@@ -4,101 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB8D0CCD194
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88ACDCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8fEL-0005si-1g; Tue, 14 Oct 2025 09:38:21 -0400
+	id 1v8fIO-0007DL-LD; Tue, 14 Oct 2025 09:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fEC-0005aX-Ib
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1v8fHs-00074t-Qt
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:42:04 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fE4-00015J-DC
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760449079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zsMuvNyPFddR1kWpBU6ZgTh6DaoZvqds7yRzYkfuz60=;
- b=LZBU9RxUJbsQBZisW8fjc+bB8l553KoZUXu4S09vH9/CNDNj8CjN147nzcgo/NQehvGjns
- kEG0CQg8MWcnmScvQLZ68AeLdHyqxvD76wNDetC273Bvz2DcvkO8Yq4/C64BLMV9je2R7c
- vaDjKF16zN62UoA2YxYprIXOelwDPPM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-WQlcH_d_NRiYqPgtuGH01g-1; Tue, 14 Oct 2025 09:37:58 -0400
-X-MC-Unique: WQlcH_d_NRiYqPgtuGH01g-1
-X-Mimecast-MFC-AGG-ID: WQlcH_d_NRiYqPgtuGH01g_1760449077
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-426d314d0deso2307408f8f.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:37:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760449076; x=1761053876;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zsMuvNyPFddR1kWpBU6ZgTh6DaoZvqds7yRzYkfuz60=;
- b=P+6fNZyjidy8VXbLD8sRqmpCBy93gq0BU4U9SppBRcUfntgm9pRc5Y5XJ0NEvd8eMy
- 2/rLvLqvSScsUJxrsqoor9tNtxoj8IrQ5yzHJjZIKh0Ekdb/NuTQI9Lyz6xWmbyj9iFR
- A1hOEZurQc9utfHvqMULYpWb1AiRUHeRyb4mqJor6DUnnApUc4u1ABoHHg+GQRSMGih5
- ck22DefkdEoE2hMTIpOgNJ54cO6SOpIiR+c9K5F/uotFsMjR01jwe1UljLZ2KvU+z+To
- 4+jzivU1sccIM5fCKHvs1cjWlC9yCZmkw1dytTlM5umXZ6+rdFtg6A+1WXZYJT7ETCTq
- XfgQ==
-X-Gm-Message-State: AOJu0YxdxshAqT70d/EXGYWD0XYfOEBWkSj6v6yVTHAZO9NyQwn4ZnpE
- 9fqb86HQoxL3PNyS4vON9eeU4al0QPFI86a2+RUhnp3QjllrR3Gw5T3ab9xij8Z2oN2ZPptxZc/
- 3GTdcKsMPz8IO9RmYtI/KbaDPwM8HBqBKkRjiGy+CPwKPcK92Zwx0XHK/1AHK4tEua/w1AZiQJy
- vsUl5v7Soki/oJwsW4a5UTl9kgzdbQrLhc3gIOHJZP
-X-Gm-Gg: ASbGnctouX4q42b3dlxrgPzhTh8RVSTVKJuhptuJx3fNXnzZNxSIZeI5ATcKmfSzk03
- E5BEdKymnZhkxgmXLo5X0EjFgFH7uK6wxOrWr1j1HDekxZ3VeGEBNkm5hiGzlka2R5mfbjNBtuN
- cwO1J5haLTr/K7TEdVufsVn9Kj1WFxPRs6fBh840Sp76H+eFoofcleGA7eZvRVSTTlBOKYumGm2
- B/BonDlv1/2NjIrtE+b3s8Fhyn9oPlX/HAzXsYHZgNUKS0b6/lDO2yvJ7TssrXMLJNl5pq3lzGp
- CT+koXIlOBeS95FT9sFy0U+skH2vm1dByYjjBZou0ibNN1tm+k7PnyBkm/Z3Nl0xn/AFZjrF4mA
- fVMyUjYTGm5BQKCchMQLe3LIymFWTKy5ySuVKt6zDpN4=
-X-Received: by 2002:a5d:5d03:0:b0:3ec:e0d0:60e5 with SMTP id
- ffacd0b85a97d-42667177bd4mr16027466f8f.15.1760449075785; 
- Tue, 14 Oct 2025 06:37:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqhGgqfSe7PXM5B5eAmw1yMJvFZmH2dwtsJgR80jLk1hjOFFaqvAcaOX129R+RNOG10GJ67Q==
-X-Received: by 2002:a5d:5d03:0:b0:3ec:e0d0:60e5 with SMTP id
- ffacd0b85a97d-42667177bd4mr16027439f8f.15.1760449075240; 
- Tue, 14 Oct 2025 06:37:55 -0700 (PDT)
-Received: from [192.168.10.48] ([151.61.22.175])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e0e70sm23740164f8f.40.2025.10.14.06.37.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 06:37:53 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Praveen K Paladugu <prapal@microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 16/28] monitor: generalize query-mshv/"info mshv" to
- query-accelerators/"info accelerators"
-Date: Tue, 14 Oct 2025 15:37:01 +0200
-Message-ID: <20251014133713.1103695-16-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251014133540.1103268-1-pbonzini@redhat.com>
-References: <20251014133540.1103268-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1v8fHV-0001ts-LN
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:41:43 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cmFfg4X3tz6GDSK;
+ Tue, 14 Oct 2025 21:38:35 +0800 (CST)
+Received: from dubpeml100004.china.huawei.com (unknown [7.214.146.78])
+ by mail.maildlp.com (Postfix) with ESMTPS id 832771402FE;
+ Tue, 14 Oct 2025 21:41:25 +0800 (CST)
+Received: from dubpeml500004.china.huawei.com (7.214.147.1) by
+ dubpeml100004.china.huawei.com (7.214.146.78) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Tue, 14 Oct 2025 14:41:25 +0100
+Received: from dubpeml500004.china.huawei.com ([7.214.147.1]) by
+ dubpeml500004.china.huawei.com ([7.214.147.1]) with mapi id 15.02.1544.011;
+ Tue, 14 Oct 2025 14:41:25 +0100
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Salil Mehta
+ <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
+Subject: RE: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+Thread-Topic: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+Thread-Index: AQHcPPUb159YqalKN0iW0Ad9cDluebTBcyuAgAAtQ0D///KGAIAAES+Q
+Date: Tue, 14 Oct 2025 13:41:25 +0000
+Message-ID: <b3f9f1d44d8d4a779dcaae2497b8b71b@huawei.com>
+References: <20251014102439.319915-1-peter.maydell@linaro.org>
+ <261d6938fc894b1ca0979aef30fb9e1c@huawei.com>
+ <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
+ <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.202.67.200]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,221 +79,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The recently-introduced query-mshv command is a duplicate of query-kvm,
-and neither provides a full view of which accelerators are supported
-by a particular binary of QEMU and which is in use.
-
-KVM was the first accelerator added to QEMU, predating QOM and TYPE_ACCEL,
-so it got a pass.  But now, instead of adding a badly designed copy, solve
-the problem completely for all accelerators with a command that provides
-the whole picture:
-
-    >> {"execute": "query-accelerators"}
-    << {"return": {"enabled": "tcg", "present": ["kvm", "mshv", "qtest", "tcg", "xen"]}}
-
-Cc: Praveen K Paladugu <prapal@microsoft.com>
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- qapi/accelerator.json      | 47 +++++++++++++++++++++++++++++---------
- include/monitor/hmp.h      |  2 +-
- hw/core/machine-hmp-cmds.c | 21 +++++++++--------
- hw/core/machine-qmp-cmds.c | 20 ++++++++++++----
- hmp-commands-info.hx       | 15 ++++++++----
- 5 files changed, 74 insertions(+), 31 deletions(-)
-
-diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-index 664e0272465..2b920608847 100644
---- a/qapi/accelerator.json
-+++ b/qapi/accelerator.json
-@@ -56,30 +56,55 @@
-   'features': [ 'unstable' ] }
- 
- ##
--# @MshvInfo:
-+# @Accelerator:
- #
- # Information about support for MSHV acceleration
- #
--# @enabled: true if MSHV acceleration is active
-+# @hvf: Apple Hypervisor.framework
- #
--# @present: true if MSHV acceleration is built into this executable
-+# @kvm: KVM
-+#
-+# @mshv: Hyper-V
-+#
-+# @nvmm: NetBSD NVMM
-+#
-+# @qtest: QTest (dummy accelerator)
-+#
-+# @tcg: TCG (dynamic translation)
-+#
-+# @whpx: Windows Hypervisor Platform
-+#
-+# @xen: Xen
- #
- # Since: 10.2.0
- ##
--{ 'struct': 'MshvInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
-+{ 'enum': 'Accelerator', 'data': ['hvf', 'kvm', 'mshv', 'nvmm', 'qtest', 'tcg', 'whpx', 'xen'] }
- 
- ##
--# @query-mshv:
-+# @AcceleratorInfo:
- #
--# Return information about MSHV acceleration
-+# Information about support for various accelerators
- #
--# Returns: @MshvInfo
-+# @enabled: the accelerator that is in use
- #
--# Since: 10.0.92
-+# @present: the list of accelerators that are built into this executable
-+#
-+# Since: 10.2.0
-+##
-+{ 'struct': 'AcceleratorInfo', 'data': {'enabled': 'Accelerator', 'present': ['Accelerator']} }
-+
-+##
-+# @query-accelerators:
-+#
-+# Return information about accelerators
-+#
-+# Returns: @AcceleratorInfo
-+#
-+# Since: 10.2.0
- #
- # .. qmp-example::
- #
--#     -> { "execute": "query-mshv" }
--#     <- { "return": { "enabled": true, "present": true } }
-+#     -> { "execute": "query-accelerators" }
-+#     <- { "return": { "enabled": "mshv", "present": ["kvm", "mshv", "qtest", "tcg"] } }
- ##
--{ 'command': 'query-mshv', 'returns': 'MshvInfo' }
-+{ 'command': 'query-accelerators', 'returns': 'AcceleratorInfo' }
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 31bd812e5f4..897dfaa2b6d 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -24,7 +24,7 @@ strList *hmp_split_at_comma(const char *str);
- void hmp_info_name(Monitor *mon, const QDict *qdict);
- void hmp_info_version(Monitor *mon, const QDict *qdict);
- void hmp_info_kvm(Monitor *mon, const QDict *qdict);
--void hmp_info_mshv(Monitor *mon, const QDict *qdict);
-+void hmp_info_accelerators(Monitor *mon, const QDict *qdict);
- void hmp_info_status(Monitor *mon, const QDict *qdict);
- void hmp_info_uuid(Monitor *mon, const QDict *qdict);
- void hmp_info_chardev(Monitor *mon, const QDict *qdict);
-diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
-index 682ed9f49b8..74a56600be8 100644
---- a/hw/core/machine-hmp-cmds.c
-+++ b/hw/core/machine-hmp-cmds.c
-@@ -163,19 +163,22 @@ void hmp_info_kvm(Monitor *mon, const QDict *qdict)
-     qapi_free_KvmInfo(info);
- }
- 
--void hmp_info_mshv(Monitor *mon, const QDict *qdict)
-+void hmp_info_accelerators(Monitor *mon, const QDict *qdict)
- {
--    MshvInfo *info;
-+    AcceleratorInfo *info;
-+    AcceleratorList *accel;
- 
--    info = qmp_query_mshv(NULL);
--    monitor_printf(mon, "mshv support: ");
--    if (info->present) {
--        monitor_printf(mon, "%s\n", info->enabled ? "enabled" : "disabled");
--    } else {
--        monitor_printf(mon, "not compiled\n");
-+    info = qmp_query_accelerators(NULL);
-+    for (accel = info->present; accel; accel = accel->next) {
-+        char trail = accel->next ? ' ' : '\n';
-+        if (info->enabled == accel->value) {
-+            monitor_printf(mon, "[%s]%c", Accelerator_str(accel->value), trail);
-+        } else {
-+            monitor_printf(mon, "%s%c", Accelerator_str(accel->value), trail);
-+        }
-     }
- 
--    qapi_free_MshvInfo(info);
-+    qapi_free_AcceleratorInfo(info);
- }
- 
- void hmp_info_uuid(Monitor *mon, const QDict *qdict)
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index e24bf0d97bf..51d5c230f7e 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -31,15 +31,25 @@
- #include <sys/stat.h>
- 
- /*
-- * QMP query for MSHV
-+ * QMP query for enabled and present accelerators
-  */
--MshvInfo *qmp_query_mshv(Error **errp)
-+AcceleratorInfo *qmp_query_accelerators(Error **errp)
- {
--    MshvInfo *info = g_malloc0(sizeof(*info));
-+    AcceleratorInfo *info = g_malloc0(sizeof(*info));
-+    AccelClass *current_class = ACCEL_GET_CLASS(current_accel());
-+    int i;
- 
--    info->enabled = mshv_enabled();
--    info->present = accel_find("mshv");
-+    for (i = ACCELERATOR__MAX; i-- > 0; ) {
-+        const char *s = Accelerator_str(i);
-+        AccelClass *this_class = accel_find(s);
- 
-+        if (this_class) {
-+            QAPI_LIST_PREPEND(info->present, i);
-+            if (this_class == current_class) {
-+                info->enabled = i;
-+            }
-+        }
-+    }
-     return info;
- }
- 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index c2aa40056bb..25b4aed51f5 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -308,16 +308,21 @@ SRST
- ERST
- 
-     {
--        .name       = "mshv",
-+        .name       = "accelerators",
-         .args_type  = "",
-         .params     = "",
--        .help       = "show MSHV information",
--        .cmd        = hmp_info_mshv,
-+        .help       = "show present and enabled information",
-+        .cmd        = hmp_info_accelerators,
-     },
- 
- SRST
--  ``info mshv``
--    Show MSHV information.
-+  ``info accelerators``
-+    Show which accelerators are compiled into a QEMU binary, and what accelerator
-+    is in use. For example::
-+
-+        kvm qtest [tcg]
-+
-+    indicates that TCG in use, and that KVM and qtest are also available.
- ERST
- 
-     {
--- 
-2.51.0
-
+PiBGcm9tOiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+DQo+IFNlbnQ6
+IFR1ZXNkYXksIE9jdG9iZXIgMTQsIDIwMjUgMjozMSBQTQ0KPiBUbzogU2FsaWwgTWVodGEgPHNh
+bGlsLm1laHRhQGh1YXdlaS5jb20+DQo+IA0KPiBPbiBUdWUsIDE0IE9jdCAyMDI1IGF0IDE0OjIz
+LCBTYWxpbCBNZWh0YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBI
+aSBQZXRlciwNCj4gPg0KPiA+ID4gRnJvbTogcWVtdS1kZXZlbC1ib3VuY2VzK3NhbGlsLm1laHRh
+PWh1YXdlaS5jb21Abm9uZ251Lm9yZw0KPiA8cWVtdS0NCj4gPiA+IGRldmVsLWJvdW5jZXMrc2Fs
+aWwubWVodGE9aHVhd2VpLmNvbUBub25nbnUub3JnPiBPbiBCZWhhbGYgT2YgU2FsaWwNCj4gPiA+
+IE1laHRhIHZpYQ0KPiA+ID4gU2VudDogVHVlc2RheSwgT2N0b2JlciAxNCwgMjAyNSAxMTo0MSBB
+TQ0KPiA+ID4gVG86IFBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz47IHFl
+bXUtDQo+IGRldmVsQG5vbmdudS5vcmcNCj4gPiA+DQo+ID4gPiBIaSBQZXRlciwNCj4gPiA+DQo+
+ID4gPiA+IEZyb206IHFlbXUtZGV2ZWwtYm91bmNlcytzYWxpbC5tZWh0YT1odWF3ZWkuY29tQG5v
+bmdudS5vcmcNCj4gPiA+IDxxZW11LQ0KPiA+ID4gPiBkZXZlbC1ib3VuY2VzK3NhbGlsLm1laHRh
+PWh1YXdlaS5jb21Abm9uZ251Lm9yZz4gT24gQmVoYWxmIE9mDQo+ID4gPiA+IGRldmVsLWJvdW5j
+ZXMrUGV0ZXINCj4gPiA+ID4gTWF5ZGVsbA0KPiA+ID4gPiBTZW50OiBUdWVzZGF5LCBPY3RvYmVy
+IDE0LCAyMDI1IDExOjI1IEFNDQo+ID4gPiA+IFRvOiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4g
+PiA+ID4NCj4gPiA+ID4gQ3VycmVudGx5IGluIGFybV9naWN2M19pY2NfcmVzZXQoKSB3ZSByZWFk
+IHRoZSBrZXJuZWwncyB2YWx1ZSBvZg0KPiA+ID4gPiBJQ0NfQ1RMUl9FTDEgYXMgcGFydCBvZiBy
+ZXNldHRpbmcgdGhlIENQVSBpbnRlcmZhY2UuICBUaGlzIG1vc3RseQ0KPiA+ID4gPiB3b3Jrcywg
+YnV0IHdlJ3JlIGFjdHVhbGx5IGJyZWFraW5nIGFuIGFzc3VtcHRpb24gdGhlIGtlcm5lbCBtYWtl
+cw0KPiA+ID4gPiB0aGF0IHVzZXJzcGFjZSBvbmx5IGFjY2Vzc2VzIHRoZSBpbi1rZXJuZWwgR0lD
+IGRhdGEgd2hlbiB0aGUgVk0gaXMNCj4gPiA+ID4gdG90YWxseSBwYXVzZWQsIHdoaWNoIG1heSBu
+b3QgYmUgdGhlIGNhc2UgaWYgYSBzaW5nbGUgdkNQVSBpcyBiZWluZw0KPiByZXNldC4NCj4gPiA+
+ID4gVGhlIGVmZmVjdCBpcyB0aGF0IGl0J3MgcG9zc2libGUgdGhhdCB0aGUgcmVhZCBhdHRlbXB0
+IHJldHVybnMgRUJVU1kuDQo+ID4gPiA+DQo+ID4gPiA+IEF2b2lkIHRoaXMgYnkgcmVhZGluZyB0
+aGUga2VybmVsJ3MgdmFsdWUgb2YgdGhlIHJlc2V0IElDQ19DVExSX0VMMQ0KPiA+ID4gPiBvbmNl
+IGluIGRldmljZSByZWFsaXplLiBUaGlzIGJyaW5ncyBJQ0NfQ1RMUl9FTDEgaW50byBsaW5lIHdp
+dGgNCj4gPiA+ID4gdGhlIG90aGVyIGNwdWlmIHJlZ2lzdGVycywgd2hlcmUgd2UgYXNzdW1lIHdl
+IGtub3cgd2hhdCB0aGUga2VybmVsDQo+ID4gPiA+IGlzIHJlc2V0dGluZyB0aGVtIHRvIGFuZCBq
+dXN0IHVwZGF0ZSBRRU1VJ3MgZGF0YSBzdHJ1Y3R1cmVzIGluDQo+ID4gPiBhcm1fZ2ljdjNfaWNj
+X3Jlc2V0KCkuDQo+ID4gPiA+DQo+ID4gPiA+IFNpZ25lZC1vZmYtYnk6IFBldGVyIE1heWRlbGwg
+PHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz4NCj4gPiA+ID4gLS0tDQo+ID4gPiA+IEkndmUgb25s
+eSB0ZXN0ZWQgdGhpcyBmYWlybHkgbGlnaHRseSwgYnV0IGl0IHNlZW1zIHRvIHdvcmsuDQo+ID4g
+PiA+IFNhbGlsLCBkb2VzIHRoaXMgZml4IHRoZSBFQlVTWSBpc3N1ZXMgeW91IHdlcmUgc2VlaW5n
+ID8NCj4gPiA+DQo+ID4gPg0KPiA+ID4gTGV0IG1lIHRyeSB0aGlzIGFuZCBnZXQgYmFjayB0byB5
+b3UuICBBbHNvLCBqdXN0IHRvIGxldCB5b3Uga25vdw0KPiA+ID4gdGhhdCAtRUJVU1kgY2FuIHJl
+dHVybiBmcm9tIG90aGVyIHBsYWNlcyBhcyB3ZWxsLiBQbGVhc2UgY2hlY2sgIG15DQo+ID4gPiBy
+ZXBseSBpbiB0aGUgb3RoZXIgbWFpbC0gY2hhaW4uDQo+ID4NCj4gPg0KPiA+IEdvdCB0aGlzLg0K
+PiA+DQo+ID4gKGdkYikgaGFuZGxlIFNJR1VTUjEgbm9zdG9wIG5vcHJpbnQgcGFzcw0KPiA+IFNp
+Z25hbCAgICAgICAgU3RvcCAgICAgIFByaW50ICAgUGFzcyB0byBwcm9ncmFtIERlc2NyaXB0aW9u
+DQo+ID4gU0lHVVNSMSAgICAgICBObyAgICAgICAgTm8gICAgICBZZXMgICAgICAgICAgICAgVXNl
+ciBkZWZpbmVkIHNpZ25hbCAxDQo+ID4gKGdkYikgcnVuDQo+ID4gU3RhcnRpbmcgcHJvZ3JhbToN
+Cj4gPiAvb3B0L3dvcmtzcGFjZS9jb2RlL3FlbXUvcWVtdS9idWlsZC9xZW11LXN5c3RlbS1hYXJj
+aDY0IC0tZW5hYmxlLQ0KPiBrdm0NCj4gPiAtbWFjaGluZSB2aXJ0LGdpYy12ZXJzaW9uPTMgLWNw
+dSBob3N0IC1zbXAgY3B1cz0yLGRpc2FibGVkY3B1cz0yIC1tDQo+ID4gMzAwTSAta2VybmVsIC9v
+cHQvd29ya3NwYWNlL2NvZGUvbGludXgvbGludXgvYXJjaC9hcm02NC9ib290L0ltYWdlDQo+ID4g
+LWluaXRyZCAvb3B0L3dvcmtzcGFjZS9jb2RlL2ZpbGVzeXN0ZW0vcm9vdGZzLmNwaW8uZ3ogLWFw
+cGVuZA0KPiA+IGNvbnNvbGU9dHR5QU1BMFwgcm9vdD0vZGV2L3JhbVwgZWFybHljb25cIHJkaW5p
+dD0vaW5pdFwgbWF4Y3B1cz0xXA0KPiA+IGFjcGk9Zm9yY2UgLW5vZ3JhcGhpYyAtYmlvcw0KPiA+
+IC9vcHQvd29ya3NwYWNlL2NvZGUvdWVmaS9lZGsyL0J1aWxkL0FybVZpcnRRZW11LQ0KPiBBQVJD
+SDY0L1JFTEVBU0VfR0NDNS9GDQo+ID4gVi9RRU1VX0VGSS5mZCBbVGhyZWFkIGRlYnVnZ2luZyB1
+c2luZyBsaWJ0aHJlYWRfZGIgZW5hYmxlZF0gVXNpbmcgaG9zdA0KPiA+IGxpYnRocmVhZF9kYiBs
+aWJyYXJ5ICIvbGliL2FhcmNoNjQtbGludXgtZ251L2xpYnRocmVhZF9kYi5zby4xIi4NCj4gPiBb
+TmV3IFRocmVhZCAweGZmZmZmNWI1ZWI0MCAoTFdQIDMxOTk0KV0gW05ldyBUaHJlYWQgMHhmZmZm
+ZjRlODhiNDANCj4gPiAoTFdQIDMxOTk2KV0gW05ldyBUaHJlYWQgMHhmZmZmZDRkZmViNDAgKExX
+UCAzMTk5NyldIFVuZXhwZWN0ZWQgZXJyb3INCj4gPiBpbiBrdm1fZGV2aWNlX2FjY2VzcygpIGF0
+IC4uL2FjY2VsL2t2bS9rdm0tYWxsLmM6MzQ3NToNCj4gPiBxZW11LXN5c3RlbS1hYXJjaDY0OiBL
+Vk1fR0VUX0RFVklDRV9BVFRSIGZhaWxlZDogR3JvdXAgNiBhdHRyDQo+ID4gMHgwMDAwMDAwMDAw
+MDBjNjY0OiBJbmFwcHJvcHJpYXRlIGlvY3RsIGZvciBkZXZpY2UNCj4gDQo+IERvZXMgaXQgZG8g
+dGhpcyBjb25zaXN0ZW50bHksIG9yIG9ubHkgc29tZXRpbWVzPyBXaGF0IGhvc3Qga2VybmVsIHZl
+cnNpb24gYXJlDQo+IHlvdSBydW5uaW5nPyBBbmQgd2hhdCBRRU1VIGNvbW1pdCAocGx1cyB0aGlz
+IHBhdGNoKT8NCg0KSSd2ZSB0cmllZCAzIHRpbWVzIGFuZCBpdCBoYXBwZW5lZCBhbGwgdGhlIDMg
+dGltZXMgYnV0IHRoaXMgaXMgYSB2ZXJ5IHBlcnRpbmVudA0KcXVlc3Rpb24gYW5kIEknbSBub3Qg
+c3VyZSBpZiBldmVyeSBhdHRlbXB0IHdpbGwgbGVhZCB0byB0aGlzLg0KDQpJIHRob3VnaHQgeW91
+IGFza2VkIG1lIHRvIHZhbGlkYXRlIHRoZSBmaXggYnkgcmVwbGFjaW5nIGJlbG93Og0KDQpodHRw
+czovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjUxMDAxMDEwMTI3LjMwOTI2MzEtMjIt
+c2FsaWwubWVodGFAb3Buc3JjLm5ldC8NCg0KDQpZZXMsIEknbSB1c2luZyB0aGUgcmVjZW50IFJG
+QyBWNiB2Q1BVIEhvdHBsdWcgcGF0Y2hlcyBicmFuY2ggSSd2ZSBwdXNoZWQgdG8gdGhlDQpjb21t
+dW5pdHkuDQoNCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTEwMDEwMTAx
+MjcuMzA5MjYzMS0xLXNhbGlsLm1laHRhQG9wbnNyYy5uZXQvDQoNCllvdSBjYW4gYWxzbyBnZXQg
+aXQgaGVyZToNCmh0dHBzOi8vZ2l0aHViLmNvbS9zYWxpbC1tZWh0YS9xZW11LmdpdCB2aXJ0LWNw
+dWhwLWFybXY4L3JmYy12Ng0KDQoNCkFncmVlZC4gaXRzIHdvcnRoIHNlZWluZyB3aXRob3V0IHRo
+ZSBwYXRjaGVzIGFwcGxpZWQuIEknbGwgc2hhcmUgd2l0aCB5b3UgdGhlDQpyZXN1bHQgc2hvcnRs
+eS4NCg0KDQpUaGFua3MNClNhbGlsLg0KDQo+IA0KPiBJJ20gZ3Vlc3NpbmcgZnJvbSB0aGF0ICJk
+aXNhYmxlZGNwdXM9MiIgcGFydCB0aGF0IHlvdSdyZSBydW5uaW5nIHNvbWUgbm90LQ0KPiB5ZXQt
+dXBzdHJlYW0gc2V0IG9mIFFFTVUgcGF0Y2hlcy4gUGxlYXNlIGRyb3AgdGhvc2UsIGFuZCB0ZXN0
+IG9ubHkgd2l0aA0KPiB0aGlzLCB0byBydWxlIG91dCB0aGUgcG9zc2liaWxpdHkgb2Ygc29tZSBi
+dWcvdW5leHBlY3RlZCBpbnRlcmFjdGlvbiB3aXRoDQo+IHRob3NlLg0KPiANCj4gdGhhbmtzDQo+
+IC0tIFBNTQ0K
 
