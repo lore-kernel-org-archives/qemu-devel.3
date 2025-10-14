@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89EC5CCD187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287FFCCD18E
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 11:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8cxZ-00081I-Si; Tue, 14 Oct 2025 07:12:53 -0400
+	id 1v8cxZ-00081C-77; Tue, 14 Oct 2025 07:12:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cxS-0007vk-Qr
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:47 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1v8cxO-0007uq-Mv
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:42 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cxO-00081u-AQ
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:46 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b5a8184144dso226890766b.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:40 -0700 (PDT)
+ id 1v8cxM-00081o-3P
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:42 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-62fc0b7bf62so7731395a12.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760440358; x=1761045158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760440357; x=1761045157; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j/kw8tYIwMBnzBLUietdBRI+PGY5gSak1QKmauHgZS8=;
- b=Dlk3VAGB9dJq8iJSWVpniELaIWLMoS8Ab1dHeDP7Ml7bIGh01CtKeagMwdZo1cb6MM
- ElVjPIU1QYJEyTjDSzWwknQ5xWe9PDWhsOBhTzhefizQagiIVoxNE549T1kLn/zUL81M
- SvS4oiEyHpuV7BKg9QOXAKyJP/ip5TkF2OVEfM1g8YzaYkithnoWh3taKmcptJ7fiAeq
- X+OypvQFe73lFfOl2oW51X3Yi2h0zYxVIvAahCLwzUm/rlGJLWpseHzgmBDk0bZF6Rhm
- bG5hCIoPOJw7f1aQk5XU56SYnjKHV0HwOdQ6Y8BKrYG2rXH68j9NVBENCzD2uZYOvtbI
- f2eg==
+ bh=lx/g6Brw0vnITlYo9+9jagFBHEALpmQn7onYoxBlbPw=;
+ b=z4gscisi0owWUHTNARNgXQq/cnKMp3njsYec0YjggNwMionENVdaZXwbLc2uLJ75Zz
+ pZOo+dNQBCPYfi7KsXMOubnPbhvWgeIRADSU7108Suaxj1hZSmo4dxJJLOaT/3USIYr5
+ C+sTQ9hVqtQo/ZLsDVPye55a5TAzvD2FGGk4qY9ikw14RCVvrz1GKyNCD0dQ5iyGZgdG
+ 1YOJVvIiUZ/fByRXP7unWfZPJMYBj/m7I1wSpj0LaH+SrmY/XJogmZRiKw8U0IzvVRP6
+ U9PO6UHeu7FIII7Myqz62tRT2hRDBt6NzNSvVxu9h1Wb0t7kQdge7rdjrOyQITdu+xIq
+ 4sug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760440358; x=1761045158;
+ d=1e100.net; s=20230601; t=1760440357; x=1761045157;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j/kw8tYIwMBnzBLUietdBRI+PGY5gSak1QKmauHgZS8=;
- b=Q54Zc7KxZxNPujxg5Z27StWVbC+pNw+5vtXvcq49lqmQSJpCEuhTmjBopZw3Ohai40
- 6+UUPCfyzB8yMOMyAlaWm5tTJkthP3eFhN+7KlZk6tw239S5CSyFIoOi+Fb+pmnUcZ7q
- E9ubU9q5syBpvKD61bpMtW+HPM7/2sm611WsSsUnS1CEO/okcoym5hK99qhpcFW4P67m
- khrLAFLlmhNVu5Pk9xuDLJvBvP6luvoDzui4MvfVFre6/wHGLN+XkS+HwaLyrWR3NRNS
- Wa+3vTBHYLWxxNwW+T8bAHwcxrULC2Msv0ROcEPN+smCKV/1icorFGEKVbuFIpGY8DnC
- P5ug==
-X-Gm-Message-State: AOJu0YzmZpdhIeX8MScLYOJEffS+I1OfLCRU8y18dXN0LNYsLsRPXBt+
- +sCawXs7L1aSik9TMwmnGQn0K5v1lvOB9x4N8DcBB2pxxLOcsEvRXnQWHtDLas8I87k=
-X-Gm-Gg: ASbGncssRTomGShUhPEiHkIp9Mj+aj2pObeIc5ByKWKHKGAgS2Aier8JYF/qf2WIwTP
- SQehBhjuwmJp0hfAOAhizODgiDLET5/l8aIe5SmA/NAGKIzIlEgXHGPIzFTLXjU6eAlyLTV827L
- lfPaFT0zb1NTQdj8uQKdfFa9knDQiGeZOBgOihJ10nAn6BXqOzDpnI8ZWMhdDVQnExlxRlVxi9X
- kpvldI3NjisWzxR8YsEoPqJDpIWOxGgdsS6ZzwcJaKKfLF5peUg+iKq8goNuFbNm2sydfpEMMBj
- uAuMI56SHRu5c0veIy0twSQToLTRjShN+hDfSDxYMOHfNZFyFak6HPCjedUFkKfCbC2sGB0ZIK9
- JsmyuwC6MNNJhepVC+i+QsK/qpod25fVXHy6cH/XMCAkyuA==
-X-Google-Smtp-Source: AGHT+IGmVtbq3KsPtESdOWmj6fQM0KKisYYnvk4u+b0iGptwk2279uwTHKTo7zmh6e3FNPabruOkbw==
-X-Received: by 2002:a17:907:868b:b0:b3e:babd:f257 with SMTP id
- a640c23a62f3a-b50aa49207amr2896780366b.10.1760440358209; 
- Tue, 14 Oct 2025 04:12:38 -0700 (PDT)
+ bh=lx/g6Brw0vnITlYo9+9jagFBHEALpmQn7onYoxBlbPw=;
+ b=YgP/bI7kS4uO5D5cDf8Qay9fD/XXCL45mF0L2d9XkY0WcXHvjDANpzXczw6TbmvyMd
+ Ss+sX2Tl10bTLBrJMvKy6QFaxIfTy2RwGvl0LR4F9CYADgNOkqu8y3zq8rH58M92/T8K
+ ztpANVnlVEcMbKVgyAZV0wwA+FJeybeY3qJpi6PyG3Z+K0i0XF6iKBPP0GGy5qyBF5eO
+ Qamv6M0TLB98iD+F8KWWoplYxoPomml+jTHwCSqNhHyAkHIonxHXlBRTyRd//mIxNb+Z
+ CVUmMIr2nnSdPvBxG7wCYTAb/HPDY7GDFwHgV5C/MJDNh8z6DFcS86mhxmvv55i/BXSA
+ yeUQ==
+X-Gm-Message-State: AOJu0YwH5+T2Malt9V86eakfxocOSK2RBK04FdLBGAL3dUT+cRn4NS3u
+ KQY8k9cN5UO22NL4jY7/bTxvZVjIs7mYNvs3bSJvZfBzoI7oMD2Nd6w212608yhEJHc=
+X-Gm-Gg: ASbGncsmRjmQXTTmShpjlagRSgOV/MnytQXtOZP8kFwBGm/f0F+BDGDMXulENhBkOWx
+ i9SXZ4nXlmz9zzKiTGtDS2qFESabq6Z2KW4QQJ24DQ9RYS+5TVkPXCX0NNZ0FuGhgvK+ob/45/m
+ XQX6EytR2K/+l/7ZhnL1ZrxKUSnZWmWtA3Th8iy9nApSB4eqeevdmgjLrGt+MoC1wycHw+umgiC
+ TW7IIdakTMCPIgEP6ibJZt2yl0REjV07gABNgoiVH6GCJ10CJJT8XTBg98RnKr2nr/OglmeXHcl
+ tZy0gPau9uRJGM93e6kP09W+p1HaQFVL6MUdmxzPeHBTrDR6ddaSHI7Vdc5EfRq6xvFokYnAwcb
+ BrUh81box0oy0qzFNmgT0iGU75IzVrOUuFUj4Yx7zflPtzLeR/cU2UWh5
+X-Google-Smtp-Source: AGHT+IEiv+LJHJ1Yn/obZ6afL5QOdUhoCNGsyqdIWtfNYp4gWu566tH7NL+iDzsR3h9d5Rs2w9Zo4g==
+X-Received: by 2002:a17:907:9612:b0:b41:b0c4:e74c with SMTP id
+ a640c23a62f3a-b50ac0cc075mr2662316466b.33.1760440357185; 
+ Tue, 14 Oct 2025 04:12:37 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d951ceb4sm1133750766b.72.2025.10.14.04.12.35
+ a640c23a62f3a-b55d952a273sm1156506666b.83.2025.10.14.04.12.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 14 Oct 2025 04:12:35 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 28D2A5F82B;
+ by draig.lan (Postfix) with ESMTP id 40AB85F82E;
  Tue, 14 Oct 2025 12:12:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -76,20 +76,18 @@ Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Andrew Keesler <ankeesler@google.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 1/8] Support per-head resolutions with virtio-gpu
-Date: Tue, 14 Oct 2025 12:12:27 +0100
-Message-ID: <20251014111234.3190346-2-alex.bennee@linaro.org>
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 2/8] system/memory: add memory_region_finalize tracepoint
+Date: Tue, 14 Oct 2025 12:12:28 +0100
+Message-ID: <20251014111234.3190346-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251014111234.3190346-1-alex.bennee@linaro.org>
 References: <20251014111234.3190346-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,107 +110,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Keesler <ankeesler@google.com>
+This only traces named memory regions as it is otherwise quite noisy
+every time the address map changes.
 
-In 454f4b0f, we started down the path of supporting separate
-configurations per display head (e.g., you have 2 heads - one with
-EDID name "AAA" and the other with EDID name "BBB").
-
-In this change, we add resolution to this configuration surface (e.g.,
-you have 2 heads - one with resolution 111x222 and the other with
-resolution 333x444).
-
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA",
-                 "xres":111,
-                 "yres":222
-              },
-              {
-                 "name":"BBB",
-                 "xres":333,
-                 "yres":444
-              }
-            ]}'
-
-Here is the behavior matrix of the current resolution configuration
-surface (xres/yres) with the new resolution configuration surface
-(outputs[i].xres/yres).
-
-Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with default xres/yres
-
-Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with xres/yres
-
-Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-
-Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-Signed-off-by: Andrew Keesler <ankeesler@google.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250902141312.750525-2-ankeesler@google.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- qapi/virtio.json             | 10 ++++++++--
- hw/display/virtio-gpu-base.c | 10 ++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ system/memory.c     | 5 +++++
+ system/trace-events | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 05295ab6655..0ce789bb22f 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -971,15 +971,21 @@
- ##
- # @VirtIOGPUOutput:
- #
--# Describes configuration of a VirtIO GPU output.
-+# Describes configuration of a VirtIO GPU output. If both xres and
-+# yres are set, they take precedence over root virtio-gpu
-+# resolution configuration and enable the corresponding output.
- #
- # @name: the name of the output
- #
-+# @xres: horizontal resolution of the output in pixels (since 10.2)
-+#
-+# @yres: vertical resolution of the output in pixels (since 10.2)
-+#
- # Since: 10.1
- ##
- 
- { 'struct': 'VirtIOGPUOutput',
--  'data': { 'name': 'str' } }
-+  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
- 
- ##
- # @DummyVirtioForceArrays:
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 7269477a1c8..6adb5312a40 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-     g->req_state[0].width = g->conf.xres;
-     g->req_state[0].height = g->conf.yres;
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         node && output_idx < g->conf.max_outputs;
-+         output_idx++, node = node->next) {
-+        if (node->value->has_xres && node->value->has_yres) {
-+            g->enabled_output_bitmask |= (1 << output_idx);
-+            g->req_state[output_idx].width = node->value->xres;
-+            g->req_state[output_idx].height = node->value->yres;
-+        }
+diff --git a/system/memory.c b/system/memory.c
+index 8b84661ae36..fd7c3192ed4 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1821,6 +1821,11 @@ static void memory_region_finalize(Object *obj)
+      * memory_region_set_enabled instead could trigger a transaction and
+      * cause an infinite loop.
+      */
++
++    if (mr->name) {
++        trace_memory_region_finalize(mr, mr->name);
 +    }
 +
-     g->hw_ops = &virtio_gpu_ops;
-     for (i = 0; i < g->conf.max_outputs; i++) {
-         g->scanout[i].con =
+     mr->enabled = false;
+     memory_region_transaction_begin();
+     if (mr->container) {
+diff --git a/system/trace-events b/system/trace-events
+index 82856e44f2e..a8ef2326e14 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -23,6 +23,7 @@ memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t v
+ memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
++memory_region_finalize(void *mr, const char *name) "mr %p, %s"
+ flatview_new(void *view, void *root) "%p (root %p)"
+ flatview_destroy(void *view, void *root) "%p (root %p)"
+ flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
 -- 
 2.47.3
 
