@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9257ECCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59435CCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ZR0-0005Yd-4q; Tue, 14 Oct 2025 03:27:02 -0400
+	id 1v8ZUk-0006GL-Db; Tue, 14 Oct 2025 03:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8ZQy-0005Y9-C0; Tue, 14 Oct 2025 03:27:00 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8ZQw-0004PE-1O; Tue, 14 Oct 2025 03:27:00 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9455015D429;
- Tue, 14 Oct 2025 10:26:32 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9752A29F2DE;
- Tue, 14 Oct 2025 10:26:52 +0300 (MSK)
-Message-ID: <542c446a-9c63-45a3-b68e-4f72f6ad51ef@tls.msk.ru>
-Date: Tue, 14 Oct 2025 10:26:52 +0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1v8ZUh-0006Fs-Pk
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:30:51 -0400
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1v8ZUf-0004sF-W1
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:30:51 -0400
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-7900f7f4ba9so58872696d6.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 00:30:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760427048; x=1761031848; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ulClb2Ykb6HnoV2pD2vHzTnvCHvbkDlgy4oorUlAYAI=;
+ b=jLPsm0ogme0UHnMZZ+twwT/anFEZjkptCxX/h32zunBhkQ5Q3XmlN8MNhMl9bj8U0x
+ lEucXd4PxdObmweU9KOwnaSUK2e8hEKSgWERp6smHWc2SiZ2F+c5NcEUfC5J6j0dR+ho
+ tq0pJ47sLNzwxc2Ck0XYaPCfuUK1joOJ6zSwDjDE+YvVy52fDuTZpnNgGBXF2tX2nar3
+ 2NdgJX7cpxEQ9pr1EQKXSkjGWqESYOJDVQvhcsvqQeQ7iA+CIJTvgeTZVDBRgdGRW2CR
+ W3VbqOg1z9boeE+nDHMvDtJOVYbfcjALEdxpWI/aItDg/e6KBpBKgOI3qT71qyZgmACS
+ nRjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760427048; x=1761031848;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ulClb2Ykb6HnoV2pD2vHzTnvCHvbkDlgy4oorUlAYAI=;
+ b=LDG6kQytHKPk9YnpVtj1oe7WqABh6iSwP39jarac/ldRgU1GxSKTRG8tvK3naiTfoc
+ GE0mi8cit3Z1EP0FU+DmZPqv7qf1AkbMsMYvFOezcA3B6x8UjQW3Z6CAwpgBllHoGVZM
+ yindjwgjmjgW0RvSixYysG1n9YKOrRBKOEjb1+MpD4jd5FfaDNof2O9nEManY3wUgVl8
+ 2AD8iB420ZA2yYNqlJAMiWDzriGvlvrI7uj9cAeGQ2gB+BaetBe8/qRL6O7W0zkt9j1N
+ f72PsWFQpcH3qx1lL0j3We3PTxNjmPpcKka26X4HIix2OZcKJ+iHKZwCEGK2cwEZFF9r
+ /Y5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFdPuuAOQx3pC6/TAnjpV6fwq1SjmSOMb6iFWDGhShcp3MKdUE/bZXseXOq6AL6GvHn04eWC8lte5K@nongnu.org
+X-Gm-Message-State: AOJu0YxXCIEcRiOieWayngWsWESK3IpaL2N/veMeXHZNwnUn1hNhER68
+ Zbh32M7nHGvHCMXdQNHDuB4PSOUnXFCtYVLQCQFC15or6AcWwKpD1RUeAwUjZYQkIgGWe8FQlnH
+ e7RxQxyIoQv/lOF1tI2O/b49eepK8lUg=
+X-Gm-Gg: ASbGncvdbaPKyb4kQLDrcnXq4gnasgAcKN5W32PcdQQWDEoXqw8562vq3zMONR61/Yf
+ tJpTARfb7aqx2/Iwmb/52jNR3zFT/CPGZJETeU0B1KOhz2jCqaND2z31qz/gGZDuZE3wEcOboul
+ uznDRCLWCnbT6d2KHEf5V1yrjcQUA00mXOr5YZFlIkSPSRn65NMqpgwr0o83Pzrnp2ADEVoW/Fk
+ W7wW9nYFJsIz5FnbmiltbsVmIHZuk1oxUKJJ/hI2Htx4bfZo6dwBbmqow==
+X-Google-Smtp-Source: AGHT+IEdEoxSunmYgOLbZt3aclImYkBsDRaOpVW9XKo8G/xwFTdjAATbgwEvNYWrsmOTKAj/cfVA7dOS8L4Tbm+CLV4=
+X-Received: by 2002:ac8:7d86:0:b0:4e7:25ae:be92 with SMTP id
+ d75a77b69052e-4e725aec4c2mr99997021cf.47.1760427047734; Tue, 14 Oct 2025
+ 00:30:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/uefi: fix properties list definition
-To: xpahos@gmail.com, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-References: <20251012-pvvars-fix-props-v1-1-6ca31af626e0@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251012-pvvars-fix-props-v1-1-6ca31af626e0@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
+ <20251013133836.852018-8-vsementsov@yandex-team.ru>
+In-Reply-To: <20251013133836.852018-8-vsementsov@yandex-team.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 14 Oct 2025 11:30:36 +0400
+X-Gm-Features: AS18NWCZfpNAeZxzGpedXeh4iJK85btrXM8KJXsusuXQnhzlgT8ri1uX9fCNOkY
+Message-ID: <CAJ+F1C+E6Q8V2_Qn14d490+qbLZTEf08hStC5w6=vV5ebNcvoA@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] char: vhost-user-blk call connect by hand
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
+ qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com, 
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,33 +99,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/25 01:36, xpahos@gmail.com wrote:
-> From: Alexander Gryanko <xpahos@gmail.com>
-> 
-> Added DEFINE_PROP_END_OF_LIST() to the Property structure definition.
-> This fixes the device_class_set_legacy_reset error when accessing
-> the prop->info field.
+Hi
 
-Please show the context where this is a problem, which error
-are you seeing.
+On Mon, Oct 13, 2025 at 5:39=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> Give vhost-user-blk a possibility (and responsibility) to decide when
+> do connect. It will help us to realize vhost-user-blk backend-transfer
+> migration feature:
+>
+> For incoming migration we'll need to postpone connect at least until
+> early stage of migrate-incoming command, when we already know all
+> migration parameters and can decide, are we going to do incoming
+> backend-transfer (and get chardev fd from incoming stream), or we
+> finally need to connect.
+>
+> With this patch, we don't modify vhost-user-blk.c: it already
+> do call qemu_chr_fe_wait_connected(), which in turn calls
+> qemu_chr_connect().
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  chardev/char-fe.c                | 21 +++++++++++++++++----
+>  hw/core/qdev-properties-system.c |  2 +-
+>  include/chardev/char-fe.h        |  2 ++
+>  3 files changed, 20 insertions(+), 5 deletions(-)
+>
+> diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+> index 973fed5bea..9e2c658cb9 100644
+> --- a/chardev/char-fe.c
+> +++ b/chardev/char-fe.c
+> @@ -189,12 +189,20 @@ bool qemu_chr_fe_backend_open(CharBackend *be)
+>      return be->chr && be->chr->be_open;
+>  }
+>
+> -bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
+> +bool qemu_chr_fe_init_ex(CharBackend *b, Chardev *s, ObjectClass *oc,
+> +                         Error **errp)
+>  {
+>      unsigned int tag =3D 0;
+> -
+> -    if (!qemu_chr_connect(s, errp)) {
+> -        return false;
+> +    const char *driver =3D oc ? object_class_get_name(oc) : NULL;
+> +
+> +    /*
+> +     * vhost-user-blk wants call qemu_chr_connect by hand,
+> +     * to support backend-transfer migration feature.
+> +     */
+> +    if (!driver || !g_str_has_prefix(driver, "vhost-user-blk")) {
+> +        if (!qemu_chr_connect(s, errp)) {
+> +            return false;
+> +        }
 
-> --- a/hw/uefi/var-service-sysbus.c
-> +++ b/hw/uefi/var-service-sysbus.c
-> @@ -39,6 +39,7 @@ static const Property uefi_vars_sysbus_properties[] = {
->                        state.disable_custom_mode, false),
->       DEFINE_PROP_BOOL("use-pio", uefi_vars_sysbus_state,
->                        state.use_pio, false),
-> +    DEFINE_PROP_END_OF_LIST(),
+Why not pass a bool "connect" instead?
 
-Which qemu version is it?
+DEFINE_PROP_CHR() would use "true".
 
-See commit 5fcabe628b8140691dab834a22be549d242b24bd which is in 10.0.
-This symbol (DEFINE_PROP_END_OF_LIST) is not defined (and not used)
-in current qemu.
++ Introduce DEFINE_PROP_CHR_NO_CONNECT() that would use "false".
 
-So it looks like this patch isn't needed.
+and wire it with a new PropertyInfo and modified callbacks.
 
-Thanks,
+>      }
+>
+>      if (s) {
+> @@ -218,6 +226,11 @@ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Er=
+ror **errp)
+>      return true;
+>  }
+>
+> +bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
+> +{
+> +    return qemu_chr_fe_init_ex(b, s, NULL, errp);
+> +}
+> +
+>  void qemu_chr_fe_deinit(CharBackend *b, bool del)
+>  {
+>      assert(b);
+> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-s=
+ystem.c
+> index 1f810b7ddf..35eed17d4d 100644
+> --- a/hw/core/qdev-properties-system.c
+> +++ b/hw/core/qdev-properties-system.c
+> @@ -297,7 +297,7 @@ static void set_chr(Object *obj, Visitor *v, const ch=
+ar *name, void *opaque,
+>      if (s =3D=3D NULL) {
+>          error_setg(errp, "Property '%s.%s' can't find value '%s'",
+>                     object_get_typename(obj), name, str);
+> -    } else if (!qemu_chr_fe_init(be, s, errp)) {
+> +    } else if (!qemu_chr_fe_init_ex(be, s, obj->class, errp)) {
+>          error_prepend(errp, "Property '%s.%s' can't take value '%s': ",
+>                        object_get_typename(obj), name, str);
+>      }
+> diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+> index 8ef05b3dd0..f1c05cc5ed 100644
+> --- a/include/chardev/char-fe.h
+> +++ b/include/chardev/char-fe.h
+> @@ -34,6 +34,8 @@ struct CharBackend {
+>   * Returns: false on error.
+>   */
+>  bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp);
+> +bool qemu_chr_fe_init_ex(CharBackend *b, Chardev *s, ObjectClass *oc,
+> +                         Error **errp);
+>
+>  /**
+>   * qemu_chr_fe_deinit:
+> --
+> 2.48.1
+>
+>
 
-/mjt
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
