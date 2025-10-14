@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25858CCD18E
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9F3CCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8aKA-0003FI-Rv; Tue, 14 Oct 2025 04:24:02 -0400
+	id 1v8aKI-0003JD-58; Tue, 14 Oct 2025 04:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1v8aK7-0003Ek-Ux
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:23:59 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1v8aKF-0003HC-S1
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:24:07 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1v8aK5-0003t6-1J
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:23:59 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-b554bb615dcso3451389a12.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 01:23:56 -0700 (PDT)
+ id 1v8aKB-0003uI-BA
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:24:07 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-269639879c3so49044545ad.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 01:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1760430235; x=1761035035; darn=nongnu.org;
+ d=sifive.com; s=google; t=1760430241; x=1761035041; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bYWfU3Ybv8UMfXDoLYIZExvngPG0XH9qkihRnX+Zfvs=;
- b=NXcExFps8uZgb0X9dCDCGB1w+T2Q0NWEm8FaX9heQcldLWwhxESVfKHdbTPE8ALjFL
- V9n44hY/tlF9peQfqWlNbGWe6x1ybX8r+d7znENVqHUFKL2XGy93VTo1ubgIaBrHUROC
- LCM3OeBCH9SNu/zK5lJ5wFdee6mGszTwtcUkwf+WFVPzzMhlAGYV9tBNje8ZzcHSJ5iI
- gUefVgplxeLPk5/3dHHqYctxYAMd2CnIlRQbSLsqWpJsrAw9a1HvvnSrjsYXJpN5dEVu
- Tl0ckvHIr1vKGyhHpVPcO2/tnr2o07FApUr4n+PEyndS0KQaj9cuNf5A6BXIwJEFnRW0
- Urkg==
+ bh=026+MkGDqz12mXQJte4DznqG5pLwCGi6DGsBZLqInuM=;
+ b=DQGo3DIIyUNgx41g6jkuD9IZDOtCS1DSgzhY8lbQ0xbUqSCWAzUCO32glhXBtnzGyZ
+ 8ab9AxXguMqiImgGNQ0sLSLpReRdrV9/i+YUTGEn07X1RkAvXRKiKxlxsZHQZcroMISW
+ gIDnJfHGLEz8DLryzlCiJb29aE+J0McpEtumvHc38acZqYgqdms8scsEa01k7IOQPhCi
+ 7ezbon1D+ufAc5WPA6GNA5OIbS3oNvZGDlGwBvEol5KZaxADvHpFMmPoPpQBluZjB+9v
+ Lyt0yRLbmMLsw6+opw6BJ2TJ6/OuBi1IgMs74DlenFLyNtz+hXEHiO3hgIiXyibkxO8L
+ GShA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760430235; x=1761035035;
+ d=1e100.net; s=20230601; t=1760430241; x=1761035041;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bYWfU3Ybv8UMfXDoLYIZExvngPG0XH9qkihRnX+Zfvs=;
- b=SxOUlGFAEEjVmaT3XRwkk90kbiHmVxSvY7BqMsyY3CYojM6ai1r1IsPTJOlh8lryvz
- qaYa3TA2xDx3QsRSfTWlqU7wR831ZVBgOvO0W1Uq79y4w2Kw4yMoUWmUU68+fTN8SGJr
- kUiy5WV1qvHNjmwbW0jqybvOYBaGSgE+BpWBD8Y8fjz531y61eKiVcXA0BkHeCBqJuS2
- cxpCU3DD5ND2WDRIHppohtFMxGHGYktbinVYY0hPD692nYr4P2CsHJSZB5cbD8OaNn39
- FT9Bnn/+trqILzvjbjAMbPEYRRbOOK8Apzs8S6QRu/YpH4CHaE+Ce1cI6Xb+gefVaKW0
- Kp1g==
-X-Gm-Message-State: AOJu0Yx7tg8eG/x3rXdML2DRdZSNcwn+++7DczZWagrs6Cc2snM/ylqx
- ytxV3ZwliSIPY5VpIciekM/mgs6W2eRb1vDueGmqa+yMpQfdkRLNfR3+RRXECw5Y/zHN5zLQBhT
- 3fJZ7rnDwcO2qGT0aqQHv5MZlIi369gXmxsmu9u7Nh3VnOXemhuQWpxIFT01+DT7JKwAcUBS468
- hYCKeynpFxwQTdvIQ4gM0J9nU0mXrXcEODk8+D2/di
-X-Gm-Gg: ASbGncuFkqcEJbC3Oy/r2Ek64elA86GtffFWswIx0kfOHQBb8GGlKs7flV7NNbZNEL6
- jLIYpKrikeBgAG7zYLxKBCXMbeWkKrDMQrYY1NwXUSx2gyXy3QrljgnLmNe4IDjtH//g+aOfo42
- QjiIy+AbXjQWfLrDn37zb/DeE+FJT0b+FMFr1I5fRK09jKvhDwDVAcABW+maaEdbZlNoLqQSv9s
- PbzYUyUACs1ZsqXAIOJ2YKqjH+6NOA8EnspmzZWj1MQDjsYaXB8lQgjij6miMAaeG7K/13E/VZA
- lZJm/ooc7oOlUSZ725MA3Ko7j33yBasNk2dWywcunpgJhNZxG+UEmYg1majjcdM8PTxi/1JV+4B
- L0XX0eRwf74qgaYd1yKA+4ivCc5jePLNcEKnKgqO2zmAIW48QhNd5iWmKVVeccxA4JgDD2/MzTr
- ITJ/lq
-X-Google-Smtp-Source: AGHT+IGF7l+YAH2oduE9aCljvJtuOiw+VCE/hUqU/BLwDsTFsvHnvB5Lh11Y5I74xnWIrIckeDFeVQ==
-X-Received: by 2002:a17:903:11c6:b0:264:70e9:dcb1 with SMTP id
- d9443c01a7336-290273a1750mr293434515ad.56.1760430234892; 
- Tue, 14 Oct 2025 01:23:54 -0700 (PDT)
+ bh=026+MkGDqz12mXQJte4DznqG5pLwCGi6DGsBZLqInuM=;
+ b=QhbXplVL7P6FL/1hrufAYPAU1rKhKD4gbVilqNjO+TpSx9Vt+3E2aF5Qx/Ku+jqM3S
+ gTjIfe0nUn9pFwg982gJ0dx8vVKmmAiTZ46DJo7zCgjsa4scAFN0zIs8ekhvhrg5JTd9
+ 24MJpEgHAiE0o2Om1xUj2VUtLnrW9NL3H4o3Rq9F8DHiob0Nr7+nLOgSjqf5DRUicDrR
+ C3yDtDoz6NdNc6t+klsReKi0XRWzQO0NkdraWnWr3TqQIetP0Q3lfDCmY24qwULSk8zl
+ p8T1EB02mLiIcZYQD0oOn+4u3dd8fHlgzrr3mn5f1Ww9YMOpmZt72oiHTdcTsUV7r3tc
+ 3UIw==
+X-Gm-Message-State: AOJu0Yyc7NijqalSWAyc3NFcJwbjfNrku8UaHgFIg4ZW2/HhssziXmGW
+ o6Hy+pvuw9f6raLuO72P0KY3/R7h5J2kuZX2qedwPweoFLHU8Lev5vZsD3SEKbr2h2/6v/gwrOO
+ KFlCPJrx035FFPNPvi+30QeZBZiYr4i7xHryKrONtp8ybeOC60BFgxWfcEAqHQgHlQqOSxc483A
+ TsJK0MHI2LmBsCUaN8GUWd02QmFivJtGxu6deJNdqZ
+X-Gm-Gg: ASbGncso7MBzlwJJ1j1JH4KcMXHIYpahXGTGjiV8W2NKC2WdLtkEBfkfO5n0wWD3mMR
+ 4KPv/PHIV1Dl5rjIw7Gui5yi9TfWc4v822X9EIXFcOQ7HI88nYdDvOE0QDvT4QjYQ03Qp/gbsi+
+ UWDihWEltBbIuEVC11d1TfVACT6FUspoHPGQw8qX58aks4QKOs9MyuOt1BasFN02wQ5jzxe4b+W
+ FlqE6KMN3LQz03g5DTwJV/TKL8FQmMA+SAZ/3tp14DTv85buAGcef6B5Dos6ICi1Vrk7vwo7rEx
+ 84S+QGcfzoWT1FyYTklN92BSIdX5irXdc4UBhPPDifuvawI/YE924xSqzbDGjShaxeJD0vFVq9L
+ ds4GQUV6LQPP6MBPjDIOFb/nNyNgzGAwugJVn0kxFp1u/TrWkPRH5qw6LfMBrbLwEQF2GYKIp78
+ EJIysrS+aOoIvcP/Y=
+X-Google-Smtp-Source: AGHT+IETd5g8Um1+ut15Nb6iztyzEnFiDFYPiBvqdA5TJK1PhnktkYoSA1KGNewUw7rPPmq56H32Aw==
+X-Received: by 2002:a17:902:f64d:b0:24e:3cf2:2453 with SMTP id
+ d9443c01a7336-2902741f7admr293189115ad.61.1760430241375; 
+ Tue, 14 Oct 2025 01:24:01 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.167])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f93e06sm157162815ad.115.2025.10.14.01.23.52
+ d9443c01a7336-29034f93e06sm157162815ad.115.2025.10.14.01.23.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Oct 2025 01:23:54 -0700 (PDT)
+ Tue, 14 Oct 2025 01:24:00 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -77,23 +77,23 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v1 1/2] target/riscv: Make PMP granularity configurable
-Date: Tue, 14 Oct 2025 16:23:37 +0800
-Message-ID: <20251014082338.87618-2-jay.chang@sifive.com>
+Subject: [PATCH v1 2/2] target/riscv: Make PMP CSRs conform to WARL constraints
+Date: Tue, 14 Oct 2025 16:23:38 +0800
+Message-ID: <20251014082338.87618-3-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251014082338.87618-1-jay.chang@sifive.com>
 References: <20251014082338.87618-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=jay.chang@sifive.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=jay.chang@sifive.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,114 +109,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the PMP granularity in qemu always used a minimum
-granularity of 4 bytes, this patch add pmp-granularity to allow
-platforms to configure the value.
+This patch ensure pmpcfg and pmpaddr comply with WARL constraints.
 
-A new CPU parameter pmp-granularity has been introduced to the QEMU
-command line. For example:
+When the PMP granularity is greater than 4 bytes, NA4 mode is not valid
+per the spec and will be silently ignored.
 
-        -cpu rv64, g=true, c=true, pmp=true, pmp-granularity=1024
+According to the spec, changing pmpcfg.A only affects the "read" value
+of pmpaddr. When G > 2 and pmpcfg.A is NAPOT, bits pmpaddr[G-2:0] read
+as all ones. When G > 1 and pmpcfg.A is OFF or TOR, bits pmpaddr[G-1:0]
+read as all zeros. This allows software to read back the correct
+granularity value.
 
-If no specific value is provided, the default value is 4 bytes.
+In addition, when updating the PMP address rule in TOR mode,
+the start and end addresses of the PMP region should be aligned
+to the PMP granularity. (The current SPEC only state in TOR mode
+that bits pmpaddr[G-1:0] do not affect the TOR address-matching logic.)
 
 Signed-off-by: Jay Chang <jay.chang@sifive.com>
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Jim Shu <jim.shu@sifive.com>
 ---
- target/riscv/cpu.c                | 39 +++++++++++++++++++++++++++++++
- target/riscv/cpu.h                |  1 +
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- 3 files changed, 41 insertions(+)
+ target/riscv/pmp.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a877018ab0..73d4280d7c 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1121,6 +1121,7 @@ static void riscv_cpu_init(Object *obj)
-     cpu->cfg.cbop_blocksize = 64;
-     cpu->cfg.cboz_blocksize = 64;
-     cpu->cfg.pmp_regions = 16;
-+    cpu->cfg.pmp_granularity = MIN_RISCV_PMP_GRANULARITY;
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
-     cpu->cfg.max_satp_mode = -1;
- 
-@@ -1606,6 +1607,43 @@ static const PropertyInfo prop_num_pmp_regions = {
-     .set = prop_num_pmp_regions_set,
- };
- 
-+static void prop_pmp_granularity_set(Object *obj, Visitor *v, const char *name,
-+                                     void *opaque, Error **errp)
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 72f1372a49..a15265c8d2 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -108,6 +108,17 @@ static int pmp_is_invalid_smepmp_cfg(CPURISCVState *env, uint8_t val)
+         g_assert_not_reached();
+     }
+ }
++/*
++ * Calculate PMP granularity value 'g'
++ *
++ * The granularity value 'g' is defined as log2(granularity) - 2, where
++ * granularity is the minimum alignment requirement for PMP regions in bytes.
++ */
++static inline int pmp_get_granularity_g(CPURISCVState *env)
 +{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint32_t value;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+
-+    if ((value < MIN_RISCV_PMP_GRANULARITY) && (value & (value - 1))) {
-+        error_setg(errp, "PMP granularity must be a power of 2 and at least %d",
-+                   MIN_RISCV_PMP_GRANULARITY);
-+        return;
-+    }
-+
-+    if (cpu->cfg.pmp_granularity != value && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        return;
-+    }
-+
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.pmp_granularity = value;
++    return __builtin_ctz(riscv_cpu_cfg(env)->pmp_granularity >> 2);
 +}
 +
-+static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
-+                                     void *opaque, Error **errp)
-+{
-+    uint32_t value = RISCV_CPU(obj)->cfg.pmp_granularity;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_pmp_granularity = {
-+    .description = "pmp-granularity",
-+    .get = prop_pmp_granularity_get,
-+    .set = prop_pmp_granularity_set,
-+};
-+
- static int priv_spec_from_str(const char *priv_spec_str)
+ 
+ /*
+  * Count the number of active rules.
+@@ -153,6 +164,15 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "ignoring pmpcfg write - invalid\n");
+         } else {
++            uint8_t a_field = pmp_get_a_field(val);
++            /*
++             * When granularity g >= 1 (i.e., granularity > 4 bytes),
++             * the NA4 (Naturally Aligned 4-byte) mode is not selectable
++             */
++            if ((riscv_cpu_cfg(env)->pmp_granularity >
++                MIN_RISCV_PMP_GRANULARITY) && (a_field == PMP_AMATCH_NA4)) {
++                    return false;
++            }
+             env->pmp_state.pmp[pmp_index].cfg_reg = val;
+             pmp_update_rule_addr(env, pmp_index);
+             return true;
+@@ -199,6 +219,7 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+     target_ulong prev_addr = 0u;
+     hwaddr sa = 0u;
+     hwaddr ea = 0u;
++    int g = pmp_get_granularity_g(env);
+ 
+     if (pmp_index >= 1u) {
+         prev_addr = env->pmp_state.pmp[pmp_index - 1].addr_reg;
+@@ -211,6 +232,11 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+         break;
+ 
+     case PMP_AMATCH_TOR:
++        /* Bits pmpaddr[G-1:0] do not affect the TOR address-matching logic. */
++        if (g >= 1) {
++            prev_addr &= ~((1UL << g) - 1UL);
++            this_addr &= ~((1UL << g) - 1UL);
++        }
+         if (prev_addr >= this_addr) {
+             sa = ea = 0u;
+             break;
+@@ -577,6 +603,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+ 
+ /*
+  * Handle a read from a pmpaddr CSR
++ * Change A field of pmpcfg affects the read value of pmpaddr
+  */
+ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
  {
-     int priv_version = -1;
-@@ -2606,6 +2644,7 @@ static const Property riscv_cpu_properties[] = {
-     {.name = "mmu", .info = &prop_mmu},
-     {.name = "pmp", .info = &prop_pmp},
-     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
-+    {.name = "pmp-granularity", .info = &prop_pmp_granularity},
+@@ -585,6 +612,25 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
  
-     {.name = "priv_spec", .info = &prop_priv_spec},
-     {.name = "vext_spec", .info = &prop_vext_spec},
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2c2266415e..04711f93a2 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -176,6 +176,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- 
- #define MAX_RISCV_PMPS (64)
- #define OLD_MAX_RISCV_PMPS (16)
-+#define MIN_RISCV_PMP_GRANULARITY 4
- 
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index e2d116f0df..a154ecdc79 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -166,6 +166,7 @@ TYPED_FIELD(uint16_t, cbom_blocksize, 0)
- TYPED_FIELD(uint16_t, cbop_blocksize, 0)
- TYPED_FIELD(uint16_t, cboz_blocksize, 0)
- TYPED_FIELD(uint8_t,  pmp_regions, 0)
-+TYPED_FIELD(uint32_t, pmp_granularity, 0)
- 
- TYPED_FIELD(int8_t, max_satp_mode, -1)
- 
+     if (addr_index < pmp_regions) {
+         val = env->pmp_state.pmp[addr_index].addr_reg;
++        int g = pmp_get_granularity_g(env);
++        switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg_reg)) {
++        case PMP_AMATCH_OFF:
++            /* fallthrough */
++        case PMP_AMATCH_TOR:
++            /* Bit [g-1:0] read all zero */
++            if (g >= 1 && g < TARGET_LONG_BITS) {
++                val &= ~((1UL << g) - 1UL);
++            }
++            break;
++        case PMP_AMATCH_NAPOT:
++            /* Bit [g-2:0] read all one */
++            if (g >= 2 && g < TARGET_LONG_BITS) {
++                val |= ((1UL << (g - 1)) - 1UL);
++            }
++            break;
++        default:
++            break;
++        }
+         trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
+     } else {
+         qemu_log_mask(LOG_GUEST_ERROR,
 -- 
 2.48.1
 
