@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3139CCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD19CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 15:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8gRc-0003fE-Jo; Tue, 14 Oct 2025 10:56:08 -0400
+	id 1v8gVp-0005GG-8j; Tue, 14 Oct 2025 11:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8gRa-0003es-4N
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:56:06 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8gVb-0005FT-Vy
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 11:00:16 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8gRX-0003Oy-MC
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:56:05 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-780fc3b181aso3235771b3a.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 07:56:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8gVX-0004B8-De
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 11:00:15 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-63b710f276fso5630607d50.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 08:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760453762; x=1761058562; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jEUu8iAjg0qFf7fVbccEIesXFK7DU9RWuhhi3V2lIJk=;
- b=hv3k1rCak8S7/aZLiNlFN5JZH8m8U9fptVSaZbSSxtQmxwAkNaRX2TPv0tc7PXtGFX
- AExKBBTglXbzDgEtIPtGYGXDHOMtyoRx0gpzBvvDbQsHsEe08/9B7zXiRKoE/okBFque
- Oopkicm7WuJg0qmW/67s8CGVipNt7XoahYa5zqmz7cS1QnbqAR2tYnOrY0qvK1aYd5So
- mNZk/aKgUkVa6Pjs1bvINXTihX63q0nfa0l6miaOY71/ZqqymcSDtNCysBNdI2zp/GyP
- W7UHaK9fvTLC6oIUwVvyBPuVTRHrBukyhWh7ut4wvd94ne+nCL41RjXqYU3ciTU2Ln3Q
- SZBQ==
+ d=linaro.org; s=google; t=1760454007; x=1761058807; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EXdtC+RoVqzJ6jxvALg4/2uKoqvuJlAPbcy64ykvg5U=;
+ b=qXAdnNKT7HPpyZ736SLLGUKDIGfKIn/+vAg4GNLir4EQSCPyNQVlSRZTplO6Tt8gSE
+ O0GTxa8aTsXtsL1JoDJu8XzqgFixwQc9qdm+wqaM6kazsBXVKqCAhIwweHeo9CBnGY68
+ F8rC6oIaS5ACFQEL+sTyBR+E0oTmyP2tlOTpvDKrLba4pNF+UU4dt/WfFbOZeyuQK6vz
+ QfsYqpv4e75JBMOKdSZ7CePUbcplxeQpURvLM1lVm1PHPtZCeWpxvk+/AaHmj+mXTDGS
+ ymvbR/6TQmq+i4QXAP7syGEyltHwL40Xl/KBVk6T0++/WJGyWAHL+DXf/qkRrysByawr
+ SZDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760453762; x=1761058562;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jEUu8iAjg0qFf7fVbccEIesXFK7DU9RWuhhi3V2lIJk=;
- b=hTiLKxl9zTsfQmIKFzG0/Ea05ynpE6owxyJ/Izt+My+lAatPK4GqqA7rTHNAmQG9ki
- ezB9KgW6P+3tDOVcO3m4Yg/CPX68lmgtN4Vv0VdBQUKqwsaEjpIHGH+mCo8mteJZA4y6
- A14V38pgaAjTTZppIlebQQHJQLdPjtuVqIClf9mqUHeQ34NFvtPbJMBeE9vGEgALLu15
- qXRLeFbt22RXy4YBMA/+b00V0i1v7NdMnOSisVo+zdpdZe0vwAQd9kOSx29mXlurUIIZ
- JznZ01DdgAsqKzLxwybsd0kcZlu6VxbNRuslg/Su1zC8+Is7r2e/Zr0ztrXk5dh6Fu7N
- qxSw==
-X-Gm-Message-State: AOJu0Yz4sP6zGwOcfeAqwhtT09yvw8TtT7appBmxuK+aJVcbptf3l0OC
- J3bkHGqlLAvdIFWbHgKUEhyNnWkuV6SHrY+fM2x7gY7NIyPuJCGHz1KCxrs54yu6o3EeU5nWjQw
- CliaZ0/4=
-X-Gm-Gg: ASbGnctQ3MKV2jPNzlwK0gUa0ZUzHgnHZRxVBxcSgvG+Iu8U5yMVZb8K5E8TwXgEIVI
- XDoN95IqkTYiAvjI/TYCyvmUvuoHNWJcf4f1otQHvWJPTWqppES0c6NMuwtY+b+8dCsUNhHD8Gj
- ppJ1jISwqPYR5wwlSAxFZ6d1LeXYiy4WvMNOX4FCUE2Ud1mOy7mnRZt6NTZFi8OLsl3Gy5bhzdH
- NN2mNhL3f7StlY1XKXLRzMnuqjlqTeXADgP+8yFVXb6ZcvnzUZY5cwpXcgjOIcj9RpmDAjszGNM
- yg+VGL3cBDhBm5ylsKD1CYPAEonU+j406V72aqXwWSAqICpllXYqOAjo8fziHV1758rYzj4mCbD
- gBsa4BY0TUsAt1coPX/Tm7ArIxADVJrSQEMdSDRh16d8upUREluhQckyT7rAEx2kVhUUpSA==
-X-Google-Smtp-Source: AGHT+IGp3Ip4eidSuWz0CvgR9okMkzMBpjOQcOHBfdCe4kdEG9n53q/CpFxh9qaLrRt/zM5IAILH0g==
-X-Received: by 2002:a05:6a21:3393:b0:32b:83ae:567d with SMTP id
- adf61e73a8af0-32da812f3b3mr31392370637.21.1760453761419; 
- Tue, 14 Oct 2025 07:56:01 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7992d0e2c6csm15299585b3a.57.2025.10.14.07.56.00
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Oct 2025 07:56:01 -0700 (PDT)
-Message-ID: <7060e943-3aa4-42a3-9f94-6250c9821ae2@linaro.org>
-Date: Tue, 14 Oct 2025 07:55:59 -0700
+ d=1e100.net; s=20230601; t=1760454007; x=1761058807;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EXdtC+RoVqzJ6jxvALg4/2uKoqvuJlAPbcy64ykvg5U=;
+ b=iE2mZBpy6jURijGKWTaMNtiKpoxkcdkxEZ3WU7MJCo/RY0CnUW47mfh1OBNrbCF88r
+ 79KFNV/P34yhiDiMYxhpxbneVPD26pOyipqyVo7J0e88far6ufyO7VwuHsmm+TAlNvvA
+ Lz47Vnim0TPZfDG0DhpmcPs5qUxG/93AgUO8bOmWp2NSx41QiubyAVrLiYS387MYcvlp
+ nrawoMziH9RZCVAZhiw86f1h8LArU4kyvPut4UIBF6eQZA+gAYKXueF24W0d5XaZn8x2
+ EXadjMD47U9nwM9ptd4emgRhvvUy0lZ3nRkqsZWjR487yw6NlPqpEyFQdvlfB3St6PUw
+ rNfg==
+X-Gm-Message-State: AOJu0Ywlc8PnZ00l+S3kFwFxp9ru83pOhnLijcWHog7HIuR/KrKpoMbA
+ Uhj5MX3SiY2xtkqVnryc6Jjf8hrBGOHUxJOfVqUyRDeMrmMEdtaWMvSLBI+Khu6AqB8odhqoqcz
+ QqEYxP85BGSGYRg5gEJ6IxIuWWU4RHxnc4V7THVKXGA==
+X-Gm-Gg: ASbGncvLSGQdHw9X98OFO1hxkToWlRE+gJz15mRxcB+8GFE7mRp/0XfjFvghJ9z02TM
+ eWF3lC0GFLg/DdkH2CPROg14zEck74/1w7QhtmQE2/tbVFONs1jNPwoHfofOS+PTaLIhX7zCM+W
+ 83akNroHMWJ3NupliFYReVrGcAuNvVGeK6lZTqW922QUhcxFQjaI3wXa9V0iHquh+nmQ3cYuB06
+ RFVbZrfVgNfQpDW/glLmjM/7PYW1QVTpvlRKbRAbw==
+X-Google-Smtp-Source: AGHT+IGOiTb1+nKX3ewnngbdy2ro26GRL3gH9UHygOyv8vLClLz4UTW/XFdoZVw+hZSAb3nBHdFUiCcciE9TdeNYzDg=
+X-Received: by 2002:a05:690e:483:b0:633:c0f9:705c with SMTP id
+ 956f58d0204a3-63ccb8e0f2bmr17151955d50.24.1760454006783; Tue, 14 Oct 2025
+ 08:00:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Fix reads of CNTFRQ_EL0 in linux-user mode
-To: qemu-devel@nongnu.org
-References: <20251013161040.216819-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251013161040.216819-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+References: <20251014102439.319915-1-peter.maydell@linaro.org>
+ <261d6938fc894b1ca0979aef30fb9e1c@huawei.com>
+ <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
+ <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
+ <b3f9f1d44d8d4a779dcaae2497b8b71b@huawei.com>
+ <CAFEAcA804drHGyTG73bXkqSMgXvKGGaLWvm6QS85FhD+dXDqjw@mail.gmail.com>
+ <cb5c762bd24d4cd69aea415d4bc10051@huawei.com>
+ <CAFEAcA-g18R03vqpqXr0boOccDqhNP0J7Gx8nZOxUrbQh13pog@mail.gmail.com>
+ <599ea0ba89314d28af8b3ae7b590d1a9@huawei.com>
+In-Reply-To: <599ea0ba89314d28af8b3ae7b590d1a9@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 14 Oct 2025 15:59:55 +0100
+X-Gm-Features: AS18NWBaS0H5ukysZElQa47-py_dztF4XooGgnjUICZXI55S-TQhwa8UM44LqHw
+Message-ID: <CAFEAcA8-QGBGqjw3Eefx_yyz_30azn9Trz-OGSxq7v4N=X+26Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/13/25 09:10, Peter Maydell wrote:
-> In commit bd8e9ddf6f6 ("target/arm: Refactor default generic timer
-> frequency handling") we changed how we initialized the generic timer
-> frequency as reported in the CNTFRQ_EL0 register.  As part of that,
-> we chanegd the linux-user version of the CNTFRQ_EL0 sysreg from
-> having a constant value set at compile time through the .resetvalue
-> field to having a reset value which we compute in a .resetfn.
-> 
-> This accidentally broke the reading of CNTFRQ_EL0 in linux-user mode,
-> because the cpreg is marked as ARM_CP_CONST, which means we translate
-> it as a read of the compile-time constant value in the .resetvalue
-> field.  This is now zero, so userspace sees a 0 frequency value.
-> 
-> Fix the bug by dropping the ARM_CP_CONST marking.  This will cause us
-> to translate the read as a load of the value from the CPU state
-> struct cp15.c14_cntfrq field, which is where the real frequency value
-> now lives.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3159
-> Fixes: bd8e9ddf6f6 ("target/arm: Refactor default generic timer frequency handling")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 167f2909b3f..1e1c0e41415 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -2306,7 +2306,7 @@ static uint64_t gt_virt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
->   static const ARMCPRegInfo generic_timer_cp_reginfo[] = {
->       { .name = "CNTFRQ_EL0", .state = ARM_CP_STATE_AA64,
->         .opc0 = 3, .opc1 = 3, .crn = 14, .crm = 0, .opc2 = 0,
-> -      .type = ARM_CP_CONST, .access = PL0_R /* no PL1_RW in linux-user */,
-> +      .access = PL0_R /* no PL1_RW in linux-user */,
->         .fieldoffset = offsetof(CPUARMState, cp15.c14_cntfrq),
->         .resetfn = arm_gt_cntfrq_reset,
->       },
+On Tue, 14 Oct 2025 at 15:48, Salil Mehta <salil.mehta@huawei.com> wrote:
+>
+> Hi Peter,
+>
+> > From: Peter Maydell <peter.maydell@linaro.org>
+> > Sent: Tuesday, October 14, 2025 3:29 PM
+> > To: Salil Mehta <salil.mehta@huawei.com>
+> >
+> > On Tue, 14 Oct 2025 at 15:22, Salil Mehta <salil.mehta@huawei.com> wrote:
+> > >
+> > > Hi Peter,
+> > >
+> > > > From: Peter Maydell <peter.maydell@linaro.org>
+> > > > Sent: Tuesday, October 14, 2025 2:50 PM
+> > > > To: Salil Mehta <salil.mehta@huawei.com>
+> > > >
+> > > > On Tue, 14 Oct 2025 at 14:41, Salil Mehta <salil.mehta@huawei.com>
+> > wrote:
+> > > > > I thought you asked me to validate the fix by replacing below:
+> > > > >
+> > > > > https://lore.kernel.org/qemu-devel/20251001010127.3092631-22-salil
+> > > > > .meh
+> > > > > ta@opnsrc.net/
+> > > > >
+> > > > >
+> > > > > Yes, I'm using the recent RFC V6 vCPU Hotplug patches branch I've
+> > > > > pushed to the community.
+> > > > >
+> > > > > https://lore.kernel.org/qemu-devel/20251001010127.3092631-1-salil.
+> > > > > meht
+> > > > > a@opnsrc.net/
+> > > >
+> > > > That's the one with the "lazy realize" hack, right? I imagine what's
+> > > > happening is that we realize the GIC, and the code in this patch
+> > > > assumes that all the CPUs are already realized at that point. When
+> > > > we try to get the register value for a not-yet-realized CPU the kernel
+> > complains.
+> > >
+> > >
+> > > Even if we realize all of the vCPUs the problem will not go away. This
+> > > problem is happening because we have recently started to Exit Hypercalls
+> > to userspace.
+> > > This means we are now accessing the system register in a non-atomic
+> > context.
+> >
+> > The point of this patch is that it moves the read of ICC_CTLR_EL1 out of the
+> > reset path and into the GIC realize method, at which point no vCPUs should
+> > have started running. But it does assume that you don't have half-created
+> > VCPUs connected to the GIC.
+>
+>
+> This Is not true. Actually, inner cpu_exec() (in kvm-all..c)  loop keeps on dipping
+> into the KVM_RUN IOCTL and exiting back with INTR continuously as the realized
+> vCPUs are in RUNNABLE state initially. The actual "start-powered-off" policy only
+> gets applied after first system-reset happens.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+In what situation do we ever start running a VCPU before
+the *GIC* has been realized? The GIC should get realized
+as part of creating the virt board, which must complete
+before we do anything like running a vcpu.
 
-r~
+> > > The observation you are seeing has got nothing to do with lazy realization.
+> > > The problem happens even after threads are realized and then we try to
+> > > access the ICC_CTLR_EL1 register during cpu_reset()
+> >
+> > With this patch, we should not be accessing ICC_CTLR_EL1 during CPU reset.
+> > The backtrace you posted does not have CPU reset in it, so whatever is going
+> > wrong there must be something else.
+>
+> Yes, but its crashing in the realization of the GIC i.e. in context of machvirt_init()
+> First reset of the vCPUs happens much later than this. Hence, the reason of this
+> contention is different than the one you are trying to solve using this patch.
+
+Yes, and my suggestion is that the failure you are seeing is only
+because you have got half-created vcpu objects. Your backtrace
+shows that the error here is not EBUSY, but ENOTTY.
+
+-- PMM
 
