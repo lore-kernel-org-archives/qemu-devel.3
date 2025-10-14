@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69CECCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5EF0CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8fEJ-0005qr-4b; Tue, 14 Oct 2025 09:38:19 -0400
+	id 1v8fEw-0006Sy-F0; Tue, 14 Oct 2025 09:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fE6-0005Y1-Jj
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v8fEW-0005yo-TZ
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fE0-000151-DE
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:06 -0400
+ id 1v8fEP-00017p-Ux
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760449077;
+ s=mimecast20190719; t=1760449103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PuR7JKiNJ5s528urmAgX4g6HhfGe6vzMJkniXLSA/FU=;
- b=XOOEhVAeEvlCgZv0BZi7Bq3suxOXZtPNCEV0ZdcmX1gaDFutW/vzHUCQ9kmFedwvr9mzLN
- TP8BWNqpZL0OWzRFPdwq6dtA5g27gR5lT+Q4wv6hgxjT6s+5ZyxgGUt7if9g1tjM3Hsmpl
- XsPuLKvGgx6WB4Ejz7gdPf2lqb4Mtj8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XEG6T/J+GXYTGRUDDa6Uq81qUc1bn8Yy9qgoJUqKqdY=;
+ b=N6fZQ6UoCB140bSOQNnO2HIZN9n8SHgdikazEf3R07KWUzq1NPELwum4weU3w1Gl2XxIqz
+ qJf+xDLPtxujb9JmrOVdkF4/I6X1icR02GDicun1ZNrYjEEO3aAI6FcklDbR7eGWVSsEHA
+ rYrqwtD4bka+4Wd9nYuEdLFwUAAt31I=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-nCe0YvFfPJiOyprMBpRSpg-1; Tue, 14 Oct 2025 09:37:56 -0400
-X-MC-Unique: nCe0YvFfPJiOyprMBpRSpg-1
-X-Mimecast-MFC-AGG-ID: nCe0YvFfPJiOyprMBpRSpg_1760449074
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e38957979so29727275e9.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:37:55 -0700 (PDT)
+ us-mta-81-fLVKrTtqPQigEHydnBO77g-1; Tue, 14 Oct 2025 09:38:21 -0400
+X-MC-Unique: fLVKrTtqPQigEHydnBO77g-1
+X-Mimecast-MFC-AGG-ID: fLVKrTtqPQigEHydnBO77g_1760449101
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-426ce339084so3990461f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:38:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760449073; x=1761053873;
+ d=1e100.net; s=20230601; t=1760449100; x=1761053900;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PuR7JKiNJ5s528urmAgX4g6HhfGe6vzMJkniXLSA/FU=;
- b=ANIpRJJsukRGE2UJLlzT84Ck+9UPuUnPWvm3UN2lWUYCLBKu0mTr+gO01L1J0vMK9G
- IKozz1QuWyHwzKxvS8a57tuPrHCAzJjMpNgSrpbkEMlPtjQywUtO70s6P40dMfXXRv+v
- GSK+JgRH8oHViYYdtuhLeByWL2eRsBmCd8I5l/Pi2n0sL3kmpQ4wbhfn/NkGjFSBsvKW
- J5RK0SqFbq2q14psjIwpI+wNAoYf4mZfr/RnvmrkLlDivIMI4Dz9EWrBIcKnIV5oklIg
- jhraTbEnlEDHHgLsdG3U0kn/zghaXkJsR3Tk+ssjYEquTUmkjsdlIOi2kpzf7DrubydB
- 2FAQ==
-X-Gm-Message-State: AOJu0YyxUnWlvssPGbQbBsxXDDDKgziBHq6e0vHVrYX6cIikuV13Bcs/
- PNIziJopxQZJxGNO+Q4s6WEOuwE6yjr9XnAjx1AApaKdWZiEa2sosF9BGHNdPpoeckKPH9u9zib
- v+YLiW0/Imn7+XIQfqqORFOvUF6DBwRqTQDaAeGuTdsn8ifZaaaAeigOx6k9uq2l0wjb3xbGJKP
- V/vGFCQK4fLeCNRNoTeI+pHEMiU61AoS5ZcRk9YuAC
-X-Gm-Gg: ASbGncuF/CqBFVdlm1rk8zGI4ooVIokqfkgTVmYfHwMg3+prUDWBxS7JnBzBkl48gLW
- 7G58Sb4r+w/vE/gKZymtQSKY6Evvo1dgVEw5D3K/1S4ZOh0GsXuLUjWvBXBWSKPT4J+g/AiKRMQ
- 9L1iKK2xvUA/JUambkyZ4H13M89KhM/S966klyWMfiQQbnSe94LESungU1cvVMJi/ZS7FvWVpZx
- 0nuIzq5IjqMz0AKUJiJuffQpBrgZZbt+bKfXN6xpsNIice8Wt4/cPih7SAhqpVi04vjKPC803tk
- XF0ERbL0kTl69zT2Xu1CvWY7bzuZ6f1j9vsWRfIoatY1cDu60KM8OsSwTwosnhZg6fjaMkcu0at
- +8JvckbPwQ6+0qIeuCavyTcfMGHKTPudmTwe3GwohetE=
-X-Received: by 2002:a05:600d:42f2:b0:46e:4341:7302 with SMTP id
- 5b1f17b1804b1-46fb15396d6mr120879455e9.34.1760449073192; 
- Tue, 14 Oct 2025 06:37:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH50wa3Ls8wNEDNx3XBTk9SAL/tgppq/FP1cP7gsNmob0qLIM10/LrZ+4w1UKdT+/LbZtAuLQ==
-X-Received: by 2002:a05:600d:42f2:b0:46e:4341:7302 with SMTP id
- 5b1f17b1804b1-46fb15396d6mr120879245e9.34.1760449072779; 
- Tue, 14 Oct 2025 06:37:52 -0700 (PDT)
+ bh=XEG6T/J+GXYTGRUDDa6Uq81qUc1bn8Yy9qgoJUqKqdY=;
+ b=IymsIWQ8skL3F343935hXtSHr9UkgpIJb6Q+LvzwEj+S9uDQOM5DzoGkz0SKbO1B46
+ x2OSrXKiTnSAR7VMz9P26qTaqKHYSL+Q5eTT7WPVEfRNifbNJTBNTmST51B3StEwOQ0I
+ RPzmCfU2toCiTQOrfSqrlh8WX3P39k4EmKtwpivqZOi9cP6vIEm3plbYAKq4bAJeEtzH
+ 72B1iNVThCGFMSTipULwbqXwJn6XytMukmLYXHdgIxVATvfFAs8nhujQ47aiNn7FY9d9
+ V4Cn3UZCWdyOVug8t4Gd20mHU9hcvcDZvu4n4iAf7OpcJzmqUDpwlwYX36BhOTpGntNF
+ 2kLQ==
+X-Gm-Message-State: AOJu0YxR3EskeIL3NnaFrwXWnuzFoUYzI00CZuUkYPkxT+wNr/G0RWIb
+ 9RkgF/ooTiI1lFQiBh5+7btDX/3oSqVAEe/xSUzZJYpwPXpx3HEl+JHtprzUrZXmKqbiQI6FTdD
+ AhkRaZAJDsqCtTig9YfwznmScOAwtqqCsOj1pKR+u5OBlPMCyKwwUTkY2kycRBb221DvMCW79+2
+ ssuoFkmKzit0ugOYl8kiqfRVK/X0me4ZhFdlgEcQgx
+X-Gm-Gg: ASbGnctxuEaJ6OYW2c6TWDypWHYe9p/R+yH58BppapaQgK2eWFmEANkOKeLni3s69B+
+ KUgz2jg21Ki7oGAyL8vXUJBcsR3Gm0+aYP5MOWBZp9hLWpjrKeR1rsOtMwil8Y4YGUCF8s7M6bO
+ nLx4iUqRE7uTBk+TN5XgNs1KOLLM5nPFMKAjFLExPX3OejqqCLOyqELi61nvX6zMP1A3M5STYLN
+ lgtbD8AsKWdByWExPitA5D0ErKSvTyWhdsSSRsCWwcKalERThu9znDBBnaMbnMDJvqB9OtfTPtq
+ NWzfqTuR0Q0Qlq7SLADRcofHVxZnN7PLi4dJX0dxPbdT9lF94gve+yjeBxAx0CjtNxQlD4RA6jx
+ 1A8+rdIqQLJ+nSLP4ekDu0ul8KCsAN/fmxwOlSlb/yvY=
+X-Received: by 2002:a05:6000:2906:b0:3eb:c276:a347 with SMTP id
+ ffacd0b85a97d-42666a9700fmr14230901f8f.0.1760449099645; 
+ Tue, 14 Oct 2025 06:38:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTr4/jOIqoVUg6CIZOSz1yoksWQovr0g4YZjumlQG5UIWUrzcM99ZEu+9ytfXFqlAVh6Yw1A==
+X-Received: by 2002:a05:6000:2906:b0:3eb:c276:a347 with SMTP id
+ ffacd0b85a97d-42666a9700fmr14230879f8f.0.1760449099090; 
+ Tue, 14 Oct 2025 06:38:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce57d404sm23974497f8f.3.2025.10.14.06.37.51
+ ffacd0b85a97d-426f2f72e18sm2451882f8f.0.2025.10.14.06.38.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 06:37:51 -0700 (PDT)
+ Tue, 14 Oct 2025 06:38:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 15/28] monitor: clarify "info accel" help message
-Date: Tue, 14 Oct 2025 15:37:00 +0200
-Message-ID: <20251014133713.1103695-15-pbonzini@redhat.com>
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 23/28] rust: migration: extract vmstate_fields_ref
+Date: Tue, 14 Oct 2025 15:37:08 +0200
+Message-ID: <20251014133713.1103695-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014133540.1103268-1-pbonzini@redhat.com>
 References: <20251014133540.1103268-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,34 +110,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for adding "info accelerators", explain that this command
-is about runtime statistics.
+This is useful when building a VMState for generic structs, because you have
+to avoid nested statics.  Using vmstate_fields! will fail in the likely case
+where the _FIELDS static uses Self from an outer item, because that is
+forbidden.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+The separate macros are needed because you cannot just do
+
+                 .fields(vmstate_fields_ref! {
+                      vmstate_of!(PL011State, clock),
+                 })
+
+The value returned by vmstate_fields_ref! is not promoted to static, which is
+unfortunate but intentional (https://github.com/rust-lang/rust/issues/60502):
+
+error[E0716]: temporary value dropped while borrowed
+   --> rust/hw/char/pl011/libpl011.rlib.p/structured/device.rs:743:17
+    |
+738 | /      VMStateDescriptionBuilder::<PL011State>::new()
+739 | |          .name(c"pl011/clock")
+740 | |          .version_id(1)
+741 | |          .minimum_version_id(1)
+742 | |          .needed(&PL011State::clock_needed)
+743 | |          .fields(vmstate_fields_ref! {
+    | | _________________^
+744 | ||              vmstate_of!(PL011State, clock),
+745 | ||         })
+    | ||_________^- argument requires that borrow lasts for `'static`
+    |  |_________|
+    |            creates a temporary value which is freed while still in use
+746 |            .build();
+    |                   - temporary value is freed at the end of this statement
+
+Thus it is necessary to use the "static", whether explicitly or hidden by
+vmstate_fields.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hmp-commands-info.hx | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/migration/src/vmstate.rs | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index eaaa880c1b3..c2aa40056bb 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -271,12 +271,12 @@ ERST
-         .name       = "accel",
-         .args_type  = "",
-         .params     = "",
--        .help       = "show accelerator info",
-+        .help       = "show accelerator statistics",
-     },
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 6b0f96c4da8..59e665f6c3a 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -412,19 +412,30 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
+     }};
+ }
  
- SRST
-   ``info accel``
--    Show accelerator info.
-+    Show accelerator statistics.
- ERST
- 
- SRST
++/// Add a terminator to the fields in the arguments, and return
++/// a reference to the resulting array of values.
++#[macro_export]
++macro_rules! vmstate_fields_ref {
++    ($($field:expr),*$(,)*) => {
++        &[
++            $($field),*,
++            $crate::bindings::VMStateField {
++                flags: $crate::bindings::VMStateFlags::VMS_END,
++                ..::common::zeroable::Zeroable::ZERO
++            }
++        ]
++    }
++}
++
+ /// Helper macro to declare a list of
+ /// ([`VMStateField`](`crate::bindings::VMStateField`)) into a static and return
+ /// a pointer to the array of values it created.
+ #[macro_export]
+ macro_rules! vmstate_fields {
+     ($($field:expr),*$(,)*) => {{
+-        static _FIELDS: &[$crate::bindings::VMStateField] = &[
++        static _FIELDS: &[$crate::bindings::VMStateField] = $crate::vmstate_fields_ref!(
+             $($field),*,
+-            $crate::bindings::VMStateField {
+-                flags: $crate::bindings::VMStateFlags::VMS_END,
+-                ..::common::zeroable::Zeroable::ZERO
+-            }
+-        ];
++        );
+         _FIELDS
+     }}
+ }
 -- 
 2.51.0
 
