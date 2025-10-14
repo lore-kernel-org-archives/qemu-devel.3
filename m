@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6363CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B55DCCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8lhl-0000qM-Hy; Tue, 14 Oct 2025 16:33:09 -0400
+	id 1v8lis-0001OG-3w; Tue, 14 Oct 2025 16:34:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhg-0000oC-KI
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:04 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8liq-0001Na-4i
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:34:16 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhY-0000Pb-Ka
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:04 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lih-0000YK-EU
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:34:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=nWJ5GmAlqkTRFlYLntDLAfOkhxKK8h9UaWBSF0uCw8g=; b=BSB8G8CGZ8tciG5
- F1mk94oGKlkv3x29DeJZwU5Q64PRu8hIx4HyULg2zJ1jYF8PexbkCo+ca+Z6dWS74fKpIURY31IAu
- wmMaLlPf/yESxzIIvcItoPvJW6qUW913sPg4ak9jjRPsvWI+JgIHLYwJzXdAQxv5weHXjeV/IaZC2
- Mc=;
+ List-Help; bh=lC2jGNrhLAvyuYMCT1r/zgn1IyRpsTkm9KLh05/eFiw=; b=DbE8WwWeOM3C9o3
+ /idK/b1IygXZxA42FV7O/1z37f2Nt1fJkncScbftMaA9FTkYNUctxo4pJ9Vc8V0rZsuU+AsKDjskO
+ VtoS/Htni1f6N+eoptwxNVkh9mwXnZm2tBp3QryezPpHfTJY82kcaa766gW1sz9yGHghxsoiqsUKn
+ 8w=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [PATCH v3 04/34] target/riscv: Bugfix
- riscv_pmu_ctr_get_fixed_counters_val()
-Date: Tue, 14 Oct 2025 22:34:41 +0200
-Message-ID: <20251014203512.26282-5-anjo@rev.ng>
+Subject: [PATCH v3 33/34] target/riscv: Introduce externally facing CSR access
+ functions
+Date: Tue, 14 Oct 2025 22:35:10 +0200
+Message-ID: <20251014203512.26282-34-anjo@rev.ng>
 In-Reply-To: <20251014203512.26282-1-anjo@rev.ng>
 References: <20251014203512.26282-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -65,91 +65,134 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From my understanding the upper_half argument only indicates whether the
-upper or lower 32 bits should be returned, and upper_half will only ever
-be set when MXLEN == 32.  However, the function also uses upper_half to
-determine whether the inhibit flags are located in mcyclecfgh or
-mcyclecfg, but this misses the case where MXLEN == 32, upper_half == false
-for TARGET_RISCV32 where we would also need to read the upper half field.
-
-Minor simplifications are also made along with some formatting fixes.
+Convert riscv_csr_[read|write]() into target_ulong angnostic CSR access
+functions that can be safely used from outside of target/ without
+knowledge of the target register size.  Replace the 4 existing CSR
+accesses in hw/ and linux-user/.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
-NOTE: I've not included any reviewed-bys or modified this patch as it's
-still unclear to me whether this change is correct or not.  Alistair
-mentioned that this can get called for MXLEN == 32 and upper_half ==
-false, meaning the lower field would be accessed.  I'm sure I'm missing
-something but this is still not clear to me, it seems to me like we
-always want to access the upper half for MXLEN == 32 since that's were
-the inhibit flags are stored.
----
- target/riscv/csr.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ target/riscv/cpu.h        |  7 ++++++-
+ target/riscv/csr.h        | 13 -------------
+ hw/riscv/riscv_hart.c     |  7 +++----
+ linux-user/riscv/signal.c |  5 +++--
+ target/riscv/csr.c        | 17 +++++++++++++++++
+ 5 files changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5c91658c3d..657179a983 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -17,6 +17,7 @@
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index a83930a85f..4b039ff92b 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -858,7 +858,12 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+ RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env);
+ uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
  
-+#include "cpu_bits.h"
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qemu/timer.h"
-@@ -1243,18 +1244,21 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-     int inst = riscv_pmu_ctr_monitor_instructions(env, counter_idx);
-     uint64_t *counter_arr_virt = env->pmu_fixed_ctrs[inst].counter_virt;
-     uint64_t *counter_arr = env->pmu_fixed_ctrs[inst].counter;
--    target_ulong result = 0;
-     uint64_t curr_val = 0;
-     uint64_t cfg_val = 0;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
+-#include "csr.h"
++/*
++ * Externally facing CSR access functions, wrappers around riscv_csr*().
++ */
 +
-+    /* Ensure upper_half is only set for MXL_RV32 */
-+    g_assert(rv32 || !upper_half);
++int riscv_csr_write_i64(CPURISCVState *env, int csrno, uint64_t val);
++int riscv_csr_read_i64(CPURISCVState *env, int csrn, uint64_t *res);
  
-     if (counter_idx == 0) {
--        cfg_val = upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
-+        cfg_val = rv32 ? ((uint64_t)env->mcyclecfgh << 32) :
-                   env->mcyclecfg;
-     } else if (counter_idx == 2) {
--        cfg_val = upper_half ? ((uint64_t)env->minstretcfgh << 32) :
-+        cfg_val = rv32 ? ((uint64_t)env->minstretcfgh << 32) :
-                   env->minstretcfg;
-     } else {
--        cfg_val = upper_half ?
-+        cfg_val = rv32 ?
-                   ((uint64_t)env->mhpmeventh_val[counter_idx] << 32) :
-                   env->mhpmevent_val[counter_idx];
-         cfg_val &= MHPMEVENT_FILTER_MASK;
-@@ -1262,7 +1266,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+ /*
+  * The event id are encoded based on the encoding specified in the
+diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+index 5b92f6fecc..552e6c5de5 100644
+--- a/target/riscv/csr.h
++++ b/target/riscv/csr.h
+@@ -23,19 +23,6 @@ RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
+                                  target_ulong new_value,
+                                  target_ulong write_mask);
  
-     if (!cfg_val) {
-         if (icount_enabled()) {
--                curr_val = inst ? icount_get_raw() : icount_get();
-+            curr_val = inst ? icount_get_raw() : icount_get();
-         } else {
-             curr_val = cpu_get_host_ticks();
-         }
-@@ -1294,13 +1298,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+-static inline void riscv_csr_write(CPURISCVState *env, int csrno,
+-                                   target_ulong val)
+-{
+-    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
+-}
+-
+-static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
+-{
+-    target_ulong val = 0;
+-    riscv_csrr(env, csrno, &val);
+-    return val;
+-}
+-
+ typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
+                                                  int csrno);
+ typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index 7f2676008c..c7e98a4308 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -67,12 +67,11 @@ static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
+     RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
+     CPURISCVState *env = &cpu->env;
+ 
+-    int ret = RISCV_EXCP_NONE;
++    RISCVException ret = RISCV_EXCP_NONE;
+     if (strcmp(cmd, "get_csr") == 0) {
+-        ret = riscv_csrr(env, csrno, (target_ulong *)val);
++        ret = riscv_csr_read_i64(env, csrno, val);
+     } else if (strcmp(cmd, "set_csr") == 0) {
+-        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
+-                          MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
++        ret = riscv_csr_write_i64(env, csrno, *val);
      }
  
- done:
--    if (riscv_cpu_mxl(env) == MXL_RV32) {
--        result = upper_half ? curr_val >> 32 : curr_val;
--    } else {
--        result = curr_val;
--    }
--
--    return result;
-+    return upper_half ? curr_val >> 32 : curr_val;
+     g_assert(ret == RISCV_EXCP_NONE);
+diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
+index 358fa1d82d..9d5ba300e4 100644
+--- a/linux-user/riscv/signal.c
++++ b/linux-user/riscv/signal.c
+@@ -90,7 +90,8 @@ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
+         __put_user(env->fpr[i], &sc->fpr[i]);
+     }
+ 
+-    uint32_t fcsr = riscv_csr_read(env, CSR_FCSR);
++    uint64_t fcsr;
++    riscv_csr_read_i64(env, CSR_FCSR, &fcsr);
+     __put_user(fcsr, &sc->fcsr);
  }
  
- static RISCVException riscv_pmu_write_ctr(CPURISCVState *env, target_ulong val,
+@@ -159,7 +160,7 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
+ 
+     uint32_t fcsr;
+     __get_user(fcsr, &sc->fcsr);
+-    riscv_csr_write(env, CSR_FCSR, fcsr);
++    riscv_csr_write_i64(env, CSR_FCSR, fcsr);
+ }
+ 
+ static void restore_ucontext(CPURISCVState *env, struct target_ucontext *uc)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 2da27441f8..2983d5bfe4 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5658,6 +5658,23 @@ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+     return riscv_csrrw_do64(env, csrno, ret_value, new_value, write_mask, ra);
+ }
+ 
++int riscv_csr_write_i64(CPURISCVState *env, int csrno, uint64_t val)
++{
++    RISCVException ret;
++    ret = riscv_csrrw(env, csrno, NULL, val,
++                      MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
++    return ret;
++}
++
++int riscv_csr_read_i64(CPURISCVState *env, int csrno, uint64_t *res)
++{
++    RISCVException ret;
++    target_ulong val = 0;
++    ret = riscv_csrr(env, csrno, &val);
++    *res = val;
++    return ret;
++}
++
+ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
+                                         Int128 *ret_value,
+                                         Int128 new_value,
 -- 
 2.51.0
 
