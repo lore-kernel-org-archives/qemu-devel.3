@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF68CCCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80242CCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8aUY-0006ko-1S; Tue, 14 Oct 2025 04:34:46 -0400
+	id 1v8aWu-0008Tx-41; Tue, 14 Oct 2025 04:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8aUR-0006iH-GR
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:34:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8aUO-000576-B9
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:34:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760430875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QakAHz9DxTuZeY/xZmC23qj9vgF2vkaDcsYOiEuMirk=;
- b=XtoJbAuZ/HO5zk5pxJs7QiUGHdncGTzlkIYDlbRBrufd9TTLWryxEAsWBdg0zHrlxaLw/j
- jV8SJIdFRbYDnGjnRpj4mnnYLtryZi403VCQTYYK0ydqrkpzkRV+UJipshOM1ubktxGFpR
- GfdRC5hInMXpyvzsyAGPn54gI/DLoEs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-ggQy302CONCEflkrasax5Q-1; Tue,
- 14 Oct 2025 04:34:33 -0400
-X-MC-Unique: ggQy302CONCEflkrasax5Q-1
-X-Mimecast-MFC-AGG-ID: ggQy302CONCEflkrasax5Q_1760430872
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6123C18004D4; Tue, 14 Oct 2025 08:34:32 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.162])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AAFFD19560A2; Tue, 14 Oct 2025 08:34:30 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 2/2] tests: Evict stale files in the functional download
- cache after a while
-Date: Tue, 14 Oct 2025 10:34:24 +0200
-Message-ID: <20251014083424.103202-3-thuth@redhat.com>
-In-Reply-To: <20251014083424.103202-1-thuth@redhat.com>
-References: <20251014083424.103202-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8aWs-0008Tp-UF
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:37:10 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8aWq-0005Ri-NE
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:37:10 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-77f9fb2d9c5so45014217b3.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 01:37:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760431023; x=1761035823; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=G2wXHawLphgjXMKUIBlNV42EVOVQetLfGGTkt4o3IG0=;
+ b=lX8oz2bzDkQTEuC+r6ZWKoyeJswSjYjVmyjV0NfgKWmfeQpagJ1DdvN3/tKiaKXTIn
+ 6pIvtBdAN8okJT7F9ekT31drRC/QA7MCHpMbElLP2gzvY5Pbo/PHZsw9pD/NfFbcXH7j
+ sBDGL+OZ+h47ucsREL2i6ZWf0eKmDi1xaYMTdmOMmT34AUAAbAi2TgayYF7fMDU118qa
+ +vNaApA0Gjb4k4KVb6ydk8EAsRYnH1kHkpNEsZelb9F4kZZMCLUUkzOlMXiHkVJz0LX6
+ VxTkCZ7fuvXJFF2e3jkZX6incEsa/0Nse2JrQJRqO1UzEUPVeyIRaRZi2SSsXNkg4zHy
+ 5mig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760431023; x=1761035823;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=G2wXHawLphgjXMKUIBlNV42EVOVQetLfGGTkt4o3IG0=;
+ b=lgkRhP92uPXs1NEiQyNnT6Ns/comNQkfHAsUbe3E3eIjlFw/SB1puOBeKoXxc0mgiK
+ cTlgK269EAfls8vx9VjWd6YKi0n6qnlpCp8k1MDM8nLeVL1gaq8rjpLUn5EkFtwCq+HD
+ e89xKQDWPSLIoAb+JFxFGcm/1xecS2YF2pv+AXKGKoNjPd4+QXv+wNTkKV0f+m2Gaa5F
+ 7Gl7rzCPAxUuOtQOh6KvTCcjPSJoxRYLfsRvVHXzwAdxvVeehwd1o7DXRxJgFr9wKIwS
+ S+cdcyG+M7IWQblAHmPa1TkW6lW4tgdyCNsgSCdg/MdBzSQ6//ZH4DB2dY+v8RNbDIZ+
+ 29kg==
+X-Gm-Message-State: AOJu0YyvPRGhPPtFb51lw7lO84QBEauHri/dnS8lQlwwXDlp+P7KRXo4
+ P9niPwlVSssNf4MBDPkRUllIPcuH4gfN0QS1sfyWdS3lBDydS3bejlY7MtBK+sThE3GNn/vrbWO
+ t3QDlK9L+s3m62JNXJ9kPKtuxCyjYEPIK08v7lqwhsw==
+X-Gm-Gg: ASbGnctkNpk1k7UPnh7EtnOmcHHnfPSQ7WBfeqOo/PzqkfxoZ67TD1K9k5NIahno9Jy
+ wNjSCwLW3hzrZCduTzYN9FICRK7hmgY9M/RKAAzFNv/EAZgPKuulPvP6g6IXVp/66oOOIR3y9By
+ U+DKQ+hqMMEyu3z+JrRqCwsVr2OjZDmSW8eUjFDMdAkhylUCK1KTEFEkm/Fa0gpRJbdovfHKC6w
+ K+AuOqPmlnz2VuY1s8ZpdlIXvi+gu8=
+X-Google-Smtp-Source: AGHT+IECuBWW7Mr3bdnefo9hCmYHcFbwqlQRLyVDhb767ve9pQExfrgwAwUBBTHQcYKoTbM+UVDSaLdeF/fMGFZKDEA=
+X-Received: by 2002:a53:ea51:0:b0:63c:da95:21c7 with SMTP id
+ 956f58d0204a3-63cda9524edmr14064490d50.48.1760431023344; Tue, 14 Oct 2025
+ 01:37:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250729111226.3627499-1-armbru@redhat.com>
+In-Reply-To: <20250729111226.3627499-1-armbru@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 14 Oct 2025 09:36:51 +0100
+X-Gm-Features: AS18NWDdnneHmaeFVDUQFGdg-xa0DZiF63LABZFsNDGIwihe3MoHxpb_nMM5usM
+Message-ID: <CAFEAcA-UrCD7mrmX_4dCK0urMmY5+qs=Y268WerQVq1c+7nB=Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/xenfb: Replace unreachable code by abort()
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
+ paul@xen.org, edgar.iglesias@gmail.com, xen-devel@lists.xenproject.org, 
+ qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,105 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Tue, 29 Jul 2025 at 12:14, Markus Armbruster <armbru@redhat.com> wrote:
+>
+> xenfb_mouse_event() has a switch statement whose controlling
+> expression move->axis is an enum InputAxis.  The enum values are
+> INPUT_AXIS_X and INPUT_AXIS_Y, encoded as 0 and 1.  The switch has a
+> case for both axes.  In addition, it has an unreachable default label.
+> This convinces Coverity that move->axis can be greater than 1.  It
+> duly reports a buffer overrun when it is used to subscript an array
+> with two elements.
 
-The download cache of the functional tests is currently only growing.
-But sometimes tests get removed or changed to use different assets,
-thus we should clean up the stale old assets after a while when they
-are not in use anymore. So add a script that looks at the time stamps
-of the assets and removes them if they haven't been touched for more
-than half of a year. Since there might also be some assets around that
-have been added to the cache before we added the time stamp files,
-assume a default time stamp that is close to the creation date of this
-patch, so that we don't delete these files too early (so we still have
-all assets around in case we have to bisect an issue in the recent past
-of QEMU).
+I think also that Coverity gets confused by QAPI's convention
+in generated code of defining enumerations like this:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                       |  1 +
- scripts/clean_functional_cache.py | 45 +++++++++++++++++++++++++++++++
- tests/Makefile.include            |  1 +
- 3 files changed, 47 insertions(+)
- create mode 100755 scripts/clean_functional_cache.py
+typedef enum InputAxis {
+    INPUT_AXIS_X,
+    INPUT_AXIS_Y,
+    INPUT_AXIS__MAX,
+} InputAxis;
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 84cfd85e1fa..4c468d45337 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4398,6 +4398,7 @@ M: Thomas Huth <thuth@redhat.com>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Daniel P. Berrange <berrange@redhat.com>
- F: docs/devel/testing/functional.rst
-+F: scripts/clean_functional_cache.py
- F: tests/functional/qemu_test/
- 
- Windows Hosted Continuous Integration
-diff --git a/scripts/clean_functional_cache.py b/scripts/clean_functional_cache.py
-new file mode 100755
-index 00000000000..c3370ffbb87
---- /dev/null
-+++ b/scripts/clean_functional_cache.py
-@@ -0,0 +1,45 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+"""Delete stale assets from the download cache of the functional tests"""
-+
-+import os
-+import stat
-+import sys
-+import time
-+from pathlib import Path
-+
-+
-+cache_dir_env = os.getenv('QEMU_TEST_CACHE_DIR')
-+if cache_dir_env:
-+    cache_dir = Path(cache_dir_env, "download")
-+else:
-+    cache_dir = Path(Path("~").expanduser(), ".cache", "qemu", "download")
-+
-+if not cache_dir.exists():
-+    print(f"Cache dir {cache_dir} does not exist!", file=sys.stderr)
-+    sys.exit(1)
-+
-+os.chdir(cache_dir)
-+
-+for file in cache_dir.iterdir():
-+    # Only consider the files that use a sha256 as filename:
-+    if len(file.name) != 64:
-+        continue
-+
-+    try:
-+        timestamp = int(file.with_suffix(".stamp").read_text())
-+    except FileNotFoundError:
-+        # Assume it's an old file that was already in the cache before we
-+        # added the code for evicting stale assets. Use the release date
-+        # of QEMU v10.1 as a default timestamp.
-+        timestamp = time.mktime((2025, 8, 26, 0, 0, 0, 0, 0, 0))
-+
-+    age = time.time() - timestamp
-+
-+    # Delete files older than half of a year (183 days * 24h * 60m * 60s)
-+    if age > 15811200:
-+        print(f"Removing {cache_dir}/{file.name}.")
-+        file.chmod(stat.S_IWRITE)
-+        file.unlink()
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index e47ef4d45c9..d4dfbf3716d 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -111,6 +111,7 @@ $(FUNCTIONAL_TARGETS): check-venv
- .PHONY: check-functional
- check-functional: check-venv
- 	@$(NINJA) precache-functional
-+	@$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
- 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
- 
- .PHONY: check-func check-func-quick
--- 
-2.51.0
+Coverity thinks that INPUT_AXIS__MAX might be a valid
+value it can see in move->axis, because we defined the
+enum that way.
 
+In theory I suppose that since the __MAX value is only
+there to be an array or enumeration bound that we could
+emit code that #defines it rather than making it part
+of the enum.
+
+thanks
+-- PMM
 
