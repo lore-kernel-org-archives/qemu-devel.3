@@ -4,81 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4020CCCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 10:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7470BCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 10:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8cSd-00025q-HY; Tue, 14 Oct 2025 06:40:55 -0400
+	id 1v8cTk-0002N8-Rn; Tue, 14 Oct 2025 06:42:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8cSZ-00025c-SV
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:40:51 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8cSR-0003Ns-G9
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:40:50 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-63d0692136bso1898784d50.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 03:40:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760438438; x=1761043238; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=fV7/jrMkBaJn6/SK6psmoZxBrmB/QuRq2mi1M4MJLDM=;
- b=xx6XgFymdx2Dm2V59cEsmnXahLbcpl2f3vOtiVcXDUkpl9HTvsQh367F4uuaxuXLAN
- EFxdE8vkAnGB3N7y6+WQxZklI8tPWAj1axQQkqsHjY0NdivFuErXeqA9KtWlhPW5s5TO
- KRmE5lZJpQ8zrFNO96JL8cOtZlnxL1CWTcdTHlfnCMfrQBDreDdsloDYrUrN0hVE9cYj
- CfhBjhaLzQxHRtZ9SadyveZEdNConrWpoSS/DaBU28CDKp6ulMEE/UgRZoNLTs3PSI/o
- TvqO4i+Sjlg0B8u+doDX2qC0+/MyrVaT6N/U1rVpA9QhfmRJCdgoOQ74JM6PyF1m6pp0
- kaMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760438438; x=1761043238;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fV7/jrMkBaJn6/SK6psmoZxBrmB/QuRq2mi1M4MJLDM=;
- b=LignF9rYInX72RYU5bbHlDn+IWqhOrHqoyH/lGCQqLG5b8/9UeAJyaoNvkDSA1csml
- LkjqGSYU0dq37YjTQyESOsVJE6PIb3ErFUgRT5VTb2pTDWvz9y+RSALuR44hspu939gz
- WRALBXpVSJDdsSZg65XSvf6UC4z9XUzczjZZtaddnHhGop7ywxGeaRnF0ammLnACzCkY
- w4HVOjDez1Tq1S3yqgRtXXov9wbyh3BTdWyzjK16U61A04wEOoD/lId7v/aDLcu8Jp1M
- QcLprffP6ehu4QU0vKsr657pp5KKsmyq0/MqfBUh8QrW7WY2dNPI4NoC4ZHwQe+AY9aC
- DpIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwTOdjspULSDPKyK6woHe4YEJgSVmENiWbDI3e3k5+N6q7G6kTDBiA1TCLzrgQYRFAJL1vRIUpAYZf@nongnu.org
-X-Gm-Message-State: AOJu0YzZckQjv7TK40rDzswjjsELeov1U2XglrCiMdwKx4iJFVxpWk+D
- cYU6HudPbAzvMmVXYWA+mKvdl2l0FloLfQkPxHQozsb47pGioE8gLfn1anWvze3SaaWOC8PUb12
- N4t8LSG3vHWSE9S8Me0mJb8939si+otQxp+7o+VEZOg==
-X-Gm-Gg: ASbGncvuHqmfxY+bGcE030l5OYbrM1mha22OG+st+ceGKFXgdkFXnU1s04+k8QihwoL
- 3Ktx/EReoUWeXPV3Wo7mC/9iNRI1awuRDNO6vq5fFAtAB0Bfmg4LJKKJXgDiUTViZcPwmq9INgM
- xNVx9SHDDNmFQiuA5m4EyydP7I/vN/p//6fgT5LWmsvoa/sn0cZ+I2NEryDW7KSNnl4lE9xjcr9
- wsLUNl5yo2R5zfpku9MeH/9xX92Ja3r/awzVvSwLQ==
-X-Google-Smtp-Source: AGHT+IHU25n+NhO/XEBsOpVv+Dv7mHjyhEKj989SEiZfz77ncLsJkxn7uC2b82nVld78ZQAkn2bckryrhV0afokk0ek=
-X-Received: by 2002:a53:cec2:0:b0:62a:b545:54b6 with SMTP id
- 956f58d0204a3-63ccb8f2f76mr15802555d50.35.1760438437741; Tue, 14 Oct 2025
- 03:40:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8cTf-0002M2-De
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:41:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8cTY-0003RP-Ql
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:41:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760438508;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3A0WX5MWMGHSL6zwX5a2tJWhQWuH/2f2cvzDwd00pU4=;
+ b=I/TKc3tp9zPatdhWW0yeFalv0B2ihY6YgIivrC3cM1JSQVDofQxCXpJkCUpdaBgi9HNjp+
+ 9N2hseU24y+LqJAIzRsTQJE9oASMmbGAl2bbpJ1Fad+2YgR9MMds0mmGutxZF2JFeRUQG8
+ o7Ug7Oi7DAiATU/ikYxb/73CAHdrTrI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-tc8upLupMda-LOMN1fGXJA-1; Tue,
+ 14 Oct 2025 06:41:46 -0400
+X-MC-Unique: tc8upLupMda-LOMN1fGXJA-1
+X-Mimecast-MFC-AGG-ID: tc8upLupMda-LOMN1fGXJA_1760438506
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94B57195410A; Tue, 14 Oct 2025 10:41:45 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.162])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C1F42300018D; Tue, 14 Oct 2025 10:41:43 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>,
+	qemu-block@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 0/3] tests/qemu-iotests: Improve test detection for meson
+Date: Tue, 14 Oct 2025 12:41:39 +0200
+Message-ID: <20251014104142.1281028-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20250708115238.667050-1-peter.maydell@linaro.org>
-In-Reply-To: <20250708115238.667050-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Oct 2025 11:40:26 +0100
-X-Gm-Features: AS18NWBgEyajiYmPUV-neW3F_hyeBVXdjoo5-mhRmEe8VsCU4lpfFONRodvhii8
-Message-ID: <CAFEAcA_MqNWHJ62sRCCK5s6-V6-qA4BWP5aFp0PZPeLDyXbYOw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] hw/intc: handle GICD_TYPER2 for KVM GICv3
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Eric Auger <eric.auger@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,36 +80,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 8 Jul 2025 at 12:52, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The GICD_TYPER2 GICv3 distributor register is one that is added
-> for GICv4.1; previously this was architected as a RES0 location.
-> Our TCG GIC doesn't implement GICv4.1, but for KVM the kernel
-> might support it.
->
-> This patchset:
->  * makes GICD_TYPER0 reads not trigger a bad-read trace
->    event on the TCG GICv3, for the benefit of GICv4.1-aware
->    guest code
->  * migrates the GICD_TYPER2 register value on a KVM GIC,
->    so that a mismatch between source and destination
->    can be caught by the destination kernel
->
-> Note that I have only very lightly tested this, on a
-> host which (I believe) doesn't have a GICv4.1.
->
-> Changes v1->v2:
->  * fix comment missing bracket
->  * fix reset handling so this works on GICv4.1 hosts
->  * move get/put code to be with the other GICD regs
->  * new patch 3 to drop a barely-used debug printf macro
+When running the test in thorough mode, we currently try to run a lot of
+tests that are only skipped, which is somewhat annoying. This series
+fixes the problems (see second patch), and add some more image formats
+in the third patch (which should be fine now that the list of tests that
+we try to execute is not that big anymore).
 
-I never applied this, I think because I was concerned about
-not having tested patch 2 very much. But patches 1 and 3
-are definitely simple and safe, so I'm going to pick those
-up. Patch 2 is still probably a good idea, but IDK if I'm
-going to get round to testing it, especially since I don't
-have a GICv4.1 host to hand...
+v2:
+- Improve the detection mechanism in patch 2 by using regex statements
+- Extend the comment in patch 2 a little bit, saying that the detection
+  can fail in certain cases, e.g. when the "unsupported_fmt" and the
+  "supported_fmt" statement are on the same line (which does not seem to
+  be a problem with the current test cases right now, fortunately)
 
--- PMM
+Thomas Huth (3):
+  tests/qemu-iotests/184: Fix skip message for qemu-img without throttle
+  tests/qemu-iotests: Improve the dry run list to speed up thorough
+    testing
+  tests/qemu-iotest: Add more image formats to the thorough testing
+
+ tests/qemu-iotests/184         |  2 +-
+ tests/qemu-iotests/check       | 42 +++++++++++++++++++++++++++++++---
+ tests/qemu-iotests/meson.build |  3 +++
+ 3 files changed, 43 insertions(+), 4 deletions(-)
+
+-- 
+2.51.0
+
 
