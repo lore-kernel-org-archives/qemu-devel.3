@@ -4,105 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0EC0CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FCDCCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8hZC-0000JV-Ag; Tue, 14 Oct 2025 12:08:02 -0400
+	id 1v8hab-0001N3-E7; Tue, 14 Oct 2025 12:09:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v8hZ8-0000IG-Uw; Tue, 14 Oct 2025 12:08:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v8hZ6-0005BM-Rx; Tue, 14 Oct 2025 12:07:58 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E82qC0015706;
- Tue, 14 Oct 2025 16:07:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=RqEaTGD44kyr1mqua
- 1w6dAKaJJc+0MWxgwbHeGOuWd4=; b=aNfUC+2spPugoGIq5PqYt1rg+CgMSBvr0
- zfKEWxiGECJgnrG1Az0kZPEV2ubHxQuI6+FLitJ0BBnRV7/riFC/Esvs0aXpDJXV
- JTpu+Gcjjokm0+L5IA1jzVP62O/W707ToFE/qEt6l1I3uyTbJB46zlU0Fsre0OUh
- iQXWpw9jBM8tInzxbtK3bt1y7OvIzCkYKkRdoHUVkALxEe3qVSzxLWSqrN5RPVs9
- OAQs4RWHBRQR+Gm96lYJGR+ptZr7wWpfmWX1zxIxsD+MwFGvmWwsFyxl2nKZDqYO
- OsXJqS3nVmqP3ZpYBs467hOrhUM5rq4T8BEsv4lqniNIxPNbC4+3Q==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qewtyqt0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Oct 2025 16:07:51 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59EFRi2b015028;
- Tue, 14 Oct 2025 16:07:50 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r3sjbk4u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Oct 2025 16:07:50 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59EG7mYl61014516
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Oct 2025 16:07:48 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A60320117;
- Tue, 14 Oct 2025 16:07:48 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2594C20116;
- Tue, 14 Oct 2025 16:07:48 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.111.67.246])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Oct 2025 16:07:48 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 3/3] tests/tcg/s390x: Test SET CLOCK COMPARATOR
-Date: Tue, 14 Oct 2025 18:05:15 +0200
-Message-ID: <20251014160743.398093-4-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251014160743.398093-1-iii@linux.ibm.com>
-References: <20251014160743.398093-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8haX-0001Mj-FI
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:09:25 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8haU-0005KP-02
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:09:25 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-7815092cd06so9749037b3.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 09:09:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760458159; x=1761062959; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tsFaLEfLhcvzz++ZyZjgYONkG3EwSGLyjtHXvr32VQM=;
+ b=G5c/xg7K3/uoRb4qmT3qar7+3piIFJ9zLIoDPyfHUhuxyRbQEBQ6t64DX/4o8DuxEo
+ KrFl1F5uYFvtwZ2UikgPjRdArrhE/69MSMWexgFicF4zftX8Ym354WS2Niv0qxXLfbtf
+ ZvOF1YcXl5Bg1oGBEiQ6LQesAH1p6qsxgzliPA+535HnQBuw2yKO7Q5XEBGK3kOxBtm1
+ U8IqJMbl5u/sm54VeEhtF72YzzU7PVJfZWIm1omGUzYvNUQYA3D/4qvrmcmzO2Gl35PV
+ 9DbYpB6SP3+Z06qN+xSepuz8lnOJXDOSuNObKu5be9wjwscwMAMf9dEfuo/h4VXZlcY8
+ w2Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760458159; x=1761062959;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tsFaLEfLhcvzz++ZyZjgYONkG3EwSGLyjtHXvr32VQM=;
+ b=RavvIolpmz0bjEjdzmZmwbmqKND2SPuLJ6dgqHuWMGc/faBG6ryhyQpQRWhEmKJ58V
+ g0nDlrEeXHzmUGZ76liZung+A0FVmf0W8Ko0SHj4Ix9LOQCmPrv0Y7xHOss9X6VAWUMr
+ wP/R0QJ3Jd4BfVQstQalj4R3hqA7PpvY2bbBt04aBnm/64eeAO5WBdMROdLiQmpGEAiN
+ Dfkl+/FLsatpqco9sJnbcahVk2N18QE5FFrA3dG6d5rcpL8rU8fpZPQlTSLUZHwMolee
+ RuLGAwRr/flSjbSBG6YKkN2FRogvIKQy2eMs09Bd7oA9NeLuKWe9zhiC0AEG2oOUbetf
+ 5j5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVp1gnOJgwmvrN4OTjnFguDjGt+m4SJ9gR/mljDCBluEi628HeJsx6I3DFLO44lKtLeAXktzIAcOGrC@nongnu.org
+X-Gm-Message-State: AOJu0YwRxPeCq9O5sg9WmjUrQUDneaN/D34FHBUBli6S8mpo+n2J/fOB
+ tH7mTfs+nUfy1UD5eucLcoyBZ5Ob/ZcXN0bIJNq14PgBvIkl8A+Jw+mrAoYgD2cKSTk8cATqadm
+ OcdIijs324Boy12SCS+lRn+1aW413GikBm428Bg/V/Q==
+X-Gm-Gg: ASbGnctlTX77nEOhNhxHO3RBJNmgCHvQzDnQ5Y7b0bimV9WHzIcvAM+JZJE2ML1ibAr
+ BJlob2hu7nnS6uaYdYCcczW+weXCKpjUhRwhVsFxJk2a62DMJiPGOCB2rhIl56IHYumJOMrnQvP
+ qK2/njmLUN72kt5bV/KhjiLP6Bd9TxzsIeD18LhuvOx+n7My6ZHx5CZYZj82wt3YgrVHYvrnbEn
+ XkBGHwPdCpBJKqb7Kfqs+roB3V/Y+DLMvZf+5g5Pw==
+X-Google-Smtp-Source: AGHT+IHVZLMJJ1Y5tPQm2Dl1eW62thXEVO1rf9/5Fh4ZA41a3t4HFdokS6B+BYLD22UYFzuIqjIPX1TFyGsHccMnVEc=
+X-Received: by 2002:a05:690e:2445:b0:63c:f5a6:f2d5 with SMTP id
+ 956f58d0204a3-63cf5a707d6mr7465735d50.55.1760458159183; Tue, 14 Oct 2025
+ 09:09:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dcVRObKYBl3B2A5GsTIhqx6uJ8qgl4N3
-X-Authority-Analysis: v=2.4 cv=Kr1AGGWN c=1 sm=1 tr=0 ts=68ee7557 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=GplkH8VCR8Vvap5QFYcA:9 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: dcVRObKYBl3B2A5GsTIhqx6uJ8qgl4N3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfXxNHONrjQBEV1
- gwZqwHg6ad35ySxnHFOdCBfPVcFbObaUPYDlhu8RZqAapLqgBz+ynZclP9JIDDbdMKfMkDff99S
- a87V9yRBUGNYZXbc4EHVrKV1Oi0RxWjcDMp1f3PbVPsfCRcVOY+G6fUNdZH33coZ2yR8Y7Jq0zu
- TTB9u9SHaMu/fx5c3CkaqzIKqTO6khm8Oh588sxcuyt76YMzj/TPNB+HGz5ff9kAlpo1+HvpErg
- R1L16OZ8PFyJ33V/7mOJmbwMVgQmX4FRKRsLBboemaJypcQTRLuWPb1s30/uyAxOiPQrg5Utcx8
- VEYCrOv/hTLkCDk7ltp8xaRHR7j2RUOottImfZHS9bBNjWUC2PzWLZ5MkLzXUJrwnCX4dO4ij/6
- Xaw2yVTA+SKSiFFNv3x/kGC0g6lkvQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-14_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
- phishscore=0 suspectscore=0 malwarescore=0 clxscore=1011 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <859f333e-37f9-4e76-bf88-a69d0641626a@siemens.com>
+In-Reply-To: <859f333e-37f9-4e76-bf88-a69d0641626a@siemens.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 14 Oct 2025 17:09:06 +0100
+X-Gm-Features: AS18NWBvalo1Pjvnm3N-tDVrq0BJzM5OIdreqwRPEFJVUdjqID-tGVXqu7t1zLY
+Message-ID: <CAFEAcA8HiZcLqxUAiU26XTS7e2xm6Uf0EUqQc7Ny7cvD8EhxJw@mail.gmail.com>
+Subject: Re: [PATCH] hw/openrisc/openrisc_sim: Avoid false-positive overflow
+ warning
+To: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Jia Liu <proljc@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,87 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a small test to prevent regressions.
+On Tue, 14 Oct 2025 at 17:03, Jan Kiszka <jan.kiszka@siemens.com> wrote:
+>
+> From: Jan Kiszka <jan.kiszka@siemens.com>
+>
+> Resolves this build breakage:
+>
+> ../hw/openrisc/openrisc_sim.c: In function =E2=80=98openrisc_sim_init=E2=
+=80=99:
+> ../hw/openrisc/openrisc_sim.c:284:45: error: =E2=80=98__builtin___snprint=
+f_chk=E2=80=99 output may be truncated before the last format character [-W=
+error=3Dformat-truncation=3D]
+>      snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+>                                              ^
+> In file included from /usr/include/stdio.h:964:0,
+>                  from /data/qemu/include/qemu/osdep.h:114,
+>                  from ../hw/openrisc/openrisc_sim.c:21:
+> /usr/include/bits/stdio2.h:54:10: note: =E2=80=98__builtin___snprintf_chk=
+=E2=80=99 output between 8 and 9 bytes into a destination of size 8
+>    return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+>           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>         __glibc_objsize (__s), __fmt,
+>         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>         __va_arg_pack ());
+>         ~~~~~~~~~~~~~~~~~
+>
+> This is actually a false positive because uart_idx is 0..3, never larger
+> or even negative.
+>
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> ---
+>  hw/openrisc/openrisc_sim.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+> index 880c8ebbb8..dcb1a7a00b 100644
+> --- a/hw/openrisc/openrisc_sim.c
+> +++ b/hw/openrisc/openrisc_sim.c
+> @@ -281,7 +281,7 @@ static void openrisc_sim_serial_init(Or1ksimState *st=
+ate, hwaddr base,
+>          /* The /chosen node is created during fdt creation. */
+>          qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename)=
+;
+>      }
+> -    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+> +    snprintf(alias, sizeof(alias), "serial%u", uart_idx);
+>      qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/s390x/Makefile.softmmu-target |  1 +
- tests/tcg/s390x/sckc.S                  | 53 +++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
- create mode 100644 tests/tcg/s390x/sckc.S
+If we're going to change this I think I'd prefer
+   g_autofree char *alias =3D g_strdup_printf("serial%d", uart_idx);
 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index 8cd4667c63b..a4425d3184a 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -28,6 +28,7 @@ ASM_TESTS =                                                                    \
-     mc                                                                         \
-     per                                                                        \
-     precise-smc-softmmu                                                        \
-+    sckc                                                                       \
-     ssm-early                                                                  \
-     stosm-early                                                                \
-     stpq                                                                       \
-diff --git a/tests/tcg/s390x/sckc.S b/tests/tcg/s390x/sckc.S
-new file mode 100644
-index 00000000000..0fadec0dd65
---- /dev/null
-+++ b/tests/tcg/s390x/sckc.S
-@@ -0,0 +1,53 @@
-+/*
-+ * Test clock comparator.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+    .org 0x130
-+ext_old_psw:
-+    .org 0x1b0
-+ext_new_psw:
-+    .quad 0x180000000, _ext            /* 64-bit mode */
-+    .org 0x200                         /* lowcore padding */
-+
-+    .globl _start
-+_start:
-+    lpswe start31_psw
-+_start31:
-+    stctg %c0,%c0,c0
-+    oi c0+6,8                          /* set clock-comparator subclass mask */
-+    lctlg %c0,%c0,c0
-+0:
-+    cghsi ext_counter,0x1000
-+    jnz 0b
-+    lpswe success_psw
-+
-+_ext:
-+    stg %r0,ext_saved_r0
-+
-+    lg %r0,ext_counter
-+    aghi %r0,1
-+    stg %r0,ext_counter
-+
-+    stck clock
-+    lg %r0,clock
-+    agfi %r0,0x40000                   /* 64us * 0x1000 =~ 0.25s */
-+    stg %r0,clock
-+    sckc clock
-+
-+    lg %r0,ext_saved_r0
-+    lpswe ext_old_psw
-+
-+    .align 8
-+start31_psw:
-+    .quad 0x100000080000000,_start31   /* EX, 31-bit mode */
-+success_psw:
-+    .quad 0x2000000000000,0xfff        /* see is_special_wait_psw() */
-+c0:
-+    .skip 8
-+clock:
-+    .quad 0
-+ext_counter:
-+    .quad 0
-+ext_saved_r0:
-+    .skip 8
--- 
-2.51.0
+(declaration at top of function as usual for our style)
 
+thanks
+-- PMM
 
