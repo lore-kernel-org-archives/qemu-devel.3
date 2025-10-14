@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A139CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3210ECCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8Z5Y-000143-RS; Tue, 14 Oct 2025 03:04:52 -0400
+	id 1v8Z74-0001bv-AF; Tue, 14 Oct 2025 03:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8Z5X-00013p-AI
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:04:51 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1v8Z71-0001VH-Nr
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:06:23 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8Z5U-0001Ri-7o
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:04:51 -0400
+ id 1v8Z6z-0001iL-Pq
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:06:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760425489; x=1791961489;
+ t=1760425581; x=1791961581;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=aEoV2nwVq/Zd9n2KK099QaT/uplOERgtEr8hEZnRzJY=;
- b=EmxymkItmZ9Ut8il1OUhQgjqDpYKGlRAQRmlhQ16y25cGpK+fM9E43jj
- QBINpjpk1+T4DWKlyR0WpE+A743AfSEZPGex3YF4h7MHQhhQWRY7aLviB
- HbmXqRA4iLnOsn+Eirk5z2MbNy17Ixrh/fgHHD89dBe69kCtCToUoyJlw
- vXJeOcSj13ArVf1KUKmwP4A256VZd4xZ+d5nFTdSwr24IP4hNsUcyPpmy
- 3IPrFip888l1l7+ysm+0aW1UhmGWwoQh4R3AnffVNgoEL+lx5yN3MUnIT
- A29iMUphKxg9032Oo4jnr0k1d63Qba6XW+JWU+83rzMKBvJjJyYyH26mf w==;
-X-CSE-ConnectionGUID: +VwvXE5STZ6Fu2SsezIr6Q==
-X-CSE-MsgGUID: MmLR2UNwQhuFXxHmZYTaxw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="72846968"
-X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="72846968"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Oct 2025 00:04:44 -0700
-X-CSE-ConnectionGUID: 0y3fDW2LT8OyJcdThmIUxA==
-X-CSE-MsgGUID: F4foXZG2R02rlsTO+XOGUQ==
+ bh=8BhEbCt70rrUrXwfNPSuJBz1lOrViR2HxvGzcNUyCWw=;
+ b=Fpx/Ev0SOtc/HdRoAAQdTajCiMWNI+WdRwY2eiS/OEGbZrPkTib6RewO
+ IyFljQIAa9gPYPiYQs6qnrXvU1DwZBq+d+VR8MqrDZZdm/FI23S0VCnWu
+ atLQPmyXX4ub+1NJG+TkuYq4hJvSmEtdZ8EeLT8PW0TvX7/Qn5/66HoDf
+ f+swhPM0ZoUEUJiFDl9mdBMHQ6jPPeDJhcs8I7phkIqUbZfUNO8IwovZO
+ MBR1jskR/Pabh9qPe/hsLlUylbZSPz7lkxLdOh4OrXDuQ6HexN5YL8Pei
+ qgFpex8kuKHNwJMH13lAV5cE9gjmrFCGYgw/LH4usNSjtOfiXaXt3Rz9/ Q==;
+X-CSE-ConnectionGUID: pS8AxZonRES58YwezFdx2g==
+X-CSE-MsgGUID: CTx10GuMRK+bEIK+P6VtUw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="73256546"
+X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="73256546"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Oct 2025 00:06:19 -0700
+X-CSE-ConnectionGUID: mk20ZWw3To2kvoLIb9uOWw==
+X-CSE-MsgGUID: UKT1qZGuTn+bFQtaQeCMAw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="182581479"
+X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="181762249"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 14 Oct 2025 00:04:42 -0700
-Date: Tue, 14 Oct 2025 15:26:47 +0800
+ by fmviesa006.fm.intel.com with ESMTP; 14 Oct 2025 00:06:18 -0700
+Date: Tue, 14 Oct 2025 15:28:24 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 1/2] rust/timer: Make Timer::modify() accept an i64
- expire_time Timer
-Message-ID: <aO37N2wfO+afES7d@intel.com>
+Subject: [PATCH 2/2] rust/timer: Add Timer::modify_ns()
+Message-ID: <aO37mEDYQaC3x29Y@intel.com>
 References: <20251001075005.1041833-1-pbonzini@redhat.com>
  <20251001075210.1042479-10-pbonzini@redhat.com>
  <aO3z7zbztw3TaxY+@intel.com>
@@ -60,7 +59,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <aO3z7zbztw3TaxY+@intel.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -85,60 +84,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At C side, timer_mod() accepts the int64_t expire_time as an argument.
-
-In fact, int64_t defines the positive value range accepted by
-expire_timer is (0, INT64_MAX].
-
-But at Rust side, Timer::modify() accepts an u64 expire_time and convert
-it to i64 internally. This is a lazy approach, assuming no one would use
-negative values to modify the timer. However, logically speaking, a
-negative expire_time is acceptable - it means that the current timer
-should fire immediately.
-
-Moreover, specifying expire_time as i64 allows callers to more clearly
-understand the accepted value range, preventing them from unexpectedly
-finding a `u64` (> `i64::MAX`) silently converted to a negative value.
-
-Make Timer::modify() accept an i64 expire_time.
+Add the binding of timer_mod_ns(), and re-implement Timer::modify()
+based on Timer::modify_ns().
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 2 +-
- rust/util/src/timer.rs           | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ rust/util/src/timer.rs | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 86638c076666..f0ac01758e72 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -365,7 +365,7 @@ fn arm_timer(&mut self, tick: u64) {
-         }
-
-         self.last = ns;
--        self.qemu_timer.modify(self.last);
-+        self.qemu_timer.modify(self.last.try_into().unwrap());
-     }
-
-     fn set_timer(&mut self) {
 diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
-index c6b3e4088ecb..c3a9de6b72df 100644
+index c3a9de6b72df..88f120c54185 100644
 --- a/rust/util/src/timer.rs
 +++ b/rust/util/src/timer.rs
-@@ -86,10 +86,10 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
+@@ -10,7 +10,7 @@
+ use common::{callbacks::FnCall, Opaque};
+
+ use crate::bindings::{
+-    self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod, QEMUClockType,
++    self, qemu_clock_get_ns, timer_del, timer_init_full, timer_mod_ns, QEMUClockType,
+ };
+
+ /// A safe wrapper around [`bindings::QEMUTimer`].
+@@ -86,10 +86,18 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
          }
      }
 
--    pub fn modify(&self, expire_time: u64) {
-+    pub fn modify(&self, expire_time: i64) {
+-    pub fn modify(&self, expire_time: i64) {
++    pub fn modify_ns(&self, expire_time: i64) {
          // SAFETY: the only way to obtain a Timer safely is via methods that
          // take a Pin<&mut Self>, therefore the timer is pinned
--        unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
-+        unsafe { timer_mod(self.as_mut_ptr(), expire_time) }
+-        unsafe { timer_mod(self.as_mut_ptr(), expire_time) }
++        unsafe { timer_mod_ns(self.as_mut_ptr(), expire_time) }
++    }
++
++    pub fn modify(&self, expire_time: i64) {
++        // SAFETY: the only way to obtain a Timer safely is via methods that
++        // take a Pin<&mut Self>, therefore the timer is pinned and is valid
++        let scale = unsafe { *self.as_ptr() }.scale as i64;
++        // Following C's behavior, scale expire_time even when it is negative.
++        self.modify_ns(expire_time * scale);
      }
 
      pub fn delete(&self) {
 --
 2.34.1
+
 
 
