@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4ADCCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B3FCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8gDL-0006EV-Lf; Tue, 14 Oct 2025 10:41:24 -0400
+	id 1v8gFH-00087I-NX; Tue, 14 Oct 2025 10:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8gD8-0005ym-Ox; Tue, 14 Oct 2025 10:41:13 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8gFG-00086B-29
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:43:22 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8gD2-00017S-9C; Tue, 14 Oct 2025 10:41:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760452864; x=1791988864;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=BCIv9WvCeYChIqqBjpb0qOWf+C+747NLrXa02y3pa2s=;
- b=a0miDh1l3QVouojZuP813XO2dxMBxTbHGQnpqA9OSBUe0J+suVveB6vs
- 1mh9P8lL9ouUUta/Be+41CGETJ/JtQ9ILEPvAO7hs7qtN0Pb1TEgrOvyp
- ViBaeKCQCLtfmorkLWVZKEt4IgkP5BJoh70QSabosShrM1ssDzQb1IwEe
- v0Dl8PAoF8ThFVtiHToAB173z8be3t6ZUoTA99T9/kbrUEX2chYGBKR8s
- S8WsSpGyq/LdSzpJ6fOfwJ40FQ4L9RpOTslIHVIReIaPlKjsfUepPVE41
- DvsZeLQwET7vjR8LPfyvBLc3a7dkrpj0VCiYSUuxNUomkxsZ7hfnssXj7 g==;
-X-CSE-ConnectionGUID: t4w+Nkd4Swu/L+eOqNmzCA==
-X-CSE-MsgGUID: M6EGkxhMRVaapk/3+9p0wg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11582"; a="73214035"
-X-IronPort-AV: E=Sophos;i="6.19,228,1754982000"; d="scan'208";a="73214035"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Oct 2025 07:40:56 -0700
-X-CSE-ConnectionGUID: kvfGcXhuRXSjUH4TrppoZQ==
-X-CSE-MsgGUID: YaWuXDmTTgS27C/qkCf1kA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,228,1754982000"; d="scan'208";a="219042393"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 14 Oct 2025 07:40:55 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] rust/qemu-macros: Convert bit value to u8 within #[property]
-Date: Tue, 14 Oct 2025 23:02:51 +0800
-Message-Id: <20251014150251.2473680-1-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8gFC-0001WX-8D
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:43:21 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 163BE80867;
+ Tue, 14 Oct 2025 17:43:11 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a8a::1:35] (unknown
+ [2a02:6bf:8080:a8a::1:35])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 9hQtEl2FbiE0-QRxXGi3F; Tue, 14 Oct 2025 17:43:10 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760452990;
+ bh=WzxQZrynPC932qLoAnTUeiu6ZgUJq7V4LTnnzwbnCIU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=rQyoZVmM6O5m/XppeFVdjO9859ivGmmySr60F75xB0zSEI7mJuIBeQaXhhmSqpMjB
+ 5xrwBsUhBNO9ijna6/TYaGxmUoV3jkEG4BwIUyBHfTHBGigfGs1L8BFSzq2setPazW
+ ojEzmaKuWhRnONCpwp8enlQsmPYAJCpnphSrJgv4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c541a8e4-15b4-415e-9a57-0fc4ba75e623@yandex-team.ru>
+Date: Tue, 14 Oct 2025 17:43:09 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] chardev: postpone connect
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, eduardo@habkost.net,
+ qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
+ <aO5Sv8i4rxLFi-XF@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aO5Sv8i4rxLFi-XF@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -77,46 +79,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For bit property, make the type conversion within the #[property] macro
-so that users do not need to handle the conversion.
+On 14.10.25 16:40, Daniel P. Berrangé wrote:
+> On Mon, Oct 13, 2025 at 04:38:29PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> Hi all!
+>>
+>> That's a preparation for backend-transfer migration of
+>> vhost-user-blk. For such migration we are going to transfer
+>> vhost-user-blk fds, including backend chardev fd to the target
+>> in migration stream (backed by UNIX domain socket).
+>>
+>> So, on the target, we want to know, should we call connect(),
+>> or is it a backend-transfer migration, and we should wait for
+>> incoming fd.
+>>
+>> But at initialization time we can't know it: user may setup
+>> migration parameters (enabling backend-transfer) later.
+>>
+>> So, let's postpone chardev open/connect phase up to attaching
+>> to frontend. At this point we can check:
+>>
+>> - if it's vhost-user-blk, do nothing, let vhost-user-blk decide
+>>    when to do connect()
+>> - otherwise, do connect() at this point
+> 
+> I'm finding it quite unpleasant that we've created a new set of
+> callbacks just for the socket backend, and not the other chardev
+> backends.
+> 
+> Conceptually it feels like the problem of transferring in pre-
+> opened FDs from a previous QEMU should be conceptually relevant
+> to all the backend types. If it is, then I very much want us to
+> convert all the backends instead of leaving a pile of technical
+> debt for someone else in the future.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/hw/timer/hpet/src/device.rs | 2 +-
- rust/qemu-macros/src/lib.rs      | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+Agree. If the design is approved, I'll try to update all other
+chardevs as well.
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 86638c076666..23f2eefd1cd9 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -539,7 +539,7 @@ pub struct HPETState {
-     // Internal state
-     /// Capabilities that QEMU HPET supports.
-     /// bit 0: MSI (or FSB) support.
--    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT as u8, default = false)]
-+    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT, default = false)]
-     flags: u32,
- 
-     /// Offset of main counter relative to qemu clock.
-diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
-index 3e21b67b4719..2a7454da2416 100644
---- a/rust/qemu-macros/src/lib.rs
-+++ b/rust/qemu-macros/src/lib.rs
-@@ -271,7 +271,10 @@ macro_rules! str_to_c_str {
-                 name: ::std::ffi::CStr::as_ptr(#prop_name),
-                 info: #qdev_prop,
-                 offset: ::core::mem::offset_of!(#name, #field_name) as isize,
--                bitnr: #bitnr,
-+                bitnr: {
-+                    const { assert!(#bitnr >= 0 && #bitnr <= u8::MAX as _, "bit exceeds u8 range"); }
-+                    #bitnr as u8
-+                },
-                 set_default: #set_default,
-                 defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
-                 ..::common::Zeroable::ZERO
+> 
+> This series also doesn't illustrate usage of the new model with
+> pre-opened FDs, so I'm finding it hard to validate whether
+> this design is effective or not.
+> 
+
+Understand, of course.
+
+[PATCH v2 00/?] vhost-user-blk: live-backend local migration
+
+is coming soon, so the whole picture will be seen.
+
+Still, I'll first resend this one (chardev: postpone connect) and
+
+[PATCH v2 00/23] vhost refactoring and fixes
+
+to base future v2 vhost-user-blk: live-backend local migration
+on clear base.
+
 -- 
-2.34.1
-
+Best regards,
+Vladimir
 
