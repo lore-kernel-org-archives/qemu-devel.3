@@ -4,137 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58431CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 19:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEBECCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 19:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8kXL-0005X1-HW; Tue, 14 Oct 2025 15:18:19 -0400
+	id 1v8kYz-00060Y-7R; Tue, 14 Oct 2025 15:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8kXF-0005W3-LC
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:18:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8kYw-0005zo-Ox
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:19:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v8kXC-0007NM-6o
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:18:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8kYu-0007Yv-Bg
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 15:19:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760469485;
+ s=mimecast20190719; t=1760469593;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vvMwMAmyhRUrtehTUF0szqO3/q+p+aYypOFhNDW0YJs=;
- b=UwhwkunVmWwseOZ9KEyZyKsmg/zUbqVE8jsNoAeKpsK/Ej6uZ9xpZeY9dwdBu2dEYSyizs
- MArMBglWJ2JzDUqQA98ATFpoG/2z6LJ/oN4MyDc/6otKjtN+nsNLaFb5sUoCMKxgA55jev
- NiORqQkmXImdGBiFN4mlWftFdbOzD0I=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=V+VWQlRtDiKUJEtuqAgZyiqfrGUS0b2sMRTtBiC3lXE=;
+ b=d77Vq/QmMu3MWK+4OQ2unumvW2B7aRTwkYy6m5btBULLEGetJThH5LT0/cmczZj94nd3RK
+ 3r48mVU2CUGlp4V/qrZkwlbJ1OO+cZE2n5uUcb4UVo2F3SahGDvhzg3EThWSinhWIa4LRx
+ 6hDgESO22YAzaAyipMYrtm5BJkJi9ts=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-TaKQEC9lMqaLsu2ERgI69g-1; Tue, 14 Oct 2025 15:18:02 -0400
-X-MC-Unique: TaKQEC9lMqaLsu2ERgI69g-1
-X-Mimecast-MFC-AGG-ID: TaKQEC9lMqaLsu2ERgI69g_1760469481
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e509374dcso25462895e9.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 12:18:02 -0700 (PDT)
+ us-mta-633-ZbC3z-73NKK4nxwViJpfhw-1; Tue, 14 Oct 2025 15:19:52 -0400
+X-MC-Unique: ZbC3z-73NKK4nxwViJpfhw-1
+X-Mimecast-MFC-AGG-ID: ZbC3z-73NKK4nxwViJpfhw_1760469592
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-86df46fa013so3583462985a.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 12:19:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760469481; x=1761074281;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vvMwMAmyhRUrtehTUF0szqO3/q+p+aYypOFhNDW0YJs=;
- b=N9VrsD5rq5By/GqI+760Sr8yoNXVazE2B9e841TY7t5cMxkbJ7gS0u8yEo/+kA1bj6
- C/xMspIF4rFfOkSGCef6b5E37CYMdC9VmcV491gaDOAEjE1Vto/n1eHXoleWwtYaCqEl
- zzW+8tCpzm2TzWF/0KLlTlTO5aQUUkLAPjzDwCfXQdBR4oaH/QArKbl9QtMPIj+vt8jb
- TV4agu8gKsoqYMZhaJfLZGCRKvvP6CrBUq/oCgmAHD/CdV3Fvm6W25lWia2sg+Vcip3M
- aPS1UFhaLXYU6TRmyPFRrulqTowa34ggoFbLQl88K2F7OmXZ/qlqa1Tg4fYS7zuIChUr
- Apng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrqWzRCtrDCcikybD9TDjyGGKuHCaMnfc+Jh6lTW2bxqSkhO0ltI5oVe08h4gxOLryPEbrGY3nfuba@nongnu.org
-X-Gm-Message-State: AOJu0Yw9fSDKJKlDaWBA9OcL3bOYXidF4W8OriN9tZMq9lMYLGqVXB6K
- jQaod/VHmsVIZkZyrhrQZ64Q87CUEX3unHjzGsNvU+hhCd+zGcazwFyDU4xkQnC4pF5CwSNtqMd
- 2EpEjxaBfRS8PquPY/JR6DP+psMLPxmEqdCMpV7rL13xquPsBdhE7DKY3
-X-Gm-Gg: ASbGncs6itccmhqBU9vTPlefbo4KerxpJF9Vx0kJS7aGScF9MA49M/0703NmHMq7q0k
- yrUFiIMtj5pVBVxFOoSn+sZci5QkqY5Ed6isWw67eXM//X7pRPIgMVVIOev4NBBIS9nq0xg+Ps+
- Az+FL3myMXvYMaLcpE0eFyn31MxsrxQdMflqThKrKCy5Hcziih/L30mI44TzznHWXC6boxIQB9Q
- jer519R+9DdlFOLn5fKcLM6d7esyRKunNUg4A8R863PxrUCGXKbEJ1VNkwManoufaOycXJGoXvK
- 3RITfLrDdz5+fTIpK2osaDnMgL1GUHlu/McXUi0gGagY1o+ynK/s2l/tpR7zqkyFGet6DQwVju4
- F+cE=
-X-Received: by 2002:a05:600c:1f8e:b0:46f:b42e:e392 with SMTP id
- 5b1f17b1804b1-46fbbeb30a2mr90594125e9.39.1760469481004; 
- Tue, 14 Oct 2025 12:18:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGk1F5tgxsBpOKnSPu3wNLL9gO6D6y9/QvSlOThTE8YqBxthqB38W2u6UDufG23sI5K+5bA6g==
-X-Received: by 2002:a05:600c:1f8e:b0:46f:b42e:e392 with SMTP id
- 5b1f17b1804b1-46fbbeb30a2mr90594005e9.39.1760469480592; 
- Tue, 14 Oct 2025 12:18:00 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fc155143fsm209339275e9.11.2025.10.14.12.17.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Oct 2025 12:17:59 -0700 (PDT)
-Message-ID: <06010021-2170-44e0-a186-6c69a075da49@redhat.com>
-Date: Tue, 14 Oct 2025 21:17:58 +0200
+ d=1e100.net; s=20230601; t=1760469591; x=1761074391;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V+VWQlRtDiKUJEtuqAgZyiqfrGUS0b2sMRTtBiC3lXE=;
+ b=rGiUOeVABYgEV4B1DB5NCBB4RfrzSjwptf7Aa1gtN33YXSCfFJblEb5b0pzW0VRBuo
+ oy7/el90ScyIO/kVNIMB2MRPfBucLIrdmYU6JIIjSxYPQxEjRA3s6fXQh+Dz8z+EFX1T
+ OQ6O8XjPdIJQtOXG5p8oLRejRvKtzQlynqzg1014w0jPcT9KpgytvawvVOPDyGK+0TjY
+ 5b+X3pVp/yRGylBosz/e8WwuT347BDx/9WkP17jXLJ1ZpEqxzBXdxS3oGIGoqjGqJxzm
+ 5FBbsJsEaigPwaV2Jogim39/47WR57ion26zIJlH3w1EIZOXM7fP5mSNdQIyTJYtWUY3
+ hQaQ==
+X-Gm-Message-State: AOJu0YxmoK1EsxCb9A0hew8rNIZLRF64sURARrzzwE0lVFLSK9JwUpT+
+ Ia4LJuv+Z983eoouCu75/xRaUEi8KC8hKUhyHzPqfkTN6JbS0YMgg4oAkS+GrjvW2gIRB2VCNoy
+ pJrdY0j+rzbI+eKiFlQMY795j4f7ec8zRvEiCn+DU6eHyzb0E6imvahLPv1NJc7wDvadKpDJ4se
+ dttulpZTy1hvIihQHZTnFvtOPARBCB9bQIZ9emdg==
+X-Gm-Gg: ASbGncv8ZaZXujaN2Yh1JAlcU51rwO5MLyjujGVSu4RMvIMrJJ+nq3EW75oASUAkFtG
+ +Tq8bJQLjX77mxRxptAExfni1aa1uah+aHPOZcpvyxZcORd/PL/DerF5CCwIFNTHI0U90VQG4Kc
+ JPsGN12KCFPwaA2txz6uTmH+/stQz6Imf9aicQo09hkzi+EQsuMZHXwMBT7TjDkLSpWgKdmOqgg
+ b1fytJL86ctdvHf9FDpPLE4F4mMi38NE4KBtNbaIFJQZUWGK4ZH6sQ0cQpQD+Xa5Y2HIICspdy1
+ GhM6un4/EaT0kQVOP47ST/qCQQ4kpQ==
+X-Received: by 2002:a05:620a:2981:b0:84a:f7cc:1eaf with SMTP id
+ af79cd13be357-88350f575a5mr4294861285a.35.1760469591169; 
+ Tue, 14 Oct 2025 12:19:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoakdbp9BljsWaX0AKJTl/ij+zsqC0Zbicq0Rxf7FJqOn2GPnzuFXEGfZ8S8aBbhB++KEikQ==
+X-Received: by 2002:a05:620a:2981:b0:84a:f7cc:1eaf with SMTP id
+ af79cd13be357-88350f575a5mr4294854485a.35.1760469590612; 
+ Tue, 14 Oct 2025 12:19:50 -0700 (PDT)
+Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-884a22744f2sm1256602585a.44.2025.10.14.12.19.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 12:19:49 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ peterx@redhat.com, Richard Henderson <rth@twiddle.net>,
+ "Emilio G . Cota" <cota@braap.org>
+Subject: [PATCH v2 2/3] tests/test-rcu-*: Zero-initialize allocated elements
+Date: Tue, 14 Oct 2025 15:19:43 -0400
+Message-ID: <20251014191944.2225735-3-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251014191944.2225735-1-peterx@redhat.com>
+References: <20251014191944.2225735-1-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vfio: rename field to "num_initial_regions"
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>, Thomas Huth <thuth@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- qemu-stable@nongnu.org, qemu-s390x@nongnu.org
-References: <20251014151227.2298892-1-john.levon@nutanix.com>
- <20251014151227.2298892-2-john.levon@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251014151227.2298892-2-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -143,7 +92,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,147 +108,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/14/25 17:12, John Levon wrote:
-> We set VFIODevice::num_regions at initialization time, and do not
-> otherwise refresh it. As it is valid in theory for a VFIO device to
-> later increase the number of supported regions, rename the field to
-> "num_initial_regions" to better reflect its semantics.
-> 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+QEMU almost always do this, so do it too with the RCU unit tests.  It's
+preparation work to start asserting on possible rcu double free.
 
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ tests/unit/test-rcu-list.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   include/hw/vfio/vfio-device.h |  2 +-
->   hw/vfio-user/device.c         |  2 +-
->   hw/vfio/ccw.c                 |  4 ++--
->   hw/vfio/device.c              | 12 ++++++------
->   hw/vfio/iommufd.c             |  3 ++-
->   hw/vfio/pci.c                 |  4 ++--
->   6 files changed, 14 insertions(+), 13 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 7e9aed6d3c..0fe6c60ba2 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -74,7 +74,7 @@ typedef struct VFIODevice {
->       VFIODeviceOps *ops;
->       VFIODeviceIOOps *io_ops;
->       unsigned int num_irqs;
-> -    unsigned int num_regions;
-> +    unsigned int num_initial_regions;
->       unsigned int flags;
->       VFIOMigration *migration;
->       Error *migration_blocker;
-> diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-> index 0609a7dc25..64ef35b320 100644
-> --- a/hw/vfio-user/device.c
-> +++ b/hw/vfio-user/device.c
-> @@ -134,7 +134,7 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
->       VFIOUserFDs fds = { 0, 1, fd};
->       int ret;
->   
-> -    if (info->index > vbasedev->num_regions) {
-> +    if (info->index > vbasedev->num_initial_regions) {
->           return -EINVAL;
->       }
->   
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 9560b8d851..4d9588e7aa 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -484,9 +484,9 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
->        * We always expect at least the I/O region to be present. We also
->        * may have a variable number of regions governed by capabilities.
->        */
-> -    if (vdev->num_regions < VFIO_CCW_CONFIG_REGION_INDEX + 1) {
-> +    if (vdev->num_initial_regions < VFIO_CCW_CONFIG_REGION_INDEX + 1) {
->           error_setg(errp, "vfio: too few regions (%u), expected at least %u",
-> -                   vdev->num_regions, VFIO_CCW_CONFIG_REGION_INDEX + 1);
-> +                   vdev->num_initial_regions, VFIO_CCW_CONFIG_REGION_INDEX + 1);
->           return false;
->       }
->   
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 64f8750389..52079f4cf5 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -257,7 +257,7 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
->   {
->       int i;
->   
-> -    for (i = 0; i < vbasedev->num_regions; i++) {
-> +    for (i = 0; i < vbasedev->num_initial_regions; i++) {
->           struct vfio_info_cap_header *hdr;
->           struct vfio_region_info_cap_type *cap_type;
->   
-> @@ -466,7 +466,7 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
->       int i;
->   
->       vbasedev->num_irqs = info->num_irqs;
-> -    vbasedev->num_regions = info->num_regions;
-> +    vbasedev->num_initial_regions = info->num_regions;
->       vbasedev->flags = info->flags;
->       vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
->   
-> @@ -476,10 +476,10 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
->       QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
->   
->       vbasedev->reginfo = g_new0(struct vfio_region_info *,
-> -                               vbasedev->num_regions);
-> +                               vbasedev->num_initial_regions);
->       if (vbasedev->use_region_fds) {
-> -        vbasedev->region_fds = g_new0(int, vbasedev->num_regions);
-> -        for (i = 0; i < vbasedev->num_regions; i++) {
-> +        vbasedev->region_fds = g_new0(int, vbasedev->num_initial_regions);
-> +        for (i = 0; i < vbasedev->num_initial_regions; i++) {
->               vbasedev->region_fds[i] = -1;
->           }
->       }
-> @@ -489,7 +489,7 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
->   {
->       int i;
->   
-> -    for (i = 0; i < vbasedev->num_regions; i++) {
-> +    for (i = 0; i < vbasedev->num_initial_regions; i++) {
->           g_free(vbasedev->reginfo[i]);
->           if (vbasedev->region_fds != NULL && vbasedev->region_fds[i] != -1) {
->               close(vbasedev->region_fds[i]);
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 68470d552e..10fc065d20 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -663,7 +663,8 @@ found_container:
->       vfio_iommufd_cpr_register_device(vbasedev);
->   
->       trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
-> -                                   vbasedev->num_regions, vbasedev->flags);
-> +                                   vbasedev->num_initial_regions,
-> +                                   vbasedev->flags);
->       return true;
->   
->   err_listener_register:
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 06b06afc2b..8b8bc5a421 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2975,9 +2975,9 @@ bool vfio_pci_populate_device(VFIOPCIDevice *vdev, Error **errp)
->           return false;
->       }
->   
-> -    if (vbasedev->num_regions < VFIO_PCI_CONFIG_REGION_INDEX + 1) {
-> +    if (vbasedev->num_initial_regions < VFIO_PCI_CONFIG_REGION_INDEX + 1) {
->           error_setg(errp, "unexpected number of io regions %u",
-> -                   vbasedev->num_regions);
-> +                   vbasedev->num_initial_regions);
->           return false;
->       }
->   
+diff --git a/tests/unit/test-rcu-list.c b/tests/unit/test-rcu-list.c
+index 8f0adb8b00..853c9e33d9 100644
+--- a/tests/unit/test-rcu-list.c
++++ b/tests/unit/test-rcu-list.c
+@@ -233,7 +233,7 @@ static void *rcu_q_updater(void *arg)
+         TEST_LIST_FOREACH_RCU(el, &Q_list_head, entry) {
+             j++;
+             if (target_el == j) {
+-                struct list_element *new_el = g_new(struct list_element, 1);
++                struct list_element *new_el = g_new0(struct list_element, 1);
+                 n_nodes_local++;
+                 TEST_LIST_INSERT_AFTER_RCU(el, new_el, entry);
+                 break;
+@@ -259,7 +259,7 @@ static void rcu_qtest_init(void)
+     nthreadsrunning = 0;
+     srand(time(0));
+     for (i = 0; i < RCU_Q_LEN; i++) {
+-        new_el = g_new(struct list_element, 1);
++        new_el = g_new0(struct list_element, 1);
+         TEST_LIST_INSERT_HEAD_RCU(&Q_list_head, new_el, entry);
+     }
+     qemu_mutex_lock(&counts_mutex);
+-- 
+2.50.1
 
 
