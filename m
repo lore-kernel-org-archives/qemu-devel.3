@@ -4,90 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE46CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 10:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26BF4CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 10:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8cWE-0005NF-LQ; Tue, 14 Oct 2025 06:44:38 -0400
+	id 1v8cYm-0000fA-Ab; Tue, 14 Oct 2025 06:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cVQ-0004aU-65
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:43:49 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cVF-0003Wx-4U
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:43:47 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-426edfffc66so529820f8f.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 03:43:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760438605; x=1761043405; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Jil0Ama1zoQrZnPdRDjlJAWkmuZcYK/+OGYeLjiDqe0=;
- b=p154IGX5rhIDLDWv+CwtHRzGTgar/5m/1tLfCuoJmj8NFStWaVRNbw1efoHQTwJ2bE
- jrhsmONqH/XjckqIrOuXGwkEa5CWZFIZHJfznLNKQg8SaaMvs4LEO2793uJ/redep2Cp
- L7MSiYbotGRgUcqGwsXx4Z4DdqkNykvPQhfhCFL3S+Qf8gxvrofjOfEeuAfWBIyVFpck
- vCYQV3YCboWDRaJWN5L2VSA7N+WtKB9S/x4PaE4MM3XxtecuyL2wOw6fMe0ewvk+3yln
- FyMKBZn6kssaxq325OiCHdzJZ14yLzGB3dys9/G5+Yvd0OjD8iChFlo3tbwGYoU5KO76
- 5EZw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8cYk-0000em-TX
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:47:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8cYd-00041W-KP
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 06:47:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760438825;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=r7SYV5yRsu+kQhBtG8+ZO4HIbJ8BJckGDMn7/VeClAQ=;
+ b=jPbecT5CUu7xzPzlrM1FYb/KsiHVALUp3hcLC3Gh5c9utdwu+DkwuZaTI/IuWACtBAQ93f
+ OcDGp2jN3K0YwdJ55K1Ji7SJqdbRVtBw8Ax1uPLjcXaJ9oW0n0trQprR50ce3bo8kMnd93
+ 8SrRD/kP2zJ/WFLjOTeR+mEYnPvSZj4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-bFxvATq8PNSVz3T-oJvStA-1; Tue, 14 Oct 2025 06:47:04 -0400
+X-MC-Unique: bFxvATq8PNSVz3T-oJvStA-1
+X-Mimecast-MFC-AGG-ID: bFxvATq8PNSVz3T-oJvStA_1760438823
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e509374dcso22745745e9.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 03:47:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760438605; x=1761043405;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1760438823; x=1761043623;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Jil0Ama1zoQrZnPdRDjlJAWkmuZcYK/+OGYeLjiDqe0=;
- b=iCwbDtL/M75qTMtVy8s1eqVV8Q5lhEJfkzylaYmE2T6Aec5OLF24+V5zdTbWuwPB92
- JVu4vhSdiFBZtaunD7KrLLsFVcs4l9ZYFgKeMWRIZ1BDtkQj11TnfKSpEFA8ivI5YrVG
- caaRS0lu/frGATJwYQzmR100Jd1txdbqe/YkqOMbZ2WiBEPbImG0UDIuAnnngoYDy3pd
- fGUuONafCOp8oP9BB5bkuaaeDDp1/o/UIOKD4BIfeHdB0wZHk5fxWplHRFolE3dUpihE
- UiqvUy9HLxEec+pJw9ZrVYzBTCeE13VddO6bAO6chzl143Shk7b2p2eQh900n4ISJ0Dx
- EmzQ==
-X-Gm-Message-State: AOJu0YzWzaUFyXAzuW2x5CbpabNryd53JoPVlgL8Kk2mby5R333oISOq
- iQg6Ea6FydpNXVh15gdgOhVF+TnsEpQBs/Vy2CEeC84cDv0+WQZ0o9ps7QNhuCcvj94=
-X-Gm-Gg: ASbGnctZzF85h9zLer3pc757Esh9XKEC0SYxx0AJKOz1C2oX8u/sGXmwYfJX3fdlF4n
- ZOj74GPe5n51r8dzfRMWgqUHdoe95exD1kqvtbZUlER/HZV8KPaG3nbbLWDU2pwkapF+PQDzZl2
- FpTscjjtKtYhI0/lS5Q6CnXCenAn/jSGojGa+JXoMJzCzk0jEkUiJLTSqJGOpc+BkoKB9ESJx4W
- aEgtHrx7dXCh9Pr5E5QE7LvITGIZsBIQrTkIfVOmTno3pUJaT+fF8qm3pY7DJL/DaKvHTBLoIiO
- Xh6vNofouWkBdJVW5ZQislE1ADjwdD2O0+ojOLZ3uVpXA7sWxchxhU0ItbazXFUYvGnZ0cL6Sao
- b+YvrZBbZ4wdiXrHByfTTzfA7X51pcbT5KyDi7qurfONMgStWWHYXcH2Y
-X-Google-Smtp-Source: AGHT+IEapHYNwEsBeHKpfb8hNIa+UaI/5witG9DkXrRFY1Y8kMzrkmWlFHzupl/07WpZBNXGZEKkbQ==
-X-Received: by 2002:a05:6000:40c8:b0:410:f600:c35e with SMTP id
- ffacd0b85a97d-425829b0561mr16342480f8f.8.1760438604816; 
- Tue, 14 Oct 2025 03:43:24 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583424sm22685054f8f.21.2025.10.14.03.43.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 03:43:24 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5264A5F812;
- Tue, 14 Oct 2025 11:43:23 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-s390x@nongnu.org
-Subject: [PATCH 0/5] testing/next - arm custom runner tweaks
-Date: Tue, 14 Oct 2025 11:43:17 +0100
-Message-ID: <20251014104323.3023714-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ bh=r7SYV5yRsu+kQhBtG8+ZO4HIbJ8BJckGDMn7/VeClAQ=;
+ b=OvPauCe3MXzvfWqFYoH7SP0jIB6ZEilMQaHsquPvKWD7ChJaJMiRAvzeXHv2xTJseU
+ irmk2AM89uGZJE4cN2nnQGaoZaDqNfQwJnaFRdCjk8MsP9+Hdw25gMWFifb3nN7D3GY3
+ xGwJICSDVL7asu4R9ae38IguyMJXCeJXrOLt1u+nVaiSikaXjutzaQR7iiG4ifmpUiGS
+ Oh7BEjLwQoF3568E8pxTTkcfgXisiU3+obtF4JtGrJexNt2IxHztl8VOCgalI9ftLnr2
+ RvuFMq65xJHVHKX9tCLv1vOkKqpjG/IC0hPTX6IZrBEdjfs320p6qE8ECTwzQoDGQbSl
+ knjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXk3QIM5QDeMcOBmsTz44KJZtpIyQV0dEBuw1WSt7IUg2vJLlq0mPpjbVdVESCTd3EL79upiizpLqSP@nongnu.org
+X-Gm-Message-State: AOJu0YydwoOnIy2fghc4fLs7QBlsSpw/nIdRlGCjBjCNTnCz+1X/ozzR
+ Thi2XeimkxB2Jj8z5qTt7Ak6PKftKCuDRhhyLvhlTyHHiiWjyNo63FFitdLZjaFgllaSMAPtb+f
+ oK471hkue7QDAYxcx8wxG150aotpSNrxRvz7tUO779U8fOoIvwKSBl+cS
+X-Gm-Gg: ASbGncvcX08Pecs/AxIjpQkgmRMz+w8+VcIf0Wd3C1xjXApF83ZMbc8DkBSYnZmtyS/
+ H+OklNbsbo0issKJypsAR7pKwPOAVunCYnUGFHeJKn/VS/LET5g5NKamwUbQTYbsAyae2CPeUKS
+ 9p4gjBCZQSvCKkol86Gi5XeDpMOuppmRavhmV5F5k3Tsv/3GDPBTU3lruIQRhZjpg7VCCD6FGJA
+ bGamK7YMZVPiNX9TKCnkh2R+VhXPmWvV0xU74w6ATzb8jpFjgdF00ZRKPFTwvZ2dYvHnO+gwnt8
+ Vjt5qKrl1rTUB58A5mxcdi6mbUwuqR1qs9Abwke0tFwrGw5yLPI5LBDh2pUMo3yqPV+C77a80UL
+ iy7mrZA==
+X-Received: by 2002:a05:600c:628e:b0:46d:996b:826f with SMTP id
+ 5b1f17b1804b1-46fa9afbb26mr161424505e9.25.1760438822847; 
+ Tue, 14 Oct 2025 03:47:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvxuu/gLWf/gNaPoKX7kuCub1yptnF+jdSOzuRON/vrMQK1PHMXq9Ivp3wpGmQspD4MNn9EQ==
+X-Received: by 2002:a05:600c:628e:b0:46d:996b:826f with SMTP id
+ 5b1f17b1804b1-46fa9afbb26mr161424325e9.25.1760438822511; 
+ Tue, 14 Oct 2025 03:47:02 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
+ [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb483bbb4sm228219885e9.5.2025.10.14.03.47.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Oct 2025 03:47:02 -0700 (PDT)
+Message-ID: <c5003498-7914-4d94-bb79-0851c49c47a1@redhat.com>
+Date: Tue, 14 Oct 2025 12:47:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] testing/next - arm custom runner tweaks
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-s390x@nongnu.org
+References: <20251014104323.3023714-1-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251014104323.3023714-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,66 +157,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This isn't quite ready yet as there is an in-flight MR for libvirt-ci
-and the final patch has to manually drop a couple of packages which
-don't cleanly install. I don't know if we should deal with that
-upstream or in the lcitool metadata. For reference the two packages
-are:
+On 14/10/2025 12.43, Alex Bennée wrote:
+> This isn't quite ready yet as there is an in-flight MR for libvirt-ci
+> and the final patch has to manually drop a couple of packages which
+> don't cleanly install. I don't know if we should deal with that
+> upstream or in the lcitool metadata. For reference the two packages
+> are:
+> 
+>    libcurl4-gnutls-dev:armhf
+>    libglusterfs-dev:armhf
 
-  libcurl4-gnutls-dev:armhf
-  libglusterfs-dev:armhf
+FYI, glusterfs is deprecated in QEMU since a while:
 
-which I don't think are crucial to coverage. The main motivation was
-to include the crypto libs so the block io tests don't fail.
+  https://gitlab.com/qemu-project/qemu/-/commit/b873463821343c6f702c4195f2168790b09cf44e
 
-However the the bulk of it works to:
+... so you could also add a patch that removes it from QEMU now, I guess.
 
-  - improve utilisation of the new CI machines
-  - remove hacks that get in the way of private test runners
-  - fully drive ansible packages with lcitool
-  - widen the testing of 32 bit Arm on the custom runner
-
-Please review.
-
-Alex.
-
-Alex Bennée (5):
-  tests/lcitool: bump to latest version and regenerate (!wait on
-    upstream)
-  gitlab: use template for ubuntu-24.04-aarch64 jobs
-  gitlab: modernise the ubuntu24.04-aarch32 jobs
-  scripts/setup: update the armhf overlay
-  scripts/setup: update build-environment to use armhf yaml (!WIP)
-
- .../custom-runners/ubuntu-24.04-aarch32.yml   |  15 +-
- .../custom-runners/ubuntu-24.04-aarch64.yml   | 230 ++++++++----------
- scripts/ci/setup/ubuntu/build-environment.yml |  22 +-
- .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |   4 +-
- ...armhf-cross.yml => ubuntu-2404-armhf.yaml} |  67 +----
- .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |   4 +-
- tests/docker/dockerfiles/alpine.docker        |  10 +-
- tests/docker/dockerfiles/centos9.docker       |  10 +-
- .../dockerfiles/debian-amd64-cross.docker     |  16 +-
- .../dockerfiles/debian-arm64-cross.docker     |  16 +-
- .../dockerfiles/debian-armhf-cross.docker     |  16 +-
- .../dockerfiles/debian-i686-cross.docker      |  16 +-
- .../dockerfiles/debian-mips64el-cross.docker  |  16 +-
- .../dockerfiles/debian-mipsel-cross.docker    |  16 +-
- .../dockerfiles/debian-ppc64el-cross.docker   |  16 +-
- .../dockerfiles/debian-riscv64-cross.docker   |  16 +-
- .../dockerfiles/debian-s390x-cross.docker     |  16 +-
- tests/docker/dockerfiles/debian.docker        |  10 +-
- .../dockerfiles/fedora-rust-nightly.docker    |  10 +-
- .../dockerfiles/fedora-win64-cross.docker     |  14 +-
- tests/docker/dockerfiles/fedora.docker        |  10 +-
- tests/docker/dockerfiles/opensuse-leap.docker |  10 +-
- tests/docker/dockerfiles/ubuntu2204.docker    |  10 +-
- tests/lcitool/libvirt-ci                      |   2 +-
- tests/lcitool/refresh                         |  11 +
- 25 files changed, 259 insertions(+), 324 deletions(-)
- rename scripts/ci/setup/ubuntu/{ubuntu-2204-armhf-cross.yml => ubuntu-2404-armhf.yaml} (63%)
-
--- 
-2.47.3
+  Thomas
 
 
