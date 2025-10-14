@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D518ACCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258E3CCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8b62-0004Oy-AJ; Tue, 14 Oct 2025 05:13:30 -0400
+	id 1v8b63-0004Qc-U5; Tue, 14 Oct 2025 05:13:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8b5v-0004M1-Fg
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:13:25 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8b5s-0001Du-I7
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:13:23 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id F407180818;
- Tue, 14 Oct 2025 12:13:16 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8a::1:35] (unknown
- [2a02:6bf:8080:a8a::1:35])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id FDLOTI3FoSw0-31wLyGo9; Tue, 14 Oct 2025 12:13:16 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760433196;
- bh=CopMfirbw4Ji03+4yyARmoX2JWPJcaxWw4w77F6IrPE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=gsQVxMq6ZV8g27sjhyuwfHsLc2SLC1Wj1oz5Tp2RGXxRM7s3KxTvAB8dapcHx0bAn
- WOZZfE8qldCaAgsNLg0B0rnXCLadhWpfWMyx+x4X4xe88ErFgw/9e9110llBAttgOo
- AebbGSFRFr/plh9Ixg/YrnGlQvAqQ1uA8uixKpXU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <f4470541-c41b-406d-b099-f995502fbc21@yandex-team.ru>
-Date: Tue, 14 Oct 2025 12:13:15 +0300
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1v8b5t-0004Lm-Qa
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:13:22 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1v8b5r-0001Dv-KM
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:13:21 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxxtAsFO5oq_MVAA--.46260S3;
+ Tue, 14 Oct 2025 17:13:16 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJDx_8MqFO5oDFHhAA--.40660S3;
+ Tue, 14 Oct 2025 17:13:16 +0800 (CST)
+Subject: Re: [PATCH 2/4] target/loongarch: Remove target_ulong use in
+ gen_goto_tb()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
+ <anjo@rev.ng>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20251009201947.34643-1-philmd@linaro.org>
+ <20251009201947.34643-3-philmd@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <471d31b2-1b49-c5c3-348a-d77ff78c8342@loongson.cn>
+Date: Tue, 14 Oct 2025 17:13:09 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] chardev/char: qemu_char_open(): add return value
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
- <20251013133836.852018-4-vsementsov@yandex-team.ru>
- <CAJ+F1CL-wvyP3cVGAWyy_avQxzwPQcVJ+YtyxpRVY8HmKDNjkw@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAJ+F1CL-wvyP3cVGAWyy_avQxzwPQcVJ+YtyxpRVY8HmKDNjkw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20251009201947.34643-3-philmd@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDx_8MqFO5oDFHhAA--.40660S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7XrWruw4UWw15KFyUGw4xZrc_yoWDWwb_AF
+ 1xJr4kWr4kW3W7A3WFkry5AF1Ska1kCFnavF90qay8Gas8Xw4UAr48Ww1kCrn0vw4Fvr13
+ C39rGrnxur1a9osvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbxxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0
+ oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F4
+ 0EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUtVWrXwAv7VC2z280aVAFwI0_
+ Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbI
+ xvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
+ xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrx
+ kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v2
+ 6r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJw
+ CI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcHUqUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.658,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,72 +86,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.10.25 10:10, Marc-André Lureau wrote:
-> Hi
-> 
-> On Mon, Oct 13, 2025 at 5:40 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> Accordingly with recommendations in include/qapi/error.h accompany
->> errp by boolean return value and get rid of error propagation.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   chardev/char.c | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/chardev/char.c b/chardev/char.c
->> index d5a2533e8e..64ec60c0f2 100644
->> --- a/chardev/char.c
->> +++ b/chardev/char.c
->> @@ -246,14 +246,20 @@ int qemu_chr_add_client(Chardev *s, int fd)
->>           CHARDEV_GET_CLASS(s)->chr_add_client(s, fd) : -1;
->>   }
->>
->> -static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
->> +static bool qemu_char_open(Chardev *chr, ChardevBackend *backend,
->>                              bool *be_opened, Error **errp)
->>   {
->> +    ERRP_GUARD();
->>       ChardevClass *cc = CHARDEV_GET_CLASS(chr);
->>
->>       if (cc->open) {
->>           cc->open(chr, backend, be_opened, errp);
->> +        if (*errp) {
->> +            return false;
->> +        }
->>       }
->> +
->> +    return true;
->>   }
->>
->>   static void char_init(Object *obj)
->> @@ -1030,9 +1036,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
->>           goto fail;
->>       }
->>
->> -    qemu_char_open(chr, backend, &be_opened, &local_err);
->> -    if (local_err) {
->> -        error_propagate(errp, local_err);
->> +    if (!qemu_char_open(chr, backend, &be_opened, &local_err)) {
-> 
-> You meant to pass errp instead, since you dropped error_propagate ?
-> 
+在 2025/10/10 上午4:19, Philippe Mathieu-Daudé 写道:
+> translator_use_goto_tb() expects a vaddr type since commit
+> b1c09220b4c ("accel/tcg: Replace target_ulong with vaddr in
+> translator*()").
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/loongarch/tcg/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+Signed-off-by: Song Gao <gaosong@loongson.cn>
 
-Oops, right
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+> index 53a0b4c3ce9..e30b64c0e05 100644
+> --- a/target/loongarch/tcg/translate.c
+> +++ b/target/loongarch/tcg/translate.c
+> @@ -99,7 +99,7 @@ void generate_exception(DisasContext *ctx, int excp)
+>       ctx->base.is_jmp = DISAS_NORETURN;
+>   }
+>   
+> -static inline void gen_goto_tb(DisasContext *ctx, int n, target_ulong dest)
+> +static inline void gen_goto_tb(DisasContext *ctx, int n, vaddr dest)
+>   {
+>       if (ctx->va32) {
+>           dest = (uint32_t) dest;
 
->>           goto fail;
->>       }
->>
->> --
->> 2.48.1
->>
->>
-> 
-> 
-
-
--- 
-Best regards,
-Vladimir
 
