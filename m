@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA03CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6415CCCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:45:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v92h3-0000Yp-PQ; Wed, 15 Oct 2025 10:41:38 -0400
+	id 1v92k9-0001h7-DK; Wed, 15 Oct 2025 10:44:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v92go-0000Nz-S0
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:41:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v92k3-0001fJ-QF
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:44:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v92gf-0006Js-Dz
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:41:18 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v92jw-0006aW-89
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:44:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760539265;
+ s=mimecast20190719; t=1760539465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=R1MLAN7CR8OZ9XZGygHRbL8NAIs9pi1ZShZl/FkeZOs=;
- b=OskIw6A7hEHUx4Jg6/UBCbvKIrEOeBMRLThq9d2HJM6ofVTRNyHKzq8fVuubaly8ek7s7l
- BbPATXKUDHuYfO5ojOo7ZOQZVAU08XedMUx6Ip6Hhszu1i6KDmElUtfWUsRg8YQtefiJ5T
- 2WU/X64tTPrkUcIlOyYtiO23rEGZlV8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZJr1B92xSGunX+IoquMZJ1Umw9DtWtUDrc/CgKtnve8=;
+ b=cbQQJXeng6YM53RRQVtQYR4xb+ggs3sKfUE7ertWjEouM/hig8CHDlc0r5H8A+xPXdYq8K
+ lJB0XcSOsPSNNNGPLiFDvymTYFp3G0NQwTry/9EAHxHVwFRY3x7HVzPoLawhOZclCWSmXl
+ x7GPAvLXcqpwxvfn1ClQ6e2NPpEWCDY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-WiZZrmeHPP-8aixi4OjAKg-1; Wed,
- 15 Oct 2025 10:41:01 -0400
-X-MC-Unique: WiZZrmeHPP-8aixi4OjAKg-1
-X-Mimecast-MFC-AGG-ID: WiZZrmeHPP-8aixi4OjAKg_1760539260
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-woJVRLxxNwaCniTPhekF9Q-1; Wed,
+ 15 Oct 2025 10:44:21 -0400
+X-MC-Unique: woJVRLxxNwaCniTPhekF9Q-1
+X-Mimecast-MFC-AGG-ID: woJVRLxxNwaCniTPhekF9Q_1760539460
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE7C019560BB; Wed, 15 Oct 2025 14:40:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D85FA30001A1; Wed, 15 Oct 2025 14:40:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7209921E6A27; Wed, 15 Oct 2025 16:40:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,  Yanan Wang <wangyanan55@huawei.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v5 3/3] hw/uefi/ovmf-log: add maxsize parameter
-In-Reply-To: <20251015120637.1736402-4-kraxel@redhat.com> (Gerd Hoffmann's
- message of "Wed, 15 Oct 2025 14:06:37 +0200")
-References: <20251015120637.1736402-1-kraxel@redhat.com>
- <20251015120637.1736402-4-kraxel@redhat.com>
-Date: Wed, 15 Oct 2025 16:40:56 +0200
-Message-ID: <87wm4w9qiv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1416A19560BA; Wed, 15 Oct 2025 14:44:20 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.91])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9232830001A1; Wed, 15 Oct 2025 14:44:19 +0000 (UTC)
+Date: Tue, 14 Oct 2025 14:22:20 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: armbru@redhat.com, qemu-devel@nongnu.org, eblake@redhat.com,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH v2 27/33] qapi/trace.json: docs: width=70 and two spaces
+ between sentences
+Message-ID: <20251014182220.GA18850@fedora>
+References: <20251011140441.297246-1-vsementsov@yandex-team.ru>
+ <20251011140441.297246-28-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="cQXygG5e+MJ89Usf"
+Content-Disposition: inline
+In-Reply-To: <20251011140441.297246-28-vsementsov@yandex-team.ru>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,150 +88,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gerd Hoffmann <kraxel@redhat.com> writes:
 
-> Allow limiting the amount of log output sent.  Allow up to 1 MiB.
-> In case the guest log buffer is larger than 1 MiB limit the output
-> instead of throwing an error.
->
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+--cQXygG5e+MJ89Usf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Sat, Oct 11, 2025 at 05:04:33PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/uefi/ovmf-log.c   | 42 ++++++++++++++++++++++++++++++++++--------
->  hmp-commands-info.hx |  4 ++--
->  qapi/machine.json    |  5 +++++
->  3 files changed, 41 insertions(+), 10 deletions(-)
->
-> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-> index e281a980a101..28788620e3f6 100644
-> --- a/hw/uefi/ovmf-log.c
-> +++ b/hw/uefi/ovmf-log.c
-> @@ -18,6 +18,7 @@
->  #include "qapi/error.h"
->  #include "qapi/type-helpers.h"
->  #include "qapi/qapi-commands-machine.h"
-> +#include "qobject/qdict.h"
->  
->  
->  /* ----------------------------------------------------------------------- */
-> @@ -164,7 +165,8 @@ static void handle_ovmf_log_range(GString *out,
->      }
->  }
->  
-> -FirmwareLog *qmp_query_firmware_log(Error **errp)
-> +FirmwareLog *qmp_query_firmware_log(bool have_max_size, uint64_t max_size,
-> +                                    Error **errp)
->  {
->      MEM_DEBUG_LOG_HDR header;
->      dma_addr_t offset, base;
-> @@ -184,18 +186,40 @@ FirmwareLog *qmp_query_firmware_log(Error **errp)
->          return NULL;
->      }
->  
-> -    if (header.DebugLogSize > MiB) {
-> -        /* default size is 128k (32 pages), allow up to 1M */
-> -        error_setg(errp, "firmware log: log buffer is too big");
-> -        return NULL;
-> -    }
-> -
->      if (header.DebugLogHeadOffset > header.DebugLogSize ||
->          header.DebugLogTailOffset > header.DebugLogSize) {
->          error_setg(errp, "firmware log: invalid header");
->          return NULL;
->      }
->  
-> +    if (have_max_size) {
-> +        if (max_size > MiB) {
-> +            error_setg(errp, "firmware log: max-size larger than 1 MiB");
+>  qapi/trace.json | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-"parameter 'max-size' exceeds 1MiB" or similar.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-> +            return NULL;
-> +        }
-> +    } else {
-> +        max_size = MiB;
-> +    }
-> +
-> +    /* adjust header.DebugLogHeadOffset so we return at most maxsize bytes */
-> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
-> +        /* wrap around */
-> +        if (header.DebugLogTailOffset > max_size) {
-> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - max_size;
-> +        } else {
-> +            uint64_t max_chunk = max_size - header.DebugLogTailOffset;
-> +            if (header.DebugLogSize > max_chunk &&
-> +                header.DebugLogHeadOffset < header.DebugLogSize - max_chunk) {
-> +                header.DebugLogHeadOffset = header.DebugLogSize - max_chunk;
-> +            }
-> +        }
-> +    } else {
-> +        if (header.DebugLogTailOffset > max_size &&
-> +            header.DebugLogHeadOffset < header.DebugLogTailOffset - max_size) {
-> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - max_size;
-> +        }
-> +    }
+--cQXygG5e+MJ89Usf
+Content-Type: application/pgp-signature; name=signature.asc
 
-Didn't review this part; my brain's fried for today :)
+-----BEGIN PGP SIGNATURE-----
 
-> +
->      base = offset + header.HeaderSize;
->      if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
->          /* wrap around */
-> @@ -239,8 +263,10 @@ void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
->      Error *err = NULL;
->      FirmwareLog *log;
->      gsize log_len;
-> +    int64_t maxsize;
->  
-> -    log = qmp_query_firmware_log(&err);
-> +    maxsize = qdict_get_try_int(qdict, "maxsize", -1);
-> +    log = qmp_query_firmware_log(maxsize != -1, (uint64_t)maxsize, &err);
->      if (err)  {
->          hmp_handle_error(mon, err);
->          return;
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index f0aef419923c..f00d7081b40c 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -993,8 +993,8 @@ ERST
->  
->      {
->          .name       = "firmware-log",
-> -        .args_type  = "",
-> -        .params     = "",
-> +        .args_type  = "maxsize:o?",
-> +        .params     = "[maxsize]",
->          .help       = "show the firmware (ovmf) debug log",
->          .cmd        = hmp_info_firmware_log,
->      },
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjulNwACgkQnKSrs4Gr
+c8jOvAf9E+OCqFMdz0HS4+bli50N20+X5ApV15ZLsclyTklHVe3nyJ8LMrQsERhn
+USDXEB7XDGWAiaHLqa2HnY8us8WymAfEuyw7AsJo10Eo8rX5f/MVD041PBFnAlsX
+eWIodGH/u83VEH9a8gHLg3wdAX9KgWEh+E71rzpWsUr/LmvNPCqlLfca/ySPiL7v
+AKtNTNp3En1CaFI+79yo63wunxS30Ma1HlUAPkUX0yXIUFY3CK6f+SNS6rrxJNTD
+cDTqziJWMC3ni3DaLW0AMH4e4RswtMlhG8iXtyxF06ag7MEQxBbU4TqzDqcwdFML
+XNwm8a2aIgzOXxHO96TuR6tp0kdxeA==
+=K0Fe
+-----END PGP SIGNATURE-----
 
-Might want to spell it max-size for consistency with QMP.  Up to you.
-
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 96133e5c71cf..e4b15680c172 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -1858,9 +1858,14 @@
->  #
->  # Find firmware memory log buffer in guest memory, return content.
->  #
-> +# @max-size: limit the amount of log data returned.  Up to 1 MiB if
-> +#            log data is allowed.  In case the amout of log data is
-
-What are you trying to convey by "if log data is allowed"?
-
-s/amout/amount/
-
-> +#            larger than max-size the tail of the log is returned.
-
-Please use @max-size here for nicer rendering.
-
-> +#
->  # Since: 10.2
->  ##
->  { 'command': 'query-firmware-log',
-> +  'data': { '*max-size': 'size' },
->    'returns': 'FirmwareLog' }
->  
->  ##
+--cQXygG5e+MJ89Usf--
 
 
