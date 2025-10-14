@@ -4,53 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C346ECCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AC8CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 14:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8gBf-0004uc-4X; Tue, 14 Oct 2025 10:39:39 -0400
+	id 1v8gCo-0005eH-FR; Tue, 14 Oct 2025 10:40:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8gBc-0004uF-Lo
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:36 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v8gCl-0005cX-A3; Tue, 14 Oct 2025 10:40:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1v8gBS-0000WH-Ou
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:36 -0400
-DKIM-Signature: a=rsa-sha256; bh=mOMV6mSEZ4Mev5FKiKCskorfQLLMT6xX0RUPXAgXja8=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1760452755; v=1;
- b=CK9+lhgwZn3Vymii1i0eDN+XjGhIaN5yHBDq/gz/53cnJ03H+ATXQENQW5UUOUeUWA/D00Ch
- QMbV7FmfZEYn0SSu6I+BSjs2xbIbhiBhhp9Cw9RfTx5gLxRhlvDMvZfWiuBY2k/bSVc9S78R31V
- S/YKARpxBG+Fz+SKl4SR2+v9s33yw0/AXCHmtMdQEviqDx4Dj/e+aVbx8DZDByvA19iL5EthpSw
- VndxU2mO1h9eC9a0JN4ju6kQrT36mTEdkuQMdIX5CmYbZPdH3wGp6r2gfJOe8uzoI9hdfeVfj+N
- 8ChCIhmo+EJRaGFxWKYYHjIi2z7u1w5HdM7Lc1WK94rLA==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 722D323BDE;
- Tue, 14 Oct 2025 14:39:15 +0000 (UTC)
-From: ~myrslint <myrslint@git.sr.ht>
-Date: Fri, 10 Oct 2025 02:43:48 +0000
-Subject: [PATCH qemu v7 2/2] Honor guest PAT on x86, absent Bochs display
-Message-ID: <176045275486.7119.13003157223292391926-2@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <176045275486.7119.13003157223292391926-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v8gCi-0000rm-5E; Tue, 14 Oct 2025 10:40:46 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 414C115D690;
+ Tue, 14 Oct 2025 17:40:14 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C59E329F5EF;
+ Tue, 14 Oct 2025 17:40:34 +0300 (MSK)
+Message-ID: <119705ff-61c3-4d49-9c05-8bae019bbe2e@tls.msk.ru>
+Date: Tue, 14 Oct 2025 17:40:34 +0300
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: 17
-X-Spam_score: 1.7
-X-Spam_bar: +
-X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFT PATCH v2 0/2] Fix cross migration issue with missing
+ features: pdcm, arch-capabilities
+To: Paolo Bonzini <pbonzini@redhat.com>, Hector Cao <hector.cao@canonical.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org, lk@c--e.de,
+ berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250923104136.133875-1-pbonzini@redhat.com>
+ <aNVrAkx+ahn7ZRns@intel.com>
+ <8a754d6c-1d8c-43d7-b3f8-a4b3e194d30e@tls.msk.ru>
+ <aOyouIh//WY+EkKb@intel.com>
+ <d2cf0acc-7ba2-43fd-9d1b-3fcfbb8f7dc7@tls.msk.ru>
+ <CABjvBV60PX6OLzkFTfkPDXYUtR_WMVNbm9DQZwjaa_YuBAcfkg@mail.gmail.com>
+ <CABgObfbb-xpaBGZ7PhfQuFQorKwCVWpA057mctX0XqNxMnFhxA@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <CABgObfbb-xpaBGZ7PhfQuFQorKwCVWpA057mctX0XqNxMnFhxA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,200 +109,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: myrslint <qemu.haziness801@passinbox.com>
+On 10/14/25 16:53, Paolo Bonzini wrote:
+> On Tue, Oct 14, 2025 at 12:49 PM Hector Cao <hector.cao@canonical.com> wrote:
 
-On x86_64, where most CPUs support self-snoop, it is preferrable to
-always honor guest PAT. Not doing so is a quirk. There is a default
-enabled KVM quirk flag which enforces not doing so due to a former bug
-in Bochs display driver.
+>> Reverting the two faulty commits in 10.0.x will reduce the scope of migration failures (10.0.x -> 10.0.y / 10.1.z)
+> 
+> Yes, I agree. In my opinion reverting is the best option, because it
+> makes the machine types as constant as possible. Any change in the
+> machine types is a bug and the fix is to revert to the previous
+> situation.
 
-The bug has been fixed but not enough has yet passed since so we only
-disable said quirk flag if a Bochs display is not configured for the
-virtual machine.
+Ok, let's just revert them, despite the fact it's been two stable
+10.0.x releases already.
 
-This commit also moves around a bit of code that would be called when
-the initialization of a VM is done.
+How exactly migration fails, when it fails, and what's our
+breakage matrix?
 
-Signed-off-by: myrslint <qemu.haziness801@passinbox.com>
----
- accel/kvm/kvm-all.c        |  1 +
- accel/stubs/kvm-stub.c     |  1 +
- hw/display/bochs-display.c | 17 +++++++++++++++
- include/system/kvm.h       |  9 ++++++++
- target/i386/kvm/kvm.c      | 42 +++++++++++++++++++++++++++++++-------
- 5 files changed, 63 insertions(+), 7 deletions(-)
+   <=10.0.3
+     10.0.4,10.0.5
+   >=10.0.6 with reverts (I plan to make this release ASAP)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 58802f7c3c..b1ae36d6a1 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -103,6 +103,7 @@ bool kvm_readonly_mem_allowed;
- bool kvm_vm_attributes_allowed;
- bool kvm_msi_use_devid;
- bool kvm_pre_fault_memory_supported;
-+bool kvm_bochs_drm_quirk;
- static bool kvm_has_guest_debug;
- static int kvm_sstep_flags;
- static bool kvm_immediate_exit;
-diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index 68cd33ba97..a69c89e1ad 100644
---- a/accel/stubs/kvm-stub.c
-+++ b/accel/stubs/kvm-stub.c
-@@ -24,6 +24,7 @@ bool kvm_gsi_direct_mapping;
- bool kvm_allowed;
- bool kvm_readonly_mem_allowed;
- bool kvm_msi_use_devid;
-+bool kvm_bochs_drm_quirk;
-=20
- void kvm_flush_coalesced_mmio_buffer(void)
- {
-diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
-index ad2821c974..ec5ab5861c 100644
---- a/hw/display/bochs-display.c
-+++ b/hw/display/bochs-display.c
-@@ -20,6 +20,8 @@
- #include "ui/qemu-pixman.h"
- #include "qom/object.h"
-=20
-+#include "system/kvm.h"
-+
- typedef struct BochsDisplayMode {
-     pixman_format_code_t format;
-     uint32_t             bytepp;
-@@ -309,6 +311,21 @@ static void bochs_display_realize(PCIDevice *dev, Error =
-**errp)
-     }
-=20
-     memory_region_set_log(&s->vram, true, DIRTY_MEMORY_VGA);
-+
-+    /*
-+    * On x86_64, where most CPUs support self-snoop, it is preferrable to
-+    * always honor guest PAT. Not doing so is a quirk. There is a default
-+    * enabled KVM quirk flag which enforces not doing so due to a former bug
-+    * in Bochs display driver.
-+    *
-+    * The bug has been fixed but not enough has yet passed since so we only
-+    * disable said quirk flag if a Bochs display is not configured for the
-+    * virtual machine.
-+    *
-+    * The following flag tells KVM initialization code not to disable that
-+    * quirk flag.
-+    */
-+    kvm_bochs_drm_quirk =3D true;
- }
-=20
- static bool bochs_display_get_big_endian_fb(Object *obj, Error **errp)
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 4fc09e3891..45ddb2e0ee 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -43,6 +43,7 @@ extern bool kvm_gsi_direct_mapping;
- extern bool kvm_readonly_mem_allowed;
- extern bool kvm_msi_use_devid;
- extern bool kvm_pre_fault_memory_supported;
-+extern bool kvm_bochs_drm_quirk;
-=20
- #define kvm_enabled()           (kvm_allowed)
- /**
-@@ -144,6 +145,13 @@ extern bool kvm_pre_fault_memory_supported;
-  */
- #define kvm_msi_devid_required() (kvm_msi_use_devid)
-=20
-+/**
-+ * kvm_has_bochs_drm:
-+ * Returns: true if KVM is possible and a Bochs DRM driver is
-+ * in use for display.
-+ */
-+#define kvm_has_bochs_drm() (kvm_bochs_drm_quirk)
-+
- #else
-=20
- #define kvm_enabled()           (0)
-@@ -158,6 +166,7 @@ extern bool kvm_pre_fault_memory_supported;
- #define kvm_gsi_direct_mapping() (false)
- #define kvm_readonly_mem_enabled() (false)
- #define kvm_msi_devid_required() (false)
-+#define kvm_has_bochs_drm() (false)
-=20
- #endif  /* CONFIG_KVM_IS_POSSIBLE */
-=20
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index db40caa341..4d2a01ca0e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2692,13 +2692,13 @@ static bool kvm_rdmsr_pkg_energy_status(X86CPU *cpu,
-     return true;
- }
-=20
--static Notifier smram_machine_done;
-+static Notifier kvm_machine_done;
- static KVMMemoryListener smram_listener;
- static AddressSpace smram_address_space;
- static MemoryRegion smram_as_root;
- static MemoryRegion smram_as_mem;
-=20
--static void register_smram_listener(Notifier *n, void *unused)
-+static void register_smram_listener(void)
- {
-     CPUState *cpu;
-     MemoryRegion *smram =3D
-@@ -2731,6 +2731,37 @@ static void register_smram_listener(Notifier *n, void =
-*unused)
-     }
- }
-=20
-+static bool kvm_x86_smm_enabled(void)
-+{
-+    return object_dynamic_cast(OBJECT(current_machine), TYPE_X86_MACHINE) &&
-+        x86_machine_is_smm_enabled(X86_MACHINE(current_machine));
-+}
-+
-+static int kvm_x86_disable_quirsk2_mask(void)
-+{
-+    return kvm_check_extension(kvm_state, KVM_CAP_DISABLE_QUIRKS2);
-+}
-+
-+static int kvm_disable_ignore_guest_pat(void)
-+{
-+    return kvm_vm_enable_cap(kvm_state, KVM_CAP_DISABLE_QUIRKS2, 0, \
-+                             KVM_X86_QUIRK_IGNORE_GUEST_PAT);
-+}
-+
-+static void handle_machine_done(Notifier *n, void *unused)
-+{
-+    if (kvm_x86_smm_enabled()) {
-+        register_smram_listener();
-+    }
-+    if (!kvm_has_bochs_drm() && \
-+        (kvm_x86_disable_quirsk2_mask() & KVM_X86_QUIRK_IGNORE_GUEST_PAT)) {
-+        if (kvm_disable_ignore_guest_pat()) {
-+            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-+                         "modifiable but we failed to disable it");
-+        }
-+    }
-+}
-+
- static void *kvm_msr_energy_thread(void *data)
- {
-     KVMState *s =3D data;
-@@ -3311,11 +3342,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
-=20
--    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
--        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
--        smram_machine_done.notify =3D register_smram_listener;
--        qemu_add_machine_init_done_notifier(&smram_machine_done);
--    }
-+    kvm_machine_done.notify =3D handle_machine_done;
-+    qemu_add_machine_init_done_notifier(&kvm_machine_done);
-=20
-     if (enable_cpu_pm) {
-         ret =3D kvm_vm_enable_disable_exits(s);
---=20
-2.49.1
+I guess migration between <=10.0.3 and >=10.0.6 will be just fine.
+
+also, it looks like 10.1.2 should be released ASAP too, with the fixes
+on top picked up from the master branch.
+
+Let's plan two new stable releases (10.0.6 & 10.1.2) for the next week.
+
+Thanks,
+
+/mjt
 
