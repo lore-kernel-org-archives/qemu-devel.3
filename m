@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93C3CCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BA4CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8fTD-000577-7V; Tue, 14 Oct 2025 09:53:43 -0400
+	id 1v8fUu-0006CM-Cg; Tue, 14 Oct 2025 09:55:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fT5-0004sP-GW
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:53:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fT1-0003Tq-Fd
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:53:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760450008;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KiqRnSP/X9SSZA8yDUllsWfXGNlAGteT5DU0FW0Muq8=;
- b=Ln02heWGPOCfOEcoovzc3mP4bT08eLtXUJZV1JcS/89bS8M7JKCrlkSFu2ta/OH/y7rGeN
- 6I06xnl8xNKZHC7gNLafBbYQ3iEAQOziaBU4/F9yxO7dyC6k1muzmBsUNQuhuJECtsKSsr
- HmKBi15sjf9FS9Ip6iArupV66jhMQL4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-eONBhfFZNy2FUf1t7QcP_w-1; Tue, 14 Oct 2025 09:53:27 -0400
-X-MC-Unique: eONBhfFZNy2FUf1t7QcP_w-1
-X-Mimecast-MFC-AGG-ID: eONBhfFZNy2FUf1t7QcP_w_1760450006
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3f384f10762so4639440f8f.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:53:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1v8fUr-0006Bt-Uj
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:55:25 -0400
+Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1v8fUn-0003py-HJ
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:55:25 -0400
+Received: by mail-qv1-xf36.google.com with SMTP id
+ 6a1803df08f44-78f58f4230cso61530266d6.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:55:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760450114; x=1761054914; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eqM2n9ouX3W8TRjEET6p8zyITW3j0B6dn6O/k5mtSKo=;
+ b=iY2/ie+xRdSAd0oTiBFa/ey7Rpw9qvOQQtpDYBFGi3xxGcVrTEbPoCIBq95HOnVcOz
+ fDWI1vd4NPWiHO3aF9/pDTPLPdTJ7d1j+2Lx0xGiH4R2+omATYL08auxPARdwfkw5vO6
+ HpRmz+kvkGq5f/stGHcMmjU6Tb7jT+9T5K1jQHhBOkTd8Mrjb3sUE4hUvDC43q6sZo2E
+ MPZOBDQOjyrNZJCS8CYYVCpWztSIMFEEGAe0dj+wgNrOKQMayqDWfHlMaFeojpyUe+Kb
+ +ulGF+0semUlYynuPU1iKSEU6dfEoCHBbbSfFdLBgY3CVCnGcxbVBOI+bC02NFSN8cg1
+ zXIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760450006; x=1761054806;
+ d=1e100.net; s=20230601; t=1760450115; x=1761054915;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KiqRnSP/X9SSZA8yDUllsWfXGNlAGteT5DU0FW0Muq8=;
- b=MoYYfvnl3n/4zaUqys4e+pReWSc9oNiZgiV5eziq0fSaXxiU5PB9uMyKG0lhb6G4wl
- ZPV1TAJb8MhYwEHqlOf6uUkvcrTGN3cc1nCmkrppwrOKwvxhZKJpt6y98jlFHwBm03vI
- pYQgwpfuMdO0cNJEtHOLuV1LraEuoUY1S4kcnu32ufahbHINzesX55CqnQeK6eG79VU8
- nEgT3sW6SX6QbdHz1qpaoCcRXMhqDVWAQ5mWppykboM0K9uhihjKG6YjqUL0mYofsCgI
- OclyTYq/LBnPDcZKdxEdzYWboqbk3Ice40HzEpbZM/xHlS5Yxe0CwXepj3N8jlSuZq5C
- QrhA==
+ bh=eqM2n9ouX3W8TRjEET6p8zyITW3j0B6dn6O/k5mtSKo=;
+ b=Wl/tI48AU0llrc3/ctMPGm/pruSsYyjavHwEixjnjF5SPuX2YqXV0vOOc/tquovs9e
+ tPiOPKTkITCjEJl31iNqeSjkqEZaoURNbS/4z/bZGTd1JGxUmUELnfkuRLM9i8f/1i3t
+ K8dfPD+E+xgRxBySM+RRZb2/NU/mYzRNuGqWh2vKebXsP/CWIIMEcXejjbMC5k1iqTtr
+ 8/GF1IJISyTaCLqNdR47Ec8blvDRkdn58jJgfziOeXOwr5ZsXva5y/I248oTd5jcNLDy
+ 1vlPeh/lsjD0mdPGyuv9RVugrA29D67RmP9uxtLKpzAaoUQMZJNdss2+45I/z0DQNqqo
+ CZXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjPibOpOnUYupKGqTAyDN369c/g9tuqpq3xOxAlZws+Z/WMsNLGXH8Bw0hpIi69qPguhsxPDOGaE4b@nongnu.org
-X-Gm-Message-State: AOJu0YwFBXs3PRSyCIuUn72VZD+9pTwfVyfpVcf9p3aj4ryDfoHRjIBO
- sKwgYPbz21VhtyRhQMQ5bYIMnssTzrojinTP233Lpjtevspt5tsDjqL3gZPi+DC4h9znWbwkg/V
- 3HHzriYHIi38Ot9vAoZFzttFEkbrUCAyLeisF4F3/IjBCgup476byfTLRQf8pkdqLwOzp/ZQFrv
- qDyQBVuwDXofk/7UroVp1fihIc6c3OYFw=
-X-Gm-Gg: ASbGncvEN9b2SFYe9QNliJF6a5Ycqv1m4TYX11QGIIRv0ozuspb5FiPrrH//syLzSEn
- czuy/NSuc/nIFOGZJM8xLqyOm2qWZ7jbtmIp/0wZNZOWadCKcUnayfLIo29pyeuFl3V8+2V1d+U
- J87wQL4JEWcCCmbYfaYGmy3J8trgXbaCrDpyK9DfnJzh0zwBY63aiTL9HsC+DkswT4bLLD4IvTN
- Q93seVMgn2/RjnozH+6YvnK
-X-Received: by 2002:a05:6000:2910:b0:405:3028:1bf2 with SMTP id
- ffacd0b85a97d-4266e8db2abmr14301005f8f.62.1760450006147; 
- Tue, 14 Oct 2025 06:53:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHsRicPE1x1uskBlTA5XpPje4S8wC+d1zd1A3r8QzAyas5dQGZHhztnVz1sQuPWFWV8FcOMMzMv/t6Gn5c1h6o=
-X-Received: by 2002:a05:6000:2910:b0:405:3028:1bf2 with SMTP id
- ffacd0b85a97d-4266e8db2abmr14300983f8f.62.1760450005739; Tue, 14 Oct 2025
- 06:53:25 -0700 (PDT)
+ AJvYcCWA4cYX2l+xCNa6FxcoBy1mutlCSdLBMhN38b0VX2xRJk3Rmaiz+RUZ+oFpBDqjR9+zpWMxcHOcRLGm@nongnu.org
+X-Gm-Message-State: AOJu0Yy7Me8SAmLwCg0Ai203bq4jGCabqRJaOpP3Dp5zZHIY46Kvh82w
+ fngLC9uP0IUyCPYNObUqE9ifJ78Khw89m5+pGc4Th5EwrcPvYhxdnz33aPoITkGWBiFZOQNFH7A
+ KouKitJxoR6mWXSF6aXMTkfE1q5e9evg=
+X-Gm-Gg: ASbGncu2a/1ZLq72vP0H7zXhEA13A5vWynlWyV+6R8A4iucWleq9fMu6eq8VULkzWyS
+ iCUT/NkrPQNTlms3bbxQKJMkstXY0MfSAHWMxC6OUnZoOwDenMCfy6GladtwP9a/wkaM7Bh2btE
+ omcfyW374oseFOoAwfbvTLPIPVzuDxg2d+w8PNWlw38O4V3Qy5hN2VDKs+JSInusHUEk/k/x6J9
+ HKOU1rRKrIPjFJulREGoi6dDO+C7dgGSR2eLmZ+EZdP6h/bE8RiiCyQDzmWJ92RMKPD
+X-Google-Smtp-Source: AGHT+IEZn83oHu9ZaLOZ4DeES5MQDbQlBVLpssZWqPqoKQVivfjEgDtY2HgC51w+dmHEVC5YqyKHLdCn2FJEx4Vx3/E=
+X-Received: by 2002:ad4:5f4b:0:b0:820:a83:eaec with SMTP id
+ 6a1803df08f44-87b2efb961amr360633176d6.35.1760450114567; Tue, 14 Oct 2025
+ 06:55:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250923104136.133875-1-pbonzini@redhat.com>
- <aNVrAkx+ahn7ZRns@intel.com>
- <8a754d6c-1d8c-43d7-b3f8-a4b3e194d30e@tls.msk.ru> <aOyouIh//WY+EkKb@intel.com>
- <d2cf0acc-7ba2-43fd-9d1b-3fcfbb8f7dc7@tls.msk.ru>
- <CABjvBV60PX6OLzkFTfkPDXYUtR_WMVNbm9DQZwjaa_YuBAcfkg@mail.gmail.com>
-In-Reply-To: <CABjvBV60PX6OLzkFTfkPDXYUtR_WMVNbm9DQZwjaa_YuBAcfkg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 14 Oct 2025 15:53:13 +0200
-X-Gm-Features: AS18NWBGFfEKlUkAzxqAa0jOMAtdmIkWmGzqlH9G0GBsVx-OZwdonW6lkjkGySk
-Message-ID: <CABgObfbb-xpaBGZ7PhfQuFQorKwCVWpA057mctX0XqNxMnFhxA@mail.gmail.com>
-Subject: Re: [RFT PATCH v2 0/2] Fix cross migration issue with missing
- features: pdcm, arch-capabilities
-To: Hector Cao <hector.cao@canonical.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-devel@nongnu.org, 
- lk@c--e.de, berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-stable <qemu-stable@nongnu.org>
+References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
+ <20251013133836.852018-3-vsementsov@yandex-team.ru>
+ <CAJ+F1C+W+hUuu--QopWqB14w2VWeiPkOxxGdS-v2K7MB4eye-A@mail.gmail.com>
+ <6c5f3a6a-b237-4352-810e-345eb0f36904@yandex-team.ru>
+In-Reply-To: <6c5f3a6a-b237-4352-810e-345eb0f36904@yandex-team.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 14 Oct 2025 17:55:03 +0400
+X-Gm-Features: AS18NWDqU25wkwfWepnzp2ddgbPc4RExqepzAM2xJ67aLGjkyXQjAfljLdiQq4w
+Message-ID: <CAJ+F1CKhMu4RHsC22e_JfgCXLZHkuucux=VfTamx0_4yEJaR-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] chardev/char: split chardev_init_logfd() out of
+ qemu_char_open()
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
+ qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com, 
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,75 +102,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 14, 2025 at 12:49=E2=80=AFPM Hector Cao <hector.cao@canonical.c=
-om> wrote:
->
->
->
-> On Mon, Oct 13, 2025 at 7:22=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> =
-wrote:
->>
->> On 10/13/25 10:22, Zhao Liu wrote:
->> > On Fri, Oct 10, 2025 at 08:40:56PM +0300, Michael Tokarev wrote:
->> ..>>> I found the previous 2 fixes were merged into stable 10.0:
->> >>>
->> >>> 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
->> >>> 3d26cb65c27190e57637644ecf6c96b8c3d246a3
->> >>>
->> >>> Should stable 10.0 revert these 2 fixes, to ensure migration
->> >>> compatibility?
->> >
->> > Sorry for late...just return from vacation.
->>
->> I returned from vacation today too :)
->>
->> >> Now when I think about it.
->> >>
->> >> There were at least 2 point releases of 10.0.x (10.0.4 & 10.0.5)
->> >> with these 2 patches already.
->> >
->> > EMM, it seems 10.0.x (x < 4) can't migrate to 10.0.y (4 <=3D y <=3D 5)=
-,
->> > right? If so, could we treat this behavior as a regression?
->>
->> It is a regression in 10.0.4 indeed.  But it already lasted for
->> 2 stable releases (10.0.4 & 10.0.5).  So by reverting the above
->> mentioned two changes in 10.0.6, we'll make yet another regression,
->> now when migrating from 10.0.[45] to 10.0.6. This is why I thought
->> it might be an idea to keep just one regression in 10.0.x, so to
->> say.  Especially since these changes already fixes issues with
->> existing guests, so by reverting them, we'll bring them back to
->> 10.0.x.
->>
->> It is an either-or combination.  It is not bad either way, I'm just
->> thinking what is best currently.
->>
->> And with my limited understanding of the migration issue in the context
->> (for which I asked for clarification some 5 or 6 times already), it
->> feels to me like "pretending" these above 2 mentioned above patches has
->> always been part of 10.0.x, - declare that migration wont work from
->> 10.0.[1-3] (or [1-5]?) to subsequent versions, and be done with it.
->>
->> And modify the 2 properties introduced by:
->>
->> 6529f31e0d target/i386: add compatibility property for pdcm feature
->> e9efa4a771 target/i386: add compatibility property for arch_capabilities
->>
->> to be part of pc_compat_9_2 machine, not 10.0..
->>
->> Hopefully it's understandable what I mean.
->
-> IIUC, there is no perfect solution that makes migration work for all comb=
-inations
-> of versions as you already pointed out.
-> Reverting the two faulty commits in 10.0.x will reduce the scope of migra=
-tion failures (10.0.x -> 10.0.y / 10.1.z)
+Hi
 
-Yes, I agree. In my opinion reverting is the best option, because it
-makes the machine types as constant as possible. Any change in the
-machine types is a bug and the fix is to revert to the previous
-situation.
+On Tue, Oct 14, 2025 at 1:21=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 14.10.25 10:30, Marc-Andr=C3=A9 Lureau wrote:
+> > On Mon, Oct 13, 2025 at 5:41=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+> > <vsementsov@yandex-team.ru> wrote:
+> >>
+> >> We are going to share new chardev_init_logfd() with further
+> >> alternative initialization interface. Let qemu_char_open() be
+> >> a wrapper for .open(), and its artifacts (handle be_opened if
+> >> was not set to false by backend, and filename).
+> >>
+> >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru=
+>
+> >
+> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> >> ---
+> >>   chardev/char.c | 49 +++++++++++++++++++++++++++++++-----------------=
+-
+> >>   1 file changed, 31 insertions(+), 18 deletions(-)
+> >>
+> >> diff --git a/chardev/char.c b/chardev/char.c
+> >> index a43b7e5481..d5a2533e8e 100644
+> >> --- a/chardev/char.c
+> >> +++ b/chardev/char.c
+> >> @@ -250,22 +250,6 @@ static void qemu_char_open(Chardev *chr, ChardevB=
+ackend *backend,
+> >>                              bool *be_opened, Error **errp)
+> >>   {
+> >>       ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
+> >> -    /* Any ChardevCommon member would work */
+> >
+> > maybe keep that comment?
+>
+> I a bit don't follow it, honestly.. What it mean? That we should
+> handle members of common structure here?
 
-Paolo
+The ChardevBackend type is a union, and all the members inherit from
+ChardevCommon. Ideally, we wouldn't cast this way, but that would
+require some changes in code generator...
 
+>
+> Not a problem to put it back to chardev_init_logfd().. But maybe, it
+> then should be renamed to chardev_init_common()
+>
+> >
+> >
+> >> -    ChardevCommon *common =3D backend ? backend->u.null.data : NULL;
+> >> -
+> >> -    if (common && common->logfile) {
+> >> -        int flags =3D O_WRONLY;
+> >> -        if (common->has_logappend &&
+> >> -            common->logappend) {
+> >> -            flags |=3D O_APPEND;
+> >> -        } else {
+> >> -            flags |=3D O_TRUNC;
+> >> -        }
+> >> -        chr->logfd =3D qemu_create(common->logfile, flags, 0666, errp=
+);
+> >> -        if (chr->logfd < 0) {
+> >> -            return;
+> >> -        }
+> >> -    }
+> >>
+> >>       if (cc->open) {
+> >>           cc->open(chr, backend, be_opened, errp);
+> >> @@ -1000,6 +984,28 @@ void qemu_chr_set_feature(Chardev *chr,
+> >>       return set_bit(feature, chr->features);
+> >>   }
+> >>
+> >> +static bool chardev_init_logfd(Chardev *chr, ChardevBackend *backend,
+> >> +                                Error **errp)
+> >> +{
+> >> +    ChardevCommon *common =3D backend ? backend->u.null.data : NULL;
+> >> +
+> >> +    if (common && common->logfile) {
+> >> +        int flags =3D O_WRONLY;
+> >> +        if (common->has_logappend &&
+> >> +            common->logappend) {
+> >> +            flags |=3D O_APPEND;
+> >> +        } else {
+> >> +            flags |=3D O_TRUNC;
+> >> +        }
+> >> +        chr->logfd =3D qemu_create(common->logfile, flags, 0666, errp=
+);
+> >> +        if (chr->logfd < 0) {
+> >> +            return false;
+> >> +        }
+> >> +    }
+> >> +
+> >> +    return true;
+> >> +}
+> >> +
+> >>   static Chardev *chardev_new(const char *id, const char *typename,
+> >>                               ChardevBackend *backend,
+> >>                               GMainContext *gcontext,
+> >> @@ -1020,11 +1026,14 @@ static Chardev *chardev_new(const char *id, co=
+nst char *typename,
+> >>       chr->label =3D g_strdup(id);
+> >>       chr->gcontext =3D gcontext;
+> >>
+> >> +    if (!chardev_init_logfd(chr, backend, errp)) {
+> >> +        goto fail;
+> >> +    }
+> >> +
+> >>       qemu_char_open(chr, backend, &be_opened, &local_err);
+> >>       if (local_err) {
+> >>           error_propagate(errp, local_err);
+> >> -        object_unref(obj);
+> >> -        return NULL;
+> >> +        goto fail;
+> >>       }
+> >>
+> >>       if (!chr->filename) {
+> >> @@ -1035,6 +1044,10 @@ static Chardev *chardev_new(const char *id, con=
+st char *typename,
+> >>       }
+> >>
+> >>       return chr;
+> >> +
+> >> +fail:
+> >> +    object_unref(obj);
+> >> +    return NULL;
+> >>   }
+> >>
+> >>   Chardev *qemu_chardev_new(const char *id, const char *typename,
+> >> --
+> >> 2.48.1
+> >>
+> >>
+> >
+> >
+> > --
+> > Marc-Andr=C3=A9 Lureau
+>
+>
+> --
+> Best regards,
+> Vladimir
+
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
