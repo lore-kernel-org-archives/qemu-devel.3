@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6581ECCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 17:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3ADFCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 17:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ijP-0000RR-Qh; Tue, 14 Oct 2025 13:22:39 -0400
+	id 1v8ikb-00019d-TA; Tue, 14 Oct 2025 13:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan@islenet.com>) id 1v8gB2-0004kt-6b
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:39:02 -0400
-Received: from lin1.islenet.com ([2600:3c03:e000:2e3::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan@islenet.com>) id 1v8gAv-0000Ta-P7
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 10:38:59 -0400
-Received: from localhost (localhost [IPv6:::1])
- by lin1.islenet.com (Postfix) with ESMTP id 0D9CBF587E
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 10:38:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=islenet.com; h=
- mime-version:user-agent:content-transfer-encoding:content-type
- :content-type:references:in-reply-to:date:date:from:from:subject
- :subject:message-id:received:received; s=default; t=1760452726;
- x=1761316727; bh=vdbUDl7UbxlgbDCkGWGOC8k5rQkr5MDU/yFLZqabLys=; b=
- g46JU7Yz8MFBQIzIoLlZWJ1nQUgVekLXblxqlYNNd1SDQPcDf+U+UrpbHPeZG6CQ
- OucQO8vkrDU+1zzVy/wDfmc3SAE72SWCaiglnGo5aqgwXxjg7+k6FehAQpoqcf7U
- yxVP8ngbulVSCMZmvNhlBPQ/kcZjAZ/JqvnBnlo/RDFvBaoJesdXl6oPq4/HGWep
- /n3l5+C8bPIKIeHm1n8ZwC/Bwgg6N6eERk+6fo7DiJJvIXQWuobbEDYLlBeCvvZz
- XmIBLTj0WnUWpJAwofZzEbccWNu+9136fwn9Dp0z9GB+8b/JreCJ9moi1r96GnvZ
- 7WZ5Na1qRV/JI3FFcDFlNA==
-X-Virus-Scanned: amavis at islenet.com
-Received: from lin1.islenet.com ([IPv6:::1])
- by localhost (lin1.islenet.com [IPv6:::1]) (amavis, port 10026) with LMTP
- id LUrFXBjZRne9 for <qemu-devel@nongnu.org>;
- Tue, 14 Oct 2025 10:38:46 -0400 (EDT)
-Received: from venus.islenet.com (unknown [IPv6:2601:985:300:a441::7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lin1.islenet.com (Postfix) with ESMTPSA id BF544F5870
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 10:38:46 -0400 (EDT)
-Message-ID: <049abab6fcd8a07dc32afd6c914e7dc920bc68ce.camel@islenet.com>
-Subject: Re: DOS 6.22 with LIM 4.0 Expanded Memory
-From: "Daniel L. Srebnick" <dan@islenet.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v8ikY-00018B-Ab
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:23:50 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v8ikV-0008CS-Ei
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 13:23:50 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-782e93932ffso5060787b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 10:23:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760462625; x=1761067425; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hB3ew05sFTjrc2BAHZj/TJ6nak9Kqkcz//MuGkF6rNE=;
+ b=VPgxl80ubhvgSwAcMy0yqRAX9MPXiqN978QzeSz61/vUB9rcaWY62UTGB3LQv2RYfZ
+ zVUEn0QMal7t/xgOQWuIaJ8s283dKEcixc9OJDXEgozKVRktstZbgux17vKb7nLrkzsE
+ AaVtTX0+lPLitnLts6BnN3Nx8/KUZUl1UOUtrAS66eYfxcJCl//tVRL5KGZQROXRKtGD
+ NtzNnX2kuwcaq9cSqVLkFjkFsXIKlXXFnNRF08q37Yx3Cxd5THnwRYQan9QlrjVFCQJI
+ zs+GUlajrsf/88HfNeJXQX99VQOl08CR4GkL9b+J0O+u9hNwP1tGfxVpIKcwM9EPVANJ
+ 1uqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760462625; x=1761067425;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hB3ew05sFTjrc2BAHZj/TJ6nak9Kqkcz//MuGkF6rNE=;
+ b=ARS15EHOjQPwyfFVucLMhGEWTtEk6aI01IMQUi/iS9gljr7rgI1VYhenmfRNCECkOQ
+ u3NxiWH5BMSx2+xSXDdkW293VE7cvS0x5du/0OO1d+E6xB9CraXgxr2/Fwuq+2TBThkk
+ SI/l32VlfLlA57FcOJMdGzfI0lBkrehIeOq/pHsd12+LOblozjS6UmhdSCMx7BZq3e2z
+ rJ85KHffNKpDPLXOne4E82br86GhxC09kXko07rCkwwIt5A8S94ojwQ7lNv95gugQgFF
+ udkVw+GzkLszcEsgeCmQaQUkgiDJtqnHssEGjEreKJLMI8KXgHSka1OkWc6pQUTDrSZV
+ 3zJg==
+X-Gm-Message-State: AOJu0YzzfzNk3PCUcNQeouUyB99RbMRfI4Ls+MXvgvxLHkNDuvurpvJj
+ pFtCbTyoGQJpC3eAC5dwI7OenHFKwB319QjfR9g7L3nRVWF14MiAccfTa1q0gRxx3QCM0W/7kcP
+ liIOAxsc=
+X-Gm-Gg: ASbGncu4ecqAu4k3o6dex9eH+TGw6VXDaaw9z9SSDYbo83Ps2L+w7oso0ckG/fyCbdu
+ 09VJPJoW8SFtec1nV3aUHA3AfVDawqxmfmrhGp3w3gBNOLPvMPrPafihQxWHLEOD4lCZnMJ4VP6
+ 4ikRHa1YqnZKdMjE72F8MyD3CDVFWRboCRjztWM3wsluk/n1fGEd2+T5fLUG9Q6HS1mVdir9RoS
+ h+Dfw8LX0O818G0idz8BG+53T8hlf/fGiv9bKhTgH/BvFgzIGYnjHB4sDXd9Xt0o4e91YO4Z8aO
+ wl36JkF6ohKZni/YAXOySNzIAbrm4ldcjDSAgqGdFtRofWAqbTXw6XkCRvx50xwnAWVuDaBOlIG
+ dWbe0ZtAyrLuXzSh1jNcXzXC4xcEvemqBgmSJPcO0o+PS5CSyZi6so+mj5uwLwg==
+X-Google-Smtp-Source: AGHT+IFNkh8sAq9fKTei6ASjBB++QBue3bSYFDQBF9q0a9sCpvs2kDpJtIh/oeIhndzwCemV8vTaEQ==
+X-Received: by 2002:a05:6a00:13a8:b0:77d:b0cf:ca14 with SMTP id
+ d2e1a72fcca58-79387a28134mr27668039b3a.22.1760462624919; 
+ Tue, 14 Oct 2025 10:23:44 -0700 (PDT)
+Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7992bb116basm15741913b3a.30.2025.10.14.10.23.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 10:23:44 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Date: Tue, 14 Oct 2025 10:38:46 -0400
-In-Reply-To: <69de1286-0750-47d1-bac6-26512a339018@linaro.org>
-References: <ebb4d277d49d53e55d9c0d56375df29981631c3e.camel@islenet.com>
- <69de1286-0750-47d1-bac6-26512a339018@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 3/3] accel/tcg: Hoist first page lookup above pointer_wrap
+Date: Tue, 14 Oct 2025 10:23:41 -0700
+Message-ID: <20251014172341.243858-4-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251014172341.243858-1-richard.henderson@linaro.org>
+References: <20251014172341.243858-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2600:3c03:e000:2e3::1;
- envelope-from=dan@islenet.com; helo=lin1.islenet.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 14 Oct 2025 13:22:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,20 +101,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-10-01 at 23:42 -0300, Gustavo Romero wrote:
->=20
-> A command line to start the VM would be better than the XML file,
-> IMHO.
->=20
+For strict alignment targets we registered cpu_pointer_wrap_notreached,
+but generic code used it before recognizing the alignment exception.
+Hoist the first page lookup, so that the alignment exception happens first.
 
-qemu-system-i386 MS-DOS_6.22.qcow2 -machine pc-i440fx-9.2
+Cc: qemu-stable@nongnu.org
+Buglink: https://bugs.debian.org/1112285
+Fixes: a4027ed7d4be ("target: Use cpu_pointer_wrap_notreached for strict align targets")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/cputlb.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-Assuming that the qcow2 files has an MS-DOS 6.22 image.
-
-In config.sys, you'd need a line like:
-
-device=3Dc:\dos\emm386.exe ram=20
-
-
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 3010dd4f5d..631f1fe135 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1742,6 +1742,7 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+                        uintptr_t ra, MMUAccessType type, MMULookupLocals *l)
+ {
+     bool crosspage;
++    vaddr last;
+     int flags;
+ 
+     l->memop = get_memop(oi);
+@@ -1751,13 +1752,15 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+ 
+     l->page[0].addr = addr;
+     l->page[0].size = memop_size(l->memop);
+-    l->page[1].addr = (addr + l->page[0].size - 1) & TARGET_PAGE_MASK;
++    l->page[1].addr = 0;
+     l->page[1].size = 0;
+-    crosspage = (addr ^ l->page[1].addr) & TARGET_PAGE_MASK;
+ 
++    /* Lookup and recognize exceptions from the first page. */
++    mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
++
++    last = addr + l->page[0].size - 1;
++    crosspage = (addr ^ last) & TARGET_PAGE_MASK;
+     if (likely(!crosspage)) {
+-        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+-
+         flags = l->page[0].flags;
+         if (unlikely(flags & (TLB_WATCHPOINT | TLB_NOTDIRTY))) {
+             mmu_watch_or_dirty(cpu, &l->page[0], type, ra);
+@@ -1767,18 +1770,18 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+         }
+     } else {
+         /* Finish compute of page crossing. */
+-        int size0 = l->page[1].addr - addr;
++        vaddr addr1 = last & TARGET_PAGE_MASK;
++        int size0 = addr1 - addr;
+         l->page[1].size = l->page[0].size - size0;
+         l->page[0].size = size0;
+-
+         l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
+-                                                         l->page[1].addr, addr);
++                                                         addr1, addr);
+ 
+         /*
+-         * Lookup both pages, recognizing exceptions from either.  If the
+-         * second lookup potentially resized, refresh first CPUTLBEntryFull.
++         * Lookup and recognize exceptions from the second page.
++         * If the lookup potentially resized the table, refresh the
++         * first CPUTLBEntryFull pointer.
+          */
+-        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+         if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
+             uintptr_t index = tlb_index(cpu, l->mmu_idx, addr);
+             l->page[0].full = &cpu->neg.tlb.d[l->mmu_idx].fulltlb[index];
+-- 
+2.43.0
 
 
