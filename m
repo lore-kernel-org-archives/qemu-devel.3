@@ -4,76 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC92ACCD18D
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BB4CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8eWd-0005G0-CD; Tue, 14 Oct 2025 08:53:11 -0400
+	id 1v8eWQ-0005Eh-62; Tue, 14 Oct 2025 08:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eWY-0005FB-QU
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:53:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eWQ-0003uP-JR
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:53:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760446373;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U3UqQXrcego6DBmgEw1aiqxuJEkjeFTMvBia1HFgwGw=;
- b=NbDe1llu9FlNY5leS9wXXMMtlV6fmU3AXrVEuxvlaFfMQLHAvUCG2ASiyVOQHSJVZIDp7d
- 2YwD1ruC3MQ+iqdhf04DR9gnlCqxzc8Os2YbCyyzhjLO69uDCwMdpk7eRRwKeCQvqgs7oN
- 2AfAL2bIwkBalWuBifiteHgGdy0reZE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-88jpo1BKMauoxGOC25keTQ-1; Tue,
- 14 Oct 2025 08:52:49 -0400
-X-MC-Unique: 88jpo1BKMauoxGOC25keTQ-1
-X-Mimecast-MFC-AGG-ID: 88jpo1BKMauoxGOC25keTQ_1760446369
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05416180028D; Tue, 14 Oct 2025 12:52:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 862B11955F21; Tue, 14 Oct 2025 12:52:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 23EB321E6A27; Tue, 14 Oct 2025 14:52:46 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  marcandre.lureau@redhat.com,  Bernhard Beschow
- <shentey@gmail.com>
-Subject: Re: [PATCH] ui/pixman: Fix crash in qemu_pixman_shareable_free()
-In-Reply-To: <2831438d-9ca2-4629-b708-65874cf3a4a7@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 13 Oct 2025 16:11:32
- +0200")
-References: <20251013112102.2396012-1-armbru@redhat.com>
- <2831438d-9ca2-4629-b708-65874cf3a4a7@linaro.org>
-Date: Tue, 14 Oct 2025 14:52:46 +0200
-Message-ID: <87jz0xmyqp.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v8eWN-0005EY-T3
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:52:56 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v8eWH-0003u1-N1
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:52:55 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-636de696e18so1999426a12.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 05:52:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760446363; x=1761051163; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0hCF37KjFI/Dt92BwrOrHQsosxgCV2ZktrD+jHlYVoc=;
+ b=jV0glTze0ITYgjUXBzmXLg4lgSab3rSECE94+zAJTypBTEk5MJs2Ot3wNnC8nYgt6j
+ V5qRr2/Q3wyC8c2AAFJNICqKA83qarwfCcyipLUO0N5xrG5eLfTjhTtwxujBtPH039CV
+ 82uKpqIZhNlCPU+IvYIE5BffLoqE+PDHAEeYZqIX24J/UhNnk9ZIypM0SqBm9ypCnX5h
+ EtA/5FIqA1UrECl8qvfHLnkhvEfqC3kfH4sWx/l7zfUNakekEvxJFytx3YwY2jGhgTnP
+ xtGBVQOfBVeLzBSSZQuFWX5GOya89l8IiVGAa+gofFScYqoLVzqtC3Sgaj6qeemLyJN0
+ 2JvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760446363; x=1761051163;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0hCF37KjFI/Dt92BwrOrHQsosxgCV2ZktrD+jHlYVoc=;
+ b=JGgeg77tAvSi+PUYW9N7TzPHRocqNCWZtt3RH8ogAOTxkf+XHVIGb/lIx6VlNyoeVP
+ vAM77S5FR8BGUA4UVBAd2EqUOa1qbaHp/F5ZY8KDySPv/KWFKRzjOkncAnLSIitc5YWe
+ br0CTDXgxEt4f3h1KNM+5msDBJtIBeeyI30iOSW6/829+8mdVbVg1f26OXmiiVe3pLm7
+ 6K6s2q5EnO9MLOnWnbt1eJE2uO9PTOysT7SX5hO/ZvOzyEmFQRRo9lsU/NpHFYXB23o/
+ DdQpyGY4+3gTysGG/2KEslXCsJ1gDPzMHSyZ29CaNzDhKOkvNd0zOxivOajGiwjvKWg7
+ B4Ww==
+X-Gm-Message-State: AOJu0YzomUbNKubfQto3sO4I35aGFL5r6phOAOJZzen0RfSi5GaN8IFt
+ vF9nByd+BFJYwmtFKGZ5ERUe7rUwVuxmjvvM2HzWXFaPbX80ce1c8qlX40WChQ/wwmbDy3o5ZJl
+ qiUD9
+X-Gm-Gg: ASbGnctBZuMBYiTI/Qd/LZdH485cjDShmA3wgtSM+8sclCfiTVLzncdu2mqNlkcvEGC
+ NjLaQoc2CAn85ysndIid3EqRoh0m8kkfw2rVSA0Lkxr1PCFAVvBRkvDullwFuSk+dwqkKE46MDM
+ 1U+pNil2Bstt5nHNqpXJ9bd2FO/Sd4psJpY4ORfx9GINX67uOTHbfjckxGfowkrQjGPE/rWQGrX
+ yhwTwCox1Umi5KpqZh9QCWgUOTG6koizWsbOcMGMg6EPrK8JSAed2A4FiXP6oomNO8pSjLU3HNL
+ X5ktjKlXm43nQuvYFKUZrCsiWo7p5c6FX1rH6eW/1AljaZ9BfGJqyeO0xsMiYbFc7eqCHn1vxbR
+ +WCRSBfWINSQyf/FPz3uELcIBi6SwSNXTlXL4BSVE0lCpVuGVVfHXty5p
+X-Google-Smtp-Source: AGHT+IGi0FYoYLj/LYiZMNxK736V6JmSe+ADIWij5DqXb1JBnzPukUaNQGu7yAjuVL6E1Uqs7CTiLw==
+X-Received: by 2002:a05:6402:848:b0:62f:337b:beed with SMTP id
+ 4fb4d7f45d1cf-639d5c576d9mr21785137a12.30.1760446363483; 
+ Tue, 14 Oct 2025 05:52:43 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63a52b71438sm11004782a12.25.2025.10.14.05.52.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 05:52:42 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DF8C55F812;
+ Tue, 14 Oct 2025 13:52:41 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v7 00/25] tcg-plugins: add hooks for discontinuities
+In-Reply-To: <cover.1759744337.git.neither@nut.email> (Julian Ganz's message
+ of "Mon, 6 Oct 2025 11:56:55 +0200")
+References: <cover.1759744337.git.neither@nut.email>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Tue, 14 Oct 2025 13:52:41 +0100
+Message-ID: <87a51tlk6e.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,53 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Julian Ganz <neither@nut.email> writes:
 
-> On 13/10/25 13:21, Markus Armbruster wrote:
->> Reported-by: Bernhard Beschow <shentey@gmail.com>
->> Fixes: b296b29d3414 (ui/pixman: Consistent error handling in qemu_pixman=
-_shareable_free())
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>   ui/qemu-pixman.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
->> index e46c6232cf..aea09755b9 100644
->> --- a/ui/qemu-pixman.c
->> +++ b/ui/qemu-pixman.c
->> @@ -291,7 +291,9 @@ qemu_pixman_shareable_free(qemu_pixman_shareable han=
-dle,
->>       Error *err =3D NULL;
->>=20=20=20
->>       qemu_win32_map_free(ptr, handle, &err);
->
-> Slightly better if qemu_win32_map_free(), as per commit e3fe3988d78
-> ("error: Document Error API usage rules") recommended style:
->
-> + *  We recommend
-> + *   =E2=80=A2 bool-valued functions return true on success / false on f=
-ailure,
-> + *   =E2=80=A2 pointer-valued functions return non-null / null pointer, =
-and
-> + *   =E2=80=A2 integer-valued functions return non-negative / negative.
+> Some analysis greatly benefits, or depends on, information about
+> certain types of dicontinuities such as interrupts. For example, we may
+> need to handle the execution of a new translation block differently if
+> it is not the result of normal program flow but of an interrupt.
 
-I went fo a minimal fix.
+I think we are almost there. I see Richard made some comments and there
+is at least one re-base fix to make. I've also left some questions on
+the test cases.
 
-I now see that this is the only use of qemu_win32_map_free().  Changing
-it to return bool would've been okay.
-
-> Anyhow,
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
-Thanks!
-
->> -    error_report_err(err);
->> +    if (err) {
->> +        error_report_err(err);
->> +    }
->>   #else
->>       qemu_memfd_free(ptr, size, handle);
->>   #endif
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
