@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E98FCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E158BCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:11:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8lJw-0002cJ-17; Tue, 14 Oct 2025 16:08:32 -0400
+	id 1v8lJw-0002ch-HL; Tue, 14 Oct 2025 16:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8lJf-0002KH-6h
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:18 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1v8lJl-0002PT-P5
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:22 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v8lJ3-0005Mu-Kv
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:13 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-27ee41e0798so91919595ad.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:07:34 -0700 (PDT)
+ id 1v8lJ6-0005NT-55
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:08:20 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-78f3bfe3f69so5186353b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760472453; x=1761077253; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760472456; x=1761077256; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i+qU0whZ6ZjQiZGb9Lq+40FrMiv4gq0wjHFcVSvTXNk=;
- b=L8vz4LrlVyppL3jDPU3TjFDj7DuiABpCUs6c4Hm+DbtMQf8/mDkYz+kU7z9Ik3a/3J
- ZwOh6uRvWqqYOZbNvPHA7H1kghYYC/v6tTEjoDINR/kuRAjO7XlT61xlmNMLgjOoAy1U
- fBZ3cmoXJ6gaJX5rpeiyJEpcTBSjqySOIorovq9n2ADj2N64ixwWLIaTAYL5pir7yVnY
- QFVbnAUv7wlDm14oAaVSvuh4e+Z4RtJsLDRb9ytMtqv/LpNlwdWh6k/XYYAYwMpe7IcO
- bnxpJbNa+RNTuUZSr50BiXjTSNe7R72+QUcBSGGUIo1PlyN72Ou5jCkD2BvC2zo392CL
- Lubw==
+ bh=m7hkthyYRuHXN3913QLlPJYPsMb7uOcoCSH2wW9sxo8=;
+ b=kHhL/TFd0q3K1gvW3mJBHsZsqHkXDVlPz4jcIKzCVKYEAjK45iX8QqKRKV8Plmd+gV
+ LY5Uhu+XRAEBkLrmL8Vp5mkx0O+75Ou879X1qXRox7SpFibuIDsTepktGOHkZRwRKNog
+ /I5Rodh6IY0FLffQFTGjMYzLbCM7cNtCqp2av5D7Xcz4xr5KRH/yorplmUUG8FuAPdSM
+ 8DzmBJyOWkLqw7tf7J9VATgmtAcDpsaffkIFc/f/o18OhY1fjZ+DF1THftBgvVs/NCnl
+ 9Ic+k9OoLzdsN7n0W0sylG5wvh0UZ/T7wHxi84Qg37rMeW0SwweS90/TNAIAAMtBi+XK
+ t/vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760472453; x=1761077253;
+ d=1e100.net; s=20230601; t=1760472456; x=1761077256;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i+qU0whZ6ZjQiZGb9Lq+40FrMiv4gq0wjHFcVSvTXNk=;
- b=V5ZGfi4R6ahScGMc8ZFHzYEs8CiJrCGjS1oGJb2yAmd9SCQ2PWheMjMeXZLPEZfsM/
- 2pPsLd3xx8VWYAAfaB+OLcTo0X5xM8qNVncvSOKp36B4URI2QDZb4VCeDWX6MXoOI71u
- K5Nda3b6W3hZawYaRlYLYOZQscQiozqYobioovbe10z3t7fNFYd3XLCqWYUaonoDFATo
- eNVhZ6qz7EhkDxaIpk/wRy6ceHv/njoWWDpqNhgvHu1x3E48LDWcovqQqWTtdbZ8sx/0
- SqhLSIpRK7TClYh1HaVD+5ebOCGqDdQ79HqnY3Z7ftG1XKoUXGNX3uAa+01xZFEBcHY5
- pBzw==
-X-Gm-Message-State: AOJu0YzRg0QU7tnaBKszl6W9HO2C9Tbq8DBYGP5NnLyjO5w7hXAH3Y3p
- tOwkGM9M8rAuMLNM5rTWVhjtpCnUz0coldhnSSLTzlTk/tmDmNx1Xr73MHtgK6gRlIDrxw8u+PF
- 03ae5Lyo=
-X-Gm-Gg: ASbGncu2/XB5LISOEcuDQMDE1lQ91cb90VkdHasgxx6n7vxDLfYEyHyXmxxDe/e4Ogp
- mFpFCuKFgmx/gKONo2Q17rI1Hn/wQFHS8l++Ii7DDfneMDoBLFCLX6IZ8BEQbhd0IhLbFnPDeh8
- cFj9HxqE9kLHX05wKa4jEnCkwsw9oqxoH+I/Qu2Cyn6Q4laGlhNn/Uznz9IjJ/P2b/TGB9uyXHf
- M4hV3c8V28Ki+oLYJiKzbfvviQP+XspcMuKU0VUX65wbyVcOv7BsYTRFxkZuX65gyl2Mai/PQy+
- EJy/V3aP7vhN0N7dzs52lMYLbrVYyiL4NYB/jOtro2oFxL6+msp1XfG6rowa1TsQuXoFc/8e4rE
- 9ybO9QqhmUZqI6E8D6a646RnNDGOWSq5dFg5tIagg9R8HEbAfVEI=
-X-Google-Smtp-Source: AGHT+IE0Kxr6QefjgB5eoH1V9yc4zW1jU/WWtmP2lBc440xGKnNB1sae9ho0SY2KNR3XbYx7WCjhXA==
-X-Received: by 2002:a17:903:f85:b0:275:b1cf:6ddc with SMTP id
- d9443c01a7336-290273565c8mr349853185ad.5.1760472453483; 
- Tue, 14 Oct 2025 13:07:33 -0700 (PDT)
+ bh=m7hkthyYRuHXN3913QLlPJYPsMb7uOcoCSH2wW9sxo8=;
+ b=Gwd41foJV+y2G4JiaI2z+36C9odXXb1ZKpnL50WCNfpPMdlW2wTvAzT2qI6HVIwNSE
+ fd1hmHsbUH/jNkKYeogLomB5qQOxffyQaSFJhVWzmwmUqYpOF/VsOWc9QaHkgflXBaUa
+ H6TXNcFGgxJyWnQpRRWa1lURezbPa8P+FeW0kdlduD+PAGM8NesUkulhclLVK0djvMg6
+ X0eJscCnTp4Fd8GloAzWbLKztXyqd5/8sQfh4VGfMAcSXFpVFO6FgqDmIks5UO24P80c
+ pmGlSQ7dZ+r6ZvmpqWGwU3vbgBGjVcWKpdat13Bjlz4pLH+4aI5BDLqRc1evmmz0BHnS
+ odVQ==
+X-Gm-Message-State: AOJu0YwMp5kiSV2etdawryBdDo68Oq79xXG6h4n3FpFreSsUtathCDbx
+ CXRpPqnQF5Zruz1k/rqTzxD9RO1wxUJ1I8zc4iQ2AnTEBCAq+1u5+QCG2Fa8mqZtRo0fVCU3DHm
+ 2usDUasM=
+X-Gm-Gg: ASbGncv6/Y0Ihf6hEqbPHGFzot6mMBIYcmCvHO3VkNnJpoDGs4qIbWIkgpVzi+s9hBz
+ 2PYC39pXejkNEgwWfFPxacOPOxs/x+CVnQGsTPxUHIqzIcvi2gPfr/16Ej5lXOpkjnTMHYPvUzz
+ v+gURyH1A+jRY/1XZtSmltcil1Hug3QLnVsH6EyoWiOZKjfy5rSr+q+Uc+HpBzi5vVuhYrXHGCu
+ HymCVR0uB9Uo//UUOiCFaWdBr+nE+zHrvSPEOEsYZHEr7XcJdcUI9zDBV2X4b2jtMtNlP8LIhqQ
+ bTvL9g6IJH1s/X8ixo4VJlW/kQP+a9NPk1RYPvlHmS2dI2srHNjX2eYAt5Voy3MEufpnxXxiofN
+ Rcr7Y8Ht5ev59gMfrhciBvyU0FeGN9SjSJbeeHX4cM4/oo+e5dZTGIwJRSWRMtQ==
+X-Google-Smtp-Source: AGHT+IGyA0qQWo+PwVYNO70vAG9eQhBXIq9i3+Jzuke4pIfGDXo1cSW2Iqt3Cqn36f79IYA/BEXDgw==
+X-Received: by 2002:a17:902:f78c:b0:25c:76f1:b024 with SMTP id
+ d9443c01a7336-290272679dbmr313113515ad.25.1760472455626; 
+ Tue, 14 Oct 2025 13:07:35 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29034f93ea2sm172100975ad.126.2025.10.14.13.07.33
+ d9443c01a7336-29034f93ea2sm172100975ad.126.2025.10.14.13.07.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 13:07:33 -0700 (PDT)
+ Tue, 14 Oct 2025 13:07:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 20/37] target/arm: Consolidate definitions of PAR
-Date: Tue, 14 Oct 2025 13:07:01 -0700
-Message-ID: <20251014200718.422022-21-richard.henderson@linaro.org>
+Subject: [PATCH v2 23/37] target/arm: Split out flush_if_asid_change
+Date: Tue, 14 Oct 2025 13:07:04 -0700
+Message-ID: <20251014200718.422022-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251014200718.422022-1-richard.henderson@linaro.org>
 References: <20251014200718.422022-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,166 +99,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a function define_par_register which handles the 3
-distinct cases for PAR.  It is easier to understand with
-the definitions all in one place.
-
-Make the aarch64 to be the primary definition, when present,
-rather than being an alias of the 64-bit non-secure aa32 reg.
-Remove the unnecessary .writefn from the aarch64 defintion,
-and drop it from the 32-bit definition with LPAE.
-
-Remove the LPAE test from par_write, since it will no longer
-be used in that situation.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c | 103 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 73 insertions(+), 30 deletions(-)
+ target/arm/helper.c | 33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index d3a425e259..7800d83f48 100644
+index 550ba77c5c..c6d290ce7c 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -2475,9 +2475,7 @@ static const ARMCPRegInfo gen_timer_ecv_cp_reginfo[] = {
+@@ -2929,6 +2929,17 @@ static void vmsa_tcr_el12_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     raw_write(env, ri, value);
+ }
  
- static void par_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
- {
--    if (arm_feature(env, ARM_FEATURE_LPAE)) {
--        raw_write(env, ri, value);
--    } else if (arm_feature(env, ARM_FEATURE_V7)) {
-+    if (arm_feature(env, ARM_FEATURE_V7)) {
-         raw_write(env, ri, value & 0xfffff6ff);
-     } else {
-         raw_write(env, ri, value & 0xfffff1ff);
-@@ -3244,10 +3242,11 @@ static const ARMCPRegInfo lpae_cp_reginfo[] = {
-     { .name = "AMAIR1", .cp = 15, .crn = 10, .crm = 3, .opc1 = 0, .opc2 = 1,
-       .access = PL1_RW, .accessfn = access_tvm_trvm,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
--    { .name = "PAR", .cp = 15, .crm = 7, .opc1 = 0,
--      .access = PL1_RW, .type = ARM_CP_64BIT, .resetvalue = 0,
--      .bank_fieldoffsets = { offsetof(CPUARMState, cp15.par_s),
--                             offsetof(CPUARMState, cp15.par_ns)} },
-+
-+    /*
-+     * The primary definitions of TTBR[01]_EL1 are in vmsa_cp_reginfo[].
-+     * Here we need only provide the 64-bit views for AArch32.
-+     */
-     { .name = "TTBR0", .cp = 15, .crm = 2, .opc1 = 0,
-       .access = PL1_RW, .accessfn = access_tvm_trvm,
-       .type = ARM_CP_64BIT | ARM_CP_ALIAS,
-@@ -3262,6 +3261,71 @@ static const ARMCPRegInfo lpae_cp_reginfo[] = {
-       .writefn = vmsa_ttbr_write, .raw_writefn = raw_write },
- };
- 
-+static void define_par_register(ARMCPU *cpu)
++static void flush_if_asid_change(CPUARMState *env, const ARMCPRegInfo *ri,
++                                 uint64_t new, unsigned mask)
 +{
-+    /*
-+     * For v8:
-+     * The aarch64 reg is primary, since it might be 128-bit.
-+     * The aarch32 64-bit non-secure reg is secondary to aa64.
-+     * The aarch32 64-bit secure reg is primary.
-+     *
-+     * For v7:
-+     * The aarch32 64-bit s+ns regs are primary.
-+     *
-+     * The aarch32 32-bit regs are secondary to one of the above,
-+     * and we also don't expose them to gdb.
-+     */
-+    static const ARMCPRegInfo parv8_reginfo = {
-+        .name = "PAR_EL1", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 3, .opc1 = 0, .crn = 7, .crm = 4, .opc2 = 0,
-+        .access = PL1_RW, .fgt = FGT_PAR_EL1,
-+        .fieldoffset = offsetof(CPUARMState, cp15.par_el[1])
-+    };
++    uint64_t old = raw_read(env, ri);
 +
-+    static ARMCPRegInfo par64_reginfo[2] = {
-+        [0 ... 1] = {
-+            .state = ARM_CP_STATE_AA32,
-+            .cp = 15, .crm = 7, .opc1 = 0,
-+            .type = ARM_CP_64BIT, .access = PL1_RW,
-+        },
-+        [0].name = "PAR",
-+        [0].secure = ARM_CP_SECSTATE_NS,
-+        [0].fieldoffset = offsetof(CPUARMState, cp15.par_ns),
-+        [1].name = "PAR_S",
-+        [1].secure = ARM_CP_SECSTATE_S,
-+        [1].fieldoffset = offsetof(CPUARMState, cp15.par_s),
-+    };
-+
-+    static ARMCPRegInfo par32_reginfo = {
-+        .name = "PAR", .state = ARM_CP_STATE_AA32,
-+        .cp = 15, .crn = 7, .crm = 4, .opc1 = 0, .opc2 = 0,
-+        .access = PL1_RW, .resetvalue = 0,
-+        .bank_fieldoffsets = { offsetoflow32(CPUARMState, cp15.par_s),
-+                               offsetoflow32(CPUARMState, cp15.par_ns) },
-+        .writefn = par_write,
-+    };
-+
-+    CPUARMState *env = &cpu->env;
-+
-+    /* With only VAPA, define a 32-bit reg that filters bits from write. */
-+    if (!arm_feature(env, ARM_FEATURE_LPAE)) {
-+        define_one_arm_cp_reg(cpu, &par32_reginfo);
-+        return;
++    /* The ASID or VMID is in bits [63:48]. */
++    if ((old ^ new) >> 48) {
++        tlb_flush_by_mmuidx(env_cpu(env), mask);
 +    }
-+
-+    /* With LPAE, the 32-bit regs are aliases of 64-bit regs. */
-+    par32_reginfo.type = ARM_CP_ALIAS | ARM_CP_NO_GDB;
-+    par32_reginfo.writefn = NULL;
-+    define_one_arm_cp_reg(cpu, &par32_reginfo);
-+
-+    if (arm_feature(env, ARM_FEATURE_V8)) {
-+        define_one_arm_cp_reg(cpu, &parv8_reginfo);
-+        par64_reginfo[0].type |= ARM_CP_ALIAS;
-+    }
-+
-+    define_arm_cp_regs(cpu, par64_reginfo);
 +}
 +
- static uint64_t aa64_fpcr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ static void vmsa_ttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                             uint64_t value)
  {
-     return vfp_get_fpcr(env);
-@@ -3765,13 +3829,6 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-       .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 14, .opc2 = 2,
-       .fgt = FGT_DCCISW,
-       .access = PL1_W, .accessfn = access_tsw, .type = ARM_CP_NOP },
--    { .name = "PAR_EL1", .state = ARM_CP_STATE_AA64,
--      .type = ARM_CP_ALIAS,
--      .opc0 = 3, .opc1 = 0, .crn = 7, .crm = 4, .opc2 = 0,
--      .access = PL1_RW, .resetvalue = 0,
--      .fgt = FGT_PAR_EL1,
--      .fieldoffset = offsetof(CPUARMState, cp15.par_el[1]),
--      .writefn = par_write },
-     /* 32 bit cache operations */
-     { .name = "ICIALLUIS", .cp = 15, .opc1 = 0, .crn = 7, .crm = 1, .opc2 = 0,
-       .type = ARM_CP_NOP, .access = PL1_W, .accessfn = access_ticab },
-@@ -7120,23 +7177,9 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_one_arm_cp_reg(cpu, &gen_timer_cntpoff_reginfo);
+@@ -2950,14 +2961,13 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+      * TCR_EL2.A1 to know if this is really the TTBRx_EL2 that
+      * holds the active ASID, only checking the field that might.
+      */
+-    if (extract64(raw_read(env, ri) ^ value, 48, 16) &&
+-        (arm_hcr_el2_eff(env) & HCR_E2H)) {
+-        uint16_t mask = ARMMMUIdxBit_E20_2 |
+-                        ARMMMUIdxBit_E20_2_PAN |
+-                        ARMMMUIdxBit_E20_2_GCS |
+-                        ARMMMUIdxBit_E20_0 |
+-                        ARMMMUIdxBit_E20_0_GCS;
+-        tlb_flush_by_mmuidx(env_cpu(env), mask);
++    if (arm_hcr_el2_eff(env) & HCR_E2H) {
++        flush_if_asid_change(env, ri, value,
++                             ARMMMUIdxBit_E20_2 |
++                             ARMMMUIdxBit_E20_2_PAN |
++                             ARMMMUIdxBit_E20_2_GCS |
++                             ARMMMUIdxBit_E20_0 |
++                             ARMMMUIdxBit_E20_0_GCS);
      }
- #endif
--    if (arm_feature(env, ARM_FEATURE_VAPA)) {
--        ARMCPRegInfo vapa_cp_reginfo[] = {
--            { .name = "PAR", .cp = 15, .crn = 7, .crm = 4, .opc1 = 0, .opc2 = 0,
--              .access = PL1_RW, .resetvalue = 0,
--              .bank_fieldoffsets = { offsetoflow32(CPUARMState, cp15.par_s),
--                                     offsetoflow32(CPUARMState, cp15.par_ns) },
--              .writefn = par_write},
--        };
+     raw_write(env, ri, value);
+ }
+@@ -2965,16 +2975,11 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ static void vttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                         uint64_t value)
+ {
+-    ARMCPU *cpu = env_archcpu(env);
+-    CPUState *cs = CPU(cpu);
+-
+     /*
+      * A change in VMID to the stage2 page table (Stage2) invalidates
+      * the stage2 and combined stage 1&2 tlbs (EL10_1 and EL10_0).
+      */
+-    if (extract64(raw_read(env, ri) ^ value, 48, 16) != 0) {
+-        tlb_flush_by_mmuidx(cs, alle1_tlbmask(env));
+-    }
++    flush_if_asid_change(env, ri, value, alle1_tlbmask(env));
+     raw_write(env, ri, value);
+ }
  
--        /*
--         * When LPAE exists this 32-bit PAR register is an alias of the
--         * 64-bit AArch32 PAR register defined in lpae_cp_reginfo[]
--         */
--        if (arm_feature(env, ARM_FEATURE_LPAE)) {
--            vapa_cp_reginfo[0].type = ARM_CP_ALIAS | ARM_CP_NO_GDB;
--        }
--        define_arm_cp_regs(cpu, vapa_cp_reginfo);
-+    if (arm_feature(env, ARM_FEATURE_VAPA)) {
-+        define_par_register(cpu);
-     }
-     if (arm_feature(env, ARM_FEATURE_CACHE_TEST_CLEAN)) {
-         define_arm_cp_regs(cpu, cache_test_clean_cp_reginfo);
 -- 
 2.43.0
 
