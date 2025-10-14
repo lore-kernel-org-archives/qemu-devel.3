@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B77CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 799A1CCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8b4E-0002T0-V5; Tue, 14 Oct 2025 05:11:38 -0400
+	id 1v8b57-0002xf-3X; Tue, 14 Oct 2025 05:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1v8b4D-0002Rd-TA
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:11:37 -0400
+ id 1v8b50-0002tt-NJ
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:12:27 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1v8b4A-00019Z-VN
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:11:37 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1v8b4w-0001Az-5I
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:12:26 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxaNG_E+5oZ_MVAA--.47546S3;
- Tue, 14 Oct 2025 17:11:27 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxL9P0E+5oj_MVAA--.46419S3;
+ Tue, 14 Oct 2025 17:12:20 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJBxTMG9E+5oRVDhAA--.47944S3;
- Tue, 14 Oct 2025 17:11:26 +0800 (CST)
-Subject: Re: [PATCH 2/2] target/loongarch: Skip global TLB when calculating
- replaced TLB
-To: Bibo Mao <maobibo@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20251009025932.2990219-1-maobibo@loongson.cn>
- <20251009025932.2990219-3-maobibo@loongson.cn>
+ by front1 (Coremail) with SMTP id qMiowJBxzsHyE+5ol1DhAA--.10979S3;
+ Tue, 14 Oct 2025 17:12:19 +0800 (CST)
+Subject: Re: [PATCH 1/4] hw/loongarch/boot: Remove unnecessary cast to
+ target_ulong
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
+ <anjo@rev.ng>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20251009201947.34643-1-philmd@linaro.org>
+ <20251009201947.34643-2-philmd@linaro.org>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <83579f9f-4ea2-be40-3231-37323bcfb694@loongson.cn>
-Date: Tue, 14 Oct 2025 17:11:20 +0800
+Message-ID: <11061e2b-41c7-1a37-7c7e-cbad3df7b648@loongson.cn>
+Date: Tue, 14 Oct 2025 17:12:13 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20251009025932.2990219-3-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+In-Reply-To: <20251009201947.34643-2-philmd@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowJBxTMG9E+5oRVDhAA--.47944S3
+X-CM-TRANSID: qMiowJBxzsHyE+5ol1DhAA--.10979S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7KrWfAFyDKrW7XFyUGr17urX_yoW8Wr48pr
- y7Cr4kKFykGrZ5A3Wft34YqF1UXw4kWws2gan3GrySvrsxGr18ur4DXw4qkFyxJ3WUCr40
- kFnayr18ZFW3XacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZF1UWr47JFy5Aw4xCr1kCrX_yoW8ArWUpr
+ srAw15tr1FyrWru3y2yFy8ur97tw1rGr4agF9xKFyFyrZFgr1UZFy8Zry7ZFWDXw4rKFn0
+ qFn5Aw1jq3WUtwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
@@ -64,13 +65,12 @@ X-Coremail-Antispam: 1Uk129KBj93XoW7KrWfAFyDKrW7XFyUGr17urX_yoW8Wr48pr
  UUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.658, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.658,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,53 +86,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-‘⁄ 2025/10/9 …œŒÁ10:59, Bibo Mao –¥µ¿:
-> When new TLB entry is added, TLB index is calculated from invalid
-> entry at first and then from different ASID, and randomly at last.
+Âú® 2025/10/10 ‰∏äÂçà4:19, Philippe Mathieu-Daud√© ÂÜôÈÅì:
+> Reduce initrd_size scope. It is already of signed type (ssize_t),
+> no need to cast to unsigned for the comparison.
 >
-> With different ASID, global TLB should be skipped since ASID is not
-> useful when global TLB is added.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
 > ---
->   target/loongarch/tcg/tlb_helper.c | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
+>   hw/loongarch/boot.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 
 Thanks.
 Song Gao
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-> index f8fada5b9a..f1d183cb64 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -371,7 +371,7 @@ void helper_tlbfill(CPULoongArchState *env)
->       uint16_t pagesize, stlb_ps;
->       uint16_t asid, tlb_asid;
->       LoongArchTLB *tlb;
-> -    uint8_t tlb_e;
-> +    uint8_t tlb_e, tlb_g;
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index a516415822d..3dd48cb8aab 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -306,7 +306,7 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
+>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>   {
+>       uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
+> -    ssize_t kernel_size, initrd_size;
+> +    ssize_t kernel_size;
 >   
->       if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
->           entryhi = env->CSR_TLBREHI;
-> @@ -400,7 +400,8 @@ void helper_tlbfill(CPULoongArchState *env)
->               }
+>       kernel_size = load_elf(info->kernel_filename, NULL,
+>                              cpu_loongarch_virt_to_phys, NULL,
+> @@ -328,7 +328,8 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>       }
 >   
->               tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-> -            if (asid != tlb_asid) {
-> +            tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
-> +            if (tlb_g == 0 && asid != tlb_asid) {
->                   set = i;
->               }
+>       if (info->initrd_filename) {
+> -        initrd_size = get_image_size(info->initrd_filename);
+> +        ssize_t initrd_size = get_image_size(info->initrd_filename);
+> +
+>           if (initrd_size > 0) {
+>               initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
+>               initrd_offset = alloc_initrd_memory(info, initrd_offset,
+> @@ -337,7 +338,7 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>                                                 initrd_offset, initrd_size);
 >           }
-> @@ -423,7 +424,8 @@ void helper_tlbfill(CPULoongArchState *env)
->               }
 >   
->               tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-> -            if (asid != tlb_asid) {
-> +            tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
-> +            if (tlb_g == 0 && asid != tlb_asid) {
->                   index = i;
->               }
->           }
+> -        if (initrd_size == (target_ulong)-1) {
+> +        if (initrd_size == -1) {
+>               error_report("could not load initial ram disk '%s'",
+>                            info->initrd_filename);
+>               exit(1);
 
 
