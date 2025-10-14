@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40278CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7612CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8bDo-0007za-TP; Tue, 14 Oct 2025 05:21:32 -0400
+	id 1v8bgh-0004g4-62; Tue, 14 Oct 2025 05:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8bDn-0007z9-Ni
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:21:31 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1v8bgc-0004fu-D6
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:51:18 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v8bDk-00022G-7t
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:21:30 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5ED4BC014E;
- Tue, 14 Oct 2025 12:21:24 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8a::1:35] (unknown
- [2a02:6bf:8080:a8a::1:35])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id MLLsRR2F6mI0-JT68sfP7; Tue, 14 Oct 2025 12:21:23 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760433683;
- bh=4aopmKTFFDU0LCRASY32kAXn7zAGpFarLVf0FvLBlaM=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Nx32GGufcswEvEUn1Zc5JrJn5Xp5mEmWXodrNQ4uecCH+NFRQib6OA8OB/nIzNDeQ
- vNzvEAfhTmHDoM1v/aKQhPHqRE3tv6gCdjEl+ydi9n8IhdYWcpctqlq/szLXX7st4z
- fL8JVAPldJVzL5/3SbcPqZlcUZBSvvs3iYMx52zE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <6c5f3a6a-b237-4352-810e-345eb0f36904@yandex-team.ru>
-Date: Tue, 14 Oct 2025 12:21:22 +0300
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1v8bgY-0005WO-Gt
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:51:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760435475; x=1791971475;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=lsd+HeGJLyHTmOx/FJA4TEA9vcuzEdjoafp24cU5pqM=;
+ b=DPEGwck05UaiiV3aXZ3c7tgx2shgafiB7jDNs6Yuh3hn5chc/fSyk1NJ
+ ODMrqaViMWHnm7s+LUnEVIV8KPBigShpgIWQgH2fOkAPyETBcsN6xXa+3
+ oPT9DBb1s9SubAIUdobFzD4I8BJxxgXal9qoI5hw5J8JIELo8pYoHate2
+ DwSW8PsYEgOdkYblssLSBz/xU0OepYiqEzS+ThTF7Q1F7HQLVF8wgGuyY
+ vBlHkKv3EaIcTxt8Ve/vRqNNLF5Dmrzk2rw/ZLptGAxcluRWOlOlcDhGc
+ yQKRWsrk1hiIldCK9opgx5s6bODnQ2pYZHflI0/DOagqfbB2JoDhIBjYC Q==;
+X-CSE-ConnectionGUID: YZrrFValQSKUYfTN98e7Ig==
+X-CSE-MsgGUID: P3oEJ97bT8CswOag0Oigmg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="61627805"
+X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="61627805"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Oct 2025 02:51:10 -0700
+X-CSE-ConnectionGUID: vx58wDbAQfG1Oi5h7p5mJw==
+X-CSE-MsgGUID: m+zOQqRtRyKFobd25ioK0A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="181068415"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.22])
+ by orviesa010.jf.intel.com with ESMTP; 14 Oct 2025 02:51:08 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+	Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH 1/2] i386/kvm/cpu: Init SMM cpu address space for hotplugged
+ CPUs
+Date: Tue, 14 Oct 2025 17:42:14 +0800
+Message-ID: <20251014094216.164306-2-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251014094216.164306-1-xiaoyao.li@intel.com>
+References: <20251014094216.164306-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] chardev/char: split chardev_init_logfd() out of
- qemu_char_open()
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
- <20251013133836.852018-3-vsementsov@yandex-team.ru>
- <CAJ+F1C+W+hUuu--QopWqB14w2VWeiPkOxxGdS-v2K7MB4eye-A@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAJ+F1C+W+hUuu--QopWqB14w2VWeiPkOxxGdS-v2K7MB4eye-A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -82,129 +84,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.10.25 10:30, Marc-André Lureau wrote:
-> On Mon, Oct 13, 2025 at 5:41 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> We are going to share new chardev_init_logfd() with further
->> alternative initialization interface. Let qemu_char_open() be
->> a wrapper for .open(), and its artifacts (handle be_opened if
->> was not set to false by backend, and filename).
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> 
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
->> ---
->>   chardev/char.c | 49 +++++++++++++++++++++++++++++++------------------
->>   1 file changed, 31 insertions(+), 18 deletions(-)
->>
->> diff --git a/chardev/char.c b/chardev/char.c
->> index a43b7e5481..d5a2533e8e 100644
->> --- a/chardev/char.c
->> +++ b/chardev/char.c
->> @@ -250,22 +250,6 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
->>                              bool *be_opened, Error **errp)
->>   {
->>       ChardevClass *cc = CHARDEV_GET_CLASS(chr);
->> -    /* Any ChardevCommon member would work */
-> 
-> maybe keep that comment?
+The SMM cpu address space is initialized in a machine_init_done
+notifier. It only runs once when QEMU starts up, which leads to the
+issue that for any hotplugged CPU after the machine is ready, SMM
+cpu address space doesn't get initialized.
 
-I a bit don't follow it, honestly.. What it mean? That we should
-handle members of common structure here?
+Fix the issue by initializing the SMM cpu address space in x86_cpu_plug()
+when the cpu is hotplugged.
 
-Not a problem to put it back to chardev_init_logfd().. But maybe, it
-then should be renamed to chardev_init_common()
+Fixes: 591f817d819f ("target/i386: Define enum X86ASIdx for x86's address spaces")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Closes: https://lore.kernel.org/qemu-devel/CAFEAcA_3kkZ+a5rTZGmK8W5K6J7qpYD31HkvjBnxWr-fGT2h_A@mail.gmail.com/
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ hw/i386/x86-common.c       | 11 +++++++++++
+ target/i386/kvm/kvm.c      |  6 ++++++
+ target/i386/kvm/kvm_i386.h |  1 +
+ 3 files changed, 18 insertions(+)
 
-> 
-> 
->> -    ChardevCommon *common = backend ? backend->u.null.data : NULL;
->> -
->> -    if (common && common->logfile) {
->> -        int flags = O_WRONLY;
->> -        if (common->has_logappend &&
->> -            common->logappend) {
->> -            flags |= O_APPEND;
->> -        } else {
->> -            flags |= O_TRUNC;
->> -        }
->> -        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
->> -        if (chr->logfd < 0) {
->> -            return;
->> -        }
->> -    }
->>
->>       if (cc->open) {
->>           cc->open(chr, backend, be_opened, errp);
->> @@ -1000,6 +984,28 @@ void qemu_chr_set_feature(Chardev *chr,
->>       return set_bit(feature, chr->features);
->>   }
->>
->> +static bool chardev_init_logfd(Chardev *chr, ChardevBackend *backend,
->> +                                Error **errp)
->> +{
->> +    ChardevCommon *common = backend ? backend->u.null.data : NULL;
->> +
->> +    if (common && common->logfile) {
->> +        int flags = O_WRONLY;
->> +        if (common->has_logappend &&
->> +            common->logappend) {
->> +            flags |= O_APPEND;
->> +        } else {
->> +            flags |= O_TRUNC;
->> +        }
->> +        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
->> +        if (chr->logfd < 0) {
->> +            return false;
->> +        }
->> +    }
->> +
->> +    return true;
->> +}
->> +
->>   static Chardev *chardev_new(const char *id, const char *typename,
->>                               ChardevBackend *backend,
->>                               GMainContext *gcontext,
->> @@ -1020,11 +1026,14 @@ static Chardev *chardev_new(const char *id, const char *typename,
->>       chr->label = g_strdup(id);
->>       chr->gcontext = gcontext;
->>
->> +    if (!chardev_init_logfd(chr, backend, errp)) {
->> +        goto fail;
->> +    }
->> +
->>       qemu_char_open(chr, backend, &be_opened, &local_err);
->>       if (local_err) {
->>           error_propagate(errp, local_err);
->> -        object_unref(obj);
->> -        return NULL;
->> +        goto fail;
->>       }
->>
->>       if (!chr->filename) {
->> @@ -1035,6 +1044,10 @@ static Chardev *chardev_new(const char *id, const char *typename,
->>       }
->>
->>       return chr;
->> +
->> +fail:
->> +    object_unref(obj);
->> +    return NULL;
->>   }
->>
->>   Chardev *qemu_chardev_new(const char *id, const char *typename,
->> --
->> 2.48.1
->>
->>
-> 
-> 
-> --
-> Marc-André Lureau
-
-
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 7512be64d67b..dd6ac3f3b741 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -183,6 +183,17 @@ void x86_cpu_plug(HotplugHandler *hotplug_dev,
+         fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+     }
+ 
++    /*
++     * Non-hotplugged CPUs get their SMM cpu address space initialized in
++     * machine init done notifier: register_smram_listener().
++     *
++     * We need initialize the SMM cpu address space for the hotplugged CPU
++     * specifically.
++     */
++    if (dev->hotplugged && kvm_enabled() && x86_machine_is_smm_enabled(x86ms)) {
++        kvm_smm_cpu_address_space_init(cpu);
++    }
++
+     found_cpu = x86_find_cpu_slot(MACHINE(x86ms), cpu->apic_id, NULL);
+     found_cpu->cpu = CPU(dev);
+ out:
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index db40caa3412f..c339d8c84434 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2731,6 +2731,12 @@ static void register_smram_listener(Notifier *n, void *unused)
+     }
+ }
+ 
++/* It should only be called in cpu's hotplug callback */
++void kvm_smm_cpu_address_space_init(X86CPU *cpu)
++{
++    cpu_address_space_init(CPU(cpu), X86ASIdx_SMM, "cpu-smm", &smram_as_root);
++}
++
+ static void *kvm_msr_energy_thread(void *data)
+ {
+     KVMState *s = data;
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index 5f83e8850a2b..35017ba07a4a 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -74,6 +74,7 @@ uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
+                              uint32_t cpuid_i);
+ #endif /* CONFIG_KVM */
+ 
++void kvm_smm_cpu_address_space_init(X86CPU *cpu);
+ void kvm_pc_setup_irq_routing(bool pci_enabled);
+ 
+ #endif
 -- 
-Best regards,
-Vladimir
+2.43.0
+
 
