@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E720CCD18D
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC92ACCD18D
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:53:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8eRR-0003uV-Kq; Tue, 14 Oct 2025 08:47:49 -0400
+	id 1v8eWd-0005G0-CD; Tue, 14 Oct 2025 08:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8eRQ-0003u6-Jg
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:47:48 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8eRJ-0003NQ-VX
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:47:48 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-634a3327ff7so10819883a12.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 05:47:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760446057; x=1761050857; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FzcCdvqVExjkLrdp+A5jr5Gzjr8KK8VBYoh/fTORjEQ=;
- b=NJaeDfUtaOWuDyWeJZThEhF6i8nVPMPj2vvhaw+8NHFzZl8BR9zxuMr4EQKI0h/cgs
- 13M6HlP9SXmwDogfJXr9wq4P7sYC1fFGUIjJbya4ABO5NRS02BNFZtk8QxNCD18wv2mw
- cN7ox5wPA0uyxJR8T+rQXmMPDXxrK41xX1t7HxB1MzCjnMYawG++NlGIaOJd/5Lpsyas
- woEmYzS375I5UZ71SE5cFyyds3D//We9EZ75rYfqd0zxTdnmRiXhvTBG+XkRSfJY/RT2
- nfdlKcht3x22cnsbW4adsN0vKlD/TiIt1l3UO0d0G6SlBD5OaD0WDWLhlTrj8eb4nXu3
- Kk9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760446057; x=1761050857;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FzcCdvqVExjkLrdp+A5jr5Gzjr8KK8VBYoh/fTORjEQ=;
- b=CZjVE9nllt14zR12vOLhuzW6+v76fRoJmRusfG38RlCIqWmq5/5KH4Pkh0srIM6JQ9
- JnEgWyFlR5/7BbdOUHG/tvYbjj2MSk9sE9IjcoxnYjW1kTLrZk+iGyKwSpVd2kSs2YsE
- U0ZI2GSIJqkpIfjN5vLNzu9ZgBXGZCxG79DnKb/h5fJwfGFiKAVA27VhRf3aNvQXVRsC
- PwsK61uZi+Kp0kPdFlNjiog8FaozutOTUDe/1wCJYdmVdPKv8xS/+WeSlgdjD/lOGlTr
- okLf/8RjA01/o+Cqhfn9bnCRMNTTs3i7076/NhM1nZpP+qOX8fMzi54ZlqONBTZiaFcN
- h7Zg==
-X-Gm-Message-State: AOJu0Yynsb7UGlxMkMV2nezvon6qk9Gd/o69zj1HzfIQ3q96eLHBE1Y2
- z8v3uChkWVbF1VBhlD+c+du1n5eogBHwmE/OJGENpHYaS4gcqfes9mCwJ//b/coboD0=
-X-Gm-Gg: ASbGncuimzxKSGP0BEgGPdVs1fqrA9s48xnmpZU221PB5Cm9/TWTJ8vA/gT7SHTv3KO
- wnCmykGYR8w1YZR6eL4lfsO1FKmtMO/H57hiF9Kh5MWBiDoJRvZPn0KARJim3WlgfiOgjscqyUw
- /mFE6lxk92f09HGdp0dvz9vtW4by1oRr2TNVIVNQyRy0gN9qsF3dfzDU+qAhM8zYTCWyoqhgQkI
- 2c3W9CowNLXAHiLtX2GYHwBdbQnoWYrO4UxqP14CzJAQ9n7ahzw+ky4mvkSMpRHx1ACysGnE5t8
- Xa7KT8aS1arb/heZO/klOdP1v1mAZSDIVTycdSnk8NDJ4aiSFPHCBawJXJDGM5LAjwOgi656gQN
- p6LUarXZKXDxDau12UCjSQvlXb7uZKebPwgskVL41ADN9hRSefCmSPoSw
-X-Google-Smtp-Source: AGHT+IFnz6+YfnK3Z8hw9t93tzgf+lO2jkmS8U5hxVB8zl32u0LiOBndlgoGIHbPX2e5A80b2bK/3A==
-X-Received: by 2002:a05:6402:2809:b0:639:c9c2:3956 with SMTP id
- 4fb4d7f45d1cf-639d5c5a382mr24681592a12.28.1760446055853; 
- Tue, 14 Oct 2025 05:47:35 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63a5235dca9sm11132257a12.8.2025.10.14.05.47.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 05:47:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 617A85F812;
- Tue, 14 Oct 2025 13:47:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,  Weiwei Li
- <liwei1518@gmail.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: Re: [PATCH v7 25/25] tests: add test with interrupted memory
- accesses on rv64
-In-Reply-To: <729c8db0f4b61033f5a460747ea50fced9dabc1e.1759744337.git.neither@nut.email>
- (Julian Ganz's message of "Mon, 6 Oct 2025 11:59:20 +0200")
-References: <cover.1759744337.git.neither@nut.email>
- <729c8db0f4b61033f5a460747ea50fced9dabc1e.1759744337.git.neither@nut.email>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Tue, 14 Oct 2025 13:47:34 +0100
-Message-ID: <87frbllkex.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eWY-0005FB-QU
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:53:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8eWQ-0003uP-JR
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:53:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760446373;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U3UqQXrcego6DBmgEw1aiqxuJEkjeFTMvBia1HFgwGw=;
+ b=NbDe1llu9FlNY5leS9wXXMMtlV6fmU3AXrVEuxvlaFfMQLHAvUCG2ASiyVOQHSJVZIDp7d
+ 2YwD1ruC3MQ+iqdhf04DR9gnlCqxzc8Os2YbCyyzhjLO69uDCwMdpk7eRRwKeCQvqgs7oN
+ 2AfAL2bIwkBalWuBifiteHgGdy0reZE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-88jpo1BKMauoxGOC25keTQ-1; Tue,
+ 14 Oct 2025 08:52:49 -0400
+X-MC-Unique: 88jpo1BKMauoxGOC25keTQ-1
+X-Mimecast-MFC-AGG-ID: 88jpo1BKMauoxGOC25keTQ_1760446369
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05416180028D; Tue, 14 Oct 2025 12:52:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 862B11955F21; Tue, 14 Oct 2025 12:52:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 23EB321E6A27; Tue, 14 Oct 2025 14:52:46 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  marcandre.lureau@redhat.com,  Bernhard Beschow
+ <shentey@gmail.com>
+Subject: Re: [PATCH] ui/pixman: Fix crash in qemu_pixman_shareable_free()
+In-Reply-To: <2831438d-9ca2-4629-b708-65874cf3a4a7@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 13 Oct 2025 16:11:32
+ +0200")
+References: <20251013112102.2396012-1-armbru@redhat.com>
+ <2831438d-9ca2-4629-b708-65874cf3a4a7@linaro.org>
+Date: Tue, 14 Oct 2025 14:52:46 +0200
+Message-ID: <87jz0xmyqp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,142 +89,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Julian Ganz <neither@nut.email> writes:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> This test aims at catching API misbehaviour w.r.t. the interaction
-> between interrupts and memory accesses, such as the bug fixed in
+> On 13/10/25 13:21, Markus Armbruster wrote:
+>> Reported-by: Bernhard Beschow <shentey@gmail.com>
+>> Fixes: b296b29d3414 (ui/pixman: Consistent error handling in qemu_pixman=
+_shareable_free())
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> ---
+>>   ui/qemu-pixman.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
+>> index e46c6232cf..aea09755b9 100644
+>> --- a/ui/qemu-pixman.c
+>> +++ b/ui/qemu-pixman.c
+>> @@ -291,7 +291,9 @@ qemu_pixman_shareable_free(qemu_pixman_shareable han=
+dle,
+>>       Error *err =3D NULL;
+>>=20=20=20
+>>       qemu_win32_map_free(ptr, handle, &err);
 >
->     27f347e6a1d269c533633c812321cabb249eada8
-
-Even better the abbrev with title:
-
-  27f347e6a1d (accel/tcg: also suppress asynchronous IRQs for cpu_io_recomp=
-ile)
-
-> Because the condition for triggering misbehaviour may not be
-> deterministic and the cross-section between memory accesses and
-> interrupt handlers may be small, we have to place our trust in large
-> numbers. Instead of guessing/trying an arbitrary, fixed loop-bound, we
-> decided to loop for a fixed amount of real-time. This avoids the test
-> running into a time-out on slower machines while enabling a high number
-> of possible interactions on faster machines.
+> Slightly better if qemu_win32_map_free(), as per commit e3fe3988d78
+> ("error: Document Error API usage rules") recommended style:
 >
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Signed-off-by: Julian Ganz <neither@nut.email>
-> ---
->  tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
->  tests/tcg/riscv64/interruptedmemory.S     | 67 +++++++++++++++++++++++
->  2 files changed, 73 insertions(+)
->  create mode 100644 tests/tcg/riscv64/interruptedmemory.S
->
-> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv6=
-4/Makefile.softmmu-target
-> index 1a71a78653..d8f92b8e61 100644
-> --- a/tests/tcg/riscv64/Makefile.softmmu-target
-> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-> @@ -30,5 +30,11 @@ run-plugin-doubletrap: doubletrap
->  	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
->  	  $(QEMU_OPTS)$<)
->=20=20
-> +EXTRA_RUNS +=3D run-plugin-interruptedmemory
-> +run-plugin-interruptedmemory: interruptedmemory
-> +	$(call run-test, $<, \
-> +	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
-> +	  $(QEMU_OPTS)$<)
+> + *  We recommend
+> + *   =E2=80=A2 bool-valued functions return true on success / false on f=
+ailure,
+> + *   =E2=80=A2 pointer-valued functions return non-null / null pointer, =
+and
+> + *   =E2=80=A2 integer-valued functions return non-negative / negative.
 
-Something went wrong with substitutions there because I see:
+I went fo a minimal fix.
 
-  timeout -s KILL --foreground 120  /home/alex/lsrc/qemu.git/builds/all/qem=
-u-system-riscv64 -plugin ../plugins/libdiscons.so -d plugin -D .pout -M vir=
-t -display none -semihosting -device loader,file=3Dinterruptedmemory
+I now see that this is the only use of qemu_win32_map_free().  Changing
+it to return bool would've been okay.
 
-There doesn't seem to be any output either when I run it manually -
-should we be checking the output and at least confirming we are
-detecting the right sort of events?
+> Anyhow,
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-> +
->  # We don't currently support the multiarch system tests
->  undefine MULTIARCH_TESTS
-> diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/in=
-terruptedmemory.S
-> new file mode 100644
-> index 0000000000..a32d672849
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/interruptedmemory.S
-> @@ -0,0 +1,67 @@
-> +	.option norvc
-> +
-> +	.text
-> +	.global _start
-> +_start:
-> +	# Set up trap vector
-> +	lla	t0, trap
-> +	csrw	mtvec, t0
-> +
-> +	# Set up timer
-> +	lui	t1, 0x02004
-> +	sd	zero, 0(t1) # MTIMECMP0
-> +
-> +	# Enable timer interrupts
-> +	li	t0, 0x80
-> +	csrrs	zero, mie, t0
-> +	csrrsi	zero, mstatus, 0x8
-> +
-> +	# Find out when to stop
-> +	call	rtc_get
-> +	li	t0, 60
-> +	slli	t0, t0, 30 # Approx. 10e9 ns
-> +	add	t0, t0, a0
+Thanks!
 
-The runtime of 60s seems quite long for a tcg test. Can we not show
-stuff happening in a shorter period of time?
+>> -    error_report_err(err);
+>> +    if (err) {
+>> +        error_report_err(err);
+>> +    }
+>>   #else
+>>       qemu_memfd_free(ptr, size, handle);
+>>   #endif
 
-> +
-> +	# Loop with memory accesses
-> +	la	t1, semiargs
-> +0:
-> +	ld	t2, 0(t1)
-> +	sd	t2, 0(t1)
-> +	call	rtc_get
-> +	bltu	a0, t0, 0b
-> +
-> +	li	a0, 0
-> +	lla	a1, semiargs
-> +	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-> +	sd	t0, 0(a1)
-> +	sd	a0, 8(a1)
-> +	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-> +
-> +	# Semihosting call sequence
-> +	.balign	16
-> +	slli	zero, zero, 0x1f
-> +	ebreak
-> +	srai	zero, zero, 0x7
-> +	j	.
-> +
-> +rtc_get:
-> +	# Get current time from the goldfish RTC
-> +	lui	t3, 0x0101
-> +	lw	a0, 0(t3)
-> +	lw	t3, 4(t3)
-> +	slli	t3, t3, 32
-> +	add	a0, a0, t3
-> +	ret
-> +
-> +trap:
-> +	lui	t5, 0x0200c
-> +	ld	t6, -0x8(t5) # MTIME
-> +	addi	t6, t6, 100
-> +	lui	t5, 0x02004
-> +	sd	t6, 0(t5) # MTIMECMP
-> +	mret
-> +
-> +	.data
-> +	.balign	16
-> +semiargs:
-> +	.space	16
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
