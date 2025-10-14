@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91F8CCD184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7256CCD18E
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 11:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8cxR-0007vD-5T; Tue, 14 Oct 2025 07:12:45 -0400
+	id 1v8cxc-000836-GJ; Tue, 14 Oct 2025 07:12:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cxO-0007uh-AX
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:42 -0400
+ id 1v8cxU-0007wJ-Ok
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:48 -0400
 Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cxL-00081n-Ur
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:42 -0400
+ id 1v8cxS-00083M-Bc
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:48 -0400
 Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b4aed12cea3so823833566b.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:39 -0700 (PDT)
+ a640c23a62f3a-b463f986f80so184462066b.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760440357; x=1761045157; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Svb2oNT9or1vltT0+6b3m5vDocAyrYfL4zg65Nw042I=;
- b=zg7sh0SnRhd/mEq5igfGudbRcPI0lxRd1DnP2KoMK0qIxqDSHbVp/Wfb4ORDajoDja
- cO9Lw1EQQ161JYiQroCfODwABmW40wIvmsJwpfNqctcyAkkgcmXjEjEd15+Xmi9jMUDs
- H17AzawfPqkqLIDsl1qah1/HHRT1PYiUTPS4zY7lo5OmNM+mW4V8qcO2Zske83kKkLt/
- KPLfB0A736/cbp0MqoFPN8+qg4zEh+LqTOlqTf7UrGbH4YQcepMKgCCTBeIHT1f/meXV
- RQCwDkmy0b81MnDXkfS87MFcZ52Xozm23dJ97DbTPpyrnX/MUyA6bzMfgzL2R5LE+Uc5
- vPGg==
+ d=linaro.org; s=google; t=1760440364; x=1761045164; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kxqMBghotsNAW3z2sKbNmh6PO8mUrbQ9ykLagwcUbrI=;
+ b=vS9f/PMIKu7b/hHM6yztiOxk5YBy3SQGmparUaMPKf8DOJIPF/iqOoXELTgg1rzE2C
+ 1kFZ6zqx3I/iSwIdGxVS3Q2/bLb6ZP/63dXJ+zrUAor0oNnKPOPyjkJYCAGlEJzBXRhR
+ TDPRGqv0Us4xLSUbfOe/+wstk7+5gwvpIo+FjYmB+sQmEflOH4leifJdzknSdU2UFRQk
+ c/stZLWdF30t3MZRO0XqNWZTqTTQjMvu6VKFnhiX6wr24O0sMPwbOzBG1euRtwt6tvgm
+ jFxxDWX0uO+Ip1RSjrbKKoW+zz7qvy2iPjazQ1IOQmfleK5lYzcQQf24SrINwcldr7MV
+ JdiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760440357; x=1761045157;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Svb2oNT9or1vltT0+6b3m5vDocAyrYfL4zg65Nw042I=;
- b=UzwNarpLsPFEP0HwIsMLNLnXF355xLKDhx3vPWNjxWmHrT2i0Su1qwoBXTJTj1LzhS
- Anx5uWSZNTNU+JtpolkCQrBItXj4f/dfZpkYwhzG6S3tNR+qgUMoRGPZaFjeFJSUf/wk
- 0MabqrWPxbxORJokcHkp/lPd3n7y/bznWyZLVegppbqkhdSp8C+nCKOVt1mLsnIVLuND
- Ts3YMob1jUN1QFQCxNWPH/Qj9XuMD+mEjDOBIQK947InkATFuHHipYAnzuYyC8hMLg7b
- gDnmx5RdQ4aBgAD00gHGP3jnRJAi7BUMcrWKnovvPFWIaby9gSvL6RTioSlWRlx3vHKE
- GRIw==
-X-Gm-Message-State: AOJu0YyMMp88u04tIO11gWTphYxELenyZ7JPm1qYet612sTHLFi1fO03
- SdmuMMVW8LpoLGIdEuIHub5Ibbcs4t2DkHBKgtTEZLnCOOcIEu53VNWoY57hybca2EY=
-X-Gm-Gg: ASbGncu5E1d+gyFixKEV7et5SKEZCm6Ubf3XilDsDsLN8NSLF5JyHzPKIWHQjtwvegw
- ycXa6t26P5CzN+H4fD+w0ZIB4rJB+fUAdZDw7mqgbB38jt6EaNG5P7lSNuaAlRDjrdGB/2CPNdt
- nEWS1ASQDFInSoDtZK6tM88R/MvScNUHYSRuqtSb+Hxk0IjinAreDSoyRshFjNCzoHhwwJl7h8H
- KC8rvWAQWjiAEKE+jr/j3e+O1TXcjtDIDqXgotJzAgQQEDeGJ3jZJ4CB2hCpWi06DCX3Wvnf+ug
- VKOJOBBLHq4LiENM71iSpo1WooJzZIjakq/c1KK/OggHJgylbbc8kD9DX5dU3koG4VdsZBZWe91
- sgC6zFNMt37Zv0tUX/UegSHsZEsShY5bHJ7+2nBDhddB4RBpCfONmV5Hn
-X-Google-Smtp-Source: AGHT+IFIevHdJvXtsgzxk+sUWSZJ7n2+73TStVTDhq6g3DU//dlX//gLihQUjUehoLHlCNUEadABzA==
-X-Received: by 2002:a17:907:d86:b0:b3e:f987:d6a8 with SMTP id
- a640c23a62f3a-b50ac4da0bdmr2559194566b.44.1760440356631; 
- Tue, 14 Oct 2025 04:12:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760440364; x=1761045164;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kxqMBghotsNAW3z2sKbNmh6PO8mUrbQ9ykLagwcUbrI=;
+ b=Qhp+1QIm3kxuJ2GvFa7kTD47oZBMxVEqk5gPBFlaPgsucwdo8zwoBMqjpOV7I7/qCA
+ F3gWZCu/FhMG/ZOI6TXZnLNZB4Nk5CnvqiddVrAR0Kj0wPLj5qKFuGSyufn6uciQW5bl
+ /VAROHeezxoAzGXdn6ZcCd8r0531RzpNx0me9Rc29HkZEu9zYgA3x/2m8S4Rh87qCi6n
+ 2aiob5O1r91IPqFY64uBWtgX5IINm3wKgcURVtc5GQbkAZ+VJaPr+o9SLdFdvK2tv+t4
+ GESuL8QZbyK628ehYm1UtRCXLZnY7ZwEFgW7mesroFN/oWmJJgep9WRnA/UXu7KCNGlU
+ NcEg==
+X-Gm-Message-State: AOJu0YwWeW/IWKbtShivw0QYCW7RU1pDEevUHrEeM+O4S0+/vpwtYwhD
+ nVT+nPHnI1VhDAyw7FTj1lhE2vLwNoo0y7Yy7HHYd969ldPAQAQPsGBsU6BL1TiRZH0=
+X-Gm-Gg: ASbGnctA25pOVKP5IhfhBsCknm4KiOI7CH3iQUHgxa1dkR7dqOf+2VjA4xWu5XsiREz
+ jXoEE6mU/yANK92uEoVsoYvxKliiv1MBquAkZEqRH91Cd9zHxLZ7fZNf9dKoBODpC54HoqrNM8v
+ LdRdnerOtb6SdYi0/xjgzrVbDZfBdiSFpI9udyv80prixwJXzb8e/PgHmxzbUiL6bGH5SnFkEYi
+ s1w6pPFBcvKYk/XNzXU0ImajrzDYy8MbqOF3KFq6jEqbnoOg2iUJtfmXuFsK3CuWbMJZvO2Lof+
+ PbVvqg4MfSEBDWFNxHBfBTX2+3abbzzhcLND2UkpTlZFuFwtbWW233/VBqGnnsN6BuDVWUf95TT
+ NyfYPx8cN4pLwW3T6IgnllOtNrMNgQAcsJFRWwhgUcKyKMQ==
+X-Google-Smtp-Source: AGHT+IHHJHMPJYJ5v7xglCte7DfQ1AWOsH39mv1264aNNKNlWkjYNPKN6crIFVmHw8oD8baC9uYpTQ==
+X-Received: by 2002:a17:907:94d0:b0:b04:7232:3e97 with SMTP id
+ a640c23a62f3a-b50aa3921edmr2633393566b.21.1760440363678; 
+ Tue, 14 Oct 2025 04:12:43 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d9920ec0sm1149295466b.86.2025.10.14.04.12.35
+ a640c23a62f3a-b55d5cac037sm1102213566b.12.2025.10.14.04.12.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 04:12:35 -0700 (PDT)
+ Tue, 14 Oct 2025 04:12:39 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 112895F812;
+ by draig.lan (Postfix) with ESMTP id CA6E65FA5C;
  Tue, 14 Oct 2025 12:12:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -76,12 +77,14 @@ Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 0/8] virtio-gpu/next - misc fixes and MR handling
-Date: Tue, 14 Oct 2025 12:12:26 +0100
-Message-ID: <20251014111234.3190346-1-alex.bennee@linaro.org>
+Subject: [PATCH 8/8] tests/functional: add GPU blob allocation test
+Date: Tue, 14 Oct 2025 12:12:34 +0100
+Message-ID: <20251014111234.3190346-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251014111234.3190346-1-alex.bennee@linaro.org>
+References: <20251014111234.3190346-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
  envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
@@ -107,50 +110,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I still have a number of patches that addressed a lock-up but were
-never merged due to objections. However there is a bunch of discussion
-around re-factoring the MemoryRegion code so I'm re-posting with an
-additional functional test which demonstrates the lock-up is fixed.
-Whatever the final solution for more cleanly handling the binding
-between MemoryRegions and blobs it will at least need to pass the
-test.
+This is a very short microkernel test that initialises and then maps
+and unmaps a blob resource.
 
-Blob memory issues aside I'll send a PR next week to merge the
-per-head and ui/gtk-gl-area changes.
+Without the other fixes in this series it causes QEMU to hang on the
+unhandled unmap.
 
-Discuss,
-
-Alex.
-
-Alex Bennée (4):
-  system/memory: add memory_region_finalize tracepoint
-  hw/display: add blob map/unmap trace events
-  hw/display: re-arrange memory region tracking
-  tests/functional: add GPU blob allocation test
-
-Andrew Keesler (1):
-  Support per-head resolutions with virtio-gpu
-
-Dongwon Kim (1):
-  ui/gtk-gl-area: Remove extra draw call in refresh
-
-Manos Pitsidianakis (2):
-  virtio-gpu: refactor async blob unmapping
-  virtio-gpu: fix hang under TCG when unmapping blob
-
- qapi/virtio.json                          | 10 +++-
- include/system/memory.h                   |  1 +
- hw/display/virtio-gpu-base.c              | 10 ++++
- hw/display/virtio-gpu-virgl.c             | 62 +++++++++++--------
- system/memory.c                           |  5 ++
- ui/gtk-gl-area.c                          |  1 -
- hw/display/trace-events                   |  2 +
- system/trace-events                       |  1 +
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
  tests/functional/aarch64/meson.build      |  1 +
  tests/functional/aarch64/test_gpu_blob.py | 73 +++++++++++++++++++++++
- 10 files changed, 138 insertions(+), 28 deletions(-)
+ 2 files changed, 74 insertions(+)
  create mode 100755 tests/functional/aarch64/test_gpu_blob.py
 
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+index 5ad52f93e1d..f6ca33b2be4 100644
+--- a/tests/functional/aarch64/meson.build
++++ b/tests/functional/aarch64/meson.build
+@@ -26,6 +26,7 @@ tests_aarch64_system_thorough = [
+   'aspeed_ast2700',
+   'aspeed_ast2700fc',
+   'device_passthrough',
++  'gpu_blob',
+   'hotplug_pci',
+   'imx8mp_evk',
+   'kvm',
+diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/functional/aarch64/test_gpu_blob.py
+new file mode 100755
+index 00000000000..a913d3b29c8
+--- /dev/null
++++ b/tests/functional/aarch64/test_gpu_blob.py
+@@ -0,0 +1,73 @@
++#!/usr/bin/env python3
++#
++# Functional tests for GPU blob support. This is a directed test to
++# exercise the blob creation and removal features of virtio-gpu. You
++# can find the source code for microkernel test here:
++#   https://gitlab.com/epilys/qemu-880-repro
++#
++# Copyright (c) 2025 Linaro Ltd.
++#
++# Authors:
++#  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu.machine.machine import VMLaunchFailure
++
++from qemu_test import Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test.linuxkernel import LinuxKernelTest
++
++class Aarch64VirtBlobTest(LinuxKernelTest):
++
++    ASSET_BLOB = Asset('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/'
++                       'download?path=%2Fblob-test&files=qemu-880.bin',
++                       '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
++
++    def test_virtio_gpu_blob(self):
++
++        self.set_machine('virt')
++        self.require_accelerator("tcg")
++
++        blob = self.ASSET_BLOB.fetch()
++
++        self.vm.set_console()
++
++        self.vm.add_args("-machine", "virt,memory-backend=mem0,accel=tcg",
++                         '-m', '4G',
++                         '-cpu', 'max',
++                         '-kernel', blob,
++                         '-object', 'memory-backend-memfd,share=on,id=mem0,size=4G',
++                         '-global', 'virtio-mmio.force-legacy=false',
++                         '-nic', 'none',
++                         '-device',
++                         'virtio-gpu-gl,hostmem=128M,blob=true,venus=true',
++                         '-display', 'egl-headless,gl=on',
++                         '-d', 'guest_errors')
++
++        try:
++            self.vm.launch()
++        except VMLaunchFailure as excp:
++            if "old virglrenderer, blob resources unsupported" in excp.output:
++                self.skipTest("No blob support for virtio-gpu")
++            elif "old virglrenderer, venus unsupported" in excp.output:
++                self.skipTest("No venus support for virtio-gpu")
++            elif "egl: no drm render node available" in excp.output:
++                self.skipTest("Can't access host DRM render node")
++            elif "'type' does not accept value 'egl-headless'" in excp.output:
++                self.skipTest("egl-headless support is not available")
++            elif "'type' does not accept value 'dbus'" in excp.output:
++                self.skipTest("dbus display support is not available")
++            elif "eglInitialize failed: EGL_NOT_INITIALIZED" in excp.output:
++                self.skipTest("EGL failed to initialize on this host")
++            else:
++                self.log.info("unhandled launch failure: %s", excp.output)
++                raise excp
++
++        self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
++        # the test should cleanly exit
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.47.3
 
