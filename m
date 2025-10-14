@@ -4,100 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D88CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE37CCD192
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8f1A-0004sK-AR; Tue, 14 Oct 2025 09:24:45 -0400
+	id 1v8f5h-0006AZ-JZ; Tue, 14 Oct 2025 09:29:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8f18-0004rh-IP
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:24:42 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8f13-0007Y1-73
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:24:42 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-6353f2937f3so6281382d50.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:24:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760448274; x=1761053074; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=G8jDXamh0GAjhaOOyUbM/zxBl3+EgMCzhSCMLTGd7MM=;
- b=Kydw+eXXA4hMSPzxUjV9HI5oaP6PuGMeePHeDqJQlt9j6sVGp5YLRCkK40Mx7nTFv3
- bhJItSOXd3EFNK10ub6g0n4MZHG0wSikjJt5/wScnvszYN/2dX/01pcXVlpsIcXKsNK9
- E/CpHL0dQ9w09I1AOo+iuaSMgomHFZD04URVri9zfRaQhye5UIurtb0BJFRoX5hA9KkN
- h6Ks0bz0FeGt/fhEJyxIZBqUMrTb1hjejC2UwWy4t2r2CgftPRf5VuTpwnmyZsIJzeNL
- LxMogncCfhR5vVQ1RZmZ4PUSs0E0Dbb/1L3G15J8EQUwrRJOa0lHNiy6hLPMRvQmahi8
- /44w==
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1v8f5f-00066o-MH
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:29:23 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1v8f5d-00086s-5c
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:29:23 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59E87Hwt005378
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:29:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:content-type:date:from
+ :message-id:mime-version:subject:to; s=qcppdkim1; bh=ehpNWDCHDel
+ KDgklQhu3pSTn/s0dscDOL87rT3NpH5k=; b=itBKCiBC1O4Pj/EWhjoNg8dOKEi
+ bFF+6y1tD0zA81h0HLA6ymkJqv4qgPi6Q729/RV8+zUzMSNUW/Kniy7ZNh0ohw4K
+ CwLFQlSSWLRDOi+XhcI26B04YvMBm2trbyojFzYhKN+cDBFFWBeTgGqAt4iauwpn
+ 8TAUOJvQ+zIhb7XTCRr7TLaDGVed+Bvs9N0ys9XO1BjAZydKVunFreTrly2BMmvY
+ 6WHrbZCkd6uRySKnqchDUPs3iyYrcbHPY3TkAxZVKldPwTc7xv/n4+EvONXLeq9M
+ r67QcT8WzKzGZ2dd9LS9Drlp1tSXgyzzJpRDpBv81O1OFYqWVAEjcMX/cLQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49qfbj0ngx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:29:16 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-27356178876so65836635ad.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:29:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760448274; x=1761053074;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=G8jDXamh0GAjhaOOyUbM/zxBl3+EgMCzhSCMLTGd7MM=;
- b=LzemJTXSnihN49Uw1A4AdhCxeY58tO8gTap8CR1+s89M24aR7tyW+WBSFEGRfct3XQ
- vW7M7nBApXSHd2a4jVCca60Z7XsWI8uqkb6kn0NxpzB9Zt8tZHyaVw2RWfLk/TMCXo7m
- +wl7AXO8Lo7zFdysCqHd04bmqocSooaqAppYehjaHJw+r32w8QxoMD/jYAtUEwRX1CJg
- wdfrkjNb7df6OCSgHhtJVOJy7du41bETWBs9Lrt7pk6V4b7dgGwPvNDBzLB1rWoIRfgM
- 8TpvQ94pAEg6DMDryTnymIV17CIDr+o7kpYYv3CV0+1I4TNUbnyDjfyNpgKkyRzCO+ja
- 0esw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6eygw2pOw6NWfIva1qXhF2IOhorvb9KHSSUDp9ihtwDO3zOKLVKHhJx1uo5Cu7KO1mA/kk/QZ+oLO@nongnu.org
-X-Gm-Message-State: AOJu0YzDUvbSnVRm0VX6X306Fr17wKRwkRh6ZxUWVQ83zrJc9fFLr91e
- pMjAxIjIO6m7ZQAYSer5b28s16ozO5MgOKEpuf8PxGJo3ZZjwLM078WzGsmD/3XD+Wlgk5P2FY5
- giaanVDAOogN9InG19lrbW9SkUSrlCrqnB6zxe7AOjg==
-X-Gm-Gg: ASbGncsN5pwrmdULIUifnQ5rI2Cjiyn33ULrY8DA0aNuiQ89WpDLvULS2lovIeUeVRQ
- MOSoQndALqYheDae8iSQ3GndRFaVaMLi11TwjTttJpjkoMbQPhFywvC4O9kabMkisSawT9ED7Ca
- 5kgMjfrmIc3Th/BZOb9crL+j50uMHku0BxomppNIQsydGmGqLGTmxNlEUpTeB/xu/BTNNcwnIZ6
- btto3xMw9Tx2suTBmebtPamkAM15AQ8NQ7DQb2ICA==
-X-Google-Smtp-Source: AGHT+IHaFc3RRuDEiqeYSwnBo4u9QB+QqXv4aFN8eskYGje4t8Ipu4fV5lIW2GG8Dvb+kXgxpAr3wSK39vx2ipeuRE8=
-X-Received: by 2002:a53:be0a:0:b0:63c:f5a7:3fc with SMTP id
- 956f58d0204a3-63cf5a70a2emr7600436d50.64.1760448273771; Tue, 14 Oct 2025
- 06:24:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760448555; x=1761053355;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ehpNWDCHDelKDgklQhu3pSTn/s0dscDOL87rT3NpH5k=;
+ b=Aj4/cc9Wjzgi0Q8QceukEsAPyeLikQd82Ts29eQmulbfNih27y1s7nftNS2ZTVatWR
+ E45Bapas/GTAcwuY66z76XP5KOB/ZIwCVG0fJqMBN6/J2JzrC+2jHFmdY6+lyt3txTxo
+ 1T5IZRIAaqhLEd6SbT8Pblu5Vd3WJB/nJvV99s2S0d5XXLQ2mJQxNsvAPwyugiYOxGnd
+ zF1iWrubgwo0SXDy38KDFQn/N3sqYY/CWl3vN/dkx6j9Z9A1H74flf56qCDe3zptTwdK
+ CTXe6jhwE0wR/aN6iB5vv+Nr4PzMh64BjJgxTs279PdzuXsIeFbNQiZ97jOdVGkaUZJG
+ bSZA==
+X-Gm-Message-State: AOJu0YyU1oa5RzqahDRi2lKMxyHiyhXP1q4DpPopwqmwQhCAQ8iYlj9Q
+ kUE8XLBwEVFFEtgBp8WzIbAMxB7pi1XxhGU+CYjCwjn0ombPSWTEzSKqgNqLCSDmea3RtoiJijw
+ yCe6DPRikaUdMHLd8cLtU3LkPRadSAqQuXY6tUGWGqgmZx1x0KPw8izJmAyJYrD2x/Q==
+X-Gm-Gg: ASbGncvTOjiyf7r9jLGONUD8GdEkOr8rZ7A+LdQe/mVzU/o9pu30nZzZoTY6DtHPmOy
+ aFFUJgk/sW401Fsqi0h5NopztZSbUjHUkOrJaTO3CodhoTOdALkVt0KDZzlNfZBQI6veHqLOlcN
+ PxsCf63EGU4hLKTMAwuYsLrD4Co1l/kmLbtPtSz2uMx+EIb0QnbBNBVMFfrR/4w6jWKopdDyCeq
+ nQIDEPS5pRTSLk72B5J6DJJQFgo7qvqkxESpCAwoeg4pG0tuT5dzOEvepl1Ef/vmicxcJ0iJLxt
+ FxK4o7iDQiZEsz4jY8WfuImJi+7laT/sLpBycmRAaQZMGU/3AanoH7uSbP/kbApLwIWinOXyg+j
+ cZQui2ZrGPTJd
+X-Received: by 2002:a17:902:cf08:b0:275:c2f:1b41 with SMTP id
+ d9443c01a7336-290274193camr318062415ad.53.1760448554633; 
+ Tue, 14 Oct 2025 06:29:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhSJjyRQlDs2NzpNhLN5yp9pEli5TngUbS7quEJAtokuW54PBasPmZ3bPJu91hK/gCaDqTsw==
+X-Received: by 2002:a17:902:cf08:b0:275:c2f:1b41 with SMTP id
+ d9443c01a7336-290274193camr318061995ad.53.1760448554172; 
+ Tue, 14 Oct 2025 06:29:14 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034f07275sm164478125ad.66.2025.10.14.06.29.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 06:29:13 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
+ philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com
+Subject: [PATCH v3 0/4] linux-user/hexagon: fix sigcontext
+Date: Tue, 14 Oct 2025 06:29:03 -0700
+Message-Id: <20251014132907.3268743-1-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250908125058.220973-1-peter.maydell@linaro.org>
- <20250908104125-mutt-send-email-mst@kernel.org>
- <46AA9C03-CA7E-4C4B-AD05-A9053666BA52@gmail.com>
- <20251013070945-mutt-send-email-mst@kernel.org> <aOzm2ukHfkPF-zhT@redhat.com>
- <CAFEAcA9p51aPGhHgUPishEJ9TE60dm83ofKr5Wa-qM_1SqJ67w@mail.gmail.com>
- <aO5OndKoyP4Tk8Rw@redhat.com>
-In-Reply-To: <aO5OndKoyP4Tk8Rw@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Oct 2025 14:24:22 +0100
-X-Gm-Features: AS18NWBEgp9rF0la74221YIrfcgrObUAY4l2alirlrVCyAB-5MtRwOFxwpklcIk
-Message-ID: <CAFEAcA-K8=4O+rohY062YGQLLBpQP=knCgJMsJSoGTNsZHeLeA@mail.gmail.com>
-Subject: Re: [RFC PATCH] docs/system/security: Restrict "virtualization use
- case" to specific machines
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- qemu-devel@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Huacai Chen <chenhuacai@kernel.org>, qemu-s390x@nongnu.org, 
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxOCBTYWx0ZWRfXyoBRug5Ht5uC
+ qDyR5u5N2soMQ4THP+N72/qtXqxSEIu6DfZLwprWGQwL4ZV9YzjDBBpKguVuaDoRSSVQXB5F2od
+ Ud6HpsAns+sEkJ1QoAootwMB8dhfZtmVc6eKdyjVmTEl4ooMvTGd28QW9dlCYrK3w55KF+geCcU
+ thn73b8LpezDbMKiqksE1oRV/GZxz6oblSsqJBMIoo6Ut5Y7IvUMAZWawfhWXHr64t7FdPk0Zar
+ FQijRas7pRvoKh4G3fg1fg6TtSE23fSXhAh7MoW/5mfYgMAe9MCWln7a+8lI4W5b1qwtACdHuoa
+ PEXmurUjx2FZ4rp2CbgpUX0fnkBizQT+O3x/nqpCVhf1pyAZvnUEvHsUylpqUtQhxqeQXZQJt5V
+ jz2umEiWqpo1HLTRlJOOePZI5ExE+g==
+X-Proofpoint-ORIG-GUID: owuS97dsqYmhFjCvTXn9FeniYFwAztWF
+X-Authority-Analysis: v=2.4 cv=bodBxUai c=1 sm=1 tr=0 ts=68ee502c cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=jBgUiILNZ4taLe3DBhAA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: owuS97dsqYmhFjCvTXn9FeniYFwAztWF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-14_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110018
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,91 +134,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Oct 2025 at 14:22, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Tue, Oct 14, 2025 at 01:20:07PM +0100, Peter Maydell wrote:
-> > On Mon, 13 Oct 2025 at 12:47, Daniel P. Berrang=C3=A9 <berrange@redhat.=
-com> wrote:
-> > > With a very minimal wording tweak our current defined policy could
-> > > avoid being a blocker for enabling KVM in imx8mp-evk. In
-> > >
-> > >   https://www.qemu.org/docs/master/system/security.html
-> > >
-> > > where it describes the "virtualization use case", we could simply
-> > > tweak it to always require a versioned machine type
-> > >
-> > > Change
-> > >
-> > >   "These use cases rely on hardware virtualization extensions
-> > >    to execute guest code safely on the physical CPU at close-
-> > >    to-native speed."
-> > >
-> > > To say
-> > >
-> > >   "These use cases apply to versioned machine types when used
-> > >    in combination with hardware virtualization extensions
-> > >    to execute guest code safely on the physical CPU at close-
-> > >    to-native speed"
-> >
-> > With the suggested changes listed elsewhere in this
-> > thread, my current manually curated list of machines is:
-> >
-> > aarch64
-> >   ``virt``
-> > i386, x86_64
-> >   ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``
-> > s390x
-> >   ``s390-ccw-virtio``
-> > loongarch64:
-> >   ``virt``
-> > ppc64:
-> >   ``pseries``
-> > riscv32, riscv64:
-> >   ``virt``
-> >
-> > If we say "versioned machine type", that puts these machines
-> > outside the "supported" boundary:
-> >
-> > i386, x86_64
-> >   ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``
-> > loongarch64:
-> >   ``virt``
-> > riscv32, riscv64:
-> >   ``virt``
-> >
-> > I can certainly see the argument for loongarch64
-> > and maybe even riscv[*] still being "not supported for
-> > production security-boundary stuff", but do we really
-> > want to say that the Xen machine types and microvm
-> > aren't suitable for VM use ?
->
-> No, that would be wrong. How about this alternative
->
->   @@ -21,7 +21,9 @@ Virtualization Use Case
->    The virtualization use case covers cloud and virtual private server (V=
-PS)
->    hosting, as well as traditional data center and desktop virtualization=
-.  These
->    use cases rely on hardware virtualization extensions to execute guest =
-code
->   -safely on the physical CPU at close-to-native speed.
->   +safely on the physical CPU at close-to-native speed.  This use case is=
- limited
->   +to the use of versioned machine types, or machine types designed exclu=
-sively
->   +for virtualization.
->
->  The following entities are untrusted, meaning that they may be buggy or
->  malicious:
->
-> that wording would bring xen* and microvm into the scope, and so match
-> your manually curated list.
-
-I think that it's simpler for users if we explicitly list the
-machines, rather than making them guess whether a machine
-is "designed exclusively for virtualization".
-
-thanks
--- PMM
+Rm9sbG93IHVwIGZyb20gdjI6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAy
+NTEwMDkxOTU5NDMuNDM4NDU0LTEtYnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tLwoKdjMgY2hh
+bmdlIGZyb20gdjI6CiAgICAtIGZpeGVzIHRvIHRoZSB0ZXN0IGNhc2UsIHN1Z2dlc3RlZCBmcm9t
+IHJldmlldyAobG9vcCBib3VuZCwgY2xvYmJlcnMpLgoKQnJpYW4gQ2FpbiAoNCk6CiAgbGludXgt
+dXNlci9oZXhhZ29uOiBGaXggc2lnY29udGV4dAogIGxpbnV4LXVzZXIvaGV4YWdvbjogdXNlIGFi
+aV91bG9uZwogIGxpbnV4LXVzZXIvaGV4YWdvbjogVXNlIGFuIGFycmF5IGZvciBHUFJzCiAgdGVz
+dHMvdGNnL2hleGFnb246IEFkZCBjc3swLDF9IGNvdmVyYWdlCgogbGludXgtdXNlci9oZXhhZ29u
+L3NpZ25hbC5jICAgICAgICB8IDE4NCArKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLQogdGVz
+dHMvdGNnL2hleGFnb24vc2lnbmFsX2NvbnRleHQuYyB8ICAyMyArKystCiAyIGZpbGVzIGNoYW5n
+ZWQsIDkyIGluc2VydGlvbnMoKyksIDExNSBkZWxldGlvbnMoLSkKCi0tIAoyLjM0LjEKCg==
 
