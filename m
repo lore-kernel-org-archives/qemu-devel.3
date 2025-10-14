@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2718ACCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E29DFCCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8akN-0003KQ-EB; Tue, 14 Oct 2025 04:51:07 -0400
+	id 1v8akn-0003Vj-Ch; Tue, 14 Oct 2025 04:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v8akI-0003Jj-Ha
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:51:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v8akE-0006wG-6i
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:51:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760431855;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bx124GfnlKyS5uJsdANq7MkBlFBMzYx79UeD3IZUbZc=;
- b=ZHgWsZEoLp9MtFJJbvgx7nM51L4UoF9urRQF14dHsNJ/Xp6DYjMdFWqDoCtbobZNG3FooW
- MOxGhA8sXdF4U+lJHbiC82kQ1L/9W5sCzhyJojQvHq7AOPc+gagNsgGdi/ldOiQgp+Q+oj
- 3d5HmEGsOu//T8cr2mMHJHib6XkBxpE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-Z1oMWN4yNrCLkApj6F5Bzg-1; Tue,
- 14 Oct 2025 04:50:53 -0400
-X-MC-Unique: Z1oMWN4yNrCLkApj6F5Bzg-1
-X-Mimecast-MFC-AGG-ID: Z1oMWN4yNrCLkApj6F5Bzg_1760431852
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93B6F1954117; Tue, 14 Oct 2025 08:50:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.198])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B26F01800283; Tue, 14 Oct 2025 08:50:50 +0000 (UTC)
-Date: Tue, 14 Oct 2025 09:50:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Praveen K Paladugu <prapal@microsoft.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 1/2] monitor: clarify "info accel" help message
-Message-ID: <aO4O5s6Y2EoQt-ON@redhat.com>
-References: <20251013112650.935921-1-pbonzini@redhat.com>
- <20251013112650.935921-2-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1v8akl-0003Vb-AH
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:51:31 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1v8akh-0006xa-8N
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:51:30 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Dx_78BD+5oqfEVAA--.46723S3;
+ Tue, 14 Oct 2025 16:51:13 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJBxzsH9Du5o60fhAA--.10904S3;
+ Tue, 14 Oct 2025 16:51:13 +0800 (CST)
+Subject: Re: [PATCH 1/2] hw/loongarch/virt: Remove header file ls7a.h
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20251013063516.688936-1-maobibo@loongson.cn>
+ <20251013063516.688936-2-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <1ffddf05-b3ea-95bd-f9b9-d78e93711002@loongson.cn>
+Date: Tue, 14 Oct 2025 16:51:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20251013063516.688936-2-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251013112650.935921-2-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBxzsH9Du5o60fhAA--.10904S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3AFy5tr1rWrWrZw13CF45Jwc_yoW3Zr17p3
+ WDAFs09rs5G347W34vqFy3Xry7JFsrCa429F1xurWrAFnxWr18ury0yws0gFyUX395JFyI
+ qr95K3sFg3Z8XwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.658, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,26 +80,220 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 01:26:49PM +0200, Paolo Bonzini wrote:
-> In preparation for adding "info accelerators", explain that this command
-> is about runtime statistics.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+‘⁄ 2025/10/13 œ¬ŒÁ2:35, Bibo Mao –¥µ¿:
+> LoongArch virt machine uses GPEX PCIE host bridge rather than 7A host
+> bridge. Remove header file ls7a.h and put hardware information to file
+> include/hw/loongarch/virt.h
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->  hmp-commands-info.hx | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>   MAINTAINERS                            |  1 -
+>   hw/intc/loongarch_pic_kvm.c            |  1 -
+>   hw/loongarch/virt-acpi-build.c         |  1 -
+>   hw/loongarch/virt-fdt-build.c          |  1 -
+>   hw/loongarch/virt.c                    |  1 -
+>   include/hw/intc/loongarch_pic_common.h |  2 +-
+>   include/hw/loongarch/virt.h            | 39 ++++++++++++++++++++++++++
+>   include/hw/pci-host/ls7a.h             | 39 --------------------------
+>   8 files changed, 40 insertions(+), 45 deletions(-)
+Signed-off-by: Song Gao <gaosong@loongson.cn>
 
-Reviewed-by: Daniel P. Berrang√© <berrange@redhat.com>
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks.
+Song Gao
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 84cfd85e1f..0c766961f3 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1308,7 +1308,6 @@ F: include/hw/intc/loongarch_*.h
+>   F: include/hw/intc/loongson_ipi_common.h
+>   F: hw/intc/loongarch_*.c
+>   F: hw/intc/loongson_ipi_common.c
+> -F: include/hw/pci-host/ls7a.h
+>   F: hw/rtc/ls7a_rtc.c
+>   F: gdb-xml/loongarch*.xml
+>   
+> diff --git a/hw/intc/loongarch_pic_kvm.c b/hw/intc/loongarch_pic_kvm.c
+> index dd504ec6a6..6cfddf4520 100644
+> --- a/hw/intc/loongarch_pic_kvm.c
+> +++ b/hw/intc/loongarch_pic_kvm.c
+> @@ -10,7 +10,6 @@
+>   #include "hw/boards.h"
+>   #include "hw/intc/loongarch_pch_pic.h"
+>   #include "hw/loongarch/virt.h"
+> -#include "hw/pci-host/ls7a.h"
+>   #include "system/kvm.h"
+>   
+>   static void kvm_pch_pic_access_reg(int fd, uint64_t addr, void *val, bool write)
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index 8c2228a772..3694c9827f 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -21,7 +21,6 @@
+>   #include "system/reset.h"
+>   
+>   /* Supported chipsets: */
+> -#include "hw/pci-host/ls7a.h"
+>   #include "hw/loongarch/virt.h"
+>   
+>   #include "hw/acpi/utils.h"
+> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+> index 728ce46699..1f0ba01f71 100644
+> --- a/hw/loongarch/virt-fdt-build.c
+> +++ b/hw/loongarch/virt-fdt-build.c
+> @@ -12,7 +12,6 @@
+>   #include "hw/loader.h"
+>   #include "hw/loongarch/virt.h"
+>   #include "hw/pci-host/gpex.h"
+> -#include "hw/pci-host/ls7a.h"
+>   #include "system/device_tree.h"
+>   #include "system/reset.h"
+>   #include "target/loongarch/cpu.h"
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index c1760423ee..efd1f9ac49 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -29,7 +29,6 @@
+>   #include "hw/intc/loongarch_pch_pic.h"
+>   #include "hw/intc/loongarch_pch_msi.h"
+>   #include "hw/intc/loongarch_dintc.h"
+> -#include "hw/pci-host/ls7a.h"
+>   #include "hw/pci-host/gpex.h"
+>   #include "hw/misc/unimp.h"
+>   #include "hw/loongarch/fw_cfg.h"
+> diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
+> index f774c975d4..675ba96e64 100644
+> --- a/include/hw/intc/loongarch_pic_common.h
+> +++ b/include/hw/intc/loongarch_pic_common.h
+> @@ -7,7 +7,7 @@
+>   #ifndef HW_LOONGARCH_PIC_COMMON_H
+>   #define HW_LOONGARCH_PIC_COMMON_H
+>   
+> -#include "hw/pci-host/ls7a.h"
+> +#include "hw/loongarch/virt.h"
+>   #include "hw/sysbus.h"
+>   
+>   #define PCH_PIC_INT_ID                  0x00
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 76fa57cd07..0cc1b499a7 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -25,6 +25,7 @@
+>   #define IOCSRF_VM               11
+>   #define IOCSRF_DMSI             15
+>   
+> +/* IOCSR region */
+>   #define VERSION_REG             0x0
+>   #define FEATURE_REG             0x8
+>   #define VENDOR_REG              0x10
+> @@ -36,6 +37,18 @@
+>   
+>   #define LOONGARCH_MAX_CPUS      256
+>   
+> +/* MMIO memory region */
+> +#define VIRT_PCH_REG_BASE       0x10000000UL
+> +#define VIRT_PCH_REG_SIZE       0x400
+> +#define VIRT_IOAPIC_REG_BASE    (VIRT_PCH_REG_BASE)
+> +#define VIRT_MISC_REG_BASE      (VIRT_PCH_REG_BASE + 0x00080000)
+> +#define VIRT_RTC_REG_BASE       (VIRT_MISC_REG_BASE + 0x00050100)
+> +#define VIRT_RTC_LEN            0x100
+> +#define VIRT_PLATFORM_BUS_BASEADDRESS   0x16000000UL
+> +#define VIRT_PLATFORM_BUS_SIZE          0x02000000
+> +#define VIRT_PCI_IO_BASE        0x18004000UL
+> +#define VIRT_PCI_IO_OFFSET      0x4000
+> +#define VIRT_PCI_IO_SIZE        0xC000
+>   #define VIRT_FWCFG_BASE         0x1e020000UL
+>   #define VIRT_BIOS_BASE          0x1c000000UL
+>   #define VIRT_BIOS_SIZE          (16 * MiB)
+> @@ -44,6 +57,16 @@
+>   #define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
+>   #define VIRT_FLASH1_BASE        0x1d000000UL
+>   #define VIRT_FLASH1_SIZE        (16 * MiB)
+> +#define VIRT_UART_BASE          0x1fe001e0UL
+> +#define VIRT_UART_SIZE          0x100
+> +#define VIRT_PCI_CFG_BASE       0x20000000UL
+> +#define VIRT_PCI_CFG_SIZE       0x08000000UL
+> +#define VIRT_DINTC_BASE         0x2FE00000UL
+> +#define VIRT_DINTC_SIZE         0x00100000UL
+> +#define VIRT_PCH_MSI_ADDR_LOW   0x2FF00000UL
+> +#define VIRT_PCH_MSI_SIZE       0x8
+> +#define VIRT_PCI_MEM_BASE       0x40000000UL
+> +#define VIRT_PCI_MEM_SIZE       0x40000000UL
+>   
+>   #define VIRT_LOWMEM_BASE        0
+>   #define VIRT_LOWMEM_SIZE        0x10000000
+> @@ -53,6 +76,22 @@
+>   #define VIRT_GED_REG_ADDR       QEMU_ALIGN_UP(VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN, 4)
+>   #define VIRT_GED_CPUHP_ADDR     QEMU_ALIGN_UP(VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT, 4)
+>   
+> +/*
+> + * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
+> + * 0  - 15  GSI for ISA devices even if there is no ISA devices
+> + * 16 - 63  GSI for CPU devices such as timers/perf monitor etc
+> + * 64 -     GSI for external devices
+> + */
+> +#define VIRT_PCH_PIC_IRQ_NUM     32
+> +#define VIRT_GSI_BASE            64
+> +#define VIRT_DEVICE_IRQS         16
+> +#define VIRT_UART_IRQ            (VIRT_GSI_BASE + 2)
+> +#define VIRT_UART_COUNT          4
+> +#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 6)
+> +#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 7)
+> +#define VIRT_PLATFORM_BUS_IRQ    (VIRT_GSI_BASE + 8)
+> +#define VIRT_PLATFORM_BUS_NUM_IRQS      2
+> +
+>   #define COMMAND_LINE_SIZE       512
+>   
+>   #define FDT_BASE                0x100000
+> diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
+> index bfdbfe3614..33e7942de9 100644
+> --- a/include/hw/pci-host/ls7a.h
+> +++ b/include/hw/pci-host/ls7a.h
+> @@ -13,43 +13,4 @@
+>   #include "qemu/range.h"
+>   #include "qom/object.h"
+>   
+> -#define VIRT_PCI_MEM_BASE        0x40000000UL
+> -#define VIRT_PCI_MEM_SIZE        0x40000000UL
+> -#define VIRT_PCI_IO_OFFSET       0x4000
+> -#define VIRT_PCI_CFG_BASE        0x20000000
+> -#define VIRT_PCI_CFG_SIZE        0x08000000
+> -#define VIRT_PCI_IO_BASE         0x18004000UL
+> -#define VIRT_PCI_IO_SIZE         0xC000
+> -
+> -#define VIRT_PCH_REG_BASE        0x10000000UL
+> -#define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
+> -#define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
+> -#define VIRT_DINTC_SIZE          0x100000UL
+> -#define VIRT_DINTC_BASE          0x2FE00000UL
+> -#define VIRT_PCH_REG_SIZE        0x400
+> -#define VIRT_PCH_MSI_SIZE        0x8
+> -
+> -/*
+> - * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
+> - * 0  - 15  GSI for ISA devices even if there is no ISA devices
+> - * 16 - 63  GSI for CPU devices such as timers/perf monitor etc
+> - * 64 -     GSI for external devices
+> - */
+> -#define VIRT_PCH_PIC_IRQ_NUM     32
+> -#define VIRT_GSI_BASE            64
+> -#define VIRT_DEVICE_IRQS         16
+> -#define VIRT_UART_COUNT          4
+> -#define VIRT_UART_IRQ            (VIRT_GSI_BASE + 2)
+> -#define VIRT_UART_BASE           0x1fe001e0
+> -#define VIRT_UART_SIZE           0x100
+> -#define VIRT_RTC_IRQ             (VIRT_GSI_BASE + 6)
+> -#define VIRT_MISC_REG_BASE       (VIRT_PCH_REG_BASE + 0x00080000)
+> -#define VIRT_RTC_REG_BASE        (VIRT_MISC_REG_BASE + 0x00050100)
+> -#define VIRT_RTC_LEN             0x100
+> -#define VIRT_SCI_IRQ             (VIRT_GSI_BASE + 7)
+> -
+> -#define VIRT_PLATFORM_BUS_BASEADDRESS   0x16000000
+> -#define VIRT_PLATFORM_BUS_SIZE          0x2000000
+> -#define VIRT_PLATFORM_BUS_NUM_IRQS      2
+> -#define VIRT_PLATFORM_BUS_IRQ           (VIRT_GSI_BASE + 8)
+>   #endif
 
 
