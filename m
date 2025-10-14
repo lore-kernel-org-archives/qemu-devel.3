@@ -4,225 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E2C4CCD190
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 21:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021CACCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 21:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8mZu-0005d7-NR; Tue, 14 Oct 2025 17:29:06 -0400
+	id 1v8mr3-0001dr-9M; Tue, 14 Oct 2025 17:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1v8mZs-0005cv-Ir
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 17:29:04 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8mqt-0001cu-Eb
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 17:46:39 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1v8mZq-000862-3g
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 17:29:04 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59EEfKKs003762;
- Tue, 14 Oct 2025 21:28:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=0PCH+Oh/pVUt+ZIDP1NFSbS0WdJdsbZEVVIHwTGT5U0=; b=
- bG2+y2XH97336SJNm34or1jMGRzvrvh1k6hCAQ4QReZ23fJ8wJjjjq0sTv6pzRaJ
- rw9EAz8uoDsa7yG3zfv3pVqCjDwu0W5OSF8Ik5BrrzYEhMnl+QeUrpUp0DF1JIpl
- ESzB82PqRH2xhJKgl+qsD9D6yJarjI6MnF3Izg4Wk9NXLc494IGkcScU2KtKjnmi
- 55XbDKB8jWRufp98GK6FLVGRdDMRmVHHneO4XbHY14pPZVA6L0kiyJCLSJlR5oHy
- yZf1W47CpGMxJCPTqHhqMhREA3e+tUJjWT5XNPhJCUKGh/94BgvGNcbh1biMq6PY
- LMRSaAnmjzXH2WSV1FpEVg==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 49qe59dbx6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Oct 2025 21:28:52 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 59EKLpuD018292; Tue, 14 Oct 2025 21:28:52 GMT
-Received: from sj2pr03cu001.outbound.protection.outlook.com
- (mail-westusazon11012000.outbound.protection.outlook.com [52.101.43.0])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 49qdp995rm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Oct 2025 21:28:52 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iFyBEfnMlVm5Km4K0aQAlyvmBVAQzrfiqie1ZSzto8Tf2vV2MvEACXyiKJakaC8psBg9MDarbHWpBS1OFvRBIxI9jfG0gqTbeRLZslOL7YJhYQntXSIqFxvUkQ2KtgsJzVwKl91vjE1+yXFRpez7FzoC85UEW1yxFoUVBhWbxoEuPqURUoEFbfD9iDGiuG2nj73BIkaqTNI7Fvr+IGnCxB7/isgiKusHVEw0cbIzjZnITg1Tlvlg7L4FgeX1d+eMorI/j2H0ufxgczYc9ZaguTGnaKVxtE+HZoCF2I5id/OkNM2AMF2AEQoYGJJUfBCMpeY40iC9dq/vrQapFQTbmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0PCH+Oh/pVUt+ZIDP1NFSbS0WdJdsbZEVVIHwTGT5U0=;
- b=bmK9Xu6YcE9plzy/Dqa67g2cd96qIwGLTJqKbNylQnmOMSi6GcPNiOpnYDH6oTaXbf/SWf3j+aFSdD5soCWeL0HFFmCOYekf51R5glKD74hlTcxtbjKHrsRBE079A0vKcwHrHKQROA3PKtUafOopdlI2lO5rjoaKxEAiLjp9wCA92ZOHyrc3mgwcJ6lywpAL3f4gT+ZEH0LvEqmMsiFRmHqGRQxxCnkYXnodIZ5A0tKm8xp41I1yuyfWGNBSJ9cv0ULikcBILm02v7cDFHEchT4vVnsM2Cavazh2baQgd1tfy6kECIhGTyMcr6TcDyX4sPfVB5LgLRgsmKB1f7SBqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0PCH+Oh/pVUt+ZIDP1NFSbS0WdJdsbZEVVIHwTGT5U0=;
- b=GWPvc8UrzpU7gqEUL67j/P8T/SInpUQX65erwzWRCuVCN0Rm6AJx36mqktpi30xLHfZddzTcmCEuic9GZ8GItOJDTWPMgPhhoE82nfd6TwXreMQhOjDrEA9SYjvc+QacWpWmQV/36hNwqMavWUsxkxPEsBu983pzjEyfPCZVeZ8=
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com (2603:10b6:208:30e::6)
- by IA0PR10MB7157.namprd10.prod.outlook.com (2603:10b6:208:400::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.10; Tue, 14 Oct
- 2025 21:28:49 +0000
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4]) by BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4%4]) with mapi id 15.20.9203.009; Tue, 14 Oct 2025
- 21:28:48 +0000
-Message-ID: <3a9b6ddc-f885-47c1-8e15-91e0ef19aea3@oracle.com>
-Date: Tue, 14 Oct 2025 17:28:44 -0400
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8mqp-0002Sa-MB
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 17:46:39 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 42508C02F4;
+ Wed, 15 Oct 2025 00:46:29 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a8a::1:35] (unknown
+ [2a02:6bf:8080:a8a::1:35])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id QkXv0w2FwqM0-jCxIqQ8s; Wed, 15 Oct 2025 00:46:27 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760478387;
+ bh=RI8AZXAKZBawfHnvOQ56YmbOJvdf/k1bqik10VqJoLg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=JfgkE60ny62it6yiod0VFsPjnHX/aUhn3Zzfes3p+Oyt+xpEGwBhCuqEDabVRKfS9
+ 47oIyQ7ZHa8lRfvTP2pW9/YhXaPzHdmtj5opDzSIAxSL26eIOJA8cgceCA8NFAhYpH
+ OLJ2HJP6aT46LV+8taPqMLA/USC5Xl6JR9RmSZeg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9a9ced95-583e-4c1e-84f0-af12a5800193@yandex-team.ru>
+Date: Wed, 15 Oct 2025 00:46:26 +0300
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] amd_iommu: Support 64 bit address for IOTLB lookup
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, suravee.suthikulpanit@amd.com, vasant.hegde@amd.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, aik@amd.com
-References: <20251013050046.393-1-sarunkod@amd.com>
- <20251013050046.393-3-sarunkod@amd.com>
+Subject: Re: [PATCH v7 16/19] qapi: add interface for backend-transfer
+ virtio-net/tap migration
+To: Peter Xu <peterx@redhat.com>
+Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
+ eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ berrange@redhat.com, qemu-devel@nongnu.org, michael.roth@amd.com,
+ steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
+ yc-core@yandex-team.ru, raphael.s.norwitz@gmail.com
+References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
+ <20251010173957.166759-17-vsementsov@yandex-team.ru>
+ <aO57SKp86zX2R8mV@x1.local>
+ <6da192b9-7609-4cc8-82a9-1a445ecb10c9@yandex-team.ru>
+ <aO6xqt5_1PDBwOwu@x1.local>
 Content-Language: en-US
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-In-Reply-To: <20251013050046.393-3-sarunkod@amd.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aO6xqt5_1PDBwOwu@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH8P223CA0028.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:510:2db::21) To BLAPR10MB5041.namprd10.prod.outlook.com
- (2603:10b6:208:30e::6)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BLAPR10MB5041:EE_|IA0PR10MB7157:EE_
-X-MS-Office365-Filtering-Correlation-Id: 072ff374-43ad-4289-73e4-08de0b68a9d9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eUhpbTcxQ0VPMEtaVDJvamxNaUJ5K0g5SllnY05PV0V2WFIzWC8xL21aYklm?=
- =?utf-8?B?QVcza0hOQVRLaWFnNC9sTktVd2NSd3FEQlhIZVhvLzhtQk1lQ0YrZG9IWWNv?=
- =?utf-8?B?SmhuTlFtWDV4ODNwOWFtWHd4RUo4aWttS3JkWm41MTFwck9CeWtRRS8vR0dw?=
- =?utf-8?B?NmNBYnVyL0JNb3B0TnBBS3haaWw1NUxZYjVPY2ZUM3ZKMy9UOTV3ZTZyREZ4?=
- =?utf-8?B?K0NyeXo4dTlsUm1EQTJQc1BaT2ZFaTlGcmdvV2hIUXcxN1FFS1hrTm5ZWVBJ?=
- =?utf-8?B?Q0p2ZC9HL0RaS3J0MFFtSkNtQXN2STk1Yy9sTmhIUm91RHhMNFFnUkkvUDZN?=
- =?utf-8?B?aSs3ZXZFS21weHhDWkJ3T3RPaFFuYng2T3ZITFZBRTFWdERFM2ZwbHhKTExx?=
- =?utf-8?B?ZXhCUEZXSkVrUy9nNytsN0RKbXBvWHViZG50Ymx4VG5CeDhOdFYrUFQ3VkZk?=
- =?utf-8?B?c3g4T3lrbFQ1ZVMxWkl3Z1lRSnhIL0pRS3hieGd4MjJGVTgzb3kyS1phd2pl?=
- =?utf-8?B?bElvYm5INTlVS1pXc1B5ajd0cFlTczlrSkt4VnFZVzQrcTVCc3BWVms3QkFl?=
- =?utf-8?B?Y2hwdFRBOUtHUlJybERyVjZLamV6Uy8yNEVzOGp1d05KMmxGam02ZENIa0dm?=
- =?utf-8?B?V2x1NE9Dbzc1TWVCMm1iSGY1TkFVNkxRdUZFNU5WM1RsL3NCVmsrbWIwSSti?=
- =?utf-8?B?UkNXQnF3Q085cWhQUXRNclZ5SXA5ejNZQlJ2Q1ljbzQ2UXIwRFdDcUFRamln?=
- =?utf-8?B?V05QQmNkK3ZUcHFnbHF3MngvMzF4WHJTejZsYUJKVUNsR3FNU0FUOWh2dUZ3?=
- =?utf-8?B?djhBVE9zVC8vdXcvOHRWbEhSTzlHTGtkeGZkaTVGQTNtUURsaFRuTm9qeVJ0?=
- =?utf-8?B?dHYrYXR6Y0Q0cU9zTkVxUEZsSGRDekd1M1AzMUxxVnVqZ0QyU1I2bWV2NU4v?=
- =?utf-8?B?bFFBaGNxeVY4dVNLZDU5akxPZUcxZlY3alBJYVZ6NFEzZC9TVVlCREdZM0lX?=
- =?utf-8?B?T0dxK3p6SFN4SEJZWVl0NzBxeGpVVFVwLzZNdE9nM2JydUJMUy9yU1ZsNXda?=
- =?utf-8?B?MGQxT0VLWnhNVEJ1WVJPdGprT2diVWZ4ZFFIdDZzK1VEd09oVmxlMkJvcmtp?=
- =?utf-8?B?YnRaL2l1NGJXNDFaU0NJMzF6YzVIMUxZeEtNcExVeDhibXZpZkEyRnBKVzVC?=
- =?utf-8?B?M09mM0dlbUU2UDM2L3VuTDdWN0szaURhZ1RQVzg3NlRtSVJlblY2L1ZmTVJJ?=
- =?utf-8?B?QTUyVzFEZDR3WTFuM090M0h0aXQ5SkdFRVNYM1dZcmFtbkxZNS93ZkptSDNJ?=
- =?utf-8?B?dURZV0lzNGZPKzJxS0VocWpYcWNRRGtRbWNZOUplUjVYeDIyeGxWQXg3VmJU?=
- =?utf-8?B?TWN4L0w0NDRPNDlnaFM5WDdnUFV3dnQ2bjh1UEI1YkRBc0lTTVZqY0VGZzZC?=
- =?utf-8?B?dWQ0UFlCZzF0UVd1TjJhS0EzL1ZEVk5VL1o1b3J2T21zdXRFbUx5Y2hvSXRY?=
- =?utf-8?B?VVRQbWg2dUg2S29BbkQrT2JrekJjd1VsOWpCMTZKVUZXV3pPbG9OWUwwOUVT?=
- =?utf-8?B?YmpsWWl1YTdVNkdkWjh5RlBldjdzd1Rnc0dOMjlHeFhMRlV3RVlNbEtuZHRj?=
- =?utf-8?B?UHo0eVBDWEJ5Z0VPcDQ4WnBsTldHSWRic1Y4azRUQVcwb1kwZml0d3lBaWlh?=
- =?utf-8?B?bVNQZEI1endCbDZFM1liYUM2bjUvSEUrVVl5cmIzK1luUktHVWNKTEdWbW9j?=
- =?utf-8?B?M2xHcER1Z0daaHFMQ2dYclpVeVJwZU80WUxnVTVUaTBLNnZsTk9zcVptZjZq?=
- =?utf-8?B?VEN3TTZqbzJHeGRlNVF6Z0swR1VOd3hDQmI1SmtlTDIwZ1p3ZE16QVRsdjZ0?=
- =?utf-8?B?NjJURXNFaGZkc1QvWXdmcjlXVUdvOGFNSGh2UXZ2Ky9QVGVOWXBwWWhBaVFP?=
- =?utf-8?Q?ZIOIUrJLxENhjH+VMeGtYZWRUE+sg2F9?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BLAPR10MB5041.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZkZkOHRuTVVEMFZsZ29BK1hwNmoxM1hQRGJlN0JxMlB5eGNveHpxSU4zaXQv?=
- =?utf-8?B?MVV4WG53MGhyWFc4QXdqeSt4dXplWWR3QUlDVWxXOTNZYzZvNjVRODJZR1Ey?=
- =?utf-8?B?Q0hRaHhvOVhlZG5GcTJITE5NN21hMVJDUk11VUs1aWY5b1NrTVJNaVBDNkRE?=
- =?utf-8?B?NHFsd1ZqVEZvL2JsczJCQmpZdWkyY1EvUDREcStRYjdTZzFFL0VlNTBjcGVp?=
- =?utf-8?B?Zk1HQ2Z3WVhEOWVIeUhVdjdoRDJmakpLR045ZTFhaVAxVng1QURjS2JreG1K?=
- =?utf-8?B?TXVKUkxtYjJZZjllOW5qNFA5NERyYlNZbjZWR2FiTk0vR3ZGbUIwbW4welBv?=
- =?utf-8?B?S1BWZk1VT2dMT3NQRmpDZzh3VHdFSUFwczk0b2ZjOVhKMTI1dzdoUkJWUGUr?=
- =?utf-8?B?RTFxRlRTaDFYa2FuOUQxZGdEWXhDdU0xNHp0U08vVWNsQ045emhkcFhpcmVx?=
- =?utf-8?B?UjhjaTRXdElPOE1UVFVFc3BRbWxSOVU3TjF4aEZZSnZncXpYMTJjSGw5YTNY?=
- =?utf-8?B?OGlzOEsyQkgzTmdkb09FNlNDOUxvVExzV000WHZSKzlUOFl3d0hWUWVsVGVp?=
- =?utf-8?B?U3hhS21YeWtoTjZqUXZ4NjBpa1Zqc1FEZ1pVZW81Qzl2Vm1meGo3RmszdW5l?=
- =?utf-8?B?TExGbi94L3N5dEZuOVJnZmdkZDRXSVBLMEZnUjNqSC9XbGw0Z3pIZkpNem05?=
- =?utf-8?B?Y093bmNRWS9JTmN6K3hSUVM2RDBFcmNZWldBbEFxNzhxUFRZR2VCV3V2dzNp?=
- =?utf-8?B?YXkyc3FtM29wbDVhNlE3RjBURHo2eHllQll0MUQ3ZDFUZXZaWEFheGNmNmhV?=
- =?utf-8?B?aGxwVFpPQmpnVkxtaDBWa3E0WFpmOXdBNWt4RllyVnA4MzVVeUovZzEvZlBW?=
- =?utf-8?B?SGZYMWZGRHNuRUExVngxdnptNjljYmpocXAwOUU3ckZrTmhIYXp0ZUh5S2ZH?=
- =?utf-8?B?ZkJsdjNPZDkwNGgrdkwwZWZtRFkxeHVjRUdTcWtrNkZid0NxUVk1U1F2eStR?=
- =?utf-8?B?LzJXbVhMcUlVV0pycnV4TmpibnFKeFhyZjZrSHMyM3JXYTRiNWJEYjhkRHQw?=
- =?utf-8?B?MGF6cUhuRkFCaGJ6dXppeisyelFlalZiZDdlakttbXVic3M5amZKQ3dneWtM?=
- =?utf-8?B?UGpvSjI1VlhWYUFzZnlqVTFGbHJ5TnJxVjBFd3FVdk81Y25uRWxSK0plS2tU?=
- =?utf-8?B?d3k1WnduNzROaEEyZEpFZW5BMi9uT0dWZU1yMEhaYUg3eEw3aTBLaTFTQUdt?=
- =?utf-8?B?SVRWTUw0Z1l0WWNhWE84ZUhPQmZCcjh2UXFEL2taSURaUUxaRDd4UGpOaHlC?=
- =?utf-8?B?WmZiY2lwQmhuSnBlNVpuSWRNeXN1UU1qQ3ovKzZUN3FpUFFtSzJrK0NlakFG?=
- =?utf-8?B?eERMVzN1N0pVaEZoVnJBUi9lL3cwUmErYXM5TG5oZXcwa0NndFBBVXpOT1FZ?=
- =?utf-8?B?ZysrT2pBZGM2a3lGb1h0Zm41djNpMHlnOVFZb2draE1wb1lkME5CeXd1NjJG?=
- =?utf-8?B?MEpNbzc5SzRIMngwaXJjT2RtaWwvYTF2dnY1NThEdmdkRlZZMHU3ME1tdHNM?=
- =?utf-8?B?N2lvOEp5cFpYVXdEL3RaSEFtNzh5RFloTTRyTlJ3OCtzazhkOFpBcmwybmtC?=
- =?utf-8?B?VldzQWtrMEFuNDd4OE1HOWxORUZvZWE5bXdMQzdKcGowcElnd2VZYkplUXdK?=
- =?utf-8?B?Wm5QaGF6MWRFaFl5V2JKU3lBZUpVRXo1dmY5LzdJRmtVcm5FOGt4eWVCdEw1?=
- =?utf-8?B?SUFEZS9LNWZvZ05UUGd5dkdFM0RoaEl4NnNUV2JDQVZoUUFZclVyOFRhdm9n?=
- =?utf-8?B?VUg3Z0h1VzlYQlY4MXp5ZmtrVzhpNjgyMUZ5aS95UHZZZER0cFpOdi81L2V0?=
- =?utf-8?B?R3lYRDNwUG9tTmpEd3RYN3BhajRuMmlieSt5aEJZRjJYd1lTL3F6S01qZ01P?=
- =?utf-8?B?ZlI5SFhzaTM5WC9kSENhdTRGKzJsS20rOVJQZEN5RGxBUXB0THYxNlkrZjg1?=
- =?utf-8?B?WjF1dnNIcys3eG0xbVJRdEJkR0gwMGg0cUNZd1I1WDFLMWxuTjN6TmlhdUxx?=
- =?utf-8?B?RWNWZTBheHdMN2ZuSEhoWmJkTW9LZ0IyM1gzdEtiYWQ5dGw0WkdqYlZQN203?=
- =?utf-8?B?UDFaV3hKVEZWbmhraUNLN3BqM1lsbzAyTDhucC8rNEo1KyswQmQreVhPcldB?=
- =?utf-8?Q?oYmv7CXWf6VHJmxIN5+HpPg=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 2Rlq+DgmeMwrw8IVQ9KqoUSvXQeE3tI5vcJFGb/y0OWGXBDLQhKAZ3qHvzxgmy3lny88hSbLuqrpfRJNxQ6HtD/WmJrqoCPtUBO9MR/mx7HHU3J5TX3aDa5dcIK+IYa7BnqPEcC8MALqcZOFlYkSv/dedmjuaWhi3i/MgFsJ1qQF6DFcV8Q4+mhAZwTyemhjRS9IgJuqFRleVaExaQjBRFZSvuFQqzqw2fpoUZ5VGz1lPugaQC+od0g67oq0EpO27OvEHCBEB24JDRhz5eFhctnTGGwWQDe+5ObR/YZaE3KqXs5XXkmAznlcDY2sJmx2KlCyRTiJq03/ypGRK+2WnyaHjMRAy7r3Ovc3XXVHxNPT2vzkUE4gMSFrRPh5Jbo8kE2TW3DKouuZNzNMRZ1f3y+WPf6Hz9+rZVbvi3QXIye5QOQf6W9q2zoXzcv6dGhWcnKb+hzOT9VkogyxS9nV651igY2PiNoilOo9+zSbgJmE+Fc/dQ0WE+F8HXuvS8530+wMl7QvdX1xOiGbRtgnZtm0HrXZWoaHtNc1QlwltY8UQeeLP2ydfssiqBPDcum9ehGKOhwat0HHzq378iPqK2h46I52HxdAfHr4hT4ctA8=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 072ff374-43ad-4289-73e4-08de0b68a9d9
-X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5041.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2025 21:28:48.8530 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bO1LYLAxNfbc1mKplTYORA5+ZUemiNDHJ0KSxX44LvI4xa6M63n4QotF1NovE1sfdqluoc2FqPPdM+J8wlMJUXv9jOtTZBo2O2tSh4Xacys=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7157
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-14_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- suspectscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 spamscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2510020000 definitions=main-2510140146
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMCBTYWx0ZWRfX/P5g3HhhUAWg
- JdfBoXziAuRJxQs5L89/NgsmoEkyWlPmgPy2bJjuVEVb76g7C7STj2GBNmbI6jL+faVdDf8YBr7
- HatiIUw0adGie2CneCr/NBPE0oK1oXONBTjGk3lEdbqOhWDQEEEW84AHVIQhd4xorKkAD8GNbgX
- +OO0MuEbHLXsiMO9Kc+iHXjCMBGKXZsYSDQTTY+Qe0qYOOslct3cPJn4higa/8rLDeHNRaxL3o+
- 3BJWYldH+3u6bvlEdYQaDu2Nhd9QZN4cm/KvotIjY7zjxxfX2zfhmvCfGGiX5YLq0sa6vvsUB5V
- wOEP5AWmWQsNkwt6ewcQWkwWb1rAm9R0YbS7Obtv0YZPDoT51YlCIkk+JoWdK+1P1daLavJS/NG
- baEnWTLttvQkPqGqvRLy1nH1Lc2Qhg==
-X-Authority-Analysis: v=2.4 cv=V7JwEOni c=1 sm=1 tr=0 ts=68eec094 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=x6icFKpwvdMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=zd2uoN0lAAAA:8 a=B_MNZs3Y9oQAeh4xAzAA:9 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: boVG-SKZrmmGidOW0pocuVGbd9Wl__lr
-X-Proofpoint-GUID: boVG-SKZrmmGidOW0pocuVGbd9Wl__lr
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -234,169 +86,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/13/25 1:00 AM, Sairaj Kodilkar wrote:
-> Physical AMD IOMMU supports up to 64 bits of DMA address. When device tries
-> to read or write from a given DMA address, IOMMU translates the address
-> using page table assigned to that device. Since IOMMU uses per device page
-> tables, the emulated IOMMU should use the cache tag of 68 bits
-> (64 bit address - 12 bit page alignment + 16 bit device ID).
+On 14.10.25 23:25, Peter Xu wrote:
+> On Tue, Oct 14, 2025 at 10:31:30PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 14.10.25 19:33, Peter Xu wrote:
+>>> On Fri, Oct 10, 2025 at 08:39:54PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> To migrate virtio-net TAP device backend (including open fds) locally,
+>>>> user should simply set migration parameter
+>>>>
+>>>>      backend-transfer = ["virtio-net-tap"]
+>>>>
+>>>> Why not simple boolean? To simplify migration to further versions,
+>>>> when more devices will support backend-transfer migration.
+>>>>
+>>>> Alternatively, we may add per-device option to disable backend-transfer
+>>>> migration, but still:
+>>>>
+>>>> 1. It's more comfortable to set same capabilities/parameters on both
+>>>> source and target QEMU, than care about each device.
+>>>
+>>> But it loses per-device control, right?  Say, we can have two devices, and
+>>> the admin can decide if only one of the devices will enable this feature.
+>>>
+>>
+>> Right. But, in short:
+>>
+>> 1. I'm not sure, that such granularity is necessary.
+>>
+>> 2. It may implemented later, on top of the feature.
 > 
-> Current emulated AMD IOMMU uses GLib hash table to create software iotlb
-> and uses 64 bit key to store the IOVA and deviceID, which limits the IOVA
-> to 60 bits. This causes failure while setting up the device when guest is
-> booted with "iommu.forcedac=1".
+> I confess that's not a good example, but my point was that it was
+> straightforward idea to have two layers of settings, meanwhile it provides
+> full flexiblity.
 > 
-> To solve this problem, Use 64 bit IOVA and 16 bit devid as key to store
-> entries in IOTLB; Use upper 52 bits of IOVA (GFN) and lower 12 bits of
-> the device ID to construct the 64 bit hash key in order avoid the
-> truncation as much as possible (reducing hash collisions).
+>>
+>>>>
+>>>> 2. To not break the design, that machine-type + device options +
+>>>> migration capabilities and parameters are fully define the resulting
+>>>> migration stream. We'll break this if add in future more
+>>>> backend-transfer support in devices under same backend-transfer=true
+>>>> parameter.
+>>>
+>>> Could you elaborate?
+>>>
+>>> I thought last time we discussed, we planned to have both the global knob
+>>> and a per-device flag, then the feature is enabled only if both flags are
+>>> set.
+>>
+>> Right, here in v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01644.html
+>>
+>> Still at this point, I also needed local-incoming=true target option, so I
+>> considered all the parameters like "I can't make feature without extra
+>> per-device options, so here they are".
+>>
+>> A day later, after motivating comment from Markus (accidentally in v2),
+>> I found and suggested the way:
+>>
+>> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01960.html
+>>
+>> And further versions v4-v7 were the realization of the idea. Still, main
+>> benefit is possibility to get rid of per-device local-incoming=true
+>> options for target, not about a kind of per-device "capability" flag we
+>> discuss now.
+>>
+>> A, and here I said [1]:
+>>
+>>> 1. global fds-passing migration capability, to enable/disable the whole feature
+>>>
+>>> 2. per-device fds-passing option, on by default for all supporting
+>>> devices, to be
+>>> able to disable backing migration for some devices. (we discussed it
+>>> here: https://lore.kernel.org/all/aL8kuXQ2JF1TV3M7@x1.local/ ).
+>>> Still, normally these options are always on by default.
+>>> And more over, I can postpone their implementation to separate series,
+>>> to reduce discussion field, and to check that everything may work
+>>> without additional user input.
+>>
+>> And then, went this way, postponing realization of per-device options..
 > 
-> Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> ---
->   hw/i386/amd_iommu.c | 57 ++++++++++++++++++++++++++++++---------------
->   hw/i386/amd_iommu.h |  4 ++--
->   2 files changed, 40 insertions(+), 21 deletions(-)
+> Postponing the per-device flag might still break different backends if you
+> specify the list with virtio-net-pci.
 > 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index b194e3294dd7..a218d147e53d 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -106,6 +106,11 @@ typedef struct amdvi_as_key {
->       uint8_t devfn;
->   } amdvi_as_key;
->   
-> +typedef struct amdvi_iotlb_key {
-> +    uint64_t gfn;
-> +    uint16_t devid;
-> +} amdvi_iotlb_key;
-> +
->   uint64_t amdvi_extended_feature_register(AMDVIState *s)
->   {
->       uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-> @@ -377,16 +382,6 @@ static void amdvi_log_pagetab_error(AMDVIState *s, uint16_t devid,
->                PCI_STATUS_SIG_TARGET_ABORT);
->   }
->   
-> -static gboolean amdvi_uint64_equal(gconstpointer v1, gconstpointer v2)
-> -{
-> -    return *((const uint64_t *)v1) == *((const uint64_t *)v2);
-> -}
-> -
-> -static guint amdvi_uint64_hash(gconstpointer v)
-> -{
-> -    return (guint)*(const uint64_t *)v;
-> -}
-> -
->   static gboolean amdvi_as_equal(gconstpointer v1, gconstpointer v2)
->   {
->       const struct amdvi_as_key *key1 = v1;
-> @@ -425,11 +420,30 @@ static AMDVIAddressSpace *amdvi_get_as_by_devid(AMDVIState *s, uint16_t devid)
->                                amdvi_find_as_by_devid, &devid);
->   }
->   
-> +static gboolean amdvi_iotlb_equal(gconstpointer v1, gconstpointer v2)
-> +{
-> +    const amdvi_iotlb_key *key1 = v1;
-> +    const amdvi_iotlb_key *key2 = v2;
-> +
-> +    return key1->devid == key2->devid && key1->gfn == key2->gfn;
-> +}
-> +
-> +static guint amdvi_iotlb_hash(gconstpointer v)
-> +{
-> +    const amdvi_iotlb_key *key = v;
-> +    /* Use GPA and DEVID to find the bucket */
-> +    return (guint)(key->gfn << AMDVI_PAGE_SHIFT_4K |
-> +                   (key->devid & ~AMDVI_PAGE_MASK_4K));
-> +}
-> +
-> +
->   static AMDVIIOTLBEntry *amdvi_iotlb_lookup(AMDVIState *s, hwaddr addr,
->                                              uint64_t devid)
->   {
-> -    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
-> -                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
-> +    amdvi_iotlb_key key = {
-> +        .gfn = AMDVI_GET_IOTLB_GFN(addr)
+> But only until now, I noticed you were using "virtio-net-tap" instead of
+> "virtio-net-pci".
+> 
+> Ouch.. I think that's even more complicated. :(
+> 
+> Here I think the problem is, introducing some arbitrary strings into
+> migration QAPI to represent some combinations of "virtio frontend F1" and
+> "virtio backend B1" doesn't sound the right thing to do.  Migration ideally
+> should have zero knowledge of the device topology, types of devices,
+> frontends or backends.  "virtio-*" as a string should not appear in
+> migration/ or qapi/migration.json at all..
+> 
+>>
+>> And then, developing similar migration for vhost-user-blk, found
+>> that I can't use on boolean capability for such features, the reason
+>> in commit message, which we discuss now.
+> 
+> Why a bool isn't enough?  Could you share a link to that discussion?
+> 
+>>
+>> Than, current design came in v5 (v4 was skipped).. And I even got an
+>> approval from Fabiano :)
+>>
+>> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg03999.html
+>>
+>>>
+>>> If these parameters are all set the same on src/dst, would it also not
+>>> break the design when new devices start to support it (and the new device
+>>> will need to introduce its own per-device flags)?
+>>
+>> Yes, right.
+>>
+>> I missed, that, "postponing (probably forever)" per-device options
+>> realization, I started to implement another way to solve the same
+>> problem (switching from one boolean capability to a backend-transfer
+>> list).
+>>
+>> In other words, if at some point implement per-device options, that will
+>> partly intersect by functionality with current complex migration
+>> parameter..
+>>
+>> -
+>>
+>> But still, I think, that parameter backend-transfer = [list of targets]
+>> is better than per-device option. With per-device options we'll have to
+>> care about them forever. I can't imagine a way to make them TRUE by
+>> default.
+>>
+>> Using machine type, to set option to TRUE by default in new MT, and to
+>> false in all previous ones doesn't make real sense: we never migrate on
+>> another MT, but we do can migrate from QEMU without support for
+>> virtio-net backend transfer to the QEMU with such support. And on target
+>> QEMU we'll want to enable virtio-net backend-transfer for further
+>> migrations..
+> 
+> So this is likely why you changed your mind.  I think machine properties
+> definitely make sense.
+> 
+> We set it OFF on old machines because when on old machines the src QEMU
+> _may_ not support this feature.  We set it ON on new machines because when
+> the QEMU has the new machine declared anyway, it is guaranteed to support
+> the feature.
+> 
+> We can still manually set the per-device properties iff the admin is sure
+> that both sides of "old" QEMUs support this feature.  However machine
+> properties worked like that for many years and I believe that's how it
+> works, by being always on the safe side.
+> 
+>>
+>> So, I think, modifying machine types is wrong idea here. So, we have to
+>> keep new options FALSE by default, and management tool have to care to
+>> set them appropriately.
+>>
+>> -
+>>
+>> Let's look from the POV of management tool.
+>>
+>> With complex parameter (list of backend-transfer targets, suggested with
+>> this series), what should we do?
+>>
+>> 1. With introspection, get backend-transfer targets supported by source
+>>     and target QEMUs
+>> 2. Get and intersection, assume X
+>> 3. Set same backend-transfer=X on source and target
+>> 4. Start a migration
+>>
+>> But with per-device parameters it becomes a lot more complicated and
+>> error prone
+>>
+>> 1. Somehow understand (how?), which devices support backend-transfer on
+>>     source and target
+>> 2. Get an intersection
+>> 3. Set all the backend-transfer options on both vms correspondingly,
+>>     doing personal qom-set for each device
+>> 4. Start a migration
+>>
+>> -
+>>
+>> In short:
+>>
+>> 1. per device - is too high granularity, making management more complex
+> 
+> If we follow the machine property way of doing this (which I believe we
+> used for years), then mgmt doesn't need any change except properly enable
+> fd-passing in migration cap/params when it's a local migration.  That's
+> all.  It doesn't need to know anything about "which device(s) supports
+> fd-passing", because they'll all be auto-set by the machine types.
+> 
+>>
+>> 2. per feature - is what we need. And it's a normal use for migration
+>> capabilities: we implement a new migration feature, and add new
+>> capability. The only new bit with this series is that "we are going to"
+>> implement similar capabilities later, and seems good to organize them
+>> all into a list, rather than make separate booleans.
+>>
+>>
+>>>
+>>>>
+>>>> The commit only brings the interface, the realization will come in later
+>>>> commit. That's why we add a temporary not-implemented error in
+>>>> migrate_params_check().
+>>>>
+>>
+>> [..]
+>>
+>>>> +bool migrate_virtio_net_tap(void)
+>>>> +{
+>>>> +    MigrationState *s = migrate_get_current();
+>>>> +    BackendTransferList *el = s->parameters.backend_transfer;
+>>>> +
+>>>> +    for ( ; el; el = el->next) {
+>>>> +        if (el->value == BACKEND_TRANSFER_VIRTIO_NET_TAP) {
+>>>
+>>> So this is also something I want to avoid.  The hope is we don't
+>>> necessarily need to invent new device names into qapi/migration.json.
+>>> OTOH, we can export a helper in migration/misc.h so that devices can query
+>>> wehther the global feature is enabled or not, using that to AND the
+>>> per-device flag.
+>>>
+>>
+>> Understand. But I can't imagine how to keep management simple with per-device
+>> options..
+>>
+>> -
+>>
+>> What do you think?
+> 
+> I feel like you wanted to enable this feature _while_ using an old machine
+> type.
 
-Missing a comma at the end of the line above so the definition is 
-invalid and fails the build.
+Exactly
 
-> +        .devid = devid,
-> +    };
->       return g_hash_table_lookup(s->iotlb, &key);
->   }
->   
-> @@ -451,8 +465,10 @@ static gboolean amdvi_iotlb_remove_by_devid(gpointer key, gpointer value,
->   static void amdvi_iotlb_remove_page(AMDVIState *s, hwaddr addr,
->                                       uint64_t devid)
->   {
-> -    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
-> -                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
-> +    amdvi_iotlb_key key = {
-> +        .gfn = AMDVI_GET_IOTLB_GFN(addr)
+> Is that what you're looking for?  Can you simply urge the users to
+> move to new machine types when looking for new features?  I believe that's
+> what we do..
+> 
+> MT properties were working like that for a long time.  What you were asking
+> is fair, but if so I'd still like to double check with you on that's your
+> real purpose (enabling this feature on NEW qemus but OLD machine types, all
+> automatically).
+> 
 
-Same issue here with missing comma after initializer.
+You made me think.
 
-Thank you,
-Alejandro
+On the one hand, you are right, I agree with all arguments about migration
+being separate from virtio device types, their backends and frontends.
 
-> +        .devid = devid,
-> +    };
->       g_hash_table_remove(s->iotlb, &key);
->   }
->   
-> @@ -463,8 +479,10 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
->       /* don't cache erroneous translations */
->       if (to_cache.perm != IOMMU_NONE) {
->           AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
-> -        uint64_t *key = g_new(uint64_t, 1);
-> -        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
-> +        amdvi_iotlb_key *key = g_new(amdvi_iotlb_key, 1);
-> +
-> +        key->gfn = AMDVI_GET_IOTLB_GFN(gpa);
-> +        key->devid = devid;
->   
->           trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
->                   PCI_FUNC(devid), gpa, to_cache.translated_addr);
-> @@ -477,7 +495,8 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
->           entry->perms = to_cache.perm;
->           entry->translated_addr = to_cache.translated_addr;
->           entry->page_mask = to_cache.addr_mask;
-> -        *key = gfn | ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
-> +        entry->devid = devid;
-> +
->           g_hash_table_replace(s->iotlb, key, entry);
->       }
->   }
-> @@ -2526,8 +2545,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
->           }
->       }
->   
-> -    s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
-> -                                     amdvi_uint64_equal, g_free, g_free);
-> +    s->iotlb = g_hash_table_new_full(amdvi_iotlb_hash,
-> +                                     amdvi_iotlb_equal, g_free, g_free);
->   
->       s->address_spaces = g_hash_table_new_full(amdvi_as_hash,
->                                        amdvi_as_equal, g_free, g_free);
-> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-> index 38471b95d153..302ccca5121f 100644
-> --- a/hw/i386/amd_iommu.h
-> +++ b/hw/i386/amd_iommu.h
-> @@ -220,8 +220,8 @@
->   #define PAGE_SIZE_PTE_COUNT(pgsz)       (1ULL << ((ctz64(pgsz) - 12) % 9))
->   
->   /* IOTLB */
-> -#define AMDVI_IOTLB_MAX_SIZE 1024
-> -#define AMDVI_DEVID_SHIFT    36
-> +#define AMDVI_IOTLB_MAX_SIZE        1024
-> +#define AMDVI_GET_IOTLB_GFN(addr)   (addr >> AMDVI_PAGE_SHIFT_4K)
->   
->   /* default extended feature */
->   #define AMDVI_DEFAULT_EXT_FEATURES \
+And yes, if refuse the idea of enabling the feature in old machine types
+automatically, everything fits into existing paradigm.
 
+On the other hand is our downstream practice in the cloud. We introduce
+new machine types _very_ seldom. Almost always, new features developed
+or backported to our downstream doesn't require new machine type. In such
+situation, creating feature, which theoretically (and more simple in API!)
+may be done without introducing new MT, but creating it by introducing new
+MT, postponing the moment when we start to widely use it up to the moment when
+most of existing vms will die or restart naturally (as for sure, we'll not
+ask users to restart them, it would be too expensive (not saying about,
+is restart a safe way to change MT, or we'd better recreate a vm), seems
+very strange for me. (too long sentence detector blinking).
+
+So, finally, it's OK for me to switch to per-device properties. Then, in
+downstream I may implement corresponding capabilities to simplify management.
+That's rather simple.
+
+-
+
+Interesting, could migration "return path" be somehow used to get information
+from target, does it support backend transfer for concrete device?
+
+So that, we simply enable backend-transfer=true parameter both on
+source and target. Than, source somehow find out through return path,
+for the device, does target support backend-transfer for it, and decide,
+what to do? Or that's too complicated?
+
+-- 
+Best regards,
+Vladimir
 
