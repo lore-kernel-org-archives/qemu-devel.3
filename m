@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24118CCD184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FEBFCCD18E
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8liJ-000139-T2; Tue, 14 Oct 2025 16:33:43 -0400
+	id 1v8li7-0000xk-10; Tue, 14 Oct 2025 16:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8liH-00012D-DS
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:41 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8li5-0000ww-05
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:29 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8liE-0000Tf-WD
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:41 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8li2-0000SU-Qb
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=dqevdc4Akvscxn8eBi9a9N7/peI7nFXswvNmQsGiSx0=; b=oDMBMPSdG9OKe+n
- 21KgOnjtIvl7zCIXh1YWnjbJ6YmG4Td4hLr9RfC96XjFur58kJ+XFA0dt3MMUTH5hRk5jvqNVSH2I
- LAXEOue/V96LZgwd4FyykorY6NNJ5ZGFDUBHJCtpVAVmOyR/1dWzEst+W4EjABOWdaEPNJxcmkC/f
- 84=;
+ List-Help; bh=hr0Ny9yER4yUsNQYGUoDhbnGJYLE0rj7JMjSciiggJk=; b=scNwG+nyCgD8fYF
+ VKE6cZZRbN25IsZ/OAJtOTHVecEkf5RH+kYY6/qsmp4FX5qZX9fVCGnqS76qSbA3Sec7GqKFJkSi7
+ mFqtKHHZ3jAbVXY6ufk9iRoyhZXidHxNOUNWDj7yrL/C2gPyy/bOBzGDWfk3enRp/9fxWlp2SLBKJ
+ Uo=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [PATCH v3 20/34] target/riscv: Fix size of sw_check_code
-Date: Tue, 14 Oct 2025 22:34:57 +0200
-Message-ID: <20251014203512.26282-21-anjo@rev.ng>
+Subject: [PATCH v3 16/34] target/riscv: Fix size of priv_ver and vext_ver
+Date: Tue, 14 Oct 2025 22:34:53 +0200
+Message-ID: <20251014203512.26282-17-anjo@rev.ng>
 In-Reply-To: <20251014203512.26282-1-anjo@rev.ng>
 References: <20251014203512.26282-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,87 +64,71 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field only holds values of 2 and 3, fix its size to 8 bits and
-update stores from TCG.
+Fix these fields to 32 bits, also update corresponding priv_ver field
+in DisasContext as well as function arguments. 32 bits was chosen
+since it's large enough to fit all stored values and int/int32_t is
+used in RISCVCPUDef and a few functions.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/riscv/cpu.h                            | 2 +-
- target/riscv/translate.c                      | 4 ++--
- target/riscv/insn_trans/trans_rvi.c.inc       | 8 ++++----
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 4 ++--
- 4 files changed, 9 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h       | 6 +++---
+ target/riscv/machine.c   | 4 ++--
+ target/riscv/translate.c | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 6bee15cb5e..37035a9541 100644
+index bcf10a4c8b..6ed912cbd1 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -259,7 +259,7 @@ struct CPUArchState {
-     /* env place holder for extra word 2 during unwind */
-     uint64_t excp_uw2;
-     /* sw check code for sw check exception */
--    target_ulong sw_check_code;
-+    uint8_t sw_check_code;
- #ifdef CONFIG_USER_ONLY
-     uint32_t elf_flags;
+@@ -238,8 +238,8 @@ struct CPUArchState {
+ 
+     uint64_t guest_phys_fault_addr;
+ 
+-    target_ulong priv_ver;
+-    target_ulong vext_ver;
++    uint32_t priv_ver;
++    uint32_t vext_ver;
+ 
+     /* RISCVMXL, but uint32_t for vmstate migration */
+     uint32_t misa_mxl;      /* current mxl */
+@@ -799,7 +799,7 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
  #endif
+ 
+ static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
+-                                              target_long priv_ver,
++                                              uint32_t priv_ver,
+                                               uint32_t misa_ext)
+ {
+     /* In priv spec version 1.12 or newer, C always implies Zca */
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 27034180c4..1cf744c5f0 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -439,8 +439,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT8(env.frm, RISCVCPU),
+         VMSTATE_UINT64(env.badaddr, RISCVCPU),
+         VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
+-        VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+-        VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
++        VMSTATE_UINT32(env.priv_ver, RISCVCPU),
++        VMSTATE_UINT32(env.vext_ver, RISCVCPU),
+         VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+         VMSTATE_UNUSED(4),
 diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 14c8f1c6a2..ca7e6c44c6 100644
+index 2770c06413..14c8f1c6a2 100644
 --- a/target/riscv/translate.c
 +++ b/target/riscv/translate.c
-@@ -1362,8 +1362,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     if (ctx->fcfi_lp_expected) {
-         /* Emit after insn_start, i.e. before the op following insn_start. */
-         tcg_ctx->emit_before_op = QTAILQ_NEXT(ctx->base.insn_start, link);
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         tcg_ctx->emit_before_op = NULL;
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 9c8c04b2dc..5efdd95f97 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -53,8 +53,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         /*
-          * misaligned, according to spec we should raise sw check exception
-          */
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         return true;
-@@ -66,8 +66,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         TCGv tmp = tcg_temp_new();
-         tcg_gen_extract_tl(tmp, get_gpr(ctx, xT2, EXT_NONE), 12, 20);
-         tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         gen_set_label(skip);
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index fa1489037d..3f71adec35 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -40,8 +40,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                        mxl_memop(ctx) | MO_ALIGN);
-     TCGv rs1 = get_gpr(ctx, a->rs1, EXT_NONE);
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
--    tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
--                  tcg_env, offsetof(CPURISCVState, sw_check_code));
-+    tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-+                    tcg_env, offsetof(CPURISCVState, sw_check_code));
-     gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+@@ -60,7 +60,7 @@ typedef struct DisasContext {
+     DisasContextBase base;
+     target_ulong cur_insn_len;
+     target_ulong pc_save;
+-    target_ulong priv_ver;
++    uint32_t priv_ver;
+     RISCVMXL misa_mxl_max;
+     RISCVMXL xl;
+     RISCVMXL address_xl;
 -- 
 2.51.0
 
