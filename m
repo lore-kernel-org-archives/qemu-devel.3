@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5878CCD193
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2010CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 16:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8hdN-00029f-5Y; Tue, 14 Oct 2025 12:12:21 -0400
+	id 1v8hgt-0002pp-PN; Tue, 14 Oct 2025 12:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8hdL-00029L-Do
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:12:19 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v8hgk-0002pT-0D
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:15:54 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8hdI-0005tE-Tn
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:12:18 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-781421f5be6so20791477b3.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 09:12:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1v8hgf-0006Vt-MG
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 12:15:48 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-33292adb180so5389317a91.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 09:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760458334; x=1761063134; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QYHb+EHjAjIONDz+4Q/jbJWZrU7avRL+3+qKZfFfUZU=;
- b=q9yjr2hXf+9N42ELFS9xOCuAy4yHKAf++On7Blb+sO+ulBLBy9vUCX07WaAbD0sMHZ
- 6o41hoF99KaYR3KVQ+k0tSiMN3RYm/aU2jBV8JWFrkdOaJGucRUPx4vcM5F8FVrNpcdl
- mbga6KGr8NBQ0VJ8dl+PLwjaije295kKnpGKNbtlid0srbwoFbCteae5Y5D2NpcKF3tF
- pRZTvcnCQ+YEaVg3aPtGoz+W1Jq9M9iI3jCQPoV4U73FLehVyj+HCS6/vuv8Zip2IiBD
- SEbksdRjPmXBpMPgzN5YwoGtmqNwrX4br/7F2KeYYHFvIeKyhRQi2+yqbMg2WRw1Vfrx
- /JQw==
+ d=linaro.org; s=google; t=1760458542; x=1761063342; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0x5mvdsciU8XlM7tsgF1SHaF5LXB6iM8X1i2eTLCID8=;
+ b=h0TTB10FJ7KtMqgM4wJ3XWjkxpKN0zCfSILBh4K8cYC2d2/8MHANgq3c3yZqCN0hqY
+ ET/J76NwnPJSobU6nCci92QYm43Yp9CgFrZiButBHRbZPqdCPAj8lnkw6qLSSoWby1QT
+ rpSbzICS+10BAfum20fttm/lqB/S+IlMmPGNlHd617OaGcXEZr/PEdVlrdFlFROR2fv3
+ 0Q0z3eJ4lDYYjawUTWo7CaliEBWJOX1S7z0Dl9FfCjE3XmClSNXk02MIFJfBGDid1vc1
+ uWe83c5as6GePhsY6YAI8tR3vgMhPEmtrfnOqOBJvtVYOml94B4DbMrKGo0CLcTZUyGK
+ 3xWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760458334; x=1761063134;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QYHb+EHjAjIONDz+4Q/jbJWZrU7avRL+3+qKZfFfUZU=;
- b=qHxkuKMgroYE0LDRLCkVSJN5CWIO/rhhGH80ibKyhPmK1hBMD8XeREiyXdSm1X1MZN
- NB0QCcoWibG/sjc68SY7UH8L4Df8ikQEiT+vyeD2eiFmqM9vWsP7oDdOr8hbp81PAEPV
- TgIjTL+K2almpEC0tDHjONwYulXR8KuV6h0e1Bg7jjAL3J2cblyEPn5ZAfK1NyPYOtwk
- OQP19z1tq9JXS2gMqATrL3MoshoF4zTBtl8ayaauJwtXtO5syYXI7VRVYI+J4PYLXbmj
- Rib3K5vXKvLJTyW1MNY3+wxEXxOrk/b0J4N3pN4287++6K+tyAlfBiF56yhog5xCaM0W
- ixwg==
-X-Gm-Message-State: AOJu0YwM7c1zQbYTKNwZqRiOoi2IjbyvkQVvQPY1q6nbSRjUz3bgFTGq
- Qz89s/NlIwLMaQ+m3vDJbjpPY7/jU4B4FqeL+2Gyi6fD05wor7a8028wnvWsKys45Sw8Fl4h74a
- YJGHwzI3AtlG3GTDGeHGXDwO+zgRauXajuPqkLsQDSQ==
-X-Gm-Gg: ASbGncuwPkRLomnyW6yPVqa7x4ncXerfF4lwXqXalf5PxdSHvKWTZpiM86OWs4bmR89
- fp1ytudLTxLBZ3v2ZcVlPoEcUI0+mEzwUDhHlJjK7KKsIRp0fpJYw4tX+nSICYImVGACbakWMCD
- DfxgL5vu9pnvZBIfTF4Ci2FEMFXSQKiNWLWOdGBkJFpvy8L3AKlLASWUTl/xMB3VkqaRAnBThVf
- vf7PKY/S4ingbwbpci1ME3Bz/S8D0c=
-X-Google-Smtp-Source: AGHT+IFO4CKdCcJjR4fC4POWfSgG4yKLxW9LUpE4LUAkcSPj+pOovvY9clKmSq1dSQa0uxibEeyKJXX1C62Ae1HJD7w=
-X-Received: by 2002:a53:ba8d:0:b0:63d:24f9:5332 with SMTP id
- 956f58d0204a3-63d24f953d8mr1173240d50.55.1760458334365; Tue, 14 Oct 2025
- 09:12:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760458542; x=1761063342;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0x5mvdsciU8XlM7tsgF1SHaF5LXB6iM8X1i2eTLCID8=;
+ b=AKQXw7nx8HDb1HdupJt0jkSN16nWTo/TnYFVP26js4QY3oKi3aRMSVJ7J/bEQSBocb
+ zMTwY+s5QSc5E09snq4rWIymaRIncLW8LkmIMr9WEQd76iEw1Gu6U2Mp4xQKbhnyf0GN
+ FwCLtxkXzpyXV8rr1iCnliR0MgqA2FGWVGTFNH9YG9HE1pJcJWUpi8zhmOwhurN+mW9a
+ JJglJvkaoOaFarkLvoGWL0cZ5wx51as8cwrEfOZDTyksZWmOpPkZKSMgh5mEsYR320yl
+ NP3F/R60MmCN6yO7ipswWgCcZ256SFIoo6JtE5PkPkMiywqe1ACzNrPc1SuRUi/o6lZQ
+ UKNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPqHe/HJlZU3Ar9Tlg2hv5aLGMtV5uxn0NcRAdX5IdFO4Rx6du+y4JU4/Pnc9IMdmAakgd+v8OFH0+@nongnu.org
+X-Gm-Message-State: AOJu0Yzm0qLRFjuZw6c1YrTsxdi2vB7B8wmbV2e38SUs6y6ER7eBOE2J
+ 7vbTHTMeF1hX5ZcHXU5LWiN5IJUI7Yd46CgBgcMA67/qZoGmtfdDB3Dodvd8p1e1kB0=
+X-Gm-Gg: ASbGncvkWIvmyUXVDUPF6HsrkOGoppt0oZ6GPDE0KQXJ4Wfg744PbOLq1yOR7hwoX6x
+ z5v+Pvkyg7t84eFDa/x8ZHpKQ++G8+VmZLZHwDet+/FsrAbOJf85lZYDWmpwuWmDWjAr8XE/bZ1
+ U3UJ6v04MaqPqykYEx8Ysbwlk97rWdtnfnUfMjj7j1VJ/r1lI5ooID4xKEHAX7p9DP09906kM7p
+ x2WsmaSlhyT/nkWzSt8MgPbaL0wCFi0AJSw+73LAOzLgDWxTxGHZpM6sHEhGb/AMdZrE4T+Jd/+
+ g66bsu8xOwPweZqtordqCue5POqBBdUu1FP3PJ2pLUPiXwQCqlpJV59hCb3W3STmPUgV0HaT+43
+ 0a4gkHe+G3F/lT6v1MExv5+PFyS8Ecc9TKo4eI17C1JmuV3v1M7QMdozsyUwma2FWKIC0QeLo1A
+ ksoha3gP6F+IkXEh9sEfn1n1s=
+X-Google-Smtp-Source: AGHT+IEbVRRXuBQWjmoG/NyuSn+6xWahftxSApIz9qb6uBh+i/FpMzla3L2aq0YBZZRXWQWQFs+f1g==
+X-Received: by 2002:a17:903:a90:b0:27e:f201:ec90 with SMTP id
+ d9443c01a7336-29027264d78mr319271305ad.25.1760458542502; 
+ Tue, 14 Oct 2025 09:15:42 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:b401:1d95:80a1:93a2:fc08:86bf?
+ ([2804:7f0:b401:1d95:80a1:93a2:fc08:86bf])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29034de6c88sm169912465ad.17.2025.10.14.09.15.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Oct 2025 09:15:42 -0700 (PDT)
+Message-ID: <e280b52d-7fab-4e9f-84f4-a5862ce7284e@linaro.org>
+Date: Tue, 14 Oct 2025 13:15:40 -0300
 MIME-Version: 1.0
-References: <20251014102439.319915-1-peter.maydell@linaro.org>
- <261d6938fc894b1ca0979aef30fb9e1c@huawei.com>
- <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
- <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
- <b3f9f1d44d8d4a779dcaae2497b8b71b@huawei.com>
- <CAFEAcA804drHGyTG73bXkqSMgXvKGGaLWvm6QS85FhD+dXDqjw@mail.gmail.com>
- <cb5c762bd24d4cd69aea415d4bc10051@huawei.com>
- <CAFEAcA-g18R03vqpqXr0boOccDqhNP0J7Gx8nZOxUrbQh13pog@mail.gmail.com>
- <599ea0ba89314d28af8b3ae7b590d1a9@huawei.com>
- <CAFEAcA8-QGBGqjw3Eefx_yyz_30azn9Trz-OGSxq7v4N=X+26Q@mail.gmail.com>
- <a630fc58d9f946988bd6c27479543dd1@huawei.com>
- <CAFEAcA8GsSDnY8GEJZYNbJ3KZAp9tJ=s_vUBB_XwwGaEwozxzQ@mail.gmail.com>
- <880fc89ebcb9404cbc135a501e635671@huawei.com>
- <57c971afc3e64c1cbd48d032fb557c00@huawei.com>
-In-Reply-To: <57c971afc3e64c1cbd48d032fb557c00@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Oct 2025 17:12:02 +0100
-X-Gm-Features: AS18NWCynkS6OlvtaL1LTU2CTYLa3zbkj14bjXCnh133YUVMfgAdndrCIK_pCXk
-Message-ID: <CAFEAcA91-QGjZbGnrffH138WEdrZx9cEQjAzPsQfBg4G6rahGA@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/76] target-arm queue
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251010130527.3921602-1-peter.maydell@linaro.org>
+ <35087274-df34-4528-88a2-d855768fb5af@linaro.org>
+ <e3314d25-dd8a-46a9-bbfc-44fba387099a@linaro.org>
+ <CAFEAcA_OLA=Ct7wFHwnfixrYofjyMDuw_5ViNb7Yxu43B12szQ@mail.gmail.com>
+ <ca74ac20-f510-4c78-8f3b-85a551841041@linaro.org>
+ <CAFEAcA9MjN3q06COn=_==v+zFt06Qtp9WEy7+yx2JO_L17StCQ@mail.gmail.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <CAFEAcA9MjN3q06COn=_==v+zFt06Qtp9WEy7+yx2JO_L17StCQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,32 +110,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Oct 2025 at 17:07, Salil Mehta <salil.mehta@huawei.com> wrote:
-> There is one more issue.
->
-> /*
->  * Update KVM's MP_STATE based on what QEMU thinks it is
->  */
-> static int kvm_arm_sync_mpstate_to_kvm(ARMCPU *cpu)
-> {
->     if (cap_has_mp_state) {
->         struct kvm_mp_state mp_state = {
->             .mp_state = (cpu->power_state == PSCI_OFF) ?
->             KVM_MP_STATE_STOPPED : KVM_MP_STATE_RUNNABLE
->         };
->         return kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &mp_state);
->     }
->     return 0;
-> }
->
->
-> value of PSCI_OFF = 1 and we do not initialize the default state of power_state.
-> This means KVM_MP_STATE state will be configured as RUNNABLE at the first
-> instance till the cpu_reset() happens. This is not correct either.
+Hi Peter,
 
-The answer is that nothing should care about the KVM_MP_STATE
-until after the CPU has reset for the first time (i.e. we
-should never try to KVM_RUN a CPU object we never reset).
+On 10/14/25 12:28, Peter Maydell wrote:
+> On Tue, 14 Oct 2025 at 16:24, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+>>
+>> Hi Peter,
+>>
+>> On 10/12/25 16:58, Peter Maydell wrote:
+>>> On Fri, 10 Oct 2025 at 20:59, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+>>>>
+>>>> Hi,
+>>>>
+>>>> On 10/10/25 16:03, Richard Henderson wrote:
+>>>>> On 10/10/25 06:04, Peter Maydell wrote:
+>>>>>> ----------------------------------------------------------------
+>>>>>> target-arm queue:
+>>>>>>     * Implement FEAT_GCS
+>>>>>>     * Implement FEAT_MEC
+>>>>>
+>>>>> Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+>>>>
+>>>> Could somebody give me access to https://wiki.qemu.org/ChangeLog/10.2, please?
+>>>
+>>> It should be accessible to anybody with a wiki account, I think.
+>>>
+>>> (I have already updated it per this pullreq's changes; let me
+>>> know if I missed anything.)
+>>
+>> It's missing FEAT_MEC in the list.
+> 
+> ...and also FEAT_GCS : looks like I didn't update the changelog
+> at all for this pullreq. Either I was confusing it with
+> some other pullreq, or else I failed to actually save my
+> changes or something.
+> 
+>> But let me add it so I can test my access to the Wiki pages.
+> 
+> Sure -- please add both FEAT_MEC and FEAT_GCS.
 
--- PMM
+Ok! ;)
+
+
+Cheers,
+Gustavo
 
