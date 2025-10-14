@@ -4,91 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BB4CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BCECCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 12:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8eWQ-0005Eh-62; Tue, 14 Oct 2025 08:52:58 -0400
+	id 1v8eWl-0005Gv-PC; Tue, 14 Oct 2025 08:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8eWN-0005EY-T3
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:52:56 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8eWh-0005GR-W7
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:53:16 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8eWH-0003u1-N1
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:52:55 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-636de696e18so1999426a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 05:52:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v8eWZ-0003vH-3T
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 08:53:15 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6354af028c6so5181920d50.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 05:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760446363; x=1761051163; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1760446385; x=1761051185; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0hCF37KjFI/Dt92BwrOrHQsosxgCV2ZktrD+jHlYVoc=;
- b=jV0glTze0ITYgjUXBzmXLg4lgSab3rSECE94+zAJTypBTEk5MJs2Ot3wNnC8nYgt6j
- V5qRr2/Q3wyC8c2AAFJNICqKA83qarwfCcyipLUO0N5xrG5eLfTjhTtwxujBtPH039CV
- 82uKpqIZhNlCPU+IvYIE5BffLoqE+PDHAEeYZqIX24J/UhNnk9ZIypM0SqBm9ypCnX5h
- EtA/5FIqA1UrECl8qvfHLnkhvEfqC3kfH4sWx/l7zfUNakekEvxJFytx3YwY2jGhgTnP
- xtGBVQOfBVeLzBSSZQuFWX5GOya89l8IiVGAa+gofFScYqoLVzqtC3Sgaj6qeemLyJN0
- 2JvQ==
+ bh=Sk9uJbC7nqF1Vr/op1/1cZNr7x1v5xpAmDnAo7NDF68=;
+ b=ADqqDuzV/tkt8kv6osDKvPM3zUk8eyKAh+vfdAP78su0ohBolVYkf39MivhDEpoEuu
+ Kev1VfOTTtGwMUtnZOuJFAXLqpebxyrxx2kakYzHVLLYhbs9Cg9bn/QTlLl3nWzXeuae
+ o9qnqQs3b+PnewxuxRwh+cBgr0Eqwiz6CN65lUN7arfNTYWpOnTp2MD0HGEvDghpnbKz
+ RGTJridpdumZABMXBsf7mWHGIrpFziAVyeQUZWTykZzZWubaA2NuLA9QwsPX/pIcSUgQ
+ 5xwi1FEp26Xkp/WNwz6Rj0MOCAv6vM51WrsmAJJ3vIBILPkcDdO4glQo2+0uIkZaIj0z
+ 0Vww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760446363; x=1761051163;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0hCF37KjFI/Dt92BwrOrHQsosxgCV2ZktrD+jHlYVoc=;
- b=JGgeg77tAvSi+PUYW9N7TzPHRocqNCWZtt3RH8ogAOTxkf+XHVIGb/lIx6VlNyoeVP
- vAM77S5FR8BGUA4UVBAd2EqUOa1qbaHp/F5ZY8KDySPv/KWFKRzjOkncAnLSIitc5YWe
- br0CTDXgxEt4f3h1KNM+5msDBJtIBeeyI30iOSW6/829+8mdVbVg1f26OXmiiVe3pLm7
- 6K6s2q5EnO9MLOnWnbt1eJE2uO9PTOysT7SX5hO/ZvOzyEmFQRRo9lsU/NpHFYXB23o/
- DdQpyGY4+3gTysGG/2KEslXCsJ1gDPzMHSyZ29CaNzDhKOkvNd0zOxivOajGiwjvKWg7
- B4Ww==
-X-Gm-Message-State: AOJu0YzomUbNKubfQto3sO4I35aGFL5r6phOAOJZzen0RfSi5GaN8IFt
- vF9nByd+BFJYwmtFKGZ5ERUe7rUwVuxmjvvM2HzWXFaPbX80ce1c8qlX40WChQ/wwmbDy3o5ZJl
- qiUD9
-X-Gm-Gg: ASbGnctBZuMBYiTI/Qd/LZdH485cjDShmA3wgtSM+8sclCfiTVLzncdu2mqNlkcvEGC
- NjLaQoc2CAn85ysndIid3EqRoh0m8kkfw2rVSA0Lkxr1PCFAVvBRkvDullwFuSk+dwqkKE46MDM
- 1U+pNil2Bstt5nHNqpXJ9bd2FO/Sd4psJpY4ORfx9GINX67uOTHbfjckxGfowkrQjGPE/rWQGrX
- yhwTwCox1Umi5KpqZh9QCWgUOTG6koizWsbOcMGMg6EPrK8JSAed2A4FiXP6oomNO8pSjLU3HNL
- X5ktjKlXm43nQuvYFKUZrCsiWo7p5c6FX1rH6eW/1AljaZ9BfGJqyeO0xsMiYbFc7eqCHn1vxbR
- +WCRSBfWINSQyf/FPz3uELcIBi6SwSNXTlXL4BSVE0lCpVuGVVfHXty5p
-X-Google-Smtp-Source: AGHT+IGi0FYoYLj/LYiZMNxK736V6JmSe+ADIWij5DqXb1JBnzPukUaNQGu7yAjuVL6E1Uqs7CTiLw==
-X-Received: by 2002:a05:6402:848:b0:62f:337b:beed with SMTP id
- 4fb4d7f45d1cf-639d5c576d9mr21785137a12.30.1760446363483; 
- Tue, 14 Oct 2025 05:52:43 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63a52b71438sm11004782a12.25.2025.10.14.05.52.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 05:52:42 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DF8C55F812;
- Tue, 14 Oct 2025 13:52:41 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v7 00/25] tcg-plugins: add hooks for discontinuities
-In-Reply-To: <cover.1759744337.git.neither@nut.email> (Julian Ganz's message
- of "Mon, 6 Oct 2025 11:56:55 +0200")
-References: <cover.1759744337.git.neither@nut.email>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Tue, 14 Oct 2025 13:52:41 +0100
-Message-ID: <87a51tlk6e.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1760446385; x=1761051185;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Sk9uJbC7nqF1Vr/op1/1cZNr7x1v5xpAmDnAo7NDF68=;
+ b=TMzZ3Y4EvxnKisRNwpUKnRAjxJw8qJOcmlpuXrKKh0W698SoAzdMZ0hqtHCXGI0JZb
+ +Kc6yBYX/DNokkb5kTTvqARnlRhG5xVwcbicwfoWLhSyN1nG2fwwlo0eeJaDNHG6oC3d
+ Vdym6gthMjqlXF0gmH+eyY5x/4CQDYYmiMzPpEWH4vUNznbaLttGD+sDHKwdWKc3wM3q
+ m5l0vWzSLeBVciuM6LJyguaiK2EMYctA3fQDPDd367wcsKQgjNy/nsVqab6SjKD8CFrl
+ MD893ZgLzf5RgfJ/qNmUCyqwpsPrQpER5SSbeHiU2S+TqVCMz0tZ2xHtdJAfk7iCQNYs
+ 2qwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLKX88p1EXFCmNOLKtZOHamWIEMk6CTQg1y8visiaaA/25Di8S/9zrh/F5aowSycORyVBZkrJ2cZ3R@nongnu.org
+X-Gm-Message-State: AOJu0Yz//b4DiqdJIbyA5OxKiwqDwVSBhFmU3r2tKObO95Va2dQcTbpt
+ 79EOCVfIqGn+k3J9NXuiD0v+d/x3FYfLjYJRnHdNEv378hjPyVyxT1pVzzvoIpjabMn3YKW5vlT
+ OcddUNnouPrMDhra0C3yARkmU/HRTaZx2h64TnZADRQ==
+X-Gm-Gg: ASbGncuWvMNm06K+KzuZM2RzuXtYytbWhihOI22W+PVbYQsI8CKid5UqSjQKEz6YMPv
+ zGrE+1p5nr4xd9SF3gLXR/GJhdZlUgnGsQEeuzsfQr3URnpUkUsbp0N0+ilkYi0crXOyic1AAMd
+ /Bwo2fC8MWcHn+2fnNVD/5P8Mw9D5J8yoViD3sLp0kuLp6D57gRLBNZ8aTMv42c3wNj7t4s4XfT
+ RC5skFEsOR/JMaWFfNjyj8EDtjSUHc=
+X-Google-Smtp-Source: AGHT+IENHNrZVm/nujcMu06bFxnzR63nkyRDwK429nxQdtTtB7BqjmRozQL2J/1ya9dDcpdqEjXViinZyqhLPNUFNzM=
+X-Received: by 2002:a53:a04d:0:b0:638:53e9:bab0 with SMTP id
+ 956f58d0204a3-63ccb8e0cc1mr17817376d50.24.1760446384784; Tue, 14 Oct 2025
+ 05:53:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250919115017.1536203-1-berrange@redhat.com>
+ <20250919115017.1536203-15-berrange@redhat.com>
+ <CAFEAcA8AE4AcF6VOAPmtNeJi1XRBXityX1mLPw6K9+++VW6EEw@mail.gmail.com>
+ <f5e98585-6ad2-4e54-97db-0c4019380ee7@yandex-team.ru>
+In-Reply-To: <f5e98585-6ad2-4e54-97db-0c4019380ee7@yandex-team.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 14 Oct 2025 13:52:52 +0100
+X-Gm-Features: AS18NWA0WbwVlzEf6vW7gFBN0arMQ9prFOdBPDocU7diZzAEujjcdBEZAnoQZz8
+Message-ID: <CAFEAcA-z8F2aVx7cCqCoWCXJkD+onzGAvd1DiO=dVGKZoO7N8A@mail.gmail.com>
+Subject: Re: [PULL 14/16] chardev: qemu_chr_open_fd(): add errp
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Jagannathan Raman <jag.raman@oracle.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Darren Kenny <darren.kenny@oracle.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-block@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ John Levon <john.levon@nutanix.com>, 
+ Fam Zheng <fam@euphon.net>, Alexander Bulekov <alxndr@bu.edu>,
+ Stefan Weil <sw@weilnetz.de>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>, 
+ Qiuhao Li <Qiuhao.Li@outlook.com>, Michael Roth <michael.roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,18 +122,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Julian Ganz <neither@nut.email> writes:
+On Mon, 22 Sept 2025 at 15:27, Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 22.09.25 16:45, Peter Maydell wrote:
+> > On Fri, 19 Sept 2025 at 12:55, Daniel P. Berrang=C3=A9 <berrange@redhat=
+.com> wrote:
+> >>
+> >> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> >>
+> >> Every caller already support errp, let's go further.
+> >>
+> >> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> >> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru=
+>
+> >> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> >
+> > Coverity reports a bug in this change (CID 1630444):
+> >
+> >
+> >> diff --git a/chardev/char-file.c b/chardev/char-file.c
+> >> index a9e8c5e0d7..89e9cb849c 100644
+> >> --- a/chardev/char-file.c
+> >> +++ b/chardev/char-file.c
+> >> @@ -92,7 +92,11 @@ static void qmp_chardev_open_file(Chardev *chr,
+> >>           }
+> >>       }
+> >>
+> >> -    qemu_chr_open_fd(chr, in, out);
+> >> +    if (!qemu_chr_open_fd(chr, in, out, errp)) {
+> >> +        qemu_close(out);
+> >> +        qemu_close(in);
+> >
+> > Here 'in' can be -1 (if there is only an output file
+> > and no separate input file specified), so we can
+> > try to close(-1). Suggested fix:
+> >
+> >           if (in >=3D 0) {
+> >               qemu_close(in);
+> >           }
+>
+> Agree. I'll send a patch.
 
-> Some analysis greatly benefits, or depends on, information about
-> certain types of dicontinuities such as interrupts. For example, we may
-> need to handle the execution of a new translation block differently if
-> it is not the result of normal program flow but of an interrupt.
+Hi -- did you ever send a patch for this? (I was just looking
+through our still-outstanding coverity issues and noticed this
+one still there.)
 
-I think we are almost there. I see Richard made some comments and there
-is at least one re-base fix to make. I've also left some questions on
-the test cases.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
