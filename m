@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EFACCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 11:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91F8CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 11:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ctf-0006ME-Rz; Tue, 14 Oct 2025 07:08:53 -0400
+	id 1v8cxR-0007vD-5T; Tue, 14 Oct 2025 07:12:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8ctG-0006Gr-QY
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:08:29 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1v8cxO-0007uh-AX
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:42 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8ctE-00079P-Qi
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:08:26 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e37d10ed2so47835115e9.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:08:23 -0700 (PDT)
+ id 1v8cxL-00081n-Ur
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:42 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b4aed12cea3so823833566b.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760440102; x=1761044902; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TcZTql3elf5pX0dYEuIgbCia8QbAI6X151BBcGtRlLk=;
- b=t1dyN4jPrgKZcjPneynXEBH2auO5v4NcxgOZhdpkhp3fDphkDHc7A3nzIvzpUsxcUp
- qMssADUPTXx77dY9gihsxKRTfqH2uTgx0j8fBmlI9+2w6PYvUdHCJpGTMzO3Q4f03i9x
- JKYPyGPfVCv+e5dLgyZwRlQtJAKTFi44ELt7EXYvFZ/1NAq5pUakNf5ejSmoA85Wtqs0
- 9wlBxWxA9gKRAe8Vv9bqJDsgGgOz8Smu4DrihLMgunPiOU0D8xwb4zZA6TcfISQ58b3y
- j2l3WGu33SK6/Axpy6Cvm8FoyX6tV2+2ao4wcNfdFdV5FG6bfhabUkDrKvOTcjRdFxFt
- L3DQ==
+ d=linaro.org; s=google; t=1760440357; x=1761045157; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Svb2oNT9or1vltT0+6b3m5vDocAyrYfL4zg65Nw042I=;
+ b=zg7sh0SnRhd/mEq5igfGudbRcPI0lxRd1DnP2KoMK0qIxqDSHbVp/Wfb4ORDajoDja
+ cO9Lw1EQQ161JYiQroCfODwABmW40wIvmsJwpfNqctcyAkkgcmXjEjEd15+Xmi9jMUDs
+ H17AzawfPqkqLIDsl1qah1/HHRT1PYiUTPS4zY7lo5OmNM+mW4V8qcO2Zske83kKkLt/
+ KPLfB0A736/cbp0MqoFPN8+qg4zEh+LqTOlqTf7UrGbH4YQcepMKgCCTBeIHT1f/meXV
+ RQCwDkmy0b81MnDXkfS87MFcZ52Xozm23dJ97DbTPpyrnX/MUyA6bzMfgzL2R5LE+Uc5
+ vPGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760440102; x=1761044902;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TcZTql3elf5pX0dYEuIgbCia8QbAI6X151BBcGtRlLk=;
- b=tIb4F+pf5CPLQI/TN46UbhmVWDYI43nnCSWIRzNPny9aO+Qp5sFOnwYVxX9eTS3wAH
- 26sJtadnTUAPWS3AN46atJ/uXK46s12V/430jXtRFIvWxCDd4zIAo4G0POWwLCkghMps
- pDbSOCHm0r7B6JHd1uJznrH2AUYDAwrr4eGX26BIclb+lsdQTYK/DIeUCR/lURI8kyPA
- /cdgojzjR6/y2jquKAAqd4PKMKuEDA1pH8VY1HwfZccf80GxCJdZh+W0M/NK83OrmrH2
- 3IVVbywWZssxzStap0RJ91lGcZ6oIhYO/smkK3uJuoLyYoMM4tg8og2RdSfo94embKf/
- nUAw==
-X-Gm-Message-State: AOJu0Yz7GHDRxMZazwRM+dM1CNo3IzGPY4+//yWZyxQ3ZhSiDXokkMtt
- Tt7BooqUxyCluSwGde3RGsnr+Khy/P88Fi/cjLGE+NynKzJYdaEJqjqxi/Wea0o9j9K2BR6vdQ/
- juDR4
-X-Gm-Gg: ASbGncsUkpS/Ak6qqHJVVciPq8OsoReY6SzATFy4k5ukQoaaOKYEsGLEzemEvFtDS0w
- Dbn9xdTdgT+yt87T8xp7KIcRJztBQ8sVpkCV1AocxdRRk7WtNJrVAg/4O9TEcXql3Ipfpbba17e
- zHNq4pNvb8FfBmUMPCg9idg9n5yJsvjLp4mWofUksDTa5uPBZX30XGgp7b8993bhg9R/ipRLEOP
- D/JXlGUkO1IeJJ921vvrIVdMTTapf+S2Iu+EecgqhXyKLsNJ+r8GSwjc+9HaqJ0RHm35TuZWBat
- FoHV4i2/jV2SngmyLF6Xsv7X4qjlPVm/iycTxAgxR7QvJU95IwY5AZ7JKE2u7aWjTGp7nN49Cp6
- eAFgiMDWfbEq8uRyctHzgirRkX3a9WegpXALvGQbdnoQw+A==
-X-Google-Smtp-Source: AGHT+IETsP06vYBb5ol+KrnVxQU7Wr6HlQf5JgrUQmgdWt8SjKsulFtyLOIoyzivwmTVtgDBSC5Xuw==
-X-Received: by 2002:a05:600c:4586:b0:46e:45d3:82fd with SMTP id
- 5b1f17b1804b1-46fa9b086e1mr185404945e9.31.1760440101767; 
- Tue, 14 Oct 2025 04:08:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760440357; x=1761045157;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Svb2oNT9or1vltT0+6b3m5vDocAyrYfL4zg65Nw042I=;
+ b=UzwNarpLsPFEP0HwIsMLNLnXF355xLKDhx3vPWNjxWmHrT2i0Su1qwoBXTJTj1LzhS
+ Anx5uWSZNTNU+JtpolkCQrBItXj4f/dfZpkYwhzG6S3tNR+qgUMoRGPZaFjeFJSUf/wk
+ 0MabqrWPxbxORJokcHkp/lPd3n7y/bznWyZLVegppbqkhdSp8C+nCKOVt1mLsnIVLuND
+ Ts3YMob1jUN1QFQCxNWPH/Qj9XuMD+mEjDOBIQK947InkATFuHHipYAnzuYyC8hMLg7b
+ gDnmx5RdQ4aBgAD00gHGP3jnRJAi7BUMcrWKnovvPFWIaby9gSvL6RTioSlWRlx3vHKE
+ GRIw==
+X-Gm-Message-State: AOJu0YyMMp88u04tIO11gWTphYxELenyZ7JPm1qYet612sTHLFi1fO03
+ SdmuMMVW8LpoLGIdEuIHub5Ibbcs4t2DkHBKgtTEZLnCOOcIEu53VNWoY57hybca2EY=
+X-Gm-Gg: ASbGncu5E1d+gyFixKEV7et5SKEZCm6Ubf3XilDsDsLN8NSLF5JyHzPKIWHQjtwvegw
+ ycXa6t26P5CzN+H4fD+w0ZIB4rJB+fUAdZDw7mqgbB38jt6EaNG5P7lSNuaAlRDjrdGB/2CPNdt
+ nEWS1ASQDFInSoDtZK6tM88R/MvScNUHYSRuqtSb+Hxk0IjinAreDSoyRshFjNCzoHhwwJl7h8H
+ KC8rvWAQWjiAEKE+jr/j3e+O1TXcjtDIDqXgotJzAgQQEDeGJ3jZJ4CB2hCpWi06DCX3Wvnf+ug
+ VKOJOBBLHq4LiENM71iSpo1WooJzZIjakq/c1KK/OggHJgylbbc8kD9DX5dU3koG4VdsZBZWe91
+ sgC6zFNMt37Zv0tUX/UegSHsZEsShY5bHJ7+2nBDhddB4RBpCfONmV5Hn
+X-Google-Smtp-Source: AGHT+IFIevHdJvXtsgzxk+sUWSZJ7n2+73TStVTDhq6g3DU//dlX//gLihQUjUehoLHlCNUEadABzA==
+X-Received: by 2002:a17:907:d86:b0:b3e:f987:d6a8 with SMTP id
+ a640c23a62f3a-b50ac4da0bdmr2559194566b.44.1760440356631; 
+ Tue, 14 Oct 2025 04:12:36 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb483c7e0sm236095235e9.7.2025.10.14.04.08.20
+ a640c23a62f3a-b55d9920ec0sm1149295466b.86.2025.10.14.04.12.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 04:08:21 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 53F0B5F812;
- Tue, 14 Oct 2025 12:08:20 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>
-Subject: Re: [PATCH v7 04/25] contrib/plugins: add plugin showcasing new
- dicontinuity related API
-In-Reply-To: <9ada544f3b3c1840f75d6e2bda8bc23783cd0b2b.1759744337.git.neither@nut.email>
- (Julian Ganz's message of "Mon, 6 Oct 2025 11:56:59 +0200")
-References: <cover.1759744337.git.neither@nut.email>
- <9ada544f3b3c1840f75d6e2bda8bc23783cd0b2b.1759744337.git.neither@nut.email>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Tue, 14 Oct 2025 12:08:20 +0100
-Message-ID: <87ldldlp0b.fsf@draig.linaro.org>
+ Tue, 14 Oct 2025 04:12:35 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 112895F812;
+ Tue, 14 Oct 2025 12:12:35 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 0/8] virtio-gpu/next - misc fixes and MR handling
+Date: Tue, 14 Oct 2025 12:12:26 +0100
+Message-ID: <20251014111234.3190346-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1.249,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,19 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Julian Ganz <neither@nut.email> writes:
+I still have a number of patches that addressed a lock-up but were
+never merged due to objections. However there is a bunch of discussion
+around re-factoring the MemoryRegion code so I'm re-posting with an
+additional functional test which demonstrates the lock-up is fixed.
+Whatever the final solution for more cleanly handling the binding
+between MemoryRegions and blobs it will at least need to pass the
+test.
 
-> We recently introduced new plugin API for registration of discontinuity
-> related callbacks. This change introduces a minimal plugin showcasing
-> the new API. It simply counts the occurances of interrupts, exceptions
-> and host calls per CPU and reports the counts when exitting.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Julian Ganz <neither@nut.email>
+Blob memory issues aside I'll send a PR next week to merge the
+per-head and ui/gtk-gl-area changes.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Discuss,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Alex.
+
+Alex Bennée (4):
+  system/memory: add memory_region_finalize tracepoint
+  hw/display: add blob map/unmap trace events
+  hw/display: re-arrange memory region tracking
+  tests/functional: add GPU blob allocation test
+
+Andrew Keesler (1):
+  Support per-head resolutions with virtio-gpu
+
+Dongwon Kim (1):
+  ui/gtk-gl-area: Remove extra draw call in refresh
+
+Manos Pitsidianakis (2):
+  virtio-gpu: refactor async blob unmapping
+  virtio-gpu: fix hang under TCG when unmapping blob
+
+ qapi/virtio.json                          | 10 +++-
+ include/system/memory.h                   |  1 +
+ hw/display/virtio-gpu-base.c              | 10 ++++
+ hw/display/virtio-gpu-virgl.c             | 62 +++++++++++--------
+ system/memory.c                           |  5 ++
+ ui/gtk-gl-area.c                          |  1 -
+ hw/display/trace-events                   |  2 +
+ system/trace-events                       |  1 +
+ tests/functional/aarch64/meson.build      |  1 +
+ tests/functional/aarch64/test_gpu_blob.py | 73 +++++++++++++++++++++++
+ 10 files changed, 138 insertions(+), 28 deletions(-)
+ create mode 100755 tests/functional/aarch64/test_gpu_blob.py
+
+-- 
+2.47.3
+
 
