@@ -4,102 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC1DCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A24A4CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 20:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8laW-00088Q-En; Tue, 14 Oct 2025 16:25:40 -0400
+	id 1v8lhk-0000q7-Oj; Tue, 14 Oct 2025 16:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8laT-00088I-VH
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:25:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhg-0000o5-D2
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:04 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v8laJ-00083N-VZ
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:25:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760473521;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RLgJGzo8oRKrykPBF3FgcA0mpKSzNArLm1J9klVTdDY=;
- b=Zodi5CqyQfaWZ5vwKHhw6/KMeMJdLJ/NwRiLFgEusrFFs2gJGmmgvN9LNwf7KxP8bN3NRw
- KvRkgTdCagKRU2WfF2+4wk/iHexE7RK5PVgOnXvBD38uKGE/vyX8mqmAFNI3QmrFeI/ei2
- Xt9pSoKgD6pTOUfpoptAZy22h84gd2s=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-oSErFAfXPfi7GSw3fP_A0A-1; Tue, 14 Oct 2025 16:25:19 -0400
-X-MC-Unique: oSErFAfXPfi7GSw3fP_A0A-1
-X-Mimecast-MFC-AGG-ID: oSErFAfXPfi7GSw3fP_A0A_1760473519
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-876ee102b44so9216146d6.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 13:25:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760473519; x=1761078319;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RLgJGzo8oRKrykPBF3FgcA0mpKSzNArLm1J9klVTdDY=;
- b=SdLxE+AkLRCu8ZlEZp3+ISmrSGsDSNXkyOYbSQ1Qu04OCqmCpet1WXFxHoxVL2GZ+e
- /MXmIBajuuT4FNY9QRXqYlqo3RFeO+ltfhwwF0SK8XY612+/VtXf8w/185jRcAxPQe73
- sO6zDvVZH8GEknnWyLPFpg1rOR6hYTTqxpLQxqZWMRBz8KSx6Ad9mjskTz8wFYIT/VD6
- rFWwu2wBXSiEo6lbTew62YpmHD0tWMZ7xsFyS0yfDd47kZCpi6wDTMM9hIAoGi1JkqDp
- laMPXLRfnxlKyHtw/I4PKEmMQI+cIC8NbOMXZo1LdMPIP0oXHeKYUIjK6r/+OADqecTS
- rBLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXt8Gy2W8+V19tQSgwOHOFrsMmKf93gDzrPq8FOjukqpPKT0isPIIh2ih5Wlh/q/+a9flyvk/GCTWrB@nongnu.org
-X-Gm-Message-State: AOJu0YwIPl9lxPJ7qvwqSTQnDAY0oqWWFSyuWrtl6IiErT0TLoet7DKZ
- F4SNFLYnlE0scvV0vQN83JRDGakJVogcV8gBWUCvEvpK9sNkR12l9t8N1w8Fcu+ApOavfhzTCbE
- LBBHB+Cif3fvegDbtgwXLCc5m1B/s0SRsCnfPbkDnctVxGgX2oUbupzGx
-X-Gm-Gg: ASbGnctZSdCcvwA8IPXSYMg/Nw0+srSc6OeTjpANkvs0Pegn1M1quvm0NnABeZLiIH/
- Aba40Fzr7W4D8G8UdsvfLo+ugv1jtL4KC0qXSK0xdEGdLAqxTubPqLe4v1RBF6wbv2V5cjIy6xU
- 2MkS+du2CW4T32Rc1S9Y8Bvu4tfEF/TetJJeOz4WO01hgTpnTmzlQWhYJfjwTX0sJkfi+Vry2ys
- 57cyAp1kQ23Hthty/aOSz5AGIhSj54IyhAel6m7WmyzykYKfvv8wxmYPdG4yknZLBIoe1yeIZL2
- qgJ/8rZ2fi8QmIPwayW3Y1vfGm/BGZIS
-X-Received: by 2002:a05:622a:590a:b0:4b3:4fa9:4cd2 with SMTP id
- d75a77b69052e-4e6eb04f536mr448967041cf.33.1760473518624; 
- Tue, 14 Oct 2025 13:25:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvL8nMo+yMQL9jDt2bTIFDJJ4LSClUVIVWClLmjGbS38/A/PIMKCga5BfwCH44U3dnC2JqZg==
-X-Received: by 2002:a05:622a:590a:b0:4b3:4fa9:4cd2 with SMTP id
- d75a77b69052e-4e6eb04f536mr448966571cf.33.1760473518052; 
- Tue, 14 Oct 2025 13:25:18 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e881d04210sm4935981cf.23.2025.10.14.13.25.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 13:25:16 -0700 (PDT)
-Date: Tue, 14 Oct 2025 16:25:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org,
- michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
- davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-Subject: Re: [PATCH v7 16/19] qapi: add interface for backend-transfer
- virtio-net/tap migration
-Message-ID: <aO6xqt5_1PDBwOwu@x1.local>
-References: <20251010173957.166759-1-vsementsov@yandex-team.ru>
- <20251010173957.166759-17-vsementsov@yandex-team.ru>
- <aO57SKp86zX2R8mV@x1.local>
- <6da192b9-7609-4cc8-82a9-1a445ecb10c9@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v8lhW-0000PR-Pr
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 16:33:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=ONq1AIpN/IXx0RSRwmWe1bnZnBTw43lL7I56LFqeSXk=; b=t/hVggCzmREdF5B
+ 63Zbrk02tMOF/jTPC5PY14kdRb9ipJwGWIUSy5rIT8+0drQaLyIQqj//0HXHZVt79qdEnRnr3BGo7
+ wooRRPkEaUt+0+uVNDk5wnVNGZ+pRrSr9NwiATJNY4ld5O5Fn2PBCzF43EBevhv+NI2LEHKJAVY3T
+ 5g=;
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
+ palmer@dabbelt.com
+Subject: [PATCH v3 02/34] target/riscv: Fix size of trivial CPUArchState fields
+Date: Tue, 14 Oct 2025 22:34:39 +0200
+Message-ID: <20251014203512.26282-3-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-1-anjo@rev.ng>
+References: <20251014203512.26282-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6da192b9-7609-4cc8-82a9-1a445ecb10c9@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,248 +59,337 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 14, 2025 at 10:31:30PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 14.10.25 19:33, Peter Xu wrote:
-> > On Fri, Oct 10, 2025 at 08:39:54PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > To migrate virtio-net TAP device backend (including open fds) locally,
-> > > user should simply set migration parameter
-> > > 
-> > >     backend-transfer = ["virtio-net-tap"]
-> > > 
-> > > Why not simple boolean? To simplify migration to further versions,
-> > > when more devices will support backend-transfer migration.
-> > > 
-> > > Alternatively, we may add per-device option to disable backend-transfer
-> > > migration, but still:
-> > > 
-> > > 1. It's more comfortable to set same capabilities/parameters on both
-> > > source and target QEMU, than care about each device.
-> > 
-> > But it loses per-device control, right?  Say, we can have two devices, and
-> > the admin can decide if only one of the devices will enable this feature.
-> > 
-> 
-> Right. But, in short:
-> 
-> 1. I'm not sure, that such granularity is necessary.
-> 
-> 2. It may implemented later, on top of the feature.
+This commits groups together all CPUArchState fields whose behaviour can
+be retained by simply changing the size of the field.
 
-I confess that's not a good example, but my point was that it was
-straightforward idea to have two layers of settings, meanwhile it provides
-full flexiblity.
+Note, senvcfg is defined to be SXLEN bits wide, but is widened to 64
+bits to match henvcfg and menvcfg.  Next, [m|h]edeleg are changed to
+64 bits as defined privileged specification, and hvictl is fixed to 32
+bits which holds all relevant values, see HVICTL_VALID_MASK.  The
+remaining fields touched in the commit are widened from [H|S|M]XLEN
+to 64-bit.
 
-> 
-> > > 
-> > > 2. To not break the design, that machine-type + device options +
-> > > migration capabilities and parameters are fully define the resulting
-> > > migration stream. We'll break this if add in future more
-> > > backend-transfer support in devices under same backend-transfer=true
-> > > parameter.
-> > 
-> > Could you elaborate?
-> > 
-> > I thought last time we discussed, we planned to have both the global knob
-> > and a per-device flag, then the feature is enabled only if both flags are
-> > set.
-> 
-> Right, here in v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01644.html
-> 
-> Still at this point, I also needed local-incoming=true target option, so I
-> considered all the parameters like "I can't make feature without extra
-> per-device options, so here they are".
-> 
-> A day later, after motivating comment from Markus (accidentally in v2),
-> I found and suggested the way:
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01960.html
-> 
-> And further versions v4-v7 were the realization of the idea. Still, main
-> benefit is possibility to get rid of per-device local-incoming=true
-> options for target, not about a kind of per-device "capability" flag we
-> discuss now.
-> 
-> A, and here I said [1]:
-> 
-> > 1. global fds-passing migration capability, to enable/disable the whole feature
-> > 
-> > 2. per-device fds-passing option, on by default for all supporting
-> > devices, to be
-> > able to disable backing migration for some devices. (we discussed it
-> > here: https://lore.kernel.org/all/aL8kuXQ2JF1TV3M7@x1.local/ ).
-> > Still, normally these options are always on by default.
-> > And more over, I can postpone their implementation to separate series,
-> > to reduce discussion field, and to check that everything may work
-> > without additional user input.
-> 
-> And then, went this way, postponing realization of per-device options..
+Note, the cpu/hyper, cpu/envcfg, cpu/jvt, and cpu VMSTATE versions are
+bumped, breaking migration from older versions.
 
-Postponing the per-device flag might still break different backends if you
-specify the list with virtio-net-pci.
+References to the privileged/unprivileged RISCV specification refer to
+version 20250508.
 
-But only until now, I noticed you were using "virtio-net-tap" instead of
-"virtio-net-pci".
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.h     | 78 +++++++++++++++++++--------------------
+ target/riscv/machine.c | 84 +++++++++++++++++++++---------------------
+ 2 files changed, 81 insertions(+), 81 deletions(-)
 
-Ouch.. I think that's even more complicated. :(
-
-Here I think the problem is, introducing some arbitrary strings into
-migration QAPI to represent some combinations of "virtio frontend F1" and
-"virtio backend B1" doesn't sound the right thing to do.  Migration ideally
-should have zero knowledge of the device topology, types of devices,
-frontends or backends.  "virtio-*" as a string should not appear in
-migration/ or qapi/migration.json at all..
-
-> 
-> And then, developing similar migration for vhost-user-blk, found
-> that I can't use on boolean capability for such features, the reason
-> in commit message, which we discuss now.
-
-Why a bool isn't enough?  Could you share a link to that discussion?
-
-> 
-> Than, current design came in v5 (v4 was skipped).. And I even got an
-> approval from Fabiano :)
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg03999.html
-> 
-> > 
-> > If these parameters are all set the same on src/dst, would it also not
-> > break the design when new devices start to support it (and the new device
-> > will need to introduce its own per-device flags)?
-> 
-> Yes, right.
-> 
-> I missed, that, "postponing (probably forever)" per-device options
-> realization, I started to implement another way to solve the same
-> problem (switching from one boolean capability to a backend-transfer
-> list).
-> 
-> In other words, if at some point implement per-device options, that will
-> partly intersect by functionality with current complex migration
-> parameter..
-> 
-> -
-> 
-> But still, I think, that parameter backend-transfer = [list of targets]
-> is better than per-device option. With per-device options we'll have to
-> care about them forever. I can't imagine a way to make them TRUE by
-> default.
-> 
-> Using machine type, to set option to TRUE by default in new MT, and to
-> false in all previous ones doesn't make real sense: we never migrate on
-> another MT, but we do can migrate from QEMU without support for
-> virtio-net backend transfer to the QEMU with such support. And on target
-> QEMU we'll want to enable virtio-net backend-transfer for further
-> migrations..
-
-So this is likely why you changed your mind.  I think machine properties
-definitely make sense.
-
-We set it OFF on old machines because when on old machines the src QEMU
-_may_ not support this feature.  We set it ON on new machines because when
-the QEMU has the new machine declared anyway, it is guaranteed to support
-the feature.
-
-We can still manually set the per-device properties iff the admin is sure
-that both sides of "old" QEMUs support this feature.  However machine
-properties worked like that for many years and I believe that's how it
-works, by being always on the safe side.
-
-> 
-> So, I think, modifying machine types is wrong idea here. So, we have to
-> keep new options FALSE by default, and management tool have to care to
-> set them appropriately.
-> 
-> -
-> 
-> Let's look from the POV of management tool.
-> 
-> With complex parameter (list of backend-transfer targets, suggested with
-> this series), what should we do?
-> 
-> 1. With introspection, get backend-transfer targets supported by source
->    and target QEMUs
-> 2. Get and intersection, assume X
-> 3. Set same backend-transfer=X on source and target
-> 4. Start a migration
-> 
-> But with per-device parameters it becomes a lot more complicated and
-> error prone
-> 
-> 1. Somehow understand (how?), which devices support backend-transfer on
->    source and target
-> 2. Get an intersection
-> 3. Set all the backend-transfer options on both vms correspondingly,
->    doing personal qom-set for each device
-> 4. Start a migration
-> 
-> -
-> 
-> In short:
-> 
-> 1. per device - is too high granularity, making management more complex
-
-If we follow the machine property way of doing this (which I believe we
-used for years), then mgmt doesn't need any change except properly enable
-fd-passing in migration cap/params when it's a local migration.  That's
-all.  It doesn't need to know anything about "which device(s) supports
-fd-passing", because they'll all be auto-set by the machine types.
-
-> 
-> 2. per feature - is what we need. And it's a normal use for migration
-> capabilities: we implement a new migration feature, and add new
-> capability. The only new bit with this series is that "we are going to"
-> implement similar capabilities later, and seems good to organize them
-> all into a list, rather than make separate booleans.
-> 
-> 
-> > 
-> > > 
-> > > The commit only brings the interface, the realization will come in later
-> > > commit. That's why we add a temporary not-implemented error in
-> > > migrate_params_check().
-> > > 
-> 
-> [..]
-> 
-> > > +bool migrate_virtio_net_tap(void)
-> > > +{
-> > > +    MigrationState *s = migrate_get_current();
-> > > +    BackendTransferList *el = s->parameters.backend_transfer;
-> > > +
-> > > +    for ( ; el; el = el->next) {
-> > > +        if (el->value == BACKEND_TRANSFER_VIRTIO_NET_TAP) {
-> > 
-> > So this is also something I want to avoid.  The hope is we don't
-> > necessarily need to invent new device names into qapi/migration.json.
-> > OTOH, we can export a helper in migration/misc.h so that devices can query
-> > wehther the global feature is enabled or not, using that to AND the
-> > per-device flag.
-> > 
-> 
-> Understand. But I can't imagine how to keep management simple with per-device
-> options..
-> 
-> -
-> 
-> What do you think?
-
-I feel like you wanted to enable this feature _while_ using an old machine
-type.  Is that what you're looking for?  Can you simply urge the users to
-move to new machine types when looking for new features?  I believe that's
-what we do..
-
-MT properties were working like that for a long time.  What you were asking
-is fair, but if so I'd still like to double check with you on that's your
-real purpose (enabling this feature on NEW qemus but OLD machine types, all
-automatically).
-
-Thanks,
-
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 4c13012442..4b291dbf81 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -254,7 +254,7 @@ struct CPUArchState {
+     /* 128-bit helpers upper part return value */
+     target_ulong retxh;
+ 
+-    target_ulong jvt;
++    uint64_t jvt;
+ 
+     /* elp state for zicfilp extension */
+     bool      elp;
+@@ -271,7 +271,7 @@ struct CPUArchState {
+     target_ulong priv;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+-    target_ulong senvcfg;
++    uint64_t senvcfg;
+ 
+ #ifndef CONFIG_USER_ONLY
+     /* This contains QEMU specific information about the virt state. */
+@@ -313,18 +313,18 @@ struct CPUArchState {
+      */
+     uint64_t vsie;
+ 
+-    target_ulong satp;   /* since: priv-1.10.0 */
+-    target_ulong stval;
+-    target_ulong medeleg;
++    uint64_t satp;   /* since: priv-1.10.0 */
++    uint64_t stval;
++    uint64_t medeleg;
+ 
+-    target_ulong stvec;
+-    target_ulong sepc;
+-    target_ulong scause;
++    uint64_t stvec;
++    uint64_t sepc;
++    uint64_t scause;
+ 
+-    target_ulong mtvec;
+-    target_ulong mepc;
+-    target_ulong mcause;
+-    target_ulong mtval;  /* since: priv-1.10.0 */
++    uint64_t mtvec;
++    uint64_t mepc;
++    uint64_t mcause;
++    uint64_t mtval;  /* since: priv-1.10.0 */
+ 
+     uint64_t mctrctl;
+     uint32_t sctrdepth;
+@@ -346,13 +346,13 @@ struct CPUArchState {
+     uint64_t mvip;
+ 
+     /* Hypervisor CSRs */
+-    target_ulong hstatus;
+-    target_ulong hedeleg;
++    uint64_t hstatus;
++    uint64_t hedeleg;
+     uint64_t hideleg;
+     uint32_t hcounteren;
+-    target_ulong htval;
+-    target_ulong htinst;
+-    target_ulong hgatp;
++    uint64_t htval;
++    uint64_t htinst;
++    uint64_t hgatp;
+     target_ulong hgeie;
+     target_ulong hgeip;
+     uint64_t htimedelta;
+@@ -366,7 +366,7 @@ struct CPUArchState {
+     uint64_t hvip;
+ 
+     /* Hypervisor controlled virtual interrupt priorities */
+-    target_ulong hvictl;
++    uint32_t hvictl;
+     uint8_t hviprio[64];
+ 
+     /* Upper 64-bits of 128-bit CSRs */
+@@ -379,26 +379,26 @@ struct CPUArchState {
+      * For RV64 this is a 64-bit vsstatus.
+      */
+     uint64_t vsstatus;
+-    target_ulong vstvec;
+-    target_ulong vsscratch;
+-    target_ulong vsepc;
+-    target_ulong vscause;
+-    target_ulong vstval;
+-    target_ulong vsatp;
++    uint64_t vstvec;
++    uint64_t vsscratch;
++    uint64_t vsepc;
++    uint64_t vscause;
++    uint64_t vstval;
++    uint64_t vsatp;
+ 
+     /* AIA VS-mode CSRs */
+     target_ulong vsiselect;
+ 
+-    target_ulong mtval2;
+-    target_ulong mtinst;
++    uint64_t mtval2;
++    uint64_t mtinst;
+ 
+     /* HS Backup CSRs */
+-    target_ulong stvec_hs;
+-    target_ulong sscratch_hs;
+-    target_ulong sepc_hs;
+-    target_ulong scause_hs;
+-    target_ulong stval_hs;
+-    target_ulong satp_hs;
++    uint64_t stvec_hs;
++    uint64_t sscratch_hs;
++    uint64_t sepc_hs;
++    uint64_t scause_hs;
++    uint64_t stval_hs;
++    uint64_t satp_hs;
+     uint64_t mstatus_hs;
+ 
+     /*
+@@ -435,8 +435,8 @@ struct CPUArchState {
+ 
+     PMUFixedCtrState pmu_fixed_ctrs[2];
+ 
+-    target_ulong sscratch;
+-    target_ulong mscratch;
++    uint64_t sscratch;
++    uint64_t mscratch;
+ 
+     /* Sstc CSRs */
+     uint64_t stimecmp;
+@@ -506,11 +506,11 @@ struct CPUArchState {
+ #endif /* CONFIG_KVM */
+ 
+     /* RNMI */
+-    target_ulong mnscratch;
+-    target_ulong mnepc;
+-    target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
+-    target_ulong mnstatus;
+-    target_ulong rnmip;
++    uint64_t mnscratch;
++    uint64_t mnepc;
++    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
++    uint64_t mnstatus;
++    uint64_t rnmip;
+     uint64_t rnmi_irqvec;
+     uint64_t rnmi_excpvec;
+ };
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 18d790af0d..f6ca017211 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -80,17 +80,17 @@ static bool hyper_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_hyper = {
+     .name = "cpu/hyper",
+-    .version_id = 4,
+-    .minimum_version_id = 4,
++    .version_id = 5,
++    .minimum_version_id = 5,
+     .needed = hyper_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.hstatus, RISCVCPU),
+-        VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
++        VMSTATE_UINT64(env.hstatus, RISCVCPU),
++        VMSTATE_UINT64(env.hedeleg, RISCVCPU),
+         VMSTATE_UINT64(env.hideleg, RISCVCPU),
+         VMSTATE_UINT32(env.hcounteren, RISCVCPU),
+-        VMSTATE_UINTTL(env.htval, RISCVCPU),
+-        VMSTATE_UINTTL(env.htinst, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgatp, RISCVCPU),
++        VMSTATE_UINT64(env.htval, RISCVCPU),
++        VMSTATE_UINT64(env.htinst, RISCVCPU),
++        VMSTATE_UINT64(env.hgatp, RISCVCPU),
+         VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+         VMSTATE_UINTTL(env.hgeip, RISCVCPU),
+         VMSTATE_UINT64(env.hvien, RISCVCPU),
+@@ -98,28 +98,28 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
+         VMSTATE_UINT64(env.vstimecmp, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.hvictl, RISCVCPU),
++        VMSTATE_UINT32(env.hvictl, RISCVCPU),
+         VMSTATE_UINT8_ARRAY(env.hviprio, RISCVCPU, 64),
+ 
+         VMSTATE_UINT64(env.vsstatus, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsscratch, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.vscause, RISCVCPU),
+-        VMSTATE_UINTTL(env.vstval, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsatp, RISCVCPU),
++        VMSTATE_UINT64(env.vstvec, RISCVCPU),
++        VMSTATE_UINT64(env.vsscratch, RISCVCPU),
++        VMSTATE_UINT64(env.vsepc, RISCVCPU),
++        VMSTATE_UINT64(env.vscause, RISCVCPU),
++        VMSTATE_UINT64(env.vstval, RISCVCPU),
++        VMSTATE_UINT64(env.vsatp, RISCVCPU),
+         VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
+         VMSTATE_UINT64(env.vsie, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.mtval2, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtinst, RISCVCPU),
++        VMSTATE_UINT64(env.mtval2, RISCVCPU),
++        VMSTATE_UINT64(env.mtinst, RISCVCPU),
+ 
+-        VMSTATE_UINTTL(env.stvec_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.sscratch_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.sepc_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.scause_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.stval_hs, RISCVCPU),
+-        VMSTATE_UINTTL(env.satp_hs, RISCVCPU),
++        VMSTATE_UINT64(env.stvec_hs, RISCVCPU),
++        VMSTATE_UINT64(env.sscratch_hs, RISCVCPU),
++        VMSTATE_UINT64(env.sepc_hs, RISCVCPU),
++        VMSTATE_UINT64(env.scause_hs, RISCVCPU),
++        VMSTATE_UINT64(env.stval_hs, RISCVCPU),
++        VMSTATE_UINT64(env.satp_hs, RISCVCPU),
+         VMSTATE_UINT64(env.mstatus_hs, RISCVCPU),
+ 
+         VMSTATE_END_OF_LIST()
+@@ -291,12 +291,12 @@ static bool envcfg_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_envcfg = {
+     .name = "cpu/envcfg",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = envcfg_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(env.menvcfg, RISCVCPU),
+-        VMSTATE_UINTTL(env.senvcfg, RISCVCPU),
++        VMSTATE_UINT64(env.senvcfg, RISCVCPU),
+         VMSTATE_UINT64(env.henvcfg, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+@@ -356,11 +356,11 @@ static bool jvt_needed(void *opaque)
+ 
+ static const VMStateDescription vmstate_jvt = {
+     .name = "cpu/jvt",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = jvt_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.jvt, RISCVCPU),
++        VMSTATE_UINT64(env.jvt, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -427,8 +427,8 @@ static const VMStateDescription vmstate_sstc = {
+ 
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+-    .version_id = 10,
+-    .minimum_version_id = 10,
++    .version_id = 11,
++    .minimum_version_id = 11,
+     .post_load = riscv_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+@@ -459,16 +459,16 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.mvip, RISCVCPU),
+         VMSTATE_UINT64(env.sie, RISCVCPU),
+         VMSTATE_UINT64(env.mideleg, RISCVCPU),
+-        VMSTATE_UINTTL(env.satp, RISCVCPU),
+-        VMSTATE_UINTTL(env.stval, RISCVCPU),
+-        VMSTATE_UINTTL(env.medeleg, RISCVCPU),
+-        VMSTATE_UINTTL(env.stvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.sepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.scause, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.mepc, RISCVCPU),
+-        VMSTATE_UINTTL(env.mcause, RISCVCPU),
+-        VMSTATE_UINTTL(env.mtval, RISCVCPU),
++        VMSTATE_UINT64(env.satp, RISCVCPU),
++        VMSTATE_UINT64(env.stval, RISCVCPU),
++        VMSTATE_UINT64(env.medeleg, RISCVCPU),
++        VMSTATE_UINT64(env.stvec, RISCVCPU),
++        VMSTATE_UINT64(env.sepc, RISCVCPU),
++        VMSTATE_UINT64(env.scause, RISCVCPU),
++        VMSTATE_UINT64(env.mtvec, RISCVCPU),
++        VMSTATE_UINT64(env.mepc, RISCVCPU),
++        VMSTATE_UINT64(env.mcause, RISCVCPU),
++        VMSTATE_UINT64(env.mtval, RISCVCPU),
+         VMSTATE_UINTTL(env.miselect, RISCVCPU),
+         VMSTATE_UINTTL(env.siselect, RISCVCPU),
+         VMSTATE_UINT32(env.scounteren, RISCVCPU),
+@@ -479,8 +479,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+                              vmstate_pmu_ctr_state, PMUCTRState),
+         VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+         VMSTATE_UINTTL_ARRAY(env.mhpmeventh_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+-        VMSTATE_UINTTL(env.sscratch, RISCVCPU),
+-        VMSTATE_UINTTL(env.mscratch, RISCVCPU),
++        VMSTATE_UINT64(env.sscratch, RISCVCPU),
++        VMSTATE_UINT64(env.mscratch, RISCVCPU),
+         VMSTATE_UINT64(env.stimecmp, RISCVCPU),
+ 
+         VMSTATE_END_OF_LIST()
 -- 
-Peter Xu
+2.51.0
 
 
