@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A69CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 11:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B44CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 11:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8cxY-00080b-Pr; Tue, 14 Oct 2025 07:12:53 -0400
+	id 1v8cxf-00084E-5D; Tue, 14 Oct 2025 07:12:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cxQ-0007vE-MM
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:45 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1v8cxV-0007wO-NI
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:51 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8cxO-000823-80
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:44 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b50206773adso1120536666b.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:40 -0700 (PDT)
+ id 1v8cxT-00083F-AC
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 07:12:49 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-63b9da57cecso3758842a12.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 04:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760440359; x=1761045159; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760440363; x=1761045163; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Bg8rMtlhXnkF/w+mBJd2TOmEOHNkxcbPVb42bgZPfso=;
- b=zsJ453v88Bg4jgk6+95QOAdXd9l90D8GD5qBULAY6fNSL2t8isnMZ7h82XSIpk6yy9
- CRn3+VyiS/WHP3hmRTDv9snLcnqKU9qPGA9cG7ZptH8ulf4OPuSjWbAM0bVAveBE2hM0
- d94FHQL6Oh0JDHxS5uEc7x0CW9/wBeX6ZlnISHeFL9IYcOzUZUXF5MYLCiI5+qz9hFjt
- yt3ETuV5fgkiGFW31waboLj8Xg6mNnyOlu5wTuI4qBmOah806rJikWmjfNziChb/pKE4
- uU9mpivL/aqUfT78+IINKntdDlD1vaqCoCMXuo/MIEwE7Eg8l87ZE+2bm6sVrH2KmRJL
- Epdw==
+ bh=sNsz/B9ZMuWBA6zhxt/zXKcHrrm+1gb8tG46YN/TcvU=;
+ b=Ces9/lPweWELXf9PXDcPfj/9dgflVIwS6zzheGdImwQCQZNn4kZhmgv0xnTGu5g/Kt
+ r6tRQA/fOFt9NXpNC2/j6Zner3X7SU3P4h1ILv9gRJZ4cw+CWd+mVicJLef4eXNMLxPH
+ csDyJU2eJwGh869S96fznokYV+4qXZam2Zscad8TfLRX6KM60VCLr+cTBZZu+bUEl4v7
+ fkfRhaufhBcDay0cM31+ruSDDPw4itTYQZqE1ddFHTyaaEp57Ie2dylnyMEDvTqrUop4
+ RVqwRy2RmQkPiYeioIkFnZ5X6xOLvyqD38LArUlIYivodh63dzT9b7DwaQd2790aLPUF
+ UYOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760440359; x=1761045159;
+ d=1e100.net; s=20230601; t=1760440363; x=1761045163;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Bg8rMtlhXnkF/w+mBJd2TOmEOHNkxcbPVb42bgZPfso=;
- b=DSdgNKUT0y/txYUiwSu1mK46mgQlDfzf5hYmQ1yNo4GKuEoEpdIXz+3Zra0fFqrSqA
- d/9a5Z/i4HxtSG1UY2/sIsM9KIK73dncVsmZ36ui18JS9Ve4gSvYBm7oXfuHhsYyu5/e
- BTd1kFoQxIDgIItprVlOxspyh5nT6lHgf/iZIuMbMAB2TTqYx4svA5xzz37v/MfoHZH9
- 7F4l6cY2Oplm7ER5md6JwCsBPgMGH9zb4mTTdVhniuxPGeK4pNf/tKknHalkvpmYm0rC
- lBp29n/6Q5bppOXenRQNI+WLWeTWi8xitwxUJEkL/p6SaOgQ9Prtcwva1SVZnmVRP28l
- J/6A==
-X-Gm-Message-State: AOJu0YwOAXecbrJCJ2ysFTSlKiHV40o+qvdwVS7dOYaY72zPEYcoj9rX
- tPza7l0B3zdUYrXBwlFYSh039OYyImLxzN8F34jjUPMfdXB93+iAh9tmaSnd3WKNGhM=
-X-Gm-Gg: ASbGncv87uwl2cQn4d4DSsjygjqXUWsSxEs0IOIPlArXmxkIiVI2r9eLOmLqvOfcUqS
- F7Uv+Vn2G6AqL8U6zztPbmLJvXVcWJf6tAvUDF9In3Cu5oy0Ee4ywbZn0MtER0i0S+FSrC6gN44
- wdjWYGkhJ+q3B7UYUnjcRPZ09H55VOthoELbi0eR0P7GFFVYFQYylI16YaE0WC2jV6BoYgstPHH
- hgKn9zZ/VwGwm2chRQJh4sDYDeZ43YmO1P1JQy6cbsQh1E7jVe69DJ+WJlHfDBxlOI7F+PEcE7x
- KNDm9ux9iqWgkgK1Wr/tGzVlruO+/aqCJtPqLeFJwk5lbeEAL5SG9xgdNA4JUdd34dIv3ueJtDY
- /rtnZUWGd74vwb2rytnF1sA8/cPuvO72V84exAXJhzz9Sn0ySBwX1MhR1FGubVw/IYCg=
-X-Google-Smtp-Source: AGHT+IFfA4YwSeSl9iZVBc6k9MB9nfb3h9qQQwAJjvgfVfWJCggQ+Mf9MFEijfyE+xhebnDfR5bPSA==
-X-Received: by 2002:a17:907:18c6:b0:b54:2c82:40f1 with SMTP id
- a640c23a62f3a-b542c8241bbmr2520263066b.11.1760440359504; 
- Tue, 14 Oct 2025 04:12:39 -0700 (PDT)
+ bh=sNsz/B9ZMuWBA6zhxt/zXKcHrrm+1gb8tG46YN/TcvU=;
+ b=t05+rZa75TNeCiYhk2GCMDjR21R2DlCSWzcd+t7dp8QqdR1Qm/cW8SbfxUrvv9ePQW
+ 0oXX+aiHg1m/tcl+Xt74jvMdWsTl8ZvawLFpEqNIBCygZ8vS5ZNVsCAHhLDj2HB+XWVQ
+ K4+top8iKcnrQ2xRL4VIjaKwUxdxPwg2DKGap0uyoXm7rGM0917Cj7wmX19Ydbngps0z
+ UnS9xG7Map4IoCA2HUjO9fg6JdFa3PFWQwypyzqLYav0tLRss/BWYGsimeDWs6rIXSwG
+ 804fpEhq5aYV0uaGDNQdFIWqH0aMWdUUVmKizUCtvZeEFmtiWIgihLrPaYmOseH6PXIT
+ Kb5A==
+X-Gm-Message-State: AOJu0YwmR5bBmEfzxXFmKoEjSQTyKpyjjiEtnRvI2jYbQzP7HiWrHWE3
+ hTIyfd2vMOunvhI+dsd+V/TwJgVxed3sUSM8BcWUI5HG3cJoAYNa4P/Ycgg78PKlYns=
+X-Gm-Gg: ASbGncvPIpY31xDkMYkqU00RVQ0rZF9MIg4pHyon+GoICFT7ui2KH/v9YgJ9/FmOybp
+ UcD3gfd8x0GtCeZC8PJ+JZylYgL1M8cH/vMD9II8V4j3sK2Sypvec1Kg9mvcfCAHvkIhddEdGjM
+ Mh1MMKQiKrALVIBcifW6hJd9fsk8momC52Hdv2laJtRP1f+5aRDpmR3hBqCRcUU2IExabg89ZkX
+ n9RG3TYgoM9UUoYd7ZbcNA+Isxyci2R6N48aMp6V2DU5Q3OGBy0OkgwixOlGY8v1RwAbFkxF0xx
+ J6xVayEN66IwKHnTGZuxpSWQYWUmKaBHqL/B/iCsNv4KPlwm443HCEEhAvfEQSL3shhaRh4s7Os
+ bfSJSb83w26+dU0etVebHkZJlD8bYeOHCOu+Oe45eysCO+TNSFEaQZbtV
+X-Google-Smtp-Source: AGHT+IHeaehqiUFmtqcm0+6ZnsjB4TAQBHlmiSHEXNd/c9jqhHQkwBwtmTahsdnyRaHFBFD35pTWVQ==
+X-Received: by 2002:a05:6402:26c8:b0:63b:dfab:6d5f with SMTP id
+ 4fb4d7f45d1cf-63bdfab6f6emr562709a12.5.1760440363122; 
+ Tue, 14 Oct 2025 04:12:43 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b55d9525541sm1127441266b.80.2025.10.14.04.12.35
+ 4fb4d7f45d1cf-63a52b7164dsm10774803a12.21.2025.10.14.04.12.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 04:12:36 -0700 (PDT)
+ Tue, 14 Oct 2025 04:12:39 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5510B5F83C;
+ by draig.lan (Postfix) with ESMTP id B14175FA53;
  Tue, 14 Oct 2025 12:12:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -77,19 +77,19 @@ Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Dongwon Kim <dongwon.kim@intel.com>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-stable@nongnu.org
-Subject: [PATCH 3/8] ui/gtk-gl-area: Remove extra draw call in refresh
-Date: Tue, 14 Oct 2025 12:12:29 +0100
-Message-ID: <20251014111234.3190346-4-alex.bennee@linaro.org>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH 7/8] virtio-gpu: fix hang under TCG when unmapping blob
+Date: Tue, 14 Oct 2025 12:12:33 +0100
+Message-ID: <20251014111234.3190346-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251014111234.3190346-1-alex.bennee@linaro.org>
 References: <20251014111234.3190346-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,43 +112,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
-which causes some guest display corruption when gtk-gl-area
-is used for GTK rendering (e.g. Wayland Compositor) possibly due to
-simulataneous accesses on the guest frame buffer by host compositor
-and the guest.
+This commit fixes an indefinite hang when using VIRTIO GPU blob objects
+under TCG in certain conditions.
 
-Fixes: 77bf310084 ("ui/gtk: Draw guest frame at refresh cycle")
-Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+The VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB VIRTIO command creates a
+MemoryRegion and attaches it to an offset on a PCI BAR of the
+VirtIOGPUdevice. The VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB command unmaps
+it.
+
+Because virglrenderer commands are not thread-safe they are only
+called on the main context and QEMU performs the cleanup in three steps
+to prevent a use-after-free scenario where the guest can access the
+region after it’s unmapped:
+
+1. From the main context, the region’s field finish_unmapping is false
+   by default, so it sets a variable cmd_suspended, increases the
+   renderer_blocked variable, deletes the blob subregion, and unparents
+   the blob subregion causing its reference count to decrement.
+
+2. From an RCU context, the MemoryView gets freed, the FlatView gets
+   recalculated, the free callback of the blob region
+   virtio_gpu_virgl_hostmem_region_free is called which sets the
+   region’s field finish_unmapping to true, allowing the main thread
+   context to finish replying to the command
+
+3. From the main context, the command is processed again, but this time
+   finish_unmapping is true, so virgl_renderer_resource_unmap can be
+   called and a response is sent to the guest.
+
+It happens so that under TCG, if the guest has no timers configured (and
+thus no interrupt will cause the CPU to exit), the RCU thread does not
+have enough time to grab the locks and recalculate the FlatView.
+
+That’s not a big problem in practice since most guests will assume a
+response will happen later in time and go on to do different things,
+potentially triggering interrupts and allowing the RCU context to run.
+If the guest waits for the unmap command to complete though, it blocks
+indefinitely. Attaching to the QEMU monitor and force quitting the guest
+allows the cleanup to continue.
+
+There's no reason why the FlatView recalculation can't occur right away
+when we delete the blob subregion, however. It does not, because when we
+create the subregion we set the object as its own parent:
+
+    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+
+The extra reference is what prevents freeing the memory region object in
+the memory transaction of deleting the subregion.
+
+This commit changes the owner object to the device, which removes the
+extra owner reference in the memory region and causes the MR to be
+freed right away in the main context.
+
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-Message-Id: <20250214170813.2234754-1-dongwon.kim@intel.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250603110204.838117-12-alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250410122643.1747913-3-manos.pitsidianakis@linaro.org>
 Cc: qemu-stable@nongnu.org
 ---
- ui/gtk-gl-area.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 05fc38096ec..9a11c9b4d18 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -165,7 +165,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ca7c607bf67..d880adc8ab0 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -112,7 +112,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     vmr->g = g;
+     mr = g_new0(MemoryRegion, 1);
  
-     if (vc->gfx.guest_fb.dmabuf &&
-         qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        gd_gl_area_draw(vc);
-         return;
-     }
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
  
 -- 
 2.47.3
