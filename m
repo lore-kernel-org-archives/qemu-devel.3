@@ -4,98 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E83CCD18E
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D7DCCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8aye-0000Vw-Tq; Tue, 14 Oct 2025 05:05:52 -0400
+	id 1v8b3b-00029R-91; Tue, 14 Oct 2025 05:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v8ayd-0000Vo-Co
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:05:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v8aya-0000Kq-DC
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:05:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760432746;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BCNZcQOf0Bag4g0cQ2XrIFeDod0G86j2tb+J6htdoks=;
- b=CGu0+/oEtKuBljVq31p6fAZq5TUCJjcz3ws6itnkLxvYR8ENuDPV0cVybKw5kqmx6hVMTw
- qU0jKiflCXabE8WBZ2H4rx1+7B6EGW8GAsuPplRVHAdIS+UZGBh0/pwrtZ8uMxSRKtAPiF
- 5MTnLXqQ8zujg/KJe1V2Knk/3G+r/70=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-1Hn8hukKMa-0Dzwi8SkqTw-1; Tue, 14 Oct 2025 05:05:45 -0400
-X-MC-Unique: 1Hn8hukKMa-0Dzwi8SkqTw-1
-X-Mimecast-MFC-AGG-ID: 1Hn8hukKMa-0Dzwi8SkqTw_1760432744
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ecdfe971abso4140327f8f.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 02:05:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760432744; x=1761037544;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BCNZcQOf0Bag4g0cQ2XrIFeDod0G86j2tb+J6htdoks=;
- b=kZ00Luutj4J2f3/q6rLdxVz6oy2rt3O6H6YuC3m43nRIi9hAkJBZBxC/v/n39tttc/
- 9Xq26skOwKLpYcEg2QxAchrUJ21HeIqCuVab7y13p6Hf2SNeSnsXkHAcGc1QgBXvZesf
- PSNKkZF6mgLr8PdFekT8vqd/E1Cmc4nKBe6KBsn421E0sXL+PDKdIlRtgKPkKCcdMHbZ
- FGNztAOsE4uysYyEcoiqYA+7YDb8tSMMsS0/fcgRFzJyHQEM1HW2HQZOnCaCPDhf2Zru
- MNxQ/02YNwXnMBGnwWQIRAe81Qoh/UXvkK2RXi38ZgamwFCGFH3T3sOr4NUB6oemWpb8
- Vhrg==
-X-Gm-Message-State: AOJu0Yyk5KjHYuuGEZ3Fd/84GMzQEIcKOCO6hskGlkVFeHfIQBPzeKYq
- VGbHQuDa6j/pxEzaZMqGU8dRmbrOxJyvnlQZpJVKYIMv4xPT4Ync05fbFlJ6gg11tTPKWgUmJiq
- VBIoqdOpKgYppEVdye62cucxc5Ss6BfcuX0iNW3nCmsYCLHJY35h8qw6p
-X-Gm-Gg: ASbGncsS7rwSjPfs8UeVH4ffFKp/7BdAnI6u4H+i+cCa8qRVmRG2xmU4GH1gNijCvCp
- Ub8c6KXUEYE/ODF7OQEYayFHZxy9rce9XMK6DNy5pCFKwSn2j0BJq63Ac5jg1JFzPkFVeCthHX4
- qXvzFAaNSrn9YPZsWSALrLxKFUhOZu174xvf/aidk7k0/R95Hf9G2WXtIRpyQY4WNV9LKT3Y0Ts
- TXkkyov2dapCNncr2JCUmdgTGonM3lvUDBABBpXM3AocdaoPKiSqeQ990pf/uOyuNkOB75K7R8h
- OBXFGdBtVgmwajSn11zR6DeA6s2/p6JChw==
-X-Received: by 2002:a05:6000:2c11:b0:3ee:15bb:72c8 with SMTP id
- ffacd0b85a97d-4266e7dfd9dmr16937387f8f.36.1760432744140; 
- Tue, 14 Oct 2025 02:05:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOY769jf8tNJwoS6yKdiDIYexYYwtu0oLN5BIhVGRiFs7DCEiuBk06XYrrdupAM9TbIwOtdg==
-X-Received: by 2002:a05:6000:2c11:b0:3ee:15bb:72c8 with SMTP id
- ffacd0b85a97d-4266e7dfd9dmr16937356f8f.36.1760432743610; 
- Tue, 14 Oct 2025 02:05:43 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:152d:b200:2a90:8f13:7c1e:f479])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426e50ef821sm7889951f8f.38.2025.10.14.02.05.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 02:05:43 -0700 (PDT)
-Date: Tue, 14 Oct 2025 05:05:40 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Sairaj Kodilkar <sarunkod@amd.com>
-Cc: qemu-devel@nongnu.org, alejandro.j.jimenez@oracle.com,
- pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, suravee.suthikulpanit@amd.com,
- vasant.hegde@amd.com, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, aik@amd.com
-Subject: Re: [PATCH v2 2/2] amd_iommu: Support 64 bit address for IOTLB lookup
-Message-ID: <20251014050512-mutt-send-email-mst@kernel.org>
-References: <20251013050046.393-1-sarunkod@amd.com>
- <20251013050046.393-3-sarunkod@amd.com>
- <20251013041617-mutt-send-email-mst@kernel.org>
- <e4c5d25c-572c-45fe-8e64-b6f141c0f82e@amd.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1v8b3Y-00029E-K7
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:10:56 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1v8b3V-00017w-B9
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:10:56 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Bxnr+YE+5oXfMVAA--.45444S3;
+ Tue, 14 Oct 2025 17:10:48 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJCxXMGVE+5o5U_hAA--.51312S3;
+ Tue, 14 Oct 2025 17:10:48 +0800 (CST)
+Subject: Re: [PATCH 1/2] target/loongarch: Add missing TLB flush with
+ different asid
+To: Bibo Mao <maobibo@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20251009025932.2990219-1-maobibo@loongson.cn>
+ <20251009025932.2990219-2-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <cf157e3d-9d06-6efe-806c-a49aa72b894c@loongson.cn>
+Date: Tue, 14 Oct 2025 17:10:40 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e4c5d25c-572c-45fe-8e64-b6f141c0f82e@amd.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20251009025932.2990219-2-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxXMGVE+5o5U_hAA--.51312S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uF18ur1UAF4kGw4DWrykWFX_yoW8ZF43pr
+ W7C34ktF9rCrW8AF4ft3yFgr17Z3y8Cws7XrsxGryrXrn3Jrn7WFWktws0krW0y3W3AF47
+ ZF40yry8uFy3XacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24SoDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.658, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,62 +86,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 14, 2025 at 02:34:28PM +0530, Sairaj Kodilkar wrote:
-> 
-> 
-> On 10/13/2025 1:49 PM, Michael S. Tsirkin wrote:
-> > On Mon, Oct 13, 2025 at 10:30:46AM +0530, Sairaj Kodilkar wrote:
-> > > Physical AMD IOMMU supports up to 64 bits of DMA address. When device tries
-> > > to read or write from a given DMA address, IOMMU translates the address
-> > > using page table assigned to that device. Since IOMMU uses per device page
-> > > tables, the emulated IOMMU should use the cache tag of 68 bits
-> > > (64 bit address - 12 bit page alignment + 16 bit device ID).
-> > > 
-> > > Current emulated AMD IOMMU uses GLib hash table to create software iotlb
-> > > and uses 64 bit key to store the IOVA and deviceID, which limits the IOVA
-> > > to 60 bits. This causes failure while setting up the device when guest is
-> > > booted with "iommu.forcedac=1".
-> > > 
-> > > To solve this problem, Use 64 bit IOVA and 16 bit devid as key to store
-> > > entries in IOTLB; Use upper 52 bits of IOVA (GFN) and lower 12 bits of
-> > > the device ID to construct the 64 bit hash key in order avoid the
-> > > truncation as much as possible (reducing hash collisions).
-> > > 
-> > > Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-> > > Signed-off-by: Sairaj Kodilkar<sarunkod@amd.com>
-> > I am wondering whether we need to limit how much host memory
-> > can the shadow take. Because with so many bits, the sky is the limit ...
-> > OTOH it's not directly caused by this patch, but it's something
-> > we should think about maybe.
-> 
-> I don't think I fully understand this. Do you mean the host memory
-> taken by the pages used to build shadow page table ?
+ÔÚ 2025/10/9 ÉÏÎç10:59, Bibo Mao Ð´µÀ:
+> If asid is changed in function helper_csrwr_asid(), qemu TLB is flushed,
+> however loongArch TLB is still valid. So loongArch TLB need be invalidated
+> in function invalidate_tlb() with different asid and bit effective need
+> be cleared.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/tcg/tlb_helper.c | 14 ++++++++------
+>   1 file changed, 8 insertions(+), 6 deletions(-)
+Signed-off-by: Song Gao <gaosong@loongson.cn>
 
-the memory used by the hash table.
-
-> 
-> > Something more to improve:
-> > 
-> > 
-> > > ---
-> > >   hw/i386/amd_iommu.c | 57 ++++++++++++++++++++++++++++++---------------
-> > >   hw/i386/amd_iommu.h |  4 ++--
-> > >   2 files changed, 40 insertions(+), 21 deletions(-)
-> > > 
-> > > diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> > > index b194e3294dd7..a218d147e53d 100644
-> > > --- a/hw/i386/amd_iommu.c
-> > > +++ b/hw/i386/amd_iommu.c
-> > > @@ -106,6 +106,11 @@ typedef struct amdvi_as_key {
-> > >       uint8_t devfn;
-> > >   } amdvi_as_key;
-> > > +typedef struct amdvi_iotlb_key {
-> > > +    uint64_t gfn;
-> > > +    uint16_t devid;
-> > > +} amdvi_iotlb_key;
-> > > +
-> > Pls change struct and typedef names to match qemu coding style.
-> Thanks
-> Sairaj
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 8cfce48a29..f8fada5b9a 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -117,13 +117,7 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+>       uint8_t tlb_v0 = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, V);
+>       uint8_t tlb_v1 = FIELD_EX64(tlb->tlb_entry1, TLBENTRY, V);
+>       uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+> -    uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+>   
+> -    if (!tlb_e) {
+> -        return;
+> -    }
+> -
+> -    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>       tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+>       pagesize = MAKE_64BIT_MASK(tlb_ps, 1);
+>       mask = MAKE_64BIT_MASK(0, tlb_ps + 1);
+> @@ -145,11 +139,19 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
+>   {
+>       LoongArchTLB *tlb;
+>       uint16_t csr_asid, tlb_asid, tlb_g;
+> +    uint8_t tlb_e;
+>   
+>       csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+>       tlb = &env->tlb[index];
+> +    tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+> +    if (!tlb_e) {
+> +        return;
+> +    }
+> +
+> +    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+>       tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+>       tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+> +    /* QEMU TLB is flushed when asid is changed */
+>       if (tlb_g == 0 && tlb_asid != csr_asid) {
+>           return;
+>       }
 
 
