@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E334CCD192
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12647CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 13:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8fEc-000649-V7; Tue, 14 Oct 2025 09:38:39 -0400
+	id 1v8fDd-0005B2-A5; Tue, 14 Oct 2025 09:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fES-0005vu-Ud
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1v8fDa-00053V-B3
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:37:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v8fEP-00017i-Uw
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:38:28 -0400
+ id 1v8fDX-0000yq-Ek
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 09:37:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760449102;
+ s=mimecast20190719; t=1760449048;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2MMGynjhv4WBBo4X3LLy26Qc6OUsNSBvfImlI2mQ1Zo=;
- b=YmywTNhQzuCM6mziiy/qSFULs8xDke3EHAJStC6B3qMvNXsM+ijGFUTmFwkVG2xHlwAeJO
- eCv/o+DpyadHhLdjFmbjeAD0z4PYkPqdxkI+NmZ6hFPY+4ybVRtLlxJNpLQIQzExiJEDUf
- RpTQ6TM8NB37hy06lX1MmrAQXawt10s=
+ bh=2dTSUgN6s0KeJhRecE9yb8BWINQmHI2btxAHd/ryNlM=;
+ b=CWoGHdZOGP9PvznGNpBNzeLhXEMsR8dAW2/F63ltmxLkND4SR7F1QdOhdz3bTvIYx/3H/3
+ foexSgHotbOBycHWQC1X/YINAZ8KqkBYFVavuZ6yAkCHfCNPDzjeMTtkCkUB6j6U2q2nVc
+ JkiFk4j1BwIdmeBJkunSKX40gyZI3+g=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-Yh28bZIyOPae2M_lwAxBfQ-1; Tue, 14 Oct 2025 09:38:17 -0400
-X-MC-Unique: Yh28bZIyOPae2M_lwAxBfQ-1
-X-Mimecast-MFC-AGG-ID: Yh28bZIyOPae2M_lwAxBfQ_1760449096
+ us-mta-606-ZAe6Z7VxO-uXwqy_FRKljw-1; Tue, 14 Oct 2025 09:37:27 -0400
+X-MC-Unique: ZAe6Z7VxO-uXwqy_FRKljw-1
+X-Mimecast-MFC-AGG-ID: ZAe6Z7VxO-uXwqy_FRKljw_1760449046
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f924ae2a89so6288381f8f.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:38:16 -0700 (PDT)
+ ffacd0b85a97d-3f3c118cbb3so5322091f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 06:37:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760449095; x=1761053895;
+ d=1e100.net; s=20230601; t=1760449045; x=1761053845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2MMGynjhv4WBBo4X3LLy26Qc6OUsNSBvfImlI2mQ1Zo=;
- b=R2pD7qk7EsjomlV9NhHEUBAWtW4imPdQ22acVP6pQMg/EmBVgnvdzY3n/XroTJXmZg
- v4NfRFtHN7OJBblbCwizw5yzHDVcfjBSuaKkEKEs3AqG+Lh67FJh6pFvAROuwuTz/8mJ
- aj9rJP6PfGmxgY5zRPfgv0ZHNNgeRF9OvH0NcWQ5mlMZIwElDYjdZUeRa3ycE1OkwLm7
- 9twXGF1KX1o3SC5NoWwmKYs1VApcl/BTSBJC5nOQEmOW7MGsLRC6+O063DNI87au4XJ5
- KpPoWPgEoCvexINmg8yD8f4Td02p8gJyPzjC1+9We2yrd//kSFlrHbBOVvckkhp0bx+2
- g+qg==
-X-Gm-Message-State: AOJu0YzK6SCJ1YCB37x8mHWstOJwd4aKn/OYgpHO1D4UMY4UOQTlLJEI
- FV2YTVMDIFtnDtlYOY+ZyNZ7L3o9V6gK3C/SlbUzbQOAd9/NtUTM/nU0urm+zBt2bv1iSRanhdb
- R7WqKVbuPwrK/ZziVFrpsOakdKimZD9WB94W4yhtpG8fR5L6Ta1EWnvNpdsQBtTxeKwY0T04vdw
- 1UvmISnb43gvy2rvXg1g+9w9GJWRWwedJZyjtRx/jd
-X-Gm-Gg: ASbGnctsa7kGcApW6CQ6nnrXkW+/SCECniTpFiwTN4+UCBCAr2Gokn7VAs4QiFwq3qb
- G+fmGzp1IB3UUNVkasb0tQ6APrRLMa30V8ZrVfY7uNypwNQjI/sVDmiJaQI/P1gRlyyUBc3R4sd
- E3zgYYyRPPdaLUkVkTgmw1oKBPm3uxA0P+1mbVWucGUbpp5sXVrwz4zCqKsILalShp0qsgqbyX+
- 7o64cQU6UNx0O9JxW4ioYJxA7zXVVknKBRoAsMSWebe54VwcjQBWPUK449rRV/7aEqeqCkuwWg+
- deCufQX1BbRNhDFSHIcZbl3ySaDW3sNCtPV3yAcoOYa26ddSgEBngM6M4Vk+zaKlFlBf2ZftoM7
- I5VNHEIv3vmGxtbzQo4lqxGq9uHsjYKQcYEygX3HIN/Q=
-X-Received: by 2002:a05:6000:2305:b0:3e9:b7a5:5dc9 with SMTP id
- ffacd0b85a97d-4266e7d6bb2mr15176857f8f.23.1760449094742; 
- Tue, 14 Oct 2025 06:38:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdoYEj4wak2TUf2VQqLGs++zrvAZKV8Pl801kp0Bfg4H90QZFAghMtUeaDV2ZzYb8hWULXaQ==
-X-Received: by 2002:a05:6000:2305:b0:3e9:b7a5:5dc9 with SMTP id
- ffacd0b85a97d-4266e7d6bb2mr15176842f8f.23.1760449094265; 
- Tue, 14 Oct 2025 06:38:14 -0700 (PDT)
+ bh=2dTSUgN6s0KeJhRecE9yb8BWINQmHI2btxAHd/ryNlM=;
+ b=ELedXJUWTCU44wojWtkzTJZaSYQuz+PSUHkbSEtMiX/qU2AKRD5vf0P3uReQLFbNy2
+ 4c3WIJMnIZxY3dhAk5nmCU//XuqcWbXhTCjeWmlv5Oz2gwWiwMYX7SmKMmltrfhEI2NV
+ DnXflo5p3h/9AyiUf12uLtBcEqg0jAV7LBoK58s6sQmTCZYzTbQwPQ38NEHuwuo5xjAe
+ 1cUw3eJxMCjtTaUmWoI9Kj3jFxl64/G/OmCwTaBOaYFMi1n5BPIHhnjFvWwszLYOsLXu
+ Bcn6KWF+YdrXC/jZfjEBFhd2xmBIfaMyv3Y7lVRwovFnqyiaClhNpDcrWyGihHD+62ao
+ pVZg==
+X-Gm-Message-State: AOJu0YyM1WDY+V8Z2YuKoNDDOLv/0z4UC5eUyzh17Bb7OK79WVQCpJgI
+ 8WkRWmJkKZMmd7oTFEYy+j7ES04iEm3r2bXx+cTFOu1+l/zBP4zBrx0CW8/9qBV28tMewd1ECdC
+ oWF1bLfOnA+iSPzHw1qLGXb7rmEM77r3hZB2mn/vNnM53eD+yD3HQsdV7BkdR01EPvEtBQP1BL0
+ pyGPMkC0QGWzrr4kUo/zdAIzTk/c0y0Wc3eexsDnfy
+X-Gm-Gg: ASbGnct4N3Ilbj8XUSHb4s6OdU+uBuItGFQLUbJGiVnzoXfBZibGtVmqDHCUcDtrPrM
+ BMugMUq2GjKjqOa1bb32/fzqxQ1QG+0c+MNUcryg3AoIiVf5bVVD5xi0IBysb/jAbUMmisP0g1o
+ 9Ftq0l4JA4ZogKP+a74ZFowyrvWTzKmejYbjEbOaEiwrcsWC74+7nqPGQh/PCyWaerc108qSG4Z
+ 8Uq5hNd2v+karpkvFu9TXF19byfGZptty1IF8lgsdMcBYucQLDkAVWuGa8QzW2gdhzb18YJ8fMg
+ rHELElDD+tTPRFMe8dV16fO1NuX1RDMJKiauuJn2qep2O3PIQLa7gX/kS4XKcZyj5H+/pQvVOBR
+ vMpNs2neZtSkT+X4Qb7c56wbmkzKWojaTAzyGnF4E4cc=
+X-Received: by 2002:a05:6000:4301:b0:3d8:3eca:a978 with SMTP id
+ ffacd0b85a97d-4266726d56emr13886053f8f.21.1760449045309; 
+ Tue, 14 Oct 2025 06:37:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0SVpkY2U+zhsIzEUgJ96Q+xlYML5tmtcgU3ycYAC2h/ax0YTcD4wgsXLc+v+AV67Yl718Bg==
+X-Received: by 2002:a05:6000:4301:b0:3d8:3eca:a978 with SMTP id
+ ffacd0b85a97d-4266726d56emr13886035f8f.21.1760449044869; 
+ Tue, 14 Oct 2025 06:37:24 -0700 (PDT)
 Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5cf71dsm22921264f8f.29.2025.10.14.06.38.11
+ ffacd0b85a97d-426ce5e10e8sm23711721f8f.39.2025.10.14.06.37.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 06:38:11 -0700 (PDT)
+ Tue, 14 Oct 2025 06:37:23 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 21/28] rust: migration: do not store raw pointers into
- VMStateSubsectionsWrapper
-Date: Tue, 14 Oct 2025 15:37:06 +0200
-Message-ID: <20251014133713.1103695-21-pbonzini@redhat.com>
+ Babu Moger <babu.moger@amd.com>, "Borislav Petkov (AMD)" <bp@alien8.de>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 05/28] target/i386: Add TSA attack variants TSA-SQ and TSA-L1
+Date: Tue, 14 Oct 2025 15:36:50 +0200
+Message-ID: <20251014133713.1103695-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251014133540.1103268-1-pbonzini@redhat.com>
 References: <20251014133540.1103268-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,76 +111,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Raw pointers were used to insert a NULL one at the end of the array.
-However, Option<&...> has the same layout and does not remove Sync
-from the type of the array.
+From: Babu Moger <babu.moger@amd.com>
 
-As an extra benefit, this enables validation of the terminator of the
-subsection array, because is_null() in const context would not be stable
-until Rust 1.84.
+Transient Scheduler Attacks (TSA) are new speculative side channel attacks
+related to the execution timing of instructions under specific
+microarchitectural conditions. In some cases, an attacker may be able to
+use this timing information to infer data from other contexts, resulting in
+information leakage.
 
+AMD has identified two sub-variants two variants of TSA.
+CPUID Fn8000_0021 ECX[1] (TSA_SQ_NO).
+	If this bit is 1, the CPU is not vulnerable to TSA-SQ.
+
+CPUID Fn8000_0021 ECX[2] (TSA_L1_NO).
+	If this bit is 1, the CPU is not vulnerable to TSA-L1.
+
+Add the new feature word FEAT_8000_0021_ECX and corresponding bits to
+detect TSA variants.
+
+Link: https://www.amd.com/content/dam/amd/en/documents/resources/bulletin/technical-guidance-for-mitigating-transient-scheduler-attacks.pdf
+Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/migration/src/vmstate.rs | 29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+ target/i386/cpu.h |  6 ++++++
+ target/i386/cpu.c | 17 +++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 2e320262f06..a6ee7e93853 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -470,33 +470,21 @@ unsafe impl $crate::vmstate::VMState for $type {
-     };
- }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 8b7c173838e..f74f13534e7 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -643,6 +643,7 @@ typedef enum FeatureWord {
+     FEAT_8000_0008_EBX, /* CPUID[8000_0008].EBX */
+     FEAT_8000_0021_EAX, /* CPUID[8000_0021].EAX */
+     FEAT_8000_0021_EBX, /* CPUID[8000_0021].EBX */
++    FEAT_8000_0021_ECX, /* CPUID[8000_0021].ECX */
+     FEAT_8000_0022_EAX, /* CPUID[8000_0022].EAX */
+     FEAT_C000_0001_EDX, /* CPUID[C000_0001].EDX */
+     FEAT_KVM,           /* CPUID[4000_0001].EAX (KVM_CPUID_FEATURES) */
+@@ -1126,6 +1127,11 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+  */
+ #define CPUID_8000_0021_EBX_RAPSIZE    (8U << 16)
  
--/// A transparent wrapper type for the `subsections` field of
--/// [`VMStateDescription`].
--///
--/// This is necessary to be able to declare subsection descriptions as statics,
--/// because the only way to implement `Sync` for a foreign type (and `*const`
--/// pointers are foreign types in Rust) is to create a wrapper struct and
--/// `unsafe impl Sync` for it.
--///
--/// This struct is used in the
--/// [`vm_state_subsections`](crate::vmstate_subsections) macro implementation.
--#[repr(transparent)]
--pub struct VMStateSubsectionsWrapper(pub &'static [*const crate::bindings::VMStateDescription]);
--
--unsafe impl Sync for VMStateSubsectionsWrapper {}
-+/// The type returned by [`vmstate_subsections!`](crate::vmstate_subsections).
-+pub type VMStateSubsections = &'static [Option<&'static crate::bindings::VMStateDescription>];
++/* CPU is not vulnerable TSA SA-SQ attack */
++#define CPUID_8000_0021_ECX_TSA_SQ_NO  (1U << 1)
++/* CPU is not vulnerable TSA SA-L1 attack */
++#define CPUID_8000_0021_ECX_TSA_L1_NO  (1U << 2)
++
+ /* Performance Monitoring Version 2 */
+ #define CPUID_8000_0022_EAX_PERFMON_V2  (1U << 0)
  
- /// Helper macro to declare a list of subsections ([`VMStateDescription`])
- /// into a static and return a pointer to the array of pointers it created.
- #[macro_export]
- macro_rules! vmstate_subsections {
-     ($($subsection:expr),*$(,)*) => {{
--        static _SUBSECTIONS: $crate::vmstate::VMStateSubsectionsWrapper = $crate::vmstate::VMStateSubsectionsWrapper(&[
-+        static _SUBSECTIONS: $crate::vmstate::VMStateSubsections = &[
-             $({
-                 static _SUBSECTION: $crate::bindings::VMStateDescription = $subsection.get();
--                ::core::ptr::addr_of!(_SUBSECTION)
-+                Some(&_SUBSECTION)
-             }),*,
--            ::core::ptr::null()
--        ]);
-+            None,
-+        ];
-         &_SUBSECTIONS
-     }}
- }
-@@ -686,8 +674,9 @@ pub const fn fields(mut self, fields: &'static [VMStateField]) -> Self {
-     }
- 
-     #[must_use]
--    pub const fn subsections(mut self, subs: &'static VMStateSubsectionsWrapper) -> Self {
--        self.0.subsections = subs.0.as_ptr();
-+    pub const fn subsections(mut self, subs: &'static VMStateSubsections) -> Self {
-+        let subs: *const Option<&bindings::VMStateDescription> = subs.as_ptr();
-+        self.0.subsections = subs.cast::<*const bindings::VMStateDescription>();
-         self
-     }
- 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index ab18de894e4..339881b40f8 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1415,6 +1415,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .tcg_features = 0,
+         .unmigratable_flags = 0,
+     },
++    [FEAT_8000_0021_ECX] = {
++        .type = CPUID_FEATURE_WORD,
++        .feat_names = {
++            NULL, "tsa-sq-no", "tsa-l1-no", NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++        },
++        .cpuid = { .eax = 0x80000021, .reg = R_ECX, },
++        .tcg_features = 0,
++        .unmigratable_flags = 0,
++    },
+     [FEAT_8000_0022_EAX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+@@ -8526,6 +8542,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         *eax = *ebx = *ecx = *edx = 0;
+         *eax = env->features[FEAT_8000_0021_EAX];
+         *ebx = env->features[FEAT_8000_0021_EBX];
++        *ecx = env->features[FEAT_8000_0021_ECX];
+         break;
+     case 0x80000022:
+         *eax = *ebx = *ecx = *edx = 0;
 -- 
 2.51.0
 
