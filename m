@@ -4,86 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2263CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC0A2CCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 07:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ZVH-0006b0-Li; Tue, 14 Oct 2025 03:31:27 -0400
+	id 1v8ZgK-0002CE-7d; Tue, 14 Oct 2025 03:42:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v8ZVD-0006VJ-RJ
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:31:25 -0400
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v8ZVC-0004v6-36
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:31:23 -0400
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-78f15d5846dso82773056d6.0
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 00:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760427081; x=1761031881; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pK3hGy8gQaunyTuvyJ1gtkdEz4Adpj0UtdCSBrh+yCc=;
- b=DH2S7xglaWRNiSzdbWojIv6TFaghgWMipOdrXh0uitMllJzm+Kq4hYi/Wh+POYzxRH
- s4y0qWKpPA5iI6pN1hEHqlpQls4EhMJaMyIrPuOzvO65nL28DFdEvqGAdcy3Z7PkRbCB
- 8Ul2mcd3bLdhIdmG47phWOfEyi09MX14ptZlKj5o2bFScULWgpj3uTW7Xr8po8zqdGM5
- vE4Cz5d9shxB1kZ2LEGEseHLR+OCX1lBkDojunxfXgAPMtlyVtJftniBjhiPtGuvDoxA
- igcMj+iesDdNlxqcFYSoEsoxeuesN5VbHY1aXd/nx0DN3hwJB/fZEumRuPg0EAAmr/L4
- 5MgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760427081; x=1761031881;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pK3hGy8gQaunyTuvyJ1gtkdEz4Adpj0UtdCSBrh+yCc=;
- b=IE9JVRWn5FyT7Ou3CnJxXdp3Vj1hsODT6CUoh/aDj2O2edy3v6UZXI4d7b0IXoVg0E
- 5VdKPSTFOgioKROzIQWdYDie7rwrwjiVi0SoFmcTS9pCYOEvKSiEaxkz1bEjFyNw0uZx
- l2ewZQAy5zjVKwcZuJDXRrlXNCOc7PDO0rB9QkBsl7Rqz8uG6JBExKuA5FkVq3MIY4NO
- T2/tmCAB/SgthC8h13GOHyhK88S1w6mUAre6bl+9tQx+qLqsGuQCgJohW1BgX++QKYHy
- oGJSmJt3X4S2SoQ8g8xiJBTzKs9cLnRvRsRlGuI5Ti3IRYFRq/ZSVC8GxdasIeaK4Rry
- rD3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwyB1L7I2C+UfZsEBk4dS7f3DK6JONljtg+i+DTNy4jn7IJ2fxTNf53N5TztkKP1FNwgQw00CkvQ3c@nongnu.org
-X-Gm-Message-State: AOJu0Yzz2XFKPZ4QnMnG2qxbtsrswdwjJz4YsPFTspqDpG/bGzQ4PuDY
- BN6yoGqYuXLZGcHkp2DQngZcq2sELMvtaf73So5LfBIfX+4Je6qLzWPcNnMAyPghX7Yl9eJ+nqx
- a67Ddd6kh7pJI8V0Gk9rHr2ZfYVnEmhw=
-X-Gm-Gg: ASbGncuFQqdjEYJA+GDSxVpj00pG68H4qheJ7xgjH6zdDkVPDV2PdGshS4zg125+7zx
- YF3KBiBvsb+5My0bMbNTeWU8UtII5iWxPBg9Qh9G2Yy64gIFGw5RP9zvU8ueSKN6OY4QEhtdqBs
- du1bk7KUdMaWGGQXYdE3VyqIXFu1uUvOgwEeeiKVpiP3aEdYzXLBUl+cRz72wQGq9JQkYGwVjdo
- uKp96w7CW6uaId4Sj75kWSxDnFox+xbYVPkZ3ajlMfSi+soVjlR9laIvmIo6aKOei0p
-X-Google-Smtp-Source: AGHT+IFWvp1Rm3fFx2ZzlodGMzocEugZMnKmLl7+pxT1sCjpTEvXHr1gWjDJ/a03P8dYSpbd6emXE00L5gYJ0DCur0U=
-X-Received: by 2002:a05:622a:409:b0:4d2:2d8b:4e4d with SMTP id
- d75a77b69052e-4e6eace7918mr334376591cf.21.1760427080901; Tue, 14 Oct 2025
- 00:31:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8ZgH-0002Bw-RF
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:42:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8ZgC-0006R8-LV
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 03:42:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760427761;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=SHUotR2nJ/K6X1C0pnOd/lK6tY2NnaYZKDc/xGnWPuI=;
+ b=amZ6Ij7iCPXeBT3ndICWERonfMIqT+10Z9OQvlN6FSaMzxO2AhrZMeTnbN76pk4ED+aYBB
+ DBz0i882+4Upqk5Gp3TPJDUC92bh68xbRerUnKVLIjdOlmX5a6A3XoGTaI0GLhAkN57Ir5
+ 5X2TbMUgmZaTJ8FVVQEpVScZuPr9Km8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-forSofwjOGKuPF4o34xyag-1; Tue,
+ 14 Oct 2025 03:42:37 -0400
+X-MC-Unique: forSofwjOGKuPF4o34xyag-1
+X-Mimecast-MFC-AGG-ID: forSofwjOGKuPF4o34xyag_1760427756
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02D341800366; Tue, 14 Oct 2025 07:42:36 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F1D71800447; Tue, 14 Oct 2025 07:42:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CF36621E6A27; Tue, 14 Oct 2025 09:42:32 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org,  sstabellini@kernel.org,  anthony@xenproject.org,
+ paul@xen.org,  edgar.iglesias@gmail.com,  xen-devel@lists.xenproject.org,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] hw/display/xenfb: Replace unreachable code by abort()
+In-Reply-To: <20C81C5B-912C-49B3-B50A-867C06C134B1@gmail.com> (Bernhard
+ Beschow's message of "Mon, 13 Oct 2025 19:17:28 +0000")
+References: <20250729111226.3627499-1-armbru@redhat.com>
+ <877bwz6oqy.fsf@pond.sub.org>
+ <20C81C5B-912C-49B3-B50A-867C06C134B1@gmail.com>
+Date: Tue, 14 Oct 2025 09:42:32 +0200
+Message-ID: <87tt02ylnb.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
- <20251013133836.852018-2-vsementsov@yandex-team.ru>
-In-Reply-To: <20251013133836.852018-2-vsementsov@yandex-team.ru>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 14 Oct 2025 11:31:09 +0400
-X-Gm-Features: AS18NWBthDP4Wvuj5BFNeF4LTCkaQ_EJo7eloMQ5kTSFXc27Rj0cGlOxIJLoyfE
-Message-ID: <CAJ+F1C+=CRRaPHFf2ukSLki6vw0McoA0j3PPAL7gJBfJbSPZYw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] chardev/char-socket: simplify reconnect-ms handling
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com, 
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf34.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,84 +88,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 5:39=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> We pass it to qmp_chardev_open_socket_client() only to write
-> to s->reconnect_time_ms. Let's simply set this field earlier,
-> together with other options.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Bernhard Beschow <shentey@gmail.com> writes:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Am 13. Oktober 2025 11:10:45 UTC schrieb Markus Armbruster <armbru@redhat.com>:
+>>Ping?
+>>
+>>Markus Armbruster <armbru@redhat.com> writes:
+>>
+>>> xenfb_mouse_event() has a switch statement whose controlling
+>>> expression move->axis is an enum InputAxis.  The enum values are
+>>> INPUT_AXIS_X and INPUT_AXIS_Y, encoded as 0 and 1.  The switch has a
+>>> case for both axes.  In addition, it has an unreachable default label.
+>>> This convinces Coverity that move->axis can be greater than 1.  It
+>>> duly reports a buffer overrun when it is used to subscript an array
+>>> with two elements.
+>>>
+>>> Replace the unreachable code by abort().
+>>>
+>>> Resolves: Coverity CID 1613906
+>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>> ---
+>>>  hw/display/xenfb.c | 3 +--
+>>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+>>> index 22822fecea..5e6c691779 100644
+>>> --- a/hw/display/xenfb.c
+>>> +++ b/hw/display/xenfb.c
+>>> @@ -283,8 +283,7 @@ static void xenfb_mouse_event(DeviceState *dev, QemuConsole *src,
+>>>                  scale = surface_height(surface) - 1;
+>>>                  break;
+>>>              default:
+>>> -                scale = 0x8000;
+>>> -                break;
+>>> +                abort();
+>
+> Don't we prefer g_assert_not_reached() these days, for more expressiveness?
 
+See https://lore.kernel.org/qemu-devel/87v7nbdwfx.fsf@pond.sub.org/
 
-> ---
->  chardev/char-socket.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
->
-> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-> index 62852e3caf..f3bc6290d2 100644
-> --- a/chardev/char-socket.c
-> +++ b/chardev/char-socket.c
-> @@ -1274,18 +1274,16 @@ skip_listen:
->
->
->  static int qmp_chardev_open_socket_client(Chardev *chr,
-> -                                          int64_t reconnect_ms,
->                                            Error **errp)
->  {
->      SocketChardev *s =3D SOCKET_CHARDEV(chr);
->
-> -    if (reconnect_ms > 0) {
-> -        s->reconnect_time_ms =3D reconnect_ms;
-> +    if (s->reconnect_time_ms > 0) {
->          tcp_chr_connect_client_async(chr);
->          return 0;
-> -    } else {
-> -        return tcp_chr_connect_client_sync(chr, errp);
->      }
-> +
-> +    return tcp_chr_connect_client_sync(chr, errp);
->  }
->
->
-> @@ -1378,7 +1376,6 @@ static void qmp_chardev_open_socket(Chardev *chr,
->      bool is_tn3270      =3D sock->has_tn3270  ? sock->tn3270  : false;
->      bool is_waitconnect =3D sock->has_wait    ? sock->wait    : false;
->      bool is_websock     =3D sock->has_websocket ? sock->websocket : fals=
-e;
-> -    int64_t reconnect_ms =3D sock->has_reconnect_ms ? sock->reconnect_ms=
- : 0;
->      SocketAddress *addr;
->
->      s->is_listen =3D is_listen;
-> @@ -1386,6 +1383,8 @@ static void qmp_chardev_open_socket(Chardev *chr,
->      s->is_tn3270 =3D is_tn3270;
->      s->is_websock =3D is_websock;
->      s->do_nodelay =3D do_nodelay;
-> +    s->reconnect_time_ms =3D sock->has_reconnect_ms ? sock->reconnect_ms=
- : 0;
-> +
->      if (sock->tls_creds) {
->          Object *creds;
->          creds =3D object_resolve_path_component(
-> @@ -1450,7 +1449,7 @@ static void qmp_chardev_open_socket(Chardev *chr,
->              return;
->          }
->      } else {
-> -        if (qmp_chardev_open_socket_client(chr, reconnect_ms, errp) < 0)=
- {
-> +        if (qmp_chardev_open_socket_client(chr, errp) < 0) {
->              return;
->          }
->      }
-> --
-> 2.48.1
->
->
+[...]
 
-
---
-Marc-Andr=C3=A9 Lureau
 
