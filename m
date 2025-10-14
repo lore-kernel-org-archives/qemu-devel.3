@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A38CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9222CCD18E
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 08:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8aRI-0005wV-4F; Tue, 14 Oct 2025 04:31:24 -0400
+	id 1v8aUQ-0006i8-Ut; Tue, 14 Oct 2025 04:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8aR6-0005un-AA; Tue, 14 Oct 2025 04:31:12 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8aUN-0006hj-CI
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:34:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v8aQz-0004nP-I5; Tue, 14 Oct 2025 04:31:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760430665; x=1791966665;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=AhvnL2S2fN+ldgYctCAEvmuShzWzaBmyk2G9FC1MiTI=;
- b=XdNy3RHnPontRquMFRKwYAqdSvYpa2H3ymAd9YBfAWsiujy4dnUE1QRI
- 4mrCaP7rZ27f7yFghWd/BJL+fMPT/lLLuTxZ92ay81A1NCnLtLa0JnhLm
- z6UhGt0jIQ8tvfr3uY1mOhWktRpj66imAQ/60uxxGqyMLbiBUqkEe29Qc
- MilCnMMPFCjuxV6Po0IVF8xzV+EbTA4MT0IFABE0wvIJkn7Rh191Ze8HD
- krHtx/onWimL8niOiiHTnrmPKGLsYAdpgpOkTeSKliGFr4hhTF3XyjgCo
- 1xaMtSo/8brSRX3k/5KjKwd9/eV+vwkN9gCyZ4/rsei6x0C4a7k7IAx1Q A==;
-X-CSE-ConnectionGUID: H8Db4JPKTXS39v5nPnFXHg==
-X-CSE-MsgGUID: gMOWFOWPQhmnz+04WMHg1Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="73927412"
-X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="73927412"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Oct 2025 01:30:59 -0700
-X-CSE-ConnectionGUID: qez4GtwfQJ2GUa3uituZfQ==
-X-CSE-MsgGUID: +TzDXtmBSn203ZqOcYGlcg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,227,1754982000"; d="scan'208";a="181384287"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 14 Oct 2025 01:30:58 -0700
-Date: Tue, 14 Oct 2025 16:53:03 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH] rust: hpet: fix fw_cfg handling
-Message-ID: <aO4PbwYHYJeRermA@intel.com>
-References: <20251013165251.1004096-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8aUK-00054M-J5
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 04:34:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760430870;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ipA/NfBK8orPbOPeoSn4uhL6GpeWEv3wXIVhCRvmAyE=;
+ b=aDki83i9b0jOIy7sBpflgoEG47esWAZDeZtPGKHJoQiix4p5vj5iDgK9Bt9Rb65wZ26fHa
+ XLYNcyo7rztVJ6EudivBMa7WzPLtzAOfzfpUNe8DEqI5zAVOFyO3PN8eJnVJ5Hiy/FRmug
+ kqENsbvv5gTalrXJQM018z+0Y5Wrhbg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-obf_2qHYMnCVf_BWOUOpwg-1; Tue,
+ 14 Oct 2025 04:34:28 -0400
+X-MC-Unique: obf_2qHYMnCVf_BWOUOpwg-1
+X-Mimecast-MFC-AGG-ID: obf_2qHYMnCVf_BWOUOpwg_1760430868
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D54101954102; Tue, 14 Oct 2025 08:34:27 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.162])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 083FA19560A2; Tue, 14 Oct 2025 08:34:25 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 0/2] Clean up the functional download cache after some
+ months
+Date: Tue, 14 Oct 2025 10:34:22 +0200
+Message-ID: <20251014083424.103202-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251013165251.1004096-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,23 +83,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 06:52:51PM +0200, Paolo Bonzini wrote:
-> Date: Mon, 13 Oct 2025 18:52:51 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH] rust: hpet: fix fw_cfg handling
-> X-Mailer: git-send-email 2.51.0
-> 
-> HPET ids for fw_cfg are not assigned correctly, because there
-> is a read but no write.  This is caught by nightly Rust as
-> an unused-assignments warning, so fix it.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/timer/hpet/src/fw_cfg.rs | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+The download cache of the functional tests is currently only growing.
+But sometimes tests get removed or changed to use different assets,
+thus we should clean up the stale old assets after a while when they
+are not in use anymore.
 
-Oops, thanks for this fix.
+This little patch series now introduces time stamps for the assets in
+the cache (first patch) that we update during each test run, so we can
+check these time stamps regularly and evict stale assets after half
+of a year not being used anymore (that should be enough time to still
+keep the assets around for a while in case you want to diagnose a
+problem that is still some months old).
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+v3:
+- Simplify the code in _save_time_stamp() (thanks, Daniel!)
+
+v2:
+- Add some wordings to the 1st patch why we cannot use mtime/atime here
+- Use functions from Path object instead from "os" (thanks to Daniel!)
+
+Thomas Huth (2):
+  tests/functional: Set current time stamp of assets when using them
+  tests: Evict stale files in the functional download cache after a
+    while
+
+ MAINTAINERS                         |  1 +
+ scripts/clean_functional_cache.py   | 45 +++++++++++++++++++++++++++++
+ tests/Makefile.include              |  1 +
+ tests/functional/qemu_test/asset.py | 13 +++++++++
+ 4 files changed, 60 insertions(+)
+ create mode 100755 scripts/clean_functional_cache.py
+
+-- 
+2.51.0
 
 
