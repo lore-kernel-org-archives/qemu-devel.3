@@ -4,80 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D80CCD187
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40278CCD187
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 09:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8bDn-0007zP-Q9; Tue, 14 Oct 2025 05:21:31 -0400
+	id 1v8bDo-0007za-TP; Tue, 14 Oct 2025 05:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8bDl-0007yt-9L
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:21:29 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v8bDi-00022H-Tu
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:21:28 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-6353f2937f3so5993488d50.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 02:21:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760433685; x=1761038485; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=EoLIPjWxg8TDINbK9pEzBb+cunrAu2Micik44rjNi/4=;
- b=E5sCdoGBiEsLwFtHWO9OXICaH6BumaoXQ5Z3c6TgR28l1QuyBaGJhStbI6B0w6XfBw
- 7t0Z9BTd16ujV/YJF5/RnNm3hoiPYnG48zeeqH0JBmjsN6NXTuZKFF/GxUzZj2vRQRBF
- bszbX12FHU+1iu47Khb+gCu1JjcLa3RVdXEiw+KPjhQaUct5z56+HYws4T2d0BD1FGmM
- xGeXmHKJT4vO8xjVDA5AT3hYuvkbBHaTChwJGJv8DcciHZFvWeWOWQ7wUbQ8pSU39Nng
- +muKW2jWfTZoCZU1O2RbdBodLvD0PWcCt/CakjdpHNsWUkirMLa7fknKwH5MpEyxyRyC
- xF5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760433685; x=1761038485;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EoLIPjWxg8TDINbK9pEzBb+cunrAu2Micik44rjNi/4=;
- b=uK2r6bCmCqa3MWgX8b3Z7uLNDwQDH7qKZBa7V9RXU12veLhaq1aa53r0JdD+7X4uJZ
- Or/CmztPbzoTKeqe6rzOs7RI1riBXHoZ48OuSRVvunoiI1ELQ43aVq8DBnJB7b3aP4VM
- e2DEfCnxsy538EatZAF2UcYR7ptz+tSYckgoF4ZsjqNj1dgFFBeImNxNcO84vBM8RhJx
- kDFZ+pnuZwsZ37wM+64uuGttupeS5rUc93PYTGeK38gskXU9uyaVJaD0HpNHeC5xx792
- P+wbK+UAaPwb9D/98XT2saUZIz5Nel70DlqlOLAYg13ChYn0B1ZFdiRvhq+u95JxIqW3
- Qabg==
-X-Gm-Message-State: AOJu0YwylJ3fdJznlDO7QyBvoiAHZDXAg5VXv1C9ijJiW06sSr7nK5z1
- kC/bwRNU4q2oCYCZY3gj0CdLdyCc1ZJo9cTECWDzrSEyMeGPOxv78WH5wZRvctwdAkikhg9jAke
- QxjcGY4TrVKxgZOPcPC5xbkkrOE3UfnsZ7YXMfxw9lGAQebWtbgA6
-X-Gm-Gg: ASbGncuYyeL6KtxtO3UeimJE6rv0zFv2RWsUjbbehulUtnsZn+WtOB1Fvxn1LDHcPk4
- /zQPBtHJJ1MJAiQQPTJZoZ/hGhIk7VhgwdaNv7DksQdLBqyEarprh9lRqtzk6dF1neP4OXoAmX+
- xfSC1WKkQPO3/F5TRtpWoW/cETPa1D9xZWFf3cHm8TI6ktNCsUt8tMIe7+VcQUYUtcK1yESjxLo
- Pf6yasCz+m3hDOWfoupHP1JJUHZCNVKKZH3tNMqdA==
-X-Google-Smtp-Source: AGHT+IFnBN/kUumfy2G6+595h8nkFF72QDiwYgJ/388Dka4RqGycHLFWwfC/MxmVIXCw6b41MBitn7vj9E7bhnB9gVM=
-X-Received: by 2002:a53:be0a:0:b0:63c:f5a7:3fc with SMTP id
- 956f58d0204a3-63cf5a70a2emr7217190d50.64.1760433684784; Tue, 14 Oct 2025
- 02:21:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8bDn-0007z9-Ni
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:21:31 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v8bDk-00022G-7t
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 05:21:30 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 5ED4BC014E;
+ Tue, 14 Oct 2025 12:21:24 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a8a::1:35] (unknown
+ [2a02:6bf:8080:a8a::1:35])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id MLLsRR2F6mI0-JT68sfP7; Tue, 14 Oct 2025 12:21:23 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760433683;
+ bh=4aopmKTFFDU0LCRASY32kAXn7zAGpFarLVf0FvLBlaM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Nx32GGufcswEvEUn1Zc5JrJn5Xp5mEmWXodrNQ4uecCH+NFRQib6OA8OB/nIzNDeQ
+ vNzvEAfhTmHDoM1v/aKQhPHqRE3tv6gCdjEl+ydi9n8IhdYWcpctqlq/szLXX7st4z
+ fL8JVAPldJVzL5/3SbcPqZlcUZBSvvs3iYMx52zE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <6c5f3a6a-b237-4352-810e-345eb0f36904@yandex-team.ru>
+Date: Tue, 14 Oct 2025 12:21:22 +0300
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Oct 2025 10:21:13 +0100
-X-Gm-Features: AS18NWCj0D9ebHLz4WmL-PM1XDzS5drXvoF_JpwfEFD9Jw7iKXh-haa8066oQZ8
-Message-ID: <CAFEAcA_HOAY3dvoj7a0GYX85UeN9OVi7SPqYtEmPFWP+DvZfSg@mail.gmail.com>
-Subject: proposed schedule for 10.2 release
-To: QEMU Developers <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/7] chardev/char: split chardev_init_logfd() out of
+ qemu_char_open()
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ qemu-devel@nongnu.org, raphael@enfabrica.net, armbru@redhat.com,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+References: <20251013133836.852018-1-vsementsov@yandex-team.ru>
+ <20251013133836.852018-3-vsementsov@yandex-team.ru>
+ <CAJ+F1C+W+hUuu--QopWqB14w2VWeiPkOxxGdS-v2K7MB4eye-A@mail.gmail.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CAJ+F1C+W+hUuu--QopWqB14w2VWeiPkOxxGdS-v2K7MB4eye-A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -89,24 +82,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I noticed we hadn't yet got around to nailing down the schedule
-for 10.2, so I put together a proposal (which is basically just
-"same as 9.2 but with all the dates moved back 1 day to be on
-Tuesday"):
+On 14.10.25 10:30, Marc-André Lureau wrote:
+> On Mon, Oct 13, 2025 at 5:41 PM Vladimir Sementsov-Ogievskiy
+> <vsementsov@yandex-team.ru> wrote:
+>>
+>> We are going to share new chardev_init_logfd() with further
+>> alternative initialization interface. Let qemu_char_open() be
+>> a wrapper for .open(), and its artifacts (handle be_opened if
+>> was not set to false by backend, and filename).
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+>> ---
+>>   chardev/char.c | 49 +++++++++++++++++++++++++++++++------------------
+>>   1 file changed, 31 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/chardev/char.c b/chardev/char.c
+>> index a43b7e5481..d5a2533e8e 100644
+>> --- a/chardev/char.c
+>> +++ b/chardev/char.c
+>> @@ -250,22 +250,6 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
+>>                              bool *be_opened, Error **errp)
+>>   {
+>>       ChardevClass *cc = CHARDEV_GET_CLASS(chr);
+>> -    /* Any ChardevCommon member would work */
+> 
+> maybe keep that comment?
 
-2025-11-04     Soft feature freeze
-2025-11-11     Hard feature freeze. Tag rc0
-2025-11-18     Tag rc1
-2025-11-25     Tag rc2
-2025-12-02     Tag rc3
-2025-12-09     Release; or tag rc4 if needed
-2025-12-16     Release if we needed an rc4
+I a bit don't follow it, honestly.. What it mean? That we should
+handle members of common structure here?
 
-https://wiki.qemu.org/Planning/10.2
+Not a problem to put it back to chardev_init_logfd().. But maybe, it
+then should be renamed to chardev_init_common()
 
-Richard, you're doing the merge handling this cycle: does
-that work for you?
+> 
+> 
+>> -    ChardevCommon *common = backend ? backend->u.null.data : NULL;
+>> -
+>> -    if (common && common->logfile) {
+>> -        int flags = O_WRONLY;
+>> -        if (common->has_logappend &&
+>> -            common->logappend) {
+>> -            flags |= O_APPEND;
+>> -        } else {
+>> -            flags |= O_TRUNC;
+>> -        }
+>> -        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
+>> -        if (chr->logfd < 0) {
+>> -            return;
+>> -        }
+>> -    }
+>>
+>>       if (cc->open) {
+>>           cc->open(chr, backend, be_opened, errp);
+>> @@ -1000,6 +984,28 @@ void qemu_chr_set_feature(Chardev *chr,
+>>       return set_bit(feature, chr->features);
+>>   }
+>>
+>> +static bool chardev_init_logfd(Chardev *chr, ChardevBackend *backend,
+>> +                                Error **errp)
+>> +{
+>> +    ChardevCommon *common = backend ? backend->u.null.data : NULL;
+>> +
+>> +    if (common && common->logfile) {
+>> +        int flags = O_WRONLY;
+>> +        if (common->has_logappend &&
+>> +            common->logappend) {
+>> +            flags |= O_APPEND;
+>> +        } else {
+>> +            flags |= O_TRUNC;
+>> +        }
+>> +        chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
+>> +        if (chr->logfd < 0) {
+>> +            return false;
+>> +        }
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>>   static Chardev *chardev_new(const char *id, const char *typename,
+>>                               ChardevBackend *backend,
+>>                               GMainContext *gcontext,
+>> @@ -1020,11 +1026,14 @@ static Chardev *chardev_new(const char *id, const char *typename,
+>>       chr->label = g_strdup(id);
+>>       chr->gcontext = gcontext;
+>>
+>> +    if (!chardev_init_logfd(chr, backend, errp)) {
+>> +        goto fail;
+>> +    }
+>> +
+>>       qemu_char_open(chr, backend, &be_opened, &local_err);
+>>       if (local_err) {
+>>           error_propagate(errp, local_err);
+>> -        object_unref(obj);
+>> -        return NULL;
+>> +        goto fail;
+>>       }
+>>
+>>       if (!chr->filename) {
+>> @@ -1035,6 +1044,10 @@ static Chardev *chardev_new(const char *id, const char *typename,
+>>       }
+>>
+>>       return chr;
+>> +
+>> +fail:
+>> +    object_unref(obj);
+>> +    return NULL;
+>>   }
+>>
+>>   Chardev *qemu_chardev_new(const char *id, const char *typename,
+>> --
+>> 2.48.1
+>>
+>>
+> 
+> 
+> --
+> Marc-André Lureau
 
-thanks
--- PMM
+
+-- 
+Best regards,
+Vladimir
 
