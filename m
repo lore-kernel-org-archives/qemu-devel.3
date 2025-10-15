@@ -1,87 +1,87 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists.gnu.org (unknown [209.51.188.17])
+Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8F7CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 20:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54B8CCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 20:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v98PQ-0002l6-5p; Wed, 15 Oct 2025 16:47:44 -0400
+	id 1v98R6-0003SH-N5; Wed, 15 Oct 2025 16:49:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98PO-0002kb-Jn
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:47:42 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98R4-0003Rl-IS
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:49:26 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98PH-0005ha-Vq
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:47:37 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-426edfffc66so1020882f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 13:47:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98R2-0005vb-IB
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:49:26 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ee12a63af1so16339f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 13:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760561253; x=1761166053; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760561361; x=1761166161; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vSwPULsQD7VLuV1SvB+GEFhB3KvNAvneyy25czbHzq4=;
- b=FcV9yb821py5jzU3SniNFy96azaZvJfVRwSA4nwg3cgnP6v+IUm59XUyyiVOE469lo
- BJRKG+SWHjP8YfimAheyzfAyaE0+zIvmgClblP8k0Qo9OjEptIo1kwDDBHV2UOIZO1zu
- IkuHcbiJsuq4TX667tfAhHB2t3tR0C43gX/tsjL5UueT49FtEkzGkCbzOMI7J3UW+/gh
- ivSFsMcy1SIDwUOlyzeBCVeatNOfUVNeWVib/wERB6vhVgtLOgVNaVdjqJVCqXVgM7pS
- LG/+oHw766b1WEBlKuS1mjubNcJafL9/zZhxASxYPdP9o1NyhnwQaCUval6NJFRjL9KK
- Z5mQ==
+ bh=3fcsMmUg68iaBzAiKcvZOSVWTZmzAtvjqas+XdxAfe4=;
+ b=xGgNLLYZTjWRxi39ed5vIHYEWHWRd4onwaek3ZrDvQWaFwc3mb5jU9BTVzlc2+qtyy
+ wgnkaiaAaA/FQCJtpd805IbV9O+72H+DzNZWFITiDxP9Whcjn1XZ3655GRpBJMGZQxyN
+ taXCNmrAabo1Wp1/iWs6fzCfOnUY1VIZmb5quR+3w5vFH+deRuTy9Zyjq09VMCTKUT+F
+ VohdGSobIrBpC4WWZVHc8yDiNGVgtsPxfsRAGYGqC0OHlpVaoYV6Ki68CbKNggVQ/Pz/
+ X9f1SRDQ73Shry9hkf1LIM3hr7gFHN9wrNffnSchuFyMKs7L/fQ/MLM6KSLolkUyhc0o
+ /gwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760561253; x=1761166053;
+ d=1e100.net; s=20230601; t=1760561361; x=1761166161;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vSwPULsQD7VLuV1SvB+GEFhB3KvNAvneyy25czbHzq4=;
- b=O6YR5v0lv4HZtePMzEvOjoT3xo/wnzT8WD66rrHSzigH53WGyvI/ExoT8NQePYETig
- VqJ/q4suHYz1wM1krVwhZN1OKjrgwynCBM9p+p0vETvTqiH7rVqeNDQnvT230E0o691f
- KDOeGRneplrsMErD9x58UKlRnRHBGHV+t3FqKFAXzGLVxGVWuij76E3MsRbrLQaY9Icx
- pmUMdWQ6btMt2Q1BJQimUgwXVi7sOV8T9+aU/S6bOOYqwAEnyoBt+tW+mFUOHxqbW2iR
- vBjfHu+NB71Wkq9Uhm0qzhwwGWaz1PyAOYpMngauDZJfUMYSYNurMEdaETg1b+6ykvb9
- kDqw==
+ bh=3fcsMmUg68iaBzAiKcvZOSVWTZmzAtvjqas+XdxAfe4=;
+ b=Y5mOZAcjzIyvnIfqwzO7aXIWKh9//bVzqqoQPoe6n1GZUk75z/wE1JAxUQENe+yBQr
+ vh2U/MVw4LxUKYVggyhCQPHGTgj9u2l/b+YAlUNFM8es/QdU/xLVeB8ZD6PdglR/dSd/
+ qgf8h0eGqQdioeqAK2u3hG/S+OssL8tdiBt+ZnbFSUL1+htvnzx4p1bCFyqoWpKcrkzp
+ AC5RfqY4qV2oD+kHmjFHOJabQwO8Fuj/PdDsH8YLD3ahqq0Aq83PdwdOdEMPpRL7yw72
+ FfhE+6FhchisXRagbecJAxYG2WVaPjWKgCW5M6yEUqb30/59WPcYEOKy1Snui3pa0nqH
+ JIgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpRTWosjdKr8GwCOiWBOhyZOLZZFh3VnnWGELnV6u/u+IUersEM6NH+g4PudcCR1fYg1U+ct29UfN/@nongnu.org
-X-Gm-Message-State: AOJu0YzeCG7GcujuMis32HEO27Et0GVjURxnCC6UKqhbVYNKW4xLaUa9
- MLOn7bm5gz2vp9FZ9u/+dFjhJix/9ewKZ/UprD2Sun2LUA3lgcx8KsGQSqpcQPIXydI=
-X-Gm-Gg: ASbGncsT79y+vklndBUs/N1uaw0NoC6hijym3a+XueiNcEa3ZcF2HeK1vK4+BESJyiV
- 5BwnnjW9Viz9e4wP4b+PxVR8DbQN0gXuCkzt1UWipwqB6jse8rj1o8htCi5YQhwr0EyvbcdLVlx
- 2wGeVAyH+dFRg60MwlrUAwyzp1R7y60nXYtBicKeNFZoouPyJwoGwetiZ++/kiigS5BUk3y/skZ
- 3BNup9l4trzHr0lD3z3zvA1NqdWwe9P0uVmLqg56SMcK36GQxJTrwXt5OFeY9VCZ1usGWk24xC7
- lcb980MMPjoUzUA7t0+u6iWxPZs1Ke1NN6cZr+ZkPOGAIKoLdZyOmBvAcChijHXdBstgEsT4kdE
- 7nc4J5YbW2UII+n1GXYk+LDsjamCBUlPCU8ppAb39pVvhiShyvtSgKzSfPYoPrfvyaokvUoS/QZ
- b7aoKvYl7zYgc9JqHhHVaXmAw=
-X-Google-Smtp-Source: AGHT+IF48V1gPtKIf1KyVAjt5u/AEYA5cO4nM0/MgQywp04WdW8i7J7ptb1g3rJ4Tx/8VDyVXBVEpQ==
-X-Received: by 2002:a05:6000:1843:b0:3f5:3578:e538 with SMTP id
- ffacd0b85a97d-426fb8b7789mr1110054f8f.21.1760561252729; 
- Wed, 15 Oct 2025 13:47:32 -0700 (PDT)
+ AJvYcCU0PWEd/R1mTFtlVglMqEuo2a9t7rgIA5p65NYGSkhMoJFxpCWszvvL9vQLtHUVGyCAff/vtRsvdxY2@nongnu.org
+X-Gm-Message-State: AOJu0YwJN8oTDhFQao6p/Gqf0AunJl25FbzcY08L4TMmAz7RyaWVxVBk
+ QmFIuPd9jU1WtdR9pxp+O4gyiF3kl0q273CML2YpSxU+wYBDS+bY5BaNZaGxXCLuRRc=
+X-Gm-Gg: ASbGncvOOXAi//VmwqbbylVcAx4afb4Am1Ujsi9QL9k9gezz5oVim1Os0vba5WLayA0
+ uaNeBMGt8ZAf7EchdScWGDOaIQZs5DludNSVR7haEh6wLatrovo9XeNUXiDZHlnaV8tiQ9s/TkZ
+ XGgoKXzGq5o7YelEy8Sy+9v/X2cLiexOwOF6zC5lZI5fIn6b5PRNGfZ7rxZPh4TW+9VruMi6aiz
+ vLKhh3d3gz4soYlpBFvs/fnKYiPK0JE0B+sS4w03jt16DouZf0jyJXIvLcwPz/Fke/6Yhmg3K3b
+ 7ZDQ+QH988eRoxDIibWL7berGfFQUq4CuotauppF8GHXtgSc1Zx/3iFkrlylYE1Klk3bBNTwPuZ
+ td1U+V2NdwxOLrWQ5K86xc65qzVWdM9qRAsiMI1eEsFQg6wNxOfL90GgUIhPrFwpYpKjAplAe9y
+ TZdJXp2aTAF+peXdFrYeKG9uQ=
+X-Google-Smtp-Source: AGHT+IEw3dYcVd9QKYg1Q7/SLx7pOWnlUMmE/K5OvAvP5TRvrPDWuS+hQDaBqbPmh5XVwjkOeidH7A==
+X-Received: by 2002:a05:6000:40ca:b0:426:ea7b:8043 with SMTP id
+ ffacd0b85a97d-426ea7b856amr6265257f8f.52.1760561361282; 
+ Wed, 15 Oct 2025 13:49:21 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5cfe74sm30497262f8f.35.2025.10.15.13.47.31
+ ffacd0b85a97d-426e50ef821sm16699415f8f.38.2025.10.15.13.49.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 13:47:32 -0700 (PDT)
-Message-ID: <8c5b223d-2095-481c-aeff-ad9517c0a7af@linaro.org>
-Date: Wed, 15 Oct 2025 22:47:31 +0200
+ Wed, 15 Oct 2025 13:49:20 -0700 (PDT)
+Message-ID: <aceb0e08-bb3a-4a6f-a9bc-23fb81da6a81@linaro.org>
+Date: Wed, 15 Oct 2025 22:49:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 31/34] target/riscv: Move debug.h include away from
- cpu.h
+Subject: Re: [PATCH v3 32/34] target/riscv: Move CSR declarations to separate
+ csr.h header
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
 References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-32-anjo@rev.ng>
+ <20251014203512.26282-33-anjo@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251014203512.26282-32-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-33-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +105,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 14/10/25 22:35, Anton Johansson wrote:
-> All debug.h definitions except for RV_MAX_TRIGGERS are internal to
-> target/riscv.  Move RV_MAX_TRIGGERS to cpu.h and include debug.h from
-> all translation units which relied on the cpu.h include.
+> Most of these definitions save riscv_csrr, riscv_csrrw, riscv_csr_read,
+> riscv_csr_write are only used in target/.  Move declarations to a
+> separate headers which will soon be made internal to target/.
+> 
+> csr.h is temporarily included from cpu.h to not break includes from
+> outside target/, this include will be removed in the following commit.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   target/riscv/cpu.h         | 2 +-
->   target/riscv/debug.h       | 2 --
->   target/riscv/cpu.c         | 3 +++
->   target/riscv/csr.c         | 3 +++
->   target/riscv/debug.c       | 1 +
->   target/riscv/tcg/tcg-cpu.c | 1 +
->   6 files changed, 9 insertions(+), 3 deletions(-)
+>   target/riscv/cpu.h            | 82 +-----------------------------
+>   target/riscv/csr.h            | 94 +++++++++++++++++++++++++++++++++++
+>   target/riscv/cpu.c            |  1 +
+>   target/riscv/csr.c            |  1 +
+>   target/riscv/gdbstub.c        |  1 +
+>   target/riscv/kvm/kvm-cpu.c    |  1 +
+>   target/riscv/op_helper.c      |  1 +
+>   target/riscv/riscv-qmp-cmds.c |  1 +
+>   target/riscv/th_csr.c         |  1 +
+>   9 files changed, 102 insertions(+), 81 deletions(-)
+>   create mode 100644 target/riscv/csr.h
 
 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index f169eb4bba..f4dd3b48d5 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -37,6 +37,9 @@
->   #include "kvm/kvm_riscv.h"
->   #include "tcg/tcg-cpu.h"
->   #include "tcg/tcg.h"
-> +#if !defined(CONFIG_USER_ONLY)
-> +#include "debug.h"
-> +#endif
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index 1934f919c0..f8d3bc0df1 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -20,6 +20,7 @@
+>   #include "exec/gdbstub.h"
+>   #include "gdbstub/helpers.h"
+>   #include "cpu.h"
+> +#include "csr.h"
 
-For target specific header, we prefer the path relative to $srcdir:
-
-   #include "target/riscv/debug.h"
+   #include "target/riscv/csr.h"
 
 Otherwise,
 
