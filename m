@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFC1CCD184
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 03:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A476ECCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 03:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8sJv-0006Rm-FM; Tue, 14 Oct 2025 23:36:59 -0400
+	id 1v8sKw-0006aj-NQ; Tue, 14 Oct 2025 23:38:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8sJt-0006RO-Ds
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:36:57 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8sJq-0004XD-6k
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:36:57 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-781421f5bf5so25153357b3.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 20:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760499410; x=1761104210; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dOJa5dAemTev4Uz8NZdQRrOF0mfQI5ZIzajG1m3vCNk=;
- b=Q+1GOPSDollrPPx/xgV7N5hFBe1TN9Mp6Bwc8fSzmgWbxcTt/LRuUv45PlR8Go7dLv
- juioaHv0i03gv9MjkPBGBoEECE0s6iQw5LmqTsZfAXJe5nllEv+6ijeayCbkiiioQMoV
- Cay/9917LGJC3snyx1zWcAcluDIR24pYaxsuNutnwu3s2vVGzKYH73QePfPcp7XiZXPM
- gc4oV+mfec6RVo5tKfs93nbX54Yn2D3d5wDFqusXE8a2axUYNRQKf/Q8iQ10RoPSDvgM
- BsCI32xQdydQYMsde54h04cYlXNlv9jOIvRt2OE7ci+S8/GAIPQY8U7zB44h8SnBGbxF
- fDfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760499410; x=1761104210;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dOJa5dAemTev4Uz8NZdQRrOF0mfQI5ZIzajG1m3vCNk=;
- b=HuHVez7EH0W6RCcElXh2IRrvRtojrBjCSYE1oFTWE6L6elXnTeJZkMXNqbJ2uEKHN0
- 4NC6LqHZup6w1H/5wg1n+d6Jzl6dXNrrf2KhQ8X88WARS0X2wF8FbQ7BuYjRJu3qwW8O
- JG/FKQwl8KssTrcv51Gb/5og7S5TQcxMjH0Y/pAub7EYkJiqS1gqWzVMcETAjC63yylG
- Qmywf1kMAzuaLwB6qSmmfqtSpCRsVIvo40XJtq4biDgZ4ws7RhdwpMgA+nbYAX4vqg/Y
- Bgkg/btlVrXaxBotjG/PNlDtNt0rXS5Fijmrl+AvUSvlTcFBrTPsuCsCAfXz0sou5OsM
- Vpqw==
-X-Gm-Message-State: AOJu0YxBh7n8F9gZfRpbwGCwS5ChRz0MvUusOXUnNQeau8AIyAmt3+Z5
- z7PS7LJtVvsvG6JEjAe5EEGviubNqtZKe1geml/fPMt75YPUL8wNwp9BTh6PTmnyZDVWuU00HMC
- KbvhyjJ/zmDeQstDoI4NSdEYW2Kjsnag=
-X-Gm-Gg: ASbGnct+aXsULSOYfag2N3iGAhr9ZEzkxbFvN0N6PcV69Jwj6EBO6Q+Yp06cYUB8uME
- wBwnR8yled1hZuJTOTVHBR8HNjRWRGbOH1jAbGrmisyQba3Uzu4QOEWodC6Hluka5Vi+Ixk9E35
- tWhtZFy6adoREuAydjmqVv5S9nZoEJ98qcPy2IGoV5AzscNMlmB2p85FNGJUZjLzGlycxF5KmKq
- heIPdjcfmO2o1cUbeZk0tj6dPa48uKtoFLkrMreVFX4RDv0+WookNAPKgXMjIEpzt4=
-X-Google-Smtp-Source: AGHT+IGrENmNmtwm/dX35G+69kFX8oAz+K1GXYcJwY5O/bYdnEdog9y4N4ca9pql9fn4mhA58KHyR8pXdRtkPAuD/CI=
-X-Received: by 2002:a05:690c:4a0c:b0:780:fdbb:5265 with SMTP id
- 00721157ae682-780fdbb5de0mr334804317b3.19.1760499409821; Tue, 14 Oct 2025
- 20:36:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v8sKt-0006aR-Ce
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:37:59 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v8sKm-0004av-8g
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:37:59 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59F3ba6e082441
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 15 Oct 2025 12:37:37 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=oI4OmrcM6/Ucne+KDAmYK/NyqtKj23CXrGG8MqWGDEA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760499457; v=1;
+ b=hVCmpAG5+CL0TS0VhH8KZjzGoWXlODgokXTO9Pi3AwO1XYkmhFXiBIJnlbptv1d7
+ Eqp2/QbuxBF37u/0uMoYlpPTepymjxivNot/aeinXs10Fd6LUxFEmPGJdlKdd7xA
+ sFhALSuRxt4ClDoj+9Cncqu60sn6pdTD+d3tyqd5rrTSfiieB7iDawH94bkIwc0/
+ zdg/fvlHSS8yEsphnKxwvkexeC93SbB8i4/R8wMUwgBQmwEoVgjrZ0n1sOkQZ4Vy
+ N5nAqKjsQTixHC965kgX9q58gb41liVn5sE1UrI1IPQNOM+HtnA2CSOermuOExUl
+ nzCmQJQseOjl4/8mv7OBkA==
+Message-ID: <0f069bb5-dc6a-4b1c-a1f2-0f7e7710d988@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 15 Oct 2025 12:37:36 +0900
 MIME-Version: 1.0
-References: <20251003104443.51501-1-djordje.todorovic@htecgroup.com>
- <20251003104443.51501-3-djordje.todorovic@htecgroup.com>
-In-Reply-To: <20251003104443.51501-3-djordje.todorovic@htecgroup.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 15 Oct 2025 13:36:22 +1000
-X-Gm-Features: AS18NWD2d44Au1cj75AIooclTBgZYYwmHAqWXsRgvExNey_bq4wwlpXSxWZIMhg
-Message-ID: <CAKmqyKP=Lu_1kq98LzuykGC=FK0-28OKtR=Pwixqg034NR3wLQ@mail.gmail.com>
-Subject: Re: [PATCH v10 02/13] target/riscv: Add cpu_set_exception_base
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "philmd@linaro.org" <philmd@linaro.org>, 
- "thuth@redhat.com" <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=alistair23@gmail.com; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] system/memory: add memory_region_finalize tracepoint
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251014111234.3190346-1-alex.bennee@linaro.org>
+ <20251014111234.3190346-3-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251014111234.3190346-3-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,76 +81,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 3, 2025 at 8:45=E2=80=AFPM Djordje Todorovic
-<Djordje.Todorovic@htecgroup.com> wrote:
->
-> Add a new function, so we can change reset vector from platforms
-> during runtime.
->
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 2025/10/14 20:12, Alex Bennée wrote:
+> This only traces named memory regions as it is otherwise quite noisy
+> every time the address map changes.
+
+Checking for name does not seem effective to reduce noises. I used 
+Coccinelle and found there are only three instances of unnamed memory 
+regions. The three instances are:
+
+- memory_region_init_alias() in xen_gnttab_realize()
+- memory_region_init_io() in subpage_init()
+- memory_region_init_io() in io_mem_init()
+
+The command line I used is as follows:
+spatch --macro-file scripts/cocci-macro-file.h --sp-file 
+./scripts/coccinelle/a.cocci --keep-comments --in-place --use-gitgrep 
+--dir .
+
+Below is the content of scripts/coccinelle/a.cocci:
+
+@filter@
+expression a, b, c, d;
+position p;
+@@
+
+(
+  memory_region_init@p(a, b, NULL, ...);
+|
+  memory_region_init_io@p(a, b, c, d, NULL, ...);
+|
+  memory_region_init_ram_nomigrate@p(a, b, NULL, ...);
+|
+  memory_region_init_ram_flags_nomigrate@p(a, b, NULL, ...);
+|
+  memory_region_init_resizeable_ram@p(a, b, NULL, ...);
+|
+  memory_region_init_ram_from_file@p(a, b, NULL, ...);
+|
+  memory_region_init_ram_from_fd@p(a, b, NULL, ...);
+|
+  memory_region_init_ram_ptr@p(a, b, NULL, ...);
+|
+  memory_region_init_ram_device_ptr@p(a, b, NULL, ...);
+|
+  memory_region_init_alias@p(a, b, NULL, ...);
+|
+  memory_region_init_rom_nomigrate@p(a, b, NULL, ...);
+|
+  memory_region_init_rom_device_nomigrate@p(a, b, c, d, NULL, ...);
+|
+  memory_region_init_iommu@p(a, b, c, d, NULL, ...);
+|
+  memory_region_init_ram@p(a, b, NULL, ...);
+|
+  memory_region_init_ram_guest_memfd@p(a, b, NULL, ...);
+|
+  memory_region_init_rom@p(a, b, NULL, ...);
+|
+  memory_region_init_rom_device@p(a, b, c, d, NULL, ...);
+)
+
+@script:python@
+p << filter.p;
+@@
+
+cocci.print_main("found", p)
+
+
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->  target/riscv/cpu.c | 15 +++++++++++++++
->  target/riscv/cpu.h |  4 ++++
->  2 files changed, 19 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index d055ddf462..d42cf9d70e 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -73,6 +73,21 @@ bool riscv_cpu_option_set(const char *optname)
->      return g_hash_table_contains(general_user_opts, optname);
->  }
->
-> +#ifndef CONFIG_USER_ONLY
-> +/* This is used in runtime only. */
-> +void cpu_set_exception_base(int vp_index, target_ulong address)
-> +{
-> +    CPUState *cpu_state =3D qemu_get_cpu(vp_index);
-
-We usually use `CPUState *cs` in QEMU
-
-> +    if (cpu_state =3D=3D NULL) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "cpu_set_exception_base: invalid vp_index: %u",
-> +                      vp_index);
+>   system/memory.c     | 5 +++++
+>   system/trace-events | 1 +
+>   2 files changed, 6 insertions(+)
+> 
+> diff --git a/system/memory.c b/system/memory.c
+> index 8b84661ae36..fd7c3192ed4 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -1821,6 +1821,11 @@ static void memory_region_finalize(Object *obj)
+>        * memory_region_set_enabled instead could trigger a transaction and
+>        * cause an infinite loop.
+>        */
+> +
+> +    if (mr->name) {
+> +        trace_memory_region_finalize(mr, mr->name);
 > +    }
-> +    RISCVCPU *vp =3D RISCV_CPU(cpu_state);
-
-This should be `RISCVCPU *cpu` and should be defined at the top of the func=
-tion
-
-Otherwise
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> +    vp->env.resetvec =3D address;
-> +}
-> +#endif
 > +
->  static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConf=
-ig *src)
->  {
->  #define BOOL_FIELD(x) dest->x |=3D src->x;
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 4a862da615..34751bd414 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -672,6 +672,10 @@ G_NORETURN void riscv_raise_exception(CPURISCVState =
-*env,
->  target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
->  void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
->
-> +#ifndef CONFIG_USER_ONLY
-> +void cpu_set_exception_base(int vp_index, target_ulong address);
-> +#endif
-> +
->  FIELD(TB_FLAGS, MEM_IDX, 0, 3)
->  FIELD(TB_FLAGS, FS, 3, 2)
->  /* Vector flags */
-> --
-> 2.34.1
+>       mr->enabled = false;
+>       memory_region_transaction_begin();
+>       if (mr->container) {
+> diff --git a/system/trace-events b/system/trace-events
+> index 82856e44f2e..a8ef2326e14 100644
+> --- a/system/trace-events
+> +++ b/system/trace-events
+> @@ -23,6 +23,7 @@ memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t v
+>   memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+>   memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+>   memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+> +memory_region_finalize(void *mr, const char *name) "mr %p, %s"
+>   flatview_new(void *view, void *root) "%p (root %p)"
+>   flatview_destroy(void *view, void *root) "%p (root %p)"
+>   flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
+
 
