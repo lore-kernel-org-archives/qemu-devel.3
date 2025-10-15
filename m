@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C3FCCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49230CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v95MR-0007sg-Ks; Wed, 15 Oct 2025 13:32:27 -0400
+	id 1v95Lf-0007mC-9k; Wed, 15 Oct 2025 13:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v95MQ-0007sY-PA
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:32:26 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v95MN-000086-MW
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:32:26 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b63148d25c3so882684a12.1
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:32:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760549537; x=1761154337; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zqVrH5nOX1ic51ClmB65OHGjcxRyWLOch1avnZ7x5dA=;
- b=jBRA1skRuHUlOzavpMKoAvlC16z0ysifAZM7DsKdZpKptcpXIDoPf3blh92Cre7RAy
- TgC6ZxYQHimC747GmgbtkgSYxsLraUblebmPSfLwKV7U2PQMFowNVy8VbyyWXy2Wnb1s
- rfDF5IZT9+eTrvucUC3JUULUmrW/UE8GmnG/iU3ct9mJmNLU8UX+chGsrEAvo2PQv32/
- Sn76zKtD1I04M32Did7BjyZrTuGZ8dnTzkhycXYE+Tt1vx/20J2DPa4me9twP3GEPfl5
- eqL3MzOgxmwPJjixmSheOCFjTZJ18qRp5YKBK80kV25tD0s5v/dKZuSFG0NYoEhHmmXg
- bj+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760549537; x=1761154337;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zqVrH5nOX1ic51ClmB65OHGjcxRyWLOch1avnZ7x5dA=;
- b=v066dC3AG9Vvg5yoTFR75pZ1RfdQtjYoFcfn6fbcM0IrMLEiF1oXdyJgcDcPDXIg3N
- Sa6HCfLKX+o0jkYxDBlB130HLNTp1cHNkgtBxbmPpwFuSpKfxOfspRberx6/ggdirgas
- FFYyCtMx9uodOvLEiFV/fUuQXj/UVCW0+wLKHMma4IdIbMsglcfAJtDZ39MIRrzZ0WfL
- Tvzx+C/y+7EcSv+7cuAZFIATHcbvouXZBSWA04h7fvIqDFFyMpy3YCR3kO703z3FGW/k
- BNfoy/vpR7wKHgOcHeQIetsXs4kfD+Oz5rJ+KUEK2JIAFieCpD0lpLYx+hrdiJ4hoFza
- UczA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnTbkIDMzeHUwLFG/tPM66hK/3AKIg437uoTrqdVffJ653bIMC9/KzRorRbp5zF1zlTlvAE0sCUzZl@nongnu.org
-X-Gm-Message-State: AOJu0Yzega36WgAU7MGMIvVghLCtI2pck7iH/3nPXD+LYbfhJuuQDhmd
- bhA8IOvrHjARUNjy67uPqwCgyYc27k0BO49LzspUBEHwTu2E6J/DCGYgrqAdnGkwZfYJoJfZlfW
- ovWlMAH4=
-X-Gm-Gg: ASbGncu40fMc+bNKCb4BOvOScc4lYc1Mbs0QICDWAmBiYhwzPbMeLv2NQYJS8EYQqhS
- jE693/ly+lpodl6zhZprK1TDHViOlytERPUF716GNkqnmxgjcwwFtIgbrYwX+ibo60/pHk3yOF4
- OlE3clTmVD87XmXqhiMFuIuF5ioAGwYEQEqEviGs4ru+GKlbxVwu4Icn2OiwKsWiRPUxKOpSmDG
- FLVEfm/w8G9rczTSXpTORZQtUZBnfbOHWiIc/xt/Q/4xq5JU+QgzHhZ0PLKwtvXs4g6VNKMzP3O
- SuvvZ+kuuAmBQjrWeTs71581UyzMU+vf/POXHkbzTw6Slhoc6Kzg/RcZq/5FG4/ptscVrfrBHFf
- FhG9HjSH76ge62g6n6JWKG4Jx3MsmrwQqgRmekc6qWy0rCcEvyMHkzLxUG5lHhASxr5wiJQ==
-X-Google-Smtp-Source: AGHT+IEc9w7/o9pWqGWRFEYx0l0JpwK98LvQaqPxegAFLI5ACZjn/4JRMFmcStHlyNolGGn29BUrKQ==
-X-Received: by 2002:a17:902:d4c2:b0:274:506d:7fcc with SMTP id
- d9443c01a7336-290918cbc9bmr11727905ad.6.1760549537216; 
- Wed, 15 Oct 2025 10:32:17 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b6a228a5b91sm210952a12.15.2025.10.15.10.32.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 10:32:16 -0700 (PDT)
-Message-ID: <74cdcf75-5a5e-4b13-8637-422be5069439@linaro.org>
-Date: Wed, 15 Oct 2025 10:32:15 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v95LZ-0007lb-4G
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:31:33 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v95LQ-0008U9-Dw
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:31:32 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E06E715E3D4;
+ Wed, 15 Oct 2025 20:31:18 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D9CAA2A1202;
+ Wed, 15 Oct 2025 20:31:19 +0300 (MSK)
+Message-ID: <43ef15f9-1225-4416-9d04-eefc4f6eb952@tls.msk.ru>
+Date: Wed, 15 Oct 2025 20:31:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Name gen_goto_tb()'s TB slot index as
- @tb_slot_idx
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20251010031745.37528-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251010031745.37528-1-philmd@linaro.org>
+Subject: Re: [PATCH v3 7/7] esp.c: only allow ESP commands permitted in the
+ current asc_mode
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
+ fam@euphon.net, qemu-devel@nongnu.org
+References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
+ <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,30 +105,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 20:17, Philippe Mathieu-Daudé wrote:
-> tcg_gen_goto_tb() takes an unsigned index to the TB slot (0 or 1).
-> Declare the argument as unsigned and rename it as @tb_slot_idx
-> (which is more descriptive than @n) on all targets.
+11.07.2025 23:46, Mark Cave-Ayland wrote:
+> If an ESP command is issued in an incorrect mode then an illegal command
+> interrupt should be generated. Add a new esp_cmd_is_valid() function to
+> indicate whether the ESP command is valid for the current mode, and if not
+> then raise the illegal command interrupt.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/alpha/translate.c         | 8 ++++----
->   target/arm/tcg/translate-a64.c   | 8 ++++----
->   target/arm/tcg/translate.c       | 8 ++++----
->   target/avr/translate.c           | 7 ++++---
->   target/hexagon/translate.c       | 8 ++++----
->   target/loongarch/tcg/translate.c | 7 ++++---
->   target/microblaze/translate.c    | 7 ++++---
->   target/mips/tcg/translate.c      | 7 ++++---
->   target/ppc/translate.c           | 7 ++++---
->   target/riscv/translate.c         | 9 +++++----
->   target/rx/translate.c            | 7 ++++---
->   target/sh4/translate.c           | 7 ++++---
->   target/sparc/translate.c         | 6 +++---
->   target/tricore/translate.c       | 7 ++++---
->   14 files changed, 56 insertions(+), 47 deletions(-)
+> This fixes WinNT MIPS which issues ICCS after a Chip Reset which is not
+> permitted, but will fail with an INACCESSIBLE_BOOT_DEVICE error unless an
+> interrupt is generated.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Fixes: 83428f7a97 ("esp.c: move write_response() non-DMA logic to esp_do_nodma()")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2464
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is commit 6f8ce26bb00 which landed between v10.0.0 and v10.1.0,
+and after seabios update to 1.17.0.
 
-r~
+This commit - bisectable - breaks qemu's cdrom test.
+
+
+$ PYTHON=python3 QTEST_QEMU_BINARY=./qemu-system-i386 tests/qtest/cdrom-test --tap -k -p /i386/cdrom/boot/am53c974
+TAP version 14
+# random seed: R02S10a5ccc054a33d854e7868e868e33d3c
+xorriso 1.5.6 : RockRidge filesystem manipulator, libburnia project.
+
+xorriso 1.5.6
+ISO 9660 Rock Ridge filesystem manipulator and CD/DVD/BD burn program
+Copyright (C) 2023, Thomas Schmitt <scdbackup@gmx.net>, libburnia project.
+xorriso version   :  1.5.6
+Version timestamp :  2023.06.07.180001
+Build timestamp   :  -none-given-
+libisofs   in use :  1.5.6  (min. 1.5.6)
+libjte     in use :  2.0.0  (min. 2.0.0)
+libburn    in use :  1.5.6  (min. 1.5.6)
+libburn OS adapter:  internal GNU/Linux SG_IO adapter sg-linux
+libisoburn in use :  1.5.6  (min. 1.5.6)
+Provided under GNU GPL version 3 or later, due to libreadline license.
+There is NO WARRANTY, to the extent permitted by law.
+xorriso 1.5.6 : RockRidge filesystem manipulator, libburnia project.
+
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1823149.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-1823149.qmp,id=char0 
+-mon chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1823149.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-1823149.qmp,id=char0 
+-mon chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+# Start of i386 tests
+# Start of cdrom tests
+# Start of boot tests
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1823149.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-1823149.qmp,id=char0 
+-mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -no-shutdown -device am53c974 -device scsi-cd,drive=cd1 -drive 
+if=none,id=cd1,format=raw,file=cdrom-boot-iso-b5O01H -accel qtest
+
+[long pause - I guess qemu binary just times out after a few minutes]
+
+ERROR:../../build/qemu/10.1/tests/qtest/boot-sector.c:173:boot_sector_test: assertion failed (signature == SIGNATURE): (0x00000000 == 0x0000dead)
+
+
+Mark, it looks you were right on IRC - this is one of your ESP changes :)
+
+But I also wonder why we haven't noticed this in the CI on gitlab.  I only
+come across it on my local system when I installed xorriso for an unrelated
+reason, and this test started to fail - I thought it's my staging-10.1
+regression :)
+
+Thanks,
+
+/mjt
 
