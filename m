@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B93CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576FBCCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t6k-0001Dr-Pb; Wed, 15 Oct 2025 00:27:26 -0400
+	id 1v8t5c-0000Gs-HH; Wed, 15 Oct 2025 00:26:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t6i-0001CN-Pn; Wed, 15 Oct 2025 00:27:24 -0400
+ id 1v8t5Z-0000Ex-8b; Wed, 15 Oct 2025 00:26:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t6c-0002zY-Fm; Wed, 15 Oct 2025 00:27:24 -0400
+ id 1v8t5R-0002nZ-Nh; Wed, 15 Oct 2025 00:26:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8CB7715D9DD;
- Wed, 15 Oct 2025 07:25:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5F04B15D9CD;
+ Wed, 15 Oct 2025 07:24:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2557029FE84;
- Wed, 15 Oct 2025 07:25:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0307329FE76;
+ Wed, 15 Oct 2025 07:25:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Jim Shu <jim.shu@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 10/13] target/riscv: Fix SSP CSR error handling in
- VU/VS mode
-Date: Wed, 15 Oct 2025 07:25:34 +0300
-Message-ID: <20251015042540.68611-10-mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 08/11] target/riscv: Fix ssamoswap error handling
+Date: Wed, 15 Oct 2025 07:25:12 +0300
+Message-ID: <20251015042520.68556-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
-References: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
+References: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -63,32 +62,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jim Shu <jim.shu@sifive.com>
 
-In VU/VS mode, accessing $ssp CSR will trigger the virtual instruction
-exception instead of illegal instruction exception if SSE is disabled
-via xenvcfg CSRs.
+Follow the RISC-V CFI v1.0 spec [1] to fix the exception type
+when ssamoswap is disabled by xSSE.
 
-This is from RISC-V CFI v1.0 spec ch2.2.4. Shadow Stack Pointer
+[1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250924074818.230010-3-jim.shu@sifive.com>
+Message-ID: <20250924074818.230010-4-jim.shu@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 84c1605b7606d810ded4c1c3a2717f158dc89e3f)
+(cherry picked from commit 0b16c7b6a854d461cdfd418769b51d58e43dd92a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 76e2f7e1d5..76e77ae2d1 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -202,6 +202,8 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
- #if !defined(CONFIG_USER_ONLY)
-         if (env->debugger) {
-             return RISCV_EXCP_NONE;
-+        } else if (env->virt_enabled) {
-+            return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-         }
- #endif
-         return RISCV_EXCP_ILLEGAL_INST;
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index f712b1c368..c82bacdc39 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1284,3 +1284,8 @@ DEF_HELPER_4(vgmul_vv, void, ptr, ptr, env, i32)
+ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
+ DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
+ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
++
++/* CFI (zicfiss) helpers */
++#ifndef CONFIG_USER_ONLY
++DEF_HELPER_1(ssamoswap_disabled, void, env)
++#endif
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index 45686af4d6..f4a1c12ca0 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -91,7 +91,11 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+     }
+ 
+     if (!ctx->bcfi_enabled) {
++#ifndef CONFIG_USER_ONLY
++        gen_helper_ssamoswap_disabled(tcg_env);
++#else
+         return false;
++#endif
+     }
+ 
+     TCGv dest = dest_gpr(ctx, a->rd);
+@@ -116,7 +120,11 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
+     }
+ 
+     if (!ctx->bcfi_enabled) {
++#ifndef CONFIG_USER_ONLY
++        gen_helper_ssamoswap_disabled(tcg_env);
++#else
+         return false;
++#endif
+     }
+ 
+     TCGv dest = dest_gpr(ctx, a->rd);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 110292e84d..8382aa94cb 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -717,4 +717,53 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, target_ulong addr)
+     return cpu_ldl_code_mmu(env, addr, oi, ra);
+ }
+ 
++void helper_ssamoswap_disabled(CPURISCVState *env)
++{
++    int exception = RISCV_EXCP_ILLEGAL_INST;
++
++    /*
++     * Here we follow the RISC-V CFI spec [1] to implement the exception type
++     * of ssamoswap* instruction.
++     *
++     * [1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
++     *
++     * Note: We have already checked some conditions in trans_* functions:
++     *   1. The effective priv mode is not M-mode.
++     *   2. The xSSE specific to the effictive priv mode is disabled.
++     */
++    if (!get_field(env->menvcfg, MENVCFG_SSE)) {
++        /*
++         * Disabled M-mode SSE always trigger illegal instruction when
++         * current priv mode is not M-mode.
++         */
++        exception = RISCV_EXCP_ILLEGAL_INST;
++        goto done;
++    }
++
++    if (!riscv_has_ext(env, RVS)) {
++        /* S-mode is not implemented */
++        exception = RISCV_EXCP_ILLEGAL_INST;
++        goto done;
++    } else if (env->virt_enabled) {
++        /*
++         * VU/VS-mode with disabled xSSE will trigger the virtual instruction
++         * exception.
++         */
++        exception = RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
++        goto done;
++    } else {
++        /*
++         * U-mode with disabled S-mode SSE will trigger the illegal instruction
++         * exception.
++         *
++         * Note: S-mode is already handled in the disabled M-mode SSE case.
++         */
++        exception = RISCV_EXCP_ILLEGAL_INST;
++        goto done;
++    }
++
++done:
++    riscv_raise_exception(env, exception, GETPC());
++}
++
+ #endif /* !CONFIG_USER_ONLY */
 -- 
 2.47.3
 
