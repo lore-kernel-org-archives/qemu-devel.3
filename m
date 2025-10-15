@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9D6CCD194
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30506CCD194
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v95AK-0002tT-Sk; Wed, 15 Oct 2025 13:19:58 -0400
+	id 1v95As-00038q-5c; Wed, 15 Oct 2025 13:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v95AJ-0002tL-M3
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:19:55 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v95Aq-00037A-IW
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:20:28 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v95AD-00062m-4x
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:19:55 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46e2e6a708fso42884665e9.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:19:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v95Ad-0006O9-Ie
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:20:25 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-46e542196c7so6687605e9.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760548781; x=1761153581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760548811; x=1761153611; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BQCmOrrumX80gUCMInb8wwaOxkJtjhgXyhfk3xnzr7A=;
- b=vnwDEs51lI0coKfZXAVJVZtccK8QWRgpKk+MVz/0s/AJW50sM9rcVMgPPSTjmyq22l
- 8EVfZnGvGaUn6C6Rnhj2+DnZQsBCUwpl3Hua0tiT3mxduwifABFpvNdRzdQnt5VaCwoC
- kexHOSUXoJPA5mlKj5Ruw74nlGVpgXIhKA8EUYKT1VGYEVSRQIlI+hcomzBXpJGn+BVr
- XTdlPu/PBoZk6pJhP90Pt0zDanaWNSuzL4lbK2VKUIpTVru6Du/FzsgnShHAR5NFj2S/
- J+CsIh1NorFDNFHSOi9LjjWkPKF3T6wXSVB8SB5wC3zUPSvDd/O4/S8y34jYjVU7wad2
- rg6Q==
+ bh=XLOhl34H9ArtZN+RfPEupyYfgwofD8LgLKnH22GXGKw=;
+ b=ju4EeR5gJfJazqUMCCikEhH/YLgHCA72XU7ed6kuldh9Gm/gI3N3+JDINFdW1bLNpz
+ WSgARI+k3ogUKFivnuiO/wR39SGgYgWpiOJRaNtrT9c9WwmBTn3rMiWNIcpumb+sQKFT
+ JFa2ReiStnA1pTXTUnJhoc2zDbceEIKN25XS59Gkx22j+pQ8rdx7SPMcZ+YfaXq2YZXX
+ BBoQeB+FuntcRCOlHo4VHScQ9xcn5QdHFT9q6wJET6pq1XOyPPr8+FoSxwar7JpdDaox
+ Is/s1hKhJuR+Nsr6B0Q9d2Zsc/ZfR/pW43Dc7b+uIXKppUqM9ZnI21NSJkZNykEz231+
+ dp9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760548781; x=1761153581;
+ d=1e100.net; s=20230601; t=1760548811; x=1761153611;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BQCmOrrumX80gUCMInb8wwaOxkJtjhgXyhfk3xnzr7A=;
- b=CbkGU6bniZEz53HEOBAm6yGkDxc63/oarZLAoKTmyzYWQYGj4URZaDlFy57Hk74c8J
- fwERGdWUSl7zG3Q1MLuScK3sbzRCMG9gb+Bjr8aqQ3Zmw+6n9asZCrokFGiFfUJ4HfJn
- EoWHbC4h6jPO2ByU5hXo9xUvGLeKGR6v1ae26XUYrGKPkvjYPXP14k4Wj0zZD3jqnv6c
- SoT0AK+MyX2PG6jyITeEQjTJPqi83m5C2Byvd2iDBGrPLazAZhMfC98ki86saw5NLDdO
- o7TRgrYh/rUCzUGVd8IIE7nhJG4kqwmsPv8KbU3hubK4Ld6QjG3u2j07TkD5y60Kvjdg
- sm4w==
-X-Gm-Message-State: AOJu0YyjjWq3MEzOpeKAdqyhXKWSjw+aio2gOKTtvJj4lEm1alX0ChwL
- 7sIW8ZLJdmfNj5w/xMQokvLfWlXre7ZQGYZ9dXzBLUN5NeBn1TrHBCTOYJK/ud6q3zhHXl+JF7x
- oFYR85yUCwg==
-X-Gm-Gg: ASbGncuNztM4IdNJJYjQSI24LNr0SpxfbaxdpG9YGP3tQs0VWs6q2DMDDC2WsuMvM8/
- 8AA/Rl1tj6e/j73LaQa8Tp4AR0QIG1ABODmRYo/JkzwPNKW8CtDa0fSGjeDIMXcr/GC2FueJA0S
- GoUk+sreanIGjmicRRV6bFLJq3LXH9+czyT2oLGuf56IRXGY1LhTT0HdcyfpYoggSGJ9/a8fAVk
- QAp+HPW9Nz4ZWrTAjsPAW6HpESVt0xltw+iz8PzbeAbvGUjQ/4sJqED9X6Zn+FWk6pyiDhpFz6/
- DkVN1dguS9Ftg/A4USbFZmpTWq7mPZycbvfEiRoLZEJJ3yXqAokQ5aKBJNolxwKwEwwX/446ihV
- 2DJA6mOu0qB1DIVkLtphFck2pPPZ3Z8Zz3Dx7N82Z+0pXVRM8ji3gPfG5uNRBHVNJp3j0Tfd16v
- oJM8knyFFTmJ6Y
-X-Google-Smtp-Source: AGHT+IESfxmiS5e2cXMAlRPLPK3XA1HToDddkk6EDVYB1ZoSzuHoKYsUNNxkQ82IkGxYvB8tfpuHww==
-X-Received: by 2002:a05:600c:8206:b0:46e:19f8:88d3 with SMTP id
- 5b1f17b1804b1-46fa9af313bmr207681755e9.22.1760548781366; 
- Wed, 15 Oct 2025 10:19:41 -0700 (PDT)
+ bh=XLOhl34H9ArtZN+RfPEupyYfgwofD8LgLKnH22GXGKw=;
+ b=bhanfogN/fSSQlzY74tN4mKyETtqu4K/zzXTu+2+3vKaBhuGHCchVWV7BvG9o98ZS6
+ rlt8HFAVELmybLAJhy65VDdR9dbnWrJIz4RMs4DVnNoEjA/tU54UK24rNji3xVGyWyk1
+ SxhvSdwQiWUe5IvPEeAw0qp7R8fMGbgCQpdncUeAXTVNsHy+uZhlB6InnLfARlBAbTyq
+ Uj9y1V9NzQbHpyK/ut9ls+nrJnxbrlUhKtPBqutg1pYBakbKPOspW6wcpCDf8Zj9fLgL
+ TKNFUEz/nQdx4hS5Z70DU4fJJrkwi5l5ESQ0GetTYqPfB0XPH8LAU1H8PJP6uUmKe7uj
+ F5SA==
+X-Gm-Message-State: AOJu0YxQkatQXzfUMaouTnhrSVv5wogo1wZx7oDc6dzhTcAxzDPNTUGP
+ BiZogZwW5MtwjIT8N5HOTl5TTy2oaRvR7fRePtu+wu4zbFeUC0z36d3QiJumNz5cEt/+UDpvBlg
+ RRpoJChRe6g==
+X-Gm-Gg: ASbGnct+XyZkHTdw5d85YgmvAFO7In8Evk81JDO0L+vOANc9aJwpUwCvr/dP5JAa//b
+ cfcv4jO5SHfHEZEnw6g23wmGfoskTTk63eOwugs4q6fofCFsfUDySfTEulLPm/AeWvJCHUUwfNd
+ 7R30RgPqV5sg2T0Mrch12VZLlq4L03YPKgTxuTuQz33PtdDpZw0GeMb6kYAa4Xpq0JCTnUyMytr
+ xma6grhDpZUv0rY+exrNFmD6Lkz/RmvOP94eXSjrv94+7EC4dof35WTbBNlQjaPhriv/J+P/G3o
+ j/t6vgE4TUDEV4OfHdLkqO9cLehMC1T/2KfeBpEz/i68rJjj+do7QO0xoL8XKldueraO22o04a1
+ m3V/bggNM5mF6EHBsh1yf7RixmYDR9rE67bgKLR+9CSU/if0fXgQl21TBUCm+WeBNbrmqFEocUJ
+ hwzBNmw89u7y/QflBI5pUmc7o=
+X-Google-Smtp-Source: AGHT+IG7tEavSbN74oQFxffeN78IKx3iUB/n/wGwv8YSCMtz9qa6L3UnQjoi5wGgpV8Z5CfRsEI04g==
+X-Received: by 2002:a05:600c:4e89:b0:46f:a8fd:c0dc with SMTP id
+ 5b1f17b1804b1-471099212bbmr9870225e9.3.1760548811077; 
+ Wed, 15 Oct 2025 10:20:11 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47101c03644sm44367235e9.8.2025.10.15.10.19.39
+ 5b1f17b1804b1-46fb482b9absm362840485e9.2.2025.10.15.10.20.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 10:19:40 -0700 (PDT)
-Message-ID: <4966a261-0daf-461c-b814-a6792281e911@linaro.org>
-Date: Wed, 15 Oct 2025 19:19:39 +0200
+ Wed, 15 Oct 2025 10:20:10 -0700 (PDT)
+Message-ID: <5f29d664-34b1-4012-b634-a99461540bd1@linaro.org>
+Date: Wed, 15 Oct 2025 19:20:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] target/rx: Remove target_ulong and MO_TE uses
+Subject: Re: [PATCH] target/rx: Un-inline various helpers
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Anton Johansson <anjo@rev.ng>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20251009151607.26278-1-philmd@linaro.org>
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251009200012.33650-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251009151607.26278-1-philmd@linaro.org>
+In-Reply-To: <20251009200012.33650-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 17:15, Philippe Mathieu-Daudé wrote:
-> The RX target is 32-bit / little endian only.
-> Remove an invalid target_ulong use, then replace MO_TE -> MO_LE.
+On 9/10/25 22:00, Philippe Mathieu-Daudé wrote:
+> Rely on the linker to optimize at linking time.
 > 
-> Philippe Mathieu-Daudé (8):
->    target/rx: Replace target_ulong -> vaddr for translator API uses
->    target/rx: Use MemOp type in gen_ld[u]() and gen_st()
->    target/rx: Propagate DisasContext to generated helpers
->    target/rx: Propagate DisasContext to push() / pop()
->    target/rx: Propagate DisasContext to gen_ld[u]() and gen_st()
->    target/rx: Factor mo_endian() helper out
->    target/rx: Replace MO_TE -> MO_LE
->    target/rx: Expand TCG register definitions for 32-bit target
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Based-on: <20251009151607.26278-1-philmd@linaro.org>
+> ---
+>   target/rx/translate.c | 48 +++++++++++++++++++++----------------------
+>   1 file changed, 24 insertions(+), 24 deletions(-)
 
-Series queued, thanks.
+Patch queued, thanks.
 
