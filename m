@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36312CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BFECCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v91sI-0000r2-3d; Wed, 15 Oct 2025 09:49:06 -0400
+	id 1v924X-0003pj-LU; Wed, 15 Oct 2025 10:01:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v91sG-0000qI-C9
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:49:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v924U-0003pN-Io
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:01:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v91sD-0007GN-Im
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:49:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v924L-0000PI-GL
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:01:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760536138;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1760536884;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YWhen++a79FthcvE3SnEW4XRqd9wOq/MWkhLVfspJ1s=;
- b=RdXnNoNgXZCFML5dPHx1ddxN1jz2zSnrIYDU+hxExeyTs4RnoNZQJX9pRTfBO5W7u6Zpky
- DLtNjguh+t5YzA8qMAmv084bv9ohnby58ORtCXrMhxVk6igt+40ZMasDz4EnB1taB1TEIw
- WmA8jy2mmEXOHO3J92RmAdgYat6A0MY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=YQruXLoz8CZ8TbrEh6nr9UAYekt8nYMUWluAYu6wxrw=;
+ b=Iik/sQGc9YnUOo+cMMPAtuwdC4k1PjIKhX5WFXAMtdjwsSM9CZpFiILyqsFeg3ZNSr0wmC
+ 2bVpkyl/rEcOeB3J+nE/HZzakHAim52QRa9UaV+3i6CX4WtdEWRXRHZyY7wVAcgBHB0jcs
+ OL6luQhE8yHz02n1EEYGXfuLvcC8BXs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-pryIPy8-Nbm0S4xnh4k9Rw-1; Wed,
- 15 Oct 2025 09:48:56 -0400
-X-MC-Unique: pryIPy8-Nbm0S4xnh4k9Rw-1
-X-Mimecast-MFC-AGG-ID: pryIPy8-Nbm0S4xnh4k9Rw_1760536135
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-8c3sversN5GT1omXXYXykQ-1; Wed,
+ 15 Oct 2025 10:01:20 -0400
+X-MC-Unique: 8c3sversN5GT1omXXYXykQ-1
+X-Mimecast-MFC-AGG-ID: 8c3sversN5GT1omXXYXykQ_1760536879
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05FBA1800637; Wed, 15 Oct 2025 13:48:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 250B819560AD; Wed, 15 Oct 2025 13:48:52 +0000 (UTC)
-Date: Wed, 15 Oct 2025 14:48:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH 2/4] tests: rearrange suites for I/O tests
-Message-ID: <aO-mQQ6nrLYXmPaz@redhat.com>
-References: <20251008113552.747002-1-berrange@redhat.com>
- <20251008113552.747002-3-berrange@redhat.com>
- <aO4JSRfDAn6Jq7Hn@redhat.com> <aO-lVDVKWEVMeasR@redhat.com>
- <507917da-519f-431d-ab30-3b24b7173471@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98AD41954128; Wed, 15 Oct 2025 14:01:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A985130001A6; Wed, 15 Oct 2025 14:01:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 49CA321E6A27; Wed, 15 Oct 2025 16:01:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  Yanan Wang <wangyanan55@huawei.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  "Dr. David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v5 1/3] hw/uefi: add query-firmware-log monitor command
+In-Reply-To: <20251015120637.1736402-2-kraxel@redhat.com> (Gerd Hoffmann's
+ message of "Wed, 15 Oct 2025 14:06:35 +0200")
+References: <20251015120637.1736402-1-kraxel@redhat.com>
+ <20251015120637.1736402-2-kraxel@redhat.com>
+Date: Wed, 15 Oct 2025 16:01:15 +0200
+Message-ID: <87h5w0b6xg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <507917da-519f-431d-ab30-3b24b7173471@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,105 +88,359 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 03:47:26PM +0200, Thomas Huth wrote:
-> On 15/10/2025 15.44, Daniel P. Berrangé wrote:
-> > On Tue, Oct 14, 2025 at 10:26:49AM +0200, Kevin Wolf wrote:
-> > > Am 08.10.2025 um 13:35 hat Daniel P. Berrangé geschrieben:
-> > > > Currently there are 5 block formats, each classified as either quick,
-> > > > slow or thorough. This classification then determines what tests we
-> > > > add to meson suites. The suites are as follows
-> > > > 
-> > > >    * block
-> > > > 
-> > > >      => tests listed by 'check -g auto -n' for 'quick' formats
-> > > > 
-> > > >    * slow, block-slow
-> > > > 
-> > > >      => tests listed by 'check -n' for 'slow' formats or 'check -g auto -n'
-> > > >         for 'quick' formats
-> > > > 
-> > > >    * thorough, block-thorough
-> > > > 
-> > > >      => tests listed by 'check -n' for 'thorough' formats
-> > > > 
-> > > > The pairs of suites 'slow' / 'block-slow' and 'thorough' / 'block-thorough'
-> > > > match in terms of what tests are enabled. The only difference is whether
-> > > > non-block related tests are also in the suite.
-> > > > 
-> > > > There are two problems with this
-> > > > 
-> > > >   * If a format is classified as 'quick', we don't expose any
-> > > >     meson suite for running *all* tests, only the 'auto' tests.
-> > > > 
-> > > >     eg there is no suite to run all qcow2 tests, only 'quick'
-> > > >     tests can be run via meson, even if using 'SPEED=slow' we
-> > > >     still filter to only 'auto' tests.
-> > > > 
-> > > >   * There is no suite that allows running all tests for a given
-> > > >     format.
-> > > > 
-> > > >     eg there is no suite to run only 'raw' tests - you can only
-> > > >     use 'block-slow' which runs both raw and "auto" qcow2 tests.
-> > > > 
-> > > >     eg there is no suite to run only 'vpc' tests - you can only
-> > > >     use 'block-thorough' which runs qed, vmdk & vpc tests.
-> > > > 
-> > > > This patch suggests that 'block-slow' and 'block-thorough' are
-> > > > not actually compelling use cases, and should be dropped. ie it
-> > > > is not expected that people need to run all VPC, VMDK and QED
-> > > > tests at the same time. Instead a more useful feature is the
-> > > > ability to run all tests for a given format. Further the 'auto'
-> > > > filtering should only apply in the default 'block' target/suite.
-> > > > 
-> > > > IOW, with this patch we get the follows meson suites:
-> > > > 
-> > > >   * 'block' - 'auto' tests for any format listed as 'quick'
-> > > >               Currently just qcow2 'auto' tests
-> > > >   * 'block-$FORMAT' - ALL tests for the given $FORMAT, for each
-> > > >                       of qcow2, raw, qed, vmdk & vpc
-> > > >   * 'slow' - ALL tests for formats tagged with 'quick' or 'slow'
-> > > >   * 'thorough' - ALL tests formats tagged with 'thorough'
-> > > > 
-> > > > This corresponds to the following make targets.
-> > > > 
-> > > >   * 'make check-block'
-> > > > 
-> > > >      => runs only 'auto' qcow2 tests  (unchanged)
-> > > > 
-> > > >   * 'make check-block SPEED=thorough'
-> > > > 
-> > > >      => runs all 'qed', 'vmdk', 'vpc' tests (unchanged)
-> > > 
-> > > Also all qcow2 and raw tests, right?
-> > 
-> > Sigh, I made a mistake here, this should read:
-> >    * 'make check' / 'make check-block'
-> >       => runs only 'auto' qcow2 tests  (unchanged)
-> > 
-> > The 'make check-block SPEED=thorough/slow' feature was removed
-> > on the basis that running all targets at once is not that
-> > useful, instead the 'check-block-$FORMAT' targets are
-> > replacing it. IOW the meson 'block-slow' and 'block-through'
-> > suites are gone.
-> 
-> Can we still run all tests (i.e. iotests, qtests, unit tests and functional
-> tests in parallel) at once with a simple "make check SPEED=thorough" ? If
-> not, that would be a regression for me.
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
-Yes, the tests are still added to the 'thorough' and 'slow' meson
-suites, only the 'block-thorough' and 'block-slow' suites were
-removed.
+> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+> optional support for logging to a memory buffer.  There is guest side
+> support -- for example in linux kernels v6.17+ -- to read that buffer.
+> But that might not helpful if your guest stops booting early enough that
+> guest tooling can not be used yet.  So host side support to read that
+> log buffer is a useful thing to have.
+>
+> This patch implements the query-firmware-log both qmp monitor command
+> to read the firmware log.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  include/monitor/hmp.h      |   1 +
+>  hw/uefi/ovmf-log.c         | 233 +++++++++++++++++++++++++++++++++++++
+>  tests/qtest/qmp-cmd-test.c |   2 +
+>  hw/uefi/meson.build        |   2 +-
+>  qapi/machine.json          |  24 ++++
+>  5 files changed, 261 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/uefi/ovmf-log.c
+>
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index 31bd812e5f41..0af272b52ac1 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -179,5 +179,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
+>  void hmp_info_mtree(Monitor *mon, const QDict *qdict);
+>  void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
+>  void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
+> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
+>  
+>  #endif
 
+This hunk needs to go into the next patch.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+> new file mode 100644
+> index 000000000000..85dda15ab6ad
+> --- /dev/null
+> +++ b/hw/uefi/ovmf-log.c
+> @@ -0,0 +1,233 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * print ovmf debug log
+> + *
+> + * see OvmfPkg/Library/MemDebugLogLib/ in edk2
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qemu/target-info-qapi.h"
+> +#include "hw/boards.h"
+> +#include "hw/i386/x86.h"
+> +#include "hw/arm/virt.h"
+> +#include "system/dma.h"
+> +#include "monitor/hmp.h"
+> +#include "monitor/monitor.h"
+> +#include "qapi/error.h"
+> +#include "qapi/type-helpers.h"
+> +#include "qapi/qapi-commands-machine.h"
+> +
+> +
+> +/* ----------------------------------------------------------------------- */
+> +/* copy from edk2                                                          */
+> +
+> +#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
+> +#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
+> +
+> +/*
+> + * Mem Debug Log buffer header.
+> + * The Log buffer is circular. Only the most
+> + * recent messages are retained. Older messages
+> + * will be discarded if the buffer overflows.
+> + * The Debug Log starts just after the header.
+> + */
+> +typedef struct {
+> +    /*
+> +     * Magic values
+> +     * These fields are used by tools to locate the buffer in
+> +     * memory. These MUST be the first two fields of the structure.
+> +     * Use a 128 bit Magic to vastly reduce the possibility of
+> +     * a collision with random data in memory.
+> +     */
+> +    uint64_t             Magic1;
+> +    uint64_t             Magic2;
+> +    /*
+> +     * Header Size
+> +     * This MUST be the third field of the structure
+> +     */
+> +    uint64_t             HeaderSize;
+> +    /*
+> +     * Debug log size (minus header)
+> +     */
+> +    uint64_t             DebugLogSize;
+> +    /*
+> +     * edk2 uses this for locking access.
+> +     */
+> +    uint64_t             MemDebugLogLock;
+> +    /*
+> +     * Debug log head offset
+> +     */
+> +    uint64_t             DebugLogHeadOffset;
+> +    /*
+> +     *  Debug log tail offset
+> +     */
+> +    uint64_t             DebugLogTailOffset;
+> +    /*
+> +     * Flag to indicate if the buffer wrapped and was thus truncated.
+> +     */
+> +    uint64_t             Truncated;
+> +    /*
+> +     * Firmware Build Version (PcdFirmwareVersionString)
+> +     */
+> +    char                 FirmwareVersion[128];
+> +} MEM_DEBUG_LOG_HDR;
+> +
+> +
+> +/* ----------------------------------------------------------------------- */
+> +/* qemu monitor command                                                    */
+> +
+> +typedef struct {
+> +    uint64_t             magic1;
+> +    uint64_t             magic2;
+> +} MemDebugLogMagic;
+> +
+> +/* find log buffer in guest memory by searching for the magic cookie */
+> +static dma_addr_t find_ovmf_log_range(dma_addr_t start, dma_addr_t end)
+> +{
+> +    static const MemDebugLogMagic magic = {
+> +        .magic1 = MEM_DEBUG_LOG_MAGIC1,
+> +        .magic2 = MEM_DEBUG_LOG_MAGIC2,
+> +    };
+> +    MemDebugLogMagic check;
+> +    dma_addr_t step = 4 * KiB;
+> +    dma_addr_t offset;
+> +
+> +    for (offset = start; offset < end; offset += step) {
+> +        if (dma_memory_read(&address_space_memory, offset,
+> +                            &check, sizeof(check),
+> +                            MEMTXATTRS_UNSPECIFIED)) {
+> +            /* dma error -> stop searching */
+> +            break;
+> +        }
+> +        if (memcmp(&magic, &check, sizeof(check)) == 0) {
+> +            return offset;
+> +        }
+> +    }
+> +    return (dma_addr_t)-1;
+> +}
+> +
+> +static dma_addr_t find_ovmf_log(void)
+> +{
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+> +    dma_addr_t start, end, offset;
+> +
+> +    if (target_arch() == SYS_EMU_TARGET_X86_64 &&
+> +        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
+> +        X86MachineState *x86ms = X86_MACHINE(ms);
+> +
+> +        /* early log buffer, static allocation in memfd, sec + early pei */
+> +        offset = find_ovmf_log_range(0x800000, 0x900000);
+> +        if (offset != -1) {
+> +            return offset;
+> +        }
+> +
+> +        /*
+> +         * normal log buffer, dynamically allocated close to end of low memory,
+> +         * late pei + dxe phase
+> +         */
+> +        end = x86ms->below_4g_mem_size;
+> +        start = end - MIN(end, 128 * MiB);
+> +        return find_ovmf_log_range(start, end);
+> +    }
+> +
+> +    if (target_arch() == SYS_EMU_TARGET_AARCH64 &&
+> +        object_dynamic_cast(OBJECT(ms), TYPE_VIRT_MACHINE)) {
+> +        VirtMachineState *vms = VIRT_MACHINE(ms);
+> +
+> +        /* edk2 ArmVirt firmware allocations are in the first 128 MB */
+> +        start = vms->memmap[VIRT_MEM].base;
+> +        end = start + 128 * MiB;
+> +        return find_ovmf_log_range(start, end);
+> +    }
+> +
+> +    return (dma_addr_t)-1;
+> +}
+> +
+> +static void handle_ovmf_log_range(GString *out,
+> +                                  dma_addr_t start,
+> +                                  dma_addr_t end,
+> +                                  Error **errp)
+> +{
+> +    if (start > end) {
+> +        return;
+> +    }
+> +
+> +    size_t len = end - start;
+> +    g_string_set_size(out, out->len + len);
+> +    if (dma_memory_read(&address_space_memory, start,
+> +                        out->str + (out->len - len),
+> +                        len, MEMTXATTRS_UNSPECIFIED)) {
+> +        error_setg(errp, "firmware log: buffer read error");
+> +        return;
+> +    }
+> +}
+> +
+> +FirmwareLog *qmp_query_firmware_log(Error **errp)
+> +{
+> +    MEM_DEBUG_LOG_HDR header;
+> +    dma_addr_t offset, base;
+> +    FirmwareLog *ret;
+> +    g_autoptr(GString) log = g_string_new("");
+> +
+> +    offset = find_ovmf_log();
+> +    if (offset == -1) {
+> +        error_setg(errp, "firmware log: not found");
+> +        return NULL;
+> +    }
+> +
+> +    if (dma_memory_read(&address_space_memory, offset,
+> +                        &header, sizeof(header),
+> +                        MEMTXATTRS_UNSPECIFIED)) {
+> +        error_setg(errp, "firmware log: header read error");
+> +        return NULL;
+> +    }
+> +
+> +    if (header.DebugLogSize > MiB) {
+> +        /* default size is 128k (32 pages), allow up to 1M */
+> +        error_setg(errp, "firmware log: log buffer is too big");
+> +        return NULL;
+> +    }
+> +
+> +    if (header.DebugLogHeadOffset > header.DebugLogSize ||
+> +        header.DebugLogTailOffset > header.DebugLogSize) {
+> +        error_setg(errp, "firmware log: invalid header");
+> +        return NULL;
+> +    }
+> +
+> +    base = offset + header.HeaderSize;
+> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+> +        /* wrap around */
+> +        handle_ovmf_log_range(log,
+> +                              base + header.DebugLogHeadOffset,
+> +                              base + header.DebugLogSize,
+> +                              errp);
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +        handle_ovmf_log_range(log,
+> +                              base + 0,
+> +                              base + header.DebugLogTailOffset,
+> +                              errp);
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +    } else {
+> +        handle_ovmf_log_range(log,
+> +                              base + header.DebugLogHeadOffset,
+> +                              base + header.DebugLogTailOffset,
+> +                              errp);
+> +        if (*errp) {
+> +            return NULL;
+> +        }
+> +    }
+> +
+> +    ret = g_new0(FirmwareLog, 1);
+> +    if (header.FirmwareVersion[0] != '\0') {
+> +        ret->version = g_strndup(header.FirmwareVersion,
+> +                                 sizeof(header.FirmwareVersion));
+> +    }
+
+In this revision, @version is present when the Firmware supports it, and
+its not the empty string.
+
+The previous revision had
+
+       ret->version = g_strndup(header.FirmwareVersion,
+                                sizeof(header.FirmwareVersion));
+
+Present when the Firmware supports it.
+
+I'm not sure we care for the difference.
+
+Observation, not a demand for antthing.
+
+> +    ret->log = g_base64_encode((const guchar *)log->str, log->len);
+> +    return ret;
+> +}
+> diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+> index cf718761861d..279a8f5614e9 100644
+> --- a/tests/qtest/qmp-cmd-test.c
+> +++ b/tests/qtest/qmp-cmd-test.c
+> @@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
+>          /* Only valid with accel=tcg */
+>          { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+>          { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
+> +        /* requires firmware with memory buffer logging support */
+> +        { "query-firmware-log", ERROR_CLASS_GENERIC_ERROR },
+>          { NULL, -1 }
+>      };
+>      int i;
+> diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
+> index 91eb95f89e6d..c8f38dfae247 100644
+> --- a/hw/uefi/meson.build
+> +++ b/hw/uefi/meson.build
+> @@ -1,4 +1,4 @@
+> -system_ss.add(files('hardware-info.c'))
+> +system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
+>  
+>  uefi_vars_ss = ss.source_set()
+>  if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 038eab281c78..96133e5c71cf 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1839,6 +1839,30 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ]}
+>  
+> +##
+> +# @FirmwareLog:
+> +#
+> +# @version: Firmware version.
+> +#
+> +# @log: Firmware debug log, in base64 encoding.  First and last log
+> +#       line might be incomplete.
+> +#
+> +# Since: 10.2
+> +##
+> +{ 'struct': 'FirmwareLog',
+> +  'data': { '*version': 'str',
+> +            'log': 'str' } }
+> +
+> +##
+> +# @query-firmware-log:
+> +#
+> +# Find firmware memory log buffer in guest memory, return content.
+> +#
+> +# Since: 10.2
+> +##
+> +{ 'command': 'query-firmware-log',
+> +  'returns': 'FirmwareLog' }
+> +
+>  ##
+>  # @dump-skeys:
+>  #
+
+With the first hunk moved
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
