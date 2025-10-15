@@ -4,86 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FDCCCD192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBF5CCD18E
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8rJ0-0007FB-Ef; Tue, 14 Oct 2025 22:31:59 -0400
+	id 1v8rJH-0007HZ-Iu; Tue, 14 Oct 2025 22:32:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8rIy-0007F2-Sq
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:31:57 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8rIu-0004hE-3d
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:31:55 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-63994113841so11314786a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 19:31:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1v8rJ5-0007Fu-JE
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:32:03 -0400
+Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1v8rIu-0004gb-Al
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:32:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760495504; x=1761100304; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XqUux0AQPbB5AT6nf1+t3MWAjlR79bWMPkbU7vu+9hA=;
- b=W9cjJUAnCTFOSjEBvXebPEHuGXMm87EoIh+TWMAatsdDSFqwlh2IiIV3/Eee0/WdxE
- Pd/lqwIWbqHU79p8TUwxhvoewWrurTRMNZLaDB9MD1agig0Lu+fjJeszJIURyBd/qahW
- 9Hp78w4RwiRwqzKPdhJGe3wYPbjGkgjEYrVC+gdpowY4jHyjkn1FlKSJMTcZo20ZH//i
- 8gGidNBbKO8RR65piRo6n+qDku75fvWNz4ny3Zpy7nvtUiu6Gi4j1pohDLPr4zpBWEP5
- H8KKMw9JwAHfh2K44IwgSr3bhECU8on9kp8OyEe5ldh//iyUJGiP9aFa6LPS/7k+I6XI
- VRSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760495504; x=1761100304;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XqUux0AQPbB5AT6nf1+t3MWAjlR79bWMPkbU7vu+9hA=;
- b=hG355KHVF14xTtIJdQCFYBpstBYE22+n7H8F3NhpB5eM3QUCsaU+W5H09wEBy2AUwb
- oLQAyMUD5AUsBEkJ+85kqDGyGPgQBIrM6rGXmqe1QfRtkL2QyZENIAHoT4l1Zm9D8HVm
- bDKRmHVYw9oryGlPxcTzovYjbwr1j4Nj9h/i5R6/vz5KRVYgi/36auY0HZVLg4NUaKcj
- WT7A27ZndzSRf/VYL6IkdZnHa0lxTLmLnOOJbhkJWEkKmss6bG4nrlcpnZQhjGpmxfa7
- i96kvs5KqIzIwE5ftrhwQZRhKiAKYbCZbGDqnOG0+Id1wxOyzptUGLUIdcdqqLXtARhi
- fQ1Q==
-X-Gm-Message-State: AOJu0Yzu+7eq5RsHDi6s2LLbj8IrDfVd5gQjjcgCPB5ofR802IHlN10V
- qH4wpMuNN80g0DsLeN3A16M1CTsO1desvUgFSRYuRNWyq3+jW1JP/DPV9FxpFeAMvg6gaEYmNVw
- 5xgfPqEXbT9hy0pK1gpiFkek4A72/ujk=
-X-Gm-Gg: ASbGncskERwLlbWZ5Ci6TW7nDfzAxSnHgvYl7olzZT1i38oqb8fi1Q89ZYo7fMQN5pM
- huOtUJtwp0w59TCAYK/5tJ+eUa/3lcUBVFQNmoW9WNsfJcfjxIiLsCktcXj2zYZJNzS8cAWEgFX
- I6P7C5Et28a1agPjGF/ZK7jZl8T7CevLqh545+YcEM/cSuO3x0iXbf7recobB0T3um/KD4kxJaf
- ji1BmWJ0DkRavz/CliOEG0xRWJyHu8hh/MN5aVitCnYOHM6+Sy0FB5u
-X-Google-Smtp-Source: AGHT+IF9vUJq7NpQSRnfoDt2DiDqAixHvCh6KXifOca9f5YAf98+fThZVwLcljhWUVD18dH6cI9OxhcdMr5JwA/OmBk=
-X-Received: by 2002:a05:6402:5c8:b0:637:e490:4600 with SMTP id
- 4fb4d7f45d1cf-639d5b80283mr25139574a12.16.1760495503831; Tue, 14 Oct 2025
- 19:31:43 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1760495481; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=p5Ue8vdwtiJkUWGD86zV+nx690zj7ppnrkqoLBzyCTQ=;
+ b=WpzCn1K4AAflJ8YtygB9f4Q9sHaXNvhMA/JQYl8MANyL68TBKKxGyMKh7joObRoQh+smNJYrYVcqZl1xOLqxXn84moC1+5a6YdLATUq76JFdVuE9euiXiuLkkYVYrArSnyDI/7FMka7gjKnqROsFyX5CgPktAG6jMzityURX1l0=
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0WqEFqm3_1760495474 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 15 Oct 2025 10:31:20 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: farosas@suse.de
+Cc: peterx@redhat.com,
+	qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 03/24] migration: Normalize tls arguments
+Date: Wed, 15 Oct 2025 10:31:14 +0800
+Message-Id: <20251015023114.24876-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250630195913.28033-4-farosas@suse.de>
+References: <20250630195913.28033-4-farosas@suse.de>
 MIME-Version: 1.0
-References: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
-In-Reply-To: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 15 Oct 2025 12:31:17 +1000
-X-Gm-Features: AS18NWCcb-wfa9ZY4kCaGLgWq46oXhRq5jWEl6ht5DIJB8_SCehCz9ciflTgtJM
-Message-ID: <CAKmqyKP-AvSfOk4rXAsT1vPdWGfVBxd6+pgw080_tAijEUY4Og@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv: Correct mmu-type property of sifive_u harts in
- device tree
-To: Zejun Zhao <jelly.zhao.42@gmail.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
+Received-SPF: pass client-ip=115.124.30.101;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-101.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,44 +68,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 14, 2025 at 1:00=E2=80=AFAM Zejun Zhao <jelly.zhao.42@gmail.com=
-> wrote:
->
-> Correct mmu-type property of sifive_u harts from Sv48 to Sv39 in 64-bit
-> mode since it's the only supported SATP mode.
->
-> Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
+Fabiano Rosas wrote on Mon, 30 Jun 2025 16:58:52 -0300:
 
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
+> The migration parameters tls_creds, tls_authz and tls_hostname
+> currently have a non-uniform handling. When used as arguments to
+> migrate-set-parameters, their type is StrOrNull and when used as
+> return value from query-migrate-parameters their type is a plain
+> string.
+> 
+> Not only having to convert between the types is cumbersome, but it
+> also creates the issue of requiring two different QAPI types to be
+> used, one for each command. MigrateSetParameters is used for
+> migrate-set-parameters with the TLS arguments as StrOrNull while
+> MigrationParameters is used for query-migrate-parameters with the TLS
+> arguments as str.
+> 
+> Since StrOrNull could be considered a superset of str, change the type
+> of the TLS arguments in MigrationParameters to StrOrNull. Also ensure
+> that QTYPE_QNULL is never used.
+> 
+> 1) migrate-set-parameters will always write QTYPE_QSTRING to
+>   s->parameters, either an empty or non-empty string.
+> 
+> 2) query-migrate-parameters will always return a QTYPE_QSTRING, either
+>   empty or non-empty.
+> 
+> 3) the migrate_tls_* helpers will always return a non-empty string or
+>   NULL, for the internal migration code's consumption.
+> 
+> Points (1) and (2) above help simplify the parameters validation and
+> the query command handling because s->parameters is already kept in
+> the format that query-migrate-parameters (and info migrate_paramters)
+> expect. Point (3) is so people don't need to care about StrOrNull in
+> migration code.
+> 
+> This will allow the type duplication to be removed in the next
+> patches.
+> 
+> Note that the type of @tls_creds, @tls-hostname, @tls-authz changes
+> from str to StrOrNull in introspection of the query-migrate-parameters
+> command. We accept this imprecision to enable de-duplication.
+> 
+> There's no need to free the TLS options in
+> migration_instance_finalize() because they're freed by the qdev
+> properties .release method.
+> 
+> Temporary in this patch:
+> migrate_params_test_apply() copies s->parameters into a temporary
+> structure, so it's necessary to drop the references to the TLS options
+> if they were not set by the user to avoid double-free. This is fixed
+> in the next patches.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  hw/riscv/sifive_u.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index d69f942cfb..3e1ed209ca 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -176,7 +176,7 @@ static void create_fdt(SiFiveUState *s, const MemMapE=
-ntry *memmap,
->              if (is_32_bit) {
->                  qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "risc=
-v,sv32");
->              } else {
-> -                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "risc=
-v,sv48");
-> +                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "risc=
-v,sv39");
->              }
->              riscv_isa_write_fdt(&s->soc.u_cpus.harts[cpu - 1], fdt, node=
-name);
->          } else {
-> --
-> 2.43.0
->
->
+>  migration/migration-hmp-cmds.c |   7 +-
+>  migration/options.c            | 156 ++++++++++++++++++++-------------
+>  migration/options.h            |   1 +
+>  migration/tls.c                |   2 +-
+>  qapi/migration.json            |   6 +-
+>  5 files changed, 106 insertions(+), 66 deletions(-)
+> 
+> +void migrate_tls_opts_free(MigrationParameters *params)
+> +{
+> +    qapi_free_StrOrNull(params->tls_creds);
+> +    qapi_free_StrOrNull(params->tls_hostname);
+> +    qapi_free_StrOrNull(params->tls_authz);
+> +}
+> +
+> +/* either non-empty or empty string */
+> +static void tls_opt_to_str(StrOrNull **tls_opt)
+> +{
+> +    StrOrNull *opt = *tls_opt;
+> +
+> +    if (!opt) {
+> +        return;
+> +    }
+> +
+> +    switch (opt->type) {
+> +    case QTYPE_QSTRING:
+> +        return;
+> +    case QTYPE_QNULL:
+> +        qobject_unref(opt->u.n);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    opt->type = QTYPE_QSTRING;
+> +    opt->u.s = g_strdup("");
+> +    *tls_opt = opt;
+> +}
+> +
+
+Can these two functions be changed to be general, not just for tls?
+IMHO: 
+void migrate_strornull_opts_free(MigrationParameters *params)
+boid strornull_to_str(StrOrNull **the_opt)
+
+In this way, when members of type StrOrNull are added later,
+the function can be reused.
+
+--
+Bin Guo
+
 
