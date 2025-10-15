@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCE9CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 23:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17020CCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 23:31:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Ax1-0008Un-Jo; Wed, 15 Oct 2025 19:30:35 -0400
+	id 1v9Axk-0000Ld-Bg; Wed, 15 Oct 2025 19:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9Awz-0008Uc-H1
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:30:33 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1v9Axi-0000LG-4K
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:31:18 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9Awx-0001n9-Fa
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:30:33 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b6a0a7f3a47so73425a12.1
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 16:30:30 -0700 (PDT)
+ id 1v9Axe-0001ov-OE
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:31:17 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-33274fcf5c1so143397a91.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 16:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760571029; x=1761175829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760571073; x=1761175873; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PebC4szHKqlev3/Mp2zb+nesOCEjB/5SOba7/2Fyo0Q=;
- b=DXStmIoNnLfXu/KHESddf1shOXbm12LKTKxF6p3HbL5LIHPBnD1V2MnAYfY21avKLr
- reb6IQ6rqNigjYAcbznnd9/3tw2AsbeM6aVmBiv2zjyPLC58KKd/thBNgHa7CUJ+R56S
- 3nPJr1Q063JwqX+g2u2Nngm/B0sKzTIXXG6lU6tuixoyItOkZnQx8Pi0ezHTe0oXO1cA
- bQd02rYaE1nyDkU712uXg7oFWKCToXM1M5LyU7/ouFLL7tpwx+t6I9F5ukCyh/3xfBDI
- BE+4/eq5ysxTc1xCebZfwvdxyhOGyeWUsr3MJ/RGu+3bXVxLd073W0na+8j11YY1qsI2
- iCwg==
+ bh=fqnsCpfAqmmPC45CT/JBdLDKqQUBjon8Fhb5HYhYUiQ=;
+ b=hYWusvckuUURGwAvgyeHVpPP0V495oSrcOzsxD5F3Jf6olwN84cr0odt5rLxEX9ZeJ
+ lTlizL3mE3wXK0kQVc8woFymWDubiPtCJv4hsw7LkKBa8YGhzfXw0RDgfjYvaT/Dr7u6
+ nOFRaZkhtIQqs/6RXVps2u0aNNM25Qtna+h5qqmMdOe6bPW5XqFzeWOaUy/TUa49iqyR
+ KsI5rrjyUdiMWQh0I0Q8Ec4hS7+9JkdW5RnnLMx3bcfy4U6PbxK31zfm9ej5Bo/2f4vh
+ bFSJOZP6L1uutTSEJ4epnEzWcLE9RFcgckVaqf1dWzqvJbmqZcpibfMTQeG9GOMnPwBE
+ ck6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760571029; x=1761175829;
+ d=1e100.net; s=20230601; t=1760571073; x=1761175873;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PebC4szHKqlev3/Mp2zb+nesOCEjB/5SOba7/2Fyo0Q=;
- b=M/vQ/NFF+L7+A6vAXhz4fj2/A1QpscbJ+XSsvB2Bd9lNvgC3IHCyT8JVGxwKfnMoB8
- HxQETCEKwiQjkHWR+sLDS6sx5D5st8dXfH7SxMUct4Km0uwDNCV9miY97cmTRX09sGY5
- lBXxZa1D1AwltA76eFLZLlUYIdDOvHx54fUoE3vW9NPMEM0Rm/HMMX1LgDLq5w7/NJuC
- +rr8q6X63+xcuEZgD5lTxqJvxa9yW2ZB/ks1xp0p8GoTU0ZsHDnZQkiZ0weKC40JdQxg
- AQO/1DZg2n1DtXmLjDmfdT9DXQAiPTe8QhNDyl01xA6BXNyOayBYM0OFcUAwyWt00kRa
- r99Q==
-X-Gm-Message-State: AOJu0Yz5aAP2rmn5MaPDuKjxkPqUfSXrtH174hGUjlUnlFr4VWouInGC
- TU6rRePNi3KMO46sS+ijiruka8gbvXyEkOQsYjMS5um53G7yPtOojDmACz4mPj6JLqsXsEOGttz
- 66PQh
-X-Gm-Gg: ASbGnctsFRaPjhxUnpnLPgZaF440BQUCfjl5FB/5RlsFiAuGpC97OJXWTHtb4a9CBaQ
- omQX2CEJlU7kNsbmjUk+UdMHeomx5sUC+Ogs4SBJhG5kr4t4w6Uz+e1P+h0Z2i5JzA/pnrtqvoB
- pmQziki70zpKTG15hRfWlsrDHgZtKaCGpk3D/y613VqKM4FWg6JAk1YOuNLKM7y2xczd8mXs0FT
- X0P3po3A/50E+qeGmzjlI4OmvAgR0gF086ob8/rP6aRIzFKFDtJwgI0C2dYgzaocOt0VpYBWQn5
- OGEf99bDN+490A9MEuQ9kXiuVZi2/U5sgIi1th75zQZtmkhLTIROzJaHUehqNnvmthqLD/GsGXh
- QfNhpdiVN//zDcHV3+ggGd0rgKJZ0A3gwdrFWp37dXX3orCcU9b65yrcJ58Cc3f/OKWtP85RiZi
- wLL6k27CCY68eSiDty4UDRyozjEi8=
-X-Google-Smtp-Source: AGHT+IGAphnQh4wC0hdn+r2AZRGcPtknb1bliiCJ+gmRsqVw/siGk/M4RBK3t+gFu5jLYt0i62Tfvw==
-X-Received: by 2002:a17:903:1448:b0:24b:24dc:91a7 with SMTP id
- d9443c01a7336-29027402b4bmr403780545ad.45.1760571029498; 
- Wed, 15 Oct 2025 16:30:29 -0700 (PDT)
+ bh=fqnsCpfAqmmPC45CT/JBdLDKqQUBjon8Fhb5HYhYUiQ=;
+ b=keOQGdnXa3kBKMMD34u6HpZfYLwlm8CZGWC50l8PI0rkzL+OvhunKOCqchc0apFD7V
+ SdFT4DNZf4JeXUNfVqyd7JXSN1rj87y87QooqzE/bFuQV8CcFMDxd4PEcCED+IPh1Xez
+ JT1ciC6ymM1xXWjoFbZQltqDHNj26LM3Q0BxQ1tt2GEsrYJeaifim+PBwoKPVxLlcWQO
+ xlARgjZbrAu0nT8zEWY62E7+VPOV5TpZsKzpF9jkbSdolKIipH3gq8txUa2td3SxuvAN
+ IcZnqzNhS2BzCgxUTsZR1h7JNYeXKC9gxtmZ8HjsziFGb2Y5TDTth8jalWknCs1ZDKeN
+ XQoQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvdpSrDQeheuNwND3y1mb0X5L7o16I9UMpGdrrov8zhes1gpsM7dJxAeUWYY7PXvSC9MvMXuyUrq0s@nongnu.org
+X-Gm-Message-State: AOJu0YzZJ7CH0ZJCEcX+tXGcoVU6JJ9XaPuhyB31evhykI4yV/FadH1w
+ +fqN80Qy4PmB7i5lQ2YrdXbutuscX7zJc2z1wm5K6kAF2382AmEsLn9OdqmibIJXOQ1J5kbXqII
+ R6KM/
+X-Gm-Gg: ASbGncvREKcSbChme23KY6p4iIMtJHsWa/xISlTWKkRxvhtlwsOldYMLQLNow10i3lT
+ WZg4ZiR+MUKNGMdjmt/cP3BsYQkq4KUTGbxvKkHpYBAgln1l2FQb6S+LMpa501mrDaLDXod4Vky
+ UKG4rRCKwWaIqLnOnO1BBCu73NqCPhNNAasoHisrdqb5d9rIgmavpvFsz6rldABKcBy1HIeKTJW
+ T9qQwO0v/lz7jIPa3YctY1xYcgfhVXit3S/1qQgJ8br73f3kT8PaL7vPhtSJfQeH9UIdIxL37MI
+ BTubtEOQs6RHw8ZB6IGPoejbkIGtW/cNhuTBTCtlllqKZcKtQMGkc18tJs15Ia7xseQqWEPXwce
+ AaEn/6T7ocPyKalueT2rIe0k3DBi5tRR+E+UWa/mB2JPu9Kr1bn+/yI6aGqtyaQIxqipinDzBWo
+ H9bMwSK4WIF9e4SqwvAu5gQFBIMZ0=
+X-Google-Smtp-Source: AGHT+IHUMsUZwIBaDiJh671aygRsQ1IgDI7w5n/TDZUPn9BuH2+cXs3US/p2T7diN7Q+06emFxOM6w==
+X-Received: by 2002:a17:90b:3a92:b0:313:1c7b:fc62 with SMTP id
+ 98e67ed59e1d1-33b5137591cmr41695630a91.22.1760571073154; 
+ Wed, 15 Oct 2025 16:31:13 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099a7b032sm7904675ad.63.2025.10.15.16.30.28
+ 41be03b00d2f7-b6a22b7957asm738912a12.26.2025.10.15.16.31.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 16:30:29 -0700 (PDT)
-Message-ID: <43cca2d1-0db3-40d3-9187-1b06dcffe036@linaro.org>
-Date: Wed, 15 Oct 2025 16:30:28 -0700
+ Wed, 15 Oct 2025 16:31:12 -0700 (PDT)
+Message-ID: <0167e505-e769-4305-87b4-f281219a3465@linaro.org>
+Date: Wed, 15 Oct 2025 16:31:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] contrib/plugins/uftrace_symbols.py: generate debug
- files to map symbols to source
+Subject: Re: [PATCH] contrib/plugins/uftrace_symbols.py: generate debug files
+ to map symbols to source
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20251015232809.628043-1-pierrick.bouvier@linaro.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20251013213912.413386-1-pierrick.bouvier@linaro.org>
+ <b7256e10-d5b1-4978-90e1-99d9e76318df@linaro.org>
+ <b4a0756b-3781-433a-aa4c-338d9348da5d@linaro.org>
+ <87347jkgfw.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251015232809.628043-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <87347jkgfw.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,33 +111,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/25 4:28 PM, Pierrick Bouvier wrote:
-> Enhance uftrace_symbols.py to generate .dbg files, containing
-> source location for every symbol present in .sym file.
-> It allows to use `uftrace {replay,dump} --srcline` and show origin of
-> functions, connecting trace to original source code.
+On 10/15/25 2:23 PM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> It was first implemented with pyelftools DWARF parser, which was way
-> too slow (~minutes) to get locations for every symbol in the linux
-> kernel. Thus, we use `addr2line` instead, which runs in seconds.
+>> On 10/15/25 1:40 PM, Philippe Mathieu-Daudé wrote:
+>>> On 13/10/25 23:39, Pierrick Bouvier wrote:
+>>>> Enhance uftrace_symbols.py to generate .dbg files, containing
+>>>> source location for every symbol present in .sym file.
+>>>> It allows to use uftrace {replay,dump} --srcline and show origin of
+>>> `uftrace {replay,dump} --srcline`
+>>>
+>>>> functions, connecting trace to original source code.
+>>>>
+>>>> It was first implemented with pyelftools DWARF parser, which was way
+>>>> to slow (~minutes) to get locations for every symbol in the linux
+>>> s/to/too/
+>>>
+>>>> kernel. Thus, we use addr2line instead, which runs in seconds.
+>>>>
+>>>> As well, there were some bugs with latest pyelftools release,
+>>>> requiring to run master version, which is not installable with pip.
+>>>> Thus, since we now require binutils (addr2line), we can ditch pyelftools
+>>>> based implementation and simply rely on nm to get symbols information,
+>>> `nm`
+>>>
+>>>> which is faster and better.
+>>>>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>> ---
+>>>>     contrib/plugins/uftrace_symbols.py | 108 +++++++++++++++++++----------
+>>>>     1 file changed, 72 insertions(+), 36 deletions(-)
+>>>>
+>>>> diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+>>>> index b49e03203c8..728bf04ce54 100755
+>>>> --- a/contrib/plugins/uftrace_symbols.py
+>>>> +++ b/contrib/plugins/uftrace_symbols.py
+>>>> @@ -1,7 +1,7 @@
+>>>>     #!/usr/bin/env python3
+>>>>     # -*- coding: utf-8 -*-
+>>>>     #
+>>>> -# Create symbols and mapping files for uftrace.
+>>>> +# Create symbols, debug and mapping files for uftrace.
+>>>>     #
+>>>>     # Copyright 2025 Linaro Ltd
+>>>>     # Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>> @@ -9,44 +9,71 @@
+>>>>     # SPDX-License-Identifier: GPL-2.0-or-later
+>>>>        import argparse
+>>>> -import elftools # pip install pyelftools
+>>>>     import os
+>>>> +import subprocess
+>>>>     -from elftools.elf.elffile import ELFFile
+>>>> -from elftools.elf.sections import SymbolTableSection
+>>>> +class Symbol:
+>>>> +    def __init__(self, name, addr, size):
+>>>> +        self.name = name
+>>>> +        # clamp addr to 48 bits, like uftrace entries
+>>>> +        self.addr = addr & 0xffffffffffff
+>>>> +        self.full_addr = addr
+>>>> +        self.size = size
+>>>>     -def elf_func_symbols(elf):
+>>>> -    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
+>>>> -                  if isinstance(s, SymbolTableSection)]
+>>>> -    symbols = []
+>>>> -    for _, section in symbol_tables:
+>>>> -        for _, symbol in enumerate(section.iter_symbols()):
+>>>> -            if symbol_size(symbol) == 0:
+>>>> -                continue
+>>>> -            type = symbol['st_info']['type']
+>>>> -            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
+>>>> -                symbols.append(symbol)
+>>>> -    symbols.sort(key = lambda x: symbol_addr(x))
+>>>> +    def set_loc(self, file, line):
+>>>> +        self.file = file
+>>>> +        self.line = line
+>>>> +
+>>>> +def get_symbols(elf_file):
+>>>> +    symbols=[]
+>>>> +    try:
+>>>> +        out = subprocess.check_output(['nm', '--print-size', elf_file],
+>>>> +                                      stderr=subprocess.STDOUT,
+>>>> +                                      text=True)
+>>> Nitpicking, we might be using cross-compiled `nm`, so maybe not
+>>> hardcode
+>>> the binary name.
+>>>
+>>>> +    except subprocess.CalledProcessError as e:
+>>>> +        print(e.output)
+>>>> +        raise
+>>>> +    out = out.strip().split('\n')
+>>>> +    for line in out:
+>>>> +        info = line.split(' ')
+>>>> +        if len(info) == 3:
+>>>> +            # missing size information
+>>>> +            continue
+>>>> +        addr, size, type, name = info
+>>>> +        # add only symbols from .text section
+>>>> +        if type.lower() != 't':
+>>>> +            continue
+>>>> +        addr = int(addr, 16)
+>>>> +        size = int(size, 16)
+>>>> +        symbols.append(Symbol(name, addr, size))
+>>>> +    symbols.sort(key = lambda x: x.addr)
+>>>>         return symbols
+>>>>     -def symbol_size(symbol):
+>>>> -    return symbol['st_size']
+>>>> -
+>>>> -def symbol_addr(symbol):
+>>>> -    addr = symbol['st_value']
+>>>> -    # clamp addr to 48 bits, like uftrace entries
+>>>> -    return addr & 0xffffffffffff
+>>>> -
+>>>> -def symbol_name(symbol):
+>>>> -    return symbol.name
+>>>> +def find_symbols_locations(elf_file, symbols):
+>>>> +    addresses = '\n'.join([hex(x.full_addr) for x in symbols])
+>>>> +    try:
+>>>> +        out = subprocess.check_output(['addr2line', '--exe', elf_file],
+>>> Ditto (cross compiled)?
+>>>
+>>>> +                                      stderr=subprocess.STDOUT,
+>>>> +                                      input=addresses, text=True)
+>>>> +    except subprocess.CalledProcessError as e:
+>>>> +        print(e.output)
+>>>> +        raise
+>>>> +    out = out.strip().split('\n')
+>>>> +    assert len(out) == len(symbols)
+>>>> +    for i in range(len(symbols)):
+>>>> +        s = symbols[i]
+>>>> +        file, line = out[i].split(':')
+>>>> +        # addr2line may return 'line (discriminator [0-9]+)' sometimes,
+>>>> +        # remove this to keep only line number.
+>>>> +        line = line.split(' ')[0]
+>>>> +        s.set_loc(file, line)
+>>>>        class BinaryFile:
+>>>>         def __init__(self, path, map_offset):
+>>>>             self.fullpath = os.path.realpath(path)
+>>>>             self.map_offset = map_offset
+>>>> -        with open(path, 'rb') as f:
+>>>> -            self.elf = ELFFile(f)
+>>>> -            self.symbols = elf_func_symbols(self.elf)
+>>>> +        self.symbols = get_symbols(self.fullpath)
+>>>> +        find_symbols_locations(self.fullpath, self.symbols)
+>>>>            def path(self):
+>>>>             return self.fullpath
+>>>> @@ -56,7 +83,7 @@ def addr_start(self):
+>>>>            def addr_end(self):
+>>>>             last_sym = self.symbols[-1]
+>>>> -        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
+>>>> +        return last_sym.addr + last_sym.size + self.map_offset
+>>>>            def generate_symbol_file(self, prefix_symbols):
+>>>>             binary_name = os.path.basename(self.fullpath)
+>>>> @@ -66,14 +93,21 @@ def generate_symbol_file(self, prefix_symbols):
+>>>>                 # print hexadecimal addresses on 48 bits
+>>>>                 addrx = "0>12x"
+>>>>                 for s in self.symbols:
+>>>> -                addr = symbol_addr(s)
+>>>> +                addr = s.addr
+>>>>                     addr = f'{addr:{addrx}}'
+>>>> -                size = f'{symbol_size(s):{addrx}}'
+>>>> -                name = symbol_name(s)
+>>>> +                size = f'{s.size:{addrx}}'
+>>>>                     if prefix_symbols:
+>>>> -                    name = f'{binary_name}:{name}'
+>>>> +                    name = f'{binary_name}:{s.name}'
+>>>>                     print(addr, size, 'T', name, file=sym_file)
+>>>>     +    def generate_debug_file(self):
+>>>> +        binary_name = os.path.basename(self.fullpath)
+>>>> +        dbg_file_path = f'./uftrace.data/{binary_name}.dbg'
+>>> Prefer os.path.join().
+>>>
+>>>> +        with open(dbg_file_path, 'w') as dbg_file:
+>>>> +            for s in self.symbols:
+>>>> +                print(f'F: {hex(s.addr)} {s.name}', file=dbg_file)
+>>>> +                print(f'L: {s.line} {s.file}', file=dbg_file)
+>>>> +
+>>>>     def parse_parameter(p):
+>>>>         s = p.split(":")
+>>>>         path = s[0]
+>>>> @@ -84,7 +118,7 @@ def parse_parameter(p):
+>>>>         offset = s[1]
+>>>>         if not offset.startswith('0x'):
+>>>>             err = f'offset "{offset}" is not an hexadecimal constant. '
+>>>> -        err += 'It should starts with "0x".'
+>>>> +        err += 'It should start with "0x".'
+>>>>             raise ValueError(err)
+>>>>         offset = int(offset, 16)
+>>>>         return path, offset
+>>>> @@ -124,7 +158,8 @@ def generate_map(binaries):
+>>>>        def main():
+>>>>         parser = argparse.ArgumentParser(description=
+>>>> -                                     'generate symbol files for uftrace')
+>>>> +                                     'generate symbol files for uftrace. '
+>>>> +                                     'Require binutils (nm and addr2line).')
+>>>>         parser.add_argument('elf_file', nargs='+',
+>>>>                             help='path to an ELF file. '
+>>>>                             'Use /path/to/file:0xdeadbeef to add a mapping offset.')
+>>>> @@ -145,6 +180,7 @@ def main():
+>>>>            for b in binaries:
+>>>>             b.generate_symbol_file(args.prefix_symbols)
+>>>> +        b.generate_debug_file()
+>>>>            generate_map(binaries)
+>>>>     
+>>> No blocking comments:
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>
+>>
+>> Thanks Philippe.
+>>
+>> For the cross compiled tools, I'm not really sure it's worth making
+>> this more complex. Having tooling for a cross architecture is an
+>> advanced setup, and I think it's fair to expect someone to have
+>> binutils installed if they have any cross compiler and cross binutils.
+>> Plus, they can always create a symlink if needed.
+>>
+>> Alex, can you eventually integrate the (other) cosmetic changes?
+>> If not, I can send a new patch if you prefer.
 > 
-> As well, there were some bugs with latest pyelftools release,
-> requiring to run master version, which is not installable with pip.
-> Thus, since we now require binutils (addr2line), we can ditch pyelftools
-> based implementation and simply rely on `nm` to get symbols information,
-> which is faster and better.
+> If you could send a v2 that would be great.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   contrib/plugins/uftrace_symbols.py | 116 +++++++++++++++++++----------
->   1 file changed, 76 insertions(+), 40 deletions(-)
-v2
---
+>>
+>> Thanks,
+>> Pierrick
+> 
 
-- Cosmetic changes in commit description
-- use os.path.join to build paths
+v2 sent:
+https://lore.kernel.org/qemu-devel/20251015232809.628043-1-pierrick.bouvier@linaro.org/T/#u
 
-Forgot to apply the:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Thanks,
+Pierrick
 
