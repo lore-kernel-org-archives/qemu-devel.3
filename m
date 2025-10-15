@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAEECCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 18:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D452CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 18:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v95rq-0007it-7o; Wed, 15 Oct 2025 14:04:55 -0400
+	id 1v9615-0003WH-Se; Wed, 15 Oct 2025 14:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v95rp-0007bt-99
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:04:53 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1v9613-0003W9-OO
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:14:25 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v95ra-0006h9-MI
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:04:50 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-33067909400so5033053a91.2
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 11:04:36 -0700 (PDT)
+ id 1v960w-0008Fh-Am
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:14:25 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-77f343231fcso4384468b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 11:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760551474; x=1761156274; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760552051; x=1761156851; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6hiE6nKxlxT3dKWxxJ2StkUUJLaYjvE3FN25uqfGzX0=;
- b=NI1LsbXFsxMuaxZeHKxwgdzxe2+PQWYzMTD1QIqjlaowKVAa7R0P0MnBjZVo31JoQS
- dlFqzA1ru/hzDIhkJ9PymH1LoDpApvHMZYoX7Y+/tWGFsukUHMpPuUGMU/yoco+f5OM4
- vTtoPMZ15nq9XsizQDNHIalXj/cG57M/rU08dt7xlAaHrC9NPsP2+G884J5dpo75hgdI
- ZiJe7hhcInpiFpyKgKSpokB3Yid/L3uPe5QgGwFAHHY+2FrbG21tQIXnZ6CrsnRInm+I
- O4tl+3rcu/beXjZf7FBDRZL+lRYW44a8BRtqCLCh9OkQlIR9rMuzIyo3dJtQ4n6FAyAD
- G3Bg==
+ bh=NLOeSRpRhaoS16aLWmxoq8ko7RPyRjPJb2wfqebKudU=;
+ b=aYbIw2ilMb0Fvy0EkEBuKU/04M13GCSbx9abBKuLUxpSs/PWdooAN5AtayJzKIyFFT
+ Q62qf88u12rfjE4YzGGDY+hOi5sYJI5Oky1nRYA3Jsm165aMstfAvzanmlcfXPyNAinV
+ 8TMwT9j+x3i7dRb2uRV5KRHl3iwSEQAM+5CcZcKcFpZXr4gBvZBaPh4n8hYM+OmCuM+X
+ MEzahU0QeygJcFL9ScrHmTqELuvX4iJ58LBUlcGg2PsinIjfCr4jurTbJdbDtjU5RkBP
+ OZYhwJNUaLDo4Rjx9T4tmmZj5eCErI0sf7I5PyRDMbh3F5KoyYSWmp63q2ZXByAL3SYV
+ /R2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760551474; x=1761156274;
+ d=1e100.net; s=20230601; t=1760552051; x=1761156851;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6hiE6nKxlxT3dKWxxJ2StkUUJLaYjvE3FN25uqfGzX0=;
- b=SpS2TSbM16n3Yhq6JTGb8X0jnDpre8a914DuMovAZ87tHSNOum+Nz/czZ9EVONP/jW
- NkJXvTQ+70IeZxT7+q7kPqX5kPk/ofuzSyTRJow4dtLfINdmpUGIWOs7BqiL2v4f/4dy
- ZAji9knKJypn7Bs1rukOy+IWGz4yJ0qJGdsbxNApuztHU75ILWgwLj8QpX8oO6kiDcek
- KsJqPL6rIv/Eep+yHfvVTdA3gOiail6HDtYYFmExQQc18ZgMphRzOEUrcVrBJKeu0b1D
- ofyXgfY+rthSzaQqqF2rX8+n5kL8rW4DKGpllqIOyiCUPcPz5teiWLVsEHWnRza3il8h
- bfPA==
+ bh=NLOeSRpRhaoS16aLWmxoq8ko7RPyRjPJb2wfqebKudU=;
+ b=iS8kb6RdStTui07E7hSn3C03Dje3FYpBLt/u8oec3+j/yEGt317Ln05q+npOfax39j
+ ySVQjd843Q75fxpNDfxlwJGKMpI2yjFWv1rWVktVKWV9F1XbBbWnITRHKC8VjD2eo4mI
+ AMzelkd4DZv4a/bSrK1F8MAmDL8xoHLGyK88TtcQ00rzzYpzrT28yE5eunwKDUSh2whM
+ jkFzeZ/un1Pf7kmwJBKkbkxx/a+TC8zd66ObJLGVKw2hXAXrSEnMzv3gUJw0jab5ehrj
+ gEV5aFxQIEyIluwqj5+FG/fW5yOClC9tBZzFIXEQ8OA6M1Yj4yM4+bIGxzvBCtKpPJqM
+ qfSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXESp1iqGLVR9ZrXgtLbFXwzcQrgq2WWYOplo6IymbBxIL1erKCY0kTi2BqUi3bwZ3HeqJFquhZIuzH@nongnu.org
-X-Gm-Message-State: AOJu0YxhrLqXNvY2CR9cabLQxzEbbHAPySSBGKdggQimUVeD0UHDqiN5
- GrMtqt8pde2YUyFRecFchGMUVGg4iui+2zTff334tJ51qHpur7JDuitsKDyVVZLNQcw=
-X-Gm-Gg: ASbGncuEcph6UAefocIUTb9aTVwVJS3TcXYUlO2nmxmuakKRJBHdxtmDlyVCWNki9yX
- dh4ySfycjYFg3iI5/iZPPbmhJa0CZwBeaHdpDlRqrF7QCF41LNLem1DByoFl1m9ZlOAkoeYWmxJ
- 6N7jSAcyT/e/C7wqB5icFgPM0EqYbWxdaRVEVomTkfwwQN2nlcvckFYXVfU92k8GdXPFWnuf8QD
- 3ypC68PjrUpwDJ/vZ9//NiyDpCkBiDePhuETEK3ECNV23BjIujmA8TE6gZQtJ7i1W+WY45BvY1N
- LaUyXwUwJrwNNbtdjMUpZfIh40JewD7Id9C6sZqPO6rqDNgh7TD2NNMwr1pFtLA9PksHT3Bc6M3
- eaAihN0EQHiqG6e0BY1v8+rt670/vh9nVsRqpPwkJIhB4lmzGXli8+C72BX45Pyja1xIzgaGjGJ
- RnCxaUhAimB8gHA6nF
-X-Google-Smtp-Source: AGHT+IFQJJVSEbMiTR2M9+stAr1D9/2mbt3XeAAZQJJD1tKFMmT1tJ8A2hxNYVwjwe9OpkXa/C+sxQ==
-X-Received: by 2002:a17:90b:38c3:b0:32b:d8af:b636 with SMTP id
- 98e67ed59e1d1-33b51377d87mr41413433a91.19.1760551474072; 
- Wed, 15 Oct 2025 11:04:34 -0700 (PDT)
+ AJvYcCWS/5Pgho0wy6kigzBN0bJ32GHs3rWOQlOGfKJRufCzmeOfySEm3r6tiEyzowwzZAn/97zFxQpq9DXr@nongnu.org
+X-Gm-Message-State: AOJu0YyQdDjA+Y6ULNXC7nuF8O2pXAItTXe/brKmNko8Pg+ps7VkF9oY
+ CqMo5XEXUpIRQ4ZUg8fVBngwb0GnBOJBgMb7pT65MgtcIrSZeJCl3enEbZKnBw6QxsQ=
+X-Gm-Gg: ASbGncvihGaFwbzzIIYe/xR/9hLGYmbn24B5UOKN3WC/CcKUh0FkkVA4kFsw46cMSx7
+ Ev5KdCvUhEYpdrXoSOAYMN69+Pl0bc4lTnsAEBTYc+Ip6Fioo3lbQDxAt/Kg0yyzuAXbgiUb+wz
+ fPIefYYf9J8S1YGDTGxZUpzmAEUAjFjUoPbBL/mqEVgceNzlPXsNiVR5gm4dNXwEsvdeQsTvmcI
+ 6NxXLEr1Bmmh0nW8fXfJ+BnIPLqj/40Cziez8sMquS+av4lzmptCvWx2hMIYUBEA+v+ZqhqBXRu
+ X60s4widsjsnwgxutsQpLjuKHy5PPNVI8rENZy+bcfS+swSmCKvk7Luyh+zOB14CmT12JTazblX
+ xns45wCl2gTHpFkHdk79qCJNlEPJeWWZ8187z+6jFVVqAj5+0HTKoz5AOAA==
+X-Google-Smtp-Source: AGHT+IEU3dZytynKBcJxng7Vi4evaRfLw6saoGl/veGB7f2pxnWoDXqup0pi4U1KINprBBjQxd5LQQ==
+X-Received: by 2002:a17:903:2f83:b0:25c:392c:33be with SMTP id
+ d9443c01a7336-290273a415cmr381194655ad.59.1760552050593; 
+ Wed, 15 Oct 2025 11:14:10 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33b9786e602sm3303778a91.11.2025.10.15.11.04.33
+ d9443c01a7336-29099a7b0d3sm2916105ad.66.2025.10.15.11.14.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 11:04:33 -0700 (PDT)
-Message-ID: <f50ee036-8c6a-46c6-bd9d-9cad63c20229@linaro.org>
-Date: Wed, 15 Oct 2025 11:04:32 -0700
+ Wed, 15 Oct 2025 11:14:10 -0700 (PDT)
+Message-ID: <10307c42-8ac3-443d-9046-30c1b7dad12b@linaro.org>
+Date: Wed, 15 Oct 2025 11:14:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Name gen_goto_tb()'s TB slot index as
- @tb_slot_idx
+Subject: Re: [PATCH v3 04/34] target/riscv: Bugfix
+ riscv_pmu_ctr_get_fixed_counters_val()
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20251010031745.37528-1-philmd@linaro.org>
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
+References: <20251014203512.26282-1-anjo@rev.ng>
+ <20251014203512.26282-5-anjo@rev.ng>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251010031745.37528-1-philmd@linaro.org>
+In-Reply-To: <20251014203512.26282-5-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,28 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/9/25 8:17 PM, Philippe Mathieu-Daudé wrote:
-> tcg_gen_goto_tb() takes an unsigned index to the TB slot (0 or 1).
-> Declare the argument as unsigned and rename it as @tb_slot_idx
-> (which is more descriptive than @n) on all targets.
+On 10/14/25 1:34 PM, Anton Johansson wrote:
+>  From my understanding the upper_half argument only indicates whether the
+> upper or lower 32 bits should be returned, and upper_half will only ever
+> be set when MXLEN == 32.  However, the function also uses upper_half to
+> determine whether the inhibit flags are located in mcyclecfgh or
+> mcyclecfg, but this misses the case where MXLEN == 32, upper_half == false
+> for TARGET_RISCV32 where we would also need to read the upper half field.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Minor simplifications are also made along with some formatting fixes.
+> 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> 
 > ---
->   target/alpha/translate.c         | 8 ++++----
->   target/arm/tcg/translate-a64.c   | 8 ++++----
->   target/arm/tcg/translate.c       | 8 ++++----
->   target/avr/translate.c           | 7 ++++---
->   target/hexagon/translate.c       | 8 ++++----
->   target/loongarch/tcg/translate.c | 7 ++++---
->   target/microblaze/translate.c    | 7 ++++---
->   target/mips/tcg/translate.c      | 7 ++++---
->   target/ppc/translate.c           | 7 ++++---
->   target/riscv/translate.c         | 9 +++++----
->   target/rx/translate.c            | 7 ++++---
->   target/sh4/translate.c           | 7 ++++---
->   target/sparc/translate.c         | 6 +++---
->   target/tricore/translate.c       | 7 ++++---
->   14 files changed, 56 insertions(+), 47 deletions(-)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> NOTE: I've not included any reviewed-bys or modified this patch as it's
+> still unclear to me whether this change is correct or not.  Alistair
+> mentioned that this can get called for MXLEN == 32 and upper_half ==
+> false, meaning the lower field would be accessed.  I'm sure I'm missing
+> something but this is still not clear to me, it seems to me like we
+> always want to access the upper half for MXLEN == 32 since that's were
+> the inhibit flags are stored.
 
+In case there is a doubt, having an assert for this situation would make 
+it future proof.
+g_assert(!(rv32 && !upper_half));
+
+As well, maybe Alistair can point a call site where this combination is 
+possible.
+
+> ---
+>   target/riscv/csr.c | 22 ++++++++++------------
+>   1 file changed, 10 insertions(+), 12 deletions(-)
+>
 
