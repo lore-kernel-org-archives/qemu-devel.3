@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E25A7CCD190
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 06:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91115CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 06:24:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8uuV-0000wQ-PS; Wed, 15 Oct 2025 02:22:55 -0400
+	id 1v8uuo-00016p-N3; Wed, 15 Oct 2025 02:23:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8uuS-0000vZ-De; Wed, 15 Oct 2025 02:22:52 -0400
+ id 1v8uud-0000yt-Oh; Wed, 15 Oct 2025 02:23:04 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8uuK-0002xW-R6; Wed, 15 Oct 2025 02:22:52 -0400
+ id 1v8uuY-0002xW-Km; Wed, 15 Oct 2025 02:23:03 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 15 Oct
- 2025 14:22:11 +0800
+ 2025 14:22:12 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 15 Oct 2025 14:22:11 +0800
+ Transport; Wed, 15 Oct 2025 14:22:12 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 02/12] hw/arm/aspeed_ast27x0-tsp: Add SDRAM region and fix
- naming and size to 512MB
-Date: Wed, 15 Oct 2025 14:21:57 +0800
-Message-ID: <20251015062210.3128710-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 04/12] hw/arm/ast27x0: Add SRAM link and alias mapping for
+ TSP coprocessor
+Date: Wed, 15 Oct 2025 14:21:59 +0800
+Message-ID: <20251015062210.3128710-5-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
 References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.399,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,65 +66,75 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the TSP memory was incorrectly modeled as "SRAM" with
-a 32 MB size. Rename from SRAM to SDRAM and correct size from 32MB
-to 512MB to match hardware.
+AST2700 has a 128KB SRAM, physically mapped at 0x10000000–0x1001FFFF for
+the PSP (CA35) processor. The TSP coprocessor shares this same SRAM but
+accesses it through a different address window at 0x70000000–0x7001FFFF.
+
+To model this shared-memory behavior in QEMU, this commit introduces a
+linked SRAM property and alias mapping between the PSP and TSP subsystems.
+
+Changes include:
+- Add the SRAM alias mapping at 0x70000000 in aspeed_ast27x0-tsp.c.
+- In aspeed_ast27x0-fc.c, connect the TSP coprocessor’s "sram" link to
+  the PSP’s SRAM region.
+- Ensure the alias region is initialized during TSP SoC realization so
+  the TSP can correctly access shared SRAM through its own address space.
+
+This ensures that the TSP and PSP share the same physical SRAM backing.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0-tsp.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ hw/arm/aspeed_ast27x0-fc.c  | 4 ++++
+ hw/arm/aspeed_ast27x0-tsp.c | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 25e668a648..dfac7d1e17 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -150,6 +150,8 @@ static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
+     AspeedCoprocessorState *soc;
+     AspeedCoprocessorClass *sc;
+     Ast2700FCState *s = AST2700A1FC(machine);
++    AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
++
+     s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
+     clock_set_hz(s->tsp_sysclk, 200000000ULL);
+ 
+@@ -166,6 +168,8 @@ static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
+     sc = ASPEED_COPROCESSOR_GET_CLASS(soc);
+     aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART7, sc->uarts_base,
+                             sc->uarts_num, serial_hd(2));
++    object_property_set_link(OBJECT(&s->tsp), "sram",
++                             OBJECT(&psp->sram), &error_abort);
+     if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {
+         return false;
+     }
 diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 9318f8c86c..caeb3392a8 100644
+index caeb3392a8..56b68adf54 100644
 --- a/hw/arm/aspeed_ast27x0-tsp.c
 +++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -16,10 +16,10 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/arm/aspeed_coprocessor.h"
- 
--#define AST2700_TSP_RAM_SIZE (32 * MiB)
-+#define AST2700_TSP_SDRAM_SIZE (512 * MiB)
+@@ -20,6 +20,7 @@
  
  static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
--    [ASPEED_DEV_SRAM]      =  0x00000000,
-+    [ASPEED_DEV_SDRAM]     =  0x00000000,
+     [ASPEED_DEV_SDRAM]     =  0x00000000,
++    [ASPEED_DEV_SRAM]      =  0x70000000,
      [ASPEED_DEV_INTC]      =  0x72100000,
      [ASPEED_DEV_SCU]       =  0x72C02000,
      [ASPEED_DEV_SCUIO]     =  0x74C02000,
-@@ -165,7 +165,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     DeviceState *armv7m;
--    g_autofree char *sram_name = NULL;
-+    g_autofree char *sdram_name = NULL;
-     int uart;
-     int i;
+@@ -195,6 +196,12 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+                                 sc->memmap[ASPEED_DEV_SDRAM],
+                                 &s->sdram);
  
-@@ -184,16 +184,16 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-                              OBJECT(s->memory), &error_abort);
-     sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
- 
--    sram_name = g_strdup_printf("aspeed.dram.%d",
--                                CPU(a->armv7m.cpu)->cpu_index);
--
--    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name,
--                                AST2700_TSP_RAM_SIZE, errp)) {
-+    /* SDRAM */
-+    sdram_name = g_strdup_printf("aspeed.sdram.%d",
-+                                 CPU(a->armv7m.cpu)->cpu_index);
-+    if (!memory_region_init_ram(&s->sdram, OBJECT(s), sdram_name,
-+                                AST2700_TSP_SDRAM_SIZE, errp)) {
-         return;
-     }
-     memory_region_add_subregion(s->memory,
--                                sc->memmap[ASPEED_DEV_SRAM],
--                                &s->sram);
-+                                sc->memmap[ASPEED_DEV_SDRAM],
-+                                &s->sdram);
- 
++    /* SRAM */
++    memory_region_init_alias(&s->sram_alias, OBJECT(s), "sram.alias",
++                             s->sram, 0, memory_region_size(s->sram));
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM],
++                                &s->sram_alias);
++
      /* SCU */
      if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+         return;
 -- 
 2.43.0
 
