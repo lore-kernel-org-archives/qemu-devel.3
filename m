@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEF5CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 00:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51685CCD184
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 01:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8oyN-0007M3-28; Tue, 14 Oct 2025 20:02:31 -0400
+	id 1v8qA9-0000RD-6k; Tue, 14 Oct 2025 21:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v8oyJ-0007LP-Le
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 20:02:29 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from
+ <3b_buaAkKCmYPMbMEScERKSSKPI.GSQUIQY-HIZIPRSRKRY.SVK@flex--lixiaoyan.bounces.google.com>)
+ id 1v8qA8-0000Q9-4j
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 21:18:44 -0400
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v8oyH-0002ia-8E
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 20:02:27 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-3305c08d9f6so347083a91.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 17:02:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3b_buaAkKCmYPMbMEScERKSSKPI.GSQUIQY-HIZIPRSRKRY.SVK@flex--lixiaoyan.bounces.google.com>)
+ id 1v8qA6-0003DB-BM
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 21:18:43 -0400
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-33428befd39so22936813a91.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 18:18:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760486542; x=1761091342; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R8COgXH1ebkpcfSfLdBYECLUfxmKPOTaSeHRmqCzzTA=;
- b=y/SiVLu6gfYvoe+F+TZuwLFOJAdc8i4jTm2XYEGPG/V/Ei0GqfdyDvqL9NUGr+oHGt
- 4r1fgiOm+Qcq15czkzZoFmOZUYLUoFTKG2hVGrCJl47WbYXFp1j3yIKa74BwbYSbkCvx
- TPzexRFZP1cUDrcXcLDq4SWKeBn2ipUrw7iN2zFlcTkTaTaEQ7h7Bv33f0YYChzaxZgB
- IYZuGzmlmJK8D+2TMp3vvUXkKCIGVmhQ7nxYISJ2FQEC1Ym8JAWb1f2p1VvQkvoGVfXY
- aPVWO7ch+U9NraG0mgqwo4Tcus1mr9NrwdDLZNwzJHWsU8MSJE0ahF/0OXktT+oULd/N
- CLEw==
+ d=google.com; s=20230601; t=1760491119; x=1761095919; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=tFcrpMNqUzSK5xY1pNPFjqerwuvA1GbCVm02DaoYGWw=;
+ b=Dhg7rMZniMNCdmiLpWuOYbbQ1V6hAftFwweWxGzonOKqOV+kX/1MDiZeGpYslRn12f
+ HrQ7elrVlPQqhFVoNQlLDd6XM0NdMDyu8qcPwbrX4BpCRYViX6kea3VRiI2EcSwwRi7O
+ Aye07CgUS9RSe80SIqppN5vohke74yzMxdpAna8uNHMJDejUN6ARtDh2IbHLSQHqujzd
+ 1HSfajy4HlRti6Dqfq9aOhslycSfjoXGSl2UvCq8uambVKUWVzCoW10UaN6SfeSwhbvS
+ dHqDjCjtnVHcDNjJYoCh7vNpT5AqC05dw2Mkn+XJLh0jTmruFJ4e0p+HYpf1EITjHVFB
+ Jbyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760486542; x=1761091342;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R8COgXH1ebkpcfSfLdBYECLUfxmKPOTaSeHRmqCzzTA=;
- b=pSq50GJQSks8dpMbE63YnwpKCnmPniyl2adwTH3+8us5N1KlptKiwTvYZKQKJSY6zE
- tRjZY/+w2McOwYoWBsuDylSOBeb0mgsHKmpTOgKRcrgwxaOE58lY4Dc9jT5Djz+nA+z9
- KEgd6ao4P1/7pnkUvQaCGC78U9xL+ISC0rCCQxn3qhP5/5XKluWiI2pMZNWAk94hiANY
- yulFpFa7s6nmDbN0KJKZvu4AXhiLQVVi/9wlYtU81GlaOXPNEZQ3MoR9FPYOsL3Ivgqm
- IoJUKgeIIgF8KW4AWwxfVvGcxl5cXoJapnHhbxtRCfrMO/BX4/RDle2S4QtgyrywhZvi
- 6mog==
-X-Gm-Message-State: AOJu0YweBqE+7oGX2XM6zNZTiakFp4F8iDleYNbg5u3RcmbShwD4O32K
- Y7Yfwc1VyPLKPxL5WGA2pVXlfLsuY8qVXNvWA6RdpwtDsKMSR94C7elTVojOH+u3xQ8=
-X-Gm-Gg: ASbGncso3tYVpGNuHdxz4emQlt8Oo77d/3KxeOehmrNzVq5rtK+YZN7DXJLYO+J4xY0
- w0jwV37Vu3hNzC/M5VQjcoPUgH5lr6eHz/1LsgOd3C7EiJa+SctBN097Z/MWKaHW1l+gCXKjR/Q
- AYDU5ZOadYlzJZXX30bg07+echtt53I7D8UyfA04AskH+0iCUguJEpnyek2/34nNPZK60KfHy7M
- PO/2Jh74cDamAefZ6gSFoNRRmSkGu/q8BPDyWyxc67fxwWLiduFxIpn/F7TfL2mHeNmVfABbxnV
- 3G09vxA89QTpeM9R5kREyL/kNtxvCL7osnY7SdtXN+BqHz66wf4MWKCkpEPP0iKeDz45nWseuev
- dk28daweXGzICLGOHn0NJGK8oUAm7SZRcp6Tcv2F6XnKi4jWFvu/chxMRoIOO6pg7m9Ic
-X-Google-Smtp-Source: AGHT+IHGVFLr7tqjeW67nmNpsy9MVddGNRjIN/SNGCXtbN7bg6BCBFod8KyjZSOopcmhJUgjmhz5Ng==
-X-Received: by 2002:a17:90b:57ce:b0:339:e8c7:d47d with SMTP id
- 98e67ed59e1d1-33b516fc531mr35421760a91.9.1760486541932; 
- Tue, 14 Oct 2025 17:02:21 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33b97860773sm123128a91.6.2025.10.14.17.02.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Oct 2025 17:02:21 -0700 (PDT)
-Message-ID: <dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org>
-Date: Tue, 14 Oct 2025 17:02:20 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 19/21] hw/arm/smmuv3: Use iommu_index to represent the
- security context
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
- <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ d=1e100.net; s=20230601; t=1760491119; x=1761095919;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tFcrpMNqUzSK5xY1pNPFjqerwuvA1GbCVm02DaoYGWw=;
+ b=sHMoUmo6UtBpfouuyqY1lwOSnUKXy0Bx5UW3ehnLJFUrQC1Z0xgu7sj4TfJKly+s32
+ Ddow55f1Z8t8tbU1DOrm+RbTLZxYQ/eLstr/3ywXJluvzqaxTqI16mu86rh46UI4ykJG
+ 66s7DTp7yDRXSbi5eapE0zl3JKtiSyjSaCcCINz4w+VGX2ADNKM9y/MA8LGuKARzD6Gv
+ TxVHqej3SCtVZTiH7GYaKYXsUseWFDTdqA/0MZ5V2Ort+ktXg89ZKzwwtYBF+K/UGaeM
+ UqzDhAopQBGRp0B91h3gt17G7bwAERjcvgzH+VWoZXoiUs4Gy8dDsdvN77EcZg0ks1e3
+ iYLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcXFjPPhTg2EYjpR+9vD5kzm0QgBgMZF4hkUD4BlqnQWpSvyJINZr31vnrImJea4bhUL5Fw5ugYF30@nongnu.org
+X-Gm-Message-State: AOJu0Yyr6/EacfY5q2Hde1pTQG8Xq7qqumB+Y7Ksn7zBWYpN7zscxFXW
+ M2nOOpsnl6IqeHzxhPr+LzNt+G8cy5TZ6lowNLbtAGHo/7/yoI0iBFg6CdLxwyjlyoja+GvJPO2
+ E3hbvplHQBeb3PlWR6g==
+X-Google-Smtp-Source: AGHT+IFZhDR+vh+kuynIcVAxf3GbvjB/ncgWkyQSmW0gDVUzvv6yS2h499GC8W5hXkls5C1vc5Jx5D8QVwS7qww=
+X-Received: from pjblt11.prod.google.com ([2002:a17:90b:354b:b0:33b:51fe:1a8d])
+ (user=lixiaoyan job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:1648:b0:32e:e18a:368c with SMTP id
+ 98e67ed59e1d1-33b51106a8emr38759811a91.7.1760491119120; 
+ Tue, 14 Oct 2025 18:18:39 -0700 (PDT)
+Date: Wed, 15 Oct 2025 01:18:27 +0000
+In-Reply-To: <20251015011830.1688468-1-lixiaoyan@google.com>
+Mime-Version: 1.0
+References: <20251015011830.1688468-1-lixiaoyan@google.com>
+X-Mailer: git-send-email 2.51.0.788.g6d19910ace-goog
+Message-ID: <20251015011830.1688468-4-lixiaoyan@google.com>
+Subject: [PATCH v2 3/5] hw/arm/npcm8xx.c: Add all IRQ ENUMs
+From: Coco Li <lixiaoyan@google.com>
+To: peter.maydell@linaro.org, clg@kaod.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, lixiaoyan@google.com, 
+ flwu@google.com, andrew@codeconstruct.com.au, philmd@linaro.org, 
+ Hao Wu <wuhaotsh@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3b_buaAkKCmYPMbMEScERKSSKPI.GSQUIQY-HIZIPRSRKRY.SVK@flex--lixiaoyan.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
+X-Spam_score_int: -88
+X-Spam_score: -8.9
+X-Spam_bar: --------
+X-Spam_report: (-8.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.269,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UPPERCASE_50_75=0.008,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,144 +97,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
+In the process of implementing serial gpio and adding the corresponding
+ENUMs, also complete the list for npcm8xx.
 
-On 10/12/25 8:15 AM, Tao Tang wrote:
-> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to select
-> the programming interface. To support future extensions like RME, which
-> defines four security states (Non-secure, Secure, Realm, and Root), the
-> QEMU model must cleanly separate these contexts for all operations.
-> 
-> This commit leverages the generic iommu_index to represent this
-> security context. The core IOMMU layer now uses the SMMU's .attrs_to_index
-> callback to map a transaction's ARMSecuritySpace attribute to the
-> corresponding iommu_index.
-> 
-> This index is then passed down to smmuv3_translate and used throughout
-> the model to select the correct register bank and processing logic. This
-> makes the iommu_index the clear QEMU equivalent of the architectural
-> SEC_SID, cleanly separating the contexts for all subsequent lookups.
-> 
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->   hw/arm/smmuv3.c | 36 +++++++++++++++++++++++++++++++++++-
->   1 file changed, 35 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index c9c742c80b..b44859540f 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1080,6 +1080,38 @@ static void smmuv3_fixup_event(SMMUEventInfo *event, hwaddr iova)
->       }
->   }
->   
-> +static SMMUSecSID smmuv3_attrs_to_sec_sid(MemTxAttrs attrs)
-> +{
-> +    switch (attrs.space) {
-> +    case ARMSS_Secure:
-> +        return SMMU_SEC_SID_S;
-> +    case ARMSS_NonSecure:
-> +    default:
-> +        return SMMU_SEC_SID_NS;
-> +    }
-> +}
-> +
-> +/*
-> + * ARM IOMMU index mapping (implements SEC_SID from ARM SMMU):
-> + * iommu_idx = 0: Non-secure transactions
-> + * iommu_idx = 1: Secure transactions
-> + *
-> + * The iommu_idx parameter effectively implements the SEC_SID
-> + * (Security Stream ID) attribute from the ARM SMMU architecture specification,
-> + * which allows the SMMU to differentiate between different security state
-> + * transactions at the hardware level.
-> + */
-> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
-> +{
-> +    return (int)smmuv3_attrs_to_sec_sid(attrs);
-> +}
-> +
-> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
-> +{
-> +    /* Support 2 IOMMU indexes for now: NS/S */
-> +    return SMMU_SEC_SID_NUM;
-> +}
-> +
->   /* Entry point to SMMU, does everything. */
->   static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->                                         IOMMUAccessFlags flag, int iommu_idx)
-> @@ -1087,7 +1119,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->       SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->       SMMUv3State *s = sdev->smmu;
->       uint32_t sid = smmu_get_sid(sdev);
-> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUSecSID sec_sid = iommu_idx;
->       SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->       SMMUEventInfo event = {.type = SMMU_EVT_NONE,
->                              .sid = sid,
-> @@ -2540,6 +2572,8 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
->   
->       imrc->translate = smmuv3_translate;
->       imrc->notify_flag_changed = smmuv3_notify_flag_changed;
-> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
-> +    imrc->num_indexes = smmuv3_num_indexes;
->   }
->   
->   static const TypeInfo smmuv3_type_info = {
+Signed-off-by: Coco Li <lixiaoyan@google.com>
+Reviewed-by: Hao Wu <wuhaotsh@google.com>
+---
+ hw/arm/npcm8xx.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
-I noticed that this commit breaks boot of a simple Linux kernel. It was 
-already the case with v2, and it seems there is a deeper issue.
+diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+index a276fea698..10887d07fa 100644
+--- a/hw/arm/npcm8xx.c
++++ b/hw/arm/npcm8xx.c
+@@ -92,8 +92,14 @@ enum NPCM8xxInterrupt {
+     NPCM8XX_GMAC2_IRQ,
+     NPCM8XX_GMAC3_IRQ,
+     NPCM8XX_GMAC4_IRQ,
+-    NPCM8XX_MMC_IRQ             = 26,
++    NPCM8XX_ESPI_IRQ,
++    NPCM8XX_SIOX0_IRQ,
++    NPCM8XX_SIOX1_IRQ,
++    NPCM8XX_MC_IRQ              = 25,
++    NPCM8XX_MMC_IRQ,
+     NPCM8XX_PSPI_IRQ            = 28,
++    NPCM8XX_VDMA_IRQ,
++    NPCM8XX_MCTP_IRQ,
+     NPCM8XX_TIMER0_IRQ          = 32,   /* Timer Module 0 */
+     NPCM8XX_TIMER1_IRQ,
+     NPCM8XX_TIMER2_IRQ,
+@@ -116,6 +122,14 @@ enum NPCM8xxInterrupt {
+     NPCM8XX_OHCI1_IRQ,
+     NPCM8XX_EHCI2_IRQ,
+     NPCM8XX_OHCI2_IRQ,
++    NPCM8XX_SPI1_IRQ            = 82,
++    NPCM8XX_RNG_IRQ             = 84,
++    NPCM8XX_SPI0_IRQ            = 85,
++    NPCM8XX_SPI3_IRQ            = 87,
++    NPCM8XX_GDMA0_IRQ           = 88,
++    NPCM8XX_GDMA1_IRQ,
++    NPCM8XX_GDMA2_IRQ,
++    NPCM8XX_OTP_IRQ             = 92,
+     NPCM8XX_PWM0_IRQ            = 93,   /* PWM module 0 */
+     NPCM8XX_PWM1_IRQ,                   /* PWM module 1 */
+     NPCM8XX_MFT0_IRQ            = 96,   /* MFT module 0 */
+@@ -128,6 +142,11 @@ enum NPCM8xxInterrupt {
+     NPCM8XX_MFT7_IRQ,                   /* MFT module 7 */
+     NPCM8XX_PCI_MBOX1_IRQ       = 105,
+     NPCM8XX_PCI_MBOX2_IRQ,
++    NPCM8XX_GPIO231_IRQ         = 108,
++    NPCM8XX_GPIO233_IRQ,
++    NPCM8XX_GPIO234_IRQ,
++    NPCM8XX_GPIO93_IRQ,
++    NPCM8XX_GPIO94_IRQ,
+     NPCM8XX_GPIO0_IRQ           = 116,
+     NPCM8XX_GPIO1_IRQ,
+     NPCM8XX_GPIO2_IRQ,
+@@ -163,6 +182,12 @@ enum NPCM8xxInterrupt {
+     NPCM8XX_SMBUS24_IRQ,
+     NPCM8XX_SMBUS25_IRQ,
+     NPCM8XX_SMBUS26_IRQ,
++    NPCM8XX_FLM0_IRQ            = 160,
++    NPCM8XX_FLM1_IRQ,
++    NPCM8XX_FLM2_IRQ,
++    NPCM8XX_FLM3_IRQ,
++    NPCM8XX_JMT1_IRQ            = 188,
++    NPCM8XX_JMT2_IRQ,
+     NPCM8XX_UART0_IRQ           = 192,
+     NPCM8XX_UART1_IRQ,
+     NPCM8XX_UART2_IRQ,
+@@ -170,6 +195,22 @@ enum NPCM8xxInterrupt {
+     NPCM8XX_UART4_IRQ,
+     NPCM8XX_UART5_IRQ,
+     NPCM8XX_UART6_IRQ,
++    NPCM8XX_I3C0_IRQ            = 224,
++    NPCM8XX_I3C1_IRQ,
++    NPCM8XX_I3C2_IRQ,
++    NPCM8XX_I3C3_IRQ,
++    NPCM8XX_I3C4_IRQ,
++    NPCM8XX_I3C5_IRQ,
++    NPCM8XX_A35INTERR_IRQ       = 240,
++    NPCM8XX_A35EXTERR_IRQ,
++    NPCM8XX_PMU0_IRQ,
++    NPCM8XX_PMU1_IRQ,
++    NPCM8XX_PMU2_IRQ,
++    NPCM8XX_PMU3_IRQ,
++    NPCM8XX_CTI0_IRQ,
++    NPCM8XX_CTI1_IRQ,
++    NPCM8XX_CTI2_IRQ,
++    NPCM8XX_CTI3_IRQ,
+ };
+ 
+ /* Total number of GIC interrupts, including internal Cortex-A35 interrupts. */
+-- 
+2.51.0.788.g6d19910ace-goog
 
-Virtio drive initialization hangs up with:
-[    9.421906] virtio_blk virtio2: [vda] 20971520 512-byte logical 
-blocks (10.7 GB/10.0 GiB)
-smmuv3_translate_disable smmuv3-iommu-memory-region-24-3 sid=0x18 bypass 
-(smmu disabled) iova:0xfffff040 is_write=1
-
-You can reproduce that with any kernel/rootfs, but if you want a simple 
-recipe (you need podman and qemu-user-static):
-$ git clone https://github.com/pbo-linaro/qemu-linux-stack
-$ cd qemu-linux-stack
-$ ./build_kernel.sh
-$ ./build_rootfs.sh
-$ /path/to/qemu-system-aarch64 \
--nographic -M virt,iommu=smmuv3 -cpu max -kernel out/Image.gz \
--append "root=/dev/vda rw" out/host.ext4 -trace 'smmuv3*'
-
-Looking more closely,
-we reach SMMU_TRANS_DISABLE, because iommu_idx associated is 1.
-This values comes from smmuv3_attrs_to_sec_sid, by reading attrs.space, 
-which is ArmSS_Secure.
-
-The problem is that it's impossible to have anything Secure given that 
-all the code above runs in NonSecure world.
-After investigation, the original value read from attrs.space has not 
-been set anywhere, and is just the default zero-initialized value coming 
-from pci_msi_trigger. It happens that it defaults to SEC_SID_S, which 
-probably matches your use case with hafnium, but it's an happy accident.
-
-Looking at the SMMU spec, I understand that SEC_SID is configured for 
-each stream, and can change dynamically.
-On the opposite, a StreamID is fixed and derived from PCI bus and slot 
-for a given device.
-
-Thus, I think we are missing some logic here.
-I'm still trying to understand where the SEC_SID should come from initially.
-"The association between a device and the Security state of the 
-programming interface is a system-defined property."
-Does it mean we should be able to set a QEMU property for any device?
-
-Does anyone familiar with this has some idea?
-
-As well, we should check the SEC_SID found based on SMMU_S_IDR1.SECURE_IMPL.
-3.10.1 StreamID Security state (SEC_SID)
-If SMMU_S_IDR1.SECURE_IMPL == 0, then incoming transactions have a 
-StreamID, and either:
-• A SEC_SID identifier with a value of 0.
-• No SEC_SID identifer, and SEC_SID is implicitly treated as 0.
-If SMMU_S_IDR1.SECURE_IMPL == 1, incoming transactions have a StreamID, 
-and a SEC_SID identifier.
-
-Regards,
-Pierrick
 
