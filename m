@@ -4,78 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE55CCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC029CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v92aU-0006RU-VB; Wed, 15 Oct 2025 10:34:47 -0400
+	id 1v92aa-0006SP-JB; Wed, 15 Oct 2025 10:34:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v92aP-0006Qc-1l
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:34:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1v92aO-0006QJ-15
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:34:43 -0400
+Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v92aI-0005AX-VQ
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:34:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760538868;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ayzj4D6i4XAEak6GWvrS1p9QdKH6A1kCflXEEenQWAs=;
- b=ZZBnSsttrm38bYlsOUEWOnFBwzPLuzr8tKe0F5blqdMxhWrSDIYMihjDtprcgHiAHSXB8c
- cnzsHKUKMOavCjLoB4yMVSNvxLFgYZyxFgQ3jAAx2kwyiETTCKURC3cEGKRqqCTcjM3jEv
- Iu2I/Qp/9/h+e9ljw/Liy9dQsYwQI/I=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-WFJJAKyHOiqHRxcRbBSNXg-1; Wed,
- 15 Oct 2025 10:34:24 -0400
-X-MC-Unique: WFJJAKyHOiqHRxcRbBSNXg-1
-X-Mimecast-MFC-AGG-ID: WFJJAKyHOiqHRxcRbBSNXg_1760538863
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DFE1195419E; Wed, 15 Oct 2025 14:34:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E77630001A5; Wed, 15 Oct 2025 14:34:21 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D4B2121E6A27; Wed, 15 Oct 2025 16:34:18 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,  Yanan Wang <wangyanan55@huawei.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v5 1/3] hw/uefi: add query-firmware-log monitor command
-In-Reply-To: <20251015120637.1736402-2-kraxel@redhat.com> (Gerd Hoffmann's
- message of "Wed, 15 Oct 2025 14:06:35 +0200")
-References: <20251015120637.1736402-1-kraxel@redhat.com>
- <20251015120637.1736402-2-kraxel@redhat.com>
-Date: Wed, 15 Oct 2025 16:34:18 +0200
-Message-ID: <87y0pc9qtx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1v92aI-0005Ag-J8
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:34:39 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id AA1A814001C2;
+ Wed, 15 Oct 2025 10:34:28 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Wed, 15 Oct 2025 10:34:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+ t=1760538868; x=1760625268; bh=FGvl5cpkCEBcFgwW7RfJrsv6SujYUKtm
+ pj3H63Jsbng=; b=EMH3jSgf6cicPglp2UmwmbY2I/HuhJ4wUKUJeR/QLOOcWH4z
+ vY2iJx1esJANWp5w3ea5IAwcgVpRZAeJ/7OwMoozGEU44N16C5bhyY0Krn3lrfTs
+ W6CBc1gLSQXYMKF9w8HLFT2IPlxjwbEGZgXD/szKK+0hNqfOAO/q+6BTu0U7JjGF
+ Qft24vDUVjIgGdUidvo9z3QYnHCQMgME6CYu7cpdRf6OsYEqBr6L0O8hFjsA0Pe0
+ RSK42rCsgmCYgLkerAKwaGZpC13OlGlF3+AqaereiFLv5Ara/LOTCkJkoDjw6msL
+ 9QKQcO8cdwyQAicjzZfUCrMuxXb9JIGGbnMklA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760538868; x=
+ 1760625268; bh=FGvl5cpkCEBcFgwW7RfJrsv6SujYUKtmpj3H63Jsbng=; b=C
+ npKWl62q7i28oTVeoc6d7nmdUhAWzONOOklYnMk5hITxhwKHOX08dDPDgadgKM9u
+ OTecwqiHsh8MsLq/g0wN+hnpNwdWJak3RhjJwJxIbZaYsvf+ZVVRTjFd8YKWHNS6
+ mAYD528m833aeI2v6ioc3joxJzbct0U+10u6K8spmR7+8DW0GM/0AI8sk+wiZybp
+ 7q+msw6VZPzO1lCzAUNHXaKlHugZqOAe9eh+vlSdJVuVXWU9lG5gkxzSEy9lWmf4
+ 0ZFmPWAKagXmGX+/bGPIw3yB9gj7zDFk3KX7ygsNyTDlWwQIFaBNSaYAIFQp5WLT
+ hj+wAhqqfEjbp1NyB/QFg==
+X-ME-Sender: <xms:9LDvaA69aZ5FIrnRh3RQrg3vrnRi6znaXiClSC5ckvkXanU9GgpmIQ>
+ <xme:9LDvaIz59Pq94VHC0tP_kudaKwoABLGgo-sfEdsWRPrfKbTbm4N0OUBbWuZ6Dasy9
+ NvWdFukQBWNxCaq93w-ytFSp3PpjGXsU7o9TilapQUP1kDr1hceLg>
+X-ME-Received: <xmr:9LDvaHybpAoc5_zfNEGvUDwa-g8sN9IMgF1NlY67HkMG66eruJbTriKfaeHd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefieeiucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+ hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
+ jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
+ tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
+ nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlh
+ grthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehjrggslhhonhhs
+ khhirdighiiipdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdprhgtph
+ htthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhmpdhrtghp
+ thhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:9LDvaAzGuM_s2bykTFfKsnhdlL-gV8FLmlgfdp_zj-PcZLdHqkfIyg>
+ <xmx:9LDvaBbYwKOnmqVM0wAoIdrVOxspFrTiGBKyITJso5zbp8TAEraCTw>
+ <xmx:9LDvaBUfhEfo-YgS4KflPkhA0DBzcpTf0Ev4sVIN7ONgK08p8Jm-BQ>
+ <xmx:9LDvaPhhw1p1AoEise2RXEHfOh5LJ0ukC5NsHxibB3u3_1rsV9S5fA>
+ <xmx:9LDvaCMubgVUoXETNdR6xQ-CLdyuuw75Z-abJVtxv_ly-JZEffUMaIw0>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Oct 2025 10:34:27 -0400 (EDT)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 93995993;
+ Wed, 15 Oct 2025 14:34:25 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 15 Oct 2025 10:34:25 -0400
+Message-Id: <DDIYXXF8C8O3.BGW7D8I6VZTW@jablonski.xyz>
+Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using
+ hardware-correct aperture sizes
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
+X-Mailer: aerc 0.21.0
+References: <20251001034616.3017119-1-chad@jablonski.xyz>
+ <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
+ <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
+ <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
+ <DDHGPB02664A.3C0GAHH5K41QT@jablonski.xyz>
+ <fee6d690-8302-d3bb-fdec-52e59662f97a@eik.bme.hu>
+In-Reply-To: <fee6d690-8302-d3bb-fdec-52e59662f97a@eik.bme.hu>
+Received-SPF: pass client-ip=103.168.172.153; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-a2-smtp.messagingengine.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,321 +124,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Second thoughts on error handling...
-
-Gerd Hoffmann <kraxel@redhat.com> writes:
-
-> Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
-> optional support for logging to a memory buffer.  There is guest side
-> support -- for example in linux kernels v6.17+ -- to read that buffer.
-> But that might not helpful if your guest stops booting early enough that
-> guest tooling can not be used yet.  So host side support to read that
-> log buffer is a useful thing to have.
 >
-> This patch implements the query-firmware-log both qmp monitor command
-> to read the firmware log.
+> Question is if Radeon has BAR0 matching VRAM size because in that case if=
+=20
+> Rage128 has fixed 64MB and Radeon has size of VRAM for BAR0 then=20
+> CONFIG_APER_SIZE can be half of BAR0 which would work for both. But if=20
+> Radeon also has a fixed size BAR0 larger than actual VRAM (mathching max=
+=20
+> supported VRAM instead then current calculation is needed using VRAM size=
+=20
+> for radeon according to the FCode ROM I've tested. Changing=20
+> CONFIG_APER_SIZE only for Rage128 should not break anything as I did not=
+=20
+> see anything using that so that would also work if we can't find out what=
+=20
+> Radeon has.
 >
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  include/monitor/hmp.h      |   1 +
->  hw/uefi/ovmf-log.c         | 233 +++++++++++++++++++++++++++++++++++++
->  tests/qtest/qmp-cmd-test.c |   2 +
->  hw/uefi/meson.build        |   2 +-
->  qapi/machine.json          |  24 ++++
->  5 files changed, 261 insertions(+), 1 deletion(-)
->  create mode 100644 hw/uefi/ovmf-log.c
->
-> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-> index 31bd812e5f41..0af272b52ac1 100644
-> --- a/include/monitor/hmp.h
-> +++ b/include/monitor/hmp.h
-> @@ -179,5 +179,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
->  void hmp_info_mtree(Monitor *mon, const QDict *qdict);
->  void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
->  void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
-> +void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
->  
->  #endif
-> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-> new file mode 100644
-> index 000000000000..85dda15ab6ad
-> --- /dev/null
-> +++ b/hw/uefi/ovmf-log.c
-> @@ -0,0 +1,233 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * print ovmf debug log
-> + *
-> + * see OvmfPkg/Library/MemDebugLogLib/ in edk2
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +#include "qemu/target-info-qapi.h"
-> +#include "hw/boards.h"
-> +#include "hw/i386/x86.h"
-> +#include "hw/arm/virt.h"
-> +#include "system/dma.h"
-> +#include "monitor/hmp.h"
-> +#include "monitor/monitor.h"
-> +#include "qapi/error.h"
-> +#include "qapi/type-helpers.h"
-> +#include "qapi/qapi-commands-machine.h"
-> +
-> +
-> +/* ----------------------------------------------------------------------- */
-> +/* copy from edk2                                                          */
-> +
-> +#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
-> +#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
-> +
-> +/*
-> + * Mem Debug Log buffer header.
-> + * The Log buffer is circular. Only the most
-> + * recent messages are retained. Older messages
-> + * will be discarded if the buffer overflows.
-> + * The Debug Log starts just after the header.
-> + */
-> +typedef struct {
-> +    /*
-> +     * Magic values
-> +     * These fields are used by tools to locate the buffer in
-> +     * memory. These MUST be the first two fields of the structure.
-> +     * Use a 128 bit Magic to vastly reduce the possibility of
-> +     * a collision with random data in memory.
-> +     */
-> +    uint64_t             Magic1;
-> +    uint64_t             Magic2;
-> +    /*
-> +     * Header Size
-> +     * This MUST be the third field of the structure
-> +     */
-> +    uint64_t             HeaderSize;
-> +    /*
-> +     * Debug log size (minus header)
-> +     */
-> +    uint64_t             DebugLogSize;
-> +    /*
-> +     * edk2 uses this for locking access.
-> +     */
-> +    uint64_t             MemDebugLogLock;
-> +    /*
-> +     * Debug log head offset
-> +     */
-> +    uint64_t             DebugLogHeadOffset;
-> +    /*
-> +     *  Debug log tail offset
-> +     */
-> +    uint64_t             DebugLogTailOffset;
-> +    /*
-> +     * Flag to indicate if the buffer wrapped and was thus truncated.
-> +     */
-> +    uint64_t             Truncated;
-> +    /*
-> +     * Firmware Build Version (PcdFirmwareVersionString)
-> +     */
-> +    char                 FirmwareVersion[128];
-> +} MEM_DEBUG_LOG_HDR;
-> +
-> +
-> +/* ----------------------------------------------------------------------- */
-> +/* qemu monitor command                                                    */
-> +
-> +typedef struct {
-> +    uint64_t             magic1;
-> +    uint64_t             magic2;
-> +} MemDebugLogMagic;
-> +
-> +/* find log buffer in guest memory by searching for the magic cookie */
-> +static dma_addr_t find_ovmf_log_range(dma_addr_t start, dma_addr_t end)
-> +{
-> +    static const MemDebugLogMagic magic = {
-> +        .magic1 = MEM_DEBUG_LOG_MAGIC1,
-> +        .magic2 = MEM_DEBUG_LOG_MAGIC2,
-> +    };
-> +    MemDebugLogMagic check;
-> +    dma_addr_t step = 4 * KiB;
-> +    dma_addr_t offset;
-> +
-> +    for (offset = start; offset < end; offset += step) {
-> +        if (dma_memory_read(&address_space_memory, offset,
-> +                            &check, sizeof(check),
-> +                            MEMTXATTRS_UNSPECIFIED)) {
-> +            /* dma error -> stop searching */
-> +            break;
-> +        }
-> +        if (memcmp(&magic, &check, sizeof(check)) == 0) {
-> +            return offset;
-> +        }
-> +    }
-> +    return (dma_addr_t)-1;
-> +}
 
-This searches a well-known address range for a page starting with 128
-magic bits.
+Card                          VRAM    PCI BAR0   CONFIG_MEMSIZE  CONFIG_APE=
+R_SIZE  AGP_APER_OFFSET
+-----------------------       ----    --------   --------------  ----------=
+------  ---------------
+Rage 128 Pro Ultra TF         32MB     64MB       0x02000000      0x0200000=
+0        0x02000000
+Rage 128 RF/SG AGP            16MB     64MB       0x01000000      0x0200000=
+0        0x02000000
+Radeon R100 QD [Radeon 7200]  64MB    128MB       0x04000000      0x0400000=
+0        N/A
 
-It uses dma_memory_read(), so the address range is in the DMA
-controller's address space.  I assume that's okay.
+Looking at the linux source it appears the R100 doesn't have an
+AGP_APER_OFFSET register. The register at that offset according to the
+linux driver is something else entirely. This suggests that
+the R100 doesn't map AGP memory space into BAR0 in the way that the
+Rage 128 does. It makes sense that the R128's BAR0 would be twice the
+max memory for the architecture given that it also has to do this AGP
+mapping. But if the R100 _doesn't_ then it wouldn't need to make room
+for AGP and it may just be that the BAR0 is the size of the max memory.
+I don't have documentation for the R100 though so it's tough to know for su=
+re.
 
-dma_memory_read() fails basically when nothing is mapped in the DMA
-controller's address space there.
-
-If the function succeeds, we should have an entire page, as long as
-nothing else messes with the mapping.
-
-> +
-> +static dma_addr_t find_ovmf_log(void)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    dma_addr_t start, end, offset;
-> +
-> +    if (target_arch() == SYS_EMU_TARGET_X86_64 &&
-> +        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-> +        X86MachineState *x86ms = X86_MACHINE(ms);
-> +
-> +        /* early log buffer, static allocation in memfd, sec + early pei */
-> +        offset = find_ovmf_log_range(0x800000, 0x900000);
-> +        if (offset != -1) {
-> +            return offset;
-> +        }
-> +
-> +        /*
-> +         * normal log buffer, dynamically allocated close to end of low memory,
-> +         * late pei + dxe phase
-> +         */
-> +        end = x86ms->below_4g_mem_size;
-> +        start = end - MIN(end, 128 * MiB);
-> +        return find_ovmf_log_range(start, end);
-> +    }
-> +
-> +    if (target_arch() == SYS_EMU_TARGET_AARCH64 &&
-> +        object_dynamic_cast(OBJECT(ms), TYPE_VIRT_MACHINE)) {
-> +        VirtMachineState *vms = VIRT_MACHINE(ms);
-> +
-> +        /* edk2 ArmVirt firmware allocations are in the first 128 MB */
-> +        start = vms->memmap[VIRT_MEM].base;
-> +        end = start + 128 * MiB;
-> +        return find_ovmf_log_range(start, end);
-> +    }
-> +
-> +    return (dma_addr_t)-1;
-> +}
-
-Again, if this succeeds, we should have an entire page.
-
-> +
-> +static void handle_ovmf_log_range(GString *out,
-> +                                  dma_addr_t start,
-> +                                  dma_addr_t end,
-> +                                  Error **errp)
-> +{
-> +    if (start > end) {
-> +        return;
-> +    }
-> +
-> +    size_t len = end - start;
-> +    g_string_set_size(out, out->len + len);
-> +    if (dma_memory_read(&address_space_memory, start,
-> +                        out->str + (out->len - len),
-> +                        len, MEMTXATTRS_UNSPECIFIED)) {
-> +        error_setg(errp, "firmware log: buffer read error");
-
-I'm no friend of the error message format "what we're dealing with: what
-went wrong".  What we're dealing with is usually obvious.  Suggest
-something like "can't read firmware log buffer contents".
-
-> +        return;
-> +    }
-> +}
-> +
-> +FirmwareLog *qmp_query_firmware_log(Error **errp)
-> +{
-> +    MEM_DEBUG_LOG_HDR header;
-> +    dma_addr_t offset, base;
-> +    FirmwareLog *ret;
-> +    g_autoptr(GString) log = g_string_new("");
-> +
-> +    offset = find_ovmf_log();
-> +    if (offset == -1) {
-> +        error_setg(errp, "firmware log: not found");
-
-"firmware log buffer not found"
-
-> +        return NULL;
-> +    }
-> +
-> +    if (dma_memory_read(&address_space_memory, offset,
-> +                        &header, sizeof(header),
-> +                        MEMTXATTRS_UNSPECIFIED)) {
-> +        error_setg(errp, "firmware log: header read error");
-
-Can this actually happen?  We should have an entire page...
-
-"can't read firmware log buffer header".
-
-> +        return NULL;
-> +    }
-> +
-> +    if (header.DebugLogSize > MiB) {
-> +        /* default size is 128k (32 pages), allow up to 1M */
-> +        error_setg(errp, "firmware log: log buffer is too big");
-
-"firmware log buffer exceeds 1MiB"
-
-This error goes away in PATCH 3.
-
-> +        return NULL;
-> +    }
-> +
-> +    if (header.DebugLogHeadOffset > header.DebugLogSize ||
-> +        header.DebugLogTailOffset > header.DebugLogSize) {
-> +        error_setg(errp, "firmware log: invalid header");
-
-"firmware log buffer header is invalid"
-
-Could also treat it the same as bad magic, i.e. check it together with
-!find_ovmf_log().
-
-> +        return NULL;
-> +    }
-> +
-> +    base = offset + header.HeaderSize;
-> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
-> +        /* wrap around */
-> +        handle_ovmf_log_range(log,
-> +                              base + header.DebugLogHeadOffset,
-> +                              base + header.DebugLogSize,
-> +                              errp);
-> +        if (*errp) {
-> +            return NULL;
-> +        }
-> +        handle_ovmf_log_range(log,
-> +                              base + 0,
-> +                              base + header.DebugLogTailOffset,
-> +                              errp);
-> +        if (*errp) {
-> +            return NULL;
-> +        }
-> +    } else {
-> +        handle_ovmf_log_range(log,
-> +                              base + header.DebugLogHeadOffset,
-> +                              base + header.DebugLogTailOffset,
-> +                              errp);
-> +        if (*errp) {
-> +            return NULL;
-> +        }
-> +    }
-> +
-> +    ret = g_new0(FirmwareLog, 1);
-> +    if (header.FirmwareVersion[0] != '\0') {
-> +        ret->version = g_strndup(header.FirmwareVersion,
-> +                                 sizeof(header.FirmwareVersion));
-> +    }
-> +    ret->log = g_base64_encode((const guchar *)log->str, log->len);
-> +    return ret;
-> +}
-
-[...]
-
+But to answer your question about the BAR0 matching VRAM on the R100.
+At least for this card it does not. The VRAM is half of the BAR0. I have a
+32MB Radeon arriving soon so I'll be able to test that to see if it also
+follows that pattern or if BAR0 is still 128MB. From what I'm seeing there
+may have been some 128MB R100's, it's not entirely clear to me. So it's
+possible that the 128MB is the max VRAM.
 
