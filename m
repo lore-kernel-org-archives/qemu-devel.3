@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696B9CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 20:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B15CCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 20:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v98TN-00048L-I4; Wed, 15 Oct 2025 16:51:49 -0400
+	id 1v98UQ-0004bv-F9; Wed, 15 Oct 2025 16:52:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98TL-00047o-DY
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:51:47 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98UO-0004Z1-2n
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:52:52 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98TF-0006GA-Sk
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:51:47 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3ee12807d97so32515f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 13:51:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v98UI-0006Ik-Om
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 16:52:51 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-46e6a689bd0so250585e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 13:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760561499; x=1761166299; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760561563; x=1761166363; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tjrmy1Z3U9BD8e55zir0PEsRtADKxT53ZcB5dvG2itg=;
- b=PYtg60vyB7UhO+l0lIRd9nUrXKyajvB61TtbczBktB6YKkq2Khfotljkwh8671TgQR
- 78nGChYpIV1mFS2xtcQqoMS+N4Hl3rz236rT06i52bw2Xwp3S+0NNzQnblUEXQogUl31
- UKW+tn7mZ8djL31IcubqYl7+GNnEuds4Q/rugWtTHt0V/qHQHSfFAtV7lss5ADmF9OBF
- q74ym3YKsw/KYi+JCcU/bHWMOjrZlDKmOI/4rbfu4zaDKHvZShDZPPOEoLZ5N35jkw4D
- cOdd3Err5nvNiXFPLLEi8e12x9tRsqdGQePiJi21Y5sCSAKMx0OkJFJEaEn9eH3EXa1O
- pJOQ==
+ bh=lPc5I6X6oKsdH5ziLNXFRtPd+Y6J3n4ZXk3HdcCgILA=;
+ b=dBKXAm8azSXDj8JcYu637qwj6L2uacffFu194hfM1wyHbEVZmldGQIjKAm6wPL/Dd7
+ F76lVw+3RolqHAYZQOmaO7LfQvk8lehfmVXJnJIES5CTFam1HPUKjhKY35EBV6alxtGe
+ 855wXCrUJWKfWOrgIVwbXF21oKR0b2Evst1XJzRyMT4TFcNfs1C8iSgRRtwBbb3vCfid
+ p8d7ajyGaFG3PdR2p9ea/JEOoCVIbzT7TmHvlsz6o3eQVvIY9GhOzUpnh2m99wQkjZNI
+ sjlw+6YdySoaCeDNumwPSFlIh9dIGkbhqTqRl8XLS5MIyFfnoCrZAP34oPnJwrM32TsH
+ rPGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760561499; x=1761166299;
+ d=1e100.net; s=20230601; t=1760561563; x=1761166363;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tjrmy1Z3U9BD8e55zir0PEsRtADKxT53ZcB5dvG2itg=;
- b=tNUGBTPz+7LjJicIQh4qX2LmXGcvbLFKx2TadMOqlU+761ciLSvUZUry+fYV1nru2n
- OSptGHWeNH+kq0g+AMM8T6rRwHvhg7efmExEhdkx6/DOfrH//cAk1nRPnQMxzrVeI+ye
- J6/ZXZ5O2BZirA1qd0rhlAn0KT+bdsJ8j9VLJkSn/aWPi2cYDZC7eHCkJ3h2INRBL1/q
- MM+3oM1LXyieOsR0YWG6PSFJVVI5TME3oEECJ7LcBkj8O9Q0ZLELffgPiho35/3kYvur
- b+z3yeC99gjc+HxQhYexPfsMKkc8mLEy/b+Ut8vjdfRPB4lP0V4ckf6ZP/QHtDoU+EFO
- J27A==
+ bh=lPc5I6X6oKsdH5ziLNXFRtPd+Y6J3n4ZXk3HdcCgILA=;
+ b=dRosW5isJ2mlTSGfN7M21jTpuoa40WIg9ubogpKKFmojq7QDdG+4j0q5iD/zCjsblm
+ XXeBxpYkCYEpfBhADuks75fFfwMNeDhBgL/er26QusuuQHS4W7YCuB5AQJ2/Fz7op7ZV
+ KFqU9Gp8BLN9az4K9BNtQUuM/rjNLyoKjDZIVyqeWWQPSj704fOQhp/SGx52FDhkmsA6
+ hsrOGobtxfTMLxdWg/vi9sM3/NxsrDK3ZBYnj0BRsvXyAI/gnMnEaLsNXCz2RJfdHRSu
+ 18VstQCtwXIYIeuyJmO8sY4gDqA7c3KvYS4zx4xjOZn6q9842CelxOLnANIREh+k8YAX
+ sTWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlJklCEtL2CVXXf6OdRvfymB39mnQjwu4QMYtSjJU4mm71CZhm3iCZNwIJW3CXRWW7xYZtHanFHasF@nongnu.org
-X-Gm-Message-State: AOJu0Yzw/CYeTSDrllq1Ld3noOyfjMKfxDOJ5qLAsr6xBxZ/chefsbPf
- Y+yBRbfD7hOuNwpjJpRt2wQgcXyn0lsDyaZ3MPr5xrAEQCzpff8kCwL0CS0xLqqv1bo=
-X-Gm-Gg: ASbGncsoTnH5lCCwx+lor5PWcdAuTQYhtj1q2Z9TCfwo7UGu4W2nqpPnMlbqMsKOmuw
- kNRW33I+v9bb4xu9f0wm9pu/wvMQMmpD5es9mae8+zW/Xk1q0IzfQaUsQjy1lsOMed9N80Fjzvx
- 5AlkBzwEaOpA2DHY+kXtRsC94i5vPEHuk1RIpb5IQ5pcDTOuIZfr7FYgOwMfJyzpUmjQB2dVCUd
- NqUl81k0Zh1jAk4nksCE1Lwvz6B8w/Dg7kTg24giu9sud8c6Y8I+0sHK4Hua+a8+90dzBa0eY7a
- fR7RJz1vAspJhA6Ln4mGxH+kzCSR1fzPS7Jv1SoOKaO+DJzwNtLdYc+8m2cbBnK1Mtp/xuaubCH
- FR/7pgQQg92L0goXGsfRZBgDs+VjwOkoJJUXogpcXiBstSvG/DVVvKAQZEvUKgYfP3vKPzfhy8o
- etbFQGkFFkNZR8MEDwKeKroWs=
-X-Google-Smtp-Source: AGHT+IFc166vMA9FgH0KMCkdfdAfkFL5qYy6l3QIlUoA/txUx4qmvGl/2OyS2WpkKUgW/HNBXbKTGw==
-X-Received: by 2002:a05:6000:2dc5:b0:3ec:1b42:1f8d with SMTP id
- ffacd0b85a97d-4266e7cdc81mr18559861f8f.10.1760561498946; 
- Wed, 15 Oct 2025 13:51:38 -0700 (PDT)
+ AJvYcCV5SCo268AY57yHUQidn3+6sB1bEVeP/Hk4qlsdXOFXKjcwVmdKYHkjE94AwzIRLikD2V7s6NO7OSfi@nongnu.org
+X-Gm-Message-State: AOJu0Yy4ZRIxAR6vUmZ7ZGQQo4e7H7yz9QRx+PdnxvDEJ4MKYNuigvlA
+ xxU2dUxLh4EYQ+I3FaJcJAFiDHR7lfFkw0EdN5uj2fvxEKDpvpk0SOBQS0RZcNz1jxk5tN6WGYM
+ x47IpgfIJJQ==
+X-Gm-Gg: ASbGnctd1ovM/rSt8yqcIEiDFXIVeovhCnhm9On+iXqFIzp0BhipzGShqOiaxZuB9qp
+ DMBd9mRdw20qzIS4eVmKttp5F1ibWH7H/MogpQB8ITrYMI+Q32KTRHK84Nz8JMJgL6iGqVvx5eO
+ 8tlDt1vH0vD2jbwthBrEdZ3sn0BUWdB0Ncqk6NuMY7rHdiIG0vEyZ8HEfYFuc5WJKPWDpJfHqHn
+ c+ujYTSFcbn95G0mbJ88+vCwRouRWHhbKkrOoyyOyebQlwSjr/Wzdg+WEM/lS0b/vykr9ioEJJq
+ gbUqeFFmWrjhMjzgKazVVC67p4CaQMOr+8MFhjpyRxfJCif1FZOvyq/8qQLmusbhUVLCrokXjoc
+ eOW3fZP2F2xSErC1EX2ky942Ko6bYlUslFAhBd8kymmZ2Nqf7U0ZzxeHW7wo2SuxmrHDlDtj5PJ
+ cTD8+Yoy19KMlZDKd01pSmGiB8VAMYo2bVULR9d2udtsh4hCY=
+X-Google-Smtp-Source: AGHT+IHy+1hSlY9xBXJ3op2M2D6EbHVL9sfjCfKGKhisKF8F3tASXW0Awf/kls2pN2c5hnHIHBGxqw==
+X-Received: by 2002:a05:600c:3f08:b0:46e:4b42:1dbe with SMTP id
+ 5b1f17b1804b1-46fa9b075f3mr246306435e9.32.1760561563456; 
+ Wed, 15 Oct 2025 13:52:43 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583664sm31002575f8f.22.2025.10.15.13.51.38
+ 5b1f17b1804b1-47101c3b29bsm43738345e9.15.2025.10.15.13.52.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 13:51:38 -0700 (PDT)
-Message-ID: <3395a80a-d3db-4ebd-a11c-e7746d59c9ce@linaro.org>
-Date: Wed, 15 Oct 2025 22:51:37 +0200
+ Wed, 15 Oct 2025 13:52:42 -0700 (PDT)
+Message-ID: <b1aaec8a-c436-458a-bed8-9ae2fe1aaa08@linaro.org>
+Date: Wed, 15 Oct 2025 22:52:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 29/34] target/riscv: Fix size of trigger data
+Subject: Re: [PATCH v3 20/34] target/riscv: Fix size of sw_check_code
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
 References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-30-anjo@rev.ng>
+ <20251014203512.26282-21-anjo@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251014203512.26282-30-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-21-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,73 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/10/25 22:35, Anton Johansson wrote:
-> mcontext is at most 14 bits in size with the H extension, fix to 16
-> bits. trigger_cur indexes into tdata*[RV_MAX_TRIGGERS] which holds 2
-> elements, fix to 8 bits.
-> 
-> Note, the cpu/debug VMSTATE version is bumped, breaking migration from
-> older versions.
+On 14/10/25 22:34, Anton Johansson wrote:
+> The field only holds values of 2 and 3, fix its size to 8 bits and
+> update stores from TCG.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   target/riscv/cpu.h     | 10 +++++-----
->   target/riscv/machine.c | 12 ++++++------
->   2 files changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 85ad250a8f..e404b120bc 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -466,11 +466,11 @@ struct CPUArchState {
->       target_ulong mseccfg;
->   
->       /* trigger module */
-> -    target_ulong trigger_cur;
-> -    target_ulong tdata1[RV_MAX_TRIGGERS];
-> -    target_ulong tdata2[RV_MAX_TRIGGERS];
-> -    target_ulong tdata3[RV_MAX_TRIGGERS];
-> -    target_ulong mcontext;
-> +    uint16_t mcontext;
-> +    uint8_t trigger_cur;
-> +    uint64_t tdata1[RV_MAX_TRIGGERS];
-> +    uint64_t tdata2[RV_MAX_TRIGGERS];
-> +    uint64_t tdata3[RV_MAX_TRIGGERS];
->       struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
->       struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
->       QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 376075b2bd..e86fc58e43 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -239,15 +239,15 @@ static int debug_post_load(void *opaque, int version_id)
->   
->   static const VMStateDescription vmstate_debug = {
->       .name = "cpu/debug",
-> -    .version_id = 2,
-> -    .minimum_version_id = 2,
-> +    .version_id = 3,
-> +    .minimum_version_id = 3,
->       .needed = debug_needed,
->       .post_load = debug_post_load,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
-> -        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
-> -        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
-> -        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-> +        VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
-> +        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
-> +        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
-> +        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
+>   target/riscv/cpu.h                            | 2 +-
+>   target/riscv/translate.c                      | 4 ++--
+>   target/riscv/insn_trans/trans_rvi.c.inc       | 8 ++++----
+>   target/riscv/insn_trans/trans_rvzicfiss.c.inc | 4 ++--
+>   4 files changed, 9 insertions(+), 9 deletions(-)
 
-Pre-existing, but mcontext is not migrated. Deliberate?
-
-Otherwise:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->           VMSTATE_END_OF_LIST()
->       }
->   };
 
 
