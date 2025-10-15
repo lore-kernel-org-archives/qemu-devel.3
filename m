@@ -4,113 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DD1CCD185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88611CCD19D
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 16:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v94JW-0003pi-GD; Wed, 15 Oct 2025 12:25:23 -0400
+	id 1v94K6-0003tB-LJ; Wed, 15 Oct 2025 12:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v94JT-0003pR-9N; Wed, 15 Oct 2025 12:25:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v94JI-0006xM-JA; Wed, 15 Oct 2025 12:25:17 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FDh6sY009916;
- Wed, 15 Oct 2025 16:25:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=VZpRoZ
- Oviq1H1OzYdb/+YlOy4X2WnqtsAcg93jd0oLo=; b=g6/VIAPc/uYUUjguqQ4ShD
- dzm5oiy0enCQVTh1KIMGy+N6VBhIhmiRaOSZHB9p6bmglhiTtPpnhO5RyRF99A4Y
- 6dM/QV54H5F3uQeqH87mf7bA5vEcQp9GdycQh29C+2iUQi7Z/31XTgZUJjl6oqqB
- 5OGV9CHcMPCTKKRevB1Ug7XmG705UT0zncWxNdqHzzhyO67RYe0RvsrRdKCISiyH
- hVF1bRzfrkY7sjrgGcLc3NNboLXh7wUsN0Bz/1h8gCc199gtIvZbeMiE8PPbCiWW
- rA2pfeHpg3C61LUe7nw3xgzLI5yVz7CTjn4h9ZxkBSw16vwXni3okp19JmcvbBVQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qdnpn0k6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Oct 2025 16:25:04 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59FGP4lK013457;
- Wed, 15 Oct 2025 16:25:04 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qdnpn0k3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Oct 2025 16:25:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59FEYHnW028071;
- Wed, 15 Oct 2025 16:25:03 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49tdg98f8j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Oct 2025 16:25:03 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59FGOxl553150146
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Oct 2025 16:24:59 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 467FB2008B;
- Wed, 15 Oct 2025 16:24:59 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1398A2008C;
- Wed, 15 Oct 2025 16:24:57 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.39.24.169])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 15 Oct 2025 16:24:46 +0000 (GMT)
-Date: Wed, 15 Oct 2025 21:54:44 +0530
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2] hw/ppc/pnv: Improve kernel/initrd load failure error
- messages
-Message-ID: <aO_KzHgv-D7fXni2@linux.ibm.com>
-References: <20251015134716.1099351-2-vishalc@linux.ibm.com>
- <aO-pc3Qgi9tmr1JZ@redhat.com>
+ (Exim 4.90_1)
+ (envelope-from <bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev>)
+ id 1v94K3-0003rq-B0
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:25:56 -0400
+Received: from m228-13.mailgun.net ([159.135.228.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1)
+ (envelope-from <bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev>)
+ id 1v94Jw-0006zk-3v
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:25:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mail.yodel.dev;
+ q=dns/txt; s=pdk1; t=1760545532; x=1760552732; 
+ h=Content-Transfer-Encoding: MIME-Version: Message-ID: Date: Subject: Subject:
+ Cc: To: To: From: From: Sender: Sender; 
+ bh=5d6S802Fv3BJtY5FgntR1mdjGl+gAP0dIqcIOXSbF4Q=;
+ b=iEbaKTFjqXsH3a17jUJRjSankjolS4swi8C4IAFzFMzexPitD5sc4Gt3T+toZq8WAG3aBTdaJL/i0dy0QGt3q60AYMyUS95Yh2cpFaYWPDUqHSISmHo0T3v/Sc1dLF5SndwOlSWgAKTi7Z+twRxmLmvkhkcXZAoTSq0/FWFTw5gEsGbW4e0U6ShkUubyndP1C6yOhwSbR/NP5P38efaXc7ot1m8Wfmp7sjXA/KUvO/9UUXH7LQohbATZpBKEjQd9zLXh6mIEoCcwOaH5vJG3uaV/Py5GQV118/7P2KnjJ2rU5n80FMGs58jFJdmvN6i7aEVjlaDdwVyJUbMlm7gGQg==
+X-Mailgun-Sid: WyJjZmM4NiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjMzZTkyMCJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ 99fc67f222b20ff159392bcc92f1073236929c587be6427412e8a6613476bc35 with SMTP id
+ 68efcafc51cb16734be8c16b; Wed, 15 Oct 2025 16:25:32 GMT
+X-Mailgun-Sending-Ip: 159.135.228.13
+To: qemu-devel@nongnu.org
+Cc: Yodel Eldar <yodel.eldar@yodel.dev>,
+ Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] gdbstub/user-target: Map errno values from the host OS to GDB
+Date: Wed, 15 Oct 2025 11:25:20 -0500
+Message-ID: <20251015162520.15736-1-yodel.eldar@yodel.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4949; i=yodel.eldar@yodel.dev;
+ h=from:subject; bh=ZfdeKOSSvsrONVLxpiUfwlfwPOUMTNMX2FW7k8/V2Cg=;
+ b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDLempl+nZuz70+PjMFfD6MPPAYCD5aETVjJZXf4fnuTw
+ o+wmR2qHaUsDGJcDLJiiiyXz0qcdcjd3ZW28sd9mDmsTCBDGLg4BWAiWUoMf3i/KvW+KI/8NGuT
+ 3yFH5SzBGglu+et7GCYJz9nbk1Lq7cPwVzjEZ8aOoq1TJ5RUlHsr2tXEvk8/eaiV/XhHe+izqOL
+ jjAA=
+X-Developer-Key: i=yodel.eldar@yodel.dev; a=openpgp;
+ fpr=D3CD18CD406DBB8A66A9F8DF95EE4FB736654DAC
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aO-pc3Qgi9tmr1JZ@redhat.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAwNSBTYWx0ZWRfX7i+KERfZbfqK
- qjoZj9QeAuCipNHyKNaE3gXY6jcDq4KYV71ojuHhsvozsrsiG0DItBJ5kXP0oCIvUSzuXr7tT2O
- qZNs2hUs+fS3/mJVJRSbgnCHW6zoYXR2xPMw8o3pRUy0xQo3jk5Lhb/nc6N/fIBu1EPi5q5hsww
- GNxVacfuXSvLVm2SBN3+uoD8F2FjJFSNJM0i7r4nqzOwqpyl7yOrSQddAZ9RCG2fbVQOAvPlM6o
- mR7FS9Sgyw97A3Fg0ymuHTX+o2I9T/A7xtUfmv8ix4/x31WTETWHA9ifnp+T5n2cZdlXHfzjyZH
- t2KNorrTrgA9TGyMSJyy+KTIzjP76uNQ9t/p1VncieiTHMqr5APM3x5g+9wTQ0HaFHI6iV96Tmr
- lKSW1MNlAmIapdzrLPPRgFInNI2LaQ==
-X-Proofpoint-ORIG-GUID: BoFofPI--UJ0l5BpDJcvJreOcqmlX6Vr
-X-Proofpoint-GUID: HLW9rOdgiIpVeMxOmudlPEpMnvS-Fweb
-X-Authority-Analysis: v=2.4 cv=MoxfKmae c=1 sm=1 tr=0 ts=68efcae0 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=8nJEP1OIZ-IA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=tZty7TLBYI1PViTkrPsA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_06,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 clxscore=1011 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110005
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=159.135.228.13;
+ envelope-from=bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev;
+ helo=m228-13.mailgun.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,286 +73,159 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yodel Eldar <yodel.eldar@yodel.dev>
+From:  Yodel Eldar via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Daniel,
+This patch introduces the function "gdb_host_errno_to_gdb" that maps
+host-dependent errno values to their GDB protocol-specific
+representations as listed in the GDB manual [1].
 
-Thank you for the review!
+The stub now uses the correct GDB errno values in F reply packets.
 
-On Wed, Oct 15, 2025 at 03:02:27PM +0100, Daniel P. Berrangé wrote:
-> On Wed, Oct 15, 2025 at 07:17:17PM +0530, Vishal Chourasia wrote:
-> > diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-> > index e72bbde2a2..8cf5aadf1f 100644
-> > --- a/hw/core/generic-loader.c
-> > +++ b/hw/core/generic-loader.c
-> > @@ -148,13 +148,14 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
-> >  
-> >          if (size < 0 || s->force_raw) {
-> >              /* Default to the maximum size being the machine's ram size */
-> > -            size = load_image_targphys_as(s->file, s->addr, current_machine->ram_size, as);
-> > +            size = load_image_targphys_as(s->file, s->addr,
-> > +                    current_machine->ram_size, as, errp);
-> >          } else {
-> >              s->addr = entry;
-> >          }
-> >  
-> > -        if (size < 0) {
-> > -            error_setg(errp, "Cannot load specified image %s", s->file);
-> > +        if (*errp || size < 0) {
-> 
-> We should not have to check both *errp and 'size < 0'.
-Sure, I will remove the `*errp`
+[1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
 
-> We must ensure that every code path in 'load_image_targphys_as' that can
-> return -1, will *always* fills in 'errp', so that callers can be sure
-> that *errp is always non-NULL on failure.
-> 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2751
+Reported-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+---
+ gdbstub/user-target.c | 93 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 89 insertions(+), 4 deletions(-)
 
-> > +            error_reportf_err(*errp, "Cannot load specified image %s", s->file);
-> 
-> This method is propagating the error to the caller in its 'errp'
-> parameter, so it is wrong to call error_reportf_err. The latter
-> should only be used at the final point in the callstack which
-> owns the 'Error' parameter.
-> 
-> The only change in this method should be to remove the existing
-> error_setg call.
-Agreed. Removing it altogether.
-
-> > diff --git a/hw/core/guest-loader.c b/hw/core/guest-loader.c
-> > index 3db89d7a2e..d4f749fd6e 100644
-> > --- a/hw/core/guest-loader.c
-> > +++ b/hw/core/guest-loader.c
-> > @@ -101,9 +101,9 @@ static void guest_loader_realize(DeviceState *dev, Error **errp)
-> >  
-> >      /* Default to the maximum size being the machine's ram size */
-> >      size = load_image_targphys_as(file, s->addr, current_machine->ram_size,
-> > -                                  NULL);
-> > -    if (size < 0) {
-> > -        error_setg(errp, "Cannot load specified image %s", file);
-> > +                                  NULL, errp);
-> > +    if (*errp || size < 0) {
-> > +        error_reportf_err(*errp, "Cannot load specified image %s", file);
-> >          return;
-> 
-> Again must not be calling error_reportf_err nor chcking *errp,
-> just remove error_setg().
-Will remove.
-
-> >  
-> > diff --git a/hw/core/loader.c b/hw/core/loader.c
-> > index 477661a025..d8c02786d2 100644
-> > --- a/hw/core/loader.c
-> > +++ b/hw/core/loader.c
-> > @@ -48,6 +48,7 @@
-> >  #include "qapi/error.h"
-> >  #include "qapi/qapi-commands-machine.h"
-> >  #include "qapi/type-helpers.h"
-> > +#include "qemu/units.h"
-> >  #include "trace.h"
-> >  #include "hw/hw.h"
-> >  #include "disas/disas.h"
-> > @@ -61,23 +62,31 @@
-> >  #include "hw/nvram/fw_cfg.h"
-> >  #include "system/memory.h"
-> >  #include "hw/boards.h"
-> > +#include "qapi/error.h"
-> >  #include "qemu/cutils.h"
-> >  #include "system/runstate.h"
-> >  #include "tcg/debuginfo.h"
-> >  
-> > +#include <errno.h>
-> >  #include <zlib.h>
-> >  
-> >  static int roms_loaded;
-> >  
-> >  /* return the size or -1 if error */
-> > -int64_t get_image_size(const char *filename)
-> > +int64_t get_image_size(const char *filename, Error **errp)
-> >  {
-> >      int fd;
-> >      int64_t size;
-> >      fd = open(filename, O_RDONLY | O_BINARY);
-> > -    if (fd < 0)
-> > +    if (fd < 0) {
-> > +        error_setg_file_open(errp, errno, filename);
-> >          return -1;
-> > +    }
-> 
-> This perhaps ought to be changed to call 'qemu_open' which
-> already fills in an Error object, and additionally protects
-> the fd with O_CLOEXEC and handles FD passing with /dev/fdset
-> 
-Make sense, thanks for the suggestion. 
-
-> >      size = lseek(fd, 0, SEEK_END);
-> > +    if (size < 0) {
-> > +        error_setg_errno(errp, errno, "lseek failure");
-> > +        return -1;
-> > +    }
-> >      close(fd);
-> >      return size;
-> >  }
-> > @@ -118,21 +127,28 @@ ssize_t read_targphys(const char *name,
-> >  }
-> >  
-> >  ssize_t load_image_targphys(const char *filename,
-> > -                            hwaddr addr, uint64_t max_sz)
-> > +                            hwaddr addr, uint64_t max_sz, Error **errp)
-> >  {
-> > -    return load_image_targphys_as(filename, addr, max_sz, NULL);
-> > +    return load_image_targphys_as(filename, addr, max_sz, NULL, errp);
-> >  }
-> >  
-> >  /* return the size or -1 if error */
-> >  ssize_t load_image_targphys_as(const char *filename,
-> > -                               hwaddr addr, uint64_t max_sz, AddressSpace *as)
-> > +                               hwaddr addr, uint64_t max_sz, AddressSpace *as,
-> > +                               Error **errp)
-> >  {
-> >      ssize_t size;
-> >  
-> > -    size = get_image_size(filename);
-> > -    if (size < 0 || size > max_sz) {
-> > +    size = get_image_size(filename, errp);
-> > +    if (*errp || size < 0) {
-> 
-> Must not chck *errp, only 'size < 0'.
-Sure. I will modify accordingly.
-
-> 
-> >          return -1;
-> >      }
-> > +
-> > +    if (size > max_sz) {
-> > +        error_setg(errp, "Exceeds maximum image size (%lu MiB)", max_sz / MiB);
-> > +        return -1;
-> > +    }
-> > +
-> >      if (size > 0) {
-> >          if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
-> >              return -1;
-> > @@ -150,7 +166,7 @@ ssize_t load_image_mr(const char *filename, MemoryRegion *mr)
-> >          return -1;
-> >      }
-> >  
-> > -    size = get_image_size(filename);
-> > +    size = get_image_size(filename, NULL);
-> >  
-> >      if (size < 0 || size > memory_region_size(mr)) {
-> >          return -1;
-> 
-> 
-> I'd suggest that we add the Error parameter in one patch, making every
-> caller pass NULL. Then a second patch update the callers to pass a
-> non-NULL errp and use error_report_err to print details, ideally  for
-> more than just the 1 ppc source file. 
-
-sure.
-
-Planning to make following changes as per your review.
-
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-index 8cf5aadf1f..cd636d9d89 100644
---- a/hw/core/generic-loader.c
-+++ b/hw/core/generic-loader.c
-@@ -154,8 +154,7 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
-             s->addr = entry;
-         }
-
--        if (*errp || size < 0) {
--            error_reportf_err(*errp, "Cannot load specified image %s", s->file);
-+        if (size < 0) {
-             return;
-         }
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index 43231e695e..29feb0509c 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -302,6 +302,87 @@ static void hostio_reply_with_data(const void *buf, size_t n)
+                           gdbserver_state.str_buf->len, true);
+ }
+ 
++/*
++ * Map host error numbers to their GDB protocol counterparts.
++ * For the list of GDB File-I/O supported error numbers, please consult:
++ * https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
++ */
++
++static int gdb_host_errno_to_gdb(int errnum)
++{
++    enum {
++        GDB_EPERM        =    1,
++        GDB_ENOENT       =    2,
++        GDB_EINTR        =    4,
++        GDB_EIO          =    5,
++        GDB_EBADF        =    9,
++        GDB_EACCES       =   13,
++        GDB_EFAULT       =   14,
++        GDB_EBUSY        =   16,
++        GDB_EEXIST       =   17,
++        GDB_ENODEV       =   19,
++        GDB_ENOTDIR      =   20,
++        GDB_EISDIR       =   21,
++        GDB_EINVAL       =   22,
++        GDB_ENFILE       =   23,
++        GDB_EMFILE       =   24,
++        GDB_EFBIG        =   27,
++        GDB_ENOSPC       =   28,
++        GDB_ESPIPE       =   29,
++        GDB_EROFS        =   30,
++        GDB_ENOSYS       =   88,
++        GDB_ENAMETOOLONG =   91,
++        GDB_EUNKNOWN     = 9999,
++    };
++
++    switch (errnum) {
++    case EPERM:
++        return GDB_EPERM;
++    case ENOENT:
++        return GDB_ENOENT;
++    case EINTR:
++        return GDB_EINTR;
++    case EIO:
++        return GDB_EIO;
++    case EBADF:
++        return GDB_EBADF;
++    case EACCES:
++        return GDB_EACCES;
++    case EFAULT:
++        return GDB_EFAULT;
++    case EBUSY:
++        return GDB_EBUSY;
++    case EEXIST:
++        return GDB_EEXIST;
++    case ENODEV:
++        return GDB_ENODEV;
++    case ENOTDIR:
++        return GDB_ENOTDIR;
++    case EISDIR:
++        return GDB_EISDIR;
++    case EINVAL:
++        return GDB_EINVAL;
++    case ENFILE:
++        return GDB_ENFILE;
++    case EMFILE:
++        return GDB_EMFILE;
++    case EFBIG:
++        return GDB_EFBIG;
++    case ENOSPC:
++        return GDB_ENOSPC;
++    case ESPIPE:
++        return GDB_ESPIPE;
++    case EROFS:
++        return GDB_EROFS;
++    case ENOSYS:
++        return GDB_ENOSYS;
++    case ENAMETOOLONG:
++        return GDB_ENAMETOOLONG;
++    default:
++        return GDB_EUNKNOWN;
++    }
++}
++
+ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+ {
+     const char *filename = get_filename_param(params, 0);
+@@ -315,7 +396,8 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+     int fd = open(filename, flags, mode);
+ #endif
+     if (fd < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = gdb_host_errno_to_gdb(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+     } else {
+         g_string_printf(gdbserver_state.str_buf, "F%x", fd);
      }
-diff --git a/hw/core/guest-loader.c b/hw/core/guest-loader.c
-index d4f749fd6e..9722474480 100644
---- a/hw/core/guest-loader.c
-+++ b/hw/core/guest-loader.c
-@@ -102,8 +102,7 @@ static void guest_loader_realize(DeviceState *dev, Error **errp)
-     /* Default to the maximum size being the machine's ram size */
-     size = load_image_targphys_as(file, s->addr, current_machine->ram_size,
-                                   NULL, errp);
--    if (*errp || size < 0) {
--        error_reportf_err(*errp, "Cannot load specified image %s", file);
-+    if (size < 0) {
+@@ -327,7 +409,8 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+     int fd = gdb_get_cmd_param(params, 0)->val_ul;
+ 
+     if (close(fd) == -1) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = gdb_host_errno_to_gdb(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+         gdb_put_strbuf();
          return;
      }
-
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index d8c02786d2..68cf982efe 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -77,14 +77,13 @@ int64_t get_image_size(const char *filename, Error **errp)
- {
-     int fd;
-     int64_t size;
--    fd = open(filename, O_RDONLY | O_BINARY);
-+    fd = qemu_open(filename, O_RDONLY | O_BINARY, errp);
-     if (fd < 0) {
--        error_setg_file_open(errp, errno, filename);
-         return -1;
+@@ -350,7 +433,8 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
+ 
+     ssize_t n = pread(fd, buf, bufsiz, offset);
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = gdb_host_errno_to_gdb(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+         gdb_put_strbuf();
+         return;
      }
-     size = lseek(fd, 0, SEEK_END);
-     if (size < 0) {
--        error_setg_errno(errp, errno, "lseek failure");
-+        error_setg_errno(errp, errno, "lseek failure: %s", filename);
-         return -1;
+@@ -373,7 +457,8 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
+     ssize_t n = readlink(filename, buf, BUFSIZ);
+ #endif
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = gdb_host_errno_to_gdb(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+         gdb_put_strbuf();
+         return;
      }
-     close(fd);
-@@ -140,12 +139,12 @@ ssize_t load_image_targphys_as(const char *filename,
-     ssize_t size;
-
-     size = get_image_size(filename, errp);
--    if (*errp || size < 0) {
-+    if (size < 0) {
-         return -1;
-     }
-
-     if (size > max_sz) {
--        error_setg(errp, "Exceeds maximum image size (%lu MiB)", max_sz / MiB);
-+        error_setg(errp, "%s exceeds maximum image size (%lu MiB)", filename, max_sz / MiB);
-         return -1;
-     }
-
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index e293d2ef35..16f3802717 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1072,8 +1072,7 @@ static void pnv_init(MachineState *machine)
-     fw_size = load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
-                                     &errp);
-     if (fw_size < 0) {
--        error_reportf_err(errp, "Could not load OPAL firmware '%s': ",
--                fw_filename);
-+        error_report_err(errp);
-         exit(1);
-     }
-     g_free(fw_filename);
-@@ -1086,8 +1085,7 @@ static void pnv_init(MachineState *machine)
-                                           KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE,
-                                           &errp);
-         if (kernel_size < 0) {
--            error_reportf_err(errp, "Could not load kernel '%s': ",
--                    machine->kernel_filename);
-+            error_report_err(errp);
-             exit(1);
-         }
-     }
-@@ -1098,8 +1096,7 @@ static void pnv_init(MachineState *machine)
-         pnv->initrd_size = load_image_targphys(machine->initrd_filename,
-                                   pnv->initrd_base, INITRD_MAX_SIZE, &errp);
-         if (pnv->initrd_size < 0) {
--            error_reportf_err(errp, "Could not load initial ram disk '%s': ",
--                    machine->initrd_filename);
-+            error_report_err(errp);
-             exit(1);
-         }
-     }
-
-
-- vishalc
+-- 
+2.51.0
 
 
