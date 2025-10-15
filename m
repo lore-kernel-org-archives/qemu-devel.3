@@ -4,55 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBF5CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67B4CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8rJH-0007HZ-Iu; Tue, 14 Oct 2025 22:32:15 -0400
+	id 1v8rSa-0000mH-2o; Tue, 14 Oct 2025 22:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1v8rJ5-0007Fu-JE
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:32:03 -0400
-Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v8rSW-0000lX-BS
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:41:48 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1v8rIu-0004gb-Al
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:32:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1760495481; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=p5Ue8vdwtiJkUWGD86zV+nx690zj7ppnrkqoLBzyCTQ=;
- b=WpzCn1K4AAflJ8YtygB9f4Q9sHaXNvhMA/JQYl8MANyL68TBKKxGyMKh7joObRoQh+smNJYrYVcqZl1xOLqxXn84moC1+5a6YdLATUq76JFdVuE9euiXiuLkkYVYrArSnyDI/7FMka7gjKnqROsFyX5CgPktAG6jMzityURX1l0=
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0WqEFqm3_1760495474 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 15 Oct 2025 10:31:20 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: farosas@suse.de
-Cc: peterx@redhat.com,
-	qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 03/24] migration: Normalize tls arguments
-Date: Wed, 15 Oct 2025 10:31:14 +0800
-Message-Id: <20251015023114.24876-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250630195913.28033-4-farosas@suse.de>
-References: <20250630195913.28033-4-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v8rSP-0005g8-W6
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:41:47 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59F2fJuN061330
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 15 Oct 2025 11:41:19 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=wA2nkoAjrw2F42nkelDD0ZtqCBF9pYTxn8ZInFXqjVA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760496079; v=1;
+ b=LinuVxETo6DrZDPrRTEPlUJGZ8xi6dz4XmjrHiiWeaQNBqwgT50QwMgthPP6tfO1
+ Ttryt628yyjuNp6YFA3ry6ilLYZXPmssl5IFQ3o7U6bhFbbjBF3Op1ztil9YclgY
+ HrHKmRMHNyHnVs0bCNMpd275dzaMH/bV7CBU+ertLml5+Bcysc5ZCNowWF4cHm9l
+ YL34/mOw/9wRPAWBS3WnQXKCuLzXdjS8YX9+DkEbWrSdzNBg8v0WktHe32P3U1cF
+ N+1X1e4R6zMKYXm+etTi+lmzWDkGa2qH2l/nRr3JPk5MEj7zTG9rw+BVNj0oIRvH
+ wz4j9lNrZbMvgP5sa4Rbqg==
+Message-ID: <eea555b4-879c-4fd8-b837-1a8c1e1c76fa@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 15 Oct 2025 11:41:18 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 8/8] tests/functional: add GPU blob allocation test
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251014111234.3190346-1-alex.bennee@linaro.org>
+ <20251014111234.3190346-9-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251014111234.3190346-9-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
-Received-SPF: pass client-ip=115.124.30.101;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,107 +81,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas wrote on Mon, 30 Jun 2025 16:58:52 -0300:
+On 2025/10/14 20:12, Alex Bennée wrote:
+> This is a very short microkernel test that initialises and then maps
+> and unmaps a blob resource.
+> 
+> Without the other fixes in this series it causes QEMU to hang on the
+> unhandled unmap.
 
-> The migration parameters tls_creds, tls_authz and tls_hostname
-> currently have a non-uniform handling. When used as arguments to
-> migrate-set-parameters, their type is StrOrNull and when used as
-> return value from query-migrate-parameters their type is a plain
-> string.
+Thank you for the reproduction case.
+
+I don't have time to look into it this and the next week due to 
+attendance to a conference (MICRO-58), but I'll definitely do so after that.
+
 > 
-> Not only having to convert between the types is cumbersome, but it
-> also creates the issue of requiring two different QAPI types to be
-> used, one for each command. MigrateSetParameters is used for
-> migrate-set-parameters with the TLS arguments as StrOrNull while
-> MigrationParameters is used for query-migrate-parameters with the TLS
-> arguments as str.
-> 
-> Since StrOrNull could be considered a superset of str, change the type
-> of the TLS arguments in MigrationParameters to StrOrNull. Also ensure
-> that QTYPE_QNULL is never used.
-> 
-> 1) migrate-set-parameters will always write QTYPE_QSTRING to
->   s->parameters, either an empty or non-empty string.
-> 
-> 2) query-migrate-parameters will always return a QTYPE_QSTRING, either
->   empty or non-empty.
-> 
-> 3) the migrate_tls_* helpers will always return a non-empty string or
->   NULL, for the internal migration code's consumption.
-> 
-> Points (1) and (2) above help simplify the parameters validation and
-> the query command handling because s->parameters is already kept in
-> the format that query-migrate-parameters (and info migrate_paramters)
-> expect. Point (3) is so people don't need to care about StrOrNull in
-> migration code.
-> 
-> This will allow the type duplication to be removed in the next
-> patches.
-> 
-> Note that the type of @tls_creds, @tls-hostname, @tls-authz changes
-> from str to StrOrNull in introspection of the query-migrate-parameters
-> command. We accept this imprecision to enable de-duplication.
-> 
-> There's no need to free the TLS options in
-> migration_instance_finalize() because they're freed by the qdev
-> properties .release method.
-> 
-> Temporary in this patch:
-> migrate_params_test_apply() copies s->parameters into a temporary
-> structure, so it's necessary to drop the references to the TLS options
-> if they were not set by the user to avoid double-free. This is fixed
-> in the next patches.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->  migration/migration-hmp-cmds.c |   7 +-
->  migration/options.c            | 156 ++++++++++++++++++++-------------
->  migration/options.h            |   1 +
->  migration/tls.c                |   2 +-
->  qapi/migration.json            |   6 +-
->  5 files changed, 106 insertions(+), 66 deletions(-)
+>   tests/functional/aarch64/meson.build      |  1 +
+>   tests/functional/aarch64/test_gpu_blob.py | 73 +++++++++++++++++++++++
+>   2 files changed, 74 insertions(+)
+>   create mode 100755 tests/functional/aarch64/test_gpu_blob.py
 > 
-> +void migrate_tls_opts_free(MigrationParameters *params)
-> +{
-> +    qapi_free_StrOrNull(params->tls_creds);
-> +    qapi_free_StrOrNull(params->tls_hostname);
-> +    qapi_free_StrOrNull(params->tls_authz);
-> +}
-> +
-> +/* either non-empty or empty string */
-> +static void tls_opt_to_str(StrOrNull **tls_opt)
-> +{
-> +    StrOrNull *opt = *tls_opt;
-> +
-> +    if (!opt) {
-> +        return;
-> +    }
-> +
-> +    switch (opt->type) {
-> +    case QTYPE_QSTRING:
-> +        return;
-> +    case QTYPE_QNULL:
-> +        qobject_unref(opt->u.n);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    opt->type = QTYPE_QSTRING;
-> +    opt->u.s = g_strdup("");
-> +    *tls_opt = opt;
-> +}
-> +
+> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+> index 5ad52f93e1d..f6ca33b2be4 100644
+> --- a/tests/functional/aarch64/meson.build
+> +++ b/tests/functional/aarch64/meson.build
+> @@ -26,6 +26,7 @@ tests_aarch64_system_thorough = [
+>     'aspeed_ast2700',
+>     'aspeed_ast2700fc',
+>     'device_passthrough',
+> +  'gpu_blob',
+>     'hotplug_pci',
+>     'imx8mp_evk',
+>     'kvm',
+> diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/functional/aarch64/test_gpu_blob.py
+> new file mode 100755
+> index 00000000000..a913d3b29c8
+> --- /dev/null
+> +++ b/tests/functional/aarch64/test_gpu_blob.py
+> @@ -0,0 +1,73 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional tests for GPU blob support. This is a directed test to
+> +# exercise the blob creation and removal features of virtio-gpu. You
+> +# can find the source code for microkernel test here:
+> +#   https://gitlab.com/epilys/qemu-880-repro
 
-Can these two functions be changed to be general, not just for tls?
-IMHO: 
-void migrate_strornull_opts_free(MigrationParameters *params)
-boid strornull_to_str(StrOrNull **the_opt)
+Nice. I appreciate the effort to creat the microkernel; hopefully it 
+will be useful also to exercise this part of virtio-gpu for debugging in 
+the future.
 
-In this way, when members of type StrOrNull are added later,
-the function can be reused.
+> +#
+> +# Copyright (c) 2025 Linaro Ltd.
+> +#
+> +# Authors:
+> +#  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> +#  Alex Bennée <alex.bennee@linaro.org>
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu.machine.machine import VMLaunchFailure
+> +
+> +from qemu_test import Asset
+> +from qemu_test import wait_for_console_pattern
+> +from qemu_test.linuxkernel import LinuxKernelTest
+> +
+> +class Aarch64VirtBlobTest(LinuxKernelTest):
+> +
+> +    ASSET_BLOB = Asset('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/'
+> +                       'download?path=%2Fblob-test&files=qemu-880.bin',
+> +                       '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
+> +
+> +    def test_virtio_gpu_blob(self):
+> +
+> +        self.set_machine('virt')
+> +        self.require_accelerator("tcg")
+> +
+> +        blob = self.ASSET_BLOB.fetch()
+> +
+> +        self.vm.set_console()
+> +
+> +        self.vm.add_args("-machine", "virt,memory-backend=mem0,accel=tcg",
+> +                         '-m', '4G',
+> +                         '-cpu', 'max',
+> +                         '-kernel', blob,
+> +                         '-object', 'memory-backend-memfd,share=on,id=mem0,size=4G',
+> +                         '-global', 'virtio-mmio.force-legacy=false',
+> +                         '-nic', 'none',
+> +                         '-device',
+> +                         'virtio-gpu-gl,hostmem=128M,blob=true,venus=true',
 
---
-Bin Guo
+venus is not exercised with this test case so can be removed.
+
+This test somehow hung on my laptop even with the all other patches in 
+this series applied, and removing venus=true fixed the hung.
+
+I suppose the hang is unrelated to the problem fixed in this series and 
+but rather is a problem specific to my environment (Asahi Linux). 
+Anyway, I think removing venus=true is a safer option to avoid problems 
+with the host graphics stack.
+
+Below is a part of build/meson-logs/testlog.txt:
+
+==================================== 1/1 
+=====================================
+test:         qemu:func-thorough+func-aarch64-thorough+thorough / 
+func-aarch64-gpu_blob
+start time:   02:25:49
+duration:     90.01s
+result:       killed by signal 15 SIGTERM
+command: 
+MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 
+MALLOC_PERTURB_=12 RUST_BACKTRACE=1 
+QEMU_TEST_QEMU_BINARY=/home/me/q/var/qemu/build/qemu-system-aarch64 
+UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 
+PYTHONPATH=/home/me/q/var/qemu/python:/home/me/q/var/qemu/tests/functional 
+ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 
+MESON_TEST_ITERATION=1 QEMU_BUILD_ROOT=/home/me/q/var/qemu/build 
+QEMU_TEST_QEMU_IMG=/home/me/q/var/qemu/build/qemu-img 
+LD_LIBRARY_PATH=/home/me/q/var/qemu/build/contrib/plugins:/home/me/q/var/qemu/build/tests/tcg/plugins 
+/home/me/q/var/qemu/build/pyvenv/bin/python3 
+/home/me/q/var/qemu/tests/functional/aarch64/test_gpu_blob.py
+----------------------------------- stderr 
+-----------------------------------
+==31639==WARNING: ASan doesn't fully support makecontext/swapcontext 
+functions and may produce false positives in some cases!
+==============================================================================
+
+
+Summary of Failures:
+
+1/1 qemu:func-thorough+func-aarch64-thorough+thorough / 
+func-aarch64-gpu_blob TIMEOUT        90.01s   killed by signal 15 SIGTERM
+
+Ok:                 0
+Expected Fail:      0
+Fail:               0
+Unexpected Pass:    0
+Skipped:            0
+Timeout:            1
+
+> +                         '-display', 'egl-headless,gl=on',
+> +                         '-d', 'guest_errors')
+> +
+> +        try:
+> +            self.vm.launch()
+> +        except VMLaunchFailure as excp:
+> +            if "old virglrenderer, blob resources unsupported" in excp.output:
+> +                self.skipTest("No blob support for virtio-gpu")
+> +            elif "old virglrenderer, venus unsupported" in excp.output:
+> +                self.skipTest("No venus support for virtio-gpu")
+> +            elif "egl: no drm render node available" in excp.output:
+> +                self.skipTest("Can't access host DRM render node")
+
+This condition is unnecessary as DRM render node is not used.
+
+> +            elif "'type' does not accept value 'egl-headless'" in excp.output:
+> +                self.skipTest("egl-headless support is not available")
+> +            elif "'type' does not accept value 'dbus'" in excp.output:
+> +                self.skipTest("dbus display support is not available")
+
+This can be removed too.
+
+> +            elif "eglInitialize failed: EGL_NOT_INITIALIZED" in excp.output:
+> +                self.skipTest("EGL failed to initialize on this host")
+> +            else:
+> +                self.log.info("unhandled launch failure: %s", excp.output)
+> +                raise excp
+> +
+> +        self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
+> +        # the test should cleanly exit
+> +
+> +
+> +if __name__ == '__main__':
+> +    LinuxKernelTest.main()
 
 
