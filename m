@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5710CCD194
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D227CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v95Ty-0002H0-8p; Wed, 15 Oct 2025 13:40:15 -0400
+	id 1v95VC-0003ZI-Lg; Wed, 15 Oct 2025 13:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v95Tt-0002Av-KA
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:40:10 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v95V9-0003WJ-AE
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:41:28 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v95To-0000tM-EN
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:40:09 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-4256866958bso3956436f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:40:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v95V1-0001CH-Fj
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:41:27 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7811fa91774so5986096b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760549996; x=1761154796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760550074; x=1761154874; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KEgBKwZS6rpilocZAwpPRmX7jo6ggdQ2o9ATQFmH7Ho=;
- b=XlOIZxoaC3orx44/iT2k8ShgVnx5v8LOWfhNIVqOOIhUvY0acIhtMAyVqld1lFpbf+
- HhoofdD8IgWgnrKHzqn+ySLzlJL/XqcL3tGFB1Bf+E52LjuMq4pS4+aBYO3l3rECYlIr
- 5o29Y+Xz0AFYaNjDlxzAflicghi5qqEyGblerhtlV4DeRM89wzFg1RIIQGQ85/ZGgtlW
- /vUYhtzdYqZQd77yQ0Kf2lwjjXe6r5Mz46DqDMh/U3uLuAPZk4QXf7EDgdQ6Y4sJ4zYB
- VNjE01vhIrECT/a7HBV2drleZSQXLpLGr+ZNGUEaOaSKCFVo1AvmZba+Hr04l0QQ9Mf6
- pHkQ==
+ bh=vwsJIirwXLXCJz81e1fZsYyuNQ/sijCuEumUF+Ei850=;
+ b=Hsp5aChsqZpqM3+UWLmVqelhNNoJ1nGvy40xrpttSueN0L5mTNBnJb8h6AO5ZnxBqY
+ TTCinvHrgheK7Lq8LzZ2S6dnp2TukN8g+ISDv1k50tfxAgax0KZgLXrBVtzgpo4W4d5U
+ vmLCFZ/biAeR1ABybSIGqlKqxCSdbfZLtmrlc0BaLbpFSUEaCZ7agKUQY+SRMIoCWWUX
+ v+9l0jdBxUgagfEIccWDaSMBY7LeqS3VkHTahzPgbqJDvIJ+V7yN7UTe+0UWeb80Meh1
+ g3WMiBhiKoCGz0d8kMNjBLKb4pfIYXOqml2O+uZeaKjNvwT2RjighpIJqLyeo5p34sxC
+ 1dMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760549996; x=1761154796;
+ d=1e100.net; s=20230601; t=1760550074; x=1761154874;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KEgBKwZS6rpilocZAwpPRmX7jo6ggdQ2o9ATQFmH7Ho=;
- b=L071LkKyDJvGpuUMumof7b2TNUZVr9azyo2d8ecCjCL0tzugVklFEX20IpVPR+Q+/k
- vON3qQf3ocbMKtafK4IGcOOJKI8kzwz1FWsaq+3LtHxYfHMO0GPRrx2Mp7yV8efE7yed
- 1KZuiN+zrHEhjqo4CLvPT/sEoryFjNXXxYKxjQfmdYbKMvZFqfXWrUbsloKybNd4K5b1
- fhbuYu6vQi0MU9xcYG2nROZlZq51yFVIJ9SDtZrhxjC1Kl+pn+kKmE2C4payf86JuLP2
- HuxoZi+0EannINcJ/LtlitTGb0LBu95P7Jh5GXGeEfb6/8CBV+3rGYzqRXFklmC5LPYh
- 1dOQ==
-X-Gm-Message-State: AOJu0Yw5VU37KSbhRlw0Gm4arcxm3/RbrKBan0CqG5vd1oc6voR+abie
- 4YtcM0lEZmxMptgQ0GEioRnYuYFZiTt9cIefyIt74tJtFB/OD1Ouojqm6rWob9w8iNg=
-X-Gm-Gg: ASbGncvnrHFfcxqOf1aALZA73julvGPFGDebUb0amkmy5n4iIUycIPCcs504GACtXTE
- /tTnz7LStyd822qeMtBCXAmaEjA7Si7H2XuDmgnT7iSErG6D+UFB606ZWuPle7bBeuobafK5kns
- AtiL42pktiYs7UIrLrP4EUlPo5t3+1DR81YtMEcwySwiO5GJWqir1JKe3RSwaF49f6dJaLsuHOx
- UZkMb4uYLQ1f7St95KKspdwUAbovusohz1L3ThcX5GkKTrgowwChvacK6iBKM3efJpZvCniD9sd
- K0Upx03UkhpK2QiJTlGLKQgytJkXcuuzKFADoeiAmaoo+NQb8MytCvfOd3/nXCQ6TA3Ehi6TqTy
- GqF0KNXbGahtgl2s79R+H47i3vPfe0+7yzk9fxXjGyyhKQdOcifMr3Ap0ktRdqomaJ4BwM1m9o+
- Vx8pH2Lt0/02Mi
-X-Google-Smtp-Source: AGHT+IHgNHfZYOXdibo+VxGjrrlPjeMVl4Czt+h5ng6o2wja3L0TZjh62nB0DypumNatwsXmmDhcKQ==
-X-Received: by 2002:a05:6000:40e0:b0:426:d56d:f35f with SMTP id
- ffacd0b85a97d-426d56df39fmr10002801f8f.59.1760549996434; 
- Wed, 15 Oct 2025 10:39:56 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fb55ac08dsm302655285e9.13.2025.10.15.10.39.55
+ bh=vwsJIirwXLXCJz81e1fZsYyuNQ/sijCuEumUF+Ei850=;
+ b=ki80IvGDj7xrwawSAAktqB1/oWqDdaIL5zUkz+BEDyMp5AeHRqIfVrMBftmKof8FDj
+ McUPaT79sGAwyf6HAxeC0fiNAdiPVkEcWtc5zICCjEoiqaY+9LzriRlLwao6x/w/ZPr4
+ eXtu9QShBk5IEZ244ohDwGsIA+E5kAKi0U5zt/ga0FiKBH2yKI/R1+TgtgNSbBjIisVG
+ fHow2bNAL/KZGJmTUUajnt1FopNDPc9mJbTuNGWpmHdjF609fPjnD32xnsIfGNEje0rc
+ Xh9u2JB8Edo36DgphS/T9TE9rHe3w93YRKeSCGMNt/Qbsdfw8WI+/hTFyfijiPMjHe7J
+ hGzg==
+X-Gm-Message-State: AOJu0YwYp0ezPrrQLZdQsvXjLKV+gLhKibItPyEXQRdHgVnEmTMTt/EO
+ 8vx9u+Efp6YkNIzISBtWNQK6HlF7pP/AH6rE0TwMAwYR29DC6CcUSd1X96jdyS80+Cs=
+X-Gm-Gg: ASbGnctt/8q8lHlFE1CMdZs9OEyvfEa6OIvEG0oi+DY1ywxk0FsEBqXaVf8EHXvTt3n
+ bb69gJN3J9U+E/XrLnH1tCkjNkdNuoZ4ln+ykmTR1mgjhiZo7qdDV/JQ4DCeKygNqvRruJ8fn4c
+ 31GSeDG2TX436GDypybkYR8/wY/+GnSka07sbOQ3g75incboMEOpq49EfisxZpLnkELPt5sBhm+
+ AVTv73xExCXw6gkli3yTDRa4iDFDtQpWgWdCgKSbuImVcL4RXZAEu9/2SPQnDjZRHZDhHqdzUdE
+ E5RM4upcrFB4cqjklOHxiScR3UQYhhZP+odFMxBex7E2YrRB8x/8cFUOU8M1Vgh7C9DAMQ/xVbe
+ yf94YWKcJrjBE3w7J3kWEeBUFRjHbFB7UG0eGSLrGazzeVsCUXD2US6Dac13WCpzypVd2
+X-Google-Smtp-Source: AGHT+IFKoiCKwYfF4oBu2Xj1N/pEAbzbp7bKHc4dNqUTrbMxBMSGNbbjANG9APQE7aCyeF7TiLX+Yw==
+X-Received: by 2002:a05:6a20:3d05:b0:334:879e:3c8f with SMTP id
+ adf61e73a8af0-334879e3e5emr4361030637.25.1760550073938; 
+ Wed, 15 Oct 2025 10:41:13 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b6a2288786bsm230892a12.5.2025.10.15.10.41.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 10:39:55 -0700 (PDT)
-Message-ID: <e5301e34-3e78-4e66-b3de-499e7b60e183@linaro.org>
-Date: Wed, 15 Oct 2025 19:39:54 +0200
+ Wed, 15 Oct 2025 10:41:13 -0700 (PDT)
+Message-ID: <4bea1c28-7c5e-4b5c-8757-21e5cb3545ab@linaro.org>
+Date: Wed, 15 Oct 2025 10:41:11 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] target/microblaze: Remove target_ulong use in
- helper_stackprot()
+Subject: Re: [PATCH] contrib/plugins/uftrace_symbols.py: generate debug files
+ to map symbols to source
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20251008060129.87579-1-philmd@linaro.org>
- <20251008060129.87579-5-philmd@linaro.org>
- <dmneby7i44m7vvkhfhxh7cdhfu4l43wilukrtnfcvqzwgrgp66@hzkohhyqg4cu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <dmneby7i44m7vvkhfhxh7cdhfu4l43wilukrtnfcvqzwgrgp66@hzkohhyqg4cu>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20251013213912.413386-1-pierrick.bouvier@linaro.org>
+ <87h5w0ju6g.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87h5w0ju6g.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,69 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 12:22, Anton Johansson wrote:
-> On 08/10/25, Philippe Mathieu-Daudé wrote:
->> Since commit 36a9529e60e ("target/microblaze: Simplify
->> compute_ldst_addr_type{a,b}"), helper_stackprot() takes
->> a TCGv_i32 argument.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/microblaze/helper.h    | 2 +-
->>   target/microblaze/op_helper.c | 4 ++--
->>   2 files changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
->> index ef4fad9b91e..01eba592b26 100644
->> --- a/target/microblaze/helper.h
->> +++ b/target/microblaze/helper.h
->> @@ -20,7 +20,7 @@ DEF_HELPER_FLAGS_3(fcmp_ne, TCG_CALL_NO_WG, i32, env, i32, i32)
->>   DEF_HELPER_FLAGS_3(fcmp_ge, TCG_CALL_NO_WG, i32, env, i32, i32)
->>   
->>   DEF_HELPER_FLAGS_2(pcmpbf, TCG_CALL_NO_RWG_SE, i32, i32, i32)
->> -DEF_HELPER_FLAGS_2(stackprot, TCG_CALL_NO_WG, void, env, tl)
->> +DEF_HELPER_FLAGS_2(stackprot, TCG_CALL_NO_WG, void, env, i32)
->>   DEF_HELPER_FLAGS_2(get, TCG_CALL_NO_RWG, i32, i32, i32)
->>   DEF_HELPER_FLAGS_3(put, TCG_CALL_NO_RWG, void, i32, i32, i32)
->>   
->> diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
->> index b8365b3b1d2..df93c4229d6 100644
->> --- a/target/microblaze/op_helper.c
->> +++ b/target/microblaze/op_helper.c
->> @@ -365,13 +365,13 @@ uint32_t helper_pcmpbf(uint32_t a, uint32_t b)
->>       return 0;
->>   }
->>   
->> -void helper_stackprot(CPUMBState *env, target_ulong addr)
->> +void helper_stackprot(CPUMBState *env, uint32_t addr)
->>   {
->>       if (addr < env->slr || addr > env->shr) {
->>           CPUState *cs = env_cpu(env);
->>   
->>           qemu_log_mask(CPU_LOG_INT, "Stack protector violation at "
->> -                      TARGET_FMT_lx " %x %x\n",
->> +                                   "0x%x 0x%x 0x%x\n",
->>                         addr, env->slr, env->shr);
->>   
->>           env->ear = addr;
->> -- 
->> 2.51.0
->>
+On 10/15/25 4:11 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> Might as well update call sites to gen_helper_stackprot() as well.
-> compute_ldst_addr_type[ab]() calls into gen_helper_stackprot() but
-> returns TCGv.  That return value is passed to do_load() and
-> do_store() as TCGv, but the bodies of these function clearly expect
-> TCG_i32.
-
-Right, but tcg_gen_qemu_ld_i32/tcg_gen_qemu_st_i32() take a TCGv...
-
-I'll address as follow up patches I think.
-
+>> Enhance uftrace_symbols.py to generate .dbg files, containing
+>> source location for every symbol present in .sym file.
+>> It allows to use uftrace {replay,dump} --srcline and show origin of
+>> functions, connecting trace to original source code.
+>>
+>> It was first implemented with pyelftools DWARF parser, which was way
+>> to slow (~minutes) to get locations for every symbol in the linux
+>> kernel. Thus, we use addr2line instead, which runs in seconds.
+>>
+>> As well, there were some bugs with latest pyelftools release,
+>> requiring to run master version, which is not installable with pip.
+>> Thus, since we now require binutils (addr2line), we can ditch pyelftools
+>> based implementation and simply rely on nm to get symbols information,
+>> which is faster and better.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Otherwise
+> Queued to maintainer/oct-2025, thanks.
 > 
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
 
-Thanks!
+Thanks Alex.
 
