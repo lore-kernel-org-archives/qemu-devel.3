@@ -4,68 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF8A3CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 03:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A1DCCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 03:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8sMf-0007ZU-8r; Tue, 14 Oct 2025 23:39:50 -0400
+	id 1v8sdp-0001bA-0L; Tue, 14 Oct 2025 23:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v8sMc-0007Z7-Sb
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:39:46 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v8sMV-0004gC-D8
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:39:46 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59F3dUAR083201
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 15 Oct 2025 12:39:30 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2Bs/XiceB5Mv27fpmiild2sdUXO3rhPM721Od2ZeRDI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1760499570; v=1;
- b=SK8zEv8V1EYKKZixKzGcOr5OAyAlaWlAzwGsjcFkDa/6C/nqtMy67wJznAenS4c+
- LGLQDxGwqavXqQSQIUENEnzF1kpfH5paeOILDCyT2FXJStIrNUhk2qDvaz0W7h0k
- qnXHwMgDxfKYjAkE2M3MLz7Iuk9twuPE26b53g5r2THsCjsr+RYXHsJ/fIxZXZr/
- bKfo0YrX6Os988PtXDWtDvJQBTJOgDu1uyToOgJ80ZMjp42bRlkrgKPKcEfPv2V1
- rqIS23fyAoRLHWOv0QyqfyH1BDxP10Rwx/5h6+W7U0kbYepJ79BajMylGV/DzLSh
- hVpm1MayZCYG2ekGtwsYxg==
-Message-ID: <94528009-46a7-4fad-b7f4-c6d9e5839e35@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 15 Oct 2025 12:39:30 +0900
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1v8sdf-0001Zd-QR
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:57:27 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1v8sdV-0006ma-35
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:57:19 -0400
+Received: from loongson.cn (unknown [10.2.10.34])
+ by gateway (Coremail) with SMTP id _____8Cx6tGMG+9onUUWAA--.48080S3;
+ Wed, 15 Oct 2025 11:57:01 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.10.34])
+ by front1 (Coremail) with SMTP id qMiowJCxM+SEG+9oJMrkAA--.45496S2;
+ Wed, 15 Oct 2025 11:56:52 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/4] loongarch queue
+Date: Wed, 15 Oct 2025 11:56:47 +0800
+Message-Id: <20251015035651.1462972-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] hw/display: add blob map/unmap trace events
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251014111234.3190346-1-alex.bennee@linaro.org>
- <20251014111234.3190346-5-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251014111234.3190346-5-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+X-CM-TRANSID: qMiowJCxM+SEG+9oJMrkAA--.45496S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uw4rKF1xCF4DGrykXr47Awc_yoW8GFy8pr
+ W3CrnxGr48Gr9rJrn3Xry5Xr15Jrn7GF12qF13try8Cr43Zr1UZr18Ar1kCFyUJ34rJry0
+ qr1rCw1DuF1UJrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
+ xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
+ Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jr0_JrylIxkGc2Ij64vIr41lIxAIcVC0I7
+ IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
+ 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+ AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,14 +74,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/14 20:12, Alex Bennée wrote:
-> As these events happen dynamically as the guest does various things
-> they are quite handy to trace.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+The following changes since commit 3bf5c57a11827d9fa706524d57ee3e5af68a429e:
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+  Merge tag 'pull-tcg-20251014' of https://gitlab.com/rth7680/qemu into staging (2025-10-14 10:25:05 -0700)
 
-I think you can include this in the pull request for per-head and 
-ui/gtk-gl-area changes you are going to send.
+are available in the Git repository at:
+
+  https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20251015
+
+for you to fetch changes up to a9c5e0ed9b63becde7a6188bf71f95e31a132b19:
+
+  hw/loongarch/virt: Sort order by hardware device base address (2025-10-15 11:07:37 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20251015 queue
+
+----------------------------------------------------------------
+Bibo Mao (4):
+      target/loongarch: Add missing TLB flush with different asid
+      target/loongarch: Skip global TLB when calculating replaced TLB
+      hw/loongarch/virt: Remove header file ls7a.h
+      hw/loongarch/virt: Sort order by hardware device base address
+
+ MAINTAINERS                            |  1 -
+ hw/intc/loongarch_pic_kvm.c            |  1 -
+ hw/loongarch/virt-acpi-build.c         |  1 -
+ hw/loongarch/virt-fdt-build.c          |  1 -
+ hw/loongarch/virt.c                    |  3 +-
+ include/hw/intc/loongarch_pic_common.h |  2 +-
+ include/hw/loongarch/virt.h            | 75 +++++++++++++++++++++++++---------
+ include/hw/pci-host/ls7a.h             | 39 ------------------
+ target/loongarch/tcg/tlb_helper.c      | 22 ++++++----
+ 9 files changed, 70 insertions(+), 75 deletions(-)
+
 
