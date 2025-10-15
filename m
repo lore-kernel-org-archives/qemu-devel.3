@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDB7CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 06:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5753DCCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 06:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8uv7-0001RX-RM; Wed, 15 Oct 2025 02:23:33 -0400
+	id 1v8uvR-0002O0-T4; Wed, 15 Oct 2025 02:23:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8uv5-0001QA-2N; Wed, 15 Oct 2025 02:23:31 -0400
+ id 1v8uvM-0002Gm-QN; Wed, 15 Oct 2025 02:23:49 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8uuy-0002xW-JH; Wed, 15 Oct 2025 02:23:30 -0400
+ id 1v8uvE-0003Bf-FB; Wed, 15 Oct 2025 02:23:48 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 15 Oct
@@ -30,17 +30,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 08/12] hw/arm/aspeed_ast27x0-fc: Add VBOOTROM support
-Date: Wed, 15 Oct 2025 14:22:03 +0800
-Message-ID: <20251015062210.3128710-9-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
+Subject: [PATCH v1 09/12] tests/functional/aarch64/ast2700fc: Update test
+ ASPEED SDK v09.08
+Date: Wed, 15 Oct 2025 14:22:04 +0800
+Message-ID: <20251015062210.3128710-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
 References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -66,38 +66,50 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduces support for loading a vbootrom image into the dedicated vbootrom
-memory region in the AST2700 Full Core machine.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tests/functional/aarch64/test_aspeed_ast2700fc.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 99c0b34159..7be2e84927 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -60,6 +60,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     Ast2700FCState *s = AST2700A1FC(machine);
-     AspeedSoCState *soc;
-     AspeedSoCClass *sc;
-+    const char *bios_name = NULL;
-     BlockBackend *fmc0 = NULL;
-     DeviceState *dev = NULL;
-     uint64_t rom_size;
-@@ -122,6 +123,10 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-         aspeed_install_boot_rom(soc, fmc0, &s->ca35_boot_rom, rom_size);
-     }
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+index 28b66614d9..bcce0c8d4e 100755
+--- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
++++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+@@ -36,9 +36,9 @@ def verify_openbmc_boot_and_login(self, name):
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
  
-+    /* VBOOTROM */
-+    bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-+    aspeed_load_vbootrom(soc, bios_name, errp);
-+
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
+-    ASSET_SDK_V906_AST2700 = Asset(
+-            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
+-            'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
++    ASSET_SDK_V908_AST2700 = Asset(
++            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2700-default-obmc.tar.gz',
++            'eac3dc409b7ea3cd4b03d4792d3cebd469792ad893cb51e1d15f0fc20bd1e2cd')
  
-     return true;
+     def do_ast2700_i2c_test(self):
+         exec_command_and_wait_for_pattern(self,
+@@ -66,7 +66,7 @@ def do_ast2700fc_ssp_test(self):
+         self.vm.set_console(console_index=1)
+         self.vm.launch()
+ 
+-        exec_command_and_wait_for_pattern(self, '\012', 'ssp:~$')
++        exec_command_and_wait_for_pattern(self, '\012', 'ssp_tsp:~$')
+         exec_command_and_wait_for_pattern(self, 'version',
+                                           'Zephyr version 3.7.1')
+         exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
+@@ -133,10 +133,10 @@ def start_ast2700fc_test(self, name):
+         self.do_test_aarch64_aspeed_sdk_start(
+                 self.scratch_file(name, 'image-bmc'))
+ 
+-    def test_aarch64_ast2700fc_sdk_v09_06(self):
++    def test_aarch64_ast2700fc_sdk_v09_08(self):
+         self.set_machine('ast2700fc')
+ 
+-        self.archive_extract(self.ASSET_SDK_V906_AST2700)
++        self.archive_extract(self.ASSET_SDK_V908_AST2700)
+         self.start_ast2700fc_test('ast2700-default')
+         self.verify_openbmc_boot_and_login('ast2700-default')
+         self.do_ast2700_i2c_test()
 -- 
 2.43.0
 
