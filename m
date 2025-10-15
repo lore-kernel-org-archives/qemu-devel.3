@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB408CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466A6CCD194
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v952E-00083Z-8c; Wed, 15 Oct 2025 13:11:34 -0400
+	id 1v956C-0001LH-Ha; Wed, 15 Oct 2025 13:15:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v952C-00082h-0A
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:11:32 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9566-0001KY-2T
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:15:34 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9526-00046N-EL
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:11:31 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9561-0004vs-Vv
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:15:33 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47109187c32so2189935e9.2
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:11:21 -0700 (PDT)
+ 5b1f17b1804b1-46f53f88e0bso40285075e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760548276; x=1761153076; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760548521; x=1761153321; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hiY0Qjn5RIsSJpnw0hE0xXkc8WMEWGs0JeKIyXBc3Vs=;
- b=uugpUKJvoyYLrGoN3+x6/Ikyvb3TmdhdCTVpiY6oMhisFf9r4wywIOYepEsmjdeoNn
- FbzF8nHiTb9cy6RGbOoAcSEU68rxIlRs5tJ94HkhSIAarVUEiigMbFTgy1BNzZGFLs8r
- TNuuwjWxsayFROuIGjrs4kR1EYa2pUZ0x2s6bzxuMJk8Rb4wVTaXxyXZJKdBOdnTF5R8
- S31DVSwElfvb1qDuBm73xSX9Br1hsaaEagOaHfoEYoDL6P/izVI6vFbP0ZLBuNFZGr9P
- eKEEmHaDCz+Z6fJoNm9FoVMDtV4shx6iA4/46zFfT/Pt0bZ/JU8SQVUlFNeMSk/tUP2y
- 3vIA==
+ bh=0Ibs9r+HE1oPolICmyeyoUkQJcLCShVeB+p/I8ErSHw=;
+ b=SoKQDvn+r/FisSfjXfQytJT5IqJlc0/BlSqJfV3E1vph7ZwucmMN2SWoOT1+K/WABv
+ b3H61QJGl14WcpS9KfMfVCLbJCyc8nOsYgHtcofBs2HZI0Vu9YSNcyeWYhOxhGUqLEkY
+ +gC59ubtbxPhfD+7X+nNGHSsvLUzGad2qYFReb6rDCmvnrKh1OS2wZAeH9B8hhP6ZzxB
+ NTizUXF7FW8Y2xuT1iqCz11UowTX7LiFFzjlYqXCDQzMxo3t3eGUe3nkaFT1U4xP3zIf
+ 04n2ybB/H8Jwq+LBj3yUc91dvL1RWHpwu/hOJ27UQxhOZPNOzesTwqowtXpKVs+PGiG0
+ e0ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760548276; x=1761153076;
+ d=1e100.net; s=20230601; t=1760548521; x=1761153321;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hiY0Qjn5RIsSJpnw0hE0xXkc8WMEWGs0JeKIyXBc3Vs=;
- b=BfqYzxkVJCPe+YTe/w9zaqJQg41yR4L0nP5Pi+ctRS1DStcsKLRE4mioXfd3Nt+xia
- 8toBHpaGANypxnuW+Np55x3G+iSAjXh+TrpLTD4JWZIKhx2lfdqA1EEK93S70s490bwB
- 7sj04MUc0t9bLKz6ClRJgZ9y/i1WJjf1dwl0HLSFTY+uBV/Jnrm/rmO4vI3fp2J3qbUV
- mFm/1soXVuEEeqdovQuWlBcuxdZ0zVVzwlw4lvAzeLlKsseav65TtF0j/noL0BTqUyBH
- v4tA7cZWlshFjouxqcCfpWsPHJHMuqPN/5NdOWAu2jOaztUCG4VR3Lz3/1W2lH620w9s
- Qc7A==
-X-Gm-Message-State: AOJu0YzOZV52ckXAQzBy8JMd7Kc5IubhTaqbx8oqADqFG+KfI5mAWo3R
- zqDGkoESNr72DftBB/zpV+hkMCuGxitTGQy3iKHbH62S5HcmcCXqFV/99SdFwkHEqJVebvqGxWa
- SG9JH9KDkIQ==
-X-Gm-Gg: ASbGncuZSOcIWNjVh7gseJPe+lPvid0Mm9aduY0ogcwvPycsySdA4OrBCbd2LaNu15/
- FuH8bFamo8YejMMLM2L1Q7zlugrkBWqUybfAwbbuPM2OEBt+7Ui/aNbLuLa+razeR2WhFzO7Qih
- 09rrhGrOujkC+xTqpAxCD0TT0ZIbtNTh6Ham5JOPGd9+9Q9nW90LLafJz+QNn6ThLuh04splUOc
- j9fl514sdEI/p4+PYLmPDWYcOD8qWHYMtsG9ukpvTbpf3C8W4mxVkfqNO613oTHgfKk5i8cLUQU
- WvH50lfZVTaokQB/yEFBrYaRL+zwMqujbJk+e837hHi53ZCBBPmrlgZ2bTG13mrozcTKkKuMQ4w
- vN1DooWHKfKCypUeAVO7A6AJoCSijeaqUkTC9+xAEjF+KTolphRdWeLWjEf7urj+0DDwxtxrXTA
- 7mxlhV1boD/URF+cRK0P9x9ic=
-X-Google-Smtp-Source: AGHT+IEQEkUvXxPAF8+l18pD+aPUZQE2t3n/Y/vhmWy/4HHNCAim1MTOUZtGZ3v4Jgy0PmKpulpzCg==
-X-Received: by 2002:a05:600c:1d11:b0:46e:5aca:3d26 with SMTP id
- 5b1f17b1804b1-46fa9aef840mr220919015e9.22.1760548276510; 
- Wed, 15 Oct 2025 10:11:16 -0700 (PDT)
+ bh=0Ibs9r+HE1oPolICmyeyoUkQJcLCShVeB+p/I8ErSHw=;
+ b=rrkCuFQx6v+pkQ5Up+8FH1tV4vuJfLRg66mqholLMIvKhClgE4FePx+50jJ/gpklAt
+ SXEYtwrGKgsMtaDogQxAPw1KY4Ilai4md7TenZ9hN+TxjuWNQoB2uGjKfoF6/S09GT6o
+ W33k6vghWKbOyGqRCgJ4QuRoqwmM4dzoyBduxjJTrpp8o3TvxOPZSdqIvGDkU0/qfd7m
+ /+anFshhTYfmix/Aeq5gcZJVuJNOCpVGDqOTKBY7HnDPacZO2NV6NSWpmBbfNzpF7qOb
+ I6Fcd6avwNC6s+ASCWwjavq47jogOARJu/F1Ai68M6yrI7j2sZ6oaundBsh9Hn/JP+Ui
+ 6BUQ==
+X-Gm-Message-State: AOJu0YxsQTkqbyiOpmbHFdft3/NomY5DghUfb9/RfHHufeY9wkq+FjAc
+ /N0WeFj6tDy1dtUi3harjNKxg/JIa9yZQbysjNK8vOHOa8p01sqOjtt4KxDS76rfiizqE6bXWCP
+ zTIzDClAAHQ==
+X-Gm-Gg: ASbGncvra1xrUhA9H9V5Kr1QYtxWYdJ2onstvYFUNzrJ9N/8ANcgqoOg3mxUxd0On7h
+ 35EMHEDslFxEMBZfQMgBn1TQ79B3Bn4BE8B8DnGbvKucCTDnVuonrXuR6cQGJsmVvF09212ON3I
+ VEj29OMkWCFp7ZtIlBkjx9ihZuJrXI6+ne7LGf8am1DuZq17AfaTMTcQEmtUhkxzCruFV4DZO88
+ 0ZB1kKasYPIDmNEJ+eKpw6UBr3FP6WzBcTVyZAMgGXTiF2mCtl5tqDl0a/PqVNHYBSSLCnD0IJy
+ JfQYzOw1XTwutteVsVjr3xpp0G0BWmnGVxjrQwppXM3nsh8VKJZOl303BezhG617D2dHpCwffxe
+ aICQot/PCTO1Qgz0rvrqvapAnBrhw1UCgFDjpSAeGt47m0ly4mWsStYgZa1eaJECSHP5NpGVvQ/
+ xKJZyCMiOBrjsd
+X-Google-Smtp-Source: AGHT+IHUUeaZBzpI80fOa47EijNSByjbnIox0U+o+KeCB6yBQx0kwSWskCDI5fwP1G1LhDTIiMmnlg==
+X-Received: by 2002:a05:600c:8288:b0:471:6f4:601f with SMTP id
+ 5b1f17b1804b1-47106f460f6mr21048985e9.19.1760548521179; 
+ Wed, 15 Oct 2025 10:15:21 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e8141sm29739971f8f.48.2025.10.15.10.11.15
+ 5b1f17b1804b1-46fab500706sm185243425e9.3.2025.10.15.10.15.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 10:11:16 -0700 (PDT)
-Message-ID: <66d96066-d979-40f0-a2d7-a6ddc1fae391@linaro.org>
-Date: Wed, 15 Oct 2025 19:11:14 +0200
+ Wed, 15 Oct 2025 10:15:20 -0700 (PDT)
+Message-ID: <dbf3e294-2d91-4c26-822c-f3b054f32f0d@linaro.org>
+Date: Wed, 15 Oct 2025 19:15:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] target/xtensa: Remove all uses of target_ulong type
+Subject: Re: [PATCH 0/6] target/sh4: Remove all uses of target_ulong type
 Content-Language: en-US
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Max Filippov <jcmvbkbc@gmail.com>
-References: <20251008051529.86378-1-philmd@linaro.org>
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+References: <20251008064814.90520-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251008051529.86378-1-philmd@linaro.org>
+In-Reply-To: <20251008064814.90520-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
@@ -103,12 +103,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 07:15, Philippe Mathieu-Daudé wrote:
-> Remove the left over target_ulong uses in Xtensa frontend.
+On 8/10/25 08:48, Philippe Mathieu-Daudé wrote:
+> Remove the left over target_ulong uses in SH4 frontend.
 > 
-> Philippe Mathieu-Daudé (2):
->    target/xtensa: Remove target_ulong use in xtensa_tr_translate_insn()
->    target/xtensa: Remove target_ulong use in xtensa_get_tb_cpu_state()
+> Philippe Mathieu-Daudé (6):
+>    target/sh4: Convert CPUSH4State::sr register to uint32_t type
+>    target/sh4: Remove target_ulong use in cpu_sh4_is_cached()
+>    target/sh4: Use hwaddr type for hardware addresses
+>    target/sh4: Remove target_ulong uses in superh_cpu_get_phys_page_debug
+>    target/sh4: Use vaddr type for TLB virtual addresses
+>    target/sh4: Remove target_ulong use in gen_goto_tb()
 
 Series queued, thanks.
 
