@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A0DCCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9CD6CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t5q-0000Um-MD; Wed, 15 Oct 2025 00:26:30 -0400
+	id 1v8t69-0000aZ-C8; Wed, 15 Oct 2025 00:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5o-0000Tn-OA; Wed, 15 Oct 2025 00:26:28 -0400
+ id 1v8t67-0000Zr-AJ; Wed, 15 Oct 2025 00:26:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5k-0002th-Ln; Wed, 15 Oct 2025 00:26:28 -0400
+ id 1v8t64-0002vS-0F; Wed, 15 Oct 2025 00:26:46 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B987815D9D4;
- Wed, 15 Oct 2025 07:25:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0CCF215D9D7;
+ Wed, 15 Oct 2025 07:25:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5D45D29FE7B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 99BA029FE7E;
  Wed, 15 Oct 2025 07:25:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [Stable-10.0.6 01/13] Revert "target/i386: do not expose
- ARCH_CAPABILITIES on AMD CPU"
-Date: Wed, 15 Oct 2025 07:25:25 +0300
-Message-ID: <20251015042540.68611-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Filip Hejsek <filip.hejsek@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 04/13] ui/gtk: Fix callback function signature
+Date: Wed, 15 Oct 2025 07:25:28 +0300
+Message-ID: <20251015042540.68611-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,38 +61,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
-(v10.0.2-66-g24778b1c7ee7) from the 10.0.x branch.
+From: Filip Hejsek <filip.hejsek@gmail.com>
 
-The problem is that the change makes qemu 10.0.x non-migratable
-to subsequent qemu versions, since it requires introducing a new
-machine type.
+The correct type for opaque pointer is gpointer,
+not gpointer * (which is a pointer to a pointer).
 
-This revert re-introduces the problem with windows guests (which
-is already fixed in windows but not in prior versions).
-Details: https://gitlab.com/qemu-project/qemu/-/issues/3001
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit c187a67c9dcdece58138f4df5ca4dd846934eddc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 70d6095be9..e88e5d17db 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -500,12 +500,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-          * Linux v4.17-v4.20 incorrectly return ARCH_CAPABILITIES on SVM hosts.
-          * We can detect the bug by checking if MSR_IA32_ARCH_CAPABILITIES is
-          * returned by KVM_GET_MSR_INDEX_LIST.
--         *
--         * But also, because Windows does not like ARCH_CAPABILITIES on AMD
--         * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
--         * KVM sets up.
-          */
--        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
-+        if (!has_msr_arch_capabs) {
-             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
-         }
-     } else if (function == 7 && index == 1 && reg == R_EAX) {
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 2db10c46da..fe0a2249ff 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -769,9 +769,9 @@ static gboolean gd_render_event(GtkGLArea *area, GdkGLContext *context,
+ }
+ 
+ static void gd_resize_event(GtkGLArea *area,
+-                            gint width, gint height, gpointer *opaque)
++                            gint width, gint height, gpointer opaque)
+ {
+-    VirtualConsole *vc = (void *)opaque;
++    VirtualConsole *vc = opaque;
+     double pw = width, ph = height;
+     double sx = vc->gfx.scale_x, sy = vc->gfx.scale_y;
+     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(area));
 -- 
 2.47.3
 
