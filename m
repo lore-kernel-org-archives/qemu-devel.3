@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 135BACCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 07:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8205CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 07:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8w0J-0007po-9T; Wed, 15 Oct 2025 03:32:59 -0400
+	id 1v8w3d-0000jP-Vi; Wed, 15 Oct 2025 03:36:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v8w0F-0007oG-N5
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 03:32:57 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1v8w3c-0000j7-5o
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 03:36:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v8w02-0002vh-QA
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 03:32:53 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1v8w3R-0003Sa-EC
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 03:36:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760513556;
+ s=mimecast20190719; t=1760513769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=70hTOIeRjpAwkVONZ3uEgfzV1+pcXOwHMuO1qxxu1Q4=;
- b=KiQynibVxw418khspAL51q8ldvLZI6/BSTOI9JqlWuOKxbvdJ3n7hcz+0z7VhCCr4nT/tK
- Agm3U6l4raFx2sVPT5vfTYeWHr+VdUuqJ9WSMPCK6rovEY8bNnYkBW4mN5Obecq23XOUx6
- d3c8WTVccSdQr238pJsHmBD13RSEAzU=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-151-qwdogm23NFCinJovblgoWA-1; Wed, 15 Oct 2025 03:32:34 -0400
-X-MC-Unique: qwdogm23NFCinJovblgoWA-1
-X-Mimecast-MFC-AGG-ID: qwdogm23NFCinJovblgoWA_1760513553
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-40fd1b17d2bso3675860f8f.1
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 00:32:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760513553; x=1761118353;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=70hTOIeRjpAwkVONZ3uEgfzV1+pcXOwHMuO1qxxu1Q4=;
- b=h/Wc6iKo4txn05WZy2mUyyUvFdqalQjGMeZcHznz0W7WnRnfwmFAFaF1BYNMvCp8uT
- 223xhpetM1fBHTW8nRA78OJvG9jcUgppZH2Zla+oAMT+3DQnnaCeg3CKUjFjVied2jEL
- ZrDqoElcfdt/QYb26gGw6jI8A8I5bcEEmJi3Nb+Zdc7JclOGSl3V2yBq9tj5WbhbPx+O
- tSXSYVhLVBGPAGFJrq2qshKCLpSlzdBXaniAsT59Icq3uSj4dnJbLu0gBBzuBeMd51eJ
- Wn/Uh3YnHOOewsnTplPQKzhJXpnD6zcItiyl5WPSgnDlqoWUMnmv76nMj7Cpxugu5+Rl
- QaFw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8VPwMgJ0SsFwP8MOOuJCXEd3XdC8HTlpr3k+vhCB4G6IKgQ0Fcx7TLlgnltFCl5xIn4fdfZaOQW9r@nongnu.org
-X-Gm-Message-State: AOJu0YxATq819ljbpbNEHtIVso0edLshelpS0uUaIbe0cCi52iQ1hbBW
- SBFaPOzySTof0y3VC1WrSvfXhyv6BQvKHm/JA4tskd4icp2Is+QfRxIuwfOvvh375n7N1AhEnvd
- D+BSqRnCxhcXtJKyrBeqDQEAO4SnbK2sAyOrVgO9b6BysPAVWI+5El/6j
-X-Gm-Gg: ASbGnctmUuJXMAdG0bVhAv173hwyA6/vEZ3kXZb4//X4Dgbn8cxosiKLnmTg/Y7VazC
- r97ELC6uKBUqR0VCX3THcOcgZYZfGWPzpE5JTvBRSKDy/04ps3hBm8b1PP177arNBsrpsyW0Gws
- vPSADHvkam5W0xshA7yploatghG6urwzz0I9UDSI+O1OnaO7wgC9AEjZNucbrHQoc3j7B6LjvfK
- GDEy8LjMbOqLvVURFtzO74saFRgFUyd3LhEm8B2kIRIblclcoBVkNzKldVa5dxE0umM6N7+sdmo
- /Eu8Ky+NZiQiSoUOgtGXmYAlDBIRP97wpw==
-X-Received: by 2002:a05:6000:2303:b0:3df:c5e3:55f8 with SMTP id
- ffacd0b85a97d-4266e7dfbeemr17659720f8f.54.1760513553434; 
- Wed, 15 Oct 2025 00:32:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGh6+w1PykN6hpXnkRpvBsEorHcEf2Q2lklMTtbH+Omwyf5XhCAlqVh3zs2wJAC1e6aoGaoCA==
-X-Received: by 2002:a05:6000:2303:b0:3df:c5e3:55f8 with SMTP id
- ffacd0b85a97d-4266e7dfbeemr17659693f8f.54.1760513552947; 
- Wed, 15 Oct 2025 00:32:32 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:152d:b200:2a90:8f13:7c1e:f479])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e1284sm27180999f8f.45.2025.10.15.00.32.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 00:32:32 -0700 (PDT)
-Date: Wed, 15 Oct 2025 03:32:29 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Cc: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com, richard.henderson@linaro.org,
- philmd@linaro.org, suravee.suthikulpanit@amd.com,
- vasant.hegde@amd.com, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, aik@amd.com
-Subject: Re: [PATCH v2 1/2] amd_iommu: Fix handling device on buses != 0
-Message-ID: <20251015032834-mutt-send-email-mst@kernel.org>
-References: <20251013050046.393-1-sarunkod@amd.com>
- <20251013050046.393-2-sarunkod@amd.com>
- <20251013041059-mutt-send-email-mst@kernel.org>
- <6fa9b33c-31ff-43f6-8ab1-8d200c832c94@amd.com>
- <20251014050023-mutt-send-email-mst@kernel.org>
- <c585b4c2-5bde-4aff-a3b0-370bae5e9c0d@oracle.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qGMG3q0crFDJVbLc/s/7883YxgjNgjUwgfC2sjdFAiQ=;
+ b=EsWRh0Yc7cbgb36QRKhJeRkF8imnES60pKRFpACvXYxyLIKTbLKFkw3pO37Caj2NMuPu6u
+ sl0sovJRH2Z9GYsVdGlHGTpIAvctpYOp+Vmy17Y2UKHCYtR5y9a0jxOu695enX2DerpU32
+ MBxT4Zl+yqiOtcXMb8cJLI/1ba0Xm0o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-57otKqHIP6u93SNM41pueQ-1; Wed,
+ 15 Oct 2025 03:36:06 -0400
+X-MC-Unique: 57otKqHIP6u93SNM41pueQ-1
+X-Mimecast-MFC-AGG-ID: 57otKqHIP6u93SNM41pueQ_1760513764
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7CA5C1800741; Wed, 15 Oct 2025 07:36:04 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.3])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 276851955BE3; Wed, 15 Oct 2025 07:36:02 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ devel@lists.libvirt.org (reviewer:Incompatible changes),
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] RFC: audio: deprecate HMP audio commands
+Date: Wed, 15 Oct 2025 11:35:59 +0400
+Message-ID: <20251015073559.2799165-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c585b4c2-5bde-4aff-a3b0-370bae5e9c0d@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -115,118 +90,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 14, 2025 at 05:46:40PM -0400, Alejandro Jimenez wrote:
-> 
-> 
-> On 10/14/25 5:02 AM, Michael S. Tsirkin wrote:
-> > On Tue, Oct 14, 2025 at 11:13:51AM +0530, Sairaj Kodilkar wrote:
-> > > 
-> > > 
-> > > On 10/13/2025 1:45 PM, Michael S. Tsirkin wrote:
-> > > > On Mon, Oct 13, 2025 at 10:30:45AM +0530, Sairaj Kodilkar wrote:
-> > > > > The AMD IOMMU is set up at boot time and uses PCI bus numbers + devfn
-> > > > > for indexing into DTE. The problem is that before the guest started,
-> > > > > all PCI bus numbers are 0 as no PCI discovery happened yet (BIOS or/and
-> > > > > kernel will do that later) so relying on the bus number is wrong.
-> > > > > The immediate effect is emulated devices cannot do DMA when places on
-> > > > > a bus other that 0.
-> > > > > 
-> > > > > Replace static array of address_space with hash table which uses devfn and
-> > > > > PCIBus* for key as it is not going to change after the guest is booted.
-> > > > I am curious whether this has any measureable impact on
-> > > > performance.
-> > > 
-> > > I dont think it should have much performance impact, as guest usually has
-> > > small number of devices attached to it and hash has O(1) average search cost
-> > > when hash key function is good.
-> > > 
-> > > > 
-> > > > > Co-developed-by: Alexey Kardashevskiy <aik@amd.com>
-> > > > > Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
-> > > > > Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> > > > 
-> > > > love the patch! yet something to improve:
-> > > > 
-> > > > > ---
-> > > > >    hw/i386/amd_iommu.c | 134 ++++++++++++++++++++++++++------------------
-> > > > >    hw/i386/amd_iommu.h |   2 +-
-> > > > >    2 files changed, 79 insertions(+), 57 deletions(-)
-> > > > > 
-> > > > > diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> > > > > index 378e0cb55eab..b194e3294dd7 100644
-> > > > > --- a/hw/i386/amd_iommu.c
-> > > > > +++ b/hw/i386/amd_iommu.c
-> > > > > @@ -59,7 +59,7 @@ const char *amdvi_mmio_high[] = {
-> > > > >    };
-> > > > >    struct AMDVIAddressSpace {
-> > > > > -    uint8_t bus_num;            /* bus number                           */
-> > > > > +    PCIBus *bus;                /* PCIBus (for bus number)              */
-> > > > >        uint8_t devfn;              /* device function                      */
-> > > > >        AMDVIState *iommu_state;    /* AMDVI - one per machine              */
-> > > > >        MemoryRegion root;          /* AMDVI Root memory map region         */
-> > > > > @@ -101,6 +101,11 @@ typedef enum AMDVIFaultReason {
-> > > > >        AMDVI_FR_PT_ENTRY_INV,      /* Failure to read PTE from guest memory */
-> > > > >    } AMDVIFaultReason;
-> > > > > +typedef struct amdvi_as_key {
-> > > > > +    PCIBus *bus;
-> > > > > +    uint8_t devfn;
-> > > > > +} amdvi_as_key;
-> > > > > +
-> > > > >    uint64_t amdvi_extended_feature_register(AMDVIState *s)
-> > > > >    {
-> > > > >        uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-> > > > 
-> > > > Pls fix structure and typedef names according to the QEMU
-> > > > coding style. Thanks!
-> > > > 
-> > > 
-> > > This is something I am struggling with, because the name
-> > > `AMDVIASKey` does not offer readability.
-> > 
-> > AMDVIAsKey
-> > 
-> > 
-> > Or you can update all code to use AmdVi and get AmdViAsKey if you prefer.
-> > 
-> > 
-> > > Maybe we can come
-> > > up with an alternate style which is readable and does not
-> > > differ much from the current style.
-> > > 
-> > > @alejandro any suggestions ?
-> > > 
-> 
-> I should have pointed out the CamelCase requirement for the typedef on v1.
-> My initial reaction was: "do not use typedef" and go with the slightly
-> longer 'struct amdvi_as_key' instead.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Sorry, that's a coding style violation too :)
+The command is niche and better served by the host audio system.
+There is no QMP equivalent, fortunately. You can capture the audio
+stream via remote desktop protocols too (dbus, vnc, spice).
 
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ docs/about/deprecated.rst     | 20 ++++++++++++++++++++
+ meson.build                   |  9 +++++++++
+ audio/meson.build             |  7 +++++--
+ hmp-commands-info.hx          |  2 ++
+ hmp-commands.hx               |  4 +++-
+ meson_options.txt             |  3 +++
+ scripts/meson-buildoptions.sh |  3 +++
+ 7 files changed, 45 insertions(+), 3 deletions(-)
 
-	Typedefs
-	--------
-
-	Typedefs are used to eliminate the redundant 'struct' keyword, since type
-	names have a different style than other identifiers ("CamelCase" versus
-	"snake_case").  Each named struct type should have a CamelCase name and a
-	corresponding typedef.
-
-the only exceptions we make is when we import headers
-from outside libraries to interface with them. 
-
-
-> The style guide has a warning about
-> typedefs (which doesn't necessarily apply here), but IMO still better to
-> avoid it in this case were we are not really gaining much from it.
-
-not sure which warning you mean, or why would not it apply.
-
-
-> If I were to use a typedef I would use 'AMDViAsKey'. After all, the 'i' in
-> AMD-Vi and 'd' in VT-d are lowercase ;)
-
-Sounds good.
-
-> But my opinion is to avoid the typedef altogether.
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 98361f5832..a357f207cf 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -169,6 +169,26 @@ Use ``job-finalize`` instead.
+ 
+ This argument has always been ignored.
+ 
++Human Machine Protocol (HMP) commands
++-------------------------------------
++
++``wavcapture`` (since 10.2)
++''''''''''''''''''''''''''''
++
++The ``wavcapture`` command is deprecated and will be removed in a future release.
++
++Use ``-audiodev wav`` or your host audio system to capture audio.
++
++``stopcapture`` (since 10.2)
++''''''''''''''''''''''''''''
++
++The ``stopcapture`` command is deprecated and will be removed in a future release.
++
++``info`` argument ``capture`` (since 10.2)
++''''''''''''''''''''''''''''''''''''''''''
++
++The ``info capture`` command is deprecated and will be removed in a future release.
++
+ Host Architectures
+ ------------------
+ 
+diff --git a/meson.build b/meson.build
+index afaefa0172..0a2401e11e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2354,6 +2354,7 @@ endif
+ config_host_data = configuration_data()
+ 
+ config_host_data.set('CONFIG_HAVE_RUST', have_rust)
++config_host_data.set('CONFIG_AUDIO_HMP', get_option('audio_hmp'))
+ audio_drivers_selected = []
+ if have_system
+   audio_drivers_available = {
+@@ -5105,3 +5106,11 @@ if not actually_reloc and (host_os == 'windows' or get_option('relocatable'))
+   message('QEMU will have to be installed under ' + get_option('prefix') + '.')
+   message('Use --disable-relocatable to remove this warning.')
+ endif
++
++if get_option('audio_hmp')
++  message()
++  warning('DEPRECATED HMP audio commands')
++  message()
++  message('If you want to keep supporting this command, please')
++  message('contact the developers at qemu-devel@nongnu.org.')
++endif
+diff --git a/audio/meson.build b/audio/meson.build
+index 59f0a431d5..ca2ef2a8f3 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -1,12 +1,15 @@
+ system_ss.add([spice_headers, files('audio.c')])
+ system_ss.add(files(
+-  'audio-hmp-cmds.c',
++  'audio.c',
+   'mixeng.c',
+   'noaudio.c',
+   'wavaudio.c',
+-  'wavcapture.c',
+ ))
+ 
++if get_option('audio_hmp')
++  system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++endif
++
+ system_ss.add(when: coreaudio, if_true: files('coreaudio.m'))
+ system_ss.add(when: dsound, if_true: files('dsoundaudio.c', 'audio_win_int.c'))
+ 
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 25b4aed51f..59f3446224 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -363,6 +363,7 @@ SRST
+     Show host USB devices.
+ ERST
+ 
++#ifdef CONFIG_AUDIO_HMP
+     {
+         .name       = "capture",
+         .args_type  = "",
+@@ -375,6 +376,7 @@ SRST
+   ``info capture``
+     Show capture information.
+ ERST
++#endif
+ 
+     {
+         .name       = "snapshots",
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 15f6082596..414e2d2d1e 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -764,6 +764,7 @@ SRST
+ 
+ ERST
+ 
++#ifdef CONFIG_AUDIO_HMP
+     {
+         .name       = "wavcapture",
+         .args_type  = "path:F,audiodev:s,freq:i?,bits:i?,nchannels:i?",
+@@ -798,6 +799,7 @@ SRST
+     info capture
+ 
+ ERST
++#endif
+ 
+     {
+         .name       = "memsave",
+@@ -1090,7 +1092,7 @@ ERST
+ 
+ SRST
+ ``dump-guest-memory [-p]`` *filename* *begin* *length*
+-  \ 
++  \
+ ``dump-guest-memory [-z|-l|-s|-w]`` *filename*
+   Dump guest memory to *protocol*. The file can be processed with crash or
+   gdb. Without ``-z|-l|-s|-w``, the dump format is ELF.
+diff --git a/meson_options.txt b/meson_options.txt
+index 2836156257..d0fa75f1cf 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -39,6 +39,9 @@ option('coroutine_backend', type: 'combo',
+ option('gdb', type: 'string', value: '',
+        description: 'Path to GDB')
+ 
++option('audio_hmp', type: 'boolean', value: true,
++       description: 'enable HMP commands for audio', deprecated: true)
++
+ # Everything else can be set via --enable/--disable-* option
+ # on the configure script command line.  After adding an option
+ # here make sure to run "make update-buildoptions".
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 3d0d132344..44ef7900f0 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -11,6 +11,7 @@ meson_options_help() {
+   printf "%s\n" '                           set block driver read-write whitelist (by default'
+   printf "%s\n" '                           affects only QEMU, not tools like qemu-img)'
+   printf "%s\n" '  --datadir=VALUE          Data file directory [share]'
++  printf "%s\n" '  --disable-audio-hmp      enable HMP commands for audio'
+   printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better performance)'
+   printf "%s\n" '  --disable-debug-info     Enable debug symbols and other information'
+   printf "%s\n" '  --disable-hexagon-idef-parser'
+@@ -244,6 +245,8 @@ _meson_option_parse() {
+     --enable-attr) printf "%s" -Dattr=enabled ;;
+     --disable-attr) printf "%s" -Dattr=disabled ;;
+     --audio-drv-list=*) quote_sh "-Daudio_drv_list=$2" ;;
++    --enable-audio-hmp) printf "%s" -Daudio_hmp=true ;;
++    --disable-audio-hmp) printf "%s" -Daudio_hmp=false ;;
+     --enable-auth-pam) printf "%s" -Dauth_pam=enabled ;;
+     --disable-auth-pam) printf "%s" -Dauth_pam=disabled ;;
+     --enable-gcov) printf "%s" -Db_coverage=true ;;
+-- 
+2.51.0
 
 
