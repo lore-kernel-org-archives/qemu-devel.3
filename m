@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7885ACCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F0ACCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t5l-0000RL-FD; Wed, 15 Oct 2025 00:26:25 -0400
+	id 1v8t5b-0000FN-31; Wed, 15 Oct 2025 00:26:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5i-0000N3-La; Wed, 15 Oct 2025 00:26:22 -0400
+ id 1v8t5Y-0000Db-DA; Wed, 15 Oct 2025 00:26:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5e-0002qR-Jh; Wed, 15 Oct 2025 00:26:22 -0400
+ id 1v8t5S-0002nk-CI; Wed, 15 Oct 2025 00:26:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8AFBF15D9D0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6D1D215D9CE;
  Wed, 15 Oct 2025 07:24:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2ECE829FE79;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 111E429FE77;
  Wed, 15 Oct 2025 07:25:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hector Cao <hector.cao@canonical.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 11/11] target/i386: add compatibility property for
- pdcm feature
-Date: Wed, 15 Oct 2025 07:25:15 +0300
-Message-ID: <20251015042520.68556-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 09/11] target/riscv: rvv: Fix vslide1[up|down].vx
+ unexpected result when XLEN=32 and SEW=64
+Date: Wed, 15 Oct 2025 07:25:13 +0300
+Message-ID: <20251015042520.68556-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
@@ -60,94 +61,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hector Cao <hector.cao@canonical.com>
+From: Max Chou <max.chou@sifive.com>
 
-The pdcm feature is supposed to be disabled when PMU is not
-available. Up until v10.1, pdcm feature is enabled even when PMU
-is off. This behavior has been fixed but this change breaks the
-migration of VMs that are run with QEMU < 10.0 and expect the pdcm
-feature to be enabled on the destination host.
+When XLEN is 32 and SEW is 64, the original implementation of
+vslide1up.vx and vslide1down.vx helper functions fills the 32-bit value
+of rs1 into the first element of the destination vector register (rd),
+which is a 64-bit element.
 
-This commit restores the legacy behavior for machines with version
-prior to 10.1 to allow the migration from older QEMU to QEMU 10.1.
+This commit attempted to resolve the issue by extending the rs1 value
+to 64 bits during the TCG translation phase to ensure that the helper
+functions won't lost the higer 32 bits.
 
-Signed-off-by: Hector Cao <hector.cao@canonical.com>
-Link: https://lore.kernel.org/r/20250910115733.21149-3-hector.cao@canonical.com
-Fixes: e68ec298090 ("i386/cpu: Move adjustment of CPUID_EXT_PDCM before feature_dependencies[] check", 2025-06-20)
-[Move property from migration object to CPU. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6529f31e0dccadb532c80b36e3efe7aef83f9cad)
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250124073325.2467664-1-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 81d1885dcc4424fec6761120f6e251eb3408fb8e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 2504365bc2..0861e329b5 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -85,6 +85,7 @@ GlobalProperty pc_compat_10_0[] = {
-     { TYPE_X86_CPU, "x-consistent-cache", "false" },
-     { TYPE_X86_CPU, "x-vendor-cpuid-only-v2", "false" },
-     { TYPE_X86_CPU, "x-arch-cap-always-on", "true" },
-+    { TYPE_X86_CPU, "x-pdcm-on-even-without-pmu", "true" },
- };
- const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index c82bacdc39..b785456ee0 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1101,14 +1101,14 @@ DEF_HELPER_6(vslidedown_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(vslidedown_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(vslidedown_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(vslidedown_vx_d, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1up_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1up_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1up_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1up_vx_d, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1down_vx_b, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1down_vx_h, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1down_vx_w, void, ptr, ptr, tl, ptr, env, i32)
+-DEF_HELPER_6(vslide1down_vx_d, void, ptr, ptr, tl, ptr, env, i32)
++DEF_HELPER_6(vslide1up_vx_b, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1up_vx_h, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1up_vx_w, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1up_vx_d, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1down_vx_b, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1down_vx_h, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1down_vx_w, void, ptr, ptr, i64, ptr, env, i32)
++DEF_HELPER_6(vslide1down_vx_d, void, ptr, ptr, i64, ptr, env, i32)
  
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index fe369bb128..ab18de894e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7908,6 +7908,11 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             /* Fixup overflow: max value for bits 23-16 is 255. */
-             *ebx |= MIN(num, 255) << 16;
-         }
-+        if (cpu->pdcm_on_even_without_pmu) {
-+            if (!cpu->enable_pmu) {
-+                *ecx &= ~CPUID_EXT_PDCM;
-+            }
-+        }
-         break;
-     case 2: { /* cache info: needed for Pentium Pro compatibility */
-         const CPUCaches *caches;
-@@ -8958,9 +8963,11 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
-     }
+ DEF_HELPER_6(vfslide1up_vf_h, void, ptr, ptr, i64, ptr, env, i32)
+ DEF_HELPER_6(vfslide1up_vf_w, void, ptr, ptr, i64, ptr, env, i32)
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 71f98fb350..f4b5460340 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3561,7 +3561,6 @@ static bool slideup_check(DisasContext *s, arg_rmrr *a)
+ }
  
--    /* PDCM is fixed1 bit for TDX */
--    if (!cpu->enable_pmu && !is_tdx_vm()) {
--        env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
-+    if (!cpu->pdcm_on_even_without_pmu) {
-+        /* PDCM is fixed1 bit for TDX */
-+        if (!cpu->enable_pmu && !is_tdx_vm()) {
-+            env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
-+        }
-     }
+ GEN_OPIVX_TRANS(vslideup_vx, slideup_check)
+-GEN_OPIVX_TRANS(vslide1up_vx, slideup_check)
+ GEN_OPIVI_TRANS(vslideup_vi, IMM_ZX, vslideup_vx, slideup_check)
  
-     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
-@@ -10021,6 +10028,8 @@ static const Property x86_cpu_properties[] = {
+ static bool slidedown_check(DisasContext *s, arg_rmrr *a)
+@@ -3572,9 +3571,56 @@ static bool slidedown_check(DisasContext *s, arg_rmrr *a)
+ }
  
-     DEFINE_PROP_BOOL("x-arch-cap-always-on", X86CPU,
-                      arch_cap_always_on, false),
-+    DEFINE_PROP_BOOL("x-pdcm-on-even-without-pmu", X86CPU,
-+                     pdcm_on_even_without_pmu, false),
- };
+ GEN_OPIVX_TRANS(vslidedown_vx, slidedown_check)
+-GEN_OPIVX_TRANS(vslide1down_vx, slidedown_check)
+ GEN_OPIVI_TRANS(vslidedown_vi, IMM_ZX, vslidedown_vx, slidedown_check)
  
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 414ca968e8..42168f1d6d 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2320,6 +2320,12 @@ struct ArchCPU {
-      */
-     bool arch_cap_always_on;
- 
-+    /*
-+     * Backwards compatibility with QEMU <10.1. The PDCM feature is now disabled when
-+     * PMU is not available, but prior to 10.1 it was enabled even if PMU is off.
-+     */
-+    bool pdcm_on_even_without_pmu;
++typedef void gen_helper_vslide1_vx(TCGv_ptr, TCGv_ptr, TCGv_i64, TCGv_ptr,
++                                TCGv_env, TCGv_i32);
 +
-     /* Number of physical address bits supported */
-     uint32_t phys_bits;
++#define GEN_OPIVX_VSLIDE1_TRANS(NAME, CHECK)                            \
++static bool trans_##NAME(DisasContext *s, arg_rmrr *a)                  \
++{                                                                       \
++    if (CHECK(s, a)) {                                                  \
++        static gen_helper_vslide1_vx * const fns[4] = {                 \
++            gen_helper_##NAME##_b, gen_helper_##NAME##_h,               \
++            gen_helper_##NAME##_w, gen_helper_##NAME##_d,               \
++        };                                                              \
++                                                                        \
++        TCGv_ptr dest, src2, mask;                                      \
++        TCGv_i64 src1;                                                  \
++        TCGv_i32 desc;                                                  \
++        uint32_t data = 0;                                              \
++                                                                        \
++        dest = tcg_temp_new_ptr();                                      \
++        mask = tcg_temp_new_ptr();                                      \
++        src2 = tcg_temp_new_ptr();                                      \
++        src1 = tcg_temp_new_i64();                                      \
++                                                                        \
++        data = FIELD_DP32(data, VDATA, VM, a->vm);                      \
++        data = FIELD_DP32(data, VDATA, LMUL, s->lmul);                  \
++        data = FIELD_DP32(data, VDATA, VTA, s->vta);                    \
++        data = FIELD_DP32(data, VDATA, VTA_ALL_1S, s->cfg_vta_all_1s);  \
++        data = FIELD_DP32(data, VDATA, VMA, s->vma);                    \
++        desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,            \
++                                s->cfg_ptr->vlenb, data));              \
++                                                                        \
++        tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, a->rd));            \
++        tcg_gen_addi_ptr(src2, tcg_env, vreg_ofs(s, a->rs2));           \
++        tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));                \
++        tcg_gen_ext_tl_i64(src1, get_gpr(s, a->rs1, EXT_SIGN));         \
++                                                                        \
++        fns[s->sew](dest, mask, src1, src2, tcg_env, desc);             \
++                                                                        \
++        tcg_gen_movi_tl(cpu_vstart, 0);                                 \
++        finalize_rvv_inst(s);                                           \
++                                                                        \
++        return true;                                                    \
++    }                                                                   \
++    return false;                                                       \
++}
++
++GEN_OPIVX_VSLIDE1_TRANS(vslide1up_vx, slideup_check)
++GEN_OPIVX_VSLIDE1_TRANS(vslide1down_vx, slidedown_check)
++
+ /* Vector Floating-Point Slide Instructions */
+ static bool fslideup_check(DisasContext *s, arg_rmrr *a)
+ {
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 7c67d67a13..41ea223106 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5198,11 +5198,11 @@ GEN_VEXT_VSLIE1UP(16, H2)
+ GEN_VEXT_VSLIE1UP(32, H4)
+ GEN_VEXT_VSLIE1UP(64, H8)
  
+-#define GEN_VEXT_VSLIDE1UP_VX(NAME, BITWIDTH)                     \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2, \
+-                  CPURISCVState *env, uint32_t desc)              \
+-{                                                                 \
+-    vslide1up_##BITWIDTH(vd, v0, s1, vs2, env, desc);             \
++#define GEN_VEXT_VSLIDE1UP_VX(NAME, BITWIDTH)                   \
++void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2,   \
++                  CPURISCVState *env, uint32_t desc)            \
++{                                                               \
++    vslide1up_##BITWIDTH(vd, v0, s1, vs2, env, desc);           \
+ }
+ 
+ /* vslide1up.vx vd, vs2, rs1, vm # vd[0]=x[rs1], vd[i+1] = vs2[i] */
+@@ -5249,11 +5249,11 @@ GEN_VEXT_VSLIDE1DOWN(16, H2)
+ GEN_VEXT_VSLIDE1DOWN(32, H4)
+ GEN_VEXT_VSLIDE1DOWN(64, H8)
+ 
+-#define GEN_VEXT_VSLIDE1DOWN_VX(NAME, BITWIDTH)                   \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2, \
+-                  CPURISCVState *env, uint32_t desc)              \
+-{                                                                 \
+-    vslide1down_##BITWIDTH(vd, v0, s1, vs2, env, desc);           \
++#define GEN_VEXT_VSLIDE1DOWN_VX(NAME, BITWIDTH)                 \
++void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2,   \
++                  CPURISCVState *env, uint32_t desc)            \
++{                                                               \
++    vslide1down_##BITWIDTH(vd, v0, s1, vs2, env, desc);         \
+ }
+ 
+ /* vslide1down.vx vd, vs2, rs1, vm # vd[i] = vs2[i+1], vd[vl-1]=x[rs1] */
 -- 
 2.47.3
 
