@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC76CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C1ACCD184
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8rcu-00036F-0s; Tue, 14 Oct 2025 22:52:32 -0400
+	id 1v8rgn-00042g-Ez; Tue, 14 Oct 2025 22:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8rci-00035M-MF
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:52:22 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1v8rgl-00042X-Rp
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:56:31 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8rcV-0006j2-Vu
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:52:20 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6318855a83fso13562065a12.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 19:52:05 -0700 (PDT)
+ id 1v8rgj-0007JJ-6W
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:56:31 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-6318855a83fso13569270a12.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 19:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760496722; x=1761101522; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760496984; x=1761101784; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yrYATmWBAX2GR6ZMhMA7RmRp8c2zVgLxLVX3yrwBUEU=;
- b=JPMlEsS1FIv6YW1EhtHIV8Nmwko+ve8fISn5p+u3f9d4UAbeaH5fSQJ/Y15+2byUWx
- bkoUXCCVeLl7lm+bSrycjrzIrtk4vn0ep3PpfgOx3d9Fipn1A8VSDaOaV7TKpyLUan9/
- gHxCjgCjAXR9xSC7A5+GxZb8gFQH6rA+kQgGKks9ONN2no6Lq8WvxKYiaelEG9xOXUZZ
- uOVUMnzzclpcvznU+MTRrP3SeIrMO16XT50f7hq1QTTjEgCiS6yqaheny7eTf56Z/6Gy
- D4Sug9TZWcWq9PXzHq/ztjqulCHqvlTgyQiKujvcXg4OnLD23geoL887MzuGjYh4h/WB
- UtuQ==
+ bh=nSOyUOfcRgwCLQjHz3KGvCyxbJuRpakhwxIp0fdtB+4=;
+ b=RW5ksoIN5/GNT6djN2VYbbZ0d6107nPku59VM8GDX3nMZJllSKOB/spUkql2e9zO/6
+ YZ3pzqiP1SKMI/fX5AyXHa64h0zp8i2Sg8OfjO4oiu2Bcc3BmmK5/RtpFKd3D20xHc0S
+ YVhbFPp3c1gP8VZ/Sx0FRB2xnv4RbA8/IkEGe7IYvHCnZ9Yt9bvFwWnUHiNokO3jJ2a5
+ Uc2ZnRif1gMPAX9UOcPf7GLwQ7n2MWIIiMpRl30vbPhRPESVgGBEp83JKMuWtMcFh63f
+ 3E93WY7zV5BD2O999SV/1rN9JR3O7oVesEk0C9i4noL4KIFdsnLr8WG1T5k7TgJ0SFaP
+ aTGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760496722; x=1761101522;
+ d=1e100.net; s=20230601; t=1760496984; x=1761101784;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yrYATmWBAX2GR6ZMhMA7RmRp8c2zVgLxLVX3yrwBUEU=;
- b=ZMQteSWRgB1sRgdB6pJyGBjy+V1aoVwKTdByx2IfCcnaMErzSe5K9IVG1YQcOOwSVM
- J3waJfp6ccLN9yD5Y27Fn4aYue995tq0eyzOoIOwrIvBSvIttSoqb2ZbkUgrfo5azhL/
- UJ/aKU4Z/S753k77BkD+A6S+pX16oSc//VasNyWCznipA60Z0EQ7K7bflUdFHdC+ZrZQ
- 6FrWviwWfO1h2lwcEwY2HXBzHaQS+LlIYKK98r5qn4zdW4wjDhxdZ4+dtTJJFmxLT2yJ
- zHtxUmGNu2+3ZMhgiJZv2T+oI3zQefyvnV9yhWU31LZ9qtcVT+yUNZqBaGNUPssEbYq6
- T47g==
-X-Gm-Message-State: AOJu0Yzcmrh4FoVC3b38AIfObH4lKdqdizDd4xz4rfnbdrXPMB3QHoeH
- y8YBPd1IEG2kKb0x2Lbee1Aoo4VGbglSW/6xnSFwSFjDCDvu4bNogt+6SDzr4LE+oLkOupvCfcD
- CVF9ZVHRtK7medtlE8UK+veawsLu//tsZPw==
-X-Gm-Gg: ASbGncvjnN9y5c0xrnzJZesueUYj/j5GO8tMmSCE6RchbVy8sTTh9lvpY4IEGNTfsQL
- 1AQNMpWtwLAvR+D6HSvjtTNHcxOo1vxvEDA7acsYSMAXaYyninpY3tXatTeAq6aeIUe2PJNnjql
- daQqC6h39/H/oeCrjD361QmEaYuLq1L0JxItHQagKquCFJtRbh1WWsKWUTpbfCPyJx2hHFPQ2YA
- OTaTrSUjCf4NmhFQ7meLnr/ZPpjXRohwanUEp3iJZjhOIZnG/Hpk0aU
-X-Google-Smtp-Source: AGHT+IHfdiazKAbx3IzJ0+Yac/K58inmUv1XsIBrE0OCc+SfRlMNaRiS7aEv5XbNypPb0qc6WRbYd9uawaSR9g5s9FQ=
-X-Received: by 2002:a05:6402:2789:b0:63b:ee26:546d with SMTP id
- 4fb4d7f45d1cf-63bee265665mr584877a12.12.1760496721892; Tue, 14 Oct 2025
- 19:52:01 -0700 (PDT)
+ bh=nSOyUOfcRgwCLQjHz3KGvCyxbJuRpakhwxIp0fdtB+4=;
+ b=F4mb0JFg8swf++eTflHNGRgRwf4c/MCLue2JXDN+FARUHwlyBh0tz0N/X1fVWxpCRd
+ S/tFz82yDu8jJlTyg1xV7UbxozvwhquqqxnBVkMt/wUsOBs7uMcux0OtU6aO8EbzPequ
+ 0hlXKGV2eOTw4Hq+YgsGlBsM88G8RewB5lwNe1o/4FwnOumfuy6QY9t9wzpvWIQ2/ohT
+ ZvHwo45aY7ZtJYWavwp7z2HtKU+7AO83PaUOR8L2K7X5S9Tt5HaKaxZbU0pfT2w4MUx5
+ hssaYcELs8va34iME3xTAdR+NDCRtlbtCHYQRdTa+El58nhMq5KHHMSOX/3eS4NpexhK
+ /FJg==
+X-Gm-Message-State: AOJu0YxC67g9VbO6NsR2siBLO7hcikTjM6gfzy0gdlpz76nTYiCnedD0
+ jnXfF41yl8QT0GvKzVVg6IJMIMKSloJMfAmyR8u3NvWVabjgH+ab00rQFxc48BIUc39v4mV7+Hp
+ eOgsmyM1sIGhTUc3koqHyrArtbuHDctY=
+X-Gm-Gg: ASbGnctXARtXWXmXfu3Nc5trGr9i5atsYw0EfMBgE42PnSeH5WKWXO49rkbYrL/RBWh
+ iA7WYyDIa9UVvUY4Z2s+Y7MGbsjDYKmeRpCSvPYpLCxfYBxua3T+vUge186SW5E58r/bBiGwclx
+ GciDpqP65jHZpvA+xAOhYDfuMxNr38CkzlOPoH5g87KiUU5jIj3dKGzxqE2hqtnxqiFK773Z6ex
+ rtG3yqJ07bXoYjHEPiSmSqnwiEVtSP/3yvkFUwFQyPFwz90F9MGpxLWJxXjJXgKcKE=
+X-Google-Smtp-Source: AGHT+IELUTvtMNW2SvI+R8O95u7W9p0mAJVenJ3px34A5l7JtkGxA806AIlowQx5qcEBrCDwq9xhwuJjE6bkpv0Ugn4=
+X-Received: by 2002:a05:6402:278b:b0:639:e11d:6529 with SMTP id
+ 4fb4d7f45d1cf-639e11d6e8cmr23439796a12.5.1760496984064; Tue, 14 Oct 2025
+ 19:56:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251010134226.72221-1-philmd@linaro.org>
- <20251010134226.72221-14-philmd@linaro.org>
-In-Reply-To: <20251010134226.72221-14-philmd@linaro.org>
+References: <20251001073306.28573-1-anjo@rev.ng>
+ <20251001073306.28573-5-anjo@rev.ng>
+ <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
+ <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
+In-Reply-To: <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 15 Oct 2025 12:51:34 +1000
-X-Gm-Features: AS18NWBwVRqB-drBRL_aG1NiBUYL6uW6v4KzuNNNosV6WccScC7pzNA2dGBiVuE
-Message-ID: <CAKmqyKPtjuAa=-fTukwE0-x5Ds5YLLotCHzxk=_TJaqzxuGwqA@mail.gmail.com>
-Subject: Re: [PATCH 13/16] target/riscv: Replace HOST_BIG_ENDIAN #ifdef with
- runtime if() check
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Wed, 15 Oct 2025 12:55:57 +1000
+X-Gm-Features: AS18NWAwR91iTsJyMihsjC1n80Oiz3NuBsMCLnSbNBFvHCQ4X_tBHwVDqDceFxI
+Message-ID: <CAKmqyKMyBMY88+6i5BdrXJtU8S9H_DcUG8O7yu5s9cE2Mv_s5g@mail.gmail.com>
+Subject: Re: [PATCH v2 04/33] target/riscv: Bugfix
+ riscv_pmu_ctr_get_fixed_counters_val()
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
+ richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -87,7 +84,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,111 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 10, 2025 at 11:52=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On Tue, Oct 7, 2025 at 9:06=E2=80=AFPM Anton Johansson <anjo@rev.ng> wrote:
 >
-> Replace compile-time #ifdef with a runtime check to ensure all code
-> paths are built and tested. This reduces build-time configuration
-> complexity and improves maintainability.
+> On 03/10/25, Alistair Francis wrote:
+> > On Wed, Oct 1, 2025 at 5:43=E2=80=AFPM Anton Johansson via
+> > <qemu-devel@nongnu.org> wrote:
+> > >
+> > > From my understanding the upper_half argument only indicates whether =
+the
+> > > upper or lower 32 bits should be returned, and upper_half will only e=
+ver
+> > > be set when MXLEN =3D=3D 32.  However, the function also uses upper_h=
+alf to
+> > > determine whether the inhibit flags are located in mcyclecfgh or
+> > > mcyclecfg, but this misses the case where MXLEN =3D=3D 32, upper_half=
+ =3D=3D false
+> > > for TARGET_RISCV32 where we would also need to read the upper half fi=
+eld.
+> >
+> > If MXLEN =3D=3D 32, upper_half =3D=3D false then we want to read mcycle=
+cfg,
+> > which the code today seems to be doing correctly.
 >
-> No functional change intended.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Hi again, I might be missing something then, when would this function nee=
+d
+> to access mcyclecfg for MXLEN =3D=3D 32?  AFAIU mcyclecfg and mcyclecfgh =
+are
+> modeled separately for MXLEN =3D=3D 32, even when sizeof(target_ulong) =
+=3D=3D 8.
+> Since this function only checks inhibit flags wouldn't we always want to
+> access mcyclecfgh for MXLEN =3D=3D 32?
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+When MXLEN =3D=3D 32 mcyclecfg is the bottom 32-bits of the mcyclecfg CSR
+and mcyclecfgh is the top 32-bits of the CSR. The idea is that
+target_ulong will be 32-bits (sizeof(target_ulong) =3D=3D 4). It doesn't
+really matter if target_ulong is 64-bits though, as the registers
+should just be treated as 32-bit registers anyway.
+
+Combining mcyclecfg and mcyclecfgh into one 64-bit register for MXLEN
+=3D=3D 32 makes sense though. For MXLEN =3D=3D 64 there is no mcyclecfgh an=
+d
+mcyclecfg it always 64-bit.
 
 Alistair
 
-> ---
->  target/riscv/vector_helper.c            | 32 ++++++++++++-------------
->  target/riscv/insn_trans/trans_rvv.c.inc | 16 ++++++-------
->  2 files changed, 24 insertions(+), 24 deletions(-)
 >
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 41ea2231067..2de3358ee86 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -235,26 +235,26 @@ vext_continuous_ldst_host(CPURISCVState *env, vext_=
-ldst_elem_fn_host *ldst_host,
->                          void *vd, uint32_t evl, uint32_t reg_start, void=
- *host,
->                          uint32_t esz, bool is_load)
->  {
-> -#if HOST_BIG_ENDIAN
-> -    for (; reg_start < evl; reg_start++, host +=3D esz) {
-> -        ldst_host(vd, reg_start, host);
-> -    }
-> -#else
-> -    if (esz =3D=3D 1) {
-> -        uint32_t byte_offset =3D reg_start * esz;
-> -        uint32_t size =3D (evl - reg_start) * esz;
-> -
-> -        if (is_load) {
-> -            memcpy(vd + byte_offset, host, size);
-> -        } else {
-> -            memcpy(host, vd + byte_offset, size);
-> -        }
-> -    } else {
-> +    if (HOST_BIG_ENDIAN) {
->          for (; reg_start < evl; reg_start++, host +=3D esz) {
->              ldst_host(vd, reg_start, host);
->          }
-> +    } else {
-> +        if (esz =3D=3D 1) {
-> +            uint32_t byte_offset =3D reg_start * esz;
-> +            uint32_t size =3D (evl - reg_start) * esz;
-> +
-> +            if (is_load) {
-> +                memcpy(vd + byte_offset, host, size);
-> +            } else {
-> +                memcpy(host, vd + byte_offset, size);
-> +            }
-> +        } else {
-> +            for (; reg_start < evl; reg_start++, host +=3D esz) {
-> +                ldst_host(vd, reg_start, host);
-> +            }
-> +        }
->      }
-> -#endif
->  }
->
->  static void vext_set_tail_elems_1s(target_ulong vl, void *vd,
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
-trans/trans_rvv.c.inc
-> index f4b5460340e..2a487179f63 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -3351,19 +3351,19 @@ static void load_element(TCGv_i64 dest, TCGv_ptr =
-base,
->  /* offset of the idx element with base register r */
->  static uint32_t endian_ofs(DisasContext *s, int r, int idx)
->  {
-> -#if HOST_BIG_ENDIAN
-> -    return vreg_ofs(s, r) + ((idx ^ (7 >> s->sew)) << s->sew);
-> -#else
-> -    return vreg_ofs(s, r) + (idx << s->sew);
-> -#endif
-> +    if (HOST_BIG_ENDIAN) {
-> +        return vreg_ofs(s, r) + ((idx ^ (7 >> s->sew)) << s->sew);
-> +    } else {
-> +        return vreg_ofs(s, r) + (idx << s->sew);
-> +    }
->  }
->
->  /* adjust the index according to the endian */
->  static void endian_adjust(TCGv_i32 ofs, int sew)
->  {
-> -#if HOST_BIG_ENDIAN
-> -    tcg_gen_xori_i32(ofs, ofs, 7 >> sew);
-> -#endif
-> +    if (HOST_BIG_ENDIAN) {
-> +        tcg_gen_xori_i32(ofs, ofs, 7 >> sew);
-> +    }
->  }
->
->  /* Load idx >=3D VLMAX ? 0 : vreg[idx] */
-> --
-> 2.51.0
->
->
+> //Anton
 
