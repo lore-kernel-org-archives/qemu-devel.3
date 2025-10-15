@@ -4,64 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15684CCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:17:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31561CCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v92J6-0000fY-FQ; Wed, 15 Oct 2025 10:16:48 -0400
+	id 1v92OM-0001zU-UM; Wed, 15 Oct 2025 10:22:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v92J0-0000ez-0E
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:16:46 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1v92O9-0001xl-6I; Wed, 15 Oct 2025 10:22:01 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v92Is-0002X8-Fr
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:16:41 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:8982:0:640:5cf4:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3D7F6807FC;
- Wed, 15 Oct 2025 17:16:27 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a94::1:15] (unknown
- [2a02:6bf:8080:a94::1:15])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id QGRfeD3F6Sw0-z5MvY6te; Wed, 15 Oct 2025 17:16:26 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760537786;
- bh=VkbZSrqRdF56Tr9OVfRkNhBqQ95hLYsAyjBKRVhk+EY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=k3b63BFAdaDBL8d2cfN9HSPpxPm+++/xQ1BDdjymjXyC5DEKY7mwLPuoBlc8Xew6L
- 2/qrwxY/15JM5hnfQtIroL2zqZXatyC/jBjJi7RXRmHSPnK0hDHtnE25k4klD4QZKo
- ZPozX5+66JdriENpHgcx6cJSRoOVY+qd//gZavj8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <92593ecc-e807-4cdc-aea8-81f41e63b87e@yandex-team.ru>
-Date: Wed, 15 Oct 2025 17:16:26 +0300
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1v92Ny-0003Eg-RA; Wed, 15 Oct 2025 10:21:59 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59FDhDNp012319;
+ Wed, 15 Oct 2025 14:21:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=g2iljmQPeaXc+evUDfnQ6HT6BuSZoDg00I2Re6HCA
+ uQ=; b=Rj7mP+8UV4oZIXfi+u3J5TaHGPi67fv1WdmkQJS/511jiTnUoIvSmhfbp
+ u7XXYTycpGaWp7+P/UaFiErAH5e/8aBskJdeWPayNTeAxhknEc3ieVZWRlYbbFsA
+ aqZAPMMC0fphcdsr9TxrjSYKp/k3ArMy5DqocrgHcdAhsdsjcqTN85/2u+DpMH0J
+ LssoOBk3C9/7GJKLAv4nKn5ZPOvpNMVkdpcQ92IeZcmqSq+cKc4Kqsa/zOa84MB+
+ 1jUCSilwZbMmcxWfh7UZuVvDWjg1DvgaCYwS53fL1SrOnWQCoFG1YeyFvINDRMhD
+ 6mXIxFIANxgDWhBSS/ToFeDSwj4cA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnrcgj0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Oct 2025 14:21:46 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59FD1PMn015190;
+ Wed, 15 Oct 2025 14:21:45 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r1js911c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Oct 2025 14:21:45 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59FELhlX41550214
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Oct 2025 14:21:43 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A69B620108;
+ Wed, 15 Oct 2025 14:21:43 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 310CA20104;
+ Wed, 15 Oct 2025 14:21:43 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.87.134.59])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 15 Oct 2025 14:21:43 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 0/3] target/s390x: Fix missing clock-comparator interrupts
+Date: Wed, 15 Oct 2025 16:21:03 +0200
+Message-ID: <20251015142141.3238-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] qapi: net/tap: deprecate vhostforce option
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- devel@lists.libvirt.org
-References: <20250901153943.65235-1-vsementsov@yandex-team.ru>
- <CACGkMEtD3_WP51=XPFM6oTsrSUCHkm9+ukEEWC68iayCKzNU9Q@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CACGkMEtD3_WP51=XPFM6oTsrSUCHkm9+ukEEWC68iayCKzNU9Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M5ZA6iws c=1 sm=1 tr=0 ts=68efadfa cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=wulB5n37dczb7JW1nh8A:9 a=HhbK4dLum7pmb74im6QT:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+ a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
+X-Proofpoint-GUID: biPr-3Er0pQ5axM-1QZDiI2MuyjkQ1zs
+X-Proofpoint-ORIG-GUID: biPr-3Er0pQ5axM-1QZDiI2MuyjkQ1zs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEwMDE0MCBTYWx0ZWRfX1+sWVrMbaJ9+
+ vIdoGWt/puihVgq4Q3B47ErLsB8U5rWcRNrKgdutjMqmrcngmtbd9Tanl8iRsjdWfICb7CPbHvt
+ Hch9nqlvfnzWcngwSFRjArqJ7ePFHzuvejC3/ZgkR/UAYFyubnM+NHFJNIkPW3Kkvr6/+K4yvpg
+ GDRv4Abij8iHPWZtMsLgBE+Cc3WBEiM7v/klYdOacHEtFsdgrp3FM/qVs95wOQOY4bbFm300jtZ
+ UgRgzP6Jl+DAbQMzmRyTBXBgFsi2pvmz5LlldPcE2X+hIHtc4eJB3R9dKbRD2TeSyf+gcuc+wTO
+ so3WcDzWurJTdA3Bk/7gZOGoXxR2DVgs5YJQ0nT8xmY5JC518yR6m3yZYSVroZEYx58dUYc0SF1
+ XzOZC8WgFbR4oiJllxudqyvHVeElJg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-15_05,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510100140
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,137 +118,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.10.25 08:48, Jason Wang wrote:
-> On Mon, Sep 1, 2025 at 11:39 PM Vladimir Sementsov-Ogievskiy
-> <vsementsov@yandex-team.ru> wrote:
->>
->> This option doesn't make sense since long ago (10 years!)
->> commit 1e7398a140f7a6 ("vhost: enable vhost without without MSI-X").
-> 
-> qemu-options.hx still say:
-> 
-> """
->      "                use vhostforce=on to force vhost on for non-MSIX
-> virtio guests\n"
-> """
-> 
-> Should we fix that as well?
+v1: https://lore.kernel.org/qemu-devel/20251014160743.398093-1-iii@linux.ibm.com/
+v1 -> v2: Add Thomas' R-b.
+          Cc: stable (Michael).
+          Improve formatting, commit messages, and test (Ilya).
 
-will do.
+Hi,
 
-> 
->>
->> Prior 1e7398a140f7a6, to enable vhost for some specific kind of guests
->> (that don't have MSI-X support), you should have set vhostforce=on
->> (with vhost=on or unset).
->>
->> Since 1e7398a140f7a6, guest type doesn't matter, all guests are equal
->> for vhost-enabling options logic.
->>
->> The current logic is:
->>    vhost=on / vhost=off : vhostforce ignored, doesn't make sense
->>    vhost unset : vhostforce counts, enabling vhost
->>
->> Currently you may enable vhost several ways:
->> - vhost=on
->> - vhostforce=on
->> - vhost=on + vhostforce=on
->> - and even vhost=on + vhostforce=off
->>
->> - they are all equal.
->>
->> Let's finally deprecate the extra option.
-> 
-> Note that vhostforce works for vhost-user as well:
-> 
-> { 'struct': 'NetdevVhostUserOptions',
->    'data': {
->      'chardev':        'str',
->      '*vhostforce':    'bool',
->      '*queues':        'int' } }
-> 
-> Should we change that as well?
-> 
+While trying to (so far unsuccessfully) reproduce [1], I found two bugs
+in the clock comparator handling. This series fixes both and adds a
+test.
 
-hmm, this vhostforce is unused. Will deprecate it as well.
+[1] https://lore.kernel.org/lkml/ab3131a2-c42a-47ff-bf03-e9f68ac053c0@t-8ch.de/
 
->>
->> Also, fix @vhostforce documentation.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Reviewed-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>
->> v3: - two spaces between sentences for vhostforce description
->>      - add r-b by Markus
->>
->>   docs/about/deprecated.rst |  7 +++++++
->>   qapi/net.json             | 11 +++++++++--
->>   2 files changed, 16 insertions(+), 2 deletions(-)
->>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index d50645a071..b17a5a41aa 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -516,6 +516,13 @@ Stream ``reconnect`` (since 9.2)
->>   The ``reconnect`` option only allows specifying second granularity timeouts,
->>   which is not enough for all types of use cases, use ``reconnect-ms`` instead.
->>
->> +TAP ``vhostforce`` (since 10.2)
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +The ``vhostforce`` option is redundant with the ``vhost`` option.
->> +If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
->> +
->> +
->>   VFIO device options
->>   '''''''''''''''''''
->>
->> diff --git a/qapi/net.json b/qapi/net.json
->> index 78bcc9871e..bab26e0c5d 100644
->> --- a/qapi/net.json
->> +++ b/qapi/net.json
->> @@ -346,13 +346,20 @@
->>   # @vhostfds: file descriptors of multiple already opened vhost net
->>   #     devices
->>   #
->> -# @vhostforce: vhost on for non-MSIX virtio guests
->> +# @vhostforce: enable vhost-net network accelerator.  Ignored when
->> +#    @vhost is set.
->>   #
->>   # @queues: number of queues to be created for multiqueue capable tap
->>   #
->>   # @poll-us: maximum number of microseconds that could be spent on busy
->>   #     polling for tap (since 2.7)
->>   #
->> +# Features:
->> +#
->> +# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
->> +#    option is redundant with the @vhost option. If they conflict,
->> +#    @vhost takes precedence.  Just use @vhost.
->> +#
->>   # Since: 1.2
->>   ##
->>   { 'struct': 'NetdevTapOptions',
->> @@ -369,7 +376,7 @@
->>       '*vhost':      'bool',
->>       '*vhostfd':    'str',
->>       '*vhostfds':   'str',
->> -    '*vhostforce': 'bool',
->> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
->>       '*queues':     'uint32',
->>       '*poll-us':    'uint32'} }
->>
->> --
->> 2.48.1
->>
-> 
-> Thanks
-> 
+Best regards,
+Ilya
 
-Thanks for reviewing!
+Ilya Leoshkevich (3):
+  target/s390x: Fix missing interrupts for small CKC values
+  target/s390x: Fix missing clock-comparator interrupts after reset
+  tests/tcg/s390x: Test SET CLOCK COMPARATOR
+
+ hw/s390x/s390-virtio-ccw.c              |  6 +--
+ target/s390x/cpu.c                      |  8 ++++
+ target/s390x/tcg/misc_helper.c          | 12 ++++--
+ tests/tcg/s390x/Makefile.softmmu-target |  1 +
+ tests/tcg/s390x/sckc.S                  | 55 +++++++++++++++++++++++++
+ 5 files changed, 75 insertions(+), 7 deletions(-)
+ create mode 100644 tests/tcg/s390x/sckc.S
 
 -- 
-Best regards,
-Vladimir
+2.51.0
+
 
