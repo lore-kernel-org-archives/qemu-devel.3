@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBE7CCD19A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE69CCD19B
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 15:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v92xk-0007n6-59; Wed, 15 Oct 2025 10:58:48 -0400
+	id 1v92xV-0007hT-Fv; Wed, 15 Oct 2025 10:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v92xg-0007m2-Ki; Wed, 15 Oct 2025 10:58:44 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1v92xT-0007ga-DU
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:58:31 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v92xX-0000fV-5D; Wed, 15 Oct 2025 10:58:44 -0400
+ id 1v92xL-0000bZ-B9
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:58:31 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 14900C0697;
- Wed, 15 Oct 2025 17:58:30 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C6F5DC068A;
+ Wed, 15 Oct 2025 17:58:19 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a94::1:15])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AwRFIp2FFSw0-XKLzqHqu; Wed, 15 Oct 2025 17:58:29 +0300
+ ESMTPSA id AwRFIp2FFSw0-tOrzNGIV; Wed, 15 Oct 2025 17:58:19 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760540309;
- bh=wNwdu8SceSxrcW0rk9s55+OjbMtBeK9dCvm3vEfhvUE=;
+ s=default; t=1760540299;
+ bh=alqbx58EES1ZCWM4lr+qmhdbJNW3cz+TCgNRWd5Bg2c=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=NIiBvSgtUo6N8DQ0A35y21ATV+e46h9/ZBA/mzikqghhCzc+pEk9bs2v7J+Lson8B
- jFwGlzFHnmfnne/VtpVri8n/O1aaSSrYKZGqxGVNR+01ZQkqv/Xztn72C94TXZnXe5
- YRvfxWGnb/J+HfKom46XvC7yC2UoD9NPAmqeS8C4=
+ b=VBdJUtd5pboDXxF/armVhIbFVBpNrOO2dYHYF/F8Rmk4wOXykzhAqK7tz2a7Vh7Gx
+ SqEnijPVmGSZMEtvnfpZwralRPWH8MLstCqfvaQWeOshQs4MGWInuFUyS0z5HIakER
+ 0iY5GVGpWAsDfNh9J78XdSv0L0UhXED1uQJBlorc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH v3 22/23] vhost-user-blk: add some useful trace-points
-Date: Wed, 15 Oct 2025 17:58:06 +0300
-Message-ID: <20251015145808.1112843-23-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru
+Subject: [PATCH v3 08/23] virtio: drop *_set_guest_notifier_fd_handler()
+ helpers
+Date: Wed, 15 Oct 2025 17:57:52 +0300
+Message-ID: <20251015145808.1112843-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
 References: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,121 +77,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Now they don't make code more readable. Let's better put the whole
+logic into virtio_queue_set_guest_notifier().
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/block/trace-events     | 10 ++++++++++
- hw/block/vhost-user-blk.c | 19 +++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ hw/virtio/virtio.c | 76 +++++++++++-----------------------------------
+ 1 file changed, 17 insertions(+), 59 deletions(-)
 
-diff --git a/hw/block/trace-events b/hw/block/trace-events
-index cc9a9f2460..dbaa5ca6cb 100644
---- a/hw/block/trace-events
-+++ b/hw/block/trace-events
-@@ -58,6 +58,16 @@ virtio_blk_handle_zone_mgmt(void *vdev, void *req, uint8_t op, int64_t sector, i
- virtio_blk_handle_zone_reset_all(void *vdev, void *req, int64_t sector, int64_t len) "vdev %p req %p sector 0x%" PRIx64 " cap 0x%" PRIx64 ""
- virtio_blk_handle_zone_append(void *vdev, void *req, int64_t sector) "vdev %p req %p, append sector 0x%" PRIx64 ""
- 
-+# vhost-user-blk.c
-+vhost_user_blk_start_in(void *vdev) "vdev %p"
-+vhost_user_blk_start_out(void *vdev) "vdev %p"
-+vhost_user_blk_stop_in(void *vdev) "vdev %p"
-+vhost_user_blk_stop_out(void *vdev) "vdev %p"
-+vhost_user_blk_connect_in(void *vdev) "vdev %p"
-+vhost_user_blk_connect_out(void *vdev) "vdev %p"
-+vhost_user_blk_device_realize_in(void *vdev) "vdev %p"
-+vhost_user_blk_device_realize_out(void *vdev) "vdev %p"
-+
- # hd-geometry.c
- hd_geometry_lchs_guess(void *blk, int cyls, int heads, int secs) "blk %p LCHS %d %d %d"
- hd_geometry_guess(void *blk, uint32_t cyls, uint32_t heads, uint32_t secs, int trans) "blk %p CHS %u %u %u trans %d"
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index de7a810c93..a5daed4346 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -31,6 +31,7 @@
- #include "hw/virtio/virtio-access.h"
- #include "system/system.h"
- #include "system/runstate.h"
-+#include "trace.h"
- 
- static const int user_feature_bits[] = {
-     VIRTIO_BLK_F_SIZE_MAX,
-@@ -137,6 +138,8 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-     int i, ret;
- 
-+    trace_vhost_user_blk_start_in(vdev);
-+
-     if (!k->set_guest_notifiers) {
-         error_setg(errp, "binding does not support guest notifiers");
-         return -ENOSYS;
-@@ -192,6 +195,8 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 704bc7943f..4184aff75c 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3804,74 +3804,32 @@ static void virtio_config_guest_notifier_read(EventNotifier *n)
      }
-     s->started_vu = true;
- 
-+    trace_vhost_user_blk_start_out(vdev);
-+
-     return ret;
- 
- err_guest_notifiers:
-@@ -212,6 +217,8 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
-     int ret;
-     bool force_stop = false;
- 
-+    trace_vhost_user_blk_stop_in(vdev);
-+
-     if (!s->started_vu) {
-         return 0;
-     }
-@@ -233,6 +240,9 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
-     }
- 
-     vhost_dev_disable_notifiers(&s->dev, vdev);
-+
-+    trace_vhost_user_blk_stop_out(vdev);
-+
-     return ret;
  }
  
-@@ -340,6 +350,8 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
-     int ret = 0;
+-static void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq,
+-                                                       bool assign,
+-                                                       bool with_irqfd)
+-{
+-    if (assign && !with_irqfd) {
+-        event_notifier_set_handler(&vq->guest_notifier,
+-                                   virtio_queue_guest_notifier_read);
+-    } else {
+-        event_notifier_set_handler(&vq->guest_notifier, NULL);
+-    }
+-    if (!assign) {
+-        /* Test and clear notifier before closing it,
+-         * in case poll callback didn't have time to run. */
+-        virtio_queue_guest_notifier_read(&vq->guest_notifier);
+-    }
+-}
+-
+-static void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+-                                                 bool assign, bool with_irqfd)
+-{
+-    EventNotifier *n;
+-    n = &vdev->config_notifier;
+-    if (assign && !with_irqfd) {
+-        event_notifier_set_handler(n, virtio_config_guest_notifier_read);
+-    } else {
+-        event_notifier_set_handler(n, NULL);
+-    }
+-    if (!assign) {
+-        /* Test and clear notifier before closing it,*/
+-        /* in case poll callback didn't have time to run. */
+-        virtio_config_guest_notifier_read(n);
+-    }
+-}
+-
+-static void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+-                                                     VirtQueue *vq,
+-                                                     int n, bool assign,
+-                                                     bool with_irqfd)
+-{
+-    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+-        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+-    } else {
+-        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
+-    }
+-}
+-
+ int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
+                                     bool with_irqfd)
+ {
+-    VirtQueue *vq = NULL;
+-    EventNotifier *notifier = NULL;
+-
+-    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+-        notifier = virtio_config_get_guest_notifier(vdev);
+-    } else {
+-        vq = virtio_get_queue(vdev, n);
+-        notifier = virtio_queue_get_guest_notifier(vq);
+-    }
++    bool is_config = n == VIRTIO_CONFIG_IRQ_IDX;
++    VirtQueue *vq = is_config ? NULL : virtio_get_queue(vdev, n);
++    EventNotifier *notifier = is_config ?
++        virtio_config_get_guest_notifier(vdev) :
++        virtio_queue_get_guest_notifier(vq);
++    EventNotifierHandler *read_fn = is_config ?
++        virtio_config_guest_notifier_read :
++        virtio_queue_guest_notifier_read;
  
-+    trace_vhost_user_blk_connect_in(vdev);
+     if (assign) {
+         int r = event_notifier_init(notifier, 0);
+         if (r < 0) {
+             return r;
+         }
+-        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
+-    } else {
+-        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, false,
+-                                                 with_irqfd);
++    }
 +
-     if (s->connected) {
-         return 0;
++    event_notifier_set_handler(notifier,
++                               (assign && !with_irqfd) ? read_fn : NULL);
++
++    if (!assign) {
++        /* Test and clear notifier before closing it,*/
++        /* in case poll callback didn't have time to run. */
++        read_fn(notifier);
+         event_notifier_cleanup(notifier);
      }
-@@ -365,6 +377,8 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-         ret = vhost_user_blk_start(vdev, errp);
-     }
  
-+    trace_vhost_user_blk_connect_out(vdev);
-+
-     return ret;
- }
- 
-@@ -455,6 +469,8 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
-     int retries;
-     int i, ret;
- 
-+    trace_vhost_user_blk_device_realize_in(vdev);
-+
-     if (!s->chardev.chr) {
-         error_setg(errp, "chardev is mandatory");
-         return;
-@@ -514,6 +530,9 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
-     qemu_chr_fe_set_handlers(&s->chardev,  NULL, NULL,
-                              vhost_user_blk_event, NULL, (void *)dev,
-                              NULL, true);
-+
-+    trace_vhost_user_blk_device_realize_out(vdev);
-+
-     return;
- 
- virtio_err:
 -- 
 2.48.1
 
