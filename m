@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD080CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 008ADCCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t7A-0002KR-53; Wed, 15 Oct 2025 00:27:52 -0400
+	id 1v8t6b-00016U-Ty; Wed, 15 Oct 2025 00:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t77-0002Ex-Oo; Wed, 15 Oct 2025 00:27:50 -0400
+ id 1v8t6Z-00013O-Uj; Wed, 15 Oct 2025 00:27:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t71-0002zm-A4; Wed, 15 Oct 2025 00:27:49 -0400
+ id 1v8t6W-0002yg-4b; Wed, 15 Oct 2025 00:27:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D33D15D9DE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5982015D9DB;
  Wed, 15 Oct 2025 07:25:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3FD9829FE85;
- Wed, 15 Oct 2025 07:25:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EFA9E29FE82;
+ Wed, 15 Oct 2025 07:25:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jim Shu <jim.shu@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 11/13] target/riscv: Fix ssamoswap error handling
-Date: Wed, 15 Oct 2025 07:25:35 +0300
-Message-ID: <20251015042540.68611-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 08/13] target/arm: Don't set HCR.RW for AArch32 only
+ CPUs
+Date: Wed, 15 Oct 2025 07:25:32 +0300
+Message-ID: <20251015042540.68611-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,119 +63,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim Shu <jim.shu@sifive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Follow the RISC-V CFI v1.0 spec [1] to fix the exception type
-when ssamoswap is disabled by xSSE.
+In commit 39ec3fc0301 we fixed a bug where we were not implementing
+HCR_EL2.RW as RAO/WI for CPUs where EL1 doesn't support AArch32.
+However, we got the condition wrong, so we now set this bit even on
+CPUs which have no AArch64 support at all.  This is wrong because the
+AArch32 HCR register defines this bit as RES0.
 
-[1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
+Correct the condition we use for forcing HCR_RW to be set.
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250924074818.230010-4-jim.shu@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 0b16c7b6a854d461cdfd418769b51d58e43dd92a)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3128
+Fixes: 39ec3fc0301 ("target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't support AArch32")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250925115723.1293233-1-peter.maydell@linaro.org
+(cherry picked from commit a23e719ca8e80d22eafe4b2b57833918d439fa0c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 85d73e492d..e2e883151d 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1284,3 +1284,8 @@ DEF_HELPER_4(vgmul_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
- DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
-+
-+/* CFI (zicfiss) helpers */
-+#ifndef CONFIG_USER_ONLY
-+DEF_HELPER_1(ssamoswap_disabled, void, env)
-+#endif
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 45686af4d6..f4a1c12ca0 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -91,7 +91,11 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 066705ddb7..b3ca49a6de 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5340,7 +5340,8 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+     value &= valid_mask;
+ 
+     /* RW is RAO/WI if EL1 is AArch64 only */
+-    if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
++    if (arm_feature(env, ARM_FEATURE_AARCH64) &&
++        !cpu_isar_feature(aa64_aa32_el1, cpu)) {
+         value |= HCR_RW;
      }
  
-     if (!ctx->bcfi_enabled) {
-+#ifndef CONFIG_USER_ONLY
-+        gen_helper_ssamoswap_disabled(tcg_env);
-+#else
-         return false;
-+#endif
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
-@@ -116,7 +120,11 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
-     }
- 
-     if (!ctx->bcfi_enabled) {
-+#ifndef CONFIG_USER_ONLY
-+        gen_helper_ssamoswap_disabled(tcg_env);
-+#else
-         return false;
-+#endif
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 6a8c2e1940..c34d8a4a9c 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -715,4 +715,53 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, target_ulong addr)
-     return cpu_ldl_code_mmu(env, addr, oi, ra);
- }
- 
-+void helper_ssamoswap_disabled(CPURISCVState *env)
-+{
-+    int exception = RISCV_EXCP_ILLEGAL_INST;
-+
-+    /*
-+     * Here we follow the RISC-V CFI spec [1] to implement the exception type
-+     * of ssamoswap* instruction.
-+     *
-+     * [1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
-+     *
-+     * Note: We have already checked some conditions in trans_* functions:
-+     *   1. The effective priv mode is not M-mode.
-+     *   2. The xSSE specific to the effictive priv mode is disabled.
-+     */
-+    if (!get_field(env->menvcfg, MENVCFG_SSE)) {
-+        /*
-+         * Disabled M-mode SSE always trigger illegal instruction when
-+         * current priv mode is not M-mode.
-+         */
-+        exception = RISCV_EXCP_ILLEGAL_INST;
-+        goto done;
-+    }
-+
-+    if (!riscv_has_ext(env, RVS)) {
-+        /* S-mode is not implemented */
-+        exception = RISCV_EXCP_ILLEGAL_INST;
-+        goto done;
-+    } else if (env->virt_enabled) {
-+        /*
-+         * VU/VS-mode with disabled xSSE will trigger the virtual instruction
-+         * exception.
-+         */
-+        exception = RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-+        goto done;
-+    } else {
-+        /*
-+         * U-mode with disabled S-mode SSE will trigger the illegal instruction
-+         * exception.
-+         *
-+         * Note: S-mode is already handled in the disabled M-mode SSE case.
-+         */
-+        exception = RISCV_EXCP_ILLEGAL_INST;
-+        goto done;
-+    }
-+
-+done:
-+    riscv_raise_exception(env, exception, GETPC());
-+}
-+
- #endif /* !CONFIG_USER_ONLY */
 -- 
 2.47.3
 
