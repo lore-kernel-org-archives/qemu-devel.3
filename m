@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32779CCD184
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 03:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 979DBCCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 03:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8s3p-0003VO-41; Tue, 14 Oct 2025 23:20:23 -0400
+	id 1v8sHX-0005hf-TE; Tue, 14 Oct 2025 23:34:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8s3m-0003UA-Fk
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:20:18 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1v8sHW-0005hW-VV
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:34:31 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8s3e-0002Tz-7i
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:20:17 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6399706fd3cso8978643a12.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 20:20:08 -0700 (PDT)
+ id 1v8sHO-0003xF-Vl
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 23:34:30 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-78142734156so26231577b3.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 20:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760498404; x=1761103204; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760499258; x=1761104058; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4nf2fRGF18rXyBRYKgpKSuJaWRINQmJzTz15oCZr19s=;
- b=KrZf5LO5uEiKBhaCXNLyQ0VozyfdiqsguBRILyQITCAkIphGKmlsOzIzS5mSUqmoSU
- YBLCIGozemzdPmFWOqkY0qnn88y6Ay3Um9FXCDAhiL2uUz5gtVA9j45kYpSmo5xv4qmA
- TmvswhvTVehu6wOa0Quz/4SN/GFdqojVzpoXOPO+FABRHWzFkoMNhyudr4wL/qC2QY9a
- 9tq+BcpIF2qy3gXFFZRCoQ4rKqLSiqIaxgPNGOxJNl7aGznKZxeH+730ZMK0hubQ8CNS
- Vnun2m2eC9K1tQMRvkfFOagYu4yHrDQruASNc7/S92VCOSA4V0o32gLg5MbHuM3cvfM6
- yoxQ==
+ bh=+ssXvmeot63i3xSe1WTGclI/2ejGLxy6Q2So2aownM4=;
+ b=lZeY0DuqMsglWAEC13dBpV8ChcV6sRrqN4J6bgxWV8QFw0Vz66NsLK4P5+CV7MgXLG
+ pcNyEn+pQc/EA+z3vc5tedyKGaVFPJPC3gAEkyMGRXumskanHG6PNvFW4maDgmc+LHeg
+ rrRwMOKMdAmcxfOGwtuYOOFD6LpLvl1Kt0yrpjyhdymoUOQ1+Iq+qmRGF40umOP6CJTN
+ /YrmXbmqnXpbomfU1OBTGaQcAQSJEDPk1Td5W+8QLTkWyo+Jv5CUu20WTDqONxTr4LoC
+ xOaa2f0R1PPErIoAi+DTyhoxo+X8jG508KqH/IGJJTdEYz6BoX/OGsHLi87pWNE2foBX
+ +2Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760498404; x=1761103204;
+ d=1e100.net; s=20230601; t=1760499258; x=1761104058;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4nf2fRGF18rXyBRYKgpKSuJaWRINQmJzTz15oCZr19s=;
- b=e8B365iHOxpzbBH0wzEVuQIuw0aFfr7ps8iWm9CqC3mW2lfqemy2kUv16x3zglFS+p
- nmdaVxSYnyRkH7DaDmaT0WRYXUvcul+Z6x94HzHleho+6URz8jTUr/COf4MX/LeLxZUq
- 2OUw60WK2BACx8dcJ2Z+J498m1/6HJCIiZc143ndcBvNDo17c8JHWQvLGep/IHelMxtp
- 1z5nbtftOQhOcjoRbk0IiPTClxs5CoByimf2+ylHvQju6jQzBSDH5DAYxgGBXlvtvKOu
- vre5SGZVgYmeRLTr6tTE6TVCwfd+LSm/chcV+amj2h9IwLAwRocutWoaQxKAT6IewE5z
- f+3g==
-X-Gm-Message-State: AOJu0YzOq3S3GqtNFj8Ys2Wjelo9t2W/nRarf7U6do3byoBVbgkAnUnP
- t8HhT1qIT2g6ICx1jBQ5rFI5uH/oTjobCx6jV0QJGGYXbxHy6o1fZlAx17x5qzvv1xDWuWwjg2v
- 3yXssm0fn47dRGnD07766ARbtMdMQHHk=
-X-Gm-Gg: ASbGncso9ipz7ETTC+DT5Y50RIQb7ws8M0zcnM5r6PElH620TChqVBZuUTHzklukpl3
- RZOwgt42I3/c5IvYmtux5QcA91TETInPAHkdhC5kgXaALySGBCAwdFryAzggezFeiZAqibt02Vb
- tRmEmywQhGAyB1uI1ZAEfDNyLcWjmkbMAHig0kQ795j+1hiwSyMYr8SGuGI/LDwwEZYDfkABgHR
- QtC2lJHh0MrD5JOMa52lXIr0wYKe57DyBokIX8LCSFN7EPE1vkvs9RCzo3oeO2IWznX/1cpYsc3
- iQ==
-X-Google-Smtp-Source: AGHT+IE10XYOLXRCSY1z8FJtLwBac+6+9qqXjN6TYdd20PVQ6wfiEZsblquUy7Ca29FPFcEtq502AxIryR1+XNxnMYY=
-X-Received: by 2002:a05:6402:50cb:b0:639:73d4:357f with SMTP id
- 4fb4d7f45d1cf-639d597c537mr21843713a12.0.1760498404298; Tue, 14 Oct 2025
- 20:20:04 -0700 (PDT)
+ bh=+ssXvmeot63i3xSe1WTGclI/2ejGLxy6Q2So2aownM4=;
+ b=j3jKpc+ThluWEKYVyQFWKCePZqZRDByxsC+wXBmX+3P4AzhM3Pf9p0NyYEZgzjKPH/
+ LKnl3dOC1k/vbfiSpzP5f9rPGXj94vB8x3BMJQ9bjw8Q+ZAeT7d9MaFdDIUQUIO46Z6/
+ kXLE0oTqtyyv8kdEE9EStpMjaTgwusg+tartI0AUZzDttzYnEc0p8KoR+tik3yy7M8Zg
+ u9Q+/RS7xkmgTy20p5y7QY6tWmr8AWFZ7sL56QgHs2IJqUczhYS4NBfZ7RnMon1qrbvM
+ /0BsHou0FSlIUUAOSLzahcP8aM8VJv2EDsyE7rCU6rB3jz4RK3NsKd/Y0s7NMAaKjsDC
+ tZoA==
+X-Gm-Message-State: AOJu0YycVfBHZIx/zamH3puyEduBDUR2T5MY95d7VbhQvlqTDNnLMsfc
+ kGF3CURj2VRLiXaIh8y8BzeMiJvbvzj2wlOuQnLg5jtEnF/4vaGBIxkHhnNc6laYZqpr1AahYxC
+ wCWJJa2uP0Ads1kVbJDNDT5Im6sioRtQ=
+X-Gm-Gg: ASbGncuGKraJRd10DNKOtxFGvCtyNyVZZ2mg1qzdGvOQCQuo3+b8JD1So1Nyrjhj5Yz
+ plEiQI4nRhxMupN9zllWQ9l+UodEFNuNF/mG5B8DbAvKEiynbAG2csqi9fbAtjRjfoFyxchKHy5
+ qjNwjFaYCgSCN1qpQHY8L2AS2jqJpb/ehTCwt3LOOTQolC1nMhQrwMJpbo3ADQs0C6R5VQSPgOo
+ l/Y7Ql5TqkdIw10V7I/yQQWJduVy7wZHdh+mKJAmRWiE12SHJ/OsqeIIyEp1Khp3fU=
+X-Google-Smtp-Source: AGHT+IG284Ok8pngfiPjNwICEI69MC3olbwD3c1Rvxr/721ARhtDIuBebwZixwAn10n4bzibHW1e0cWdde/M1vpUquo=
+X-Received: by 2002:a53:b852:0:b0:636:1985:56c0 with SMTP id
+ 956f58d0204a3-63ccb90be31mr16683966d50.39.1760499258413; Tue, 14 Oct 2025
+ 20:34:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251003104443.51501-1-djordje.todorovic@htecgroup.com>
- <20251003104443.51501-12-djordje.todorovic@htecgroup.com>
-In-Reply-To: <20251003104443.51501-12-djordje.todorovic@htecgroup.com>
+ <20251003104443.51501-14-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20251003104443.51501-14-djordje.todorovic@htecgroup.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 15 Oct 2025 13:19:37 +1000
-X-Gm-Features: AS18NWAVrKmfqC_1LLa0cwQIYJ5saMPy1zvagmX5PdzMb_9Z9WMZfvmAdickV9g
-Message-ID: <CAKmqyKMbsu_G59pX1t=WCRLNVFEYT+jq8aj9F4aza-k5CO5mmA@mail.gmail.com>
-Subject: Re: [PATCH v10 11/13] hw/riscv: Add support for MIPS Boston-aia board
- mode
+Date: Wed, 15 Oct 2025 13:33:51 +1000
+X-Gm-Features: AS18NWDSSyl73eSGCtSkCtxXblZLtcIrlDOQX9xNEr01RmuISkceMoCjmu3JWOA
+Message-ID: <CAKmqyKMv48x1jo0ows+TBcB=WqxQ0aN-ZjCeuH5iX6JDoC7Diw@mail.gmail.com>
+Subject: Re: [PATCH v10 13/13] test/functional: Add test for boston-aia board
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
@@ -79,8 +77,8 @@ Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "thuth@redhat.com" <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=alistair23@gmail.com; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -88,7 +86,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,629 +105,182 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Oct 3, 2025 at 8:45=E2=80=AFPM Djordje Todorovic
 <Djordje.Todorovic@htecgroup.com> wrote:
 >
-> The board model supports up to 64 harts with MIPS CPS, MIPS GCR,
-> MIPS CPC, AIA plic, and AIA clint devices. The model can create
-> boot code, if there is no -bios parameter. We can specify -smp x,
-> cores=3Dy,thread=3Dz.
-> Ex: Use 4 cores and 2 threads with each core to
-> have 8 smp cpus as follows.
->   qemu-system-riscv64 -cpu mips-p8700 \
->   -m 2G -M boston-aia \
->   -smp 8,cores=3D4,threads=3D2 -kernel fw_payload.bin \
->   -drive file=3Drootfs.ext2,format=3Draw -serial stdio
+> Add functional test for Boston AIA board. The P8700 RISC-V based
+> CPU by MIPS supports it at the moment.
 >
 > Signed-off-by: Chao-ying Fu <cfu@mips.com>
 > Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Acked-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  configs/devices/riscv64-softmmu/default.mak |   1 +
->  docs/system/riscv/mips.rst                  |  20 +
->  docs/system/target-riscv.rst                |   1 +
->  hw/riscv/Kconfig                            |   6 +
->  hw/riscv/boston-aia.c                       | 472 ++++++++++++++++++++
->  hw/riscv/meson.build                        |   1 +
->  6 files changed, 501 insertions(+)
->  create mode 100644 docs/system/riscv/mips.rst
->  create mode 100644 hw/riscv/boston-aia.c
->
-> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/device=
-s/riscv64-softmmu/default.mak
-> index e485bbd1a3..a8e4d0ab33 100644
-> --- a/configs/devices/riscv64-softmmu/default.mak
-> +++ b/configs/devices/riscv64-softmmu/default.mak
-> @@ -12,3 +12,4 @@
->  # CONFIG_MICROCHIP_PFSOC=3Dn
->  # CONFIG_SHAKTI_C=3Dn
->  # CONFIG_XIANGSHAN_KUNMINGHU=3Dn
-> +# CONFIG_MIPS_BOSTON_AIA=3Dn
-> diff --git a/docs/system/riscv/mips.rst b/docs/system/riscv/mips.rst
-> new file mode 100644
-> index 0000000000..97096421e1
-> --- /dev/null
-> +++ b/docs/system/riscv/mips.rst
-> @@ -0,0 +1,20 @@
-> +Boards for RISC-V Processors by MIPS
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +RISC-V processors developed by MIPS support Boston-aia board model. The =
-board
-> +model supports up to 64 harts with MIPS CPS, MIPS GCR, MIPS CPC, AIA pli=
-c,
-> +and AIA clint devices. The model can create boot code, if there is no
-> +```-bios``` parameter. Also, we can specify ```-smp x,cores=3Dy,thread=
-=3Dz```.
-> +
-> +Running Linux kernel
-> +--------------------
-> +
-> +For example, to use 4 cores and 2 threads with each core to have 8 smp c=
-pus,
-> +that runs on the ```mips-p8700``` CPU, run qemu as follows:
-> +
-> +.. code-block:: bash
-> +
-> +   qemu-system-riscv64 -cpu mips-p8700 \
-> +         -m 2G -M boston-aia \
-> +         -smp 8,cores=3D4,threads=3D2 -kernel fw_payload.bin \
-> +         -drive file=3Drootfs.ext2,format=3Draw -serial stdio
-> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-> index 89b2cb732c..3ad5d1ddaf 100644
-> --- a/docs/system/target-riscv.rst
-> +++ b/docs/system/target-riscv.rst
-> @@ -68,6 +68,7 @@ undocumented; you can get a complete list by running
->
->     riscv/microblaze-v-generic
->     riscv/microchip-icicle-kit
-> +   riscv/mips
->     riscv/shakti-c
->     riscv/sifive_u
->     riscv/virt
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index fc9c35bd98..0222c93f87 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -128,3 +128,9 @@ config XIANGSHAN_KUNMINGHU
->      select RISCV_APLIC
->      select RISCV_IMSIC
->      select SERIAL_MM
-> +
-> +config MIPS_BOSTON_AIA
-> +    bool
-> +    default y
-> +    select PCI_EXPRESS
-> +    select PCI_EXPRESS_XILINX
-> diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
-> new file mode 100644
-> index 0000000000..f7c4bd0f85
-> --- /dev/null
-> +++ b/hw/riscv/boston-aia.c
-> @@ -0,0 +1,472 @@
-> +/*
-> + * MIPS Boston-aia development board emulation.
-> + *
-> + * Copyright (c) 2016 Imagination Technologies
-> + *
-> + * Copyright (c) 2025 MIPS
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +
-> +#include "hw/boards.h"
-> +#include "hw/char/serial-mm.h"
-> +#include "hw/ide/pci.h"
-> +#include "hw/ide/ahci-pci.h"
-> +#include "hw/loader.h"
-> +#include "hw/riscv/cps.h"
-> +#include "hw/pci-host/xilinx-pcie.h"
-> +#include "hw/qdev-properties.h"
-> +#include "qapi/error.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/log.h"
-> +#include "chardev/char.h"
-> +#include "system/address-spaces.h"
-> +#include "system/device_tree.h"
-> +#include "system/system.h"
-> +#include "system/qtest.h"
-> +#include "system/runstate.h"
-> +
-> +#include <libfdt.h>
-> +#include "qom/object.h"
-> +
-> +#define TYPE_MIPS_BOSTON_AIA "mips-boston-aia"
-> +typedef struct BostonState BostonState;
-> +DECLARE_INSTANCE_CHECKER(BostonState, BOSTON,
-> +                         TYPE_MIPS_BOSTON_AIA)
-> +
-> +enum {
-> +    BOSTON_PCIE2,
-> +    BOSTON_PCIE2_MMIO,
-> +    BOSTON_PLATREG,
-> +    BOSTON_UART,
-> +    BOSTON_LCD,
-> +    BOSTON_FLASH,
-> +    BOSTON_HIGHDDR,
-> +};
-> +
-> +static const MemMapEntry boston_memmap[] =3D {
-> +    [BOSTON_PCIE2] =3D      { 0x14000000,     0x2000000 },
-> +    [BOSTON_PCIE2_MMIO] =3D { 0x16000000,      0x100000 },
-> +    [BOSTON_PLATREG] =3D    { 0x17ffd000,        0x1000 },
-> +    [BOSTON_UART] =3D       { 0x17ffe000,          0x20 },
-> +    [BOSTON_LCD] =3D        { 0x17fff000,           0x8 },
-> +    [BOSTON_FLASH] =3D      { 0x18000000,     0x8000000 },
-> +    [BOSTON_HIGHDDR] =3D    { 0x80000000,           0x0 },
-> +};
-> +
-> +/* Interrupt numbers for APLIC. */
-> +#define UART_INT 4
-> +#define PCIE2_INT 7
-> +
-> +struct BostonState {
-> +    SysBusDevice parent_obj;
-> +
-> +    MachineState *mach;
-> +    RISCVCPSState cps;
-> +    SerialMM *uart;
-> +
-> +    CharBackend lcd_display;
-> +    char lcd_content[8];
-> +    bool lcd_inited;
-> +};
-> +
-> +enum boston_plat_reg {
-> +    PLAT_FPGA_BUILD     =3D 0x00,
-> +    PLAT_CORE_CL        =3D 0x04,
-> +    PLAT_WRAPPER_CL     =3D 0x08,
-> +    PLAT_SYSCLK_STATUS  =3D 0x0c,
-> +    PLAT_SOFTRST_CTL    =3D 0x10,
-> +#define PLAT_SOFTRST_CTL_SYSRESET       (1 << 4)
-> +    PLAT_DDR3_STATUS    =3D 0x14,
-> +#define PLAT_DDR3_STATUS_LOCKED         (1 << 0)
-> +#define PLAT_DDR3_STATUS_CALIBRATED     (1 << 2)
-> +#define PLAT_DDR3_INTERFACE_RESET       (1 << 3)
-> +    PLAT_PCIE_STATUS    =3D 0x18,
-> +#define PLAT_PCIE_STATUS_PCIE0_LOCKED   (1 << 0)
-> +#define PLAT_PCIE_STATUS_PCIE1_LOCKED   (1 << 8)
-> +#define PLAT_PCIE_STATUS_PCIE2_LOCKED   (1 << 16)
-> +    PLAT_FLASH_CTL      =3D 0x1c,
-> +    PLAT_SPARE0         =3D 0x20,
-> +    PLAT_SPARE1         =3D 0x24,
-> +    PLAT_SPARE2         =3D 0x28,
-> +    PLAT_SPARE3         =3D 0x2c,
-> +    PLAT_MMCM_DIV       =3D 0x30,
-> +#define PLAT_MMCM_DIV_CLK0DIV_SHIFT     0
-> +#define PLAT_MMCM_DIV_INPUT_SHIFT       8
-> +#define PLAT_MMCM_DIV_MUL_SHIFT         16
-> +#define PLAT_MMCM_DIV_CLK1DIV_SHIFT     24
-> +    PLAT_BUILD_CFG      =3D 0x34,
-> +#define PLAT_BUILD_CFG_IOCU_EN          (1 << 0)
-> +#define PLAT_BUILD_CFG_PCIE0_EN         (1 << 1)
-> +#define PLAT_BUILD_CFG_PCIE1_EN         (1 << 2)
-> +#define PLAT_BUILD_CFG_PCIE2_EN         (1 << 3)
-> +    PLAT_DDR_CFG        =3D 0x38,
-> +#define PLAT_DDR_CFG_SIZE               (0xf << 0)
-> +#define PLAT_DDR_CFG_MHZ                (0xfff << 4)
-> +    PLAT_NOC_PCIE0_ADDR =3D 0x3c,
-> +    PLAT_NOC_PCIE1_ADDR =3D 0x40,
-> +    PLAT_NOC_PCIE2_ADDR =3D 0x44,
-> +    PLAT_SYS_CTL        =3D 0x48,
-> +};
-> +
-> +static void boston_lcd_event(void *opaque, QEMUChrEvent event)
-> +{
-> +    BostonState *s =3D opaque;
-> +    if (event =3D=3D CHR_EVENT_OPENED && !s->lcd_inited) {
-> +        qemu_chr_fe_printf(&s->lcd_display, "        ");
-> +        s->lcd_inited =3D true;
-> +    }
-> +}
-> +
-> +static uint64_t boston_lcd_read(void *opaque, hwaddr addr,
-> +                                unsigned size)
-> +{
-> +    BostonState *s =3D opaque;
-> +    uint64_t val =3D 0;
-> +
-> +    switch (size) {
-> +    case 8:
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 7) & 0x7] << 56;
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 6) & 0x7] << 48;
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 5) & 0x7] << 40;
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 4) & 0x7] << 32;
-> +        /* fall through */
-> +    case 4:
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 3) & 0x7] << 24;
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 2) & 0x7] << 16;
-> +        /* fall through */
-> +    case 2:
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 1) & 0x7] << 8;
-> +        /* fall through */
-> +    case 1:
-> +        val |=3D (uint64_t)s->lcd_content[(addr + 0) & 0x7];
-> +        break;
-> +    }
-> +
-> +    return val;
-> +}
-> +
-> +static void boston_lcd_write(void *opaque, hwaddr addr,
-> +                             uint64_t val, unsigned size)
-> +{
-> +    BostonState *s =3D opaque;
-> +
-> +    switch (size) {
-> +    case 8:
-> +        s->lcd_content[(addr + 7) & 0x7] =3D val >> 56;
-> +        s->lcd_content[(addr + 6) & 0x7] =3D val >> 48;
-> +        s->lcd_content[(addr + 5) & 0x7] =3D val >> 40;
-> +        s->lcd_content[(addr + 4) & 0x7] =3D val >> 32;
-> +        /* fall through */
-> +    case 4:
-> +        s->lcd_content[(addr + 3) & 0x7] =3D val >> 24;
-> +        s->lcd_content[(addr + 2) & 0x7] =3D val >> 16;
-> +        /* fall through */
-> +    case 2:
-> +        s->lcd_content[(addr + 1) & 0x7] =3D val >> 8;
-> +        /* fall through */
-> +    case 1:
-> +        s->lcd_content[(addr + 0) & 0x7] =3D val;
-> +        break;
-> +    }
-> +
-> +    qemu_chr_fe_printf(&s->lcd_display,
-> +                       "\r%-8.8s", s->lcd_content);
-> +}
-> +
-> +static const MemoryRegionOps boston_lcd_ops =3D {
-> +    .read =3D boston_lcd_read,
-> +    .write =3D boston_lcd_write,
-> +    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> +};
-> +
-> +static uint64_t boston_platreg_read(void *opaque, hwaddr addr,
-> +                                    unsigned size)
-> +{
-> +    BostonState *s =3D opaque;
-> +    uint32_t gic_freq, val;
-> +
-> +    if (size !=3D 4) {
-> +        qemu_log_mask(LOG_UNIMP, "%uB platform register read\n", size);
-> +        return 0;
-> +    }
-
-You can remove this...
-
-> +
-> +    switch (addr & 0xffff) {
-> +    case PLAT_FPGA_BUILD:
-> +    case PLAT_CORE_CL:
-> +    case PLAT_WRAPPER_CL:
-> +        return 0;
-> +    case PLAT_DDR3_STATUS:
-> +        return PLAT_DDR3_STATUS_LOCKED | PLAT_DDR3_STATUS_CALIBRATED
-> +               | PLAT_DDR3_INTERFACE_RESET;
-> +    case PLAT_MMCM_DIV:
-> +        gic_freq =3D 25000000 / 1000000;
-> +        val =3D gic_freq << PLAT_MMCM_DIV_INPUT_SHIFT;
-> +        val |=3D 1 << PLAT_MMCM_DIV_MUL_SHIFT;
-> +        val |=3D 1 << PLAT_MMCM_DIV_CLK0DIV_SHIFT;
-> +        val |=3D 1 << PLAT_MMCM_DIV_CLK1DIV_SHIFT;
-> +        return val;
-> +    case PLAT_BUILD_CFG:
-> +        val =3D PLAT_BUILD_CFG_PCIE0_EN;
-> +        val |=3D PLAT_BUILD_CFG_PCIE1_EN;
-> +        val |=3D PLAT_BUILD_CFG_PCIE2_EN;
-> +        return val;
-> +    case PLAT_DDR_CFG:
-> +        val =3D s->mach->ram_size / GiB;
-> +        assert(!(val & ~PLAT_DDR_CFG_SIZE));
-> +        val |=3D PLAT_DDR_CFG_MHZ;
-> +        return val;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "Read platform register 0x%" HWADDR_PRI=
-x "\n",
-> +                      addr & 0xffff);
-> +        return 0;
-> +    }
-> +}
-> +
-> +static void boston_platreg_write(void *opaque, hwaddr addr,
-> +                                 uint64_t val, unsigned size)
-> +{
-> +    if (size !=3D 4) {
-> +        qemu_log_mask(LOG_UNIMP, "%uB platform register write\n", size);
-> +        return;
-> +    }
-> +
-> +    switch (addr & 0xffff) {
-> +    case PLAT_FPGA_BUILD:
-> +    case PLAT_CORE_CL:
-> +    case PLAT_WRAPPER_CL:
-> +    case PLAT_DDR3_STATUS:
-> +    case PLAT_PCIE_STATUS:
-> +    case PLAT_MMCM_DIV:
-> +    case PLAT_BUILD_CFG:
-> +    case PLAT_DDR_CFG:
-> +        /* read only */
-> +        break;
-> +    case PLAT_SOFTRST_CTL:
-> +        if (val & PLAT_SOFTRST_CTL_SYSRESET) {
-> +            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> +        }
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "Write platform register 0x%" HWADDR_PR=
-Ix
-> +                      " =3D 0x%" PRIx64 "\n", addr & 0xffff, val);
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps boston_platreg_ops =3D {
-> +    .read =3D boston_platreg_read,
-> +    .write =3D boston_platreg_write,
-> +    .endianness =3D DEVICE_NATIVE_ENDIAN,
-
-... and add this here instead
-
-    .impl =3D {
-        .min_access_size =3D 4,
-        .max_access_size =3D 4,
-    },
-
-
-Otherwise:
 
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
-> +};
-> +
-> +static const TypeInfo boston_device =3D {
-> +    .name          =3D TYPE_MIPS_BOSTON_AIA,
-> +    .parent        =3D TYPE_SYS_BUS_DEVICE,
-> +    .instance_size =3D sizeof(BostonState),
-> +};
-> +
-> +static void boston_register_types(void)
-> +{
-> +    type_register_static(&boston_device);
-> +}
-> +type_init(boston_register_types)
-> +
-> +#define NUM_INSNS 6
-> +static void gen_firmware(uint32_t *p)
-> +{
-> +    int i;
-> +    uint32_t reset_vec[NUM_INSNS] =3D {
-> +           /* CM relocate */
-> +           0x1fb802b7,     /* li   t0,0x1fb80000   */
-> +           0x16100337,     /* li   t1,0x16100000   */
-> +           0x0062b423,     /* sd   t1,8(t0)        */
-> +           /* Jump to 0x80000000 */
-> +           0x00100293,     /* li   t0,1            */
-> +           0x01f29293,     /* slli t0,t0,1f        */
-> +           0x00028067      /* jr   t0              */
-> +    };
-> +
-> +    for (i =3D 0; i < NUM_INSNS; i++) {
-> +        *p++ =3D reset_vec[i];
-> +    }
-> +}
-> +
-> +static inline XilinxPCIEHost *
-> +xilinx_pcie_init(MemoryRegion *sys_mem, uint32_t bus_nr,
-> +                 hwaddr cfg_base, uint64_t cfg_size,
-> +                 hwaddr mmio_base, uint64_t mmio_size,
-> +                 qemu_irq irq)
-> +{
-> +    DeviceState *dev;
-> +    MemoryRegion *cfg, *mmio;
-> +
-> +    dev =3D qdev_new(TYPE_XILINX_PCIE_HOST);
-> +
-> +    qdev_prop_set_uint32(dev, "bus_nr", bus_nr);
-> +    qdev_prop_set_uint64(dev, "cfg_base", cfg_base);
-> +    qdev_prop_set_uint64(dev, "cfg_size", cfg_size);
-> +    qdev_prop_set_uint64(dev, "mmio_base", mmio_base);
-> +    qdev_prop_set_uint64(dev, "mmio_size", mmio_size);
-> +
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +
-> +    cfg =3D sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-> +    memory_region_add_subregion_overlap(sys_mem, cfg_base, cfg, 0);
-> +
-> +    mmio =3D sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-> +    memory_region_add_subregion_overlap(sys_mem, 0, mmio, 0);
-> +
-> +    qdev_connect_gpio_out_named(dev, "interrupt_out", 0, irq);
-> +
-> +    return XILINX_PCIE_HOST(dev);
-> +}
-> +
-> +static void boston_mach_init(MachineState *machine)
-> +{
-> +    DeviceState *dev;
-> +    BostonState *s;
-> +    MemoryRegion *flash, *ddr_low_alias, *lcd, *platreg;
-> +    MemoryRegion *sys_mem =3D get_system_memory();
-> +    XilinxPCIEHost *pcie2;
-> +    PCIDevice *pdev;
-> +    AHCIPCIState *ich9;
-> +    DriveInfo *hd[6];
-> +    Chardev *chr;
-> +    int fw_size;
-> +
-> +    if ((machine->ram_size % GiB) ||
-> +        (machine->ram_size > (4 * GiB))) {
-> +        error_report("Memory size must be 1GB, 2GB, 3GB, or 4GB");
-> +        exit(1);
-> +    }
-> +
-> +    if (machine->smp.cpus / machine->smp.cores / machine->smp.threads > =
-1) {
-> +        error_report(
-> +            "Invalid -smp x,cores=3Dy,threads=3Dz. The max number of clu=
-sters "
-> +            "supported is 1");
-> +        exit(1);
-> +    }
-> +
-> +    dev =3D qdev_new(TYPE_MIPS_BOSTON_AIA);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +
-> +    s =3D BOSTON(dev);
-> +    s->mach =3D machine;
-> +
-> +    object_initialize_child(OBJECT(machine), "cps", &s->cps, TYPE_RISCV_=
-CPS);
-> +    object_property_set_str(OBJECT(&s->cps), "cpu-type", machine->cpu_ty=
-pe,
-> +                            &error_fatal);
-> +    object_property_set_uint(OBJECT(&s->cps), "num-vp", machine->smp.cpu=
-s,
-> +                             &error_fatal);
-> +    object_property_set_uint(OBJECT(&s->cps), "num-hart", machine->smp.t=
-hreads,
-> +                             &error_fatal);
-> +    object_property_set_uint(OBJECT(&s->cps), "num-core", machine->smp.c=
-ores,
-> +                             &error_fatal);
-> +    object_property_set_uint(OBJECT(&s->cps), "gcr-base", GCR_BASE_ADDR,
-> +                             &error_fatal);
-> +    sysbus_realize(SYS_BUS_DEVICE(&s->cps), &error_fatal);
-> +
-> +    sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->cps), 0, 0, 1);
-> +
-> +    flash =3D  g_new(MemoryRegion, 1);
-> +    memory_region_init_rom(flash, NULL, "boston.flash",
-> +                           boston_memmap[BOSTON_FLASH].size, &error_fata=
-l);
-> +    memory_region_add_subregion_overlap(sys_mem,
-> +                                        boston_memmap[BOSTON_FLASH].base=
-,
-> +                                        flash, 0);
-> +
-> +    memory_region_add_subregion_overlap(sys_mem,
-> +                                        boston_memmap[BOSTON_HIGHDDR].ba=
-se,
-> +                                        machine->ram, 0);
-> +
-> +    ddr_low_alias =3D g_new(MemoryRegion, 1);
-> +    memory_region_init_alias(ddr_low_alias, NULL, "boston_low.ddr",
-> +                             machine->ram, 0,
-> +                             MIN(machine->ram_size, (256 * MiB)));
-> +    memory_region_add_subregion_overlap(sys_mem, 0, ddr_low_alias, 0);
-> +
-> +    pcie2 =3D xilinx_pcie_init(sys_mem, 2,
-> +                             boston_memmap[BOSTON_PCIE2].base,
-> +                             boston_memmap[BOSTON_PCIE2].size,
-> +                             boston_memmap[BOSTON_PCIE2_MMIO].base,
-> +                             boston_memmap[BOSTON_PCIE2_MMIO].size,
-> +                             qdev_get_gpio_in(s->cps.aplic, PCIE2_INT));
-> +
-> +    platreg =3D g_new(MemoryRegion, 1);
-> +    memory_region_init_io(platreg, NULL, &boston_platreg_ops, s,
-> +                          "boston-platregs",
-> +                          boston_memmap[BOSTON_PLATREG].size);
-> +    memory_region_add_subregion_overlap(sys_mem,
-> +                          boston_memmap[BOSTON_PLATREG].base, platreg, 0=
-);
-> +
-> +    s->uart =3D serial_mm_init(sys_mem, boston_memmap[BOSTON_UART].base,=
- 2,
-> +                             qdev_get_gpio_in(s->cps.aplic, UART_INT), 1=
-0000000,
-> +                             serial_hd(0), DEVICE_NATIVE_ENDIAN);
-> +
-> +    lcd =3D g_new(MemoryRegion, 1);
-> +    memory_region_init_io(lcd, NULL, &boston_lcd_ops, s, "boston-lcd", 0=
-x8);
-> +    memory_region_add_subregion_overlap(sys_mem,
-> +                                        boston_memmap[BOSTON_LCD].base, =
-lcd, 0);
-> +
-> +    chr =3D qemu_chr_new("lcd", "vc:320x240", NULL);
-> +    qemu_chr_fe_init(&s->lcd_display, chr, NULL);
-> +    qemu_chr_fe_set_handlers(&s->lcd_display, NULL, NULL,
-> +                             boston_lcd_event, NULL, s, NULL, true);
-> +
-> +    pdev =3D pci_create_simple_multifunction(&PCI_BRIDGE(&pcie2->root)->=
-sec_bus,
-> +                                           PCI_DEVFN(0, 0), TYPE_ICH9_AH=
-CI);
-> +    ich9 =3D ICH9_AHCI(pdev);
-> +    g_assert(ARRAY_SIZE(hd) =3D=3D ich9->ahci.ports);
-> +    ide_drive_get(hd, ich9->ahci.ports);
-> +    ahci_ide_create_devs(&ich9->ahci, hd);
-> +
-> +    if (machine->firmware) {
-> +        fw_size =3D load_image_targphys(machine->firmware,
-> +                                      0x1fc00000, 4 * MiB);
-> +        if (fw_size =3D=3D -1) {
-> +            error_report("unable to load firmware image '%s'",
-> +                          machine->firmware);
-> +            exit(1);
-> +        }
-> +        if (machine->kernel_filename) {
-> +                fw_size =3D load_image_targphys(machine->kernel_filename=
-,
-> +                                              0x80000000, 64 * MiB);
-> +                if (fw_size =3D=3D -1) {
-> +                    error_report("unable to load kernel image '%s'",
-> +                                  machine->kernel_filename);
-> +                    exit(1);
-> +                }
-> +        }
-> +    } else if (machine->kernel_filename) {
-> +        fw_size =3D load_image_targphys(machine->kernel_filename,
-> +                                      0x80000000, 64 * MiB);
-> +        if (fw_size =3D=3D -1) {
-> +            error_report("unable to load kernel image '%s'",
-> +                          machine->kernel_filename);
-> +            exit(1);
-> +        }
-> +
-> +        gen_firmware(memory_region_get_ram_ptr(flash) + 0x7c00000);
-> +    } else if (!qtest_enabled()) {
-> +        error_report("Please provide either a -kernel or -bios argument"=
-);
-> +        exit(1);
-> +    }
-> +}
-> +
-> +static void boston_mach_class_init(MachineClass *mc)
-> +{
-> +    mc->desc =3D "MIPS Boston-aia";
-> +    mc->init =3D boston_mach_init;
-> +    mc->block_default_type =3D IF_IDE;
-> +    mc->default_ram_size =3D 2 * GiB;
-> +    mc->default_ram_id =3D "boston.ddr";
-> +    mc->max_cpus =3D MAX_HARTS;
-> +    mc->default_cpu_type =3D TYPE_RISCV_CPU_MIPS_P8700;
-> +}
-> +
-> +DEFINE_MACHINE("boston-aia", boston_mach_class_init)
-> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> index 9023b80087..533472e22a 100644
-> --- a/hw/riscv/meson.build
-> +++ b/hw/riscv/meson.build
-> @@ -16,5 +16,6 @@ riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: file=
-s('microblaze-v-generic.c
->  riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangsh=
-an_kmh.c'))
+> ---
+>  tests/functional/riscv64/meson.build          |   2 +
+>  .../functional/riscv64/test_riscv64_boston.py | 124 ++++++++++++++++++
+>  2 files changed, 126 insertions(+)
+>  create mode 100755 tests/functional/riscv64/test_riscv64_boston.py
 >
->  riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
-> +riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.=
-c'))
+> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/risc=
+v64/meson.build
+> index c1704d9275..58d541f8c2 100644
+> --- a/tests/functional/riscv64/meson.build
+> +++ b/tests/functional/riscv64/meson.build
+> @@ -1,12 +1,14 @@
+>  # SPDX-License-Identifier: GPL-2.0-or-later
 >
->  hw_arch +=3D {'riscv': riscv_ss}
+>  test_riscv64_timeouts =3D {
+> +  'riscv64_boston' : 120,
+>    'tuxrun' : 120,
+>  }
+>
+>  tests_riscv64_system_quick =3D [
+>    'migration',
+>    'opensbi',
+> +  'riscv64_boston',
+>  ]
+>
+>  tests_riscv64_system_thorough =3D [
+> diff --git a/tests/functional/riscv64/test_riscv64_boston.py b/tests/func=
+tional/riscv64/test_riscv64_boston.py
+> new file mode 100755
+> index 0000000000..d450f7eaf5
+> --- /dev/null
+> +++ b/tests/functional/riscv64/test_riscv64_boston.py
+> @@ -0,0 +1,124 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Boston board test for RISC-V P8700 processor by MIPS
+> +#
+> +# Copyright (c) 2025 MIPS
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +
+> +import os
+> +from qemu_test import QemuSystemTest, Asset
+> +from qemu_test import wait_for_console_pattern
+> +
+> +
+> +class RiscvBostonTest(QemuSystemTest):
+> +    """
+> +    Test the boston-aia board with P8700 processor
+> +    """
+> +
+> +    ASSET_FW_PAYLOAD =3D Asset(
+> +        'https://github.com/MIPS/linux-test-downloads/raw/main/p8700/fw_=
+payload.bin',
+> +        'd6f4ae14d0c178c1d0bb38ddf64557536ca8602a588b220729a8aa17caa383a=
+a')
+> +
+> +    ASSET_ROOTFS =3D Asset(
+> +        'https://github.com/MIPS/linux-test-downloads/raw/main/p8700/roo=
+tfs.ext2',
+> +        'f937e21b588f0d1d17d10a063053979686897bbbbc5e9617a5582f7c1f48e56=
+5')
+> +
+> +    def _boot_linux_test(self, smp_count):
+> +        """Common setup and boot test for Linux on Boston board
+> +
+> +        Args:
+> +            smp_count: Number of CPUs to use for SMP
+> +        """
+> +        self.set_machine('boston-aia')
+> +        fw_payload_path =3D self.ASSET_FW_PAYLOAD.fetch()
+> +        rootfs_path =3D self.ASSET_ROOTFS.fetch()
+> +
+> +        self.vm.add_args('-cpu', 'mips-p8700')
+> +        self.vm.add_args('-m', '2G')
+> +        self.vm.add_args('-smp', str(smp_count))
+> +        self.vm.add_args('-kernel', fw_payload_path)
+> +        self.vm.add_args('-drive', f'file=3D{rootfs_path},format=3Draw,s=
+napshot=3Don')
+> +
+> +        self.vm.set_console()
+> +        self.vm.launch()
+> +
+> +        # Wait for OpenSBI
+> +        wait_for_console_pattern(self, 'OpenSBI')
+> +
+> +        # Wait for Linux kernel boot
+> +        wait_for_console_pattern(self, 'Linux version')
+> +        wait_for_console_pattern(self, 'Machine model: MIPS P8700')
+> +
+> +        # Test e1000e network card functionality
+> +        wait_for_console_pattern(self, 'e1000e')
+> +        wait_for_console_pattern(self, 'Network Connection')
+> +
+> +        # Wait for boot to complete - system reaches login prompt
+> +        wait_for_console_pattern(self, 'Run /sbin/init as init process')
+> +
+> +    def test_boston_boot_linux_min_cpus(self):
+> +        """
+> +        Test Linux kernel boot with minimum CPU count (2)
+> +        """
+> +        self._boot_linux_test(smp_count=3D2)
+> +
+> +    def test_boston_boot_linux_7_cpus(self):
+> +        """
+> +        Test Linux kernel boot with 7 CPUs
+> +
+> +        7 CPUs is a special configuration that tests odd CPU count
+> +        handling and ensures proper core distribution across clusters.
+> +        """
+> +        self._boot_linux_test(smp_count=3D7)
+> +
+> +    def test_boston_boot_linux_35_cpus(self):
+> +        """
+> +        Test Linux kernel boot with 35 CPUs
+> +
+> +        35 CPUs is a special configuration that tests a non-power-of-2
+> +        CPU count above 32, validating proper handling of larger
+> +        asymmetric SMP configurations.
+> +        """
+> +        self._boot_linux_test(smp_count=3D35)
+> +
+> +    def test_boston_boot_linux_max_cpus(self):
+> +        """
+> +        Test Linux kernel boot with maximum supported CPU count (64)
+> +        """
+> +        self._boot_linux_test(smp_count=3D64)
+> +
+> +    def test_boston_invalid_cpu_count(self):
+> +        """
+> +        Test that 65 CPUs is rejected as invalid (negative test case)
+> +        """
+> +        from subprocess import run, PIPE
+> +
+> +        fw_payload_path =3D self.ASSET_FW_PAYLOAD.fetch()
+> +        rootfs_path =3D self.ASSET_ROOTFS.fetch()
+> +
+> +        cmd =3D [
+> +            self.qemu_bin,
+> +            '-M', 'boston-aia',
+> +            '-cpu', 'mips-p8700',
+> +            '-m', '2G',
+> +            '-smp', '65',
+> +            '-kernel', fw_payload_path,
+> +            '-drive', f'file=3D{rootfs_path},format=3Draw,snapshot=3Don'=
+,
+> +            '-nographic'
+> +        ]
+> +
+> +        # Run QEMU and expect it to fail immediately.
+> +        result =3D run(cmd, capture_output=3DTrue, text=3DTrue, timeout=
+=3D5)
+> +
+> +        # Check that QEMU exited with error code 1
+> +        self.assertEqual(result.returncode, 1,
+> +                         "QEMU should exit with code 1 for invalid SMP c=
+ount")
+> +
+> +        # Check error message
+> +        self.assertIn('Invalid SMP CPUs 65', result.stderr,
+> +                      "Error message should indicate invalid SMP CPU cou=
+nt")
+> +
+> +if __name__ =3D=3D '__main__':
+> +    QemuSystemTest.main()
 > --
 > 2.34.1
 
