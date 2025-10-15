@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD0DCCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 18:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D680BCCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 18:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v965v-0005CF-En; Wed, 15 Oct 2025 14:19:27 -0400
+	id 1v968H-0006Kp-Rt; Wed, 15 Oct 2025 14:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v965s-0005Bn-VT
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:19:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v965o-0000Z5-LL
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:19:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760552352;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QH5EkaSuNYBRPIAqTLc2ZPoCA2R94lZsVtoCuFek/fo=;
- b=ahzubIL9v22i8efeDCIS874u2GrUh0ZrLCY6L3wDDNcbmkS3d9Ons3hao14NT4iFKuVbw+
- BKpoKA6t3aOiY0ZYK3VxjEGrTi64TmvgjUuBeWnAmbIJrqhhBqTg1Xt2yvq2y3Om06ToCc
- T2REuwIVF+9NvKbqcAu6eXnBLA81vFY=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-6VA3WYZkMfW6p7uQ8aHNKA-1; Wed, 15 Oct 2025 14:19:11 -0400
-X-MC-Unique: 6VA3WYZkMfW6p7uQ8aHNKA-1
-X-Mimecast-MFC-AGG-ID: 6VA3WYZkMfW6p7uQ8aHNKA_1760552351
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-88e2656b196so563350585a.2
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 11:19:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v968C-0006IX-DA
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:21:48 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v9688-00017g-2e
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:21:48 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-78af743c232so6281478b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 11:21:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760552498; x=1761157298; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sEZv/rDH/KQU+LRp69TEnzymzVBlREonIs51lYfiTFQ=;
+ b=Tq9tlWF9EltKf4JawDk2C9yKrlkC49lWX6DMUYiOGmxupbq2EbnEeuQdlEj+NHL/NI
+ ZOYb2T/cza6XF/fOJjiFC11ISeZ7dVSW9TiFR2T9Y3E+8DDkPyL7X3dqysp78NT5GHnz
+ rPBCnkcC02wiFYQ2npGWc9PcVYoGjjOUZqZA0HJdR0ceSpejD8RkrVanwtex5iiIHu7D
+ 1oOx2X0DEehgPzUARYq7UO1T7N/mw9kx0Dfy71VFIkds//Cgc8oDb7LkuDAWa2FjIl0j
+ NuOrlEKmw7UTcC85/F0nggDe7czf9BuLtL6C+aKUUYAfeGj+eq6gWc4N1K3EoY4eXtiW
+ TUHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760552348; x=1761157148;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QH5EkaSuNYBRPIAqTLc2ZPoCA2R94lZsVtoCuFek/fo=;
- b=DaDxK82CIGi8jXmpfwo/jkn9QKF5PqiiAKfLQ4roVAfEnA1oma4CixpEl1b/zkbLq/
- SCKBs1BBZeVKNrhYQ2ZVVgbOJRLv+uh46mEHzu+dz5FFagSqiQwQZW6e4SVuZFuTJoby
- NQnx7UYeOQyLt4Xdr3YBxBYaYtDbBFKZvfdztTmxzm3MHBOYgI4Hn8A8tsWIwByMq3Jw
- lmktWlmPdfrej7RjNYwG5hXCkMJ4SXTKGHx7IhpVP1EaAus5uod1wfA7kyYQjWUTblqc
- fPdN+ZC7hTSV28pVfGRd35p2p57ZQJ/MYuyRkKvYTiAiIzThj5r5kcUAE+8akDp9T+SU
- lDtw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+DdmFimezUmiJGqHLydDPft/lmxNA5YVNIZAAfcGm2cr/M4W6+5zKAPpLaz3ZO6IJhUIZnjKgEFTV@nongnu.org
-X-Gm-Message-State: AOJu0Yw/2aWeitMA4Z07HVmrvg/ENVCCKW+JKWeQJ3mOKyR4Q49JhYnA
- CL2A65bMKbIArVv4vyQ6NDUH6sCncnDPEYSrXNTnluPI5p1vAinpODt0zfq5zai3CseqHxEkq4Z
- phnRfbiEtbgBNYAsmImAZFmIXKQANX6AUi82df2s2a6cKS4Ux/ZTT1/0k
-X-Gm-Gg: ASbGnctJodG9YFoUQp4Zb3QJDkNVz3fEP+quxF3nj2vKhHb9W3K+e8t4yRSw3eKQ2iX
- Wkn/9EkxybetbiZuTGa17lKIVIHzkr7BxbKSFzoPyzXE0dA30q+nSEgSn7XVv0TzRtv257iLfCj
- /VyR3dEUlzmP9SuILfYq1mlzwvP+FGEaqat88ToBYZBkFWPjG3ES9K4PXNbEHC6wg2HjvqWcLAN
- uyFN8mKn9qffb30DTSBh4mTB4TUULbCYioLIP5JqANfZvpnF9/jJqXAS3MehSq2g665QXi688xp
- 7rh2TWKnJxtK5o89lUwGx1TGgrCAFPSg
-X-Received: by 2002:ac8:5d05:0:b0:4b7:a680:2111 with SMTP id
- d75a77b69052e-4e6eacb3007mr346407971cf.8.1760552347626; 
- Wed, 15 Oct 2025 11:19:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGLbvrBxMTyCkre3PXipipxjkcRKzcjdZa7MevqmHvkyVsq3ijjd+pChgeui3gZuTRS9nufA==
-X-Received: by 2002:ac8:5d05:0:b0:4b7:a680:2111 with SMTP id
- d75a77b69052e-4e6eacb3007mr346407451cf.8.1760552346969; 
- Wed, 15 Oct 2025 11:19:06 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e881c55664sm22863471cf.5.2025.10.15.11.19.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 11:19:06 -0700 (PDT)
-Date: Wed, 15 Oct 2025 14:19:03 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org,
- michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
- davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-Message-ID: <aO_ll4Lf0bq6vgdm@x1.local>
-References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
- <20251015132136.1083972-17-vsementsov@yandex-team.ru>
+ d=1e100.net; s=20230601; t=1760552498; x=1761157298;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sEZv/rDH/KQU+LRp69TEnzymzVBlREonIs51lYfiTFQ=;
+ b=m2AgqrGVMDI/KCIZ2rJLkwY5poPtLvZW21stPvWcuIE1GAkOSbSMg7EnMOJmBfbIBU
+ U8Fs4YcahGLDgHOtVpNNo5z3YiSYlIO9Ea6nRt1nVJwTTtHCK04t5AH+NrQwLh9eaDlU
+ ZRFLdeP29WnkdgMhvjVs2v4s6bKbvG8k3n+s2VApIOZ/ShMw4x4unNsa5Dfj5+ZQ1XKL
+ j9lB6hALeUKuVz8Wt7BxlOdrIpYNJtAX/iYV95w/4JKVnjfvlCAxfTiAEr//Pn/mKyAO
+ JCA4BzHxTBMW2XMIjSIW/A7L2esZa5w+RQwkQ2Ja5gCMW7y36v6LyhPIcrMbJ6IQ3mnt
+ GnYQ==
+X-Gm-Message-State: AOJu0YzqJdvQaLdeo7MKjqVqGb+s1fOeVjhEBtiHWuHKCmQTEG0BXAHS
+ qBl+Q25twqazNhKhLQDuMxPd25YykJIgsBdG0zE16mKLfoivD2feupJcJQVYkcEPQYqMhOJNnFe
+ GaE5NmJs=
+X-Gm-Gg: ASbGncu9q4WzX8EaPFNc0CjY/suPABJr0BS+5MrPwcNv2RPGKMYQjJgQPX1kEJY30zM
+ 0+f6TCl5bDc9kbzVvXbsk5FiKwHC73j7zFGqL0dAsOHBQSxFPF3RkW2aRYNWilLL1fsBoayhoIl
+ qWwKcWm5gxSEkMOT7rQs6+jeYZI3F8A1Zor9siSPB4lTwTwg/KzYWyoMqOJoO9WN1nFs1GdbJCw
+ EQFHJ8jM/PzW6x5yZ9iqYnh1EpEzqNZzS7JXDZzJYnn0f7LJESr9qPIe0TrvWTH2+Lae2mH/sNn
+ 0zXY3dwaWrpdc/6eGl6wPrfy2P8Rh+lhmuhXCbQxNWWL1/Y9MlzW16YR15iyzZtT7ZE90V7Rs9n
+ YMuKSMRd1MoSREqkqisRjhD6/iIS5WKvOkYttAP5rk242qrcBLYSS2SDetes=
+X-Google-Smtp-Source: AGHT+IGl3h2mT+LT3kfTpXyYNgonanZNtNw9oNHEYopSFJgdxNifMHQz3iM27kmfM95YK1zq5yCtSg==
+X-Received: by 2002:a17:90b:2244:b0:329:e4d1:c20f with SMTP id
+ 98e67ed59e1d1-33b51162533mr39347300a91.9.1760552497815; 
+ Wed, 15 Oct 2025 11:21:37 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b6a22b7b01fsm275625a12.21.2025.10.15.11.21.36
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Oct 2025 11:21:37 -0700 (PDT)
+Message-ID: <ca60cb0f-684b-40c1-994a-8dbc56351a95@linaro.org>
+Date: Wed, 15 Oct 2025 11:21:35 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251015132136.1083972-17-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/7] target/microblaze: Remove target_ulong use in
+ cpu_handle_mmu_fault()
+To: qemu-devel@nongnu.org
+References: <20251015180115.97493-1-philmd@linaro.org>
+ <20251015180115.97493-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251015180115.97493-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,211 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 04:21:32PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> This parameter enables backend-transfer feature: all devices
-> which support it will migrate their backends (for example a TAP
-> device, by passing open file descriptor to migration channel).
+On 10/15/25 11:01, Philippe Mathieu-Daudé wrote:
+> cpu_handle_mmu_fault() -- renamed in commit f429d607c71 -- expects
+> a vaddr type for its address argument since commit 7510454e3e7
+> ("cpu: Turn cpu_handle_mmu_fault() into a CPUClass hook").
 > 
-> Currently no such devices, so the new parameter is a noop.
-> 
-> Next commit will add support for virtio-net, to migrate its
-> TAP backend.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Reviewed-by: Anton Johansson<anjo@rev.ng>
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > ---
->  migration/options.c | 18 ++++++++++++++++++
->  migration/options.h |  2 ++
->  qapi/migration.json | 38 ++++++++++++++++++++++++++++++++------
->  3 files changed, 52 insertions(+), 6 deletions(-)
-> 
-> diff --git a/migration/options.c b/migration/options.c
-> index 5183112775..a461b07b54 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -262,6 +262,12 @@ bool migrate_mapped_ram(void)
->      return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
->  }
->  
-> +bool migrate_backend_transfer(void)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    return s->parameters.backend_transfer;
-> +}
-> +
->  bool migrate_ignore_shared(void)
->  {
->      MigrationState *s = migrate_get_current();
-> @@ -963,6 +969,9 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
->      params->cpr_exec_command = QAPI_CLONE(strList,
->                                            s->parameters.cpr_exec_command);
->  
-> +    params->has_backend_transfer = true;
-> +    params->backend_transfer = s->parameters.backend_transfer;
-> +
->      return params;
->  }
->  
-> @@ -997,6 +1006,7 @@ void migrate_params_init(MigrationParameters *params)
->      params->has_zero_page_detection = true;
->      params->has_direct_io = true;
->      params->has_cpr_exec_command = true;
-> +    params->has_backend_transfer = true;
->  }
->  
->  /*
-> @@ -1305,6 +1315,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
->      if (params->has_cpr_exec_command) {
->          dest->cpr_exec_command = params->cpr_exec_command;
->      }
-> +
-> +    if (params->has_backend_transfer) {
-> +        dest->backend_transfer = params->backend_transfer;
-> +    }
->  }
->  
->  static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-> @@ -1443,6 +1457,10 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
->          s->parameters.cpr_exec_command =
->              QAPI_CLONE(strList, params->cpr_exec_command);
->      }
-> +
-> +    if (params->has_backend_transfer) {
-> +        s->parameters.backend_transfer = params->backend_transfer;
-> +    }
->  }
->  
->  void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
-> diff --git a/migration/options.h b/migration/options.h
-> index 82d839709e..755ba1c024 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -87,6 +87,8 @@ const char *migrate_tls_hostname(void);
->  uint64_t migrate_xbzrle_cache_size(void);
->  ZeroPageDetection migrate_zero_page_detection(void);
->  
-> +bool migrate_backend_transfer(void);
-> +
->  /* parameters helpers */
->  
->  bool migrate_params_check(MigrationParameters *params, Error **errp);
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index be0f3fcc12..35601a1f87 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -951,9 +951,16 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @backend-transfer: Enable backend-transfer feature for devices that
-> +#     supports it. In general that means that backend state and its
-> +#     file descriptors are passed to the destination in the migraton
-> +#     channel (which must be a UNIX socket). Individual devices
-> +#     declare the support for backend-transfer by per-device
-> +#     backend-transfer option. (Since 10.2)
+>   target/microblaze/mmu.h | 2 +-
+>   target/microblaze/mmu.c | 4 ++--
+>   2 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I still prefer the name "fd-passing" or anything more explicit than
-"backend-transfer". Maybe the current name is fine for TAP, only because
-TAP doesn't have its own VMSD to transfer?
-
-Consider a device that would be a backend that supports VMSDs already to be
-migrated, then if it starts to allow fd-passing, this name will stop being
-suitable there, because it used to "transfer backend" already, now it's
-just started to "fd-passing".
-
-Meanwhile, consider another example - what if a device is not a backend at
-all (e.g. vfio?), has its own VMSD, then want to do fd-passing?
-
-In general, I think "fd" is really a core concept of this whole thing.  One
-thing to complement that idea is, IMHO this patch misses one important
-change, that migration framework should actually explicitly fail the
-migration if this feature is enabled but it's not a unix socket protocol
-(aka, fd-passing REQUIRES scm rights).  Would that look more reliable?
-Otherwise IIUC it'll throw weird errors when e.g. when we enabled this
-feature and trying to migrate via either TCP or to a file..
-
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @backend-transfer, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -978,7 +985,8 @@
->             'mode',
->             'zero-page-detection',
->             'direct-io',
-> -           'cpr-exec-command'] }
-> +           'cpr-exec-command',
-> +           { 'name': 'backend-transfer', 'features': ['unstable'] } ] }
->  
->  ##
->  # @MigrateSetParameters:
-> @@ -1137,9 +1145,16 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @backend-transfer: Enable backend-transfer feature for devices that
-> +#     supports it. In general that means that backend state and its
-> +#     file descriptors are passed to the destination in the migraton
-> +#     channel (which must be a UNIX socket). Individual devices
-> +#     declare the support for backend-transfer by per-device
-> +#     backend-transfer option. (Since 10.2)
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @backend-transfer, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # TODO: either fuse back into `MigrationParameters`, or make
-> @@ -1179,7 +1194,9 @@
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
->              '*direct-io': 'bool',
-> -            '*cpr-exec-command': [ 'str' ]} }
-> +            '*cpr-exec-command': [ 'str' ],
-> +            '*backend-transfer': { 'type': 'bool',
-> +                                   'features': [ 'unstable' ] } } }
->  
->  ##
->  # @migrate-set-parameters:
-> @@ -1352,9 +1369,16 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @backend-transfer: Enable backend-transfer feature for devices that
-> +#     supports it. In general that means that backend state and its
-> +#     file descriptors are passed to the destination in the migraton
-> +#     channel (which must be a UNIX socket). Individual devices
-> +#     declare the support for backend-transfer by per-device
-> +#     backend-transfer option. (Since 10.2)
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @backend-transfer, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
-> @@ -1391,7 +1415,9 @@
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
->              '*direct-io': 'bool',
-> -            '*cpr-exec-command': [ 'str' ]} }
-> +            '*cpr-exec-command': [ 'str' ],
-> +            '*backend-transfer': { 'type': 'bool',
-> +                                   'features': [ 'unstable' ] } } }
->  
->  ##
->  # @query-migrate-parameters:
-> -- 
-> 2.48.1
-> 
-
--- 
-Peter Xu
-
+r~
 
