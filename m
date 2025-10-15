@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A577CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD080CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t5i-0000MV-LO; Wed, 15 Oct 2025 00:26:23 -0400
+	id 1v8t7A-0002KR-53; Wed, 15 Oct 2025 00:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5g-0000K1-En; Wed, 15 Oct 2025 00:26:20 -0400
+ id 1v8t77-0002Ex-Oo; Wed, 15 Oct 2025 00:27:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5b-0002pp-QX; Wed, 15 Oct 2025 00:26:20 -0400
+ id 1v8t71-0002zm-A4; Wed, 15 Oct 2025 00:27:49 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7C10115D9CF;
- Wed, 15 Oct 2025 07:24:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9D33D15D9DE;
+ Wed, 15 Oct 2025 07:25:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1FAF829FE78;
- Wed, 15 Oct 2025 07:25:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3FD9829FE85;
+ Wed, 15 Oct 2025 07:25:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Hector Cao <hector.cao@canonical.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 10/11] target/i386: add compatibility property for
- arch_capabilities
-Date: Wed, 15 Oct 2025 07:25:14 +0300
-Message-ID: <20251015042520.68556-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jim Shu <jim.shu@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 11/13] target/riscv: Fix ssamoswap error handling
+Date: Wed, 15 Oct 2025 07:25:35 +0300
+Message-ID: <20251015042540.68611-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
-References: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
+References: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -60,112 +60,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Jim Shu <jim.shu@sifive.com>
 
-Prior to v10.1, if requested by user, arch-capabilities is always on
-despite the fact that CPUID advertises it to be off/unvailable.
-This causes a migration issue for VMs that are run on a machine
-without arch-capabilities and expect this feature to be present
-on the destination host with QEMU 10.1.
+Follow the RISC-V CFI v1.0 spec [1] to fix the exception type
+when ssamoswap is disabled by xSSE.
 
-Add a compatibility property to restore the legacy behavior for all
-machines with version prior to 10.1.
+[1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
 
-To preserve the functionality (added by 10.1) of turning off
-ARCH_CAPABILITIES where Windows does not like it, use directly
-the guest CPU vendor: x86_cpu_get_supported_feature_word is not
-KVM-specific and therefore should not necessarily use the host
-CPUID.
-
-Co-authored-by: Hector Cao <hector.cao@canonical.com>
-Signed-off-by: Hector Cao <hector.cao@canonical.com>
-Fixes: d3a24134e37 ("target/i386: do not expose ARCH_CAPABILITIES on AMD CPU", 2025-07-17)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit e9efa4a77168ac2816bf9471f878252ce6224710)
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20250924074818.230010-4-jim.shu@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 0b16c7b6a854d461cdfd418769b51d58e43dd92a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 2f58e73d33..2504365bc2 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -84,6 +84,7 @@
- GlobalProperty pc_compat_10_0[] = {
-     { TYPE_X86_CPU, "x-consistent-cache", "false" },
-     { TYPE_X86_CPU, "x-vendor-cpuid-only-v2", "false" },
-+    { TYPE_X86_CPU, "x-arch-cap-always-on", "true" },
- };
- const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6d85149e6e..fe369bb128 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7539,6 +7539,20 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
- #endif
-         break;
- 
-+    case FEAT_7_0_EDX:
-+        /*
-+         * Windows does not like ARCH_CAPABILITIES on AMD machines at all.
-+         * Do not show the fake ARCH_CAPABILITIES MSR that KVM sets up,
-+         * except if needed for migration.
-+         *
-+         * When arch_cap_always_on is removed, this tweak can move to
-+         * kvm_arch_get_supported_cpuid.
-+         */
-+        if (cpu && IS_AMD_CPU(&cpu->env) && !cpu->arch_cap_always_on) {
-+            unavail = CPUID_7_0_EDX_ARCH_CAPABILITIES;
-+        }
-+        break;
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 85d73e492d..e2e883151d 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1284,3 +1284,8 @@ DEF_HELPER_4(vgmul_vv, void, ptr, ptr, env, i32)
+ DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
+ DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
+ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
 +
-     default:
-         break;
++/* CFI (zicfiss) helpers */
++#ifndef CONFIG_USER_ONLY
++DEF_HELPER_1(ssamoswap_disabled, void, env)
++#endif
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index 45686af4d6..f4a1c12ca0 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -91,7 +91,11 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
      }
-@@ -10004,6 +10018,9 @@ static const Property x86_cpu_properties[] = {
-                      true),
-     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
-     DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
+ 
+     if (!ctx->bcfi_enabled) {
++#ifndef CONFIG_USER_ONLY
++        gen_helper_ssamoswap_disabled(tcg_env);
++#else
+         return false;
++#endif
+     }
+ 
+     TCGv dest = dest_gpr(ctx, a->rd);
+@@ -116,7 +120,11 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
+     }
+ 
+     if (!ctx->bcfi_enabled) {
++#ifndef CONFIG_USER_ONLY
++        gen_helper_ssamoswap_disabled(tcg_env);
++#else
+         return false;
++#endif
+     }
+ 
+     TCGv dest = dest_gpr(ctx, a->rd);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 6a8c2e1940..c34d8a4a9c 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -715,4 +715,53 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, target_ulong addr)
+     return cpu_ldl_code_mmu(env, addr, oi, ra);
+ }
+ 
++void helper_ssamoswap_disabled(CPURISCVState *env)
++{
++    int exception = RISCV_EXCP_ILLEGAL_INST;
 +
-+    DEFINE_PROP_BOOL("x-arch-cap-always-on", X86CPU,
-+                     arch_cap_always_on, false),
- };
- 
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e0be7a7406..414ca968e8 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2314,6 +2314,12 @@ struct ArchCPU {
-     /* Forcefully disable KVM PV features not exposed in guest CPUIDs */
-     bool kvm_pv_enforce_cpuid;
- 
 +    /*
-+     * Expose arch-capabilities unconditionally even on AMD models, for backwards
-+     * compatibility with QEMU <10.1.
++     * Here we follow the RISC-V CFI spec [1] to implement the exception type
++     * of ssamoswap* instruction.
++     *
++     * [1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
++     *
++     * Note: We have already checked some conditions in trans_* functions:
++     *   1. The effective priv mode is not M-mode.
++     *   2. The xSSE specific to the effictive priv mode is disabled.
 +     */
-+    bool arch_cap_always_on;
++    if (!get_field(env->menvcfg, MENVCFG_SSE)) {
++        /*
++         * Disabled M-mode SSE always trigger illegal instruction when
++         * current priv mode is not M-mode.
++         */
++        exception = RISCV_EXCP_ILLEGAL_INST;
++        goto done;
++    }
 +
-     /* Number of physical address bits supported */
-     uint32_t phys_bits;
- 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 5621200be0..96035c27cd 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -503,12 +503,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-          * Linux v4.17-v4.20 incorrectly return ARCH_CAPABILITIES on SVM hosts.
-          * We can detect the bug by checking if MSR_IA32_ARCH_CAPABILITIES is
-          * returned by KVM_GET_MSR_INDEX_LIST.
--         *
--         * But also, because Windows does not like ARCH_CAPABILITIES on AMD
--         * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
--         * KVM sets up.
-          */
--        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
-+        if (!has_msr_arch_capabs) {
-             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
-         }
-     } else if (function == 7 && index == 1 && reg == R_EAX) {
++    if (!riscv_has_ext(env, RVS)) {
++        /* S-mode is not implemented */
++        exception = RISCV_EXCP_ILLEGAL_INST;
++        goto done;
++    } else if (env->virt_enabled) {
++        /*
++         * VU/VS-mode with disabled xSSE will trigger the virtual instruction
++         * exception.
++         */
++        exception = RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
++        goto done;
++    } else {
++        /*
++         * U-mode with disabled S-mode SSE will trigger the illegal instruction
++         * exception.
++         *
++         * Note: S-mode is already handled in the disabled M-mode SSE case.
++         */
++        exception = RISCV_EXCP_ILLEGAL_INST;
++        goto done;
++    }
++
++done:
++    riscv_raise_exception(env, exception, GETPC());
++}
++
+ #endif /* !CONFIG_USER_ONLY */
 -- 
 2.47.3
 
