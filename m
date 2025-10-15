@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74852CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A577CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:31:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t5K-00008g-Uq; Wed, 15 Oct 2025 00:25:59 -0400
+	id 1v8t5i-0000MV-LO; Wed, 15 Oct 2025 00:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5J-000089-8i; Wed, 15 Oct 2025 00:25:57 -0400
+ id 1v8t5g-0000K1-En; Wed, 15 Oct 2025 00:26:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5B-0002kA-JX; Wed, 15 Oct 2025 00:25:57 -0400
+ id 1v8t5b-0002pp-QX; Wed, 15 Oct 2025 00:26:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 08FB015D9C9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7C10115D9CF;
  Wed, 15 Oct 2025 07:24:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B55329FE72;
- Wed, 15 Oct 2025 07:25:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1FAF829FE78;
+ Wed, 15 Oct 2025 07:25:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- "Michael S. Tsirkin" <mst@redhat.com>, Qing Wang <qinwang@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 04/11] pcie_sriov: make pcie_sriov_pf_exit() safe on
- non-SR-IOV devices
-Date: Wed, 15 Oct 2025 07:25:08 +0300
-Message-ID: <20251015042520.68556-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Hector Cao <hector.cao@canonical.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 10/11] target/i386: add compatibility property for
+ arch_capabilities
+Date: Wed, 15 Oct 2025 07:25:14 +0300
+Message-ID: <20251015042520.68556-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
@@ -62,63 +60,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Commit 3f9cfaa92c96 ("virtio-pci: Implement SR-IOV PF") added an
-unconditional call from virtio_pci_exit() to pcie_sriov_pf_exit().
+Prior to v10.1, if requested by user, arch-capabilities is always on
+despite the fact that CPUID advertises it to be off/unvailable.
+This causes a migration issue for VMs that are run on a machine
+without arch-capabilities and expect this feature to be present
+on the destination host with QEMU 10.1.
 
-pcie_sriov_pf_exit() reads from the SR-IOV Capability in Configuration
-Space:
+Add a compatibility property to restore the legacy behavior for all
+machines with version prior to 10.1.
 
-  uint8_t *cfg = dev->config + dev->exp.sriov_cap;
-  ...
-  unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To preserve the functionality (added by 10.1) of turning off
+ARCH_CAPABILITIES where Windows does not like it, use directly
+the guest CPU vendor: x86_cpu_get_supported_feature_word is not
+KVM-specific and therefore should not necessarily use the host
+CPUID.
 
-This results in undefined behavior when dev->exp.sriov_cap is 0 because
-this is not an SR-IOV device. For example, unparent_vfs() segfaults when
-total_vfs happens to be non-zero.
-
-Fix this by returning early from pcie_sriov_pf_exit() when
-dev->exp.sriov_cap is 0 because this is not an SR-IOV device.
-
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Reported-by: Qing Wang <qinwang@redhat.com>
-Buglink: https://issues.redhat.com/browse/RHEL-116443
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250924155153.579495-1-stefanha@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit bab681f752048c3bc22d561b1d314c7ec16419c9)
+Co-authored-by: Hector Cao <hector.cao@canonical.com>
+Signed-off-by: Hector Cao <hector.cao@canonical.com>
+Fixes: d3a24134e37 ("target/i386: do not expose ARCH_CAPABILITIES on AMD CPU", 2025-07-17)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit e9efa4a77168ac2816bf9471f878252ce6224710)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 29474d749a..c4f88f0975 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -195,7 +195,9 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2f58e73d33..2504365bc2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -84,6 +84,7 @@
+ GlobalProperty pc_compat_10_0[] = {
+     { TYPE_X86_CPU, "x-consistent-cache", "false" },
+     { TYPE_X86_CPU, "x-vendor-cpuid-only-v2", "false" },
++    { TYPE_X86_CPU, "x-arch-cap-always-on", "true" },
+ };
+ const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
  
- void pcie_sriov_pf_exit(PCIDevice *dev)
- {
--    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
-+    if (dev->exp.sriov_cap == 0) {
-+        return;
-+    }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 6d85149e6e..fe369bb128 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7539,6 +7539,20 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+ #endif
+         break;
  
-     if (dev->exp.sriov_pf.vf_user_created) {
-         uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
-@@ -211,6 +213,8 @@ void pcie_sriov_pf_exit(PCIDevice *dev)
-             pci_config_set_device_id(dev->exp.sriov_pf.vf[i]->config, vf_dev_id);
-         }
-     } else {
-+        uint8_t *cfg = dev->config + dev->exp.sriov_cap;
++    case FEAT_7_0_EDX:
++        /*
++         * Windows does not like ARCH_CAPABILITIES on AMD machines at all.
++         * Do not show the fake ARCH_CAPABILITIES MSR that KVM sets up,
++         * except if needed for migration.
++         *
++         * When arch_cap_always_on is removed, this tweak can move to
++         * kvm_arch_get_supported_cpuid.
++         */
++        if (cpu && IS_AMD_CPU(&cpu->env) && !cpu->arch_cap_always_on) {
++            unavail = CPUID_7_0_EDX_ARCH_CAPABILITIES;
++        }
++        break;
 +
-         unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+     default:
+         break;
      }
- }
+@@ -10004,6 +10018,9 @@ static const Property x86_cpu_properties[] = {
+                      true),
+     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
+     DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
++
++    DEFINE_PROP_BOOL("x-arch-cap-always-on", X86CPU,
++                     arch_cap_always_on, false),
+ };
+ 
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e0be7a7406..414ca968e8 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2314,6 +2314,12 @@ struct ArchCPU {
+     /* Forcefully disable KVM PV features not exposed in guest CPUIDs */
+     bool kvm_pv_enforce_cpuid;
+ 
++    /*
++     * Expose arch-capabilities unconditionally even on AMD models, for backwards
++     * compatibility with QEMU <10.1.
++     */
++    bool arch_cap_always_on;
++
+     /* Number of physical address bits supported */
+     uint32_t phys_bits;
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 5621200be0..96035c27cd 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -503,12 +503,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+          * Linux v4.17-v4.20 incorrectly return ARCH_CAPABILITIES on SVM hosts.
+          * We can detect the bug by checking if MSR_IA32_ARCH_CAPABILITIES is
+          * returned by KVM_GET_MSR_INDEX_LIST.
+-         *
+-         * But also, because Windows does not like ARCH_CAPABILITIES on AMD
+-         * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
+-         * KVM sets up.
+          */
+-        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
++        if (!has_msr_arch_capabs) {
+             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
+         }
+     } else if (function == 7 && index == 1 && reg == R_EAX) {
 -- 
 2.47.3
 
