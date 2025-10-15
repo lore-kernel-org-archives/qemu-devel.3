@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B07CCCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D8B7CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t5F-00006n-9v; Wed, 15 Oct 2025 00:25:53 -0400
+	id 1v8t5N-00009o-Jv; Wed, 15 Oct 2025 00:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5B-00005L-Bi; Wed, 15 Oct 2025 00:25:49 -0400
+ id 1v8t5J-00008K-F7; Wed, 15 Oct 2025 00:25:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t54-0002jN-Cb; Wed, 15 Oct 2025 00:25:49 -0400
+ id 1v8t5D-0002kr-Ek; Wed, 15 Oct 2025 00:25:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E7A4315D9C8;
- Wed, 15 Oct 2025 07:24:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1BAE915D9CA;
+ Wed, 15 Oct 2025 07:24:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A00629FE71;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B0ADE29FE73;
  Wed, 15 Oct 2025 07:25:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, nanliu <nanliu@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 03/11] docs/devel: Correct uefi-vars-x64 device name
-Date: Wed, 15 Oct 2025 07:25:07 +0300
-Message-ID: <20251015042520.68556-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 05/11] target/arm: Don't set HCR.RW for AArch32 only
+ CPUs
+Date: Wed, 15 Oct 2025 07:25:09 +0300
+Message-ID: <20251015042520.68556-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -43,7 +47,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,46 +63,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: nanliu <nanliu@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The documentation for UEFI variable storage in uefi-vars.rst
-incorrectly listed the device name as `uefi-vars-x86`.
+In commit 39ec3fc0301 we fixed a bug where we were not implementing
+HCR_EL2.RW as RAO/WI for CPUs where EL1 doesn't support AArch32.
+However, we got the condition wrong, so we now set this bit even on
+CPUs which have no AArch64 support at all.  This is wrong because the
+AArch32 HCR register defines this bit as RES0.
 
-The correct device name as implemented in the source code is
-`uefi-vars-x64`.
+Correct the condition we use for forcing HCR_RW to be set.
 
-This commit updates the documentation to use the correct name,
-aligning it with the implementation.
-
-Signed-off-by: Nana Liu <nanliu@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3128
+Fixes: 39ec3fc0301 ("target/arm: HCR_EL2.RW should be RAO/WI if EL1 doesn't support AArch32")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250925115723.1293233-1-peter.maydell@linaro.org
+(cherry picked from commit a23e719ca8e80d22eafe4b2b57833918d439fa0c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit f65918497cc6b9034ce8f81a4df1d6407e110367)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/devel/uefi-vars.rst b/docs/devel/uefi-vars.rst
-index 0151a26a0a..b4013b5d12 100644
---- a/docs/devel/uefi-vars.rst
-+++ b/docs/devel/uefi-vars.rst
-@@ -34,7 +34,7 @@ configures the shared buffer location and size, and traps to the host
- to process the requests.
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0c1299ff84..e2ef4ea2cc 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3728,7 +3728,8 @@ static void do_hcr_write(CPUARMState *env, uint64_t value, uint64_t valid_mask)
+     value &= valid_mask;
  
- The ``uefi-vars`` device implements the UEFI virtual device.  It comes
--in ``uefi-vars-x86`` and ``uefi-vars-sysbus`` flavours.  The device
-+in ``uefi-vars-x64`` and ``uefi-vars-sysbus`` flavours.  The device
- reimplements the handlers needed, specifically
- ``EfiSmmVariableProtocol`` and ``VarCheckPolicyLibMmiHandler``.  It
- also consumes events (``EfiEndOfDxeEventGroup``,
-@@ -57,7 +57,7 @@ usage on x86_64
- .. code::
+     /* RW is RAO/WI if EL1 is AArch64 only */
+-    if (!cpu_isar_feature(aa64_aa32_el1, cpu)) {
++    if (arm_feature(env, ARM_FEATURE_AARCH64) &&
++        !cpu_isar_feature(aa64_aa32_el1, cpu)) {
+         value |= HCR_RW;
+     }
  
-    qemu-system-x86_64 \
--      -device uefi-vars-x86,jsonfile=/path/to/vars.json
-+      -device uefi-vars-x64,jsonfile=/path/to/vars.json
- 
- usage on aarch64
- ----------------
 -- 
 2.47.3
 
