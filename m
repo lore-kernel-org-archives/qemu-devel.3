@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5753DCCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 06:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF8DCCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 06:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8uvR-0002O0-T4; Wed, 15 Oct 2025 02:23:54 -0400
+	id 1v8uvq-0002l6-FG; Wed, 15 Oct 2025 02:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8uvM-0002Gm-QN; Wed, 15 Oct 2025 02:23:49 -0400
+ id 1v8uvn-0002kd-Nw; Wed, 15 Oct 2025 02:24:16 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v8uvE-0003Bf-FB; Wed, 15 Oct 2025 02:23:48 -0400
+ id 1v8uvf-0003Bf-LE; Wed, 15 Oct 2025 02:24:13 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 15 Oct
@@ -31,10 +31,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 09/12] tests/functional/aarch64/ast2700fc: Update test
- ASPEED SDK v09.08
-Date: Wed, 15 Oct 2025 14:22:04 +0800
-Message-ID: <20251015062210.3128710-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 10/12] tests/functional/aarch64/ast2700fc: Add eth2 network
+ interface check in PCIe test
+Date: Wed, 15 Oct 2025 14:22:05 +0800
+Message-ID: <20251015062210.3128710-11-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
 References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
@@ -66,50 +66,38 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Enhance the AST2700 functional PCIe test to verify the network interface
+configuration for eth2. This adds an additional command to check the IP
+address assignment on eth2 to ensure network functionality is correctly
+initialized in the test environment.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/functional/aarch64/test_aspeed_ast2700fc.py | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tests/functional/aarch64/test_aspeed_ast2700fc.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-index 28b66614d9..bcce0c8d4e 100755
+index bcce0c8d4e..843647e6c5 100755
 --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
 +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-@@ -36,9 +36,9 @@ def verify_openbmc_boot_and_login(self, name):
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+@@ -60,6 +60,9 @@ def do_ast2700_pcie_test(self):
+             'lspci -s 0002:01:00.0',
+             '0002:01:00.0 Ethernet controller: '
+             'Intel Corporation 82574L Gigabit Network Connection')
++        exec_command_and_wait_for_pattern(self,
++            'ip addr show dev eth2',
++            'inet 10.0.2.15/24')
  
--    ASSET_SDK_V906_AST2700 = Asset(
--            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
--            'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
-+    ASSET_SDK_V908_AST2700 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2700-default-obmc.tar.gz',
-+            'eac3dc409b7ea3cd4b03d4792d3cebd469792ad893cb51e1d15f0fc20bd1e2cd')
+     def do_ast2700fc_ssp_test(self):
+         self.vm.shutdown()
+@@ -135,6 +138,7 @@ def start_ast2700fc_test(self, name):
  
-     def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-@@ -66,7 +66,7 @@ def do_ast2700fc_ssp_test(self):
-         self.vm.set_console(console_index=1)
-         self.vm.launch()
- 
--        exec_command_and_wait_for_pattern(self, '\012', 'ssp:~$')
-+        exec_command_and_wait_for_pattern(self, '\012', 'ssp_tsp:~$')
-         exec_command_and_wait_for_pattern(self, 'version',
-                                           'Zephyr version 3.7.1')
-         exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
-@@ -133,10 +133,10 @@ def start_ast2700fc_test(self, name):
-         self.do_test_aarch64_aspeed_sdk_start(
-                 self.scratch_file(name, 'image-bmc'))
- 
--    def test_aarch64_ast2700fc_sdk_v09_06(self):
-+    def test_aarch64_ast2700fc_sdk_v09_08(self):
+     def test_aarch64_ast2700fc_sdk_v09_08(self):
          self.set_machine('ast2700fc')
++        self.require_netdev('user')
  
--        self.archive_extract(self.ASSET_SDK_V906_AST2700)
-+        self.archive_extract(self.ASSET_SDK_V908_AST2700)
+         self.archive_extract(self.ASSET_SDK_V908_AST2700)
          self.start_ast2700fc_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
 -- 
 2.43.0
 
