@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A657CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 12:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63FFCCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 12:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v90HG-0008Mk-Ig; Wed, 15 Oct 2025 08:06:46 -0400
+	id 1v90Hk-0008Rw-OU; Wed, 15 Oct 2025 08:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v90H3-0008LU-Sf
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:06:34 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v90Gw-0000o6-ST
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:06:33 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-7501c24a731so77253647b3.3
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 05:06:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760529979; x=1761134779; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1NSOXM+21hN6vLOK+gx+jUeqiMVSuJSg+BtE0AwsORA=;
- b=CEcImpR6W+bPGr2a31xT+eJcKkFQL+gzFE5fuaHpCxk/L7zIO+2S3rOPLW33uJEp2O
- av2EzZQtSoamXPBClkjb1t8BMrXlkXFdQYCW8U51jy2vPOsRW5FUa6K3OPm3G6A/Lj6e
- EAaZyvRdvoO2hh+BkijzjT6g4IHm+M6Yutou/kszNXR4cAO1aK8G852YFqfByafwW03s
- BfrXccQrAn15XFaMM5GQ4LSIgLnVGHv8CWUYaYPwCDpavHBe9zeL25DV5j4GBZv3wVWk
- r0Kyinxi2I3kn+KvHyQTh2S4GVeIPHbB4FMWjwYAJdcfoG0nKw+ibANY7ZF141Or8uQD
- YlKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760529979; x=1761134779;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1NSOXM+21hN6vLOK+gx+jUeqiMVSuJSg+BtE0AwsORA=;
- b=rZ6+kySTKCIGuSbKLN9bBv7yd3uNI02HdQmO6L1xzlVob+tM85QI86iNEwuv1MAYPa
- 0nYRSYtNyXxTrFdlnk9n7AIK1FhpcbG6InAzNUW0tl8Uvly1DUhZbSnLtVOIEWCVFln6
- oPsiPfORCRovtS/XkFmkuDRpo5A301XVj6hP0+/bATAS2YJo97G/vMvoL6/pe8sC902E
- rkYPnARrwtO4IDvWGWrHvYMYIOabsM6Lw6p3hemmwBabtf6g1zMJ7jSmam/x7VBUAKOI
- x0uXpmZmtXIra6wCjm5J5cZGy0/FeQfiXwBE5os73xVU4+wy+KvLO2+9/i5gdP4uUeyc
- xvlg==
-X-Gm-Message-State: AOJu0YwY9WagjpIqEr/cLvwDMQEQTtREMmzI/uY56bahj56WYIJYEI8H
- ef7xPFVnB2m5YaVBZoegh7RVVK/dT822OQKpcbdx8YXaORircAgEs965JszLT8HSPrLwDxV0CDp
- ePoEgVqAJtTr7ue2JwsA+PC3SJGV81K4qbHA1tDsBww==
-X-Gm-Gg: ASbGncuqiDXrIX+QxmHHW6YvRUVzVDMtAtKQaF6bqAg/qIN8PtIEA3Dhr0xuCZpOJ3A
- bIrsIKOODBmlw+AcekjnUHrMl8CqBvKxwrHSWuwc1SiQPsTHaMQ3eCMYTFiox0me2RwgMPFLedl
- ps/XsCehZlT3LYdUec8x6wRA5aAHzzggSe+XUQRkogJZMRWThypiYnUolFxBn7Za1AXohNZIR7t
- qfEL1U+lfKkH75DLauQdDYbCZoCwOH7GSRkIGB7WA==
-X-Google-Smtp-Source: AGHT+IGWfC4cFcDhyouSG1w+x4/v8TPW8AMEClTGKNAnV63sDIImFQYgZLakmPIF66hTUY3MDfIiVKqvuGEv90Qy/WM=
-X-Received: by 2002:a05:690e:14ce:b0:63d:ec38:cbf1 with SMTP id
- 956f58d0204a3-63dec38cc2cmr163224d50.24.1760529979554; Wed, 15 Oct 2025
- 05:06:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v90Hb-0008Pc-Aa
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:07:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v90HJ-0000pZ-V1
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:07:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760530007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hO8ClIzuHPIZPFBk3ID+RydV8aOTrEPPzpEWH1aTe+E=;
+ b=C0OestuvJWXIKVNNRqf1JuV/uSpm1I8qSEWd98YYu1uaoCOB2EyJUbibQ9Bd5z8FXtT95+
+ HDaMeqmikA2v8VlG7orPZGiXgJTv+mZRdESaYnkF7fGA2MQaEQhkdnHwZ5VrDPiBOuRAb3
+ 4rcLWruonBeN/CK9Pje10bRi5do2z58=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-UO9EAnMCOZubsCeDUJ4Xjw-1; Wed,
+ 15 Oct 2025 08:06:43 -0400
+X-MC-Unique: UO9EAnMCOZubsCeDUJ4Xjw-1
+X-Mimecast-MFC-AGG-ID: UO9EAnMCOZubsCeDUJ4Xjw_1760530002
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98E851865FD3; Wed, 15 Oct 2025 12:06:41 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF93730002CD; Wed, 15 Oct 2025 12:06:39 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id BDBEC1800998; Wed, 15 Oct 2025 14:06:37 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v5 1/3] hw/uefi: add query-firmware-log monitor command
+Date: Wed, 15 Oct 2025 14:06:35 +0200
+Message-ID: <20251015120637.1736402-2-kraxel@redhat.com>
+In-Reply-To: <20251015120637.1736402-1-kraxel@redhat.com>
+References: <20251015120637.1736402-1-kraxel@redhat.com>
 MIME-Version: 1.0
-References: <20251014102439.319915-1-peter.maydell@linaro.org>
- <d6f9dfa368b2419998379ac9dd986a7b@huawei.com>
-In-Reply-To: <d6f9dfa368b2419998379ac9dd986a7b@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 15 Oct 2025 13:06:07 +0100
-X-Gm-Features: AS18NWDan5KV9g4Wyk7ZbQeYnD54B7as9t89RrLOa3DsqOr84uSHBrHkyJuR6A8
-Message-ID: <CAFEAcA8U_3zJsnHt2wxME3j8J83whzTNgP9vEvUGuWHe7KGaYA@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,115 +91,335 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Oct 2025 at 11:58, Salil Mehta <salil.mehta@huawei.com> wrote:
->
-> Hi Peter,
->
-> > From: qemu-devel-bounces+salil.mehta=huawei.com@nongnu.org <qemu-
-> > devel-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of Peter
-> > Maydell
-> > Sent: Tuesday, October 14, 2025 11:25 AM
-> > To: qemu-devel@nongnu.org
-> > Cc: Salil Mehta <salil.mehta@opnsrc.net>; Marc Zyngier <maz@kernel.org>
-> > Subject: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
-> > kernel in cpuif reset
-> >
-> > Currently in arm_gicv3_icc_reset() we read the kernel's value of
-> > ICC_CTLR_EL1 as part of resetting the CPU interface.  This mostly works, but
-> > we're actually breaking an assumption the kernel makes that userspace only
-> > accesses the in-kernel GIC data when the VM is totally paused, which may
-> > not be the case if a single vCPU is being reset.  The effect is that it's possible
-> > that the read attempt returns EBUSY.
-> >
-> > Avoid this by reading the kernel's value of the reset ICC_CTLR_EL1 once in
-> > device realize. This brings ICC_CTLR_EL1 into line with the other cpuif
-> > registers, where we assume we know what the kernel is resetting them to
-> > and just update QEMU's data structures in arm_gicv3_icc_reset().
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > I've only tested this fairly lightly, but it seems to work.
-> > Salil, does this fix the EBUSY issues you were seeing ?
-> >
-> >  include/hw/intc/arm_gicv3_common.h |  3 ++
-> >  hw/intc/arm_gicv3_kvm.c            | 49 +++++++++++++++++++++---------
-> >  2 files changed, 38 insertions(+), 14 deletions(-)
-> >
-> [...]
-> > +
-> > +    /*
-> > +     * Now we can read the kernel's initial value of ICC_CTLR_EL1, which
-> > +     * we will need if a CPU interface is reset. If the kernel is ancient
-> > +     * and doesn't support writing the GIC state then we don't need to
-> > +     * care what reset does to QEMU's data structures.
-> > +     */
-> > +    if (!s->migration_blocker) {
-> > +        for (i = 0; i < s->num_cpu; i++) {
-> > +            GICv3CPUState *c = &s->cpu[i];
-> > +
-> > +            kvm_device_access(s->dev_fd,
-> > KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS,
-> > +                              KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer),
-> > +                              &c->kvm_reset_icc_ctlr_el1, false, &error_abort);
-> > +        }
-> > +    }
-> >  }
->
->
-> Above changes assume that the driver's configured value of the ICC_CTLR_EL1
-> system register is the same as the default value. I've verified that this
-> currently the case. However, it safe to assume that this will remain true
-> in the future as well?
+Starting with the edk2-stable202508 tag OVMF (and ArmVirt too) have
+optional support for logging to a memory buffer.  There is guest side
+support -- for example in linux kernels v6.17+ -- to read that buffer.
+But that might not helpful if your guest stops booting early enough that
+guest tooling can not be used yet.  So host side support to read that
+log buffer is a useful thing to have.
 
-I don't understand what you mean here. We read the kernel's ICC_CTLR_EL1
-at VM startup, when we know it will be the reset value, because we haven't
-run any VCPUs yet.
+This patch implements the query-firmware-log both qmp monitor command
+to read the firmware log.
 
-> We can instead cache the value once during the first cpu_reset() for each
-> CPU interface and reuse that cached value for all subsequent cpu_reset()
-> operations.  This would simplify the implementation while retaining
-> major goals.
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ include/monitor/hmp.h      |   1 +
+ hw/uefi/ovmf-log.c         | 233 +++++++++++++++++++++++++++++++++++++
+ tests/qtest/qmp-cmd-test.c |   2 +
+ hw/uefi/meson.build        |   2 +-
+ qapi/machine.json          |  24 ++++
+ 5 files changed, 261 insertions(+), 1 deletion(-)
+ create mode 100644 hw/uefi/ovmf-log.c
 
-No, we should read the value at realize time, as this patch does.
-Trying to do it at cpu_reset runs into the same problem that we
-have now that the kernel doesn't expect us to be reading the
-register when another vcpu might be running.
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 31bd812e5f41..0af272b52ac1 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -179,5 +179,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
+ void hmp_info_mtree(Monitor *mon, const QDict *qdict);
+ void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
+ void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
++void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
+ 
+ #endif
+diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+new file mode 100644
+index 000000000000..85dda15ab6ad
+--- /dev/null
++++ b/hw/uefi/ovmf-log.c
+@@ -0,0 +1,233 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * print ovmf debug log
++ *
++ * see OvmfPkg/Library/MemDebugLogLib/ in edk2
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qemu/target-info-qapi.h"
++#include "hw/boards.h"
++#include "hw/i386/x86.h"
++#include "hw/arm/virt.h"
++#include "system/dma.h"
++#include "monitor/hmp.h"
++#include "monitor/monitor.h"
++#include "qapi/error.h"
++#include "qapi/type-helpers.h"
++#include "qapi/qapi-commands-machine.h"
++
++
++/* ----------------------------------------------------------------------- */
++/* copy from edk2                                                          */
++
++#define MEM_DEBUG_LOG_MAGIC1  0x3167646d666d766f  /* "ovmfmdg1" */
++#define MEM_DEBUG_LOG_MAGIC2  0x3267646d666d766f  /* "ovmfmdg2" */
++
++/*
++ * Mem Debug Log buffer header.
++ * The Log buffer is circular. Only the most
++ * recent messages are retained. Older messages
++ * will be discarded if the buffer overflows.
++ * The Debug Log starts just after the header.
++ */
++typedef struct {
++    /*
++     * Magic values
++     * These fields are used by tools to locate the buffer in
++     * memory. These MUST be the first two fields of the structure.
++     * Use a 128 bit Magic to vastly reduce the possibility of
++     * a collision with random data in memory.
++     */
++    uint64_t             Magic1;
++    uint64_t             Magic2;
++    /*
++     * Header Size
++     * This MUST be the third field of the structure
++     */
++    uint64_t             HeaderSize;
++    /*
++     * Debug log size (minus header)
++     */
++    uint64_t             DebugLogSize;
++    /*
++     * edk2 uses this for locking access.
++     */
++    uint64_t             MemDebugLogLock;
++    /*
++     * Debug log head offset
++     */
++    uint64_t             DebugLogHeadOffset;
++    /*
++     *  Debug log tail offset
++     */
++    uint64_t             DebugLogTailOffset;
++    /*
++     * Flag to indicate if the buffer wrapped and was thus truncated.
++     */
++    uint64_t             Truncated;
++    /*
++     * Firmware Build Version (PcdFirmwareVersionString)
++     */
++    char                 FirmwareVersion[128];
++} MEM_DEBUG_LOG_HDR;
++
++
++/* ----------------------------------------------------------------------- */
++/* qemu monitor command                                                    */
++
++typedef struct {
++    uint64_t             magic1;
++    uint64_t             magic2;
++} MemDebugLogMagic;
++
++/* find log buffer in guest memory by searching for the magic cookie */
++static dma_addr_t find_ovmf_log_range(dma_addr_t start, dma_addr_t end)
++{
++    static const MemDebugLogMagic magic = {
++        .magic1 = MEM_DEBUG_LOG_MAGIC1,
++        .magic2 = MEM_DEBUG_LOG_MAGIC2,
++    };
++    MemDebugLogMagic check;
++    dma_addr_t step = 4 * KiB;
++    dma_addr_t offset;
++
++    for (offset = start; offset < end; offset += step) {
++        if (dma_memory_read(&address_space_memory, offset,
++                            &check, sizeof(check),
++                            MEMTXATTRS_UNSPECIFIED)) {
++            /* dma error -> stop searching */
++            break;
++        }
++        if (memcmp(&magic, &check, sizeof(check)) == 0) {
++            return offset;
++        }
++    }
++    return (dma_addr_t)-1;
++}
++
++static dma_addr_t find_ovmf_log(void)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++    dma_addr_t start, end, offset;
++
++    if (target_arch() == SYS_EMU_TARGET_X86_64 &&
++        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
++        X86MachineState *x86ms = X86_MACHINE(ms);
++
++        /* early log buffer, static allocation in memfd, sec + early pei */
++        offset = find_ovmf_log_range(0x800000, 0x900000);
++        if (offset != -1) {
++            return offset;
++        }
++
++        /*
++         * normal log buffer, dynamically allocated close to end of low memory,
++         * late pei + dxe phase
++         */
++        end = x86ms->below_4g_mem_size;
++        start = end - MIN(end, 128 * MiB);
++        return find_ovmf_log_range(start, end);
++    }
++
++    if (target_arch() == SYS_EMU_TARGET_AARCH64 &&
++        object_dynamic_cast(OBJECT(ms), TYPE_VIRT_MACHINE)) {
++        VirtMachineState *vms = VIRT_MACHINE(ms);
++
++        /* edk2 ArmVirt firmware allocations are in the first 128 MB */
++        start = vms->memmap[VIRT_MEM].base;
++        end = start + 128 * MiB;
++        return find_ovmf_log_range(start, end);
++    }
++
++    return (dma_addr_t)-1;
++}
++
++static void handle_ovmf_log_range(GString *out,
++                                  dma_addr_t start,
++                                  dma_addr_t end,
++                                  Error **errp)
++{
++    if (start > end) {
++        return;
++    }
++
++    size_t len = end - start;
++    g_string_set_size(out, out->len + len);
++    if (dma_memory_read(&address_space_memory, start,
++                        out->str + (out->len - len),
++                        len, MEMTXATTRS_UNSPECIFIED)) {
++        error_setg(errp, "firmware log: buffer read error");
++        return;
++    }
++}
++
++FirmwareLog *qmp_query_firmware_log(Error **errp)
++{
++    MEM_DEBUG_LOG_HDR header;
++    dma_addr_t offset, base;
++    FirmwareLog *ret;
++    g_autoptr(GString) log = g_string_new("");
++
++    offset = find_ovmf_log();
++    if (offset == -1) {
++        error_setg(errp, "firmware log: not found");
++        return NULL;
++    }
++
++    if (dma_memory_read(&address_space_memory, offset,
++                        &header, sizeof(header),
++                        MEMTXATTRS_UNSPECIFIED)) {
++        error_setg(errp, "firmware log: header read error");
++        return NULL;
++    }
++
++    if (header.DebugLogSize > MiB) {
++        /* default size is 128k (32 pages), allow up to 1M */
++        error_setg(errp, "firmware log: log buffer is too big");
++        return NULL;
++    }
++
++    if (header.DebugLogHeadOffset > header.DebugLogSize ||
++        header.DebugLogTailOffset > header.DebugLogSize) {
++        error_setg(errp, "firmware log: invalid header");
++        return NULL;
++    }
++
++    base = offset + header.HeaderSize;
++    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
++        /* wrap around */
++        handle_ovmf_log_range(log,
++                              base + header.DebugLogHeadOffset,
++                              base + header.DebugLogSize,
++                              errp);
++        if (*errp) {
++            return NULL;
++        }
++        handle_ovmf_log_range(log,
++                              base + 0,
++                              base + header.DebugLogTailOffset,
++                              errp);
++        if (*errp) {
++            return NULL;
++        }
++    } else {
++        handle_ovmf_log_range(log,
++                              base + header.DebugLogHeadOffset,
++                              base + header.DebugLogTailOffset,
++                              errp);
++        if (*errp) {
++            return NULL;
++        }
++    }
++
++    ret = g_new0(FirmwareLog, 1);
++    if (header.FirmwareVersion[0] != '\0') {
++        ret->version = g_strndup(header.FirmwareVersion,
++                                 sizeof(header.FirmwareVersion));
++    }
++    ret->log = g_base64_encode((const guchar *)log->str, log->len);
++    return ret;
++}
+diff --git a/tests/qtest/qmp-cmd-test.c b/tests/qtest/qmp-cmd-test.c
+index cf718761861d..279a8f5614e9 100644
+--- a/tests/qtest/qmp-cmd-test.c
++++ b/tests/qtest/qmp-cmd-test.c
+@@ -52,6 +52,8 @@ static int query_error_class(const char *cmd)
+         /* Only valid with accel=tcg */
+         { "x-query-jit", ERROR_CLASS_GENERIC_ERROR },
+         { "xen-event-list", ERROR_CLASS_GENERIC_ERROR },
++        /* requires firmware with memory buffer logging support */
++        { "query-firmware-log", ERROR_CLASS_GENERIC_ERROR },
+         { NULL, -1 }
+     };
+     int i;
+diff --git a/hw/uefi/meson.build b/hw/uefi/meson.build
+index 91eb95f89e6d..c8f38dfae247 100644
+--- a/hw/uefi/meson.build
++++ b/hw/uefi/meson.build
+@@ -1,4 +1,4 @@
+-system_ss.add(files('hardware-info.c'))
++system_ss.add(files('hardware-info.c', 'ovmf-log.c'))
+ 
+ uefi_vars_ss = ss.source_set()
+ if (config_all_devices.has_key('CONFIG_UEFI_VARS'))
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 038eab281c78..96133e5c71cf 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1839,6 +1839,30 @@
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ]}
+ 
++##
++# @FirmwareLog:
++#
++# @version: Firmware version.
++#
++# @log: Firmware debug log, in base64 encoding.  First and last log
++#       line might be incomplete.
++#
++# Since: 10.2
++##
++{ 'struct': 'FirmwareLog',
++  'data': { '*version': 'str',
++            'log': 'str' } }
++
++##
++# @query-firmware-log:
++#
++# Find firmware memory log buffer in guest memory, return content.
++#
++# Since: 10.2
++##
++{ 'command': 'query-firmware-log',
++  'returns': 'FirmwareLog' }
++
+ ##
+ # @dump-skeys:
+ #
+-- 
+2.51.0
 
-> Calling pause_vcpus_all() at VM initialization time--during  the first
-> cpu_reset()--should not cause any issues, as all secondary vCPUs are idle
-> (i.e. their PCs are not initialized and kernel has not yet loaded). Pausing
-> such vCPUs at this stage should not be a disruptive action.
-
-We should not need to run pause_vcpus_all() at all here. CPU reset
-should be fine done for one vcpu with the others running.
-
-> Moreover, if this stage poses a problem for a KVM device IOCTL access, it
-> similarly affect other components like GICv3 ITS, which also uses KVM
-> device IOCTL during GICv3 reset hold. At this stage all the vCPUs should still
-> be in a pre-boot or idle state
-
-> static void kvm_arm_its_reset_hold(Object *obj, ResetType type)
-> {
-> [...]
->
->     if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
->                                KVM_DEV_ARM_ITS_CTRL_RESET)) {
->         kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
->                           KVM_DEV_ARM_ITS_CTRL_RESET, NULL, true, &error_abort);
->         return;
->     }
-> [...]
->
-> }
->
-> We are not even pausing vCPUs here, yet we expect above KVM device IOCTL
-> to succeed on the first attempt. The operation also ends up acquiring the
-> mutex for all vCPUs within the KVM.
-
-ITS reset should only happen (a) at start of the run, before any
-vcpus run or (b) as part of a full system reset. We should check that
-the vcpus are paused when we're doing system reset, but I would expect
-that to be the case because it would be likely to be buggy if not.
-
--- PMM
 
