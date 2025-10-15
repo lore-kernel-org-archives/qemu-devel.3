@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17500CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Oct 2025 23:49:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEF5CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 00:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8ol3-0005pz-GH; Tue, 14 Oct 2025 19:48:46 -0400
+	id 1v8oyN-0007M3-28; Tue, 14 Oct 2025 20:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8oky-0005pY-0n
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 19:48:40 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v8oyJ-0007LP-Le
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 20:02:29 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v8okq-0001SG-BI
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 19:48:39 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46f53f88e0bso33930935e9.1
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 16:48:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v8oyH-0002ia-8E
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 20:02:27 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3305c08d9f6so347083a91.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 17:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760485707; x=1761090507; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UH3QDvFtmGKSmUVe57xoqA6TZLSc/XQEQYquC6LjKck=;
- b=JfOncp4jjb+rmr8MSYsJfTptK62LP09HLI80YUcB83y2B0uUtjiiYgv5EkuooK+F/u
- EKF0om6yOLFYvvLdibsxx9wCahuMLzGWcVpty6ce0iQJG+TM4G46ZlYfUogokOFTkMtR
- 8yisI3eHh/JXvNct+YwvuCgx1mX918/KDSVpgvp+FwdUzSKeOKO0exLt3KlD2KVtujiA
- JP8+84OJgDt6Jp3qPOBX2JZpv2KdOLprSnGMJSPUE96wzUzun6uwZVjc85SuZrFloXJu
- ufiORwf2ZClQz2pMssQjc1yqPMDoNEDTebcb1vrNXrxgOszzCUQhVCevJNGj/suZuJHt
- lScw==
+ d=linaro.org; s=google; t=1760486542; x=1761091342; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R8COgXH1ebkpcfSfLdBYECLUfxmKPOTaSeHRmqCzzTA=;
+ b=y/SiVLu6gfYvoe+F+TZuwLFOJAdc8i4jTm2XYEGPG/V/Ei0GqfdyDvqL9NUGr+oHGt
+ 4r1fgiOm+Qcq15czkzZoFmOZUYLUoFTKG2hVGrCJl47WbYXFp1j3yIKa74BwbYSbkCvx
+ TPzexRFZP1cUDrcXcLDq4SWKeBn2ipUrw7iN2zFlcTkTaTaEQ7h7Bv33f0YYChzaxZgB
+ IYZuGzmlmJK8D+2TMp3vvUXkKCIGVmhQ7nxYISJ2FQEC1Ym8JAWb1f2p1VvQkvoGVfXY
+ aPVWO7ch+U9NraG0mgqwo4Tcus1mr9NrwdDLZNwzJHWsU8MSJE0ahF/0OXktT+oULd/N
+ CLEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760485707; x=1761090507;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UH3QDvFtmGKSmUVe57xoqA6TZLSc/XQEQYquC6LjKck=;
- b=MyQt8eNZGCJsB9evWC9dqqA+xODYXMiOWRmUNHtbSH3s37e13Q7u6k2lsrOSBvz00u
- SEspv5kJfzusOiYweBnTXkOPej5J74uB840rbzQyVScpainQ24WeKDl2g57EISJ5FlwN
- mAv9DdbuwndLYypQjuRDJ2tzZsBG8p46Pl5mBqsU6pPHvzBSRzQdDI7eJceQjA40Uuvl
- ffPDOh16/RaEx9sgEef0aowiTzRaADn1zEMiGTIxPRuLo+8W9yu+iBnvVQMdy4ApzUkq
- PK8UNQ11G98lcsA6TcjKV8ikJNC47bjHrJiGFjC8CkHAqPwGHOWipZVuud9CXkTCUhr8
- 9+DQ==
-X-Gm-Message-State: AOJu0YyA5XIvIFXsDbe+c0a5r3fQPOL3PHFJEe+0a4v1941sbnPwgt6y
- Xhs2zgwFhDpiUEcv3YMtzL9y6vkY4duUFq20lE55mzeF5bWiv86cIkexQtpxfzruAYw=
-X-Gm-Gg: ASbGncsvTbpxgEGZvSqHAW1+1D3T8NyzZMZ1fLzJKkLslL56ez3KMa8z2qksoO2lw9s
- 4bFWupiimfah7gwZtgwh1m7mcO8JOEJSz69A4E+CV2l98Z9rtQDgnpi6cGxpFPFzA7CcAaVp0nt
- DPhBeH3bSPa0pjFn3TlR8afD+jqQi1JtD6y3uJKQRbRLIuZDw5J5uN8GZ7jPfl4fvfAKCaFblly
- 7c1rDbkL1wFnxwGefN5tdOofnciZ6YqzwJdNdgtNjChVhEXMP4qqvHRIn5eNX/U3rUbI1YP5kPy
- r6c7N12QrLlyLSIX+ame3atZsrw2D7ubdbTEkWepXOm0VDVuafkwPlSeq+Y7nWWx60dEXpX+GJn
- QVYh1np3pjMS6mRh0gxWpUl/g4QCKm8YT6O4IOhH3yrNofg==
-X-Google-Smtp-Source: AGHT+IFI2Ky7UbTGWPLvGJ2PaLH7ucu2FZ5Iy3dRBcY6orqmWSTWY9TyHMHEuAPdHmDEizRBg0o32w==
-X-Received: by 2002:a05:600c:628e:b0:46e:38f7:625f with SMTP id
- 5b1f17b1804b1-46fa9aa2123mr159778255e9.10.1760485707185; 
- Tue, 14 Oct 2025 16:48:27 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46fab36ed3bsm174239745e9.0.2025.10.14.16.48.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Oct 2025 16:48:26 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7332F5F83C;
- Wed, 15 Oct 2025 00:48:25 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  qemu-ppc@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH 2/3] docker: Stop building 32-bit PowerPC images
-In-Reply-To: <20251014173900.87497-3-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 14 Oct 2025 19:38:58
- +0200")
-References: <20251014173900.87497-1-philmd@linaro.org>
- <20251014173900.87497-3-philmd@linaro.org>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Wed, 15 Oct 2025 00:48:25 +0100
-Message-ID: <87y0pdjb92.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1760486542; x=1761091342;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R8COgXH1ebkpcfSfLdBYECLUfxmKPOTaSeHRmqCzzTA=;
+ b=pSq50GJQSks8dpMbE63YnwpKCnmPniyl2adwTH3+8us5N1KlptKiwTvYZKQKJSY6zE
+ tRjZY/+w2McOwYoWBsuDylSOBeb0mgsHKmpTOgKRcrgwxaOE58lY4Dc9jT5Djz+nA+z9
+ KEgd6ao4P1/7pnkUvQaCGC78U9xL+ISC0rCCQxn3qhP5/5XKluWiI2pMZNWAk94hiANY
+ yulFpFa7s6nmDbN0KJKZvu4AXhiLQVVi/9wlYtU81GlaOXPNEZQ3MoR9FPYOsL3Ivgqm
+ IoJUKgeIIgF8KW4AWwxfVvGcxl5cXoJapnHhbxtRCfrMO/BX4/RDle2S4QtgyrywhZvi
+ 6mog==
+X-Gm-Message-State: AOJu0YweBqE+7oGX2XM6zNZTiakFp4F8iDleYNbg5u3RcmbShwD4O32K
+ Y7Yfwc1VyPLKPxL5WGA2pVXlfLsuY8qVXNvWA6RdpwtDsKMSR94C7elTVojOH+u3xQ8=
+X-Gm-Gg: ASbGncso3tYVpGNuHdxz4emQlt8Oo77d/3KxeOehmrNzVq5rtK+YZN7DXJLYO+J4xY0
+ w0jwV37Vu3hNzC/M5VQjcoPUgH5lr6eHz/1LsgOd3C7EiJa+SctBN097Z/MWKaHW1l+gCXKjR/Q
+ AYDU5ZOadYlzJZXX30bg07+echtt53I7D8UyfA04AskH+0iCUguJEpnyek2/34nNPZK60KfHy7M
+ PO/2Jh74cDamAefZ6gSFoNRRmSkGu/q8BPDyWyxc67fxwWLiduFxIpn/F7TfL2mHeNmVfABbxnV
+ 3G09vxA89QTpeM9R5kREyL/kNtxvCL7osnY7SdtXN+BqHz66wf4MWKCkpEPP0iKeDz45nWseuev
+ dk28daweXGzICLGOHn0NJGK8oUAm7SZRcp6Tcv2F6XnKi4jWFvu/chxMRoIOO6pg7m9Ic
+X-Google-Smtp-Source: AGHT+IHGVFLr7tqjeW67nmNpsy9MVddGNRjIN/SNGCXtbN7bg6BCBFod8KyjZSOopcmhJUgjmhz5Ng==
+X-Received: by 2002:a17:90b:57ce:b0:339:e8c7:d47d with SMTP id
+ 98e67ed59e1d1-33b516fc531mr35421760a91.9.1760486541932; 
+ Tue, 14 Oct 2025 17:02:21 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33b97860773sm123128a91.6.2025.10.14.17.02.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Oct 2025 17:02:21 -0700 (PDT)
+Message-ID: <dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org>
+Date: Tue, 14 Oct 2025 17:02:20 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v3 19/21] hw/arm/smmuv3: Use iommu_index to represent the
+ security context
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
+ <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
+ <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,80 +109,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Hi Tao,
 
-> 32-bit host support is deprecated since commit 6d701c9bac1
-> ("meson: Deprecate 32-bit host support"). Besides, the Ubuntu
-> distribution we are using to cross-build dropped support for
-> 32-bit PPC as of Ubuntu 18.04 LTS [*].
-
-Erm NAK. debian-all-test-cross.docker holds the cross compilers for
-building test cases and we are not dropping 32 bit guest support.
-
-We may need to hive more off into legacy-test-cross if they are being
-dropped from Trixie.
-
->
->   Given the recent announcement that the powerpc architecture
->   would be dropped from the upcoming Debian release, there
->   has been a good deal of discussion about the future of this
->   architecture in Ubuntu as well [...].
->
->   Unlike the ppc64el architecture, there is no longer upstream
->   support for the 32-bit, big-endian powerpc architecture [...].
->
->   The Technical Board has therefore determined that the powerpc
->   port should not be included in the Ubuntu 17.04 (zesty) release.
->
->   The powerpc architecture will continue to be supported as part
->   of existing stable releases.  Since powerpc is included in
->   Ubuntu 16.04 LTS, security updates for existing packages can be
->   expected until April 2021.
->
-> Next commits will remove support for 32-bit PPC hosts. Stop
-> building the powerpc Docker image.
->
-> [*] https://lists.ubuntu.com/archives/ubuntu-devel-announce/2016-December=
-/001199.html
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 10/12/25 8:15 AM, Tao Tang wrote:
+> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to select
+> the programming interface. To support future extensions like RME, which
+> defines four security states (Non-secure, Secure, Realm, and Root), the
+> QEMU model must cleanly separate these contexts for all operations.
+> 
+> This commit leverages the generic iommu_index to represent this
+> security context. The core IOMMU layer now uses the SMMU's .attrs_to_index
+> callback to map a transaction's ARMSecuritySpace attribute to the
+> corresponding iommu_index.
+> 
+> This index is then passed down to smmuv3_translate and used throughout
+> the model to select the correct register bank and processing logic. This
+> makes the iommu_index the clear QEMU equivalent of the architectural
+> SEC_SID, cleanly separating the contexts for all subsequent lookups.
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->  configure                                             | 1 -
->  tests/docker/dockerfiles/debian-all-test-cross.docker | 1 -
->  2 files changed, 2 deletions(-)
->
-> diff --git a/configure b/configure
-> index 461b53dd605..ce76a00aff1 100755
-> --- a/configure
-> +++ b/configure
-> @@ -1362,7 +1362,6 @@ fi
->  : ${cross_prefix_mips64=3D"mips64-linux-gnuabi64-"}
->  : ${cross_prefix_mipsel=3D"mipsel-linux-gnu-"}
->  : ${cross_prefix_mips=3D"mips-linux-gnu-"}
-> -: ${cross_prefix_ppc=3D"powerpc-linux-gnu-"}
->  : ${cross_prefix_ppc64=3D"powerpc64-linux-gnu-"}
->  : ${cross_prefix_ppc64le=3D"$cross_prefix_ppc64"}
->  : ${cross_prefix_riscv64=3D"riscv64-linux-gnu-"}
-> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/test=
-s/docker/dockerfiles/debian-all-test-cross.docker
-> index 420a4e33e60..08361cbe6b5 100644
-> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-> @@ -58,7 +58,6 @@ ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
->  RUN if dpkg-architecture -e amd64; then \
->    export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS} gcc-hppa-linux-gn=
-u libc6-dev-hppa-cross"; \
->    export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS} gcc-m68k-linux-gn=
-u libc6-dev-m68k-cross"; \
-> -  export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS} gcc-powerpc-linux=
--gnu libc6-dev-powerpc-cross"; \
->    export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS} gcc-powerpc64-lin=
-ux-gnu libc6-dev-ppc64-cross"; \
->    export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS} gcc-sparc64-linux=
--gnu libc6-dev-sparc64-cross"; \
->    fi && \
+>   hw/arm/smmuv3.c | 36 +++++++++++++++++++++++++++++++++++-
+>   1 file changed, 35 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index c9c742c80b..b44859540f 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1080,6 +1080,38 @@ static void smmuv3_fixup_event(SMMUEventInfo *event, hwaddr iova)
+>       }
+>   }
+>   
+> +static SMMUSecSID smmuv3_attrs_to_sec_sid(MemTxAttrs attrs)
+> +{
+> +    switch (attrs.space) {
+> +    case ARMSS_Secure:
+> +        return SMMU_SEC_SID_S;
+> +    case ARMSS_NonSecure:
+> +    default:
+> +        return SMMU_SEC_SID_NS;
+> +    }
+> +}
+> +
+> +/*
+> + * ARM IOMMU index mapping (implements SEC_SID from ARM SMMU):
+> + * iommu_idx = 0: Non-secure transactions
+> + * iommu_idx = 1: Secure transactions
+> + *
+> + * The iommu_idx parameter effectively implements the SEC_SID
+> + * (Security Stream ID) attribute from the ARM SMMU architecture specification,
+> + * which allows the SMMU to differentiate between different security state
+> + * transactions at the hardware level.
+> + */
+> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
+> +{
+> +    return (int)smmuv3_attrs_to_sec_sid(attrs);
+> +}
+> +
+> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
+> +{
+> +    /* Support 2 IOMMU indexes for now: NS/S */
+> +    return SMMU_SEC_SID_NUM;
+> +}
+> +
+>   /* Entry point to SMMU, does everything. */
+>   static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>                                         IOMMUAccessFlags flag, int iommu_idx)
+> @@ -1087,7 +1119,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>       SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>       SMMUv3State *s = sdev->smmu;
+>       uint32_t sid = smmu_get_sid(sdev);
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUSecSID sec_sid = iommu_idx;
+>       SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>       SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>                              .sid = sid,
+> @@ -2540,6 +2572,8 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+>   
+>       imrc->translate = smmuv3_translate;
+>       imrc->notify_flag_changed = smmuv3_notify_flag_changed;
+> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
+> +    imrc->num_indexes = smmuv3_num_indexes;
+>   }
+>   
+>   static const TypeInfo smmuv3_type_info = {
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I noticed that this commit breaks boot of a simple Linux kernel. It was 
+already the case with v2, and it seems there is a deeper issue.
+
+Virtio drive initialization hangs up with:
+[    9.421906] virtio_blk virtio2: [vda] 20971520 512-byte logical 
+blocks (10.7 GB/10.0 GiB)
+smmuv3_translate_disable smmuv3-iommu-memory-region-24-3 sid=0x18 bypass 
+(smmu disabled) iova:0xfffff040 is_write=1
+
+You can reproduce that with any kernel/rootfs, but if you want a simple 
+recipe (you need podman and qemu-user-static):
+$ git clone https://github.com/pbo-linaro/qemu-linux-stack
+$ cd qemu-linux-stack
+$ ./build_kernel.sh
+$ ./build_rootfs.sh
+$ /path/to/qemu-system-aarch64 \
+-nographic -M virt,iommu=smmuv3 -cpu max -kernel out/Image.gz \
+-append "root=/dev/vda rw" out/host.ext4 -trace 'smmuv3*'
+
+Looking more closely,
+we reach SMMU_TRANS_DISABLE, because iommu_idx associated is 1.
+This values comes from smmuv3_attrs_to_sec_sid, by reading attrs.space, 
+which is ArmSS_Secure.
+
+The problem is that it's impossible to have anything Secure given that 
+all the code above runs in NonSecure world.
+After investigation, the original value read from attrs.space has not 
+been set anywhere, and is just the default zero-initialized value coming 
+from pci_msi_trigger. It happens that it defaults to SEC_SID_S, which 
+probably matches your use case with hafnium, but it's an happy accident.
+
+Looking at the SMMU spec, I understand that SEC_SID is configured for 
+each stream, and can change dynamically.
+On the opposite, a StreamID is fixed and derived from PCI bus and slot 
+for a given device.
+
+Thus, I think we are missing some logic here.
+I'm still trying to understand where the SEC_SID should come from initially.
+"The association between a device and the Security state of the 
+programming interface is a system-defined property."
+Does it mean we should be able to set a QEMU property for any device?
+
+Does anyone familiar with this has some idea?
+
+As well, we should check the SEC_SID found based on SMMU_S_IDR1.SECURE_IMPL.
+3.10.1 StreamID Security state (SEC_SID)
+If SMMU_S_IDR1.SECURE_IMPL == 0, then incoming transactions have a 
+StreamID, and either:
+• A SEC_SID identifier with a value of 0.
+• No SEC_SID identifer, and SEC_SID is implicitly treated as 0.
+If SMMU_S_IDR1.SECURE_IMPL == 1, incoming transactions have a StreamID, 
+and a SEC_SID identifier.
+
+Regards,
+Pierrick
 
