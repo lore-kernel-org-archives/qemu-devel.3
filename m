@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80749CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485E4CCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8xmr-00047K-Ux; Wed, 15 Oct 2025 05:27:13 -0400
+	id 1v8xov-0004r2-AL; Wed, 15 Oct 2025 05:29:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1v8xmp-00046l-RC; Wed, 15 Oct 2025 05:27:12 -0400
-Received: from mx08-0090a401.pphosted.com ([66.159.246.175])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1v8xot-0004qr-Ke
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:29:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1v8xmj-0000tv-DG; Wed, 15 Oct 2025 05:27:11 -0400
-Received: from pps.filterd (m0463075.ppops.net [127.0.0.1])
- by mx08-0090a401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 59F69Yb31694218; Wed, 15 Oct 2025 09:26:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckhoff.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=mail2022r; bh=lCfGpgWQMQf/cHREgZrXPLL5
- 89Dm7tevk+CJBBXtMkk=; b=UBSXJAcHL1lV0c0RUeSXxWYgZ8q65bHxi1bIdp5y
- HBTrpaf0afYLgHcBE0vAtQGnnLURRe8yYXk129+zCX2jP+LraH9FwN0G/DF83hQ8
- zwKpjGu+j1QfaJxktOe6yyG0IZZQJCWT10RRavaaLITkzqrAEGsoCjWBakCjgNxc
- RhzLzHJv9nyF3IT7W8y55oleX3hNAqt5EfvHWbF0FeYi4MNYjL2GeQAYtvTPi20R
- yMV+LwzhdfHTjCWC3fLB0VG5668kTKF4tqh1mOYlEPPN+YEoQyw0YfPmetkCyh6B
- ffY3ho9tK6ngXtsvTztYL6I1fPRx+ETna0ccHi85d+19Uw==
-Received: from ex14.beckhoff.com ([62.159.14.12])
- by mx08-0090a401.pphosted.com (PPS) with ESMTPS id 49t2x68qv5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Oct 2025 09:26:56 +0000 (GMT)
-Received: from ex10.beckhoff.com (172.17.2.111) by ex14.beckhoff.com
- (172.17.3.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 15 Oct
- 2025 11:26:54 +0200
-Received: from ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b]) by
- ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.2562.017; Wed, 15 Oct 2025 11:26:54 +0200
-From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
-To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-CC: "hreitz@redhat.com" <hreitz@redhat.com>, "alistair@alistair23.me"
- <alistair@alistair23.me>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "kwolf@redhat.com"
- <kwolf@redhat.com>,
- =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 00/14] hw/arm: add Beckhoff CX7200 board
-Thread-Topic: [PATCH v2 00/14] hw/arm: add Beckhoff CX7200 board
-Thread-Index: AQHcDcMp+xUfgo4QkkKp5EpDCdpuJLRj4bEAgF9M8gA=
-Date: Wed, 15 Oct 2025 09:26:54 +0000
-Message-ID: <7851b91e797bfd2b4171fe32662f2c3c26902bb7.camel@beckhoff.com>
-References: <20250815090113.141641-1-corvin.koehne@gmail.com>
- <CAFEAcA9y-0-Oe5beVObe+SZqmByRSOYkCaKM1FDjeo0jdxjjCQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA9y-0-Oe5beVObe+SZqmByRSOYkCaKM1FDjeo0jdxjjCQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.17.128.174]
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="=-Lw3VBhkrVBNiH2CrjPJQ"
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1v8xoo-00013Q-M6
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:29:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760520540;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UkoUjr5ni9hGyQHXv8EnkGG3NKfyVwQg3RCFg8iD8Zc=;
+ b=aruOnHWlz2Z+AVOqnuPqqo3wae4Tslt0nclzN5JJdiBvQhfEu/VA/Fy3YRCXCaslXfBqo1
+ 1WuyL6Z2867H4iIFtNJKI8eLZxrcO+yZM++u1ZILgCVjqxF7oEE2Y7Ty213t+2CYsRP97t
+ U9fpEYb0p3LNn+imJvTKrqpyo5ve96s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-3jmt0jf8NqmCCEgrNTwvfA-1; Wed,
+ 15 Oct 2025 05:28:57 -0400
+X-MC-Unique: 3jmt0jf8NqmCCEgrNTwvfA-1
+X-Mimecast-MFC-AGG-ID: 3jmt0jf8NqmCCEgrNTwvfA_1760520536
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 740141956080; Wed, 15 Oct 2025 09:28:56 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.3])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 07C6219560AD; Wed, 15 Oct 2025 09:28:54 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, berrange@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ devel@lists.libvirt.org (reviewer:Incompatible changes),
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] RFC: audio: deprecate HMP audio commands
+Date: Wed, 15 Oct 2025 13:28:51 +0400
+Message-ID: <20251015092851.2850617-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-ORIG-GUID: S7rIG3LOyFr7CxRKuaTybodSyrd6LKPh
-X-Proofpoint-GUID: S7rIG3LOyFr7CxRKuaTybodSyrd6LKPh
-X-Authority-Analysis: v=2.4 cv=WfABqkhX c=1 sm=1 tr=0 ts=68ef68e1 cx=c_pps
- a=ZkhbYXbYXnnsONUOWLo3Bg==:117 a=ZkhbYXbYXnnsONUOWLo3Bg==:17
- a=xqWC_Br6kY4A:10 a=ErxAllwcpegA:10 a=x6icFKpwvdMA:10 a=M51BFTxLslgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=elej7QgOwMPcv-EOkUgA:9 a=QEXdDO2ut3YA:10
- a=10j73BITz0fXYFs0uoEA:9 a=FfaGCDsud1wA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE1MDA3MiBTYWx0ZWRfX+LJ+1DumgJ25
- a91cZrWr8BdSxGTSsPtk8o1kFqvgSVaChjOeZeFJStU18PwArbU8rwFRQk5aejZTtErG8IxketF
- /sQvTK5hsBJ5fQ4ojGEdPbt2xQazZzOgDM3W8vU4Sj9bsgaoHWleawSmLumONlVXp0sjHuebzUc
- YCSaJ8SDYq92UlZ+nLMm1yQBGgznLCpanB49oDl6nEx0g7lMSifKzK168/nh7RUwM4iktLKxbhc
- 3NIVvnjIClUYNpE67Nj3kJRbJs99bZyD+DQp61Ho3FWoNKKDuEddLLS1VXME+Fq12DshsaK05z/
- odDO/VLX1bt3160x1u95J/Lv6EAEoh2kVEmCdyd0FFrJ1wElAj0OGMmoIR+su4HpvSrKoMDR8bu
- mjq2t/eQFEw+3yTWJEL7BdauahKNFg==
-Received-SPF: pass client-ip=66.159.246.175;
- envelope-from=C.Koehne@beckhoff.com; helo=mx08-0090a401.pphosted.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +87,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-Lw3VBhkrVBNiH2CrjPJQ
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On Fri, 2025-08-15 at 19:06 +0100, Peter Maydell wrote:
-> This patchset is on my list to review. As an initial request,
-> for a new board could we have a test in tests/functional/
-> please? This is basically a simple test that downloads
-> a guest image from some public stable URL, runs it on QEMU,
-> and checks for some output on the UART that indicates
-> that it succeeded. (You can do more complex things like
-> sending commands to the guest if you want/need to, but
-> "does it basically boot" is the minimum bar here.)
-> The other files in tests/functional/ should hopefully
-> serve as examples you can pattern your test on.
->=20
-> thanks
-> -- PMM
+The command is niche and better served by the host audio system.
+There is no QMP equivalent, fortunately. You can capture the audio
+stream via remote desktop protocols too (dbus, vnc, spice).
 
-At the moment, there's no image for this device publicly available. However=
-,
-we're working on it. We're going to add such a patch when there's a public
-stable URL.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ docs/about/deprecated.rst | 20 ++++++++++++++++++++
+ meson.build               |  4 ++++
+ audio/audio-hmp-cmds.c    |  7 +++++++
+ audio/meson.build         |  5 +++--
+ hmp-commands-info.hx      |  2 ++
+ hmp-commands.hx           |  2 ++
+ 6 files changed, 38 insertions(+), 2 deletions(-)
 
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 98361f5832..a357f207cf 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -169,6 +169,26 @@ Use ``job-finalize`` instead.
+ 
+ This argument has always been ignored.
+ 
++Human Machine Protocol (HMP) commands
++-------------------------------------
++
++``wavcapture`` (since 10.2)
++''''''''''''''''''''''''''''
++
++The ``wavcapture`` command is deprecated and will be removed in a future release.
++
++Use ``-audiodev wav`` or your host audio system to capture audio.
++
++``stopcapture`` (since 10.2)
++''''''''''''''''''''''''''''
++
++The ``stopcapture`` command is deprecated and will be removed in a future release.
++
++``info`` argument ``capture`` (since 10.2)
++''''''''''''''''''''''''''''''''''''''''''
++
++The ``info capture`` command is deprecated and will be removed in a future release.
++
+ Host Architectures
+ ------------------
+ 
+diff --git a/meson.build b/meson.build
+index afaefa0172..a4d8e33132 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2354,6 +2354,10 @@ endif
+ config_host_data = configuration_data()
+ 
+ config_host_data.set('CONFIG_HAVE_RUST', have_rust)
++
++# HMP code deprecated since v10.2, to be removed
++config_host_data.set('CONFIG_AUDIO_HMP', true)
++
+ audio_drivers_selected = []
+ if have_system
+   audio_drivers_available = {
+diff --git a/audio/audio-hmp-cmds.c b/audio/audio-hmp-cmds.c
+index 8774c09f18..9129a02331 100644
+--- a/audio/audio-hmp-cmds.c
++++ b/audio/audio-hmp-cmds.c
+@@ -28,6 +28,7 @@
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qobject/qdict.h"
++#include "qemu/error-report.h"
+ 
+ static QLIST_HEAD (capture_list_head, CaptureState) capture_head;
+ 
+@@ -36,6 +37,8 @@ void hmp_info_capture(Monitor *mon, const QDict *qdict)
+     int i;
+     CaptureState *s;
+ 
++    warn_report_once("'info capture' is deprecated since v10.2, to be removed");
++
+     for (s = capture_head.lh_first, i = 0; s; s = s->entries.le_next, ++i) {
+         monitor_printf(mon, "[%d]: ", i);
+         s->ops.info (s->opaque);
+@@ -48,6 +51,8 @@ void hmp_stopcapture(Monitor *mon, const QDict *qdict)
+     int n = qdict_get_int(qdict, "n");
+     CaptureState *s;
+ 
++    warn_report_once("'stopcapture' is deprecated since v10.2, to be removed");
++
+     for (s = capture_head.lh_first, i = 0; s; s = s->entries.le_next, ++i) {
+         if (i == n) {
+             s->ops.destroy (s->opaque);
+@@ -69,6 +74,8 @@ void hmp_wavcapture(Monitor *mon, const QDict *qdict)
+     Error *local_err = NULL;
+     AudioState *as = audio_state_by_name(audiodev, &local_err);
+ 
++    warn_report_once("'wavcapture' is deprecated since v10.2, to be removed");
++
+     if (!as) {
+         error_report_err(local_err);
+         return;
+diff --git a/audio/meson.build b/audio/meson.build
+index 59f0a431d5..f0c97e5223 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -1,12 +1,13 @@
+ system_ss.add([spice_headers, files('audio.c')])
+ system_ss.add(files(
+-  'audio-hmp-cmds.c',
+   'mixeng.c',
+   'noaudio.c',
+   'wavaudio.c',
+-  'wavcapture.c',
+ ))
+ 
++# deprecated since v10.2, to be removed
++system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++
+ system_ss.add(when: coreaudio, if_true: files('coreaudio.m'))
+ system_ss.add(when: dsound, if_true: files('dsoundaudio.c', 'audio_win_int.c'))
+ 
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 25b4aed51f..59f3446224 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -363,6 +363,7 @@ SRST
+     Show host USB devices.
+ ERST
+ 
++#ifdef CONFIG_AUDIO_HMP
+     {
+         .name       = "capture",
+         .args_type  = "",
+@@ -375,6 +376,7 @@ SRST
+   ``info capture``
+     Show capture information.
+ ERST
++#endif
+ 
+     {
+         .name       = "snapshots",
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 15f6082596..6d59bc8f18 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -764,6 +764,7 @@ SRST
+ 
+ ERST
+ 
++#ifdef CONFIG_AUDIO_HMP
+     {
+         .name       = "wavcapture",
+         .args_type  = "path:F,audiodev:s,freq:i?,bits:i?,nchannels:i?",
+@@ -798,6 +799,7 @@ SRST
+     info capture
+ 
+ ERST
++#endif
+ 
+     {
+         .name       = "memsave",
+-- 
+2.51.0
 
-Best regards,
-Corvin
-
---=-Lw3VBhkrVBNiH2CrjPJQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmjvaN4ACgkQ2FTaVjFe
-AmrYTw/+Lkg39YidNRblygTQ8Jiw9ezzMBIaWYe74W0n0kv+oOqaP5Y+hWgxHJnf
-9rI3p9Hdex6YlWqSlqcjY9FUJcJUjL1yLb11G3DoGsWk14pCVnNgKZg6t/6OglZQ
-c1MxO+WTKkar4Fkp2xSxbEjkoue4AjyVUCrDJWYOCkxKn4hZI+19muFOqBtpI7e7
-AJ5I/PXobOry/FILe4eavLrj6BUTz1lzCl2Dndb/6haGrf7Ic2Fg76rgV4z60yvE
-uvk+ORRfD0sHMcY26fVylElH7yHqnRXMgXQw8QOTetLG+CMxMadXEc/78592GOKO
-kfx8ubInOXD4Dya7TuWU5ayanogYL/Y9pUKN+dDGspSsQGgF3sPWkuR+rjjYQ4PA
-jL/R4Q6IcZOWN5xNQFLNGKvbp1Qe9C54uLp1k5up3/cmR5IDNf0CaBxbskz5j69X
-xyPkHOvGGpw5Y4qYTgFFc8RL41800Er/+PS2Bi+IpswxAcCCrMHpnL+8DIPucVhg
-uHK2Dak/8wFiOc3tPWJSjOWWyLhmoVhEx/Gn+Ft3daCjl0Oge17LxQvTPxVzRnw2
-7ovX/UuMYzkEKxthG42cYYBgeLTWgPN8DvruXMjvbzfYinlGxs/V97bgN7hNcu9A
-foX6M3c38GoXx6zj5bFGIR/TtkyJ2SAutip/k65LjcABleCLNIM=
-=akyR
------END PGP SIGNATURE-----
-
---=-Lw3VBhkrVBNiH2CrjPJQ--
 
