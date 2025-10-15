@@ -4,88 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4F3CCD185
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E40CCD193
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v99D6-0003c0-8r; Wed, 15 Oct 2025 17:39:04 -0400
+	id 1v99DE-0003fT-UZ; Wed, 15 Oct 2025 17:39:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v99Cx-0003Zq-Ve
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:00 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v99Cu-0004zm-7w
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:55 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2698384978dso503965ad.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:38:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760564329; x=1761169129; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SqCRsRggw+NmDtKLMVf8Mr9OjYm8BzUFUWvu2nTrVOA=;
- b=eDsOL46b69KSGgqsix4okHrwLsn9cK7m7zyFB0gJJ7Q/YAwfIXcj4caw1KP2yYG0lj
- jj4WkRGzFUpsayL//ye3bH+ICqTldl2hP9ftuNNJ9p7riDfVaPUtkbyCx1YtX0pG6hlz
- P8ZwVu+snoqaziJvuy+OKNwGGhZ0YxKweL661MyTVNve8DD7an7FfwJp7UvmK92cundJ
- O9efFuSYGdDOp234p17lfQyAUj2wTnazeLuId3Ysybp3sY0n43I5VUyWpmw/63GyN9ZI
- pJqojtpsh9k1DidRHLNlwJFHzOqlgiFgUmUSXfs1/Wu/bYiFspJTQVHkiDggDnQiMW/e
- 5xCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760564329; x=1761169129;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SqCRsRggw+NmDtKLMVf8Mr9OjYm8BzUFUWvu2nTrVOA=;
- b=nsMAIlt4K0AA1MoIi/jdXF7PFpy3qptpUVxCkm3ccnoisKgP5DTpcNy2lBDcugXBdq
- MIlIwBeDMpGx6UfStNWHz2jmjilUHMaWLftylzmv+8lCkDnDWBDL6W/2TANSChvyhZoB
- L8suyGShQBNO6WAqG1z1gg3t/43EP9h6BeTH0XGzRBu9wFt2yfphV5AjpxNg3KzpQwda
- wnYcdNlycNBeD50jAPwqaMuPf8bkxVkvKj2HRo2i0ZGV360oeGZTZU1dp5vFU+6DSPXM
- TDVpX8LSHQvuee4gUhnMd+67j4bXGZ5WJb6D/2FdX8klM63E7rCPAHcklH7De6IRyE/U
- RjUA==
-X-Gm-Message-State: AOJu0Yz4VLXfR3pRq5bud+PwoCepzOeZhbNLYV3ccDfBG6hmTnvovjpE
- qB87VtkGH3JhAkJgJ3CsbZ6p0IFa2VRQhnzCIk7Rb8Plhf9ZQc9WLuYi6ODu0/x6DP7u26OfR/g
- zhcdSbpk=
-X-Gm-Gg: ASbGncvN8wy6wTzA3toB9GrbcdNO3Zzc3bzlutof84aOVjO7WnjRGQGAH8RQeBfzSwR
- 6UE7VuFE+41Obt4DMfGfTHYBqUcm2ExM7hyneUBs3CGcLqqBdAE8JZBwZ9uCtAjqsikgqukGVKr
- vnmc9QwKk9dLJnG7+sbAO7KuS1pnsSzjxSfh8jZW1yfm6OmtMT5FNcL9sew/HMkq/dcga8o1E5Q
- bkKQ+yHqoDfLaRAicshKQERi9ptLPm/mtxgnZeNduZSmdg93PtzNM7xS8AwtZ/xwxr3Vpv+wNdC
- Qb5EJiPVCofsOw9WT5nNL/OhiAmUMpPxQEJvYcleTZVSLBexYNtpC0xrW2mkGkpuv5H14G1Smoy
- HBjgyzAgI0VZ0Nma8I71xlJnaXh3AibWCAw4sltCYU8Mg5XPoSKwlmhDzQXeo2MZiNm+tguU2cx
- ffzB3LYskwOpj8LJQUZZNb
-X-Google-Smtp-Source: AGHT+IFJrfnNEmvDmpCudCPxWh6WDb9J7WfmCY5e9aJXlOyf+eEfhE4J1W1QM0sDgpVgicvg6S6dOg==
-X-Received: by 2002:a17:903:3c2c:b0:270:b6d5:f001 with SMTP id
- d9443c01a7336-2902723faa2mr342518875ad.23.1760564329189; 
- Wed, 15 Oct 2025 14:38:49 -0700 (PDT)
-Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099a7d1bbsm6247085ad.65.2025.10.15.14.38.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 14:38:48 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v2 6/9] tcg/mips: Remove ALIAS_PADD, ALIAS_PADDI
-Date: Wed, 15 Oct 2025 14:38:40 -0700
-Message-ID: <20251015213843.14277-7-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251015213843.14277-1-richard.henderson@linaro.org>
-References: <20251015213843.14277-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v99DC-0003fC-Hc
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:10 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v99DA-00052M-5w
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:10 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C4B6D15E431;
+ Wed, 15 Oct 2025 23:20:39 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E27232A12B3;
+ Wed, 15 Oct 2025 23:20:40 +0300 (MSK)
+Message-ID: <4b289042-470e-4fa6-b287-2d5ae3a05157@tls.msk.ru>
+Date: Wed, 15 Oct 2025 23:20:40 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/7] esp.c: only allow ESP commands permitted in the
+ current asc_mode
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
+ fam@euphon.net, qemu-devel@nongnu.org
+References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
+ <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
+ <43ef15f9-1225-4416-9d04-eefc4f6eb952@tls.msk.ru>
+ <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,115 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These aliases existed to simplify code for O32 and N32.
-Now that the 64-bit abi is the only one supported, we
-can use the DADD* instructions directly.
+On 10/15/25 22:06, Mark Cave-Ayland wrote:
+..> Yeah that's an odd one. I just tested master here and it works fine 
+here
+> on Debian bookworm:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/mips/tcg-target.c.inc | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+I'm on debian trixie though, - maybe that's the reason.
 
-diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-index 8e7c0ea33f..83bf65d5ca 100644
---- a/tcg/mips/tcg-target.c.inc
-+++ b/tcg/mips/tcg-target.c.inc
-@@ -340,10 +340,6 @@ typedef enum {
-     OPC_SYNC_ACQUIRE = OPC_SYNC | 0x11 << 6,
-     OPC_SYNC_RELEASE = OPC_SYNC | 0x12 << 6,
-     OPC_SYNC_RMB     = OPC_SYNC | 0x13 << 6,
--
--    /* Aliases for convenience.  */
--    ALIAS_PADD     = sizeof(void *) == 4 ? OPC_ADDU : OPC_DADDU,
--    ALIAS_PADDI    = sizeof(void *) == 4 ? OPC_ADDIU : OPC_DADDIU,
- } MIPSInsn;
- 
- /*
-@@ -700,7 +696,7 @@ static void tcg_out_ldst(TCGContext *s, MIPSInsn opc, TCGReg data,
-     if (ofs != lo) {
-         tcg_out_movi(s, TCG_TYPE_PTR, TCG_TMP0, ofs - lo);
-         if (addr != TCG_REG_ZERO) {
--            tcg_out_opc_reg(s, ALIAS_PADD, TCG_TMP0, TCG_TMP0, addr);
-+            tcg_out_opc_reg(s, OPC_DADDU, TCG_TMP0, TCG_TMP0, addr);
-         }
-         addr = TCG_TMP0;
-     }
-@@ -1109,7 +1105,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         tcg_out_opc_reg(s, OPC_AND, TCG_TMP3, TCG_TMP3, TCG_TMP0);
- 
-         /* Add the tlb_table pointer, creating the CPUTLBEntry address.  */
--        tcg_out_opc_reg(s, ALIAS_PADD, TCG_TMP3, TCG_TMP3, TCG_TMP1);
-+        tcg_out_opc_reg(s, OPC_DADDU, TCG_TMP3, TCG_TMP3, TCG_TMP1);
- 
-         /* Load the tlb comparator.  */
-         if (addr_type == TCG_TYPE_I32) {
-@@ -1148,7 +1144,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
- 
-         /* delay slot */
-         base = TCG_TMP3;
--        tcg_out_opc_reg(s, ALIAS_PADD, base, TCG_TMP3, addr);
-+        tcg_out_opc_reg(s, OPC_DADDU, base, TCG_TMP3, addr);
-     } else {
-         if (a_mask && (use_mips32r6_instructions || a_bits != s_bits)) {
-             ldst = new_ldst_label(s);
-@@ -1177,9 +1173,9 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         }
-         if (guest_base) {
-             if (guest_base == (int16_t)guest_base) {
--                tcg_out_opc_imm(s, ALIAS_PADDI, TCG_REG_A0, base, guest_base);
-+                tcg_out_opc_imm(s, OPC_DADDIU, TCG_REG_A0, base, guest_base);
-             } else {
--                tcg_out_opc_reg(s, ALIAS_PADD, TCG_REG_A0, base,
-+                tcg_out_opc_reg(s, OPC_DADDU, TCG_REG_A0, base,
-                                 TCG_GUEST_BASE_REG);
-             }
-             base = TCG_REG_A0;
-@@ -1417,7 +1413,7 @@ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
-         } else {
-             base = TCG_REG_V0;
-             tcg_out_movi(s, TCG_TYPE_PTR, base, ofs - lo);
--            tcg_out_opc_reg(s, ALIAS_PADD, base, base, TCG_REG_TB);
-+            tcg_out_opc_reg(s, OPC_DADDU, base, base, TCG_REG_TB);
-         }
-     }
-     if (!tcg_out_opc_jmp(s, OPC_J, tb_ret_addr)) {
-@@ -1425,7 +1421,7 @@ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
-         tcg_out_opc_reg(s, OPC_JR, 0, TCG_TMP0, 0);
-     }
-     /* delay slot */
--    tcg_out_opc_imm(s, ALIAS_PADDI, TCG_REG_V0, base, lo);
-+    tcg_out_opc_imm(s, OPC_DADDIU, TCG_REG_V0, base, lo);
- }
- 
- static void tcg_out_goto_tb(TCGContext *s, int which)
-@@ -1444,7 +1440,7 @@ static void tcg_out_goto_tb(TCGContext *s, int which)
- 
-     set_jmp_reset_offset(s, which);
-     /* For the unlinked case, need to reset TCG_REG_TB. */
--    tcg_out_ldst(s, ALIAS_PADDI, TCG_REG_TB, TCG_REG_TB,
-+    tcg_out_ldst(s, OPC_DADDIU, TCG_REG_TB, TCG_REG_TB,
-                  -tcg_current_code_size(s));
- }
- 
-@@ -2366,7 +2362,7 @@ static void tcg_target_qemu_prologue(TCGContext *s)
-     tcg_set_frame(s, TCG_REG_SP, TCG_STATIC_CALL_ARGS_SIZE, TEMP_SIZE);
- 
-     /* TB prologue */
--    tcg_out_opc_imm(s, ALIAS_PADDI, TCG_REG_SP, TCG_REG_SP, -FRAME_SIZE);
-+    tcg_out_opc_imm(s, OPC_DADDIU, TCG_REG_SP, TCG_REG_SP, -FRAME_SIZE);
-     for (i = 0; i < ARRAY_SIZE(tcg_target_callee_save_regs); i++) {
-         tcg_out_st(s, TCG_TYPE_REG, tcg_target_callee_save_regs[i],
-                    TCG_REG_SP, SAVE_OFS + i * REG_SIZE);
-@@ -2409,7 +2405,7 @@ static void tcg_target_qemu_prologue(TCGContext *s)
- 
-     tcg_out_opc_reg(s, OPC_JR, 0, TCG_REG_RA, 0);
-     /* delay slot */
--    tcg_out_opc_imm(s, ALIAS_PADDI, TCG_REG_SP, TCG_REG_SP, FRAME_SIZE);
-+    tcg_out_opc_imm(s, OPC_DADDIU, TCG_REG_SP, TCG_REG_SP, FRAME_SIZE);
- 
-     if (use_mips32r2_instructions) {
-         return;
--- 
-2.43.0
+The current master is broken for me too, - everything since this
+commit.
 
+Now I wonder, as usual, how to debug such a case, - at the very
+start, I'd love to see qemu messages if any.
+
+Sigh.
+
+/mjt
 
