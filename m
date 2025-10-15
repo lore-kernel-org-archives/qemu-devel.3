@@ -4,75 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40465CCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 19:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957E4CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 19:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v96lk-0002Rq-IJ; Wed, 15 Oct 2025 15:02:40 -0400
+	id 1v96pb-0003U8-W1; Wed, 15 Oct 2025 15:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v96li-0002Rh-Fh
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 15:02:39 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1v96pa-0003Tx-Cf
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 15:06:38 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v96lV-0006GV-Db
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 15:02:37 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 77984807C5;
- Wed, 15 Oct 2025 22:02:16 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a94::1:15] (unknown
- [2a02:6bf:8080:a94::1:15])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id E2WICx1FjqM0-yp8M1y3o; Wed, 15 Oct 2025 22:02:15 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760554935;
- bh=j6YCdbeESC67nlUXEMQd8LYmxQ5l2q0KRwTFAIUNTCU=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=0Xc6M5xafB1PD3Y0lGm2tCKpDUuXNJ/xKezgD/nnxH1wDxPnlVt0WXmZP7Y9c3CrP
- lHFlQQHzWBs6q/2MhTOF9uA3yHM2OdcZYReQUmkf3QHng1DQVAByVZOosg5knEgVbk
- rCBobzT4xjACBemj/mu1G/k2ZpB7LmERv5R9RT60=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3b9f1da4-6264-45d4-ade1-a6273cc6fa1e@yandex-team.ru>
-Date: Wed, 15 Oct 2025 22:02:14 +0300
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1v96pP-0006k6-AX
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 15:06:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=alxVnQo6RTMNhUpheea8qHlmpzaD86UhzFG2F+tLOJU=; b=PvE1gUdewypYeLzHAWAb2t6laN
+ I0Ry0sO3PVBpvHwWaKx3MOj+sC0lKq6AS9pZCUfTC4tqYYPUZQDili+VVsjq/YslkEnRMiZInkCG+
+ OdCXjMdGGH4FEsUu7wzeuHvl8N6jQUIWwHC4syV1Uzkp7xeVnHzzbl1keYZr2VpraA+qCPBH/HcP7
+ V+zUBLqxmE71u/jgrTx0mVfIG7S//CsFR4P0K9NCnVJhPRpy9CkFgPlzJntKiAKGqjQ166ArMaxwS
+ XPeu1eX5EebTkpKRegZwmhQROdOB90YLy61BADYs/hcuRtYM0gN/u3TsLD8Fg0wj+5KLfFrP1BWPI
+ OKGCRHjf49qDh8eBGrRbE9ExieXYDQi4+zxGz5Ka1dKR33SP3NEgXnGxdalFoEyW21bacIqCKHLMI
+ 4LqJ9CW6sdxZ9U8+oG+bWudLO2yQaBI+Ir98jwPxLvUn8JUGPmyzaIQMkMFSdHVrYsKYb6nZTQ9lc
+ P3XEJ4W7XVX1e4lVFtk7MiTvzHJU5bJ53kj4sjFwHCug/d5R2JG1Y9PikcQ5k5aBkVgIc74UqGIij
+ QdiRCaLS3ualp0RWKhxvQe8wfVPh7Kr6MdD8YgSiErxBUEW4dKX700eZ9OKiBCaLIQHXZYjgxU8PX
+ Rlpahu85DaVG3De7eNSxGUAeNPaPo2AmRQ8Dskjy0=;
+Received: from [2a02:8012:2f01:0:fdd2:5974:452d:adcc]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1v96mv-000CRd-IS; Wed, 15 Oct 2025 20:03:57 +0100
+Message-ID: <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
+Date: Wed, 15 Oct 2025 20:06:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-To: Peter Xu <peterx@redhat.com>
-Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
- berrange@redhat.com, qemu-devel@nongnu.org, michael.roth@amd.com,
- steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
- yc-core@yandex-team.ru, raphael.s.norwitz@gmail.com
-References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
- <20251015132136.1083972-17-vsementsov@yandex-team.ru>
- <aO_ll4Lf0bq6vgdm@x1.local>
+To: Michael Tokarev <mjt@tls.msk.ru>, pbonzini@redhat.com, fam@euphon.net,
+ qemu-devel@nongnu.org
+References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
+ <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
+ <43ef15f9-1225-4416-9d04-eefc4f6eb952@tls.msk.ru>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aO_ll4Lf0bq6vgdm@x1.local>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <43ef15f9-1225-4416-9d04-eefc4f6eb952@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fdd2:5974:452d:adcc
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 7/7] esp.c: only allow ESP commands permitted in the
+ current asc_mode
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -84,117 +106,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.10.25 21:19, Peter Xu wrote:
-> On Wed, Oct 15, 2025 at 04:21:32PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> This parameter enables backend-transfer feature: all devices
->> which support it will migrate their backends (for example a TAP
->> device, by passing open file descriptor to migration channel).
+On 15/10/2025 18:31, Michael Tokarev wrote:
+
+> 11.07.2025 23:46, Mark Cave-Ayland wrote:
+>> If an ESP command is issued in an incorrect mode then an illegal command
+>> interrupt should be generated. Add a new esp_cmd_is_valid() function to
+>> indicate whether the ESP command is valid for the current mode, and if not
+>> then raise the illegal command interrupt.
 >>
->> Currently no such devices, so the new parameter is a noop.
+>> This fixes WinNT MIPS which issues ICCS after a Chip Reset which is not
+>> permitted, but will fail with an INACCESSIBLE_BOOT_DEVICE error unless an
+>> interrupt is generated.
 >>
->> Next commit will add support for virtio-net, to migrate its
->> TAP backend.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
-
-[..]
-
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -951,9 +951,16 @@
->>   #     is @cpr-exec.  The first list element is the program's filename,
->>   #     the remainder its arguments.  (Since 10.2)
->>   #
->> +# @backend-transfer: Enable backend-transfer feature for devices that
->> +#     supports it. In general that means that backend state and its
->> +#     file descriptors are passed to the destination in the migraton
->> +#     channel (which must be a UNIX socket). Individual devices
->> +#     declare the support for backend-transfer by per-device
->> +#     backend-transfer option. (Since 10.2)
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> Fixes: 83428f7a97 ("esp.c: move write_response() non-DMA logic to esp_do_nodma()")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2464
 > 
-> Thanks.
+> This is commit 6f8ce26bb00 which landed between v10.0.0 and v10.1.0,
+> and after seabios update to 1.17.0.
 > 
-> I still prefer the name "fd-passing" or anything more explicit than
-> "backend-transfer". Maybe the current name is fine for TAP, only because
-> TAP doesn't have its own VMSD to transfer?
+> This commit - bisectable - breaks qemu's cdrom test.
+>  
+> $ PYTHON=python3 QTEST_QEMU_BINARY=./qemu-system-i386 tests/qtest/cdrom-test --tap -k 
+> -p /i386/cdrom/boot/am53c974
+> TAP version 14
+> # random seed: R02S10a5ccc054a33d854e7868e868e33d3c
+> xorriso 1.5.6 : RockRidge filesystem manipulator, libburnia project.
 > 
-> Consider a device that would be a backend that supports VMSDs already to be
-> migrated, then if it starts to allow fd-passing, this name will stop being
-> suitable there, because it used to "transfer backend" already, now it's
-> just started to "fd-passing".
+> xorriso 1.5.6
+> ISO 9660 Rock Ridge filesystem manipulator and CD/DVD/BD burn program
+> Copyright (C) 2023, Thomas Schmitt <scdbackup@gmx.net>, libburnia project.
+> xorriso version   :  1.5.6
+> Version timestamp :  2023.06.07.180001
+> Build timestamp   :  -none-given-
+> libisofs   in use :  1.5.6  (min. 1.5.6)
+> libjte     in use :  2.0.0  (min. 2.0.0)
+> libburn    in use :  1.5.6  (min. 1.5.6)
+> libburn OS adapter:  internal GNU/Linux SG_IO adapter sg-linux
+> libisoburn in use :  1.5.6  (min. 1.5.6)
+> Provided under GNU GPL version 3 or later, due to libreadline license.
+> There is NO WARRANTY, to the extent permitted by law.
+> xorriso 1.5.6 : RockRidge filesystem manipulator, libburnia project.
 > 
-> Meanwhile, consider another example - what if a device is not a backend at
-> all (e.g. vfio?), has its own VMSD, then want to do fd-passing?
-
-Reasonable.
-
-But consider also the discussion with Fabiano in v5, where he argues against fds
-(reasonable too):
-
-https://lore.kernel.org/qemu-devel/87y0qatqoa.fsf@suse.de/
-
-(still, they were against my "fds" name for the parameter, which is
-really too generic, fd-passing is not)
-
-and the arguments for backend-transfer (to read similar with cpr-transfer)
-
-https://lore.kernel.org/qemu-devel/87ms6qtlgf.fsf@suse.de/
-
-
+> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1823149.sock -qtest- 
+> log /dev/null -chardev socket,path=/tmp/qtest-1823149.qmp,id=char0 -mon 
+> chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1823149.sock -qtest- 
+> log /dev/null -chardev socket,path=/tmp/qtest-1823149.qmp,id=char0 -mon 
+> chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+> # Start of i386 tests
+> # Start of cdrom tests
+> # Start of boot tests
+> # starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1823149.sock -qtest- 
+> log /dev/null -chardev socket,path=/tmp/qtest-1823149.qmp,id=char0 -mon 
+> chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -no- 
+> shutdown -device am53c974 -device scsi-cd,drive=cd1 -drive 
+> if=none,id=cd1,format=raw,file=cdrom-boot-iso-b5O01H -accel qtest
 > 
-> In general, I think "fd" is really a core concept of this whole thing.
-
-I think, we can call "backend" any external object, linked by the fd.
-
-Still, backend/frontend terminology is so misleading, when applied to
-complex systems (for me, at least), that I don't really like "-backend"
-word here.
-
-fd-passing is OK for me, I can resend with it, if arguments by Fabiano
-not change your mind.
-
->  One
-> thing to complement that idea is, IMHO this patch misses one important
-> change, that migration framework should actually explicitly fail the
-> migration if this feature is enabled but it's not a unix socket protocol
-> (aka, fd-passing REQUIRES scm rights).  Would that look more reliable?
-> Otherwise IIUC it'll throw weird errors when e.g. when we enabled this
-> feature and trying to migrate via either TCP or to a file..
+> [long pause - I guess qemu binary just times out after a few minutes]
 > 
+> ERROR:../../build/qemu/10.1/tests/qtest/boot-sector.c:173:boot_sector_test: assertion 
+> failed (signature == SIGNATURE): (0x00000000 == 0x0000dead)
+> 
+> 
+> Mark, it looks you were right on IRC - this is one of your ESP changes :)
+> 
+> But I also wonder why we haven't noticed this in the CI on gitlab.  I only
+> come across it on my local system when I installed xorriso for an unrelated
+> reason, and this test started to fail - I thought it's my staging-10.1
+> regression :)
 
-Right. I rely on checking in qemu_file_get_fd() / qemu_file_set_fd()
-handlers.
-
-But of course, earlier clean failure of qmp-migrate / qmp-incoming-migate
-commands would be nice, will do.
-
-Like this, I think:
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 6ed6a10f57..0c73332706 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -255,6 +255,14 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
-          return false;
-      }
-
-+    if (migrate_backend_transfer() &&
-+        !(addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
-+          addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX)) {
-+        error_setg(errp, "Migration requires a UNIX domain socket as transport, "
-+                   "because backend-transfer is enabled");
-+        return false;
-+    }
-+
-      return true;
-  }
+Yeah that's an odd one. I just tested master here and it works fine here on Debian 
+bookworm:
 
 
+$ PYTHON=python3 QTEST_QEMU_BINARY=./qemu-system-i386 tests/qtest/cdrom-test --tap -k 
+-p /i386/cdrom/boot/am53c974
+# random seed: R02Sa8c7bf5b1a18b3b0358cc0699bb45534
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+xorriso 1.5.4
+ISO 9660 Rock Ridge filesystem manipulator and CD/DVD/BD burn program
+Copyright (C) 2019, Thomas Schmitt <scdbackup@gmx.net>, libburnia project.
+xorriso version   :  1.5.4
+Version timestamp :  2021.01.30.150001
+Build timestamp   :  -none-given-
+libisofs   in use :  1.5.4  (min. 1.5.4)
+libjte     in use :  2.0.0  (min. 2.0.0)
+libburn    in use :  1.5.4  (min. 1.5.4)
+libburn OS adapter:  internal GNU/Linux SG_IO adapter sg-linux
+libisoburn in use :  1.5.4  (min. 1.5.4)
+Provided under GNU GPL version 3 or later, due to libreadline license.
+There is NO WARRANTY, to the extent permitted by law.
+xorriso 1.5.4 : RockRidge filesystem manipulator, libburnia project.
+
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1253673.sock 
+-qtest-log /dev/null -chardev socket,path=/tmp/qtest-1253673.qmp,id=char0 -mon 
+chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1253673.sock 
+-qtest-log /dev/null -chardev socket,path=/tmp/qtest-1253673.qmp,id=char0 -mon 
+chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+# Start of i386 tests
+# Start of cdrom tests
+# Start of boot tests
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-1253673.sock 
+-qtest-log /dev/null -chardev socket,path=/tmp/qtest-1253673.qmp,id=char0 -mon 
+chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg 
+-no-shutdown -device am53c974 -device scsi-cd,drive=cd1 -drive 
+if=none,id=cd1,format=raw,file=cdrom-boot-iso-gLvZnQ -accel qtest
+ok 1 /i386/cdrom/boot/am53c974
+# End of boot tests
+# End of cdrom tests
+# End of i386 tests
+1..1
 
 
+Could it be related to the newer xorriso version? And are you sure there isn't an 
+older copy of SeaBIOS lying around somewhere that is getting picked up by accident?
 
--- 
-Best regards,
-Vladimir
+
+ATB,
+
+Mark.
+
 
