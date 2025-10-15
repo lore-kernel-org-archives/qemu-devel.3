@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240E2CCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD192CCD19E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v99D9-0003dS-TW; Wed, 15 Oct 2025 17:39:07 -0400
+	id 1v99D4-0003bc-Mq; Wed, 15 Oct 2025 17:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v99Cx-0003Zm-AT
+ id 1v99Cx-0003Zo-Uq
  for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:57 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v99Ct-0004zs-Ml
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:54 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b67ae7e76abso3343304a12.3
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:38:51 -0700 (PDT)
+ id 1v99Cp-0004z4-B3
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:55 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b49c1c130c9so6147a12.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:38:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760564330; x=1761169130; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sQaFJc14vdCg9lLKVjU9tvZ4qhRkPGO331YqH3E6/aI=;
- b=L3FqGkJSrdC+EYy7cETUa+q6vf7EPNobnZW5Zv1pZBDffY8/MY0Z6EeYlwaDvB+Cka
- wlBmiEBAdUmePgz8NbPujPytVb0zyUzDGlvg636+GixzSpApsLv6veGbll419yv/PwXd
- h3XN+wgS8PIQCNLj9hiwa6YxuFWBQsu/RIL1Ok5e0w0RS9VKhmgcht7CiER4n7iB1mUu
- +V0kLlprJUJFNgd5hdzLMhYS3jd3wiYHCUT9XSZUDcuSKJUAEtT2TqysbQ5LjgD7ScCM
- Q0G4q4HDzuaDpBo494TRtAezW+gxjmhiBTcYJ753J7crX+PdS18tCdnMbJ8vMpmez2AZ
- VAHg==
+ d=linaro.org; s=google; t=1760564324; x=1761169124; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bdcGU3hi9Z5/EbuaY8U3gbHHOmLLTJarEwS9cmQnv8o=;
+ b=pqAKfLd6Pk5kuVqGrvs5XLprPgLsG0kuuSxUcNo6ZOMD7sougU4Hh875PcDsGltpZa
+ n+rkh/yBUXGRB5qtWNZIQOoEWem2DXNzzbh4y+4tMI4DGLwO+Q5R/GgH5br+EB86wlWL
+ +MOQD32/qYXOaxCYZk7tMBW6RXIWTj96PjBAnmmZyV4qfHOtPEm5Gg7dYJ50hlej3a1R
+ aBjdrZOA7q1eVzSye4V6e869yxNFT7XeiyeQbS6FNV7cyh7cp61vEBEw0t71Kt4+jPVt
+ HxTWqYeJmRXvpHZFUOXzo3vDwi+/RuDCL5YpO17sV59I6gQyqELH2JtMa7MlepvySFRF
+ Xndw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760564330; x=1761169130;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sQaFJc14vdCg9lLKVjU9tvZ4qhRkPGO331YqH3E6/aI=;
- b=iclopnmqqynEyPkqOvMlZp5KZOn5RcGJjGiaVbvSIDWDNLpGfysVqT4MdFPbfsrG+i
- feuRHfj6xcwvMvZ/VnHOK5iF44GLmoloGkj3zo4+JmV/oL5v86Dg/wCAO9CQATuMesBV
- h/C7gEVQ/4s1gtW4RJCd1mAZ9e4mfyhw7411WCYBj0eW9lcEPRnDlCFmg8zbVuZiKd3+
- 9Fu4mQ0Wcj6+mA6sKWJqRnQ7F7c67rqKv1/B72f10qvRT1HQU4/K1DmWRiM/9NFzGfTt
- +6aPtI8jDH0UB79JGs9ktq0rVQZrYHoaCElK9DqlgEKalq/1USaHrRakV9agBZa4XE5v
- fIBA==
-X-Gm-Message-State: AOJu0YxD7CcUiQOeIDgzhDOL/iYjEKhBYlYGg5SZ5A60/sbcnRvF7jVA
- aP3HSsHlADdn6BByOHI6kEmej9tw10Y+1BfcitClF5dOjqBmkmZAzDjuSXwM0nVyy9hvaso23xx
- 4bD3iIVM=
-X-Gm-Gg: ASbGncs7USuTGBQyZg8dyHntkXEnwGtO+/WMntuJz1w8eRIX+RzQQRubVzrCYNwqI6x
- +XCOLX/db5XcdQucAQLyuM7CD4bgnXKAcUsPfJ+xVAIrzqx6kmLQrXBNPie0k6fNJADUwZDyb5w
- c/LkXBJxKRfw3S+PMQqvNe8uW+H7V9LAO9HnAI/zsj5W/M8hMWv/22/g6qE28clUIkPLseAt0p8
- 5LITABGHjR41cjbCIl2lUC9Eh4eLZMv7YLZHHeYgVmtbX9sxopb1iLTY4lMZxhXDfT8JukdGc6h
- 45vGt+Ms50tTA/Todusznwpmw08tEtWasLL9+2RTu46DFKiVr1mSRIb41p4hVJI3kfenpc6Y9f8
- ZTPsVFsJrps3+4h2h0YtqcAm05DbyomYnNS/KGWyXqGMVuBrMiP5U0JXTWW86Rwejx+ZnskhZ8k
- b+LH3y9jTwRNyzqL0qD4PR
-X-Google-Smtp-Source: AGHT+IHH4Sq/vLsJW08Xc40kh43ognt5jxLeVfsZu40MX2xV7DlLtfynGxRgfFulaJIs85p/h8/v2Q==
-X-Received: by 2002:a17:903:2305:b0:24f:8286:9e5d with SMTP id
- d9443c01a7336-290272cf65dmr440428105ad.26.1760564329997; 
- Wed, 15 Oct 2025 14:38:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760564324; x=1761169124;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bdcGU3hi9Z5/EbuaY8U3gbHHOmLLTJarEwS9cmQnv8o=;
+ b=ivFv3my0oqV7hsiQyhQYv3y9t+LWZzHpJNlVzJK/Zylr+j/LJtlbds1aA8UPMCJZee
+ WlThZ16vXzfMkHrZPRjoq/np+DWJVLHxKma2T8i1P8qnEQQtyFOpKudcxxKld5HEUetg
+ gDTLr+/qO7XAxFerfspUVdGaRQJRqsAzse6mdPmqhA2mUXQggO/XwyV7vO9cMoVCsFKQ
+ H26kKBD5wyz0EvMrrMx5KAjmomaYRovMJ5v54atDIxLDBQGTlNpA0PTgE606tu8AdFyN
+ XW7xQiYDcX3nvgKBVumSbjM3JnVGmDOBWbD0+G+nXvWqCLueMJ7Eh/XkgZ2ZGwHpGguQ
+ IE8A==
+X-Gm-Message-State: AOJu0YyDCOaMAXWk2Cr4aCRGjvM22cYNaHwXn0xFcvupwZ4BtYOudS+q
+ pvTFZYgUewsdGrBggBDzBAp3Nc0L2KLhFanQbcb+ygR+Ch2pviKupYqjwMsiJgFJCQHrV9cPDLI
+ yB6Yoah0=
+X-Gm-Gg: ASbGnct+HmewFr+HxpUtnjVxhT5RQUU2giYvPAP8aoBgIqQcFErarMUXYNePCL3AGNu
+ WCs+BodlsW9hXFUAW3CmxQprW1CM5LZoGWL7wVEva6HdIz470psvmH/ZKhWxFNa1OyA9RxpewbF
+ nDB32fvwdB3y3mVJ5R8eUMRw0j1kCJcJAJ9j1J+mioFuUYejXSg7f0BKZqNgo1Ux2RWPEY1Dblv
+ 6ZdosrsIChXcH2fQujW7sIUqRYvCR1wCEWRtX58OdnDVoT5PhNZOfAAT6QNE7qp9klrLzFkFPTl
+ 2dvT7MppzRxEnn62464wzFEDNgwILe+omYINdyWtuQmUDlDy2WhUHa/rhChgAja1Mh+AdphT4XR
+ c3efIu4zamS07l+Qqz8RsA2WPFoTD/A08+7FW8B1ceoLrX4B9pqFVqLvSbwqLl8pvRM1W1Z+p8p
+ XBXkakR9C4bcPcIEhR4VNalsq1RxyFBY0=
+X-Google-Smtp-Source: AGHT+IF0yIjg57nYOqdO3Pwx7N7KNFJA98ENzdWhxXyJ09CqAO/5yKlb0vSYveuSqjsCHLRS6mqGjg==
+X-Received: by 2002:a17:902:e883:b0:271:fead:9930 with SMTP id
+ d9443c01a7336-290272f835amr439845755ad.59.1760564324336; 
+ Wed, 15 Oct 2025 14:38:44 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099a7d1bbsm6247085ad.65.2025.10.15.14.38.49
+ d9443c01a7336-29099a7d1bbsm6247085ad.65.2025.10.15.14.38.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 14:38:49 -0700 (PDT)
+ Wed, 15 Oct 2025 14:38:44 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v2 7/9] buildsys: Remove support for 32-bit PPC hosts
-Date: Wed, 15 Oct 2025 14:38:41 -0700
-Message-ID: <20251015213843.14277-8-richard.henderson@linaro.org>
+Subject: [PATCH v2 0/9] tcg: Remove support for 32-bit mips/ppc hosts
+Date: Wed, 15 Oct 2025 14:38:34 -0700
+Message-ID: <20251015213843.14277-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251015213843.14277-1-richard.henderson@linaro.org>
-References: <20251015213843.14277-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,141 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+While all 32-bit hosts are deprecated, I have been unable to test
+either of these hosts for quite some time.  Let's remove them first.
 
-Stop detecting 32-bit PPC host as supported.
-See previous commit for rationale.
+Changes for v2:
+ - I'm going to leave Phil's docker changes to Alex, since there was
+   some issue with build images vs cross-testing images.
+ - There was a error in the v1 ppc configure update, a 'fi' not
+   removed with its corresponding 'if'.  There
+ - Additional cleanups for both mips and ppc64.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[rth: Retain _ARCH_PPC64 check in udiv_qrnnd]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251014173900.87497-4-philmd@linaro.org>
----
- include/qemu/timer.h | 13 +------------
- disas/disas-host.c   |  4 +---
- util/cacheflush.c    |  4 ++--
- configure            | 19 +++++--------------
- 4 files changed, 9 insertions(+), 31 deletions(-)
+I've tested the result on ppc64le (cfarm120) and ppc64 (cfarm121),
+but have only done a cross-build for mips64el.
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index aec730ac25..406d741120 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -850,12 +850,11 @@ static inline int64_t get_clock(void)
- /*******************************************/
- /* host CPU ticks (if available) */
- 
--#if defined(_ARCH_PPC)
-+#if defined(_ARCH_PPC64)
- 
- static inline int64_t cpu_get_host_ticks(void)
- {
-     int64_t retval;
--#ifdef _ARCH_PPC64
-     /* This reads timebase in one 64bit go and includes Cell workaround from:
-        http://ozlabs.org/pipermail/linuxppc-dev/2006-October/027052.html
-     */
-@@ -863,16 +862,6 @@ static inline int64_t cpu_get_host_ticks(void)
-                           "cmpwi   %0,0\n\t"
-                           "beq-    $-8"
-                           : "=r" (retval));
--#else
--    /* http://ozlabs.org/pipermail/linuxppc-dev/1999-October/003889.html */
--    unsigned long junk;
--    __asm__ __volatile__ ("mfspr   %1,269\n\t"  /* mftbu */
--                          "mfspr   %L0,268\n\t" /* mftb */
--                          "mfspr   %0,269\n\t"  /* mftbu */
--                          "cmpw    %0,%1\n\t"
--                          "bne     $-16"
--                          : "=r" (retval), "=r" (junk));
--#endif
-     return retval;
- }
- 
-diff --git a/disas/disas-host.c b/disas/disas-host.c
-index 8146fafe80..4b06f41fa6 100644
---- a/disas/disas-host.c
-+++ b/disas/disas-host.c
-@@ -56,11 +56,9 @@ static void initialize_debug_host(CPUDebug *s)
-     s->info.cap_mode = CS_MODE_64;
-     s->info.cap_insn_unit = 1;
-     s->info.cap_insn_split = 8;
--#elif defined(_ARCH_PPC)
-+#elif defined(_ARCH_PPC64)
-     s->info.cap_arch = CS_ARCH_PPC;
--# ifdef _ARCH_PPC64
-     s->info.cap_mode = CS_MODE_64;
--# endif
- #elif defined(__riscv)
- #if defined(_ILP32) || (__riscv_xlen == 32)
-     s->info.print_insn = print_insn_riscv32;
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index 17c58918de..69c9614e2c 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -153,7 +153,7 @@ static void arch_cache_info(int *isize, int *dsize)
-     }
- }
- 
--#elif defined(_ARCH_PPC) && defined(__linux__)
-+#elif defined(_ARCH_PPC64) && defined(__linux__)
- # include "elf.h"
- 
- static void arch_cache_info(int *isize, int *dsize)
-@@ -187,7 +187,7 @@ static void fallback_cache_info(int *isize, int *dsize)
-     } else if (*dsize) {
-         *isize = *dsize;
-     } else {
--#if defined(_ARCH_PPC)
-+#if defined(_ARCH_PPC64)
-         /*
-          * For PPC, we're going to use the cache sizes computed for
-          * flush_idcache_range.  Which means that we must use the
-diff --git a/configure b/configure
-index 8263f81370..a2f66f7ff9 100755
---- a/configure
-+++ b/configure
-@@ -391,15 +391,11 @@ elif check_define __sparc__ ; then
-   else
-     cpu="sparc"
-   fi
--elif check_define _ARCH_PPC ; then
--  if check_define _ARCH_PPC64 ; then
--    if check_define _LITTLE_ENDIAN ; then
--      cpu="ppc64le"
--    else
--      cpu="ppc64"
--    fi
-+elif check_define _ARCH_PPC64 ; then
-+  if check_define _LITTLE_ENDIAN ; then
-+    cpu="ppc64le"
-   else
--    cpu="ppc"
-+    cpu="ppc64"
-   fi
- elif check_define __mips__ ; then
-   if check_define __mips64 ; then
-@@ -472,11 +468,6 @@ case "$cpu" in
-     linux_arch=mips
-     ;;
- 
--  ppc)
--    host_arch=ppc
--    linux_arch=powerpc
--    CPU_CFLAGS="-m32"
--    ;;
-   ppc64)
-     host_arch=ppc64
-     linux_arch=powerpc
-@@ -1471,7 +1462,7 @@ probe_target_compiler() {
-         container_image=debian-all-test-cross
-         container_cross_prefix=mips64-linux-gnuabi64-
-         ;;
--      ppc|ppc64|ppc64le)
-+      ppc64|ppc64le)
-         container_image=debian-all-test-cross
-         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
-         ;;
+
+r~
+
+
+Philippe Mathieu-Daudé (7):
+  gitlab: Stop cross-testing for 32-bit MIPS hosts
+  buildsys: Remove support for 32-bit MIPS hosts
+  kvm/mips: Remove support for 32-bit hosts
+  tcg/mips: Remove support for O32 and N32 ABIs
+  tcg/mips: Remove support for 32-bit hosts
+  buildsys: Remove support for 32-bit PPC hosts
+  tcg/ppc: Remove support for 32-bit hosts
+
+Richard Henderson (2):
+  tcg/mips: Remove ALIAS_PADD, ALIAS_PADDI
+  tcg/ppc: Remove dead cases from tcg_target_op_def
+
+ include/qemu/timer.h                     |  13 +-
+ tcg/mips/tcg-target-has.h                |   2 -
+ tcg/mips/tcg-target-reg-bits.h           |   8 +-
+ tcg/ppc/tcg-target-has.h                 |   5 +-
+ tcg/ppc/tcg-target-reg-bits.h            |   8 +-
+ disas/disas-host.c                       |   4 +-
+ util/cacheflush.c                        |   4 +-
+ .gitlab-ci.d/container-cross.yml         |   6 -
+ .gitlab-ci.d/crossbuilds.yml             |  14 -
+ common-user/host/mips/safe-syscall.inc.S |  35 --
+ configure                                |  26 +-
+ docs/about/deprecated.rst                |  13 +-
+ docs/about/removed-features.rst          |   6 +
+ meson.build                              |   2 -
+ tcg/mips/tcg-target.c.inc                | 319 +++---------------
+ tcg/ppc/tcg-target.c.inc                 | 391 +++++------------------
+ 16 files changed, 152 insertions(+), 704 deletions(-)
+
 -- 
 2.43.0
 
