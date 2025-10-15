@@ -4,43 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC86CCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EBE9CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v91nn-0005Y3-2w; Wed, 15 Oct 2025 09:44:27 -0400
+	id 1v91oi-00064A-0X; Wed, 15 Oct 2025 09:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1v91ni-0005XM-IO; Wed, 15 Oct 2025 09:44:23 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v91of-00063D-AS
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:45:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1v91nY-0006Qp-Vf; Wed, 15 Oct 2025 09:44:22 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 171876883A;
- Wed, 15 Oct 2025 15:43:57 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, fam@euphon.net, mst@redhat.com, stefanha@redhat.com,
- kwolf@redhat.com, qemu-stable@nongnu.org
-Subject: [RFC] hw/scsi: avoid deadlock upon TMF request canceling with VirtIO
-Date: Wed, 15 Oct 2025 15:43:50 +0200
-Message-ID: <20251015134351.380079-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v91oX-0006di-P9
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:45:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760535903;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AfEg9f/M7xhPzBnPoZ+Qu+woTl+bR2KSvRnz5/UyM54=;
+ b=gEWvNu3jFYExKNoZmZShIEJwqzbb7CwchNOUE3ZQyRAldJ4W7auck4giirJQjT9cMUYp6x
+ 8G7Hmp4SMwIcdVNsjXVQcLbkR2qSKk7MS2CsOvIMYmaYYT20JL5YAjV+S04UNdopM4ZJEn
+ lYMdj1ZFz5meIkSiZPWCUD9+NnzCICI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-rYlfFWmGPIKMlCbb4iBTiQ-1; Wed,
+ 15 Oct 2025 09:44:59 -0400
+X-MC-Unique: rYlfFWmGPIKMlCbb4iBTiQ-1
+X-Mimecast-MFC-AGG-ID: rYlfFWmGPIKMlCbb4iBTiQ_1760535898
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AA501800BC0; Wed, 15 Oct 2025 13:44:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEDCA19560AD; Wed, 15 Oct 2025 13:44:55 +0000 (UTC)
+Date: Wed, 15 Oct 2025 14:44:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH 2/4] tests: rearrange suites for I/O tests
+Message-ID: <aO-lVDVKWEVMeasR@redhat.com>
+References: <20251008113552.747002-1-berrange@redhat.com>
+ <20251008113552.747002-3-berrange@redhat.com>
+ <aO4JSRfDAn6Jq7Hn@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1760535833555
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+In-Reply-To: <aO4JSRfDAn6Jq7Hn@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -53,221 +90,133 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When scsi_req_dequeue() is reached via
-scsi_req_cancel_async()
-virtio_scsi_tmf_cancel_req()
-virtio_scsi_do_tmf_aio_context(),
-there is a deadlock when trying to acquire the SCSI device's requests
-lock, because it was already acquired in
-virtio_scsi_do_tmf_aio_context().
+On Tue, Oct 14, 2025 at 10:26:49AM +0200, Kevin Wolf wrote:
+> Am 08.10.2025 um 13:35 hat Daniel P. Berrangé geschrieben:
+> > Currently there are 5 block formats, each classified as either quick,
+> > slow or thorough. This classification then determines what tests we
+> > add to meson suites. The suites are as follows
+> > 
+> >   * block
+> > 
+> >     => tests listed by 'check -g auto -n' for 'quick' formats
+> > 
+> >   * slow, block-slow
+> > 
+> >     => tests listed by 'check -n' for 'slow' formats or 'check -g auto -n'
+> >        for 'quick' formats
+> > 
+> >   * thorough, block-thorough
+> > 
+> >     => tests listed by 'check -n' for 'thorough' formats
+> > 
+> > The pairs of suites 'slow' / 'block-slow' and 'thorough' / 'block-thorough'
+> > match in terms of what tests are enabled. The only difference is whether
+> > non-block related tests are also in the suite.
+> > 
+> > There are two problems with this
+> > 
+> >  * If a format is classified as 'quick', we don't expose any
+> >    meson suite for running *all* tests, only the 'auto' tests.
+> > 
+> >    eg there is no suite to run all qcow2 tests, only 'quick'
+> >    tests can be run via meson, even if using 'SPEED=slow' we
+> >    still filter to only 'auto' tests.
+> > 
+> >  * There is no suite that allows running all tests for a given
+> >    format.
+> > 
+> >    eg there is no suite to run only 'raw' tests - you can only
+> >    use 'block-slow' which runs both raw and "auto" qcow2 tests.
+> > 
+> >    eg there is no suite to run only 'vpc' tests - you can only
+> >    use 'block-thorough' which runs qed, vmdk & vpc tests.
+> > 
+> > This patch suggests that 'block-slow' and 'block-thorough' are
+> > not actually compelling use cases, and should be dropped. ie it
+> > is not expected that people need to run all VPC, VMDK and QED
+> > tests at the same time. Instead a more useful feature is the
+> > ability to run all tests for a given format. Further the 'auto'
+> > filtering should only apply in the default 'block' target/suite.
+> > 
+> > IOW, with this patch we get the follows meson suites:
+> > 
+> >  * 'block' - 'auto' tests for any format listed as 'quick'
+> >              Currently just qcow2 'auto' tests
+> >  * 'block-$FORMAT' - ALL tests for the given $FORMAT, for each
+> >                      of qcow2, raw, qed, vmdk & vpc
+> >  * 'slow' - ALL tests for formats tagged with 'quick' or 'slow'
+> >  * 'thorough' - ALL tests formats tagged with 'thorough'
+> > 
+> > This corresponds to the following make targets.
+> > 
+> >  * 'make check-block'
+> > 
+> >     => runs only 'auto' qcow2 tests  (unchanged)
+> > 
+> >  * 'make check-block SPEED=thorough'
+> > 
+> >     => runs all 'qed', 'vmdk', 'vpc' tests (unchanged)
+> 
+> Also all qcow2 and raw tests, right?
 
-In particular, the issue happens with a FreeBSD guest (13, 14, 15,
-maybe more), when it cancels SCSI requests, because of timeout.
+Sigh, I made a mistake here, this should read:
+ 
+  * 'make check' / 'make check-block'
+ 
+     => runs only 'auto' qcow2 tests  (unchanged)
 
-This is a regression caused by commit da6eebb33b ("virtio-scsi:
-perform TMFs in appropriate AioContexts") and the introduction of the
-requests_lock earlier.
+The 'make check-block SPEED=thorough/slow' feature was removed
+on the basis that running all targets at once is not that
+useful, instead the 'check-block-$FORMAT' targets are
+replacing it. IOW the meson 'block-slow' and 'block-through'
+suites are gone.
 
-Keep track of whether the device's requests lock is already being held
-and do not re-acquire it in scsi_req_dequeue() to fix the issue. Since
-scsi_req_dequeue() removes entries from the queue, it's necessary to
-switch to the safe variant when iterating in
-virtio_scsi_do_tmf_aio_context().
 
-Originally reported by Proxmox VE users:
-https://bugzilla.proxmox.com/show_bug.cgi?id=6810
-https://forum.proxmox.com/threads/173914/
 
-Fixes: da6eebb33b ("virtio-scsi: perform TMFs in appropriate AioContexts")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
+> 
+> Quotes are a bit inconsistent here in the commit message. Sometimes
+> you use quotes for format names like here, but in other places you use
+> quotes for 'auto' and leave format names without quotes.
+> 
+> >  * 'make check-block SPEED=slow'
+> > 
+> >     => runs all 'raw' tests (unchanged)
+> >     => runs all 'qcow2' tests (previously was only 'auto' tests)
+> > 
+> >  * 'make check-block-qcow2'
+> > 
+> >      => runs all qcow2 tests (new feature)
+> > 
+> >  * 'make check-block-raw'
+> > 
+> >      => runs all raw tests (new feature)
+> > 
+> >  * 'make check-block-vpc'
+> > 
+> >      => runs all vpc tests (new feature)
+> > 
+> >  * 'make check-block-qed'
+> > 
+> >      => runs all qed tests (new feature)
+> > 
+> >  * 'make check-block-vmdk'
+> > 
+> >      => runs all vmdk tests (new feature)
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  tests/qemu-iotests/meson.build | 48 ++++++++++++++++++++++++++--------
+> >  1 file changed, 37 insertions(+), 11 deletions(-)
 
-RFC, because it's a naive approach, maybe somebody has a better idea?
-
- hw/scsi/mptsas.c       |  4 ++--
- hw/scsi/scsi-bus.c     | 25 +++++++++++++++----------
- hw/scsi/virtio-scsi.c  |  8 ++++++--
- include/hw/scsi/scsi.h |  3 ++-
- 4 files changed, 25 insertions(+), 15 deletions(-)
-
-diff --git a/hw/scsi/mptsas.c b/hw/scsi/mptsas.c
-index 4ada35b7ec..30d773235c 100644
---- a/hw/scsi/mptsas.c
-+++ b/hw/scsi/mptsas.c
-@@ -466,7 +466,7 @@ static void mptsas_process_scsi_task_mgmt(MPTSASState *s, MPIMsgSCSITaskMgmt *re
-                 notifier->s = s;
-                 notifier->reply = reply_async;
-                 notifier->notifier.notify = mptsas_cancel_notify;
--                scsi_req_cancel_async(r, &notifier->notifier);
-+                scsi_req_cancel_async(r, &notifier->notifier, false);
-                 goto reply_maybe_async;
-             }
-         }
-@@ -498,7 +498,7 @@ static void mptsas_process_scsi_task_mgmt(MPTSASState *s, MPIMsgSCSITaskMgmt *re
-                 notifier->s = s;
-                 notifier->reply = reply_async;
-                 notifier->notifier.notify = mptsas_cancel_notify;
--                scsi_req_cancel_async(r, &notifier->notifier);
-+                scsi_req_cancel_async(r, &notifier->notifier, false);
-             }
-         }
- 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 9b12ee7f1c..827b85a68f 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -19,7 +19,7 @@
- 
- static char *scsibus_get_dev_path(DeviceState *dev);
- static char *scsibus_get_fw_dev_path(DeviceState *dev);
--static void scsi_req_dequeue(SCSIRequest *req);
-+static void scsi_req_dequeue(SCSIRequest *req, bool holds_requests_lock);
- static uint8_t *scsi_target_alloc_buf(SCSIRequest *req, size_t len);
- static void scsi_target_free_buf(SCSIRequest *req);
- static void scsi_clear_reported_luns_changed(SCSIRequest *req);
-@@ -290,7 +290,7 @@ static void scsi_dma_restart_req(SCSIRequest *req, void *opaque)
-                 scsi_req_continue(req);
-                 break;
-             case SCSI_XFER_NONE:
--                scsi_req_dequeue(req);
-+                scsi_req_dequeue(req, false);
-                 scsi_req_enqueue(req);
-                 break;
-         }
-@@ -1029,13 +1029,17 @@ int32_t scsi_req_enqueue(SCSIRequest *req)
-     return rc;
- }
- 
--static void scsi_req_dequeue(SCSIRequest *req)
-+static void scsi_req_dequeue(SCSIRequest *req, bool holds_requests_lock)
- {
-     trace_scsi_req_dequeue(req->dev->id, req->lun, req->tag);
-     req->retry = false;
-     if (req->enqueued) {
--        WITH_QEMU_LOCK_GUARD(&req->dev->requests_lock) {
-+        if (holds_requests_lock) {
-             QTAILQ_REMOVE(&req->dev->requests, req, next);
-+        } else {
-+            WITH_QEMU_LOCK_GUARD(&req->dev->requests_lock) {
-+                QTAILQ_REMOVE(&req->dev->requests, req, next);
-+            }
-         }
-         req->enqueued = false;
-         scsi_req_unref(req);
-@@ -1618,7 +1622,7 @@ void scsi_req_complete_failed(SCSIRequest *req, int host_status)
- 
-     req->host_status = host_status;
-     scsi_req_ref(req);
--    scsi_req_dequeue(req);
-+    scsi_req_dequeue(req, false);
-     req->bus->info->fail(req);
- 
-     /* Cancelled requests might end up being completed instead of cancelled */
-@@ -1647,7 +1651,7 @@ void scsi_req_complete(SCSIRequest *req, int status)
-     }
- 
-     scsi_req_ref(req);
--    scsi_req_dequeue(req);
-+    scsi_req_dequeue(req, false);
-     req->bus->info->complete(req, req->residual);
- 
-     /* Cancelled requests might end up being completed instead of cancelled */
-@@ -1670,7 +1674,8 @@ void scsi_req_cancel_complete(SCSIRequest *req)
-  * notifier list, the bus will be notified the requests cancellation is
-  * completed.
-  * */
--void scsi_req_cancel_async(SCSIRequest *req, Notifier *notifier)
-+void scsi_req_cancel_async(SCSIRequest *req, Notifier *notifier,
-+                           bool holds_requests_lock)
- {
-     trace_scsi_req_cancel(req->dev->id, req->lun, req->tag);
-     if (notifier) {
-@@ -1686,7 +1691,7 @@ void scsi_req_cancel_async(SCSIRequest *req, Notifier *notifier)
-     }
-     /* Dropped in scsi_req_cancel_complete.  */
-     scsi_req_ref(req);
--    scsi_req_dequeue(req);
-+    scsi_req_dequeue(req, holds_requests_lock);
-     req->io_canceled = true;
-     if (req->aiocb) {
-         blk_aio_cancel_async(req->aiocb);
-@@ -1704,7 +1709,7 @@ void scsi_req_cancel(SCSIRequest *req)
-     assert(!req->io_canceled);
-     /* Dropped in scsi_req_cancel_complete.  */
-     scsi_req_ref(req);
--    scsi_req_dequeue(req);
-+    scsi_req_dequeue(req, false);
-     req->io_canceled = true;
-     if (req->aiocb) {
-         blk_aio_cancel(req->aiocb);
-@@ -1782,7 +1787,7 @@ void scsi_device_set_ua(SCSIDevice *sdev, SCSISense sense)
- 
- static void scsi_device_purge_one_req(SCSIRequest *req, void *opaque)
- {
--    scsi_req_cancel_async(req, NULL);
-+    scsi_req_cancel_async(req, NULL, false);
- }
- 
- /**
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index d817fc42b4..48612f8738 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -315,6 +315,7 @@ static void virtio_scsi_cancel_notify(Notifier *notifier, void *data)
-     g_free(n);
- }
- 
-+/* Must be called with r->dev->requests_lock held. */
- static void virtio_scsi_tmf_cancel_req(VirtIOSCSIReq *tmf, SCSIRequest *r)
- {
-     VirtIOSCSICancelNotifier *notifier;
-@@ -327,7 +328,7 @@ static void virtio_scsi_tmf_cancel_req(VirtIOSCSIReq *tmf, SCSIRequest *r)
-     notifier = g_new(VirtIOSCSICancelNotifier, 1);
-     notifier->notifier.notify = virtio_scsi_cancel_notify;
-     notifier->tmf_req = tmf;
--    scsi_req_cancel_async(r, &notifier->notifier);
-+    scsi_req_cancel_async(r, &notifier->notifier, true);
- }
- 
- /* Execute a TMF on the requests in the current AioContext */
-@@ -364,7 +365,9 @@ static void virtio_scsi_do_tmf_aio_context(void *opaque)
-     }
- 
-     WITH_QEMU_LOCK_GUARD(&d->requests_lock) {
--        QTAILQ_FOREACH(r, &d->requests, next) {
-+        SCSIRequest *tmp;
-+        /* scsi_req_dequeue() removes entries from queue, use safe iteration */
-+        QTAILQ_FOREACH_SAFE(r, &d->requests, next, tmp) {
-             VirtIOSCSIReq *cmd_req = r->hba_private;
-             assert(cmd_req); /* request has hba_private while enqueued */
- 
-@@ -374,6 +377,7 @@ static void virtio_scsi_do_tmf_aio_context(void *opaque)
-             if (match_tag && cmd_req->req.cmd.tag != tmf->req.tmf.tag) {
-                 continue;
-             }
-+            assert(&d->requests_lock == &r->dev->requests_lock);
-             virtio_scsi_tmf_cancel_req(tmf, r);
-         }
-     }
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 90ee192b4d..49b898e44a 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -226,7 +226,8 @@ uint8_t *scsi_req_get_buf(SCSIRequest *req);
- int scsi_req_get_sense(SCSIRequest *req, uint8_t *buf, int len);
- void scsi_req_cancel_complete(SCSIRequest *req);
- void scsi_req_cancel(SCSIRequest *req);
--void scsi_req_cancel_async(SCSIRequest *req, Notifier *notifier);
-+void scsi_req_cancel_async(SCSIRequest *req, Notifier *notifier,
-+                           bool holds_requests_lock);
- void scsi_req_retry(SCSIRequest *req);
- void scsi_device_drained_begin(SCSIDevice *sdev);
- void scsi_device_drained_end(SCSIDevice *sdev);
+With regards,
+Daniel
 -- 
-2.47.3
-
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
