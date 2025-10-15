@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99EA7CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A986CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8yDx-0003MU-2T; Wed, 15 Oct 2025 05:55:13 -0400
+	id 1v8yE8-0003VS-Vh; Wed, 15 Oct 2025 05:55:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8yDv-0003Lm-Ap
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:55:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8yE7-0003UC-JK
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:55:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8yDq-0004cO-FH
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:55:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v8yDx-0004eS-5m
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:55:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760522103;
+ s=mimecast20190719; t=1760522111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g8/rP+mPrJyZKSuhPFUQQMHfdewJhJO6001zJxYgTo8=;
- b=ZhGxXHnkSVyhjW0em0u2gXXUV4AkAXAGf9+uY2BB40/e29WHi1yjb/s+/+4GNlaOdgs0tx
- dhrcdU/DbjfBJ7a3B+uXxkm1GbnOF+yyDZd9JA3q3bH0zrFUqFSkgb1CvkLZG0MDFcykEb
- HBVPKi4yF5U8yn5AxARHsuVlXqO2fuc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ByGp1tmpifRggNbAhsRl0C5D4RJXbzbp090grVB37+g=;
+ b=YJtjJUsTGcs4Fp/KA3NpNuItLTYG5gnnI38Rbu9jdIPMzaVPDz0nkb6WkceJqgUoD+zpLj
+ qdBfgIqEV969rh8pRQv6LnDThCFHkPMBA7hc9hEVRQVTZJoYs99oPl+SmxNee6Z1EiqAEZ
+ lpRe7ljGi57xhTFt7fCVI3muMnEVJdQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-k3p12uI6OPe03qV0JYjf6g-1; Wed,
- 15 Oct 2025 05:55:02 -0400
-X-MC-Unique: k3p12uI6OPe03qV0JYjf6g-1
-X-Mimecast-MFC-AGG-ID: k3p12uI6OPe03qV0JYjf6g_1760522101
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-426-bfwk7_eAONaLNzbF3Iyzng-1; Wed,
+ 15 Oct 2025 05:55:07 -0400
+X-MC-Unique: bfwk7_eAONaLNzbF3Iyzng-1
+X-Mimecast-MFC-AGG-ID: bfwk7_eAONaLNzbF3Iyzng_1760522107
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5AED31956080; Wed, 15 Oct 2025 09:55:01 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0210519560AD; Wed, 15 Oct 2025 09:55:07 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.24])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E15B31800452; Wed, 15 Oct 2025 09:54:59 +0000 (UTC)
+ id 91AA0180044F; Wed, 15 Oct 2025 09:55:05 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/6] tests/functional: Fix problems in decorators.py reported
+Subject: [PATCH 5/6] tests/functional: Fix problems in uncompress.py reported
  by pylint
-Date: Wed, 15 Oct 2025 11:54:50 +0200
-Message-ID: <20251015095454.1575318-3-thuth@redhat.com>
+Date: Wed, 15 Oct 2025 11:54:53 +0200
+Message-ID: <20251015095454.1575318-6-thuth@redhat.com>
 In-Reply-To: <20251015095454.1575318-1-thuth@redhat.com>
 References: <20251015095454.1575318-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,258 +85,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The documentation strings should follow the function definition
-lines, not precede them.
+- put the doc strings in the right locations (after the "def" line)
+- use isinstance() instead of checking via type()
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/decorators.py | 176 +++++++++++------------
- 1 file changed, 87 insertions(+), 89 deletions(-)
+ tests/functional/qemu_test/uncompress.py | 40 ++++++++++++------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index b2392958041..807418359ab 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -10,136 +10,134 @@
+diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+index b7ef8f759b7..5bbdf8fe323 100644
+--- a/tests/functional/qemu_test/uncompress.py
++++ b/tests/functional/qemu_test/uncompress.py
+@@ -58,20 +58,20 @@ def zstd_uncompress(zstd_path, output_path):
+     os.chmod(output_path, stat.S_IRUSR | stat.S_IWUSR)
  
- from .cmd import which
  
 -'''
--Decorator to skip execution of a test if the provided
--environment variables are not set.
--Example:
- 
--  @skipIfMissingEnv("QEMU_ENV_VAR0", "QEMU_ENV_VAR1")
--'''
- def skipIfMissingEnv(*vars_):
+-@params compressed: filename, Asset, or file-like object to uncompress
+-@params uncompressed: filename to uncompress into
+-@params format: optional compression format (gzip, lzma)
++def uncompress(compressed, uncompressed, format=None):
 +    '''
-+    Decorator to skip execution of a test if the provided
-+    environment variables are not set.
-+    Example:
-+
-+      @skipIfMissingEnv("QEMU_ENV_VAR0", "QEMU_ENV_VAR1")
++    @params compressed: filename, Asset, or file-like object to uncompress
++    @params uncompressed: filename to uncompress into
++    @params format: optional compression format (gzip, lzma)
+ 
+-Uncompresses @compressed into @uncompressed
++    Uncompresses @compressed into @uncompressed
+ 
+-If @format is None, heuristics will be applied to guess the format
+-from the filename or Asset URL. @format must be non-None if @uncompressed
+-is a file-like object.
++    If @format is None, heuristics will be applied to guess the
++    format from the filename or Asset URL. @format must be non-None
++    if @uncompressed is a file-like object.
+ 
+-Returns the fully qualified path to the uncompessed file
+-'''
+-def uncompress(compressed, uncompressed, format=None):
++    Returns the fully qualified path to the uncompessed file
 +    '''
-     missing_vars = []
-     for var in vars_:
--        if os.getenv(var) == None:
-+        if os.getenv(var) is None:
-             missing_vars.append(var)
+     if format is None:
+         format = guess_uncompress_format(compressed)
  
--    has_vars = True if len(missing_vars) == 0 else False
-+    has_vars = len(missing_vars) == 0
- 
-     return skipUnless(has_vars, f"Missing env var(s): {', '.join(missing_vars)}")
+@@ -84,19 +84,19 @@ def uncompress(compressed, uncompressed, format=None):
+     else:
+         raise Exception(f"Unknown compression format {format}")
  
 -'''
+-@params compressed: filename, Asset, or file-like object to guess
 -
--Decorator to skip execution of a test if the list
--of command binaries is not available in $PATH.
--Example:
--
--  @skipIfMissingCommands("mkisofs", "losetup")
+-Guess the format of @compressed, raising an exception if
+-no format can be determined
 -'''
- def skipIfMissingCommands(*args):
+ def guess_uncompress_format(compressed):
+-    if type(compressed) == Asset:
 +    '''
-+    Decorator to skip execution of a test if the list
-+    of command binaries is not available in $PATH.
-+    Example:
++    @params compressed: filename, Asset, or file-like object to guess
 +
-+      @skipIfMissingCommands("mkisofs", "losetup")
++    Guess the format of @compressed, raising an exception if
++    no format can be determined
 +    '''
-     has_cmds = True
-     for cmd in args:
--         if not which(cmd):
--             has_cmds = False
--             break
-+        if not which(cmd):
-+            has_cmds = False
-+            break
++    if isinstance(compressed, Asset):
+         compressed = urlparse(compressed.url).path
+-    elif type(compressed) != str:
++    elif not isinstance(compressed, str):
+         raise Exception(f"Unable to guess compression cformat for {compressed}")
  
-     return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
-                                 ", ".join(args))
- 
--'''
--Decorator to skip execution of a test if the current
--host operating system does match one of the prohibited
--ones.
--Example
--
--  @skipIfOperatingSystem("Linux", "Darwin")
--'''
- def skipIfOperatingSystem(*args):
-+    '''
-+    Decorator to skip execution of a test if the current host
-+    operating system does match one of the prohibited ones.
-+    Example:
-+
-+      @skipIfOperatingSystem("Linux", "Darwin")
-+    '''
-     return skipIf(platform.system() in args,
-                   'running on an OS (%s) that is not able to run this test' %
-                   ", ".join(args))
- 
--'''
--Decorator to skip execution of a test if the current
--host machine does not match one of the permitted
--machines.
--Example
--
--  @skipIfNotMachine("x86_64", "aarch64")
--'''
- def skipIfNotMachine(*args):
-+    '''
-+    Decorator to skip execution of a test if the current
-+    host machine does not match one of the permitted machines.
-+    Example:
-+
-+      @skipIfNotMachine("x86_64", "aarch64")
-+    '''
-     return skipUnless(platform.machine() in args,
-                       'not running on one of the required machine(s) "%s"' %
-                       ", ".join(args))
- 
--'''
--Decorator to skip execution of flaky tests, unless
--the $QEMU_TEST_FLAKY_TESTS environment variable is set.
--A bug URL must be provided that documents the observed
--failure behaviour, so it can be tracked & re-evaluated
--in future.
-+def skipFlakyTest(bug_url):
-+    '''
-+    Decorator to skip execution of flaky tests, unless
-+    the $QEMU_TEST_FLAKY_TESTS environment variable is set.
-+    A bug URL must be provided that documents the observed
-+    failure behaviour, so it can be tracked & re-evaluated
-+    in future.
- 
--Historical tests may be providing "None" as the bug_url
--but this should not be done for new test.
-+    Historical tests may be providing "None" as the bug_url
-+    but this should not be done for new test.
- 
--Example:
-+    Example:
- 
--  @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
--'''
--def skipFlakyTest(bug_url):
-+      @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
-+    '''
-     if bug_url is None:
-         bug_url = "FIXME: reproduce flaky test and file bug report or remove"
-     return skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'),
-                       f'Test is unstable: {bug_url}')
- 
--'''
--Decorator to skip execution of tests which are likely
--to execute untrusted commands on the host, or commands
--which process untrusted code, unless the
--$QEMU_TEST_ALLOW_UNTRUSTED_CODE env var is set.
--Example:
--
--  @skipUntrustedTest()
--'''
- def skipUntrustedTest():
-+    '''
-+    Decorator to skip execution of tests which are likely
-+    to execute untrusted commands on the host, or commands
-+    which process untrusted code, unless the
-+    $QEMU_TEST_ALLOW_UNTRUSTED_CODE env var is set.
-+    Example:
-+
-+      @skipUntrustedTest()
-+    '''
-     return skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'),
-                       'Test runs untrusted code / processes untrusted data')
- 
--'''
--Decorator to skip execution of tests which need large
--data storage (over around 500MB-1GB mark) on the host,
--unless the $QEMU_TEST_ALLOW_LARGE_STORAGE environment
--variable is set
-+def skipBigDataTest():
-+    '''
-+    Decorator to skip execution of tests which need large
-+    data storage (over around 500MB-1GB mark) on the host,
-+    unless the $QEMU_TEST_ALLOW_LARGE_STORAGE environment
-+    variable is set
- 
--Example:
-+    Example:
- 
--  @skipBigDataTest()
--'''
--def skipBigDataTest():
-+      @skipBigDataTest()
-+    '''
-     return skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'),
-                       'Test requires large host storage space')
- 
--'''
--Decorator to skip execution of tests which have a really long
--runtime (and might e.g. time out if QEMU has been compiled with
--debugging enabled) unless the $QEMU_TEST_ALLOW_SLOW
--environment variable is set
-+def skipSlowTest():
-+    '''
-+    Decorator to skip execution of tests which have a really long
-+    runtime (and might e.g. time out if QEMU has been compiled with
-+    debugging enabled) unless the $QEMU_TEST_ALLOW_SLOW
-+    environment variable is set
- 
--Example:
-+    Example:
- 
--  @skipSlowTest()
--'''
--def skipSlowTest():
-+      @skipSlowTest()
-+    '''
-     return skipUnless(os.getenv('QEMU_TEST_ALLOW_SLOW'),
-                       'Test has a very long runtime and might time out')
- 
--'''
--Decorator to skip execution of a test if the list
--of python imports is not available.
--Example:
--
--  @skipIfMissingImports("numpy", "cv2")
--'''
- def skipIfMissingImports(*args):
-+    '''
-+    Decorator to skip execution of a test if the list
-+    of python imports is not available.
-+    Example:
-+
-+      @skipIfMissingImports("numpy", "cv2")
-+    '''
-     has_imports = True
-     for impname in args:
-         try:
-@@ -151,15 +149,15 @@ def skipIfMissingImports(*args):
-     return skipUnless(has_imports, 'required import(s) "%s" not installed' %
-                                    ", ".join(args))
- 
--'''
--Decorator to skip execution of a test if the system's
--locked memory limit is below the required threshold.
--Takes required locked memory threshold in kB.
--Example:
--
--  @skipLockedMemoryTest(2_097_152)
--'''
- def skipLockedMemoryTest(locked_memory):
-+    '''
-+    Decorator to skip execution of a test if the system's
-+    locked memory limit is below the required threshold.
-+    Takes required locked memory threshold in kB.
-+    Example:
-+
-+      @skipLockedMemoryTest(2_097_152)
-+    '''
-     # get memlock hard limit in bytes
-     _, ulimit_memory = resource.getrlimit(resource.RLIMIT_MEMLOCK)
- 
+-    (name, ext) = os.path.splitext(compressed)
++    (_name, ext) = os.path.splitext(compressed)
+     if ext == ".xz":
+         return "xz"
+     elif ext == ".gz":
 -- 
 2.51.0
 
