@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BA4CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C971CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8tYd-0008UM-Tf; Wed, 15 Oct 2025 00:56:16 -0400
+	id 1v8tYz-0000Gf-Iu; Wed, 15 Oct 2025 00:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1v8tYa-0008Ty-Rv
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:56:12 -0400
+ id 1v8tYy-0000GI-BC
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:56:36 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1v8tYV-0006Mv-DR
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:56:11 -0400
+ id 1v8tYu-0006Ni-9x
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:56:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760504168; x=1792040168;
+ t=1760504193; x=1792040193;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=Rzpdp1CruxhfTb7zsakp6uSePDcjc69cb52VvZp3Pps=;
- b=dKRCiJG0wLIB+iquF9gecLTMX2M27MveRR7sWcW7vOaEP/AIlfXzlKXB
- CU647afZlRvfqLJeWtVrsZ/b340xlLBhIESNX/yFvRKYl5JnCgTh8gQIn
- CmHSKX9nTNBtYGiNt/RTrTbKa4dqcVf3PEq3pobsX5pOvAthr1wvEbx+e
- PnBgqwLEUizKODcs8H505H5q/SYiUZyMMH/SwApScGdxBeKF1NwkT7qcZ
- j1OUkyw3UDE4ckleT7HeDbtawzfR3jSneTFr23/0AcY/BEM5a2t1D1PgY
- iMfw1GkCyz0nVJYQ+NGqevfEPFec+hmUzzq4lDL0YxWsqTuxfOLjMPct3 g==;
-X-CSE-ConnectionGUID: SCl1i4YITc6KJ0TzTGntKg==
-X-CSE-MsgGUID: Ia69DdQrQOaLs7EBIHePGA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11582"; a="66321197"
-X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; d="scan'208";a="66321197"
+ bh=HKAx3qvaNGZgpB4EL3KFBKSC09WoV5bzsvnLEqXcRnI=;
+ b=KVsVT/PvCdfbJpc4UOay3WvTkuKRvNkfsoL/g6qMo8NWtiQ3bk9OjG+3
+ EIsU+G5Q4D/cgCa6tB55+dM8a8KO22ozBK9XCAm27aZWCoeHbf6lOVMpo
+ eGTf926ayfOsoW8ohpxfgHG6/20yhvpGr3tsyRDLTkychxIieTBhDaftX
+ KIHHEKk7vty65wCf/5U2ELpTE+5AxED1Bos31AdbYwvk7wZAnXkYfzs3U
+ EsWRF4GGKm6j1uTdhwPO2MLfzMocuZeOKau9NBcXubfhkmND73jE1kZFz
+ x/eMI1a1lH/SKfcLqF1DcU4W/OQs6oa9gxVNQVW2EDQFr5j7yiLcT2yB5 Q==;
+X-CSE-ConnectionGUID: aTHZLzWCTWiGuTdcnbG9tw==
+X-CSE-MsgGUID: JiB8dnlbTCiPD/pn3I4HNw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11582"; a="66321234"
+X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; d="scan'208";a="66321234"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Oct 2025 21:56:02 -0700
-X-CSE-ConnectionGUID: FCy6eezeTKCXZ502R3sJ7w==
-X-CSE-MsgGUID: 1g+EhbXxSJC7NMCVdSE+ww==
+ 14 Oct 2025 21:56:28 -0700
+X-CSE-ConnectionGUID: g5MyXq7cSB+ht4F2x7ufig==
+X-CSE-MsgGUID: TDFdurbhSM2os4ad1lXf+Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; d="scan'208";a="186321312"
+X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; d="scan'208";a="186321364"
 Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Oct 2025 21:56:02 -0700
+ 14 Oct 2025 21:56:28 -0700
 Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
  fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Tue, 14 Oct 2025 21:56:00 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ 15.2.2562.27; Tue, 14 Oct 2025 21:56:26 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
  FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Tue, 14 Oct 2025 21:56:00 -0700
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.20) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ 15.2.2562.27 via Frontend Transport; Tue, 14 Oct 2025 21:56:26 -0700
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.34) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Tue, 14 Oct 2025 21:56:00 -0700
+ 15.2.2562.27; Tue, 14 Oct 2025 21:56:26 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PKHUgDKaUdUkI/3PjOQfS6UMkLaIDtCTQ5nI8i9pFB2mhD10njWGbUvaXU7crsGt3cnOfNgglcnzqbCXrnXJourjFQ/68GPdH5uY9ERX165McDYAGhswZB05rNTxYGu7O5j2yrNKHv4a5DKvWBYAZ76ROR+lB0RS6vBg03jH6yuE9xrMipidKORkiCoeoy4dc7a1+i2wfYM/x2QjkZ17S5X7fCmIjm81IrEcZzj9FLkh64zPhJ1viXPrurIjUWsdo5NJlHcLn3xzKTbSWgftYNp8/0JxDVFUT9XRKBtfZ+HNsHs15vISUiLC8SpruRF4xSciqqRJISIXiIo2+tzBtg==
+ b=H5PAKN44/1ARWJfg6U4uesOzfcxnRpXzPAkIVEqQsqYi37pmSkUlxWo7r/BszrUIT3qkesb+S7YfOgFbPbgi4Po/Jxyz8ipeiyZG80dW6H605B8mXK6XSpBY6RQTIIpkqE6APRFy7ivSHWxCipW1ztPtk9DFOGWppjZJ42cGTEHO4N/hYwSmGbj8DraO9lHK+oqJXxs6s2rsFZA3uKYpenZ+jAXARhRTz+B/UM0cMW4Zu2ykWNAFJL6yt/qiY8YXJ3z+NlhaahX0wBT0ZFeT+WCOzHrlR2U4hMxtWkwgym0VsiuXPkkS2Ftz4s0q/cFpYKrOz+aYOszVBcR8wP8wXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LJti04Wi00G1l+4eA1/r+xCrqPHn2Lw74D6uXpIUpAo=;
- b=xB+tktvSPIxcDynmhxdsZG8j/h4unHEt1o2Qfo8i8ng/33AYp5eAM4+MepKwuDtHzEtTX6+dQpRjXPf21bljuvEZ9KMs/Pd/WUZ/Qu8GsbZgnwwbvm+QK19tcUlqiFO8UxKJKmLSLoByIDAPXfZ3JaJAr6QinoXl9n6krfsi4zmOfOJxvj/PhRQi9KIexNlVeYVD78ZEEhePGRLiEzcPFIyRSOzASBI7zPlGZtFItAYLcgzlVsg2ZQPX2NYdv0QDCbTq3+QN3P4rpYnydoMsJwodUia60HG/Iyjzula2pCZy1dw9xAuePubLLy3kOJKvJcxkwEbWzq8rJ94SrT34Vw==
+ bh=Y/pAKMsD31Y2D2S0anf6OG2R+79FpBRtDm05OkwDuWI=;
+ b=lQHK1EZ3fCgtrnfyhwkHab5ps1PN6++Sq5WeEJqfk6VPjsv84QmpKvTmI+362rf/KJV58cdKaE4gF2HTW5tkWXU3Tj8EnT5g21MBzUDD/4Zb7b7TzhrktDa8cnlG1ZEgWwlExm+hyLKsAEcR4HgAY0ibkVNFkdw3ICmDRqSVpFRpXAY7wtgbi2q7xLMg5t/s8I5zDqM5ATjJJ8Lh9nnezDW9O3WVAz330mkPL/P1mr1W/Lgqj3oKy3EgylRhQOc9t4Wc+jvz9VewB+kuUqWDkMZHyJ9kmLClXhbRek9e+uXG7fD++YI9C3hKj4Hiu/8t7BLt4ankBZoQERGh1JQY2Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -72,28 +72,28 @@ Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
  by PH7PR11MB5957.namprd11.prod.outlook.com (2603:10b6:510:1e0::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.12; Wed, 15 Oct
- 2025 04:55:57 +0000
+ 2025 04:56:19 +0000
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::dd3b:ce77:841a:722b%4]) with mapi id 15.20.9203.009; Wed, 15 Oct 2025
- 04:55:52 +0000
+ 04:56:19 +0000
 From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
  =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
  <dmitry.osipenko@collabora.com>
-Subject: RE: [PATCH v1 3/7] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Topic: [PATCH v1 3/7] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Thread-Index: AQHcNL+RWmobuqB6Pkqib8U2rEv1a7TBH1sAgAFtUDA=
-Date: Wed, 15 Oct 2025 04:55:52 +0000
-Message-ID: <IA0PR11MB71854538EFDCFB9717B6C01CF8E8A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v1 1/7] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Thread-Topic: [PATCH v1 1/7] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Thread-Index: AQHcNL+QHgJFlns5YUOIqUF6JDbuzbTBHqyAgAFtqKA=
+Date: Wed, 15 Oct 2025 04:56:19 +0000
+Message-ID: <IA0PR11MB71859435C7610FD403EED34CF8E8A@IA0PR11MB7185.namprd11.prod.outlook.com>
 References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
- <20251003234138.85820-4-vivek.kasireddy@intel.com>
- <ebb13e38-adf6-4754-ad06-d72e2eb309f1@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ebb13e38-adf6-4754-ad06-d72e2eb309f1@rsg.ci.i.u-tokyo.ac.jp>
+ <20251003234138.85820-2-vivek.kasireddy@intel.com>
+ <2d72c77c-6ea1-45e5-b23e-e1d64cb716fa@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <2d72c77c-6ea1-45e5-b23e-e1d64cb716fa@rsg.ci.i.u-tokyo.ac.jp>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -102,80 +102,80 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|PH7PR11MB5957:EE_
-x-ms-office365-filtering-correlation-id: fe761474-71de-4b94-c008-08de0ba71de6
+x-ms-office365-filtering-correlation-id: 66036f0f-62a9-43cb-ae97-08de0ba72de8
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?7cpJAWBEGnzBJ9+sGo8NSuUP5t6y1N6VUNUN7PtjAR9qmT4tvaAQPjmuwl?=
- =?iso-8859-1?Q?hbcNywQArzYli4r4MkQkrQl31jLDK0bJO0MYl+z/YaXkk/VhV3cIS/NsfD?=
- =?iso-8859-1?Q?rso1Mu9HmTn1TgcI57nZpyPfduY6jaQcm/tuV2gewQEZQxuM1Z3NH4YYGL?=
- =?iso-8859-1?Q?GVyhAawxWW/8WAyOfCbS6VwXIrRWPl0nm94dXyU8KZMk1t2D+4oQQR86Pp?=
- =?iso-8859-1?Q?d0yZTgqIQOAmx4Nq6TS7IW5T/IJhhoHh5f4pWVkYzzkXOd2netrBWzMNy9?=
- =?iso-8859-1?Q?EZkKmlPgCBsRbLElodX2ImfZn+8uK/F+wEcdVFoY+dLlhNr3lhc+9yk4pq?=
- =?iso-8859-1?Q?ZQZvg350+ttn09psuMLaqeiheBfCfTSs7v0vON8jKqsQzYVMOTTj7wXEUP?=
- =?iso-8859-1?Q?TESoDmN8X5k23DuwQKHSjTRpSG4ZrpOH49JEa3AstnGTlaEMp7nGKz5a6I?=
- =?iso-8859-1?Q?0FtnuDI9XCVO8LgKuHuDZShqFM4pPGydX/vPpCZTsuxDYwYm8yNZE4iQje?=
- =?iso-8859-1?Q?Q6lN73JNSn1QngSwDazkHdX7cuk5ftZjno+cSmFkIKU6sySQl1UnSxe2Gj?=
- =?iso-8859-1?Q?NADria/gSoMxQxJgPQH0wvxNcBOB+71+bKHfvX88bO5NvXNdV33Tuu5r7h?=
- =?iso-8859-1?Q?Qgna5SX2llnpYxeQSxyJB7vObAW9HdzMeQmAPCmowOXi2yRKcNyhYhISc+?=
- =?iso-8859-1?Q?0o4yKzuT8K3APDxuDNeRdd5gMbDuiYIsRgUDBqAvdZagmv3ut/Yz0DO3K9?=
- =?iso-8859-1?Q?juvaIW4fFM8izx0f3b6sdbhK8lFm45W3fHA6x2SBWExXiXikZgrjykgiWT?=
- =?iso-8859-1?Q?QXEU5qVKahWQmMp5TV+n9LAPzeOSi6qwHLUIrMFrmXnkLmJkweXpIUYgLx?=
- =?iso-8859-1?Q?JpZfM+9a6RarBEj6/LRQ6nKnOcWr/QASLgy2T8q5NVJE7p2Y2ZUjIKj1Kp?=
- =?iso-8859-1?Q?ngPPLJzRmF+2W7f1ah9lfBV+RJqUV2IIS/mqDcNshn1J3UTkQtuo+iGm/1?=
- =?iso-8859-1?Q?pASSWLg8cBuDueP4nVZdPsyEUrNyhAq3AD7y27Ii5U72HLDjQ5J+4aGRZf?=
- =?iso-8859-1?Q?I6suNlBcDjfFyqpRzqsDAQbtHn3uafI9XxgdrNrK5J6j8lQ2Mc92MrUOMa?=
- =?iso-8859-1?Q?B9MQL4HAl35GjEN2sqVLIekJNI82N3t5L+jeEGdO5UMfwkr2PBoaIsYyxx?=
- =?iso-8859-1?Q?9hWiKuUMfc/3bOTWWYh2qskLfJFuHBEacjfnEPzJhZnwg5hHdgkJkbcNs4?=
- =?iso-8859-1?Q?g9Rxp5CUrEiAz5v8rLCiUXr1Wf+jueVm+67sWko8OzDwOwapzNvImm5E7z?=
- =?iso-8859-1?Q?Zh6PVrMf1JHcp+7gW8M9Ih8fYyX/JV3eDal7KwTTJnjIpfK0Gvi8xF7H07?=
- =?iso-8859-1?Q?jGDY27asC0rKpeg4HzyFH9oyUMduJBqQNJXf/tEbbqUPuQ23PpEKoAk9Hv?=
- =?iso-8859-1?Q?aclxbSwaUTYRzQVlu4AG4UibzPdtfr5nD/qdefpOXcklUIhDUolB7RG3NF?=
- =?iso-8859-1?Q?q6AnfWhayAdEAaKN2guXcJmGmx+klq762Xey00hK/s0U1MGYaDyVrnWtgp?=
- =?iso-8859-1?Q?sDch4OZfdedphPtIcrA0ecEGJL+n?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?4KbUN4sKaoDnpz4VTDzLT0WIRHADtbAGlDPV1a9NsxhfwmpkxVCs6NfFMk?=
+ =?iso-8859-1?Q?tpD7lsprOKQp/G0cHGYYhJDsKiYFlwTe3RDp0h6k4jQK2Yta+bET0tdJPF?=
+ =?iso-8859-1?Q?bXI4bUnsW6n2IUyGV5al72uh362SKcmqiZrSJnDAMd7S9CsEDamn0SOYED?=
+ =?iso-8859-1?Q?8t8vVDjOu/hoISgb2NAv03H2yItkF+SM9x60aD4wSIUA3AnPEzgnHZT9Kv?=
+ =?iso-8859-1?Q?WBbAkfbh98ZlTMLrXKq6irAT19+yZEOi4pm7eIpp5POZEOUI3mgiXJlIfw?=
+ =?iso-8859-1?Q?1XmR1Yx7MLCSlnDH0MzS5ZkBr/O/+fKtFGOrq/CqnJJutTs1YEUcOGHQO+?=
+ =?iso-8859-1?Q?dNcDCOr/z+XNL1bKNhqGzDACkTe09++6RCqGL+vgAhnEGtflrGMa35e96T?=
+ =?iso-8859-1?Q?OFJhhFX4FiiImUxAxqYgu97buRWLJS5jbxoGglxpHU5dTj+4/Bc9sBHZ6H?=
+ =?iso-8859-1?Q?2MKoYz8bhQQxB/Z9EeVpfgda8M72IY7nJ5FWz7BJrVH02eQtPREfBzYqsj?=
+ =?iso-8859-1?Q?TSTkO8UbH6vJy3yB6WXESPu901Xmok6/uCjUOgVmZbZn/HpIIQ/zjU0stI?=
+ =?iso-8859-1?Q?crkeZ/pc7FaGkadFeevqkd4lTeonOxZAXjeCeOSN2ZlwWMEsQWncWmCCb7?=
+ =?iso-8859-1?Q?XfUp//qX0yoTe0dWMCAUSdae+uvh4E1shr0uLe1+p5wwSf41Ee1b47igi1?=
+ =?iso-8859-1?Q?WPfNeunJ+PrGjMyTpmlKgx0elRJHiQFuKv6ox3F9372RlYUB3+bCalm6B4?=
+ =?iso-8859-1?Q?mSIoje1Qi+W2S7wnVAQfU+Wqpb0A05BNHvBr6kEad6qPE8bbpY6rAS0TC5?=
+ =?iso-8859-1?Q?jp5Qg1K5Z7PN8K3Fxw8EPTjAUy3lSZp9QZGU8lHsy6G5Im3pckL1SeqXJW?=
+ =?iso-8859-1?Q?IjCWxVv1POayTgOavCpY2v+VQbjp0vBorNF02vswTWTu3b7cvpqNzab5rZ?=
+ =?iso-8859-1?Q?Zwp9zhTUsSpVLmpht/gd0FiIEy+ZWm63yFUKDRAZ1Q9fYrw7shxhnpkW56?=
+ =?iso-8859-1?Q?J2tY0ilD5pso5rnE+PhAtNRrQTc3Tts8woeJg1aaLIyI60cBfwHoyZ8TJA?=
+ =?iso-8859-1?Q?1w12ijEPe4LeY6Iel8lD8t0zWGbxxgmzOyRVubpgtIZ4QpxtwPy6v2rX7u?=
+ =?iso-8859-1?Q?ksLrjmXfZ8oqKNU3balu4C0qo5HXI8H1X8IS9fD3iivINBVwcFwhjvcnFE?=
+ =?iso-8859-1?Q?xEVZha34/tY/mRw062wt1SO1rJ08tEBNTSLyPUn6JmzD1jdvEZULune2Zd?=
+ =?iso-8859-1?Q?GrIZS8oJ+4gQo2VadOCyqigFRQGPsE/4uoUvisQdXmgK8CiVUEqgPHxCxR?=
+ =?iso-8859-1?Q?4X8vRFTIj4c1TXxr+4jYWeydBf7W2zmM0Ux7sY3i2jIRpTUDQjmrdtqFYj?=
+ =?iso-8859-1?Q?saiOxyeZcDS4K3ILGEArk4dSxFx/u2uRMdPvpMiMGAB/ImLQt15Ah3ep3B?=
+ =?iso-8859-1?Q?Dszqh+PSCBoqLVCwb5W5fD+FGjIrlBd6CiBVVX4sqpC+vMxiorHHjsQeN5?=
+ =?iso-8859-1?Q?Nkyc9ezdIu2IfHOVhEbrHny9ayBTKkivxg/aF4o8QhseTx3VO2DJqJ/s3H?=
+ =?iso-8859-1?Q?0g+DCKRlix7hY3Y8YjcbEoMms7RG?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?AQu2HDRKkH6G2/Ceh61Y10xSYDBF7tWm9OoHp1145PaDz0haxdFPYWYd81?=
- =?iso-8859-1?Q?Udu2UyfhUrMhHZU30B4tU7znVP0dH1gBoKnmgKaaqLZNCV3VriLszR/7La?=
- =?iso-8859-1?Q?LXEUwQcCcNNYBmXACxwVJGC+dmdITylnIFNF4AAviBL2Swnwc8H5q+c/ih?=
- =?iso-8859-1?Q?QPUZ3EOoHsJ1A/wrKv1CHEx1VZRJkFNjyByaNh8+EQfxdhOWSPsnhp2RbE?=
- =?iso-8859-1?Q?JEEkPtVCFDKbeA8SESCYfJe/a5m07D9eQjtZPERIXFaIsY54efPwVmx5Hi?=
- =?iso-8859-1?Q?aZvJPcZ1+jL7sGOy6/rY9OId8z/Pn2bGAea7FP1z3Hy6DeR3Qnw2Y+d+zB?=
- =?iso-8859-1?Q?6KlizvBRH/RGYe5Jljq1WGIxUBKldCbQfpkUaKl5UXq0v+tWa5XlxSu80r?=
- =?iso-8859-1?Q?Oiv4KwFKfc1xhB0OH3U3n1N6GKU2ZGvDrLkh5ERSWxsmFgEg0ybrWQXgB7?=
- =?iso-8859-1?Q?Btd2dEyUfmzwLYqR36jUpG6hPBG19VPFnOdgtMQyvIGj7era1AUYZsKKta?=
- =?iso-8859-1?Q?4YJkCPgCRrsRLGeBk5QfdosWztF5BbyilNLNfmBj9gNXfiGP5hgJgId5bq?=
- =?iso-8859-1?Q?T9xAwZqj2Pi8uvSYcfxd6TYs789E9ifxe1qmCC4jQhiuX4W9cV38cKuKqQ?=
- =?iso-8859-1?Q?nFfvgnnoODFOHRSddcD1b0DvEekNgSYhdKubkySZbKp/BKU47D8k0e5CGI?=
- =?iso-8859-1?Q?YaJEzmmiqpgNwclothEOFD9DCQQcup/dTThGEam9VkKQBVGe29PD51VhrO?=
- =?iso-8859-1?Q?HPdjO8x8Qbr+PB07cz2XISgmg8Ptp22gw4ieBH1Ah6gBnqEBllrG7ELVTy?=
- =?iso-8859-1?Q?NsC3FLz7ec1g5ACMrqFbvvZk8l/c9PLSLD4Twim4TO+bxJA4sxKEcNi4Bo?=
- =?iso-8859-1?Q?JMUFLZVtAyFX5eOdHraV/F5ttsZsuZ6Uv2xaIUOL7UWwg3KVyIMSnUYcds?=
- =?iso-8859-1?Q?D+Ko/gm3rzpQEzpdvL+JrR0WAoUZOFwJ61c+LJl7FQJ64dU496oz8t9lvO?=
- =?iso-8859-1?Q?OnTGpPxfsker3ObYJTWJgEJ/AoVgzYW+BNzG57Ti79JuclAuppXTjcAECf?=
- =?iso-8859-1?Q?vUW0sWXLJ66O72NKkPhysO8FrRRPJJyq61Sw8hrjp0OsvljcgwUSpT4Tcg?=
- =?iso-8859-1?Q?ycRgPyW2VhOZCR8k/iqZhOQhZlrd2LIQUXUyJgyd8XOO2q0tnAJPSwcjYK?=
- =?iso-8859-1?Q?kD484gDAXfV2rEfBbg92uI7iOr4l7BgTmB7odDQC3feFpYKhRbF9v85KAj?=
- =?iso-8859-1?Q?BzsyJbSFbd9nUq6PFdWrryM8YOCjnQolcqnWW27OooZX/gJo8nogW56C65?=
- =?iso-8859-1?Q?chV5uOVKAb4WNXvakTQLK5OXL5FGAKp6xuuwOKGlC+ppc4O0Aqs931iy62?=
- =?iso-8859-1?Q?jsS0DsCOzFXAQ3/846fK5NTkz6Yl8/Y0KBHF2JhpB6IbsJSbidCGE8gv6k?=
- =?iso-8859-1?Q?u3fl8I4JBvQ2PqqT0qGkI8pgMGXgjpE7SluLLTdBYwyXWa6m186S/G+T3O?=
- =?iso-8859-1?Q?V6TW+VGsZasvNIwAHW8KKg/hS2t3LnpsXPPMhYUETCxjfgqac4Ntfj3KC6?=
- =?iso-8859-1?Q?9uKhQTehwjqekY1e2/AsagSmn8xO0jS/HZTffVYKGrUAx1DwV7DzlkxraJ?=
- =?iso-8859-1?Q?QOlTvXHW1XsSVlZ55Q22XQg/ajzQfFJ70O?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?kLYbkUbc4pgdwK/t/ma2ChPKvRkktdZvCwjUqF1RbwdNq79x+Wv+ydp4Ic?=
+ =?iso-8859-1?Q?PJXQIU8w4Il0qPW7heiOy3JAGOIxvrwxyRQ2e0oOAtlaExaVqq3jDemxVH?=
+ =?iso-8859-1?Q?qBVzznjv6gnvryovQW9+2sDCA8NN91YLt0+y3wbTDP5YO+DXfeBIMiFL+G?=
+ =?iso-8859-1?Q?4sYqRl/5BAKamwpJKI+ZuHipX3q4Snr/KG3L0O7ckgIiOs3r3qwGNV2t86?=
+ =?iso-8859-1?Q?ZFFJCdSM0DkBNb+iZxz16l1hXK9Pe4E2mH8urQKe6XZeOEll23YchUsgDA?=
+ =?iso-8859-1?Q?1HbwEeRdR8wTgq+Zt30nl4TRVlPGT3DG1SCqBuR3ufto9HytO0ud/nVfJ7?=
+ =?iso-8859-1?Q?92Ocjj5CNR628qHVYdXTfwYyc9mA4brptVx2kdL+Ve9gLeWdQaImEox2eV?=
+ =?iso-8859-1?Q?U36cPGrZmjzpjsKnuSH0g2OUxCD+ashI5+uqwFzs59dUUgxZpx8aRVq9Zs?=
+ =?iso-8859-1?Q?qv8Y1WnEjRGQ09Y/H04jKLLKkMYpAwcAeu249TKY/CXLqXD61Xc3seCiJF?=
+ =?iso-8859-1?Q?npcJJBf5ymBEt4KZP4CzhUPDIXvcUzBbqT9TGTd8LCsulmxTsP2z8Udgjj?=
+ =?iso-8859-1?Q?RPtTvFOClDJIqfDvi/10qmN4B+h9j4xaksrZy+zgjoeYbHzChcqtz2K0RX?=
+ =?iso-8859-1?Q?ZYWdlJPElkGC2AF48/g3lF2YLXjEKhIn+oW3qKQqovDhOuoGHYuQMqiViS?=
+ =?iso-8859-1?Q?VM9GKaRuMHLovTUkC79cumj4PCdbb7+qJUeyEByZs/O8cFasPpCq3tqEKp?=
+ =?iso-8859-1?Q?R9BwBen/4VaEgL7Tecr5+BuTbviRZB4Eo8kYIw8mGD+l9z2hU82xPBjTN2?=
+ =?iso-8859-1?Q?+DWKd0KHEmF2wDCJ+tTjDeEq7H6NwtrGnT8xvvZFcAFYPixXa7jG+1PRq8?=
+ =?iso-8859-1?Q?As8Q5G+zqoRC8Yjibsr+iABNtlRhrt6nobyXlLQETq619s+SK0WTKcw9M2?=
+ =?iso-8859-1?Q?5YQoR3cqB84LiAk4MNnODPmkFV7wZXsPDORjwzQMKkiH82ANB9VZGGoOOM?=
+ =?iso-8859-1?Q?1DvsfnsP2XGhgvcQJBQZzNyzFLHBSrzUQWNY8WvY1ADBmYXIchxKgYejI6?=
+ =?iso-8859-1?Q?QqW0mqmkI291Jc0A3AL26B++GEnz1rqHJdlUH1S8Jz6qVIr9F1AP8mTEjX?=
+ =?iso-8859-1?Q?Omzna6OyCXZmEul4AhivfhW0bCdf2BvWjMu0XjN4IT8rDAH/m6m5VtICQo?=
+ =?iso-8859-1?Q?zKXUN5kbvH1rgY7TXN8wWVuLtth/rEW9TAWu3OiZ9WEJJ9qtrl8/bue7s/?=
+ =?iso-8859-1?Q?fI14qgOGEA1EAaBr2F59IjetXY4bjLvRyOhDrI7omhRvsWr8WETxmu61VS?=
+ =?iso-8859-1?Q?RwS8eV9+tKqr7/YFM7fZePHqU47zKucPXg4dq6n+PDCOLG0HrsunFhAjDb?=
+ =?iso-8859-1?Q?6NAwxIn6KGWJVBPowXYfxXiWguBYVBT3pAfe1447IV2HEs1ZMDXRF0WiE1?=
+ =?iso-8859-1?Q?qOTwHZyCiIx7i/PZWuPEdNJkwTI9RRK/69hY1u/lviQA+xrAOjYl1j8Ss5?=
+ =?iso-8859-1?Q?AKbH9diuDedIbhLEnoUf17TzV8Ek7+uOAGJM+K0rHAN/oIpbWHoUtdgH32?=
+ =?iso-8859-1?Q?0JXVhIqflX9VLYjnmYgw7kw6c2+EvmbfILxKzSDALekQ5lVPjvR3mOjwSJ?=
+ =?iso-8859-1?Q?1npTePxbBpznzsLMNK5xnKXZnWMeqLc2Hd?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe761474-71de-4b94-c008-08de0ba71de6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2025 04:55:52.2279 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66036f0f-62a9-43cb-ae97-08de0ba72de8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2025 04:56:19.0472 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zisQK4A2vcBjzuPamHiMKZo6vPKS1FRfWTEpiV6TtLWqCO8XFYohsKRbZNofsOUXh4oXBHikpBJsujBHEG5UPX1ayzXoBYgSX7P9gaJ7WqE=
+X-MS-Exchange-CrossTenant-userprincipalname: u4ojun8yS68GkbMutkgcxUhumQVCt/xxqX/FGeUHAJ0E55N2cKyqSc9LYJLF0AqOMn8bF+WdjYs2jSWzpHRI0SNKFTJCdBKGrsIZjbfwdYc=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB5957
 X-OriginatorOrg: intel.com
 Received-SPF: pass client-ip=198.175.65.15;
@@ -203,100 +203,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
-
-> Subject: Re: [PATCH v1 3/7] virtio-gpu: Find hva for Guest's DMA addr
-> associated with a ram device
 >=20
 > On 2025/10/04 8:35, Vivek Kasireddy wrote:
-> > If the Guest provides a DMA address that is associated with a ram
-> > device (such as a PCI device region and not its system memory),
-> > then we can obtain the hva (host virtual address) by invoking
-> > address_space_translate() followed by memory_region_get_ram_ptr().
-> >
-> > This is because the ram device's address space is not accessible
-> > to virtio-gpu directly and hence dma_memory_map() cannot be used.
-> > Therefore, we first need to identify the memory region associated
-> > with the DMA address and figure out if it belongs to a ram device
-> > or not and decide how to obtain the host address accordingly.
-> >
-> > Note that we take a reference on the memory region if it belongs
-> > to a ram device but we would still call dma_memory_unmap() later
-> > (to unref mr) regardless of how we obtained the hva.
-> >
-> > Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+> > There are cases when a blob resource's backing might get detached
+> > and re-attached again such as when the underlying object is getting
+> > migrated in the Guest. In these situations, we need to obtain a new
+> > dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
+>  > > Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
 > > Cc: Alex Benn=E9e <alex.bennee@linaro.org>
 > > Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > > ---
-> >   hw/display/virtio-gpu.c | 30 +++++++++++++++++++++++++++---
-> >   1 file changed, 27 insertions(+), 3 deletions(-)
+> >   hw/display/virtio-gpu.c | 4 ++++
+> >   1 file changed, 4 insertions(+)
 > >
 > > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > index df696611a4..22bbe76809 100644
+> > index de35902213..70e8757128 100644
 > > --- a/hw/display/virtio-gpu.c
 > > +++ b/hw/display/virtio-gpu.c
-> > @@ -801,6 +801,32 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU
-> *g,
-> >                                 &fb, res, &ss.r, &cmd->error);
-> >   }
-> >
-> > +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-> > +                                       struct virtio_gpu_ctrl_command =
-*cmd,
-> > +                                       uint64_t a, hwaddr *len)
-> > +{
-> > +    MemoryRegion *mr =3D NULL;
-> > +    hwaddr xlat;
+> > @@ -937,6 +937,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+> >           cmd->error =3D VIRTIO_GPU_RESP_ERR_UNSPEC;
+> >           return;
+> >       }
 > > +
-> > +    if (cmd->cmd_hdr.type !=3D VIRTIO_GPU_CMD_RESOURCE_CREATE_BLOB)
-> {
+> > +    if (res->blob_size && res->dmabuf_fd < 0) {
 >=20
-> I wonder what this conditional for. I think this breaks mapping VFIO
-> with VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING.
-You are right, it does break attach_backing cmd. I'll remove it.
+> Checking res->dmabuf_fd should be unnecessary because it is always < 0
+> when !res->iov && res->blob_size.
+I agree, it is unnecessary. I'll remove it.
 
 Thanks,
 Vivek
 
 >=20
-> > +        return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-> > +                              DMA_DIRECTION_TO_DEVICE,
-> > +                              MEMTXATTRS_UNSPECIFIED);
-> > +    }
-> > +
-> > +    mr =3D address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat,=
- len,
-> > +                                 DMA_DIRECTION_TO_DEVICE,
-> > +                                 MEMTXATTRS_UNSPECIFIED);
-> > +    if (memory_region_is_ram_device(mr)) {
-> > +        memory_region_ref(mr);
-> > +        return memory_region_get_ram_ptr(mr) + xlat;
-> > +    }
-> > +
-> > +    return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, len,
-> > +                          DMA_DIRECTION_TO_DEVICE,
-> > +                          MEMTXATTRS_UNSPECIFIED);
-> > +}
-> > +
-> >   int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-> >                                     uint32_t nr_entries, uint32_t offse=
-t,
-> >                                     struct virtio_gpu_ctrl_command *cmd=
-,
-> > @@ -842,9 +868,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-> >
-> >           do {
-> >               len =3D l;
-> > -            map =3D dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-> > -                                 DMA_DIRECTION_TO_DEVICE,
-> > -                                 MEMTXATTRS_UNSPECIFIED);
-> > +            map =3D virtio_gpu_dma_memory_map(g, cmd, a, &len);
-> >               if (!map) {
-> >                   qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMI=
-O
-> memory for"
-> >                                 " element %d\n", __func__, e);
-
+> virtio_gpu_cleanup_mapping() is the function that sets res->iov to NULL,
+> and it ensures res->dmabuf_fd < 0 by calling virtio_gpu_fini_udmabuf()
+> when res->blob_size !=3D 0.
 
