@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED49BCCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BF9CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:25:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v91T1-0005dz-Dy; Wed, 15 Oct 2025 09:22:59 -0400
+	id 1v91SZ-0005VX-Dh; Wed, 15 Oct 2025 09:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v91SV-0005TA-MR
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:27 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1v91SH-0005L5-2e
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:16 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v91S9-00034l-4r
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:27 -0400
+ id 1v91S4-000347-B5
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:11 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8166588ACF;
- Wed, 15 Oct 2025 16:21:54 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 013B288ADA;
+ Wed, 15 Oct 2025 16:21:50 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a94::1:15])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id bLQ5oq0N5Os0-95StWcB1; Wed, 15 Oct 2025 16:21:53 +0300
+ ESMTPSA id bLQ5oq0N5Os0-LKdf4lUi; Wed, 15 Oct 2025 16:21:49 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760534513;
- bh=MqiBmROUNBmcgWznWmpS2J0vN0EQYgRHjh9r7Qc714k=;
+ s=default; t=1760534509;
+ bh=bQt+gPOuzNBNYHmDfV4+WMNfu6qlQ2YEWlgC+gNksfY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=fX7heLf4GCGYP8i3Cov6V7R1LuO7yyjyND2b1DBJg1pL/Yxh3qElFmPlhIozhV8NL
- NRo8ON2xDFXSBbq6+uiUJ37GI27O3pMXi6O1eCdQiBY+nVFhNslsPnfRdvUwc8QGt0
- amhNDkijw+XlsGWFuFaWaoYfd1h8pPLMd4kp57dU=
+ b=pDtaH8UPBuwdkiVwPvzFZ4ozBKUXWg6JbudhGqdKkhMOP1q+LPNAuo0/y3V0VIz8t
+ BlEEj7wxeE3eOOyRFfddFbuHEKjFIyrkiyIOhRXv++bDYqxzrUaMi1Mp8as3IN0Fc1
+ 43iEacFCZp/w8Qn8qEbp+VBecnkrL4EoUcC50Md4=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,24 +49,22 @@ Cc: peterx@redhat.com, farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
  steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
  yc-core@yandex-team.ru, vsementsov@yandex-team.ru,
  raphael.s.norwitz@gmail.com
-Subject: [PATCH v8 16/19] qapi: introduce backend-transfer migration parameter
-Date: Wed, 15 Oct 2025 16:21:32 +0300
-Message-ID: <20251015132136.1083972-17-vsementsov@yandex-team.ru>
+Subject: [PATCH v8 11/19] net/tap: introduce net_tap_setup()
+Date: Wed, 15 Oct 2025 16:21:27 +0300
+Message-ID: <20251015132136.1083972-12-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
 References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,182 +79,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This parameter enables backend-transfer feature: all devices
-which support it will migrate their backends (for example a TAP
-device, by passing open file descriptor to migration channel).
-
-Currently no such devices, so the new parameter is a noop.
-
-Next commit will add support for virtio-net, to migrate its
-TAP backend.
+Move most of net_init_tap_one() to net_tap_setup() - future pair
+for net_tap_new(), for postponed setup.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 ---
- migration/options.c | 18 ++++++++++++++++++
- migration/options.h |  2 ++
- qapi/migration.json | 38 ++++++++++++++++++++++++++++++++------
- 3 files changed, 52 insertions(+), 6 deletions(-)
+ net/tap.c | 39 +++++++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 5183112775..a461b07b54 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -262,6 +262,12 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
- }
+diff --git a/net/tap.c b/net/tap.c
+index b5ac856a3d..b01cd4d6c2 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -88,6 +88,10 @@ typedef struct TAPState {
+     int sndbuf;
+ } TAPState;
  
-+bool migrate_backend_transfer(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    return s->parameters.backend_transfer;
++static bool net_tap_setup(TAPState *s, const NetdevTapOptions *tap,
++                          const char *vhostfdname,
++                          int fd, int vnet_hdr, Error **errp);
++
+ static void launch_script(const char *setup_script, const char *ifname,
+                           int fd, Error **errp);
+ 
+@@ -723,11 +727,6 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              int vnet_hdr, int fd, Error **errp)
+ {
+     TAPState *s = net_tap_new(peer, model, name, tap);
+-    int vhostfd;
+-
+-    if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
+-        goto failed;
+-    }
+ 
+     if (tap->fd || tap->fds) {
+         qemu_set_info_str(&s->nc, "fd=%d", fd);
+@@ -746,6 +745,21 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+     }
+ 
++    if (!net_tap_setup(s, tap, vhostfdname, fd, vnet_hdr, errp)) {
++        qemu_del_net_client(&s->nc);
++    }
 +}
 +
- bool migrate_ignore_shared(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -963,6 +969,9 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-     params->cpr_exec_command = QAPI_CLONE(strList,
-                                           s->parameters.cpr_exec_command);
- 
-+    params->has_backend_transfer = true;
-+    params->backend_transfer = s->parameters.backend_transfer;
++static bool net_tap_setup(TAPState *s, const NetdevTapOptions *tap,
++                          const char *vhostfdname,
++                          int fd, int vnet_hdr, Error **errp)
++{
++    int vhostfd;
 +
-     return params;
- }
- 
-@@ -997,6 +1006,7 @@ void migrate_params_init(MigrationParameters *params)
-     params->has_zero_page_detection = true;
-     params->has_direct_io = true;
-     params->has_cpr_exec_command = true;
-+    params->has_backend_transfer = true;
- }
- 
- /*
-@@ -1305,6 +1315,10 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
-     if (params->has_cpr_exec_command) {
-         dest->cpr_exec_command = params->cpr_exec_command;
-     }
-+
-+    if (params->has_backend_transfer) {
-+        dest->backend_transfer = params->backend_transfer;
++    if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
++        return false;
 +    }
- }
- 
- static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-@@ -1443,6 +1457,10 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-         s->parameters.cpr_exec_command =
-             QAPI_CLONE(strList, params->cpr_exec_command);
++
+     if (tap->has_vhost ? tap->vhost :
+         vhostfdname || (tap->has_vhostforce && tap->vhostforce)) {
+         VhostNetOptions options;
+@@ -761,20 +775,20 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         if (vhostfdname) {
+             vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
+             if (vhostfd == -1) {
+-                goto failed;
++                return false;
+             }
+             if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                goto failed;
++                return false;
+             }
+         } else {
+             vhostfd = open("/dev/vhost-net", O_RDWR);
+             if (vhostfd < 0) {
+                 error_setg_errno(errp, errno,
+                                  "tap: open vhost char device failed");
+-                goto failed;
++                return false;
+             }
+             if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                goto failed;
++                return false;
+             }
+         }
+         options.opaque = (void *)(uintptr_t)vhostfd;
+@@ -789,14 +803,11 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         if (!s->vhost_net) {
+             error_setg(errp,
+                        "vhost-net requested but could not be initialized");
+-            goto failed;
++            return false;
+         }
      }
-+
-+    if (params->has_backend_transfer) {
-+        s->parameters.backend_transfer = params->backend_transfer;
-+    }
+ 
+-    return;
+-
+-failed:
+-    qemu_del_net_client(&s->nc);
++    return true;
  }
  
- void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
-diff --git a/migration/options.h b/migration/options.h
-index 82d839709e..755ba1c024 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -87,6 +87,8 @@ const char *migrate_tls_hostname(void);
- uint64_t migrate_xbzrle_cache_size(void);
- ZeroPageDetection migrate_zero_page_detection(void);
- 
-+bool migrate_backend_transfer(void);
-+
- /* parameters helpers */
- 
- bool migrate_params_check(MigrationParameters *params, Error **errp);
-diff --git a/qapi/migration.json b/qapi/migration.json
-index be0f3fcc12..35601a1f87 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -951,9 +951,16 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @backend-transfer: Enable backend-transfer feature for devices that
-+#     supports it. In general that means that backend state and its
-+#     file descriptors are passed to the destination in the migraton
-+#     channel (which must be a UNIX socket). Individual devices
-+#     declare the support for backend-transfer by per-device
-+#     backend-transfer option. (Since 10.2)
-+#
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @backend-transfer, @x-checkpoint-delay and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
-@@ -978,7 +985,8 @@
-            'mode',
-            'zero-page-detection',
-            'direct-io',
--           'cpr-exec-command'] }
-+           'cpr-exec-command',
-+           { 'name': 'backend-transfer', 'features': ['unstable'] } ] }
- 
- ##
- # @MigrateSetParameters:
-@@ -1137,9 +1145,16 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @backend-transfer: Enable backend-transfer feature for devices that
-+#     supports it. In general that means that backend state and its
-+#     file descriptors are passed to the destination in the migraton
-+#     channel (which must be a UNIX socket). Individual devices
-+#     declare the support for backend-transfer by per-device
-+#     backend-transfer option. (Since 10.2)
-+#
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @backend-transfer, @x-checkpoint-delay and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # TODO: either fuse back into `MigrationParameters`, or make
-@@ -1179,7 +1194,9 @@
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
-             '*direct-io': 'bool',
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*backend-transfer': { 'type': 'bool',
-+                                   'features': [ 'unstable' ] } } }
- 
- ##
- # @migrate-set-parameters:
-@@ -1352,9 +1369,16 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @backend-transfer: Enable backend-transfer feature for devices that
-+#     supports it. In general that means that backend state and its
-+#     file descriptors are passed to the destination in the migraton
-+#     channel (which must be a UNIX socket). Individual devices
-+#     declare the support for backend-transfer by per-device
-+#     backend-transfer option. (Since 10.2)
-+#
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @backend-transfer, @x-checkpoint-delay and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
-@@ -1391,7 +1415,9 @@
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
-             '*direct-io': 'bool',
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*backend-transfer': { 'type': 'bool',
-+                                   'features': [ 'unstable' ] } } }
- 
- ##
- # @query-migrate-parameters:
+ static int get_fds(char *str, char *fds[], int max)
 -- 
 2.48.1
 
