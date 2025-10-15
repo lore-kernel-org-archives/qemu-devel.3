@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BB5CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45847CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t5R-0000Ah-7h; Wed, 15 Oct 2025 00:26:05 -0400
+	id 1v8t5R-0000Al-NZ; Wed, 15 Oct 2025 00:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5P-0000AN-W1; Wed, 15 Oct 2025 00:26:04 -0400
+ id 1v8t5P-0000AG-NS; Wed, 15 Oct 2025 00:26:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t5L-0002mS-FP; Wed, 15 Oct 2025 00:26:03 -0400
+ id 1v8t5L-0002mM-F4; Wed, 15 Oct 2025 00:26:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4FF4115D9CC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 35FC815D9CB;
  Wed, 15 Oct 2025 07:24:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DCEF429FE75;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C318F29FE74;
  Wed, 15 Oct 2025 07:25:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Jim Shu <jim.shu@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 07/11] target/riscv: Fix SSP CSR error handling in
- VU/VS mode
-Date: Wed, 15 Oct 2025 07:25:11 +0300
-Message-ID: <20251015042520.68556-7-mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 06/11] target/riscv: Fix the mepc when sspopchk
+ triggers the exception
+Date: Wed, 15 Oct 2025 07:25:10 +0300
+Message-ID: <20251015042520.68556-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251014173635@cover.tls.msk.ru>
@@ -63,32 +63,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jim Shu <jim.shu@sifive.com>
 
-In VU/VS mode, accessing $ssp CSR will trigger the virtual instruction
-exception instead of illegal instruction exception if SSE is disabled
-via xenvcfg CSRs.
-
-This is from RISC-V CFI v1.0 spec ch2.2.4. Shadow Stack Pointer
+When sspopchk is in the middle of TB and triggers the SW check
+exception, it should update PC from gen_update_pc(). If not, RISC-V mepc
+CSR will get wrong PC address which is still at the start of TB.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250924074818.230010-3-jim.shu@sifive.com>
+Message-ID: <20250924074818.230010-2-jim.shu@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 84c1605b7606d810ded4c1c3a2717f158dc89e3f)
+(cherry picked from commit c851052a77fd79300708df2070297b5428b4be8d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5824928d95..94d15c9241 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -204,6 +204,8 @@ static RISCVException cfi_ss(CPURISCVState *env, int csrno)
- #if !defined(CONFIG_USER_ONLY)
-         if (env->debugger) {
-             return RISCV_EXCP_NONE;
-+        } else if (env->virt_enabled) {
-+            return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-         }
- #endif
-         return RISCV_EXCP_ILLEGAL_INST;
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index b0096adcd0..45686af4d6 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -40,6 +40,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
+     tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
+                   tcg_env, offsetof(CPURISCVState, sw_check_code));
++    gen_update_pc(ctx, 0);
+     gen_helper_raise_exception(tcg_env,
+                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+     gen_set_label(skip);
 -- 
 2.47.3
 
