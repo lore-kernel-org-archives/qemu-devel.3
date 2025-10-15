@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0393CCD184
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FDCCCD192
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8rC0-00053m-HD; Tue, 14 Oct 2025 22:24:45 -0400
+	id 1v8rJ0-0007FB-Ef; Tue, 14 Oct 2025 22:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8rBx-00052W-CP
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:24:41 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1v8rIy-0007F2-Sq
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:31:57 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v8rBi-0003tz-2S
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:24:39 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-634b774f135so9648013a12.2
- for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 19:24:23 -0700 (PDT)
+ id 1v8rIu-0004hE-3d
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:31:55 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-63994113841so11314786a12.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 19:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760495061; x=1761099861; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760495504; x=1761100304; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gp13dvcQhfwF/JKqdDmmqKB5Yail0lrxLkSvJtcQlUI=;
- b=IMMuAeFC/vd0XLoNyRvEVote0Myqz1toRsKmB3Kwl/NNxca0jOue/bOwOzVJUBLPUs
- gTp/0Qeit2wAx2qdDhoFhWoVhHhSvIUzh2d8YnxuHXKUCjw8ne6ABbkDUdBGG1XXrkCe
- P4Cr9TyrVUZzN+dwL3AMPhnP+hDPNqHHZMsbEqc2NcqGL6/kkCOsAKnuo/F9XtB1HEBU
- 3NisEgEBFuQwXY1iVjyP12bjWxlohTkgvrwAsSdwy9pmonUXA8NECyLWT5x71ldcaT+M
- byFhQcuhB/XsNQRtHOamG5S7B2sX3PIxlF3Gwalkv3pdippyKrNujoYoHaJLwY3+Mx80
- qiig==
+ bh=XqUux0AQPbB5AT6nf1+t3MWAjlR79bWMPkbU7vu+9hA=;
+ b=W9cjJUAnCTFOSjEBvXebPEHuGXMm87EoIh+TWMAatsdDSFqwlh2IiIV3/Eee0/WdxE
+ Pd/lqwIWbqHU79p8TUwxhvoewWrurTRMNZLaDB9MD1agig0Lu+fjJeszJIURyBd/qahW
+ 9Hp78w4RwiRwqzKPdhJGe3wYPbjGkgjEYrVC+gdpowY4jHyjkn1FlKSJMTcZo20ZH//i
+ 8gGidNBbKO8RR65piRo6n+qDku75fvWNz4ny3Zpy7nvtUiu6Gi4j1pohDLPr4zpBWEP5
+ H8KKMw9JwAHfh2K44IwgSr3bhECU8on9kp8OyEe5ldh//iyUJGiP9aFa6LPS/7k+I6XI
+ VRSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760495061; x=1761099861;
+ d=1e100.net; s=20230601; t=1760495504; x=1761100304;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gp13dvcQhfwF/JKqdDmmqKB5Yail0lrxLkSvJtcQlUI=;
- b=rtuijOynvzK3Wnph9dQQhbYUiRz8FAcXV61AnMigLn+6inNQTume6dEz2RnzCq9uvi
- XkTBVxiu5kCqd8ABIExAQ7tSgJq3lHifFir39FDAcd1Lle0fEJdmKoNg+c+G18rVVPQI
- sxuMV2QRqiwbAbg7LRT3toQdAkYm2L7n16o0B/uFYa/yQjykUyq0mHFUSWVdDYL4OYCj
- VUXtNAlNwBwl1mI2SSuWyf9y7VgL3fl7yMIoOy4O7wKXJmTaG5MNkm9kZ7GwNiCNRai9
- hHTw+0qTAJuMFlHl6+lSP1Y/n2WHYqMgvLFmD133+54rkYrUr/N2Mn8MbAc3D4ImXEYm
- OUpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0FZuFa5P3uBP4YyHQ4aw86z/uGbIl7Hi1ClLkNSoUFY0fi8vVeciLO37GypPml9sTyYhSqPprfgsb@nongnu.org
-X-Gm-Message-State: AOJu0YwwG090Bbsp+cuRnkvd4WVs+d/Ylx6vl8YeF9unx5kvIZJghABH
- Wbc1maDMAjRzI2aTnvdxr5ARcvgjlS+zUj3yyYm3p6Kh0tNkYMWu7ujOyI4x92rDjOCldrsvs9c
- V0E0XTrRbqv4bArruIvAk+fe8G/DKmGE=
-X-Gm-Gg: ASbGncvp6WQAjslPIQgCcuC2LDEZ3TzRFM32KL36DlecnZsdkAONGWxb4a5WOsXI1Qt
- Rj9RRH2xFnlZhfhDn0wmDIMw/Hlmaw1vQJzsHzg+Mj6va8SFQWMwIEbhWZKGs1dkTQWn+wH7Zg1
- xM9G4geQO4Js7hUzOLlnBUlnJ5hdMtvag0w7Z1ywcytFgQb/z/p9F2MsKu6MDBi4qsEiA+pIMkn
- iwZezcJLIo88hKkbe2ZFGCdEwX+ZAVqxH4Cpa5TDgpORapOwVRmhC8iGAo9Pj9EXAg=
-X-Google-Smtp-Source: AGHT+IEcQ2k4wDMQNmrj1s8e6x3fHLrMesMDJz/c3Vr2ndiT/3HBNjenrfvh83hHFWtIBXOxu4YhZjYG46svXs/bQhw=
-X-Received: by 2002:a05:6402:358c:b0:639:e050:6794 with SMTP id
- 4fb4d7f45d1cf-639e0506bd2mr20395065a12.11.1760495061212; Tue, 14 Oct 2025
- 19:24:21 -0700 (PDT)
+ bh=XqUux0AQPbB5AT6nf1+t3MWAjlR79bWMPkbU7vu+9hA=;
+ b=hG355KHVF14xTtIJdQCFYBpstBYE22+n7H8F3NhpB5eM3QUCsaU+W5H09wEBy2AUwb
+ oLQAyMUD5AUsBEkJ+85kqDGyGPgQBIrM6rGXmqe1QfRtkL2QyZENIAHoT4l1Zm9D8HVm
+ bDKRmHVYw9oryGlPxcTzovYjbwr1j4Nj9h/i5R6/vz5KRVYgi/36auY0HZVLg4NUaKcj
+ WT7A27ZndzSRf/VYL6IkdZnHa0lxTLmLnOOJbhkJWEkKmss6bG4nrlcpnZQhjGpmxfa7
+ i96kvs5KqIzIwE5ftrhwQZRhKiAKYbCZbGDqnOG0+Id1wxOyzptUGLUIdcdqqLXtARhi
+ fQ1Q==
+X-Gm-Message-State: AOJu0Yzu+7eq5RsHDi6s2LLbj8IrDfVd5gQjjcgCPB5ofR802IHlN10V
+ qH4wpMuNN80g0DsLeN3A16M1CTsO1desvUgFSRYuRNWyq3+jW1JP/DPV9FxpFeAMvg6gaEYmNVw
+ 5xgfPqEXbT9hy0pK1gpiFkek4A72/ujk=
+X-Gm-Gg: ASbGncskERwLlbWZ5Ci6TW7nDfzAxSnHgvYl7olzZT1i38oqb8fi1Q89ZYo7fMQN5pM
+ huOtUJtwp0w59TCAYK/5tJ+eUa/3lcUBVFQNmoW9WNsfJcfjxIiLsCktcXj2zYZJNzS8cAWEgFX
+ I6P7C5Et28a1agPjGF/ZK7jZl8T7CevLqh545+YcEM/cSuO3x0iXbf7recobB0T3um/KD4kxJaf
+ ji1BmWJ0DkRavz/CliOEG0xRWJyHu8hh/MN5aVitCnYOHM6+Sy0FB5u
+X-Google-Smtp-Source: AGHT+IF9vUJq7NpQSRnfoDt2DiDqAixHvCh6KXifOca9f5YAf98+fThZVwLcljhWUVD18dH6cI9OxhcdMr5JwA/OmBk=
+X-Received: by 2002:a05:6402:5c8:b0:637:e490:4600 with SMTP id
+ 4fb4d7f45d1cf-639d5b80283mr25139574a12.16.1760495503831; Tue, 14 Oct 2025
+ 19:31:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251004200049.871646-1-linux@roeck-us.net>
- <20251004200049.871646-5-linux@roeck-us.net>
-In-Reply-To: <20251004200049.871646-5-linux@roeck-us.net>
+References: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
+In-Reply-To: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 15 Oct 2025 12:23:54 +1000
-X-Gm-Features: AS18NWDIhFH0EEYwEg9W41_NTXJH8oVdsGtVc9ZrloYfaRmS2dY-y9U8YchcruA
-Message-ID: <CAKmqyKOP8hThu-XZud87dnJaJtmenA-mcrWnAwEyWN_7BYBfmA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] microchip icicle: Enable PCS on Cadence Ethernet
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
+Date: Wed, 15 Oct 2025 12:31:17 +1000
+X-Gm-Features: AS18NWCcb-wfa9ZY4kCaGLgWq46oXhRq5jWEl6ht5DIJB8_SCehCz9ciflTgtJM
+Message-ID: <CAKmqyKP-AvSfOk4rXAsT1vPdWGfVBxd6+pgw080_tAijEUY4Og@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv: Correct mmu-type property of sifive_u harts in
+ device tree
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -86,7 +83,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,49 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Oct 5, 2025 at 6:03=E2=80=AFAM Guenter Roeck <linux@roeck-us.net> w=
-rote:
+On Tue, Oct 14, 2025 at 1:00=E2=80=AFAM Zejun Zhao <jelly.zhao.42@gmail.com=
+> wrote:
 >
-> PCS needs to be enabled for SGMII to be supported by the Linux kernel.
+> Correct mmu-type property of sifive_u harts from Sv48 to Sv39 in 64-bit
+> mode since it's the only supported SATP mode.
 >
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  hw/riscv/microchip_pfsoc.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  hw/riscv/sifive_u.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index 6e2a6e721b..5d3007e8d3 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -415,6 +415,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *=
-dev, Error **errp)
->      object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, =
-errp);
->      object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
->      object_property_set_bool(OBJECT(&s->gem0), "phy-connected", false, e=
-rrp);
-> +    object_property_set_bool(OBJECT(&s->gem0), "pcs-enabled", true, errp=
-);
->
->      sysbus_realize(SYS_BUS_DEVICE(&s->gem0), errp);
->      sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem0), 0,
-> @@ -426,6 +427,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *=
-dev, Error **errp)
->      object_property_set_int(OBJECT(&s->gem1), "phy-addr", 9, errp);
->      object_property_set_link(OBJECT(&s->gem1), "phy-consumer",
->                               OBJECT(&s->gem0), errp);
-> +    object_property_set_bool(OBJECT(&s->gem1), "pcs-enabled", true, errp=
-);
->      sysbus_realize(SYS_BUS_DEVICE(&s->gem1), errp);
->      sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem1), 0,
->                      memmap[MICROCHIP_PFSOC_GEM1].base);
+> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+> index d69f942cfb..3e1ed209ca 100644
+> --- a/hw/riscv/sifive_u.c
+> +++ b/hw/riscv/sifive_u.c
+> @@ -176,7 +176,7 @@ static void create_fdt(SiFiveUState *s, const MemMapE=
+ntry *memmap,
+>              if (is_32_bit) {
+>                  qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "risc=
+v,sv32");
+>              } else {
+> -                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "risc=
+v,sv48");
+> +                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "risc=
+v,sv39");
+>              }
+>              riscv_isa_write_fdt(&s->soc.u_cpus.harts[cpu - 1], fdt, node=
+name);
+>          } else {
 > --
-> 2.45.2
+> 2.43.0
 >
 >
 
