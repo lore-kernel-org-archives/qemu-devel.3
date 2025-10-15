@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE676CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEA2CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8t6e-00019n-UZ; Wed, 15 Oct 2025 00:27:21 -0400
+	id 1v8t6U-0000sM-OQ; Wed, 15 Oct 2025 00:27:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t6c-00017t-NO; Wed, 15 Oct 2025 00:27:19 -0400
+ id 1v8t6R-0000hz-R9; Wed, 15 Oct 2025 00:27:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v8t6W-0002yo-Ai; Wed, 15 Oct 2025 00:27:18 -0400
+ id 1v8t6N-0002xo-To; Wed, 15 Oct 2025 00:27:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 723F515D9DC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4889D15D9DA;
  Wed, 15 Oct 2025 07:25:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0C0A629FE83;
- Wed, 15 Oct 2025 07:25:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE29729FE81;
+ Wed, 15 Oct 2025 07:25:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jim Shu <jim.shu@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Qing Wang <qinwang@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 09/13] target/riscv: Fix the mepc when sspopchk
- triggers the exception
-Date: Wed, 15 Oct 2025 07:25:33 +0300
-Message-ID: <20251015042540.68611-9-mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 07/13] pcie_sriov: make pcie_sriov_pf_exit() safe on
+ non-SR-IOV devices
+Date: Wed, 15 Oct 2025 07:25:31 +0300
+Message-ID: <20251015042540.68611-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251014174303@cover.tls.msk.ru>
@@ -61,31 +62,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim Shu <jim.shu@sifive.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-When sspopchk is in the middle of TB and triggers the SW check
-exception, it should update PC from gen_update_pc(). If not, RISC-V mepc
-CSR will get wrong PC address which is still at the start of TB.
+Commit 3f9cfaa92c96 ("virtio-pci: Implement SR-IOV PF") added an
+unconditional call from virtio_pci_exit() to pcie_sriov_pf_exit().
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20250924074818.230010-2-jim.shu@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit c851052a77fd79300708df2070297b5428b4be8d)
+pcie_sriov_pf_exit() reads from the SR-IOV Capability in Configuration
+Space:
+
+  uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+  ...
+  unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This results in undefined behavior when dev->exp.sriov_cap is 0 because
+this is not an SR-IOV device. For example, unparent_vfs() segfaults when
+total_vfs happens to be non-zero.
+
+Fix this by returning early from pcie_sriov_pf_exit() when
+dev->exp.sriov_cap is 0 because this is not an SR-IOV device.
+
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Reported-by: Qing Wang <qinwang@redhat.com>
+Buglink: https://issues.redhat.com/browse/RHEL-116443
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20250924155153.579495-1-stefanha@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit bab681f752048c3bc22d561b1d314c7ec16419c9)
+(Mjt: backport to before v10.0.0-819-g19e55471d4e8
+ "pcie_sriov: Allow user to create SR-IOV device")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index b0096adcd0..45686af4d6 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -40,6 +40,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-     tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-                   tcg_env, offsetof(CPURISCVState, sw_check_code));
-+    gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index dd4fbaea46..6281bd61d9 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -112,6 +112,9 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+ void pcie_sriov_pf_exit(PCIDevice *dev)
+ {
+     uint8_t *cfg = dev->config + dev->exp.sriov_cap;
++    if (dev->exp.sriov_cap == 0) {
++        return;
++    }
+ 
+     unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+ }
 -- 
 2.47.3
 
