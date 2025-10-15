@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67B4CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEFFCCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8rSa-0000mH-2o; Tue, 14 Oct 2025 22:41:53 -0400
+	id 1v8raB-0001qT-Fr; Tue, 14 Oct 2025 22:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v8rSW-0000lX-BS
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:41:48 -0400
+ id 1v8ra3-0001q5-IH
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:49:35 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v8rSP-0005g8-W6
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:41:47 -0400
+ id 1v8rZq-0006JR-A3
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:49:28 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59F2fJuN061330
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59F2n486063990
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 15 Oct 2025 11:41:19 +0900 (JST)
+ Wed, 15 Oct 2025 11:49:04 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=wA2nkoAjrw2F42nkelDD0ZtqCBF9pYTxn8ZInFXqjVA=; 
+DKIM-Signature: a=rsa-sha256; bh=gguJc98z35ToVrINbOWa6utCG1k72ZRcJf5CX1dzVvc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1760496079; v=1;
- b=LinuVxETo6DrZDPrRTEPlUJGZ8xi6dz4XmjrHiiWeaQNBqwgT50QwMgthPP6tfO1
- Ttryt628yyjuNp6YFA3ry6ilLYZXPmssl5IFQ3o7U6bhFbbjBF3Op1ztil9YclgY
- HrHKmRMHNyHnVs0bCNMpd275dzaMH/bV7CBU+ertLml5+Bcysc5ZCNowWF4cHm9l
- YL34/mOw/9wRPAWBS3WnQXKCuLzXdjS8YX9+DkEbWrSdzNBg8v0WktHe32P3U1cF
- N+1X1e4R6zMKYXm+etTi+lmzWDkGa2qH2l/nRr3JPk5MEj7zTG9rw+BVNj0oIRvH
- wz4j9lNrZbMvgP5sa4Rbqg==
-Message-ID: <eea555b4-879c-4fd8-b837-1a8c1e1c76fa@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 15 Oct 2025 11:41:18 +0900
+ s=rs20250326; t=1760496544; v=1;
+ b=Rj+X+RrJYLg71YUWNF9fDTh760YTzWnQv7RZVYaSbz54RmiNChx3v9r7RsyIfh+z
+ NZuJOJ25CUacEn479I/Z0h1dW1TOC84w7xyGPYTdzRq7cJ5DhmabKvG1dGZZMH/J
+ Abjfx2lDXYsK1Wo7ck7flxNJK4HcwouRTuhSuWUxTSWF6qfwnvV5PymB5xjffc5L
+ O4e6Dv3T89+5GKyQZWmGNGTg//bAXn/fAJTooRQSoIJ02So61W8hVtxZkZFhMT7h
+ ZowBwBK72wMnQWQ/2DFub2q7ysToNhzo5bs3UAHiIBjZ8/g8RY8nx/znH0hG9beK
+ ktXa1c72pXlksOa3uyoWaw==
+Message-ID: <7ebab3d3-ee30-499c-b475-a64560eb160a@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 15 Oct 2025 11:49:04 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] tests/functional: add GPU blob allocation test
+Subject: Re: [PATCH 1/8] Support per-head resolutions with virtio-gpu
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -49,12 +49,14 @@ Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Andrew Keesler <ankeesler@google.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20251014111234.3190346-1-alex.bennee@linaro.org>
- <20251014111234.3190346-9-alex.bennee@linaro.org>
+ <20251014111234.3190346-2-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251014111234.3190346-9-alex.bennee@linaro.org>
+In-Reply-To: <20251014111234.3190346-2-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -82,177 +84,120 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/10/14 20:12, Alex Bennée wrote:
-> This is a very short microkernel test that initialises and then maps
-> and unmaps a blob resource.
+> From: Andrew Keesler <ankeesler@google.com>
 > 
-> Without the other fixes in this series it causes QEMU to hang on the
-> unhandled unmap.
-
-Thank you for the reproduction case.
-
-I don't have time to look into it this and the next week due to 
-attendance to a conference (MICRO-58), but I'll definitely do so after that.
-
+> In 454f4b0f, we started down the path of supporting separate
+> configurations per display head (e.g., you have 2 heads - one with
+> EDID name "AAA" and the other with EDID name "BBB").
 > 
+> In this change, we add resolution to this configuration surface (e.g.,
+> you have 2 heads - one with resolution 111x222 and the other with
+> resolution 333x444).
+> 
+>    -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+>    -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+>    -device '{"driver":"virtio-vga",
+>              "max_outputs":2,
+>              "id":"vga",
+>              "outputs":[
+>                {
+>                   "name":"AAA",
+>                   "xres":111,
+>                   "yres":222
+>                },
+>                {
+>                   "name":"BBB",
+>                   "xres":333,
+>                   "yres":444
+>                }
+>              ]}'
+> 
+> Here is the behavior matrix of the current resolution configuration
+> surface (xres/yres) with the new resolution configuration surface
+> (outputs[i].xres/yres).
+> 
+> Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: current behavior - outputs[0] enabled with default xres/yres
+> 
+> Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: current behavior - outputs[0] enabled with xres/yres
+> 
+> Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+> 
+> Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+> Signed-off-by: Andrew Keesler <ankeesler@google.com>
+
+Nitpick: it is better to have a blank line between Behavior: and 
+Signed-off-by: to clarify the beginning of tags.
+
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Message-ID: <20250902141312.750525-2-ankeesler@google.com>
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   tests/functional/aarch64/meson.build      |  1 +
->   tests/functional/aarch64/test_gpu_blob.py | 73 +++++++++++++++++++++++
->   2 files changed, 74 insertions(+)
->   create mode 100755 tests/functional/aarch64/test_gpu_blob.py
+>   qapi/virtio.json             | 10 ++++++++--
+>   hw/display/virtio-gpu-base.c | 10 ++++++++++
+>   2 files changed, 18 insertions(+), 2 deletions(-)
 > 
-> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-> index 5ad52f93e1d..f6ca33b2be4 100644
-> --- a/tests/functional/aarch64/meson.build
-> +++ b/tests/functional/aarch64/meson.build
-> @@ -26,6 +26,7 @@ tests_aarch64_system_thorough = [
->     'aspeed_ast2700',
->     'aspeed_ast2700fc',
->     'device_passthrough',
-> +  'gpu_blob',
->     'hotplug_pci',
->     'imx8mp_evk',
->     'kvm',
-> diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/functional/aarch64/test_gpu_blob.py
-> new file mode 100755
-> index 00000000000..a913d3b29c8
-> --- /dev/null
-> +++ b/tests/functional/aarch64/test_gpu_blob.py
-> @@ -0,0 +1,73 @@
-> +#!/usr/bin/env python3
+> diff --git a/qapi/virtio.json b/qapi/virtio.json
+> index 05295ab6655..0ce789bb22f 100644
+> --- a/qapi/virtio.json
+> +++ b/qapi/virtio.json
+> @@ -971,15 +971,21 @@
+>   ##
+>   # @VirtIOGPUOutput:
+>   #
+> -# Describes configuration of a VirtIO GPU output.
+> +# Describes configuration of a VirtIO GPU output. If both xres and
+> +# yres are set, they take precedence over root virtio-gpu
+> +# resolution configuration and enable the corresponding output.
+>   #
+>   # @name: the name of the output
+>   #
+> +# @xres: horizontal resolution of the output in pixels (since 10.2)
 > +#
-> +# Functional tests for GPU blob support. This is a directed test to
-> +# exercise the blob creation and removal features of virtio-gpu. You
-> +# can find the source code for microkernel test here:
-> +#   https://gitlab.com/epilys/qemu-880-repro
-
-Nice. I appreciate the effort to creat the microkernel; hopefully it 
-will be useful also to exercise this part of virtio-gpu for debugging in 
-the future.
-
+> +# @yres: vertical resolution of the output in pixels (since 10.2)
 > +#
-> +# Copyright (c) 2025 Linaro Ltd.
-> +#
-> +# Authors:
-> +#  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> +#  Alex Bennée <alex.bennee@linaro.org>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
+>   # Since: 10.1
+>   ##
+>   
+>   { 'struct': 'VirtIOGPUOutput',
+> -  'data': { 'name': 'str' } }
+> +  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
+>   
+>   ##
+>   # @DummyVirtioForceArrays:
+> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+> index 7269477a1c8..6adb5312a40 100644
+> --- a/hw/display/virtio-gpu-base.c
+> +++ b/hw/display/virtio-gpu-base.c
+> @@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+>       g->req_state[0].width = g->conf.xres;
+>       g->req_state[0].height = g->conf.yres;
+>   
+> +    for (output_idx = 0, node = g->conf.outputs;
+> +         node && output_idx < g->conf.max_outputs;
+
+output_idx < g->conf.max_outputs is redundant as it is already enforced 
+with the first for-loop that enumerates outputs.
+
+The condition can be simply removed, but I think merging this loop to 
+the earlier loop will make the code a bit more concise.
+
+Aside this redundancy of the code, the logic this patch implements looks 
+good to me.
+
+> +         output_idx++, node = node->next) {
+> +        if (node->value->has_xres && node->value->has_yres) {
+> +            g->enabled_output_bitmask |= (1 << output_idx);
+> +            g->req_state[output_idx].width = node->value->xres;
+> +            g->req_state[output_idx].height = node->value->yres;
+> +        }
+> +    }
 > +
-> +from qemu.machine.machine import VMLaunchFailure
-> +
-> +from qemu_test import Asset
-> +from qemu_test import wait_for_console_pattern
-> +from qemu_test.linuxkernel import LinuxKernelTest
-> +
-> +class Aarch64VirtBlobTest(LinuxKernelTest):
-> +
-> +    ASSET_BLOB = Asset('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/'
-> +                       'download?path=%2Fblob-test&files=qemu-880.bin',
-> +                       '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
-> +
-> +    def test_virtio_gpu_blob(self):
-> +
-> +        self.set_machine('virt')
-> +        self.require_accelerator("tcg")
-> +
-> +        blob = self.ASSET_BLOB.fetch()
-> +
-> +        self.vm.set_console()
-> +
-> +        self.vm.add_args("-machine", "virt,memory-backend=mem0,accel=tcg",
-> +                         '-m', '4G',
-> +                         '-cpu', 'max',
-> +                         '-kernel', blob,
-> +                         '-object', 'memory-backend-memfd,share=on,id=mem0,size=4G',
-> +                         '-global', 'virtio-mmio.force-legacy=false',
-> +                         '-nic', 'none',
-> +                         '-device',
-> +                         'virtio-gpu-gl,hostmem=128M,blob=true,venus=true',
-
-venus is not exercised with this test case so can be removed.
-
-This test somehow hung on my laptop even with the all other patches in 
-this series applied, and removing venus=true fixed the hung.
-
-I suppose the hang is unrelated to the problem fixed in this series and 
-but rather is a problem specific to my environment (Asahi Linux). 
-Anyway, I think removing venus=true is a safer option to avoid problems 
-with the host graphics stack.
-
-Below is a part of build/meson-logs/testlog.txt:
-
-==================================== 1/1 
-=====================================
-test:         qemu:func-thorough+func-aarch64-thorough+thorough / 
-func-aarch64-gpu_blob
-start time:   02:25:49
-duration:     90.01s
-result:       killed by signal 15 SIGTERM
-command: 
-MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 
-MALLOC_PERTURB_=12 RUST_BACKTRACE=1 
-QEMU_TEST_QEMU_BINARY=/home/me/q/var/qemu/build/qemu-system-aarch64 
-UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 
-PYTHONPATH=/home/me/q/var/qemu/python:/home/me/q/var/qemu/tests/functional 
-ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 
-MESON_TEST_ITERATION=1 QEMU_BUILD_ROOT=/home/me/q/var/qemu/build 
-QEMU_TEST_QEMU_IMG=/home/me/q/var/qemu/build/qemu-img 
-LD_LIBRARY_PATH=/home/me/q/var/qemu/build/contrib/plugins:/home/me/q/var/qemu/build/tests/tcg/plugins 
-/home/me/q/var/qemu/build/pyvenv/bin/python3 
-/home/me/q/var/qemu/tests/functional/aarch64/test_gpu_blob.py
------------------------------------ stderr 
------------------------------------
-==31639==WARNING: ASan doesn't fully support makecontext/swapcontext 
-functions and may produce false positives in some cases!
-==============================================================================
-
-
-Summary of Failures:
-
-1/1 qemu:func-thorough+func-aarch64-thorough+thorough / 
-func-aarch64-gpu_blob TIMEOUT        90.01s   killed by signal 15 SIGTERM
-
-Ok:                 0
-Expected Fail:      0
-Fail:               0
-Unexpected Pass:    0
-Skipped:            0
-Timeout:            1
-
-> +                         '-display', 'egl-headless,gl=on',
-> +                         '-d', 'guest_errors')
-> +
-> +        try:
-> +            self.vm.launch()
-> +        except VMLaunchFailure as excp:
-> +            if "old virglrenderer, blob resources unsupported" in excp.output:
-> +                self.skipTest("No blob support for virtio-gpu")
-> +            elif "old virglrenderer, venus unsupported" in excp.output:
-> +                self.skipTest("No venus support for virtio-gpu")
-> +            elif "egl: no drm render node available" in excp.output:
-> +                self.skipTest("Can't access host DRM render node")
-
-This condition is unnecessary as DRM render node is not used.
-
-> +            elif "'type' does not accept value 'egl-headless'" in excp.output:
-> +                self.skipTest("egl-headless support is not available")
-> +            elif "'type' does not accept value 'dbus'" in excp.output:
-> +                self.skipTest("dbus display support is not available")
-
-This can be removed too.
-
-> +            elif "eglInitialize failed: EGL_NOT_INITIALIZED" in excp.output:
-> +                self.skipTest("EGL failed to initialize on this host")
-> +            else:
-> +                self.log.info("unhandled launch failure: %s", excp.output)
-> +                raise excp
-> +
-> +        self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
-> +        # the test should cleanly exit
-> +
-> +
-> +if __name__ == '__main__':
-> +    LinuxKernelTest.main()
+>       g->hw_ops = &virtio_gpu_ops;
+>       for (i = 0; i < g->conf.max_outputs; i++) {
+>           g->scanout[i].con =
 
 
