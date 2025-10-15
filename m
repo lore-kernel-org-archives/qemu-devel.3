@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F2FCCD194
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 16:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9358FCCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 17:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v94nI-0004oz-0L; Wed, 15 Oct 2025 12:56:09 -0400
+	id 1v950G-0007QT-Vq; Wed, 15 Oct 2025 13:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v94nG-0004oc-9t
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:56:06 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v950D-0007QG-30
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:09:29 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v94nA-0002OH-5Y
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:56:05 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3ecdf2b1751so4969833f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 09:55:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9507-0003dI-Hz
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 13:09:28 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-471075c0a18so7380265e9.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 10:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760547354; x=1761152154; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760548150; x=1761152950; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=G3blqevTUMY+PyitpbFBhgo4hWwUVIj/OwUUeGP3sUM=;
- b=eGL3Jg3W6+iM2HHinKkqI/giE+VJ5mdSbUb/hHe9n7o91a5RL/PbADTqfz0kH8ATQV
- HaXUX9DkvYlpi3TDgTPDlZgcwz6gAwrRUigArbVTGrGfrHzcRbz7N+bZh2WoLpL8Logc
- jLGfwkGjp4blKlUHxMUCXTYnPpp5LQD47UNpfUsx4bqtFr/dAjpV0C5y8YnEPHkukbL6
- kzcpO/dsY3xKo2Nb835OrtWaK7Z0KdTZIXuaXnn7as6kIC/woAlhNIZJMQSgRHUB/eq1
- C7carJWxA/OsQ5Vj8oPaKGuNhPPG4/eZmx5Te+692LXFFKTOkwoFR1P/kWy6BoYFAyW4
- ym0A==
+ bh=5jopzM0swassCYuNUhN7gP+sTCya11oFX1c1euu/V3U=;
+ b=zfDzaWo3jLvncLzKoO7TZlCJKAnq7VwV9Qy0LyPrgOVQJ/w8bKIDi6n3o2NdTFBvjZ
+ rMDqkDy/WFP8maNzPyNEeCeUQHFEzsUiQ/tLUgDanMDNsxz1BEcbnSwGiilRJ1Z/zkpv
+ CBAc9Al81/xZCHnxVxk/1agnlJKdtXPHMylTEq246n8dPVwLo7Khy4glerOC9kMYYwDB
+ oHEdypUhY30vbPgVhFTgsQFJLcqGb7bH75rx/SgS/bwCsAPlM6tiYD7jOqYwMjEACW9d
+ 298cwU8ClNyC43g/BKa5UNGRBeH1kJQ+ijwrXLriRszZfRyviazhVsZ11HDSs30jGQJn
+ 60gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760547354; x=1761152154;
+ d=1e100.net; s=20230601; t=1760548150; x=1761152950;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G3blqevTUMY+PyitpbFBhgo4hWwUVIj/OwUUeGP3sUM=;
- b=IqCVBhxh5/ylWsBaRtOHE28v55XL6SN/xycCQ87UHQCFQnABASOTnT4TwHbiETj331
- p51e6cKymV+NxWG6lKc7d4ABMa6t6DhRkZJTEp/+lyO5G9Ns9MlMMLSy2KwlnXPAiL4U
- fETmA9+7FdEtNvuttQXkgHtXAYlVghnPCGtAZDaB/RKU5sFoRiUDkhcHr/luwBfZtEqD
- l0Eja1iakjZlH0RUC2K9oL3KBbdKzg21aD0WRH7dPRuS+l/o0O5WQEgexW+NC6k5pdNP
- +K16f3CPPieVJdXDKswxwvR9f58JwULHo+0Rvw6oNDitNHlScL2eh3KUYC9RZKioVo8n
- mcTg==
-X-Gm-Message-State: AOJu0Yzu0kU9K5mwGPfP6Q+VLLrTJmkmcUmJTPLH8oFfkXYbyqvGaSVj
- Va+W6mSfjcA0vcgbElQpQYkevhFNsWluXtKyAu1e+dJzEM6VrYdS0TiUU+ShCjK69A1ngmIzuHa
- swnoWXsWfig==
-X-Gm-Gg: ASbGnctO3U1LhX1Rg2BDt/BvHAqy7B/njLI8z/SuYES22a8XCSQ7lEwzQbqpi5dVw4z
- 6f8y7rxjPMv9RWmvsr2t7NAsbl9k94eTTuahH78FgxkE4omGGlRh1rVV4zw6buDnhIUJqS6fiz1
- dQEfPSEyglIOoaLR5MO0CS2FExgb59hWAf4rsR31we1iSlP5C9Bo8Pp5bCvq1cm4JclBPDLeCex
- 1+Tnq35u/TorMi3n3GKstu/1Tzpu2l8KbHZ+R3TIb6AOwp/Ei4i1aKhpxLLH/YoLW07j5IjKV3l
- btxjlDCIAJEO3HNnuf8l9VVGLNHzvc41ZvgFAOS2t+Tgrz1ePIefrksDbhoJuHpwTZxA16WliKc
- cd6kVw84F8hyvujI/HEPfvGVYTcRqYDemHbILOF0UM28vvdUM/4MR8Tx0riHyZztveJmPNfinh+
- c/LY8GM06T7QgMtUmjCAwUm1I=
-X-Google-Smtp-Source: AGHT+IFoCX6AO+nOOMZepXenilz5V+4kYhDBhHqOEGHWBXLAHTPxDVTDPLfaUSms7MCwPt4kZzzFGg==
-X-Received: by 2002:a05:6000:2301:b0:425:72cd:8364 with SMTP id
- ffacd0b85a97d-4266e8e1afamr20010298f8f.53.1760547353767; 
- Wed, 15 Oct 2025 09:55:53 -0700 (PDT)
+ bh=5jopzM0swassCYuNUhN7gP+sTCya11oFX1c1euu/V3U=;
+ b=ZJKcSASJnvBWMEp3l5h9r3WRrmVxVg85FZ4l3cjqNSNqp4UR3Xs+f/0OTv1iVSUFqC
+ VE8uSMdt8l+hnPcCRikO/Im01EI+2DQBYGnd/nuul1YgVAgq271Duc08Y9wQhXoJ21lB
+ b6eTGmiwT+rbvmd6AV62TFvvsdtQlW1sFvbd5AYM+s07/L4aoGMKWfQbgVCzSusSM8om
+ vQz9fuTJoxDww+MK6m5yVarO24/CWehvcNQrf+ns2EDVtL6efxAH4ciGK5lwJP/SDrz5
+ F5fDKpYJa0na8TPArJFiqTsnGMjehjn7gsh3kQTMxkLYUWWVEu/n1UPmYpSaMTRsManS
+ 7sqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXnHsQF9XYEqHBhMV/cPRZtlR/bk+4eUgedZwT7UFflEK7RiTE0gWitHntv4Dw8M6kRJ7XM0O0FL8A9@nongnu.org
+X-Gm-Message-State: AOJu0Yy1R2lW/bcrGOV36umtq6zUs7/OIRsbF5OfH/hd2U4erTILhBz4
+ sxDLl/M2IVruN6v8QFpB5tuehf5FRUlYMsNz7LFXWTuOSdWdKbEMWFHqJAklLpBjEY0=
+X-Gm-Gg: ASbGnctpr0kkkBYOrogAvtEv3BCMxm1naKrMDfMBn+T38Fj4eWM5eSk3mdl+4Jy0tID
+ jNhMbGdCRPXpgMqWl0HoLBRfkubnE0CbK0MAwEiBvNObJQ0pYMqJW+6Ry9hm5j+DWltf5C6rG2X
+ miVww/+dZ3IsTvf82gL71yNaVTLvfLsdBoO4RmmuEIrkEBPI98sol23A7AQvFPpzOnI8IiEGQ43
+ 8JgaDLVTOt8Om3DwfOi+DXbAJ7BY4/3mmJXyMHVWVSgXVMKSyXflqDMtgrRt2CodgZf55ww9ltr
+ cZPckYSWjLrmnfL2kXEs9cQL7f1SWdxLtIYZ6O1zycHL96KgFMmXN+OUOE0hkhDzbLoXxvYkfOQ
+ aqxGOu0Hgs7A4i10bZsZq0xyr2gKc960wrRJcP+gFT97vveql3EALF6lN/BGxNKtjf5YvbcBfZb
+ KQBK4DifC/QmNi2djGEKkLFpw=
+X-Google-Smtp-Source: AGHT+IFbRsNSVQZb/tg8RtuOjyu4kfSXzAjdAcxZehRMPX52cgh07xsIqXRFpNl2EPWZO2UWGjPofQ==
+X-Received: by 2002:a05:6000:43d6:20b0:426:f391:1968 with SMTP id
+ ffacd0b85a97d-426f3911a30mr3759293f8f.35.1760548150113; 
+ Wed, 15 Oct 2025 10:09:10 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce57d49bsm31514917f8f.10.2025.10.15.09.55.52
+ ffacd0b85a97d-426ce57d4bbsm30468629f8f.2.2025.10.15.10.09.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 09:55:53 -0700 (PDT)
-Message-ID: <3d719fc0-426b-483b-b72a-ef205b1c22d0@linaro.org>
-Date: Wed, 15 Oct 2025 18:55:52 +0200
+ Wed, 15 Oct 2025 10:09:09 -0700 (PDT)
+Message-ID: <155aadcd-5044-443c-a647-02c5e3d92ad6@linaro.org>
+Date: Wed, 15 Oct 2025 19:09:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/12] target/tricore: Remove all uses of target_ulong
- types
+Subject: Re: [PATCH 9/9] target/hppa: Replace MO_TE -> MO_BE
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>
-References: <20251010052141.42460-1-philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Helge Deller <deller@gmx.de>
+References: <20251009101040.18378-1-philmd@linaro.org>
+ <20251009101040.18378-10-philmd@linaro.org>
+ <2079231a-e7e9-4b1f-80a6-b60e2431c8e1@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251010052141.42460-1-philmd@linaro.org>
+In-Reply-To: <2079231a-e7e9-4b1f-80a6-b60e2431c8e1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 07:21, Philippe Mathieu-Daudé wrote:
-> Remove incorrect target_ulong uses, then for the rest
-> mechanically convert:
+On 9/10/25 19:04, Richard Henderson wrote:
+> On 10/9/25 03:10, Philippe Mathieu-Daudé wrote:
+>> We only build the PA-RISC targets using big endianness order:
+>>
+>>    $ git grep TARGET_BIG_ENDIAN configs/targets/hppa-*
+>>    configs/targets/hppa-linux-user.mak:5:TARGET_BIG_ENDIAN=y
+>>    configs/targets/hppa-softmmu.mak:2:TARGET_BIG_ENDIAN=y
+>>
+>> Therefore the MO_TE definition always expands to MO_BE. Use the
+>> latter to simplify.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/hppa/translate.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+>> index 6fec63cb433..c9009441ad0 100644
+>> --- a/target/hppa/translate.c
+>> +++ b/target/hppa/translate.c
+>> @@ -106,7 +106,7 @@ typedef struct DisasContext {
+>>   static inline MemOp mo_endian(DisasContext *ctx)
+>>   {
+>> -    return MO_TE;
+>> +    return MO_BE;
+>>   }
+>>   /* Note that ssm/rsm instructions number PSW_W and PSW_E 
+>> differently.  */
 > 
->   - target_ulong -> uint32_t
->   - TCGv -> TCGv_i32
->   - tcg_temp_new() -> tcg_temp_new_i32()
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Based-on: <20251010031745.37528-1-philmd@linaro.org>
-> 
-> Philippe Mathieu-Daudé (12):
->    target/tricore: Remove target_ulong use in gen_goto_tb()
->    target/tricore: Replace target_ulong -> vaddr with tlb_fill() callees
->    target/tricore: Remove target_ulong use in translate_insn() handler
->    target/tricore: Remove target_ulong use in gen_addi_d()
->    target/tricore: Remove unnecessary cast to target_ulong
->    target/tricore: Replace target_ulong -> uint32_t in op_helper.c
->    target/tricore: Declare registers as TCGv_i32
->    target/tricore: Inline tcg_gen_ld32u_tl()
->    target/tricore: Expand TCG helpers for 32-bit target
->    target/tricore: Pass DisasContext as first argument
->    target/tricore: Un-inline various helpers
->    target/tricore: Expand TCGv type for 32-bit target
+> Indeed.  Like ppc64, hppa always defaults to big-endian and has a PSW 
+> bit to enable little-endian.  (Which we don't implement, and quite 
+> possibly was never implemented in any hardware.)
 
-Series queued, thanks.
+Indeed, per parisc2.0.pdf:
+
+   PSW_E
+   Little endian memory access enable. When 0, all memory references
+   are big endian. When 1, all memory references are little endian.
+   Implementation of this bit is optional. If it is not implemented,
+   all memory references are big endian and this bit is a reserved bit.
+
+I'll squash:
+
+    /* The PSW_E bit sets the (little) endianness, but we don't 
+implement it. */
+
+Thanks,
+
+Phil.
 
