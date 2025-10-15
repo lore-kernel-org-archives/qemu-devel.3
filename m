@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD192CCD19E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB68CCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v99D4-0003bc-Mq; Wed, 15 Oct 2025 17:39:02 -0400
+	id 1v99DA-0003e1-S3; Wed, 15 Oct 2025 17:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v99Cx-0003Zo-Uq
+ id 1v99Cx-0003Zj-0s
  for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:57 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v99Cp-0004z4-B3
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:55 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-b49c1c130c9so6147a12.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:38:45 -0700 (PDT)
+ id 1v99Cr-0004zQ-LU
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:54 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-789fb76b466so84584b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:38:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760564324; x=1761169124; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bdcGU3hi9Z5/EbuaY8U3gbHHOmLLTJarEwS9cmQnv8o=;
- b=pqAKfLd6Pk5kuVqGrvs5XLprPgLsG0kuuSxUcNo6ZOMD7sougU4Hh875PcDsGltpZa
- n+rkh/yBUXGRB5qtWNZIQOoEWem2DXNzzbh4y+4tMI4DGLwO+Q5R/GgH5br+EB86wlWL
- +MOQD32/qYXOaxCYZk7tMBW6RXIWTj96PjBAnmmZyV4qfHOtPEm5Gg7dYJ50hlej3a1R
- aBjdrZOA7q1eVzSye4V6e869yxNFT7XeiyeQbS6FNV7cyh7cp61vEBEw0t71Kt4+jPVt
- HxTWqYeJmRXvpHZFUOXzo3vDwi+/RuDCL5YpO17sV59I6gQyqELH2JtMa7MlepvySFRF
- Xndw==
+ d=linaro.org; s=google; t=1760564327; x=1761169127; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+w5No0Ep1LX3XR7FDPjD+GZNr16ogOShPRDBWgvVMw0=;
+ b=LB87uYO88nQTqc+sLFC7VREc8Ve5kmBysGbOAJ7g6K37G7XU0gTJ8e1vWApsMxYCdy
+ KidN5vtCQNagtmczq7TdE8aCqaILiXKDgfgoCBJONiNhP/ajFuMi9S5GVpMI0koTIJus
+ TWb/mgeGTAPkMVUjO8J/hJxGjFPckCNZVXmKdhYVCqLCGp6FW3sBOsNKBQAQUB94rW9e
+ dxVwllTSC3xfqISRG6NkpAHVDgn+1i7YnlmuF0ImfRns8g+xfSgWE6hd7EkhMzcVWZrU
+ j5lC0c7SXYtGC+XivkjGZ+xQEu8/y/Yg26HWY10ky2bqIOGn2b3gIh5GEcc7DSi6KBnq
+ Kpmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760564324; x=1761169124;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bdcGU3hi9Z5/EbuaY8U3gbHHOmLLTJarEwS9cmQnv8o=;
- b=ivFv3my0oqV7hsiQyhQYv3y9t+LWZzHpJNlVzJK/Zylr+j/LJtlbds1aA8UPMCJZee
- WlThZ16vXzfMkHrZPRjoq/np+DWJVLHxKma2T8i1P8qnEQQtyFOpKudcxxKld5HEUetg
- gDTLr+/qO7XAxFerfspUVdGaRQJRqsAzse6mdPmqhA2mUXQggO/XwyV7vO9cMoVCsFKQ
- H26kKBD5wyz0EvMrrMx5KAjmomaYRovMJ5v54atDIxLDBQGTlNpA0PTgE606tu8AdFyN
- XW7xQiYDcX3nvgKBVumSbjM3JnVGmDOBWbD0+G+nXvWqCLueMJ7Eh/XkgZ2ZGwHpGguQ
- IE8A==
-X-Gm-Message-State: AOJu0YyDCOaMAXWk2Cr4aCRGjvM22cYNaHwXn0xFcvupwZ4BtYOudS+q
- pvTFZYgUewsdGrBggBDzBAp3Nc0L2KLhFanQbcb+ygR+Ch2pviKupYqjwMsiJgFJCQHrV9cPDLI
- yB6Yoah0=
-X-Gm-Gg: ASbGnct+HmewFr+HxpUtnjVxhT5RQUU2giYvPAP8aoBgIqQcFErarMUXYNePCL3AGNu
- WCs+BodlsW9hXFUAW3CmxQprW1CM5LZoGWL7wVEva6HdIz470psvmH/ZKhWxFNa1OyA9RxpewbF
- nDB32fvwdB3y3mVJ5R8eUMRw0j1kCJcJAJ9j1J+mioFuUYejXSg7f0BKZqNgo1Ux2RWPEY1Dblv
- 6ZdosrsIChXcH2fQujW7sIUqRYvCR1wCEWRtX58OdnDVoT5PhNZOfAAT6QNE7qp9klrLzFkFPTl
- 2dvT7MppzRxEnn62464wzFEDNgwILe+omYINdyWtuQmUDlDy2WhUHa/rhChgAja1Mh+AdphT4XR
- c3efIu4zamS07l+Qqz8RsA2WPFoTD/A08+7FW8B1ceoLrX4B9pqFVqLvSbwqLl8pvRM1W1Z+p8p
- XBXkakR9C4bcPcIEhR4VNalsq1RxyFBY0=
-X-Google-Smtp-Source: AGHT+IF0yIjg57nYOqdO3Pwx7N7KNFJA98ENzdWhxXyJ09CqAO/5yKlb0vSYveuSqjsCHLRS6mqGjg==
-X-Received: by 2002:a17:902:e883:b0:271:fead:9930 with SMTP id
- d9443c01a7336-290272f835amr439845755ad.59.1760564324336; 
- Wed, 15 Oct 2025 14:38:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760564327; x=1761169127;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+w5No0Ep1LX3XR7FDPjD+GZNr16ogOShPRDBWgvVMw0=;
+ b=ghDzh74KDhe7qtFEhknuvZsckBdIrNtNOas8oE4Fe0FOKOl1uhR0INwOLlh//vVo0Q
+ Vs2Zp81KSzIByBAhs+9LWV4YwutRbuDRvJrEwBoNq3eq4oqQ/35u6xv5p57nz1y+VMDY
+ PV9RzzHsvPUGUdw2rXskXNQ3Ro5ikBOXs+tZ1yfe0vLANLajHWrXOhchbTNvm+4dOsaD
+ vw41SDzdIKdzpXFB/6R1lv5gzoY0dtig4amWV1WDcr5pVT+suIll7fb6CXalFSvPbCtT
+ CnZUsofdGLN0VCLOn1IiCb02o9G8DgCw+dVUjWOqDrlQMk3TI9Xui5I1RspEM8ml55Yt
+ 1I3w==
+X-Gm-Message-State: AOJu0YxI16DAD+lZV+Sj5Sy8pS23+ge6Cr78PeIxQUvZckCiTkgQMvuO
+ Esj/d4qt+njHHp9yUkhjmmSs9uh4EuZhau2KjKSsExE3QulvitRd3BFTsm9V+Znda2ch04chbW5
+ ++2DIQ1U=
+X-Gm-Gg: ASbGncv2tWgOBNBMrb1JQkEFCI9nPjDRAskP/7BQNwsxoQ95xSSIdnMG3KR8W55iSiZ
+ T7WGMQpbp632whdUenWoTnK6Vxu10PNX8xRMc6njin6HSn2EgguhmZ2j2DxiPafIY0dA465EWV3
+ SMmoC2wI/a6zjXkzjPS+UHlaX6w6E+o+ohdo+F8MoJ6Zc1p8fJzir4RLciSr40+quGzHFQfpWWe
+ R8d1lmhHXK16BGtBS7lvGAYHwoks6ivueUG/2W4UyD1j0xC8cjz/OgS+iCy1cj+vUsbdYzARC3y
+ YqlV1JT0lhHWWIGvMkenkeP6ZCQBNFINz8L0fUv+HpDJBI/2BCM2mSgsCSvw5qjBM0DQh9fE0XJ
+ sU4uwOxOJvoCcVJSRszMSHxRigi9YSgcomNPy5UCSL4bhB9ak5DIZwCEwccFJ2g==
+X-Google-Smtp-Source: AGHT+IFLXtTT8xkjpMMT/+twPFiZtnoqJIfi9qSDoRKMMVQusYfy1zH4otThSohMjAIzf88rLx0lRA==
+X-Received: by 2002:a17:903:2a8c:b0:290:78b2:675 with SMTP id
+ d9443c01a7336-29078b20b87mr113290275ad.41.1760564327125; 
+ Wed, 15 Oct 2025 14:38:47 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099a7d1bbsm6247085ad.65.2025.10.15.14.38.43
+ d9443c01a7336-29099a7d1bbsm6247085ad.65.2025.10.15.14.38.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 14:38:44 -0700 (PDT)
+ Wed, 15 Oct 2025 14:38:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH v2 0/9] tcg: Remove support for 32-bit mips/ppc hosts
-Date: Wed, 15 Oct 2025 14:38:34 -0700
-Message-ID: <20251015213843.14277-1-richard.henderson@linaro.org>
+Cc: philmd@linaro.org, alex.bennee@linaro.org, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v2 3/9] kvm/mips: Remove support for 32-bit hosts
+Date: Wed, 15 Oct 2025 14:38:37 -0700
+Message-ID: <20251015213843.14277-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251015213843.14277-1-richard.henderson@linaro.org>
+References: <20251015213843.14277-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While all 32-bit hosts are deprecated, I have been unable to test
-either of these hosts for quite some time.  Let's remove them first.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Changes for v2:
- - I'm going to leave Phil's docker changes to Alex, since there was
-   some issue with build images vs cross-testing images.
- - There was a error in the v1 ppc configure update, a 'fi' not
-   removed with its corresponding 'if'.  There
- - Additional cleanups for both mips and ppc64.
+See previous commit for rationale.
 
-I've tested the result on ppc64le (cfarm120) and ppc64 (cfarm121),
-but have only done a cross-build for mips64el.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251009195210.33161-7-philmd@linaro.org>
+---
+ meson.build | 2 --
+ 1 file changed, 2 deletions(-)
 
-
-r~
-
-
-Philippe Mathieu-Daudé (7):
-  gitlab: Stop cross-testing for 32-bit MIPS hosts
-  buildsys: Remove support for 32-bit MIPS hosts
-  kvm/mips: Remove support for 32-bit hosts
-  tcg/mips: Remove support for O32 and N32 ABIs
-  tcg/mips: Remove support for 32-bit hosts
-  buildsys: Remove support for 32-bit PPC hosts
-  tcg/ppc: Remove support for 32-bit hosts
-
-Richard Henderson (2):
-  tcg/mips: Remove ALIAS_PADD, ALIAS_PADDI
-  tcg/ppc: Remove dead cases from tcg_target_op_def
-
- include/qemu/timer.h                     |  13 +-
- tcg/mips/tcg-target-has.h                |   2 -
- tcg/mips/tcg-target-reg-bits.h           |   8 +-
- tcg/ppc/tcg-target-has.h                 |   5 +-
- tcg/ppc/tcg-target-reg-bits.h            |   8 +-
- disas/disas-host.c                       |   4 +-
- util/cacheflush.c                        |   4 +-
- .gitlab-ci.d/container-cross.yml         |   6 -
- .gitlab-ci.d/crossbuilds.yml             |  14 -
- common-user/host/mips/safe-syscall.inc.S |  35 --
- configure                                |  26 +-
- docs/about/deprecated.rst                |  13 +-
- docs/about/removed-features.rst          |   6 +
- meson.build                              |   2 -
- tcg/mips/tcg-target.c.inc                | 319 +++---------------
- tcg/ppc/tcg-target.c.inc                 | 391 +++++------------------
- 16 files changed, 152 insertions(+), 704 deletions(-)
-
+diff --git a/meson.build b/meson.build
+index afaefa0172..c5710a6a47 100644
+--- a/meson.build
++++ b/meson.build
+@@ -295,8 +295,6 @@ elif cpu == 'ppc'
+   kvm_targets = ['ppc-softmmu']
+ elif cpu == 'ppc64'
+   kvm_targets = ['ppc-softmmu', 'ppc64-softmmu']
+-elif cpu == 'mips'
+-  kvm_targets = ['mips-softmmu', 'mipsel-softmmu']
+ elif cpu == 'mips64'
+   kvm_targets = ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmmu', 'mips64el-softmmu']
+ elif cpu == 'riscv32'
 -- 
 2.43.0
 
