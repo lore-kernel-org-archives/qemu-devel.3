@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 593F4CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 11:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F568CCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 11:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8zby-00005O-KQ; Wed, 15 Oct 2025 07:24:06 -0400
+	id 1v8zcI-0000Bn-4i; Wed, 15 Oct 2025 07:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8zbw-0008VF-VW
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 07:24:04 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8zc4-00009Q-81
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 07:24:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8zbm-0003Dl-Mw
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 07:24:04 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8zbs-0003El-6Y
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 07:24:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760527431;
+ s=mimecast20190719; t=1760527436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=caWGUGGM/k4ZIcTosCRU7rf8W+938SnhmMAenF+SXSI=;
- b=B2PYUozcfixyk6/nxq/8zf4MHPMSi2lldYFoUV9NpitsIZQWq5sORLJEpJVDN/0Z2CT2Ml
- Tn4nV/d3NI5wllmm+FeTBlnzjN6RSc6pr6gmOh5VWkyvRLBTyAey3aCTFqv0khFibVs2Vo
- hAR2b1z464t+8UK9dCVv+GVbCDD0fK0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=WOTVJE4znw/zNoERVFcl7Z/SeuXdNa7jD4n1nPt3Z/g=;
+ b=Bx9Dx6OExwDuA93JjoaEwT0Fzq4KN88WuHZvT1cWZYMBkCi9hidwKpcHNbhHCdf8gEaQte
+ ZNp7idyjFcC+v0im2S2uU4CClQCW7zE5KcG8nQulml0qO9pODV/7C5OqC98vETobSpYXYi
+ JRkvEH7Yrc7O77TQ8l2XZUc9Bke6zTc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-FeA9kQQEPwCstWkvEK23dw-1; Wed,
- 15 Oct 2025 07:23:49 -0400
-X-MC-Unique: FeA9kQQEPwCstWkvEK23dw-1
-X-Mimecast-MFC-AGG-ID: FeA9kQQEPwCstWkvEK23dw_1760527428
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-EJ2oRJ7XNsSqXWV21KNLtg-1; Wed,
+ 15 Oct 2025 07:23:51 -0400
+X-MC-Unique: EJ2oRJ7XNsSqXWV21KNLtg-1
+X-Mimecast-MFC-AGG-ID: EJ2oRJ7XNsSqXWV21KNLtg_1760527430
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD60119560A2; Wed, 15 Oct 2025 11:23:48 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B32371800BC0; Wed, 15 Oct 2025 11:23:50 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91FD41800446; Wed, 15 Oct 2025 11:23:47 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50D9F1955BE3; Wed, 15 Oct 2025 11:23:50 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id CF041180099A; Wed, 15 Oct 2025 13:23:42 +0200 (CEST)
+ id 08ABB180099C; Wed, 15 Oct 2025 13:23:43 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 2/5] igvm: add support for igvm memory map parameter in
- native mode
-Date: Wed, 15 Oct 2025 13:23:39 +0200
-Message-ID: <20251015112342.1672955-3-kraxel@redhat.com>
+Subject: [PATCH v3 4/5] igvm: track memory regions created
+Date: Wed, 15 Oct 2025 13:23:41 +0200
+Message-ID: <20251015112342.1672955-5-kraxel@redhat.com>
 In-Reply-To: <20251015112342.1672955-1-kraxel@redhat.com>
 References: <20251015112342.1672955-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,198 +86,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and wire up qigvm_x86_get_mem_map_entry function which converts the
-e820 table into an igvm memory map parameter.  This makes igvm files for
-the native (non-confidential) platform with memory map parameter work.
+Keep a linked list of the memory regions created by igvm.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/system/igvm.h   |  5 +++++
- backends/igvm.c         | 18 ++++++++++++----
- stubs/igvm.c            | 21 +++++++++++++++++++
- target/i386/igvm.c      | 46 +++++++++++++++++++++++++++++++++++++++++
- stubs/meson.build       |  1 +
- target/i386/meson.build |  3 +++
- 6 files changed, 90 insertions(+), 4 deletions(-)
- create mode 100644 stubs/igvm.c
- create mode 100644 target/i386/igvm.c
+ backends/igvm.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/include/system/igvm.h b/include/system/igvm.h
-index a4abab043a1f..3f72a40b8897 100644
---- a/include/system/igvm.h
-+++ b/include/system/igvm.h
-@@ -19,4 +19,9 @@
- int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
-                       bool onlyVpContext, Error **errp);
- 
-+/* x86 native */
-+int qigvm_x86_get_mem_map_entry(int index,
-+                                ConfidentialGuestMemoryMapEntry *entry,
-+                                Error **errp);
-+
- #endif
 diff --git a/backends/igvm.c b/backends/igvm.c
-index 723d45b755a0..e949c81abb9a 100644
+index ee5ee74c7a66..1690fb334bf5 100644
 --- a/backends/igvm.c
 +++ b/backends/igvm.c
-@@ -12,6 +12,7 @@
- #include "qemu/osdep.h"
+@@ -28,6 +28,11 @@ typedef struct QIgvmParameterData {
+     uint32_t index;
+ } QIgvmParameterData;
  
- #include "qapi/error.h"
-+#include "qemu/target-info-qapi.h"
- #include "system/igvm.h"
- #include "system/memory.h"
- #include "system/address-spaces.h"
-@@ -543,6 +544,8 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-                                       Error **errp)
++typedef struct QIgvmMemoryRegion {
++    QTAILQ_ENTRY(QIgvmMemoryRegion) next;
++    MemoryRegion mr;
++} QIgvmMemoryRegion;
++
+ /*
+  * Some directives are specific to particular confidential computing platforms.
+  * Define required types for each of those platforms here.
+@@ -73,6 +78,7 @@ typedef struct QIgvm {
+     uint32_t compatibility_mask;
+     unsigned current_header_index;
+     QTAILQ_HEAD(, QIgvmParameterData) parameter_data;
++    QTAILQ_HEAD(, QIgvmMemoryRegion) memory_regions;
+     IgvmPlatformType platform_type;
+ 
+     /*
+@@ -185,7 +191,7 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+                                   int region_identifier, Error **errp)
  {
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-+                             Error **errp) = NULL;
-     QIgvmParameterData *param_entry;
-     int max_entry_count;
-     int entry = 0;
-@@ -550,7 +553,15 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     ConfidentialGuestMemoryMapEntry cgmm_entry;
-     int retval = 0;
- 
--    if (!ctx->cgs) {
-+    if (ctx->cgs && ctx->cgsc->get_mem_map_entry) {
-+        get_mem_map_entry = ctx->cgsc->get_mem_map_entry;
-+    }
-+
-+    if (!get_mem_map_entry && target_arch() == SYS_EMU_TARGET_X86_64) {
-+        get_mem_map_entry = qigvm_x86_get_mem_map_entry;
-+    }
-+
-+    if (!get_mem_map_entry) {
-         error_setg(errp,
-                    "IGVM file contains a memory map but this is not supported "
-                    "by the current system.");
-@@ -565,7 +576,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-                 param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
-             mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
- 
--            retval = ctx->cgsc->get_mem_map_entry(entry, &cgmm_entry, errp);
-+            retval = get_mem_map_entry(entry, &cgmm_entry, errp);
-             while (retval == 0) {
-                 if (entry > max_entry_count) {
-                     error_setg(
-@@ -598,8 +609,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-                         IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
-                     break;
-                 }
--                retval =
--                    ctx->cgsc->get_mem_map_entry(++entry, &cgmm_entry, errp);
-+                retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
+     ERRP_GUARD();
+-    MemoryRegion *igvm_pages = NULL;
++    QIgvmMemoryRegion *pages = NULL;
+     Int128 gpa_region_size;
+     MemoryRegionSection mrs =
+         memory_region_find(get_system_memory(), addr, size);
+@@ -219,20 +225,21 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+          */
+         g_autofree char *region_name =
+             g_strdup_printf("igvm.%X", region_identifier);
+-        igvm_pages = g_new0(MemoryRegion, 1);
++        pages = g_new0(QIgvmMemoryRegion, 1);
+         if (ctx->cgs && ctx->cgs->require_guest_memfd) {
+-            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
++            if (!memory_region_init_ram_guest_memfd(&pages->mr, NULL,
+                                                     region_name, size, errp)) {
+                 return NULL;
              }
-             if (retval < 0) {
-                 return retval;
-diff --git a/stubs/igvm.c b/stubs/igvm.c
-new file mode 100644
-index 000000000000..c32058eb2a6e
---- /dev/null
-+++ b/stubs/igvm.c
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU IGVM, stubs
-+ *
-+ * Copyright (C) 2026 Red Hat
-+ *
-+ * Authors:
-+ *  Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "system/igvm.h"
-+
-+int qigvm_x86_get_mem_map_entry(int index,
-+                                ConfidentialGuestMemoryMapEntry *entry,
-+                                Error **errp)
-+{
-+    return -1;
-+}
-diff --git a/target/i386/igvm.c b/target/i386/igvm.c
-new file mode 100644
-index 000000000000..2ed6cd052c79
---- /dev/null
-+++ b/target/i386/igvm.c
-@@ -0,0 +1,46 @@
-+/*
-+ * QEMU IGVM, support for native x86 guests
-+ *
-+ * Copyright (C) 2026 Red Hat
-+ *
-+ * Authors:
-+ *  Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "hw/i386/e820_memory_layout.h"
-+#include "system/igvm.h"
-+
-+/*
-+ * convert e820 table into igvm memory map
-+ */
-+int qigvm_x86_get_mem_map_entry(int index,
-+                                ConfidentialGuestMemoryMapEntry *entry,
-+                                Error **errp)
-+{
-+    struct e820_entry *table;
-+    int num_entries;
-+
-+    num_entries = e820_get_table(&table);
-+    if ((index < 0) || (index >= num_entries)) {
-+        return 1;
-+    }
-+    entry->gpa = table[index].address;
-+    entry->size = table[index].length;
-+    switch (table[index].type) {
-+    case E820_RAM:
-+        entry->type = CGS_MEM_RAM;
-+        break;
-+    case E820_RESERVED:
-+        entry->type = CGS_MEM_RESERVED;
-+        break;
-+    default:
-+        /* should not happen */
-+        error_setg(errp, "unknown e820 type");
-+        return -1;
-+    }
-+    return 0;
-+}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 5d577467bfdd..27be2dec9f9e 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -74,6 +74,7 @@ if have_system
-   stub_ss.add(files('dump.c'))
-   stub_ss.add(files('cmos.c'))
-   stub_ss.add(files('fw_cfg.c'))
-+  stub_ss.add(files('igvm.c'))
-   stub_ss.add(files('target-get-monitor-def.c'))
-   stub_ss.add(files('target-monitor-defs.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 89ba4912aaeb..d385eafdf7e1 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -26,6 +26,9 @@ i386_system_ss.add(files(
- ))
- i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'),
-                                        if_false: files('sev-system-stub.c'))
-+if igvm.found()
-+  i386_system_ss.add(files('igvm.c'))
-+endif
+         } else {
+-            if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
++            if (!memory_region_init_ram(&pages->mr, NULL, region_name, size,
+                                         errp)) {
+                 return NULL;
+             }
+         }
+-        memory_region_add_subregion(get_system_memory(), addr, igvm_pages);
+-        return memory_region_get_ram_ptr(igvm_pages);
++        memory_region_add_subregion(get_system_memory(), addr, &pages->mr);
++        QTAILQ_INSERT_TAIL(&ctx->memory_regions, pages, next);
++        return memory_region_get_ram_ptr(&pages->mr);
+     }
+ }
  
- i386_user_ss = ss.source_set()
+@@ -928,6 +935,7 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
+     }
  
+     QTAILQ_INIT(&ctx.parameter_data);
++    QTAILQ_INIT(&ctx.memory_regions);
+ 
+     for (ctx.current_header_index = 0;
+          ctx.current_header_index < (unsigned)header_count;
 -- 
 2.51.0
 
