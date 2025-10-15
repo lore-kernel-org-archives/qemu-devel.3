@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAC9CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 10:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6BACCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 10:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8z9b-0006g6-0n; Wed, 15 Oct 2025 06:54:47 -0400
+	id 1v8zDS-00012J-58; Wed, 15 Oct 2025 06:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v8z9Z-0006fk-Fh
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 06:54:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1v8zDP-00010q-JJ
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 06:58:43 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v8z9O-0005uQ-8p
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 06:54:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760525668;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=3zVtH0qCGKpNT+qP1Z8g653PyrNRWy7b40fBpybhARc=;
- b=KFd0t55lt0x1L+GT32elwR3wyUiS6rwMsZsxUJz2lWcRfg0yP2/zL/UULKUzfiThQW9dTH
- 61yOkMQBKOZpKSze40aga2GA9c7qMUx1cUPsrg5lUgdqYH1O46vPAx/wPdXf6o43Pw/2sO
- 8u96S5e3sfHL1OqoB8hn+HK0r9Hn7yE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-fj8n1LK4OPim_nSgfFssjA-1; Wed,
- 15 Oct 2025 06:54:25 -0400
-X-MC-Unique: fj8n1LK4OPim_nSgfFssjA-1
-X-Mimecast-MFC-AGG-ID: fj8n1LK4OPim_nSgfFssjA_1760525664
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9641319560B7; Wed, 15 Oct 2025 10:54:24 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F03D180044F; Wed, 15 Oct 2025 10:54:22 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH] RFC: qdev: add legacy properties only for those print()-able
-Date: Wed, 15 Oct 2025 14:54:19 +0400
-Message-ID: <20251015105419.2975542-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1v8zDI-0006iO-B2
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 06:58:43 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cmp22481Gz6L51H;
+ Wed, 15 Oct 2025 18:57:14 +0800 (CST)
+Received: from dubpeml100004.china.huawei.com (unknown [7.214.146.78])
+ by mail.maildlp.com (Postfix) with ESMTPS id 03580140371;
+ Wed, 15 Oct 2025 18:58:16 +0800 (CST)
+Received: from dubpeml500004.china.huawei.com (7.214.147.1) by
+ dubpeml100004.china.huawei.com (7.214.146.78) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 15 Oct 2025 11:58:15 +0100
+Received: from dubpeml500004.china.huawei.com ([7.214.147.1]) by
+ dubpeml500004.china.huawei.com ([7.214.147.1]) with mapi id 15.02.1544.011;
+ Wed, 15 Oct 2025 11:58:15 +0100
+To: Peter Maydell <peter.maydell@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
+Subject: RE: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+Thread-Topic: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+Thread-Index: AQHcPPUb159YqalKN0iW0Ad9cDluebTC/hsA
+Date: Wed, 15 Oct 2025 10:58:15 +0000
+Message-ID: <d6f9dfa368b2419998379ac9dd986a7b@huawei.com>
+References: <20251014102439.319915-1-peter.maydell@linaro.org>
+In-Reply-To: <20251014102439.319915-1-peter.maydell@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.202.66.179]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,46 +76,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi Peter,
 
-The link properties are not printed in "info qtree", I don't know if
-this was intentional. We currently register legacy properties for
-link/ptr properties, but they don't have PropertyInfo getters (only
-ObjectPropertyAccessor, when using non-legacy properties)
+> From: qemu-devel-bounces+salil.mehta=3Dhuawei.com@nongnu.org <qemu-
+> devel-bounces+salil.mehta=3Dhuawei.com@nongnu.org> On Behalf Of Peter
+> Maydell
+> Sent: Tuesday, October 14, 2025 11:25 AM
+> To: qemu-devel@nongnu.org
+> Cc: Salil Mehta <salil.mehta@opnsrc.net>; Marc Zyngier <maz@kernel.org>
+> Subject: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+> kernel in cpuif reset
+>=20
+> Currently in arm_gicv3_icc_reset() we read the kernel's value of
+> ICC_CTLR_EL1 as part of resetting the CPU interface.  This mostly works, =
+but
+> we're actually breaking an assumption the kernel makes that userspace onl=
+y
+> accesses the in-kernel GIC data when the VM is totally paused, which may
+> not be the case if a single vCPU is being reset.  The effect is that it's=
+ possible
+> that the read attempt returns EBUSY.
+>=20
+> Avoid this by reading the kernel's value of the reset ICC_CTLR_EL1 once i=
+n
+> device realize. This brings ICC_CTLR_EL1 into line with the other cpuif
+> registers, where we assume we know what the kernel is resetting them to
+> and just update QEMU's data structures in arm_gicv3_icc_reset().
+>=20
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I've only tested this fairly lightly, but it seems to work.
+> Salil, does this fix the EBUSY issues you were seeing ?
+>=20
+>  include/hw/intc/arm_gicv3_common.h |  3 ++
+>  hw/intc/arm_gicv3_kvm.c            | 49 +++++++++++++++++++++---------
+>  2 files changed, 38 insertions(+), 14 deletions(-)
+>=20
+[...]
+> +
+> +    /*
+> +     * Now we can read the kernel's initial value of ICC_CTLR_EL1, which
+> +     * we will need if a CPU interface is reset. If the kernel is ancien=
+t
+> +     * and doesn't support writing the GIC state then we don't need to
+> +     * care what reset does to QEMU's data structures.
+> +     */
+> +    if (!s->migration_blocker) {
+> +        for (i =3D 0; i < s->num_cpu; i++) {
+> +            GICv3CPUState *c =3D &s->cpu[i];
+> +
+> +            kvm_device_access(s->dev_fd,
+> KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS,
+> +                              KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer)=
+,
+> +                              &c->kvm_reset_icc_ctlr_el1, false, &error_=
+abort);
+> +        }
+> +    }
+>  }
 
-By not registering a (unusable?) legacy property, "info qtree" can now
-print the link.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/core/qdev-properties.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Above changes assume that the driver's configured value of the ICC_CTLR_EL1
+system register is the same as the default value. I've verified that this
+currently the case. However, it safe to assume that this will remain true
+in the future as well?
 
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index b7e8a89ba5..fe260a9670 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -1143,14 +1143,13 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop
- {
-     g_autofree char *name = NULL;
- 
--    /* Register pointer properties as legacy properties */
--    if (!prop->info->print && prop->info->get) {
-+    if (!prop->info->print) {
-         return;
-     }
- 
-     name = g_strdup_printf("legacy-%s", prop->name);
-     object_class_property_add(OBJECT_CLASS(dc), name, "str",
--        prop->info->print ? qdev_get_legacy_property : prop->info->get,
-+        qdev_get_legacy_property,
-         NULL, NULL, (Property *)prop);
- }
- 
--- 
-2.51.0
+If it is acceptable to always use the default values, then the existing cha=
+nge
+proposed in RFC V6 only requires a minor modification. Specifically, we can
+remove ' first_psci_on_request_seen' and other related code that updates
+the driver-configured value after the guest kernel has loaded during runtim=
+e.
+
+We can instead cache the value once during the first cpu_reset() for each
+CPU interface and reuse that cached value for all subsequent cpu_reset()
+operations.  This would simplify the implementation while retaining
+major goals.
+
+https://lore.kernel.org/qemu-devel/20251001010127.3092631-22-salil.mehta@op=
+nsrc.net/
+
+You humble Consideration:
+
+Calling pause_vcpus_all() at VM initialization time--during  the first
+cpu_reset()--should not cause any issues, as all secondary vCPUs are idle
+(i.e. their PCs are not initialized and kernel has not yet loaded). Pausing
+such vCPUs at this stage should not be a disruptive action.
+
+Moreover, if this stage poses a problem for a KVM device IOCTL access, it
+similarly affect other components like GICv3 ITS, which also uses KVM
+device IOCTL during GICv3 reset hold. At this stage all the vCPUs should st=
+ill
+be in a pre-boot or idle state
+
+static void kvm_arm_its_reset_hold(Object *obj, ResetType type)
+{
+[...]
+
+    if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
+                               KVM_DEV_ARM_ITS_CTRL_RESET)) {
+        kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
+                          KVM_DEV_ARM_ITS_CTRL_RESET, NULL, true, &error_ab=
+ort);
+        return;
+    }
+[...]
+
+}
+
+We are not even pausing vCPUs here, yet we expect above KVM device IOCTL
+to succeed on the first attempt. The operation also ends up acquiring the
+mutex for all vCPUs within the KVM.=20
+
+
+Many thanks!
+
+Best regards
+Salil.
+
+
+
+
+
+
+
+
+
 
 
