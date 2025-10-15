@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD21CCD192
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9A6CCD194
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v91Sb-0005XH-Mh; Wed, 15 Oct 2025 09:22:33 -0400
+	id 1v91SM-0005LD-GO; Wed, 15 Oct 2025 09:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v91SO-0005Oa-GC
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:22 -0400
+ id 1v91S8-0005Iu-76
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:04 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v91S9-00035Q-3u
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:18 -0400
+ id 1v91Ry-0002zy-3P
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:03 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3936E88B11;
- Wed, 15 Oct 2025 16:21:56 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id ECF4D88A39;
+ Wed, 15 Oct 2025 16:21:43 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a94::1:15])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id bLQ5oq0N5Os0-ncbDdCOD; Wed, 15 Oct 2025 16:21:55 +0300
+ ESMTPSA id bLQ5oq0N5Os0-9ko4QUr0; Wed, 15 Oct 2025 16:21:43 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760534515;
- bh=vOw5oa65DZ0Z+eI0DURWrqAVxZOetTHC4LKJBWHMDPQ=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=cq0LGXlOw1uGRNgON1YHChSpitpYD1qRFRe0BHIl6mYosvbwmfVji96woZtWCvJsB
- 4bWfhb1d5vGYlrrK/vaPufR9seSFdXNtdOv+7dL2oxS97VuefLeB0fUKCnD/bnHaIY
- sezUwJR/HuIoRzDlPe30S7HXsbbS5ducJkNjyo30=
+ s=default; t=1760534503;
+ bh=qRZTogNTqI/NlvPAmDaFtUT9hXrMy3NPHnhfaXmrOwM=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=ZPMX/todzycs4H/A9I6tim6eZG/gJxHYaTSOsQ0AuJ5WqwedbqlzxDbG3eoMa+ACm
+ YeuGNBG5EZdcikcK5JaUjp5VnOjPAjHQSrRycfH4nkUJU+CThI2Op7gwnuXr9WCB6m
+ xOzBx2bNgZDQlBrgZ0lWEpJM4tAMPDcCfRxwjCes=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -49,14 +49,14 @@ Cc: peterx@redhat.com, farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
  steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
  yc-core@yandex-team.ru, vsementsov@yandex-team.ru,
  raphael.s.norwitz@gmail.com
-Subject: [PATCH v8 18/19] tests/functional: add skipWithoutSudo() decorator
-Date: Wed, 15 Oct 2025 16:21:34 +0300
-Message-ID: <20251015132136.1083972-19-vsementsov@yandex-team.ru>
+Subject: [PATCH v8 04/19] net/tap: pass NULL to net_init_tap_one() in cases
+ when scripts are NULL
+Date: Wed, 15 Oct 2025 16:21:20 +0300
+Message-ID: <20251015132136.1083972-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
 References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
@@ -80,49 +80,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To be used in the next commit: that would be a test for TAP
-networking, and it will need to setup TAP device.
+Directly pass NULL in cases where we report an error if script or
+downscript are set.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Tested-by: Lei Yang <leiyang@redhat.com>
 Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 ---
- tests/functional/qemu_test/decorators.py | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/tap.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index b239295804..125d31dda6 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -6,6 +6,7 @@
- import os
- import platform
- import resource
-+import subprocess
- from unittest import skipIf, skipUnless
+diff --git a/net/tap.c b/net/tap.c
+index b1b64c508d..a05cc7ef64 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -800,8 +800,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     const NetdevTapOptions *tap;
+     int fd, vnet_hdr = 0, i = 0, queues;
+     /* for the no-fd, no-helper case */
+-    const char *script;
+-    const char *downscript;
+     Error *err = NULL;
+     const char *vhostfdname;
+     char ifname[128];
+@@ -811,8 +809,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     tap = &netdev->u.tap;
+     queues = tap->has_queues ? tap->queues : 1;
+     vhostfdname = tap->vhostfd;
+-    script = tap->script;
+-    downscript = tap->downscript;
  
- from .cmd import which
-@@ -167,3 +168,18 @@ def skipLockedMemoryTest(locked_memory):
-         ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
-         f'Test required {locked_memory} kB of available locked memory',
-     )
-+
-+'''
-+Decorator to skip execution of a test if passwordless
-+sudo command is not available.
-+'''
-+def skipWithoutSudo():
-+    proc = subprocess.run(["sudo", "-n", "/bin/true"],
-+                          stdin=subprocess.PIPE,
-+                          stdout=subprocess.PIPE,
-+                          stderr=subprocess.STDOUT,
-+                          universal_newlines=True,
-+                          check=False)
-+
-+    return skipUnless(proc.returncode == 0,
-+                      f'requires password-less sudo access: {proc.stdout}')
+     /* QEMU hubs do not support multiqueue tap, in this case peer is set.
+      * For -netdev, peer is always NULL. */
+@@ -853,7 +849,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         }
+ 
+         net_init_tap_one(tap, peer, "tap", name, NULL,
+-                         script, downscript,
++                         NULL, NULL,
+                          vhostfdname, vnet_hdr, fd, &err);
+         if (err) {
+             error_propagate(errp, err);
+@@ -914,7 +910,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             }
+ 
+             net_init_tap_one(tap, peer, "tap", name, ifname,
+-                             script, downscript,
++                             NULL, NULL,
+                              tap->vhostfds ? vhost_fds[i] : NULL,
+                              vnet_hdr, fd, &err);
+             if (err) {
+@@ -959,7 +955,7 @@ free_fail:
+         }
+ 
+         net_init_tap_one(tap, peer, "bridge", name, ifname,
+-                         script, downscript, vhostfdname,
++                         NULL, NULL, vhostfdname,
+                          vnet_hdr, fd, &err);
+         if (err) {
+             error_propagate(errp, err);
+@@ -967,6 +963,8 @@ free_fail:
+             return -1;
+         }
+     } else {
++        const char *script = tap->script;
++        const char *downscript = tap->downscript;
+         g_autofree char *default_script = NULL;
+         g_autofree char *default_downscript = NULL;
+         bool vnet_hdr_required = tap->has_vnet_hdr && tap->vnet_hdr;
 -- 
 2.48.1
 
