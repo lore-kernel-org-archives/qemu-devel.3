@@ -4,50 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C884CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 23:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3AACCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 23:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9BHN-0003bJ-9b; Wed, 15 Oct 2025 19:51:37 -0400
+	id 1v9BOj-0006Va-Fd; Wed, 15 Oct 2025 19:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v9BHL-0003bA-Oc
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:51:35 -0400
+ id 1v9BOh-0006VK-VM
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:59:12 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v9BHE-00049j-4N
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:51:35 -0400
+ id 1v9BOd-0004vw-2v
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 19:59:11 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C9F435972E7;
- Thu, 16 Oct 2025 01:51:21 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D366C5972E7;
+ Thu, 16 Oct 2025 01:59:03 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Dk56i5OKkSUE; Thu, 16 Oct 2025 01:51:19 +0200 (CEST)
+ id CasBHt-G_2iv; Thu, 16 Oct 2025 01:59:01 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0F8825972E3; Thu, 16 Oct 2025 01:51:19 +0200 (CEST)
+ id 913AE5972E3; Thu, 16 Oct 2025 01:59:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0D6B85972E8;
- Thu, 16 Oct 2025 01:51:19 +0200 (CEST)
-Date: Thu, 16 Oct 2025 01:51:19 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8F12559703F;
+ Thu, 16 Oct 2025 01:59:01 +0200 (CEST)
+Date: Thu, 16 Oct 2025 01:59:01 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- marcandre.lureau@redhat.com
-Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using hardware-correct
- aperture sizes
-In-Reply-To: <DDIYXXF8C8O3.BGW7D8I6VZTW@jablonski.xyz>
-Message-ID: <93a93652-0203-47f0-6179-edfa543990fa@eik.bme.hu>
-References: <20251001034616.3017119-1-chad@jablonski.xyz>
- <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
- <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
- <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
- <DDHGPB02664A.3C0GAHH5K41QT@jablonski.xyz>
- <fee6d690-8302-d3bb-fdec-52e59662f97a@eik.bme.hu>
- <DDIYXXF8C8O3.BGW7D8I6VZTW@jablonski.xyz>
+cc: qemu-devel@nongnu.org, kraxel@redhat.com, marcandre.lureau@redhat.com
+Subject: Re: [PATCH v2] ati-vga: Fix framebuffer mapping by using
+ hardware-correct aperture sizes
+In-Reply-To: <20251015173716.1764461-1-chad@jablonski.xyz>
+Message-ID: <55dc6bce-c965-2202-f61c-d6bfb2d64820@eik.bme.hu>
+References: <20251015173716.1764461-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
@@ -73,71 +66,132 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 15 Oct 2025, Chad Jablonski wrote:
->> Question is if Radeon has BAR0 matching VRAM size because in that case if
->> Rage128 has fixed 64MB and Radeon has size of VRAM for BAR0 then
->> CONFIG_APER_SIZE can be half of BAR0 which would work for both. But if
->> Radeon also has a fixed size BAR0 larger than actual VRAM (mathching max
->> supported VRAM instead then current calculation is needed using VRAM size
->> for radeon according to the FCode ROM I've tested. Changing
->> CONFIG_APER_SIZE only for Rage128 should not break anything as I did not
->> see anything using that so that would also work if we can't find out what
->> Radeon has.
->>
+> Rage 128 cards always request 64MB for their linear (framebuffer)
+> aperture. This is regardless of the amount of physical VRAM on the
+> board. The following are results from real hardware tests:
 >
 > Card                          VRAM    PCI BAR0   CONFIG_MEMSIZE  CONFIG_APER_SIZE  AGP_APER_OFFSET
 > -----------------------       ----    --------   --------------  ----------------  ---------------
 > Rage 128 Pro Ultra TF         32MB     64MB       0x02000000      0x02000000        0x02000000
 > Rage 128 RF/SG AGP            16MB     64MB       0x01000000      0x02000000        0x02000000
 > Radeon R100 QD [Radeon 7200]  64MB    128MB       0x04000000      0x04000000        N/A
-
-For this R100 card APER_SIZE matches MEMSIZE but the BAR length is twice 
-that. Maybe the other card you get will shed some light on what's going on 
-with Radeon. I've looked up what the FCode ROM I've tested was doing. This 
-is from a Card#109-85500-00 Rom#113-85501-226 according to the IDs it sets 
-in the device tree, probably from a PowerMac but I don't have the card 
-just found this ROM. The detokenized part of this Radeon 7000/RV100 ROM 
-that accesses CONFIG_APER_SIZE looks like this:
-
-   7321: const_REG_CONFIG_APER_SIZE
-   7323: ati-reg-l@
-   7325: dup
-   7326: b(to) var_aper_size
-   7329: 2*
-   7330: b(to) var_ram_size
-   7333: const_REG_CONFIG_REG_APER_SIZE
-   7335: ati-reg-l@
-   7337: 2*
-   7338: b(to) var_mmio_size
-
-The variable names were invented by me so it's possible that it actually 
-means vram and mmio BAR size but it does 2* for both the VRAM and REG 
-APERS and this is the size it then uses for map-in and map-out calls so 
-this suggests these registers are half of the BAR size at least for this 
-card.
-
-> Looking at the linux source it appears the R100 doesn't have an
-> AGP_APER_OFFSET register. The register at that offset according to the
-> linux driver is something else entirely. This suggests that
-> the R100 doesn't map AGP memory space into BAR0 in the way that the
-> Rage 128 does. It makes sense that the R128's BAR0 would be twice the
-> max memory for the architecture given that it also has to do this AGP
-> mapping. But if the R100 _doesn't_ then it wouldn't need to make room
-> for AGP and it may just be that the BAR0 is the size of the max memory.
-> I don't have documentation for the R100 though so it's tough to know for sure.
 >
-> But to answer your question about the BAR0 matching VRAM on the R100.
-> At least for this card it does not. The VRAM is half of the BAR0. I have a
-> 32MB Radeon arriving soon so I'll be able to test that to see if it also
-> follows that pattern or if BAR0 is still 128MB. From what I'm seeing there
-> may have been some 128MB R100's, it's not entirely clear to me. So it's
-> possible that the 128MB is the max VRAM.
+> Previously the linear aperture (BAR0) would match the VRAM size.
+> This discrepancy caused issues with the X.org and XFree86 r128 drivers.
+> These drivers apply a mask of 0xfc000000 (2^26 = 64MB) to the linear
+> aperture address. If that address is not on a 64MB boundary the
+> framebuffer points to an incorrect memory location.
+>
+> Testing shows that the Radeon R100 also has a BAR0 larger than VRAM
+> (128MB in this case) and the X.org driver for Radeon also masks to 64MB.
+>
+> For Rage 128, CONFIG_APER_SIZE also differs from the previous value and
+> the behavior stated in the documentation. The Rage 128 register guide
+> states that it should contain the size of the VRAM + AGP memory. The cards
+> tested above show that this isn't the case. These tests also included
+> enabling/disabling AGP with 8MB of memory. It didn't change the
+> contents of CONFIG_APER_SIZE.
+>
+> For Radeon R100, CONFIG_APER_SIZE behavior remains the same. There is
+> some worry that changing it could cause issues for other cards.
+> Especially given that I have only a single example here to test.
+>
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> ---
+> hw/display/ati.c     | 20 ++++++++++++++++++--
+> hw/display/ati_int.h |  4 ++++
+> 2 files changed, 22 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index f7c0006a87..7af12777c8 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -30,6 +30,7 @@
+> #include "ui/console.h"
+> #include "hw/display/i2c-ddc.h"
+> #include "trace.h"
+> +#include "qemu/units.h"
 
-I only have a Rage Mobility M6 Design Guide (M6 is another name for RV100) 
-that talks about memory size and it says that it's minimum 8MB maximum 
-64MB but could be R100 supported more. It's still possible that the BAR 
-size is twice the VRAM size for some reason but we don't have enough 
-evidence for that.
+Just some nits. This include now also belongs to ati_int.h where it's 
+used.
+
+> #define ATI_DEBUG_HW_CURSOR 0
+>
+> @@ -361,7 +362,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+>                                       PCI_BASE_ADDRESS_0, size) & 0xfffffff0;
+>         break;
+>     case CONFIG_APER_SIZE:
+> -        val = s->vga.vram_size / 2;
+> +        val = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
+> +            ATI_RAGE128_LINEAR_APER_SIZE / 2 : s->vga.vram_size / 2;
+
+Should indent below s-> like at other places.
+
+>         break;
+>     case CONFIG_REG_1_BASE:
+>         val = pci_default_read_config(&s->dev,
+> @@ -952,6 +954,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+> {
+>     ATIVGAState *s = ATI_VGA(dev);
+>     VGACommonState *vga = &s->vga;
+> +    uint64_t aper_size;
+>
+> #ifndef CONFIG_PIXMAN
+>     if (s->use_pixman != 0) {
+> @@ -1011,7 +1014,20 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+>     /* io space is alias to beginning of mmregs */
+>     memory_region_init_alias(&s->io, OBJECT(s), "ati.io", &s->mm, 0, 0x100);
+>
+> -    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &vga->vram);
+> +    /*
+> +     * Rage128: Framebuffer inhabits the bottom 32MB of the linear aperture.
+> +     *          The top 32MB is reserved for AGP (not implemented).
+> +     *
+> +     * R100: Linear aperture layout differs from Rage 128. No
+> +     *       AGP_APER_OFFSET register exists.
+> +     */
+
+We don't use AGP_APER_OFFSET here so this comment isn't that clean. The 
+layout does not differ in that VRAM is still at the beginning but only in 
+that Radeon has no AGP window.
+
+> +    aper_size = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
+> +        ATI_RAGE128_LINEAR_APER_SIZE : ATI_R100_LINEAR_APER_SIZE;
+
+Indent.
 
 Regards,
 BALATON Zoltan
+
+> +    memory_region_init(&s->linear_aper, OBJECT(dev), "ati-linear-aperture0",
+> +                       aper_size);
+> +    memory_region_add_subregion(&s->linear_aper, 0, &vga->vram);
+> +
+> +    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &s->linear_aper);
+>     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
+>     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mm);
+>
+> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+> index f5a47b82b0..4f66d0df3f 100644
+> --- a/hw/display/ati_int.h
+> +++ b/hw/display/ati_int.h
+> @@ -29,6 +29,9 @@
+> /* Radeon RV100 (VE) */
+> #define PCI_DEVICE_ID_ATI_RADEON_QY 0x5159
+>
+> +#define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
+> +#define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
+> +
+> #define TYPE_ATI_VGA "ati-vga"
+> OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
+>
+> @@ -97,6 +100,7 @@ struct ATIVGAState {
+>     QEMUCursor *cursor;
+>     QEMUTimer vblank_timer;
+>     bitbang_i2c_interface bbi2c;
+> +    MemoryRegion linear_aper;
+>     MemoryRegion io;
+>     MemoryRegion mm;
+>     ATIVGARegs regs;
+>
 
