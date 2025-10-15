@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C80CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 12:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E2BBCCD193
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 12:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v90JO-0001uv-V1; Wed, 15 Oct 2025 08:08:59 -0400
+	id 1v90Mt-0004vh-R6; Wed, 15 Oct 2025 08:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v90JL-0001tQ-RD
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:08:56 -0400
+ id 1v90Ms-0004vB-Br
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:12:34 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v90JE-00011i-8I
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:08:55 -0400
+ id 1v90Ml-0001sH-26
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 08:12:34 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59FC8GkL062962
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59FCCChk063840
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 15 Oct 2025 21:08:16 +0900 (JST)
+ Wed, 15 Oct 2025 21:12:13 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=sxB8afE63a62NLDegdEixzfXoT3VFP7bEQvg8ZH3aiI=; 
+DKIM-Signature: a=rsa-sha256; bh=RGDOOJegA9+4VeGSi+DYWQRT05M9ybyGQoPhFyhTuts=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:From:To;
- s=rs20250326; t=1760530096; v=1;
- b=sB6TJ6mURD091+E9CxOjlBOjC1KCN02OwXVtokdZPaGO0NI61NoSc6BNWKPwBXvn
- 8wg+MIPH7LEk/xFBcPMmhW4+MtnwJS8zEcFkPrYhU1BtI9hVGX1xLIB+zL4TurjF
- Lc8wfRQW2EyYBznOBhAIoglPDhrDkQ/jyiuk6hYNy7gijmG6Fr/kiKGdFf7v79fB
- coYypSvwt/rjI6G4zKbwwSP+r35OM6SjUutLtr6ckWFVp0Km6xX+fcyGQ2rW3AJY
- wDFMy918Z6eSLC0FPyIXxMIt4tnSnShgG/qaMz0nyF8DyYdDXTyJ1uqE9cV5ttes
- liFyj9OqTFV7G0wu6byXpQ==
-Message-ID: <1f127ac5-10dd-435e-9ff5-f70596d7aac4@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 15 Oct 2025 21:08:16 +0900
+ s=rs20250326; t=1760530333; v=1;
+ b=FVuew2wqd03CUaltJ1coqcax9Ta8v9jId1Xz4CKJdoGU0BsQlDnojUwV2+cyt78p
+ 5/Mh53rD/0VbKrnvHCjIKysgQt2JFz9LPATB0ER2QpUdqHBEet/tAMr6fo547tmT
+ xhEYMAJ0qb0tJKRHs1hLbQofTu1JnOG7shQ8gy0pqxWl9bBV+5K6KpC2B5WTnaSU
+ u8Mbx5HvGri1vKwX3+jkdUzYxfxcsUmcKxQwOFPM1s4F3rGwY9fKxeay0fNPkXnD
+ Tj/LcuTmfFCCp/nhHpQ/y/Q4yvpJua/0tP2LEKJdd4BmOYJ775sCz8SLaxLobFy/
+ keAgSoMIsD/2uupS0WaDtg==
+Message-ID: <748b72a4-7901-4239-93f6-0dc67c40e52e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 15 Oct 2025 21:12:12 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify
- blob resources
+Subject: Re: [PATCH 8/8] tests/functional: add GPU blob allocation test
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
- <20251003234138.85820-3-vivek.kasireddy@intel.com>
- <1fd966d9-95a5-45aa-8a20-46f2987cd65a@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB718547E3A9E97A0DD6A4A2D6F8EAA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <ba762750-cab1-4cb8-a629-101de5fdc179@rsg.ci.i.u-tokyo.ac.jp>
- <CH3PR11MB7177C4541131508F53BD27F3F8E8A@CH3PR11MB7177.namprd11.prod.outlook.com>
- <955ea687-ed25-47bd-9ba9-73c6b98c8e29@rsg.ci.i.u-tokyo.ac.jp>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251014111234.3190346-1-alex.bennee@linaro.org>
+ <20251014111234.3190346-9-alex.bennee@linaro.org>
+ <eea555b4-879c-4fd8-b837-1a8c1e1c76fa@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US
-In-Reply-To: <955ea687-ed25-47bd-9ba9-73c6b98c8e29@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <eea555b4-879c-4fd8-b837-1a8c1e1c76fa@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -83,91 +82,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/15 15:11, Akihiko Odaki wrote:
-> On 2025/10/15 14:07, Kasireddy, Vivek wrote:
->> Hi Akihiko,
+On 2025/10/15 11:41, Akihiko Odaki wrote:
+> On 2025/10/14 20:12, Alex Bennée wrote:
+>> This is a very short microkernel test that initialises and then maps
+>> and unmaps a blob resource.
 >>
->>> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to 
->>> identify blob
->>> resources
->>>
->>>>
->>>>> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to 
->>>>> identify
->>> blob
->>>>> resources
->>>>>
->>>>> On 2025/10/04 8:35, Vivek Kasireddy wrote:
->>>>>> The res->blob pointer may not be valid (non-NULL) for some blobs
->>>>>> where the backing storage is not memfd based. Therefore, we cannot
->>>>>> use it to determine if a resource is a blob or not. Instead, we
->>>>>> could use res->blob_size to make this determination as it is
->>>>>> non-zero for blob resources regardless of where their backing
->>>>>> storage is located.
->>>>>
->>>>> I think this patch is no longer necessary since now you add code to
->>>>> mmap() VFIO storage with "[PATCH v1 7/7] virtio-gpu-udmabuf: Create
->>>>> dmabuf for blobs associated with VFIO devices".
->>>> Right, but given that mmap() can still fail for various reasons and 
->>>> this
->>>> use-case can work as long as dmabuf creation succeeds, I think it makes
->>>> sense to not rely on res->blob to determine if a resource is blob or 
->>>> not.
->>>
->>> I think the code will be simpler by making resource creation fail when
->>> mmap() fails, and I am concerned that the guest may mulfunction with
->>> such an incomplete resource.
->> AFAICT, mmap() is a slow, optional path except for the cursor (which 
->> needs
->> further improvement). So, failing resource creation when mmap() fails
->> does not seem like a good idea to me given the fact that supporting 
->> mmap()
->> is considered optional for dmabuf providers. And, even with vfio, mmap()
->> can be blocked for various reasons by the kernel driver IIUC.
-
-Reviewing the code again, I don't think mmap() can fail with the current 
-version of this series.
-
-udmabuf obviously always supports mmap().
-
-For VFIO, checking memory_region_is_ram_device() ensures that VFIO 
-supports mmap(); memory_region_init_ram_device_ptr() is called from 
-vfio_region_mmap(), which is only called when VFIO supports mmap().
-
-The use of ram_device needs to be removed if it is really wanted to 
-create resources with VFIO devices lacking mmap(). This patch is 
-unnecessary otherwise.
-
+>> Without the other fixes in this series it causes QEMU to hang on the
+>> unhandled unmap.
 > 
-> Being slow doesn't matter, and it is not just for the cursor, but there 
-> are several other functions modified; I guess the resulting resource 
-> will be unusable except for accelerations like virgl.
+> Thank you for the reproduction case.
+> 
+> I don't have time to look into it this and the next week due to 
+> attendance to a conference (MICRO-58), but I'll definitely do so after 
+> that.
 > 
 >>
->>>
->>> To motivate the proposed patch, there should be a use-case that requires
->>> to have a resource without mmap(), not one that "can work" a resource
->>> without mmap(). It is extraneous complexity otherwise.
->>>
->>> Such a use case should be explained in the patch message and perhaps
->>> also with a comment in the code. The current patch message needs an
->>> update as it sounds like it is unnecessary when theere is code to mmap()
->>> VFIO-based backing storage, which this series has already gained.
->> Although VFIO supports mmap(), it is not guaranteed to work in all cases
->> and with a different dmabuf provider (in the future), it may not be 
->> possible
->> at all.
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>> ---
+>>   tests/functional/aarch64/meson.build      |  1 +
+>>   tests/functional/aarch64/test_gpu_blob.py | 73 +++++++++++++++++++++++
+>>   2 files changed, 74 insertions(+)
+>>   create mode 100755 tests/functional/aarch64/test_gpu_blob.py
+>>
+>> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/ 
+>> aarch64/meson.build
+>> index 5ad52f93e1d..f6ca33b2be4 100644
+>> --- a/tests/functional/aarch64/meson.build
+>> +++ b/tests/functional/aarch64/meson.build
+>> @@ -26,6 +26,7 @@ tests_aarch64_system_thorough = [
+>>     'aspeed_ast2700',
+>>     'aspeed_ast2700fc',
+>>     'device_passthrough',
+>> +  'gpu_blob',
+>>     'hotplug_pci',
+>>     'imx8mp_evk',
+>>     'kvm',
+>> diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/ 
+>> functional/aarch64/test_gpu_blob.py
+>> new file mode 100755
+>> index 00000000000..a913d3b29c8
+>> --- /dev/null
+>> +++ b/tests/functional/aarch64/test_gpu_blob.py
+>> @@ -0,0 +1,73 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# Functional tests for GPU blob support. This is a directed test to
+>> +# exercise the blob creation and removal features of virtio-gpu. You
+>> +# can find the source code for microkernel test here:
+>> +#   https://gitlab.com/epilys/qemu-880-repro
 > 
-> The fact that mmap() is being optional for DMA-BUF and VFIO is 
-> insufficient, but what matters here is whether a DMA-BUF that lacks 
-> mmap() is usable for graphics.
+> Nice. I appreciate the effort to creat the microkernel; hopefully it 
+> will be useful also to exercise this part of virtio-gpu for debugging in 
+> the future.
 > 
-> Reading the cover letter, I suppose you are importing a mmap-incapable 
-> DMA-BUF exported by a dGPU, and the imported DMA-BUF is used with virgl 
-> or something. Explaining the use case will show that there is a mmap- 
-> incapable DMA-BUF usable for graphics.
+>> +#
+>> +# Copyright (c) 2025 Linaro Ltd.
+>> +#
+>> +# Authors:
+>> +#  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> +#  Alex Bennée <alex.bennee@linaro.org>
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +from qemu.machine.machine import VMLaunchFailure
+>> +
+>> +from qemu_test import Asset
+>> +from qemu_test import wait_for_console_pattern
+
+This import of wait_for_console_pattern is unused. There is a call of 
+self.wait_for_console_pattern(), but it prefixed with "self." so doesn't 
+use this import.
+
+>> +from qemu_test.linuxkernel import LinuxKernelTest
+>> +
+>> +class Aarch64VirtBlobTest(LinuxKernelTest):
+>> +
+>> +    ASSET_BLOB = Asset('https://fileserver.linaro.org/s/ 
+>> kE4nCFLdQcoBF9t/'
+>> +                       'download?path=%2Fblob-test&files=qemu-880.bin',
+>> +                       
+>> '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e2d569ea2e34e42eb')
+>> +
+>> +    def test_virtio_gpu_blob(self):
+>> +
+>> +        self.set_machine('virt')
+>> +        self.require_accelerator("tcg")
+>> +
+>> +        blob = self.ASSET_BLOB.fetch()
+>> +
+>> +        self.vm.set_console()
+>> +
+>> +        self.vm.add_args("-machine", "virt,memory- 
+>> backend=mem0,accel=tcg",
+>> +                         '-m', '4G',
+>> +                         '-cpu', 'max',
+>> +                         '-kernel', blob,
+>> +                         '-object', 'memory-backend- 
+>> memfd,share=on,id=mem0,size=4G',
+>> +                         '-global', 'virtio-mmio.force-legacy=false',
+>> +                         '-nic', 'none',
+>> +                         '-device',
+>> +                         'virtio-gpu- 
+>> gl,hostmem=128M,blob=true,venus=true',
 > 
-> Regards,
-> Akihiko Odaki
+> venus is not exercised with this test case so can be removed.
+> 
+> This test somehow hung on my laptop even with the all other patches in 
+> this series applied, and removing venus=true fixed the hung.
+> 
+> I suppose the hang is unrelated to the problem fixed in this series and 
+> but rather is a problem specific to my environment (Asahi Linux). 
+> Anyway, I think removing venus=true is a safer option to avoid problems 
+> with the host graphics stack.
+> 
+> Below is a part of build/meson-logs/testlog.txt:
+> 
+> ==================================== 1/1 
+> =====================================
+> test:         qemu:func-thorough+func-aarch64-thorough+thorough / func- 
+> aarch64-gpu_blob
+> start time:   02:25:49
+> duration:     90.01s
+> result:       killed by signal 15 SIGTERM
+> command: 
+> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=12 RUST_BACKTRACE=1 QEMU_TEST_QEMU_BINARY=/home/me/q/var/qemu/build/qemu-system-aarch64 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 PYTHONPATH=/home/me/q/var/qemu/python:/home/me/q/var/qemu/tests/functional ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 MESON_TEST_ITERATION=1 QEMU_BUILD_ROOT=/home/me/q/var/qemu/build QEMU_TEST_QEMU_IMG=/home/me/q/var/qemu/build/qemu-img LD_LIBRARY_PATH=/home/me/q/var/qemu/build/contrib/plugins:/home/me/q/var/qemu/build/tests/tcg/plugins /home/me/q/var/qemu/build/pyvenv/bin/python3 /home/me/q/var/qemu/tests/functional/aarch64/test_gpu_blob.py
+> ----------------------------------- stderr 
+> -----------------------------------
+> ==31639==WARNING: ASan doesn't fully support makecontext/swapcontext 
+> functions and may produce false positives in some cases!
+> ==============================================================================
+> 
+> 
+> Summary of Failures:
+> 
+> 1/1 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64- 
+> gpu_blob TIMEOUT        90.01s   killed by signal 15 SIGTERM
+> 
+> Ok:                 0
+> Expected Fail:      0
+> Fail:               0
+> Unexpected Pass:    0
+> Skipped:            0
+> Timeout:            1
+> 
+>> +                         '-display', 'egl-headless,gl=on',
+>> +                         '-d', 'guest_errors')
+>> +
+>> +        try:
+>> +            self.vm.launch()
+>> +        except VMLaunchFailure as excp:
+>> +            if "old virglrenderer, blob resources unsupported" in 
+>> excp.output:
+>> +                self.skipTest("No blob support for virtio-gpu")
+>> +            elif "old virglrenderer, venus unsupported" in excp.output:
+>> +                self.skipTest("No venus support for virtio-gpu")
+>> +            elif "egl: no drm render node available" in excp.output:
+>> +                self.skipTest("Can't access host DRM render node")
+> 
+> This condition is unnecessary as DRM render node is not used.
+> 
+>> +            elif "'type' does not accept value 'egl-headless'" in 
+>> excp.output:
+>> +                self.skipTest("egl-headless support is not available")
+>> +            elif "'type' does not accept value 'dbus'" in excp.output:
+>> +                self.skipTest("dbus display support is not available")
+> 
+> This can be removed too.
+> 
+>> +            elif "eglInitialize failed: EGL_NOT_INITIALIZED" in 
+>> excp.output:
+>> +                self.skipTest("EGL failed to initialize on this host")
+>> +            else:
+>> +                self.log.info("unhandled launch failure: %s", 
+>> excp.output)
+>> +                raise excp
+>> +
+>> +        self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
+>> +        # the test should cleanly exit
+>> +
+>> +
+>> +if __name__ == '__main__':
+>> +    LinuxKernelTest.main()
+> 
 
 
