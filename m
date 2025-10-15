@@ -4,154 +4,192 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76819CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED543CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 04:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8tOE-0006qS-MB; Wed, 15 Oct 2025 00:45:31 -0400
+	id 1v8tXA-0008Fu-QX; Wed, 15 Oct 2025 00:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v8tOC-0006oh-0d
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:45:28 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1v8tX4-0008Fe-J5
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:54:38 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v8tO2-0005Ja-SA
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:45:26 -0400
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1v8tWy-00063P-Si
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 00:54:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760504073; x=1792040073;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=kUCuzKJWMfJwminjai0FJqX4b6ypyhivKsr4LSfa6cY=;
+ b=D0g/ppisA/6BHw4wZp07hE8urDQuD+t1TAzVgbqCAjINuHZnE9J/U+aK
+ DYn9Cb6dtIlLhPC9V4IHkXmpfAfobZ97RXfOekM5uouMUOSmR5H7ALJwe
+ j6mzP80GZqdrSqqcUdUzsZnFyZ1jnv5Y0cPkGdL8dJ+8SBT8fG14LvB73
+ PfFBc3OznvMn0DZ7qfZoJi4lLZNf8C/wHpkxgNsNo8uvf0ywcfSaj6iiP
+ WiMONqv6vSyA4Yzorj+8BwwYW97trolZhg1wbYZXmNoCIm2JxLlhaomTv
+ VLPMa32JOfuY1EL+3m9UMoveXQibyKWKvTbOj52ugeEHuwWpJ9YLGx7Bq g==;
+X-CSE-ConnectionGUID: uo2Ztf5xSwCZBAvn3T0ryQ==
+X-CSE-MsgGUID: S+SgdWoRTCie2FUtVOndpQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11582"; a="88138226"
+X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; d="scan'208";a="88138226"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Oct 2025 21:54:23 -0700
+X-CSE-ConnectionGUID: WMqfCv4zSuGZ63vLs401lA==
+X-CSE-MsgGUID: 6odzYmGnSBygF0aIkfjrVA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; d="scan'208";a="205765319"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Oct 2025 21:54:23 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Tue, 14 Oct 2025 21:54:22 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Tue, 14 Oct 2025 21:54:22 -0700
+Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.34) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Tue, 14 Oct 2025 21:54:22 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jCRY/gvZYfKr9dQXjkHJUrzTIDQI9t3n9dcsH4iPNhpFvIXZLPRfRcI+ORSUVrrcygTxxGIVSKdSdbqJR31ePPSj/YdzaA/MUyLmkL3Zaa+nWOvuhwhcx6jEq9OaaPF+OQme6Pe0fc1B0ZoaNoZ/e6Ok1Z3iL45gEnjZ2MwLSXzQYJ8ge/E9bOtCrrQK/DJnWXOvTl2WyF3fSEdMpM6cLDCpbJCYCTtm1oG376y8l6TS3VyLkZ06dAKA6zoLdyM9c24Vn/kNRipbrTocOP97seHcstI53LqJoMXMzrt3DtolR43zUMsaKAnjvIB97xp9fKmrGyHz7gBNCdKpKnsvoA==
+ b=AAz6L/hU7HgrCpdcXfZDrGO1hy57ubF2xIlMM/XXUMCJrEGw+E6EFzT9ItFwwEOfCgn/DtqBvHknceMljljqXChSukApDR/P3XE/y2n2pUvJXSQyR0bLYZ2o9hXVy2QmzdHPQ5Mq91y9D62w8DEbJI15azCdnrIKPogqoLVGnFwGQQhC1yE7uCBpJGYJlaD5vDprh3gqRPKeYH04wg4R7lhRN2bNtRRA1Ki+apcbzbLYslbLQ19ytlQtLdhyw1CngicvRML8q+NWKatPcJbrqEYGm1YXl0KvKICqX7dvqxt7gMIAErF7pICgwoz5pMTNBUbrlxlmgmYr1Nh+9jT9HQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=byOO4BAuIaSmhjGKmlboMEU+M+Ecn4tqC42vLZBqmLI=;
- b=IcAgPqTmWI1Kel/URj3EctBPMdkgUpWfKYKj+No6T9GzMH3do5SR18eXF9THMI1aaS2AuP7qyI9tZ14UZm9s50yxJaZiAb74RRpM8dHKhjMKqJGOZHa9Z3vwwI5lTMo/4Rw87OO93ACNybPq50c2b+35wkulHsfu87y9aYAaVbnN2fwjUgTTDU/SRn6k5beRIM2w1gHr56XRMBR2CZdgtkXusIe2mKHoG8GXtmZ6R4r34aPpdCTg3ZatdZSOf00ArR5xgiI7w4w7u1g9yZlaiWs/ofzBbtFbdHe5SxoX/73D8pIhqCMRzn8Q8zz2k5FDK0yeUwoKa1o015d26YFTxA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=byOO4BAuIaSmhjGKmlboMEU+M+Ecn4tqC42vLZBqmLI=;
- b=XgwydI+V7AXV21aiigGgfatlorhIonfFuA4ljQvZjK9KXHAxwBeJR/DZPryjZctej8IvG1LR1cqSRKzFNDY8yW0ccM9sO6W7f/iNJXRpfzbRgJi/QM5nK41WXkKwAqjNuZNTGi7sLnOOZHyEcbDyFNy1D3zHBV/Aoox63T78IkY=
-Received: from PH8PR02CA0006.namprd02.prod.outlook.com (2603:10b6:510:2d0::23)
- by DM4PR12MB6493.namprd12.prod.outlook.com (2603:10b6:8:b6::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.10; Wed, 15 Oct
- 2025 04:44:59 +0000
-Received: from SA2PEPF000015CD.namprd03.prod.outlook.com
- (2603:10b6:510:2d0:cafe::8d) by PH8PR02CA0006.outlook.office365.com
- (2603:10b6:510:2d0::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.13 via Frontend Transport; Wed,
- 15 Oct 2025 04:44:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SA2PEPF000015CD.mail.protection.outlook.com (10.167.241.203) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9228.7 via Frontend Transport; Wed, 15 Oct 2025 04:44:57 +0000
-Received: from [172.31.35.81] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 14 Oct
- 2025 21:44:53 -0700
-Message-ID: <e9fa3517-a33b-4d7f-9a06-e334c4ebae1f@amd.com>
-Date: Wed, 15 Oct 2025 10:14:44 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] amd_iommu: Fix handling device on buses != 0
+ bh=tezxYKgHRBr/j3KohiJjAnG562IEA+PTyxtFB/o7KLE=;
+ b=JvSHjYy3tR5P7ANSxXJmd293vDAu/3NaHYAlO4Kt3yXdWjvLuamF2fwtwMt8Z6dPhpdbX5pE9tLYyEXdbFFI8NbRpxJo+BG7WwzqBBukqrpmyOVtsxrnZeLQW9pdXvqMMOgpFKKINQRuWjjuu6k7CpeD3runFmqs8dUZx3hnk38xp17JJ7t762EkP/86YZRMzSJmn05JMM9FuO5MrqiVR3NyBpmvWuwxZ/yLw/ZS6rrT5nzEz7lK4V8/eD8s3sM0cJASsCnQXca0a0KuUrODhEVvjEseEUka/k+qJw3g+28VYnuh/ANXrvklVnvJWnpkqO+divnTIQMKCJcET0lYQA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
+ by PH7PR11MB5957.namprd11.prod.outlook.com (2603:10b6:510:1e0::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.12; Wed, 15 Oct
+ 2025 04:54:20 +0000
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::dd3b:ce77:841a:722b%4]) with mapi id 15.20.9203.009; Wed, 15 Oct 2025
+ 04:54:20 +0000
+From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>
+Subject: RE: [PATCH v1 7/7] virtio-gpu-udmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Topic: [PATCH v1 7/7] virtio-gpu-udmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Thread-Index: AQHcNL+QQn0dgmrpeUSObhHSZQs0bbS62gWAgAQvqwCAAhi+AIABa/KQ
+Date: Wed, 15 Oct 2025 04:54:19 +0000
+Message-ID: <IA0PR11MB7185DAAE7F0B9A2252311250F8E8A@IA0PR11MB7185.namprd11.prod.outlook.com>
+References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
+ <20251003234138.85820-8-vivek.kasireddy@intel.com>
+ <25cb995e-bb7f-4901-84e5-853d2a19b5c0@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71851DC9F2EE0B8E4914DB9CF8EAA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <ce7ba7b4-f008-4afc-a603-990ac6dfa8a5@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <ce7ba7b4-f008-4afc-a603-990ac6dfa8a5@rsg.ci.i.u-tokyo.ac.jp>
+Accept-Language: en-US
 Content-Language: en-US
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, "Michael S. Tsirkin"
- <mst@redhat.com>
-CC: <qemu-devel@nongnu.org>, <pbonzini@redhat.com>,
- <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <suravee.suthikulpanit@amd.com>, <vasant.hegde@amd.com>,
- <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>, <aik@amd.com>
-References: <20251013050046.393-1-sarunkod@amd.com>
- <20251013050046.393-2-sarunkod@amd.com>
- <20251013041059-mutt-send-email-mst@kernel.org>
- <6fa9b33c-31ff-43f6-8ab1-8d200c832c94@amd.com>
- <20251014050023-mutt-send-email-mst@kernel.org>
- <c585b4c2-5bde-4aff-a3b0-370bae5e9c0d@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <c585b4c2-5bde-4aff-a3b0-370bae5e9c0d@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF000015CD:EE_|DM4PR12MB6493:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50351eb8-69e3-4605-3f00-08de0ba597bf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NGtvV3E3NmZOL1dHWVJ2TFkvMFBPYmdOWTNhc3dNL0dzbytkR0FjUlh2ckNh?=
- =?utf-8?B?MnpKZEtPblF6NjBzcnZTZXlBWWpPa2JpYkFob0dQdnZORXB0bzFRWXdNZ2s1?=
- =?utf-8?B?SDRiZEpzb251NW91V2RibXpBNFpvc05yZ2svN2JaWUxib3QwS2Zoa3dqL3BW?=
- =?utf-8?B?V1dpNng5K0FDRFJ6OGdOTmdtbXQ1cmZ3a3hXOFNOMFRlR0lxUWJzN29oeGx1?=
- =?utf-8?B?aDhyd3NPMzBuRjNYcExhRFZZRFI4K3JtaDMyYkROZUd6K2ZvYmpieVhkQ1BF?=
- =?utf-8?B?Z1liUThqRFAyL2xrUFhScjNoRGt0UG91Yk4yNDZIMklQeXlwdFplL0czREhU?=
- =?utf-8?B?a3BVNlhXSVE5bWFtdUNqbWlVNGdYRURyM2RMcnRCN2NZRXI1RkhJelVzclZZ?=
- =?utf-8?B?TEIxb0RTNlNJcUlSYkxqcjRQNE1OS2M4K3dUeHBqOEJtemhzWC9RUzhGNHU4?=
- =?utf-8?B?emVRWU5SY2RJQm9zQVM3d1JyN2tPeTIvRExyL1pNQXhlOWZKRGk0MjQzMjk5?=
- =?utf-8?B?bml2dmRmMXFodVlrdXFYR0pVbUJ5R3NzaFhTVVBXQW1rRGI4MldPYWsvK2hY?=
- =?utf-8?B?Y2RrbW05WTQ2aC90dHVJbHdSTkplZlk3ai9MVG0rTTJ0amJTVVdXS0VFc291?=
- =?utf-8?B?S3ZiYUFjVUE4MHRDN3hBeEhJR0x3ckZYbHJUNGE2RnpIY1FESTM4ODFpcFYw?=
- =?utf-8?B?ZkJuc3NoRDNQZmdEbVlPdlVZbHdlRlZMM1hSVE9DV3UzWkFmZ25TQTE4SWtW?=
- =?utf-8?B?L05lU2t4MXRlNmQ2ZzJkUlpXM3JEYlhQVXdPRmFFVHpialYrcnordXpBL1dm?=
- =?utf-8?B?OEFmS2R6SGQ1MnJBaTZTQmgwY1c0dnNiRm5UYWxhdEN4YktyT05VYUVRdGlG?=
- =?utf-8?B?VWdISHY2bXRFekFGeVVFR3VGVE5RWDB2cmRtakVvem5RdUN0UUV5OUh0a01z?=
- =?utf-8?B?THRRZGRGMXhjd3B0MWp5T2JCWWxyTkxseHBvYjhUNUxxRGtEWmZ0RTZ5UXRW?=
- =?utf-8?B?K0d2RU1OQ2V1U0t5VXhHME4zU3RpWGI2VDRCTE5ld1ZwYkhNUENtb3FNSjB0?=
- =?utf-8?B?UXlDb09NbmlBUUVkQ2luN0l1QjhxT1g4bkVicWg2MCs0a1hRcFJDYzM0OWJr?=
- =?utf-8?B?aTE5YjNjejFzWkV4eFRDVWpsK3hYN0tDV2YyY1VOOWdXbU9jdFJYSnNLa3hx?=
- =?utf-8?B?SmRnQXVZcmZabEExbldmalhzTm43UThqNElaUjRpZ2VIQzBoM0dHL3ljanJI?=
- =?utf-8?B?VHN4b0E0WGthWkIrWlhOU2FwZEtOWlA4NWY4UHpDQUJUNXFpdFJmR1V5K0Mw?=
- =?utf-8?B?NWMzV1BPY2dLWVpSTFd6cDh5bEd1M01sbHRIRmFxZHlrdnpBQW9lU1I0dGJT?=
- =?utf-8?B?SjJwNEQ4NTVlNytReHV1QlBPK0JmN1JMaVN4eWRxT0pBQkViVjA3dHRldjM3?=
- =?utf-8?B?dkJ5OEN1djl4T29kc3BLMTFhdlZGQk95L2QyN2pPTmZZLzdudThjQ0MwWHZZ?=
- =?utf-8?B?c25iQ3pxOG9adlJwNWJkbXllWTRhN1Rsb1ZwVjEzaEhuWGV6VXpDNzhDamFp?=
- =?utf-8?B?NDR3RUtBT3pRWHVrTm0vb3V0eXZxT0Z2Y09VR09QdWNPR0V0Z2RDaEhZeGJG?=
- =?utf-8?B?ZFBhNS91V3h6WUZIVnJJeUQrRFpOaHM2Y3Awd2ZmNEVmWER0UHFlSkpodGJ6?=
- =?utf-8?B?R1VNR3NqYXdaaU9kbTA1TVVyRmpMcTBDaS9tUXVUTE1aM1N4eVc1dE8rOEdZ?=
- =?utf-8?B?VGFqMERENmhJK3huUVVvZElMSy92UmU1VGJjbk4zVVJET2tjMUt1Ly9SdDVy?=
- =?utf-8?B?ZE81K0UzZkVMN1NoUy9FT05KOElVY1Z1ZkdISkE2aE50Qlc3U1hRSU5vcVAy?=
- =?utf-8?B?YnlGRjV3UGpsTm1NT0ZsTDBFQ2JDNEtxTXA2VzlGUFpuNU5LUWxuTzZNR3F1?=
- =?utf-8?B?UktPV292ZlBLVHIzdXl3cmVzM2QrRU01ZEVOSUI4RWc4Zk04VWY4VXl1bEtT?=
- =?utf-8?B?dUlSOUo3ZXYrNVhWWEU4emFoSFlPODUySUNTemdYUUtMZzRFSndSZVhEUlda?=
- =?utf-8?B?VCtBd2VIZHloRzFrV2prL212WUpCMmlReEc5QU9ZbEpaeDZ6NThvUURFS1Z5?=
- =?utf-8?Q?q1dE=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2025 04:44:57.5939 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50351eb8-69e3-4605-3f00-08de0ba597bf
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF000015CD.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6493
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|PH7PR11MB5957:EE_
+x-ms-office365-filtering-correlation-id: 821849e5-916c-4a34-aa82-08de0ba6e6fa
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?aeO62g1eEPfQa1L+SCPsWKLqGprsa5X5h4bhDsbqJobkpiIUNqUuZ8h1N7?=
+ =?iso-8859-1?Q?T/wne9YmeKtbiXltqa7NvsIJlDTxRrOMlIrPwQ25qVCaob2yHuFmQA03LY?=
+ =?iso-8859-1?Q?y5zNApVCARsqtJX1dw1/LFmooqsXIOOe8IjmPIy4ycxPaDGLITdq2DEvqM?=
+ =?iso-8859-1?Q?rlfISCSStYoEGg6ilEnWI3n0ADXwUl4env11S3fOD62vA7YRhqDN4JHZa/?=
+ =?iso-8859-1?Q?IOG4yh5wKxGalMYNBDWFlqgZ6F52dWqYK1/AdR2xRpdTNxBki4Xqx9i9dP?=
+ =?iso-8859-1?Q?zR0vUmkgOWp+NVo8FqIs4LqHqQzz9TtGG7zRNGqSREwC7Hiz4FGNO4deZp?=
+ =?iso-8859-1?Q?ufl1hCfAaZxoPKk7ap/cfAGNaueX0+XtPUSoHShunKcDQWrBDwX3ZAskcs?=
+ =?iso-8859-1?Q?X6lx06RTaSu0EFI+N4Xppnv16Mez8HFZmPedSuByyTPLCz7+gtXVxAIxRH?=
+ =?iso-8859-1?Q?+ZiAW35V4snwMfr9AcfUM8qZNDnPJ5xIdWPlgp+X67lLLXfeKm5ghPBmN+?=
+ =?iso-8859-1?Q?Bm4ON3eRyqZgWUO13eS2NtVcK64Nw7opZ96RxQ2wtWYtf/TY6ltnc8x7Ni?=
+ =?iso-8859-1?Q?381F0BBoIVKU0j7H8n6YSeL7vdZWmUVUrcLJ3aWgCGQL7cQj5hIZ4dYfGK?=
+ =?iso-8859-1?Q?E/bjjnIG9/6LS5wO65AkiK8kZT+7uMHAhUAMjzBF89kKXmzQW6edUaNRtl?=
+ =?iso-8859-1?Q?Suo46iRd3grsDc29kB0BfnOFuAwHhG/5mmHeN5fCDWqfMCBG8eChCEtAro?=
+ =?iso-8859-1?Q?1T+ggjreJp62PP6MgCeQFpjlr0cXINZuAkwBWiCNcuW7vxpr2abvnN7Ix+?=
+ =?iso-8859-1?Q?26VSWRWiATGAYNAluon4jFMk52JEyWw/UJz9tXUyTAtXJYLAOFVVZuT7Lm?=
+ =?iso-8859-1?Q?O5tS7eWftEcbaVB1IwfDVSqX+JLr+WA/Ue8MT+SaZCvIzEVvNjsR4ehUSZ?=
+ =?iso-8859-1?Q?u5k7ULdVLxfxk0CfQOl0cUNeqGbV4C9RotJuZK4l7Vzk3emdkUz0+rDaFU?=
+ =?iso-8859-1?Q?UvBnN3o4av3IXIcvvavULpCIBT7GY2F35KoJ+uDPwL34YJRvtbCmXxsyY7?=
+ =?iso-8859-1?Q?h4Ao0MkjZDvfD1F6J1BkrzzS3st/WbbMJGsvss47PpK0OaZk2ckELMid7f?=
+ =?iso-8859-1?Q?OJhIqcBiZEycbefwWGsGhTC5Id/zpeNcilJ/R8K8hYmbTlFwDTC+/XXBri?=
+ =?iso-8859-1?Q?kV/dvfTsGcg6ThYcIh44Fz56FTQA7+CPP3LXCCSXJXi8QTouEoVoNxl9Ph?=
+ =?iso-8859-1?Q?TiJLCzfWvm4TndVbJ5AhhJIlfiHfdxuwIuQsB6ZKbm4Taedf7pvaWIhR2a?=
+ =?iso-8859-1?Q?/6XERfVDdIE+Hy5uPq8zYNiVSmmxewQuXnuXPEYr4bf1czsx/YBRAqnnkD?=
+ =?iso-8859-1?Q?3LUWzhXp69KtvWk12LmSwmpCjP0JvPk5jFPa+APM/oBadIJE1lsV8MJOm/?=
+ =?iso-8859-1?Q?+EfLhbRMLBZI7KwZVGsnu8nQV9kzDoP/ZxYJDd58YNWEWXTGeig2sz8RJv?=
+ =?iso-8859-1?Q?kGC7veD2A1/5zybwbaweLzCiXDo2I9xs2LHNnbz2IbEdUtc6YpPsVHvS7k?=
+ =?iso-8859-1?Q?l8WP6UxqId+a/0LEPl4A3vTqEESI?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?SIPEkUA7IuG+6zm+XNGEDCcNJ/bC0CeSJK/lFKVpZmXOaXVWx71/vVvY4Y?=
+ =?iso-8859-1?Q?wzB9TQApAENb8GzeAXaTYBaIWMXV3BgFbXGJKcoZMtiIRYHgJGvtVtYgt7?=
+ =?iso-8859-1?Q?umJMOBpYb6vbqaD7sQ55R5KvWM6l0ijVF3FKRwoCxB69ncGCvkVOog5roS?=
+ =?iso-8859-1?Q?Jf/bWj+ii90Xg0Jhf8M6WdeLwgVyJcAHAuusZyJAwfpfqalowpc9yZUHpd?=
+ =?iso-8859-1?Q?2Yynw2aFeIfFJStayMp/CgQgQkWTCCJmMTNAOfePDqwBvd16zzGV8niK1n?=
+ =?iso-8859-1?Q?x+WxT07zltQMZviE1DfJtXc0IZNDU/Xy5qOJkdnB/lBRfkb/uCVw8uSJOe?=
+ =?iso-8859-1?Q?dD3z7hhphMVavXcI+NKV/nQuEDBWBtr+x4notbQ0Pi+r11AXvnNcSOVKmW?=
+ =?iso-8859-1?Q?mEe6f/QDTDcWlGZhlNHQcF/b9jftqyklMtAAnldU8L+G2TfX9jTv9S9m1W?=
+ =?iso-8859-1?Q?HfL6JGFypQShOhOvi8w6EVClfxBNXZJX0C8ZAd+9uDPIgknvKVhSFgfsOk?=
+ =?iso-8859-1?Q?o7oOmgcR82Exwt39wiTuUWGyGhg3L/IPE6pEq04BgvYBPHMOm85K7FYRht?=
+ =?iso-8859-1?Q?moFYyb3fn72Dmqw0FR0o8TC3tEVE+QgCZtzWosgCoTy6mg/CYMF05cNaCc?=
+ =?iso-8859-1?Q?fQU4d7InNQs0+oEPQBdutxAPmnCaGhTJilIMaeWJY+0kdCKgnJVQaD3Cn+?=
+ =?iso-8859-1?Q?+UEuf2Ch9g8PvLaD1Y6CBQRs7k1R2+zh3xMLeqCp6V54W+k4wokBZJ1/eI?=
+ =?iso-8859-1?Q?MJuBzXreN33UYC/Jntqyx3siVEXjpbfe5tTPHwt5gc0yYOq7CR8ITztIbB?=
+ =?iso-8859-1?Q?ejCEmQJDCtvzvWg/u7M3RFZ7kb07NWJz1Aml+JSJmuxVyPm1axJxuOB0ZM?=
+ =?iso-8859-1?Q?Nfz8QkXUQ3+tQlVJRXhzCGHekRU2UFUBr4rAJJ0xKMcShfxOmw1K+QLrwh?=
+ =?iso-8859-1?Q?GqS6pJGaVLaFW4ATUnHK3FLN4Je7le/rwqigbnbpE29grUflR7sqXg/V2D?=
+ =?iso-8859-1?Q?FJzzZoNmaiQxprM1pW4TVoHHEi4fVUm/cumTczJzAR9IK0XWxuJ1nkzXvk?=
+ =?iso-8859-1?Q?L/7T6zumc6NrOaahGGzK0agp9pc1SjlhpAWK7W6qWnrJYaAxCaY1DmHuaF?=
+ =?iso-8859-1?Q?7ex2ZwGH/PSCrGN9jVDJKhxhyBF04Fbv1Dsfh/GyIyVt6qGpJcfYUG49YS?=
+ =?iso-8859-1?Q?hFeCLXHWVA10tU0NMV7A2QEfKXqEOGxfe0P+WB3T5sDuSw9ndmnPMB4uH7?=
+ =?iso-8859-1?Q?V5YbLgpM5VvuNPoamLF6OhdtDWVqyE2PbjcahHarPfqtL3eRQjqDVT0N6a?=
+ =?iso-8859-1?Q?+rOqj0nkyWCuT/LxTlfBYqBgrvQtKT9s4dfxItBtgJR4eIUlvtxN+2rQkZ?=
+ =?iso-8859-1?Q?ICndax/6jT79VsCG7Ah+V1zciJrAUFOHXWdEO1xgO6vgZkJZ5X7kju7T6n?=
+ =?iso-8859-1?Q?0psUGnyP6wlsxFVPzpozhtUS/sJcsHmdw0OsnfSYmUnpdj4znX1QU1/pQX?=
+ =?iso-8859-1?Q?FzSlGz8qkwjJJtyuOhtYDWYX7GLD8tj18HZ84iKuEToW5vlNn8rmwccApe?=
+ =?iso-8859-1?Q?ksUC+htTCkFZhkvuY9kmSqUvNZyZXCnSdhDK0rU3oQk/pUmISTJWTHz2c0?=
+ =?iso-8859-1?Q?cbSHZ8wp//VRzyDTs3uJBchyL5U9G9KTgd?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 821849e5-916c-4a34-aa82-08de0ba6e6fa
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2025 04:54:20.0508 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ZU8CwaWqK+Ku0hkuU3WYvqAkI5JNRa+AE/y0dV345fBssb+X3/RSuO0FNKYRKR1UwK0gTWPNvaxgGmf1xzv7K1erStYA7Vk6tT2z1W7O5hs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB5957
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.7;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,187 +205,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Akihiko,
 
+> Subject: Re: [PATCH v1 7/7] virtio-gpu-udmabuf: Create dmabuf for blobs
+> associated with VFIO devices
+>=20
+> On 2025/10/13 16:00, Kasireddy, Vivek wrote:
+> > Hi Akihiko,
+> >
+> >> Subject: Re: [PATCH v1 7/7] virtio-gpu-udmabuf: Create dmabuf for blob=
+s
+> >> associated with VFIO devices
+> >>
+> >> On 2025/10/04 8:36, Vivek Kasireddy wrote:
+> >>> In addition to memfd, a blob resource can also have its backing
+> >>> storage in a VFIO device region. Therefore, we first need to figure
+> >>> out if the blob is backed by a VFIO device region or a memfd before
+> >>> we can call the right API to get a dmabuf fd created.
+> >>>
+> >>> So, once we have the ramblock and the associated mr, we rely on
+> >>> memory_region_is_ram_device() to tell us where the backing storage
+> >>> is located. If the blob resource is VFIO backed, we try to find the
+> >>> right VFIO device that contains the blob and then invoke the API
+> >>> vfio_device_create_dmabuf().
+> >>>
+> >>> Note that in virtio_gpu_remap_udmabuf(), we first try to test if
+> >>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+> >>> use the VFIO device fd directly to create the CPU mapping.
+> >>
+> >> It is odd to handle VFIO DMA-BUF in a function named "udmabuf". The
+> >> function and source file need to be renamed.
+> > Ok, makes sense. I'll rename it accordingly.
+> >
+> >>
+> >>>
+> >>> Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+> >>> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
+> >>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> >>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> >>> ---
+> >>>    hw/display/Kconfig              |   5 ++
+> >>>    hw/display/virtio-gpu-udmabuf.c | 143
+> >> ++++++++++++++++++++++++++++++--
+> >>>    2 files changed, 141 insertions(+), 7 deletions(-)
+> >>>
+> >>> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+> >>> index 1e95ab28ef..0d090f25f5 100644
+> >>> --- a/hw/display/Kconfig
+> >>> +++ b/hw/display/Kconfig
+> >>> @@ -106,6 +106,11 @@ config VIRTIO_VGA
+> >>>        depends on VIRTIO_PCI
+> >>>        select VGA
+> >>>
+> >>> +config VIRTIO_GPU_VFIO_BLOB
+> >>> +    bool
+> >>> +    default y
+> >>> +    depends on VFIO
+> >>> +
+> >>>    config VHOST_USER_GPU
+> >>>        bool
+> >>>        default y
+> >>> diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-
+> >> udmabuf.c
+> >>> index d804f321aa..bd06b4f300 100644
+> >>> --- a/hw/display/virtio-gpu-udmabuf.c
+> >>> +++ b/hw/display/virtio-gpu-udmabuf.c
+> >>> @@ -18,6 +18,7 @@
+> >>>    #include "ui/console.h"
+> >>>    #include "hw/virtio/virtio-gpu.h"
+> >>>    #include "hw/virtio/virtio-gpu-pixman.h"
+> >>> +#include "hw/vfio/vfio-device.h"
+> >>>    #include "trace.h"
+> >>>    #include "system/ramblock.h"
+> >>>    #include "system/hostmem.h"
+> >>> @@ -27,6 +28,33 @@
+> >>>    #include "standard-headers/linux/udmabuf.h"
+> >>>    #include "standard-headers/drm/drm_fourcc.h"
+> >>>
+> >>> +static void vfio_create_dmabuf(VFIODevice *vdev,
+> >>> +                               struct virtio_gpu_simple_resource *re=
+s)
+> >>> +{
+> >>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> >>> +    res->dmabuf_fd =3D vfio_device_create_dmabuf(vdev, res->iov, res=
+-
+> >>> iov_cnt);
+> >>> +    if (res->dmabuf_fd < 0) {
+> >>> +        qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                      "%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s\n",
+> >>> +                      __func__, strerror(errno));
+> >>> +    }
+> >>> +#endif
+> >>> +}
+> >>> +
+> >>> +static VFIODevice *vfio_device_lookup(MemoryRegion *mr)
+> >>> +{
+> >>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> >>> +    VFIODevice *vdev;
+> >>> +
+> >>> +    QLIST_FOREACH(vdev, &vfio_device_list, next) {
+> >>> +        if (vdev->dev =3D=3D mr->dev) {
+> >>> +            return vdev;
+> >>> +        }
+> >>> +    }
+> >>> +#endif
+> >>> +    return NULL;
+> >>> +}
+> >>> +
+> >>>    static void virtio_gpu_create_udmabuf(struct
+> virtio_gpu_simple_resource
+> >> *res)
+> >>>    {
+> >>>        struct udmabuf_create_list *list;
+> >>> @@ -68,11 +96,73 @@ static void virtio_gpu_create_udmabuf(struct
+> >> virtio_gpu_simple_resource *res)
+> >>>        g_free(list);
+> >>>    }
+> >>>
+> >>> -static void virtio_gpu_remap_udmabuf(struct
+> virtio_gpu_simple_resource
+> >> *res)
+> >>> +static void *vfio_dmabuf_mmap(struct virtio_gpu_simple_resource *res=
+,
+> >>> +                              VFIODevice *vdev)
+> >>> +{
+> >>> +    struct vfio_region_info *info;
+> >>> +    ram_addr_t offset, len =3D 0;
+> >>> +    void *map, *submap;
+> >>> +    int i, ret =3D -1;
+> >>> +    RAMBlock *rb;
+> >>> +
+> >>> +    /*
+> >>> +     * We first reserve a contiguous chunk of address space for the =
+entire
+> >>> +     * dmabuf, then replace it with smaller mappings that correspond=
+ to
+> the
+> >>> +     * individual segments of the dmabuf.
+> >>> +     */
+> >>> +    map =3D mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, vdev-
+> >>> fd, 0);
+> >>> +    if (map =3D=3D MAP_FAILED) {
+> >>> +        return map;
+> >>> +    }
+> >>> +
+> >>> +    for (i =3D 0; i < res->iov_cnt; i++) {
+> >>> +        rcu_read_lock();
+> >>> +        rb =3D qemu_ram_block_from_host(res->iov[i].iov_base, false,
+> &offset);
+> >>> +        rcu_read_unlock();
+> >>
+> >> I don't think this RCU lock is necessary. The documentation of
+> >> qemu_ram_block_from_host() says:
+> >>   > By the time this function returns, the returned pointer is not
+> >>   > protected by RCU anymore.  If the caller is not within an RCU crit=
+ical
+> >>   > section and does not hold the BQL, it must have other means of
+> >>   > protecting the pointer, such as a reference to the memory region t=
+hat
+> >>   > owns the RAMBlock.
+> >>
+> >> This function is called with the BQL held, and a reference to the memo=
+ry
+> >> region is also taken in virtio_gpu_dma_memory_map().
+> > I agree. I'll remove the RCU lock.
+> >
+> >>
+> >>> +
+> >>> +        if (!rb) {
+> >>> +            goto err;
+> >>> +        }
+> >>> +
+> >>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> >>> +        ret =3D vfio_get_region_index_from_mr(rb->mr);
+> >>> +        if (ret < 0) {
+> >>> +            goto err;
+> >>> +        }
+> >>> +
+> >>> +        ret =3D vfio_device_get_region_info(vdev, ret, &info);
+> >>> +#endif
+> >>> +        if (ret < 0) {
+> >>> +            goto err;
+> >>> +        }
+> >>> +
+> >>> +        submap =3D mmap(map + len, res->iov[i].iov_len, PROT_READ,
+> >>> +                      MAP_SHARED | MAP_FIXED, vdev->fd,
+> >>> +                      info->offset + offset);
+> >>> +        if (submap =3D=3D MAP_FAILED) {
+> >>> +            goto err;
+> >>> +        }
+> >>> +
+> >>> +        len +=3D res->iov[i].iov_len;
+> >>> +    }
+> >>> +    return map;
+> >>> +err:
+> >>> +    munmap(map, res->blob_size);
+> >>> +    return MAP_FAILED;
+> >>> +}
+> >>> +
+> >>> +static void virtio_gpu_remap_udmabuf(struct
+> virtio_gpu_simple_resource
+> >> *res,
+> >>> +                                     VFIODevice *vdev)
+> >>>    {
+> >>>        res->remapped =3D mmap(NULL, res->blob_size, PROT_READ,
+> >>>                             MAP_SHARED, res->dmabuf_fd, 0);
+> >>>        if (res->remapped =3D=3D MAP_FAILED) {
+> >>> +        if (vdev) {
+> >>> +            res->remapped =3D vfio_dmabuf_mmap(res, vdev);
+> >>> +            if (res->remapped !=3D MAP_FAILED) {
+> >>> +                return;
+> >>> +            }
+> >>> +        }
+> >>>            warn_report("%s: dmabuf mmap failed: %s", __func__,
+> >>>                        strerror(errno));
+> >>>            res->remapped =3D NULL;
+> >>> @@ -130,18 +220,59 @@ bool virtio_gpu_have_udmabuf(void)
+> >>>
+> >>>    void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *re=
+s)
+> >>>    {
+> >>> +    VFIODevice *vdev =3D NULL;
+> >>>        void *pdata =3D NULL;
+> >>> +    ram_addr_t offset;
+> >>> +    RAMBlock *rb;
+> >>>
+> >>>        res->dmabuf_fd =3D -1;
+> >>>        if (res->iov_cnt =3D=3D 1 &&
+> >>>            res->iov[0].iov_len < 4096) {
+> >>>            pdata =3D res->iov[0].iov_base;
+> >>>        } else {
+> >>> -        virtio_gpu_create_udmabuf(res);
+> >>> -        if (res->dmabuf_fd < 0) {
+> >>> +        rcu_read_lock();
+> >>> +        rb =3D qemu_ram_block_from_host(res->iov[0].iov_base, false,
+> &offset);
+> >>> +        rcu_read_unlock();
+> >>> +
+> >>> +        if (!rb) {
+> >>> +            qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                          "%s: Could not find ram block for host add=
+ress\n",
+> >>> +                          __func__);
+> >>>                return;
+> >>>            }
+> >>> -        virtio_gpu_remap_udmabuf(res);
+> >>> +
+> >>> +        if (memory_region_is_ram_device(rb->mr)) {
+> >>> +            vdev =3D vfio_device_lookup(rb->mr);
+> >>> +            if (!vdev) {
+> >>> +                qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                              "%s: Could not find device to create d=
+mabuf\n",
+> >>> +                              __func__);
+> >>> +                return;
+> >>> +            }
+> >>> +
+> >>> +            vfio_create_dmabuf(vdev, res);
+> >>> +            if (res->dmabuf_fd < 0) {
+> >>> +                qemu_log_mask(LOG_GUEST_ERROR,
+> >>> +                              "%s: Could not create dmabuf from vfio=
+ device\n",
+> >>> +                              __func__);
+> >>> +                return;
+> >>> +            }
+> >>> +        } else if (memory_region_is_ram(rb->mr) &&
+> >> virtio_gpu_have_udmabuf()) {
+> >>
+> >> memory_region_is_ram_device() and memory_region_is_ram() should be
+> >> called for all iov elements, not just the first one.
+> > I am not sure if it is enforced anywhere but I don't think a dmabuf's
+> > segments (or entries) can refer to multiple memory regions. AFAIK,
+> > the buffer associated with a dmabuf exists entirely within a single
+> > memory region. And, when it needs to be migrated, it is moved
+> > completely.
+>=20
+> It should be explicitly enforced. Please refer to section "Unexpected
+> Device Accesses" in: docs/devel/secure-coding-practices.rst
+Ok, I'll add a helper function to check whether all the entries belong to
+a single memory region or not.
 
-On 10/15/2025 3:16 AM, Alejandro Jimenez wrote:
->
->
-> On 10/14/25 5:02 AM, Michael S. Tsirkin wrote:
->> On Tue, Oct 14, 2025 at 11:13:51AM +0530, Sairaj Kodilkar wrote:
->>>
->>>
->>> On 10/13/2025 1:45 PM, Michael S. Tsirkin wrote:
->>>> On Mon, Oct 13, 2025 at 10:30:45AM +0530, Sairaj Kodilkar wrote:
->>>>> The AMD IOMMU is set up at boot time and uses PCI bus numbers + devfn
->>>>> for indexing into DTE. The problem is that before the guest started,
->>>>> all PCI bus numbers are 0 as no PCI discovery happened yet (BIOS 
->>>>> or/and
->>>>> kernel will do that later) so relying on the bus number is wrong.
->>>>> The immediate effect is emulated devices cannot do DMA when places on
->>>>> a bus other that 0.
->>>>>
->>>>> Replace static array of address_space with hash table which uses 
->>>>> devfn and
->>>>> PCIBus* for key as it is not going to change after the guest is 
->>>>> booted.
->>>> I am curious whether this has any measureable impact on
->>>> performance.
->>>
->>> I dont think it should have much performance impact, as guest 
->>> usually has
->>> small number of devices attached to it and hash has O(1) average 
->>> search cost
->>> when hash key function is good.
->>>
->>>>
->>>>> Co-developed-by: Alexey Kardashevskiy <aik@amd.com>
->>>>> Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
->>>>> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
->>>>
->>>> love the patch! yet something to improve:
->>>>
->>>>> ---
->>>>>    hw/i386/amd_iommu.c | 134 
->>>>> ++++++++++++++++++++++++++------------------
->>>>>    hw/i386/amd_iommu.h |   2 +-
->>>>>    2 files changed, 79 insertions(+), 57 deletions(-)
->>>>>
->>>>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
->>>>> index 378e0cb55eab..b194e3294dd7 100644
->>>>> --- a/hw/i386/amd_iommu.c
->>>>> +++ b/hw/i386/amd_iommu.c
->>>>> @@ -59,7 +59,7 @@ const char *amdvi_mmio_high[] = {
->>>>>    };
->>>>>    struct AMDVIAddressSpace {
->>>>> -    uint8_t bus_num;            /* bus 
->>>>> number                           */
->>>>> +    PCIBus *bus;                /* PCIBus (for bus 
->>>>> number)              */
->>>>>        uint8_t devfn;              /* device 
->>>>> function                      */
->>>>>        AMDVIState *iommu_state;    /* AMDVI - one per 
->>>>> machine              */
->>>>>        MemoryRegion root;          /* AMDVI Root memory map 
->>>>> region         */
->>>>> @@ -101,6 +101,11 @@ typedef enum AMDVIFaultReason {
->>>>>        AMDVI_FR_PT_ENTRY_INV,      /* Failure to read PTE from 
->>>>> guest memory */
->>>>>    } AMDVIFaultReason;
->>>>> +typedef struct amdvi_as_key {
->>>>> +    PCIBus *bus;
->>>>> +    uint8_t devfn;
->>>>> +} amdvi_as_key;
->>>>> +
->>>>>    uint64_t amdvi_extended_feature_register(AMDVIState *s)
->>>>>    {
->>>>>        uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
->>>>
->>>> Pls fix structure and typedef names according to the QEMU
->>>> coding style. Thanks!
->>>>
->>>
->>> This is something I am struggling with, because the name
->>> `AMDVIASKey` does not offer readability.
->>
->> AMDVIAsKey
->>
->>
->> Or you can update all code to use AmdVi and get AmdViAsKey if you 
->> prefer.
->>
->>
->>> Maybe we can come
->>> up with an alternate style which is readable and does not
->>> differ much from the current style.
->>>
->>> @alejandro any suggestions ?
->>>
->
-> I should have pointed out the CamelCase requirement for the typedef on 
-> v1. My initial reaction was: "do not use typedef" and go with the 
-> slightly longer 'struct amdvi_as_key' instead. The style guide has a 
-> warning about typedefs (which doesn't necessarily apply here), but IMO 
-> still better to avoid it in this case were we are not really gaining 
-> much from it.
->
-> If I were to use a typedef I would use 'AMDViAsKey'. After all, the 
-> 'i' in AMD-Vi and 'd' in VT-d are lowercase ;)
->
-> But my opinion is to avoid the typedef altogether.
->
->>>>> @@ -382,6 +387,44 @@ static guint amdvi_uint64_hash(gconstpointer v)
->>>>>        return (guint)*(const uint64_t *)v;
->>>>>    }
->>>>> +static gboolean amdvi_as_equal(gconstpointer v1, gconstpointer v2)
->>>>> +{
->>>>> +    const struct amdvi_as_key *key1 = v1;
->>>>> +    const struct amdvi_as_key *key2 = v2;
->>>>> +
->>>>> +    return key1->bus == key2->bus && key1->devfn == key2->devfn;
->>>>> +}
->>>>> +
->>>>> +static guint amdvi_as_hash(gconstpointer v)
->>>>> +{
->>>>> +    const struct amdvi_as_key *key = v;
->>>>> +    guint bus = (guint)(uintptr_t)key->bus;
->>>>> +
->>>>> +    return (guint)(bus << 8 | (uint)key->devfn);
->>>>> +}
->>>>> +
->>>>> +static AMDVIAddressSpace *amdvi_as_lookup(AMDVIState *s, PCIBus 
->>>>> *bus,
->>>>> +                                          uint8_t devfn)
->>>>> +{
->>>>> +    amdvi_as_key key = { .bus = bus, .devfn = devfn };
->>>>> +    return g_hash_table_lookup(s->address_spaces, &key);
->>>>> +}
->>>>> +
->>>>> +gboolean amdvi_find_as_by_devid(gpointer key, gpointer value,
->>>>> +                                  gpointer user_data)
->>>>> +{
->>>>> +    amdvi_as_key *as = (struct amdvi_as_key *)key;
->>>> this assignment does not need a cast I think.
->>>>
-> Agree. And assuming you take my advice of not using a typedef, the 
-> line should be:
->
-> const struct amdvi_as_key *as = key;
->
-> to follow the style guide directive of using "const-correct" pointers. 
-> Putting back the static qualifier from my earlier reply:
->
-> static gboolean amdvi_find_as_by_devid(gpointer key, gpointer value,
->                                        gpointer user_data)
-> {
->     const struct amdvi_as_key *as = key;
->     const uint16_t *devidp = user_data;
->
->
->     return *devidp == PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-> }
->
-
-Sure. From now on we will avoid typedefs in the AMD-Vi and I liked your 
-suggestion of
-'struct AMDViAsKey'. Should I update entire code with this new naming 
-style ?
-
-Thanks
-Sairaj
-
-> Thank you,
-> Alejandro
->
->>>>> +    uint16_t devid = *((uint16_t *)user_data);
->>>> would be better like this:
->>>>         uint16_t * devidp = user_data;
->>>> then just use *devidp instead of devid.
->>>
->>> sure
->>>
->>> Thanks
->>> Sairaj
->>
->
-
+Thanks,
+Vivek
 
