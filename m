@@ -4,111 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC029CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEFCFCCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v92aa-0006SP-JB; Wed, 15 Oct 2025 10:34:52 -0400
+	id 1v92fY-00006d-Kj; Wed, 15 Oct 2025 10:40:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v92aO-0006QJ-15
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:34:43 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v92fW-00006O-8h
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:39:58 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v92aI-0005Ag-J8
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:34:39 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.phl.internal (Postfix) with ESMTP id AA1A814001C2;
- Wed, 15 Oct 2025 10:34:28 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-03.internal (MEProxy); Wed, 15 Oct 2025 10:34:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1760538868; x=1760625268; bh=FGvl5cpkCEBcFgwW7RfJrsv6SujYUKtm
- pj3H63Jsbng=; b=EMH3jSgf6cicPglp2UmwmbY2I/HuhJ4wUKUJeR/QLOOcWH4z
- vY2iJx1esJANWp5w3ea5IAwcgVpRZAeJ/7OwMoozGEU44N16C5bhyY0Krn3lrfTs
- W6CBc1gLSQXYMKF9w8HLFT2IPlxjwbEGZgXD/szKK+0hNqfOAO/q+6BTu0U7JjGF
- Qft24vDUVjIgGdUidvo9z3QYnHCQMgME6CYu7cpdRf6OsYEqBr6L0O8hFjsA0Pe0
- RSK42rCsgmCYgLkerAKwaGZpC13OlGlF3+AqaereiFLv5Ara/LOTCkJkoDjw6msL
- 9QKQcO8cdwyQAicjzZfUCrMuxXb9JIGGbnMklA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1760538868; x=
- 1760625268; bh=FGvl5cpkCEBcFgwW7RfJrsv6SujYUKtmpj3H63Jsbng=; b=C
- npKWl62q7i28oTVeoc6d7nmdUhAWzONOOklYnMk5hITxhwKHOX08dDPDgadgKM9u
- OTecwqiHsh8MsLq/g0wN+hnpNwdWJak3RhjJwJxIbZaYsvf+ZVVRTjFd8YKWHNS6
- mAYD528m833aeI2v6ioc3joxJzbct0U+10u6K8spmR7+8DW0GM/0AI8sk+wiZybp
- 7q+msw6VZPzO1lCzAUNHXaKlHugZqOAe9eh+vlSdJVuVXWU9lG5gkxzSEy9lWmf4
- 0ZFmPWAKagXmGX+/bGPIw3yB9gj7zDFk3KX7ygsNyTDlWwQIFaBNSaYAIFQp5WLT
- hj+wAhqqfEjbp1NyB/QFg==
-X-ME-Sender: <xms:9LDvaA69aZ5FIrnRh3RQrg3vrnRi6znaXiClSC5ckvkXanU9GgpmIQ>
- <xme:9LDvaIz59Pq94VHC0tP_kudaKwoABLGgo-sfEdsWRPrfKbTbm4N0OUBbWuZ6Dasy9
- NvWdFukQBWNxCaq93w-ytFSp3PpjGXsU7o9TilapQUP1kDr1hceLg>
-X-ME-Received: <xmr:9LDvaHybpAoc5_zfNEGvUDwa-g8sN9IMgF1NlY67HkMG66eruJbTriKfaeHd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefieeiucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
- tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlh
- grthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehjrggslhhonhhs
- khhirdighiiipdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdprhgtph
- htthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhmpdhrtghp
- thhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:9LDvaAzGuM_s2bykTFfKsnhdlL-gV8FLmlgfdp_zj-PcZLdHqkfIyg>
- <xmx:9LDvaBbYwKOnmqVM0wAoIdrVOxspFrTiGBKyITJso5zbp8TAEraCTw>
- <xmx:9LDvaBUfhEfo-YgS4KflPkhA0DBzcpTf0Ev4sVIN7ONgK08p8Jm-BQ>
- <xmx:9LDvaPhhw1p1AoEise2RXEHfOh5LJ0ukC5NsHxibB3u3_1rsV9S5fA>
- <xmx:9LDvaCMubgVUoXETNdR6xQ-CLdyuuw75Z-abJVtxv_ly-JZEffUMaIw0>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Oct 2025 10:34:27 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 93995993;
- Wed, 15 Oct 2025 14:34:25 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 15 Oct 2025 10:34:25 -0400
-Message-Id: <DDIYXXF8C8O3.BGW7D8I6VZTW@jablonski.xyz>
-Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] ati-vga: Fix framebuffer mapping by using
- hardware-correct aperture sizes
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
-X-Mailer: aerc 0.21.0
-References: <20251001034616.3017119-1-chad@jablonski.xyz>
- <8ca9a290-39be-7d52-2add-f37a30e05545@eik.bme.hu>
- <DDHA2TJZB67L.8WL7I58CQAZ6@jablonski.xyz>
- <31fa1128-e693-494d-2515-467866d1598b@eik.bme.hu>
- <DDHGPB02664A.3C0GAHH5K41QT@jablonski.xyz>
- <fee6d690-8302-d3bb-fdec-52e59662f97a@eik.bme.hu>
-In-Reply-To: <fee6d690-8302-d3bb-fdec-52e59662f97a@eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=chad@jablonski.xyz;
- helo=fhigh-a2-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v92fO-00062N-Dz
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:39:58 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 60E8C889C2;
+ Wed, 15 Oct 2025 17:39:44 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a94::1:15])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id gdRVCn3Foa60-sWVMuTAW; Wed, 15 Oct 2025 17:39:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760539183;
+ bh=ZG7MBLKtWr7FDpexxGzgUyfecOn/If9nG1GsuFcJrDs=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=kbJ1XNbthKNMpBOyoAMVWx7lL5K3WCAIWcMZe6o72tM8/TamogWRZt9DdjWkwSoDc
+ Tx6k732K9vgLWhDBb4es2GkLvDCKeEmpRmjZt5GptKGyQ0SrIn6znfsIpQzrIw/Uv2
+ /SEgueaJdPBgZybV66O983zZH1xCrmlAsyboLu38=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com
+Cc: devel@lists.libvirt.org, eblake@redhat.com, armbru@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, vsementsov@yandex-team.ru
+Subject: [PATCH v4] qapi: net: deprecate vhostforce option
+Date: Wed, 15 Oct 2025 17:39:41 +0300
+Message-ID: <20251015143941.1109499-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.498, PDS_OTHER_BAD_TLD=1.997, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,49 +74,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->
-> Question is if Radeon has BAR0 matching VRAM size because in that case if=
-=20
-> Rage128 has fixed 64MB and Radeon has size of VRAM for BAR0 then=20
-> CONFIG_APER_SIZE can be half of BAR0 which would work for both. But if=20
-> Radeon also has a fixed size BAR0 larger than actual VRAM (mathching max=
-=20
-> supported VRAM instead then current calculation is needed using VRAM size=
-=20
-> for radeon according to the FCode ROM I've tested. Changing=20
-> CONFIG_APER_SIZE only for Rage128 should not break anything as I did not=
-=20
-> see anything using that so that would also work if we can't find out what=
-=20
-> Radeon has.
->
+This option for tap and vhost-user netdevs doesn't make sense
+since long ago (10 years!), starting from commits:
 
-Card                          VRAM    PCI BAR0   CONFIG_MEMSIZE  CONFIG_APE=
-R_SIZE  AGP_APER_OFFSET
------------------------       ----    --------   --------------  ----------=
-------  ---------------
-Rage 128 Pro Ultra TF         32MB     64MB       0x02000000      0x0200000=
-0        0x02000000
-Rage 128 RF/SG AGP            16MB     64MB       0x01000000      0x0200000=
-0        0x02000000
-Radeon R100 QD [Radeon 7200]  64MB    128MB       0x04000000      0x0400000=
-0        N/A
+ 1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
+ 24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
 
-Looking at the linux source it appears the R100 doesn't have an
-AGP_APER_OFFSET register. The register at that offset according to the
-linux driver is something else entirely. This suggests that
-the R100 doesn't map AGP memory space into BAR0 in the way that the
-Rage 128 does. It makes sense that the R128's BAR0 would be twice the
-max memory for the architecture given that it also has to do this AGP
-mapping. But if the R100 _doesn't_ then it wouldn't need to make room
-for AGP and it may just be that the BAR0 is the size of the max memory.
-I don't have documentation for the R100 though so it's tough to know for su=
-re.
+Prior these commits, to enable kernel vhost-net, or vhost-user-net for
+some specific kind of guests (that don't have MSI-X support), you should
+have set vhostforce=on.
 
-But to answer your question about the BAR0 matching VRAM on the R100.
-At least for this card it does not. The VRAM is half of the BAR0. I have a
-32MB Radeon arriving soon so I'll be able to test that to see if it also
-follows that pattern or if BAR0 is still 128MB. From what I'm seeing there
-may have been some 128MB R100's, it's not entirely clear to me. So it's
-possible that the 128MB is the max VRAM.
+Now guest type doesn't matter, all guests are equal for these
+options logic.
+
+For tap the current logic is:
+  vhost=on / vhost=off : vhostforce ignored, doesn't make sense
+  vhost unset : vhostforce counts, enabling vhost
+
+So you may enable vhost for tap several ways:
+- vhost=on
+- vhostforce=on
+- vhost=on + vhostforce=on
+- and even vhost=on + vhostforce=off
+
+- they are all equal.
+
+For vhost-user we simply ignore the vhostforce option at all in the
+code.
+
+Let's finally deprecate the extra options.
+
+Also, fix @vhostforce documentation everywhere to show the real picture,
+and update vhost-user test to not use deprecated option.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+
+v4:
+- update documentation
+- deprecate also similar option for vhost-user net
+
+v3 was "[PATCH v3] qapi: net/tap: deprecate vhostforce option":
+Supersedes: <20250901153943.65235-1-vsementsov@yandex-team.ru>
+
+ docs/about/deprecated.rst     | 11 +++++++++++
+ qapi/net.json                 | 20 ++++++++++++++++----
+ qemu-options.hx               | 13 +++++--------
+ tests/qtest/vhost-user-test.c |  2 +-
+ 4 files changed, 33 insertions(+), 13 deletions(-)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 98361f5832..2882603b20 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -487,6 +487,17 @@ Stream ``reconnect`` (since 9.2)
+ The ``reconnect`` option only allows specifying second granularity timeouts,
+ which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+ 
++TAP ``vhostforce`` (since 10.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The ``vhostforce`` option is redundant with the ``vhost`` option.
++If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
++
++Vhost-user ``vhostforce`` (since 10.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The ``vhostforce`` option is a no-op.  Do not use it.
++
+ CPU device properties
+ '''''''''''''''''''''
+ 
+diff --git a/qapi/net.json b/qapi/net.json
+index 60d196afe5..531b360e46 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -346,13 +346,20 @@
+ # @vhostfds: file descriptors of multiple already opened vhost net
+ #     devices
+ #
+-# @vhostforce: vhost on for non-MSIX virtio guests
++# @vhostforce: enable vhost-net network accelerator.  Ignored when
++#    @vhost is set.
+ #
+ # @queues: number of queues to be created for multiqueue capable tap
+ #
+ # @poll-us: maximum number of microseconds that could be spent on busy
+ #     polling for tap (since 2.7)
+ #
++# Features:
++#
++# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
++#    option is redundant with the @vhost option. If they conflict,
++#    @vhost takes precedence.  Just use @vhost.
++#
+ # Since: 1.2
+ ##
+ { 'struct': 'NetdevTapOptions',
+@@ -369,7 +376,7 @@
+     '*vhost':      'bool',
+     '*vhostfd':    'str',
+     '*vhostfds':   'str',
+-    '*vhostforce': 'bool',
++    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
+     '*queues':     'uint32',
+     '*poll-us':    'uint32'} }
+ 
+@@ -606,17 +613,22 @@
+ #
+ # @chardev: name of a unix socket chardev
+ #
+-# @vhostforce: vhost on for non-MSIX virtio guests (default: false).
++# @vhostforce: no-op (default: false).
+ #
+ # @queues: number of queues to be created for multiqueue vhost-user
+ #     (default: 1) (Since 2.5)
+ #
++# Features:
++#
++# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
++#    option is ignored in code and does nothing.  Don't use it.
++#
+ # Since: 2.1
+ ##
+ { 'struct': 'NetdevVhostUserOptions',
+   'data': {
+     'chardev':        'str',
+-    '*vhostforce':    'bool',
++    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
+     '*queues':        'int' } }
+ 
+ ##
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 0223ceffeb..35a70096e8 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2882,7 +2882,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+ #else
+     "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
+     "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
+-    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
++    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
+     "         [,poll-us=n]\n"
+     "                configure a host TAP network backend with ID 'str'\n"
+     "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
+@@ -2898,9 +2898,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
+     "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
+     "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
+-    "                use vhost=on to enable experimental in kernel accelerator\n"
+-    "                    (only has effect for virtio guests which use MSIX)\n"
+-    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
++    "                use vhost=on to enable in kernel accelerator\n"
+     "                use 'vhostfd=h' to connect to an already opened vhost net device\n"
+     "                use 'vhostfds=x:y:...:z to connect to multiple already opened vhost net devices\n"
+     "                use 'queues=n' to specify the number of queues to be created for multiqueue TAP\n"
+@@ -2991,7 +2989,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                use 'start-queue=m' to specify the first queue that should be used\n"
+ #endif
+ #ifdef CONFIG_POSIX
+-    "-netdev vhost-user,id=str,chardev=dev[,vhostforce=on|off]\n"
++    "-netdev vhost-user,id=str,chardev=dev\n"
+     "                configure a vhost-user network, backed by a chardev 'dev'\n"
+ #endif
+ #ifdef __linux__
+@@ -3882,12 +3880,11 @@ SRST
+     for insertion into the socket map.  The combination of 'map-path' and
+     'sock-fds' together is not supported.
+ 
+-``-netdev vhost-user,chardev=id[,vhostforce=on|off][,queues=n]``
++``-netdev vhost-user,chardev=id[,queues=n]``
+     Establish a vhost-user netdev, backed by a chardev id. The chardev
+     should be a unix domain socket backed one. The vhost-user uses a
+     specifically defined protocol to pass vhost ioctl replacement
+-    messages to an application on the other end of the socket. On
+-    non-MSIX guests, the feature can be forced with vhostforce. Use
++    messages to an application on the other end of the socket. Use
+     'queues=n' to specify the number of queues to be created for
+     multiqueue vhost-user.
+ 
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 609ff24059..a4862d7087 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -46,7 +46,7 @@
+ #define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
+                         " -numa node,memdev=mem"
+ #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
+-#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
++#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s"
+ 
+ #define HUGETLBFS_MAGIC       0x958458f6
+ 
+-- 
+2.48.1
+
 
