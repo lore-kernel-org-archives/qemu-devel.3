@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100A4CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 18:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD0CCCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 18:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v96AV-00083N-Gp; Wed, 15 Oct 2025 14:24:11 -0400
+	id 1v96Bb-0000Zi-W0; Wed, 15 Oct 2025 14:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v96AT-00082b-5D
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:24:09 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1v96BP-0000Xa-2C
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:25:08 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v96AQ-0001dw-WF
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:24:08 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2909448641eso2597125ad.1
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 11:24:03 -0700 (PDT)
+ id 1v96B8-0001fm-QN
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 14:25:01 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-78af743c232so6283515b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 11:24:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760552641; x=1761157441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760552686; x=1761157486; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EiAqh6nyIXIrUNeIOBSZyPCXFhQTs9A8R814sLO73eI=;
- b=CeFdaLnB/sRSOA0EkacHN1mufSNUXPnDKQtBtKaQ4FPPCxKva7gvyP6ZiXeEQDw0DQ
- BrV7TkzZkNfHgoL3gWGLWr0tJn6TEWjG1CLtg4H4ZnXO/XEOhmmvBS9H9PMoZg6pao5H
- I1SBJRp1+svOzu23kxV9deGy/Y+iLgMkLyIKi05HCDCtBeONidUKjr+Vwk2xTulpY2Wo
- FUw/qHEpia+kqs081Gh+rTDghmijhT0hMjwSFBg8EqOJUH3cDmiptU+Cx4hWqZZJ6XN6
- r9g9ZYMu8h7yHxQVHVXOUMhvEGmGBdWyGUHD8EVkm2z9roA8CGnkKNGztdPaS5DY7EuH
- T34g==
+ bh=kbmCMOXcwnMPOYFq3NXY+SpNbaeXzC7bUV2sRJWg2KA=;
+ b=JVXkjLVzF96+ZpZMIvQSMqyFZHrqWQ/Et+VbfUVUEWr9aOGmyPuWt7d2wRUg30aZOn
+ i1EKN4Q5GveqY5aSMuT4T2s7OD+ey8N9N34IrJ6hscIe+8xaq1WpAYg1fAh12eR/0YOE
+ s88QAeAkJ/asO6qVj3U2ZpO4Kgzh4bS9OX5PzE/mxTWthS5NK4SiD3oEV0YmHddWT3JI
+ 7QimJ/VnIhMF1q+KjNO0fL0OODoS21hunO5Aw0LR7USUMhKMxXIc2w7RVDjxT1Rx/b1D
+ 54fyP0Mw6+CZz13Uh85PoX5gmc29WLupY2m/XvmPVnQFjlHEZdvFdcr43/M4WlusP8uU
+ LuGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760552641; x=1761157441;
+ d=1e100.net; s=20230601; t=1760552686; x=1761157486;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EiAqh6nyIXIrUNeIOBSZyPCXFhQTs9A8R814sLO73eI=;
- b=i8IbkxgE+Tw5AwiudOFTHSwjs6dwh2A9i5MXB5vepRZDgr3HwfuxB8RYbYZtD37K8Y
- yVO8xUcTt+92PKifdoMS7P2vCqgErP/r1us28eQXhuFxNvsYADVvXbs1ET/PP7RIiuyE
- 9AC8VV8tIlwV2deR4E0RIQSO5mNcR2lJwgDnEgv9eq/Q/SeBCzEjYfnqTMEZTo15OGIe
- KSJnH9lyxMPYPfcl6qtliJNUl8+O3tQgF64c8LtdkLWVipVs7BnHtGatIpBngt2rRzCa
- o5piu+ojj3+iJUWD22Cd15GqUeVUCzS1BoAuNdrgPb12kvlapbgYwEhR7GJE9+1I1KNM
- 2LOQ==
-X-Gm-Message-State: AOJu0Yx50+gFiK2FGsTGxXQuQ1gFrb8g+6bKDFTBNvqErms7662A01a9
- ipT072O8DMFlB/eFvJUGNR6a9EoQplzkSzIG6sYvbLahGNte8gH2YPehvJA/6g6JxXaU/XCXYdo
- gW7ehIfM=
-X-Gm-Gg: ASbGncuMEUisYHWMDVnGbFru4iocmf9wE58S6sZtNY+8vFScxOeFG8KbCycwtdS4mmH
- mddWEAklvIcm2/QQN3Qzmk9XMItSn8ijE8exCLZVCZrHr4cESwZwl76mbQglt6755N/IQC9mAms
- gq7FfTqCG1amNMB9pA+REG6na5SFs0kUupKHyJ39NS7uGkt7SJapr6t7YRfaLcRE8/UZpjhZHJe
- W/UgSvqiYPbq4g3p8Msv/oZxqjBstcaBjHw2S3Ym0BnPoutU3K2f1ZVToDbRwZvxAvJMe2zM4zk
- 9oZaP3DrgN2lZIQYMP5RdmUkw1YKcqfxKgEcy/ro88o9oLTLNxLWOks31S+r3Y7fhQBecMrY/8U
- jeWuvhcnLjOjRG4nPzpTx6uVQCkeFEmJfCcSMb1Yb8V5zjiXn+eMmqKNfFu5jxYl5zsPVsw==
-X-Google-Smtp-Source: AGHT+IECwmeUnt5COvCnfvf1fFiPzLC0usL15baw9Rg/67bbsVSOjPBrM54r2+3/3wwQCnXC3fxodw==
-X-Received: by 2002:a17:902:dac6:b0:272:a847:cabb with SMTP id
- d9443c01a7336-29091bdc6b0mr14633365ad.28.1760552640907; 
- Wed, 15 Oct 2025 11:24:00 -0700 (PDT)
+ bh=kbmCMOXcwnMPOYFq3NXY+SpNbaeXzC7bUV2sRJWg2KA=;
+ b=CKjXqUhfo0+mp09HjentToxkpWCTcJ3sWjmax5N3kH5E3E2stadIpazYAtqxQkcp7b
+ sU6EU9SryNjQ7aUHCBH9loRWnyu71K5dh8Wty4QoHkMFKX7PLo3ORpdQQ5SIrjXq5RA2
+ 3vb1l/ShMyfURky77H0ufhha0DZC0011+p2IKDDbSGoM1WImFmybvsbCDvx8C9O87VyZ
+ SZIZNXKuzqn2CIt5f7TJObKFvXKtx2hI+Msmx0KSEDdLhd4kkv1MRLcYXn1C12cISMi1
+ 7O1vVBkz6yGk2GpeFwWYGmqyGtBI9BdSqD358U6ijCHtZiuACB/ZWE1/pJPaIb+CZDGM
+ SdFg==
+X-Gm-Message-State: AOJu0Yyxc/wOjx6BN3QJ2rmuwX96Qyn9k7JYUcoZjGm0QVzwXph2X92z
+ An+bcUlVdUsF0kVbxsdFfVZsNSa/LDH0faQBPZvcaS2JCAX0bM6nRvWlKrGTfiun8uMAkaIooAH
+ wfrnKUT8=
+X-Gm-Gg: ASbGncskcO1Qi748j6QvJnwys5aHt9CiD4oprTA0pmGCZrrQ2KRNUGXiCBVgYGEeflz
+ Xsa26+Qc7rYHLXuOiP60R8PyBIw6PyJs92XINDv8Fo34cBLeQbQ9KwCLJpvsNcamf/T23EJ0XIH
+ FdDhv/1GpBVeR1iJ+mCuw217QZh4xSq7TKurfV5cEgtKMy5rR8qqLxMy/D57sPx0xrM3zXdmtpz
+ jIeHuPk334R0TkfdXAp6/rO+WySWGoJqlLap5f0qKPbPF5Yj61uYNyPLCX1Qqw4AUcgyty4TbrE
+ vJF89BU229H5J2hXLOxqlfd560I+5IKxD9bRUvbgh74Rh1Vs84CU1mlHhYx7ayV+XkNnXeG4bjt
+ P2E+MWQ3e7oFYxBa6BSlXUd82FNoRD1CBC8jRPOraNXaBF9T5FsXBcy8+qBwCfqDRmXsqWg==
+X-Google-Smtp-Source: AGHT+IEfMGDbmjY06lHOR+Q3agLnpEk8Dnj4ZV4lfuDzZkferMS4Mg4ehTSG4fJUUY+SZ6nWkzSwUw==
+X-Received: by 2002:a05:6a00:2e03:b0:781:e9c:2178 with SMTP id
+ d2e1a72fcca58-79387c1ace6mr36643200b3a.31.1760552685831; 
+ Wed, 15 Oct 2025 11:24:45 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099aaf693sm3015705ad.80.2025.10.15.11.24.00
+ d2e1a72fcca58-7992d0e1336sm19342406b3a.59.2025.10.15.11.24.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 11:24:00 -0700 (PDT)
-Message-ID: <a1d3df84-395e-48c0-9aa7-403f6cf35ba2@linaro.org>
-Date: Wed, 15 Oct 2025 11:23:59 -0700
+ Wed, 15 Oct 2025 11:24:45 -0700 (PDT)
+Message-ID: <ae76fa52-da2c-4011-ac20-bfcce7c6d9f1@linaro.org>
+Date: Wed, 15 Oct 2025 11:24:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/7] target/microblaze: Have compute_ldst_addr_type[ab]
- return TCG_i32
+Subject: Re: [PATCH v3 6/7] target/microblaze: Have do_load/store() take a
+ TCG_i32 address argument
 To: qemu-devel@nongnu.org
 References: <20251015180115.97493-1-philmd@linaro.org>
- <20251015180115.97493-6-philmd@linaro.org>
+ <20251015180115.97493-7-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251015180115.97493-6-philmd@linaro.org>
+In-Reply-To: <20251015180115.97493-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,14 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/15/25 11:01, Philippe Mathieu-Daudé wrote:
-> Both compute_ldst_addr_typea() and compute_ldst_addr_typeb()
-> bodies use a TCG_i32, so return the same type.
+> All callers of do_load() and do_store() pass a TCG_i32 address
+> type, have both functions take a TCG_i32.
 > 
 > Suggested-by: Anton Johansson<anjo@rev.ng>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/microblaze/translate.c | 48 +++++++++++++++++------------------
->   1 file changed, 24 insertions(+), 24 deletions(-)
+>   target/microblaze/translate.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
