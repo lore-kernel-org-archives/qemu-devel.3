@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59914CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 07:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A421CCD190
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 07:56:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8wMH-0005Ql-AZ; Wed, 15 Oct 2025 03:55:41 -0400
+	id 1v8wMw-0005yK-Jf; Wed, 15 Oct 2025 03:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v8wME-0005QO-LI; Wed, 15 Oct 2025 03:55:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v8wMt-0005vz-HP; Wed, 15 Oct 2025 03:56:19 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v8wM9-0005Vp-Ay; Wed, 15 Oct 2025 03:55:38 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59EK1vL9006552;
- Wed, 15 Oct 2025 07:55:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0/yb1k
- sTUF14uypdqa0Jauoqxg8o+fXMTpYCrihtvg0=; b=Zu3icTMTT3IeY+/BhfZmYL
- iY+4kvJkrCt+ztxhI/5qTBXYrAqJVrCIhKj7aXwN/Y7455vKuI3e/SWbCE5EpcwU
- 5M9xb81d8Pvu+aj+A8ZCmgprDGALuyJ3qth/BIwlPPzC+SWJdRfgAWHiWa1/cevr
- 8b0K47YyS1cTDUx7eGYTJ99o+AaZM0ypbBRUSvL64sLltTXACCxu0JUR4/P/S2wJ
- Axw4C2ZNYq08mMQuuYJqN2wduz6/IoLBumomp37eLVReA/6Ytk77gkDs2XFt5R2q
- DTvrXIcSt+fWtNtQOrUx01JhFcUmcezGviZ2fvVTciwHjab32irTvWpaLFJ7EUUA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnraqr9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Oct 2025 07:55:28 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59F3oBeH018336;
- Wed, 15 Oct 2025 07:55:27 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49s3rf8tee-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 15 Oct 2025 07:55:27 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59F7tO3h39518518
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 15 Oct 2025 07:55:24 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E52AA20220;
- Wed, 15 Oct 2025 07:28:37 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 47D292021F;
- Wed, 15 Oct 2025 07:28:37 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.111.38.145])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 15 Oct 2025 07:28:37 +0000 (GMT)
-Message-ID: <67f6a9617a0f128e75e0c8049041e81102518a16.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] target/s390x: Fix missing clock-comparator
- interrupts after reset
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Date: Wed, 15 Oct 2025 09:28:36 +0200
-In-Reply-To: <20251014160743.398093-3-iii@linux.ibm.com>
-References: <20251014160743.398093-1-iii@linux.ibm.com>
- <20251014160743.398093-3-iii@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v8wMo-0005Yd-NI; Wed, 15 Oct 2025 03:56:18 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C18715DBA6;
+ Wed, 15 Oct 2025 10:55:42 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2BA792A0065;
+ Wed, 15 Oct 2025 10:56:04 +0300 (MSK)
+Message-ID: <372b7788-621f-45a0-a507-960140be921f@tls.msk.ru>
+Date: Wed, 15 Oct 2025 10:56:04 +0300
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M5ZA6iws c=1 sm=1 tr=0 ts=68ef5370 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=jWqlWjeE-wqjcu1HJ-sA:9 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: mTkiX-LleTngwTmWI03H5lZa4BfTWL4t
-X-Proofpoint-ORIG-GUID: mTkiX-LleTngwTmWI03H5lZa4BfTWL4t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEwMDE0MCBTYWx0ZWRfX0qZYGRZVU9ph
- lWB0Hor67YzzQAEpeoFdW/46Z0qZZKozTtWkxEIepzmW9zS/4yGQCMnb0HfXcdZVhOGqZ7CNCy4
- cYUwNxJOBfhuqT89JqIZasDARe0bg5IKGn3awHc4iEJFAVmclKknZ4RKWvfsH0EVmGHRua3ERl1
- vkeomeKyVL32bG966IenCHcPlXJXBCxOlzyIYrRUT+9xqIA8T95rCGpMBG0Zb5/q7C9fYTOK0K/
- 7zX15licEGJrfRHqKQAckKeWSrwhEwoXsfTmISNXtkC8Ro0nMezitP7PcmMn1fD1Mlu3593zo1h
- qLGdkV5HLR0Q6IKpBSA/G/iPmForJH1RQr1qa8HmzmMLmVrqALoyIXzowKkZfmSCGVSO8THyiKG
- qtCOpB2M6K5rwBaAVTeY2tk7DIIFVw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-15_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510100140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] target/s390x: Fix missing clock-comparator interrupts
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20251014160743.398093-1-iii@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251014160743.398093-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,28 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-10-14 at 18:05 +0200, Ilya Leoshkevich wrote:
-> After reset, both TOD and CKC values are set to 0, so if
-                    ^^^
+14.10.2025 19:05, Ilya Leoshkevich wrote:
+> Hi,
+> 
+> While trying to (so far unsuccessfully) reproduce [1], I found two bugs
+> in the clock comparator handling. This series fixes both and adds a
+> test.
+> 
+> [1] https://lore.kernel.org/lkml/ab3131a2-c42a-47ff-bf03-e9f68ac053c0@t-8ch.de/
+> 
+> Best regards,
+> Ilya
+> 
+> Ilya Leoshkevich (3):
+>    target/s390x: Fix missing interrupts for small CKC values
+>    target/s390x: Fix missing clock-comparator interrupts after reset
+>    tests/tcg/s390x: Test SET CLOCK COMPARATOR
 
-This is inaccurate, only the TOD programmable register is set to 0.
-I will fix this in v2.
+Are these worth to have in qemu stable series?
 
-> clock-comparator interrupts are enabled, one should occur shortly
-> thereafter.
->=20
-> Currently the code does not set tod_timer, so this does not happen.
->=20
-> Fix by adding a tcg_s390_tod_updated() call. Initialize TOD clock
-> before CPUs in order to ensure that the respective object exists
-> during the CPU reset.
->=20
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
-> =C2=A0hw/s390x/s390-virtio-ccw.c | 6 +++---
-> =C2=A0target/s390x/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-| 8 ++++++++
-> =C2=A02 files changed, 11 insertions(+), 3 deletions(-)
+(And please don't forget to add Cc: qemu-stable@ to other future
+changes which are also good to have in stable series).
 
-[...]
+Thanks,
+
+/mjt
 
