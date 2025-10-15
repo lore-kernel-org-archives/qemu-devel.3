@@ -4,77 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E77CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1757CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8xN4-0003cT-9W; Wed, 15 Oct 2025 05:00:34 -0400
+	id 1v8xRP-0007Wp-My; Wed, 15 Oct 2025 05:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1v8xN1-0003bu-8o
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:00:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1v8xRN-0007WF-Le; Wed, 15 Oct 2025 05:05:01 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1v8xMv-0005Bw-QY
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:00:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760518821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4hVX23j1qg89GM2XTJ2f9M0XbvXysR1u9GM3HK6Mb+g=;
- b=HfLwTAUBUT3euDnDHuYuGWFspq7wc7soqqwZv4wteiLZ9aRNGLB5QbaBWNohWmwhSjwGY3
- qibQn/fd2bxtaieC+OQUUSiOjLC1k1Pc+nkGvO8JfjH0N/xBUBNX6R1ZiCoIgcwv2tPdo6
- DDVuMK+sY8wApTN7Xz6G7O+NqDYxm84=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-IbO7UJtNNC2CNuQ4qyaEwA-1; Wed,
- 15 Oct 2025 05:00:18 -0400
-X-MC-Unique: IbO7UJtNNC2CNuQ4qyaEwA-1
-X-Mimecast-MFC-AGG-ID: IbO7UJtNNC2CNuQ4qyaEwA_1760518817
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE2581956052; Wed, 15 Oct 2025 09:00:16 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.44.32.123])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4A19B1800353; Wed, 15 Oct 2025 09:00:10 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stevensd@chromium.org, jasowang@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, hi@alyssa.is,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, david@redhat.com,
- manos.pitsidianakis@linaro.org, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, stefanha@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, slp@redhat.com,
- dbassey@redhat.com, Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v9 5/7] vhost_user.rst: Add GET_SHMEM_CONFIG message
-Date: Wed, 15 Oct 2025 10:59:28 +0200
-Message-ID: <20251015085930.1517330-6-aesteve@redhat.com>
-In-Reply-To: <20251015085930.1517330-1-aesteve@redhat.com>
-References: <20251015085930.1517330-1-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1v8xRF-0005Xy-ST; Wed, 15 Oct 2025 05:05:01 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id A9D2948DBF;
+ Wed, 15 Oct 2025 09:04:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDC4C4CEF8;
+ Wed, 15 Oct 2025 09:04:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1760519076;
+ bh=VB4Fcz2lHkrUMyoTfMgNF7qNNy6BHxWOLyZuLsG1jyg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=uq6qEb6XMWo1QnZalvPo5+eGqR5RV0x/7Cd90aaNqZTxH5ErMQi+aIDN6ZhgAOJmp
+ /59VCqs46yXuBPgTqkgiAINIEOng4rnBNXzu9DCwn4br01VnrHAWM32+L7dAcoQVgy
+ U9XkzHvC/8JyLJmpw0vKtqQSYxdAnwSGLrdDlORC0BVpuFkE8L2yth7zd5S/xRM54G
+ wt+IGQ8sJK3ycb+m2p+M/L2v5l/8tVdHZJheabqXhsNZJuBoJYELGDfO4+FWejaxOi
+ kgZyDRXSpUKX6AZn+dQMV0NFT/Uli6tQKZUPqgxyT6mSZIrFDCzzgd2QgWaMfAAeGl
+ ongojqv65GW6w==
+Date: Wed, 15 Oct 2025 10:04:32 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH 0/4] Fix Ethernet interface support for
+ microchip-icicle-kit
+Message-ID: <20251015-chump-certainly-c220ef4541ab@spud>
+References: <20251004200049.871646-1-linux@roeck-us.net>
+ <CAKmqyKPQDUjQPgzfpcUBSEZ=y1Of6dcrWBj8e6cBhHUH8F9Kng@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="6CQf4aeaa1Viu3Cu"
+Content-Disposition: inline
+In-Reply-To: <CAKmqyKPQDUjQPgzfpcUBSEZ=y1Of6dcrWBj8e6cBhHUH8F9Kng@mail.gmail.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=conor@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,81 +76,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GET_SHMEM_CONFIG vhost-user frontend
-message to the spec documentation.
 
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+--6CQf4aeaa1Viu3Cu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index dab9f3af42..54d64ae75f 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -371,6 +371,20 @@ MMAP request
-   - 0: Pages are mapped read-only
-   - 1: Pages are mapped read-write
- 
-+VIRTIO Shared Memory Region configuration
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-++-------------+---------+------------+----+--------------+
-+| num regions | padding | mem size 0 | .. | mem size 255 |
-++-------------+---------+------------+----+--------------+
-+
-+:num regions: a 32-bit number of regions
-+
-+:padding: 32-bit
-+
-+:mem size: contains ``num regions`` 64-bit fields representing the size of each
-+           VIRTIO Shared Memory Region
-+
- C structure
- -----------
- 
-@@ -397,6 +411,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-           VhostUserMMap mmap;
-+          VhostUserShMemConfig shmem;
-       };
-   } QEMU_PACKED VhostUserMsg;
- 
-@@ -1754,6 +1769,30 @@ Front-end message types
-   Using this function requires prior negotiation of the
-   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
- 
-+``VHOST_USER_GET_SHMEM_CONFIG``
-+  :id: 44
-+  :equivalent ioctl: N/A
-+  :request payload: N/A
-+  :reply payload: ``struct VhostUserShMemConfig``
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the front-end
-+  to gather the VIRTIO Shared Memory Region configuration. The back-end will
-+  respond with the number of VIRTIO Shared Memory Regions it requires, and
-+  each shared memory region size in an array. The shared memory IDs are
-+  represented by the array index. The information returned shall comply
-+  with the following rules:
-+
-+  * The shared information will remain valid and unchanged for the entire
-+    lifetime of the connection.
-+
-+  * The Shared Memory Region size must be a multiple of the page size
-+    supported by mmap(2).
-+
-+  * The size may be 0 if the region is unused. This can happen when the
-+    device does not support an optional feature but does support a feature
-+    that uses a higher shmid.
-+
- Back-end message types
- ----------------------
- 
--- 
-2.49.0
+On Wed, Oct 15, 2025 at 01:03:50PM +1000, Alistair Francis wrote:
+> On Sun, Oct 5, 2025 at 6:02=E2=80=AFAM Guenter Roeck <linux@roeck-us.net>=
+ wrote:
+> >
+> > The Microchip PolarFire SoC Icicle Kit supports two Ethernet interfaces.
+> > The PHY on each may be connected to separate MDIO busses, or both may be
+> > connected on the same MDIO bus using different PHY addresses. Add suppo=
+rt
+> > for it to the Cadence GEM emulation.
+> >
+> > The Linux kernel checks the PCS disabled bit in the R_DESCONF register
+> > to determine if SGMII is supported. If the bit is set, SGMII support is
+> > disabled. Since the Microchip Icicle devicetree file configures SGMII
+> > interface mode, enabling the Ethernet interfaces fails when booting
+> > the Linux kernel. Add support for clearing the PCS disabled bit.
+> >
+> > ----------------------------------------------------------------
+> > Guenter Roeck (4):
+> >       hw/net/cadence_gem: Support two Ethernet interfaces connected to =
+single MDIO bus
+> >       hw/riscv: microchip_pfsoc: Connect Ethernet PHY channels
+> >       hw/net/cadence_gem: Add pcs-enabled property
+> >       microchip icicle: Enable PCS on Cadence Ethernet
+>=20
+> Thanks!
+>=20
+> Applied to riscv-to-apply.next
 
+Didn't notice these in time, thanks for fixing this Guenter.
+
+--6CQf4aeaa1Viu3Cu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaO9joAAKCRB4tDGHoIJi
+0hQkAP9Fdj/+Z2jwIImK9jyVTpkpgNfxKgIvkDS1c/rwA81KUAD9H1aSP6tW5zol
+N+wi9ANWAaggx/aqCh2Nk5UuEr/2rws=
+=VzkN
+-----END PGP SIGNATURE-----
+
+--6CQf4aeaa1Viu3Cu--
 
