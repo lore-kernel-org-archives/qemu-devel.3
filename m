@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E647BCCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB280CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v99DE-0003fO-LZ; Wed, 15 Oct 2025 17:39:12 -0400
+	id 1v99Em-0006ds-5L; Wed, 15 Oct 2025 17:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v99DC-0003f4-As
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:10 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v99D9-00052L-U0
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:10 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B15015E434;
- Wed, 15 Oct 2025 23:23:14 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B6F622A12B4;
- Wed, 15 Oct 2025 23:23:15 +0300 (MSK)
-Message-ID: <fc9a6d4f-ffc4-4242-837a-d91aa3d68a70@tls.msk.ru>
-Date: Wed, 15 Oct 2025 23:23:15 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v99Ei-0006QF-Cw
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:40:45 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v99Ee-0005NC-PD
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:40:44 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2681660d604so934675ad.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:40:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760564435; x=1761169235; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YOwesMzwLSu4uCr1Ef1IJ6OQT/hq4jOSRu/u7tcHxuM=;
+ b=EnhjepcU0pWUStjpSecOGuI+zIfbiuakKqEYB2bISyEiSse7LEHKBioLPniYbsXvHQ
+ tWNQyc7dhwXITjZaWuOusXeNY87BueUK18fQyKFOd9nS0aoWvWpjj5vrarB6t9fO7PbL
+ c87xfTW5ulwAunCksHuQjrZDvuTXQbKL1Tekdie+gWuUPwpudRhsCM/xtL542VGPFIBN
+ MwCwGem1jH8E8HKtvcIWFXcv8Ss9yX3+QEJLj2+LfbkroHZmh+Gq+zhbjAGAnk29RCk4
+ +FRVAizTpM+Tt8RDXofkZeagxEzY8e5LWYTf5Eim6A8ZNcliWxizR+pYnR5/VztbxCXN
+ BeWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760564435; x=1761169235;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YOwesMzwLSu4uCr1Ef1IJ6OQT/hq4jOSRu/u7tcHxuM=;
+ b=SzI2Fgq98R/GNvNbfuq9+an0/fM3t/HjR5+y2+BbQ5RIgyQht1uy+b16KONvqw6Kvo
+ GCsSnI6yNXODUnYAf9OtlWCA0tKnpUx4rs6PwxPFa2peTiA9lPSb+oXAFrh1BmWQqYD1
+ mZfcd/YDDeGI5etiVsjiJenLT4jKoImyIg/nbvUnalQf/nQbiDrCoRUst+UazK3+/5Q7
+ crxJu6stHmA+zjMS02xsXGk/YRxEZzC9UWpIKaKujrr59VskKSsDT358dRJYdOjINxin
+ HqBrurQzJWMNQe2ixWBrUdIFAUrvnr7196J0W/lEm5PtDSJz8XBBJDOPIzeap96gXSGz
+ Qh8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUq4NEOva42sgJq1YkvDaBw/YareySO+z2REdHpM4cEVHZvX4PZLqRySA+4MbzDI8zf9yMSJRRca+Cs@nongnu.org
+X-Gm-Message-State: AOJu0Yyg737/bcp68XV8PGMzZ96amV9OW7zRdX0mlC+hs2pvjn07LGlY
+ Aooc7EwAaY+ZniV3KqtJ/gGVr3D5DeyT3NQuJZwc1TGyZPQK16cCiPezpgel6GB5rF3pMho2tmh
+ w7YID4M4=
+X-Gm-Gg: ASbGncviDZ3o4V6o246GHQ10yaON6qGyHsHyUiFtEsrQ5qT3JtRxhgx1HNLkURvYLba
+ aCoWw1gmPvEh4BBSwbr1/Xdp6Ta9IPGpRe3CIJVd7uWWGLxAp7IRN/sGBbMfa5km8+ZSwb8nODD
+ IZDDDLDbcpiPtvORTL7pqtVvzTTN7o1eWGAOjeWBXfFOSu1uHysnTjdSdSqHaWIO6FhlqKagYNv
+ jkblHeOwqfsgLhpS8C0MZDMwOp317G9kv4Dx8ozNoTJ9ucLjuRvqO/C5x1nOB2qhuWSXxtfIEtP
+ 7dT8/c+3u0r0oMB0v79IpQOD8VqtDDmYCLbILCdnqC+Y63GAFFd3s513m78+YlwpyAjKkp6IiCZ
+ jqYp/5NTkvDXOa2p52K601LKq5q7nhf4G+H0i2ZpXZYaWA4aYKtdAvCVujbdLdzJqb05/CPhNBD
+ MYEdcthgbnwheTdJpLSw==
+X-Google-Smtp-Source: AGHT+IFVVO7+s2WI6C0XZPiM8WRosv0HJmmyScrjawrDGwCGtSxKKc08LXmAPqavL9t7xArcyI3WHg==
+X-Received: by 2002:a17:902:f791:b0:290:9576:d6ef with SMTP id
+ d9443c01a7336-2909576d7c1mr11759095ad.54.1760564435253; 
+ Wed, 15 Oct 2025 14:40:35 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29099aa32c4sm6248535ad.79.2025.10.15.14.40.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Oct 2025 14:40:34 -0700 (PDT)
+Message-ID: <ef21f690-2721-4d12-ad41-6abdfa54a53f@linaro.org>
+Date: Wed, 15 Oct 2025 14:40:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/7] esp.c: only allow ESP commands permitted in the
- current asc_mode
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- fam@euphon.net, qemu-devel@nongnu.org
-References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
- <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
- <43ef15f9-1225-4416-9d04-eefc4f6eb952@tls.msk.ru>
- <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
+Subject: Re: [PATCH] tests/functional/alpha: Remove superfluous fetch() line
+ from the clipper test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20251010144525.842462-1-thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251010144525.842462-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,18 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/25 22:06, Mark Cave-Ayland wrote:
-..> Could it be related to the newer xorriso version? And are you sure 
-there
-> isn't an older copy of SeaBIOS lying around somewhere that is getting 
-> picked up by accident?
+On 10/10/25 07:45, Thomas Huth wrote:
+> From: Thomas Huth<thuth@redhat.com>
+> 
+> The kernel asset is retrieved automatically via the uncompress()
+> line below the fetch(), so the fetch() is simply not necessary here.
+> 
+> Signed-off-by: Thomas Huth<thuth@redhat.com>
+> ---
+>   tests/functional/alpha/test_clipper.py | 1 -
+>   1 file changed, 1 deletion(-)
 
-I forgot to answer this one (saw it in the first place though).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Nope, this is qemu git build, - which picks up everything from
-pc-bios directory.  So it's 1.17.0.
-
-xorriso version - might be, but I'd love to see qemu messages :)
-
-/mjt
+r~
 
