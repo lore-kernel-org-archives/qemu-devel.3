@@ -4,54 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC5BCCD192
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7877CCD194
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v91VO-0001cD-6w; Wed, 15 Oct 2025 09:25:26 -0400
+	id 1v91SW-0005T7-FZ; Wed, 15 Oct 2025 09:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v91VN-0001ap-4j
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:25:25 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v91SB-0005JE-Hc
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:08 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v91V9-0003TK-Tu
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:25:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=zKU6myrwXMXIlgy4yFFaEUrAYf8RL5GyRb/aBqTqUjI=; b=VnDuutva7dR0oXK
- rtQEy/5gdTLDTrzr6x6gJz+i0t2RykF8qsZ69YilwtmdFSBw6VGd/D+ODb20vzw4wcmyx5WU+FFyq
- Dvru2ZyMkvGUGcphQenpzIM6Kr/Yv+IfcFo6R9LjRZzipbX6Tb24alSqM987oDTSrOQNc5sHtYgJ5
- Y8=;
-Date: Wed, 15 Oct 2025 15:27:41 +0200
-Subject: [PATCH 4/5] target-info: Introduce runtime TARGET_PHYS_ADDR_SPACE_BITS
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v91Rv-0002zr-OB
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:22:05 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1F11E88A3E;
+ Wed, 15 Oct 2025 16:21:43 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a94::1:15])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id bLQ5oq0N5Os0-beisVgbX; Wed, 15 Oct 2025 16:21:42 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760534502;
+ bh=sWnY8ZzMlkKOLKPtaKjH3fVS/aysz4QqO5yCpSiiFBE=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=m14ODcN+Bk8+KYTpnf4baGLNI7pd+mxsdu/TsnTUsIacllK2pqahsOeB1gXSJ0zEy
+ 4S7Mw2/NMbs8B3m11OUT+pPAMY9oqisIWOKfvLmv6KayxtyMER+8TDf8uGwK+ypSYF
+ EENjnd683gZsHZalLmHyMW7aCJAnuNGBtA1342/k=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: mst@redhat.com,
+	jasowang@redhat.com
+Cc: peterx@redhat.com, farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
+ armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ berrange@redhat.com, qemu-devel@nongnu.org, michael.roth@amd.com,
+ steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
+ yc-core@yandex-team.ru, vsementsov@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+Subject: [PATCH v8 03/19] net/tap: rework net_tap_init()
+Date: Wed, 15 Oct 2025 16:21:19 +0300
+Message-ID: <20251015132136.1083972-4-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
+References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251015-feature-single-binary-hw-v1-v1-4-8b416eda42cf@rev.ng>
-References: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
-In-Reply-To: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -60,68 +76,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- include/qemu/target-info-impl.h | 2 ++
- include/qemu/target-info.h      | 8 ++++++++
- target-info.c                   | 5 +++++
- 3 files changed, 15 insertions(+)
+In future (to support backend-transfer migration for virtio-net/tap,
+which includes fds passing through unix socket) we'll want to postpone
+fd-initialization to the later point, when QAPI structured parameters
+are not available. So, let's now rework the function to interface
+without "tap" parameter.
 
-diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
-index 17887f64e2..80d1613128 100644
---- a/include/qemu/target-info-impl.h
-+++ b/include/qemu/target-info-impl.h
-@@ -18,6 +18,8 @@ typedef struct TargetInfo {
-     SysEmuTarget target_arch;
-     /* runtime equivalent of TARGET_LONG_BITS definition */
-     unsigned long_bits;
-+    /* runtime equivalent of TARGET_PHYS_ADDR_SPACE_BITS definition */
-+    unsigned phys_addr_space_bits;
-     /* runtime equivalent of CPU_RESOLVING_TYPE definition */
-     const char *cpu_type;
-     /* QOM typename machines for this binary must implement */
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index abcf25db6f..8474c43404 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -23,6 +23,14 @@ const char *target_name(void);
-  */
- unsigned target_long_bits(void);
- 
-+/**
-+ * target_phys_addr_space_bits:
-+ *
-+ * Returns: number of bits needed to represent the targets physical
-+ *          address space.
-+ */
-+unsigned target_phys_addr_space_bits(void);
-+
- /**
-  * target_machine_typename:
-  *
-diff --git a/target-info.c b/target-info.c
-index 3110ab32f7..3d696ae0b3 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -22,6 +22,11 @@ unsigned target_long_bits(void)
-     return target_info()->long_bits;
+Also, rename to net_tap_open(), as it's just a wrapper on tap_open(),
+and having net_tap_init() and net_init_tap() functions in one file
+is confusing.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+---
+ net/tap.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
+
+diff --git a/net/tap.c b/net/tap.c
+index f90050c3a0..b1b64c508d 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -655,20 +655,12 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+     return 0;
  }
  
-+unsigned target_phys_addr_space_bits(void)
-+{
-+    return target_info()->phys_addr_space_bits;
-+}
-+
- SysEmuTarget target_arch(void)
+-static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
++static int net_tap_open(int *vnet_hdr, bool vnet_hdr_required,
+                         const char *setup_script, char *ifname,
+                         size_t ifname_sz, int mq_required, Error **errp)
  {
-     SysEmuTarget arch = target_info()->target_arch;
-
+     Error *err = NULL;
+-    int fd, vnet_hdr_required;
+-
+-    if (tap->has_vnet_hdr) {
+-        *vnet_hdr = tap->vnet_hdr;
+-        vnet_hdr_required = *vnet_hdr;
+-    } else {
+-        *vnet_hdr = 1;
+-        vnet_hdr_required = 0;
+-    }
++    int fd;
+ 
+     fd = RETRY_ON_EINTR(tap_open(ifname, ifname_sz, vnet_hdr, vnet_hdr_required,
+                       mq_required, errp));
+@@ -977,6 +969,8 @@ free_fail:
+     } else {
+         g_autofree char *default_script = NULL;
+         g_autofree char *default_downscript = NULL;
++        bool vnet_hdr_required = tap->has_vnet_hdr && tap->vnet_hdr;
++
+         if (tap->vhostfds) {
+             error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
+             return -1;
+@@ -997,7 +991,9 @@ free_fail:
+         }
+ 
+         for (i = 0; i < queues; i++) {
+-            fd = net_tap_init(tap, &vnet_hdr, i >= 1 ? "no" : script,
++            vnet_hdr = tap->has_vnet_hdr ? tap->vnet_hdr : 1;
++            fd = net_tap_open(&vnet_hdr, vnet_hdr_required,
++                              i >= 1 ? "no" : script,
+                               ifname, sizeof ifname, queues > 1, errp);
+             if (fd == -1) {
+                 return -1;
 -- 
-2.51.0
+2.48.1
 
 
