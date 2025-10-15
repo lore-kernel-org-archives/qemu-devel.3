@@ -4,67 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB32CCD185
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 07:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D46CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 08:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8wMn-0005py-ID; Wed, 15 Oct 2025 03:56:13 -0400
+	id 1v8wYo-0001sM-VT; Wed, 15 Oct 2025 04:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8wMl-0005lE-L5
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 03:56:11 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8wYn-0001rf-0u
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 04:08:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v8wMf-0005Y4-PR
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 03:56:10 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8wYk-0006tB-D6
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 04:08:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760514959;
+ s=mimecast20190719; t=1760515709;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=i9nv8f8DCeB1cUJjABzO7Z7CSJUt2Z/XMPTp2ytRtLE=;
- b=UzhoUjr6xn2EXEUBHChjogMuf3cMzof4qwA2PaNFN4J8oTRfrNhFp/wmOrkcX8pCm0XHqT
- UuvD22bVgOP7NFGdrn1nCoDyuCnegboYPsYjhU0P8CAw7TZsiGpYdG8vrbFQiegJnW7YFU
- tCCvru6+iLGnHuoNR1iPeUesUlydusQ=
+ bh=ZmrQf6BDaLQYdgBCQQDN9rbZLFnbcaTf2FNxvuvnTbg=;
+ b=gRAJCy7nlNCio+onWbueptxNdufAZNCQoqGLL8F5EfcAkHDyhjq5QvWOMZatljD4Td1nW7
+ SiyIG1rtGCKBBOg2pENA1EjDcPeZ0grZT9o2hb3w4kx6mTNUIaYNfQ8YHLJVzG999YnMwG
+ hWLZouVylmfCqkEfKn5I8SDqap7u26w=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-wWh6lHvHOleM0BrdCKsCAQ-1; Wed,
- 15 Oct 2025 03:55:56 -0400
-X-MC-Unique: wWh6lHvHOleM0BrdCKsCAQ-1
-X-Mimecast-MFC-AGG-ID: wWh6lHvHOleM0BrdCKsCAQ_1760514954
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-aIVhdfxVNsqAEuUtvKSkzg-1; Wed,
+ 15 Oct 2025 04:08:25 -0400
+X-MC-Unique: aIVhdfxVNsqAEuUtvKSkzg-1
+X-Mimecast-MFC-AGG-ID: aIVhdfxVNsqAEuUtvKSkzg_1760515703
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2EAA81800BC1; Wed, 15 Oct 2025 07:55:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E3851800451; Wed, 15 Oct 2025 07:55:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C77B621E6A27; Wed, 15 Oct 2025 09:55:50 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: marcandre.lureau@redhat.com,  pbonzini@redhat.com,  berrange@redhat.com,
- eduardo@habkost.net,  qemu-devel@nongnu.org,  raphael@enfabrica.net,
- yc-core@yandex-team.ru,  d-tatianin@yandex-team.ru
-Subject: Re: [PATCH v3 7/7] chardev: introduce DEFINE_PROP_CHR_NO_CONNECT
-In-Reply-To: <2df28aa4-d979-4659-a1ca-33d9cba94fb1@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 15 Oct 2025 10:11:16 +0300")
-References: <20251014152644.954762-1-vsementsov@yandex-team.ru>
- <20251014152644.954762-8-vsementsov@yandex-team.ru>
- <87tt00irg0.fsf@pond.sub.org>
- <2df28aa4-d979-4659-a1ca-33d9cba94fb1@yandex-team.ru>
-Date: Wed, 15 Oct 2025 09:55:50 +0200
-Message-ID: <87ldlcfvjt.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ id 703A71800744; Wed, 15 Oct 2025 08:08:23 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A02851955F1B; Wed, 15 Oct 2025 08:08:22 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 8025818000B2; Wed, 15 Oct 2025 10:08:20 +0200 (CEST)
+Date: Wed, 15 Oct 2025 10:08:20 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v4 1/2] hw/uefi: add "info firmware-log" +
+ "query-firmware-log" monitor commands
+Message-ID: <z4sxrfotm3bse3hybroietck6njdyc3h7gejfjosovqd7eb7el@2rjj2ualeonl>
+References: <20251013104954.250166-1-kraxel@redhat.com>
+ <20251013104954.250166-2-kraxel@redhat.com>
+ <aO4QSE7oNqpNApFZ@redhat.com>
+ <gzn24uzbuady2ipi3uvuzyykqgkvp6ogbwsapghflkfyymgzrv@2bwdhvhwlzw3>
+ <87sefkfw84.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87sefkfw84.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,66 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On Wed, Oct 15, 2025 at 09:41:15AM +0200, Markus Armbruster wrote:
+> Gerd Hoffmann <kraxel@redhat.com> writes:
+> 
+> >   Hi,
+> >
+> >> > +static void handle_ovmf_log_range(GString *out,
+> >> > +                                  dma_addr_t start,
+> >> > +                                  dma_addr_t end,
+> >> > +                                  Error **errp)
+> >> > +{
+> >> > +    g_autofree char *buf = NULL;
+> >> 
+> >> Left-over variable - unfortunately gcc doens't warn about unused
+> >> vars when g_autofree is present :-(
+> >
+> > Fixed.
+> >
+> >> > +{ 'struct': 'FirmwareLog',
+> >> > +  'data': { '*version': 'str',
+> >> > +            '*log': 'str' } }
+> >> 
+> >> Having version be optional makes sense, but what is the semantics for
+> >> 'log' being optional. If the log is unavailable, wouldn't we be better
+> >> raising an error ?
+> >
+> > That is what the current implementation actually does.  I change it.
+> 
+> Drawback: when some Firmware provides version, but not log, the command
+> can't give us the version, because it fails.  Do we care?
 
-> On 15.10.25 09:56, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->>> For further vhost-user-blk backend-transfer migration realization we
->>> want to give it (vhost-user-blk) a possibility (and responsibility) to
->>> decide when do connect.
->>>
->>> For incoming migration we'll need to postpone connect at least until
->>> early stage of migrate-incoming command, when we already know all
->>> migration parameters and can decide, are we going to do incoming
->>> backend-transfer (and get chardev fd from incoming stream), or we
->>> finally need to connect.
->>>
->>> With this patch, we only provide new macro, to define chardev property,
->>> later it will be used in vhost-user-blk instead of DEFINE_PROP_CHR.
->>
->> There is no "later" in this series.
->> The new macro is called DEFINE_PROP_CHR_NO_CONNECT().
->> 
->>> Then, vhost-user-blk will call qemu_chr_connect() by hand when needed
->>> (for example through qemu_chr_fe_wait_connected(), which is already
->>> called in vhost_user_blk_realize_connect()).
->>>
->>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>
->> Excuse my quick & ignorant questions...
->>
->> I understand ChardevClass provides either methods init() and connect(),
->> or method open().
->>
->> Is a ChardevClass providing open() usable with
->> DEFINE_PROP_CHR_NO_CONNECT()?
->
-> Good question. It's usable, but it will work like simple DEFINE_PROP_CHR.
-> I should improve it somehow. Better is to fail than go unexpected way.
->
->> Is a ChardevClass providing init() and connect() usable with
->> DEFINE_PROP_CHR()?
->
-> Yes, and works correctly.
->
->> Could the code do the right thing based on presence of open() vs. init()
->> and connect() instead of DEFINE_PROP_CHR()
->> vs. DEFINE_PROP_CHR_NO_CONNECT()?
->> 
->
-> No, because, the frontend should be prepared to work with new _NO_CONNECT (e.g.,
-> call _connect() by hand when needed). There are a lot of frontends, which
-> expect already connected backend, updating them all would be big (and
-> unnecessary) work.
+Technically the current implementation has both version and log,
+unconditionally, even though both can be the empty string ...
 
-QMP command
-
-    {"execute": "qom-list-types", "arguments": {"implements": "chardev"}}
-
-shows me 23 subtypes of "chardev".  Could miss a few not in this build.
-
-Converting them all would be work.  It's not a prohibitive amount of
-work, though.  Whether it's worth our while is not for me to judge.
+take care,
+  Gerd
 
 
