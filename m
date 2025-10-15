@@ -4,83 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D46CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 08:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED8ECCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 08:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8wYo-0001sM-VT; Wed, 15 Oct 2025 04:08:39 -0400
+	id 1v8wci-00047B-NN; Wed, 15 Oct 2025 04:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8wYn-0001rf-0u
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 04:08:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1v8wcf-00040A-FM; Wed, 15 Oct 2025 04:12:37 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1v8wYk-0006tB-D6
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 04:08:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760515709;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZmrQf6BDaLQYdgBCQQDN9rbZLFnbcaTf2FNxvuvnTbg=;
- b=gRAJCy7nlNCio+onWbueptxNdufAZNCQoqGLL8F5EfcAkHDyhjq5QvWOMZatljD4Td1nW7
- SiyIG1rtGCKBBOg2pENA1EjDcPeZ0grZT9o2hb3w4kx6mTNUIaYNfQ8YHLJVzG999YnMwG
- hWLZouVylmfCqkEfKn5I8SDqap7u26w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-aIVhdfxVNsqAEuUtvKSkzg-1; Wed,
- 15 Oct 2025 04:08:25 -0400
-X-MC-Unique: aIVhdfxVNsqAEuUtvKSkzg-1
-X-Mimecast-MFC-AGG-ID: aIVhdfxVNsqAEuUtvKSkzg_1760515703
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 703A71800744; Wed, 15 Oct 2025 08:08:23 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A02851955F1B; Wed, 15 Oct 2025 08:08:22 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 8025818000B2; Wed, 15 Oct 2025 10:08:20 +0200 (CEST)
-Date: Wed, 15 Oct 2025 10:08:20 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v4 1/2] hw/uefi: add "info firmware-log" +
- "query-firmware-log" monitor commands
-Message-ID: <z4sxrfotm3bse3hybroietck6njdyc3h7gejfjosovqd7eb7el@2rjj2ualeonl>
-References: <20251013104954.250166-1-kraxel@redhat.com>
- <20251013104954.250166-2-kraxel@redhat.com>
- <aO4QSE7oNqpNApFZ@redhat.com>
- <gzn24uzbuady2ipi3uvuzyykqgkvp6ogbwsapghflkfyymgzrv@2bwdhvhwlzw3>
- <87sefkfw84.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1v8wcX-0007Ru-9I; Wed, 15 Oct 2025 04:12:37 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 15 Oct
+ 2025 16:12:19 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Wed, 15 Oct 2025 16:12:19 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <kane_chen@aspeedtech.com>
+Subject: [PATCH v1 0/1] Move AST1030 machine to a separate file
+Date: Wed, 15 Oct 2025 16:12:17 +0800
+Message-ID: <20251015081219.2766143-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87sefkfw84.fsf@pond.sub.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,43 +59,25 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 09:41:15AM +0200, Markus Armbruster wrote:
-> Gerd Hoffmann <kraxel@redhat.com> writes:
-> 
-> >   Hi,
-> >
-> >> > +static void handle_ovmf_log_range(GString *out,
-> >> > +                                  dma_addr_t start,
-> >> > +                                  dma_addr_t end,
-> >> > +                                  Error **errp)
-> >> > +{
-> >> > +    g_autofree char *buf = NULL;
-> >> 
-> >> Left-over variable - unfortunately gcc doens't warn about unused
-> >> vars when g_autofree is present :-(
-> >
-> > Fixed.
-> >
-> >> > +{ 'struct': 'FirmwareLog',
-> >> > +  'data': { '*version': 'str',
-> >> > +            '*log': 'str' } }
-> >> 
-> >> Having version be optional makes sense, but what is the semantics for
-> >> 'log' being optional. If the log is unavailable, wouldn't we be better
-> >> raising an error ?
-> >
-> > That is what the current implementation actually does.  I change it.
-> 
-> Drawback: when some Firmware provides version, but not log, the command
-> can't give us the version, because it fails.  Do we care?
+v1:
+ 1. Move AST1030 machine to a separate file
 
-Technically the current implementation has both version and log,
-unconditionally, even though both can be the empty string ...
+Jamin Lin (1):
+  hw/arm/aspeed: Move AST1030 machine to a separate file
 
-take care,
-  Gerd
+ include/hw/arm/aspeed.h        |  18 ++++++
+ hw/arm/aspeed.c                | 106 ++------------------------------
+ hw/arm/aspeed_ast10x0_boards.c | 107 +++++++++++++++++++++++++++++++++
+ hw/arm/meson.build             |   1 +
+ 4 files changed, 130 insertions(+), 102 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast10x0_boards.c
+
+-- 
+2.43.0
 
 
