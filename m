@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E40CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240E2CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 21:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v99DE-0003fT-UZ; Wed, 15 Oct 2025 17:39:13 -0400
+	id 1v99D9-0003dS-TW; Wed, 15 Oct 2025 17:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v99DC-0003fC-Hc
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:10 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v99DA-00052M-5w
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:39:10 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C4B6D15E431;
- Wed, 15 Oct 2025 23:20:39 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E27232A12B3;
- Wed, 15 Oct 2025 23:20:40 +0300 (MSK)
-Message-ID: <4b289042-470e-4fa6-b287-2d5ae3a05157@tls.msk.ru>
-Date: Wed, 15 Oct 2025 23:20:40 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v99Cx-0003Zm-AT
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:57 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v99Ct-0004zs-Ml
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 17:38:54 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b67ae7e76abso3343304a12.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 14:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760564330; x=1761169130; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sQaFJc14vdCg9lLKVjU9tvZ4qhRkPGO331YqH3E6/aI=;
+ b=L3FqGkJSrdC+EYy7cETUa+q6vf7EPNobnZW5Zv1pZBDffY8/MY0Z6EeYlwaDvB+Cka
+ wlBmiEBAdUmePgz8NbPujPytVb0zyUzDGlvg636+GixzSpApsLv6veGbll419yv/PwXd
+ h3XN+wgS8PIQCNLj9hiwa6YxuFWBQsu/RIL1Ok5e0w0RS9VKhmgcht7CiER4n7iB1mUu
+ +V0kLlprJUJFNgd5hdzLMhYS3jd3wiYHCUT9XSZUDcuSKJUAEtT2TqysbQ5LjgD7ScCM
+ Q0G4q4HDzuaDpBo494TRtAezW+gxjmhiBTcYJ753J7crX+PdS18tCdnMbJ8vMpmez2AZ
+ VAHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760564330; x=1761169130;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sQaFJc14vdCg9lLKVjU9tvZ4qhRkPGO331YqH3E6/aI=;
+ b=iclopnmqqynEyPkqOvMlZp5KZOn5RcGJjGiaVbvSIDWDNLpGfysVqT4MdFPbfsrG+i
+ feuRHfj6xcwvMvZ/VnHOK5iF44GLmoloGkj3zo4+JmV/oL5v86Dg/wCAO9CQATuMesBV
+ h/C7gEVQ/4s1gtW4RJCd1mAZ9e4mfyhw7411WCYBj0eW9lcEPRnDlCFmg8zbVuZiKd3+
+ 9Fu4mQ0Wcj6+mA6sKWJqRnQ7F7c67rqKv1/B72f10qvRT1HQU4/K1DmWRiM/9NFzGfTt
+ +6aPtI8jDH0UB79JGs9ktq0rVQZrYHoaCElK9DqlgEKalq/1USaHrRakV9agBZa4XE5v
+ fIBA==
+X-Gm-Message-State: AOJu0YxD7CcUiQOeIDgzhDOL/iYjEKhBYlYGg5SZ5A60/sbcnRvF7jVA
+ aP3HSsHlADdn6BByOHI6kEmej9tw10Y+1BfcitClF5dOjqBmkmZAzDjuSXwM0nVyy9hvaso23xx
+ 4bD3iIVM=
+X-Gm-Gg: ASbGncs7USuTGBQyZg8dyHntkXEnwGtO+/WMntuJz1w8eRIX+RzQQRubVzrCYNwqI6x
+ +XCOLX/db5XcdQucAQLyuM7CD4bgnXKAcUsPfJ+xVAIrzqx6kmLQrXBNPie0k6fNJADUwZDyb5w
+ c/LkXBJxKRfw3S+PMQqvNe8uW+H7V9LAO9HnAI/zsj5W/M8hMWv/22/g6qE28clUIkPLseAt0p8
+ 5LITABGHjR41cjbCIl2lUC9Eh4eLZMv7YLZHHeYgVmtbX9sxopb1iLTY4lMZxhXDfT8JukdGc6h
+ 45vGt+Ms50tTA/Todusznwpmw08tEtWasLL9+2RTu46DFKiVr1mSRIb41p4hVJI3kfenpc6Y9f8
+ ZTPsVFsJrps3+4h2h0YtqcAm05DbyomYnNS/KGWyXqGMVuBrMiP5U0JXTWW86Rwejx+ZnskhZ8k
+ b+LH3y9jTwRNyzqL0qD4PR
+X-Google-Smtp-Source: AGHT+IHH4Sq/vLsJW08Xc40kh43ognt5jxLeVfsZu40MX2xV7DlLtfynGxRgfFulaJIs85p/h8/v2Q==
+X-Received: by 2002:a17:903:2305:b0:24f:8286:9e5d with SMTP id
+ d9443c01a7336-290272cf65dmr440428105ad.26.1760564329997; 
+ Wed, 15 Oct 2025 14:38:49 -0700 (PDT)
+Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29099a7d1bbsm6247085ad.65.2025.10.15.14.38.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Oct 2025 14:38:49 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH v2 7/9] buildsys: Remove support for 32-bit PPC hosts
+Date: Wed, 15 Oct 2025 14:38:41 -0700
+Message-ID: <20251015213843.14277-8-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251015213843.14277-1-richard.henderson@linaro.org>
+References: <20251015213843.14277-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/7] esp.c: only allow ESP commands permitted in the
- current asc_mode
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- fam@euphon.net, qemu-devel@nongnu.org
-References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
- <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
- <43ef15f9-1225-4416-9d04-eefc4f6eb952@tls.msk.ru>
- <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <30f3c816-83d7-4a2b-8107-de5c433d183a@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,20 +102,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/25 22:06, Mark Cave-Ayland wrote:
-..> Yeah that's an odd one. I just tested master here and it works fine 
-here
-> on Debian bookworm:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I'm on debian trixie though, - maybe that's the reason.
+Stop detecting 32-bit PPC host as supported.
+See previous commit for rationale.
 
-The current master is broken for me too, - everything since this
-commit.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[rth: Retain _ARCH_PPC64 check in udiv_qrnnd]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251014173900.87497-4-philmd@linaro.org>
+---
+ include/qemu/timer.h | 13 +------------
+ disas/disas-host.c   |  4 +---
+ util/cacheflush.c    |  4 ++--
+ configure            | 19 +++++--------------
+ 4 files changed, 9 insertions(+), 31 deletions(-)
 
-Now I wonder, as usual, how to debug such a case, - at the very
-start, I'd love to see qemu messages if any.
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index aec730ac25..406d741120 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -850,12 +850,11 @@ static inline int64_t get_clock(void)
+ /*******************************************/
+ /* host CPU ticks (if available) */
+ 
+-#if defined(_ARCH_PPC)
++#if defined(_ARCH_PPC64)
+ 
+ static inline int64_t cpu_get_host_ticks(void)
+ {
+     int64_t retval;
+-#ifdef _ARCH_PPC64
+     /* This reads timebase in one 64bit go and includes Cell workaround from:
+        http://ozlabs.org/pipermail/linuxppc-dev/2006-October/027052.html
+     */
+@@ -863,16 +862,6 @@ static inline int64_t cpu_get_host_ticks(void)
+                           "cmpwi   %0,0\n\t"
+                           "beq-    $-8"
+                           : "=r" (retval));
+-#else
+-    /* http://ozlabs.org/pipermail/linuxppc-dev/1999-October/003889.html */
+-    unsigned long junk;
+-    __asm__ __volatile__ ("mfspr   %1,269\n\t"  /* mftbu */
+-                          "mfspr   %L0,268\n\t" /* mftb */
+-                          "mfspr   %0,269\n\t"  /* mftbu */
+-                          "cmpw    %0,%1\n\t"
+-                          "bne     $-16"
+-                          : "=r" (retval), "=r" (junk));
+-#endif
+     return retval;
+ }
+ 
+diff --git a/disas/disas-host.c b/disas/disas-host.c
+index 8146fafe80..4b06f41fa6 100644
+--- a/disas/disas-host.c
++++ b/disas/disas-host.c
+@@ -56,11 +56,9 @@ static void initialize_debug_host(CPUDebug *s)
+     s->info.cap_mode = CS_MODE_64;
+     s->info.cap_insn_unit = 1;
+     s->info.cap_insn_split = 8;
+-#elif defined(_ARCH_PPC)
++#elif defined(_ARCH_PPC64)
+     s->info.cap_arch = CS_ARCH_PPC;
+-# ifdef _ARCH_PPC64
+     s->info.cap_mode = CS_MODE_64;
+-# endif
+ #elif defined(__riscv)
+ #if defined(_ILP32) || (__riscv_xlen == 32)
+     s->info.print_insn = print_insn_riscv32;
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index 17c58918de..69c9614e2c 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -153,7 +153,7 @@ static void arch_cache_info(int *isize, int *dsize)
+     }
+ }
+ 
+-#elif defined(_ARCH_PPC) && defined(__linux__)
++#elif defined(_ARCH_PPC64) && defined(__linux__)
+ # include "elf.h"
+ 
+ static void arch_cache_info(int *isize, int *dsize)
+@@ -187,7 +187,7 @@ static void fallback_cache_info(int *isize, int *dsize)
+     } else if (*dsize) {
+         *isize = *dsize;
+     } else {
+-#if defined(_ARCH_PPC)
++#if defined(_ARCH_PPC64)
+         /*
+          * For PPC, we're going to use the cache sizes computed for
+          * flush_idcache_range.  Which means that we must use the
+diff --git a/configure b/configure
+index 8263f81370..a2f66f7ff9 100755
+--- a/configure
++++ b/configure
+@@ -391,15 +391,11 @@ elif check_define __sparc__ ; then
+   else
+     cpu="sparc"
+   fi
+-elif check_define _ARCH_PPC ; then
+-  if check_define _ARCH_PPC64 ; then
+-    if check_define _LITTLE_ENDIAN ; then
+-      cpu="ppc64le"
+-    else
+-      cpu="ppc64"
+-    fi
++elif check_define _ARCH_PPC64 ; then
++  if check_define _LITTLE_ENDIAN ; then
++    cpu="ppc64le"
+   else
+-    cpu="ppc"
++    cpu="ppc64"
+   fi
+ elif check_define __mips__ ; then
+   if check_define __mips64 ; then
+@@ -472,11 +468,6 @@ case "$cpu" in
+     linux_arch=mips
+     ;;
+ 
+-  ppc)
+-    host_arch=ppc
+-    linux_arch=powerpc
+-    CPU_CFLAGS="-m32"
+-    ;;
+   ppc64)
+     host_arch=ppc64
+     linux_arch=powerpc
+@@ -1471,7 +1462,7 @@ probe_target_compiler() {
+         container_image=debian-all-test-cross
+         container_cross_prefix=mips64-linux-gnuabi64-
+         ;;
+-      ppc|ppc64|ppc64le)
++      ppc64|ppc64le)
+         container_image=debian-all-test-cross
+         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
+         ;;
+-- 
+2.43.0
 
-Sigh.
-
-/mjt
 
