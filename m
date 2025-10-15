@@ -4,63 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88611CCD19D
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 16:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E234CCD185
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 16:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v94K6-0003tB-LJ; Wed, 15 Oct 2025 12:25:58 -0400
+	id 1v94PT-00060z-7i; Wed, 15 Oct 2025 12:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev>)
- id 1v94K3-0003rq-B0
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:25:56 -0400
-Received: from m228-13.mailgun.net ([159.135.228.13])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v94PQ-00060b-Se
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:31:29 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev>)
- id 1v94Jw-0006zk-3v
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:25:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mail.yodel.dev;
- q=dns/txt; s=pdk1; t=1760545532; x=1760552732; 
- h=Content-Transfer-Encoding: MIME-Version: Message-ID: Date: Subject: Subject:
- Cc: To: To: From: From: Sender: Sender; 
- bh=5d6S802Fv3BJtY5FgntR1mdjGl+gAP0dIqcIOXSbF4Q=;
- b=iEbaKTFjqXsH3a17jUJRjSankjolS4swi8C4IAFzFMzexPitD5sc4Gt3T+toZq8WAG3aBTdaJL/i0dy0QGt3q60AYMyUS95Yh2cpFaYWPDUqHSISmHo0T3v/Sc1dLF5SndwOlSWgAKTi7Z+twRxmLmvkhkcXZAoTSq0/FWFTw5gEsGbW4e0U6ShkUubyndP1C6yOhwSbR/NP5P38efaXc7ot1m8Wfmp7sjXA/KUvO/9UUXH7LQohbATZpBKEjQd9zLXh6mIEoCcwOaH5vJG3uaV/Py5GQV118/7P2KnjJ2rU5n80FMGs58jFJdmvN6i7aEVjlaDdwVyJUbMlm7gGQg==
-X-Mailgun-Sid: WyJjZmM4NiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjMzZTkyMCJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 99fc67f222b20ff159392bcc92f1073236929c587be6427412e8a6613476bc35 with SMTP id
- 68efcafc51cb16734be8c16b; Wed, 15 Oct 2025 16:25:32 GMT
-X-Mailgun-Sending-Ip: 159.135.228.13
-To: qemu-devel@nongnu.org
-Cc: Yodel Eldar <yodel.eldar@yodel.dev>,
- Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] gdbstub/user-target: Map errno values from the host OS to GDB
-Date: Wed, 15 Oct 2025 11:25:20 -0500
-Message-ID: <20251015162520.15736-1-yodel.eldar@yodel.dev>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v94PN-0007W6-LG
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 12:31:28 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-26d0fbe238bso49201635ad.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 09:31:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760545878; x=1761150678; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ReruoDdoSMJ/N8lj7J7WuJkfs4jH4DGBRGBmJVyCxwE=;
+ b=v+3X9+LJnz708FYs7NR8hkwKhIFP1ctGQXuvoHaAIVkW/3NN64Qf0oE1lx+hp8m8Zo
+ 5p85F9Gx5VCVfF7jlxGDLyrvUxdoLdzkVvmGkWBge4Of9YJJu6oKh4XGd6ZphLDmW8dI
+ T8uh0h84Vr/Y/RD0W754GS2nK+rgf2jHQqVQT06cpzXtZDp0Uo9B39krMorpEFbCYr8Y
+ p9DfiGaF+OiTH+jpk9xGfbgNUIsYxJNpWN9Igw1NXuKULLchNws/zld1Jn6O+vVAe/XG
+ mqU39IvzRTE9GcjCVUj+1XrmxTeD8wWiwYdyDgM9tWg+aNLk0QwxwxsYKYBga3TlZAAs
+ ZIqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760545878; x=1761150678;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ReruoDdoSMJ/N8lj7J7WuJkfs4jH4DGBRGBmJVyCxwE=;
+ b=QD17kHC+B7eyH4AR3Vn2vjPq57LTR01pmXj4u3V8qmYCd8vl0NAttwxs2XGlCZurAM
+ oQO4QfkKq6ATzPhutmtlal7a4xVGPT41K0nzUJMiW67ydjntJ6jTmXtr+6CbWX/iHx1E
+ wIKu5l5Koo+EUPdAq1xyAELRrieMj/XVPtn8EwXLMpWg7F66+6SyOKCvzHpkK1V0eV2V
+ 3eGc0ZBGiR9ofkMSvGJmvJCqP46kzo4cXBv804rghP+t7ZuY7FggAIE6/6qvMRs964WB
+ 6Oy7fYloydk+yjhy6v7stAURno8q2TWMM02b+hapJxKPdH9zqPi19h+h3oYhATRZrK2t
+ SwOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXAYyIUsRknEGlQ+RPbmzjjJCriWfwIoM46Wp2uqgu9jneiVOQiRLZlEc6F3v8bK3BpyXbly10bkd7F@nongnu.org
+X-Gm-Message-State: AOJu0YzA8qXSAEKmQdxAfGEwSJRr1GbpJTz93SXOLQmSDWriUZF6KJG3
+ 2oMmh3pYOnuQ/iZmNLo2d/P6xkBh3oZksKnHYxxy2HVc2RHJPB/uzEMj2ev0r+kYq3Q=
+X-Gm-Gg: ASbGnctkZHh0rl9WfzfLspNjjk5j8b0ez8NqC5WOrmrxZvDeIey6DS7lx3OTZCQt88T
+ qAQReYf3qOfPnqS9OrEr1lr8mLcNY8raB0L1cbL092Rao2tCG2SuAJnQSt5XM9nXT91fExagT1x
+ Ruodjflgbyt1hqkau/vAYWGjtyTRyYuwzK44xswhtV5QzRgkE46gT/XEWVu5spiSxXyeFe0u+gW
+ JEZ4u7LUn5Or9qHOO+LH7l4LARn40goj61o9iQMuvAmxkWQ7yDtDxYhyL1RJzPpuNmshCWCbh6E
+ 3UfHPGsoRb5BVjFsUF4ezIPlRsV6z6fiSMKdmtlQfy4t/+gWggtpgHfGvvzheuswdbdsgUhZVb/
+ sPp+UNCGaaSgYOWyyGU5pFnWeHgXYWgGqBnU1rqSGiOqy3xEwUpn4Lxu7gpA=
+X-Google-Smtp-Source: AGHT+IFCB3yfgp2HVl+Q4sYWTffMo6p2ZfXikWgpdGKEJTRBNhK7Gz1PolRlWRYpx/AO7pgPKv5jhA==
+X-Received: by 2002:a17:903:2ecd:b0:28e:cc41:b0df with SMTP id
+ d9443c01a7336-2902741fb25mr321416205ad.61.1760545878317; 
+ Wed, 15 Oct 2025 09:31:18 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b6a228aca0csm89509a12.17.2025.10.15.09.31.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Oct 2025 09:31:17 -0700 (PDT)
+Message-ID: <1fc99217-f1e3-4ad9-8f67-89ab47995c98@linaro.org>
+Date: Wed, 15 Oct 2025 09:31:15 -0700
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4949; i=yodel.eldar@yodel.dev;
- h=from:subject; bh=ZfdeKOSSvsrONVLxpiUfwlfwPOUMTNMX2FW7k8/V2Cg=;
- b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDLempl+nZuz70+PjMFfD6MPPAYCD5aETVjJZXf4fnuTw
- o+wmR2qHaUsDGJcDLJiiiyXz0qcdcjd3ZW28sd9mDmsTCBDGLg4BWAiWUoMf3i/KvW+KI/8NGuT
- 3yFH5SzBGglu+et7GCYJz9nbk1Lq7cPwVzjEZ8aOoq1TJ5RUlHsr2tXEvk8/eaiV/XhHe+izqOL
- jjAA=
-X-Developer-Key: i=yodel.eldar@yodel.dev; a=openpgp;
- fpr=D3CD18CD406DBB8A66A9F8DF95EE4FB736654DAC
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=159.135.228.13;
- envelope-from=bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev;
- helo=m228-13.mailgun.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] hw/riscv: Replace target_ulong uses
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com, 
+ palmer@dabbelt.com
+References: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
+ <20251015-feature-single-binary-hw-v1-v1-2-8b416eda42cf@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251015-feature-single-binary-hw-v1-v1-2-8b416eda42cf@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,159 +102,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yodel Eldar <yodel.eldar@yodel.dev>
-From:  Yodel Eldar via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch introduces the function "gdb_host_errno_to_gdb" that maps
-host-dependent errno values to their GDB protocol-specific
-representations as listed in the GDB manual [1].
+On 10/15/25 06:27, Anton Johansson wrote:
+> -                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
+> +                mask = (1L << (target_long_bits() - (va_len - 1))) - 1;
 
-The stub now uses the correct GDB errno values in F reply packets.
+While you're at it, long, via 1L, is always wrong.
 
-[1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
+Here, use MAKE_64BIT_MASK.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2751
-Reported-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
----
- gdbstub/user-target.c | 93 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 89 insertions(+), 4 deletions(-)
 
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index 43231e695e..29feb0509c 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -302,6 +302,87 @@ static void hostio_reply_with_data(const void *buf, size_t n)
-                           gdbserver_state.str_buf->len, true);
- }
- 
-+/*
-+ * Map host error numbers to their GDB protocol counterparts.
-+ * For the list of GDB File-I/O supported error numbers, please consult:
-+ * https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
-+ */
-+
-+static int gdb_host_errno_to_gdb(int errnum)
-+{
-+    enum {
-+        GDB_EPERM        =    1,
-+        GDB_ENOENT       =    2,
-+        GDB_EINTR        =    4,
-+        GDB_EIO          =    5,
-+        GDB_EBADF        =    9,
-+        GDB_EACCES       =   13,
-+        GDB_EFAULT       =   14,
-+        GDB_EBUSY        =   16,
-+        GDB_EEXIST       =   17,
-+        GDB_ENODEV       =   19,
-+        GDB_ENOTDIR      =   20,
-+        GDB_EISDIR       =   21,
-+        GDB_EINVAL       =   22,
-+        GDB_ENFILE       =   23,
-+        GDB_EMFILE       =   24,
-+        GDB_EFBIG        =   27,
-+        GDB_ENOSPC       =   28,
-+        GDB_ESPIPE       =   29,
-+        GDB_EROFS        =   30,
-+        GDB_ENOSYS       =   88,
-+        GDB_ENAMETOOLONG =   91,
-+        GDB_EUNKNOWN     = 9999,
-+    };
-+
-+    switch (errnum) {
-+    case EPERM:
-+        return GDB_EPERM;
-+    case ENOENT:
-+        return GDB_ENOENT;
-+    case EINTR:
-+        return GDB_EINTR;
-+    case EIO:
-+        return GDB_EIO;
-+    case EBADF:
-+        return GDB_EBADF;
-+    case EACCES:
-+        return GDB_EACCES;
-+    case EFAULT:
-+        return GDB_EFAULT;
-+    case EBUSY:
-+        return GDB_EBUSY;
-+    case EEXIST:
-+        return GDB_EEXIST;
-+    case ENODEV:
-+        return GDB_ENODEV;
-+    case ENOTDIR:
-+        return GDB_ENOTDIR;
-+    case EISDIR:
-+        return GDB_EISDIR;
-+    case EINVAL:
-+        return GDB_EINVAL;
-+    case ENFILE:
-+        return GDB_ENFILE;
-+    case EMFILE:
-+        return GDB_EMFILE;
-+    case EFBIG:
-+        return GDB_EFBIG;
-+    case ENOSPC:
-+        return GDB_ENOSPC;
-+    case ESPIPE:
-+        return GDB_ESPIPE;
-+    case EROFS:
-+        return GDB_EROFS;
-+    case ENOSYS:
-+        return GDB_ENOSYS;
-+    case ENAMETOOLONG:
-+        return GDB_ENAMETOOLONG;
-+    default:
-+        return GDB_EUNKNOWN;
-+    }
-+}
-+
- void gdb_handle_v_file_open(GArray *params, void *user_ctx)
- {
-     const char *filename = get_filename_param(params, 0);
-@@ -315,7 +396,8 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
-     int fd = open(filename, flags, mode);
- #endif
-     if (fd < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-+        int gdb_errno = gdb_host_errno_to_gdb(errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
-     } else {
-         g_string_printf(gdbserver_state.str_buf, "F%x", fd);
-     }
-@@ -327,7 +409,8 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
-     int fd = gdb_get_cmd_param(params, 0)->val_ul;
- 
-     if (close(fd) == -1) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-+        int gdb_errno = gdb_host_errno_to_gdb(errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
-         gdb_put_strbuf();
-         return;
-     }
-@@ -350,7 +433,8 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
- 
-     ssize_t n = pread(fd, buf, bufsiz, offset);
-     if (n < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-+        int gdb_errno = gdb_host_errno_to_gdb(errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
-         gdb_put_strbuf();
-         return;
-     }
-@@ -373,7 +457,8 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
-     ssize_t n = readlink(filename, buf, BUFSIZ);
- #endif
-     if (n < 0) {
--        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
-+        int gdb_errno = gdb_host_errno_to_gdb(errno);
-+        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
-         gdb_put_strbuf();
-         return;
-     }
--- 
-2.51.0
-
+r~
 
