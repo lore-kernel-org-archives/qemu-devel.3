@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08A0CCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:23:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D700ACCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8xeM-0001xm-I4; Wed, 15 Oct 2025 05:18:26 -0400
+	id 1v8xiY-0008CD-Az; Wed, 15 Oct 2025 05:22:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1v8xe6-0001pi-Ps
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:18:12 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1v8xdl-0007Bk-MM
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:18:09 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-b41870fef44so491070366b.3
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 02:17:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760519862; x=1761124662; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dD9uX6PaBNvNuAFjXV9Q7DahJDHptOizy7QDhFL8Gts=;
- b=hMdCQWsNKd4NetYe7OEnS64akGFKWuBwmAo0rHa1o1HYeMjQy9u7AdmV9IdlvY7qdM
- m5uPQQQjmchXSF6a9reTaHLjrqosVupVj/xbP8/C7mG3AVOwsUlvdqOT+vHGabY1XotF
- /ZjF4e3eLY+hFa2Cvw6ZpJlBqzNZBn5uuRVx6uWHLcN/4YioLubCrXSOzKxUmBGznvhW
- uajAzqDHzAAcaygPjwuhr0PHD3DUyNyQLAiE9AJHjER2uYr8tKmsiHRKa5WL+X8yX8Ha
- xcOpfMEdeWooeW9kakOcvla0UqcZMX8X6YlzYGkS7t9IcouX6bw4v2rCBFyRlA1ZclOt
- CTUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760519862; x=1761124662;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dD9uX6PaBNvNuAFjXV9Q7DahJDHptOizy7QDhFL8Gts=;
- b=gyiSUJhnSIHnobDg2Zn9PY4Fr9FIf77tBy5u6A/mrFjJqW5LEEitWHvEJyeZXLhjiq
- YPoPCCwN/xocWCFK4N2WG5iJWxaFwM+3c+sGXlnt8H6YWXAh8piL7rC2HdeQqi2He57Y
- MB3Lmd3IqcMPPstN53txbLkO3SrFkzWaScsBmODR0/61uW8WSeSzZDBNHTUbdvTo2IPr
- 0bkxZTmh++tD8//1Y7VzMoUM23sA3XI9fCFGDB3HZ0zTligpSqiv2Q9esrG7I9HzvDEr
- ggeFCkgN0mB7pUUFLB5P8ZLaY4MOGy3yyzBRHs0qgP1pHb1m7gTxJdjvt5pIF//UFD64
- lR2w==
-X-Gm-Message-State: AOJu0Yyj2k7kDOM6m+MCXRm9UqMpG6prnAIDXpgzjMYF38u024aP47Kh
- 8OYY1CzlYBYFkIRauQOEdEyH9IGOCQIfA3OSLbsYbHrKtXrk+ahVDlFhfZ+2RuYxcs0=
-X-Gm-Gg: ASbGncubyi2P3UWbx82D1OszqjBVRe1wfDigYQTksf7tESQ93Derg5wTpmCGl+lNFtk
- 5pNhBDiaPu6aGqx9YI3L5KPtN/v5C7J4CY7L12LF7vKws65bt1Yq9Z33BkzaxiVdUbzVj2dLmel
- 0wWhPdWXzxKwFryi1Yv2+GUvVDEa4q/5GwxQ1y5wuT7vnqz0rswXoHUKUXQEkhoQHuwaVfs2aTy
- GZxIQcUT4HirFtHcWg8Z6gkIfuJ7dgtrVTMSqlJwwv64fib2w5Lw9BQSB69bEwfUkp1DxuaG2GX
- vZH9lnW4DFX+SnIh7wV6PNTwsAUTVm5u6/UDPuvn7RAQKYEKuGv+MQ33zY3nr/D5wUKaXANp0rh
- C2RCSJJyQzadcZPvsKYA3xUEhlrSH0pkg6GJ7X9iVKYJ1fcQHhZF09uasoj3WS+0s0ix4L3kR
-X-Google-Smtp-Source: AGHT+IFn+Jxc4SgpAXY72JjpWx+qqMtm+cS8pd7JnLXg7lsD9pjCYZCnrynqxVjYC2WqHyUIITBJIA==
-X-Received: by 2002:a17:907:7f0b:b0:b46:31be:e8fe with SMTP id
- a640c23a62f3a-b50aa48c4f0mr3042696566b.11.1760519861994; 
- Wed, 15 Oct 2025 02:17:41 -0700 (PDT)
-Received: from PC-DA2D10.beckhoff.com ([195.226.174.194])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b5cb9e7a23dsm182069966b.23.2025.10.15.02.17.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 02:17:41 -0700 (PDT)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v3 01/14] hw/timer: Make frequency configurable
-Date: Wed, 15 Oct 2025 11:17:16 +0200
-Message-ID: <20251015091729.33761-2-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251015091729.33761-1-corvin.koehne@gmail.com>
-References: <20251015091729.33761-1-corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1v8xiW-00089T-Nd; Wed, 15 Oct 2025 05:22:45 -0400
+Received: from mx07-0090a401.pphosted.com ([66.159.244.62])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1v8xiM-0008Op-63; Wed, 15 Oct 2025 05:22:43 -0400
+Received: from pps.filterd (m0463074.ppops.net [127.0.0.1])
+ by mx07-0090a401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 59F5mTBx3187626; Wed, 15 Oct 2025 09:22:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckhoff.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=mail2022r; bh=23mQ5+KHilvkrloqgFyXRmee
+ nufwLxpzXQnLdHKAPxA=; b=RDFgvCuLeEprAr3giXRU0L+XaIv2uQNSVUfuJZes
+ zvAwz82XQs1Lgflccz2ySpdhqs7QEgYpjpAgZq2dxQh4/lQQ35JoTDcihwBJTxwC
+ 39OVakL1uDCI5bYp9Fb3IMvYIz0jiTTro4ZMYhgTAJRPQ+ada1XzA7wMDjaCbA1i
+ uZJD1YxoVj+3MDF2g7CEY7ZVKq6GCeSMxciK4+XTWkdCKyQgb7bBoBLvU+BltfNI
+ nyX77bu8ZlG0JjBpwNxDxIJnjRGwB9d0qPpnjRdlTDxyodJ9g4gI/lb93qMGWsBF
+ xhQ+oUhLalY3CDmZAztudEaaprWh1hduh5+17quQUOsUsA==
+Received: from ex13.beckhoff.com ([62.159.14.12])
+ by mx07-0090a401.pphosted.com (PPS) with ESMTPS id 49sscv1c3b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Oct 2025 09:22:16 +0000 (GMT)
+Received: from ex10.beckhoff.com (172.17.2.111) by ex13.beckhoff.com
+ (172.17.6.19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 15 Oct
+ 2025 11:22:15 +0200
+Received: from ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b]) by
+ ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
+ 15.02.2562.017; Wed, 15 Oct 2025 11:22:15 +0200
+From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
+To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+CC: "hreitz@redhat.com" <hreitz@redhat.com>, "alistair@alistair23.me"
+ <alistair@alistair23.me>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "kwolf@redhat.com"
+ <kwolf@redhat.com>,
+ =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 11/14] hw/misc: Add Beckhoff CCAT device
+Thread-Topic: [PATCH v2 11/14] hw/misc: Add Beckhoff CCAT device
+Thread-Index: AQHcDcMwea5IHvjMZUi/2YBy7YDE9rRqCH4AgFkk1wA=
+Date: Wed, 15 Oct 2025 09:22:15 +0000
+Message-ID: <b7a7ef984e81a2fb0ce2793f25d660caca67ab4f.camel@beckhoff.com>
+References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+ <20250815090113.141641-12-corvin.koehne@gmail.com>
+ <CAFEAcA_VQgoym1_Nmw8iXyBS-ZQTvc+3FYQBTR7W0_Pxb3u=RQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_VQgoym1_Nmw8iXyBS-ZQTvc+3FYQBTR7W0_Pxb3u=RQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.17.128.174]
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="=-mdoOgExWiFK4oLb+eFoy"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x629.google.com
+X-Proofpoint-GUID: jd67gIwbN8xcj7W04ekRgYEmJB0lfQRf
+X-Authority-Analysis: v=2.4 cv=MMVtWcZl c=1 sm=1 tr=0 ts=68ef67c9 cx=c_pps
+ a=ZkhbYXbYXnnsONUOWLo3Bg==:117 a=ZkhbYXbYXnnsONUOWLo3Bg==:17
+ a=xqWC_Br6kY4A:10 a=ErxAllwcpegA:10 a=x6icFKpwvdMA:10 a=M51BFTxLslgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=3dN-dAOnzxXYxHM_xGQA:9 a=QEXdDO2ut3YA:10
+ a=g_xI4TjUgyBJa0J3FfUA:9 a=FfaGCDsud1wA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE1MDA3MSBTYWx0ZWRfX3C+UBcIH+FGE
+ dlFmFwt7U6a9dUaqO2QJqvTrpEazbnWQnjuFIIYtS7E30FrzXLP69mmDhFu19ivtcYLKiGtraSW
+ QghhGo8fI3QCCmnZlMS2BfxRPHpvuZ20WKP39k1XOcP25TWfdzbj0qyPzMpqigld02gAJdQaMuu
+ XGEe0mV78JyJN8pyDGz61+4tP78vZvCo2p9eDoCgzbtaweTIoavDxaeic1uGVio+QylTJ6i+wzk
+ C3iBTagyCyWtm/GBow7ZvJOtMMRUGVp8R+JEozLumqG7q/PjSaITJB40x5M9JdN0uyu37ANEQ6H
+ rMAm+tDPwUsuwXKoQdWkHrPcJA2H2H+DtZXplKhref+46R6JmrDiZAQSc4+4H7vuEIT5zZZI8qY
+ Dud425kIWj8HLfW5/YDF1e25ylZ57Q==
+X-Proofpoint-ORIG-GUID: jd67gIwbN8xcj7W04ekRgYEmJB0lfQRf
+Received-SPF: pass client-ip=66.159.244.62; envelope-from=C.Koehne@beckhoff.com;
+ helo=mx07-0090a401.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,146 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+--=-mdoOgExWiFK4oLb+eFoy
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The a9 global timer and arm mp timers rely on the PERIPHCLK as
-their clock source. The current implementation does not take
-that into account. That causes problems for applications assuming
-other frequencies than 1 GHz.
+On Tue, 2025-08-19 at 17:03 +0100, Peter Maydell wrote:
+> Is there a datasheet/manual for this device? The comment
+> at the top of the file is a good place to put the URL to it.
 
-We can now configure frequencies for the a9 global timer and
-arm mp timer. By allowing these values to be set according to
-the application's needs, we ensure that the timers behave
-consistently with the expected system configuration. The SoC
-configures the device correctly.
+Unfortunately, there's no publicly available manual so far. We're currently
+trying to convince people to publish one. We're going to add the URL to the
+comment when on is available.
 
-Information can be found in the Zynq 7000 SoC Technical
-Reference Manual under Timers.
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM
 
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
----
- hw/timer/a9gtimer.c            |  9 ++++++---
- hw/timer/arm_mptimer.c         | 15 +++++++++++----
- include/hw/timer/a9gtimer.h    |  1 +
- include/hw/timer/arm_mptimer.h |  2 ++
- 4 files changed, 20 insertions(+), 7 deletions(-)
+Best regards,
+Corvin
 
-diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
-index 690140f5a6..ad9abcb4bb 100644
---- a/hw/timer/a9gtimer.c
-+++ b/hw/timer/a9gtimer.c
-@@ -63,9 +63,9 @@ static inline int a9_gtimer_get_current_cpu(A9GTimerState *s)
- static inline uint64_t a9_gtimer_get_conv(A9GTimerState *s)
- {
-     uint64_t prescale = extract32(s->control, R_CONTROL_PRESCALER_SHIFT,
--                                  R_CONTROL_PRESCALER_LEN);
--
--    return (prescale + 1) * 10;
-+                                  R_CONTROL_PRESCALER_LEN) + 1;
-+    uint64_t scaled_prescaler = prescale * 10;
-+    return muldiv64(scaled_prescaler, NANOSECONDS_PER_SECOND, s->freq_hz);
- }
- 
- static A9GTimerUpdate a9_gtimer_get_update(A9GTimerState *s)
-@@ -374,6 +374,9 @@ static const VMStateDescription vmstate_a9_gtimer = {
- };
- 
- static const Property a9_gtimer_properties[] = {
-+    /* Default clock-frequency is 1GHz (NANOSECONDS_PER_SECOND) */
-+    DEFINE_PROP_UINT64("clock-frequency", A9GTimerState, freq_hz,
-+                       NANOSECONDS_PER_SECOND),
-     DEFINE_PROP_UINT32("num-cpu", A9GTimerState, num_cpu, 0),
- };
- 
-diff --git a/hw/timer/arm_mptimer.c b/hw/timer/arm_mptimer.c
-index 7cc5915e9e..342ca1276a 100644
---- a/hw/timer/arm_mptimer.c
-+++ b/hw/timer/arm_mptimer.c
-@@ -59,9 +59,11 @@ static inline void timerblock_update_irq(TimerBlock *tb)
- }
- 
- /* Return conversion factor from mpcore timer ticks to qemu timer ticks.  */
--static inline uint32_t timerblock_scale(uint32_t control)
-+static inline uint32_t timerblock_scale(TimerBlock *tb, uint32_t control)
- {
--    return (((control >> 8) & 0xff) + 1) * 10;
-+    uint64_t prescale = (((control >> 8) & 0xff) + 1);
-+    uint64_t scaled_prescaler = prescale * 10;
-+    return muldiv64(scaled_prescaler, NANOSECONDS_PER_SECOND, tb->freq_hz);
- }
- 
- /* Must be called within a ptimer transaction block */
-@@ -155,7 +157,7 @@ static void timerblock_write(void *opaque, hwaddr addr,
-             ptimer_stop(tb->timer);
-         }
-         if ((control & 0xff00) != (value & 0xff00)) {
--            ptimer_set_period(tb->timer, timerblock_scale(value));
-+            ptimer_set_period(tb->timer, timerblock_scale(tb, value));
-         }
-         if (value & 1) {
-             uint64_t count = ptimer_get_count(tb->timer);
-@@ -222,7 +224,8 @@ static void timerblock_reset(TimerBlock *tb)
-         ptimer_transaction_begin(tb->timer);
-         ptimer_stop(tb->timer);
-         ptimer_set_limit(tb->timer, 0, 1);
--        ptimer_set_period(tb->timer, timerblock_scale(0));
-+        ptimer_set_period(tb->timer,
-+            timerblock_scale(tb, tb->control));
-         ptimer_transaction_commit(tb->timer);
-     }
- }
-@@ -269,6 +272,7 @@ static void arm_mptimer_realize(DeviceState *dev, Error **errp)
-      */
-     for (i = 0; i < s->num_cpu; i++) {
-         TimerBlock *tb = &s->timerblock[i];
-+        tb->freq_hz = s->freq_hz;
-         tb->timer = ptimer_init(timerblock_tick, tb, PTIMER_POLICY);
-         sysbus_init_irq(sbd, &tb->irq);
-         memory_region_init_io(&tb->iomem, OBJECT(s), &timerblock_ops, tb,
-@@ -301,6 +305,9 @@ static const VMStateDescription vmstate_arm_mptimer = {
- };
- 
- static const Property arm_mptimer_properties[] = {
-+    /* Default clock-frequency is 1GHz (NANOSECONDS_PER_SECOND) */
-+    DEFINE_PROP_UINT64("clock-frequency", ARMMPTimerState, freq_hz,
-+                       NANOSECONDS_PER_SECOND),
-     DEFINE_PROP_UINT32("num-cpu", ARMMPTimerState, num_cpu, 0),
- };
- 
-diff --git a/include/hw/timer/a9gtimer.h b/include/hw/timer/a9gtimer.h
-index 6ae9122e4b..3b63d14927 100644
---- a/include/hw/timer/a9gtimer.h
-+++ b/include/hw/timer/a9gtimer.h
-@@ -76,6 +76,7 @@ struct A9GTimerState {
- 
-     MemoryRegion iomem;
-     /* static props */
-+    uint64_t freq_hz;
-     uint32_t num_cpu;
- 
-     QEMUTimer *timer;
-diff --git a/include/hw/timer/arm_mptimer.h b/include/hw/timer/arm_mptimer.h
-index 65a96e2a0d..da43a3d351 100644
---- a/include/hw/timer/arm_mptimer.h
-+++ b/include/hw/timer/arm_mptimer.h
-@@ -31,6 +31,7 @@ typedef struct {
-     uint32_t control;
-     uint32_t status;
-     struct ptimer_state *timer;
-+    uint64_t freq_hz;
-     qemu_irq irq;
-     MemoryRegion iomem;
- } TimerBlock;
-@@ -43,6 +44,7 @@ struct ARMMPTimerState {
-     SysBusDevice parent_obj;
-     /*< public >*/
- 
-+    uint64_t freq_hz;
-     uint32_t num_cpu;
-     TimerBlock timerblock[ARM_MPTIMER_MAX_CPUS];
-     MemoryRegion iomem;
--- 
-2.47.3
+--=-mdoOgExWiFK4oLb+eFoy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmjvZ8YACgkQ2FTaVjFe
+AmpLgg//W5eC3qt/yguDkM6V9f9KE4thnud8WH0AINJlywJdWyRKaSezodEmp0nE
+QaLgvE24gZvVsqZfc0YTF+ssSUQN4cqYbSgfYWM3eAZ5TxPP/7tDHdJbE4+3AGmQ
+YYxDYIDjtBt8XhX0Gyo2kfWfv06Iowt5TCKQowW7pN48Yz5DFZJytGnviTR3nUmv
+jSULePuriH9evHCOfL/y9m0+hZcew9IFVfkyigLRXZ+spdBvzx8KfzVd+neU1SR/
+1zqgEnQbiBxTvXsLWo0TYsiUlT1e8Wukc5E6/FFnnVON2Cs0/vLdraBhSG1NZNgD
+pB1no8uPcIFTb1u5o4Zgk0yWb94OXM+ZGhTZQAc4nwjjiy0cC+DgC2XLTiR1guWh
+l/2/WtD+VHKgtd9oHw57j1s2jj7gya3TMJXQ7J05EQGXsnhHF2y6pJqNDP7umudV
+nnwKKtMP6M+clEBjPhTdiQ3BIpxSLSO3ViG/02enHR4yRFDeqXIGGPIWtCYm7K5c
++ztVgvKOZZmxfMf/ibVnNXVCxsWEhhsQAUI7yIri+nkYLkvqDhiQTAHiSnfVIair
+WOOGF8goNaCvF2VjN3w1zsXNRV+loITGWUdiY77LHo6sBiochHI51/GY1oyTKESi
+IFqdnxzg+KimouYuJSSKI7OGMdrpmaHMqSJuSHCnkX9rBk6avFU=
+=Sf0p
+-----END PGP SIGNATURE-----
+
+--=-mdoOgExWiFK4oLb+eFoy--
 
