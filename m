@@ -4,95 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B0ECCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E142DCCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 09:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8xeV-00025Q-5G; Wed, 15 Oct 2025 05:18:35 -0400
+	id 1v8xgW-0004D2-JV; Wed, 15 Oct 2025 05:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1v8xeK-0001wD-Al
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:18:24 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1v8xdq-0007Fz-CC
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:18:23 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b463f986f80so402496166b.2
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 02:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760519872; x=1761124672; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A1i0haX05wPH7+qqw20aGMRGdV4gaXbDlVbiQ7m2y5A=;
- b=bYt5vrlz7gFR/4YKUaV3toDZjZ82cvTpzr/5wngk6Tn+fy5QfDDsV68HeQuAyQHui4
- hH1Yp+2ToGLBUz2I1kKPByCDNEzf6p16q8NItJiIG+iGMa19D9UU8hjNLm2UsRFUd3+r
- Ajos5OMsOEnXfPw0ow5P1MhRW93MDHmvLvGv7Th35KmPG09OGCCGFthluCYBrVOwqHf7
- pF3XvSaHcv94m2ThWMY+O9qj5BIkmUDDRbsNKTiyS7pnDdGI+7pXM7MwBQvPnmrVPShy
- fCU93kazZJ6NdVbkDBpEpFLuGP/yP02ELbiXGSlN0+nxz9bWo4V6Bg6X50zlHfwxg9mt
- jPig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760519872; x=1761124672;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=A1i0haX05wPH7+qqw20aGMRGdV4gaXbDlVbiQ7m2y5A=;
- b=iX414Ez9Zfd7i3ZGmTTl7igrL6oXXkimKHGBmQVqInx2GwZuIj+BX07sKrk8UbZrsa
- E8Ry1LPNvsIC+i6PWC34srOrp2ydSIX6J6jONgDigbjTzP0sAJAXw5hvfcXeogCjICnD
- xJnwdpXaZAllWh1CgnOInqkU50T97ZaQepFyU+5A1TUtcioXpDeOGhYKycws2Rvm4Gwa
- ErBP8aIehnDEwhtN0yP9tEO7vytxbUAPzPHfk3cENbVmdsBV/uDzWBkeGcarFo2hzLod
- I0/X0LG8+K2jwod3bueKp4o0iC1EUnjBsFkvw5VcH0CYPrvjhC6hR4BnXCAPI35GkG+0
- hqSw==
-X-Gm-Message-State: AOJu0YzLzWoM+iBdlhRYrb57OPpIFareZnlAB6g6dH6vbTNMRdXbHsiO
- vMZbJazbfbxaX39/KfZ2lUsY3vqdg/mwAbhMcxWIBCF1pTJUfYTQZ7jKGjxY1vwnPmw=
-X-Gm-Gg: ASbGncsLA88jOjP2ze/C+AUCydsDrrw0VYOvhPva8CVphDzDGR4tcEbjOFC6GhgbIVW
- HE1L646s3wYpkWRXOYXuE4EGMCxj22CyfoDmRj6V3yeA33FU4AUtkHOQVJLm2hnNODq8MFE8Y1o
- daRLuK92U6k3GtxGabkvXMU/JRH+g/4KOeTj/RKNO7X+SywLCi/QXWnDUWYoPrKIlQ67bd9rgmu
- Uv4Cm9EjfLjHTky6rcd+XJbfy/JvXTvx2BdAFDr7YgiBOGwfx3G1j/iJNFWloXzJXoGelF+GUtU
- qJN+S4Zj0TEJjMZYXG+Ot4v8YFUPv8p/2A8jJVWG+vAa4D9Pst4Pl9b2E3Hh6p6RWz/Fos9nfHr
- mSexx/0J0QDfNUJjQbBFKUnfdd90yy2nvJsZdyoGwaeLBspx9K8t5s5gvioFuCl30qEbpvZuq
-X-Google-Smtp-Source: AGHT+IHXQKBdRb7I7nFha4o16yZk3FResaMPTKYJidp8LZvY35n6AKiEnnb1+zy4dDB3WqIZDgVinA==
-X-Received: by 2002:a17:906:c146:b0:b49:a5e4:754a with SMTP id
- a640c23a62f3a-b50abfd027emr3087732566b.43.1760519871521; 
- Wed, 15 Oct 2025 02:17:51 -0700 (PDT)
-Received: from PC-DA2D10.beckhoff.com ([195.226.174.194])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b5cb9e7a23dsm182069966b.23.2025.10.15.02.17.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Oct 2025 02:17:51 -0700 (PDT)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1v8xgT-00049E-TH
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:20:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1v8xg8-0007tr-M1
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 05:20:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760520008;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=37RHUcEAG6umQd9fGbe3X3p5XRjtgf1f2iFAxJSPW+Y=;
+ b=btjfy8Qwam9X3wIZ6+xLo5y7wwCd/HuZZTHx8Ez7KTZG+AlzJM8a+pdCHScshP970zULzF
+ cjPup5hpjWicxEf1x+szdMPYtxKgCMY7qz8ohZf0Gxxp12n6hDaxFV6CFfrSNGC0ZqfM5D
+ tzvqVMLntJd0TGOBJJwu7hRHqx5+ieI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-ddP9GtA5OtGqdTfrb4uaNQ-1; Wed,
+ 15 Oct 2025 05:20:07 -0400
+X-MC-Unique: ddP9GtA5OtGqdTfrb4uaNQ-1
+X-Mimecast-MFC-AGG-ID: ddP9GtA5OtGqdTfrb4uaNQ_1760520006
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 934B81800345
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 09:20:06 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.44.32.123])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B4D6918004D4; Wed, 15 Oct 2025 09:20:04 +0000 (UTC)
+From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- YannickV <Y.Vossen@beckhoff.com>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v3 10/14] hw/misc/zynq_slcr: Add logic for DCI configuration
-Date: Wed, 15 Oct 2025 11:17:25 +0200
-Message-ID: <20251015091729.33761-11-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251015091729.33761-1-corvin.koehne@gmail.com>
-References: <20251015091729.33761-1-corvin.koehne@gmail.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Albert Esteve <aesteve@redhat.com>
+Subject: [PATCH] vhost-user: fix shared object lookup handler logic
+Date: Wed, 15 Oct 2025 11:19:55 +0200
+Message-ID: <20251015091955.1524800-1-aesteve@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ej1-x62c.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,97 +82,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+Fix vhost_user_backend_handle_shared_object_lookup() logic to handle
+the error path the same way as other handlers do. The main
+difference between them is that shared_object_lookup handler
+sends the reply from within the handler itself.
 
-The registers for the digitally controlled impedance (DCI) clock are
-part of the system level control registers (SLCR). The DONE bit in
-the status register indicates a successfull DCI calibration. An
-description of the calibration process can be found here:
-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
+What vhost_user_backend_handle_shared_object_lookup() returns, depends
+on whether vhost_user_backend_send_dmabuf_fd() succeded or not to send
+a reply. Any check that results in an error before that only
+determines the return value in the response. However, when an error
+in sending the response within the handler occurs, we want to jump
+to err and close the backend channel to be consistent with other message
+types. On the other hand, when the response succeds then the
+VHOST_USER_NEED_REPLY_MASK flag is unset and the reply in backend_read
+is skipped, going directly to the fdcleanup.
 
-The DCI control register and status register have been added. As soon
-as the ENABLE and RESET bit are set, the RESET bit has also been toggled
-to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
-register is set. If these bits change the DONE bit is reset. Note that the
-option bits are not taken into consideration.
-
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- hw/misc/zynq_slcr.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ hw/virtio/vhost-user.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-index 010387beec..d8702da4ce 100644
---- a/hw/misc/zynq_slcr.c
-+++ b/hw/misc/zynq_slcr.c
-@@ -180,6 +180,12 @@ REG32(GPIOB_CFG_HSTL, 0xb14)
- REG32(GPIOB_DRVR_BIAS_CTRL, 0xb18)
- 
- REG32(DDRIOB, 0xb40)
-+REG32(DDRIOB_DCI_CTRL, 0xb70)
-+    FIELD(DDRIOB_DCI_CTRL, RESET, 0, 1)
-+    FIELD(DDRIOB_DCI_CTRL, ENABLE, 1, 1)
-+    FIELD(DDRIOB_DCI_CTRL, UPDATE_CONTROL, 20, 1)
-+REG32(DDRIOB_DCI_STATUS, 0xb74)
-+    FIELD(DDRIOB_DCI_STATUS, DONE, 13, 1)
- #define DDRIOB_LENGTH 14
- 
- #define ZYNQ_SLCR_MMIO_SIZE     0x1000
-@@ -193,6 +199,8 @@ struct ZynqSLCRState {
- 
-     MemoryRegion iomem;
- 
-+    bool ddriob_dci_ctrl_reset_toggled;
-+
-     uint32_t regs[ZYNQ_SLCR_NUM_REGS];
- 
-     Clock *ps_clk;
-@@ -331,6 +339,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
- 
-     DB_PRINT("RESET\n");
- 
-+    s->ddriob_dci_ctrl_reset_toggled = false;
-+
-     s->regs[R_LOCKSTA] = 1;
-     /* 0x100 - 0x11C */
-     s->regs[R_ARM_PLL_CTRL]   = 0x0001A008;
-@@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
-     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
-                           = 0x00000e00;
-     s->regs[R_DDRIOB + 12] = 0x00000021;
-+
-+    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
- }
- 
- static void zynq_slcr_reset_hold(Object *obj, ResetType type)
-@@ -554,6 +566,25 @@ static void zynq_slcr_write(void *opaque, hwaddr offset,
-                 (int)offset, (unsigned)val & 0xFFFF);
-         }
-         return;
-+
-+    case R_DDRIOB_DCI_CTRL:
-+        if (!FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
-+            FIELD_EX32(s->regs[R_DDRIOB_DCI_CTRL], DDRIOB_DCI_CTRL, RESET)) {
-+
-+            s->ddriob_dci_ctrl_reset_toggled = true;
-+            DB_PRINT("DDRIOB DCI CTRL RESET was toggled\n");
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 36c9c2e04d..163c3d8ca5 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1833,8 +1833,11 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+                                                              &payload.object);
+         break;
+     case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
+-        ret = vhost_user_backend_handle_shared_object_lookup(dev->opaque, ioc,
+-                                                             &hdr, &payload);
++        /* Handler manages its own response, check error and close connection */
++        if (vhost_user_backend_handle_shared_object_lookup(dev->opaque, ioc,
++                                                           &hdr, &payload) < 0) {
++            goto err;
 +        }
-+
-+        if (FIELD_EX32(val, DDRIOB_DCI_CTRL, ENABLE) &&
-+            FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
-+            !FIELD_EX32(val, DDRIOB_DCI_CTRL, UPDATE_CONTROL) &&
-+            s->ddriob_dci_ctrl_reset_toggled) {
-+
-+            s->regs[R_DDRIOB_DCI_STATUS] |= R_DDRIOB_DCI_STATUS_DONE_MASK;
-+        } else {
-+            s->regs[R_DDRIOB_DCI_STATUS] &= ~R_DDRIOB_DCI_STATUS_DONE_MASK;
-+        }
-+        break;
-     }
- 
-     if (s->regs[R_LOCKSTA]) {
+         break;
+     default:
+         error_report("Received unexpected msg type: %d.", hdr.request);
 -- 
-2.47.3
+2.49.0
 
 
