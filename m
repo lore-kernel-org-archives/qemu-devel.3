@@ -4,70 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEFFCCD18E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B09CCD184
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 02:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v8raB-0001qT-Fr; Tue, 14 Oct 2025 22:49:44 -0400
+	id 1v8raJ-0001r9-4v; Tue, 14 Oct 2025 22:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v8ra3-0001q5-IH
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:49:35 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v8rZq-0006JR-A3
- for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:49:28 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59F2n486063990
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 15 Oct 2025 11:49:04 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=gguJc98z35ToVrINbOWa6utCG1k72ZRcJf5CX1dzVvc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1760496544; v=1;
- b=Rj+X+RrJYLg71YUWNF9fDTh760YTzWnQv7RZVYaSbz54RmiNChx3v9r7RsyIfh+z
- NZuJOJ25CUacEn479I/Z0h1dW1TOC84w7xyGPYTdzRq7cJ5DhmabKvG1dGZZMH/J
- Abjfx2lDXYsK1Wo7ck7flxNJK4HcwouRTuhSuWUxTSWF6qfwnvV5PymB5xjffc5L
- O4e6Dv3T89+5GKyQZWmGNGTg//bAXn/fAJTooRQSoIJ02So61W8hVtxZkZFhMT7h
- ZowBwBK72wMnQWQ/2DFub2q7ysToNhzo5bs3UAHiIBjZ8/g8RY8nx/znH0hG9beK
- ktXa1c72pXlksOa3uyoWaw==
-Message-ID: <7ebab3d3-ee30-499c-b475-a64560eb160a@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 15 Oct 2025 11:49:04 +0900
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v8ra8-0001qY-UI
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:49:41 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v8ra2-0006LH-Su
+ for qemu-devel@nongnu.org; Tue, 14 Oct 2025 22:49:40 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-63163a6556bso11937661a12.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Oct 2025 19:49:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760496565; x=1761101365; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n6qjZYlED9cI5ZqDFGB24BCtY1bwwgj+Qp3FAx8995M=;
+ b=GS8BBr2cjTBvdO1DaoUBw0hsO98/wLjBCI1UbMNnQgGzZv+sUt7VDovt1wI0SxkIFR
+ u27H6I7bS4qYfHoIEScDYbf2xYIfuaSg1GKxlwIS6/usNIukTigf1xGAXxPe7ZYYSjKV
+ 7LKWjDOHgPTFQobJqLYxHNqgNXXUzj4ClCihul6JDnkN+x6oxxL92EXUjtnE9IftZrXZ
+ Wi7XN+BSSnke7gI33fYIA9n91Al55j3AXIL/wfD97pMyttsaFu8bU4l8UNO0I3cCNEBE
+ jkruP0Ac+oa/kqEcnJdZyJlupDmLZwChq8tqzhqH6UXFixkHWra9hr5sgP0M/8bgL+Pu
+ siYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760496565; x=1761101365;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=n6qjZYlED9cI5ZqDFGB24BCtY1bwwgj+Qp3FAx8995M=;
+ b=QxPzNR3dnOeFCTbERwbgYnBmN9pyqx3UI5B5Fkk/1mQL7Q0DzXsWFgpgJ9Wdq7RxmA
+ 8iQSDxdjjVg6yTIblJg9ELVjTC7FQ5S2XtXbvTOXTMfHgYzXesCtB41swgGQaMpbaTlE
+ M1zKmQw1YDwYNG3ny3eJia7zIWCSJQL8Sfr8q2F94xpoWbON5jJzAKqQQ+OyxMPwKK5I
+ aDdE1E5wPZ/yirG9fr8HTijoy86o22o+he5b+wGtSmep2bGMLhfwDKP6Z7CLztHQKieK
+ 7sen3zz9+OW6bbQ4kqSI2iXvdOdFPasuVajWyyLEFMFXA6vMqAznf/6BX7pOLYlAIkjY
+ kzTg==
+X-Gm-Message-State: AOJu0Yxbed9vRsNg7/jet3ddj/sIP9+a+95vUdgEx+WuOZtcYQjXXH6K
+ LklxOmckX+S8p66rXjfj+Gbrw78NEQvD2kgdS3E7Nk8AsEtX9sv0MFWXz5K0SlFMcDsHWO/WzC3
+ eH5CHWUUdNV7Wi3ivFLBQAE9qxbSKA3g=
+X-Gm-Gg: ASbGncsVRHMzt5c100z8EihVf8CE3JbJbREW6hUvXb6GfW1QDwrbbyFLN8+LqQC9hW5
+ OmByvTEkLUesIs1Auz/DdgMGcE6QB470ppdqv6nVPlqKwAWAtCeSBoD/JVXIZoGUN/u1LgFFQqa
+ geUtXZgSj4Sg15aK3lQkK5AfcN1NeViABtL0VU8kLVtMA7j4d5KhcKEw+c7V1gGx36nYDlyKD6r
+ ENdRyL+XvxYxzCuSIzeSD7R+xyu/wnanXKPuJqVzmPaGA7+2LWYV8FDNnzJC4OtzpeccOLt5/Lg
+ vQ==
+X-Google-Smtp-Source: AGHT+IHHaTUvHcpDViXjqVRzXZIChBsVG8+g6HvIsqXs0iFGU8jo4cyVPt7J9fyPy0gRtb4fHY1J/0d1mKHNouTFWuw=
+X-Received: by 2002:a05:6402:d09:b0:62f:3721:fc8c with SMTP id
+ 4fb4d7f45d1cf-639d5c7019fmr22465706a12.37.1760496564567; Tue, 14 Oct 2025
+ 19:49:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] Support per-head resolutions with virtio-gpu
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Andrew Keesler <ankeesler@google.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251014111234.3190346-1-alex.bennee@linaro.org>
- <20251014111234.3190346-2-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251014111234.3190346-2-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+References: <20251010155045.78220-1-philmd@linaro.org>
+ <0e246345-6296-4df2-8f1e-4c8beb9532f0@linaro.org>
+In-Reply-To: <0e246345-6296-4df2-8f1e-4c8beb9532f0@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 15 Oct 2025 12:48:57 +1000
+X-Gm-Features: AS18NWAFuRVyghTm2mNAFC5jlzxFOrOYfpqSLYMxn-jYT2ljz4Uj2CJyWxwcDkM
+Message-ID: <CAKmqyKPZpUaXd7K6qfu-q4xSmGF-mmPA+p14ROi85KE76aW0RA@mail.gmail.com>
+Subject: Re: [PATCH 00/13] target/riscv: Centralize MO_TE uses in a pair of
+ helpers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Christoph Muellner <christoph.muellner@vrull.eu>, 
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Anton Johansson <anjo@rev.ng>, Richard Henderson <richard.henderson@linaro.org>,
+ Valentin Haudiquet <valentin.haudiquet@canonical.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,121 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/14 20:12, Alex Bennée wrote:
-> From: Andrew Keesler <ankeesler@google.com>
-> 
-> In 454f4b0f, we started down the path of supporting separate
-> configurations per display head (e.g., you have 2 heads - one with
-> EDID name "AAA" and the other with EDID name "BBB").
-> 
-> In this change, we add resolution to this configuration surface (e.g.,
-> you have 2 heads - one with resolution 111x222 and the other with
-> resolution 333x444).
-> 
->    -display vnc=localhost:0,id=aaa,display=vga,head=0 \
->    -display vnc=localhost:1,id=bbb,display=vga,head=1 \
->    -device '{"driver":"virtio-vga",
->              "max_outputs":2,
->              "id":"vga",
->              "outputs":[
->                {
->                   "name":"AAA",
->                   "xres":111,
->                   "yres":222
->                },
->                {
->                   "name":"BBB",
->                   "xres":333,
->                   "yres":444
->                }
->              ]}'
-> 
-> Here is the behavior matrix of the current resolution configuration
-> surface (xres/yres) with the new resolution configuration surface
-> (outputs[i].xres/yres).
-> 
-> Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-> Behavior: current behavior - outputs[0] enabled with default xres/yres
-> 
-> Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-> Behavior: current behavior - outputs[0] enabled with xres/yres
-> 
-> Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-> 
-> Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-> Signed-off-by: Andrew Keesler <ankeesler@google.com>
+On Wed, Oct 15, 2025 at 5:45=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Alistair,
+>
+> On 10/10/25 17:50, Philippe Mathieu-Daud=C3=A9 wrote:
+> > In preparation of having RISC-V cores changing their endianness
+> > at runtime, centralize the MO_TE uses to a pair of methods.
+> >
+> > Except the 128-bit LD/ST change (first patch), no further
+> > functional changes intended.
+> >
+> > Philippe Mathieu-Daud=C3=A9 (13):
+> >    target/riscv: Really use little endianness for 128-bit loads/stores
+>
+> Are you OK to queue reviewed patches 2-13 (independent of patch #1)?
 
-Nitpick: it is better to have a blank line between Behavior: and 
-Signed-off-by: to clarify the beginning of tags.
+Yep
 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20250902141312.750525-2-ankeesler@google.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   qapi/virtio.json             | 10 ++++++++--
->   hw/display/virtio-gpu-base.c | 10 ++++++++++
->   2 files changed, 18 insertions(+), 2 deletions(-)
-> 
-> diff --git a/qapi/virtio.json b/qapi/virtio.json
-> index 05295ab6655..0ce789bb22f 100644
-> --- a/qapi/virtio.json
-> +++ b/qapi/virtio.json
-> @@ -971,15 +971,21 @@
->   ##
->   # @VirtIOGPUOutput:
->   #
-> -# Describes configuration of a VirtIO GPU output.
-> +# Describes configuration of a VirtIO GPU output. If both xres and
-> +# yres are set, they take precedence over root virtio-gpu
-> +# resolution configuration and enable the corresponding output.
->   #
->   # @name: the name of the output
->   #
-> +# @xres: horizontal resolution of the output in pixels (since 10.2)
-> +#
-> +# @yres: vertical resolution of the output in pixels (since 10.2)
-> +#
->   # Since: 10.1
->   ##
->   
->   { 'struct': 'VirtIOGPUOutput',
-> -  'data': { 'name': 'str' } }
-> +  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
->   
->   ##
->   # @DummyVirtioForceArrays:
-> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-> index 7269477a1c8..6adb5312a40 100644
-> --- a/hw/display/virtio-gpu-base.c
-> +++ b/hw/display/virtio-gpu-base.c
-> @@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
->       g->req_state[0].width = g->conf.xres;
->       g->req_state[0].height = g->conf.yres;
->   
-> +    for (output_idx = 0, node = g->conf.outputs;
-> +         node && output_idx < g->conf.max_outputs;
+Thanks!
 
-output_idx < g->conf.max_outputs is redundant as it is already enforced 
-with the first for-loop that enumerates outputs.
+Applied to riscv-to-apply.next
 
-The condition can be simply removed, but I think merging this loop to 
-the earlier loop will make the code a bit more concise.
+Alistair
 
-Aside this redundancy of the code, the logic this patch implements looks 
-good to me.
-
-> +         output_idx++, node = node->next) {
-> +        if (node->value->has_xres && node->value->has_yres) {
-> +            g->enabled_output_bitmask |= (1 << output_idx);
-> +            g->req_state[output_idx].width = node->value->xres;
-> +            g->req_state[output_idx].height = node->value->yres;
-> +        }
-> +    }
-> +
->       g->hw_ops = &virtio_gpu_ops;
->       for (i = 0; i < g->conf.max_outputs; i++) {
->           g->scanout[i].con =
-
+>
+> >    target/riscv: Explode MO_TExx -> MO_TE | MO_xx
+> >    target/riscv: Conceal MO_TE within gen_amo()
+> >    target/riscv: Conceal MO_TE within gen_inc()
+> >    target/riscv: Conceal MO_TE within gen_load() / gen_store()
+> >    target/riscv: Conceal MO_TE within gen_load_idx() / gen_store_idx()
+> >    target/riscv: Conceal MO_TE within gen_fload_idx() / gen_fstore_idx(=
+)
+> >    target/riscv: Conceal MO_TE within gen_storepair_tl()
+> >    target/riscv: Conceal MO_TE within gen_cmpxchg*()
+> >    target/riscv: Conceal MO_TE|MO_ALIGN within gen_lr() / gen_sc()
+> >    target/riscv: Factor MemOp variable out when MO_TE is set
+> >    target/riscv: Introduce mo_endian() helper
+> >    target/riscv: Introduce mo_endian_env() helper
+> Regards,
+> Phil.
+>
 
