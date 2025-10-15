@@ -4,61 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEFCFCCD18E
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA03CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 14:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v92fY-00006d-Kj; Wed, 15 Oct 2025 10:40:01 -0400
+	id 1v92h3-0000Yp-PQ; Wed, 15 Oct 2025 10:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v92fW-00006O-8h
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:39:58 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v92go-0000Nz-S0
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:41:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v92fO-00062N-Dz
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:39:58 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 60E8C889C2;
- Wed, 15 Oct 2025 17:39:44 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a94::1:15])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id gdRVCn3Foa60-sWVMuTAW; Wed, 15 Oct 2025 17:39:43 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760539183;
- bh=ZG7MBLKtWr7FDpexxGzgUyfecOn/If9nG1GsuFcJrDs=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=kbJ1XNbthKNMpBOyoAMVWx7lL5K3WCAIWcMZe6o72tM8/TamogWRZt9DdjWkwSoDc
- Tx6k732K9vgLWhDBb4es2GkLvDCKeEmpRmjZt5GptKGyQ0SrIn6znfsIpQzrIw/Uv2
- /SEgueaJdPBgZybV66O983zZH1xCrmlAsyboLu38=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: jasowang@redhat.com
-Cc: devel@lists.libvirt.org, eblake@redhat.com, armbru@redhat.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, vsementsov@yandex-team.ru
-Subject: [PATCH v4] qapi: net: deprecate vhostforce option
-Date: Wed, 15 Oct 2025 17:39:41 +0300
-Message-ID: <20251015143941.1109499-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v92gf-0006Js-Dz
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 10:41:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760539265;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=R1MLAN7CR8OZ9XZGygHRbL8NAIs9pi1ZShZl/FkeZOs=;
+ b=OskIw6A7hEHUx4Jg6/UBCbvKIrEOeBMRLThq9d2HJM6ofVTRNyHKzq8fVuubaly8ek7s7l
+ BbPATXKUDHuYfO5ojOo7ZOQZVAU08XedMUx6Ip6Hhszu1i6KDmElUtfWUsRg8YQtefiJ5T
+ 2WU/X64tTPrkUcIlOyYtiO23rEGZlV8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-WiZZrmeHPP-8aixi4OjAKg-1; Wed,
+ 15 Oct 2025 10:41:01 -0400
+X-MC-Unique: WiZZrmeHPP-8aixi4OjAKg-1
+X-Mimecast-MFC-AGG-ID: WiZZrmeHPP-8aixi4OjAKg_1760539260
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CE7C019560BB; Wed, 15 Oct 2025 14:40:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D85FA30001A1; Wed, 15 Oct 2025 14:40:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7209921E6A27; Wed, 15 Oct 2025 16:40:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,  Yanan Wang <wangyanan55@huawei.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  "Dr. David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v5 3/3] hw/uefi/ovmf-log: add maxsize parameter
+In-Reply-To: <20251015120637.1736402-4-kraxel@redhat.com> (Gerd Hoffmann's
+ message of "Wed, 15 Oct 2025 14:06:37 +0200")
+References: <20251015120637.1736402-1-kraxel@redhat.com>
+ <20251015120637.1736402-4-kraxel@redhat.com>
+Date: Wed, 15 Oct 2025 16:40:56 +0200
+Message-ID: <87wm4w9qiv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,199 +91,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This option for tap and vhost-user netdevs doesn't make sense
-since long ago (10 years!), starting from commits:
+Gerd Hoffmann <kraxel@redhat.com> writes:
 
- 1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
- 24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
+> Allow limiting the amount of log output sent.  Allow up to 1 MiB.
+> In case the guest log buffer is larger than 1 MiB limit the output
+> instead of throwing an error.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  hw/uefi/ovmf-log.c   | 42 ++++++++++++++++++++++++++++++++++--------
+>  hmp-commands-info.hx |  4 ++--
+>  qapi/machine.json    |  5 +++++
+>  3 files changed, 41 insertions(+), 10 deletions(-)
+>
+> diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+> index e281a980a101..28788620e3f6 100644
+> --- a/hw/uefi/ovmf-log.c
+> +++ b/hw/uefi/ovmf-log.c
+> @@ -18,6 +18,7 @@
+>  #include "qapi/error.h"
+>  #include "qapi/type-helpers.h"
+>  #include "qapi/qapi-commands-machine.h"
+> +#include "qobject/qdict.h"
+>  
+>  
+>  /* ----------------------------------------------------------------------- */
+> @@ -164,7 +165,8 @@ static void handle_ovmf_log_range(GString *out,
+>      }
+>  }
+>  
+> -FirmwareLog *qmp_query_firmware_log(Error **errp)
+> +FirmwareLog *qmp_query_firmware_log(bool have_max_size, uint64_t max_size,
+> +                                    Error **errp)
+>  {
+>      MEM_DEBUG_LOG_HDR header;
+>      dma_addr_t offset, base;
+> @@ -184,18 +186,40 @@ FirmwareLog *qmp_query_firmware_log(Error **errp)
+>          return NULL;
+>      }
+>  
+> -    if (header.DebugLogSize > MiB) {
+> -        /* default size is 128k (32 pages), allow up to 1M */
+> -        error_setg(errp, "firmware log: log buffer is too big");
+> -        return NULL;
+> -    }
+> -
+>      if (header.DebugLogHeadOffset > header.DebugLogSize ||
+>          header.DebugLogTailOffset > header.DebugLogSize) {
+>          error_setg(errp, "firmware log: invalid header");
+>          return NULL;
+>      }
+>  
+> +    if (have_max_size) {
+> +        if (max_size > MiB) {
+> +            error_setg(errp, "firmware log: max-size larger than 1 MiB");
 
-Prior these commits, to enable kernel vhost-net, or vhost-user-net for
-some specific kind of guests (that don't have MSI-X support), you should
-have set vhostforce=on.
+"parameter 'max-size' exceeds 1MiB" or similar.
 
-Now guest type doesn't matter, all guests are equal for these
-options logic.
+> +            return NULL;
+> +        }
+> +    } else {
+> +        max_size = MiB;
+> +    }
+> +
+> +    /* adjust header.DebugLogHeadOffset so we return at most maxsize bytes */
+> +    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+> +        /* wrap around */
+> +        if (header.DebugLogTailOffset > max_size) {
+> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - max_size;
+> +        } else {
+> +            uint64_t max_chunk = max_size - header.DebugLogTailOffset;
+> +            if (header.DebugLogSize > max_chunk &&
+> +                header.DebugLogHeadOffset < header.DebugLogSize - max_chunk) {
+> +                header.DebugLogHeadOffset = header.DebugLogSize - max_chunk;
+> +            }
+> +        }
+> +    } else {
+> +        if (header.DebugLogTailOffset > max_size &&
+> +            header.DebugLogHeadOffset < header.DebugLogTailOffset - max_size) {
+> +            header.DebugLogHeadOffset = header.DebugLogTailOffset - max_size;
+> +        }
+> +    }
 
-For tap the current logic is:
-  vhost=on / vhost=off : vhostforce ignored, doesn't make sense
-  vhost unset : vhostforce counts, enabling vhost
+Didn't review this part; my brain's fried for today :)
 
-So you may enable vhost for tap several ways:
-- vhost=on
-- vhostforce=on
-- vhost=on + vhostforce=on
-- and even vhost=on + vhostforce=off
+> +
+>      base = offset + header.HeaderSize;
+>      if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+>          /* wrap around */
+> @@ -239,8 +263,10 @@ void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
+>      Error *err = NULL;
+>      FirmwareLog *log;
+>      gsize log_len;
+> +    int64_t maxsize;
+>  
+> -    log = qmp_query_firmware_log(&err);
+> +    maxsize = qdict_get_try_int(qdict, "maxsize", -1);
+> +    log = qmp_query_firmware_log(maxsize != -1, (uint64_t)maxsize, &err);
+>      if (err)  {
+>          hmp_handle_error(mon, err);
+>          return;
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index f0aef419923c..f00d7081b40c 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -993,8 +993,8 @@ ERST
+>  
+>      {
+>          .name       = "firmware-log",
+> -        .args_type  = "",
+> -        .params     = "",
+> +        .args_type  = "maxsize:o?",
+> +        .params     = "[maxsize]",
+>          .help       = "show the firmware (ovmf) debug log",
+>          .cmd        = hmp_info_firmware_log,
+>      },
 
-- they are all equal.
+Might want to spell it max-size for consistency with QMP.  Up to you.
 
-For vhost-user we simply ignore the vhostforce option at all in the
-code.
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 96133e5c71cf..e4b15680c172 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1858,9 +1858,14 @@
+>  #
+>  # Find firmware memory log buffer in guest memory, return content.
+>  #
+> +# @max-size: limit the amount of log data returned.  Up to 1 MiB if
+> +#            log data is allowed.  In case the amout of log data is
 
-Let's finally deprecate the extra options.
+What are you trying to convey by "if log data is allowed"?
 
-Also, fix @vhostforce documentation everywhere to show the real picture,
-and update vhost-user test to not use deprecated option.
+s/amout/amount/
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+> +#            larger than max-size the tail of the log is returned.
 
-v4:
-- update documentation
-- deprecate also similar option for vhost-user net
+Please use @max-size here for nicer rendering.
 
-v3 was "[PATCH v3] qapi: net/tap: deprecate vhostforce option":
-Supersedes: <20250901153943.65235-1-vsementsov@yandex-team.ru>
-
- docs/about/deprecated.rst     | 11 +++++++++++
- qapi/net.json                 | 20 ++++++++++++++++----
- qemu-options.hx               | 13 +++++--------
- tests/qtest/vhost-user-test.c |  2 +-
- 4 files changed, 33 insertions(+), 13 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 98361f5832..2882603b20 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -487,6 +487,17 @@ Stream ``reconnect`` (since 9.2)
- The ``reconnect`` option only allows specifying second granularity timeouts,
- which is not enough for all types of use cases, use ``reconnect-ms`` instead.
- 
-+TAP ``vhostforce`` (since 10.2)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The ``vhostforce`` option is redundant with the ``vhost`` option.
-+If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
-+
-+Vhost-user ``vhostforce`` (since 10.2)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The ``vhostforce`` option is a no-op.  Do not use it.
-+
- CPU device properties
- '''''''''''''''''''''
- 
-diff --git a/qapi/net.json b/qapi/net.json
-index 60d196afe5..531b360e46 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -346,13 +346,20 @@
- # @vhostfds: file descriptors of multiple already opened vhost net
- #     devices
- #
--# @vhostforce: vhost on for non-MSIX virtio guests
-+# @vhostforce: enable vhost-net network accelerator.  Ignored when
-+#    @vhost is set.
- #
- # @queues: number of queues to be created for multiqueue capable tap
- #
- # @poll-us: maximum number of microseconds that could be spent on busy
- #     polling for tap (since 2.7)
- #
-+# Features:
-+#
-+# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
-+#    option is redundant with the @vhost option. If they conflict,
-+#    @vhost takes precedence.  Just use @vhost.
-+#
- # Since: 1.2
- ##
- { 'struct': 'NetdevTapOptions',
-@@ -369,7 +376,7 @@
-     '*vhost':      'bool',
-     '*vhostfd':    'str',
-     '*vhostfds':   'str',
--    '*vhostforce': 'bool',
-+    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
-     '*queues':     'uint32',
-     '*poll-us':    'uint32'} }
- 
-@@ -606,17 +613,22 @@
- #
- # @chardev: name of a unix socket chardev
- #
--# @vhostforce: vhost on for non-MSIX virtio guests (default: false).
-+# @vhostforce: no-op (default: false).
- #
- # @queues: number of queues to be created for multiqueue vhost-user
- #     (default: 1) (Since 2.5)
- #
-+# Features:
-+#
-+# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
-+#    option is ignored in code and does nothing.  Don't use it.
-+#
- # Since: 2.1
- ##
- { 'struct': 'NetdevVhostUserOptions',
-   'data': {
-     'chardev':        'str',
--    '*vhostforce':    'bool',
-+    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
-     '*queues':        'int' } }
- 
- ##
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 0223ceffeb..35a70096e8 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2882,7 +2882,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
- #else
-     "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
-     "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
--    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
-+    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
-     "         [,poll-us=n]\n"
-     "                configure a host TAP network backend with ID 'str'\n"
-     "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
-@@ -2898,9 +2898,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
-     "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
-     "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
-     "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
--    "                use vhost=on to enable experimental in kernel accelerator\n"
--    "                    (only has effect for virtio guests which use MSIX)\n"
--    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
-+    "                use vhost=on to enable in kernel accelerator\n"
-     "                use 'vhostfd=h' to connect to an already opened vhost net device\n"
-     "                use 'vhostfds=x:y:...:z to connect to multiple already opened vhost net devices\n"
-     "                use 'queues=n' to specify the number of queues to be created for multiqueue TAP\n"
-@@ -2991,7 +2989,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
-     "                use 'start-queue=m' to specify the first queue that should be used\n"
- #endif
- #ifdef CONFIG_POSIX
--    "-netdev vhost-user,id=str,chardev=dev[,vhostforce=on|off]\n"
-+    "-netdev vhost-user,id=str,chardev=dev\n"
-     "                configure a vhost-user network, backed by a chardev 'dev'\n"
- #endif
- #ifdef __linux__
-@@ -3882,12 +3880,11 @@ SRST
-     for insertion into the socket map.  The combination of 'map-path' and
-     'sock-fds' together is not supported.
- 
--``-netdev vhost-user,chardev=id[,vhostforce=on|off][,queues=n]``
-+``-netdev vhost-user,chardev=id[,queues=n]``
-     Establish a vhost-user netdev, backed by a chardev id. The chardev
-     should be a unix domain socket backed one. The vhost-user uses a
-     specifically defined protocol to pass vhost ioctl replacement
--    messages to an application on the other end of the socket. On
--    non-MSIX guests, the feature can be forced with vhostforce. Use
-+    messages to an application on the other end of the socket. Use
-     'queues=n' to specify the number of queues to be created for
-     multiqueue vhost-user.
- 
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index 609ff24059..a4862d7087 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -46,7 +46,7 @@
- #define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
-                         " -numa node,memdev=mem"
- #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
--#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
-+#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s"
- 
- #define HUGETLBFS_MAGIC       0x958458f6
- 
--- 
-2.48.1
+> +#
+>  # Since: 10.2
+>  ##
+>  { 'command': 'query-firmware-log',
+> +  'data': { '*max-size': 'size' },
+>    'returns': 'FirmwareLog' }
+>  
+>  ##
 
 
