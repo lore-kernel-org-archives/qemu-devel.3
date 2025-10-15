@@ -4,135 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6228CCD193
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29465CCD18E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Oct 2025 13:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v91IG-0000TD-Fn; Wed, 15 Oct 2025 09:11:53 -0400
+	id 1v91Jp-0002Sd-Qt; Wed, 15 Oct 2025 09:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohd.akram@outlook.com>)
- id 1v91IA-0000HG-IP
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:11:46 -0400
-Received: from mail-francesouthazolkn190110001.outbound.protection.outlook.com
- ([2a01:111:f403:d207::1] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1v91Jj-0002Rn-Jz
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:13:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohd.akram@outlook.com>)
- id 1v91Hz-0001Z7-Gq
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:11:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JkfLj6djqUpSd5giT8ht5zt1lNwAZhgzY1VWDRb3paJiRpSkuHXpKKdUvM/ZesOcZhCggsBWL22ChRxDBLYKEFCacvNTz76GAMO/G8qT1YuFO7s3tbQ7M+YzLMeI6W3Qvg4dUCUjBoqKjN//+d5Y9SgaCyykmzGHexCw2R/lZkpbP0AGO26TJJoGcdYfYfNSBQwJoLC2UntUu6dZnq9wBvjzNL0X9IQENSlMnmk4K5Gd4g+rxqDLGilB8a4qR78fELz4qq+BbBMC2jt0GZy/dkRDxoaEMSfAQb6kjCI+C8T9O6jIi7q4sNmmk5xLz4bA/mQRkVkgpeUhrCblQP+NwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t/IZSWJf0h0BEvGWuQLV67QSX6vYyybsakCvQC0nofw=;
- b=eQ/vjhQvi4HAHaNv7XsMGbwoA6Xq7HijA5uEXrom23/0kfcUlRNtHMrapZH2idT9Ub61nAHnIwxk5kX7Ew5vJc+opWGTPx8q0L+dBQx+kfbRnIFe1T1I5QgEHWDL0IGrbmXZnnkub4Hd+qyVFeaMSm/VlPmMgo/JPU6Kb1kJVHg3PyJCZ8XN5CZyPTqBjN+CS+2XxnwEp12NzG87OgUCeuLkc+Oo5l+tjrzWy3y33n+JwZ3xnxsML7hJ3rY7gXx+Conu7uLd5wkxk3ncisTVYBu02s4t4YC2l3KS79O5JoVA8rJk1tJC/kvslMNKp8Hk/Oy2LfKTuJHkZLwwrts3yA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t/IZSWJf0h0BEvGWuQLV67QSX6vYyybsakCvQC0nofw=;
- b=bu51jo6EwB3EP9RwKO6e0EPuZRnJE8G0FPOpZeA8BTf8A8Vyetm53a2Ybw+f/x9VtVYkXNXStmNGUYcf7pQFNiOgyXauhlP0xvlOPAaIBOGCOV5j+KB8DmRyuO4y2vJDDpzEnCJTYFh5OCYpKYT+H7XxvxpDDjigucjTFBr7cehVlf4K6oI6JenS2s43/LpNtbQTftK46siglMogLkQqUilLC8e8q5zLZ03KJGVXG+BrPBCkljkg2zrj0AuG8q0LmbIGyiWiBfaGbMEMoN8Muysr+faEh+/NAXMtIjvBr0xBxPQflvk+I/WKU/rJPE/+CLtAfREE6rTTtuseGvLrAQ==
-Received: from BESP195MB2851.EURP195.PROD.OUTLOOK.COM (2603:10a6:b10:eb::11)
- by PAXP195MB1215.EURP195.PROD.OUTLOOK.COM (2603:10a6:102:1aa::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.11; Wed, 15 Oct
- 2025 13:11:11 +0000
-Received: from BESP195MB2851.EURP195.PROD.OUTLOOK.COM
- ([fe80::b263:ce33:cd7d:676e]) by BESP195MB2851.EURP195.PROD.OUTLOOK.COM
- ([fe80::b263:ce33:cd7d:676e%2]) with mapi id 15.20.9182.017; Wed, 15 Oct 2025
- 13:11:11 +0000
-From: Mohamed Akram <mohd.akram@outlook.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: [PATCH v2] file-posix: Fix seeking compressed files on macOS
-Thread-Topic: [PATCH v2] file-posix: Fix seeking compressed files on macOS
-Thread-Index: AQHcPdUtdJopakJppk27+DkXsXZ8Kg==
-Date: Wed, 15 Oct 2025 13:11:11 +0000
-Message-ID: <6B1AA32F-A327-4F91-9560-6845D9F94120@outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3826.700.81)
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BESP195MB2851:EE_|PAXP195MB1215:EE_
-x-ms-office365-filtering-correlation-id: ca2a3cc7-07bf-44ab-27b3-08de0bec5023
-x-microsoft-antispam: BCL:0;
- ARA:14566002|19110799012|41001999006|12121999013|15080799012|461199028|31061999003|8062599012|8060799015|51005399003|39105399003|40105399003|3412199025|440099028|10035399007|102099032;
-x-microsoft-antispam-message-info: =?us-ascii?Q?xj6Kz1nEn10jePzQcbX1v583qmXpb1l6WV2L2v/Kcq0YapFS1qrf9hLRHkpQ?=
- =?us-ascii?Q?+kIWZQ7aL5nqWeRHhXuNZoagyvMgOmxIpn3dgw5/rdW023RHO8IPT4EdD84+?=
- =?us-ascii?Q?eUhp8xczumDDKP7YiJSRabvaONfzDeGVcHakOrWOtNh2pQ8+/r+0WqU58nIp?=
- =?us-ascii?Q?LGTCN5Vqawd5QuP7THQ0+o8G62q0Ta5RgzVKwZHx9x3En0WvAxFYYUA+cgJ/?=
- =?us-ascii?Q?KV5ZujSx27QOFclxAE95dFprkqPhkuhYptyfuo1+dqe8zPLAQa/p8TqVOcJB?=
- =?us-ascii?Q?geGD6oiXH+yYXOPFbUvcoGnwxJ/NGop+1yCjzZUPJhVrzJc4m/q9fjJnXAJI?=
- =?us-ascii?Q?84nlvhvu5MXD09ELs+1HW4n33G3owSj/D83iP31o/aZuXrV8ZVyFA8skmShf?=
- =?us-ascii?Q?bToBhXZuqm2sjbJH/Z8aklS9Nm+fJtZYgdX6a81jJwlHcqwl3BGKX0zhe5XU?=
- =?us-ascii?Q?IGbkk12zSVtkfGh5UQD4072eGbnMZ3IPBqaC19pPBJDncl47KXEtXX3/k8f7?=
- =?us-ascii?Q?9ZgKpbRXIIWQ/WLcfsFy6KoEgW00oRiBe6opVfORon9q+EMVXekcqs/X9AHj?=
- =?us-ascii?Q?WeO1wPZu694ihBRYmNE/ZUIdnKCiFgwu4S7UOBHSxakeMRhitV04vdeJEbWf?=
- =?us-ascii?Q?wm57A6ymMXxP+VqI26kofY3CHVq6eRWtj5ANnGJJO4qcmSqNGK/cKBj2sSAq?=
- =?us-ascii?Q?hhNrErn7xbcmUSIKk5QNzUvS/01s/bQaf/p7KAqrPSbD7XPqlKtXU3Kuhz90?=
- =?us-ascii?Q?JQBDNs0Lzi/xdsqEytgaT1N2PjopunK3bT/1hbXh+5DWccl2kbPRD6rMpK62?=
- =?us-ascii?Q?wm3Y8kspHVyjRJ+OULCshl5GVmrJzgSnfZ1aPo8ecZyy3u/7FaDdQDSm60np?=
- =?us-ascii?Q?wASDrbkB4tpA9G/y06GoodO+pl0oS4YJn0GfTRXazAQnYT11ziUx25sG2I56?=
- =?us-ascii?Q?TUBGMP/1UZOd5wMzjwUHdpWLF6PY1VusTFn5lBH5wyPcgaOSu8PdNhd4H5iq?=
- =?us-ascii?Q?jNNUkmUso/D3Mqwy1CSq4AIquN4gOfqQAd2Vspa5Ssr/yYiKgi80tR3j+Bi9?=
- =?us-ascii?Q?jwCAvBhrBac5MXRsHIQyymbO7NRaBE/92OPAMTyverJADfQco08A2f31sRKJ?=
- =?us-ascii?Q?er/EaGq9bMJ92ZHVdZvR350MSQ5u9UMaqTqcGkKkmBop7UOzaC2TvMw/ImfP?=
- =?us-ascii?Q?ia/KOb27CEkzltKblRAOPMvGs7plC8EiAd/9FDmrKWX8wrStjwyxesJBC6hO?=
- =?us-ascii?Q?K/npEvgaGo4Iu76/rmfPQo0UL57K6pdNRMTK/N/azGdVe0YDLNzzOeiNtvFQ?=
- =?us-ascii?Q?PeMJ9dW/5rDYdOOzC5cg0mYVQqXR469LLFAA3b4DVtXP1lrJ9a7tVAKp+stL?=
- =?us-ascii?Q?RHWWyfc=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?SAblfxZ9pj53EoGBA/Ye6Luq9N88lbie+lENMFVfIuXT9jkVBpkNIR8bnGlD?=
- =?us-ascii?Q?XH09K+eJ3iGI4CdWuEcz6dSpLBFgxzWHbe5JtjcnWrPvrIOibmQioLeBXS13?=
- =?us-ascii?Q?+UblW/yQ7GMzc/KFPmS6b7xnx7agATGiJV/lla++PO7eER670/IU4BwQ8yUm?=
- =?us-ascii?Q?45YJahmW76PVtDKwCHPy26kqbetOTKaYTnJQ/OT4y+dxdHgB7JIDv6+em9EN?=
- =?us-ascii?Q?6bH+PZ/AvYZZfoBC16ixm0eSA65UMgPU0YFY+knVsHI8g5vjqPFkcrEm9MkP?=
- =?us-ascii?Q?0W4j1B+0R/edmP3dOp+lV4Hyc5lcygs+YIq+7OcRbge04l4OEjoMrg7A8k4j?=
- =?us-ascii?Q?QSkaN06bnu1nu62qoH8OW050EJR3GNtoT5rdTotAsQ2LN5exbLDP7EG1ArHt?=
- =?us-ascii?Q?ovh2GdJGgzorUS9Xo0zJoSmqIZLT8SeNKlbP5INXZ3Lq108fUfNKGvUkzgEV?=
- =?us-ascii?Q?ZTzxbuNujKAyB/HXkFEhrWFDHmVpghvoBjNfNarwsbLfq+oiT+zOsE+0lXpV?=
- =?us-ascii?Q?qTpuHrf4hl1n/zgy6diisBrXah8APGf0+eIhzcwbvHMxXJjWxmTXscZtTqFt?=
- =?us-ascii?Q?pQrWddhEFM5q7M8GouPfBp0FXN3qc3ubFpM1v2BcdHEaM1Gqk/cqgk4dcH67?=
- =?us-ascii?Q?hesv+AtNS9xB0u8oYyuB3GcKhHZ/8OxVnZXVhIbwAiG+QxHkgMizrXdPLil7?=
- =?us-ascii?Q?yEZanIi71Fe6pbC0XwyIqVyMFIEoeJ53lFaOGAbe5dEuLl7QiFpAWWFQ4ysS?=
- =?us-ascii?Q?oVyN2MYsFTLEb2iBZiTDURQo65vQzeTJtfYQ6FrNbnLAXNGsiGTGoZwb93fl?=
- =?us-ascii?Q?Kyo68lDxEVw29Dxby6UITWtH/wmmwBU2eM4HVlfvw3u9/OU7ZJGHuSspSkb4?=
- =?us-ascii?Q?ldcZnZnuNWyRmw+7HIP3wfKJj97cEDQwYaxoRVOfAC3c6TUKdDENwhdUb4Bk?=
- =?us-ascii?Q?QK/gUmPhhFnz5T4EBCEQkABZ8+fsazfnMMVPHs2oGYEdJsfDMlrhx1xYXNMs?=
- =?us-ascii?Q?n656WjHmRAMaa8FuePFsgxoU65F6QghCFXuQ2i22y/IIjnqbCzxtRLZK4PI/?=
- =?us-ascii?Q?LAKDetcdMmYfIJpSrYtI9v2KSEpbgd7b5wdT+cApahBnq68jtn/iStQnTbh8?=
- =?us-ascii?Q?mlr+JdOo0crd6jPZlpc+mifQ0Q7OY9aYoQ3QzYiRH6oEQoGqRJX6bvjz2DkY?=
- =?us-ascii?Q?bRRNO/WWW3iYXdjNtgxL7eJo7BXqNROCAt52a+kYt7ycpLf1kKLbOkNGkqBk?=
- =?us-ascii?Q?67DFEo8M95rNnh7ssMi0CO8wz6R1tSfonU2zrqjuBPXNnPvGW9Rxuh6YWHie?=
- =?us-ascii?Q?6t0=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <F8F8CDBFFA1F6843A02DE27D5F5B5CBA@EURP195.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1v91Jc-0001xw-Dk
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 09:13:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760533987;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dt73WI0EUdeOhWsEo2yudqjG8YLrA2wI+alCNe9pK1c=;
+ b=ET+Mnbq+6MmnB0XfUSTzkmNpOsM+O+RrovAL8cKT+k7EUBVU3RoidsXrhgVHCBupGFNKJU
+ 8yrYTkCTGqtHhbp5b53k4h80ct1vFLzjkEnf9vKxxNALabW8ljYR2BduM2BbL9fb7d1TSE
+ /Qn6ZxGUeG6w4d9f22QrG7w6pkTZKxE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-01mKq6WHM3ivYnwkn6Vv1g-1; Wed,
+ 15 Oct 2025 09:13:04 -0400
+X-MC-Unique: 01mKq6WHM3ivYnwkn6Vv1g-1
+X-Mimecast-MFC-AGG-ID: 01mKq6WHM3ivYnwkn6Vv1g_1760533982
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D35E1800592; Wed, 15 Oct 2025 13:13:02 +0000 (UTC)
+Received: from localhost (dhcp-192-195.str.redhat.com [10.33.192.195])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76B631800446; Wed, 15 Oct 2025 13:13:01 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger@redhat.com, Sebastian Ott <sebott@redhat.com>, Shameer
+ Kolothum <skolothumtho@nvidia.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ gshan@redhat.com
+Subject: Re: [RFC 1/3] target/arm/cpu: Add new CPU property for KVM regs to
+ hide
+In-Reply-To: <9590ce96-6617-4cfb-849e-b24ea7fcacb9@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20250911134324.3702720-1-eric.auger@redhat.com>
+ <20250911134324.3702720-2-eric.auger@redhat.com>
+ <0f05a0ec-8b98-a9b7-6e3a-9ef73d0c34e7@redhat.com>
+ <b2ae3dc0-9bf0-4e89-a995-b97410d57861@redhat.com>
+ <87ikgpv6yo.fsf@redhat.com>
+ <9590ce96-6617-4cfb-849e-b24ea7fcacb9@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Wed, 15 Oct 2025 15:12:58 +0200
+Message-ID: <87cy6oux45.fsf@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BESP195MB2851.EURP195.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: ca2a3cc7-07bf-44ab-27b3-08de0bec5023
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2025 13:11:11.7501 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXP195MB1215
-Received-SPF: pass client-ip=2a01:111:f403:d207::1;
- envelope-from=mohd.akram@outlook.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,44 +97,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An lseek with SEEK_DATA or SEEK_HOLE on a compressed file can fail with
-ENXIO, which resulted in data not being read.
+On Tue, Oct 14 2025, Eric Auger <eric.auger@redhat.com> wrote:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3124
-Signed-off-by: Mohamed Akram <mohd.akram@outlook.com>
----
- block/file-posix.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+> On 10/8/25 3:49 PM, Cornelia Huck wrote:
+>> On Fri, Oct 03 2025, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>>> Hi Sebastian,
+>>>
+>>> On 9/18/25 6:16 PM, Sebastian Ott wrote:
+>>>> On Thu, 11 Sep 2025, Eric Auger wrote:
+>>>>> New kernels sometimes expose new registers in an unconditionnal
+>>>>> manner.=C2=A0 This situation breaks backward migration as qemu notices
+>>>>> there are more registers to store on guest than supported in the
+>>>>> destination kerenl. This leads to a "failed to load
+>>>>> cpu:cpreg_vmstate_array_len" error.
+>>>>>
+>>>>> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
+>>>>> pseudo FW register in v6.16 by commit C0000e58c74e (=E2=80=9CKVM: arm=
+64:
+>>>>> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2=E2=80=9D). Trying to do backw=
+ard
+>>>>> migration from a host kernel which features the commit to a destinati=
+on
+>>>>> host that doesn't fail.
+>>>>>
+>>>>> Currently QEMU is not using that feature so ignoring this latter
+>>>>> is not a problem. An easy way to fix the migration issue is to teach
+>>>>> qemu we don't care about that register and we can simply ignore it,
+>>>>> including its state migration.
+>>>>>
+>>>>> This patch introduces a CPU property, under the form of an array of
+>>>>> reg indices which indicates which registers can be ignored.
+>>>>>
+>>>>> The goal then is to set this property in machine type compats such
+>>>>> as:
+>>>>> static GlobalProperty arm_virt_kernel_compat_10_1[] =3D {
+>>>>> =C2=A0=C2=A0 /* KVM_REG_ARM_VENDOR_HYP_BMAP_2 */
+>>>>> =C2=A0=C2=A0 { TYPE_ARM_CPU, "kvm-hidden-regs", "0x6030000000160003" =
+},
+>>>>> }
+>>>> One thing worth noting - once this series lands:
+>>>> https://lore.kernel.org/qemu-devel/20250801074730.28329-1-shameerkolot=
+hum@gmail.com/
+>>>>
+>>>> we might need to add a bit more logic here. Either using the kvm
+>>>> interfaces (only ignore KVM_REG_ARM_VENDOR_HYP_BMAP_2 when the register
+>>>> value is 0) or qemu knowledge (only ignore KVM_REG_ARM_VENDOR_HYP_BMAP=
+_2
+>>>> when the impl-cpu property is not used).
+>>> Effectively if we "hide" KVM_REG_ARM_VENDOR_HYP_BMAP_2 on save/restore
+>>> we must enforce the reg is not used by userspace.
+>>>
+>>> One way would be to test whether KVM_REG_ARM_VENDOR_HYP_BMAP_2 is hidden
+>>> in kvm_arm_target_impl_cpus_supported() and if it is, report false.
+>>> However for every new functionality in qemu it does not sound sensible
+>>> to check whether new KVM regs being used are anonymously hidden.
+>>>
+>>> Another way could be to fail kvm_set_one_reg/kvm_get_one_reg in case the
+>>> register is hidden. That way in Shameer's series, kvm_arch_init_vcpu()
+>>> would fail if BMAP_2 is hidden, ie. in our example for all machines
+>>> types before 10.2. By the way adding Shameer.
+>> I think tying this to the state of the reg (hidden or not) is less
+>> error-prone (I'd assume we'd have different ways of detecting whether
+>> something is used for future cases, and "is the reg hidden?" would work
+>> in all cases.) We'd need to tie migration to matching machine versions
+>> anyway, I think.
+>>
+> I guess you suggest to check the hidden/fake state in
+>
+> kvm_set_one_reg/kvm_get_one_reg too. One issue is those helpers are arch =
+agnostic. I would need to either introduce a callback in the CPU class to c=
+heck the actual status or add the props in the parent CPU object. Or introd=
+uce a KVM IOTCL to teach KVM a reg shall never be accessed.
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 8c738674c..7a3f66e59 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3203,6 +3203,19 @@ static int find_allocation(BlockDriverState *bs, off=
-_t start,
-      */
-     offs =3D lseek(s->fd, start, SEEK_DATA);
-     if (offs < 0) {
-+#ifdef __APPLE__
-+        /* On macOS, this error does not always mean that there is no data=
-.
-+         * Check if we can get the trailing hole, which should be guarante=
-ed.
-+         * If that fails, then SEEK_DATA/SEEK_HOLE won't work for this fil=
-e. */
-+        if (errno =3D=3D ENXIO) {
-+            if (start < raw_getlength(bs) &&
-+                lseek(s->fd, start, SEEK_HOLE) < 0 &&
-+                errno =3D=3D ENXIO) {
-+                return -ENOTSUP;
-+            }
-+            return -ENXIO;
-+        }
-+#endif
-         return -errno;          /* D3 or D4 */
-     }
-=20
---=20
-2.51.0
+Aren't they always called from arch code, though? We could easily wrap
+them for arm, I think. (Unless there's some more generic interest in
+conditional ONE_REG accesses.)
 
 
