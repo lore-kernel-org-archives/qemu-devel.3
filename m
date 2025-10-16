@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87312CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16074CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mul-00072Z-IL; Thu, 16 Oct 2025 08:17:05 -0400
+	id 1v9Mun-00078a-Oo; Thu, 16 Oct 2025 08:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MuA-0006PY-9C
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Muh-0006r8-Vm
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:17:00 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mtx-0008Ad-PE
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:23 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46e2826d5c6so6096425e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:16:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MuV-0008Fa-TU
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:58 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4270491e9easo45419f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760616968; x=1761221768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760616997; x=1761221797; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NfxBcgO17M8tjqMzSh6qKBBU3m8HNLtT0bm7HHfbtsE=;
- b=zgtKlDsM+IJTwle49QkIS7Hwwx8hV9gf6CZpvu9VJA70aUtX9mxFBWefivpwQafHTQ
- Q0RGfCHtaxn1IQ1kNuO9MxqxDRE/Fde3pzhF6VtXqY+5llETcS3W3xs5mGZJO16xiSiX
- Ei5ScJFXCRQY9vZyMmYa5z2iPCA2gxBueUwHqtgwvwL3+iBcM0ncyWoM3EGf+3Xd6/ub
- R6F/E6U7T+djHb3PM/eS+9Bw17pPaUiBn+OWavhw3a+G0C9fDDHmoLDF3JsOn3OEMfY8
- MNCdlMSGV0CxDynd6jja30wJEpBzX4K7LKvjfEPybOfaHm7diEKmc2pKsSJjnQxG1ra7
- Ap8w==
+ :reply-to; bh=s/VgKDi/AmTRxccR3mAlzawFNzbduYz91OdfcZBf1s8=;
+ b=J3nbZ5UqJvcF7PR3fcibBM9sDif+ugh7PPKTRU6083y2+3WoHZVb7b4muedKDkw3cq
+ qsKyyAd84wXYjcnyUN43bdLZeIMptIiWC+3jcRllIIYx/9vWy0Wlz0CilSve4RSappok
+ 4zSdxeFxBHRawwOISoO8fiTJeDMd0Dk5f5QUhyaS+jyGhpYPoRj0OG7AZY8hQyDuKI4l
+ fPjYKqWWlnzS+Cq71AylNp1ZWYjihqWmBUlUWihaSMzkOtrK6qhCyV8HdO3CAy2Som8e
+ Mu1lx0Rnq8gOKkGQ1fw2VpohG6uGFYYUG0mHjWu59WXSkIvzQXR727ERSnjd2kdt5szt
+ 4N4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760616968; x=1761221768;
+ d=1e100.net; s=20230601; t=1760616997; x=1761221797;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NfxBcgO17M8tjqMzSh6qKBBU3m8HNLtT0bm7HHfbtsE=;
- b=AjRp7SzpiNpUFG7nVyjLmUYqAtHf7BJcuspK3BjMlV1YAHg04vT0PfOPNlDbmzKCBT
- Fy2V0a0QPhnObU7LIZ9+PSXzWMpHII8J0PrjScL813KcmC3ggIlAyVdJxbsagkowQivz
- p0O1SXu3NmAm0qDnxn2eA8N0n+GAsWhk1BWedkdfiDT4Fe8ADd2qwwcSSVZe6JfhX3TU
- JjxXkKpDqH5kWMxD3OBpnCaireytupGEdCqjT+0NGjCfi4L1DgmA3vvncpNvkwyOqsZL
- InUgnVd+VIKKbbwg8Z05I0VrlAXOI0TJqBS1Rgxqo+3V3f3R4Np9mqnX99QOGbhOnzpz
- Sj/w==
-X-Gm-Message-State: AOJu0Yx2oncsonkCsdvtLY4ifQ/6FBpwQk4IFV63q8EqW+F9/zxvmPdb
- jDSffJyGHaZEWObMc0OXJ9U3zK8ldQcTo79c+Ju+MnSEat8gm3AlRWbPmQKs2z5a5Foq91VVJrV
- Dar4GjwE=
-X-Gm-Gg: ASbGnctCnSO34he9qabu6nDVO4tY+UYG5e0Y1p5+vPRum9CujsVK/TPlmbxGREyRv0V
- MunH57PWOGja45uxa3vWg05gVdGISwIrKjKgc6eUtcUkWvLLs0QF5CePV7h6mTwvb2CV06m8rRk
- 3MOzvxb5FTlj8WMoqLa/HHN1EX7c/nsg40Ih8hftze4MBZcFmocEXtb5eTIcXcnzRgl2v/OnN7h
- JBW/0vzmYl3KbkSwQFY+2IDtD0h60OqvRVqzDlnDaoPpAhnyqzazjItN1WmS494XN5tYSfB14bm
- 232j8q+FhOAwhi40aeL6Eg5QKfft45cggbDxWb349/NPBc6RdE82aNNwKiXhWwa4ypnJ5g399+5
- bnhG9C/OGEkB9TQLfMbWfFC//lEX8ma1CkW7BmapnabdUqabxG5avO4pv8q8EWO1ncEA672k6kG
- AcvQmQ0/WFr6K+6rGb6g3D+vDY8vp+WqVwUkf5wdZv22zMXm/OsOoWfA==
-X-Google-Smtp-Source: AGHT+IHMdyh3IcsAeIUS4HYPUYexCWSP/PdYZfAqYsDcjHf7DlpcHRA3I7ihyUwAR0bCM1iDxPGwZw==
-X-Received: by 2002:a05:600c:8b76:b0:471:989:9d85 with SMTP id
- 5b1f17b1804b1-4710989a0dbmr29749605e9.19.1760616968238; 
- Thu, 16 Oct 2025 05:16:08 -0700 (PDT)
+ bh=s/VgKDi/AmTRxccR3mAlzawFNzbduYz91OdfcZBf1s8=;
+ b=V6H7BnNfr5N9vLQikBSFIGwYXNtfSoj5TJZVP6js9j4SpEI5XUnB9dzoHBOmRZzJX9
+ K7GWfpi3jmUQk136fCztzQsU6/bbpZlhNhj/FMwD/bNzPBZuFI3ox5FRfl3IoAaBiuYL
+ lrSfiSoyrlqcWYvcB124pr19caULtakBp4dxrbbomjknLMfYtkEpUMe7TSsFk078WOES
+ DRTItK9d3vhjzY4QxNDF32gdFmDyC3CTV0ir7sqDB2xJWAMSLIUZit5LmeZXFSrPN74H
+ 265i+KhYm1oAkoz1J5aCYFtd4m5p+IWvsSG/rYn57WlE52jTSoczujuO3xpytLgRJjKG
+ 24Wg==
+X-Gm-Message-State: AOJu0Yw+C/Yyr1wetsBRfxYbb3yZAGUtlJGF1gPfRVqkK+PJIx2xsSiC
+ XDiaE79dxKsIksmLOHdB7qvsvsEpnXLTtk1WEcDYS0TDUNnYYT7Ka2ppWXSyM51BILGNV3KQeF2
+ gqGWHXG4=
+X-Gm-Gg: ASbGnctIeocNphbEotuM5FpEwkiAIvxPxc1W8iSLXKOsnImH9WxLAJs5rphDR3O3lsV
+ RssjSY/zwVN97v+TDXUj41LXea602vEXHqQIE5+WN3VXX6l9C3BvktPEhy2vNWwS3Bh7KcKzM6M
+ 00WjvLCe5D2J0mZG0z9z9l8l7BSy3Lfg/U2MqkfVGTYHqfTM9uW/0funfQGdLFdcFOgqZNqpmm3
+ pG+0WqQRBOV55StJPWaHHqqfYxi9tJiz6F6zJdO9lmIZnqN7oyfqt819qICb0QWj41OjVfJx7CS
+ Yc6DW4QgeyhEq85TckWyxlP5HueJ+RwTZpYJHB9S+tJDK1Ua0Y8UYaVf2AYc5xoA566o8xsdv63
+ MhQ5EGMB9Y/zzmtW4H1aCIXMVyR39FsD+usyQB5G0WuNIZSQjg804sAdfX+UeeVrQhEb7qAri5/
+ wIeSRdMO24lUUjyG+yatVAcOfjgpwA5Z4Araxh8YuJCDp8n3eoeRy4gw==
+X-Google-Smtp-Source: AGHT+IFvMlka1BC0GKosIwVxAwURgWiFsYaFDIwU1chkQBwATQ+ULGPGYAAgIpXMjNKKZEcVQJ/1aA==
+X-Received: by 2002:a05:6000:2203:b0:425:57dd:58c4 with SMTP id
+ ffacd0b85a97d-4266e7d7eb1mr23208997f8f.26.1760616996712; 
+ Thu, 16 Oct 2025 05:16:36 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471144238easm24968805e9.4.2025.10.16.05.16.07
+ ffacd0b85a97d-426ce583664sm34770776f8f.22.2025.10.16.05.16.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:16:07 -0700 (PDT)
+ Thu, 16 Oct 2025 05:16:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/75] target/hppa: Conceal MO_TE within do_load()
-Date: Thu, 16 Oct 2025 14:14:23 +0200
-Message-ID: <20251016121532.14042-8-philmd@linaro.org>
+Subject: [PULL 13/75] target/hppa: correct size bit parity for fmpyadd
+Date: Thu, 16 Oct 2025 14:14:29 +0200
+Message-ID: <20251016121532.14042-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
 References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,35 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251009101040.18378-5-philmd@linaro.org>
----
- target/hppa/translate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+From: Gabriel Brookman <brookmangabriel@gmail.com>
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 859c6cf5f9b..ee0c874342c 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -1676,7 +1676,7 @@ static bool do_load(DisasContext *ctx, unsigned rt, unsigned rb,
-         /* Make sure if RT == RB, we see the result of the load.  */
-         dest = tcg_temp_new_i64();
-     }
--    do_load_64(ctx, dest, rb, rx, scale, disp, sp, modify, mop);
-+    do_load_64(ctx, dest, rb, rx, scale, disp, sp, modify, MO_TE | mop);
-     save_gpr(ctx, rt, dest);
+For the fmpyadd instruction on the hppa architecture, there is a bit
+used to specify whether the instruction is operating on a 32 bit or
+64 bit floating point register. For most instructions, such a bit is 0
+when operating on the smaller register and 1 when operating on the
+larger register. However, according to page 6-57 of the PA-RISC 1.1
+Architecture and Instruction Set Reference Manual, this convention is
+reversed for the fmpyadd instruction specifically, meaning the bit is
+1 for operations on 32 bit registers and 0 for 64 bit registers. See
+also page 6-18 (fig. 6-8) and 6-19 (table 6-16), where the f field
+for FMPYADD and FMPYSUB is documented. Previously, QEMU decoded this
+operation as operating on the other size of register, leading to bugs
+when translating the fmpyadd instruction. This patch fixes that issue.
+
+Reported-by: Andreas Hüttel <andreas.huettel@ur.de>
+Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3096
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-ID: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
+[PMD: Add documentation refs mentioned by Andreas K. Huettel]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hppa/insns.decode | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index 4eaac750ea8..13c6a55bf2a 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -365,10 +365,10 @@ fstd            011100 ..... ..... .. ............1.    @ldstim11
+ &mpyadd         rm1 rm2 ta ra tm
+ @mpyadd         ...... rm1:5 rm2:5 ta:5 ra:5 . tm:5     &mpyadd
  
-     return nullify_end(ctx);
-@@ -3302,7 +3302,7 @@ static bool trans_ld(DisasContext *ctx, arg_ldst *a)
-         return gen_illegal(ctx);
-     }
-     return do_load(ctx, a->t, a->b, a->x, a->scale ? a->size : 0,
--                   a->disp, a->sp, a->m, a->size | MO_TE);
-+                   a->disp, a->sp, a->m, a->size);
- }
+-fmpyadd_f       000110 ..... ..... ..... ..... 0 .....  @mpyadd
+-fmpyadd_d       000110 ..... ..... ..... ..... 1 .....  @mpyadd
+-fmpysub_f       100110 ..... ..... ..... ..... 0 .....  @mpyadd
+-fmpysub_d       100110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpyadd_f       000110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpyadd_d       000110 ..... ..... ..... ..... 0 .....  @mpyadd
++fmpysub_f       100110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpysub_d       100110 ..... ..... ..... ..... 0 .....  @mpyadd
  
- static bool trans_st(DisasContext *ctx, arg_ldst *a)
+ ####
+ # Conditional Branches
 -- 
 2.51.0
 
