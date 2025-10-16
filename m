@@ -4,71 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E286CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21932CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Puy-0000Xh-Aq; Thu, 16 Oct 2025 11:29:29 -0400
+	id 1v9PxK-0001i0-NK; Thu, 16 Oct 2025 11:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9Puu-0000Wn-Kk
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:29:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9Puj-0004xd-Dq
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:29:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760628550;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OyFrjSE+pTyNrH+MjT48xgQr1QySglD/+GPKXIFd9Us=;
- b=HGt5yPOm0RvT5kE4LxgeqORb4ibDmsbnveJuzwoOgforXPSbmoUSo5qAEZHKjeMDv5TDDe
- izb51cnxAfL4UAVzVxNAO3ggIDH1caAY1XIEh2RwdSKWCV2Vib9uA3SNkZXsdcXWJ0/agK
- uNp8is6cyHGWG6hRkyBkJdK7wWMDLJE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-Pqxmgkw7MeetRmZ1rN7tFg-1; Thu,
- 16 Oct 2025 11:29:04 -0400
-X-MC-Unique: Pqxmgkw7MeetRmZ1rN7tFg-1
-X-Mimecast-MFC-AGG-ID: Pqxmgkw7MeetRmZ1rN7tFg_1760628543
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 697CF19560A2; Thu, 16 Oct 2025 15:29:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.155])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 987B51800451; Thu, 16 Oct 2025 15:29:01 +0000 (UTC)
-Date: Thu, 16 Oct 2025 10:28:59 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, matoro <matoro_mailinglist_qemu@matoro.tk>
-Subject: Re: [PATCH v2 3/6] crypto: allow client/server cert chains
-Message-ID: <jczraatcitsz3tf5aznkeaiffanysz4dlvn7opoyibofvr2loj@u3wumm3rwdq5>
-References: <20250919101022.1491007-1-berrange@redhat.com>
- <20250919101022.1491007-4-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v9PxI-0001hk-Ix
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:31:52 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1v9PxB-0005I3-LP
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:31:52 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-269639879c3so8710435ad.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:31:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760628700; x=1761233500; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=erXzoxKlF1MBdXhNeeU9XBEgLEHuF5GOecvXBGPI/68=;
+ b=vAIbWY8eJFtAkMoOnlCJxu0JDDQuKSEQHYrg7v3Pntb8nrOPiSm/HoDUG/cOJ2Nzyp
+ a3aziMFNk6rnE4tlh2eaMfeVTODmW8JKKEG+iiAWq9CDc9QBUAOvgRZmKa2wcuM3MBfY
+ 63cTwtB8N+AZMR7UqzgOomH1KByGwcF+R7W7BTiy04ZFeJHkvYwfVcmf7YthxOBTTSfI
+ ZcnMgsXAD7oIWHMqeyWZY5nS0ReSx0zl/Tj2NROjfPf0TNftGth2xbyuWK3Zag775tG7
+ WtmNFrEie71mvFhFfUiBax3UjQyFciyhWTlbgr4LH65H3JB476RXG4aVV2ZLdAAUEXcJ
+ Dn5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760628700; x=1761233500;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=erXzoxKlF1MBdXhNeeU9XBEgLEHuF5GOecvXBGPI/68=;
+ b=cmEQZicEoyNLo82N0hfO9XiWsgubisVGQD80X+W7T1G+onEMwmtrNMk5fJv6IAPrSG
+ aw9m+PBh/IBqcUvBOW07Ktp2A5dawmAjTI7AbHl+X1fip/f+7As2t65smE0Gz1DHDCrQ
+ Legu349S7kzCjkyNBg3+BCkZObxTflUTPopl6i4KXCg0KmuYfcKTOXwBH7j8a4IB11hs
+ 2cQYpxoXWnSaknlapCMHJIAeG486EJTjPrEY+1KVNbXhSKU1QlxfBq3IUP0vmt8eZgun
+ E2xDkkXnbBOgp/F8OmhFrfW5/PqyXBZ9kddF4Y32ep17+XzkrbZrYhybM7wOrFo4kGV6
+ A8YA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgIOxeja+MSObC3YkrhZxlEu80QNAVrn35F+ebB4POfQ6l5evozRCoi+isS1VFNGAapPV7njOw7Z9K@nongnu.org
+X-Gm-Message-State: AOJu0Yyx0/GJ5Um2QtTWr1ymPDN3ZUHihVAgUBJIQOGKCqkwH1Kb2bp1
+ +Tu/vsPwiNdmfS7l3Psi3L1FFaUF+KBwF6Hyjj820KFVNCUrwTcCKQ7WaYUf+ZiFCv0=
+X-Gm-Gg: ASbGncuIm0SyX5BggcmKhEDlUv6BtO3tZBnr9C4QIpHt9rrno+tu6lN/uci8Elq13fn
+ 7CcQeHHH4TTexD4A6QWzwQJGQoAn9j4eo5ClhzyRLhbR3fxdWaUTWelMt/c6EPoObnCNPBCJe0n
+ EJVhbw/jqzlP9bKhseQGNijO8UvABr0LxuhjD9DIZ9xxN6h6rBkrR1llIFu4UDYxdgqgb/Pkb32
+ QMarFJlm0udyrUvlq3a2wcQN2/PMH669+g2nyN25obToU/96TSQPV7Ft/uWIkGNLoi0Qh+ogfE2
+ M80AMOLirx0bdJcRXX+DffeKKUUY4EAA/+5I8eAIZPb21iHU7G7ZFSyScniqq0kwafvQcymCeuG
+ qofo3d8RkIanQfT8SiFYwuPxPAsHnPaXlBU6Uxwx9UTfWkoc2K0w+DAGnOaoNhZ/DPmVgkLN92V
+ NJj5IMHFD74pR3
+X-Google-Smtp-Source: AGHT+IG0Ll9nmcr9DR0Y2tjgybaQU21B+R9uHigz8z+hnsFsx7RoSE2awIp3vz46KfCThFcdGhgy6g==
+X-Received: by 2002:a17:902:ce87:b0:26c:2e56:ec27 with SMTP id
+ d9443c01a7336-290c9cbc92amr5544705ad.19.1760628699815; 
+ Thu, 16 Oct 2025 08:31:39 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29099afdc02sm33757345ad.110.2025.10.16.08.31.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Oct 2025 08:31:39 -0700 (PDT)
+Message-ID: <5db0da99-2284-4ad1-91a9-f5e19a2bb5a6@linaro.org>
+Date: Thu, 16 Oct 2025 08:31:38 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/11] hw/display: add blob map/unmap trace events
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20251016150357.876415-1-alex.bennee@linaro.org>
+ <20251016150357.876415-7-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251016150357.876415-7-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250919101022.1491007-4-berrange@redhat.com>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,95 +115,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 11:10:19AM +0100, Daniel P. Berrangé wrote:
-> From: matoro <matoro@users.noreply.github.com>
-
-The CC: line has a different email address for matoro than the git
-author attribution.  Does that matter?  I'm not a fan of github's
-attempt to make it difficult to reach a contributor outside the github
-walled garden.
-
+On 10/16/25 8:03 AM, Alex Bennée wrote:
+> As these events happen dynamically as the guest does various things
+> they are quite handy to trace.
 > 
-> The existing implementation assumes that client/server certificates are
-> single individual certificates.  If using publicly-issued certificates,
-> or internal CAs that use an intermediate issuer, this is unlikely to be
-> the case, and they will instead be certificate chains.  While this can
-> be worked around by moving the intermediate certificates to the CA
-> certificate, which DOES currently support multiple certificates, this
-> instead allows the issued certificate chains to be used as-is, without
-> requiring the overhead of shuffling certificates around.
-> 
-> Corresponding libvirt change is available here:
-> https://gitlab.com/libvirt/libvirt/-/merge_requests/222
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: matoro <matoro_mailinglist_qemu@matoro.tk>
-> [DB: adapted for code conflicts with multi-CA patch]
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->  crypto/tlscredsx509.c                 | 156 ++++++++++++--------------
->  tests/unit/test-crypto-tlscredsx509.c |  77 +++++++++++++
->  2 files changed, 147 insertions(+), 86 deletions(-)
+>   hw/display/virtio-gpu-virgl.c | 4 ++++
+>   hw/display/trace-events       | 2 ++
+>   2 files changed, 6 insertions(+)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 94ddc01f91c..07f6355ad62 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -134,6 +134,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>   
+>       res->mr = mr;
+>   
+> +    trace_virtio_gpu_cmd_res_map_blob(res->base.resource_id, vmr, mr);
+> +
+>       return 0;
+>   }
+>   
+> @@ -153,6 +155,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>   
+>       vmr = to_hostmem_region(res->mr);
+>   
+> +    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
+> +
+>       /*
+>        * Perform async unmapping in 3 steps:
+>        *
+> diff --git a/hw/display/trace-events b/hw/display/trace-events
+> index 52786e6e184..e323a82cff2 100644
+> --- a/hw/display/trace-events
+> +++ b/hw/display/trace-events
+> @@ -38,6 +38,8 @@ virtio_gpu_cmd_set_scanout_blob(uint32_t id, uint32_t res, uint32_t w, uint32_t
+>   virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h) "res 0x%x, fmt 0x%x, w %d, h %d"
+>   virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
+>   virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res 0x%x, size %" PRId64
+> +virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res 0x%x, vmr %p, mr %p"
+> +virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
+>   virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
+>   virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
+>   virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
 
->  
-> -static gnutls_x509_crt_t
-> -qcrypto_tls_creds_load_cert(QCryptoTLSCredsX509 *creds,
-> -                            const char *certFile,
-> -                            bool isServer,
-> -                            Error **errp)
-> -{
-
-> -
->  static int
-> -qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
-> -                                    const char *certFile,
-> -                                    gnutls_x509_crt_t **certs,
-> -                                    unsigned int *ncerts,
-> -                                    Error **errp)
-> +qcrypto_tls_creds_load_cert_list(QCryptoTLSCredsX509 *creds,
-> +                                 const char *certFile,
-> +                                 gnutls_x509_crt_t **certs,
-> +                                 unsigned int *ncerts,
-> +                                 bool isServer,
-> +                                 bool isCA,
-> +                                 Error **errp)
->  {
-
-Nice consolidation to reduce duplication.
-
-> @@ -520,41 +497,48 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
-
->  
-> -    if (cert &&
-> -        qcrypto_tls_creds_check_cert(creds,
-> -                                     cert, certFile, isServer,
-> -                                     false, errp) < 0) {
-> -        goto cleanup;
-> +    for (i = 0; i < ncerts; i++) {
-> +        if (qcrypto_tls_creds_check_cert(creds,
-> +                                         certs[i], certFile,
-> +                                         isServer, (i != 0), errp) < 0) {
-
-The () around 'i != 0' look extraneous to me; but that's trivial
-formatting so I'm not opposed to keeping them.  On the other hand...
-
-> +            goto cleanup;
-> +        }
->      }
->  
-> -    if (cert &&
-> -        qcrypto_tls_creds_check_authority_chain(creds, cert,
-> +    if (ncerts &&
-
-...here you are doing an implicit conversion of ncerts to bool; why
-not do the same implicit conversion of 'i' rather than explicit '(i !=
-0)' above?
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
