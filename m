@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C7B2CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 10:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460BECCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 10:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9LPF-0001SC-Ev; Thu, 16 Oct 2025 06:40:25 -0400
+	id 1v9LQq-0002wi-6i; Thu, 16 Oct 2025 06:42:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9LPB-0001Rj-O7
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:40:21 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9LP2-0002ps-QH
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:40:21 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E0956C00BE;
- Thu, 16 Oct 2025 13:40:05 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8c::1:19] (unknown
- [2a02:6bf:8080:a8c::1:19])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4eOKxD2FtmI0-bI7KGKCO; Thu, 16 Oct 2025 13:40:05 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760611205;
- bh=FQUIRy3M6ZgH3ratdVXGEurS9hX0sP6RCmqzdYjwPG4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QzLPTqBeu9WB9wbOv1nEGfSqF7y1WPcVmu08Ji/BlN5sTecJueMgozffUZXtc/j/V
- WwQMkjuH7mx6/Sz6hhzHvNgJMblRqdOU1DoXypI2e4q2eht4DwLPFMDf1t2L7Rhya4
- /8BensQUA0/PhHwlKZYrpdpH9ZB9zlt9OmFLAul4=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <4ab377cb-4820-439e-a425-44e7f3fe0c61@yandex-team.ru>
-Date: Thu, 16 Oct 2025 13:40:04 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9LQo-0002vq-KU
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:42:02 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9LQk-0002xR-S5
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:42:01 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-78113fdfd07so5087597b3.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 03:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760611315; x=1761216115; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bTlThrkGP7o0lPuUTwj6GZkfseRWUreUjXOtEetO0Hw=;
+ b=JUOz+8/EAnv+OeQU9gkbRaRMioc2ccHTPW1I8BdHHECXb/LQFIok5xa8hnR+iU1EkW
+ KJpAwHOU4Gz9vok+FuaaVVNS3+ipCBzv8Sv6l8bKNylh4OkXNQEPxB4tq5x40l0pEBCJ
+ 4m9A6Th+XrU8T0B8y+0B039hCvchr9arZJvcEswNl8VUEGGCz2yMjUxGZnCX3fICTWlf
+ Iv2WXLz1f/idp3ONTQjIQA4eA/ReuPVw/Qi76249JsvsjPUzbhBld6D8tTo6A8UA2gaT
+ zeNQNYe99IFpLvom+mqXgnvUXRc/3m/ykRKbZ13zbqrIiEsiTrLMZpZJ0cSXZmmu114j
+ iKAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760611315; x=1761216115;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bTlThrkGP7o0lPuUTwj6GZkfseRWUreUjXOtEetO0Hw=;
+ b=YTn5EPSxVmx18dJ5EK3iIw5V77kjmNb/19K/UIRWPlSl4qBxOkvF7Ps+oMc9C0U0au
+ jEXbLVJPgV0PJH8Zomxxt4FEuvJ4yXdumtho+KCArb8VZ2rB7TIRmJ7UkPMqZJd4L/bl
+ zb4snLUrmPSiVVgmhkXtAwEVpF5b2MkOnLHdmdZAUxMzhedB67ktROrRbBSpdwrtcUQ1
+ BlRm9OMTyo0X222tyslFZHX5xfTYHTBWoM4uKY7cSkZ9Om2m8z3KI9hQhtSuPmoSuL9A
+ W5GhIx9YQiWJ6TPnvhcvSXUeEWQUNeUxYj3ZmFSriXB+CinRjsWdpEZ7FiOSRXgS9Lez
+ Ezgw==
+X-Gm-Message-State: AOJu0YxASxCOsyZt2LVjb1NzW+fH3HKqltIS0pOJtrab6Rc1ifHCrDmg
+ FnW4yLdqyCFn6AobnRmgyV28e0k7vCdRQb0Mu+3CQUR/U0dPKpUHzTw23HV98rLMWyaZb/fm8W5
+ /0zg8UQas7E9h+HDu1n5RpmVRkSSDCg2EwTLrmVj7+aSk1knVvRSk
+X-Gm-Gg: ASbGncvNfuPEweJKm0Pggs57JVfYfmCf/fsJLpHnlyhogq3AhUk5fzLQvxrdJiPMP+f
+ YcsaRJ+/YIPRWsT2DuYBg/KYTdYW2OdbM3CbX/GUaOUbzU835juNB+DkMWqWgScPNMfSL5yPMWA
+ scIpT319erLQycd4a/7M/N/TvtTu6o7ZgeSLqNpJESpfA117LVzcGDG/fH4YTKy+9VOblJbgVBj
+ o4PT/UILlf53OmdiKdE0g2yBeFVzHgTKG/Cc1dzjyIFuXlchnY7d1RRhu16sLJddYZxhPYwZpoy
+ Rm+yDs9+xf0=
+X-Google-Smtp-Source: AGHT+IFzquJWho5RMDUtLp5SZBHFGLOa1IKgjreFwL0wG0kpquH3r4t2/M/dZRBlGTlSQWHyYauA0hjBevchxcDn22Y=
+X-Received: by 2002:a05:690e:2c3:b0:63c:dd26:331 with SMTP id
+ 956f58d0204a3-63cdd260bb7mr17671756d50.10.1760611315197; Thu, 16 Oct 2025
+ 03:41:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] qapi: net: deprecate vhostforce option
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, devel@lists.libvirt.org, eblake@redhat.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-References: <20251015143941.1109499-1-vsementsov@yandex-team.ru>
- <87bjm7teou.fsf@pond.sub.org>
- <239dc7b4-de5a-4e47-912d-543347d1f90b@yandex-team.ru>
- <87frbjrv0s.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87frbjrv0s.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20251010121435.3885228-1-peter.maydell@linaro.org>
+In-Reply-To: <20251010121435.3885228-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Oct 2025 11:41:43 +0100
+X-Gm-Features: AS18NWAbELbFNag36BtKu45paPluvcvPbbAu3qH3xbVnIUHiN9bShYEE_dCDUKU
+Message-ID: <CAFEAcA_KzHLCV4GsHWAKSN-p6018HGLCCFuPZNOia4B_+oWDRw@mail.gmail.com>
+Subject: Re: [PATCH] tests/tcg/multiarch/linux/linux-test: Don't try to test
+ atime update
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,89 +95,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.10.25 13:38, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> On 16.10.25 11:48, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> This option for tap and vhost-user netdevs doesn't make sense
->>>> since long ago (10 years!), starting from commits:
->>>>
->>>>    1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
->>>>    24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
->>>>
->>>> Prior these commits, to enable kernel vhost-net, or vhost-user-net for
->>>> some specific kind of guests (that don't have MSI-X support), you should
->>>> have set vhostforce=on.
->>>>
->>>> Now guest type doesn't matter, all guests are equal for these
->>>> options logic.
->>>>
->>>> For tap the current logic is:
->>>>     vhost=on / vhost=off : vhostforce ignored, doesn't make sense
->>>>     vhost unset : vhostforce counts, enabling vhost
->>>>
->>>> So you may enable vhost for tap several ways:
->>>> - vhost=on
->>>> - vhostforce=on
->>>> - vhost=on + vhostforce=on
->>>> - and even vhost=on + vhostforce=off
->>>>
->>>> - they are all equal.
->>>>
->>>> For vhost-user we simply ignore the vhostforce option at all in the
->>>> code.
->>>>
->>>> Let's finally deprecate the extra options.
->>>>
->>>> Also, fix @vhostforce documentation everywhere to show the real picture,
->>>> and update vhost-user test to not use deprecated option.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> 
-> [...]
-> 
->>>> diff --git a/qemu-options.hx b/qemu-options.hx
->>>> index 0223ceffeb..35a70096e8 100644
->>>> --- a/qemu-options.hx
->>>> +++ b/qemu-options.hx
->>>> @@ -2882,7 +2882,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->>>>   #else
->>>>       "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
->>>>       "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
->>>> -    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
->>>> +    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
->>>>       "         [,poll-us=n]\n"
->>>>       "                configure a host TAP network backend with ID 'str'\n"
->>>>       "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
->>>> @@ -2898,9 +2898,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->>>>       "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
->>>>       "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
->>>>       "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
->>>> -    "                use vhost=on to enable experimental in kernel accelerator\n"
->>>> -    "                    (only has effect for virtio guests which use MSIX)\n"
->>>> -    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
->>>> +    "                use vhost=on to enable in kernel accelerator\n"
->>>
->>> So the kernel's accelerator is no longer experimental?
->>
->> Reading this, I heard the first time that vhost-net is experimental.
->> It's about 15 years old, and used in production. I think "experimental"
->> is inappropriate word here)
-> 
-> Just double-checking :)
-> 
-> The text you adjust is from 2010 (commit 82b0d80ef6a).  I guess the
-> accelerator was experimental back then.
-> 
-> Mention the correction in the commit message?
-> 
+Ping for review?
 
-Will do
+thanks
+-- PMM
 
-
--- 
-Best regards,
-Vladimir
+On Fri, 10 Oct 2025 at 13:14, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The linux-test test includes an attempt to check the utime and stat
+> syscalls by setting the atime and mtime of a file to specific values,
+> and then calling stat() to check that the values read back correctly.
+>
+> Unfortunately this is flaky, as it will fail if some other process
+> (for instance a virus scanner, backup program, etc) gets in and reads
+> the file between the utime() and stat() call, resulting in a host
+> syscall sequence like this:
+>
+> utimensat(AT_FDCWD, "file2",
+>   [{tv_sec=1001, tv_nsec=0} /* 1970-01-01T01:16:41+0100 */,
+>    {tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */], 0) = 0
+> # successfully set atime to 1001 and mtime to 1000
+> statx(AT_FDCWD, "file2", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT,
+>   STATX_BASIC_STATS,
+>   {stx_mask=STATX_BASIC_STATS|STATX_MNT_ID,
+>    stx_blksize=4096, stx_attributes=0, stx_nlink=1, stx_uid=32808,
+>    stx_gid=32808, stx_mode=S_IFREG|0600, stx_ino=21659016,
+>    stx_size=100, stx_blocks=8,
+>    stx_attributes_mask=STATX_ATTR_COMPRESSED|STATX_ATTR_IMMUTABLE|
+>          STATX_ATTR_APPEND|STATX_ATTR_NODUMP|STATX_ATTR_ENCRYPTED|
+>          STATX_ATTR_AUTOMOUNT|STATX_ATTR_MOUNT_ROOT|STATX_ATTR_VERITY|
+>          STATX_ATTR_DAX,
+>    stx_atime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+>    stx_ctime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+>    stx_mtime={tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */,
+>    stx_rdev_major=0, stx_rdev_minor=0, stx_dev_major=252,
+>    stx_dev_minor=0, stx_mnt_id=0x1f}) = 0
+> # but when we statx the file, we get back an mtime of 1000
+> # but an atime corresponding to when the other process read it
+>
+> and which will cause the test program to fail with the error
+> message "stat time".
+>
+> In theory we could defend against this by e.g.  operating on files in
+> a dummy loopback mount filesystem which we mounted as 'noatime', but
+> this isn't worth the hassle.  Just drop the check on atime.
+>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> The failure happens to me occasionally on my local system.
+> ---
+>  tests/tcg/multiarch/linux/linux-test.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
+> index 64f57cb287e..bf6e0fda262 100644
+> --- a/tests/tcg/multiarch/linux/linux-test.c
+> +++ b/tests/tcg/multiarch/linux/linux-test.c
+> @@ -155,9 +155,14 @@ static void test_file(void)
+>          error("stat mode");
+>      if ((st.st_mode & 0777) != 0600)
+>          error("stat mode2");
+> -    if (st.st_atime != 1001 ||
+> -        st.st_mtime != 1000)
+> +    /*
+> +     * Only check mtime, not atime: other processes such as
+> +     * virus scanners might race with this test program and get
+> +     * in and update the atime, causing random failures.
+> +     */
+> +    if (st.st_mtime != 1000) {
+>          error("stat time");
+> +    }
+>
+>      chk_error(stat(tmpdir, &st));
+>      if (!S_ISDIR(st.st_mode))
+> --
+> 2.43.0
 
