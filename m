@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786D8CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBADCCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Xb7-0005Zb-DZ; Thu, 16 Oct 2025 19:41:29 -0400
+	id 1v9XcY-00063p-BC; Thu, 16 Oct 2025 19:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9Xb6-0005ZR-DS
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:41:28 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1v9XcW-00063h-Lp
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:42:57 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9Xb4-0002p7-72
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:41:28 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-63c1006fdcfso2341041a12.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:41:25 -0700 (PDT)
+ id 1v9XcU-0002t6-7j
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:42:55 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-63bfbbbdd0bso2571369a12.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760658083; x=1761262883; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760658172; x=1761262972; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=szGxHxKOPJImLc1PjGnA88xgibt2D3DfORNKrvy/uTc=;
- b=iuVeFwSOfqR21VDmoZqB0CbQxNwYr9AVsYnzHmTxsfzNPyn378xzi8hF2Y5DFOqGZR
- 4K1jgzkJB0ZNSnpC0lDqGyhW+nF48zgYOUVyNHpoXKvbjNG8F0YfEDmFSan6UnXpOtmb
- MX36+icfi5mOiU9Uuj7FBZu4Jed3cM/nt0mQ4PaII4yuN2x7IfMGBYo22fgS2ahwxJMa
- DDyjPURQfwkRORZMFlj+4kV8IRI7Sl5SG3A4reFet/cUwCKt31rw9JrRai84VytIkiDl
- c5IFQSoHsqtV+BJYK60V2OoGzEIhBIrbuBE7dfDbDXAobzBA2GkArJ9Ho6VxeY15gdvU
- HKcQ==
+ bh=bj8dPshwGuLhSnu5rIGIi5mpOwcKw8nZHqZqEMckfMk=;
+ b=AHwyW02MBGqXtv7gD37rhLg4Eex1Zw7jufPCiVA1iV/X534ITqq2pQEDXkzUOv8RBy
+ TS9BtnyY4eyfGuojW4SNuH2gR6NajHoBTqwMLIsNn1Yv8FnxadCxREmkle/IYm4vQ8Nm
+ SIgonzwWGwwavdkET/gsPMVlMsRK76Ku3A/xKFLeKVZblY3LTapW/CpMTXumh/WwWxTw
+ JnhEPxPMTjrVn2BS+K2SrsIvApD5A6JIvGKEQpHcP8UgKjOeiqhkGV2xLOVXF+yGpmc3
+ md48BsqxLwur9kF3gW4ZO9NvvYaOz11s/dfKGcHpi/XCFaeQjCpCLPhmUvUvB7nDHvA2
+ r0ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760658083; x=1761262883;
+ d=1e100.net; s=20230601; t=1760658172; x=1761262972;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=szGxHxKOPJImLc1PjGnA88xgibt2D3DfORNKrvy/uTc=;
- b=vqnohCfL6/AQzsAl6s3YigO4Ue9a9oBR/9d99HxLIXOXrOGZ1SlMq8OaI6A5ydwftg
- nZIojBZICQOnzkG5rnDi3Jp8rHgvdLdDmZ8y20TpjhrPKKaRxGjarvM/iY9oPdA6/feV
- mRUBaeH5t6b0AFOz03OV5dgxhEOLUHwyTgVjOhmsZo6XYGSZdsXahbW588u+Dd2wF3ej
- IyLpyJe9B7v+Q5UuDVgza5gmm4UvuEmQi9L4Ot8geHNXLFd3lp6llvDqE5O5fRV2TMef
- K1nE7yo+3rWcUYijXD6AjYEu4AcSL2Lcgb1l7DwGwABkDA+r06K3m2MloGhodb3RzMre
- bmCA==
-X-Gm-Message-State: AOJu0Yy2j8fGqCl4dQlda7Pv9sYqQ1oKp/fCYa8bfOeRz0PrUI5xRnBh
- iHd+CvbapJgHySbnQxmS6B5wIcN6mUKAgtFV3bgw3Sysm6MgQurUQ56NZkeQfQDkptb/H1rgaXD
- FNsOZq1GUNkQphZbnTrbp0Rn71j+LVoI=
-X-Gm-Gg: ASbGncsFlc+E5cArDLPYte/IPMhB3DUBKNAZQmgA+6PJBkgXe/KBhkPavEvqpBRvpjC
- 1wjxnKZjeFCfbSxUsNF0LXtenQ7FpxMSqKjPH11EPz+XCA9RgkDaqyWMy8GWUlcubYRF0T6B2Pt
- qWrj4mlfjbewqmnl+aaH3A3BZ0Fxv84PgEM9Y/t6hhlOpwI8L2lAuNPAC0y7SH8o3O3SwGoWhlN
- YNb/E3jVnQqpt1bKZIRC2figTHzqkAmDFzm3iLJn5HtXFA3S6iM04wIaKp9Nu02sAkTADRRL4fW
- 2K96aZHzx96ZdS1FQWSOk4DIXg==
-X-Google-Smtp-Source: AGHT+IFbNV4/lpY2hkijC2Fc8bOXZZ13D1PVBHSoFtGIt9CkXXZ/9De7wtkKx5xIrJToANXXCO9qUhtna2Gkp6yN9qU=
-X-Received: by 2002:a05:6402:4316:b0:63b:fbb7:88bc with SMTP id
- 4fb4d7f45d1cf-63c1f628bcamr1475063a12.5.1760658083138; Thu, 16 Oct 2025
- 16:41:23 -0700 (PDT)
+ bh=bj8dPshwGuLhSnu5rIGIi5mpOwcKw8nZHqZqEMckfMk=;
+ b=B2oGZeJqlga/smfhZK5M6bHH3BdSsG7RKNT5CJ+dDTzkeH+a06T3NtkxJXDw8q1s75
+ gi4nzUTMbpG5Pekit8JHqAbJeQUBu//Bz7Onh0kXTIPzmQoojNBpxP356ctU+HMiLk44
+ Eivu0FCAFltz2nnde7i2MGnylv9DHxJC8o8ztzTLSqmQ/Nz0vIjLz8TyrKNiOaT+byX1
+ WXchTnIQvMqolR/7Ll6JFKWhy1Mw3ng/4tbPF1BX7Kifdy4sBFUg7vbPy6EbmaY3jCm0
+ KkM9PpiC7/NYy2nMGMv5+m1X8ivaWGl56ppohcp/9kFdzxOUbl3dL9rJ2l3kH9zrPNP6
+ hF7Q==
+X-Gm-Message-State: AOJu0YyFK8HatQMYFup1Qp9daKoYUkWPvNueWa2vXjMkAyMt4JZwy+HR
+ 6t6WvT/uOhgxltKMqAzk/llx/RPDGKBq+Kaet3d6UvWVfWWKT5yyRPR8V+xDhEvJ48YJtr7zWQw
+ 8fJEeEtgS55tgYroDZJBuqR+DPSQxzFk=
+X-Gm-Gg: ASbGncsIMuPgC+1ssx3/mG91H9YreY11NF5rGTEmtUBRNHIaKd12qKwI1XChGd+GXTN
+ oSQumzUvDL1Q9QdKOaPS7R3w/dB/rNDW4mmkqUV5ZKhAnrUeaj3KWji3ZXDOP7sjRRQuvGxOpm4
+ 9FIL4NhxooDqrucPI7/FkuF7+vUZDg9gPOn9h+eVWtfIvqBMlIUdwRNM4BXrc9q2kevP+Lq2c82
+ A19k7u+ZP2PslqhBL90rSiEXm61+gX10vYGl8q5Vo0T9TjwZyGEYE8G24cbica5zdbQI6CzzpS5
+ qhnnu8KNTL3lT8IC5Y7FdWhL1zbBwCB1ODyA
+X-Google-Smtp-Source: AGHT+IFJIS9tsgFLtS8th27uajNpiTrDG6LP8nx1a0Yvhbphqy2UcLAsY9UBdPvCa5d9KgqZNt+tz0Q+FI+5ehXBm/I=
+X-Received: by 2002:a05:6402:44c7:b0:637:e253:45d0 with SMTP id
+ 4fb4d7f45d1cf-63c1f63e335mr1287652a12.11.1760658172132; Thu, 16 Oct 2025
+ 16:42:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-35-anjo@rev.ng>
-In-Reply-To: <20251014203512.26282-35-anjo@rev.ng>
+References: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
+ <20251015-feature-single-binary-hw-v1-v1-3-8b416eda42cf@rev.ng>
+In-Reply-To: <20251015-feature-single-binary-hw-v1-v1-3-8b416eda42cf@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 17 Oct 2025 09:40:56 +1000
-X-Gm-Features: AS18NWCTE-GfrNP2-ZBtoKnO8W6R3KXer5dFjlznBkjeyjYojfLedCby9ADOomg
-Message-ID: <CAKmqyKN91tpwX8+0UpV9MxPS6u6X2B4PywEO8Fh_uOYW--GFWw@mail.gmail.com>
-Subject: Re: [PATCH v3 34/34] target/riscv: Make pmp.h target_ulong agnostic
+Date: Fri, 17 Oct 2025 09:42:25 +1000
+X-Gm-Features: AS18NWC7Rafi8wLwVS04iB0coPs4pLO9jEuNsZR4NUs4rttEbM7hValEf3BBWWY
+Message-ID: <CAKmqyKP_ycSWuBv_Li38y0P2eZpRA9PUQLMpcfmObbs6b+UrdA@mail.gmail.com>
+Subject: Re: [PATCH 3/5] hw/riscv: Widen OpenSBI dynamic info struct
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, palmer@dabbelt.com
+ alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,178 +98,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 6:38=E2=80=AFAM Anton Johansson via
+On Wed, Oct 15, 2025 at 11:29=E2=80=AFPM Anton Johansson via
 <qemu-devel@nongnu.org> wrote:
 >
-> The pmp.h header is exposed through cpu.h.  pmp_table_t is also used in
-> CPUArchState.  CSR declarations are only used in target/ and are moved to
-> csr.h.  In pmp.h, addr_reg is widened to 64 bits and the privilege mode
-> parameter is fixed to 8 bits, similar to previous commits.
->
-> Note, the cpu/pmp/entry and cpu/pmp VMSTATE versions are bumped, breaking
-> migration from older versions.
+> Since fw_dynamic_info is only used for non 32 bit targets, target_long
+> is int64_t anyway.  Rename struct to fw_dynamic_info64 and use int64_t.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/csr.h     | 12 ++++++++++++
->  target/riscv/pmp.h     | 20 +++++---------------
->  target/riscv/machine.c | 10 +++++-----
->  target/riscv/pmp.c     | 10 ++++++----
->  4 files changed, 28 insertions(+), 24 deletions(-)
+>  include/hw/riscv/boot_opensbi.h | 14 +++++++-------
+>  hw/riscv/boot.c                 | 22 ++++++++++++----------
+>  2 files changed, 19 insertions(+), 17 deletions(-)
 >
-> diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-> index 552e6c5de5..3752a0ef43 100644
-> --- a/target/riscv/csr.h
-> +++ b/target/riscv/csr.h
-> @@ -78,4 +78,16 @@ void riscv_set_csr_ops(int csrno, const riscv_csr_oper=
-ations *ops);
->  /* In th_csr.c */
->  extern const RISCVCSR th_csr_list[];
+> diff --git a/include/hw/riscv/boot_opensbi.h b/include/hw/riscv/boot_open=
+sbi.h
+> index 18664a174b..ab9999be3f 100644
+> --- a/include/hw/riscv/boot_opensbi.h
+> +++ b/include/hw/riscv/boot_opensbi.h
+> @@ -29,17 +29,17 @@ enum sbi_scratch_options {
+>  };
 >
-> +/* PMP CSRs, defined in pmp.c */
-> +void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-> +                      target_ulong val);
-> +target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
-> +
-> +void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
-> +uint64_t mseccfg_csr_read(CPURISCVState *env);
-> +
-> +void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-> +                       target_ulong val);
-> +target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
-> +
->  #endif /* RISCV_CSR_H */
-> diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-> index e322904637..f5d6ec2bbf 100644
-> --- a/target/riscv/pmp.h
-> +++ b/target/riscv/pmp.h
-> @@ -22,8 +22,6 @@
->  #ifndef RISCV_PMP_H
->  #define RISCV_PMP_H
+>  /** Representation dynamic info passed by previous booting stage */
+> -struct fw_dynamic_info {
+> +struct fw_dynamic_info64 {
+>      /** Info magic */
+> -    target_long magic;
+> +    int64_t magic;
+>      /** Info version */
+> -    target_long version;
+> +    int64_t version;
+>      /** Next booting stage address */
+> -    target_long next_addr;
+> +    int64_t next_addr;
+>      /** Next booting stage mode */
+> -    target_long next_mode;
+> +    int64_t next_mode;
+>      /** Options for OpenSBI library */
+> -    target_long options;
+> +    int64_t options;
+>      /**
+>       * Preferred boot HART id
+>       *
+> @@ -55,7 +55,7 @@ struct fw_dynamic_info {
+>       * stage can set it to -1UL which will force the FW_DYNAMIC firmware
+>       * to use the relocation lottery mechanism.
+>       */
+> -    target_long boot_hart;
+> +    int64_t boot_hart;
+>  };
 >
-> -#include "cpu.h"
-> -
->  typedef enum {
->      PMP_READ  =3D 1 << 0,
->      PMP_WRITE =3D 1 << 1,
-> @@ -50,7 +48,7 @@ typedef enum {
->  } mseccfg_field_t;
+>  /** Representation dynamic info passed by previous booting stage */
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 4eadcff26c..64608e58c7 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -387,7 +387,8 @@ void riscv_rom_copy_firmware_info(MachineState *machi=
+ne,
+>                                    uint64_t kernel_entry)
+>  {
+>      struct fw_dynamic_info32 dinfo32;
+> -    struct fw_dynamic_info dinfo;
+> +    struct fw_dynamic_info64 dinfo64;
+> +    void *dinfo_ptr =3D NULL;
+>      size_t dinfo_len;
 >
->  typedef struct {
-> -    target_ulong addr_reg;
-> +    uint64_t addr_reg;
->      uint8_t  cfg_reg;
->  } pmp_entry_t;
->
-> @@ -65,21 +63,13 @@ typedef struct {
->      uint32_t num_rules;
->  } pmp_table_t;
->
-> -void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-> -                      target_ulong val);
-> -target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
-> -
-> -void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
-> -uint64_t mseccfg_csr_read(CPURISCVState *env);
-> +typedef struct CPUArchState CPURISCVState;
->
-> -void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-> -                       target_ulong val);
-> -target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
->  bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-> -                        target_ulong size, pmp_priv_t privs,
-> +                        int size, pmp_priv_t privs,
->                          pmp_priv_t *allowed_privs,
-> -                        target_ulong mode);
-> -target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
-> +                        privilege_mode_t mode);
-> +uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
->  void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
->  void pmp_update_rule_nums(CPURISCVState *env);
->  uint32_t pmp_get_num_rules(CPURISCVState *env);
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index e86fc58e43..eab3adec4d 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -48,10 +48,10 @@ static int pmp_post_load(void *opaque, int version_id=
-)
->
->  static const VMStateDescription vmstate_pmp_entry =3D {
->      .name =3D "cpu/pmp/entry",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .fields =3D (const VMStateField[]) {
-> -        VMSTATE_UINTTL(addr_reg, pmp_entry_t),
-> +        VMSTATE_UINT64(addr_reg, pmp_entry_t),
->          VMSTATE_UINT8(cfg_reg, pmp_entry_t),
->          VMSTATE_END_OF_LIST()
+>      if (riscv_is_32bit(harts)) {
+> @@ -397,15 +398,17 @@ void riscv_rom_copy_firmware_info(MachineState *mac=
+hine,
+>          dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
+>          dinfo32.options =3D 0;
+>          dinfo32.boot_hart =3D 0;
+> +        dinfo_ptr =3D &dinfo32;
+>          dinfo_len =3D sizeof(dinfo32);
+>      } else {
+> -        dinfo.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+> -        dinfo.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
+> -        dinfo.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+> -        dinfo.next_addr =3D cpu_to_le64(kernel_entry);
+> -        dinfo.options =3D 0;
+> -        dinfo.boot_hart =3D 0;
+> -        dinfo_len =3D sizeof(dinfo);
+> +        dinfo64.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+> +        dinfo64.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
+> +        dinfo64.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+> +        dinfo64.next_addr =3D cpu_to_le64(kernel_entry);
+> +        dinfo64.options =3D 0;
+> +        dinfo64.boot_hart =3D 0;
+> +        dinfo_ptr =3D &dinfo64;
+> +        dinfo_len =3D sizeof(dinfo64);
 >      }
-> @@ -59,8 +59,8 @@ static const VMStateDescription vmstate_pmp_entry =3D {
 >
->  static const VMStateDescription vmstate_pmp =3D {
->      .name =3D "cpu/pmp",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .needed =3D pmp_needed,
->      .post_load =3D pmp_post_load,
->      .fields =3D (const VMStateField[]) {
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index 85199c7387..0839a23086 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -23,6 +23,7 @@
->  #include "qemu/log.h"
->  #include "qapi/error.h"
->  #include "cpu.h"
-> +#include "csr.h"
->  #include "trace.h"
->  #include "exec/cputlb.h"
->  #include "exec/page-protection.h"
-> @@ -272,7 +273,7 @@ static int pmp_is_in_range(CPURISCVState *env, int pm=
-p_index, hwaddr addr)
->   */
->  static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t pr=
-ivs,
->                                         pmp_priv_t *allowed_privs,
-> -                                       target_ulong mode)
-> +                                       privilege_mode_t mode)
->  {
->      bool ret;
+>      /**
+> @@ -419,8 +422,7 @@ void riscv_rom_copy_firmware_info(MachineState *machi=
+ne,
+>      }
 >
-> @@ -331,8 +332,9 @@ static bool pmp_hart_has_privs_default(CPURISCVState =
-*env, pmp_priv_t privs,
->   * Return false if no match
->   */
->  bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-> -                        target_ulong size, pmp_priv_t privs,
-> -                        pmp_priv_t *allowed_privs, target_ulong mode)
-> +                        int size, pmp_priv_t privs,
-> +                        pmp_priv_t *allowed_privs,
-> +                        privilege_mode_t mode)
->  {
->      int i =3D 0;
->      int pmp_size =3D 0;
-> @@ -662,7 +664,7 @@ uint64_t mseccfg_csr_read(CPURISCVState *env)
->   * To avoid this we return a size of 1 (which means no caching) if the P=
-MP
->   * region only covers partial of the TLB page.
->   */
-> -target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
-> +uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
->  {
->      hwaddr pmp_sa;
->      hwaddr pmp_ea;
+>      rom_add_blob_fixed_as("mrom.finfo",
+> -                           riscv_is_32bit(harts) ?
+> -                           (void *)&dinfo32 : (void *)&dinfo,
+> +                           dinfo_ptr,
+>                             dinfo_len,
+>                             rom_base + reset_vec_size,
+>                             &address_space_memory);
+>
 > --
 > 2.51.0
 >
