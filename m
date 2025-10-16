@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9DBCCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 03:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BF0CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 04:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9F7C-0000y0-Ni; Wed, 15 Oct 2025 23:57:22 -0400
+	id 1v9FBg-0001qQ-AB; Thu, 16 Oct 2025 00:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9F7B-0000xb-1t
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:57:21 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1v9FBe-0001qH-Br
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 00:01:58 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9F78-0000rT-5E
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:57:20 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-639fb035066so377818a12.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 20:57:17 -0700 (PDT)
+ id 1v9FBa-0001fD-RY
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 00:01:57 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-63bfbbbdd0bso456718a12.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 21:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760587036; x=1761191836; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760587313; x=1761192113; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zQo8QxU31WExo92KOPA8Ute1JF2mwln81IPJ/0BnwNE=;
- b=lYwlhSrPJBgHBdFWnBZ8ayVYjgWaTXsxwryNvXeHljWpVmKxSXdDlp9NDyPcL6y38N
- DrrPVH1gO/M+0lv98RXNEWAGcXQMTG8orOg0mZ1YX/cGzgDJRfAVPyQQpH7eI+lnzZ76
- JjDjWp99ZPVBseFDmlkwhCOKm8d7uxOeLZ+fbMKKWfAmMwC4L0+PsVFE7EUzyPpYF/u+
- GnbR5oPUCtQSFiR7wWwChA+veO7EVq1Pi784EQyy0SwGbn8lNts2nVplvOj8gPg10Gil
- 8E29Hl04cvk2b/dFWs/GAWzkA+xFRvYFbXlmguksLEvJdrw45klig6NChqeO/jD1hOeY
- G1dQ==
+ bh=q6pkQ5YIFwg+eyifuqyy7xVWr0mXZpDDd71g5EDNHDA=;
+ b=HpS24SC2UOARoyqsJZJHovdJFVITmjOrB6V2Ebd4jDcaaC8eR4HwHOrGABnUW2KGAG
+ ftl2MOC2zzh79EnW77NAU2F5kZfybvMPNa3PrfK6KC+fJgAQI6NUv7dbPzA1X2T9g5C5
+ Vtl0Rucg0pZUxGx18LIVfNq1ikj6KLqHl+9jnal3fG5vHDSKB/iE9O8vPcSCnUqqMldd
+ AlTpfLvL+CcrffhcGXQ9SrqSK4wKocAjzW1sxhqsbewzt6FFZ8isdjV47Xalfqa0UDfv
+ 1slZ9XQ/bY3etpm9kmHZlYLye9Vdc7+xArKYfA7F1zv9XoL7MT0anDhNesezFua/CKJJ
+ mVkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760587036; x=1761191836;
+ d=1e100.net; s=20230601; t=1760587313; x=1761192113;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zQo8QxU31WExo92KOPA8Ute1JF2mwln81IPJ/0BnwNE=;
- b=sEr65HgGX6Q/nN7QaUxsH0NCLPFDy2k1Ocq9LfVVNch30vRou3BiD6DFJzY6wbf4MK
- jVtGce2kWNUX2zWRYdch2F468Hyktv6MtRJUaMOXfMKPCL6I+aox2zyn8WP0YpBHFytI
- BrYg6AJ+vynL0sERv7JSlarBsJOEXF++gaNELo8TjMCdJVNvgBx8RlUPsT5wL2z8bKVK
- 1aD2p8Af8dnXP5tbgIeBJNtO5HaUl/jrXlNJ4HttojtK+IPeJvzXVuNdEDu5IZdQaLx2
- cqdfMyrLu6CtFtjiK1n4jslB9Wc2EQD5TxzxGKnDd9xKJ6rFzqkowWLVJvn8PT3zOrQY
- dbxg==
-X-Gm-Message-State: AOJu0YwOYUgAm1fI5OV3pHO9EmNhn7xx6aMWqKM/wDY7nDp5uctq6KiW
- 9/fpsleroYvFgJMYpsmAUEdI7xcP1G3FdkSfIYkK8xPlAI99o/6AqwZypnCoG9/qk0ch5wGfLzh
- 8XCRbMNIOxxDO1Bvg/zaKWGn0ByIDIhU=
-X-Gm-Gg: ASbGncu5ABZ3HwSFwKCoHvy/xgqkfNjrtLmAtHYez8OoHXpuV0r9W+uR5A/25XsX8NJ
- Nzkd7mKJNZhWm1jEA/rTIVajD8kYq7Z6p4Oh0G8jNiYAisTCqrYIyhJiAibhPe0s6iQmFe4iere
- KSYKftT5dStiOCDbTd5VhTusLuKtY76QKGCJFqdRhTswzXoKWMu3os58W1Y/n9RhjK08iGzUGXs
- TBw5fh6mFsnvM5gJO2RrnZEF1L1POkAsSCIF/gIZcJAmbIANN7ig1VfzqnUDNLywie5BsheUW0E
- Q/mDO6wnTZAl/15XPB9LJBbNpA==
-X-Google-Smtp-Source: AGHT+IFLUylw2HZqzilk4M+ogE7z9ZKTbXgxugbJdMBYN87SH0LnOpNt2XOeVZxHYwGURSasLufRzNrhjll2dsDRZwk=
-X-Received: by 2002:a05:6402:2791:b0:63b:ede0:240d with SMTP id
- 4fb4d7f45d1cf-63bede028c7mr4410862a12.4.1760587035790; Wed, 15 Oct 2025
- 20:57:15 -0700 (PDT)
+ bh=q6pkQ5YIFwg+eyifuqyy7xVWr0mXZpDDd71g5EDNHDA=;
+ b=B0bJ1z94kneGb0iLWxSggOariYUooJdqkxSNEcBSCg3cuVIMeurWIsa9LQieiFQUqB
+ 0atnrVFWU4kh2q/2Jxkg547tAoYzzQ8hhlEgN75ijz1ms8P5guZK7H1p3BlSytLyPw6z
+ ghLy/il66poNpDMBnrLhBfb2MxOykHd9g7X4WjRWSffkQr7YhyvqOCYDXF5kDBGLdqCa
+ 9fn67mncGYu+Oluew1GEhMm/PaWCpcF6IS/yR2FlUmDRagep9zhNM/ulZuGgoIVqsPn1
+ UEds+s3nXWabZcaoMIMWsn8atKBYm8nNYvgnD3wJO1Q/6eQFpWfzxmcOvu+n+IpO/ntT
+ AAHw==
+X-Gm-Message-State: AOJu0YwjRAfs0GpB6rrrYbzDY1212cs67KHoT3PYEitINjSB6TgQRXBa
+ g7HA/by8atq4LIa1D8WdTlz3bJrsgTiQ1qrkqVyp0/7Vfs82xp0Bwd6VXxpHjN3vXZYyCOr+eWe
+ PrcybJdauLjf9NuKY1O4R5eCqhkOSZQRzaw==
+X-Gm-Gg: ASbGncv6ZwERF+yr1LnEP0tWWHdRHPzeDok0k/G2cO1bviC7rOhs3WRpgQyrhG5aZGW
+ 20V58qsujg0VjmXFICa4qfsLuZ5CyyLhJw9A0vdBguBE73EniShVnB6EQXp6dOxiRXZCw7fGs2a
+ NSmLtolr45brlVRUs2M8H+bFGZSOPQOB9bDwJ2clllu/KoBzoVJgIQMHMElS1LO+WopE0GHBQBT
+ 7iAUjvrAyCWBY2k1gY2J4SkKkGU57hzATynTzo1FydqHXTxd2IBfiyH7frm4Ok6fDlUs4OXflnc
+ TLu+A6tc2NCxaVeoq4vLkp2l9g==
+X-Google-Smtp-Source: AGHT+IELZjwpE4/zwf4KRecrmo3/6Yann814FtUIOySeHIAi9UFywdT63tvc0fPx9jZUU2ADB4ysx0n/FMh/8kiqvbM=
+X-Received: by 2002:a05:6402:35ce:b0:637:ec31:be93 with SMTP id
+ 4fb4d7f45d1cf-639d5b5e449mr28741416a12.2.1760587312622; Wed, 15 Oct 2025
+ 21:01:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-4-anjo@rev.ng>
-In-Reply-To: <20251014203512.26282-4-anjo@rev.ng>
+References: <20251001073306.28573-1-anjo@rev.ng>
+ <20251001073306.28573-5-anjo@rev.ng>
+ <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
+ <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
+ <CAKmqyKMyBMY88+6i5BdrXJtU8S9H_DcUG8O7yu5s9cE2Mv_s5g@mail.gmail.com>
+ <7fngsrmp3rdo3hzra4rso5kwi4zejvdyl6xzc7swmmqji7wr44@vyallk4lkhe6>
+In-Reply-To: <7fngsrmp3rdo3hzra4rso5kwi4zejvdyl6xzc7swmmqji7wr44@vyallk4lkhe6>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 Oct 2025 13:56:49 +1000
-X-Gm-Features: AS18NWCP0ukh-B_afbpwqxMs9e1hntCx70BkWjVYsaZiiKiVPVZAwx0-ew1Zt1w
-Message-ID: <CAKmqyKOn11JeXpTJ5ywWq5MCxxJMH31-n_Eq75fuebNO4DYkew@mail.gmail.com>
-Subject: Re: [PATCH v3 03/34] target/riscv: Fix size of mhartid
+Date: Thu, 16 Oct 2025 14:01:25 +1000
+X-Gm-Features: AS18NWCN3r2_sojAAfPTkHKkg9rAq7i3bA6pQBfz5ZKzA98tlJ5MyEJFdHUdrCU
+Message-ID: <CAKmqyKPHVAKqOPQgD5J95TcnG=Gro5JBWTURmaqGr=ksVy5Q9g@mail.gmail.com>
+Subject: Re: [PATCH v2 04/33] target/riscv: Bugfix
+ riscv_pmu_ctr_get_fixed_counters_val()
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, palmer@dabbelt.com
+ richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,85 +103,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 6:35=E2=80=AFAM Anton Johansson via
-<qemu-devel@nongnu.org> wrote:
+On Wed, Oct 15, 2025 at 7:55=E2=80=AFPM Anton Johansson <anjo@rev.ng> wrote=
+:
 >
-> and update formatting in log.
+> On 15/10/25, Alistair Francis wrote:
+> > On Tue, Oct 7, 2025 at 9:06=E2=80=AFPM Anton Johansson <anjo@rev.ng> wr=
+ote:
+> > >
+> > > On 03/10/25, Alistair Francis wrote:
+> > > > On Wed, Oct 1, 2025 at 5:43=E2=80=AFPM Anton Johansson via
+> > > > <qemu-devel@nongnu.org> wrote:
+> > > > >
+> > > > > From my understanding the upper_half argument only indicates whet=
+her the
+> > > > > upper or lower 32 bits should be returned, and upper_half will on=
+ly ever
+> > > > > be set when MXLEN =3D=3D 32.  However, the function also uses upp=
+er_half to
+> > > > > determine whether the inhibit flags are located in mcyclecfgh or
+> > > > > mcyclecfg, but this misses the case where MXLEN =3D=3D 32, upper_=
+half =3D=3D false
+> > > > > for TARGET_RISCV32 where we would also need to read the upper hal=
+f field.
+> > > >
+> > > > If MXLEN =3D=3D 32, upper_half =3D=3D false then we want to read mc=
+yclecfg,
+> > > > which the code today seems to be doing correctly.
+> > >
+> > > Hi again, I might be missing something then, when would this function=
+ need
+> > > to access mcyclecfg for MXLEN =3D=3D 32?  AFAIU mcyclecfg and mcyclec=
+fgh are
+> > > modeled separately for MXLEN =3D=3D 32, even when sizeof(target_ulong=
+) =3D=3D 8.
+> > > Since this function only checks inhibit flags wouldn't we always want=
+ to
+> > > access mcyclecfgh for MXLEN =3D=3D 32?
+> >
+> > When MXLEN =3D=3D 32 mcyclecfg is the bottom 32-bits of the mcyclecfg C=
+SR
+> > and mcyclecfgh is the top 32-bits of the CSR. The idea is that
+> > target_ulong will be 32-bits (sizeof(target_ulong) =3D=3D 4). It doesn'=
+t
+> > really matter if target_ulong is 64-bits though, as the registers
+> > should just be treated as 32-bit registers anyway.
 >
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Appreciate the explanation, this makes sense to me.  But the function
+> only uses cfg_val to check inhibit flags in the top 32 bits, so accessing=
+ the
+> lower 32 bits when upper_half =3D=3D false and MXLEN =3D=3D 32 would be i=
+ncorrect
+> then?
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Well a guest can still access the lower 32-bits and although there is
+nothing there now there might be in the future.
+
+>
+> Your comment below is what's tripping me up, since the behaviour of
+> accesing the lower 32 bits for MXLEN =3D=3D 32 is not retained when
+> mcyclecfgh and mcyclecfg are merged to a single 64 bit field
+
+I don't follow what you mean here
 
 Alistair
 
-> ---
->  target/riscv/cpu.h         | 2 +-
->  target/riscv/cpu_helper.c  | 2 +-
->  target/riscv/machine.c     | 2 +-
->  target/riscv/tcg/tcg-cpu.c | 2 +-
->  4 files changed, 4 insertions(+), 4 deletions(-)
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 4b291dbf81..25f996985b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -279,7 +279,7 @@ struct CPUArchState {
->      target_ulong geilen;
->      uint64_t resetvec;
+> > >      if (counter_idx =3D=3D 0) {
+> > > -        cfg_val =3D upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
+> > > +        cfg_val =3D rv32 ? ((uint64_t)env->mcyclecfgh << 32) :
+> >
+> > This doesn't look right.
+> >
+> > RV32 will want to access both mcyclecfgh and mcyclecfg, but this
+> > change restricts access to mcyclecfg as rv32 will always be true.
+> >
+> > I don't think there is anything wrong with the current code.
 >
-> -    target_ulong mhartid;
-> +    uint64_t mhartid;
->      /*
->       * For RV32 this is 32-bit mstatus and 32-bit mstatush.
->       * For RV64 this is a 64-bit mstatus.
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 3479a62cc7..9d0683f200 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -2278,7 +2278,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
->                       riscv_cpu_get_trap_name(cause, async));
->
->      qemu_log_mask(CPU_LOG_INT,
-> -                  "%s: hart:"TARGET_FMT_ld", async:%d, cause:"TARGET_FMT=
-_lx", "
-> +                  "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", =
-"
->                    "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=
-=3D%s\n",
->                    __func__, env->mhartid, async, cause, env->pc, tval,
->                    riscv_cpu_get_trap_name(cause, async));
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index f6ca017211..ab0bc32e1f 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -450,7 +450,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->          VMSTATE_UINTTL(env.priv, RISCVCPU),
->          VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
->          VMSTATE_UINT64(env.resetvec, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mhartid, RISCVCPU),
-> +        VMSTATE_UINT64(env.mhartid, RISCVCPU),
->          VMSTATE_UINT64(env.mstatus, RISCVCPU),
->          VMSTATE_UINT64(env.mip, RISCVCPU),
->          VMSTATE_UINT64(env.miclaim, RISCVCPU),
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 1150bd1469..db3cbc1625 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -487,7 +487,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISC=
-VCPU *cpu)
->                  continue;
->              }
->  #ifndef CONFIG_USER_ONLY
-> -            warn_report("disabling %s extension for hart 0x" TARGET_FMT_=
-lx
-> +            warn_report("disabling %s extension for hart 0x%" PRIx64
->                          " because privilege spec version does not match"=
-,
->                          edata->name, env->mhartid);
->  #else
-> --
-> 2.51.0
->
->
+> //Anton
 
