@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C103CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDC6CCD195
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9PWa-0002Cm-2p; Thu, 16 Oct 2025 11:04:16 -0400
+	id 1v9PWx-0002Hm-4N; Thu, 16 Oct 2025 11:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v9PWY-0002CF-TS
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:15 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1v9PWl-0002Fp-7a
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:27 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v9PWP-0001AQ-8q
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:14 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47117e75258so83775e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:04:04 -0700 (PDT)
+ id 1v9PWX-0001B2-5E
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:25 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3ed20bdfdffso859944f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760627042; x=1761231842; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760627047; x=1761231847; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EO8zY+f+eRKXz2hwkLNT6XbeCb6L/izof5+RV6C6SZU=;
- b=aIAhFNZHi8uracppwjbLISKwfsxFQWFzRd3bZIL8alzPEoe0233AYGMXfd7RGlA7MS
- DYH5CaIJo6BLS69oqA49RJYXrYW6WipWSNWFSJ7TMe5qOGtksPIiQWlloN3lFXZBg+6Z
- 6YRsFjDMf+iqpFuIDXPvqrdhe2WBvaB6vo16fFMH5iB919TNT5cWOmU9vuEdEKgzBWLu
- Mxx32IjB3cPfh+/su3oLhLoVsrqxpHtQbfex02k1Ut+3zCt6ATsmrzpJtKCC/tb2wfI7
- 0Q5hjq7Iy907EHNm4NzrC1PGhE5fmjpBG+pNdm+g/PSV9zeQZ4NWqAGVhnLgZgQf36tr
- PjKw==
+ bh=IwPFf1pbtLyHgXrVD3lp8OL749C/noD+jZkGwklcu94=;
+ b=UzaxLOUXbDdAToDIvWDQ6IkyRfq47hkUOkWodmOLqIOaLBdNX+LE/RYQOegN8vpdBn
+ qQDwOG6X+33BW0uKtwZMWYNwOC9eaVM+M60WQ7dA3utiRpE+l9lm2Bg6MIKQ7j4lIK9F
+ UNtqogToeOriF/v7jrsznpSohiOhzdc7wvAc3MKQsQIwRdv2HKSBax1z69XP3zDrPa/s
+ FJzdAu3O6nE4ZrYNAzU7oFnAPVGtY30aYBdhqDeipiMGlfhJhHPbrnaqGqFacRhbQ5Ya
+ ZxrbspROJop4REp0bkWuO9l3WxqQ5IPj1DeK/tSKGz4kHByss53/mxtE275fOOh6dNxK
+ qGGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760627042; x=1761231842;
+ d=1e100.net; s=20230601; t=1760627047; x=1761231847;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EO8zY+f+eRKXz2hwkLNT6XbeCb6L/izof5+RV6C6SZU=;
- b=adyQSmtASoh1OPZHeQ6Ij0ioNYxDPhjbVxnSEggsjFwsUVW3NUMUKE1d4MQSExdpX2
- ukLzCIB197/Tq/oQRarMrhg+FHFm6qxHySSzucIMGbQM95BQg5CvoXrlgrjMfSHYSUqk
- 2p13QGqGY4bp138YKplHk4a16OuwAgmfzhKzzAU1sNHJv7i+Mo0GgqAR/zRm0+ddeAWz
- 5iauwFDXmE46vXSCRkVnXK86UaEM9I6d1jFit2jdxWL8lux4buILqIMREZDWAClR0Ybf
- o4YRRTdsNaMyYDjDEzb0ZzAKVu9HJPZr1lQzHLpuFaDRi3U+F2dApK2jQX4+PXcOqObm
- IjTw==
-X-Gm-Message-State: AOJu0YwKa9DpuwNprqZYsQvgjI83+pv99XkxFlyNgur+b5aie+nQmGGV
- JcxR3XlXe9A2GAsEAAckh7DR2r7ZcC1zSIXyKCkwDehGMPcyCJ1Jj2Aq7qjtQtSZVdk=
-X-Gm-Gg: ASbGnctSo7YE1qhduuVwye/UD5o6dafixdePhWKI1aGOje/jN8W9bdlRWG8nUg18QTf
- IQinA4uRtts5XyDbsb74fi59oKEbOSUZSPLjdUZg+bFBZSPc3CFxLcoZJVZpQp46g33n6FdJycG
- FatB/oiRE7f9iBSgUsGN/n7P15kDfMMzXs0/7ql67wp/pBi1uLSWygImUsnuYng26g9drPDIOaK
- HJtneZosR9ivU6FvjaLhU3kvV+No7lrc8GztvYBbUFqc1/jrlT9sgnLkbV/bsW2EoTAhUcePxW4
- jEcuTGfjsPgim5dPsP8p+0ZSL/Z58Vh/o6xAeHZh4IN09g4u48nH/knRoldYRlSD+WQyUL8OCIY
- uoKj7GNxnhIVDAoRxJZr3q1QexqctuopPv34QgwPxG3fwdK0YLOg8Y9S8oJTitdX9qoHGgK6TIp
- 2KHG2VTlM+RbE=
-X-Google-Smtp-Source: AGHT+IGIZvjzA47nkAowGslp4cd0HOEMBBO80cepdDIGX03OPwrZ5tK31tlJpdKnPlF1bdv608L+dg==
-X-Received: by 2002:a05:600c:3513:b0:46f:b340:75e7 with SMTP id
- 5b1f17b1804b1-471178748a9mr2504435e9.8.1760627042213; 
- Thu, 16 Oct 2025 08:04:02 -0700 (PDT)
+ bh=IwPFf1pbtLyHgXrVD3lp8OL749C/noD+jZkGwklcu94=;
+ b=rBYpyXeJEPE/jffJpz4uWKzPyhRCvCXnYcx2CQTQZ22EYHyz9TLYZrZGJrQ9+C6+hC
+ WDFtI6btvtmbgXG2Yn1/eOdCL1nzE0jlSGLu7kLObT8C/o4bJFM3RSTB77F5uFITk+29
+ fIHk4eJtNL8LymCl5/xQs358YacLYqlrEGVMraiY6b4aG9N77kHRZZItnOuccj1b9hee
+ 66r42+Ix+T/ulpA1/zjalos+r/1k6047geguqY0wkVMvXscgnvm3V58rN+ntu7c8b93I
+ htr4RvyWjbQo59t9TrQSeieD+c1s+BZsWLvt6Pjj9ocmvKnxXwsZQN+4525pIdZ5nWqI
+ +DPA==
+X-Gm-Message-State: AOJu0YyhAgBS1DLVTLJAIMAqhfg9TSQd6WIBRIdzqVD5U130dNxTs9dv
+ aAQRH/RCzl6UdGBGLss4d5Ic5EE1vfcaJZoXusQv5FIkonSIxaxqbWFZNxiTarvO/ss=
+X-Gm-Gg: ASbGncsH3DpagedfLBPycIneKttFvkil1V0x05jSHR+eR/a5MB+kZ+xUQFUkYiPSXjq
+ JXAwvFJImnUu4qfEyYcf13iRlVGK5831OsUobERC3tFdlaajqo2sHtaLbesFvUaInpiO6vjBfi4
+ Rk+WYyRhHLzPYZr83nqulhz2eG2vbGSjgs8fztsQaoLl4RdmCMHe9SQWUoNBH9iDBuT61AJe0cO
+ 0iblbwvX02NMO9Y0T/IQ09Zsvx5WOfWw9g8I1PI7T8g4Eq9OZH7daJxiOlAOvn13t38/wXsDJcI
+ A95dBxuBf5SLbB9E35DPtTb66X1mhv4j9SRxDmkXPfW0qNDokZYctd5tk9wRSA9etVJMI6HTaAe
+ SVwvvEV45+9PxBC/unwxgUJkWb/eBRets8kbAba6S5mYq+BFXzAHfGiuoJckltpl2sX7G+Fe6Ur
+ wK3vzOxxwkfuk=
+X-Google-Smtp-Source: AGHT+IGoiWPVXoZ/ttIWoCl7fBJNOKmMRiQlCb2EZQENFkAVwYkjC72SIJ5jdNk9rZkYOr25tJ5f/g==
+X-Received: by 2002:a05:6000:4b08:b0:427:526:16aa with SMTP id
+ ffacd0b85a97d-42705261894mr182405f8f.58.1760627047183; 
+ Thu, 16 Oct 2025 08:04:07 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710f28a920sm21361185e9.7.2025.10.16.08.03.58
+ ffacd0b85a97d-426ff65596csm4134085f8f.24.2025.10.16.08.04.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Oct 2025 08:03:59 -0700 (PDT)
+ Thu, 16 Oct 2025 08:04:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8C2245F87A;
- Thu, 16 Oct 2025 16:03:57 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 7589B5FAEB;
+ Thu, 16 Oct 2025 16:03:58 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -82,17 +82,17 @@ Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 01/11] gitlab: use template for ubuntu-24.04-aarch64 jobs
-Date: Thu, 16 Oct 2025 16:03:46 +0100
-Message-ID: <20251016150357.876415-2-alex.bennee@linaro.org>
+Subject: [PATCH 10/11] docs/system: drop vhost-user-rng docs
+Date: Thu, 16 Oct 2025 16:03:55 +0100
+Message-ID: <20251016150357.876415-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251016150357.876415-1-alex.bennee@linaro.org>
 References: <20251016150357.876415-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,271 +115,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of the test is pure boilerplate so to save ourselves from
-repetition move all the main bits into a minimal copy of
-native_build_job_template but without the caching.
+This is a fairly lightweight document which doesn't add much to the
+general advice in vhost-user. Update the vhost-user docs to point
+directly at the rust-vmm repo.
 
-We keep all the current allow_fail and configure setups but do take
-the opportunity to replace the -j`nproc --ignore=40` hack with
-something that almost, but not quite, saturates the machine its being
-built on.
-
+Reviewed-by: John Levon <john.levon@nutanix.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .../custom-runners/ubuntu-24.04-aarch64.yml   | 230 ++++++++----------
- 1 file changed, 96 insertions(+), 134 deletions(-)
+ docs/system/devices/virtio/index.rst          |  1 -
+ docs/system/devices/virtio/vhost-user-rng.rst | 41 -------------------
+ docs/system/devices/virtio/vhost-user.rst     |  2 +-
+ 3 files changed, 1 insertion(+), 43 deletions(-)
+ delete mode 100644 docs/system/devices/virtio/vhost-user-rng.rst
 
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-index d26c7827f45..46db9ae0138 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-@@ -2,150 +2,112 @@
- # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
- # "Install basic packages to build QEMU on Ubuntu 24.04"
+diff --git a/docs/system/devices/virtio/index.rst b/docs/system/devices/virtio/index.rst
+index fc457ca74c7..e3839e61824 100644
+--- a/docs/system/devices/virtio/index.rst
++++ b/docs/system/devices/virtio/index.rst
+@@ -25,6 +25,5 @@ can also be off-loaded to an external process via :ref:`vhost user
+    virtio-snd.rst
+    vhost-user.rst
+    vhost-user-input.rst
+-   vhost-user-rng.rst
  
-+.ubuntu_aarch64_template:
-+  extends: .custom_runner_template
-+  needs: []
-+  stage: build
-+  tags:
-+    - ubuntu_24.04
-+    - aarch64
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+    - if: "$AARCH64_RUNNER_AVAILABLE"
-+  before_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start setup "Pre-script setup"
-+    - JOBS=$(expr $(nproc) - 4)
-+    - section_end setup
-+  script:
-+    - mkdir build
-+    - cd build
-+    - section_start configure "Running configure"
-+    - ../configure $CONFIGURE_ARGS ||
-+          { cat config.log meson-logs/meson-log.txt && exit 1; }
-+    - section_end configure
-+    - section_start build "Building QEMU"
-+    - make --output-sync -j"$JOBS"
-+    - section_end build
-+    - section_start test "Running tests"
-+    - if test -n "$MAKE_CHECK_ARGS";
-+      then
-+        make -j"$JOBS" $MAKE_CHECK_ARGS ;
-+      fi
-+    - section_end test
-+
- ubuntu-24.04-aarch64-all-linux-static:
-- extends: .custom_runner_template
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-- - if: "$AARCH64_RUNNER_AVAILABLE"
-- script:
-- - mkdir build
-- - cd build
-- # Disable -static-pie due to build error with system libc:
-- # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1987438
-- - ../configure --enable-debug --static --disable-system --disable-pie
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make --output-sync -j`nproc --ignore=40`
-- - make check-tcg
-- - make --output-sync -j`nproc --ignore=40` check
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    # Disable -static-pie due to build error with system libc:
-+    # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1987438
-+    CONFIGURE_ARGS: --enable-debug --static --disable-system --disable-pie
-+    MAKE_CHECK_ARGS: check-tcg
- 
- ubuntu-24.04-aarch64-all:
-- extends: .custom_runner_template
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--   when: manual
--   allow_failure: true
-- - if: "$AARCH64_RUNNER_AVAILABLE"
--   when: manual
--   allow_failure: true
-- script:
-- - mkdir build
-- - cd build
-- - ../configure
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make --output-sync -j`nproc --ignore=40`
-- - make --output-sync -j`nproc --ignore=40` check
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    MAKE_CHECK_ARGS: check
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+      when: manual
-+      allow_failure: true
-+    - if: "$AARCH64_RUNNER_AVAILABLE"
-+      when: manual
-+      allow_failure: true
- 
- ubuntu-24.04-aarch64-without-defaults:
-- extends: .custom_runner_template
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--   when: manual
--   allow_failure: true
-- - if: "$AARCH64_RUNNER_AVAILABLE"
--   when: manual
--   allow_failure: true
-- script:
-- - mkdir build
-- - cd build
-- - ../configure --disable-user --without-default-devices --without-default-features
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make --output-sync -j`nproc --ignore=40`
-- - make --output-sync -j`nproc --ignore=40` check
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    CONFIGURE_ARGS: --disable-user --without-default-devices --without-default-features
-+    MAKE_CHECK_ARGS: check
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+      when: manual
-+      allow_failure: true
-+    - if: "$AARCH64_RUNNER_AVAILABLE"
-+      when: manual
-+      allow_failure: true
- 
- ubuntu-24.04-aarch64-alldbg:
-- extends: .custom_runner_template
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-- - if: "$AARCH64_RUNNER_AVAILABLE"
-- script:
-- - mkdir build
-- - cd build
-- - ../configure --enable-debug
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make clean
-- - make --output-sync -j`nproc --ignore=40`
-- - make --output-sync -j`nproc --ignore=40` check
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    CONFIGURE_ARGS: --enable-debug
-+    MAKE_CHECK_ARGS: check-tcg
- 
- ubuntu-24.04-aarch64-clang:
-- extends: .custom_runner_template
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--   when: manual
--   allow_failure: true
-- - if: "$AARCH64_RUNNER_AVAILABLE"
--   when: manual
--   allow_failure: true
-- script:
-- - mkdir build
-- - cd build
-- - ../configure --disable-libssh --cc=clang --cxx=clang++ --enable-ubsan
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make --output-sync -j`nproc --ignore=40`
-- - make --output-sync -j`nproc --ignore=40` check
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
-+    MAKE_CHECK_ARGS: check
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+      when: manual
-+      allow_failure: true
-+    - if: "$AARCH64_RUNNER_AVAILABLE"
-+      when: manual
-+      allow_failure: true
- 
- ubuntu-24.04-aarch64-tci:
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--   when: manual
--   allow_failure: true
-- - if: "$AARCH64_RUNNER_AVAILABLE"
--   when: manual
--   allow_failure: true
-- script:
-- - mkdir build
-- - cd build
-- - ../configure --enable-tcg-interpreter
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make --output-sync -j`nproc --ignore=40`
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    CONFIGURE_ARGS: --enable-tcg-interpreter
-+    MAKE_CHECK_ARGS: check
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+      when: manual
-+      allow_failure: true
-+    - if: "$AARCH64_RUNNER_AVAILABLE"
-+      when: manual
-+      allow_failure: true
- 
- ubuntu-24.04-aarch64-notcg:
-- extends: .custom_runner_template
-- needs: []
-- stage: build
-- tags:
-- - ubuntu_24.04
-- - aarch64
-- rules:
-- - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
--   when: manual
--   allow_failure: true
-- - if: "$AARCH64_RUNNER_AVAILABLE"
--   when: manual
--   allow_failure: true
-- script:
-- - mkdir build
-- - cd build
-- - ../configure --disable-tcg --with-devices-aarch64=minimal
--   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-- - make --output-sync -j`nproc --ignore=40`
-- - make --output-sync -j`nproc --ignore=40` check
-+  extends: .ubuntu_aarch64_template
-+  variables:
-+    CONFIGURE_ARGS: --disable-tcg --with-devices-aarch64=minimal
-+    MAKE_CHECK_ARGS: check
-+  rules:
-+    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-+      when: manual
-+      allow_failure: true
-+    - if: "$AARCH64_RUNNER_AVAILABLE"
-+      when: manual
-+      allow_failure: true
+ .. _VirtIO specification: https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
+diff --git a/docs/system/devices/virtio/vhost-user-rng.rst b/docs/system/devices/virtio/vhost-user-rng.rst
+deleted file mode 100644
+index ead14053264..00000000000
+--- a/docs/system/devices/virtio/vhost-user-rng.rst
++++ /dev/null
+@@ -1,41 +0,0 @@
+-.. _vhost_user_rng:
+-
+-QEMU vhost-user-rng - RNG emulation
+-===================================
+-
+-Background
+-----------
+-
+-What follows builds on the material presented in vhost-user.rst - it should
+-be reviewed before moving forward with the content in this file.
+-
+-Description
+------------
+-
+-The vhost-user-rng device implementation was designed to work with a random
+-number generator daemon such as the one found in the vhost-device crate of
+-the rust-vmm project available on github [1].
+-
+-[1]. https://github.com/rust-vmm/vhost-device
+-
+-Examples
+---------
+-
+-The daemon should be started first:
+-
+-::
+-
+-  host# vhost-device-rng --socket-path=rng.sock -c 1 -m 512 -p 1000
+-
+-The QEMU invocation needs to create a chardev socket the device can
+-use to communicate as well as share the guests memory over a memfd.
+-
+-::
+-
+-  host# qemu-system								\
+-      -chardev socket,path=$(PATH)/rng.sock,id=rng0				\
+-      -device vhost-user-rng-pci,chardev=rng0					\
+-      -m 4096 									\
+-      -object memory-backend-file,id=mem,size=4G,mem-path=/dev/shm,share=on	\
+-      -numa node,memdev=mem							\
+-      ...
+diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
+index bddf8df5ed5..9c9a28df380 100644
+--- a/docs/system/devices/virtio/vhost-user.rst
++++ b/docs/system/devices/virtio/vhost-user.rst
+@@ -45,7 +45,7 @@ platform details for what sort of virtio bus to use.
+     - :ref:`vhost_user_input`
+   * - vhost-user-rng
+     - Entropy driver
+-    - :ref:`vhost_user_rng`
++    - See https://github.com/rust-vmm/vhost-device
+   * - vhost-user-scmi
+     - System Control and Management Interface
+     - See https://github.com/rust-vmm/vhost-device
 -- 
 2.47.3
 
