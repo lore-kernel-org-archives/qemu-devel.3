@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14364CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAABCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mtu-000674-7A; Thu, 16 Oct 2025 08:16:10 -0400
+	id 1v9Mvk-0000L1-8D; Thu, 16 Oct 2025 08:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mts-000659-AI
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:08 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mut-0007Lo-Rn
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:17:16 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mth-000851-MB
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:05 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3ee130237a8so460972f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:15:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mur-0008IZ-8L
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:17:11 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42701aa714aso341990f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760616944; x=1761221744; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760617024; x=1761221824; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NcHn6tnpXWm0n21+w8vaM9zccGBWqwHOy+l8QY6n6fU=;
- b=YaHUfZtk6MVIa37WENNyfH5ZrpJNX5GMs7Tp5AEVcVlNlobzqF9OII/Q67tWYMHzmX
- 0g1q8D8CCFv7engFuqbpq4JDbHkdDtuAUN4guleTzo0Pznu/k1wJd8JOJlK8gKP4o0sd
- YXFZ8bqbgt6gEI6jha7kUgduKvX+/O7VsFVvFBmB+3gEMAbhHcFLPV4zuTwAX1di2mjS
- jxq1wPYQJznmuJ2Q3l/sA2QmXWqKlE1Pr6VGZAzKZ7j3KdwvRS8V7WswZeIgt0abHhO+
- uiSQ6ZIN7oWhf1flY7oxBoUdJSbb6FHpxjrT42JRMg8O92rvypMvkkIWcwh2lbpYdlp7
- OVvw==
+ :reply-to; bh=scDPVWmrhQ8Im0exkQ2f9sNF2qLU7BMfhHwn75M2Aj0=;
+ b=cFeRTXeLzuTELy5yz2PxiUqzJ2vJA2NtkRjZ9vj5qbocdq7RIRjDSmj/OAhbB6iw8H
+ TiEMRF3sFls/J6VOVta0k+V1xnsabBzP2xI7mJX7yE2GRgJ2L+7KRR9mDzG3MYuvgmfe
+ uPh1E51XAoLOGbga36wUoACKLB2zc7cqRVZzw8e1uK6KvyV096lwlCFGna9lE2urrogE
+ +sbAL8ikMY4tgllolBPJvlNFtFDMJQP+RYcERPZ+FkCrTTK00xP9TPxwOaQzltthHbES
+ xtebTuYsfAZf6ZePiiGTaQ05nM6FcrViltoy1mhyLIBZOuTC2YrONUsuKGB0Z/xwco58
+ 0qow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760616944; x=1761221744;
+ d=1e100.net; s=20230601; t=1760617024; x=1761221824;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NcHn6tnpXWm0n21+w8vaM9zccGBWqwHOy+l8QY6n6fU=;
- b=bRJipHi/8Ng9k7vOzmyNWUt4GamFn2GOB5JFb1ezTxkBgfIGKK3kBBy4OPp+oDLlUA
- lXr/SwyDg07QAN7hvxZ5LDSYNoFTzjnFmwndorPztBklwSyCFfOC2XaFjqcRg4BIQp/0
- XAWLYnMVopBx5WdZfdZwBudG774gYY3jzQMcjdlBpWy1c12mHqRbRc0ELzv6NgH5yCAj
- CWT8NGLuzNxfNDr6emNxDDVoggX4cWXmKPXgxIndzM4mqOapVEsveMeMzQ2Lp+YmDF+K
- gTFMKsmJAvYLVmg72vrrTJxgnnstLVNMsHEzVKF1vcIZai7773XQHSUEXvEu3lnZrKr4
- i/6Q==
-X-Gm-Message-State: AOJu0Yx0lH0PHIle1X+hkUF6qEgzsooUgEHcdvFrDzj/ZZIw+dC05VFJ
- 2wqU9t/rUoNiEIbIixqrdEqAoPf+Ai/BW0R/U86Nl2F/kYdK8UyiwUGl5HV6vY8lQfSdoQwVASo
- WxirhyOM=
-X-Gm-Gg: ASbGncvQWS+xbb1ZyNtKWKtIvBGGpL6oVQA0fyJDI20DuDQsQFIyIJUWV43TlhgZl0v
- 9yrAkGy6FKSOq6qpbdlbgGQAYV20ylw5GcHEwFEB6LlOA8WWQbjG5s+VuVTOtsQbbOmgup2OL1h
- aHVC49JCqytg9/9iSq1dfeNEZ2bajZBY79vReP/wz7ZwF8XHSa0M1Ehd59fXNh2/T5hAXJFpZ1q
- TgBtrZeu4fac8n6Few1RfLf1ltBNbOpUOXws6pbygRPONHLgxzBI8DYkOpiIhqsTDpojnw1AHSe
- yGChx+VpecBG5fJb9xdRS/3BS85yyR+WRPkWN9mERXC70kiShtWut91qgm/2oA77xkOnwTA526k
- 0MJYxUoNzDKVFP91IF/PJL37MSvPkXRbIxf2wPJSBSJdaAs5XC9vgLJtPjfPalgFmVMVgvdZy6J
- pzXmF8lCWuaJsF6rDi7cX2qhygAthJDuVogjuSEGhzoEsQ+8WaLTp12lzfNxgi0zOd
-X-Google-Smtp-Source: AGHT+IEaAB11MlKIHnCwf0O9C5vNUtvidqzgKKwTWriEhMPVasGqe1/mqt5GD1la2dNomY/GmNN+JQ==
-X-Received: by 2002:a05:6000:3102:b0:425:7e3f:f091 with SMTP id
- ffacd0b85a97d-4266e7d4485mr19984184f8f.37.1760616944470; 
- Thu, 16 Oct 2025 05:15:44 -0700 (PDT)
+ bh=scDPVWmrhQ8Im0exkQ2f9sNF2qLU7BMfhHwn75M2Aj0=;
+ b=UycD47OWmk0OAan6Ovj8CRcA80ED6BjZTqH0WKS+rktjgKxZcuXpMx6Yw/ECVlLbSu
+ 52x4MLq60yOLsYQDHWROCctUAqsZCZ0opjt3aYQ9XOBqvcLZlRzeqnd1k1QHNXZ039pG
+ Dicbd3FsipA5xoW76gFYJpGiqje2cKfpRPqj2UPglQQYDjw3u6ZCWMFWJs16QZm2t+24
+ JmYIwt0+81VwyP6GRYednqbsCErTtpwlXdiEBrU0AOZXHyGyDUQAUtu0at5k+mihh6AN
+ T46VPKjjCzcGzjChwsCco2IZ4MXiCMOgd3B6xlNlSe1LxQ5ki0wVxwbRxSKY98lq1Znr
+ w58A==
+X-Gm-Message-State: AOJu0YwSELtQlrF3H5C9u41cvYnC99h2EzQoqQoxzUnqQHzOlt1sUHTi
+ qL/f0L7m6O3dZmsn/9glQAxFIe4raavoUq6Jku57Dui5efYCDHdC0ejH7BvTBm76a94nmJ+VEtB
+ 4ovCufd0=
+X-Gm-Gg: ASbGncupKixNN0pG44ATAQLrzBk5RbBt8z8BodiItTxOFVsxDp+9CO6N9Dl6JstpKgz
+ 9c6TLSZ3KOcG/3at6XOzszxx0p43VBxGyOSjSscIl61PfKK5ubGDUNUDuGac0vyDrrFlLVvxdZB
+ 6j7v+bXpl2ZEjSej21AgrfQGYFZ/gMS+9orw6XcByRD1tigaOoHtlmVOarMmdMWtFx1ESL53f6b
+ jj+xHVHE0MxkWIF3A78DQuEtwbwhnHbXOcbSm22MIerRJeXRWDeMT9kwM2ei6p0xfuUmyuCyCgw
+ yEa0MFBKkSHncQgcs2priEnO3lk3WrpBhg/IxcqN3vF2uhi5Ky9+Y9ihCVWjtj01cOjg6pHIbZ9
+ dXBX8XbG1dmvJi4l4HtZt4o4GVKBGzYTFVOH6qPzcdiT4e3JwTwumNV9riNeSuh3d4qAV9myaLh
+ h/+x6pqvuvO2+auCmpczGDo+RZCRsIZd0kYHxZvS1UD9AO58yUlGGgRw==
+X-Google-Smtp-Source: AGHT+IFLNBoaw8UIwHFPbrNFpZqdCNe9kZrmxxBT9InPmnQ4VxTzV3m3ypUNqIEwW2T/AQnEjDzc1Q==
+X-Received: by 2002:a5d:5c8a:0:b0:415:7a6c:6a38 with SMTP id
+ ffacd0b85a97d-4266e8e6ebemr20479060f8f.59.1760617024330; 
+ Thu, 16 Oct 2025 05:17:04 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e0efasm34314428f8f.41.2025.10.16.05.15.43
+ ffacd0b85a97d-426ce57d404sm34771043f8f.3.2025.10.16.05.17.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:15:44 -0700 (PDT)
+ Thu, 16 Oct 2025 05:17:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/75] target/alpha: Access CPUState::cpu_index via helper
-Date: Thu, 16 Oct 2025 14:14:18 +0200
-Message-ID: <20251016121532.14042-3-philmd@linaro.org>
+Subject: [PULL 19/75] target/m68k: Remove pointless @cpu_halted TCGv
+Date: Thu, 16 Oct 2025 14:14:35 +0200
+Message-ID: <20251016121532.14042-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
 References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,65 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUState::cpu_index is a target agnostic field, meant
-for common code (i.e. accel/ and system/ folders).
-
-Target specific code should use the CPUClass::get_arch_id()
-helper, even if there is a 1:1 mapping.
-
-In preparation of generic changes around CPU indexing,
-introduce the whoami helper to access the generic
-CPUState::cpu_index field.
+Avoid registering a TCGv to write the generic CPUState::halted
+field. Access it directly via @env in both STOP / HALT opcodes.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250925010438.59755-1-philmd@linaro.org>
+Message-Id: <20250925012454.60602-1-philmd@linaro.org>
 ---
- target/alpha/helper.h     | 1 +
- target/alpha/sys_helper.c | 5 +++++
- target/alpha/translate.c  | 3 +--
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ target/m68k/translate.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/target/alpha/helper.h b/target/alpha/helper.h
-index 788d2fbf289..954a5c8294c 100644
---- a/target/alpha/helper.h
-+++ b/target/alpha/helper.h
-@@ -92,6 +92,7 @@ DEF_HELPER_FLAGS_1(tbia, TCG_CALL_NO_RWG, void, env)
- DEF_HELPER_FLAGS_2(tbis, TCG_CALL_NO_RWG, void, env, i64)
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 0cee54f4900..eb1ba150745 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -44,8 +44,6 @@
+ #undef DEFO32
+ #undef DEFO64
  
- DEF_HELPER_1(halt, void, i64)
-+DEF_HELPER_1(whami, i64, env)
+-static TCGv_i32 cpu_halted;
+-
+ static char cpu_reg_names[2 * 8 * 3 + 5 * 4];
+ static TCGv cpu_dregs[8];
+ static TCGv cpu_aregs[8];
+@@ -77,9 +75,6 @@ void m68k_tcg_init(void)
+ #undef DEFO32
+ #undef DEFO64
  
- DEF_HELPER_FLAGS_0(get_vmtime, TCG_CALL_NO_RWG, i64)
- DEF_HELPER_FLAGS_0(get_walltime, TCG_CALL_NO_RWG, i64)
-diff --git a/target/alpha/sys_helper.c b/target/alpha/sys_helper.c
-index 87e37605c13..0e0a619975b 100644
---- a/target/alpha/sys_helper.c
-+++ b/target/alpha/sys_helper.c
-@@ -67,3 +67,8 @@ void helper_set_alarm(CPUAlphaState *env, uint64_t expire)
-         timer_del(cpu->alarm_timer);
+-    cpu_halted = tcg_global_mem_new_i32(tcg_env,
+-                                        -offsetof(M68kCPU, env) +
+-                                        offsetof(CPUState, halted), "HALTED");
+     p = cpu_reg_names;
+     for (i = 0; i < 8; i++) {
+         sprintf(p, "D%d", i);
+@@ -4506,7 +4501,8 @@ DISAS_INSN(halt)
+         gen_exception(s, s->pc, EXCP_SEMIHOSTING);
+         return;
      }
+-    tcg_gen_movi_i32(cpu_halted, 1);
++    tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
++                   offsetof(CPUState, halted) - offsetof(M68kCPU, env));
+     gen_exception(s, s->pc, EXCP_HLT);
  }
-+
-+uint64_t HELPER(whami)(CPUAlphaState *env)
-+{
-+    return env_cpu(env)->cpu_index;
-+}
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index a492520075e..b1d8a4eb80a 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -1126,8 +1126,7 @@ static DisasJumpType gen_call_pal(DisasContext *ctx, int palcode)
-             break;
-         case 0x3C:
-             /* WHAMI */
--            tcg_gen_ld32s_i64(ctx->ir[IR_V0], tcg_env,
--                -offsetof(AlphaCPU, env) + offsetof(CPUState, cpu_index));
-+            gen_helper_whami(ctx->ir[IR_V0], tcg_env);
-             break;
  
-         case 0x3E:
+@@ -4522,7 +4518,8 @@ DISAS_INSN(stop)
+     ext = read_im16(env, s);
+ 
+     gen_set_sr_im(s, ext, 0);
+-    tcg_gen_movi_i32(cpu_halted, 1);
++    tcg_gen_st_i32(tcg_constant_i32(1), tcg_env,
++                   offsetof(CPUState, halted) - offsetof(M68kCPU, env));
+     gen_exception(s, s->pc, EXCP_HLT);
+ }
+ 
 -- 
 2.51.0
 
