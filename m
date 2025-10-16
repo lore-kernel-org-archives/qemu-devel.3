@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79CA2CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 16:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42606CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 16:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9QoQ-00037a-Sk; Thu, 16 Oct 2025 12:26:46 -0400
+	id 1v9QoV-0003GS-KB; Thu, 16 Oct 2025 12:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9QoD-0002xg-K6
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:26:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9QoJ-00031E-Tk
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:26:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9Qo1-0004xM-Dj
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:26:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9QoC-00052O-Qp
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:26:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760631976;
+ s=mimecast20190719; t=1760631989;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CsXNk0bNR7geyKHVldXcDOSqODASb0NEf1xECyBSNGA=;
- b=bBviUyg4u1nTGXz4JStRVXe2GFCzhmg5tTrItfsyynW35kD6Sxkf/FM7ds/toPqewXo3A4
- 33J25IKMhHS7iR4yibogPWeL1XCTnQOuyhuiDQE9Rw/UthU3dBN60+dY0d0LPilFZBsdvk
- FUp8Wh0S/YnKYkNvha3c3FzMANEWfU0=
+ bh=RU7Man4KnRGIbs9jMvnj9ufvxV6EUPeaR+Ae0LV/CMk=;
+ b=Hu946loDZ9z6tnUuUJO+4hgLFEfyzHxkPx/Azn39BqcbhsPGPUhbNtmqVbUPo2ULje4A18
+ qf2bIhjCd/OyatcnJ+8v/PCYpassWjJsmExuhE2xM8hpOUPBSPKQ0gEfVtxyUhWpInqdTa
+ hTN/nHB0aiKbhdXtEFIcMaH1XaF5qrs=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-kPisOi7tNVGxDQvOHcK0kg-1; Thu,
- 16 Oct 2025 12:26:11 -0400
-X-MC-Unique: kPisOi7tNVGxDQvOHcK0kg-1
-X-Mimecast-MFC-AGG-ID: kPisOi7tNVGxDQvOHcK0kg_1760631969
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-GPgSTenWN-SFRTepFfT9oQ-1; Thu,
+ 16 Oct 2025 12:26:26 -0400
+X-MC-Unique: GPgSTenWN-SFRTepFfT9oQ-1
+X-Mimecast-MFC-AGG-ID: GPgSTenWN-SFRTepFfT9oQ_1760631985
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB9E718002F7; Thu, 16 Oct 2025 16:26:08 +0000 (UTC)
+ id 299FF18002C1; Thu, 16 Oct 2025 16:26:25 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.163])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA4781956056; Thu, 16 Oct 2025 16:26:04 +0000 (UTC)
+ id DBDDD1956056; Thu, 16 Oct 2025 16:26:23 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 01/10] python/qemu: Replace some remaining "avocados" with
- "functional tests"
-Date: Thu, 16 Oct 2025 18:25:52 +0200
-Message-ID: <20251016162601.442557-2-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/10] target/s390x/mmu_helper: Simplify s390_cpu_virt_mem_rw()
+ logic
+Date: Thu, 16 Oct 2025 18:26:00 +0200
+Message-ID: <20251016162601.442557-10-thuth@redhat.com>
 In-Reply-To: <20251016162601.442557-1-thuth@redhat.com>
 References: <20251016162601.442557-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -86,47 +84,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The avocado tests have been replaced by the new functional tests,
-so also update this in the README.rst files in the python directory
-accordingly.
+In order to simplify the next commit, move the
+trigger_access_exception() call after the address_space_rw()
+calls. No logical change intended.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251008141410.99865-2-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251008131936.71160-1-thuth@redhat.com>
 ---
- python/qemu/machine/README.rst | 2 +-
- python/qemu/utils/README.rst   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/s390x/mmu_helper.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/python/qemu/machine/README.rst b/python/qemu/machine/README.rst
-index 8de2c3d7722..6554c693201 100644
---- a/python/qemu/machine/README.rst
-+++ b/python/qemu/machine/README.rst
-@@ -2,7 +2,7 @@ qemu.machine package
- ====================
+diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+index 487c41bf933..22d3d4a97df 100644
+--- a/target/s390x/mmu_helper.c
++++ b/target/s390x/mmu_helper.c
+@@ -541,9 +541,7 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+     pages = g_malloc(nr_pages * sizeof(*pages));
  
- This package provides core utilities used for testing and debugging
--QEMU. It is used by the iotests, vm tests, avocado tests, and several
-+QEMU. It is used by the iotests, vm tests, functional tests, and several
- other utilities in the ./scripts directory. It is not a fully-fledged
- SDK and it is subject to change at any time.
+     ret = translate_pages(cpu, laddr, nr_pages, pages, is_write, &tec);
+-    if (ret) {
+-        trigger_access_exception(&cpu->env, ret, tec);
+-    } else if (hostbuf != NULL) {
++    if (ret == 0 && hostbuf != NULL) {
+         AddressSpace *as = CPU(cpu)->as;
  
-diff --git a/python/qemu/utils/README.rst b/python/qemu/utils/README.rst
-index d5f2da14540..5027f0b5f11 100644
---- a/python/qemu/utils/README.rst
-+++ b/python/qemu/utils/README.rst
-@@ -2,6 +2,6 @@ qemu.utils package
- ==================
+         /* Copy data by stepping through the area page by page */
+@@ -556,6 +554,9 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+             len -= currlen;
+         }
+     }
++    if (ret) {
++        trigger_access_exception(&cpu->env, ret, tec);
++    }
  
- This package provides miscellaneous utilities used for testing and
--debugging QEMU. It is used primarily by the vm and avocado tests.
-+debugging QEMU. It is used primarily by the vm and functional tests.
- 
- See the documentation in ``__init__.py`` for more information.
+     g_free(pages);
+     return ret;
 -- 
 2.51.0
 
