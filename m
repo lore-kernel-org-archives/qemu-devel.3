@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE695CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39264CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mts-00063a-RS; Thu, 16 Oct 2025 08:16:08 -0400
+	id 1v9Mu2-0006Eh-4X; Thu, 16 Oct 2025 08:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mtf-00061y-OX
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:15:55 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mtz-0006Ap-5W
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:15 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MtT-00083Q-Ix
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:15:54 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3ed20bdfdffso692815f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:15:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mtq-00087v-Pb
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:13 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-42701f2ad61so256595f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:16:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760616935; x=1761221735; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=E+4YTGKP36pt6mvcQO+b8RWSJSAkWm5iLXUm8vLAp9A=;
- b=FXGL2Hr5kT8DESUuHTeSJ1NwX+u174LMbHpr21hRHxYeh/w9qRewymEbaMvKYo34Oi
- IsStEqWwuBDrq/CLG75pN6Bz6MXZwzQyQYryonIF7WiG0SIy02ctFCk0Ds9d+nZiW/yJ
- DsEZN4y3YgXUL/XVHNc+Jek8ZNHKlVQYWIkWokHIalCqgGUbnZ3YrWbPEU3IlGEcpHg5
- 891en51AmidanfFTLGd+zNhrK7lw5OCglpLpm1EE5pzHFSaFtLsgOTqx/uN3Uoaccirt
- nuwFibrvp9ApTO6+BtcI4tFyF63e7nTcXbSY5H/9Ai8htFaAbV5Naa9cu+iRdzgbum+2
- ZPoQ==
+ d=linaro.org; s=google; t=1760616958; x=1761221758; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=MG76ZHuOFDp9nKGKME0FcXDd+gBoTD4h2sGrYalA88M=;
+ b=Fl91wWxQ/vNfZvLZ4dT7ggTb/ix/f0TqJBDjMFRUA0EdQwl5rQyzWrSQqYlU7hQExB
+ uJ3QeCTcAgjAQSMoby6+uVp3GPthKZrFK7fgFjO7XpMf2GUL4GDIvXZzvWVZEPvP8i9V
+ Yf2OlvX+VO//zdjed9iJ/wYYzXZ+zoUKNUzsYNwY3flBBRCJQO3Pvx0nuTZ8wo968CzZ
+ zjM7pb9/b5dv7BxwCieT2wUJBFqoKHa/tnMPXqZOhpP3prOenUjU3Wu32HFVR1w2liX+
+ jFUOU1cx17MIm/ZA0nJpG4Ly6APFghPzZ7DXb/29GPO4NInj42hd9//4KqvP83nvqcPe
+ OSVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760616935; x=1761221735;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E+4YTGKP36pt6mvcQO+b8RWSJSAkWm5iLXUm8vLAp9A=;
- b=kxU3TgtCvX1OjwZWKCfftlk3VbtsfP6t/ocLy1LtTifaSSm1VWmHeMzUljJp+SaT9T
- T9wYqzR4E7d2F2aGdCZMuzJQflmkPozrT/jIwZETEUs33o9/Zpc2hoD9bqEoglcHyHou
- mwMMm35UimMnZHPWbNcovUEc8sZ+pBDqxg2GV/AWXqWaEAkbwwMY4P8rrYkcZ6ffHNAG
- s7+lsGrVPBS3LqbjwOohhl/pKjzF7yFhSuEYJi5cadzk17Uk0AwoTePjIoaVvvFAre7p
- kG42NDqWnwqZQZ9FRhsHEApBnzH4DIX1uc4Ww/vRGUY7TEhFz8Z977DUsWj6q3uJOp6E
- DcZQ==
-X-Gm-Message-State: AOJu0YwEA1W6O3KEde0FBOJ5NTJvgOiH5IONgRfxJTWiRLiKY5w5bCUL
- clBxjj5qfBVspiviktBj2ds0ODATApSoJ+TpWMU7PJhn/mD813OGIr0Y7gHi9TzaEpa+PaD/hks
- qYM3dzUo=
-X-Gm-Gg: ASbGncsCmvFxhJGJ1doO56eoktGnfwavDwgl7kmnm7r27dU4ExdyzanEO7ZIdgyaBUm
- 0PJCgGN/xKQcNglb1hTml3V//yC1Jfp0SKVzc7XzTvJUgnCOuB64f+KpJvO6roctbtQxUHl6XkK
- QP70YuxRvjtAHbg9goiaUv06dkTsVathaeG1frfhBU//oFwg8Qx685rTEAmdkhD/NOOva+MU431
- 0RyTFWN+U5+MNQd0xFnAqJPAyb4fx5C0/XCh5snd1GIlGl6gxqIWsqBDnlHVlapZSSrv560vuIL
- YdOvGQixsc8mCJfvpgqf48l9ZhYM9fkae0oAOFyjkMVQNTHNKxS6H9rnqHdClbVOmfJEQr+E1fs
- E8etqwk3psZCnvWBdtKJVXwgkfLF7xIPfu7SYDUN+bx62QR2qHGD0Hq5f1bc7EC/KH5VO7NDGK/
- VmdVifSh5RG8LTd2sHqLDgNpPhPeEcMelqk3d88Y8ve6EqGA29gGL//Q==
-X-Google-Smtp-Source: AGHT+IFHPuNUSe5COb9GZT0psYtgoNSwYDinFxSobl76Pd0ocqxGxhTYSCOUs5Dw9IRAN7f8Q8SXPQ==
-X-Received: by 2002:a05:6000:26c5:b0:3ee:1357:e191 with SMTP id
- ffacd0b85a97d-4266e7d9252mr19308131f8f.30.1760616934558; 
- Thu, 16 Oct 2025 05:15:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760616958; x=1761221758;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MG76ZHuOFDp9nKGKME0FcXDd+gBoTD4h2sGrYalA88M=;
+ b=qxyuOpuP+enTDp7dJwmsoeMKGMHKQ3xU/BLd23a3mO0Z6feGtyB6h6haFogQHJcLjZ
+ m/XcG4WZ+BevnMPluShRh5I9/tiipTWhERsafk/1vtaDbJYCcQGuOunLxO3yWPe1lTAH
+ 0s8dZyk8ZitFydwJd8kACbNeQvx59cObXFcli03/9H26DwXVB58Jf+AiZbMUuJKVtg9R
+ XyMeL3RjF5ANkYYfwWbScLf+ou30Z9dXGBsaQXJxjNsteFWTVfiEncj0gnK1qvoVVAUy
+ WDqsFdvFxquYO1ZEAL07Todv9qmeS5n8WSevWgs/K9IS3wZpwm82JhDLoooBdJxC0IFl
+ fvCw==
+X-Gm-Message-State: AOJu0YzaJ+y/KAKkJ4Emrq0WU1KMnuIuqs/Vdf1B+2Wl476MRBAUByz3
+ jq7YtYX3mf09GTjALyYROhw+JobA9FeYw+l5SwQj0RT9F6RmUKx7aXJBWRs1/mD00nc7Bl28gb+
+ AvgRzefI=
+X-Gm-Gg: ASbGnctDoQk5KiqJVhKVOnWB0CoAG9CcuTfT4Xg39RyklzpDybYE7skHoNc3kUs5pDn
+ SsH3P6eOj0b7A6syjRrlpeB0FQkvRB+x2MSae+HscyemhEJ1SDsCLRBFtSSjvpTGiB0Drv19QUj
+ C161cO8cw9UvYbjtvztrve6i6QpGq5zol8p78we48HHh42NX6Ujko3KT1eHe97HoNWFJvStZV1v
+ yPa4cD9Noeg/3d5X2LRjiQnkZyGEtS3CL590XA0ywpz+eTQy6efQ6+28JjVuaqvQVbQiwJfq7G0
+ Jc1xWsU8C4HXOYhxTybHXRyivmbkd376e06XjvjGdvo24EMIGgHzloq/zNNQbc6GOZFATfgvuRm
+ fRraDti2Oy6zfQXXtA0eV/CGBLSiGuoiHfVio/RN81Rj8ghCGup/YfspYvn76p6DXssVDitgYq9
+ g7/9z0FRWkYj7vajEBq1Wjb3WqY+hhlx9Ttw2kNMgLw5a4iXkMDUVTb7bZ3squEZro
+X-Google-Smtp-Source: AGHT+IHS+mX58Jt00ykWMbRmvqJX7+z2aYY7zipSA3uurbufZ1V5M5n/orSNMRsHc1fvhin2o1SDJA==
+X-Received: by 2002:a05:6000:420c:b0:3f4:5bda:271a with SMTP id
+ ffacd0b85a97d-42666ac39e4mr18682874f8f.6.1760616958303; 
+ Thu, 16 Oct 2025 05:15:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5cfe69sm35546984f8f.32.2025.10.16.05.15.33
+ ffacd0b85a97d-426e50ef821sm20293559f8f.38.2025.10.16.05.15.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:15:34 -0700 (PDT)
+ Thu, 16 Oct 2025 05:15:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/75] Misc single binary patches for 2025-10-16
-Date: Thu, 16 Oct 2025 14:14:16 +0200
-Message-ID: <20251016121532.14042-1-philmd@linaro.org>
+Subject: [PULL 05/75] target/hppa: Have hppa_form_gva*() return vaddr type
+Date: Thu, 16 Oct 2025 14:14:21 +0200
+Message-ID: <20251016121532.14042-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
+References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,183 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8109ebdb95c45d9062c7e6e7beae0ee571fca4f8:
+Return a 'vaddr' type for "guest virtual address".
 
-  Merge tag 'pull-loongarch-20251015' of https://github.com/bibo-mao/qemu into staging (2025-10-15 14:49:51 -0700)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251009101040.18378-3-philmd@linaro.org>
+---
+ target/hppa/cpu.h        | 8 ++++----
+ target/hppa/helper.c     | 4 ++--
+ target/hppa/mem_helper.c | 2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/single-binary-20251016
-
-for you to fetch changes up to 3b283e98d7f3b1cec795bfac0213265e41fbecfe:
-
-  mailmap: Unify Clément Mathieu--Drif emails (2025-10-16 14:08:44 +0200)
-
-----------------------------------------------------------------
-Various patches related to single binary work:
-
-- Remove some VMSTATE_UINTTL() uses
-- Replace target_ulong by vaddr / hwaddr / uint[32,64]_t
-- Expand TCGv to TCGv_i32 for 32-bit targets
-- Remove some unnecessary checks on TARGET_LONG_BITS
-- Replace few HOST_BIG_ENDIAN preprocessor #ifdef by compile-time if() check
-- Expand MO_TE to either MO_BE or MO_LE
-
-Also:
-
-- Fix HPPA FMPYADD opcode
-- Unify Clément Mathieu--Drif email addresses
-----------------------------------------------------------------
-
-Anton Johansson (1):
-  target/riscv: Use 32 bits for misa extensions
-
-Gabriel Brookman (1):
-  target/hppa: correct size bit parity for fmpyadd
-
-Philippe Mathieu-Daudé (73):
-  accel/tcg: Name gen_goto_tb()'s TB slot index as @tb_slot_idx
-  target/alpha: Access CPUState::cpu_index via helper
-  target/alpha: Replace VMSTATE_UINTTL() -> VMSTATE_UINT64()
-  target/hppa: Use hwaddr type for HPPATLBEntry::pa
-  target/hppa: Have hppa_form_gva*() return vaddr type
-  target/hppa: Explode MO_TExx -> MO_TE | MO_xx
-  target/hppa: Conceal MO_TE within do_load()
-  target/hppa: Conceal MO_TE within do_load_32/64()
-  target/hppa: Conceal MO_TE within do_store()
-  target/hppa: Conceal MO_TE within do_store_32/64()
-  target/hppa: Introduce mo_endian() helper
-  target/hppa: Replace MO_TE -> MO_BE
-  target/loongarch: Replace VMSTATE_UINTTL() -> VMSTATE_UINT64()
-  target/loongarch: Remove target_ulong use in gen_goto_tb()
-  target/loongarch: Remove target_ulong use in gdb_write_register
-    handler
-  target/loongarch: Do not use target_ulong type for LDDIR level
-  target/m68k: Remove unused @cpu_exception_index TCGv
-  target/m68k: Remove pointless @cpu_halted TCGv
-  target/microblaze: Remove target_ulong use in cpu_handle_mmu_fault()
-  target/microblaze: Remove target_ulong uses in
-    get_phys_page_attrs_debug
-  target/microblaze: Remove target_ulong use in gen_goto_tb()
-  target/microblaze: Remove target_ulong use in helper_stackprot()
-  target/microblaze: Have compute_ldst_addr_type[ab] return TCGv_i32
-  target/microblaze: Have do_load/store() take a TCGv_i32 address
-    argument
-  target/microblaze: Convert CPUMBState::res_addr field to uint32_t type
-  target/openrisc: Replace VMSTATE_UINTTL() -> VMSTATE_UINT32()
-  target/openrisc: Do not use target_ulong for @mr in MTSPR helper
-  target/openrisc: Remove unused cpu_openrisc_map_address_*() handlers
-  target/openrisc: Remove target_ulong use in raise_mmu_exception()
-  target/openrisc: Use vaddr type for $pc jumps
-  target/openrisc: Remove 'TARGET_LONG_BITS != 32' dead code
-  target/openrisc: Explode MO_TExx -> MO_TE | MO_xx
-  target/openrisc: Conceal MO_TE within do_load()
-  target/openrisc: Conceal MO_TE within do_store()
-  target/openrisc: Introduce mo_endian() helper
-  target/openrisc: Replace MO_TE -> MO_BE
-  target/openrisc: Inline tcg_gen_trunc_i64_tl()
-  target/openrisc: Replace target_ulong -> uint32_t
-  target/riscv: Replace HOST_BIG_ENDIAN #ifdef with if() check
-  target/rx: Replace target_ulong -> vaddr for translator API uses
-  target/rx: Use MemOp type in gen_ld[u]() and gen_st()
-  target/rx: Propagate DisasContext to generated helpers
-  target/rx: Propagate DisasContext to push() / pop()
-  target/rx: Propagate DisasContext to gen_ld[u]() and gen_st()
-  target/rx: Factor mo_endian() helper out
-  target/rx: Replace MO_TE -> MO_LE
-  target/rx: Expand TCG register definitions for 32-bit target
-  target/rx: Un-inline various helpers
-  target/s390x: Replace HOST_BIG_ENDIAN #ifdef with if() check
-  target/sh4: Convert CPUSH4State::sr register to uint32_t type
-  target/sh4: Remove target_ulong use in cpu_sh4_is_cached()
-  target/sh4: Use hwaddr type for hardware addresses
-  target/sh4: Remove target_ulong uses in superh_cpu_get_phys_page_debug
-  target/sh4: Use vaddr type for TLB virtual addresses
-  target/sh4: Remove target_ulong use in gen_goto_tb()
-  target/sparc: Reduce inclusions of 'exec/cpu-common.h'
-  target/tricore: Remove target_ulong use in gen_goto_tb()
-  target/tricore: Replace target_ulong -> vaddr with tlb_fill() callees
-  target/tricore: Remove target_ulong use in translate_insn() handler
-  target/tricore: Remove target_ulong use in gen_addi_d()
-  target/tricore: Remove unnecessary cast to target_ulong
-  target/tricore: Replace target_ulong -> uint32_t in op_helper.c
-  target/tricore: Declare registers as TCGv_i32
-  target/tricore: Inline tcg_gen_ld32u_tl()
-  target/tricore: Expand TCG helpers for 32-bit target
-  target/tricore: Pass DisasContext as first argument
-  target/tricore: Un-inline various helpers
-  target/tricore: Expand TCGv type for 32-bit target
-  target/xtensa: Replace legacy cpu_physical_memory_[un]map() calls
-  target/xtensa: Remove target_ulong use in xtensa_tr_translate_insn()
-  target/xtensa: Remove target_ulong use in xtensa_get_tb_cpu_state()
-  linux-user/microblaze: Fix little-endianness binary
-  mailmap: Unify Clément Mathieu--Drif emails
-
- target/alpha/helper.h                         |    1 +
- target/hppa/cpu.h                             |   10 +-
- target/loongarch/cpu-mmu.h                    |    2 +-
- target/loongarch/tcg/helper.h                 |    2 +-
- target/microblaze/cpu.h                       |    2 +-
- target/microblaze/helper.h                    |    2 +-
- target/microblaze/mmu.h                       |    2 +-
- target/openrisc/cpu.h                         |   31 +-
- target/openrisc/helper.h                      |    8 +-
- target/riscv/cpu.h                            |    4 +-
- target/sh4/cpu.h                              |    6 +-
- target/sparc/cpu.h                            |    1 -
- target/hppa/insns.decode                      |    8 +-
- linux-user/microblaze/elfload.c               |    3 +-
- target/alpha/machine.c                        |   34 +-
- target/alpha/sys_helper.c                     |    5 +
- target/alpha/translate.c                      |   11 +-
- target/arm/tcg/translate-a64.c                |    8 +-
- target/arm/tcg/translate.c                    |    8 +-
- target/avr/translate.c                        |    7 +-
- target/hexagon/translate.c                    |    8 +-
- target/hppa/helper.c                          |    4 +-
- target/hppa/mem_helper.c                      |    2 +-
- target/hppa/translate.c                       |   24 +-
- target/loongarch/cpu_helper.c                 |    2 +-
- target/loongarch/gdbstub.c                    |    2 +-
- target/loongarch/machine.c                    |    4 +-
- target/loongarch/tcg/tlb_helper.c             |    4 +-
- target/loongarch/tcg/translate.c              |    6 +-
- target/m68k/translate.c                       |   17 +-
- target/microblaze/helper.c                    |    3 +-
- target/microblaze/machine.c                   |    6 +-
- target/microblaze/mmu.c                       |    4 +-
- target/microblaze/op_helper.c                 |    4 +-
- target/microblaze/translate.c                 |   83 +-
- target/mips/tcg/translate.c                   |    7 +-
- target/openrisc/fpu_helper.c                  |    8 +-
- target/openrisc/machine.c                     |   20 +-
- target/openrisc/mmu.c                         |    7 +-
- target/openrisc/sys_helper.c                  |    7 +-
- target/openrisc/translate.c                   |  463 +-
- target/ppc/translate.c                        |    7 +-
- target/riscv/translate.c                      |    9 +-
- target/riscv/vector_helper.c                  |   32 +-
- target/rx/translate.c                         |  462 +-
- target/s390x/tcg/translate.c                  |    6 +-
- target/sh4/helper.c                           |   34 +-
- target/sh4/translate.c                        |   10 +-
- target/sparc/helper.c                         |    1 +
- target/sparc/int64_helper.c                   |    1 +
- target/sparc/translate.c                      |    6 +-
- target/tricore/cpu.c                          |    2 +-
- target/tricore/helper.c                       |    4 +-
- target/tricore/op_helper.c                    |  219 +-
- target/tricore/translate.c                    | 3978 +++++++++--------
- target/xtensa/cpu.c                           |    6 +-
- target/xtensa/translate.c                     |    2 +-
- target/xtensa/xtensa-semi.c                   |   11 +-
- .../tcg/insn_trans/trans_privileged.c.inc     |    2 +-
- target/riscv/insn_trans/trans_rvv.c.inc       |   16 +-
- target/s390x/tcg/translate_vx.c.inc           |    6 +-
- .mailmap                                      |    1 +
- target/hppa/trace-events                      |    6 +-
- 63 files changed, 2848 insertions(+), 2813 deletions(-)
-
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 869a75876e2..c652ef945ac 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -320,8 +320,8 @@ void hppa_translate_code(CPUState *cs, TranslationBlock *tb,
+ 
+ #define CPU_RESOLVING_TYPE TYPE_HPPA_CPU
+ 
+-static inline target_ulong hppa_form_gva_mask(uint64_t gva_offset_mask,
+-                                        uint64_t spc, target_ulong off)
++static inline vaddr hppa_form_gva_mask(uint64_t gva_offset_mask,
++                                       uint64_t spc, target_ulong off)
+ {
+ #ifdef CONFIG_USER_ONLY
+     return off & gva_offset_mask;
+@@ -330,8 +330,8 @@ static inline target_ulong hppa_form_gva_mask(uint64_t gva_offset_mask,
+ #endif
+ }
+ 
+-static inline target_ulong hppa_form_gva(CPUHPPAState *env, uint64_t spc,
+-                                         target_ulong off)
++static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
++                                  target_ulong off)
+ {
+     return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
+ }
+diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+index d7f8495d982..edcd2bf27c8 100644
+--- a/target/hppa/helper.c
++++ b/target/hppa/helper.c
+@@ -148,8 +148,8 @@ void hppa_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         m = UINT32_MAX;
+     }
+ 
+-    qemu_fprintf(f, "IA_F %08" PRIx64 ":%0*" PRIx64 " (" TARGET_FMT_lx ")\n"
+-                    "IA_B %08" PRIx64 ":%0*" PRIx64 " (" TARGET_FMT_lx ")\n",
++    qemu_fprintf(f, "IA_F %08" PRIx64 ":%0*" PRIx64 " (0x%" VADDR_PRIx ")\n"
++                    "IA_B %08" PRIx64 ":%0*" PRIx64 " (0x%" VADDR_PRIx ")\n",
+                  env->iasq_f >> 32, w, m & env->iaoq_f,
+                  hppa_form_gva_mask(env->gva_offset_mask, env->iasq_f,
+ 				    env->iaoq_f),
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index 9bdd0a6f23d..cce82e65999 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -803,7 +803,7 @@ void HELPER(diag_btlb)(CPUHPPAState *env)
+ 
+ uint64_t HELPER(b_gate_priv)(CPUHPPAState *env, uint64_t iaoq_f)
+ {
+-    uint64_t gva = hppa_form_gva(env, env->iasq_f, iaoq_f);
++    vaddr gva = hppa_form_gva(env, env->iasq_f, iaoq_f);
+     HPPATLBEntry *ent = hppa_find_tlb(env, gva);
+ 
+     if (ent == NULL) {
 -- 
 2.51.0
 
