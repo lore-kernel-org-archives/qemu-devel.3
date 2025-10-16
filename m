@@ -4,86 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EAE0CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9220DCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9MwN-00029J-TF; Thu, 16 Oct 2025 08:18:43 -0400
+	id 1v9Mw0-0001Uz-15; Thu, 16 Oct 2025 08:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MwG-000262-PH
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:36 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MwA-0008RV-9H
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:36 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-426edfffc66so428927f8f.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:18:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760617106; x=1761221906; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VQ2Gd5+2h6IYgns+2XMmOdyOU9XnsS3HXby7kOkNXdo=;
- b=Q6FrJg61sl+tzoHEJCzu3DXZKqYH8iDN2yWI9pbmHIAjOhjFBr/a7wmFJEMEqHwWJ1
- volQkGYW8F8T/Fc9IGUb8QDouKkd1BlboTgQWdt2WZ3vX/Yfk2ROxHMvGN7QhdLm0rKW
- txwX3RUf9mc6J4S4EBmk3HOscG1ffSrtaEGoXRRTUcDdiFRDtM+WtQD79bNCaEQcAbSj
- +q1V3BkkEwcT0JVuBQZXpcKOPdGFMk5PaR5olCbcMxCpL88kJ1gNLRVDAAiYqrrfRZ01
- KHuxRUDeIX/5qK97bqrn1cYuvesbqpb0RQ1Hex+wnIJth5hbMJnKK2AOlPtOZEBrOKA1
- +9nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760617106; x=1761221906;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VQ2Gd5+2h6IYgns+2XMmOdyOU9XnsS3HXby7kOkNXdo=;
- b=FkuUv94amYs+I6Xe6SAp1+LJYkZuiLC6OjNmb0fV4q9Ozd+Gu43t7BOIfqPSyO+8Jj
- Yoe11klf2BTfz35JrTvwAxO8UsJ70KIHeervsQBMcaREtXA+DNwTqej5vS3uxLXzVzvo
- vNACiIJ+kyJB/enVVsJLds8o+zgJnyNq0NvMEnI8AlqUx+Gtqvj2RpJqE8LXmmeq8WaM
- wI9i7MxjvVCCB24VOzGHLrfrScdHiLrZT/KRZ3y5VrhJ4o3yFM51Lm2oapQTfhsP+LEi
- gPhVARvUT+tVTeMvL750JkTEdTyAaMCXTcR8KRPtmt8mgu2TXxjiKQ9lcsc2gIEW9pif
- v4pw==
-X-Gm-Message-State: AOJu0YxrHQXe507uCaEUHgWklfPXcc4AloSccTLzcAuGGGvAfecnUtc+
- fhMxUbS5xYMeZz3UYyOW7x+ve6l3tgZUOUIqVWuqbb4b90u0qvxfW0IbbI04338wM72bqDeAD3o
- aMB0HMs0=
-X-Gm-Gg: ASbGnctqDVVaNdqVYYGjw1HPCgtejtWqt/uwJ0OyL3fimrWQScfk6dvzz/4m3M9znv9
- 3VRNpxdi/wHvMLKrThfD8Yjedf6NAi3k9cursbxYP1v2Epz3aWSF5q2kdWQ3CT9nGc2fXhDE06O
- H/4xlYlE/UO9fm4s/FcFJqIWvVN6eIaJls9WxF5+LoNCPOqSM9Xml0Xw1pMaapuiasQaz4nxqDG
- 3tMb2aloW077j8E4fDWriIwLRMcOrqdnEFWrwPqEEAu7o291cO+m8LvgT9lvP9VT2JHdcVP43vQ
- 4d2XavRpA7WyZcOl6paGo+5K+3Z3PGUzfQ7cC0Nw6Regq4aJyq/FtCY8HAPa8VGmM8IIA94P9u+
- LuLAFVZKobO6fr9Ne7jTas1CIjNASVdYHljy9DZ3NYftRcCnFWuewteftbZwHOc33PkYEYH1xVY
- mNWqusnMn6CxPziqlVfb0xF2vCt5Mi+/7qvhdJch9dWxKq65VGpAcohsL5XN7zd6tC
-X-Google-Smtp-Source: AGHT+IGtKFk982d94/g2zuIvTp969mKJfHlC4f3vxKfMMUZLU4USEFX9j+iE5sxyD3ubH9IgYGyIQg==
-X-Received: by 2002:a05:6000:2287:b0:425:7e33:b4a9 with SMTP id
- ffacd0b85a97d-42704a62705mr31853f8f.0.1760617106356; 
- Thu, 16 Oct 2025 05:18:26 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce57d404sm34778799f8f.3.2025.10.16.05.18.25
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:18:25 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 37/75] target/openrisc: Replace MO_TE -> MO_BE
-Date: Thu, 16 Oct 2025 14:14:53 +0200
-Message-ID: <20251016121532.14042-38-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
-References: <20251016121532.14042-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1v9MvX-0007xi-Bk; Thu, 16 Oct 2025 08:17:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1v9MvN-0008M2-PT; Thu, 16 Oct 2025 08:17:47 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GAHTeL021227;
+ Thu, 16 Oct 2025 12:17:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=wsJVKV2/dXHjBV4dZ
+ JEAzYUAvsft7J0SZdUtFRxu2+E=; b=cpBejVg0BSGXN2ZQFf6+ZNk/6ja6+5qdQ
+ x8SLJvakR5FFe8Sp0TTz4bu6lG28XlgjoauMiicVWZ7H5uyZPifecx8yOk/B6auw
+ lZkl5tgMTME2jDHTydv6fzYOWxyH1CxJRsy1fzZx41eD2uvzCr5gRR/i3XnyihjY
+ pLsORmzudEwJ52J+O3n59f6OJKwtAk7d4L1i2imEOCwMLyqbx7vVLUw6P2/dmzEo
+ uHJcbQ24YWRhv0jROklT2UT4p/MQipBBxx727c2hQ2Bo8ofAZgIveHmIppBmH7r2
+ dR2QzVKrwjNdcuEU5STYEPf4+OI7VtXllKuZNSm5J3haSABwj9mAQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew09cjt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 12:17:33 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GA85Cb003613;
+ Thu, 16 Oct 2025 12:17:32 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xy5q93-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 12:17:32 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59GCHS5j52101418
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Oct 2025 12:17:28 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 326EB2013C;
+ Thu, 16 Oct 2025 12:17:28 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EB8A2013B;
+ Thu, 16 Oct 2025 12:17:28 +0000 (GMT)
+Received: from a46lp68.lnxne.boe (unknown [9.152.108.100])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Oct 2025 12:17:28 +0000 (GMT)
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
+ Thomas Huth <thuth@redhat.com>
+Cc: Sebastian Mitterle <smitterl@redhat.com>,
+ qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
+ Michael Mueller <mimu@linux.ibm.com>
+Subject: [PATCH v3 2/2] tests/functional: add tests for SCLP event CPI
+Date: Thu, 16 Oct 2025 14:17:08 +0200
+Message-ID: <20251016121708.334133-2-shalini@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20251016121708.334133-1-shalini@linux.ibm.com>
+References: <20251016121708.334133-1-shalini@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nw6fqr9drwXML8DEYd6XpMe8h-0auhXP
+X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68f0e25d cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=WP5zsaevAAAA:8 a=ugThcBDMf7tpZusDcEcA:9 a=t8Kx07QrZZTALmIZmm-o:22
+ a=poXaRoVlC6wW9_mwW8W4:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX6GvvfXJPWB1T
+ kF3bWwsMNjh/bOTqDAMi3CqCzJr4F127VWbQ0YHY2bikqc08PB78g0SpkmdbrncwhYDCAbJQlOe
+ UIjsNhpVSwW0iylt1+NhsmzI5vhJXGLN4BURw5Aa/2IyEB6lZM4qUDQ5kDEMvnxdi2S3aFztVTr
+ KTCdGqzEjqMI/0PLN3n/2Bl/3QFxtMyom5yK4L1ZJVc0Ywyw+na+71BRTCirAaQDuZg4L4B7EDj
+ qnR36kevJZngp1apBwxpPinFI96Aeidb9IGYpI7ZMojD3ISLbjEX0rsIg3Ubv09VgxzJZRg7DAS
+ AhEKpnghGfnRyk2NLjyiUWspn+4yPFVDmxAQwhTHZQ06VnOWsIq4c+wTJl/6MT7EjFJb126zS6E
+ B6+bwQblnAp2g4Yaa9VC+dneLLxXLg==
+X-Proofpoint-GUID: nw6fqr9drwXML8DEYd6XpMe8h-0auhXP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,37 +122,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the OpenRISC targets using big endianness order:
+Add tests for SCLP event type Control-Program Identification.
 
-  $ git grep TARGET_BIG_ENDIAN configs/targets/or1k-*
-  configs/targets/or1k-linux-user.mak:2:TARGET_BIG_ENDIAN=y
-  configs/targets/or1k-softmmu.mak:2:TARGET_BIG_ENDIAN=y
-
-Therefore the MO_TE definition always expands to MO_BE. Use the
-latter to simplify.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251010070702.51484-12-philmd@linaro.org>
+Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 ---
- target/openrisc/translate.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/functional/s390x/test_ccw_virtio.py | 26 +++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-index 1a43e5ab6f7..3d9dfd663aa 100644
---- a/target/openrisc/translate.c
-+++ b/target/openrisc/translate.c
-@@ -61,7 +61,8 @@ typedef struct DisasContext {
+diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional/s390x/test_ccw_virtio.py
+index 453711aa0f..0455337856 100755
+--- a/tests/functional/s390x/test_ccw_virtio.py
++++ b/tests/functional/s390x/test_ccw_virtio.py
+@@ -15,6 +15,7 @@
+ import tempfile
  
- static inline MemOp mo_endian(DisasContext *dc)
- {
--    return MO_TE;
-+    /* The SR_LEE bit sets the (little) endianness, but we don't implement it. */
-+    return MO_BE;
- }
+ from qemu_test import QemuSystemTest, Asset
++from qemu_test import exec_command
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test import wait_for_console_pattern
  
- static inline bool is_user(DisasContext *dc)
+@@ -270,5 +271,30 @@ def test_s390x_fedora(self):
+                         'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
+                         ' sleep 1 ; done', 'Start virtcrypto_remove.')
+ 
++        # Test SCLP event Control-Program Identification (CPI)
++        cpi = '/sys/firmware/cpi/'
++        sclpcpi = '/machine/sclp/s390-sclp-event-facility/sclpcpi'
++        self.log.info("Test SCLP event CPI")
++        exec_command(self, 'echo TESTVM > ' + cpi + 'system_name')
++        exec_command(self, 'echo LINUX > ' + cpi + 'system_type')
++        exec_command(self, 'echo TESTPLEX > ' + cpi + 'sysplex_name')
++        exec_command(self, 'echo 0x001a000000060b00 > ' + cpi + 'system_level')
++        exec_command_and_wait_for_pattern(self,
++                                          'echo 1 > ' + cpi + 'set', ':/#')
++        try:
++            event = self.vm.event_wait('SCLP_CPI_INFO_AVAILABLE')
++        except TimeoutError:
++            self.fail('Timed out waiting for the SCLP_CPI_INFO_AVAILABLE event')
++        ts = self.vm.cmd('qom-get', path=sclpcpi, property='timestamp')
++        self.assertNotEqual(ts, 0)
++        name = self.vm.cmd('qom-get', path=sclpcpi, property='system_name')
++        self.assertEqual(name.strip(), 'TESTVM')
++        typ = self.vm.cmd('qom-get', path=sclpcpi, property='system_type')
++        self.assertEqual(typ.strip(), 'LINUX')
++        sysplex = self.vm.cmd('qom-get', path=sclpcpi, property='sysplex_name')
++        self.assertEqual(sysplex.strip(), 'TESTPLEX')
++        level = self.vm.cmd('qom-get', path=sclpcpi, property='system_level')
++        self.assertEqual(level, 0x001a000000060b00)
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
-2.51.0
+2.49.0
 
 
