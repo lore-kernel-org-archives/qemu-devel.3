@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4096FCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 20:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A173CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 20:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9U9b-0005qT-8X; Thu, 16 Oct 2025 16:00:51 -0400
+	id 1v9UTC-0005Zf-NJ; Thu, 16 Oct 2025 16:21:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v9U9P-0005nu-3V
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:00:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v9UT7-0005YQ-TG
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:21:03 -0400
+Received: from npq-east2-cluster1-host4-snip4-2.eps.apple.com ([57.103.77.15]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v9U9I-0006dX-5G
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:00:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760644830;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2ptAYzZTByvIFXFSmnEJDlbalMqQ0HX0+OaeL5uN8yg=;
- b=M9c5rQLeFpx1+2j4B1YzAYYPpjmwag6NVlGwpVPdlckQqiG31n6+JhWWKOHZFM+tTIYGLe
- nyqa2uf7ODCsSEwHT+9IUr/i5h7uAytANEXW0C0EwYr7+OdZuZ+UhawJHtd2JR23yWXf/s
- +hmsPW2F90VLEvt5XELH5/lGqDoqBDI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-Ew8SxEQwMXOG9j52AF9y0A-1; Thu,
- 16 Oct 2025 16:00:26 -0400
-X-MC-Unique: Ew8SxEQwMXOG9j52AF9y0A-1
-X-Mimecast-MFC-AGG-ID: Ew8SxEQwMXOG9j52AF9y0A_1760644825
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A212319560B8; Thu, 16 Oct 2025 20:00:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4795519560B4; Thu, 16 Oct 2025 20:00:18 +0000 (UTC)
-Date: Thu, 16 Oct 2025 21:00:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- mst@redhat.com, jasowang@redhat.com, farosas@suse.de,
- sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
- davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-Message-ID: <aPFOz8sb41ON8UHr@redhat.com>
-References: <aO_ll4Lf0bq6vgdm@x1.local>
- <3b9f1da4-6264-45d4-ade1-a6273cc6fa1e@yandex-team.ru>
- <aO_--QWDJO7iOhR4@x1.local>
- <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
- <aPCtkB-GvFNuqlHn@redhat.com>
- <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
- <aPE8Oo5D3oesB7sV@x1.local> <aPE-vmyg1mLDO4pf@redhat.com>
- <aPFFSVJ8iCn8zaSV@redhat.com> <aPFJ16QZ7m_7h_kM@x1.local>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1v9UT5-0000x7-Em
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:21:01 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPS id
+ 6446318005FE; Thu, 16 Oct 2025 20:20:57 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=aRq3YU5535mG5uSPAFBSlmsbBJkL1R5+IAqIsTf/zZw=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=Q5Kmf2c2LdGezhxzE/ZBDH5dAE+7LDDxcHNt9UwEuQNGNZViB26aJEMT3KAaLmC2SSsLH8x4Y1nNuFBbn7gTRvkbB+1ANf5gNQZTLy7ncr6gWwh4eImz8U5mT1+/ngdgf0RP3jbQhfTowsJErpmoJSV6E9nEQUKzBEDV/Ui2lG666RkfW86T2zXAmrWhWyWhsCqNnTJNE1HFdD8eSLMhbIlfyAhOKZg9+6dAfINeRpku/olTYPWjyUkhJ3D0wxKcxPxQ/+l+5ya7CypePaT7ANA4ax4GeAOtrt6Lq6bV8GSGSjFHnbZo8Nd4n0OHFqeRCpswZ6j3KA7jRYaSwW3MBA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPSA id
+ 6C1CF18002F6; Thu, 16 Oct 2025 20:20:50 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v9 02/24] accel/system: Introduce hwaccel_enabled() helper
+Date: Thu, 16 Oct 2025 22:20:22 +0200
+Message-ID: <20251016202044.75261-3-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251016202044.75261-1-mohamed@unpredictable.fr>
+References: <20251016202044.75261-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aPFJ16QZ7m_7h_kM@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: lsNe0lHgjcNVy_cnFFeQXn3h1LeDuTFd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDE1MSBTYWx0ZWRfX7wplO7uq0zvI
+ FQ/06r+hxWefs72wyXV1Ee48WIbeDHOe3JafERcVkVs2nEc681SkErY38W5YB/Eh0mRjT3ecLl3
+ Z8rg21+h/XX4LcO8rJ/221xqXv3iPQjAudtwiGB1HPXhLQsL5Eo5Wd568tOlww3jAEJ/82td35o
+ YxjWd4XaCDnGs15/pYHeLRvJaRoSA1x4KyCkJzyn3Bi19UJJYqv0G3U66TuOHIPs3c0oLaitSsm
+ rDoQa0fJJm0Zmw/7Hm066KJoDrdPjfX5v542FgCVPTRvgD5I+IS3UQ5a9V2658es4/il2RhvQ=
+X-Proofpoint-GUID: lsNe0lHgjcNVy_cnFFeQXn3h1LeDuTFd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_04,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0 mlxlogscore=999
+ phishscore=0 mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2510160151
+X-JNJ: AAAAAAABMqHCHrhiGcn/ZdyUuy4d4ZoGQOKtR0E2CDrv3ZrPu8A0hu4+NQNWoRTMGRw84Ukel4wyw5uKXtqrhWkNiW1t6ty9kinFAgwCIeuqyGY2x2l909QBb9ip5prwANJdr5gR6xZr4pwdpRZkmbMHdgFDFqDqlLKKQEXkxd/nxi8fiFC47xmb4V0VpE1wUfQFUMM+6krHqtGvaLRupIq2DfANORa/Oda7/fKvzY59eRlS7ySc0LeBDTRWWGejL8EDLCE49R5NNGH+ptQrlugvIgGOn1RQpvxkVC65Cxc6cZJQfjb0OfrpVEugiSmMwLUhOa7xINnXAkKGYU5cn9cK+80Wej3kVtjO+hCUXJka9s/5qVCDfqCDufIHoJLCtl70j0hHgojIhVLug9qqT9EY4G2EgWp8+kz4Qk4M1N0d4U5NHfRE9vD+TgnXPzZSmiitn/72bqmuffZCbgs2oURmhQ7aUv7K2mS9kILi/KkHAGGSVZNM/lEMX59mh0fab/C1o/jhdc605noUG3kycyuSaoQXPsIfOoULNH/6g8hKWQUnrSxT56hW4hbP1F6u0lcDYqQcgLA825h08A+ztjzi0/6t/mOwEV43fSLKzTagvbUABninybBjtj1wE5u0XQlA+P6zEIe8/YEjVLJbrxar3Shxxj4Je6pNoapsZ/HHMYpdvPWRdLA2Onrq
+Received-SPF: pass client-ip=57.103.77.15;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,79 +87,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 16, 2025 at 03:39:03PM -0400, Peter Xu wrote:
-> On Thu, Oct 16, 2025 at 08:19:37PM +0100, Daniel P. Berrangé wrote:
-> > On Thu, Oct 16, 2025 at 07:51:42PM +0100, Daniel P. Berrangé wrote:
-> > > On Thu, Oct 16, 2025 at 02:40:58PM -0400, Peter Xu wrote:
-> > > > On Thu, Oct 16, 2025 at 12:23:35PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > On 16.10.25 11:32, Daniel P. Berrangé wrote:
-> > > > > > On Thu, Oct 16, 2025 at 12:02:45AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > > > 1. Remote migration: we can't reuse backends (files, sockets, host devices), as
-> > > > > > > we are moving to another host. So, we don't enable "backend-transfer". We don't
-> > > > > > > transfer the backend, we have to initialize new backend on another host.
-> > > > > > > 
-> > > > > > > 2. Local migration to update QEMU, with minimal freeze-time and minimal
-> > > > > > > extra actions: use "backend-transfer", exactly to keep the backends
-> > > > > > > (vhost-user-server, TAP device in kernel, in-kernel vfio device state, etc)
-> > > > > > > as is.
-> > > > > > > 
-> > > > > > > 3. Local migration, but we want to reconfigure some backend, or switch
-> > > > > > > to another backend. We disable "backend-transfer" for one device.
-> > > > > > 
-> > > > > > This implies that you're changing 'backend-transfer' against the
-> > > > > > device at time of each migration.
-> > > > > > 
-> > > > > > This takes us back to the situation we've had historically where the
-> > > > > > behaviour of migration depends on global properties the mgmt app has
-> > > > > > set prior to the 'migrate' command being run. We've just tried to get
-> > > > > > away from that model by passing everything as parameters to the
-> > > > > > migrate command, so I'm loathe to see us invent a new way to have
-> > > > > > global state properties changing migration behaviour.
-> > > > > > 
-> > > > > > This 'backend-transfer' device property is not really a device property,
-> > > > > > it is an indirect parameter to the 'migrate' command.
-> > > > 
-> > > > I was not seeing it like that.
-> > > > 
-> > > > I was treating per-device parameter to be a flag showing whether the device
-> > > > is capable of passing over FDs, which is more like a device attribute.
-> > 
-> > Whether a backend is technically capable of transfer shouldn't require a
-> > user specified property - there should be an internal API to query whether
-> > the current backend configuration is transferrable or not, based on the
-> > code implementation. Allowing a mgmt app to specify this can only lead
-> > to mistakes, because they don't know the internal constraints of the
-> > implementation.
-> > 
-> > The mgmt app should only be concerned with whether they want to transfer
-> > a backend or not which is a time-of-use decision rather than launch time
-> > decision.
-> 
-> IMHO the per-device property, when available, should always mean it fully
-> support the feature, when it is turned ON.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-That can't be expressed in a property in the device.
+hwaccel_enabled() return whether any hardware accelerator
+is enabled.
 
-Consider the virtio-net device.  The backend transfer is only
-possible of the virtio-net is associated with a netdev using
-the vhost-user backend, and the vhost-user backend must be
-using a chardev with a socket backend, and the socket backend
-must not have TLS or websockets enabled.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/system/hw_accel.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Migratability of the backend requires an API against the
-NetClientInfo object, which will in turn require calling
-out to an API against the Chardv object.
-
-
-With regards,
-Daniel
+diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
+index 55497edc29..628a50e066 100644
+--- a/include/system/hw_accel.h
++++ b/include/system/hw_accel.h
+@@ -40,4 +40,17 @@ void cpu_synchronize_pre_loadvm(CPUState *cpu);
+ void cpu_synchronize_post_reset(CPUState *cpu);
+ void cpu_synchronize_post_init(CPUState *cpu);
+ 
++/**
++ * hwaccel_enabled:
++ *
++ * Returns: %true if a hardware accelerator is enabled, %false otherwise.
++ */
++static inline bool hwaccel_enabled(void)
++{
++    return hvf_enabled()
++        || kvm_enabled()
++        || nvmm_enabled()
++        || whpx_enabled();
++}
++
+ #endif /* QEMU_HW_ACCEL_H */
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.50.1 (Apple Git-155)
 
 
