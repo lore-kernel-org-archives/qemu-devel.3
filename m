@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE13CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 07:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F3ACCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 07:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9IO5-0007W6-7O; Thu, 16 Oct 2025 03:27:01 -0400
+	id 1v9IUe-0000Du-18; Thu, 16 Oct 2025 03:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1v9IO2-0007VV-OE
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:26:59 -0400
-Received: from mail.8bytes.org ([85.214.250.239])
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1v9IUT-0000DK-DD
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:33:41 -0400
+Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1v9INv-0003Jz-OH
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:26:58 -0400
+ (envelope-from <joro@8bytes.org>) id 1v9IUO-0003uV-Ic
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:33:36 -0400
 Received: from 8bytes.org (p549214ac.dip0.t-ipconnect.de [84.146.20.172])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id BBA7C583C8;
- Thu, 16 Oct 2025 09:26:47 +0200 (CEST)
+ by mail.8bytes.org (Postfix) with ESMTPSA id 1E8125819E;
+ Thu, 16 Oct 2025 09:33:28 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
- s=default; t=1760599607;
- bh=oPHASgBJdp2YQpxgFo3iZagWHBBvcIXbuFbVs8R5f3s=;
+ s=default; t=1760600008;
+ bh=BBPLelYhjpWbyLFzeUNZEDt8AdBmWPq1e+jpgTAuzB4=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=qzzCVLi9hnOj5twx11gfP7Yen2bBmZUxFGO80DGM61vcnIafkyy3f9asAcyRwHSj/
- OL23uwDoUdtpodzP+YBUfeprxRv0pu8J+8Co3niiRUf8RGGcBRt1K1DMZKmXtTfR4i
- ZDUj2wSQ3yLYwvzzHCPdPnhEa5sy3RtwqzGBFJ7SOW9o10qCK4Fx0eez9s7PiHmW8k
- hqTVntkRenO2/JTzytep5QkpIONfwAgQLdJICHpIvqZj2A6W/4MZjPLlbUqLrVAXUQ
- 1/mwY0dXm8b9RKgg/kwvU72nv+DbJuLI2GKVJ5XvoWmbE/6LPSKB2Mdktn5frhP8TY
- vNlH5UNpbEJlA==
-Date: Thu, 16 Oct 2025 09:26:46 +0200
+ b=jqc13Qjh7p02MklKhhZPujNofTFA0+S+2vibxU5dK8HiqvDC7wizms9JbtlGeQdfJ
+ 46hEbmofhLZ9NMk4sHtdlMTWrKogEcN30XCrIQpsz6pR+i1ftd7bW3F6Ark5GzEfWO
+ UQA4PgGiCqeQD+UdikIJaKUBdlwQAYz8Mo5HA8lXFEy8l1mviPmIYvTkQ2wcfHLZBn
+ Vi8bBs2rKkrgEQqSAVpZJvmwTh2szMfTiyTTTxsDP8es4PiSsndcETaKMufmgee3w5
+ 1+LO3jEIQcOjbGLbhdvW2RvPsDPeO0zdPz1bgWOgJLeSWERts7wkKIZ1dR8wuLoidt
+ zmUIJ3K9Xi/5g==
+Date: Thu, 16 Oct 2025 09:33:26 +0200
 From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
 To: Luigi Leonardi <leonardi@redhat.com>
 Cc: coconut-svsm@lists.linux.dev, qemu-devel@nongnu.org, 
  Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
  Oliver Steffen <osteffen@redhat.com>
 Subject: Re: SVSM device assignment: device tree support
-Message-ID: <ybpr7ctlwxzadwzhzmgxkycwcvnisloujq6wuvirdnokfnae2b@2wtitjynh325>
+Message-ID: <pvxuvrkfkyyuhj4ck4x2vqs5663v2axtvnblq6r46vsohqmmp7@bym5ooygzdlx>
 References: <CANo9s6kqgmSa4w-DkSRDqRw9gw0dBEmaM4yenczA+1uh6ZL9Pw@mail.gmail.com>
+ <ybpr7ctlwxzadwzhzmgxkycwcvnisloujq6wuvirdnokfnae2b@2wtitjynh325>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CANo9s6kqgmSa4w-DkSRDqRw9gw0dBEmaM4yenczA+1uh6ZL9Pw@mail.gmail.com>
-Received-SPF: pass client-ip=85.214.250.239; envelope-from=joro@8bytes.org;
- helo=mail.8bytes.org
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ybpr7ctlwxzadwzhzmgxkycwcvnisloujq6wuvirdnokfnae2b@2wtitjynh325>
+Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
+ envelope-from=joro@8bytes.org; helo=mail.8bytes.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,26 +72,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Luigi,
+Should also add the Github link:
 
-On Thu, Oct 09, 2025 at 03:20:08PM +0200, Luigi Leonardi wrote:
-> -machine [..] svsm-bus=bus1
-> -device virtio-blk-device,drive=svsm_storage,id=dev1
-> -object svsm-devices,id=bus1,devices=dev1,dev2,dev3
+	https://github.com/joergroedel/qemu/tree/planes
 
-As discussed in the meeting yesterday, here is my current in-progress
-development branch for planes. It contains the Machine and QDEV properties to
-assign planes to devices.
-
-The commits you likely need:
-
-97a524149cc1 qdev: Add plane property
-dc9cfd1e2e81 hw/core/machine: Add device-plane property
-
-Let me know if those work for you, and feel free to ignore the rest in this
-branch.
-
-Thanks,
-
-	Joerg
+On Thu, Oct 16, 2025 at 09:26:47AM +0200, Jörg Rödel wrote:
+> Hey Luigi,
+> 
+> On Thu, Oct 09, 2025 at 03:20:08PM +0200, Luigi Leonardi wrote:
+> > -machine [..] svsm-bus=bus1
+> > -device virtio-blk-device,drive=svsm_storage,id=dev1
+> > -object svsm-devices,id=bus1,devices=dev1,dev2,dev3
+> 
+> As discussed in the meeting yesterday, here is my current in-progress
+> development branch for planes. It contains the Machine and QDEV properties to
+> assign planes to devices.
+> 
+> The commits you likely need:
+> 
+> 97a524149cc1 qdev: Add plane property
+> dc9cfd1e2e81 hw/core/machine: Add device-plane property
+> 
+> Let me know if those work for you, and feel free to ignore the rest in this
+> branch.
+> 
+> Thanks,
+> 
+> 	Joerg
 
