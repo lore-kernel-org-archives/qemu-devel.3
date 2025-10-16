@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4E0CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA3EBCCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9RIX-000162-Uy; Thu, 16 Oct 2025 12:57:55 -0400
+	id 1v9RIA-0000y2-Qh; Thu, 16 Oct 2025 12:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v9RIW-00015P-JP
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:57:52 -0400
-Received: from p-east2-cluster1-host1-snip4-7.eps.apple.com ([57.103.76.30]
+ id 1v9RI7-0000wx-SA
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:57:27 -0400
+Received: from p-east2-cluster1-host4-snip4-10.eps.apple.com ([57.103.76.23]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v9RI6-0001cI-9F
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:57:52 -0400
+ id 1v9RHu-0001aX-IR
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:57:27 -0400
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPS id
- EF672180075F; Thu, 16 Oct 2025 16:57:17 +0000 (UTC)
+ 2606918001FD; Thu, 16 Oct 2025 16:57:09 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=AZVyyBW9yXgsaeulA1YXhH/G5izca99gWRDYt1AsjCw=;
+ s=sig1; bh=h7u/XWsux0pmMZnA7+paR99F4ZhLVNBkIu/tmCtAH0I=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=LJxk1oU/PhdViyEgTOpI+H6Q6yhgQvte58YjngC0iV9JGb3b9f3KoBf4UtITIn8kJIkqoT7r3M2HKfq6qLHty8OvyG4eofaTnUY/4FXQx+vb8LsCZ4Rdm0c9Bq6WTtgDjTTng+hYzd3Wfah4NdlQX9Un5yKD0ja5loqkaUbGg0v7USVGg4CuR8PkiLiDCvjHhexhWOGqzDLmhSaZjZdNts2ftXs52q4ZnqBVMWnjh1KVWIBB/u+65qwXShfeWE5qDlmJJ08rF/VvoJPh43AwLiRnL5VqpprOdXXowQZyxxdiApIRLs1iVca81VpScTfneF1a2y1c/Z2kcSAtf18ymQ==
+ b=GxHSKKP5KfdhVWTmVMHw3jnFn1icmcpaUD4AkHd5J4a/5DL9r4L4f7UqPpyROS6voss6jzEIbNLr/Z1S/wob2rlIVqnftqdWIK/YF253oAH+5y2TyY8qLbzJDzA0az/PlRPHnfLWGzgc0nFUA9FFFAq+Q+3ESaSCSVQpln9Nlyu1yvW9KMr/7ImhKfaUfBe/OQBmf7mgzliJbRUANOsg86/VuWq15j0EkAC6Yq3ani2z3WjA9T+IO7mW1wjYEWNoDzviZaPspiHum8Ofbo6b4wxAS7NfCrwrs3/JHRkKQcj+40qhY003yY5yzT9oChSJTBlVirxWT1QShfcAypatbQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPSA id
- 02D7118000A3; Thu, 16 Oct 2025 16:56:10 +0000 (UTC)
+ 30FF318024C9; Thu, 16 Oct 2025 16:55:57 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>,
@@ -53,38 +53,40 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v7 14/24] target/arm: cpu: mark WHPX as supporting PSCI 1.3
-Date: Thu, 16 Oct 2025 18:55:10 +0200
-Message-ID: <20251016165520.62532-15-mohamed@unpredictable.fr>
+Subject: [PATCH v7 10/24] hw, target,
+ accel: whpx: change apic_in_platform to kernel_irqchip
+Date: Thu, 16 Oct 2025 18:55:06 +0200
+Message-ID: <20251016165520.62532-11-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251016165520.62532-1-mohamed@unpredictable.fr>
 References: <20251016165520.62532-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: JsCEOPQOJ2dsSIDOxlHrsbL5OsLuv_dQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDEyMiBTYWx0ZWRfX92gxmSv9O7po
- C31ioFjC667O407rDAP+I7esduqWKOQeqt4r/HF1vflt5nnHtAha1jNxXz8zux2fqzkt3Ns338Z
- Ij3oZV1di3pfaBXOqCLreV/sTAsK/ft4QW+HBg4Thzo5iDP7Gu5nZ3n+kaOe520JwiYhf42SA+9
- 9Ipr5n48NSu5gESRATmkDFudtl6ToFJ0afQhHMrgNZ30j2931jzSg1LU7sfDjbetvrZxT7Jr46C
- wCzmig9EXFd7sA2y1ufVLu3IxbTpMPLydSBDADnWX+z4vFZzKHdmo4rlh9DeVsRW6Cour6n1g=
-X-Proofpoint-GUID: JsCEOPQOJ2dsSIDOxlHrsbL5OsLuv_dQ
+X-Proofpoint-ORIG-GUID: bNNSvIik7Ue097Ccdwp2dYK7CeAQcsAP
+X-Proofpoint-GUID: bNNSvIik7Ue097Ccdwp2dYK7CeAQcsAP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDEyMyBTYWx0ZWRfX5sEZ/CG/5J6E
+ ioC8LiV6uVceX5Gs06uMbiGwECs5U0DH6EPFxtnThYEq6eGFblYra5oAVonjF1chQqNY0EhPZoz
+ 2DFv75iZSk9S7c4U1Sma46YXOYAcLEaoCDk9gGJSedSAsLtlUW0FJ3H6Ex3lE4o9/IL3cJOIdp9
+ j7w6cXOwT2bnsmCDUpkL0aGCq+BwNfRlSDEQffe/b9RoXasU+wqLwRhbZE72QKZlPGqzJalPb+l
+ ZfNgkLbhdPP/7XFTgMe2GhAQGqPRHLYB4TDue4ocn+tivlEvOEl5HP/ecsTQn2wCf+iwNUau4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=906 bulkscore=0
- malwarescore=0 spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2510160122
-X-JNJ: AAAAAAABiyYFN1ylLz9x2kQJNEPRbUP3xlqwEVogXRXR2ZOOevjA+VJdwIaZ9iGcCDVM5Vc2oHYBKP+ZFCLIEMpbmtDSPhtW5ml/A/715zWSn1yLhgvg2vWw67NhoDXOuWeHdSd8CzSyqearBtLfqxeX/VpHSQwQI8CvTT4/sSAtcZZCyUARmProdzfBj5iq51c8uVCz7ugM/nzlLNNPORH6CH/TBwI06KA+syC0D6D9phEsVNpH8uV9acqg+FOQYrNewslELwyprxF+370b4odbLc1To8piL9ppJS7fHBBccT7mxpj2+qNFyCRpoudFaMtOQ9jRfMgLRbzgeivuotc7kvVnerjgd/D8J7B8TLMx5RAmQAUqOvQZkCKXjSpMHZrm0PU3H91/jf5ek7uSgOZVAujRQ2lAieMh6TULbwZrG1KguYI2l0KcpVaKwJuNNwFSsPZHomXub2R8yu2Pe7ambQ+zkOf86f/c6vHGwnNMqZwPlYsZ7suy0NWJh2sF2Y+e19CyK0vXzgMojU7xN5Mwj38ZLbgOsFOGstZaozB9qyc7j2epK6ijJwL7qunQWjR6LIhhwfrgu95lFoR+/aJjolZSkr3QHHlxU4YLx8NxQhOAr/NwnO0Bft4dXic1MQ7H8CnduPme1FFXlGR7TRKfTbGK6LjFahqZCZsCko7Ib5XdcR+3wzXfKm4ikUJw3c8Az2v+dBa4CDY+TPpQB4VC5E1dZDDl5uQKPZ5IS5ndv2kqCGgMmKLk4z1eW4syWB9S52H9kJlxJbD48HDYux31b8QA+T7tprYxmeRnA6d8mxeHFWKETH01icXv6hNeE+yFfwl85K5BhBavLa/kpLw8SRAyAGyjpC9U4OjDqOqb04k9RmeuXIpoeseRDaxvMAlNp25psLqXjXcdnXTArcARzPR0ud6rsLB/EXMdkA3VYsXGHinUaZW9gRY/8Vc=
-Received-SPF: pass client-ip=57.103.76.30;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ phishscore=0 mlxlogscore=999 mlxscore=0 clxscore=1030 bulkscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2510160123
+X-JNJ: AAAAAAABg3kEB3Drvjcchx/D8pXJbOWXPSRCp646G7z8pQnooXrmfVOmUjllUzjsUxqaX1z9E15KgZfqmInD4lip4/veg19NR5Rg8tLuzQuJ2Qvr2NYPhhucgn0fQZxGSAYZZuJhhaC7LgpK2Jk6wSgTuA2n+Gw5Apy5vZkaD8meOyvWoQT5524si4n6DYUHQro5EKFIIca9FJHnwgss9RW5EKLr4o0VGw9OP8ybz7Kl7dejQ/JLAO/52rClr8msJQNPw8u4UiirEihHtsyuWuh6LnyAL18RuFkI5zVTOhrRr4izOahdFrcRUIb3QAKMqoTKriXb9eLRkUZqeQLAXtJhnwhHeqoeHPv51OixeWvRArTUp6KV7sGjwrHqrTZxUKjNUIMUZZNceA6Ixl3zZZcF4N00V2hIPWlJ3LIW7WzP56hRFApFLKJnJXV2ba+7qm0s6E/Qp5uqDhuRM0gjZcBVo5hRyH6yfU37m+1qKU0yx1w0+YOgXF+GDTflI/RmOe4tsxi7YP4UsyDouZktzsJ1OHFpE0/D6RDzOERBOFvYrb1w5ugB+I4FYffX4JjDauJwJVcy52KVx08XIAmWCAmpbdeGRp8BoyDKCCXJw2AOm3I1BSyxecYJJZASWAkBymw8rr0UWEy5fo6GZ75zvc7DbQf1WwRSIt/CDbar8/wEse7v52bKf2DBfpotU0xvHgeRxdEz4qAqOw17haPwUfSpFHghtmjyd9nX5nV7YyBSENFGqK5hhCagb3dYTHvOWPwn2ZspHb1rV/6Nyu69vw97jwY+lTnOWqtCfqq1mS4hptxe76bzVe6JitX9QLF5d9Hiptc1TEH1xLJuEJjoloMiv8iee7b2VAWb+UuE4Gqu7X5TWy0MYwj+lgtboND3Mp2cGciEabZ+wuap4pL0bA2Au4fdfjQNW9Q8knpT
+Received-SPF: pass client-ip=57.103.76.23;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,37 +102,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hyper-V supports PSCI 1.3, and that implementation is exposed through
-WHPX.
+Change terminology to match the KVM one, as APIC is x86-specific.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ accel/whpx/whpx-accel-ops.c    |  2 +-
+ accel/whpx/whpx-common.c       |  4 ++--
+ hw/i386/x86-cpu.c              |  4 ++--
+ include/system/whpx-internal.h |  2 +-
+ include/system/whpx.h          |  4 ++--
+ target/i386/cpu-apic.c         |  2 +-
+ target/i386/whpx/whpx-all.c    | 14 +++++++-------
+ 7 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 3b556f1404..bf25b3580e 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/timer.h"
- #include "qemu/log.h"
- #include "exec/page-vary.h"
-+#include "system/whpx.h"
- #include "target/arm/idau.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-@@ -1140,6 +1141,8 @@ static void arm_cpu_initfn(Object *obj)
-     if (tcg_enabled() || hvf_enabled()) {
-         /* TCG and HVF implement PSCI 1.1 */
-         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
-+    } else if (whpx_enabled()) {
-+        cpu->psci_version = QEMU_PSCI_VERSION_1_3;
-     }
+diff --git a/accel/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
+index c84a25c273..50fadea0fd 100644
+--- a/accel/whpx/whpx-accel-ops.c
++++ b/accel/whpx/whpx-accel-ops.c
+@@ -78,7 +78,7 @@ static void whpx_kick_vcpu_thread(CPUState *cpu)
+ 
+ static bool whpx_vcpu_thread_is_idle(CPUState *cpu)
+ {
+-    return !whpx_apic_in_platform();
++    return !whpx_irqchip_in_kernel();
  }
+ 
+ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index c0ff6cacb8..18d93225c1 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -496,9 +496,9 @@ static const TypeInfo whpx_cpu_accel_type = {
+  * Partition support
+  */
+ 
+-bool whpx_apic_in_platform(void)
++bool whpx_irqchip_in_kernel(void)
+ {
+-    return whpx_global.apic_in_platform;
++    return whpx_global.kernel_irqchip;
+ }
+ 
+ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/i386/x86-cpu.c b/hw/i386/x86-cpu.c
+index c876e6709e..778607e7ca 100644
+--- a/hw/i386/x86-cpu.c
++++ b/hw/i386/x86-cpu.c
+@@ -45,7 +45,7 @@ static void pic_irq_request(void *opaque, int irq, int level)
+ 
+     trace_x86_pic_interrupt(irq, level);
+     if (cpu_is_apic_enabled(cpu->apic_state) && !kvm_irqchip_in_kernel() &&
+-        !whpx_apic_in_platform()) {
++        !whpx_irqchip_in_kernel()) {
+         CPU_FOREACH(cs) {
+             cpu = X86_CPU(cs);
+             if (apic_accept_pic_intr(cpu->apic_state)) {
+@@ -71,7 +71,7 @@ int cpu_get_pic_interrupt(CPUX86State *env)
+     X86CPU *cpu = env_archcpu(env);
+     int intno;
+ 
+-    if (!kvm_irqchip_in_kernel() && !whpx_apic_in_platform()) {
++    if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
+         intno = apic_get_interrupt(cpu->apic_state);
+         if (intno >= 0) {
+             return intno;
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index e57d2c8526..366bc525a3 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -42,7 +42,7 @@ struct whpx_state {
+ 
+     bool kernel_irqchip_allowed;
+     bool kernel_irqchip_required;
+-    bool apic_in_platform;
++    bool kernel_irqchip;
+ };
+ 
+ extern struct whpx_state whpx_global;
+diff --git a/include/system/whpx.h b/include/system/whpx.h
+index 00f6a3e523..98fe045ba1 100644
+--- a/include/system/whpx.h
++++ b/include/system/whpx.h
+@@ -26,10 +26,10 @@
+ #ifdef CONFIG_WHPX_IS_POSSIBLE
+ extern bool whpx_allowed;
+ #define whpx_enabled() (whpx_allowed)
+-bool whpx_apic_in_platform(void);
++bool whpx_irqchip_in_kernel(void);
+ #else /* !CONFIG_WHPX_IS_POSSIBLE */
+ #define whpx_enabled() 0
+-#define whpx_apic_in_platform() (0)
++#define whpx_irqchip_in_kernel() (0)
+ #endif /* !CONFIG_WHPX_IS_POSSIBLE */
+ 
+ #endif /* QEMU_WHPX_H */
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+index 242a05fdbe..d4d371a616 100644
+--- a/target/i386/cpu-apic.c
++++ b/target/i386/cpu-apic.c
+@@ -32,7 +32,7 @@ APICCommonClass *apic_get_class(Error **errp)
+         apic_type = "kvm-apic";
+     } else if (xen_enabled()) {
+         apic_type = "xen-apic";
+-    } else if (whpx_apic_in_platform()) {
++    } else if (whpx_irqchip_in_kernel()) {
+         apic_type = "whpx-apic";
+     }
+ 
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index d1f8e49cb2..feabbec427 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -607,7 +607,7 @@ void whpx_get_registers(CPUState *cpu)
+                      hr);
+     }
+ 
+-    if (whpx_apic_in_platform()) {
++    if (whpx_irqchip_in_kernel()) {
+         /*
+          * Fetch the TPR value from the emulated APIC. It may get overwritten
+          * below with the value from CR8 returned by
+@@ -749,7 +749,7 @@ void whpx_get_registers(CPUState *cpu)
+ 
+     assert(idx == RTL_NUMBER_OF(whpx_register_names));
+ 
+-    if (whpx_apic_in_platform()) {
++    if (whpx_irqchip_in_kernel()) {
+         whpx_apic_get(x86_cpu->apic_state);
+     }
+ 
+@@ -1379,7 +1379,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+     }
+ 
+     /* Get pending hard interruption or replay one that was overwritten */
+-    if (!whpx_apic_in_platform()) {
++    if (!whpx_irqchip_in_kernel()) {
+         if (!vcpu->interruption_pending &&
+             vcpu->interruptable && (env->eflags & IF_MASK)) {
+             assert(!new_int.InterruptionPending);
+@@ -1552,7 +1552,7 @@ int whpx_vcpu_run(CPUState *cpu)
+ 
+     if (exclusive_step_mode == WHPX_STEP_NONE) {
+         whpx_vcpu_process_async_events(cpu);
+-        if (cpu->halted && !whpx_apic_in_platform()) {
++        if (cpu->halted && !whpx_irqchip_in_kernel()) {
+             cpu->exception_index = EXCP_HLT;
+             qatomic_set(&cpu->exit_request, false);
+             return 0;
+@@ -1641,7 +1641,7 @@ int whpx_vcpu_run(CPUState *cpu)
+             break;
+ 
+         case WHvRunVpExitReasonX64ApicEoi:
+-            assert(whpx_apic_in_platform());
++            assert(whpx_irqchip_in_kernel());
+             ioapic_eoi_broadcast(vcpu->exit_ctx.ApicEoi.InterruptVector);
+             break;
+ 
+@@ -2186,7 +2186,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+                 goto error;
+             }
+         } else {
+-            whpx->apic_in_platform = true;
++            whpx->kernel_irqchip = true;
+         }
+     }
+ 
+@@ -2195,7 +2195,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     prop.ExtendedVmExits.X64MsrExit = 1;
+     prop.ExtendedVmExits.X64CpuidExit = 1;
+     prop.ExtendedVmExits.ExceptionExit = 1;
+-    if (whpx_apic_in_platform()) {
++    if (whpx_irqchip_in_kernel()) {
+         prop.ExtendedVmExits.X64ApicInitSipiExitTrap = 1;
+     }
  
 -- 
 2.50.1 (Apple Git-155)
