@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EEFCCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4504CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9KGn-0003ow-4R; Thu, 16 Oct 2025 05:27:37 -0400
+	id 1v9KIy-0004SD-BW; Thu, 16 Oct 2025 05:29:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KGk-0003oe-VC
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:27:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KIw-0004RX-IR
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:29:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KGe-0001JQ-34
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:27:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KIu-0001RR-Hf
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:29:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760606844;
+ s=mimecast20190719; t=1760606985;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K142S9tepB4ZTDxhXP61XZYKYruEe/XIHqtI6f6OEpc=;
- b=cR+J5U4vyrYh7n/+V1En/UpvdeGgieq03yKvRcFbBplouI352kz4x0008x60XW/yKVyxK2
- 7Zqmyphgl16P0H/qNcEH39d/faFJ1EKlPEU4JFSorHmLscx6KRv++lIyo2uOZkRC3KvJyq
- ByizJ2RCLYir5LAc8/zFxiRnX4Caf8I=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iFzKmK8KHh4gorMYiNODUyNdwfHUhF/L26Rme0u2aMs=;
+ b=Ltdw0m1Xn1ULM4boV2ay8heqoGSF5T5PM/6JKtaaYgm4QRDZkf6H2RNvWEQj6KUdq/zQOA
+ zUJQJPnEg4JJYSQMjb4bpaYnmpX/QwgigwY3oxn7KV3UgFq147PEpAUZCgCIsUZQ8wso7X
+ 7Lr8AUrBHS6IigK0SFj1r8f9YNPgy1M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-7W0R9Y9ZOEmsclM2dR8QjA-1; Thu, 16 Oct 2025 05:27:22 -0400
-X-MC-Unique: 7W0R9Y9ZOEmsclM2dR8QjA-1
-X-Mimecast-MFC-AGG-ID: 7W0R9Y9ZOEmsclM2dR8QjA_1760606842
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-46e36686ca1so3966675e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:27:22 -0700 (PDT)
+ us-mta-626-iEKBtYJXN5uheiUVBJgU8Q-1; Thu, 16 Oct 2025 05:29:43 -0400
+X-MC-Unique: iEKBtYJXN5uheiUVBJgU8Q-1
+X-Mimecast-MFC-AGG-ID: iEKBtYJXN5uheiUVBJgU8Q_1760606982
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47108163eeaso2243185e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:29:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760606841; x=1761211641;
+ d=1e100.net; s=20230601; t=1760606982; x=1761211782;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K142S9tepB4ZTDxhXP61XZYKYruEe/XIHqtI6f6OEpc=;
- b=f8hCCPbzrS183YrhOIpoZYrDHD0TtwFNHBisdZ+xW+ijSN6hYGRMw7EksrDfcm9qVb
- phz/VYDQgYKZG964e/6lRU5l7F9lbFvTfmTOHgJ/h4C+SqxX2Dp2oJo0Pv2yaKajpswS
- aQDFUhoQQaPUkRL9+CPP4/TkGUPHHakiUA1wHRCqLkn5DXtcX9btZ9M57s1QVLgygjiG
- 8GYUPYHUZbU4b3AtpyfZ+jj7luBjdnB6xMDkJMX5qT3TqB0VcxwF8vGuAW+v1+CeLlBO
- z8V+PdTb+bE8mk21qposuzXnw8clxcbeAUkr7HCgdDfyM+KpUDlifCJuYzOkvKFolR1w
- VoBw==
+ bh=iFzKmK8KHh4gorMYiNODUyNdwfHUhF/L26Rme0u2aMs=;
+ b=gX+QZiIuj3nwXX5GQWQyj98LfoUspZr6efsHSmTcuRj0FENu6F/VTNTJzcj2Q5tnZU
+ L90r7+75VO/QD9forFLungvLCeZPYuMu4RLHD1x/HI6hVg0qQ8tUcLYcxvFl25dPQ3Ui
+ UVgJ2QzoDrJsoYk1zwrFs+FywqLn9B5Ohq07t8JcKuHgg8q8z91fszazmDv5lL2tOkmF
+ j8Gdou8SMN34ysTNFip5FBaWYSnV+MPFmHr+sJm0/jNTrkJSFuka3fqvxUHP1aVk4zDT
+ 5ZyERRuCKFfPYYgzMOvSujj0UeTHMOAQhyujk6EssFC8O+EohmQRfa2sAhzE5P1cKaDh
+ R70Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1hbKPuq849j5gRlA0EE7MTfUbsiXICqZ1BdRIC3tljdiWZnBiCIF5WmF56NX9KmltSBwclJjZspS/@nongnu.org
-X-Gm-Message-State: AOJu0Yxt/k5Pzm8INvrcUq6pXILohnzrUb5xlTVlPnpzeP0oHt01B/9J
- w0sbY9vFyuNTUKJUbMoCa0rYenFKBkTuVlC8p/INmWKYuW9U9/iJlj+i3uzsb6fWCZ0c/6BTc2c
- 0PFLCx0ijVkkqdNSjIiHmsxvqbhzBLAcx4hlJWqlTmYOb7zx9q/EE5aom
-X-Gm-Gg: ASbGncvRk42yEva6EcKIlCNpPSHealRDak6Nws4lLPPFU2FIa7dmftv8XqIbr+LUGac
- HocCLTLN1LJjeJ1uF09c/STRVFJBdLnsnviZOeQYZCKwXrvcxiiTeemkyo5peCj0vnL73EAl5WQ
- ApRdBqSBOdaaLVZljBBTy/r1Ej0HkFgG+Z2uwMKy5U0/nwRsYJBCPxrmiXi/cxHsnmkrhDuFNEK
- 6AC5CIlgYbAy6VWrmYGkTcchwb3W0bh7ZQmhxBFSwU2weDoR8zVxpsBf7unfkQTukCFb2Oho0nM
- TockUaggny/+Lej8cc4qNIslY4zwwsukRp7igzURFNe87z4vvPxxPKV+r72Keg9Npfo1r9ndVnQ
- RLL7oarHDLWAWyNE2gR/XfMr/tMOWCSHHzVz+eazE
-X-Received: by 2002:a05:600c:198f:b0:46e:3b1a:20d7 with SMTP id
- 5b1f17b1804b1-46fa9af8595mr263299875e9.19.1760606841535; 
- Thu, 16 Oct 2025 02:27:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqt3ExgyuacoYSlC9a/DMros5P4375J5n7o5gAlSsi0BVY6eKZAyEaysy0RksqGsEr/zEcew==
-X-Received: by 2002:a05:600c:198f:b0:46e:3b1a:20d7 with SMTP id
- 5b1f17b1804b1-46fa9af8595mr263299685e9.19.1760606841040; 
- Thu, 16 Oct 2025 02:27:21 -0700 (PDT)
+ AJvYcCVx9ij3QQtzO9Z5CEOQ3ulhxNyrvSSp26Rgwl9jW1lhBBqhaA48XEBp8zirMmID94ShbDx06uMZPCYP@nongnu.org
+X-Gm-Message-State: AOJu0Yw6i1Jmy3+0L63bhkE2jplwIIYCJ9WpxY69bREr2GSC63/xsbSs
+ jkRbW/mJz8ic9bymaL83Nz+90OT0h5tl8PoOcMvVXuEQjOzVE4P3tHZSUyjYAbHnQxQdpopP0eA
+ ywNkZHEbUFLKpHeeK+gCLR33tQBkMNg8aVoTJk8XiJtqTWGu0zEUcv301ke8MalBy
+X-Gm-Gg: ASbGnctNZDJS8YNziorU2B8xlt4rd3qaSj0VSsaRqI1L9rumAqDE2PT18fAXCGt5NcC
+ b8o9eXspCZF1cI41udQdyVcweFzskANge2mzLe/vJp2Tb9S1/EOjRRu9GDDQPr6atrZpBENfM+b
+ CcXoE3zCjyyy2gJOEMnAsJ7Si13Bydmw9jiFoLlyovUqi5MI6jkvuy143xUSaQHKJEyF4EeR5N1
+ oXLIwNm4DhbUrZibB3s7hPDe3JEJzhnxipKadHjIrTFWwTnbJ7p5MSIvnjGpW7RMI4pKlHtR4ia
+ xKdU0UDHT6EtLc55el0cVdWTQErQv/3efStpNVP5Oe8p0XIXOTTh3pnEsGz/hkN2aGd4T6+j4gy
+ V+i9WieGmGuXltNSXAupPNrMesgqVmK8HrZv9jfGE
+X-Received: by 2002:a05:600c:c116:b0:46e:3709:d88a with SMTP id
+ 5b1f17b1804b1-46fa9b17e16mr183294605e9.33.1760606982082; 
+ Thu, 16 Oct 2025 02:29:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0mfQKB/aEb2E5SpUb3sZCwx0kia2RMoWt/MQ3jr8oC7TcgttEEvyqhnyXCy7tV+CJkrlxRw==
+X-Received: by 2002:a05:600c:c116:b0:46e:3709:d88a with SMTP id
+ 5b1f17b1804b1-46fa9b17e16mr183294465e9.33.1760606981694; 
+ Thu, 16 Oct 2025 02:29:41 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
  [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cb36e7csm17732855e9.2.2025.10.16.02.27.20
+ 5b1f17b1804b1-47114428dbfsm14905895e9.5.2025.10.16.02.29.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 02:27:20 -0700 (PDT)
-Message-ID: <5352c759-d2d9-4922-9ba1-f8e98c86cd38@redhat.com>
-Date: Thu, 16 Oct 2025 11:27:19 +0200
+ Thu, 16 Oct 2025 02:29:41 -0700 (PDT)
+Message-ID: <8bf630e8-9c3f-4d2d-8f68-a4abcca54f64@redhat.com>
+Date: Thu, 16 Oct 2025 11:29:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional: remove use of getLogger in reverse
- debuging
+Subject: Re: [PATCH 2/2] tests/functional: ensure GDB client is stopped on
+ error
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 References: <20251014140047.385347-1-berrange@redhat.com>
- <20251014140047.385347-2-berrange@redhat.com>
+ <20251014140047.385347-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,7 +126,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251014140047.385347-2-berrange@redhat.com>
+In-Reply-To: <20251014140047.385347-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -138,7 +138,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,23 +155,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 14/10/2025 16.00, Daniel P. Berrangé wrote:
-> This fixes the gap left by
-> 
->    commit 8a44d8c2ac0921c8064fbfd00ef28e3a2588918e
->    Author: Daniel P. Berrangé <berrange@redhat.com>
->    Date:   Fri Sep 12 19:22:00 2025 +0100
-> 
->      tests/functional: use self.log for all logging
-> 
-> ensuring that log message from the reverse debugging test actually
-> make it into the logfile on disk.
+> If the reverse_debugging_run method fails, the GDB client will not
+> be closed resulting in python complaining about resource leaks.
+> Hoisting the GDB client creation into the caller allows this to
+> be cleaned up easily. While doing this, also move the VM shutdown
+> call to match.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/reverse_debugging.py | 49 ++++++++++++---------------
->   1 file changed, 22 insertions(+), 27 deletions(-)
+>   tests/functional/reverse_debugging.py | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
 
 
