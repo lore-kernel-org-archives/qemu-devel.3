@@ -4,90 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B6A5CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50324CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Rw9-0006Mx-Sn; Thu, 16 Oct 2025 13:38:49 -0400
+	id 1v9Rva-0005zx-ON; Thu, 16 Oct 2025 13:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v9Rvx-0006HA-KD
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:38:41 -0400
-Received: from p-east2-cluster2-host1-snip4-10.eps.apple.com ([57.103.78.13]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1v9RvV-0005qI-8l; Thu, 16 Oct 2025 13:38:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v9Rvt-0007dd-Vi
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:38:37 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-6 (Postfix) with ESMTPS id
- 6CA6A1800141; Thu, 16 Oct 2025 17:38:29 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=/6NY7U3Atkanr4qfTcQ0H73EJM7+21eqXZpVtymAXL0=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=ELIoXM0MsTIRC3rXtmRl3FCZbuGuLO1OngpHMd+pPbGVLdwCZ6/LtwtZsmEGpfngjHxmxQQw5gLVf0PM4ejs/SSjGGj0VSLwjouuBg7DutiOgRRRmgefEM4a6J4a6oVwNzAJ/N22CHqVG/dSixVB5GqsKoUEgRh1C63oMT/8kB72D2kDpF9Oqbw59aOdfdhBlZatIn25ycqB2uDinrw4Ij8aUolGDVlGtKd/u25S19rs8Fv86xw4LZ95xgNCeN7iZYW8gYoHE+8cA4WZ54pI0SwikCL6HI5olodVVHdUgOIk1+STkxOBfVEBKbiayJzMDvkOjhtQ3NZmvMxS3pYsVg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-6 (Postfix) with ESMTPSA id
- C0E7618002D2; Thu, 16 Oct 2025 17:38:25 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- Zhao Liu <zhao1.liu@intel.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v8 06/24] whpx: Move around files before introducing AArch64
- support
-Date: Thu, 16 Oct 2025 19:37:45 +0200
-Message-ID: <20251016173803.65764-7-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251016173803.65764-1-mohamed@unpredictable.fr>
-References: <20251016173803.65764-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1v9RvP-0007Wk-Rz; Thu, 16 Oct 2025 13:38:08 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GCT882001281;
+ Thu, 16 Oct 2025 17:37:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Pd8abb14oKFstc5vx
+ gLC0VDWMO/xweb9p+GtmIPBadM=; b=RBT5MLhbXou/+bjqf1lma2UIkjcdrpmCf
+ 4RwBweY4XK6lwTzLmQvjfBrfCpUKKvAD0rPtOrSKN45j7GLshP3r/rBtKnA4JPRR
+ yMe8j+DGDmJ8ijkAdvY+no1ZSTBXqLit8/9GV3Lgmy49SUAPtQQMkwRXxixyHO2O
+ StrdmQ77QO6TLysEl4+rAj8kAUKV0vnIvXQjBzkugjr+LLw7ZXg5Xes56EO52W+g
+ 6xuYreRbuvGhkC5VvjRkGDA/hI21XlFV4CYR+TMySXSPdZIPampso/Db7I7Elt5b
+ 3zx+9Hv+SG5D/eDPcbWn3yMmpTDKJytMTNerXu/rYWeJqciSdo+DA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49rfp875ua-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 17:37:51 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59GHYuvg004189;
+ Thu, 16 Oct 2025 17:37:51 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49rfp875u4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 17:37:51 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GGkXwf003663;
+ Thu, 16 Oct 2025 17:37:49 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xy74c2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 17:37:49 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59GHbjRi18547018
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Oct 2025 17:37:45 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BCC32200E0;
+ Thu, 16 Oct 2025 17:37:45 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0245B200DA;
+ Thu, 16 Oct 2025 17:37:43 +0000 (GMT)
+Received: from vishalc-ibm.ibm.com (unknown [9.39.26.252])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Oct 2025 17:37:42 +0000 (GMT)
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+To: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, berrange@redhat.com, alistair@alistair23.me,
+ alex.bennee@linaro.org
+Cc: Vishal Chourasia <vishalc@linux.ibm.com>
+Subject: [PATCH 3/5] hw/core: Pass errp to load_image_targphys_as()
+Date: Thu, 16 Oct 2025 23:05:01 +0530
+Message-ID: <20251016173502.1261674-6-vishalc@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251016173502.1261674-1-vishalc@linux.ibm.com>
+References: <20251016173502.1261674-1-vishalc@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 5rFM2QL64ru08HDO5gW3wzY0GlFQAZ0F
-X-Proofpoint-ORIG-GUID: 5rFM2QL64ru08HDO5gW3wzY0GlFQAZ0F
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDEyOCBTYWx0ZWRfX2LQLZ8Hblrqn
- TXcL6R3t4yebby8PjIHNOePNix5EKmHMMREN87JPyWRd0fpN8iU/dieeTGFJdv2kq3W7yRhDt2z
- Y+QAPqDkiqns8dpflgjELvg53TgW4k6/qhZnTsTlxsXt4Udf5WgTKLFldQ/+hSbks0pKr6FbhQC
- nT6kh34wR+Vsg8xIwKSQCpvOVKa1sfcgy8u028oS6oTJdEL+jI48GV8i+sgXHl82LDj8zWvs7U4
- dyYA0s1rTm05zf/U8yqHQ+S7879WfXP1i+EhN3AwFJY5p9jo6+jH4GOn5LPQgT1chr8Bvf0og=
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: LXVY6J1pbjzhnvtAE8hoph5qKryLcY9Q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEyMDA4NCBTYWx0ZWRfXxmVL2wmOiYk1
+ dSshTyL1E2cT34iNMZacpdjN8uh1IMXHz5lqeKuk8vUK96gtXZAYqtdnejSnqqttu6aohKSfc52
+ Pa+VtHyMJASQhUQLkc9V/I8LWBnXWfNZXsJ87hM+VIZoyALrvyEGZK6/RBIXUT5c/chrlh2Te/T
+ NIb9/1Lprqb98TUPb7eYWC+Meh28yp8Zk8T/HUWGwF2AGHsn/iDbwfbOdse8hyeZZr4xgWb07Nl
+ Jr5/QcfHqF1Q5FR4zo9tHON5euFtqYtV35iYw/us+dZDUGNGVo2sdbxaf8Z8ENqeGcwrcWcZ0L+
+ pKu6GHOLygjQI2GgTaSHVmoPmUf0bcV/7rVbY78TOWiGXSFIB9c4yEzUJkzEdj3NRM8lMz5kJdT
+ A6HsTQO7MpJ0almcQvemvugcuQOTEg==
+X-Proofpoint-GUID: JqiFrQS4duCzoW7Ab0uDuQQb1V-UJ52K
+X-Authority-Analysis: v=2.4 cv=af5sXBot c=1 sm=1 tr=0 ts=68f12d6f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=9QQsejfFni1f41aiRA8A:9 a=cPQSjfK2_nFv0Q5t_7PE:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 adultscore=0 spamscore=0 clxscore=1030 suspectscore=0
- mlxscore=0 mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2510160128
-X-JNJ: AAAAAAABRPGaJD7x4pIs3HKmoeUPAYRAVuhrIQGyhpCkHpAl48BFwD2Nq5bAVp9w+C4fQQ9eXwKHzRhlnpPr2zpQHtgfN+J0bs1efMR3tMJ25kXiW5WuYlVOsRDkUy/ImZzb0rU8It7GoTND8eYc09+/PE8/jp4Ow6xlT7zOwWecJUmbhHGZO0Y86j+bzdxksopCDQHI4LiAB+dza6/nJkORt/wosJBXKYOnBq2gNJfuFc8yvisJcPP9rZUPmm1YDVeIPGGV6k+RyZysbcmsjTPWXhh600lK9uYHGPRebjuCYfB6ttW7CPs34QbBXYtLPkfm27gy8UeyoXraTpReW4Jv3a+5gcFLqrrxSkgxePT5GT/0l51OBtP4vJ/aoUX8FfzRYh2xW5Z2LllaWyGVhmJxTI7mPB6FoMcD1L64pWRMF8l2RllJ8wCQ4/gggRSG2yisHTIvx9XTi5FCeQATmtFhCWH9H9A0hKDhA24TyelMM/nmGnoM79uFaQu06eNLRCayyWQhR9S8JWI9ups9K6xP33JkqZ1fa/xnHQV06ky3NjnfTOE0u57mKTPFaQpf0WYo+K37GXf9r2M0cCqkg0bp+B41NWcHGTq7KxDDADhoiX7MOLNspv5pqdlPONXqWfXFXdJGaE14ms2LWz4C7FZ2M0w+CZ4h8Jqm0pWCL6rRA+Qv611I2uPlo8Y/MpijHEPEU640vF1WzjVaTdhyBDeay9ZVgkS6FsFToz3+JkxxYNIHKrW8HNiWEC8AXPzk9lp/oGt2jlgWNUwZkgkAO+9p+WIHoUc5x9h+b+L576HfJeb7Mi73tXKy6xrv2OaSgn0R8BPRF0+zWjDF8kE3mEjIGNHG4MPCzSzuyVl3Qkkz3onfJml482y7NrfRZk6EjYMx5JY7cX3n+G38UYiyvVhFbtDmYsTgtY+JdiEanhecxw==
-Received-SPF: pass client-ip=57.103.78.13;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510120084
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,160 +125,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
+Pass errp to load_image_targphys_as() in generic-loader and
+guest-loader to capture detailed error information from the
+loader functions.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Use error_prepend() instead of error_setg() to preserve the
+underlying error details while adding context about which image
+failed to load.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 ---
- MAINTAINERS                                           | 2 ++
- accel/meson.build                                     | 1 +
- accel/whpx/meson.build                                | 6 ++++++
- {target/i386 => accel}/whpx/whpx-accel-ops.c          | 4 ++--
- {target/i386/whpx => include/system}/whpx-accel-ops.h | 4 ++--
- {target/i386/whpx => include/system}/whpx-internal.h  | 5 +++--
- target/i386/whpx/meson.build                          | 1 -
- target/i386/whpx/whpx-all.c                           | 4 ++--
- target/i386/whpx/whpx-apic.c                          | 2 +-
- 9 files changed, 19 insertions(+), 10 deletions(-)
- create mode 100644 accel/whpx/meson.build
- rename {target/i386 => accel}/whpx/whpx-accel-ops.c (97%)
- rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
- rename {target/i386/whpx => include/system}/whpx-internal.h (98%)
+ hw/core/generic-loader.c | 4 ++--
+ hw/core/guest-loader.c   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0c766961f3..c25e22ffdb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -547,9 +547,11 @@ F: include/system/hvf_int.h
- WHPX CPUs
- M: Sunil Muthuswamy <sunilmut@microsoft.com>
- S: Supported
-+F: accel/whpx/
- F: target/i386/whpx/
- F: accel/stubs/whpx-stub.c
- F: include/system/whpx.h
-+F: include/system/whpx-accel-ops.h
+diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
+index 6689847c33..433efb7387 100644
+--- a/hw/core/generic-loader.c
++++ b/hw/core/generic-loader.c
+@@ -149,13 +149,13 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
+         if (size < 0 || s->force_raw) {
+             /* Default to the maximum size being the machine's ram size */
+             size = load_image_targphys_as(s->file, s->addr,
+-                    current_machine->ram_size, as, NULL);
++                    current_machine->ram_size, as, errp);
+         } else {
+             s->addr = entry;
+         }
  
- MSHV
- M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
-diff --git a/accel/meson.build b/accel/meson.build
-index 983dfd0bd5..289b7420ff 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -6,6 +6,7 @@ user_ss.add(files('accel-user.c'))
- subdir('tcg')
- if have_system
-   subdir('hvf')
-+  subdir('whpx')
-   subdir('qtest')
-   subdir('kvm')
-   subdir('xen')
-diff --git a/accel/whpx/meson.build b/accel/whpx/meson.build
-new file mode 100644
-index 0000000000..7b3d6f1c1c
---- /dev/null
-+++ b/accel/whpx/meson.build
-@@ -0,0 +1,6 @@
-+whpx_ss = ss.source_set()
-+whpx_ss.add(files(
-+  'whpx-accel-ops.c',
-+))
-+
-+specific_ss.add_all(when: 'CONFIG_WHPX', if_true: whpx_ss)
-diff --git a/target/i386/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
-similarity index 97%
-rename from target/i386/whpx/whpx-accel-ops.c
-rename to accel/whpx/whpx-accel-ops.c
-index f75886128d..c84a25c273 100644
---- a/target/i386/whpx/whpx-accel-ops.c
-+++ b/accel/whpx/whpx-accel-ops.c
-@@ -16,8 +16,8 @@
- #include "qemu/guest-random.h"
+         if (size < 0) {
+-            error_setg(errp, "Cannot load specified image %s", s->file);
++            error_prepend(errp, "Cannot load specified image %s: ", s->file);
+             return;
+         }
+     }
+diff --git a/hw/core/guest-loader.c b/hw/core/guest-loader.c
+index 59f325ad9c..618455e556 100644
+--- a/hw/core/guest-loader.c
++++ b/hw/core/guest-loader.c
+@@ -101,9 +101,9 @@ static void guest_loader_realize(DeviceState *dev, Error **errp)
  
- #include "system/whpx.h"
--#include "whpx-internal.h"
--#include "whpx-accel-ops.h"
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
+     /* Default to the maximum size being the machine's ram size */
+     size = load_image_targphys_as(file, s->addr, current_machine->ram_size,
+-                                  NULL, NULL);
++                                  NULL, errp);
+     if (size < 0) {
+-        error_setg(errp, "Cannot load specified image %s", file);
++        error_prepend(errp, "Cannot load specified image %s: ", file);
+         return;
+     }
  
- static void *whpx_cpu_thread_fn(void *arg)
- {
-diff --git a/target/i386/whpx/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
-similarity index 92%
-rename from target/i386/whpx/whpx-accel-ops.h
-rename to include/system/whpx-accel-ops.h
-index 54cfc25a14..ed9d4c49f4 100644
---- a/target/i386/whpx/whpx-accel-ops.h
-+++ b/include/system/whpx-accel-ops.h
-@@ -7,8 +7,8 @@
-  * See the COPYING file in the top-level directory.
-  */
- 
--#ifndef TARGET_I386_WHPX_ACCEL_OPS_H
--#define TARGET_I386_WHPX_ACCEL_OPS_H
-+#ifndef SYSTEM_WHPX_ACCEL_OPS_H
-+#define SYSTEM_WHPX_ACCEL_OPS_H
- 
- #include "system/cpus.h"
- 
-diff --git a/target/i386/whpx/whpx-internal.h b/include/system/whpx-internal.h
-similarity index 98%
-rename from target/i386/whpx/whpx-internal.h
-rename to include/system/whpx-internal.h
-index 6633e9c4ca..e61375d554 100644
---- a/target/i386/whpx/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -1,5 +1,6 @@
--#ifndef TARGET_I386_WHPX_INTERNAL_H
--#define TARGET_I386_WHPX_INTERNAL_H
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef SYSTEM_WHPX_INTERNAL_H
-+#define SYSTEM_WHPX_INTERNAL_H
- 
- #include <windows.h>
- #include <winhvplatform.h>
-diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
-index 9c54aaad39..c3aaaff9fd 100644
---- a/target/i386/whpx/meson.build
-+++ b/target/i386/whpx/meson.build
-@@ -1,5 +1,4 @@
- i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
-   'whpx-all.c',
-   'whpx-apic.c',
--  'whpx-accel-ops.c',
- ))
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 256761834c..106a352980 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -31,8 +31,8 @@
- #include "accel/accel-cpu-target.h"
- #include <winerror.h>
- 
--#include "whpx-internal.h"
--#include "whpx-accel-ops.h"
-+#include "system/whpx-internal.h"
-+#include "system/whpx-accel-ops.h"
- 
- #include <winhvplatform.h>
- #include <winhvemulation.h>
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index e1ef6d4e6d..badb404b63 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -18,7 +18,7 @@
- #include "hw/pci/msi.h"
- #include "system/hw_accel.h"
- #include "system/whpx.h"
--#include "whpx-internal.h"
-+#include "system/whpx-internal.h"
- 
- struct whpx_lapic_state {
-     struct {
 -- 
-2.50.1 (Apple Git-155)
+2.51.0
 
 
