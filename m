@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BCA7CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 18:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E683FCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 18:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9SH0-0002iy-8F; Thu, 16 Oct 2025 14:00:22 -0400
+	id 1v9SH4-0002kb-CM; Thu, 16 Oct 2025 14:00:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v9SGx-0002hH-1v; Thu, 16 Oct 2025 14:00:19 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1v9SGz-0002iF-3A; Thu, 16 Oct 2025 14:00:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v9SGs-0002xD-TL; Thu, 16 Oct 2025 14:00:17 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GBfFnN021718;
+ id 1v9SGu-0002xC-2v; Thu, 16 Oct 2025 14:00:20 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GBotgt021944;
  Thu, 16 Oct 2025 18:00:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tcnschf6Tzn8lr9Mo
- g6fbobDSxPq5ZSMw3MsU3AWhQQ=; b=nuqGJJCikBA2BsEIY4Ka53TlHB7Uq8aNv
- vr3CWWnDcB64qxZsBOUM/tECS87fF+XgpColpNAYBHvGt2EGlSyWD+86jDnrtaJZ
- pWpKbik7wEBdkNzef0on6xkNyQw7hLZRukYEnJ3eNS6bHl5l+vjvXt4VJn7ArXCE
- kCBuuykkmFdmL5/gMaGeMDy+khjbTCinN498Fg59QjvOdPWMquIjuji92kS/Ujg3
- RBfVpqAX8ubd1tBRw7NqOjWr7HthHAAUtMw3qD2YUtnFQvwYTkKh9kBdDleqWHid
- OW/7mKe3Vza3dfpZywDswY05SLKORAIzhFqs1I7v7ddBafsZZ5Hhg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0b5ty-1
+ :mime-version:references:subject:to; s=pp1; bh=VsSOpe6pgGj5wbRdO
+ 8x5We83G5GYrOJq7kqoOz19YGc=; b=TS3JTZDxFo1jsplT6WmD96jo1eGPe2lcA
+ ks7TQGKbdzwVpl7yLEEFE0FWTnsFltIoRkfwXLey0z17Qo7sZ0cEpRlCsbwCrgfV
+ QHt44Ca1NAvrKY6uwmcIDnXWkBuZfVP8U7hbLfNZVqWiavchFo/tuNjFH5mblnm3
+ G4e/ePZyptroPQteVAARaGm/hkmRkuJQZuwY2MlpmfdeQB4r1g86fKuKqRO6Q4uM
+ u7ds6RspsCkdjlmTd/tmxEuq5AxQiguad4M/Ou5UbqKnjmf+i5ZBROhUh75uwIty
+ ptMV/q2H1rmsgLdLjistMtv0cNsQMEoPZKl3ufwyEZu5trBaFlFIQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey94f4c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 16 Oct 2025 18:00:10 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GHhp0Y016705;
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GH4fwL003603;
  Thu, 16 Oct 2025 18:00:09 GMT
 Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r32k737f-1
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xy784r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 18:00:09 +0000
+ Thu, 16 Oct 2025 18:00:08 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
  by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59GI072L47907282
+ 59GI07lQ47907280
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Thu, 16 Oct 2025 18:00:07 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9864320086;
+ by IMSVA (Postfix) with ESMTP id 1A87A20087;
  Thu, 16 Oct 2025 18:00:07 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 303B620082;
- Thu, 16 Oct 2025 18:00:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A181F20082;
+ Thu, 16 Oct 2025 18:00:06 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.111.58.138])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Oct 2025 18:00:07 +0000 (GMT)
+ Thu, 16 Oct 2025 18:00:06 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  David Hildenbrand <david@redhat.com>
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH v4 2/4] target/s390x: Fix missing clock-comparator interrupts
- after reset
-Date: Thu, 16 Oct 2025 19:58:31 +0200
-Message-ID: <20251016175954.41153-3-iii@linux.ibm.com>
+Subject: [PATCH v4 1/4] target/s390x: Fix missing interrupts for small CKC
+ values
+Date: Thu, 16 Oct 2025 19:58:30 +0200
+Message-ID: <20251016175954.41153-2-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016175954.41153-1-iii@linux.ibm.com>
 References: <20251016175954.41153-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2YHvbkWk6HZ8mPGx9Za13dluyBbkLxN2
-X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68f132aa cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: Oen8N2DO2jp1q3ylw63vflpIGjDCTfyo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX7aQBmwIRYwfg
+ qq+PpbhVPtNbL4fZNJEKtSbIgZCuVewoU1uWSC4icCPYdVvUfA+CO0PZeRaJFVTVp214SwJmvyc
+ 4tZ6On1gBWs85W+Spyf4jTR3vluWHzZSinmdoEV1dnORYVQWLv3ri5uVuT5yXAkrYKrsXz2NTx+
+ hkUQiDV62KLWZQNgBJUZrROap7CoN2F+gRfhPqnNH4DMWSct+Z4dWPi5sXSOLLe0fjeh+U7UujM
+ JQyZWzK9nrsPJrF170QYn3Xp9/ggaRiNo8DWOVjhc7Ps1ovodH8OzWFamU2yuVhNCTx66Gp2WW9
+ 2Ite7MZuLFsQL5bIRqlG7jba+ERnGuN7hvcYrE4iXscO/jMU0vPbC3RGyyO1M4nBcLIkrbQqc46
+ k6ebwSf/j83bmrMQdmgm9BtVSAXm5g==
+X-Proofpoint-GUID: Oen8N2DO2jp1q3ylw63vflpIGjDCTfyo
+X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68f132aa cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=1K0trMwjMfmDt0goFSAA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=VnNF1IyMAAAA:8 a=DMoVdRysFPNM0ZNGwSsA:9 a=Fg1AiH1G6rFz08G2ETeA:22
  a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX4aagrODowtLL
- 4dNFS5H53aNJh/n9+jrPpQa8kQ3/j97zIssRJgb++SPkRhoPWVul3DkjgwJ+wY+BO+3N/kDQzL+
- hbcQzha3Z38gUh1fqrY2a7K5qCa/cPFEm93rGYDZP0O+hXl4Tfk735JCyR5yEeSRpSoi6eA9irW
- lRTBEYmsHlCLjPmaMalIksHrhnvS2VFMAi7DsQAbTRzBdFeywDIxg0BPA56ieNkiUQZ8LzBbO8J
- JcfyUJYrcuuP1XIub5Z3b/KA93ubdscv4/+6BxJeRvU3TGexhsnJfj8lJJfbxrWgrLeBQ5W02o7
- bbV7nd1g1oLqfebDXtPsPqYLzRP7lkTUCc3g2ZqIgQANwH1AKfjZQtHXN5in7ZyHEMM23MSUaNQ
- I/nZS2zq/ihklroiYpkkAnuS8MmbdQ==
-X-Proofpoint-GUID: 2YHvbkWk6HZ8mPGx9Za13dluyBbkLxN2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 clxscore=1015 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,54 +120,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After reset, CKC value is set to 0, so if clock-comparator interrupts
-are enabled, one should occur very shortly thereafter.
+Suppose TOD clock value is 0x1111111111111111 and clock-comparator
+value is 0, in which case clock-comparator interruption should occur
+immediately.
 
-Currently the code that loads the respective control register does not
-set tod_timer, so this does not happen.
+With the current code, tod2time(env->ckc - td->base.low) ends up being
+a very large number, so this interruption never happens.
 
-Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
+Fix by firing the timer immediately if env->ckc < td->base.low.
 
 Cc: qemu-stable@nongnu.org
-Suggested-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- target/s390x/tcg/mem_helper.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ target/s390x/tcg/misc_helper.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index f1acb1618f7..24675fc818d 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -1959,6 +1959,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-         if (env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-         env->cregs[i] = val;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
-                    i, src, val);
-@@ -1989,10 +1993,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 6d9d601d29a..215b5b9d933 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -199,11 +199,15 @@ static void update_ckc_timer(CPUS390XState *env)
+         return;
+     }
  
-     for (i = r1;; i = (i + 1) % 16) {
-         uint32_t val = cpu_ldl_data_ra(env, src, ra);
-+        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
-         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
--        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-+        env->cregs[i] = val64;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
-         src += sizeof(uint32_t);
+-    /* difference between origins */
+-    time = env->ckc - td->base.low;
++    if (env->ckc < td->base.low) {
++        time = 0;
++    } else {
++        /* difference between origins */
++        time = env->ckc - td->base.low;
  
+-    /* nanoseconds */
+-    time = tod2time(time);
++        /* nanoseconds */
++        time = tod2time(time);
++    }
+ 
+     timer_mod(env->tod_timer, time);
+ }
 -- 
 2.51.0
 
