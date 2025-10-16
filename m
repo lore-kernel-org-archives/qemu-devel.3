@@ -4,99 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C4FCCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8424CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9K2O-0007TO-Pt; Thu, 16 Oct 2025 05:12:44 -0400
+	id 1v9K5T-0008Rb-Vt; Thu, 16 Oct 2025 05:15:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9K2N-0007Sr-57
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:12:43 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9K2B-0007Y0-Lc
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:12:42 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46e3a50bc0fso3455595e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:12:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760605944; x=1761210744; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xNfv9xsmmhteqxadkVhT2+fkyYPSah+3ICpJbHA4auM=;
- b=fYWxzTg75xkyqxbMA+A2hRj6d6MJ++WASzMcmYxTRgZ8gJkfnmlczf0HinOpRbDOfa
- k3bnXyPzNQrFlYhXlw1WfLprZ6rlwK0Q3oGXlA62p4Vsc5K8tpt8N0NA4KUlqzvhVub/
- Rf2wCinriQ8CM/hygso8KzvkvfLZrfc8yiqr+ugg6Nv6lyptboF/BrOx9ccbMkyRNi+P
- aUTHncu4Ya7WB4AyIlSI27xSkZBVoPKu2O2wTQWwk5ZwClD3b069bycfFgRK1j8DNPG9
- pOONqR6A2T3pQ5cEHvW9E9brdw9671HKC4qsxZGLQgUk4OHaAT/K8XlkCrjP+CCTvqhS
- 0cew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760605944; x=1761210744;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xNfv9xsmmhteqxadkVhT2+fkyYPSah+3ICpJbHA4auM=;
- b=TazX18Fk9softcn2Gnfycf8Jp6WbFPh8ofDNEzguprgG8JKKvogTjP83/kQSM+sMw0
- 5AbX0pR22jWKqy4Ry9WQhOsUWy3baPYA0kNz8/vR6jhjceO9RUIeeHRDHvyEvK2EKxZZ
- CW16JAENoMzBjW4oO95B5lc7+yhiK92klDFw3+74LX0A7LFk3RY20V4ts8wmCJA3/ni1
- 8eqdZ0kqx9vjy+J8hzUnQiwzTnLvMtp4cp+y1YhX1+5IlK/w54FPIgKN0+/BFiZuHMz8
- reIJEJRsDnKAgpqxEvsYQ17IgbZawxiEhZpQ0KOQy4XRYtztv3CZo0b/Sb6CJ0WK9mHp
- K4vA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbHdmVEfFnbu/GmlMZs3r+F1GY9DxQfGAPBru+bwTXxJSsIbA07nxc9iAtTqAi41pN/xYBW+w9cTj8@nongnu.org
-X-Gm-Message-State: AOJu0Yz9Manl7Yq6Y1NctmF0xzg7pu2dJDi/XsKgmXspw+M/5xwZEJxz
- J3YF0oorj0QfT44h16QjwuauqXNuZ76jFAbJxbcjWHW4OMR89zOT95we9cd/jOFrlls=
-X-Gm-Gg: ASbGnctUELLxvcJZMZ41wls/SSnJUkKoBL6y3/n3X4ILP+zd3OZUFGGbIc0ktBUOxw4
- gAiAQrmeKv7jWDy9JWThU3Jj4Ho9kUrsaW0FNVPhnNJ3dCLkGgoPBAiTZZi3zgYdyjWOYGOWTZ5
- J3aRpt0hmdCV/li9WsX3/X7TzTOc3NE1obGzU1lj/OhOKTV1TYwKDUuWcC1k4Dgb9F15xIS5Gga
- Mr1mBB9o6+F50lXl2qL595x/Xs5xCBGHpaTgzi2oOXSf9ptZR4xlfz0fmDRcY7zWOCj41nl7X4V
- 16fjYkV3XYTHXjsWRZsvmjsjoqCL6YW5LiW8y9yqVWvpdHF/sefDEvMS698S3/HbR+ikL4mp4NF
- NK9fz9QpcBtUXliF/d1A0xQMoE64REDj1f2cm+LEzsciv9k3QUAaFZPJutETIT7yCtD98giCkaW
- jFxUjvqSJeB6FyyZNnGK4MXa1yiPQehuc/MP3eFSsYHOWa4bUFddWG6iYr4g==
-X-Google-Smtp-Source: AGHT+IE80TJxnu4thgS5f+era764aCpK9tGSrOOZRfaWpeLL3Lkv72yXnMKHQ6DPJ379DWca9g9xvg==
-X-Received: by 2002:a05:6000:258a:b0:425:8bc2:9c4b with SMTP id
- ffacd0b85a97d-42666abb51amr16517178f8f.6.1760605943892; 
- Thu, 16 Oct 2025 02:12:23 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cd833ebsm16015305e9.3.2025.10.16.02.12.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 02:12:23 -0700 (PDT)
-Message-ID: <ea10c781-d15f-4346-a092-78d203f2f0c9@linaro.org>
-Date: Thu, 16 Oct 2025 11:12:22 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v9K5M-0008QZ-5m
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:15:52 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v9K5F-0007vb-So
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:15:47 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:8982:0:640:5cf4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7E901C01B4;
+ Thu, 16 Oct 2025 12:15:34 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a8c::1:19] (unknown
+ [2a02:6bf:8080:a8c::1:19])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id WFNfDV3F7Sw0-1EI1RVyz; Thu, 16 Oct 2025 12:15:33 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760606133;
+ bh=pdduf2Oi5Z7Ljlxcs27p6BBAw8pAipopz3Y4K3zgWrk=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=n+w2iSSw06jrR0JoPumlOsyo9yRaIEkQRqb2Sd/bl6t4skiN0F+POLovHn/W5Ddrb
+ 3N9Jntzz/8uixeiP2vMGnkN9jX6wf8G0E8r24r96IOmJUzHMUrKEtTjWXHlODBU0Jt
+ 4PSmHDc23+1WayfWoDRB5HZ8vmJ9OtE7mdkRW9AA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <d99947db-afeb-462f-b2b5-a53e451e762d@yandex-team.ru>
+Date: Thu, 16 Oct 2025 12:15:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: aspeed: Split the machine definition into individual source files
+Subject: Re: [PATCH v8 17/19] virtio-net: support backend-transfer migration
+ for virtio-net/tap
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, farosas@suse.de,
+ sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
+ philmd@linaro.org, qemu-devel@nongnu.org, michael.roth@amd.com,
+ steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
+ yc-core@yandex-team.ru, raphael.s.norwitz@gmail.com
+References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
+ <20251015132136.1083972-18-vsementsov@yandex-team.ru>
+ <aPCriMKg_UolIrHK@redhat.com>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- "'qemu-arm@nongnu.org'" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: 'Andrew Jeffery' <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, 'Jamin Lin' <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Patrick Williams <patrick@stwcx.xyz>
-References: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aPCriMKg_UolIrHK@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -108,40 +84,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/6/25 11:23, Cédric Le Goater wrote:
-> Hi,
+On 16.10.25 11:23, Daniel P. Berrangé wrote:
+> On Wed, Oct 15, 2025 at 04:21:33PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> Add virtio-net option backend-transfer, which is true by default,
+>> but false for older machine types, which doesn't support the feature.
+>>
+>> For backend-transfer migration, both global migration parameter
+>> backend-transfer and virtio-net backend-transfer option should be
+>> set to true.
+>>
+>> With the parameters enabled (both on source and target) of-course, and
+>> with unix-socket used as migration-channel, we do "migrate" the
+>> virtio-net backend - TAP device, with all its fds.
+>>
+>> This way management tool should not care about creating new TAP, and
+>> should not handle switching to it. Migration downtime become shorter.
+>>
+>> How it works:
+>>
+>> 1. For incoming migration, we postpone TAP initialization up to
+>>     pre-incoming point.
+>>
+>> 2. At pre-incoming point we see that "virtio-net-tap" is set for
+>>     backend-transfer, so we postpone TAP initialization up to
+>>     post-load
+>>
+>> 3. During virtio-load, we get TAP state (and fds) as part of
+>>     virtio-net state
+>>
+>> 4. In post-load we finalize TAP initialization
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   hw/core/machine.c              |  1 +
+>>   hw/net/virtio-net.c            | 75 +++++++++++++++++++++++++++++++++-
+>>   include/hw/virtio/virtio-net.h |  1 +
+>>   include/net/tap.h              |  2 +
+>>   net/tap.c                      | 45 +++++++++++++++++++-
+>>   5 files changed, 122 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index 681adbb7ac..a3d77f5604 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -40,6 +40,7 @@
+>>   
+>>   GlobalProperty hw_compat_10_1[] = {
+>>       { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+>> +    { TYPE_VIRTIO_NET, "backend-transfer", "false" },
+>>   };
+>>   const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
+>>   
+>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+>> index 661413c72f..5f9711dee7 100644
+>> --- a/hw/net/virtio-net.c
+>> +++ b/hw/net/virtio-net.c
+>> @@ -38,6 +38,7 @@
+>>   #include "qapi/qapi-events-migration.h"
+>>   #include "hw/virtio/virtio-access.h"
+>>   #include "migration/misc.h"
+>> +#include "migration/options.h"
+>>   #include "standard-headers/linux/ethtool.h"
+>>   #include "system/system.h"
+>>   #include "system/replay.h"
+>> @@ -3358,6 +3359,9 @@ struct VirtIONetMigTmp {
+>>       uint16_t        curr_queue_pairs_1;
+>>       uint8_t         has_ufo;
+>>       uint32_t        has_vnet_hdr;
+>> +
+>> +    NetClientState *ncs;
+>> +    uint32_t max_queue_pairs;
+>>   };
+>>   
+>>   /* The 2nd and subsequent tx_waiting flags are loaded later than
+>> @@ -3627,6 +3631,71 @@ static const VMStateDescription vhost_user_net_backend_state = {
+>>       }
+>>   };
+>>   
+>> +static bool virtio_net_is_tap_mig(void *opaque, int version_id)
+>> +{
+>> +    VirtIONet *n = opaque;
+>> +    NetClientState *nc;
+>> +
+>> +    nc = qemu_get_queue(n->nic);
+>> +
+>> +    return migrate_backend_transfer() && n->backend_transfer && nc->peer &&
+>> +        nc->peer->info->type == NET_CLIENT_DRIVER_TAP;
+>> +}
+>> +
+>> +static int virtio_net_nic_pre_save(void *opaque)
+>> +{
+>> +    struct VirtIONetMigTmp *tmp = opaque;
+>> +
+>> +    tmp->ncs = tmp->parent->nic->ncs;
+>> +    tmp->max_queue_pairs = tmp->parent->max_queue_pairs;
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int virtio_net_nic_pre_load(void *opaque)
+>> +{
+>> +    /* Reuse the pointer setup from save */
+>> +    virtio_net_nic_pre_save(opaque);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int virtio_net_nic_post_load(void *opaque, int version_id)
+>> +{
+>> +    struct VirtIONetMigTmp *tmp = opaque;
+>> +    Error *local_err = NULL;
+>> +
+>> +    if (!virtio_net_update_host_features(tmp->parent, &local_err)) {
+>> +        error_report_err(local_err);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static const VMStateDescription vmstate_virtio_net_nic_nc = {
+>> +    .name = "virtio-net-nic-nc",
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_STRUCT_POINTER(peer, NetClientState, vmstate_tap,
+>> +                               NetClientState),
+>> +        VMSTATE_END_OF_LIST()
+>> +   },
+>> +};
+>> +
+>> +static const VMStateDescription vmstate_virtio_net_nic = {
+>> +    .name      = "virtio-net-nic",
+>> +    .pre_load  = virtio_net_nic_pre_load,
+>> +    .pre_save  = virtio_net_nic_pre_save,
+>> +    .post_load  = virtio_net_nic_post_load,
+>> +    .fields    = (const VMStateField[]) {
+>> +        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(ncs, struct VirtIONetMigTmp,
+>> +                                             max_queue_pairs,
+>> +                                             vmstate_virtio_net_nic_nc,
+>> +                                             struct NetClientState),
+>> +        VMSTATE_END_OF_LIST()
+>> +    },
+>> +};
+>> +
+>>   static const VMStateDescription vmstate_virtio_net_device = {
+>>       .name = "virtio-net-device",
+>>       .version_id = VIRTIO_NET_VM_VERSION,
+>> @@ -3658,6 +3727,9 @@ static const VMStateDescription vmstate_virtio_net_device = {
+>>            * but based on the uint.
+>>            */
+>>           VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
+>> +        VMSTATE_WITH_TMP_TEST(VirtIONet, virtio_net_is_tap_mig,
+>> +                              struct VirtIONetMigTmp,
+>> +                              vmstate_virtio_net_nic),
+>>           VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
+>>                            vmstate_virtio_net_has_vnet),
+>>           VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
+>> @@ -4239,7 +4311,7 @@ static bool vhost_user_blk_pre_incoming(void *opaque, Error **errp)
+>>       VirtIONet *n = opaque;
+>>       int i;
+>>   
+>> -    if (peer_wait_incoming(n)) {
+>> +    if (!virtio_net_is_tap_mig(opaque, 0) && peer_wait_incoming(n)) {
+>>           for (i = 0; i < n->max_queue_pairs; i++) {
+>>               if (!peer_postponed_init(n, i, errp)) {
+>>                   return false;
+>> @@ -4389,6 +4461,7 @@ static const Property virtio_net_properties[] = {
+>>                                  host_features_ex,
+>>                                  VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
+>>                                  false),
+>> +    DEFINE_PROP_BOOL("backend-transfer", VirtIONet, backend_transfer, true),
+>>   };
+>>   
+>>   static void virtio_net_class_init(ObjectClass *klass, const void *data)
 > 
-> This is a follow up of a private discussion with Patrick.
+> I really don't like this approach, because it is requiring the frontend
+> device to know about every different backend implementation that is able
+> to do state transfer. This really violates the separation from the
+> frontend and backend. The choice of specific backend should generally
+> be opaque to the frontend.
 > 
-> Aspeed modeling started nearly 10y ago with the palmetto-bmc machine.
-> We now have 5 SoCs and 25 machines which are mostly defined in
-> in a single aspeed.c file. Multi SoC machines, fby35 and ast2700fc,
-> are defined in fby35.c and aspeed_ast27x0-fc.c respectively.
-> 
-> Since we started separating the SoCs :
-> 
->    hw/arm/aspeed_ast10x0.c
->    hw/arm/aspeed_ast2400.c
->    hw/arm/aspeed_ast2600.c
->    hw/arm/aspeed_ast27x0.c
->    hw/arm/aspeed_ast27x0-ssp.c
->    hw/arm/aspeed_ast27x0-tsp.c
-> 
-> We could do the same for the machines keeping an 'aspeed_ast<rev>'
-> prefix (and maybe avoid the 'bmc' suffix). I think this would ease
-> introduction of new machines. We would be able to get rid of
-> aspeed_eeprom.[ch] and move machine custom data in the machine source
-> file. Which seems cleaner.
-> 
-> Timing is about right for code reshuffling, still 3w before soft
-> freeze, no important changes inflight, but if we start doing this
-> conversion, we should do it for all. See the list below for the brave.
-> 
-> Comments ?
+> This really ought to be redesigned to work in terms of an formal API
+> exposed by the backend, not poking at TAP backend specific details.
+> eg an API that operates on NetClientState, for which each backend
+> can provide an optional implementation.
 
-Good idea, but please split ASPEED_SOC in Kconfig accordingly.
+Agree, I'll try.
 
-Regards,
+> 
+> 
+>> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+>> index 5b8ab7bda7..bf07f8a4cb 100644
+>> --- a/include/hw/virtio/virtio-net.h
+>> +++ b/include/hw/virtio/virtio-net.h
+>> @@ -231,6 +231,7 @@ struct VirtIONet {
+>>       struct EBPFRSSContext ebpf_rss;
+>>       uint32_t nr_ebpf_rss_fds;
+>>       char **ebpf_rss_fds;
+>> +    bool backend_transfer;
+>>   };
+>>   
+>>   size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+>> diff --git a/include/net/tap.h b/include/net/tap.h
+>> index 5a926ba513..506f7ab719 100644
+>> --- a/include/net/tap.h
+>> +++ b/include/net/tap.h
+>> @@ -36,4 +36,6 @@ int tap_get_fd(NetClientState *nc);
+>>   bool tap_wait_incoming(NetClientState *nc);
+>>   bool tap_postponed_init(NetClientState *nc, Error **errp);
+>>   
+>> +extern const VMStateDescription vmstate_tap;
+>> +
+>>   #endif /* QEMU_NET_TAP_H */
+>> diff --git a/net/tap.c b/net/tap.c
+>> index 8afbf3b407..b9c12dd64c 100644
+>> --- a/net/tap.c
+>> +++ b/net/tap.c
+>> @@ -819,7 +819,7 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+>>   
+>>   static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp)
+>>   {
+>> -    if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
+>> +    if (fd != -1 && !net_tap_set_fd(s, fd, vnet_hdr, errp)) {
+>>           return false;
+>>       }
+>>   
+>> @@ -1225,6 +1225,49 @@ int tap_disable(NetClientState *nc)
+>>       }
+>>   }
+>>   
+>> +static int tap_pre_load(void *opaque)
+>> +{
+>> +    TAPState *s = opaque;
+>> +
+>> +    if (s->fd != -1) {
+>> +        error_report(
+>> +            "TAP is already initialized and cannot receive incoming fd");
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int tap_post_load(void *opaque, int version_id)
+>> +{
+>> +    TAPState *s = opaque;
+>> +    Error *local_err = NULL;
+>> +
+>> +    if (!net_tap_setup(s, -1, -1, &local_err)) {
+>> +        error_report_err(local_err);
+>> +        qemu_del_net_client(&s->nc);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +const VMStateDescription vmstate_tap = {
+>> +    .name = "net-tap",
+>> +    .pre_load = tap_pre_load,
+>> +    .post_load = tap_post_load,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_FD(fd, TAPState),
+>> +        VMSTATE_BOOL(using_vnet_hdr, TAPState),
+>> +        VMSTATE_BOOL(has_ufo, TAPState),
+>> +        VMSTATE_BOOL(has_uso, TAPState),
+>> +        VMSTATE_BOOL(has_tunnel, TAPState),
+>> +        VMSTATE_BOOL(enabled, TAPState),
+>> +        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>>   bool tap_wait_incoming(NetClientState *nc)
+>>   {
+>>       TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> 
+> IMHO implementing state transfer in the backends ought to be separate
+> commit from adding support for using that in the frontend.
+> 
 
-Phil.
+Will do.
+
+Thanks for reviewing!
+
+
+-- 
+Best regards,
+Vladimir
 
