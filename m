@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB977CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 03:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9DBCCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 03:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Ejw-00065V-6i; Wed, 15 Oct 2025 23:33:20 -0400
+	id 1v9F7C-0000y0-Ni; Wed, 15 Oct 2025 23:57:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1v9Eju-00065F-Hn
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:33:18 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9F7B-0000xb-1t
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:57:21 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1v9Ejq-0006Zw-FE
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:33:18 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-63b9da76e42so451442a12.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 20:33:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9F78-0000rT-5E
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:57:20 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-639fb035066so377818a12.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 20:57:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1760585592; x=1761190392; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760587036; x=1761191836; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zDx4vUBTXYtsKZguPSMTeW4z2LPKCHzenwLZ1f4KAqs=;
- b=XaU6jKDeQMkRHo/ZqzXwb86PkXx14qF6j9/+lknRaeQRd9HQHkdKFDU5zcZG67V0nM
- Z6KWw9PjDyG9SWno9cuPDGqLAH/HnlY/p1c3SbgR0w5V6jUKwAWTqSnrmlDAxB4hNUPY
- /DShG3S2pimpHPD5Q9vI/7mb2ejcmni6BVGrIS64AiWQnN3ymEsC+cKw6UPv0X/z2Xs6
- EudEGWO2RFxBWedNBR41gn53Nq4MZxNWZ6+PInq76HOIMeo948HuCSgkYyNj6b8YwY9A
- ctYs251/tgPOIjN9D1/6WEkSFsQQN++JJ9je4iSOUn02XUFJ8/kwpxzvtzNvzRY+otuk
- Jd3g==
+ bh=zQo8QxU31WExo92KOPA8Ute1JF2mwln81IPJ/0BnwNE=;
+ b=lYwlhSrPJBgHBdFWnBZ8ayVYjgWaTXsxwryNvXeHljWpVmKxSXdDlp9NDyPcL6y38N
+ DrrPVH1gO/M+0lv98RXNEWAGcXQMTG8orOg0mZ1YX/cGzgDJRfAVPyQQpH7eI+lnzZ76
+ JjDjWp99ZPVBseFDmlkwhCOKm8d7uxOeLZ+fbMKKWfAmMwC4L0+PsVFE7EUzyPpYF/u+
+ GnbR5oPUCtQSFiR7wWwChA+veO7EVq1Pi784EQyy0SwGbn8lNts2nVplvOj8gPg10Gil
+ 8E29Hl04cvk2b/dFWs/GAWzkA+xFRvYFbXlmguksLEvJdrw45klig6NChqeO/jD1hOeY
+ G1dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760585592; x=1761190392;
+ d=1e100.net; s=20230601; t=1760587036; x=1761191836;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zDx4vUBTXYtsKZguPSMTeW4z2LPKCHzenwLZ1f4KAqs=;
- b=lkHIlck3weAu4CTNwhmjLLYzxOTz7wL7oqZIgs5f9Zr7WqT2bKyXRyAewWoGcxSO/F
- dsww8LDBfDDts5jIg3k3saI4giI6P4VCIztZn8lwjNJjkNvpYyPUtu1sN56hISXKClnS
- 4h6l711aP1tWqWsMVToV1xoj1R0BXd2b1tQZUJCjh+3XTkn34qtryz9xa90R5CjSco+x
- OeN5Y0K4kOzkfFFdXMWsbg7c8HAvBdkIg2SzRezv/gQzom6Hv8EuZY6YvnZ5KhpoD8We
- BCISNAfAoGKB2HIagbCIXZOJH8c3T01LCgjEUSPJAorKVZ9dTwDWHtkOIIJhZaMwHiS9
- /cFw==
-X-Gm-Message-State: AOJu0YwrKRvi1/rPnUibIihv0IIPeuXsJ5TskqWDO69buZWUc7lvD7oa
- wDkJxMRQ/XDBp8Vsunrx634L85OYM7qCkW6OG1kQJ2rueX7+javQHQbouFLQInCIlZd9a8Zv25y
- RKr2zP0UaC/269QMnhX928jQWs2YjXnScS0F5+KW+rQ==
-X-Gm-Gg: ASbGncudUVEXjgd7FR2uqrg0FRRJ2TyqFuFzac5NWeDRvQyTYesjDuRCWm9aNRh3z+D
- OfFgOf39j/DfzMa6mvPHXPYGizmjDuOfqgqbn5YwJ89E2HrPIYBvtPHSgZ+Tq0+WhrHGRVrgO93
- C6uZ3c3TwNULYN7+TkkwYglDlOXeUZc2i/2LRJmFzX7swXpEyk1TkjvJ6TZijoB65viwXv9VWtx
- 0nCigpeT/9P5ORCpZBXVFwLZaQt2PPxP/L3D5xBJLNLdY8XlAhXB5inDsvw7LZ3d6IdaHktRg==
-X-Google-Smtp-Source: AGHT+IFNR/dqk2CasjiAn0KLZAiGx7xDLkCVH3uRAftR/yiY8CdCTNrYgybdPcB+mDBG7egGKEqijznpJZsOEfSVEGc=
-X-Received: by 2002:a05:6402:847:b0:637:8faa:9df7 with SMTP id
- 4fb4d7f45d1cf-639d5c59ca3mr28678606a12.29.1760585591629; Wed, 15 Oct 2025
- 20:33:11 -0700 (PDT)
+ bh=zQo8QxU31WExo92KOPA8Ute1JF2mwln81IPJ/0BnwNE=;
+ b=sEr65HgGX6Q/nN7QaUxsH0NCLPFDy2k1Ocq9LfVVNch30vRou3BiD6DFJzY6wbf4MK
+ jVtGce2kWNUX2zWRYdch2F468Hyktv6MtRJUaMOXfMKPCL6I+aox2zyn8WP0YpBHFytI
+ BrYg6AJ+vynL0sERv7JSlarBsJOEXF++gaNELo8TjMCdJVNvgBx8RlUPsT5wL2z8bKVK
+ 1aD2p8Af8dnXP5tbgIeBJNtO5HaUl/jrXlNJ4HttojtK+IPeJvzXVuNdEDu5IZdQaLx2
+ cqdfMyrLu6CtFtjiK1n4jslB9Wc2EQD5TxzxGKnDd9xKJ6rFzqkowWLVJvn8PT3zOrQY
+ dbxg==
+X-Gm-Message-State: AOJu0YwOYUgAm1fI5OV3pHO9EmNhn7xx6aMWqKM/wDY7nDp5uctq6KiW
+ 9/fpsleroYvFgJMYpsmAUEdI7xcP1G3FdkSfIYkK8xPlAI99o/6AqwZypnCoG9/qk0ch5wGfLzh
+ 8XCRbMNIOxxDO1Bvg/zaKWGn0ByIDIhU=
+X-Gm-Gg: ASbGncu5ABZ3HwSFwKCoHvy/xgqkfNjrtLmAtHYez8OoHXpuV0r9W+uR5A/25XsX8NJ
+ Nzkd7mKJNZhWm1jEA/rTIVajD8kYq7Z6p4Oh0G8jNiYAisTCqrYIyhJiAibhPe0s6iQmFe4iere
+ KSYKftT5dStiOCDbTd5VhTusLuKtY76QKGCJFqdRhTswzXoKWMu3os58W1Y/n9RhjK08iGzUGXs
+ TBw5fh6mFsnvM5gJO2RrnZEF1L1POkAsSCIF/gIZcJAmbIANN7ig1VfzqnUDNLywie5BsheUW0E
+ Q/mDO6wnTZAl/15XPB9LJBbNpA==
+X-Google-Smtp-Source: AGHT+IFLUylw2HZqzilk4M+ogE7z9ZKTbXgxugbJdMBYN87SH0LnOpNt2XOeVZxHYwGURSasLufRzNrhjll2dsDRZwk=
+X-Received: by 2002:a05:6402:2791:b0:63b:ede0:240d with SMTP id
+ 4fb4d7f45d1cf-63bede028c7mr4410862a12.4.1760587035790; Wed, 15 Oct 2025
+ 20:57:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250417105249.18232-1-jim.shu@sifive.com>
- <20250417105249.18232-5-jim.shu@sifive.com>
- <e7616702-8a7b-4617-8433-236a1086bdf9@ventanamicro.com>
- <CALw707rstv76_oESKHzbeuPakSesWNBXogQoCJN4pHMj_wz7eg@mail.gmail.com>
- <125b7913-c8c0-448b-9f3f-3b893436b901@ventanamicro.com>
-In-Reply-To: <125b7913-c8c0-448b-9f3f-3b893436b901@ventanamicro.com>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Thu, 16 Oct 2025 11:33:00 +0800
-X-Gm-Features: AS18NWA5bA5jEA-tEDP_afI62he9vjOlSwWxHC7oCalyWi0_exQBl7o125tVLJQ
-Message-ID: <CALw707pE=oXYWrYndA8jaxeqxD-vM1bcqSMV_U8_vfYuGy-ZUg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/18] exec: Add RISC-V WorldGuard WID to MemTxAttrs
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Michael Rolnik <mrolnik@gmail.com>, 
- Helge Deller <deller@gmx.de>, Song Gao <gaosong@loongson.cn>,
- Laurent Vivier <laurent@vivier.eu>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Stafford Horne <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>, 
- "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>,
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+References: <20251014203512.26282-1-anjo@rev.ng>
+ <20251014203512.26282-4-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-4-anjo@rev.ng>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 16 Oct 2025 13:56:49 +1000
+X-Gm-Features: AS18NWCP0ukh-B_afbpwqxMs9e1hntCx70BkWjVYsaZiiKiVPVZAwx0-ew1Zt1w
+Message-ID: <CAKmqyKOn11JeXpTJ5ywWq5MCxxJMH31-n_Eq75fuebNO4DYkew@mail.gmail.com>
+Subject: Re: [PATCH v3 03/34] target/riscv: Fix size of mhartid
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
+ alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=jim.shu@sifive.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,101 +98,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On Wed, Oct 15, 2025 at 6:35=E2=80=AFAM Anton Johansson via
+<qemu-devel@nongnu.org> wrote:
+>
+> and update formatting in log.
+>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Thanks for the suggestion. I will add it in the v3 patches.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-- Jim
+Alistair
 
-On Mon, Oct 13, 2025 at 1:27=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+> ---
+>  target/riscv/cpu.h         | 2 +-
+>  target/riscv/cpu_helper.c  | 2 +-
+>  target/riscv/machine.c     | 2 +-
+>  target/riscv/tcg/tcg-cpu.c | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
 >
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 4b291dbf81..25f996985b 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -279,7 +279,7 @@ struct CPUArchState {
+>      target_ulong geilen;
+>      uint64_t resetvec;
 >
+> -    target_ulong mhartid;
+> +    uint64_t mhartid;
+>      /*
+>       * For RV32 this is 32-bit mstatus and 32-bit mstatush.
+>       * For RV64 this is a 64-bit mstatus.
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 3479a62cc7..9d0683f200 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -2278,7 +2278,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>                       riscv_cpu_get_trap_name(cause, async));
 >
-> On 10/8/25 2:54 AM, Jim Shu wrote:
-> > Hi Daniel,
-> >
-> > Both '_reserved1' and '_reserved2' fields are only for padding
-> > MemTxAttrs struct to be 8-byte [1], so I remove a 1-byte reserved
-> > field when adding 'world_id' field to it.
-> > Is it ok for you? Or you think it is better to separate them.
+>      qemu_log_mask(CPU_LOG_INT,
+> -                  "%s: hart:"TARGET_FMT_ld", async:%d, cause:"TARGET_FMT=
+_lx", "
+> +                  "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", =
+"
+>                    "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=
+=3D%s\n",
+>                    __func__, env->mhartid, async, cause, env->pc, tval,
+>                    riscv_cpu_get_trap_name(cause, async));
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index f6ca017211..ab0bc32e1f 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -450,7 +450,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
+>          VMSTATE_UINTTL(env.priv, RISCVCPU),
+>          VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
+>          VMSTATE_UINT64(env.resetvec, RISCVCPU),
+> -        VMSTATE_UINTTL(env.mhartid, RISCVCPU),
+> +        VMSTATE_UINT64(env.mhartid, RISCVCPU),
+>          VMSTATE_UINT64(env.mstatus, RISCVCPU),
+>          VMSTATE_UINT64(env.mip, RISCVCPU),
+>          VMSTATE_UINT64(env.miclaim, RISCVCPU),
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 1150bd1469..db3cbc1625 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -487,7 +487,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISC=
+VCPU *cpu)
+>                  continue;
+>              }
+>  #ifndef CONFIG_USER_ONLY
+> -            warn_report("disabling %s extension for hart 0x" TARGET_FMT_=
+lx
+> +            warn_report("disabling %s extension for hart 0x%" PRIx64
+>                          " because privilege spec version does not match"=
+,
+>                          edata->name, env->mhartid);
+>  #else
+> --
+> 2.51.0
 >
-> It's fine. I suggest adding this explanation in the commit msg to avoid
-> further questions about it.
->
->
-> Thanks,
->
-> Daniel
->
-> >
-> >
-> > [1]
-> > commit 5014e33b1e00d330f13df33c09a3932ac88f8d94
-> > Link: https://lore.kernel.org/r/20250121151322.171832-2-zhao1.liu@intel=
-.com
-> >
-> > Thanks!
-> >
-> > On Sat, Aug 9, 2025 at 8:34=E2=80=AFPM Daniel Henrique Barboza
-> > <dbarboza@ventanamicro.com> wrote:
-> >>
-> >>
-> >>
-> >> On 4/17/25 7:52 AM, Jim Shu wrote:
-> >>> RISC-V WorldGuard will add 5-bit world_id (WID) to the each memory
-> >>> transaction on the bus. The wgChecker in front of RAM or peripherals
-> >>> MMIO could do the access control based on the WID. It is similar to A=
-RM
-> >>> TrustZone NS bit, but the WID is 5-bit.
-> >>>
-> >>> The common implementation of WID is AXI4 AxUSER signal.
-> >>>
-> >>> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> >>> ---
-> >>>    include/exec/memattrs.h | 8 ++++++--
-> >>>    1 file changed, 6 insertions(+), 2 deletions(-)
-> >>>
-> >>> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-> >>> index 8db1d30464..7a6866fa41 100644
-> >>> --- a/include/exec/memattrs.h
-> >>> +++ b/include/exec/memattrs.h
-> >>> @@ -54,6 +54,11 @@ typedef struct MemTxAttrs {
-> >>>         */
-> >>>        unsigned int pid:8;
-> >>>
-> >>> +    /*
-> >>> +     * RISC-V WorldGuard: the 5-bit WID field of memory access.
-> >>> +     */
-> >>> +    unsigned int world_id:5;
-> >>> +
-> >>>        /*
-> >>>         * Bus masters which don't specify any attributes will get thi=
-s
-> >>>         * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
-> >>> @@ -63,8 +68,7 @@ typedef struct MemTxAttrs {
-> >>>         */
-> >>>        bool unspecified;
-> >>>
-> >>> -    uint8_t _reserved1;
-> >>> -    uint16_t _reserved2;
-> >>> +    uint16_t _reserved1;
-> >>
-> >> Is 'reserved2' unused? Not sure why you ended up removing it in this p=
-atch.
-> >>
-> >> If it's really unused it's ok to remove it but this should be done in =
-separate.
-> >>
-> >>
-> >> Thanks,
-> >>
-> >> Daniel
-> >>
-> >>
-> >>>    } MemTxAttrs;
-> >>>
-> >>>    QEMU_BUILD_BUG_ON(sizeof(MemTxAttrs) > 8);
-> >>
 >
 
