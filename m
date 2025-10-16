@@ -4,80 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E91BCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354A1CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9KD4-0002Bb-3N; Thu, 16 Oct 2025 05:23:46 -0400
+	id 1v9KCk-00029U-QJ; Thu, 16 Oct 2025 05:23:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9KD2-0002BP-RM
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:23:44 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v9KCi-000292-5R
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:23:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9KCy-0000q9-Tk
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:23:43 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id AF87DC023A;
- Thu, 16 Oct 2025 12:23:36 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8c::1:19] (unknown
- [2a02:6bf:8080:a8c::1:19])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ZNNpWT3Fv0U0-YwHsoEf2; Thu, 16 Oct 2025 12:23:36 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760606616;
- bh=He2X7Bsgkiacn2NjKkoV172bwFbSe9eEZEPFrKnXqGU=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=EefPvFD99jEhAMgpFcA4TUdY5EhLPaYE1t6Y6R1BUqrjPz6Fhb4c4LW0Hro+2Rrgo
- AF+4KMamtR5hdwGtyTDp33wSGxPmH6XRpvcNKX2LmpH3CPZx6RnuwlCkt7fIyuFtpB
- 9LAZacV7twG2hfYnhcEw78IBudu8ErB/95vvyI0w=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
-Date: Thu, 16 Oct 2025 12:23:35 +0300
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v9KCb-0000nH-Gs
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:23:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760606592;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mSPTKZ5hvzwp2viVKEYZkZWN6rExGuI+XHrbLOfq3jQ=;
+ b=GpAUeUwC3fS+M506ZObbo0SAjXxtwxpWzAQxUq0LK1exUbl5YNB96+gAxC06YvOhZdEQ5i
+ hNLwm2N/zOuQ9U9Iec1wtdCjOJ+E1UbBuAUZQE2lE1VHBtXeigcTEL7eZ9HyLMW1jFYlQE
+ OEUakBvuzFS+P6SXLHghtSL7cjK1fq8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-7cqMrQ-AODuRu6Qz2Klidw-1; Thu, 16 Oct 2025 05:23:10 -0400
+X-MC-Unique: 7cqMrQ-AODuRu6Qz2Klidw-1
+X-Mimecast-MFC-AGG-ID: 7cqMrQ-AODuRu6Qz2Klidw_1760606589
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-426ec5e9278so1267246f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:23:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760606589; x=1761211389;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mSPTKZ5hvzwp2viVKEYZkZWN6rExGuI+XHrbLOfq3jQ=;
+ b=GR3PYnIBo76/tBdFwjcxTA86699sEQRq2YyaE1qLSeQxk3qv5nzZeey2sfrj2QOL2K
+ kTYAkDpFnkaKGLl0dUzeyhxvBXFLV2TBsZeMiLg8C3Z3nHb/KeW1KYWYfOZu1rltHEXP
+ xYaBh90Ta0OAiaAy3tYRifVFn7TgmoCAlH4BrwbUfZHZdyVXmfp9u4d4Zt4rM2JcVrhb
+ FxkkcGyqVrCzgOpRZWCbTPIVGh40hKhpFIKBR/YKcwp1wRf1zjL843QaX+W9r0yxOymh
+ bb6HRxdgHAPqIc5YQPgvFM6GvvPgu01kZ6pmXKOLvANS01Mqbe7LWJpR/bgn8MPOnOH/
+ kPiQ==
+X-Gm-Message-State: AOJu0Yx1zsx0TPo5Czu2E+WjZjtTXYB1D+seWZTO+oWR3nvRJrh36ePt
+ 8/26QHogmKtiAwZrALHaLeIwztyg+dfdgvmA4iLd2DZ8iNXcdirf0uZwp+Pl4QqCSwj96vGPfTr
+ KaukJnQBe/JIKQoZzsiHUjFzLWMHJtizcfre0O5/oz0zJ4bU2iCz2J9heWbIFsb6F
+X-Gm-Gg: ASbGncsL092/sZ1rjpYpYWk4DU0BQeFOkTSxqa9Ytf/yYRh0nKs6n8ucSsa/Df8WN8M
+ coVyizv0Ra/+XQqHjj/xNzydKEkGcQs55lsyOivGyJztPDbaalb5AVg2aR5UthNoidvraWP48gP
+ QmjmTR63WOUbY/YPGWTY83uOhA7D/FA+RLg/9UAxV0M7+JdVU+9QkwYVR/rGpsqKQp4NSMrueE5
+ t6y4lgDJ6Z+qqIZ9co1nxtgH2b3cnIi90/fIwF+6kZwS4ZmiC8R8rkvErdHm5kjFAt1S3XRDjwF
+ nBv94qQJMP7qY/kGR4CDdaNIP81ohLFXFeNFFtu9olNs85p+wnE/r7/bqAcweQ2VNxB1daSk9gk
+ R/UB9AhOHLTa23TnX7w/VTJ5793M89zD6Dy+bz2E/kHLu7iCJ77qPXfEb22vH8iyTL7W+2R8tuW
+ E/JA==
+X-Received: by 2002:a05:6000:2910:b0:3ea:bccc:2a2c with SMTP id
+ ffacd0b85a97d-42666ab96aamr22537091f8f.11.1760606589076; 
+ Thu, 16 Oct 2025 02:23:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGSY+mBlwsnTnrnCqJ5JDIyduLGFdj9hV2ChgeJcJUcVxF3uzmFgnNkKY0rhGNxezcjJpu4vw==
+X-Received: by 2002:a05:6000:2910:b0:3ea:bccc:2a2c with SMTP id
+ ffacd0b85a97d-42666ab96aamr22537073f8f.11.1760606588689; 
+ Thu, 16 Oct 2025 02:23:08 -0700 (PDT)
+Received: from [192.168.10.48] ([151.61.22.175])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-426ce5cf6b4sm33537933f8f.25.2025.10.16.02.23.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Oct 2025 02:23:07 -0700 (PDT)
+Message-ID: <af20ba0c-26ad-48d7-a135-918f14b8d63e@redhat.com>
+Date: Thu, 16 Oct 2025 11:23:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, mst@redhat.com, jasowang@redhat.com,
- farosas@suse.de, sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
- davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
- <20251015132136.1083972-17-vsementsov@yandex-team.ru>
- <aO_ll4Lf0bq6vgdm@x1.local>
- <3b9f1da4-6264-45d4-ade1-a6273cc6fa1e@yandex-team.ru>
- <aO_--QWDJO7iOhR4@x1.local>
- <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
- <aPCtkB-GvFNuqlHn@redhat.com>
+Subject: Re: [PATCH 2/2] target/i386: Use X86ASIdx_MEM in kvm_init()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20251014094216.164306-1-xiaoyao.li@intel.com>
+ <20251014094216.164306-3-xiaoyao.li@intel.com>
+ <c82e0b7d-c22c-41b5-a9e8-757a590cf719@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aPCtkB-GvFNuqlHn@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <c82e0b7d-c22c-41b5-a9e8-757a590cf719@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -89,167 +150,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.10.25 11:32, Daniel P. Berrangé wrote:
-> On Thu, Oct 16, 2025 at 12:02:45AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 15.10.25 23:07, Peter Xu wrote:
->>> On Wed, Oct 15, 2025 at 10:02:14PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> On 15.10.25 21:19, Peter Xu wrote:
->>>>> On Wed, Oct 15, 2025 at 04:21:32PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>>>> This parameter enables backend-transfer feature: all devices
->>>>>> which support it will migrate their backends (for example a TAP
->>>>>> device, by passing open file descriptor to migration channel).
->>>>>>
->>>>>> Currently no such devices, so the new parameter is a noop.
->>>>>>
->>>>>> Next commit will add support for virtio-net, to migrate its
->>>>>> TAP backend.
->>>>>>
->>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>>>> ---
->>>>
->>>> [..]
->>>>
->>>>>> --- a/qapi/migration.json
->>>>>> +++ b/qapi/migration.json
->>>>>> @@ -951,9 +951,16 @@
->>>>>>     #     is @cpr-exec.  The first list element is the program's filename,
->>>>>>     #     the remainder its arguments.  (Since 10.2)
->>>>>>     #
->>>>>> +# @backend-transfer: Enable backend-transfer feature for devices that
->>>>>> +#     supports it. In general that means that backend state and its
->>>>>> +#     file descriptors are passed to the destination in the migraton
->>>>>> +#     channel (which must be a UNIX socket). Individual devices
->>>>>> +#     declare the support for backend-transfer by per-device
->>>>>> +#     backend-transfer option. (Since 10.2)
->>>>>
->>>>> Thanks.
->>>>>
->>>>> I still prefer the name "fd-passing" or anything more explicit than
->>>>> "backend-transfer". Maybe the current name is fine for TAP, only because
->>>>> TAP doesn't have its own VMSD to transfer?
->>>>>
->>>>> Consider a device that would be a backend that supports VMSDs already to be
->>>>> migrated, then if it starts to allow fd-passing, this name will stop being
->>>>> suitable there, because it used to "transfer backend" already, now it's
->>>>> just started to "fd-passing".
->>>>>
->>>>> Meanwhile, consider another example - what if a device is not a backend at
->>>>> all (e.g. vfio?), has its own VMSD, then want to do fd-passing?
->>>>
->>>> Reasonable.
->>>>
->>>> But consider also the discussion with Fabiano in v5, where he argues against fds
->>>> (reasonable too):
->>>>
->>>> https://lore.kernel.org/qemu-devel/87y0qatqoa.fsf@suse.de/
->>>>
->>>> (still, they were against my "fds" name for the parameter, which is
->>>> really too generic, fd-passing is not)
->>>>
->>>> and the arguments for backend-transfer (to read similar with cpr-transfer)
->>>>
->>>> https://lore.kernel.org/qemu-devel/87ms6qtlgf.fsf@suse.de/
->>>>
->>>>
->>>>>
->>>>> In general, I think "fd" is really a core concept of this whole thing.
->>>>
->>>> I think, we can call "backend" any external object, linked by the fd.
->>>>
->>>> Still, backend/frontend terminology is so misleading, when applied to
->>>> complex systems (for me, at least), that I don't really like "-backend"
->>>> word here.
->>>>
->>>> fd-passing is OK for me, I can resend with it, if arguments by Fabiano
->>>> not change your mind.
->>>
->>> Ah, I didn't notice the name has been discussed.
->>>
->>> I think it means you can vote for your own preference now because we have
->>> one vote for each. :) Let's also see whether Fabiano will come up with
->>> something better than both.
->>>
->>> You mentioned explicitly the file descriptors in the qapi doc, that's what
->>> I would strongly request for.  The other thing is the unix socket check, it
->>> looks all good below now with it, thanks.  No strong feelings on the names.
->>>
+On 10/16/25 10:43, Philippe Mathieu-Daudé wrote:
+> On 14/10/25 11:42, Xiaoyao Li wrote:
+>> When the patch introduces 'enum X86ADIdx'[0] got merged, it somehow
+>> missed the change to replace as id 0 with X86ASIdx_MEM in kvm_init().
+
+It wasn't missed, it broke CI. ;)
+
+Paolo
+
+>> Change the leftover in kvm_init() to make the usage consistent.
 >>
->> After a bit more thinking, I leaning towards keeping backend-transfer. I think
->> it's more meaningful for the user:
+>> [0] https://lore.kernel.org/qemu-devel/20250730095253.1833411-3- 
+>> xiaoyao.li@intel.com/
 >>
->> If we call it "fd-passing", user may ask:
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   accel/kvm/kvm-all.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> Ok, what is it? Allow QEMU to pass some fds through migration stream, if it
->> supports fds? Which fds? Why to pass them? Finally, why QEMU can't just check
->> is it unix socket or not, and pass any fds it wants if it is?
->>
->> Logical question is, why not just drop the global capability, and check only
->> is it unix socket or not? (OK, relying only on socket type is wrong anyway,
->> as it may be some complex tunneling, which includes unix sockets, but still
->> can't pass fds, but I think now about feature naming)
->>
->> But we really want an explicit switch for the feature. As qemu-update is
->> not the only case of local migration. The another case is changing the
->> backend. So for the user's choice is:
->>
->> 1. Remote migration: we can't reuse backends (files, sockets, host devices), as
->> we are moving to another host. So, we don't enable "backend-transfer". We don't
->> transfer the backend, we have to initialize new backend on another host.
->>
->> 2. Local migration to update QEMU, with minimal freeze-time and minimal
->> extra actions: use "backend-transfer", exactly to keep the backends
->> (vhost-user-server, TAP device in kernel, in-kernel vfio device state, etc)
->> as is.
->>
->> 3. Local migration, but we want to reconfigure some backend, or switch
->> to another backend. We disable "backend-transfer" for one device.
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index 58802f7c3cc1..3030c47d55b1 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -2800,7 +2800,7 @@ static int kvm_init(AccelState *as, MachineState 
+>> *ms)
+>>       s->memory_listener.listener.coalesced_io_del = 
+>> kvm_uncoalesce_mmio_region;
+>>       kvm_memory_listener_register(s, &s->memory_listener,
+>> -                                 &address_space_memory, 0, "kvm- 
+>> memory");
+>> +                                 &address_space_memory, X86ASIdx_MEM, 
+>> "kvm-memory");
 > 
-> This implies that you're changing 'backend-transfer' against the
-> device at time of each migration.
+> NAck: this is a generic code use by multiple architectures.
 > 
-> This takes us back to the situation we've had historically where the
-> behaviour of migration depends on global properties the mgmt app has
-> set prior to the 'migrate' command being run. We've just tried to get
-> away from that model by passing everything as parameters to the
-> migrate command, so I'm loathe to see us invent a new way to have
-> global state properties changing migration behaviour.
 > 
-> This 'backend-transfer' device property is not really a device property,
-> it is an indirect parameter to the 'migrate' command.
-> 
-> Ergo, if we need the ability to selectively migrate the backend state
-> of individal devices, then instead of a property on the device, we
-> should pass a list of device IDs as a parameter to the migrate
-> command in QMP.
 
-Understand.
-
-So, it will look like
-
-# @backend-transfer: List of devices IDs or QOM paths, to enable
-#     backend-transfer for. In general that means that backend
-#     states and their file descriptors are passed to the destination
-#     in the migration channel (which must be a UNIX socket), and
-#     management tool doesn't have to configure new backends for
-#     target QEMU (like vhost-user server, or TAP device in the kernel).
-#     Default is no backend-transfer migration (Since 10.2)
-
-
-Peter, is it OK for you?
-
-
-> 
->>
->> 4. Some problem with "backend-transfer", may be some bug. Disable the whole
->> beackend-transfer feature, and do normal local migration to a new version
->> with bug fixed.
->>
-> 
-> With regards,
-> Daniel
-
-
--- 
-Best regards,
-Vladimir
 
