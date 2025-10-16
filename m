@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92AAECCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 11:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BA6CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 11:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9MNs-0007ko-9e; Thu, 16 Oct 2025 07:43:04 -0400
+	id 1v9MNW-0007O3-CG; Thu, 16 Oct 2025 07:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9MNF-0007Gw-Ty; Thu, 16 Oct 2025 07:42:30 -0400
+ id 1v9MMm-00077W-5Q; Thu, 16 Oct 2025 07:41:57 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9MN9-0003WI-6G; Thu, 16 Oct 2025 07:42:24 -0400
+ id 1v9MMa-0003V1-UX; Thu, 16 Oct 2025 07:41:52 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E413DC01E2;
- Thu, 16 Oct 2025 14:41:38 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A45E8C01C0;
+ Thu, 16 Oct 2025 14:41:31 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a8c::1:19])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id LfP2M73FEmI0-RYmLMXZs; Thu, 16 Oct 2025 14:41:38 +0300
+ ESMTPSA id LfP2M73FEmI0-kbTFYAzO; Thu, 16 Oct 2025 14:41:31 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760614898;
- bh=kdIFXuaPTp/BfbVEZsthEVutCRQg5Y0tS4H8w9udEPE=;
+ s=default; t=1760614891;
+ bh=s9yCrQBHmEqUJP+BAtrGs9xnsIszRjeHBLrqv/k9/kY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=e2Dxekh174wsHqceWBfHueJM2/cHPGf5UkiSTy8YbRha0/aq5vwelBvKSyfXdaFy2
- 2ckuhk4l5CLHfTY+CF1LNfTJ8POh0Yi4whMgKNLdvirM4sFEHr84XHjpZGSo6KyeoY
- 3YH61i/sQNJdG3+GAaRaUVIJchtL9bffsQsEYZKQ=
+ b=nGMFivfrKNwEYIg4qwdqbFWpAbeT2qjkF2VfBM6/5cHP4iADYxGoBuyFaeYKhyjCE
+ nTuClrPtD2w8Gm2KvZ4UojN8fA31c+j9bTunxgzi2ta2nXtoE9VELDvlS43fuq4mq2
+ aKRDhC38KQ64KEkYt2XCUupg+hX9++fFFxuTvOhs=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,9 +48,9 @@ Cc: mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com,
  qemu-block@nongnu.org, steven.sistare@oracle.com,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, jasowang@redhat.com
-Subject: [PATCH v2 20/25] vhost-user: add vmstate
-Date: Thu, 16 Oct 2025 14:40:57 +0300
-Message-ID: <20251016114104.1384675-21-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 10/25] vhost-user-blk: split vhost_user_blk_init()
+Date: Thu, 16 Oct 2025 14:40:47 +0300
+Message-ID: <20251016114104.1384675-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
 References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
@@ -79,138 +79,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Split it into _init() and _connect() part, following pattern of
+vhost_dev_init / vhost_dev_connect.
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost-user.c         | 95 ++++++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-user.h |  4 ++
- 2 files changed, 99 insertions(+)
+ hw/block/vhost-user-blk.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index c5cb5ed528..a820214188 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -28,6 +28,8 @@
- #include "system/runstate.h"
- #include "system/cryptodev.h"
- #include "migration/postcopy-ram.h"
-+#include "migration/qemu-file-types.h"
-+#include "migration/qemu-file.h"
- #include "trace.h"
- #include "system/ramblock.h"
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index c31c265a0e..9c727c3977 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -58,6 +58,7 @@ static const int user_feature_bits[] = {
+ };
  
-@@ -3137,6 +3139,99 @@ void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
-         qmp_decode_protocols(u->protocol_features);
- }
+ static void vhost_user_blk_event(void *opaque, QEMUChrEvent event);
++static int vhost_user_blk_connect(DeviceState *dev, Error **errp);
  
-+typedef struct VhostUserMigTmp {
-+    struct vhost_dev *parent;
-+    bool has_backend_channel;
-+    int backend_fd;
-+    uint32_t memory_slots;
-+    uint64_t protocol_features;
-+} VhostUserMigTmp;
-+
-+static int vhost_user_tmp_pre_save(void *opaque)
-+{
-+    VhostUserMigTmp *tmp = opaque;
-+    struct vhost_dev *dev = tmp->parent;
-+    struct vhost_user *u = dev->opaque;
-+    QIOChannelSocket *sioc = u->backend_sioc;
-+
-+    if (sioc && sioc->fd < 0) {
-+        return -EINVAL;
-+    }
-+
-+    tmp->backend_fd = sioc ? sioc->fd : -1;
-+    tmp->has_backend_channel = !!sioc;
-+    tmp->memory_slots = u->user->memory_slots;
-+    tmp->protocol_features = u->protocol_features;
-+
-+    return 0;
-+}
-+
-+static int vhost_user_tmp_post_load(void *opaque, int version_id)
-+{
-+    struct VhostUserMigTmp *tmp = opaque;
-+    struct vhost_dev *dev = tmp->parent;
-+    struct vhost_user *u = dev->opaque;
-+    Error *local_err = NULL;
-+
-+    if (tmp->has_backend_channel) {
-+        u->backend_sioc = qio_channel_socket_new_fd(tmp->backend_fd,
-+                                                    &local_err);
-+        if (!u->backend_sioc) {
-+            error_report_err(local_err);
-+            return -EINVAL;
+ static void vhost_user_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+ {
+@@ -352,9 +353,6 @@ static int vhost_user_blk_init(DeviceState *dev, bool connect, Error **errp)
+ 
+     trace_vhost_user_blk_init_in(vdev);
+ 
+-    /* TODO: implement support for connect=false */
+-    assert(connect);
+-
+     assert(!s->connected);
+ 
+     s->dev.num_queues = s->num_queues;
+@@ -371,6 +369,29 @@ static int vhost_user_blk_init(DeviceState *dev, bool connect, Error **errp)
+         return ret;
+     }
+ 
++    if (connect) {
++        ret = vhost_user_blk_connect(dev, errp);
++        if (ret < 0) {
++            return ret;
 +        }
-+        u->backend_src = qio_channel_add_watch_source(
-+            QIO_CHANNEL(u->backend_sioc), G_IO_IN | G_IO_HUP,
-+            backend_read, u->dev, NULL, NULL);
 +    }
 +
-+    u->user->memory_slots = tmp->memory_slots;
-+    u->protocol_features = tmp->protocol_features;
++    trace_vhost_user_blk_init_out(vdev);
 +
 +    return 0;
 +}
 +
-+static bool vhost_user_tmp_test_fd(void *opaque, int version_id)
++static int vhost_user_blk_connect(DeviceState *dev,
++                                  Error **errp)
 +{
-+    struct VhostUserMigTmp *tmp = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VHostUserBlk *s = VHOST_USER_BLK(vdev);
++    int ret = 0;
 +
-+    return tmp->has_backend_channel;
-+}
++    trace_vhost_user_blk_connect_in(vdev);
 +
-+static const VMStateDescription vmstate_vhost_user_blk_tmp = {
-+    .name = "vhost-user-blk-tmp",
-+    .pre_save = vhost_user_tmp_pre_save,
-+    .post_load = vhost_user_tmp_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(protocol_features, VhostUserMigTmp),
-+        VMSTATE_UINT32(memory_slots, VhostUserMigTmp),
-+        VMSTATE_BOOL(has_backend_channel, VhostUserMigTmp),
-+        VMSTATE_FD_TEST(backend_fd, VhostUserMigTmp, vhost_user_tmp_test_fd),
-+        VMSTATE_END_OF_LIST()
-+   },
-+};
++    assert(!s->connected);
 +
-+static int vhost_user_post_load(void *opaque, int version_id)
-+{
-+    struct vhost_dev *dev = opaque;
-+    struct vhost_user *u = dev->opaque;
-+
-+    u->postcopy_notifier.notify = vhost_user_postcopy_notifier;
-+    postcopy_add_notifier(&u->postcopy_notifier);
-+
-+    return 0;
-+}
-+
-+const VMStateDescription vmstate_vhost_user = {
-+    .name = "vhost-user",
-+    .post_load = vhost_user_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_WITH_TMP(struct vhost_dev, VhostUserMigTmp,
-+                         vmstate_vhost_user_blk_tmp),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VhostOps user_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_USER,
-         .vhost_backend_init = vhost_user_backend_init,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 36d96296a3..fb89268de2 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -114,4 +114,8 @@ void vhost_user_async_close(DeviceState *d,
- 
- void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status);
- 
-+extern const VMStateDescription vmstate_vhost_user;
-+#define VMSTATE_BACKEND_TRANSFER_VHOST_USER(_field, _state) \
-+    VMSTATE_STRUCT(_field, _state, 0, vmstate_vhost_user, struct vhost_dev)
-+
- #endif
+     ret = vhost_dev_connect(&s->dev, errp);
+     if (ret < 0) {
+         return ret;
 -- 
 2.48.1
 
