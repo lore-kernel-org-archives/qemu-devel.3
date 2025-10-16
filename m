@@ -4,134 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84385CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 10:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9243BCCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 10:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9KnT-0004NZ-LB; Thu, 16 Oct 2025 06:01:23 -0400
+	id 1v9LNv-00013u-P4; Thu, 16 Oct 2025 06:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KnS-0004NF-E9
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:01:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v9LNs-00012r-JR
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:39:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KnH-0005Sh-Fd
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:01:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v9LNn-0002aK-8x
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 06:38:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760608867;
+ s=mimecast20190719; t=1760611131;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=73O+ivfpCbAs9rwLj7gYOdADSVK9dLuABs8aCfn7DUI=;
- b=ZzIUEgiY2ZM3uymjVNYLSJ6GaIMfYoYNuRRBNDU9pQpU0JfRzsl5wcD4yx5O0LbkrStu38
- tLSmNrchLB8OgY6UkD5Hsf6SnyAPGLk5yE4MUCnbFZWb+2f3N/MRzbDWOKsG0AWZ4He9aP
- rbNZTOq0sJnTMtplQDBnW43ySJuxcD8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-8Ph4fanKOaec7DRAyU2x1Q-1; Thu, 16 Oct 2025 06:01:06 -0400
-X-MC-Unique: 8Ph4fanKOaec7DRAyU2x1Q-1
-X-Mimecast-MFC-AGG-ID: 8Ph4fanKOaec7DRAyU2x1Q_1760608865
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4710d174c31so7688215e9.0
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 03:01:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760608865; x=1761213665;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=73O+ivfpCbAs9rwLj7gYOdADSVK9dLuABs8aCfn7DUI=;
- b=e1tqsrBfLbzaIlodkVMYq70gGmEkldl5zaM0DaZbsf02pEagI6Yl0Q+w/ZWHwsf8JA
- SG8aoBVUc9Sl+8kOzIwB0crxDKgYHMsVo0Q4eu+z+ysVqfyYZ/iO8EEWyBAHnShKX3mo
- B8NcgRVqOiJ/H8TDNfU+vUTrCqqGujbVNf9nuAtgmEqe3ggJsAWOIN/xw73ntD20CJAM
- tkM9ZOq2I/+JHshsBXq9HmEmbIwKKxbMcMMiNxviU2HBXiby9XH15ZgnrRqOBfPH/hs1
- kACM6no6rmxoa1OKOEcPl3kwaZsDcYiy/+j2xqkUleW+gaahYgqytTZlyuxP1eBzePkm
- 0yMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXe2xiczY0+6If0SOLrdG+s4EVLjo+O98nrH+mRE3RzCOIjF/27aFHjR+tvOw1Oi+JKEinZ+3yqeqBv@nongnu.org
-X-Gm-Message-State: AOJu0Yz3kLQ/Klq5CEiomRsBm/qtqT7Yn2wvvegRolBh80Ya36IOPP7h
- TSAs0AuHMelb4iuC7DxinXI7nMy5AY5JTc5BvF/C7zhFugdXyhVjR3y65B3z0ys6/A1vw/uvLA1
- /X5yAUK611Gri08joJF/ZwtyE4rMb6pJ6WzJzb7tS0L+rP5P/sx0G5+YD
-X-Gm-Gg: ASbGncsfyhewGP0y0abdknKQl5ZibEQ8/IDz8wxoymIjb9zLLRY1PQksReRle2y8Mxn
- yWRkAIUg8uHNfw4wFVLybFEbkYgQMeovZL3a0Whs7L651vwAzuC7fwN3boGVX/jbrTotNHRDN2H
- k5uRBHRQ62D6sQh7n0Ie5Njs15flDjmjr6r4+tjRmfX4zaORmmxYnbqvicMXFLv7pojRS21+i3V
- eQpFtvS3qIF8cnQ2gmnd+0qujL6nYW/+iIZhSo8SjynqjYfxAdAB3/8WgCurV5pHdxM32oy1cFE
- hoE9GG0bbLR/Vy+ruGofWpUr9aYWqw0KPLq6PP2GnmJQDWnAAUGu22gV/GJ+T3mJqFM+v+62j1w
- RIPC4RWZsO8JbpJ+TR06+S1H7++M2ibyws41wQdqR
-X-Received: by 2002:a05:600c:4745:b0:46d:cfc9:1d0f with SMTP id
- 5b1f17b1804b1-46fa9af30e5mr254325875e9.19.1760608864923; 
- Thu, 16 Oct 2025 03:01:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxl8KAuI7MBxfe2VPxkBUyL0sp6dAPnqjTH9RuFNZhEtLhvrFBBXnjz+kg7JErczhqvrXkKA==
-X-Received: by 2002:a05:600c:4745:b0:46d:cfc9:1d0f with SMTP id
- 5b1f17b1804b1-46fa9af30e5mr254325505e9.19.1760608864477; 
- Thu, 16 Oct 2025 03:01:04 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
- [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ff65596csm2604909f8f.24.2025.10.16.03.01.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 03:01:04 -0700 (PDT)
-Message-ID: <eac19087-ee5f-4a4b-a086-19601cccb822@redhat.com>
-Date: Thu, 16 Oct 2025 12:01:03 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=N874HbHUUU7TnJyKEhqUOv79wOFms/6Fki3m6zA07mY=;
+ b=A7aKgCeuKrWUQR/KbTt8fSBYFvpmZA06xMvM1+DCXUj2EGmpmaszMCUjhFvSBKwjBSTakU
+ sccrViSnM0ZZ24vdKuSPKPBvWoaXGl3X/7WclqHKrXzjm5vEjgZPsWfG1JmHrr9GkWMWwG
+ /lXH5gx+yzT5gHqjn9TjI8Wb+9B8H14=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-dxUhf6ZLNsC8qucGANvAog-1; Thu,
+ 16 Oct 2025 06:38:48 -0400
+X-MC-Unique: dxUhf6ZLNsC8qucGANvAog-1
+X-Mimecast-MFC-AGG-ID: dxUhf6ZLNsC8qucGANvAog_1760611127
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EA851800637; Thu, 16 Oct 2025 10:38:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B98A9300019F; Thu, 16 Oct 2025 10:38:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4E9E021E6A27; Thu, 16 Oct 2025 12:38:43 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  devel@lists.libvirt.org,  eblake@redhat.com,
+ farosas@suse.de,  lvivier@redhat.com,  pbonzini@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4] qapi: net: deprecate vhostforce option
+In-Reply-To: <239dc7b4-de5a-4e47-912d-543347d1f90b@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Thu, 16 Oct 2025 12:03:33 +0300")
+References: <20251015143941.1109499-1-vsementsov@yandex-team.ru>
+ <87bjm7teou.fsf@pond.sub.org>
+ <239dc7b4-de5a-4e47-912d-543347d1f90b@yandex-team.ru>
+Date: Thu, 16 Oct 2025 12:38:43 +0200
+Message-ID: <87frbjrv0s.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/tcg/s390x: Test SET CLOCK COMPARATOR
-To: Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20251015142141.3238-1-iii@linux.ibm.com>
- <20251015142141.3238-4-iii@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251015142141.3238-4-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -140,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,17 +88,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/10/2025 16.21, Ilya Leoshkevich wrote:
-> Add a small test to prevent regressions.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   tests/tcg/s390x/Makefile.softmmu-target |  1 +
->   tests/tcg/s390x/sckc.S                  | 55 +++++++++++++++++++++++++
->   2 files changed, 56 insertions(+)
->   create mode 100644 tests/tcg/s390x/sckc.S
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> On 16.10.25 11:48, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> This option for tap and vhost-user netdevs doesn't make sense
+>>> since long ago (10 years!), starting from commits:
+>>>
+>>>   1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
+>>>   24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
+>>>
+>>> Prior these commits, to enable kernel vhost-net, or vhost-user-net for
+>>> some specific kind of guests (that don't have MSI-X support), you should
+>>> have set vhostforce=on.
+>>>
+>>> Now guest type doesn't matter, all guests are equal for these
+>>> options logic.
+>>>
+>>> For tap the current logic is:
+>>>    vhost=on / vhost=off : vhostforce ignored, doesn't make sense
+>>>    vhost unset : vhostforce counts, enabling vhost
+>>>
+>>> So you may enable vhost for tap several ways:
+>>> - vhost=on
+>>> - vhostforce=on
+>>> - vhost=on + vhostforce=on
+>>> - and even vhost=on + vhostforce=off
+>>>
+>>> - they are all equal.
+>>>
+>>> For vhost-user we simply ignore the vhostforce option at all in the
+>>> code.
+>>>
+>>> Let's finally deprecate the extra options.
+>>>
+>>> Also, fix @vhostforce documentation everywhere to show the real picture,
+>>> and update vhost-user test to not use deprecated option.
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+[...]
+
+>>> diff --git a/qemu-options.hx b/qemu-options.hx
+>>> index 0223ceffeb..35a70096e8 100644
+>>> --- a/qemu-options.hx
+>>> +++ b/qemu-options.hx
+>>> @@ -2882,7 +2882,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+>>>  #else
+>>>      "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
+>>>      "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
+>>> -    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
+>>> +    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
+>>>      "         [,poll-us=n]\n"
+>>>      "                configure a host TAP network backend with ID 'str'\n"
+>>>      "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
+>>> @@ -2898,9 +2898,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+>>>      "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
+>>>      "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
+>>>      "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
+>>> -    "                use vhost=on to enable experimental in kernel accelerator\n"
+>>> -    "                    (only has effect for virtio guests which use MSIX)\n"
+>>> -    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
+>>> +    "                use vhost=on to enable in kernel accelerator\n"
+>> 
+>> So the kernel's accelerator is no longer experimental?
+>
+> Reading this, I heard the first time that vhost-net is experimental.
+> It's about 15 years old, and used in production. I think "experimental"
+> is inappropriate word here)
+
+Just double-checking :)
+
+The text you adjust is from 2010 (commit 82b0d80ef6a).  I guess the
+accelerator was experimental back then.
+
+Mention the correction in the commit message?
+
+[...]
 
 
