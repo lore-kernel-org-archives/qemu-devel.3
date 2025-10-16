@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16074CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63A5CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mun-00078a-Oo; Thu, 16 Oct 2025 08:17:06 -0400
+	id 1v9Mtx-00068Y-AK; Thu, 16 Oct 2025 08:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Muh-0006r8-Vm
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:17:00 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mtt-00065u-3N
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:09 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MuV-0008Fa-TU
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:58 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4270491e9easo45419f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:16:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mtm-000878-BV
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:16:08 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-46fcf9f63b6so3522175e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760616997; x=1761221797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760616954; x=1761221754; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=s/VgKDi/AmTRxccR3mAlzawFNzbduYz91OdfcZBf1s8=;
- b=J3nbZ5UqJvcF7PR3fcibBM9sDif+ugh7PPKTRU6083y2+3WoHZVb7b4muedKDkw3cq
- qsKyyAd84wXYjcnyUN43bdLZeIMptIiWC+3jcRllIIYx/9vWy0Wlz0CilSve4RSappok
- 4zSdxeFxBHRawwOISoO8fiTJeDMd0Dk5f5QUhyaS+jyGhpYPoRj0OG7AZY8hQyDuKI4l
- fPjYKqWWlnzS+Cq71AylNp1ZWYjihqWmBUlUWihaSMzkOtrK6qhCyV8HdO3CAy2Som8e
- Mu1lx0Rnq8gOKkGQ1fw2VpohG6uGFYYUG0mHjWu59WXSkIvzQXR727ERSnjd2kdt5szt
- 4N4w==
+ :reply-to; bh=+6gexP1/asyF00baE5jYVsYkot+6QG6gZHm7RtPxrqk=;
+ b=gzOLpQM3TzNKfu8nV3j29WQMhA7GzA3GqJVID+8p5efCIw7Tqwit6RC88GvpbOPJQn
+ jBSKSGBvj4N72SFsMOYehTXMZzquTewoLTxg2vRAskNQ8ed1fk6+CLG+ged9gOZtBnj/
+ lF8jM253mupv2szs3Vg8KarFo6eeTOFWvQjQBGttly/h8bAVsaA5vopN1YWaBr9SCcAz
+ COsZ/NETCihqyZ7T/r7ZwXWp1ly+ZRiv4bW1PgdOwTs4xtYmVy5CZePVVGOWOC7wVLxx
+ LhjKOdmwtiwQT9zLWpY4KyVndc/MIk4351rOL9nFM894I4UfG8OhB9y5qhiJ3/OWktpi
+ AsyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760616997; x=1761221797;
+ d=1e100.net; s=20230601; t=1760616954; x=1761221754;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s/VgKDi/AmTRxccR3mAlzawFNzbduYz91OdfcZBf1s8=;
- b=V6H7BnNfr5N9vLQikBSFIGwYXNtfSoj5TJZVP6js9j4SpEI5XUnB9dzoHBOmRZzJX9
- K7GWfpi3jmUQk136fCztzQsU6/bbpZlhNhj/FMwD/bNzPBZuFI3ox5FRfl3IoAaBiuYL
- lrSfiSoyrlqcWYvcB124pr19caULtakBp4dxrbbomjknLMfYtkEpUMe7TSsFk078WOES
- DRTItK9d3vhjzY4QxNDF32gdFmDyC3CTV0ir7sqDB2xJWAMSLIUZit5LmeZXFSrPN74H
- 265i+KhYm1oAkoz1J5aCYFtd4m5p+IWvsSG/rYn57WlE52jTSoczujuO3xpytLgRJjKG
- 24Wg==
-X-Gm-Message-State: AOJu0Yw+C/Yyr1wetsBRfxYbb3yZAGUtlJGF1gPfRVqkK+PJIx2xsSiC
- XDiaE79dxKsIksmLOHdB7qvsvsEpnXLTtk1WEcDYS0TDUNnYYT7Ka2ppWXSyM51BILGNV3KQeF2
- gqGWHXG4=
-X-Gm-Gg: ASbGnctIeocNphbEotuM5FpEwkiAIvxPxc1W8iSLXKOsnImH9WxLAJs5rphDR3O3lsV
- RssjSY/zwVN97v+TDXUj41LXea602vEXHqQIE5+WN3VXX6l9C3BvktPEhy2vNWwS3Bh7KcKzM6M
- 00WjvLCe5D2J0mZG0z9z9l8l7BSy3Lfg/U2MqkfVGTYHqfTM9uW/0funfQGdLFdcFOgqZNqpmm3
- pG+0WqQRBOV55StJPWaHHqqfYxi9tJiz6F6zJdO9lmIZnqN7oyfqt819qICb0QWj41OjVfJx7CS
- Yc6DW4QgeyhEq85TckWyxlP5HueJ+RwTZpYJHB9S+tJDK1Ua0Y8UYaVf2AYc5xoA566o8xsdv63
- MhQ5EGMB9Y/zzmtW4H1aCIXMVyR39FsD+usyQB5G0WuNIZSQjg804sAdfX+UeeVrQhEb7qAri5/
- wIeSRdMO24lUUjyG+yatVAcOfjgpwA5Z4Araxh8YuJCDp8n3eoeRy4gw==
-X-Google-Smtp-Source: AGHT+IFvMlka1BC0GKosIwVxAwURgWiFsYaFDIwU1chkQBwATQ+ULGPGYAAgIpXMjNKKZEcVQJ/1aA==
-X-Received: by 2002:a05:6000:2203:b0:425:57dd:58c4 with SMTP id
- ffacd0b85a97d-4266e7d7eb1mr23208997f8f.26.1760616996712; 
- Thu, 16 Oct 2025 05:16:36 -0700 (PDT)
+ bh=+6gexP1/asyF00baE5jYVsYkot+6QG6gZHm7RtPxrqk=;
+ b=jwajNebsACVwphP6e8kvwXiQtziHRLF4VFrXzb4ya7GrpbAhnfz54Evfc/2GpAA3El
+ FQRZjGwF19//bDAT3MBsb6fVzY6Lt7zxzY7I21EKGpv5FMBWeeVcY7RSz1IN2Q4lz2dt
+ XwVTcNHLbrH+LaVNomh620F4XYpBtwFCx/wSCryNoexg/r13fqWE2tqARzLKvw/wpnSR
+ ButXvWgj/NLNXJ1aVS18xBzoCXG7gelmbY3eyuupsA5AzVaeF0eaifGnIPLwWdLf3HmW
+ tz+0KQZLZPUZITL+HBsReoyZEQWOgcsLEkL4L/D7L3SWk+/vaRSEfUWqkIi7jio4iP92
+ UMIw==
+X-Gm-Message-State: AOJu0Yx26emPZ/zLYXxD4DcUFmlxBPZh1t/jwKcsSjC+g571GxcQ4J6U
+ ZYH36yeut2YigJ5GHjkXbRmbjUxbK81pxAFmZIWksmsIggf1px9gCaty+2HNU/9X37f0rN99z19
+ W3j1A8zE=
+X-Gm-Gg: ASbGncvQwth4X76VZWB7o+BuCT3Bkn0QW/4XCmsfq+YCeK23b2ppSkTNCcysWstzYVy
+ QbNarhhhfHZuCm+RiXkRYfrCPQkQQR9lCfh/xtHCYjXuehQLgq5XJ+1K4KiXmmzhkSJvuokwMh5
+ oC7OIIDl8KZTpfE2ZgiP6F9YrKyq6YHi1xDer4atq7tHSRspbuIhI5KfO92UJOl5bDckYCUTQd/
+ CYiHhItqTstdljsDzO5Lx9jXc5uL4h5k0VMti1cazVf4Bv2+umtmLEUMjFxtG/Cs8FcpmwnRrpZ
+ vL2LoF3uALBKE9krLqAvtymsbwr/T7LPNU9fEdXOBzK0X3tANs1gtnshN4s6nsgmek5b6pWhc0z
+ rxnO5yqQ+Q9C09HF6Bb4NKqgiG/8v3vH7kvvCqEh9WmGK8oJ0L8MCnsOiKWkjvUxpcA/XleOQ1/
+ kPb39xM5Axqptn+IJukdQ49B+FxsAM4GicfaabolZk6IbJwQ7iviaIC0AIOUFV1+KV
+X-Google-Smtp-Source: AGHT+IHzxNPaHE6Gg5JxivvSwS6YHLN6OEfHh6wMt74V0k0wONNY0z2cdQVFF66ZlSQVvmXPFlZCZA==
+X-Received: by 2002:a05:600c:524c:b0:45d:e28c:875a with SMTP id
+ 5b1f17b1804b1-46fa9b08f16mr251343975e9.31.1760616953748; 
+ Thu, 16 Oct 2025 05:15:53 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce583664sm34770776f8f.22.2025.10.16.05.16.36
+ 5b1f17b1804b1-471144c831asm21912455e9.13.2025.10.16.05.15.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:16:36 -0700 (PDT)
+ Thu, 16 Oct 2025 05:15:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/75] target/hppa: correct size bit parity for fmpyadd
-Date: Thu, 16 Oct 2025 14:14:29 +0200
-Message-ID: <20251016121532.14042-14-philmd@linaro.org>
+Subject: [PULL 04/75] target/hppa: Use hwaddr type for HPPATLBEntry::pa
+Date: Thu, 16 Oct 2025 14:14:20 +0200
+Message-ID: <20251016121532.14042-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
 References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,52 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gabriel Brookman <brookmangabriel@gmail.com>
+HPPATLBEntry::@pa is a physical address, use the appropriate type.
 
-For the fmpyadd instruction on the hppa architecture, there is a bit
-used to specify whether the instruction is operating on a 32 bit or
-64 bit floating point register. For most instructions, such a bit is 0
-when operating on the smaller register and 1 when operating on the
-larger register. However, according to page 6-57 of the PA-RISC 1.1
-Architecture and Instruction Set Reference Manual, this convention is
-reversed for the fmpyadd instruction specifically, meaning the bit is
-1 for operations on 32 bit registers and 0 for 64 bit registers. See
-also page 6-18 (fig. 6-8) and 6-19 (table 6-16), where the f field
-for FMPYADD and FMPYSUB is documented. Previously, QEMU decoded this
-operation as operating on the other size of register, leading to bugs
-when translating the fmpyadd instruction. This patch fixes that issue.
-
-Reported-by: Andreas Hüttel <andreas.huettel@ur.de>
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3096
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Helge Deller <deller@gmx.de>
-Message-ID: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
-[PMD: Add documentation refs mentioned by Andreas K. Huettel]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251009101040.18378-2-philmd@linaro.org>
 ---
- target/hppa/insns.decode | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/hppa/cpu.h        | 2 +-
+ target/hppa/trace-events | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index 4eaac750ea8..13c6a55bf2a 100644
---- a/target/hppa/insns.decode
-+++ b/target/hppa/insns.decode
-@@ -365,10 +365,10 @@ fstd            011100 ..... ..... .. ............1.    @ldstim11
- &mpyadd         rm1 rm2 ta ra tm
- @mpyadd         ...... rm1:5 rm2:5 ta:5 ra:5 . tm:5     &mpyadd
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 672ab3750c8..869a75876e2 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -187,7 +187,7 @@ typedef struct HPPATLBEntry {
+         struct HPPATLBEntry *unused_next;
+     };
  
--fmpyadd_f       000110 ..... ..... ..... ..... 0 .....  @mpyadd
--fmpyadd_d       000110 ..... ..... ..... ..... 1 .....  @mpyadd
--fmpysub_f       100110 ..... ..... ..... ..... 0 .....  @mpyadd
--fmpysub_d       100110 ..... ..... ..... ..... 1 .....  @mpyadd
-+fmpyadd_f       000110 ..... ..... ..... ..... 1 .....  @mpyadd
-+fmpyadd_d       000110 ..... ..... ..... ..... 0 .....  @mpyadd
-+fmpysub_f       100110 ..... ..... ..... ..... 1 .....  @mpyadd
-+fmpysub_d       100110 ..... ..... ..... ..... 0 .....  @mpyadd
+-    target_ulong pa;
++    hwaddr pa;
  
- ####
- # Conditional Branches
+     unsigned entry_valid : 1;
+ 
+diff --git a/target/hppa/trace-events b/target/hppa/trace-events
+index a10ba73d5d4..01761a4559b 100644
+--- a/target/hppa/trace-events
++++ b/target/hppa/trace-events
+@@ -1,13 +1,13 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
+ # mem_helper.c
+-disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%lx"
+-disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%lx"
++disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
++disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+ disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
+ disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
+ disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
+ disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%lx"
++disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+ disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
+ disable hppa_tlb_ptlb(void *env) "env=%p"
+ disable hppa_tlb_ptlb_local(void *env) "env=%p"
 -- 
 2.51.0
 
