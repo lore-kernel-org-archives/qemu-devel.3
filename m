@@ -4,124 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 522BCCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 19:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D334CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 19:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9U59-0003N7-O7; Thu, 16 Oct 2025 15:56:16 -0400
+	id 1v9U5t-0003Zd-DL; Thu, 16 Oct 2025 15:57:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1v9U57-0003Ma-H7; Thu, 16 Oct 2025 15:56:13 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1v9U52-0005Co-GZ; Thu, 16 Oct 2025 15:56:13 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GJUsm8021066;
- Thu, 16 Oct 2025 19:55:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=OFRUe+
- KQLx1qH7G6gwBkYLooMFYglCx8Q6DJSdtJOo4=; b=cXAPqsTRVvP0QiYndWtCti
- 9+yYBiIl4LFfwzOIHqhVJnXh4snYYkUZW4dN77GTxkxwL907kdesFpFdffCkG5tR
- 5u+vMB2bcFOCtXuX0WgES34T/EFAIUvJARJ51IcLo6rDXl8GKiof096zPKkGmgzP
- uQ3CogAR7tlAjdvURbf5STKwA5L2Mz/Ph3n7jlTSMZZdyDzfDbOJySJZtSk5UflT
- YCv5kUEyVdiD4X5o9zuFu1r+04TbzW2sOHyHF2kwBzM7atkYtysxQ9TtWU1Pi7r4
- mTqmr8JFYhHLUwwDFxP6s7rz7UhalyIWEA35YSgWM21gVcNTmuu1gyuBpRflxx5A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0bnjp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 19:55:53 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59GJt3r7026270;
- Thu, 16 Oct 2025 19:55:52 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0bnjj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 19:55:52 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GHHp9X016996;
- Thu, 16 Oct 2025 19:55:51 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r32k7j01-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 19:55:51 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59GJtn5918088256
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Oct 2025 19:55:49 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B807E20396;
- Thu, 16 Oct 2025 19:55:49 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E0B0B20395;
- Thu, 16 Oct 2025 19:55:48 +0000 (GMT)
-Received: from [9.87.132.104] (unknown [9.87.132.104])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Oct 2025 19:55:48 +0000 (GMT)
-Message-ID: <40098bb1-c18c-426f-8f54-c96eb2f2a6ec@linux.ibm.com>
-Date: Thu, 16 Oct 2025 21:55:48 +0200
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1v9U5r-0003Yr-Lg
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 15:56:59 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1v9U5o-0005LT-F9
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 15:56:59 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-33b9e390d74so1130516a91.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 12:56:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760644614; x=1761249414; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=vTQxPDLwUpmZFh6MiUWMMVm9/EBUd0e7wk+hxHI54c0=;
+ b=NsnDsnr4i48VgSmNCAyja8GkoaoSPaHsbQgoDGi/YnuxTmyxnjfOdPLQ8kalE7YRlt
+ oV7dczXmgz2fJevvMQH5hMiqxIv87p8mDRPIojWGfZjUN3bf+FkD3h8PzaRSYQXmrFQZ
+ 3r0mLf7PlBTRQQNawrjM/CujHufbUKUllF8z0ySAr5b7BX/ZvVvVjccT9Ge+LVdPH8ra
+ DY3uNhLBU9FnzDG5FZgU4zU+eJ5O49VWdMksfZPlttRhpPrFrNyBpYfi0v1VYZN8fz9k
+ 5twmO1+0xVzmQyFcUHyQzg4GiLFrCOo+zPP3zrHT11erFv6Em602TGfB37JptyyDVbC4
+ yHkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760644614; x=1761249414;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vTQxPDLwUpmZFh6MiUWMMVm9/EBUd0e7wk+hxHI54c0=;
+ b=lxEVeSE+en/PJyxbB/L8WnBeMdD3F48qyuNKPB0VgrIDREeGxTKVcKGR6Su9R3OgJv
+ 3Sin3w5eOCXQCWePKtUp+YdpTclfchL0H5mMgAj6HrQqIHPqhK68aLWc0hgpV0CdRpEb
+ Za7Tm4GM7J3nLbZqIYAanV1+LdBLWuRRC551mhMg+TKxBar1wTZ63rEW0+UF822qHg0D
+ aF7qrVGHK24jCgIrECECXkjdhBVQ6ua8WtDfvecG3e9QHq0NO53fmDiAKCmiSVRBlxZy
+ J7aubUl1nTjh+3ausi/CV3H80QuGqLchXepMrL+YV2cvtu+rayE/um7pd69AcR5acFrD
+ T1vw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXb3Bm3JpCFuN/7IijcLzUs0GQvK8F98cT11EYrapET/0KfDQXwH1+TWfE1zAkd2B9DXv4lJA9XALv+@nongnu.org
+X-Gm-Message-State: AOJu0YxAv0/WgL9pqYc1+ZEXHCuAmizz1/5E3+vGZAIMT8Znz7XsMGP4
+ 1BvlhRPMBzJ/B45jXhkcr/qMW4EhMgE3CF0V1+Dn9CHk17isu6QBya2J
+X-Gm-Gg: ASbGncvG3haLzeeVeFCzbGtP1rN8sMJWNznNncCwLYcqlLmbo2j760z9WF0DwB2gbN6
+ OiyAdJzPFJwCT5TNaJ9lfOSCi81i5IANOVwiZO5dVcvFHrm55Mau3w5E1xgvn2vGX8M8IPFNuBR
+ YixWzbTEL5gmQgpg+r/biHjJQpG4vfeAHhdJ2RKaErFezZGwxy4K0+ySDK3NHESr02jwBzdelge
+ m3AsCYoMay0FyxkVcKgrNaxcKvG81QjjG6C7z81bnAqO2/f+DT5iadRiTGiCty6mMumvxB9DE5u
+ rm55mhF+n6vR0/DVuz32xfIIe281ULt+ocK0sU/ya+iUNAaRoHvjDZm0gxjHSv7l4EntolB1Bgw
+ MC1tlbmtfoyEtPoFD0BXLmH2gkdH1Zixoq/kWeo7rTAKXthnRe7Xqhkd6Is5EENyFRw5vfxvmYJ
+ tQZtPyGe0cRMWkZ0V6BmGrxK3+VhkdgFJ4ZJEb4yBmLMn8HPiZ
+X-Google-Smtp-Source: AGHT+IFfg8W10bQHJxpehfLEoevfXn4cH0tsWmNXnrFJnm+eakwPVKEkZtQ9fd2Gc+Eqa7PYT13oUg==
+X-Received: by 2002:a17:90b:270a:b0:32e:8c14:5d09 with SMTP id
+ 98e67ed59e1d1-33bcf86287fmr1137409a91.7.1760644614034; 
+ Thu, 16 Oct 2025 12:56:54 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
+ ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33bd79b2ee4sm274810a91.1.2025.10.16.12.56.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Oct 2025 12:56:53 -0700 (PDT)
+Message-ID: <ac484dc1-4ab5-49ba-a5a2-b4b292d7165a@roeck-us.net>
+Date: Thu, 16 Oct 2025 12:56:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs/system/security: Restrict "virtualization use
- case" to specific machines
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-References: <20251016131159.750480-1-peter.maydell@linaro.org>
+Subject: Re: Reverts needed to get qemu 10.1.1 and 10.0.5 working for me
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-stable <qemu-stable@nongnu.org>
+References: <cf07f156-6d93-4631-8f8b-6bdaae488519@roeck-us.net>
+ <12f3164f-291e-4415-b724-299a23dec746@tls.msk.ru>
 Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20251016131159.750480-1-peter.maydell@linaro.org>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
+ RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
+ nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
+ 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
+ gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
+ IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
+ kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
+ VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
+ jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
+ BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
+ ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
+ oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
+ VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
+ 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
+ onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
+ DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
+ rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
+ WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
+ qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
+ 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
+ qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
+ 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
+ pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
+ J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
+ pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
+ 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
+ ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
+ I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
+ nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
+ HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
+ JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
+ H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
+ njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
+ dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
+ j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
+ scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
+ zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
+ RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
+ F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
+ FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <12f3164f-291e-4415-b724-299a23dec746@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: XgqHhEQunIwWbHzOi09u1_iefJvJ9vnZ
-X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68f14dc9 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=hpkoLDSOn8IH4pMs9ZkA:9 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfXxDxr04yJED2n
- RggN8pDsgl6ncqcktP9QV3r801bqqRRecVxASYE0tMfJy/FkIyGkhNoy9+/Rw9DYOLN9ZFA3/7Z
- t/12AUk0O3p3QQROC1ncJrAr/BFCwVmmMRAZxNojnbsI41hDLCqXG+x4/s3/sDyf23mqwhrdzr3
- 1ek4BhVrKl74SNbC+zFiOI3LKK+zn9+fdN12mtk+sW1qbkH7r63bFoQ3DQi054ZBNkm9D9FI4Hs
- bMKLRLUd+n2xJizZV5ak7Af7keHlJhZyAF7R6jq7FeKFNyObl4r5zq+Pdib5dJibRh3aGplSJFk
- K24adEq/1yjPQUCgO/FGK3i2V3+np4d/HsgScrPl/hvWY+vKaNxIDQ11AYyVwvds7t1k5pO21HX
- opLnVNRv4Gn/9pjem3Zk/3E4ZcFzZQ==
-X-Proofpoint-GUID: cKb9Iw_uv-SgysYy0v7VcGYaU1CHOUKt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-16_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1011 impostorscore=0
- phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=groeck7@gmail.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,18 +149,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.10.25 um 15:11 schrieb Peter Maydell:
-[...]
-> +Supported machine types for the virtualization use case, by target architecture:
-> +
-> +aarch64
-> +  ``virt``
-> +i386, x86_64
-> +  ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``
-> +s390x
-> +  ``s390-ccw-virtio``
+On 10/16/25 09:46, Michael Tokarev wrote:
+> [Adding qemu-stable@ to Cc]
+> 
+> On 10/15/25 13:33, Guenter Roeck wrote:
+>> Hi all,
+>>
+>> I lost track what exactly I reported, so here is a summary of reverts and
+>> patches I needed to get qemu 10.1.1 and 10.0.5 working for me.
+> 
+> Reported to where?
+> 
 
-Makes sense for the s390x case.
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Oh man, I didn't expect this kind of push-back. I so regret sending this e-mail.
+Please just forget about it. Sorry for the noise.
+
+Guenter
 
 
