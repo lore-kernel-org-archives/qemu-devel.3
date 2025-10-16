@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4504CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8475CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9KIy-0004SD-BW; Thu, 16 Oct 2025 05:29:52 -0400
+	id 1v9KNl-00064c-Sz; Thu, 16 Oct 2025 05:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KIw-0004RX-IR
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:29:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KNk-00064N-H2
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:34:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KIu-0001RR-Hf
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:29:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KNd-00021i-EM
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:34:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760606985;
+ s=mimecast20190719; t=1760607277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iFzKmK8KHh4gorMYiNODUyNdwfHUhF/L26Rme0u2aMs=;
- b=Ltdw0m1Xn1ULM4boV2ay8heqoGSF5T5PM/6JKtaaYgm4QRDZkf6H2RNvWEQj6KUdq/zQOA
- zUJQJPnEg4JJYSQMjb4bpaYnmpX/QwgigwY3oxn7KV3UgFq147PEpAUZCgCIsUZQ8wso7X
- 7Lr8AUrBHS6IigK0SFj1r8f9YNPgy1M=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wjo9tJC7WDlQMs+Wn6lV/c+5ExuHfNrq7AArbOtReJ4=;
+ b=fLZHGFuB3NITlipqtj1v9mYeZDW3Xg7VNgt2X94xAWtBOUswuUL0GYmKFlq7DCHKUCOu6/
+ gvcomJdyFB+mIDJdnvHTdXrJysuYaBmTxuE4y485cWi52KZee6AEBleU1IsZ5+vhUKlpIz
+ 2SAf8HfZFELgENJMV4rNr2BndMtHLtY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-iEKBtYJXN5uheiUVBJgU8Q-1; Thu, 16 Oct 2025 05:29:43 -0400
-X-MC-Unique: iEKBtYJXN5uheiUVBJgU8Q-1
-X-Mimecast-MFC-AGG-ID: iEKBtYJXN5uheiUVBJgU8Q_1760606982
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47108163eeaso2243185e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:29:43 -0700 (PDT)
+ us-mta-212-OBQVSsNiP2KkxEIJnEKYzg-1; Thu, 16 Oct 2025 05:34:36 -0400
+X-MC-Unique: OBQVSsNiP2KkxEIJnEKYzg-1
+X-Mimecast-MFC-AGG-ID: OBQVSsNiP2KkxEIJnEKYzg_1760607274
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ee12ab7f33so211063f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:34:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760606982; x=1761211782;
+ d=1e100.net; s=20230601; t=1760607274; x=1761212074;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iFzKmK8KHh4gorMYiNODUyNdwfHUhF/L26Rme0u2aMs=;
- b=gX+QZiIuj3nwXX5GQWQyj98LfoUspZr6efsHSmTcuRj0FENu6F/VTNTJzcj2Q5tnZU
- L90r7+75VO/QD9forFLungvLCeZPYuMu4RLHD1x/HI6hVg0qQ8tUcLYcxvFl25dPQ3Ui
- UVgJ2QzoDrJsoYk1zwrFs+FywqLn9B5Ohq07t8JcKuHgg8q8z91fszazmDv5lL2tOkmF
- j8Gdou8SMN34ysTNFip5FBaWYSnV+MPFmHr+sJm0/jNTrkJSFuka3fqvxUHP1aVk4zDT
- 5ZyERRuCKFfPYYgzMOvSujj0UeTHMOAQhyujk6EssFC8O+EohmQRfa2sAhzE5P1cKaDh
- R70Q==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wjo9tJC7WDlQMs+Wn6lV/c+5ExuHfNrq7AArbOtReJ4=;
+ b=kIzOGj8bYDTuHxEprbQW3CIndZoNdKfSGHCUrCkL26U3DSerOBKloh8Cvx0+DPPhEl
+ FihB7Mw89kpzi4ywW3oVZdUOqEIl8hnmqtbkG8QbZD1CS48JlPNZ5204Jtoh9WCEZcLL
+ 7wpfJTeMeCAXn6H2xb2C1w9T3FlnZxCfZCq4P5jRVC5xlDXYiGfaUovH9ta1jikkFLsK
+ uaWdajsx1nfhmDZDqAP+0ENhybpx1UVhqweTTvOfKeYCiNziOmrJq3YTOweAeLtG0M17
+ fD7AsxQmTEw9Am4tLMyZRELDoL6ZMJQRl419qdt4uqnFRMy8SjENX4FBlTxaOQ4hDsxW
+ xU/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVx9ij3QQtzO9Z5CEOQ3ulhxNyrvSSp26Rgwl9jW1lhBBqhaA48XEBp8zirMmID94ShbDx06uMZPCYP@nongnu.org
-X-Gm-Message-State: AOJu0Yw6i1Jmy3+0L63bhkE2jplwIIYCJ9WpxY69bREr2GSC63/xsbSs
- jkRbW/mJz8ic9bymaL83Nz+90OT0h5tl8PoOcMvVXuEQjOzVE4P3tHZSUyjYAbHnQxQdpopP0eA
- ywNkZHEbUFLKpHeeK+gCLR33tQBkMNg8aVoTJk8XiJtqTWGu0zEUcv301ke8MalBy
-X-Gm-Gg: ASbGnctNZDJS8YNziorU2B8xlt4rd3qaSj0VSsaRqI1L9rumAqDE2PT18fAXCGt5NcC
- b8o9eXspCZF1cI41udQdyVcweFzskANge2mzLe/vJp2Tb9S1/EOjRRu9GDDQPr6atrZpBENfM+b
- CcXoE3zCjyyy2gJOEMnAsJ7Si13Bydmw9jiFoLlyovUqi5MI6jkvuy143xUSaQHKJEyF4EeR5N1
- oXLIwNm4DhbUrZibB3s7hPDe3JEJzhnxipKadHjIrTFWwTnbJ7p5MSIvnjGpW7RMI4pKlHtR4ia
- xKdU0UDHT6EtLc55el0cVdWTQErQv/3efStpNVP5Oe8p0XIXOTTh3pnEsGz/hkN2aGd4T6+j4gy
- V+i9WieGmGuXltNSXAupPNrMesgqVmK8HrZv9jfGE
-X-Received: by 2002:a05:600c:c116:b0:46e:3709:d88a with SMTP id
- 5b1f17b1804b1-46fa9b17e16mr183294605e9.33.1760606982082; 
- Thu, 16 Oct 2025 02:29:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0mfQKB/aEb2E5SpUb3sZCwx0kia2RMoWt/MQ3jr8oC7TcgttEEvyqhnyXCy7tV+CJkrlxRw==
-X-Received: by 2002:a05:600c:c116:b0:46e:3709:d88a with SMTP id
- 5b1f17b1804b1-46fa9b17e16mr183294465e9.33.1760606981694; 
- Thu, 16 Oct 2025 02:29:41 -0700 (PDT)
+ AJvYcCXYzeBqZoMe6MpthYXm3uPFVF2MBd6NwVu25jgqZpwmVqnMoYGg+1OS5zvE3mfK3kO0m4mdqX1fHlve@nongnu.org
+X-Gm-Message-State: AOJu0YysHxRX5dgE0LAkeVVCQay9p4Ylc6Zb0EJVcjgpvJQvTM6sqsDr
+ 45lxp55CB+v/7PB5Xow4xi+OaQCWUxHX6UM7FwwbVBmzG1N2+ebE6gDDUul52g2LziVmaSQPYcE
+ wMNzAdNkWqiFWtE/22tqXwM6KTTWYVjNiLknFYUTR2VgzZPWxzOIJvRaGtPa1ap8p
+X-Gm-Gg: ASbGncsubl/LEIivO5/RZyAsgauHjE72TW2fmeQKM58ktyCs2ssP1GY3DXgu2Z+4Zam
+ r/xnQyy4YA9OBr8ngXgv6fKfRMrupM4OZsg86RVdgGFp6f2YbRfL3rbKXvZC8AacQboXKi+K246
+ urU2uVbGaN0G0sgSKgpjo0f/aAWEk2aZdtnaJup7uA/tjgIOvUbNXfeI7b6Bcx0uMvAl9LxC3BC
+ MYUU542msT4zX1wMVnHXOAy3+yC23AxpSpMl8+QMKBBKomBneZmuSG1wOHrrRQR4BwOpBaaNa5M
+ MT3QlfaiZwDVwo7t97fkAg9XLvPqbzSH/UyL4tyGDVSWJLb9nw76E8RDrmncbyzt5uVgUfGpK7q
+ A7Dvz5Rh2ICxTLv/OmID8aY7srtDtDcpZGiAFWEt4
+X-Received: by 2002:a05:6000:250a:b0:402:a740:1edd with SMTP id
+ ffacd0b85a97d-4266e7dfeb4mr22980277f8f.39.1760607274196; 
+ Thu, 16 Oct 2025 02:34:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRqWBc/vOkmEMoBEOQWQr+32gCnBDvvrhBvqWsKtSVpGrOHyxCFS7+cxKh2Ai2DWBkv+K9RQ==
+X-Received: by 2002:a05:6000:250a:b0:402:a740:1edd with SMTP id
+ ffacd0b85a97d-4266e7dfeb4mr22980251f8f.39.1760607273767; 
+ Thu, 16 Oct 2025 02:34:33 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
  [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47114428dbfsm14905895e9.5.2025.10.16.02.29.40
+ ffacd0b85a97d-426ce5e1284sm33320693f8f.45.2025.10.16.02.34.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 02:29:41 -0700 (PDT)
-Message-ID: <8bf630e8-9c3f-4d2d-8f68-a4abcca54f64@redhat.com>
-Date: Thu, 16 Oct 2025 11:29:40 +0200
+ Thu, 16 Oct 2025 02:34:33 -0700 (PDT)
+Message-ID: <4fd19e9b-2a91-4a55-880e-ddd9826fbf29@redhat.com>
+Date: Thu, 16 Oct 2025 11:34:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/functional: ensure GDB client is stopped on
- error
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH v2 1/2] target/s390x/mmu_helper: Simplify
+ s390_cpu_virt_mem_rw() logic
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-References: <20251014140047.385347-1-berrange@redhat.com>
- <20251014140047.385347-3-berrange@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@redhat.com>
+References: <20251008141410.99865-1-philmd@linaro.org>
+ <20251008141410.99865-2-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251014140047.385347-3-berrange@redhat.com>
+In-Reply-To: <20251008141410.99865-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -138,7 +141,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,17 +157,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/10/2025 16.00, Daniel P. Berrangé wrote:
-> If the reverse_debugging_run method fails, the GDB client will not
-> be closed resulting in python complaining about resource leaks.
-> Hoisting the GDB client creation into the caller allows this to
-> be cleaned up easily. While doing this, also move the VM shutdown
-> call to match.
+On 08/10/2025 16.14, Philippe Mathieu-Daudé wrote:
+> In order to simplify the next commit, move the
+> trigger_access_exception() call after the address_space_rw()
+> calls. No logical change intended.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/functional/reverse_debugging.py | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
+>   target/s390x/mmu_helper.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+> index 487c41bf933..22d3d4a97df 100644
+> --- a/target/s390x/mmu_helper.c
+> +++ b/target/s390x/mmu_helper.c
+> @@ -541,9 +541,7 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+>       pages = g_malloc(nr_pages * sizeof(*pages));
+>   
+>       ret = translate_pages(cpu, laddr, nr_pages, pages, is_write, &tec);
+> -    if (ret) {
+> -        trigger_access_exception(&cpu->env, ret, tec);
+> -    } else if (hostbuf != NULL) {
+> +    if (ret == 0 && hostbuf != NULL) {
+>           AddressSpace *as = CPU(cpu)->as;
+>   
+>           /* Copy data by stepping through the area page by page */
+> @@ -556,6 +554,9 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+>               len -= currlen;
+>           }
+>       }
+> +    if (ret) {
+> +        trigger_access_exception(&cpu->env, ret, tec);
+> +    }
+>   
+>       g_free(pages);
+>       return ret;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
