@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3210BCCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46EBECCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9RSU-0007xU-Mq; Thu, 16 Oct 2025 13:08:10 -0400
+	id 1v9RTg-0008Tp-Ib; Thu, 16 Oct 2025 13:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9RSS-0007xH-K4
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:08:08 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1v9RTN-0008Ly-EX
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:09:05 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9RSK-0003DG-UP
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:08:08 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7800ff158d5so976549b3a.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 10:07:59 -0700 (PDT)
+ id 1v9RT5-0003FJ-2U
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:08:55 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-339d7c4039aso989649a91.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 10:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760634476; x=1761239276; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760634522; x=1761239322; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mzbO6qxXTSLN2VfEZ7sgVqVzDYN015Du6ppqHnVvYSo=;
- b=DRXYJhLts6pQgIWra1GSFIW5VaTQItoQM3/7fG0FXbPtENJe+YjVPS6f/Nf5tdwrwl
- Ipv4eb8Nnb7vmKvmdiC2hsrV22+fwWCctjRgPU4EcS8d15vPrxafkHlB95JEgKUUL+/F
- CHK2Mbtm6SnPBG2/S9W0m4CfHXC8fWDBcGmWt0oq7S75q/aWZQgxe/b0om5SYuC2oqZs
- 3iehZYOTyzPuAlX97fsLNCFsvB1zn0XLQiIgpVvAwFbUsYy+29JTcGO5ng9y4clySpNk
- 8xf70YW/D/nBPlvoGF+IVpkTzTNOlMKGBkwV0VLaFKf4ZzTsXiL5x3P3vCYHbWviMHA+
- +crQ==
+ bh=uEb7VEbvyYjCc8j5dVK2DcmXJGpMPlFdSk8E1hsGY2s=;
+ b=Y50qy9Ig0G7+AAVf4Ycjut4Iww/2RF/YTt89T7nG7KF7fBAkxDBP4fZMijJCxuAU47
+ oMCrOKLSxCs8S3OtDcn+dDO2N1zpPxXk4vUwvaUiee8zXdiYLYuVXvPv7kYCidRKh2g/
+ MB7DAoNixyBiXSkjIhZjIHdHU/O14EkdyAoYoKwZNhgsMzE72YTqVZhajYxd5aHvwtJo
+ cCNYQU0XmrXfU/xioLjHob/ABL65FYkHQgpq+hXBs3A5/VXt+ZIhgYcgNnBbE2APGjij
+ TOa/1+MgNLJNi1YxLJdgmHYc04gNY52ThLyS5kHu1KrUpOLQX0zOQNJTqeoSoWFjtWNm
+ rVmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760634476; x=1761239276;
+ d=1e100.net; s=20230601; t=1760634522; x=1761239322;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mzbO6qxXTSLN2VfEZ7sgVqVzDYN015Du6ppqHnVvYSo=;
- b=ZpjynECdHhGzfuX6yiU/0X0tvf+L/o+7zXaIeNGOMrlLGz97ABFSmXtzvUg2TX1L/H
- uP52Uz63KG/7W/BjcCBFdmeRRky6xaLaN7f7nvJ+5x5qm9cB9X1G/Jr4GmEkcGSVyGTS
- VdNkdTdU1mLjGDMvS77jEr1qak2v4+aPiYAu06zr8OYmEjyH8zBNSXWtKGY3Ps7YklCO
- LZ2R9uTLuLRS9Qejs3dxYfOrAahZhkGYvScIm/JHZL3BYJVS0wRBCjltgZ89vqdcihDr
- ykc85GIYUqaeEAGENG7rjZG3GAO+/Ouws4hqg3fc3cqatCQ32gRYmIfe48wfdF/f5FC1
- nPVA==
+ bh=uEb7VEbvyYjCc8j5dVK2DcmXJGpMPlFdSk8E1hsGY2s=;
+ b=FhHLdwdNrnsW753XK9dWCmXBuwuUaLToVOBRMxlNPCLM1zaDps4KX2hM5Z2elwrr76
+ wOGomSHYIbsVsf++AR7nZS1BGcTBrYKcvPVh9C+itX6gYaj33Phf/Cxr1duq3H69O5AI
+ 7+tXioqcofxF/kE1z1MRYB7ftkCwSViRVZEdn9p81oAa9L09i5WGkVUXKdLtFO9LgGd4
+ eYzzNt9DT7rqdyJyIMxomgoD1DeGZAsxzFoThyaIFBH0xECjug4g4+22w5BAPCGX52jC
+ h7oHydxkLrf/02pG3Njfwxt6DTsuvQukULvz9kbTEciDOxoSiB1h7aqoF7GHsSJrV4Rt
+ /mIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWiv2tltUJ1NAOKdT+yU/DCW6HJoiCCBspB+dkosC2hw1bONtM5+ltxy+0ufi4JcthdBwTBKBUOJeoD@nongnu.org
-X-Gm-Message-State: AOJu0YxrZ6abfrPNuI2UVhFiWU6O1x1BxhGvetuPfLMW93CPsgTHY4Xg
- yEgLU2/8Ht5i2Bt9wEukAqvhE1CNxz3gPGjvTyNA13o6agGEQqnjrdlqQzmrTSTmbBI=
-X-Gm-Gg: ASbGncvjxkYaU0CseW92pDPbBCrxGnKcLTUDshuHJDNCpUabI7ND0MjMNUPtRUD+5dI
- 7EEoCUfbUk3iaxc0BLD5P/t/jD6NLpX9G+n0Sc0wdg9R0MBw0PU/pVegmZ4xZBlBDwvltCk2mdV
- J1Z+E5cBm2mdjhHlxks+o8sWJFphj+YT9kk4hhYT5wQJ7L15baHhnbs1Vo11/N3DBx6HXpN4R6y
- 3eJ7/TQuHGIS0kRzXbiH8VmVISa7fMh0gnaYG38Ih1AQJ2RrygQOhXpDEylhluZ5z++zl0jR2bg
- 5FcA5f8A9Lk4xOgu7u0/nsyAzUiBAcUyryS0WVW332eHJZS5VtXPco0YWrJ3b1RGFNNTkjzSCY1
- jwkFw09lS0A+80WgICKoPArgbipPnc0mkgTLAol1mmF3M1SyuYY0ZbeAkbXH3CTQyrHz1A099RG
- P2BER6880u1P0Y6JSGkbdEwsA=
-X-Google-Smtp-Source: AGHT+IEz4yyVpPHAHnaSdwY5OhhzkZ+c1o6Qi6CcgXGWF688z8Ud9rib7Lcs7Z3hHBFsvf4idG26UQ==
-X-Received: by 2002:a05:6a21:6da1:b0:262:da1c:3bfb with SMTP id
- adf61e73a8af0-334a84854b9mr821530637.7.1760634476213; 
- Thu, 16 Oct 2025 10:07:56 -0700 (PDT)
+ AJvYcCWGxmliE6w8F8C45GhFRGUo9CeP6FOgBCPHhNHt11kBneUgkp7skhifyx3uRd+rEjee8BrDD6/IA16D@nongnu.org
+X-Gm-Message-State: AOJu0Yy6TREjKir2tD+ZAqN228niRAY3o1Zs/YFhZKyG1+LtMmNzWziz
+ xESzwt4pEy7069df3bGtavY1CcTvsZ7HnS5OD736xVuH9MGrfjUFNYwCBo8NVXTawKo=
+X-Gm-Gg: ASbGncsnNTnZR9XUXHvSR2eaFirq9AIeRim7tJ0/Egm/vwtksDjzsQDDNdtGdfmjK1K
+ o8qyGnfUlT3CJsIkIv7/g28neKwmd/aS425qB1JvukPMR3ZhZPi0/s3fcL9kP3P1kt2O0Er6fO2
+ tnSTcWWEkHUiYXO4PPlGHimtve2ZFWYO6h59djrH6k4g3QE/yFUJYp/t9noehIrYL/xUnhBCaAf
+ 7UIhVW7YBKDYhjiporvOxM9uAKZiQ5+JpigixICJfrafBnvRYwy/zJhqYdVLkvw4WsE9a3sL6mo
+ LPMGg9ieNeMhywwcCsmuXWvVqaDnSFcGBs3yDRK7txktwEe5KJr9W3Ib0ZD16ah5TPfdNoP6Hla
+ D4P2og8e1PwxDB8NOPfBhWZH1sfCjQyp2NZxz9ZiOZ+sMry7WheOt+S6SnqrdnbX3rKoEf1pJSx
+ zlRmjli/RbJD5Z
+X-Google-Smtp-Source: AGHT+IGvlt/Fftn9IU6QjMkh9CuyfliAiXLfcmx5y43Vo4TArp0VvHRZtq2j14CuUV2d8EZCmHthIQ==
+X-Received: by 2002:a17:90a:e70f:b0:32f:98da:c397 with SMTP id
+ 98e67ed59e1d1-33bcf8f735emr569066a91.24.1760634522240; 
+ Thu, 16 Oct 2025 10:08:42 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b6a31e443e9sm1825218a12.16.2025.10.16.10.07.55
+ 98e67ed59e1d1-33bb6522fc6sm2541227a91.2.2025.10.16.10.08.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 10:07:55 -0700 (PDT)
-Message-ID: <0d421108-0a63-464d-82de-071ccbc61919@linaro.org>
-Date: Thu, 16 Oct 2025 10:07:54 -0700
+ Thu, 16 Oct 2025 10:08:41 -0700 (PDT)
+Message-ID: <eeca5101-ac66-496c-beec-e6b17853be44@linaro.org>
+Date: Thu, 16 Oct 2025 10:08:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 01/24] target/arm/kvm: add constants for new PSCI
- versions
+Subject: Re: [PATCH v7 03/24] qtest: hw/arm: virt: skip ACPI test for ITS off
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>,
@@ -91,22 +90,22 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Sebastian Ott <sebott@redhat.com>
+ Roman Bolshakov <rbolshakov@ddn.com>
 References: <20251016165520.62532-1-mohamed@unpredictable.fr>
- <20251016165520.62532-2-mohamed@unpredictable.fr>
+ <20251016165520.62532-4-mohamed@unpredictable.fr>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251016165520.62532-2-mohamed@unpredictable.fr>
+In-Reply-To: <20251016165520.62532-4-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,14 +122,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/16/25 9:54 AM, Mohamed Mediouni wrote:
-> From: Sebastian Ott <sebott@redhat.com>
-> 
-> Add constants for PSCI version 1_2 and 1_3.
-> 
-> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   target/arm/kvm-consts.h | 2 ++
->   1 file changed, 2 insertions(+)
+>   tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+>   1 file changed, 1 insertion(+)
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
