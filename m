@@ -4,99 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22589CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 07:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183ADCCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 07:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9I2b-0002Jp-8Y; Thu, 16 Oct 2025 03:04:49 -0400
+	id 1v9IFZ-0005S6-IK; Thu, 16 Oct 2025 03:18:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9I2a-0002Jf-7u
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:04:48 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9I2X-00009E-6s
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:04:47 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so369361b3a.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 00:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760598281; x=1761203081; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QK7CB95SnpYaR79BK/2HE8D78sK7zSMAuXNZb88nXzA=;
- b=m5tUMLU6pGJrFjg4B8umsvHOPcP+ZM5K/BqZpJZ489mOmdpvyYWrYp1Iq+hhEJUNZe
- 0YcpigdQ8VQE7QPQGe8WK9ZBUzP66JQscbp+vpqiX6IAM1ZfB/T8DYVZuM3L+8ZZMvEY
- AVoFiZPOH+t8FOXpeCjoQUGcEiw4bbiel8dAVGBg9oxnQP1cM2z5TLGuWWd3i/V68ikI
- Y6ptpQciTQFTftSpAmT/TI4CKrYtbbTU8KzurUwcLwpL5Tp3TUxF+C3Se/mER39xcQCo
- S6nmQQttL+BIW8QE97bFGXkWDhml/uk2EagaSyxq4vbS96+T9tr4EqDHfzhJsimXGKIQ
- tipA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9IFX-0005RW-MO
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:18:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9IFU-00028b-6c
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 03:18:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760599085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1vGt7Q70KB3nhImkZzA1sZaPIGiOe1pJumTRXrSOcdY=;
+ b=KtRYk4kwnzaXE31buRRzegIXi/kSA2Ci+dKs5bWvn8f8muIQBFiQ/owUhQVDmGeXWtVZkw
+ PylVmJcZj05R6ttjIzHG7e+0ifVkyf/H9Cqayqnc6JD8X8AwRUzI2f8gHD+1rS0HnwG4Lx
+ x7Y5h++W7WSw7Inphp8lft27Lx18NR0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-322-wZiNM-LlPaibUTco82x5MQ-1; Thu, 16 Oct 2025 03:18:03 -0400
+X-MC-Unique: wZiNM-LlPaibUTco82x5MQ-1
+X-Mimecast-MFC-AGG-ID: wZiNM-LlPaibUTco82x5MQ_1760599083
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47114018621so1075825e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 00:18:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760598281; x=1761203081;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QK7CB95SnpYaR79BK/2HE8D78sK7zSMAuXNZb88nXzA=;
- b=iTAc/ucHVPOrUOjEQlVMkDWV+fzK9Hn0mQB4qr1m6R5xxUA+cKkIaz6euOhBf0LSbT
- TdAlUVPhE41O5XANKToV0+2+3HsX6Jf91u/y9snpaQzFzVw9YSuF2L5OFTvKCoE/clDE
- FWhLCILaeKzy1k31Jg+dHCDX3wAaVbeXbBb/fZSmGCvuMEY6mqOgq8QLEFhQFqm8EP76
- KLGlOTacVIfsabmYQobikqrPeV83CJH+7v6FmtLxhWuO7hp0TeL4dsPeUNs6vnrFAMo3
- Pyt9+khdNbqlrMpvelwV7J30uI4CGzl2g7r8KQzOmUCthH0CjbF94UmIJiMXyyQzsZpI
- VUgg==
-X-Gm-Message-State: AOJu0Yz3eXd/kMIBbWwIoMk7GuLn7o/XJOl2ajbwMmkiDuadps7hn1Pm
- 9dYwXOrbyI/gnoCF3daYSocXwgG7cWdrb/ZvsSvck5FTWMD4I2mNuKgZZ0R9pNgilAM=
-X-Gm-Gg: ASbGncvDfdzBs96ZNOinnQf5twRWnybJfMMbm+Ba1V5lhC5a/4rR/Lz1eoXR+8XNXjk
- Js1eK2aHlXgKcGrKa9Zg8TaA/ga0tUZsO2sif8oOYkyJRGWMQ1Q1N8VLgzuh3oKcIo+afAjkzNF
- I6JWdFdwHN5n2G5/gONmxDUJF/FFKa5ZyGq21V+Ij/T56+LLuRfJJwYkTYnaFEcwF+BKajIYi9o
- 4ezT7jbE7ZKKmbvCe1rGE8WBTK1yDD/j24Ebi9hoptI1oBUnAsHdpi47/Og0Ae77pYHrepjZYLs
- 9WhpriuwHRtLkhuR4S3W9ayGg9+8fbD62D2C2QNHDxSN7gzSccfebqx9WEQMNVQqEmhQPG+NPdJ
- yseu3lW8mYGikzRgnnwuzBSugc1plEp3xRa4KXxbHESYUHItVtbNYoU74qgcvmhWQSpXwyF4Ffe
- /Y2caCyESMSZoviItL+XHCCtG37tI=
-X-Google-Smtp-Source: AGHT+IFRwbd5QkdGsvvQHQOiz1erV275o1FkMbKoA0c1thRgAbQCSD4WO1nYGDc6qUfjPlTBtTcgbA==
-X-Received: by 2002:a05:6a21:9981:b0:2b9:5bdc:8e28 with SMTP id
- adf61e73a8af0-33495e484dfmr3991762637.15.1760598281256; 
- Thu, 16 Oct 2025 00:04:41 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b6a228a5b78sm1761165a12.14.2025.10.16.00.04.40
+ d=1e100.net; s=20230601; t=1760599083; x=1761203883;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1vGt7Q70KB3nhImkZzA1sZaPIGiOe1pJumTRXrSOcdY=;
+ b=uIHS4NJHYWW3ql4XI1rGfS+rpp9sqhMKwdCltC9ntmPbOiRnjL3fb56+KDti4LdhlU
+ eRQnmyGWHeWbJ24fafzZxEIfkS5eTwGuPNbIHmGdNVT0ZukSnhuf3y0FONiCNw/3WWNv
+ YUPPTNQRyrEH/bTxVaGbVL8N/28K62SdwPQnv17wEiaMDTeD6N0erHLdgaS+BLj80Gmz
+ W1C3sV+p8dGHsGcA627Csn6DHRdDwzJj1w253yKKBzFw1V8EsBWo3Tb8GtXmLbZXpGQD
+ UR1qcQjwUYA4+K45cyBg4oQ6/5V7OhXeXdOORfdE6tcGLhkwaDZW5dScA28IZWMJUXr3
+ X49Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWR0wgyuyjXImaVgaT/U7NclV1G8iXn4nzHcoZj7wTYZ4SC5bzSBt2Hhdn7TxsGGOO8nZnWSEjkb6Xc@nongnu.org
+X-Gm-Message-State: AOJu0YxH+asp3H7JVZldA8u5PS5jJh4o+NhWPxviQy97njxLUS0qNbB5
+ 1ovMGoxRL8s58Kp/ZAAtlHwd+pYAz1YSmZWmiK/f+Rz3OY2gvRpPPwBubSZPtyxhZRe87g6e9Ty
+ hr45NF0H8NfPH2IYUYKsVOEj5WoIVbt7rK2wKfSgi/SkEWGGh+OqTIUcS
+X-Gm-Gg: ASbGncvqAYPMFasgjBilo5OOchB0ZZc4xFUXIDaAKGsaTZX54U0uDuk69ZZTfUoP8FU
+ J7mv+th5u853NeAjhKp11QpZcHkQgC38ChfBPpKgzTmCS0lA+bFZJ/dLG6XJ1pWTHbK47adDa15
+ fFEgcAMeHzEVwL2rQp4Wrfgu6Jq7mKYpq+0K6BwnAvTKS2OPvkEGXemWzpnEq+V8QXfbknhz6HE
+ kGsqx/LKziIljTH4mvIDgutExCDCpnwq9z0Uht7UW6+dXQ0N1XcoZ9En5oVnOUdtFl9pBoGGP3d
+ hUWzbcbGIAOP4Q9FSbaoW4DsF8GFDtgBsFehqcMZbxPXZL4f0WW3SknuwqjUGQ0yCOeE93m94ei
+ JCUvBxJkU4pf5gYmgEIgPQ1lqKKBEnCDRFh0CHZq1
+X-Received: by 2002:a05:600d:41c4:b0:471:7a:791a with SMTP id
+ 5b1f17b1804b1-471007a7a96mr39458385e9.7.1760599082660; 
+ Thu, 16 Oct 2025 00:18:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbuVvqZPNENIiEDYmG02rBU0O1aMfQkW8meXbNig3SpmMshbAnd96S61PsVqBwCwcwxSnU4Q==
+X-Received: by 2002:a05:600d:41c4:b0:471:7a:791a with SMTP id
+ 5b1f17b1804b1-471007a7a96mr39458235e9.7.1760599082270; 
+ Thu, 16 Oct 2025 00:18:02 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
+ [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-471144d17cdsm8550475e9.18.2025.10.16.00.18.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 00:04:40 -0700 (PDT)
-Message-ID: <75d10ffd-eafe-4daa-b763-6e1f3e90c766@linaro.org>
-Date: Thu, 16 Oct 2025 00:04:39 -0700
+ Thu, 16 Oct 2025 00:18:01 -0700 (PDT)
+Message-ID: <f4ec5b8c-2bdb-43a2-a100-cfb1685aeb52@redhat.com>
+Date: Thu, 16 Oct 2025 09:17:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 19/21] hw/arm/smmuv3: Use iommu_index to represent the
- security context
-To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
- <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
- <dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org>
- <5bde6664-c830-44dd-9513-700980a43ade@phytium.com.cn>
+Subject: Re: [PATCH v2 2/2] tests/functional: add tests for SCLP event CPI
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
+ qemu-s390x mailing list <qemu-s390x@nongnu.org>
+Cc: Sebastian Mitterle <smitterl@redhat.com>,
+ qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Michael Mueller <mimu@linux.ibm.com>
+References: <20251013133902.111233-1-shalini@linux.ibm.com>
+ <20251013133902.111233-2-shalini@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <5bde6664-c830-44dd-9513-700980a43ade@phytium.com.cn>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20251013133902.111233-2-shalini@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,208 +159,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/25 11:37 PM, Tao Tang wrote:
-> Hi Pierrick:
+On 13/10/2025 15.39, Shalini Chellathurai Saroja wrote:
+> Add tests for SCLP event type Control-Program Identification.
 > 
-> On 2025/10/15 08:02, Pierrick Bouvier wrote:
->> Hi Tao,
->>
->> On 10/12/25 8:15 AM, Tao Tang wrote:
->>> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to select
->>> the programming interface. To support future extensions like RME, which
->>> defines four security states (Non-secure, Secure, Realm, and Root), the
->>> QEMU model must cleanly separate these contexts for all operations.
->>>
->>> This commit leverages the generic iommu_index to represent this
->>> security context. The core IOMMU layer now uses the SMMU's
->>> .attrs_to_index
->>> callback to map a transaction's ARMSecuritySpace attribute to the
->>> corresponding iommu_index.
->>>
->>> This index is then passed down to smmuv3_translate and used throughout
->>> the model to select the correct register bank and processing logic. This
->>> makes the iommu_index the clear QEMU equivalent of the architectural
->>> SEC_SID, cleanly separating the contexts for all subsequent lookups.
->>>
->>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->>> ---
->>>    hw/arm/smmuv3.c | 36 +++++++++++++++++++++++++++++++++++-
->>>    1 file changed, 35 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->>> index c9c742c80b..b44859540f 100644
->>> --- a/hw/arm/smmuv3.c
->>> +++ b/hw/arm/smmuv3.c
->>> @@ -1080,6 +1080,38 @@ static void smmuv3_fixup_event(SMMUEventInfo
->>> *event, hwaddr iova)
->>>        }
->>>    }
->>>    +static SMMUSecSID smmuv3_attrs_to_sec_sid(MemTxAttrs attrs)
->>> +{
->>> +    switch (attrs.space) {
->>> +    case ARMSS_Secure:
->>> +        return SMMU_SEC_SID_S;
->>> +    case ARMSS_NonSecure:
->>> +    default:
->>> +        return SMMU_SEC_SID_NS;
->>> +    }
->>> +}
->>> +
->>> +/*
->>> + * ARM IOMMU index mapping (implements SEC_SID from ARM SMMU):
->>> + * iommu_idx = 0: Non-secure transactions
->>> + * iommu_idx = 1: Secure transactions
->>> + *
->>> + * The iommu_idx parameter effectively implements the SEC_SID
->>> + * (Security Stream ID) attribute from the ARM SMMU architecture
->>> specification,
->>> + * which allows the SMMU to differentiate between different security
->>> state
->>> + * transactions at the hardware level.
->>> + */
->>> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu,
->>> MemTxAttrs attrs)
->>> +{
->>> +    return (int)smmuv3_attrs_to_sec_sid(attrs);
->>> +}
->>> +
->>> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
->>> +{
->>> +    /* Support 2 IOMMU indexes for now: NS/S */
->>> +    return SMMU_SEC_SID_NUM;
->>> +}
->>> +
->>>    /* Entry point to SMMU, does everything. */
->>>    static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr
->>> addr,
->>>                                          IOMMUAccessFlags flag, int
->>> iommu_idx)
->>> @@ -1087,7 +1119,7 @@ static IOMMUTLBEntry
->>> smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->>>        SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->>>        SMMUv3State *s = sdev->smmu;
->>>        uint32_t sid = smmu_get_sid(sdev);
->>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->>> +    SMMUSecSID sec_sid = iommu_idx;
->>>        SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->>>        SMMUEventInfo event = {.type = SMMU_EVT_NONE,
->>>                               .sid = sid,
->>> @@ -2540,6 +2572,8 @@ static void
->>> smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
->>>          imrc->translate = smmuv3_translate;
->>>        imrc->notify_flag_changed = smmuv3_notify_flag_changed;
->>> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
->>> +    imrc->num_indexes = smmuv3_num_indexes;
->>>    }
->>>      static const TypeInfo smmuv3_type_info = {
->>
->> I noticed that this commit breaks boot of a simple Linux kernel. It
->> was already the case with v2, and it seems there is a deeper issue.
->>
->> Virtio drive initialization hangs up with:
->> [    9.421906] virtio_blk virtio2: [vda] 20971520 512-byte logical
->> blocks (10.7 GB/10.0 GiB)
->> smmuv3_translate_disable smmuv3-iommu-memory-region-24-3 sid=0x18
->> bypass (smmu disabled) iova:0xfffff040 is_write=1
->>
->> You can reproduce that with any kernel/rootfs, but if you want a
->> simple recipe (you need podman and qemu-user-static):
->> $ git clone https://github.com/pbo-linaro/qemu-linux-stack
->> $ cd qemu-linux-stack
->> $ ./build_kernel.sh
->> $ ./build_rootfs.sh
->> $ /path/to/qemu-system-aarch64 \
->> -nographic -M virt,iommu=smmuv3 -cpu max -kernel out/Image.gz \
->> -append "root=/dev/vda rw" out/host.ext4 -trace 'smmuv3*'
->>
->> Looking more closely,
->> we reach SMMU_TRANS_DISABLE, because iommu_idx associated is 1.
->> This values comes from smmuv3_attrs_to_sec_sid, by reading
->> attrs.space, which is ArmSS_Secure.
->>
->> The problem is that it's impossible to have anything Secure given that
->> all the code above runs in NonSecure world.
->> After investigation, the original value read from attrs.space has not
->> been set anywhere, and is just the default zero-initialized value
->> coming from pci_msi_trigger. It happens that it defaults to SEC_SID_S,
->> which probably matches your use case with hafnium, but it's an happy
->> accident.
->>
->> Looking at the SMMU spec, I understand that SEC_SID is configured for
->> each stream, and can change dynamically.
->> On the opposite, a StreamID is fixed and derived from PCI bus and slot
->> for a given device.
->>
->> Thus, I think we are missing some logic here.
->> I'm still trying to understand where the SEC_SID should come from
->> initially.
->> "The association between a device and the Security state of the
->> programming interface is a system-defined property."
->> Does it mean we should be able to set a QEMU property for any device?
->>
->> Does anyone familiar with this has some idea?
->>
->> As well, we should check the SEC_SID found based on
->> SMMU_S_IDR1.SECURE_IMPL.
->> 3.10.1 StreamID Security state (SEC_SID)
->> If SMMU_S_IDR1.SECURE_IMPL == 0, then incoming transactions have a
->> StreamID, and either:
->> • A SEC_SID identifier with a value of 0.
->> • No SEC_SID identifer, and SEC_SID is implicitly treated as 0.
->> If SMMU_S_IDR1.SECURE_IMPL == 1, incoming transactions have a
->> StreamID, and a SEC_SID identifier.
->>
->> Regards,
->> Pierrick
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/s390x/test_ccw_virtio.py | 25 +++++++++++++++++++++++
+>   1 file changed, 25 insertions(+)
 > 
-> Thank you very much for your detailed review and in-depth analysis, and
-> for pointing out this critical issue that breaks the Linux boot.
-> 
-> 
-> To be transparent, my initial approach was indeed tailored to my
-> specific test case, where I was effectively hardcoding the device's
-> StreamID to represent it's a so-called Secure device in my self testing.
-> This clearly isn't a general solution.
-> 
+> diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional/s390x/test_ccw_virtio.py
+> index 453711aa0f..82e73ecf5e 100755
+> --- a/tests/functional/s390x/test_ccw_virtio.py
+> +++ b/tests/functional/s390x/test_ccw_virtio.py
+> @@ -15,6 +15,7 @@
+>   import tempfile
+>   
+>   from qemu_test import QemuSystemTest, Asset
+> +from qemu_test import exec_command
+>   from qemu_test import exec_command_and_wait_for_pattern
+>   from qemu_test import wait_for_console_pattern
+>   
+> @@ -270,5 +271,29 @@ def test_s390x_fedora(self):
+>                           'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
+>                           ' sleep 1 ; done', 'Start virtcrypto_remove.')
+>   
+> +        # Test SCLP event Control-Program Identification (CPI)
+> +        cpi = '/sys/firmware/cpi/'
+> +        sclpcpi = '/machine/sclp/s390-sclp-event-facility/sclpcpi'
+> +        self.log.info("Test SCLP event CPI")
+> +        exec_command(self, 'echo TESTVM > ' + cpi + 'system_name')
+> +        exec_command(self, 'echo LINUX > ' + cpi + 'system_type')
+> +        exec_command(self, 'echo TESTPLEX > ' + cpi + 'sysplex_name')
+> +        exec_command(self, 'echo 0x001a000000060b00 > ' + cpi + 'system_level')
+> +        exec_command(self, 'echo 1 > ' + cpi + 'set')
 
-It's definitely not a bad approach, and it's a good way to exercise the 
-secure path. It would have been caught by some of QEMU functional tests 
-anyway, so it's not a big deal.
+I think at least the last statement should be replaced by 
+exec_command_and_wait_for_pattern, waiting for the shell prompt. Otherwise 
+there is a small race condition here that the exec_command() has been sent, 
+but not executed yet. Ok, the event_wait() will wait for a while, so it's 
+very unlikely, but let's better play save and wait for the shell prompt 
+first, before waiting for the event.
 
-A solution would be to define the secure attribute as a property of the 
-PCI device, and query that to identify sec_sid accordingly.
-As you'll see in 3.10.1 StreamID Security state (SEC_SID), "Whether a 
-stream is under Secure control or not is a different property to the 
-target PA space of a transaction.", so we definitely should *not* do any 
-funky stuff depending on which address is accessed.
+> +        try:
+> +            event = self.vm.event_wait('SCLP_CPI_INFO_AVAILABLE')
+> +        except TimeoutError:
+> +            self.skipTest('SCLP Event type CPI is not supported')
 
-By curiosity, which kind of secure device are you using? Is it one of 
-the device available upstream, or a specific one you have in your fork?
+Should we rather fail the test in case we don't receive the event?
 
-> 
-> You've raised a crucial architectural point that I hadn't fully
-> considered: how a standard "Normal World" PCIe device should be properly
-> associated with the "Secure World". To be honest, I didn't have a clear
-> answer for this, so your feedback is a perfect opportunity for me to dig
-> in and understand this area correctly.
-> 
-It took time for us to reach that question also.
-Our current understanding is that SEC_SID == Realm is identified by bits 
-on pci side (part of TDISP protocol), and that secure devices are indeed 
-hardcoded somewhere.
+> +        ts = self.vm.cmd('qom-get', path=sclpcpi, property='timestamp')
+> +        self.assertNotEqual(ts, 0)
+> +        name = self.vm.cmd('qom-get', path=sclpcpi, property='system_name')
+> +        self.assertEqual(name.strip(), 'TESTVM')
+> +        typ = self.vm.cmd('qom-get', path=sclpcpi, property='system_type')
+> +        self.assertEqual(typ.strip(), 'LINUX')
+> +        sysplex = self.vm.cmd('qom-get', path=sclpcpi, property='sysplex_name')
+> +        self.assertEqual(sysplex.strip(), 'TESTPLEX')
+> +        level = self.vm.cmd('qom-get', path=sclpcpi, property='system_level')
+> +        self.assertEqual(level, 0x001a000000060b00)
 
-We asked this question to some Arm folks working on this area, to 
-confirm Secure devices are supposed to be defined this way.
-
-> 
-> I'd be very interested to hear ideas from others on the list who are
-> more familiar with this topic.
-> 
-> 
-> Best,
-> 
-> Tao
-> 
-> 
+  Thomas
 
 
