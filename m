@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8475CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F85ECCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9KNl-00064c-Sz; Thu, 16 Oct 2025 05:34:49 -0400
+	id 1v9KPk-0006s9-Q2; Thu, 16 Oct 2025 05:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KNk-00064N-H2
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:34:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KPi-0006rd-IQ
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:36:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KNd-00021i-EM
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:34:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9KPe-0002Or-W7
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:36:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760607277;
+ s=mimecast20190719; t=1760607405;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wjo9tJC7WDlQMs+Wn6lV/c+5ExuHfNrq7AArbOtReJ4=;
- b=fLZHGFuB3NITlipqtj1v9mYeZDW3Xg7VNgt2X94xAWtBOUswuUL0GYmKFlq7DCHKUCOu6/
- gvcomJdyFB+mIDJdnvHTdXrJysuYaBmTxuE4y485cWi52KZee6AEBleU1IsZ5+vhUKlpIz
- 2SAf8HfZFELgENJMV4rNr2BndMtHLtY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y5NUgVttnBSYtObq9rfGpzdttDAj2KLEewcuySqH4OE=;
+ b=UaNdolBsL82leLGEY9arUX6blFGf0j4fCfSvx+wDza/kkWjl+A5v2S9OVdL5OLWGrK5eUE
+ MwMy/ZQvLp8a8PwG8I9NVWaiB1MlmRbjz6DspD4691Qz3D4Ww/IHsgB2wrkLaf3s1AIjUi
+ G2Qhaq1+sqF7GBjgbDIuddkCKqaK88k=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-212-OBQVSsNiP2KkxEIJnEKYzg-1; Thu, 16 Oct 2025 05:34:36 -0400
-X-MC-Unique: OBQVSsNiP2KkxEIJnEKYzg-1
-X-Mimecast-MFC-AGG-ID: OBQVSsNiP2KkxEIJnEKYzg_1760607274
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3ee12ab7f33so211063f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:34:35 -0700 (PDT)
+ us-mta-66-sSqQeQoGNkePfRxpmZS_Ew-1; Thu, 16 Oct 2025 05:36:44 -0400
+X-MC-Unique: sSqQeQoGNkePfRxpmZS_Ew-1
+X-Mimecast-MFC-AGG-ID: sSqQeQoGNkePfRxpmZS_Ew_1760607403
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-46e36686ca1so4024105e9.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:36:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760607274; x=1761212074;
+ d=1e100.net; s=20230601; t=1760607402; x=1761212202;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wjo9tJC7WDlQMs+Wn6lV/c+5ExuHfNrq7AArbOtReJ4=;
- b=kIzOGj8bYDTuHxEprbQW3CIndZoNdKfSGHCUrCkL26U3DSerOBKloh8Cvx0+DPPhEl
- FihB7Mw89kpzi4ywW3oVZdUOqEIl8hnmqtbkG8QbZD1CS48JlPNZ5204Jtoh9WCEZcLL
- 7wpfJTeMeCAXn6H2xb2C1w9T3FlnZxCfZCq4P5jRVC5xlDXYiGfaUovH9ta1jikkFLsK
- uaWdajsx1nfhmDZDqAP+0ENhybpx1UVhqweTTvOfKeYCiNziOmrJq3YTOweAeLtG0M17
- fD7AsxQmTEw9Am4tLMyZRELDoL6ZMJQRl419qdt4uqnFRMy8SjENX4FBlTxaOQ4hDsxW
- xU/g==
+ bh=y5NUgVttnBSYtObq9rfGpzdttDAj2KLEewcuySqH4OE=;
+ b=ABonjYaXolJ4gW/Su0oPkWWegVBoadxMev6aob0hmRWcOqKcQ/dFf0Bm9GliPl0Nhm
+ PcpoqO02zy86lCj8tMw2xm1ieNwq1un8wgIa+HuagDHxjPdWeZ/7h90Fwe17kC2nS3kX
+ zSgRGqkjWy0YatHLj3vN406/3HUiJu6KzYkG2NFhLW5SmU8rUMx5xOSTnHM5bfkE13ls
+ DXOIy6/Qewa+X6TI/Di0fqLVmTuO3QL+GMEwYq80qN07JUCChW7IcYI9aYeqHyRi1pmX
+ z4Bxku4KYzpozyxiIxL8wjFJVGQ4EhErN//nosXyCWUEfapLJF4CcdKTqI+JDKo9nrPU
+ rFsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYzeBqZoMe6MpthYXm3uPFVF2MBd6NwVu25jgqZpwmVqnMoYGg+1OS5zvE3mfK3kO0m4mdqX1fHlve@nongnu.org
-X-Gm-Message-State: AOJu0YysHxRX5dgE0LAkeVVCQay9p4Ylc6Zb0EJVcjgpvJQvTM6sqsDr
- 45lxp55CB+v/7PB5Xow4xi+OaQCWUxHX6UM7FwwbVBmzG1N2+ebE6gDDUul52g2LziVmaSQPYcE
- wMNzAdNkWqiFWtE/22tqXwM6KTTWYVjNiLknFYUTR2VgzZPWxzOIJvRaGtPa1ap8p
-X-Gm-Gg: ASbGncsubl/LEIivO5/RZyAsgauHjE72TW2fmeQKM58ktyCs2ssP1GY3DXgu2Z+4Zam
- r/xnQyy4YA9OBr8ngXgv6fKfRMrupM4OZsg86RVdgGFp6f2YbRfL3rbKXvZC8AacQboXKi+K246
- urU2uVbGaN0G0sgSKgpjo0f/aAWEk2aZdtnaJup7uA/tjgIOvUbNXfeI7b6Bcx0uMvAl9LxC3BC
- MYUU542msT4zX1wMVnHXOAy3+yC23AxpSpMl8+QMKBBKomBneZmuSG1wOHrrRQR4BwOpBaaNa5M
- MT3QlfaiZwDVwo7t97fkAg9XLvPqbzSH/UyL4tyGDVSWJLb9nw76E8RDrmncbyzt5uVgUfGpK7q
- A7Dvz5Rh2ICxTLv/OmID8aY7srtDtDcpZGiAFWEt4
-X-Received: by 2002:a05:6000:250a:b0:402:a740:1edd with SMTP id
- ffacd0b85a97d-4266e7dfeb4mr22980277f8f.39.1760607274196; 
- Thu, 16 Oct 2025 02:34:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRqWBc/vOkmEMoBEOQWQr+32gCnBDvvrhBvqWsKtSVpGrOHyxCFS7+cxKh2Ai2DWBkv+K9RQ==
-X-Received: by 2002:a05:6000:250a:b0:402:a740:1edd with SMTP id
- ffacd0b85a97d-4266e7dfeb4mr22980251f8f.39.1760607273767; 
- Thu, 16 Oct 2025 02:34:33 -0700 (PDT)
+ AJvYcCXbzKuIfnf+Xy7pY2Yn4Xu/mqt7fK4Eb6HacneNvBCXJPP9j2LUJW6x/6ptctpF3uzOtig1+v+3XFcc@nongnu.org
+X-Gm-Message-State: AOJu0YxKJ/pEql+HgsFh15qhnTKIF6dWWaYvFAjtx3tUz/MU64BHsP6E
+ 8vFPUiRjQfQqFdnJKMsqU5RMjcCQQzGNM5EuFg6+4BhquEYUoISExD4m5IYXQwtmeXX3wCdtDS/
+ VADSI1VT8lqEoS3T0yCkDW8mnIBhK6eAcW8lmowDAbKwWZXZHLS/GKjOG
+X-Gm-Gg: ASbGncsq9iQb1iBw6ZjmJOYK1RwoyMCSc75jD0y8g+HwE884w/xZqee9EfJVOiBNnYN
+ N0GMdW2kPzhldDFZnBHvvFx63NfOlE+5MClqW5t1xurxzCJ1Otkpsu1WyZvcwoX7F0OSa/F99bs
+ e2hX/uJRMwyyInTlS46+yv9ZKE/IEhfc3fOblzNoXv5KUD8ZDn0UhnNlY/7cUOZLxS0+WIMic+U
+ S+UeU1RQF6lg7Hh2dfxqFB5TG4Lz0+JPGQzU1RSxay+VHU4Qo7GT9yINDQyP1e9XbCDQ3WA4ihp
+ 11yeCi36excF9WsHzN3Txrhfemq6m+VW7tJrhytHHDqweBLG1lazKGOZiJ6GrAzxczJDYNEDTaV
+ jm/dMw1TLqAlycOHYmwaV2i6B4HuOUdmskVwBnPtk
+X-Received: by 2002:a05:600c:3507:b0:471:131f:85b7 with SMTP id
+ 5b1f17b1804b1-471131f8d68mr9793925e9.15.1760607402658; 
+ Thu, 16 Oct 2025 02:36:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmqBpmLB0hMREuc2UmZtVh5CWoZRl+zb2W/RK38q7cYanpvzeD3P4ptHhQZHhb8nAdE4YTQg==
+X-Received: by 2002:a05:600c:3507:b0:471:131f:85b7 with SMTP id
+ 5b1f17b1804b1-471131f8d68mr9793705e9.15.1760607402227; 
+ Thu, 16 Oct 2025 02:36:42 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
  [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e1284sm33320693f8f.45.2025.10.16.02.34.32
+ 5b1f17b1804b1-4710ca4931csm19214515e9.0.2025.10.16.02.36.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 02:34:33 -0700 (PDT)
-Message-ID: <4fd19e9b-2a91-4a55-880e-ddd9826fbf29@redhat.com>
-Date: Thu, 16 Oct 2025 11:34:32 +0200
+ Thu, 16 Oct 2025 02:36:41 -0700 (PDT)
+Message-ID: <ac6576f8-e33f-4673-96cc-63105ef95a57@redhat.com>
+Date: Thu, 16 Oct 2025 11:36:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/s390x/mmu_helper: Simplify
- s390_cpu_virt_mem_rw() logic
+Subject: Re: [PATCH v2 2/2] target/s390x/mmu_helper: Do not ignore
+ address_space_rw() errors
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@redhat.com>
 References: <20251008141410.99865-1-philmd@linaro.org>
- <20251008141410.99865-2-philmd@linaro.org>
+ <20251008141410.99865-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251008141410.99865-2-philmd@linaro.org>
+In-Reply-To: <20251008141410.99865-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -141,7 +141,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,40 +158,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/10/2025 16.14, Philippe Mathieu-Daudé wrote:
-> In order to simplify the next commit, move the
-> trigger_access_exception() call after the address_space_rw()
-> calls. No logical change intended.
+> If a address_space_rw() call ever fails, break the loop and
+> return the PGM_ADDRESSING error (after triggerring an access
+> exception).
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/s390x/mmu_helper.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+>   target/s390x/mmu_helper.c | 10 ++++++++--
+>   1 file changed, 8 insertions(+), 2 deletions(-)
 > 
 > diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-> index 487c41bf933..22d3d4a97df 100644
+> index 22d3d4a97df..3b1e75f7833 100644
 > --- a/target/s390x/mmu_helper.c
 > +++ b/target/s390x/mmu_helper.c
-> @@ -541,9 +541,7 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
->       pages = g_malloc(nr_pages * sizeof(*pages));
->   
->       ret = translate_pages(cpu, laddr, nr_pages, pages, is_write, &tec);
-> -    if (ret) {
-> -        trigger_access_exception(&cpu->env, ret, tec);
-> -    } else if (hostbuf != NULL) {
-> +    if (ret == 0 && hostbuf != NULL) {
->           AddressSpace *as = CPU(cpu)->as;
+> @@ -546,9 +546,15 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
 >   
 >           /* Copy data by stepping through the area page by page */
-> @@ -556,6 +554,9 @@ int s390_cpu_virt_mem_rw(S390CPU *cpu, vaddr laddr, uint8_t ar, void *hostbuf,
+>           for (i = 0; i < nr_pages; i++) {
+> +            MemTxResult res;
+> +
+>               currlen = MIN(len, TARGET_PAGE_SIZE - (laddr % TARGET_PAGE_SIZE));
+> -            address_space_rw(as, pages[i] | (laddr & ~TARGET_PAGE_MASK),
+> -                             attrs, hostbuf, currlen, is_write);
+> +            res = address_space_rw(as, pages[i] | (laddr & ~TARGET_PAGE_MASK),
+> +                                   attrs, hostbuf, currlen, is_write);
+> +            if (res != MEMTX_OK) {
+> +                ret = PGM_ADDRESSING;
+> +                break;
+> +            }
+>               laddr += currlen;
+>               hostbuf += currlen;
 >               len -= currlen;
->           }
->       }
-> +    if (ret) {
-> +        trigger_access_exception(&cpu->env, ret, tec);
-> +    }
->   
->       g_free(pages);
->       return ret;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
