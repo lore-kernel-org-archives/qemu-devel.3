@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0B90CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BED6CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mvv-0001EY-VR; Thu, 16 Oct 2025 08:18:16 -0400
+	id 1v9MzT-0006Cy-6E; Thu, 16 Oct 2025 08:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mvk-0000Mh-Dp
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:05 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mxf-0004SM-B2
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:20:06 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MvX-0008Mq-Cs
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:04 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3ece1102998so506926f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:17:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MxR-00007J-RG
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:20:02 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-46e2e363118so5339645e9.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760617061; x=1761221861; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760617176; x=1761221976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rZA1fWSYzUnWZQGD1H1+GmKfsAyRn/bLV4Ew+uYFMHI=;
- b=Ia2ZN1kQGKI90UPFZCXfTYjTjndxXL6U3WhWn5IQ8KdO5rCqDRQ8HqnpV86jyIGy/Y
- NmlvSZ7Bcr5Eynof+99YXzxX+EONmTaDDDzVOhS0ENSmJQ2IQCWIke5SOsybPffVCBLG
- gJ5GWz5pMITWewBqe8y9dT4CuLSRZKRLZ4ykbEfNwww9lKSMXPYFQE7cF2KHcUwG2ae7
- DEpb/Kid76QQXhMgP+wV/ptHtXj8iaYNy9Ht/ZcLrHiq1BmkAVm8yFy9B0sIN2Y0avQy
- 8BE8XVCp/5IdgWYw5WJjEnvewlirPIbkkVxbA8xGxLYbCPAKqqwsQcEty/esUIqSTF7x
- XWPg==
+ :reply-to; bh=eUi+/YruAu0GqnNptOwyORnqU9XWBam7ShlehwQN3yo=;
+ b=UDHM4uw0sbwzNwLhQQsC7UybfEqo15xk1PWo5jYySqGxj5htHa37lIzR4i19QAC+52
+ NLH+WnQM4/gdnGuayU6QL6iT2hqvt1VF+3nKC0XvW0XOew51bN3dFSGL3My2HczzZoiP
+ LVL+jeZO2teWzpwdBuZmXTjkWwbR8Ebv4WzBPPWBVv+FPEA0+6/E4U/pHW/2OMRr70rM
+ EzC+wtLXJGvjrZWMZzu+D4P3XI705zcvSxF/wQtPFKWRb68/neCdp9P1g3qjh9EZxTKL
+ o1QUw5yB1QrXWFksCQDCvRTvxQDu1bJo2aOSXfaJsvypNM9U6lIvRO5INDWdqPrpGzVa
+ /Iug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760617061; x=1761221861;
+ d=1e100.net; s=20230601; t=1760617176; x=1761221976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rZA1fWSYzUnWZQGD1H1+GmKfsAyRn/bLV4Ew+uYFMHI=;
- b=AmM/B9hgrYN2I2GDiLJJ85uVwDXCGxZUMC3W4afh8bAHEbefvxD3RmGSjCIC3JlR55
- yU+KrrKi7d5EnF6tZb1ZCI6iC3iw2ngoHbh/ar8yHsRKY+2qW12OW9ZziLc1zxHHl9Eh
- pjwG9qyCvGvVxnHPD2uVilqcpP8XR/xta3CN0XfhHLe8JIvD8U6Hipc2+igZvhlK/wYx
- sX3nqTzTmUCc6+iARY6+NnR2SHwl+IWpLaCvR9iFNHnZpCk4pmbwIPIh0oqgoRjuOfzE
- 0RuhT4JcFH+FDnTSBAmhvSvfHeois7L0VhDv+uRvVg+khZSHtohmoIEliqGLPi38j/jN
- zzBg==
-X-Gm-Message-State: AOJu0Yzen97VnKZjwduuM+V78FXdfWEp8C4qolOgCupNpVnR2JDThhV7
- HQKMeDmUBD37SVVYRKral/oyTzatqSG+u23i+MlWLddIqsHRsdeOnerbLyWagHOpHHY7/XWkYDG
- rP9uJdz0=
-X-Gm-Gg: ASbGncsrOfoTUGf2vrtpBJyPVyfnD11WRpaX3w2rksVeF+VmhZktLuerwNURc60Gnlf
- ybWc41JoVuzzqjuuh5Cr7bW5gsOHXOE77R1mkE6cE1Jt258xEtefoZvRzbptbnQuYoP+08vPKUP
- Y58UY1CgoEXxjnnsRHojOdP+SGiTOetLQ22hB8lOZBcJe8QGMnDPBWBqmjeegrLO99tePPOByoJ
- pOitqF/V75bVML9BDuqB358ZflIWJN3LJ1pRfh3tAlk9FGfAuitZLKZvB3ZwBB0ECpQBCzXkeTU
- 2KHMmAhEfphrtOj9arDWVnk+MjOpwv59MrIe3M4PDBvQFqmVXlLr+wUu0qxqsNDbFMdPb013vhY
- iOPcZVw+Wi0s/D8Tw1lq6pxNmSog9j2pYUs2dAV3+q04KeL9ic/y6rgBw6TQWrWswa2ZK7kEVrj
- vp047dY8l41q7MOoL41zXy3pl3GsLSBxK2AvIbKXDeWN8I1K/cU2JfQsGOo9oayKQn
-X-Google-Smtp-Source: AGHT+IEWMEiDj+9NLP0wsZ7ohuqSeThP2M2HEBHSp6XQZxPvJZeNyqTRhUn+1PbpZyE6v+PTHjoJiQ==
-X-Received: by 2002:a05:6000:71e:b0:427:72:4c9 with SMTP id
- ffacd0b85a97d-42700720595mr1334387f8f.26.1760617060623; 
- Thu, 16 Oct 2025 05:17:40 -0700 (PDT)
+ bh=eUi+/YruAu0GqnNptOwyORnqU9XWBam7ShlehwQN3yo=;
+ b=wgW0Aiz5+Fte5w3eq6ahM9WWDdSXjEXb0R7+hOVKDQLDCJnk/XVG6DA06EY2E5ZXWN
+ pkdIyrnLPsuLkaOf746O4LAqJeM8FqnzmqjINhS4lLQ3zO7DIzxPinbpmV0eyVHUhCSz
+ jiu1I4Am7MCjUtwrCqHmnchPu9dwD9zSTAtHXihSZwksG5Tp397vWOwZqHhjhXqFi3oR
+ a/SbWEUTy+t314gzyPyQzD1orE0DdcaT+NYg3VLn0T4gZ8mMoSNwYGFn+Umk9SuMsGpq
+ cUPhkHFjfetIIrv51ERBQtoMyJmKgfcv42lIC7pQTm7WuzOdgY7PNmVrH0+rA5I66Y6w
+ C2lg==
+X-Gm-Message-State: AOJu0Yw5Y+rN/d+e9qkgyFQPWwSfd4qV1avBvDkmwcTj08lju1t7oKoa
+ TWBYfOVQPc9XSV1XFF9KH1nbG5ybq7LX3XkKYrebUBAL/ukEO+582VPUj33vdjHQyLaCaHoZsAn
+ EByqbX1s=
+X-Gm-Gg: ASbGncsLY3Cth1cNnRpKJdcX9pRO2EAw7QYTFzYqC+rJKjhz/p3n4i/VD/mUC3tAzbm
+ UVL5s6q9DFlSfXLhArcMFfOXdj7aG5Vu8pdsNv7tIbTepR2MxMqJe8ciof8mf2cXl4nS6LFVuQT
+ atQLCo7KHxAv7+QBBfXk2YkyJonHsAKb+ZuLgZ+e3fdKh02LCRD4Hplb9riyKbsymAELjjmXXr5
+ MXOb0KZAvB1bi9TSNbXEYUrLb8+FgN3AihvQIILMhkI+PyMHabwI6yDtiBBgS7gSegSBV+0/vhQ
+ Ed/Qy6kglppjwW6+edihTOe4n6AYqhno64hcdIlsUh/tkHLPHhNP1QH0w8a8XgyGdEVseKhXGuX
+ DWP8BLgj1RgZVppwugjiA7AzCj/pASQ7owY548EJhrmOedlkdbWDYHo+82IH26RJ/3ZyGRHot75
+ tzaSIoIipLLWe9qknQSUBgXrlhV3Pi/csCI3hMHifHpQiWBzFyEndexQ==
+X-Google-Smtp-Source: AGHT+IGnTYSfs0TOOZESxNiRlfw0+fF36G3DN6GVBC6W32d2LhPBLSo+F9hoptJ9tsM5k2ef2p2m3g==
+X-Received: by 2002:a05:600c:3e8f:b0:471:1717:409 with SMTP id
+ 5b1f17b1804b1-47117170635mr287875e9.23.1760617176365; 
+ Thu, 16 Oct 2025 05:19:36 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5833dcsm34119256f8f.19.2025.10.16.05.17.39
+ 5b1f17b1804b1-4710ed831cbsm18909815e9.5.2025.10.16.05.19.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:17:40 -0700 (PDT)
+ Thu, 16 Oct 2025 05:19:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/75] target/openrisc: Replace VMSTATE_UINTTL() ->
- VMSTATE_UINT32()
-Date: Thu, 16 Oct 2025 14:14:43 +0200
-Message-ID: <20251016121532.14042-28-philmd@linaro.org>
+Subject: [PULL 52/75] target/sh4: Convert CPUSH4State::sr register to uint32_t
+ type
+Date: Thu, 16 Oct 2025 14:15:08 +0200
+Message-ID: <20251016121532.14042-53-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
 References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,39 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both OpenRISCTLBEntry fields are of uint32_t type. Use the
-appropriate VMSTATE_UINT32() macro.
-
-There is no functional change (the migration stream is not
-modified), because the OpenRISC targets are only built as 32-bit:
-
-  $ git grep TARGET_LONG_BITS configs/targets/or1k-*
-  configs/targets/or1k-linux-user.mak:5:TARGET_LONG_BITS=32
-  configs/targets/or1k-softmmu.mak:5:TARGET_LONG_BITS=32
+Since its introduction in commit fdf9b3e831e the %SR register
+is a uint32_t type.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251010070702.51484-2-philmd@linaro.org>
+Message-Id: <20251008064814.90520-2-philmd@linaro.org>
 ---
- target/openrisc/machine.c | 4 ++--
+ target/sh4/cpu.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/openrisc/machine.c b/target/openrisc/machine.c
-index 081c706d02c..fa054e528bd 100644
---- a/target/openrisc/machine.c
-+++ b/target/openrisc/machine.c
-@@ -26,8 +26,8 @@ static const VMStateDescription vmstate_tlb_entry = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(mr, OpenRISCTLBEntry),
--        VMSTATE_UINTTL(tr, OpenRISCTLBEntry),
-+        VMSTATE_UINT32(mr, OpenRISCTLBEntry),
-+        VMSTATE_UINT32(tr, OpenRISCTLBEntry),
-         VMSTATE_END_OF_LIST()
-     }
- };
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index c41ab70dd7c..db27a693f12 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -365,14 +365,14 @@ static inline int cpu_ptel_pr (uint32_t ptel)
+ #define PTEA_TC        (1 << 3)
+ #define cpu_ptea_tc(ptea) (((ptea) & PTEA_TC) >> 3)
+ 
+-static inline target_ulong cpu_read_sr(CPUSH4State *env)
++static inline uint32_t cpu_read_sr(CPUSH4State *env)
+ {
+     return env->sr | (env->sr_m << SR_M) |
+                      (env->sr_q << SR_Q) |
+                      (env->sr_t << SR_T);
+ }
+ 
+-static inline void cpu_write_sr(CPUSH4State *env, target_ulong sr)
++static inline void cpu_write_sr(CPUSH4State *env, uint32_t sr)
+ {
+     env->sr_m = (sr >> SR_M) & 1;
+     env->sr_q = (sr >> SR_Q) & 1;
 -- 
 2.51.0
 
