@@ -4,140 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96046CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 06:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5C6CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 06:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9HVH-0007VL-Bg; Thu, 16 Oct 2025 02:30:23 -0400
+	id 1v9Hac-0000pW-12; Thu, 16 Oct 2025 02:35:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9HVD-0007Uv-Dx
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:30:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v9HaQ-0000nH-NC
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:35:45 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v9HV4-0003pB-Eg
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:30:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760596209;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0EbepmDVRJ/bHrs8WIO007Vi+N8MRrEJJTRHH7oii/M=;
- b=UKwHyhZFl3ZPSzo7TQzLqZSJlG4W/xvRMplKZeRvopPT1nT/DXoht2yEp5M6OuXHhjKUcW
- 9wJvxGXab89yadTaAPRuXf/Pon7z4H/eHr4ch+QMq2KKqExlFbeNhRIPEc9CxvXFcda/ic
- OTie2yx++GJwpfCJD8ROx9Zx8ndXGOc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-x8s2rXK0OV6P0b1EXMBhNg-1; Thu, 16 Oct 2025 02:30:06 -0400
-X-MC-Unique: x8s2rXK0OV6P0b1EXMBhNg-1
-X-Mimecast-MFC-AGG-ID: x8s2rXK0OV6P0b1EXMBhNg_1760596205
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-40cfb98eddbso718877f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 23:30:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760596205; x=1761201005;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0EbepmDVRJ/bHrs8WIO007Vi+N8MRrEJJTRHH7oii/M=;
- b=uEHF/fNYvKxv9j59Z1pUVxyEBprv64wgHj/ySzDgrXTQrGvHE1d+c1Bf6HEqjqd2yS
- vtI6K3BeC8UgSKydyw1DIwRlpff278ZxH4jCw0CbM6jaWMeickkN2h7P2NeywIVLVac1
- HhFraRv/s6TZGJ15CBsDdt3QneWWA9V1M1+/Z+POw0yZ3fhCscxihBVUPJKCMNG36B8c
- kqgGB4+Tcr1yqxs5dDGBvnVHMOhT2AS5FXYx9mwhNIcmJhrhEsFlUdyA9MbfTViOoNyZ
- g1FwPSKvdTnMo3fLh0OJUhe18/eXxU6OaaMLZr/VwDuzv2FNbuLko09g/M/6OY4HqMOJ
- 4FCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOWwFx5VL0hld2aEtQBUl+gkMguEIbhF5HxuoAJ+ZmvGV0E53GZBE/mqDWwjvzdIAUpDj9IFECo24y@nongnu.org
-X-Gm-Message-State: AOJu0YxfjeAHEWfepgFFaBp/+AjwvelFt4fwy2EW/bbrFG8KJ83NTZDr
- ssW3JsHaxsCFck54X8JjAplFjCnBfbktHtvKJrgfXqUQq/CFoyH/3ndh06hHH2W4WPqkvKJtHct
- DGUo+Yf6pQXAf+CCxpnnwXzsb4qL/THf24ZuqZXEqV+meYgZ3btysD3f3
-X-Gm-Gg: ASbGnctmQ1JkOVAOunsEZmWjnK5YbOGvzwDvcs25GEEA0rq51BiwABYRr0bE0KWdXj8
- TB8LNECQjcWCp7tunDD1B8OCReslcVlQcLHIV22rWJZ665j4h492V7JWoZKTupjKs9+8XGqtnVA
- 00RAB8iFE7PyptEYoxKzlSGxuAUK4vUtaO44/Tg5haMXuHoWxyOE0GPQ42HA3eBeGsmgy7JIdjX
- Giu2mUxUsDWb/OrOooNXmOB1AEucpL8oo+IpFYqHLJPCjQr4+Fa2JgISIFqfPCHmsFE82ak/5CL
- DBtDKGoVDt0Kayzj4eu5xogRyNKMPCFztjFbEq6f2P38SHMB6TGVnHj5uAXmg5aS0nVTUBUmkVq
- CDyqi8k9MVk8MrVYPC+N9Gy2U/2PRC1URU4xTwCMR
-X-Received: by 2002:a05:6000:2404:b0:425:6fb5:2ad4 with SMTP id
- ffacd0b85a97d-426fb7bbe2dmr1709170f8f.15.1760596205412; 
- Wed, 15 Oct 2025 23:30:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYEbC9CV80/u8CiQsYP95bDPDJSNdmIjVAbCF37BiIHRK5QjHPKyvbGh3glRy4ZxTPMk4JDA==
-X-Received: by 2002:a05:6000:2404:b0:425:6fb5:2ad4 with SMTP id
- ffacd0b85a97d-426fb7bbe2dmr1709151f8f.15.1760596204956; 
- Wed, 15 Oct 2025 23:30:04 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-136.pools.arcor-ip.net.
- [47.64.112.136]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426fb279857sm4002149f8f.20.2025.10.15.23.30.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Oct 2025 23:30:04 -0700 (PDT)
-Message-ID: <bf243ec1-c4be-4a24-a766-efc0fc41a7f9@redhat.com>
-Date: Thu, 16 Oct 2025 08:30:03 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v9HaF-0004TA-0J
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:35:37 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59G6YquU099261
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 16 Oct 2025 15:35:05 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=Dr456ID8nj2hAPfVNzcXfjYjbtMrOIuqc1lkRDZklFs=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1760596505; v=1;
+ b=W00g6CQ3a8hVJfKedbJXQpnlyg1oy1RFvhHfS8nRph2dWMxDJN8d1LqDdmBBWbPO
+ TwNSt5djle2TemWaSgfhgQyGkvmGalS7vXTmyr/ksXgR1U84fdf5ZZXq7fy3SZAL
+ 1wIBYR7j5uEWUv+aTwunj92TOoXKK+hGgw2sxNJFp5O9uT2wDKDCqWA/cFOI/9ZR
+ 10o1uXeAyEnxeS6vkroEhjJSYVHnKuaPTmChU5WYNeEGM4LdW6KYscmycaUq8nIs
+ FokbskMK6UmPoSwRsPm0riNeRS24+uGN8PhrwOQaDEMit3zxrT7W2XqprnQIMMF2
+ nf5mH31xz7Utv2vftGFP7w==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 16 Oct 2025 15:34:41 +0900
+Subject: [PATCH] rcu: Unify force quiescent state
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] buildsys: Remove support for 32-bit PPC hosts
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, alex.bennee@linaro.org
-References: <20251015213843.14277-1-richard.henderson@linaro.org>
- <20251015213843.14277-8-richard.henderson@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251015213843.14277-8-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAACS8GgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDA0NT3bT8ouRU3WSTVAPjRMukRHNDSyWg2oKi1LTMCrA50bG1tQDaRQH
+ WVwAAAA==
+X-Change-ID: 20251015-force-c4e03a9ba719
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ Eric Blake <eblake@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,23 +81,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/10/2025 23.38, Richard Henderson wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Stop detecting 32-bit PPC host as supported.
-> See previous commit for rationale.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> [rth: Retain _ARCH_PPC64 check in udiv_qrnnd]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20251014173900.87497-4-philmd@linaro.org>
-> ---
->   include/qemu/timer.h | 13 +------------
->   disas/disas-host.c   |  4 +---
->   util/cacheflush.c    |  4 ++--
->   configure            | 19 +++++--------------
->   4 files changed, 9 insertions(+), 31 deletions(-)
+Borrow the concept of force quiescent state from Linux to ensure readers
+remain fast during normal operation and to avoid stalls.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Background
+==========
+
+The previous implementation had four steps to begin reclamation.
+
+1. call_rcu_thread() would wait for the first callback.
+
+2. call_rcu_thread() would periodically poll until a decent number of
+   callbacks piled up or it timed out.
+
+3. synchronize_rcu() would statr a grace period (GP).
+
+4. wait_for_readers() would wait for the GP to end. It would also
+   trigger the force_rcu notifier to break busy loops in a read-side
+   critical section if drain_call_rcu() had been called.
+
+Problem
+=======
+
+The separation of waiting logic across these steps led to suboptimal
+behavior:
+
+The GP was delayed until call_rcu_thread() stops polling.
+
+force_rcu was not consistently triggered when call_rcu_thread() detected
+a high number of pending callbacks or a timeout. This inconsistency
+sometimes led to stalls, as reported in a virtio-gpu issue where memory
+unmapping was blocked[1].
+
+wait_for_readers() imposed unnecessary overhead in non-urgent cases by
+unconditionally executing qatomic_set(&index->waiting, true) and
+qemu_event_reset(&rcu_gp_event), which are necessary only for expedited
+synchronization.
+
+Solution
+========
+
+Move the polling in call_rcu_thread() to wait_for_readers() to prevent
+the delay of the GP. Additionally, reorganize wait_for_readers() to
+distinguish between two states:
+
+Normal State: it relies exclusively on periodic polling to detect
+the end of the GP and maintains the read-side fast path.
+
+Force Quiescent State: Whenever expediting synchronization, it always
+triggers force_rcu and executes both qatomic_set(&index->waiting, true)
+and qemu_event_reset(&rcu_gp_event). This avoids stalls while confining
+the read-side overhead to this state.
+
+This unified approach, inspired by the Linux RCU, ensures consistent and
+efficient RCU grace period handling and confirms resolution of the
+virtio-gpu issue.
+
+[1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-alex.bennee@linaro.org/
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ util/rcu.c | 79 ++++++++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 51 insertions(+), 28 deletions(-)
+
+diff --git a/util/rcu.c b/util/rcu.c
+index b703c86f15a3..acac9446ea98 100644
+--- a/util/rcu.c
++++ b/util/rcu.c
+@@ -43,10 +43,14 @@
+ #define RCU_GP_LOCKED           (1UL << 0)
+ #define RCU_GP_CTR              (1UL << 1)
+ 
++
++#define RCU_CALL_MIN_SIZE        30
++
+ unsigned long rcu_gp_ctr = RCU_GP_LOCKED;
+ 
+ QemuEvent rcu_gp_event;
+ static int in_drain_call_rcu;
++static int rcu_call_count;
+ static QemuMutex rcu_registry_lock;
+ static QemuMutex rcu_sync_lock;
+ 
+@@ -76,15 +80,29 @@ static void wait_for_readers(void)
+ {
+     ThreadList qsreaders = QLIST_HEAD_INITIALIZER(qsreaders);
+     struct rcu_reader_data *index, *tmp;
++    int sleeps = 0;
++    bool forced = false;
+ 
+     for (;;) {
+-        /* We want to be notified of changes made to rcu_gp_ongoing
+-         * while we walk the list.
++        /*
++         * Force the grace period to end and wait for it if any of the
++         * following heuristical conditions are satisfied:
++         * - A decent number of callbacks piled up.
++         * - It timed out.
++         * - It is in a drain_call_rcu() call.
++         *
++         * Otherwise, periodically poll the grace period, hoping it ends
++         * promptly.
+          */
+-        qemu_event_reset(&rcu_gp_event);
++        if (!forced &&
++            (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
++             sleeps >= 5 || qatomic_read(&in_drain_call_rcu))) {
++            forced = true;
+ 
+-        QLIST_FOREACH(index, &registry, node) {
+-            qatomic_set(&index->waiting, true);
++            QLIST_FOREACH(index, &registry, node) {
++                notifier_list_notify(&index->force_rcu, NULL);
++                qatomic_set(&index->waiting, true);
++            }
+         }
+ 
+         /* Here, order the stores to index->waiting before the loads of
+@@ -106,8 +124,6 @@ static void wait_for_readers(void)
+                  * get some extra futex wakeups.
+                  */
+                 qatomic_set(&index->waiting, false);
+-            } else if (qatomic_read(&in_drain_call_rcu)) {
+-                notifier_list_notify(&index->force_rcu, NULL);
+             }
+         }
+ 
+@@ -115,7 +131,8 @@ static void wait_for_readers(void)
+             break;
+         }
+ 
+-        /* Wait for one thread to report a quiescent state and try again.
++        /*
++         * Sleep for a while and try again.
+          * Release rcu_registry_lock, so rcu_(un)register_thread() doesn't
+          * wait too much time.
+          *
+@@ -133,7 +150,20 @@ static void wait_for_readers(void)
+          * rcu_registry_lock is released.
+          */
+         qemu_mutex_unlock(&rcu_registry_lock);
+-        qemu_event_wait(&rcu_gp_event);
++
++        if (forced) {
++            qemu_event_wait(&rcu_gp_event);
++
++            /*
++             * We want to be notified of changes made to rcu_gp_ongoing
++             * while we walk the list.
++             */
++            qemu_event_reset(&rcu_gp_event);
++        } else {
++            g_usleep(10000);
++            sleeps++;
++        }
++
+         qemu_mutex_lock(&rcu_registry_lock);
+     }
+ 
+@@ -173,15 +203,11 @@ void synchronize_rcu(void)
+     }
+ }
+ 
+-
+-#define RCU_CALL_MIN_SIZE        30
+-
+ /* Multi-producer, single-consumer queue based on urcu/static/wfqueue.h
+  * from liburcu.  Note that head is only used by the consumer.
+  */
+ static struct rcu_head dummy;
+ static struct rcu_head *head = &dummy, **tail = &dummy.next;
+-static int rcu_call_count;
+ static QemuEvent rcu_call_ready_event;
+ 
+ static void enqueue(struct rcu_head *node)
+@@ -259,30 +285,27 @@ static void *call_rcu_thread(void *opaque)
+     rcu_register_thread();
+ 
+     for (;;) {
+-        int tries = 0;
+-        int n = qatomic_read(&rcu_call_count);
++        int n;
+ 
+-        /* Heuristically wait for a decent number of callbacks to pile up.
++        /*
+          * Fetch rcu_call_count now, we only must process elements that were
+          * added before synchronize_rcu() starts.
+          */
+-        while (n == 0 || (n < RCU_CALL_MIN_SIZE && ++tries <= 5)) {
+-            g_usleep(10000);
+-            if (n == 0) {
+-                qemu_event_reset(&rcu_call_ready_event);
+-                n = qatomic_read(&rcu_call_count);
+-                if (n == 0) {
++        for (;;) {
++            qemu_event_reset(&rcu_call_ready_event);
++            n = qatomic_read(&rcu_call_count);
++            if (n) {
++                break;
++            }
++
+ #if defined(CONFIG_MALLOC_TRIM)
+-                    malloc_trim(4 * 1024 * 1024);
++            malloc_trim(4 * 1024 * 1024);
+ #endif
+-                    qemu_event_wait(&rcu_call_ready_event);
+-                }
+-            }
+-            n = qatomic_read(&rcu_call_count);
++            qemu_event_wait(&rcu_call_ready_event);
+         }
+ 
+-        qatomic_sub(&rcu_call_count, n);
+         synchronize_rcu();
++        qatomic_sub(&rcu_call_count, n);
+         bql_lock();
+         while (n > 0) {
+             node = try_dequeue();
+
+---
+base-commit: 0dc905ac306c68649e05cdaf8434123c8f917b41
+change-id: 20251015-force-c4e03a9ba719
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
