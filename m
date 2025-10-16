@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC1CCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D65A7CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9XBM-0007xY-PG; Thu, 16 Oct 2025 19:14:54 -0400
+	id 1v9XC9-00087A-8z; Thu, 16 Oct 2025 19:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9XBE-0007xN-VO
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:14:45 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1v9XC7-00086t-9B
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:15:39 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9XBC-0007np-4N
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:14:43 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-63994113841so2302459a12.3
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:14:41 -0700 (PDT)
+ id 1v9XC5-0008Dy-Au
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:15:39 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-634b774f135so2190765a12.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760656480; x=1761261280; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760656535; x=1761261335; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OrlSni9ZedQWlOiEUbc9dD2qNgW/bi8cLd2f/HrMi0M=;
- b=eBx01hg8tX/VDitAgu4yS7vaCteIDHfedWQ3XGb2jkMEa55AShpeEkgZdlSang0I7i
- AsPdlbvbz+Gl1Ng/TaizrupZLhmoJI+sNWU1kiN3qhGWYmB3nI2TR1qVL8PSwlvwEZDc
- 7y7Vhwz5lMfpS1tLJZ5bP2IeySdKVBHMoax17pAa5xGp3LzvbRFJugglj0qovRwifCaw
- vmYPiKrcQVBhmJvr/nbea+ZLXetkkmAsxj+hwyld2kfvAPG/OhGlWwXR2b3ZLUse3APg
- VibbZvDrTWiPl14F2ZWwL+TjZ+FELaCmTqrrnJKYa35SwDWT1/FaK7E8KdVBvXT3l3RO
- Q6jA==
+ bh=b8iwmQfJdG0UJ70FaimHsnyJ7b2e/kcblKBr9RW4qGI=;
+ b=GXHcM2xkbZEf/2qTHf1pNufbEIus8YszKVIIuD2ldRPrmB71xXdwoJH4pLJhP4eaxs
+ FW1bpC3VGWynhnah9kB9KJTJsjljT7EBTYR+z0Z5O7HoV2IgAYZjCLXW5I5pLa0ML6gS
+ DELzoE9SK9QfVfe0K/YAjP3oDoTvKvXjOr0jlPwVh/GRCa375posLbcLazvNX3U2PTrX
+ Wk0cnecRtFm99WIK9D9dtTCNBSfQCnz1yai5Tm3TXCblsr/x7p6KpeQGLObtAP/lyGXx
+ qQ+/G+pzaa0e6XeuPSN2oIqCKS+mUxh0hdTTcBE50zm+QWIYQEwh8FtS+Mpx1qgKLJBq
+ 6lug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760656480; x=1761261280;
+ d=1e100.net; s=20230601; t=1760656535; x=1761261335;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OrlSni9ZedQWlOiEUbc9dD2qNgW/bi8cLd2f/HrMi0M=;
- b=io+2VsSiFZKT47kdM1+9wA0RTdPoegmyXhRF0Oo/1orRN/KRZ2t/BvxZEfMlgKJufy
- zjtKz2csCs5PKiO8vAyNjQJpEk2gXV5wAcBpYO00bKXrthedJJyfbOPbes6GGni/IgDI
- agYLbG4DIxronbzl1IIAkJZwwMY2A8zbgXbZMdnCZTeBi9URZtWEQa4kIoyoOhuMmg8Y
- sAeK9ve8IhJ495zLLza+z/fHmXkNOvVd5HK2ZW077SveboQVDzDKvEzU9k6v6yG8dwpa
- 1DQtxR1QihxbqzRPb3kY6l+p1Frgdi+QZDL3g1lpku54dN+K14Mw5zNm7a7k6caaOzjE
- tucQ==
-X-Gm-Message-State: AOJu0Yx5mg+SfljV2pztzmnp8rrYC8qClMl2NXdJh7s/oDLbLwCmKRnK
- M+5XM+sV9NSg4WK4VczJ3HE49bEZ4FLDeqkOe4fJEf30DAGZfNUnxPnOgpgPqWMHCr3k0tGOcRw
- RJRmTbp8tywjGw9FKGNhTzbM1VldoPzo=
-X-Gm-Gg: ASbGnctgiwAW8M33NwwGuJrXs72Y5KvxUIWZobclbsBRHIrq5qaMgTd83viBptT1dKF
- xxWpk0IubvAGIswnu8OviSl2Bm2vF3nth7m+/7aBRmdhs4AzkqID9XrlGSsZJwFzWj+GC8spCTw
- +jEg0muWQYhGaNLZ84LE8OTyJkkDsD7SV9W0afDozxddrZPemcU1jC0UvNmUprK5hkzm2nQHJFz
- 4x2kC18uYgcWqT2ichJViXqIJusbqdpfVhjd1EiYC5sbFe7Tq1Za9MpqP6DAPHZ5wa7A5pJjmAq
- GGDjNe0vhPQ4d1E=
-X-Google-Smtp-Source: AGHT+IHOcy5D6rhtZOpS851JjTpZ1ekmtefeWCG/3hAGWmzsOH91Lv0pCf/8jue1ZrAH9o7PQbuGaLHToj0tiNLeWVs=
-X-Received: by 2002:a05:6402:1e91:b0:62f:5424:7371 with SMTP id
- 4fb4d7f45d1cf-63c1f631cb9mr1514726a12.8.1760656479843; Thu, 16 Oct 2025
- 16:14:39 -0700 (PDT)
+ bh=b8iwmQfJdG0UJ70FaimHsnyJ7b2e/kcblKBr9RW4qGI=;
+ b=SgMXITZuSW+oeSU2XqV7pgzPtADFbAnGouJ0AVoDL1EjTf/eWubHh04tjsuAOL6EUA
+ bTNaGCU+bTH9vcApSJrr23S19Z6WawQO7B2gzxTsBz6V+l56eTnItYTASn148PzTV6e7
+ ZDCgyO/NXPG3/OCvGOAPOrZqJX6hQhda6syVCm1D5eO8frUBRbdXqz54l1Yk+udFm/Df
+ m23fdr3HyXgwFP5XAD6WAB80r+/VQd6kA6PZWZr9fdagHXK34GvB77Uo5lVCAT8bkK7F
+ xBD6cZSQ8riJwWZylBjaN4NzAxoZ4nOq1aiBoaXVfVvke0qVFTcyWnH5AHYzf6o4MLI1
+ f5eQ==
+X-Gm-Message-State: AOJu0YyKadz3NpSVg2GnZ0RB6NtLbD+a5vkzVPJr/YlDTTofgCEiaGrm
+ m3HeylqX3iNYs+y/kgM5Ci1FBqHJwSA5Ef8T/YG2bIpC56ZbGwYUk8hZZCgV8PKjyBJ7aefvxnh
+ wpQAelf67sPxkdoFwFWiR2GaJM9ikXaM=
+X-Gm-Gg: ASbGnctwFjRSz9Skm4CqTsWBFHfwCsputec+7O+CWjHsDfKMpZzF90a+akDS8SjPGbc
+ a3iixXLxKDNsBdCqbnPV07gV+jeVW6YdzZg3ZEX/Hn9JHuqLMJM/1bOANn5q4PYuLbOptgMkMQx
+ A330sKeFqDhn7JCrYYQOlp8Eeyz7aNH7VUSkyTOs+G0O/jSV8JLpDV+1Y4LZWPCvpfhQOS2u1q5
+ XRAMned+/a0RhmvR7rsFiKgg1TkgcDK+kE3QoKAUXj73tY+RKYOx3cqqJjhy6yWmiMf+xtr++P5
+ gvUq8bARvI69BRhbYq0nWzMTRw==
+X-Google-Smtp-Source: AGHT+IE2noZDtkEt79bnlTgJ6YUFrDjvrhYehXYanfcSL56sFCAlxOtKPVDe39uQy2TMnRV7FB9VjUiHoCq/hrtZwNE=
+X-Received: by 2002:a05:6402:44da:b0:63b:fbb0:3de8 with SMTP id
+ 4fb4d7f45d1cf-63c1f66c61fmr1176384a12.13.1760656535406; Thu, 16 Oct 2025
+ 16:15:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-21-anjo@rev.ng>
-In-Reply-To: <20251014203512.26282-21-anjo@rev.ng>
+ <20251014203512.26282-23-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-23-anjo@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 17 Oct 2025 09:14:13 +1000
-X-Gm-Features: AS18NWAMo8kfUynyR4GeU7G_1bfqmeDccwB6kzNkEEYAeUgcmOE7EjCvCTr-yCA
-Message-ID: <CAKmqyKO5guqLxMMY=BpjX_4dLySuUFkewKqQYbk01qpTbJFBwg@mail.gmail.com>
-Subject: Re: [PATCH v3 20/34] target/riscv: Fix size of sw_check_code
+Date: Fri, 17 Oct 2025 09:15:09 +1000
+X-Gm-Features: AS18NWCYLlGENyIAOeQ63ArjBy0ws1rpZG6wjmCuNypVIYDAjBPpam-dXjIJzzs
+Message-ID: <CAKmqyKMtsfT26tHiA6d7=9mAtybkixLHhfNnhjbR1eLymagngg@mail.gmail.com>
+Subject: Re: [PATCH v3 22/34] target/riscv: Fix size of gei fields
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
  alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,11 +98,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 6:39=E2=80=AFAM Anton Johansson via
+On Wed, Oct 15, 2025 at 6:38=E2=80=AFAM Anton Johansson via
 <qemu-devel@nongnu.org> wrote:
 >
-> The field only holds values of 2 and 3, fix its size to 8 bits and
-> update stores from TCG.
+> geilen takes the values 31 or 63, fix it to 8 bits. hgeie and hgeip are
+> at most 64 bits in size, fix to 64.  Update relevant function arguments.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
@@ -112,91 +112,84 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.h                            | 2 +-
->  target/riscv/translate.c                      | 4 ++--
->  target/riscv/insn_trans/trans_rvi.c.inc       | 8 ++++----
->  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 4 ++--
->  4 files changed, 9 insertions(+), 9 deletions(-)
+>  target/riscv/cpu.h        | 10 +++++-----
+>  target/riscv/cpu_helper.c |  4 ++--
+>  target/riscv/machine.c    |  4 ++--
+>  3 files changed, 9 insertions(+), 9 deletions(-)
 >
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 6bee15cb5e..37035a9541 100644
+> index 1d5d74f11b..f637ab476e 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -259,7 +259,7 @@ struct CPUArchState {
->      /* env place holder for extra word 2 during unwind */
->      uint64_t excp_uw2;
->      /* sw check code for sw check exception */
-> -    target_ulong sw_check_code;
-> +    uint8_t sw_check_code;
->  #ifdef CONFIG_USER_ONLY
->      uint32_t elf_flags;
->  #endif
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 14c8f1c6a2..ca7e6c44c6 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -1362,8 +1362,8 @@ static void riscv_tr_translate_insn(DisasContextBas=
-e *dcbase, CPUState *cpu)
->      if (ctx->fcfi_lp_expected) {
->          /* Emit after insn_start, i.e. before the op following insn_star=
-t. */
->          tcg_ctx->emit_before_op =3D QTAILQ_NEXT(ctx->base.insn_start, li=
-nk);
-> -        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> -                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-> +        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> +                        tcg_env, offsetof(CPURISCVState, sw_check_code))=
-;
->          gen_helper_raise_exception(tcg_env,
->                        tcg_constant_i32(RISCV_EXCP_SW_CHECK));
->          tcg_ctx->emit_before_op =3D NULL;
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
-trans/trans_rvi.c.inc
-> index 9c8c04b2dc..5efdd95f97 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -53,8 +53,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
->          /*
->           * misaligned, according to spec we should raise sw check except=
-ion
->           */
-> -        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> -                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-> +        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> +                        tcg_env, offsetof(CPURISCVState, sw_check_code))=
-;
->          gen_helper_raise_exception(tcg_env,
->                        tcg_constant_i32(RISCV_EXCP_SW_CHECK));
->          return true;
-> @@ -66,8 +66,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
->          TCGv tmp =3D tcg_temp_new();
->          tcg_gen_extract_tl(tmp, get_gpr(ctx, xT2, EXT_NONE), 12, 20);
->          tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
-> -        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> -                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-> +        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> +                        tcg_env, offsetof(CPURISCVState, sw_check_code))=
-;
->          gen_helper_raise_exception(tcg_env,
->                        tcg_constant_i32(RISCV_EXCP_SW_CHECK));
->          gen_set_label(skip);
-> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv=
-/insn_trans/trans_rvzicfiss.c.inc
-> index fa1489037d..3f71adec35 100644
-> --- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> @@ -40,8 +40,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspop=
-chk *a)
->                         mxl_memop(ctx) | MO_ALIGN);
->      TCGv rs1 =3D get_gpr(ctx, a->rs1, EXT_NONE);
->      tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-> -    tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-> -                  tcg_env, offsetof(CPURISCVState, sw_check_code));
-> +    tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-> +                    tcg_env, offsetof(CPURISCVState, sw_check_code));
->      gen_update_pc(ctx, 0);
->      gen_helper_raise_exception(tcg_env,
->                    tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+> @@ -278,7 +278,7 @@ struct CPUArchState {
+>  #ifndef CONFIG_USER_ONLY
+>      /* This contains QEMU specific information about the virt state. */
+>      bool virt_enabled;
+> -    target_ulong geilen;
+> +    uint8_t geilen;
+>      uint64_t resetvec;
+>
+>      uint64_t mhartid;
+> @@ -355,8 +355,8 @@ struct CPUArchState {
+>      uint64_t htval;
+>      uint64_t htinst;
+>      uint64_t hgatp;
+> -    target_ulong hgeie;
+> -    target_ulong hgeip;
+> +    uint64_t hgeie;
+> +    uint64_t hgeip;
+>      uint64_t htimedelta;
+>      uint64_t hvien;
+>
+> @@ -608,8 +608,8 @@ int riscv_cpu_mirq_pending(CPURISCVState *env);
+>  int riscv_cpu_sirq_pending(CPURISCVState *env);
+>  int riscv_cpu_vsirq_pending(CPURISCVState *env);
+>  bool riscv_cpu_fp_enabled(CPURISCVState *env);
+> -target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
+> -void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
+> +uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
+> +void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
+>  bool riscv_cpu_vector_enabled(CPURISCVState *env);
+>  void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+>  int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 26c3c846a5..55c9e9ae29 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -662,7 +662,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *en=
+v)
+>      }
+>  }
+>
+> -target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
+> +uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
+>  {
+>      if (!riscv_has_ext(env, RVH)) {
+>          return 0;
+> @@ -671,7 +671,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
+>      return env->geilen;
+>  }
+>
+> -void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
+> +void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
+>  {
+>      if (!riscv_has_ext(env, RVH)) {
+>          return;
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index ce5e44325d..8a8f5be8d6 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -91,8 +91,8 @@ static const VMStateDescription vmstate_hyper =3D {
+>          VMSTATE_UINT64(env.htval, RISCVCPU),
+>          VMSTATE_UINT64(env.htinst, RISCVCPU),
+>          VMSTATE_UINT64(env.hgatp, RISCVCPU),
+> -        VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+> -        VMSTATE_UINTTL(env.hgeip, RISCVCPU),
+> +        VMSTATE_UINT64(env.hgeie, RISCVCPU),
+> +        VMSTATE_UINT64(env.hgeip, RISCVCPU),
+>          VMSTATE_UINT64(env.hvien, RISCVCPU),
+>          VMSTATE_UINT64(env.hvip, RISCVCPU),
+>          VMSTATE_UINT64(env.htimedelta, RISCVCPU),
 > --
 > 2.51.0
 >
