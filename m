@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36FCCCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38704CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Xdn-0006ks-0r; Thu, 16 Oct 2025 19:44:15 -0400
+	id 1v9Xf3-0007ig-RG; Thu, 16 Oct 2025 19:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v9Xdj-0006jx-Lq
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:44:12 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v9Xdf-0002xY-WB
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:44:11 -0400
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59GNhp9Q086982
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 17 Oct 2025 08:43:51 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=nKR3bGh+ZwieGad21IrWDmrQeMxj/Ryy7PKtnEO3xkk=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1760658231; v=1;
- b=DT/I5T2/G84RO0QuESuNgGlGgYD2X86iDydgjyK4MUXqdmB3pMpIExIaFc0l+Flt
- +i3XM1Oh+se4CBCsaNxk0xddXlN9/2qK5r4ZhFj4c+EZohl8FxkkVvxkbYBvp8hD
- OS/omZAYHF0IRs0lHIFMs20yoAXArrPVRIK/750vQ7YF6YC+WtXWIncBtGu/mc+R
- jFITP6scJT71HkUztsB6UCvH8ninqkr/Qy35bN8hGN8Ibo+sYIbIVPzvhBGRUtBq
- pqc3zg9d7svHut9Y+vmGBZIhqeGPXYIS7OfRkrVD+DFxvyhYpVho5MCPMl6Tfb9C
- 7ZyLBBFhmZR6DU+sj1hSDA==
-Message-ID: <626016e1-c7d8-4377-bf9f-ab0f0eef1457@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 17 Oct 2025 08:43:51 +0900
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9Xf2-0007iW-Oj
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:45:32 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9Xez-0003Bh-7M
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:45:32 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-63963066fb0so2734140a12.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760658327; x=1761263127; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9lx1uk/60Tdxx3rNJNTS6AjXxsJQGaQPtGp1pyBNcnU=;
+ b=fT77Ap9W5W4PtJUiEdIcUTUXvgKfDKYtuki1bZVmX1BLp8P0InrhJY77KLrVI17YqQ
+ CtoUjhVvNqLk3622GNBzdPMpgLgu5Lq8jz/63hXN/bPIZFc9A7+udB2okP0ZkQmBSPAC
+ xgT5v8wOP+zGKZ+ib18DF1I2TbmzDSxbXqIdq8dUi9U3b4ee8zvJdqooB3iqpI4TMNJD
+ NfFZHVAWKtT+KdnoUtmYbbQQnQ+SjQJnou8BBf4oJrXZIWHmW6xYAcRbPEncgHu9d0O9
+ CaadgQoAJgt9oYY0oXfxyPJgSv7ELIG/80S3w0/0j/lUUIwFK7cqhBWXBYux9sjhk4wW
+ Goaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760658327; x=1761263127;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9lx1uk/60Tdxx3rNJNTS6AjXxsJQGaQPtGp1pyBNcnU=;
+ b=OhZunQngtw3qLApFmt+r8/8SjfhVnNf62yJxtQS7y+Kssxk/SD9wPZaPmH8UHTruCA
+ JpIZMK3HB7SqJLsm+OAoHOPm1pjs09lOa49NSK9g2j7gyjMB+5ZsIcmMDzWl4VWbSsUu
+ HknGmP24PaVJ2vC12h8jATNR0CsggaFbjJTBeku04W5ucYQvCcmrEjCyHdoyJFklQVZt
+ bpak7gwdXZryjI3fCyE7vZtxN1jQR2MdpUFmiPhS5pnSQ23dIoA0mVdoosY08SBCGqn3
+ o/We7V3H8hRAHXfG1K8RiQBhz9V3biWIYYS+M35YaSkxOfMbZGC2vBeMauNnxORcbJG8
+ x48A==
+X-Gm-Message-State: AOJu0YwJpys5yBK7Xt4bJUDFZd1U65j3pSF/CWvFwxeJj6q+juOWY6Yq
+ LvFeC+rddp2CBylPhXq08uzr5unNgE3JJZ8v3rfV/9akHTnFn5079+DIPdWwGu0xPLVlwoST/jq
+ VOS9gSICU76zNHxjARG0DV7wczifFQKdy7g==
+X-Gm-Gg: ASbGnctTs7FqBio+hZ64kpCtW0XVI2RJIyGbKO/tNl+J8XYgck94Re25zzIXbgMh75L
+ CS/lFL6pqj8eu9GyCudAKbb6TBpjfGrX+ejNYAk8L7w4N+Vy2cqYFsMynUTeceK44803pTP9EBi
+ /czw1J0dNbSFIa3ExFl5IDPB/G2/DqUrCJH4sgvwlaUUw/e/JVQgqNtpKrHHyQzvFYalehjJI5o
+ 7qCVauqokF1gyYWJnNWhCcKADWfBIRh7GSIfss1BVw4cw7IVBEUK2WelBKHIfDNPdn9umpwWX8L
+ bnUT/1W2kAaegataPISmP/khTg==
+X-Google-Smtp-Source: AGHT+IErZPCmCz5vavUlVFAuGMddvALMzwnJLUqwmrtkclKQf84x3fgft0u6JOiLVDIyepnCQiIrBOi/CCmgcjajNcg=
+X-Received: by 2002:a05:6402:1471:b0:62e:e722:a3c7 with SMTP id
+ 4fb4d7f45d1cf-63c1f6345ccmr1590116a12.9.1760658327030; Thu, 16 Oct 2025
+ 16:45:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rcu: Unify force quiescent state
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
- <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+References: <20251014203512.26282-1-anjo@rev.ng>
+ <20251014203512.26282-17-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-17-anjo@rev.ng>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 17 Oct 2025 09:45:00 +1000
+X-Gm-Features: AS18NWAi54mzQ8ML3l3dcDo-WCLfnuNXvgWUz4DRe8l3Lo1nKMMe13oxVigfOHQ
+Message-ID: <CAKmqyKO5q2k4UPE-nq+Yi=oHnyC67yJSCG5bLyOwh0DnnWqhOA@mail.gmail.com>
+Subject: Re: [PATCH v3 16/34] target/riscv: Fix size of priv_ver and vext_ver
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
+ alistair.francis@wdc.com, palmer@dabbelt.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,85 +98,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/17 4:33, Dmitry Osipenko wrote:
-> On 10/16/25 09:34, Akihiko Odaki wrote:
->> -        /* Wait for one thread to report a quiescent state and try again.
->> +        /*
->> +         * Sleep for a while and try again.
->>            * Release rcu_registry_lock, so rcu_(un)register_thread() doesn't
->>            * wait too much time.
->>            *
->> @@ -133,7 +150,20 @@ static void wait_for_readers(void)
->>            * rcu_registry_lock is released.
->>            */
->>           qemu_mutex_unlock(&rcu_registry_lock);
->> -        qemu_event_wait(&rcu_gp_event);
->> +
->> +        if (forced) {
->> +            qemu_event_wait(&rcu_gp_event);
->> +
->> +            /*
->> +             * We want to be notified of changes made to rcu_gp_ongoing
->> +             * while we walk the list.
->> +             */
->> +            qemu_event_reset(&rcu_gp_event);
->> +        } else {
->> +            g_usleep(10000);
->> +            sleeps++;
-> 
-> Thanks a lot for this RCU improvement. It indeed removes the hard stalls
-> with unmapping of virtio-gpu blobs.
-> 
-> Am I understanding correctly that potentially we will be hitting this
-> g_usleep(10000) and stall virtio-gpu for the first ~10ms? I.e. the
-> MemoryRegion patches from Alex [1] are still needed to avoid stalls
-> entirely.
-> 
-> [1]
-> https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-alex.bennee@linaro.org/
+On Wed, Oct 15, 2025 at 6:37=E2=80=AFAM Anton Johansson via
+<qemu-devel@nongnu.org> wrote:
+>
+> Fix these fields to 32 bits, also update corresponding priv_ver field
+> in DisasContext as well as function arguments. 32 bits was chosen
+> since it's large enough to fit all stored values and int/int32_t is
+> used in RISCVCPUDef and a few functions.
+>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-That is right, but "avoiding stalls entirely" also causes use-after-free.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-The problem with virtio-gpu on TCG is that TCG keeps using the old 
-memory map until force_rcu is triggered. So, without force_rcu, the 
-following pseudo-code on a guest will result in use-after-free:
+Alistair
 
-address = blob_map(resource_id);
-blob_unmap(resource_id);
-
-for (i = 0; i < some_big_number; i++)
-   *(uint8_t *)address = 0;
-
-*(uint8_t *)address will dereference the blob until force_rcu is 
-triggered, so finalizing MemoryRegion before force_rcu results in 
-use-after-free.
-
-The best option to eliminate the delay entirely I have in mind is to 
-call drain_call_rcu(), but I'm not for such a change (for now). 
-drain_call_rcu() eliminates the delay if the FlatView protected by RCU 
-is the only referrer of the MemoryRegion, but that is not guaranteed.
-
-Performance should not be a concern anyway in this situation. The guest 
-should not waste CPU time by polling in the first place if you really 
-care performance; since it's a para-virtualized device and not a real 
-hardware, CPU time may be shared between the guest and the device, and 
-thus polling on the guest has an inherent risk of slowing down the 
-device. For performance-sensitive workloads, the guest should:
-
-- avoid polling and
-- accumulate commands instead of waiting for each
-
-The delay will be less problematic if the guest does so, and I think at 
-least Linux does avoid polling.
-
-That said, stalling the guest forever in this situation is "wrong" (!= 
-"bad performance"). I wrote this patch to guarantee forward progress, 
-which is mandatory for semantic correctness.
-
-Perhaps drain_call_rcu() may make sense also in other, 
-performance-sensitive scenarios, but it should be added after benchmark 
-or we will have a immature optimization.
-
-Regards,
-Akihiko Odaki
+> ---
+>  target/riscv/cpu.h       | 6 +++---
+>  target/riscv/machine.c   | 4 ++--
+>  target/riscv/translate.c | 2 +-
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index bcf10a4c8b..6ed912cbd1 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -238,8 +238,8 @@ struct CPUArchState {
+>
+>      uint64_t guest_phys_fault_addr;
+>
+> -    target_ulong priv_ver;
+> -    target_ulong vext_ver;
+> +    uint32_t priv_ver;
+> +    uint32_t vext_ver;
+>
+>      /* RISCVMXL, but uint32_t for vmstate migration */
+>      uint32_t misa_mxl;      /* current mxl */
+> @@ -799,7 +799,7 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *e=
+nv)
+>  #endif
+>
+>  static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
+> -                                              target_long priv_ver,
+> +                                              uint32_t priv_ver,
+>                                                uint32_t misa_ext)
+>  {
+>      /* In priv spec version 1.12 or newer, C always implies Zca */
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 27034180c4..1cf744c5f0 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -439,8 +439,8 @@ const VMStateDescription vmstate_riscv_cpu =3D {
+>          VMSTATE_UINT8(env.frm, RISCVCPU),
+>          VMSTATE_UINT64(env.badaddr, RISCVCPU),
+>          VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
+> -        VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+> -        VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
+> +        VMSTATE_UINT32(env.priv_ver, RISCVCPU),
+> +        VMSTATE_UINT32(env.vext_ver, RISCVCPU),
+>          VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+>          VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+>          VMSTATE_UNUSED(4),
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 2770c06413..14c8f1c6a2 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -60,7 +60,7 @@ typedef struct DisasContext {
+>      DisasContextBase base;
+>      target_ulong cur_insn_len;
+>      target_ulong pc_save;
+> -    target_ulong priv_ver;
+> +    uint32_t priv_ver;
+>      RISCVMXL misa_mxl_max;
+>      RISCVMXL xl;
+>      RISCVMXL address_xl;
+> --
+> 2.51.0
+>
+>
 
