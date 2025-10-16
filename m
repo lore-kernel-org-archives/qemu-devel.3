@@ -4,102 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1619ECCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCB8CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Pxr-0001nZ-0b; Thu, 16 Oct 2025 11:32:27 -0400
+	id 1v9Q7J-0007uB-9I; Thu, 16 Oct 2025 11:42:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9Pxo-0001nC-Cu
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:32:25 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9Pxj-0005LB-Qx
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:32:24 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-78af3fe5b17so821148b3a.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:32:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760628733; x=1761233533; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GyjaHI+UqaINYr2roEiGX3exarI/C/IyoxelbzGiIIA=;
- b=shjnl6GFDIo7N1sMjhgZs7X+G7PKfUL0g3DlLYiZgc/U30d8gi4esukf9mPbRwFAzV
- S+1mkzc17F5cmwhSny2MvQUtSp6+pUlGPyEpRCRprtqciuAWEU1algOoTZQzddoj7FLy
- zdQa89U4wjgrPsFTxGB9uL1kHa2smXJzlm6ySQ1c3G6Hk3kWNtxe0T2R7UopygoE3cOS
- 5dxYiINVIw8cr7y1CkjmlY7IDF/KpHVPiDPEbb8LCVQGCimzP/iU09vsBnMNxkqT9T9b
- 8Hin0I43aWJ35lBn2LWH2ZxaRTNlNpPOaYnL+S88IsE4k+MgViN7URZrIlAztso82r92
- vmxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760628733; x=1761233533;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GyjaHI+UqaINYr2roEiGX3exarI/C/IyoxelbzGiIIA=;
- b=fUQPMe3Ul+Z28PofSE6tZWPz5MV3m1HqYmbqcXa0xLpGM1Q2FLqmoIJQmo1MQ3ZgFo
- u2jARd0QWvtY+1XaWcflIDt5rN+4OmIDLW0zOp2cB1aNa/JGQ1CN+PPqTEf+qOCWrqFV
- pB/QKKSY24OCrI7e5N1y5bIe/Pj97AZ9idJK+b++lLHxx55jH91nyoVChgjpRVs9Uuxv
- Xf6ftkxt2dn7C37+N28gnCOcTXYKcZzxI7PDmDCS1e7H9VFqCxmMca2skDzJgD5N5Pgp
- fXTPfWW5b0A4yyT7ll59qaGnBWZc5KW71Kyf1DIU70s/NCyhRcMQJYoEE+kl3+qv05AB
- OPtg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/yLrbdZ3PcfedVLp7fgRDrjg37IdloJMMBTPg87gi9kLjKvBG28vXmw9yOsgektijQkQfgC6cLYv3@nongnu.org
-X-Gm-Message-State: AOJu0YxN5E3UEWOyaaGZa0irIiByUgM1EeIBn3rNEE34by88oJ+WaBFQ
- SkmuLHOCCCPjaHa2p2TM7Q9havO+ICqWkgj1NsSUkB1UrWVaKwm0qco7SnR4Vl0G3zQ=
-X-Gm-Gg: ASbGncvkxW2OkDpY3/14Y0zvPD++9L2SLY/95EwoO991GphPIVkRkO89lhoFfhix4YY
- 7SEq+Ls9ULFYk3obvIO/j2e1zF1hp8ZEKRoNMeXZ9m/+/zM30NWY9DD6HZu4/RDK+ZZPoQOcTEO
- yyaUlMB6BS3Jl3sMgb2XgaC84OAwboXE2yQY0QhBM4zA/B4yPVX8cEgvWLuytT9YG8exWw6lLat
- QtNqO4b3arqpycJ1KLXUj06aIBOfZzjOX0TH/+ika9dPz2BgMMg2pniXO/MKrRzlBjqyAGwWG37
- jQpA9wMFBA5f55oYW6d/jhgxQv+o7pfAxXFsfJXPwiD2voUTjdvAPAC9R10hvE1waT/H3uVlFlB
- QDhkeTGIboOtVPJCovOZ1YnbJQJhOGJGSe4o9R3eZt0bu4+l5F55CBT88jVMXqjuyChZv3SPdoA
- u0n+Xz/zwU+6z9MwB6rxtNRRQ=
-X-Google-Smtp-Source: AGHT+IFUE0OEu1D8x0ACMDgnZ7uVmSbZLTu+QC5hQnpmOQ5qF2X2oQGdgFAvqMkQVEyLZoVKUAMC/Q==
-X-Received: by 2002:a05:6a20:4311:b0:246:d43a:3856 with SMTP id
- adf61e73a8af0-334a857d6f3mr403451637.22.1760628733227; 
- Thu, 16 Oct 2025 08:32:13 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b6a22b7866csm3159482a12.19.2025.10.16.08.32.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 08:32:12 -0700 (PDT)
-Message-ID: <9a436ca6-792b-4c46-bdb4-1a84d6286b58@linaro.org>
-Date: Thu, 16 Oct 2025 08:32:12 -0700
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9Q7F-0007rM-H6
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:42:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9Q75-0006pN-Pe
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:42:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760629314;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LbqxUbjGjMydToe30ff2DVVeXFQQlvB2Gjo1LGgYUQQ=;
+ b=iOcpfFRfYvDkrKRfSqtAtzs2cfXrSSYL7+IvoV5YyTnuXDtQjUjNI/5ASCa34XZx8kjDya
+ dm9tmNI5XuDG3+aJcjL/KzeYB93w/5qf4u/Ml0tI4U3dCpG3yueDD7fdRso7M61D9s9oS3
+ M23pR/vRe8Dcl7M6xrv+R3tKQZ9UdgQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-gWKZEq4fNP6DRXyDnq5ctw-1; Thu,
+ 16 Oct 2025 11:41:52 -0400
+X-MC-Unique: gWKZEq4fNP6DRXyDnq5ctw-1
+X-Mimecast-MFC-AGG-ID: gWKZEq4fNP6DRXyDnq5ctw_1760629311
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 785F8195608D
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 15:41:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.155])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 246C2300019F; Thu, 16 Oct 2025 15:41:49 +0000 (UTC)
+Date: Thu, 16 Oct 2025 10:41:47 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 4/6] crypto: stop requiring "key encipherment" usage
+ in x509 certs
+Message-ID: <b7ffwoujpgryclocsq5tf6nmz24ziaastfjbt2av2gftc5pvbr@qroqdsicq3so>
+References: <20250919101022.1491007-1-berrange@redhat.com>
+ <20250919101022.1491007-5-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] gitlab: use template for ubuntu-24.04-aarch64 jobs
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Levon <john.levon@nutanix.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20251016150357.876415-1-alex.bennee@linaro.org>
- <20251016150357.876415-2-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251016150357.876415-2-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+In-Reply-To: <20250919101022.1491007-5-berrange@redhat.com>
+User-Agent: NeoMutt/20250905
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,273 +87,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/16/25 8:03 AM, Alex Bennée wrote:
-> Most of the test is pure boilerplate so to save ourselves from
-> repetition move all the main bits into a minimal copy of
-> native_build_job_template but without the caching.
+On Fri, Sep 19, 2025 at 11:10:20AM +0100, Daniel P. Berrangé wrote:
+> This usage flag was deprecated by RFC8813, such that it is
+> forbidden to be present for certs using ECDSA/ECDH algorithms,
+> and in TLS 1.3 is conceptually obsolete.
 > 
-> We keep all the current allow_fail and configure setups but do take
-> the opportunity to replace the -j`nproc --ignore=40` hack with
-> something that almost, but not quite, saturates the machine its being
-> built on.
+> As such many valid certs will no longer have this key usage
+> flag set, and QEMU should not be rejecting them, as this
+> prevents use of otherwise valid & desirable algorithms.
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   .../custom-runners/ubuntu-24.04-aarch64.yml   | 230 ++++++++----------
->   1 file changed, 96 insertions(+), 134 deletions(-)
-> 
-> diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-> index d26c7827f45..46db9ae0138 100644
-> --- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-> +++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-> @@ -2,150 +2,112 @@
->   # setup by the scripts/ci/setup/ubuntu/build-environment.yml task
->   # "Install basic packages to build QEMU on Ubuntu 24.04"
->   
-> +.ubuntu_aarch64_template:
-> +  extends: .custom_runner_template
-> +  needs: []
-> +  stage: build
-> +  tags:
-> +    - ubuntu_24.04
-> +    - aarch64
-> +  rules:
-> +    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> +    - if: "$AARCH64_RUNNER_AVAILABLE"
-> +  before_script:
-> +    - source scripts/ci/gitlab-ci-section
-> +    - section_start setup "Pre-script setup"
-> +    - JOBS=$(expr $(nproc) - 4)
-> +    - section_end setup
-> +  script:
-> +    - mkdir build
-> +    - cd build
-> +    - section_start configure "Running configure"
-> +    - ../configure $CONFIGURE_ARGS ||
-> +          { cat config.log meson-logs/meson-log.txt && exit 1; }
-> +    - section_end configure
-> +    - section_start build "Building QEMU"
-> +    - make --output-sync -j"$JOBS"
-> +    - section_end build
-> +    - section_start test "Running tests"
-> +    - if test -n "$MAKE_CHECK_ARGS";
-> +      then
-> +        make -j"$JOBS" $MAKE_CHECK_ARGS ;
-> +      fi
-> +    - section_end test
-> +
->   ubuntu-24.04-aarch64-all-linux-static:
-> - extends: .custom_runner_template
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> - script:
-> - - mkdir build
-> - - cd build
-> - # Disable -static-pie due to build error with system libc:
-> - # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1987438
-> - - ../configure --enable-debug --static --disable-system --disable-pie
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make --output-sync -j`nproc --ignore=40`
-> - - make check-tcg
-> - - make --output-sync -j`nproc --ignore=40` check
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    # Disable -static-pie due to build error with system libc:
-> +    # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1987438
-> +    CONFIGURE_ARGS: --enable-debug --static --disable-system --disable-pie
-> +    MAKE_CHECK_ARGS: check-tcg
->   
->   ubuntu-24.04-aarch64-all:
-> - extends: .custom_runner_template
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> -   when: manual
-> -   allow_failure: true
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> -   when: manual
-> -   allow_failure: true
-> - script:
-> - - mkdir build
-> - - cd build
-> - - ../configure
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make --output-sync -j`nproc --ignore=40`
-> - - make --output-sync -j`nproc --ignore=40` check
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    MAKE_CHECK_ARGS: check
-> +  rules:
-> +    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> +      when: manual
-> +      allow_failure: true
-> +    - if: "$AARCH64_RUNNER_AVAILABLE"
-> +      when: manual
-> +      allow_failure: true
->   
->   ubuntu-24.04-aarch64-without-defaults:
-> - extends: .custom_runner_template
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> -   when: manual
-> -   allow_failure: true
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> -   when: manual
-> -   allow_failure: true
-> - script:
-> - - mkdir build
-> - - cd build
-> - - ../configure --disable-user --without-default-devices --without-default-features
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make --output-sync -j`nproc --ignore=40`
-> - - make --output-sync -j`nproc --ignore=40` check
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    CONFIGURE_ARGS: --disable-user --without-default-devices --without-default-features
-> +    MAKE_CHECK_ARGS: check
-> +  rules:
-> +    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> +      when: manual
-> +      allow_failure: true
-> +    - if: "$AARCH64_RUNNER_AVAILABLE"
-> +      when: manual
-> +      allow_failure: true
->   
->   ubuntu-24.04-aarch64-alldbg:
-> - extends: .custom_runner_template
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> - script:
-> - - mkdir build
-> - - cd build
-> - - ../configure --enable-debug
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make clean
-> - - make --output-sync -j`nproc --ignore=40`
-> - - make --output-sync -j`nproc --ignore=40` check
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    CONFIGURE_ARGS: --enable-debug
-> +    MAKE_CHECK_ARGS: check-tcg
->   
->   ubuntu-24.04-aarch64-clang:
-> - extends: .custom_runner_template
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> -   when: manual
-> -   allow_failure: true
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> -   when: manual
-> -   allow_failure: true
-> - script:
-> - - mkdir build
-> - - cd build
-> - - ../configure --disable-libssh --cc=clang --cxx=clang++ --enable-ubsan
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make --output-sync -j`nproc --ignore=40`
-> - - make --output-sync -j`nproc --ignore=40` check
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
-> +    MAKE_CHECK_ARGS: check
-> +  rules:
-> +    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> +      when: manual
-> +      allow_failure: true
-> +    - if: "$AARCH64_RUNNER_AVAILABLE"
-> +      when: manual
-> +      allow_failure: true
->   
->   ubuntu-24.04-aarch64-tci:
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> -   when: manual
-> -   allow_failure: true
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> -   when: manual
-> -   allow_failure: true
-> - script:
-> - - mkdir build
-> - - cd build
-> - - ../configure --enable-tcg-interpreter
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make --output-sync -j`nproc --ignore=40`
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    CONFIGURE_ARGS: --enable-tcg-interpreter
-> +    MAKE_CHECK_ARGS: check
-> +  rules:
-> +    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> +      when: manual
-> +      allow_failure: true
-> +    - if: "$AARCH64_RUNNER_AVAILABLE"
-> +      when: manual
-> +      allow_failure: true
->   
->   ubuntu-24.04-aarch64-notcg:
-> - extends: .custom_runner_template
-> - needs: []
-> - stage: build
-> - tags:
-> - - ubuntu_24.04
-> - - aarch64
-> - rules:
-> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> -   when: manual
-> -   allow_failure: true
-> - - if: "$AARCH64_RUNNER_AVAILABLE"
-> -   when: manual
-> -   allow_failure: true
-> - script:
-> - - mkdir build
-> - - cd build
-> - - ../configure --disable-tcg --with-devices-aarch64=minimal
-> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
-> - - make --output-sync -j`nproc --ignore=40`
-> - - make --output-sync -j`nproc --ignore=40` check
-> +  extends: .ubuntu_aarch64_template
-> +  variables:
-> +    CONFIGURE_ARGS: --disable-tcg --with-devices-aarch64=minimal
-> +    MAKE_CHECK_ARGS: check
-> +  rules:
-> +    - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-> +      when: manual
-> +      allow_failure: true
-> +    - if: "$AARCH64_RUNNER_AVAILABLE"
-> +      when: manual
-> +      allow_failure: true
+>  crypto/tlscredsx509.c                 | 10 +-------
+>  docs/system/tls.rst                   | 13 +++-------
+>  tests/unit/crypto-tls-x509-helpers.h  |  6 ++---
+>  tests/unit/test-crypto-tlscredsx509.c | 36 +++++++++++++--------------
+>  tests/unit/test-crypto-tlssession.c   | 14 +++++------
+>  tests/unit/test-io-channel-tls.c      |  4 +--
+>  6 files changed, 34 insertions(+), 49 deletions(-)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+My understanding is that the reason you coded all the sanity checks
+into qemu was to provide saner error messages for users that create
+invalid keys than what gnutls does (keys are already hard enough to
+create securely, so it is nice to be told how to fix your key rather
+than just "it didn't work").  I also understand that newer algorithms
+really can't use this flag, and we don't want to reject use of better
+algorithms, so this patch makes sense as documented.
+
+Still, is there any risk that for older algorithms, where the 'key
+encipherment' bit did matter, that we could now end up processing an
+incomplete key that we would have previously rejected with a nice
+message but which now goes to gnutls and reverts back to the poorer
+error message quality or even worse being used despite being a
+security risk?  I don't think it is a high risk - fewer people would
+be generating certificates that explicitly request an older algorithm
+but not following all the recommended steps, compared to the more
+common case of people following your documentation and getting the
+newest defaults that just work; anyone determined enough to get an
+older algorithm deserves the breakage if their explicit instructions
+to override the default are weaker than normal.
+
+In saying that, I'm hoping that gnutls still diagnoses certs that
+cannot be properly used for the purpose at hand (whether or not the
+'key encipherment' bit must be set or cleared), even if it gives a
+less-than-stellar diagnostic message about rejecting a cert.  If I'm
+wrong, and an incomplete cert with an older algorithm but missing the
+bit turns into a security bypass, it's much more than QEMU that would
+be impacted.  So, I'm comfortable with:
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
