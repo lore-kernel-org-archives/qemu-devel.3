@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C18DFCCD185
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 04:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0135ACCD185
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 04:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Ffs-0005aR-2F; Thu, 16 Oct 2025 00:33:12 -0400
+	id 1v9Fh0-0005xI-0U; Thu, 16 Oct 2025 00:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9Ffp-0005a2-Da
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 00:33:09 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1v9Fgy-0005x9-TK
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 00:34:20 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9Ffn-00058s-9Y
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 00:33:09 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-63bdc7d939fso497953a12.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 21:33:06 -0700 (PDT)
+ id 1v9Fgv-0005Hq-Oh
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 00:34:20 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-634a3327ff7so432827a12.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 21:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760589185; x=1761193985; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760589256; x=1761194056; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dEjVX264IWOErwB5vI/hxKo38hRotuf1v+O/x34iGJM=;
- b=WtOrygC+C3wFhvaJcmJXueDkQrdJOcZ15BIWPxpalPM0t3y+KIg1r4laapbuDwav+s
- ByhvrHclOqvbYl46bRb/OfuOjtq44SKmawyIa2imAKMU8H2ARzfUj8RV8ar7E0yWnJa2
- QmQ9bpfMepz523Zx1R+tbqI2DcW2BC0ExFFYe4EQXhaV5Mn54ZEO9gGqVVXmlQ5EV4YR
- E08cT07Y+h75wvxd9hxNFOrysA5+tpVuM7AoFfEUH8/4AMqAB8R3vrLs69jQI8k7ZMu8
- I+2c0uVoJnRRthexQ6GL8s+3rCI2NgRvDXYhdIcdSeiNywa+nkMzXkwOlXO4eqkSipm8
- YYxA==
+ bh=aRLvwgBtqSA0KhcthC71cJJNVIxYb8VzcMa8+i7FnRo=;
+ b=ghPFwyToAtRHjMU7Yf8D+YFkfc/k0UU+Wgi5HR3dtPB/o6uhtUwowwZ6x/Bg6nOqtP
+ hThlXrcT1gY21DfkJiL4LhAigZIIK1+AZRMx3bsdjpdy6BTiIlj9hTHUShLwx2LClMyS
+ JCmBux6FxxtCKekMo9dzJB3mQnFTaVggoQBrlRW9GFVzqYRdJC0rphOUwMOilkWKHwd0
+ IO+STQcFsgxfc2k33RbYVQ/1XUrp0TMqspWq+Z/l6zw7rANFBhNvxxcOXW2vxcvjGmpE
+ ueP8xPiKOBBre4MjsjUIvye4u+cQDcXNNVrJwNbKKKP2mRHUIXHHWDk86Rv3cd9Ztih/
+ ln0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760589185; x=1761193985;
+ d=1e100.net; s=20230601; t=1760589256; x=1761194056;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dEjVX264IWOErwB5vI/hxKo38hRotuf1v+O/x34iGJM=;
- b=TdaODY48shRvHl/s/RWBFZF+V1daPuDJt3dF6fxAWjmdIMOgLwzkJvWKepkK9tJ2+d
- PEzifDFXGg3QNuVxnw3zxvVHuenGPxBc8+fxtqw0afDWpJWWi3fjswLnfAzjqrzdKAD4
- tXAB4PThLIJeYL1md7ffmxVuRbLLCPlIG8lSFnQQuaTQk/r9aju0I80oxoXZR58pZQTI
- rP126tH8JPHEeFIyNBZ53sHpAI5/yhgboVRqGg+E7ZdpoQFQx7bN/Lr4izvQsk2uBf2k
- Vm4fnDF4r4BBJwIaQDpKIoJt6BHS59x2SKF+7Af1icf82LqOpwDD3/Nwp3HRiBFTacrl
- dFiQ==
-X-Gm-Message-State: AOJu0YyTOFrQBpJRXDkLYrE6ZwqwKNn1ArnSk15AaWmX+WysDpujbjIv
- 5mOAM+tDs+vSHfQ41pgDlbnvByttnJ7jgXl9J6QfIjULyKRz/t/xW6fEbHjD3Nz7hUmSL6EIMiB
- ffU/LVkQ4dXN+QYPNZuf9kAFzXDuk22I=
-X-Gm-Gg: ASbGncubEf1fR1ViOtp1TdMSGuRzYcupylcjmaWo02tqUm24+gfbCgMHtbiOhW5yq1X
- xt45dM8XP2xouGllRzfHO+AmwhgmhumfGhcEpF/Bnv4qo5X0ocqOey5cGkTRq8V3jIqhmSZxmFe
- dEsk0qLCAEnYzZ81th1dbQ6dJ6wJYEA8G1n/OcZI74S6PfS/7W6W68WHH96sFYxbPDl9TahYc7X
- 8yqIvNozOl/g7fQU+59OfjAghbgCu3PsQf0RiU5ukw6jnKR2oD6bMmKzm7bkuAMKwBgpbmtEj5j
- E5pKA8rPfM6+jeI=
-X-Google-Smtp-Source: AGHT+IFrWOsv9xHqS9AfBKl8w69QR+o1LArppkbgqLa4QSfUDcb7AYtZ2F3Iic50F7ijDH+1EQKyrTBrFFmhDOa1Zbo=
-X-Received: by 2002:a05:6402:440d:b0:639:dd3f:f27f with SMTP id
- 4fb4d7f45d1cf-639dd3ff812mr24772918a12.4.1760589184861; Wed, 15 Oct 2025
- 21:33:04 -0700 (PDT)
+ bh=aRLvwgBtqSA0KhcthC71cJJNVIxYb8VzcMa8+i7FnRo=;
+ b=PcUSwgHsjtJupJEwIF7nt6QEuw3AzcOk702gntMTw65ixwJqXXyFHe3z2ccNOO0XzR
+ QxZ3KWZBsKNW90+PBD8DmumNYUPGQ5OL5H/HqVDNqD5vaiUG/+JTn1aPI49pmA2oO06Z
+ VsbbeMpuh6YSHWHWol67iouNUbYoqzy754SwsA9VwnE+f1ZorzT5SeGX9bvZQSlDzWHU
+ 1nEFcqPlglZ744qaLC3rL5wCLO/XOMdwJyIWRJhaAddXgm95tq3Na+sCNeIj1aWj0HL+
+ yizs66Q57xTlImetM9cN4YiR/eKoQaUrIwfJMfPvOHif2DVl7L0ScaJ/HiSQmkzwKaks
+ Et5g==
+X-Gm-Message-State: AOJu0YyHF+CD7M4hYBdw/HZBLNBG0gGzLtgLzI+lqdifOmCIYhUDopke
+ CNaixsNvRhxg6xXxT5nHGMUkyZt0E0ZOvpXLwVdpEIUMpGAC8hVvj3fguoN6sfAuI3/KjGp6zO1
+ XP6wVFt0mwOuuAH5x1BWCPzgUIoUCZ3I=
+X-Gm-Gg: ASbGnctL7Ddub5FgC31dJaYDhGi4MqqYGqH1S4R6XyE2AT0Hj7wSBKdYVvr0d0VYNuk
+ tYE6bHGtGRN1a29yJ1r56/mmy2MAija8CAd3MyfkUKsSGQ+MpQrGxa17ZBNSdLVz3yqvMgArESz
+ WdJHoS/0K61BKHz8O/ana2oWPBcTgIUMtdQcMleIDWKvMc7fR9sXN0Jiys3VaCCWzN4d0VNRlNM
+ IZstxS86ypZXHRmkRkjwWM3I5osLQoQnGuWK8RNMMI20RvlWCm82h+hR3hbeyXF8FrRM+ToroF7
+ iTgxyftqTKU/IgI=
+X-Google-Smtp-Source: AGHT+IFKFqT0KyAnc9KmMWohFuGS+uR23Z2q0z7kRVStbqCIDRqKQdllExuMZDGmXPXvw0XPihSd16pAIHlUyfkW9qU=
+X-Received: by 2002:a05:6402:3550:b0:639:fd12:65a2 with SMTP id
+ 4fb4d7f45d1cf-639fd1267d4mr22853916a12.15.1760589255632; Wed, 15 Oct 2025
+ 21:34:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-11-anjo@rev.ng>
-In-Reply-To: <20251014203512.26282-11-anjo@rev.ng>
+ <20251014203512.26282-13-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-13-anjo@rev.ng>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 Oct 2025 14:32:37 +1000
-X-Gm-Features: AS18NWDluORhakQF5lY6Vnc_CHdrLPoq6buw0YBSt5uu7DU33OODikC9mK9HERU
-Message-ID: <CAKmqyKOBjTHm-gvnd-USSKBNDS1gu_4FsVOGv8VpJ3rJ4XF5Zg@mail.gmail.com>
-Subject: Re: [PATCH v3 10/34] target/riscv: Fix size of gpr and gprh
+Date: Thu, 16 Oct 2025 14:33:49 +1000
+X-Gm-Features: AS18NWAldUI_vHkNmzeL3XAqiLhI4YnvtjyonIZu_9_RqVfjjuvE-1NcyXhxODQ
+Message-ID: <CAKmqyKM=xfFb+xaQ3hS=Cdyi1XF__mNGgucBf3HMEwoL5ecvCw@mail.gmail.com>
+Subject: Re: [PATCH v3 12/34] target/riscv: Fix size of pc, load_[val|res]
 To: Anton Johansson <anjo@rev.ng>
 Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
  alistair.francis@wdc.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,149 +98,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 6:36=E2=80=AFAM Anton Johansson via
+On Wed, Oct 15, 2025 at 6:35=E2=80=AFAM Anton Johansson via
 <qemu-devel@nongnu.org> wrote:
 >
-> gprh is only needed for TARGET_RISCV64 when modeling 128-bit registers,
-> fixing their size to 64 bits makes sense.
->
-> gpr is also fixed to 64 bits since all direct uses of env->gpr
-> correctly zero extend/truncate to/from target_ulong, meaning
-> !TARGET_RISCV64 will behave as expected.
->
-> We do however need to be a bit careful when mapping 64-bit fields to
-> 32-bit TCGv globals on big endian hosts.
->
-> Note, the cpu/rv128 VMSTATE version is bumped, breaking migration from
-> older versions.
+> Fix to 64 bits in size and as these are mapped to TCG globals, be
+> careful with host endianness when allocating globals.  Casts are
+> added to logging expressions to retain the correct size for
+> TARGET_RISCV32.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.h            |  4 ++--
->  target/riscv/cpu.c            |  2 +-
->  target/riscv/machine.c        |  8 ++++----
->  target/riscv/riscv-qmp-cmds.c |  2 +-
->  target/riscv/translate.c      | 17 +++++++++++++++--
->  5 files changed, 23 insertions(+), 10 deletions(-)
+>  target/riscv/cpu.h        |  6 +++---
+>  target/riscv/cpu.c        |  2 +-
+>  target/riscv/cpu_helper.c |  6 +++---
+>  target/riscv/machine.c    |  6 +++---
+>  target/riscv/translate.c  | 12 +++++++-----
+>  5 files changed, 17 insertions(+), 15 deletions(-)
 >
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 09d9e4c33c..7573d5aa7e 100644
+> index ff1562b7ff..a25c75ca64 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -212,8 +212,8 @@ typedef struct PMUFixedCtrState {
->  } PMUFixedCtrState;
+> @@ -224,9 +224,9 @@ struct CPUArchState {
+>      uint8_t vxsat;
+>      bool vill;
 >
->  struct CPUArchState {
-> -    target_ulong gpr[32];
-> -    target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
-> +    uint64_t gpr[32];
-> +    uint64_t gprh[32]; /* 64 top bits of the 128-bit registers */
+> -    target_ulong pc;
+> -    target_ulong load_res;
+> -    target_ulong load_val;
+> +    uint64_t pc;
+> +    uint64_t load_res;
+> +    uint64_t load_val;
 >
->      /* vector coprocessor state. */
->      uint64_t vreg[32 * RV_VLEN_MAX / 64] QEMU_ALIGNED(16);
+>      /* Floating-Point state */
+>      uint64_t fpr[32]; /* assume both F and D extensions */
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a877018ab0..b7690ac00f 100644
+> index b7690ac00f..c86a64b727 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -583,7 +583,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *=
+> @@ -528,7 +528,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *=
 f, int flags)
+>          qemu_fprintf(f, " %s %d\n", "V      =3D  ", env->virt_enabled);
+>      }
 >  #endif
+> -    qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
+> +    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
+>  #ifndef CONFIG_USER_ONLY
+>      {
+>          static const int dump_csrs[] =3D {
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 9d0683f200..5a20596f1f 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -2279,9 +2279,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
 >
->      for (i =3D 0; i < 32; i++) {
-> -        qemu_fprintf(f, " %-8s " TARGET_FMT_lx,
-> +        qemu_fprintf(f, " %-8s %" PRIx64,
->                       riscv_int_regnames[i], env->gpr[i]);
->          if ((i & 3) =3D=3D 3) {
->              qemu_fprintf(f, "\n");
+>      qemu_log_mask(CPU_LOG_INT,
+>                    "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", =
+"
+> -                  "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=
+=3D%s\n",
+> -                  __func__, env->mhartid, async, cause, env->pc, tval,
+> -                  riscv_cpu_get_trap_name(cause, async));
+> +                  "epc:0x%"PRIx64", tval:0x"TARGET_FMT_lx", desc=3D%s\n"=
+,
+> +                  __func__, env->mhartid, async, cause, env->pc,
+> +                  tval, riscv_cpu_get_trap_name(cause, async));
+>
+>      mode =3D env->priv <=3D PRV_S && cause < 64 &&
+>          (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : =
+PRV_M;
 > diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 09c032a879..7349383eab 100644
+> index 440b09fc32..66ed3f6504 100644
 > --- a/target/riscv/machine.c
 > +++ b/target/riscv/machine.c
-> @@ -177,11 +177,11 @@ static bool rv128_needed(void *opaque)
->
->  static const VMStateDescription vmstate_rv128 =3D {
->      .name =3D "cpu/rv128",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .needed =3D rv128_needed,
->      .fields =3D (const VMStateField[]) {
-> -        VMSTATE_UINTTL_ARRAY(env.gprh, RISCVCPU, 32),
-> +        VMSTATE_UINT64_ARRAY(env.gprh, RISCVCPU, 32),
->          VMSTATE_UINT64(env.mscratchh, RISCVCPU),
->          VMSTATE_UINT64(env.sscratchh, RISCVCPU),
->          VMSTATE_END_OF_LIST()
-> @@ -429,7 +429,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->      .minimum_version_id =3D 11,
->      .post_load =3D riscv_cpu_post_load,
->      .fields =3D (const VMStateField[]) {
-> -        VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> +        VMSTATE_UINT64_ARRAY(env.gpr, RISCVCPU, 32),
+> @@ -433,9 +433,9 @@ const VMStateDescription vmstate_riscv_cpu =3D {
 >          VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
 >          VMSTATE_UINT8_ARRAY(env.miprio, RISCVCPU, 64),
 >          VMSTATE_UINT8_ARRAY(env.siprio, RISCVCPU, 64),
-> diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.=
-c
-> index c499f9b9a7..95fa713c69 100644
-> --- a/target/riscv/riscv-qmp-cmds.c
-> +++ b/target/riscv/riscv-qmp-cmds.c
-> @@ -262,7 +262,7 @@ static bool reg_is_ulong_integer(CPURISCVState *env, =
-const char *name,
->                                   target_ulong *val, bool is_gprh)
->  {
->      const char * const *reg_names;
-> -    target_ulong *vals;
-> +    uint64_t *vals;
->
->      if (is_gprh) {
->          reg_names =3D riscv_int_regnamesh;
+> -        VMSTATE_UINTTL(env.pc, RISCVCPU),
+> -        VMSTATE_UINTTL(env.load_res, RISCVCPU),
+> -        VMSTATE_UINTTL(env.load_val, RISCVCPU),
+> +        VMSTATE_UINT64(env.pc, RISCVCPU),
+> +        VMSTATE_UINT64(env.load_res, RISCVCPU),
+> +        VMSTATE_UINT64(env.load_val, RISCVCPU),
+>          VMSTATE_UINTTL(env.frm, RISCVCPU),
+>          VMSTATE_UINTTL(env.badaddr, RISCVCPU),
+>          VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
 > diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 6fc06c71f5..4308b7712e 100644
+> index 98fd4b9051..6b84d0c384 100644
 > --- a/target/riscv/translate.c
 > +++ b/target/riscv/translate.c
-> @@ -27,6 +27,7 @@
->  #include "accel/tcg/cpu-ldst.h"
->  #include "exec/translation-block.h"
->  #include "exec/log.h"
-> +#include "exec/tswap.h"
->  #include "semihosting/semihost.h"
->
->  #include "internals.h"
-> @@ -1428,12 +1429,24 @@ void riscv_translate_init(void)
->       */
->      cpu_gpr[0] =3D NULL;
->      cpu_gprh[0] =3D NULL;
-> +    /*
-> +     * Be careful with big endian hosts when mapping 64-bit CPUArchState=
- fields
-> +     * to 32-bit TCGv globals.  An offset of 4 bytes is applied so the l=
-east
-> +     * significant bytes are correctly written to.
-> +     */
-> +#if HOST_BIG_ENDIAN && !defined(TARGET_RISCV64)
-> +    size_t field_offset =3D 4;
-> +#else
-> +    size_t field_offset =3D 0;
-> +#endif
+> @@ -1444,6 +1444,10 @@ void riscv_translate_init(void)
+>      /* 32 bits in size, no offset needed */
+>      size_t vl_offset =3D offsetof(CPURISCVState, vl);
+>      size_t vstart_offset =3D offsetof(CPURISCVState, vstart);
+> +    /* 64 bits in size mapped to TCGv, needs offset */
+> +    size_t pc_offset     =3D offsetof(CPURISCVState, pc) + field_offset;
+> +    size_t res_offset    =3D offsetof(CPURISCVState, load_res) + field_o=
+ffset;
+> +    size_t val_offset    =3D offsetof(CPURISCVState, load_val) + field_o=
+ffset;
 >
 >      for (i =3D 1; i < 32; i++) {
 >          cpu_gpr[i] =3D tcg_global_mem_new(tcg_env,
-> -            offsetof(CPURISCVState, gpr[i]), riscv_int_regnames[i]);
-> +            offsetof(CPURISCVState, gpr[i]) + field_offset,
-> +            riscv_int_regnames[i]);
->          cpu_gprh[i] =3D tcg_global_mem_new(tcg_env,
-> -            offsetof(CPURISCVState, gprh[i]), riscv_int_regnamesh[i]);
-> +            offsetof(CPURISCVState, gprh[i]) + field_offset,
-> +            riscv_int_regnamesh[i]);
+> @@ -1459,11 +1463,9 @@ void riscv_translate_init(void)
+>              offsetof(CPURISCVState, fpr[i]), riscv_fpr_regnames[i]);
 >      }
 >
->      for (i =3D 0; i < 32; i++) {
+> -    cpu_pc =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), =
+"pc");
+> +    cpu_pc =3D tcg_global_mem_new(tcg_env, pc_offset, "pc");
+>      cpu_vl =3D tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
+>      cpu_vstart =3D tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstar=
+t");
+> -    load_res =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, loa=
+d_res),
+> -                             "load_res");
+> -    load_val =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, loa=
+d_val),
+> -                             "load_val");
+> +    load_res =3D tcg_global_mem_new(tcg_env, res_offset, "load_res");
+> +    load_val =3D tcg_global_mem_new(tcg_env, val_offset, "load_val");
+>  }
 > --
 > 2.51.0
 >
