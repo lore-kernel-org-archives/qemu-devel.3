@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54361CCD185
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 05:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994C3CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 05:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9G8T-00047X-Sy; Thu, 16 Oct 2025 01:02:45 -0400
+	id 1v9GHx-0006II-6R; Thu, 16 Oct 2025 01:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1v9G8S-00046r-9f
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:02:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1v9G8P-000089-Jp
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:02:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760590959;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y+M1d7C1E2JshZ7CHhROOA4cr7tTxPknQy2xzCLDpFU=;
- b=Vp414tm/pSTX1EJOYu7203TMe5FUMmj0tnIHypqWgyJLkfw0PX6EToX6H8uoOH84HRT5g/
- hIWXbrSmuUvhm4fO9GIwO2MZrttfNkiwjD5Y7tfrBCg5vylXHB0AIdxJ9+RWjdmAgFAJtA
- BNBqIT1EpRAdIyPrJ1fnPTCFe7GUL0w=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-xzTNuhDvPwm_K4AmtXcQ5w-1; Thu, 16 Oct 2025 01:02:37 -0400
-X-MC-Unique: xzTNuhDvPwm_K4AmtXcQ5w-1
-X-Mimecast-MFC-AGG-ID: xzTNuhDvPwm_K4AmtXcQ5w_1760590956
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-33428befc49so530137a91.0
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 22:02:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9GHv-0006Hq-08
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:12:31 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9GHr-000214-V3
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:12:29 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b5e19810703so39837966b.2
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 22:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760591545; x=1761196345; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cVaXGWZcWAqQErFu3HFNIMUeWzNnClLF//wu1wUPfzA=;
+ b=Hro2Ok95iTc06S5+of5ey7C6ZW6uxZV3uGA6WlfDp+owwMfjBUk0IJTLJqiatpheqH
+ BuLAgz+xU9ssTxk5/dgLhZMy3BmpyOERaDhgfu6FfF8OUaxkQ4F/CsEXfSqWp+Hwi/DA
+ i/oGUEEyskP/nKxpPd6RmR6eCKSWAdfpOQCYLK2/w18ZAncgGi49eGsWhjqowx9l2bUY
+ 1o76mVO+Z9KVT4uS3cU0xGW4lFIY1S/4sI0IcksOJWly4WpkN7fSX576BushVWWC5Z+G
+ 29AbydLBnE5J3XDATSCJI8D/3xnXhlKt2c7sDNvsd2+kJ6O8f1t2hBfJLH/0cGWz/j7u
+ 4RPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760590956; x=1761195756;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1760591545; x=1761196345;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y+M1d7C1E2JshZ7CHhROOA4cr7tTxPknQy2xzCLDpFU=;
- b=s5SzVWcH/DzWk1vjNj8YV0Y5eHRJhhN38J8E0LiVWAuMW9b26HNeU7KMq4JhAeVelK
- 5ZtSabqIVtVdzFtgQF8w86w+mcIihaMzzAUWokdubXMfuVrKiFcIAodUz5xGxIsPp+4l
- /JEtBzKfi6wv8Gm/Ik/WPYqkZqMii43CAy6IY7kLjYG7eLeTNmtkh4y2onVQDPZqb6M4
- syJ6oT4frro95vPbDMJl/g3twgWHAuuKX5yi5OnpcPuVoiAbflJaD3Ap524ZEG3q/cj5
- bgj+TC5ZUR42NsK3qQS3vr+OLQ87L/yHTFB/THXFaKuiWCyKKqf9474VRH/Nxz7ZAiLT
- CV5Q==
-X-Gm-Message-State: AOJu0Yz+cdndt8rlTHT8MbD6axRz/+9jtTusogItahWzCcZ4/7ZLkXoc
- nQO4pbZZ4Jh3oFLb6fznqQIbdjq7WMORXU0AFAA4cuHm02dILlmkfqu3NpVepyyQQnSshNvJ4YL
- JZMT61SiVR8DGPM/1bvOHiF0/xyuDnAoXD4YVXLgQFYMsikIoYp+crz2x
-X-Gm-Gg: ASbGnctT2yOwEEhL8AQMaPfKv1hXqZlAv56yBqY7ctYoUxgA9cEezMRlg7sYYj1ShOT
- 7vZoyCRVOOlY9rJYY2T6+qDoKU/e6X09q/cTUn35AmxyrvogfcbL+r0jWpuudBwBmOOEuiqcMpO
- nmidZPZ34L24FfBH8P8SBf/QtweZoa5xRfQxvIBgTQK/T/Sd4gtT6gajSnBgz8UZ9kyE12pE06n
- G4F/0vEc1FfcBix39nUdOtjHHuHTq1Q+TTTLPvoW15zPM3p8EhbxccDKrLQeOz5skhW9sV6t4U4
- QjlQyApoGt1bJ2nToyBlrCWbheFu4z4ms9kYVQfcMVyKeUxXw0vBz3TAbUoIaFCOO724xHpqofa
- 7Ef6pQYYnDhsCUv0=
-X-Received: by 2002:a17:90b:3d4:b0:33b:a351:4bc3 with SMTP id
- 98e67ed59e1d1-33ba3514bd1mr1875824a91.12.1760590956153; 
- Wed, 15 Oct 2025 22:02:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVNomwaGBlNqcA7iAzW+U81/Qu45AlL2ah6wyZOT3hQ3i00iM/0vx0BD3fsSk+S1jCz/E7mg==
-X-Received: by 2002:a17:90b:3d4:b0:33b:a351:4bc3 with SMTP id
- 98e67ed59e1d1-33ba3514bd1mr1875797a91.12.1760590955805; 
- Wed, 15 Oct 2025 22:02:35 -0700 (PDT)
-Received: from smtpclient.apple ([122.162.208.81])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33bb651936esm227504a91.5.2025.10.15.22.02.33
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 15 Oct 2025 22:02:35 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
-Subject: Re: [PATCH v3 5/5] igvm: add MAINTAINERS entry
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20251015112342.1672955-6-kraxel@redhat.com>
-Date: Thu, 16 Oct 2025 10:32:21 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Stefano Garzarella <sgarzare@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+ bh=cVaXGWZcWAqQErFu3HFNIMUeWzNnClLF//wu1wUPfzA=;
+ b=YFbxEXduBIp7bScn8M38k5gxIM81A+slrVOcVJH2qtSOfkuwGPzm1nrAoHuldtu9vB
+ z11p3blbDolvjetkxLsJ8uA2cZi806NEfN/3u3wdA1qDfUkruk83N2P2cK0ggCIFC6za
+ RuMl/uZhnAHg6a03Ar1lSlkiwOoXNci52euvpQJTdXH5+j60lWt5m6XtxkJELBRl3Wxa
+ 3OtHQVijImW97rKyIY8hOOPPYkzUkzsBBZSvGvz0r8lPCu/yjFmXtzxp6Ux4hD0fLIyQ
+ VikZK0QUyApesUU6ZSUaTXQ8+0RgRnWnH/uhcgURXBP4ldNCWWXkBgMtWFhJmotWQMYS
+ 2ATA==
+X-Gm-Message-State: AOJu0YyAhL9PkQOIHbfYKaLJWLctGAdzeBaZTSEFuz90Z6scgSeyxB+Y
+ qGiqPDbJRhcvHXXPGOYUtJ5Hkd1QI+Xs1pSJxH2bwX3nOA6qL5T/1VwCtFL55VIJbxG4hLn7Xp2
+ I3F+7RILVD0q8SauvmvF1vffNM6rdsPM=
+X-Gm-Gg: ASbGncvpsvRuLREVyNsi6+IgsBDojCS7eGpycxAXyN0iL6ZygbYiZfapRlIigcaxLEz
+ 2U86sCL3GY80+aqQJjOpirkQEawC/x0SDuJ3Zz7bLficxyGDm+s8vDB/XhRNcCY6C8hnIdlalRH
+ lLBDCH6SbsFgLDp9GE9HYIR7rXaWJfCbvqzJp1vmMSU7HXy0RyCcw8z74FHmm6vBUJ1Yycm951+
+ 8D1UpINimZK4ViUv6nlkysx8mj6LXJAOZ4iWjhV3foJXxAyK0CPy7Fst5iOqdSLdz0galQjXS5t
+ EpU+gymi+0UuC4/dTTAK0fkIsQ==
+X-Google-Smtp-Source: AGHT+IH4OtuwU3ddvNBGJl35xW3ph0WDW+kq+B05QuexDjghiBh8GWoghB6R1n5D88st38xBSOHIhvuNUlwLJ8FF2ag=
+X-Received: by 2002:a17:907:3e05:b0:b04:563f:e120 with SMTP id
+ a640c23a62f3a-b50abfcd056mr3530410766b.53.1760591545421; Wed, 15 Oct 2025
+ 22:12:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20251014203512.26282-1-anjo@rev.ng>
+ <20251014203512.26282-18-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-18-anjo@rev.ng>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 16 Oct 2025 15:11:58 +1000
+X-Gm-Features: AS18NWBzgsED7KQqyElxxHwzoSF-dW7oUwayaNTnd_L5LKEKoleJ8UdVqtjjtDU
+Message-ID: <CAKmqyKND4kGvmaM64C_Wb1rYXE4KFGU3Ys+6YeWRp5MUf_a0Zw@mail.gmail.com>
+Subject: Re: [PATCH v3 17/34] target/riscv: Fix size of retxh
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
+ alistair.francis@wdc.com, palmer@dabbelt.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D41722C0-0F23-4804-88DC-1FAEB4272345@redhat.com>
-References: <20251015112342.1672955-1-kraxel@redhat.com>
- <20251015112342.1672955-6-kraxel@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51.11.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,46 +98,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Oct 15, 2025 at 6:35=E2=80=AFAM Anton Johansson via
+<qemu-devel@nongnu.org> wrote:
+>
+> 128-bit helpers only make sense for MXL_RV128, TARGET_RISCV64,
+> and TCGv =3D=3D TCGv_i64, therefore fix retxh to 64 bits.
+>
+> For the sake of being pedandic, update 128-bit instructions to access
+> retxh via 64 bit TCG ops, even if they only make sense when TCGv =3D=3D
+> TCGv_i64.
+>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-> On 15 Oct 2025, at 4:53=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
-wrote:
->=20
-> Add Roy (being the original author) as maintainer.  Add myself as
-> reviewer.  Status to be decided.
->=20
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Alistair
+
 > ---
-> MAINTAINERS | 9 +++++++++
-> 1 file changed, 9 insertions(+)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 84cfd85e1fa1..3ebcbcdfdb04 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3893,6 +3893,15 @@ F: roms/edk2-*
-> F: tests/data/uefi-boot-images/
-> F: tests/uefi-test-tools/
->=20
-> +IGVM Firmware
-> +M: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> +R: Gerd Hoffmann <kraxel@redhat.com>
-
-I would also like to add myself as a reviewer as well.
-
-R: Ani Sinha <anisinha@redhat.com>
-
-> +S: TBD
-> +F: backends/igvm*.c
-> +F: include/system/igvm*.h
-> +F: stubs/igvm.c
-> +F: target/i386/igvm.c
-> +
-> VT-d Emulation
-> M: Michael S. Tsirkin <mst@redhat.com>
-> R: Jason Wang <jasowang@redhat.com>
-> --=20
+>  target/riscv/cpu.h                      |  2 +-
+>  target/riscv/insn_trans/trans_rvi.c.inc |  8 ++++++--
+>  target/riscv/insn_trans/trans_rvm.c.inc | 16 ++++++++++++----
+>  3 files changed, 19 insertions(+), 7 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 6ed912cbd1..d7a41e6db5 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -248,7 +248,7 @@ struct CPUArchState {
+>      uint32_t xl;            /* current xlen */
+>
+>      /* 128-bit helpers upper part return value */
+> -    target_ulong retxh;
+> +    uint64_t retxh;
+>
+>      uint64_t jvt;
+>
+> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_=
+trans/trans_rvi.c.inc
+> index b9c7160468..9c8c04b2dc 100644
+> --- a/target/riscv/insn_trans/trans_rvi.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
+> @@ -1012,10 +1012,12 @@ static bool do_csrr_i128(DisasContext *ctx, int r=
+d, int rc)
+>      TCGv destl =3D dest_gpr(ctx, rd);
+>      TCGv desth =3D dest_gprh(ctx, rd);
+>      TCGv_i32 csr =3D tcg_constant_i32(rc);
+> +    TCGv_i64 wide_desth =3D tcg_temp_new_i64();
+>
+>      translator_io_start(&ctx->base);
+>      gen_helper_csrr_i128(destl, tcg_env, csr);
+> -    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_trunc_i64_tl(desth, wide_desth);
+>      gen_set_gpr128(ctx, rd, destl, desth);
+>      return do_csr_post(ctx);
+>  }
+> @@ -1035,10 +1037,12 @@ static bool do_csrrw_i128(DisasContext *ctx, int =
+rd, int rc,
+>      TCGv destl =3D dest_gpr(ctx, rd);
+>      TCGv desth =3D dest_gprh(ctx, rd);
+>      TCGv_i32 csr =3D tcg_constant_i32(rc);
+> +    TCGv_i64 wide_desth =3D tcg_temp_new_i64();
+>
+>      translator_io_start(&ctx->base);
+>      gen_helper_csrrw_i128(destl, tcg_env, csr, srcl, srch, maskl, maskh)=
+;
+> -    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_trunc_i64_tl(desth, wide_desth);
+>      gen_set_gpr128(ctx, rd, destl, desth);
+>      return do_csr_post(ctx);
+>  }
+> diff --git a/target/riscv/insn_trans/trans_rvm.c.inc b/target/riscv/insn_=
+trans/trans_rvm.c.inc
+> index 795f0ccf14..0e2da5bed2 100644
+> --- a/target/riscv/insn_trans/trans_rvm.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvm.c.inc
+> @@ -169,8 +169,10 @@ static bool trans_mulhu(DisasContext *ctx, arg_mulhu=
+ *a)
+>  static void gen_div_i128(TCGv rdl, TCGv rdh,
+>                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+>  {
+> +    TCGv_i64 wide_rdh =3D tcg_temp_new_i64();
+>      gen_helper_divs_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+> -    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+>  }
+>
+>  static void gen_div(TCGv ret, TCGv source1, TCGv source2)
+> @@ -212,8 +214,10 @@ static bool trans_div(DisasContext *ctx, arg_div *a)
+>  static void gen_divu_i128(TCGv rdl, TCGv rdh,
+>                            TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+>  {
+> +    TCGv_i64 wide_rdh =3D tcg_temp_new_i64();
+>      gen_helper_divu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+> -    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+>  }
+>
+>  static void gen_divu(TCGv ret, TCGv source1, TCGv source2)
+> @@ -244,8 +248,10 @@ static bool trans_divu(DisasContext *ctx, arg_divu *=
+a)
+>  static void gen_rem_i128(TCGv rdl, TCGv rdh,
+>                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+>  {
+> +    TCGv_i64 wide_rdh =3D tcg_temp_new_i64();
+>      gen_helper_rems_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+> -    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+>  }
+>
+>  static void gen_rem(TCGv ret, TCGv source1, TCGv source2)
+> @@ -289,8 +295,10 @@ static bool trans_rem(DisasContext *ctx, arg_rem *a)
+>  static void gen_remu_i128(TCGv rdl, TCGv rdh,
+>                            TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+>  {
+> +    TCGv_i64 wide_rdh =3D tcg_temp_new_i64();
+>      gen_helper_remu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+> -    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
+> +    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+>  }
+>
+>  static void gen_remu(TCGv ret, TCGv source1, TCGv source2)
+> --
 > 2.51.0
->=20
-
+>
+>
 
