@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F90CCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 11:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D77CCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 11:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9MNZ-0007Qp-AT; Thu, 16 Oct 2025 07:42:45 -0400
+	id 1v9MMx-0007A7-Ax; Thu, 16 Oct 2025 07:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9MMt-00078y-6q; Thu, 16 Oct 2025 07:42:03 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1v9MMb-00075S-Qi; Thu, 16 Oct 2025 07:41:46 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9MMi-0003Vg-4r; Thu, 16 Oct 2025 07:42:01 -0400
+ id 1v9MMQ-0003TM-DP; Thu, 16 Oct 2025 07:41:44 -0400
 Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 178FBC01D9;
- Thu, 16 Oct 2025 14:41:35 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2093FC01C6;
+ Thu, 16 Oct 2025 14:41:28 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a8c::1:19])
  by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id LfP2M73FEmI0-8SW4HDUx; Thu, 16 Oct 2025 14:41:34 +0300
+ ESMTPSA id LfP2M73FEmI0-tJ9HppKJ; Thu, 16 Oct 2025 14:41:27 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760614894;
- bh=ATBOk7y2BkgORhsGkD3qM3CJxtTyEmK5hDTvCDCS0bI=;
+ s=default; t=1760614887;
+ bh=NCBQBj1KLYl9rxemiXXzJo8O03ptUskg5oqIPqd6fMU=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=DK2q2cFa+YysBJZ7APancKjLfoPdtnagj6nH30xp4wTDn4U07tbKBm57dk1Qk3R7Z
- qCcjZNhy/CYtrrAAawGohBAcECSEJ1J9X1GrigwLlBGerNwlJ+xdC94hc6Nu1mwGFi
- 78Oi1lyUx157LRTtBeJ6mVv1GlNJ736m3eMiu2Sw=
+ b=Gm2tYnLEYpgakuaZolY3N0OZpoTs2w0M/6wY6x3J5iIfQCOetsskp7V7cil59D4yn
+ 8jtLr5v7oO6E05J8MOsAt32f5t8RcZv9TnpjJl4JqUIq0P/PpPwqoLAUhFzCJaolDU
+ KBGFI1aAss3Am78ApraFMhS+xqMpo+e4WX3wkjI4=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,25 +46,26 @@ Cc: mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com,
  eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
  qemu-block@nongnu.org, steven.sistare@oracle.com,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, jasowang@redhat.com,
- Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2 15/25] migration: introduce vmstate_event_notifier
-Date: Thu, 16 Oct 2025 14:40:52 +0300
-Message-ID: <20251016114104.1384675-16-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, jasowang@redhat.com
+Subject: [PATCH v2 05/25] vhost: split vhost_dev_connect() out of
+ vhost_dev_init()
+Date: Thu, 16 Oct 2025 14:40:42 +0300
+Message-ID: <20251016114104.1384675-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
 References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,106 +80,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be used to support backend-transfer migration for
-vhost-user-blk, we'll migrate event notifier fds through
-migration stream, to avoid extra contact with backend.
+Split vhost_dev_init() so that the first part will do early
+initialization of QEMU structures, but don't communicate with backend,
+and the second part will do backend communication.
+
+We need this for future support for backend-transfer migration support
+for vhost-user-blk (backend will not be available in the early
+initialization point).
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- include/migration/vmstate.h        |  7 ++++
- migration/meson.build              |  1 +
- migration/vmstate-event-notifier.c | 54 ++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+)
- create mode 100644 migration/vmstate-event-notifier.c
+ hw/virtio/vhost.c         | 27 +++++++++++++++++++++------
+ include/hw/virtio/vhost.h |  2 ++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index f243518fb5..7f1f1c166a 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -1294,4 +1294,11 @@ void vmstate_register_ram_global(struct MemoryRegion *memory);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index f733e98b4a..09d00e4d98 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1619,7 +1619,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    bool connect, Error **errp)
+ {
+-    int i, r, n_initialized_vqs = 0;
++    int i, r;
  
- bool vmstate_check_only_migratable(const VMStateDescription *vmsd);
+     trace_vhost_dev_init_in(hdev);
  
-+extern const VMStateDescription vmstate_event_notifier;
+@@ -1640,9 +1640,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+      */
+     assert(connect || hdev->vhost_ops->vhost_backend_connect);
+ 
+-    /* TDDO: support connect=false */
+-    assert(connect);
+-
+     r = hdev->vhost_ops->vhost_backend_init(hdev, opaque, errp);
+     if (r < 0) {
+         goto fail;
+@@ -1678,6 +1675,26 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     memory_listener_register(&hdev->memory_listener, &address_space_memory);
+     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+ 
++    trace_vhost_dev_init_out(hdev);
 +
-+#define VMSTATE_EVENT_NOTIFIER(_field, _struct) \
-+    VMSTATE_STRUCT(_field, _struct, 0, vmstate_event_notifier, \
-+                   EventNotifier)
++    return connect ? vhost_dev_connect(hdev, errp) : 0;
 +
-+
- #endif
-diff --git a/migration/meson.build b/migration/meson.build
-index 16909d54c5..b5341ae0cb 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -5,6 +5,7 @@ migration_files = files(
-   'xbzrle.c',
-   'vmstate-types.c',
-   'vmstate.c',
-+  'vmstate-event-notifier.c',
-   'qemu-file.c',
-   'yank_functions.c',
- )
-diff --git a/migration/vmstate-event-notifier.c b/migration/vmstate-event-notifier.c
-new file mode 100644
-index 0000000000..2076eec961
---- /dev/null
-+++ b/migration/vmstate-event-notifier.c
-@@ -0,0 +1,54 @@
-+/*
-+ * Event notifier migration support
-+ * Copyright (c) Yandex Technologies LLC, 2025
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/event_notifier.h"
-+#include "migration/vmstate.h"
-+
-+static int event_notifier_pre_save(void *opaque)
-+{
-+    struct EventNotifier *e = opaque;
-+
-+    if (!e->initialized || e->rfd != e->wfd) {
-+        return -1;
-+    }
-+
-+    return 0;
++fail:
++    vhost_dev_cleanup(hdev);
++    return r;
 +}
 +
-+static int event_notifier_pre_load(void *opaque)
++int vhost_dev_connect(struct vhost_dev *hdev, Error **errp)
 +{
-+    struct EventNotifier *e = opaque;
++    int i, r, n_initialized_vqs = 0;
 +
-+    if (e->initialized) {
-+        return -1;
++    if (hdev->vhost_ops->vhost_backend_connect) {
++        r = hdev->vhost_ops->vhost_backend_connect(hdev, errp);
++        if (r < 0) {
++            goto fail;
++        }
 +    }
 +
-+    return 0;
-+}
+     r = hdev->vhost_ops->vhost_set_owner(hdev);
+     if (r < 0) {
+         error_setg_errno(errp, -r, "vhost_set_owner failed");
+@@ -1720,8 +1737,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         goto fail;
+     }
+ 
+-    trace_vhost_dev_init_out(hdev);
+-
+     return 0;
+ 
+ fail:
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 74ed24232e..af46d4b5f2 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -158,6 +158,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    uint32_t busyloop_timeout,
+                    bool connect, Error **errp);
+ 
++int vhost_dev_connect(struct vhost_dev *hdev, Error **errp);
 +
-+static int event_notifier_post_load(void *opaque, int version_id)
-+{
-+    struct EventNotifier *e = opaque;
-+
-+    if (e->rfd < 0) {
-+        return -1;
-+    }
-+
-+    e->wfd = e->rfd;
-+    e->initialized = true;
-+
-+    return 0;
-+}
-+
-+const VMStateDescription vmstate_event_notifier = {
-+    .name = "event-notifier",
-+    .pre_save = event_notifier_pre_save,
-+    .pre_load = event_notifier_pre_load,
-+    .post_load = event_notifier_post_load,
-+    .fields = (const VMStateField[]){VMSTATE_FD(rfd, EventNotifier),
-+                                     VMSTATE_END_OF_LIST()},
-+};
+ /**
+  * vhost_dev_cleanup() - tear down and cleanup vhost interface
+  * @hdev: the common vhost_dev structure
 -- 
 2.48.1
 
