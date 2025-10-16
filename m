@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83BFECCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787B4CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mx6-0003dC-Tp; Thu, 16 Oct 2025 08:19:30 -0400
+	id 1v9Mwn-0002wG-Hu; Thu, 16 Oct 2025 08:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mwa-0002NS-9h
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:58 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MwF-00023a-V5
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:36 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MwV-0008Tf-RI
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:55 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-42701b29a7eso254815f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:18:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mw9-0008RC-TD
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47112a73785so4431215e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760617125; x=1761221925; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760617102; x=1761221902; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=P7blmDCF8sM42OmGl4/6ogMGKaMzc2e24JLbAyfldN8=;
- b=Phv/ulrzrHjFanZnyN990jjGvRQ2rsNnglkEdZPOzW0GGBuSQ+mskJ5mwutlp7UraK
- LK672t2fQNCl57ViWspK7OkOk0ulfFm1u1vk3Ahh4/oiUQ+xFEU2VDkA0S4OCoRnYWsR
- uOiyRy6NeX1yfezcaCDuYnix46xHfR+wZcmzCT1kbZ1wdJUJLOfdCz3UR7QzdpiGQsXj
- 9YFDh3YHK1am3tsxh0ghtSbRNgEN2vy6os6XFYyE0Vji3Znz194t6gwlRKtvAIaM3sZ5
- r5yjJD7DZOikQkCHi200O+R/nd8/7YotUiMskmzRIt82L7lNfMgedC9y6HCSqNdsGqse
- /2yA==
+ :reply-to; bh=PPP4W+2GMCtu5NaTXRhA0Y3fwTHqC/v44euxXjto1BU=;
+ b=Qe/1peNis2yDYh/t7nWWLm0BJSJ+rpAvfhwctNpHQvSKKN+yiaEyjUKvXFdjeGjfxQ
+ 2t7rEP8k/tIb4Igk9KYta8GRyyTVCtYS72dNMgq43WJGKMRAWwu1xngkX1rfalPBPhq5
+ 5oZwhb0RNWwDEHTxDkU20B6wFVaOZ3EH0atTtfr9CmQZO08JQFRBqTWdHJkMtPvjfKS8
+ MMNN8cYUhVyBV7wG5uo37qwQQW2TlD/yDKKy+W/sD+DpqvqypPulKKQKhLuenwSQ6o+L
+ Q+srbZh2i51ceJI+tAatibw5MKwOTR/5E39E2HOShqa+cIz+VHSGkI6t7c6bpZ6950Q2
+ /5+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760617125; x=1761221925;
+ d=1e100.net; s=20230601; t=1760617102; x=1761221902;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=P7blmDCF8sM42OmGl4/6ogMGKaMzc2e24JLbAyfldN8=;
- b=axTe1uWZEm99WdfgafTE22ZXjp2VCTqjIYxvEdJJiuaxSrQN3rTQ66fw8uFShcriC6
- CvGiV9/QkBprc8IWz2CuSO49I6ZIbK3nQdRs4nidlPOEzannD63LsE4YudDGCO5k+Xxu
- YJJBpHdsb7k+Gj+xW9hJ/PEqjYjuFaSCDHke8TvCI+Jw5fb0p1PayJFNoBGHy245jfdn
- ufhe7XZe1ryec8n+uZ+K1QB5O+lqzy77jfRIm9ad9hNkTazBcyyZxGe6KTEoNudeN1TO
- ropDbvE3HoHGR3FzM1bogu33mXlCKQqzV6XRHk4cQJfhldGWQ3ALUOscmAUBLvzK/TQq
- HLyw==
-X-Gm-Message-State: AOJu0YwrwxrHNkHOu5aB+8kkreWOKex3vKIslmT4FpxF9ihuW/IClcrH
- bD5V1PGpbUamcK1dRIbyC3x4LH0jauHIBAUk+xmWrE+6s9d4R5yVn6+zcsejy/jvkxeXyDgzkca
- KNSjQZoA=
-X-Gm-Gg: ASbGncvTG6+QM36f9bCEo7kPXUa/WoDn4EnLTIeJSmkn1BCDlxrlIkmvatVmWhuDSG1
- 1KV9vr86nCe5cI0dJ2KQyfgO4jkN8BB7BLSvjt6XvtH8abLaRAeuA+IRsBzONGMjaqZgpSC2i9T
- wMdKKo140o1orJOfpbUtzl1VanlWmVTsGAHkyDy49QpCL4VGBU7jCxIkZHuaJZr+MSE48Ueum8K
- BpdnTfDwRaYC3O/NVdZjG9sbVsfl0sCDujU1rGc+/w5u+hgBoWfPksa0ZUCLRHNjz3Bs0bGZAyk
- H+nTzUdhtDbdEL2eQJW8HXBabifRK5DCFTwxUJ+2LzBiuNKL67ohRD3LjQJGMnff45D5K6LNqza
- p/73QjoDFcOSEazkEiDO22MUnEa9HYYnmSXrIoT3E5kMdCrRdBnhy6mNrTRU3OhsKspO6MVG6W3
- hkYKtVah7XFK19469RdagxGjB9Bejd0gmungE3IbRz5AZEE1ECOoYYcA==
-X-Google-Smtp-Source: AGHT+IHcXQUpI4FtgE/qAVc9LGgOPMskwWaC4SljugD3J9veTmb6B7Rk4ZcbgMtjgxNFM3RhSp/8QA==
-X-Received: by 2002:a05:6000:2c06:b0:3e9:54d1:e708 with SMTP id
- ffacd0b85a97d-426fb7ab8abmr2235135f8f.20.1760617124909; 
- Thu, 16 Oct 2025 05:18:44 -0700 (PDT)
+ bh=PPP4W+2GMCtu5NaTXRhA0Y3fwTHqC/v44euxXjto1BU=;
+ b=fTJ8Mv+c3HKfK/W1RIcUf0LtXVfinBJxKkCWGZqv06w1uUWnVgHdQuWc9Dc8l3mYen
+ GEEpL5fGlguSzWnTxxQ3MelVteBmfWlBstD0QEMBE0a1rZKjC/f5+ZJQK9LA1gZr9gOW
+ deNYQKzTjRtBNOFUbA2a5sLQAiPDYl4w2Mn77gkU1jSVNJvKI9hoTDjdYkjfUftOIb5N
+ I8Q1ITd3v9I+MHitUV7ck8mjS4OsUI3pOnOPl6ORlua67PEUBrc+veXlrTPEXNoNrrPT
+ kemjMq0WYfQp9uA6gr6qHvEMAj7FUDHppePeQn0yPI4NCZDU73gKFhHkYlFLJXO6NxnW
+ pR8w==
+X-Gm-Message-State: AOJu0Yztq61eimBxyudNSxZ0kB7OxkuPKeUgiXQSbGScdjGcPo+LOLzB
+ oO5TfBtrYccFsMgtdjONHpnh2E9Xvp4Hu3yCWhqtxqGvbn7Gfh39FfnX1q390pgmMzDzIXJ0SXi
+ IDsktqSA=
+X-Gm-Gg: ASbGnctQ91h7VBehphkep+sohrRVWn/2pqSNC7gEbpKkffAyfAYlN5En7JtccIlx1bm
+ mgTOLjTrXHiAGjBAmz35hpwReD7wRvZgQBbdiqZTHjebhGHPK34HkOQlZpUY41Y+iZci1tg4aaS
+ 3krk2M/ag0Guu/hXlmiPZySXMuvaOp81g/tOSlVh2ibtdRde+SFkxP6ZK7TvlMNDbbSoNNlqHSz
+ LV3IiDsEgFErTpLHL/wPpMaaNgo2Gud7SJl7DhhnKt9CcAciccG8GQNKEGBx9jdgVvYQTmcEMMA
+ JQWW5h9KzOIEombWKV4a8jUrOG96zv6cx4JNkxatbG5Eg6gODmxdwvfmh3T92f3CRKS3peweeM/
+ w2aBK1rFG5i+coM+X2in4mKyVdByu59Qjt5tMpGPsky7tRhnbuNsaF4hnQUZDfQO7iFhXm5Gpxz
+ lqJQJUkh1jxtNXsHoAQJq4DLH6/5X1F3mpRi9WNnwMhOz7DW2cm6vOYxaUMaDyFsqz
+X-Google-Smtp-Source: AGHT+IGyQC134su+mwuuvMoP69QAHm5LSv7rkJWU7qltG8h+n1xk8619gdovHFYO/FMH3cTUPNoYIw==
+X-Received: by 2002:a05:600c:c162:b0:46e:4a60:ea2c with SMTP id
+ 5b1f17b1804b1-46fa9b17e57mr244312255e9.37.1760617101764; 
+ Thu, 16 Oct 2025 05:18:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42704141cd0sm1034058f8f.11.2025.10.16.05.18.44
+ ffacd0b85a97d-426ce5825aasm33953046f8f.14.2025.10.16.05.18.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:18:44 -0700 (PDT)
+ Thu, 16 Oct 2025 05:18:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 41/75] target/riscv: Replace HOST_BIG_ENDIAN #ifdef with if()
- check
-Date: Thu, 16 Oct 2025 14:14:57 +0200
-Message-ID: <20251016121532.14042-42-philmd@linaro.org>
+Subject: [PULL 36/75] target/openrisc: Introduce mo_endian() helper
+Date: Thu, 16 Oct 2025 14:14:52 +0200
+Message-ID: <20251016121532.14042-37-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
 References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,100 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace preprocessor-time #ifdef with a compile-time check
-to ensure all code paths are built and tested. This reduces
-build-time configuration complexity and simplifies code
-maintainability.
-
-No functional change intended.
+mo_endian() returns the target endianness.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20251010134226.72221-14-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251010070702.51484-11-philmd@linaro.org>
 ---
- target/riscv/vector_helper.c            | 32 ++++++++++++-------------
- target/riscv/insn_trans/trans_rvv.c.inc | 16 ++++++-------
- 2 files changed, 24 insertions(+), 24 deletions(-)
+ target/openrisc/translate.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 41ea2231067..2de3358ee86 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -235,26 +235,26 @@ vext_continuous_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
-                         void *vd, uint32_t evl, uint32_t reg_start, void *host,
-                         uint32_t esz, bool is_load)
- {
--#if HOST_BIG_ENDIAN
--    for (; reg_start < evl; reg_start++, host += esz) {
--        ldst_host(vd, reg_start, host);
--    }
--#else
--    if (esz == 1) {
--        uint32_t byte_offset = reg_start * esz;
--        uint32_t size = (evl - reg_start) * esz;
--
--        if (is_load) {
--            memcpy(vd + byte_offset, host, size);
--        } else {
--            memcpy(host, vd + byte_offset, size);
--        }
--    } else {
-+    if (HOST_BIG_ENDIAN) {
-         for (; reg_start < evl; reg_start++, host += esz) {
-             ldst_host(vd, reg_start, host);
-         }
-+    } else {
-+        if (esz == 1) {
-+            uint32_t byte_offset = reg_start * esz;
-+            uint32_t size = (evl - reg_start) * esz;
+diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
+index 623513bb15c..1a43e5ab6f7 100644
+--- a/target/openrisc/translate.c
++++ b/target/openrisc/translate.c
+@@ -59,6 +59,11 @@ typedef struct DisasContext {
+     TCGv zero;
+ } DisasContext;
+ 
++static inline MemOp mo_endian(DisasContext *dc)
++{
++    return MO_TE;
++}
 +
-+            if (is_load) {
-+                memcpy(vd + byte_offset, host, size);
-+            } else {
-+                memcpy(host, vd + byte_offset, size);
-+            }
-+        } else {
-+            for (; reg_start < evl; reg_start++, host += esz) {
-+                ldst_host(vd, reg_start, host);
-+            }
-+        }
-     }
--#endif
- }
- 
- static void vext_set_tail_elems_1s(target_ulong vl, void *vd,
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index f4b5460340e..2a487179f63 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3351,19 +3351,19 @@ static void load_element(TCGv_i64 dest, TCGv_ptr base,
- /* offset of the idx element with base register r */
- static uint32_t endian_ofs(DisasContext *s, int r, int idx)
+ static inline bool is_user(DisasContext *dc)
  {
--#if HOST_BIG_ENDIAN
--    return vreg_ofs(s, r) + ((idx ^ (7 >> s->sew)) << s->sew);
--#else
--    return vreg_ofs(s, r) + (idx << s->sew);
--#endif
-+    if (HOST_BIG_ENDIAN) {
-+        return vreg_ofs(s, r) + ((idx ^ (7 >> s->sew)) << s->sew);
-+    } else {
-+        return vreg_ofs(s, r) + (idx << s->sew);
-+    }
- }
- 
- /* adjust the index according to the endian */
- static void endian_adjust(TCGv_i32 ofs, int sew)
+ #ifdef CONFIG_USER_ONLY
+@@ -622,7 +627,8 @@ static bool trans_l_lwa(DisasContext *dc, arg_load *a)
+     check_r0_write(dc, a->d);
+     ea = tcg_temp_new();
+     tcg_gen_addi_tl(ea, cpu_R(dc, a->a), a->i);
+-    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx, MO_TE | MO_UL);
++    tcg_gen_qemu_ld_tl(cpu_R(dc, a->d), ea, dc->mem_idx,
++                       mo_endian(dc) | MO_UL);
+     tcg_gen_mov_tl(cpu_lock_addr, ea);
+     tcg_gen_mov_tl(cpu_lock_value, cpu_R(dc, a->d));
+     return true;
+@@ -632,7 +638,7 @@ static void do_load(DisasContext *dc, arg_load *a, MemOp mop)
  {
--#if HOST_BIG_ENDIAN
--    tcg_gen_xori_i32(ofs, ofs, 7 >> sew);
--#endif
-+    if (HOST_BIG_ENDIAN) {
-+        tcg_gen_xori_i32(ofs, ofs, 7 >> sew);
-+    }
- }
+     TCGv ea;
  
- /* Load idx >= VLMAX ? 0 : vreg[idx] */
+-    mop |= MO_TE;
++    mop |= mo_endian(dc);
+ 
+     check_r0_write(dc, a->d);
+     ea = tcg_temp_new();
+@@ -690,7 +696,8 @@ static bool trans_l_swa(DisasContext *dc, arg_store *a)
+ 
+     val = tcg_temp_new();
+     tcg_gen_atomic_cmpxchg_tl(val, cpu_lock_addr, cpu_lock_value,
+-                              cpu_R(dc, a->b), dc->mem_idx, MO_TE | MO_UL);
++                              cpu_R(dc, a->b), dc->mem_idx,
++                              mo_endian(dc) | MO_UL);
+     tcg_gen_setcond_tl(TCG_COND_EQ, cpu_sr_f, val, cpu_lock_value);
+ 
+     tcg_gen_br(lab_done);
+@@ -707,7 +714,7 @@ static void do_store(DisasContext *dc, arg_store *a, MemOp mop)
+ {
+     TCGv t0 = tcg_temp_new();
+ 
+-    mop |= MO_TE;
++    mop |= mo_endian(dc);
+ 
+     tcg_gen_addi_tl(t0, cpu_R(dc, a->a), a->i);
+     tcg_gen_qemu_st_tl(cpu_R(dc, a->b), t0, dc->mem_idx, mop);
 -- 
 2.51.0
 
