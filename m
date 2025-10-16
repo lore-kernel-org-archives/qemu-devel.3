@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5426CCD199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF40CCCD194
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mxs-0004Vq-EH; Thu, 16 Oct 2025 08:20:19 -0400
+	id 1v9Mvt-000134-Jd; Thu, 16 Oct 2025 08:18:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MxX-0004CS-RC
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:19:56 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MxP-00007c-Gm
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:19:55 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46e5980471eso5597995e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:19:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760617181; x=1761221981; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tFemSrV+yXNTrcdNlowTIb2z00rqADa2FjVBPDuDWzE=;
- b=DcTm+FOD2k2UofjKKwFqRtFTXbBzemW60czEpXiHxjw/gGbaqovL408gHo2GhdjdDX
- 5JQrPlDkfcwZ0xh6xXMj8fJWTsBVZkWXzFOnYKBL0M3yRrbPHgQMQQHgNmPXH343Z+Iu
- QXhvfNrPFrbgQjsTXn82xt4I26SVBfjZLV6l1nW199ClxnDyro5x3pz2LA9iZa2e8DTm
- pPcsLrbGf5G8lsoTvh4lMYwLXJtPJw2AHFEiCU2Enuee7TER4oLiIcoxiCY8MGtSKGTe
- tEm4EOtkTAUquDLTYDypLZMBWNeC/QBDehpeXTYN1K//8/cntM83tNdVQsgtNGoQLNNK
- /TlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760617181; x=1761221981;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tFemSrV+yXNTrcdNlowTIb2z00rqADa2FjVBPDuDWzE=;
- b=L63J8AJ9RgpU6QslIV2si1pnkBdGXiASXu5hixlRQplXy0jtHRCkrjfz/yZt6jtGhH
- aH6l49bXgyohs663JO1wtn6chVmcnjZr8Mx9itUBJbSPfvk0LPmravefaulTxAT5Rhql
- cHEZr7xobpZgj7x9dsf1BPi0nVh5e+PP+MJErk6W6kK0h9NNffPNGFCh9USIySBOiu1v
- aiuKStI4xJsHlhWgvboecIJhkjOBRjrXmJgdWSzZeHcvuNlLFnCnwA3usObZUxtlObsW
- fOXmmTB3Yg3+fSS/MRFiTJJ0sj8fCxaWAbbdnwwgMFUN3AVa7KWTPhKxN+uMCkYia7Kg
- JVeQ==
-X-Gm-Message-State: AOJu0Yxq8DQWzeceAPDR5Y97qAOpwH045uwxJzrlhS/mvrBlKjWyxgxp
- UFctg4F2mDIljHoG5OjTDOpp4JeWPQxRTmQHJOa3KouD97pAL3btWExvo3kT+7c1SRTariIFSE0
- KcDd2+NA=
-X-Gm-Gg: ASbGnctqJtnQciwkOa5dtA99wQTSvH+VYh80XeGeRiUzleDvJQKYOyE6DqHNxblID4R
- rjP/9gQR62ru2I0anVRQGAOxx+4zRl6sNcK1Y8PsSDHgk7u3RZMkB0tDGbP2X/ChQWFUBQYMJaf
- yQc1XCJJt2kL7YED85/IZPxrdFERr8i7mH3xhzKyEfMp/84zjcj/xacg3wTKwzfnP3C0JRUxwnP
- CIbS70TkMBlKl6hpF3KJ4PCtKwsKaW4NtqAPsHwXACyfoMxCr+mqQbBL2XWOs8c15TTfPcIjzt5
- D4pGxNz7/a7RWVrO510lPgQWhXbX/6ewDlGQdjDmy0C18t4geDVDsL06FmLNi4wLE5yVO63NkUR
- NU+Nz5XGPl9U+VieA7Am4I2wjyZeH6byEBRocALKcHezeuinWNmwa4HKAC7cv4V58ArBG95IP9v
- K7+IXHMDYSyzcoOkxHCGG0DO5i3l73WIOhyE9jqkukPN1mKrJ5BozciA==
-X-Google-Smtp-Source: AGHT+IFhSRBfRkbcS645BVjvJglyH0AgUcW68CzVW5vC7+nP5gRKETdnSUKyAc+5NHHFI7mjaSpusw==
-X-Received: by 2002:a05:600c:450d:b0:470:bcc4:b0a0 with SMTP id
- 5b1f17b1804b1-470bcc4b26amr88325985e9.34.1760617180825; 
- Thu, 16 Oct 2025 05:19:40 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710ca243a3sm20282155e9.0.2025.10.16.05.19.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:19:40 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 53/75] target/sh4: Remove target_ulong use in
- cpu_sh4_is_cached()
-Date: Thu, 16 Oct 2025 14:15:09 +0200
-Message-ID: <20251016121532.14042-54-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
-References: <20251016121532.14042-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1v9MvP-0007ql-9i
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:17:45 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1v9MvH-0008Kj-AU
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:17:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cnRkq1SgJz6L529;
+ Thu, 16 Oct 2025 20:16:19 +0800 (CST)
+Received: from dubpeml100003.china.huawei.com (unknown [7.214.147.98])
+ by mail.maildlp.com (Postfix) with ESMTPS id 000521402A5;
+ Thu, 16 Oct 2025 20:17:23 +0800 (CST)
+Received: from dubpeml500004.china.huawei.com (7.214.147.1) by
+ dubpeml100003.china.huawei.com (7.214.147.98) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 16 Oct 2025 13:17:23 +0100
+Received: from dubpeml500004.china.huawei.com ([7.214.147.1]) by
+ dubpeml500004.china.huawei.com ([7.214.147.1]) with mapi id 15.02.1544.011;
+ Thu, 16 Oct 2025 13:17:23 +0100
+To: Peter Maydell <peter.maydell@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
+Subject: RE: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+Thread-Topic: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+Thread-Index: AQHcPPUb159YqalKN0iW0Ad9cDluebTEswGg
+Date: Thu, 16 Oct 2025 12:17:23 +0000
+Message-ID: <4b686af261024bad91bf079a098976de@huawei.com>
+References: <20251014102439.319915-1-peter.maydell@linaro.org>
+In-Reply-To: <20251014102439.319915-1-peter.maydell@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.202.67.10]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,56 +76,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 852d481faf7 ("SH: Improve movca.l/ocbi emulation")
-helper_movcal() pass a uint32_t type to cpu_sh4_is_cached().
+Hi Peter,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20251008064814.90520-3-philmd@linaro.org>
----
- target/sh4/cpu.h    | 2 +-
- target/sh4/helper.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+> From: qemu-devel-bounces+salil.mehta=3Dhuawei.com@nongnu.org <qemu-
+> devel-bounces+salil.mehta=3Dhuawei.com@nongnu.org> On Behalf Of Peter
+> Maydell
+> Sent: Tuesday, October 14, 2025 11:25 AM
+> To: qemu-devel@nongnu.org
+> Cc: Salil Mehta <salil.mehta@opnsrc.net>; Marc Zyngier <maz@kernel.org>
+> Subject: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+> kernel in cpuif reset
+>=20
+> Currently in arm_gicv3_icc_reset() we read the kernel's value of
+> ICC_CTLR_EL1 as part of resetting the CPU interface.  This mostly works, =
+but
+> we're actually breaking an assumption the kernel makes that userspace onl=
+y
+> accesses the in-kernel GIC data when the VM is totally paused, which may
+> not be the case if a single vCPU is being reset.  The effect is that it's=
+ possible
+> that the read attempt returns EBUSY.
+>=20
+> Avoid this by reading the kernel's value of the reset ICC_CTLR_EL1 once i=
+n
+> device realize. This brings ICC_CTLR_EL1 into line with the other cpuif
+> registers, where we assume we know what the kernel is resetting them to
+> and just update QEMU's data structures in arm_gicv3_icc_reset().
+>=20
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I've only tested this fairly lightly, but it seems to work.
+> Salil, does this fix the EBUSY issues you were seeing ?
 
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index db27a693f12..b0759010c47 100644
---- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -277,7 +277,7 @@ void cpu_sh4_write_mmaped_utlb_data(CPUSH4State *s, hwaddr addr,
-                                     uint32_t mem_value);
- #endif
- 
--int cpu_sh4_is_cached(CPUSH4State * env, target_ulong addr);
-+int cpu_sh4_is_cached(CPUSH4State *env, uint32_t addr);
- 
- void cpu_load_tlb(CPUSH4State * env);
- 
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 1744ef0e6d8..4f1e2072296 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -47,7 +47,7 @@
- 
- #if defined(CONFIG_USER_ONLY)
- 
--int cpu_sh4_is_cached(CPUSH4State *env, target_ulong addr)
-+int cpu_sh4_is_cached(CPUSH4State *env, uint32_t addr)
- {
-     /* For user mode, only U0 area is cacheable. */
-     return !(addr & 0x80000000);
-@@ -735,7 +735,7 @@ void cpu_sh4_write_mmaped_utlb_data(CPUSH4State *s, hwaddr addr,
-     }
- }
- 
--int cpu_sh4_is_cached(CPUSH4State * env, target_ulong addr)
-+int cpu_sh4_is_cached(CPUSH4State *env, uint32_t addr)
- {
-     int n;
-     int use_asid = !(env->mmucr & MMUCR_SV) || !(env->sr & (1u << SR_MD));
--- 
-2.51.0
+
+Would you be absorbing this in your tree now or should I make it part
+of the RFC V7 ?
+
+Reviewed-by: Salil Mehta <salil.mehta@huawei.com>
+Tested-by: Salil Mehta <salil.mehta@huawei.com>
+
+
+Many thanks!
+
+Best regards
+Salil.
+
+
+>=20
+>  include/hw/intc/arm_gicv3_common.h |  3 ++
+>  hw/intc/arm_gicv3_kvm.c            | 49 +++++++++++++++++++++---------
+>  2 files changed, 38 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/include/hw/intc/arm_gicv3_common.h
+> b/include/hw/intc/arm_gicv3_common.h
+> index 38aa1961c50..61d51915e07 100644
+> --- a/include/hw/intc/arm_gicv3_common.h
+> +++ b/include/hw/intc/arm_gicv3_common.h
+> @@ -166,6 +166,9 @@ struct GICv3CPUState {
+>      uint64_t icc_igrpen[3];
+>      uint64_t icc_ctlr_el3;
+>=20
+> +    /* For KVM, cached copy of the kernel reset value of ICC_CTLR_EL1 */
+> +    uint64_t kvm_reset_icc_ctlr_el1;
+> +
+>      /* Virtualization control interface */
+>      uint64_t ich_apr[3][4]; /* ich_apr[GICV3_G1][x] never used */
+>      uint64_t ich_hcr_el2;
+> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c index
+> 9829e2146da..b95e6ea057a 100644
+> --- a/hw/intc/arm_gicv3_kvm.c
+> +++ b/hw/intc/arm_gicv3_kvm.c
+> @@ -666,11 +666,24 @@ static void kvm_arm_gicv3_get(GICv3State *s)
+>=20
+>  static void arm_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo
+> *ri)  {
+> -    GICv3State *s;
+> -    GICv3CPUState *c;
+> +    GICv3CPUState *c =3D (GICv3CPUState *)env->gicv3state;
+>=20
+> -    c =3D (GICv3CPUState *)env->gicv3state;
+> -    s =3D c->gic;
+> +    /*
+> +     * This function is called when each vcpu resets. The kernel
+> +     * API for the GIC assumes that it is only to be used when the
+> +     * whole VM is paused, so if we attempt to read the kernel's
+> +     * reset values here we might get EBUSY failures.
+> +     * So instead we assume we know what the kernel's reset values
+> +     * are (mostly zeroes) and only update the QEMU state struct
+> +     * fields. The exception is that we do need to know the kernel's
+> +     * idea of the ICC_CTLR_EL1 reset value, so we cache that at
+> +     * device realize time.
+> +     *
+> +     * This makes these sysregs different from the usual CPU ones,
+> +     * which can be validly read and written when only the single
+> +     * vcpu they apply to is paused, and where (in target/arm code)
+> +     * we read the reset values out of the kernel on every reset.
+> +     */
+>=20
+>      c->icc_pmr_el1 =3D 0;
+>      /*
+> @@ -691,16 +704,8 @@ static void arm_gicv3_icc_reset(CPUARMState *env,
+> const ARMCPRegInfo *ri)
+>      memset(c->icc_apr, 0, sizeof(c->icc_apr));
+>      memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
+>=20
+> -    if (s->migration_blocker) {
+> -        return;
+> -    }
+> -
+> -    /* Initialize to actual HW supported configuration */
+> -    kvm_device_access(s->dev_fd,
+> KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS,
+> -                      KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer),
+> -                      &c->icc_ctlr_el1[GICV3_NS], false, &error_abort);
+> -
+> -    c->icc_ctlr_el1[GICV3_S] =3D c->icc_ctlr_el1[GICV3_NS];
+> +    c->icc_ctlr_el1[GICV3_NS] =3D c->kvm_reset_icc_ctlr_el1;
+> +    c->icc_ctlr_el1[GICV3_S] =3D c->kvm_reset_icc_ctlr_el1;
+>  }
+>=20
+>  static void kvm_arm_gicv3_reset_hold(Object *obj, ResetType type) @@ -
+> 939,6 +944,22 @@ static void kvm_arm_gicv3_realize(DeviceState *dev,
+> Error **errp)
+>                                      kvm_arm_gicv3_notifier,
+>                                      MIG_MODE_CPR_TRANSFER);
+>      }
+> +
+> +    /*
+> +     * Now we can read the kernel's initial value of ICC_CTLR_EL1, which
+> +     * we will need if a CPU interface is reset. If the kernel is ancien=
+t
+> +     * and doesn't support writing the GIC state then we don't need to
+> +     * care what reset does to QEMU's data structures.
+> +     */
+> +    if (!s->migration_blocker) {
+> +        for (i =3D 0; i < s->num_cpu; i++) {
+> +            GICv3CPUState *c =3D &s->cpu[i];
+> +
+> +            kvm_device_access(s->dev_fd,
+> KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS,
+> +                              KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer)=
+,
+> +                              &c->kvm_reset_icc_ctlr_el1, false, &error_=
+abort);
+> +        }
+> +    }
+>  }
+>=20
+>  static void kvm_arm_gicv3_class_init(ObjectClass *klass, const void *dat=
+a)
+> --
+> 2.43.0
+>=20
 
 
