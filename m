@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A3ACCCD195
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 06:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8441ACCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 06:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Hfc-0003JR-Uk; Thu, 16 Oct 2025 02:41:04 -0400
+	id 1v9Hp8-0005Wn-T3; Thu, 16 Oct 2025 02:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9HfY-0003JB-Ag
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:41:01 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v9Hp6-0005WM-Eb
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:50:52 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9HfU-0005G0-T8
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:41:00 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id F039A8083D;
- Thu, 16 Oct 2025 09:40:51 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8c::1:19] (unknown
- [2a02:6bf:8080:a8c::1:19])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id oeKVv33F1qM0-WXTcLsCM; Thu, 16 Oct 2025 09:40:51 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760596851;
- bh=EUEicfCwv23R5thr2EbKdfyolUV/kGS1ov+cwSUhL84=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=R/FFAuAdNqtp+tPCNv+hZpTgcglE00tQAQzGi3fuGyf8XUswaAS7+7puB7H1hXxsI
- SSxDbAmpn84WT1viTa+QO9iKMgdygjAKDE5ewBNQpfMGDvQFLb47EvfgTvk7C26HP0
- tLvF/CjhaI8aiMnzrrZmDUAz/7pcza+6x5k93n4k=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <29851555-f1f2-479d-aa61-7be80289f357@yandex-team.ru>
-Date: Thu, 16 Oct 2025 09:40:50 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v9Hp2-000771-Lj
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 02:50:52 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59G6oN6j004834
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 16 Oct 2025 15:50:23 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=T2Ffs87z7sCm2PVLH2xPBPa+TErG2xNOS+CMYXHQkDI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760597423; v=1;
+ b=eAqvXvpS5+xVNvex8GQhCvgfszXeOgWRBMZ6UqW8iOACxc/l+PkqWPKNEH1tenom
+ n7FAgSO0bk6S/cNgd9JSui+Upaz6oAYC0HzzHa3hLKRI2N85Yhcu5z5Kg2YPeWJL
+ Yd7f9ancKiFpUsTIpsw/Pj9S7uEZGCTr6lHjs/JudgVDEZdd+tDtqqjeQD8hO0xd
+ v4jeIXPjEljFuP0NJwEpcyTctHQ1V/y5eW2BANOpa35a56Mr1bqh9zhrvfmzMFNy
+ gxnZa0RYGvD96lkFIlxVZVM2N8xJWVmRBQC1/2b8N49m+9FBg2BntsF9wbuBvRQK
+ YbFRJD8RD7jqFgfm8HTR5Q==
+Message-ID: <a0bcfbed-b6a1-42e5-b482-eb056fc2cd25@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 16 Oct 2025 15:50:23 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/7] chardev/char: introduce .init() + .connect()
- initialization interface
-To: Markus Armbruster <armbru@redhat.com>
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, qemu-devel@nongnu.org, raphael@enfabrica.net,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20251015212051.1156334-1-vsementsov@yandex-team.ru>
- <20251015212051.1156334-6-vsementsov@yandex-team.ru>
- <87qzv3v03c.fsf@pond.sub.org>
+Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify
+ blob resources
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
+ <20251003234138.85820-3-vivek.kasireddy@intel.com>
+ <1fd966d9-95a5-45aa-8a20-46f2987cd65a@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB718547E3A9E97A0DD6A4A2D6F8EAA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <ba762750-cab1-4cb8-a629-101de5fdc179@rsg.ci.i.u-tokyo.ac.jp>
+ <CH3PR11MB7177C4541131508F53BD27F3F8E8A@CH3PR11MB7177.namprd11.prod.outlook.com>
+ <955ea687-ed25-47bd-9ba9-73c6b98c8e29@rsg.ci.i.u-tokyo.ac.jp>
+ <1f127ac5-10dd-435e-9ff5-f70596d7aac4@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71853F97E13556E781AAE104F8E9A@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87qzv3v03c.fsf@pond.sub.org>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB71853F97E13556E781AAE104F8E9A@IA0PR11MB7185.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,96 +85,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.10.25 09:20, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 2025/10/16 14:41, Kasireddy, Vivek wrote:
+> Hi Akihiko,
 > 
->> We'll need a possibility to postpone connect step to later point in
->> time to implement backend-transfer migration feature for vhost-user-blk
->> in further commits. Let's start with new char interface for backends.
+>> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify blob
+>> resources
 >>
->> .init() takes QAPI parameters and should parse them, called early
+>> On 2025/10/15 15:11, Akihiko Odaki wrote:
+>>> On 2025/10/15 14:07, Kasireddy, Vivek wrote:
+>>>> Hi Akihiko,
+>>>>
+>>>>> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to
+>>>>> identify blob
+>>>>> resources
+>>>>>
+>>>>>>
+>>>>>>> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to
+>>>>>>> identify
+>>>>> blob
+>>>>>>> resources
+>>>>>>>
+>>>>>>> On 2025/10/04 8:35, Vivek Kasireddy wrote:
+>>>>>>>> The res->blob pointer may not be valid (non-NULL) for some blobs
+>>>>>>>> where the backing storage is not memfd based. Therefore, we cannot
+>>>>>>>> use it to determine if a resource is a blob or not. Instead, we
+>>>>>>>> could use res->blob_size to make this determination as it is
+>>>>>>>> non-zero for blob resources regardless of where their backing
+>>>>>>>> storage is located.
+>>>>>>>
+>>>>>>> I think this patch is no longer necessary since now you add code to
+>>>>>>> mmap() VFIO storage with "[PATCH v1 7/7] virtio-gpu-udmabuf: Create
+>>>>>>> dmabuf for blobs associated with VFIO devices".
+>>>>>> Right, but given that mmap() can still fail for various reasons and
+>>>>>> this
+>>>>>> use-case can work as long as dmabuf creation succeeds, I think it makes
+>>>>>> sense to not rely on res->blob to determine if a resource is blob or
+>>>>>> not.
+>>>>>
+>>>>> I think the code will be simpler by making resource creation fail when
+>>>>> mmap() fails, and I am concerned that the guest may mulfunction with
+>>>>> such an incomplete resource.
+>>>> AFAICT, mmap() is a slow, optional path except for the cursor (which
+>>>> needs
+>>>> further improvement). So, failing resource creation when mmap() fails
+>>>> does not seem like a good idea to me given the fact that supporting
+>>>> mmap()
+>>>> is considered optional for dmabuf providers. And, even with vfio, mmap()
+>>>> can be blocked for various reasons by the kernel driver IIUC.
 >>
->> .connect() should actually establish a connection, and postponed to
->> the point of attaching to frontend. Called at later point, either
->> at time of attaching frontend, either from qemu_chr_wait_connected().
-> 
-> s/either/or/
-> 
+>> Reviewing the code again, I don't think mmap() can fail with the current
+>> version of this series.
 >>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> [...]
-> 
->> diff --git a/include/chardev/char.h b/include/chardev/char.h
->> index 429852f8d9..d2e01f0f9c 100644
->> --- a/include/chardev/char.h
->> +++ b/include/chardev/char.h
->> @@ -63,6 +63,7 @@ struct Chardev {
->>       CharBackend *be;
->>       char *label;
->>       char *filename;
->> +    bool connect_postponed;
->>       int logfd;
->>       int be_open;
->>       /* used to coordinate the chardev-change special-case: */
->> @@ -225,6 +226,7 @@ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
->>                                   bool permit_mux_mon);
->>   int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_all);
->>   #define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, len, true)
->> +bool qemu_chr_connect(Chardev *chr, Error **errp);
->>   int qemu_chr_wait_connected(Chardev *chr, Error **errp);
->>   
->>   #define TYPE_CHARDEV "chardev"
->> @@ -259,7 +261,31 @@ struct ChardevClass {
->>       /* parse command line options and populate QAPI @backend */
->>       void (*parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
->>   
->> -    /* called after construction, open/starts the backend */
->> +    /*
->> +     * Called after construction, create the backend, mutually exclusive
->> +     * with @open, and should be followed by @connect().
->> +     * Must set the Chardev's chr->filename on success.
->> +     */
->> +    bool (*init)(Chardev *chr, ChardevBackend *backend,
->> +                 Error **errp);
->> +
->> +    /*
->> +     * Called after @init(), starts the backend, mutually exclusive
->> +     * with @open. Should care to send CHR_EVENT_OPENED when connected.
-> 
-> Would "Must send CHR_EVENT_OPENED on success" be clearer?
+>> udmabuf obviously always supports mmap().
+>>
+>> For VFIO, checking memory_region_is_ram_device() ensures that VFIO
+>> supports mmap(); memory_region_init_ram_device_ptr() is called from
+>> vfio_region_mmap(), which is only called when VFIO supports mmap().
+> My point is not whether a dmabuf provider provides support for mmap()
+> or not but about the fact that mmap() can fail (for various reasons because
+> it is not a guarantee) making res->blob NULL. But we are incorrectly using
+> res->blob pointer to determine whether a resource is a blob (and usable)
+> or not which doesn't make sense because even if res->blob is NULL, the
+> resource is still valid and usable via the dmabuf fd, which is the preferred,
+> accelerated path.
 
-No, because it may start background connecting process instead, which
-should finish with CHR_EVENT_OPENED.
+Failing to mmap something that is already mmap-ed to another address is 
+very unrealistic and I can't really think of a possibility of such a 
+failure aside bugs.
 
-> 
->> +     */
->> +    bool (*connect)(Chardev *chr, Error **errp);
->> +
->> +    /*
->> +     * Called after construction, an alternative to @init + @connect
->> +     * and should do the work for both: create and start the backend.
->> +     * Mutual exclusive with @init and @connect.
-> 
-> Mutually
-> 
->> +     *
->> +     * May not set the Chardev's chr->filename (generic code will care),
->> +     * and may not send CHR_EVENT_OPENED when connected (@be_opened
->> +     * should not be touched in this case, to signal the generic code
->> +     * to care about CHR_EVENT_OPENED). If backend care about
-> 
-> If the backend cares
-> 
->> +     * CHR_EVENT_OPENED, it should set @be_opened to false.
->> +     */
->>       void (*open)(Chardev *chr, ChardevBackend *backend,
->>                    bool *be_opened, Error **errp);
-> 
+If this condition (a valid resource with a NULL res->blob) could only 
+happen due to a bug, then, in my opinion, marking such a resource as 
+invalid is actually a more defensive and desirable approach. If a core 
+operation like mmap fails unexpectedly on a resource that should support 
+it, continuing to treat it as functional could lead to worse, 
+harder-to-debug failures later in the pipeline. And I hope it can be 
+done without complicating the code (or it even simplifies).
 
-
--- 
-Best regards,
-Vladimir
+Regards,
+Akihiko Odaki
 
