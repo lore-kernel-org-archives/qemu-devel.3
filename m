@@ -4,69 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263C5CCD19A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1375CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mnl-0000HS-Rp; Thu, 16 Oct 2025 08:09:49 -0400
+	id 1v9MoK-0000wM-Vi; Thu, 16 Oct 2025 08:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1v9MnV-0000CW-41
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:09:35 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1v9Mnt-0000ha-FI; Thu, 16 Oct 2025 08:09:57 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1v9MnP-0006wT-63
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:09:32 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cnRVd4VSjz6M4Ls;
- Thu, 16 Oct 2025 20:05:45 +0800 (CST)
-Received: from dubpeml500003.china.huawei.com (unknown [7.214.146.145])
- by mail.maildlp.com (Postfix) with ESMTPS id 3087A1402A5;
- Thu, 16 Oct 2025 20:09:16 +0800 (CST)
-Received: from dubpeml500004.china.huawei.com (7.214.147.1) by
- dubpeml500003.china.huawei.com (7.214.146.145) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 16 Oct 2025 13:09:15 +0100
-Received: from dubpeml500004.china.huawei.com ([7.214.147.1]) by
- dubpeml500004.china.huawei.com ([7.214.147.1]) with mapi id 15.02.1544.011;
- Thu, 16 Oct 2025 13:09:15 +0100
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Salil Mehta
- <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
-Subject: RE: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-Thread-Topic: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-Thread-Index: AQHcPPUb159YqalKN0iW0Ad9cDluebTBcyuAgAAtQ0D///KGAIADFNew
-Date: Thu, 16 Oct 2025 12:09:15 +0000
-Message-ID: <d2c29e810ccc4d0eb7740b69e36cb4ac@huawei.com>
-References: <20251014102439.319915-1-peter.maydell@linaro.org>
- <261d6938fc894b1ca0979aef30fb9e1c@huawei.com>
- <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
- <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.202.67.10]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1v9Mnm-0006zS-HL; Thu, 16 Oct 2025 08:09:56 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GBnVX9021793;
+ Thu, 16 Oct 2025 12:09:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=3FSU47RGtnCQB/ov4
+ YA8aPN+XrcB8C07+ZWC65TGiS4=; b=DmzKNyBIMz3g2BWmJiZ1w/M68kVB+rYtp
+ yXoU1TQ0EHqhU/oDT8lq04zYET8NBsdhFu+cAgYcJ/sdAMjnTe+C7QiR0DpPAUAU
+ P4u7JASAetjQaLVdJ1QaxQA6zTw2DOpcY5/Q2AirnFhrbngeeFDARmGvRkhvZrt/
+ z0jgm5JRyNKfgGjjikYWPtuMnQt+ayo1eBoXrUuC0aJ5qgPvKcpthkCcTem4Hpug
+ Qt9jHJ5Y3fsuHP5rslWDfDzk1Zonm/AhG+G7FqZI8n1hW0hnZizX4mQ1U0t9NwcL
+ 1Z02hRY/rUGw6Y1o0rHmhlvLdVAcia4M7lzPpDqjspAYaOs0K3H4g==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey92hnm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 12:09:36 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GA9Lbn018812;
+ Thu, 16 Oct 2025 12:09:35 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r2jmwm53-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 12:09:35 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59GC9XX062259688
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Oct 2025 12:09:33 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9753C20175;
+ Thu, 16 Oct 2025 12:09:33 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 27BB920174;
+ Thu, 16 Oct 2025 12:09:33 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.111.71.186])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Oct 2025 12:09:33 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-stable@nongnu.org
+Subject: [PATCH v3 3/3] tests/tcg/s390x: Test SET CLOCK COMPARATOR
+Date: Thu, 16 Oct 2025 14:07:01 +0200
+Message-ID: <20251016120928.22467-4-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251016120928.22467-1-iii@linux.ibm.com>
+References: <20251016120928.22467-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: _KV8zhtB_UgFmH5RUCZNiTVFfbnj_CF9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX+KbFsqPaN2MY
+ lY63t3twFs5ZD+Y8XAq4pnviavW8hflf3Kj3GqzSlgqUN9QMUjp4qa0fdaGqXTj2JrWuuH71R95
+ Sdry60IGpObUrQCegENMJEg1d4fITcomiqP9GZGF+VicUF/adq1VxcTkEdhSaWvpCjqTKR23SZf
+ DKCjLsWhIFb6K9mihy0shPgj6CvD1I1wN30usJDsVFNDD43MQKCidG9Cjz/8nkLbRwqDy4EusWI
+ +1C4z2xvUmqk0nnT6IJkIpAKgY+9bKWE83Z7mkkxDJ2odr4vOqOjHsacQH8vLB74hG2BDO4YGpv
+ Hm86xRgWsUi672Ii/TmZZne15qBjsKEQB6uzdHLGERZ47puavufZ1ToCQ4nZL8ImdaLN7u2CL9a
+ Md+1gg78+/pF7ZuSkX+yPhb4X6layw==
+X-Proofpoint-GUID: _KV8zhtB_UgFmH5RUCZNiTVFfbnj_CF9
+X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68f0e080 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=H4dCiJhQUaCM5N7H5isA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,104 +116,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiBGcm9tOiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+DQo+IFNlbnQ6
-IFR1ZXNkYXksIE9jdG9iZXIgMTQsIDIwMjUgMjozMSBQTQ0KPiBUbzogU2FsaWwgTWVodGEgPHNh
-bGlsLm1laHRhQGh1YXdlaS5jb20+DQo+IA0KPiBPbiBUdWUsIDE0IE9jdCAyMDI1IGF0IDE0OjIz
-LCBTYWxpbCBNZWh0YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBI
-aSBQZXRlciwNCj4gPg0KPiA+ID4gRnJvbTogcWVtdS1kZXZlbC1ib3VuY2VzK3NhbGlsLm1laHRh
-PWh1YXdlaS5jb21Abm9uZ251Lm9yZw0KPiA8cWVtdS0NCj4gPiA+IGRldmVsLWJvdW5jZXMrc2Fs
-aWwubWVodGE9aHVhd2VpLmNvbUBub25nbnUub3JnPiBPbiBCZWhhbGYgT2YgU2FsaWwNCj4gPiA+
-IE1laHRhIHZpYQ0KPiA+ID4gU2VudDogVHVlc2RheSwgT2N0b2JlciAxNCwgMjAyNSAxMTo0MSBB
-TQ0KPiA+ID4gVG86IFBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz47IHFl
-bXUtDQo+IGRldmVsQG5vbmdudS5vcmcNCj4gPiA+DQo+ID4gPiBIaSBQZXRlciwNCj4gPiA+DQo+
-ID4gPiA+IEZyb206IHFlbXUtZGV2ZWwtYm91bmNlcytzYWxpbC5tZWh0YT1odWF3ZWkuY29tQG5v
-bmdudS5vcmcNCj4gPiA+IDxxZW11LQ0KPiA+ID4gPiBkZXZlbC1ib3VuY2VzK3NhbGlsLm1laHRh
-PWh1YXdlaS5jb21Abm9uZ251Lm9yZz4gT24gQmVoYWxmIE9mDQo+ID4gPiA+IGRldmVsLWJvdW5j
-ZXMrUGV0ZXINCj4gPiA+ID4gTWF5ZGVsbA0KPiA+ID4gPiBTZW50OiBUdWVzZGF5LCBPY3RvYmVy
-IDE0LCAyMDI1IDExOjI1IEFNDQo+ID4gPiA+IFRvOiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4g
-PiA+ID4NCj4gPiA+ID4gQ3VycmVudGx5IGluIGFybV9naWN2M19pY2NfcmVzZXQoKSB3ZSByZWFk
-IHRoZSBrZXJuZWwncyB2YWx1ZSBvZg0KPiA+ID4gPiBJQ0NfQ1RMUl9FTDEgYXMgcGFydCBvZiBy
-ZXNldHRpbmcgdGhlIENQVSBpbnRlcmZhY2UuICBUaGlzIG1vc3RseQ0KPiA+ID4gPiB3b3Jrcywg
-YnV0IHdlJ3JlIGFjdHVhbGx5IGJyZWFraW5nIGFuIGFzc3VtcHRpb24gdGhlIGtlcm5lbCBtYWtl
-cw0KPiA+ID4gPiB0aGF0IHVzZXJzcGFjZSBvbmx5IGFjY2Vzc2VzIHRoZSBpbi1rZXJuZWwgR0lD
-IGRhdGEgd2hlbiB0aGUgVk0gaXMNCj4gPiA+ID4gdG90YWxseSBwYXVzZWQsIHdoaWNoIG1heSBu
-b3QgYmUgdGhlIGNhc2UgaWYgYSBzaW5nbGUgdkNQVSBpcyBiZWluZw0KPiByZXNldC4NCj4gPiA+
-ID4gVGhlIGVmZmVjdCBpcyB0aGF0IGl0J3MgcG9zc2libGUgdGhhdCB0aGUgcmVhZCBhdHRlbXB0
-IHJldHVybnMgRUJVU1kuDQo+ID4gPiA+DQo+ID4gPiA+IEF2b2lkIHRoaXMgYnkgcmVhZGluZyB0
-aGUga2VybmVsJ3MgdmFsdWUgb2YgdGhlIHJlc2V0IElDQ19DVExSX0VMMQ0KPiA+ID4gPiBvbmNl
-IGluIGRldmljZSByZWFsaXplLiBUaGlzIGJyaW5ncyBJQ0NfQ1RMUl9FTDEgaW50byBsaW5lIHdp
-dGgNCj4gPiA+ID4gdGhlIG90aGVyIGNwdWlmIHJlZ2lzdGVycywgd2hlcmUgd2UgYXNzdW1lIHdl
-IGtub3cgd2hhdCB0aGUga2VybmVsDQo+ID4gPiA+IGlzIHJlc2V0dGluZyB0aGVtIHRvIGFuZCBq
-dXN0IHVwZGF0ZSBRRU1VJ3MgZGF0YSBzdHJ1Y3R1cmVzIGluDQo+ID4gPiBhcm1fZ2ljdjNfaWNj
-X3Jlc2V0KCkuDQo+ID4gPiA+DQo+ID4gPiA+IFNpZ25lZC1vZmYtYnk6IFBldGVyIE1heWRlbGwg
-PHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz4NCj4gPiA+ID4gLS0tDQo+ID4gPiA+IEkndmUgb25s
-eSB0ZXN0ZWQgdGhpcyBmYWlybHkgbGlnaHRseSwgYnV0IGl0IHNlZW1zIHRvIHdvcmsuDQo+ID4g
-PiA+IFNhbGlsLCBkb2VzIHRoaXMgZml4IHRoZSBFQlVTWSBpc3N1ZXMgeW91IHdlcmUgc2VlaW5n
-ID8NCj4gPiA+DQo+ID4gPg0KPiA+ID4gTGV0IG1lIHRyeSB0aGlzIGFuZCBnZXQgYmFjayB0byB5
-b3UuICBBbHNvLCBqdXN0IHRvIGxldCB5b3Uga25vdw0KPiA+ID4gdGhhdCAtRUJVU1kgY2FuIHJl
-dHVybiBmcm9tIG90aGVyIHBsYWNlcyBhcyB3ZWxsLiBQbGVhc2UgY2hlY2sgIG15DQo+ID4gPiBy
-ZXBseSBpbiB0aGUgb3RoZXIgbWFpbC0gY2hhaW4uDQo+ID4NCj4gPg0KPiA+IEdvdCB0aGlzLg0K
-PiA+DQo+ID4gKGdkYikgaGFuZGxlIFNJR1VTUjEgbm9zdG9wIG5vcHJpbnQgcGFzcw0KPiA+IFNp
-Z25hbCAgICAgICAgU3RvcCAgICAgIFByaW50ICAgUGFzcyB0byBwcm9ncmFtIERlc2NyaXB0aW9u
-DQo+ID4gU0lHVVNSMSAgICAgICBObyAgICAgICAgTm8gICAgICBZZXMgICAgICAgICAgICAgVXNl
-ciBkZWZpbmVkIHNpZ25hbCAxDQo+ID4gKGdkYikgcnVuDQo+ID4gU3RhcnRpbmcgcHJvZ3JhbToN
-Cj4gPiAvb3B0L3dvcmtzcGFjZS9jb2RlL3FlbXUvcWVtdS9idWlsZC9xZW11LXN5c3RlbS1hYXJj
-aDY0IC0tZW5hYmxlLQ0KPiBrdm0NCj4gPiAtbWFjaGluZSB2aXJ0LGdpYy12ZXJzaW9uPTMgLWNw
-dSBob3N0IC1zbXAgY3B1cz0yLGRpc2FibGVkY3B1cz0yIC1tDQo+ID4gMzAwTSAta2VybmVsIC9v
-cHQvd29ya3NwYWNlL2NvZGUvbGludXgvbGludXgvYXJjaC9hcm02NC9ib290L0ltYWdlDQo+ID4g
-LWluaXRyZCAvb3B0L3dvcmtzcGFjZS9jb2RlL2ZpbGVzeXN0ZW0vcm9vdGZzLmNwaW8uZ3ogLWFw
-cGVuZA0KPiA+IGNvbnNvbGU9dHR5QU1BMFwgcm9vdD0vZGV2L3JhbVwgZWFybHljb25cIHJkaW5p
-dD0vaW5pdFwgbWF4Y3B1cz0xXA0KPiA+IGFjcGk9Zm9yY2UgLW5vZ3JhcGhpYyAtYmlvcw0KPiA+
-IC9vcHQvd29ya3NwYWNlL2NvZGUvdWVmaS9lZGsyL0J1aWxkL0FybVZpcnRRZW11LQ0KPiBBQVJD
-SDY0L1JFTEVBU0VfR0NDNS9GDQo+ID4gVi9RRU1VX0VGSS5mZCBbVGhyZWFkIGRlYnVnZ2luZyB1
-c2luZyBsaWJ0aHJlYWRfZGIgZW5hYmxlZF0gVXNpbmcgaG9zdA0KPiA+IGxpYnRocmVhZF9kYiBs
-aWJyYXJ5ICIvbGliL2FhcmNoNjQtbGludXgtZ251L2xpYnRocmVhZF9kYi5zby4xIi4NCj4gPiBb
-TmV3IFRocmVhZCAweGZmZmZmNWI1ZWI0MCAoTFdQIDMxOTk0KV0gW05ldyBUaHJlYWQgMHhmZmZm
-ZjRlODhiNDANCj4gPiAoTFdQIDMxOTk2KV0gW05ldyBUaHJlYWQgMHhmZmZmZDRkZmViNDAgKExX
-UCAzMTk5NyldIFVuZXhwZWN0ZWQgZXJyb3INCj4gPiBpbiBrdm1fZGV2aWNlX2FjY2VzcygpIGF0
-IC4uL2FjY2VsL2t2bS9rdm0tYWxsLmM6MzQ3NToNCj4gPiBxZW11LXN5c3RlbS1hYXJjaDY0OiBL
-Vk1fR0VUX0RFVklDRV9BVFRSIGZhaWxlZDogR3JvdXAgNiBhdHRyDQo+ID4gMHgwMDAwMDAwMDAw
-MDBjNjY0OiBJbmFwcHJvcHJpYXRlIGlvY3RsIGZvciBkZXZpY2UNCj4gDQo+IERvZXMgaXQgZG8g
-dGhpcyBjb25zaXN0ZW50bHksIG9yIG9ubHkgc29tZXRpbWVzPyBXaGF0IGhvc3Qga2VybmVsIHZl
-cnNpb24gYXJlDQo+IHlvdSBydW5uaW5nPyBBbmQgd2hhdCBRRU1VIGNvbW1pdCAocGx1cyB0aGlz
-IHBhdGNoKT8NCj4gDQo+IEknbSBndWVzc2luZyBmcm9tIHRoYXQgImRpc2FibGVkY3B1cz0yIiBw
-YXJ0IHRoYXQgeW91J3JlIHJ1bm5pbmcgc29tZSBub3QtDQo+IHlldC11cHN0cmVhbSBzZXQgb2Yg
-UUVNVSBwYXRjaGVzLiBQbGVhc2UgZHJvcCB0aG9zZSwgYW5kIHRlc3Qgb25seSB3aXRoDQo+IHRo
-aXMsIHRvIHJ1bGUgb3V0IHRoZSBwb3NzaWJpbGl0eSBvZiBzb21lIGJ1Zy91bmV4cGVjdGVkIGlu
-dGVyYWN0aW9uIHdpdGgNCj4gdGhvc2UuDQoNCg0KVGhhbmtzIGZvciB0aGlzIHN1Z2dlc3Rpb24u
-IFdlIGNhbiBpZ25vcmUgdGhlIGNyYXNoIGl0IGhhcHBlbmVkIGJlY2F1c2UNCm9mIHRoZSB3cm9u
-ZyBjb25mbGljdCByZXNvbHV0aW9uLg0KDQpJIGFsc28gcmV2aWV3ZWQgdGhlIHByb2JsZW0gb2Yg
-dGhlIGhhbmcgd2hpY2ggSSBicmllZmx5IHRvdWNoZWQgdXBvbiBlYXJsaWVyLg0KQWZ0ZXIgcmV2
-aXNpdGluZyB0aGUgcHJldmlvdXMgZGVidWdnaW5nIGJyYW5jaGVzIGFuZCBmaXhlcyBJIHJlYWxp
-emVkOg0KMS4gSGFuZyBoYXBwZW5lZCB3aGlsZSBleGVjdXRpbmcgQ1BVX09OIGZyb20gZ3Vlc3Qg
-a2VybmVsIGFuZCBub3Qgd2hpbGUNCiAgICBhY2Nlc3NpbmcgdGhlIHN5c3RlbSByZWdpc3RlciBk
-dXJpbmcgR0lDIHJlYWxpemF0aW9uIHBoYXNlLg0KMi4gSXQgb25seSBoYXBwZW5lZCBpZiB0aGUg
-e3BhdXNlLHJlc3VtZX1fYWxsX3ZjcHVzKCkgd2FzIG5vdCBiZWluZyB1c2VkDQozLiBQb2ludCAy
-LiBoYXBwZW5lZCB3aGVuIEkgYWN0dWFsbHkgaW1wbGVtZW50ZWQgdGhlIE1hcmMncyBzdWdnZXN0
-aW9uIHRvDQogICAgY2FjaGUgZHVyaW5nIHRoZSBHSUMgcmVhbGl6ZS4gDQo0LiBCdXQgdGhlIGhh
-bmcgb25seSBoYXBwZW5lZCB3aGVuIHRoZSByZWNlbnRseSBlbmFibGVkIHZDUFVzIHdlcmUgYnJv
-dWdodA0KICAgICBvbmxpbmUgZm9yIHRoZSBmaXJzdCB0aW1lLg0KDQoNCkJ1dCB3aHkgaXQgaGFw
-cGVuZWQ/DQoxLiB3aGVuIGEgQ1BVIGlzIHJlYWxpemVkIGl0cyBDUFVTdGF0ZTo6c3RvcHBlZD10
-cnVlLCBzZXQgYnkgcWVtdV9pbml0X3ZjcHUoKQ0KMi4gVGhpcyBzdGF0ZSBpcyByZXNldCBmb3Ig
-YWxsIHRoZSBlbmFibGVkIHZDUFVzIGluIGNvbnRleHQgdG8gdm1fc3RhcnQoKSB3aGVuDQogICAg
-IHJlc3VtZV9hbGxfdmNwdXMoKSBpcyBjYWxsZWQuDQozLiBGb3IgdGhlIGRpc2FibGVkIHZDUFVz
-LCB3ZSBtdXN0IGRvIHRoZSBzYW1lIHdoZW4gdGhleSBhcmUgZW5hYmxlZC4NCjQuIENhbGxpbmcg
-Y3B1X3Jlc3VtZSgpIHdoZW4gJ2Rpc2FibGVkJyB2Q1BVcyBhcmUgYWRtaW5pc3RyYXRpdmVseSBl
-bmFibGVkDQogICAgIHJlc2V0cyB0aGUgQ1BVU3RhdGU6OnN0b3BwZWQgdG8gZmFsc2UgYW5kIGtp
-Y2tzIHRoZSB2Q1BVcy4NCjUuIEhhbmcgd2FzIGR1ZSB0byB0aGUgQ1BVIHRocmVhZCBub3QgZ2V0
-dGluZyBraWNrZWQgZnJvbSB0aGUgSU8gd2FpdCBzdGF0ZS4NCjYuIFRoaXMgcHJvYmxlbSB3ZW50
-IHVubm90aWNlZCBlYXJsaWVyIGJlY2F1c2UgYmVmb3JlIGNhbGxpbmcgS1ZNIGRldmljZQ0KICAg
-IElPQ1RMIHdlIGZpcnN0IHBhdXNlZCBhbGwgdGhlIHZDUFVzIGFuZCB0aGVuIHJlc3VtZWQgdGhl
-IHZDUFVzIGluDQogICAgY29udGV4dCB0byB0aGUgY3B1X3Jlc2V0KCkgYnkgY2FsbGluZyB7cGF1
-c2UscmVzdW1lfV92Y3B1X2FsbCgpLiBUaGlzIHJlc3VtZQ0KICAgYWN0aW9uIHJlc2V0cyB0aGUg
-Q1BVU3RhdGU6OnN0b3BwZWQgdG8gZmFsc2UgYW5kIGtpY2tzIHRoZSB0aHJlYWQgYXMgd2VsbC4N
-Cg0KDQpJJ3ZlIHRlc3RlZCBhYm92ZSBhbmQgaXQgd29ya3MuIEFib3ZlIGhhbmcgcHJldmlvdXNs
-eSBvYnNlcnZlZCBpcyBmaXhlZC4NCg0KaHR0cHM6Ly9naXRodWIuY29tL3NhbGlsLW1laHRhL3Fl
-bXUvY29tbWl0cy92aXJ0LWNwdWhwLWFybXY4L3JmYy12Ni4xLw0KDQoNCk1hbnkgdGhhbmtzIQ0K
-DQpCZXN0IHJlZ2FyZHMNClNhbGlsLg0KDQoNCg0KDQoNCg0KDQoNCg0KDQo=
+Add a small test to prevent regressions.
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tests/tcg/s390x/Makefile.softmmu-target |  1 +
+ tests/tcg/s390x/sckc.S                  | 55 +++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 tests/tcg/s390x/sckc.S
+
+diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
+index 8cd4667c63b..a4425d3184a 100644
+--- a/tests/tcg/s390x/Makefile.softmmu-target
++++ b/tests/tcg/s390x/Makefile.softmmu-target
+@@ -28,6 +28,7 @@ ASM_TESTS =                                                                    \
+     mc                                                                         \
+     per                                                                        \
+     precise-smc-softmmu                                                        \
++    sckc                                                                       \
+     ssm-early                                                                  \
+     stosm-early                                                                \
+     stpq                                                                       \
+diff --git a/tests/tcg/s390x/sckc.S b/tests/tcg/s390x/sckc.S
+new file mode 100644
+index 00000000000..66e8733f45c
+--- /dev/null
++++ b/tests/tcg/s390x/sckc.S
+@@ -0,0 +1,55 @@
++/*
++ * Test clock comparator.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++    .org 0x130
++ext_old_psw:
++    .org 0x1b0
++ext_new_psw:
++    .quad 0x180000000, _ext            /* 64-bit mode */
++    .org 0x200                         /* lowcore padding */
++
++    .globl _start
++_start:
++    lpswe start31_psw
++_start31:
++    stctg %c0,%c0,c0
++    oi c0+6,8                          /* set clock-comparator subclass mask */
++    lctlg %c0,%c0,c0
++    jg .
++
++_ext:
++    stg %r0,ext_saved_r0
++
++    lg %r0,ext_counter
++    aghi %r0,1
++    stg %r0,ext_counter
++
++    cgfi %r0,0x1000
++    jnz 0f
++    lpswe success_psw
++0:
++
++    stck clock
++    lg %r0,clock
++    agfi %r0,0x40000                   /* 64us * 0x1000 =~ 0.25s */
++    stg %r0,clock
++    sckc clock
++
++    lg %r0,ext_saved_r0
++    lpswe ext_old_psw
++
++    .align 8
++start31_psw:
++    .quad 0x100000080000000,_start31   /* EX, 31-bit mode */
++success_psw:
++    .quad 0x2000000000000,0xfff        /* see is_special_wait_psw() */
++c0:
++    .skip 8
++clock:
++    .quad 0
++ext_counter:
++    .quad 0
++ext_saved_r0:
++    .skip 8
+-- 
+2.51.0
+
 
