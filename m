@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26227CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F4ECCD19A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9MwC-0001vC-3C; Thu, 16 Oct 2025 08:18:32 -0400
+	id 1v9Mw2-0001aC-LA; Thu, 16 Oct 2025 08:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mw9-0001ne-RO
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:30 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mvj-0000CV-4c
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:03 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mw1-0008Qy-PR
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:28 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-42421b1514fso392596f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:18:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MvX-0008N9-Ct
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:18:02 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42557c5cedcso397726f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760617097; x=1761221897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760617065; x=1761221865; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Yo/E3uEAHXqN340EGGedJ1kT+6rcG10oKgsR/3sLzts=;
- b=q8Ph8eEBZoTRak7ICPwKOytXGEGWrhoKlYraA2r+LYu9GnlzjZr8rChoTOQrHCXjLs
- PggNUQJqrAXrKSG9CnuAHveakvX2oVll8X5s+Wv+KhF4XC6m7nK3N4feuH5RufObCD4b
- sGXuU9lXRpmKX7bMJ5pJwyHjAQFVniYnBaYnBtXiy1E9jZDZ3DiTcvHK3ql7dS7dfJgw
- TQkGe2oQvXOYIitdB8xlEnurR64Yo93NH0YBPuXPzm8AwEiyqemA23m6A76MUiuvE/hh
- depveVp6R88x3i++1+O+ZUV59rqVX8qkzPPlGk2IKH7L09G8THBEXltl5+kavxoL5Exf
- h8BA==
+ :reply-to; bh=XVN6tBw0gmk97WCd+6dwcTNW4D6/bgAb0sKGBCNOIqs=;
+ b=H88As4ISQaZNkGwY12cwpiXaIIC/97UrYJGa4/90uxHei/3jntVqDzqotmj73PVNGs
+ J17p+Zt+SjD2YjaSsIUH++fIxHRyMekwb2AhTzNuZPXBbGVK++O9wquY2NGBeMeHHN+7
+ qjbRqOxcRQnOaWivcG6ZgyD1rXk4tUho7+xruhqJzjRCwH6aIwH+AbGxLYrJuzGr6Lwk
+ vSuGELmeb4t0XVNSLd0bqG7RU8xSXcFfvrXI8uVEcmDwYKnGQ55aR0uDbXjUFcgM1k69
+ 8RUibPKIiG8Any6Gxog+DL9M8y+pzIXOR28V5QyLiAAYaqbz614OBleKcp9SvLgv8gtb
+ jt/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760617097; x=1761221897;
+ d=1e100.net; s=20230601; t=1760617065; x=1761221865;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Yo/E3uEAHXqN340EGGedJ1kT+6rcG10oKgsR/3sLzts=;
- b=epacURHzmM/iaraYP4tSLZN9A44N1roeINhZY2AapPEcToZKQSlwsVjKFIt23H8mHU
- s+uYtlzBVQxI6EmrCdgyM48nK7bzejxF+VHgcocVpV9zpFP67HytSAcq6APzafd7RWc1
- e9jdVGD1/rt2q/6A48O36mUC5aYeX1daOroKRfOKNPU8LD8WjiWzsUCeMIg8XR1OwGd9
- 9b3XGemYQRTFLa8Gv8GLC4J4Q4zRk6Mg0xT4oQpLWmn+LaWphWExI588ULzeo+w24YDR
- 09JWjljJBxbsjC0d1vzagmwDa1fb9xxkjK+zzE83mtZ/Y3GxQtDet2WCIMm1OLJkobXi
- RFxw==
-X-Gm-Message-State: AOJu0YwCksPkUdvbMQ1YPa1YYY2qY+ktupNLchu7/mun3yGNadG+iAWY
- iY4lhFRPjXh+c6EaZ3yh4cJebkih49hrUghtC1ouOO/sdzgPrPW847xy2tWcfJhmwZI8qBnxhLq
- AzyCfk0c=
-X-Gm-Gg: ASbGnctjxR1cBHt/pa2y5kP09HFJbdRhoc5SCJmyDwZjcfNRIk16UgQYYek0QhSW+0E
- rdIPLvmUUmJG0bNIsfIFx6u0q2h60kw8d5ylD+IfcJx9d5TrFAyXZK4BRmr8S9QGCEzBRtWtVeD
- vNq7VHTwNFjkqxLp7Rr7YwHJvj4R3Kt3PzssT8njLgt7q+BqTpd9UkFYhJQsEFLYewUri+GBHRo
- Q9iZylZ7tNXiRz9H3ksIP/rPKldp/jdehIT8ft9bCQ6wqnefE779UdB0AwUBYtaz7awQOYBjuGS
- YctVBHeuQUkcj7dCtSCX2XetxOltmvUb7RBzRnLqYVAziDUxax4QKFjHt/Xn6yVwa4BkNGtDyw9
- QnEURIA4EOQJmKCnhlMvonc6RxS1pkRvMsVAtJJ2EvF034Hfkas25SAmqjfg34uLqEfFXJmljfh
- VumQzfP7EvFYV7QMgnDsV9Ir4RmKqLl5M6d0y+qVpQQjo+DPrzAyee+Phkt+65ZjNl
-X-Google-Smtp-Source: AGHT+IF+BKXQOauF+5YF5gX1B+ibW48wTHusZpA99a+fVoWkYgopEXrtUO9+aDZ58aho7L63jAhUbg==
-X-Received: by 2002:a05:6000:2506:b0:3e9:978e:48fd with SMTP id
- ffacd0b85a97d-42666ab88fbmr20235825f8f.23.1760617097176; 
- Thu, 16 Oct 2025 05:18:17 -0700 (PDT)
+ bh=XVN6tBw0gmk97WCd+6dwcTNW4D6/bgAb0sKGBCNOIqs=;
+ b=xLU2cYDINuN4Baiu4x3b68eOHDXUjiB3AgsHpov5cFibssIixUHCs+Tbl6p5qad0Rb
+ s9tiVMeg1mGbCXoLpktf9buIku4DYPhlsvfSqwH5BYw8bYw3Cfk15q0Jn9tKodkTwWKR
+ +Yw5eIqDrtDF8uz41awUaW3Uv+j5baan8y3Penp83hTKf3gQR5Aj/ZSty1fD1cys/q1u
+ nTtDxLZopXOBTQBR/IzxcOF7158ClueftgCMtzZyA5FSTR3SucQz3q0A/j0ZdqD62qja
+ XADJ77EHlAKUQvCJWkmosydMxgDEetjHiervsia9kFGjyD6yARun1ISOuupPZRWyhs0y
+ UW8g==
+X-Gm-Message-State: AOJu0YxX5fObLOlM/4dkBBwB/jq1Ag2a3i9g+mBXpvxqnCdROZVr4KXD
+ FCCbwUxcy1r32tvCWn5CN6Buv5G0xpQ1hnV3xbGEJIVqNwZqG7J4AiHyRbNXAaFr8SwhZq/L+bC
+ qpAuGw9g=
+X-Gm-Gg: ASbGncvkQm/zzUNpJRBvRAdhD1S4bafQ4iso2WAm8DjSpTdC7qR/UrJn0gflGu8j03K
+ uug/0MTefrcMAi+CD7GMy755eSXw2slm3vhmtNQpsQk5M/4UGSvA4mGWniT/bglXDae9XlYe07/
+ mt2Cbs7YsOSJW3rqWsHTbZSz8t05qvKYfq+xRy6l+4j1fK8gYvajcoFfMraGH5UHUyHBtt0DvFf
+ F55LJ9Gbkl5Hmv//VvBFMv1YHmk7k9JXJngoiK5+p2wtA+DK1c7kbGn9EhXtxn0BQGnN53CWuQu
+ egGPLU/KUdsk/OE9X4CM2G4cE+ctHNoZeaRkhb6kgrv3nX39VZaDeQvl0uQvcKpQ0Zpk4K4RJBw
+ OlRkNrkMiDs75EqG8yyA05/nfm49OmyZMEZIenLfcXnQCciw3Qo1r2nbdCI2qIpeyUSIuymKTko
+ Mb6FjOrjdRnyU7jJSJ4d+81ZyAXSwTPG56MFNRgpYvd0dT7pLEmjBtIpjs05AerpWm
+X-Google-Smtp-Source: AGHT+IH9M3/VjmgcX6ic5cwQqY29v+TUZ6OX1NLHZCCz0p2S7ey5fkqLj2GcGxL1iiBwNEZ4JUbmCA==
+X-Received: by 2002:adf:e18a:0:b0:426:d81f:a86 with SMTP id
+ ffacd0b85a97d-426d81f0b0amr14856660f8f.58.1760617065194; 
+ Thu, 16 Oct 2025 05:17:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471143663afsm24878745e9.0.2025.10.16.05.18.16
+ ffacd0b85a97d-426f6773726sm8908074f8f.49.2025.10.16.05.17.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:18:16 -0700 (PDT)
+ Thu, 16 Oct 2025 05:17:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/75] target/openrisc: Conceal MO_TE within do_store()
-Date: Thu, 16 Oct 2025 14:14:51 +0200
-Message-ID: <20251016121532.14042-36-philmd@linaro.org>
+Subject: [PULL 28/75] target/openrisc: Do not use target_ulong for @mr in
+ MTSPR helper
+Date: Thu, 16 Oct 2025 14:14:44 +0200
+Message-ID: <20251016121532.14042-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
 References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251010070702.51484-10-philmd@linaro.org>
----
- target/openrisc/translate.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+OpenRISCTLBEntry::@mr field is a uint32_t type since its
+introduction in commit 726fe045720 ("target-or32: Add MMU support").
 
-diff --git a/target/openrisc/translate.c b/target/openrisc/translate.c
-index a6ba1747eca..623513bb15c 100644
---- a/target/openrisc/translate.c
-+++ b/target/openrisc/translate.c
-@@ -706,13 +706,16 @@ static bool trans_l_swa(DisasContext *dc, arg_store *a)
- static void do_store(DisasContext *dc, arg_store *a, MemOp mop)
- {
-     TCGv t0 = tcg_temp_new();
-+
-+    mop |= MO_TE;
-+
-     tcg_gen_addi_tl(t0, cpu_R(dc, a->a), a->i);
-     tcg_gen_qemu_st_tl(cpu_R(dc, a->b), t0, dc->mem_idx, mop);
- }
- 
- static bool trans_l_sw(DisasContext *dc, arg_store *a)
- {
--    do_store(dc, a, MO_TE | MO_UL);
-+    do_store(dc, a, MO_UL);
-     return true;
- }
- 
-@@ -724,7 +727,7 @@ static bool trans_l_sb(DisasContext *dc, arg_store *a)
- 
- static bool trans_l_sh(DisasContext *dc, arg_store *a)
- {
--    do_store(dc, a, MO_TE | MO_UW);
-+    do_store(dc, a, MO_UW);
-     return true;
- }
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251010070702.51484-3-philmd@linaro.org>
+---
+ target/openrisc/sys_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/openrisc/sys_helper.c b/target/openrisc/sys_helper.c
+index b091a9c6685..ad59939db3b 100644
+--- a/target/openrisc/sys_helper.c
++++ b/target/openrisc/sys_helper.c
+@@ -45,7 +45,7 @@ void HELPER(mtspr)(CPUOpenRISCState *env, target_ulong spr, target_ulong rb)
+     OpenRISCCPU *cpu = env_archcpu(env);
+ #ifndef CONFIG_USER_ONLY
+     CPUState *cs = env_cpu(env);
+-    target_ulong mr;
++    uint32_t mr;
+     int idx;
+ #endif
  
 -- 
 2.51.0
