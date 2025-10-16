@@ -4,109 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9220DCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F15CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mw0-0001Uz-15; Thu, 16 Oct 2025 08:18:20 -0400
+	id 1v9MxI-0003lK-CO; Thu, 16 Oct 2025 08:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1v9MvX-0007xi-Bk; Thu, 16 Oct 2025 08:17:54 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1v9MvN-0008M2-PT; Thu, 16 Oct 2025 08:17:47 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GAHTeL021227;
- Thu, 16 Oct 2025 12:17:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=wsJVKV2/dXHjBV4dZ
- JEAzYUAvsft7J0SZdUtFRxu2+E=; b=cpBejVg0BSGXN2ZQFf6+ZNk/6ja6+5qdQ
- x8SLJvakR5FFe8Sp0TTz4bu6lG28XlgjoauMiicVWZ7H5uyZPifecx8yOk/B6auw
- lZkl5tgMTME2jDHTydv6fzYOWxyH1CxJRsy1fzZx41eD2uvzCr5gRR/i3XnyihjY
- pLsORmzudEwJ52J+O3n59f6OJKwtAk7d4L1i2imEOCwMLyqbx7vVLUw6P2/dmzEo
- uHJcbQ24YWRhv0jROklT2UT4p/MQipBBxx727c2hQ2Bo8ofAZgIveHmIppBmH7r2
- dR2QzVKrwjNdcuEU5STYEPf4+OI7VtXllKuZNSm5J3haSABwj9mAQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew09cjt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 12:17:33 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GA85Cb003613;
- Thu, 16 Oct 2025 12:17:32 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xy5q93-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 12:17:32 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59GCHS5j52101418
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Oct 2025 12:17:28 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 326EB2013C;
- Thu, 16 Oct 2025 12:17:28 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0EB8A2013B;
- Thu, 16 Oct 2025 12:17:28 +0000 (GMT)
-Received: from a46lp68.lnxne.boe (unknown [9.152.108.100])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Oct 2025 12:17:28 +0000 (GMT)
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
- Thomas Huth <thuth@redhat.com>
-Cc: Sebastian Mitterle <smitterl@redhat.com>,
- qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
- Michael Mueller <mimu@linux.ibm.com>
-Subject: [PATCH v3 2/2] tests/functional: add tests for SCLP event CPI
-Date: Thu, 16 Oct 2025 14:17:08 +0200
-Message-ID: <20251016121708.334133-2-shalini@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20251016121708.334133-1-shalini@linux.ibm.com>
-References: <20251016121708.334133-1-shalini@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mwz-0003Zw-Hg
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:19:23 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mwp-0008Ul-CI
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:19:19 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-46e3a50bc0fso5145475e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:19:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760617143; x=1761221943; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=syTPR0/Kz5lkOalM4REifuIGfeKNGtxsVgoRSrbPq1M=;
+ b=RpzceeoH0EThpKzaynwqUaRdgLY0KxST9AKZgfuzD41ouRsnQsr+n5B/EkgD/DpX65
+ iYwfC255j005imtv3e/mCMzdPQt15+tkZ3uKwQTiUixF9+oeKUC2gYGsBxOyAgnNtWGR
+ F1H+1q5IfCLmXzGd3TV6FHsSHgZQxEuEHyfH9V/s+OwNHdfg7T2/i37c1Ee/kXKAlGNA
+ l6GAPITXaDu8HuU1H+woujHBj/8pQwCycvx99E5nnzmLqDeqODFsGaivbJEAY3CqBT5E
+ SfnlSKpTZrvGOZH95Fs8zDmw8bXL/PG2mYaqSQ0wHtZeMMlpdC/QvW7Pqje2vWqGqA3O
+ jstA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760617143; x=1761221943;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=syTPR0/Kz5lkOalM4REifuIGfeKNGtxsVgoRSrbPq1M=;
+ b=ArP7qwmCUkRZRUgzFWX2eOxwZELeRwl3oD3AD25tQ6C8BDVz8DzSExhqUkFDx6ZCCS
+ R8x6rTKj47GblHyrUHAFsLrWtkGgYiz0Z/v2Qu1ZYEgu0GzlJHrIIYwB7iv6z8m83ca+
+ IcUFwWfjSJ1NyGQuB0ZpzAEYAcAO2sdsFZUYjky5dCf+QncaONFS057jnQrJy2e1n/CC
+ /n6aQFsLPLn1Gqwn02wBb4x4D92mxfb55Xz0a358FdKp3m+wSzRqbUbM5oD2Sz+H0Iwk
+ 4u1fHynGeZbNY/qjs8VpK8HtrqGkyNkpJdzrNxWAvJ64QepBlq5Ttx4TPHW9rrRiL9CX
+ s8vA==
+X-Gm-Message-State: AOJu0YwmD2f/l2y6nmANUZc5Bz3C2O7gOV2pgj49I6CRN67IITZQ3uxD
+ fCeaxnZMcXJe9lsijLjs0vSp1RKv6fx5R0HwR0r7nHBWVJnWr9kVM0UA03GVJ3q93TNTfNab0nx
+ LzDNRFBo=
+X-Gm-Gg: ASbGncv07d7wdynmVQ+csxqxClelzg9hMPEeeCqjSg3GYceBwz9cBT1e18wDRyBOWdT
+ 4EjrOULroMRI9+57Fp0g9ixMJZkucmjChWpPLg3nUWNX2gRq6Lvi2qA6viRJwC5bjonz0yUoS93
+ 5FNVA4nrD+b/LdL5CUNqQQUBE7doGAgypH11cYmtNvcDB7Qk3ussRNQl6mBI7Ady9l2O+oTdJ9c
+ rXPXUATNf2nOBYW+TmSZjPR7yVV/QccUsjuTSn3CEu29pnVqMgvJINVi+TM/nFhNZJyyRf11ek5
+ z7QQnPWW9zxsXf4JaZewVGnc7s3/lZwNJcnylB4PrCtXKXz0PDmhShQsuiFbP3PxpMSPiuznwvs
+ xhTRwYOqjcHJBAXWP53AkerJ9hUpQK6oSKrU8y2RvTAUtVaORw+qOchr6Cl8C/Q73Fb6FJtlxIn
+ +c37DumB2a1sHv+p2v7jFu1wt4Tr09QspwftjYEEW419p+WZdZphQZik50ifwvMHzB
+X-Google-Smtp-Source: AGHT+IGZ4y4raD+0+oMTgF7rJZFQyhwbBH8e1rmhVTX/zslnyXlARAw0GfDa+RcNqTehk46JCqD1rg==
+X-Received: by 2002:a05:600c:4f08:b0:46e:206a:78cc with SMTP id
+ 5b1f17b1804b1-46fa9b1062dmr215114455e9.28.1760617143079; 
+ Thu, 16 Oct 2025 05:19:03 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426d0d9050bsm32541857f8f.13.2025.10.16.05.19.02
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 16 Oct 2025 05:19:02 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 45/75] target/rx: Propagate DisasContext to push() / pop()
+Date: Thu, 16 Oct 2025 14:15:01 +0200
+Message-ID: <20251016121532.14042-46-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
+References: <20251016121532.14042-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: nw6fqr9drwXML8DEYd6XpMe8h-0auhXP
-X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68f0e25d cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=WP5zsaevAAAA:8 a=ugThcBDMf7tpZusDcEcA:9 a=t8Kx07QrZZTALmIZmm-o:22
- a=poXaRoVlC6wW9_mwW8W4:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX6GvvfXJPWB1T
- kF3bWwsMNjh/bOTqDAMi3CqCzJr4F127VWbQ0YHY2bikqc08PB78g0SpkmdbrncwhYDCAbJQlOe
- UIjsNhpVSwW0iylt1+NhsmzI5vhJXGLN4BURw5Aa/2IyEB6lZM4qUDQ5kDEMvnxdi2S3aFztVTr
- KTCdGqzEjqMI/0PLN3n/2Bl/3QFxtMyom5yK4L1ZJVc0Ywyw+na+71BRTCirAaQDuZg4L4B7EDj
- qnR36kevJZngp1apBwxpPinFI96Aeidb9IGYpI7ZMojD3ISLbjEX0rsIg3Ubv09VgxzJZRg7DAS
- AhEKpnghGfnRyk2NLjyiUWspn+4yPFVDmxAQwhTHZQ06VnOWsIq4c+wTJl/6MT7EjFJb126zS6E
- B6+bwQblnAp2g4Yaa9VC+dneLLxXLg==
-X-Proofpoint-GUID: nw6fqr9drwXML8DEYd6XpMe8h-0auhXP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-16_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,58 +99,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add tests for SCLP event type Control-Program Identification.
-
-Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-Suggested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251009151607.26278-5-philmd@linaro.org>
 ---
- tests/functional/s390x/test_ccw_virtio.py | 26 +++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ target/rx/translate.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional/s390x/test_ccw_virtio.py
-index 453711aa0f..0455337856 100755
---- a/tests/functional/s390x/test_ccw_virtio.py
-+++ b/tests/functional/s390x/test_ccw_virtio.py
-@@ -15,6 +15,7 @@
- import tempfile
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index b314d94b018..912daaf9fb6 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -414,13 +414,13 @@ static void move_to_cr(DisasContext *ctx, TCGv val, int cr)
+     }
+ }
  
- from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import wait_for_console_pattern
+-static void push(TCGv val)
++static void push(DisasContext *ctx, TCGv val)
+ {
+     tcg_gen_subi_i32(cpu_sp, cpu_sp, 4);
+     rx_gen_st(MO_32, val, cpu_sp);
+ }
  
-@@ -270,5 +271,30 @@ def test_s390x_fedora(self):
-                         'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
-                         ' sleep 1 ; done', 'Start virtcrypto_remove.')
+-static void pop(TCGv ret)
++static void pop(DisasContext *ctx, TCGv ret)
+ {
+     rx_gen_ld(MO_32, ret, cpu_sp);
+     tcg_gen_addi_i32(cpu_sp, cpu_sp, 4);
+@@ -619,7 +619,7 @@ static bool trans_POPC(DisasContext *ctx, arg_POPC *a)
+ {
+     TCGv val;
+     val = tcg_temp_new();
+-    pop(val);
++    pop(ctx, val);
+     move_to_cr(ctx, val, a->cr);
+     return true;
+ }
+@@ -634,7 +634,7 @@ static bool trans_POPM(DisasContext *ctx, arg_POPM *a)
+     }
+     r = a->rd;
+     while (r <= a->rd2 && r < 16) {
+-        pop(cpu_regs[r++]);
++        pop(ctx, cpu_regs[r++]);
+     }
+     return true;
+ }
+@@ -670,7 +670,7 @@ static bool trans_PUSHC(DisasContext *ctx, arg_PUSHC *a)
+     TCGv val;
+     val = tcg_temp_new();
+     move_from_cr(ctx, val, a->cr, ctx->pc);
+-    push(val);
++    push(ctx, val);
+     return true;
+ }
  
-+        # Test SCLP event Control-Program Identification (CPI)
-+        cpi = '/sys/firmware/cpi/'
-+        sclpcpi = '/machine/sclp/s390-sclp-event-facility/sclpcpi'
-+        self.log.info("Test SCLP event CPI")
-+        exec_command(self, 'echo TESTVM > ' + cpi + 'system_name')
-+        exec_command(self, 'echo LINUX > ' + cpi + 'system_type')
-+        exec_command(self, 'echo TESTPLEX > ' + cpi + 'sysplex_name')
-+        exec_command(self, 'echo 0x001a000000060b00 > ' + cpi + 'system_level')
-+        exec_command_and_wait_for_pattern(self,
-+                                          'echo 1 > ' + cpi + 'set', ':/#')
-+        try:
-+            event = self.vm.event_wait('SCLP_CPI_INFO_AVAILABLE')
-+        except TimeoutError:
-+            self.fail('Timed out waiting for the SCLP_CPI_INFO_AVAILABLE event')
-+        ts = self.vm.cmd('qom-get', path=sclpcpi, property='timestamp')
-+        self.assertNotEqual(ts, 0)
-+        name = self.vm.cmd('qom-get', path=sclpcpi, property='system_name')
-+        self.assertEqual(name.strip(), 'TESTVM')
-+        typ = self.vm.cmd('qom-get', path=sclpcpi, property='system_type')
-+        self.assertEqual(typ.strip(), 'LINUX')
-+        sysplex = self.vm.cmd('qom-get', path=sclpcpi, property='sysplex_name')
-+        self.assertEqual(sysplex.strip(), 'TESTPLEX')
-+        level = self.vm.cmd('qom-get', path=sclpcpi, property='system_level')
-+        self.assertEqual(level, 0x001a000000060b00)
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+@@ -685,7 +685,7 @@ static bool trans_PUSHM(DisasContext *ctx, arg_PUSHM *a)
+     }
+     r = a->rs2;
+     while (r >= a->rs && r >= 0) {
+-        push(cpu_regs[r--]);
++        push(ctx, cpu_regs[r--]);
+     }
+     return true;
+ }
+@@ -772,7 +772,7 @@ static bool trans_SCCnd(DisasContext *ctx, arg_SCCnd *a)
+ static bool trans_RTSD_i(DisasContext *ctx, arg_RTSD_i *a)
+ {
+     tcg_gen_addi_i32(cpu_sp, cpu_sp, a->imm  << 2);
+-    pop(cpu_pc);
++    pop(ctx, cpu_pc);
+     ctx->base.is_jmp = DISAS_JUMP;
+     return true;
+ }
+@@ -792,9 +792,9 @@ static bool trans_RTSD_irr(DisasContext *ctx, arg_RTSD_irr *a)
+     tcg_gen_addi_i32(cpu_sp, cpu_sp, adj << 2);
+     dst = a->rd;
+     while (dst <= a->rd2 && dst < 16) {
+-        pop(cpu_regs[dst++]);
++        pop(ctx, cpu_regs[dst++]);
+     }
+-    pop(cpu_pc);
++    pop(ctx, cpu_pc);
+     ctx->base.is_jmp = DISAS_JUMP;
+     return true;
+ }
+@@ -1585,7 +1585,7 @@ static bool trans_BRA_l(DisasContext *ctx, arg_BRA_l *a)
+ static inline void rx_save_pc(DisasContext *ctx)
+ {
+     TCGv pc = tcg_constant_i32(ctx->base.pc_next);
+-    push(pc);
++    push(ctx, pc);
+ }
+ 
+ /* jmp rs */
+@@ -1626,7 +1626,7 @@ static bool trans_BSR_l(DisasContext *ctx, arg_BSR_l *a)
+ /* rts */
+ static bool trans_RTS(DisasContext *ctx, arg_RTS *a)
+ {
+-    pop(cpu_pc);
++    pop(ctx, cpu_pc);
+     ctx->base.is_jmp = DISAS_JUMP;
+     return true;
+ }
+@@ -2154,8 +2154,8 @@ static bool trans_RTE(DisasContext *ctx, arg_RTE *a)
+     TCGv psw;
+     if (is_privileged(ctx, 1)) {
+         psw = tcg_temp_new();
+-        pop(cpu_pc);
+-        pop(psw);
++        pop(ctx, cpu_pc);
++        pop(ctx, psw);
+         gen_helper_set_psw_rte(tcg_env, psw);
+         ctx->base.is_jmp = DISAS_EXIT;
+     }
 -- 
-2.49.0
+2.51.0
 
 
