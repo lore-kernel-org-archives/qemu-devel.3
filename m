@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5744ECCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1CECCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9RYm-0004h0-R8; Thu, 16 Oct 2025 13:14:41 -0400
+	id 1v9RZp-0005Ax-2F; Thu, 16 Oct 2025 13:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9RYj-0004d5-8E
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:14:38 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1v9RZR-000526-6L
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:15:22 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9RYd-0004FY-WC
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:14:36 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-27eceb38eb1so11821985ad.3
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 10:14:26 -0700 (PDT)
+ id 1v9RZI-0004Yd-KV
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:15:19 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7835321bc98so1010292b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 10:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760634863; x=1761239663; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760634909; x=1761239709; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xbf8AuRX9mwiNpLkN8rUpE4f3cRZY7K2AwrEPz3vr+0=;
- b=Tk7MghiQVEGI4P16BQi6NRkHuKFyUTkmp3zW21eH5JHhhRK04yufRj0/ZSESE+2qZL
- +8pYw4n+WrAoo8x14w3DD2jmZm2NxPs5rkhba8x+2a4hSD1t2zMFeure56EQ0hlzMA7y
- tiPZmoLj70vzHbXigT564Y28ThhC5kJc5kBKjEdRj+2AawAyOilY9kBE8ziceoWAHapr
- UPNO6CLnWyYI6twmZJZFUN6fFRbxgdgaiNit1H8qbg/oE+1LHiTSpB6YQq8ryehmxX+Z
- bFbtdvJL6XUfFLoGULbdo03fuAgWbkdkmSDwurLSjaEBQbNAsR1ppBsgMtVJ49nQqoSY
- 1MtQ==
+ bh=tof3EVSvHhBUpVi7ajOyVgIJrNKqbMisVbLCxByvW5s=;
+ b=Fqj90toHeOtgQ9OoWG0XX1DbbJeulXW6ioSso58JJqZgCfu1M303Kp/w/goxHqKJPo
+ f9N69dAV1sCvkpfe+uR4yZjJl1gRsI9AgNwd/byPzvZWTAFP76LcF2b1aHJ4so4okkoE
+ tLvV7JCkZ+ZojYEImtA/ZTq9s4QuXEBxVq7EQaH9xR/Pc5OvovyE1YR0CtNbQClfmNAw
+ lO7IzV74vSHtp4gl7LM3pIGqQtKIyPgqgt3EV5GgAALefKRtSDKaaUGxhZ3VvEjAXV6j
+ MkoWrG4tsTGillnFnQHudeQS7+/3zPrFrEThYnFeE0u8ziGXl37FEFe8gO9NvdkBKBSg
+ 7rOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760634863; x=1761239663;
+ d=1e100.net; s=20230601; t=1760634909; x=1761239709;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xbf8AuRX9mwiNpLkN8rUpE4f3cRZY7K2AwrEPz3vr+0=;
- b=Kq3hdSyKjQfwDcgKyMZ3RcF3k2J9QxuHhHcMHQFjUxsZkv2GtZoWTb2b2ePjiykyrj
- beoXtlFM+jAkH5REQh/fIxM/Z10jCrwqIJX4mRT9aTlE20nwDEB773XxZo9owgo7+8dr
- PoL0epPy4pS+bPluVbwdXcWFZdXi3hGXuhqhp7alU8oNFBoSKBHTyqk2pnvnF6JOncXW
- qOHrPaEO5Uy12eYU8jr3XVE3nspXrrH39Lt8mHyThl+2Ynk0DQSCT0Nfss7aTB5GDtsq
- sXzklzlIPH42KHo6oPZpvn3kWfkuHtwgXJqEQrCAVXLhPHbNEz79zIhvIBB6VYx/CBry
- oHVg==
+ bh=tof3EVSvHhBUpVi7ajOyVgIJrNKqbMisVbLCxByvW5s=;
+ b=shmQshTdBrGl7vKHt5XXx9rAHk4OPVFHwP1GebRA5B2AU1Io/GosuhDtzWLGC4bjeO
+ GLHBSPH0QnU6naVlwPrDHcMFT6aQcQZGeDlY16h2q8grPpNXmTZ0MUuU/orzvk+NjTwm
+ iurAFvTVDA7+LAzTZUhrmdCPVMH5xLZtn5RpqWdP5p+J9xaCVJJMeR2bGdWJAcnMWHKq
+ KrPKbs99sLBUqSF7NXzBZA0wIVAxxkqyt8+IcJXY901r6NkN2mw2CFdymnLDf/ocnjEc
+ fSxgO67TzHIpmuDCMwubjVoK3UQVxINl5AjzZQC8cmOJMpv9tbYISVHB8/3Lo/Kf8HJB
+ Y5Bw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdR6kRgFeuD0DTiE2V3/s1WUztmGr7MvHD0Zb0qfzUDKOHawKL8seynD+2o9oeyzaMxYeoio0ikFcJ@nongnu.org
-X-Gm-Message-State: AOJu0YzpR0EueXQQ/7cihuSAeyzrx5r3i5g30TnbN9Pv7xTYdG0VJTgJ
- 6yVl4a66+7sQ5FqC7eDAJgMi+G7W9IpxmOr2BO8GhuDaA09CO6MwdlTdKyg1dtoMAR8=
-X-Gm-Gg: ASbGnctlTbBENELrTzkgVWIb4nIBx9FyiWTTYXQiL3Tft4GVJEhSlu/PNcV9DvU/jTj
- +xMr2nxyIhcUPv5wOsjdOb/5IL5hL9M2+uaz9C7nIJ7WvnRTziU3TCZhIEdVqxe9oZ5vtT3L1u9
- 6I6DWF2tWV5T4E2HLAO72UFOJ+uVntyuCi+gbD0oCd8KdSiYXKUwpMind2sR0LeEWxGq2DbmB7J
- Z0WzP/ScuLGkW5A6/i5Dmomevt7P+VWu2amzCZICKFyK5sdTSdqPp2gO6STTKpwF71NuZg//Jgk
- k1vE11UVFwni9fv1JCdMiHqzBSbGrtJvGjdHQLFzmKLhrGWJ6yZChy+JxkR0RSe/DVOGRD2Td/n
- lsbOY+k/8VBqfvq/7PD5coBP7MTE3RXsOPzbNBIXLRI+CboN1txHJSv1Jhmm0iOldZ1QfOSkA82
- 4BCCGbH43L5QkKuzARUxVEmIM=
-X-Google-Smtp-Source: AGHT+IF182F4lmL6LvxLkrYofl7mXVzTygfR3b9k9De4jgcnqkzNqlvOwYury9mzQ7IWDkZNzFWKJQ==
-X-Received: by 2002:a17:902:db11:b0:240:48f4:40f7 with SMTP id
- d9443c01a7336-290cba4efc9mr8442235ad.39.1760634862800; 
- Thu, 16 Oct 2025 10:14:22 -0700 (PDT)
+ AJvYcCU8TQ5PcHxUBEUhDcDSbMG0uhzYPEoD1Q5WcwQw/KzSnhVlscFTOg7qqanGjaezt9Sl7dMYjqScelim@nongnu.org
+X-Gm-Message-State: AOJu0Yw0HO00znb+z+wWaIKwNGK/ySEMxdIPCozw3QTfzqoemlhfL1n4
+ KEiBjkWnQXLKcCiKor89woa2sQE4BapX9fNoL4wDjS3iBhyWom6h3SYtdKkRBBg6SPA=
+X-Gm-Gg: ASbGncvwp7qgBpVVy5USl6QK1Sn7BU4NtH3jqwsOInvny/4qxw1TsGcIqIsXi8f05YQ
+ TNIcfEHytdk4/UTYhCJ3XT0uMaFjyEP6nDnkTWcWk38zW4nglvZ29iIH6nS65qQb46JLiudqkXK
+ ZHFyzoXoxtGggagnmGerf7Ru3Ql2AW/Epw9PmCnqbeme9sNPgDmkwiqEYAUPPSBNYR0OAinZB4m
+ 4kzbqeUWyetJ5gtklGQOKqa5l0syrJ0FncjMFkNafbjFdTrPBgLBVqh4vxk3PyzBLhXV6CFmTDS
+ fkXKUP9+2+HkLl9H84cRbjHKzdP+ouuuLOduYTadMUyfWqtnMGbKNi2IZmENiPXN2OXm24fTQDM
+ QdEPd68RC3sbpDyKT/OyWQvWLRFOclz4yL5738ffZ6o8y+SHXZIBqsODuSfmD9YsGZLIdT/lvEc
+ F5zX/INQKYD3nD
+X-Google-Smtp-Source: AGHT+IHfOj2/RGEhI9uYqAiueQ5geH38L5kdOF1sE9vNJMIOJ7LSbEsFzN5vZE3JkIhfd+nJud+MPg==
+X-Received: by 2002:a05:6a20:3c8e:b0:334:9c41:bdcb with SMTP id
+ adf61e73a8af0-334a86445ddmr785445637.58.1760634909132; 
+ Thu, 16 Oct 2025 10:15:09 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099aba062sm35990345ad.98.2025.10.16.10.14.21
+ d2e1a72fcca58-7992b060962sm23224426b3a.1.2025.10.16.10.15.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 10:14:22 -0700 (PDT)
-Message-ID: <e760f90e-497a-4e8c-9e2c-87195f2b98de@linaro.org>
-Date: Thu, 16 Oct 2025 10:14:21 -0700
+ Thu, 16 Oct 2025 10:15:08 -0700 (PDT)
+Message-ID: <faf3cd2b-4961-4d7c-899f-bfaa9f2ee271@linaro.org>
+Date: Thu, 16 Oct 2025 10:15:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/24] whpx: arm64: gicv3: add migration blocker
+Subject: Re: [PATCH v7 23/24] MAINTAINERS: update maintainers for WHPX
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>,
@@ -92,19 +92,20 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
  Roman Bolshakov <rbolshakov@ddn.com>
 References: <20251016165520.62532-1-mohamed@unpredictable.fr>
- <20251016165520.62532-22-mohamed@unpredictable.fr>
+ <20251016165520.62532-24-mohamed@unpredictable.fr>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251016165520.62532-22-mohamed@unpredictable.fr>
+In-Reply-To: <20251016165520.62532-24-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,12 +122,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/16/25 9:55 AM, Mohamed Mediouni wrote:
-> GICv3 state save-restore is currently not implemented yet.
+> And add arm64 files.
+> 
+>  From Pedro Barbuda (on Teams):
+> 
+>> we meant to have that switched a while back. you can add me as the maintainer. Pedro Barbuda (pbarbuda@microsoft.com)
 > 
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   hw/intc/arm_gicv3_whpx.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+>   MAINTAINERS | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
