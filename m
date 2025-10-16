@@ -4,67 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827BACCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C4FCCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 09:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Jtn-0002xR-LQ; Thu, 16 Oct 2025 05:03:51 -0400
+	id 1v9K2O-0007TO-Pt; Thu, 16 Oct 2025 05:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9Jtl-0002wq-NZ
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:03:49 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9Jtf-0006jo-Ky
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:03:49 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id CDCEDC01AB;
- Thu, 16 Oct 2025 12:03:34 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8c::1:19] (unknown
- [2a02:6bf:8080:a8c::1:19])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id X3NhET3FwuQ0-3QqngTGR; Thu, 16 Oct 2025 12:03:34 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760605414;
- bh=lR08Zm2rWY31HiE6NetQ+H7AehJ0DvklVmZgW1RU9c8=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=zEIkWKXpR955N4PW1yb1yUjjke56GCRriD1b5l0U9AipCu8X7nvkXscqB6JcufOXV
- j21KjAE7v/1BO+2+MxA6WB1q9q131II/Q8m3kATKKkvfuO6ubal59GwkGYV+55B+Tp
- xWy/fYaSYgJz/UKyg2y0AmeG9m7Ct7Bv4XG1xO6Y=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <239dc7b4-de5a-4e47-912d-543347d1f90b@yandex-team.ru>
-Date: Thu, 16 Oct 2025 12:03:33 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9K2N-0007Sr-57
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:12:43 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9K2B-0007Y0-Lc
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 05:12:42 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-46e3a50bc0fso3455595e9.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 02:12:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760605944; x=1761210744; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xNfv9xsmmhteqxadkVhT2+fkyYPSah+3ICpJbHA4auM=;
+ b=fYWxzTg75xkyqxbMA+A2hRj6d6MJ++WASzMcmYxTRgZ8gJkfnmlczf0HinOpRbDOfa
+ k3bnXyPzNQrFlYhXlw1WfLprZ6rlwK0Q3oGXlA62p4Vsc5K8tpt8N0NA4KUlqzvhVub/
+ Rf2wCinriQ8CM/hygso8KzvkvfLZrfc8yiqr+ugg6Nv6lyptboF/BrOx9ccbMkyRNi+P
+ aUTHncu4Ya7WB4AyIlSI27xSkZBVoPKu2O2wTQWwk5ZwClD3b069bycfFgRK1j8DNPG9
+ pOONqR6A2T3pQ5cEHvW9E9brdw9671HKC4qsxZGLQgUk4OHaAT/K8XlkCrjP+CCTvqhS
+ 0cew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760605944; x=1761210744;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xNfv9xsmmhteqxadkVhT2+fkyYPSah+3ICpJbHA4auM=;
+ b=TazX18Fk9softcn2Gnfycf8Jp6WbFPh8ofDNEzguprgG8JKKvogTjP83/kQSM+sMw0
+ 5AbX0pR22jWKqy4Ry9WQhOsUWy3baPYA0kNz8/vR6jhjceO9RUIeeHRDHvyEvK2EKxZZ
+ CW16JAENoMzBjW4oO95B5lc7+yhiK92klDFw3+74LX0A7LFk3RY20V4ts8wmCJA3/ni1
+ 8eqdZ0kqx9vjy+J8hzUnQiwzTnLvMtp4cp+y1YhX1+5IlK/w54FPIgKN0+/BFiZuHMz8
+ reIJEJRsDnKAgpqxEvsYQ17IgbZawxiEhZpQ0KOQy4XRYtztv3CZo0b/Sb6CJ0WK9mHp
+ K4vA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVbHdmVEfFnbu/GmlMZs3r+F1GY9DxQfGAPBru+bwTXxJSsIbA07nxc9iAtTqAi41pN/xYBW+w9cTj8@nongnu.org
+X-Gm-Message-State: AOJu0Yz9Manl7Yq6Y1NctmF0xzg7pu2dJDi/XsKgmXspw+M/5xwZEJxz
+ J3YF0oorj0QfT44h16QjwuauqXNuZ76jFAbJxbcjWHW4OMR89zOT95we9cd/jOFrlls=
+X-Gm-Gg: ASbGnctUELLxvcJZMZ41wls/SSnJUkKoBL6y3/n3X4ILP+zd3OZUFGGbIc0ktBUOxw4
+ gAiAQrmeKv7jWDy9JWThU3Jj4Ho9kUrsaW0FNVPhnNJ3dCLkGgoPBAiTZZi3zgYdyjWOYGOWTZ5
+ J3aRpt0hmdCV/li9WsX3/X7TzTOc3NE1obGzU1lj/OhOKTV1TYwKDUuWcC1k4Dgb9F15xIS5Gga
+ Mr1mBB9o6+F50lXl2qL595x/Xs5xCBGHpaTgzi2oOXSf9ptZR4xlfz0fmDRcY7zWOCj41nl7X4V
+ 16fjYkV3XYTHXjsWRZsvmjsjoqCL6YW5LiW8y9yqVWvpdHF/sefDEvMS698S3/HbR+ikL4mp4NF
+ NK9fz9QpcBtUXliF/d1A0xQMoE64REDj1f2cm+LEzsciv9k3QUAaFZPJutETIT7yCtD98giCkaW
+ jFxUjvqSJeB6FyyZNnGK4MXa1yiPQehuc/MP3eFSsYHOWa4bUFddWG6iYr4g==
+X-Google-Smtp-Source: AGHT+IE80TJxnu4thgS5f+era764aCpK9tGSrOOZRfaWpeLL3Lkv72yXnMKHQ6DPJ379DWca9g9xvg==
+X-Received: by 2002:a05:6000:258a:b0:425:8bc2:9c4b with SMTP id
+ ffacd0b85a97d-42666abb51amr16517178f8f.6.1760605943892; 
+ Thu, 16 Oct 2025 02:12:23 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4710cd833ebsm16015305e9.3.2025.10.16.02.12.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Oct 2025 02:12:23 -0700 (PDT)
+Message-ID: <ea10c781-d15f-4346-a092-78d203f2f0c9@linaro.org>
+Date: Thu, 16 Oct 2025 11:12:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] qapi: net: deprecate vhostforce option
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, devel@lists.libvirt.org, eblake@redhat.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-References: <20251015143941.1109499-1-vsementsov@yandex-team.ru>
- <87bjm7teou.fsf@pond.sub.org>
+Subject: Re: aspeed: Split the machine definition into individual source files
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87bjm7teou.fsf@pond.sub.org>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ "'qemu-arm@nongnu.org'" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: 'Andrew Jeffery' <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, 'Jamin Lin' <jamin_lin@aspeedtech.com>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,244 +108,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.10.25 11:48, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 19/6/25 11:23, Cédric Le Goater wrote:
+> Hi,
 > 
->> This option for tap and vhost-user netdevs doesn't make sense
->> since long ago (10 years!), starting from commits:
->>
->>   1e7398a140f7a6 ("vhost: enable vhost without without MSI-X")
->>   24f938a682d934 ("vhost user:support vhost user nic for non msi guests")
->>
->> Prior these commits, to enable kernel vhost-net, or vhost-user-net for
->> some specific kind of guests (that don't have MSI-X support), you should
->> have set vhostforce=on.
->>
->> Now guest type doesn't matter, all guests are equal for these
->> options logic.
->>
->> For tap the current logic is:
->>    vhost=on / vhost=off : vhostforce ignored, doesn't make sense
->>    vhost unset : vhostforce counts, enabling vhost
->>
->> So you may enable vhost for tap several ways:
->> - vhost=on
->> - vhostforce=on
->> - vhost=on + vhostforce=on
->> - and even vhost=on + vhostforce=off
->>
->> - they are all equal.
->>
->> For vhost-user we simply ignore the vhostforce option at all in the
->> code.
->>
->> Let's finally deprecate the extra options.
->>
->> Also, fix @vhostforce documentation everywhere to show the real picture,
->> and update vhost-user test to not use deprecated option.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> v4:
->> - update documentation
->> - deprecate also similar option for vhost-user net
->>
->> v3 was "[PATCH v3] qapi: net/tap: deprecate vhostforce option":
->> Supersedes: <20250901153943.65235-1-vsementsov@yandex-team.ru>
->>
->>   docs/about/deprecated.rst     | 11 +++++++++++
->>   qapi/net.json                 | 20 ++++++++++++++++----
->>   qemu-options.hx               | 13 +++++--------
->>   tests/qtest/vhost-user-test.c |  2 +-
->>   4 files changed, 33 insertions(+), 13 deletions(-)
->>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 98361f5832..2882603b20 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -487,6 +487,17 @@ Stream ``reconnect`` (since 9.2)
->>   The ``reconnect`` option only allows specifying second granularity timeouts,
->>   which is not enough for all types of use cases, use ``reconnect-ms`` instead.
->>   
->> +TAP ``vhostforce`` (since 10.2)
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +The ``vhostforce`` option is redundant with the ``vhost`` option.
->> +If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
->> +
->> +Vhost-user ``vhostforce`` (since 10.2)
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +The ``vhostforce`` option is a no-op.  Do not use it.
->> +
->>   CPU device properties
->>   '''''''''''''''''''''
->>   
->> diff --git a/qapi/net.json b/qapi/net.json
->> index 60d196afe5..531b360e46 100644
->> --- a/qapi/net.json
->> +++ b/qapi/net.json
->> @@ -346,13 +346,20 @@
->>   # @vhostfds: file descriptors of multiple already opened vhost net
->>   #     devices
->>   #
->> -# @vhostforce: vhost on for non-MSIX virtio guests
->> +# @vhostforce: enable vhost-net network accelerator.  Ignored when
->> +#    @vhost is set.
->>   #
->>   # @queues: number of queues to be created for multiqueue capable tap
->>   #
->>   # @poll-us: maximum number of microseconds that could be spent on busy
->>   #     polling for tap (since 2.7)
->>   #
->> +# Features:
->> +#
->> +# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
->> +#    option is redundant with the @vhost option. If they conflict,
->> +#    @vhost takes precedence.  Just use @vhost.
+> This is a follow up of a private discussion with Patrick.
 > 
-> Behavior should be discussed in the descriptions instead.  I think what
-> we already have there ("Ignored when @vhost is set") suffices.
+> Aspeed modeling started nearly 10y ago with the palmetto-bmc machine.
+> We now have 5 SoCs and 25 machines which are mostly defined in
+> in a single aspeed.c file. Multi SoC machines, fby35 and ast2700fc,
+> are defined in fby35.c and aspeed_ast27x0-fc.c respectively.
 > 
-> Let's use the common phrasing here:
+> Since we started separating the SoCs :
 > 
->     # @deprecated: Member @vhostforce is deprecated.  Use @vhost instead.
+>    hw/arm/aspeed_ast10x0.c
+>    hw/arm/aspeed_ast2400.c
+>    hw/arm/aspeed_ast2600.c
+>    hw/arm/aspeed_ast27x0.c
+>    hw/arm/aspeed_ast27x0-ssp.c
+>    hw/arm/aspeed_ast27x0-tsp.c
+> 
+> We could do the same for the machines keeping an 'aspeed_ast<rev>'
+> prefix (and maybe avoid the 'bmc' suffix). I think this would ease
+> introduction of new machines. We would be able to get rid of
+> aspeed_eeprom.[ch] and move machine custom data in the machine source
+> file. Which seems cleaner.
+> 
+> Timing is about right for code reshuffling, still 3w before soft
+> freeze, no important changes inflight, but if we start doing this
+> conversion, we should do it for all. See the list below for the brave.
+> 
+> Comments ?
 
-OK
+Good idea, but please split ASPEED_SOC in Kconfig accordingly.
 
-> 
->> +#
->>   # Since: 1.2
->>   ##
->>   { 'struct': 'NetdevTapOptions',
->> @@ -369,7 +376,7 @@
->>       '*vhost':      'bool',
->>       '*vhostfd':    'str',
->>       '*vhostfds':   'str',
->> -    '*vhostforce': 'bool',
->> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
->>       '*queues':     'uint32',
->>       '*poll-us':    'uint32'} }
->>   
->> @@ -606,17 +613,22 @@
->>   #
->>   # @chardev: name of a unix socket chardev
->>   #
->> -# @vhostforce: vhost on for non-MSIX virtio guests (default: false).
->> +# @vhostforce: no-op (default: false).
-> 
-> Suggest
-> 
->     # @vhostforce: silently ignored, exists just for backward
->     #     compatibility.
+Regards,
 
-Sounds good, OK
-
-> 
->>   #
->>   # @queues: number of queues to be created for multiqueue vhost-user
->>   #     (default: 1) (Since 2.5)
->>   #
->> +# Features:
->> +#
->> +# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
->> +#    option is ignored in code and does nothing.  Don't use it.
-> 
-> Again, discussion of behavior does not belong here.  I think
-> 
->     # @deprecated: Member @vhostforce is deprecated.
-> 
-> suffices.
-
-✓
-
-> 
->> +#
->>   # Since: 2.1
->>   ##
->>   { 'struct': 'NetdevVhostUserOptions',
->>     'data': {
->>       'chardev':        'str',
->> -    '*vhostforce':    'bool',
->> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
->>       '*queues':        'int' } }
->>   
->>   ##
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index 0223ceffeb..35a70096e8 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -2882,7 +2882,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->>   #else
->>       "-netdev tap,id=str[,fd=h][,fds=x:y:...:z][,ifname=name][,script=file][,downscript=dfile]\n"
->>       "         [,br=bridge][,helper=helper][,sndbuf=nbytes][,vnet_hdr=on|off][,vhost=on|off]\n"
->> -    "         [,vhostfd=h][,vhostfds=x:y:...:z][,vhostforce=on|off][,queues=n]\n"
->> +    "         [,vhostfd=h][,vhostfds=x:y:...:z][,queues=n]\n"
->>       "         [,poll-us=n]\n"
->>       "                configure a host TAP network backend with ID 'str'\n"
->>       "                connected to a bridge (default=" DEFAULT_BRIDGE_INTERFACE ")\n"
->> @@ -2898,9 +2898,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->>       "                default is disabled 'sndbuf=0' to enable flow control set 'sndbuf=1048576')\n"
->>       "                use vnet_hdr=off to avoid enabling the IFF_VNET_HDR tap flag\n"
->>       "                use vnet_hdr=on to make the lack of IFF_VNET_HDR support an error condition\n"
->> -    "                use vhost=on to enable experimental in kernel accelerator\n"
->> -    "                    (only has effect for virtio guests which use MSIX)\n"
->> -    "                use vhostforce=on to force vhost on for non-MSIX virtio guests\n"
->> +    "                use vhost=on to enable in kernel accelerator\n"
-> 
-> So the kernel's accelerator is no longer experimental?
-
-Reading this, I heard the first time that vhost-net is experimental.
-It's about 15 years old, and used in production. I think "experimental"
-is inappropriate word here)
-
-
-
-> 
->>       "                use 'vhostfd=h' to connect to an already opened vhost net device\n"
->>       "                use 'vhostfds=x:y:...:z to connect to multiple already opened vhost net devices\n"
->>       "                use 'queues=n' to specify the number of queues to be created for multiqueue TAP\n"
->> @@ -2991,7 +2989,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
->>       "                use 'start-queue=m' to specify the first queue that should be used\n"
->>   #endif
->>   #ifdef CONFIG_POSIX
->> -    "-netdev vhost-user,id=str,chardev=dev[,vhostforce=on|off]\n"
->> +    "-netdev vhost-user,id=str,chardev=dev\n"
->>       "                configure a vhost-user network, backed by a chardev 'dev'\n"
->>   #endif
->>   #ifdef __linux__
->> @@ -3882,12 +3880,11 @@ SRST
->>       for insertion into the socket map.  The combination of 'map-path' and
->>       'sock-fds' together is not supported.
->>   
->> -``-netdev vhost-user,chardev=id[,vhostforce=on|off][,queues=n]``
->> +``-netdev vhost-user,chardev=id[,queues=n]``
->>       Establish a vhost-user netdev, backed by a chardev id. The chardev
->>       should be a unix domain socket backed one. The vhost-user uses a
->>       specifically defined protocol to pass vhost ioctl replacement
->> -    messages to an application on the other end of the socket. On
->> -    non-MSIX guests, the feature can be forced with vhostforce. Use
->> +    messages to an application on the other end of the socket. Use
->>       'queues=n' to specify the number of queues to be created for
->>       multiqueue vhost-user.
->>   
->> diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
->> index 609ff24059..a4862d7087 100644
->> --- a/tests/qtest/vhost-user-test.c
->> +++ b/tests/qtest/vhost-user-test.c
->> @@ -46,7 +46,7 @@
->>   #define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
->>                           " -numa node,memdev=mem"
->>   #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
->> -#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
->> +#define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s"
->>   
->>   #define HUGETLBFS_MAGIC       0x958458f6
-> 
-
-
--- 
-Best regards,
-Vladimir
+Phil.
 
