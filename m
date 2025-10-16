@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10BECCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E286CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:30:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Pu8-0000Nl-M4; Thu, 16 Oct 2025 11:28:36 -0400
+	id 1v9Puy-0000Xh-Aq; Thu, 16 Oct 2025 11:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v9Pu6-0000NP-OX
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:28:34 -0400
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v9Pu0-0004uT-4w
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:28:34 -0400
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-3c97709a4fbso241849fac.0
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:28:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1760628504; x=1761233304; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1DNFEQAbx1C1OF6IR8cj3tKL3RTGxnKmq5qGnYuZu+4=;
- b=ZbzUoyQplLoZtJHdgfjb5HXEkBA1d4vR9aqs5IvV4Ww7eKK/rYDQE5Rzl21npo0HRN
- nzAJevHbnjB0+fenFoy2m3JOyni1nVIWyQ1EmvhmKyoRuoQCxquprzfpfnzetHgnihkc
- mGbbGXvtatB65oCPijAX81//rBLwuUjCEHLsB2vqueOaPqzeODbS9vtRyt+kJAQSquqn
- cnjEc73ztAcyzuhHWzJ3GwEPiSg9zdGS/LR6posAwbelFS0sQcboaibye6zR9l9zBn7x
- s+MmI6dM65G/NZdP5A2nDSDL4wJc5M/QxtGOm36aM1V7vvNiggKodbOJ1y57/ArU2gzu
- sSwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760628504; x=1761233304;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1DNFEQAbx1C1OF6IR8cj3tKL3RTGxnKmq5qGnYuZu+4=;
- b=mECMJ4KaS/M5Jf/vBHCG80tRMjvcGmV3A3up+jl/yRyQ3RtfxHJMsViZoEPastdCHH
- gS4FkDD12Ovh25jObRiaVlqGwhUKLhh0GFuENqD6RrchIYDs6memCTdUREWH4k/jwv0k
- QDDSH6VDo8M/Y5/1bCTBwAwfWaNdi13n/geM5lVifxKp+8abmgD8rsNdpAyG0CvamUd7
- 94ewsSztpxRXoH/jhpoJYI7F231UT4Efu1WEAKnVCCx8PtAlZdDGjdkGCVCDtPrQd7ON
- yx1wj3d5n7KeLSi2QXJwFfUO1Nyf00VoW0sHxvZCP8z/7wwWa4e5Kv6+ExBpwBFo15Ur
- dsig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUouniL9wH4vdkT/Zis5vKk7+HmFDBlZzgD4UBDI+JHIfHl6Id5+eqG0fSDQXwdgeFeJz9JKmb/vQiH@nongnu.org
-X-Gm-Message-State: AOJu0Yzw9rTSrrQqdmXOmA9sVRucOjlMdyGSJMM1hjKOd6zs9+Bd2OEd
- 47033TZTQ8JURXx4dqe2dPJaAQpBh2E1T6RIg73W5SrNYBRGJA3NcBjKCX+0cO63zPbycTFwWzI
- AuDRC0ThLGasd8u66zLhaTTaFNGHvk9rl6+OGbaLRUg==
-X-Gm-Gg: ASbGncvcU/cmpIJoAUCdPvXXZxdicVXMXjKwnuevg+nczIViUrFZYJtcr1QK3NYvafl
- Fir2kK7hsvRHk/iZoE1ec0klrDWnz+34UV06p9iqykRkd50zYkW70uOQJIzjGBxqCWBO2LKaCdp
- b1kgGr53w1EM0MtAaWJzjfzXWwemNzRmzlOrGIgljvHFSJXCB/Z4iT6J1vItW1eBQasiM6668ia
- +U0g35dWCdzicsY9HvD8QXYFroLBCb7loiSJqIWNm/ffv6M5lwt5MMAPB1cK2FojIadt3vSKBJ/
- 2O/ogJBMiN3BzxJiRIu+vVYmlTLykbhBHhV9fuRr6KKbU1NoBci0
-X-Google-Smtp-Source: AGHT+IGQJNtX5pJqMjQ6g5EJ/rnfW0xs46zdjqTU0eX1YrmT9xPBRjxIgXo6S5OKS6a3iLDfUtbFy4TC8ymFuAjkR54=
-X-Received: by 2002:a05:6870:64a3:b0:347:b473:5f58 with SMTP id
- 586e51a60fabf-3c98cf023ccmr68583fac.1.1760628504379; Thu, 16 Oct 2025
- 08:28:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9Puu-0000Wn-Kk
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:29:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9Puj-0004xd-Dq
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:29:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760628550;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OyFrjSE+pTyNrH+MjT48xgQr1QySglD/+GPKXIFd9Us=;
+ b=HGt5yPOm0RvT5kE4LxgeqORb4ibDmsbnveJuzwoOgforXPSbmoUSo5qAEZHKjeMDv5TDDe
+ izb51cnxAfL4UAVzVxNAO3ggIDH1caAY1XIEh2RwdSKWCV2Vib9uA3SNkZXsdcXWJ0/agK
+ uNp8is6cyHGWG6hRkyBkJdK7wWMDLJE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-Pqxmgkw7MeetRmZ1rN7tFg-1; Thu,
+ 16 Oct 2025 11:29:04 -0400
+X-MC-Unique: Pqxmgkw7MeetRmZ1rN7tFg-1
+X-Mimecast-MFC-AGG-ID: Pqxmgkw7MeetRmZ1rN7tFg_1760628543
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 697CF19560A2; Thu, 16 Oct 2025 15:29:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.155])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 987B51800451; Thu, 16 Oct 2025 15:29:01 +0000 (UTC)
+Date: Thu, 16 Oct 2025 10:28:59 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, matoro <matoro_mailinglist_qemu@matoro.tk>
+Subject: Re: [PATCH v2 3/6] crypto: allow client/server cert chains
+Message-ID: <jczraatcitsz3tf5aznkeaiffanysz4dlvn7opoyibofvr2loj@u3wumm3rwdq5>
+References: <20250919101022.1491007-1-berrange@redhat.com>
+ <20250919101022.1491007-4-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20251014102439.319915-1-peter.maydell@linaro.org>
- <d6f9dfa368b2419998379ac9dd986a7b@huawei.com>
- <CAFEAcA8U_3zJsnHt2wxME3j8J83whzTNgP9vEvUGuWHe7KGaYA@mail.gmail.com>
- <e2b03da8f7514b57aef7d236be1dcb90@huawei.com>
- <CAFEAcA_KcvBOOc4nY6VMziSuh=YrcgbaNZhi3+M_kM01v97WtQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_KcvBOOc4nY6VMziSuh=YrcgbaNZhi3+M_kM01v97WtQ@mail.gmail.com>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Thu, 16 Oct 2025 15:28:11 +0000
-X-Gm-Features: AS18NWCwwf5F56J04_scWPeqYWWc1CyVnW4MQrQYMZ74UX8yBOj6xCDdcJcviD8
-Message-ID: <CAJ7pxeaCeSPAzjqnhVG6VkQyX3Vx82yvb-ex1ya+j7pFjFOekg@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Salil Mehta <salil.mehta@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-oa1-x2f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250919101022.1491007-4-berrange@redhat.com>
+User-Agent: NeoMutt/20250905
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,106 +84,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Fri, Sep 19, 2025 at 11:10:19AM +0100, Daniel P. Berrangé wrote:
+> From: matoro <matoro@users.noreply.github.com>
 
-On Thu, Oct 16, 2025 at 12:46=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
->
-> On Thu, 16 Oct 2025 at 12:13, Salil Mehta <salil.mehta@huawei.com> wrote:
-> >
-> > Hi Peter,
-> > > > Above changes assume that the driver's configured value of the
-> > > > ICC_CTLR_EL1 system register is the same as the default value. I've
-> > > > verified that this currently the case. However, it safe to assume t=
-hat
-> > > > this will remain true in the future as well?
-> > >
-> > > I don't understand what you mean here. We read the kernel's ICC_CTLR_=
-EL1
-> > > at VM startup, when we know it will be the reset value, because we ha=
-ven't
-> > > run any VCPUs yet.
-> >
-> >
-> > System register fetches its value from ICH_VMCR_EL2 and ICH_VTR_EL2.
-> > In specific, EOIMode, PMHE and CBPR fields of ICC_CTLR_EL1 are from
-> > the VMCR register. Later gets configured when driver gets loaded and ag=
-ain
-> > re-configured in context to each CPU ON request(via in-kernel  CPU Hotp=
-lug
-> > state machine; CPUHP_AP_IRQ_GIC_STARTING). This configures the VMCR
-> > again and again. Although, the value as of now is same.
-> >
-> > You might want to check gic_cpu_sys_reg_init() in irq-gic-v3.c
->
-> I'm afraid I still don't understand what you mean here. This is
-> all the guest writing to the GIC registers as it starts up, right?
-> That has no influence at all on what the reset value of the emulated
-> hardware should be. (This is the same as on real hardware:
-> it doesn't matter what the OS writes to registers when it is
-> running; when the hardware resets it resets to the reset value.)
+The CC: line has a different email address for matoro than the git
+author attribution.  Does that matter?  I'm not a fan of github's
+attempt to make it difficult to reach a contributor outside the github
+walled garden.
 
-For context, the gic_cpu_init() function is invoked from two paths in
-the kernel: first from gic_init_bases() when the GICv3 driver is
-initially loaded on the boot CPU, and later from gic_starting_cpu()
-during each CPU online transition in the hotplug state machine.
+> 
+> The existing implementation assumes that client/server certificates are
+> single individual certificates.  If using publicly-issued certificates,
+> or internal CAs that use an intermediate issuer, this is unlikely to be
+> the case, and they will instead be certificate chains.  While this can
+> be worked around by moving the intermediate certificates to the CA
+> certificate, which DOES currently support multiple certificates, this
+> instead allows the issued certificate chains to be used as-is, without
+> requiring the overhead of shuffling certificates around.
+> 
+> Corresponding libvirt change is available here:
+> https://gitlab.com/libvirt/libvirt/-/merge_requests/222
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: matoro <matoro_mailinglist_qemu@matoro.tk>
+> [DB: adapted for code conflicts with multi-CA patch]
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  crypto/tlscredsx509.c                 | 156 ++++++++++++--------------
+>  tests/unit/test-crypto-tlscredsx509.c |  77 +++++++++++++
+>  2 files changed, 147 insertions(+), 86 deletions(-)
 
-The hotplug path wires up
+>  
+> -static gnutls_x509_crt_t
+> -qcrypto_tls_creds_load_cert(QCryptoTLSCredsX509 *creds,
+> -                            const char *certFile,
+> -                            bool isServer,
+> -                            Error **errp)
+> -{
 
-CPUHP_AP_IRQ_GIC_STARTING -> gic_starting_cpu
+> -
+>  static int
+> -qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
+> -                                    const char *certFile,
+> -                                    gnutls_x509_crt_t **certs,
+> -                                    unsigned int *ncerts,
+> -                                    Error **errp)
+> +qcrypto_tls_creds_load_cert_list(QCryptoTLSCredsX509 *creds,
+> +                                 const char *certFile,
+> +                                 gnutls_x509_crt_t **certs,
+> +                                 unsigned int *ncerts,
+> +                                 bool isServer,
+> +                                 bool isCA,
+> +                                 Error **errp)
+>  {
 
-in gic_smp_init(). On every CPU online event this leads to:
+Nice consolidation to reduce duplication.
 
-gic_starting_cpu() -> gic_cpu_init() -> gic_cpu_sys_reg_init()
+> @@ -520,41 +497,48 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
 
-which reprograms the CPU-interface system registers on that CPU,
-including ICC_CTLR_EL1 (fields EOIMode, PMHE, CBPR).
+>  
+> -    if (cert &&
+> -        qcrypto_tls_creds_check_cert(creds,
+> -                                     cert, certFile, isServer,
+> -                                     false, errp) < 0) {
+> -        goto cleanup;
+> +    for (i = 0; i < ncerts; i++) {
+> +        if (qcrypto_tls_creds_check_cert(creds,
+> +                                         certs[i], certFile,
+> +                                         isServer, (i != 0), errp) < 0) {
 
-The following dump stack from a guest hotplug event shows this
-sequence clearly:
+The () around 'i != 0' look extraneous to me; but that's trivial
+formatting so I'm not opposed to keeping them.  On the other hand...
 
-echo 1 > /sys/devices/system/cpu/cpu1/online
-[   39.287402] gic_cpu_sys_reg_init+0x4c/0x294
-[   39.287406] gic_cpu_init.part.0+0xc0/0x114
-[   39.287409] gic_starting_cpu+0x24/0x8c
-[   39.287412] cpuhp_invoke_callback+0x104/0x20c
-[   39.287419] notify_cpu_starting+0x80/0xac
-[   39.287421] secondary_start_kernel+0xdc/0x15c
+> +            goto cleanup;
+> +        }
+>      }
+>  
+> -    if (cert &&
+> -        qcrypto_tls_creds_check_authority_chain(creds, cert,
+> +    if (ncerts &&
 
+...here you are doing an implicit conversion of ncerts to bool; why
+not do the same implicit conversion of 'i' rather than explicit '(i !=
+0)' above?
 
-As a result, ICC_CTLR_EL1 is at its architectural reset value at
-VM realize (before any vCPU runs), but it is guest-configured
-after the driver runs and again on each later CPU online event.
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
-Although it looks safe in practice from the way EOIMode, CBPR,
-and PMHE fields are currently programmed by the guest, the
-eventual value always depends on what the guest writes into
-VMCR each time it configures the CPU interface during a
-CPU_ON sequence. Given that, would it still be correct for
-QEMU to treat the realize-time ICC_CTLR_EL1 value as a
-persistent runtime value rather than just a reset template?
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
-Since cpu_reset() will also be invoked for every CPU_ON in QEMU,
-is there even a remote possibility that a guest GIC driver (Linux or
-otherwise) might alter these field configurations across successive
-CPU_ON/OFF cycles?
-
->
-> We want to know what value the kernel gives to this register when
-> the GIC is in a freshly reset state when no guest code has run.
-> That should be the value that it has here, when we read it on realize.
-
-But when PSCI CPU_ON is being handled entirely in the kernel
-i.e. no hotplug patches are present and hence no SMCC Hypercall
-exit exists then we will always use driver updated VMCR fields (I think).
-In the current case even along with the hotplug patches they are the
-same but in *future* will they be?
-
-I do understand what you and Marc discussed and pointed out that,
-"The reset value is indeed cast in stone once the GIC has been created."
-https://lore.kernel.org/lkml/864is2x6z9.wl-maz@kernel.org/
-
-
-Best regards
-Salil.
 
