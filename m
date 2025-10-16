@@ -4,97 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41086CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 13:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 622F5CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 13:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9NmM-00021Z-9H; Thu, 16 Oct 2025 09:12:26 -0400
+	id 1v9Nzi-0006Y0-3V; Thu, 16 Oct 2025 09:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v9NmF-0001zx-EM
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:12:19 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v9Nm4-0007D0-Jm
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:12:19 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-4270491e9easo91163f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 06:12:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760620322; x=1761225122; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XOUFNZvpHvqjnm/AtQ2K0Ky2w9UxP0NVE0y9sfgq5R8=;
- b=XhF08UrJ+8tx+TuUe3l6gYI6u/zxNdARqUFZFGzMaxe1FwubBWeNTbzGBqSlkNiXdt
- 7hSs7N1eitfPH3uzPe42/VWebiNAtXfB6JOJlB9aTZgUaFtStk8gbrCJ99ePuu9tsrtG
- 8FMy9zXoBbeGHxTpCM1cR57vVU/JywnYXKoN3IEQV1GYGnUpi3WwsPCyu7iA0Awzp/t3
- VfvfYLrGcx5RtIq1Kd3VfBJJQRVo7/QU5Udshwou0ci7MvxZgbSpjuEuJJUnSn/p4Uyz
- x20y3qzCN4g4O/adh5sK2jFa134/WcnjHHVJs4pp6Tlqpyty6J0iLMAJoeGaN/ESc+AE
- I/kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760620322; x=1761225122;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XOUFNZvpHvqjnm/AtQ2K0Ky2w9UxP0NVE0y9sfgq5R8=;
- b=hMfDTVsQeNNaMEBpXi6gdtx5iwBwhWZd+rPdfN1C9ZKucwrYugWJKaHWHBDjqD3R14
- SFicFX5t0Qdqy8w7x5t8WRz9jTgPohgtqY1oDywBrm+kdPM19DVJj3mv/cj8AWzXrOSv
- P0EEgGKJuCG7gop8fCEELX+KVs/+GZJEwd+ZRSIFpJ3vghZCiqYuytaG7wqYsVAUl5SM
- 1pWTe2BtJRGBOD0BlFc0ob9HuWizd8tbiuTH0IsYR8oG6JGjN/URqTUbZ+SizKp35M3z
- mfHaXBQEnx6qaBZKg3BMxj951nBjX1Tuqp0hJpptQf6FBgkJINVdf1fAChkAzFVaNYHR
- 5jpA==
-X-Gm-Message-State: AOJu0Yx6jU314dlhgIG3kUBDXm49l8q9wzgf3i2R0ONP/0wZkeEX7QTn
- 6lAvM37+gkDO/lLozdY4NzQhtLbBUxDIIui7T2vHGJUXFHSuo0PZ+mSMMlYWi/m09gT3ylkGJq6
- o6peG
-X-Gm-Gg: ASbGnctowAWkRWzTMNqVa785vx47W1Ze06cZXp8xoVfOC0gmd4pzX253IJ0AlIaDahS
- W3OjlIATsmblpsep8LHZx6q3WDQapLRlvkbAWf+vD+9axMfmppnO2Y0YSMQBnXf0rWOev0KZ95K
- PqVhbV8JqShXdtnqofhFicajk7xKy8ml0sBnOoAoTUFnLX+ytsN/PpyqxLPajhsDdapzC+/QSwG
- gXKIElv1xaS5SxCmMwZoEiWfv8uQaQUjj8yCdCZpPfv/jpsHbUfynJ9qjoGl0WGu1AsStTwrxu5
- dKqG3Tv149QG1T/3ruXIK1jz9XmvDZgjYv4l2K0Ltma/47TONjII2AcWb+OvrVR83Ysct8WUUk9
- 3QkjT2PRLTofoeIEr8tTYW0bCoy0LBC2D4YdjOzkUCjfL57bhM/mZyxAEtjETqclkFN4BN6qlge
- h0VCsYd8E9zE7x/KVBJ9wpDlOxkSBX1+M=
-X-Google-Smtp-Source: AGHT+IFbroAqjxKopL/8oWTHIEPp0sO95JEtiIY9HxkTTxB57rQwFTtY3xXmFhLIKybwLh1K7gC2pQ==
-X-Received: by 2002:a5d:5d02:0:b0:3f7:b7ac:f3d2 with SMTP id
- ffacd0b85a97d-42704d9b22amr30802f8f.43.1760620321700; 
- Thu, 16 Oct 2025 06:12:01 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4711443e81asm28033515e9.10.2025.10.16.06.12.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Oct 2025 06:12:01 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v9Nzf-0006Xd-5b
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:26:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v9NzU-0001EL-IO
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:26:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760621153;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=kOLRyuKs++0RiVEeUipv4OUAS1imZkhhXiB6IuStEz0=;
+ b=XRpvLBacCsx6nyHldyxSx6Xee2TNL8dPVEOzQZfxEAYty7V6eazc4gSK5uZiMjgbxoE5cY
+ ryFgFUzSs0oYWFsBLRURTOa1Bobdcqp9C1VC9Q9HMXNcOKHoVXrwRX21jx9WYt+5Cxxrls
+ pyXcW7+oXFgQzpIBgn23mcfQ425mE28=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-30YR9ZVYOJWcKYbPuz05ew-1; Thu,
+ 16 Oct 2025 09:25:51 -0400
+X-MC-Unique: 30YR9ZVYOJWcKYbPuz05ew-1
+X-Mimecast-MFC-AGG-ID: 30YR9ZVYOJWcKYbPuz05ew_1760621151
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCA2A195609E
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 13:25:50 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.46])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0B645300019F; Thu, 16 Oct 2025 13:25:49 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-Subject: [PATCH v2] docs/system/security: Restrict "virtualization use case"
- to specific machines
-Date: Thu, 16 Oct 2025 14:11:59 +0100
-Message-ID: <20251016131159.750480-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] tests: use macros for registering char tests for sockets
+Date: Thu, 16 Oct 2025 14:25:48 +0100
+Message-ID: <20251016132548.1654627-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,90 +82,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently our security policy defines a "virtualization use case"
-where we consider bugs to be security issues, and a
-"non-virtualization use case" where we do not make any security
-guarantees and don't consider bugs to be security issues.
+The test-char.c has a couple of helper macros for registering tests that
+need to be repeated for both IP and UNIX sockets. One test case was not
+using the macro though.
 
-The rationale for this split is that much code in QEMU is older and
-was not written with malicious guests in mind, and we don't have the
-resources to audit, fix and defend it.  So instead we inform users
-about what the can in practice rely on as a security barrier, and
-what they can't.
-
-We don't currently restrict the "virtualization use case" to any
-particular set of machine types.  This means that we have effectively
-barred ourselves from adding KVM support to any machine type that we
-don't want to put into the "bugs are security issues" category, even
-if it would be useful for users to be able to get better performance
-with a trusted guest by enabling KVM. This seems an unnecessary
-restriction, and in practice the set of machine types it makes
-sense to use for untrusted-guest virtualization is quite small.
-
-Specifically, we would like to be able to enable the use of
-KVM with the imx8 development board machine types, but we don't
-want to commit ourselves to having to support those SoC models
-and device models as part of QEMU's security boundary:
-https://lore.kernel.org/qemu-devel/20250629204851.1778-3-shentey@gmail.com/
-
-This patch updates the security policy to explicitly list the
-machine types we consider to be useful for the "virtualization
-use case".
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
-changes v1->v2: updated the list:
- * remove isapc
- * remove ppc, mips, mips64 (no machines supported)
- * list pseries as only supported ppc64 machine
- * list virt as only supported riscv32, riscv64 machine
+ tests/unit/test-char.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-I believe the list to now be correct, and I think we generally
-had some consensus about the idea on the v1 patch discussion, so
-this one is a non-RFC patch.
-
----
- docs/system/security.rst | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
-
-diff --git a/docs/system/security.rst b/docs/system/security.rst
-index f2092c8768b..53992048e65 100644
---- a/docs/system/security.rst
-+++ b/docs/system/security.rst
-@@ -35,6 +35,32 @@ malicious:
- Bugs affecting these entities are evaluated on whether they can cause damage in
- real-world use cases and treated as security bugs if this is the case.
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index f30a39f61f..3c9f0a68e8 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -1969,19 +1969,17 @@ int main(int argc, char **argv)
+     g_test_add_data_func("/char/socket/client/reconnect-error/" # name, \
+                          &client7 ##name, char_socket_client_test);     \
+     g_test_add_data_func("/char/socket/client/dupid-reconnect/" # name, \
+-                         &client8 ##name, char_socket_client_dupid_test)
++                         &client8 ##name, char_socket_client_dupid_test); \
++    g_test_add_data_func("/char/socket/server/two-clients/" # name,     \
++                         addr, char_socket_server_two_clients_test)
  
-+To be covered by this security support policy you must:
-+
-+- use a virtualization accelerator like KVM or HVF
-+- use one of the machine types listed below
-+
-+It may be possible to use other machine types with a virtualization
-+accelerator to provide improved performance with a trusted guest
-+workload, but any machine type not listed here should not be
-+considered to be providing guest isolation or security guarantees,
-+and falls under the "non-virtualization use case".
-+
-+Supported machine types for the virtualization use case, by target architecture:
-+
-+aarch64
-+  ``virt``
-+i386, x86_64
-+  ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``
-+s390x
-+  ``s390-ccw-virtio``
-+loongarch64:
-+  ``virt``
-+ppc64:
-+  ``pseries``
-+riscv32, riscv64:
-+  ``virt``
-+
- Non-virtualization Use Case
- '''''''''''''''''''''''''''
+     if (has_ipv4) {
+         SOCKET_SERVER_TEST(tcp, &tcpaddr);
+         SOCKET_CLIENT_TEST(tcp, &tcpaddr);
+-        g_test_add_data_func("/char/socket/server/two-clients/tcp", &tcpaddr,
+-                             char_socket_server_two_clients_test);
+     }
+ #ifndef WIN32
+     SOCKET_SERVER_TEST(unix, &unixaddr);
+     SOCKET_CLIENT_TEST(unix, &unixaddr);
+-    g_test_add_data_func("/char/socket/server/two-clients/unix", &unixaddr,
+-                         char_socket_server_two_clients_test);
+ #endif
  
+     g_test_add_func("/char/udp", char_udp_test);
 -- 
-2.43.0
+2.50.1
 
 
