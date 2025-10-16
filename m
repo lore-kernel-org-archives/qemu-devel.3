@@ -4,148 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E791FCCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786D8CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:42:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9XOr-0003gq-GV; Thu, 16 Oct 2025 19:28:49 -0400
+	id 1v9Xb7-0005Zb-DZ; Thu, 16 Oct 2025 19:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1v9XOp-0003gb-Is; Thu, 16 Oct 2025 19:28:47 -0400
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1v9XOn-00018H-HX; Thu, 16 Oct 2025 19:28:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bIaNvmo9/4kC1vQf17otFeoZpH8wi10QkyGx62ygqdk3dyELXidZDsc5AN8csPki5ATOTXl5/eydUHXjcX3sQaOelktdx5HwpsKxCTL/TfXKoV0ssCTqanoxgG17zjRN2Hy9VzBl8OlbyS1p6lM+Ay+U3RtNnyY42QDp7L0LjzcfOk0fXVIz+z221lsHE97Lsu0O7tf3+I28cMOhHN/rN0PsXpJsQUmTWBSbfSucGE9sHhY68ftGHKh/faw5GkIVilyDOy3SY07sD8hQ0qJvUTWriEACckFL1DsKi818xEWIdrgKTQWl5QmBiOYRHYxNkOlGS6qe0yxTLlNaHxi8NQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1zwz9rdTuN0snTQul54XTMDtu5czmuJxYZFak6CddRQ=;
- b=qqPJ5mEpeFMjNXZtitTrPCZTHQIDe/p2PHX50egm25Jw4M3lRr3HZuO59H9tlwIbY/uiM1hceTWrQcV3xrjkRbDYkPLxGBovWWHsSSlN9HoqFrvAMC1AfYDI+qQZi4lGroVwus6z8ZyrtPmKpzqYKG++m2+5ouT8YmhM2B5zgyBJn1jkFNH5J/GN4yrF2ay0HhTH9cqX0nAOSZByE0KuCoaNLQeT16wCGYlFkJAFrYx/NcMVW+4zMfA+9785SfneBI7sNU/VW1Y3s7HOPcyftJ9ViKy8RN+fwNUO1KJ7R8elwnZwQf1Y/FfvcbV/NVaNOAQtk6jLJTrHxNGH7PuIBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1zwz9rdTuN0snTQul54XTMDtu5czmuJxYZFak6CddRQ=;
- b=ElfsLAgSWtR3Fy6r3yTWHSXuOZA6QwXfPwVy/HUWc4E+LFmAKjIp8bb5HwAWHyvk0Gq4P9jgyzWsblYfy2OvamJVyqF+eUDILh4U0FBXOyKGtM0dMe/0QKAkbUextyQh37bYlx9+bLfyiN5MoEIr5zfoefahZhvIGJJ36paHlNJWqf73kKy77cBD9LjUKYF/J+UrwSSdlM/YJ23EntZrYn+EgEXgVmE5gVt6xaTvdNBny/7JdP6tgDs3JiAaycl/7e5HxMkng+WYYTUlonoiVkdFNqOVMKHMV38m+OxltqkKRiH03zvK4Rcpkra1LCJ7Xp7bFfP1CNF650LcoOXoJg==
-Received: from PH0PR07CA0078.namprd07.prod.outlook.com (2603:10b6:510:f::23)
- by IA1PR12MB6116.namprd12.prod.outlook.com (2603:10b6:208:3e8::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.11; Thu, 16 Oct
- 2025 23:28:38 +0000
-Received: from CY4PEPF0000EE3C.namprd03.prod.outlook.com
- (2603:10b6:510:f:cafe::2a) by PH0PR07CA0078.outlook.office365.com
- (2603:10b6:510:f::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.11 via Frontend Transport; Thu,
- 16 Oct 2025 23:28:25 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CY4PEPF0000EE3C.mail.protection.outlook.com (10.167.242.13) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9228.7 via Frontend Transport; Thu, 16 Oct 2025 23:28:37 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.34; Thu, 16 Oct
- 2025 16:28:19 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 16 Oct
- 2025 16:28:18 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 16 Oct 2025 16:28:17 -0700
-Date: Thu, 16 Oct 2025 16:28:16 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 12/27] hw/arm/smmuv3-accel: Make use of
- get_msi_address_space() callback
-Message-ID: <aPF/kIPkKtLgm4jg@Asurada-Nvidia>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-13-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9Xb6-0005ZR-DS
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:41:28 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9Xb4-0002p7-72
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:41:28 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-63c1006fdcfso2341041a12.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:41:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760658083; x=1761262883; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=szGxHxKOPJImLc1PjGnA88xgibt2D3DfORNKrvy/uTc=;
+ b=iuVeFwSOfqR21VDmoZqB0CbQxNwYr9AVsYnzHmTxsfzNPyn378xzi8hF2Y5DFOqGZR
+ 4K1jgzkJB0ZNSnpC0lDqGyhW+nF48zgYOUVyNHpoXKvbjNG8F0YfEDmFSan6UnXpOtmb
+ MX36+icfi5mOiU9Uuj7FBZu4Jed3cM/nt0mQ4PaII4yuN2x7IfMGBYo22fgS2ahwxJMa
+ DDyjPURQfwkRORZMFlj+4kV8IRI7Sl5SG3A4reFet/cUwCKt31rw9JrRai84VytIkiDl
+ c5IFQSoHsqtV+BJYK60V2OoGzEIhBIrbuBE7dfDbDXAobzBA2GkArJ9Ho6VxeY15gdvU
+ HKcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760658083; x=1761262883;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=szGxHxKOPJImLc1PjGnA88xgibt2D3DfORNKrvy/uTc=;
+ b=vqnohCfL6/AQzsAl6s3YigO4Ue9a9oBR/9d99HxLIXOXrOGZ1SlMq8OaI6A5ydwftg
+ nZIojBZICQOnzkG5rnDi3Jp8rHgvdLdDmZ8y20TpjhrPKKaRxGjarvM/iY9oPdA6/feV
+ mRUBaeH5t6b0AFOz03OV5dgxhEOLUHwyTgVjOhmsZo6XYGSZdsXahbW588u+Dd2wF3ej
+ IyLpyJe9B7v+Q5UuDVgza5gmm4UvuEmQi9L4Ot8geHNXLFd3lp6llvDqE5O5fRV2TMef
+ K1nE7yo+3rWcUYijXD6AjYEu4AcSL2Lcgb1l7DwGwABkDA+r06K3m2MloGhodb3RzMre
+ bmCA==
+X-Gm-Message-State: AOJu0Yy2j8fGqCl4dQlda7Pv9sYqQ1oKp/fCYa8bfOeRz0PrUI5xRnBh
+ iHd+CvbapJgHySbnQxmS6B5wIcN6mUKAgtFV3bgw3Sysm6MgQurUQ56NZkeQfQDkptb/H1rgaXD
+ FNsOZq1GUNkQphZbnTrbp0Rn71j+LVoI=
+X-Gm-Gg: ASbGncsFlc+E5cArDLPYte/IPMhB3DUBKNAZQmgA+6PJBkgXe/KBhkPavEvqpBRvpjC
+ 1wjxnKZjeFCfbSxUsNF0LXtenQ7FpxMSqKjPH11EPz+XCA9RgkDaqyWMy8GWUlcubYRF0T6B2Pt
+ qWrj4mlfjbewqmnl+aaH3A3BZ0Fxv84PgEM9Y/t6hhlOpwI8L2lAuNPAC0y7SH8o3O3SwGoWhlN
+ YNb/E3jVnQqpt1bKZIRC2figTHzqkAmDFzm3iLJn5HtXFA3S6iM04wIaKp9Nu02sAkTADRRL4fW
+ 2K96aZHzx96ZdS1FQWSOk4DIXg==
+X-Google-Smtp-Source: AGHT+IFbNV4/lpY2hkijC2Fc8bOXZZ13D1PVBHSoFtGIt9CkXXZ/9De7wtkKx5xIrJToANXXCO9qUhtna2Gkp6yN9qU=
+X-Received: by 2002:a05:6402:4316:b0:63b:fbb7:88bc with SMTP id
+ 4fb4d7f45d1cf-63c1f628bcamr1475063a12.5.1760658083138; Thu, 16 Oct 2025
+ 16:41:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250929133643.38961-13-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3C:EE_|IA1PR12MB6116:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3595c9c-a17f-4b17-e235-08de0d0bbb7b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700013|376014|7416014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?DcVOmTBKd0kEQVV/+t3eqF4FEZNG06NYPpbARd731DZn3qB/lPGARtICkEEh?=
- =?us-ascii?Q?xp65i7TNvu8w7pq4+rEQ9kHuLUWhRfe7tPcqWmRpu91kaV5uj85GV6DYuL8P?=
- =?us-ascii?Q?rLKE/8wNdkHdGxR3rVvK2pjajftWAk1JTCOl2/3lQ3uk4f1Wp2HRSfuFlwln?=
- =?us-ascii?Q?J/eugRLTTqQr7xFaJ0OyrmK3CDrH/H/mhNCUNeK6cgYQNhiSaoiMCA5YRaYe?=
- =?us-ascii?Q?dS68e1Y5P8g5cBkS1H0/EVsIx/wnW0ErViNqfzXnhqjFKFxu1C0dpMiBKkNr?=
- =?us-ascii?Q?rsWlWiSy72e+U7D7dRo971Y9W8P6LM4RNEIG2bZRkSufFw22DHslCFqprmOD?=
- =?us-ascii?Q?qjrDHrzFKxzJVTPJsW3xfz6+mpU9qhRY8y1QwbhUHJEMmPjJwnS5lXiuoz1K?=
- =?us-ascii?Q?p7SfXBNjCo/GcP1BWmeokCssZV/kwOmRdL9ZjQRKOLurvzxue8QkIsYTflqD?=
- =?us-ascii?Q?FC04NwSmt0n2Lujo/vLdPrT4dhsjm3x1NHRvlQxTg5qRHo+uqmEnyTh2dA7o?=
- =?us-ascii?Q?slv1w/qsdSeuRzxgS3LTG/Y/ifweVIjeRX/km18pC1fiaMgr1RE8lL1FhVvj?=
- =?us-ascii?Q?A6SBHMklVNA/cG619CVbFC9twcneRhs7vjaDIgV/zA2KV62lo9CHRGABJ+Gu?=
- =?us-ascii?Q?4egIDVQzPanfTu8wDk1QKVPltLuX3mbCJEXrzy4HD653XmVMC2OIKlKvP+C8?=
- =?us-ascii?Q?TRIi5BspDjKbDjZxzUQacB0arg8DYWL+FH6nQu1MHXnC4OKptgfdaM8O45Mz?=
- =?us-ascii?Q?AelAltWljOOWfHNjEDkuD571UWgO/GVtsSiTHqJ+Q+MkxVn19H5kTSZqIu/o?=
- =?us-ascii?Q?8cz21rOmrMt5HIEuszkg+y3dJuBqUJVCgnXOJiEC6YZnyTDnX2f835/lrTxp?=
- =?us-ascii?Q?c2ijkKbs/Ni7U9j8EjwmtGkUxuxN/zVsbZnWER+6tNzfnXqZVzjpRVQuWTrA?=
- =?us-ascii?Q?5JRJ8A3brujvVWTL8bYCYcY5+mhxEQLKRCV9aGNapo3OPNOALxMqp1OUDO0H?=
- =?us-ascii?Q?WxMcNWEyqXOtVBljcCwNLmksXtE/0CvAHLkE6pIeTnvfYv0Dfyn99EqD6nQd?=
- =?us-ascii?Q?aC3WXIC52X3//dHP2iQSBzJTA1Px0OZdMZMCcVxTf8K8lq/Czm00Bbvxsst0?=
- =?us-ascii?Q?x0wF/cj001Y9ctIvqOcjMixxAOOijxEhunUO0bK0n/eS8zv71loxQ9g/fmVM?=
- =?us-ascii?Q?Rt8+da6Qc9YjoiJqTF1ioWm0xyzjvERM0aOysKv1BrGQg7MlqC8YqUbiSgoS?=
- =?us-ascii?Q?y0awo9vjx+oLKbl8PqFqilqFuGQMuc8Ahiq6qep9HZYcN0AAoqryOumcMlOC?=
- =?us-ascii?Q?+7EUg82nLG5zaiHhZkRY0eWez10ySlKEXkpQBbs9zHflmTXZpMrGWYhYQe7o?=
- =?us-ascii?Q?HoQpeY2j4UPYRaPwRXFYZUlyBWYTsuiU4vGUkEK8YJiInWwVd29pC4wsiNMI?=
- =?us-ascii?Q?7n98s1VpHb7t42exrVvZ1LMHiXMDdwuIeSgFcaEAi5GG06qi2RBH/v5I5Cek?=
- =?us-ascii?Q?hK8f89jkovgiHuWTZc6daWHxsUQ0Abv1rGb7K2KtZYkOw54uQFYxtqQJ1yxn?=
- =?us-ascii?Q?ypN9kpzZO3Lp0KypIjQ=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014)(7416014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2025 23:28:37.3139 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3595c9c-a17f-4b17-e235-08de0d0bbb7b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE3C.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6116
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
- envelope-from=nicolinc@nvidia.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+References: <20251014203512.26282-1-anjo@rev.ng>
+ <20251014203512.26282-35-anjo@rev.ng>
+In-Reply-To: <20251014203512.26282-35-anjo@rev.ng>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 17 Oct 2025 09:40:56 +1000
+X-Gm-Features: AS18NWCTE-GfrNP2-ZBtoKnO8W6R3KXer5dFjlznBkjeyjYojfLedCby9ADOomg
+Message-ID: <CAKmqyKN91tpwX8+0UpV9MxPS6u6X2B4PywEO8Fh_uOYW--GFWw@mail.gmail.com>
+Subject: Re: [PATCH v3 34/34] target/riscv: Make pmp.h target_ulong agnostic
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
+ alistair.francis@wdc.com, palmer@dabbelt.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,14 +98,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 29, 2025 at 02:36:28PM +0100, Shameer Kolothum wrote:
-> Here we return the IOMMU address space if the device has S1 translation
-> enabled by Guest. Otherwise return system address space.
-> 
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+On Wed, Oct 15, 2025 at 6:38=E2=80=AFAM Anton Johansson via
+<qemu-devel@nongnu.org> wrote:
+>
+> The pmp.h header is exposed through cpu.h.  pmp_table_t is also used in
+> CPUArchState.  CSR declarations are only used in target/ and are moved to
+> csr.h.  In pmp.h, addr_reg is widened to 64 bits and the privilege mode
+> parameter is fixed to 8 bits, similar to previous commits.
+>
+> Note, the cpu/pmp/entry and cpu/pmp VMSTATE versions are bumped, breaking
+> migration from older versions.
+>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Apart from the naming that Jonathan pointed out,
- 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+>  target/riscv/csr.h     | 12 ++++++++++++
+>  target/riscv/pmp.h     | 20 +++++---------------
+>  target/riscv/machine.c | 10 +++++-----
+>  target/riscv/pmp.c     | 10 ++++++----
+>  4 files changed, 28 insertions(+), 24 deletions(-)
+>
+> diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+> index 552e6c5de5..3752a0ef43 100644
+> --- a/target/riscv/csr.h
+> +++ b/target/riscv/csr.h
+> @@ -78,4 +78,16 @@ void riscv_set_csr_ops(int csrno, const riscv_csr_oper=
+ations *ops);
+>  /* In th_csr.c */
+>  extern const RISCVCSR th_csr_list[];
+>
+> +/* PMP CSRs, defined in pmp.c */
+> +void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+> +                      target_ulong val);
+> +target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+> +
+> +void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
+> +uint64_t mseccfg_csr_read(CPURISCVState *env);
+> +
+> +void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+> +                       target_ulong val);
+> +target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
+> +
+>  #endif /* RISCV_CSR_H */
+> diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+> index e322904637..f5d6ec2bbf 100644
+> --- a/target/riscv/pmp.h
+> +++ b/target/riscv/pmp.h
+> @@ -22,8 +22,6 @@
+>  #ifndef RISCV_PMP_H
+>  #define RISCV_PMP_H
+>
+> -#include "cpu.h"
+> -
+>  typedef enum {
+>      PMP_READ  =3D 1 << 0,
+>      PMP_WRITE =3D 1 << 1,
+> @@ -50,7 +48,7 @@ typedef enum {
+>  } mseccfg_field_t;
+>
+>  typedef struct {
+> -    target_ulong addr_reg;
+> +    uint64_t addr_reg;
+>      uint8_t  cfg_reg;
+>  } pmp_entry_t;
+>
+> @@ -65,21 +63,13 @@ typedef struct {
+>      uint32_t num_rules;
+>  } pmp_table_t;
+>
+> -void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+> -                      target_ulong val);
+> -target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+> -
+> -void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
+> -uint64_t mseccfg_csr_read(CPURISCVState *env);
+> +typedef struct CPUArchState CPURISCVState;
+>
+> -void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+> -                       target_ulong val);
+> -target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
+>  bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+> -                        target_ulong size, pmp_priv_t privs,
+> +                        int size, pmp_priv_t privs,
+>                          pmp_priv_t *allowed_privs,
+> -                        target_ulong mode);
+> -target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
+> +                        privilege_mode_t mode);
+> +uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
+>  void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
+>  void pmp_update_rule_nums(CPURISCVState *env);
+>  uint32_t pmp_get_num_rules(CPURISCVState *env);
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index e86fc58e43..eab3adec4d 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -48,10 +48,10 @@ static int pmp_post_load(void *opaque, int version_id=
+)
+>
+>  static const VMStateDescription vmstate_pmp_entry =3D {
+>      .name =3D "cpu/pmp/entry",
+> -    .version_id =3D 1,
+> -    .minimum_version_id =3D 1,
+> +    .version_id =3D 2,
+> +    .minimum_version_id =3D 2,
+>      .fields =3D (const VMStateField[]) {
+> -        VMSTATE_UINTTL(addr_reg, pmp_entry_t),
+> +        VMSTATE_UINT64(addr_reg, pmp_entry_t),
+>          VMSTATE_UINT8(cfg_reg, pmp_entry_t),
+>          VMSTATE_END_OF_LIST()
+>      }
+> @@ -59,8 +59,8 @@ static const VMStateDescription vmstate_pmp_entry =3D {
+>
+>  static const VMStateDescription vmstate_pmp =3D {
+>      .name =3D "cpu/pmp",
+> -    .version_id =3D 1,
+> -    .minimum_version_id =3D 1,
+> +    .version_id =3D 2,
+> +    .minimum_version_id =3D 2,
+>      .needed =3D pmp_needed,
+>      .post_load =3D pmp_post_load,
+>      .fields =3D (const VMStateField[]) {
+> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+> index 85199c7387..0839a23086 100644
+> --- a/target/riscv/pmp.c
+> +++ b/target/riscv/pmp.c
+> @@ -23,6 +23,7 @@
+>  #include "qemu/log.h"
+>  #include "qapi/error.h"
+>  #include "cpu.h"
+> +#include "csr.h"
+>  #include "trace.h"
+>  #include "exec/cputlb.h"
+>  #include "exec/page-protection.h"
+> @@ -272,7 +273,7 @@ static int pmp_is_in_range(CPURISCVState *env, int pm=
+p_index, hwaddr addr)
+>   */
+>  static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t pr=
+ivs,
+>                                         pmp_priv_t *allowed_privs,
+> -                                       target_ulong mode)
+> +                                       privilege_mode_t mode)
+>  {
+>      bool ret;
+>
+> @@ -331,8 +332,9 @@ static bool pmp_hart_has_privs_default(CPURISCVState =
+*env, pmp_priv_t privs,
+>   * Return false if no match
+>   */
+>  bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+> -                        target_ulong size, pmp_priv_t privs,
+> -                        pmp_priv_t *allowed_privs, target_ulong mode)
+> +                        int size, pmp_priv_t privs,
+> +                        pmp_priv_t *allowed_privs,
+> +                        privilege_mode_t mode)
+>  {
+>      int i =3D 0;
+>      int pmp_size =3D 0;
+> @@ -662,7 +664,7 @@ uint64_t mseccfg_csr_read(CPURISCVState *env)
+>   * To avoid this we return a size of 1 (which means no caching) if the P=
+MP
+>   * region only covers partial of the TLB page.
+>   */
+> -target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
+> +uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
+>  {
+>      hwaddr pmp_sa;
+>      hwaddr pmp_ea;
+> --
+> 2.51.0
+>
+>
 
