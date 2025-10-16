@@ -4,107 +4,198 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC99ECCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D17E6CCD194
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9MoS-0001CT-22; Thu, 16 Oct 2025 08:10:32 -0400
+	id 1v9Mp2-0001oB-IU; Thu, 16 Oct 2025 08:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v9Mo1-0000mn-Sa; Thu, 16 Oct 2025 08:10:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1v9Mp0-0001fH-BE
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:11:06 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1v9Mnj-0006yu-Go; Thu, 16 Oct 2025 08:10:01 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59G2HTuB010194;
- Thu, 16 Oct 2025 12:09:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Y2h6TdWlxVDiVfPno
- YF5l9frUy5Kex2iUmuv1+WHI28=; b=NYhRUgjgy/bBwh9+cyKritAVKYp6NafhV
- c39bEoLlIW/7AkzouT72441upna0lg8wA2pzVQOzDem5iDgtXxPgEuj0Di+/DEZ4
- Of5xb3O21mhxoyS+MlqYGoZ/lUdM3JrvXHkNe5Q0AnKWmGNeyJ7ZcmaZjI2vz1Ei
- LxFa31bApYRpqS04JMLors55TNRkRI1GI7n5TSP0wp99pnotthJsN1f49qHa7/ZU
- Z4NWkajejV/AfWv5JdsvCFZ5libvQQOjRzwMK2T8Pg8p6u10fIxHWfnWaBE01uq6
- L1541u0VfqCKLblZG0LM6ndDMkmg6iTK0TtjvqNxn5u0tBWEcM5Wg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qewuagx3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 12:09:35 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GAogQ2015041;
- Thu, 16 Oct 2025 12:09:34 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r3sjnbbb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Oct 2025 12:09:34 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59GC9X9F59179408
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Oct 2025 12:09:33 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1147820173;
- Thu, 16 Oct 2025 12:09:33 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8783920174;
- Thu, 16 Oct 2025 12:09:32 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.111.71.186])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Oct 2025 12:09:32 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH v3 2/3] target/s390x: Fix missing clock-comparator interrupts
- after reset
-Date: Thu, 16 Oct 2025 14:07:00 +0200
-Message-ID: <20251016120928.22467-3-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251016120928.22467-1-iii@linux.ibm.com>
-References: <20251016120928.22467-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1v9Mon-0007LU-Q1
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:11:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760616653; x=1792152653;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=96c7W70cMh9i789+ZJfMVY/RPZC6ReWGOMcHLkbIHEo=;
+ b=jqhavS7Gxx+sSjrgDGrZZBinT18UeWzJ7duiruyS8BEX7RvDUCnGQ76l
+ MfuHFSMK+yeCY2adXRAfPlb1EmUl9Ju3G/n+Jjf1z5llfBPjZ1iYVmBJM
+ db+jo7FkrQ9tHHxzSNg90W9AMYNlU/4I1kGxC6j4F7p8t3JfaFFJlzOUy
+ y2vE4NTHJBPQ4RrKlsBe+M1xojmcI+YMU0zEsaEwM7tD7CzdPPEYb34TT
+ Zj9dde8f+5D1yr9r8/+Ggd3tF+6Mb3krkbWR+/Hmy0N2uYUmL27C/bcmA
+ IDpWn7TpcMJKaowY8mNckuW+HHMp8N0pFRZYOa4Sgh5Kau7skiu0QOdEE g==;
+X-CSE-ConnectionGUID: fSJjFBpISRCinfL7TxKpBQ==
+X-CSE-MsgGUID: iB9d5AfQRPm11ZKxPcAL7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="73407216"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="73407216"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Oct 2025 05:10:46 -0700
+X-CSE-ConnectionGUID: SIdnh6YmRFuSTibtg7STVw==
+X-CSE-MsgGUID: Ee6sEPcpR3ip1FdbBiin6A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182008815"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Oct 2025 05:10:47 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 16 Oct 2025 05:10:46 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Thu, 16 Oct 2025 05:10:46 -0700
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.36) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 16 Oct 2025 05:10:45 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HEMvKjKoPmwPB4kfc6eWl01482VDqoqXLF0R0MgS3/IUKDxBCrmRD77iDc+NIGIW7dKkEfPNuXtKa4jvLABs45HrUeCb8vJETzUK6jjoo6JhBKC69NKD44ryzEiDoEwfPsQuBQHvdADes8BLJSwzTnrj2EDfSu2LjYKzBmjxW36wmHcJwCKuw0LHnkrx8k13G68gfck8I1e4pHNFUL4PxmnTddkU8UJVAUDtBiq8GJgvol5mGRqumqa5WAuL8IdxbrrM2Jdi4vIWF9U3+j+Z1qcgq0DT7Og+f2txQzYOh9PkmBFXFIwRlpx61zw9XPEorvN0vGk6Jto+xetshoDhPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KIRmPlBauBrENzFEiKnHsXULXnqs7F5mLhmOWG7eAu8=;
+ b=glJvddT2Dr1FqjDQlQoj927HypL+w3sYXcTdm083nRyLqqGWXrH193Sk+s3utkQVGYMlb/Fgb2tuA33ttR26oF36ZyE6LhKzDyqqT/hmjbfI+derIvoxJTuaXGb0QShjeUj5BIMjD8NoDRN8tMGcnDhDyvqpYpJLvwBtgYFSo7vzX5n1VNzuwKNXbOvKGF4qrqun+0dmibFVxasrnWJJdwIEvLQjJzq3Dc0Jpm1YyUOPDGBkIfMsTaolLE9Yzt0NC0qaqLJSTB+4nrACKw4e3XpzFTkd61NFh7piqY5tsKp1+oCSWBIvcMqXSKoVHItzTRieBeVVe93BKVkk5F8enw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ0PR11MB4798.namprd11.prod.outlook.com (2603:10b6:a03:2d5::12)
+ by PH0PR11MB7168.namprd11.prod.outlook.com (2603:10b6:510:1e9::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.11; Thu, 16 Oct
+ 2025 12:10:39 +0000
+Received: from SJ0PR11MB4798.namprd11.prod.outlook.com
+ ([fe80::d946:6abf:6e7e:fd1e]) by SJ0PR11MB4798.namprd11.prod.outlook.com
+ ([fe80::d946:6abf:6e7e:fd1e%7]) with mapi id 15.20.9228.012; Thu, 16 Oct 2025
+ 12:10:38 +0000
+Message-ID: <f3a3bf0a-e002-4ef2-a8c8-43df511a7f3b@intel.com>
+Date: Thu, 16 Oct 2025 20:17:26 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] intel_iommu: Handle PASID cache invalidation
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <jasowang@redhat.com>, <peterx@redhat.com>,
+ <clement.mathieu--drif@eviden.com>
+References: <20251016074544.377637-1-zhenzhong.duan@intel.com>
+ <20251016074544.377637-2-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <20251016074544.377637-2-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: KU0P306CA0002.MYSP306.PROD.OUTLOOK.COM
+ (2603:1096:d10:17::20) To SJ0PR11MB4798.namprd11.prod.outlook.com
+ (2603:10b6:a03:2d5::12)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: B1s7OgcwQQJaaw3tZRPcTrg5Q8eQIY8I
-X-Authority-Analysis: v=2.4 cv=Kr1AGGWN c=1 sm=1 tr=0 ts=68f0e07f cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=1K0trMwjMfmDt0goFSAA:9 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: B1s7OgcwQQJaaw3tZRPcTrg5Q8eQIY8I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX2QJArvhpb/CJ
- k/mqtuZjsGE8ndgllW2ZSFhSVzkNBFB5W4DtqcI4LXR6Y/8oqBNRbddOsvj7AtZJZ1kfi8iXMsL
- DVRdhRNSj/sHzOSk3Zq2+7m4MxyXnB390aZkD9o56VSq1MzYNZAR+MPXq5DKD59n/XOlDpGe914
- 56jx0l6kRW24cZhV1+r5nVeJDBmBNoXubP5dKjsK6QpX6VTsd41be/xCNrx4UZolZ3GrcMidguO
- eFvXYklczz2zwO86b7ZUccbegSRcaGM4ju8vFxD85YWtNuZdmspjmLMYyHz6TMQAjGyk4yp+3/s
- mchSfiAiooAvoAJcw3gmsduVCCjlUn/YZybSi45kERzP5Au5LqfPl/o6PD3WF05HgcBoNe1OCaH
- XYA4xx2Y85RJ1prBsM+y6HCIg/BhrQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-16_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
- phishscore=0 suspectscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|PH0PR11MB7168:EE_
+X-MS-Office365-Filtering-Correlation-Id: 259fa467-765b-4b4f-a195-08de0cad04e5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0; ARA:13230040|42112799006|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UmxBd0luNnVoTkdvWC80OGdvUVpxRlp5bDE0VGp3ZHhvdzh2TE1HUXVSdUJW?=
+ =?utf-8?B?ZldLWmozcGJ3WWRtTVZCMjVFT0Y0ajNRVTZBMjNubTROWm81WDlQeCt4ei92?=
+ =?utf-8?B?UkpwblQ5YTJheW1LUCtoNUVWVTRjR2hmbjJhQUVtdTRnQU1WUHIvQ2doM0xB?=
+ =?utf-8?B?UUU0QjVNd2dOTi9mLzNLNEYwTUtmbU1QNkltczlKaUU1NVRmVHZLZ29xbHJL?=
+ =?utf-8?B?bG9RcTVpTis5bmVBd1pFYmlLZWlWdUVvLzNYT0JtYmErZzgyODB3MDA1dFhM?=
+ =?utf-8?B?S1V5Q0JxQjRKNm44cTIyQkNCNWlEOWFWQlBMYzl0WWJOZzdsM2g1THdkYjBL?=
+ =?utf-8?B?REt4MDRRNmJWSUc0VzhHYlFzNzJvQWRiU3BOOTlwKy9QQ015NXBPaDFQRStm?=
+ =?utf-8?B?SmJ6NlJNLzl0dEN3RGtPT1V2RkpPSWtXaHVQZE9raStSd0FMRlVlL2JDRVlo?=
+ =?utf-8?B?bGZhY2NocFdCNy9WQVJXUHhOWENqd3N1WmF6em14VUZob1BYcUk2TndzYTRN?=
+ =?utf-8?B?Z0F0NmhUeEUvYVNBdm5USDRDRUtBWXIvUW9jTWZZNng1MUU4TWMyMStRdGpn?=
+ =?utf-8?B?SEE3UklDZStCd1BROFFlZHV0ZmdReWxteS8zbTR3Tmt6ZGM1YVQ0c0VtUGg4?=
+ =?utf-8?B?YW5LVCtZYWlZdVJIVHZoTEdEMnVvN2J2ZVQwSE5JeTBYZHhLQ3hxdmIvV3RN?=
+ =?utf-8?B?RndJUUtTRE5tYzN1aGd2RGpLanhHUHk3RElmME9UMTJza3Z4M1Vja2Nncy9P?=
+ =?utf-8?B?Z0RkdCtWZVRoTXRCMEdoTTZnTFZXdXI3NnpQc21OZ0dRZ0RPNWZ0UDd5ODlo?=
+ =?utf-8?B?STM5RExYNVEvZzJSa3NvMmZtakVaWnlYS1p6dk1HejU2QWR6NXlGUWo0UGov?=
+ =?utf-8?B?N0tiaFAzVkgrZ1JCSGFGMmFXTm5IREozcnlaYWdRYVdKOG9oeGhJMlhJZVBO?=
+ =?utf-8?B?a1pjbTJSSm9WQTQ2TzV1aFB6aEpJczFieHR1enBDSG5HOFZnajZoV2tRMkV6?=
+ =?utf-8?B?SkRFdWNGcGk5eU5xMDI2YmNtUDRaem1TcnozZ1d6N3NlVXpJWGRCd2tyRXpW?=
+ =?utf-8?B?MnptVWlLelJ2M0lObndvRTdHWCs3UjZpaFhhbk52aXpSQVRQZnJtTkkvaW85?=
+ =?utf-8?B?aGtBMGQ5T0Ira3I2STg5R2Y1Wk9aU2I5dHB2eUc3bDlsZGxrUkR6LytHc2JU?=
+ =?utf-8?B?Q3d5ZlFCNkFyMEFDRFN4NXFqZTZuN2FwamcrV1NVT1kvaC9YcnV1d2JCRjJC?=
+ =?utf-8?B?Z1dHTDM3czFKQVA0azlSZWtSR3BwRGdvNEVQcy9kQTJXUE0yNlJUVjNZRG9k?=
+ =?utf-8?B?dUdqKzB3UzlMV0tYVUNHNkFUbm9pc2RiQzhIQjhKYmZpSnA2YWRWbkJPQWRu?=
+ =?utf-8?B?MGF2THpHT2pnaExvWG9aYXUyUHpFV0JpTkNPcnBHdmdEY3pUZE1aQUpGNHZX?=
+ =?utf-8?B?aGZtZmFPMzdmM0hXV0diU1BwQ1AzK1hZbkVWWWdRQjkySG5OVllMOHJXMUNK?=
+ =?utf-8?B?ZUNsN3NFMGhKTThRcTJVMkRSekhtMHlTNTg1d0VaYnoreUhMRTNSNTEvczRo?=
+ =?utf-8?B?SUxtTHhTdkFmSEZ6djhEVzVIUVBvRko1ck0vMDF6VER4VUNuamxaQ0xRdE5N?=
+ =?utf-8?B?QVJOdGxXZUV4WEcxYktoclNjWTdqc0hNTW10eFBBQTAvM28zMDlxb0Fvc3lr?=
+ =?utf-8?B?M1hPbS9YS0Fla3hTQTJWUUJvbmQvV0NjbnlpRnQ1SzcxUStkazJ5T3ZiY1g0?=
+ =?utf-8?B?UkNPbHJnQzdkVGVKbVl2SFBHbUl0dElFWklmWGUzcjFOUHBOVjhxWnVNd0FL?=
+ =?utf-8?B?bnljNVFBdFoxVXBkUkxldWt3WW9qbTcveWlsd3IwdXJEUXR5UHZFM0U0bXBr?=
+ =?utf-8?B?N3pMRHlMelNnU2dYN1JIdHptWWkvMUh5SkI3bnhNZHRGSk85bmtIR1JYUTdk?=
+ =?utf-8?Q?HDYN2GbPS9FvtgG0GrPE97DF3mjFvpSm?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB4798.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(42112799006)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YkR5ay9VYXNFNFV0WVBGM2ZWcHhhUFVXUXMvbGtyZGxmcEZRSlN6VmRrN3lp?=
+ =?utf-8?B?bmpPWkdSazcrY0ZINUlvYlJKakV1NldQc2YrY1ZpRW9YZjdIVnJhMFVQeTlp?=
+ =?utf-8?B?RVZMd1liK1N5OGhRNlpYbHlpUnd0NTYzSlRqWllBUW15aE03NUtBbWV2Snh2?=
+ =?utf-8?B?OG0xMnJKMVJoMDhpb0JaU3JZaTcvaFUyVXdPdTZnZjcwbS9LcW1LaEdvbUla?=
+ =?utf-8?B?NUxyTjI4Ky84ajYwK1A4aW9tL0ZKOG1kNERMUmZ4UUJiK2dqS1VOclJYZ2lF?=
+ =?utf-8?B?WHZ3WHdnSTJjTnZWekVZMmZLS1ZMeXlPSy93cUR1SnNzeFp6VFVleGNrRlIz?=
+ =?utf-8?B?cE5GaldBeTdDeW1hYUdsaVNMbDBLRWE0dnVYcFZkS29tanU3TzJMaHZyNW5x?=
+ =?utf-8?B?eTFGcG9LZ1h3aGE2Vi9DMEN0OFlFVWZ4cmxCYjdzaHN3UDhqNm14MWJac0Q4?=
+ =?utf-8?B?anJNNDZ3bmoxcldvTEljOUJpT0xCLys5NDZiRTh0TzRFQjNIS2g2OXp4Rnht?=
+ =?utf-8?B?WHpXaEo1ODZiN3N3M09YYnBCOGcxdFFXaWNLYnlKaFVZTEYvVTkxQTYzSVUr?=
+ =?utf-8?B?OGEwZnMwZXRpTTFYMFhldHlTWTBERUJzZHNFQ1RJZ3d0QXVYZE5URitXOFRm?=
+ =?utf-8?B?akRlSk5jelpGR3AvdDFNSG90T2JaMXBNR1JyMHlZTHJzREd0SlFPZFdCdk00?=
+ =?utf-8?B?akVtNmQ3bmhFUE03L09PVWZWelNiTHgvbUFtOVFlOUdBd2hscmhCV3QxVnpa?=
+ =?utf-8?B?bUhwRkJZbU94Tk5iUG5YZEhwcWx5N1Y4WU51d1BkciszaXFwVmx3NlljbWI3?=
+ =?utf-8?B?N25ZWXN0Vjg5ODFzV0VaV2ZWNlhQbkJXR0czQ1Q0WmlBTE9lUFNHMlp4M0t0?=
+ =?utf-8?B?czg0a2o5QVN4c293WWNxQkcxUURTUTZMcHZQUy9RWlU2MkZ0OU00TlcxZElF?=
+ =?utf-8?B?bW4xUUVML1FybE5wSXhtdGwzU3RKV1R5akx3WHR4dFhwRXdPTC9Pay93QWth?=
+ =?utf-8?B?Qk5CcWtkWWYyNHMrMFo2aGMrM0N3bytKdXVseEVPZ0FGSm9rRTBZYmhtcW51?=
+ =?utf-8?B?eEgxTEVhcFNWN2YzNmcwbitwTldaWTBKTHJRTC9qL3RyRHpBd0pFMUJieEVJ?=
+ =?utf-8?B?UzY5NWRZeS9DT0Fscng3MHNzY0U5cEQyamRnaENNSFBhZ0NFZGlSUTViL1dm?=
+ =?utf-8?B?Um10YUlDWTJLL0xhQnlVWjlVK3Q0d3ZkS1VHUmQxSmp5QTRhcHl0V1UyY0F5?=
+ =?utf-8?B?bDgrNXYxeDROSHVpcnN5S0tZUS9ETTdNb2hSdVRZdEd5MnVUenVnL0NISkIy?=
+ =?utf-8?B?UVI0dVZlUUpvQlhCUDQ2UElTalVwQ3VucCt1M1NXUHE3clUzOWFZd0piZmMz?=
+ =?utf-8?B?QmRGWVYwUVE1bythNEgySEMzMGJwL3ljUERSK3dwdTNWRHlVaCtCZnNSa2VU?=
+ =?utf-8?B?dVdLZ0psOEtWdjJvVXhOd3lWRVVkTFBxeElQbU9pTWdjMkZUYjdIZnBMUTdv?=
+ =?utf-8?B?cW91ODg4Z213ZXRlWjhzeUhpRHczTWxHZ3k0N1ZjdnNwaGdrQlB5T05yemJi?=
+ =?utf-8?B?eVlPZUJOZHhlSnM4a0dtdVlHM01GZnJFbDN4ZEFVeWREUC8xdlg0NjFQUnJr?=
+ =?utf-8?B?L2N6Z2pYaU1qd0hzVUVEdmwxZGUyUGJJdG9rN2Y1TlpMdDhNME5aYnp3OHgr?=
+ =?utf-8?B?ZkdGS0lwamV2KzdQNVZiTnJpOXFtN1NuRkJXSmdsZWE3VW9WeEdaM0s3dXlv?=
+ =?utf-8?B?TlJ2TlFtUzJmSnEweVlXcVd0ak9KZlRBeTVnTStOLy9zbUk0SW53VE1nOTVy?=
+ =?utf-8?B?cHVsWmMwdWtMb0FST0VCWDM3OFN2Z3RLeHlEdDJENTJ5TUMwRW1XOWc1T083?=
+ =?utf-8?B?T1lVQXpDWTVNak1CcXhBM3Z3Q2IvTS9jODNXS3ZvSnRrdlVZYk8xU2k2MXlj?=
+ =?utf-8?B?M2tBTFBDQk9uL1oyOXo4ZmFHSEYzYnpXZXJwUFMrZXI3WGRjNDUzN3dSbEs5?=
+ =?utf-8?B?eFc1T3c1SUhmRS9KSDYrbENNdGwreDUyd21iS3RHb29LLzRQTHphNVpSOVdD?=
+ =?utf-8?B?K0pQaHZ3VFdaa0JwdG05Zm11SjJJSW5WNUVXWmJ1SzlRRzRaVGZvTkZNNmJW?=
+ =?utf-8?Q?q512o26rAoehz4Z5MBBfRdUl4?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 259fa467-765b-4b4f-a195-08de0cad04e5
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4798.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2025 12:10:38.9005 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: T8bgdyqZUgz1gzMkZ5EKbLsHI4d7QCY85KDij5Ow9WdajXoEIwc3ul6/0zGa1YLiLmgaAymbmoozLjGzjAq1gQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB7168
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,54 +211,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After reset, CKC value is set to 0, so if clock-comparator interrupts
-are enabled, one should occur very shortly thereafter.
+On 2025/10/16 15:45, Zhenzhong Duan wrote:
+> Adds an new entry VTDPASIDCacheEntry in VTDAddressSpace to cache the pasid
+> entry and track PASID usage and future PASID tagged DMA address translation
+> support in vIOMMU.
+> 
+> When guest triggers pasid cache invalidation, QEMU will capture it and
+> update or invalidate pasid cache.
+> 
+> vIOMMU emulator could figure out the reason by fetching latest guest pasid
+> entry in memory and compare it with cached PASID entry if it's valid.
+> 
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Currently the code that loads the respective control register does not
-set tod_timer, so this does not happen.
-
-Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
-
-Cc: qemu-stable@nongnu.org
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- target/s390x/tcg/mem_helper.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index f1acb1618f7..24675fc818d 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -1959,6 +1959,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-         if (env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-         env->cregs[i] = val;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
-                    i, src, val);
-@@ -1989,10 +1993,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
- 
-     for (i = r1;; i = (i + 1) % 16) {
-         uint32_t val = cpu_ldl_data_ra(env, src, ra);
-+        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
-         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
--        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-+        env->cregs[i] = val64;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
-         src += sizeof(uint32_t);
- 
--- 
-2.51.0
-
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 
