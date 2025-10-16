@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CDC6CCD195
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E59CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9PWx-0002Hm-4N; Thu, 16 Oct 2025 11:04:40 -0400
+	id 1v9PWZ-0002Ci-JR; Thu, 16 Oct 2025 11:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v9PWl-0002Fp-7a
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:27 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1v9PWX-0002C6-TA
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:13 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v9PWX-0001B2-5E
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:25 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3ed20bdfdffso859944f8f.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:04:10 -0700 (PDT)
+ id 1v9PWO-0001AL-Mm
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:04:13 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-426fc536b5dso470574f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760627047; x=1761231847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760627042; x=1761231842; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IwPFf1pbtLyHgXrVD3lp8OL749C/noD+jZkGwklcu94=;
- b=UzaxLOUXbDdAToDIvWDQ6IkyRfq47hkUOkWodmOLqIOaLBdNX+LE/RYQOegN8vpdBn
- qQDwOG6X+33BW0uKtwZMWYNwOC9eaVM+M60WQ7dA3utiRpE+l9lm2Bg6MIKQ7j4lIK9F
- UNtqogToeOriF/v7jrsznpSohiOhzdc7wvAc3MKQsQIwRdv2HKSBax1z69XP3zDrPa/s
- FJzdAu3O6nE4ZrYNAzU7oFnAPVGtY30aYBdhqDeipiMGlfhJhHPbrnaqGqFacRhbQ5Ya
- ZxrbspROJop4REp0bkWuO9l3WxqQ5IPj1DeK/tSKGz4kHByss53/mxtE275fOOh6dNxK
- qGGw==
+ bh=LKX1JcbUUcRo5zoCpPFg8mImjKOb7aFJD3nDg/qhPKo=;
+ b=Ny5o+O6GeYt0zaIA8ejMj7RNSqc7fUM84tk/fQBc3dl9i5SV0G5145dJgjQh9RF/s6
+ UECZrFZ/Y1aJpIr5DTHuG78228aFS2tiNp+ZHVVYZXRy8sVHKOGr1OwCpDliO4pvmRDa
+ ZWUv+pRdkEyOhzN3UpKcFT+KcKB8nEBiwy0371z6nRG+A6rCDH1cw4qGL5KhcRvTAax/
+ mKDP55yuJ6nhYrK9lVHx3F4egmNL4YCpyRsjZKWRHvUxxnYGwPhjzzXKWLiKrjsfkoly
+ 538OBN86XQsEpzKldrpX/6//9Sc1l6YviZnhuajBnKPdg3LLeSC/UMl04MHhn+Ew/doq
+ fFjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760627047; x=1761231847;
+ d=1e100.net; s=20230601; t=1760627042; x=1761231842;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IwPFf1pbtLyHgXrVD3lp8OL749C/noD+jZkGwklcu94=;
- b=rBYpyXeJEPE/jffJpz4uWKzPyhRCvCXnYcx2CQTQZ22EYHyz9TLYZrZGJrQ9+C6+hC
- WDFtI6btvtmbgXG2Yn1/eOdCL1nzE0jlSGLu7kLObT8C/o4bJFM3RSTB77F5uFITk+29
- fIHk4eJtNL8LymCl5/xQs358YacLYqlrEGVMraiY6b4aG9N77kHRZZItnOuccj1b9hee
- 66r42+Ix+T/ulpA1/zjalos+r/1k6047geguqY0wkVMvXscgnvm3V58rN+ntu7c8b93I
- htr4RvyWjbQo59t9TrQSeieD+c1s+BZsWLvt6Pjj9ocmvKnxXwsZQN+4525pIdZ5nWqI
- +DPA==
-X-Gm-Message-State: AOJu0YyhAgBS1DLVTLJAIMAqhfg9TSQd6WIBRIdzqVD5U130dNxTs9dv
- aAQRH/RCzl6UdGBGLss4d5Ic5EE1vfcaJZoXusQv5FIkonSIxaxqbWFZNxiTarvO/ss=
-X-Gm-Gg: ASbGncsH3DpagedfLBPycIneKttFvkil1V0x05jSHR+eR/a5MB+kZ+xUQFUkYiPSXjq
- JXAwvFJImnUu4qfEyYcf13iRlVGK5831OsUobERC3tFdlaajqo2sHtaLbesFvUaInpiO6vjBfi4
- Rk+WYyRhHLzPYZr83nqulhz2eG2vbGSjgs8fztsQaoLl4RdmCMHe9SQWUoNBH9iDBuT61AJe0cO
- 0iblbwvX02NMO9Y0T/IQ09Zsvx5WOfWw9g8I1PI7T8g4Eq9OZH7daJxiOlAOvn13t38/wXsDJcI
- A95dBxuBf5SLbB9E35DPtTb66X1mhv4j9SRxDmkXPfW0qNDokZYctd5tk9wRSA9etVJMI6HTaAe
- SVwvvEV45+9PxBC/unwxgUJkWb/eBRets8kbAba6S5mYq+BFXzAHfGiuoJckltpl2sX7G+Fe6Ur
- wK3vzOxxwkfuk=
-X-Google-Smtp-Source: AGHT+IGoiWPVXoZ/ttIWoCl7fBJNOKmMRiQlCb2EZQENFkAVwYkjC72SIJ5jdNk9rZkYOr25tJ5f/g==
+ bh=LKX1JcbUUcRo5zoCpPFg8mImjKOb7aFJD3nDg/qhPKo=;
+ b=BXpYoMb48IWOrQSjoFtc42R5CA7DI2j3twvhkdG6fZOKks9T+Y/N/5TERZsCCzViop
+ rgLzuoXvf68cBHv170JXWahefmXy/tSHPeAB9CM/0mbFwkjwrkq2IcpSb5ZNyZT0ocYw
+ brhewkqAATizObNn1lUZasqlQSl1Isk8cgpS+eIAk7ZdFhtsjedzfR1letpSgwAaLNWT
+ kc+yKrvdEQ+z1s1bdVF+ierPX7Qhr6CUsoTLP4yQJIdvYpGj31SqGDfgWHnS+mSs4STM
+ hUIlvSJroXJ/m+45X9c6z7tWeZhqRlXJyjnRBIQq3fSsw38WaiRsSJ9Yvnnm5RmuPfEI
+ q6kA==
+X-Gm-Message-State: AOJu0Yw3WdAbW7n6kcyAdr/843RQqhWGTOgBYf3LT30AJNTYq3q1TPwY
+ Vq6tA+ybYfcJdl1RZ3UIFP2AO+x5UvlBgodmdV2N02C1OwGjPYb/9HTgYHF/tR1Bqvc=
+X-Gm-Gg: ASbGncszwYo//KOML1/MFPF2nJP3tQvC22vv9VPJNhh6cq+UqQeTV+n1LOVjPcK6vlx
+ rE4GHi2KBfOAL9q6QCx9ICEzOzgvssWTNmbuRQm8yzgKRZsLykpNu0eqMrdbB8QzfT7FQhZc5ub
+ kNZe5cjYEXo+rEy+SKq4P1zR5N/tEXyVv6uQmq2Dr92UFsrllo4W+aYTz2yhsFrsuHmYjuCBns+
+ X/Ld89LsfzRtdcZNNpaHi2ahNmSE0bf86CmG7n6O3A6o04HPFlIGXPMn27sQ5q8F2uNbyNNuig0
+ o7nOJdKKtFuiv96djGljsDnfarNDP4GaQcWQyXvggIJcMXh2huRZOS+omKMBJEeyC3cguj/OqoR
+ pUDBvflHPkC9QU3jdOoBt4PapbWo+vXX0DeQ8x4xN3+kgStPcA1eYJaVhczdl0r1RqKyTZwzn4u
+ VxdICX
+X-Google-Smtp-Source: AGHT+IG6GNVsampnh5gf3rQc+2jQ/s9xgWyJfv0gSmPXT4OYAEMJYLUMEM/J/6OLcMkvZpqMRhKwLQ==
 X-Received: by 2002:a05:6000:4b08:b0:427:526:16aa with SMTP id
- ffacd0b85a97d-42705261894mr182405f8f.58.1760627047183; 
- Thu, 16 Oct 2025 08:04:07 -0700 (PDT)
+ ffacd0b85a97d-42705261894mr181971f8f.58.1760627041575; 
+ Thu, 16 Oct 2025 08:04:01 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ff65596csm4134085f8f.24.2025.10.16.08.04.02
+ ffacd0b85a97d-426feeb7441sm4722744f8f.43.2025.10.16.08.03.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Oct 2025 08:04:03 -0700 (PDT)
+ Thu, 16 Oct 2025 08:03:59 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7589B5FAEB;
- Thu, 16 Oct 2025 16:03:58 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id D3BA45FAAE;
+ Thu, 16 Oct 2025 16:03:57 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -81,18 +81,20 @@ Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 10/11] docs/system: drop vhost-user-rng docs
-Date: Thu, 16 Oct 2025 16:03:55 +0100
-Message-ID: <20251016150357.876415-11-alex.bennee@linaro.org>
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Andrew Keesler <ankeesler@google.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 04/11] Support per-head resolutions with virtio-gpu
+Date: Thu, 16 Oct 2025 16:03:49 +0100
+Message-ID: <20251016150357.876415-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251016150357.876415-1-alex.bennee@linaro.org>
 References: <20251016150357.876415-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,90 +117,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a fairly lightweight document which doesn't add much to the
-general advice in vhost-user. Update the vhost-user docs to point
-directly at the rust-vmm repo.
+From: Andrew Keesler <ankeesler@google.com>
 
-Reviewed-by: John Levon <john.levon@nutanix.com>
+In 454f4b0f, we started down the path of supporting separate
+configurations per display head (e.g., you have 2 heads - one with
+EDID name "AAA" and the other with EDID name "BBB").
+
+In this change, we add resolution to this configuration surface (e.g.,
+you have 2 heads - one with resolution 111x222 and the other with
+resolution 333x444).
+
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+                 "xres":111,
+                 "yres":222
+              },
+              {
+                 "name":"BBB",
+                 "xres":333,
+                 "yres":444
+              }
+            ]}'
+
+Here is the behavior matrix of the current resolution configuration
+surface (xres/yres) with the new resolution configuration surface
+(outputs[i].xres/yres).
+
+Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with default xres/yres
+
+Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with xres/yres
+
+Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Signed-off-by: Andrew Keesler <ankeesler@google.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250902141312.750525-2-ankeesler@google.com>
+[AJB: dropped pointless output_idx range check, tweak commit]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/system/devices/virtio/index.rst          |  1 -
- docs/system/devices/virtio/vhost-user-rng.rst | 41 -------------------
- docs/system/devices/virtio/vhost-user.rst     |  2 +-
- 3 files changed, 1 insertion(+), 43 deletions(-)
- delete mode 100644 docs/system/devices/virtio/vhost-user-rng.rst
+ qapi/virtio.json             | 10 ++++++++--
+ hw/display/virtio-gpu-base.c |  9 +++++++++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/devices/virtio/index.rst b/docs/system/devices/virtio/index.rst
-index fc457ca74c7..e3839e61824 100644
---- a/docs/system/devices/virtio/index.rst
-+++ b/docs/system/devices/virtio/index.rst
-@@ -25,6 +25,5 @@ can also be off-loaded to an external process via :ref:`vhost user
-    virtio-snd.rst
-    vhost-user.rst
-    vhost-user-input.rst
--   vhost-user-rng.rst
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 05295ab6655..0ce789bb22f 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -971,15 +971,21 @@
+ ##
+ # @VirtIOGPUOutput:
+ #
+-# Describes configuration of a VirtIO GPU output.
++# Describes configuration of a VirtIO GPU output. If both xres and
++# yres are set, they take precedence over root virtio-gpu
++# resolution configuration and enable the corresponding output.
+ #
+ # @name: the name of the output
+ #
++# @xres: horizontal resolution of the output in pixels (since 10.2)
++#
++# @yres: vertical resolution of the output in pixels (since 10.2)
++#
+ # Since: 10.1
+ ##
  
- .. _VirtIO specification: https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
-diff --git a/docs/system/devices/virtio/vhost-user-rng.rst b/docs/system/devices/virtio/vhost-user-rng.rst
-deleted file mode 100644
-index ead14053264..00000000000
---- a/docs/system/devices/virtio/vhost-user-rng.rst
-+++ /dev/null
-@@ -1,41 +0,0 @@
--.. _vhost_user_rng:
--
--QEMU vhost-user-rng - RNG emulation
--===================================
--
--Background
------------
--
--What follows builds on the material presented in vhost-user.rst - it should
--be reviewed before moving forward with the content in this file.
--
--Description
-------------
--
--The vhost-user-rng device implementation was designed to work with a random
--number generator daemon such as the one found in the vhost-device crate of
--the rust-vmm project available on github [1].
--
--[1]. https://github.com/rust-vmm/vhost-device
--
--Examples
----------
--
--The daemon should be started first:
--
--::
--
--  host# vhost-device-rng --socket-path=rng.sock -c 1 -m 512 -p 1000
--
--The QEMU invocation needs to create a chardev socket the device can
--use to communicate as well as share the guests memory over a memfd.
--
--::
--
--  host# qemu-system								\
--      -chardev socket,path=$(PATH)/rng.sock,id=rng0				\
--      -device vhost-user-rng-pci,chardev=rng0					\
--      -m 4096 									\
--      -object memory-backend-file,id=mem,size=4G,mem-path=/dev/shm,share=on	\
--      -numa node,memdev=mem							\
--      ...
-diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
-index bddf8df5ed5..9c9a28df380 100644
---- a/docs/system/devices/virtio/vhost-user.rst
-+++ b/docs/system/devices/virtio/vhost-user.rst
-@@ -45,7 +45,7 @@ platform details for what sort of virtio bus to use.
-     - :ref:`vhost_user_input`
-   * - vhost-user-rng
-     - Entropy driver
--    - :ref:`vhost_user_rng`
-+    - See https://github.com/rust-vmm/vhost-device
-   * - vhost-user-scmi
-     - System Control and Management Interface
-     - See https://github.com/rust-vmm/vhost-device
+ { 'struct': 'VirtIOGPUOutput',
+-  'data': { 'name': 'str' } }
++  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
+ 
+ ##
+ # @DummyVirtioForceArrays:
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 7269477a1c8..14058f6bffb 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -233,6 +233,15 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+     g->req_state[0].width = g->conf.xres;
+     g->req_state[0].height = g->conf.yres;
+ 
++    for (output_idx = 0, node = g->conf.outputs;
++         node; output_idx++, node = node->next) {
++        if (node->value->has_xres && node->value->has_yres) {
++            g->enabled_output_bitmask |= (1 << output_idx);
++            g->req_state[output_idx].width = node->value->xres;
++            g->req_state[output_idx].height = node->value->yres;
++        }
++    }
++
+     g->hw_ops = &virtio_gpu_ops;
+     for (i = 0; i < g->conf.max_outputs; i++) {
+         g->scanout[i].con =
 -- 
 2.47.3
 
