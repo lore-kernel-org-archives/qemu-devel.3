@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7120CCD195
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 13:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05630CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 13:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9O4i-00080e-CQ; Thu, 16 Oct 2025 09:31:24 -0400
+	id 1v9O6v-0000nE-1J; Thu, 16 Oct 2025 09:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v9O4a-0007tn-12
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:31:17 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v9O4P-00022X-7u
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:31:13 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-78142734156so9942017b3.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 06:31:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760621459; x=1761226259; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SO1iDXAk7EUhTggSDOqi1/t5IggvdLbMVa0XYaZ2ZH4=;
- b=YG7LG0CU8zCaKsV1oqsYgwsKbwkejgLBlbsILQhI1+3S8poMpGYt1DblDaJeBfHT1A
- tA0EEeMHGRa/D1EUo5smPME3npGJnm4+3isTEmSzBkB1cvvSlwdiFLoIjr3sPXLrC+3o
- qVKtQ5Y69hH4auLYdo9V0xWHK9yspUlQWtDWwLk8dtdMWtzZgDdhOkMrWeDF4b4M+XQp
- 1GLQD76yehGPwz0wtu1nYoFSL4Xix8rMw5wTXJ30+XHQgB6Y488GcDF3UiT0CIYaAEwT
- HJP9psAqpx9wQxPmGAcyNKRIctA7p7di1fkbYVU1JP3+TrhIYyNLZ5qGMqj2gKNdjNKC
- GTqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760621459; x=1761226259;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SO1iDXAk7EUhTggSDOqi1/t5IggvdLbMVa0XYaZ2ZH4=;
- b=IcmmAZxzMSoI0318yT45PbuxWM7WAn9PJAweMqkaFjGFTV/k5CUJ9iV2TUBPz2znA4
- 61Pt//o0C9VRt07K35VtMj7Z3QtzFlDSPJTCV12xLUeSdmC0ZVsdZkFrfiyKGDFLoYv2
- BRgLB3FhpP56S1UT09xbHlW3gemyz0P9vXpG/i0NobDmRTo0JN1yIdht7hOwuoTNihh4
- viCocRXat4QnQU50uBruDNPVazyOQyOXKzpsTnrhCSFd1ARkWI0YTRnnodN0qRuPonS4
- eWnoRoF+Kn5kgm+el7BfaY/tjOitEhf4o0kE65pyR8pFTqz7gCOD7Tw/3n3OThXUlqgm
- q5GQ==
-X-Gm-Message-State: AOJu0YzJIOfaYj8Dd6C1wq6dUarA4ZfF+G3ZLwCGgx+7YPJMp5S05km9
- 5mLLnGzdfAqT+oGwtj+sfc7pyHFzhnNZeK24gZFdv8O7djsZCGaM2CGupuMJaRkMGyuqynuZOi3
- 3/IjYqRRCYXCrCO6Q3U+33ZPTCWEKMHWjJBzdThm0yA==
-X-Gm-Gg: ASbGncvSW5csneZatyPi7gil4G5379mr+oDjwR9ErigyVgn87q4dqBm9BiS7qQnXff2
- Qx5c3K8fAVWZK//WQNBjlNIKnCxvLjfsTPe/ioaceKPXe92Y5c6wNUCK3v9AYKRmTf2OBXSygdk
- Wnfbs2j/hwJKezyHGAVXxWpOIb953206ZeHD6qvyOgB50O3UBnc3MgZ/dzXWqKBHplA4B3+zpYa
- yOsGwj4TC4sJOCD+CrH2k57CPEsgZ5yQk7h5eujhq5p5x9d0FNzw8cEHAqKSw==
-X-Google-Smtp-Source: AGHT+IHTxbyGqIYq96olEQzB0LcnjxM9DkP6BOZCPdUeV2iYaqPHxeDhjBq2BoDklHFBIYkHD03I4mELenlAVPCsNwM=
-X-Received: by 2002:a05:690e:150a:b0:63e:109b:d9ed with SMTP id
- 956f58d0204a3-63e160e9937mr230148d50.13.1760621459384; Thu, 16 Oct 2025
- 06:30:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20251016132548.1654627-1-berrange@redhat.com>
-In-Reply-To: <20251016132548.1654627-1-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 16 Oct 2025 14:30:47 +0100
-X-Gm-Features: AS18NWDSX0yufdO_09aesQMdnyQ-hyHrPa_RrRj-00kXvYqStnlPHcf4Nl4Q5Jg
-Message-ID: <CAFEAcA8J+ELMCdVBuqTTDg=seO4h4q9LdtXBya421Z3FH6__wg@mail.gmail.com>
-Subject: Re: [PATCH] tests: use macros for registering char tests for sockets
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v9O6s-0000mt-MC
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:33:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v9O6l-0002GT-Go
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 09:33:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760621607;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2cfh+bAJWryN8oAisretTBKkasC3SYusnf0ZAZ+p8Yo=;
+ b=K5zyPq2+1jnQw9MrB3KblR9pEK5/leE3BX9VgafHsTWViMk3R2YDDkNzadirljyBwRW5da
+ LN3HmP2IK2Dpoo/Gs5dnC8KVSbM4nZDSqD5rLYGqJIgGIULtIyR+Z9XmXnsENr/t8rzhzX
+ CpHCD9hpjrGVUd68xTvpgd6VLiC1Tzk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-X8wIP_BsOUOYHrf8jIZoPg-1; Thu,
+ 16 Oct 2025 09:33:24 -0400
+X-MC-Unique: X8wIP_BsOUOYHrf8jIZoPg-1
+X-Mimecast-MFC-AGG-ID: X8wIP_BsOUOYHrf8jIZoPg_1760621603
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95EFA19560AD; Thu, 16 Oct 2025 13:33:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.46])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9BE71800577; Thu, 16 Oct 2025 13:33:22 +0000 (UTC)
+Date: Thu, 16 Oct 2025 14:33:19 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Subject: Re: [PATCH] tests: use macros for registering char tests for sockets
+Message-ID: <aPD0H_iryWnvtYYn@redhat.com>
+References: <20251016132548.1654627-1-berrange@redhat.com>
+ <CAFEAcA8J+ELMCdVBuqTTDg=seO4h4q9LdtXBya421Z3FH6__wg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA8J+ELMCdVBuqTTDg=seO4h4q9LdtXBya421Z3FH6__wg@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,57 +85,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Oct 2025 at 14:27, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> The test-char.c has a couple of helper macros for registering tests that
-> need to be repeated for both IP and UNIX sockets. One test case was not
-> using the macro though.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  tests/unit/test-char.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-> index f30a39f61f..3c9f0a68e8 100644
-> --- a/tests/unit/test-char.c
-> +++ b/tests/unit/test-char.c
-> @@ -1969,19 +1969,17 @@ int main(int argc, char **argv)
->      g_test_add_data_func("/char/socket/client/reconnect-error/" # name, =
-\
->                           &client7 ##name, char_socket_client_test);     =
-\
->      g_test_add_data_func("/char/socket/client/dupid-reconnect/" # name, =
-\
-> -                         &client8 ##name, char_socket_client_dupid_test)
-> +                         &client8 ##name, char_socket_client_dupid_test)=
-; \
-> +    g_test_add_data_func("/char/socket/server/two-clients/" # name,     =
-\
-> +                         addr, char_socket_server_two_clients_test)
->
->      if (has_ipv4) {
->          SOCKET_SERVER_TEST(tcp, &tcpaddr);
->          SOCKET_CLIENT_TEST(tcp, &tcpaddr);
-> -        g_test_add_data_func("/char/socket/server/two-clients/tcp", &tcp=
-addr,
-> -                             char_socket_server_two_clients_test);
->      }
->  #ifndef WIN32
->      SOCKET_SERVER_TEST(unix, &unixaddr);
->      SOCKET_CLIENT_TEST(unix, &unixaddr);
-> -    g_test_add_data_func("/char/socket/server/two-clients/unix", &unixad=
-dr,
-> -                         char_socket_server_two_clients_test);
->  #endif
+On Thu, Oct 16, 2025 at 02:30:47PM +0100, Peter Maydell wrote:
+> On Thu, 16 Oct 2025 at 14:27, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > The test-char.c has a couple of helper macros for registering tests that
+> > need to be repeated for both IP and UNIX sockets. One test case was not
+> > using the macro though.
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  tests/unit/test-char.c | 8 +++-----
+> >  1 file changed, 3 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+> > index f30a39f61f..3c9f0a68e8 100644
+> > --- a/tests/unit/test-char.c
+> > +++ b/tests/unit/test-char.c
+> > @@ -1969,19 +1969,17 @@ int main(int argc, char **argv)
+> >      g_test_add_data_func("/char/socket/client/reconnect-error/" # name, \
+> >                           &client7 ##name, char_socket_client_test);     \
+> >      g_test_add_data_func("/char/socket/client/dupid-reconnect/" # name, \
+> > -                         &client8 ##name, char_socket_client_dupid_test)
+> > +                         &client8 ##name, char_socket_client_dupid_test); \
+> > +    g_test_add_data_func("/char/socket/server/two-clients/" # name,     \
+> > +                         addr, char_socket_server_two_clients_test)
+> >
+> >      if (has_ipv4) {
+> >          SOCKET_SERVER_TEST(tcp, &tcpaddr);
+> >          SOCKET_CLIENT_TEST(tcp, &tcpaddr);
+> > -        g_test_add_data_func("/char/socket/server/two-clients/tcp", &tcpaddr,
+> > -                             char_socket_server_two_clients_test);
+> >      }
+> >  #ifndef WIN32
+> >      SOCKET_SERVER_TEST(unix, &unixaddr);
+> >      SOCKET_CLIENT_TEST(unix, &unixaddr);
+> > -    g_test_add_data_func("/char/socket/server/two-clients/unix", &unixaddr,
+> > -                         char_socket_server_two_clients_test);
+> >  #endif
+> 
+> This is a "server" test, but it looks like you've added it to
+> the SOCKET_CLIENT_TEST macro instead of the SOCKET_SERVER_TEST macro ?
 
-This is a "server" test, but it looks like you've added it to
-the SOCKET_CLIENT_TEST macro instead of the SOCKET_SERVER_TEST macro ?
+Opps, yes, though it raises the question of why we have separate
+macros for server vs client tests instead of one.
 
-thanks
--- PMM
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
