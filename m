@@ -4,91 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25710CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 20:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56A1CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 20:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Uuk-0001VA-0C; Thu, 16 Oct 2025 16:49:34 -0400
+	id 1v9Ux3-0002Ko-Q3; Thu, 16 Oct 2025 16:51:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9Uuf-0001Ub-Pt
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:49:30 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1)
+ (envelope-from <bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev>)
+ id 1v9Uwz-0002Kf-C1
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:51:53 -0400
+Received: from pc232-55.mailgun.net ([143.55.232.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9Uud-00050U-Tm
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:49:29 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-79ef9d1805fso1185207b3a.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 13:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760647765; x=1761252565; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=maGa1ryzoa7fEHm5TYkqPQn2fmFfdgCSmJAGtCD2lQA=;
- b=Zc5IqJpVwfImwHgqKvnxCF7+T8OIdm0ozD2AurzZpdThgOGLnAhQvWd4Mi2VT1WcSX
- /iNxe9L8LEi5UXxO8lxzF2LVFbGP5U+F0+DglFDMNMWBc66lst4rMUnSJhZforPVDMxh
- oEaZfgPF9LGG+ygpopUAHTZOgdqvdiqJN67aZcqDAH0Wi//UNbbGAQ5LGJ304SIgS/RD
- 3NwwdYKGe3NDJoBS7XsDZlt1Dmap4VTlNECGYBPrnWIgs0wUKbIva/8owSBNK3j+GMce
- KM7zvvzFVhEV9Acn+kpeNJj7pFV/h6ILQK1nhZzlTGbV9MExUnCNYfh5CI8XmyGce8L/
- w5sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760647765; x=1761252565;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=maGa1ryzoa7fEHm5TYkqPQn2fmFfdgCSmJAGtCD2lQA=;
- b=soypf89b1qX+KHtUuiZNO1qgIRS6w1oVlDPGZ6lMpiDbz2xgj+NgN+1R1FcOAZL9ni
- eg4LNXVADjxvPJqghiDUW97B2U6cEM3wcyLHfwWztSP5vUk95LzI1wASyCmA7PJBQO+3
- Wi8F3RYiVRC7wSYMudYLNFNbVuXoYCueKxOam802i9Reo/8cLnFHcxkIletb10N+gCmp
- Dg5IgdvK+AbIB8g4ptv0EDJo+ML8FaDuT57EdXGEeVZQAwhljIXiTFQtU8mMAw6R+FgM
- 6XUD2CP0A4F47a146St38/hAbb1R1Ah/Y9EDDXx5L+zuLMIC17flt9J5XmKBTRYXpgEz
- n4jQ==
-X-Gm-Message-State: AOJu0YzdY2HRdo9Ix55gSuEhm6NvneuYm/eDVdBCG/eixGl6ps6vVQPS
- dTsElcmYi8x7KBna7T5tM76RBXExNKVAaN8xpUS07hvXU1EHb9np2Ubi73rlyxWF8pA=
-X-Gm-Gg: ASbGncuLpNbScFkvTaKC0qwHGBd5cSq81jMYvSOz/aPhPJuVFuSqbxYLadVf4BVODcL
- dd6Gw4rAR9fym1aneGnihoqfRb8bcC8UOSK8cvJjm+gp+UawXEExDqGYt79kvNV3HRSU4Lu0f1w
- RqzPsSyPTgi3aeHX+JvZ6WbfwT/6lNgp5Do7a9Bg9OjEiTHtjkf3nTtzjh+aixUVXqPoMEb5jdK
- OMmqOaSJO/lDpNDH56xqo1BYR7vmo0dnhQc66+E5m34SLedce0JgE/1tv6xW7+WJ0wX9KOud22h
- +3pejHoDu6IEqY/QtllXtfGQR7htSXiI3C7XchUGIe62Fr4f7L6PufmG0yCLYVWr34KjjNa5a5z
- OghHKdwyhVw54yReqFou7UkdD2xpMq2eUuSDs/0QqoFwYkWY6vpSLU46XWL6GMudG4EJOllpXEd
- nmYAJEko5WN20RtQ==
-X-Google-Smtp-Source: AGHT+IFdO108mVSMWD4sNXmQCfGPt89+Nx5jv8A6nG61ndRp1ZA4XX0TsrF2F5Oa/e+QqhJDBpeT9w==
-X-Received: by 2002:a05:6a00:3d06:b0:77d:6a00:1cd1 with SMTP id
- d2e1a72fcca58-7a220a814a5mr1664705b3a.12.1760647765583; 
- Thu, 16 Oct 2025 13:49:25 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7992d096740sm23414698b3a.38.2025.10.16.13.49.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 13:49:25 -0700 (PDT)
-Message-ID: <5a25d13e-7b99-49c4-ace1-8d190aa2e0d4@linaro.org>
-Date: Thu, 16 Oct 2025 13:49:23 -0700
+ (Exim 4.90_1)
+ (envelope-from <bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev>)
+ id 1v9Uwt-0005L7-63
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:51:50 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mail.yodel.dev;
+ q=dns/txt; s=pdk1; t=1760647890; x=1760655090; 
+ h=Content-Transfer-Encoding: Content-Type: In-Reply-To: From: From:
+ References: Cc: To: To: Subject: Subject: MIME-Version: Date: Message-ID:
+ Sender: Sender; 
+ bh=BEb9fNHqVkrBOKq4uZb/3V81ghYdbp2HeXG60vsuL5M=;
+ b=oPu+GqjEqEoOLhBNjn4ZLtk+VsD6EO/LxmttG/IXQu0l5EDjb5Lq4qkSrbR9S3mq/5eaonVLePz6eAkgIil9c4IPncfKgHWJpFFqRGAX03M62smHpfKTK4pwKo4bgHz8q+u98kzWydmRg5dSw08wINzKiu+CppJoRhVNdAhjyO1xa3CHwTGz2H9Y2rxK9oO4sb+1DmqBG+D2ngZMkeKXKUqODAyUfXJrR+I0w4SfeDazY15biOMTrav4J6vDtYnPTUtCSjFbLLjri4ht2t/ns/8AEnRSSBZ0cRCHmsjwePT29UKULdcQVlAcTzp9rzvtWs5l+r1I4B0dsO3Zhi/F2w==
+X-Mailgun-Sid: WyJjZmM4NiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjMzZTkyMCJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ 4ce8a49c8004b204f66ae3e14f08d0c10421585ac37c4eb2fe87bea52d74908e with SMTP id
+ 68f15ad2b50b98a5662b6f12; Thu, 16 Oct 2025 20:51:30 GMT
+X-Mailgun-Sending-Ip: 143.55.232.55
+Message-ID: <8d00eb96-97b0-42af-9e3b-645efbe909e2@yodel.dev>
+Date: Thu, 16 Oct 2025 15:51:28 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] gitlab: Stop cross-testing for 32-bit MIPS hosts
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
- Thomas Huth <thuth@redhat.com>
-References: <20251015213843.14277-1-richard.henderson@linaro.org>
- <20251015213843.14277-2-richard.henderson@linaro.org>
- <aPCl9VPKPLSDmjiG@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] gdbstub/user-target: Map errno values from the host OS to
+ GDB
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20251015162520.15736-1-yodel.eldar@yodel.dev>
+ <87o6q6j3oe.fsf@draig.linaro.org>
 Content-Language: en-US
-In-Reply-To: <aPCl9VPKPLSDmjiG@redhat.com>
+Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
+ xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
+ I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
+ AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
+ Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
+ 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
+ imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
+ TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
+In-Reply-To: <87o6q6j3oe.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=143.55.232.55;
+ envelope-from=bounce+c033f0.33e920-qemu-devel=nongnu.org@mail.yodel.dev;
+ helo=pc232-55.mailgun.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,53 +80,186 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yodel Eldar <yodel.eldar@yodel.dev>
+From:  Yodel Eldar via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/16/25 00:59, Daniel P. Berrangé wrote:
-> On Wed, Oct 15, 2025 at 02:38:35PM -0700, Richard Henderson wrote:
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi, Alex!
+
+On 10/16/25 9:56 AM, Alex Bennée wrote:
+> Yodel Eldar <yodel.eldar@yodel.dev> writes:
+> 
+>> This patch introduces the function "gdb_host_errno_to_gdb" that maps
+>> host-dependent errno values to their GDB protocol-specific
+>> representations as listed in the GDB manual [1].
 >>
->> 32-bit host support is deprecated since commit 6d701c9bac1
->> ("meson: Deprecate 32-bit host support"). Next commits will
->> remove support for 32-bit MIPS hosts. Stop cross-building
->> QEMU on our CI.
+>> The stub now uses the correct GDB errno values in F reply packets.
 >>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> Message-ID: <20251009195210.33161-3-philmd@linaro.org>
+>> [1] https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2751
+>> Reported-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 >> ---
->>   .gitlab-ci.d/container-cross.yml |  6 ------
->>   .gitlab-ci.d/crossbuilds.yml     | 14 --------------
->>   2 files changed, 20 deletions(-)
+>>   gdbstub/user-target.c | 93 +++++++++++++++++++++++++++++++++++++++++--
+>>   1 file changed, 89 insertions(+), 4 deletions(-)
 >>
->> diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
->> index 8d3be53b75..0fd7341afa 100644
->> --- a/.gitlab-ci.d/container-cross.yml
->> +++ b/.gitlab-ci.d/container-cross.yml
->> @@ -52,12 +52,6 @@ mips64el-debian-cross-container:
->>     variables:
->>       NAME: debian-mips64el-cross
+>> diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+>> index 43231e695e..29feb0509c 100644
+>> --- a/gdbstub/user-target.c
+>> +++ b/gdbstub/user-target.c
+>> @@ -302,6 +302,87 @@ static void hostio_reply_with_data(const void *buf, size_t n)
+>>                             gdbserver_state.str_buf->len, true);
+>>   }
 >>   
->> -mipsel-debian-cross-container:
->> -  extends: .container_job_template
->> -  stage: containers
->> -  variables:
->> -    NAME: debian-mipsel-cross
+>> +/*
+>> + * Map host error numbers to their GDB protocol counterparts.
+>> + * For the list of GDB File-I/O supported error numbers, please consult:
+>> + * https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
+>> + */
+>> +
+>> +static int gdb_host_errno_to_gdb(int errnum)
+>> +{
+>> +    enum {
+>> +        GDB_EPERM        =    1,
+>> +        GDB_ENOENT       =    2,
+>> +        GDB_EINTR        =    4,
+>> +        GDB_EIO          =    5,
+>> +        GDB_EBADF        =    9,
+>> +        GDB_EACCES       =   13,
+>> +        GDB_EFAULT       =   14,
+>> +        GDB_EBUSY        =   16,
+>> +        GDB_EEXIST       =   17,
+>> +        GDB_ENODEV       =   19,
+>> +        GDB_ENOTDIR      =   20,
+>> +        GDB_EISDIR       =   21,
+>> +        GDB_EINVAL       =   22,
+>> +        GDB_ENFILE       =   23,
+>> +        GDB_EMFILE       =   24,
+>> +        GDB_EFBIG        =   27,
+>> +        GDB_ENOSPC       =   28,
+>> +        GDB_ESPIPE       =   29,
+>> +        GDB_EROFS        =   30,
+>> +        GDB_ENOSYS       =   88,
+>> +        GDB_ENAMETOOLONG =   91,
+>> +        GDB_EUNKNOWN     = 9999,
+>> +    };
 > 
-> The input to this job is
+> We have this enum in include/gdbstub/syscalls.h already.
 > 
->    tests/docker/dockerfiles/debian-mipsel-cross.docker
+
+Thanks for pointing that out!
+
+>> +
+>> +    switch (errnum) {
+>> +    case EPERM:
+>> +        return GDB_EPERM;
+>> +    case ENOENT:
+>> +        return GDB_ENOENT;
+>> +    case EINTR:
+>> +        return GDB_EINTR;
+>> +    case EIO:
+>> +        return GDB_EIO;
+>> +    case EBADF:
+>> +        return GDB_EBADF;
+>> +    case EACCES:
+>> +        return GDB_EACCES;
+>> +    case EFAULT:
+>> +        return GDB_EFAULT;
+>> +    case EBUSY:
+>> +        return GDB_EBUSY;
+>> +    case EEXIST:
+>> +        return GDB_EEXIST;
+>> +    case ENODEV:
+>> +        return GDB_ENODEV;
+>> +    case ENOTDIR:
+>> +        return GDB_ENOTDIR;
+>> +    case EISDIR:
+>> +        return GDB_EISDIR;
+>> +    case EINVAL:
+>> +        return GDB_EINVAL;
+>> +    case ENFILE:
+>> +        return GDB_ENFILE;
+>> +    case EMFILE:
+>> +        return GDB_EMFILE;
+>> +    case EFBIG:
+>> +        return GDB_EFBIG;
+>> +    case ENOSPC:
+>> +        return GDB_ENOSPC;
+>> +    case ESPIPE:
+>> +        return GDB_ESPIPE;
+>> +    case EROFS:
+>> +        return GDB_EROFS;
+>> +    case ENOSYS:
+>> +        return GDB_ENOSYS;
+>> +    case ENAMETOOLONG:
+>> +        return GDB_ENAMETOOLONG;
+>> +    default:
+>> +        return GDB_EUNKNOWN;
+>> +    }
+>> +}
+>> +
+>>   void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+>>   {
+>>       const char *filename = get_filename_param(params, 0);
+>> @@ -315,7 +396,8 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+>>       int fd = open(filename, flags, mode);
+>>   #endif
+>>       if (fd < 0) {
+>> -        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+>> +        int gdb_errno = gdb_host_errno_to_gdb(errno);
+>> +        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+>>       } else {
+>>           g_string_printf(gdbserver_state.str_buf, "F%x", fd);
+>>       }
+>> @@ -327,7 +409,8 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+>>       int fd = gdb_get_cmd_param(params, 0)->val_ul;
+>>   
+>>       if (close(fd) == -1) {
+>> -        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+>> +        int gdb_errno = gdb_host_errno_to_gdb(errno);
+>> +        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+>>           gdb_put_strbuf();
+>>           return;
+>>       }
+>> @@ -350,7 +433,8 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
+>>   
+>>       ssize_t n = pread(fd, buf, bufsiz, offset);
+>>       if (n < 0) {
+>> -        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+>> +        int gdb_errno = gdb_host_errno_to_gdb(errno);
+>> +        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+>>           gdb_put_strbuf();
+>>           return;
+>>       }
+>> @@ -373,7 +457,8 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
+>>       ssize_t n = readlink(filename, buf, BUFSIZ);
+>>   #endif
+>>       if (n < 0) {
+>> -        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
+>> +        int gdb_errno = gdb_host_errno_to_gdb(errno);
+>> +        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+>>           gdb_put_strbuf();
+>>           return;
+>>       }
 > 
-> which should thus also be deleted, along with removal
-> of the line from tests/lcitool/refresh that generates
-> it.
+> with that fixed:
+> 
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> 
 
-Yes.  As I mentioned in the cover, I'm leaving the docker updates from Phil's patch set to 
-Alex.
+Since your review, I've noticed that Richard Henderson already authored
+a host-to-GDB errno mapping function in commit 7327e6023:
+host_to_gdb_errno:target/m68k/m68k-semi.c; it's functionally identical
+to the mapping proposed in this patch (albeit missing two errno values
+that were undocumented in the GDB manual until recently), but written in
+the context of semihosting for the m68k.
 
+So as to avoid duplicating code, I'm considering exporting the existing
+host_to_gdb_errno in a minor refactor to use that instead; do you think
+that's a better route?
 
-r~
+Thanks,
+Yodel
 
