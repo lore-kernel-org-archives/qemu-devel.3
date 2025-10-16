@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDF5CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E98FCCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 12:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Mza-0006VM-Tw; Thu, 16 Oct 2025 08:22:04 -0400
+	id 1v9N1w-0002Hu-J8; Thu, 16 Oct 2025 08:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9Mxd-0004S2-U3
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:20:06 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9N0y-0000vK-Mc
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:23:30 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9MxT-00007v-Ta
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:20:01 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so6404665e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:19:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9N0j-0000dD-6F
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 08:23:25 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-633c1b740c5so728713d50.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 05:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760617185; x=1761221985; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pC9RqIYu/OpuJxSwTbOA7/FjgnXnjZkCPpqL03xQwls=;
- b=cgujehRL3kVrOPFBaQJIYMo9/OPdMBuo4nFB71YifidlAJ5avBmivOj01W1N02d8JH
- sMFn9PfxIn4/Ei3DPHQoXGa+FmNoRW2AlwZDi6bJq99dw/MsMRrNA6ShF8M9cOLkRkys
- OUWT4xZymogg7QQzRAnlHqzxrJBHv9D9IVmQR6Nzolb3ZsNx/es7ou1imJb3Gz5oG80X
- 7bfRd65ne0WMX72E2fPvbaSKwXMj834ZAS73SyzIPBwr0l+W8x0N3CdhuOxMozewNGbd
- gD3AMl98Vup4gxPwh3zTdS9wVwGSKIwUKJ9yRMB0sIWV4/J8TzVZGyy9z0AZ1aAj/YNp
- zQlw==
+ d=linaro.org; s=google; t=1760617386; x=1761222186; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2C+0wEFz4rwq6y2h5JGMTivrxHAjZFvVlCHfttp9nns=;
+ b=kegkQT2gJd7b6qJE+ElbZSqim0i/uEevnghfJ3pwfeZlrsFRzOkXXNiBwZ/no/2eY2
+ g5kHEO1ACM1Cm4p3oTjEzkn7K4nb8pFrLW4N3/5Rq6JJdyeB0GuRsPLoLDOi5vDoEB9E
+ r6NIuOTjDRmAnt1yswiPMuLQ9q/Wwo01whPjYRXsFFhohAgQ3fccR3AYjxctb/wHA+Fn
+ PyaTOC6imUgEbozvOpcCvdtNRIQvqOXwYBCP1gpl10pEwOQQMsRpt5diLnZqoPnVpM30
+ A0/MdeLsFnVImgbSXvxKkKzqoQlvbMX4RNbznuBLgip/nvbppVoxrYva/OVcbLh8z7Vy
+ V/XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760617185; x=1761221985;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pC9RqIYu/OpuJxSwTbOA7/FjgnXnjZkCPpqL03xQwls=;
- b=dbFLTmweoeNfYYFZf4l7g1KYcJ5Aw9CbhhxLmgwKXPQcxN+q6V/GTEPbufE3HGJ3IM
- coqDpBjzIH80AB2hW51AIQoU5zNZJ2b1Z7geIjzqAZVq/cQwX/0fhlcPlBCe7sFLInu6
- L7vAVesmozGiQ8pQRVHhsHnYlVGl/M2fv0dcKNykgQ+rsng1LNeIqYUCcr5z1dPw/x7j
- Jidd8AKMEjYW1NzSPQ6/JqRnAVOGofdSC7RgKXi/BjdpCdDym041+E9v/a3RBpj+NaMm
- nwZAMkqrmw+wN/SmCjU3cCwZajrzHtpfNN58SGQWNmVhbJ2xbKeD04UHKX8mBFaUe9BX
- WQ/A==
-X-Gm-Message-State: AOJu0Ywjuqn0+xJtjzlS5x18qKtvj16xnfTdg7nUaZoovaG7V0PfNphj
- ZPSAtq53SQ/9KrVSsu9YfTXn/HKbN4A2e3zYmOHsHrhCSFUXJaguJkOCJs7pe8RdwuknLd380Gp
- 5k6zVnTA=
-X-Gm-Gg: ASbGncs+mkGk59oRrM+1urWAC6aNS3PszqypoGT3BqDDTkJ7j+eoDyzMLRcHa+Ls5M7
- 81+C2ceNJcrUwI/rgh2zd6Wcacr4yNHmLTWQ7d865feDajE2QZIJp21u8bxnw+Bk72z8dfnbvig
- CASQsU4Q3KQJ1Xoh9VsEcwvQc90OSaZk5O+zSCWRj1hACRZ9mQ70kCcLjl4NrWdb8Kjx5oKvsGo
- f3gtTe/KKZuaHZc5wtld3iaSl47dxddHvhgwCq2zEgY46lRTc3X4j4RmcLh+wR4z3+roEyVXWOY
- ndl2e/XGFRDNDumBplASlkihZK556l7vChcw+47JCHm2d4ukEf0kdrLJjZdbxE9Oenfcm1vFOHP
- jMWirzbf1iBiZPS+zHiUoOm0HyYreu0WO16aqKe6zGqDully7zZ+4KWBQLLoylcnzIp8ZaV9wMw
- ubPDPStN73HAELjZb1eUXfSTg54C6UiXVdz4aOw5fksMfWXO8b+6zBARVIYZNP183o
-X-Google-Smtp-Source: AGHT+IG+SUGKjFFVRkk32Pqa//KFWYhWPwwqDAyXYeclhBPEv7Wwsea60LTb9WQZ76u6X4VldmywlA==
-X-Received: by 2002:a05:6000:1a8b:b0:410:3a4f:1298 with SMTP id
- ffacd0b85a97d-42667177dd6mr23614321f8f.15.1760617185340; 
- Thu, 16 Oct 2025 05:19:45 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e10e8sm34477746f8f.39.2025.10.16.05.19.44
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 16 Oct 2025 05:19:44 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 54/75] target/sh4: Use hwaddr type for hardware addresses
-Date: Thu, 16 Oct 2025 14:15:10 +0200
-Message-ID: <20251016121532.14042-55-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251016121532.14042-1-philmd@linaro.org>
-References: <20251016121532.14042-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1760617386; x=1761222186;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2C+0wEFz4rwq6y2h5JGMTivrxHAjZFvVlCHfttp9nns=;
+ b=VdXDoo+6cSpHKn9+ILALiAqe4kxht69Dd4F1azMA02R7g9vwuBIhgVJJ5Wr/xhvUVm
+ MTBX+v/3vouhwKXCSSmraWwt0hALyzFnohzlL4nZ35HykNW9OYOF/t+h3f2rNCat+V9I
+ EO1YCFC5kdgaUwY/JF6LmW95lDwID330WZGhBjtYijieDysQ1725gviMrCYaoxY/+cqe
+ J02RBxgho90DFgwleKz37Lry8mQQqvCQkxOkZ5W9I+bxQkv4OhWmh9y8kLxA7AxGP+Jo
+ 4/T3ohQS/VS+zMUmSkIc+AiD/zdGhfpRFEIfwz/yTwL+CPu4hE6iF9cEcTFp1VDwbbLl
+ tJ8Q==
+X-Gm-Message-State: AOJu0Yx+XISZlaVlEgCGJOwLO5O3Ie4IOGWUdT1m7vqpbdWxgRXFpmtE
+ 71+/0dVJzie6B4D4CyfCSYqWHaUg92a2NvCeJZ+92SGASXKuYbohzWphJKNwxNZBrqWqBv+Saz6
+ 8cq0hBmx/hdP9GwOCv/vpLp1qxa9V3O7ufivYJleQxw==
+X-Gm-Gg: ASbGncsZv5wUE/TG6YViQ++fQS4fk5KaUjy14/9ffmMbdhkBxME9gkwt9B2/vba8Qvl
+ SqLXtIni8LMc3s/F/4ERoWb89nmvBT0C4Imn3QZYFdmi65BnQSI0yXkfydWWAvJ58GCUcB+jloo
+ 9LeCxqXaSlgVW3Vcq8GU65uulQGQgQ67pI7AZYyaS4bjrlpMx+p4dCv4YRGMV1ltVzPrgy5T97D
+ alo3bBpuNA2Hlre66ocgl0AapVhjsY+XsxHubUppVBtv+9WWCk1pR6q3jZjdFrmrJaXAfVMkKvo
+X-Google-Smtp-Source: AGHT+IEwHF/GiXpZNqHBRR9xTxHtPNUxgldoL2RqzeCqOq0dsseWOmLfdGygDlEe56B7fOhMCmUNQ60vq8VMrSBVOzU=
+X-Received: by 2002:a05:690e:14c5:b0:63c:e930:e37 with SMTP id
+ 956f58d0204a3-63e1604f30amr39006d50.0.1760617386581; Thu, 16 Oct 2025
+ 05:23:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251014102439.319915-1-peter.maydell@linaro.org>
+ <4b686af261024bad91bf079a098976de@huawei.com>
+In-Reply-To: <4b686af261024bad91bf079a098976de@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 16 Oct 2025 13:22:54 +0100
+X-Gm-Features: AS18NWDfwEe5i76U4GBkkONd_DMLp09zKNqd_bkq6OHHw8UQjDF2NiQzQMO5RYE
+Message-ID: <CAFEAcA-CdCSD36azVc=7EVKn2jgXggOa8Rt-Gvnqnyebwbx6eg@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+ kernel in cpuif reset
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Salil Mehta <salil.mehta@opnsrc.net>, Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,56 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CPUClass::get_phys_page_debug() handler returns a 'hwaddr' type.
+On Thu, 16 Oct 2025 at 13:17, Salil Mehta <salil.mehta@huawei.com> wrote:
+>
+> Hi Peter,
+>
+> > From: qemu-devel-bounces+salil.mehta=huawei.com@nongnu.org <qemu-
+> > devel-bounces+salil.mehta=huawei.com@nongnu.org> On Behalf Of Peter
+> > Maydell
+> > Sent: Tuesday, October 14, 2025 11:25 AM
+> > To: qemu-devel@nongnu.org
+> > Cc: Salil Mehta <salil.mehta@opnsrc.net>; Marc Zyngier <maz@kernel.org>
+> > Subject: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
+> > kernel in cpuif reset
+> >
+> > Currently in arm_gicv3_icc_reset() we read the kernel's value of
+> > ICC_CTLR_EL1 as part of resetting the CPU interface.  This mostly works, but
+> > we're actually breaking an assumption the kernel makes that userspace only
+> > accesses the in-kernel GIC data when the VM is totally paused, which may
+> > not be the case if a single vCPU is being reset.  The effect is that it's possible
+> > that the read attempt returns EBUSY.
+> >
+> > Avoid this by reading the kernel's value of the reset ICC_CTLR_EL1 once in
+> > device realize. This brings ICC_CTLR_EL1 into line with the other cpuif
+> > registers, where we assume we know what the kernel is resetting them to
+> > and just update QEMU's data structures in arm_gicv3_icc_reset().
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > I've only tested this fairly lightly, but it seems to work.
+> > Salil, does this fix the EBUSY issues you were seeing ?
+>
+>
+> Would you be absorbing this in your tree now or should I make it part
+> of the RFC V7 ?
+>
+> Reviewed-by: Salil Mehta <salil.mehta@huawei.com>
+> Tested-by: Salil Mehta <salil.mehta@huawei.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20251008064814.90520-4-philmd@linaro.org>
----
- target/sh4/helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Thanks for the testing. I'll pull it into target-arm.next since
+it does fix a potential issue with the current codebase.
 
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 4f1e2072296..55ab1dc9947 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -325,7 +325,7 @@ static int find_utlb_entry(CPUSH4State * env, target_ulong address, int use_asid
-    MMU_ITLB_MULTIPLE, MMU_ITLB_VIOLATION,
-    MMU_IADDR_ERROR, MMU_DADDR_ERROR_READ, MMU_DADDR_ERROR_WRITE.
- */
--static int get_mmu_address(CPUSH4State * env, target_ulong * physical,
-+static int get_mmu_address(CPUSH4State *env, hwaddr *physical,
-                            int *prot, target_ulong address,
-                            MMUAccessType access_type)
- {
-@@ -392,7 +392,7 @@ static int get_mmu_address(CPUSH4State * env, target_ulong * physical,
-     return n;
- }
- 
--static int get_physical_address(CPUSH4State * env, target_ulong * physical,
-+static int get_physical_address(CPUSH4State *env, hwaddr* physical,
-                                 int *prot, target_ulong address,
-                                 MMUAccessType access_type)
- {
-@@ -433,7 +433,7 @@ static int get_physical_address(CPUSH4State * env, target_ulong * physical,
- 
- hwaddr superh_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
--    target_ulong physical;
-+    hwaddr physical;
-     int prot;
- 
-     if (get_physical_address(cpu_env(cs), &physical, &prot, addr, MMU_DATA_LOAD)
-@@ -800,7 +800,7 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     CPUSH4State *env = cpu_env(cs);
-     int ret;
- 
--    target_ulong physical;
-+    hwaddr physical;
-     int prot;
- 
-     ret = get_physical_address(env, &physical, &prot, address, access_type);
--- 
-2.51.0
-
+-- PMM
 
