@@ -4,79 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5373FCCD183
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 20:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F37CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 20:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9UYh-0004iI-Th; Thu, 16 Oct 2025 16:26:47 -0400
+	id 1v9UZ1-0005KT-5D; Thu, 16 Oct 2025 16:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9UYf-0004cf-1q
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:26:45 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1v9UYz-0005HQ-1g; Thu, 16 Oct 2025 16:27:05 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9UYX-0001a0-B2
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 16:26:44 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 38652808B6;
- Thu, 16 Oct 2025 23:26:32 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a8c::1:19] (unknown
- [2a02:6bf:8080:a8c::1:19])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id TQYfZM2FiGk0-hM7p52gw; Thu, 16 Oct 2025 23:26:31 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760646391;
- bh=rxUec4Lnpo5lw40QLIBIGiHDM5iAPMEcS20njVOo1r8=;
- h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
- b=eljPXxQZQQ3wfAvvfrOUeMAtDw3dV0ZKqKF9D5mUCNPeiYteJ35fc93wlcZZ3F7ln
- pBZn9iEWQttKtMuYGE1Z6OHNrR2f9OiDRm7bQsV3LrpIM6LJ5qj6qazqPVyn/YyMD8
- 30oM+lj+qdZkhVyMsOlOyZSLnsSGA8Ak0zR9cd74=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a36fdf7e-b7c7-4faa-8cb3-40e2433e9d8c@yandex-team.ru>
-Date: Thu, 16 Oct 2025 23:26:29 +0300
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1v9UYv-0001cj-Vw; Thu, 16 Oct 2025 16:27:04 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GGvdgl021824;
+ Thu, 16 Oct 2025 20:26:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=J4Q0TuVbzHck793OJUBnq83iLEscOS
+ wUSy6Yo/Xc6DE=; b=X+xLMxR8ZbMfHaP3MayBan1tHH7o1tWg75l+W8bH3uOBSX
+ 3lb63QedBaxymIR1bT/vSzbghm6MwE4b4V6/NnHjo2Ccka6By+SlpZHl5HVe9Nrk
+ J9/vZrJBPR7lnF8zrTM6u2zR2NLXTB5CJ07/GohfApXIljJVqrrgseUFmkQ09BAI
+ 9nrO38NmQ6yNdjhznRetSvWN4zCrY/viLXTnKTMnl4SK8erSmux46xdCWbMhwDQ8
+ Cs22L3vvQZvtqDepw2xL0k2ceoqafn1MTjWzIV+CceE4HABwbDds6YTGO11Tr8pV
+ nnkZIqMBZ84SpHsi+dfq86mFfN/TyMt8FAfpJpJw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0btw5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 20:26:56 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59GKQusS029736;
+ Thu, 16 Oct 2025 20:26:56 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0btw3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 20:26:56 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GHRoFD028069;
+ Thu, 16 Oct 2025 20:26:55 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49tdg9exrr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 20:26:55 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59GKQpPF59638062
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Oct 2025 20:26:51 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5AE2F20075;
+ Thu, 16 Oct 2025 20:26:51 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2B6C620073;
+ Thu, 16 Oct 2025 20:26:49 +0000 (GMT)
+Received: from linux.ibm.com (unknown [9.39.26.252])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 16 Oct 2025 20:26:48 +0000 (GMT)
+Date: Fri, 17 Oct 2025 01:56:46 +0530
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, berrange@redhat.com
+Subject: Re: [PATCH 5/5] hw/ppc: Pass errp to load_image_targphys() and
+ report errors
+Message-ID: <aPFVBuFLHCdcxPoy@linux.ibm.com>
+References: <20251016173502.1261674-1-vishalc@linux.ibm.com>
+ <20251016173502.1261674-8-vishalc@linux.ibm.com>
+ <2b8acd7a-59eb-bc0c-13c2-de650afe28cc@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, mst@redhat.com, jasowang@redhat.com,
- farosas@suse.de, sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- michael.roth@amd.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
- yc-core@yandex-team.ru, raphael.s.norwitz@gmail.com
-References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
- <20251015132136.1083972-17-vsementsov@yandex-team.ru>
- <aO_ll4Lf0bq6vgdm@x1.local>
- <3b9f1da4-6264-45d4-ade1-a6273cc6fa1e@yandex-team.ru>
- <aO_--QWDJO7iOhR4@x1.local>
- <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
- <aPCtkB-GvFNuqlHn@redhat.com>
- <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
-Content-Language: en-US
-In-Reply-To: <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2b8acd7a-59eb-bc0c-13c2-de650afe28cc@eik.bme.hu>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: gdWVjxNi8ac9vboP9xJB3ottGxrnfNu7
+X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68f15510 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=N5XcTDuVFYzu4Ex11mUA:9 a=CjuIK1q_8ugA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX4leuQzV/8pQU
+ iQLV36Bgh/aLErg/kjtG7+C7HbcmH3qZ/F4YOk6MGsFilfsz5dryNkWVgj2RK5PfZvv9SXe8TgW
+ wapd2jWv6jFqGJol4g6i9y9sZagHikfUDZwhSqnRUXhKNVCurw8kpB2Xl9jwyfmO++9wObZLeG2
+ 1P1j8hekQeqjiyQIncwQkgkoHgDG5gBVhpO1DzXFeXXJ2ph4pvs53hDo4ycVhP+HMcwvZQcABar
+ SCukYb+vya9oSNvEfGFq3dV/AOPlOihlob1orAvoi9kh67HZw+HRBSO/36S/Wq8CINK936F4uWt
+ rSagVopDyb0Wqn4Vhr7ZDCXVVablkQVX98BGeDrzVG6W5+G/jSj9Tf9R+FLuwb/5C+x1kfy/5Ls
+ ncU4LOQkkPas9ed/WOrGeYHznWksjw==
+X-Proofpoint-GUID: g3RLHiZfEkrG0cnOkc08BrVGBr5Pn3yc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-16_04,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,474 +127,314 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.10.25 12:23, Vladimir Sementsov-Ogievskiy wrote:
-> On 16.10.25 11:32, Daniel P. Berrangé wrote:
->> On Thu, Oct 16, 2025 at 12:02:45AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>> On 15.10.25 23:07, Peter Xu wrote:
->>>> On Wed, Oct 15, 2025 at 10:02:14PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>>> On 15.10.25 21:19, Peter Xu wrote:
->>>>>> On Wed, Oct 15, 2025 at 04:21:32PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>>>>> This parameter enables backend-transfer feature: all devices
->>>>>>> which support it will migrate their backends (for example a TAP
->>>>>>> device, by passing open file descriptor to migration channel).
->>>>>>>
->>>>>>> Currently no such devices, so the new parameter is a noop.
->>>>>>>
->>>>>>> Next commit will add support for virtio-net, to migrate its
->>>>>>> TAP backend.
->>>>>>>
->>>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>>>>> ---
->>>>>
->>>>> [..]
->>>>>
->>>>>>> --- a/qapi/migration.json
->>>>>>> +++ b/qapi/migration.json
->>>>>>> @@ -951,9 +951,16 @@
->>>>>>>     #     is @cpr-exec.  The first list element is the program's filename,
->>>>>>>     #     the remainder its arguments.  (Since 10.2)
->>>>>>>     #
->>>>>>> +# @backend-transfer: Enable backend-transfer feature for devices that
->>>>>>> +#     supports it. In general that means that backend state and its
->>>>>>> +#     file descriptors are passed to the destination in the migraton
->>>>>>> +#     channel (which must be a UNIX socket). Individual devices
->>>>>>> +#     declare the support for backend-transfer by per-device
->>>>>>> +#     backend-transfer option. (Since 10.2)
->>>>>>
->>>>>> Thanks.
->>>>>>
->>>>>> I still prefer the name "fd-passing" or anything more explicit than
->>>>>> "backend-transfer". Maybe the current name is fine for TAP, only because
->>>>>> TAP doesn't have its own VMSD to transfer?
->>>>>>
->>>>>> Consider a device that would be a backend that supports VMSDs already to be
->>>>>> migrated, then if it starts to allow fd-passing, this name will stop being
->>>>>> suitable there, because it used to "transfer backend" already, now it's
->>>>>> just started to "fd-passing".
->>>>>>
->>>>>> Meanwhile, consider another example - what if a device is not a backend at
->>>>>> all (e.g. vfio?), has its own VMSD, then want to do fd-passing?
->>>>>
->>>>> Reasonable.
->>>>>
->>>>> But consider also the discussion with Fabiano in v5, where he argues against fds
->>>>> (reasonable too):
->>>>>
->>>>> https://lore.kernel.org/qemu-devel/87y0qatqoa.fsf@suse.de/
->>>>>
->>>>> (still, they were against my "fds" name for the parameter, which is
->>>>> really too generic, fd-passing is not)
->>>>>
->>>>> and the arguments for backend-transfer (to read similar with cpr-transfer)
->>>>>
->>>>> https://lore.kernel.org/qemu-devel/87ms6qtlgf.fsf@suse.de/
->>>>>
->>>>>
->>>>>>
->>>>>> In general, I think "fd" is really a core concept of this whole thing.
->>>>>
->>>>> I think, we can call "backend" any external object, linked by the fd.
->>>>>
->>>>> Still, backend/frontend terminology is so misleading, when applied to
->>>>> complex systems (for me, at least), that I don't really like "-backend"
->>>>> word here.
->>>>>
->>>>> fd-passing is OK for me, I can resend with it, if arguments by Fabiano
->>>>> not change your mind.
->>>>
->>>> Ah, I didn't notice the name has been discussed.
->>>>
->>>> I think it means you can vote for your own preference now because we have
->>>> one vote for each. :) Let's also see whether Fabiano will come up with
->>>> something better than both.
->>>>
->>>> You mentioned explicitly the file descriptors in the qapi doc, that's what
->>>> I would strongly request for.  The other thing is the unix socket check, it
->>>> looks all good below now with it, thanks.  No strong feelings on the names.
->>>>
->>>
->>> After a bit more thinking, I leaning towards keeping backend-transfer. I think
->>> it's more meaningful for the user:
->>>
->>> If we call it "fd-passing", user may ask:
->>>
->>> Ok, what is it? Allow QEMU to pass some fds through migration stream, if it
->>> supports fds? Which fds? Why to pass them? Finally, why QEMU can't just check
->>> is it unix socket or not, and pass any fds it wants if it is?
->>>
->>> Logical question is, why not just drop the global capability, and check only
->>> is it unix socket or not? (OK, relying only on socket type is wrong anyway,
->>> as it may be some complex tunneling, which includes unix sockets, but still
->>> can't pass fds, but I think now about feature naming)
->>>
->>> But we really want an explicit switch for the feature. As qemu-update is
->>> not the only case of local migration. The another case is changing the
->>> backend. So for the user's choice is:
->>>
->>> 1. Remote migration: we can't reuse backends (files, sockets, host devices), as
->>> we are moving to another host. So, we don't enable "backend-transfer". We don't
->>> transfer the backend, we have to initialize new backend on another host.
->>>
->>> 2. Local migration to update QEMU, with minimal freeze-time and minimal
->>> extra actions: use "backend-transfer", exactly to keep the backends
->>> (vhost-user-server, TAP device in kernel, in-kernel vfio device state, etc)
->>> as is.
->>>
->>> 3. Local migration, but we want to reconfigure some backend, or switch
->>> to another backend. We disable "backend-transfer" for one device.
->>
->> This implies that you're changing 'backend-transfer' against the
->> device at time of each migration.
->>
->> This takes us back to the situation we've had historically where the
->> behaviour of migration depends on global properties the mgmt app has
->> set prior to the 'migrate' command being run. We've just tried to get
->> away from that model by passing everything as parameters to the
->> migrate command, so I'm loathe to see us invent a new way to have
->> global state properties changing migration behaviour.
->>
->> This 'backend-transfer' device property is not really a device property,
->> it is an indirect parameter to the 'migrate' command.
->>
->> Ergo, if we need the ability to selectively migrate the backend state
->> of individal devices, then instead of a property on the device, we
->> should pass a list of device IDs as a parameter to the migrate
->> command in QMP.
+On Thu, Oct 16, 2025 at 09:27:36PM +0200, BALATON Zoltan wrote:
+> On Thu, 16 Oct 2025, Vishal Chourasia wrote:
+> > Pass errp to load_image_targphys() calls in ppc machine initialization
+> > to capture detailed error information when loading firmware, kernel,
+> > and initrd images.
+> > 
+> > Use error_reportf_err() instead of error_report() to print the
+> > underlying error details along with context about which image failed
+> > to load.
+> > 
+<snipped>
+> > diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+> > index 7fa14fd0e6..d4703f79da 100644
+> > --- a/hw/ppc/pegasos2.c
+> > +++ b/hw/ppc/pegasos2.c
+> > @@ -129,6 +129,7 @@ static void pegasos2_init(MachineState *machine)
+> >     int i;
+> >     ssize_t sz;
+> >     uint8_t *spd_data;
+> > +    Error *errp = NULL;
+> > 
+> >     /* init CPU */
+> >     pm->cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
+> > @@ -164,10 +165,10 @@ static void pegasos2_init(MachineState *machine)
+> >                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+> >     if (sz <= 0) {
+> >         sz = load_image_targphys(filename, pm->vof ? 0 : PROM_ADDR, PROM_SIZE,
+> > -                NULL);
+> > +                                 &errp);
+> >     }
+> >     if (sz <= 0 || sz > PROM_SIZE) {
+> > -        error_report("Could not load firmware '%s'", filename);
+> > +        error_reportf_err(errp, "Could not load firmware '%s': ", filename);
 > 
-> Understand.
-> 
-> So, it will look like
-> 
-> # @backend-transfer: List of devices IDs or QOM paths, to enable
-> #     backend-transfer for. In general that means that backend
-> #     states and their file descriptors are passed to the destination
-> #     in the migration channel (which must be a UNIX socket), and
-> #     management tool doesn't have to configure new backends for
-> #     target QEMU (like vhost-user server, or TAP device in the kernel).
-> #     Default is no backend-transfer migration (Since 10.2)
+> We can get here with *errp == NULL if load_elf did not fail but tried to
+> load a too large image. Is that a problem? It's the same in prep.c. Mac
+> machines also try different formats but those only check for size < 0 so
+> maybe not a problem there.
 > 
 
+/* return < 0 if error, otherwise the number of bytes loaded in memory */
+ssize_t load_elf(const char *filename,
 
-RFC diff to these series, to switch the API to list of IDs:
+load_elf returns number of bytes. 
 
+Yes, this is a problem. If load_elf() succeeds but the returned value
+is greater than PROM_SIZE, then *errp == NULL and this would cause a
+segmentation fault when trying to report the error.
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index a3d77f5604..681adbb7ac 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -40,7 +40,6 @@
-  
-  GlobalProperty hw_compat_10_1[] = {
-      { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
--    { TYPE_VIRTIO_NET, "backend-transfer", "false" },
-  };
-  const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
-  
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 5f9711dee7..a895b26e5d 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3638,7 +3638,7 @@ static bool virtio_net_is_tap_mig(void *opaque, int version_id)
-  
-      nc = qemu_get_queue(n->nic);
-  
--    return migrate_backend_transfer() && n->backend_transfer && nc->peer &&
-+    return migrate_backend_transfer(DEVICE(n)) && nc->peer &&
-          nc->peer->info->type == NET_CLIENT_DRIVER_TAP;
-  }
-  
-@@ -4461,7 +4461,6 @@ static const Property virtio_net_properties[] = {
-                                 host_features_ex,
-                                 VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
-                                 false),
--    DEFINE_PROP_BOOL("backend-transfer", VirtIONet, backend_transfer, true),
-  };
-  
-  static void virtio_net_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index a7bfb10dc7..0f3b7aa55e 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -1160,4 +1160,7 @@ typedef enum MachineInitPhase {
-  bool phase_check(MachineInitPhase phase);
-  void phase_advance(MachineInitPhase phase);
-  
-+bool migrate_backend_transfer(DeviceState *dev);
-+bool migrate_backend_transfer_check_list(const strList *list, Error **errp);
-+
-  #endif
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index bf07f8a4cb..5b8ab7bda7 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -231,7 +231,6 @@ struct VirtIONet {
-      struct EBPFRSSContext ebpf_rss;
-      uint32_t nr_ebpf_rss_fds;
-      char **ebpf_rss_fds;
--    bool backend_transfer;
-  };
-  
-  size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 592b93021e..7f931bed17 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -152,4 +152,6 @@ bool multifd_device_state_save_thread_should_exit(void);
-  void multifd_abort_device_state_save_threads(void);
-  bool multifd_join_device_state_save_threads(void);
-  
-+const strList *migrate_backend_transfer_list(void);
-+
-  #endif
-diff --git a/migration/options.c b/migration/options.c
-index a461b07b54..1644728ed7 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -13,6 +13,7 @@
-  
-  #include "qemu/osdep.h"
-  #include "qemu/error-report.h"
-+#include "qapi/util.h"
-  #include "exec/target_page.h"
-  #include "qapi/clone-visitor.h"
-  #include "qapi/error.h"
-@@ -24,6 +25,7 @@
-  #include "migration/colo.h"
-  #include "migration/cpr.h"
-  #include "migration/misc.h"
-+#include "migration/options.h"
-  #include "migration.h"
-  #include "migration-stats.h"
-  #include "qemu-file.h"
-@@ -262,7 +264,7 @@ bool migrate_mapped_ram(void)
-      return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
-  }
-  
--bool migrate_backend_transfer(void)
-+const strList *migrate_backend_transfer_list(void)
-  {
-      MigrationState *s = migrate_get_current();
-      return s->parameters.backend_transfer;
-@@ -969,8 +971,11 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-      params->cpr_exec_command = QAPI_CLONE(strList,
-                                            s->parameters.cpr_exec_command);
-  
--    params->has_backend_transfer = true;
--    params->backend_transfer = s->parameters.backend_transfer;
-+    if (s->parameters.backend_transfer) {
-+        params->has_backend_transfer = true;
-+        params->backend_transfer = QAPI_CLONE(strList,
-+                                              s->parameters.backend_transfer);
-+    }
-  
-      return params;
-  }
-@@ -1193,6 +1198,11 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-          return false;
-      }
-  
-+    if (params->has_backend_transfer &&
-+        !migrate_backend_transfer_check_list(params->backend_transfer, errp)) {
-+        return false;
-+    }
-+
-      return true;
-  }
-  
-@@ -1459,7 +1469,10 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
-      }
-  
-      if (params->has_backend_transfer) {
--        s->parameters.backend_transfer = params->backend_transfer;
-+        qapi_free_strList(s->parameters.backend_transfer);
-+
-+        s->parameters.backend_transfer = QAPI_CLONE(strList,
-+                                                    params->backend_transfer);
-      }
-  }
-  
-diff --git a/migration/options.h b/migration/options.h
-index 755ba1c024..82d839709e 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -87,8 +87,6 @@ const char *migrate_tls_hostname(void);
-  uint64_t migrate_xbzrle_cache_size(void);
-  ZeroPageDetection migrate_zero_page_detection(void);
-  
--bool migrate_backend_transfer(void);
--
-  /* parameters helpers */
-  
-  bool migrate_params_check(MigrationParameters *params, Error **errp);
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 35601a1f87..9478c4ddab 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -951,12 +951,11 @@
-  #     is @cpr-exec.  The first list element is the program's filename,
-  #     the remainder its arguments.  (Since 10.2)
-  #
--# @backend-transfer: Enable backend-transfer feature for devices that
--#     supports it. In general that means that backend state and its
--#     file descriptors are passed to the destination in the migraton
--#     channel (which must be a UNIX socket). Individual devices
--#     declare the support for backend-transfer by per-device
--#     backend-transfer option. (Since 10.2)
-+# @backend-transfer: List of devices (IDs or QOM paths) for
-+#     backend-transfer migration.  When enabled, device backends
-+#     including opened fds will be passed to the destination in the
-+#     migration channel (which must be a UNIX domain socket).  Default
-+#     is no backend-transfer migration. (Since 10.2)
-  #
-  # Features:
-  #
-@@ -1145,12 +1144,11 @@
-  #     is @cpr-exec.  The first list element is the program's filename,
-  #     the remainder its arguments.  (Since 10.2)
-  #
--# @backend-transfer: Enable backend-transfer feature for devices that
--#     supports it. In general that means that backend state and its
--#     file descriptors are passed to the destination in the migraton
--#     channel (which must be a UNIX socket). Individual devices
--#     declare the support for backend-transfer by per-device
--#     backend-transfer option. (Since 10.2)
-+# @backend-transfer: List of devices (IDs or QOM paths) for
-+#     backend-transfer migration.  When enabled, device backends
-+#     including opened fds will be passed to the destination in the
-+#     migration channel (which must be a UNIX domain socket).  Default
-+#     is no backend-transfer migration. (Since 10.2)
-  #
-  # Features:
-  #
-@@ -1195,7 +1193,7 @@
-              '*zero-page-detection': 'ZeroPageDetection',
-              '*direct-io': 'bool',
-              '*cpr-exec-command': [ 'str' ],
--            '*backend-transfer': { 'type': 'bool',
-+            '*backend-transfer': { 'type': [ 'str' ],
-                                     'features': [ 'unstable' ] } } }
-  
-  ##
-@@ -1369,12 +1367,11 @@
-  #     is @cpr-exec.  The first list element is the program's filename,
-  #     the remainder its arguments.  (Since 10.2)
-  #
--# @backend-transfer: Enable backend-transfer feature for devices that
--#     supports it. In general that means that backend state and its
--#     file descriptors are passed to the destination in the migraton
--#     channel (which must be a UNIX socket). Individual devices
--#     declare the support for backend-transfer by per-device
--#     backend-transfer option. (Since 10.2)
-+# @backend-transfer: List of devices (IDs or QOM paths) for
-+#     backend-transfer migration.  When enabled, device backends
-+#     including opened fds will be passed to the destination in the
-+#     migration channel (which must be a UNIX domain socket).  Default
-+#     is no backend-transfer migration. (Since 10.2)
-  #
-  # Features:
-  #
-@@ -1416,7 +1413,7 @@
-              '*zero-page-detection': 'ZeroPageDetection',
-              '*direct-io': 'bool',
-              '*cpr-exec-command': [ 'str' ],
--            '*backend-transfer': { 'type': 'bool',
-+            '*backend-transfer': { 'type': [ 'str' ],
-                                     'features': [ 'unstable' ] } } }
-  
-  ##
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 2ac92d0a07..b4a1a88992 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -939,6 +939,32 @@ void qmp_device_del(const char *id, Error **errp)
-      }
-  }
-  
-+bool migrate_backend_transfer(DeviceState *dev)
-+{
-+    const strList *el = migrate_backend_transfer_list();
-+
-+    for ( ; el; el = el->next) {
-+        if (find_device_state(el->value, false, NULL) == dev) {
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-+
-+bool migrate_backend_transfer_check_list(const strList *list, Error **errp)
-+{
-+    const strList *el = list;
-+
-+    for ( ; el; el = el->next) {
-+        if (!find_device_state(el->value, false, errp)) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-  int qdev_sync_config(DeviceState *dev, Error **errp)
-  {
-      DeviceClass *dc = DEVICE_GET_CLASS(dev);
-diff --git a/tests/functional/test_x86_64_tap_migration.py b/tests/functional/test_x86_64_tap_migration.py
-index 1f88ff174c..a324b0f374 100644
---- a/tests/functional/test_x86_64_tap_migration.py
-+++ b/tests/functional/test_x86_64_tap_migration.py
-@@ -254,17 +254,16 @@ def prepare_and_launch_vm(
-          self.log.info(f"Launching {vm_s} VM")
-          vm.launch()
-  
--        self.set_migration_capabilities(vm, backend_transfer)
--
-          if not backend_transfer:
-              tap_name = TAP_ID2 if incoming else TAP_ID
-          else:
-              tap_name = TAP_ID
-  
--        self.add_virtio_net(vm, vhost, tap_name, backend_transfer)
-+        self.add_virtio_net(vm, vhost, tap_name)
-+
-+        self.set_migration_capabilities(vm, backend_transfer)
-  
--    def add_virtio_net(self, vm, vhost: bool, tap_name: str,
--                       backend_transfer: bool):
-+    def add_virtio_net(self, vm, vhost: bool, tap_name: str = "tap0"):
-          netdev_params = {
-              "id": "netdev.1",
-              "vhost": vhost,
-@@ -289,17 +288,19 @@ def add_virtio_net(self, vm, vhost: bool, tap_name: str,
-              bus="pci.1",
-              mac=GUEST_MAC,
-              disable_legacy="off",
--            backend_transfer=backend_transfer,
-          )
-  
-      def set_migration_capabilities(self, vm, backend_transfer=True):
--        vm.cmd("migrate-set-capabilities", { "capabilities": [
-+        capabilities = [
-              {"capability": "events", "state": True},
-              {"capability": "x-ignore-shared", "state": True},
--        ]})
--        vm.cmd("migrate-set-parameters", {
--            "backend-transfer": backend_transfer
--        })
-+        ]
-+        vm.cmd("migrate-set-capabilities", {"capabilities": capabilities})
-+        if backend_transfer:
-+            vm.cmd(
-+                "migrate-set-parameters",
-+                {"backend-transfer": ["/machine/peripheral/vnet.1/virtio-backend"]},
-+            )
-  
-      def setup_guest_network(self) -> None:
-          exec_command_and_wait_for_pattern(self, "ip addr", "# ")
+Any location where an error check is performed based on a condition
+other than *errp (such as size checks) runs the risk of segmentation
+fault.
 
+> >         exit(1);
+> >     }
+> >     g_free(filename);
+> > @@ -260,10 +261,10 @@ static void pegasos2_init(MachineState *machine)
+> >         pm->initrd_addr = ROUND_UP(pm->initrd_addr, 4);
+> >         pm->initrd_addr = MAX(pm->initrd_addr, INITRD_MIN_ADDR);
+> >         sz = load_image_targphys(machine->initrd_filename, pm->initrd_addr,
+> > -                                 machine->ram_size - pm->initrd_addr, NULL);
+> > +                                 machine->ram_size - pm->initrd_addr, &errp);
+> >         if (sz <= 0) {
+> > -            error_report("Could not load initrd '%s'",
+> > -                         machine->initrd_filename);
+> > +            error_reportf_err(errp, "Could not load initrd '%s': ",
+> > +                              machine->initrd_filename);
+> >             exit(1);
+> >         }
+> >         pm->initrd_size = sz;
+> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> > index a3e5203970..88668a700e 100644
+> > --- a/hw/ppc/pnv.c
+> > +++ b/hw/ppc/pnv.c
+> > @@ -1015,6 +1015,7 @@ static void pnv_init(MachineState *machine)
+> >     char *chip_typename;
+> >     DriveInfo *pnor;
+> >     DeviceState *dev;
+> > +    Error *errp = NULL;
+> > 
+> >     if (kvm_enabled()) {
+> >         error_report("machine %s does not support the KVM accelerator",
+> > @@ -1069,9 +1070,10 @@ static void pnv_init(MachineState *machine)
+> >     }
+> > 
+> >     fw_size = load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
+> > -                                    NULL);
+> > +                                    &errp);
+> >     if (fw_size < 0) {
+> > -        error_report("Could not load OPAL firmware '%s'", fw_filename);
+> > +        error_reportf_err(errp, "Could not load OPAL firmware '%s': ",
+> > +                          fw_filename);
+> >         exit(1);
+> >     }
+> >     g_free(fw_filename);
+> > @@ -1082,10 +1084,10 @@ static void pnv_init(MachineState *machine)
+> > 
+> >         kernel_size = load_image_targphys(machine->kernel_filename,
+> >                                           KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE,
+> > -                                          NULL);
+> > +                                          &errp);
+> >         if (kernel_size < 0) {
+> > -            error_report("Could not load kernel '%s'",
+> > -                         machine->kernel_filename);
+> > +            error_reportf_err(errp, "Could not load kernel '%s': ",
+> > +                              machine->kernel_filename);
+> >             exit(1);
+> >         }
+> >     }
+> > @@ -1094,10 +1096,10 @@ static void pnv_init(MachineState *machine)
+> >     if (machine->initrd_filename) {
+> >         pnv->initrd_base = INITRD_LOAD_ADDR;
+> >         pnv->initrd_size = load_image_targphys(machine->initrd_filename,
+> > -                                  pnv->initrd_base, INITRD_MAX_SIZE, NULL);
+> > +                                  pnv->initrd_base, INITRD_MAX_SIZE, &errp);
+> >         if (pnv->initrd_size < 0) {
+> > -            error_report("Could not load initial ram disk '%s'",
+> > -                         machine->initrd_filename);
+> > +            error_reportf_err(errp, "Could not load initial ram disk '%s': ",
+> > +                              machine->initrd_filename);
+> >             exit(1);
+> >         }
+> >     }
+> > diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+> > index 7c66912c10..9e55e56ee0 100644
+> > --- a/hw/ppc/ppc440_bamboo.c
+> > +++ b/hw/ppc/ppc440_bamboo.c
+> > @@ -141,6 +141,7 @@ static void bamboo_init(MachineState *machine)
+> >     DeviceState *uicdev;
+> >     SysBusDevice *uicsbd;
+> >     int success;
+> > +    Error *errp = NULL;
+> > 
+> >     if (kvm_enabled()) {
+> >         error_report("machine %s does not support the KVM accelerator",
+> > @@ -243,11 +244,11 @@ static void bamboo_init(MachineState *machine)
+> >     if (initrd_filename) {
+> >         initrd_size = load_image_targphys(initrd_filename, RAMDISK_ADDR,
+> >                                           machine->ram_size - RAMDISK_ADDR,
+> > -                                          NULL);
+> > +                                          &errp);
+> > 
+> >         if (initrd_size < 0) {
+> > -            error_report("could not load ram disk '%s' at %x",
+> > -                         initrd_filename, RAMDISK_ADDR);
+> > +            error_reportf_err(errp, "could not load ram disk '%s' at %x: ",
+> > +                              initrd_filename, RAMDISK_ADDR);
+> >             exit(1);
+> >         }
+> >     }
+> > diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+> > index edd3da7102..f8cf6dc16e 100644
+> > --- a/hw/ppc/prep.c
+> > +++ b/hw/ppc/prep.c
+> > @@ -250,6 +250,7 @@ static void ibm_40p_init(MachineState *machine)
+> >     uint32_t kernel_base = 0, initrd_base = 0;
+> >     long kernel_size = 0, initrd_size = 0;
+> >     char boot_device;
+> > +    Error *errp = NULL;
+> > 
+> >     if (kvm_enabled()) {
+> >         error_report("machine %s does not support the KVM accelerator",
+> > @@ -280,10 +281,10 @@ static void ibm_40p_init(MachineState *machine)
+> >     bios_size = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+> >                          ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+> >     if (bios_size < 0) {
+> > -        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE, NULL);
+> > +        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE, &errp);
+> >     }
+> >     if (bios_size < 0 || bios_size > BIOS_SIZE) {
+> > -        error_report("Could not load bios image '%s'", filename);
+> > +        error_reportf_err(errp, "Could not load bios image '%s': ", filename);
+> >         return;
+> >     }
+> >     g_free(filename);
+> > @@ -381,10 +382,10 @@ static void ibm_40p_init(MachineState *machine)
+> >         kernel_size = load_image_targphys(machine->kernel_filename,
+> >                                           kernel_base,
+> >                                           machine->ram_size - kernel_base,
+> > -                                          NULL);
+> > +                                          &errp);
+> >         if (kernel_size < 0) {
+> > -            error_report("could not load kernel '%s'",
+> > -                         machine->kernel_filename);
+> > +            error_reportf_err(errp, "could not load kernel '%s': ",
+> > +                              machine->kernel_filename);
+> >             exit(1);
+> >         }
+> >         fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_ADDR, kernel_base);
+> > @@ -395,10 +396,10 @@ static void ibm_40p_init(MachineState *machine)
+> >             initrd_size = load_image_targphys(machine->initrd_filename,
+> >                                               initrd_base,
+> >                                               machine->ram_size - initrd_base,
+> > -                                              NULL);
+> > +                                              &errp);
+> >             if (initrd_size < 0) {
+> > -                error_report("could not load initial ram disk '%s'",
+> > -                             machine->initrd_filename);
+> > +                error_reportf_err(errp, "could not load initial ram disk '%s': ",
+> > +                                  machine->initrd_filename);
+> >                 exit(1);
+> >             }
+> >             fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_ADDR, initrd_base);
+> > diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+> > index 68d3eacbff..a5cb8e0738 100644
+> > --- a/hw/ppc/sam460ex.c
+> > +++ b/hw/ppc/sam460ex.c
+> > @@ -262,6 +262,7 @@ static void sam460ex_init(MachineState *machine)
+> >     struct boot_info *boot_info;
+> >     uint8_t *spd_data;
+> >     int success;
+> > +    Error *errp = NULL;
+> > 
+> >     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
+> >     env = &cpu->env;
+> > @@ -495,10 +496,10 @@ static void sam460ex_init(MachineState *machine)
+> >         initrd_size = load_image_targphys(machine->initrd_filename,
+> >                                           RAMDISK_ADDR,
+> >                                           machine->ram_size - RAMDISK_ADDR,
+> > -                                          NULL);
+> > +                                          &errp);
+> >         if (initrd_size < 0) {
+> > -            error_report("could not load ram disk '%s' at %x",
+> > -                    machine->initrd_filename, RAMDISK_ADDR);
+> > +            error_reportf_err(errp, "could not load ram disk '%s' at %x: ",
+> > +                              machine->initrd_filename, RAMDISK_ADDR);
+> >             exit(1);
+> >         }
+> >     }
+> > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> > index 9e17b5a31d..0be542c888 100644
+> > --- a/hw/ppc/spapr.c
+> > +++ b/hw/ppc/spapr.c
+> > @@ -2824,9 +2824,10 @@ static void spapr_machine_init(MachineState *machine)
+> >         error_report("Could not find LPAR firmware '%s'", bios_name);
+> >         exit(1);
+> >     }
+> > -    fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, NULL);
+> > +    fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, &errp);
+> >     if (fw_size <= 0) {
+> > -        error_report("Could not load LPAR firmware '%s'", filename);
+> > +        error_reportf_err(errp, "Could not load LPAR firmware '%s': ",
+> > +                          filename);
+> >         exit(1);
+> >     }
+> > 
+> > @@ -3090,10 +3091,10 @@ static void spapr_machine_init(MachineState *machine)
+> >                                                      spapr->initrd_base,
+> >                                                      load_limit
+> >                                                      - spapr->initrd_base,
+> > -                                                     NULL);
+> > +                                                     &errp);
+> >             if (spapr->initrd_size < 0) {
+> > -                error_report("could not load initial ram disk '%s'",
+> > -                             initrd_filename);
+> > +                error_reportf_err(errp, "could not load initial ram disk '%s': ",
+> > +                                  initrd_filename);
+> >                 exit(1);
+> >             }
+> >         }
+> > diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+> > index 00d9ab7509..a7d3de62fa 100644
+> > --- a/hw/ppc/virtex_ml507.c
+> > +++ b/hw/ppc/virtex_ml507.c
+> > @@ -195,6 +195,7 @@ static void virtex_init(MachineState *machine)
+> >     qemu_irq irq[32], cpu_irq;
+> >     int kernel_size;
+> >     int i;
+> > +    Error *errp = NULL;
+> > 
+> >     /* init CPUs */
+> >     cpu = ppc440_init_xilinx(machine->cpu_type, 400000000);
+> > @@ -253,7 +254,7 @@ static void virtex_init(MachineState *machine)
+> >             /* If we failed loading ELF's try a raw image.  */
+> >             kernel_size = load_image_targphys(kernel_filename,
+> >                                               boot_offset,
+> > -                                              machine->ram_size, NULL);
+> > +                                              machine->ram_size, &errp);
+> 
+> What checks and reports errp? Was something left out here?
+The error check was missing here. After reviewing the code, it seems a
+check should be added. I will add it in the next version.
 
+Thanks,
+vishalc
 
--- 
-Best regards,
-Vladimir
+> 
+> Regards,
+> BALATON Zoltan
+> 
+> >             boot_info.bootstrap_pc = boot_offset;
+> >             high = boot_info.bootstrap_pc + kernel_size + 8192;
+> >         }
+> > @@ -265,11 +266,11 @@ static void virtex_init(MachineState *machine)
+> >             initrd_base = high = ROUND_UP(high, 4);
+> >             initrd_size = load_image_targphys(machine->initrd_filename,
+> >                                               high, machine->ram_size - high,
+> > -                                              NULL);
+> > +                                              &errp);
+> > 
+> >             if (initrd_size < 0) {
+> > -                error_report("couldn't load ram disk '%s'",
+> > -                             machine->initrd_filename);
+> > +                error_reportf_err(errp, "couldn't load ram disk '%s': ",
+> > +                                  machine->initrd_filename);
+> >                 exit(1);
+> >             }
+> >             high = ROUND_UP(high + initrd_size, 4);
+> > 
+> 
 
