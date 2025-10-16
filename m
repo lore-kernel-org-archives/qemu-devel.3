@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21932CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFDFCCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9PxK-0001i0-NK; Thu, 16 Oct 2025 11:31:54 -0400
+	id 1v9Pxh-0001lZ-Uj; Thu, 16 Oct 2025 11:32:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9PxI-0001hk-Ix
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:31:52 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1v9Pxd-0001ks-B8
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:32:14 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1v9PxB-0005I3-LP
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:31:52 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-269639879c3so8710435ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:31:42 -0700 (PDT)
+ id 1v9PxU-0005Jn-Cc
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:32:12 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-27d4d6b7ab5so11039875ad.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 08:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760628700; x=1761233500; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760628717; x=1761233517; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=erXzoxKlF1MBdXhNeeU9XBEgLEHuF5GOecvXBGPI/68=;
- b=vAIbWY8eJFtAkMoOnlCJxu0JDDQuKSEQHYrg7v3Pntb8nrOPiSm/HoDUG/cOJ2Nzyp
- a3aziMFNk6rnE4tlh2eaMfeVTODmW8JKKEG+iiAWq9CDc9QBUAOvgRZmKa2wcuM3MBfY
- 63cTwtB8N+AZMR7UqzgOomH1KByGwcF+R7W7BTiy04ZFeJHkvYwfVcmf7YthxOBTTSfI
- ZcnMgsXAD7oIWHMqeyWZY5nS0ReSx0zl/Tj2NROjfPf0TNftGth2xbyuWK3Zag775tG7
- WtmNFrEie71mvFhFfUiBax3UjQyFciyhWTlbgr4LH65H3JB476RXG4aVV2ZLdAAUEXcJ
- Dn5w==
+ bh=PL8YOWmB2c68vjqnVAng3hylZSGSdPKdCyrPQ29+1eQ=;
+ b=JtiaawAV4r3FI21iu726awhmOiRrdT5cHfAD+mwzlho7Hz2w0SW21QcXiTU+c96sFt
+ H2hJ/UnkahABrhZ8/SlC6rvxNbhA9Psg0oUcKHbbY9a1QWRJMa6IitWNd3IbuF17e9h1
+ k7/xyAFGXqkO1JTtkqNoliijpvhBwYpGv1Ql9nSuQALGIocf75O5muuCRDswxMyn7ZH7
+ 9WqtaBLvMyMBt69l/xvhaqP7KP2CWtPywCKdRrxSFm7iyD7Yx+XJqdu0spgHeQZjtS1M
+ unY3oXsztyiLg0PeZi/TsB1ucgwxoVFrczN/j+PhDrXdA43PFkoVgNeWqykI0nzEwVjy
+ E34w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760628700; x=1761233500;
+ d=1e100.net; s=20230601; t=1760628717; x=1761233517;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=erXzoxKlF1MBdXhNeeU9XBEgLEHuF5GOecvXBGPI/68=;
- b=cmEQZicEoyNLo82N0hfO9XiWsgubisVGQD80X+W7T1G+onEMwmtrNMk5fJv6IAPrSG
- aw9m+PBh/IBqcUvBOW07Ktp2A5dawmAjTI7AbHl+X1fip/f+7As2t65smE0Gz1DHDCrQ
- Legu349S7kzCjkyNBg3+BCkZObxTflUTPopl6i4KXCg0KmuYfcKTOXwBH7j8a4IB11hs
- 2cQYpxoXWnSaknlapCMHJIAeG486EJTjPrEY+1KVNbXhSKU1QlxfBq3IUP0vmt8eZgun
- E2xDkkXnbBOgp/F8OmhFrfW5/PqyXBZ9kddF4Y32ep17+XzkrbZrYhybM7wOrFo4kGV6
- A8YA==
+ bh=PL8YOWmB2c68vjqnVAng3hylZSGSdPKdCyrPQ29+1eQ=;
+ b=uUzQqvt3THfcuYCLUqYGyj6Tt7JwlC0k7AJuVRxtnPc9Tq4QbM4LNIwAdrcNJYQA/X
+ RMJiwMu5Rs7x93gVxCqGNEfLevw/784lBejzL0n3CSIYwr0mj58syZUHv0NyjAdhDIxO
+ 2axI35Xovlm24C2n++lPQpLBT5j5xKuOjtnxmRrFw3OVCSnj8v+qjig/tBteCG80RnrE
+ Uz3PU75O39LBjmbyCm6+X9QNm/c7SrKE8mWcBhtCI07dyTktufS2ayG48YRIwzfAZlzf
+ pmL1oxTaLCUDGznUNuHgnRe7B7OoF86FcdOoXjI/g7AZokg9wyznHPqZxkcYECa1YHpa
+ P0Xw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgIOxeja+MSObC3YkrhZxlEu80QNAVrn35F+ebB4POfQ6l5evozRCoi+isS1VFNGAapPV7njOw7Z9K@nongnu.org
-X-Gm-Message-State: AOJu0Yyx0/GJ5Um2QtTWr1ymPDN3ZUHihVAgUBJIQOGKCqkwH1Kb2bp1
- +Tu/vsPwiNdmfS7l3Psi3L1FFaUF+KBwF6Hyjj820KFVNCUrwTcCKQ7WaYUf+ZiFCv0=
-X-Gm-Gg: ASbGncuIm0SyX5BggcmKhEDlUv6BtO3tZBnr9C4QIpHt9rrno+tu6lN/uci8Elq13fn
- 7CcQeHHH4TTexD4A6QWzwQJGQoAn9j4eo5ClhzyRLhbR3fxdWaUTWelMt/c6EPoObnCNPBCJe0n
- EJVhbw/jqzlP9bKhseQGNijO8UvABr0LxuhjD9DIZ9xxN6h6rBkrR1llIFu4UDYxdgqgb/Pkb32
- QMarFJlm0udyrUvlq3a2wcQN2/PMH669+g2nyN25obToU/96TSQPV7Ft/uWIkGNLoi0Qh+ogfE2
- M80AMOLirx0bdJcRXX+DffeKKUUY4EAA/+5I8eAIZPb21iHU7G7ZFSyScniqq0kwafvQcymCeuG
- qofo3d8RkIanQfT8SiFYwuPxPAsHnPaXlBU6Uxwx9UTfWkoc2K0w+DAGnOaoNhZ/DPmVgkLN92V
- NJj5IMHFD74pR3
-X-Google-Smtp-Source: AGHT+IG0Ll9nmcr9DR0Y2tjgybaQU21B+R9uHigz8z+hnsFsx7RoSE2awIp3vz46KfCThFcdGhgy6g==
-X-Received: by 2002:a17:902:ce87:b0:26c:2e56:ec27 with SMTP id
- d9443c01a7336-290c9cbc92amr5544705ad.19.1760628699815; 
- Thu, 16 Oct 2025 08:31:39 -0700 (PDT)
+ AJvYcCVOI0XjK40lKrBDeRjyosKLACzzHzdf0IInOhWTMQWC4nhVtK7DBHBzMJDYDnlsiytFM4F2CkN33ACw@nongnu.org
+X-Gm-Message-State: AOJu0Yzj6eu0NcrJmyy/W8DvY30+Cc3Y6KZiKsMzGAA8fc+C4zOas7CS
+ 1abBe87EtyvNgf9QTHtTHVgnpASVfwtXuSxoTCQjhLpgtoBriRjmH8IPheCGh+70Paw=
+X-Gm-Gg: ASbGnct//fq0/Q4WbOV9UxZjbGWqH1kiNnDgpSAeiaOR8vBJ3ybav+jxBpJEK9mIcl7
+ fHsVbBe/q0liReh0triGMfTLs938i4r+EseMPs6U8L5lFabhIM58lGeI7uX2G2tSANFuBS0Mvjf
+ Gc3gpF5gysXj6WF4OUCbT+ZI8JSUjUocMoR4B7+dAGNEvTHfuAUto1WJTEuWh7xekZ/+MmG9As2
+ s7MqIvCNYAP+NdfD5jADq5bZKcnp5cYCWh2vP0vvGDn5QrGJEWrK/7hQKz0qJp2u9VlwYZX05fM
+ liGR/X0VGH2ylzKf8Dy+pn3jlMhZibQR3CXY5UIU6dwAI6R8n6cbJXxZe6Bu1MayTJVSwLHMz2s
+ VneC1oKmWn44Hu/XoZCr07bmAuyrmh9ze+woawL3olz651OGr2dTAOpA0EFV94KjSkS0gjEYlJi
+ 9YWMHDDIXfIkCJsLJdzvz84Bo=
+X-Google-Smtp-Source: AGHT+IFkWNYp/Qmq7zm09fWaEkuS7Ervmu7DGSsYfvvRbF6Q66XUOue/sjAfZtV76QmJYZ9h2GCqfg==
+X-Received: by 2002:a17:902:d4c4:b0:26e:7468:8a99 with SMTP id
+ d9443c01a7336-290ca121e99mr4880335ad.36.1760628717040; 
+ Thu, 16 Oct 2025 08:31:57 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29099afdc02sm33757345ad.110.2025.10.16.08.31.38
+ d9443c01a7336-29099aba4d3sm33751605ad.83.2025.10.16.08.31.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Oct 2025 08:31:39 -0700 (PDT)
-Message-ID: <5db0da99-2284-4ad1-91a9-f5e19a2bb5a6@linaro.org>
-Date: Thu, 16 Oct 2025 08:31:38 -0700
+ Thu, 16 Oct 2025 08:31:56 -0700 (PDT)
+Message-ID: <6add64a1-755a-48b1-9a7c-d85319e0c6b1@linaro.org>
+Date: Thu, 16 Oct 2025 08:31:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/11] hw/display: add blob map/unmap trace events
+Subject: Re: [PATCH 02/11] gitlab: drop aarch32 runner and associated bits
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
@@ -86,20 +86,20 @@ Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, "Michael S. Tsirkin"
  <mst@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 References: <20251016150357.876415-1-alex.bennee@linaro.org>
- <20251016150357.876415-7-alex.bennee@linaro.org>
+ <20251016150357.876415-3-alex.bennee@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251016150357.876415-7-alex.bennee@linaro.org>
+In-Reply-To: <20251016150357.876415-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,50 +116,224 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/16/25 8:03 AM, Alex Bennée wrote:
-> As these events happen dynamically as the guest does various things
-> they are quite handy to trace.
+> While working out what hoops to jump through to get a full set of
+> aarch32 packages installed on the aarch64 runner it was pointed out 32
+> bit host support is deprecated. As the extra packages where needed for
+> system emulation (marked deprecated since 8.0!) there didn't seem much
+> point keeping this in.
+> 
+> While the full expunging of 32 bit host support will probably be done
+> for 11.0 we can at least reduce the CI burden a bit now.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   hw/display/virtio-gpu-virgl.c | 4 ++++
->   hw/display/trace-events       | 2 ++
->   2 files changed, 6 insertions(+)
+>   .gitlab-ci.d/custom-runners.yml               |   1 -
+>   .../custom-runners/ubuntu-24.04-aarch32.yml   |  25 ----
+>   scripts/ci/setup/ubuntu/build-environment.yml |  17 ---
+>   .../setup/ubuntu/ubuntu-2204-armhf-cross.yml  | 127 ------------------
+>   4 files changed, 170 deletions(-)
+>   delete mode 100644 .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+>   delete mode 100644 scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
 > 
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 94ddc01f91c..07f6355ad62 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -134,6 +134,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+> diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
+> index 3eb8216d571..142fbf4a242 100644
+> --- a/.gitlab-ci.d/custom-runners.yml
+> +++ b/.gitlab-ci.d/custom-runners.yml
+> @@ -31,4 +31,3 @@
+>   include:
+>     - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-s390x.yml'
+>     - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml'
+> -  - local: '/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml'
+> diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+> deleted file mode 100644
+> index 75029c9187e..00000000000
+> --- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+> +++ /dev/null
+> @@ -1,25 +0,0 @@
+> -# All ubuntu-24.04 jobs should run successfully in an environment
+> -# setup by the scripts/ci/setup/ubuntu/build-environment.yml task
+> -# "Install basic packages to build QEMU on Ubuntu 24.04"
+> -
+> -ubuntu-24.04-aarch32-all:
+> - extends: .custom_runner_template
+> - needs: []
+> - stage: build
+> - tags:
+> - - ubuntu_24.04
+> - - aarch32
+> - rules:
+> - - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+> -   when: manual
+> -   allow_failure: true
+> - - if: "$AARCH32_RUNNER_AVAILABLE"
+> -   when: manual
+> -   allow_failure: true
+> - script:
+> - - mkdir build
+> - - cd build
+> - - ../configure --cross-prefix=arm-linux-gnueabihf-
+> -   || { cat config.log meson-logs/meson-log.txt; exit 1; }
+> - - make --output-sync -j`nproc --ignore=40`
+> - - make --output-sync -j`nproc --ignore=40` check
+> diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
+> index 6042750cb4d..0f8ec5fab04 100644
+> --- a/scripts/ci/setup/ubuntu/build-environment.yml
+> +++ b/scripts/ci/setup/ubuntu/build-environment.yml
+> @@ -47,21 +47,4 @@
+>           - ansible_facts['distribution'] == 'Ubuntu'
+>           - ansible_facts['distribution_version'] == '24.04'
 >   
->       res->mr = mr;
+> -    - name: Install armhf cross-compile packages to build QEMU on AArch64 Ubuntu 24.04
+> -      package:
+> -        name:
+> -          - binutils-arm-linux-gnueabihf
+> -          - gcc-arm-linux-gnueabihf
+> -          - libblkid-dev:armhf
+> -          - libc6-dev:armhf
+> -          - libffi-dev:armhf
+> -          - libglib2.0-dev:armhf
+> -          - libmount-dev:armhf
+> -          - libpcre2-dev:armhf
+> -          - libpixman-1-dev:armhf
+> -          - zlib1g-dev:armhf
+> -      when:
+> -        - ansible_facts['distribution'] == 'Ubuntu'
+> -        - ansible_facts['distribution_version'] == '24.04'
+> -        - ansible_facts['architecture'] == 'aarch64'
 >   
-> +    trace_virtio_gpu_cmd_res_map_blob(res->base.resource_id, vmr, mr);
-> +
->       return 0;
->   }
->   
-> @@ -153,6 +155,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
->   
->       vmr = to_hostmem_region(res->mr);
->   
-> +    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
-> +
->       /*
->        * Perform async unmapping in 3 steps:
->        *
-> diff --git a/hw/display/trace-events b/hw/display/trace-events
-> index 52786e6e184..e323a82cff2 100644
-> --- a/hw/display/trace-events
-> +++ b/hw/display/trace-events
-> @@ -38,6 +38,8 @@ virtio_gpu_cmd_set_scanout_blob(uint32_t id, uint32_t res, uint32_t w, uint32_t
->   virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h) "res 0x%x, fmt 0x%x, w %d, h %d"
->   virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
->   virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res 0x%x, size %" PRId64
-> +virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res 0x%x, vmr %p, mr %p"
-> +virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
->   virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
->   virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
->   virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
+> diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml b/scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
+> deleted file mode 100644
+> index 0cc34cd10b9..00000000000
+> --- a/scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
+> +++ /dev/null
+> @@ -1,127 +0,0 @@
+> -# THIS FILE WAS AUTO-GENERATED
+> -#
+> -#  $ lcitool variables --cross-arch armv7l ubuntu-2204 qemu
+> -#
+> -# https://gitlab.com/libvirt/libvirt-ci
+> -
+> -packages:
+> -  - bash
+> -  - bc
+> -  - bison
+> -  - bsdextrautils
+> -  - bzip2
+> -  - ca-certificates
+> -  - ccache
+> -  - dbus
+> -  - debianutils
+> -  - diffutils
+> -  - exuberant-ctags
+> -  - findutils
+> -  - flex
+> -  - gcc
+> -  - gcovr
+> -  - gettext
+> -  - git
+> -  - hostname
+> -  - libglib2.0-dev
+> -  - libpcre2-dev
+> -  - libsndio-dev
+> -  - libspice-protocol-dev
+> -  - llvm
+> -  - locales
+> -  - make
+> -  - meson
+> -  - mtools
+> -  - ncat
+> -  - ninja-build
+> -  - openssh-client
+> -  - pkgconf
+> -  - python3
+> -  - python3-numpy
+> -  - python3-opencv
+> -  - python3-pillow
+> -  - python3-pip
+> -  - python3-sphinx
+> -  - python3-sphinx-rtd-theme
+> -  - python3-tomli
+> -  - python3-venv
+> -  - python3-yaml
+> -  - rpm2cpio
+> -  - sed
+> -  - socat
+> -  - sparse
+> -  - swtpm
+> -  - tar
+> -  - tesseract-ocr
+> -  - tesseract-ocr-eng
+> -  - xorriso
+> -  - zstd
+> -  - gcc-arm-linux-gnueabihf
+> -  - libaio-dev:armhf
+> -  - libasan6:armhf
+> -  - libasound2-dev:armhf
+> -  - libattr1-dev:armhf
+> -  - libbpf-dev:armhf
+> -  - libbrlapi-dev:armhf
+> -  - libbz2-dev:armhf
+> -  - libc6-dev:armhf
+> -  - libcacard-dev:armhf
+> -  - libcap-ng-dev:armhf
+> -  - libcapstone-dev:armhf
+> -  - libcmocka-dev:armhf
+> -  - libcurl4-gnutls-dev:armhf
+> -  - libdaxctl-dev:armhf
+> -  - libdrm-dev:armhf
+> -  - libepoxy-dev:armhf
+> -  - libfdt-dev:armhf
+> -  - libffi-dev:armhf
+> -  - libfuse3-dev:armhf
+> -  - libgbm-dev:armhf
+> -  - libgcrypt20-dev:armhf
+> -  - libglib2.0-dev:armhf
+> -  - libglusterfs-dev:armhf
+> -  - libgnutls28-dev:armhf
+> -  - libgtk-3-dev:armhf
+> -  - libibumad-dev:armhf
+> -  - libibverbs-dev:armhf
+> -  - libiscsi-dev:armhf
+> -  - libjemalloc-dev:armhf
+> -  - libjpeg-turbo8-dev:armhf
+> -  - libjson-c-dev:armhf
+> -  - liblttng-ust-dev:armhf
+> -  - liblzo2-dev:armhf
+> -  - libncursesw5-dev:armhf
+> -  - libnfs-dev:armhf
+> -  - libnuma-dev:armhf
+> -  - libpam0g-dev:armhf
+> -  - libpipewire-0.3-dev:armhf
+> -  - libpixman-1-dev:armhf
+> -  - libpng-dev:armhf
+> -  - libpulse-dev:armhf
+> -  - librbd-dev:armhf
+> -  - librdmacm-dev:armhf
+> -  - libsasl2-dev:armhf
+> -  - libsdl2-dev:armhf
+> -  - libsdl2-image-dev:armhf
+> -  - libseccomp-dev:armhf
+> -  - libselinux1-dev:armhf
+> -  - libslirp-dev:armhf
+> -  - libsnappy-dev:armhf
+> -  - libspice-server-dev:armhf
+> -  - libssh-dev:armhf
+> -  - libsystemd-dev:armhf
+> -  - libtasn1-6-dev:armhf
+> -  - libubsan1:armhf
+> -  - libudev-dev:armhf
+> -  - liburing-dev:armhf
+> -  - libusb-1.0-0-dev:armhf
+> -  - libusbredirhost-dev:armhf
+> -  - libvdeplug-dev:armhf
+> -  - libvirglrenderer-dev:armhf
+> -  - libvte-2.91-dev:armhf
+> -  - libxen-dev:armhf
+> -  - libzstd-dev:armhf
+> -  - nettle-dev:armhf
+> -  - systemtap-sdt-dev:armhf
+> -  - zlib1g-dev:armhf
+> -
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
