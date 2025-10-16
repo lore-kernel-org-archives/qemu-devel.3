@@ -4,85 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996CACCD185
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 03:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB977CCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 03:33:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9EhH-0005RS-GS; Wed, 15 Oct 2025 23:30:35 -0400
+	id 1v9Ejw-00065V-6i; Wed, 15 Oct 2025 23:33:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9EhF-0005RG-NW
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:30:33 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1v9Eju-00065F-Hn
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:33:18 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9EhD-0006Oa-C6
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:30:33 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-63c1006fdcfso63063a12.2
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 20:30:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1v9Ejq-0006Zw-FE
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 23:33:18 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-63b9da76e42so451442a12.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 20:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760585428; x=1761190228; darn=nongnu.org;
+ d=sifive.com; s=google; t=1760585592; x=1761190392; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YJpyq+XEzOePN/A/RAKSPFoo07S7LQUxptorHZ+zlQM=;
- b=SCUqKhpQO3kRsRPvtmSeFRAtJjPTJz5avK0yOwPN8Eo43+ltNESJ7Jqhrh07o+IdDH
- Iq+Z6A4MHSaC4jVjX3iOe/fyg43HtSRhqxJwxIVfSbSpaIro+aw+nWLROMT5JtUvBQ9x
- hagKgI7yWmRqbS8zV0zniKJMmLAN+xYM7SYsGNtk4oXiaG56CoCZdLOgcre48cVSZZnm
- TwV/+2O6gL31KZjwQqJgNg5fRs9cudRNY+HQlQcTD62RLvk+lgOBNirPs7q/1+95fpcP
- /pKv18psuFmlRa1mlQ1scGNl+cIPy1tj2L9yYersi8CgbOkN6C9/5iuCnHnSzwfGUMO7
- m2OA==
+ bh=zDx4vUBTXYtsKZguPSMTeW4z2LPKCHzenwLZ1f4KAqs=;
+ b=XaU6jKDeQMkRHo/ZqzXwb86PkXx14qF6j9/+lknRaeQRd9HQHkdKFDU5zcZG67V0nM
+ Z6KWw9PjDyG9SWno9cuPDGqLAH/HnlY/p1c3SbgR0w5V6jUKwAWTqSnrmlDAxB4hNUPY
+ /DShG3S2pimpHPD5Q9vI/7mb2ejcmni6BVGrIS64AiWQnN3ymEsC+cKw6UPv0X/z2Xs6
+ EudEGWO2RFxBWedNBR41gn53Nq4MZxNWZ6+PInq76HOIMeo948HuCSgkYyNj6b8YwY9A
+ ctYs251/tgPOIjN9D1/6WEkSFsQQN++JJ9je4iSOUn02XUFJ8/kwpxzvtzNvzRY+otuk
+ Jd3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760585428; x=1761190228;
+ d=1e100.net; s=20230601; t=1760585592; x=1761190392;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YJpyq+XEzOePN/A/RAKSPFoo07S7LQUxptorHZ+zlQM=;
- b=Luer2rdtAK0QzdaW2UWRho//tgHQcpbnApOOnmoqQPM09uMgf0xoJRH62XlUGHGH0w
- jnbAotbfBnQ54Qoe2cui4K30ku6cmjyyrV/yJ2OYmforqXCP0Zu5Sg+K0MR0nUvnIhfX
- Bv+fBTiUDsGWpxFA7NH5IasRlj2LHY3aJwZ8Zc+HvSSOQxQplAJ99AOzp0TEbIOQqteS
- ak33rvN+h7RaDn8ty1O7hrxRopYUP/jZH6V2qJEsuvl1EuhpdSZzK8OvbjxMMOQtwxxo
- CF65+8g6r62aiNKnCgnTaI1PFapL/jZ5TZFQKih1ZLTL+9CKI5ibAqA/NztEVuiuaiRP
- xVnw==
-X-Gm-Message-State: AOJu0YwB2Zd2kGDyVP86Qv7BPmKbv4qpRZES+Q0zEwaMUQRv0HjQ7hGx
- MGMLSdj/2w/JLDQim2Hvug3U+lhU6YwamXOIIJQg1bMBuqgvp0CTrzpMq+x3+4lLGNaPjjAfs/W
- tL/1Xyt7sHAEiFahASBxi48jcFpz3Ob8=
-X-Gm-Gg: ASbGncvJxT8BAd96yj64PX/nLtPuquZbH8gLZUqPJQW07+2eOV8YHpoyieF+JD4nH8M
- qxRywCkpT9GpQqa1U3X3dDsCWUyJfl0y5UourWpXxr8iEvl66jauMfT6vOuiaPfCMfhH/hv8Vms
- 5GGc+B80NVR+GRy/Mwiww5YKLDY+Dv2z/5i3DOqNL5BijQdvPVXPFITUVpUzvok0W6Ppe1MDDCr
- VcYjLU0VZVaxaejwNSh+gnA+D7W1i/msXbUuv3a4dvj4bkylG6MA5HYYhuSUni/bodQseYf/zGR
- mqhvM7y/hIpX7w8=
-X-Google-Smtp-Source: AGHT+IHlFivv+EDybMJNIeMxmun2t0GQMkcZw7BN0xDAumOxIebS95ebYZdQg7XBNqzo9L0yex01hAj73r2e8DLmbI4=
-X-Received: by 2002:a05:6402:84f:b0:631:cc4f:2ff5 with SMTP id
- 4fb4d7f45d1cf-639d5c5a788mr28383200a12.25.1760585427922; Wed, 15 Oct 2025
- 20:30:27 -0700 (PDT)
+ bh=zDx4vUBTXYtsKZguPSMTeW4z2LPKCHzenwLZ1f4KAqs=;
+ b=lkHIlck3weAu4CTNwhmjLLYzxOTz7wL7oqZIgs5f9Zr7WqT2bKyXRyAewWoGcxSO/F
+ dsww8LDBfDDts5jIg3k3saI4giI6P4VCIztZn8lwjNJjkNvpYyPUtu1sN56hISXKClnS
+ 4h6l711aP1tWqWsMVToV1xoj1R0BXd2b1tQZUJCjh+3XTkn34qtryz9xa90R5CjSco+x
+ OeN5Y0K4kOzkfFFdXMWsbg7c8HAvBdkIg2SzRezv/gQzom6Hv8EuZY6YvnZ5KhpoD8We
+ BCISNAfAoGKB2HIagbCIXZOJH8c3T01LCgjEUSPJAorKVZ9dTwDWHtkOIIJhZaMwHiS9
+ /cFw==
+X-Gm-Message-State: AOJu0YwrKRvi1/rPnUibIihv0IIPeuXsJ5TskqWDO69buZWUc7lvD7oa
+ wDkJxMRQ/XDBp8Vsunrx634L85OYM7qCkW6OG1kQJ2rueX7+javQHQbouFLQInCIlZd9a8Zv25y
+ RKr2zP0UaC/269QMnhX928jQWs2YjXnScS0F5+KW+rQ==
+X-Gm-Gg: ASbGncudUVEXjgd7FR2uqrg0FRRJ2TyqFuFzac5NWeDRvQyTYesjDuRCWm9aNRh3z+D
+ OfFgOf39j/DfzMa6mvPHXPYGizmjDuOfqgqbn5YwJ89E2HrPIYBvtPHSgZ+Tq0+WhrHGRVrgO93
+ C6uZ3c3TwNULYN7+TkkwYglDlOXeUZc2i/2LRJmFzX7swXpEyk1TkjvJ6TZijoB65viwXv9VWtx
+ 0nCigpeT/9P5ORCpZBXVFwLZaQt2PPxP/L3D5xBJLNLdY8XlAhXB5inDsvw7LZ3d6IdaHktRg==
+X-Google-Smtp-Source: AGHT+IFNR/dqk2CasjiAn0KLZAiGx7xDLkCVH3uRAftR/yiY8CdCTNrYgybdPcB+mDBG7egGKEqijznpJZsOEfSVEGc=
+X-Received: by 2002:a05:6402:847:b0:637:8faa:9df7 with SMTP id
+ 4fb4d7f45d1cf-639d5c59ca3mr28678606a12.29.1760585591629; Wed, 15 Oct 2025
+ 20:33:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251014203512.26282-1-anjo@rev.ng>
-In-Reply-To: <20251014203512.26282-1-anjo@rev.ng>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 Oct 2025 13:30:01 +1000
-X-Gm-Features: AS18NWB_7phHHPH8zF5ej6bsW1YpP4be8g_tFnh8YQylqyl9h1k71f82SxMBWHo
-Message-ID: <CAKmqyKOviCFNk_ShuOsk6nvgYudPmrKSGK3cAoeGoFC4mR1adA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/34] single-binary: Make riscv cpu.h target
- independent
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, palmer@dabbelt.com
+References: <20250417105249.18232-1-jim.shu@sifive.com>
+ <20250417105249.18232-5-jim.shu@sifive.com>
+ <e7616702-8a7b-4617-8433-236a1086bdf9@ventanamicro.com>
+ <CALw707rstv76_oESKHzbeuPakSesWNBXogQoCJN4pHMj_wz7eg@mail.gmail.com>
+ <125b7913-c8c0-448b-9f3f-3b893436b901@ventanamicro.com>
+In-Reply-To: <125b7913-c8c0-448b-9f3f-3b893436b901@ventanamicro.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Thu, 16 Oct 2025 11:33:00 +0800
+X-Gm-Features: AS18NWA5bA5jEA-tEDP_afI62he9vjOlSwWxHC7oCalyWi0_exQBl7o125tVLJQ
+Message-ID: <CALw707pE=oXYWrYndA8jaxeqxD-vM1bcqSMV_U8_vfYuGy-ZUg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/18] exec: Add RISC-V WorldGuard WID to MemTxAttrs
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Michael Rolnik <mrolnik@gmail.com>, 
+ Helge Deller <deller@gmx.de>, Song Gao <gaosong@loongson.cn>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Stafford Horne <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>,
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,138 +121,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 6:34=E2=80=AFAM Anton Johansson via
-<qemu-devel@nongnu.org> wrote:
->
-> Hi,
->
-> this is a first patchset moving towards single-binary support for riscv.
-> Additional patchsets for hw/ and target/ are based on this one so it's
-> best to make sure the approach taken is ok.  Most patches in this set
-> concern fields in CPUArchState which are either widened (usually to
-> uint64_t) or fixed to a smaller size which handles all use cases.
->
-> General purpose registers and fields mapped to TCG are dealt with by
-> widening the type and applying an offset to tcg_global_mem_new() to
-> correctly handle 32-bit targets on big endian hosts.
->
-> Quick question to correct my understanding. AFAICT riscv64-softmmu is a
-> superset of riscv32-softmmu which handles 32-, 64, and 128-bit ISAs, so
-> concerning single-binary do we for the time being only need to support
-> riscv64-softmmu?
+Hi Daniel,
 
-That's correct, the idea is that someone can use riscv64-softmmu for
-32, 64 and 128 bit CPUs.
+Thanks for the suggestion. I will add it in the v3 patches.
 
-So in theory we could remove riscv32-softmmu today and not break
-anything (obviously it would break a lot due to the name and argument
-changes required, but you get the point).
+- Jim
 
-I don't think many people are using riscv64-softmmu with 32-bit CPUs,
-so it's possible there are bugs where we accidently expose the wrong
-thing, but the idea is there and we should work on fixing those.
-
-Alistair
-
+On Mon, Oct 13, 2025 at 1:27=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> Let me know what you think of the direction taken here and if you would
-> prefer something else.
 >
-> Patches 4, 5, and 10 still in need of review.
 >
-> Changes in v2:
->   - Use BIT() to define misa extension bits in "Use 32 bits for misa
->     extensions";
+> On 10/8/25 2:54 AM, Jim Shu wrote:
+> > Hi Daniel,
+> >
+> > Both '_reserved1' and '_reserved2' fields are only for padding
+> > MemTxAttrs struct to be 8-byte [1], so I remove a 1-byte reserved
+> > field when adding 'world_id' field to it.
+> > Is it ok for you? Or you think it is better to separate them.
 >
->   - Squash "Fix size of mcause" into "Fix size of trivial CPUArchState
->     fields";
+> It's fine. I suggest adding this explanation in the commit msg to avoid
+> further questions about it.
 >
->   - Bump VMSTATE version_id and minimum_version_id for "cpu/pmp/entry",
->     "cpu/pmp", "cpu/hyper", "cpu/vector", "cpu/rv128", "cpu/debug",
->     "cpu/envcfg", "cpu/pmu", "cpu/jvt", "cpu/ssp", and "cpu".  Migration
->     from older versions is broken.
 >
-> Changes in v3:
->   - Fix formatting issues during printing;
+> Thanks,
 >
->   - Move assert before extract64() in pmu_read_ctr();
+> Daniel
 >
->   - Added patch 5/34 fixing a bug in rmw_cd_ctr_cfg() where bit 30 is
->     zeroed instead of bit 62 (MHPMEVENTH_* vs MHPMEVENT_*);
->
->   - Added privilege_mode_t typedef for storing PRV_* fields;
->
->   - Added reviewed-bys.
->
-> Anton Johansson (34):
->   target/riscv: Use 32 bits for misa extensions
->   target/riscv: Fix size of trivial CPUArchState fields
->   target/riscv: Fix size of mhartid
->   target/riscv: Bugfix riscv_pmu_ctr_get_fixed_counters_val()
->   target/riscv: Bugfix make bit 62 read-only 0 for sireg* cfg CSR read
->   target/riscv: Combine mhpmevent and mhpmeventh
->   target/riscv: Combine mcyclecfg and mcyclecfgh
->   target/riscv: Combine minstretcfg and minstretcfgh
->   target/riscv: Combine mhpmcounter and mhpmcounterh
->   target/riscv: Fix size of gpr and gprh
->   target/riscv: Fix size of vector CSRs
->   target/riscv: Fix size of pc, load_[val|res]
->   target/riscv: Fix size of frm and fflags
->   target/riscv: Fix size of badaddr and bins
->   target/riscv: Fix size of guest_phys_fault_addr
->   target/riscv: Fix size of priv_ver and vext_ver
->   target/riscv: Fix size of retxh
->   target/riscv: Fix size of ssp
->   target/riscv: Fix size of excp_uw2
->   target/riscv: Fix size of sw_check_code
->   target/riscv: Fix size of priv
->   target/riscv: Fix size of gei fields
->   target/riscv: Fix size of [m|s|vs]iselect fields
->   target/riscv: Fix arguments to board IMSIC emulation callbacks
->   target/riscv: Fix size of irq_overflow_left
->   target/riscv: Indent PMUFixedCtrState correctly
->   target/riscv: Replace target_ulong in riscv_cpu_get_trap_name()
->   target/riscv: Replace target_ulong in riscv_ctr_add_entry()
->   target/riscv: Fix size of trigger data
->   target/riscv: Fix size of mseccfg
->   target/riscv: Move debug.h include away from cpu.h
->   target/riscv: Move CSR declarations to separate csr.h header
->   target/riscv: Introduce externally facing CSR access functions
->   target/riscv: Make pmp.h target_ulong agnostic
->
->  target/riscv/cpu.h                            | 349 +++++++-----------
->  target/riscv/csr.h                            |  93 +++++
->  target/riscv/debug.h                          |   2 -
->  target/riscv/pmp.h                            |  20 +-
->  hw/intc/riscv_imsic.c                         |  34 +-
->  hw/riscv/riscv_hart.c                         |   7 +-
->  linux-user/riscv/signal.c                     |   5 +-
->  target/riscv/cpu.c                            |  10 +-
->  target/riscv/cpu_helper.c                     |  42 +--
->  target/riscv/csr.c                            | 290 ++++++++-------
->  target/riscv/debug.c                          |   1 +
->  target/riscv/fpu_helper.c                     |   6 +-
->  target/riscv/gdbstub.c                        |   1 +
->  target/riscv/kvm/kvm-cpu.c                    |   1 +
->  target/riscv/machine.c                        | 177 +++++----
->  target/riscv/op_helper.c                      |   1 +
->  target/riscv/pmp.c                            |  14 +-
->  target/riscv/pmu.c                            | 150 ++------
->  target/riscv/riscv-qmp-cmds.c                 |   3 +-
->  target/riscv/tcg/tcg-cpu.c                    |   3 +-
->  target/riscv/th_csr.c                         |   1 +
->  target/riscv/translate.c                      |  53 ++-
->  target/riscv/vector_helper.c                  |  22 +-
->  .../riscv/insn_trans/trans_privileged.c.inc   |   2 +-
->  target/riscv/insn_trans/trans_rvi.c.inc       |  16 +-
->  target/riscv/insn_trans/trans_rvm.c.inc       |  16 +-
->  target/riscv/insn_trans/trans_rvv.c.inc       |  24 +-
->  target/riscv/insn_trans/trans_rvzicfiss.c.inc |  22 +-
->  28 files changed, 685 insertions(+), 680 deletions(-)
->  create mode 100644 target/riscv/csr.h
->
-> --
-> 2.51.0
->
+> >
+> >
+> > [1]
+> > commit 5014e33b1e00d330f13df33c09a3932ac88f8d94
+> > Link: https://lore.kernel.org/r/20250121151322.171832-2-zhao1.liu@intel=
+.com
+> >
+> > Thanks!
+> >
+> > On Sat, Aug 9, 2025 at 8:34=E2=80=AFPM Daniel Henrique Barboza
+> > <dbarboza@ventanamicro.com> wrote:
+> >>
+> >>
+> >>
+> >> On 4/17/25 7:52 AM, Jim Shu wrote:
+> >>> RISC-V WorldGuard will add 5-bit world_id (WID) to the each memory
+> >>> transaction on the bus. The wgChecker in front of RAM or peripherals
+> >>> MMIO could do the access control based on the WID. It is similar to A=
+RM
+> >>> TrustZone NS bit, but the WID is 5-bit.
+> >>>
+> >>> The common implementation of WID is AXI4 AxUSER signal.
+> >>>
+> >>> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> >>> ---
+> >>>    include/exec/memattrs.h | 8 ++++++--
+> >>>    1 file changed, 6 insertions(+), 2 deletions(-)
+> >>>
+> >>> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+> >>> index 8db1d30464..7a6866fa41 100644
+> >>> --- a/include/exec/memattrs.h
+> >>> +++ b/include/exec/memattrs.h
+> >>> @@ -54,6 +54,11 @@ typedef struct MemTxAttrs {
+> >>>         */
+> >>>        unsigned int pid:8;
+> >>>
+> >>> +    /*
+> >>> +     * RISC-V WorldGuard: the 5-bit WID field of memory access.
+> >>> +     */
+> >>> +    unsigned int world_id:5;
+> >>> +
+> >>>        /*
+> >>>         * Bus masters which don't specify any attributes will get thi=
+s
+> >>>         * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
+> >>> @@ -63,8 +68,7 @@ typedef struct MemTxAttrs {
+> >>>         */
+> >>>        bool unspecified;
+> >>>
+> >>> -    uint8_t _reserved1;
+> >>> -    uint16_t _reserved2;
+> >>> +    uint16_t _reserved1;
+> >>
+> >> Is 'reserved2' unused? Not sure why you ended up removing it in this p=
+atch.
+> >>
+> >> If it's really unused it's ok to remove it but this should be done in =
+separate.
+> >>
+> >>
+> >> Thanks,
+> >>
+> >> Daniel
+> >>
+> >>
+> >>>    } MemTxAttrs;
+> >>>
+> >>>    QEMU_BUILD_BUG_ON(sizeof(MemTxAttrs) > 8);
+> >>
 >
 
