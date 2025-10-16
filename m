@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212A4CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 15:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD429CCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 16:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9QG0-0005tk-86; Thu, 16 Oct 2025 11:51:12 -0400
+	id 1v9QS6-00053V-T0; Thu, 16 Oct 2025 12:03:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9QFv-0005t7-VH
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:51:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v9QFn-0008DD-OT
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 11:51:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760629850;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=E65owRgyDYyHbqOnJRKa4CCGFJ09a+0V84lMUKow6mw=;
- b=Fu+VwZ9mwrmgyczp/cu+j5WEhtp2O/UQP13qWlv3hl6keDSRyYqqAHpSU21G/NUerLr2Fu
- XEYpqycnrK3nEdp4ITU3XKZI9ospss3IL89qycrTBN/nTY3id5C7qpcGjLic+Yra4QOHyw
- K2PowKZzQHo+1ayfp4j5bGA7PsnufbA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-pjaGDj5NOJqXPVv5DY-EjA-1; Thu,
- 16 Oct 2025 11:50:49 -0400
-X-MC-Unique: pjaGDj5NOJqXPVv5DY-EjA-1
-X-Mimecast-MFC-AGG-ID: pjaGDj5NOJqXPVv5DY-EjA_1760629848
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4089E1800744
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 15:50:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.155])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA1B11956056; Thu, 16 Oct 2025 15:50:46 +0000 (UTC)
-Date: Thu, 16 Oct 2025 10:50:44 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 6/6] crypto: fix error reporting in cert chain checks
-Message-ID: <5xa3qjk4lon53h2kdu5palyvq5dtj5j6pbr56o3hfliypkxdpi@wduygbmdxy25>
-References: <20250919101022.1491007-1-berrange@redhat.com>
- <20250919101022.1491007-7-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9QRu-0004we-RH
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:03:34 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9QRl-0001hG-In
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 12:03:30 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3ee1381b835so799400f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 09:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760630595; x=1761235395; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IKB36zl1JhFyiPdH+NdngDZusOe5aX6RiH1LliwRAQQ=;
+ b=GyDjCpTfN/V6fw91zdeZemUDrRi2iaCizMf3QJ58NigmLZ70MTSRe/f6EQsE3HoXLx
+ Wc11R9d3+kg6D/1rKSYu5+K0thzpLD1bz7WC16LCxI5TAdJlEKtP8B0n5X2sf6/84mO0
+ p26mY4PZNoOpFQo2npJH21xc9ccmwUWAfw96wN+jCJurSk93fAPkFA2OYZGLgDI1ddm5
+ W3KIUoKSWpNWPiCQ/vwTb1jL0/S0K8LDZSbePXpDar/AkMUahZjfChg7GA+ynJSonNLp
+ ex2ymrgRLwHLpUfK8devnH/mVkH8kAmNHPCUfraXj2q3x+16bSWpM7dSbqCJlrEkAiqU
+ kwQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760630595; x=1761235395;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IKB36zl1JhFyiPdH+NdngDZusOe5aX6RiH1LliwRAQQ=;
+ b=oOiROd5C0s5onHyD6eYR++JzNsC/gbV0vFJGfsMIf8gu+rL8fXWqTKIsOSQtW+cjSj
+ DkBaaTTlVfroA2T+QannnKjfJcfw0oRsYLqMj1j5DADtvLfnP6GS7ULQ9+fRsno+MGV7
+ Nr9/a2Ib4aH8m9Qpg8fcydemoE5G1pYg5z5wtvSr5VTm6Qf0IjNQ946u3Jx2gDOj2Nkq
+ fNPf4c1w81FNKofbWe5a5GlatOgmMld+IU1REkAvcHSmYgigdYhP6A9tQrBYHeKMSGSN
+ rorilpo9h5p4aZeKJN5Kon8KZgUSBuAKU8x3Pub31Ow75szgQUVXG0YlO+uHRK8MdePQ
+ gHDA==
+X-Gm-Message-State: AOJu0YyXAj9fp+4DZCJs3PspXBfjqZKjPES7MWlSSXzOcFPCwKnRsMIE
+ kXaQCoxo0KN9gVJlegwRH3hW/Aj7lOFk/8wKpGhzpwomU9pOuj50LYYh1qdk/E63Z2Lpsk+3iR0
+ McGeOE6Y=
+X-Gm-Gg: ASbGncumfLCgtaHeFtwVpAxtHzO3JLnF15p4yJewVDSnMUnnhDh9nhsJA+rsoVWWn3V
+ t8/yYdDdhIuIgN9ka5nohUfMGzTVvh6YsIlYQo+cBvPpfM+Jm9lzDK4q3YXy+OphvRGhIzA6XTC
+ UaDads+p5T8j72mSm2QTMyHRUBvAfBTsp05jkOkoZcFElIlZAkTdd4uqL5KFIq1ER5/SSvcyAas
+ PsTpATYgYy4Fqah9kPFNepRFeyIHiTa2l+9tF0Q+f45Fp0Ib9DOYoH+DX/FOKVNVeDeEf03SwGN
+ UJCSdtkxXSH+ZNFxLDkVcTvYftvIcPZ5kJyDAGchvdhCF8dts1QM/yGgmVFtE400t2lDBHEFYWx
+ vd6vHyvvOsI5SBKNbFqZvOYCHZHJWeE1mPayQghuHC/WdzOXoZsCObXoWfjycokg8uwD3k46dRZ
+ RCtNDPNG8j+UaHEiYHoJVfAcJdwklMfmm7gX/GcatRFYZm3PyB0g==
+X-Google-Smtp-Source: AGHT+IHc2QVW0JmuszkuVMZr+1PU3RMdjQmy+L55oMQMcNkPH5YbCu1FCTXqUROSYj9rKGwgERWMiA==
+X-Received: by 2002:a05:6000:186a:b0:3ff:17ac:a347 with SMTP id
+ ffacd0b85a97d-42704d7be45mr538647f8f.27.1760630595354; 
+ Thu, 16 Oct 2025 09:03:15 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce5d015esm36608065f8f.33.2025.10.16.09.03.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 16 Oct 2025 09:03:14 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] migration: Remove unused VMSTATE_UINTTL_EQUAL[_V]() macros
+Date: Thu, 16 Oct 2025 18:03:13 +0200
+Message-ID: <20251016160313.25751-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250919101022.1491007-7-berrange@redhat.com>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,45 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 11:10:22AM +0100, Daniel P. Berrangé wrote:
-> The loop that checks the CA certificate chain can fail to report
-> an error message if one of the certs in the chain has an issuer
-> than is not present in the chain. In this case, the outer loop
+The last use of VMSTATE_UINTTL_EQUAL() was removed in commit
+16a2497bd44 ("target-ppc: Fix CPU migration from qemu-2.6 <->
+later versions"), 9 years ago; remove it.
 
-s/than/that/
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/migration/cpu.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-> 'while (checking_issuer)' will terminate after failing to find
-> the issuer, and no error message will be reported.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  crypto/tlscredsx509.c | 32 +++++++++++++++++++++-----------
->  1 file changed, 21 insertions(+), 11 deletions(-)
-> 
-> diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-> index 89a8e261d5..d42f2afaea 100644
-> --- a/crypto/tlscredsx509.c
-> +++ b/crypto/tlscredsx509.c
-> @@ -319,7 +319,6 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
->                                          Error **errp)
->  {
->      gnutls_x509_crt_t cert_to_check = certs[ncerts - 1];
-> -    int checking_issuer = 1;
-
-This was the line I mentioned in patch 1/6 as needing a bool.  Should
-this cleanup be squashed into that patch rather than having churn in
-the series?
-
->      int retval = 0;
->      gnutls_datum_t dn = {}, dnissuer = {};
->
-
-Should there be a testsuite patch along with this to provoke that
-particular failure scenario?
-
+diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+index 65abe3c8cc0..ca7cc0479e7 100644
+--- a/include/migration/cpu.h
++++ b/include/migration/cpu.h
+@@ -19,8 +19,6 @@
+ 
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT64_V(_f, _s, _v)
+-#define VMSTATE_UINTTL_EQUAL_V(_f, _s, _v)                            \
+-    VMSTATE_UINT64_EQUAL_V(_f, _s, _v)
+ #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+     VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
+ #define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
+@@ -40,8 +38,6 @@
+ 
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT32_V(_f, _s, _v)
+-#define VMSTATE_UINTTL_EQUAL_V(_f, _s, _v)                            \
+-    VMSTATE_UINT32_EQUAL_V(_f, _s, _v)
+ #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
+ #define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
+@@ -53,8 +49,6 @@
+ 
+ #define VMSTATE_UINTTL(_f, _s)                                        \
+     VMSTATE_UINTTL_V(_f, _s, 0)
+-#define VMSTATE_UINTTL_EQUAL(_f, _s)                                  \
+-    VMSTATE_UINTTL_EQUAL_V(_f, _s, 0)
+ #define VMSTATE_UINTTL_ARRAY(_f, _s, _n)                              \
+     VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, 0)
+ #define VMSTATE_UINTTL_2DARRAY(_f, _s, _n1, _n2)                      \
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.51.0
 
 
