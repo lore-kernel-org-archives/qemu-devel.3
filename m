@@ -4,85 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D39CCD199
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36FCCCD199
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 23:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9XdU-0006cC-Gl; Thu, 16 Oct 2025 19:43:56 -0400
+	id 1v9Xdn-0006ks-0r; Thu, 16 Oct 2025 19:44:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9XdO-0006ap-Mn
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:43:50 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9XdM-0002wW-I6
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:43:50 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-639102bba31so2746812a12.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 16:43:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760658225; x=1761263025; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ujbW208llVQvky7lGfL5zMm369p+t0cWpniEMjCE0BA=;
- b=NFsVqcX+KHRpW4umEg1/3Z3UjxNNPG+Coig1FSRwL1rSN1++myN+VzbM9Xzvzm/7zW
- iYvHi68h5+cBcEtpaLBlcm9Z4pVEFJ0lZdmOcEKDx73UufgpfEGMGcpPc0acND9hrqEG
- iwOta85QgCiM23ncot5fkryDvtn4SOxtCoQAR+TEm0VtlmSUehSDrADIAQw4w4n9KFc9
- OHMht2Pg52FT7BbpVvw7Eluwv83vFE/5EZhPpG+b+R1uSHy2iEewirOZ572u8mvOkGYo
- zPgFyZDH6d4CzQLI6iR0mLHFch7FxxpgVbp1vFFgLL8oWv/RFxt8et9ASL9Ziqgw1GQ5
- gDLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760658225; x=1761263025;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ujbW208llVQvky7lGfL5zMm369p+t0cWpniEMjCE0BA=;
- b=bT2ybSZ/tlKuPu5FcvgjphJG/7BV+ppxYVe9HsrIe9iCfeAXUw7bUJULqSLfhyGzhK
- xGmWzS/dnjotLN6Cd27UMXXA4+AsKlXEfe1Z8zqdlbgP70upKoojRGRQrXM7LnccMpfl
- oXANgqYO6wqU9dOC87pZqN9n4+qkzCS07MuzBCNAQsvLB4VZskU15yUhUCisVd27OEdL
- uYOBSwMmsaH1onDt9Lo89HhZvI5OFIN0ndsDIuCc82hKZHePIQ68tgt1xKZQ+ouHCmqb
- 2dVrR5jvGN7pNAUCFnv8ssEAbrsSnkLRNy5gYRRJ97xncCdxC29FsoDw0Mw0sEogCTcq
- JWag==
-X-Gm-Message-State: AOJu0Yx9nkff+hK7KdR4+rd/eRqpp5uNuJKG0gxYVmwtwyE8eiyYLpty
- ck+FsdfL8+wQYM6kNluO2tpwzP9AiIRHhzQOvbVldM5cw4V0SQ91BCjQOKBAUEl3sgfnMGT7Yvd
- PJAnDPU7sUHfEJMeCmnpx//agU/vxPq4=
-X-Gm-Gg: ASbGncsXYF3woQUezn9tiode0YClErbt+/Pb9HMSP46gJD0532C9PTUbeB7TdRodxDW
- PyattFwV78EXCNQcJLCHKFOALrrC9yFT8KdzJ/eLW9lmXSDkjkBHaRQlqHLErj8wsYRttiApwEB
- IqYNfrpZlhoJCexOImc32iKCMGt6S/W5wWB/5xspSufxWbp4SNvA611ArftIO2TO9HZIuND+wqz
- YqcDtItMF3gxoJb7Jw1Rsi2jirfzfNAK/BzIP/OWKMYSsTavOip3Wbuv4v05F0mOVxGu5DUzf4m
- CqrbrkAv7Ue+FBADIwcYMZgx2A==
-X-Google-Smtp-Source: AGHT+IHe3V2HjR18IsM3xtPSstwD0nwqfO9sWPvDNoZ8BMelkApeEEFlJYtDedMEKVUn94OC4srHKajDf8M/ySXSBJ8=
-X-Received: by 2002:a05:6402:358e:b0:63b:d931:3e98 with SMTP id
- 4fb4d7f45d1cf-63c1f630766mr1430332a12.5.1760658224940; Thu, 16 Oct 2025
- 16:43:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v9Xdj-0006jx-Lq
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:44:12 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1v9Xdf-0002xY-WB
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 19:44:11 -0400
+Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59GNhp9Q086982
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 17 Oct 2025 08:43:51 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=nKR3bGh+ZwieGad21IrWDmrQeMxj/Ryy7PKtnEO3xkk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760658231; v=1;
+ b=DT/I5T2/G84RO0QuESuNgGlGgYD2X86iDydgjyK4MUXqdmB3pMpIExIaFc0l+Flt
+ +i3XM1Oh+se4CBCsaNxk0xddXlN9/2qK5r4ZhFj4c+EZohl8FxkkVvxkbYBvp8hD
+ OS/omZAYHF0IRs0lHIFMs20yoAXArrPVRIK/750vQ7YF6YC+WtXWIncBtGu/mc+R
+ jFITP6scJT71HkUztsB6UCvH8ninqkr/Qy35bN8hGN8Ibo+sYIbIVPzvhBGRUtBq
+ pqc3zg9d7svHut9Y+vmGBZIhqeGPXYIS7OfRkrVD+DFxvyhYpVho5MCPMl6Tfb9C
+ 7ZyLBBFhmZR6DU+sj1hSDA==
+Message-ID: <626016e1-c7d8-4377-bf9f-ab0f0eef1457@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 17 Oct 2025 08:43:51 +0900
 MIME-Version: 1.0
-References: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
- <20251015-feature-single-binary-hw-v1-v1-5-8b416eda42cf@rev.ng>
-In-Reply-To: <20251015-feature-single-binary-hw-v1-v1-5-8b416eda42cf@rev.ng>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 17 Oct 2025 09:43:18 +1000
-X-Gm-Features: AS18NWAFON5PWk3kyD30AJvWsz6ZIh3QbGsEJFBXZ_Wx2IbkSZfgk4VDVvYq9yY
-Message-ID: <CAKmqyKPCi=VPTOKydEw0urZOAGkoGMOFq-cD9aT0sMUoNCwHsA@mail.gmail.com>
-Subject: Re: [PATCH 5/5] hw/riscv: Use runtime target_phys_addr_space_bits()
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rcu: Unify force quiescent state
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
+ <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,35 +80,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 11:28=E2=80=AFPM Anton Johansson via
-<qemu-devel@nongnu.org> wrote:
->
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+On 2025/10/17 4:33, Dmitry Osipenko wrote:
+> On 10/16/25 09:34, Akihiko Odaki wrote:
+>> -        /* Wait for one thread to report a quiescent state and try again.
+>> +        /*
+>> +         * Sleep for a while and try again.
+>>            * Release rcu_registry_lock, so rcu_(un)register_thread() doesn't
+>>            * wait too much time.
+>>            *
+>> @@ -133,7 +150,20 @@ static void wait_for_readers(void)
+>>            * rcu_registry_lock is released.
+>>            */
+>>           qemu_mutex_unlock(&rcu_registry_lock);
+>> -        qemu_event_wait(&rcu_gp_event);
+>> +
+>> +        if (forced) {
+>> +            qemu_event_wait(&rcu_gp_event);
+>> +
+>> +            /*
+>> +             * We want to be notified of changes made to rcu_gp_ongoing
+>> +             * while we walk the list.
+>> +             */
+>> +            qemu_event_reset(&rcu_gp_event);
+>> +        } else {
+>> +            g_usleep(10000);
+>> +            sleeps++;
+> 
+> Thanks a lot for this RCU improvement. It indeed removes the hard stalls
+> with unmapping of virtio-gpu blobs.
+> 
+> Am I understanding correctly that potentially we will be hitting this
+> g_usleep(10000) and stall virtio-gpu for the first ~10ms? I.e. the
+> MemoryRegion patches from Alex [1] are still needed to avoid stalls
+> entirely.
+> 
+> [1]
+> https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-alex.bennee@linaro.org/
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+That is right, but "avoiding stalls entirely" also causes use-after-free.
 
-Alistair
+The problem with virtio-gpu on TCG is that TCG keeps using the old 
+memory map until force_rcu is triggered. So, without force_rcu, the 
+following pseudo-code on a guest will result in use-after-free:
 
-> ---
->  hw/riscv/riscv-iommu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 450285a850..9ac37efc70 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2449,7 +2449,7 @@ static void riscv_iommu_instance_init(Object *obj)
->
->      /* Report QEMU target physical address space limits */
->      s->cap =3D set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-> -                       TARGET_PHYS_ADDR_SPACE_BITS);
-> +                       target_phys_addr_space_bits());
->
->      /* TODO: method to report supported PID bits */
->      s->pid_bits =3D 8; /* restricted to size of MemTxAttrs.pid */
->
-> --
-> 2.51.0
->
->
+address = blob_map(resource_id);
+blob_unmap(resource_id);
+
+for (i = 0; i < some_big_number; i++)
+   *(uint8_t *)address = 0;
+
+*(uint8_t *)address will dereference the blob until force_rcu is 
+triggered, so finalizing MemoryRegion before force_rcu results in 
+use-after-free.
+
+The best option to eliminate the delay entirely I have in mind is to 
+call drain_call_rcu(), but I'm not for such a change (for now). 
+drain_call_rcu() eliminates the delay if the FlatView protected by RCU 
+is the only referrer of the MemoryRegion, but that is not guaranteed.
+
+Performance should not be a concern anyway in this situation. The guest 
+should not waste CPU time by polling in the first place if you really 
+care performance; since it's a para-virtualized device and not a real 
+hardware, CPU time may be shared between the guest and the device, and 
+thus polling on the guest has an inherent risk of slowing down the 
+device. For performance-sensitive workloads, the guest should:
+
+- avoid polling and
+- accumulate commands instead of waiting for each
+
+The delay will be less problematic if the guest does so, and I think at 
+least Linux does avoid polling.
+
+That said, stalling the guest forever in this situation is "wrong" (!= 
+"bad performance"). I wrote this patch to guarantee forward progress, 
+which is mandatory for semantic correctness.
+
+Perhaps drain_call_rcu() may make sense also in other, 
+performance-sensitive scenarios, but it should be added after benchmark 
+or we will have a immature optimization.
+
+Regards,
+Akihiko Odaki
 
