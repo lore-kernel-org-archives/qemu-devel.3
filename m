@@ -4,86 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D31CCD1A2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFD3CCD199
 	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 17:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Rvo-0006CS-VM; Thu, 16 Oct 2025 13:38:29 -0400
+	id 1v9Rw8-0006LX-Aq; Thu, 16 Oct 2025 13:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v9Rvm-0006A6-1K
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:38:26 -0400
-Received: from p-east2-cluster6-host9-snip4-6.eps.apple.com ([57.103.76.197]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1v9Rvy-0006H9-CF; Thu, 16 Oct 2025 13:38:41 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1v9Rvc-0007Zy-Tr
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 13:38:24 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-6 (Postfix) with ESMTPS id
- 485EA1800110; Thu, 16 Oct 2025 17:38:09 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=TpZRPdKhUTjyuX0UqPOFFkd5b/O+tgyQUHZLONOBYCk=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=eAgyuSt7Fl/yzHBPMSLEBxExuS8+exh5wivynXnUxiTeymfKWSsClD7aK+4vwC/42Mfi5l9IJI0gFcWUMFMuDksaapxoIuv/5tddh56aB/MGFXnR6w5YSiqWdXQRXhRq1VZmXUMvrA1/VxlEFH+dvr5Pa70uNDiWd794wmHP9N9P7mJWE+8UX/IJR1Ji4WD+IOzMlrc0gAMI+fSqwY5sRVjHDbEU3601HS29FiWdr+Ah3XxNJOtdN7pSvsUM0BNZjp5ScGDuIqwxDLYjKjXPTb9PSGFVj6UHZkeoe80gkDh0tHygfneMTxAIqipj2oxdYHNNNtbZkpCNfy+fA/eqtA==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-6 (Postfix) with ESMTPSA id
- A2834180010F; Thu, 16 Oct 2025 17:38:05 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- Zhao Liu <zhao1.liu@intel.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>
-Subject: [PATCH v8 00/24] WHPX support for Arm
-Date: Thu, 16 Oct 2025 19:37:39 +0200
-Message-ID: <20251016173803.65764-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1v9Rvk-0007b9-60; Thu, 16 Oct 2025 13:38:36 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GDrJ84023883;
+ Thu, 16 Oct 2025 17:38:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=40nRQJQTo789o6tDq
+ 5Ga0TXaDH7I8WO+1LCp/UG8M/Q=; b=TyRqUgLuFth/BCHfAxowB7AuHEcb+H/RG
+ QLonZMq5rmVU5hBMiaX8PyEsom2P081OQ1qxPNrX7LBxt/iT8pu5N391g9gqJuM3
+ dDP2FmoW6lsydK30kEVHo+MRn8r/M/A08vbLvaWA8A59ajtB8offdXfk1yYic6mB
+ f4SGFScon5SBPKxis6+aips890h6VWjbCuyigaKImXPewKNBTotOqBRfd3HZxGdp
+ uXg+V5J9k66zNtLaZIe2uw5sU8iQnPFirik/kmrmSaYDtYllcu1EeKz03GgzMWr8
+ ZUxcCpvKnUQgXKIpphRFYS+Mcg4ABxJIybcWb2FyjiGBbbGmcVAQg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49tfxpny9g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 17:38:17 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59GHRngu002741;
+ Thu, 16 Oct 2025 17:38:17 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49tfxpny9e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 17:38:17 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59GGF79g003709;
+ Thu, 16 Oct 2025 17:38:16 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xy74da-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Oct 2025 17:38:16 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59GHcCTr35914000
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Oct 2025 17:38:12 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 84CB9200E0;
+ Thu, 16 Oct 2025 17:38:12 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 36ADA200DA;
+ Thu, 16 Oct 2025 17:38:10 +0000 (GMT)
+Received: from vishalc-ibm.ibm.com (unknown [9.39.26.252])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Oct 2025 17:37:59 +0000 (GMT)
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+To: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, berrange@redhat.com
+Cc: Vishal Chourasia <vishalc@linux.ibm.com>
+Subject: [PATCH 5/5] hw/ppc: Pass errp to load_image_targphys() and report
+ errors
+Date: Thu, 16 Oct 2025 23:05:03 +0530
+Message-ID: <20251016173502.1261674-8-vishalc@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251016173502.1261674-1-vishalc@linux.ibm.com>
+References: <20251016173502.1261674-1-vishalc@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE2MDEyOCBTYWx0ZWRfXxP7acZsq7Ng0
- ZGwMsHRBSsp4bacy6fOaEpXp0Mc6HoENCbzyhZJMU9RQT7HDhrCaR2r/ucAXY/5IDgDTPdv+dbH
- SEVMphdY9MFJrkb91MyGbrdWtXev0WPbugYX27jn+8g0RmIxJOC8C5Q+bQqiRUbqdWqGKoPfiyG
- f8MhxL6RTUGfZbqOYuD4LIZaxIa8rSvJ3Co6guuwF7/EvDMDjJerIGWC4G4ugbamNWy6UEYvhfU
- C1HHTzPLE/qVLv7XT6HIEdRZDjgjvqUe6t6sLRY1HRHuvRyAbDIZzH9Ww86BdCDFcmlYEp3c4=
-X-Proofpoint-GUID: 6XueHETvQdBRN20UcUvR5fK4X9zwgGUd
-X-Proofpoint-ORIG-GUID: 6XueHETvQdBRN20UcUvR5fK4X9zwgGUd
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 1bc6Y79wh3TQfmRGdGLdvVksG5fD4OlG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE1MDEyNSBTYWx0ZWRfXxgDAgLFMQ1Ud
+ k6dlC3D8gJW69aig4AVoD4srSW2jFvHbeZS0y5lrATvsvyjEAqnsEz5B2JYyPuul0dTXHuBiJoP
+ Drn+dqJcgcRcNRl4as6RWw/lGS1BgLUtGLV+w6d9fQWhZmEDz+IE9h9uXIAVKVlMfErKEy9rBTK
+ wzm9g4hrR/5Cq7TuQ7ADTAjGGhKd0faWXbKUdcw/T5lrReQ711sLgllU8H3V9schSsqm4XTMYiT
+ iWVrsRrLQkAoxR7MULvV6gkCFM7z7wQ9GbyBbGtS6/rAOtR+TmmZ9B0JPhm+3SjkDyWQpDdutpS
+ vd0k46NkNZngHbQrch8oZjBc8kFCACYhQviBeQ5JcJOzy9ldv4JLoN3sjw6GRfTfBO81FOhoQuE
+ vIl/niBYcvO62icPzqeofa5NRojxtw==
+X-Authority-Analysis: v=2.4 cv=R+wO2NRX c=1 sm=1 tr=0 ts=68f12d89 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=epcxUv981NhcBCS7hEEA:9
+X-Proofpoint-ORIG-GUID: BAtmlsKMqTF7Kn9ad17fQWS8xMG56g2v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-16_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- clxscore=1030 adultscore=0 mlxscore=0 spamscore=0
- phishscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.22.0-2506270000 definitions=main-2510160128
-X-JNJ: AAAAAAABaH72HdoZKULZDDPFUWIUPBdiFKkAT+lPewsoecxaMrjCCH+uHbCnleLvw6LHbhfznptnilXBEVpdKjfnCW82ik3ubxEhHQzPZao/0PebBW1nlRgYYsnseYpFKGCYi4hewbzvt2Zg91EiND76m0Ki3WsT0E1duduuCl8Lc79n1KMGBZlQnIYGl+fA5aT4zMa/ALvvQE7ruXnxh5ucLhz2u0kvpEiWJfKs6Px8SLjnY25Gcrdz8H2RK5QGsaEcgTvc7kSm5PMgPKwv+Rv3Ctj4Txi+W9OrSwtquxof4ca02znUvvtRs/vByYC0W5C/p3RVPbFi6/ozsFS1t+nnq/IrflNsIS6apeUSRu8+an/aooEvGj/r9OPem/A6d3yweVefJjW7DohVkIouGtUo24crSHyai9soiafo747/evxw3Q1896GmxDiNGd3aDFUtzjyBbdB6zS5LObFZ9uL9m0TbH8daalIimFcWz9QUTBwJj9mvuYgKaYin29PnE8iXqi7PRHFf+PVpTGShcMT0jq3D1Z/ubYWblf9F5QSkHgphRZsERuYyHnew0CqlBJzwEnOZg3q4xg+hMnIHGYCjwjgs4pHLM8C76m+kdNzR+Z5S9auC4C6LQgnXnCDBYBuuqCA3rz+k/utoqbqFgn2m64VbFN32EJ5DiXOr7LFeZEw2MYZdphNBnXFU6dud1takyy+tHehJj+QHfOkmDQEdDhoO2/9H3+AMM2NS2cgFHhTvb8bszzEYmuECakwnsg6+YbCdyPCSlQ8RiuxGwcBivyyuteHHMAgcnc8meQ/OLyEaGyuFdRDsDOwzONI4YSkLUKr8767XlHEGOOB+MokLiAUp+RakGtomC1BuWP6zBYLT5caRBkjzai7ctpLoJXvHFhjYvIOyWGyr6pCZ3H6sCung0hA=
-Received-SPF: pass client-ip=57.103.76.197;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510150125
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,165 +125,487 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v8)
+Pass errp to load_image_targphys() calls in ppc machine initialization
+to capture detailed error information when loading firmware, kernel,
+and initrd images.
 
-Missing features:
-- PSCI state sync with Hyper-V
-- Interrupt controller save-restore
-- SVE register sync
+Use error_reportf_err() instead of error_report() to print the
+underlying error details along with context about which image failed
+to load.
 
-Known bugs:
-- reboots when multiple cores are enabled are currently broken
-- U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+---
+ hw/ppc/amigaone.c      | 11 ++++++-----
+ hw/ppc/e500.c          | 13 +++++++------
+ hw/ppc/mac_newworld.c  | 17 +++++++++--------
+ hw/ppc/mac_oldworld.c  | 17 +++++++++--------
+ hw/ppc/pegasos2.c      | 11 ++++++-----
+ hw/ppc/pnv.c           | 18 ++++++++++--------
+ hw/ppc/ppc440_bamboo.c |  7 ++++---
+ hw/ppc/prep.c          | 17 +++++++++--------
+ hw/ppc/sam460ex.c      |  7 ++++---
+ hw/ppc/spapr.c         | 11 ++++++-----
+ hw/ppc/virtex_ml507.c  |  9 +++++----
+ 11 files changed, 75 insertions(+), 63 deletions(-)
 
-Note:
-
-"target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
-
-"accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
-as part of this series to make it compilable as a whole.
-
-"hw/arm: virt: add GICv2m for the case when ITS is not available" present in both the HVF
-vGIC and this series.
-
-And another note:
-Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
-so didn't do changes there to a sysreg.inc.
-
-Updates since v7:
-- Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
-Other commits are unchanged.
-
-Updates since v6:
-- Rebasing
-- Fixing a bug in the GICv3+GICv2m case for ACPI table generation
-- getting rid of the slots infrastructure for memory management
-- Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
-as that's what switches ITS to a tristate.
-- Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
-
-Updates since v5:
-- Rebasing
-- Address review comments
-- Rework ITS enablement to a tristate
-- On x86: move away from deprecated APIs to get/set APIC state
-
-Updates since v4:
-- Taking into account review comments
-- Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
-- Debug register sync
-
-Updates since v3:
-- Disabling SVE on WHPX
-- Taking into account review comments incl:
-
-- fixing x86 support
-- reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
-which can be reduced even further down the road.
-- generalize get_physical_address_range into something common between hvf and whpx
-
-Updates since v2:
-- Fixed up a rebase screwup for whpx-internal.h
-- Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
-- Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
-
-Updates since v1:
-- Shutdowns and reboots
-- MPIDR_EL1 register sync
-- Fixing GICD_TYPER_LPIS value
-- IPA size clamping
-- -cpu host now implemented
-
-Mohamed Mediouni (22):
-  qtest: hw/arm: virt: skip ACPI test for ITS off
-  hw/arm: virt: add GICv2m for the case when ITS is not available
-  tests: data: update AArch64 ACPI tables
-  whpx: Move around files before introducing AArch64 support
-  whpx: reshuffle common code
-  whpx: ifdef out winhvemulation on non-x86_64
-  whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
-  hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
-  whpx: interrupt controller support
-  whpx: add arm64 support
-  whpx: change memory management logic
-  target/arm: cpu: mark WHPX as supporting PSCI 1.3
-  hw/arm: virt: cleanly fail on attempt to use the platform vGIC
-    together with ITS
-  docs: arm: update virt machine model description
-  whpx: arm64: clamp down IPA size
-  hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
-    and HVF
-  whpx: arm64: implement -cpu host
-  target/arm: whpx: instantiate GIC early
-  whpx: arm64: gicv3: add migration blocker
-  whpx: enable arm64 builds
-  MAINTAINERS: update maintainers for WHPX
-  whpx: apic: use non-deprecated APIs to control interrupt controller
-    state
-
-Philippe Mathieu-Daudé (1):
-  accel/system: Introduce hwaccel_enabled() helper
-
-Sebastian Ott (1):
-  target/arm/kvm: add constants for new PSCI versions
-
- MAINTAINERS                                   |   11 +-
- accel/hvf/hvf-all.c                           |    7 +-
- accel/meson.build                             |    1 +
- accel/whpx/meson.build                        |    7 +
- {target/i386 => accel}/whpx/whpx-accel-ops.c  |    6 +-
- accel/whpx/whpx-common.c                      |  544 +++++++++
- docs/system/arm/virt.rst                      |   10 +-
- hw/arm/virt-acpi-build.c                      |   17 +-
- hw/arm/virt.c                                 |   70 +-
- hw/i386/x86-cpu.c                             |    4 +-
- hw/intc/arm_gicv3_common.c                    |    3 +
- hw/intc/arm_gicv3_whpx.c                      |  249 ++++
- hw/intc/meson.build                           |    1 +
- include/hw/arm/virt.h                         |    6 +-
- include/hw/boards.h                           |    3 +-
- include/hw/intc/arm_gicv3_common.h            |    3 +
- include/system/hvf_int.h                      |    2 +
- include/system/hw_accel.h                     |   13 +
- .../whpx => include/system}/whpx-accel-ops.h  |    4 +-
- include/system/whpx-all.h                     |   20 +
- include/system/whpx-common.h                  |   26 +
- .../whpx => include/system}/whpx-internal.h   |   23 +-
- include/system/whpx.h                         |    4 +-
- meson.build                                   |   20 +-
- target/arm/cpu.c                              |    3 +
- target/arm/cpu64.c                            |   19 +-
- target/arm/hvf-stub.c                         |   20 -
- target/arm/hvf/hvf.c                          |    6 +-
- target/arm/hvf_arm.h                          |    3 -
- target/arm/kvm-consts.h                       |    2 +
- target/arm/meson.build                        |    2 +-
- target/arm/whpx/meson.build                   |    5 +
- target/arm/whpx/whpx-all.c                    | 1018 +++++++++++++++++
- target/arm/whpx/whpx-stub.c                   |   15 +
- target/arm/whpx_arm.h                         |   17 +
- target/i386/cpu-apic.c                        |    2 +-
- target/i386/hvf/hvf.c                         |   11 +
- target/i386/whpx/meson.build                  |    1 -
- target/i386/whpx/whpx-all.c                   |  569 +--------
- target/i386/whpx/whpx-apic.c                  |   48 +-
- tests/data/acpi/aarch64/virt/APIC.its_off     |  Bin 164 -> 188 bytes
- 41 files changed, 2142 insertions(+), 653 deletions(-)
- create mode 100644 accel/whpx/meson.build
- rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
- create mode 100644 accel/whpx/whpx-common.c
- create mode 100644 hw/intc/arm_gicv3_whpx.c
- rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
- create mode 100644 include/system/whpx-all.h
- create mode 100644 include/system/whpx-common.h
- rename {target/i386/whpx => include/system}/whpx-internal.h (89%)
- delete mode 100644 target/arm/hvf-stub.c
- create mode 100644 target/arm/whpx/meson.build
- create mode 100644 target/arm/whpx/whpx-all.c
- create mode 100644 target/arm/whpx/whpx-stub.c
- create mode 100644 target/arm/whpx_arm.h
-
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 5c5acc9872..33a4066fa0 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -276,6 +276,7 @@ static void amigaone_init(MachineState *machine)
+     DriveInfo *di;
+     hwaddr loadaddr;
+     struct boot_info *bi = NULL;
++    Error *errp = NULL;
+ 
+     /* init CPU */
+     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
+@@ -324,9 +325,9 @@ static void amigaone_init(MachineState *machine)
+             error_report("Could not find firmware '%s'", machine->firmware);
+             exit(1);
+         }
+-        sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, NULL);
++        sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, &errp);
+         if (sz <= 0 || sz > PROM_SIZE) {
+-            error_report("Could not load firmware '%s'", filename);
++            error_reportf_err(errp, "Could not load firmware '%s': ", filename);
+             exit(1);
+         }
+     }
+@@ -413,10 +414,10 @@ static void amigaone_init(MachineState *machine)
+         loadaddr = ROUND_UP(loadaddr + 4 * MiB, 4 * KiB);
+         loadaddr = MAX(loadaddr, INITRD_MIN_ADDR);
+         sz = load_image_targphys(machine->initrd_filename, loadaddr,
+-                                 bi->bd_info - loadaddr, NULL);
++                                 bi->bd_info - loadaddr, &errp);
+         if (sz <= 0) {
+-            error_report("Could not load initrd '%s'",
+-                         machine->initrd_filename);
++            error_reportf_err(errp, "Could not load initrd '%s': ",
++                              machine->initrd_filename);
+             exit(1);
+         }
+         bi->initrd_start = loadaddr;
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 30937a4a92..009d80da39 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -932,6 +932,7 @@ void ppce500_init(MachineState *machine)
+     MemoryRegion *ccsr_addr_space;
+     SysBusDevice *s;
+     I2CBus *i2c;
++    Error *errp = NULL;
+ 
+     irqs = g_new0(IrqLines, smp_cpus);
+     for (i = 0; i < smp_cpus; i++) {
+@@ -1227,10 +1228,10 @@ void ppce500_init(MachineState *machine)
+         kernel_base = cur_base;
+         kernel_size = load_image_targphys(machine->kernel_filename,
+                                           cur_base,
+-                                          machine->ram_size - cur_base, NULL);
++                                          machine->ram_size - cur_base, &errp);
+         if (kernel_size < 0) {
+-            error_report("could not load kernel '%s'",
+-                         machine->kernel_filename);
++            error_reportf_err(errp, "could not load kernel '%s': ",
++                              machine->kernel_filename);
+             exit(1);
+         }
+ 
+@@ -1242,11 +1243,11 @@ void ppce500_init(MachineState *machine)
+         initrd_base = (cur_base + INITRD_LOAD_PAD) & ~INITRD_PAD_MASK;
+         initrd_size = load_image_targphys(machine->initrd_filename, initrd_base,
+                                           machine->ram_size - initrd_base,
+-                                          NULL);
++                                          &errp);
+ 
+         if (initrd_size < 0) {
+-            error_report("could not load initial ram disk '%s'",
+-                         machine->initrd_filename);
++            error_reportf_err(errp, "could not load initial ram disk '%s': ",
++                              machine->initrd_filename);
+             exit(1);
+         }
+ 
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index 728525759c..d26cbcb0df 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -156,6 +156,7 @@ static void ppc_core99_init(MachineState *machine)
+     DeviceState *uninorth_internal_dev = NULL, *uninorth_agp_dev = NULL;
+     hwaddr nvram_addr = 0xFFF04000;
+     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
++    Error *errp = NULL;
+ 
+     /* init CPUs */
+     for (i = 0; i < machine->smp.cpus; i++) {
+@@ -189,12 +190,12 @@ static void ppc_core99_init(MachineState *machine)
+         if (bios_size <= 0) {
+             /* or load binary ROM image */
+             bios_size = load_image_targphys(filename, PROM_BASE, PROM_SIZE,
+-                    NULL);
++                                            &errp);
+         }
+         g_free(filename);
+     }
+     if (bios_size < 0 || bios_size > PROM_SIZE) {
+-        error_report("could not load PowerPC bios '%s'", bios_name);
++        error_reportf_err(errp, "could not load PowerPC bios '%s': ", bios_name);
+         exit(1);
+     }
+ 
+@@ -212,11 +213,11 @@ static void ppc_core99_init(MachineState *machine)
+             kernel_size = load_image_targphys(machine->kernel_filename,
+                                               kernel_base,
+                                               machine->ram_size - kernel_base,
+-                                              NULL);
++                                              &errp);
+         }
+         if (kernel_size < 0) {
+-            error_report("could not load kernel '%s'",
+-                         machine->kernel_filename);
++            error_reportf_err(errp, "could not load kernel '%s': ",
++                              machine->kernel_filename);
+             exit(1);
+         }
+         /* load initrd */
+@@ -225,10 +226,10 @@ static void ppc_core99_init(MachineState *machine)
+             initrd_size = load_image_targphys(machine->initrd_filename,
+                                               initrd_base,
+                                               machine->ram_size - initrd_base,
+-                                              NULL);
++                                              &errp);
+             if (initrd_size < 0) {
+-                error_report("could not load initial ram disk '%s'",
+-                             machine->initrd_filename);
++                error_reportf_err(errp, "could not load initial ram disk '%s': ",
++                                  machine->initrd_filename);
+                 exit(1);
+             }
+             cmdline_base = TARGET_PAGE_ALIGN(initrd_base + initrd_size);
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index a067a191cd..4dbe74bfd2 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -108,6 +108,7 @@ static void ppc_heathrow_init(MachineState *machine)
+     DriveInfo *dinfo, *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+     void *fw_cfg;
+     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
++    Error *errp = NULL;
+ 
+     /* init CPUs */
+     for (i = 0; i < machine->smp.cpus; i++) {
+@@ -144,13 +145,13 @@ static void ppc_heathrow_init(MachineState *machine)
+         if (bios_size <= 0) {
+             /* or if could not load ELF try loading a binary ROM image */
+             bios_size = load_image_targphys(filename, PROM_BASE, PROM_SIZE,
+-                    NULL);
++                                            &errp);
+             bios_addr = PROM_BASE;
+         }
+         g_free(filename);
+     }
+     if (bios_size < 0 || bios_addr - PROM_BASE + bios_size > PROM_SIZE) {
+-        error_report("could not load PowerPC bios '%s'", bios_name);
++        error_reportf_err(errp, "could not load PowerPC bios '%s': ", bios_name);
+         exit(1);
+     }
+ 
+@@ -168,11 +169,11 @@ static void ppc_heathrow_init(MachineState *machine)
+             kernel_size = load_image_targphys(machine->kernel_filename,
+                                               kernel_base,
+                                               machine->ram_size - kernel_base,
+-                                              NULL);
++                                              &errp);
+         }
+         if (kernel_size < 0) {
+-            error_report("could not load kernel '%s'",
+-                         machine->kernel_filename);
++            error_reportf_err(errp, "could not load kernel '%s': ",
++                              machine->kernel_filename);
+             exit(1);
+         }
+         /* load initrd */
+@@ -182,10 +183,10 @@ static void ppc_heathrow_init(MachineState *machine)
+             initrd_size = load_image_targphys(machine->initrd_filename,
+                                               initrd_base,
+                                               machine->ram_size - initrd_base,
+-                                              NULL);
++                                              &errp);
+             if (initrd_size < 0) {
+-                error_report("could not load initial ram disk '%s'",
+-                             machine->initrd_filename);
++                error_reportf_err(errp, "could not load initial ram disk '%s': ",
++                                  machine->initrd_filename);
+                 exit(1);
+             }
+             cmdline_base = TARGET_PAGE_ALIGN(initrd_base + initrd_size);
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index 7fa14fd0e6..d4703f79da 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -129,6 +129,7 @@ static void pegasos2_init(MachineState *machine)
+     int i;
+     ssize_t sz;
+     uint8_t *spd_data;
++    Error *errp = NULL;
+ 
+     /* init CPU */
+     pm->cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
+@@ -164,10 +165,10 @@ static void pegasos2_init(MachineState *machine)
+                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+     if (sz <= 0) {
+         sz = load_image_targphys(filename, pm->vof ? 0 : PROM_ADDR, PROM_SIZE,
+-                NULL);
++                                 &errp);
+     }
+     if (sz <= 0 || sz > PROM_SIZE) {
+-        error_report("Could not load firmware '%s'", filename);
++        error_reportf_err(errp, "Could not load firmware '%s': ", filename);
+         exit(1);
+     }
+     g_free(filename);
+@@ -260,10 +261,10 @@ static void pegasos2_init(MachineState *machine)
+         pm->initrd_addr = ROUND_UP(pm->initrd_addr, 4);
+         pm->initrd_addr = MAX(pm->initrd_addr, INITRD_MIN_ADDR);
+         sz = load_image_targphys(machine->initrd_filename, pm->initrd_addr,
+-                                 machine->ram_size - pm->initrd_addr, NULL);
++                                 machine->ram_size - pm->initrd_addr, &errp);
+         if (sz <= 0) {
+-            error_report("Could not load initrd '%s'",
+-                         machine->initrd_filename);
++            error_reportf_err(errp, "Could not load initrd '%s': ",
++                              machine->initrd_filename);
+             exit(1);
+         }
+         pm->initrd_size = sz;
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index a3e5203970..88668a700e 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1015,6 +1015,7 @@ static void pnv_init(MachineState *machine)
+     char *chip_typename;
+     DriveInfo *pnor;
+     DeviceState *dev;
++    Error *errp = NULL;
+ 
+     if (kvm_enabled()) {
+         error_report("machine %s does not support the KVM accelerator",
+@@ -1069,9 +1070,10 @@ static void pnv_init(MachineState *machine)
+     }
+ 
+     fw_size = load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
+-                                    NULL);
++                                    &errp);
+     if (fw_size < 0) {
+-        error_report("Could not load OPAL firmware '%s'", fw_filename);
++        error_reportf_err(errp, "Could not load OPAL firmware '%s': ",
++                          fw_filename);
+         exit(1);
+     }
+     g_free(fw_filename);
+@@ -1082,10 +1084,10 @@ static void pnv_init(MachineState *machine)
+ 
+         kernel_size = load_image_targphys(machine->kernel_filename,
+                                           KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE,
+-                                          NULL);
++                                          &errp);
+         if (kernel_size < 0) {
+-            error_report("Could not load kernel '%s'",
+-                         machine->kernel_filename);
++            error_reportf_err(errp, "Could not load kernel '%s': ",
++                              machine->kernel_filename);
+             exit(1);
+         }
+     }
+@@ -1094,10 +1096,10 @@ static void pnv_init(MachineState *machine)
+     if (machine->initrd_filename) {
+         pnv->initrd_base = INITRD_LOAD_ADDR;
+         pnv->initrd_size = load_image_targphys(machine->initrd_filename,
+-                                  pnv->initrd_base, INITRD_MAX_SIZE, NULL);
++                                  pnv->initrd_base, INITRD_MAX_SIZE, &errp);
+         if (pnv->initrd_size < 0) {
+-            error_report("Could not load initial ram disk '%s'",
+-                         machine->initrd_filename);
++            error_reportf_err(errp, "Could not load initial ram disk '%s': ",
++                              machine->initrd_filename);
+             exit(1);
+         }
+     }
+diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+index 7c66912c10..9e55e56ee0 100644
+--- a/hw/ppc/ppc440_bamboo.c
++++ b/hw/ppc/ppc440_bamboo.c
+@@ -141,6 +141,7 @@ static void bamboo_init(MachineState *machine)
+     DeviceState *uicdev;
+     SysBusDevice *uicsbd;
+     int success;
++    Error *errp = NULL;
+ 
+     if (kvm_enabled()) {
+         error_report("machine %s does not support the KVM accelerator",
+@@ -243,11 +244,11 @@ static void bamboo_init(MachineState *machine)
+     if (initrd_filename) {
+         initrd_size = load_image_targphys(initrd_filename, RAMDISK_ADDR,
+                                           machine->ram_size - RAMDISK_ADDR,
+-                                          NULL);
++                                          &errp);
+ 
+         if (initrd_size < 0) {
+-            error_report("could not load ram disk '%s' at %x",
+-                         initrd_filename, RAMDISK_ADDR);
++            error_reportf_err(errp, "could not load ram disk '%s' at %x: ",
++                              initrd_filename, RAMDISK_ADDR);
+             exit(1);
+         }
+     }
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index edd3da7102..f8cf6dc16e 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -250,6 +250,7 @@ static void ibm_40p_init(MachineState *machine)
+     uint32_t kernel_base = 0, initrd_base = 0;
+     long kernel_size = 0, initrd_size = 0;
+     char boot_device;
++    Error *errp = NULL;
+ 
+     if (kvm_enabled()) {
+         error_report("machine %s does not support the KVM accelerator",
+@@ -280,10 +281,10 @@ static void ibm_40p_init(MachineState *machine)
+     bios_size = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                          ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+     if (bios_size < 0) {
+-        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE, NULL);
++        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE, &errp);
+     }
+     if (bios_size < 0 || bios_size > BIOS_SIZE) {
+-        error_report("Could not load bios image '%s'", filename);
++        error_reportf_err(errp, "Could not load bios image '%s': ", filename);
+         return;
+     }
+     g_free(filename);
+@@ -381,10 +382,10 @@ static void ibm_40p_init(MachineState *machine)
+         kernel_size = load_image_targphys(machine->kernel_filename,
+                                           kernel_base,
+                                           machine->ram_size - kernel_base,
+-                                          NULL);
++                                          &errp);
+         if (kernel_size < 0) {
+-            error_report("could not load kernel '%s'",
+-                         machine->kernel_filename);
++            error_reportf_err(errp, "could not load kernel '%s': ",
++                              machine->kernel_filename);
+             exit(1);
+         }
+         fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_ADDR, kernel_base);
+@@ -395,10 +396,10 @@ static void ibm_40p_init(MachineState *machine)
+             initrd_size = load_image_targphys(machine->initrd_filename,
+                                               initrd_base,
+                                               machine->ram_size - initrd_base,
+-                                              NULL);
++                                              &errp);
+             if (initrd_size < 0) {
+-                error_report("could not load initial ram disk '%s'",
+-                             machine->initrd_filename);
++                error_reportf_err(errp, "could not load initial ram disk '%s': ",
++                                  machine->initrd_filename);
+                 exit(1);
+             }
+             fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_ADDR, initrd_base);
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 68d3eacbff..a5cb8e0738 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -262,6 +262,7 @@ static void sam460ex_init(MachineState *machine)
+     struct boot_info *boot_info;
+     uint8_t *spd_data;
+     int success;
++    Error *errp = NULL;
+ 
+     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
+     env = &cpu->env;
+@@ -495,10 +496,10 @@ static void sam460ex_init(MachineState *machine)
+         initrd_size = load_image_targphys(machine->initrd_filename,
+                                           RAMDISK_ADDR,
+                                           machine->ram_size - RAMDISK_ADDR,
+-                                          NULL);
++                                          &errp);
+         if (initrd_size < 0) {
+-            error_report("could not load ram disk '%s' at %x",
+-                    machine->initrd_filename, RAMDISK_ADDR);
++            error_reportf_err(errp, "could not load ram disk '%s' at %x: ",
++                              machine->initrd_filename, RAMDISK_ADDR);
+             exit(1);
+         }
+     }
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 9e17b5a31d..0be542c888 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2824,9 +2824,10 @@ static void spapr_machine_init(MachineState *machine)
+         error_report("Could not find LPAR firmware '%s'", bios_name);
+         exit(1);
+     }
+-    fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, NULL);
++    fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, &errp);
+     if (fw_size <= 0) {
+-        error_report("Could not load LPAR firmware '%s'", filename);
++        error_reportf_err(errp, "Could not load LPAR firmware '%s': ",
++                          filename);
+         exit(1);
+     }
+ 
+@@ -3090,10 +3091,10 @@ static void spapr_machine_init(MachineState *machine)
+                                                      spapr->initrd_base,
+                                                      load_limit
+                                                      - spapr->initrd_base,
+-                                                     NULL);
++                                                     &errp);
+             if (spapr->initrd_size < 0) {
+-                error_report("could not load initial ram disk '%s'",
+-                             initrd_filename);
++                error_reportf_err(errp, "could not load initial ram disk '%s': ",
++                                  initrd_filename);
+                 exit(1);
+             }
+         }
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index 00d9ab7509..a7d3de62fa 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -195,6 +195,7 @@ static void virtex_init(MachineState *machine)
+     qemu_irq irq[32], cpu_irq;
+     int kernel_size;
+     int i;
++    Error *errp = NULL;
+ 
+     /* init CPUs */
+     cpu = ppc440_init_xilinx(machine->cpu_type, 400000000);
+@@ -253,7 +254,7 @@ static void virtex_init(MachineState *machine)
+             /* If we failed loading ELF's try a raw image.  */
+             kernel_size = load_image_targphys(kernel_filename,
+                                               boot_offset,
+-                                              machine->ram_size, NULL);
++                                              machine->ram_size, &errp);
+             boot_info.bootstrap_pc = boot_offset;
+             high = boot_info.bootstrap_pc + kernel_size + 8192;
+         }
+@@ -265,11 +266,11 @@ static void virtex_init(MachineState *machine)
+             initrd_base = high = ROUND_UP(high, 4);
+             initrd_size = load_image_targphys(machine->initrd_filename,
+                                               high, machine->ram_size - high,
+-                                              NULL);
++                                              &errp);
+ 
+             if (initrd_size < 0) {
+-                error_report("couldn't load ram disk '%s'",
+-                             machine->initrd_filename);
++                error_reportf_err(errp, "couldn't load ram disk '%s': ",
++                                  machine->initrd_filename);
+                 exit(1);
+             }
+             high = ROUND_UP(high + initrd_size, 4);
 -- 
-2.50.1 (Apple Git-155)
+2.51.0
 
 
