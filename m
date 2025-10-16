@@ -4,84 +4,193 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146C9CCD194
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 05:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB6BCCD183
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 05:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9GeV-00025e-P8; Thu, 16 Oct 2025 01:35:51 -0400
+	id 1v9Gey-0002Mh-1i; Thu, 16 Oct 2025 01:36:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9GeT-00025O-Rk
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:35:49 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1v9GeP-0004Tj-FP
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:35:49 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-634b774f135so462116a12.2
- for <qemu-devel@nongnu.org>; Wed, 15 Oct 2025 22:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760592944; x=1761197744; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hCdFjs4XrjyJI2hjnHLkNo/JMrR4kwrg7b7RfrKnCe0=;
- b=DGwbeCU86Vd1GUdKZ+vij7ub8MZOdkk3IER5lKqoFz+persbmU3skrXpLVLsOz/0QN
- 0gSr9RC6GlNS60FTnmDhWPvbdS+g6JpJqtRkPqwNGpBYvD/pLcxY45eKYABcCC1eDgnc
- l/kd98ziFe1c6/vo8oLgZ0u7WqxH9mr+4xx/+cepCDfrx9Afl5W1Uhi/ARpKCa1a/6yn
- pgNltHAVU6mdus3qqflyXIyydNxJmdZ0nsZbtLKDY76b3dR4JiLV97tdQPuTOGSU7xn8
- kHjCmbH22b9BhjTyj+b+jPK4mlNzmk+Ja/uEGhtZybDL83HeMclkjB9Bv+DaD5vvze2r
- BNAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760592944; x=1761197744;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hCdFjs4XrjyJI2hjnHLkNo/JMrR4kwrg7b7RfrKnCe0=;
- b=BcaXvAvfG3gveAHnbK1xBp7fzhi2/47xygYlS27lDW1G4juc/m/VgxOIJfcd4xr8KR
- ahbonnVbPc9XWQ29wMv7UMgDzeFq3u71MzRnNBSRyhulumzRsxWMiD7UNUNlr+FG/nOl
- NrpZiTXcfnMUzy0RSzDnpv8bpy3Pc0Vek3wrc1OOiXDYtXxmpao1L2a6717bI1m5wcSD
- uZcY0DUN6qXVK+5Znbaq6GBR0XupuHBfWKG/tpey4a7vYMkHar09acPLaPIiDmNIHgZh
- +aOHwbi4K7Ms+nubDhD6SzRW2sEMS5WNNi0dgik7v3vwELabXQdAF6fed9UtQuZ754iS
- arow==
-X-Gm-Message-State: AOJu0YzhL+7jtn5hfh0XjBY98gjy6eTtjDLxM6wbflwG5h9Uxw9xI0rt
- nGLbsJn8E6bSepx1gsTrZoHswl7Z/WjChi8FijQAe8sMZeDSwUWP6Ax+C7Rjz4yVvhkQPjSfldv
- 1UMzIhtiD9qROfPAtsFpFe9amWpN/Bw8=
-X-Gm-Gg: ASbGncvmD1ir+u/WoUWOAkVJ8cxWY7ODkm6N1zzgElhM6l09eUXuU1CZy3BPrUUItDL
- jnLafIacD7WqO4MvRwHYs6kx+LcrBu7oldcxhR9cAOQZgQzU4tPMsRkrQkg0Plv5DBcmvGElGwe
- XyBZyRywzApveSmN1PwGBJ2rR+anfc3aiANaB5wM8+8KN3BCYA3MYZvMyN1pUML00IdjJ1vqv/c
- dcTv6T9cP9/NkVSLgaPKj9Lht2zTG77/gJywPZBkIFQdPRCrRF8wrg/D1qGSAP5j9NCKgsUiDAd
- 05oXNb//3KCDU5s=
-X-Google-Smtp-Source: AGHT+IGhXLvFY4+shr18YC2vMCK7Wnoxd2kXOYMh6TbYQa+H8307P4bxyLsri9D5LikXc1/xqHWQv/rIOrgQNNAMw9E=
-X-Received: by 2002:a05:6402:50c7:b0:634:ab36:3c74 with SMTP id
- 4fb4d7f45d1cf-639d5b80653mr29414266a12.9.1760592943567; Wed, 15 Oct 2025
- 22:35:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20251014203512.26282-1-anjo@rev.ng>
- <20251014203512.26282-19-anjo@rev.ng>
-In-Reply-To: <20251014203512.26282-19-anjo@rev.ng>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 16 Oct 2025 15:35:17 +1000
-X-Gm-Features: AS18NWCy14G_3c7flK3W1ZXlpOnsodGr1j1HtiISOtn7-7V08P6DUyMCEpYZRlk
-Message-ID: <CAKmqyKPWK0OiYR2XRnea1JttHvhEQ5smRSL55Zbo_qTMvzeAYQ@mail.gmail.com>
-Subject: Re: [PATCH v3 18/34] target/riscv: Fix size of ssp
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1v9Ges-0002Is-Db
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:36:14 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1v9Gep-0004VR-QZ
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 01:36:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760592972; x=1792128972;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=BN6SbmnY3NkX37ql8SKyFsYFF1LusPrj1NlfMbwutvU=;
+ b=NhlC2YlJ7WodYIz23ialv6lX/Sj7bQsGtzS7tIFCBNbCXxHuz1/U2Df1
+ lj0lRnwf3lx4tbSD9ZgnraveZWdN9bwW3mPKYpZeky7z26Glg9JqdEis4
+ Kypg3MfrCV7FDWipJ4A9Ts0yZgc9CC61onLqhSrMdvIf92PbtuMGoK04v
+ +De1aXU4fblZJZponJswLr7SvDif15MejGx2iDEdIbOy/iy+Su1UHuTnR
+ 9fm21ym3/c6xxPA8n+5ji34nwb6o6xSfPNSFH3FiuonUp+vzS8aU/pxBe
+ Ykx+z10eGg7pUIYTLX9rTJKzxbDXcOKxOF91nitl6joZizkg93EzcTGL7 A==;
+X-CSE-ConnectionGUID: O+XBtiT7TYKJ+pBBXmbnRg==
+X-CSE-MsgGUID: WdWfLQS5SVKv3J3sXf6fFQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11583"; a="73887924"
+X-IronPort-AV: E=Sophos;i="6.19,233,1754982000"; d="scan'208";a="73887924"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Oct 2025 22:36:10 -0700
+X-CSE-ConnectionGUID: jSFnldV5Ta62HIyhXJ48mQ==
+X-CSE-MsgGUID: 8GUomeFJS6CSleo2oJJg4Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,233,1754982000"; d="scan'208";a="182300547"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Oct 2025 22:36:09 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Wed, 15 Oct 2025 22:36:08 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Wed, 15 Oct 2025 22:36:08 -0700
+Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.26) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Wed, 15 Oct 2025 22:36:08 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f2myXWSG4GW5cA364KN/IkobOO3aBS7V6k4i9qUpMjmlAeKHzw0etv+b707JFyaxsOnYQqbPtHZ7hQYpHj+J+KO3TpmRe9i2yPv9dME9b0gM33C15yFj5fUwXDvVQY0FeDkzP8/0mlFTzfMMi227iAgk/D22tcBxCfoquvRiGXv/BwM+QVSWt3t1oY2JRFsK0YGTNxUQkaI5CgJWY5yUbLLvNmi2sOSLvVrH8YmwsFJwnHXCAkUfahn8EEpLlVYGgUi8OrwmGZCEv7aTeQvSmjwwIrFND0Q72xcG+9lOOxnf/8YWcGQlO8flECay9KSbR0OrygGbaFmFj3j8Ch3ogw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BN6SbmnY3NkX37ql8SKyFsYFF1LusPrj1NlfMbwutvU=;
+ b=fSUFk4XYYI9kq4XQcqIrkI+PL89r8GBBTJ2bT1tCrijn+dipVVoUeRS8hkSc5QXyMKXZ6DMl6Zh2J0VW2YyP/dtdSjjhENu+P3asXglQChbhB2mXfrYApyCa30SLdUMFr3RLGFJWZ1w0k0BloU5Vl2YbnYBrai0fbwGoYIowYyQT0fM7Yx/jgahQR3JKuPVpgzQPb909/2clqFFATgaCfNPy4VbsqT2BRrt9xZTNhW37EoUYHOP6XR82lEW6Jae0eiJtvn7oM4JOhhVOJZ18CiH3v1u7sVmLaXqV4YlroUiWFa/J8g7aD5Bbv6djIaVKRhFB3oLV77norW2AdcZc/w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
+ by MW6PR11MB8365.namprd11.prod.outlook.com (2603:10b6:303:240::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.10; Thu, 16 Oct
+ 2025 05:36:06 +0000
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::dd3b:ce77:841a:722b%4]) with mapi id 15.20.9203.015; Thu, 16 Oct 2025
+ 05:36:06 +0000
+From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>
+Subject: RE: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify
+ blob resources
+Thread-Topic: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identify
+ blob resources
+Thread-Index: AQHcNL+RUYjirTlu+0+SWGS5LfcOTbS60JoAgAQ3pzCAAhCigIABcDrggABCiYCAAVLIYA==
+Date: Thu, 16 Oct 2025 05:36:06 +0000
+Message-ID: <IA0PR11MB718592F15E431D03C1B01762F8E9A@IA0PR11MB7185.namprd11.prod.outlook.com>
+References: <20251003234138.85820-1-vivek.kasireddy@intel.com>
+ <20251003234138.85820-3-vivek.kasireddy@intel.com>
+ <1fd966d9-95a5-45aa-8a20-46f2987cd65a@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB718547E3A9E97A0DD6A4A2D6F8EAA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <ba762750-cab1-4cb8-a629-101de5fdc179@rsg.ci.i.u-tokyo.ac.jp>
+ <CH3PR11MB7177C4541131508F53BD27F3F8E8A@CH3PR11MB7177.namprd11.prod.outlook.com>
+ <955ea687-ed25-47bd-9ba9-73c6b98c8e29@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <955ea687-ed25-47bd-9ba9-73c6b98c8e29@rsg.ci.i.u-tokyo.ac.jp>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|MW6PR11MB8365:EE_
+x-ms-office365-filtering-correlation-id: 33403aab-ac48-4f6d-ca08-08de0c75e712
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?lCEGw+pr855mbHZBK8byWiFPipAdEzKrKUlOegRDKLmwIfUtEXj2/eIZRR?=
+ =?iso-8859-1?Q?4s3XJUVim2eIsvpJTPdCPwgNU/6QQ8w/pUYYn/QFYkKeO4dCMA6QoF5YeH?=
+ =?iso-8859-1?Q?UoKX4cJABssKPoxRQq1Q8fuaQWTR9cinT9zEaoJ6pm0zqQH74FP2Lghp2t?=
+ =?iso-8859-1?Q?iAdZcWzfJjdcby7JMFE/f93KQTcx056nWzth8M4vgFJDjvhfeqE656IEWq?=
+ =?iso-8859-1?Q?89qeHRjrPuNA7+n2RLWrWhVmoR1zJ6LS8oCMMCaznK0aC/CxBHR4YrmFdH?=
+ =?iso-8859-1?Q?6GGRWY0JmYjD89padc2wFyd5J2U94oZfo3UlURBnycYUZS3SCD60bGQEbp?=
+ =?iso-8859-1?Q?h7fozU8ciFEITU9Q7JszU7V3xcsnyCtykH6Uszxw31d0b9BMMMR66jRI8E?=
+ =?iso-8859-1?Q?YRy39L2KfizK86u5OuJaxUQEUvy/MjO0g1EZhY4LZeldMYTzp3TZ4AnCP6?=
+ =?iso-8859-1?Q?19MRF9lc8Ckj24pNH/SlWoaiN7NFGtc7hr0OQpvi8Zq5NG1iYNAR/e7hbu?=
+ =?iso-8859-1?Q?qLiNy2ehSPBLGKVEyWDawHgzPPJZJbmLZWfZ74jTCsMhupbOyxDf3jdPGW?=
+ =?iso-8859-1?Q?+YXKnruMZiQW82FH+O/Af8Ygpsf2rPErUqzlKGNDTpWnNyBj7BvoY7BD4/?=
+ =?iso-8859-1?Q?mbZpmLpZJhiM+lUIojeyvHCo7xyd/AcLEs5+VN7vt9m4rE+kpkaC7/SxvB?=
+ =?iso-8859-1?Q?AD1epsOq25tEqQEKcby4ugeQO9ezJRte5DV0+GpV/oO7sJDCHg8FfuX5qv?=
+ =?iso-8859-1?Q?olS/L9cKOYmv8GmxwrMPEoZf3r1DI93xfUXIYzQ8h2Q37KgSUIxmDf5XcD?=
+ =?iso-8859-1?Q?yPKklx3KbQQ0aAiP8MG8b+3PkVZqXhsbGlHMUweLBqTPoXk/jyDoUcpAuY?=
+ =?iso-8859-1?Q?7yNAYJm4OtyXdwA2XcIlKYdRayCVdB96K7tw4vfLLFnffU3TrhSvW3dHcb?=
+ =?iso-8859-1?Q?cdfXuw7sVCYU9/Vz3YZhsDchoCb8zsoKT8DKmxUFULPTnQxlrMahxIi+1L?=
+ =?iso-8859-1?Q?dmIzToO6r20465/2m1e+JjcQbcKylHCUMpv/0b11qv6v9sgyWh9K71oBBW?=
+ =?iso-8859-1?Q?hjw3O/4AHCfVDzWzS3bkgZpdZ7yeimjUq++fjDap1gq8j4tm7pnSZCKUaL?=
+ =?iso-8859-1?Q?+STU+DP3LGrTb5gVWPNiOg4cYP3jXCMSWIyVwNsEDTjddIH5zBX8a9f0Zt?=
+ =?iso-8859-1?Q?QOS0BC4V46a3azMX8W2MLfeAd1zAS24E/ub/BPlKdyf68RfylPoAjySw9m?=
+ =?iso-8859-1?Q?ubwY5788zjlEKAI1GEXougKsiPCyGWiwSjg0nCuXrhkr95lj0s99qD87RA?=
+ =?iso-8859-1?Q?h6qTH+6XalGoY5NTmiuxWdUkykz8goo50VZ2I0xsV6reiURMjGcAQFROD1?=
+ =?iso-8859-1?Q?hpwW4HOo0QnnnxLqUFlwcoQ0wMYGBzfO8KxhCUQq/aGBVswPtK8w8IZ4IE?=
+ =?iso-8859-1?Q?lPa2XcQgPhCN/10Q7XZrjxr0+OVaMXamwCSDa2pb3/7CQBV8VCft2XOINe?=
+ =?iso-8859-1?Q?nEEiJvUXpJP7F0F7ZKCnSy7H+Yi4/TfFyO6VVvboAtN3I9x1SEmBet7Swi?=
+ =?iso-8859-1?Q?A8LK+po7F14tttZWGI/dqoURo6KU?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?64AFBxv0pH/L3jmbYHEULdrduY4wnhjsgP2CsmrlgOfdN+ms0J2MvmGO4g?=
+ =?iso-8859-1?Q?4gbGBWf+Cvvcw5Zt1E3jwWU+66ec01yElaV/39lOjWeK9OI8R0fR5AmKaa?=
+ =?iso-8859-1?Q?5EjPyBTmHMxcxw8qxb9O3CJy+wTWfm0u0wZymhXSSMXnmCw7ya8jJrlDCd?=
+ =?iso-8859-1?Q?YXT609B1y0jlMkkITpZfS69DP5wuUZ3XNvBTXqXBIxQRBv9psvXbs3cJLZ?=
+ =?iso-8859-1?Q?qnHqvU6eljMvv1AZmTKrZKtze/Ldx37LAY8WBl6wi0Xxk3/EpM5j1zYflB?=
+ =?iso-8859-1?Q?ru+n5e1s9ShGbSonMAnOsW4LJSSB4Le5R9dTCtQd8zXZQpZd+C9k6GsUc1?=
+ =?iso-8859-1?Q?vNmTh7bQT9/25nAJkZm0NAKWNJUnIsLSx8pOrIZRahcEvumhVHD3OUvAd7?=
+ =?iso-8859-1?Q?+7jB47/YoOFS9OWx+8xra3e7Bb/YlR9ie6CaEe0UQT2tWTaizEDvmlpoJJ?=
+ =?iso-8859-1?Q?M2M7iLGcMtobaL8jZM6qkKt+wdKKo/mdn/bGWwFMs+vGfVeDj9k4uqWpBg?=
+ =?iso-8859-1?Q?QN2WTqYEwXKZByBFy/ycg7UQxn8R2VsA5sMe30QxbXYQ6QcEezfxfpgcUi?=
+ =?iso-8859-1?Q?aDFcxnauZtuu4FJOxQVyAuPqW4YLGbniSM9kI9PmxqYVBK6HVJCcdQz8d2?=
+ =?iso-8859-1?Q?RKYuO3mc13bakRYTKtnRKha+IKJvtUwL/ogJPlYvqiVPsERw2yLKkjP4kv?=
+ =?iso-8859-1?Q?pctKAMvCggezQBD8+V1Ei90eDqNQix9mww4h34H369RqbIAvWVC3CH0II+?=
+ =?iso-8859-1?Q?AqrM4n53t70OxiEvZJb71P2qDJL8yvKmt9MnzoEO4nkmg1U610q2wz2DNP?=
+ =?iso-8859-1?Q?E+Z2oz/1a13Au9rZ4kMTATDns84o0wkiDNLAnuDmIegLeUN/gxQKKxbow2?=
+ =?iso-8859-1?Q?H7yvy6faRMdo5/Pk1Ta/LstQFRachhNQ0hl2ZryGmK2TQB5MEr3tKealRG?=
+ =?iso-8859-1?Q?ZHsxhCS4sfMt6/TOieV6u2AqnK9u0p1bX5OFLj0EcWieQ0F8UIU9kdTD+L?=
+ =?iso-8859-1?Q?9mFWg0tits74MyqWInTgzBmn0pQ1h9k4xVXOlHGlQDx5uMMbGIxOWj/HDn?=
+ =?iso-8859-1?Q?0pcGn5VmSbuQq+ofxTFRTYkLOO4mrveZEKUjDTK9hfUXNGg+/xE4YRujYb?=
+ =?iso-8859-1?Q?W5qE6ULVSd9tjaNY4MRrJDiNmNFIodD1A9qIYLTGbPOqxFDs1nbcT0jFb1?=
+ =?iso-8859-1?Q?QzesZbJam/FWV4cXu7uVSZ3KhDHp4jZ32QRcf7faiX4IPqOxOteMmfG7+l?=
+ =?iso-8859-1?Q?M1mIUP3ip2vX/QM6NwLccAWKsXT3UM5KbCsuvGEoUA7JsprvIpcF2EceKV?=
+ =?iso-8859-1?Q?ttDJQtvumSnDNfTBhQIwXpMyej6iwwcN5p68ghWN3Ow+MshwqETvsonNvr?=
+ =?iso-8859-1?Q?Zepl4GdoElnfP9XhWZ0/E1YKCKBtYfdzOvu5wiRXH3QM2JCw8X66Mbh6LQ?=
+ =?iso-8859-1?Q?mHFnBro0fAYhysmw97B83R3nqRtRF39x0bN2U3X+Eu1jyqU/hpIPZu8yIO?=
+ =?iso-8859-1?Q?eGeHwZpcxbuKQ7f9ZFCnA2+TiBnPC2RmwUDngY8yO4T8yZGR8qk18jP1a6?=
+ =?iso-8859-1?Q?NrssK37FrgOacYioHELz+0faAeYJv4Ym6VX4A0cG12q3HXNdkx29v3wTa+?=
+ =?iso-8859-1?Q?eva1ISk4tdhQn67wLpeeMjnixidiYyQFJ+?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33403aab-ac48-4f6d-ca08-08de0c75e712
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2025 05:36:06.0433 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: FykNE/c6ISBlknIvjAQ36iRtG0P1lEen/u8K9oG7w+9xUcobrELxo6YJGC/qX2ECsijUAQI8/Yov0JjZxrZfTpWDwaoyCNNGrOYyGx2sNBU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR11MB8365
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.13;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,121 +207,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 6:39=E2=80=AFAM Anton Johansson via
-<qemu-devel@nongnu.org> wrote:
->
-> As ssp holds a pointer, fix to 64 bits in size and make sure stores from
-> TCG use the correct size to avoid problems on big endian hosts.
->
-> Note, the cpu/ssp VMSTATE version is bumped, breaking migration from
-> older versions.
->
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi Akihiko,
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
->  target/riscv/cpu.h                            |  2 +-
->  target/riscv/machine.c                        |  6 +++---
->  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
->  3 files changed, 17 insertions(+), 9 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index d7a41e6db5..2a71393118 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -255,7 +255,7 @@ struct CPUArchState {
->      /* elp state for zicfilp extension */
->      bool      elp;
->      /* shadow stack register for zicfiss extension */
-> -    target_ulong ssp;
-> +    uint64_t ssp;
->      /* env place holder for extra word 2 during unwind */
->      target_ulong excp_uw2;
->      /* sw check code for sw check exception */
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 1cf744c5f0..c55794c554 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -390,11 +390,11 @@ static bool ssp_needed(void *opaque)
->
->  static const VMStateDescription vmstate_ssp =3D {
->      .name =3D "cpu/ssp",
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .needed =3D ssp_needed,
->      .fields =3D (const VMStateField[]) {
-> -        VMSTATE_UINTTL(env.ssp, RISCVCPU),
-> +        VMSTATE_UINT64(env.ssp, RISCVCPU),
->          VMSTATE_END_OF_LIST()
->      }
->  };
-> diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv=
-/insn_trans/trans_rvzicfiss.c.inc
-> index f4a1c12ca0..fa1489037d 100644
-> --- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-> @@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspop=
-chk *a)
->      TCGLabel *skip =3D gen_new_label();
->      uint32_t tmp =3D (get_xl(ctx) =3D=3D MXL_RV64) ? 8 : 4;
->      TCGv data =3D tcg_temp_new();
-> -    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    TCGv_i64 wide_addr =3D tcg_temp_new_i64();
-> +    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    tcg_gen_trunc_i64_tl(addr, wide_addr);
->      decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
->      tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
->                         mxl_memop(ctx) | MO_ALIGN);
-> @@ -45,7 +47,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspop=
-chk *a)
->                    tcg_constant_i32(RISCV_EXCP_SW_CHECK));
->      gen_set_label(skip);
->      tcg_gen_addi_tl(addr, addr, tmp);
-> -    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    tcg_gen_ext_tl_i64(wide_addr, addr);
-> +    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
->
->      return true;
->  }
-> @@ -59,12 +62,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspus=
-h *a)
->      TCGv addr =3D tcg_temp_new();
->      int tmp =3D (get_xl(ctx) =3D=3D MXL_RV64) ? -8 : -4;
->      TCGv data =3D get_gpr(ctx, a->rs2, EXT_NONE);
-> +    TCGv_i64 wide_addr =3D tcg_temp_new_i64();
->      decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-> -    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    tcg_gen_trunc_i64_tl(addr, wide_addr);
->      tcg_gen_addi_tl(addr, addr, tmp);
->      tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
->                         mxl_memop(ctx) | MO_ALIGN);
-> -    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    tcg_gen_ext_tl_i64(wide_addr, addr);
-> +    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
->
->      return true;
->  }
-> @@ -76,7 +82,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a=
+> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to identi=
+fy blob
+> resources
+>=20
+> On 2025/10/15 14:07, Kasireddy, Vivek wrote:
+> > Hi Akihiko,
+> >
+> >> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to ide=
+ntify
+> blob
+> >> resources
+> >>
+> >>>
+> >>>> Subject: Re: [PATCH v1 2/7] virtio-gpu: Don't rely on res->blob to i=
+dentify
+> >> blob
+> >>>> resources
+> >>>>
+> >>>> On 2025/10/04 8:35, Vivek Kasireddy wrote:
+> >>>>> The res->blob pointer may not be valid (non-NULL) for some blobs
+> >>>>> where the backing storage is not memfd based. Therefore, we cannot
+> >>>>> use it to determine if a resource is a blob or not. Instead, we
+> >>>>> could use res->blob_size to make this determination as it is
+> >>>>> non-zero for blob resources regardless of where their backing
+> >>>>> storage is located.
+> >>>>
+> >>>> I think this patch is no longer necessary since now you add code to
+> >>>> mmap() VFIO storage with "[PATCH v1 7/7] virtio-gpu-udmabuf: Create
+> >>>> dmabuf for blobs associated with VFIO devices".
+> >>> Right, but given that mmap() can still fail for various reasons and t=
+his
+> >>> use-case can work as long as dmabuf creation succeeds, I think it mak=
+es
+> >>> sense to not rely on res->blob to determine if a resource is blob or =
+not.
+> >>
+> >> I think the code will be simpler by making resource creation fail when
+> >> mmap() fails, and I am concerned that the guest may mulfunction with
+> >> such an incomplete resource.
+> > AFAICT, mmap() is a slow, optional path except for the cursor (which ne=
+eds
+> > further improvement). So, failing resource creation when mmap() fails
+> > does not seem like a good idea to me given the fact that supporting mma=
+p()
+> > is considered optional for dmabuf providers. And, even with vfio, mmap(=
 )
->      }
->
->      TCGv dest =3D dest_gpr(ctx, a->rd);
-> -    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
-> +    TCGv_i64 wide_addr =3D tcg_temp_new_i64();
-> +    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-> +    tcg_gen_trunc_i64_tl(dest, wide_addr);
->      gen_set_gpr(ctx, a->rd, dest);
->
->      return true;
-> --
-> 2.51.0
->
->
+> > can be blocked for various reasons by the kernel driver IIUC.
+>=20
+> Being slow doesn't matter, and it is not just for the cursor, but there
+> are several other functions modified; I guess the resulting resource
+> will be unusable except for accelerations like virgl.
+>=20
+> >
+> >>
+> >> To motivate the proposed patch, there should be a use-case that requir=
+es
+> >> to have a resource without mmap(), not one that "can work" a resource
+> >> without mmap(). It is extraneous complexity otherwise.
+> >>
+> >> Such a use case should be explained in the patch message and perhaps
+> >> also with a comment in the code. The current patch message needs an
+> >> update as it sounds like it is unnecessary when theere is code to mmap=
+()
+> >> VFIO-based backing storage, which this series has already gained.
+> > Although VFIO supports mmap(), it is not guaranteed to work in all case=
+s
+> > and with a different dmabuf provider (in the future), it may not be pos=
+sible
+> > at all.
+>=20
+> The fact that mmap() is being optional for DMA-BUF and VFIO is
+> insufficient, but what matters here is whether a DMA-BUF that lacks
+> mmap() is usable for graphics.
+Yes, it is definitely usable. AFAICS, res->blob pointer is only used when g=
+l=3Doff.
+But given that most environments nowadays support OpenGL, most users
+would prefer gl=3Don, which means the resource's dmabuf fd would be used
+(by the UI) instead of res->blob pointer.
+
+>=20
+> Reading the cover letter, I suppose you are importing a mmap-incapable
+> DMA-BUF exported by a dGPU, and the imported DMA-BUF is used with virgl
+> or something. Explaining the use case will show that there is a
+> mmap-incapable DMA-BUF usable for graphics.
+The dmabuf provider in this case (vfio-pci dmabuf feature) does not support
+mmap(), but the blob resource/dmabuf can still be accessed via the fd when
+gl=3Don (by Gtk, Spice UI). Please find more details about my use-case here=
+:
+https://lore.kernel.org/dri-devel/20250915072428.1712837-1-vivek.kasireddy@=
+intel.com/
+
+Thanks,
+Vivek
+
+>=20
+> Regards,
+> Akihiko Odaki
 
