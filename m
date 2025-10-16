@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35006CCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 00:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FD3CCD185
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Oct 2025 01:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9Bd1-0007yw-Fc; Wed, 15 Oct 2025 20:13:59 -0400
+	id 1v9D8i-0002To-Qd; Wed, 15 Oct 2025 21:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v9Bcy-0007yV-SW
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 20:13:56 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v9Bcv-0006ry-87
- for qemu-devel@nongnu.org; Wed, 15 Oct 2025 20:13:56 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E2CDE5972E6;
- Thu, 16 Oct 2025 02:13:48 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id mKdWo_x702OH; Thu, 16 Oct 2025 02:13:46 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D26F15972E3; Thu, 16 Oct 2025 02:13:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D058A59703F;
- Thu, 16 Oct 2025 02:13:46 +0200 (CEST)
-Date: Thu, 16 Oct 2025 02:13:46 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, kraxel@redhat.com, marcandre.lureau@redhat.com
-Subject: Re: [PATCH v2] ati-vga: Fix framebuffer mapping by using
- hardware-correct aperture sizes
-In-Reply-To: <55dc6bce-c965-2202-f61c-d6bfb2d64820@eik.bme.hu>
-Message-ID: <66a869c9-de72-1c1a-0413-3366cecdef7c@eik.bme.hu>
-References: <20251015173716.1764461-1-chad@jablonski.xyz>
- <55dc6bce-c965-2202-f61c-d6bfb2d64820@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1v9D8b-0002S6-KO
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 21:50:43 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1v9D8W-0001Tl-Oz
+ for qemu-devel@nongnu.org; Wed, 15 Oct 2025 21:50:41 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxK9JnT_Bom7EWAA--.47102S3;
+ Thu, 16 Oct 2025 09:50:31 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJCxH8JjT_BoAY3oAA--.64734S9;
+ Thu, 16 Oct 2025 09:50:31 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v5 07/14] target/loongarch: Add debug parameter with
+ loongarch_page_table_walker()
+Date: Thu, 16 Oct 2025 09:50:20 +0800
+Message-Id: <20251016015027.1695116-8-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20251016015027.1695116-1-maobibo@loongson.cn>
+References: <20251016015027.1695116-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxH8JjT_BoAY3oAA--.64734S9
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,153 +67,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Oct 2025, BALATON Zoltan wrote:
-> On Wed, 15 Oct 2025, Chad Jablonski wrote:
->> Rage 128 cards always request 64MB for their linear (framebuffer)
->> aperture. This is regardless of the amount of physical VRAM on the
->> board. The following are results from real hardware tests:
->> 
->> Card                          VRAM    PCI BAR0   CONFIG_MEMSIZE 
->> CONFIG_APER_SIZE  AGP_APER_OFFSET
->> -----------------------       ----    --------   -------------- 
->> ----------------  ---------------
->> Rage 128 Pro Ultra TF         32MB     64MB       0x02000000 
->> 0x02000000        0x02000000
->> Rage 128 RF/SG AGP            16MB     64MB       0x01000000 
->> 0x02000000        0x02000000
->> Radeon R100 QD [Radeon 7200]  64MB    128MB       0x04000000 
->> 0x04000000        N/A
->> 
->> Previously the linear aperture (BAR0) would match the VRAM size.
->> This discrepancy caused issues with the X.org and XFree86 r128 drivers.
->> These drivers apply a mask of 0xfc000000 (2^26 = 64MB) to the linear
->> aperture address. If that address is not on a 64MB boundary the
->> framebuffer points to an incorrect memory location.
->> 
->> Testing shows that the Radeon R100 also has a BAR0 larger than VRAM
->> (128MB in this case) and the X.org driver for Radeon also masks to 64MB.
->> 
->> For Rage 128, CONFIG_APER_SIZE also differs from the previous value and
->> the behavior stated in the documentation. The Rage 128 register guide
->> states that it should contain the size of the VRAM + AGP memory. The cards
->> tested above show that this isn't the case. These tests also included
->> enabling/disabling AGP with 8MB of memory. It didn't change the
->> contents of CONFIG_APER_SIZE.
->> 
->> For Radeon R100, CONFIG_APER_SIZE behavior remains the same. There is
->> some worry that changing it could cause issues for other cards.
->> Especially given that I have only a single example here to test.
->> 
->> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
->> ---
->> hw/display/ati.c     | 20 ++++++++++++++++++--
->> hw/display/ati_int.h |  4 ++++
->> 2 files changed, 22 insertions(+), 2 deletions(-)
->> 
->> diff --git a/hw/display/ati.c b/hw/display/ati.c
->> index f7c0006a87..7af12777c8 100644
->> --- a/hw/display/ati.c
->> +++ b/hw/display/ati.c
->> @@ -30,6 +30,7 @@
->> #include "ui/console.h"
->> #include "hw/display/i2c-ddc.h"
->> #include "trace.h"
->> +#include "qemu/units.h"
->
-> Just some nits. This include now also belongs to ati_int.h where it's used.
->
->> #define ATI_DEBUG_HW_CURSOR 0
->> 
->> @@ -361,7 +362,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, 
->> unsigned int size)
->>                                       PCI_BASE_ADDRESS_0, size) & 
->> 0xfffffff0;
->>         break;
->>     case CONFIG_APER_SIZE:
->> -        val = s->vga.vram_size / 2;
->> +        val = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
->> +            ATI_RAGE128_LINEAR_APER_SIZE / 2 : s->vga.vram_size / 2;
->
-> Should indent below s-> like at other places.
->
->>         break;
->>     case CONFIG_REG_1_BASE:
->>         val = pci_default_read_config(&s->dev,
->> @@ -952,6 +954,7 @@ static void ati_vga_realize(PCIDevice *dev, Error 
->> **errp)
->> {
->>     ATIVGAState *s = ATI_VGA(dev);
->>     VGACommonState *vga = &s->vga;
->> +    uint64_t aper_size;
->> 
->> #ifndef CONFIG_PIXMAN
->>     if (s->use_pixman != 0) {
->> @@ -1011,7 +1014,20 @@ static void ati_vga_realize(PCIDevice *dev, Error 
->> **errp)
->>     /* io space is alias to beginning of mmregs */
->>     memory_region_init_alias(&s->io, OBJECT(s), "ati.io", &s->mm, 0, 
->> 0x100);
->> 
->> -    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &vga->vram);
->> +    /*
->> +     * Rage128: Framebuffer inhabits the bottom 32MB of the linear 
->> aperture.
->> +     *          The top 32MB is reserved for AGP (not implemented).
->> +     *
->> +     * R100: Linear aperture layout differs from Rage 128. No
->> +     *       AGP_APER_OFFSET register exists.
->> +     */
->
-> We don't use AGP_APER_OFFSET here so this comment isn't that clean. The
+Add debug parameter with function loongarch_page_table_walker(),
+in debug mode it is only to get physical address. And It used in
+future HW PTW usage, bit dirty and access will be updated in HW
+PTW mode.
 
-I mean comment isn't that clear. Maybe it's enough to say that framebuffer 
-is at the beginning of the aperture which has some additional space or AGP 
-window for Rage128 which we don't emulate.
+Also function loongarch_page_table_walker() is renamed as
+loongarch_ptw() for short.
 
-> layout does not differ in that VRAM is still at the beginning but only in 
-> that Radeon has no AGP window.
->
->> +    aper_size = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
->> +        ATI_RAGE128_LINEAR_APER_SIZE : ATI_R100_LINEAR_APER_SIZE;
->
-> Indent.
->
-> Regards,
-> BALATON Zoltan
->
->> +    memory_region_init(&s->linear_aper, OBJECT(dev), 
->> "ati-linear-aperture0",
->> +                       aper_size);
->> +    memory_region_add_subregion(&s->linear_aper, 0, &vga->vram);
->> +
->> +    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, 
->> &s->linear_aper);
->>     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
->>     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mm);
->> 
->> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
->> index f5a47b82b0..4f66d0df3f 100644
->> --- a/hw/display/ati_int.h
->> +++ b/hw/display/ati_int.h
->> @@ -29,6 +29,9 @@
->> /* Radeon RV100 (VE) */
->> #define PCI_DEVICE_ID_ATI_RADEON_QY 0x5159
->> 
->> +#define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
->> +#define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
->> +
->> #define TYPE_ATI_VGA "ati-vga"
->> OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
->> 
->> @@ -97,6 +100,7 @@ struct ATIVGAState {
->>     QEMUCursor *cursor;
->>     QEMUTimer vblank_timer;
->>     bitbang_i2c_interface bbi2c;
->> +    MemoryRegion linear_aper;
->>     MemoryRegion io;
->>     MemoryRegion mm;
->>     ATIVGARegs regs;
->> 
->
->
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu_helper.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 05e7fd6f3f..8fc596763d 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -106,9 +106,8 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+     return TLBRET_MATCH;
+ }
+ 
+-static TLBRet loongarch_page_table_walker(CPULoongArchState *env,
+-                                          MMUContext *context,
+-                                          int access_type, int mmu_idx)
++static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
++                            int access_type, int mmu_idx, int debug)
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong index, phys;
+@@ -184,7 +183,7 @@ static TLBRet loongarch_map_address(CPULoongArchState *env,
+          * legal mapping, even if the mapping is not yet in TLB. return 0 if
+          * there is a valid map, else none zero.
+          */
+-        return loongarch_page_table_walker(env, context, access_type, mmu_idx);
++        return loongarch_ptw(env, context, access_type, mmu_idx, is_debug);
+     }
+ 
+     return TLBRET_NOMATCH;
+-- 
+2.39.3
+
 
