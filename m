@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95210CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 07:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 017F3CCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 07:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA15B-0005gh-HZ; Sat, 18 Oct 2025 03:10:29 -0400
+	id 1vA15C-0005gx-2M; Sat, 18 Oct 2025 03:10:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sean.anderson@linux.dev>)
- id 1v9s7D-0000aW-2p
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 17:35:59 -0400
-Received: from out-189.mta0.migadu.com ([91.218.175.189])
+ id 1v9s7E-0000ag-DR
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 17:36:00 -0400
+Received: from out-179.mta0.migadu.com ([91.218.175.179])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sean.anderson@linux.dev>)
- id 1v9s73-0000uR-EY
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 17:35:58 -0400
+ id 1v9s7C-0000uQ-B8
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 17:36:00 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1760736945;
+ t=1760736943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IVIPlUW5oXm0hcESztel9HH9+opylms8y0YgCdufQAo=;
- b=VYTOpnn5DbUYwkGf+IpIDAkrSdwQ7dApZ6vLz44sUjNoG+CYsrwXO1kEgdzyGk0xX3+f/J
- JUt6jqfpApgvm+XpmdTl6BOFPv7/7tDKiCJArd/xSNYU1enefPgzbDYI69na7nRBEsew47
- 65aJk4bRtWi3sdLo/rLPcE4dE+A+uDU=
+ bh=MNCqKXPKfDxfIU4kqikJ84i8HiPeFd3Ia+9CKZI7f3k=;
+ b=SiYUKloxRcJhHFQAUFw83Q6JUB6AeCUHvC/iao+GlIvxfUROhHwCdHhfc/4In2p1nctrFd
+ YnRQwn5V50FiNT2maJORNP1e+xg9D/A2ZoCeUA77Y1kY5U8wlh8xeNGqBV0Nkg+ObPIsDM
+ KhM6u62IwA/1jSCmFXaNlSx7Sp386wU=
 From: Sean Anderson <sean.anderson@linux.dev>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Luc Michel <lmichel@kalray.eu>, Sean Anderson <sean.anderson@linux.dev>
-Subject: [PATCH 2/3] semihosting: Fix GDB File-I/O FLEN
-Date: Fri, 17 Oct 2025 17:35:28 -0400
-Message-Id: <20251017213529.998267-3-sean.anderson@linux.dev>
+Subject: [PATCH 1/3] gdbstub: Fix %s formatting
+Date: Fri, 17 Oct 2025 17:35:27 -0400
+Message-Id: <20251017213529.998267-2-sean.anderson@linux.dev>
 In-Reply-To: <20251017213529.998267-1-sean.anderson@linux.dev>
 References: <20251017213529.998267-1-sean.anderson@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.189;
- envelope-from=sean.anderson@linux.dev; helo=out-189.mta0.migadu.com
+Received-SPF: pass client-ip=91.218.175.179;
+ envelope-from=sean.anderson@linux.dev; helo=out-179.mta0.migadu.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -72,36 +72,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fstat returns 0 on success and -1 on error. Since we have already
-checked for error, ret must be zero. Therefore, any call to fstat on a
-non-empty file will return -1/EOVERFLOW.
+The format string for %s has two format characters. This causes it to
+emit strings like "466f5bd8/6x" instead of "466f5bd8/6". GDB detects
+this and returns EIO, causing all open File I/O calls to fail.
 
-Restore the original logic that just did a byteswap. I don't really know
-what the intention of the fixed commit was.
-
-Fixes: a6300ed6b7 ("semihosting: Split out semihost_sys_flen")
+Fixes: 0820a075af ("gdbstub: Adjust gdb_do_syscall to only use uint32_t and uint64_t")
 Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
 ---
 
- semihosting/arm-compat-semi.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ gdbstub/syscalls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index 6100126796..c5a07cb947 100644
---- a/semihosting/arm-compat-semi.c
-+++ b/semihosting/arm-compat-semi.c
-@@ -316,10 +316,7 @@ common_semi_flen_fstat_cb(CPUState *cs, uint64_t ret, int err)
-                                 &size, 8, 0)) {
-             ret = -1, err = EFAULT;
-         } else {
--            size = be64_to_cpu(size);
--            if (ret != size) {
--                ret = -1, err = EOVERFLOW;
--            }
-+            ret = be64_to_cpu(size);
-         }
-     }
-     common_semi_cb(cs, ret, err);
+diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
+index e855df21ab..d8bb90cc1c 100644
+--- a/gdbstub/syscalls.c
++++ b/gdbstub/syscalls.c
+@@ -127,7 +127,7 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...)
+             case 's':
+                 i64 = va_arg(va, uint64_t);
+                 i32 = va_arg(va, uint32_t);
+-                p += snprintf(p, p_end - p, "%" PRIx64 "/%x" PRIx32, i64, i32);
++                p += snprintf(p, p_end - p, "%" PRIx64 "/%" PRIx32, i64, i32);
+                 break;
+             default:
+             bad_format:
 -- 
 2.35.1.1320.gc452695387.dirty
 
