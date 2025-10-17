@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60586CCD195
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A87CCCD19F
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 15:13:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9m8m-0006Ds-BS; Fri, 17 Oct 2025 11:13:12 -0400
+	id 1v9m8X-0006AN-3C; Fri, 17 Oct 2025 11:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9m8g-0006C8-PG
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:13:08 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1v9m8U-00068d-HT
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:12:54 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9m8V-0006Db-50
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:13:04 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-290deb0e643so7603545ad.2
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 08:12:52 -0700 (PDT)
+ id 1v9m8L-0006Cd-9w
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:12:54 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-290c2b6a6c2so16139845ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 08:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760713969; x=1761318769; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760713961; x=1761318761; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xbT8s7BgAOOCeKwpgykrHCA1cuKIxwsWITIY/NphJvA=;
- b=QojdqxP3ZXPSwZjjvxnrMiPqxZ8rBvZnePLDUfS8Vx+hLJvvsbFY3SleqgTuS1TDEm
- xlwEXF2DP82OHmK1Jzq1KxoY7NFFmUiLXI1nQS27QJMVZBozcq+4oNfZj9bV6ozCfSJX
- wXPRnq+NNEjHuDBeo6ck1XSWnMXP/kF5id37LZW7vHEEn73DgdwDZAXzUQ6NTw5FO/6b
- 0UmI4js/m/1MtxnRFi0YZ321DoZtYDnWL5w5XtuF3C/6j1y4BoI4QSvB3iRLi2+pO8af
- QUVZ0TizdhZ5B/LZvz0xUFMNssoO+j9JE+4HO0pTW+/QzAghbmU+J25/hnLGXriz+2zJ
- Hhdg==
+ bh=koQsAFouNUd1W5J4wdrheLPAPSOaKLbycwvoS2z+Iws=;
+ b=q5v1qlc/kKHQKRIdk83oV0x09pcrhpLONho5n6EypLBXMf/PcyYEw8cd+gH6Q6zvC6
+ qhKtn6pYu8fowXibqMc4NPBYvmCw8CnddLWe6xKAFzDe3HXhn3OVqXpA16Tlplw+z4O6
+ MjCHxku7+A4DJ28cTAjyurLJCOz/ysIPHXCD4sfSIhS04s5nigtwpMSg5vSqQdsGlK4S
+ yIzYGvY5n6dPh16n1IOaCXwzJ4ivWOjWNoREEMuo/wt6Fyy01SJXbidHl4tfLnMzzaPE
+ UM0YFA6Q+vP439Fmbr9F02JaZnrRMYD2nyvA8PYT+iJa1e+xFyTatKRd5Qvpz3oVTIqi
+ NGzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760713969; x=1761318769;
+ d=1e100.net; s=20230601; t=1760713961; x=1761318761;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xbT8s7BgAOOCeKwpgykrHCA1cuKIxwsWITIY/NphJvA=;
- b=ArDHdvJf4A9ekdCVACR01ZOINN3n2UKfTe8r7pwX3mgNybj+/KHYc6+/Llpd5HhPkt
- a+XMnyBAAtDXO+wzLxmdcpHOUpJcDYiSgR2/n3tfB12Bbw7BY0ih79zSMpO68A471wsp
- oMtLrF421n0Wrf1ajuryWgGJeTb5xwvdwR5dcAicxR+kKA34VFto2BEGMHu+2U8DRrrf
- Ng3cnPPQxe324R9oRgEVeJ7pe8ymQVua0aS+ROXyoD2UFrnSzpil/QMNiH8qoGMQmYhY
- eNqrQ+NlaROmkQkYbkVqEMEw0nXDiHzSUN7A6M8VpEkmHhSG9C5ger7S7k9lLIT33/Qk
- 0uIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAEaiAey0kOIrSZvRebiUMEQWIaSD0D8qOVnmgpbIqI6rBPIi/yenwRO03Ed9K8l+OLRz51HoZxL6U@nongnu.org
-X-Gm-Message-State: AOJu0Ywyfhh/NwWFLkXEqlvtp5JT7H1PLFICWoJT9ZUoSz+jlssYQrMj
- t/T5t+cYTzUFCDf/7hRQCyajbXCFDuPLh0XSlhq83D1es+8SfgvWbz7fxGlL/f2yULhTcpZbnTi
- yCo9TsSo=
-X-Gm-Gg: ASbGnctUNsEvNA0TzinCb/q5GSUX+KkTgZ3K0F2x2DyTxhxtEFN6P+YZCg3xq7fYNjm
- TW66DK3DzyX1X4nJeopIhBgCsT3L+4euyuJeGP4Rva2LjlZriK0aowTBsRmzVYZNrU08R39ymgH
- Y5eD/hkS21yUJxXKtOGX5uK0WqfHLHWLeN2hwivzfz0TyPaQ/wFFU1STmdEgcHwIwV4cpSF6FGj
- 2dMf3JceQ/oDDldU9VkNI8CXvos2+6VboL4U+TlUcabFr0wfODCcmvPg6nFFbUMCmbWHu5Y1hfl
- 0WrFPERjcRCq6VEFbJiERaugmgZLtrlMK+yC+VZTJ5AXYiSmIZjuK6aIW1xqJJEO3c0OW9UbCKa
- k7VqZgyaIx4zO+vTw/3tZ6d+iN2FMlRjVWbG20RcBDkSEOKDy0a4fsXuOqFP2VaN6FvvgVH9K4k
- vmeGBM0nwPdmD9XHR8j8ixr67FzTgd7Ir6t/0=
-X-Google-Smtp-Source: AGHT+IHJLyfaYojF5dI1fdkvesYf/LVdDr7xZmRK0nsQgvsiFf6GtHIKJLF75Voxh+uUtjTBdZTanw==
-X-Received: by 2002:a17:903:8c6:b0:290:d0fb:55ab with SMTP id
- d9443c01a7336-290d0fb57e8mr45007315ad.50.1760713969279; 
- Fri, 17 Oct 2025 08:12:49 -0700 (PDT)
+ bh=koQsAFouNUd1W5J4wdrheLPAPSOaKLbycwvoS2z+Iws=;
+ b=BHwPRmc22MxH3tJNjd6f0kWOu4bW1aQPEZxYPe7boDU0T6jIYhlGKGlmZiJrVzr+dZ
+ tE8ZV6pSS3G9R6pf1DAZwsQJmlIsaYTlHT+PXfN6rXupDQ9RBI4k3Kky5hdU0NeIQ8bK
+ bR8FyQQuvR9aO0t7dC0XFHdiyMNOEx54RoLzj5OyE3+pl9BZR2rgHligEa1RcLYqku+a
+ Eo2BrzRi3q0hd2VURm7pxZRpli8lG/Afqf/sKum+Krm/bXf9qjJf0p4iAfpFh+oyP7Cn
+ Cfhh6PvrD+EqDSk5r9ya9qZENNUDP/X+mV9Sb5lTS43jGFjxo9CDHSGW9MBk5mydMQPw
+ BzFg==
+X-Gm-Message-State: AOJu0YyILuzJP9YNIDQZwoGnbIqg6EdhyItfT9F7wFd400WhRECspxSV
+ OI5AtLntP7CPckxKpTxS0uqdmZl1dy4M2rEX9SKsdEX3q78PLLcHb2QTvMfpqfzoP0KMbBYe7Ff
+ UlI2cLhA=
+X-Gm-Gg: ASbGncudaTK2T8j5FxqahpmLFj1Qf6Uz7W8d4TYMNkR8okD9L2C/TNY/M5+aGjJbunh
+ DGydw9kka/v8XY+lbqegNn6qQE/g5tZ6uNu4oV23YFXvhKwX+HlBFf6X67RJaEQDy9NuTpU322u
+ GnL1xXnoAI3ccqugkk2jYOxCXLP6zIOlzphwVuWx+7nTzlvnVIprJs2OsQQUbBitYSA/jXkteOK
+ MXRgrPfGnuqIQRrTega5GprJVg/cBWd6Ez3pfkvmyWJU2/RAJSg2Wdzb37y8RbZA0b48p3sMUM0
+ xeozfIkXPUsDU53Y5CNWpFqzV0Sjk5lIyAdfeMO5Ds0Dkf6lDDcko6oBYvsw9XiXum1Z0H3GTUn
+ qOmnuOgbeDcCQje6GOIGdGXU4pULEgaAuGXJbhhmi/TMlIiyHeu4lXRNFFxk+H6DTz5azyWr2CL
+ Wcd5wf9dstLioT/WMLR63escJl
+X-Google-Smtp-Source: AGHT+IGitKBv8nKclMo3hytN1NfGoHZ4dHPu/mBYSEb8q2cUanLsLBF7GD0YUb+xPmPRfE+IfBAssA==
+X-Received: by 2002:a17:902:d2c6:b0:290:c0d7:237e with SMTP id
+ d9443c01a7336-290caf831cdmr52810205ad.39.1760713960421; 
+ Fri, 17 Oct 2025 08:12:40 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2909939613csm66610595ad.51.2025.10.17.08.12.48
+ d9443c01a7336-2909934fde5sm66987155ad.41.2025.10.17.08.12.39
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 08:12:48 -0700 (PDT)
-Message-ID: <33f0a6e8-a84c-4071-b418-d8a218e8721a@linaro.org>
-Date: Fri, 17 Oct 2025 08:12:47 -0700
+ Fri, 17 Oct 2025 08:12:40 -0700 (PDT)
+Message-ID: <d2c32a8a-72d0-4409-9285-f35c8b5b6efa@linaro.org>
+Date: Fri, 17 Oct 2025 08:12:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/10] Various testing and s390x patches
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20251016162601.442557-1-thuth@redhat.com>
+Subject: Re: [PULL v2 00/75] Misc single binary patches for 2025-10-16
+To: qemu-devel@nongnu.org
+References: <20251016151108.18442-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251016162601.442557-1-thuth@redhat.com>
+In-Reply-To: <20251016151108.18442-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/16/25 09:25, Thomas Huth wrote:
->   Hi Richard!
-> 
+On 10/16/25 08:11, Philippe Mathieu-Daudé wrote:
 > The following changes since commit 8109ebdb95c45d9062c7e6e7beae0ee571fca4f8:
 > 
 >    Merge tag 'pull-loongarch-20251015' ofhttps://github.com/bibo-mao/qemu into staging (2025-10-15 14:49:51 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/thuth/qemu.git tags/pull-request-2025-10-16
+>    https://github.com/philmd/qemu.git tags/single-binary-20251016
 > 
-> for you to fetch changes up to d6f7f9254e333c56226bb7051e74ea57daea2fff:
+> for you to fetch changes up to 8dd133fa85bb49e2e61c489a566ab8460478dc24:
 > 
->    target/s390x/mmu_helper: Do not ignore address_space_rw() errors (2025-10-16 18:19:23 +0200)
+>    mailmap: Unify Clément Mathieu--Drif emails (2025-10-16 17:07:52 +0200)
+> 
+> v2: Remove legacy cpu_physical_memory_*() calls
 > 
 > ----------------------------------------------------------------
-> * Improve cache handling for the msys2 CI and the functional asset cache
-> * Clean ups for some minor issues in functional tests
-> * Don't ignore errors of address_space_rw in s390x MMU code
+> Various patches related to single binary work:
+> 
+> - Remove some VMSTATE_UINTTL() uses
+> - Replace target_ulong by vaddr / hwaddr / uint[32,64]_t
+> - Expand TCGv to TCGv_i32 for 32-bit targets
+> - Remove some unnecessary checks on TARGET_LONG_BITS
+> - Replace few HOST_BIG_ENDIAN preprocessor #ifdef by compile-time if() check
+> - Expand MO_TE to either MO_BE or MO_LE
+> 
+> Also:
+> 
+> - Remove legacy cpu_physical_memory_*() calls
+> - Fix HPPA FMPYADD opcode
+> - Unify Clément Mathieu--Drif email addresses
+> ----------------------------------------------------------------
+
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
-
 
