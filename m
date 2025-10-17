@@ -4,92 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED19CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 18:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86FBDCCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 18:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9omm-00009C-C7; Fri, 17 Oct 2025 14:02:40 -0400
+	id 1v9oxa-0002ON-Qo; Fri, 17 Oct 2025 14:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9omk-00008y-CI
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 14:02:38 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9omh-0005OW-Qt
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 14:02:38 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-78f3bfe3f69so2072070b3a.2
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 11:02:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760724152; x=1761328952; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=e8WRG3tvnNMCpSMg7Ei1UGKAf/OWnPSE7MFlBksmiPU=;
- b=xokibtkVGp8jDh9IW2mTSL6f0nzHdnyXfXqk/OM3Ynt817UnlfFouLKF1AtxUpFFId
- tgq+CnHZ/XFLBafW1XTnwddTos48FLg9QOFkauOWIAm38uhMphbo5tTiWXum7r1Rg+Nf
- b9/6qw2mZYNXa9zUssWcyePXsVSpg4IR1FqySPNbW0sw19CV4sBuLa2HJBcjJKceXFUg
- X/L7V68DV5rLNEskOfCCOfV4xwpzexsFL+is1E6VGya5fTi3aIwSSBAYPTlyq457XzML
- V49WLbtLEvEa1OzNKtPuKdTJbgY80vdwM3Xh2UsM9atOz9crRSQUd0q1hyf91VPkC6Lq
- m3jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760724152; x=1761328952;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e8WRG3tvnNMCpSMg7Ei1UGKAf/OWnPSE7MFlBksmiPU=;
- b=KcDxjaq39xmAxtfMoByx6cjviDvCvw3G4Bx/seWaol5iZ+FX4jT7Mq8SsVCU2q7ANy
- eWe3RNhQyZaJUoDQs/dT/wwsVRjHnzEr/noZOnfmdlbJVC+OlvD9NiMjZMI8svY9I5TM
- j6x0r/F7OdrvX50zieNMUbRP9tEKrGmayZLlvI8GfnObatc/wPES/OOivcpVoN7CnDwe
- MhOTUChAAnI+9pZfmakHx/nTAsNAc5tX9LMuotN9XwUI1zojWNwF4qeOgIgWTtXHdeNw
- 7T9du3NICPtOT4I6vvPnIyEkzELxmVtx2+yAjfS7q5GeNUryf719kk9mRTfvgji4rTtd
- xqkQ==
-X-Gm-Message-State: AOJu0YzjWUJQ+sJjkoA4dwKuJU9HVpxhRQYwfxdiKs3fSm/4s88x+mAj
- hwM8SeHIL6/YXqvNa0aPF9bdh3Vpiw4MFQ+gOun4g5thKeEJRon8XkSHqQIqKl6bufxerPn3GYl
- ++S7iT/s=
-X-Gm-Gg: ASbGncvEtSJatYqIXRyAlmlf9GkCv3OIeYPZnmDojcyS9Ws33qlCm5P6G35kCNCohbW
- TSx7XMe76ox6TPbwKsF8GHvrn6q/wObtm2kAGJBmsqVJl1tFdP7whVUnPS9DdmjTZmLq2gW4hvE
- 6DlaoAyg+iif/ix9sriorcJA8+HIlbareOjIWrUnLpN+6moDqDC7OL530nlo2+NYgicFxQpcns8
- 0rVzh6M+qoaL9GWblDIsT1aeW8aLWTBZLFSgjDTnMMzeZeUqinlwNv+6dP0rZ/61EIRqPG3lIoF
- szZsrJ2RiuaWL4tEfdf/0bRK95ICPr9xxs/0ui8jQEBPUoflkzrcsiplO/nO2gVnm1mNJHr4nh5
- eLzt3nSVKXJs9rwutHpSvrh/BTxwcSL1PhFY+6sYPCbwrXs4qRPCt2rmS3M0gSxRwOmkRwbYlv6
- i2TY4jDmgLaBRguw==
-X-Google-Smtp-Source: AGHT+IH3SIFrgV6V9xwlGkGz9Gu189QvRxAysAlov4HFqrjWORyU/wwIVQ4+WFlrWU2cpPtwELdcdw==
-X-Received: by 2002:a05:6a20:6a27:b0:2dd:5de9:537d with SMTP id
- adf61e73a8af0-334a83c71f4mr6038033637.0.1760724152502; 
- Fri, 17 Oct 2025 11:02:32 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33d5de8091fsm3582a91.19.2025.10.17.11.02.31
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 11:02:31 -0700 (PDT)
-Message-ID: <d6c47ef5-79aa-498a-a7c1-6a8e2dbf1000@linaro.org>
-Date: Fri, 17 Oct 2025 11:02:30 -0700
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v9oxV-0002O3-0G; Fri, 17 Oct 2025 14:13:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v9oxO-0006r2-8C; Fri, 17 Oct 2025 14:13:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59HDcTRb001444;
+ Fri, 17 Oct 2025 18:13:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=2XIPW68tCzsEnBieEeo99+dw8vO4R0
+ DtCfu3qUt40ew=; b=JsYYn5BqpOHYK0wYGLy89W6wTGJmI6K7WfbaZmy0uJzx4x
+ 6G3Yn8UOb2dZJzuNU9+c2OTsKvYoU7O0zCrgFYUJ2D7l9WOCdBKHhhEYk/0ks1Bf
+ 2wF5FDHwuPLWIflNcNEmjcGDcnbNuXq148p2y0yOLO3CkGvuqJ93JDTchvaYVSYj
+ e+HnIy64BgXDiCamtiAiThxDWATllQi2VWpG4TrXoCcmP3gOhfSFWDZreLyNO1kA
+ Hd3bUCPIlIE3LO7iVEqFTPAAwftIaQPmfSx30QbP2C0OOm+egW4bb9yzG86Jh9Js
+ Mii/Iu0/KNeyqjSf6F0/qq0gNM7XkAomC7aQeCgw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49rfp8fb0p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Oct 2025 18:13:35 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59HI6HHi024791;
+ Fri, 17 Oct 2025 18:13:34 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49rfp8fb0j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Oct 2025 18:13:34 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59HI88Wp018823;
+ Fri, 17 Oct 2025 18:13:33 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r2jn6ttd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Oct 2025 18:13:33 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59HIDTIh55902552
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Oct 2025 18:13:29 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A0D672004D;
+ Fri, 17 Oct 2025 18:13:29 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 49CC720040;
+ Fri, 17 Oct 2025 18:13:25 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.220.85])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 17 Oct 2025 18:13:25 +0000 (GMT)
+Date: Fri, 17 Oct 2025 23:43:23 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+Subject: Re: [PATCH v4 4/8] hw/ppc: Preserve memory regions registered for
+ fadump
+Message-ID: <5wyqyl4rgvro52s6xxkygd32azntsooqhoyknvyd5afkqrdpwd@ol7hymxsmodl>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-5-adityag@linux.ibm.com>
+ <e032c9c2-1df3-40db-9d74-4a115f612da4@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] tests/tcg/multiarch/linux/linux-test: Don't try to
- test atime update
-To: qemu-devel@nongnu.org
-References: <20251016150357.876415-1-alex.bennee@linaro.org>
- <20251016150357.876415-4-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251016150357.876415-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e032c9c2-1df3-40db-9d74-4a115f612da4@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: tj_NTMDVog6pKxwR_6hOPJnILh3-Qoq_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEyMDA4NCBTYWx0ZWRfX4rNw7nBcz0D+
+ uLuGH4tNg1MjCw/jy0EnG/pJb1dylcSjGkNu7xlbgdjhIqzz4FLipAa+VVmNL+c3NR/18YxOvnZ
+ lsK6UCFTyXxzu40tkmV4ReShaJRsh6pucG/gNeatm0PTBFePjwrhOkYnW8SMmdLUHw4l6oZ/3vT
+ 3dg0vtnuZRkHAvbppXc+VxleMHTzEermP+Wyjf8ObTaBoT6aXjBa5ohAKAlieFcatKaAaMTqsPT
+ ATpGZcV5OVwGe+vl+yNf+AWgUQ/0neZRS6d8RgQfiO7XFTZfN0ufe0GiyXhB2B5D0MsRe3yFRKy
+ Wm7Oh5dLVnKGRxvYAyBrbuugpRMUCT8Yi1fb84H5reTlowFY9MTF9SQHXMlDDEoBmnmn+iw69Qg
+ sXNnoSFzg0zd+Cbmt2TziNLRqO4WCg==
+X-Proofpoint-GUID: yAw7Bemu84JdKt8Y8RNJ1BhM4O3exH1T
+X-Authority-Analysis: v=2.4 cv=af5sXBot c=1 sm=1 tr=0 ts=68f2874f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=HVEMHGV9u8Dng3hu1ysA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-17_06,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510120084
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,56 +131,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/16/25 08:03, Alex Bennée wrote:
-> From: Peter Maydell<peter.maydell@linaro.org>
+On 25/10/17 06:36PM, Sourabh Jain wrote:
 > 
-> The linux-test test includes an attempt to check the utime and stat
-> syscalls by setting the atime and mtime of a file to specific values,
-> and then calling stat() to check that the values read back correctly.
 > 
-> Unfortunately this is flaky, as it will fail if some other process
-> (for instance a virus scanner, backup program, etc) gets in and reads
-> the file between the utime() and stat() call, resulting in a host
-> syscall sequence like this:
+> On 23/03/25 23:10, Aditya Gupta wrote:
+> > <...snip...>
+> > +    /*
+> > +     * Optimisation: Skip copy if source and destination are same
+> > +     * (eg. param area)
+> > +     */
+> > +    if (src_addr != dest_addr) {
+> > +        /*
+> > +         * Using 'g_try_malloc' as the source length is coming from kernel,
+> > +         * which can be invalid/huge, due to which allocation can fail
+> > +         */
+> > +        copy_buffer = g_try_malloc(src_len + 1);
 > 
-> utimensat(AT_FDCWD, "file2",
->    [{tv_sec=1001, tv_nsec=0} /* 1970-01-01T01:16:41+0100 */,
->     {tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */], 0) = 0
-> # successfully set atime to 1001 and mtime to 1000
-> statx(AT_FDCWD, "file2", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT,
->    STATX_BASIC_STATS,
->    {stx_mask=STATX_BASIC_STATS|STATX_MNT_ID,
->     stx_blksize=4096, stx_attributes=0, stx_nlink=1, stx_uid=32808,
->     stx_gid=32808, stx_mode=S_IFREG|0600, stx_ino=21659016,
->     stx_size=100, stx_blocks=8,
->     stx_attributes_mask=STATX_ATTR_COMPRESSED|STATX_ATTR_IMMUTABLE|
->           STATX_ATTR_APPEND|STATX_ATTR_NODUMP|STATX_ATTR_ENCRYPTED|
->           STATX_ATTR_AUTOMOUNT|STATX_ATTR_MOUNT_ROOT|STATX_ATTR_VERITY|
->           STATX_ATTR_DAX,
->     stx_atime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
->     stx_ctime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
->     stx_mtime={tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */,
->     stx_rdev_major=0, stx_rdev_minor=0, stx_dev_major=252,
->     stx_dev_minor=0, stx_mnt_id=0x1f}) = 0
-> # but when we statx the file, we get back an mtime of 1000
-> # but an atime corresponding to when the other process read it
-> 
-> and which will cause the test program to fail with the error
-> message "stat time".
-> 
-> In theory we could defend against this by e.g.  operating on files in
-> a dummy loopback mount filesystem which we mounted as 'noatime', but
-> this isn't worth the hassle.  Just drop the check on atime.
-> 
-> Cc:qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> Reviewed-by: Thomas Huth<thuth@redhat.com>
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> ---
->   tests/tcg/multiarch/linux/linux-test.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
+> The region size could be in GBs. I think it is better to do it in chunks.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Sure Sourabh, will do in chunks of 32MB in v5.
 
-r~
+> 
+> And don't we need to free the copy_buffer?
+
+No, since I declare it as 'g_autofree', so it's freed automatically at
+all exits.
+
+> 
+> > +        if (copy_buffer == NULL) {
+> > +            qemu_log_mask(LOG_GUEST_ERROR,
+> > +                "FADump: Failed allocating memory (size: %ld) for copying"
+> > +                " reserved memory regions\n", src_len);
+> > +
+> > +            return false;
+> > +        }
+> > +
+> > +        /* Copy the source region to destination */
+> > +        io_result = address_space_read(default_as, src_addr, attrs,
+> > +                copy_buffer, src_len);
+> > +        if ((io_result & MEMTX_DECODE_ERROR) ||
+> > +            (io_result & MEMTX_ACCESS_ERROR)) {
+> > +            /*
+> > +             * Invalid source address is not an hardware error, instead
+> > +             * wrong parameter from the kernel.
+> > +             * Return true to let caller know to continue reading other
+> > +             * sections
+> > +             */
+> > +            region->error_flags = FADUMP_ERROR_INVALID_SOURCE_ADDR;
+> > +            region->bytes_dumped = 0;
+> > +            return true;
+> > +        } else if (io_result != MEMTX_OK) {
+> > +            qemu_log_mask(LOG_GUEST_ERROR,
+> > +                "FADump: Failed to read source region in section: %d\n",
+> > +                region->source_data_type);
+> > +
+> > +            return false;
+> > +        }
+> > +
+> > +        io_result = address_space_write(default_as, dest_addr, attrs,
+> > +                copy_buffer, src_len);
+> > +        if ((io_result & MEMTX_DECODE_ERROR) ||
+> > +            (io_result & MEMTX_ACCESS_ERROR)) {
+> > +            /*
+> > +             * Invalid destination address is not an hardware error,
+> > +             * instead wrong parameter from the kernel.
+> > +             * Return true to let caller know to continue reading other
+> > +             * sections
+> 
+> Logging MEMTX_DECODE_ERROR would help identify kernel bugs. I think
+> we should log this for both read and write.
+
+Makes sense. Will do.
+
+> 
+> > +             */
+> > +            region->error_flags = FADUMP_ERROR_INVALID_DEST_ADDR;
+> > +            region->bytes_dumped = 0;
+> 
+> Seems like caller is already setting bytes_dump to 0. But even if you wanna
+> do here.
+> How about setting region->bytes_dumped = 0 early to avoid setting at
+> multiple
+> places?
+> 
+> In cases you need to free the copy_buffer I recommend having an exit label
+> in this function.
+
+As we declare it as 'g_autofree', 'g_free' will automatically get
+invoked when the variable goes out of scope.
+
+> 
+> > +            return true;
+> > +        } else if (io_result != MEMTX_OK) {
+> > +            qemu_log_mask(LOG_GUEST_ERROR,
+> > +                "FADump: Failed to write destination in section: %d\n",
+> > +                region->source_data_type);
+> > +
+> > +            return false;
+> > +        }
+> > +    }
+> > +
+> > <...snip...>
+> > +            fdm->rgn[i].error_flags =
+> > +                cpu_to_be16(FADUMP_ERROR_INVALID_DATA_TYPE);
+> > +        }
+> > +    }
+> > +
+> > +    return true;
+> 
+> This function only returns true. Since caller has some action when this
+> function
+> returns false I am considering there is something wrong in this function.
+> 
+> If this suppose to return true always then lets not have return at all.
+
+Agreed return type is of no use as of this patch. The return type being
+bool is needed when CPU register saving is implemented, where we return
+false, signalling a HW error that we failed to save registers.
+
+Thanks,
+- Aditya G
+
 
