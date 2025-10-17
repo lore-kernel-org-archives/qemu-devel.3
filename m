@@ -4,103 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA4BCCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 15:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC48CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 15:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9mk2-0000kr-1j; Fri, 17 Oct 2025 11:51:42 -0400
+	id 1v9moK-0003ET-9k; Fri, 17 Oct 2025 11:56:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v9mk0-0000gZ-Cu
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:51:40 -0400
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v9moG-0003DR-Tq
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:56:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v9mjs-0003qc-9Q
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:51:39 -0400
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
- by mailfhigh.stl.internal (Postfix) with ESMTP id B8D647A0082;
- Fri, 17 Oct 2025 11:51:29 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-09.internal (MEProxy); Fri, 17 Oct 2025 11:51:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1760716289; x=
- 1760802689; bh=yaOzH4ZD5Q2CrGhXF6tFydMjuFnRzi1IMa76PXsDv6I=; b=R
- H7qRfeD7RZ9JX3OPWDhzXLyYAXS9G8yDRCsend28Q4igda4wN7MUbrfdLhVAqgET
- tD6Ds5QweVvpIQMk+Brkm4wQjJmhXZOR1GgWjZ4SYEyqacW9+F1xqRf8BfDtV7G5
- AaX6uqQmlhCS5YR4kQq0fQxQLGozxNy4x/LzXL91L2skuYe65Z1ac1slOcVn2f85
- stf19SBvcy+eczV/JJ5f/SW8+gp65TUpq6e8gg344zOaJltPIm+7jmFixGK6EsAk
- lZyWdG7xxIRino2ZUx0ncMy6HGWFftknK8MeNAdSuWtHZKA/4/D21+to9YSP0lP5
- 0GSSwkRq9wBWO3NbKFLkw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1760716289; x=1760802689; bh=y
- aOzH4ZD5Q2CrGhXF6tFydMjuFnRzi1IMa76PXsDv6I=; b=wUWLfG6HV2ckjxGij
- R2lc8dXUBp0Roq15WppumhL0cslpG0C14stqQ8DU3NruE+/93JIVcfnBlUdWbv3j
- ZJs9K6AMP/6nAtjaYw39Z5pjuB9U4Iq4jhg/BgWg1R8q15n6+PX/jQo9US2WR4Rx
- kXH8PdgSgDn4qtBRwGJN7yQJOO1DnLYfoppNgQ7FZ7YaZ7OKwPpjQf2s6jPxf9Z8
- /cY+8yd+9MU5XE8at8FyQzJixY5wPgSohzNj/gFI9VACP5TiXWDtfcAYtuFTsC3K
- QLZ/snEXTJP1zLNJ8M3kHB+owjOAGpb9YkHNi/kxdSET3wHLdBB3Jy5wF2roUsdu
- DWDtw==
-X-ME-Sender: <xms:AWbyaAj7RbkJMSoaNN5RMPxELHBEI3KZyQU2oENaN2EJbq4_OmMY4A>
- <xme:AWbyaP744TiifaaqORZLn-80pZKrSlMCkVk_3_Zj701jbTAaLq3I02_RtuB9B6Znj
- pLQ-z7lznpwp_Fjc5-VhVZu9qtBruvUo5KIjn9OMOFRfIKZ8iYQgWc>
-X-ME-Received: <xmr:AWbyaAbLJa_D_CXlzR6W9uVpReqUS2lRG35mB2uetSZxFLmF92_GDC7YAWvn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdelheekucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
- ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
- eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
- gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtoh
- hmpdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehq
- vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthhonh
- esvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdig
- hiii
-X-ME-Proxy: <xmx:AWbyaM7_p2pepeIJu4YM31DV7yiHfSmxZHJBnwPAWiZcOssOgb0O8A>
- <xmx:AWbyaLC7WATriPXvHVBYyuY0fqGQL0hG61XFhKP6_lVJFGvZKI7k9w>
- <xmx:AWbyaKdjpDyr_cqZoRE8sz-YOmq6mPKJuRaz7i72kEeduRpXh9u8KQ>
- <xmx:AWbyaCLAs4njkP2ZL5L7rYvF_SABS4WNxQaga5QDuj-swCIY5p6bJQ>
- <xmx:AWbyaDWsRseybaKy7dVUEelek-wRwzLbknGkEjgIOTIkoISfNe5jnKcO>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Oct 2025 11:51:28 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id eebbe656;
- Fri, 17 Oct 2025 15:51:28 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
-To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu, kraxel@redhat.com, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v4 1/1] ati-vga: Fix framebuffer mapping by using
- hardware-correct aperture sizes
-Date: Fri, 17 Oct 2025 11:51:17 -0400
-Message-ID: <20251017155117.1953708-2-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251017155117.1953708-1-chad@jablonski.xyz>
-References: <20251017155117.1953708-1-chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v9moC-0004To-DB
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:56:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760716551;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=syK7eWmOhrAxwTy1DDdEa/5Z2/CCRj5xu3iY+rH1JEM=;
+ b=agysOYBIZRJAGXxF638G0Uhjq/oRj0E4ceXOoZpT5pgWfhJEEXfis5B4prxSjXveopdIyw
+ ml2M8/2Vihn2bkeiS1ZxYE+Cg6HWq8KU/OTJkuiY74sJFaQZjJXvPTO1u+8vBZtT0mxpwu
+ STdsK9WHANf8wFbJTHOYwA8uFA22W8s=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-613-geKGzzlIM_6IqPeiL2L_2w-1; Fri, 17 Oct 2025 11:55:48 -0400
+X-MC-Unique: geKGzzlIM_6IqPeiL2L_2w-1
+X-Mimecast-MFC-AGG-ID: geKGzzlIM_6IqPeiL2L_2w_1760716547
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-86b8db0e70dso108897206d6.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 08:55:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760716547; x=1761321347;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=syK7eWmOhrAxwTy1DDdEa/5Z2/CCRj5xu3iY+rH1JEM=;
+ b=c3YoFlEi8ZbKMuSy2Y2rFW9FvLQjBlcVUzDW2KJv9Wae5oPatvY+hW+RWj+K/abxJD
+ BTvUFRKqEPF6QijY4uucarD5ZjNMKhBJwUECv1xAlp4k3WppSFC1aWqjrug2fi0GVBn7
+ hZylEezywU54UkGIEGS+/VHTsDcjysaCraM+XZwnCXTL8D1aSNYGkBOdEl/rFNGG2PkC
+ qxJes+z1dE1z0zmKyGT+e42jxCoDmDsPAtoKfqXIny1VChMi2gthWFvTCUTcEE5Jyx8h
+ 21F6Q9ZWzomJfSsDEK/HE26ZKDYNmLktxD67NnNmr5FSe3fdUO06EsBP3OAT95bnYivz
+ oNKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQ60AfKqIhwo2rDRGE1l+mlyGX911spPWYHQ6QFMd7VvAPEPQGbRVa36dL8Z0bTm6rb8QwD72q3POv@nongnu.org
+X-Gm-Message-State: AOJu0YzoRrs79Vs3E945pagzwnSskut9iZKNqht09xHvKn2/kxxz7ZcM
+ RQqZtA9vSElH/wPXnhkfk/gB8PQzB6JFnED1VIBMybvKWJezCG0RMvg1GxsFtBJPFNOXQWxi194
+ ojlQvN9yOb2FHL3mIBJVSZ5s1l6hDmUTjPpoKRxqE4yyvBibncwt0mNlf
+X-Gm-Gg: ASbGncuh2CGRUuVpUbESu29JgzPVT7ylVl069ZkLNE/QjakPD6wlCKlEKPihbLAmKyg
+ 1qBx6ZJSDb+HpWS9oKmNpnWgnbZT5/D30q4EXPODtjpe3GOussNfuhaRpi9hKj4DIDfbOuLUnUV
+ OD/SCgJt9wzC/n738owHvfqt8RUYlbCnJFUwgMiRtVIf9qpJbesEUuPcZVdSdZCBaAZQl8Ljjjt
+ lQW9sj1Y4wCclORpG6TwBTetP9AHNbiY9h0c7QrsV6gcF53JMrvUYdzaGxWWMMhEbwewYqgpcIA
+ 4IiCTLG2e8UaIABXxkKDvS8kBSsmHIECoH06Vb2/0kcssU8whxH/fPtLsLBr5bPznfQ=
+X-Received: by 2002:ad4:5f0e:0:b0:87c:8e1:d739 with SMTP id
+ 6a1803df08f44-87c202c8d38mr55561146d6.23.1760716547374; 
+ Fri, 17 Oct 2025 08:55:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2KUihrUt88zOMw0c8qaUWieYca6qNjHyi5CIIz1mMcRAsAiVVgAL69Nn1PwmEyERP42kvLA==
+X-Received: by 2002:ad4:5f0e:0:b0:87c:8e1:d739 with SMTP id
+ 6a1803df08f44-87c202c8d38mr55560636d6.23.1760716546824; 
+ Fri, 17 Oct 2025 08:55:46 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87cf5237273sm1213676d6.26.2025.10.17.08.55.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 08:55:45 -0700 (PDT)
+Date: Fri, 17 Oct 2025 11:55:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ mst@redhat.com, jasowang@redhat.com, farosas@suse.de,
+ sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
+ michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
+ parameter
+Message-ID: <aPJm_vrlDTxSNzYR@x1.local>
+References: <aO_--QWDJO7iOhR4@x1.local>
+ <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
+ <aPCtkB-GvFNuqlHn@redhat.com>
+ <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
+ <aPE8Oo5D3oesB7sV@x1.local> <aPE-vmyg1mLDO4pf@redhat.com>
+ <aPFHl3VWV0pCmzd1@x1.local> <aPFOHjl5BoWEMqSL@redhat.com>
+ <aPFVWi1pwxS8yGay@x1.local>
+ <7995fd74-5f02-4cd6-94b5-f1b361298257@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b5-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+In-Reply-To: <7995fd74-5f02-4cd6-94b5-f1b361298257@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,115 +121,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rage 128 cards always request 64MB for their linear (framebuffer)
-aperture and R100 cards always request 128MB. This is regardless
-of the amount of physical VRAM on the board. The following are results
-from real hardware tests:
+On Fri, Oct 17, 2025 at 09:51:26AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 16.10.25 23:28, Peter Xu wrote:
+> > On Thu, Oct 16, 2025 at 08:57:18PM +0100, Daniel P. Berrangé wrote:
+> > > Errm, machine types apply to devices, but this is about transferring
+> > > backends which are outside the scope of machine types.
+> > 
+> > Ah.. I didn't notice that net backends are not inherited by default from
+> > qdev, hence not applicable to machine type properties.
+> > 
+> > Is it possible we enable it somehow, so that backends can have compat
+> > properties similarly to frontends?
+> 
+> But that would mean, that we can't reconfigure a backend during live migration.
+> 
+> In my understanding, machine type properties are visible to the guest,
+> and that's why we can't change them for running vm, even during live
+> migration.
 
-Card                              VRAM    PCI BAR0   CONFIG_MEMSIZE  CONFIG_APER_SIZE  AGP_APER_OFFSET
------------------------           ----    --------   --------------  ----------------  ---------------
-Rage 128 Pro Ultra TF             32MB     64MB       0x02000000      0x02000000        0x02000000
-Rage 128 RF/SG AGP                16MB     64MB       0x01000000      0x02000000        0x02000000
-Radeon R100 QD [Radeon 7200]      64MB    128MB       0x04000000      0x04000000        N/A
-Radeon RV100 QY [Radeon 7000/VE]  32MB    128MB       0x02000000      0x04000000        N/A
+IIUC machine type properties may or may not be visible to the guest.  It
+should depend on whether it is relevant to a guest-visible behavior.  Here
+a flag showing "whether TAP, as a backend, can migrate" shouldn't be
+exposed to guest.
 
-Previously the linear aperture (BAR0) would match the VRAM size.
-This discrepancy caused issues with the X.org and XFree86 r128 drivers.
-These drivers apply a mask of 0xfc000000 (2^26 = 64MB) to the linear
-aperture address. If that address is not on a 64MB boundary the
-framebuffer points to an incorrect memory location.
+I was indeed expecting that one will need to qom-set it for each device if
+you want to get rid of versioned machine types.  It's not ideal interfacing
+as what Dan was looking for, but it should still work so far, and I think
+it might still be fair if it's only needed without machine type versionings.
 
-Testing shows that the Radeon R100 also has a BAR0 larger than VRAM
-(128MB in this case) and the X.org radeon driver also masks to 64MB.
+> 
+> Bringing here another type of properties, which we _can_ change for
+> running vm (even if changing is not very comfortable for admin), will
+> be like tying ourselves hands.
+> 
+> And yes, there is a way to change any properties by qom-set. But it
+> lays out of paradigm of machine types, and normally we can't change
+> most of properties in flight.
+> 
+> 
+> Or in other words: if we _can_ go on only with migration parameters,
+> that actually shows, that what we are talking about is definitely
+> property of migration, not property of device.
+> 
+> 
+> And final note: if we can use one mechanism instead of two mechanisms,
+> it makes the architecture twice simpler. Trying to go on with _only_
+> device properties would mean run a bench of qom-set commands before
+> every migration (as we have to distinguish local and remote migrations
+> anyway), that looks bad. On the other hand, go on with _only_ migration
+> parameter is feasible and looks better.
+> 
+> 
+> And very final note: making global parameter + per-device parameters,
+> actually, global parameter become a workaround to the fact that we
+> don't want run a bench of qom-set commands. So, global parameter is
+> an additional API to hide inconvenience of the main API.
 
-For Rage 128, CONFIG_APER_SIZE also differs from the previous value and
-the behavior stated in the documentation. The Rage 128 register guide
-states that it should contain the size of the VRAM + AGP memory. The cards
-tested above show that this isn't the case. These tests also included
-enabling/disabling AGP with 8MB of memory. It didn't change the
-contents of CONFIG_APER_SIZE.
+IMHO it's not a workaround.  To me, it's a better way of abstraction,
+because the migration side provides the capability of passing FDs, and
+whatever is generic about that should be attached to the global knob.
+Migration shouldn't care about behavior or attributes of a specific device.
+Listing the devices in any way in migration's QAPI is a workaround instead.
 
-For both Rage 128 and R100 the CONFIG_APER_SIZE is half of the PCI BAR0 size.
+But I agree I do not know whether it's easy to have net backends support
+machine types properties.  I think it still makes sense logically that a
+net backend is a TYPE_DEVICE, even if it's a backend device which is not
+directly visible to the guest.
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/display/ati.c     | 16 ++++++++++++++--
- hw/display/ati_int.h |  5 +++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+Thanks,
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index f7c0006a87..0b4298d078 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -361,7 +361,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-                                       PCI_BASE_ADDRESS_0, size) & 0xfffffff0;
-         break;
-     case CONFIG_APER_SIZE:
--        val = s->vga.vram_size / 2;
-+        val = memory_region_size(&s->linear_aper) / 2;
-         break;
-     case CONFIG_REG_1_BASE:
-         val = pci_default_read_config(&s->dev,
-@@ -952,6 +952,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
- {
-     ATIVGAState *s = ATI_VGA(dev);
-     VGACommonState *vga = &s->vga;
-+    uint64_t aper_size;
- 
- #ifndef CONFIG_PIXMAN
-     if (s->use_pixman != 0) {
-@@ -1011,7 +1012,18 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
-     /* io space is alias to beginning of mmregs */
-     memory_region_init_alias(&s->io, OBJECT(s), "ati.io", &s->mm, 0, 0x100);
- 
--    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &vga->vram);
-+    /*
-+     * The framebuffer is at the beginning of the linear aperture. For
-+     * Rage128 the upper half of the aperture is reserved for an AGP
-+     * window (which we do not emulate.)
-+     */
-+    aper_size = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
-+                ATI_RAGE128_LINEAR_APER_SIZE : ATI_R100_LINEAR_APER_SIZE;
-+    memory_region_init(&s->linear_aper, OBJECT(dev), "ati-linear-aperture0",
-+                       aper_size);
-+    memory_region_add_subregion(&s->linear_aper, 0, &vga->vram);
-+
-+    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &s->linear_aper);
-     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
-     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mm);
- 
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index f5a47b82b0..708cc1dd3a 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -10,6 +10,7 @@
- #define ATI_INT_H
- 
- #include "qemu/timer.h"
-+#include "qemu/units.h"
- #include "hw/pci/pci_device.h"
- #include "hw/i2c/bitbang_i2c.h"
- #include "vga_int.h"
-@@ -29,6 +30,9 @@
- /* Radeon RV100 (VE) */
- #define PCI_DEVICE_ID_ATI_RADEON_QY 0x5159
- 
-+#define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
-+#define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
-+
- #define TYPE_ATI_VGA "ati-vga"
- OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
- 
-@@ -97,6 +101,7 @@ struct ATIVGAState {
-     QEMUCursor *cursor;
-     QEMUTimer vblank_timer;
-     bitbang_i2c_interface bbi2c;
-+    MemoryRegion linear_aper;
-     MemoryRegion io;
-     MemoryRegion mm;
-     ATIVGARegs regs;
 -- 
-2.51.0
+Peter Xu
 
 
