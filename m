@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C25BCCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81714CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kQr-0006Zx-BC; Fri, 17 Oct 2025 09:23:45 -0400
+	id 1v9kYF-0000BJ-Ep; Fri, 17 Oct 2025 09:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v9kQm-0006YU-02
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:23:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v9kQe-000723-J4
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:23:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760707409;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HaxWyWdeeumA9qtoL3XFb3fw+Bju+xyOc2rFcxfl41s=;
- b=fwSrRaEB7fleToV4qs3nQiofp+Qwz9k1Nbaf7HU4PTUYXdrdB35pCPWDnpZTNd2whyFE5W
- JUifbL/LTnBjebmltl5FUaKk5Fr9jD4GxZL9f9jolIy+SZ7a+OLWEyuFl19d+KLlRRLBDG
- 7NYBSre/w6LTtIx2Ms/QnacWc34ar3c=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-NyrrG_rEOZKt5SvLuBI_Lw-1; Fri, 17 Oct 2025 09:23:28 -0400
-X-MC-Unique: NyrrG_rEOZKt5SvLuBI_Lw-1
-X-Mimecast-MFC-AGG-ID: NyrrG_rEOZKt5SvLuBI_Lw_1760707408
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-872d2ad9572so688708785a.3
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:23:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760707408; x=1761312208;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kYB-0000AV-QG
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:31:19 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXz-00081z-EF
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:31:19 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3ee130237a8so1306146f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:31:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760707862; x=1761312662; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HaxWyWdeeumA9qtoL3XFb3fw+Bju+xyOc2rFcxfl41s=;
- b=nIniKBnYhQ50cOnJASaksXAUFA4GK63gPDjsJQPO5okosoDc3xL3eaQd0F9DSGFyM5
- jqBrtfoo7CVLNu4wN+mMKlTVvrZOSdkU/hIyF5GEuKQEXwc/4KDm4RSrLihrCXeHs4fL
- IeiKwl3w3K7SBxlRz+vObzejSe9FiaQJCugBBDd0yi/55I0K02qehhR7yCMLB6cQi+Hb
- xEfzgLRUZu0jPU1E6qIiN9eP9jid4B1JITItprm3bYXt++rMzfPwDmjgNwysZugFl/MW
- TFIi7tvL4JnpxBgo4hN8QSc2UF5gYtoITXhpNwMl/gQIk7qgRvquPNQ3LjeWhZvzbThL
- Y9Sg==
-X-Gm-Message-State: AOJu0YxjhuUz+7+qyWvFQ9SUAdPmQVC1R+qLkNODwM5y5Cdht0izlLwO
- o1eIGSUaobYQULiv5//zJTXXBm06jLTF8KJtJNTtO3sxnmZZVR/DlrRwOM/xT/xDnGSfTNiMZAi
- akLl4CeHY0h9lRtSaCPb5o6VYUStgZHLoK8XM8czEJI26zwYu5ub/EXAc
-X-Gm-Gg: ASbGnctp8MnvYZFZkOWp4Gnynp4z7z1/oAdmYd+/cZ+uOaaJcdUaCO1TQz/kBwxE0xt
- R2EyyCp09txGP0I4ogFXnaeQ9xMnb6ZlFXOla6x8Xvdep10Cu/5AWWNlAeEPjupfWkqeu7330/S
- EaUZVfcROU23tWstjfmy+93c0apsbBrT18L0RlwRjzxLf8dK2Yo/6fXHkO/KKB5Qt/nhmEGN4y1
- kxdXK68VU7tTVzkv/xGMS/O5TSN/T4/RpFcHs6UypK2Xl7YFGEMaCnQhR/iVfG2ZAewxw12zspk
- 35IDm1YHPzpF7IoAMmH0c9u4AtI6RYbDabJ7R0Q778WYYtIvCK/8YpVJ5zO/CPnCoehehVskSc3
- O9zLnryu/DOscmA0r26ipWj3Z0lxXbvXw3T7luBWf1VOFtMcOzcs=
-X-Received: by 2002:a05:622a:95:b0:4e8:a73c:87d8 with SMTP id
- d75a77b69052e-4e8a73cb645mr10301601cf.71.1760707407844; 
- Fri, 17 Oct 2025 06:23:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXx4FKwcbNrnjhj7thAJxuRHtDuNzkf9RRGy5eDqKk07rzVEgdA8V6JP7A8xBPGibbQ8JCTg==
-X-Received: by 2002:a05:622a:95:b0:4e8:a73c:87d8 with SMTP id
- d75a77b69052e-4e8a73cb645mr10301101cf.71.1760707407342; 
- Fri, 17 Oct 2025 06:23:27 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
- [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e8a8cf1a7dsm2049291cf.7.2025.10.17.06.23.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Oct 2025 06:23:26 -0700 (PDT)
-Date: Fri, 17 Oct 2025 15:23:20 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>, Ani Sinha <anisinha@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 2/5] igvm: add support for igvm memory map parameter
- in native mode
-Message-ID: <lvk2mna2vasyqb2ws6ylnyhtec7iym32mdreqglae6gupnejcw@rxhsvsjf33xe>
-References: <20251015112342.1672955-1-kraxel@redhat.com>
- <20251015112342.1672955-3-kraxel@redhat.com>
+ bh=bohEM9UlUebYg5TCW40RaN2S1kCYQfAGCU/82ulclMg=;
+ b=V1tsaBAvgZH2GkJeE068sq4NZzl1R2r24c5M0mlD66FABgbX8wSE1UFg6haM/mlcUC
+ qNePtlIwKGB8NCLCA7/xiemB1sGgtfXFHU7zaXW5BnOW7hC0qgs4w4rt54aVqfYoYO9b
+ PX7FJLD494U6itaVdg1syXHAcFJNPxahL/YhHc1/J5ECUaGiBZ9oj/hE8zzvsMDe+jPK
+ F51OnK0ZiaDogwxBXAuREamWhBXTSRCWl95KnYIPvav7obJNcjFFxVKyuVQDKDyUStvM
+ ZnV6o0RuoVtEaa4/2jjsU3H806VjQrVp+KdmcafelXF+0QCro5h8kanXH6uIHTdrMUBD
+ A7Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760707862; x=1761312662;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bohEM9UlUebYg5TCW40RaN2S1kCYQfAGCU/82ulclMg=;
+ b=vjufJ0TDyJo1108ROeqpjgyk1s+3kwWhVA13A5vNQ63whMLTDEoT29nNhlDhIH6Yd6
+ PjgYzcbbV+VXMtB9sl8wC9lJAZUJthw2xV/XP/xIC3QlrWpIDuAMxbqN9TARA6Q4nSr/
+ +NC5FFj2DoO7CHtrDc25hAacfSRjkAyq61h9xZCQOaFfeVANcZ9ey6Ycvf6xeIh8gRVj
+ gQA1iCXOWVSYEUlgEyT7AAuqadAYhaGAWgNsPtXwXKJq8u0PJ6eX1PBoRmbEYCc1d8x3
+ B2UbNlaXjnoAJx8VkRmwAgKGIEr9cMEbamOeL87yIqCWVbFTFyVjVYxSk2Y1lz4P7FcE
+ cL/w==
+X-Gm-Message-State: AOJu0YyaTFmNI9/K0itk02qqOFly4Mfc9hwg+uqHPvjuZuYsBu6WcnJy
+ A7uKhoCMZXr26SIhONHDOeGvHiJ4T2ZzKHXx487lixZULlsAatKsqezcBnl9ET5ONFxruABIba0
+ mFza4e9k=
+X-Gm-Gg: ASbGncud1+LrJg3ISGODG1J8TE0Sk13jfmoMI/ZNFwNuvGfTEaOWd3Ow1OKZM+qQsKU
+ 0mktIfBYcyoAJs0d0UcTlXfPryQ/00v1ekGPYoNZLHEIHV/7DW6ON+e0ksEteFt0EX2lREqQnHR
+ VLTi2tKWZQuBVrW1OMoas84bIP5nMn43jwIdPYNnqQ2R8vWb2ZveUYHTPQY0rKWLG9Vo+eau0H9
+ RM/yAlx0ls83k7xmvUMPZl3YBXVlc5jGzN5IQneEmWEWZn68iqyxEtB9Sjgz6twQXgbUn5hsslH
+ wMqFN4WPFQZpl9uAaLU72LoPOsbRTcZ8plnSMU6Zhp4AiM4NEVGSA/VjG41yxY4sxvig+m8WwU6
+ fZ6MxV7Lv2x4qS2c3PCc/gk/wciSJJ2ZRLPB0olssQEF2tCqZgTXp8LhmPqJvkPpRwgFRQL1nAj
+ kc24Hyt76bfdoTJBux/yUTpgu7wg9RuvkJS7Eh7t8NklxzF05bUA==
+X-Google-Smtp-Source: AGHT+IHqDWp1P+x3Ya1r/WBGm3tSkclNfCesfNtURh9TP9OjbvDwELKcx5DmmiaoMLNO5HdZV1dOUQ==
+X-Received: by 2002:a05:6000:2dc9:b0:3ec:e276:5f43 with SMTP id
+ ffacd0b85a97d-42704da64e0mr2312332f8f.18.1760707861815; 
+ Fri, 17 Oct 2025 06:31:01 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426feeb7441sm10192262f8f.43.2025.10.17.06.31.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 17 Oct 2025 06:31:01 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 11/12] hw/s390x/ccw: Remove S390CcwMachineClass::max_threads
+ field
+Date: Fri, 17 Oct 2025 15:30:00 +0200
+Message-ID: <20251017133002.61410-12-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251017133002.61410-1-philmd@linaro.org>
+References: <20251017133002.61410-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251015112342.1672955-3-kraxel@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,214 +108,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 01:23:39PM +0200, Gerd Hoffmann wrote:
->Add and wire up qigvm_x86_get_mem_map_entry function which converts the
->e820 table into an igvm memory map parameter.  This makes igvm files for
->the native (non-confidential) platform with memory map parameter work.
->
->Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->---
-> include/system/igvm.h   |  5 +++++
-> backends/igvm.c         | 18 ++++++++++++----
-> stubs/igvm.c            | 21 +++++++++++++++++++
-> target/i386/igvm.c      | 46 +++++++++++++++++++++++++++++++++++++++++
-> stubs/meson.build       |  1 +
-> target/i386/meson.build |  3 +++
-> 6 files changed, 90 insertions(+), 4 deletions(-)
-> create mode 100644 stubs/igvm.c
-> create mode 100644 target/i386/igvm.c
->
->diff --git a/include/system/igvm.h b/include/system/igvm.h
->index a4abab043a1f..3f72a40b8897 100644
->--- a/include/system/igvm.h
->+++ b/include/system/igvm.h
->@@ -19,4 +19,9 @@
-> int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
->                       bool onlyVpContext, Error **errp);
->
->+/* x86 native */
->+int qigvm_x86_get_mem_map_entry(int index,
->+                                ConfidentialGuestMemoryMapEntry *entry,
->+                                Error **errp);
->+
-> #endif
->diff --git a/backends/igvm.c b/backends/igvm.c
->index 723d45b755a0..e949c81abb9a 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -12,6 +12,7 @@
-> #include "qemu/osdep.h"
->
-> #include "qapi/error.h"
->+#include "qemu/target-info-qapi.h"
-> #include "system/igvm.h"
-> #include "system/memory.h"
-> #include "system/address-spaces.h"
->@@ -543,6 +544,8 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
->                                       Error **errp)
-> {
->     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
->+    int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
->+                             Error **errp) = NULL;
->     QIgvmParameterData *param_entry;
->     int max_entry_count;
->     int entry = 0;
->@@ -550,7 +553,15 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
->     ConfidentialGuestMemoryMapEntry cgmm_entry;
->     int retval = 0;
->
->-    if (!ctx->cgs) {
->+    if (ctx->cgs && ctx->cgsc->get_mem_map_entry) {
->+        get_mem_map_entry = ctx->cgsc->get_mem_map_entry;
->+    }
->+
->+    if (!get_mem_map_entry && target_arch() == SYS_EMU_TARGET_X86_64) {
+The S390CcwMachineClass::max_threads field was only used by the
+s390-ccw-virtio-7.1 machine, which got removed. Remove it
+as now unused, simplifying the s390_init_cpus() method.
 
-nit: we can avoid to re-evaluate `get_mem_map_entry` again, so we can
-do: (not a strong opinion, just more readable IMHO)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/s390x/s390-virtio-ccw.h | 3 ---
+ hw/s390x/s390-virtio-ccw.c         | 7 ++-----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-       else if (target_arch() == SYS_EMU_TARGET_X86_64) {
-
->+        get_mem_map_entry = qigvm_x86_get_mem_map_entry;
->+    }
->+
->+    if (!get_mem_map_entry) {
->         error_setg(errp,
->                    "IGVM file contains a memory map but this is not supported "
->                    "by the current system.");
->@@ -565,7 +576,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
->                 param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
->             mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
->
->-            retval = ctx->cgsc->get_mem_map_entry(entry, &cgmm_entry, errp);
->+            retval = get_mem_map_entry(entry, &cgmm_entry, errp);
->             while (retval == 0) {
->                 if (entry > max_entry_count) {
-
-pre-existing, but should this be `entry >= max_entry_count` ?
-
-BTW this should be eventually fixed in another patch, so for this patch:
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
->                     error_setg(
->@@ -598,8 +609,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
->                         IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
->                     break;
->                 }
->-                retval =
->-                    ctx->cgsc->get_mem_map_entry(++entry, &cgmm_entry, errp);
->+                retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
->             }
->             if (retval < 0) {
->                 return retval;
->diff --git a/stubs/igvm.c b/stubs/igvm.c
->new file mode 100644
->index 000000000000..c32058eb2a6e
->--- /dev/null
->+++ b/stubs/igvm.c
->@@ -0,0 +1,21 @@
->+/*
->+ * QEMU IGVM, stubs
->+ *
->+ * Copyright (C) 2026 Red Hat
->+ *
->+ * Authors:
->+ *  Gerd Hoffmann <kraxel@redhat.com>
->+ *
->+ * SPDX-License-Identifier: GPL-2.0-or-later
->+ */
->+
->+#include "qemu/osdep.h"
->+
->+#include "system/igvm.h"
->+
->+int qigvm_x86_get_mem_map_entry(int index,
->+                                ConfidentialGuestMemoryMapEntry *entry,
->+                                Error **errp)
->+{
->+    return -1;
->+}
->diff --git a/target/i386/igvm.c b/target/i386/igvm.c
->new file mode 100644
->index 000000000000..2ed6cd052c79
->--- /dev/null
->+++ b/target/i386/igvm.c
->@@ -0,0 +1,46 @@
->+/*
->+ * QEMU IGVM, support for native x86 guests
->+ *
->+ * Copyright (C) 2026 Red Hat
->+ *
->+ * Authors:
->+ *  Gerd Hoffmann <kraxel@redhat.com>
->+ *
->+ * SPDX-License-Identifier: GPL-2.0-or-later
->+ */
->+
->+#include "qemu/osdep.h"
->+
->+#include "hw/i386/e820_memory_layout.h"
->+#include "system/igvm.h"
->+
->+/*
->+ * convert e820 table into igvm memory map
->+ */
->+int qigvm_x86_get_mem_map_entry(int index,
->+                                ConfidentialGuestMemoryMapEntry *entry,
->+                                Error **errp)
->+{
->+    struct e820_entry *table;
->+    int num_entries;
->+
->+    num_entries = e820_get_table(&table);
->+    if ((index < 0) || (index >= num_entries)) {
->+        return 1;
->+    }
->+    entry->gpa = table[index].address;
->+    entry->size = table[index].length;
->+    switch (table[index].type) {
->+    case E820_RAM:
->+        entry->type = CGS_MEM_RAM;
->+        break;
->+    case E820_RESERVED:
->+        entry->type = CGS_MEM_RESERVED;
->+        break;
->+    default:
->+        /* should not happen */
->+        error_setg(errp, "unknown e820 type");
->+        return -1;
->+    }
->+    return 0;
->+}
->diff --git a/stubs/meson.build b/stubs/meson.build
->index 5d577467bfdd..27be2dec9f9e 100644
->--- a/stubs/meson.build
->+++ b/stubs/meson.build
->@@ -74,6 +74,7 @@ if have_system
->   stub_ss.add(files('dump.c'))
->   stub_ss.add(files('cmos.c'))
->   stub_ss.add(files('fw_cfg.c'))
->+  stub_ss.add(files('igvm.c'))
->   stub_ss.add(files('target-get-monitor-def.c'))
->   stub_ss.add(files('target-monitor-defs.c'))
->   stub_ss.add(files('win32-kbd-hook.c'))
->diff --git a/target/i386/meson.build b/target/i386/meson.build
->index 89ba4912aaeb..d385eafdf7e1 100644
->--- a/target/i386/meson.build
->+++ b/target/i386/meson.build
->@@ -26,6 +26,9 @@ i386_system_ss.add(files(
-> ))
-> i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'),
->                                        if_false: files('sev-system-stub.c'))
->+if igvm.found()
->+  i386_system_ss.add(files('igvm.c'))
->+endif
->
-> i386_user_ss = ss.source_set()
->
->-- 
->2.51.0
->
+diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+index 526078a4e2b..db804db33c3 100644
+--- a/include/hw/s390x/s390-virtio-ccw.h
++++ b/include/hw/s390x/s390-virtio-ccw.h
+@@ -49,11 +49,8 @@ static inline uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
+ void s390_handle_ptf(S390CPU *cpu, uint8_t r1, uintptr_t ra);
+ 
+ struct S390CcwMachineClass {
+-    /*< private >*/
+     MachineClass parent_class;
+ 
+-    /*< public >*/
+-    int max_threads;
+     bool use_cpi;
+ };
+ 
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index cf09b5c46e6..390d427dc41 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -75,12 +75,10 @@ out:
+ static void s390_init_cpus(MachineState *machine)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+-    S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
+     int i;
+ 
+-    if (machine->smp.threads > s390mc->max_threads) {
+-        error_report("S390 does not support more than %d threads.",
+-                     s390mc->max_threads);
++    if (machine->smp.threads > 1) {
++        error_report("S390 does not support more than 1 thread.");
+         exit(1);
+     }
+ 
+@@ -779,7 +777,6 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+     S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
+     DumpSKeysInterface *dsi = DUMP_SKEYS_INTERFACE_CLASS(oc);
+ 
+-    s390mc->max_threads = 1;
+     s390mc->use_cpi = true;
+     mc->reset = s390_machine_reset;
+     mc->block_default_type = IF_VIRTIO;
+-- 
+2.51.0
 
 
