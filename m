@@ -4,97 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0478ECCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC269CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9lCs-0004rg-8U; Fri, 17 Oct 2025 10:13:22 -0400
+	id 1v9lLp-0005J0-3Z; Fri, 17 Oct 2025 10:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCq-0004oR-0c
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:20 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCS-0005in-8Y
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:18 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-471131d6121so15682655e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 07:12:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760710373; x=1761315173; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Db+sG+Cpd+beGHgOxFpXdb2XuieXj9vluST9V47nkKU=;
- b=ERsZx6oW6Ubuvz1bHv2PoiE/VYTG5NxaXilH/ZZKdn3dHNE0ZYiIjruwk0EIBP1qLx
- pgtUE4OvLFJE9j5oq96tXcRQou+Js4Usd7KOHoyaXrXWHpizYdfW7CIDps7LYuzHqqme
- aIIbpf4l9JE/wjKg/WDlB4FzZPtotLk7iMGD8DSdkRTiGRGBkAZ8a/p+AVaYiqpeZUbf
- xc3yvjXdpm2sMZdOwF5NTnl7ASSh/NtppIDH1P9GIDjM62bQXGtQlVKy3+d3aEu17ZsX
- O0O36oCUTuLTpKYiodcvFKT9aUWQQ3BnK6jfoIBOsvuHEZ5WMV2aw3CARnJnP4q+xuOi
- ZjEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760710373; x=1761315173;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Db+sG+Cpd+beGHgOxFpXdb2XuieXj9vluST9V47nkKU=;
- b=w6UsQhSZ2tkIGykSyS/0iaGXNa9OH1T6nqcx42G7bFjuPd0PXvVgY9knHULEFQjmEz
- IlbTG48v80VqxlzmzcNfq7tmTBoUeQ1oQAkkPKSgH/iNbqedH7hTkGKERI5zj9jJo2GM
- SBGRr1e54aZCEO6x5cTqGWgl5oPO5EIunQB+f7LIuP/XTij6gfGEJA4AIeLNvknrbi+D
- ZO83wYPiDBMTPLxnBchtoNn7acshaVTjJVf7y3Q/9cdsk9vZdykG7C8HIiGKfsUaC8kw
- 9gXfRG+yt1Pmb1/JSwGxnHT3FVzyoptinp/OKV8VZXTDPXkqllN0Ocd1HOplW6HGvp2R
- rjDw==
-X-Gm-Message-State: AOJu0YwEEr06DfAOR/9ICJGoBaceqVmOmcazacHqlG85rNkGBFFJM5/S
- A+Xxx5x0dTD+fbgfbO23IwZSulo2YTohqXZPxMsEBFiC0tjwpGKax4MERCYf8g==
-X-Gm-Gg: ASbGncvyMAAZNLHv+yMy5Wmv1wkMgJ+mOLmbKaaU3uB0ywoA3w4BFRqnmj0sjMnYfmp
- PizW0w1M/D4eJLVKRgt/BTmprB9YRl8/4dval0LIBzjYLl4OF1Y+VzcvjXUeqwKbTqxTFf/FZCW
- HdqSSNY46hsDwKFj5F3mvdtcffqO1I4Iixl9Nmr1scRwfIUawuDs8OUeJXh31pmL59thPQmvN1+
- BuOw6clLZQJDVMpMiZTj8Baw8vMsDrollE7USJmD1u1TSMSS55LiM3JlzWSSZuf81gPugPwUiFi
- u0SJceHx5bcw7uJaiBu9ik9mQSlWP9yYL8hmMTcMcRrcnWIav/hl5mTcEdTmMIW1DyWvjpFTtv6
- PbQnSOJLXhMnRQBAZF0ONCyUwo89yXy5C2oKLhNYupzHChdY5e+ZzBXnbDi6gb6EAG6WiNwTjNh
- EX72hzCdEIbBfkvR8Csv8iakSBfqJZ9IxqEaooUaan+aQ=
-X-Google-Smtp-Source: AGHT+IHjtsA4kZLXA10ETA53u+8R3ckahy3r8QzGEGhdzk6K1YX0aTVlQLFH1cO8nCp9xP5pxxzZXg==
-X-Received: by 2002:a05:600c:8b0c:b0:471:58f:601f with SMTP id
- 5b1f17b1804b1-47117912389mr31607855e9.30.1760710372844; 
- Fri, 17 Oct 2025 07:12:52 -0700 (PDT)
-Received: from archlinux (pd95edc07.dip0.t-ipconnect.de. [217.94.220.7])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cb36e7csm51359675e9.2.2025.10.17.07.12.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Oct 2025 07:12:52 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>,
- Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, qemu-trivial@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-block@nongnu.org,
- Phil Dennis-Jordan <phil@philjordan.eu>, Michael Tokarev <mjt@tls.msk.ru>,
- John Snow <jsnow@redhat.com>, kvm@vger.kernel.org,
- Laurent Vivier <lvivier@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 07/11] hw/i386/apic: Prefer APICCommonState over DeviceState
-Date: Fri, 17 Oct 2025 16:11:13 +0200
-Message-ID: <20251017141117.105944-8-shentey@gmail.com>
-X-Mailer: git-send-email 2.51.1.dirty
-In-Reply-To: <20251017141117.105944-1-shentey@gmail.com>
-References: <20251017141117.105944-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v9lLj-0005Io-GX
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:22:31 -0400
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v9lLc-00073y-Pp
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:22:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=AKpu5caaX7UXpOhsfom0VEyBRODWBtVyxe1TkB/PxVQ=; b=FfxPFguLaaZhXW/
+ aOM7Ntj9y5WCr+b+KZ8T9MTwm0fagWbj5TbLGQ+W7NUfJ48eJcwQ58jYrpug017+8Lm78/57qYUy8
+ gPyjszeLvt3m0KBTiajGK8FYsELAJ7sE191cHVPygD3qcxebZb121RSurhnz6M7iIkG/yf+GRGxFO
+ IM=;
+Date: Fri, 17 Oct 2025 16:24:50 +0200
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
+ richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
+Subject: Re: [PATCH v2 04/33] target/riscv: Bugfix
+ riscv_pmu_ctr_get_fixed_counters_val()
+Message-ID: <dj72zr4f7ais3vdgvthvpdfpbnjblbbqdfjg7yhqzthpo67x4p@5wdd4ii7yhda>
+References: <20251001073306.28573-1-anjo@rev.ng>
+ <20251001073306.28573-5-anjo@rev.ng>
+ <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
+ <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
+ <CAKmqyKMyBMY88+6i5BdrXJtU8S9H_DcUG8O7yu5s9cE2Mv_s5g@mail.gmail.com>
+ <7fngsrmp3rdo3hzra4rso5kwi4zejvdyl6xzc7swmmqji7wr44@vyallk4lkhe6>
+ <CAKmqyKPHVAKqOPQgD5J95TcnG=Gro5JBWTURmaqGr=ksVy5Q9g@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
+In-Reply-To: <CAKmqyKPHVAKqOPQgD5J95TcnG=Gro5JBWTURmaqGr=ksVy5Q9g@mail.gmail.com>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,799 +68,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makes the APIC API more type-safe by resolving quite a few APIC_COMMON
-downcasts.
+On 16/10/25, Alistair Francis wrote:
+> On Wed, Oct 15, 2025 at 7:55 PM Anton Johansson <anjo@rev.ng> wrote:
+> >
+> > On 15/10/25, Alistair Francis wrote:
+> > > On Tue, Oct 7, 2025 at 9:06 PM Anton Johansson <anjo@rev.ng> wrote:
+> > > >
+> > > > On 03/10/25, Alistair Francis wrote:
+> > > > > On Wed, Oct 1, 2025 at 5:43 PM Anton Johansson via
+> > > > > <qemu-devel@nongnu.org> wrote:
+> > > > > >
+> > > > > > From my understanding the upper_half argument only indicates whether the
+> > > > > > upper or lower 32 bits should be returned, and upper_half will only ever
+> > > > > > be set when MXLEN == 32.  However, the function also uses upper_half to
+> > > > > > determine whether the inhibit flags are located in mcyclecfgh or
+> > > > > > mcyclecfg, but this misses the case where MXLEN == 32, upper_half == false
+> > > > > > for TARGET_RISCV32 where we would also need to read the upper half field.
+> > > > >
+> > > > > If MXLEN == 32, upper_half == false then we want to read mcyclecfg,
+> > > > > which the code today seems to be doing correctly.
+> > > >
+> > > > Hi again, I might be missing something then, when would this function need
+> > > > to access mcyclecfg for MXLEN == 32?  AFAIU mcyclecfg and mcyclecfgh are
+> > > > modeled separately for MXLEN == 32, even when sizeof(target_ulong) == 8.
+> > > > Since this function only checks inhibit flags wouldn't we always want to
+> > > > access mcyclecfgh for MXLEN == 32?
+> > >
+> > > When MXLEN == 32 mcyclecfg is the bottom 32-bits of the mcyclecfg CSR
+> > > and mcyclecfgh is the top 32-bits of the CSR. The idea is that
+> > > target_ulong will be 32-bits (sizeof(target_ulong) == 4). It doesn't
+> > > really matter if target_ulong is 64-bits though, as the registers
+> > > should just be treated as 32-bit registers anyway.
+> >
+> > Appreciate the explanation, this makes sense to me.  But the function
+> > only uses cfg_val to check inhibit flags in the top 32 bits, so accessing the
+> > lower 32 bits when upper_half == false and MXLEN == 32 would be incorrect
+> > then?
+> 
+> Well a guest can still access the lower 32-bits and although there is
+> nothing there now there might be in the future.
+> 
+> >
+> > Your comment below is what's tripping me up, since the behaviour of
+> > accesing the lower 32 bits for MXLEN == 32 is not retained when
+> > mcyclecfgh and mcyclecfg are merged to a single 64 bit field
+> 
+> I don't follow what you mean here
 
-Like PICCommonState, the APICCommonState is now a public typedef while staying
-an abstract datatype.
+On upstream when riscv_pmu_ctr_get_fixed_counters_val() is called with
+MXLEN == 32 and upper_half == false, we read the inhibit flags from the
+lower 32 bits (mcyclecfg) and check against bit 62 (MINH) etc. thus
+always returning false
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- include/hw/i386/apic.h           | 33 +++++------
- include/hw/i386/apic_internal.h  |  7 +--
- target/i386/cpu.h                |  4 +-
- target/i386/kvm/kvm_i386.h       |  2 +-
- target/i386/whpx/whpx-internal.h |  2 +-
- hw/i386/kvm/apic.c               |  3 +-
- hw/i386/vapic.c                  |  2 +-
- hw/i386/x86-cpu.c                |  2 +-
- hw/intc/apic.c                   | 97 +++++++++++++-------------------
- hw/intc/apic_common.c            | 56 +++++++-----------
- target/i386/cpu-apic.c           | 16 ++----
- target/i386/cpu-dump.c           |  2 +-
- target/i386/cpu.c                |  2 +-
- target/i386/kvm/kvm.c            |  2 +-
- target/i386/whpx/whpx-apic.c     |  3 +-
- 15 files changed, 94 insertions(+), 139 deletions(-)
+  if (counter_idx == 0) {
+      cfg_val = upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
+                             env->mcyclecfg;
+  }
+  [...]
+  if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
+      curr_val += counter_arr[PRV_M];
+  }
 
-diff --git a/include/hw/i386/apic.h b/include/hw/i386/apic.h
-index eb606d6076..871f142888 100644
---- a/include/hw/i386/apic.h
-+++ b/include/hw/i386/apic.h
-@@ -1,28 +1,29 @@
- #ifndef APIC_H
- #define APIC_H
- 
-+typedef struct APICCommonState APICCommonState;
- 
- /* apic.c */
- void apic_set_max_apic_id(uint32_t max_apic_id);
--int apic_accept_pic_intr(DeviceState *s);
--void apic_deliver_pic_intr(DeviceState *s, int level);
--void apic_deliver_nmi(DeviceState *d);
--int apic_get_interrupt(DeviceState *s);
--int cpu_set_apic_base(DeviceState *s, uint64_t val);
--uint64_t cpu_get_apic_base(DeviceState *s);
--bool cpu_is_apic_enabled(DeviceState *s);
--void cpu_set_apic_tpr(DeviceState *s, uint8_t val);
--uint8_t cpu_get_apic_tpr(DeviceState *s);
--void apic_init_reset(DeviceState *s);
--void apic_sipi(DeviceState *s);
--void apic_poll_irq(DeviceState *d);
--void apic_designate_bsp(DeviceState *d, bool bsp);
--int apic_get_highest_priority_irr(DeviceState *dev);
-+int apic_accept_pic_intr(APICCommonState *s);
-+void apic_deliver_pic_intr(APICCommonState *s, int level);
-+void apic_deliver_nmi(APICCommonState *s);
-+int apic_get_interrupt(APICCommonState *s);
-+int cpu_set_apic_base(APICCommonState *s, uint64_t val);
-+uint64_t cpu_get_apic_base(APICCommonState *s);
-+bool cpu_is_apic_enabled(APICCommonState *s);
-+void cpu_set_apic_tpr(APICCommonState *s, uint8_t val);
-+uint8_t cpu_get_apic_tpr(APICCommonState *s);
-+void apic_init_reset(APICCommonState *s);
-+void apic_sipi(APICCommonState *s);
-+void apic_poll_irq(APICCommonState *s);
-+void apic_designate_bsp(APICCommonState *s, bool bsp);
-+int apic_get_highest_priority_irr(APICCommonState *s);
- int apic_msr_read(int index, uint64_t *val);
- int apic_msr_write(int index, uint64_t val);
--bool is_x2apic_mode(DeviceState *d);
-+bool is_x2apic_mode(APICCommonState *s);
- 
- /* pc.c */
--DeviceState *cpu_get_current_apic(void);
-+APICCommonState *cpu_get_current_apic(void);
- 
- #endif
-diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
-index 429278da61..4a62fdceb4 100644
---- a/include/hw/i386/apic_internal.h
-+++ b/include/hw/i386/apic_internal.h
-@@ -22,6 +22,7 @@
- #define QEMU_APIC_INTERNAL_H
- 
- #include "cpu.h"
-+#include "hw/i386/apic.h"
- #include "system/memory.h"
- #include "qemu/timer.h"
- #include "target/i386/cpu-qom.h"
-@@ -125,8 +126,6 @@
- #define VAPIC_ENABLE_BIT                0
- #define VAPIC_ENABLE_MASK               (1 << VAPIC_ENABLE_BIT)
- 
--typedef struct APICCommonState APICCommonState;
--
- #define TYPE_APIC_COMMON "apic-common"
- typedef struct APICCommonClass APICCommonClass;
- DECLARE_OBJ_CHECKERS(APICCommonState, APICCommonClass,
-@@ -203,8 +202,8 @@ typedef struct VAPICState {
- extern bool apic_report_tpr_access;
- 
- bool apic_next_timer(APICCommonState *s, int64_t current_time);
--void apic_enable_tpr_access_reporting(DeviceState *d, bool enable);
--void apic_enable_vapic(DeviceState *d, hwaddr paddr);
-+void apic_enable_tpr_access_reporting(APICCommonState *s, bool enable);
-+void apic_enable_vapic(APICCommonState *s, hwaddr paddr);
- 
- void vapic_report_tpr_access(DeviceState *dev, CPUState *cpu, target_ulong ip,
-                              TPRAccess access);
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index ce948861a7..67ff52a8b4 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2349,7 +2349,7 @@ struct ArchCPU {
- 
-     /* in order to simplify APIC support, we leave this pointer to the
-        user */
--    struct DeviceState *apic_state;
-+    struct APICCommonState *apic_state;
-     struct MemoryRegion *cpu_as_root, *cpu_as_mem, *smram;
-     Notifier machine_done;
- 
-@@ -2830,7 +2830,7 @@ bool cpu_svm_has_intercept(CPUX86State *env, uint32_t type);
- 
- /* apic.c */
- void cpu_report_tpr_access(CPUX86State *env, TPRAccess access);
--void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
-+void apic_handle_tpr_access_report(APICCommonState *s, target_ulong ip,
-                                    TPRAccess access);
- 
- /* Special values for X86CPUVersion: */
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 5f83e8850a..5c908fdd6a 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -56,7 +56,7 @@ bool kvm_has_adjust_clock_stable(void);
- bool kvm_has_exception_payload(void);
- void kvm_synchronize_all_tsc(void);
- 
--void kvm_get_apic_state(DeviceState *d, struct kvm_lapic_state *kapic);
-+void kvm_get_apic_state(APICCommonState *s, struct kvm_lapic_state *kapic);
- void kvm_put_apicbase(X86CPU *cpu, uint64_t value);
- 
- bool kvm_has_x2apic_api(void);
-diff --git a/target/i386/whpx/whpx-internal.h b/target/i386/whpx/whpx-internal.h
-index 6633e9c4ca..066e16bd8e 100644
---- a/target/i386/whpx/whpx-internal.h
-+++ b/target/i386/whpx/whpx-internal.h
-@@ -44,7 +44,7 @@ struct whpx_state {
- };
- 
- extern struct whpx_state whpx_global;
--void whpx_apic_get(DeviceState *s);
-+void whpx_apic_get(struct APICCommonState *s);
- 
- #define WHV_E_UNKNOWN_CAPABILITY 0x80370300L
- 
-diff --git a/hw/i386/kvm/apic.c b/hw/i386/kvm/apic.c
-index 1be9bfe36e..82355f0463 100644
---- a/hw/i386/kvm/apic.c
-+++ b/hw/i386/kvm/apic.c
-@@ -60,9 +60,8 @@ static void kvm_put_apic_state(APICCommonState *s, struct kvm_lapic_state *kapic
-     kvm_apic_set_reg(kapic, 0x3e, s->divide_conf);
- }
- 
--void kvm_get_apic_state(DeviceState *dev, struct kvm_lapic_state *kapic)
-+void kvm_get_apic_state(APICCommonState *s, struct kvm_lapic_state *kapic)
- {
--    APICCommonState *s = APIC_COMMON(dev);
-     int i, v;
- 
-     if (kvm_has_x2apic_api() && s->apicbase & MSR_IA32_APICBASE_EXTD) {
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 0c1c92c479..f1089f0a7c 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -490,7 +490,7 @@ void vapic_report_tpr_access(DeviceState *dev, CPUState *cs, target_ulong ip,
- }
- 
- typedef struct VAPICEnableTPRReporting {
--    DeviceState *apic;
-+    APICCommonState *apic;
-     bool enable;
- } VAPICEnableTPRReporting;
- 
-diff --git a/hw/i386/x86-cpu.c b/hw/i386/x86-cpu.c
-index c876e6709e..1a86a853d5 100644
---- a/hw/i386/x86-cpu.c
-+++ b/hw/i386/x86-cpu.c
-@@ -86,7 +86,7 @@ int cpu_get_pic_interrupt(CPUX86State *env)
-     return intno;
- }
- 
--DeviceState *cpu_get_current_apic(void)
-+APICCommonState *cpu_get_current_apic(void)
- {
-     if (current_cpu) {
-         X86CPU *cpu = X86_CPU(current_cpu);
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index c768033856..cb35c80c75 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -181,10 +181,8 @@ static void apic_local_deliver(APICCommonState *s, int vector)
-     }
- }
- 
--void apic_deliver_pic_intr(DeviceState *dev, int level)
-+void apic_deliver_pic_intr(APICCommonState *s, int level)
- {
--    APICCommonState *s = APIC(dev);
--
-     if (level) {
-         apic_local_deliver(s, APIC_LVT_LINT0);
-     } else {
-@@ -301,10 +299,8 @@ static void apic_deliver_irq(uint32_t dest, uint8_t dest_mode,
-     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
- }
- 
--bool is_x2apic_mode(DeviceState *dev)
-+bool is_x2apic_mode(APICCommonState *s)
- {
--    APICCommonState *s = APIC(dev);
--
-     return s->apicbase & MSR_IA32_APICBASE_EXTD;
- }
- 
-@@ -388,15 +384,12 @@ static void apic_set_tpr(APICCommonState *s, uint8_t val)
-     }
- }
- 
--int apic_get_highest_priority_irr(DeviceState *dev)
-+int apic_get_highest_priority_irr(APICCommonState *s)
- {
--    APICCommonState *s;
--
--    if (!dev) {
-+    if (!s) {
-         /* no interrupts */
-         return -1;
-     }
--    s = APIC_COMMON(dev);
-     return get_highest_priority_int(s->irr);
- }
- 
-@@ -458,22 +451,19 @@ static int apic_irq_pending(APICCommonState *s)
- static void apic_update_irq(APICCommonState *s)
- {
-     CPUState *cpu;
--    DeviceState *dev = (DeviceState *)s;
- 
-     cpu = CPU(s->cpu);
-     if (!qemu_cpu_is_self(cpu)) {
-         cpu_interrupt(cpu, CPU_INTERRUPT_POLL);
-     } else if (apic_irq_pending(s) > 0) {
-         cpu_interrupt(cpu, CPU_INTERRUPT_HARD);
--    } else if (!apic_accept_pic_intr(dev) || !pic_get_output(isa_pic)) {
-+    } else if (!apic_accept_pic_intr(s) || !pic_get_output(isa_pic)) {
-         cpu_reset_interrupt(cpu, CPU_INTERRUPT_HARD);
-     }
- }
- 
--void apic_poll_irq(DeviceState *dev)
-+void apic_poll_irq(APICCommonState *s)
- {
--    APICCommonState *s = APIC(dev);
--
-     apic_sync_vapic(s, SYNC_FROM_VAPIC);
-     apic_update_irq(s);
- }
-@@ -516,7 +506,7 @@ static void apic_eoi(APICCommonState *s)
- 
- static bool apic_match_dest(APICCommonState *apic, uint32_t dest)
- {
--    if (is_x2apic_mode(&apic->parent_obj)) {
-+    if (is_x2apic_mode(apic)) {
-         return apic->initial_apic_id == dest;
-     } else {
-         return apic->id == (uint8_t)dest;
-@@ -550,7 +540,7 @@ static void apic_get_broadcast_bitmask(uint32_t *deliver_bitmask,
-     for (i = 0; i < max_apics; i++) {
-         apic_iter = local_apics[i];
-         if (apic_iter) {
--            bool apic_in_x2apic = is_x2apic_mode(&apic_iter->parent_obj);
-+            bool apic_in_x2apic = is_x2apic_mode(apic_iter);
- 
-             if (is_x2apic_broadcast && apic_in_x2apic) {
-                 apic_set_bit(deliver_bitmask, i);
-@@ -642,27 +632,24 @@ static void apic_startup(APICCommonState *s, int vector_num)
-     cpu_interrupt(CPU(s->cpu), CPU_INTERRUPT_SIPI);
- }
- 
--void apic_sipi(DeviceState *dev)
-+void apic_sipi(APICCommonState *s)
- {
--    APICCommonState *s = APIC(dev);
--
-     if (!s->wait_for_sipi)
-         return;
-     cpu_x86_load_seg_cache_sipi(s->cpu, s->sipi_vector);
-     s->wait_for_sipi = 0;
- }
- 
--static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-+static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
-                          uint8_t delivery_mode, uint8_t vector_num,
-                          uint8_t trigger_mode, uint8_t dest_shorthand)
- {
--    APICCommonState *s = APIC(dev);
-     APICCommonState *apic_iter;
-     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
-     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
-     uint32_t current_apic_id;
- 
--    if (is_x2apic_mode(dev)) {
-+    if (is_x2apic_mode(s)) {
-         current_apic_id = s->initial_apic_id;
-     } else {
-         current_apic_id = s->id;
-@@ -709,18 +696,15 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
- 
- static bool apic_check_pic(APICCommonState *s)
- {
--    DeviceState *dev = (DeviceState *)s;
--
--    if (!apic_accept_pic_intr(dev) || !pic_get_output(isa_pic)) {
-+    if (!apic_accept_pic_intr(s) || !pic_get_output(isa_pic)) {
-         return false;
-     }
--    apic_deliver_pic_intr(dev, 1);
-+    apic_deliver_pic_intr(s, 1);
-     return true;
- }
- 
--int apic_get_interrupt(DeviceState *dev)
-+int apic_get_interrupt(APICCommonState *s)
- {
--    APICCommonState *s = APIC(dev);
-     int intno;
- 
-     /* if the APIC is installed or enabled, we let the 8259 handle the
-@@ -752,9 +736,8 @@ int apic_get_interrupt(DeviceState *dev)
-     return intno;
- }
- 
--int apic_accept_pic_intr(DeviceState *dev)
-+int apic_accept_pic_intr(APICCommonState *s)
- {
--    APICCommonState *s = APIC(dev);
-     uint32_t lvt0;
- 
-     if (!s)
-@@ -788,20 +771,18 @@ static void apic_timer(void *opaque)
- 
- static int apic_register_read(int index, uint64_t *value)
- {
--    DeviceState *dev;
-     APICCommonState *s;
-     uint32_t val;
-     int ret = 0;
- 
--    dev = cpu_get_current_apic();
--    if (!dev) {
-+    s = cpu_get_current_apic();
-+    if (!s) {
-         return -1;
-     }
--    s = APIC(dev);
- 
-     switch(index) {
-     case 0x02: /* id */
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             val = s->initial_apic_id;
-         } else {
-             val = s->id << 24;
-@@ -828,14 +809,14 @@ static int apic_register_read(int index, uint64_t *value)
-         val = 0;
-         break;
-     case 0x0d:
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             val = s->extended_log_dest;
-         } else {
-             val = s->log_dest << 24;
-         }
-         break;
-     case 0x0e:
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             val = 0;
-             ret = -1;
-         } else {
-@@ -902,14 +883,14 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
- 
- int apic_msr_read(int index, uint64_t *val)
- {
--    DeviceState *dev;
-+    APICCommonState *s;
- 
--    dev = cpu_get_current_apic();
--    if (!dev) {
-+    s = cpu_get_current_apic();
-+    if (!s) {
-         return -1;
-     }
- 
--    if (!is_x2apic_mode(dev)) {
-+    if (!is_x2apic_mode(s)) {
-         return -1;
-     }
- 
-@@ -943,20 +924,18 @@ static void apic_send_msi(MSIMessage *msi)
- 
- static int apic_register_write(int index, uint64_t val)
- {
--    DeviceState *dev;
-     APICCommonState *s;
- 
--    dev = cpu_get_current_apic();
--    if (!dev) {
-+    s = cpu_get_current_apic();
-+    if (!s) {
-         return -1;
-     }
--    s = APIC(dev);
- 
-     trace_apic_register_write(index, val);
- 
-     switch(index) {
-     case 0x02:
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             return -1;
-         }
- 
-@@ -979,14 +958,14 @@ static int apic_register_write(int index, uint64_t val)
-         apic_eoi(s);
-         break;
-     case 0x0d:
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             return -1;
-         }
- 
-         s->log_dest = val >> 24;
-         break;
-     case 0x0e:
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             return -1;
-         }
- 
-@@ -1005,20 +984,20 @@ static int apic_register_write(int index, uint64_t val)
-         uint32_t dest;
- 
-         s->icr[0] = val;
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             s->icr[1] = val >> 32;
-             dest = s->icr[1];
-         } else {
-             dest = (s->icr[1] >> 24) & 0xff;
-         }
- 
--        apic_deliver(dev, dest, (s->icr[0] >> 11) & 1,
-+        apic_deliver(s, dest, (s->icr[0] >> 11) & 1,
-                      (s->icr[0] >> 8) & 7, (s->icr[0] & 0xff),
-                      (s->icr[0] >> 15) & 1, (s->icr[0] >> 18) & 3);
-         break;
-     }
-     case 0x31:
--        if (is_x2apic_mode(dev)) {
-+        if (is_x2apic_mode(s)) {
-             return -1;
-         }
- 
-@@ -1053,7 +1032,7 @@ static int apic_register_write(int index, uint64_t val)
-     case 0x3f: {
-         int vector = val & 0xff;
- 
--        if (!is_x2apic_mode(dev)) {
-+        if (!is_x2apic_mode(s)) {
-             return -1;
-         }
- 
-@@ -1063,7 +1042,7 @@ static int apic_register_write(int index, uint64_t val)
-          * - Trigger mode: 0 (Edge)
-          * - Delivery mode: 0 (Fixed)
-          */
--        apic_deliver(dev, 0, 0, APIC_DM_FIXED, vector, 0, 1);
-+        apic_deliver(s, 0, 0, APIC_DM_FIXED, vector, 0, 1);
- 
-         break;
-     }
-@@ -1102,14 +1081,14 @@ static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
- 
- int apic_msr_write(int index, uint64_t val)
- {
--    DeviceState *dev;
-+    APICCommonState *s;
- 
--    dev = cpu_get_current_apic();
--    if (!dev) {
-+    s = cpu_get_current_apic();
-+    if (!s) {
-         return -1;
-     }
- 
--    if (!is_x2apic_mode(dev)) {
-+    if (!is_x2apic_mode(s)) {
-         return -1;
-     }
- 
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index 394fe02013..ec9e978b0b 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -35,12 +35,11 @@
- 
- bool apic_report_tpr_access;
- 
--int cpu_set_apic_base(DeviceState *dev, uint64_t val)
-+int cpu_set_apic_base(APICCommonState *s, uint64_t val)
- {
-     trace_cpu_set_apic_base(val);
- 
--    if (dev) {
--        APICCommonState *s = APIC_COMMON(dev);
-+    if (s) {
-         APICCommonClass *info = APIC_COMMON_GET_CLASS(s);
-         /* Reset possibly modified xAPIC ID */
-         s->id = s->initial_apic_id;
-@@ -50,10 +49,9 @@ int cpu_set_apic_base(DeviceState *dev, uint64_t val)
-     return 0;
- }
- 
--uint64_t cpu_get_apic_base(DeviceState *dev)
-+uint64_t cpu_get_apic_base(APICCommonState *s)
- {
--    if (dev) {
--        APICCommonState *s = APIC_COMMON(dev);
-+    if (s) {
-         trace_cpu_get_apic_base((uint64_t)s->apicbase);
-         return s->apicbase;
-     } else {
-@@ -62,52 +60,43 @@ uint64_t cpu_get_apic_base(DeviceState *dev)
-     }
- }
- 
--bool cpu_is_apic_enabled(DeviceState *dev)
-+bool cpu_is_apic_enabled(APICCommonState *s)
- {
--    APICCommonState *s;
--
--    if (!dev) {
-+    if (!s) {
-         return false;
-     }
- 
--    s = APIC_COMMON(dev);
--
-     return s->apicbase & MSR_IA32_APICBASE_ENABLE;
- }
- 
--void cpu_set_apic_tpr(DeviceState *dev, uint8_t val)
-+void cpu_set_apic_tpr(APICCommonState *s, uint8_t val)
- {
--    APICCommonState *s;
-     APICCommonClass *info;
- 
--    if (!dev) {
-+    if (!s) {
-         return;
-     }
- 
--    s = APIC_COMMON(dev);
-     info = APIC_COMMON_GET_CLASS(s);
- 
-     info->set_tpr(s, val);
- }
- 
--uint8_t cpu_get_apic_tpr(DeviceState *dev)
-+uint8_t cpu_get_apic_tpr(APICCommonState *s)
- {
--    APICCommonState *s;
-     APICCommonClass *info;
- 
--    if (!dev) {
-+    if (!s) {
-         return 0;
-     }
- 
--    s = APIC_COMMON(dev);
-     info = APIC_COMMON_GET_CLASS(s);
- 
-     return info->get_tpr(s);
- }
- 
--void apic_enable_tpr_access_reporting(DeviceState *dev, bool enable)
-+void apic_enable_tpr_access_reporting(APICCommonState *s, bool enable)
- {
--    APICCommonState *s = APIC_COMMON(dev);
-     APICCommonClass *info = APIC_COMMON_GET_CLASS(s);
- 
-     apic_report_tpr_access = enable;
-@@ -116,26 +105,22 @@ void apic_enable_tpr_access_reporting(DeviceState *dev, bool enable)
-     }
- }
- 
--void apic_enable_vapic(DeviceState *dev, hwaddr paddr)
-+void apic_enable_vapic(APICCommonState *s, hwaddr paddr)
- {
--    APICCommonState *s = APIC_COMMON(dev);
-     APICCommonClass *info = APIC_COMMON_GET_CLASS(s);
- 
-     s->vapic_paddr = paddr;
-     info->vapic_base_update(s);
- }
- 
--void apic_handle_tpr_access_report(DeviceState *dev, target_ulong ip,
-+void apic_handle_tpr_access_report(APICCommonState *s, target_ulong ip,
-                                    TPRAccess access)
- {
--    APICCommonState *s = APIC_COMMON(dev);
--
-     vapic_report_tpr_access(s->vapic, CPU(s->cpu), ip, access);
- }
- 
--void apic_deliver_nmi(DeviceState *dev)
-+void apic_deliver_nmi(APICCommonState *s)
- {
--    APICCommonState *s = APIC_COMMON(dev);
-     APICCommonClass *info = APIC_COMMON_GET_CLASS(s);
- 
-     info->external_nmi(s);
-@@ -193,16 +178,14 @@ uint32_t apic_get_current_count(APICCommonState *s)
-     return val;
- }
- 
--void apic_init_reset(DeviceState *dev)
-+void apic_init_reset(APICCommonState *s)
- {
--    APICCommonState *s;
-     APICCommonClass *info;
-     int i;
- 
--    if (!dev) {
-+    if (!s) {
-         return;
-     }
--    s = APIC_COMMON(dev);
-     s->tpr = 0;
-     s->spurious_vec = 0xff;
-     s->log_dest = 0;
-@@ -233,13 +216,12 @@ void apic_init_reset(DeviceState *dev)
-     }
- }
- 
--void apic_designate_bsp(DeviceState *dev, bool bsp)
-+void apic_designate_bsp(APICCommonState *s, bool bsp)
- {
--    if (dev == NULL) {
-+    if (s == NULL) {
-         return;
-     }
- 
--    APICCommonState *s = APIC_COMMON(dev);
-     if (bsp) {
-         s->apicbase |= MSR_IA32_APICBASE_BSP;
-     } else {
-@@ -262,7 +244,7 @@ static void apic_reset_common(DeviceState *dev)
-     s->vapic_paddr = 0;
-     info->vapic_base_update(s);
- 
--    apic_init_reset(dev);
-+    apic_init_reset(s);
- }
- 
- static const VMStateDescription vmstate_apic_common;
-diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
-index 242a05fdbe..acd4e1bea2 100644
---- a/target/i386/cpu-apic.c
-+++ b/target/i386/cpu-apic.c
-@@ -41,34 +41,31 @@ APICCommonClass *apic_get_class(Error **errp)
- 
- void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
- {
--    APICCommonState *apic;
-     APICCommonClass *apic_class = apic_get_class(errp);
- 
-     if (!apic_class) {
-         return;
-     }
- 
--    cpu->apic_state = DEVICE(object_new_with_class(OBJECT_CLASS(apic_class)));
-+    cpu->apic_state = APIC_COMMON(object_new_with_class(OBJECT_CLASS(apic_class)));
-     object_property_add_child(OBJECT(cpu), "lapic",
-                               OBJECT(cpu->apic_state));
-     object_unref(OBJECT(cpu->apic_state));
- 
-     /* TODO: convert to link<> */
--    apic = APIC_COMMON(cpu->apic_state);
--    apic->cpu = cpu;
--    apic->apicbase = APIC_DEFAULT_ADDRESS | MSR_IA32_APICBASE_ENABLE;
-+    cpu->apic_state->cpu = cpu;
-+    cpu->apic_state->apicbase = APIC_DEFAULT_ADDRESS | MSR_IA32_APICBASE_ENABLE;
- 
-     /*
-      * apic_common_set_id needs to check if the CPU has x2APIC
-      * feature in case APIC ID >= 255, so we need to set apic->cpu
-      * before setting APIC ID
-      */
--    qdev_prop_set_uint32(cpu->apic_state, "id", cpu->apic_id);
-+    qdev_prop_set_uint32(DEVICE(cpu->apic_state), "id", cpu->apic_id);
- }
- 
- void x86_cpu_apic_realize(X86CPU *cpu, Error **errp)
- {
--    APICCommonState *apic;
-     static bool apic_mmio_map_once;
- 
-     if (cpu->apic_state == NULL) {
-@@ -77,12 +74,11 @@ void x86_cpu_apic_realize(X86CPU *cpu, Error **errp)
-     qdev_realize(DEVICE(cpu->apic_state), NULL, errp);
- 
-     /* Map APIC MMIO area */
--    apic = APIC_COMMON(cpu->apic_state);
-     if (!apic_mmio_map_once) {
-         memory_region_add_subregion_overlap(get_system_memory(),
--                                            apic->apicbase &
-+                                            cpu->apic_state->apicbase &
-                                             MSR_IA32_APICBASE_BASE,
--                                            &apic->io_memory,
-+                                            &cpu->apic_state->io_memory,
-                                             0x1000);
-         apic_mmio_map_once = true;
-      }
-diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
-index a72ed93bd2..67bf31e0ca 100644
---- a/target/i386/cpu-dump.c
-+++ b/target/i386/cpu-dump.c
-@@ -291,7 +291,7 @@ static void dump_apic_interrupt(const char *name, uint32_t *ireg_tab,
- void x86_cpu_dump_local_apic_state(CPUState *cs, int flags)
- {
-     X86CPU *cpu = X86_CPU(cs);
--    APICCommonState *s = APIC_COMMON(cpu->apic_state);
-+    APICCommonState *s = cpu->apic_state;
-     if (!s) {
-         qemu_printf("local apic state not available\n");
-         return;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 455caff6b2..0a66e1fec9 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8789,7 +8789,7 @@ void x86_cpu_after_reset(X86CPU *cpu)
-     }
- 
-     if (cpu->apic_state) {
--        device_cold_reset(cpu->apic_state);
-+        device_cold_reset(DEVICE(cpu->apic_state));
-     }
- #endif
- }
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 309f043373..f7a6ef650a 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5029,7 +5029,7 @@ static int kvm_get_mp_state(X86CPU *cpu)
- 
- static int kvm_get_apic(X86CPU *cpu)
- {
--    DeviceState *apic = cpu->apic_state;
-+    APICCommonState *apic = cpu->apic_state;
-     struct kvm_lapic_state kapic;
-     int ret;
- 
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index e1ef6d4e6d..afcb25843b 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -151,9 +151,8 @@ static void whpx_apic_put(CPUState *cs, run_on_cpu_data data)
-     }
- }
- 
--void whpx_apic_get(DeviceState *dev)
-+void whpx_apic_get(APICCommonState *s)
- {
--    APICCommonState *s = APIC_COMMON(dev);
-     CPUState *cpu = CPU(s->cpu);
-     struct whpx_lapic_state kapic;
- 
--- 
-2.51.1.dirty
+if this behaviour is intended, we do not retain it with this patch as
+we always access the higher cfg bits to check for MINH.  Similarly when
+merging mcyclecfgh and mcyclecfg
 
+  if (counter_idx == 0) {
+      cfg_val = env->mcyclecfg;
+  }
+  [...]
+  if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
+      curr_val += counter_arr[PRV_M];
+  }
+
+we only check for MINH in the higher bits.
+
+//Anton
 
