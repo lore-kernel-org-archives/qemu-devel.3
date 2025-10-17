@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C08ACCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE82CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kXp-0008UR-97; Fri, 17 Oct 2025 09:30:57 -0400
+	id 1v9kXp-0008WT-SC; Fri, 17 Oct 2025 09:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXZ-0008Ry-Hd
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:30:42 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXJ-0008Q8-SJ
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:30:31 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXO-0007vy-QS
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:30:38 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-42701b29a7eso917752f8f.0
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:30:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXC-0007uX-Mo
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:30:24 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-471131d6121so15214175e9.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760707820; x=1761312620; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760707810; x=1761312610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A78zNbnMmecNZ6Tf/K0Gio4uGTZm2OiwrEyaD1kmTEc=;
- b=FppZNboQgEN3bEqc9q4b5jxE1pIQ31Trl3cwDt3ar1c8E4KkmGb0fRn8ZVJXEq8fLQ
- wn90sQIN8iYrVMpW1mOE5R/huv4EdRPi0q/iUGN3WDIWYZBXLGdA5Vb1lXofLu9VPfo/
- 6Tf81MxoUYRVesceRU3aXT1bwwcpNQMcMiefYJFENrYTrJGlDbbjReaCJF2ykrh40/Xt
- ugRD7D8EIrOwqliYn3/fvQOpRnckigrWb26oeU4qR1QFkXTioQVF3WFo6CaptD3Fv2yu
- vxLP8nsv0cT4s5xSAUGmbAtftFwCPvRd79bc9NqUwWE4tOKLd3YprrsdhSYh0UklPQk9
- I6zw==
+ bh=4HKXcyz/2clxRpS46l0Vexb09ZBfH6sW5WdctLeLR9Q=;
+ b=TM1HLQambANHm8tun/EDbl4cNmyC7N7uHwXIH56A0z+gD6zo/RYPBL55Ih+qwXzX5o
+ arOorzPylkMjMg5vB2L/vWu12HuztiHXkTL3eZcMewtXLmyy4YGMOEL3VUlyf2tYWYcQ
+ mmt0hDreE3qmp9psAoXHSe/mVd9W07NcB25maFl/iOvVgJvNxBsQorp9WSCDJcRW9dCt
+ 6eGlSVd1puxzBX7xS7hi4UKDfNK0IIcyJpDF10jiZT9YX9Vu7grZkY3S5nbt1XkxymMM
+ h/GgyyopCCHCf+LG2KIV2GRxYr+oTyEbJdRcQnD1u/+L0UxXCmfOLdVRBPtqLo/NohQ5
+ lMig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760707820; x=1761312620;
+ d=1e100.net; s=20230601; t=1760707810; x=1761312610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=A78zNbnMmecNZ6Tf/K0Gio4uGTZm2OiwrEyaD1kmTEc=;
- b=N4j2L+p0ir9N9Q+d3UNGtxs/14DfoI7B4HaQ/xAJlhu8IF3i1CVC5aMKbWdv8TcDbO
- MpTpvxW3wK5bLptd/DSFNvuizvCWRDUBD7JU+W0Z7+2SqH9E8d2zpM+N1pprDaSSRl+b
- jV6UpMMxU59BIvWQvw5Csg7I82rkPpJLGnWvvrHoPk4C1R/KA70ts98BGY+AGLbPeoc/
- jbEvRAfOQ3EM8gV89OgleVoiN7FAvYU/zAzgUMtF6+9AGmv3FdsS2KC1Chqos89vjnOL
- +8RqFAXoQ+56JwyNdF4J0/bXliDY6xzIpeIy2GvC3XG1gO1e+SvR2kvC1EcDV0dGSGHp
- 2IUw==
-X-Gm-Message-State: AOJu0YzCw/dFmUqdhwvKebssrTP0WCsI7ZThqiEeHYiGHVYz9RuovoAI
- 4CQfhBbjfhtRpUy1gq1g13lUObMuMun2zbHDLND3rgBpY+NSSOxxOax7xO7eqdJ2OOWJd77daWa
- W9U1pmW4=
-X-Gm-Gg: ASbGncs0BdHh4e/wyGPojbE/3GGxWFoWRtEI8xhTA5ofuZd3DxEDi0Bsghhr0XMgAYu
- PnuLfS4oeR6Ae02F5GyWaVs835CAdZ+XgbVnOHiZ7c/Q/dadE5lLVMQEjUZMfFSkcQXdbC+CXM/
- 2g/aKRedTcoU+d76Wu0TDuUoeXIh4pc698JajLn2es5ucLS6O0Le8m4Y1W/GnHr7N06L1W8Cocc
- JtJGEaL00/N2BxncCVqRoT+wiDww+C7XeVsu8nEuSjR2M1dV2vBXaYOu+VKpe6O5mJsQ1/7XDt/
- 7pG+t3UdMB40CKEtJJkfNo1UK13QBG3UMLtcj4vbp+ouwas6m7wVesB0ycWQEm2t0gVsCY73J40
- cE2/CE+x3ju2eJVBtqspjNpqjofWgOVtimSJyuMeCkQyNmtSxhly94G687vncD5eR+4/9FmKrmn
- h1Dv4fdQNCwWWcyCis8H1ildlX5zdXcyWLaR5a6uMt3SUIlm6OsWdoEIqujHly
-X-Google-Smtp-Source: AGHT+IH6NEb92+04ReM37pymEPXcRn/KBwk6INmqVbgmpoOtMmeZpdxMFKvLu9A1Q1OO7uW7F44Hug==
-X-Received: by 2002:a05:6000:3108:b0:3df:9ba8:21a3 with SMTP id
- ffacd0b85a97d-42704bc0d07mr3064974f8f.18.1760707820465; 
- Fri, 17 Oct 2025 06:30:20 -0700 (PDT)
+ bh=4HKXcyz/2clxRpS46l0Vexb09ZBfH6sW5WdctLeLR9Q=;
+ b=CX1CjOgn2k3QZ+dnyDQxp6hoKg9jJZDp6L7ZeEs794O3uQbYtr+dliZSphJztPTHtD
+ 7iTD+hYMMdy0JvJc6yHnChbMQ/jEFMSDG0/AQ73+R0tvKC76lAMruulEVzu3Zv616tgb
+ dkIAvj69lVGNGQSsngup2Z7b3+Kr9dHBPFjTtt7aroD4GByiw9tzOjrJdJm0NwL5Gjcj
+ xNrlxCXxXS5ho2Wm3Zuf92bpV/rbsabcM0kI17pQTumuZzO6oD1upaXKe0mmwwR6ePWl
+ dYoSgMvVGYtT27a3PX5Y+DJXuYROSx6c+uK1SU16Mh4AU4WkBEFiliEtOEUBAoYkLnhZ
+ w4og==
+X-Gm-Message-State: AOJu0YwdBY8Vc4MgECnNyyr7fSGblBXkRXlzqv6gbWQiuGjRvDmlJyEz
+ ir+l+YJlRia08Bi1l1Zh7cUzpHKu5q8HBgfh0Kf8V5RmewKYxhjmR87EuyUTBB9h9R4VCCcJbyw
+ U04KQ+hE=
+X-Gm-Gg: ASbGncvOYRq3rFbsgdmh3we3cgtFiMGZUjgHjrkkY/z4DTjJGeaXecJ44/maRVTHtDd
+ D/HMcBz6eBPWWmMj5r6mG9UVdgQXtVD3GOB/M+8dkoN13l+LGGQFk6yFhRbSBeIthIBwAOFizHM
+ E+pbkenhL05s5046EabIfivs7STzsFaf71PU2XLfoHwGbR1PoRyhof4VFbLPIZ8pn0uLWejcZ+f
+ hWOeGLohrpEY+o/HgqROMI5g4WP/I81cHgmOEIfWuh6Qb/nI5+oNunCXej4q6Utm/rb/HVXDjvq
+ BO9Z0kN6y1NkpHFd+D3DYj2khF1GJp6jpwyaT7F4/J9ymIKxw6mH6PQOWct4uqEDkpkKCHDt2WC
+ UziWVv2Fsm5l3rFMDHMPp4bsxy/b048dkT+7md+SlxNqLc2JXupbDngW+y2JCHH97DEoRIfBhl9
+ uFpVqpmbqK2H3eJK1oauDcjA7QRnSJs7GNuwvlj6AzCXA8QI2IC/h6U+YM/8Jv
+X-Google-Smtp-Source: AGHT+IH7/sb/CTqOwFozAJIGzWAs6yn+Cyn7enFix7virXvNF1xQUDJ/t7Bjo3QErpfp83rQFX1SWg==
+X-Received: by 2002:a05:600c:5298:b0:471:734:53c3 with SMTP id
+ 5b1f17b1804b1-47117901407mr22304335e9.24.1760707810155; 
+ Fri, 17 Oct 2025 06:30:10 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce5e1024sm40420867f8f.42.2025.10.17.06.30.19
+ 5b1f17b1804b1-47114429679sm79540135e9.8.2025.10.17.06.30.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Oct 2025 06:30:19 -0700 (PDT)
+ Fri, 17 Oct 2025 06:30:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -74,18 +74,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/12] hw/s390x/ccw: Remove deprecated s390-ccw-virtio-5.0
+Subject: [PATCH 01/12] hw/s390x/ccw: Remove deprecated s390-ccw-virtio-4.2
  machine
-Date: Fri, 17 Oct 2025 15:29:52 +0200
-Message-ID: <20251017133002.61410-4-philmd@linaro.org>
+Date: Fri, 17 Oct 2025 15:29:50 +0200
+Message-ID: <20251017133002.61410-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017133002.61410-1-philmd@linaro.org>
 References: <20251017133002.61410-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,28 +115,56 @@ deprecation & removal") it can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/s390x/s390-virtio-ccw.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 33 ---------------------------------
+ 1 file changed, 33 deletions(-)
 
 diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 64b81345f1e..e1868eb7cc8 100644
+index ad2c48188a8..64b81345f1e 100644
 --- a/hw/s390x/s390-virtio-ccw.c
 +++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1133,18 +1133,6 @@ static void ccw_machine_5_1_class_options(MachineClass *mc)
+@@ -715,26 +715,6 @@ static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
+     s390_cpu_restart(S390_CPU(cs));
  }
- DEFINE_CCW_MACHINE(5, 1);
  
--static void ccw_machine_5_0_instance_options(MachineState *machine)
+-static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
 -{
--    ccw_machine_5_1_instance_options(machine);
+-    /* same logic as in sclp.c */
+-    int increment_size = 20;
+-    ram_addr_t newsz;
+-
+-    while ((sz >> increment_size) > MAX_STORAGE_INCREMENTS) {
+-        increment_size++;
+-    }
+-    newsz = sz >> increment_size << increment_size;
+-
+-    if (sz != newsz) {
+-        qemu_printf("Ram size %" PRIu64 "MB was fixed up to %" PRIu64
+-                    "MB to match machine restrictions. Consider updating "
+-                    "the guest definition.\n", (uint64_t) (sz / MiB),
+-                    (uint64_t) (newsz / MiB));
+-    }
+-    return newsz;
 -}
 -
--static void ccw_machine_5_0_class_options(MachineClass *mc)
+ static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
+ {
+     S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+@@ -1165,19 +1145,6 @@ static void ccw_machine_5_0_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(5, 0);
+ 
+-static void ccw_machine_4_2_instance_options(MachineState *machine)
 -{
--    ccw_machine_5_1_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_5_0, hw_compat_5_0_len);
+-    ccw_machine_5_0_instance_options(machine);
 -}
--DEFINE_CCW_MACHINE(5, 0);
+-
+-static void ccw_machine_4_2_class_options(MachineClass *mc)
+-{
+-    ccw_machine_5_0_class_options(mc);
+-    mc->fixup_ram_size = s390_fixup_ram_size;
+-    compat_props_add(mc->compat_props, hw_compat_4_2, hw_compat_4_2_len);
+-}
+-DEFINE_CCW_MACHINE(4, 2);
 -
  static void ccw_machine_register_types(void)
  {
