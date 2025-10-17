@@ -4,184 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100E4CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 09:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B94B5CCD19A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 09:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9ghP-0007iY-T7; Fri, 17 Oct 2025 05:24:35 -0400
+	id 1v9gmU-00019B-BQ; Fri, 17 Oct 2025 05:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1v9ghN-0007i3-He; Fri, 17 Oct 2025 05:24:33 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1v9ghI-0003Fi-NT; Fri, 17 Oct 2025 05:24:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1760693064; x=1761297864; i=deller@gmx.de;
- bh=nTYU7PTzmjs06U80PCamLRY3uFF7jC345VRvx0qAOvE=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=GLtCb/6g9wAnXppKMyVrMEkjpmvt6qUcpjCQDWAcy6kL3Ws0wNN7A/Mp/xhHcS+V
- /ZLQxMCSrZ+SqFDnBG3rnMU9zQILSNx+pSHyBXX58W09AJRmbXnrQ7RetSjUrWJ3P
- J7O90nyzluOCc3iMX26mmC8NM0RSkuRt4dzeDpQb3cuTh2wyXaYdIpzrDMUov26Ab
- 7WA9GfoBGj8xLdNuDFZjrpBfb54IvBmf+NnkKVqMf61isxIpXri2uW+YR1Kwov0so
- uAQBZ0josZf/QWhOFLC3QjyNUPWYHt0yREafa8dum+HwUOwSkymFc/5RqBxiMyEYR
- J+CmL6P32YiM1vdBRQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.50.190]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MqJmF-1uNCbc3IZ9-00oJll; Fri, 17
- Oct 2025 11:24:23 +0200
-Message-ID: <46bf13bb-0308-4737-86d9-ed5aff87b415@gmx.de>
-Date: Fri, 17 Oct 2025 11:24:21 +0200
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1v9gmR-00018z-TB
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 05:29:47 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1v9gmO-0003xz-HH
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 05:29:47 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-63bea08a326so2303660a12.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 02:29:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760693381; x=1761298181; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x/RxCML2UdImHruQ7rY70bSmxjaRAs74F42HmXmlbjU=;
+ b=TuDzHpUkunL1+VzpoCIUK0dZUY8cSuWqDhkXFvEOAz65GKZRJIqmexXCJoDOgTZ8PZ
+ XtS9PgWRQEJ6Cj7Q0EINkALydflS/nAIneIsb8KeFbFCQ+OLg/GdwvmPAmkrg1EK21Eb
+ pShfqQOIZqpZwEyxAB9XCZidZ3nw1VFRAYnRBGbOERhdTK6VVLhuS5QBGiZFuVcp2pAT
+ SOKmnVnCXe8GAN/4n9KwUtnrMrKPMtpZuQjkuOahWabm+zMUlaYcIaWpe9f3jBzY6SPw
+ lj1efH2CqicTClbs9um1NWQ3paQPa9BUmbXnRRyjVeFcSh2j8LBCracSu7i5XsPLwCsR
+ g/fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760693381; x=1761298181;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=x/RxCML2UdImHruQ7rY70bSmxjaRAs74F42HmXmlbjU=;
+ b=MBHfZRrozZkgSnf/6gAzk8LYPitOfUIcpHJMWkI69XSz+xAX/Ucd5tpGb0nEveQlhf
+ bPOcoAIeF3y5mXANTXtLaDBIf+zmqj7a5/6r5enWp+PVtkhBGUPsniD8FwhLGSH2qKsA
+ WSVsM3xuixpXTNCsjCRC56gZQq8qWSHASM5MyKWkO10KsoYvU0oH1tfJ6JMC2GCokC4t
+ aswPRswwFpCEaGyX6DZNcMZZp+18f+EFfhNExdiILY23re64aBtgAaWgjsbADI5MNkc6
+ 4XVLnGdUVpbd7PbQMnZHLdQHtIOLIWGPZ730AdoFeAp7sb/31UvQV+xENZ682aymslYk
+ 2dTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRDYhledNEKHtadF3fZtgGzWqkZ3O6Y9oRyq2+89AMNPHjg3j+ubRD/iO1xHWA4GZmUzGz3377nyY3@nongnu.org
+X-Gm-Message-State: AOJu0YzjNaAu7yog4iEmXrjGlxnm14f8ug2TDI81pEwP2nBChM7Ze18i
+ 0XNn9OdjwGtuosBz+zMICdSCM4bYo1vHC/NqwEVwwqdGyAvJvorFTHOS55OPCqCfb8a4oQg7Tli
+ 8VPYsYwtYsDtDO+JFuM8QCeInVCQ/GUbmTqD46ftaNQ==
+X-Gm-Gg: ASbGnctnzm3+/PjIRrqFRYOo3xYYERsoUI1Qry+ADyjLg2sKezenrTYJfb96RV58kxX
+ 1qropgjhHrAACAjh39cdb9i41uRgOxJnvGKw7IsWGEu5pzvG/Hu2bdLBfUVGDAyjkeXsEYur3Fr
+ VWziIRYD9QSxby7IZEsLirpkbRTSUljWtlO1LxmVvi8tl4+Wk6w5tScSLXM/1kbMZdAKzz2CZRj
+ kpcjTSnYXohHw1GQtXCKtceGwN/n1po5WVveZoeHAGPD2JHtbVtziPov7Idlw==
+X-Google-Smtp-Source: AGHT+IGqWsEmRYynWoDnF4AvsDnMBOPYNaeBpN5hF0EfPG1FptJjd7ixygyFWqOUbszMsA8BKrvWSoV7kn+BkaUkkb4=
+X-Received: by 2002:a05:6402:40cc:b0:63c:32a6:e9ff with SMTP id
+ 4fb4d7f45d1cf-63c32a6ee79mr752482a12.8.1760693381534; Fri, 17 Oct 2025
+ 02:29:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: correct size bit parity for fmpyadd
-To: Michael Tokarev <mjt@tls.msk.ru>,
- Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Andreas_H=C3=BCttel?= <andreas.huettel@ur.de>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
- <5ee3a3db-8fa2-426f-961b-aae09cb11c40@tls.msk.ru>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <5ee3a3db-8fa2-426f-961b-aae09cb11c40@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20251016143827.1850397-1-aesteve@redhat.com>
+ <20251016143827.1850397-2-aesteve@redhat.com>
+ <nl5smdnd5neyuqykpwkruq2onc32hq7jbgbylv33xq4rrsksvc@hk6u3b33iws3>
+In-Reply-To: <nl5smdnd5neyuqykpwkruq2onc32hq7jbgbylv33xq4rrsksvc@hk6u3b33iws3>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 17 Oct 2025 12:29:14 +0300
+X-Gm-Features: AS18NWDyLu-2Y1xZWvI4jjvuJmbxdk5sKpMinILQ98Yu-QnlxcRyy4jq6V0SzG0
+Message-ID: <CAAjaMXZBZCaRKcPPWStu=a7of-fexBJsDLPMoT-QF3U19fcVUw@mail.gmail.com>
+Subject: Re: [PATCH v10 1/7] vhost-user: Add VirtIO Shared Memory map request
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, hi@alyssa.is, 
+ stefanha@redhat.com, david@redhat.com, jasowang@redhat.com, 
+ dbassey@redhat.com, stevensd@chromium.org, 
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, slp@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:jSVE6kcNnDkwG9JDMJW7WZrPFVtHxc0JEZUKAqlbjU7ZYRlCA0K
- w2fT+9MU8bMHa4u/v4M2Phb4pbG8CXyUzGbtL/sCxB6B/gkGAXolLH1ALa5J8U8SRklPfxn
- ez65/i9f15qEdfqKPA8RDI5F5rptxhhTb/+GM5G6LZMRL3UhNfcbjsDxy47aq7OeYmpMUOq
- DiE0V1DllE5H3e62tK6+g==
-UI-OutboundReport: notjunk:1;M01:P0:IDmLDLEPymM=;zyREgJbe6QnTIUw5G86SBWrArrK
- SaU06qQwsJMCmIQpyLpr1t6Sj1wJq5eb6Y9WuyXmbQMznW8c7t6RI3QOHHKrbaRSrO2WB0PuE
- WOauKXMHlwgu2APhDKtDvj+YRuk1HUQsSiCnz1q2NhaDdwe9AgRrs5ZaG81lbymTwKysfdsb6
- L6iNMSR8ncb2UM+aYq3QUKsa1MiuXrj81TshCxtxQ9Oslka9xdaZ7M0cI1a8dT43ScXY3H1Zt
- n+7jWXMXK2yv1ZHRAZ00yn4rKkpVyI1aiKQQvf+0/aIKNXNIEUH/OPsIwNRID5dR6cxMRd4gN
- +BtkgJ4Md/DjzKCLzkJ0p1OE1lgTp8PSpK88InOuXt0/VOFzeztAloZlcNsIpCHvs0RR52HaG
- YgYWTtjhgt3V9vSGZ9bkZs1PXNpqb5bHAk+/eqxSX2DmYAACu1C7N9l5DOIJVpt07sIiVLYvf
- gC1m2O9Iy2IFsVFPl04P7N8JxVQ7ZxGv6ct0SD4f368ABFOTndTPUm38APGlYu8LR4pEgB5mA
- xyuBkn/DR3OCNcOggDmbJVzOBx0h5xEmNaScU5pYW0D+thzcHwyNjNHsJDWV1LESwXuemOtmR
- vuzXQB/3C0fjNbB4jpAssvlAHKqtLEVbM/Mpf1pXqe/qxtKnJGsoFFZdEnbi+2fm7PDX6Lk6d
- JBMnprHIW5bmk906zJKUYdbjNs2RdQZt3C7ueH/Uu49vBker32r+0GeHjrpBstd+898WxNodY
- XzeqLZ6861LNHN4hZ664EGEHoMhf/O1RDAufZCo5v1Hgyc1NuYp1nt1hXN2Yxy5ZJAaOJqtDS
- 2hPrJG/bidcSww6ZZy4S0i+Evv5cLNcwyS9/fUwvzBbLw9k2LKqWSGcgCo9b4dTH8EYDps8JS
- lmjy8d8ByzJLkltLcztbuWWBzcRMwo43ddWOMbXZPUyN3rpme44gsGGxGtnl4g+Km0WYwqB5k
- eGArpkIcLIDHd5cglggATMajhgxb7sJ2dNZrC+LznJoT0dA8jzQYPxVNFd6uDvtQYAOEirFAi
- iEegiYwX2mgFmA1gXMiMQwT0sxB2DLvobSn/+uqKuyZY0ChL2rAjaVYvEQq6/vWpdXUCGipma
- 11fSohq1uf7+RpoBU9r2V+6QsoH2loOOHzLakFlTGRTCW2/Z7KP19Qx7Y53IcOtoxRO5R10bE
- ZkXUKe6rmUp/jjENU5EdYHBTelnlrVxDQlL7PWnCOlVRj/N96BR6C+fWZC7GS6y5iYkHgbdps
- iYWpQpO+azrG+uyTWv5L1g/BrUp4rc9PzMRQqc2UgOhtnVqev62JRFVRS3Ok5T4fQOHAk9TBu
- BN2PTrjzjemq3UY1L3fkG3QbN/Fcxb786lcyrsGOxTPxsWHPOsv2+GUGGXRgXzmWrQmFrDytH
- InPuAd1xbFzQGNOdDwRVblVLO0B+8OlpCpdYUr7pV5DkLdtX5CLSVFrnH+GziDF/uV5w88atO
- O70+djIsvOjgQ3Jsv0x4XU0GmuYOCD9ZtEc4aeNLy5wRw1RU2pG/tQt0HxX0uUhNjZIDb4TkJ
- KfiZwaUQ/cLFH3zBbpMbhWjQexqfw2aQ3SCXFizp+sNljsj6l2uqrNiIasQMa7udc0fN3LJ8f
- u9Rp9havLJ0yCRq/uw2u5K/lv1zujyOoZBXdo+E1vzj9KietSintt7qP08wdr9y7ajQLyKvpv
- Uxaj+p+LKDHnDjOOd5LFIMxmXnhHtAhWllRQpjaaCTt+UY0w235s58J2dkBGCr8wy5eXT9Kjn
- b+mdeglyRurzQoeZFn9mQ0pGccDfkIoikc1BR2W9Pn8Sj6wZutjbvre/wGYavRFVYgCVaeW1v
- C1jb71bvJo88E4LH1YN/eSrdAllBEpj3ysaxAr2g6nfG9LguhmfMC8fNCbweGSgBw+KYO9hnX
- 6BUAxKCqp1bycIsr+vp1obkM/A0exEdioWYOgqyakdISvXMKgCt5QWg+VfXPtGzIDUD747rji
- Jcye1L84B+tcE6V34BiPPEt5T1k18i/kgVv5VV/CAtFYoYX/ZLiXjDQ8Oa5au/JjsQXgA6hao
- Wrd4xwrrOlVPsbUX11l8OZIjRTBeTxJm+Sq+sxqnNzQoCKu7xjceS1y52tyikjIQH2CnM2wUN
- KNFZNqymFh4lYa5zFE0boNq0Z4rerMu46O4sjah7oQhiFBUZVZS6vR2ctTsAOrD+n1WRf7xpK
- DBTaj0Gebun5d4zJ0it7NdYj7MFzeR53KyjvCuWdFxIDeUiniVrK04ETpA8e2JiarDy/NL8yP
- c77UUV6GLuBShWsDPqi97pimca+wjcL9tHi2ZAbbSubbV/wATuH0t0jIabAH51uqdZ/+/8/rt
- yNeMPYJxoWlZQKbKrtOqIGAl0lL3IJCOKmGT8828ihP+OQ30Jacs1DUOjjnRpjWdf2Qg1Vscb
- qsuXejsmmnsv2sMDW7QTlcDakbOgWm/YOWqFx2G6aBkjRcATRNQuZ9tpzXNeKMqFP0V66FAfo
- bRMWins9NDOxOyPh6QEex1dzTPtCf94WLJP5XqYJGQgd0DbGftom8ghB6syEi+7XX5HwRLwPU
- ip0zNZIiI7s2WLoP9sVxSytQqIdWDHSF1Cfb2uPa2KgVHE/wzKDWjRprG780f+Uu893xwSyzB
- Wmu0mEEJaGuLmnOMP7mINfOpT/5VVSorD2+YD8Fs7CKwkuV1f8sdINXFJd8oWPjtUrWQjX/Kw
- iUCWMWmM/ZAJgdrf2LZtuVxpsfQQMwDj5AWdxOpNIBpH4NXS3Dgqbepdpaj7z6LOMd2BOdeQN
- TA1t2zxfGGGtMP47/2RuW4hpo6UC2GP7/Eg0/ZMVnPNHEvAH2K75LFyvrSDccn6BSQM/tpsMm
- I1cGQkUZ8VoxoeP7lWTI8wFly0NiVRRDNZn/+e+3pqwUZ42YlQIyZspHNoGZfwjLug4ydA78r
- StUxeEcpc2eXKWIfAjefOo3H+e6h15U7rGCNykc4nvH6wKWIVh3qy5vYJCmVW25I+5P4cE8Vj
- Pkpzc0QzALtX3mGfreG53wddoc5eE1EFmZ3Ho+aUG7PAdBGR56LfzgzMz89XtIN78xv6KDLgy
- 79HHldBzNEHNegrX3o8BzQjNwOKouwg2FrLFIQ4RfH1+pK8sIyr5mD/Sm8dIoJI0kASTy22uf
- iB9rPRQW0X+OYhrY97oqM3ogXn700GklXXilzspt1VBdZvg/mLDss6hTCCFrjaNoPu7PD21bd
- orpyjO9GSX7cLdbmWMwLR5RXHATFkQcKnXxxthWyslFZ+5IMeE6CVfoV9VNlraAF+cyecUnJp
- 35Q0/h73s6elNRJxS3MiCc1BsCveqTwcBI68QIeepqx5B6kZnX2fk9qwVFg05JFJNJFn9w0fB
- xFkry8LxmbSwBbzxG1rP1J48ZB0jqSmkP+mfIIUnHSUwnOPjGWeo/Lu5QgPrJkITCD8AehysK
- /01UFeklFkDQawA3ew3G539BS4b++wjqDvBREstRAjWDbu1Xaiu671MAGu1jDfgUzUatw6r91
- UOzXGFikMYgYCoePZT+szaxUxxZBe+DriMKDuu0D8G/eL7lnc88/fi5+RhPqVtuyzbvpYm/NK
- tYXcNb4B7BpKVUKKRsZnmAFMGi7QLiiZpPjBAq5RVx6nJ02jcaoUcJ/eh2R0K/sNnfsk0aSUh
- C15rjQ8bIcP1mccq5gn6Uo7pj7XTDC5gdivSbvvvsu4BAx2k7mkPnMWMCeW0QhB2pjM9sOpTH
- Z5mDoM1cRlnafVhm00gqUKIlrFL8aAAZmQZGSnrB2hMwUBo2VtyBulxs3JVBzUmCHNf35MSRM
- YLwpVOP0o/Li15idKK4upobsTuT696jgkBk7GiFdQdzhylDZKXd0VdRXXg1L6ndeT6Gprq8kC
- ivTv9SBk394JJu/X4uvhrviSKDanl4psH6x0Z04e9la4IfWqHDfyPRqZuv4IXWTgDrSjQOI8S
- zM02QSEX9DEYgt8vu5So+dVVHvBOEjZOZOIz/3LDgIGY7d1WSsB9qAJqKSQC0IE2vLlvwD1P8
- pi+/eXKKLGZH8OT5/nyymfikQhy5fD08ryO6qCIKF7uLGE4ANQzBFtOcZcVb6yti51iIriS4l
- C/cwnJsonRXbe/zs+bZFZThKL5bsq8AjBEtc1QY2ts/LvB6IKkb7nxjTA7fT7oDgcyyP2s9pe
- HiPvZ7BVjmvlw0W62ayLXVxyLSsHjU/ODWvqhswd9Fv+tx3BAde3ADDtXVhv3sXpDqTFWMXNu
- TBkzVhZGYzlkc8Mzf6rOYsCGzJDRURZzFaPe48ogwwcgjpyGXTHFAONT6cWifV3H7Aids8VKZ
- xRf1L+T8dtft3cJVzeTcJFmtiVIRNedP70PgZLD87GNIAuuzwlDi5eURn24HGE346V4ETW1EY
- njOlgMb9QgUc81YcGXE0o1/h8L+jI4gz5ADAiBMNnvuMZZ+HizyMf31zOO+XkHjO+lXrlqvGs
- 7ttFNp7XIqXh45jfNUYvaKehaIevyy0VtCELpGH8FYT0CZsXJruMDnBGfSfi/AnULrd9vgu9y
- HEhgtyq9Ok/w/rRinp1qa49G6rYZJwGDX0lH35VQImEo22YzTXTO2jqQVCGZve/1eTKnFs6yX
- ToxsaHad/JRrnxcRXO3hJar7Sic1XVB4tKyvPN/+k96/vjfvV7Q7QVPDaucOj2a7nAVNM1Ppu
- ydJMJbwd8b/+FzFv0i9RSZTMGrxa4EgFE/tsvkhSuKEFW3IkdoWd8oLo5zU99esfzhQvwv8JB
- 2G00Jhc9NmEAJeF8qxO4J5Uq92qh8PTR4ZRBE08cINNVwK9OGqrHK79qZO+jlgnES7jPkxrX/
- 2c+Z/5tcn2NozRd+W5FV21Cuq5nj2FvwM/OLHtuGmfUtyAv1Fc8epq5my6C79460fChkMINa0
- 23H7Jwv9UNPX1Cd0CNphzuCECvCn3Qlx9s5+2s1OL1LQnu9k9pDp4Fy6oODXYx+zdJ7As0t/t
- 8NzBB0hNcpx5vzY3ZRPuAzIyNCBH1y2O8x6nVXphK6F5qZtd6mIYSHPkQMTFnuh8O1Pg/mGm9
- G7eLyz/cteZ3ZA==
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -197,49 +104,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 07:55, Michael Tokarev wrote:
-> On 10/9/25 23:51, Gabriel Brookman wrote:
->> For the fmpyadd instruction on the hppa architecture, there is a bit
->> used to specify whether the instruction is operating on a 32 bit or 64
->> bit floating point register. For most instructions, such a bit is 0 whe=
-n
->> operating on the smaller register and 1 when operating on the larger
->> register. However, according to page 6-57 of the PA-RISC 1.1 Architectu=
-re
->> and Instruction Set Reference Manual, this convention is reversed for t=
-he
->> fmpyadd instruction specifically, meaning the bit is 1 for operations o=
-n
->> 32 bit registers and 0 for 64 bit registers. Previously, QEMU decoded
->> this operation as operating on the other size of register, leading to
->> bugs when translating the fmpyadd instruction. This patch fixes that
->> issue.
->>
->> Reported-by: Andreas H=C3=BCttel <andreas.huettel@ur.de>
->> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3096
->> ---
->> Hi all,
->>
->> This patch fixes the decoding of the fmpyadd instruction on the hppa
->> target, which uses an inverted bit convention to select between
->> 32-bit and 64-bit floating-point registers. The issue was reported by
->> Andreas H=C3=BCttel after observing incorrect behavior when running rea=
-l
->> binaries under that target. He kindly submitted a minimal reproducer
->> which I was able to use to debug the issue. I used this reproducer
->> to verify correct operation after my fix.
->>
->> Thanks,
->> Gabriel
->>
->> Reported-by: Andreas H=C3=BCttel
->> ---
->> =C2=A0 target/hppa/insns.decode | 8 ++++----
->> =C2=A0 1 file changed, 4 insertions(+), 4 deletions(-)
->=20
-> I'm picking this up for qemu-stable (10.0 & 10.1).
-Yes, please.
+On Fri, Oct 17, 2025 at 12:22=E2=80=AFPM Stefano Garzarella <sgarzare@redha=
+t.com> wrote:
+>
+> On Thu, Oct 16, 2025 at 04:38:21PM +0200, Albert Esteve wrote:
+> >Add SHMEM_MAP/UNMAP requests to vhost-user for dynamic management of
+> >VIRTIO Shared Memory mappings.
+> >
+> >This implementation introduces VirtioSharedMemoryMapping as a unified
+> >QOM object that manages both the mapping metadata and MemoryRegion
+> >lifecycle. This object provides reference-counted lifecycle management
+> >with automatic cleanup of file descriptors and memory regions
+> >through QOM finalization.
+> >
+> >This request allows backends to dynamically map file descriptors into a
+> >VIRTIO Shared Memory Region identified by their shmid. Maps are created
+> >using memory_region_init_ram_from_fd() with configurable read/write
+> >permissions, and the resulting MemoryRegions are added as subregions to
+> >the shmem container region. The mapped memory is then advertised to the
+> >guest VIRTIO drivers as a base address plus offset for reading and
+> >writting according to the requested mmap flags.
+> >
+> >The backend can unmap memory ranges within a given VIRTIO Shared Memory
+> >Region to free resources. Upon receiving this message, the frontend
+> >removes the MemoryRegion as a subregion and automatically unreferences
+> >the VirtioSharedMemoryMapping object, triggering cleanup if no other
+> >references exist.
+> >
+> >Error handling has been improved to ensure consistent behavior across
+> >handlers that manage their own vhost_user_send_resp() calls. Since
+> >these handlers clear the VHOST_USER_NEED_REPLY_MASK flag, explicit
+> >error checking ensures proper connection closure on failures,
+> >maintaining the expected error flow.
+> >
+> >Note the memory region commit for these operations needs to be delayed
+> >until after we reply to the backend to avoid deadlocks. Otherwise,
+> >the MemoryListener would send a VHOST_USER_SET_MEM_TABLE message
+> >before the reply.
+> >
+> >Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> >Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> >---
+> > hw/virtio/vhost-user.c                    | 267 ++++++++++++++++++++++
+> > hw/virtio/virtio.c                        | 199 ++++++++++++++++
+> > include/hw/virtio/virtio.h                | 135 +++++++++++
+> > subprojects/libvhost-user/libvhost-user.c |  70 ++++++
+> > subprojects/libvhost-user/libvhost-user.h |  54 +++++
+> > 5 files changed, 725 insertions(+)
+> >
+> >diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> >index 36c9c2e04d..890be55937 100644
+> >--- a/hw/virtio/vhost-user.c
+> >+++ b/hw/virtio/vhost-user.c
+> >@@ -104,6 +104,7 @@ typedef enum VhostUserRequest {
+> >     VHOST_USER_GET_SHARED_OBJECT =3D 41,
+> >     VHOST_USER_SET_DEVICE_STATE_FD =3D 42,
+> >     VHOST_USER_CHECK_DEVICE_STATE =3D 43,
+> >+    VHOST_USER_GET_SHMEM_CONFIG =3D 44,
+> >     VHOST_USER_MAX
+> > } VhostUserRequest;
+> >
+> >@@ -115,6 +116,8 @@ typedef enum VhostUserBackendRequest {
+> >     VHOST_USER_BACKEND_SHARED_OBJECT_ADD =3D 6,
+> >     VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE =3D 7,
+> >     VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP =3D 8,
+> >+    VHOST_USER_BACKEND_SHMEM_MAP =3D 9,
+> >+    VHOST_USER_BACKEND_SHMEM_UNMAP =3D 10,
+> >     VHOST_USER_BACKEND_MAX
+> > }  VhostUserBackendRequest;
+> >
+> >@@ -136,6 +139,12 @@ typedef struct VhostUserMemRegMsg {
+> >     VhostUserMemoryRegion region;
+> > } VhostUserMemRegMsg;
+> >
+> >+typedef struct VhostUserShMemConfig {
+> >+    uint32_t nregions;
+> >+    uint32_t padding;
+> >+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+> >+} VhostUserShMemConfig;
+> >+
+> > typedef struct VhostUserLog {
+> >     uint64_t mmap_size;
+> >     uint64_t mmap_offset;
+> >@@ -192,6 +201,23 @@ typedef struct VhostUserShared {
+> >     unsigned char uuid[16];
+> > } VhostUserShared;
+> >
+> >+/* For the flags field of VhostUserMMap */
+> >+#define VHOST_USER_FLAG_MAP_RW (1u << 0)
+> >+
+> >+typedef struct {
+> >+    /* VIRTIO Shared Memory Region ID */
+> >+    uint8_t shmid;
+> >+    uint8_t padding[7];
+> >+    /* File offset */
+> >+    uint64_t fd_offset;
+> >+    /* Offset within the VIRTIO Shared Memory Region */
+> >+    uint64_t shm_offset;
+> >+    /* Size of the mapping */
+> >+    uint64_t len;
+> >+    /* Flags for the mmap operation, from VHOST_USER_FLAG_MAP_* */
+> >+    uint64_t flags;
+> >+} VhostUserMMap;
+> >+
+> > typedef struct {
+> >     VhostUserRequest request;
+> >
+> >@@ -224,6 +250,8 @@ typedef union {
+> >         VhostUserInflight inflight;
+> >         VhostUserShared object;
+> >         VhostUserTransferDeviceState transfer_state;
+> >+        VhostUserMMap mmap;
+> >+        VhostUserShMemConfig shmem;
+> > } VhostUserPayload;
+> >
+> > typedef struct VhostUserMsg {
+> >@@ -1768,6 +1796,196 @@ vhost_user_backend_handle_shared_object_lookup(s=
+truct vhost_user *u,
+> >     return 0;
+> > }
+> >
+> >+/**
+> >+ * vhost_user_backend_handle_shmem_map() - Handle SHMEM_MAP backend req=
+uest
+> >+ * @dev: vhost device
+> >+ * @ioc: QIOChannel for communication
+> >+ * @hdr: vhost-user message header
+> >+ * @payload: message payload containing mapping details
+> >+ * @fd: file descriptor for the shared memory region
+> >+ *
+> >+ * Handles VHOST_USER_BACKEND_SHMEM_MAP requests from the backend. Crea=
+tes
+> >+ * a VhostUserShmemObject to manage the shared memory mapping and adds =
+it
+> >+ * to the appropriate VirtIO shared memory region. The VhostUserShmemOb=
+ject
+> >+ * serves as an intermediate parent for the MemoryRegion, ensuring prop=
+er
+> >+ * lifecycle management with reference counting.
+> >+ *
+> >+ * Returns: 0 on success, negative errno on failure
+> >+ */
+> >+static int
+> >+vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
+> >+                                    QIOChannel *ioc,
+> >+                                    VhostUserHeader *hdr,
+> >+                                    VhostUserPayload *payload,
+> >+                                    int fd)
+> >+{
+> >+    VirtioSharedMemory *shmem;
+> >+    VhostUserMMap *vu_mmap =3D &payload->mmap;
+> >+    VirtioSharedMemoryMapping *existing;
+> >+    Error *local_err =3D NULL;
+> >+    int ret =3D 0;
+> >+
+> >+    if (fd < 0) {
+> >+        error_report("Bad fd for map");
+> >+        ret =3D -EBADF;
+> >+        goto send_reply;
+> >+    }
+> >+
+> >+    if (QSIMPLEQ_EMPTY(&dev->vdev->shmem_list)) {
+> >+        error_report("Device has no VIRTIO Shared Memory Regions. "
+> >+                     "Requested ID: %d", vu_mmap->shmid);
+> >+        ret =3D -EFAULT;
+> >+        goto send_reply;
+> >+    }
+> >+
+> >+    shmem =3D virtio_find_shmem_region(dev->vdev, vu_mmap->shmid);
+> >+    if (!shmem) {
+> >+        error_report("VIRTIO Shared Memory Region at "
+> >+                     "ID %d not found or uninitialized", vu_mmap->shmid=
+);
+> >+        ret =3D -EFAULT;
+> >+        goto send_reply;
+> >+    }
+> >+
+> >+    if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
+> >+        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr.size) {
+> >+        error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
+> >+                     vu_mmap->shm_offset, vu_mmap->len);
+> >+        ret =3D -EFAULT;
+> >+        goto send_reply;
+> >+    }
+> >+
+> >+    QTAILQ_FOREACH(existing, &shmem->mmaps, link) {
+> >+        if (ranges_overlap(existing->offset, existing->len,
+> >+                           vu_mmap->shm_offset, vu_mmap->len)) {
+> >+            error_report("VIRTIO Shared Memory mapping overlap");
+> >+            ret =3D -EFAULT;
+> >+            goto send_reply;
+> >+        }
+> >+    }
+> >+
+> >+    memory_region_transaction_begin();
+> >+
+> >+    /* Create VirtioSharedMemoryMapping object */
+> >+    VirtioSharedMemoryMapping *mapping =3D virtio_shared_memory_mapping=
+_new(
+> >+        vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
+> >+        vu_mmap->len, vu_mmap->flags & VHOST_USER_FLAG_MAP_RW);
+> >+
+> >+    if (!mapping) {
+> >+        ret =3D -EFAULT;
+> >+        goto send_reply_commit;
+> >+    }
+> >+
+> >+    /* Add the mapping to the shared memory region */
+> >+    if (virtio_add_shmem_map(shmem, mapping) !=3D 0) {
+> >+        error_report("Failed to add shared memory mapping");
+> >+        object_unref(OBJECT(mapping));
+> >+        ret =3D -EFAULT;
+> >+        goto send_reply_commit;
+> >+    }
+> >+
+> >+send_reply_commit:
+> >+    /* Send reply and commit after transaction started */
+> >+    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> >+        payload->u64 =3D !!ret;
+> >+        hdr->size =3D sizeof(payload->u64);
+> >+        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
+> >+            error_report_err(local_err);
+> >+            memory_region_transaction_commit();
+> >+            return -EFAULT;
+> >+        }
+> >+    }
+> >+    memory_region_transaction_commit();
+>
+> Sorry to be late, I did a quick review, my only doubts is here, maybe it
+> was already discussed, but why do we commit after responding to the
+> backend?
+>
+> Should we do it first to prevent the backend from =E2=80=9Cseeing=E2=80=
+=9D something
+> that hasn't been committed yet?
 
-Helge
+Isn't this protected by the BQL? The commit adds the region to the
+flatview and exposes it to the guest's addresspace (this can't fail
+IIUC).
+
+>
+> Also, if vhost_user_send_resp() fails, should we call
+> virtio_del_shmem_map()?
+
+Good point.
+
+> Thanks,
+> Stefano
 
