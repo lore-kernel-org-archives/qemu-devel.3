@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204F9CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B32CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kgT-0008Nw-4O; Fri, 17 Oct 2025 09:39:56 -0400
+	id 1v9khc-00012Q-Pr; Fri, 17 Oct 2025 09:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kgH-0008IG-7E
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:39:41 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kha-000126-G8
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:41:02 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kg8-0001I4-DZ
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:39:39 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e542196c7so20111125e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:39:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9khV-0001hk-1b
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:41:01 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-46e42fa08e4so18126055e9.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760708367; x=1761313167; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760708449; x=1761313249; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hiw8AqTYPLPN8XKgHaspY50210Hhswn7lmt4oFiM1+0=;
- b=pSqGOj2JHLVGuqvQaaiITDt5JjN7XecutcBajY3GiyZ5b+lzDVwh0KjlVHQyfP2wVx
- czN5rkcqrFF8dIk80FBFCIZGV6qkx1M5E5LqP6EWyMrsn/zQUQ+WtzlBkNZ6F+f5pVl9
- kTwuvNeGxiRKTH7tZsShi1YaNJzgwNMDI24wU5lF33FVd5cfvZD6/VUZ4pvj5RqZhZEN
- lULvxEzpJBuz4HLuAkeNJr+sEtwEe7/Fa7k0FnaALaug3z70vAMJ8l9kgvg2SVJ9ozt2
- VNoMxnMj/8jM3UwXS9NHRzKQQeEzyuxqbNrxdWtBbnCMQpC3y3A+e+mPjSjK7O3gngEI
- 0gVg==
+ bh=icNqRkYDJRAB6RHr00zHh3bYRCOwkWInq2ZlFKNfHLg=;
+ b=ywat3rq8wBxY1/i3M6m15NvZFjQGunmft0Q5NPURAmjuiJmGekzBWI0nSinxzpHUwD
+ CRlYqmnqUZkpJL1Tgf9WZTdBlmIw1AlrORWjnRFW4XFiOBo5DGWA8KNBz7rTOEJU1iys
+ nCuhTGJXfyEUZIsLBmYJvsplV/uYtNCd4Rel3JVULohHfWcmZ7j34JhMrSjKTc20GVnt
+ wrabCSnoYFpEoXj7ambckI43RCLuOfDMzbI4YIoSh0wnrJvXPklC3E/bSmCVwtFSh47V
+ td5hknom5wbrMapeuXPcEMtlk9tq/mCOvshSHm3arfTZG8HFMu/Wie23A8hs4+Tn2uIM
+ ryQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760708367; x=1761313167;
+ d=1e100.net; s=20230601; t=1760708449; x=1761313249;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hiw8AqTYPLPN8XKgHaspY50210Hhswn7lmt4oFiM1+0=;
- b=TtftSSZVsJd7iiq0uEozSnHMwkH0rmY+eQNDeUvKeGNTNbmTS4r5mWT/SXRWfXtzZI
- zp7tYsgCRW6Ev2J+kuxELhv2n/yfUJwOdzixtnwLWogPY42QUubL+YM2NRi9ETwY/iFZ
- 2Rr9tdfohgs5Dppb4CbYBA7GirFx7llGvmS/5xeeXyQA5kPsL0zKJ9guH5N9a4VXAK3g
- OUprrfnTDVUGvM9QS45CKwEy1VvsB84vgmluvCYqASIAQ9IV6I+KmUhMOSuNMO/IwSCw
- OtVDylRhV4PIeEkIox1pNgEM3NK1m078EK8C3uyuao0wVKgq6yA9N51Pm7rgxsro1RM3
- CTVA==
-X-Gm-Message-State: AOJu0YyjKlrkpw5bgLdmtk7wsIB/+/AYDPp0aoQB7+WZ2r8I1092i+jr
- ciSdEO8iuWBNkNdSfz8xM2hfc7rF0uRrOjwZ24oFL9RINaVukFxlWYobEasLcVHFOsQ=
-X-Gm-Gg: ASbGncublEcf1XK3xlNyIPl52T3o94JVDCFZiBvp6t6t4DzqGl1CBdjQ7sRUEBTNcQP
- 1f2Ht50Nf764i00EgOza9xfEBPM5lyBBGjVacmauVHpSazF5zRCFlcyqMFYIOY4S6FQuE+F7qOO
- /vUDOBRCFJyllBTMW17l2hl6qU+oJJMqEO4KSVBZgih+PINQjDVKhl8zCRFy/pRBwdIEmHBmWBP
- f3TQyECytcoGFlC3iSvzo6sHMn2MWNhWk9PlB/6f4FHbsLTaZbN4/ae3LBcxKZuKkopooHDiC+h
- /H5F4esSgHjXG3csioPH8vstiX9CkxQNQMsjMfuYqJo0sZb5D/mt3mTLtMKXOCEns1hCZ8c/F12
- wI6/2dXZhSKe4K2Or7gp8CvimcWTXUWaeZuChwz0MXYCcT0JceJ9O/6Ij1ffkJ06ZcJEbg2SFIt
- 6zeUs/Ez31MPpRHHdC2V3PYy+Ecv2s0qpArEEy0B8oJnk=
-X-Google-Smtp-Source: AGHT+IGyND4O1opYO4UraWj/w9AlCZnGpdS9sMZ513alkMTwPqWLsimqDWDMUD7ykFkIefOkICk+nQ==
-X-Received: by 2002:a05:600c:8284:b0:46e:5302:7751 with SMTP id
- 5b1f17b1804b1-4711726487cmr35072495e9.9.1760708367103; 
- Fri, 17 Oct 2025 06:39:27 -0700 (PDT)
+ bh=icNqRkYDJRAB6RHr00zHh3bYRCOwkWInq2ZlFKNfHLg=;
+ b=FpI8xJN7CHMOPBZzBzJJ98QgQ1TdHej+wv09pRROuWh30XiF4BeKE++V5aQuqwZbwu
+ 8YqLJIwyG0WoJZFpsCMZ4cc3hmPNzz1TtqWF0P/YpWhoCEfaBDllNTes5Ij8XGLqHOMX
+ j4EiX6JSSh1NyAlAexJHQxZDLtUmQSuAJQFDwqmSzQcSEza7hzKTSz21LHGobb1aF0FA
+ TIqcoMEzm4GIIfcnDKWqpObBcXvgc1PabcJRmvtKaFZpcFPhabD/SlL7IRWfD+clKpjS
+ BlK1eu4hQlgo0U0Ske62BxAgIB9oshPZT2Y3WHRKOCyxSxAFgx4boMoDUL8AZMooRI9s
+ wXbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX//eaiEWaHeQSUxPxsfkg4et/A5YNeW0kyx4EdbcsW5cFDtbz6mwnhUO8AXk9IX+BN5+AbVV5DN+EO@nongnu.org
+X-Gm-Message-State: AOJu0YwXU/3L2y5ir7ZIVwCLAP+a/wj+yzJBNPeVzAnOIlF+ttVGd+Hy
+ e8oUMgqL8ktzRVemJiUXZ2pgok8J2z+b/TFOiE2M/r3CDDWF/R0MjshQfGjcAjrUpTg=
+X-Gm-Gg: ASbGncsDcM5fOySkpxu9xnhuZIW05adFG/RX03URujFtPv5DSP0tqXw3ZIx5AWY+Wjb
+ sjCMWiKUKwmJRjiE8Wa8O49j5YX0teqO1fOmWSOJ8vTSFslHQPDCTF7v4ULQI7e4zpUZotlsypT
+ 8DPVZ0YkSkLB+EOlEGhu6f2WMs3dh9dNlY3Z2B/n/C6PDvif83xyyBO79ty4Fkt7yuCDfM4pT3s
+ 5Nmk2pwN2FYWC0sU7Q/Esz0yBNPXiYBdVzKTrai5T8+3eZRRYzrzYyb1VCpD6iDudxns9dVloDZ
+ HhoYJ2P1LMXQRD69pQRZp/usQxHkAUSus+4nvRYrKkEaMU8UHAsz9N90LKeW7rf12+iyzcJCR04
+ PtDcB8XlFVDr9uL2HE3ZcieetRIpS7vLFBJTo2frN/9LCq46SQdQQivYWQ1iyaIkMNUpupWoxap
+ hOVTTL4A/BTY02eRQYdaiSoHwQhONBVJxjumJDkLMpEeK60N2Fx85CKg==
+X-Google-Smtp-Source: AGHT+IHwE0d71v5wCkaVJaRIBovj3dj6VslZKSGY8OpKKfJGG8NC2q9yp7kZIPDXZXwQmZ0JZsNrog==
+X-Received: by 2002:a05:600c:8b66:b0:46e:428a:b4c7 with SMTP id
+ 5b1f17b1804b1-471179120ccmr28595485e9.23.1760708449543; 
+ Fri, 17 Oct 2025 06:40:49 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47114460fe1sm88373735e9.17.2025.10.17.06.39.25
+ ffacd0b85a97d-42708bcea1bsm2765910f8f.14.2025.10.17.06.40.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 06:39:26 -0700 (PDT)
-Message-ID: <85e8841f-a08d-4d00-9dcc-dc1d231c93ea@linaro.org>
-Date: Fri, 17 Oct 2025 15:39:25 +0200
+ Fri, 17 Oct 2025 06:40:48 -0700 (PDT)
+Message-ID: <dfe5b374-4674-4cb4-8adb-b00f8e67a03a@linaro.org>
+Date: Fri, 17 Oct 2025 15:40:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/20] hw/arm/virt: Remove virt-4.1 -> virt-7.2 machines
+Subject: Re: [PATCH 00/12] hw/s390x: Remove s390-ccw-virtio-4.2 ->
+ s390-ccw-virtio-7.2 machines
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20251017130821.58388-1-philmd@linaro.org>
- <aPJCIuoL2_C2wrv2@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20251017133002.61410-1-philmd@linaro.org>
+ <edfb9f1f-b375-4295-8e61-0b86bf5818b5@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aPJCIuoL2_C2wrv2@redhat.com>
+In-Reply-To: <edfb9f1f-b375-4295-8e61-0b86bf5818b5@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,28 +109,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/25 15:18, Daniel P. Berrangé wrote:
-> On Fri, Oct 17, 2025 at 03:07:59PM +0200, Philippe Mathieu-Daudé wrote:
->> Remove the deprecated virt-4.1 up to virt-7.2 machines,
+On 17/10/25 15:38, Thomas Huth wrote:
+> On 17/10/2025 15.29, Philippe Mathieu-Daudé wrote:
+>> Remove the deprecated s390-ccw-virtio-4.2 up to 7.2 machines,
 >> which are older than 6 years. Remove resulting dead code.
-> 
-> Nope, that's too aggressive here too. Only the 4.1/4.2 machines
-> can be removed. The others are all still reported as being valid
-> machines with '-machine help' - they'll be automatically removed
-> from that list once their expiry release cycle is started.
-
-Right :/
-
 >>
->> Philippe Mathieu-Daudé (20):
->>    hw/arm/virt: Remove deprecated virt-4.1 machine
->>    hw/arm/virt: Remove VirtMachineClass::no_ged field
->>    hw/arm/virt: Remove deprecated virt-4.2 machine
->>    hw/arm/virt: Remove VirtMachineClass::kvm_no_adjvtime field
+>> Philippe Mathieu-Daudé (12):
+>>    hw/s390x/ccw: Remove deprecated s390-ccw-virtio-4.2 machine
+>>    hw/s390x/ccw: Remove SCLPDevice::increment_size field
 
-So please only consider these 4 patches to review then.
+> NACK.
+> 
+> Being deprecated does not mean that the deprecation period already expired.
+> Please re-read the paragraph about machine deprecation in docs/about/ 
+> deprecated.rst carefully again.
 
-Thanks,
+Yes, my bad, I misunderstood the '-M help' output.
+
+Still, please consider the first 2 patches (4.2 is over 6yo).
+
+Regards,
 
 Phil.
 
