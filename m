@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C1FCCD19A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916BFCCD1A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9jLs-0005q6-PL; Fri, 17 Oct 2025 08:14:32 -0400
+	id 1v9jM2-0005w9-V7; Fri, 17 Oct 2025 08:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-202510171204004bcc601c600002073e-9j39Cg@rts-flowmailer.siemens.com>)
- id 1v9jLn-0005p1-Uc
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:28 -0400
-Received: from mta-64-228.siemens.flowmailer.net ([185.136.64.228])
+ <fm-294854-202510171204011b1bab774e000207e5-PW3bf_@rts-flowmailer.siemens.com>)
+ id 1v9jLr-0005pw-6s
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:32 -0400
+Received: from mta-65-227.siemens.flowmailer.net ([185.136.65.227])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-202510171204004bcc601c600002073e-9j39Cg@rts-flowmailer.siemens.com>)
- id 1v9jLc-0005E2-Gj
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:26 -0400
-Received: by mta-64-228.siemens.flowmailer.net with ESMTPSA id
- 202510171204004bcc601c600002073e for <qemu-devel@nongnu.org>;
- Fri, 17 Oct 2025 14:04:00 +0200
+ <fm-294854-202510171204011b1bab774e000207e5-PW3bf_@rts-flowmailer.siemens.com>)
+ id 1v9jLe-0005E8-R2
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:30 -0400
+Received: by mta-65-227.siemens.flowmailer.net with ESMTPSA id
+ 202510171204011b1bab774e000207e5 for <qemu-devel@nongnu.org>;
+ Fri, 17 Oct 2025 14:04:01 +0200
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm2;
  d=siemens.com; i=jan.kiszka@siemens.com;
- h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc;
- bh=03FqQPfCT0swFzzyg/QXqonYs+S+l8lIZ7jifCcQcHQ=;
- b=BJibUAKU1O1OCFZslGQ0pggOVBpOYx+dh0yVuqftHKO8pqTOkiSm/5tea7u2LHW2cnEc5N
- Y6wEdesVN3GQQCnEJDU0m3mGQoomDFQYsIz33f81apLD32PzR7bRVlbOcJCKda2srL1Nn/XX
- i/1e7kupIAOLYIDat8OadxfDeApRmnmXanqKCWAF8qFhMqGicZYpZGuZyJaGuF3A3FIyD3nB
- kJ2kF+13gVgWBmGkf8IrpX/yXXgQVsetFlcfXPc/xEnkZKS6J+PdlQeZPid2vNLJajPex9zg
- IMoTzlveFY01vDtGYnCU83D1cRsl0VLuGob6vMHs4sSnxAfBbXysMUQQ==;
+ h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
+ bh=o0vzWO7EP6ba9YHG0RLmyb2yOxun27xq6dQCAVZVuz4=;
+ b=kseNPrmT9QTQNYWUckJSYQeBm9/nm2DI6jpoDvGMR8xxc/E2zbWJefbkTQXZDczx9RDZUb
+ hAf6ey7SAWLb5nI5fQrhgNvtEA440SRQCONPn/zOFBeIMKotWrITh6efgxlzB84a+C8vEB1H
+ lZrIHmLIDBcPHedV885FSpdpz5fBNSG4g3HLpZHoz861fnP4qTLM3WddYQ3pl97k+bK/U5fw
+ 8b5Q5tvnimiMQjy12406kwvul+9ebZvxAKRzvvZJDjoSW08mYApZZgTSd9ZV9yvtEYdtELCq
+ dktGVIojIzBwwGgk+jZFDb9c7J+uSLr6kAHnqaIO973/HPMijP+Xvaaw==;
 From: Jan Kiszka <jan.kiszka@siemens.com>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -41,22 +41,19 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>,
- Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Joel Stanley <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
-Subject: [PATCH v5 0/6] sd: Add RPMB emulation to eMMC model
-Date: Fri, 17 Oct 2025 14:03:52 +0200
-Message-ID: <cover.1760702638.git.jan.kiszka@siemens.com>
+ Jerome Forissier <jerome.forissier@linaro.org>
+Subject: [PATCH v5 2/6] hw/sd/sdcard: Allow user-instantiated eMMC
+Date: Fri, 17 Oct 2025 14:03:54 +0200
+Message-ID: <90fc6201696fcf0e5fd0493365bc32b217aa9d6e.1760702638.git.jan.kiszka@siemens.com>
+In-Reply-To: <cover.1760702638.git.jan.kiszka@siemens.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Flowmailer-Platform: Siemens
 Feedback-ID: 519:519-294854:519-21489:flowmailer
-Received-SPF: pass client-ip=185.136.64.228;
- envelope-from=fm-294854-202510171204004bcc601c600002073e-9j39Cg@rts-flowmailer.siemens.com;
- helo=mta-64-228.siemens.flowmailer.net
+Received-SPF: pass client-ip=185.136.65.227;
+ envelope-from=fm-294854-202510171204011b1bab774e000207e5-PW3bf_@rts-flowmailer.siemens.com;
+ helo=mta-65-227.siemens.flowmailer.net
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -80,85 +77,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes in v5 [1]:
- - fix regression of patch 1 with unplugged SD cards
- - address review comments on documentation
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-Changes in v4:
- - add truncation warning to mkemmc.sh
- - fix typos in doc and mkemmc.sh
+Enable user-instantiation so that PCI-attached eMMCs can be created for
+virt machines, for QA purposes for the eMMC model itself and for complex
+firmware/OS integrations using the upcoming RPMB partition support.
 
-Changes in v3:
- - rebased, dropping merged patches
- - rework image alignment rules to match hardware
- - improve/fix mkemmc script
- - add emmc documentation
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ hw/sd/sd.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Changes in v2:
- - handle write counter expiry
- - assert() availability of QCRYPTO_HASH_ALGO_SHA256
- - add missing SPDX-License-Identifier
-
-This closes an old gap in system integration testing for the very
-complex ARM firmware stacks by adding fairly advanced Replay Protected
-Memory Block (RPMB) emulation to the eMMC device model. Key programming
-and message authentication are working, so is the write counter. Known
-users are happy with the result. What is missing, but not only for RPMB-
-related registers, is state persistence across QEMU restarts. This is OK
-at this stage for most test scenarios, though, and could still be added
-later on.
-
-What can already be done with it is demonstrated in the WIP branch of
-isar-cip-core at [2]: TF-A + OP-TEE + StandaloneMM TA + fTPM TA, used by
-U-Boot and Linux for UEFI variable storage and TPM scenarios. If you
-want to try: build qemu-arm64 target for trixie with 6.12-cip *head*
-kernel, enable secure boot and disk encryption, then run
-
-$ QEMU_PATH=/path/to/qemu-build/ ./start-qemu.sh
-
-Deploy snakeoil keys into PK, KEK and db after first boot to enable
-secure booting:
-
-root@demo:~# cert-to-efi-sig-list PkKek-1-snakeoil.pem PK.esl
-root@demo:~# sign-efi-sig-list -k PkKek-1-snakeoil.key -c PkKek-1-snakeoil.pem PK PK.esl PK.auth
-root@demo:~# efi-updatevar -f PK.auth db
-root@demo:~# efi-updatevar -f PK.auth KEK
-root@demo:~# efi-updatevar -f PK.auth PK
-
-Note that emulation is a bit slow in general, and specifically the
-partition encryption on first boot is taking 20 min. - we should
-probably reduce its size or understand if there is still something to
-optimize.
-
-Jan
-
-[1] https://github.com/siemens/qemu/commits/queues/emmc/
-[2] https://gitlab.com/cip-project/cip-core/isar-cip-core/-/commits/wip/qemu-rpmb
-
-CC: Alexander Bulekov <alxndr@bu.edu>
-CC: Alistair Francis <alistair@alistair23.me>
-CC: Cédric Le Goater <clg@kaod.org>
-CC: Joel Stanley <joel@jms.id.au>
-CC: Warner Losh <imp@bsdimp.com>
-
-Jan Kiszka (6):
-  hw/sd/sdcard: Fix size check for backing block image
-  hw/sd/sdcard: Allow user-instantiated eMMC
-  hw/sd/sdcard: Add basic support for RPMB partition
-  hw/sd/sdcard: Handle RPMB MAC field
-  scripts: Add helper script to generate eMMC block device images
-  docs: Add eMMC device model description
-
- docs/system/device-emulation.rst |   1 +
- docs/system/devices/emmc.rst     |  53 +++++
- hw/sd/sd.c                       | 352 ++++++++++++++++++++++++++++---
- hw/sd/sdmmc-internal.h           |  21 ++
- hw/sd/trace-events               |   2 +
- scripts/mkemmc.sh                | 218 +++++++++++++++++++
- 6 files changed, 618 insertions(+), 29 deletions(-)
- create mode 100644 docs/system/devices/emmc.rst
- create mode 100755 scripts/mkemmc.sh
-
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index d1e1bb4f0e..305ea251cb 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2928,8 +2928,6 @@ static void emmc_class_init(ObjectClass *klass, const void *data)
+     dc->desc = "eMMC";
+     dc->realize = emmc_realize;
+     device_class_set_props(dc, emmc_properties);
+-    /* Reason: Soldered on board */
+-    dc->user_creatable = false;
+ 
+     sc->proto = &sd_proto_emmc;
+ 
 -- 
 2.51.0
 
