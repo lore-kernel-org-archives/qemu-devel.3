@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC86CCCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBD8CCD19A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9fjm-0000rM-JC; Fri, 17 Oct 2025 04:22:58 -0400
+	id 1v9fk3-00012Q-4s; Fri, 17 Oct 2025 04:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fjk-0000r9-LH
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:22:57 -0400
+ id 1v9fju-000112-Rd
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:08 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fjh-0001BE-BG
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:22:56 -0400
+ id 1v9fjm-0001BE-F2
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760689373; x=1792225373;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=gAleHMqfRPZ52zhdL3QProo/C1KuY5TMJHKgQmrar/k=;
- b=CzkyF4ugMn6QijTa4kXBEqhJJE9wOgKxTYmOQGvcA4JrF4uoQ1mpsK1j
- 8W2rRhKNK9YdVNfms2WEbaGvHj0tlmY/27UrRDv4+UeGhDjLpJ6cQUjkg
- T9jhXXuMzp+C3+l94GUu7J0aF1yEuZauVo2MEbRSh6Z12SEpaPmHUb/aC
- iFUxsa2pOyUsfUwWhtytEcROkLLyZSB1OwpoKp+RmhNWA4c9eRYD9sIeI
- 7NCeNEv2DO8J6Rm8qzt5TjFWvmQCLKH7tNFdw9OaAcyxgonwH0Or36Wda
- aaKDY/BfI19uTlYjc/kTOycJWUrNl3oZk8KfMrv4efjI71aM+L7UKdck9 A==;
-X-CSE-ConnectionGUID: ef/2Cq04SMa9W2Izm9BzWQ==
-X-CSE-MsgGUID: bjA/47dUR+Wo5rd8CdQl5A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927381"
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927381"
+ t=1760689378; x=1792225378;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=obN4zXwtXoyM1GltB8aOZ1VpAFihc3VGNbYoQhEDvnc=;
+ b=ODhzEr83m1U3h5+49sBSQE1SVgMCiEnR2n87TMCrZ2oL9oQXIuGLpkGB
+ 1AmKiwgn+68IcdNxG1BAsccnWpblV00vo2dB3/qEWeKYBdYxRBKEvGKFn
+ fy8DRqesCez/NhqYWB0lNWNpq6mK/I/tqC2qRiBgakYSiGD9fDwEz2Vg5
+ tOwCzcPNECsVAH2C7sRINdNlR9tTJvHCVNeQhmjfkh5ODH8xjLnNHuwkZ
+ m3AvhaVU9ZU8ilYDh0o7mSkqC8gY+uKS6usbvdZsiqh+4dCOuHsyZxRbS
+ pDGG2WeTOrY+6RRsqNLRax+gmAx4DhvASlWJbHdrKQVdt8kiQppFQJJ6W w==;
+X-CSE-ConnectionGUID: 8ICip55BTH+tXloaks9vvg==
+X-CSE-MsgGUID: tq28DsKDSge3jTnSFDtFKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927388"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927388"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:22:45 -0700
-X-CSE-ConnectionGUID: 6O+/CJFcRju7thjTcLRJvg==
-X-CSE-MsgGUID: F9KrFDbSQJqOl40k9S5WTg==
+ 17 Oct 2025 01:22:49 -0700
+X-CSE-ConnectionGUID: ofchU3kgRVel2dkmlNZZhw==
+X-CSE-MsgGUID: NFEXSwm3T6mUQUeWfBinhA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484675"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484678"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:22:42 -0700
+ 17 Oct 2025 01:22:46 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
@@ -53,10 +53,13 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
  eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
  xudong.hao@intel.com, giovanni.cabiddu@intel.com, mark.gross@intel.com,
  arjan.van.de.ven@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 0/8] vfio: relax the vIOMMU check
-Date: Fri, 17 Oct 2025 04:22:25 -0400
-Message-ID: <20251017082234.517827-1-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 1/8] vfio/iommufd: Add framework code to support getting
+ dirty bitmap before unmap
+Date: Fri, 17 Oct 2025 04:22:26 -0400
+Message-ID: <20251017082234.517827-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20251017082234.517827-1-zhenzhong.duan@intel.com>
+References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.19;
@@ -84,78 +87,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Currently we support device and iommu dirty tracking, device dirty tracking
+is preferred.
 
-This series relax the vIOMMU check and allows live migration with vIOMMU
-without VFs using device dirty tracking. It's rewritten based on first 4
-patches of [1] from Joao.
+Add the framework code in iommufd_cdev_unmap() to choose either device or
+iommu dirty tracking, just like vfio_legacy_dma_unmap_one().
 
-Currently what block us is the lack of dirty bitmap query with iommufd
-before unmap. By adding that query and handle some corner case we can
-relax the check.
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+---
+ hw/vfio/iommufd.c | 34 +++++++++++++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 3 deletions(-)
 
-Based on vfio-next branch:
-
-patch1-2: add dirty bitmap query with iommufd
-patch3:   a renaming cleanup
-patch4-5: unmap_bitmap optimization
-patch6:   fix large iommu notification triggered unmap_bitmap failure
-patch7:   add a blocker if VM memory is really quite large for unmap_bitmap
-patch8:   relax vIOMMU check
-
-
-We tested VM live migration (running QAT workload in VM) with QAT
-device passthrough, below matrix configs:
-1.Scalable mode vIOMMU + IOMMUFD cdev mode
-2.Scalable mode vIOMMU + legacy VFIO mode
-3.legacy mode vIOMMU + IOMMUFD cdev mode
-4.legacy mode vIOMMU + legacy VFIO mode
-
-[1] https://github.com/jpemartins/qemu/commits/vfio-migration-viommu/
-
-Thanks
-Zhenzhong
-
-Changelog:
-v2:
-- add backend_flag parameter to pass DIRTY_BITMAP_NO_CLEAR (Joao, Cedric)
-- add a cleanup patch to rename vfio_dma_unmap_bitmap (Cedric)
-- add blocker if unmap_bitmap limit check fail (Liuyi)
-
-
-Joao Martins (1):
-  vfio: Add a backend_flag parameter to
-    vfio_contianer_query_dirty_bitmap()
-
-Zhenzhong Duan (7):
-  vfio/iommufd: Add framework code to support getting dirty bitmap
-    before unmap
-  vfio/iommufd: Query dirty bitmap before DMA unmap
-  vfio/container-legacy: rename vfio_dma_unmap_bitmap() to
-    vfio_legacy_dma_unmap_get_dirty_bitmap()
-  vfio/iommufd: Add IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
-  intel_iommu: Fix unmap_bitmap failure with legacy VFIO backend
-  vfio/migration: Add migration blocker if VM memory is too large to
-    cause unmap_bitmap failure
-  vfio/migration: Allow live migration with vIOMMU without VFs using
-    device dirty tracking
-
- include/hw/vfio/vfio-container.h |  8 ++++--
- include/hw/vfio/vfio-device.h    | 10 +++++++
- include/system/iommufd.h         |  2 +-
- backends/iommufd.c               |  5 ++--
- hw/i386/intel_iommu.c            | 42 +++++++++++++++++++++++++++++
- hw/vfio-user/container.c         |  5 ++--
- hw/vfio/container-legacy.c       | 15 ++++++-----
- hw/vfio/container.c              | 20 +++++++-------
- hw/vfio/device.c                 |  6 +++++
- hw/vfio/iommufd.c                | 46 ++++++++++++++++++++++++++++----
- hw/vfio/listener.c               |  6 ++---
- hw/vfio/migration.c              | 43 ++++++++++++++++++++++++++---
- backends/trace-events            |  2 +-
- hw/vfio/trace-events             |  2 +-
- 14 files changed, 176 insertions(+), 36 deletions(-)
-
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index fc9cd9d22f..976c0a8814 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -61,14 +61,42 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+                               IOMMUTLBEntry *iotlb, bool unmap_all)
+ {
+     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
++    IOMMUFDBackend *be = container->be;
++    uint32_t ioas_id = container->ioas_id;
++    bool need_dirty_sync = false;
++    Error *local_err = NULL;
++    int ret;
+ 
+     if (unmap_all) {
+         size = UINT64_MAX;
+     }
+ 
+-    /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+-    return iommufd_backend_unmap_dma(container->be,
+-                                     container->ioas_id, iova, size);
++    if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
++        if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
++            bcontainer->dirty_pages_supported) {
++            /* TODO: query dirty bitmap before DMA unmap */
++            return iommufd_backend_unmap_dma(be, ioas_id, iova, size);
++        }
++
++        need_dirty_sync = true;
++    }
++
++    ret = iommufd_backend_unmap_dma(be, ioas_id, iova, size);
++    if (ret) {
++        return ret;
++    }
++
++    if (need_dirty_sync) {
++        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++                                                iotlb->translated_addr,
++                                                &local_err);
++        if (ret) {
++            error_report_err(local_err);
++            return ret;
++        }
++    }
++
++    return 0;
+ }
+ 
+ static bool iommufd_cdev_kvm_device_add(VFIODevice *vbasedev, Error **errp)
 -- 
 2.47.1
 
