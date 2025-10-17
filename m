@@ -4,114 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449D2CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 04:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6FFCCD19E
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9cUP-0003yw-To; Fri, 17 Oct 2025 00:54:54 -0400
+	id 1v9d18-0001dA-B9; Fri, 17 Oct 2025 01:28:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1v9cUN-0003yD-Iv; Fri, 17 Oct 2025 00:54:51 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d15-0001cN-CK
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:28:40 -0400
+Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1v9cUK-0004CX-6v; Fri, 17 Oct 2025 00:54:51 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59GJgbxB012367;
- Fri, 17 Oct 2025 04:54:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JyeMjK
- zYsjFSVxf6kg4wHLg531dRT/wXxS6jIUUCdr0=; b=skNs48SQYFbPIoimrssACE
- 6dqwo6jgdTv9aR5rA8bvWd0ge2Vd+ObZF/wXTXWfcMjJL6joGlyA+5yHssAwu7eg
- Jdk82/PmKvy0dGaVY8kvGmqd+FiuJatV5N5cjAgFMBvsspzi4D1P1eM0+cOZQw7g
- +Lmt+HuW6VUmXbH/t7ASTgitvBMiSkCQmtYfscDUVduDDwyGE60xx3cXduab7DzD
- mx4BYOfxSBfsiL2HvmR4yA3Zhpo2XCVWIVjkSBfOM9OWOwqFWe7aj5iIVppXVC4/
- O2ew8Q4v71miMQIJkrIPhpUP3aVNHtEv2Mcy/lsWhh+BjzY++XyrrVSmqRguvFcA
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnrnt2n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 04:54:41 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59H4nb0s010394;
- Fri, 17 Oct 2025 04:54:41 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnrnt2k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 04:54:41 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59H0qM3G003618;
- Fri, 17 Oct 2025 04:54:40 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xy9g9d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 04:54:40 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59H4sa9B51315096
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Oct 2025 04:54:36 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B3CB1200DD;
- Fri, 17 Oct 2025 04:54:36 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C0DD8200DC;
- Fri, 17 Oct 2025 04:54:34 +0000 (GMT)
-Received: from [9.124.220.19] (unknown [9.124.220.19])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Oct 2025 04:54:34 +0000 (GMT)
-Message-ID: <fb95ba4d-cd05-4e57-8c24-aebba4cc37be@linux.ibm.com>
-Date: Fri, 17 Oct 2025 10:24:33 +0530
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d11-0001k4-Nv
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:28:38 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.144])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cntdt0t9rz5y9m;
+ Fri, 17 Oct 2025 05:28:34 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Fri, 17 Oct
+ 2025 07:28:33 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-113S007e0b093ff-6f94-4129-80e3-e73bd2ccdeb3,
+ 48F321F6F3AAA1B288770452BCFEC79A981EE5C7) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <3f6e4b05-0a85-4589-bf7d-ba82d29d827a@kaod.org>
+Date: Fri, 17 Oct 2025 07:28:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/ppc: Pass errp to load_image_targphys() and report
- errors
-To: Vishal Chourasia <vishalc@linux.ibm.com>, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, peter.maydell@linaro.org,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com
-References: <20251016173502.1261674-1-vishalc@linux.ibm.com>
- <20251016173502.1261674-8-vishalc@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <20251016173502.1261674-8-vishalc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M5ZA6iws c=1 sm=1 tr=0 ts=68f1cc11 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=iNsD6hmKjbe9THaIYngA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: r4lvoc0xG-CEaeqj1-as9IK8pbKJrn6z
-X-Proofpoint-ORIG-GUID: y6gKBbuTVRQrHKg4gBI8DDEaWlZu_N0o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEwMDE0MCBTYWx0ZWRfXyw2jc9AKDX5t
- dezqKl41YBEGkAMO6MSvsZ7AAbytX0Kr9Ux7ULBKuFkLnK9sXdvOO7Ax513PVfPlQjsvLwyi+fg
- tVkmwy54u+2M0mJ/MhG2pQ9tIH3uBOC5iwi1AXnCuFgjmg/wZ/YzEllUdVyy5jV/xmMkHUIHsg1
- Vrl/vtarAIRYEVl8nCDBtbm5utsF7C2mTxOsMSm6l2i7BbxrSFZYgHBcGquQpiqMBT6iaWAUhPs
- S1AJ2jCA8ts3epOFn4asQFNsgE1fEdUVtDcgP2Xpcrk8dNEmdL0Wa5tv47B0PelO58bjmvVOzCh
- h8PnTOIMv+SVlBLsTDf4YBSoezK0sWkaDTSqCpAOBaxm5pUQRHLdTRO1bGaLb5yZW8mZVvI8xgL
- l9dfnHZDrBnkrkPy0sqsRMA2Id325w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-17_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510100140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Subject: Re: [SPAM] [PATCH v1 04/12] hw/arm/ast27x0: Add SRAM link and alias
+ mapping for TSP coprocessor
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>
+References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
+ <20251015062210.3128710-5-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251015062210.3128710-5-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 9c31f5ed-1b87-4380-951c-3e9ac45e9158
+X-Ovh-Tracer-Id: 15276772887665085231
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFZaxLPtYM+kuyQslok0ga4In9zpK6YUNNV1qGbQVMboYO345rup1d9m0i1hQLBQgB2iGCbPy1Ah+JLhDY2O/bsqoU027MSUKWBjsBc95vCQMTxM7Cv+fFasUJdYQwNLTJRxljYD73sshzT62v8MSgsNY4S93AEgudK9PK+U16ADkzbH4pr54e0iuC/b3tJGAYvCajYAXlGf0UHQ53khj9QcQUZKZvJj/4YCFv5ROI83p6btbg7Bfnl7JJWKQayWNf31WqIDGEINIaR2e+Q38iE5SierAsPqs8Xj8srg9eSZzGwsvPybq3rIj7W+nxDhCTpQKAijNxdZR+nBw9mmRqJV83DoOA/3X7tonN+yRzVoomE4HlkRGLArqZIUFeHpWPw+xS2ffCtoLfcDAKJNIlr/E7QEdqpMT4aetCzEId2rYKbcESuyGtdsdnhrM+2BpdhgUmPZ65JOgFmBpYn3nI7b8Iz9mTEMnh6mEtDtQC3kQFVD7T03S+Qinc8aNNfcW4t+6Dh8xkq7pnrTa2pKUBMk6GIEOUJ5CuOU8qGhdA6pF3jlNfjTVv4aadd0/DTbHt/Fbgb2DCfi+/iVT3HsxreV0n9c2G1+Opj4yANp7xrdgM1BxQaZwaVygtOiSm2T1y+/u0eWS4xR2bQ8lGVYmCDdL50oGbxz5CShKHXxMziew
+DKIM-Signature: a=rsa-sha256; bh=CyIOQZyk5u7kYqZinRcSqo4VfPgCnxm7Z4z03ZhA+FU=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1760678914; v=1;
+ b=IRTS6CPAQyXgCrvcE+DJqQ1QQy8WavkQH+m1pzuJjC2eLbndcO0vpaKNlfxf5R7+5WvxarGK
+ fafOG/4mDTMCYBRQl9SMLrDUXQ1lJYU+C81roT0XjasnTn8k3zbwTDN/X4liRGLfQ29qtJRy594
+ /347sBQg1DUvYyYMfIQw4sVNwLXZth9KxyTELbDlwXKZMiTNXTyYhgs9KeC51WZPOR4awswtltO
+ PQikNJ1tTt7BKRFZDSOfs8zDKwC/eGWNAnaZuL38Rj+9LyYbVeZDAdZq3zMSTUP2KEF4eHwem1V
+ qjZnOIAR5m/nY2FTBe7dJxgh7ICNBoy7WubvTaNSjdOrA==
+Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
+ helo=2.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -129,24 +131,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/10/25 23:05, Vishal Chourasia wrote:
+On 10/15/25 08:21, Jamin Lin wrote:
+> AST2700 has a 128KB SRAM, physically mapped at 0x10000000–0x1001FFFF for
+> the PSP (CA35) processor. The TSP coprocessor shares this same SRAM but
+> accesses it through a different address window at 0x70000000–0x7001FFFF.
+> 
+> To model this shared-memory behavior in QEMU, this commit introduces a
+> linked SRAM property and alias mapping between the PSP and TSP subsystems.
+> 
+> Changes include:
+> - Add the SRAM alias mapping at 0x70000000 in aspeed_ast27x0-tsp.c.
+> - In aspeed_ast27x0-fc.c, connect the TSP coprocessor’s "sram" link to
+>    the PSP’s SRAM region.
+> - Ensure the alias region is initialized during TSP SoC realization so
+>    the TSP can correctly access shared SRAM through its own address space.
+> 
+> This ensures that the TSP and PSP share the same physical SRAM backing.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast27x0-fc.c  | 4 ++++
+>   hw/arm/aspeed_ast27x0-tsp.c | 7 +++++++
+>   2 files changed, 11 insertions(+)
+> 
 
-> Pass errp to load_image_targphys() calls in ppc machine initialization
-> to capture detailed error information when loading firmware, kernel,
-> and initrd images.
->
-> Use error_reportf_err() instead of error_report() to print the
-> underlying error details along with context about which image failed
-> to load.
->
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 
 
-Regards,
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-- Aditya G
+Thanks,
+
+C.
 
 
 
