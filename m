@@ -4,165 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C32CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 15:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A79DCCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 16:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9mpM-0003Ul-F5; Fri, 17 Oct 2025 11:57:13 -0400
+	id 1v9n0l-0001CF-P3; Fri, 17 Oct 2025 12:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roger.pau@citrix.com>)
- id 1v9mpJ-0003UM-MK
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:57:09 -0400
-Received: from mail-eastusazon11012044.outbound.protection.outlook.com
- ([52.101.53.44] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v9n0j-0001Bg-Vc
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 12:08:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roger.pau@citrix.com>)
- id 1v9mpE-0004Wp-Ml
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 11:57:09 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DODxHeo2OngVSR5aH+DQqhy6KE8xdm1FYP0BkOQ3bh6LoJPd5lvWEA1mpf3r/p5708/rTQoR/pKdmGZxvAvcM0cNHuO//0hDodrfiuYCjy4Y4RochDAnnsnP3DD5hc7YuBK7yt0zo/hRnuvrPyctEmmaDPSuSSJtmvELrFFWqDcw98ToSSR5zQPhxtn5sh5GG6cmOqzwHpiqgOb5Fp6EpW5P3OpScxrK7gnQRRGFBRwokMjA4zAvkDGBnJWJXljIsWZ5S9BMGVzQ6V+sxsufAiR3G9DCnpZSn7s+55RTJesD9KR3yVfn1NjhtmPFoWBdAWwoOm27QYnojSLONnWCxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3qMWxcf0rg5YHkceVGM3qS2pgcb4t2ikbgNbz1m3Vhc=;
- b=n4gFODnTDEhE8UXXJhV3ElIuH0jeMDfcJ/LFiZUw9FkiCo5Gw/ltVHJ2ZB6j5NHaR95m9rW9TNtOF+7qS5vHSnkH5tkeGU1m2tmmZ/io1rZq5phsp4iGtfbEXguYJCkXvXRN2AXKasUjr3fDGS/qC9tNZbd1IENw4R+mrmc/INYimqbqzOJhzxF6pgb90IlCcCgObVSjSIWgn1GaegNBGiBc2Oi/4Q+vslT0Wbb2QaYYMvN6zHzJ9VjPGzCNZOa9jlAisE8dAYBvNiGs6SOkme67PspIIi4Cg5YpLymTwM4nT+1SRg7fHilfq6w7Ia7UhsthOt2NyXD+UO5yrfR/PQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
- dkim=pass header.d=citrix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=citrix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3qMWxcf0rg5YHkceVGM3qS2pgcb4t2ikbgNbz1m3Vhc=;
- b=WovroAtZy6ShyqYhglHYBtR2P1ySpfcyx7dzfCmhTlQNmH4JMoLPjApkgGuEL3Z05teKdCRNKNc8wLekV4nAzZxBOKzYSgSh8zfD7iRhMG+4ZVl34J/t8zlCDIjkAulNdzOf2682e4OCJWE76G1cD+sLIdWj4HIOc0ijnregjl8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=citrix.com;
-Received: from DM6PR03MB5227.namprd03.prod.outlook.com (2603:10b6:5:247::22)
- by CO1PR03MB5908.namprd03.prod.outlook.com (2603:10b6:303:9d::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.13; Fri, 17 Oct
- 2025 15:51:53 +0000
-Received: from DM6PR03MB5227.namprd03.prod.outlook.com
- ([fe80::c9a0:563d:c344:aec2]) by DM6PR03MB5227.namprd03.prod.outlook.com
- ([fe80::c9a0:563d:c344:aec2%5]) with mapi id 15.20.9228.011; Fri, 17 Oct 2025
- 15:51:53 +0000
-From: Roger Pau Monne <roger.pau@citrix.com>
-To: qemu-devel@nongnu.org
-Cc: Roger Pau Monne <roger.pau@citrix.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-Subject: [PATCH] hw/xen: pass PCI domain to xc_physdev_map_pirq_msi()
-Date: Fri, 17 Oct 2025 17:51:36 +0200
-Message-ID: <20251017155136.16540-1-roger.pau@citrix.com>
-X-Mailer: git-send-email 2.51.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA2P292CA0011.ESPP292.PROD.OUTLOOK.COM
- (2603:10a6:250:1::15) To DM6PR03MB5227.namprd03.prod.outlook.com
- (2603:10b6:5:247::22)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v9n0c-0006ZC-Nv
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 12:08:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760717327;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3CZk/Z85oyKWZoXJhb88UKg3smC0UOmYOtpI0u2G7/U=;
+ b=Vwvui/QVc7rD787okK2J5mgOw9JdhsDUobfyCnYabim7UvKRhUcWIg32XkXM2mJW+VdDkL
+ Rd2D16Dy+W6VMCy7XiBdHaV24dG2B51R1LNVWLnZMOt5FJkK5j1u3QskHmhubsvLwsePtr
+ pF3Oyz73Cjtddx5OrrLtIsebbZt4KU4=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-154-Wsp9m5EiOSuU8aIC66eJiw-1; Fri, 17 Oct 2025 12:08:46 -0400
+X-MC-Unique: Wsp9m5EiOSuU8aIC66eJiw-1
+X-Mimecast-MFC-AGG-ID: Wsp9m5EiOSuU8aIC66eJiw_1760717326
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-88f7eff9d5fso798163285a.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 09:08:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760717326; x=1761322126;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3CZk/Z85oyKWZoXJhb88UKg3smC0UOmYOtpI0u2G7/U=;
+ b=eu486ugl4A7YZ/YCuXDbHc4uY5PzF9LBjpSu0Xf5z0nNaVHjKW5jKwkdRDP5u4JdAo
+ tKX61YH2XV6Nm6U7AX4BM4Nu1KC9fhYa+i3BfbH0zkh/HjXPsk1n58XfaD/T8jknxl3V
+ 3CRfdXGOHv/4yKdhOzt+lX8tkYDs0bKt/CwCxHnxkGZwiIqfuyOB8BJ/t1igeuFupZNr
+ cgsOXYW4XQ1Jj5DqYizAsFnp+/lj/jGUlORlgRwvrpbxaKtRwUBEa2LaxWpYgCBk4OiW
+ Fc9lICcBsXUKx1l6+3R6V3apFgryuBAxSBP0TvbcyWAPDMd/3enZOBZJQYCxdTGC3s8R
+ 3wyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXmt+g85Oo4Ib/DH2VAhfLJoEZWCn+E2gAFjgh13gU4WcojDY3+jlkWQ1FT18vYljQbBQrFeUBaLKTR@nongnu.org
+X-Gm-Message-State: AOJu0YwEC04mE8jHbSdfGdXyTmulpB2cyLlKEtuu7PL2q4IVV9M6eM53
+ DmrJ85haRAiM/7ivgQOh1RFUOVTOtfdlnLcAhoAw//BAtF1vd60teuGaeZ9MbSNINcbtffhzs7F
+ +brc/vgKgaFcoK2jfyXsxBPRezLUJAU+eJldQ/ebdEjqi0vsCacHJqmtS
+X-Gm-Gg: ASbGncsj0bJs6JxhzqjnLVMRcSkMFliMe5CpPvwLqcfmV1udfLC4TCImfK3ZO88wjUd
+ 5/w8meuC2jwCkjbsQEVc4BJgmMLzsBghbhOjBTZPEfYU2OyCQpZb8Abb+f1yGxLUce3RLTqRrPL
+ u9kwzsV4CT5gHKhUkq0b6g51nt8y1TFCy7ZAdkXMjymK1Pa72WBHxLQpSFFOD856T3byakK1g32
+ HTFE+5zp5X/epSPKTb9KFrRqnywGSTCf6ANd1kkZD7ArnKKUkpvyshNLkvCqDWV0sPiY2Xsl21W
+ LCxMlHY99KuRSTVPE7X4nky8nY+/n8tqrpSiVF1HTbuVHs5Stz/cvtcT8GvzrhnpkcA=
+X-Received: by 2002:a05:622a:130c:b0:4e8:a9bf:9d2b with SMTP id
+ d75a77b69052e-4e8a9bfa45fmr11969461cf.84.1760717325388; 
+ Fri, 17 Oct 2025 09:08:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEl85QDL/dRrE64/p7N8v72U5I/lfPW4e0+nQBydFtddU5hL9r7S4uBnFBhcpoW1IOUP7vpVA==
+X-Received: by 2002:a05:622a:130c:b0:4e8:a9bf:9d2b with SMTP id
+ d75a77b69052e-4e8a9bfa45fmr11968481cf.84.1760717324758; 
+ Fri, 17 Oct 2025 09:08:44 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4e8aaf87ecdsm1356701cf.16.2025.10.17.09.08.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 09:08:44 -0700 (PDT)
+Date: Fri, 17 Oct 2025 12:08:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ mst@redhat.com, jasowang@redhat.com, farosas@suse.de,
+ sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
+ michael.roth@amd.com, steven.sistare@oracle.com, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
+ parameter
+Message-ID: <aPJqCqYF32-RKMbC@x1.local>
+References: <aO_--QWDJO7iOhR4@x1.local>
+ <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
+ <aPCtkB-GvFNuqlHn@redhat.com>
+ <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
+ <aPE8Oo5D3oesB7sV@x1.local> <aPE-vmyg1mLDO4pf@redhat.com>
+ <aPFHl3VWV0pCmzd1@x1.local> <aPFOHjl5BoWEMqSL@redhat.com>
+ <aPFVWi1pwxS8yGay@x1.local> <aPH557l6YnXT-3r8@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR03MB5227:EE_|CO1PR03MB5908:EE_
-X-MS-Office365-Filtering-Correlation-Id: 55257727-9222-40e1-c175-08de0d951767
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZGxwei9sdEk1c0hTZTdxNndRVi9TMmRQMDl4ZVVWbTdUdDQ1VkM5ZC81aGtB?=
- =?utf-8?B?NElIT05hdFhwblJVTHpGMDNBbiszbVB4WkloUHNXUE4rQmZiNFVJckg4MFpw?=
- =?utf-8?B?Q2p0L0U1SUtHb3p0eGp0eXFDQW9QaEcvbUtyQXNYcHZKYWxjLzFETkhjUlVM?=
- =?utf-8?B?aWFHOHJQWlpIQUJmTzF3NnFUZUJ3bE13RmpNbUZNUWV4L0tEMXNTQk1oVk8y?=
- =?utf-8?B?eG9vYmlyRkMzc0FHSFd2WjZrb29iMkpuNmNCRmY3N0tCOXV6b0dFclQ5bG9z?=
- =?utf-8?B?N1FxUVZLdXpQUGxzQncvcUExcTlXeXFjMDBwMDE0TG1peUEwYXJRb3c3eUtR?=
- =?utf-8?B?bldObks4d2NjMjNHK0VlelRFUkVmQUlSNHBrTWxCdFdjVDBsUStCZUZ1VVZC?=
- =?utf-8?B?ajhuZVBNb3FpN1JuYWFqS054cFliaVlzQm4xS2Y4endQeWdUMS8zR3B3cklk?=
- =?utf-8?B?b24zVmR1VmFISDA1VDRPblN3ZmJSanhPc0dSTnpmNFpLYTRMcHVCeTIwVVpD?=
- =?utf-8?B?ektPM0xrR2lOcGpIOGFkaFgrbVdSMGgwMVdJZnJCUTlyK1dQOVIxVHhiZ3ox?=
- =?utf-8?B?TVpvcWd3NWJqWlc2ZTY0YXJ0V1lwck1kMG1zOGtMYkZiT1hCZHBiZGNoNWZh?=
- =?utf-8?B?ZlFWL3hvV2VwWXRIWWFQM1ZEWWQ5N2ZFU3VNVWQwUXR4bUJTWTUzeTJwSndv?=
- =?utf-8?B?MWEvZjI1M0FDOVhaK2lQWXJkOXI4eXJNQ1JaUnhwV0lFajZZT0FTQ1Erc3BR?=
- =?utf-8?B?UllldVE1dTg4ekFGeTdPdHpCU01XaVYrUitTMzdvL2phbnlHbW5aajFZVmE0?=
- =?utf-8?B?a09QZHJuQUgxMzZKM2dFeW9aLytqZjVVRGkyRUMyYW1qOVFLTkdKeUw1VTls?=
- =?utf-8?B?QkxMNFNwcmVPK2hZbTV1S29KS2xuVmhudjNKSjJHZGIwaXhjR1hJMGtENjNY?=
- =?utf-8?B?V1l3SmFvclVmdHNUVDlkOFltbFFxdXBvOHFzc1d0ZkVrUG1uZVZuU0RCNkc1?=
- =?utf-8?B?dFBMeVIwL0pUcmVFSWZRMU5ab3hyeE9SbVBvZzlydDQyL29vTkpybXZhTUtu?=
- =?utf-8?B?TXZnYUZObFg1MVZ2RGUyUzBWNVIrMXRqQ25va2lyZEJhREx2aGxUV2hrWGln?=
- =?utf-8?B?VDRHS05KQnVnSmVMc1Q3Q043RW5lTXorV1VHNFpDcEp2akZmaHliRmVCbXIv?=
- =?utf-8?B?QjdyOFhSN3FHMldwd25MbGdnVGtobElBcU9pNjBIYnBNazFURlZ0Y3hSc0hO?=
- =?utf-8?B?ZUkxWnRaUjVNNDgxOVp0V3J3NWZPN0twYkFPSVlTa1NFQmdtSi9hNjBOd0ly?=
- =?utf-8?B?bGk2VkxTSzJ1M1hzTitKSXBuNlIzTFBrbnZFczhId0pYblFtVEp4eFR1WVdP?=
- =?utf-8?B?ZTVYa1JRcUgyWm1JK3FwcnV6TFpjcFhpdUhrQ2J5WCtmY2hoNTlKb1dXcnYr?=
- =?utf-8?B?c3pIMUE4aDROSVpRMnpkOEwxdk94T3UvV0hQYWtIcElGd0hlVDNPNG9aUEJ6?=
- =?utf-8?B?d3NZRmZvSXdOTlN0Mi83REpEcUhHckJpSy93WlJRUXF0SWgrV2NpY0I0WUZN?=
- =?utf-8?B?aFBzNEtPcU5GclRmaEZaNVpEUWVsK1BmRXJnOUFIa2ZoMFg5K2FoWi9QU3hH?=
- =?utf-8?B?UjdVdjVONStwYi9qMlRCdDArYzMxb3pSdkhxSG50S1lqbmNzK0gzT3VpTzU2?=
- =?utf-8?B?U0lBbGp5cHYrS0pZWlc5T2V3Nms5azRKZTVIcUljNDAzZERKTnFnN0duQ29i?=
- =?utf-8?B?bXJSZlZBY253bEtEZEROWHJ1Zi9EL2NqeVExM21GYXl4MnhDSVl2eHhJUXZi?=
- =?utf-8?B?ZE5Gd1VTMnVaVEZlajFrWkVrU2F0ODhwMU5pblVCWm44L3BEMzdLbDkzSCtI?=
- =?utf-8?B?UGpsNDBmZWRNSjQrQ0x3TE40YTYwSFV1SjJjTnNBS0svTEQxc245dFlLS081?=
- =?utf-8?Q?s6ftQJLOppwN+is+sUUMrKRonLKcT35n?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR03MB5227.namprd03.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WEEvcGxSU1RlUkRXVkxZa0dBV1MrMU5TREliWmFpTE8yR3hhNk9YdDBiK2VH?=
- =?utf-8?B?UyttQ1lBdHlheklra3l1cHlKYmJwT09BZjZ1UTEzd3lXTERpSkVvM3VpRnNX?=
- =?utf-8?B?WWdTWFNrY2ljWGVUNnlDb09yUjBHTzJRVzcxM3YwVzJvaUdlcE1zbUIzVmJX?=
- =?utf-8?B?ZkQwaUxVdmUrelFFY2s3Snp4NGdZTmp2YmtJRXJIeTFqZDgydEkydnRvSFpY?=
- =?utf-8?B?VG9TVlhPL1JnSU1NUVl0R3VVQWVhSzloeEU5Q2ZjeW1qR2RNUkZza2FTZUFV?=
- =?utf-8?B?UGJvVWE0YkY5WTdtcDN0YlRYY2dzU3VONUZMTFcxNmNBNlUxOHU2S0Y4ejNv?=
- =?utf-8?B?TE0wNHUwc3J4bEtHTUoyM0x6K2luQ0tJT0o4ZnE0N0psSWRFWTNWTGN0QkR2?=
- =?utf-8?B?V3NmZWtLN3d3K3ErOG42VG5ZT2dZKzYyUHJBd0lFMWtKRjZrVUpPaGx6OFJl?=
- =?utf-8?B?bjVZQzdMaHNCejhtcFAxWjVjNXBQcTFHcE9jalN4NmZqNWw0allOVS9XcVJH?=
- =?utf-8?B?Z0tRS3FobmF4dEFObzZXcHlVS1dvd1hHbVlPNEZUL2IyWStpM05WcDlmVko0?=
- =?utf-8?B?T1F6SVVDczB6RVVjZHRTRlA2aGZIb0RZcnNCN1JUSjdwdVhwSVpHaE1zenVh?=
- =?utf-8?B?UFk3b0VRZnQ3NmpIWmZIVzMxYUhKZ0xWNi9JQk5sYlFPcDlLdlVGWlR5dWx0?=
- =?utf-8?B?ZFBVVW5mbkJOTUxlV1lzYVZvTkYzeGZJem1mY3owODVEUmE3L0J6TGFvMFlH?=
- =?utf-8?B?NXdsU0ZYNVI1L001YkVjT1Z1N0JRVjFmZ2tKZSs0MWxRVDRBcWF0NWIzRjBa?=
- =?utf-8?B?Vm8zUlRlQXU1Tzl0WFU4QmVmbmpld09tYnlJaFkzV05qZUlBd1NZM2g5Lzd0?=
- =?utf-8?B?dHBWWmFnR2x0RU11OTFHNVFJMFBtZjg0MFFXTnlnd0F6WTFBTTF5ZG9Kc2xn?=
- =?utf-8?B?cTR5QUxJQnJTckZNYXlLK2tUYWNyTURDbFpPOHl3aVlabVNPS0JIdGZWSERY?=
- =?utf-8?B?S1I5MGI2YnNCQ0hzS1BzSlN0Wm9oMnlGSHpUMzFFdkhKejdYYTFlbm1MZEVo?=
- =?utf-8?B?Nkh0azk2TStFTU54Y1c2QUduMG1lQWJHMDJkZ0lJOHJvYitrdjZBVXZlbGdj?=
- =?utf-8?B?aDBQYy9jQnBNREdmL01paVBmUnFLOHVXVjVPQ3g4TkMzWjFYUDZKQXpOZVk4?=
- =?utf-8?B?NkVWeExCeGUwTWZrSXdCQ0h0VHZCWUprdGRBcTIzalhEckZwTDFpWDJTeFRG?=
- =?utf-8?B?dUIwQ2JKd2RJTGlMMFR0SE9QbndHWi9WQVBMQ3BYWllrbG53Um90ekh3TS9H?=
- =?utf-8?B?eEVSYVRmREhkbm9Lb1JEaXVKUjFHa0lrUWZJWmxDcEZXUWxMOG84OGdza3pF?=
- =?utf-8?B?dW5kRW1RWXYwaUJWUWc1L0kwd1hMVkkwMXlWdUR3NFYwZTdaT3MyNXY0Y3hh?=
- =?utf-8?B?YzN4NlpvMWk3UFNxYkxrOHYvZVRSYVp3eGZoeTN1QXpHTGdWeHZKcjBPWG1I?=
- =?utf-8?B?TWxncTZNUGNZZ1V1K1Z5NGJFRUFkRGVUVWpUd3RIRE5nYVVXNXptT1lOc0Yy?=
- =?utf-8?B?TnIyaXJXWFN3QmRmdUxnakFiMlBMZ3FIOE5KTk9RTFhSL0Z3Vk1uTTBiVFZ2?=
- =?utf-8?B?emxVeDByTTEzVVM0SFZBTGExM2U1YlhFbGFjMTNoblRINWFDWHNYYmRvdWlD?=
- =?utf-8?B?RE5HbUVpU1dzZ2lCUU16b29zTHA4K2VHbFVQVlpyYkgwMGY5RThqR0dWc2xO?=
- =?utf-8?B?QTdiRUNCOW5jL2JnajZUTXNhcWhoQzNLL2R1TGxqdCswd2xPMjVaUmRrQnRM?=
- =?utf-8?B?ZXRMUGpTSHRZa0JKTEsrNFZlekJLWm9xbnB0czBJdGxxQzl1SFUwcTRURHRC?=
- =?utf-8?B?Q1NRSGJ3Y2I1aUtUVlFpb2o1QkhsTXNVSkpzdnBXblg2WW5XS2pMVmk2VS9v?=
- =?utf-8?B?cFQxSVlqYzVzTmZ5SlVkcVZwdXpyaVg4WnlTMEVqelJsS1FVN0tZR0RFOWFL?=
- =?utf-8?B?RjdNLzY1RFRBSWduL0VucFBBczIvZGV4REl2eTFXRW9scDBnZEpEejRaU0Vv?=
- =?utf-8?B?NUd6d2lhWUZ5NTdxSGo0VFJHc21pbmZHOEg0NFlTNmJ0bk9UMTEvM01ueGIz?=
- =?utf-8?Q?zV1nQ8+KO+U3ZVlbQ6tOi2dND?=
-X-OriginatorOrg: citrix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 55257727-9222-40e1-c175-08de0d951767
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR03MB5227.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2025 15:51:53.1608 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 335836de-42ef-43a2-b145-348c2ee9ca5b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /a+6d5BvsPnlvbQOUxzweATilvANoN5NpSl3MuPQWRTZEUkmkX0s9HIiOr1iZACWH0I2FPfSXuXEQcYaqjT9ug==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR03MB5908
-Received-SPF: pass client-ip=52.101.53.44; envelope-from=roger.pau@citrix.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aPH557l6YnXT-3r8@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,40 +120,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's currently impossible for passthrough devices on segment different than
-0 to work correctly, as the PCI domain is not provided to
-xc_physdev_map_pirq_msi(), and hence it's unconditionally assumed that all
-devices are on segment 0.
+On Fri, Oct 17, 2025 at 09:10:38AM +0100, Daniel P. Berrangé wrote:
+> On Thu, Oct 16, 2025 at 04:28:10PM -0400, Peter Xu wrote:
+> > On Thu, Oct 16, 2025 at 08:57:18PM +0100, Daniel P. Berrangé wrote:
+> > > Errm, machine types apply to devices, but this is about transferring
+> > > backends which are outside the scope of machine types. 
+> > 
+> > Ah.. I didn't notice that net backends are not inherited by default from
+> > qdev, hence not applicable to machine type properties.
+> > 
+> > Is it possible we enable it somehow, so that backends can have compat
+> > properties similarly to frontends?
+> 
+> That is a technical limitation, but the problem here is bigger than
+> just the lack of qdev. It is a conceptual one - where a device is
+> implemented, its behaviour is determined exclusively by the QEMU
+> code. There are some rare exceptions, like host PCI device assignment
+> where functionality is partly in the host hardware, or external
+> device backends where impl is offloaded to an external process, but
+> most pure QEMU impls are able to be made always migratable and compat
+> can be easily ensured long term via machine types props.
+> 
+> With backends, alot of behaviour is offloaded to either the host
+> OS, or to external libraries or services. Certain narrow configs
+> may be able to transfer state, but there will always be configs
+> were state transfer is impossible. There can be no coarse rule
+> that a backend is migratable or not - it will usually be highly
+> dependent on the particular configuration choices of the backend
+> in use.  Machine types props can't magically make all backend
+> config scenarios migratable. We need to be able to interrogate
+> backends at the time migration is required.
 
-Adjust the call to xc_physdev_map_pirq_msi() to pass the PCI domain in the
-high 16bits of the bus parameter.  On versions of Xen where this is not
-supported the passed segment will be ignored and assume to be 0, no worse
-than the current state.
+I believe we have similar things already, like USO, which relies on the
+kernel feature set that QEMU runs on.  What we do right now, afaiu, is we
+make it a per-device property ON/OFF.  Then when unknown remote information
+is required, we make it ON/OFF/AUTO.  When it's AUTO, it may prefer ON and
+probe the kernel, dynamically decide the value on realize.
 
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
----
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Anthony PERARD <anthony@xenproject.org>
-Cc: Paul Durrant <paul@xen.org>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: xen-devel@lists.xenproject.org
----
- hw/xen/xen_pt_msi.c | 1 +
- 1 file changed, 1 insertion(+)
+I didn't check the code if it's explicitly done like that, but I think
+that's doable at least when a backend relies on such remote information.
 
-diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
-index e9ba17317aba..df15ccf0d030 100644
---- a/hw/xen/xen_pt_msi.c
-+++ b/hw/xen/xen_pt_msi.c
-@@ -138,6 +138,7 @@ static int msi_msix_setup(XenPCIPassthroughState *s,
-         rc = xc_physdev_map_pirq_msi(xen_xc, xen_domid, XEN_PT_AUTO_ASSIGN,
-                                      ppirq, PCI_DEVFN(s->real_device.dev,
-                                                       s->real_device.func),
-+                                     ((uint32_t)s->real_device.domain << 16) |
-                                      s->real_device.bus,
-                                      msix_entry, table_base);
-         if (rc) {
+> 
+> > If we go with a list of devices in the migration parameters, to me it'll
+> > only be a way to workaround the missing of such capability of net backends.
+> > Meanwhile, the admin will need to manage the list of devices even if the
+> > admin doesn't really needed to, IMHO.
+> 
+> We shouldn't need to list devices in every scenario. We need to focus on
+> the internal API design. We need to have suitable APIs exposed by backends
+> to allow us to query migratability and process vmstate a mere property
+> 'backend-transfer' is insufficient, whether set by QEMU code, or set by
+> the mgmt app.
+> 
+> If we have proper APIs each device should be able to query whether its
+> backend can be transferred, and so "do the right thing" if backend
+> transfer is requested by migration. The ability to list devices in the
+> migrate command is only needed to be able to exclude some backends if
+> the purpose of migration is to change a backend
+
+IIUC, it is a proposal of using exclude-list, which should in most cases be
+empty.
+
+Yes, I agree it's at least better than query all the devices and having
+mgmt specify each backend to enable backend-transfer.
+
+However IIUC it also means the query API will be internal, so that
+migration will need to be able to query that from device.
+
+Then we have similar issue on what happens if we migrate from a new QEMU to
+an old QEMU, that new QEMU (when migration module queries TAP) reports
+per-device ON, however it won't actually work because dest QEMU is OFF.
+IOW, we're still missing the functionality that we leverage from machine
+type properties..
+
+Or if we make the query to be visible to QMP / mgmt, then it'll at least
+need to be a include-list, not exclude-list.
+
+Then, we're literally bypassing the machine type versioning mechanism,
+offloading all these to mgmt.
+
+It should work, which I agree. But it also means we're reinventing the
+wheel of what machine type properties were designed for... because if we
+expose all these caps on all devices (as long as mutable after device
+realize), we do not need machine type properties anymore.  They're
+fundamentally solving the same problem, IMHO, on providing a working value
+for migration no matter what the dest QEMU binary is.
+
+Thanks,
+
 -- 
-2.51.0
+Peter Xu
 
 
