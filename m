@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA165CCD19A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7BBCCD19A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9g03-0007gt-Qz; Fri, 17 Oct 2025 04:39:47 -0400
+	id 1v9g96-00014Q-57; Fri, 17 Oct 2025 04:49:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9g01-0007gi-DC
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:39:45 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9fzv-0003jF-D8
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:39:45 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D0CB9807DA;
- Fri, 17 Oct 2025 11:39:30 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a93::1:3a] (unknown
- [2a02:6bf:8080:a93::1:3a])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id SdNNFg3FMKo0-GtM0bW8u; Fri, 17 Oct 2025 11:39:30 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760690370;
- bh=NX/smJzEpIrWBdLjWT4Ds3A82mgYntltH6W0IQhiLb0=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=TCGYeLBfyzWxyt8x424Ud29E49pDGZ4V4gLrsmp4YrojcFa4T2XJ1S9eFrVhhYHm/
- n7L5R5i/6OBiKuUjMdTeVi/xJ+OAjhtDkOYCpwZp+Ky+6THJ20D/G7LOvVFRvOA159
- kSWknnWQYKL8mvIUoxnORenantbllG8UFpuIGnCw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <89547a23-4880-4192-87b9-249100546cbe@yandex-team.ru>
-Date: Fri, 17 Oct 2025 11:39:28 +0300
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1v9g8x-00013Z-87
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:49:00 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1v9g8s-0005dC-4z
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:48:57 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-362e291924aso12888741fa.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 01:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760690931; x=1761295731; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=kKB4yQ1CEdIhJDYLxJpP2+X3Y/kzNOW0KePOaAmRC9s=;
+ b=EAgeWvO+tkxG4YOC7+2H1P1eogdXf367E2jZPfnVYxuxTZ6LkugyLqa4Mo9YLC4ME+
+ yfAk5WMGZRIbgzLIFpAKY/gD+FrS57Nw1or0eGyhueaQxHkFoMTBG2kL3Su8+AR51AFx
+ 3r3/FUPzs5vY/j5V8MCft/vB+51u5gvE2EWux7jGoyvxYc5uBZjaIxM6qq1B7J1W09an
+ S6ywBiFqaJb53ulbh+abb5rv6DrD+RUai72m5EAbbuJ5xBHeijC97cYLQaRMOWspt1fP
+ cn4U+qPWu3+1xbKkftEAr4jJE7ZatdP9k9jj8QOKtICbuMXA4BcajWJABqH1yY+KEcAh
+ geUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760690931; x=1761295731;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kKB4yQ1CEdIhJDYLxJpP2+X3Y/kzNOW0KePOaAmRC9s=;
+ b=PKmXHcQBHEi8+ybF6kIW4p0wZTYkPkBetqr6QE8hHaV/Sk2gTvGt68X/jZ8tZrlpP4
+ kfXsO+i1zM0pHdVLgNq/KdtiQrTRsTC4ye8MzDRSnupD9WJvkkSjIjT891NsTFvxcOeC
+ 9+CI0cNIhH3FEJ0fikNrnQ5GNNWfczllhp08hInD1qIXHFQruyItU8ClQX8rD3LUku/9
+ 1VH6/TPUTtI/cqxe+TFXnoi6shCQWXDMoUpH7zRImrF09B/XSxdwB5SGYszmg2OI11dq
+ /D1IBNHFKtH3r72jddbdQmiwajx3hHJEC0ZUF6h8h08jeMEaSr+kwf1BbSfJpIHlhRM3
+ RZrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUh+62S3/gMCK+mo+7ijVzYyAwi2LmvYXXIIxtI+Cgi7FaWNR5lkVSSXwz754Vd7BD8lTSpLasLTly7@nongnu.org
+X-Gm-Message-State: AOJu0YwqD6wMCpHS/9xYOelWZraadoJO1QF8psppZgZplr/35NuOAJs8
+ cRyTGFrz9JtVOxb4paUrUWilayUUr3i0UIM7kMQ9oKnPziQzgjMq5Cz3/fq8ldstma7SnW5AUzX
+ iy+qWjsEmSIzrzl4h1bqlmYE/xmYPE5MaRU1LZqe2vw==
+X-Gm-Gg: ASbGnct1m3+1n06h0gICNsUKnkYw1rcYvGC+ZjrpzjAoip02pLOEoobqlmhpS0hr7wN
+ aaYMDUO7Tb8RyQftmSjllvCqOyVQYshyi7V+KY03UNNQtGZcf7dhpCSKFb3UaGoQOPT9iTB2x9M
+ N+ThxAixn0CnAdVKQctYVhfTpH5MB6JEmIqclfIqrdWcwTn/FqZO4RGaWebOEktM6wKCzFvOEtJ
+ ED8bRjmDXww9WCvwjQelltuf6M5GIv9O83PZsfNX85POobtZ6YFv8p5AnuuPkjgT5k1PY7WkjvE
+ zdmeaw==
+X-Google-Smtp-Source: AGHT+IG4k65O71asJCL6E/CldgOm3nUH469QX5GS8KFVkXWXKGt8ggS/iD3RXgzo07G6YmzdsGjjBFbaiWpuwUNcOE4=
+X-Received: by 2002:a05:651c:982:b0:36d:86b8:c57d with SMTP id
+ 38308e7fff4ca-3779772ac96mr11562771fa.1.1760690926464; Fri, 17 Oct 2025
+ 01:48:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Cc: mst@redhat.com, jasowang@redhat.com, farosas@suse.de, sw@weilnetz.de,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
- qemu-devel@nongnu.org, michael.roth@amd.com, steven.sistare@oracle.com,
- leiyang@redhat.com, davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-References: <3b9f1da4-6264-45d4-ade1-a6273cc6fa1e@yandex-team.ru>
- <aO_--QWDJO7iOhR4@x1.local>
- <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
- <aPCtkB-GvFNuqlHn@redhat.com>
- <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
- <aPE8Oo5D3oesB7sV@x1.local> <aPE-vmyg1mLDO4pf@redhat.com>
- <aPFHl3VWV0pCmzd1@x1.local> <aPFOHjl5BoWEMqSL@redhat.com>
- <aPFVWi1pwxS8yGay@x1.local> <aPH557l6YnXT-3r8@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aPH557l6YnXT-3r8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-22-skolothumtho@nvidia.com>
+In-Reply-To: <20250929133643.38961-22-skolothumtho@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Fri, 17 Oct 2025 16:48:35 +0800
+X-Gm-Features: AS18NWDhZs1ga3V8_u_-nExC4rJxQqoCbJlEd5-ZtRx-SGG4amb5y8sU7YEkL-g
+Message-ID: <CABQgh9EJMuVNHoi3iCW73mrC=y07djR8QoPAn8wN6+rL30iadw@mail.gmail.com>
+Subject: Re: [PATCH v4 21/27] hw/arm/smmuv3-accel: Add a property to specify
+ RIL support
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com, 
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com, mochs@nvidia.com, 
+ smostafa@google.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com, 
+ jonathan.cameron@huawei.com, zhenzhong.duan@intel.com, yi.l.liu@intel.com, 
+ shameerkolothum@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -89,46 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.10.25 11:10, Daniel P. Berrangé wrote:
->> If we go with a list of devices in the migration parameters, to me it'll
->> only be a way to workaround the missing of such capability of net backends.
->> Meanwhile, the admin will need to manage the list of devices even if the
->> admin doesn't really needed to, IMHO.
-> We shouldn't need to list devices in every scenario. We need to focus on
-> the internal API design. We need to have suitable APIs exposed by backends
-> to allow us to query migratability and process vmstate a mere property
-> 'backend-transfer' is insufficient, whether set by QEMU code, or set by
-> the mgmt app.
+On Mon, 29 Sept 2025 at 21:40, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+>
+> Currently QEMU SMMUv3 has RIL support by default. But if accelerated mode
+> is enabled, RIL has to be compatible with host SMMUv3 support.
+>
+> Add a property so that the user can specify this.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
+If ril=off is not specified, the guest kernel will not boot up, is
+this expected?
 
-I now imagine the following:
+Fail with log:
+qemu-system-aarch64: -device
+vfio-pci,host=0000:75:00.1,bus=pcie.0,iommufd=iommufd0:
+ vfio 0000:75:00.1: Failed to set vIOMMU: Host SUMMUv3 differs in
+Range Invalidation support
 
-I already need an additional .pre_incoming migration handler for the feature,
-see patch
-
-  [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
-.
-
-I can add a boolean backend_transfer parameter to that handler, so that it
-informs the device, that it should get the backend state from the migration
-stream. And that's a good point to fail, if device doesn't support backend
-transfer in current configuration.
-
-If so, it seems logical to add symmetrical .pre_outgoing() vmsd handler,
-with same backend_transfer parameter, to inform source devices (or get errors
-from them).
-
-
-Or, otherwise, make a separate VMSD handler .supports_backend_transfer(),
-which should be called at start of incoming and outgoing migrations to
-check the specified list of IDs, as well as we can also call it on
-migrate-set-parameters, to get an earlier failure. And keep the devices
-to call some migrate_backend_transfer(dev), to understand, should they
-do backend-transfer or not (like in a diff, which I've sent yesterday
-in this thread).
-
-
--- 
-Best regards,
-Vladimir
+Thanks
 
