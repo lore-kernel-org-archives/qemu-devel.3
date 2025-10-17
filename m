@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F02DCCD19F
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B453CCCD19F
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 15:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9ln6-0006HD-Fo; Fri, 17 Oct 2025 10:50:48 -0400
+	id 1v9lv8-00018a-VC; Fri, 17 Oct 2025 10:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v9ln4-0006GJ-77
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:50:46 -0400
-Received: from fout-b5-smtp.messagingengine.com ([202.12.124.148])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v9lv7-00018I-3R; Fri, 17 Oct 2025 10:59:05 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1v9lmv-0003Nu-96
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:50:44 -0400
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
- by mailfout.stl.internal (Postfix) with ESMTP id C8C731D00176;
- Fri, 17 Oct 2025 10:50:31 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-08.internal (MEProxy); Fri, 17 Oct 2025 10:50:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm1; t=1760712631; x=1760799031; bh=mhO6H9RRlJ
- wuX6vzu7spB8MO2HWQbwavivCot5bFUGA=; b=VzV9CGflJvzdiJ/uNHUE19gdgT
- syFZ+I885+0EZKqJdQ6dqBtFQErEJnCGAtCIT0A+ajYXemXZ6StXjqc2eEdyJq3o
- jCFsAIjfHG1dbARwHcsz5WNdmtkhUc5Aldcw0mriwhyAOt/qlYwmvlpQpSnFoCWM
- WHcCuwC2ULYUoVDE0m5gLlya79houzwkOk/k9zSsXIok88ElqfDWuFLNZxumuwBc
- v773VQ4omNvI4syQZFCCANp7nykhSg5nzUCEeQD2AKOC1i+quv465X5jnEI9lTwI
- lc3vC+o2QRnemKIkKoA89u7uwdZbKzkIkn6QAuyI5klSiOqxLDV4OQIlyj7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1760712631; x=1760799031; bh=mhO6H9RRlJwuX6vzu7spB8MO2HWQbwavivC
- ot5bFUGA=; b=N8OSkrhO/oumM5GvsvB22k9RoR5c/wkgRiV+qPJcXcyQhW8hR8g
- D5IrsfmK7b7mrXrvAVETRppQ9blH7FmCbuxZbDD2Gb+/KrWM7DpeW8IxBb8bLf+e
- gVtQXJpjBAaUfx5qqQMdusOjhGuR2BfZzTcN8nYh8WifJz0y3iAzCvxO9afa9oVn
- tLpnvjWTCPkt/VFBKS3wX18Ghggp0oUjcB8H/HQkyl9wgMn/dagMpzoyIC1RTT9W
- 8I3MAEG7K0yrJG5dn9PN01p5zcVu8oWOTZDW7IxcTWxy4cZbSmZAr/yxjshq8t18
- V2+lW7gvoiySqaW3XWsgrcB6qlV8B/3LC0A==
-X-ME-Sender: <xms:tlfyaEvyHjRmjZjNpaozYuEfn9OZTJZLghusd-Dra_WFP7_APq3O7w>
- <xme:tlfyaIVyLYGchLI81k2i8_ws23o8p2CRmL2vaVmmDKTqzZv0Y-0x78tr9oqo0V2A-
- H-bnZzNNyhPBi2-bXRivROPDXZfdtO81fmZY3wfEIP84H0DRL-NU4c>
-X-ME-Received: <xmr:tlfyaIHT62Dj_HCduuuyF65feS-3JPOMkG5mL7uVaftZVeH6Aj7yB2Y38IV5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdelgeeiucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffoggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhkihcu
- oegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhephfetue
- fgueejleetgefgieegveejleeggedugfeuvdehgefhffduffeludekieevnecuvehluhhs
- thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrggslh
- honhhskhhirdighiiipdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdp
- rhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhmpd
- hrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthho
- pegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehkrhgrgigvlhesrh
- gvughhrghtrdgtohhmpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhu
-X-ME-Proxy: <xmx:t1fyaC0e_IIZfxNw8JFa_EN2kp-K_Z0Svx6PuEMaqptP36nVposm1w>
- <xmx:t1fyaCMEB1XNfrY_W0jI6rEku0SzTM4YzAcj-ewnlsS67WkZPtFfkg>
- <xmx:t1fyaJ6O9K_kJZ4gBxPaBsI9IBpivhSXIhvs3TeN3KM-FgDLcKJqIw>
- <xmx:t1fyaE31I3dBSNHECDlYRUqWNO0dlmuG6mQmhz_s96_v4T-1D2E3Eg>
- <xmx:t1fyaGwqgAPUNRBppLqfU6LoMH08Lel2xxNTP76KRAVNCpftqnUbULfD>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Oct 2025 10:50:30 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 7d7a9068;
- Fri, 17 Oct 2025 14:50:29 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
-To: qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu, kraxel@redhat.com, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v3 0/1] ati-vga: Fix framebuffer mapping by using
- hardware-correct aperture sizes
-Date: Fri, 17 Oct 2025 10:50:11 -0400
-Message-ID: <20251017145012.1948363-1-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1v9lv3-0004IY-DU; Fri, 17 Oct 2025 10:59:04 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D1C9F15F293;
+ Fri, 17 Oct 2025 17:58:48 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C4052EFE85;
+ Fri, 17 Oct 2025 17:58:50 +0300 (MSK)
+Message-ID: <f074aed2-7702-4a4a-a7d5-7abeb29ea663@tls.msk.ru>
+Date: Fri, 17 Oct 2025 17:58:50 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.148; envelope-from=chad@jablonski.xyz;
- helo=fout-b5-smtp.messagingengine.com
-X-Spam_score_int: 17
-X-Spam_score: 1.7
-X-Spam_bar: +
-X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.499,
- FROM_SUSPICIOUS_NTLD_FP=2, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/11] hw/intc/apic: Ensure own APIC use in
+ apic_register_{read, write}
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, qemu-trivial@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-block@nongnu.org,
+ Phil Dennis-Jordan <phil@philjordan.eu>, John Snow <jsnow@redhat.com>,
+ kvm@vger.kernel.org, Laurent Vivier <lvivier@redhat.com>
+References: <20251017141117.105944-1-shentey@gmail.com>
+ <20251017141117.105944-10-shentey@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251017141117.105944-10-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,27 +115,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-- Additional style and comment changes per BALATON
-- Moved #include "qemu/units.h" to ati_int.h
-- Added data to commit message for additional 32MB RV100 card
-- Fixed CONFIG_APER_SIZE for R100 to return half of BAR0 (as confirmed
-  by testing of the 32MB Radeon card)
+17.10.2025 17:11, Bernhard Beschow wrote:
+> ... In apic_mem_{read,write}, the
+> own APIC instance is available as the opaque parameter
 
-v2:
-- Fixed CONFIG_APER_SIZE to return half of BAR0 for Rage 128
-- Left CONFIG_APER_SIZE unchanged for R100 (half of vram_size)
-- Improved commit message and minor style changes
+> diff --git a/hw/intc/apic.c b/hw/intc/apic.c
 
-Chad Jablonski (1):
-  ati-vga: Fix framebuffer mapping by using hardware-correct aperture
-    sizes
+> @@ -876,7 +870,7 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
+>       }
+>   
+>       index = (addr >> 4) & 0xff;
+> -    apic_register_read(index, &val);
+> +    apic_register_read(opaque, index, &val);
 
- hw/display/ati.c     | 17 +++++++++++++++--
- hw/display/ati_int.h |  5 +++++
- 2 files changed, 20 insertions(+), 2 deletions(-)
+I think it would be better to use local variable here:
 
--- 
-2.51.0
+  APICCommonState *s = opaque;
 
+and use it down the line.  Yes, there's just one usage, but it is
+still clearer this way (in my opinion anyway).
+
+Ditto in apic_mem_write.
+
+But it's more a nitpick really.
+
+Thanks,
+
+/mjt
 
