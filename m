@@ -4,111 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BC3CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 18:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73835CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 18:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9p09-0003zO-Fh; Fri, 17 Oct 2025 14:16:29 -0400
+	id 1v9ozs-0003qy-V0; Fri, 17 Oct 2025 14:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v9p06-0003ym-Sf; Fri, 17 Oct 2025 14:16:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1v9ozo-0003je-Lz; Fri, 17 Oct 2025 14:16:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v9p04-0007Ll-FC; Fri, 17 Oct 2025 14:16:26 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59HGrrVB012398;
- Fri, 17 Oct 2025 18:16:19 GMT
+ id 1v9ozm-0007KP-D8; Fri, 17 Oct 2025 14:16:08 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59H9qbCo021678;
+ Fri, 17 Oct 2025 18:16:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=VsPixCQuXr0a3YA1K
- wWnXXRiIgqzlv8MPMc2bZkj0yA=; b=L9pAaWG34T5Fa5q7h3Sv3gAt0J2OpDXdn
- jzRg76nAHT9AkuF6DUOZl2ZOGzFkJP1BPNjgLl33xFbth6S0t25GkThvo7FEZsjA
- Dar4lStYl6f8EPWCIEVXgKXrsidGkkq5joCRbdUZSJcoovBCWx5s0Ba6k9DnM4go
- 6xcPZtGqMvZ+LdBtlv5I4tra5uFEITWEDX+9o/Bu7dszRQbXM/uHU5rccOY6KkQl
- a8eMrNHd+hHoAGER+z9xmUgw0CxtYJM2ZJa+abUEkeRdQ/D4qIfjRwfSabFuRROe
- 7+umKuiKSea35ybYpGRMp7Ert4lWcv3pDIFFfkEnYQU4buZR4dVGg==
+ :mime-version:references:subject:to; s=pp1; bh=gUGibRdBhyAuBPWdT
+ w5s7JT+ZuWXDB/7HKJYm5vxDnA=; b=QCxFNOuT6iYugc1Z4QdV9ZIQ5jWHxUsDk
+ 7Rfpl0N/I4m4H9DHs+e49p9S7JN7L4O9evLcH+a0lOoSMiOLt6prdjUjnnI9QSho
+ bOaBwEdMCTMLV7X0tTM+uzd3YZnR9fMGGSqyusBMOUpe9Q3x4HQxTHCZZx5J3th7
+ IxEugt1snnBxjAkEzeNRfXQy14gLwN2q8+6XmQGCNrmim6wCdhSgI5fsMr6fdtku
+ 4YEs78lLb9aeb2rYhUnvUBcVblG+/Enw6wPuB4mqLcaERQHgVSQ2DcUihM4qN4wz
+ 5QJt8rXdFLPNCml0q/4ssnOdv64Sts55BWHhkqm30RQ6IEP5m8R0A==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnru7pd-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey9cfvh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 18:16:19 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59HIGIhu030417;
- Fri, 17 Oct 2025 18:16:18 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qcnru7pa-1
+ Fri, 17 Oct 2025 18:16:00 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59HI4VD9017343;
+ Fri, 17 Oct 2025 18:16:00 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey9cfvd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 18:16:18 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59HIEw3x003626;
- Fri, 17 Oct 2025 18:16:17 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r1xyevsv-1
+ Fri, 17 Oct 2025 18:15:59 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59HFbjX3028104;
+ Fri, 17 Oct 2025 18:15:59 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49tdg9ny7d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 18:16:17 +0000
+ Fri, 17 Oct 2025 18:15:58 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59HIGESl31654652
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59HIFtGF21037460
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Oct 2025 18:16:14 GMT
+ Fri, 17 Oct 2025 18:15:55 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 05F8620040;
- Fri, 17 Oct 2025 18:16:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6815C20043;
+ Fri, 17 Oct 2025 18:15:55 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A3762004B;
- Fri, 17 Oct 2025 18:16:11 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CD40720040;
+ Fri, 17 Oct 2025 18:15:52 +0000 (GMT)
 Received: from vishalc-ibm.ibm.com (unknown [9.39.22.45])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 17 Oct 2025 18:16:11 +0000 (GMT)
+ Fri, 17 Oct 2025 18:15:52 +0000 (GMT)
 From: Vishal Chourasia <vishalc@linux.ibm.com>
 To: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
  npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
  balaton@eik.bme.hu, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
  berrange@redhat.com
 Cc: Vishal Chourasia <vishalc@linux.ibm.com>
-Subject: [Patch v4 3/5] hw/core: Pass errp to load_image_targphys_as()
-Date: Fri, 17 Oct 2025 23:42:51 +0530
-Message-ID: <20251017181250.1421446-8-vishalc@linux.ibm.com>
+Subject: [Patch v4 2/5] hw/core/loader: Use qemu_open() instead of open() in
+ get_image_size()
+Date: Fri, 17 Oct 2025 23:42:49 +0530
+Message-ID: <20251017181250.1421446-6-vishalc@linux.ibm.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017181250.1421446-2-vishalc@linux.ibm.com>
 References: <20251017181250.1421446-2-vishalc@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M5ZA6iws c=1 sm=1 tr=0 ts=68f287f3 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=WwcbXC5amFkfT6oAP7YA:9 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: KeZ3cedI9TTVXvDEfEZu_FwWdPr2uRSX
-X-Proofpoint-ORIG-GUID: WwjdRroBSZG-hIihs61MwHALgHfUJI3W
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDEwMDE0MCBTYWx0ZWRfX4kxmtIC1NGF8
- 0w92Ujp+CCDVzBO38lbzZcdDpwtg2JVGBJHe26ahmotQrJsx6qdF2U90Xm3ad4lqaSJnb7i7noa
- +yYzdc/MTckHPOEq0/b61+OR5/0w062QULteFHqWRO2UteAJrwvL4Ay34uMDY1Mtc67p3MkyZK2
- hHeCD1EhjMMmKAgcmB9BkT6GHonAn5RX9LuJYFYkO9a3akxscr8CrMgdwGR9vlnxwRO7IL+y5lq
- EuTj/ncK0ffSXpL2ivuljuHVYhn+ArU4QM5DS1yfpl/pJi2iAvPjfnATSQWkOXrIINO4Zc/M4fF
- dUU9EvgnHTTx1UvwbWQZWOEYT1NkLA3TBFmwffrMf5U7loz8iHOciFgu0dNH7DcnJHjrBI8TLp8
- 3PABQgG7wQ081+FXh2oc3XH1TPoaqg==
+X-Proofpoint-ORIG-GUID: eKkT5foUCXF_9baURRMIMm2Gg6J3gv5E
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX5SzsGqwU8G4u
+ tzc9tPmLIAbSJsL9i2U020wsP4ftQfQXSvNuxjSL9K7PNbfH0yg8tUCHNm/VSj+oZDfPbMt2fg7
+ g5Q5gzzo6T6uS4v4jkyASQ0N4Vj3uF5+3xYyWwmJU+T+yFsGlF7nEui3BNxU96J1pKuh/o19KwW
+ T9yK/2K2l0weZC/MEWhvp2q6gPuKZ+5J10siO1WUvAkHPaseY8bA60IelMa2JNa3ssmVy0uubly
+ 7xPx7MutU+AaxOnGQMitQqnlFqiA8UZ8Lrqqx/gtEqaVi1aTlbKPUvXpW4XX74QgXRtsCVSnhke
+ TPOcHtC08pETxXh2QyynZZ6syIYI4jP5Tts5BCFecIqclgHXIzic2km6HVIrpR8rwnJHJkzHgAW
+ oCY1TEBCU+mTG2NxzleW/UKUrpL7Uw==
+X-Proofpoint-GUID: AdkGUkH_jDm6dUI4__cgzzgFTLDt-tKb
+X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68f287e0 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=FjqQsbWZ5CoJ3T9912IA:9 a=3ZKOabzyN94A:10 a=cPQSjfK2_nFv0Q5t_7PE:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-17_06,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
- definitions=main-2510100140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, PP_MIME_FAKE_ASCII_TEXT=0.338,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,74 +126,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass errp to load_image_targphys_as() in generic-loader and
-guest-loader to capture detailed error information from the
-loader functions.
+Replace open() with qemu_open() which provides better error handling
+via the Error object, automatically sets O_CLOEXEC, and supports FD
+passing with /dev/fdset.
 
-Use error_prepend() instead of error_setg() to preserve the
-underlying error details while adding context about which image
-failed to load.
+Remove redundant error_setg_file_open() call since qemu_open() now
+handles error reporting internally.
 
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 ---
- hw/core/generic-loader.c | 7 ++++---
- hw/core/guest-loader.c   | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ hw/core/loader.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-index 6689847c33..35d4e5f4ea 100644
---- a/hw/core/generic-loader.c
-+++ b/hw/core/generic-loader.c
-@@ -60,6 +60,7 @@ static void generic_loader_reset(void *opaque)
- 
- static void generic_loader_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index e40cba1b9f..030f832e54 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -77,9 +77,8 @@ int64_t get_image_size(const char *filename, Error **errp)
  {
-+    ERRP_GUARD();
-     GenericLoaderState *s = GENERIC_LOADER(dev);
-     hwaddr entry;
-     ssize_t size = 0;
-@@ -149,13 +150,13 @@ static void generic_loader_realize(DeviceState *dev, Error **errp)
-         if (size < 0 || s->force_raw) {
-             /* Default to the maximum size being the machine's ram size */
-             size = load_image_targphys_as(s->file, s->addr,
--                    current_machine->ram_size, as, NULL);
-+                    current_machine->ram_size, as, errp);
-         } else {
-             s->addr = entry;
-         }
- 
--        if (size < 0) {
--            error_setg(errp, "Cannot load specified image %s", s->file);
-+        if (*errp) {
-+            error_prepend(errp, "Cannot load specified image %s: ", s->file);
-             return;
-         }
+     int fd;
+     int64_t size;
+-    fd = open(filename, O_RDONLY | O_BINARY);
++    fd = qemu_open(filename, O_RDONLY | O_BINARY, errp);
+     if (fd < 0) {
+-        error_setg_file_open(errp, errno, filename);
+         return -1;
      }
-diff --git a/hw/core/guest-loader.c b/hw/core/guest-loader.c
-index 59f325ad9c..dcbe8e4520 100644
---- a/hw/core/guest-loader.c
-+++ b/hw/core/guest-loader.c
-@@ -81,6 +81,7 @@ static void loader_insert_platform_data(GuestLoaderState *s, int size,
- 
- static void guest_loader_realize(DeviceState *dev, Error **errp)
- {
-+    ERRP_GUARD();
-     GuestLoaderState *s = GUEST_LOADER(dev);
-     char *file = s->kernel ? s->kernel : s->initrd;
-     int size = 0;
-@@ -101,9 +102,9 @@ static void guest_loader_realize(DeviceState *dev, Error **errp)
- 
-     /* Default to the maximum size being the machine's ram size */
-     size = load_image_targphys_as(file, s->addr, current_machine->ram_size,
--                                  NULL, NULL);
--    if (size < 0) {
--        error_setg(errp, "Cannot load specified image %s", file);
-+                                  NULL, errp);
-+    if (*errp) {
-+        error_prepend(errp, "Cannot load specified image %s: ", file);
-         return;
-     }
- 
+     size = lseek(fd, 0, SEEK_END);
 -- 
 2.51.0
 
