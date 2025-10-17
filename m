@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07B7CCD19A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0906ACCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9fkE-0001G1-LY; Fri, 17 Oct 2025 04:23:26 -0400
+	id 1v9fkE-0001Fy-HG; Fri, 17 Oct 2025 04:23:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fkD-0001EX-4w
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:25 -0400
+ id 1v9fk8-00015d-9w
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:20 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fk6-0001BE-Pa
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:24 -0400
+ id 1v9fk2-0001D4-MJ
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760689399; x=1792225399;
+ t=1760689395; x=1792225395;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=tUFPPm29u+6P7k6wOoH03Z1NWisfoxackVYz0mSbGHQ=;
- b=URtNv5bpFVhnnGSETP8wJ0N2r+j1nZSdAUb6xGXNT/UIFfVtWFm1miKz
- Mt+h0mRlDEucQlHNGLSTbd5MwWpEHyEK4onFrDQen0JdXJxb74+ScLk4q
- MyW544DBbGC8OgldyDdkzFaILOqFLALucfzU+kO7YA+J5WIZrBDbpcitl
- GVVDjSeFAngyD+S7ZrsO/fklpQJnVzQpwxcmE1FK7hV70JHJZFcwmcBlr
- /Bv5RCxxMVppogFqdPXVdka1+1xMI8Z1n1RH4qZ+yZHxgD3esSSuBKGyL
- /QN9EgQ28pIVZNVciaHVB4MWii1l0YKW8Zhrf/6aTrFjlDYMmKD9FXXdQ A==;
-X-CSE-ConnectionGUID: uvs+V4a+Td6ZwW1vy4ou3A==
-X-CSE-MsgGUID: fOj7b+VyS6+PpnpY49aIkQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927445"
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927445"
+ bh=4UxvzTf4x6lCPFrVrFwEYZCZrbimI3oS++oeIgtlnf4=;
+ b=WYzNOz74x+plnRZnZN0gQpiuQsG52KnlnzikdUaUdJNTB1cauvead/cb
+ cyrLZsjxsBwsrujItx5Zwr5MaIaeoV6ojYsgj/M5sSqC+S5zQt/ABTdt7
+ dyAy1A0mwSNu0SHkq5jIaOKPW01azG7XAdWMaDVvPhoz0DH/FwQM80e4I
+ zjR1uKEWk+w1n+t8P6anCX+5rBq8lKVscmFpLDMV4GLyL9ll56z+Sc3mt
+ 7FLR52S8tSgoKIXWMafSgPrM3YYGiEXew1N3vVEpucdPcFRhCrr+FRQJk
+ d5d1IREN5cojUlXZZYj4B9uVR2LKBv9WfBkV9gP36pOfe2X3SlZf2FU0c Q==;
+X-CSE-ConnectionGUID: FWfupvRYRGWfjcMf89tMHg==
+X-CSE-MsgGUID: lz66UvEwSC2G4WkNs/16vg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927423"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927423"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:23:11 -0700
-X-CSE-ConnectionGUID: 9F8DiyzSTX+ZDd1ZOgi34Q==
-X-CSE-MsgGUID: vIRPZ3ntSDekMMxIw+w/8Q==
+ 17 Oct 2025 01:23:03 -0700
+X-CSE-ConnectionGUID: DnMBatkMQNWBjgQUCdAVQQ==
+X-CSE-MsgGUID: Wq4om/+8Ti2xR0g15lMwPQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484706"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484695"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:23:08 -0700
+ 17 Oct 2025 01:23:00 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
@@ -53,10 +53,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
  eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
  xudong.hao@intel.com, giovanni.cabiddu@intel.com, mark.gross@intel.com,
  arjan.van.de.ven@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 7/8] vfio/migration: Add migration blocker if VM memory is
- too large to cause unmap_bitmap failure
-Date: Fri, 17 Oct 2025 04:22:32 -0400
-Message-ID: <20251017082234.517827-8-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 5/8] vfio/iommufd: Add IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR
+ flag support
+Date: Fri, 17 Oct 2025 04:22:30 -0400
+Message-ID: <20251017082234.517827-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251017082234.517827-1-zhenzhong.duan@intel.com>
 References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
@@ -67,8 +67,8 @@ Received-SPF: pass client-ip=192.198.163.19;
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -87,82 +87,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With default config, kernel VFIO type1 driver limits dirty bitmap to 256MB
-for unmap_bitmap ioctl so the maximum guest memory region is no more than
-8TB size for the ioctl to succeed.
+Pass IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR when doing the last dirty
+bitmap query right before unmap, no PTEs flushes. This accelerates the
+query without issue because unmap will tear down the mapping anyway.
 
-Be conservative here to limit total guest memory to 8TB or else add a
-migration blocker. IOMMUFD backend doesn't have such limit, one can use
-IOMMUFD backed device if there is a need to migration such large VM.
-
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
 ---
- hw/vfio/migration.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ include/system/iommufd.h | 2 +-
+ backends/iommufd.c       | 5 +++--
+ hw/vfio/iommufd.c        | 5 +++--
+ backends/trace-events    | 2 +-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 4c06e3db93..1106ca7857 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -16,6 +16,7 @@
- #include <sys/ioctl.h>
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index a659f36a20..767a8e4cb6 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -64,7 +64,7 @@ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                       uint64_t iova, ram_addr_t size,
+                                       uint64_t page_size, uint64_t *data,
+-                                      Error **errp);
++                                      uint64_t flags, Error **errp);
+ bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+                                       uint32_t data_type, uint32_t entry_len,
+                                       uint32_t *entry_num, void *data,
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index fdfb7c9d67..086bd67aea 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -361,7 +361,7 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+                                       uint32_t hwpt_id,
+                                       uint64_t iova, ram_addr_t size,
+                                       uint64_t page_size, uint64_t *data,
+-                                      Error **errp)
++                                      uint64_t flags, Error **errp)
+ {
+     int ret;
+     struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap = {
+@@ -371,11 +371,12 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+         .length = size,
+         .page_size = page_size,
+         .data = (uintptr_t)data,
++        .flags = flags,
+     };
  
- #include "system/runstate.h"
-+#include "hw/boards.h"
- #include "hw/vfio/vfio-device.h"
- #include "hw/vfio/vfio-migration.h"
- #include "migration/misc.h"
-@@ -1152,6 +1153,35 @@ static bool vfio_viommu_preset(VFIODevice *vbasedev)
-     return vbasedev->bcontainer->space->as != &address_space_memory;
- }
- 
-+static bool vfio_dirty_tracking_exceed_limit(VFIODevice *vbasedev)
-+{
-+    VFIOContainer *bcontainer = vbasedev->bcontainer;
-+    uint64_t max_size, page_size;
-+
-+    if (!object_dynamic_cast(OBJECT(bcontainer), TYPE_VFIO_IOMMU_LEGACY)) {
-+        return false;
-+    }
-+
-+    if (!bcontainer->dirty_pages_supported) {
-+        return true;
-+    }
-+    /*
-+     * VFIO type1 driver has a limitation of bitmap size on unmap_bitmap
-+     * ioctl(), calculate the limit and compare with guest memory size to
-+     * catch dirty tracking failure early.
-+     *
-+     * This limit is 8TB with default kernel and QEMU config, we are a bit
-+     * conservative here as VM memory layout may be nonconsecutive or VM
-+     * can run with vIOMMU enabled so the limitation could be relaxed. One
-+     * can also switch to use IOMMUFD backend if there is a need to migrate
-+     * large VM.
-+     */
-+    page_size = 1 << ctz64(bcontainer->dirty_pgsizes);
-+    max_size = bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * page_size;
-+
-+    return current_machine->ram_size > max_size;
-+}
-+
- /*
-  * Return true when either migration initialized or blocker registered.
-  * Currently only return false when adding blocker fails which will
-@@ -1208,6 +1238,13 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         goto add_blocker;
+     ret = ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP, &get_dirty_bitmap);
+     trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id, iova, size,
+-                                           page_size, ret ? errno : 0);
++                                           flags, page_size, ret ? errno : 0);
+     if (ret) {
+         error_setg_errno(errp, errno,
+                          "IOMMU_HWPT_GET_DIRTY_BITMAP (iova: 0x%"HWADDR_PRIx
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 6457cef344..937b80340c 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -74,7 +74,8 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+-            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size, 0,
++            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
++                                                    IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR,
+                                                     iotlb->translated_addr,
+                                                     &local_err);
+             if (ret) {
+@@ -224,7 +225,7 @@ static int iommufd_query_dirty_bitmap(const VFIOContainer *bcontainer,
+         if (!iommufd_backend_get_dirty_bitmap(container->be, hwpt->hwpt_id,
+                                               iova, size, page_size,
+                                               (uint64_t *)vbmap->bitmap,
+-                                              errp)) {
++                                              backend_flag, errp)) {
+             return -EINVAL;
+         }
      }
- 
-+    if (vfio_dirty_tracking_exceed_limit(vbasedev)) {
-+        error_setg(&err, "%s: Migration is currently not supported with "
-+                   "large memory VM due to dirty tracking limitation in "
-+                   "VFIO type1 driver", vbasedev->name);
-+        goto add_blocker;
-+    }
-+
-     trace_vfio_migration_realize(vbasedev->name);
-     return true;
- 
+diff --git a/backends/trace-events b/backends/trace-events
+index 56132d3fd2..e1992ba12f 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -19,5 +19,5 @@ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
+ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+-iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
++iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
 -- 
 2.47.1
 
