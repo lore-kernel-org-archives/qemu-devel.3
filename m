@@ -4,97 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F62CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2910CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kOc-0003fz-EK; Fri, 17 Oct 2025 09:21:27 -0400
+	id 1v9kKP-0006Ec-DJ; Fri, 17 Oct 2025 09:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v9kOZ-0003dl-Vc
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:21:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v9kOQ-0006nZ-Pz
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:21:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760707266;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=f3BumayGbNRyHUpWdyfjMJmdw76TdGOERSiEhbAvqrs=;
- b=K9aPU8iM/Q/r8NPuk4ODtGe17raDxoqgFDEwGlHs38xjTu128V6YXSu7gtpRFDWWTOAakp
- qitTlyHc42/ZFL0ccupQl3C+TC+EhwZng4JfFgtKzMigcewNVEGzZuCOkadTCdk4PzSx0S
- fnpSgpUaX+mXxGUtKjnRXp1DDZu5010=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-KMQt_hkoPzyx6m4TS0T_lg-1; Fri, 17 Oct 2025 09:21:05 -0400
-X-MC-Unique: KMQt_hkoPzyx6m4TS0T_lg-1
-X-Mimecast-MFC-AGG-ID: KMQt_hkoPzyx6m4TS0T_lg_1760707265
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8909da7f60aso362173985a.2
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:21:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9kKN-0006DI-J9
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:17:03 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9kKF-00063J-G7
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:17:02 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-781421f5be6so25797557b3.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:16:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760707009; x=1761311809; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7TPU5XqP3DgREr2vUJwqsd5twFBOrmveHWArUFDvCoI=;
+ b=SjhF/+SOXpAJZsQDEj4ZnJxOHWRgsaWGPQ1BhwXzkkCAgeEW3bz8ZN9WyjpaLn4h95
+ JjqjyzUchhZDFeaw8NWilmxSq8KVGcl8W6Dq4/KwCOHDNLyx9XqPxTVaJQ2+pJbl4VOU
+ /lVLAHu0xEazi89MMpd5fySmKWsre9kXLdf6rIJx43Jk0DW+qPGBqQt1MOiRxQdTthnO
+ WYuxDCTKZDlGzm27UWmxs2KeY4b5ErPcW8wdl7w9voL+IJ6j3iu32LWUbwMyeKadaQ0a
+ j4PRIzQ6+16rE8QqRXsWG0P2F4cjWNcpFzmRLs3JnGOC93GM/PomJ6D+lST9MjqqTF7J
+ /Gtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760707265; x=1761312065;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f3BumayGbNRyHUpWdyfjMJmdw76TdGOERSiEhbAvqrs=;
- b=kvY2Enfwh/Lq6FfDznDvcREhtZcRVrvX/bLQKK0FD+KTqxRfxjaDWMvSCBS3+zRvN8
- 03xiry20IZgJAjHCjIQ4gaeBYqWIsVtBOoNv4Ptx4XjKcer+IMXmP8kq9Z5uidy74qqz
- 50sdyfclqH3kKZWgj/LR6rV6CXqG8X76xD9CZlaWttzpeQLqRrEKZK7vKDERl5yp8zkl
- k7d43iAI7Dt6Vz27Yc/OJR0oxUJC63Qa/jn6qM3vsv6HDimTgNbj4hzezZ5C5ft5/xeX
- CuhAeu149KHghwkhDuYQLdSxTw1wkH0AEbE4u4E9+QnFTIKISFT3S9Vi7CCvkI5rwTXm
- hpfg==
-X-Gm-Message-State: AOJu0YxDpkpT1FRpIuqYhwgCPLJgM9Lp5DJFbD0FY8D3cQga8CGTYQ+n
- LXDfZWWj/wSeGo0WNLgISMWfZ8ZvL+MfjHjJHM/KlY8db4gcVHm/boWk335xstjK6yi4Xr0bHlB
- 9i6PDXtXNqTOvMO+Tq9ce7R26khhMCtznqEutGYT7wt0Cz9W+QLkrXW6T
-X-Gm-Gg: ASbGnct9BmvC2sF1ZvOV+/zuD7KL47kAhSsA+eg9D1PKEs+heSRSRGZ5udXmj03mzR6
- juSvGVZzijgvLqr7eVifYK1pQqevlRo4FZHeYkmpXCxZnMOUoeZ8jic88FhgaEU37Qrng3vBPHP
- DOMNpXNBmWuo0bk7ficZjSG0BIGJ5gnrhpOSaPDxr97JM2zgbxS2apCS71l6yTogpmdiEPkBwFf
- ASaIi2pBKAQsGJOwbbT1qeU67Dmmx7t/LbI6hs7RC1dmmrgl3OA1c0mPkuuzWoL43LYWY6x/N+9
- q8eYCCZtvlBG8YUaS6txFG4HBNZERL/fdp+XkG7yCkVsMgS30me/F+gAE2WOVcAnsV04VkBgHXd
- Ehwa3mSxWJ/zGruHhat6L15eauT6OTc7IZhHqBqfYdT9tnl5stiM=
-X-Received: by 2002:a05:620a:404c:b0:862:3e8d:e4ec with SMTP id
- af79cd13be357-89070319242mr514590185a.60.1760707264751; 
- Fri, 17 Oct 2025 06:21:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrHLqe9dlhOtF7Ce6PlZ9ZTwdDRDlpp13ujYJEeqL0uQXLTl3qucOzMqmH5ovtykdWKJaKBQ==
-X-Received: by 2002:a05:620a:404c:b0:862:3e8d:e4ec with SMTP id
- af79cd13be357-89070319242mr514582985a.60.1760707264080; 
- Fri, 17 Oct 2025 06:21:04 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
- [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-88f358742cfsm424166985a.11.2025.10.17.06.21.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Oct 2025 06:21:03 -0700 (PDT)
-Date: Fri, 17 Oct 2025 15:20:58 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>, Ani Sinha <anisinha@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 1/5] igvm: move igvm.h file to include/system
-Message-ID: <estmfxhn2aukzxzzpcuj635nahvppseudipkp2ifojwyylegdw@hsvkeysd2tsm>
-References: <20251015112342.1672955-1-kraxel@redhat.com>
- <20251015112342.1672955-2-kraxel@redhat.com>
+ d=1e100.net; s=20230601; t=1760707009; x=1761311809;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7TPU5XqP3DgREr2vUJwqsd5twFBOrmveHWArUFDvCoI=;
+ b=T7nm9GUl860im/XViAuJuCC0I0n5RypWZTaJEEG8UNDrMrhE5gUgiY4MtxhZOS7RPW
+ 91Je4Xq/Fb4mL9vDMZdw0dWzptQL0bUPupn94RNl7orWuxh3dvBEePq3wyfxWLtXJlzt
+ iXEj8mpS8Gh45ZjOnIOwOgd5xvJmyaHNsKuPgCLIJhTccu3Q5ILW6VEuQiFnRLIUc+jI
+ kmug9LNKxkz7TXHUWz/8wOVF+R/DJHr50S4korNGK5eUJsnf2tI9pawh7N5FRDjjDo8N
+ X2TfNYmv/TPbTTLhoVBKqWTBsh70scPAZAjupz3f84qxr7dTe4JYUAI5qX4jVaXQ0DDq
+ q2Vg==
+X-Gm-Message-State: AOJu0YxfSah1ycSeNHPIxLMWbGH0KVu1ET6ibYxhfRT1SmB3UcuMBJmo
+ ChhQb+NCrftcC9wqPQSVp6xl7TSswhRFpizarOmfWgXD/y9j54xdwHQ58J6XekJsrcswvN6YC5X
+ +oSpgI0IJhG5IsliCIiU67tMYl3pOa9vQN34FJ3XeBw==
+X-Gm-Gg: ASbGncuviBHqJRsCNE7nLEm/ikQsVbVoiKVWmSqb/pMn82trqCsKe4GyZFPvFtpN+2H
+ F2TQfJ2HQo9cF+Cm9ktAfq4xpjITkP/i8nzcITa8yEWLdV/+2RZUAE1bSNBJDzs7NFH0yle4vvG
+ CZZhgLfM8QLBrrn4KyXFZgwHl7tG//i3uO3O4VlDBQbOXEq/za4nXDRDG/nQ+G1Sa5n3hfraZBc
+ 1DNdCnKditmOvpnbePHf6mW5fHjrIC3OR6h2gd09nv5hoQ4KxGdBgNcdDKHDQ==
+X-Google-Smtp-Source: AGHT+IHwySxUilY92HgXDaux84iUgENGKAIJAHBXR0V+ON2rRNJk+W0Xo8Pm52WGJhpdIKlLwlsip11NJLkiJRfbuE4=
+X-Received: by 2002:a53:acd1:0:10b0:63e:1ee2:eb12 with SMTP id
+ 956f58d0204a3-63e1ee2eca8mr945659d50.23.1760707009646; Fri, 17 Oct 2025
+ 06:16:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251015112342.1672955-2-kraxel@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-10-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-10-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Oct 2025 14:16:37 +0100
+X-Gm-Features: AS18NWDpYkVCRIj3ds21V59gW47gXG4-rIpsqOQH9vIE9rVvvij0DqbY2vp8krY
+Message-ID: <CAFEAcA_DVB6tdyLjHn6TcwKP14-gSwGyzjmv5vDZJbmYLVY+WQ@mail.gmail.com>
+Subject: Re: [PATCH v2 09/37] target/arm: Merge arm_gen_one_feature_sysreg
+ into the single caller
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,53 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 15, 2025 at 01:23:38PM +0200, Gerd Hoffmann wrote:
->Prepare for arch-specific igvm code being added to the code base.
+On Tue, 14 Oct 2025 at 21:09, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
->Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->---
-> {backends => include/system}/igvm.h | 0
-> backends/igvm-cfg.c                 | 2 +-
-> backends/igvm.c                     | 2 +-
-> 3 files changed, 2 insertions(+), 2 deletions(-)
-> rename {backends => include/system}/igvm.h (100%)
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
->
->diff --git a/backends/igvm.h b/include/system/igvm.h
->similarity index 100%
->rename from backends/igvm.h
->rename to include/system/igvm.h
->diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
->index 45df63e06c1a..d00acf351249 100644
->--- a/backends/igvm-cfg.c
->+++ b/backends/igvm-cfg.c
->@@ -12,7 +12,7 @@
-> #include "qemu/osdep.h"
->
-> #include "system/igvm-cfg.h"
->-#include "igvm.h"
->+#include "system/igvm.h"
-> #include "qom/object_interfaces.h"
->
-> static char *get_igvm(Object *obj, Error **errp)
->diff --git a/backends/igvm.c b/backends/igvm.c
->index 9ad41582ee5e..723d45b755a0 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -11,8 +11,8 @@
->
-> #include "qemu/osdep.h"
->
->-#include "igvm.h"
-> #include "qapi/error.h"
->+#include "system/igvm.h"
-> #include "system/memory.h"
-> #include "system/address-spaces.h"
-> #include "hw/core/cpu.h"
->-- 
->2.51.0
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/gdbstub.c | 19 ++++---------------
+>  1 file changed, 4 insertions(+), 15 deletions(-)
 >
 
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
