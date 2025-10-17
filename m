@@ -4,72 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62554CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 17:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C87CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 17:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9nqm-00011R-AU; Fri, 17 Oct 2025 13:02:45 -0400
+	id 1v9o7A-0005rd-7c; Fri, 17 Oct 2025 13:19:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9nqg-00011B-3p
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 13:02:38 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v9o77-0005r5-Bt
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 13:19:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v9nqa-0004qM-2y
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 13:02:37 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4253A80793;
- Fri, 17 Oct 2025 20:02:26 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a93::1:3a] (unknown
- [2a02:6bf:8080:a93::1:3a])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id O2WYfU3F1iE0-KDdWAaVz; Fri, 17 Oct 2025 20:02:25 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760720545;
- bh=s5CaWqxN/3vZZkXuufTuzNdxExuVp9sntW6TgvzYMVg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=d7C6RajIzhrL4WC2sUwjcyxNjDcYzs7itudWqB/n3tc2YVhR/JrLHucjyz6FHgyms
- jUFzFX0+BbTx5W1DbvEwzKMG4oEtWRDfsC4GdCfrf4MiiVQxABH0/u02KG82JMP3f9
- TetRqk8vvBY1ozMGlPOR+TdB/aWA3iNwj3guC8IE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <bec79b0f-58b2-4197-ad78-f20308ca1e49@yandex-team.ru>
-Date: Fri, 17 Oct 2025 20:02:24 +0300
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v9o70-0007NI-AW
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 13:19:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760721566;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xqKQOA7IIgOldgwfrDPBw5DFY0Ez/V7/yqopDGqLJaY=;
+ b=hGYIY9942KFCVBevcLO3rGsWMX0wkaoU0Z1sLitiveKxp81hbhkBp7wVI6Eg7sSuvNdToV
+ gZ6Yc/XAawRUypbQsEds8NLfUq7R5qXw6HogHa3HKZrluE/p4/H29RjHxp7Gkl73SOnYFf
+ Rbj1B33QkR9IhybqPf0hN7nNHVOKFPU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-482-oX3IEY98PXegsu2PUI8_Eg-1; Fri, 17 Oct 2025 13:19:24 -0400
+X-MC-Unique: oX3IEY98PXegsu2PUI8_Eg-1
+X-Mimecast-MFC-AGG-ID: oX3IEY98PXegsu2PUI8_Eg_1760721560
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-427a125c925so151817f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 10:19:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760721560; x=1761326360;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xqKQOA7IIgOldgwfrDPBw5DFY0Ez/V7/yqopDGqLJaY=;
+ b=q3h1x6/1uUJSFqmrROWhAICCGP0x4AuBeeAQWxk3M6veQa9PWQZ3Gjtyi1fT6G/JKj
+ mfE+RyUGx2JKjalYFBfVWXqxL+LfL5XpLEJPLgibLCDtsfdCCLtlRXONKyYWCTcQvd1B
+ Sg6o5uMjyGVS6Lvf5LXPc77VbzO/tgp4sQgjEsPu1J89lkrceoVVZkLlfiGqPHQgKu3e
+ drlSgdoESK3AeCSqZUlUA7DoGDP7H2Z+NK9cwEYFoq7c1Brm+5iE5qUfO7wjF2A55gAk
+ EF0iczNW4M3M6iCEGtmDda0JSBkm5FyoWRtmXplZ+LRa4Yy4l1IwTgOxnT3edbaFWhzm
+ p22g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWefm0k586lXTurE0jubpeexgdV3cC+ZoK1G+pjYu5G2G3H5ZhJKjz107KKGWaVhOdrda7SjnuHiAev@nongnu.org
+X-Gm-Message-State: AOJu0YztI6mo9wuNnFNbAapHGSbaEjQ3QAN/SxF8RtyDHpyW+lfkZH4X
+ 1OmDqAV6hIGFL2yYoROqk6BdeaxtNFop6rPqBdMd5l4axb2C7sh9N4xK6Jp7b9Y+/vZV/r83i+M
+ 3A7X0Ibpm9nWC+sZi+26NpbYZS3fXN8cSSi5a8Y6mhBiTVX+kLwQlTSwa
+X-Gm-Gg: ASbGncuRMIqkiqyW2hpYktUKHe4H3np/lSzDsphUD3m8BCxam3Pn7vN+KuEUK9QGv+s
+ 5Jl8GI5GtrFi5+oPTUnbQRRd0LjZKvyP5dLfcmVVIyMy+/qRLEMvUqEelUn+Wy3hqgLcRCIEmJW
+ jfDf+6zH0zU2gQ5qZbmIokf2NZ4oVcX7RcCJDxHiKrzTrzvKTRfPMyP7K23BYY4qq4KAsNreZaO
+ LOM4S83eJGBpMyOqzt1pQc/7mb20QWzCmwasAqBgcR58b/2kpqjUb7YItlOlTERk+50SwWicuJx
+ MEavLueb4emuuRtFXO8LJLygtU8xS68nK18v5ze55pRo+RaPY4TNUWW3TFbfEp70ImaHScdLKPl
+ Zu50Pvtl5ybL9mhse5rHXGsEcgHHweGXN/5Ek5xTFaKKNlw==
+X-Received: by 2002:a05:6000:4202:b0:426:d82f:889e with SMTP id
+ ffacd0b85a97d-42704d74dc8mr3406025f8f.14.1760721560241; 
+ Fri, 17 Oct 2025 10:19:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEW05dIykKGzxbQKK/MbtwylPUzy4uySA73CqXJwXsG+Gmz0TxlbmsnMSvyCFmMiFNXFbVmYw==
+X-Received: by 2002:a05:6000:4202:b0:426:d82f:889e with SMTP id
+ ffacd0b85a97d-42704d74dc8mr3406003f8f.14.1760721559783; 
+ Fri, 17 Oct 2025 10:19:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427ea5b3f5esm312080f8f.20.2025.10.17.10.19.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Oct 2025 10:19:19 -0700 (PDT)
+Message-ID: <c6007575-a32a-44fd-b23e-6d340928a5e0@redhat.com>
+Date: Fri, 17 Oct 2025 19:19:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/23] vhost: make vhost_dev.features private
-To: Daniil Tatianin <d-tatianin@yandex-team.ru>, mst@redhat.com
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
- <20251015145808.1112843-7-vsementsov@yandex-team.ru>
- <f6b01736-e67a-4664-b216-1c7e13c3f952@yandex-team.ru>
+Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated SMMUv3
+ to vfio-pci endpoints with iommufd
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <f6b01736-e67a-4664-b216-1c7e13c3f952@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+To: Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-7-skolothumtho@nvidia.com>
+ <cba0a4c0-9d0c-4137-ae0a-7460da56ac56@redhat.com>
+ <CH3PR12MB754822A08B7D9D7317DBECD8ABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <646bbedb-cfa4-418c-80b2-f143f6f97544@redhat.com>
+ <CH3PR12MB7548CA7BFC577C90C3876748ABF6A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB7548CA7BFC577C90C3876748ABF6A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -78,285 +132,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.10.25 13:32, Daniil Tatianin wrote:
-> On 10/15/25 5:57 PM, Vladimir Sementsov-Ogievskiy wrote:
-> 
->> It's hard to control where and how do we use this field. Let's
->> cover all usages by getters/setters, and keep direct access to the
->> field only in vhost.c. It will help to control migration of this
->> field in further commits.
+
+
+On 10/17/25 3:15 PM, Shameer Kolothum wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 17 October 2025 13:47
+>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> smostafa@google.com; wangzhou1@hisilicon.com;
+>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+>> shameerkolothum@gmail.com
+>> Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated
+>> SMMUv3 to vfio-pci endpoints with iommufd
 >>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   hw/display/vhost-user-gpu.c |  7 +++----
->>   hw/net/vhost_net.c          | 18 ++++++++---------
->>   hw/virtio/vdpa-dev.c        |  2 +-
->>   hw/virtio/vhost-user-base.c |  8 ++++++--
->>   hw/virtio/vhost-user.c      |  4 ++--
->>   hw/virtio/vhost.c           |  6 +++---
->>   hw/virtio/virtio-qmp.c      |  2 +-
->>   include/hw/virtio/vhost.h   | 39 +++++++++++++++++++++++++++++++++++--
->>   net/vhost-vdpa.c            |  7 +++----
->>   9 files changed, 65 insertions(+), 28 deletions(-)
+>> External email: Use caution opening links or attachments
 >>
->> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
->> index 79ea64b12c..146620e0a3 100644
->> --- a/hw/display/vhost-user-gpu.c
->> +++ b/hw/display/vhost-user-gpu.c
->> @@ -631,17 +631,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
->>       /* existing backend may send DMABUF, so let's add that requirement */
->>       g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_DMABUF_ENABLED;
->> -    if (virtio_has_feature(g->vhost->dev.features, VIRTIO_GPU_F_VIRGL)) {
->> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_VIRGL)) {
->>           g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED;
->>       }
->> -    if (virtio_has_feature(g->vhost->dev.features, VIRTIO_GPU_F_EDID)) {
->> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_EDID)) {
->>           g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_EDID_ENABLED;
->>       } else {
->>           error_report("EDID requested but the backend doesn't support it.");
->>           g->parent_obj.conf.flags &= ~(1 << VIRTIO_GPU_FLAG_EDID_ENABLED);
->>       }
->> -    if (virtio_has_feature(g->vhost->dev.features,
->> -        VIRTIO_GPU_F_RESOURCE_UUID)) {
->> +    if (vhost_dev_has_feature(&g->vhost->dev, VIRTIO_GPU_F_RESOURCE_UUID)) {
->>           g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED;
->>       }
->> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
->> index ca19983126..323d117735 100644
->> --- a/hw/net/vhost_net.c
->> +++ b/hw/net/vhost_net.c
->> @@ -54,8 +54,8 @@ void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
->>   {
->>       virtio_features_clear(net->dev.acked_features_ex);
->>       if (net->backend == -1) {
->> -        net->dev.acked_features =
->> -           net->dev.features & (1ULL << VHOST_USER_F_PROTOCOL_FEATURES);
->> +        net->dev.acked_features = (vhost_dev_features(&net->dev) &
->> +            (1ULL << VHOST_USER_F_PROTOCOL_FEATURES));
->>       } else if (!qemu_has_vnet_hdr(net->nc)) {
->>           net->dev.acked_features = 1ULL << VHOST_NET_F_VIRTIO_NET_HDR;
->>       }
->> @@ -282,15 +282,15 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
->>       if (backend_kernel) {
->>           if (!qemu_has_vnet_hdr_len(options->net_backend,
->>                                  sizeof(struct virtio_net_hdr_mrg_rxbuf))) {
->> -            net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
->> +            vhost_dev_clear_feature(&net->dev, VIRTIO_NET_F_MRG_RXBUF);
->>           }
->>           if (!qemu_has_vnet_hdr(options->net_backend) &&
->> -            (~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR))) {
->> -            fprintf(stderr, "vhost lacks feature mask 0x%llx for backend\n",
->> -                    ~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR));
->> -             goto fail;
->> -         }
->> +            !vhost_dev_has_feature(&net->dev, VHOST_NET_F_VIRTIO_NET_HDR)) {
->> +            fprintf(stderr, "vhost lacks VHOST_NET_F_VIRTIO_NET_HDR "
->> +                    "feature for backend\n");
->> +            goto fail;
->> +        }
->>       }
->>       /* Set sane init value. Override when guest acks. */
->> @@ -298,7 +298,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
->>           virtio_features_from_u64(features,
->>                                    options->get_acked_features(net->nc));
->>           if (virtio_features_andnot(missing_features, features,
->> -                                   net->dev.features_ex)) {
->> +                                   vhost_dev_features_ex(&net->dev))) {
->>               fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
->>                       " for backend\n", VIRTIO_FEATURES_PR(missing_features));
->>               goto fail;
->> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->> index efd9f68420..e1a2ff433d 100644
->> --- a/hw/virtio/vdpa-dev.c
->> +++ b/hw/virtio/vdpa-dev.c
->> @@ -224,7 +224,7 @@ static uint64_t vhost_vdpa_device_get_features(VirtIODevice *vdev,
->>                                                  Error **errp)
->>   {
->>       VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
->> -    uint64_t backend_features = s->dev.features;
->> +    uint64_t backend_features = vhost_dev_features(&s->dev);
->>       if (!virtio_has_feature(features, VIRTIO_F_IOMMU_PLATFORM)) {
->>           virtio_clear_feature(&backend_features, VIRTIO_F_IOMMU_PLATFORM);
->> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
->> index ff67a020b4..cf311c3bfc 100644
->> --- a/hw/virtio/vhost-user-base.c
->> +++ b/hw/virtio/vhost-user-base.c
->> @@ -118,9 +118,13 @@ static uint64_t vub_get_features(VirtIODevice *vdev,
->>                                    uint64_t requested_features, Error **errp)
->>   {
->>       VHostUserBase *vub = VHOST_USER_BASE(vdev);
->> +    uint64_t backend_features = vhost_dev_features(&vub->vhost_dev);
->> +
->>       /* This should be set when the vhost connection initialises */
->> -    g_assert(vub->vhost_dev.features);
->> -    return vub->vhost_dev.features & ~(1ULL << VHOST_USER_F_PROTOCOL_FEATURES);
->> +    g_assert(backend_features);
->> +    virtio_clear_feature(&backend_features, VHOST_USER_F_PROTOCOL_FEATURES);
->> +
->> +    return backend_features;
->>   }
->>   /*
->> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->> index 3fd11a3b57..9f26515fd4 100644
->> --- a/hw/virtio/vhost-user.c
->> +++ b/hw/virtio/vhost-user.c
->> @@ -1252,7 +1252,7 @@ static int vhost_user_set_vring_enable(struct vhost_dev *dev, int enable)
->>   {
->>       int i;
->> -    if (!virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURES)) {
->> +    if (!vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES)) {
->>           /*
->>            * For vhost-user devices, if VHOST_USER_F_PROTOCOL_FEATURES has not
->>            * been negotiated, the rings start directly in the enabled state,
->> @@ -1469,7 +1469,7 @@ static int vhost_user_set_features(struct vhost_dev *dev,
->>        * Don't lose VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user
->>        * specific.
->>        */
->> -    if (virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURES)) {
->> +    if (vhost_dev_has_feature(dev, VHOST_USER_F_PROTOCOL_FEATURES)) {
->>           features |= 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
->>       }
->> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> index 414a48a218..94efa409aa 100644
->> --- a/hw/virtio/vhost.c
->> +++ b/hw/virtio/vhost.c
->> @@ -1603,7 +1603,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->>           }
->>       }
->> -    virtio_features_copy(hdev->features_ex, features);
->> +    virtio_features_copy(hdev->_features_ex, features);
-> 
-> 
-> This should probably use the vhost_dev_features_ex getter
+>>
+>> Hi Shameer,
+>>
+>> On 10/2/25 11:30 AM, Shameer Kolothum wrote:
+>>> Hi Eric,
+>>>
+>>>> -----Original Message-----
+>>>> From: Eric Auger <eric.auger@redhat.com>
+>>>> Sent: 01 October 2025 18:32
+>>>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+>>>> arm@nongnu.org; qemu-devel@nongnu.org
+>>>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>>>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>>>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>>>> smostafa@google.com; wangzhou1@hisilicon.com;
+>>>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>>>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+>>>> shameerkolothum@gmail.com
+>>>> Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated
+>>>> SMMUv3 to vfio-pci endpoints with iommufd
+>>>>
+>>>> External email: Use caution opening links or attachments
+>>>>
+>>>> Hi Shameer,
+>>>>
+>>>> On 9/29/25 3:36 PM, Shameer Kolothum wrote:
+>>>>> Accelerated SMMUv3 is only useful when the device can take advantage
+>>>>> of the host's SMMUv3 in nested mode. To keep things simple and
+>>>>> correct, we only allow this feature for vfio-pci endpoint devices that
+>>>>> use the iommufd backend. We also allow non-endpoint emulated devices
+>>>>> like PCI bridges and root ports, so that users can plug in these
+>>>>> vfio-pci devices. We can only enforce this if devices are cold
+>>>>> plugged. For hotplug cases, give appropriate
+>>>> "We can only enforce this if devices are cold plugged": I don't really
+>>>> understand that statement.
+>>> By "enforce" here I meant, we can prevent user from starting a Guest
+>>> with a non "vfio-pci/iommufd dev" with accel=one case.
+>> Ah OK I misread the code. I thought you were also exiting in case of
+>> hotplug but you only issue a warn_report.
+>> From a user point of view, the assigned device will succeed attachment
+>> but won't work. Will we get subsequent messages? 
+> It will work. But as the warning says, it may degrade the performance especially
+> If the SMMUv3 has other vfio-pci devices. Because the TLB invalidations
+> from emulated one will be issued to host SMMUv3 as well.
+>
+>  I understand the pain
+>> of propagating the error but if the user experience is bad I think it
+>> should weight over ?
+> I am not against it. But can be taken up as a separate one if required.
+>
+>>> Please let me know your thoughts.
+>> Can't you move the assignment of bus->devices[devfn] before the call and
+>> unset it in case of failure?
+>>
+>> Or if you propagate errors from
+>>
+>> get_address_space() you could retry the call later?
+> For now, I have a fix like below that seems to do the
+> Job.
+>
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index c9932c87e3..9693d7f10c 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -1370,9 +1370,6 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+>      pci_dev->bus_master_as.max_bounce_buffer_size =
+>          pci_dev->max_bounce_buffer_size;
+>
+> -    if (phase_check(PHASE_MACHINE_READY)) {
+> -        pci_init_bus_master(pci_dev);
+> -    }
+>      pci_dev->irq_state = 0;
+>      pci_config_alloc(pci_dev);
+>
+> @@ -1416,6 +1413,9 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+>      pci_dev->config_write = config_write;
+>      bus->devices[devfn] = pci_dev;
+>      pci_dev->version_id = 2; /* Current pci device vmstate version */
+> +    if (phase_check(PHASE_MACHINE_READY)) {
+> +        pci_init_bus_master(pci_dev);
+> +    }
+>      return pci_dev;
 
-Hmm, here we write into hdev->_features_ex.
+OK worth putting it in a separate patch to allow finer review of PCI
+maintainers.
 
-> 
-> Otherwise, LGTM:
-> Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-> 
->>       hdev->memory_listener = (MemoryListener) {
->>           .name = "vhost",
->> @@ -1626,7 +1626,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
->>       };
->>       if (hdev->migration_blocker == NULL) {
->> -        if (!virtio_has_feature_ex(hdev->features_ex, VHOST_F_LOG_ALL)) {
->> +        if (!vhost_dev_has_feature_ex(hdev, VHOST_F_LOG_ALL)) {
->>               error_setg(&hdev->migration_blocker,
->>                          "Migration disabled: vhost lacks VHOST_F_LOG_ALL feature.");
->>           } else if (vhost_dev_log_is_shared(hdev) && !qemu_memfd_alloc_check()) {
->> @@ -1900,7 +1900,7 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
->>       const int *bit = feature_bits;
->>       while (*bit != VHOST_INVALID_FEATURE_BIT) {
->> -        if (!virtio_has_feature_ex(hdev->features_ex, *bit)) {
->> +        if (!vhost_dev_has_feature_ex(hdev, *bit)) {
->>               virtio_clear_feature_ex(features, *bit);
->>           }
->>           bit++;
->> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
->> index 82acb6d232..33d32720e1 100644
->> --- a/hw/virtio/virtio-qmp.c
->> +++ b/hw/virtio/virtio-qmp.c
->> @@ -817,7 +817,7 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
->>           status->vhost_dev->nvqs = hdev->nvqs;
->>           status->vhost_dev->vq_index = hdev->vq_index;
->>           status->vhost_dev->features =
->> -            qmp_decode_features(vdev->device_id, hdev->features_ex);
->> +            qmp_decode_features(vdev->device_id, vhost_dev_features_ex(hdev));
->>           status->vhost_dev->acked_features =
->>               qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
->> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
->> index e308bc4556..1ba1af1d86 100644
->> --- a/include/hw/virtio/vhost.h
->> +++ b/include/hw/virtio/vhost.h
->> @@ -98,10 +98,11 @@ struct vhost_dev {
->>        * offered by a backend which may be a subset of the total
->>        * features eventually offered to the guest.
->>        *
->> -     * @features: available features provided by the backend
->> +     * @_features: available features provided by the backend, private,
->> +     *             direct access only in vhost.h/vhost.c
->>        * @acked_features: final negotiated features with front-end driver
->>        */
->> -    VIRTIO_DECLARE_FEATURES(features);
->> +    VIRTIO_DECLARE_FEATURES(_features);
->>       VIRTIO_DECLARE_FEATURES(acked_features);
->>       uint64_t max_queues;
->> @@ -403,6 +404,40 @@ int vhost_dev_get_inflight(struct vhost_dev *dev, uint16_t queue_size,
->>                              struct vhost_inflight *inflight);
->>   bool vhost_dev_has_iommu(struct vhost_dev *dev);
->> +static inline bool vhost_dev_has_feature(struct vhost_dev *dev,
->> +                                         uint64_t feature)
->> +{
->> +    return virtio_has_feature(dev->_features, feature);
->> +}
->> +
->> +static inline bool vhost_dev_has_feature_ex(struct vhost_dev *dev,
->> +                                            uint64_t feature)
->> +{
->> +    return virtio_has_feature_ex(dev->_features_ex, feature);
->> +}
->> +
->> +static inline uint64_t vhost_dev_features(struct vhost_dev *dev)
->> +{
->> +    return dev->_features;
->> +}
->> +
->> +static inline const uint64_t *vhost_dev_features_ex(struct vhost_dev *dev)
->> +{
->> +    return dev->_features_ex;
->> +}
->> +
->> +static inline void vhost_dev_clear_feature(struct vhost_dev *dev,
->> +                                           uint64_t feature)
->> +{
->> +    virtio_clear_feature(&dev->_features, feature);
->> +}
->> +
->> +static inline void vhost_dev_clear_feature_ex(struct vhost_dev *dev,
->> +                                              uint64_t feature)
->> +{
->> +    virtio_clear_feature_ex(dev->_features_ex, feature);
->> +}
->> +
->>   #ifdef CONFIG_VHOST
->>   int vhost_reset_device(struct vhost_dev *hdev);
->>   #else
->> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
->> index 74d26a9497..0af0d3bdd3 100644
->> --- a/net/vhost-vdpa.c
->> +++ b/net/vhost-vdpa.c
->> @@ -256,15 +256,14 @@ static bool vhost_vdpa_get_vnet_hash_supported_types(NetClientState *nc,
->>   {
->>       assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
->>       VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
->> -    uint64_t features = s->vhost_vdpa.dev->features;
->>       int fd = s->vhost_vdpa.shared->device_fd;
->>       struct {
->>           struct vhost_vdpa_config hdr;
->>           uint32_t supported_hash_types;
->>       } config;
->> -    if (!virtio_has_feature(features, VIRTIO_NET_F_HASH_REPORT) &&
->> -        !virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
->> +    if (!vhost_dev_has_feature(s->vhost_vdpa.dev, VIRTIO_NET_F_HASH_REPORT) &&
->> +        !vhost_dev_has_feature(s->vhost_vdpa.dev, VIRTIO_NET_F_RSS)) {
->>           return false;
->>       }
->> @@ -585,7 +584,7 @@ static int vhost_vdpa_net_cvq_start(NetClientState *nc)
->>        * If we early return in these cases SVQ will not be enabled. The migration
->>        * will be blocked as long as vhost-vdpa backends will not offer _F_LOG.
->>        */
->> -    if (!vhost_vdpa_net_valid_svq_features(v->dev->features, NULL)) {
->> +    if (!vhost_vdpa_net_valid_svq_features(vhost_dev_features(v->dev), NULL)) {
->>           return 0;
->>       }
+Thanks
 
+Eric
+>  }
+>
+> Thanks,
+> Shameer
 
--- 
-Best regards,
-Vladimir
 
