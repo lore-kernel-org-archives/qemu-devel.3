@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 705CCCCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:17:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D39CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9lCm-0004m1-KA; Fri, 17 Oct 2025 10:13:16 -0400
+	id 1v9lCW-0004e9-0X; Fri, 17 Oct 2025 10:13:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCf-0004jC-J3
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:09 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCT-0004dA-Sn
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:12:57 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCQ-0005gT-6s
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:08 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47114a40161so19688655e9.3
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 07:12:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCM-0005eh-Dr
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:12:56 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-4270a3464bcso194768f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 07:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760710368; x=1761315168; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n8oXWw/dktgNDXuS33Gpiga0QxIzazhu/qxi0riXcZ8=;
- b=ZUKYJdrMcPHLsaW3sELc/wPljyOuA8KNMhYRpoIn7lUZkeIhvFyM6y8yJe+lumISuS
- 4QRuvg0Q1FgwqwcAQ6n8EoOWLmcAziNEX75+Wg7cnBWlT14aohUJ92h9QK9hZ338FmVo
- V9+/PeT5i34x3R7jVeLfVrv6YLIVeDFwRV3K/lVZQ/2JLqsLghwwXG4o3ItVnnfWX0IP
- Vi3ViVTpRvUYJ3jDS62tdnGOvKsVUvts63jMaI1MyvEpijpw7205Ym4qnYnIgen+iRKA
- GTbtPoHMCV5Grsgsk9TgtG7wMhZzxj7R3a1VjCGR6juu06JLSIcD/rzHJomdO3uZ3gAN
- 7YOQ==
+ d=gmail.com; s=20230601; t=1760710365; x=1761315165; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gzW3ekQZ7Psj0DsMhnvdQfGfYGGMgoTsdSCNvzg/jEU=;
+ b=lpCx423vz/ClH8LDX+PMyW+IKJ3kL1pnR5TYpSXsuXCe4Ksx+mRtJ8OWDch0NOjrLP
+ 3pzeEBWg390IJW3qbIqSH1nzULOF5L2UFUkcU+BPdk5b5bjXDeaLG9RstOlsDURW6gz4
+ 1vhR3b/hYwB38V+ehNR5YoPBGlXkXi/XxEbpJDgRJuMOHcJtbOftQLPMNAFgxX6NmzcW
+ v0X6JZ/7WmeH5xL6kv7ZEfPyRYLVtSYMLuNgVoRmLi/GnRd3Ilcr+6xbQz/xzRfALGIi
+ Mxf7B2ZkgKipeysq5bv5kyR8mbSNKUMe75r62vf//409H6QXrPveG5x4ZJjMBlF/IhFc
+ rZ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760710368; x=1761315168;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n8oXWw/dktgNDXuS33Gpiga0QxIzazhu/qxi0riXcZ8=;
- b=RduQl2Mp8TmSC1MGEFvYZ3aR5k2QBY3D01m8/wI9yDjJAPhMCt5kY5ZQ3J13yeOBkK
- YoDWQp3Xcbcfjb73DKOj6P/6i48rGXOsurLMgwjABKcCVsJee1Yqq9jkJc+JaX827sOw
- ENoLuAEqhYD5brCtvKLWt6brrTPcrYj3Opp+Bk7RKG3Q0fZ0DYndE1xkcA37+KWJJhg1
- Fg8qeRGJNwnzUAdwRQ42BkSIDZ1PdzddjGPeh/6mNPHp4uLAwCLE8YHHf89nCMMqpf37
- CYPBOoLwW+Rdm+4dxQPGBpMKY0K1P4HG+2aNh4WmxtLP3BXn9gK+sKi/NG640n0aQHo2
- vdFA==
-X-Gm-Message-State: AOJu0Yz0fMqnV2pllV9vXs3Y0y4gwV3dN2lHUv/tB8vuHbgdLW0Rg0Y+
- TUJV4c3Qk5RyoTY8boWo48HDPyohICRLBrKKwes7uWLseXtJRG3DtjYuP6Y9kg==
-X-Gm-Gg: ASbGncsPB8nSsDHBDGmANsvT8fCVQoonw7HyfnhqFUtkPGaCx5BGuti7lKk1lLlseTp
- 8mpafmQALXfND7MRNiMCcBn2RkpbMkeFZ3H7v7SmqzCfUSgQR9ixOc6MbxfUV+uIuqdVpmRMVsC
- h1IjmYJ2RrOLdRdDb7EhSr9zyMW1ldgNnbri3uVqhCW0/j4e7+GQ3nclFDfC7ceBe63NXJ9tl6v
- VzNt0abCgEJVRBre7k7Bnget1CxJD0qy9p5VJXbY/5wQG+bbezucFNSnVlR9BEyU7eg+y9vmH0Z
- EDVfvkyEYH0gQdyp171sIgw3AH/FNUqntDeUjzw/2H9kVjyf14tUneK6Kizo5vaD+JGtiGFsE58
- bq4J4GN+xQSKuYx5NKyA8NJrXGm0bLXO/6Op5ggOywZxBmGBlQvfXEASTKS1TG70MsEOJYKc6L5
- iNcPlz/IBNetF7wkiIpX9h1+VAL3D1WpQppAXXyGl+35k=
-X-Google-Smtp-Source: AGHT+IGhiyzkzAr+6r0KBtkLRDLs2tlXhqCkwBqEUxcf5/lWQeWBHbLeSI13oIDWMKk0dtvqeisVSw==
-X-Received: by 2002:a05:600c:3488:b0:459:e398:ed89 with SMTP id
- 5b1f17b1804b1-4711786c586mr30171665e9.1.1760710367930; 
- Fri, 17 Oct 2025 07:12:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760710365; x=1761315165;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gzW3ekQZ7Psj0DsMhnvdQfGfYGGMgoTsdSCNvzg/jEU=;
+ b=QvIFZZtwf/zCVvB2scK5XWhTpDL4mpA2KFC6gY6Quq0On5zeYoTaFKA06aHsgFejyh
+ 9frPTDULazZopk+LYIpyiZYDYkV1EA2BJqZklD0zPUf6dHustT02mVo8SQlqvh+HSNAu
+ TpOc/S4ZdbZv+QMy+bEJyT8dMuY7VoC51IMCs74gDqAfkmfPG1xM0BqYxFVfhxe47jD6
+ vN3qxhP+p0rK3sMC8HCvagJ+LVQ13LR1+K4B6Wxn/7mzh9JJZw8hssyP4UGkT+mEbi1z
+ 2dQFiYfAhIlCxnGlvlXBd1R0YYRVx2zQ03vmTAE1OcCf7NGQV/E2vmCJ3GFbCT5ew8S9
+ AheQ==
+X-Gm-Message-State: AOJu0YxPiGWj4WyEeBHLiiDaDNMZkW7yqSbyMIA12+cxKDrB7iXAB/+O
+ p/0RF+TzOYp6ekSADs+CUZixDEpK7Kv7NlikBSebjb8gDwOJM+7Xd6JKRxqBqw==
+X-Gm-Gg: ASbGncuCZWJsA7Ztz5LgGg1kXwyojbmFLOV56bt9efJsOHAe1Rf7+ub9f3Qj1a8gMYf
+ g6xBvGzL99BLksBG5e2FmcnMdexNpNtB77o5Yvab+HoxHEs6a339UiG4RExegj65avsJNmTvuC3
+ /Os9NRVaxmKT1gYiaEseZnpy3mYJyat1yxFuAZAZm1deHRxJuqV2tjee4Y6tl9znJwRDu+NQyhK
+ tetQ9KBRlrm492McGBLOzQcV5FsVpukN24TBszP4HvUosh09+ffXXGvciBcRABeIYQKbsLl7OTZ
+ OK+3IiL7mii42nDyffU4uJRyrOU/qyGrPUXcvpUpvEJSUgWaoHoLztePRHyZT/DLDZ2JQfaxpPR
+ f9bu3NpJ8ITDcfIl0G/CV73h8ahUDo71t2BNnUtCXTk+YRpZ8lbh3S5SSWJhmhGnjIgobybk/92
+ 7XnG8ZVhtnYKDj5pgG/+zyWx5eMKmT1tY1
+X-Google-Smtp-Source: AGHT+IGeuxOJBWpmVCX3U1tHBDipCkpzrypzvQWf6sOPwcugLBzMa9b7CCp6AGBV0FZ+Pn8TPlDLZw==
+X-Received: by 2002:a05:6000:25c7:b0:427:854:787 with SMTP id
+ ffacd0b85a97d-4270854085bmr1487022f8f.51.1760710364350; 
+ Fri, 17 Oct 2025 07:12:44 -0700 (PDT)
 Received: from archlinux (pd95edc07.dip0.t-ipconnect.de. [217.94.220.7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cb36e7csm51359675e9.2.2025.10.17.07.12.46
+ 5b1f17b1804b1-4710cb36e7csm51359675e9.2.2025.10.17.07.12.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Oct 2025 07:12:47 -0700 (PDT)
+ Fri, 17 Oct 2025 07:12:43 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -78,24 +77,22 @@ Cc: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>,
  Phil Dennis-Jordan <phil@philjordan.eu>, Michael Tokarev <mjt@tls.msk.ru>,
  John Snow <jsnow@redhat.com>, kvm@vger.kernel.org,
  Laurent Vivier <lvivier@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 03/11] hw/rtc/mc146818rtc: Convert CMOS_DPRINTF() into
- trace events
-Date: Fri, 17 Oct 2025 16:11:09 +0200
-Message-ID: <20251017141117.105944-4-shentey@gmail.com>
+Subject: [PATCH v2 00/11] Cleanup patches, mostly PC-related
+Date: Fri, 17 Oct 2025 16:11:06 +0200
+Message-ID: <20251017141117.105944-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.51.1.dirty
-In-Reply-To: <20251017141117.105944-1-shentey@gmail.com>
-References: <20251017141117.105944-1-shentey@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,70 +108,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/rtc/mc146818rtc.c | 14 +++-----------
- hw/rtc/trace-events  |  4 ++++
- 2 files changed, 7 insertions(+), 11 deletions(-)
-
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index f9f5cf396f..61e9c0bf99 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -43,16 +43,10 @@
- #include "qapi/error.h"
- #include "qapi/qapi-events-misc.h"
- #include "qapi/visitor.h"
-+#include "trace.h"
- 
--//#define DEBUG_CMOS
- //#define DEBUG_COALESCED
- 
--#ifdef DEBUG_CMOS
--# define CMOS_DPRINTF(format, ...)      printf(format, ## __VA_ARGS__)
--#else
--# define CMOS_DPRINTF(format, ...)      do { } while (0)
--#endif
--
- #ifdef DEBUG_COALESCED
- # define DPRINTF_C(format, ...)      printf(format, ## __VA_ARGS__)
- #else
-@@ -439,8 +433,7 @@ static void cmos_ioport_write(void *opaque, hwaddr addr,
-     if ((addr & 1) == 0) {
-         s->cmos_index = data & 0x7f;
-     } else {
--        CMOS_DPRINTF("cmos: write index=0x%02x val=0x%02" PRIx64 "\n",
--                     s->cmos_index, data);
-+        trace_mc146818_rtc_ioport_write(s->cmos_index, data);
-         switch(s->cmos_index) {
-         case RTC_SECONDS_ALARM:
-         case RTC_MINUTES_ALARM:
-@@ -726,8 +719,7 @@ static uint64_t cmos_ioport_read(void *opaque, hwaddr addr,
-             ret = s->cmos_data[s->cmos_index];
-             break;
-         }
--        CMOS_DPRINTF("cmos: read index=0x%02x val=0x%02x\n",
--                     s->cmos_index, ret);
-+        trace_mc146818_rtc_ioport_read(s->cmos_index, ret);
-         return ret;
-     }
- }
-diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
-index b9f2852d35..d2f36217cb 100644
---- a/hw/rtc/trace-events
-+++ b/hw/rtc/trace-events
-@@ -32,6 +32,10 @@ m48txx_nvram_io_write(uint64_t addr, uint64_t value) "io write addr:0x%04" PRIx6
- m48txx_nvram_mem_read(uint32_t addr, uint32_t value) "mem read addr:0x%04x value:0x%02x"
- m48txx_nvram_mem_write(uint32_t addr, uint32_t value) "mem write addr:0x%04x value:0x%02x"
- 
-+# mc146818rtc.c
-+mc146818_rtc_ioport_read(uint8_t addr, uint8_t value) "[0x%02" PRIx8 "] -> 0x%02" PRIx8
-+mc146818_rtc_ioport_write(uint8_t addr, uint8_t value) "[0x%02" PRIx8 "] <- 0x%02" PRIx8
-+
- # goldfish_rtc.c
- goldfish_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
- goldfish_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
--- 
-2.51.1.dirty
-
+This series mostly contains PC-related patches I came up with when doing=0D
+"virtual retrocomputing" with my via-apollo-pro-133t branch [1]. It include=
+s=0D
+improved tracing and removal of cpu_get_current_apic(). The remaining patch=
+=0D
+resolves duplicate code in the test of DS1338 RTC which is used in e500=0D
+machines.=0D
+=0D
+v2:=0D
+* Remove some redundant APIC_COMMON(cpu->apic_state) casts=0D
+* Resolve cpu_get_current_apic()=0D
+=0D
+Testing done:=0D
+* make check=0D
+* Work with recent x86_64 Linux distribution running on WHPX=0D
+=0D
+[1] https://github.com/shentok/qemu/tree/via-apollo-pro-133t=0D
+=0D
+Supersedes: 20251017113338.7953-1-shentey@gmail.com=0D
+=0D
+Bernhard Beschow (11):=0D
+  hw/timer/i8254: Add I/O trace events=0D
+  hw/audio/pcspk: Add I/O trace events=0D
+  hw/rtc/mc146818rtc: Convert CMOS_DPRINTF() into trace events=0D
+  hw/rtc/mc146818rtc: Use ARRAY_SIZE macro=0D
+  hw/rtc/mc146818rtc: Assert correct usage of=0D
+    mc146818rtc_set_cmos_data()=0D
+  hw/ide/ide-internal: Move dma_buf_commit() into ide "namespace"=0D
+  hw/i386/apic: Prefer APICCommonState over DeviceState=0D
+  hw/i386/apic: Ensure own APIC use in apic_msr_{read,write}=0D
+  hw/intc/apic: Ensure own APIC use in apic_register_{read,write}=0D
+  hw/i386/x86-cpu: Remove now unused cpu_get_current_apic()=0D
+  tests/qtest/ds1338-test: Reuse from_bcd()=0D
+=0D
+ hw/ide/ide-internal.h                |   2 +-=0D
+ include/hw/i386/apic.h               |  38 +++++----=0D
+ include/hw/i386/apic_internal.h      |   7 +-=0D
+ target/i386/cpu.h                    |   4 +-=0D
+ target/i386/kvm/kvm_i386.h           |   2 +-=0D
+ target/i386/whpx/whpx-internal.h     |   2 +-=0D
+ hw/audio/pcspk.c                     |  10 ++-=0D
+ hw/i386/kvm/apic.c                   |   3 +-=0D
+ hw/i386/vapic.c                      |   2 +-=0D
+ hw/i386/x86-cpu.c                    |  10 ---=0D
+ hw/ide/ahci.c                        |   8 +-=0D
+ hw/ide/core.c                        |  10 +--=0D
+ hw/intc/apic.c                       | 116 +++++++++------------------=0D
+ hw/intc/apic_common.c                |  56 +++++--------=0D
+ hw/rtc/mc146818rtc.c                 |  20 ++---=0D
+ hw/timer/i8254.c                     |   6 ++=0D
+ target/i386/cpu-apic.c               |  16 ++--=0D
+ target/i386/cpu-dump.c               |   2 +-=0D
+ target/i386/cpu.c                    |   2 +-=0D
+ target/i386/hvf/hvf.c                |   4 +-=0D
+ target/i386/kvm/kvm.c                |   2 +-=0D
+ target/i386/tcg/system/misc_helper.c |   5 +-=0D
+ target/i386/whpx/whpx-apic.c         |   3 +-=0D
+ tests/qtest/ds1338-test.c            |  12 +--=0D
+ hw/audio/trace-events                |   4 +=0D
+ hw/rtc/trace-events                  |   4 +=0D
+ hw/timer/trace-events                |   4 +=0D
+ 27 files changed, 146 insertions(+), 208 deletions(-)=0D
+=0D
+-- =0D
+2.51.1.dirty=0D
+=0D
 
