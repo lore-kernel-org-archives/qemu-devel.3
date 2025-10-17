@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54AFCCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 705CCCCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9lD0-0004u4-Hx; Fri, 17 Oct 2025 10:13:30 -0400
+	id 1v9lCm-0004m1-KA; Fri, 17 Oct 2025 10:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCu-0004sY-28
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:24 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCf-0004jC-J3
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:09 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCW-0005ju-Qe
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:23 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-46b303f755aso19999905e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 07:12:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1v9lCQ-0005gT-6s
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:13:08 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47114a40161so19688655e9.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 07:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760710375; x=1761315175; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760710368; x=1761315168; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uoQ6SLuQ7FwjPP9PEz/jS+6Ivn8fi/SY5nUjIteDwfY=;
- b=PtErTXWow+7QUmH2tTPRGNJdn1vO+9Sl7r0JZfO9aVygyhAP/9pd74qgDx4oGFKpi5
- 7Hazh6+3sV2/4nsCBUTBzhfQ+mAc/XNuJmSuGbsltXkS3yCm4IIzemNpSz74cPV+OciL
- j+xWE+pU7x4fNr9xAf+Go3EW97f8mFemAib4OrIDVn6vZ6Lw0nQXOQMhysmZHlXtO/Dj
- /iQShfIwD1+13SHnOpFDKVsPkdruylXTmkPHy40IdQ7mEUzTqcOF/99pIuDMw7zS288L
- AVY0XIwSc4v4TK/dn/SJvl9lrS7TNBw6SHwlfkyq/SAK7dwCaqk0OcUxRiVhwdQF1TFg
- 9yNQ==
+ bh=n8oXWw/dktgNDXuS33Gpiga0QxIzazhu/qxi0riXcZ8=;
+ b=ZUKYJdrMcPHLsaW3sELc/wPljyOuA8KNMhYRpoIn7lUZkeIhvFyM6y8yJe+lumISuS
+ 4QRuvg0Q1FgwqwcAQ6n8EoOWLmcAziNEX75+Wg7cnBWlT14aohUJ92h9QK9hZ338FmVo
+ V9+/PeT5i34x3R7jVeLfVrv6YLIVeDFwRV3K/lVZQ/2JLqsLghwwXG4o3ItVnnfWX0IP
+ Vi3ViVTpRvUYJ3jDS62tdnGOvKsVUvts63jMaI1MyvEpijpw7205Ym4qnYnIgen+iRKA
+ GTbtPoHMCV5Grsgsk9TgtG7wMhZzxj7R3a1VjCGR6juu06JLSIcD/rzHJomdO3uZ3gAN
+ 7YOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760710375; x=1761315175;
+ d=1e100.net; s=20230601; t=1760710368; x=1761315168;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uoQ6SLuQ7FwjPP9PEz/jS+6Ivn8fi/SY5nUjIteDwfY=;
- b=cVj/xJBOVptVmsodgFRs5/UzV0JwTuoMdwvSPWAEXUvfujCBBtnwDH3RVrYj+eW/26
- 5vgqK05k6XK/tri5X12PTomG7EenJeLptB/kRV0Bs08wmmQgcF8NzOjoEnLdCkhwbOwn
- T3NjjmWbdNy5/sNu3KrBZaKdMtxNT3SNjTLvo/DgaYfUfF17qpqWRN2bYWZBOCM8TJzc
- gAhuoFVmRsIJ4mbcTJf8g5qaoNuMPGtr9TUEeEfDw3bga8r90uPVTEUhAONrIxNLl35I
- 34kRduwWeRe447q7I62eFXAkgFfoDZlW2cUXez5Rud1WlEpx4xQkZReHWSLsVzLDB7K/
- MA3A==
-X-Gm-Message-State: AOJu0Yx2rU2We3Kar8OoKph+d/seIZPd6jfuzZKxZgUx7ebjqIXX6VUE
- ztJqpn3ZVDYqRIfDY3RjvOAZBluabzdp7PN3qUlvjktHxIsBYeZcjS3HB1peQg==
-X-Gm-Gg: ASbGnctS3X2MAhRn6N+6dZv5nbw7V5jssLmt281CJTaaUqKbtYsapbXDhhtBy9aIT94
- ZHOGT9Dred7RJwE6HxunGyxLje3Hmrz/wrpBZMzoopK/GON4EvlLJwsTU+G/GFImISYSRthysvo
- K88Bj2a3MUWim1PVl77D5Ornc13wOc+tfjpDdZ5Sys2wigsmTEcoA3o77/RCQwqiX/WMAj20z1N
- nn8sISTnjNBWLfgRlMfa0LCbDpdARbFAvS3jn38RmkwqzZA4zDCgY6D9t/XKERjAIYkD17yzvzm
- zsmD7c/iOiLgdKjvnVfFg3PfUvWqJws6Bpbc3dXwjcMCI5R92gptO8M3e1ChLk606zy+FYX0P2X
- cdsiu9s4y+QiXVg9mameci+yO4GXwWqXA8IF9seMQTwn9MiFJrQXthlu7Gr2vHo4DK1QCnWP4dY
- Z1JVc4qwhbc92pStfLgcag58ti/Dh7g/bhIbqORcBdBhs=
-X-Google-Smtp-Source: AGHT+IGDUpHFktS1phJv11AWEB4wPTsgryq8zLqwvPwmU/+IRwKwm/FCG4X5/AX6gCWAr8CSOUFAfQ==
-X-Received: by 2002:a05:600c:548d:b0:45f:27fb:8016 with SMTP id
- 5b1f17b1804b1-471178726a9mr27315245e9.1.1760710375304; 
- Fri, 17 Oct 2025 07:12:55 -0700 (PDT)
+ bh=n8oXWw/dktgNDXuS33Gpiga0QxIzazhu/qxi0riXcZ8=;
+ b=RduQl2Mp8TmSC1MGEFvYZ3aR5k2QBY3D01m8/wI9yDjJAPhMCt5kY5ZQ3J13yeOBkK
+ YoDWQp3Xcbcfjb73DKOj6P/6i48rGXOsurLMgwjABKcCVsJee1Yqq9jkJc+JaX827sOw
+ ENoLuAEqhYD5brCtvKLWt6brrTPcrYj3Opp+Bk7RKG3Q0fZ0DYndE1xkcA37+KWJJhg1
+ Fg8qeRGJNwnzUAdwRQ42BkSIDZ1PdzddjGPeh/6mNPHp4uLAwCLE8YHHf89nCMMqpf37
+ CYPBOoLwW+Rdm+4dxQPGBpMKY0K1P4HG+2aNh4WmxtLP3BXn9gK+sKi/NG640n0aQHo2
+ vdFA==
+X-Gm-Message-State: AOJu0Yz0fMqnV2pllV9vXs3Y0y4gwV3dN2lHUv/tB8vuHbgdLW0Rg0Y+
+ TUJV4c3Qk5RyoTY8boWo48HDPyohICRLBrKKwes7uWLseXtJRG3DtjYuP6Y9kg==
+X-Gm-Gg: ASbGncsPB8nSsDHBDGmANsvT8fCVQoonw7HyfnhqFUtkPGaCx5BGuti7lKk1lLlseTp
+ 8mpafmQALXfND7MRNiMCcBn2RkpbMkeFZ3H7v7SmqzCfUSgQR9ixOc6MbxfUV+uIuqdVpmRMVsC
+ h1IjmYJ2RrOLdRdDb7EhSr9zyMW1ldgNnbri3uVqhCW0/j4e7+GQ3nclFDfC7ceBe63NXJ9tl6v
+ VzNt0abCgEJVRBre7k7Bnget1CxJD0qy9p5VJXbY/5wQG+bbezucFNSnVlR9BEyU7eg+y9vmH0Z
+ EDVfvkyEYH0gQdyp171sIgw3AH/FNUqntDeUjzw/2H9kVjyf14tUneK6Kizo5vaD+JGtiGFsE58
+ bq4J4GN+xQSKuYx5NKyA8NJrXGm0bLXO/6Op5ggOywZxBmGBlQvfXEASTKS1TG70MsEOJYKc6L5
+ iNcPlz/IBNetF7wkiIpX9h1+VAL3D1WpQppAXXyGl+35k=
+X-Google-Smtp-Source: AGHT+IGhiyzkzAr+6r0KBtkLRDLs2tlXhqCkwBqEUxcf5/lWQeWBHbLeSI13oIDWMKk0dtvqeisVSw==
+X-Received: by 2002:a05:600c:3488:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-4711786c586mr30171665e9.1.1760710367930; 
+ Fri, 17 Oct 2025 07:12:47 -0700 (PDT)
 Received: from archlinux (pd95edc07.dip0.t-ipconnect.de. [217.94.220.7])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cb36e7csm51359675e9.2.2025.10.17.07.12.54
+ 5b1f17b1804b1-4710cb36e7csm51359675e9.2.2025.10.17.07.12.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Oct 2025 07:12:54 -0700 (PDT)
+ Fri, 17 Oct 2025 07:12:47 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -78,17 +78,17 @@ Cc: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>,
  Phil Dennis-Jordan <phil@philjordan.eu>, Michael Tokarev <mjt@tls.msk.ru>,
  John Snow <jsnow@redhat.com>, kvm@vger.kernel.org,
  Laurent Vivier <lvivier@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 09/11] hw/intc/apic: Ensure own APIC use in
- apic_register_{read, write}
-Date: Fri, 17 Oct 2025 16:11:15 +0200
-Message-ID: <20251017141117.105944-10-shentey@gmail.com>
+Subject: [PATCH v2 03/11] hw/rtc/mc146818rtc: Convert CMOS_DPRINTF() into
+ trace events
+Date: Fri, 17 Oct 2025 16:11:09 +0200
+Message-ID: <20251017141117.105944-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.51.1.dirty
 In-Reply-To: <20251017141117.105944-1-shentey@gmail.com>
 References: <20251017141117.105944-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,93 +111,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As per the previous patch, the own APIC instance is already available in
-apic_msr_{read,write}, and can be passed along. In apic_mem_{read,write}, the
-own APIC instance is available as the opaque parameter, since it gets registered
-when initializing the io_memory attribute. As a result, no
-cpu_get_current_apic() is involved any longer.
-
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/intc/apic.c | 25 ++++++-------------------
- 1 file changed, 6 insertions(+), 19 deletions(-)
+ hw/rtc/mc146818rtc.c | 14 +++-----------
+ hw/rtc/trace-events  |  4 ++++
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index ba0eda3921..fee5201372 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -769,17 +769,11 @@ static void apic_timer(void *opaque)
-     apic_timer_update(s, s->next_time);
- }
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index f9f5cf396f..61e9c0bf99 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -43,16 +43,10 @@
+ #include "qapi/error.h"
+ #include "qapi/qapi-events-misc.h"
+ #include "qapi/visitor.h"
++#include "trace.h"
  
--static int apic_register_read(int index, uint64_t *value)
-+static int apic_register_read(APICCommonState *s, int index, uint64_t *value)
- {
--    APICCommonState *s;
-     uint32_t val;
-     int ret = 0;
+-//#define DEBUG_CMOS
+ //#define DEBUG_COALESCED
  
--    s = cpu_get_current_apic();
--    if (!s) {
--        return -1;
--    }
+-#ifdef DEBUG_CMOS
+-# define CMOS_DPRINTF(format, ...)      printf(format, ## __VA_ARGS__)
+-#else
+-# define CMOS_DPRINTF(format, ...)      do { } while (0)
+-#endif
 -
-     switch(index) {
-     case 0x02: /* id */
-         if (is_x2apic_mode(s)) {
-@@ -876,7 +870,7 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
+ #ifdef DEBUG_COALESCED
+ # define DPRINTF_C(format, ...)      printf(format, ## __VA_ARGS__)
+ #else
+@@ -439,8 +433,7 @@ static void cmos_ioport_write(void *opaque, hwaddr addr,
+     if ((addr & 1) == 0) {
+         s->cmos_index = data & 0x7f;
+     } else {
+-        CMOS_DPRINTF("cmos: write index=0x%02x val=0x%02" PRIx64 "\n",
+-                     s->cmos_index, data);
++        trace_mc146818_rtc_ioport_write(s->cmos_index, data);
+         switch(s->cmos_index) {
+         case RTC_SECONDS_ALARM:
+         case RTC_MINUTES_ALARM:
+@@ -726,8 +719,7 @@ static uint64_t cmos_ioport_read(void *opaque, hwaddr addr,
+             ret = s->cmos_data[s->cmos_index];
+             break;
+         }
+-        CMOS_DPRINTF("cmos: read index=0x%02x val=0x%02x\n",
+-                     s->cmos_index, ret);
++        trace_mc146818_rtc_ioport_read(s->cmos_index, ret);
+         return ret;
      }
- 
-     index = (addr >> 4) & 0xff;
--    apic_register_read(index, &val);
-+    apic_register_read(opaque, index, &val);
- 
-     return val;
  }
-@@ -891,7 +885,7 @@ int apic_msr_read(APICCommonState *s, int index, uint64_t *val)
-         return -1;
-     }
+diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
+index b9f2852d35..d2f36217cb 100644
+--- a/hw/rtc/trace-events
++++ b/hw/rtc/trace-events
+@@ -32,6 +32,10 @@ m48txx_nvram_io_write(uint64_t addr, uint64_t value) "io write addr:0x%04" PRIx6
+ m48txx_nvram_mem_read(uint32_t addr, uint32_t value) "mem read addr:0x%04x value:0x%02x"
+ m48txx_nvram_mem_write(uint32_t addr, uint32_t value) "mem write addr:0x%04x value:0x%02x"
  
--    return apic_register_read(index, val);
-+    return apic_register_read(s, index, val);
- }
- 
- static void apic_send_msi(MSIMessage *msi)
-@@ -919,15 +913,8 @@ static void apic_send_msi(MSIMessage *msi)
-     apic_deliver_irq(dest, dest_mode, delivery, vector, trigger_mode);
- }
- 
--static int apic_register_write(int index, uint64_t val)
-+static int apic_register_write(APICCommonState *s, int index, uint64_t val)
- {
--    APICCommonState *s;
--
--    s = cpu_get_current_apic();
--    if (!s) {
--        return -1;
--    }
--
-     trace_apic_register_write(index, val);
- 
-     switch(index) {
-@@ -1073,7 +1060,7 @@ static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
-         return;
-     }
- 
--    apic_register_write(index, val);
-+    apic_register_write(opaque, index, val);
- }
- 
- int apic_msr_write(APICCommonState *s, int index, uint64_t val)
-@@ -1086,7 +1073,7 @@ int apic_msr_write(APICCommonState *s, int index, uint64_t val)
-         return -1;
-     }
- 
--    return apic_register_write(index, val);
-+    return apic_register_write(s, index, val);
- }
- 
- static void apic_pre_save(APICCommonState *s)
++# mc146818rtc.c
++mc146818_rtc_ioport_read(uint8_t addr, uint8_t value) "[0x%02" PRIx8 "] -> 0x%02" PRIx8
++mc146818_rtc_ioport_write(uint8_t addr, uint8_t value) "[0x%02" PRIx8 "] <- 0x%02" PRIx8
++
+ # goldfish_rtc.c
+ goldfish_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
+ goldfish_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
 -- 
 2.51.1.dirty
 
