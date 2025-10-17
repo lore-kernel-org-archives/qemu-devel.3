@@ -4,225 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 951EACCD19A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E102CCD1A4
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9gAM-0001MY-Rz; Fri, 17 Oct 2025 04:50:26 -0400
+	id 1v9gAb-0001O9-Gp; Fri, 17 Oct 2025 04:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1v9gAK-0001M4-DQ; Fri, 17 Oct 2025 04:50:24 -0400
-Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v9gAa-0001Ns-00
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:50:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1v9gAE-00068Q-5q; Fri, 17 Oct 2025 04:50:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VRlfdDORN3jz6eHohP+T/63GtqRNg0nUtkz284zckiGjAwgU/UMzlqNxq9DCtUL58Doz6TuioSJV36I4E22Zdo0k+2yI1J6hZhRixH4K08xEqLAmS69SJEZ2JS8LYxuTZy71m6Ws5F6G8Z2y6LpW8vkIqFtfsxmbu2cYO5aGiDaL2cwP9YOFnVLlualyyzgZ5Qqg10EMhso4SPwMFZVz/ETirA4TjQq9/fzQyDw1XCOCyoMzCkTD57FalDsW/soOxlzeuGibuTayGj1PD5IGKTIj/PSpZNPvue9O93pDyu0jkHplmfVodVjtCEiYeXvNSL9cWAICw04YXyNxFQXckw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=llW401XEZ9dRrVb00KgisR+aVaQh1TxCVlz1Km0npKQ=;
- b=nhZ16k60itftITc7HhjoF4BNuNolkBFltkjlwh35o5wnG172sJxZZNsxs8ZmtyfdmHJhxn66/SgZ0dB06RWLFU+YyNTlPdPXGlTDHUNchQDVw8f3Z/e6PCGH/7CrZE/UHE1sG1D0N93xgdkIVMDnX1j2bufzGYIg79MXVuktb+NLBJBjQWI9AfoKO6bwmdAndmRhkFwG9a6FfC9aKv2NiR63cz53qHB9NW/ZnuyyiXBNoQP+wWfmcHYAQzwctbpC+Z4EgMIEnA96gltetq+AOAFcLrYUXGA6qF/J5vO7MEFrgNe1WR6s09Z3nypnNhauDfxlbAI3Hu/sSJRWALbuXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
- dkim=pass header.d=siemens.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=llW401XEZ9dRrVb00KgisR+aVaQh1TxCVlz1Km0npKQ=;
- b=hbi96PA3NkoAKOo+M1b84wdrX/jpcSwFgaakz93n3JfoQPQPhAryEcQUdqjoV4edLj7bI97tBrkAHZiYmjDXIVHLcvASRsf8oxCv0K5X+vjinXOU9DYzS4LGOX76MsddAxE8AvTAcbgwelaUKK4FY9rVVdiU2eetAZvkdCwnZhXOZmIBW3eP+CnHr/2X+U5kMwWiDX3hlQroZhzPVav8c72Ic9eo9yhJL6vyGf6bYnMftg8/kEkZWr7Genf8nGxK+Xg2XVsRNMNBdsytZ9mFq7MN4yS/UsOa1hGg2mXcjgqsF2VkAPWJdwo6WieTQYlK0/FZFhHF/9JVVVEDzEYvlA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siemens.com;
-Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
- by DB8PR10MB3498.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:13e::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.13; Fri, 17 Oct
- 2025 08:50:06 +0000
-Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::8fe1:7e71:cf4a:7408]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::8fe1:7e71:cf4a:7408%6]) with mapi id 15.20.9228.011; Fri, 17 Oct 2025
- 08:50:05 +0000
-Message-ID: <a277de12-e5fb-4007-a7de-30f4735955f2@siemens.com>
-Date: Fri, 17 Oct 2025 10:50:02 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>, Warner Losh
- <imp@bsdimp.com>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Alexander Bulekov
- <alxndr@bu.edu>, 'Jamin Lin' <jamin_lin@aspeedtech.com>
-References: <cover.1757854006.git.jan.kiszka@siemens.com>
- <48930c1092424d22dc2171140378de19e0814ef3.1757854006.git.jan.kiszka@siemens.com>
- <c144202b-0d99-4507-8a57-35df1ece3cc0@siemens.com>
- <2070f7bb-cd1a-448f-ba87-50d75e24f4c0@kaod.org>
- <b09cd869-39e7-4a62-b452-4ea39ccf4df0@siemens.com>
- <e992011b-ac3f-4770-97e8-3c0321410e72@kaod.org>
- <aa63efc6-8edc-4db4-9221-a1a54fc1cdce@siemens.com>
- <8b14bde0-2ca8-4b45-a41a-f1459a7710fe@kaod.org>
- <2c028368-b840-4f22-bb5f-a9ffcfec26c8@siemens.com>
- <aaa7ee12-d74a-48b2-8175-097837f1d611@kaod.org>
-From: Jan Kiszka <jan.kiszka@siemens.com>
-Content-Language: en-US
-Autocrypt: addr=jan.kiszka@siemens.com; keydata=
- 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
-In-Reply-To: <aaa7ee12-d74a-48b2-8175-097837f1d611@kaod.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR4P281CA0310.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f6::15) To AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:20b:588::19)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v9gAT-0006AY-EP
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:50:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760691026;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sdmQ1CrMc7SegT8Utgk9OT5+nn7sWJi9aEv+cLB+b+E=;
+ b=XLU0Tr8I/Tk5lq9cqzSyqXq3sPgPeNF2uPlyh0p6nxFgVeDsLW3DcvaoBaEZ74A+aFBVzL
+ q/cxhQvKxCd8tLAN3llkbDdu2pzbIPfaN9dkILFGyrQLxja/abNj5QgkX2rxnkm8ksgQv1
+ yfYPBqvM4wg5oNrZAUZ9bkFd6cVnP2A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-9yuE5gOwPBqtM4zPLKN3Sw-1; Fri,
+ 17 Oct 2025 04:50:25 -0400
+X-MC-Unique: 9yuE5gOwPBqtM4zPLKN3Sw-1
+X-Mimecast-MFC-AGG-ID: 9yuE5gOwPBqtM4zPLKN3Sw_1760691023
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15B4918002C9; Fri, 17 Oct 2025 08:50:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.139])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 47C0130001BC; Fri, 17 Oct 2025 08:50:16 +0000 (UTC)
+Date: Fri, 17 Oct 2025 09:50:13 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Peter Xu <peterx@redhat.com>, mst@redhat.com, jasowang@redhat.com,
+ farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
+ armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ qemu-devel@nongnu.org, michael.roth@amd.com,
+ steven.sistare@oracle.com, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
+ raphael.s.norwitz@gmail.com
+Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
+ parameter
+Message-ID: <aPIDRft9RqtGvdVf@redhat.com>
+References: <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
+ <aPCtkB-GvFNuqlHn@redhat.com>
+ <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
+ <aPE8Oo5D3oesB7sV@x1.local> <aPE-vmyg1mLDO4pf@redhat.com>
+ <aPFHl3VWV0pCmzd1@x1.local> <aPFOHjl5BoWEMqSL@redhat.com>
+ <aPFVWi1pwxS8yGay@x1.local> <aPH557l6YnXT-3r8@redhat.com>
+ <7b6ad405-0dbe-41d7-8d29-e3e92d969647@yandex-team.ru>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|DB8PR10MB3498:EE_
-X-MS-Office365-Filtering-Correlation-Id: e1ce8213-e25d-400f-b2aa-08de0d5a2b37
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RkxBdmhFWEtRcEVONThtWldaUXpnYThoRXZVdmNZQzVaWXBxa0VEbGpJUzEy?=
- =?utf-8?B?Y01CSUUxRmk1TDgzejlBWWRhcTdVb0VJeE1uamdDU2VGTEQrSzAybzZtTnRj?=
- =?utf-8?B?bXZNekxSQUxLRVhZS0RvNlN1dzU2RFJ5V2J5WGZJSlR5VXN1T2lSWk1Sc2RN?=
- =?utf-8?B?dzRhcDZqS25GK2ZUUmw5RDcrUlV1blIrQi9ReDBxckFJL0tjOTZqTnFPS0N4?=
- =?utf-8?B?M0dhOXlYZVhQcHdVTzVRUUFwdmlyNXRGV296TnBrRTJSa3lDQ0RScmVKVGxD?=
- =?utf-8?B?eVdFRmJ3Z2Z2c2l3Rm5Bb0hmaXV3Y2h0c2JVcW03bnFFMitEeVJNRk9hQTBW?=
- =?utf-8?B?VU15OFAzM0hTUTRRcmdrSTcxK2x2aUZyd01YcVVlbUMyU2pJVXF6TXg2WTFI?=
- =?utf-8?B?QjlmeVJUbitualZPcnY5V3NDSkU3RitYeUtpWWlqZlhOeW56RDdmem9Pdnd3?=
- =?utf-8?B?NncrUk5OS2FVQkpmeFdYZ3BKODVHZzhOY1pNc1FrNlBIR3U2OE5JYUZvU2x5?=
- =?utf-8?B?MVo3WCtzZXdMdm1TczEySzV0QTNIamozb2JDNEdYNkt2TENrL2tTZjJjVGVp?=
- =?utf-8?B?WUJmNGhEZlpRTHArUjdFU3NKSjQ1ckVPUk1GUE80QkJwa3ZTRVArR3NqQktL?=
- =?utf-8?B?aDBNL3hBQis1bmorRjQ5aU1GWFJhZ3JScGpuTGVJbVduK0taMW94VlYzalh5?=
- =?utf-8?B?VnpxV2h0MDMxeXMxL0VDSU9HZFJxbDZkV1kwVWNnME9iaDc0eHp1ZnRRbHVE?=
- =?utf-8?B?N1RYSnY0OHc3RTgwMW9rVUVpSncrdWk3OEduaFRGNFpXaW1qOUkySnYrMGkr?=
- =?utf-8?B?QUFzT2hpVisxbGN6b2FMOWVhRFlyUHdLQ0RCSGs4K2ozVkRueDh5RUNSU3BM?=
- =?utf-8?B?S0pramkvUXJFUVcxM2pWZkpKaVRnMENjMU1pYVhNdTd4QWRJdWRFcGg3bEJt?=
- =?utf-8?B?NWF0elVPdFNIMEZGL3luZTRuUDkyY05jaGtFK2M3L2tqeE96YjhQVnc3bnpL?=
- =?utf-8?B?MXdQUmVLM3BCOWdxVWdEODhmOUVtRld1VCtwQXFlTHBiTVVsOXR2WEUxSzR1?=
- =?utf-8?B?ZU9RZ0VoN2dsSWV5Z0Q2Qi9LMlNiT2RqQU10VC9rVHprUjNEWEYvN1Z4Q3gy?=
- =?utf-8?B?VG8rRW41STZsbjJCU2VqeXNKYVJDNDJqaklWb0UvcmF1eFVnOEh6MnNidFJE?=
- =?utf-8?B?NlUrZzNuZHVpV3cxOC9WbDR1Z1R3N3k3anZaSUJFVmFQS2oybG5WMXY2cmdE?=
- =?utf-8?B?ai9laE4vNmkrbHhrSGUraVdtOXA4VzRQNTNsTEJjNWRXTkJLb3F0Ky9FTm9M?=
- =?utf-8?B?RThhclh6OWk3aVQrTHZMa3g5V2sxK3ZLTEdVdU1HK0psSGE5RUpFVjExdzlo?=
- =?utf-8?B?UzN2aHBrQ1ZSVDQxMm5abDU3bEdta3VGenV6dWJBRjAvYU9hZVlTR2ZHQkM4?=
- =?utf-8?B?VUVhaWlud0c0WGZxNmd3T2lQSjBnSlh4dk8zUzkycFNTY0o0TjBiaHc4Kzhq?=
- =?utf-8?B?ZUJUUVhlMGFOZUVXYXN4YjJ5TlJ5V2RpTjZxbEtzQlgwbjBjaCsrY0RvbTNV?=
- =?utf-8?B?ZWhXREJ0cWFNVG1SeVpnTCtsNXdUNzhhNlluZUw4Z2xuV1JrTzQrRW13WEw1?=
- =?utf-8?B?dGZwUVdIcG9rZ1NKd2xLbnZHaTY0My9XSDVJSndIdzdValEwc3JUN2o5d1c0?=
- =?utf-8?B?WjVDemp0U3NGbC84UHBLVkFHeVdmdmRCZ0hiTW9rNzZLUzIzZGZTd05XcWgv?=
- =?utf-8?B?ekZzelkvcWdVZVlncXFucW1LUWk1dkVCd3FhVnhOOGNhek9BWFdERE1iYzNM?=
- =?utf-8?B?R3l2cnp4VmpWbmJWNlhWMkdLSWhFcHNUNGJKNmhoTEgycmdrSG9tTlo0TGJm?=
- =?utf-8?B?eTlzR3F1RjN0NjJVL3dFRHJWL2RWSENrSWFPNUpCRlkvdEVCa0ljYlFINjBG?=
- =?utf-8?Q?sExUpR/4BN2ujU+fdgDRc+NOfmTOxzSx?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RDNTbTdZT0ZVcW5ERGI3dkNYay9EKzJkSTNqeVR6bnlyOVIrWDZqUGhWRzRp?=
- =?utf-8?B?L0ZId3hId25IVHFaeWZoTnZkUGpHT20rbmFXRVg5SHlJQ3hRdHJpOEQyc0t6?=
- =?utf-8?B?OUErbDZObVllZXZ5OG5YZW9YZG5RUVM1NGJaZmQ0TUZZUFdML0tKaGlMNUdu?=
- =?utf-8?B?dnFONVhDZDVtdDhaK0w3Ly8yaDBiSXF2OXY1YVBhdFRYS1lCazVEUlhxRWxl?=
- =?utf-8?B?bWRUalFuU0kvUnJTWnZlQi8yc1J2NzVEUFFOQkdPcldoblFWOFVlNW14ZkNi?=
- =?utf-8?B?ZWpnanY2Qkl6UmE5R2tDVUszM043UEpicGdzMUtPb25oeTMvTkltRjBVbjZj?=
- =?utf-8?B?UFkwU0NBdGptUU82bS9EcXVTS3g2YWhuTmcxeXhzU1R1YnlVOE80OERWU3Ft?=
- =?utf-8?B?TXFLOGs2WmdmcDNIb1VtQXN2ckRLcU1GYTNJdW5PUHFFUDBLUzhWaEdDeWJm?=
- =?utf-8?B?RCtnR2syTGErZUlDck1WdFFUSFV4UkhvSmR6REVpdmduSitkbGhQVmIvK1Fx?=
- =?utf-8?B?aCtlL2I0OEYvNXFPUHRTZzIwNXV6cEFmNUw0NlVyWUR2SUhOOGxEK3RtSTZQ?=
- =?utf-8?B?ZVhXa203UFBRMW1jakUyTlV6T0FRbnRSdzVGNUVYa2FBTGY5WlFOUWl4RXZL?=
- =?utf-8?B?TWNjT1YzY3hGYlZWYm9IdzZZWDI5djhtZE9LbUt2SHZFQ3RJS2hWSEhHUU1L?=
- =?utf-8?B?bU5YSDVZVHlialZhdW9aUEpsUDVRTGNCcHZtU3BtaUJ4MU9TZ0dHZDMwZkpB?=
- =?utf-8?B?alR6ejdUekVnM21KbXFaamZYRk1VWHFWMi9lMnpOQUdIV0ZRbVM3Mmh0ZWhr?=
- =?utf-8?B?U0piY01xTVg4RkxMRFJScjRUVGxrL25YaUVTLy9nT2k1OVo2UVFVMWUxMlpy?=
- =?utf-8?B?WGgxZ1ZBcEVsOForalB2QndqeXBUMDVRc0ZBelZnRitPNTZkbjJQejg5NTBv?=
- =?utf-8?B?YVk0TjlNcldrUFFDV1ZnMUtBUXFVbFoxNUcxY0VkMzBHTFAyekY4Z0x0bVB6?=
- =?utf-8?B?Q3A4V3FUVXpydE91UlVjRS9XelhiQzdYbG1VWTFtUUZiQk5DS3VHaXZKVXpj?=
- =?utf-8?B?M0xSS3gzbGJGZ3NrQ3JESVEwZW5kZjI5bFZybGNPZitTT0QxRDhKc0lHa0h0?=
- =?utf-8?B?Wmkzd3FTOXlaNFpBUzlOV3JBcHJ0Q0lOWEdxUmVNTE9ISHNCTG9sb3hCdjJP?=
- =?utf-8?B?S3UwdTVLVUJwKzEvbW94NFNrRmcva0FBdmNPT1p0UmZMT2tkbmJHTlphU1Nl?=
- =?utf-8?B?TDlSWGUzRC91Tys2Q09Mb2dpb3U5SVlEejByM0g5cFlsOWZISXFMLzM2bENm?=
- =?utf-8?B?ejhFYjZFbVhaNVRhUzJLMzlPenl0R3BzUlZXNmVob2d3TUU1T1FaT3U2V0RS?=
- =?utf-8?B?dEpPL0FMT0VmN1ZoWFB0MkRUNi83VlM1N2dzMEtaN1N3d1hWcUdkRWU5bkIv?=
- =?utf-8?B?RVNySjVrUmhnTXFkU3UrNlNDbkZiMFErSWFQSHNybXBWeWF5elpPOWFpNDJL?=
- =?utf-8?B?bkpXNU5JVEN0WkY0cWpRZ0hPdjhnRFlkUmpYZ3RrK2RHNkJMNVdjRDZxT2FB?=
- =?utf-8?B?ZE91bFhBeE8yQ3ZzYVN1Rlord2VWdktGaHpSbWkvMjNMMUtQL09mK3lCUWJK?=
- =?utf-8?B?djBOaWw2cGx4WUtyUks4WFZJVTZpeWlqRUxWOXlnRG4xdEJLbUtBUmpsdm0r?=
- =?utf-8?B?SE5kcG1rbExjN2x4OTZmM21FOW9scFhvaUNOSmprZ1cwZjVCUFhLcEdaMnNN?=
- =?utf-8?B?YzdpVFpLM3FxWGJPMXBkeURmdVR6MHJ0RGMwVFJQa294cFRRZEwvd0U0M0Z2?=
- =?utf-8?B?bmcrQk9HTVl0UnE5MFY1Ujg4bkZKSE9NdG9aS2RJTTNTek5vazkvbUpqdVJG?=
- =?utf-8?B?V096bFZhWURkV0k1bVhPdGM1NnZwb3U1NkFEdEdoN0wvNFhubGlsR1A2d0VV?=
- =?utf-8?B?Rk4zUHZ1SzlHVEZ2Kzd6RTFxMXA4M2JrQXJYNzdrVG9HbkRlM2kwUlN1M0pt?=
- =?utf-8?B?NHY4UVdrazh4b1crdytVZUJGY29OZzcwbjJmS3NWNTF5Z0hTNkRtUS9YbVBC?=
- =?utf-8?B?bCtJRWJFanhtVy9acmthSDZvbHdONXpPVDJnWjFKS0dWQjNEeHpDdDJMdlF5?=
- =?utf-8?Q?MhheNAY8Znc3vbOsqE5sKlqMn?=
-X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e1ce8213-e25d-400f-b2aa-08de0d5a2b37
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2025 08:50:05.9205 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GzUx6b7Hq1a3yT6CvY5f6qZV20xjTvB8D4akqMprd0BRCVNXooojGr7wX4f585LfeS5sU7v0f8Spuzv0g+g7GQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR10MB3498
-Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
- envelope-from=jan.kiszka@siemens.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.271,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7b6ad405-0dbe-41d7-8d29-e3e92d969647@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -235,44 +97,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.10.25 07:31, Cédric Le Goater wrote:
-> Hello Jan,
+On Fri, Oct 17, 2025 at 11:26:59AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 17.10.25 11:10, Daniel P. Berrangé wrote:
+> > > Meanwhile, the admin will need to manage the list of devices even if the
+> > > admin doesn't really needed to, IMHO.
+> > We shouldn't need to list devices in every scenario.
 > 
->>>> Just to avoid we are in deadlock: My understanding of this issue is
->>>> that
->>>> it is not a fault of this series. Am I right? Or am I supposed to
->>>> address that as well?
->>>
->>> Could you add to your series :
->>>
->>>     https://lore.kernel.org/qemu-devel/20250930142448.1030476-1-
->>> clg@redhat.com/
->>>
->>> and retry the aspeed machines ?
->>
->> Yes, that patch resolves the issue above.
+> Do you mean, we may make union,
 > 
-> A similar version is now merged.
+>    backend-transfer = true | false | [list of IDs]
 > 
->>> I am afraid more should be done to run 'make check' with your series.
->>> Maybe set 'mc->auto_create_sdcard' to false for all machines ?
->>
->> Who should do that?
-> 
-> /me looks at sd maintainers. Thanks,
-> 
-> C.
-> 
+> Where true means, enable backend-transfer for all supporting devices?
+> So that normally, we'll not list all devices, but just set it to true?
 
-FWIW, v5 of this series is coming: I found an issue of this patch /wrt
-unplugged SD cards. make check now passes.
+Well I was thinking separate parameters
 
-Jan
+   backend-transfer: bool
+   backend-transfer-devices: [str]   (optional list of IDs)
 
+but it amounts to the same thing
+
+> But this way, migration will fail, if target version doesn't support
+> backend-transfer for some of used devices, or support for some
+> another, where source lack the support. So that's a way to create a
+> situation, where two QEMUs, with same device options, same machine
+> types, same configurations and same migration parameters / capabilities
+> define incompatible migration states..
+
+It is worse - the backend on both sides may support transfer,
+but may none the less be incompatible due to changed configuration,
+so this needs mgmt app input too.
+
+The challenge we have is that whether or not a backend supports
+transfer requires fairly detailed know of QEMU and the specific
+configuration of the backend. It is pretty undesirable for mgmt
+apps to have to that knowledge, as the matrix of possibilities
+is quite large and liable to change over time.
+
+If we consider 'backend transfer' to be a performance optimization,
+then really we want QEMU to "do the right thing" as much as is
+possible.
+
+Source and dst QEMUs don't have a bi-directional channel though,
+so they can't negotiate the common subset of backends they both
+support - it'll need help from the mgmt app.
+
+One possibility is a new QMP command "query-migratable-backends"
+which lists all device IDs, whose current backend configuration
+is reporting the ability to transfer state. The mgmt app could
+run that on both sides of the migration, take the intersection
+of the two lists, and then further subtract any devices where
+it has delibrately changed the backend configuration on the dst.
+
+If we had that, then we could always pass the ID list to the
+migrate command, while also avoiding hardcoding knowledge of
+QEMU backend impl details - it would largely "just work".
+
+> > We need to focus on
+> > the internal API design. We need to have suitable APIs exposed by backends
+> > to allow us to query migratability and process vmstate a mere property
+> > 'backend-transfer' is insufficient, whether set by QEMU code, or set by
+> > the mgmt app.
+> > 
+> > If we have proper APIs each device should be able to query whether its
+> > backend can be transferred, and so "do the right thing" if backend
+> > transfer is requested by migration. The ability to list devices in the
+> > migrate command is only needed to be able to exclude some backends if
+> > the purpose of migration is to change a backend
+
+With regards,
+Daniel
 -- 
-Siemens AG, Foundational Technologies
-Linux Expert Center
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
