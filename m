@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DFDCCD184
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 23:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEE9CCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 23:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9uHU-00038M-3u; Fri, 17 Oct 2025 19:54:44 -0400
+	id 1v9uIk-0003du-1A; Fri, 17 Oct 2025 19:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9uHR-00037z-DT
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 19:54:41 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1v9uIi-0003dc-Ei
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 19:56:00 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9uHP-0008N0-8n
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 19:54:40 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-27eceb38eb1so26786395ad.3
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 16:54:38 -0700 (PDT)
+ id 1v9uIg-0000Fx-IY
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 19:56:00 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7811fa91774so2261882b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 16:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760745277; x=1761350077; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760745356; x=1761350156; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0MGIdZUf5+ujmBGIBnSyr+PbnxVz6EArYYt9DQ9pu5Y=;
- b=bEjrNz49cLa0G3mmkox1rfDt6FsaxTBRu0MIWcyNv2DLmNvgvdQUr3B+2uR8gUnNyM
- vTme5ZvUM2YnXcHkDz5Xl8zoPHV9lsZ8Soky+QL5/qalD3vvLS0UTfnHTtFw3GbEBN4p
- vVdFMoc5Cln1xt7VnH0D8AtgpvnArnlDXJ3j4c5vn4Ka7LXlECr89zChCfNYESCBNB5H
- ZL4+PnSllgtV8Hqqr7Ra9jdIB/cxh5CUyt3aWYUcLvsfRf9p0SRAsSI/lT5k6dwYGst3
- JL9lW04IRGbVH1B60omz7lugggGJubJ2AAfYVxYDC8gNAr4VxfGRyRDM+Ht+1Fv+OUwj
- 5wig==
+ bh=HJ112Z/iurXexrQzBPlsWARs2RDVzkngIeWSCqLcO2o=;
+ b=dmgKUYzmbl0HQvY0MTuLK8u88+fXTiVc9tKc5gQeqBwQ142eM1fx8ULTwgPd7Mfr51
+ CY4YIrhvXOzSw1si3afTjefpvJ804/HSJ695i/yZD1INjn8Ivm2EYXyw95YnwsyPN20s
+ 3B5VotyGs7KHmzFHin7/ao5+Rl0T3od2bc3MXXBuBY2zSdeL6fzOyTk4XJwabXHmWVM5
+ dOumf0fYTnnLi2CIJxseXmrEESCzwYHPO1fYAjvGoVnUhiRS3y2bzII5oqc4fKq4Cedc
+ 6Kg41DFswQbeAfUWREjO2JplMYpyyX3uwhFUW8mJUzHYD2oJNDFItRgoGgJc1xmJ5vQa
+ QuiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760745277; x=1761350077;
+ d=1e100.net; s=20230601; t=1760745356; x=1761350156;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0MGIdZUf5+ujmBGIBnSyr+PbnxVz6EArYYt9DQ9pu5Y=;
- b=g6hgDdbam3kZJgtfwHOM7+iDJWXES2LefXrW4E+zhUm97oLMVQJsJLGRCkFXeFrxlb
- gls14x4iG+pvlDP897QlytrQg51rBxGToeJ0HD6f9OwS7w19R+ND+zhSGXI9IzNl7bT8
- PC/Fr24cJHVZo7X3g73R2ZzBioXWOka2wzzjZSv+JNJ+PxmEAVZiubLQ41SBZmaibR/B
- +4R5MO9rDUcg8bhjjGP4gHowMMVtVK1g47rNMJ2JMGzYK9KXdYx5C/wNhK1CBMeUBEuR
- ibEB5tB+4phc3ZfzTySSN1IGdzN0HuGM4sLHovGAfd9k56xESYyiYUb6gAE7lFCTB7gO
- MPOw==
-X-Gm-Message-State: AOJu0Yy16/hPdBVD3WgnFT6ZK9xGnjk/f+j4hOhkpMsK2ATAPh8Kk0Bt
- ioGHuJBJcbJq/KWQd3Ma6bByAj3fZagbYlk6QUusFad8k6VDcCAP7/xN/0FksxXOGRA0gDLr5Vi
- gh6v9mfw=
-X-Gm-Gg: ASbGncuT1aCAazCrcZNqfaTCrYYeZAXare1+z7YnCODlE49OX1Nr0gqea5Gy69YQacZ
- I7L3wAQ8QbbD8Uq0Rr3cNFzPa+bO6jEMf83X016CBIWLmEPgOiy03wqzjbIzEH8j3Ie6LbjEHM3
- h/j3p8vnCx9KYm4r2a+4PPH194YkooVsXB8XpEmCQ8DMeiBjCpWGl95JL3Ya30ukIW0YboHotlq
- 5EB/C2p39Vcd5fiIayhXHFEx1klhmGXXpE6HtHTaIMKCGRHJ2Z/V78jIYeO3GNVGD+lVv3qAnBb
- NMpQf3JXwkajtsw1tuXQlARGj6DCeXQQjjHllwRkH3G9UH9fUEhpvYfHmMblBW9z/s1MSzIMI5b
- 39KokVIdpR2T+NV+gMMT0sOQM1SSCwe4xV6lvt+bVjGrvCWaLPYZy98f3CEjVt/vGqA6DTfqe9i
- Zq3AXFdm3bs+plDfI72mSGC46b
-X-Google-Smtp-Source: AGHT+IEmdkQZ/PU5zq8hNPjqyRzuO4d4gMB+PZmpKHTCQ2aa51uBwmgAoj/GH0h2kd38bOrX4GQHnA==
-X-Received: by 2002:a17:903:244f:b0:261:e1c0:1c44 with SMTP id
- d9443c01a7336-290cc2f83a5mr68831495ad.40.1760745277201; 
- Fri, 17 Oct 2025 16:54:37 -0700 (PDT)
+ bh=HJ112Z/iurXexrQzBPlsWARs2RDVzkngIeWSCqLcO2o=;
+ b=dMM5yVaSi4oMLw7zQacnGqNS9Oiae2MD/aZJqyMGe02iQjM6c/Lmu5nvF8+/Pmn+Jr
+ DVmgtSmXW0Otb9W7QTgOCLmwAzycSRoa5MWHB1lx/lMlgIzWpJp1GQIocZkwss8hadyi
+ uz5FI2NEfomLNFvHVMy5IOF7VGsVMwS1nkv8x0ecT/geH+HMN7CjBU0/wCRhkk8gRVvR
+ k8mFKWP91/GoCRUhmOvCmmCy8QQ3ssm+wro4zzALr99pGH71nN0Dzi4OPLNGLidEi846
+ oYgTzkPt++cMUeptnsdtEOBohGXR9pmHLscn34gr5zumHDDmHtA5b/yHNumiQDhcBRku
+ JbyQ==
+X-Gm-Message-State: AOJu0Ywy42K0S6/sk3HY/xfqiz95//vIaew7ytcNOBnXRsnyhhlfVPvU
+ fnL8/8PIcW19xUPS11Vx5UFdmt5NJynDEavXgThgsLmROAO1Wnb6gUjimHabihqe6tEAKso4RB6
+ G6HvizDE=
+X-Gm-Gg: ASbGncvarU51Mb5Eo1ExNFO7EtjrOQ4sBcWwkX77XaCGUdCThwNDnsy5kGI8sOaU+eK
+ DsDUMwtSFRkD0oQmKG9ZblW+EybBnPbEBMGWEWdLETK07sxwLuzy9IEImgSQnwI0an9TMHbPz3j
+ GjrCLSzU4a7FP+4x8HHm8pcOZk6KZ99wJgYE/8BBRVzatPKLHfyiuRDDIy56nsnJ/NtvT+ki8MG
+ +bH0vSip83HtFpsXpHICGzqL2jMaaHMRl7SqSVfzHZ/AWQkZmdnFm6cXgyRuxfDqG+wL8z1QuZh
+ 2IYHIZMDQTIQpbdbWheSTYAzFiOmmDjrV2WDH0RE/ioKj/A5MHs4j9AUEFYEeu5v+ZOOWlvWwwR
+ nFbEuYX5eV9246odGBU+ZxzG5Cq+vt52tvfXjqHRNgiAqwDiKRRZ4KtBOTVm+6wMFTQVqGwsDEh
+ sHKaIF6oi78xDpO3c5St30GPXX
+X-Google-Smtp-Source: AGHT+IEAdf6ewHijFUa7qXNcAHuVfeRvvS4mCELbFzmpktT5sTbrFMPoDYv/glc9IgGagArg/PWCig==
+X-Received: by 2002:a05:6a00:188b:b0:781:2757:1b4f with SMTP id
+ d2e1a72fcca58-7a2206eb750mr5785949b3a.7.1760745356158; 
+ Fri, 17 Oct 2025 16:55:56 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-292471fe2dasm7138405ad.94.2025.10.17.16.54.36
+ d2e1a72fcca58-7a22ff5d76bsm818020b3a.33.2025.10.17.16.55.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 16:54:36 -0700 (PDT)
-Message-ID: <ca7ec472-ac1b-47a0-9e66-de25b9e005a3@linaro.org>
-Date: Fri, 17 Oct 2025 16:54:35 -0700
+ Fri, 17 Oct 2025 16:55:55 -0700 (PDT)
+Message-ID: <240a1736-2850-454d-8b7b-4574f5a9576b@linaro.org>
+Date: Fri, 17 Oct 2025 16:55:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] include/gdbstub/syscalls: Add GDB_{EIO, ENOSYS}
- errno values
+Subject: Re: [PATCH v2 2/3] gdbstub: Export host_to_gdb_errno File-I/O helper
+ function
 To: qemu-devel@nongnu.org
 References: <20251017211149.163762-1-yodel.eldar@yodel.dev>
- <20251017211149.163762-2-yodel.eldar@yodel.dev>
+ <20251017211149.163762-3-yodel.eldar@yodel.dev>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251017211149.163762-2-yodel.eldar@yodel.dev>
+In-Reply-To: <20251017211149.163762-3-yodel.eldar@yodel.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +106,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/17/25 14:11, Yodel Eldar via wrote:
-> This patch adds the EIO and ENOSYS errno values as supported by GDB's
-> File-I/O.
+> Move host_to_gdb_errno from target/m68k/m68k-semi.c to
+> gdbstub/syscalls.c. Declare it in include/gdbstub/syscalls.h.
 > 
-> Until recently, they were not documented in the relevant section of the
-> GDB manual:
-> 
-> https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
+> Add both newly added GDB File-I/O supported errno values, EIO and
+> ENOSYS, to the mapping.
 > 
 > Signed-off-by: Yodel Eldar<yodel.eldar@yodel.dev>
 > ---
->   include/gdbstub/syscalls.h | 2 ++
->   1 file changed, 2 insertions(+)
+>   gdbstub/syscalls.c         | 36 ++++++++++++++++++++++++++++++++++++
+>   include/gdbstub/syscalls.h |  9 +++++++++
+>   target/m68k/m68k-semi.c    | 29 -----------------------------
+>   3 files changed, 45 insertions(+), 29 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
