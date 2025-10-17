@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50926CCD199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635D8CCD1A4
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 20:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9qjM-00062k-LG; Fri, 17 Oct 2025 16:07:16 -0400
+	id 1v9qjL-000629-G3; Fri, 17 Oct 2025 16:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1v9qjK-00061Y-Kn
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 16:07:14 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1v9qjI-00060j-Vh
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 16:07:13 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1v9qjI-0005PJ-WA
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 16:07:14 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1v9qjH-0005Or-9t
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 16:07:12 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id DEE1045771;
- Fri, 17 Oct 2025 20:07:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24CAC4CEFB;
+ by tor.source.kernel.org (Postfix) with ESMTP id 8606E64620;
  Fri, 17 Oct 2025 20:07:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25047C113D0;
+ Fri, 17 Oct 2025 20:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1760731631;
- bh=B28j9BYJwOe4ZXZ94ncH1Ydbl7b8nu2FwTXAAheA/ow=;
+ s=k20201202; t=1760731630;
+ bh=erZN/NshTxwhl6AGnckApOHX/nZ+XlceH2xHC57E+fI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=BPAeM6RdTH+j0I9u9BJHuZYPnHecUeO3WxV13T8mghpy48aVUVIZW700k5Ur/n1nB
- ApuAVq6ArXUC6KGVIYtSeZVX53Kf1UMHzSXFO/I5ucYX8WM/3QrB6ifWfZ351pfnAl
- WBt+AdUMT0pURIaJAZ0WXc/EPIE3cFQio2W7Dvtqk9hCt4qkWZkWPqvDdmlmpX+yFo
- WdietBDADCbTeNmMpIBtbfldKSNX733ZUVEXIGS91V3ustzDKW9tYZvC1euEI6HuY8
- VOtF3YwLjpQK3JUoEb/EQASJB+JGITpQU83/NcGBce/mSL61xQeculqZTjKAYiV7k+
- uQRv+7yaPL6cg==
+ b=ntx/6uw6egcI6vJDYS2NPhWrJnh2lxjbGOiQnLSGY+G/9Wmfz+iuca1m2Do/3gsib
+ z8Y8f5NuiXJhRv904NDa7Zb1za2d6bMw4XKV9hQRormvdPMwL4tuPt87iykURkN30Y
+ TDnfMgeBLv3FtYT3aCVm+HEgD7Z8coVi7v9qOClqeqwMfC8JaQX14fkzr4j1UlfmsD
+ YAmLrejkAwp1DxhKSyjfn3iBRdOyEInRJo1TGPX5n+v1KWE3B9cSJj+WwezY0NbgNp
+ A7aYwes5R+aWPWrQ2vE5uqiwYC2rZ73ysqX7BC3TauahMwmyoYfRF/9K2H5aA8MeD3
+ 9aWtY8mXnyKOQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
 Cc: Helge Deller <deller@gmx.de>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 09/10] hw/hppa: Require SeaBIOS version 19 for 715 machine
-Date: Fri, 17 Oct 2025 22:06:52 +0200
-Message-ID: <20251017200653.23337-10-deller@kernel.org>
+Subject: [PATCH 08/10] hw/hppa: PCI devices depend on availability of PCI bus
+Date: Fri, 17 Oct 2025 22:06:51 +0200
+Message-ID: <20251017200653.23337-9-deller@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017200653.23337-1-deller@kernel.org>
 References: <20251017200653.23337-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,28 +72,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Require at least SeaBIOS version 19 before adding the 715 machine.  This is
-required, because the machine inventory of the 715 is provided by the SeaBIOS
-firmware.
+Only create the PCI serial ports (DIVA) and PCI network cards when there is
+actually a PCI bus. The shortly added 715 machine will not have a PCI bus, so
+avoid creating further PCI devices.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/machine.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index b6cdbc74ba..7981a8bb11 100644
+index bec5a86f24..b6cdbc74ba 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -43,7 +43,7 @@ struct HppaMachineState {
-     MachineState parent_obj;
- };
+@@ -387,11 +387,13 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                         enable_lasi_lan());
+     }
  
--#define MIN_SEABIOS_HPPA_VERSION 12 /* require at least this fw version */
-+#define MIN_SEABIOS_HPPA_VERSION 19 /* require at least this fw version */
+-    pci_init_nic_devices(pci_bus, mc->default_nic);
++    if (pci_bus) {
++        pci_init_nic_devices(pci_bus, mc->default_nic);
++    }
  
- #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
- static hwaddr soft_power_reg;
+     /* BMC board: HP Diva GSP */
+-    dev = qdev_new("diva-gsp");
+-    if (!object_property_get_bool(OBJECT(dev), "disable", NULL)) {
++    dev = pci_bus ? qdev_new("diva-gsp") : NULL;
++    if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
+         pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
+         if (!lasi_dev) {
+             /* bind default keyboard/serial to Diva card */
 -- 
 2.51.0
 
