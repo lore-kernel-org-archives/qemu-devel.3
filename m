@@ -4,56 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC269CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14605CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 14:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9lLp-0005J0-3Z; Fri, 17 Oct 2025 10:22:38 -0400
+	id 1v9lR5-0006YC-75; Fri, 17 Oct 2025 10:28:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v9lLj-0005Io-GX
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:22:31 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v9lR4-0006Xu-B8
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:28:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v9lLc-00073y-Pp
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:22:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=AKpu5caaX7UXpOhsfom0VEyBRODWBtVyxe1TkB/PxVQ=; b=FfxPFguLaaZhXW/
- aOM7Ntj9y5WCr+b+KZ8T9MTwm0fagWbj5TbLGQ+W7NUfJ48eJcwQ58jYrpug017+8Lm78/57qYUy8
- gPyjszeLvt3m0KBTiajGK8FYsELAJ7sE191cHVPygD3qcxebZb121RSurhnz6M7iIkG/yf+GRGxFO
- IM=;
-Date: Fri, 17 Oct 2025 16:24:50 +0200
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: Re: [PATCH v2 04/33] target/riscv: Bugfix
- riscv_pmu_ctr_get_fixed_counters_val()
-Message-ID: <dj72zr4f7ais3vdgvthvpdfpbnjblbbqdfjg7yhqzthpo67x4p@5wdd4ii7yhda>
-References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-5-anjo@rev.ng>
- <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
- <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
- <CAKmqyKMyBMY88+6i5BdrXJtU8S9H_DcUG8O7yu5s9cE2Mv_s5g@mail.gmail.com>
- <7fngsrmp3rdo3hzra4rso5kwi4zejvdyl6xzc7swmmqji7wr44@vyallk4lkhe6>
- <CAKmqyKPHVAKqOPQgD5J95TcnG=Gro5JBWTURmaqGr=ksVy5Q9g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1v9lR1-0007hv-84
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 10:28:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760711273;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CrSl8hLKSJGOG68Ko42eLHWtHGcpztcPu+p1QpZ1ErY=;
+ b=c/z19kJi4SG6oFFGA81K/CRgmJrg3pS0lnukgHqFKVqhttoOlx/jMJXhRfW+Iy5G3VIgrm
+ Lm9L6rWiM+8yBh4y6Tsi89Kpzaa6oB3aww7z2IHoJJqerhx1J0W3RG1NKlS/yEWfEBRZIh
+ C4J+f4nDZyaUSnXDEelfnzirf0q0mL0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-494-WorNP_dqOh-Jex8pm32VVg-1; Fri, 17 Oct 2025 10:27:52 -0400
+X-MC-Unique: WorNP_dqOh-Jex8pm32VVg-1
+X-Mimecast-MFC-AGG-ID: WorNP_dqOh-Jex8pm32VVg_1760711271
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47111dc7bdbso18002475e9.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 07:27:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760711271; x=1761316071;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CrSl8hLKSJGOG68Ko42eLHWtHGcpztcPu+p1QpZ1ErY=;
+ b=iVrK7sltTVZiIfQE4vFZssoVWZ+iBpnV/mBkbAN5c05e9/ysaZNowA/7Ko2E9WNdE/
+ 8URzN4He5/ztwXmVqEMwOcNw2wIUwbaTFinisQK75amBMGv61UhHsIm2LGYZGDEw4/RQ
+ 46hhl7N7OcLXQ4en17odLq/gAacqHYMdN/RU+oCqCxHqlATHq/6P+XD2gRB3urq6AlUS
+ q7Od34QtcXNSrqDZZs7OfnNC+LQv9ZyIrcRV0a8toFNhNH1qq2jqEURBpqWvnbDBqAYq
+ 9nadWOzMyPR0WRo7V2AXsNMMB6OEovC+LWo3MXoARI9etrg60Ers9neKmFa5m8TQzKDb
+ 4r1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0QMGSaa1hoqxqE4mf3slBAMPtS4zCsMGCmXE01v8AboYgGDQMjeVxNr6AQ1jSl554IH30gUcn8Zly@nongnu.org
+X-Gm-Message-State: AOJu0Yxl785zvX1EvCClGOmiL0iQcKbqgzlzmc2ChwdJVMbVDFOcTKW/
+ 7PdKk1x0qkXrcq/EDyA1ighj+jeWPSTC+cIlm1Rq6D+uR/+qEx51DAyBv9JYhEq5FM5vfTY3/IP
+ GI+8WjIIQQF6OMXUhoumGCQZv3AD1gy+OIoyOGxy4Tmi+/eOMwvf70zZI
+X-Gm-Gg: ASbGnctNT5iEEatMzn4cb+R7MYBK7yVenxKWV2FdGepPx7bnoy4vPfOyaqQRme1wYaW
+ YM/pjDVZftzZHwdbviuiu5z4kLEZeFM59G/qBfDVtmvPai5lbfDH6F0vKqC1GB8wxSWI0pvegOs
+ KGVarCw5pIkCVxw639qtZ94/Vqs0n8UwTMCwYwHcQx6z1ft2oWYIQ/m7GVacs4qkLr3v/hS9KDO
+ JXcvwvSUumUneZ6wTqfJ52SZibaLYORZVS9pgzbPuk0DKwD30en6gXQIwMDu132YqRm/XmVn95m
+ gO33shkKY9pcx3d9Izd5SFM+72BA2r1OcYXDQq6sj1QqAeH+a+hlA7+Ivnb1VLQD3Q==
+X-Received: by 2002:a05:600c:3149:b0:46f:aac5:daf with SMTP id
+ 5b1f17b1804b1-4711792a51bmr27864155e9.35.1760711271066; 
+ Fri, 17 Oct 2025 07:27:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGwxVVNwsFMcWZO8p1xAkGtRVwJetDwQ/aJgYFkjFuZehLt2Orir2SzfvRVDUMVmkG0vm+Yw==
+X-Received: by 2002:a05:600c:3149:b0:46f:aac5:daf with SMTP id
+ 5b1f17b1804b1-4711792a51bmr27863865e9.35.1760711270574; 
+ Fri, 17 Oct 2025 07:27:50 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-471144b5c34sm93546185e9.10.2025.10.17.07.27.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 07:27:49 -0700 (PDT)
+Date: Fri, 17 Oct 2025 16:27:46 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, mchehab+huawei@kernel.org,
+ Jonathan.Cameron@huawei.com, shan.gavin@gmail.com
+Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
+ CPERs injection
+Message-ID: <20251017162746.2a99015b@fedora>
+In-Reply-To: <20251007060810.258536-4-gshan@redhat.com>
+References: <20251007060810.258536-1-gshan@redhat.com>
+ <20251007060810.258536-4-gshan@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPHVAKqOPQgD5J95TcnG=Gro5JBWTURmaqGr=ksVy5Q9g@mail.gmail.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -68,85 +111,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/10/25, Alistair Francis wrote:
-> On Wed, Oct 15, 2025 at 7:55 PM Anton Johansson <anjo@rev.ng> wrote:
-> >
-> > On 15/10/25, Alistair Francis wrote:
-> > > On Tue, Oct 7, 2025 at 9:06 PM Anton Johansson <anjo@rev.ng> wrote:
-> > > >
-> > > > On 03/10/25, Alistair Francis wrote:
-> > > > > On Wed, Oct 1, 2025 at 5:43 PM Anton Johansson via
-> > > > > <qemu-devel@nongnu.org> wrote:
-> > > > > >
-> > > > > > From my understanding the upper_half argument only indicates whether the
-> > > > > > upper or lower 32 bits should be returned, and upper_half will only ever
-> > > > > > be set when MXLEN == 32.  However, the function also uses upper_half to
-> > > > > > determine whether the inhibit flags are located in mcyclecfgh or
-> > > > > > mcyclecfg, but this misses the case where MXLEN == 32, upper_half == false
-> > > > > > for TARGET_RISCV32 where we would also need to read the upper half field.
-> > > > >
-> > > > > If MXLEN == 32, upper_half == false then we want to read mcyclecfg,
-> > > > > which the code today seems to be doing correctly.
-> > > >
-> > > > Hi again, I might be missing something then, when would this function need
-> > > > to access mcyclecfg for MXLEN == 32?  AFAIU mcyclecfg and mcyclecfgh are
-> > > > modeled separately for MXLEN == 32, even when sizeof(target_ulong) == 8.
-> > > > Since this function only checks inhibit flags wouldn't we always want to
-> > > > access mcyclecfgh for MXLEN == 32?
-> > >
-> > > When MXLEN == 32 mcyclecfg is the bottom 32-bits of the mcyclecfg CSR
-> > > and mcyclecfgh is the top 32-bits of the CSR. The idea is that
-> > > target_ulong will be 32-bits (sizeof(target_ulong) == 4). It doesn't
-> > > really matter if target_ulong is 64-bits though, as the registers
-> > > should just be treated as 32-bit registers anyway.
-> >
-> > Appreciate the explanation, this makes sense to me.  But the function
-> > only uses cfg_val to check inhibit flags in the top 32 bits, so accessing the
-> > lower 32 bits when upper_half == false and MXLEN == 32 would be incorrect
-> > then?
+On Tue,  7 Oct 2025 16:08:10 +1000
+Gavin Shan <gshan@redhat.com> wrote:
+
+> In the combination of 64KB host and 4KB guest, a problematic host page
+> affects 16x guest pages. In this specific case, it's reasonable to
+> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
+> dump due to the current error can't be delivered as the previous error
+> isn't acknoledges. It's caused by the nature the host page can be
+> accessed in parallel due to the mismatched host and guest page sizes.
+
+can you explain a bit more what goes wrong?
+
+I'm especially interested in parallel access you've mentioned
+and why batch adding error records is needed
+as opposed to adding records every time invalid access happens?
+
+PS:
+Assume I don't remember details on how HEST works,
+Answering it in this format also should improve commit message
+making it more digestible for uninitiated.
+
+> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
+> for this specific case. The maximal error block size is bumped to 4KB,
+> providing enough storage space for those 16x memory CPERs.
 > 
-> Well a guest can still access the lower 32-bits and although there is
-> nothing there now there might be in the future.
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> ---
+>  hw/acpi/ghes.c   |  2 +-
+>  target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 46 insertions(+), 2 deletions(-)
 > 
-> >
-> > Your comment below is what's tripping me up, since the behaviour of
-> > accesing the lower 32 bits for MXLEN == 32 is not retained when
-> > mcyclecfgh and mcyclecfg are merged to a single 64 bit field
-> 
-> I don't follow what you mean here
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 045b77715f..5c87b3a027 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -33,7 +33,7 @@
+>  #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
+>  
+>  /* The max size in bytes for one error block */
+> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
+>  
+>  /* Generic Hardware Error Source version 2 */
+>  #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index c5d5b3b16e..3ecb85e4b7 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -11,6 +11,7 @@
+>   */
+>  
+>  #include "qemu/osdep.h"
+> +#include "qemu/units.h"
+>  #include <sys/ioctl.h>
+>  
+>  #include <linux/kvm.h>
+> @@ -2433,10 +2434,53 @@ static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
+>                                      uint64_t paddr)
+>  {
+>      GArray *addresses = g_array_new(false, false, sizeof(paddr));
+> +    uint64_t val, start, end, guest_pgsz, host_pgsz;
+>      int ret;
+>  
+>      kvm_cpu_synchronize_state(c);
+> -    g_array_append_vals(addresses, &paddr, 1);
+> +
+> +    /*
+> +     * Sort out the guest page size from TCR_EL1, which can be modified
+> +     * by the guest from time to time. So we have to sort it out dynamically.
+> +     */
+> +    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
+> +    if (ret) {
+> +        goto error;
+> +    }
+> +
+> +    switch (extract64(val, 14, 2)) {
+> +    case 0:
+> +        guest_pgsz = 4 * KiB;
+> +        break;
+> +    case 1:
+> +        guest_pgsz = 64 * KiB;
+> +        break;
+> +    case 2:
+> +        guest_pgsz = 16 * KiB;
+> +        break;
+> +    default:
+> +        error_report("unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
+> +        goto error;
+> +    }
+> +
+> +    host_pgsz = qemu_real_host_page_size();
+> +    start = paddr & ~(host_pgsz - 1);
+> +    end = start + host_pgsz;
+> +    while (start < end) {
+> +        /*
+> +         * The precise physical address is provided for the affected
+> +         * guest page that contains @paddr. Otherwise, the starting
+> +         * address of the guest page is provided.
+> +         */
+> +        if (paddr >= start && paddr < (start + guest_pgsz)) {
+> +            g_array_append_vals(addresses, &paddr, 1);
+> +        } else {
+> +            g_array_append_vals(addresses, &start, 1);
+> +        }
+> +
+> +        start += guest_pgsz;
+> +    }
+> +
+>      ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
+>      if (ret) {
+>          goto error;
 
-On upstream when riscv_pmu_ctr_get_fixed_counters_val() is called with
-MXLEN == 32 and upper_half == false, we read the inhibit flags from the
-lower 32 bits (mcyclecfg) and check against bit 62 (MINH) etc. thus
-always returning false
-
-  if (counter_idx == 0) {
-      cfg_val = upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
-                             env->mcyclecfg;
-  }
-  [...]
-  if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
-      curr_val += counter_arr[PRV_M];
-  }
-
-if this behaviour is intended, we do not retain it with this patch as
-we always access the higher cfg bits to check for MINH.  Similarly when
-merging mcyclecfgh and mcyclecfg
-
-  if (counter_idx == 0) {
-      cfg_val = env->mcyclecfg;
-  }
-  [...]
-  if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
-      curr_val += counter_arr[PRV_M];
-  }
-
-we only check for MINH in the higher bits.
-
-//Anton
 
