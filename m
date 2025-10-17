@@ -4,54 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24A2DCCD184
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89564CCD19E
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9d3o-0004jG-6o; Fri, 17 Oct 2025 01:31:29 -0400
+	id 1v9d2D-0002B0-7h; Fri, 17 Oct 2025 01:29:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d3h-0004gq-CI
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:31:22 -0400
-Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v9d27-0001yP-BF; Fri, 17 Oct 2025 01:29:44 -0400
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d3X-0002Cp-G3
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:31:18 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.125])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cnthn4vCVz5vpM;
- Fri, 17 Oct 2025 05:31:05 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v9d23-0001sh-8D; Fri, 17 Oct 2025 01:29:42 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.231.33])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cntfz0Rflz5wth;
+ Fri, 17 Oct 2025 05:29:31 +0000 (UTC)
+Received: from kaod.org (37.59.142.109) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Fri, 17 Oct
- 2025 07:31:04 +0200
+ 2025 07:29:30 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-108S00236974cb1-5d1d-46e3-9c4d-e437d9eac13d,
+ (GARM-109S0036381d1a2-382e-4a71-b088-06a897ee836c,
  48F321F6F3AAA1B288770452BCFEC79A981EE5C7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <aaa7ee12-d74a-48b2-8175-097837f1d611@kaod.org>
-Date: Fri, 17 Oct 2025 07:31:03 +0200
+Message-ID: <58061749-30cc-4630-a859-686d037828de@kaod.org>
+Date: Fri, 17 Oct 2025 07:29:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-CC: Bin Meng <bmeng.cn@gmail.com>, <qemu-block@nongnu.org>, Ilias Apalodimas
- <ilias.apalodimas@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
- Alexander Bulekov <alxndr@bu.edu>, 'Jamin Lin' <jamin_lin@aspeedtech.com>
-References: <cover.1757854006.git.jan.kiszka@siemens.com>
- <48930c1092424d22dc2171140378de19e0814ef3.1757854006.git.jan.kiszka@siemens.com>
- <c144202b-0d99-4507-8a57-35df1ece3cc0@siemens.com>
- <2070f7bb-cd1a-448f-ba87-50d75e24f4c0@kaod.org>
- <b09cd869-39e7-4a62-b452-4ea39ccf4df0@siemens.com>
- <e992011b-ac3f-4770-97e8-3c0321410e72@kaod.org>
- <aa63efc6-8edc-4db4-9221-a1a54fc1cdce@siemens.com>
- <8b14bde0-2ca8-4b45-a41a-f1459a7710fe@kaod.org>
- <2c028368-b840-4f22-bb5f-a9ffcfec26c8@siemens.com>
+Subject: Re: [SPAM] [PATCH v1 12/12] tests/functional/aarch64/ast2700fc: Add
+ vbootrom test
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>
+References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
+ <20251015062210.3128710-13-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -96,27 +87,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <2c028368-b840-4f22-bb5f-a9ffcfec26c8@siemens.com>
+In-Reply-To: <20251015062210.3128710-13-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.109]
+X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 1dcb8f21-52fe-48da-83e7-9a067e255940
-X-Ovh-Tracer-Id: 15319275608314645310
+X-Ovh-Tracer-GUID: 93595b48-c7cb-4968-873d-65bf04685162
+X-Ovh-Tracer-Id: 15292535487567072047
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEMEfL4cw6JEm6Xs0R+C92kvjNTohiAf3tjoqs/RnO0206ADD8YvWuycPD2pAT4B3FGciDs6Yx4Uk76M21zJXM/WfJziMk0Hh4g+rvkeLKW/And/Ap74FIWce1dbz638lmVyOUry5w2bnSjhtXuYaexMdbO4TiZqAQTzuBeowwL9lych63GKJOr7AkvjS9L0pEJeY0IFKSC7iVq/Wa+3k8B4S27bPKp251HPyPSF2TbSx7/UeXVxRMdNDHa4UFqSlVeZzlRMMmsBPTwGebm3uR+vUtEZAC9f7G7CqfFSO1TQxXu7v+T6jAdCqERgkzfdXmEsV5rZe3SA0jLfOwGRuPAOPRmxXE89TWEdmbDagdo08Ycvc29wm3r5c9f4WtaN3s0Sml91EcCfE1OphsgbFoNDj+Ir2cAxvKAOn1bvZEB+fKtRDsQzWkpcS3T7wz2m1hKrJd03m0FAPahbFIR7LsZv7aAzBs5oysaLxfdy+nso6l53Dnv4y6io0QaVgF2WIFv64QJyOII7udUrxlSOotDZqCJDb7ZC/7a4uPYJdbyu4dA6WCRm8ty0o2vVKS/TJI+YTHhAS38kFSwxhYzGwRAu5cFO+5eatQhkvjeQrqTrtgoM7f/ui23fGRDi6kr67PLA3Nvclbo/Z+PXnqZlTwXchvAkNgkjg3EExNtC2x5FQ
-DKIM-Signature: a=rsa-sha256; bh=AkhrxMI26W6O/HmimAl5eNM+Sp76hBpRWrWpv0AQw3A=; 
+X-VR-SPAMCAUSE: dmFkZTEG/3+9L5EPs1OmvZ6PfOgdYO/SxROjt4fm6NUUAejqtqaAWt1CD2vz5AvZc+Tc8jh0GUfaugYTnzY+cExE/PRstRrhqLdKluKn3ynJL8kBD3pRY+qXNBCVn1pr5fDJK61uqURRyfixxzUArdOPL6ZFOaJZQw3LOUe8zrG8b55Amx7Elq0sDx/uJ3Mp9odUhXsKyCHS+U+hGXS8Z7baoIKf6DJyRww3oWdMVbuy8JJXZ6bBLVoT87VjJ0EBQHH1/QNsOgPr7Tlavt9WlOprg2/aum/JZwaZsKuNaJQpAZMa+nsX59ywcVjD9xJVl4Gw8GXDmWx56IKwOaoZFFtFsOeTp/foEo7qMctQkoRybcJc4uKsQOPxp9xZQg9hzvQZCRCuPdN8gmN0ESbF5Q1Nq73wN8E5VDnNrdI4MqLKcy3uOxMS1Ls1gmjr04iUQbRAQakAEVXsDlR916T4tit/cirSq5HKwKVL3rIK3suIUkyWZSxuUttoN/n2jjNSUUSUwsjfgHA0tYTGdnYe1rI0t1Bp6+JorQebkG5UsF6uH7ORQpC0fC66kuJniE/5AWiZSKLkIUL+656Wes0IVE598xOkTVADIo/n6rYY5nW06sNgSQERyAFDIkbnE0m9kq/ZQSuybJVe5V94gQwz4lu9fXzPI6LZ493OwP5ZqrfblskS1Q
+DKIM-Signature: a=rsa-sha256; bh=LkRYJyaqA7f75l64/L9KcoER5lFzhKEJk53ro92yOL8=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760679066; v=1;
- b=Zsc4E5axTis+WUWpP4SfXiKgvIgHEkOZxSivyXMWkctyarf9Bym7HHZwXeFiLchP2DshYQWw
- sJU2+O8FHcVgDzRwajC1CL9JhOmJBv9saixzc9o5oylKQxmEL3F6h60NL26XEMc5LOsUGF9dszT
- EuEGUCMnLKW47HZif57EbNiFR/yQtBzNi6XlGI1TO+QxDEVHp7faCgkx4dSrw7aM3kHgkUurT/k
- PfL21Os02Qyh6SGu8ABY4rZL2aoNXTLKg7svcLXse/LrQGILxJ03dCGRm8Hf2SVutT8ah+XeTrA
- z2iYMCdeQosqS6VW7LNqGA508AoWE9YIQwsNTUd6yehlg==
-Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
- helo=smtpout2.mo529.mail-out.ovh.net
+ t=1760678971; v=1;
+ b=oZS+vhZyKW79aeZVMxaSoqp9tIC41V0lhEpmIhuExR4Iq79jJX53/PA6kr8aD0Nl23srKuR8
+ py2YHE3KYNrajtEtzrTBUibPlHKkzDlg7gJYKjZ/F0DRoTCMPJqayu5Tiqz2RqFlMVg+yQirdSM
+ AdB42TLzuAJlk5Ac9H45xLjUw4JiaQOAKtmFVx5jVpbnfnh49d/hZz5qAoPzQZgTNdx/QiM5CGr
+ /oH3cMPWTS4lnjxaBUGN/hXLHMBI3ppjT6BRprlGJLh84S/0q1U71kll6OSHiKSn1YR948AtEa6
+ K8RVBI+hxr6uxDZOEcwzhSRb90ewYRWtm0N51L4yB5Ldg==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,7 +115,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,31 +131,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jan,
-
->>> Just to avoid we are in deadlock: My understanding of this issue is that
->>> it is not a fault of this series. Am I right? Or am I supposed to
->>> address that as well?
->>
->> Could you add to your series :
->>
->>     https://lore.kernel.org/qemu-devel/20250930142448.1030476-1-
->> clg@redhat.com/
->>
->> and retry the aspeed machines ?
+On 10/15/25 08:22, Jamin Lin wrote:
+> Add start_ast2700fc_test_vbootrom() which boots the ast2700fc machine
+> with -bios ast27x0_bootrom.bin and reuses the coprocessor loader.
 > 
-> Yes, that patch resolves the issue above.
-
-A similar version is now merged.
-
->> I am afraid more should be done to run 'make check' with your series.
->> Maybe set 'mc->auto_create_sdcard' to false for all machines ?
+> Add test_aarch64_ast2700fc_sdk_vbootrom_v09_08() to test the vbootrom
+> with ast2700fc machine.
 > 
-> Who should do that?
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/functional/aarch64/test_aspeed_ast2700fc.py | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
+> 
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> index 9ab3d3269b..8dbc8f234f 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> @@ -138,6 +138,12 @@ def start_ast2700fc_test(self, name):
+>           self.do_test_aarch64_aspeed_sdk_start(
+>                   self.scratch_file(name, 'image-bmc'))
+>   
+> +    def start_ast2700fc_test_vbootrom(self, name):
+> +        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
+> +        self.load_ast2700fc_coprocessor(name)
+> +        self.do_test_aarch64_aspeed_sdk_start(
+> +                self.scratch_file(name, 'image-bmc'))
+> +
+>       def test_aarch64_ast2700fc_sdk_v09_08(self):
+>           self.set_machine('ast2700fc')
+>           self.require_netdev('user')
+> @@ -150,5 +156,14 @@ def test_aarch64_ast2700fc_sdk_v09_08(self):
+>           self.do_ast2700fc_ssp_test()
+>           self.do_ast2700fc_tsp_test()
+>   
+> +    def test_aarch64_ast2700fc_sdk_vbootrom_v09_08(self):
+> +        self.set_machine('ast2700fc')
+> +
+> +        self.archive_extract(self.ASSET_SDK_V908_AST2700)
+> +        self.start_ast2700fc_test_vbootrom('ast2700-default')
+> +        self.verify_openbmc_boot_and_login('ast2700-default')
+> +        self.do_ast2700fc_ssp_test()
+> +        self.do_ast2700fc_tsp_test()
+> +
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
 
-/me looks at sd maintainers. 
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
 Thanks,
 
 C.
+
 
 
