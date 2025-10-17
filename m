@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6FFCCD19E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA45CCD184
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9d18-0001dA-B9; Fri, 17 Oct 2025 01:28:42 -0400
+	id 1v9d0l-0001ZO-Eg; Fri, 17 Oct 2025 01:28:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d15-0001cN-CK
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:28:40 -0400
-Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d0f-0001Z2-4u
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:28:13 -0400
+Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d11-0001k4-Nv
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:28:38 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.144])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cntdt0t9rz5y9m;
- Fri, 17 Oct 2025 05:28:34 +0000 (UTC)
-Received: from kaod.org (37.59.142.113) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d0Z-0001gZ-ME
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:28:12 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.58.72])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cntdD3BLHz5vpl;
+ Fri, 17 Oct 2025 05:27:59 +0000 (UTC)
+Received: from kaod.org (37.59.142.100) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Fri, 17 Oct
- 2025 07:28:33 +0200
+ 2025 07:27:59 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-113S007e0b093ff-6f94-4129-80e3-e73bd2ccdeb3,
+ (GARM-100R0036377a0f0-c2dc-4419-987b-33e470cd31bf,
  48F321F6F3AAA1B288770452BCFEC79A981EE5C7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3f6e4b05-0a85-4589-bf7d-ba82d29d827a@kaod.org>
-Date: Fri, 17 Oct 2025 07:28:32 +0200
+Message-ID: <d873388b-3141-4348-b61c-390e5f262b22@kaod.org>
+Date: Fri, 17 Oct 2025 07:27:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 04/12] hw/arm/ast27x0: Add SRAM link and alias
- mapping for TSP coprocessor
+Subject: Re: [SPAM] [PATCH v1 01/12] hw/arm/aspeed_ast27x0-ssp: Add SDRAM
+ region and fix naming and size to 512MB
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
- <20251015062210.3128710-5-jamin_lin@aspeedtech.com>
+ <20251015062210.3128710-2-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,33 +87,33 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251015062210.3128710-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251015062210.3128710-2-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.113]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.100]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 9c31f5ed-1b87-4380-951c-3e9ac45e9158
-X-Ovh-Tracer-Id: 15276772887665085231
+X-Ovh-Tracer-GUID: cd51ec00-3e72-46e7-98db-4f3def86c55f
+X-Ovh-Tracer-Id: 15266921264954444591
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFZaxLPtYM+kuyQslok0ga4In9zpK6YUNNV1qGbQVMboYO345rup1d9m0i1hQLBQgB2iGCbPy1Ah+JLhDY2O/bsqoU027MSUKWBjsBc95vCQMTxM7Cv+fFasUJdYQwNLTJRxljYD73sshzT62v8MSgsNY4S93AEgudK9PK+U16ADkzbH4pr54e0iuC/b3tJGAYvCajYAXlGf0UHQ53khj9QcQUZKZvJj/4YCFv5ROI83p6btbg7Bfnl7JJWKQayWNf31WqIDGEINIaR2e+Q38iE5SierAsPqs8Xj8srg9eSZzGwsvPybq3rIj7W+nxDhCTpQKAijNxdZR+nBw9mmRqJV83DoOA/3X7tonN+yRzVoomE4HlkRGLArqZIUFeHpWPw+xS2ffCtoLfcDAKJNIlr/E7QEdqpMT4aetCzEId2rYKbcESuyGtdsdnhrM+2BpdhgUmPZ65JOgFmBpYn3nI7b8Iz9mTEMnh6mEtDtQC3kQFVD7T03S+Qinc8aNNfcW4t+6Dh8xkq7pnrTa2pKUBMk6GIEOUJ5CuOU8qGhdA6pF3jlNfjTVv4aadd0/DTbHt/Fbgb2DCfi+/iVT3HsxreV0n9c2G1+Opj4yANp7xrdgM1BxQaZwaVygtOiSm2T1y+/u0eWS4xR2bQ8lGVYmCDdL50oGbxz5CShKHXxMziew
-DKIM-Signature: a=rsa-sha256; bh=CyIOQZyk5u7kYqZinRcSqo4VfPgCnxm7Z4z03ZhA+FU=; 
+X-VR-SPAMCAUSE: dmFkZTEHIQurLfibfEdwWXVLQ4Aqdd9pvmc2AN8u9+bEBlOucR3J93IzjWhEc+9zSAIaATRtzF7Ei6DNYGV8RzDI4OSM1kBrWBNQNheyb6zArcx3SBQ2ZBzAy6FVsXJgMrBR6hDyqVpi8J9JYfiH55m7S+Em+7JN89nflMHG7Vr0W8j0rYeCgZtaG2vVussgQ0HuNZx+6p9YGarKIH1vFfQiDgAl+My/9wy6ees5VCfPdCLqXNuBOWLXUklVK8mb8XYJ99W616a0mCyaKHRXkY8XiweuV9khXzGYmFqDG7iGtuO3s/BMc4kZOBjHIpV+Yb89LEXK7txtIlnHNvTkTHRIDBIypZEgz8JMlVOMz33liC839WG0kbrw9w80gwJdnqPncR6LlJYw/GWAH1hnYBXY8s1aNXQxalRaLpk+iVNpC2WKBVmRuR9G/dRfwyDH5q+cDc3PyoUbSpBtOcFuIKP1tBLptqVx4Se4HMMGKRzzfzE40wwgpjkH5yHhonwgvZpERCM6h8gA0iMaSENb3wy0fSe7taufq17swpD2eLwC8TTfzTq+ex/M+2kJfXOW3NNGviWC362ze5Qxu8NbgG65WqExjNmMWqFUEuNwvvwNr3F4GHqxthbMgj3baEyusC8WqmU/wCzTN5kNc4jnvbQ7789m0ONucFFWuwK7iEibFFxagQ
+DKIM-Signature: a=rsa-sha256; bh=Ks5d+4NHForqp8UEX4CD6MA+1nTjkwjxT1Yx15vFwGM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760678914; v=1;
- b=IRTS6CPAQyXgCrvcE+DJqQ1QQy8WavkQH+m1pzuJjC2eLbndcO0vpaKNlfxf5R7+5WvxarGK
- fafOG/4mDTMCYBRQl9SMLrDUXQ1lJYU+C81roT0XjasnTn8k3zbwTDN/X4liRGLfQ29qtJRy594
- /347sBQg1DUvYyYMfIQw4sVNwLXZth9KxyTELbDlwXKZMiTNXTyYhgs9KeC51WZPOR4awswtltO
- PQikNJ1tTt7BKRFZDSOfs8zDKwC/eGWNAnaZuL38Rj+9LyYbVeZDAdZq3zMSTUP2KEF4eHwem1V
- qjZnOIAR5m/nY2FTBe7dJxgh7ICNBoy7WubvTaNSjdOrA==
-Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
- helo=2.mo548.mail-out.ovh.net
+ t=1760678882; v=1;
+ b=e45A0PejpYQsgkGTEUzwHYXgpOAYDm99U/+d1T/u46GDFNfv2RrEt/MZgV0fHJyKtz/O5J0E
+ cV1B1kYWYKXMLOjJXbkzU1Y56yRI25Ifo/Gg3/n/YYEPKq83efeSo7AdO19RP8uZ3GwK6Og9R3H
+ swCcBqYXCfosHwZJ1MjzIwrxyw/jPXiAUibti4QUEEnMu4qn279sAeUqLpAKEcyPaJ0ZnzemetY
+ nnXQTde44ZiMK3LBj5SWfRLfPKbSjiu26g2BPxzZwbMihouRYdeiU++QBB0J/kOKGMK7ophClPZ
+ 32LTh+LhM7UJrTMp9TBSPKS8chbSMdDiwd62BjA8oZoyA==
+Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -132,36 +132,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/15/25 08:21, Jamin Lin wrote:
-> AST2700 has a 128KB SRAM, physically mapped at 0x10000000–0x1001FFFF for
-> the PSP (CA35) processor. The TSP coprocessor shares this same SRAM but
-> accesses it through a different address window at 0x70000000–0x7001FFFF.
-> 
-> To model this shared-memory behavior in QEMU, this commit introduces a
-> linked SRAM property and alias mapping between the PSP and TSP subsystems.
-> 
-> Changes include:
-> - Add the SRAM alias mapping at 0x70000000 in aspeed_ast27x0-tsp.c.
-> - In aspeed_ast27x0-fc.c, connect the TSP coprocessor’s "sram" link to
->    the PSP’s SRAM region.
-> - Ensure the alias region is initialized during TSP SoC realization so
->    the TSP can correctly access shared SRAM through its own address space.
-> 
-> This ensures that the TSP and PSP share the same physical SRAM backing.
+> Previously, the SSP memory was incorrectly modeled as "SRAM" with
+> a 32 MB size. This change introduces a new sdram field in
+> AspeedCoprocessorState and updates the realization logic accordingly.
+> Rename from SRAM to SDRAM and correct size from 32MB to 512MB to match
+> hardware.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c  | 4 ++++
->   hw/arm/aspeed_ast27x0-tsp.c | 7 +++++++
->   2 files changed, 11 insertions(+)
+>   include/hw/arm/aspeed_coprocessor.h |  1 +
+>   hw/arm/aspeed_ast27x0-ssp.c         | 20 ++++++++++----------
+>   2 files changed, 11 insertions(+), 10 deletions(-)
 > 
-
-
-
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
 
 
