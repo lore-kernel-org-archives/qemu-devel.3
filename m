@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39D9CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD549CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kDI-0003h1-Bh; Fri, 17 Oct 2025 09:09:44 -0400
+	id 1v9kCl-00038F-M4; Fri, 17 Oct 2025 09:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kD3-0003PK-QT
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:09:30 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kCa-00032v-Hn
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:09:02 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kCl-0004YT-5Y
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:09:17 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-426edfffc66so1313744f8f.1
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:09:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kCW-0004Vi-P0
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:08:59 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3ecde0be34eso1805116f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760706547; x=1761311347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760706533; x=1761311333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cycdOupry1MmHe8WmC0tU4fLX0XNG8UvdLrV1HILvSk=;
- b=RVl/onhNRdeMPnz323ZJUtVR5DdI1k8qPEJgnop2M7whmeVYbO0QWmbD3jeYH5RjqX
- d37OFD9AHNy7aNhF0900L1VX1sXLbaflsSwsyeLdM+DUVzbLJBYZq+euU2DkUjWY2qQw
- bvJJzB+b5K74NAx8N0X1HCf+rZH5qffSoOpiJLoaMpLEnefkkd+BSkSnFirETPBx5MkS
- Z8F6KIo1lgc5CIO5WJhjd1Ez6bNzp5GKjsVHINv+0js7yoh4IULweamfzTqyUgIi5ENG
- m9vpOB7VYITYKiVoDsNi03J+qCyDuhsRH9w84K5lJwX5A86h/9eAAVKcRF4ofv0IpAeY
- bTCA==
+ bh=BMx4fEQDiJT90/D4DN9KKgZOlwkZG5AqjHkgHNGaAMU=;
+ b=gy+i3IuYLQZqQKLgtZTBlTXQZ6vxYnKfh6MehOsc69cTao0J43xBTYqZkIr/r6O8Bn
+ ZrakJCaTuV5ClmuSqqEE2DoZx8PkuPAuHFPtoQoEUxRu8XVzh0dzFzDxMj9uQvENMZoW
+ 82aPqtqFcalPOf36vnaj/EG4Ke1PjuniZ8l+nynv6zEea6XysG8B/MyViJpkHr5vDkXa
+ +MBznlunv9redmKhsb/RSYSPl3vvrcnH4Uj6GDzYvT/Bh2Dcgtka/RB8vE2ISbKpBsO3
+ 3pZK2BoZb0BGyPEpV2Ol3Sdwn550e+MNm0pXHO1acgcvkoHLsy24gd6St/fQ/zPWJJCf
+ rPzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760706547; x=1761311347;
+ d=1e100.net; s=20230601; t=1760706533; x=1761311333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cycdOupry1MmHe8WmC0tU4fLX0XNG8UvdLrV1HILvSk=;
- b=cmtn/H7f6rO/zCtnE0dCoOmOv+h4C0j+i+xqBF5ioUCekVnnPHDM0dEfTwmGoDfJ1z
- aeWCZHH5/y2q3TceOblX9H0hbJCYq5zlghHCJNiTgA1CpRtMHBJrDbdLvVxXX453HWKx
- mCSzmWWrTHFjLOiS9QMLyQHs7vmk72m00eilHjYb2Euwx+YTMNMQBDi1JA+RnUuiXW6R
- a3rc5chZj937aJXtiZjiHt2htePwcFvYqsFoJ4FAe4dHYWKItj+sRZlMCrlRyFh6Nv0H
- IPrAcLOBH6Ah1LAknM5H1tE7rffMcmOjE7KZnvJPq6Fmqf3w5yKbRHxXz0IdcHG9eVgU
- llDQ==
-X-Gm-Message-State: AOJu0Yy9c+e/0OvNrjpNW/Qe7ypg/jz9bzzbw3Ts0L35dvNA0OH1g1pb
- 8hgAp/LPKFG2wnc+RWGVnbeuPB28jOldJU5SBYQuthqZieRvUq8HcbZZ4LOc5AGs0EGM3uPCOld
- 3kbUZdu4=
-X-Gm-Gg: ASbGncvVJbxoiXLqoksNzB4+zqL6kbjOE6ajUVjt3wXHDFCeL/pVEwNeYQ4PMISiw1T
- VW8YB1DSJVwxuWZoQGC4dVBMCjXLzj8UEaBKerqGO1NVKLipFVjyNgBcX+k7uR/8Igm2pjPbKF7
- ivNE33Y2scJ/zrhrfj2BZGrr1HBYFPRF2PSHg0L4JcbizTzeLC9CCYg+JNtXzxi8iqXcgk5PaYj
- KU6W130hHHBBFq9IDmLbGvNmFqVMXSwnG8QWjJ4jYRe3frF3ogGameW1Q1WRgnB6DV+j7nRf1Jb
- el828fomQDXJtSjp6IJW7EskqjA7WOPV5+XnR2xooyODQJ6p8YGO3xUskONqAHpY76UUDe1ylRs
- RxBoCZZ57W2fckxjJpEaJm54fJcAoX8WqmNBsxVc8JVvUB+XUwedZ/VgFW+vwA/WM12SaWQNSaz
- tdLFbCIe5b4VflvZLhRWSj6xakqCHXTG2qja1e3tMOIZmJB4Ir3da43ah5gUfU
-X-Google-Smtp-Source: AGHT+IFxx0xGM7YpAWk2ylchCg1Hl7UWJ34JZwZDUFmRfUv4ANT8cjN0v52kv+oXPSnsf0FCZCKC2g==
-X-Received: by 2002:a05:6000:186a:b0:427:49b:abe with SMTP id
- ffacd0b85a97d-427049b0ae7mr2762015f8f.18.1760706547121; 
- Fri, 17 Oct 2025 06:09:07 -0700 (PDT)
+ bh=BMx4fEQDiJT90/D4DN9KKgZOlwkZG5AqjHkgHNGaAMU=;
+ b=B+Sk9I1TL3aU0qsd6q3YzL8U6W1v+IkB0Z10EZe5LpOhUQGZ623pTKn8+PpBvZUbpZ
+ RsewHftfv6dxntql4b9RxoOI8izRCnQ7MFIGUopdb5ouvVa8+g3CE58/udjoLnocXkL4
+ Al3ByOdGWNr9bJVZ/iaCsFGoggG5lQ3YDnY3vH5cYyANs4DlbS449SwkdQ6FGA6PgIyo
+ mJ0GGmyI3VruvTxS8JwEVFPChr119DnQVzGVhfw7QvVIEhONH7w5AEHL+Zw335fjbC5B
+ uQHUHEnP5Pt3xIpitX2MXCpA6EmpdL4nJqj8gfL6Rb0oMewQtnwp1GpvACJEwVOBxkb8
+ AM8g==
+X-Gm-Message-State: AOJu0YwTFxQBBRaM761wfG8C/9+jlVdzE866zlJ+/wlwtJuLCzr89X1B
+ 4bKgSt4XghBvyjaeTPAmQCnP7tGHl0UGfGdqa5aROcSyuhNdrnQ40xtudXEtCJtEU5HuXTQcr9H
+ utZlDoGc=
+X-Gm-Gg: ASbGncvubz9hR812sGd0N/ysqO7+qZvKuoLHRROHVPYmxk0fS6qNwKsYFP3g2+TkxQ8
+ QRx4CgKeHTsQF2MmJvQjCLUrwvooRtXBLoaap/FJ4ypRglCPOevBrkNtkzlwLBtlHDZ89eM9ngA
+ OGGXRxB4FkI6HAzn3bdcKmlughyrwQyTFiRVT7nCpkwuekSD80pj3fHQx/LSGCfv90q405PizID
+ 1vHbURbX+BZqU8NiP8t8Wv8ZMZ1KM81R2UR/DQqkfjE3eD7tGh/3S/oymW492j5BYUQjqZScdXU
+ AyAaAS1CyaZAI4G1AhmEWjGn71sBthS3B4x6eWtw02cvQ1U44AbR3ht5MO176M6MdClMRXXlce7
+ u5wwkNgISiZAGfp8ZEfV3Ver77V9SZBctA8wA6jzgA0sJUTzi690oLd3c+KcO6Pa9t8BHRQeoFx
+ 6PWF818xs6RaxY6QiYvyBGMxpGN3fdelpn0thltNKdo9prCfPMjDhhLoQ5p+r5
+X-Google-Smtp-Source: AGHT+IE8UN+4oQyxjGUMq75DN1hnmRVOHtIzWVcvAgmLkxSHO+M2PXS7GoNr4AUT9S+HUM4PSK4Lzw==
+X-Received: by 2002:a05:6000:144e:b0:426:fb63:c01f with SMTP id
+ ffacd0b85a97d-42704bf71ecmr2951519f8f.29.1760706532567; 
+ Fri, 17 Oct 2025 06:08:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-426ce57cd11sm41263939f8f.5.2025.10.17.06.09.06
+ ffacd0b85a97d-4270665efdcsm4169402f8f.29.2025.10.17.06.08.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Oct 2025 06:09:06 -0700 (PDT)
+ Fri, 17 Oct 2025 06:08:52 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -71,17 +71,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  qemu-arm@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 09/20] hw/arm/virt: Remove deprecated virt-5.2 machine
-Date: Fri, 17 Oct 2025 15:08:08 +0200
-Message-ID: <20251017130821.58388-10-philmd@linaro.org>
+Subject: [PATCH 06/20] hw/arm/virt: Remove VirtMachineClass::acpi_expose_flash
+ field
+Date: Fri, 17 Oct 2025 15:08:05 +0200
+Message-ID: <20251017130821.58388-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017130821.58388-1-philmd@linaro.org>
 References: <20251017130821.58388-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,34 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This machine has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") it can now be removed.
+The VirtMachineClass::acpi_expose_flash field was only used by
+the virt-5.0 machine, which got removed (see commit 2c1fb4d5c01
+"hw/arm/virt-acpi-build: Only expose flash on older machine types"
+for more context). Remove it as now unused.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/virt.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ include/hw/arm/virt.h    |  1 -
+ hw/arm/virt-acpi-build.c | 28 ----------------------------
+ 2 files changed, 29 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index cd0df096de9..e49af505431 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3648,13 +3648,3 @@ static void virt_machine_6_0_options(MachineClass *mc)
-     compat_props_add(mc->compat_props, hw_compat_6_0, hw_compat_6_0_len);
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index c77a33f6df2..ba16acb8626 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -124,7 +124,6 @@ struct VirtMachineClass {
+     bool no_tcg_its;
+     bool no_highmem_compact;
+     bool no_kvm_steal_time;
+-    bool acpi_expose_flash;
+     bool no_secure_gpio;
+     /* Machines < 6.2 have no support for describing cpu topology to guest */
+     bool no_cpu_topology;
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 8bb6b605154..5db5baa7cf3 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -99,30 +99,6 @@ static void acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+     aml_append(scope, dev);
  }
- DEFINE_VIRT_MACHINE(6, 0)
--
--static void virt_machine_5_2_options(MachineClass *mc)
+ 
+-static void acpi_dsdt_add_flash(Aml *scope, const MemMapEntry *flash_memmap)
 -{
--    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+-    Aml *dev, *crs;
+-    hwaddr base = flash_memmap->base;
+-    hwaddr size = flash_memmap->size / 2;
 -
--    virt_machine_6_0_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_5_2, hw_compat_5_2_len);
--    vmc->no_secure_gpio = true;
+-    dev = aml_device("FLS0");
+-    aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
+-    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+-
+-    crs = aml_resource_template();
+-    aml_append(crs, aml_memory32_fixed(base, size, AML_READ_WRITE));
+-    aml_append(dev, aml_name_decl("_CRS", crs));
+-    aml_append(scope, dev);
+-
+-    dev = aml_device("FLS1");
+-    aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
+-    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
+-    crs = aml_resource_template();
+-    aml_append(crs, aml_memory32_fixed(base + size, size, AML_READ_WRITE));
+-    aml_append(dev, aml_name_decl("_CRS", crs));
+-    aml_append(scope, dev);
 -}
--DEFINE_VIRT_MACHINE(5, 2)
+-
+ static void build_acpi0017(Aml *table)
+ {
+     Aml *dev, *scope, *method;
+@@ -1011,7 +987,6 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
+ static void
+ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ {
+-    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     Aml *scope, *dsdt;
+     MachineState *ms = MACHINE(vms);
+     const MemMapEntry *memmap = vms->memmap;
+@@ -1036,9 +1011,6 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
+                            (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
+     }
+-    if (vmc->acpi_expose_flash) {
+-        acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
+-    }
+     fw_cfg_acpi_dsdt_add(scope, &memmap[VIRT_FW_CFG]);
+     virtio_acpi_dsdt_add(scope, memmap[VIRT_MMIO].base, memmap[VIRT_MMIO].size,
+                          (irqmap[VIRT_MMIO] + ARM_SPI_BASE),
 -- 
 2.51.0
 
