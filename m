@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0906ACCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F75CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9fkE-0001Fy-HG; Fri, 17 Oct 2025 04:23:26 -0400
+	id 1v9fkL-0001H9-SZ; Fri, 17 Oct 2025 04:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fk8-00015d-9w
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:20 -0400
+ id 1v9fkF-0001GR-Qz
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:28 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fk2-0001D4-MJ
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:18 -0400
+ id 1v9fk3-0001DU-LW
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760689395; x=1792225395;
+ t=1760689396; x=1792225396;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=4UxvzTf4x6lCPFrVrFwEYZCZrbimI3oS++oeIgtlnf4=;
- b=WYzNOz74x+plnRZnZN0gQpiuQsG52KnlnzikdUaUdJNTB1cauvead/cb
- cyrLZsjxsBwsrujItx5Zwr5MaIaeoV6ojYsgj/M5sSqC+S5zQt/ABTdt7
- dyAy1A0mwSNu0SHkq5jIaOKPW01azG7XAdWMaDVvPhoz0DH/FwQM80e4I
- zjR1uKEWk+w1n+t8P6anCX+5rBq8lKVscmFpLDMV4GLyL9ll56z+Sc3mt
- 7FLR52S8tSgoKIXWMafSgPrM3YYGiEXew1N3vVEpucdPcFRhCrr+FRQJk
- d5d1IREN5cojUlXZZYj4B9uVR2LKBv9WfBkV9gP36pOfe2X3SlZf2FU0c Q==;
-X-CSE-ConnectionGUID: FWfupvRYRGWfjcMf89tMHg==
-X-CSE-MsgGUID: lz66UvEwSC2G4WkNs/16vg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927423"
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927423"
+ bh=B8RsLZ8p+QijWO4o8Awavo9qU6AbRzyIRgV0bwow53E=;
+ b=NXwjAYI4Bn4c4UKXO64u2WB8o62yu6LEJBAo4cUGF/8IV2Djczp9DYDb
+ nAtgfTLZ/FpICcdSVNv5+Ejq2crEC2u5nrRh2pYFt6A+VmORBn3Mfowvg
+ U/YDnrh7d1yVo/ZaAJsHkiBTIpQZxEopGIFceJcUV2LGmLO/26GdtE19S
+ YRLwKvBt0rv5XPZx9cRikLoLi25FdGov3h/p1V2u3LbB6vrC1ANFF64/U
+ PNFT0wvaXUl11Yyctu6qrYj8rynHKxnQ3nwBAfTTzKlwUrK/QS9GltPHY
+ Nm+Yj6Ywl3JPODISDVGVNkfMPtczM0l9U4FCnjFH0ojJVTBDhGHnr39cf A==;
+X-CSE-ConnectionGUID: mXs+fq7wTCGGijaW0eQAmw==
+X-CSE-MsgGUID: FU5CeVyPRJOsu4f1N6uxTQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927432"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927432"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:23:03 -0700
-X-CSE-ConnectionGUID: DnMBatkMQNWBjgQUCdAVQQ==
-X-CSE-MsgGUID: Wq4om/+8Ti2xR0g15lMwPQ==
+ 17 Oct 2025 01:23:07 -0700
+X-CSE-ConnectionGUID: omXMVP9kQN2LttWG4ivX0Q==
+X-CSE-MsgGUID: WnjumPZhSw2O/uozIhDAiw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484695"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484700"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:23:00 -0700
+ 17 Oct 2025 01:23:04 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
@@ -53,10 +53,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
  eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
  xudong.hao@intel.com, giovanni.cabiddu@intel.com, mark.gross@intel.com,
  arjan.van.de.ven@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 5/8] vfio/iommufd: Add IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR
- flag support
-Date: Fri, 17 Oct 2025 04:22:30 -0400
-Message-ID: <20251017082234.517827-6-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 6/8] intel_iommu: Fix unmap_bitmap failure with legacy VFIO
+ backend
+Date: Fri, 17 Oct 2025 04:22:31 -0400
+Message-ID: <20251017082234.517827-7-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251017082234.517827-1-zhenzhong.duan@intel.com>
 References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
@@ -64,14 +64,13 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.19;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,96 +86,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR when doing the last dirty
-bitmap query right before unmap, no PTEs flushes. This accelerates the
-query without issue because unmap will tear down the mapping anyway.
+If a VFIO device in guest switches from IOMMU domain to block domain,
+vtd_address_space_unmap() is called to unmap whole address space.
 
-Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+If that happens during migration, migration fails with legacy VFIO
+backend as below:
+
+Status: failed (vfio_container_dma_unmap(0x561bbbd92d90, 0x100000000000, 0x100000000000) = -7 (Argument list too long))
+
+Because legacy VFIO limits maximum bitmap size to 256MB which maps to 8TB on
+4K page system, when 16TB sized UNMAP notification is sent, unmap_bitmap
+ioctl fails.
+
+Fix it by iterating over DMAMap list to unmap each range with active mapping
+when migration is active. If migration is not active, unmapping the whole
+address space in one go is optimal.
+
+There is no such limitation with iommufd backend, but it's still not optimal
+to allocate large bitmap, e.g., there may be large hole between IOVA ranges,
+allocating large bitmap and dirty tracking on the hole is time consuming and
+useless work.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
 Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
 ---
- include/system/iommufd.h | 2 +-
- backends/iommufd.c       | 5 +++--
- hw/vfio/iommufd.c        | 5 +++--
- backends/trace-events    | 2 +-
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ hw/i386/intel_iommu.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index a659f36a20..767a8e4cb6 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -64,7 +64,7 @@ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
- bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
-                                       uint64_t iova, ram_addr_t size,
-                                       uint64_t page_size, uint64_t *data,
--                                      Error **errp);
-+                                      uint64_t flags, Error **errp);
- bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
-                                       uint32_t data_type, uint32_t entry_len,
-                                       uint32_t *entry_num, void *data,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index fdfb7c9d67..086bd67aea 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -361,7 +361,7 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
-                                       uint32_t hwpt_id,
-                                       uint64_t iova, ram_addr_t size,
-                                       uint64_t page_size, uint64_t *data,
--                                      Error **errp)
-+                                      uint64_t flags, Error **errp)
- {
-     int ret;
-     struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap = {
-@@ -371,11 +371,12 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
-         .length = size,
-         .page_size = page_size,
-         .data = (uintptr_t)data,
-+        .flags = flags,
-     };
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 6a168d5107..f32d4f5a15 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -37,6 +37,7 @@
+ #include "system/system.h"
+ #include "hw/i386/apic_internal.h"
+ #include "kvm/kvm_i386.h"
++#include "migration/misc.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
  
-     ret = ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP, &get_dirty_bitmap);
-     trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id, iova, size,
--                                           page_size, ret ? errno : 0);
-+                                           flags, page_size, ret ? errno : 0);
-     if (ret) {
-         error_setg_errno(errp, errno,
-                          "IOMMU_HWPT_GET_DIRTY_BITMAP (iova: 0x%"HWADDR_PRIx
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 6457cef344..937b80340c 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -74,7 +74,8 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
-     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
-         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
-             bcontainer->dirty_pages_supported) {
--            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size, 0,
-+            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
-+                                                    IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR,
-                                                     iotlb->translated_addr,
-                                                     &local_err);
-             if (ret) {
-@@ -224,7 +225,7 @@ static int iommufd_query_dirty_bitmap(const VFIOContainer *bcontainer,
-         if (!iommufd_backend_get_dirty_bitmap(container->be, hwpt->hwpt_id,
-                                               iova, size, page_size,
-                                               (uint64_t *)vbmap->bitmap,
--                                              errp)) {
-+                                              backend_flag, errp)) {
-             return -EINVAL;
-         }
-     }
-diff --git a/backends/trace-events b/backends/trace-events
-index 56132d3fd2..e1992ba12f 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -19,5 +19,5 @@ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
- iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
--iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
-+iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
- iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+@@ -4533,6 +4534,42 @@ static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+     vtd_iommu_unlock(s);
+ }
+ 
++/*
++ * Unmapping a large range in one go is not optimal during migration because
++ * a large dirty bitmap needs to be allocated while there may be only small
++ * mappings, iterate over DMAMap list to unmap each range with active mapping.
++ */
++static void vtd_address_space_unmap_in_migration(VTDAddressSpace *as,
++                                                 IOMMUNotifier *n)
++{
++    const DMAMap *map;
++    const DMAMap target = {
++        .iova = n->start,
++        .size = n->end,
++    };
++    IOVATree *tree = as->iova_tree;
++
++    /*
++     * DMAMap is created during IOMMU page table sync, it's either 4KB or huge
++     * page size and always a power of 2 in size. So the range of DMAMap could
++     * be used for UNMAP notification directly.
++     */
++    while ((map = iova_tree_find(tree, &target))) {
++        IOMMUTLBEvent event;
++
++        event.type = IOMMU_NOTIFIER_UNMAP;
++        event.entry.iova = map->iova;
++        event.entry.addr_mask = map->size;
++        event.entry.target_as = &address_space_memory;
++        event.entry.perm = IOMMU_NONE;
++        /* This field is meaningless for unmap */
++        event.entry.translated_addr = 0;
++        memory_region_notify_iommu_one(n, &event);
++
++        iova_tree_remove(tree, *map);
++    }
++}
++
+ /* Unmap the whole range in the notifier's scope. */
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+ {
+@@ -4542,6 +4579,11 @@ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+     IntelIOMMUState *s = as->iommu_state;
+     DMAMap map;
+ 
++    if (migration_is_running()) {
++        vtd_address_space_unmap_in_migration(as, n);
++        return;
++    }
++
+     /*
+      * Note: all the codes in this function has a assumption that IOVA
+      * bits are no more than VTD_MGAW bits (which is restricted by
 -- 
 2.47.1
 
