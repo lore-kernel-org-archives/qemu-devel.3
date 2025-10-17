@@ -4,121 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C332CCD19E
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E00CCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9dLs-000376-HW; Fri, 17 Oct 2025 01:50:09 -0400
+	id 1v9dM8-0003Gd-Lj; Fri, 17 Oct 2025 01:50:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v9dLl-00036V-Km; Fri, 17 Oct 2025 01:50:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v9dM6-0003Fn-90; Fri, 17 Oct 2025 01:50:22 -0400
+Received: from 2.mo548.mail-out.ovh.net ([178.33.255.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v9dLi-0004cz-Ip; Fri, 17 Oct 2025 01:50:01 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59H3me8E021054;
- Fri, 17 Oct 2025 05:49:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GiiAm+
- UrR0SUZZV0VPOEpf59Crzol9ZmKngDoEFvoGY=; b=J+2SyrTDDSdryqND2cj27Y
- uZNQvyIfa+W99mxAzhGeP3si9qC6bbEVx2+ViHg4dgIXz4v5Sk5Nv2Ki1bzva/cz
- KNqhiWBZB/Y7PfTT1JSzMeQhovonf/mBCUW495LBiMyrhG6SfeBE9L0mx2XD0I62
- 8TbReO5U08aq04mQRRqhMOV8oOcRBMtsOr5I+QHT1FEhD+m46e8/Hg6ohqtQpmT0
- RfH9CqVu0Kp3ZdJokJpzlmRUOnq3R/CcJr1eKobvn40Vm2UfuHsocg79eQXzTO4F
- jqeyjoBPYOLTgT5EXJ0241YT3NyWB7ApMjfZFP2cxl3sw8zTCA1GlAmjCaCbGwAg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0dn7c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 05:49:32 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59H5nV4r003172;
- Fri, 17 Oct 2025 05:49:31 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qew0dn75-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 05:49:31 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59H50AT3018826;
- Fri, 17 Oct 2025 05:49:30 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r2jn1md7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 05:49:30 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59H5nQdb34144592
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Oct 2025 05:49:26 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8ECD82024C;
- Fri, 17 Oct 2025 05:49:26 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B8C32024B;
- Fri, 17 Oct 2025 05:49:10 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.39.22.45])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 17 Oct 2025 05:49:10 +0000 (GMT)
-Date: Fri, 17 Oct 2025 11:19:07 +0530
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, berrange@redhat.com, richard.henderson@linaro.org,
- alistair@alistair23.me, alex.bennee@linaro.org, deller@gmx.de,
- pbonzini@redhat.com, eduardo@habkost.net, minyard@acm.org,
- gaosong@loongson.cn, maobibo@loongson.cn, laurent@vivier.eu,
- edgar.iglesias@gmail.com, hpoussin@reactos.org, balaton@eik.bme.hu,
- david@redhat.com, chigot@adacore.com, konrad.frederic@yahoo.fr,
- atar4qemu@gmail.com, jcmvbkbc@gmail.com
-Subject: Re: [PATCH 1/5] hw/core/loader: capture Error from load_image_targphys
-Message-ID: <aPHY0828TU5hl5Tg@linux.ibm.com>
-References: <20251016173502.1261674-1-vishalc@linux.ibm.com>
- <20251016173502.1261674-3-vishalc@linux.ibm.com>
- <CAKmqyKOJS+rY0NpTpv76SJqZmgjoLnvQX8wiKgxgUP6k=+fpnQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1v9dM3-0004qs-Gj; Fri, 17 Oct 2025 01:50:21 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.119])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cnv6s5kNcz5xrQ;
+ Fri, 17 Oct 2025 05:50:13 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Fri, 17 Oct
+ 2025 07:50:13 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G0045c2342c5-f75d-4c51-b99f-6d46853b37ee,
+ 48F321F6F3AAA1B288770452BCFEC79A981EE5C7) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <59aa6dd0-143d-4dcf-a2a6-ce02d599d685@kaod.org>
+Date: Fri, 17 Oct 2025 07:50:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKOJS+rY0NpTpv76SJqZmgjoLnvQX8wiKgxgUP6k=+fpnQ@mail.gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CGBSi45XDKWd1sAty0Z16EA1vSxMWGr9
-X-Authority-Analysis: v=2.4 cv=eJkeTXp1 c=1 sm=1 tr=0 ts=68f1d8ec cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=JF9118EUAAAA:8 a=a4e9Y00PKgMP4OML3gsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
- a=xVlTc564ipvMDusKsbsT:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxNCBTYWx0ZWRfX3Ja2jSNYz1S0
- pmWn3JQwMR02sOHaNOXu1RN7pGeiEHKOcf7EjfL6SLsjci9aT7b+Ee5hft0WhUATsG3sx2NTOvj
- MoEqg42v7aYTTMEP2rDTcCOABaSqbnxqx2oPRU3psECmJeeJ6gZGot21rHP0of50ANxt1Hn7qdQ
- G+vpy40VuAio9nHYn4qjp7jIX8+Jkf4Y2mvV+g2ZTWsikCDvuPkUMKHigU+/Po5fwubz9VnFrLp
- M1Vb/3w62Wff66Hzw3ASlBerZiCZtL5HhAIKtkhJKJ4t3vz6Abws7gU2aoNDAB11k14tljYtMXj
- V/agmt6CkYbhjQombT8eG2sODolLrl4iQaBQmLWvU9t1uaUDZoYUo36Ljau4JGZgr8GM99KRYii
- a/2Ryzb9AJLoB9KC2jK+XOksHz9MSg==
-X-Proofpoint-GUID: V8cx6_yy5CNvL_FtUBgUQGq0gyUvCLRK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-17_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 impostorscore=0
- phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110014
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v1 00/12] Coprocessor and memory mapping
+ improvements for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>
+References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: caeaa0e1-7310-4ebf-82e3-cf5a66ea62a6
+X-Ovh-Tracer-Id: 15642408884523338543
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTF7HDvqhKWQu45TyX8C1mz+icJlwcmxJb4eUwtbf+Sppu+JdFxmW9k4R4idg2qhqDtDXIOd6ayyxPcBHICm4XpsnJ9LBYR+U7nnDQr5i9FTDLDXAc+jGhO5R1tNdow1XsW9ynFg2zlfW2KK573T1ie9LfdJXoHnxkfjL5s7YM4PlLoEUoeS1IEDcUHmvVS5AYBy6iLP1gf3qskNvNBGHsk5fXnIzYhd5k7R20uOE0nxWMlmo3LHESW2AiqjXpMnzeOAfilVQI61nwnKiqYmkxElY7YYqa8ZdDfDvYilN4U7Vbs1nrDjecWxOF/FWvj3XdTEz9b+5vG4pGnueY2xKd5cEMSZuWRJDwoCCqyRfnxtS3FuUzVupVL8tnB8yt8ZcETzqSH3A1NRsj4KcUsFHMVwkIfZ3eGjAdh43dDxWGYxs9vR7Gv74Nd4DsyIMipJwzY1+FUYeVKzKE/vvkLTCPOgNSrWsaPatAoFj9g4otSNt4kkqHfjsh5bIQ8aPqW4BRoAkhQk4Wc8lppwcja5ZesUJc50HdAt/YRbg5c9aOnqVgxQsmnWuH2lnirExzF0eAOLco1d4RLk41kvPuB7Rriq9lwe3QhvqB1vejfI5BRroN4mRH/jZOMMXoMBv1socNDIXXDnyRAYLFmlvymF/Bl4425k41ihxRF9ov7klJ6HNA
+DKIM-Signature: a=rsa-sha256; bh=B6SPgHZG67BOCXwPOX8GcDLCIDAUmkLkBTmj7XBljKk=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1760680214; v=1;
+ b=knFJ5eIe/StXZESbTsf/D274fR6befRwifBtmLk5LcM+bvLRbbT0MXHV7ttX9ViVaXWYfH9s
+ TGRHp+IHPIIEKw6X3epAl/ajzJNVBmp8yQPJpHYt/IuaCFz1XNptHomR+k80zwH7RG4Mwj1wlAm
+ PaZrby07Ka7dep0Wv+s9yARHP5V/vk410DpIegvFhfLofAj17JneUf59Kn1OAxJka+ffmjdmdrw
+ qZEqz9y1E6kJVQNW2nRY1cihN+6IuvuvnD3gg0pYoSNGHTcX4c3o1p9JpVhggeBwi2alBNrPOcy
+ pB3Tl+pzmjUq7iVaCvdQ05KKv/bvOdgbnW/vzrxVjrNJg==
+Received-SPF: pass client-ip=178.33.255.19; envelope-from=clg@kaod.org;
+ helo=2.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -136,146 +130,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
-
-
-
-On Fri, Oct 17, 2025 at 08:58:58AM +1000, Alistair Francis wrote:
-> On Fri, Oct 17, 2025 at 4:01 AM Vishal Chourasia <vishalc@linux.ibm.com> wrote:
-> >
-> > Add Error **errp parameter to load_image_targphys(),
-> > load_image_targphys_as(), and get_image_size() to enable better
-> > error reporting when image loading fails.
-> >
-> > Pass NULL for errp in all existing call sites to maintain current
-> > behavior. No functional change intended in this patch.
-> >
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+On 10/15/25 08:21, Jamin Lin wrote:
+> v1:
+>    1. Improved memory mapping
+>    2. Added SRAM support and increased SDRAM size to 512MB to fix
+>       coprocessor crash observed in SDK v09.08
+>    3. Updated coprocessor functional tests for SDK v09.08
+>    4. Added VBOOTROM support
+>    5. Shared a single SCU instance among PSP, SSP, and TSP
+>    6. Shared UART set among PSP, SSP, and TSP
 > 
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Jamin Lin (12):
+>    hw/arm/aspeed_ast27x0-ssp: Add SDRAM region and fix naming and size to
+>      512MB
+>    hw/arm/aspeed_ast27x0-tsp: Add SDRAM region and fix naming and size to
+>      512MB
+>    hw/arm/ast27x0: Add SRAM link and alias mapping for SSP coprocessor
+>    hw/arm/ast27x0: Add SRAM link and alias mapping for TSP coprocessor
+>    hw/arm/ast27x0: Share single SCU instance across PSP, SSP, and TSP
+>    hw/arm/ast27x0: Share single UART set across PSP, SSP, and TSP
+>    hw/arm/aspeed_ast27x0-fc: Map FMC0 flash contents into CA35 boot ROM
+>    hw/arm/aspeed_ast27x0-fc: Add VBOOTROM support
+>    tests/functional/aarch64/ast2700fc: Update test ASPEED SDK v09.08
+>    tests/functional/aarch64/ast2700fc: Add eth2 network interface check
+>      in PCIe test
+>    tests/functional/aarch64/ast2700fc: Move coprocessor image loading to
+>      common function
+>    tests/functional/aarch64/ast2700fc: Add vbootrom test
 > 
-> Alistair
+>   include/hw/arm/aspeed_coprocessor.h           | 14 ++--
+>   hw/arm/aspeed_ast27x0-fc.c                    | 55 +++++++++++----
+>   hw/arm/aspeed_ast27x0-ssp.c                   | 69 +++++++++----------
+>   hw/arm/aspeed_ast27x0-tsp.c                   | 69 +++++++++----------
+>   hw/arm/aspeed_coprocessor_common.c            |  7 ++
+>   .../aarch64/test_aspeed_ast2700fc.py          | 51 ++++++++++----
+>   6 files changed, 160 insertions(+), 105 deletions(-)
 > 
-> > ---
-> >  hw/core/loader.c         | 33 +++++++++++++++++++++++++--------
-<snipped>
-> > diff --git a/hw/core/loader.c b/hw/core/loader.c
-> > index 477661a025..63bb0578b1 100644
-> > --- a/hw/core/loader.c
-> > +++ b/hw/core/loader.c
-> > @@ -48,6 +48,7 @@
-> >  #include "qapi/error.h"
-> >  #include "qapi/qapi-commands-machine.h"
-> >  #include "qapi/type-helpers.h"
-> > +#include "qemu/units.h"
-> >  #include "trace.h"
-> >  #include "hw/hw.h"
-> >  #include "disas/disas.h"
-> > @@ -61,23 +62,31 @@
-> >  #include "hw/nvram/fw_cfg.h"
-> >  #include "system/memory.h"
-> >  #include "hw/boards.h"
-> > +#include "qapi/error.h"
-> >  #include "qemu/cutils.h"
-> >  #include "system/runstate.h"
-> >  #include "tcg/debuginfo.h"
-> >
-> > +#include <errno.h>
-> >  #include <zlib.h>
-> >
-> >  static int roms_loaded;
-> >
-> >  /* return the size or -1 if error */
-> > -int64_t get_image_size(const char *filename)
-> > +int64_t get_image_size(const char *filename, Error **errp)
-> >  {
-> >      int fd;
-> >      int64_t size;
-> >      fd = open(filename, O_RDONLY | O_BINARY);
-> > -    if (fd < 0)
-> > +    if (fd < 0) {
-> > +        error_setg_file_open(errp, errno, filename);
-> >          return -1;
-> > +    }
-> >      size = lseek(fd, 0, SEEK_END);
-> > +    if (size < 0) {
-> > +        error_setg_errno(errp, errno, "lseek failure: %s", filename);
-> > +        return -1;
-> > +    }
-> >      close(fd);
-> >      return size;
-> >  }
-> > @@ -118,21 +127,29 @@ ssize_t read_targphys(const char *name,
-> >  }
-> >
-> >  ssize_t load_image_targphys(const char *filename,
-> > -                            hwaddr addr, uint64_t max_sz)
-> > +                            hwaddr addr, uint64_t max_sz, Error **errp)
-> >  {
-> > -    return load_image_targphys_as(filename, addr, max_sz, NULL);
-> > +    return load_image_targphys_as(filename, addr, max_sz, NULL, errp);
-> >  }
-> >
-> >  /* return the size or -1 if error */
-> >  ssize_t load_image_targphys_as(const char *filename,
-> > -                               hwaddr addr, uint64_t max_sz, AddressSpace *as)
-> > +                               hwaddr addr, uint64_t max_sz, AddressSpace *as,
-> > +                               Error **errp)
-> >  {
-> > +    ERRP_GUARD();
-> >      ssize_t size;
-> >
-> > -    size = get_image_size(filename);
-> > -    if (size < 0 || size > max_sz) {
-> > +    size = get_image_size(filename, errp);
-> > +    if (*errp) {
-> >          return -1;
-> >      }
-> > +
-> > +    if (size > max_sz) {
-> > +        error_setg(errp, "%s exceeds maximum image size (%lu MiB)", filename, max_sz / MiB);
-> > +        return -1;
-> > +    }
-> > +
-> >      if (size > 0) {
-> >          if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
-> >              return -1;
 
 
-There was a case where load_image_targphys_as() can return -1 but errp
-was not set. Following change addresses this issue.
-I will incorporate this in the next version (v4).
-
- /* return the size or -1 if error */
- ssize_t load_image_targphys_as(const char *filename,
--                               hwaddr addr, uint64_t max_sz, AddressSpace *as)
-+                               hwaddr addr, uint64_t max_sz, AddressSpace *as,
-+                               Error **errp)
- {
-+    ERRP_GUARD();
-     ssize_t size;
-
--    size = get_image_size(filename);
--    if (size < 0 || size > max_sz) {
-+    size = get_image_size(filename, errp);
-+    if (*errp) {
-         return -1;
-     }
-+
-+    if (size > max_sz) {
-+        error_setg(errp, "%s exceeds maximum image size (%lu MiB)",
-+                   filename, max_sz / MiB);
-+        return -1;
-+    }
-+
-     if (size > 0) {
-         if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
-+            error_setg(errp, "failed to add file as ROM");
-             return -1;
-         }
-     }
+Applied to aspeed-next.
 
 Thanks,
-vishalc
+
+C.
+
+
 
