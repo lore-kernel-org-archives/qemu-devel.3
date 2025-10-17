@@ -4,111 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE70BCCD19A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC20FCCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9jUo-0003Gg-4i; Fri, 17 Oct 2025 08:23:46 -0400
+	id 1v9jVH-0003QT-QB; Fri, 17 Oct 2025 08:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v9jUm-0003Dd-EV
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:23:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1v9jV4-0003Pz-Qg; Fri, 17 Oct 2025 08:24:03 -0400
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v9jUb-00061i-1v
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:23:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760703808;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gir8vCCONvNLbr5oS8AWzNsJd6V+MI0sZXsiRO1ZMdE=;
- b=IXzBIkZij414Eswa5KxjO1JcJHwr9hqeISE9Rgv4aXehPwJjHM5+UIMP25013v4lRVqKVG
- tx0GpgDq88AeYrDiFPV5qe8eZM4akQPDz/U1xsRd5Ntsi0sAbdP2gR/4NIS9ve8Q7hqn4o
- h2+9Q1d0RVqfcyUibTWQsaapDX8U4ds=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-494-gKqiKJcwMGec_EX5UJGs0w-1; Fri, 17 Oct 2025 08:23:27 -0400
-X-MC-Unique: gKqiKJcwMGec_EX5UJGs0w-1
-X-Mimecast-MFC-AGG-ID: gKqiKJcwMGec_EX5UJGs0w_1760703806
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-47114d373d5so14636415e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 05:23:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760703806; x=1761308606;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gir8vCCONvNLbr5oS8AWzNsJd6V+MI0sZXsiRO1ZMdE=;
- b=vOLsYIaf4YxrKRjHIs2/TD3zh/gW9sf/T0LnJo/baMtVfzxVxSaDlb0tPGacPd3zWE
- kS2Dk1tI6bU/eeoTjjbpvrfzJZM/ZOBVceoTP3dwPJ02PnOPwTOV/0YvLSywBxu9+ICY
- 214qJtA8OZ45C3g2G4rykvAg08OSY2XOsUXA8HWenwy4sS1LZEkdbHqD/nNZJoXjgb1X
- O0w7wsqIopIr9PcnNovKvPQ2d+G8y1AB5gqMH77F9du11hD5DvFEM/IcKCXPqhu999x0
- 1EnL8Jp3Fz3541nYvhgaptTytZhhtgplf5cPyf826PIY1fxd07gnKiPcKmqBHR6SyAGa
- u0Ww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWm6LVjnRBrX1rY+qkwM9R4PTV4wCEbRB2+1tfk12eUywZRtYqhQilWNAPuTn0O31YSEv1oQoyv1XOW@nongnu.org
-X-Gm-Message-State: AOJu0YxuFaYqkt5XzfDMLLeNU7TRYqMyIonWLR1KdyveE4gnzoaCHIu/
- tpdSGCOd+yDzgKvuWBTGtUTy5O1/3YOM/BdxScS88SyURGK7t2NPIEp2FIwwoGro7DhLfjVYcCU
- k6lGQqVyLhysn96XYBO5GJK79X+XaT9GhJZjg2LG/YQtDXvJS7ldHVN12wNKTt/H0
-X-Gm-Gg: ASbGncvSAwnRZjnMkedZIgtyMinS9kI3DXFSqOt51k8yQvCo2yrpnjtT1ODYjnMwrtK
- 24vGS9wW/n7oW2snJqHW8kXSYjnGErszV8sploic8CYmqCKsr0Ovke5NK/dM1mlqDnWKnDBwcvw
- IuH9/h7rCvymv0BzXkP06mO/GRlIOrDqlhP1s9d0sN2dN3W4hPexEF/vvpdC+LpbFsuraxiZ9fN
- nmyBo5FxnO1Cf3T5Vp10FCUJY/wD6ZpTZz35wc+vtUzwTrYeH9BmmrZk7Q6FunbkNR3hj2V2l+G
- zid9Eiltpj8SIHAmh/XGX9wrND7coQAxtElHBPSbcODkCy3z/7bjxX4q42jlL+c3yu7uCPo4JLZ
- fSjkOPs8bvxCQjjXo0M146kQRn16LIxTHAqi7VecPPIlJkA==
-X-Received: by 2002:a05:600c:5029:b0:46f:b32e:4af3 with SMTP id
- 5b1f17b1804b1-471178784efmr23790555e9.1.1760703805732; 
- Fri, 17 Oct 2025 05:23:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5b1wu857sDXHKaCt0SZFQGUs/3rIRFnWzbKmIFNuBfi0g78y8Hkf5jW/4Fz05LMp9btXiTQ==
-X-Received: by 2002:a05:600c:5029:b0:46f:b32e:4af3 with SMTP id
- 5b1f17b1804b1-471178784efmr23790345e9.1.1760703805247; 
- Fri, 17 Oct 2025 05:23:25 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cd4480fsm49085275e9.1.2025.10.17.05.23.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 05:23:24 -0700 (PDT)
-Message-ID: <8ee4e023-7a14-4a02-b481-b54bb9f5225b@redhat.com>
-Date: Fri, 17 Oct 2025 14:23:23 +0200
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1v9jUm-000613-UG; Fri, 17 Oct 2025 08:24:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1760703795; h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:From;
+ bh=CsiG/KGTi3fkMUpnSGwB0slbLv8nNEBui3TseU76L+M=;
+ b=dMiPzjFUEdCyRiOLOQFlU7uPdJAeBF6o3Vtr8pWu98r6ZTMFUbm6MPEmV5dZQCn4ZxhAf0dwsegLycP/F01m8Bb6Jid3ubj9MDYQira0IFvHVDhGPyfnD+qdrcRqVIMu3LUrxPqB2KY4+K6vPAkYr4ZrxyyDGCQOhXftWuZdikk=
+Received: from 30.166.65.138(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WqPerwm_1760703792 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 17 Oct 2025 20:23:13 +0800
+Content-Type: multipart/alternative;
+ boundary="------------vNMlMVvAnLLhbqRq3chSGDIK"
+Message-ID: <2e45ffac-e4fb-4113-93d6-9a672bd5495f@linux.alibaba.com>
+Date: Fri, 17 Oct 2025 20:23:12 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/27] hw/arm/smmuv3-accel: Add set/unset_iommu_device
- callback
+Subject: Re: [PATCH v11 6/8] hw/misc/riscv_iopmp: Add RISC-V IOPMP device
+To: Ethan Chen <ethan84@andestech.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, qemu-riscv@nongnu.org
+References: <20250312093735.1517740-1-ethan84@andestech.com>
+ <20250312093735.1517740-7-ethan84@andestech.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-9-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250929133643.38961-9-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20250312093735.1517740-7-ethan84@andestech.com>
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,292 +68,5018 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a multi-part message in MIME format.
+--------------vNMlMVvAnLLhbqRq3chSGDIK
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Ethan,
 
-On 9/29/25 3:36 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
+It's really a long patch. I am not sure I fully understand it.
+
+Is txn_info_push function a dead code in this patch? I find there is no way to call it.
+
+Could you show the way to use it?
+
+Thanks,
+Zhiwei
+
+On 3/12/25 5:37 PM, Ethan Chen wrote:
+> Support IOPMP specification v0.7.
+> The specification url:
+> https://github.com/riscv-non-isa/iopmp-spec/releases/tag/v0.7
 >
-> Implement a set_iommu_device callback:
->  -If found an existing viommu reuse that.
->  -Else,
->     Allocate a vIOMMU with the nested parent S2 hwpt allocated by VFIO.
->     Though, iommufd’s vIOMMU model supports nested translation by
->     encapsulating a S2 nesting parent HWPT, devices cannot attach to this
->     parent HWPT directly. So two proxy nested HWPTs (bypass and abort) are
->     allocated to handle device attachments.
->  -And add the dev to viommu device list
+> The IOPMP checks whether memory access from a device or CPU is valid.
+> This implementation uses an IOMMU to modify the address space accessed
+> by the device.
 >
-> Also add an unset_iommu_device to unwind/cleanup above.
+> For device access with IOMMUAccessFlags specifying read or write
+> (IOMMU_RO or IOMMU_WO), the IOPMP checks the permission in
+> iopmp_translate. If the access is valid, the target address space is
+> downstream_as. If the access is blocked, it will be redirected to
+> blocked_rwx_as.
 >
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> For CPU access with IOMMUAccessFlags not specifying read or write
+> (IOMMU_NONE), the IOPMP translates the access to the corresponding
+> address space based on the permission. If the access has full permission
+> (rwx), the target address space is downstream_as. If the access has
+> limited permission, the target address space is blocked_ followed by
+> the lacked permissions.
+> The operation of a blocked region can trigger an IOPMP interrupt, a bus
+> error, or it can respond with success and fabricated data, depending on
+> the value of the IOPMP ERR_CFG register.
+>
+> Support Properties and Default Values of the IOPMP Device
+> The following are the supported properties and their default values for the
+> IOPMP device. If a property has no description here, please refer to the
+> IOPMP specification for details:
+>
+> * mdcfg_fmt: 1 (Options: 0/1/2)
+> * srcmd_fmt: 0 (Options: 0/1/2)
+> * tor_en: true (Options: true/false)
+> * sps_en: false (Options: true/false)
+> * prient_prog: true (Options: true/false)
+> * rrid_transl_en: false (Options: true/false)
+> * rrid_transl_prog: false (Options: true/false)
+> * chk_x: true (Options: true/false)
+> * no_x: false (Options: true/false)
+> * no_w: false (Options: true/false)
+> * stall_en: false (Options: true/false)
+> * peis: true (Options: true/false)
+> * pees: true (Options: true/false)
+> * mfr_en: true (Options: true/false)
+> * md_entry_num: 5 (IMP: Valid only for mdcfg_fmt 1/2)
+> * md_num: 8 (Range: 0-63)
+> * rrid_num: 16 (Range: srcmd_fmt ≠ 2: 0-65535, srcmd_fmt = 2: 0-32)
+> * entry_num: 48
+>    (Range: 0-IMP. For mdcfg_fmt = 1, it is fixed as md_num * (md_entry_num + 1).
+>     Entry registers must not overlap with other registers.)
+> * prio_entry: 65535
+>    (Range: 0-IMP. If prio_entry > entry_num, it will be set to entry_num.)
+> * rrid_transl: 0x0 (Range: 0-65535)
+> * entry_offset: 0x4000
+>    (IMP: Entry registers must not overlap with other registers.)
+> * err_rdata: 0x0
+>    (uint32. Specifies the value used in responses to read transactions when
+>     errors are suppressed)
+> * msi_en: false (Options: true/false)
+> * msidata: 12 (Range: 1-1023)
+> * stall_violation_en: true (Options: true/false)
+> * err_msiaddr: 0x24000000 (low-part 32-bit address)
+> * err_msiaddrh: 0x0 (high-part 32-bit address)
+> * msi_rrid: 0
+>    (Range: 0-65535. Specifies the rrid used by the IOPMP to send the MSI.)
+>
+> Signed-off-by: Ethan Chen<ethan84@andestech.com>
 > ---
->  hw/arm/smmuv3-accel.c   | 150 ++++++++++++++++++++++++++++++++++++++++
->  hw/arm/smmuv3-accel.h   |  17 +++++
->  hw/arm/trace-events     |   4 ++
->  include/hw/arm/smmuv3.h |   1 +
->  4 files changed, 172 insertions(+)
+>   hw/misc/Kconfig               |    4 +
+>   hw/misc/meson.build           |    1 +
+>   hw/misc/riscv_iopmp.c         | 2157 +++++++++++++++++++++++++++++++++
+>   hw/misc/trace-events          |    4 +
+>   include/hw/misc/riscv_iopmp.h |  199 +++
+>   5 files changed, 2365 insertions(+)
+>   create mode 100644 hw/misc/riscv_iopmp.c
+>   create mode 100644 include/hw/misc/riscv_iopmp.h
 >
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 6b0e512d86..81fa738f6f 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -8,6 +8,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
+> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> index ec0fa5aa9f..a64bca4da1 100644
+> --- a/hw/misc/Kconfig
+> +++ b/hw/misc/Kconfig
+> @@ -222,4 +222,8 @@ config IOSB
+>   config XLNX_VERSAL_TRNG
+>       bool
+>   
+> +config RISCV_IOPMP
+> +    bool
+> +    select STREAM
+> +
+>   source macio/Kconfig
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index 6d47de482c..50f7d14650 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -34,6 +34,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+>   system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+>   system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+>   system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
+> +specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp.c'))
+>   
+>   subdir('macio')
+>   
+> diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
+> new file mode 100644
+> index 0000000000..959ab18447
+> --- /dev/null
+> +++ b/hw/misc/riscv_iopmp.c
+> @@ -0,0 +1,2157 @@
+> +/*
+> + * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
+> + *
+> + * Copyright (c) 2023-2025 Andes Tech. Corp.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see<http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "qapi/error.h"
 > +#include "trace.h"
->  
->  #include "hw/arm/smmuv3.h"
->  #include "hw/iommu.h"
-> @@ -17,6 +18,9 @@
->  
->  #include "smmuv3-accel.h"
->  
-> +#define SMMU_STE_VALID      (1ULL << 0)
-> +#define SMMU_STE_CFG_BYPASS (1ULL << 3)
+> +#include "exec/exec-all.h"
+> +#include "exec/address-spaces.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/misc/riscv_iopmp.h"
+> +#include "memory.h"
+> +#include "hw/irq.h"
+> +#include "hw/registerfields.h"
+> +#include "trace.h"
+> +#include "qemu/main-loop.h"
+> +#include "hw/stream.h"
+> +#include "hw/misc/riscv_iopmp_txn_info.h"
 > +
->  static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->                                                 PCIBus *bus, int devfn)
->  {
-> @@ -35,6 +39,149 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->      return accel_dev;
->  }
->  
-> +static bool
-> +smmuv3_accel_dev_alloc_viommu(SMMUv3AccelDevice *accel_dev,
-> +                              HostIOMMUDeviceIOMMUFD *idev, Error **errp)
+> +#define TYPE_RISCV_IOPMP_IOMMU_MEMORY_REGION "riscv-iopmp-iommu-memory-region"
+> +
+> +REG32(VERSION, 0x00)
+> +    FIELD(VERSION, VENDOR, 0, 24)
+> +    FIELD(VERSION, SPECVER , 24, 8)
+> +REG32(IMPLEMENTATION, 0x04)
+> +    FIELD(IMPLEMENTATION, IMPID, 0, 32)
+> +REG32(HWCFG0, 0x08)
+> +    FIELD(HWCFG0, MDCFG_FMT, 0, 2)
+> +    FIELD(HWCFG0, SRCMD_FMT, 2, 2)
+> +    FIELD(HWCFG0, TOR_EN, 4, 1)
+> +    FIELD(HWCFG0, SPS_EN, 5, 1)
+> +    FIELD(HWCFG0, USER_CFG_EN, 6, 1)
+> +    FIELD(HWCFG0, PRIENT_PROG, 7, 1)
+> +    FIELD(HWCFG0, RRID_TRANSL_EN, 8, 1)
+> +    FIELD(HWCFG0, RRID_TRANSL_PROG, 9, 1)
+> +    FIELD(HWCFG0, CHK_X, 10, 1)
+> +    FIELD(HWCFG0, NO_X, 11, 1)
+> +    FIELD(HWCFG0, NO_W, 12, 1)
+> +    FIELD(HWCFG0, STALL_EN, 13, 1)
+> +    FIELD(HWCFG0, PEIS, 14, 1)
+> +    FIELD(HWCFG0, PEES, 15, 1)
+> +    FIELD(HWCFG0, MFR_EN, 16, 1)
+> +    FIELD(HWCFG0, MD_ENTRY_NUM, 17, 7)
+> +    FIELD(HWCFG0, MD_NUM, 24, 6)
+> +    FIELD(HWCFG0, ADDRH_EN, 30, 1)
+> +    FIELD(HWCFG0, ENABLE, 31, 1)
+> +REG32(HWCFG1, 0x0C)
+> +    FIELD(HWCFG1, RRID_NUM, 0, 16)
+> +    FIELD(HWCFG1, ENTRY_NUM, 16, 16)
+> +REG32(HWCFG2, 0x10)
+> +    FIELD(HWCFG2, PRIO_ENTRY, 0, 16)
+> +    FIELD(HWCFG2, RRID_TRANSL, 16, 16)
+> +REG32(ENTRYOFFSET, 0x14)
+> +    FIELD(ENTRYOFFSET, OFFSET, 0, 32)
+> +REG32(MDSTALL, 0x30)
+> +    FIELD(MDSTALL, EXEMPT, 0, 1)
+> +    FIELD(MDSTALL, MD, 1, 31)
+> +REG32(MDSTALLH, 0x34)
+> +    FIELD(MDSTALLH, MD, 0, 32)
+> +REG32(RRIDSCP, 0x38)
+> +    FIELD(RRIDSCP, RRID, 0, 16)
+> +    FIELD(RRIDSCP, OP, 30, 2)
+> +    FIELD(RRIDSCP, STAT, 30, 2)
+> +REG32(MDLCK, 0x40)
+> +    FIELD(MDLCK, L, 0, 1)
+> +    FIELD(MDLCK, MD, 1, 31)
+> +REG32(MDLCKH, 0x44)
+> +    FIELD(MDLCKH, MDH, 0, 32)
+> +REG32(MDCFGLCK, 0x48)
+> +    FIELD(MDCFGLCK, L, 0, 1)
+> +    FIELD(MDCFGLCK, F, 1, 7)
+> +REG32(ENTRYLCK, 0x4C)
+> +    FIELD(ENTRYLCK, L, 0, 1)
+> +    FIELD(ENTRYLCK, F, 1, 16)
+> +REG32(ERR_CFG, 0x60)
+> +    FIELD(ERR_CFG, L, 0, 1)
+> +    FIELD(ERR_CFG, IE, 1, 1)
+> +    FIELD(ERR_CFG, RS, 2, 1)
+> +    FIELD(ERR_CFG, MSI_EN, 3, 1)
+> +    FIELD(ERR_CFG, STALL_VIOLATION_EN, 4, 1)
+> +    FIELD(ERR_CFG, MSIDATA, 8, 11)
+> +REG32(ERR_INFO, 0x64)
+> +    FIELD(ERR_INFO, V, 0, 1)
+> +    FIELD(ERR_INFO, TTYPE, 1, 2)
+> +    FIELD(ERR_INFO, MSI_WERR, 3, 1)
+> +    FIELD(ERR_INFO, ETYPE, 4, 4)
+> +    FIELD(ERR_INFO, SVC, 8, 1)
+> +REG32(ERR_REQADDR, 0x68)
+> +    FIELD(ERR_REQADDR, ADDR, 0, 32)
+> +REG32(ERR_REQADDRH, 0x6C)
+> +    FIELD(ERR_REQADDRH, ADDRH, 0, 32)
+> +REG32(ERR_REQID, 0x70)
+> +    FIELD(ERR_REQID, RRID, 0, 16)
+> +    FIELD(ERR_REQID, EID, 16, 16)
+> +REG32(ERR_MFR, 0x74)
+> +    FIELD(ERR_MFR, SVW, 0, 16)
+> +    FIELD(ERR_MFR, SVI, 16, 12)
+> +    FIELD(ERR_MFR, SVS, 31, 1)
+> +REG32(ERR_MSIADDR, 0x78)
+> +REG32(ERR_MSIADDRH, 0x7C)
+> +REG32(MDCFG0, 0x800)
+> +    FIELD(MDCFG0, T, 0, 16)
+> +REG32(SRCMD_EN0, 0x1000)
+> +    FIELD(SRCMD_EN0, L, 0, 1)
+> +    FIELD(SRCMD_EN0, MD, 1, 31)
+> +REG32(SRCMD_ENH0, 0x1004)
+> +    FIELD(SRCMD_ENH0, MDH, 0, 32)
+> +REG32(SRCMD_R0, 0x1008)
+> +    FIELD(SRCMD_R0, MD, 1, 31)
+> +REG32(SRCMD_RH0, 0x100C)
+> +    FIELD(SRCMD_RH0, MDH, 0, 32)
+> +REG32(SRCMD_W0, 0x1010)
+> +    FIELD(SRCMD_W0, MD, 1, 31)
+> +REG32(SRCMD_WH0, 0x1014)
+> +    FIELD(SRCMD_WH0, MDH, 0, 32)
+> +REG32(SRCMD_PERM0, 0x1000)
+> +REG32(SRCMD_PERMH0, 0x1004)
+> +
+> +FIELD(ENTRY_ADDR, ADDR, 0, 32)
+> +FIELD(ENTRY_ADDRH, ADDRH, 0, 32)
+> +
+> +FIELD(ENTRY_CFG, R, 0, 1)
+> +FIELD(ENTRY_CFG, W, 1, 1)
+> +FIELD(ENTRY_CFG, X, 2, 1)
+> +FIELD(ENTRY_CFG, A, 3, 2)
+> +FIELD(ENTRY_CFG, SIE, 5, 3)
+> +FIELD(ENTRY_CFG, SIRE, 5, 1)
+> +FIELD(ENTRY_CFG, SIWE, 6, 1)
+> +FIELD(ENTRY_CFG, SIXE, 7, 1)
+> +FIELD(ENTRY_CFG, SEE, 8, 3)
+> +FIELD(ENTRY_CFG, SERE, 8, 1)
+> +FIELD(ENTRY_CFG, SEWE, 9, 1)
+> +FIELD(ENTRY_CFG, SEXE, 10, 1)
+> +
+> +FIELD(ENTRY_USER_CFG, IM, 0, 32)
+> +
+> +/* Offsets to SRCMD_EN(i) */
+> +#define SRCMD_EN_OFFSET  0x0
+> +#define SRCMD_ENH_OFFSET 0x4
+> +#define SRCMD_R_OFFSET   0x8
+> +#define SRCMD_RH_OFFSET  0xC
+> +#define SRCMD_W_OFFSET   0x10
+> +#define SRCMD_WH_OFFSET  0x14
+> +
+> +/* Offsets to SRCMD_PERM(i) */
+> +#define SRCMD_PERM_OFFSET  0x0
+> +#define SRCMD_PERMH_OFFSET 0x4
+> +
+> +/* Offsets to ENTRY_ADDR(i) */
+> +#define ENTRY_ADDR_OFFSET     0x0
+> +#define ENTRY_ADDRH_OFFSET    0x4
+> +#define ENTRY_CFG_OFFSET      0x8
+> +#define ENTRY_USER_CFG_OFFSET 0xC
+> +
+> +#define IOPMP_MAX_MD_NUM                63
+> +#define IOPMP_MAX_RRID_NUM              32
+> +#define IOPMP_SRCMDFMT0_MAX_RRID_NUM    65535
+> +#define IOPMP_SRCMDFMT2_MAX_RRID_NUM    32
+> +#define IOPMP_MAX_ENTRY_NUM             65535
+> +
+> +/* The ids of iopmp are temporary */
+> +#define VENDER_VIRT                     0
+> +#define SPECVER_0_7_0                   70
+> +#define IMPID_0_7_0                     70
+> +
+> +typedef enum {
+> +    ERR_INFO_TTYPE_NOERROR,
+> +    ERR_INFO_TTYPE_READ,
+> +    ERR_INFO_TTYPE_WRITE,
+> +    ERR_INFO_TTYPE_FETCH
+> +} IOPMPErrInfoTTYPE;
+> +
+> +typedef enum {
+> +    ERR_INFO_ETYPE_NOERROR,
+> +    ERR_INFO_ETYPE_READ,
+> +    ERR_INFO_ETYPE_WRITE,
+> +    ERR_INFO_ETYPE_FETCH,
+> +    ERR_INFO_ETYPE_PARHIT,
+> +    ERR_INFO_ETYPE_NOHIT,
+> +    ERR_INFO_ETYPE_RRID,
+> +    ERR_INFO_ETYPE_USER,
+> +    ERR_INFO_ETYPE_STALL
+> +} IOPMPErrInfoETYPE;
+> +
+> +typedef enum {
+> +    IOPMP_ENTRY_NO_HIT,
+> +    IOPMP_ENTRY_PAR_HIT,
+> +    IOPMP_ENTRY_HIT
+> +} IOPMPEntryHit;
+> +
+> +typedef enum {
+> +    IOPMP_AMATCH_OFF,  /* Null (off)                            */
+> +    IOPMP_AMATCH_TOR,  /* Top of Range                          */
+> +    IOPMP_AMATCH_NA4,  /* Naturally aligned four-byte region    */
+> +    IOPMP_AMATCH_NAPOT /* Naturally aligned power-of-two region */
+> +} IOPMPAddrMode;
+> +
+> +typedef enum {
+> +    IOPMP_ACCESS_READ  = 1,
+> +    IOPMP_ACCESS_WRITE = 2,
+> +    IOPMP_ACCESS_FETCH = 3
+> +} IOPMPAccessType;
+> +
+> +typedef enum {
+> +    IOPMP_NONE = 0,
+> +    IOPMP_RO   = 1,
+> +    IOPMP_WO   = 2,
+> +    IOPMP_RW   = 3,
+> +    IOPMP_XO   = 4,
+> +    IOPMP_RX   = 5,
+> +    IOPMP_WX   = 6,
+> +    IOPMP_RWX  = 7,
+> +} IOPMPPermission;
+> +
+> +typedef enum {
+> +    RRIDSCP_OP_QUERY = 0,
+> +    RRIDSCP_OP_STALL = 1,
+> +    RRIDSCP_OP_NO_STALL = 2,
+> +    RRIDSCP_OP_RESERVED = 3,
+> +} RRIDSCPOp;
+> +
+> +typedef enum {
+> +    RRIDSCP_STAT_NOT_IMPL = 0,
+> +    RRIDSCP_STAT_STALL = 1,
+> +    RRIDSCP_STAT_NO_STALL = 2,
+> +    RRIDSCP_STAT_RRID_NO_IMPL = 3,
+> +} RRIDSCPStat;
+> +
+> +typedef struct EntryRange {
+> +    int md;
+> +    /* Index of entry array */
+> +    int start_idx;
+> +    int end_idx;
+> +} EntryRange;
+> +
+> +static void iopmp_iommu_notify(RISCVIOPMPState *s)
 > +{
-> +    struct iommu_hwpt_arm_smmuv3 bypass_data = {
-> +        .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
+> +    IOMMUTLBEvent event = {
+> +        .entry = {
+> +            .iova = 0,
+> +            .translated_addr = 0,
+> +            .addr_mask = -1ULL,
+> +            .perm = IOMMU_NONE,
+> +        },
+> +        .type = IOMMU_NOTIFIER_UNMAP,
 > +    };
-> +    struct iommu_hwpt_arm_smmuv3 abort_data = {
-> +        .ste = { SMMU_STE_VALID, 0x0ULL },
-> +    };
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +    SMMUState *bs = sdev->smmu;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    uint32_t s2_hwpt_id = idev->hwpt_id;
-> +    SMMUViommu *viommu;
-> +    uint32_t viommu_id;
 > +
-> +    if (s_accel->viommu) {
-> +        accel_dev->viommu = s_accel->viommu;
-> +        return true;
+> +    for (int i = 0; i < s->rrid_num; i++) {
+> +        memory_region_notify_iommu(&s->iommu, i, event);
 > +    }
-> +
-> +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-> +                                      s2_hwpt_id, &viommu_id, errp)) {
-> +        return false;
-> +    }
-> +
-> +    viommu = g_new0(SMMUViommu, 1);
-> +    viommu->core.viommu_id = viommu_id;
-> +    viommu->core.s2_hwpt_id = s2_hwpt_id;
-> +    viommu->core.iommufd = idev->iommufd;
-> +
-> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                    viommu->core.viommu_id, 0,
-> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
-> +                                    sizeof(abort_data), &abort_data,
-> +                                    &viommu->abort_hwpt_id, errp)) {
-> +        goto free_viommu;
-> +    }
-> +
-> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                    viommu->core.viommu_id, 0,
-> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
-> +                                    sizeof(bypass_data), &bypass_data,
-> +                                    &viommu->bypass_hwpt_id, errp)) {
-> +        goto free_abort_hwpt;
-> +    }
-> +
-> +    viommu->iommufd = idev->iommufd;
-> +
-> +    s_accel->viommu = viommu;
-> +    accel_dev->viommu = viommu;
-> +    return true;
-> +
-> +free_abort_hwpt:
-> +    iommufd_backend_free_id(idev->iommufd, viommu->abort_hwpt_id);
-> +free_viommu:
-> +    iommufd_backend_free_id(idev->iommufd, viommu->core.viommu_id);
-> +    g_free(viommu);
-> +    return false;
 > +}
 > +
-> +static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-> +                                          HostIOMMUDevice *hiod, Error **errp)
+> +static void iopmp_msi_send(RISCVIOPMPState *s)
 > +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
-> +    SMMUState *bs = opaque;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
-> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +    uint16_t sid = smmu_get_sid(sdev);
+> +    MemTxResult result;
+> +    uint64_t addr = ((uint64_t)(s->regs.err_msiaddrh) << 32) |
+> +                    s->regs.err_msiaddr;
+> +    address_space_stl_le(&address_space_memory, addr,
+> +                         FIELD_EX32(s->regs.err_cfg, ERR_CFG, MSIDATA),
+> +                         (MemTxAttrs){.requester_id = s->msi_rrid}, &result);
+> +    if (result != MEMTX_OK) {
+> +        s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO, MSI_WERR, 1);
+> +    }
+> +}
 > +
-> +    if (!idev) {
-> +        return true;
+> +static void iopmp_decode_napot(uint64_t a, uint64_t *sa,
+> +                               uint64_t *ea)
+> +{
+> +    /*
+> +     * aaaa...aaa0   8-byte NAPOT range
+> +     * aaaa...aa01   16-byte NAPOT range
+> +     * aaaa...a011   32-byte NAPOT range
+> +     * ...
+> +     * aa01...1111   2^XLEN-byte NAPOT range
+> +     * a011...1111   2^(XLEN+1)-byte NAPOT range
+> +     * 0111...1111   2^(XLEN+2)-byte NAPOT range
+> +     *  1111...1111   Reserved
+> +     */
+> +
+> +    a = (a << 2) | 0x3;
+> +    *sa = a & (a + 1);
+> +    *ea = a | (a + 1);
+> +}
+> +
+> +static void iopmp_update_rule(RISCVIOPMPState *s, uint32_t entry_index)
+> +{
+> +    uint8_t this_cfg = s->regs.entry[entry_index].cfg_reg;
+> +    uint64_t this_addr = s->regs.entry[entry_index].addr_reg |
+> +                         ((uint64_t)s->regs.entry[entry_index].addrh_reg << 32);
+> +    uint64_t prev_addr = 0u;
+> +    uint64_t sa = 0u;
+> +    uint64_t ea = 0u;
+> +
+> +    if (entry_index >= 1u) {
+> +        prev_addr = s->regs.entry[entry_index - 1].addr_reg |
+> +                    ((uint64_t)s->regs.entry[entry_index - 1].addrh_reg << 32);
 > +    }
 > +
-> +    if (accel_dev->idev) {
-> +        if (accel_dev->idev != idev) {
-> +            error_setg(errp, "Device 0x%x already has an associated IOMMU dev",
-> +                       sid);
-> +            return false;
+> +    switch (FIELD_EX32(this_cfg, ENTRY_CFG, A)) {
+> +    case IOPMP_AMATCH_OFF:
+> +        sa = 0u;
+> +        ea = -1;
+> +        break;
+> +
+> +    case IOPMP_AMATCH_TOR:
+> +        sa = (prev_addr) << 2; /* shift up from [xx:0] to [xx+2:2] */
+> +        ea = ((this_addr) << 2) - 1u;
+> +        if (sa > ea) {
+> +            sa = ea = 0u;
 > +        }
-> +        return true;
+> +        break;
+> +
+> +    case IOPMP_AMATCH_NA4:
+> +        sa = this_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
+> +        ea = (sa + 4u) - 1u;
+> +        break;
+> +
+> +    case IOPMP_AMATCH_NAPOT:
+> +        iopmp_decode_napot(this_addr, &sa, &ea);
+> +        break;
+> +
+> +    default:
+> +        sa = 0u;
+> +        ea = 0u;
+> +        break;
 > +    }
 > +
-> +    if (!smmuv3_accel_dev_alloc_viommu(accel_dev, idev, errp)) {
-> +        error_setg(errp, "Device 0x%x: Unable to alloc viommu", sid);
-> +        return false;
-> +    }
-> +
-> +    accel_dev->idev = idev;
-> +    QLIST_INSERT_HEAD(&s_accel->viommu->device_list, accel_dev, next);
-> +    trace_smmuv3_accel_set_iommu_device(devfn, sid);
-> +    return true;
+> +    s->entry_addr[entry_index].sa = sa;
+> +    s->entry_addr[entry_index].ea = ea;
+> +    iopmp_iommu_notify(s);
 > +}
 > +
-> +static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-> +                                            int devfn)
+> +static uint64_t iopmp_read(void *opaque, hwaddr addr, unsigned size)
 > +{
-> +    SMMUState *bs = opaque;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUPciBus *sbus = g_hash_table_lookup(bs->smmu_pcibus_by_busptr, bus);
-> +    SMMUv3AccelDevice *accel_dev;
-> +    SMMUViommu *viommu;
-> +    SMMUDevice *sdev;
-> +    uint16_t sid;
+> +    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
+> +    uint32_t rz = 0;
+> +    uint32_t offset, idx;
+> +    /* Start value for ERR_MFR.svi */
+> +    uint16_t svi_s;
 > +
-> +    if (!sbus) {
-> +        return;
+> +    switch (addr) {
+> +    case A_VERSION:
+> +        rz = FIELD_DP32(rz, VERSION, VENDOR, VENDER_VIRT);
+> +        rz = FIELD_DP32(rz, VERSION, SPECVER, SPECVER_0_7_0);
+> +        break;
+> +    case A_IMPLEMENTATION:
+> +        rz = IMPID_0_7_0;
+> +        break;
+> +    case A_HWCFG0:
+> +        rz = FIELD_DP32(rz, HWCFG0, MDCFG_FMT, s->mdcfg_fmt);
+> +        rz = FIELD_DP32(rz, HWCFG0, SRCMD_FMT, s->srcmd_fmt);
+> +        rz = FIELD_DP32(rz, HWCFG0, TOR_EN, s->tor_en);
+> +        rz = FIELD_DP32(rz, HWCFG0, SPS_EN, s->sps_en);
+> +        rz = FIELD_DP32(rz, HWCFG0, USER_CFG_EN, 0);
+> +        rz = FIELD_DP32(rz, HWCFG0, PRIENT_PROG, s->prient_prog);
+> +        rz = FIELD_DP32(rz, HWCFG0, RRID_TRANSL_EN, s->rrid_transl_en);
+> +        rz = FIELD_DP32(rz, HWCFG0, RRID_TRANSL_PROG, s->rrid_transl_prog);
+> +        rz = FIELD_DP32(rz, HWCFG0, CHK_X, s->chk_x);
+> +        rz = FIELD_DP32(rz, HWCFG0, NO_X, s->no_x);
+> +        rz = FIELD_DP32(rz, HWCFG0, NO_W, s->no_w);
+> +        rz = FIELD_DP32(rz, HWCFG0, STALL_EN, s->stall_en);
+> +        rz = FIELD_DP32(rz, HWCFG0, PEIS, s->peis);
+> +        rz = FIELD_DP32(rz, HWCFG0, PEES, s->pees);
+> +        rz = FIELD_DP32(rz, HWCFG0, MFR_EN, s->mfr_en);
+> +        rz = FIELD_DP32(rz, HWCFG0, MD_ENTRY_NUM, s->md_entry_num);
+> +        rz = FIELD_DP32(rz, HWCFG0, MD_NUM, s->md_num);
+> +        rz = FIELD_DP32(rz, HWCFG0, ADDRH_EN, 1);
+> +        rz = FIELD_DP32(rz, HWCFG0, ENABLE, s->enable);
+> +        break;
+> +    case A_HWCFG1:
+> +        rz = FIELD_DP32(rz, HWCFG1, RRID_NUM, s->rrid_num);
+> +        rz = FIELD_DP32(rz, HWCFG1, ENTRY_NUM, s->entry_num);
+> +        break;
+> +    case A_HWCFG2:
+> +        rz = FIELD_DP32(rz, HWCFG2, PRIO_ENTRY, s->prio_entry);
+> +        rz = FIELD_DP32(rz, HWCFG2, RRID_TRANSL, s->rrid_transl);
+> +        break;
+> +    case A_ENTRYOFFSET:
+> +        rz = s->entry_offset;
+> +        break;
+> +    case A_MDSTALL:
+> +        if (s->stall_en) {
+> +            rz = s->regs.mdstall;
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
+> +    case A_MDSTALLH:
+> +        if (s->stall_en && s->md_num > 31) {
+> +            rz = s->regs.mdstallh;
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
+> +    case A_RRIDSCP:
+> +        if (s->stall_en) {
+> +            rz = s->regs.rridscp;
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
+> +    case A_ERR_CFG:
+> +        rz = s->regs.err_cfg;
+> +        break;
+> +    case A_MDLCK:
+> +        if (s->srcmd_fmt == 1) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                __func__, (int)addr);
+> +        } else {
+> +            rz = s->regs.mdlck;
+> +        }
+> +        break;
+> +    case A_MDLCKH:
+> +        if (s->md_num < 31 || s->srcmd_fmt == 1) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                __func__, (int)addr);
+> +        } else {
+> +            rz = s->regs.mdlckh;
+> +        }
+> +        break;
+> +    case A_MDCFGLCK:
+> +        if (s->mdcfg_fmt != 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +            break;
+> +        }
+> +        rz = s->regs.mdcfglck;
+> +        break;
+> +    case A_ENTRYLCK:
+> +        rz = s->regs.entrylck;
+> +        break;
+> +    case A_ERR_REQADDR:
+> +        rz = s->regs.err_reqaddr & UINT32_MAX;
+> +        break;
+> +    case A_ERR_REQADDRH:
+> +        rz = s->regs.err_reqaddr >> 32;
+> +        break;
+> +    case A_ERR_REQID:
+> +        rz = s->regs.err_reqid;
+> +        break;
+> +    case A_ERR_INFO:
+> +        rz = s->regs.err_info;
+> +        break;
+> +    case A_ERR_MFR:
+> +        if (!s->mfr_en) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +            break;
+> +        }
+> +        svi_s = s->svi;
+> +        s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO, SVC, 0);
+> +        while (1) {
+> +            if (s->svw[s->svi]) {
+> +                if (rz == 0) {
+> +                    /* First svw is found */
+> +                    rz = FIELD_DP32(rz, ERR_MFR, SVW, s->svw[s->svi]);
+> +                    rz = FIELD_DP32(rz, ERR_MFR, SVI, s->svi);
+> +                    rz = FIELD_DP32(rz, ERR_MFR, SVS, 1);
+> +                    /* Clear svw after read */
+> +                    s->svw[s->svi] = 0;
+> +                } else {
+> +                    /* Other subsequent violation exists */
+> +                    s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO,
+> +                                                  SVC, 1);
+> +                    break;
+> +                }
+> +            }
+> +            s->svi++;
+> +            if (s->svi > (s->rrid_num / 16) + 1) {
+> +                s->svi = 0;
+> +            }
+> +            if (svi_s == s->svi) {
+> +                /* rounded back to the same value */
+> +                break;
+> +            }
+> +        }
+> +        /* Set svi for next read */
+> +        s->svi = FIELD_DP32(rz, ERR_MFR, SVI, s->svi);
+> +        break;
+> +    case A_ERR_MSIADDR:
+> +        rz = s->regs.err_msiaddr;
+> +        break;
+> +    case A_ERR_MSIADDRH:
+> +        rz = s->regs.err_msiaddrh;
+> +        break;
+> +
+> +    default:
+> +        if (s->mdcfg_fmt == 0 &&
+> +            addr >= A_MDCFG0 &&
+> +            addr <= A_MDCFG0 + 4 * (s->md_num - 1)) {
+> +            offset = addr - A_MDCFG0;
+> +            if (offset % 4) {
+> +                rz = 0;
+> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                              __func__, (int)addr);
+> +            } else {
+> +                idx = offset >> 2;
+> +                rz = s->regs.mdcfg[idx];
+> +            }
+> +        } else if (s->srcmd_fmt == 0 &&
+> +                   addr >= A_SRCMD_EN0 &&
+> +                   addr <= A_SRCMD_WH0 + 32 * (s->rrid_num - 1)) {
+> +            offset = addr - A_SRCMD_EN0;
+> +            idx = offset >> 5;
+> +            offset &= 0x1f;
+> +
+> +            if (s->sps_en || offset <= SRCMD_ENH_OFFSET) {
+> +                switch (offset) {
+> +                case SRCMD_EN_OFFSET:
+> +                    rz = s->regs.srcmd_en[idx];
+> +                    break;
+> +                case SRCMD_ENH_OFFSET:
+> +                    if (s->md_num > 31) {
+> +                        rz = s->regs.srcmd_enh[idx];
+> +                    } else {
+> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                      __func__, (int)addr);
+> +                    }
+> +                    break;
+> +                case SRCMD_R_OFFSET:
+> +                    rz = s->regs.srcmd_r[idx];
+> +                    break;
+> +                case SRCMD_RH_OFFSET:
+> +                    if (s->md_num > 31) {
+> +                        rz = s->regs.srcmd_rh[idx];
+> +                    } else {
+> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                      __func__, (int)addr);
+> +                    }
+> +                    break;
+> +                case SRCMD_W_OFFSET:
+> +                    rz = s->regs.srcmd_w[idx];
+> +                    break;
+> +                case SRCMD_WH_OFFSET:
+> +                    if (s->md_num > 31) {
+> +                        rz = s->regs.srcmd_wh[idx];
+> +                    } else {
+> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                      __func__, (int)addr);
+> +                    }
+> +                    break;
+> +                default:
+> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                  __func__, (int)addr);
+> +                    break;
+> +                }
+> +            } else {
+> +                 qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                               __func__, (int)addr);
+> +            }
+> +        } else if (s->srcmd_fmt == 2 &&
+> +                   addr >= A_SRCMD_PERM0 &&
+> +                   addr <= A_SRCMD_PERMH0 + 32 * (s->md_num - 1)) {
+> +            offset = addr - A_SRCMD_PERM0;
+> +            idx = offset >> 5;
+> +            offset &= 0x1f;
+> +            switch (offset) {
+> +            case SRCMD_PERM_OFFSET:
+> +                rz = s->regs.srcmd_perm[idx];
+> +                break;
+> +            case SRCMD_PERMH_OFFSET:
+> +                if (s->rrid_num > 16) {
+> +                    rz = s->regs.srcmd_permh[idx];
+> +                } else {
+> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                  __func__, (int)addr);
+> +                }
+> +                break;
+> +            default:
+> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                __func__, (int)addr);
+> +                break;
+> +            }
+> +        } else if (addr >= s->entry_offset &&
+> +                   addr <= s->entry_offset + ENTRY_USER_CFG_OFFSET +
+> +                           16 * (s->entry_num - 1)) {
+> +            offset = addr - s->entry_offset;
+> +            idx = offset >> 4;
+> +            offset &= 0xf;
+> +
+> +            switch (offset) {
+> +            case ENTRY_ADDR_OFFSET:
+> +                rz = s->regs.entry[idx].addr_reg;
+> +                break;
+> +            case ENTRY_ADDRH_OFFSET:
+> +                rz = s->regs.entry[idx].addrh_reg;
+> +                break;
+> +            case ENTRY_CFG_OFFSET:
+> +                rz = s->regs.entry[idx].cfg_reg;
+> +                break;
+> +            default:
+> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                              __func__, (int)addr);
+> +                break;
+> +            }
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
 > +    }
+> +    trace_iopmp_read(addr, rz);
+> +    return rz;
+> +}
 > +
-> +    sdev = sbus->pbdev[devfn];
-> +    if (!sdev) {
-> +        return;
+> +static void update_rrid_stall(RISCVIOPMPState *s)
+> +{
+> +    bool exempt = FIELD_EX32(s->regs.mdstall, MDSTALL, EXEMPT);
+> +    uint64_t stall_by_md = ((uint64_t)s->regs.mdstall |
+> +                            ((uint64_t)s->regs.mdstallh << 32)) >> 1;
+> +    uint64_t srcmd_en;
+> +    bool reduction_or;
+> +    if (s->srcmd_fmt != 2) {
+> +        for (int rrid = 0; rrid < s->rrid_num; rrid++) {
+> +            srcmd_en = ((uint64_t)s->regs.srcmd_en[rrid] |
+> +                        ((uint64_t)s->regs.srcmd_enh[rrid] << 32)) >> 1;
+> +            reduction_or = 0;
+> +            if (srcmd_en & stall_by_md) {
+> +                reduction_or = 1;
+> +            }
+> +            s->rrid_stall[rrid] = exempt ^ reduction_or;
+> +        }
+> +    } else {
+> +        for (int rrid = 0; rrid < s->rrid_num; rrid++) {
+> +            if (stall_by_md) {
+> +                s->rrid_stall[rrid] = 1;
+> +            } else {
+> +                s->rrid_stall[rrid] = 0;
+> +            }
+> +        }
 > +    }
+> +    iopmp_iommu_notify(s);
+> +}
 > +
-> +    sid = smmu_get_sid(sdev);
-> +    accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-> +    if (!host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
-> +                                               accel_dev->idev->hwpt_id,
-> +                                               NULL)) {
-> +        error_report("Unable to attach dev 0x%x to the default HW pagetable",
-> +                     sid);
+> +static inline void resume_stall(RISCVIOPMPState *s)
+> +{
+> +    for (int rrid = 0; rrid < s->rrid_num; rrid++) {
+> +        s->rrid_stall[rrid] = 0;
 > +    }
+> +    iopmp_iommu_notify(s);
+> +}
 > +
-> +    accel_dev->idev = NULL;
-> +    QLIST_REMOVE(accel_dev, next);
-> +    trace_smmuv3_accel_unset_iommu_device(devfn, sid);
+> +static void
+> +iopmp_write(void *opaque, hwaddr addr, uint64_t value, unsigned size)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
+> +    uint32_t offset, idx;
+> +    uint32_t value32 = value;
+> +    uint64_t mdlck;
+> +    uint32_t value_f;
+> +    uint32_t rrid;
+> +    uint32_t op;
+> +    trace_iopmp_write(addr, value32);
 > +
-> +    viommu = s->s_accel->viommu;
-> +    if (QLIST_EMPTY(&viommu->device_list)) {
-> +        iommufd_backend_free_id(viommu->iommufd, viommu->bypass_hwpt_id);
-> +        iommufd_backend_free_id(viommu->iommufd, viommu->abort_hwpt_id);
-> +        iommufd_backend_free_id(viommu->iommufd, viommu->core.viommu_id);
-> +        g_free(viommu);
-> +        s->s_accel->viommu = NULL;
+> +    switch (addr) {
+> +    case A_VERSION: /* RO */
+> +        break;
+> +    case A_IMPLEMENTATION: /* RO */
+> +        break;
+> +    case A_HWCFG0:
+> +        if (FIELD_EX32(value32, HWCFG0, RRID_TRANSL_PROG)) {
+> +            /* W1C */
+> +            s->rrid_transl_prog = 0;
+> +        }
+> +        if (FIELD_EX32(value32, HWCFG0, PRIENT_PROG)) {
+> +            /* W1C */
+> +            s->prient_prog = 0;
+> +        }
+> +        if (!s->enable && s->mdcfg_fmt == 2) {
+> +            /* Locked by enable bit */
+> +            s->md_entry_num = FIELD_EX32(value32, HWCFG0, MD_ENTRY_NUM);
+> +        }
+> +        if (FIELD_EX32(value32, HWCFG0, ENABLE)) {
+> +            /* W1S */
+> +            s->enable = 1;
+> +            iopmp_iommu_notify(s);
+> +        }
+> +        break;
+> +    case A_HWCFG1: /* RO */
+> +        break;
+> +    case A_HWCFG2:
+> +        if (s->prient_prog) {
+> +            s->prio_entry = FIELD_EX32(value32, HWCFG2, PRIO_ENTRY);
+> +            iopmp_iommu_notify(s);
+> +        }
+> +        if (s->rrid_transl_prog) {
+> +            s->rrid_transl = FIELD_EX32(value32, HWCFG2, RRID_TRANSL);
+> +            iopmp_iommu_notify(s);
+> +        }
+> +        break;
+> +    case A_ENTRYOFFSET:
+> +        break;
+> +    case A_MDSTALL:
+> +        if (s->stall_en) {
+> +            s->regs.mdstall = value32;
+> +            if (value32) {
+> +                s->is_stalled = 1;
+> +            } else {
+> +                /* Resume if stall, stallh == 0 */
+> +                if (s->regs.mdstallh == 0) {
+> +                    s->is_stalled = 0;
+> +                }
+> +            }
+> +            update_rrid_stall(s);
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
+> +    case A_MDSTALLH:
+> +        if (s->stall_en) {
+> +            s->regs.mdstallh = value32;
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
+> +    case A_RRIDSCP:
+> +        if (s->stall_en) {
+> +            rrid = FIELD_EX32(value32, RRIDSCP, RRID);
+> +            op = FIELD_EX32(value32, RRIDSCP, OP);
+> +            if (op == RRIDSCP_OP_RESERVED) {
+> +                break;
+> +            }
+> +            s->regs.rridscp = value32;
+> +            if (rrid > s->rrid_num) {
+> +                s->regs.rridscp = FIELD_DP32(s->regs.rridscp, RRIDSCP, STAT,
+> +                                             RRIDSCP_STAT_RRID_NO_IMPL);
+> +                break;
+> +            }
+> +            switch (op) {
+> +            case RRIDSCP_OP_QUERY:
+> +                if (s->is_stalled) {
+> +                    s->regs.rridscp =
+> +                        FIELD_DP32(s->regs.rridscp, RRIDSCP, STAT,
+> +                                    0x2 >> s->rrid_stall[rrid]);
+> +                } else {
+> +                    s->regs.rridscp = FIELD_DP32(s->regs.rridscp, RRIDSCP,
+> +                                                    STAT,
+> +                                                    RRIDSCP_STAT_NO_STALL);
+> +                }
+> +                break;
+> +            case RRIDSCP_OP_STALL:
+> +                s->rrid_stall[rrid] = 1;
+> +                break;
+> +            case RRIDSCP_OP_NO_STALL:
+> +                s->rrid_stall[rrid] = 0;
+> +                break;
+> +            default:
+> +                break;
+> +            }
+> +            if (s->is_stalled) {
+> +                iopmp_iommu_notify(s);
+> +            }
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        }
+> +        break;
+> +    case A_ERR_CFG:
+> +        if (!FIELD_EX32(s->regs.err_cfg, ERR_CFG, L)) {
+> +            s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, L,
+> +                FIELD_EX32(value32, ERR_CFG, L));
+> +            s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, IE,
+> +                FIELD_EX32(value32, ERR_CFG, IE));
+> +            s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, RS,
+> +                FIELD_EX32(value32, ERR_CFG, RS));
+> +            s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, MSI_EN,
+> +                FIELD_EX32(value32, ERR_CFG, MSI_EN));
+> +            s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG,
+> +                STALL_VIOLATION_EN, FIELD_EX32(value32, ERR_CFG,
+> +                                               STALL_VIOLATION_EN));
+> +            s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, MSIDATA,
+> +                FIELD_EX32(value32, ERR_CFG, MSIDATA));
+> +        }
+> +        break;
+> +    case A_MDLCK:
+> +        if (s->srcmd_fmt == 1) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        } else if (!FIELD_EX32(s->regs.mdlck, MDLCK, L)) {
+> +            /* sticky to 1 */
+> +            s->regs.mdlck |= value32;
+> +            if (s->md_num <= 31) {
+> +                s->regs.mdlck = extract32(s->regs.mdlck, 0, s->md_num + 1);
+> +            }
+> +        }
+> +        break;
+> +    case A_MDLCKH:
+> +        if (s->md_num < 31 || s->srcmd_fmt == 1) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                          __func__, (int)addr);
+> +        } else if (!FIELD_EX32(s->regs.mdlck, MDLCK, L)) {
+> +            /* sticky to 1 */
+> +            s->regs.mdlckh |= value32;
+> +            s->regs.mdlck = extract32(s->regs.mdlck, 0, s->md_num - 31);
+> +        }
+> +        break;
+> +    case A_MDCFGLCK:
+> +        if (s->mdcfg_fmt != 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                __func__, (int)addr);
+> +            break;
+> +        }
+> +        if (!FIELD_EX32(s->regs.mdcfglck, MDCFGLCK, L)) {
+> +            value_f = FIELD_EX32(value32, MDCFGLCK, F);
+> +            if (value_f > FIELD_EX32(s->regs.mdcfglck, MDCFGLCK, F)) {
+> +                s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, F,
+> +                                              value_f);
+> +            }
+> +            s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, L,
+> +                                          FIELD_EX32(value32, MDCFGLCK, L));
+> +        }
+> +        break;
+> +    case A_ENTRYLCK:
+> +        if (!(FIELD_EX32(s->regs.entrylck, ENTRYLCK, L))) {
+> +            value_f = FIELD_EX32(value32, ENTRYLCK, F);
+> +            if (value_f > FIELD_EX32(s->regs.entrylck, ENTRYLCK, F)) {
+> +                s->regs.entrylck = FIELD_DP32(s->regs.entrylck, ENTRYLCK, F,
+> +                                              value_f);
+> +            }
+> +            s->regs.entrylck = FIELD_DP32(s->regs.entrylck, ENTRYLCK, L,
+> +                                          FIELD_EX32(value32, ENTRYLCK, L));
+> +        }
+> +    case A_ERR_REQADDR: /* RO */
+> +        break;
+> +    case A_ERR_REQADDRH: /* RO */
+> +        break;
+> +    case A_ERR_REQID: /* RO */
+> +        break;
+> +    case A_ERR_INFO:
+> +        if (FIELD_EX32(value32, ERR_INFO, V)) {
+> +            s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO, V, 0);
+> +            qemu_set_irq(s->irq, 0);
+> +        }
+> +        if (FIELD_EX32(value32, ERR_INFO, MSI_WERR)) {
+> +            s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO, MSI_WERR,
+> +                                          0);
+> +        }
+> +        break;
+> +    case A_ERR_MFR:
+> +        s->svi = FIELD_EX32(value32, ERR_MFR, SVI);
+> +        break;
+> +    case A_ERR_MSIADDR:
+> +        if (!FIELD_EX32(s->regs.err_cfg, ERR_CFG, L)) {
+> +            s->regs.err_msiaddr = value32;
+> +        }
+> +        break;
+> +
+> +    case A_ERR_MSIADDRH:
+> +        if (!FIELD_EX32(s->regs.err_cfg, ERR_CFG, L)) {
+> +            s->regs.err_msiaddrh = value32;
+> +        }
+> +        break;
+> +
+> +    default:
+> +        if (s->mdcfg_fmt == 0 &&
+> +            addr >= A_MDCFG0 &&
+> +            addr <= A_MDCFG0 + 4 * (s->md_num - 1)) {
+> +            offset = addr - A_MDCFG0;
+> +            if (offset % 4) {
+> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                              __func__, (int)addr);
+> +            } else {
+> +                idx = offset >> 2;
+> +                s->regs.mdcfg[idx] = FIELD_EX32(value32, MDCFG0, T);
+> +                iopmp_iommu_notify(s);
+> +            }
+> +        } else if (s->srcmd_fmt == 0 &&
+> +                   addr >= A_SRCMD_EN0 &&
+> +                   addr <= A_SRCMD_WH0 + 32 * (s->rrid_num - 1)) {
+> +            offset = addr - A_SRCMD_EN0;
+> +            idx = offset >> 5;
+> +            offset &= 0x1f;
+> +
+> +            if (offset % 4 || (!s->sps_en && offset > SRCMD_ENH_OFFSET)) {
+> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                              __func__, (int)addr);
+> +            } else if (FIELD_EX32(s->regs.srcmd_en[idx], SRCMD_EN0, L) == 0) {
+> +                /* MD field is protected by mdlck */
+> +                value32 = (value32 & ~s->regs.mdlck) |
+> +                          (s->regs.srcmd_en[idx] & s->regs.mdlck);
+> +                iopmp_iommu_notify(s);
+> +                switch (offset) {
+> +                case SRCMD_EN_OFFSET:
+> +                    s->regs.srcmd_en[idx] =
+> +                        FIELD_DP32(s->regs.srcmd_en[idx], SRCMD_EN0, L,
+> +                                   FIELD_EX32(value32, SRCMD_EN0, L));
+> +                    s->regs.srcmd_en[idx] =
+> +                        FIELD_DP32(s->regs.srcmd_en[idx], SRCMD_EN0, MD,
+> +                                   FIELD_EX32(value32, SRCMD_EN0, MD));
+> +                    if (s->md_num <= 31) {
+> +                        s->regs.srcmd_en[idx] = extract32(s->regs.srcmd_en[idx],
+> +                                                          0, s->md_num + 1);
+> +                    }
+> +                    break;
+> +                case SRCMD_ENH_OFFSET:
+> +                    if (s->md_num > 31) {
+> +                        s->regs.srcmd_enh[idx] = value32;
+> +                        s->regs.srcmd_enh[idx] =
+> +                            extract32(s->regs.srcmd_enh[idx], 0,
+> +                                      s->md_num - 31);
+> +                    } else {
+> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                      __func__, (int)addr);
+> +                    }
+> +                    break;
+> +                case SRCMD_R_OFFSET:
+> +                    s->regs.srcmd_r[idx] =
+> +                        FIELD_DP32(s->regs.srcmd_r[idx], SRCMD_R0, MD,
+> +                                   FIELD_EX32(value32, SRCMD_R0, MD));
+> +                    if (s->md_num <= 31) {
+> +                        s->regs.srcmd_r[idx] = extract32(s->regs.srcmd_r[idx],
+> +                                                         0, s->md_num + 1);
+> +                    }
+> +                    break;
+> +                case SRCMD_RH_OFFSET:
+> +                    if (s->md_num > 31) {
+> +                        s->regs.srcmd_rh[idx] = value32;
+> +                        s->regs.srcmd_rh[idx] =
+> +                            extract32(s->regs.srcmd_rh[idx], 0,
+> +                                      s->md_num - 31);
+> +                    } else {
+> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                      __func__, (int)addr);
+> +                    }
+> +                    break;
+> +                case SRCMD_W_OFFSET:
+> +                    s->regs.srcmd_w[idx] =
+> +                        FIELD_DP32(s->regs.srcmd_w[idx], SRCMD_W0, MD,
+> +                                   FIELD_EX32(value32, SRCMD_W0, MD));
+> +                    if (s->md_num <= 31) {
+> +                        s->regs.srcmd_w[idx] = extract32(s->regs.srcmd_w[idx],
+> +                                                         0, s->md_num + 1);
+> +                    }
+> +                    break;
+> +                case SRCMD_WH_OFFSET:
+> +                    if (s->md_num > 31) {
+> +                        s->regs.srcmd_wh[idx] = value32;
+> +                        s->regs.srcmd_wh[idx] =
+> +                            extract32(s->regs.srcmd_wh[idx], 0,
+> +                                      s->md_num - 31);
+> +                    } else {
+> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                      __func__, (int)addr);
+> +                    }
+> +                    break;
+> +                default:
+> +                    break;
+> +                }
+> +            }
+> +        } else if (s->srcmd_fmt == 2 &&
+> +                   addr >= A_SRCMD_PERM0 &&
+> +                   addr <= A_SRCMD_PERMH0 + 32 * (s->md_num - 1)) {
+> +            offset = addr - A_SRCMD_PERM0;
+> +            idx = offset >> 5;
+> +            offset &= 0x1f;
+> +            /* mdlck lock bit is removed */
+> +            mdlck = ((uint64_t)s->regs.mdlck |
+> +                     ((uint64_t)s->regs.mdlckh << 32)) >> 1;
+> +            iopmp_iommu_notify(s);
+> +            switch (offset) {
+> +            case SRCMD_PERM_OFFSET:
+> +                /* srcmd_perm[md] is protect by mdlck */
+> +                if (((mdlck >> idx) & 0x1) == 0) {
+> +                    s->regs.srcmd_perm[idx] = value32;
+> +                }
+> +                if (s->rrid_num <= 16) {
+> +                    s->regs.srcmd_perm[idx] = extract32(s->regs.srcmd_perm[idx],
+> +                                                        0, 2 * s->rrid_num);
+> +                }
+> +                break;
+> +            case SRCMD_PERMH_OFFSET:
+> +                if (s->rrid_num > 16) {
+> +                    if (((mdlck >> idx) & 0x1) == 0) {
+> +                        s->regs.srcmd_permh[idx] = value32;
+> +                    }
+> +                    s->regs.srcmd_permh[idx] =
+> +                        extract32(s->regs.srcmd_permh[idx], 0,
+> +                                  2 * (s->rrid_num - 16));
+> +                } else {
+> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                  __func__, (int)addr);
+> +                }
+> +                break;
+> +            default:
+> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                __func__, (int)addr);
+> +                break;
+> +            }
+> +        } else if (addr >= s->entry_offset &&
+> +                   addr <= s->entry_offset + ENTRY_USER_CFG_OFFSET
+> +                           + 16 * (s->entry_num - 1)) {
+> +            offset = addr - s->entry_offset;
+> +            idx = offset >> 4;
+> +            offset &= 0xf;
+> +
+> +            /* index < ENTRYLCK_F is protected */
+> +            if (idx >= FIELD_EX32(s->regs.entrylck, ENTRYLCK, F)) {
+> +                switch (offset) {
+> +                case ENTRY_ADDR_OFFSET:
+> +                    s->regs.entry[idx].addr_reg = value32;
+> +                    break;
+> +                case ENTRY_ADDRH_OFFSET:
+> +                    s->regs.entry[idx].addrh_reg = value32;
+> +                    break;
+> +                case ENTRY_CFG_OFFSET:
+> +                    s->regs.entry[idx].cfg_reg = value32;
+> +                    if (!s->tor_en &&
+> +                        FIELD_EX32(s->regs.entry[idx].cfg_reg,
+> +                                   ENTRY_CFG, A) == IOPMP_AMATCH_TOR) {
+> +                        s->regs.entry[idx].cfg_reg =
+> +                            FIELD_DP32(s->regs.entry[idx].cfg_reg, ENTRY_CFG, A,
+> +                                       IOPMP_AMATCH_OFF);
+> +                    }
+> +                    if (!s->peis) {
+> +                        s->regs.entry[idx].cfg_reg =
+> +                            FIELD_DP32(s->regs.entry[idx].cfg_reg, ENTRY_CFG,
+> +                                       SIE, 0);
+> +                    }
+> +                    if (!s->pees) {
+> +                        s->regs.entry[idx].cfg_reg =
+> +                            FIELD_DP32(s->regs.entry[idx].cfg_reg, ENTRY_CFG,
+> +                                       SEE, 0);
+> +                    }
+> +                    break;
+> +                case ENTRY_USER_CFG_OFFSET:
+> +                    /* Does not support user customized permission */
+> +                    break;
+> +                default:
+> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
+> +                                  __func__, (int)addr);
+> +                    break;
+> +                }
+> +                iopmp_update_rule(s, idx);
+> +                if (idx + 1 < s->entry_num &&
+> +                    FIELD_EX32(s->regs.entry[idx + 1].cfg_reg, ENTRY_CFG, A) ==
+> +                    IOPMP_AMATCH_TOR) {
+> +                        iopmp_update_rule(s, idx + 1);
+> +                }
+> +            }
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n", __func__,
+> +                          (int)addr);
+> +        }
 > +    }
 > +}
 > +
->  static bool smmuv3_accel_pdev_allowed(PCIDevice *pdev, bool *vfio_pci)
->  {
->  
-> @@ -121,6 +268,8 @@ static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
->  static const PCIIOMMUOps smmuv3_accel_ops = {
->      .get_address_space = smmuv3_accel_find_add_as,
->      .get_viommu_flags = smmuv3_accel_get_viommu_flags,
-> +    .set_iommu_device = smmuv3_accel_set_iommu_device,
-> +    .unset_iommu_device = smmuv3_accel_unset_iommu_device,
->  };
->  
->  void smmuv3_accel_init(SMMUv3State *s)
-> @@ -128,4 +277,5 @@ void smmuv3_accel_init(SMMUv3State *s)
->      SMMUState *bs = ARM_SMMU(s);
->  
->      bs->iommu_ops = &smmuv3_accel_ops;
-> +    s->s_accel = g_new0(SMMUv3AccelState, 1);
->  }
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 70da16960f..3c8506d1e6 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -10,12 +10,29 @@
->  #define HW_ARM_SMMUV3_ACCEL_H
->  
->  #include "hw/arm/smmu-common.h"
-> +#include "system/iommufd.h"
-> +#include <linux/iommufd.h>
->  #include CONFIG_DEVICES
->  
-> +typedef struct SMMUViommu {
-> +    IOMMUFDBackend *iommufd;
-> +    IOMMUFDViommu core;
-could we avoid using too generic field names like "core". In the rest of
-the code it is then difficult to understand what the field corresponds to.
-
-viommu?
-> +    uint32_t bypass_hwpt_id;
-> +    uint32_t abort_hwpt_id;
-> +    QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-> +} SMMUViommu;
+> +static void apply_sps_permission(RISCVIOPMPState *s, int rrid, int md, int *cfg)
+> +{
+> +    uint64_t srcmd_r, srcmd_w;
+> +    srcmd_r = ((uint64_t)s->regs.srcmd_rh[rrid]) << 32 | s->regs.srcmd_r[rrid];
+> +    srcmd_w = ((uint64_t)s->regs.srcmd_wh[rrid]) << 32 | s->regs.srcmd_w[rrid];
+> +    if (((srcmd_r >> (md + 1)) & 0x1) == 0) {
+> +        /* remove r&x permission and error suppression */
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, R, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, X, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SIRE, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SERE, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SIXE, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SEXE, 0);
+> +    }
+> +    if (((srcmd_w >> (md + 1)) & 0x1) == 0) {
+> +        /* remove w permission and error suppression */
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, W, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SIWE, 0);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SEWE, 0);
+> +    }
+> +}
 > +
->  typedef struct SMMUv3AccelDevice {
->      SMMUDevice  sdev;
-> +    HostIOMMUDeviceIOMMUFD *idev;
-same here. hdev at least would refer to host dev at least. Or does it
-correspond to some kernel terminology?
-
-Eric
-> +    SMMUViommu *viommu;
-> +    QLIST_ENTRY(SMMUv3AccelDevice) next;
->  } SMMUv3AccelDevice;
->  
-> +typedef struct SMMUv3AccelState {
-> +    SMMUViommu *viommu;
-> +} SMMUv3AccelState;
+> +static void apply_srcmdperm(RISCVIOPMPState *s, int rrid, int md, int *cfg)
+> +{
+> +    uint64_t srcmd_perm = ((uint64_t)s->regs.srcmd_permh[md]) << 32 |
+> +                          s->regs.srcmd_perm[md];
 > +
->  #ifdef CONFIG_ARM_SMMUV3_ACCEL
->  void smmuv3_accel_init(SMMUv3State *s);
->  #else
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index f3386bd7ae..86370d448a 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -66,6 +66,10 @@ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s
->  smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
->  smmu_reset_exit(void) ""
->  
-> +#smmuv3-accel.c
-> +smmuv3_accel_set_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
-> +smmuv3_accel_unset_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
+> +    if (((srcmd_perm >> (2 * rrid)) & 0x1)) {
+> +        /* add r&x permission */
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, R, 1);
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, X, 1);
+> +    }
+> +    if (((srcmd_perm >> (2 * rrid + 1)) & 0x1)) {
+> +        /* add w permission */
+> +        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, W, 1);
+> +    }
+> +}
 > +
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
->  strongarm_ssp_read_underrun(void) "SSP rx underrun"
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index bb7076286b..5f3e9089a7 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -66,6 +66,7 @@ struct SMMUv3State {
->  
->      /* SMMU has HW accelerator support for nested S1 + s2 */
->      bool accel;
-> +    struct SMMUv3AccelState  *s_accel;
->  };
->  
->  typedef enum {
+> +static inline void apply_no_chk_x(int *cfg)
+> +{
+> +    /* Use read permission for fetch */
+> +    *cfg = FIELD_DP32(*cfg, ENTRY_CFG, X, FIELD_EX32(*cfg, ENTRY_CFG, R));
+> +}
+> +
+> +/* Apply permssions which are not specified by entry_cfg directly */
+> +static inline void apply_extend_perms(RISCVIOPMPState *s, int rrid, int md,
+> +                                      int *cfg)
+> +{
+> +    if (s->sps_en) {
+> +        apply_sps_permission(s, rrid, md, cfg);
+> +    }
+> +    if (s->srcmd_fmt == 2) {
+> +        apply_srcmdperm(s, rrid, md, cfg);
+> +    }
+> +    if (!s->chk_x) {
+> +        apply_no_chk_x(cfg);
+> +    }
+> +}
+> +
+> +static inline bool addr_in_entry(RISCVIOPMPState *s, hwaddr addr, int idx)
+> +{
+> +    return addr >= s->entry_addr[idx].sa && addr <= s->entry_addr[idx].ea;
+> +}
+> +
+> +/*
+> + * entry_range_list: The entry ranges from SRCMD and MDCFG to match
+> + * entry_idx: matched priority entry index or first non-priority entry index
+> + * cfg: entry cfg for matched priority entry and overlap permission and
+> + *           supression of matched on-priority entries
+> + * iopmp_tlb_size: If the entire TLB shares the same permission, the value is
+> + *                 set to TARGET_PAGE_SIZE, indicating that the cached
+> + *                 translation result can be reused. Otherwise, the value is 1,
+> + *                 meaning the address must be translated for each access.
+> + */
+> +static IOPMPEntryHit match_entry_range(RISCVIOPMPState *s, int rrid,
+> +                                       GSList *entry_range_list, hwaddr addr,
+> +                                       hwaddr sa, hwaddr ea,
+> +                                       int *entry_idx, int *cfg,
+> +                                       hwaddr *iopmp_tlb_size)
+> +{
+> +    EntryRange *range;
+> +    IOPMPEntryHit result = IOPMP_ENTRY_NO_HIT;
+> +    *iopmp_tlb_size = TARGET_PAGE_SIZE;
+> +    *cfg = 0;
+> +    int i = 0;
+> +    int s_idx, e_idx;
+> +    int md;
+> +    int curr_cfg;
+> +    /*
+> +     * Although a transaction may require multiple TLBs, consider the TLB of
+> +     * the current translated address instead of the transaction's start and
+> +     * end address.
+> +     */
+> +    hwaddr tlb_sa = addr & ~(TARGET_PAGE_SIZE - 1);
+> +    hwaddr tlb_ea = tlb_sa + TARGET_PAGE_SIZE - 1;
+> +    int tlb_cfg = 0;
+> +
+> +    while (entry_range_list) {
+> +        range = (EntryRange *)entry_range_list->data;
+> +        s_idx = range->start_idx;
+> +        e_idx = range->end_idx;
+> +        md = range->md;
+> +        if (e_idx > s->entry_num) {
+> +            e_idx = s->entry_num;
+> +        }
+> +        for (i = s_idx; i < e_idx; i++) {
+> +            if (FIELD_EX32(s->regs.entry[i].cfg_reg, ENTRY_CFG, A) ==
+> +                IOPMP_AMATCH_OFF) {
+> +                continue;
+> +            }
+> +
+> +            if (i < s->prio_entry) {
+> +                if (iopmp_tlb_size != NULL &&
+> +                    *iopmp_tlb_size == TARGET_PAGE_SIZE) {
+> +                    if (!(s->entry_addr[i].sa <= tlb_sa &&
+> +                          s->entry_addr[i].ea >= tlb_ea) &&
+> +                        ((s->entry_addr[i].sa >= tlb_sa &&
+> +                          s->entry_addr[i].sa <= tlb_ea) ||
+> +                         (s->entry_addr[i].ea >= tlb_sa &&
+> +                          s->entry_addr[i].ea <= tlb_ea))) {
+> +                        /*
+> +                         * A higher-priority entry exists within the TLB page
+> +                         * but does not cover the entire page. This means
+> +                         * that at least two kinds of permissions are present
+> +                         * within the TLB page.
+> +                         */
+> +                        *iopmp_tlb_size = 1;
+> +                    }
+> +                }
+> +                if (addr_in_entry(s, sa, i)) {
+> +                    if (addr_in_entry(s, ea, i)) {
+> +                            *entry_idx = i;
+> +                            *cfg = s->regs.entry[i].cfg_reg;
+> +                            apply_extend_perms(s, rrid, md, cfg);
+> +                            return IOPMP_ENTRY_HIT;
+> +                    } else {
+> +                        *entry_idx = i;
+> +                        return IOPMP_ENTRY_PAR_HIT;
+> +                    }
+> +                } else if (addr_in_entry(s, ea, i)) {
+> +                    *entry_idx = i;
+> +                    return IOPMP_ENTRY_PAR_HIT;
+> +                } else if (sa < s->entry_addr[i].sa &&
+> +                           ea > s->entry_addr[i].ea) {
+> +                    *entry_idx = i;
+> +                    return IOPMP_ENTRY_PAR_HIT;
+> +                }
+> +            } else {
+> +                if (addr_in_entry(s, sa, i) && addr_in_entry(s, ea, i)) {
+> +                    result = IOPMP_ENTRY_HIT;
+> +                    if (*entry_idx == -1) {
+> +                        /* record first matched non-priorty entry */
+> +                        *entry_idx = i;
+> +                    }
+> +                    curr_cfg = s->regs.entry[i].cfg_reg;
+> +                    apply_extend_perms(s, rrid, md, &curr_cfg);
+> +                    *cfg |= curr_cfg;
+> +                    /* Check this entry is also match tlb or not */
+> +                    if (*iopmp_tlb_size != 1 && addr_in_entry(s, tlb_sa, i) &&
+> +                        addr_in_entry(s, tlb_ea, i)) {
+> +                        tlb_cfg |= curr_cfg;
+> +                        if ((tlb_cfg & 0x7) == 0x7) {
+> +                            /* Already have RWX permission */
+> +                            *cfg = tlb_cfg;
+> +                            return result;
+> +                        }
+> +                    }
+> +                    if ((*cfg & 0x7) == 0x7 && *iopmp_tlb_size == 1) {
+> +                        /*
+> +                         * Already have RWX permission and a higher priority
+> +                         * entry in the same TLB page, checking the
+> +                         * next non-priority entry is unnecessary
+> +                         */
+> +                        return result;
+> +                    }
+> +                }
+> +            }
+> +        }
+> +        entry_range_list = entry_range_list->next;
+> +    }
+> +    if (result == IOPMP_ENTRY_HIT && (*cfg & 0x7) != (tlb_cfg & 0x7)) {
+> +        /*
+> +         * For non-priority entry hit, if the tlb permssion is different to
+> +         * matched entries permssion, reduce iopmp_tlb_size
+> +         */
+> +        *iopmp_tlb_size = 1;
+> +    }
+> +    return result;
+> +}
+> +
+> +static void entry_range_list_data_free(gpointer data)
+> +{
+> +    EntryRange *range = (EntryRange *)data;
+> +    g_free(range);
+> +}
+> +
+> +static IOPMPEntryHit match_entry_srcmd(RISCVIOPMPState *s, int rrid,
+> +                                       hwaddr addr, hwaddr start_addr,
+> +                                       hwaddr end_addr, int *match_entry_idx,
+> +                                       int *cfg, hwaddr *iopmp_tlb_size)
+> +{
+> +    IOPMPEntryHit result = IOPMP_ENTRY_NO_HIT;
+> +    GSList *entry_range_list = NULL;
+> +    uint64_t srcmd_en;
+> +    int k;
+> +    EntryRange *range;
+> +    int md_idx;
+> +    if (s->srcmd_fmt == 1) {
+> +        range = g_malloc(sizeof(*range));
+> +        md_idx = rrid;
+> +        range->md = md_idx;
+> +        if (s->mdcfg_fmt == 0) {
+> +            if (md_idx > 0) {
+> +                range->start_idx = FIELD_EX32(s->regs.mdcfg[md_idx - 1],
+> +                                              MDCFG0, T);
+> +            } else {
+> +                range->start_idx = 0;
+> +            }
+> +            range->end_idx = FIELD_EX32(s->regs.mdcfg[md_idx], MDCFG0, T);
+> +        } else {
+> +            k = s->md_entry_num + 1;
+> +            range->start_idx = md_idx * k;
+> +            range->end_idx = (md_idx + 1) * k;
+> +        }
+> +        entry_range_list = g_slist_append(entry_range_list, range);
+> +    } else {
+> +        for (md_idx = 0; md_idx < s->md_num; md_idx++) {
+> +            srcmd_en = ((uint64_t)s->regs.srcmd_en[rrid] |
+> +                        ((uint64_t)s->regs.srcmd_enh[rrid] << 32)) >> 1;
+> +            range = NULL;
+> +            if (s->srcmd_fmt == 2) {
+> +                /* All entries are needed to be checked in srcmd_fmt2 */
+> +                srcmd_en = -1;
+> +            }
+> +            if (srcmd_en & (1ULL << md_idx)) {
+> +                range = g_malloc(sizeof(*range));
+> +                range->md = md_idx;
+> +                if (s->mdcfg_fmt == 0) {
+> +                    if (md_idx > 0) {
+> +                        range->start_idx = FIELD_EX32(s->regs.mdcfg[md_idx - 1],
+> +                                                      MDCFG0, T);
+> +                    } else {
+> +                        range->start_idx = 0;
+> +                    }
+> +                    range->end_idx = FIELD_EX32(s->regs.mdcfg[md_idx],
+> +                                                MDCFG0, T);
+> +                } else {
+> +                    k = s->md_entry_num + 1;
+> +                    range->start_idx = md_idx * k;
+> +                    range->end_idx = (md_idx + 1) * k;
+> +                }
+> +            }
+> +            /*
+> +             * There is no more memory domain after it enconter an invalid
+> +             * mdcfg. Note that the behavior of mdcfg(t+1).f < mdcfg(t).f is
+> +             * implementation-dependent.
+> +             */
+> +            if (range != NULL) {
+> +                if (range->end_idx < range->start_idx) {
+> +                    break;
+> +                }
+> +                entry_range_list = g_slist_append(entry_range_list, range);
+> +            }
+> +        }
+> +    }
+> +    result = match_entry_range(s, rrid, entry_range_list, addr, start_addr,
+> +                               end_addr, match_entry_idx, cfg, iopmp_tlb_size);
+> +    g_slist_free_full(entry_range_list, entry_range_list_data_free);
+> +    return result;
+> +}
+> +
+> +static MemTxResult iopmp_error_reaction(RISCVIOPMPState *s, uint32_t rrid,
+> +                                        uint32_t eid, hwaddr addr,
+> +                                        uint32_t etype, uint32_t ttype,
+> +                                        uint32_t cfg, uint64_t *data)
+> +{
+> +    uint32_t error_id = 0;
+> +    uint32_t error_info = 0;
+> +    int offset;
+> +    /* interrupt enable regarding the access */
+> +    int ie;
+> +    /* bus error enable */
+> +    int be;
+> +    int error_record;
+> +
+> +    if (etype >= ERR_INFO_ETYPE_READ && etype <= ERR_INFO_ETYPE_WRITE) {
+> +        offset = etype - ERR_INFO_ETYPE_READ;
+> +        ie = (FIELD_EX32(s->regs.err_cfg, ERR_CFG, IE) &&
+> +              !extract32(cfg, R_ENTRY_CFG_SIRE_SHIFT + offset, 1));
+> +        be = (!FIELD_EX32(s->regs.err_cfg, ERR_CFG, RS) &&
+> +              !extract32(cfg, R_ENTRY_CFG_SERE_SHIFT + offset, 1));
+> +    } else {
+> +        ie = FIELD_EX32(s->regs.err_cfg, ERR_CFG, IE);
+> +        be = !FIELD_EX32(s->regs.err_cfg, ERR_CFG, RS);
+> +    }
+> +    error_record = (ie | be) && !(s->transaction_state[rrid].running &&
+> +                                  s->transaction_state[rrid].error_reported);
+> +    if (error_record) {
+> +        if (s->transaction_state[rrid].running) {
+> +            s->transaction_state[rrid].error_reported = true;
+> +        }
+> +        /* Update error information if the error is not suppressed */
+> +        if (!FIELD_EX32(s->regs.err_info, ERR_INFO, V)) {
+> +            error_id = FIELD_DP32(error_id, ERR_REQID, EID, eid);
+> +            error_id = FIELD_DP32(error_id, ERR_REQID, RRID, rrid);
+> +            error_info = FIELD_DP32(error_info, ERR_INFO, ETYPE, etype);
+> +            error_info = FIELD_DP32(error_info, ERR_INFO, TTYPE, ttype);
+> +            s->regs.err_info = error_info;
+> +            s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO, V, 1);
+> +            s->regs.err_reqid = error_id;
+> +            /* addr[LEN+2:2] */
+> +            s->regs.err_reqaddr = addr >> 2;
+> +            if (ie) {
+> +                if (FIELD_EX32(s->regs.err_cfg, ERR_CFG, MSI_EN)) {
+> +                    iopmp_msi_send(s);
+> +                } else {
+> +                    qemu_set_irq(s->irq, 1);
+> +                }
+> +            }
+> +        } else if (s->mfr_en) {
+> +            s->svw[rrid / 16] |= (1 << (rrid % 16));
+> +            s->regs.err_info = FIELD_DP32(s->regs.err_info, ERR_INFO, SVC, 1);
+> +        }
+> +    }
+> +    if (be) {
+> +        return MEMTX_ERROR;
+> +    } else {
+> +        if (data) {
+> +            *data = s->err_rdata;
+> +        }
+> +        return MEMTX_OK;
+> +    }
+> +}
+> +
+> +static IOMMUTLBEntry iopmp_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
+> +                                     IOMMUAccessFlags flags, int iommu_idx)
+> +{
+> +    int rrid = iommu_idx;
+> +    RISCVIOPMPState *s = RISCV_IOPMP(container_of(iommu,
+> +                                                  RISCVIOPMPState, iommu));
+> +    hwaddr start_addr, end_addr;
+> +    int entry_idx = -1;
+> +    hwaddr iopmp_tlb_size = TARGET_PAGE_SIZE;
+> +    int match_cfg = 0;
+> +    IOPMPEntryHit result;
+> +    IOPMPPermission iopmp_perm;
+> +    bool lock = false;
+> +    IOMMUTLBEntry entry = {
+> +        .target_as = &s->downstream_as,
+> +        .iova = addr,
+> +        .translated_addr = addr,
+> +        .addr_mask = 0,
+> +        .perm = IOMMU_NONE,
+> +    };
+> +
+> +    if (!s->enable) {
+> +        /* Bypass IOPMP */
+> +        entry.addr_mask = TARGET_PAGE_SIZE - 1,
+> +        entry.perm = IOMMU_RW;
+> +        return entry;
+> +    }
+> +
+> +    /* unknown RRID */
+> +    if (rrid >= s->rrid_num) {
+> +        entry.target_as = &s->blocked_rwx_as;
+> +        entry.perm = IOMMU_RW;
+> +        return entry;
+> +    }
+> +
+> +    if (s->is_stalled && s->rrid_stall[rrid]) {
+> +        if (FIELD_EX32(s->regs.err_cfg, ERR_CFG, STALL_VIOLATION_EN)) {
+> +            entry.target_as = &s->blocked_rwx_as;
+> +            entry.perm = IOMMU_RW;
+> +            return entry;
+> +        } else {
+> +            if (bql_locked()) {
+> +                bql_unlock();
+> +                lock = true;
+> +            }
+> +            while (s->is_stalled && s->rrid_stall[rrid]) {
+> +                ;
+> +            }
+> +            if (lock) {
+> +                bql_lock();
+> +            }
+> +        }
+> +    }
+> +
+> +    if (s->transaction_state[rrid].running == true) {
+> +        start_addr = s->transaction_state[rrid].start_addr;
+> +        end_addr = s->transaction_state[rrid].end_addr;
+> +    } else {
+> +        /* No transaction information, use the same address */
+> +        start_addr = addr;
+> +        end_addr = addr;
+> +    }
+> +    result = match_entry_srcmd(s, rrid, addr, start_addr, end_addr, &entry_idx,
+> +                               &match_cfg, &iopmp_tlb_size);
+> +    entry.addr_mask = iopmp_tlb_size - 1;
+> +    /* Remove permission for no_x, no_w*/
+> +    if (s->chk_x && s->no_x) {
+> +        match_cfg = FIELD_DP32(match_cfg, ENTRY_CFG, X, 0);
+> +    }
+> +    if (s->no_w) {
+> +        match_cfg = FIELD_DP32(match_cfg, ENTRY_CFG, W, 0);
+> +    }
+> +    if (result == IOPMP_ENTRY_HIT) {
+> +        iopmp_perm = match_cfg & IOPMP_RWX;
+> +        if (flags) {
+> +            if ((iopmp_perm & flags) == 0) {
+> +                /* Permission denied */
+> +                entry.target_as = &s->blocked_rwx_as;
+> +                entry.perm = IOMMU_RW;
+> +            } else {
+> +                entry.target_as = &s->downstream_as;
+> +                if (s->rrid_transl_en) {
+> +                    /* Indirectly access for rrid_transl */
+> +                    entry.target_as = &s->full_as;
+> +                }
+> +                entry.perm = iopmp_perm;
+> +            }
+> +        } else {
+> +            /* CPU access with IOMMU_NONE flag */
+> +            if (iopmp_perm & IOPMP_XO) {
+> +                if ((iopmp_perm & IOPMP_RW) == IOPMP_RW) {
+> +                    entry.target_as = &s->downstream_as;
+> +                    if (s->rrid_transl_en) {
+> +                        entry.target_as = &s->full_as;
+> +                    }
+> +                } else if ((iopmp_perm & IOPMP_RW) == IOPMP_RO) {
+> +                    entry.target_as = &s->blocked_w_as;
+> +                } else if ((iopmp_perm & IOPMP_RW) == IOPMP_WO) {
+> +                    entry.target_as = &s->blocked_r_as;
+> +                } else {
+> +                    entry.target_as = &s->blocked_rw_as;
+> +                }
+> +            } else {
+> +                if ((iopmp_perm & IOPMP_RW) == IOMMU_RW) {
+> +                    entry.target_as = &s->blocked_x_as;
+> +                } else if ((iopmp_perm & IOPMP_RW) == IOPMP_RO) {
+> +                    entry.target_as = &s->blocked_wx_as;
+> +                } else if ((iopmp_perm & IOPMP_RW) == IOPMP_WO) {
+> +                    entry.target_as = &s->blocked_rx_as;
+> +                } else {
+> +                    entry.target_as = &s->blocked_rwx_as;
+> +                }
+> +            }
+> +            entry.perm = IOMMU_RW;
+> +        }
+> +    } else {
+> +        /* CPU access with IOMMU_NONE flag no_hit or par_hit */
+> +        entry.target_as = &s->blocked_rwx_as;
+> +        entry.perm = IOMMU_RW;
+> +    }
+> +    return entry;
+> +}
+> +
+> +static const MemoryRegionOps iopmp_ops = {
+> +    .read = iopmp_read,
+> +    .write = iopmp_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 4, .max_access_size = 4}
+> +};
+> +
+> +static MemTxResult iopmp_permssion_write(void *opaque, hwaddr addr,
+> +                                         uint64_t value, unsigned size,
+> +                                         MemTxAttrs attrs)
+> +{
+> +    MemTxResult result;
+> +    int rrid = attrs.requester_id;
+> +    bool sent_info = false;
+> +    RISCVIOPMPTxnInfo signal;
+> +    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
+> +    if (s->rrid_transl_en) {
+> +        if (s->transaction_state[rrid].running && s->send_ss) {
+> +            sent_info = true;
+> +            signal.rrid = s->rrid_transl;
+> +            signal.start_addr = s->transaction_state[rrid].start_addr;
+> +            signal.end_addr = s->transaction_state[rrid].end_addr;
+> +            signal.stage = s->transaction_state[rrid].stage + 1;
+> +            /* Send transaction information to next stage iopmp. */
+> +            stream_push(s->send_ss, (uint8_t *)&signal, sizeof(signal), 0);
+> +        }
+> +        attrs.requester_id = s->rrid_transl;
+> +    }
+> +    result = address_space_write(&s->downstream_as, addr, attrs, &value, size);
+> +    if (sent_info) {
+> +        stream_push(s->send_ss, (uint8_t *)&signal, sizeof(signal), 1);
+> +    }
+> +    return result;
+> +}
+> +
+> +static MemTxResult iopmp_permssion_read(void *opaque, hwaddr addr,
+> +                                        uint64_t *pdata, unsigned size,
+> +                                        MemTxAttrs attrs)
+> +{
+> +    MemTxResult result;
+> +    int rrid = attrs.requester_id;
+> +    bool sent_info = false;
+> +    RISCVIOPMPTxnInfo signal;
+> +    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
+> +    if (s->rrid_transl_en) {
+> +        if (s->transaction_state[rrid].running && s->send_ss) {
+> +            sent_info = true;
+> +            signal.rrid = s->rrid_transl;
+> +            signal.start_addr = s->transaction_state[rrid].start_addr;
+> +            signal.end_addr = s->transaction_state[rrid].end_addr;
+> +            signal.stage = s->transaction_state[rrid].stage + 1;
+> +            /* Send transaction information to next stage iopmp. */
+> +            stream_push(s->send_ss, (uint8_t *)&signal, sizeof(signal), 0);
+> +        }
+> +        attrs.requester_id = s->rrid_transl;
+> +    }
+> +    result = address_space_read(&s->downstream_as, addr, attrs, pdata, size);
+> +    if (sent_info) {
+> +        stream_push(s->send_ss, (uint8_t *)&signal, sizeof(signal), 1);
+> +    }
+> +    return result;
+> +}
+> +
+> +static MemTxResult iopmp_handle_block(void *opaque, hwaddr addr,
+> +                                      uint64_t *data, unsigned size,
+> +                                      MemTxAttrs attrs,
+> +                                      IOPMPAccessType access_type)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
+> +    int entry_idx;
+> +    int rrid = attrs.requester_id;
+> +    int result;
+> +    hwaddr start_addr, end_addr;
+> +    IOPMPErrInfoETYPE etype;
+> +    IOPMPErrInfoTTYPE ttype;
+> +    ttype = access_type;
+> +    hwaddr iopmp_tlb_size = TARGET_PAGE_SIZE;
+> +    int match_cfg = 0;
+> +    /* unknown RRID */
+> +    if (rrid >= s->rrid_num) {
+> +        etype = ERR_INFO_ETYPE_RRID;
+> +        return iopmp_error_reaction(s, rrid, 0, addr, etype, ttype, 0, data);
+> +    }
+> +
+> +    if (s->is_stalled && s->rrid_stall[rrid]) {
+> +        etype = ERR_INFO_ETYPE_STALL;
+> +        return iopmp_error_reaction(s, rrid, 0, addr, etype, ttype, 0, data);
+> +    }
+> +
+> +    if ((access_type == IOPMP_ACCESS_FETCH && s->no_x) ||
+> +        (access_type == IOPMP_ACCESS_WRITE && s->no_w)) {
+> +        etype = ERR_INFO_ETYPE_NOHIT;
+> +        return iopmp_error_reaction(s, rrid, 0, addr, etype, ttype, 0, data);
+> +    }
+> +
+> +    if (s->transaction_state[rrid].running == true) {
+> +        start_addr = s->transaction_state[rrid].start_addr;
+> +        end_addr = s->transaction_state[rrid].end_addr;
+> +    } else {
+> +        /* No transaction information, use the same address */
+> +        start_addr = addr;
+> +        end_addr = addr;
+> +    }
+> +
+> +    /* matching again to get eid */
+> +    result = match_entry_srcmd(s, rrid, addr, start_addr, end_addr,
+> +                               &entry_idx, &match_cfg,
+> +                               &iopmp_tlb_size);
+> +    if (result == IOPMP_ENTRY_HIT) {
+> +        etype = access_type;
+> +    } else if (result == IOPMP_ENTRY_PAR_HIT) {
+> +        /* Error supperssion per entry is only for all-byte matched entry */
+> +        etype = ERR_INFO_ETYPE_PARHIT;
+> +    } else {
+> +        etype = ERR_INFO_ETYPE_NOHIT;
+> +        entry_idx = 0;
+> +    }
+> +    return iopmp_error_reaction(s, rrid, entry_idx, start_addr, etype, ttype,
+> +                                match_cfg, data);
+> +}
+> +
+> +static MemTxResult iopmp_block_write(void *opaque, hwaddr addr, uint64_t value,
+> +                                     unsigned size, MemTxAttrs attrs)
+> +{
+> +    return iopmp_handle_block(opaque, addr, NULL, size, attrs,
+> +                              IOPMP_ACCESS_WRITE);
+> +}
+> +
+> +static MemTxResult iopmp_block_read(void *opaque, hwaddr addr, uint64_t *pdata,
+> +                                    unsigned size, MemTxAttrs attrs)
+> +{
+> +    return iopmp_handle_block(opaque, addr, pdata, size, attrs,
+> +                              IOPMP_ACCESS_READ);
+> +}
+> +
+> +static MemTxResult iopmp_block_fetch(void *opaque, hwaddr addr, uint64_t *pdata,
+> +                                     unsigned size, MemTxAttrs attrs)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
+> +    if (s->chk_x) {
+> +        return iopmp_handle_block(opaque, addr, pdata, size, attrs,
+> +                                  IOPMP_ACCESS_FETCH);
+> +    }
+> +    /* Use read reaction for fetch if chk_x == 0 */
+> +    return iopmp_handle_block(opaque, addr, pdata, size, attrs,
+> +                              IOPMP_ACCESS_READ);
+> +}
+> +
+> +static const MemoryRegionOps iopmp_block_rw_ops = {
+> +    .fetch_with_attrs = iopmp_permssion_read,
+> +    .read_with_attrs = iopmp_block_read,
+> +    .write_with_attrs = iopmp_block_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_block_w_ops = {
+> +    .fetch_with_attrs = iopmp_permssion_read,
+> +    .read_with_attrs = iopmp_permssion_read,
+> +    .write_with_attrs = iopmp_block_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_block_r_ops = {
+> +    .fetch_with_attrs = iopmp_permssion_read,
+> +    .read_with_attrs = iopmp_block_read,
+> +    .write_with_attrs = iopmp_permssion_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_block_rwx_ops = {
+> +    .fetch_with_attrs = iopmp_block_fetch,
+> +    .read_with_attrs = iopmp_block_read,
+> +    .write_with_attrs = iopmp_block_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_block_wx_ops = {
+> +    .fetch_with_attrs = iopmp_block_fetch,
+> +    .read_with_attrs = iopmp_permssion_read,
+> +    .write_with_attrs = iopmp_block_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_block_rx_ops = {
+> +    .fetch_with_attrs = iopmp_block_fetch,
+> +    .read_with_attrs = iopmp_block_read,
+> +    .write_with_attrs = iopmp_permssion_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_block_x_ops = {
+> +    .fetch_with_attrs = iopmp_block_fetch,
+> +    .read_with_attrs = iopmp_permssion_read,
+> +    .write_with_attrs = iopmp_permssion_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static const MemoryRegionOps iopmp_full_ops = {
+> +    .fetch_with_attrs = iopmp_permssion_read,
+> +    .read_with_attrs = iopmp_permssion_read,
+> +    .write_with_attrs = iopmp_permssion_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .valid = {.min_access_size = 1, .max_access_size = 8},
+> +};
+> +
+> +static void iopmp_realize(DeviceState *dev, Error **errp)
+> +{
+> +    Object *obj = OBJECT(dev);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    RISCVIOPMPState *s = RISCV_IOPMP(dev);
+> +    uint64_t size, mmio_size;
+> +
+> +    size = -1ULL;
+> +
+> +    if (s->srcmd_fmt > 2) {
+> +        error_setg(errp, "Invalid IOPMP srcmd_fmt");
+> +        error_append_hint(errp, "Valid values are 0, 1, and 2.\n");
+> +        return;
+> +    }
+> +
+> +    if (s->mdcfg_fmt > 2) {
+> +        error_setg(errp, "Invalid IOPMP mdcfg_fmt");
+> +        error_append_hint(errp, "Valid values are 0, 1, and 2.\n");
+> +        return;
+> +    }
+> +
+> +    if (s->srcmd_fmt != 0) {
+> +        /* SPS is only supported in srcmd_fmt0 */
+> +        s->sps_en = false;
+> +    }
+> +
+> +    s->md_num = MIN(s->md_num, IOPMP_MAX_MD_NUM);
+> +    if (s->srcmd_fmt == 1) {
+> +        /* Each RRID has one MD */
+> +        s->md_num = MIN(s->md_num, s->rrid_num);
+> +    }
+> +    s->md_entry_num = s->default_md_entry_num;
+> +    /* If md_entry_num is fixed, entry_num = md_num * (md_entry_num + 1) */
+> +    if (s->mdcfg_fmt == 1) {
+> +        s->entry_num = s->md_num * (s->md_entry_num + 1);
+> +    }
+> +
+> +    s->prient_prog = s->default_prient_prog;
+> +    if (s->srcmd_fmt == 0) {
+> +        s->rrid_num = MIN(s->rrid_num, IOPMP_SRCMDFMT0_MAX_RRID_NUM);
+> +    } else if (s->srcmd_fmt == 1) {
+> +        s->rrid_num = MIN(s->rrid_num, s->md_num);
+> +    } else {
+> +        s->rrid_num = MIN(s->rrid_num, IOPMP_SRCMDFMT2_MAX_RRID_NUM);
+> +    }
+> +    s->prio_entry = MIN(s->default_prio_entry, s->entry_num);
+> +    s->rrid_transl_prog = s->default_rrid_transl_prog;
+> +    s->rrid_transl = s->default_rrid_transl;
+> +
+> +    s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, MSI_EN,
+> +                                 s->default_msi_en);
+> +    s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, MSIDATA,
+> +                                 s->default_msidata);
+> +    s->regs.err_msiaddr = s->default_err_msiaddr;
+> +    s->regs.err_msiaddrh = s->default_err_msiaddrh;
+> +
+> +    s->regs.mdcfg = g_malloc0(s->md_num * sizeof(uint32_t));
+> +    if (s->srcmd_fmt != 2) {
+> +        s->regs.srcmd_en = g_malloc0(s->rrid_num * sizeof(uint32_t));
+> +        s->regs.srcmd_enh = g_malloc0(s->rrid_num * sizeof(uint32_t));
+> +    } else {
+> +        /* srcmd_perm */
+> +        s->regs.srcmd_perm = g_malloc0(s->md_num * sizeof(uint32_t));
+> +        s->regs.srcmd_permh = g_malloc0(s->md_num * sizeof(uint32_t));
+> +    }
+> +
+> +    if (s->sps_en) {
+> +        s->regs.srcmd_r = g_malloc0(s->rrid_num * sizeof(uint32_t));
+> +        s->regs.srcmd_rh = g_malloc0(s->rrid_num * sizeof(uint32_t));
+> +        s->regs.srcmd_w = g_malloc0(s->rrid_num * sizeof(uint32_t));
+> +        s->regs.srcmd_wh = g_malloc0(s->rrid_num * sizeof(uint32_t));
+> +    }
+> +
+> +    if (s->stall_en) {
+> +        s->rrid_stall = g_malloc0(s->rrid_num * sizeof(bool));
+> +    }
+> +
+> +    if (s->mfr_en) {
+> +        s->svw = g_malloc0((s->rrid_num / 16 + 1) * sizeof(uint16_t));
+> +    }
+> +
+> +    s->regs.entry = g_malloc0(s->entry_num * sizeof(RISCVIOPMPEntryRegs));
+> +    s->entry_addr = g_malloc0(s->entry_num * sizeof(RISCVIOPMPEntryAddr));
+> +    s->transaction_state = g_malloc0(s->rrid_num *
+> +                                     sizeof(RISCVIOPMPTrasaction));
+> +    mmio_size = MAX(A_SRCMD_EN0 + 32 * s->rrid_num,
+> +                    s->entry_offset + 16 * s->entry_num);
+> +    qemu_mutex_init(&s->iopmp_transaction_mutex);
+> +
+> +    memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
+> +                             TYPE_RISCV_IOPMP_IOMMU_MEMORY_REGION,
+> +                             obj, "riscv-iopmp-sysbus-iommu", UINT64_MAX);
+> +    memory_region_init_io(&s->mmio, obj, &iopmp_ops,
+> +                          s, "riscv-iopmp-regs", mmio_size);
+> +    sysbus_init_mmio(sbd, &s->mmio);
+> +
+> +    memory_region_init_io(&s->blocked_rw, NULL, &iopmp_block_rw_ops, s,
+> +                          "riscv-iopmp-blocked-rw", size);
+> +    memory_region_init_io(&s->blocked_w, NULL, &iopmp_block_w_ops, s,
+> +                          "riscv-iopmp-blocked-w", size);
+> +    memory_region_init_io(&s->blocked_r, NULL, &iopmp_block_r_ops, s,
+> +                          "riscv-iopmp-blocked-r", size);
+> +    memory_region_init_io(&s->blocked_rwx, NULL, &iopmp_block_rwx_ops, s,
+> +                          "riscv-iopmp-blocked-rwx", size);
+> +    memory_region_init_io(&s->blocked_wx, NULL, &iopmp_block_wx_ops, s,
+> +                          "riscv-iopmp-blocked-wx", size);
+> +    memory_region_init_io(&s->blocked_rx, NULL, &iopmp_block_rx_ops, s,
+> +                          "riscv-iopmp-blocked-rx", size);
+> +    memory_region_init_io(&s->blocked_x, NULL, &iopmp_block_x_ops, s,
+> +                          "riscv-iopmp-blocked-x", size);
+> +    memory_region_init_io(&s->full_mr, NULL, &iopmp_full_ops, s,
+> +                          "riscv-iopmp-full", size);
+> +
+> +    address_space_init(&s->blocked_rw_as, &s->blocked_rw,
+> +                       "riscv-iopmp-blocked-rw-as");
+> +    address_space_init(&s->blocked_w_as, &s->blocked_w,
+> +                       "riscv-iopmp-blocked-w-as");
+> +    address_space_init(&s->blocked_r_as, &s->blocked_r,
+> +                       "riscv-iopmp-blocked-r-as");
+> +    address_space_init(&s->blocked_rwx_as, &s->blocked_rwx,
+> +                       "riscv-iopmp-blocked-rwx-as");
+> +    address_space_init(&s->blocked_wx_as, &s->blocked_wx,
+> +                       "riscv-iopmp-blocked-wx-as");
+> +    address_space_init(&s->blocked_rx_as, &s->blocked_rx,
+> +                       "riscv-iopmp-blocked-rx-as");
+> +    address_space_init(&s->blocked_x_as, &s->blocked_x,
+> +                       "riscv-iopmp-blocked-x-as");
+> +    address_space_init(&s->full_as, &s->full_mr, "riscv-iopmp-full-as");
+> +
+> +    object_initialize_child(OBJECT(s), "riscv_iopmp_streamsink",
+> +                            &s->txn_info_sink,
+> +                            TYPE_RISCV_IOPMP_STREAMSINK);
+> +}
+> +
+> +static void iopmp_reset_enter(Object *obj, ResetType type)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(obj);
+> +
+> +    qemu_set_irq(s->irq, 0);
+> +    if (s->srcmd_fmt != 2) {
+> +        memset(s->regs.srcmd_en, 0, s->rrid_num * sizeof(uint32_t));
+> +        memset(s->regs.srcmd_enh, 0, s->rrid_num * sizeof(uint32_t));
+> +    } else {
+> +        memset(s->regs.srcmd_en, 0, s->md_num * sizeof(uint32_t));
+> +        memset(s->regs.srcmd_enh, 0, s->md_num * sizeof(uint32_t));
+> +    }
+> +
+> +    if (s->sps_en) {
+> +        memset(s->regs.srcmd_r, 0, s->rrid_num * sizeof(uint32_t));
+> +        memset(s->regs.srcmd_rh, 0, s->rrid_num * sizeof(uint32_t));
+> +        memset(s->regs.srcmd_w, 0, s->rrid_num * sizeof(uint32_t));
+> +        memset(s->regs.srcmd_wh, 0, s->rrid_num * sizeof(uint32_t));
+> +    }
+> +
+> +    if (s->stall_en) {
+> +        memset((void *)s->rrid_stall, 0, s->rrid_num * sizeof(bool));
+> +        s->is_stalled = 0;
+> +    }
+> +
+> +    if (s->mfr_en) {
+> +        memset(s->svw, 0, (s->rrid_num / 16 + 1) * sizeof(uint16_t));
+> +    }
+> +
+> +    memset(s->regs.entry, 0, s->entry_num * sizeof(RISCVIOPMPEntryRegs));
+> +    memset(s->entry_addr, 0, s->entry_num * sizeof(RISCVIOPMPEntryAddr));
+> +    memset(s->transaction_state, 0,
+> +           s->rrid_num * sizeof(RISCVIOPMPTrasaction));
+> +
+> +    s->regs.mdlck = 0;
+> +    s->regs.mdlckh = 0;
+> +    s->regs.entrylck = 0;
+> +    s->regs.mdcfglck = 0;
+> +    s->regs.mdstall = 0;
+> +    s->regs.mdstallh = 0;
+> +    s->regs.rridscp = 0;
+> +    s->regs.err_cfg = 0;
+> +    s->regs.err_reqaddr = 0;
+> +    s->regs.err_reqid = 0;
+> +    s->regs.err_info = 0;
+> +
+> +    s->prient_prog = s->default_prient_prog;
+> +    s->rrid_transl_prog = s->default_rrid_transl_prog;
+> +    s->md_entry_num = s->default_md_entry_num;
+> +    s->rrid_transl = s->default_rrid_transl;
+> +    s->prio_entry = MIN(s->default_prio_entry, s->entry_num);
+> +    s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, MSI_EN,
+> +                                 s->default_msi_en);
+> +    s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, STALL_VIOLATION_EN,
+> +                                 s->default_stall_violation_en);
+> +    s->regs.err_cfg = FIELD_DP32(s->regs.err_cfg, ERR_CFG, MSIDATA,
+> +                                 s->default_msidata);
+> +    s->regs.err_msiaddr = s->default_err_msiaddr;
+> +    s->regs.err_msiaddrh = s->default_err_msiaddrh;
+> +    s->enable = 0;
+> +}
+> +
+> +static void iopmp_reset_hold(Object *obj, ResetType type)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(obj);
+> +
+> +    qemu_set_irq(s->irq, 0);
+> +}
+> +
+> +static int iopmp_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
+> +{
+> +    return attrs.requester_id;
+> +}
+> +
+> +static void iopmp_iommu_memory_region_class_init(ObjectClass *klass, void *data)
+> +{
+> +    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
+> +
+> +    imrc->translate = iopmp_translate;
+> +    imrc->attrs_to_index = iopmp_attrs_to_index;
+> +}
+> +
+> +static const Property iopmp_property[] = {
+> +    DEFINE_PROP_UINT32("mdcfg_fmt", RISCVIOPMPState, mdcfg_fmt, 1),
+> +    DEFINE_PROP_UINT32("srcmd_fmt", RISCVIOPMPState, srcmd_fmt, 0),
+> +    DEFINE_PROP_BOOL("tor_en", RISCVIOPMPState, tor_en, true),
+> +    DEFINE_PROP_BOOL("sps_en", RISCVIOPMPState, sps_en, false),
+> +    DEFINE_PROP_BOOL("prient_prog", RISCVIOPMPState, default_prient_prog, true),
+> +    DEFINE_PROP_BOOL("rrid_transl_en", RISCVIOPMPState, rrid_transl_en, false),
+> +    DEFINE_PROP_BOOL("rrid_transl_prog", RISCVIOPMPState,
+> +                     default_rrid_transl_prog, false),
+> +    DEFINE_PROP_BOOL("chk_x", RISCVIOPMPState, chk_x, true),
+> +    DEFINE_PROP_BOOL("no_x", RISCVIOPMPState, no_x, false),
+> +    DEFINE_PROP_BOOL("no_w", RISCVIOPMPState, no_w, false),
+> +    DEFINE_PROP_BOOL("stall_en", RISCVIOPMPState, stall_en, false),
+> +    DEFINE_PROP_BOOL("peis", RISCVIOPMPState, peis, true),
+> +    DEFINE_PROP_BOOL("pees", RISCVIOPMPState, pees, true),
+> +    DEFINE_PROP_BOOL("mfr_en", RISCVIOPMPState, mfr_en, true),
+> +    DEFINE_PROP_UINT32("md_entry_num", RISCVIOPMPState, default_md_entry_num,
+> +                       5),
+> +    DEFINE_PROP_UINT32("md_num", RISCVIOPMPState, md_num, 8),
+> +    DEFINE_PROP_UINT32("rrid_num", RISCVIOPMPState, rrid_num, 16),
+> +    DEFINE_PROP_UINT32("entry_num", RISCVIOPMPState, entry_num, 48),
+> +    DEFINE_PROP_UINT32("prio_entry", RISCVIOPMPState, default_prio_entry,
+> +                       65535),
+> +    DEFINE_PROP_UINT32("rrid_transl", RISCVIOPMPState, default_rrid_transl,
+> +                       0x0),
+> +    DEFINE_PROP_INT32("entry_offset", RISCVIOPMPState, entry_offset, 0x4000),
+> +    DEFINE_PROP_UINT32("err_rdata", RISCVIOPMPState, err_rdata, 0x0),
+> +    DEFINE_PROP_BOOL("msi_en", RISCVIOPMPState, default_msi_en, false),
+> +    DEFINE_PROP_UINT32("msidata", RISCVIOPMPState, default_msidata, 12),
+> +    DEFINE_PROP_BOOL("stall_violation_en", RISCVIOPMPState,
+> +                     default_stall_violation_en, true),
+> +    DEFINE_PROP_UINT32("err_msiaddr", RISCVIOPMPState, default_err_msiaddr,
+> +                       0x24000000),
+> +    DEFINE_PROP_UINT32("err_msiaddrh", RISCVIOPMPState, default_err_msiaddrh,
+> +                       0x0),
+> +    DEFINE_PROP_UINT32("msi_rrid", RISCVIOPMPState, msi_rrid, 0),
+> +};
+> +
+> +static void iopmp_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+> +    device_class_set_props(dc, iopmp_property);
+> +    dc->realize = iopmp_realize;
+> +    rc->phases.enter = iopmp_reset_enter;
+> +    rc->phases.hold = iopmp_reset_hold;
+> +}
+> +
+> +static void iopmp_init(Object *obj)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(obj);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+> +
+> +    sysbus_init_irq(sbd, &s->irq);
+> +}
+> +
+> +static const TypeInfo iopmp_info = {
+> +    .name = TYPE_RISCV_IOPMP,
+> +    .parent = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(RISCVIOPMPState),
+> +    .instance_init = iopmp_init,
+> +    .class_init = iopmp_class_init,
+> +};
+> +
+> +static const TypeInfo iopmp_iommu_memory_region_info = {
+> +    .name = TYPE_RISCV_IOPMP_IOMMU_MEMORY_REGION,
+> +    .parent = TYPE_IOMMU_MEMORY_REGION,
+> +    .class_init = iopmp_iommu_memory_region_class_init,
+> +};
+> +
+> +DeviceState *iopmp_create(hwaddr addr, qemu_irq irq)
+> +{
+> +    DeviceState *dev = qdev_new(TYPE_RISCV_IOPMP);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+> +    return dev;
+> +}
+> +
+> +/*
+> + * Alias subregions from the source memory region to the destination memory
+> + * region
+> + */
+> +static void alias_memory_subregions(MemoryRegion *src_mr, MemoryRegion *dst_mr)
+> +{
+> +    int32_t priority;
+> +    hwaddr addr;
+> +    MemoryRegion *alias, *subregion;
+> +    QTAILQ_FOREACH(subregion, &src_mr->subregions, subregions_link) {
+> +        priority = subregion->priority;
+> +        addr = subregion->addr;
+> +        alias = g_malloc0(sizeof(MemoryRegion));
+> +        memory_region_init_alias(alias, NULL, subregion->name, subregion, 0,
+> +                                 memory_region_size(subregion));
+> +        memory_region_add_subregion_overlap(dst_mr, addr, alias, priority);
+> +    }
+> +}
+> +
+> +/*
+> + * Create downstream of system memory for IOPMP, and overlap memory region
+> + * specified in memmap with IOPMP translator. Make sure subregions are added to
+> + * system memory before call this function.
+> + */
+> +void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
+> +                               uint32_t map_entry_num, uint32_t stage)
+> +{
+> +    RISCVIOPMPState *s = RISCV_IOPMP(dev);
+> +    uint32_t i;
+> +    MemoryRegion *iommu_alias;
+> +    MemoryRegion *target_mr = get_system_memory();
+> +    MemoryRegion *downstream = g_malloc0(sizeof(MemoryRegion));
+> +    memory_region_init(downstream, NULL, "iopmp_downstream",
+> +                       memory_region_size(target_mr));
+> +    /* Create a downstream which does not have iommu of iopmp */
+> +    alias_memory_subregions(target_mr, downstream);
+> +
+> +    for (i = 0; i < map_entry_num; i++) {
+> +        /* Access to protected regions is managed through IOPMP */
+> +        iommu_alias = g_new(MemoryRegion, 1);
+> +        memory_region_init_alias(iommu_alias, NULL, "iommu_alias",
+> +                                 MEMORY_REGION(&s->iommu), memmap[i].base,
+> +                                 memmap[i].size);
+> +        memory_region_add_subregion_overlap(target_mr, memmap[i].base,
+> +                                            iommu_alias, 1);
+> +    }
+> +    s->downstream = downstream;
+> +    address_space_init(&s->downstream_as, s->downstream,
+> +                       "riscv-iopmp-downstream-as");
+> +}
+> +
+> +static size_t txn_info_push(StreamSink *txn_info_sink, unsigned char *buf,
+> +                            size_t len, bool eop)
+> +{
+> +    RISCVIOPMPStreamSink *ss = RISCV_IOPMP_STREAMSINK(txn_info_sink);
+> +    RISCVIOPMPState *s = RISCV_IOPMP(container_of(ss, RISCVIOPMPState,
+> +                                      txn_info_sink));
+> +    RISCVIOPMPTxnInfo *signal;
+> +    uint32_t rrid;
+> +
+> +    if (len != sizeof(RISCVIOPMPTxnInfo)) {
+> +        return 0;
+> +    }
+> +    signal = (RISCVIOPMPTxnInfo *)buf;
+> +    rrid = signal->rrid;
+> +
+> +    if (s->transaction_state[rrid].running) {
+> +        if (eop) {
+> +            /* Finish the transaction */
+> +            qemu_mutex_lock(&s->iopmp_transaction_mutex);
+> +            s->transaction_state[rrid].running = 0;
+> +            qemu_mutex_unlock(&s->iopmp_transaction_mutex);
+> +            return 1;
+> +        } else {
+> +            /* Transaction is already running */
+> +            return 0;
+> +        }
+> +    } else {
+> +        /* Get the transaction info */
+> +        s->transaction_state[rrid].supported = 1;
+> +        qemu_mutex_lock(&s->iopmp_transaction_mutex);
+> +        s->transaction_state[rrid].running = 1;
+> +        qemu_mutex_unlock(&s->iopmp_transaction_mutex);
+> +
+> +        s->transaction_state[rrid].start_addr = signal->start_addr;
+> +        s->transaction_state[rrid].end_addr = signal->end_addr;
+> +        s->transaction_state[rrid].error_reported = 0;
+> +        s->transaction_state[rrid].stage = signal->stage;
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> +
+> +void iopmp_setup_sink(DeviceState *dev, StreamSink * ss)
+> +{
+> +     RISCVIOPMPState *s = RISCV_IOPMP(dev);
+> +     s->send_ss = ss;
+> +}
+> +
+> +static void riscv_iopmp_streamsink_class_init(ObjectClass *klass, void *data)
+> +{
+> +    StreamSinkClass *ssc = STREAM_SINK_CLASS(klass);
+> +    ssc->push = txn_info_push;
+> +}
+> +
+> +static const TypeInfo txn_info_sink = {
+> +    .name = TYPE_RISCV_IOPMP_STREAMSINK,
+> +    .parent = TYPE_OBJECT,
+> +    .instance_size = sizeof(RISCVIOPMPStreamSink),
+> +    .class_init = riscv_iopmp_streamsink_class_init,
+> +    .interfaces = (InterfaceInfo[]) {
+> +        { TYPE_STREAM_SINK },
+> +        { }
+> +    },
+> +};
+> +
+> +static void iopmp_register_types(void)
+> +{
+> +    type_register_static(&iopmp_info);
+> +    type_register_static(&txn_info_sink);
+> +    type_register_static(&iopmp_iommu_memory_region_info);
+> +}
+> +
+> +type_init(iopmp_register_types);
+> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> index 4383808d7a..a5ea4f1d73 100644
+> --- a/hw/misc/trace-events
+> +++ b/hw/misc/trace-events
+> @@ -395,3 +395,7 @@ ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) "Interrupting
+>   i2c_echo_event(const char *id, const char *event) "%s: %s"
+>   i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%02" PRIx8
+>   i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%02" PRIx8
+> +
+> +# riscv_iopmp.c
+> +iopmp_read(uint64_t addr, uint32_t val) "addr 0x%"PRIx64" val 0x%x"
+> +iopmp_write(uint64_t addr, uint32_t val) "addr 0x%"PRIx64" val 0x%x"
+> diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
+> new file mode 100644
+> index 0000000000..96209badf1
+> --- /dev/null
+> +++ b/include/hw/misc/riscv_iopmp.h
+> @@ -0,0 +1,199 @@
+> +/*
+> + * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
+> + *
+> + * Copyright (c) 2023-2025 Andes Tech. Corp.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see<http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef RISCV_IOPMP_H
+> +#define RISCV_IOPMP_H
+> +
+> +#include "hw/sysbus.h"
+> +#include "qemu/typedefs.h"
+> +#include "memory.h"
+> +#include "exec/hwaddr.h"
+> +#include "hw/stream.h"
+> +
+> +#define TYPE_RISCV_IOPMP "riscv-iopmp"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOPMPState, RISCV_IOPMP)
+> +
+> +typedef struct RISCVIOPMPStreamSink {
+> +    Object parent;
+> +} RISCVIOPMPStreamSink;
+> +#define TYPE_RISCV_IOPMP_STREAMSINK \
+> +        "riscv-iopmp-streamsink"
+> +DECLARE_INSTANCE_CHECKER(RISCVIOPMPStreamSink, RISCV_IOPMP_STREAMSINK,
+> +                         TYPE_RISCV_IOPMP_STREAMSINK)
+> +typedef struct {
+> +    uint32_t addr_reg;
+> +    uint32_t addrh_reg;
+> +    uint32_t cfg_reg;
+> +} RISCVIOPMPEntryRegs;
+> +
+> +typedef struct {
+> +    uint64_t sa;
+> +    uint64_t ea;
+> +} RISCVIOPMPEntryAddr;
+> +
+> +typedef struct {
+> +    union {
+> +        uint32_t *srcmd_en;
+> +        uint32_t *srcmd_perm;
+> +    };
+> +    union {
+> +        uint32_t *srcmd_enh;
+> +        uint32_t *srcmd_permh;
+> +    };
+> +    uint32_t *srcmd_r;
+> +    uint32_t *srcmd_rh;
+> +    uint32_t *srcmd_w;
+> +    uint32_t *srcmd_wh;
+> +    uint32_t *mdcfg;
+> +    RISCVIOPMPEntryRegs *entry;
+> +    uint32_t mdlck;
+> +    uint32_t mdlckh;
+> +    uint32_t entrylck;
+> +    uint32_t mdcfglck;
+> +    uint32_t mdstall;
+> +    uint32_t mdstallh;
+> +    uint32_t rridscp;
+> +    uint32_t err_cfg;
+> +    uint64_t err_reqaddr;
+> +    uint32_t err_reqid;
+> +    uint32_t err_info;
+> +    uint32_t err_msiaddr;
+> +    uint32_t err_msiaddrh;
+> +} RISCVIOPMPRegs;
+> +
+> +/*
+> + * Transaction(txn) information to identify whole transaction length, enabling
+> + * IOPMP to detect partially hit error
+> + */
+> +typedef struct RISCVIOPMPTrasaction {
+> +    bool running;
+> +    bool error_reported;
+> +    bool supported;
+> +    uint32_t stage;
+> +    hwaddr start_addr;
+> +    hwaddr end_addr;
+> +} RISCVIOPMPTrasaction;
+> +
+> +typedef struct RISCVIOPMPState {
+> +    SysBusDevice parent_obj;
+> +    RISCVIOPMPEntryAddr *entry_addr;
+> +    MemoryRegion mmio;
+> +    IOMMUMemoryRegion iommu;
+> +    RISCVIOPMPRegs regs;
+> +    MemoryRegion *downstream;
+> +    MemoryRegion blocked_r, blocked_w, blocked_x, blocked_rw, blocked_rx,
+> +                 blocked_wx, blocked_rwx;
+> +    MemoryRegion full_mr;
+> +
+> +    /*
+> +     * AddressSpace for full permission and no requirements forward transaction
+> +     * information to next IOPMP stage
+> +     */
+> +    AddressSpace downstream_as;
+> +    /* AddressSpace for limited permssion in current IOPMP stage */
+> +    AddressSpace blocked_r_as, blocked_w_as, blocked_x_as, blocked_rw_as,
+> +                 blocked_rx_as, blocked_wx_as, blocked_rwx_as;
+> +    /* AddressSpace for full permssion in current IOPMP stage */
+> +    AddressSpace full_as;
+> +    qemu_irq irq;
+> +
+> +    /* Receive txn info */
+> +    RISCVIOPMPStreamSink txn_info_sink;
+> +    /* Send txn info for next stage iopmp */
+> +    StreamSink *send_ss;
+> +    RISCVIOPMPTrasaction *transaction_state;
+> +    QemuMutex iopmp_transaction_mutex;
+> +
+> +    /*
+> +     * Stall:
+> +     * a while loop to check stall flags if stall_violation is not enabled
+> +     */
+> +    volatile bool is_stalled;
+> +    volatile bool *rrid_stall;
+> +
+> +    /* MFR extenstion */
+> +    uint16_t *svw;
+> +    uint16_t svi;
+> +
+> +    /* Properties */
+> +    /*
+> +     * MDCFG Format 0: MDCFG table is implemented
+> +     *              1: HWCFG.md_entry_num is fixed
+> +     *              2: HWCFG.md_entry_num is programmable
+> +     */
+> +    uint32_t mdcfg_fmt;
+> +    /*
+> +     * SRCMD Format 0: SRCMD_EN is implemented
+> +     *              1: 1 to 1 SRCMD mapping
+> +     *              2: SRCMD_PERM is implemented
+> +     */
+> +    uint32_t srcmd_fmt;
+> +    bool tor_en;
+> +    /* SPS is only supported in srcmd_fmt0 */
+> +    bool sps_en;
+> +    /* Indicate prio_entry is programmable or not */
+> +    bool default_prient_prog;
+> +    bool rrid_transl_en;
+> +    bool default_rrid_transl_prog;
+> +    bool chk_x;
+> +    bool no_x;
+> +    bool no_w;
+> +    bool stall_en;
+> +    bool default_stall_violation_en;
+> +    bool peis;
+> +    bool pees;
+> +    bool mfr_en;
+> +    /* Indicate md_entry_num for mdcfg_fmt1/2 */
+> +    uint32_t default_md_entry_num;
+> +    uint32_t md_num;
+> +    uint32_t rrid_num;
+> +    uint32_t entry_num;
+> +    /* Indicate number of priority entry */
+> +    uint32_t default_prio_entry;
+> +    uint32_t default_rrid_transl;
+> +    /* MSI */
+> +    bool default_msi_en;
+> +    uint32_t default_msidata;
+> +    uint32_t default_err_msiaddr;
+> +    uint32_t default_err_msiaddrh;
+> +    uint32_t msi_rrid;
+> +    /* Note: entry_offset < 0 is not support in QEMU */
+> +    int32_t entry_offset;
+> +    /*
+> +     * Data value to be returned for all read accesses that violate the security
+> +     * check
+> +     */
+> +    uint32_t err_rdata;
+> +
+> +    /* Current status for programmable parameters */
+> +    bool prient_prog;
+> +    bool rrid_transl_prog;
+> +    uint32_t md_entry_num;
+> +    uint32_t prio_entry;
+> +    uint32_t rrid_transl;
+> +    bool enable;
+> +} RISCVIOPMPState;
+> +
+> +DeviceState *iopmp_create(hwaddr addr, qemu_irq irq);
+> +void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
+> +                               uint32_t mapentry_num, uint32_t stage);
+> +void iopmp_setup_sink(DeviceState *dev, StreamSink * ss);
+> +
+> +#endif
+--------------vNMlMVvAnLLhbqRq3chSGDIK
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Ethan,</p>
+    <p>It's really a long patch. I am not sure I fully understand it.</p>
+    <pre wrap="" class="moz-quote-pre">Is txn_info_push function a dead code in this patch? I find there is no way to call it.
+
+Could you show the way to use it?
+
+Thanks,
+Zhiwei</pre>
+    <div class="moz-cite-prefix">On 3/12/25 5:37 PM, Ethan Chen wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20250312093735.1517740-7-ethan84@andestech.com">
+      <pre wrap="" class="moz-quote-pre">Support IOPMP specification v0.7.
+The specification url:
+<a class="moz-txt-link-freetext" href="https://github.com/riscv-non-isa/iopmp-spec/releases/tag/v0.7">https://github.com/riscv-non-isa/iopmp-spec/releases/tag/v0.7</a>
+
+The IOPMP checks whether memory access from a device or CPU is valid.
+This implementation uses an IOMMU to modify the address space accessed
+by the device.
+
+For device access with IOMMUAccessFlags specifying read or write
+(IOMMU_RO or IOMMU_WO), the IOPMP checks the permission in
+iopmp_translate. If the access is valid, the target address space is
+downstream_as. If the access is blocked, it will be redirected to
+blocked_rwx_as.
+
+For CPU access with IOMMUAccessFlags not specifying read or write
+(IOMMU_NONE), the IOPMP translates the access to the corresponding
+address space based on the permission. If the access has full permission
+(rwx), the target address space is downstream_as. If the access has
+limited permission, the target address space is blocked_ followed by
+the lacked permissions.<span style="white-space: pre-wrap">
+</span></pre>
+    </blockquote>
+    <blockquote type="cite"
+      cite="mid:20250312093735.1517740-7-ethan84@andestech.com">
+      <pre wrap="" class="moz-quote-pre">The operation of a blocked region can trigger an IOPMP interrupt, a bus
+error, or it can respond with success and fabricated data, depending on
+the value of the IOPMP ERR_CFG register.
+
+Support Properties and Default Values of the IOPMP Device
+The following are the supported properties and their default values for the
+IOPMP device. If a property has no description here, please refer to the
+IOPMP specification for details:
+
+* mdcfg_fmt: 1 (Options: 0/1/2)
+* srcmd_fmt: 0 (Options: 0/1/2)
+* tor_en: true (Options: true/false)
+* sps_en: false (Options: true/false)
+* prient_prog: true (Options: true/false)
+* rrid_transl_en: false (Options: true/false)
+* rrid_transl_prog: false (Options: true/false)
+* chk_x: true (Options: true/false)
+* no_x: false (Options: true/false)
+* no_w: false (Options: true/false)
+* stall_en: false (Options: true/false)
+* peis: true (Options: true/false)
+* pees: true (Options: true/false)
+* mfr_en: true (Options: true/false)
+* md_entry_num: 5 (IMP: Valid only for mdcfg_fmt 1/2)
+* md_num: 8 (Range: 0-63)
+* rrid_num: 16 (Range: srcmd_fmt ≠ 2: 0-65535, srcmd_fmt = 2: 0-32)
+* entry_num: 48
+  (Range: 0-IMP. For mdcfg_fmt = 1, it is fixed as md_num * (md_entry_num + 1).
+   Entry registers must not overlap with other registers.)
+* prio_entry: 65535
+  (Range: 0-IMP. If prio_entry &gt; entry_num, it will be set to entry_num.)
+* rrid_transl: 0x0 (Range: 0-65535)
+* entry_offset: 0x4000
+  (IMP: Entry registers must not overlap with other registers.)
+* err_rdata: 0x0
+  (uint32. Specifies the value used in responses to read transactions when
+   errors are suppressed)
+* msi_en: false (Options: true/false)
+* msidata: 12 (Range: 1-1023)
+* stall_violation_en: true (Options: true/false)
+* err_msiaddr: 0x24000000 (low-part 32-bit address)
+* err_msiaddrh: 0x0 (high-part 32-bit address)
+* msi_rrid: 0
+  (Range: 0-65535. Specifies the rrid used by the IOPMP to send the MSI.)
+
+Signed-off-by: Ethan Chen <a class="moz-txt-link-rfc2396E" href="mailto:ethan84@andestech.com">&lt;ethan84@andestech.com&gt;</a>
+---
+ hw/misc/Kconfig               |    4 +
+ hw/misc/meson.build           |    1 +
+ hw/misc/riscv_iopmp.c         | 2157 +++++++++++++++++++++++++++++++++
+ hw/misc/trace-events          |    4 +
+ include/hw/misc/riscv_iopmp.h |  199 +++
+ 5 files changed, 2365 insertions(+)
+ create mode 100644 hw/misc/riscv_iopmp.c
+ create mode 100644 include/hw/misc/riscv_iopmp.h
+
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index ec0fa5aa9f..a64bca4da1 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -222,4 +222,8 @@ config IOSB
+ config XLNX_VERSAL_TRNG
+     bool
+ 
++config RISCV_IOPMP
++    bool
++    select STREAM
++
+ source macio/Kconfig
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 6d47de482c..50f7d14650 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -34,6 +34,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
++specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp.c'))
+ 
+ subdir('macio')
+ 
+diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
+new file mode 100644
+index 0000000000..959ab18447
+--- /dev/null
++++ b/hw/misc/riscv_iopmp.c
+@@ -0,0 +1,2157 @@
++/*
++ * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
++ *
++ * Copyright (c) 2023-2025 Andes Tech. Corp.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <a class="moz-txt-link-rfc2396E" href="http://www.gnu.org/licenses/">&lt;http://www.gnu.org/licenses/&gt;</a>.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "trace.h"
++#include "exec/exec-all.h"
++#include "exec/address-spaces.h"
++#include "hw/qdev-properties.h"
++#include "hw/sysbus.h"
++#include "hw/misc/riscv_iopmp.h"
++#include "memory.h"
++#include "hw/irq.h"
++#include "hw/registerfields.h"
++#include "trace.h"
++#include "qemu/main-loop.h"
++#include "hw/stream.h"
++#include "hw/misc/riscv_iopmp_txn_info.h"
++
++#define TYPE_RISCV_IOPMP_IOMMU_MEMORY_REGION "riscv-iopmp-iommu-memory-region"
++
++REG32(VERSION, 0x00)
++    FIELD(VERSION, VENDOR, 0, 24)
++    FIELD(VERSION, SPECVER , 24, 8)
++REG32(IMPLEMENTATION, 0x04)
++    FIELD(IMPLEMENTATION, IMPID, 0, 32)
++REG32(HWCFG0, 0x08)
++    FIELD(HWCFG0, MDCFG_FMT, 0, 2)
++    FIELD(HWCFG0, SRCMD_FMT, 2, 2)
++    FIELD(HWCFG0, TOR_EN, 4, 1)
++    FIELD(HWCFG0, SPS_EN, 5, 1)
++    FIELD(HWCFG0, USER_CFG_EN, 6, 1)
++    FIELD(HWCFG0, PRIENT_PROG, 7, 1)
++    FIELD(HWCFG0, RRID_TRANSL_EN, 8, 1)
++    FIELD(HWCFG0, RRID_TRANSL_PROG, 9, 1)
++    FIELD(HWCFG0, CHK_X, 10, 1)
++    FIELD(HWCFG0, NO_X, 11, 1)
++    FIELD(HWCFG0, NO_W, 12, 1)
++    FIELD(HWCFG0, STALL_EN, 13, 1)
++    FIELD(HWCFG0, PEIS, 14, 1)
++    FIELD(HWCFG0, PEES, 15, 1)
++    FIELD(HWCFG0, MFR_EN, 16, 1)
++    FIELD(HWCFG0, MD_ENTRY_NUM, 17, 7)
++    FIELD(HWCFG0, MD_NUM, 24, 6)
++    FIELD(HWCFG0, ADDRH_EN, 30, 1)
++    FIELD(HWCFG0, ENABLE, 31, 1)
++REG32(HWCFG1, 0x0C)
++    FIELD(HWCFG1, RRID_NUM, 0, 16)
++    FIELD(HWCFG1, ENTRY_NUM, 16, 16)
++REG32(HWCFG2, 0x10)
++    FIELD(HWCFG2, PRIO_ENTRY, 0, 16)
++    FIELD(HWCFG2, RRID_TRANSL, 16, 16)
++REG32(ENTRYOFFSET, 0x14)
++    FIELD(ENTRYOFFSET, OFFSET, 0, 32)
++REG32(MDSTALL, 0x30)
++    FIELD(MDSTALL, EXEMPT, 0, 1)
++    FIELD(MDSTALL, MD, 1, 31)
++REG32(MDSTALLH, 0x34)
++    FIELD(MDSTALLH, MD, 0, 32)
++REG32(RRIDSCP, 0x38)
++    FIELD(RRIDSCP, RRID, 0, 16)
++    FIELD(RRIDSCP, OP, 30, 2)
++    FIELD(RRIDSCP, STAT, 30, 2)
++REG32(MDLCK, 0x40)
++    FIELD(MDLCK, L, 0, 1)
++    FIELD(MDLCK, MD, 1, 31)
++REG32(MDLCKH, 0x44)
++    FIELD(MDLCKH, MDH, 0, 32)
++REG32(MDCFGLCK, 0x48)
++    FIELD(MDCFGLCK, L, 0, 1)
++    FIELD(MDCFGLCK, F, 1, 7)
++REG32(ENTRYLCK, 0x4C)
++    FIELD(ENTRYLCK, L, 0, 1)
++    FIELD(ENTRYLCK, F, 1, 16)
++REG32(ERR_CFG, 0x60)
++    FIELD(ERR_CFG, L, 0, 1)
++    FIELD(ERR_CFG, IE, 1, 1)
++    FIELD(ERR_CFG, RS, 2, 1)
++    FIELD(ERR_CFG, MSI_EN, 3, 1)
++    FIELD(ERR_CFG, STALL_VIOLATION_EN, 4, 1)
++    FIELD(ERR_CFG, MSIDATA, 8, 11)
++REG32(ERR_INFO, 0x64)
++    FIELD(ERR_INFO, V, 0, 1)
++    FIELD(ERR_INFO, TTYPE, 1, 2)
++    FIELD(ERR_INFO, MSI_WERR, 3, 1)
++    FIELD(ERR_INFO, ETYPE, 4, 4)
++    FIELD(ERR_INFO, SVC, 8, 1)
++REG32(ERR_REQADDR, 0x68)
++    FIELD(ERR_REQADDR, ADDR, 0, 32)
++REG32(ERR_REQADDRH, 0x6C)
++    FIELD(ERR_REQADDRH, ADDRH, 0, 32)
++REG32(ERR_REQID, 0x70)
++    FIELD(ERR_REQID, RRID, 0, 16)
++    FIELD(ERR_REQID, EID, 16, 16)
++REG32(ERR_MFR, 0x74)
++    FIELD(ERR_MFR, SVW, 0, 16)
++    FIELD(ERR_MFR, SVI, 16, 12)
++    FIELD(ERR_MFR, SVS, 31, 1)
++REG32(ERR_MSIADDR, 0x78)
++REG32(ERR_MSIADDRH, 0x7C)
++REG32(MDCFG0, 0x800)
++    FIELD(MDCFG0, T, 0, 16)
++REG32(SRCMD_EN0, 0x1000)
++    FIELD(SRCMD_EN0, L, 0, 1)
++    FIELD(SRCMD_EN0, MD, 1, 31)
++REG32(SRCMD_ENH0, 0x1004)
++    FIELD(SRCMD_ENH0, MDH, 0, 32)
++REG32(SRCMD_R0, 0x1008)
++    FIELD(SRCMD_R0, MD, 1, 31)
++REG32(SRCMD_RH0, 0x100C)
++    FIELD(SRCMD_RH0, MDH, 0, 32)
++REG32(SRCMD_W0, 0x1010)
++    FIELD(SRCMD_W0, MD, 1, 31)
++REG32(SRCMD_WH0, 0x1014)
++    FIELD(SRCMD_WH0, MDH, 0, 32)
++REG32(SRCMD_PERM0, 0x1000)
++REG32(SRCMD_PERMH0, 0x1004)
++
++FIELD(ENTRY_ADDR, ADDR, 0, 32)
++FIELD(ENTRY_ADDRH, ADDRH, 0, 32)
++
++FIELD(ENTRY_CFG, R, 0, 1)
++FIELD(ENTRY_CFG, W, 1, 1)
++FIELD(ENTRY_CFG, X, 2, 1)
++FIELD(ENTRY_CFG, A, 3, 2)
++FIELD(ENTRY_CFG, SIE, 5, 3)
++FIELD(ENTRY_CFG, SIRE, 5, 1)
++FIELD(ENTRY_CFG, SIWE, 6, 1)
++FIELD(ENTRY_CFG, SIXE, 7, 1)
++FIELD(ENTRY_CFG, SEE, 8, 3)
++FIELD(ENTRY_CFG, SERE, 8, 1)
++FIELD(ENTRY_CFG, SEWE, 9, 1)
++FIELD(ENTRY_CFG, SEXE, 10, 1)
++
++FIELD(ENTRY_USER_CFG, IM, 0, 32)
++
++/* Offsets to SRCMD_EN(i) */
++#define SRCMD_EN_OFFSET  0x0
++#define SRCMD_ENH_OFFSET 0x4
++#define SRCMD_R_OFFSET   0x8
++#define SRCMD_RH_OFFSET  0xC
++#define SRCMD_W_OFFSET   0x10
++#define SRCMD_WH_OFFSET  0x14
++
++/* Offsets to SRCMD_PERM(i) */
++#define SRCMD_PERM_OFFSET  0x0
++#define SRCMD_PERMH_OFFSET 0x4
++
++/* Offsets to ENTRY_ADDR(i) */
++#define ENTRY_ADDR_OFFSET     0x0
++#define ENTRY_ADDRH_OFFSET    0x4
++#define ENTRY_CFG_OFFSET      0x8
++#define ENTRY_USER_CFG_OFFSET 0xC
++
++#define IOPMP_MAX_MD_NUM                63
++#define IOPMP_MAX_RRID_NUM              32
++#define IOPMP_SRCMDFMT0_MAX_RRID_NUM    65535
++#define IOPMP_SRCMDFMT2_MAX_RRID_NUM    32
++#define IOPMP_MAX_ENTRY_NUM             65535
++
++/* The ids of iopmp are temporary */
++#define VENDER_VIRT                     0
++#define SPECVER_0_7_0                   70
++#define IMPID_0_7_0                     70
++
++typedef enum {
++    ERR_INFO_TTYPE_NOERROR,
++    ERR_INFO_TTYPE_READ,
++    ERR_INFO_TTYPE_WRITE,
++    ERR_INFO_TTYPE_FETCH
++} IOPMPErrInfoTTYPE;
++
++typedef enum {
++    ERR_INFO_ETYPE_NOERROR,
++    ERR_INFO_ETYPE_READ,
++    ERR_INFO_ETYPE_WRITE,
++    ERR_INFO_ETYPE_FETCH,
++    ERR_INFO_ETYPE_PARHIT,
++    ERR_INFO_ETYPE_NOHIT,
++    ERR_INFO_ETYPE_RRID,
++    ERR_INFO_ETYPE_USER,
++    ERR_INFO_ETYPE_STALL
++} IOPMPErrInfoETYPE;
++
++typedef enum {
++    IOPMP_ENTRY_NO_HIT,
++    IOPMP_ENTRY_PAR_HIT,
++    IOPMP_ENTRY_HIT
++} IOPMPEntryHit;
++
++typedef enum {
++    IOPMP_AMATCH_OFF,  /* Null (off)                            */
++    IOPMP_AMATCH_TOR,  /* Top of Range                          */
++    IOPMP_AMATCH_NA4,  /* Naturally aligned four-byte region    */
++    IOPMP_AMATCH_NAPOT /* Naturally aligned power-of-two region */
++} IOPMPAddrMode;
++
++typedef enum {
++    IOPMP_ACCESS_READ  = 1,
++    IOPMP_ACCESS_WRITE = 2,
++    IOPMP_ACCESS_FETCH = 3
++} IOPMPAccessType;
++
++typedef enum {
++    IOPMP_NONE = 0,
++    IOPMP_RO   = 1,
++    IOPMP_WO   = 2,
++    IOPMP_RW   = 3,
++    IOPMP_XO   = 4,
++    IOPMP_RX   = 5,
++    IOPMP_WX   = 6,
++    IOPMP_RWX  = 7,
++} IOPMPPermission;
++
++typedef enum {
++    RRIDSCP_OP_QUERY = 0,
++    RRIDSCP_OP_STALL = 1,
++    RRIDSCP_OP_NO_STALL = 2,
++    RRIDSCP_OP_RESERVED = 3,
++} RRIDSCPOp;
++
++typedef enum {
++    RRIDSCP_STAT_NOT_IMPL = 0,
++    RRIDSCP_STAT_STALL = 1,
++    RRIDSCP_STAT_NO_STALL = 2,
++    RRIDSCP_STAT_RRID_NO_IMPL = 3,
++} RRIDSCPStat;
++
++typedef struct EntryRange {
++    int md;
++    /* Index of entry array */
++    int start_idx;
++    int end_idx;
++} EntryRange;
++
++static void iopmp_iommu_notify(RISCVIOPMPState *s)
++{
++    IOMMUTLBEvent event = {
++        .entry = {
++            .iova = 0,
++            .translated_addr = 0,
++            .addr_mask = -1ULL,
++            .perm = IOMMU_NONE,
++        },
++        .type = IOMMU_NOTIFIER_UNMAP,
++    };
++
++    for (int i = 0; i &lt; s-&gt;rrid_num; i++) {
++        memory_region_notify_iommu(&amp;s-&gt;iommu, i, event);
++    }
++}
++
++static void iopmp_msi_send(RISCVIOPMPState *s)
++{
++    MemTxResult result;
++    uint64_t addr = ((uint64_t)(s-&gt;regs.err_msiaddrh) &lt;&lt; 32) |
++                    s-&gt;regs.err_msiaddr;
++    address_space_stl_le(&amp;address_space_memory, addr,
++                         FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, MSIDATA),
++                         (MemTxAttrs){.requester_id = s-&gt;msi_rrid}, &amp;result);
++    if (result != MEMTX_OK) {
++        s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO, MSI_WERR, 1);
++    }
++}
++
++static void iopmp_decode_napot(uint64_t a, uint64_t *sa,
++                               uint64_t *ea)
++{
++    /*
++     * aaaa...aaa0   8-byte NAPOT range
++     * aaaa...aa01   16-byte NAPOT range
++     * aaaa...a011   32-byte NAPOT range
++     * ...
++     * aa01...1111   2^XLEN-byte NAPOT range
++     * a011...1111   2^(XLEN+1)-byte NAPOT range
++     * 0111...1111   2^(XLEN+2)-byte NAPOT range
++     *  1111...1111   Reserved
++     */
++
++    a = (a &lt;&lt; 2) | 0x3;
++    *sa = a &amp; (a + 1);
++    *ea = a | (a + 1);
++}
++
++static void iopmp_update_rule(RISCVIOPMPState *s, uint32_t entry_index)
++{
++    uint8_t this_cfg = s-&gt;regs.entry[entry_index].cfg_reg;
++    uint64_t this_addr = s-&gt;regs.entry[entry_index].addr_reg |
++                         ((uint64_t)s-&gt;regs.entry[entry_index].addrh_reg &lt;&lt; 32);
++    uint64_t prev_addr = 0u;
++    uint64_t sa = 0u;
++    uint64_t ea = 0u;
++
++    if (entry_index &gt;= 1u) {
++        prev_addr = s-&gt;regs.entry[entry_index - 1].addr_reg |
++                    ((uint64_t)s-&gt;regs.entry[entry_index - 1].addrh_reg &lt;&lt; 32);
++    }
++
++    switch (FIELD_EX32(this_cfg, ENTRY_CFG, A)) {
++    case IOPMP_AMATCH_OFF:
++        sa = 0u;
++        ea = -1;
++        break;
++
++    case IOPMP_AMATCH_TOR:
++        sa = (prev_addr) &lt;&lt; 2; /* shift up from [xx:0] to [xx+2:2] */
++        ea = ((this_addr) &lt;&lt; 2) - 1u;
++        if (sa &gt; ea) {
++            sa = ea = 0u;
++        }
++        break;
++
++    case IOPMP_AMATCH_NA4:
++        sa = this_addr &lt;&lt; 2; /* shift up from [xx:0] to [xx+2:2] */
++        ea = (sa + 4u) - 1u;
++        break;
++
++    case IOPMP_AMATCH_NAPOT:
++        iopmp_decode_napot(this_addr, &amp;sa, &amp;ea);
++        break;
++
++    default:
++        sa = 0u;
++        ea = 0u;
++        break;
++    }
++
++    s-&gt;entry_addr[entry_index].sa = sa;
++    s-&gt;entry_addr[entry_index].ea = ea;
++    iopmp_iommu_notify(s);
++}
++
++static uint64_t iopmp_read(void *opaque, hwaddr addr, unsigned size)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
++    uint32_t rz = 0;
++    uint32_t offset, idx;
++    /* Start value for ERR_MFR.svi */
++    uint16_t svi_s;
++
++    switch (addr) {
++    case A_VERSION:
++        rz = FIELD_DP32(rz, VERSION, VENDOR, VENDER_VIRT);
++        rz = FIELD_DP32(rz, VERSION, SPECVER, SPECVER_0_7_0);
++        break;
++    case A_IMPLEMENTATION:
++        rz = IMPID_0_7_0;
++        break;
++    case A_HWCFG0:
++        rz = FIELD_DP32(rz, HWCFG0, MDCFG_FMT, s-&gt;mdcfg_fmt);
++        rz = FIELD_DP32(rz, HWCFG0, SRCMD_FMT, s-&gt;srcmd_fmt);
++        rz = FIELD_DP32(rz, HWCFG0, TOR_EN, s-&gt;tor_en);
++        rz = FIELD_DP32(rz, HWCFG0, SPS_EN, s-&gt;sps_en);
++        rz = FIELD_DP32(rz, HWCFG0, USER_CFG_EN, 0);
++        rz = FIELD_DP32(rz, HWCFG0, PRIENT_PROG, s-&gt;prient_prog);
++        rz = FIELD_DP32(rz, HWCFG0, RRID_TRANSL_EN, s-&gt;rrid_transl_en);
++        rz = FIELD_DP32(rz, HWCFG0, RRID_TRANSL_PROG, s-&gt;rrid_transl_prog);
++        rz = FIELD_DP32(rz, HWCFG0, CHK_X, s-&gt;chk_x);
++        rz = FIELD_DP32(rz, HWCFG0, NO_X, s-&gt;no_x);
++        rz = FIELD_DP32(rz, HWCFG0, NO_W, s-&gt;no_w);
++        rz = FIELD_DP32(rz, HWCFG0, STALL_EN, s-&gt;stall_en);
++        rz = FIELD_DP32(rz, HWCFG0, PEIS, s-&gt;peis);
++        rz = FIELD_DP32(rz, HWCFG0, PEES, s-&gt;pees);
++        rz = FIELD_DP32(rz, HWCFG0, MFR_EN, s-&gt;mfr_en);
++        rz = FIELD_DP32(rz, HWCFG0, MD_ENTRY_NUM, s-&gt;md_entry_num);
++        rz = FIELD_DP32(rz, HWCFG0, MD_NUM, s-&gt;md_num);
++        rz = FIELD_DP32(rz, HWCFG0, ADDRH_EN, 1);
++        rz = FIELD_DP32(rz, HWCFG0, ENABLE, s-&gt;enable);
++        break;
++    case A_HWCFG1:
++        rz = FIELD_DP32(rz, HWCFG1, RRID_NUM, s-&gt;rrid_num);
++        rz = FIELD_DP32(rz, HWCFG1, ENTRY_NUM, s-&gt;entry_num);
++        break;
++    case A_HWCFG2:
++        rz = FIELD_DP32(rz, HWCFG2, PRIO_ENTRY, s-&gt;prio_entry);
++        rz = FIELD_DP32(rz, HWCFG2, RRID_TRANSL, s-&gt;rrid_transl);
++        break;
++    case A_ENTRYOFFSET:
++        rz = s-&gt;entry_offset;
++        break;
++    case A_MDSTALL:
++        if (s-&gt;stall_en) {
++            rz = s-&gt;regs.mdstall;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    case A_MDSTALLH:
++        if (s-&gt;stall_en &amp;&amp; s-&gt;md_num &gt; 31) {
++            rz = s-&gt;regs.mdstallh;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    case A_RRIDSCP:
++        if (s-&gt;stall_en) {
++            rz = s-&gt;regs.rridscp;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    case A_ERR_CFG:
++        rz = s-&gt;regs.err_cfg;
++        break;
++    case A_MDLCK:
++        if (s-&gt;srcmd_fmt == 1) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                __func__, (int)addr);
++        } else {
++            rz = s-&gt;regs.mdlck;
++        }
++        break;
++    case A_MDLCKH:
++        if (s-&gt;md_num &lt; 31 || s-&gt;srcmd_fmt == 1) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                __func__, (int)addr);
++        } else {
++            rz = s-&gt;regs.mdlckh;
++        }
++        break;
++    case A_MDCFGLCK:
++        if (s-&gt;mdcfg_fmt != 0) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++            break;
++        }
++        rz = s-&gt;regs.mdcfglck;
++        break;
++    case A_ENTRYLCK:
++        rz = s-&gt;regs.entrylck;
++        break;
++    case A_ERR_REQADDR:
++        rz = s-&gt;regs.err_reqaddr &amp; UINT32_MAX;
++        break;
++    case A_ERR_REQADDRH:
++        rz = s-&gt;regs.err_reqaddr &gt;&gt; 32;
++        break;
++    case A_ERR_REQID:
++        rz = s-&gt;regs.err_reqid;
++        break;
++    case A_ERR_INFO:
++        rz = s-&gt;regs.err_info;
++        break;
++    case A_ERR_MFR:
++        if (!s-&gt;mfr_en) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++            break;
++        }
++        svi_s = s-&gt;svi;
++        s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO, SVC, 0);
++        while (1) {
++            if (s-&gt;svw[s-&gt;svi]) {
++                if (rz == 0) {
++                    /* First svw is found */
++                    rz = FIELD_DP32(rz, ERR_MFR, SVW, s-&gt;svw[s-&gt;svi]);
++                    rz = FIELD_DP32(rz, ERR_MFR, SVI, s-&gt;svi);
++                    rz = FIELD_DP32(rz, ERR_MFR, SVS, 1);
++                    /* Clear svw after read */
++                    s-&gt;svw[s-&gt;svi] = 0;
++                } else {
++                    /* Other subsequent violation exists */
++                    s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO,
++                                                  SVC, 1);
++                    break;
++                }
++            }
++            s-&gt;svi++;
++            if (s-&gt;svi &gt; (s-&gt;rrid_num / 16) + 1) {
++                s-&gt;svi = 0;
++            }
++            if (svi_s == s-&gt;svi) {
++                /* rounded back to the same value */
++                break;
++            }
++        }
++        /* Set svi for next read */
++        s-&gt;svi = FIELD_DP32(rz, ERR_MFR, SVI, s-&gt;svi);
++        break;
++    case A_ERR_MSIADDR:
++        rz = s-&gt;regs.err_msiaddr;
++        break;
++    case A_ERR_MSIADDRH:
++        rz = s-&gt;regs.err_msiaddrh;
++        break;
++
++    default:
++        if (s-&gt;mdcfg_fmt == 0 &amp;&amp;
++            addr &gt;= A_MDCFG0 &amp;&amp;
++            addr &lt;= A_MDCFG0 + 4 * (s-&gt;md_num - 1)) {
++            offset = addr - A_MDCFG0;
++            if (offset % 4) {
++                rz = 0;
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                              __func__, (int)addr);
++            } else {
++                idx = offset &gt;&gt; 2;
++                rz = s-&gt;regs.mdcfg[idx];
++            }
++        } else if (s-&gt;srcmd_fmt == 0 &amp;&amp;
++                   addr &gt;= A_SRCMD_EN0 &amp;&amp;
++                   addr &lt;= A_SRCMD_WH0 + 32 * (s-&gt;rrid_num - 1)) {
++            offset = addr - A_SRCMD_EN0;
++            idx = offset &gt;&gt; 5;
++            offset &amp;= 0x1f;
++
++            if (s-&gt;sps_en || offset &lt;= SRCMD_ENH_OFFSET) {
++                switch (offset) {
++                case SRCMD_EN_OFFSET:
++                    rz = s-&gt;regs.srcmd_en[idx];
++                    break;
++                case SRCMD_ENH_OFFSET:
++                    if (s-&gt;md_num &gt; 31) {
++                        rz = s-&gt;regs.srcmd_enh[idx];
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                      __func__, (int)addr);
++                    }
++                    break;
++                case SRCMD_R_OFFSET:
++                    rz = s-&gt;regs.srcmd_r[idx];
++                    break;
++                case SRCMD_RH_OFFSET:
++                    if (s-&gt;md_num &gt; 31) {
++                        rz = s-&gt;regs.srcmd_rh[idx];
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                      __func__, (int)addr);
++                    }
++                    break;
++                case SRCMD_W_OFFSET:
++                    rz = s-&gt;regs.srcmd_w[idx];
++                    break;
++                case SRCMD_WH_OFFSET:
++                    if (s-&gt;md_num &gt; 31) {
++                        rz = s-&gt;regs.srcmd_wh[idx];
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                      __func__, (int)addr);
++                    }
++                    break;
++                default:
++                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                  __func__, (int)addr);
++                    break;
++                }
++            } else {
++                 qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                               __func__, (int)addr);
++            }
++        } else if (s-&gt;srcmd_fmt == 2 &amp;&amp;
++                   addr &gt;= A_SRCMD_PERM0 &amp;&amp;
++                   addr &lt;= A_SRCMD_PERMH0 + 32 * (s-&gt;md_num - 1)) {
++            offset = addr - A_SRCMD_PERM0;
++            idx = offset &gt;&gt; 5;
++            offset &amp;= 0x1f;
++            switch (offset) {
++            case SRCMD_PERM_OFFSET:
++                rz = s-&gt;regs.srcmd_perm[idx];
++                break;
++            case SRCMD_PERMH_OFFSET:
++                if (s-&gt;rrid_num &gt; 16) {
++                    rz = s-&gt;regs.srcmd_permh[idx];
++                } else {
++                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                  __func__, (int)addr);
++                }
++                break;
++            default:
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                __func__, (int)addr);
++                break;
++            }
++        } else if (addr &gt;= s-&gt;entry_offset &amp;&amp;
++                   addr &lt;= s-&gt;entry_offset + ENTRY_USER_CFG_OFFSET +
++                           16 * (s-&gt;entry_num - 1)) {
++            offset = addr - s-&gt;entry_offset;
++            idx = offset &gt;&gt; 4;
++            offset &amp;= 0xf;
++
++            switch (offset) {
++            case ENTRY_ADDR_OFFSET:
++                rz = s-&gt;regs.entry[idx].addr_reg;
++                break;
++            case ENTRY_ADDRH_OFFSET:
++                rz = s-&gt;regs.entry[idx].addrh_reg;
++                break;
++            case ENTRY_CFG_OFFSET:
++                rz = s-&gt;regs.entry[idx].cfg_reg;
++                break;
++            default:
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                              __func__, (int)addr);
++                break;
++            }
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    }
++    trace_iopmp_read(addr, rz);
++    return rz;
++}
++
++static void update_rrid_stall(RISCVIOPMPState *s)
++{
++    bool exempt = FIELD_EX32(s-&gt;regs.mdstall, MDSTALL, EXEMPT);
++    uint64_t stall_by_md = ((uint64_t)s-&gt;regs.mdstall |
++                            ((uint64_t)s-&gt;regs.mdstallh &lt;&lt; 32)) &gt;&gt; 1;
++    uint64_t srcmd_en;
++    bool reduction_or;
++    if (s-&gt;srcmd_fmt != 2) {
++        for (int rrid = 0; rrid &lt; s-&gt;rrid_num; rrid++) {
++            srcmd_en = ((uint64_t)s-&gt;regs.srcmd_en[rrid] |
++                        ((uint64_t)s-&gt;regs.srcmd_enh[rrid] &lt;&lt; 32)) &gt;&gt; 1;
++            reduction_or = 0;
++            if (srcmd_en &amp; stall_by_md) {
++                reduction_or = 1;
++            }
++            s-&gt;rrid_stall[rrid] = exempt ^ reduction_or;
++        }
++    } else {
++        for (int rrid = 0; rrid &lt; s-&gt;rrid_num; rrid++) {
++            if (stall_by_md) {
++                s-&gt;rrid_stall[rrid] = 1;
++            } else {
++                s-&gt;rrid_stall[rrid] = 0;
++            }
++        }
++    }
++    iopmp_iommu_notify(s);
++}
++
++static inline void resume_stall(RISCVIOPMPState *s)
++{
++    for (int rrid = 0; rrid &lt; s-&gt;rrid_num; rrid++) {
++        s-&gt;rrid_stall[rrid] = 0;
++    }
++    iopmp_iommu_notify(s);
++}
++
++static void
++iopmp_write(void *opaque, hwaddr addr, uint64_t value, unsigned size)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
++    uint32_t offset, idx;
++    uint32_t value32 = value;
++    uint64_t mdlck;
++    uint32_t value_f;
++    uint32_t rrid;
++    uint32_t op;
++    trace_iopmp_write(addr, value32);
++
++    switch (addr) {
++    case A_VERSION: /* RO */
++        break;
++    case A_IMPLEMENTATION: /* RO */
++        break;
++    case A_HWCFG0:
++        if (FIELD_EX32(value32, HWCFG0, RRID_TRANSL_PROG)) {
++            /* W1C */
++            s-&gt;rrid_transl_prog = 0;
++        }
++        if (FIELD_EX32(value32, HWCFG0, PRIENT_PROG)) {
++            /* W1C */
++            s-&gt;prient_prog = 0;
++        }
++        if (!s-&gt;enable &amp;&amp; s-&gt;mdcfg_fmt == 2) {
++            /* Locked by enable bit */
++            s-&gt;md_entry_num = FIELD_EX32(value32, HWCFG0, MD_ENTRY_NUM);
++        }
++        if (FIELD_EX32(value32, HWCFG0, ENABLE)) {
++            /* W1S */
++            s-&gt;enable = 1;
++            iopmp_iommu_notify(s);
++        }
++        break;
++    case A_HWCFG1: /* RO */
++        break;
++    case A_HWCFG2:
++        if (s-&gt;prient_prog) {
++            s-&gt;prio_entry = FIELD_EX32(value32, HWCFG2, PRIO_ENTRY);
++            iopmp_iommu_notify(s);
++        }
++        if (s-&gt;rrid_transl_prog) {
++            s-&gt;rrid_transl = FIELD_EX32(value32, HWCFG2, RRID_TRANSL);
++            iopmp_iommu_notify(s);
++        }
++        break;
++    case A_ENTRYOFFSET:
++        break;
++    case A_MDSTALL:
++        if (s-&gt;stall_en) {
++            s-&gt;regs.mdstall = value32;
++            if (value32) {
++                s-&gt;is_stalled = 1;
++            } else {
++                /* Resume if stall, stallh == 0 */
++                if (s-&gt;regs.mdstallh == 0) {
++                    s-&gt;is_stalled = 0;
++                }
++            }
++            update_rrid_stall(s);
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    case A_MDSTALLH:
++        if (s-&gt;stall_en) {
++            s-&gt;regs.mdstallh = value32;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    case A_RRIDSCP:
++        if (s-&gt;stall_en) {
++            rrid = FIELD_EX32(value32, RRIDSCP, RRID);
++            op = FIELD_EX32(value32, RRIDSCP, OP);
++            if (op == RRIDSCP_OP_RESERVED) {
++                break;
++            }
++            s-&gt;regs.rridscp = value32;
++            if (rrid &gt; s-&gt;rrid_num) {
++                s-&gt;regs.rridscp = FIELD_DP32(s-&gt;regs.rridscp, RRIDSCP, STAT,
++                                             RRIDSCP_STAT_RRID_NO_IMPL);
++                break;
++            }
++            switch (op) {
++            case RRIDSCP_OP_QUERY:
++                if (s-&gt;is_stalled) {
++                    s-&gt;regs.rridscp =
++                        FIELD_DP32(s-&gt;regs.rridscp, RRIDSCP, STAT,
++                                    0x2 &gt;&gt; s-&gt;rrid_stall[rrid]);
++                } else {
++                    s-&gt;regs.rridscp = FIELD_DP32(s-&gt;regs.rridscp, RRIDSCP,
++                                                    STAT,
++                                                    RRIDSCP_STAT_NO_STALL);
++                }
++                break;
++            case RRIDSCP_OP_STALL:
++                s-&gt;rrid_stall[rrid] = 1;
++                break;
++            case RRIDSCP_OP_NO_STALL:
++                s-&gt;rrid_stall[rrid] = 0;
++                break;
++            default:
++                break;
++            }
++            if (s-&gt;is_stalled) {
++                iopmp_iommu_notify(s);
++            }
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        }
++        break;
++    case A_ERR_CFG:
++        if (!FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, L)) {
++            s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, L,
++                FIELD_EX32(value32, ERR_CFG, L));
++            s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, IE,
++                FIELD_EX32(value32, ERR_CFG, IE));
++            s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, RS,
++                FIELD_EX32(value32, ERR_CFG, RS));
++            s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, MSI_EN,
++                FIELD_EX32(value32, ERR_CFG, MSI_EN));
++            s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG,
++                STALL_VIOLATION_EN, FIELD_EX32(value32, ERR_CFG,
++                                               STALL_VIOLATION_EN));
++            s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, MSIDATA,
++                FIELD_EX32(value32, ERR_CFG, MSIDATA));
++        }
++        break;
++    case A_MDLCK:
++        if (s-&gt;srcmd_fmt == 1) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        } else if (!FIELD_EX32(s-&gt;regs.mdlck, MDLCK, L)) {
++            /* sticky to 1 */
++            s-&gt;regs.mdlck |= value32;
++            if (s-&gt;md_num &lt;= 31) {
++                s-&gt;regs.mdlck = extract32(s-&gt;regs.mdlck, 0, s-&gt;md_num + 1);
++            }
++        }
++        break;
++    case A_MDLCKH:
++        if (s-&gt;md_num &lt; 31 || s-&gt;srcmd_fmt == 1) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                          __func__, (int)addr);
++        } else if (!FIELD_EX32(s-&gt;regs.mdlck, MDLCK, L)) {
++            /* sticky to 1 */
++            s-&gt;regs.mdlckh |= value32;
++            s-&gt;regs.mdlck = extract32(s-&gt;regs.mdlck, 0, s-&gt;md_num - 31);
++        }
++        break;
++    case A_MDCFGLCK:
++        if (s-&gt;mdcfg_fmt != 0) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                __func__, (int)addr);
++            break;
++        }
++        if (!FIELD_EX32(s-&gt;regs.mdcfglck, MDCFGLCK, L)) {
++            value_f = FIELD_EX32(value32, MDCFGLCK, F);
++            if (value_f &gt; FIELD_EX32(s-&gt;regs.mdcfglck, MDCFGLCK, F)) {
++                s-&gt;regs.mdcfglck = FIELD_DP32(s-&gt;regs.mdcfglck, MDCFGLCK, F,
++                                              value_f);
++            }
++            s-&gt;regs.mdcfglck = FIELD_DP32(s-&gt;regs.mdcfglck, MDCFGLCK, L,
++                                          FIELD_EX32(value32, MDCFGLCK, L));
++        }
++        break;
++    case A_ENTRYLCK:
++        if (!(FIELD_EX32(s-&gt;regs.entrylck, ENTRYLCK, L))) {
++            value_f = FIELD_EX32(value32, ENTRYLCK, F);
++            if (value_f &gt; FIELD_EX32(s-&gt;regs.entrylck, ENTRYLCK, F)) {
++                s-&gt;regs.entrylck = FIELD_DP32(s-&gt;regs.entrylck, ENTRYLCK, F,
++                                              value_f);
++            }
++            s-&gt;regs.entrylck = FIELD_DP32(s-&gt;regs.entrylck, ENTRYLCK, L,
++                                          FIELD_EX32(value32, ENTRYLCK, L));
++        }
++    case A_ERR_REQADDR: /* RO */
++        break;
++    case A_ERR_REQADDRH: /* RO */
++        break;
++    case A_ERR_REQID: /* RO */
++        break;
++    case A_ERR_INFO:
++        if (FIELD_EX32(value32, ERR_INFO, V)) {
++            s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO, V, 0);
++            qemu_set_irq(s-&gt;irq, 0);
++        }
++        if (FIELD_EX32(value32, ERR_INFO, MSI_WERR)) {
++            s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO, MSI_WERR,
++                                          0);
++        }
++        break;
++    case A_ERR_MFR:
++        s-&gt;svi = FIELD_EX32(value32, ERR_MFR, SVI);
++        break;
++    case A_ERR_MSIADDR:
++        if (!FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, L)) {
++            s-&gt;regs.err_msiaddr = value32;
++        }
++        break;
++
++    case A_ERR_MSIADDRH:
++        if (!FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, L)) {
++            s-&gt;regs.err_msiaddrh = value32;
++        }
++        break;
++
++    default:
++        if (s-&gt;mdcfg_fmt == 0 &amp;&amp;
++            addr &gt;= A_MDCFG0 &amp;&amp;
++            addr &lt;= A_MDCFG0 + 4 * (s-&gt;md_num - 1)) {
++            offset = addr - A_MDCFG0;
++            if (offset % 4) {
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                              __func__, (int)addr);
++            } else {
++                idx = offset &gt;&gt; 2;
++                s-&gt;regs.mdcfg[idx] = FIELD_EX32(value32, MDCFG0, T);
++                iopmp_iommu_notify(s);
++            }
++        } else if (s-&gt;srcmd_fmt == 0 &amp;&amp;
++                   addr &gt;= A_SRCMD_EN0 &amp;&amp;
++                   addr &lt;= A_SRCMD_WH0 + 32 * (s-&gt;rrid_num - 1)) {
++            offset = addr - A_SRCMD_EN0;
++            idx = offset &gt;&gt; 5;
++            offset &amp;= 0x1f;
++
++            if (offset % 4 || (!s-&gt;sps_en &amp;&amp; offset &gt; SRCMD_ENH_OFFSET)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                              __func__, (int)addr);
++            } else if (FIELD_EX32(s-&gt;regs.srcmd_en[idx], SRCMD_EN0, L) == 0) {
++                /* MD field is protected by mdlck */
++                value32 = (value32 &amp; ~s-&gt;regs.mdlck) |
++                          (s-&gt;regs.srcmd_en[idx] &amp; s-&gt;regs.mdlck);
++                iopmp_iommu_notify(s);
++                switch (offset) {
++                case SRCMD_EN_OFFSET:
++                    s-&gt;regs.srcmd_en[idx] =
++                        FIELD_DP32(s-&gt;regs.srcmd_en[idx], SRCMD_EN0, L,
++                                   FIELD_EX32(value32, SRCMD_EN0, L));
++                    s-&gt;regs.srcmd_en[idx] =
++                        FIELD_DP32(s-&gt;regs.srcmd_en[idx], SRCMD_EN0, MD,
++                                   FIELD_EX32(value32, SRCMD_EN0, MD));
++                    if (s-&gt;md_num &lt;= 31) {
++                        s-&gt;regs.srcmd_en[idx] = extract32(s-&gt;regs.srcmd_en[idx],
++                                                          0, s-&gt;md_num + 1);
++                    }
++                    break;
++                case SRCMD_ENH_OFFSET:
++                    if (s-&gt;md_num &gt; 31) {
++                        s-&gt;regs.srcmd_enh[idx] = value32;
++                        s-&gt;regs.srcmd_enh[idx] =
++                            extract32(s-&gt;regs.srcmd_enh[idx], 0,
++                                      s-&gt;md_num - 31);
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                      __func__, (int)addr);
++                    }
++                    break;
++                case SRCMD_R_OFFSET:
++                    s-&gt;regs.srcmd_r[idx] =
++                        FIELD_DP32(s-&gt;regs.srcmd_r[idx], SRCMD_R0, MD,
++                                   FIELD_EX32(value32, SRCMD_R0, MD));
++                    if (s-&gt;md_num &lt;= 31) {
++                        s-&gt;regs.srcmd_r[idx] = extract32(s-&gt;regs.srcmd_r[idx],
++                                                         0, s-&gt;md_num + 1);
++                    }
++                    break;
++                case SRCMD_RH_OFFSET:
++                    if (s-&gt;md_num &gt; 31) {
++                        s-&gt;regs.srcmd_rh[idx] = value32;
++                        s-&gt;regs.srcmd_rh[idx] =
++                            extract32(s-&gt;regs.srcmd_rh[idx], 0,
++                                      s-&gt;md_num - 31);
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                      __func__, (int)addr);
++                    }
++                    break;
++                case SRCMD_W_OFFSET:
++                    s-&gt;regs.srcmd_w[idx] =
++                        FIELD_DP32(s-&gt;regs.srcmd_w[idx], SRCMD_W0, MD,
++                                   FIELD_EX32(value32, SRCMD_W0, MD));
++                    if (s-&gt;md_num &lt;= 31) {
++                        s-&gt;regs.srcmd_w[idx] = extract32(s-&gt;regs.srcmd_w[idx],
++                                                         0, s-&gt;md_num + 1);
++                    }
++                    break;
++                case SRCMD_WH_OFFSET:
++                    if (s-&gt;md_num &gt; 31) {
++                        s-&gt;regs.srcmd_wh[idx] = value32;
++                        s-&gt;regs.srcmd_wh[idx] =
++                            extract32(s-&gt;regs.srcmd_wh[idx], 0,
++                                      s-&gt;md_num - 31);
++                    } else {
++                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                      __func__, (int)addr);
++                    }
++                    break;
++                default:
++                    break;
++                }
++            }
++        } else if (s-&gt;srcmd_fmt == 2 &amp;&amp;
++                   addr &gt;= A_SRCMD_PERM0 &amp;&amp;
++                   addr &lt;= A_SRCMD_PERMH0 + 32 * (s-&gt;md_num - 1)) {
++            offset = addr - A_SRCMD_PERM0;
++            idx = offset &gt;&gt; 5;
++            offset &amp;= 0x1f;
++            /* mdlck lock bit is removed */
++            mdlck = ((uint64_t)s-&gt;regs.mdlck |
++                     ((uint64_t)s-&gt;regs.mdlckh &lt;&lt; 32)) &gt;&gt; 1;
++            iopmp_iommu_notify(s);
++            switch (offset) {
++            case SRCMD_PERM_OFFSET:
++                /* srcmd_perm[md] is protect by mdlck */
++                if (((mdlck &gt;&gt; idx) &amp; 0x1) == 0) {
++                    s-&gt;regs.srcmd_perm[idx] = value32;
++                }
++                if (s-&gt;rrid_num &lt;= 16) {
++                    s-&gt;regs.srcmd_perm[idx] = extract32(s-&gt;regs.srcmd_perm[idx],
++                                                        0, 2 * s-&gt;rrid_num);
++                }
++                break;
++            case SRCMD_PERMH_OFFSET:
++                if (s-&gt;rrid_num &gt; 16) {
++                    if (((mdlck &gt;&gt; idx) &amp; 0x1) == 0) {
++                        s-&gt;regs.srcmd_permh[idx] = value32;
++                    }
++                    s-&gt;regs.srcmd_permh[idx] =
++                        extract32(s-&gt;regs.srcmd_permh[idx], 0,
++                                  2 * (s-&gt;rrid_num - 16));
++                } else {
++                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                  __func__, (int)addr);
++                }
++                break;
++            default:
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                __func__, (int)addr);
++                break;
++            }
++        } else if (addr &gt;= s-&gt;entry_offset &amp;&amp;
++                   addr &lt;= s-&gt;entry_offset + ENTRY_USER_CFG_OFFSET
++                           + 16 * (s-&gt;entry_num - 1)) {
++            offset = addr - s-&gt;entry_offset;
++            idx = offset &gt;&gt; 4;
++            offset &amp;= 0xf;
++
++            /* index &lt; ENTRYLCK_F is protected */
++            if (idx &gt;= FIELD_EX32(s-&gt;regs.entrylck, ENTRYLCK, F)) {
++                switch (offset) {
++                case ENTRY_ADDR_OFFSET:
++                    s-&gt;regs.entry[idx].addr_reg = value32;
++                    break;
++                case ENTRY_ADDRH_OFFSET:
++                    s-&gt;regs.entry[idx].addrh_reg = value32;
++                    break;
++                case ENTRY_CFG_OFFSET:
++                    s-&gt;regs.entry[idx].cfg_reg = value32;
++                    if (!s-&gt;tor_en &amp;&amp;
++                        FIELD_EX32(s-&gt;regs.entry[idx].cfg_reg,
++                                   ENTRY_CFG, A) == IOPMP_AMATCH_TOR) {
++                        s-&gt;regs.entry[idx].cfg_reg =
++                            FIELD_DP32(s-&gt;regs.entry[idx].cfg_reg, ENTRY_CFG, A,
++                                       IOPMP_AMATCH_OFF);
++                    }
++                    if (!s-&gt;peis) {
++                        s-&gt;regs.entry[idx].cfg_reg =
++                            FIELD_DP32(s-&gt;regs.entry[idx].cfg_reg, ENTRY_CFG,
++                                       SIE, 0);
++                    }
++                    if (!s-&gt;pees) {
++                        s-&gt;regs.entry[idx].cfg_reg =
++                            FIELD_DP32(s-&gt;regs.entry[idx].cfg_reg, ENTRY_CFG,
++                                       SEE, 0);
++                    }
++                    break;
++                case ENTRY_USER_CFG_OFFSET:
++                    /* Does not support user customized permission */
++                    break;
++                default:
++                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
++                                  __func__, (int)addr);
++                    break;
++                }
++                iopmp_update_rule(s, idx);
++                if (idx + 1 &lt; s-&gt;entry_num &amp;&amp;
++                    FIELD_EX32(s-&gt;regs.entry[idx + 1].cfg_reg, ENTRY_CFG, A) ==
++                    IOPMP_AMATCH_TOR) {
++                        iopmp_update_rule(s, idx + 1);
++                }
++            }
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n", __func__,
++                          (int)addr);
++        }
++    }
++}
++
++static void apply_sps_permission(RISCVIOPMPState *s, int rrid, int md, int *cfg)
++{
++    uint64_t srcmd_r, srcmd_w;
++    srcmd_r = ((uint64_t)s-&gt;regs.srcmd_rh[rrid]) &lt;&lt; 32 | s-&gt;regs.srcmd_r[rrid];
++    srcmd_w = ((uint64_t)s-&gt;regs.srcmd_wh[rrid]) &lt;&lt; 32 | s-&gt;regs.srcmd_w[rrid];
++    if (((srcmd_r &gt;&gt; (md + 1)) &amp; 0x1) == 0) {
++        /* remove r&amp;x permission and error suppression */
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, R, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, X, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SIRE, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SERE, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SIXE, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SEXE, 0);
++    }
++    if (((srcmd_w &gt;&gt; (md + 1)) &amp; 0x1) == 0) {
++        /* remove w permission and error suppression */
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, W, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SIWE, 0);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, SEWE, 0);
++    }
++}
++
++static void apply_srcmdperm(RISCVIOPMPState *s, int rrid, int md, int *cfg)
++{
++    uint64_t srcmd_perm = ((uint64_t)s-&gt;regs.srcmd_permh[md]) &lt;&lt; 32 |
++                          s-&gt;regs.srcmd_perm[md];
++
++    if (((srcmd_perm &gt;&gt; (2 * rrid)) &amp; 0x1)) {
++        /* add r&amp;x permission */
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, R, 1);
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, X, 1);
++    }
++    if (((srcmd_perm &gt;&gt; (2 * rrid + 1)) &amp; 0x1)) {
++        /* add w permission */
++        *cfg = FIELD_DP32(*cfg, ENTRY_CFG, W, 1);
++    }
++}
++
++static inline void apply_no_chk_x(int *cfg)
++{
++    /* Use read permission for fetch */
++    *cfg = FIELD_DP32(*cfg, ENTRY_CFG, X, FIELD_EX32(*cfg, ENTRY_CFG, R));
++}
++
++/* Apply permssions which are not specified by entry_cfg directly */
++static inline void apply_extend_perms(RISCVIOPMPState *s, int rrid, int md,
++                                      int *cfg)
++{
++    if (s-&gt;sps_en) {
++        apply_sps_permission(s, rrid, md, cfg);
++    }
++    if (s-&gt;srcmd_fmt == 2) {
++        apply_srcmdperm(s, rrid, md, cfg);
++    }
++    if (!s-&gt;chk_x) {
++        apply_no_chk_x(cfg);
++    }
++}
++
++static inline bool addr_in_entry(RISCVIOPMPState *s, hwaddr addr, int idx)
++{
++    return addr &gt;= s-&gt;entry_addr[idx].sa &amp;&amp; addr &lt;= s-&gt;entry_addr[idx].ea;
++}
++
++/*
++ * entry_range_list: The entry ranges from SRCMD and MDCFG to match
++ * entry_idx: matched priority entry index or first non-priority entry index
++ * cfg: entry cfg for matched priority entry and overlap permission and
++ *           supression of matched on-priority entries
++ * iopmp_tlb_size: If the entire TLB shares the same permission, the value is
++ *                 set to TARGET_PAGE_SIZE, indicating that the cached
++ *                 translation result can be reused. Otherwise, the value is 1,
++ *                 meaning the address must be translated for each access.
++ */
++static IOPMPEntryHit match_entry_range(RISCVIOPMPState *s, int rrid,
++                                       GSList *entry_range_list, hwaddr addr,
++                                       hwaddr sa, hwaddr ea,
++                                       int *entry_idx, int *cfg,
++                                       hwaddr *iopmp_tlb_size)
++{
++    EntryRange *range;
++    IOPMPEntryHit result = IOPMP_ENTRY_NO_HIT;
++    *iopmp_tlb_size = TARGET_PAGE_SIZE;
++    *cfg = 0;
++    int i = 0;
++    int s_idx, e_idx;
++    int md;
++    int curr_cfg;
++    /*
++     * Although a transaction may require multiple TLBs, consider the TLB of
++     * the current translated address instead of the transaction's start and
++     * end address.
++     */
++    hwaddr tlb_sa = addr &amp; ~(TARGET_PAGE_SIZE - 1);
++    hwaddr tlb_ea = tlb_sa + TARGET_PAGE_SIZE - 1;
++    int tlb_cfg = 0;
++
++    while (entry_range_list) {
++        range = (EntryRange *)entry_range_list-&gt;data;
++        s_idx = range-&gt;start_idx;
++        e_idx = range-&gt;end_idx;
++        md = range-&gt;md;
++        if (e_idx &gt; s-&gt;entry_num) {
++            e_idx = s-&gt;entry_num;
++        }
++        for (i = s_idx; i &lt; e_idx; i++) {
++            if (FIELD_EX32(s-&gt;regs.entry[i].cfg_reg, ENTRY_CFG, A) ==
++                IOPMP_AMATCH_OFF) {
++                continue;
++            }
++
++            if (i &lt; s-&gt;prio_entry) {
++                if (iopmp_tlb_size != NULL &amp;&amp;
++                    *iopmp_tlb_size == TARGET_PAGE_SIZE) {
++                    if (!(s-&gt;entry_addr[i].sa &lt;= tlb_sa &amp;&amp;
++                          s-&gt;entry_addr[i].ea &gt;= tlb_ea) &amp;&amp;
++                        ((s-&gt;entry_addr[i].sa &gt;= tlb_sa &amp;&amp;
++                          s-&gt;entry_addr[i].sa &lt;= tlb_ea) ||
++                         (s-&gt;entry_addr[i].ea &gt;= tlb_sa &amp;&amp;
++                          s-&gt;entry_addr[i].ea &lt;= tlb_ea))) {
++                        /*
++                         * A higher-priority entry exists within the TLB page
++                         * but does not cover the entire page. This means
++                         * that at least two kinds of permissions are present
++                         * within the TLB page.
++                         */
++                        *iopmp_tlb_size = 1;
++                    }
++                }
++                if (addr_in_entry(s, sa, i)) {
++                    if (addr_in_entry(s, ea, i)) {
++                            *entry_idx = i;
++                            *cfg = s-&gt;regs.entry[i].cfg_reg;
++                            apply_extend_perms(s, rrid, md, cfg);
++                            return IOPMP_ENTRY_HIT;
++                    } else {
++                        *entry_idx = i;
++                        return IOPMP_ENTRY_PAR_HIT;
++                    }
++                } else if (addr_in_entry(s, ea, i)) {
++                    *entry_idx = i;
++                    return IOPMP_ENTRY_PAR_HIT;
++                } else if (sa &lt; s-&gt;entry_addr[i].sa &amp;&amp;
++                           ea &gt; s-&gt;entry_addr[i].ea) {
++                    *entry_idx = i;
++                    return IOPMP_ENTRY_PAR_HIT;
++                }
++            } else {
++                if (addr_in_entry(s, sa, i) &amp;&amp; addr_in_entry(s, ea, i)) {
++                    result = IOPMP_ENTRY_HIT;
++                    if (*entry_idx == -1) {
++                        /* record first matched non-priorty entry */
++                        *entry_idx = i;
++                    }
++                    curr_cfg = s-&gt;regs.entry[i].cfg_reg;
++                    apply_extend_perms(s, rrid, md, &amp;curr_cfg);
++                    *cfg |= curr_cfg;
++                    /* Check this entry is also match tlb or not */
++                    if (*iopmp_tlb_size != 1 &amp;&amp; addr_in_entry(s, tlb_sa, i) &amp;&amp;
++                        addr_in_entry(s, tlb_ea, i)) {
++                        tlb_cfg |= curr_cfg;
++                        if ((tlb_cfg &amp; 0x7) == 0x7) {
++                            /* Already have RWX permission */
++                            *cfg = tlb_cfg;
++                            return result;
++                        }
++                    }
++                    if ((*cfg &amp; 0x7) == 0x7 &amp;&amp; *iopmp_tlb_size == 1) {
++                        /*
++                         * Already have RWX permission and a higher priority
++                         * entry in the same TLB page, checking the
++                         * next non-priority entry is unnecessary
++                         */
++                        return result;
++                    }
++                }
++            }
++        }
++        entry_range_list = entry_range_list-&gt;next;
++    }
++    if (result == IOPMP_ENTRY_HIT &amp;&amp; (*cfg &amp; 0x7) != (tlb_cfg &amp; 0x7)) {
++        /*
++         * For non-priority entry hit, if the tlb permssion is different to
++         * matched entries permssion, reduce iopmp_tlb_size
++         */
++        *iopmp_tlb_size = 1;
++    }
++    return result;
++}
++
++static void entry_range_list_data_free(gpointer data)
++{
++    EntryRange *range = (EntryRange *)data;
++    g_free(range);
++}
++
++static IOPMPEntryHit match_entry_srcmd(RISCVIOPMPState *s, int rrid,
++                                       hwaddr addr, hwaddr start_addr,
++                                       hwaddr end_addr, int *match_entry_idx,
++                                       int *cfg, hwaddr *iopmp_tlb_size)
++{
++    IOPMPEntryHit result = IOPMP_ENTRY_NO_HIT;
++    GSList *entry_range_list = NULL;
++    uint64_t srcmd_en;
++    int k;
++    EntryRange *range;
++    int md_idx;
++    if (s-&gt;srcmd_fmt == 1) {
++        range = g_malloc(sizeof(*range));
++        md_idx = rrid;
++        range-&gt;md = md_idx;
++        if (s-&gt;mdcfg_fmt == 0) {
++            if (md_idx &gt; 0) {
++                range-&gt;start_idx = FIELD_EX32(s-&gt;regs.mdcfg[md_idx - 1],
++                                              MDCFG0, T);
++            } else {
++                range-&gt;start_idx = 0;
++            }
++            range-&gt;end_idx = FIELD_EX32(s-&gt;regs.mdcfg[md_idx], MDCFG0, T);
++        } else {
++            k = s-&gt;md_entry_num + 1;
++            range-&gt;start_idx = md_idx * k;
++            range-&gt;end_idx = (md_idx + 1) * k;
++        }
++        entry_range_list = g_slist_append(entry_range_list, range);
++    } else {
++        for (md_idx = 0; md_idx &lt; s-&gt;md_num; md_idx++) {
++            srcmd_en = ((uint64_t)s-&gt;regs.srcmd_en[rrid] |
++                        ((uint64_t)s-&gt;regs.srcmd_enh[rrid] &lt;&lt; 32)) &gt;&gt; 1;
++            range = NULL;
++            if (s-&gt;srcmd_fmt == 2) {
++                /* All entries are needed to be checked in srcmd_fmt2 */
++                srcmd_en = -1;
++            }
++            if (srcmd_en &amp; (1ULL &lt;&lt; md_idx)) {
++                range = g_malloc(sizeof(*range));
++                range-&gt;md = md_idx;
++                if (s-&gt;mdcfg_fmt == 0) {
++                    if (md_idx &gt; 0) {
++                        range-&gt;start_idx = FIELD_EX32(s-&gt;regs.mdcfg[md_idx - 1],
++                                                      MDCFG0, T);
++                    } else {
++                        range-&gt;start_idx = 0;
++                    }
++                    range-&gt;end_idx = FIELD_EX32(s-&gt;regs.mdcfg[md_idx],
++                                                MDCFG0, T);
++                } else {
++                    k = s-&gt;md_entry_num + 1;
++                    range-&gt;start_idx = md_idx * k;
++                    range-&gt;end_idx = (md_idx + 1) * k;
++                }
++            }
++            /*
++             * There is no more memory domain after it enconter an invalid
++             * mdcfg. Note that the behavior of mdcfg(t+1).f &lt; mdcfg(t).f is
++             * implementation-dependent.
++             */
++            if (range != NULL) {
++                if (range-&gt;end_idx &lt; range-&gt;start_idx) {
++                    break;
++                }
++                entry_range_list = g_slist_append(entry_range_list, range);
++            }
++        }
++    }
++    result = match_entry_range(s, rrid, entry_range_list, addr, start_addr,
++                               end_addr, match_entry_idx, cfg, iopmp_tlb_size);
++    g_slist_free_full(entry_range_list, entry_range_list_data_free);
++    return result;
++}
++
++static MemTxResult iopmp_error_reaction(RISCVIOPMPState *s, uint32_t rrid,
++                                        uint32_t eid, hwaddr addr,
++                                        uint32_t etype, uint32_t ttype,
++                                        uint32_t cfg, uint64_t *data)
++{
++    uint32_t error_id = 0;
++    uint32_t error_info = 0;
++    int offset;
++    /* interrupt enable regarding the access */
++    int ie;
++    /* bus error enable */
++    int be;
++    int error_record;
++
++    if (etype &gt;= ERR_INFO_ETYPE_READ &amp;&amp; etype &lt;= ERR_INFO_ETYPE_WRITE) {
++        offset = etype - ERR_INFO_ETYPE_READ;
++        ie = (FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, IE) &amp;&amp;
++              !extract32(cfg, R_ENTRY_CFG_SIRE_SHIFT + offset, 1));
++        be = (!FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, RS) &amp;&amp;
++              !extract32(cfg, R_ENTRY_CFG_SERE_SHIFT + offset, 1));
++    } else {
++        ie = FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, IE);
++        be = !FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, RS);
++    }
++    error_record = (ie | be) &amp;&amp; !(s-&gt;transaction_state[rrid].running &amp;&amp;
++                                  s-&gt;transaction_state[rrid].error_reported);
++    if (error_record) {
++        if (s-&gt;transaction_state[rrid].running) {
++            s-&gt;transaction_state[rrid].error_reported = true;
++        }
++        /* Update error information if the error is not suppressed */
++        if (!FIELD_EX32(s-&gt;regs.err_info, ERR_INFO, V)) {
++            error_id = FIELD_DP32(error_id, ERR_REQID, EID, eid);
++            error_id = FIELD_DP32(error_id, ERR_REQID, RRID, rrid);
++            error_info = FIELD_DP32(error_info, ERR_INFO, ETYPE, etype);
++            error_info = FIELD_DP32(error_info, ERR_INFO, TTYPE, ttype);
++            s-&gt;regs.err_info = error_info;
++            s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO, V, 1);
++            s-&gt;regs.err_reqid = error_id;
++            /* addr[LEN+2:2] */
++            s-&gt;regs.err_reqaddr = addr &gt;&gt; 2;
++            if (ie) {
++                if (FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, MSI_EN)) {
++                    iopmp_msi_send(s);
++                } else {
++                    qemu_set_irq(s-&gt;irq, 1);
++                }
++            }
++        } else if (s-&gt;mfr_en) {
++            s-&gt;svw[rrid / 16] |= (1 &lt;&lt; (rrid % 16));
++            s-&gt;regs.err_info = FIELD_DP32(s-&gt;regs.err_info, ERR_INFO, SVC, 1);
++        }
++    }
++    if (be) {
++        return MEMTX_ERROR;
++    } else {
++        if (data) {
++            *data = s-&gt;err_rdata;
++        }
++        return MEMTX_OK;
++    }
++}
++
++static IOMMUTLBEntry iopmp_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
++                                     IOMMUAccessFlags flags, int iommu_idx)
++{
++    int rrid = iommu_idx;
++    RISCVIOPMPState *s = RISCV_IOPMP(container_of(iommu,
++                                                  RISCVIOPMPState, iommu));
++    hwaddr start_addr, end_addr;
++    int entry_idx = -1;
++    hwaddr iopmp_tlb_size = TARGET_PAGE_SIZE;
++    int match_cfg = 0;
++    IOPMPEntryHit result;
++    IOPMPPermission iopmp_perm;
++    bool lock = false;
++    IOMMUTLBEntry entry = {
++        .target_as = &amp;s-&gt;downstream_as,
++        .iova = addr,
++        .translated_addr = addr,
++        .addr_mask = 0,
++        .perm = IOMMU_NONE,
++    };
++
++    if (!s-&gt;enable) {
++        /* Bypass IOPMP */
++        entry.addr_mask = TARGET_PAGE_SIZE - 1,
++        entry.perm = IOMMU_RW;
++        return entry;
++    }
++
++    /* unknown RRID */
++    if (rrid &gt;= s-&gt;rrid_num) {
++        entry.target_as = &amp;s-&gt;blocked_rwx_as;
++        entry.perm = IOMMU_RW;
++        return entry;
++    }
++
++    if (s-&gt;is_stalled &amp;&amp; s-&gt;rrid_stall[rrid]) {
++        if (FIELD_EX32(s-&gt;regs.err_cfg, ERR_CFG, STALL_VIOLATION_EN)) {
++            entry.target_as = &amp;s-&gt;blocked_rwx_as;
++            entry.perm = IOMMU_RW;
++            return entry;
++        } else {
++            if (bql_locked()) {
++                bql_unlock();
++                lock = true;
++            }
++            while (s-&gt;is_stalled &amp;&amp; s-&gt;rrid_stall[rrid]) {
++                ;
++            }
++            if (lock) {
++                bql_lock();
++            }
++        }
++    }
++
++    if (s-&gt;transaction_state[rrid].running == true) {
++        start_addr = s-&gt;transaction_state[rrid].start_addr;
++        end_addr = s-&gt;transaction_state[rrid].end_addr;
++    } else {
++        /* No transaction information, use the same address */
++        start_addr = addr;
++        end_addr = addr;
++    }
++    result = match_entry_srcmd(s, rrid, addr, start_addr, end_addr, &amp;entry_idx,
++                               &amp;match_cfg, &amp;iopmp_tlb_size);
++    entry.addr_mask = iopmp_tlb_size - 1;
++    /* Remove permission for no_x, no_w*/
++    if (s-&gt;chk_x &amp;&amp; s-&gt;no_x) {
++        match_cfg = FIELD_DP32(match_cfg, ENTRY_CFG, X, 0);
++    }
++    if (s-&gt;no_w) {
++        match_cfg = FIELD_DP32(match_cfg, ENTRY_CFG, W, 0);
++    }
++    if (result == IOPMP_ENTRY_HIT) {
++        iopmp_perm = match_cfg &amp; IOPMP_RWX;
++        if (flags) {
++            if ((iopmp_perm &amp; flags) == 0) {
++                /* Permission denied */
++                entry.target_as = &amp;s-&gt;blocked_rwx_as;
++                entry.perm = IOMMU_RW;
++            } else {
++                entry.target_as = &amp;s-&gt;downstream_as;
++                if (s-&gt;rrid_transl_en) {
++                    /* Indirectly access for rrid_transl */
++                    entry.target_as = &amp;s-&gt;full_as;
++                }
++                entry.perm = iopmp_perm;
++            }
++        } else {
++            /* CPU access with IOMMU_NONE flag */
++            if (iopmp_perm &amp; IOPMP_XO) {
++                if ((iopmp_perm &amp; IOPMP_RW) == IOPMP_RW) {
++                    entry.target_as = &amp;s-&gt;downstream_as;
++                    if (s-&gt;rrid_transl_en) {
++                        entry.target_as = &amp;s-&gt;full_as;
++                    }
++                } else if ((iopmp_perm &amp; IOPMP_RW) == IOPMP_RO) {
++                    entry.target_as = &amp;s-&gt;blocked_w_as;
++                } else if ((iopmp_perm &amp; IOPMP_RW) == IOPMP_WO) {
++                    entry.target_as = &amp;s-&gt;blocked_r_as;
++                } else {
++                    entry.target_as = &amp;s-&gt;blocked_rw_as;
++                }
++            } else {
++                if ((iopmp_perm &amp; IOPMP_RW) == IOMMU_RW) {
++                    entry.target_as = &amp;s-&gt;blocked_x_as;
++                } else if ((iopmp_perm &amp; IOPMP_RW) == IOPMP_RO) {
++                    entry.target_as = &amp;s-&gt;blocked_wx_as;
++                } else if ((iopmp_perm &amp; IOPMP_RW) == IOPMP_WO) {
++                    entry.target_as = &amp;s-&gt;blocked_rx_as;
++                } else {
++                    entry.target_as = &amp;s-&gt;blocked_rwx_as;
++                }
++            }
++            entry.perm = IOMMU_RW;
++        }
++    } else {
++        /* CPU access with IOMMU_NONE flag no_hit or par_hit */
++        entry.target_as = &amp;s-&gt;blocked_rwx_as;
++        entry.perm = IOMMU_RW;
++    }
++    return entry;
++}
++
++static const MemoryRegionOps iopmp_ops = {
++    .read = iopmp_read,
++    .write = iopmp_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 4, .max_access_size = 4}
++};
++
++static MemTxResult iopmp_permssion_write(void *opaque, hwaddr addr,
++                                         uint64_t value, unsigned size,
++                                         MemTxAttrs attrs)
++{
++    MemTxResult result;
++    int rrid = attrs.requester_id;
++    bool sent_info = false;
++    RISCVIOPMPTxnInfo signal;
++    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
++    if (s-&gt;rrid_transl_en) {
++        if (s-&gt;transaction_state[rrid].running &amp;&amp; s-&gt;send_ss) {
++            sent_info = true;
++            signal.rrid = s-&gt;rrid_transl;
++            signal.start_addr = s-&gt;transaction_state[rrid].start_addr;
++            signal.end_addr = s-&gt;transaction_state[rrid].end_addr;
++            signal.stage = s-&gt;transaction_state[rrid].stage + 1;
++            /* Send transaction information to next stage iopmp. */
++            stream_push(s-&gt;send_ss, (uint8_t *)&amp;signal, sizeof(signal), 0);
++        }
++        attrs.requester_id = s-&gt;rrid_transl;
++    }
++    result = address_space_write(&amp;s-&gt;downstream_as, addr, attrs, &amp;value, size);
++    if (sent_info) {
++        stream_push(s-&gt;send_ss, (uint8_t *)&amp;signal, sizeof(signal), 1);
++    }
++    return result;
++}
++
++static MemTxResult iopmp_permssion_read(void *opaque, hwaddr addr,
++                                        uint64_t *pdata, unsigned size,
++                                        MemTxAttrs attrs)
++{
++    MemTxResult result;
++    int rrid = attrs.requester_id;
++    bool sent_info = false;
++    RISCVIOPMPTxnInfo signal;
++    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
++    if (s-&gt;rrid_transl_en) {
++        if (s-&gt;transaction_state[rrid].running &amp;&amp; s-&gt;send_ss) {
++            sent_info = true;
++            signal.rrid = s-&gt;rrid_transl;
++            signal.start_addr = s-&gt;transaction_state[rrid].start_addr;
++            signal.end_addr = s-&gt;transaction_state[rrid].end_addr;
++            signal.stage = s-&gt;transaction_state[rrid].stage + 1;
++            /* Send transaction information to next stage iopmp. */
++            stream_push(s-&gt;send_ss, (uint8_t *)&amp;signal, sizeof(signal), 0);
++        }
++        attrs.requester_id = s-&gt;rrid_transl;
++    }
++    result = address_space_read(&amp;s-&gt;downstream_as, addr, attrs, pdata, size);
++    if (sent_info) {
++        stream_push(s-&gt;send_ss, (uint8_t *)&amp;signal, sizeof(signal), 1);
++    }
++    return result;
++}
++
++static MemTxResult iopmp_handle_block(void *opaque, hwaddr addr,
++                                      uint64_t *data, unsigned size,
++                                      MemTxAttrs attrs,
++                                      IOPMPAccessType access_type)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
++    int entry_idx;
++    int rrid = attrs.requester_id;
++    int result;
++    hwaddr start_addr, end_addr;
++    IOPMPErrInfoETYPE etype;
++    IOPMPErrInfoTTYPE ttype;
++    ttype = access_type;
++    hwaddr iopmp_tlb_size = TARGET_PAGE_SIZE;
++    int match_cfg = 0;
++    /* unknown RRID */
++    if (rrid &gt;= s-&gt;rrid_num) {
++        etype = ERR_INFO_ETYPE_RRID;
++        return iopmp_error_reaction(s, rrid, 0, addr, etype, ttype, 0, data);
++    }
++
++    if (s-&gt;is_stalled &amp;&amp; s-&gt;rrid_stall[rrid]) {
++        etype = ERR_INFO_ETYPE_STALL;
++        return iopmp_error_reaction(s, rrid, 0, addr, etype, ttype, 0, data);
++    }
++
++    if ((access_type == IOPMP_ACCESS_FETCH &amp;&amp; s-&gt;no_x) ||
++        (access_type == IOPMP_ACCESS_WRITE &amp;&amp; s-&gt;no_w)) {
++        etype = ERR_INFO_ETYPE_NOHIT;
++        return iopmp_error_reaction(s, rrid, 0, addr, etype, ttype, 0, data);
++    }
++
++    if (s-&gt;transaction_state[rrid].running == true) {
++        start_addr = s-&gt;transaction_state[rrid].start_addr;
++        end_addr = s-&gt;transaction_state[rrid].end_addr;
++    } else {
++        /* No transaction information, use the same address */
++        start_addr = addr;
++        end_addr = addr;
++    }
++
++    /* matching again to get eid */
++    result = match_entry_srcmd(s, rrid, addr, start_addr, end_addr,
++                               &amp;entry_idx, &amp;match_cfg,
++                               &amp;iopmp_tlb_size);
++    if (result == IOPMP_ENTRY_HIT) {
++        etype = access_type;
++    } else if (result == IOPMP_ENTRY_PAR_HIT) {
++        /* Error supperssion per entry is only for all-byte matched entry */
++        etype = ERR_INFO_ETYPE_PARHIT;
++    } else {
++        etype = ERR_INFO_ETYPE_NOHIT;
++        entry_idx = 0;
++    }
++    return iopmp_error_reaction(s, rrid, entry_idx, start_addr, etype, ttype,
++                                match_cfg, data);
++}
++
++static MemTxResult iopmp_block_write(void *opaque, hwaddr addr, uint64_t value,
++                                     unsigned size, MemTxAttrs attrs)
++{
++    return iopmp_handle_block(opaque, addr, NULL, size, attrs,
++                              IOPMP_ACCESS_WRITE);
++}
++
++static MemTxResult iopmp_block_read(void *opaque, hwaddr addr, uint64_t *pdata,
++                                    unsigned size, MemTxAttrs attrs)
++{
++    return iopmp_handle_block(opaque, addr, pdata, size, attrs,
++                              IOPMP_ACCESS_READ);
++}
++
++static MemTxResult iopmp_block_fetch(void *opaque, hwaddr addr, uint64_t *pdata,
++                                     unsigned size, MemTxAttrs attrs)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(opaque);
++    if (s-&gt;chk_x) {
++        return iopmp_handle_block(opaque, addr, pdata, size, attrs,
++                                  IOPMP_ACCESS_FETCH);
++    }
++    /* Use read reaction for fetch if chk_x == 0 */
++    return iopmp_handle_block(opaque, addr, pdata, size, attrs,
++                              IOPMP_ACCESS_READ);
++}
++
++static const MemoryRegionOps iopmp_block_rw_ops = {
++    .fetch_with_attrs = iopmp_permssion_read,
++    .read_with_attrs = iopmp_block_read,
++    .write_with_attrs = iopmp_block_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_block_w_ops = {
++    .fetch_with_attrs = iopmp_permssion_read,
++    .read_with_attrs = iopmp_permssion_read,
++    .write_with_attrs = iopmp_block_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_block_r_ops = {
++    .fetch_with_attrs = iopmp_permssion_read,
++    .read_with_attrs = iopmp_block_read,
++    .write_with_attrs = iopmp_permssion_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_block_rwx_ops = {
++    .fetch_with_attrs = iopmp_block_fetch,
++    .read_with_attrs = iopmp_block_read,
++    .write_with_attrs = iopmp_block_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_block_wx_ops = {
++    .fetch_with_attrs = iopmp_block_fetch,
++    .read_with_attrs = iopmp_permssion_read,
++    .write_with_attrs = iopmp_block_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_block_rx_ops = {
++    .fetch_with_attrs = iopmp_block_fetch,
++    .read_with_attrs = iopmp_block_read,
++    .write_with_attrs = iopmp_permssion_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_block_x_ops = {
++    .fetch_with_attrs = iopmp_block_fetch,
++    .read_with_attrs = iopmp_permssion_read,
++    .write_with_attrs = iopmp_permssion_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static const MemoryRegionOps iopmp_full_ops = {
++    .fetch_with_attrs = iopmp_permssion_read,
++    .read_with_attrs = iopmp_permssion_read,
++    .write_with_attrs = iopmp_permssion_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {.min_access_size = 1, .max_access_size = 8},
++};
++
++static void iopmp_realize(DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    RISCVIOPMPState *s = RISCV_IOPMP(dev);
++    uint64_t size, mmio_size;
++
++    size = -1ULL;
++
++    if (s-&gt;srcmd_fmt &gt; 2) {
++        error_setg(errp, "Invalid IOPMP srcmd_fmt");
++        error_append_hint(errp, "Valid values are 0, 1, and 2.\n");
++        return;
++    }
++
++    if (s-&gt;mdcfg_fmt &gt; 2) {
++        error_setg(errp, "Invalid IOPMP mdcfg_fmt");
++        error_append_hint(errp, "Valid values are 0, 1, and 2.\n");
++        return;
++    }
++
++    if (s-&gt;srcmd_fmt != 0) {
++        /* SPS is only supported in srcmd_fmt0 */
++        s-&gt;sps_en = false;
++    }
++
++    s-&gt;md_num = MIN(s-&gt;md_num, IOPMP_MAX_MD_NUM);
++    if (s-&gt;srcmd_fmt == 1) {
++        /* Each RRID has one MD */
++        s-&gt;md_num = MIN(s-&gt;md_num, s-&gt;rrid_num);
++    }
++    s-&gt;md_entry_num = s-&gt;default_md_entry_num;
++    /* If md_entry_num is fixed, entry_num = md_num * (md_entry_num + 1) */
++    if (s-&gt;mdcfg_fmt == 1) {
++        s-&gt;entry_num = s-&gt;md_num * (s-&gt;md_entry_num + 1);
++    }
++
++    s-&gt;prient_prog = s-&gt;default_prient_prog;
++    if (s-&gt;srcmd_fmt == 0) {
++        s-&gt;rrid_num = MIN(s-&gt;rrid_num, IOPMP_SRCMDFMT0_MAX_RRID_NUM);
++    } else if (s-&gt;srcmd_fmt == 1) {
++        s-&gt;rrid_num = MIN(s-&gt;rrid_num, s-&gt;md_num);
++    } else {
++        s-&gt;rrid_num = MIN(s-&gt;rrid_num, IOPMP_SRCMDFMT2_MAX_RRID_NUM);
++    }
++    s-&gt;prio_entry = MIN(s-&gt;default_prio_entry, s-&gt;entry_num);
++    s-&gt;rrid_transl_prog = s-&gt;default_rrid_transl_prog;
++    s-&gt;rrid_transl = s-&gt;default_rrid_transl;
++
++    s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, MSI_EN,
++                                 s-&gt;default_msi_en);
++    s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, MSIDATA,
++                                 s-&gt;default_msidata);
++    s-&gt;regs.err_msiaddr = s-&gt;default_err_msiaddr;
++    s-&gt;regs.err_msiaddrh = s-&gt;default_err_msiaddrh;
++
++    s-&gt;regs.mdcfg = g_malloc0(s-&gt;md_num * sizeof(uint32_t));
++    if (s-&gt;srcmd_fmt != 2) {
++        s-&gt;regs.srcmd_en = g_malloc0(s-&gt;rrid_num * sizeof(uint32_t));
++        s-&gt;regs.srcmd_enh = g_malloc0(s-&gt;rrid_num * sizeof(uint32_t));
++    } else {
++        /* srcmd_perm */
++        s-&gt;regs.srcmd_perm = g_malloc0(s-&gt;md_num * sizeof(uint32_t));
++        s-&gt;regs.srcmd_permh = g_malloc0(s-&gt;md_num * sizeof(uint32_t));
++    }
++
++    if (s-&gt;sps_en) {
++        s-&gt;regs.srcmd_r = g_malloc0(s-&gt;rrid_num * sizeof(uint32_t));
++        s-&gt;regs.srcmd_rh = g_malloc0(s-&gt;rrid_num * sizeof(uint32_t));
++        s-&gt;regs.srcmd_w = g_malloc0(s-&gt;rrid_num * sizeof(uint32_t));
++        s-&gt;regs.srcmd_wh = g_malloc0(s-&gt;rrid_num * sizeof(uint32_t));
++    }
++
++    if (s-&gt;stall_en) {
++        s-&gt;rrid_stall = g_malloc0(s-&gt;rrid_num * sizeof(bool));
++    }
++
++    if (s-&gt;mfr_en) {
++        s-&gt;svw = g_malloc0((s-&gt;rrid_num / 16 + 1) * sizeof(uint16_t));
++    }
++
++    s-&gt;regs.entry = g_malloc0(s-&gt;entry_num * sizeof(RISCVIOPMPEntryRegs));
++    s-&gt;entry_addr = g_malloc0(s-&gt;entry_num * sizeof(RISCVIOPMPEntryAddr));
++    s-&gt;transaction_state = g_malloc0(s-&gt;rrid_num *
++                                     sizeof(RISCVIOPMPTrasaction));
++    mmio_size = MAX(A_SRCMD_EN0 + 32 * s-&gt;rrid_num,
++                    s-&gt;entry_offset + 16 * s-&gt;entry_num);
++    qemu_mutex_init(&amp;s-&gt;iopmp_transaction_mutex);
++
++    memory_region_init_iommu(&amp;s-&gt;iommu, sizeof(s-&gt;iommu),
++                             TYPE_RISCV_IOPMP_IOMMU_MEMORY_REGION,
++                             obj, "riscv-iopmp-sysbus-iommu", UINT64_MAX);
++    memory_region_init_io(&amp;s-&gt;mmio, obj, &amp;iopmp_ops,
++                          s, "riscv-iopmp-regs", mmio_size);
++    sysbus_init_mmio(sbd, &amp;s-&gt;mmio);
++
++    memory_region_init_io(&amp;s-&gt;blocked_rw, NULL, &amp;iopmp_block_rw_ops, s,
++                          "riscv-iopmp-blocked-rw", size);
++    memory_region_init_io(&amp;s-&gt;blocked_w, NULL, &amp;iopmp_block_w_ops, s,
++                          "riscv-iopmp-blocked-w", size);
++    memory_region_init_io(&amp;s-&gt;blocked_r, NULL, &amp;iopmp_block_r_ops, s,
++                          "riscv-iopmp-blocked-r", size);
++    memory_region_init_io(&amp;s-&gt;blocked_rwx, NULL, &amp;iopmp_block_rwx_ops, s,
++                          "riscv-iopmp-blocked-rwx", size);
++    memory_region_init_io(&amp;s-&gt;blocked_wx, NULL, &amp;iopmp_block_wx_ops, s,
++                          "riscv-iopmp-blocked-wx", size);
++    memory_region_init_io(&amp;s-&gt;blocked_rx, NULL, &amp;iopmp_block_rx_ops, s,
++                          "riscv-iopmp-blocked-rx", size);
++    memory_region_init_io(&amp;s-&gt;blocked_x, NULL, &amp;iopmp_block_x_ops, s,
++                          "riscv-iopmp-blocked-x", size);
++    memory_region_init_io(&amp;s-&gt;full_mr, NULL, &amp;iopmp_full_ops, s,
++                          "riscv-iopmp-full", size);
++
++    address_space_init(&amp;s-&gt;blocked_rw_as, &amp;s-&gt;blocked_rw,
++                       "riscv-iopmp-blocked-rw-as");
++    address_space_init(&amp;s-&gt;blocked_w_as, &amp;s-&gt;blocked_w,
++                       "riscv-iopmp-blocked-w-as");
++    address_space_init(&amp;s-&gt;blocked_r_as, &amp;s-&gt;blocked_r,
++                       "riscv-iopmp-blocked-r-as");
++    address_space_init(&amp;s-&gt;blocked_rwx_as, &amp;s-&gt;blocked_rwx,
++                       "riscv-iopmp-blocked-rwx-as");
++    address_space_init(&amp;s-&gt;blocked_wx_as, &amp;s-&gt;blocked_wx,
++                       "riscv-iopmp-blocked-wx-as");
++    address_space_init(&amp;s-&gt;blocked_rx_as, &amp;s-&gt;blocked_rx,
++                       "riscv-iopmp-blocked-rx-as");
++    address_space_init(&amp;s-&gt;blocked_x_as, &amp;s-&gt;blocked_x,
++                       "riscv-iopmp-blocked-x-as");
++    address_space_init(&amp;s-&gt;full_as, &amp;s-&gt;full_mr, "riscv-iopmp-full-as");
++
++    object_initialize_child(OBJECT(s), "riscv_iopmp_streamsink",
++                            &amp;s-&gt;txn_info_sink,
++                            TYPE_RISCV_IOPMP_STREAMSINK);
++}
++
++static void iopmp_reset_enter(Object *obj, ResetType type)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(obj);
++
++    qemu_set_irq(s-&gt;irq, 0);
++    if (s-&gt;srcmd_fmt != 2) {
++        memset(s-&gt;regs.srcmd_en, 0, s-&gt;rrid_num * sizeof(uint32_t));
++        memset(s-&gt;regs.srcmd_enh, 0, s-&gt;rrid_num * sizeof(uint32_t));
++    } else {
++        memset(s-&gt;regs.srcmd_en, 0, s-&gt;md_num * sizeof(uint32_t));
++        memset(s-&gt;regs.srcmd_enh, 0, s-&gt;md_num * sizeof(uint32_t));
++    }
++
++    if (s-&gt;sps_en) {
++        memset(s-&gt;regs.srcmd_r, 0, s-&gt;rrid_num * sizeof(uint32_t));
++        memset(s-&gt;regs.srcmd_rh, 0, s-&gt;rrid_num * sizeof(uint32_t));
++        memset(s-&gt;regs.srcmd_w, 0, s-&gt;rrid_num * sizeof(uint32_t));
++        memset(s-&gt;regs.srcmd_wh, 0, s-&gt;rrid_num * sizeof(uint32_t));
++    }
++
++    if (s-&gt;stall_en) {
++        memset((void *)s-&gt;rrid_stall, 0, s-&gt;rrid_num * sizeof(bool));
++        s-&gt;is_stalled = 0;
++    }
++
++    if (s-&gt;mfr_en) {
++        memset(s-&gt;svw, 0, (s-&gt;rrid_num / 16 + 1) * sizeof(uint16_t));
++    }
++
++    memset(s-&gt;regs.entry, 0, s-&gt;entry_num * sizeof(RISCVIOPMPEntryRegs));
++    memset(s-&gt;entry_addr, 0, s-&gt;entry_num * sizeof(RISCVIOPMPEntryAddr));
++    memset(s-&gt;transaction_state, 0,
++           s-&gt;rrid_num * sizeof(RISCVIOPMPTrasaction));
++
++    s-&gt;regs.mdlck = 0;
++    s-&gt;regs.mdlckh = 0;
++    s-&gt;regs.entrylck = 0;
++    s-&gt;regs.mdcfglck = 0;
++    s-&gt;regs.mdstall = 0;
++    s-&gt;regs.mdstallh = 0;
++    s-&gt;regs.rridscp = 0;
++    s-&gt;regs.err_cfg = 0;
++    s-&gt;regs.err_reqaddr = 0;
++    s-&gt;regs.err_reqid = 0;
++    s-&gt;regs.err_info = 0;
++
++    s-&gt;prient_prog = s-&gt;default_prient_prog;
++    s-&gt;rrid_transl_prog = s-&gt;default_rrid_transl_prog;
++    s-&gt;md_entry_num = s-&gt;default_md_entry_num;
++    s-&gt;rrid_transl = s-&gt;default_rrid_transl;
++    s-&gt;prio_entry = MIN(s-&gt;default_prio_entry, s-&gt;entry_num);
++    s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, MSI_EN,
++                                 s-&gt;default_msi_en);
++    s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, STALL_VIOLATION_EN,
++                                 s-&gt;default_stall_violation_en);
++    s-&gt;regs.err_cfg = FIELD_DP32(s-&gt;regs.err_cfg, ERR_CFG, MSIDATA,
++                                 s-&gt;default_msidata);
++    s-&gt;regs.err_msiaddr = s-&gt;default_err_msiaddr;
++    s-&gt;regs.err_msiaddrh = s-&gt;default_err_msiaddrh;
++    s-&gt;enable = 0;
++}
++
++static void iopmp_reset_hold(Object *obj, ResetType type)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(obj);
++
++    qemu_set_irq(s-&gt;irq, 0);
++}
++
++static int iopmp_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
++{
++    return attrs.requester_id;
++}
++
++static void iopmp_iommu_memory_region_class_init(ObjectClass *klass, void *data)
++{
++    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
++
++    imrc-&gt;translate = iopmp_translate;
++    imrc-&gt;attrs_to_index = iopmp_attrs_to_index;
++}
++
++static const Property iopmp_property[] = {
++    DEFINE_PROP_UINT32("mdcfg_fmt", RISCVIOPMPState, mdcfg_fmt, 1),
++    DEFINE_PROP_UINT32("srcmd_fmt", RISCVIOPMPState, srcmd_fmt, 0),
++    DEFINE_PROP_BOOL("tor_en", RISCVIOPMPState, tor_en, true),
++    DEFINE_PROP_BOOL("sps_en", RISCVIOPMPState, sps_en, false),
++    DEFINE_PROP_BOOL("prient_prog", RISCVIOPMPState, default_prient_prog, true),
++    DEFINE_PROP_BOOL("rrid_transl_en", RISCVIOPMPState, rrid_transl_en, false),
++    DEFINE_PROP_BOOL("rrid_transl_prog", RISCVIOPMPState,
++                     default_rrid_transl_prog, false),
++    DEFINE_PROP_BOOL("chk_x", RISCVIOPMPState, chk_x, true),
++    DEFINE_PROP_BOOL("no_x", RISCVIOPMPState, no_x, false),
++    DEFINE_PROP_BOOL("no_w", RISCVIOPMPState, no_w, false),
++    DEFINE_PROP_BOOL("stall_en", RISCVIOPMPState, stall_en, false),
++    DEFINE_PROP_BOOL("peis", RISCVIOPMPState, peis, true),
++    DEFINE_PROP_BOOL("pees", RISCVIOPMPState, pees, true),
++    DEFINE_PROP_BOOL("mfr_en", RISCVIOPMPState, mfr_en, true),
++    DEFINE_PROP_UINT32("md_entry_num", RISCVIOPMPState, default_md_entry_num,
++                       5),
++    DEFINE_PROP_UINT32("md_num", RISCVIOPMPState, md_num, 8),
++    DEFINE_PROP_UINT32("rrid_num", RISCVIOPMPState, rrid_num, 16),
++    DEFINE_PROP_UINT32("entry_num", RISCVIOPMPState, entry_num, 48),
++    DEFINE_PROP_UINT32("prio_entry", RISCVIOPMPState, default_prio_entry,
++                       65535),
++    DEFINE_PROP_UINT32("rrid_transl", RISCVIOPMPState, default_rrid_transl,
++                       0x0),
++    DEFINE_PROP_INT32("entry_offset", RISCVIOPMPState, entry_offset, 0x4000),
++    DEFINE_PROP_UINT32("err_rdata", RISCVIOPMPState, err_rdata, 0x0),
++    DEFINE_PROP_BOOL("msi_en", RISCVIOPMPState, default_msi_en, false),
++    DEFINE_PROP_UINT32("msidata", RISCVIOPMPState, default_msidata, 12),
++    DEFINE_PROP_BOOL("stall_violation_en", RISCVIOPMPState,
++                     default_stall_violation_en, true),
++    DEFINE_PROP_UINT32("err_msiaddr", RISCVIOPMPState, default_err_msiaddr,
++                       0x24000000),
++    DEFINE_PROP_UINT32("err_msiaddrh", RISCVIOPMPState, default_err_msiaddrh,
++                       0x0),
++    DEFINE_PROP_UINT32("msi_rrid", RISCVIOPMPState, msi_rrid, 0),
++};
++
++static void iopmp_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    device_class_set_props(dc, iopmp_property);
++    dc-&gt;realize = iopmp_realize;
++    rc-&gt;phases.enter = iopmp_reset_enter;
++    rc-&gt;phases.hold = iopmp_reset_hold;
++}
++
++static void iopmp_init(Object *obj)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++
++    sysbus_init_irq(sbd, &amp;s-&gt;irq);
++}
++
++static const TypeInfo iopmp_info = {
++    .name = TYPE_RISCV_IOPMP,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RISCVIOPMPState),
++    .instance_init = iopmp_init,
++    .class_init = iopmp_class_init,
++};
++
++static const TypeInfo iopmp_iommu_memory_region_info = {
++    .name = TYPE_RISCV_IOPMP_IOMMU_MEMORY_REGION,
++    .parent = TYPE_IOMMU_MEMORY_REGION,
++    .class_init = iopmp_iommu_memory_region_class_init,
++};
++
++DeviceState *iopmp_create(hwaddr addr, qemu_irq irq)
++{
++    DeviceState *dev = qdev_new(TYPE_RISCV_IOPMP);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &amp;error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
++    return dev;
++}
++
++/*
++ * Alias subregions from the source memory region to the destination memory
++ * region
++ */
++static void alias_memory_subregions(MemoryRegion *src_mr, MemoryRegion *dst_mr)
++{
++    int32_t priority;
++    hwaddr addr;
++    MemoryRegion *alias, *subregion;
++    QTAILQ_FOREACH(subregion, &amp;src_mr-&gt;subregions, subregions_link) {
++        priority = subregion-&gt;priority;
++        addr = subregion-&gt;addr;
++        alias = g_malloc0(sizeof(MemoryRegion));
++        memory_region_init_alias(alias, NULL, subregion-&gt;name, subregion, 0,
++                                 memory_region_size(subregion));
++        memory_region_add_subregion_overlap(dst_mr, addr, alias, priority);
++    }
++}
++
++/*
++ * Create downstream of system memory for IOPMP, and overlap memory region
++ * specified in memmap with IOPMP translator. Make sure subregions are added to
++ * system memory before call this function.
++ */
++void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
++                               uint32_t map_entry_num, uint32_t stage)
++{
++    RISCVIOPMPState *s = RISCV_IOPMP(dev);
++    uint32_t i;
++    MemoryRegion *iommu_alias;
++    MemoryRegion *target_mr = get_system_memory();
++    MemoryRegion *downstream = g_malloc0(sizeof(MemoryRegion));
++    memory_region_init(downstream, NULL, "iopmp_downstream",
++                       memory_region_size(target_mr));
++    /* Create a downstream which does not have iommu of iopmp */
++    alias_memory_subregions(target_mr, downstream);
++
++    for (i = 0; i &lt; map_entry_num; i++) {
++        /* Access to protected regions is managed through IOPMP */
++        iommu_alias = g_new(MemoryRegion, 1);
++        memory_region_init_alias(iommu_alias, NULL, "iommu_alias",
++                                 MEMORY_REGION(&amp;s-&gt;iommu), memmap[i].base,
++                                 memmap[i].size);
++        memory_region_add_subregion_overlap(target_mr, memmap[i].base,
++                                            iommu_alias, 1);
++    }
++    s-&gt;downstream = downstream;
++    address_space_init(&amp;s-&gt;downstream_as, s-&gt;downstream,
++                       "riscv-iopmp-downstream-as");
++}
++
++static size_t txn_info_push(StreamSink *txn_info_sink, unsigned char *buf,
++                            size_t len, bool eop)
++{
++    RISCVIOPMPStreamSink *ss = RISCV_IOPMP_STREAMSINK(txn_info_sink);
++    RISCVIOPMPState *s = RISCV_IOPMP(container_of(ss, RISCVIOPMPState,
++                                      txn_info_sink));
++    RISCVIOPMPTxnInfo *signal;
++    uint32_t rrid;
++
++    if (len != sizeof(RISCVIOPMPTxnInfo)) {
++        return 0;
++    }
++    signal = (RISCVIOPMPTxnInfo *)buf;
++    rrid = signal-&gt;rrid;
++
++    if (s-&gt;transaction_state[rrid].running) {
++        if (eop) {
++            /* Finish the transaction */
++            qemu_mutex_lock(&amp;s-&gt;iopmp_transaction_mutex);
++            s-&gt;transaction_state[rrid].running = 0;
++            qemu_mutex_unlock(&amp;s-&gt;iopmp_transaction_mutex);
++            return 1;
++        } else {
++            /* Transaction is already running */
++            return 0;
++        }
++    } else {
++        /* Get the transaction info */
++        s-&gt;transaction_state[rrid].supported = 1;
++        qemu_mutex_lock(&amp;s-&gt;iopmp_transaction_mutex);
++        s-&gt;transaction_state[rrid].running = 1;
++        qemu_mutex_unlock(&amp;s-&gt;iopmp_transaction_mutex);
++
++        s-&gt;transaction_state[rrid].start_addr = signal-&gt;start_addr;
++        s-&gt;transaction_state[rrid].end_addr = signal-&gt;end_addr;
++        s-&gt;transaction_state[rrid].error_reported = 0;
++        s-&gt;transaction_state[rrid].stage = signal-&gt;stage;
++        return 1;
++    }
++    return 0;
++}
++
++void iopmp_setup_sink(DeviceState *dev, StreamSink * ss)
++{
++     RISCVIOPMPState *s = RISCV_IOPMP(dev);
++     s-&gt;send_ss = ss;
++}
++
++static void riscv_iopmp_streamsink_class_init(ObjectClass *klass, void *data)
++{
++    StreamSinkClass *ssc = STREAM_SINK_CLASS(klass);
++    ssc-&gt;push = txn_info_push;
++}
++
++static const TypeInfo txn_info_sink = {
++    .name = TYPE_RISCV_IOPMP_STREAMSINK,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(RISCVIOPMPStreamSink),
++    .class_init = riscv_iopmp_streamsink_class_init,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_STREAM_SINK },
++        { }
++    },
++};
++
++static void iopmp_register_types(void)
++{
++    type_register_static(&amp;iopmp_info);
++    type_register_static(&amp;txn_info_sink);
++    type_register_static(&amp;iopmp_iommu_memory_region_info);
++}
++
++type_init(iopmp_register_types);
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 4383808d7a..a5ea4f1d73 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -395,3 +395,7 @@ ivshmem_flat_interrupt_peer(uint16_t peer_id, uint16_t vector_id) "Interrupting
+ i2c_echo_event(const char *id, const char *event) "%s: %s"
+ i2c_echo_recv(const char *id, uint8_t data) "%s: recv 0x%02" PRIx8
+ i2c_echo_send(const char *id, uint8_t data) "%s: send 0x%02" PRIx8
++
++# riscv_iopmp.c
++iopmp_read(uint64_t addr, uint32_t val) "addr 0x%"PRIx64" val 0x%x"
++iopmp_write(uint64_t addr, uint32_t val) "addr 0x%"PRIx64" val 0x%x"
+diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
+new file mode 100644
+index 0000000000..96209badf1
+--- /dev/null
++++ b/include/hw/misc/riscv_iopmp.h
+@@ -0,0 +1,199 @@
++/*
++ * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
++ *
++ * Copyright (c) 2023-2025 Andes Tech. Corp.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <a class="moz-txt-link-rfc2396E" href="http://www.gnu.org/licenses/">&lt;http://www.gnu.org/licenses/&gt;</a>.
++ */
++
++#ifndef RISCV_IOPMP_H
++#define RISCV_IOPMP_H
++
++#include "hw/sysbus.h"
++#include "qemu/typedefs.h"
++#include "memory.h"
++#include "exec/hwaddr.h"
++#include "hw/stream.h"
++
++#define TYPE_RISCV_IOPMP "riscv-iopmp"
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOPMPState, RISCV_IOPMP)
++
++typedef struct RISCVIOPMPStreamSink {
++    Object parent;
++} RISCVIOPMPStreamSink;
++#define TYPE_RISCV_IOPMP_STREAMSINK \
++        "riscv-iopmp-streamsink"
++DECLARE_INSTANCE_CHECKER(RISCVIOPMPStreamSink, RISCV_IOPMP_STREAMSINK,
++                         TYPE_RISCV_IOPMP_STREAMSINK)
++typedef struct {
++    uint32_t addr_reg;
++    uint32_t addrh_reg;
++    uint32_t cfg_reg;
++} RISCVIOPMPEntryRegs;
++
++typedef struct {
++    uint64_t sa;
++    uint64_t ea;
++} RISCVIOPMPEntryAddr;
++
++typedef struct {
++    union {
++        uint32_t *srcmd_en;
++        uint32_t *srcmd_perm;
++    };
++    union {
++        uint32_t *srcmd_enh;
++        uint32_t *srcmd_permh;
++    };
++    uint32_t *srcmd_r;
++    uint32_t *srcmd_rh;
++    uint32_t *srcmd_w;
++    uint32_t *srcmd_wh;
++    uint32_t *mdcfg;
++    RISCVIOPMPEntryRegs *entry;
++    uint32_t mdlck;
++    uint32_t mdlckh;
++    uint32_t entrylck;
++    uint32_t mdcfglck;
++    uint32_t mdstall;
++    uint32_t mdstallh;
++    uint32_t rridscp;
++    uint32_t err_cfg;
++    uint64_t err_reqaddr;
++    uint32_t err_reqid;
++    uint32_t err_info;
++    uint32_t err_msiaddr;
++    uint32_t err_msiaddrh;
++} RISCVIOPMPRegs;
++
++/*
++ * Transaction(txn) information to identify whole transaction length, enabling
++ * IOPMP to detect partially hit error
++ */
++typedef struct RISCVIOPMPTrasaction {
++    bool running;
++    bool error_reported;
++    bool supported;
++    uint32_t stage;
++    hwaddr start_addr;
++    hwaddr end_addr;
++} RISCVIOPMPTrasaction;
++
++typedef struct RISCVIOPMPState {
++    SysBusDevice parent_obj;
++    RISCVIOPMPEntryAddr *entry_addr;
++    MemoryRegion mmio;
++    IOMMUMemoryRegion iommu;
++    RISCVIOPMPRegs regs;
++    MemoryRegion *downstream;
++    MemoryRegion blocked_r, blocked_w, blocked_x, blocked_rw, blocked_rx,
++                 blocked_wx, blocked_rwx;
++    MemoryRegion full_mr;
++
++    /*
++     * AddressSpace for full permission and no requirements forward transaction
++     * information to next IOPMP stage
++     */
++    AddressSpace downstream_as;
++    /* AddressSpace for limited permssion in current IOPMP stage */
++    AddressSpace blocked_r_as, blocked_w_as, blocked_x_as, blocked_rw_as,
++                 blocked_rx_as, blocked_wx_as, blocked_rwx_as;
++    /* AddressSpace for full permssion in current IOPMP stage */
++    AddressSpace full_as;
++    qemu_irq irq;
++
++    /* Receive txn info */
++    RISCVIOPMPStreamSink txn_info_sink;
++    /* Send txn info for next stage iopmp */
++    StreamSink *send_ss;
++    RISCVIOPMPTrasaction *transaction_state;
++    QemuMutex iopmp_transaction_mutex;
++
++    /*
++     * Stall:
++     * a while loop to check stall flags if stall_violation is not enabled
++     */
++    volatile bool is_stalled;
++    volatile bool *rrid_stall;
++
++    /* MFR extenstion */
++    uint16_t *svw;
++    uint16_t svi;
++
++    /* Properties */
++    /*
++     * MDCFG Format 0: MDCFG table is implemented
++     *              1: HWCFG.md_entry_num is fixed
++     *              2: HWCFG.md_entry_num is programmable
++     */
++    uint32_t mdcfg_fmt;
++    /*
++     * SRCMD Format 0: SRCMD_EN is implemented
++     *              1: 1 to 1 SRCMD mapping
++     *              2: SRCMD_PERM is implemented
++     */
++    uint32_t srcmd_fmt;
++    bool tor_en;
++    /* SPS is only supported in srcmd_fmt0 */
++    bool sps_en;
++    /* Indicate prio_entry is programmable or not */
++    bool default_prient_prog;
++    bool rrid_transl_en;
++    bool default_rrid_transl_prog;
++    bool chk_x;
++    bool no_x;
++    bool no_w;
++    bool stall_en;
++    bool default_stall_violation_en;
++    bool peis;
++    bool pees;
++    bool mfr_en;
++    /* Indicate md_entry_num for mdcfg_fmt1/2 */
++    uint32_t default_md_entry_num;
++    uint32_t md_num;
++    uint32_t rrid_num;
++    uint32_t entry_num;
++    /* Indicate number of priority entry */
++    uint32_t default_prio_entry;
++    uint32_t default_rrid_transl;
++    /* MSI */
++    bool default_msi_en;
++    uint32_t default_msidata;
++    uint32_t default_err_msiaddr;
++    uint32_t default_err_msiaddrh;
++    uint32_t msi_rrid;
++    /* Note: entry_offset &lt; 0 is not support in QEMU */
++    int32_t entry_offset;
++    /*
++     * Data value to be returned for all read accesses that violate the security
++     * check
++     */
++    uint32_t err_rdata;
++
++    /* Current status for programmable parameters */
++    bool prient_prog;
++    bool rrid_transl_prog;
++    uint32_t md_entry_num;
++    uint32_t prio_entry;
++    uint32_t rrid_transl;
++    bool enable;
++} RISCVIOPMPState;
++
++DeviceState *iopmp_create(hwaddr addr, qemu_irq irq);
++void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
++                               uint32_t mapentry_num, uint32_t stage);
++void iopmp_setup_sink(DeviceState *dev, StreamSink * ss);
++
++#endif
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------vNMlMVvAnLLhbqRq3chSGDIK--
 
