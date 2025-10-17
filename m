@@ -4,116 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CD6CCD19E
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A97CCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9dN6-0003h0-AO; Fri, 17 Oct 2025 01:51:25 -0400
+	id 1v9dNs-0005UC-Bx; Fri, 17 Oct 2025 01:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9dN0-0003a6-8L
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:51:19 -0400
-Received: from 1.mo552.mail-out.ovh.net ([178.32.96.117])
+ (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v9dNp-0005N1-NI
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:52:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9dMv-0004tJ-0p
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:51:17 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.98])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cnv7s6c1qz6Mml;
- Fri, 17 Oct 2025 05:51:05 +0000 (UTC)
-Received: from kaod.org (37.59.142.103) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Fri, 17 Oct
- 2025 07:51:05 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-103G005c324863a-af7e-4254-aa14-c873635f4046,
- 48F321F6F3AAA1B288770452BCFEC79A981EE5C7) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <9405e583-3d71-4d49-8860-39c23b359fd7@kaod.org>
-Date: Fri, 17 Oct 2025 07:51:04 +0200
+ (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v9dNj-0004wE-T8
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:52:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760680316;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZZnYCSMiE2VS634K0Y/wCtbBcSCgp0pmS60LU0PsBuM=;
+ b=ir+IWmd8MCJ2NKbeqM0/LRXvnLloq8bMz/YvD38Ywbo89Xhh+dfHlujE+JQkbx3tBZ9Qqv
+ jllLoLhr1M89JR5st6UVZ7ukE+X0qyviWyklJ7+hcGKU3tiUqbUzYB+4jI3g53q0En8YV3
+ wb8evSezQC59Q+2RdA2Q+U34HbYySwg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-wYGejuLNPXWbDTdGai76aA-1; Fri,
+ 17 Oct 2025 01:51:52 -0400
+X-MC-Unique: wYGejuLNPXWbDTdGai76aA-1
+X-Mimecast-MFC-AGG-ID: wYGejuLNPXWbDTdGai76aA_1760680312
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B01461954224; Fri, 17 Oct 2025 05:51:51 +0000 (UTC)
+Received: from localhost.localdomain.com (unknown [10.72.116.124])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 402681956056; Fri, 17 Oct 2025 05:51:47 +0000 (UTC)
+From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>, Lei Yang <leiyang@redhat.com>
+Subject: [PATCH v5] net/tap-linux.c: avoid abort when setting invalid fd
+Date: Fri, 17 Oct 2025 13:51:12 +0800
+Message-ID: <20251017055112.837032-1-hzuo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 0/1] Move AST1030 machine to a separate file
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
-References: <20251015081219.2766143-1-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251015081219.2766143-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.103]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: be6d8f78-18c5-4041-9b46-feea7efd378a
-X-Ovh-Tracer-Id: 15657045583555496882
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFpq/3TXiIGkzvvJBhHPucGvWu4hz4dm4T12WxQOU5yvJXKXA4huMfapZx5RmTXzt+oUhrMeG2/iqy0/c+4EM6bC+P0HkPhSd7bIt5gMo816L7U/DeWL7je+8QxtUxg/VdmIKQgS8LXLOoPbe5o8ewcQuyQS5dRTyJw6dP8j/yqunjJN6RG68ZLtroO2UHYz6Or53NnzlV959uD5cak7CPzOypQOkUxcSE4LTVMXcpmrhWTrCZ1uftFP0Fi3t9HuG9RIleD6YRwR+Ww7RNO+IzLYrEr0HgIekYLySSi6LrEELdolRxMJqgJaCz7jyU8JV46qlpY2+5cu1fGX9kxtlnrSUMQxoUGVGAbUSn60ixDOFjl8hBJC80rPK3lG9XmyWu3VhaVMGRloXBl8WoRqlgVwBMMNjYBzc7etDJDBw2Ap7VCnQglFXq1UX9tdr/mVPoq3Z3/w961+afJ3hWssJI9hiQ0LHNkm3JYmY7YRemCgqC3volzBKhMghFqg6iZHUcIGcySyWFy/KBzEVASzDwUevZDntmIQO4XIsz+WjdM8fggGTJ/eUl2X9HKa2lor3X3MAvXrGJ6rtBUjU/Cu3p0WaFj982r6ecOsNLTxeYk7R81qDpkiY7lFtLniEOel13cp3hxUYur61TCfqchueww+K1q9z5DlAfXvOzHduns+Q
-DKIM-Signature: a=rsa-sha256; bh=QbLmsdSkQqaTbzJuHmlZntLiPPI3xzRYf5p4woawbWQ=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760680266; v=1;
- b=Cy7ry87vE+i0/uJfXtlfI+cvmXcucmHpQpP8ZCIciXG+KXuYnluLBhLqfQ0OMis+ksTD8L4C
- JAfqWvTCoFtJHlYrM7washRrtLbSfCF1ISENOmvfweZ6N5VqAWF57oEmLMukm7DdJake9p4y25/
- p79/xnGa8UncPZ6NREgHB3NtfMG96DB8woBpTXEGssBYp0KbKiwovqhi7mAjLor8srxZu6SKNbp
- /vKVVE6X8bSQnMU+GGGb20C9kmznETZsEqapvgQ4mvL+i7r5xiBiGmbgYFUT7T5U+/A35JfL9Gl
- 8UC1D65e2QREVgEWMkYneIebPLcwAAJiQELk8HZKeT4ew==
-Received-SPF: pass client-ip=178.32.96.117; envelope-from=clg@kaod.org;
- helo=1.mo552.mail-out.ovh.net
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hzuo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,29 +80,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
+When QEMU creates a tap device automatically and the tap device is
+manually removed from the host while the guest is running, the tap
+device file descriptor becomes invalid. Later, when the guest executes
+shutdown, the tap_fd_set_vnet_hdr_len() function may be called and
+abort QEMU with a core dump when attempting to use the invalid fd.
 
-On 10/15/25 10:12, Jamin Lin wrote:
-> v1:
->   1. Move AST1030 machine to a separate file
-> 
-> Jamin Lin (1):
->    hw/arm/aspeed: Move AST1030 machine to a separate file
-> 
->   include/hw/arm/aspeed.h        |  18 ++++++
->   hw/arm/aspeed.c                | 106 ++------------------------------
->   hw/arm/aspeed_ast10x0_boards.c | 107 +++++++++++++++++++++++++++++++++
->   hw/arm/meson.build             |   1 +
->   4 files changed, 130 insertions(+), 102 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast10x0_boards.c
-> 
+This patch removes many abort() calls in this file. If the fd is found
+to be in a bad state (e.g., EBADFD or ENODEV), the related function
+will print an error message.
 
-I will wait for your proposal reorganizing the aspeed machine files.
+Additionally, the return type of the tap_fd_set_vnet_hdr_len function
+is changed to int. When an error occurs during the ioctl() call,
+the return value from ioctl() is now passed back to the caller,
+allowing the caller to handle the error appropriately.
 
+The expected behavior for this negative test case is that QEMU should
+report an error but continue running rather than aborting.
 
-Thanks,
+Testing:
+- Start QEMU with automatically created tap device
+- Manually remove the tap device on the host
+- Execute shutdown in the guest
+- Verify QEMU reports an error but does not abort
 
-C.
+(gdb) bt full
+#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+        tid = <optimized out>
+        ret = 0
+        pd = <optimized out>
+        old_mask = {__val = {10}}
+        ret = <optimized out>
+#1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
+#2  0x00007f1710b15f56 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+        ret = <optimized out>
+#3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
+        save_stage = 1
+        act = {__sigaction_handler = {sa_handler = 0x20, sa_sigaction = 0x20}, sa_mask = {__val = {16929458408262392576, 18446744073709550848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943, 139737042670528, 18446744073709550328, 77, 139705603579344, 18446744073709551615, 139737041472378, 139705595179568, 16929458408262392576, 94049679794864}}, sa_flags = 281695456, sa_restorer = 0xa}
+#4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=<optimized out>, len=10) at ../net/tap-linux.c:204
+#5  tap_set_vnet_hdr_len (nc=<optimized out>, len=10) at ../net/tap.c:269
+        s = <optimized out>
+#6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=0x2956, len=10588) at ../net/net.c:573
+#7  virtio_net_set_mrg_rx_bufs (n=0x5589a72cfa10, mergeable_rx_bufs=<optimized out>, version_1=<error reading variable: Incompatible types on DWARF stack>, hash_report=<optimized out>) at ../hw/net/virtio-net.c:664
+        i = 0
+        nc = 0x5589a730ab28
+#8  virtio_net_set_features (vdev=0x5589a72cfa10, features=0) at ../hw/net/virtio-net.c:897
+        n = 0x5589a72cfa10
+        err = 0x0
+        i = 0
+#9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=0x5589a72cfa10, val=0) at ../hw/virtio/virtio.c:3079
+        k = <optimized out>
+        bad = <optimized out>
+#10 virtio_reset (opaque=0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
+        vdev = 0x5589a72cfa10
+        k = 0x5589a5c162b0
+        i = 0
+#11 0x000055899a630d2b in virtio_bus_reset (bus=0x5589a72cf990) at ../hw/virtio/virtio-bus.c:109
+        vdev = <optimized out>
+#12 virtio_pci_reset (qdev=0x5589a72c7470) at ../hw/virtio/virtio-pci.c:2311
+        proxy = 0x5589a72c7470
+        i = 0
+        bus = 0x5589a72cf990
+#13 0x000055899a686ded in memory_region_write_accessor (mr=<optimized out>, addr=<optimized out>, value=<optimized out>, size=<optimized out>, shift=<optimized out>, mask=<optimized out>, attrs=...) at ../system/memory.c:490
+        tmp = <optimized out>
+#14 0x000055899a686cbc in access_with_adjusted_size (addr=20, value=0x7f0fbedfde00, size=1, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x55899a686d30 <memory_region_write_accessor>, mr=0x5589a72c8040, attrs=...) at ../system/memory.c:566
+        print_once_ = false
+        access_mask = 255
+        access_size = 1
+        i = 0
+        r = 0
+        reentrancy_guard_applied = <optimized out>
+#15 0x000055899a686ac5 in memory_region_dispatch_write (mr=<optimized out>, addr=20, data=<optimized out>, op=<optimized out>, attrs=...) at ../system/memory.c:1545
+        size = <optimized out>
+#16 0x000055899a69f7da in flatview_write_continue_step (attrs=..., buf=0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, len=<optimized out>, mr_addr=20, l=0x7f0fbedfde28, mr=0x5589a72c8040) at ../system/physmem.c:2972
+        val = 6
+        result = 0
+        release_lock = <optimized out>
+#17 0x000055899a697c15 in flatview_write_continue (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., ptr=0x7f1711da6028, len=1, mr_addr=6, l=1, mr=0x0) at ../system/physmem.c:3002
+        result = 0
+        buf = 0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>
+#18 flatview_write (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3033
+--Type <RET> for more, q to quit, c to continue without paging--
+        l = <optimized out>
+        mr_addr = 6
+        mr = 0x0
+#19 0x000055899a697a91 in address_space_write (as=0x55899bceeba0 <address_space_memory>, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3153
+        _rcu_read_auto = 0x1
+        result = 0
+        fv = 0x2956
+#20 0x000055899a91159b in address_space_rw (addr=10588, attrs=..., buf=0x7f1711da6028, len=0, as=<optimized out>, is_write=<optimized out>) at ../system/physmem.c:3163
+#21 kvm_cpu_exec (cpu=0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
+        attrs = {secure = 0, space = 0, user = 0, memory = 0, debug = 0, requester_id = 0, pid = 0, address_type = 0, unspecified = false, _reserved1 = 0 '\000', _reserved2 = 0}
+        run = 0x7f1711da6000
+        ret = <optimized out>
+        run_ret = <optimized out>
+#22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=0x5589a5d68b40) at ../accel/kvm/kvm-accel-ops.c:51
+        r = <optimized out>
+        cpu = <optimized out>
+#23 0x000055899aba817a in qemu_thread_start (args=0x5589a5d72580) at ../util/qemu-thread-posix.c:393
+        __clframe = {__cancel_routine = <optimized out>, __cancel_arg = 0x0, __do_it = 1, __cancel_type = <optimized out>}
+        qemu_thread_args = 0x5589a5d72580
+        start_routine = 0x55899a918850 <kvm_vcpu_thread_fn>
+        arg = 0x5589a5d68b40
+        r = 0x0
+#24 0x00007f1710b6a128 in start_thread (arg=<optimized out>) at pthread_create.c:448
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {32, 8894544057743421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908, -8844535456800460908}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:100
 
+Fixes: 0caed25cd171c611781589b5402161d27d57229c ("virtio: Call set_features during reset")
+
+Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
+---
+ net/tap-linux.c | 25 ++++++++++++++++---------
+ net/tap_int.h   |  2 +-
+ 2 files changed, 17 insertions(+), 10 deletions(-)
+
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index 2a90b58467..d6b7533cfd 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -212,20 +212,25 @@ bool tap_probe_has_tunnel(int fd)
+     return true;
+ }
+ 
+-void tap_fd_set_vnet_hdr_len(int fd, int len)
++int tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+-    if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
+-        fprintf(stderr, "TUNSETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
+-                strerror(errno));
+-        abort();
++    int ret;
++
++    ret = ioctl(fd, TUNSETVNETHDRSZ, &len);
++    if (ret != 0) {
++        error_report("TUNSETVNETHDRSZ ioctl() failed: %s.", strerror(errno));
+     }
++
++    return ret;
+ }
+ 
+ int tap_fd_set_vnet_le(int fd, int is_le)
+ {
+     int arg = is_le ? 1 : 0;
++    int ret;
+ 
+-    if (!ioctl(fd, TUNSETVNETLE, &arg)) {
++    ret = ioctl(fd, TUNSETVNETLE, &arg);
++    if (!ret) {
+         return 0;
+     }
+ 
+@@ -235,14 +240,16 @@ int tap_fd_set_vnet_le(int fd, int is_le)
+     }
+ 
+     error_report("TUNSETVNETLE ioctl() failed: %s.", strerror(errno));
+-    abort();
++    return ret;
+ }
+ 
+ int tap_fd_set_vnet_be(int fd, int is_be)
+ {
+     int arg = is_be ? 1 : 0;
++    int ret;
+ 
+-    if (!ioctl(fd, TUNSETVNETBE, &arg)) {
++    ret = ioctl(fd, TUNSETVNETBE, &arg);
++    if (!ret) {
+         return 0;
+     }
+ 
+@@ -252,7 +259,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     }
+ 
+     error_report("TUNSETVNETBE ioctl() failed: %s.", strerror(errno));
+-    abort();
++    return ret;
+ }
+ 
+ void tap_fd_set_offload(int fd, const NetOffloads *ol)
+diff --git a/net/tap_int.h b/net/tap_int.h
+index b76a05044b..eed41fedc7 100644
+--- a/net/tap_int.h
++++ b/net/tap_int.h
+@@ -40,7 +40,7 @@ int tap_probe_has_ufo(int fd);
+ int tap_probe_has_uso(int fd);
+ bool tap_probe_has_tunnel(int fd);
+ void tap_fd_set_offload(int fd, const NetOffloads *ol);
+-void tap_fd_set_vnet_hdr_len(int fd, int len);
++int tap_fd_set_vnet_hdr_len(int fd, int len);
+ int tap_fd_set_vnet_le(int fd, int vnet_is_le);
+ int tap_fd_set_vnet_be(int fd, int vnet_is_be);
+ int tap_fd_enable(int fd);
+-- 
+2.47.3
 
 
