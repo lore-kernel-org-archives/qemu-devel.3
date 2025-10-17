@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2617CCD19A
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1E2CCCD19A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9jM6-0005y2-B7; Fri, 17 Oct 2025 08:14:46 -0400
+	id 1v9jM7-00060X-Sl; Fri, 17 Oct 2025 08:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-20251017120402a2edd07b9700020781-WDr9hS@rts-flowmailer.siemens.com>)
- id 1v9jLt-0005rC-Kl
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:34 -0400
-Received: from mta-64-225.siemens.flowmailer.net ([185.136.64.225])
+ <fm-294854-202510171204036c9fae5418000207cd-baGzVs@rts-flowmailer.siemens.com>)
+ id 1v9jLz-0005tW-TK
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:41 -0400
+Received: from mta-65-225.siemens.flowmailer.net ([185.136.65.225])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-20251017120402a2edd07b9700020781-WDr9hS@rts-flowmailer.siemens.com>)
- id 1v9jLe-0005Ec-R1
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:33 -0400
-Received: by mta-64-225.siemens.flowmailer.net with ESMTPSA id
- 20251017120402a2edd07b9700020781 for <qemu-devel@nongnu.org>;
- Fri, 17 Oct 2025 14:04:02 +0200
+ <fm-294854-202510171204036c9fae5418000207cd-baGzVs@rts-flowmailer.siemens.com>)
+ id 1v9jLi-0005Ey-Bm
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:14:37 -0400
+Received: by mta-65-225.siemens.flowmailer.net with ESMTPSA id
+ 202510171204036c9fae5418000207cd for <qemu-devel@nongnu.org>;
+ Fri, 17 Oct 2025 14:04:03 +0200
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm2;
  d=siemens.com; i=jan.kiszka@siemens.com;
  h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
- bh=ABLPh8cUmMhP+cUyUzsUus/0P+Zv7IY0ctQ4D2pSp4I=;
- b=hynNs38tq2B0F2uY+Qh9bO+amdW3uLnQd3JI5vBZKqMoVvFjw1dhfDB/QaI3eDwmgcABpx
- Slt/k/sFUp3Z20TlzW50bnovaKncPBUzyw+kBaCU1H7SSeVMDk6KkvJJxeaN9/i9LasK6lxI
- LmgmEQHhFz/UwmuajQjsjA/N3tvCwJwSbC5/rDu7LDROQ8bBYHf06nldHQEa6I7Uk5UGN6Sl
- ieBtxM8ZnwuUh7Cze2l2zgOKyjRsmbp2UYm7rd7FXDqz972q/2bboW/saAOYTjs//aJct3qj
- uJxS/oRnQoeqzOCML6ofdK34b/geHIjbZ4qTGPGrK6jh1V9OgmhqyJug==;
+ bh=vQy/u7fiHlMEW5tuxu760IqkWFgGR5Ow2qzEfvinbS4=;
+ b=E8cWg4nmG3EjFY6SSaYIktcJCt0WKleDN24gD7LNjelCrf2l9xx+04wR5xqClKCsFY5Qok
+ VTxi2WUP6FMaUEFlYm1jPImB2ospGxdheCS2BnATFOUKQRCuwMv8cJytGRNPHM90N3+4wgmM
+ wKpEb4Y5aTKcAOcIGPQQQOVBLTFVxCUnztnlq2pI9qN2/f3Zzd9kStvZQ9aMJJICqIPrhqxT
+ 1VUudtx34IvJ5ZOALKL2BZHOCDYQtTW7LgoqMECugjlORIBrecxM0JpeYfVVmFOKjh7/Y2yJ
+ KBx5MuWQI3SUl03b7bCwdZTEVt5mUD5nqRuZrQgNoVVGbu3skm+j2xPw==;
 From: Jan Kiszka <jan.kiszka@siemens.com>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -42,26 +42,27 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Jan=20L=C3=BCbbe?= <jlu@pengutronix.de>,
  Jerome Forissier <jerome.forissier@linaro.org>
-Subject: [PATCH v5 4/6] hw/sd/sdcard: Handle RPMB MAC field
-Date: Fri, 17 Oct 2025 14:03:56 +0200
-Message-ID: <30efd95ad5fc54b6afac9d6a0d260c174a6718d2.1760702638.git.jan.kiszka@siemens.com>
+Subject: [PATCH v5 6/6] docs: Add eMMC device model description
+Date: Fri, 17 Oct 2025 14:03:58 +0200
+Message-ID: <43c6bc1a28f449e59792526319ddc5ba23fd2fbf.1760702638.git.jan.kiszka@siemens.com>
 In-Reply-To: <cover.1760702638.git.jan.kiszka@siemens.com>
 References: <cover.1760702638.git.jan.kiszka@siemens.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Flowmailer-Platform: Siemens
 Feedback-ID: 519:519-294854:519-21489:flowmailer
-Received-SPF: pass client-ip=185.136.64.225;
- envelope-from=fm-294854-20251017120402a2edd07b9700020781-WDr9hS@rts-flowmailer.siemens.com;
- helo=mta-64-225.siemens.flowmailer.net
+Received-SPF: pass client-ip=185.136.65.225;
+ envelope-from=fm-294854-202510171204036c9fae5418000207cd-baGzVs@rts-flowmailer.siemens.com;
+ helo=mta-65-225.siemens.flowmailer.net
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.272,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,151 +80,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jan Kiszka <jan.kiszka@siemens.com>
 
-Implement correct setting of the MAC field when passing RPMB frames back
-to the guest. Also check the MAC on authenticated write requests.
-
-This depends on HMAC support for QCRYPTO_HASH_ALGO_SHA256 which is
-always available via glib - assert this, just to be safe.
-
 Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/sd/sd.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ docs/system/device-emulation.rst |  1 +
+ docs/system/devices/emmc.rst     | 53 ++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
+ create mode 100644 docs/system/devices/emmc.rst
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 918fe9f79f..759e284ac0 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -51,6 +51,7 @@
- #include "qemu/module.h"
- #include "sdmmc-internal.h"
- #include "trace.h"
-+#include "crypto/hmac.h"
- 
- //#define DEBUG_SD 1
- 
-@@ -118,6 +119,7 @@ typedef struct SDProto {
- } SDProto;
- 
- #define RPMB_KEY_MAC_LEN    32
-+#define RPMB_HASH_LEN       284
- 
- typedef struct {
-     uint8_t stuff_bytes[196];
-@@ -1120,6 +1122,66 @@ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
-     }
- }
- 
-+static bool rpmb_calc_hmac(SDState *sd, RPMBDataFrame *frame,
-+                           unsigned int num_blocks, uint8_t *mac)
-+{
-+    size_t mac_len = RPMB_KEY_MAC_LEN;
-+    bool success = true;
-+    Error *err = NULL;
-+    QCryptoHmac *hmac;
-+    uint64_t addr;
+diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
+index 911381643f..36429b1d17 100644
+--- a/docs/system/device-emulation.rst
++++ b/docs/system/device-emulation.rst
+@@ -101,3 +101,4 @@ Emulated Devices
+    devices/canokey.rst
+    devices/usb-u2f.rst
+    devices/igb.rst
++   devices/emmc.rst
+diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
+new file mode 100644
+index 0000000000..7e15b62270
+--- /dev/null
++++ b/docs/system/devices/emmc.rst
+@@ -0,0 +1,53 @@
++==============
++eMMC Emulation
++==============
 +
-+    hmac = qcrypto_hmac_new(QCRYPTO_HASH_ALGO_SHA256, sd->rpmb_key,
-+                            RPMB_KEY_MAC_LEN, &err);
-+    if (!hmac) {
-+        error_report_err(err);
-+        return false;
-+    }
++Besides SD card emulation, QEMU also offers an eMMC model as found on many
++embedded boards. An eMMC, just like an SD card, is connected to the machine
++via an SDHCI controller.
 +
-+    /*
-+     * This implies a read request because we only support single-block write
-+     * requests so far.
-+     */
-+    if (num_blocks > 1) {
-+        /*
-+         * Unfortunately, the underlying crypto libraries do not allow us to
-+         * migrate an active QCryptoHmac state. Therefore, we have to calculate
-+         * the HMAC in one run. To avoid buffering a complete read sequence in
-+         * SDState, reconstruct all frames except for the last one.
-+         */
-+        char *buf = (char *)sd->data;
++Create eMMC Images
++==================
 +
-+        memcpy(buf, frame->data, RPMB_HASH_LEN);
-+        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
-+        do {
-+            if (blk_pread(sd->blk, addr, 256, buf, 0) < 0) {
-+                fprintf(stderr, "sd_blk_read: read error on host side\n");
-+                success = false;
-+                break;
-+            }
-+            if (qcrypto_hmac_bytes(hmac, buf, RPMB_HASH_LEN, NULL, NULL,
-+                                   &err) < 0) {
-+                error_report_err(err);
-+                success = false;
-+                break;
-+            }
-+            addr += 256;
-+        } while (--num_blocks > 1);
-+    }
++A recent eMMC consists of 4 partitions: 2 boot partitions, 1 Replay protected
++Memory Block (RPMB), and the user data area. QEMU expects backing images for
++the eMMC to contain those partitions concatenated in exactly that order.
++However, the boot partitions as well as the RPMB might be absent if their sizes
++are configured to zero.
 +
-+    if (success &&
-+        qcrypto_hmac_bytes(hmac, (const char*)frame->data, RPMB_HASH_LEN, &mac,
-+                           &mac_len, &err) < 0) {
-+        error_report_err(err);
-+        success = false;
-+    }
-+    assert(!success || mac_len == RPMB_KEY_MAC_LEN);
++The eMMC specification defines alignment constraints for the partitions. The
++two boot partitions must be of the same size. Furthermore, boot and RPMB
++partitions must be multiples of 128 KB with a maximum of 32640 KB for each
++boot partition and 16384K for the RPMB partition.
 +
-+    qcrypto_hmac_free(hmac);
++The alignment constrain of the user data area depends on its size. Up to 2
++GByte, the size must be a power of 2. From 2 GByte onward, the size has to be
++multiples of 512 byte.
 +
-+    return success;
-+}
++QEMU is enforcing those alignment rules before instantiating the device.
++Therefore, the provided image has to strictly follow them as well. The helper
++script ``scripts/mkemmc.sh`` can be used to create compliant images, with or
++without pre-filled partitions. E.g., to create an eMMC image from a firmware
++image and an OS image with an empty 2 MByte RPMB, use the following command:
 +
- static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
- {
-     uint16_t resp = be16_to_cpu(sd->rpmb_result.req_resp);
-@@ -1142,6 +1204,17 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
-             sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_READ_FAILURE |
-                 (result & RPMB_RESULT_COUTER_EXPIRED));
-         }
-+        if (sd->multi_blk_cnt == 1 &&
-+            !rpmb_calc_hmac(sd, &sd->rpmb_result,
-+                            be16_to_cpu(sd->rpmb_result.block_count),
-+                            sd->rpmb_result.key_mac)) {
-+            memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
-+            sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
-+        }
-+    } else if (!rpmb_calc_hmac(sd, &sd->rpmb_result, 1,
-+                               sd->rpmb_result.key_mac)) {
-+        memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
-+        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
-     }
-     memcpy(sd->data, &sd->rpmb_result, sizeof(sd->rpmb_result));
- 
-@@ -1153,6 +1226,7 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
- {
-     RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
-     uint16_t req = be16_to_cpu(frame->req_resp);
-+    uint8_t mac[RPMB_KEY_MAC_LEN];
- 
-     if (req == RPMB_REQ_READ_RESULT) {
-         /* just return the current result register */
-@@ -1190,6 +1264,11 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
-             sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
-             break;
-         }
-+        if (!rpmb_calc_hmac(sd, frame, 1, mac) ||
-+            memcmp(frame->key_mac, mac, RPMB_KEY_MAC_LEN) != 0) {
-+            sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
-+            break;
-+        }
-         if (be32_to_cpu(frame->write_counter) != sd->rpmb_write_counter) {
-             sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_COUNTER_FAILURE);
-             break;
-@@ -3115,6 +3194,8 @@ static void emmc_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
- 
-+    assert(qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256));
++.. code-block:: console
 +
-     dc->desc = "eMMC";
-     dc->realize = emmc_realize;
-     device_class_set_props(dc, emmc_properties);
++    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
++
++This will take care of rounding up the partition sizes to the next valid value
++and will leave the RPMB and the second boot partition empty (zeroed).
++
++Adding eMMC Devices
++===================
++
++An eMMC is either automatically created by a machine model (e.g. Aspeed boards)
++or can be user-created when using a PCI-attached SDHCI controller. To
++instantiate the eMMC image from the example above in a machine without other
++SDHCI controllers while assuming that the firmware needs a boot partitions of
++1 MB, use the following options:
++
++.. code-block:: console
++
++    -drive file=emmc.img,if=none,format=raw,id=emmc-img
++    -device sdhci-pci
++    -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-partition-size=2097152
 -- 
 2.51.0
 
