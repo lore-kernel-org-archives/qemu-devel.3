@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C069CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBAB4CCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 05:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9d1y-0001tL-Rl; Fri, 17 Oct 2025 01:29:34 -0400
+	id 1v9d1r-0001qF-BV; Fri, 17 Oct 2025 01:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d1s-0001qt-Cq
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:29:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d1k-0001la-0x
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:29:22 -0400
 Received: from 6.mo548.mail-out.ovh.net ([188.165.58.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d1n-0001qI-0O
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:29:25 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.231.133])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cntfj3YClz5yCB;
- Fri, 17 Oct 2025 05:29:17 +0000 (UTC)
-Received: from kaod.org (37.59.142.96) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v9d1e-0001pc-MR
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 01:29:19 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.100])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cntfZ50cHz5yBj;
+ Fri, 17 Oct 2025 05:29:10 +0000 (UTC)
+Received: from kaod.org (37.59.142.102) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Fri, 17 Oct
- 2025 07:29:16 +0200
+ 2025 07:29:10 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-96R0018d368074-810e-4f4e-9795-4749d57254d7,
+ (GARM-102R00467cc7780-1129-43f9-a7c9-735bc74be614,
  48F321F6F3AAA1B288770452BCFEC79A981EE5C7) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <9afefc7c-d2f6-4faf-964b-bc628739a4e3@kaod.org>
-Date: Fri, 17 Oct 2025 07:29:16 +0200
+Message-ID: <1fa67818-cbc3-4812-b970-c400ad5b020e@kaod.org>
+Date: Fri, 17 Oct 2025 07:29:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 10/12] tests/functional/aarch64/ast2700fc: Add
- eth2 network interface check in PCIe test
+Subject: Re: [SPAM] [PATCH v1 09/12] tests/functional/aarch64/ast2700fc:
+ Update test ASPEED SDK v09.08
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20251015062210.3128710-1-jamin_lin@aspeedtech.com>
- <20251015062210.3128710-11-jamin_lin@aspeedtech.com>
+ <20251015062210.3128710-10-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,25 +87,25 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251015062210.3128710-11-jamin_lin@aspeedtech.com>
+In-Reply-To: <20251015062210.3128710-10-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.96]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.102]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 0b648da6-643d-4313-9f28-d3dd84d3cdc1
-X-Ovh-Tracer-Id: 15288876312522558255
+X-Ovh-Tracer-GUID: 52def445-5b21-4b11-a32f-bf85732a1281
+X-Ovh-Tracer-Id: 15286905989355047727
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEx974HFSf25uOSe9WnO5Z99NUeUj/jTkEPO9V2akqTidJHah/i270irkKGHyAgQorjjAApbUR/QtySvVWNRbNIj2TQNcK25nzhAkG0wQXy7L5Nb5b5G/vmjOPCQZ7L/y/zQ/iOy0scWF2uSGqkw/QkQhG+Jd03crzykmam5tMCK59KJhJIPN6VdHF6bv7eriwH05B7+6wjHaXAA+uVJ8qF4Vbc3MCJ63xvJ7qHtJNX4xymMUJqT0IoU6KIy0xe8g/MTIlHVcX9bd6C3XfZH7/mM0SfcVCv0EOb8hmJNl4ItZAZcjj5Buft3VtKQm9BDW7qm7nYV6zTfTyjTHcykYnimWh1GsEgmh9ZlB6egcnkS20GhHtxVi10Bcd94NxCcuxpID9kashFCU/spZbYT0fH8pyCg/7H3LVsYPI3xIUN2n2hsB5f0zpiPf45MUFcLJN5jG+SNEVQWgNx7VbXMnsZCbrw1aXCnqKBFwhhvgtgXiTrELl9QLXot7NH0lL1rsvTVmi6ayWHQU1f0ojjVsT0KyR+taUluYvJNZsx2XNB8c/o2FU0ULDpvFCnCeTSnCld34nm0HBW/4Qp86SJeX56uwA9vrqmTr2hu/zIzCtRPMFz/Ne6yvgMQki+Rwy0BSq91h30t7eg57UGYDi9LIL7qtgw2gckLRsYqrHkJUi8Aw
-DKIM-Signature: a=rsa-sha256; bh=DGgJIrT+4i4aJbqYCmnXmv5G9DTcZ5YJiokmdH/Bj+U=; 
+X-VR-SPAMCAUSE: dmFkZTEgW1XoTQFBXLr1PSh5roNn2Iid70h18L7CzIQExlQSn9u90AIYO8wsSxSLCGdgJAHO4o78LhirdEtQW/Jb6IIf1AhZ1Vi8POHYlTRJkWpVYZijvq/c8ZnUgoJUHvVpN6SlPPzeAhMMXcbAh3tvOUE23ZHRsEAX0DZZKtowjO4qhC3v/3J+MEsyvgZ/978zCkGyeY5vrhC61Sj9rdBvsMChhUooiK8XOBExRD7WCPK8TeaHaXgrjz24nkBgdNT6T3wSXSkwikESP8tvtxFTmLJZG/2tkbm/R3nmfrwvyCEmOxjviJDePzdqkkPZjOLYDjXs1v9Sh8Q9Svi0PGtRFkYoYRgn25hYagwhhzLt9ZYYVbTeucpPoB8p7YCxQA0NvGjCSiTqMSWDomLRXXfKXnuZI8V2KJp7AyBeLyp1s7gmtUUiCjcTCK9HovhNrRcQYejyLqC9Gz5o8pkupKYr6kYSDPFARaWqFr76o2GFI9glsWnoy/gif+V4lekYe7uK1Ob3r5nB2gAnPLWwS/TsSS07KAKf61kU1RQ2wzVewmCKxc7hEG4OU42JO3SMrK9aOHiWsmz+17CbETRJ5ibE4XhP/2dTFZmTuUXwbFcZkTeys4VSpXpZqgzszPWVS5CM2keqyjYMy8W+EAZvljQXdz+SExpIzJCl61zPBmarpaxWMQ
+DKIM-Signature: a=rsa-sha256; bh=wrG/i1JNLXjmEvGFmdX4ImiIhdVoeyNfIhHBWsnywI8=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760678957; v=1;
- b=mwCDuU9v/2afyPY1aEFkirv5DJCXgrlUl7S1wiVVl/MMq3xHfNiOB31CgZVOnaLMiWN74lha
- XiaTOP8wUfh1YK5HbWCOg/P4lMSAkwMwGbfpu7thtgKWMbwwZDHxEpsqThMg8BcHmXplU+fIKM8
- W8K2gkuSzoOHandazCdVuqmu4B3++lmRC+t0tu5WdBcvtCdV7AlmFR4J8pUxdbnBKEV3qr6kaeF
- 2r0jKontb9dRbUjQCMzCHOyzp7WgCI85ZgF6/wZM9sVSy0CtdIEHMT9lbT3M8nH4b5p6lpPx81q
- GAUKgU5DOXF7w1FMMUMMu40DooWsB71GZRGsaLjZNU+Jg==
+ t=1760678950; v=1;
+ b=r5OW7BzC1qkrzd/j2TAgDlbVu2Lc+9ZjZAtGL9lG8InnwR48thJga08xQXcjD4ERSrr0YfUb
+ wre1De0JFIKiG8Z4QES7mdgcavlz+MMlT6hLTGHSRTvnPWgmsOysYS9LJNNXg9lJlCPqiEcUGUE
+ Q02HZyeVjo1r/uh3SqiynaGT9piIpC4HhHK/ev9dWqkjBwNdwi6LIbmoKAJjWmIw7dmTx92KYB0
+ 4Zn5H8uOoy9YLNpd3QYkpqrZw+1eAykz2/Eb1Yxpf8GGSoTh+k4liCWlfG5NI2EQwCAGKl183WU
+ r6ynksaG96SzEgn+juCqnSvBrTRQ61tYnLICGa4TjjmHg==
 Received-SPF: pass client-ip=188.165.58.48; envelope-from=clg@kaod.org;
  helo=6.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
@@ -115,7 +115,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,38 +132,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/15/25 08:22, Jamin Lin wrote:
-> Enhance the AST2700 functional PCIe test to verify the network interface
-> configuration for eth2. This adds an additional command to check the IP
-> address assignment on eth2 to ensure network functionality is correctly
-> initialized in the test environment.
-> 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   tests/functional/aarch64/test_aspeed_ast2700fc.py | 4 ++++
->   1 file changed, 4 insertions(+)
+>   tests/functional/aarch64/test_aspeed_ast2700fc.py | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 > 
 > diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> index bcce0c8d4e..843647e6c5 100755
+> index 28b66614d9..bcce0c8d4e 100755
 > --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
 > +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> @@ -60,6 +60,9 @@ def do_ast2700_pcie_test(self):
->               'lspci -s 0002:01:00.0',
->               '0002:01:00.0 Ethernet controller: '
->               'Intel Corporation 82574L Gigabit Network Connection')
-> +        exec_command_and_wait_for_pattern(self,
-> +            'ip addr show dev eth2',
-> +            'inet 10.0.2.15/24')
+> @@ -36,9 +36,9 @@ def verify_openbmc_boot_and_login(self, name):
+>           exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+>           exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
 >   
->       def do_ast2700fc_ssp_test(self):
->           self.vm.shutdown()
-> @@ -135,6 +138,7 @@ def start_ast2700fc_test(self, name):
+> -    ASSET_SDK_V906_AST2700 = Asset(
+> -            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
+> -            'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
+> +    ASSET_SDK_V908_AST2700 = Asset(
+> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2700-default-obmc.tar.gz',
+> +            'eac3dc409b7ea3cd4b03d4792d3cebd469792ad893cb51e1d15f0fc20bd1e2cd')
 >   
->       def test_aarch64_ast2700fc_sdk_v09_08(self):
+>       def do_ast2700_i2c_test(self):
+>           exec_command_and_wait_for_pattern(self,
+> @@ -66,7 +66,7 @@ def do_ast2700fc_ssp_test(self):
+>           self.vm.set_console(console_index=1)
+>           self.vm.launch()
+>   
+> -        exec_command_and_wait_for_pattern(self, '\012', 'ssp:~$')
+> +        exec_command_and_wait_for_pattern(self, '\012', 'ssp_tsp:~$')
+>           exec_command_and_wait_for_pattern(self, 'version',
+>                                             'Zephyr version 3.7.1')
+>           exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
+> @@ -133,10 +133,10 @@ def start_ast2700fc_test(self, name):
+>           self.do_test_aarch64_aspeed_sdk_start(
+>                   self.scratch_file(name, 'image-bmc'))
+>   
+> -    def test_aarch64_ast2700fc_sdk_v09_06(self):
+> +    def test_aarch64_ast2700fc_sdk_v09_08(self):
 >           self.set_machine('ast2700fc')
-> +        self.require_netdev('user')
 >   
->           self.archive_extract(self.ASSET_SDK_V908_AST2700)
+> -        self.archive_extract(self.ASSET_SDK_V906_AST2700)
+> +        self.archive_extract(self.ASSET_SDK_V908_AST2700)
 >           self.start_ast2700fc_test('ast2700-default')
+>           self.verify_openbmc_boot_and_login('ast2700-default')
+>           self.do_ast2700_i2c_test()
+
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
