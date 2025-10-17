@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247E5CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 07:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3E0ECCD184
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 07:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9eQr-0004in-Hj; Fri, 17 Oct 2025 02:59:21 -0400
+	id 1v9eVL-0005o7-WE; Fri, 17 Oct 2025 03:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1v9eQo-0004iY-Hl
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:59:18 -0400
+ id 1v9eVJ-0005ne-DW
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 03:03:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1v9eQk-0005u9-3W
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:59:18 -0400
+ id 1v9eVG-0006IN-0o
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 03:03:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760684351;
+ s=mimecast20190719; t=1760684632;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U5+Ch12t0YIkXlLvQthmbPPTbAI4uhvsQ0mijGRHD90=;
- b=FwboAoDW0szAbS0S4WEF8KLMBYLTwMsXBRUDSyZ6mXxv4eZE0Zt5ncjCnRkTVfkcTCFkls
- ky1LYJOnciL3CLAvkiXI7OvwSMavYhg1oeOVU5aMVJL/5kywS19ITD8cLJ5mxI7gbfwMQw
- NQ7OLjc9FKwNS+s9SDNso6ulpUNKCqk=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EyiW/ItzXtKEEfqyc+xYp+e2elzmoy1LJx4m2/X1FW4=;
+ b=iI+WBfy33lueAoj70cdSRHoeXPjr59Q/H6tNuULcNKpYfbIrkUwBL69iQiYG8l9/dfcCds
+ j74amvWNmBZVmCpI716nqZ5pnb7BLAjs55y2rGfNKbGk0fXJ1elhub/s4xJtuzlbMtdKmA
+ u3krSxlz6lU25AnYzUvFwxZirPRVXU0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-n-OUQoTyP5yysZhZf5qILA-1; Fri, 17 Oct 2025 02:59:09 -0400
-X-MC-Unique: n-OUQoTyP5yysZhZf5qILA-1
-X-Mimecast-MFC-AGG-ID: n-OUQoTyP5yysZhZf5qILA_1760684349
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-28973df6a90so16899815ad.2
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 23:59:09 -0700 (PDT)
+ us-mta-160-8ta8AY92M9a_kR5nEunNwQ-1; Fri, 17 Oct 2025 03:03:50 -0400
+X-MC-Unique: 8ta8AY92M9a_kR5nEunNwQ-1
+X-Mimecast-MFC-AGG-ID: 8ta8AY92M9a_kR5nEunNwQ_1760684630
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-277f0ea6ee6so18591035ad.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 00:03:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760684349; x=1761289149;
+ d=1e100.net; s=20230601; t=1760684629; x=1761289429;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U5+Ch12t0YIkXlLvQthmbPPTbAI4uhvsQ0mijGRHD90=;
- b=ebgskQOzFZT+BXpbU7kE0qE/pesnta3dH4q18kdIhv/kYPPLK0d+8h6Z+XNRcNoTpi
- 0/R7WZFLHd6alCbfc39p9y93UYbvn4zO5i3rLTWJGZjdISCQ7PXRlreIxmuAGD+6GQGk
- FmehneJ3SprKeimpiJWmiQrd23P2ba0sfSEpCKa2zRjm/d5eGlzPn9Q8ocWkF2yjNQaY
- 4aGrMrxJor/oJsM1faNO3dG+vSfS2Xe1OLlwUV2W/wBHCvzmyp0bqB3qswmePcI8udsG
- 9gbl63fKxBNYdWgo19Ji/SZHW1WjDmPvYy1tOM9Qa6MzXEgeXYrcx8cVQ0mWdVZhuoI9
- GNow==
-X-Gm-Message-State: AOJu0YwJigFNAncadp0t3iege2BfKu8BO0LUAxLpKOu+0vka5wAliSko
- 5LYTz15TcVFDta87OrAxGs8swcIpzOlv7z5GQU7AQbtSVuw8M7Odnerv0ty2RVq+xH7UoQ7Vqvu
- UAAsi9GMuyC65NCFBfAoxpp8UTX1U5QCnGRsIOUHbzvlD0UmYM3GDtMhf/t0QJn03OvogEfujh4
- 97pg3AU4gYQqxwXKxYw/m+ZeHelkkRSUA=
-X-Gm-Gg: ASbGnctlNbdX/rLXo9Bb7CeB9g6gqb6JVR1/3cUmpEJIjl5SY0LPqmAIxnz/DYtP59l
- Rye6roQoSc8MM9t9X292e1oNmQLTreGcsnXFwpRJDOEr7nKUBGbQhuUTZi3RobXBWgRm3iXpeR0
- /sAUfUkjrgeCu2b98UcbNpIVdoAswH/hAaHqM4yjzIJAuCyPI0h2w=
-X-Received: by 2002:a17:902:e544:b0:249:37ad:ad03 with SMTP id
- d9443c01a7336-290cba4ebdamr30514885ad.34.1760684348771; 
- Thu, 16 Oct 2025 23:59:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5KL+s41TSDAIZW7kABhSH6tDY/z/Sz1TCNfgS/PeEDeHuUlYxy+W1gQ0TTip5pKgyXLSIBwQSA1sl15GSo3Q=
-X-Received: by 2002:a17:902:e544:b0:249:37ad:ad03 with SMTP id
- d9443c01a7336-290cba4ebdamr30514315ad.34.1760684348021; Thu, 16 Oct 2025
- 23:59:08 -0700 (PDT)
+ bh=EyiW/ItzXtKEEfqyc+xYp+e2elzmoy1LJx4m2/X1FW4=;
+ b=S9q8akcvnDZL3Zgje90OtIIWAHMs8i1R87Gfmg0Z00rLmb8C4U3qOyEkp3ZuCqGCXS
+ 4jT+iEgvtLzFUjnejocLelpZAj3vsEtPWy1cAOcyo3Vv1Vw7fdTvWAdCZzBp5pJX+QJs
+ Ftxbgs8Br5opUPyN7NYpea/0uSPLUu3Wua+IZwzTUkQT95TlYJ6qPh+O8u1+iFriwixj
+ 8D08k7JNByNuVZGDOGSOKOTFaAChgaNT0gJYPwS5UnKlb58BfGcMdqw2i3RfTKELgq+/
+ Nm47LJ7gjgo+eAYndvIPgaoo9mfycIF8jOHO0jFokku9Ykzwu6TcWN0Mp4BvCo0ToX8L
+ Ke3Q==
+X-Gm-Message-State: AOJu0YyG+MFDE3M+QK2jQSMuomzTH+wg56/e2rAQ8YwKIn5nNEbwHh09
+ YB7ckffteJTOnuNZ6jBPgD9GlRE5p/FUc0wSGI2EpNDEZWIGcDLLftB3lISK/pUjQ7IN41F/DY9
+ lO7/qx/xl9Ss6K+/wgPX9gS2Pp6fQOSKvEybHW1Q8iJThKeWrSLRNLFim0IKAuBdJXMBbdh168N
+ 9AQ3b8V4GsTwqLuQZiZg0txo5/sazBGU4yJs0uRlc09Q==
+X-Gm-Gg: ASbGncu4TmWO1G+sFe9kg9hNhtHke01UPV9mKNptfTSvrahmMC2MDY+6TURYpYcGAoD
+ 53XI+zTXsyt0g3uNWHRdl+pmjMmkTT6Uho5/QMSgOjJ9pu/MlCvzmzTsogHyS8HM+ZGf2xv2xKj
+ Z37pzPAu6TEjZR7a6DWqCusfBtosvMebWY/KIrxPAkoRaBbsdcqFQ=
+X-Received: by 2002:a17:902:d2c6:b0:290:c0d7:237e with SMTP id
+ d9443c01a7336-290caf831cdmr34118175ad.39.1760684629438; 
+ Fri, 17 Oct 2025 00:03:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFhTemW5wdnVmod39DboJHG8P8nyoMICsIgYtQIoMrT+aboiULK1q+agGeOsHolZwh5/HjpHF9nOyHTjX+4JY=
+X-Received: by 2002:a17:902:d2c6:b0:290:c0d7:237e with SMTP id
+ d9443c01a7336-290caf831cdmr34117905ad.39.1760684628963; Fri, 17 Oct 2025
+ 00:03:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251016143827.1850397-1-aesteve@redhat.com>
- <20251016143827.1850397-2-aesteve@redhat.com>
- <CADSE00Ln3fjBhhs5W2YXiM7M6u6kg2=5r6Nx+d03bkinsX15BA@mail.gmail.com>
- <20251016183139.GB1179082@fedora>
-In-Reply-To: <20251016183139.GB1179082@fedora>
+References: <20251015124314.1588018-1-aesteve@redhat.com>
+ <zey3wf53mapbrc25xwal3dia5fb4tddyxghvzjpy2p2fm6cdcp@7dlkcuzpcoho>
+In-Reply-To: <zey3wf53mapbrc25xwal3dia5fb4tddyxghvzjpy2p2fm6cdcp@7dlkcuzpcoho>
 From: Albert Esteve <aesteve@redhat.com>
-Date: Fri, 17 Oct 2025 08:58:55 +0200
-X-Gm-Features: AS18NWDwHjfUIPbWPBvQsK3o1GZ3mgcXbOqtHY5l4OEI_G-bRBznx89amcK8yP8
-Message-ID: <CADSE00JegVPuSeopfyHTSyerywOy=1zFjs04TYnaPXBDC_LuTQ@mail.gmail.com>
-Subject: Re: [PATCH v10 1/7] vhost-user: Add VirtIO Shared Memory map request
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- hi@alyssa.is, david@redhat.com, jasowang@redhat.com, dbassey@redhat.com, 
- stevensd@chromium.org, Stefano Garzarella <sgarzare@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, slp@redhat.com, manos.pitsidianakis@linaro.org
+Date: Fri, 17 Oct 2025 09:03:37 +0200
+X-Gm-Features: AS18NWAww3DAbEAFGn4ceWTyCzNC_iDI3UGX6cd5RXK5riOSBOToyzaNSxM_88E
+Message-ID: <CADSE00+=TyrTJfjMN8fKuNY8gK1V0BYjCXh32aQhW-eQSiNcpA@mail.gmail.com>
+Subject: Re: [PATCH v3] vhost-user: fix shared object lookup handler logic
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
@@ -111,67 +104,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 16, 2025 at 8:31=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
+On Wed, Oct 15, 2025 at 2:57=E2=80=AFPM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
 >
-> On Thu, Oct 16, 2025 at 05:18:45PM +0200, Albert Esteve wrote:
-> > On Thu, Oct 16, 2025 at 4:38=E2=80=AFPM Albert Esteve <aesteve@redhat.c=
-om> wrote:
-> > > @@ -1836,6 +2054,19 @@ static gboolean backend_read(QIOChannel *ioc, =
-GIOCondition condition,
-> > >          ret =3D vhost_user_backend_handle_shared_object_lookup(dev->=
-opaque, ioc,
-> > >                                                               &hdr, &=
-payload);
-> > >          break;
-> > > +    case VHOST_USER_BACKEND_SHMEM_MAP:
-> > > +        /* Handler manages its own response, check error and close c=
-onnection */
-> > > +        if (vhost_user_backend_handle_shmem_map(dev, ioc, &hdr, &pay=
-load,
-> > > +                                                fd ? fd[0] : -1) < 0=
-) {
-> > > +            goto err;
-> > > +        }
-> > > +        break;
-> > > +    case VHOST_USER_BACKEND_SHMEM_UNMAP:
-> > > +        /* Handler manages its own response, check error and close c=
-onnection */
-> > > +        if (vhost_user_backend_handle_shmem_unmap(dev, ioc, &hdr, &p=
-ayload) < 0) {
-> > > +            goto err;
-> > > +        }
-> > > +        break;
+> On Wed, Oct 15, 2025 at 02:43:14PM +0200, Albert Esteve wrote:
+> >Refactor backend_read() function and add a reply_ack variable
+> >to have the option for handlers to force tweak whether they should
+> >send a reply or not without depending on VHOST_USER_NEED_REPLY_MASK
+> >flag.
 > >
-> > Once this patch lands:
-> > https://lists.gnu.org/archive/html/qemu-devel/2025-10/msg03932.html
-> > These two handlers will need a `reply_ack =3D false;` before being
-> > invoked. What's the best way to proceed in this case?
+> >This fixes an issue with
+> >vhost_user_backend_handle_shared_object_lookup() logic, as the
+> >error path was not closing the backend channel correctly. So,
+> >we can remove the reply call from within the handler, make
+> >sure it returns early on errors as other handlers do and
+> >set the reply_ack variable on backend_read() to true to ensure
+> >that it will send a response, thus keeping the original intent.
 > >
-> > If I can chose, I'd prefer to integrate this one first and then I can
-> > rebase the one I linked and set the reply_ack where needed.
+> >Fixes: 160947666276c5b7f6bca4d746bcac2966635d79
+> >Cc: qemu-stable@nongnu.org
+> >Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> >---
+> > hw/virtio/vhost-user.c | 40 +++++++++++++---------------------------
+> > 1 file changed, 13 insertions(+), 27 deletions(-)
 >
-> You can rebase ahead of time and add "Based-on: <message-id>" to the
-> cover letter so the maintainer knows there is a dependency between the
-> patch series.
+> Thanks! This patch LGTM, so
 >
-> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#id35
->
-> When sending the series that depends on another series, be careful to
-> specify only the commit range from the end of the other series so that
-> you don't include all the commits from the other series. That way
-> reviewers aren't distracted by a bunch of other commits that are not
-> part of this series.
->
-> Summarizing:
-> 1. Rebase your other series on this one.
-> 2. Carefully send a new revision of your other series with only its
->    commits (not the commits from this series) and add "Based-on:
->    <message-id>" referencing this patch series by its Message-Id.
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
-Perfect. I will do that for the other patch then. Thank you!
+Thanks, I will send a new version of the patch to base it on
+https://lists.gnu.org/archive/html/qemu-devel/2025-10/msg04130.html.
+The other patch relies on the REPLY_MASK flag, so I need to add a
+`reply_ack =3D false;` or else it'd send two replies.
 
 >
-> Stefan
+>
+> But I left couple of comments that is not related to this fix and maybe
+> should be fixed separately:
+>
+> >
+> >diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> >index 36c9c2e04d..8a93f1d4b5 100644
+> >--- a/hw/virtio/vhost-user.c
+> >+++ b/hw/virtio/vhost-user.c
+> >@@ -1668,14 +1668,6 @@ static bool vhost_user_send_resp(QIOChannel *ioc,=
+ VhostUserHeader *hdr,
+> >     return !qio_channel_writev_all(ioc, iov, ARRAY_SIZE(iov), errp);
+> > }
+> >
+> >-static bool
+> >-vhost_user_backend_send_dmabuf_fd(QIOChannel *ioc, VhostUserHeader *hdr=
+,
+> >-                                  VhostUserPayload *payload, Error **er=
+rp)
+> >-{
+> >-    hdr->size =3D sizeof(payload->u64);
+> >-    return vhost_user_send_resp(ioc, hdr, payload, errp);
+> >-}
+> >-
+> > int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *=
+uuid,
+> >                                  int *dmabuf_fd)
+> > {
+> >@@ -1716,19 +1708,15 @@ int vhost_user_get_shared_object(struct vhost_de=
+v *dev, unsigned char *uuid,
+> >
+> > static int
+> > vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+> >-                                               QIOChannel *ioc,
+> >-                                               VhostUserHeader *hdr,
+> >-                                               VhostUserPayload
+> >*payload)
+> >+                                               VhostUserShared *object)
+> > {
+> >     QemuUUID uuid;
+> >     CharBackend *chr =3D u->user->chr;
+> >-    Error *local_err =3D NULL;
+> >     int dmabuf_fd =3D -1;
+> >     int fd_num =3D 0;
+> >
+> >-    memcpy(uuid.data, payload->object.uuid, sizeof(payload->object.uuid=
+));
+> >+    memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> >
+> >-    payload->u64 =3D 0;
+> >     switch (virtio_object_type(&uuid)) {
+> >     case TYPE_DMABUF:
+> >         dmabuf_fd =3D virtio_lookup_dmabuf(&uuid);
+> >@@ -1737,18 +1725,16 @@ vhost_user_backend_handle_shared_object_lookup(s=
+truct vhost_user *u,
+> >     {
+> >         struct vhost_dev *dev =3D virtio_lookup_vhost_device(&uuid);
+> >         if (dev =3D=3D NULL) {
+> >-            payload->u64 =3D -EINVAL;
+> >-            break;
+> >+            return -EINVAL;
+> >         }
+> >         int ret =3D vhost_user_get_shared_object(dev, uuid.data, &dmabu=
+f_fd);
+> >         if (ret < 0) {
+> >-            payload->u64 =3D ret;
+> >+            return ret;
+> >         }
+> >         break;
+> >     }
+> >     case TYPE_INVALID:
+> >-        payload->u64 =3D -EINVAL;
+> >-        break;
+> >+        return -EINVAL;
+>
+> So, after this patch, we are not going to call
+> `qemu_chr_fe_set_msgfds()` when we are returning an error to the
+> backend. I guess this is even better than before, right?
+>
+> >     }
+> >
+> >     if (dmabuf_fd !=3D -1) {
+> >@@ -1757,11 +1743,6 @@
+> >vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+> >
+>
+> Should we call qemu_chr_fe_set_msgfds() only if fd_num > 0?
+> Or should we return an error if `dmabuf_fd` is not a valid fd?
+>
+> I guess this is pre-existing and maybe should be fixed in another patch
+> if it's a problem.
+>
+> Thanks,
+> Stefano
+>
+> >     if (qemu_chr_fe_set_msgfds(chr, &dmabuf_fd, fd_num) < 0) {
+> >         error_report("Failed to set msg fds.");
+> >-        payload->u64 =3D -EINVAL;
+> >-    }
+> >-
+> >-    if (!vhost_user_backend_send_dmabuf_fd(ioc, hdr, payload, &local_er=
+r)) {
+> >-        error_report_err(local_err);
+> >         return -EINVAL;
+> >     }
+> >
+> >@@ -1790,6 +1771,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOC=
+ondition condition,
+> >     struct iovec iov;
+> >     g_autofree int *fd =3D NULL;
+> >     size_t fdsize =3D 0;
+> >+    bool reply_ack;
+> >     int i;
+> >
+> >     /* Read header */
+> >@@ -1808,6 +1790,8 @@ static gboolean backend_read(QIOChannel *ioc, GIOC=
+ondition condition,
+> >         goto err;
+> >     }
+> >
+> >+    reply_ack =3D hdr.flags & VHOST_USER_NEED_REPLY_MASK;
+> >+
+> >     /* Read payload */
+> >     if (qio_channel_read_all(ioc, (char *) &payload, hdr.size, &local_e=
+rr)) {
+> >         error_report_err(local_err);
+> >@@ -1833,8 +1817,10 @@ static gboolean backend_read(QIOChannel *ioc, GIO=
+Condition condition,
+> >                                                              &payload.o=
+bject);
+> >         break;
+> >     case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
+> >-        ret =3D vhost_user_backend_handle_shared_object_lookup(dev->opa=
+que, ioc,
+> >-                                                             &hdr, &pay=
+load);
+> >+        /* The backend always expects a response */
+> >+        reply_ack =3D true;
+> >+        ret =3D vhost_user_backend_handle_shared_object_lookup(dev->opa=
+que,
+> >+                                                             &payload.o=
+bject);
+> >         break;
+> >     default:
+> >         error_report("Received unexpected msg type: %d.", hdr.request);
+> >@@ -1845,7 +1831,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOC=
+ondition condition,
+> >      * REPLY_ACK feature handling. Other reply types has to be managed
+> >      * directly in their request handlers.
+> >      */
+> >-    if (hdr.flags & VHOST_USER_NEED_REPLY_MASK) {
+> >+    if (reply_ack) {
+> >         payload.u64 =3D !!ret;
+> >         hdr.size =3D sizeof(payload.u64);
+> >
+> >--
+> >2.49.0
+> >
+>
 
 
