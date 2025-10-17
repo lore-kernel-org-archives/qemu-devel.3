@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CDBCCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07B7CCD19A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9fkJ-0001Gu-9M; Fri, 17 Oct 2025 04:23:31 -0400
+	id 1v9fkE-0001G1-LY; Fri, 17 Oct 2025 04:23:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fkF-0001GG-2Q
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:27 -0400
+ id 1v9fkD-0001EX-4w
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:25 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v9fkA-0001D4-Ta
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:26 -0400
+ id 1v9fk6-0001BE-Pa
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:23:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760689403; x=1792225403;
+ t=1760689399; x=1792225399;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=99JHrZ3heZiFx9ybLFmQo2l6rqpitP2LQYczzzOLO+I=;
- b=Z753gYkan03nUSyAgPmdW1dfycNAGouhlUotOgl2f3hsZ9wRiPUUrWkU
- STJSqrX+PvlXAUavaNfrjsRdJW0NvXYnZL7D7ysK3Mc8IxJ4frEQJtA+k
- 6cmDrWHewY5v9TEfo51S05f6liHOQjEQ9P+EZF+beIP+fbN5MCVl3ygyO
- e9bRcQJ0y6wo8XoScwFS5tPeS77YV8QGUQKtur7QvZgyaMnUNIs6uXrAX
- 4htJ95XBsU/PlGPdTQWerbGDZDkeBWOr05S2C0TxloTieNdbBDlQqQfYw
- Cdeg0y1ZEBsnHo7za/RVkg9uz5D2XOesyUpwjJmbCMMAJ1Nm6Yd9fFGVC A==;
-X-CSE-ConnectionGUID: Bq8R23JMRlOkkbVXUTgQ4g==
-X-CSE-MsgGUID: pOT9nlNySCyS1D3b/eF1XQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927454"
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927454"
+ bh=tUFPPm29u+6P7k6wOoH03Z1NWisfoxackVYz0mSbGHQ=;
+ b=URtNv5bpFVhnnGSETP8wJ0N2r+j1nZSdAUb6xGXNT/UIFfVtWFm1miKz
+ Mt+h0mRlDEucQlHNGLSTbd5MwWpEHyEK4onFrDQen0JdXJxb74+ScLk4q
+ MyW544DBbGC8OgldyDdkzFaILOqFLALucfzU+kO7YA+J5WIZrBDbpcitl
+ GVVDjSeFAngyD+S7ZrsO/fklpQJnVzQpwxcmE1FK7hV70JHJZFcwmcBlr
+ /Bv5RCxxMVppogFqdPXVdka1+1xMI8Z1n1RH4qZ+yZHxgD3esSSuBKGyL
+ /QN9EgQ28pIVZNVciaHVB4MWii1l0YKW8Zhrf/6aTrFjlDYMmKD9FXXdQ A==;
+X-CSE-ConnectionGUID: uvs+V4a+Td6ZwW1vy4ou3A==
+X-CSE-MsgGUID: fOj7b+VyS6+PpnpY49aIkQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11584"; a="61927445"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="61927445"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:23:15 -0700
-X-CSE-ConnectionGUID: ryH0PFVBSSadMP7NOa4gTg==
-X-CSE-MsgGUID: FFrA1QNlRYq7Pf3e3PVZ4g==
+ 17 Oct 2025 01:23:11 -0700
+X-CSE-ConnectionGUID: 9F8DiyzSTX+ZDd1ZOgi34Q==
+X-CSE-MsgGUID: vIRPZ3ntSDekMMxIw+w/8Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484709"
+X-IronPort-AV: E=Sophos;i="6.19,234,1754982000"; d="scan'208";a="182484706"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Oct 2025 01:23:12 -0700
+ 17 Oct 2025 01:23:08 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
  jasowang@redhat.com, yi.l.liu@intel.com, clement.mathieu--drif@eviden.com,
  eric.auger@redhat.com, joao.m.martins@oracle.com, avihaih@nvidia.com,
  xudong.hao@intel.com, giovanni.cabiddu@intel.com, mark.gross@intel.com,
- arjan.van.de.ven@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jason Zeng <jason.zeng@intel.com>
-Subject: [PATCH v2 8/8] vfio/migration: Allow live migration with vIOMMU
- without VFs using device dirty tracking
-Date: Fri, 17 Oct 2025 04:22:33 -0400
-Message-ID: <20251017082234.517827-9-zhenzhong.duan@intel.com>
+ arjan.van.de.ven@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 7/8] vfio/migration: Add migration blocker if VM memory is
+ too large to cause unmap_bitmap failure
+Date: Fri, 17 Oct 2025 04:22:32 -0400
+Message-ID: <20251017082234.517827-8-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251017082234.517827-1-zhenzhong.duan@intel.com>
 References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
@@ -68,8 +67,8 @@ Received-SPF: pass client-ip=192.198.163.19;
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -88,108 +87,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e46883204c38 ("vfio/migration: Block migration with vIOMMU")
-introduces a migration blocker when vIOMMU is enabled, because we need
-to calculate the IOVA ranges for device dirty tracking. But this is
-unnecessary for iommu dirty tracking.
+With default config, kernel VFIO type1 driver limits dirty bitmap to 256MB
+for unmap_bitmap ioctl so the maximum guest memory region is no more than
+8TB size for the ioctl to succeed.
 
-Limit the vfio_viommu_preset() check to those devices which use device
-dirty tracking. This allows live migration with VFIO devices which use
-iommu dirty tracking.
+Be conservative here to limit total guest memory to 8TB or else add a
+migration blocker. IOMMUFD backend doesn't have such limit, one can use
+IOMMUFD backed device if there is a need to migration such large VM.
 
-Introduce a helper vfio_device_dirty_pages_disabled() to facilicate it.
-
-Suggested-by: Jason Zeng <jason.zeng@intel.com>
-Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
 ---
- include/hw/vfio/vfio-device.h | 10 ++++++++++
- hw/vfio/container.c           |  5 +----
- hw/vfio/device.c              |  6 ++++++
- hw/vfio/migration.c           |  6 +++---
- 4 files changed, 20 insertions(+), 7 deletions(-)
+ hw/vfio/migration.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 7e9aed6d3c..feda521514 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -148,6 +148,16 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
- 
- void vfio_device_reset_handler(void *opaque);
- bool vfio_device_is_mdev(VFIODevice *vbasedev);
-+/**
-+ * vfio_device_dirty_pages_disabled: Check if device dirty tracking will be
-+ * used for a VFIO device
-+ *
-+ * @vbasedev: The VFIODevice to transform
-+ *
-+ * Return: true if either @vbasedev doesn't support device dirty tracking or
-+ * is forcedly disabled from command line, otherwise false.
-+ */
-+bool vfio_device_dirty_pages_disabled(VFIODevice *vbasedev);
- bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
-                                          const char *typename, Error **errp);
- bool vfio_device_attach(char *name, VFIODevice *vbasedev,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 7706603c1c..8879da78c8 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -178,10 +178,7 @@ bool vfio_container_devices_dirty_tracking_is_supported(
-     VFIODevice *vbasedev;
- 
-     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
--        if (vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) {
--            return false;
--        }
--        if (!vbasedev->dirty_pages_supported) {
-+        if (vfio_device_dirty_pages_disabled(vbasedev)) {
-             return false;
-         }
-     }
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 64f8750389..837872387f 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -400,6 +400,12 @@ bool vfio_device_is_mdev(VFIODevice *vbasedev)
-     return subsys && (strcmp(subsys, "/sys/bus/mdev") == 0);
- }
- 
-+bool vfio_device_dirty_pages_disabled(VFIODevice *vbasedev)
-+{
-+    return (!vbasedev->dirty_pages_supported ||
-+            vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF);
-+}
-+
- bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
-                                          const char *typename, Error **errp)
- {
 diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 1106ca7857..1093857a34 100644
+index 4c06e3db93..1106ca7857 100644
 --- a/hw/vfio/migration.c
 +++ b/hw/vfio/migration.c
-@@ -1213,8 +1213,7 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         return !vfio_block_migration(vbasedev, err, errp);
-     }
+@@ -16,6 +16,7 @@
+ #include <sys/ioctl.h>
  
--    if ((!vbasedev->dirty_pages_supported ||
--         vbasedev->device_dirty_page_tracking == ON_OFF_AUTO_OFF) &&
-+    if (vfio_device_dirty_pages_disabled(vbasedev) &&
-         !vbasedev->iommu_dirty_tracking) {
-         if (vbasedev->enable_migration == ON_OFF_AUTO_AUTO) {
-             error_setg(&err,
-@@ -1232,7 +1231,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
-         goto out_deinit;
-     }
+ #include "system/runstate.h"
++#include "hw/boards.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/vfio-migration.h"
+ #include "migration/misc.h"
+@@ -1152,6 +1153,35 @@ static bool vfio_viommu_preset(VFIODevice *vbasedev)
+     return vbasedev->bcontainer->space->as != &address_space_memory;
+ }
  
--    if (vfio_viommu_preset(vbasedev)) {
-+    if (!vfio_device_dirty_pages_disabled(vbasedev) &&
-+        vfio_viommu_preset(vbasedev)) {
-         error_setg(&err, "%s: Migration is currently not supported "
-                    "with vIOMMU enabled", vbasedev->name);
++static bool vfio_dirty_tracking_exceed_limit(VFIODevice *vbasedev)
++{
++    VFIOContainer *bcontainer = vbasedev->bcontainer;
++    uint64_t max_size, page_size;
++
++    if (!object_dynamic_cast(OBJECT(bcontainer), TYPE_VFIO_IOMMU_LEGACY)) {
++        return false;
++    }
++
++    if (!bcontainer->dirty_pages_supported) {
++        return true;
++    }
++    /*
++     * VFIO type1 driver has a limitation of bitmap size on unmap_bitmap
++     * ioctl(), calculate the limit and compare with guest memory size to
++     * catch dirty tracking failure early.
++     *
++     * This limit is 8TB with default kernel and QEMU config, we are a bit
++     * conservative here as VM memory layout may be nonconsecutive or VM
++     * can run with vIOMMU enabled so the limitation could be relaxed. One
++     * can also switch to use IOMMUFD backend if there is a need to migrate
++     * large VM.
++     */
++    page_size = 1 << ctz64(bcontainer->dirty_pgsizes);
++    max_size = bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * page_size;
++
++    return current_machine->ram_size > max_size;
++}
++
+ /*
+  * Return true when either migration initialized or blocker registered.
+  * Currently only return false when adding blocker fails which will
+@@ -1208,6 +1238,13 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
          goto add_blocker;
+     }
+ 
++    if (vfio_dirty_tracking_exceed_limit(vbasedev)) {
++        error_setg(&err, "%s: Migration is currently not supported with "
++                   "large memory VM due to dirty tracking limitation in "
++                   "VFIO type1 driver", vbasedev->name);
++        goto add_blocker;
++    }
++
+     trace_vfio_migration_realize(vbasedev->name);
+     return true;
+ 
 -- 
 2.47.1
 
