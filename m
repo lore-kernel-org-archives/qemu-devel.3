@@ -4,60 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57F1CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F42CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9k77-0000IJ-R1; Fri, 17 Oct 2025 09:03:22 -0400
+	id 1v9k9P-0001Ay-J0; Fri, 17 Oct 2025 09:05:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v9k71-0000HS-8D
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:03:15 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1v9k6u-00034M-67
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:03:14 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cp4f83MKCz6L58j;
- Fri, 17 Oct 2025 20:59:28 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id B84991400C8;
- Fri, 17 Oct 2025 21:02:26 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 17 Oct
- 2025 14:02:25 +0100
-Date: Fri, 17 Oct 2025 14:02:24 +0100
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-CC: <qemu-devel@nongnu.org>, <fan.ni@samsung.com>, <armbru@redhat.com>,
- <lizhijian@fujitsu.com>, <zhao1.liu@intel.com>, <mst@redhat.com>,
- <linux-cxl@vger.kernel.org>, <anisa.su@samsung.com>, <linuxarm@huawei.com>
-Subject: Re: [RFC PATCH] hw/cxl: Add a performant (and correct) path for the
- non interleaved cases.
-Message-ID: <20251017140224.00000b61@huawei.com>
-In-Reply-To: <20251013143106.884-1-alireza.sanaee@huawei.com>
-References: <20251013143106.884-1-alireza.sanaee@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9k9L-0001AO-Gd
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:05:39 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9k95-0003j6-Gz
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:05:35 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-63bcfcb800aso2107401d50.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760706319; x=1761311119; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KuBZKmjoBlsw1oUgNA9R0/DESgCD3LzDHTcsDPY6GZA=;
+ b=tXLFa4E1rtHf2d6IQG6qE6Ts+k7J9KPM3TlExZaHn1EmWZz8Q9u+6Q5ozBOUuT/vy5
+ iVWcXCxCKPUFd4CD8K546hvZY64Uc7zaG+tJBx6ZEjoJDx2S33rVm/A088RRe4L0mSrN
+ wtdX2jeq8+JJDNlLLhrjT4pApM3x/KP61vzDIT37/nW0aoHyKcRIlH6zY06X9ZAtbpb5
+ wXPPVuRA2BmVnfsFmo8tvvMWhap6mCA4U2xBSUOeWNMCchcjA/QXPBKnIQ0A6UWZeUgS
+ B2XwW/7HI4zPWPIap6TRR6XLX3IWNCkUWRPhBqN+G2pMpgiX2XriCPDhaOh7H0KrWZo9
+ xlWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760706319; x=1761311119;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KuBZKmjoBlsw1oUgNA9R0/DESgCD3LzDHTcsDPY6GZA=;
+ b=Z4BeR5JIyzWzjufj924EPhb0e39YEJgQf+FMq4072e+z6fOobyqAmYBJu72z5O8VUS
+ F6ae0jKPO/POjLZY0B2Hz6U+uxEq3ChSHngwz/CgYu4OYoh0gKHTz47XrPraRjLbopu1
+ rOGRiAs6cLVXqomTOHHX/AbucofJRz22gV4iOM5cWTMFqcCNL1354Dt0iabXxa+X0p3G
+ BTbNZpVnXiooWvfIzn3CzrDEo6eXXcuHNidihBv9h5dFLIPkEA4GZevXg0LytiqXaXHs
+ LCwbEn/zoGMuQmo9sn4UgDwfga6o+fHVJee52N/V+dxT27mLru+NisFVbw9DYUvpB0W+
+ MNpw==
+X-Gm-Message-State: AOJu0YzF5y0Ol8eSZ2BjukyJ2jFOHBsQDrIcVMHfAYfIsKgQFB1uc548
+ 6u9aKtZIByzK3JYRhFCngFDv+QVVK5olsJ2d/4o+gOT6RDnfYKtdI0uXtgjz3R/U+1+/UAXxBsC
+ Ra1KiLZWGwwIBaMaDbRnQRNuV8BE2Nx8YoZvnL9hafQ==
+X-Gm-Gg: ASbGnctZ16Vk0SQiEf2fOLLdlJoNSADS2ScYN/d0hQKkPsGINVTg1MFL37wL82PK3iu
+ o8H3+bWg+qQO5+ZKOfunrbXinDDnFhGdn3aEiRs1MfFQLrWrQbJzul1CSS4pWe7O/brTDXGxhXD
+ CM/XDiI3FZG+P2VC006lhdX4QMnZ2X3iMzDOUubNZkfTFeEbqcwt+cx5P1BGcXN0MkpxcZVO06I
+ lMiGqFws37EBJtWh/mRI6Y3R/95YcwGnJOWMc+6uYhVUUA2KIxlE1lP7BhJuIqjLDhx6YQz
+X-Google-Smtp-Source: AGHT+IH19t8SFRumLoN+BuL4EHLU42mChpBHIMBiuO/r2HdZ2RgjgtDfljTnDFNkQwzegu2NMcEtFJmgWNy0PZF+Ja4=
+X-Received: by 2002:a05:690e:140d:b0:63e:2471:96ff with SMTP id
+ 956f58d0204a3-63e247198fbmr133819d50.60.1760706318417; Fri, 17 Oct 2025
+ 06:05:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-6-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-6-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Oct 2025 14:05:07 +0100
+X-Gm-Features: AS18NWDYmmqOTLdlzswdY2NG5BQ0Mvgmh8sfOdNV1i334C8SwkCr9Wqbzj5iEfM
+Message-ID: <CAFEAcA9KZcuMenU4yKeGBc7EtWu07-ELHO-SwG+dYKGN-B3zUg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/37] target/arm: Split add_cpreg_to_hashtable_aa64
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,516 +90,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Oct 2025 15:31:06 +0100
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
-
-> The CXL address to device decoding logic is complex because of the need
-> to correctly decode fine grained interleave. The current implementation
-> prevents use with KVM where executed instructions may reside in that
-> memory and gives very slow performance even in TCG.
-> 
-> In many real cases non interleaved memory configurations are useful and
-> for those we can use a more conventional memory region alias allowing
-> similar performance to other memory in the system.
-> 
-> Whether this fast path is applicable can be established once the full
-> set of HDM decoders has been committed (in whatever order the guest
-> decides to commit them). As such a check is performed on each commit /
-> uncommit of HDM decoder to establish if the alias should be added or
-> removed.
-> 
-> Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Hi Ali,
-
-Given your reply to add +CC had some broken wrapping I have probably
-confused things even more but this is a reply to the original email
-with the same +CC.  For future series that are qemu and CXL related
-as you've noted it needs to go to both main lists. It should also
-have
-[RFC PATCH qemu] as that helps Dave filter them out from the linux-cxl
-patchwork.
-
-
-Various comments inline. Many of them in the code I hacked together.
-That younger me made a mess ;)
-
+On Tue, 14 Oct 2025 at 21:15, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Rename the existing add_cpreg_to_hashtable_aa64 as *_1.
+> Introduce a new add_cpreg_to_hashtable_aa64 that handles
+> 128-bit and 64-bit views of an AArch64 system register.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> Thanks to Jonathan Cameron for feedback and help with this patch.
->  hw/cxl/cxl-component-utils.c |   9 ++
->  hw/cxl/cxl-host.c            | 268 ++++++++++++++++++++++++++++++++++-
->  hw/mem/cxl_type3.c           |   4 +
->  include/hw/cxl/cxl.h         |   1 +
->  include/hw/cxl/cxl_device.h  |  10 ++
->  5 files changed, 289 insertions(+), 3 deletions(-)
-> 
-
->  static void cxl_cache_mem_write_reg(void *opaque, hwaddr offset, uint64_t value,
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index 0d891c651d..3a563af3bc 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -12,6 +12,7 @@
-
-> @@ -226,7 +232,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->  
->      cache_mem = usp_cstate->crb.cache_mem_registers;
->  
-> -    target_found = cxl_hdm_find_target(cache_mem, addr, &target);
-> +    target_found = cxl_hdm_find_target(cache_mem, addr, &target, NULL);
->      if (!target_found) {
->          return NULL;
+>  target/arm/helper.c | 61 ++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 57 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 3b06704963..c240edf182 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -7668,11 +7668,9 @@ static void add_cpreg_to_hashtable_aa32(ARMCPU *cpu, ARMCPRegInfo *r)
 >      }
-> @@ -248,6 +254,262 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->      return d;
 >  }
->  
-> +static bool cfmws_is_not_interleaved(CXLFixedWindow *fw, hwaddr addr)
-Naming is a bit non obvious as it's not just checking the cfmws but
-also the rest of the path.  find_device doesn't suffer that confusion
-because it is finding a device under a cfwms.
-> +{
+>
+> -static void add_cpreg_to_hashtable_aa64(ARMCPU *cpu, ARMCPRegInfo *r)
+> +static void add_cpreg_to_hashtable_aa64_1(ARMCPU *cpu, ARMCPRegInfo *r,
+> +                                          uint32_t key)
 
-It's a bit annoying how much this code shares with
-cxl_cfmws_find_device()
+I prefer "do_foo()" over "foo_1()" for naming this kind of "internal
+part of some other function", and we have a lot more do_foo than
+foo_1 in target/arm.
 
-As we take this forward perhaps we need a shared helper that both wrap
-which takes a interleave allowed parameter.
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Something like:
-
-static PCIDevice *do_cxl_cfws_find_device(CXLFixedWindow *fw, hwaddr addr,
-					  bool allow_interleave)
-(
-    CXLComponentState *hb_cstate, *usp_cstate;
-    PCIHostState *hb;
-    CXLUpstreamPort *usp;
-    int rb_index;
-    uint32_t *cache_mem;
-    uint8_t target;
-    bool target_found;
-    PCIDevice *rp, *d;
-    bool interleaved = false;
-
-    /* Address is relative to memory region. Convert to HPA */
-    addr += fw->base;
-
-//new bit
-    if ((fw->num_targets > 1) && !allow_interleave) {
-        return NULL;
-    }
-    rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
-    hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
-    if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
-        return NULL;
-    }
-
-    if (cxl_get_hb_passthrough(hb)) {
-        rp = pcie_find_port_first(hb->bus);
-        if (!rp) {
-            return NULL;
-        }
-    } else {
-        hb_cstate = cxl_get_hb_cstate(hb);
-        if (!hb_cstate) {
-            return NULL;
-        }
-
-        cache_mem = hb_cstate->crb.cache_mem_registers;
-
-        target_found = cxl_hdm_find_target(cache_mem, addr, &target, &interleaved);
-        if (!target_found) {
-            return NULL;
-        }
-//new bit.
-	if (interleaved && !allow_interleave) {
-            return NULL;
-        }
-
-        rp = pcie_find_port_by_pn(hb->bus, target);
-        if (!rp) {
-            return NULL;
-        }
-    }
-
-    d = pci_bridge_get_sec_bus(PCI_BRIDGE(rp))->devices[0];
-    if (!d) {
-        return NULL;
-    }
-
-    if (object_dynamic_cast(OBJECT(d), TYPE_CXL_TYPE3)) {
-        return d;
-    }
-
-    /*
-     * Could also be a switch.  Note only one level of switching currently
-     * supported.
-     */
-    if (!object_dynamic_cast(OBJECT(d), TYPE_CXL_USP)) {
-        return NULL;
-    }
-    usp = CXL_USP(d);
-
-    usp_cstate = cxl_usp_to_cstate(usp);
-    if (!usp_cstate) {
-        return NULL;
-    }
-
-    cache_mem = usp_cstate->crb.cache_mem_registers;
-
-    target_found = cxl_hdm_find_target(cache_mem, addr, &target, &interleaved);
-    if (!target_found) {
-        return NULL;
-    }
-//new bit.
-    if (interleaved && !allow_interleave) {
-        return NULL;
-    }
-
-    d = pcie_find_port_by_pn(&PCI_BRIDGE(d)->sec_bus, target);
-    if (!d) {
-        return NULL;
-    }
-
-    d = pci_bridge_get_sec_bus(PCI_BRIDGE(d))->devices[0];
-    if (!d) {
-        return NULL;
-    }
-
-    if (!object_dynamic_cast(OBJECT(d), TYPE_CXL_TYPE3)) {
-        return NULL;
-    }
-
-    return d;
-}
-
-Then have two wrappers that hid away the oddity of the check.
-
-We still need to verify the interleave of the type3 but that
-happens when working out the mapping below.
-
-
-> +    PCIDevice *rp, *d;
-> +    PCIHostState *hb;
-> +    CXLComponentState *hb_cstate, *usp_cstate;
-> +    CXLUpstreamPort *usp;
-> +    uint32_t *cache_mem;
-> +    bool target_found, interleaved;
-> +    uint8_t target;
-> +
-> +    addr = fw->base;
-> +    if (fw->num_targets > 1) {
-> +        return false;
-> +    }
-> +
-> +    hb = PCI_HOST_BRIDGE(fw->target_hbs[0]->cxl_host_bridge);
-> +    if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
-> +        return false;
-> +    }
-> +    if (cxl_get_hb_passthrough(hb)) {
-> +        rp = pcie_find_port_first(hb->bus);
-> +        if (!rp) {
-> +            return false;
-> +        }
-> +    } else {
-> +        hb_cstate = cxl_get_hb_cstate(hb);
-> +        if (!hb_cstate) {
-> +            return false;
-> +        }
-> +        cache_mem = hb_cstate->crb.cache_mem_registers;
-> +
-> +        target_found = cxl_hdm_find_target(cache_mem, addr, &target,
-> +                                           &interleaved);
-> +        if (!target_found) {
-> +            return false;
-> +        }
-> +        if (interleaved) {
-> +            return false;
-> +        }
-> +
-> +        rp = pcie_find_port_by_pn(hb->bus, target);
-> +        if (!rp) {
-> +            return false;
-> +        }
-> +    }
-> +    d = pci_bridge_get_sec_bus(PCI_BRIDGE(rp))->devices[0];
-> +    if (!d) {
-> +        return false;
-> +    }
-> +
-> +    if (object_dynamic_cast(OBJECT(d), TYPE_CXL_TYPE3)) {
-> +        return true;
-> +    }
-> +    /*
-> +     * Could also be a switch.  Note only one level of switching currently
-> +     * supported.
-> +     */
-> +    if (!object_dynamic_cast(OBJECT(d), TYPE_CXL_USP)) {
-> +        return false;
-> +    }
-> +    usp = CXL_USP(d);
-> +
-> +    usp_cstate = cxl_usp_to_cstate(usp);
-> +    if (!usp_cstate) {
-> +        return false;
-> +    }
-> +
-> +    cache_mem = usp_cstate->crb.cache_mem_registers;
-> +
-> +    target_found = cxl_hdm_find_target(cache_mem, addr, &target,
-> +                                       &interleaved);
-> +    if (!target_found) {
-> +        return false;
-> +    }
-> +    if (interleaved) {
-> +        return false;
-> +    }
-> +
-> +    d = pcie_find_port_by_pn(&PCI_BRIDGE(d)->sec_bus, target);
-> +    if (!d) {
-> +        return false;
-> +    }
-> +
-> +    d = pci_bridge_get_sec_bus(PCI_BRIDGE(d))->devices[0];
-> +    if (!d) {
-> +        return false;
-> +    }
-> +
-> +    if (!object_dynamic_cast(OBJECT(d), TYPE_CXL_TYPE3)) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static int cxl_fmws_direct_passthrough(Object *obj, void *opaque)
-> +{
-> +    struct cxl_direct_pt_state *state = opaque;
-> +    struct CXLFixedWindow *fw;
-> +    CXLType3Dev *ct3d = state->ct3d;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_CXL_FMW)) {
-> +        return 0;
-> +    }
-> +
-> +    fw = CXL_FMW(obj);
-> +
-> +    if (!cfmws_is_not_interleaved(fw, state->decoder_base)) {
-> +        return 0;
-> +    }
-> +
-> +    if (state->commit) {
-> +        MemoryRegion *mr = NULL;
-> +        uint64_t vmr_size = 0, pmr_size = 0;
-> +        uint64_t offset = 0;
-
-Might as well combine the two lines above given they are all set to 0
-so I don't think it hurt readability.
-
-> +
-> +        if (ct3d->hostvmem) {
-> +            MemoryRegion *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-
-Blank line here.
-
-> +            vmr_size = memory_region_size(vmr);
-> +            if (state->dpa_base < vmr_size) {
-> +                mr = vmr;
-> +                offset = state->dpa_base;
-> +            }
-> +        }
-> +        if (!mr && ct3d->hostpmem) {
-> +            MemoryRegion *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-
-and here.  I have it in my head that checkpatch moans about this, but maybe not.
-
-> +            pmr_size = memory_region_size(pmr);
-pmr size is used only once. Maybe...
-
-            if (state->dpa_base - vmr_size < memory_region_size(pmr)) {
-
-However it then looks more different from previous block, so perhaps
-this isn't a good change to make.  Up to you.
-
-> +            if (state->dpa_base - vmr_size < pmr_size) {
-> +                mr = pmr;
-> +                offset = state->dpa_base - vmr_size;
-> +            }
-> +        }
-> +
-> +        if (!mr) {
-> +            return 0;
-> +        }
-> +
-> +        if (memory_region_is_mapped(&ct3d->direct_mr[state->hdm_decoder_idx])) {
-> +            return 0;
-> +        }
-> +
-> +        memory_region_init_alias(&ct3d->direct_mr[state->hdm_decoder_idx],
-> +                                 OBJECT(ct3d), "direct-mapping", mr, offset,
-> +                                 state->decoder_size);
-> +        memory_region_add_subregion(&fw->mr,
-> +                                    state->decoder_base - fw->base,
-> +                                    &ct3d->direct_mr[state->hdm_decoder_idx]);
-> +    } else {
-> +        if (memory_region_is_mapped(&ct3d->direct_mr[state->hdm_decoder_idx])) {
-> +            memory_region_del_subregion(&fw->mr,
-> +                &ct3d->direct_mr[state->hdm_decoder_idx]);
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int update_non_interleaved(Object *obj, void *opaque)
-> +{
-> +    CXLType3Dev *ct3d;
-> +    uint32_t *cache_mem;
-> +    unsigned int hdm_count, i;
-> +    uint32_t cap;
-> +    int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-> +    uint64_t dpa_base = 0;
-> +    bool commit = *(bool *) opaque;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
-> +        return 0;
-> +    }
-> +
-> +    ct3d = CXL_TYPE3(obj);
-> +    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
-> +    /*
-> +     * Walk the decoders and find any committed with iw set to 0
-> +     * (non interleaved).
-I'd move this down to...
-> +     */
-> +    cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
-> +    hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
-> +                                                 CXL_HDM_DECODER_CAPABILITY,
-> +                                                 DECODER_COUNT));
-> +
-... here and drop the following code as we already said it was commiteed
-
-> +    /* Now for each committed HDM decoder */
-> +    for (i = 0; i < hdm_count; i++) {
-> +        uint64_t decoder_base, decoder_size, skip;
-> +        uint32_t hdm_ctrl, low, high;
-> +        int iw, committed;
-> +
-> +        hdm_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + i * hdm_inc);
-> +        committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
-> +        if (commit) {
-> +            if (!committed) {
-> +                return 0;
-> +            }
-> +        } else {
-> +            if (committed) {
-> +                return 0;
-> +            }
-> +        }
-
-Smells like if could be something like:
-        /* If this state isn't the one we are looking for, nothing to do */
-        if (commit ^ committed) { 
-            return 0;
-        }
-
-
-> +
-> +        /*
-> +         * Even if this decoder is interleaved need to keep track of DPA as the
-> +         * next HDM decoder may not be interleaved.
-> +         */
-
-This comment feels a bit belt and braces given we do the += skip just below.
-Probably left over from when I was thinking my way around the original PoC.
-So I'd drop ti.
-
-
-> +        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_DPA_SKIP_LO +
-> +                       i * hdm_inc);
-> +        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_DPA_SKIP_HI +
-> +                        i * hdm_inc);
-> +        skip = ((uint64_t)high << 32) | (low & 0xf0000000);
-> +        dpa_base += skip;
-> +
-> +        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO + i * hdm_inc);
-> +        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI + i * hdm_inc);
-> +        decoder_size = ((uint64_t)high << 32) | (low & 0xf0000000);
-> +        iw = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, IW);
-> +        /* Get the HPA of the base */
-
-Similar on this. Comment feels a bit much given we use it to fill
-decoder_base.  Just drop it.
-
-> +        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO + i * hdm_inc);
-> +        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI + i * hdm_inc);
-> +        decoder_base = ((uint64_t)high << 32) | (low & 0xf0000000);
-> +
-> +#ifdef DEBUG
-> +        qemu_log("non interleaved decoder %lx %lx %lx %d\n", decoder_base,
-> +                 decoder_size, dpa_base, commit);
-> +#endif
-> +
-> +        /* Is it non interleaved? - need to check full path later */
-I'd drop the 'need to check the full path later' given it happens just below anyway.
-> +        if (iw == 0) {
-> +            struct cxl_direct_pt_state state = {
-> +                .ct3d = ct3d,
-> +                .decoder_base = decoder_base,
-> +                .decoder_size = decoder_size,
-> +                .dpa_base = dpa_base,
-> +                .hdm_decoder_idx = i,
-> +                .commit = commit,
-> +            };
-> +            object_child_foreach_recursive(object_get_root(),
-> +                                           cxl_fmws_direct_passthrough, &state);
-> +        }
-> +        dpa_base += decoder_size / cxl_interleave_ways_dec(iw, &error_fatal);
-> +
-> +    }
-> +    return 0;
-> +}
-
-
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 89411c8093..1d199d035e 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -584,6 +584,7 @@ struct CXLType3Dev {
->      uint64_t sn;
->  
->      /* State */
-> +    MemoryRegion direct_mr[CXL_HDM_DECODER_COUNT];
->      AddressSpace hostvmem_as;
->      AddressSpace hostpmem_as;
->      CXLComponentState cxl_cstate;
-> @@ -671,6 +672,15 @@ struct CSWMBCCIDev {
->      CXLCCI *cci;
->  };
->  
-> +struct cxl_direct_pt_state {
-> +    CXLType3Dev *ct3d;
-> +    hwaddr decoder_base;
-> +    hwaddr decoder_size;
-> +    hwaddr dpa_base;
-> +    unsigned int hdm_decoder_idx;
-> +    bool commit;
-> +};
-
-I don't see why this is the header.  It's only used in cxl-host.c
-so I'd move it down there. If it were widely visible type you'd need
-to follow QEMU type naming conventions. For local types things tend to be
-a bit more relaxed.
-
-> +
->  #define TYPE_CXL_SWITCH_MAILBOX_CCI "cxl-switch-mailbox-cci"
->  OBJECT_DECLARE_TYPE(CSWMBCCIDev, CSWMBCCIClass, CXL_SWITCH_MAILBOX_CCI)
->  
-
+thanks
+-- PMM
 
