@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E102CCD1A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27247CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 08:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9gAb-0001O9-Gp; Fri, 17 Oct 2025 04:50:41 -0400
+	id 1v9gDw-00033P-C0; Fri, 17 Oct 2025 04:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v9gAa-0001Ns-00
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:50:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v9gAT-0006AY-EP
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:50:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760691026;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sdmQ1CrMc7SegT8Utgk9OT5+nn7sWJi9aEv+cLB+b+E=;
- b=XLU0Tr8I/Tk5lq9cqzSyqXq3sPgPeNF2uPlyh0p6nxFgVeDsLW3DcvaoBaEZ74A+aFBVzL
- q/cxhQvKxCd8tLAN3llkbDdu2pzbIPfaN9dkILFGyrQLxja/abNj5QgkX2rxnkm8ksgQv1
- yfYPBqvM4wg5oNrZAUZ9bkFd6cVnP2A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-9yuE5gOwPBqtM4zPLKN3Sw-1; Fri,
- 17 Oct 2025 04:50:25 -0400
-X-MC-Unique: 9yuE5gOwPBqtM4zPLKN3Sw-1
-X-Mimecast-MFC-AGG-ID: 9yuE5gOwPBqtM4zPLKN3Sw_1760691023
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15B4918002C9; Fri, 17 Oct 2025 08:50:23 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.139])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47C0130001BC; Fri, 17 Oct 2025 08:50:16 +0000 (UTC)
-Date: Fri, 17 Oct 2025 09:50:13 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Peter Xu <peterx@redhat.com>, mst@redhat.com, jasowang@redhat.com,
- farosas@suse.de, sw@weilnetz.de, eblake@redhat.com,
- armbru@redhat.com, thuth@redhat.com, philmd@linaro.org,
- qemu-devel@nongnu.org, michael.roth@amd.com,
- steven.sistare@oracle.com, leiyang@redhat.com,
- davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
- raphael.s.norwitz@gmail.com
-Subject: Re: [PATCH v8 16/19] qapi: introduce backend-transfer migration
- parameter
-Message-ID: <aPIDRft9RqtGvdVf@redhat.com>
-References: <8c575b3a-7d1f-446d-8f6d-4b2e4b851731@yandex-team.ru>
- <aPCtkB-GvFNuqlHn@redhat.com>
- <29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru>
- <aPE8Oo5D3oesB7sV@x1.local> <aPE-vmyg1mLDO4pf@redhat.com>
- <aPFHl3VWV0pCmzd1@x1.local> <aPFOHjl5BoWEMqSL@redhat.com>
- <aPFVWi1pwxS8yGay@x1.local> <aPH557l6YnXT-3r8@redhat.com>
- <7b6ad405-0dbe-41d7-8d29-e3e92d969647@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9gDu-00033H-9k
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:54:06 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9gDk-0006OG-63
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 04:53:59 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4711f156326so2908375e9.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 01:53:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760691232; x=1761296032; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DPkVBlxqn36yOIrDXASSScNzO+E5lUwIyiL/iFj4KKU=;
+ b=j3d3VKS/XjQKAXEkMLLrWoMVk3VH2ASNHtZzYha4snS0BNQRhQKa0Cst8+0s3RVgTR
+ XnAS8JZgLlw42Fj8QTUbGTUugAbZ8k2Rf+78uASrfDuvGaHT1Zq2zRTMw8DxDZjFV03s
+ 5ps5zU7ve2sU320+IOVZzzh1scuy8N8qTIf7i0FyvJ56UCpqU6Q+ZiZpNqkq/r3dQ6nD
+ m+Ol/+xqkYbWafHhZlZG3X+dVCZbExn/0iAeHLNzLF653dCZ+nY/evIe94MbpTOo2qTJ
+ BfHTWx9CFDEuSpbjQN4lISxE/VdliP0YgvsTtQZfmftn2qrsSBxFCF+zk/dYVQAk9sxb
+ Cibg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760691232; x=1761296032;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DPkVBlxqn36yOIrDXASSScNzO+E5lUwIyiL/iFj4KKU=;
+ b=msuUWhPNX7iC8v0sxu7r/JGplUAx4mDukvWOjW6F33hG4Aw44vzgsUpRxBZ5//LiWc
+ rZT7xHM63hPDj/aN0I9lwa/l6KczI7lkXEiMkqLiYV1bk/tUjh89vBTFGZmNiVdOjDHg
+ f1Yyn1KmTVtWyWTKl57ZtvKDBhRWcwU4iSOicn3gC8A355nLXQ/69I7KC4t2AukBQjSs
+ gKkWPqyxYNM3EhZvFtAaiA/7Oq6lsgi4GZtXJmyYhAefBlSJvc0yJ8OXDPE1g7hj143v
+ Gtx+Ew2DhOC8jFEXpmrUtXBAswkukpKfYFU4botGf81pmr40Ea3IBMNZt3tLxxTX18Nl
+ VuzA==
+X-Gm-Message-State: AOJu0YyUCHVxUHUpiBusElX2hklCZiB1g6nZIME6v0wIXDALR3XHf/ct
+ Zl7rTCqUjudko5RiG1tuNnBwiQmQiTuEYOnSyzbRp+/ajD5ZZupXoF57kcrdeWw3YsLBKwJytgI
+ AXimy
+X-Gm-Gg: ASbGncvdIuAzo9yHJL9+6R8KbGf/TFAfe5Q7CovKMrZKa0KdmFD9fEaxWZErRFbVoea
+ +1165L3ICCBL79Jkslt7b9TvrJlL5Z4RigKEepyzryMY1b0QIE9aj2bCgkQzfaa19IvvUMTeSDq
+ CRqglJOVojowwDOA9ySIl6lxA55Key90Y9jX77T+ShkSIVpW7SL1WPQShXALpx26et7ziAYeNh4
+ x9PQzuRvf6pbqRL2F0LY71zQJkckXnnWV0L8Y6u8xov21DkmeUeoJqu1iK/Z0FHHYceTh1ZZ+x+
+ aXg7aNxO6Eh9N9mrqrUuusZzMXSuGWEt6jWyd6S/pXYEwn1S3m1NLl0lBzppZiQ4+NrlplCDEAp
+ Su8B1zRowhqHMOUP9CenR1n0WskDVxELTIv7H2nsmsV3d0U/IiCuE6BF/Qb0pSaeYwZ5zpgwaa1
+ W50HERTgys7UFtUsyz
+X-Google-Smtp-Source: AGHT+IFb8vlzXIgQkwYeFlqP03B8SrtcUEWsou+wpDaJCRZR4BbsrZCzlY9tyEPpMPYY/zehZEzWlw==
+X-Received: by 2002:a05:600c:6290:b0:46e:2cfe:971c with SMTP id
+ 5b1f17b1804b1-471177c0f91mr21285545e9.0.1760691232337; 
+ Fri, 17 Oct 2025 01:53:52 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ce57cd11sm39929648f8f.5.2025.10.17.01.53.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 01:53:51 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH] target/hppa: Set FPCR exception flag bits for non-trapped
+ exceptions
+Date: Fri, 17 Oct 2025 09:53:50 +0100
+Message-ID: <20251017085350.895681-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b6ad405-0dbe-41d7-8d29-e3e92d969647@yandex-team.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,83 +97,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 17, 2025 at 11:26:59AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 17.10.25 11:10, Daniel P. Berrangé wrote:
-> > > Meanwhile, the admin will need to manage the list of devices even if the
-> > > admin doesn't really needed to, IMHO.
-> > We shouldn't need to list devices in every scenario.
-> 
-> Do you mean, we may make union,
-> 
->    backend-transfer = true | false | [list of IDs]
-> 
-> Where true means, enable backend-transfer for all supporting devices?
-> So that normally, we'll not list all devices, but just set it to true?
+In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
+we added the code for setting up the registers correctly on trapping
+FP exceptions, we accidentally broke the handling of the flag bits
+for non-trapping exceptions.
 
-Well I was thinking separate parameters
+In update_fr0_op() we incorrectly zero out the flag bits and the C
+bit, so any fp operation would clear previously set flag bits. We
+also stopped setting the flag bits when the fp operation raises
+an exception and the trap is not enabled.
 
-   backend-transfer: bool
-   backend-transfer-devices: [str]   (optional list of IDs)
+Adjust the code so that we set the Flag bits for every exception that
+happened and where the trap is not enabled.  (This is the correct
+behaviour for the case where an instruction triggers two exceptions,
+one of which traps and one of which does not; that can only happen
+for inexact + underflow or inexact + overflow.)
 
-but it amounts to the same thing
+Cc: qemu-stable@nongnu.org
+Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/hppa/fpu_helper.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-> But this way, migration will fail, if target version doesn't support
-> backend-transfer for some of used devices, or support for some
-> another, where source lack the support. So that's a way to create a
-> situation, where two QEMUs, with same device options, same machine
-> types, same configurations and same migration parameters / capabilities
-> define incompatible migration states..
-
-It is worse - the backend on both sides may support transfer,
-but may none the less be incompatible due to changed configuration,
-so this needs mgmt app input too.
-
-The challenge we have is that whether or not a backend supports
-transfer requires fairly detailed know of QEMU and the specific
-configuration of the backend. It is pretty undesirable for mgmt
-apps to have to that knowledge, as the matrix of possibilities
-is quite large and liable to change over time.
-
-If we consider 'backend transfer' to be a performance optimization,
-then really we want QEMU to "do the right thing" as much as is
-possible.
-
-Source and dst QEMUs don't have a bi-directional channel though,
-so they can't negotiate the common subset of backends they both
-support - it'll need help from the mgmt app.
-
-One possibility is a new QMP command "query-migratable-backends"
-which lists all device IDs, whose current backend configuration
-is reporting the ability to transfer state. The mgmt app could
-run that on both sides of the migration, take the intersection
-of the two lists, and then further subtract any devices where
-it has delibrately changed the backend configuration on the dst.
-
-If we had that, then we could always pass the ID list to the
-migrate command, while also avoiding hardcoding knowledge of
-QEMU backend impl details - it would largely "just work".
-
-> > We need to focus on
-> > the internal API design. We need to have suitable APIs exposed by backends
-> > to allow us to query migratability and process vmstate a mere property
-> > 'backend-transfer' is insufficient, whether set by QEMU code, or set by
-> > the mgmt app.
-> > 
-> > If we have proper APIs each device should be able to query whether its
-> > backend can be transferred, and so "do the right thing" if backend
-> > transfer is requested by migration. The ability to list devices in the
-> > migrate command is only needed to be able to exclude some backends if
-> > the purpose of migration is to change a backend
-
-With regards,
-Daniel
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 45353202fae..2d272730f60 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -94,7 +94,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+ {
+     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+     uint32_t hard_exp = 0;
+-    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
++    uint32_t shadow = env->fr0_shadow;
++    uint32_t to_flag = 0;
+     uint32_t fr1 = 0;
+ 
+     if (likely(soft_exp == 0)) {
+@@ -122,6 +123,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+             fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
+         }
+     }
++    /* Set the Flag bits for every exception that was not enabled */
++    to_flag = hard_exp & ~shadow;
++    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++
+     env->fr0_shadow = shadow;
+     env->fr[0] = (uint64_t)shadow << 32 | fr1;
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
