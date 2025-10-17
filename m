@@ -4,113 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39BB7CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E4CCCD19A
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9jIO-0004Gc-Dm; Fri, 17 Oct 2025 08:10:59 -0400
+	id 1v9jL1-0005e8-WD; Fri, 17 Oct 2025 08:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v9jEL-0002ss-IL
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:06:49 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1v9jKy-0005dr-Tb
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:13:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1v9jDv-0003MW-Ds
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:06:36 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1v9jKk-00056b-NW
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:13:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760702769;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1760703191;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s1x/oC5Jnn+OJC2a26uV7m24hSQxQ7YA8v356EGvGEo=;
- b=DYePG1lJznn3GSo35ZiR1WX7NTrqW9MTDdKWem/aiPPgizI+k+l5CgS0JzvFS5+JUaA9u1
- FfFn7V41VRCKxqZeMDLmcugYp/9kl9EOcPw43S/l8gz0H2zcT0UU8HBCkpMOn4PsAFaLzX
- B9NSpD8XXUTiKlDeLqH1E1HjANm1o8U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/oDqgWVHWZoEXRB8GgEmFMcQ/H1zY6XAWMo16/1F0L0=;
+ b=J4mXSe6Y6L5VzXs/Gdf1HCrkz0kLx/tRaJzYZU2jXIIYjpravPGVfJDmxoX00LeaBgcfF+
+ JgNxXo+bMYRLBF7ODelaPueRrGF50JfK1+sCLAx/2OPv4uBlTcIcerjA9vEPpPSHOsQXGy
+ WZaAdMyJNTcMzhRJTvZwKt/m32Lzxn8=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-328-TVqT7MKgNAmoofS75bXnoA-1; Fri, 17 Oct 2025 08:06:07 -0400
-X-MC-Unique: TVqT7MKgNAmoofS75bXnoA-1
-X-Mimecast-MFC-AGG-ID: TVqT7MKgNAmoofS75bXnoA_1760702766
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47106a388cfso10251965e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 05:06:07 -0700 (PDT)
+ us-mta-80-4tkQLVfdOhSrab_hRn_E3g-1; Fri, 17 Oct 2025 08:13:10 -0400
+X-MC-Unique: 4tkQLVfdOhSrab_hRn_E3g-1
+X-Mimecast-MFC-AGG-ID: 4tkQLVfdOhSrab_hRn_E3g_1760703189
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8900dedd50aso258932785a.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 05:13:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760702766; x=1761307566;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s1x/oC5Jnn+OJC2a26uV7m24hSQxQ7YA8v356EGvGEo=;
- b=d7/WrDeOIupBqpkQ/G16nvLSU4tHk2/PUatKMcOfcD5s55INpK4cw7uRM7oTrDNwVa
- pNg8AuusROluNGEC4XC41nooExaGVLK5K+ezXhE+3l0QAAFZNh+P2pNl1qWJuScS4E18
- HCBby25ZK3H1JDRUdkt/xbuoIr0lyo5b3nXXMagrv0qsjKqTG61weCBXQtygMIRgO26z
- Yu+Q7P+dJhG4bg1RJY1U45qP+y+v9mX5FYeElIC+M2iv4O9C2zRvCWcWv4zXNUS/nQ9P
- 1yze/oxqAl72wQE+pTh7ixxdl2A4QQiq9TAGiVQi6ldXhPTi23x6vg6CsmXIV3h71rof
- TdeQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHdDAmypq1C7dMH/NPDlrol8jZBlwmv5ty2xplABKjRF4gyVgPZ2fj9OQ0QR4x3+TGwFp8HvaQ3w4M@nongnu.org
-X-Gm-Message-State: AOJu0YwBLPPnzk925WWlAXgVuZWCDe/Q5RGsPsSRVuMdDexEDsrxKt51
- 1hWMlf+SbFhqtpKhJiqEe0IOqQ4Et2GdXsbByLf7TgIfXBf6/zx5kaiD6T3dh7yEwM9QkTe25tO
- 7Z9lGCnRMvvPEqb+Xhpx/vlzXAMjop8u0k3w2Bshx8m9ScZEuLZjBaGws
-X-Gm-Gg: ASbGncthfUMsYiAh51k9bylrbyp8JeFJUwPv3Lxwz6M8djRGZ4uTIL13HMb6GmYwvz4
- Q6obIqmAS7KGVgLqKGVfHGj17ZTO4ycyd3/GTje+W2OT/UIDm/Tvh0QafRVDI7upUWSnEhZeUHO
- Hk747DzrDvhdr6nT/xDilTFqhGNey6amNB2QVs6MWJnQXLIWjoBJtn+Qbs0LpyPbTji/AACbuf/
- 8YeiviiE8qUeZ7PHeylieKGOUTVA/BRh9Kswq7ZCndm26xmp4raHog09VFAhsINjb/BlYFOyjPy
- uem/UtpxlfNgJBbqL5A/+JH5eHtN0pe1xZnNzIAyLG8K7Ex6381ruMsJSfXQvtAHI6nxQxw7G8b
- +qRZVS6vgyYmE9JPK3Eu8keqVL9NDFpFwVqJTNwiKzeCF9g==
-X-Received: by 2002:a05:6000:24c2:b0:427:376:2f81 with SMTP id
- ffacd0b85a97d-42704d498efmr2941930f8f.5.1760702766189; 
- Fri, 17 Oct 2025 05:06:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFT5/A7dVhmPWKMECeVGhmZpq8prz6LysqOF6lFJu+rCFDLZo9mpXiwtRUrtzZ7aZ/EgneEdw==
-X-Received: by 2002:a05:6000:24c2:b0:427:376:2f81 with SMTP id
- ffacd0b85a97d-42704d498efmr2941885f8f.5.1760702765700; 
- Fri, 17 Oct 2025 05:06:05 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710ed9e7d7sm48560215e9.3.2025.10.17.05.06.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 05:06:05 -0700 (PDT)
-Message-ID: <fb96b52e-e631-4e2a-bb02-3137a673bf42@redhat.com>
-Date: Fri, 17 Oct 2025 14:06:04 +0200
+ d=1e100.net; s=20230601; t=1760703189; x=1761307989;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/oDqgWVHWZoEXRB8GgEmFMcQ/H1zY6XAWMo16/1F0L0=;
+ b=Rl3zhjSXHwWcM5UNZP8l7e9B/tjUzP7nJtZS87yBZzIYZaiRpMqdeu2mmpB3HmzQYr
+ QNbOvDA45HAMFZ/QeWTq58P/GulV6r7yGvM9Qx3pElZgKx+Q6IvW7Md7rpBl+0+mSwoV
+ J/W2Y7ih0ASJ8dwCjzjJe/a+7XYtOuHT0LVIp5kOnuLPSN01Dml2WsbN1JVI3foXWXKZ
+ i+A9+lKyWtoERQ05+jwR+fh31SNvjDAPV57c0EIMeIDTHknhvsdX8UB9igGMY9d7Jsh3
+ F2HA5xiLyGXeaat0YGHwwHI5QsrKM3UyotHWETT0GaGCvbDyT8nchvtm+38XAyWUcP8E
+ ziOw==
+X-Gm-Message-State: AOJu0Yy4dNfpABJt49lLjBKdFh6yjyOctRaEmqxsX6IPoBSN9vXod2qp
+ TcK59dYxmCElqv0CEgfLXgVckrzlWpCAAM9uqXEmphMI2xDCYS6MRNFT0heg452QBKxypmrVwz/
+ 2onqsSWQvpmm5KWvyJ3Oh7iq+vP0Nm1USMEd98i3N9HXS0eUm9S6avink
+X-Gm-Gg: ASbGncsFzqzA5ly3BtgH1sYn/pnOoA4FV4dXIpNOSgtonSMDl/JU2DiyBRMf39gOU+H
+ VN8LhEGF+TzXrR3vK8JZy91H+WkX/Pc5kmP7VNQRTEtNc29s8Bla+tUY8b7gGDFUnAt9SDegAyf
+ WzNMVhNSy3xgVQvrBF7cEDDWM6GmNBJxjWhH8WKygEE0OM7VKom1PeFswWM/CIqcnYk8gl9x4FN
+ GOByGo4vKdYFconuWNUbZX7G0Gxv+VZg4Ioe5nPZg5Df5ozxDEJb4tmqp0jCRz0J+Ru+cD2fyx5
+ BKQkyKe/1MZl+D9wOFztOCURJbrOAs23y19l3TRBjHQ6Esv2Qe78ulI+Ph3LuPxZUej2sAT0bHC
+ GHcaXOhIb8h4HkTMYyeq6xids28dGIr9W63qUn15K2U/BxW7xs5Y=
+X-Received: by 2002:a05:620a:1999:b0:85b:475e:594d with SMTP id
+ af79cd13be357-890708f1b81mr398519385a.46.1760703189381; 
+ Fri, 17 Oct 2025 05:13:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELmNCn8ZDx/1njJFYWcYPCbCghS8eXjM+EKrndFDtFLriHfDkBCMWAeyp8pRHpFYqWUgs8Aw==
+X-Received: by 2002:a05:620a:1999:b0:85b:475e:594d with SMTP id
+ af79cd13be357-890708f1b81mr398513085a.46.1760703188659; 
+ Fri, 17 Oct 2025 05:13:08 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
+ [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-88f3861af0dsm413339385a.54.2025.10.17.05.13.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 05:13:08 -0700 (PDT)
+Date: Fri, 17 Oct 2025 14:12:38 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, hi@alyssa.is,
+ stefanha@redhat.com, david@redhat.com, 
+ jasowang@redhat.com, dbassey@redhat.com, stevensd@chromium.org, 
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ slp@redhat.com, manos.pitsidianakis@linaro.org
+Subject: Re: [PATCH v10 1/7] vhost-user: Add VirtIO Shared Memory map request
+Message-ID: <5eyt46m7aausn2b26cgtjxhqwt7f6iia3wj7c2kkjaxjjic64p@dyhbrjq32djr>
+References: <20251016143827.1850397-1-aesteve@redhat.com>
+ <20251016143827.1850397-2-aesteve@redhat.com>
+ <nl5smdnd5neyuqykpwkruq2onc32hq7jbgbylv33xq4rrsksvc@hk6u3b33iws3>
+ <CADSE00+2PU0auFOMaSpgH3dgQ9UgYp+nsAusuQa=ZXbd=JLreQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/27] hw/arm/smmuv3-accel: Add set/unset_iommu_device
- callback
-Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Jason Gunthorpe <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-9-skolothumtho@nvidia.com>
- <7167d287-f0d0-4bb8-8750-e38e9e31df10@redhat.com>
- <CH3PR12MB7548C5CB7B9BE18AAE5492BEABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aN6r4n2F1s2ZLm9d@Asurada-Nvidia>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <aN6r4n2F1s2ZLm9d@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <CADSE00+2PU0auFOMaSpgH3dgQ9UgYp+nsAusuQa=ZXbd=JLreQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,7 +102,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,81 +115,290 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Oct 17, 2025 at 01:24:52PM +0200, Albert Esteve wrote:
+>On Fri, Oct 17, 2025 at 11:23 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>>
+>> On Thu, Oct 16, 2025 at 04:38:21PM +0200, Albert Esteve wrote:
+>> >Add SHMEM_MAP/UNMAP requests to vhost-user for dynamic management of
+>> >VIRTIO Shared Memory mappings.
+>> >
+>> >This implementation introduces VirtioSharedMemoryMapping as a unified
+>> >QOM object that manages both the mapping metadata and MemoryRegion
+>> >lifecycle. This object provides reference-counted lifecycle management
+>> >with automatic cleanup of file descriptors and memory regions
+>> >through QOM finalization.
+>> >
+>> >This request allows backends to dynamically map file descriptors into a
+>> >VIRTIO Shared Memory Region identified by their shmid. Maps are created
+>> >using memory_region_init_ram_from_fd() with configurable read/write
+>> >permissions, and the resulting MemoryRegions are added as subregions to
+>> >the shmem container region. The mapped memory is then advertised to the
+>> >guest VIRTIO drivers as a base address plus offset for reading and
+>> >writting according to the requested mmap flags.
+>> >
+>> >The backend can unmap memory ranges within a given VIRTIO Shared Memory
+>> >Region to free resources. Upon receiving this message, the frontend
+>> >removes the MemoryRegion as a subregion and automatically unreferences
+>> >the VirtioSharedMemoryMapping object, triggering cleanup if no other
+>> >references exist.
+>> >
+>> >Error handling has been improved to ensure consistent behavior across
+>> >handlers that manage their own vhost_user_send_resp() calls. Since
+>> >these handlers clear the VHOST_USER_NEED_REPLY_MASK flag, explicit
+>> >error checking ensures proper connection closure on failures,
+>> >maintaining the expected error flow.
+>> >
+>> >Note the memory region commit for these operations needs to be delayed
+>> >until after we reply to the backend to avoid deadlocks. Otherwise,
+>> >the MemoryListener would send a VHOST_USER_SET_MEM_TABLE message
+>> >before the reply.
+>> >
+>> >Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> >Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>> >---
+>> > hw/virtio/vhost-user.c                    | 267 ++++++++++++++++++++++
+>> > hw/virtio/virtio.c                        | 199 ++++++++++++++++
+>> > include/hw/virtio/virtio.h                | 135 +++++++++++
+>> > subprojects/libvhost-user/libvhost-user.c |  70 ++++++
+>> > subprojects/libvhost-user/libvhost-user.h |  54 +++++
+>> > 5 files changed, 725 insertions(+)
+>> >
+>> >diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>> >index 36c9c2e04d..890be55937 100644
+>> >--- a/hw/virtio/vhost-user.c
+>> >+++ b/hw/virtio/vhost-user.c
+>> >@@ -104,6 +104,7 @@ typedef enum VhostUserRequest {
+>> >     VHOST_USER_GET_SHARED_OBJECT = 41,
+>> >     VHOST_USER_SET_DEVICE_STATE_FD = 42,
+>> >     VHOST_USER_CHECK_DEVICE_STATE = 43,
+>> >+    VHOST_USER_GET_SHMEM_CONFIG = 44,
+>> >     VHOST_USER_MAX
+>> > } VhostUserRequest;
+>> >
+>> >@@ -115,6 +116,8 @@ typedef enum VhostUserBackendRequest {
+>> >     VHOST_USER_BACKEND_SHARED_OBJECT_ADD = 6,
+>> >     VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE = 7,
+>> >     VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP = 8,
+>> >+    VHOST_USER_BACKEND_SHMEM_MAP = 9,
+>> >+    VHOST_USER_BACKEND_SHMEM_UNMAP = 10,
+>> >     VHOST_USER_BACKEND_MAX
+>> > }  VhostUserBackendRequest;
+>> >
+>> >@@ -136,6 +139,12 @@ typedef struct VhostUserMemRegMsg {
+>> >     VhostUserMemoryRegion region;
+>> > } VhostUserMemRegMsg;
+>> >
+>> >+typedef struct VhostUserShMemConfig {
+>> >+    uint32_t nregions;
+>> >+    uint32_t padding;
+>> >+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+>> >+} VhostUserShMemConfig;
+>> >+
+>> > typedef struct VhostUserLog {
+>> >     uint64_t mmap_size;
+>> >     uint64_t mmap_offset;
+>> >@@ -192,6 +201,23 @@ typedef struct VhostUserShared {
+>> >     unsigned char uuid[16];
+>> > } VhostUserShared;
+>> >
+>> >+/* For the flags field of VhostUserMMap */
+>> >+#define VHOST_USER_FLAG_MAP_RW (1u << 0)
+>> >+
+>> >+typedef struct {
+>> >+    /* VIRTIO Shared Memory Region ID */
+>> >+    uint8_t shmid;
+>> >+    uint8_t padding[7];
+>> >+    /* File offset */
+>> >+    uint64_t fd_offset;
+>> >+    /* Offset within the VIRTIO Shared Memory Region */
+>> >+    uint64_t shm_offset;
+>> >+    /* Size of the mapping */
+>> >+    uint64_t len;
+>> >+    /* Flags for the mmap operation, from VHOST_USER_FLAG_MAP_* */
+>> >+    uint64_t flags;
+>> >+} VhostUserMMap;
+>> >+
+>> > typedef struct {
+>> >     VhostUserRequest request;
+>> >
+>> >@@ -224,6 +250,8 @@ typedef union {
+>> >         VhostUserInflight inflight;
+>> >         VhostUserShared object;
+>> >         VhostUserTransferDeviceState transfer_state;
+>> >+        VhostUserMMap mmap;
+>> >+        VhostUserShMemConfig shmem;
+>> > } VhostUserPayload;
+>> >
+>> > typedef struct VhostUserMsg {
+>> >@@ -1768,6 +1796,196 @@ vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+>> >     return 0;
+>> > }
+>> >
+>> >+/**
+>> >+ * vhost_user_backend_handle_shmem_map() - Handle SHMEM_MAP backend request
+>> >+ * @dev: vhost device
+>> >+ * @ioc: QIOChannel for communication
+>> >+ * @hdr: vhost-user message header
+>> >+ * @payload: message payload containing mapping details
+>> >+ * @fd: file descriptor for the shared memory region
+>> >+ *
+>> >+ * Handles VHOST_USER_BACKEND_SHMEM_MAP requests from the backend. Creates
+>> >+ * a VhostUserShmemObject to manage the shared memory mapping and adds it
+>> >+ * to the appropriate VirtIO shared memory region. The VhostUserShmemObject
+>> >+ * serves as an intermediate parent for the MemoryRegion, ensuring proper
+>> >+ * lifecycle management with reference counting.
+>> >+ *
+>> >+ * Returns: 0 on success, negative errno on failure
+>> >+ */
+>> >+static int
+>> >+vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
+>> >+                                    QIOChannel *ioc,
+>> >+                                    VhostUserHeader *hdr,
+>> >+                                    VhostUserPayload *payload,
+>> >+                                    int fd)
+>> >+{
+>> >+    VirtioSharedMemory *shmem;
+>> >+    VhostUserMMap *vu_mmap = &payload->mmap;
+>> >+    VirtioSharedMemoryMapping *existing;
+>> >+    Error *local_err = NULL;
+>> >+    int ret = 0;
+>> >+
+>> >+    if (fd < 0) {
+>> >+        error_report("Bad fd for map");
+>> >+        ret = -EBADF;
+>> >+        goto send_reply;
+>> >+    }
+>> >+
+>> >+    if (QSIMPLEQ_EMPTY(&dev->vdev->shmem_list)) {
+>> >+        error_report("Device has no VIRTIO Shared Memory Regions. "
+>> >+                     "Requested ID: %d", vu_mmap->shmid);
+>> >+        ret = -EFAULT;
+>> >+        goto send_reply;
+>> >+    }
+>> >+
+>> >+    shmem = virtio_find_shmem_region(dev->vdev, vu_mmap->shmid);
+>> >+    if (!shmem) {
+>> >+        error_report("VIRTIO Shared Memory Region at "
+>> >+                     "ID %d not found or uninitialized", vu_mmap->shmid);
+>> >+        ret = -EFAULT;
+>> >+        goto send_reply;
+>> >+    }
+>> >+
+>> >+    if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
+>> >+        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr.size) {
+>> >+        error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
+>> >+                     vu_mmap->shm_offset, vu_mmap->len);
+>> >+        ret = -EFAULT;
+>> >+        goto send_reply;
+>> >+    }
+>> >+
+>> >+    QTAILQ_FOREACH(existing, &shmem->mmaps, link) {
+>> >+        if (ranges_overlap(existing->offset, existing->len,
+>> >+                           vu_mmap->shm_offset, vu_mmap->len)) {
+>> >+            error_report("VIRTIO Shared Memory mapping overlap");
+>> >+            ret = -EFAULT;
+>> >+            goto send_reply;
+>> >+        }
+>> >+    }
+>> >+
+>> >+    memory_region_transaction_begin();
+>> >+
+>> >+    /* Create VirtioSharedMemoryMapping object */
+>> >+    VirtioSharedMemoryMapping *mapping = virtio_shared_memory_mapping_new(
+>> >+        vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
+>> >+        vu_mmap->len, vu_mmap->flags & VHOST_USER_FLAG_MAP_RW);
+>> >+
+>> >+    if (!mapping) {
+>> >+        ret = -EFAULT;
+>> >+        goto send_reply_commit;
+>> >+    }
+>> >+
+>> >+    /* Add the mapping to the shared memory region */
+>> >+    if (virtio_add_shmem_map(shmem, mapping) != 0) {
+>> >+        error_report("Failed to add shared memory mapping");
+>> >+        object_unref(OBJECT(mapping));
+>> >+        ret = -EFAULT;
+>> >+        goto send_reply_commit;
+>> >+    }
+>> >+
+>> >+send_reply_commit:
+>> >+    /* Send reply and commit after transaction started */
+>> >+    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+>> >+        payload->u64 = !!ret;
+>> >+        hdr->size = sizeof(payload->u64);
+>> >+        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
+>> >+            error_report_err(local_err);
+>> >+            memory_region_transaction_commit();
+>> >+            return -EFAULT;
+>> >+        }
+>> >+    }
+>> >+    memory_region_transaction_commit();
+>>
+>> Sorry to be late, I did a quick review, my only doubts is here, maybe it
+>> was already discussed, but why do we commit after responding to the
+>> backend?
+>>
+>> Should we do it first to prevent the backend from “seeing” something
+>> that hasn't been committed yet?
+>
+>There is a race that leads to a deadlock. hw/virtio/vhost.c has a
+>MemoryListener that sends VHOST_USER_SET_MEM_TABLE messages in its
+>.commit() callback. If this happens before the reply, the backend will
+>not process it as it is stuck waiting for the SHMEM reply, and the
+>handler in qemu will not send it as it is waiting for the reply to the
+>SET_MEM_TABLE. So we have to delay the transaction commit to
+>immediately after the reply.
+
+Okay, I see now that you mentioned that in the commit description, 
+great, I should have read it more carefully!
+IMO it would be worth adding a comment here, but I definitely won't ask 
+you to send a v11 for this! (maybe a followup patch later).
+
+>
+>>
+>> Also, if vhost_user_send_resp() fails, should we call
+>> virtio_del_shmem_map()?
+>
+>If vhost_user_send_resp() fails, the connection with the backend is
+>closed, so the mappings will indeed never be removed unless we reset.
+>
+>Maybe better than removing the single mapping, would be to loop
+>through mappings in the shared memory and clean them all (same we do :
+>
+>```
+>        while (!QTAILQ_EMPTY(&shmem->mmaps)) {
+>            VirtioSharedMemoryMapping *mapping = QTAILQ_FIRST(&shmem->mmaps);
+>            virtio_del_shmem_map(shmem, mapping->offset, mapping->mr->size);
+>        }
+>```
+>
+>But since a backend may utilize more than one shared memory region,
+>and we do not know the mapping between a given backend and its shared
+>memories, whatever we do will be incomplete (?).
+
+I don't know if this is the right place to do this kind of cleanup, 
+maybe further up in the stack.
 
 
-On 10/2/25 6:44 PM, Nicolin Chen wrote:
-> On Thu, Oct 02, 2025 at 04:34:17AM -0700, Shameer Kolothum wrote:
->>>> Implement a set_iommu_device callback:
->>>>  -If found an existing viommu reuse that.
->>> I think you need to document why you need a vIOMMU object.
->>>>  -Else,
->>>>     Allocate a vIOMMU with the nested parent S2 hwpt allocated by VFIO.
->>>>     Though, iommufd’s vIOMMU model supports nested translation by
->>>>     encapsulating a S2 nesting parent HWPT, devices cannot attach to this
->>>>     parent HWPT directly. So two proxy nested HWPTs (bypass and abort) are
->>>>     allocated to handle device attachments.
->>> "devices cannot attach to this parent HWPT directly".  Why? It is not clear to
->>> me what those hwpt are used for compared to the original one. Why are they
->>> mandated? To me this deserves some additional explanations. If they are s2
->>> ones, I would use an s2 prefix too.
->> Ok. This needs some rephrasing.
->>
->> The idea is, we cannot yet attach a domain to the SMMUv3 for this device yet.
->> We need a vDEVICE object (which will link vSID to pSID) for attach. Please see
->> Patch #10.
->>
->> Here we just allocate two domains(bypass or abort) for later attach based on
->> Guest request.
->>
->> These are not S2 only HWPT per se. They are of type IOMMU_DOMAIN_NESTED.
->>
->> From kernel doc:
->>
->> #define __IOMMU_DOMAIN_NESTED   (1U << 6)  /* User-managed address space nested
->>                                               on a stage-2 translation        */
-> There are a couple of things going on here:
-> 1) We should not attach directly to the S2 HWPT that eventually
->    will be shared across vSMMU instances. In other word, an S2
->    HWPT will not be attachable for lacking of its tie to an SMMU
->    instance and not having a VMID at all. Instead, each vIOMMU
->    object allocated using this S2 HWPT will hold the VMID.
->
-> 2) A device cannot attach to a vIOMMU directly but has to attach
->    through a proxy nested HWPT (IOMMU_DOMAIN_NESTED). To attach
->    to an IOMMU_DOMAIN_NESTED, a vDEVICE must be allocated with a
->    given vSID.
->
-> This might sound a bit complicated but I think it makes sense from
-> a VM perspective, as a device that's behind a vSMMU should have a
-> guest-level SID and its corresponding STE: if the device is working
-> in the S2-only mode (physically), there must be a guest-level STE
-> configuring to the S1-BYPASS mode, where the "bypass" proxy HWPT
-> will be picked for attachment.
->
-> So, for rephrasing, I think it would nicer to say something like:
->
-> "
-> A device that is put behind a vSMMU instance must have a vSID and its
-> corresponding vSTEs (bypass/abort/translate). Pre-allocate the bypass
-> and abort vSTEs as two proxy nested HWPTs for the device to attach to
-> a vIOMMU.
->
-> Note that the core-managed nesting parent HWPT should not be attached
-> directly when using the iommufd's vIOMMU model. This is also because
-> we want that nesting parent HWPT to be reused eventually across vSMMU
-> instances in the same VM.
-> "
+>I think the only
+>solution after this happens is to reset (virtio_reset) to remove all
+>mappings from the all shared regions, and re-establish the backend
+>channel (is it possible?). Even if the channel cannot be restablished,
+>I wouldn't bother just removing one mapping, I would assume it needs a
+>reset.
 
-I would add 1) and 2) also in the commit msg. This definitively helps
-understanding the whole setup
+So, in conclusion, we are saying that if we can no longer communicate 
+with the backend, there is no point in maintaining a consistent state, 
+because we have to reset the device anyway.
+Are we already doing this, or should we be doing it?
 
-Eric
->
-> Nicolin
->
+BTW, I don't want to stop this series, I just found this error path 
+strange.
+
+Thanks,
+Stefano
 
 
