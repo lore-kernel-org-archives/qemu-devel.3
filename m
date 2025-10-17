@@ -4,52 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 553C5CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC35CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9jxx-0005km-77; Fri, 17 Oct 2025 08:53:53 -0400
+	id 1v9k0n-0006s6-Qj; Fri, 17 Oct 2025 08:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v9jxv-0005jy-Ls
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:53:51 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1v9jxm-0001xu-F0
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:53:50 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A28035972E9;
- Fri, 17 Oct 2025 14:53:35 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id BRamd7GTDZwJ; Fri, 17 Oct 2025 14:53:33 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4A3975972E8; Fri, 17 Oct 2025 14:53:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 485F859703F;
- Fri, 17 Oct 2025 14:53:33 +0200 (CEST)
-Date: Fri, 17 Oct 2025 14:53:33 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: QEMU Summit Minutes 2025
-In-Reply-To: <CAFEAcA-OmqRTqwYZ2WCeqFu=zxG65t6WSfKR=NthfpazrjzpzA@mail.gmail.com>
-Message-ID: <f4f426c0-7470-8764-9faf-abecf610b557@eik.bme.hu>
-References: <CAFEAcA-OmqRTqwYZ2WCeqFu=zxG65t6WSfKR=NthfpazrjzpzA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9k0l-0006rG-2d
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:56:47 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v9k0e-0002Ig-CR
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:56:46 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-63bbf5f77daso1993214d50.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 05:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760705791; x=1761310591; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QLuuFgUrjqZj2YufUaU5wjLVsYpYDQu0Ovw21kGZ/gA=;
+ b=RT28SeWT95TaaSeTMsZgCN62L7++TcCWuu4u1ejeuMJBbMF60tkRon/Yk09Ts3FFjT
+ QG72QvI2SV3dBsan98udIZ4Fm7CUJu/e47O2ET1VMWshTU4Y+56elQLJQGS5Zs8ALDjT
+ GJdQSursYxgF3LztcF19vP/M8JULe6I1cxEeOr5jmigi7DoOuNielagtUz1WDmFCAx7s
+ pHUc16SaGIwnOfT8Hb/QU4eSAw8UYWHhhRzONzznQPDXgz0viWYJnUOOvVl2iNXJnrea
+ YuftIsjsGFt22K6GuIY8bxvQ5nOGPv9qS8ueDs0MYxWoktYZuaI/huHzm6WnwC/loSd1
+ 07Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760705791; x=1761310591;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QLuuFgUrjqZj2YufUaU5wjLVsYpYDQu0Ovw21kGZ/gA=;
+ b=imHb2M+hX0WmOjh7dM5gl7Gg5n6dAZq2JCYRdQAD7IrkURXYngcFd7HzWRPMAsH6gq
+ yu8oOk+gVJkeRpW3oWS5xZWl+LMspsEE9fmmEscgijTyrlPkcW3eOEiQsU1LNQfZBH2+
+ WHDja+NMPz1okaJJ52LgYlAyOX59hRSR6v7F5SixO9E2eUjFK8ByplDiTt1A4u70RW3n
+ /CcKf9Vq6q7k1VmFvO4x/I7UrkS+JZjNnHCbQSKEo7pWznjxKIh0DB7ryGjvzvhAlXnE
+ ShJ5BkSfl8x6g/6WUhCkNlM5kkzk+DtajmMlRuQG5ROlclrgfdMivUZZSIA1e40X8fDg
+ Jg6A==
+X-Gm-Message-State: AOJu0Yz1rcSO8RUN5LO3mm/3HpdXL8OFmG9zIDZAJM3joJo2toUPIW/l
+ C5pp4yspy/yyHuNPAwIFyT2+wanCfSzzBsE3ohGZhct00VSlK/5ptp5uAnH/w0PfKeU4R7NbkLn
+ YD4oQGSpp5B89RZjF912o+q+KhaE2nqq+94POb2EAL69rYeqm/jRq
+X-Gm-Gg: ASbGnctAz2ZrrZMXKlm7xJLwedYaS/Yaqxut8jKGNoJ+mqHKxbAf4cs9vcnxjl4kTBK
+ sAzVLAdYM9tuNlrPokk6a86gvVn33vZj2yDozCvVUCVKTocXy0P58I0OoFgoXEl60QhgKPStM2F
+ RHyevKUI+adAXCRwGW7VniJNQlDxuwXGgopy+ksPlYBLQbVR7UlFafG0furGcrDrruURVegUFaB
+ lpNHhGJwi7vnkHFAsqd7nGj79NxYpvDQFfMAFRm3sXZ/+tXH2gg2FHaq4uchA==
+X-Google-Smtp-Source: AGHT+IE9c/cZ04N3GOH5OQ0+lqzHP3g0cuARud+eax0q1YlenyDKeFkC/QyUDZTPYXqh1tKMfdXBjWYkyj2ro9s51Vk=
+X-Received: by 2002:a05:690e:144e:b0:63e:1d91:f54d with SMTP id
+ 956f58d0204a3-63e1d91f657mr1109187d50.35.1760705791504; Fri, 17 Oct 2025
+ 05:56:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-4-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-4-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Oct 2025 13:56:19 +0100
+X-Gm-Features: AS18NWC-BZ-1hewTA9aSgu9NLBslImHJPa-tueAwAWeAzEeKJu5nklPDyi_sUnQ
+Message-ID: <CAFEAcA-a3ux0gfOvN9Rq3B-5w12TMeBO7rrvSwFb9pm-XHx3iA@mail.gmail.com>
+Subject: Re: [PATCH v2 03/37] target/arm: Update ARMCPRegInfo for 128-bit
+ sysregs
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,97 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Oct 2025, Peter Maydell wrote:
-> Release tarballs
-> ----------------
+On Tue, 14 Oct 2025 at 21:08, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> - Our release tarballs are quite large, and 85% of them is just the
->  source of EDK2 which we include as the corresponding source for the
->  EDK2 ROM blobs. This seems a bit silly, since most consumers of the
->  tarball are either:
->   - downstream distros who will want to build their own ROM blobs
->     from the real upstream sources
->   - end users who don't want to build the ROM blobs at all
+> Add ARM_CP_128BIT for type and functions describing 128-bit access.
 >
-> - We could perhaps usefully split the tarballs so that the ROM sources
->  and the ROM blobs are in their own tarballs and only people who need
->  them download them.
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-Wouldn't this be solved by splitting off the EDK2 version QEMU needs into 
-a separate project (something like qemu-edk2) and make that a separate 
-dependency?
 
-> - Relatedly, it would be nice for the ROM blobs to be trivially
->  regenerable by anybody, rather than the current ad-hoc "some
->  trusted person builds a binary locally and we commit it to git"
->  setup. This should be much easier in these days of containers than
->  it was when we first started committing compiled blobs to git.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Having blobs is a big conveniece that would be preferable to keep as most 
-of the time people don't need to rebuild blobs if they just want to run a 
-machine and even if changing a machine they don't need to touch the 
-firmware so it's only a few people who may want to install cross compilers 
-or a container to rebuild blobs and it would be nice to save others that 
-hassle.
-
-> - However, nothing is fundamentally broken with our current setup, so
->  unless anybody who really wants to do this work is going to step
->  up we probably won't do anything ;-)
->
-> Shifting styles and incomplete API conversions
-> ----------------------------------------------
->
-> - The project has lots of ways of achieving similar things with qdev, QOM,
->  etc. This makes it hard for contributors and reviewers to know how
->  something should be written, or which style to recommend in review.
->  Being asked to change APIs/style is disheartening.
->  This is unlikely to be something we can address easily, but some
->  things to aim for that came up in the conversation:
->  - we should be clear which APIs are legacy and must not be used in
->    new code
->  - we should update the old "unfinished transition" wiki page
-
-It should be clearly documented which is not always the case and in those 
-cases existing examples are taken as documentation. So where there is a 
-preferred API that should be in the documentation or if it's already there 
-should somehow be more organised so it's easier to find and refer to in 
-reviews.
-
-> - In particular, there is no current consensus on QOM casts
->  - Using the cast macros looks the neatest stylistically
->  - But it has a runtime overhead, which is irksome in cases where
->    actually at compile time we can be certain the pointer is of
->    a valid type (e.g. cast to parent type)
->  - Different reviewers put different weight on these factors,
->    causing conflicts about what to prefer.
-
-This may have been sparked by some of the debates we had with Mark. In one 
-review 
-[https://patchew.org/QEMU/cover.1758219840.git.balaton@eik.bme.hu/b5b4558125e2408ded29f7cdc306011358829044.1758219840.git.balaton@eik.bme.hu/] 
-he proposed memory region callbacks to take device state as opaque data 
-then QOM cast these to get the memory region, parent object or field the 
-callbacks need. I argued that there's no such convention documented 
-anywhere and what the opaque pointer should be is defined by the callbacks 
-[https://en.wikipedia.org/wiki/Closure_(computer_programming)#Callbacks_(C)] 
-so it makes sense to pass a the data it needs to the callback and not the 
-whole device state. Also the opaque data is registered once typically in 
-an init or realize function where it's already known it's the right type 
-so within the callback (which can potentially be called often) there is no 
-need to type check and cast it every time again. So opaque asignments in 
-the callback can assume the right type without casting and I don't think 
-it would bring any advantage to restrict the type to device state for 
-callbacks that would only make them unnecessarily more complex. This isn't 
-documented so can lead to different people following different views. Also 
-sometimes new conventions are only agreed on the list but not documented 
-so who missed the discussion won't know about it.
-
-I would like to raise another point here: PPC maintainership. Is there an 
-active maintainer for PPC currently? The one who is listed in MAINTAINERS 
-does not seem to be active and nobody seems to review and merge patches I 
-submit for PPC which already resulted in missing one release and the next 
-one may be the second release my series miss because of this. Is the 
-project aware of this and somebody is taking care of it?
-
-Regards,
-BALATON Zoltan
+thanks
+-- PMM
 
