@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88675CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D554CCD199
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kXg-0008Tu-RT; Fri, 17 Oct 2025 09:30:48 -0400
+	id 1v9kYD-0000Aq-1X; Fri, 17 Oct 2025 09:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXT-0008Rc-PW
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:30:39 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kYB-0000AB-05
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:31:19 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kXE-0007vF-K6
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:30:33 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so8507095e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:30:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kY7-00082b-2e
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:31:18 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-421851bca51so1520220f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760707815; x=1761312615; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760707867; x=1761312667; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q/UHGx6xpvisFhOS3RPFFYTa7tV8+Q6SbIOhNHRI88s=;
- b=Caf3dnm9QoU8XkftTu0goCRnwdRmnOzXGg5gKRa8ruv3QZi0Ra42XPkOKWsnwiQNyM
- lGnRdYGYpwcsbbedHkJo0PWCyu3YH+VF4AxEKPx/nOn/K7b669jGw6LT5D06niBfgAae
- z2eLJm3yiv5NNa7roGCAntVykIJcDEpti11aXrStysJoyAv3t/SCVYRGPnR6h6aiFRET
- E8CVQeOmQpe37mye1Z3QncQBp0/VGrzbAVHu+7/ahQn8H02eDThyFqF/J+fYefyiBeGI
- y39f9TBAij15+NWoZs8JPPjWqSlnjBGplQhfhFiu3WiGU+iGEmPHgT4DUxMxoiwFMMYQ
- gzbw==
+ bh=Lg9/iN3U42dGIjpzQABpfRLiLFnwtWVL68CvT+og75o=;
+ b=NYs/QSZiU/ZnU08xphuxVpBzsXWR9yESVxGSXkEoQLy8oGdZ60fyiM+b3fUhDNJPiY
+ j/AE8LKXXqfAQjWTFyG09TDBb/9MUfue8EO2Kxl7cWG8nCAAMUY088XNkVkXE0Tlsae/
+ KRl3Uil1gBTaQu+CfpJsiZReskDwJpPR3D4EUFLgWsLJOpSxZGnMCiQX1qY2WBW/NWS4
+ zqSYUaYczYHwRmh3zYQ5EQ3erLpH2dBjcgBi6Mc+uqSYjFkx5Qr8HCq2BWyxLk2FW1uB
+ u2ZnizAoTqIkXno74TobAIa+PpJopuHHw0VZIXgLwVtdeBoLFUO6rozle1p6oP4Aava7
+ tIZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760707815; x=1761312615;
+ d=1e100.net; s=20230601; t=1760707867; x=1761312667;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q/UHGx6xpvisFhOS3RPFFYTa7tV8+Q6SbIOhNHRI88s=;
- b=cmnoaAd/er40xTGB4ZbWkEUOa2BrXW3wqo6nLX5mgF9Gyb7Bf+N4O9Zd/7yvfV8rgN
- l7p9s21UsmFbuuQIkeJqQu2HXRX4IU27QV3VDikyQxjj+N/5tgjwkL9haa9KuFiTfwfR
- 1sSDDlG5am3c0WltgRiHkvKOawkNowNUDkLMa5ieiFiM0fxHcM6Kvid2//LX1W6xlhED
- w9PZqOmCQuRM2fnZCPAKXFKeZRcJBfNwmca9NiCuyDDOU2Waqd3qd2PJoF1jh7OCv4Pp
- juxc0tjrUz6StGuVGqcDTUXSYu5A57TSX2ai41OKZUPNzKnOdsmnxAmvJcHnF7OV50o0
- 4L+A==
-X-Gm-Message-State: AOJu0YyCAdAAzhUrmm9d5mn9iiImEePWDR9FArWALnMsb1Vdtxt0O0r6
- TVjWNgACSUwdvqmaDdadJAQ0UHo4PtHw73c4zZMsLn+fYWb77neO+ST+VIFU4TujN+a9sDska5+
- 2VoGHecU=
-X-Gm-Gg: ASbGncsKfqYC25neXGT8webYwqCzqIIWg/L+SXGJRMPsy4qbymTwKCCh1etGmiLG5Va
- Af5R9rIktXpUZCy1QFTMYz+6SzM+oJxO2tY2rTFbF/oQZsQYNO4FiTJChWABt0WfiFLoi1h8FhN
- NQ37dbU8moOAwtP5y6Oz32Uv/7QDcYBh26RnDyq4qmq6X40ZfSCmy2oHF6GIUU+LLlWFC8k/049
- ctOqmKhHaqL6zIcOK/z8UCbx5Dnw03FNSyxLixRy8HmEdTMQhyp1NVWwTmLo+vQ+hYKtFjacodg
- lghqA5TYG57/U1P5T4FSmCJKSvh6XQADJROYcrLBfU8IYobEvJkF4m6xH7DfqQDmFeGKWyqgb0v
- QNfqM6vXx6tKlnqHtwVN3sdZ39IxFa9syV4Bf08dYtpHiZRQhrxNn5iGcRPEJkxb/zFcwNO+8Cj
- heEz7I9pFbSgOlW1vlHGpGnszF6grKjjaSdpgKiGltajIZMwalJ3bpxcRxPFsv
-X-Google-Smtp-Source: AGHT+IHkxBSOxBAvZBFxn5iEhmD7eZcAshmuqYRYtNGdYVubOvaegrhLSBRjaVLUidBAKEkUhr3/tQ==
-X-Received: by 2002:a05:600c:3f10:b0:46e:59f8:8546 with SMTP id
- 5b1f17b1804b1-471178afb7amr27078605e9.17.1760707815423; 
- Fri, 17 Oct 2025 06:30:15 -0700 (PDT)
+ bh=Lg9/iN3U42dGIjpzQABpfRLiLFnwtWVL68CvT+og75o=;
+ b=YB2vEz3Lbfgeh14utuU1tBW98UW3oqimRh0jlsv3ItfTEjGXrOd9nP4IqyUFkUYuoq
+ srOzennULyhzEFcG4PdHNzgp5qAJmHXYPVQCyjv85S3xAulowQWCQCwquUz7+6vEQhIV
+ rudlaZZkY6Dp5v/N2dGmB+i8EALALSRDJF6A1V9hElWjP4n2C1TmHIDbIXrqmTCGhXqj
+ zD9S+Jhn/0dKW4uHxcETuxxWRphx4d/Jx67yMoxBWYFOmAIkfaJz1NHFTzYbJ+FCnJcF
+ HSrenmay/bXV4arQsBlA2XiXQV/9tWTTIXeUIfO8eG+OIPd9fNauy5S1nNkwqKgwByl4
+ VTdA==
+X-Gm-Message-State: AOJu0YxgPJNSvid3oLQMP7IIjqfjyoXrWI+G7xjxNT9H6DZgq04qF4ve
+ WhJBBL2A8L9r15UN5v5zSdDpeWilp/9nB/lC6TDyFR+4QjGzm3qN6LJUmEahoyYsd3G0vBo7D4q
+ jOIx1ihI=
+X-Gm-Gg: ASbGncvyXCr8oen6oS2YNvt2B+10kYhvbY41oTsBi3EEY6ARyhYhqylTRPCZtGeEDd6
+ /dkhHS/9VFAlKeq41ykgBMAdhboqFk/b1FzvXArrJLXCh68nr7W8vIaSyEh5FtGwkzdPW9V8sUm
+ Lfdh/37JHwXLVksBI2OVnFVv6L3UWmV+Eo5kmtSuea9GoyPpZU+4bikdTxbwcMCk145mD/7QqKA
+ UM0Vyc2kUPB04KQUZZcqdi6cuDPNLSxSsJ9itWRHlrSe0hfb2ZtiLsZnajyxlyvgY0cPWoFP9d7
+ 2PFUuaaXQTHN9DhJ/9raPi2/TVVofswdWIEQ43v9pDa5HqH0iXDMJDuocptW1pHobAem3LsNq8Q
+ vW38Xxmetg1fYejz2m8MTz888L2W9AMJvMrfbiYnQDJ40KceiTViiHxRNWT2AAl9P4SogILHY3C
+ nsSWrwT7huquu925TprmrFSQ4vIxukFcffThw3Gu0CJSZ5ww2PTuToEUbQS32K
+X-Google-Smtp-Source: AGHT+IFCK5e7LgLE0Mer+Jb7OyyOIFesW2b3vQifBr9tzBgz+s7LB2CWu/D4myxXrMDcDrX2fouseQ==
+X-Received: by 2002:a5d:64e4:0:b0:427:45f:ee21 with SMTP id
+ ffacd0b85a97d-42704d90029mr2823118f8f.27.1760707866829; 
+ Fri, 17 Oct 2025 06:31:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4710cb36e7csm50587645e9.2.2025.10.17.06.30.14
+ ffacd0b85a97d-4270665ef67sm4475230f8f.28.2025.10.17.06.31.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 17 Oct 2025 06:30:14 -0700 (PDT)
+ Fri, 17 Oct 2025 06:31:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -74,17 +74,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/12] hw/s390x/ccw: Remove SCLPDevice::increment_size field
-Date: Fri, 17 Oct 2025 15:29:51 +0200
-Message-ID: <20251017133002.61410-3-philmd@linaro.org>
+Subject: [PATCH 12/12] hw/s390x/ccw: Remove deprecated s390-ccw-virtio-7.2
+ machine
+Date: Fri, 17 Oct 2025 15:30:01 +0200
+Message-ID: <20251017133002.61410-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251017133002.61410-1-philmd@linaro.org>
 References: <20251017133002.61410-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,106 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SCLPDevice::increment_size field was only used by the
-s390-ccw-virtio-4.2 machine, which got removed. Remove it
-as now unused, along with the sclp_memory_init() method.
+This machine has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") it can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/s390x/sclp.h |  5 +----
- hw/s390x/sclp.c         | 34 +++-------------------------------
- 2 files changed, 4 insertions(+), 35 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
-index d32f6180e0d..33f01f85bb1 100644
---- a/include/hw/s390x/sclp.h
-+++ b/include/hw/s390x/sclp.h
-@@ -197,12 +197,9 @@ OBJECT_DECLARE_TYPE(SCLPDevice, SCLPDeviceClass,
- struct SCLPEventFacility;
- 
- struct SCLPDevice {
--    /* private */
-     DeviceState parent_obj;
--    struct SCLPEventFacility *event_facility;
--    int increment_size;
- 
--    /* public */
-+    struct SCLPEventFacility *event_facility;
- };
- 
- struct SCLPDeviceClass {
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 8602a566a49..c9a9c4bb375 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -110,7 +110,7 @@ static void read_SCP_info(SCLPDevice *sclp, SCCB *sccb)
-     ReadInfo *read_info = (ReadInfo *) sccb;
-     MachineState *machine = MACHINE(qdev_get_machine());
-     int cpu_count;
--    int rnsize, rnmax;
-+    int rnmax;
-     int required_len = SCCB_REQ_LEN(ReadInfo, machine->possible_cpus->len);
-     int offset_cpu = s390_has_feat(S390_FEAT_EXTENDED_LENGTH_SCCB) ?
-                      offsetof(ReadInfo, entries) :
-@@ -153,21 +153,14 @@ static void read_SCP_info(SCLPDevice *sclp, SCCB *sccb)
- 
-     read_info->mha_pow = s390_get_mha_pow();
-     read_info->hmfai = cpu_to_be32(s390_get_hmfai());
--
--    rnsize = 1 << (sclp->increment_size - 20);
--    if (rnsize <= 128) {
--        read_info->rnsize = rnsize;
--    } else {
--        read_info->rnsize = 0;
--        read_info->rnsize2 = cpu_to_be32(rnsize);
--    }
-+    read_info->rnsize = 1;
- 
-     /*
-      * We don't support standby memory. maxram_size is used for sizing the
-      * memory device region, which is not exposed through SCLP but through
-      * diag500.
-      */
--    rnmax = machine->ram_size >> sclp->increment_size;
-+    rnmax = machine->ram_size >> 20;
-     if (rnmax < 0x10000) {
-         read_info->rnmax = cpu_to_be16(rnmax);
-     } else {
-@@ -406,25 +399,6 @@ static void sclp_realize(DeviceState *dev, Error **errp)
-     }
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 390d427dc41..bc8e9f4c34b 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1007,18 +1007,6 @@ static void ccw_machine_8_0_class_options(MachineClass *mc)
  }
+ DEFINE_CCW_MACHINE(8, 0);
  
--static void sclp_memory_init(SCLPDevice *sclp)
+-static void ccw_machine_7_2_instance_options(MachineState *machine)
 -{
--    MachineState *machine = MACHINE(qdev_get_machine());
--    MachineClass *machine_class = MACHINE_GET_CLASS(qdev_get_machine());
--    ram_addr_t initial_mem = machine->ram_size;
--    int increment_size = 20;
--
--    /* The storage increment size is a multiple of 1M and is a power of 2.
--     * For some machine types, the number of storage increments must be
--     * MAX_STORAGE_INCREMENTS or fewer.
--     * The variable 'increment_size' is an exponent of 2 that can be
--     * used to calculate the size (in bytes) of an increment. */
--    while (machine_class->fixup_ram_size != NULL &&
--           (initial_mem >> increment_size) > MAX_STORAGE_INCREMENTS) {
--        increment_size++;
--    }
--    sclp->increment_size = increment_size;
+-    ccw_machine_8_0_instance_options(machine);
 -}
 -
- static void sclp_init(Object *obj)
- {
-     SCLPDevice *sclp = SCLP(obj);
-@@ -434,8 +408,6 @@ static void sclp_init(Object *obj)
-     object_property_add_child(obj, TYPE_SCLP_EVENT_FACILITY, new);
-     object_unref(new);
-     sclp->event_facility = EVENT_FACILITY(new);
+-static void ccw_machine_7_2_class_options(MachineClass *mc)
+-{
+-    ccw_machine_8_0_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_7_2, hw_compat_7_2_len);
+-}
+-DEFINE_CCW_MACHINE(7, 2);
 -
--    sclp_memory_init(sclp);
- }
- 
- static void sclp_class_init(ObjectClass *oc, const void *data)
+ static void ccw_machine_register_types(void)
+ {
+     type_register_static(&ccw_machine_info);
 -- 
 2.51.0
 
