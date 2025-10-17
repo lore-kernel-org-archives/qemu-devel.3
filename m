@@ -4,98 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BE7CCD183
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 01:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA66CCD183
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 01:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9ZVF-0001FX-Eh; Thu, 16 Oct 2025 21:43:33 -0400
+	id 1v9Zbd-00038N-0T; Thu, 16 Oct 2025 21:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v9ZVC-0001FO-5h
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 21:43:31 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9Zba-00037z-4m
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 21:50:06 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1v9ZV4-0008VA-UV
- for qemu-devel@nongnu.org; Thu, 16 Oct 2025 21:43:29 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-3c99a6a2afeso36622fac.1
- for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 18:43:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1v9ZbT-00013K-PU
+ for qemu-devel@nongnu.org; Thu, 16 Oct 2025 21:50:03 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-63bdfd73e6eso4764785a12.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Oct 2025 18:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1760665399; x=1761270199; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760665797; x=1761270597; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B6sJdcKSsm3k4g1+uesAYaOVYh8uUI6CcxdyeEXJiB0=;
- b=O/5JMcK/S7cyP1DqO5Bkh6ihqctTq1gcRR3FoleIU83F3l486ejJ0xPTAq75bMgooi
- 8YO0Ok7USHAysvpsu0rZWkdjbNlRQXyCtzV8qkOUuxojrqIjiWWmQxq9jwgn3WCeMn/B
- Hr2UIJrIEtQpO63Id5q29Y6XP4i3OLYUjC3rNxAICIR1h+2snG2I7iaSFltwMNY+uLp+
- Jpd9PGD+LdjFLc/LCAVqxrWmYAVJJBUlGHYev1FaU7ns79K4UC7ZLL/qn1sCC5Yu/BhN
- X/9lCzpF3rmwhS3qWfEcKTHXpRWRo7gi4fDlpExFxg5Lsbq0spgzN/nFT4HVYMt+McFS
- iRPw==
+ bh=/4S4w7vgrfVuZBfsNDGrnQYcPP5HbD/YZ/o2A90RLqI=;
+ b=VcXlpLlQ/RCeUQAwhMfFFcMHJb2L5pUtGO9K26vRUYtmJf5DsjhYS3YcnsXakfBXi2
+ YUVaYgtAIIs2zEgkjdVx78A+5UlmGT5lFFko37FcRx8iHUXkf7g34ur83gLo2ByAj+M1
+ qHh3ewIbp+/riOo4p1yQ8nsz0dGhEXEQ5eYwGvmCLY6z50tTipdEEcwnMkgSuZddlF4n
+ KuiCygI7P/USZdGMOxYufxLZPpow18Fu8D1P9kc1gY8G8s5BZdbLVH3vVlLf7oUJR+1M
+ cfag3mePQN9/Iv5LtOCJk1j9dH24iwXRGLEZyaADF0j8qYr62wLjCERnfddzuVBNWd9/
+ 6jWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760665399; x=1761270199;
+ d=1e100.net; s=20230601; t=1760665797; x=1761270597;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B6sJdcKSsm3k4g1+uesAYaOVYh8uUI6CcxdyeEXJiB0=;
- b=TdUZDbBhn7U84ah1RTNISoklN4Qk+QumGyJbhPvPwQ+LldYqWlUFXPwR//QZW+9Tjt
- ksOOfwxQiju8QqF9CvcuMwEvWjdV/VKrqK1RPYdqjr3EC5s0wky8guYdDE/Pn9aaPhYg
- llcf9iW1jwVgyoRbtpGbBtifP2W9rGs3/rC7igJszRO/U3sL81jivvZTXd++4hU27vKF
- XUb3djM8rotb2s2AxG3BES3GU8vaOTPyD0K2LQyY7Fwp/FZmroMVaUQQCTIlqUCFdKE2
- NUD5qcy4vVqG07lwTHCe3nJl2DNnl/87sqnPjc91IhjEsIah0M4RBl+mR6FmffqMC9OW
- sF3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4bQAJoqSpaFRshwZdlfYKiR0MSNgDHVuQm/VONi2N+8+UfyyI5idn/atXCN03X2u5OFNhRn3a89ZR@nongnu.org
-X-Gm-Message-State: AOJu0YzXKqOTOcGK9/eb2e0/KJDxcWlayMKA3GDRMtbd/N+0FoxuYHj3
- xnOT8zufaK/NT0To6dTDCyS7cB2ogAKihebXDwgFdJBrkpwlHllluS3pugF/adCMa+jurigGXlm
- xNzjwxnVDfW1h531jGZrIbaRtNZrWISZeN8QrYutzPw==
-X-Gm-Gg: ASbGncvFxUJXy2z7SjZb905uhwSvLSQac5eLe/nal5NqBp/zRZpkxcNQx36biRCRn/4
- OACEST7wgruDMnYoLp09I4R3e2owC1SPHgYH/kqSxEBIPzEvBObJcvs2SOaCott5HcKMSorlpx8
- uZ9nYLdbGIZx9Xs1GUpfHy/i93ZSM4zuBkvKHXCL3wrxkPtf4jb9QYecexRL+sF6s1y5zO7f3e3
- 36szx2Xu/CM7EtIECAFkLPZTqul3AusbYux6AST3ZHivys1F81O1m4vNAKaV17OwqNiNexTWfa6
- G9rSLzEeZRZUxd/d9K4xnjOkVpi/4R6Ti5GUNw1nRA==
-X-Google-Smtp-Source: AGHT+IEQUsnrISjmT75iKk+2NAwG8ailkrxSchrkcQJCy1dbWQTt5MrpivSBVc+2YqXTJ9TBAdG/juUPKq6QmP2qjg4=
-X-Received: by 2002:a05:6871:4188:b0:34b:3002:d48e with SMTP id
- 586e51a60fabf-3c98d17d43amr794113fac.50.1760665398705; Thu, 16 Oct 2025
- 18:43:18 -0700 (PDT)
+ bh=/4S4w7vgrfVuZBfsNDGrnQYcPP5HbD/YZ/o2A90RLqI=;
+ b=cG4MQbXVL26vhpKc1vJYlj+fvXOEqOpC2foCVIB+R6F6aa+UBnhwZ2zFqLExx2b+AF
+ 3w+tCLtYZ6EdJnR/it9jZrBYRkBVULQj3PvuH+l1ucptO8W1Xe3nTjmsO85w5pAFPiNc
+ gFuTTaudqBmAN0uFz1QLELV3Cia34BT+F0o4EgGVkuAfUv2WqTe0BP0BHbcqqTYJ4kt0
+ /5vsgTx4vUixxHqbPysw59gXgK9KIhmeHYt1SfZyae/j5fsdfbPyfcZOhzhu/+BMA/yf
+ 6Sh/zUVNXySK267ulVTBtx5+bHicOcepPslY8bvEbx4pi2rk2Btt3bqm9iwbauema7Ez
+ w4ug==
+X-Gm-Message-State: AOJu0YyuRnIK3xbLupeEdQAYMFj+c5U48JxSsudDU5PDPgKD+q01gl8n
+ IEfKXyfmylAk/80JxVEyOz/OQVSFvq+CzVIcTjsiEQ7M2bA15A26fn8lmp3vQK0llwCvzZ4wowJ
+ dmOhBjCRpc22wrIAyu2QIT+rZVCyZ8IY=
+X-Gm-Gg: ASbGncsowCvrXPae3asfAXNob3UIbL+1qbWBTJC9yrQWYFclf2Ats6z4I0pKB2Sa52J
+ oYwtry4urlCdJK5UZ3K2S9TP4UU8e3UklilNtRvxg2AOaGyC/utLIefRAOcN5rpwv84rBoXBUXd
+ +yCmx3+eSj+LYFO64gGsV3yKAS1w2Lqzh2+co1H7aGhEGpCAputkXBZ8IYnyzJOY9T2z1SR/AFK
+ vC6SQDQYvrrhKzPBhUSoiTTe20pjXUSkDg48cH4VskP78LoQYaY9xSP+/PbumfFBTObYOrXOBK3
+ SgF0UhI04gqenvIPXefG61L7MA==
+X-Google-Smtp-Source: AGHT+IE0/rNw4BRLeKlRkwMEXzGaWumhvr2oF0ObxDw5Dk4Bo5DTAy9OPpq1XIMAKhhVDhHbJNiCqJ91ptcTMl+ciQA=
+X-Received: by 2002:a05:6402:5186:b0:639:f648:1093 with SMTP id
+ 4fb4d7f45d1cf-63c1e1e01c3mr2426806a12.4.1760665796509; Thu, 16 Oct 2025
+ 18:49:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251014102439.319915-1-peter.maydell@linaro.org>
- <261d6938fc894b1ca0979aef30fb9e1c@huawei.com>
- <eebfcb04afc2498d8969d96fcbcf0926@huawei.com>
- <CAFEAcA_MZu4stZ4MY4zdpM0zy-gNBA3yj4dkuWL3d-FLFZC6rg@mail.gmail.com>
- <b3f9f1d44d8d4a779dcaae2497b8b71b@huawei.com>
- <CAFEAcA804drHGyTG73bXkqSMgXvKGGaLWvm6QS85FhD+dXDqjw@mail.gmail.com>
- <cb5c762bd24d4cd69aea415d4bc10051@huawei.com>
- <CAFEAcA-g18R03vqpqXr0boOccDqhNP0J7Gx8nZOxUrbQh13pog@mail.gmail.com>
- <599ea0ba89314d28af8b3ae7b590d1a9@huawei.com>
- <CAFEAcA8-QGBGqjw3Eefx_yyz_30azn9Trz-OGSxq7v4N=X+26Q@mail.gmail.com>
- <a630fc58d9f946988bd6c27479543dd1@huawei.com>
- <CAFEAcA8GsSDnY8GEJZYNbJ3KZAp9tJ=s_vUBB_XwwGaEwozxzQ@mail.gmail.com>
- <880fc89ebcb9404cbc135a501e635671@huawei.com>
- <CAFEAcA-gZj7PBM4whrvvz=qy3taO9Dz4Z2HEAAB8cE0vxH3bug@mail.gmail.com>
- <bdc3791ac7004bb281447cb8b707995f@huawei.com>
-In-Reply-To: <bdc3791ac7004bb281447cb8b707995f@huawei.com>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Fri, 17 Oct 2025 01:43:07 +0000
-X-Gm-Features: AS18NWAg9pWOWKgUBUP_IcI9ti-uG1SIoXREDkbwlrkvqbo1QyV8AA53m-unVRM
-Message-ID: <CAJ7pxeZpUKLzgp50N=qVQuBSn5MJ3rkruMvwSPbDgxHnLkX5Bw@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Avoid reading ICC_CTLR_EL1 from
- kernel in cpuif reset
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Marc Zyngier <maz@kernel.org>
+References: <175611702979.27776.8893001401121570723-0@git.sr.ht>
+ <175611702979.27776.8893001401121570723-1@git.sr.ht>
+In-Reply-To: <175611702979.27776.8893001401121570723-1@git.sr.ht>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 17 Oct 2025 11:49:29 +1000
+X-Gm-Features: AS18NWAzBH7tMp-4V4Vjcspt6D1eRCiKKLZn1mp3EaciKRNON-eFAGlwP7HDiAo
+Message-ID: <CAKmqyKOoGmNaoHW=wdN0jE-z6c-MJmMNdQfz5aM3XXkDk=T-cQ@mail.gmail.com>
+Subject: Re: [PATCH qemu v10 1/1] target/riscv: Add Zilsd and Zclsd extension
+ support
+To: "~liuxu" <liuxu@nucleisys.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-oa1-x33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,197 +98,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
-On Tue, Oct 14, 2025 at 7:36=E2=80=AFPM Salil Mehta <salil.mehta@huawei.com=
-> wrote:
+On Mon, Aug 25, 2025 at 8:17=E2=80=AFPM ~liuxu <liuxu@git.sr.ht> wrote:
 >
-> Hi Peter,
+> From: lxx <1733205434@qq.com>
 >
-> > From: qemu-devel-bounces+salil.mehta=3Dhuawei.com@nongnu.org <qemu-
-> > devel-bounces+salil.mehta=3Dhuawei.com@nongnu.org> On Behalf Of Peter
-> > Maydell
-> > Sent: Tuesday, October 14, 2025 4:44 PM
-> > To: Salil Mehta <salil.mehta@huawei.com>
-> >
-> > On Tue, 14 Oct 2025 at 16:33, Salil Mehta <salil.mehta@huawei.com> wrot=
-e:
-> > >
-> > > > From: Peter Maydell <peter.maydell@linaro.org>
-> > > > Sent: Tuesday, October 14, 2025 4:24 PM
-> > > > To: Salil Mehta <salil.mehta@huawei.com>
-> > > >
-> > > > On Tue, 14 Oct 2025 at 16:13, Salil Mehta <salil.mehta@huawei.com>
-> > wrote:
-> > > > >
-> > > > > > From: Peter Maydell <peter.maydell@linaro.org> In what situatio=
-n
-> > > > > > do we ever start running a VCPU before the *GIC* has been
-> > > > > > realized? The GIC should get realized as part of creating the
-> > > > > > virt board, which must complete before we do anything like runn=
-ing a
-> > vcpu.
-> > > > >
-> > > > >
-> > > > > Just after realization of vCPU in the machvirt_init() you can see
-> > > > > the default power_state is PSCI CPU_ON, which means
-> > > > KVM_MP_STATE_RUNNABLE.
-> > > > > Since, the thread is up and not doing IO wait in userspace it get=
-s
-> > > > > into
-> > > > > cpu_exec() loop and actually run KVM_RUN IOCTL. Inside the KVM it
-> > > > > momentarily takes the vCPU mutex but later exit and releases. Thi=
-s
-> > > > > keeps going on for all of the vCPU threads realized early.
-> > > >
-> > > > Yikes. We definitely should fix that : letting the vcpu run before
-> > > > we get to
-> > > > qemu_machine_creation_done() seems like it would be a massive sourc=
-e
-> > > > of race conditions.
-> > >
-> > > I've already proposed fix for this by parking such threads in
-> > > userspace. Please check functions virt_(un)park_cpu_in_userspace().
-> > > But need to check if we can use this trick can be used at the very ea=
-rly
-> > stages of the VM initialization.
-> >
-> > I had a look at this on x86, and we correctly don't try to KVM_RUN the =
-vcpus
-> > early. What happens there is:
-> >  * the vcpu thread calls qemu_process_cpu_events()
+> This patch adds support for the Zilsd and Zclsd extension,
+> which is documented at https://github.com/riscv/riscv-zilsd/releases/tag/=
+v1.0
 >
+> Signed-off-by: LIU Xu <liuxu@nucleisys.com>
+> Co-developed-by: SUN Dongya <sundongya@nucleisys.com>
+> Co-developed-by: ZHAO Fujin <zhaofujin@nucleisys.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+This patch fails checkpatch
+
+ERROR: New file 'target/riscv/insn_trans/trans_zilsd.c.inc' requires
+'SPDX-License-Identifier'
+
+Can you add a SPDX-License-Identifier
+
+Alistair
+
+> ---
+>  target/riscv/cpu.c                        |   4 +
+>  target/riscv/cpu_cfg_fields.h.inc         |   2 +
+>  target/riscv/insn16.decode                |   8 ++
+>  target/riscv/insn32.decode                |  12 ++-
+>  target/riscv/insn_trans/trans_zilsd.c.inc | 112 ++++++++++++++++++++++
+>  target/riscv/tcg/tcg-cpu.c                |  33 +++++++
+>  target/riscv/translate.c                  |   1 +
+>  7 files changed, 170 insertions(+), 2 deletions(-)
+>  create mode 100644 target/riscv/insn_trans/trans_zilsd.c.inc
 >
-> I cannot find this function in the Qemu mainline of 28th September ?
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index d055ddf462..78969a5874 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -121,6 +121,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
+>      ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause=
+),
+>      ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+> +    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_12_0, ext_zilsd),
+>      ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
+>      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>      ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
+> @@ -144,6 +145,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zcmop, PRIV_VERSION_1_13_0, ext_zcmop),
+>      ISA_EXT_DATA_ENTRY(zcmp, PRIV_VERSION_1_12_0, ext_zcmp),
+>      ISA_EXT_DATA_ENTRY(zcmt, PRIV_VERSION_1_12_0, ext_zcmt),
+> +    ISA_EXT_DATA_ENTRY(zclsd, PRIV_VERSION_1_12_0, ext_zclsd),
+>      ISA_EXT_DATA_ENTRY(zba, PRIV_VERSION_1_12_0, ext_zba),
+>      ISA_EXT_DATA_ENTRY(zbb, PRIV_VERSION_1_12_0, ext_zbb),
+>      ISA_EXT_DATA_ENTRY(zbc, PRIV_VERSION_1_12_0, ext_zbc),
+> @@ -1291,6 +1293,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
 >
+>      MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
+>      MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
+> +    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
 >
-> >  * this causes it to go to sleep on the cpu->halt_cond: so
-> >    it will not end up doing KVM_RUN yet
-> >  * later, the main thread completes initialization of the board
-> >  * qdev_machine_creation_done() calls cpu_synchronize_all_post_init()
-> >  * for kvm, this causes us to call kvm_cpu_synchronize_post_init()
-> >    for each vcpu
-> >  * that will call run_on_cpu() which ends up calling qemu_cpu_kick()
-> >  * qemu_cpu_kick() does a broadcast on cpu->halt_cond, which
-> >    wakes up the vcpu thread and lets it go into kvm_cpu_exec()
-> >    for the first time
-> >
-> > Why doesn't this mechanism work on Arm ?
+>      MULTI_EXT_CFG_BOOL("zba", ext_zba, true),
+>      MULTI_EXT_CFG_BOOL("zbb", ext_zbb, true),
+> @@ -1330,6 +1333,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
+>      MULTI_EXT_CFG_BOOL("zcmp", ext_zcmp, false),
+>      MULTI_EXT_CFG_BOOL("zcmt", ext_zcmt, false),
+>      MULTI_EXT_CFG_BOOL("zicond", ext_zicond, false),
+> +    MULTI_EXT_CFG_BOOL("zclsd", ext_zclsd, false),
 >
-> It is a combination of things:
+>      /* Vector cryptography extensions */
+>      MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
+lds.h.inc
+> index e2d116f0df..6c1b523b68 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -19,6 +19,7 @@ BOOL_FIELD(ext_zce)
+>  BOOL_FIELD(ext_zcf)
+>  BOOL_FIELD(ext_zcmp)
+>  BOOL_FIELD(ext_zcmt)
+> +BOOL_FIELD(ext_zclsd)
+>  BOOL_FIELD(ext_zk)
+>  BOOL_FIELD(ext_zkn)
+>  BOOL_FIELD(ext_zknd)
+> @@ -41,6 +42,7 @@ BOOL_FIELD(ext_zicond)
+>  BOOL_FIELD(ext_zihintntl)
+>  BOOL_FIELD(ext_zihintpause)
+>  BOOL_FIELD(ext_zihpm)
+> +BOOL_FIELD(ext_zilsd)
+>  BOOL_FIELD(ext_zimop)
+>  BOOL_FIELD(ext_zcmop)
+>  BOOL_FIELD(ext_ztso)
+> diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
+> index bf893d1c2e..c34020e4dc 100644
+> --- a/target/riscv/insn16.decode
+> +++ b/target/riscv/insn16.decode
+> @@ -130,10 +130,14 @@ sw                110  ... ... .. ... 00 @cs_w
+>  {
+>    ld              011  ... ... .. ... 00 @cl_d
+>    c_flw           011  ... ... .. ... 00 @cl_w
+> +  # *** Zclsd Extension ***
+> +  zclsd_ld        011  ... ... .. ... 00 @cl_d
+>  }
+>  {
+>    sd              111  ... ... .. ... 00 @cs_d
+>    c_fsw           111  ... ... .. ... 00 @cs_w
+> +  # *** Zclsd Extension ***
+> +  zclsd_sd        111  ... ... .. ... 00 @cs_d
+>  }
 >
-> void qemu_wait_io_event(CPUState *cpu)
-> {
-> [...]
->     while (cpu_thread_is_idle(cpu)) {
->          [...]
->         qemu_cond_wait(cpu->halt_cond, &bql);
->     }
-> [...]
-> }
+>  # *** RV32/64C Standard Extension (Quadrant 1) ***
+> @@ -212,10 +216,14 @@ sw                110 .  .....  ..... 10 @c_swsp
+>    c64_illegal     011 -  00000  ----- 10 # c.ldsp, RES rd=3D0
+>    ld              011 .  .....  ..... 10 @c_ldsp
+>    c_flw           011 .  .....  ..... 10 @c_lwsp
+> +  # *** Zclsd Extension ***
+> +  zclsd_ldsp      011 .  .....  ..... 10 @c_ldsp
+>  }
+>  {
+>    sd              111 .  .....  ..... 10 @c_sdsp
+>    c_fsw           111 .  .....  ..... 10 @c_swsp
+> +  # *** Zclsd Extension ***
+> +  zclsd_sd        111 .  .....  ..... 10 @c_sdsp
+>  }
 >
-> 1. To block we should wait on 'halt_cond' as you rightly pointed.
-> 2. but condition to wait is to check of the CPU is IDLE or not.
-> 3. Various conditions in which CPU can be termed IDLE are:
->      3.1  STOPPED
->      3.2  HALTED
->      3.3 It does not have any queued  work to process.
+>  # *** RV64 and RV32 Zcb Extension ***
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index cd23b1f3a9..b341832e41 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -182,8 +182,16 @@ csrrci   ............     ..... 111 ..... 1110011 @c=
+sr
 >
+>  # *** RV64I Base Instruction Set (in addition to RV32I) ***
+>  lwu      ............   ..... 110 ..... 0000011 @i
+> -ld       ............   ..... 011 ..... 0000011 @i
+> -sd       ....... .....  ..... 011 ..... 0100011 @s
+> +{
+> +  ld       ............   ..... 011 ..... 0000011 @i
+> +  # *** Zilsd instructions ***
+> +  zilsd_ld ............   ..... 011 ..... 0000011 @i
+> +}
+> +{
+> +  sd       ....... .....  ..... 011 ..... 0100011 @s
+> +  # *** Zilsd instructions ***
+> +  zilsd_sd ....... .....  ..... 011 ..... 0100011 @s
+> +}
+>  addiw    ............   ..... 000 ..... 0011011 @i
+>  slliw    0000000 .....  ..... 001 ..... 0011011 @sh5
+>  srliw    0000000 .....  ..... 101 ..... 0011011 @sh5
+> diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/ins=
+n_trans/trans_zilsd.c.inc
+> new file mode 100644
+> index 0000000000..7bdc303298
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_zilsd.c.inc
+> @@ -0,0 +1,112 @@
+> +/*
+> + * RISC-V translation routines for the Zilsd & Zclsd Extension.
+> + *
+> + * Copyright (c) 2025 Nucleisys, Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#define REQUIRE_ZILSD(ctx) do {    \
+> +    if (!ctx->cfg_ptr->ext_zilsd)  \
+> +        return false;              \
+> +} while (0)
+> +
+> +#define REQUIRE_ZCLSD(ctx) do {    \
+> +    if (!ctx->cfg_ptr->ext_zclsd)  \
+> +        return false;              \
+> +} while (0)
+> +
+> +static bool gen_load_i64(DisasContext *ctx, arg_ld *a)
+> +{
+> +    if ((a->rd) % 2) {
+> +        return false;
+> +    }
+> +
+> +    TCGv dest_low =3D dest_gpr(ctx, a->rd);
+> +    TCGv dest_high =3D dest_gpr(ctx, a->rd + 1);
+> +    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
+> +    TCGv_i64 tmp =3D tcg_temp_new_i64();
+> +
+> +    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
+> +
+> +    if (a->rd =3D=3D 0) {
+> +        return true;
+> +    }
+> +
+> +    tcg_gen_extr_i64_tl(dest_low, dest_high, tmp);
+> +
+> +    gen_set_gpr(ctx, a->rd, dest_low);
+> +    gen_set_gpr(ctx, a->rd + 1, dest_high);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_zilsd_ld(DisasContext *ctx, arg_zilsd_ld *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZILSD(ctx);
+> +    return gen_load_i64(ctx, a);
+> +}
+> +
+> +static bool trans_zclsd_ld(DisasContext *ctx, arg_zclsd_ld *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZCLSD(ctx);
+> +    return gen_load_i64(ctx, a);
+> +}
+> +
+> +static bool trans_zclsd_ldsp(DisasContext *ctx, arg_zclsd_ldsp *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZCLSD(ctx);
+> +
+> +    if (a->rd =3D=3D 0) {
+> +        return false;
+> +    }
+> +    return gen_load_i64(ctx, a);
+> +}
+> +
+> +static bool gen_store_i64(DisasContext *ctx, arg_sd *a)
+> +{
+> +    if ((a->rs2) % 2) {
+> +        return false;
+> +    }
+> +
+> +    TCGv data_low =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +    TCGv data_high =3D get_gpr(ctx, a->rs2 + 1, EXT_NONE);
+> +    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
+> +    TCGv_i64 tmp =3D tcg_temp_new_i64();
+> +
+> +    if (a->rs2 =3D=3D 0) {
+> +        tmp =3D tcg_constant_i64(0);
+> +    } else {
+> +        tcg_gen_concat_tl_i64(tmp, data_low, data_high);
+> +    }
+> +    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_zilsd_sd(DisasContext *ctx, arg_zilsd_sd *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZILSD(ctx);
+> +    return gen_store_i64(ctx, a);
+> +}
+> +
+> +static bool trans_zclsd_sd(DisasContext *ctx, arg_zclsd_sd *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZCLSD(ctx);
+> +    return gen_store_i64(ctx, a);
+> +}
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 78fb279184..873d65a92e 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -818,6 +818,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu=
+, Error **errp)
+>          cpu->pmu_avail_ctrs =3D 0;
+>      }
 >
-
-I was partly wrong in my earlier analysis=E2=80=94sorry about that. The rea=
-l flow is:
-
-qdev_realize() -> qemu_vcpu_init() sets CPUState::stopped =3D true.
-This ensures the threads created during machvirt_init() block in I/O
-wait. That part works as expected.
-
-qemu_system_reset() runs via qemu_machine_creation_done(). This performs
-the CPU reset, and cpu_common_reset_hold() initializes
-CPUState::halted from the start-powered-off property.
-
-resume_all_vcpus() is called from vm_start(). It sets
-CPUState::stopped =3D false and kicks each vCPU. However,
-CPUState::halted remains whatever start-powered-off configured
-(typically 1 for secondaries).
-
-Thus, for each secondary vCPU we have: halted =3D 1, stopped =3D 0.
-
-These conditions should be sufficient for the vCPU thread to be treated as
-idle and to sleep (I/O wait) on halt_cond.
-
-However, inside cpu_thread_is_idle(), the halted =3D 1 condition is
-effectively bypassed because kvm_halt_in_kernel_allowed defaults to
-true. As a result, the thread does not take the userspace sleep path
-even though the vCPU is halted.
-
-I traced the code and the earlier patch as follows:
-
-bool cpu_thread_is_idle(CPUState *cpu)
-{
-    if (cpu->stop || !cpu_work_list_empty(cpu)) {
-        return false;
-    }
-    if (cpu_is_stopped(cpu)) {
-        return true;
-    }
-    if (!cpu->halted || cpu_has_work(cpu)) {
-        return false;
-    }
-
-     // at this point we expect CPUState::halted =3D 1
-
-    if (cpus_accel->cpu_thread_is_idle) {
-        /* flows goes into this for ARM and returns false */
-        return cpus_accel->cpu_thread_is_idle(cpu);
-    }
-    return true;
-}
-
-where cpu_thread_is_idle =3D kvm_vcpu_thread_is_idle()
-
-static bool kvm_vcpu_thread_is_idle(CPUState *cpu)
-{
-    return !kvm_halt_in_kernel();
-}
-
-
-File: kvm.h
-/**
- * kvm_halt_in_kernel
- *
- * Returns: true if halted cpus should still get a KVM_RUN ioctl to run
- * inside of kernel space. This only works if MP state is implemented.
- */
-#define kvm_halt_in_kernel() (kvm_halt_in_kernel_allowed)
-
-
-File: target/arm/kvm.c
-int kvm_arch_init(MachineState *ms, KVMState *s)
-{
-[...]
-
-    /*
-     * PSCI wakes up secondary cores, so we always need to
-     * have vCPUs waiting in kernel space
-     */
-    kvm_halt_in_kernel_allowed =3D true;
-[...]
-}
-
-Patch: ARM: KVM: Enable in-kernel timers with user space gic
-https://lore.kernel.org/qemu-devel/1499768952-24990-4-git-send-email-peter.=
-maydell@linaro.org/
-
-Net effect: even when halted =3D 1 and there is no work, KVM/ARM forces
-cpu_thread_is_idle() to return false so the thread enters KVM_RUN. This
-causes vCPU lock contention during the VM Initialization.
-
-It looks to be a 2017 patch, maybe you can help throw more light in this?
-
-
-Many thanks!
-
-Best regards
-Salil.
+> +    if (cpu->cfg.ext_zclsd) {
+> +        if (riscv_has_ext(env, RVC) && riscv_has_ext(env, RVF)) {
+> +            error_setg(errp,
+> +                    "Zclsd cannot be supported together with C and F ext=
+ension");
+> +            return;
+> +        }
+> +        if (cpu->cfg.ext_zcf) {
+> +            error_setg(errp,
+> +                    "Zclsd cannot be supported together with Zcf extensi=
+on");
+> +            return;
+> +        }
+> +    }
+> +
+>      if (cpu->cfg.ext_zicfilp && !cpu->cfg.ext_zicsr) {
+>          error_setg(errp, "zicfilp extension requires zicsr extension");
+>          return;
+> @@ -1081,6 +1094,20 @@ static void cpu_enable_zc_implied_rules(RISCVCPU *=
+cpu)
+>      }
+>  }
+>
+> +static void cpu_enable_zilsd_implied_rules(RISCVCPU *cpu)
+> +{
+> +    CPURISCVState *env =3D &cpu->env;
+> +
+> +    if (cpu->cfg.ext_zilsd && riscv_has_ext(env, RVC)) {
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zclsd), true);
+> +    }
+> +
+> +    if (cpu->cfg.ext_zclsd) {
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zilsd), true);
+> +    }
+> +}
+> +
+>  static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
+>  {
+>      RISCVCPUImpliedExtsRule *rule;
+> @@ -1089,6 +1116,9 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU=
+ *cpu)
+>      /* Enable the implied extensions for Zc. */
+>      cpu_enable_zc_implied_rules(cpu);
+>
+> +    /* Enable the implied extensions for Zilsd. */
+> +    cpu_enable_zilsd_implied_rules(cpu);
+> +
+>      /* Enable the implied MISAs. */
+>      for (i =3D 0; (rule =3D riscv_misa_ext_implied_rules[i]); i++) {
+>          if (riscv_has_ext(&cpu->env, rule->ext)) {
+> @@ -1592,6 +1622,9 @@ static void riscv_init_max_cpu_extensions(Object *o=
+bj)
+>      isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcmp), false);
+>      isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcmt), false);
+>
+> +    isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zilsd), false);
+> +    isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zclsd), false);
+> +
+>      if (env->misa_mxl !=3D MXL_RV32) {
+>          isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcf), false);
+>      } else {
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 9ddef2d6e2..62f714034f 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1200,6 +1200,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
+ target_ulong pc)
+>  /* Include the auto-generated decoder for 16 bit insn */
+>  #include "decode-insn16.c.inc"
+>  #include "insn_trans/trans_rvzce.c.inc"
+> +#include "insn_trans/trans_zilsd.c.inc"
+>  #include "insn_trans/trans_rvzcmop.c.inc"
+>  #include "insn_trans/trans_rvzicfiss.c.inc"
+>
+> --
+> 2.49.1
 
