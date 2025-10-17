@@ -4,115 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C67CCD184
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 06:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A21CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 06:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9ddy-0001ur-7A; Fri, 17 Oct 2025 02:08:51 -0400
+	id 1v9dje-0004GV-MJ; Fri, 17 Oct 2025 02:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v9ddw-0001uf-MD; Fri, 17 Oct 2025 02:08:48 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1v9djc-0004F9-Fi
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:14:40 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1v9ddt-00077s-3w; Fri, 17 Oct 2025 02:08:48 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59H0lQOO023890;
- Fri, 17 Oct 2025 06:08:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Ts8OrNXXjCSPh2hpnpxdgWJmoFQndH
- 63C72/KNLB2QE=; b=AI8q0afo5wlRP7mviNksQy+opa0rE4GXFiLpFTH07HslWM
- 54xwHYcAR2tjj8x9KLiMZi7bn5D7/ksalF+p9jpdkVthBDIOLvp1/4fqTfTUm2lE
- +KG9vDCBdip7Gmw6HYPcuJoZgT0ivdKIXgjssZQXhwKs5Hst1ylvd5GDYEs0NpjI
- O22tBWl9QCXMKWrcAeNu8hRIXdc/ElaTkgcj/lqF+Fjix+bGLsww6ihdCmZ0NInq
- 6a+TLBHeZoGmalbR+/kz8anRcTwJ8PE7GTyaQ7LNWLdIRpBzgGuqXv9AZv3VepZG
- SwVYBcvjkJeQcaDIC9yAjoljt62l40v0Ep19c49w==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49tfxprnbd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 06:08:37 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59H603Wu016874;
- Fri, 17 Oct 2025 06:08:37 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49tfxprnbb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 06:08:37 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59H4DFEG015204;
- Fri, 17 Oct 2025 06:08:36 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r1jshvxh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Oct 2025 06:08:36 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59H68WKw6422826
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Oct 2025 06:08:32 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B85CD2004F;
- Fri, 17 Oct 2025 06:08:32 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 92EF42004B;
- Fri, 17 Oct 2025 06:08:30 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.39.22.45])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 17 Oct 2025 06:08:30 +0000 (GMT)
-Date: Fri, 17 Oct 2025 11:38:27 +0530
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, berrange@redhat.com
-Subject: Re: [PATCH 5/5] hw/ppc: Pass errp to load_image_targphys() and
- report errors
-Message-ID: <aPHdWxH8plRC-L4P@linux.ibm.com>
-References: <20251016173502.1261674-1-vishalc@linux.ibm.com>
- <20251016173502.1261674-8-vishalc@linux.ibm.com>
- <2b8acd7a-59eb-bc0c-13c2-de650afe28cc@eik.bme.hu>
- <aPFVBuFLHCdcxPoy@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1v9djX-0008He-GG
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:14:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZaMyoCPEgDEDliYHculFL/bvHzcs3YLh30e/wqRw6LSFTcsO1fgoUG3zbtIYrhSllrp6gJhYH/AJmzDPTt8YJdtkfLkxvaDVVL6C07rrx9MfI7bNFn8Gn3emOEktbIkT8t/Ac4JGEW+iYmMXiOJXpsy4y91ouzUuCh7zqFqLN/8FxxscHXo41HBHYxdXXEl/JLnOifnP8UakwmotcdeVGkbsGup4YVI5U2aWyzZZvlIMltZBwdYJvp6OgsRMKOvyqseptS7xZK5/4mkRkL/XdmInQ8fPdQCr1Brp336NxclERdArA+10TFwxY7JoPdjuzyFwEtqDxETWx1nvSaqG4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=u5CaXy3Vq/oMW2meOhC0Nh7UC6+eV9MMpDH3oU1q7VE=;
+ b=Td2ODKLgUm8Ans6Amc6PVicv7IdbilpcT03DCxKGccivJcgOLqMuJhtqWk0TAJTEXx4HV5laBK0KjS2++6jeTKnQV/xnFmDm1DX1mo4I4U7JqSKkFPnbkWGlFU8g8sAOHEen8zyHjq3nWIC358lqvO4gCVTozOOf5uMRrTaBYdbk+jNBE8U6MJqj2nvlozTOwtBhhJkVL0ikkuoQfbDsMOpfFbaghtNdd7q8wrJiJg5gWyB+yEsyqKPKtoRVUoAKtr6shyJK7dYkHDPstYRpiELUznpE8m1XM09qmuDZsXuX9GAFl+el6YUNh6OlTOAnSmIsHrue23sTEIrsyd783w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u5CaXy3Vq/oMW2meOhC0Nh7UC6+eV9MMpDH3oU1q7VE=;
+ b=0iaifBWxbxmA2tu0qFeYhA1MyJlzlXM1x2yt4UtqN4wNMk9VcZ0pVoSQ6wcjVCL8ouMrOLpQvibkodcsifYShBUaCZOVcD4UofVs3djhomFVF6yDy4IEVdAc/ZpQobVKl66PzdFhDT3zkSfHfSHqOyBNAv34546c8OXsF7eqoSo=
+Received: from CH0P220CA0009.NAMP220.PROD.OUTLOOK.COM (2603:10b6:610:ef::23)
+ by IA1PR12MB6188.namprd12.prod.outlook.com (2603:10b6:208:3e4::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.11; Fri, 17 Oct
+ 2025 06:14:25 +0000
+Received: from DS3PEPF000099E0.namprd04.prod.outlook.com
+ (2603:10b6:610:ef:cafe::cd) by CH0P220CA0009.outlook.office365.com
+ (2603:10b6:610:ef::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.12 via Frontend Transport; Fri,
+ 17 Oct 2025 06:14:24 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS3PEPF000099E0.mail.protection.outlook.com (10.167.17.203) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9253.7 via Frontend Transport; Fri, 17 Oct 2025 06:14:23 +0000
+Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 16 Oct
+ 2025 23:14:19 -0700
+From: Sairaj Kodilkar <sarunkod@amd.com>
+To: <qemu-devel@nongnu.org>, <alejandro.j.jimenez@oracle.com>
+CC: <mst@redhat.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
+ <philmd@linaro.org>, <suravee.suthikulpanit@amd.com>, <vasant.hegde@amd.com>, 
+ <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>, <aik@amd.com>, "Sairaj
+ Kodilkar" <sarunkod@amd.com>
+Subject: [PATCH v3 2/2] amd_iommu: Support 64 bit address for IOTLB lookup
+Date: Fri, 17 Oct 2025 11:43:22 +0530
+Message-ID: <20251017061322.1584-3-sarunkod@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251017061322.1584-1-sarunkod@amd.com>
+References: <20251017061322.1584-1-sarunkod@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aPFVBuFLHCdcxPoy@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: H1vMmJ_DFRki94wCTz0flgdLhUlXknbv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE1MDEyNSBTYWx0ZWRfX18ftpuvimCde
- bu+6NW3VPDZchARqgwPET+lQIbaOV+gZ9P5/VvC4+zs8sotFZdkK/du8Vdm56iJ6pkC1Kj9L9HF
- 22GzwxGWIE23MpIL7qS/PyfTobeRBr1mxQsUMIcIPtUM+wdnO3bqoBji1r3MfDlkl6r+3oS4WPd
- h+Gqpdu27D54wDbyoPV46AAVZhbjIKP3dafZ2uzWAmy4RpeGtgxdeQgtY3JSkSlJcbPqwriaBoO
- 65ZWJ5UdwDfBd0LARTGjCw4+05/SGjogE0e4FVV4g8IHWJ8o61HGPVvmG0mMz8x2W1gr2AXEjJp
- y/ONiG73HkjHUBlX8rgNYfmzZxCi85sDlzabQij6zZvoXI0igxivMo23ORuBzH2Y4rwkQKLD+kI
- dwxTHZRrYfZtEJC6/tiEltvbvBru9Q==
-X-Authority-Analysis: v=2.4 cv=R+wO2NRX c=1 sm=1 tr=0 ts=68f1dd66 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=CpeQKDSbbSTg7OkXVzQA:9 a=CjuIK1q_8ugA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: F71FCfflqHbM1p99exAOsAbU0HAsCcU8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-17_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 spamscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510150125
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099E0:EE_|IA1PR12MB6188:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7fc1d75a-eed5-4517-d5d2-08de0d446b29
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?BYEjLBnaoQVrcaVMYmWy1LEHpriKi4Zpb2Ihmb1Y7OHZKvp9pEfTLNwRw58m?=
+ =?us-ascii?Q?x4myMlK+YsvfMwNXs2c1leydIqMq6z13ZASJs0BOXptBuXdLi1eWedKfOsAu?=
+ =?us-ascii?Q?HO+k5gShM3figeyIpIjfTA+3lfUh8W8w8LrJ8RIzs5q5/eZqBn/wFo3K6mv+?=
+ =?us-ascii?Q?cKt40VYiD7sVw+QE0zCKJ59qBWYLn6UtUVeTPeuOfSAZj62iQO+lgZOmYWrv?=
+ =?us-ascii?Q?40EMWTRBmyYbqRgtW2AU7TXDpokvD5L2rfiWMcsZk/zYnTWDeeYrd8a0WbKT?=
+ =?us-ascii?Q?3da8OBU8nEIpYIv353Ic9LX04jDsSpHvGQDoR2/XHOVofYuqimT0mfZ5odf2?=
+ =?us-ascii?Q?Hx/8QlAJyV+BeU3Rx6wMHIwV5kUyy2jgELGghndacfSI6pGFsDrWNazVwquv?=
+ =?us-ascii?Q?VIf3RlzADTHbatCa3k3DrKqokoN0uG6oNj4GV8eTKEQUUlJmsyBll9ON6u3u?=
+ =?us-ascii?Q?nQuldtfs/dEbhz1hFSHyMfG/G/6pr7mmIpDpaC4EDbDaOwkbN6sjqJOAKvv7?=
+ =?us-ascii?Q?TizVIUju7nmJJq+k5a+jKI8usKwHlFX535JvnwBrj3Tt55Aj4LLC4iRqElaA?=
+ =?us-ascii?Q?NhGfsmDCnFUfjobRSU4KNviF1uQyGV3c/xci0khdJR9l9vWCCIlBjT8X1dBD?=
+ =?us-ascii?Q?cEyFFT4Zv0LifmCB0zss5TY8B/L3sgJFrd507QrA8b+FR+AM7/gzitanwjwY?=
+ =?us-ascii?Q?yLE4rwraSOlNp6Vp7iLlcFjM32K2tQjarourkNg7nKnWuAlrYvduECcFH6Md?=
+ =?us-ascii?Q?/v1/1+wcoPnxdWQ3GE1X8uCp74fw+WU0rl3Xr6c46uMjByFkTZ2q4NBBnSiN?=
+ =?us-ascii?Q?TUZHeFSfxiSga+SsPrsgn3zLNJfPGNh6hkE7DszM7IOQ5brhQejaWNNk8CFS?=
+ =?us-ascii?Q?98szvA1vDN31BOVfBeC4pQRWEdBlbfjLaVZ9tyRgsl9jdwHEuCXdKuzjOQ/n?=
+ =?us-ascii?Q?RjYgt2F2TqDlvbLmqtN354UIechI6B324lT0imufa6KnTvCStmUjwTP54qqF?=
+ =?us-ascii?Q?2P12hMHFlxbjIBZHhu0+ni/E/Cc5wuOLepyeWQmkvAOwg4L8KHosFh6EVfEU?=
+ =?us-ascii?Q?5Wiz5ZQC46LHoSp4yauOdwCPxgYw+GQJAbFWg3QEgtnvy8gb4n7LR4YX5B+M?=
+ =?us-ascii?Q?W4pJQBSzcRmOaPzwebbzqJ2dzI9+o3SWqNQ37sNSrLaDEzr3N/gqLBJSLxUZ?=
+ =?us-ascii?Q?b0xVInyZbIvEuPNSZuHBLbpYKSVBeqmoSJvyn/t87IxkZkXRx79mwvnh+oZc?=
+ =?us-ascii?Q?V/38ZgxgHxh0TghOalFEcUn94rI9on5moQ6RHrA0e4ltixOOAThr5IxvUDO1?=
+ =?us-ascii?Q?J1XfK6V3MiykS3RUgXrEu6feqJOvvf9OqeTst0RlwFHkl0+m+oCDfRpt9s8l?=
+ =?us-ascii?Q?EQpe8Abhy+bdxJPd+bSABjhI7Tu9cKifP3y3hA0xpbCNMtulv3ENgDjIamhV?=
+ =?us-ascii?Q?sUKBMzedsCvFp3XMvXbMt3FXLpRFWzWGJuSlkpGAe/eEQSTw2B/j1BNrj3nT?=
+ =?us-ascii?Q?dxHeMpxgwPKf0kEf5qj133e3PD0Lp3+mb9SzsHHli2+e87+QD2guPe4cBgmJ?=
+ =?us-ascii?Q?dmyBW2OKMcyBj5Wt1O8=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2025 06:14:23.9233 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7fc1d75a-eed5-4517-d5d2-08de0d446b29
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099E0.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6188
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,179 +151,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 17, 2025 at 01:56:46AM +0530, Vishal Chourasia wrote:
-> On Thu, Oct 16, 2025 at 09:27:36PM +0200, BALATON Zoltan wrote:
-> > On Thu, 16 Oct 2025, Vishal Chourasia wrote:
-> > > Pass errp to load_image_targphys() calls in ppc machine initialization
-> > > to capture detailed error information when loading firmware, kernel,
-> > > and initrd images.
-> > > 
-> > > Use error_reportf_err() instead of error_report() to print the
-> > > underlying error details along with context about which image failed
-> > > to load.
-> > > 
-> <snipped>
-> > > diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> > > index 7fa14fd0e6..d4703f79da 100644
-> > > --- a/hw/ppc/pegasos2.c
-> > > +++ b/hw/ppc/pegasos2.c
-> > > @@ -129,6 +129,7 @@ static void pegasos2_init(MachineState *machine)
-> > >     int i;
-> > >     ssize_t sz;
-> > >     uint8_t *spd_data;
-> > > +    Error *errp = NULL;
-> > > 
-> > >     /* init CPU */
-> > >     pm->cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
-> > > @@ -164,10 +165,10 @@ static void pegasos2_init(MachineState *machine)
-> > >                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-> > >     if (sz <= 0) {
-> > >         sz = load_image_targphys(filename, pm->vof ? 0 : PROM_ADDR, PROM_SIZE,
-> > > -                NULL);
-> > > +                                 &errp);
-> > >     }
-> > >     if (sz <= 0 || sz > PROM_SIZE) {
-> > > -        error_report("Could not load firmware '%s'", filename);
-> > > +        error_reportf_err(errp, "Could not load firmware '%s': ", filename);
-> > 
-> > We can get here with *errp == NULL if load_elf did not fail but tried to
-> > load a too large image. Is that a problem? It's the same in prep.c. Mac
-> > machines also try different formats but those only check for size < 0 so
-> > maybe not a problem there.
-> > 
-> 
-> /* return < 0 if error, otherwise the number of bytes loaded in memory */
-> ssize_t load_elf(const char *filename,
-> 
-> load_elf returns number of bytes. 
-> 
-> Yes, this is a problem. If load_elf() succeeds but the returned value
-> is greater than PROM_SIZE, then *errp == NULL and this would cause a
-> segmentation fault when trying to report the error.
-> 
-> Any location where an error check is performed based on a condition
-> other than *errp (such as size checks) runs the risk of segmentation
-> fault.
-I will be sending out modifications addressing these in the next
-version.
+Physical AMD IOMMU supports up to 64 bits of DMA address. When device tries
+to read or write from a given DMA address, IOMMU translates the address
+using page table assigned to that device. Since IOMMU uses per device page
+tables, the emulated IOMMU should use the cache tag of 68 bits
+(64 bit address - 12 bit page alignment + 16 bit device ID).
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index d4703f79da..14b679d032 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -168,7 +168,10 @@ static void pegasos2_init(MachineState *machine)
-                                  &errp);
+Current emulated AMD IOMMU uses GLib hash table to create software iotlb
+and uses 64 bit key to store the IOVA and deviceID, which limits the IOVA
+to 60 bits. This causes failure while setting up the device when guest is
+booted with "iommu.forcedac=1".
+
+To solve this problem, Use 64 bit IOVA and 16 bit devid as key to store
+entries in IOTLB; Use upper 52 bits of IOVA (GFN) and lower 12 bits of
+the devid to construct the 64 bit hash key in order avoid the truncation
+as much as possible (reducing hash collisions).
+
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+---
+ hw/i386/amd_iommu.c | 57 ++++++++++++++++++++++++++++++---------------
+ hw/i386/amd_iommu.h |  4 ++--
+ 2 files changed, 40 insertions(+), 21 deletions(-)
+
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index c2cd5213eb1b..5487894aba40 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -106,6 +106,11 @@ typedef struct AMDVIAsKey {
+     uint8_t devfn;
+ } AMDVIAsKey;
+ 
++typedef struct AMDVIIOTLBKey {
++    uint64_t gfn;
++    uint16_t devid;
++} AMDVIIOTLBKey;
++
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
+ {
+     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
+@@ -377,16 +382,6 @@ static void amdvi_log_pagetab_error(AMDVIState *s, uint16_t devid,
+              PCI_STATUS_SIG_TARGET_ABORT);
+ }
+ 
+-static gboolean amdvi_uint64_equal(gconstpointer v1, gconstpointer v2)
+-{
+-    return *((const uint64_t *)v1) == *((const uint64_t *)v2);
+-}
+-
+-static guint amdvi_uint64_hash(gconstpointer v)
+-{
+-    return (guint)*(const uint64_t *)v;
+-}
+-
+ static gboolean amdvi_as_equal(gconstpointer v1, gconstpointer v2)
+ {
+     const AMDVIAsKey *key1 = v1;
+@@ -425,11 +420,30 @@ static AMDVIAddressSpace *amdvi_get_as_by_devid(AMDVIState *s, uint16_t devid)
+                              amdvi_find_as_by_devid, &devid);
+ }
+ 
++static gboolean amdvi_iotlb_equal(gconstpointer v1, gconstpointer v2)
++{
++    const AMDVIIOTLBKey *key1 = v1;
++    const AMDVIIOTLBKey *key2 = v2;
++
++    return key1->devid == key2->devid && key1->gfn == key2->gfn;
++}
++
++static guint amdvi_iotlb_hash(gconstpointer v)
++{
++    const AMDVIIOTLBKey *key = v;
++    /* Use GPA and DEVID to find the bucket */
++    return (guint)(key->gfn << AMDVI_PAGE_SHIFT_4K |
++                   (key->devid & ~AMDVI_PAGE_MASK_4K));
++}
++
++
+ static AMDVIIOTLBEntry *amdvi_iotlb_lookup(AMDVIState *s, hwaddr addr,
+                                            uint64_t devid)
+ {
+-    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
+-                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
++    AMDVIIOTLBKey key = {
++        .gfn = AMDVI_GET_IOTLB_GFN(addr),
++        .devid = devid,
++    };
+     return g_hash_table_lookup(s->iotlb, &key);
+ }
+ 
+@@ -451,8 +465,10 @@ static gboolean amdvi_iotlb_remove_by_devid(gpointer key, gpointer value,
+ static void amdvi_iotlb_remove_page(AMDVIState *s, hwaddr addr,
+                                     uint64_t devid)
+ {
+-    uint64_t key = (addr >> AMDVI_PAGE_SHIFT_4K) |
+-                   ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
++    AMDVIIOTLBKey key = {
++        .gfn = AMDVI_GET_IOTLB_GFN(addr),
++        .devid = devid,
++    };
+     g_hash_table_remove(s->iotlb, &key);
+ }
+ 
+@@ -463,8 +479,10 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
+     /* don't cache erroneous translations */
+     if (to_cache.perm != IOMMU_NONE) {
+         AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
+-        uint64_t *key = g_new(uint64_t, 1);
+-        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
++        AMDVIIOTLBKey *key = g_new(AMDVIIOTLBKey, 1);
++
++        key->gfn = AMDVI_GET_IOTLB_GFN(gpa);
++        key->devid = devid;
+ 
+         trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+                 PCI_FUNC(devid), gpa, to_cache.translated_addr);
+@@ -477,7 +495,8 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
+         entry->perms = to_cache.perm;
+         entry->translated_addr = to_cache.translated_addr;
+         entry->page_mask = to_cache.addr_mask;
+-        *key = gfn | ((uint64_t)(devid) << AMDVI_DEVID_SHIFT);
++        entry->devid = devid;
++
+         g_hash_table_replace(s->iotlb, key, entry);
      }
-     if (sz <= 0 || sz > PROM_SIZE) {
--        error_reportf_err(errp, "Could not load firmware '%s': ", filename);
-+        if (!errp) {
-+           error_setg(&errp, ": exceeds max supported file size %lu", PROM_SIZE / MiB);
-+        }
-+        error_reportf_err(errp, "Could not load firmware '%s'", filename);
+ }
+@@ -2526,8 +2545,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+         }
+     }
+ 
+-    s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+-                                     amdvi_uint64_equal, g_free, g_free);
++    s->iotlb = g_hash_table_new_full(amdvi_iotlb_hash,
++                                     amdvi_iotlb_equal, g_free, g_free);
+ 
+     s->address_spaces = g_hash_table_new_full(amdvi_as_hash,
+                                      amdvi_as_equal, g_free, g_free);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 38471b95d153..302ccca5121f 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -220,8 +220,8 @@
+ #define PAGE_SIZE_PTE_COUNT(pgsz)       (1ULL << ((ctz64(pgsz) - 12) % 9))
+ 
+ /* IOTLB */
+-#define AMDVI_IOTLB_MAX_SIZE 1024
+-#define AMDVI_DEVID_SHIFT    36
++#define AMDVI_IOTLB_MAX_SIZE        1024
++#define AMDVI_GET_IOTLB_GFN(addr)   (addr >> AMDVI_PAGE_SHIFT_4K)
+ 
+ /* default extended feature */
+ #define AMDVI_DEFAULT_EXT_FEATURES \
+-- 
+2.34.1
 
-Similarly for other files too. 
-
-
-> 
-> > >         exit(1);
-> > >     }
-> > >     g_free(filename);
-> > > @@ -260,10 +261,10 @@ static void pegasos2_init(MachineState *machine)
-> > >         pm->initrd_addr = ROUND_UP(pm->initrd_addr, 4);
-> > >         pm->initrd_addr = MAX(pm->initrd_addr, INITRD_MIN_ADDR);
-> > >         sz = load_image_targphys(machine->initrd_filename, pm->initrd_addr,
-> > > -                                 machine->ram_size - pm->initrd_addr, NULL);
-> > > +                                 machine->ram_size - pm->initrd_addr, &errp);
-> > >         if (sz <= 0) {
-> > > -            error_report("Could not load initrd '%s'",
-> > > -                         machine->initrd_filename);
-> > > +            error_reportf_err(errp, "Could not load initrd '%s': ",
-> > > +                              machine->initrd_filename);
-> > >             exit(1);
-> > >         }
-> > >         pm->initrd_size = sz;
-> > > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > > index a3e5203970..88668a700e 100644
-> > > --- a/hw/ppc/pnv.c
-> > > +++ b/hw/ppc/pnv.c
-> > > @@ -1015,6 +1015,7 @@ static void pnv_init(MachineState *machine)
-> > >     char *chip_typename;
-> > >     DriveInfo *pnor;
-> > >     DeviceState *dev;
-> > > +    Error *errp = NULL;
-> > > 
-> > >     if (kvm_enabled()) {
-> > >         error_report("machine %s does not support the KVM accelerator",
-> > > @@ -1069,9 +1070,10 @@ static void pnv_init(MachineState *machine)
-> > >     }
-> > > 
-> > >     fw_size = load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
-> > > -                                    NULL);
-> > > +                                    &errp);
-> > >     if (fw_size < 0) {
-Also, we replace checks on size with errp.
-
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 88668a700e..4c94bc319d 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1071,7 +1071,7 @@ static void pnv_init(MachineState *machine)
-
-     fw_size = load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
-                                     &errp);
--    if (fw_size < 0) {
-+    if (errp) {
-         error_reportf_err(errp, "Could not load OPAL firmware '%s': ",
-                           fw_filename);
-         exit(1);
-
-Similarly, at other locations.
-
-Thanks,
-vishalc
-
-> > > -        error_report("Could not load OPAL firmware '%s'", fw_filename);
-> > > +        error_reportf_err(errp, "Could not load OPAL firmware '%s': ",
-> > > +                          fw_filename);
-> > >         exit(1);
-> > >     }
-> > >     g_free(fw_filename);
-> > > @@ -1082,10 +1084,10 @@ static void pnv_init(MachineState *machine)
-> > > 
-> > >         kernel_size = load_image_targphys(machine->kernel_filename,
-> > >                                           KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE,
-> > > -                                          NULL);
-> > > +                                          &errp);
-> > >         if (kernel_size < 0) {
-> > > -            error_report("Could not load kernel '%s'",
-> > > -                         machine->kernel_filename);
-> > > +            error_reportf_err(errp, "Could not load kernel '%s': ",
-> > > +                              machine->kernel_filename);
-> > >             exit(1);
-> > >         }
-> > >     }
-<snipped>
-> > > diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-> > > index 00d9ab7509..a7d3de62fa 100644
-> > > --- a/hw/ppc/virtex_ml507.c
-> > > +++ b/hw/ppc/virtex_ml507.c
-> > > @@ -195,6 +195,7 @@ static void virtex_init(MachineState *machine)
-> > >     qemu_irq irq[32], cpu_irq;
-> > >     int kernel_size;
-> > >     int i;
-> > > +    Error *errp = NULL;
-> > > 
-> > >     /* init CPUs */
-> > >     cpu = ppc440_init_xilinx(machine->cpu_type, 400000000);
-> > > @@ -253,7 +254,7 @@ static void virtex_init(MachineState *machine)
-> > >             /* If we failed loading ELF's try a raw image.  */
-> > >             kernel_size = load_image_targphys(kernel_filename,
-> > >                                               boot_offset,
-> > > -                                              machine->ram_size, NULL);
-> > > +                                              machine->ram_size, &errp);
-> > 
-> > What checks and reports errp? Was something left out here?
-> The error check was missing here. After reviewing the code, it seems a
-> check should be added. I will add it in the next version.
-> 
 
