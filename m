@@ -4,101 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 020D1CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2FC7CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 12:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9jnf-0001SS-6r; Fri, 17 Oct 2025 08:43:15 -0400
+	id 1v9jrw-0003H3-HH; Fri, 17 Oct 2025 08:47:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v9jnc-0001Mi-HF
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:43:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v9jru-0003Gk-Hb
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:47:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v9jnV-0000kn-FH
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:43:12 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1v9jrr-0001E7-Cf
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 08:47:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760704980;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1760705247;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vDKvQk3xxnWOQbsp/iLBmfza/QSwqqEwlFhje7OVN+k=;
- b=D959+Ra1WzP3LBBB74khaq+PZoBQhrY/LeanzgBDDkq8uyx2oAoFCEldaRRoWlcJZ4cUK+
- PWhOyqwGYE4pBC75DQ/LJ+GkiJ+1l95oDzCPJ55lVPRw1n8Sr4LvuBd7B84IJT6GEnI/KA
- pf0WZN5Ajnr4RbVnuD7MpgGgDO3MO4o=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KFZfsQ1e9ifEB2nrIjRVRjnmfU8DLcdu7XnN7Tm5euk=;
+ b=eo/4k84y4b/dtL//jwE9surlDx8DalY+fxudhBqV7wL2ZsZTSia8Wc94yuU7FBh5dPxxOl
+ anYOSNnujhaxaukum18NS0yfkYGqNKtSaafrzJVYe9ot/E9VvMMIHDF4eqRNG8TiMzTSrI
+ a7gM8eWccfYD10hLyn2C7PFp1V97rsI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-P6OfbJ_qMJqf3jcSfmOGtw-1; Fri, 17 Oct 2025 08:42:59 -0400
-X-MC-Unique: P6OfbJ_qMJqf3jcSfmOGtw-1
-X-Mimecast-MFC-AGG-ID: P6OfbJ_qMJqf3jcSfmOGtw_1760704979
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-86df46fa013so832228785a.2
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 05:42:59 -0700 (PDT)
+ us-mta-689-edy6TidTNdeQT_a4vgtQQQ-1; Fri, 17 Oct 2025 08:47:25 -0400
+X-MC-Unique: edy6TidTNdeQT_a4vgtQQQ-1
+X-Mimecast-MFC-AGG-ID: edy6TidTNdeQT_a4vgtQQQ_1760705244
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4710d174c31so22915195e9.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 05:47:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760704979; x=1761309779;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vDKvQk3xxnWOQbsp/iLBmfza/QSwqqEwlFhje7OVN+k=;
- b=CQxrWoNfSDUxemwFBIQIoN8ykDtrzufn2JBB9xtQgieCH+7aVSGmQYsrC6kYR8RZD/
- oxIywuEAK9w+3m2N1m0NPNN4/JwOE8cVq8wo5AWBEeZT4itKORIIYEWKijmKqTuN4/7p
- TK+OMRXmLgOxnq+09PzW1bdCRvBJm8dybm6y7wSfz5FZG87we9Kap0ZPMJa+SuJ2guqq
- FuppqJRGcl6NuYWfz9xS/DKCX90X7c7uWl5Bo49zD/Dz4YcCbWtl23ZU10WQJ5gcq/XI
- q/oLthkw0p38q1N0SrsOHx0CMpMgs/HZzdhZsBP8CiemzQLVUVikh8cIplKZu14RlHcy
- CNKw==
+ d=1e100.net; s=20230601; t=1760705243; x=1761310043;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KFZfsQ1e9ifEB2nrIjRVRjnmfU8DLcdu7XnN7Tm5euk=;
+ b=uFVi5MmQM00NZYRQA7aY2YVz911L8HZxuxKbA4S9QwPam/1M984w6aQY2ttyjY7g35
+ fRFYz21JYVYAXFDQ7EGl1XTNccnl2vukWeMv4JhACGGwTcT/OE8twCK3ijzv/ka4wQ7G
+ t5EXHlA6Y81+Z8NujiHOctPiVJixaD+nfLN0mDs/Y1K6zE7UeiiITTNWrJy8vpPzS4vk
+ 3Mt7zHmhUuDPXNR8vKrU3dpjo7OhWt7RtFTJqe8kAPHl5aXrNXmQzUcJi9Ig7fFxUezy
+ LjaDVul0dZ9Khc7snYa8TIeRCmnnTDuTUbO/XfV4SsgCx6O8b3TiJ+d6MjQKgZC6SerV
+ lnFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXONXT7isdEUKjgWM7Y0VtTLTG1hyrFy2Y0ZrBzz8fUxld5ds4gI7r34WFzp4s3ONiNACapWVEzuCiq@nongnu.org
-X-Gm-Message-State: AOJu0YzqcpiVf/fWxqt4gYAXsqviZKfCgki0Es6wjCNIaUY94TkrAKca
- BquDtA3Fxa/bf+v6UpMD2toYx4c8Xib1kHqYIi+fWTXxaucBc5JLXLr2a9Fu3/qdmxufGKXmkjZ
- +474igmzGss+1KywWkU091sGs6srxELsHR5a6u6boQmOb9gCe0cqw/SGQ
-X-Gm-Gg: ASbGncv+31qvkdgOdVFQ1wYiuvq5KXgyV3+4e2MZCPEQvsVq7ReNeauFAlwJr91I7A3
- lGz8B8bL8geAjqUwhkQoXRf3asVeMivZ3NnPPGODX6fucKXr7ZCLVs7KlkML7ym4wbNmqyeoUvP
- PgWqOXRDml6+vO309KRVBysHxWYGcZL5p99GDI+A8IAZDaXy9wknvcTriSMgxdZnDByv+bwBkMr
- +bqAt1hZsq2Q3HkTN8chZG2CDBoAtb+8cTv73ydf6pGVvqxLvthy0ijo88f72M/iZU54O0KXit8
- vBekCoUUrpPbNW0f7luJoCx/bcuGX/ZCKpi4wuz2GB9mlh4uH3PhsBMXQG/obw6ZPxC+bIBkNK5
- 7qPkJJkGi0MKnU/p+H+f4xuNG+mH6bVxfNjr9ZH8/RsYYQ5rS2UU=
-X-Received: by 2002:a05:620a:4621:b0:82b:2bad:ba33 with SMTP id
- af79cd13be357-8906e7b2f75mr432221085a.2.1760704979126; 
- Fri, 17 Oct 2025 05:42:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4SVlYl+45Xl/FehhmE6T6yfyMje9a8lvbQWm4v8V8TmfUlc4dT3DxbY1mutIBg6kiPGqryg==
-X-Received: by 2002:a05:620a:4621:b0:82b:2bad:ba33 with SMTP id
- af79cd13be357-8906e7b2f75mr432216385a.2.1760704978511; 
- Fri, 17 Oct 2025 05:42:58 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-46-200-153.retail.telecomitalia.it.
- [79.46.200.153]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-88f37e50ebasm411685985a.31.2025.10.17.05.42.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Oct 2025 05:42:58 -0700 (PDT)
-Date: Fri, 17 Oct 2025 14:42:50 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, hi@alyssa.is,
- david@redhat.com, jasowang@redhat.com, 
- dbassey@redhat.com, stevensd@chromium.org, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- slp@redhat.com, 
- manos.pitsidianakis@linaro.org, Albert Esteve <aesteve@redhat.com>
-Subject: Re: [PATCH v10 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
-Message-ID: <42yt45ixh4y2j5z72rwpswf5fv4eoixtohiafp7sqzepd4u6wk@mph7smq3dmuo>
-References: <20251016143827.1850397-1-aesteve@redhat.com>
- <20251016150544.GA1174075@fedora>
+ AJvYcCWi+nY8YSLvO4zEXY5A3kkwBsUs0AnYV91DmmPnM+nIiYniK43q7tYh6nA+8i1Vtn1tg0DPKcStlkXH@nongnu.org
+X-Gm-Message-State: AOJu0YykyK+6ypmLiYsMb7XCCo/P0wsD8KcTUwIKyi9eZbo3OFEEzNf/
+ pd3zVVhFqxLFVvpwzuqnqvtXnjBs623d46IvO1b7fALKWa/TfdfP1nJB1ArXEIOy2OV19Le2BCw
+ aCIJoifTlLkjrRV+oUdwY6wsxcwV65aIDWr/8VDsNDuCbpTbHIbO/OSbn
+X-Gm-Gg: ASbGncv5t2BQvgqNBsI09Fk4M+0tJvzWntBa2nJDKh/ScGyZcM6Qxxq8yG6k1M4fphN
+ XhZ+8FvGVwNjDRavfqh+kAPOURNLCRSsbsCYDwkGlkJPUNfzCo86135QT3PHosR0TxVQ7S+K2VS
+ STYeC2y0awRixnk3fXNP4EKheLv1ZwF33ZOdmZc/xJtM3C4d3V87AQl2ahzt5PlcX35Dv5oAsI7
+ iPaNHbep9aL3raWxT8ipD6RMjaz8pIHROjoRoaXOL/n7/PoWRKNe+TN2iZr/poXlPU6q5OvFaPZ
+ Uyq8qotS3EUK6OaHTKwlQTby5+GmkHt8e+q5uBKoea7amV9SjkjweWwGrggTIYiAUy0cQC6wEOW
+ /of+cz7xILTaqCfKV/4RxFoIr6dN3/IOtu8rnZxs6ZvIS+g==
+X-Received: by 2002:a05:600c:871a:b0:471:14f5:124e with SMTP id
+ 5b1f17b1804b1-4711791ef9bmr25120535e9.35.1760705243514; 
+ Fri, 17 Oct 2025 05:47:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEaJuqioumM3Y+kDaq3VQLgZwoISXzz1BF0j5LShBpOP0/M1psa8Q9q46sF3w0ZHjAFpv7/rg==
+X-Received: by 2002:a05:600c:871a:b0:471:14f5:124e with SMTP id
+ 5b1f17b1804b1-4711791ef9bmr25120385e9.35.1760705243059; 
+ Fri, 17 Oct 2025 05:47:23 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-426ff65596csm9344710f8f.24.2025.10.17.05.47.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Oct 2025 05:47:22 -0700 (PDT)
+Message-ID: <646bbedb-cfa4-418c-80b2-f143f6f97544@redhat.com>
+Date: Fri, 17 Oct 2025 14:47:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251016150544.GA1174075@fedora>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated SMMUv3
+ to vfio-pci endpoints with iommufd
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-7-skolothumtho@nvidia.com>
+ <cba0a4c0-9d0c-4137-ae0a-7460da56ac56@redhat.com>
+ <CH3PR12MB754822A08B7D9D7317DBECD8ABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB754822A08B7D9D7317DBECD8ABE7A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,30 +130,159 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 16, 2025 at 11:05:44AM -0400, Stefan Hajnoczi wrote:
->On Thu, Oct 16, 2025 at 04:38:20PM +0200, Albert Esteve wrote:
->> v9->v10
->> - Fix transaction_commit invoked without transaction_begin
->>   on vhost_user_backend_handle_shmem_map() early errors
->> - Removed fd tracking on VirtioSharedMemoryMapping, it
->>   is handled by the RAMBlock
->> - Reject invalid BAR configurations when VIRTIO Shared Memory
->>   Regions are in use by vhost-user-test-device
+Hi Shameer,
+
+On 10/2/25 11:30 AM, Shameer Kolothum wrote:
+> Hi Eric,
 >
->Hi Michael,
->I have finished reviewing this series. If no one else has comments then
->it can be considered for merging through your VIRTIO/vhost tree.
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 01 October 2025 18:32
+>> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
+>> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+>> smostafa@google.com; wangzhou1@hisilicon.com;
+>> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+>> shameerkolothum@gmail.com
+>> Subject: Re: [PATCH v4 06/27] hw/arm/smmuv3-accel: Restrict accelerated
+>> SMMUv3 to vfio-pci endpoints with iommufd
+>>
+>> External email: Use caution opening links or attachments
+>>
+>> Hi Shameer,
+>>
+>> On 9/29/25 3:36 PM, Shameer Kolothum wrote:
+>>> Accelerated SMMUv3 is only useful when the device can take advantage
+>>> of the host's SMMUv3 in nested mode. To keep things simple and
+>>> correct, we only allow this feature for vfio-pci endpoint devices that
+>>> use the iommufd backend. We also allow non-endpoint emulated devices
+>>> like PCI bridges and root ports, so that users can plug in these
+>>> vfio-pci devices. We can only enforce this if devices are cold
+>>> plugged. For hotplug cases, give appropriate
+>> "We can only enforce this if devices are cold plugged": I don't really
+>> understand that statement.
+> By "enforce" here I meant, we can prevent user from starting a Guest 
+> with a non "vfio-pci/iommufd dev" with accel=one case.  
+Ah OK I misread the code. I thought you were also exiting in case of
+hotplug but you only issue a warn_report.
+From a user point of view, the assigned device will succeed attachment
+but won't work. Will we get subsequent messages?  I understand the pain
+of propagating the error but if the user experience is bad I think it
+should weight over ?
+>
+>  you do checks when the device is hotplugged too.
+>> For emulated device you eventually allow them but you could decide to reject
+>> them?
+> Currently get_address_space() is a " Mandatory callback which returns a pointer
+> to an #AddressSpace". Changing that and propagating an error all the way, as 
+> you said below, is not that straightforward. At present we warn the user
+> appropriately for both vfio-pci without iommufd and emulated device hot plug
+> cases. Perhaps, if required, the error handling can be taken up as a clean-up series
+> later?
+>
+> Also, I think I need to explain the emulated device hotplug case a bit more. This
+> is something I realised later during the tests.
+>
+> Unfortunately, the hotplug scenario for emulated devices behaves differently.
+> What I’ve noticed is that the hotplug handler’s call path to get_address_space()
+> differs from cold-plug cases.
+>
+> In the emulated device hotplug case, the pdev is NULL for below:
+> PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
+>
+> Here’s what seems to be happening:
+>
+> do_pci_register_device() {
+>    ....
+>     if (phase_check(PHASE_MACHINE_READY)) {
+>         pci_init_bus_master(pci_dev);
+>             pci_device_iommu_address_space()  --> get_address_space()
+>     }
+>     ....
+>     bus->devices[devfn] = pci_dev;   //happens only after the above call.
+> }
+>
+> For vfio-pci hotplug, we’re fine, since the vfio layer calls get_address_space()
+> again, with a valid pdev.
+>
+> For cold-plug cases, the if (phase_check(PHASE_MACHINE_READY)) check is
+> false, and the call path looks like this:
+>
+> pcibus_machine_done()
+>    pci_init_bus_master(pci_dev);
+>        pci_device_iommu_address_space()  --> get_address_space()
+>
+> By then we have a valid pdev.
+>
+> I’m not sure there’s an easy fix here. One option could be to modify
+> get_address_space() to take pci_dev as input. Or we could change the 
+> call path order above.
+>
+> (See my below reply to emulated dev warn_report() case as well)
+>
+> Please let me know your thoughts.
+Can't you move the assignment of bus->devices[devfn] before the call and
+unset it in case of failure?
 
-iI left a few comments, and I still have my doubts about the error path, 
-but as Albert said, it doesn't seem easy to manage, so for now I think 
-the series can go ahead as it is.
+Or if you propagate errors from
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+get_address_space() you could retry the call later?
 
-Thanks,
-Stefano
+Eric
+
+>
+>>> warnings.
+>>>
+> [...]
+>
+>>> +
+>>> +    if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
+>>> +        if (DEVICE(pdev)->hotplugged) {
+>>> +            if (vfio_pci) {
+>>> +                warn_report("Hot plugging a vfio-pci device (%s) without "
+>>> +                            "iommufd as backend is not supported",
+>>> + pdev->name);
+>> with accelerated SMMUv3.
+>>
+>> why don't we return NULL and properly handle this in the caller. May be worth
+>> adding an errp to get_address_space(). I know this is cumbersome though.
+> See above reply on propagating err from this callback.
+>
+>>> +            } else {
+>>> +                warn_report("Hot plugging an emulated device %s with "
+>>> +                            "accelerated SMMUv3. This will bring down "
+>>> +                            "performace", pdev->name);
+>> performance
+>>> +            }
+> As I mentioned above, since the pdev for emulated dev hotplug case is NULL,
+> we will not hit the above warning. 
+>
+>>> +            /*
+>>> +             * Both cases, we will return IOMMU address space. For
+>>> + hotplugged
+>> In both cases?
+> Yes, since we can't return NULL here. However, as done here, we will inform
+> the user appropriately.
+>
+>>> +             * vfio-pci dev without iommufd as backend, it will fail later in
+>>> +             * smmuv3_notify_flag_changed() with "requires iommu MAP
+>> notifier"
+> [...]
+>
+>>> +#define TYPE_PXB_PCIE_DEV "pxb-pcie"
+>> I agree with Nicolin, you shall rather move that change in a seperate patch.
+> I thought of mentioning this change in the commit log(which I missed) and
+> avoiding a separate patch just for this. But if you guys feel strongly, I will
+> have a separate one.
+>
+> Thanks,
+> Shameer
 
 
