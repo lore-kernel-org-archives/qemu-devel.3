@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F81DCCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 18:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0023CCCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 19:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9pUe-0004NC-JH; Fri, 17 Oct 2025 14:48:00 -0400
+	id 1v9pk7-0000JA-OC; Fri, 17 Oct 2025 15:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9pUa-0004Mp-At
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 14:47:56 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1v9pk5-0000IX-KU
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 15:03:57 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9pUX-00032e-5y
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 14:47:55 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-77f343231fcso1559579b3a.3
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 11:47:52 -0700 (PDT)
+ id 1v9pk2-0005Cb-Jy
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 15:03:57 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-3327f8ed081so2845455a91.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 12:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760726871; x=1761331671; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760727832; x=1761332632; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CcU4x6T33w+bruywnpNnmRVtUVwnr6OWT0dyPBHiY3s=;
- b=NTQo7WNbgU542k9V+UzdUHt/C23YdbZi+IAwbnc8Ven7QJPNHDzAh97DkI5n+SAN+Y
- EG12XBmjTvao35B0nRmPYU6ysmmTseobSJotn8O6ZvSMi5dExsoFrtvcTymkHBGw/yPy
- VHIEsidPF3vH7ST5StmuHcR9ImcbCkwyomq2IP7RMsZbXXjnt0p0C8KhpwMIwxRllfwi
- xjU40MI94xFXRGS7fIlknhbDtEoM/jV98ghPcMQvMqawLuRAFPTaDivxKOVLTph4TjnH
- h6I0fp7RJhuDygoTXBs3yxXW8vwKKPHutWRu54aKB2eptp4HLyh2pXfqel5tlo+cJ+rA
- zCIQ==
+ bh=Uku7aAPcFrSLbT4Wezvfehb1h4Yz0KUtRB+nV1hGm6k=;
+ b=LBi95shy77gxB6GRd/rOoECIQlYnVKplPoorkx9cWIYNC5cAg+Nx6Sy+DzbXfBRRb6
+ TVVpOrKZpELvU+88gto0Qs1HiVist9b/7EBkinOkDcf9ze/1V6eS5f/q80p4sMQMPrmd
+ JHrLz5SHc/GdkO6CmP24J/abK4zcEb7ZcVV9xJEintR2kjTKgtl3w56U22NwlRM6lX++
+ jtOIXaUwfBGWeANkDzwZ1vFd5w90DaUlcGS1NSGSBn1Jh60ETbQRZMFImUrmbU8Nu3rz
+ A4WacKMZxsiJalFelAxX9P2NwugwvyEapjG+TalWt5eV/lBBGF5OYwu3dT/dy+4HEHTk
+ YoyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760726871; x=1761331671;
+ d=1e100.net; s=20230601; t=1760727832; x=1761332632;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CcU4x6T33w+bruywnpNnmRVtUVwnr6OWT0dyPBHiY3s=;
- b=s1KXcJhRC7klC3nWoXN00cvHaeIIR8/lx2PeddFSMMO2TkuxkCp5w/r/sI4QFsvYO7
- GSdT3eq2pyX7wXm7pUyqX7MgenTDubDQRidjFLQZXNth/uKECuHuXZBOlMJuz5/u7UZr
- BPd/T0A54mHcRalc7BSMEJOZuDnthggmuQ/ySHIQiKHcZofya7i0yisiCfX3EgNPU379
- kihUUe2uS4B4AgOkZXgB4b5kQlNSUw46S3BxMoa/urVWeocJvkt1pQYS1WoWm0xNl+BR
- e0ZnDHZ+CfenEuY1qGG/qvxMIhwOnLemug5ckVmMflxIvRYy9zbsKnNweFPddmvDcurM
- kQNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQWLKWP/kLTOCPjDiKu2IEgJUid2CERREmeJo6eR6dhBW1diilQQTYRCU5hQS+PTICosuXzwDMIxRD@nongnu.org
-X-Gm-Message-State: AOJu0YwBrQtnhk5p1VFVyPrIlgb3zE2wnKUadG0Xi7iIYMTRRGIZT4er
- BP+gLmW0HzZiL9/i2AoRmduYA7muuUrNbXI7VAeqJzMetgg5nwBZRZ+Yq3pTNIu2/tg=
-X-Gm-Gg: ASbGnctEb+W2C0omUxmoZrrOupUA/gNZFeRiW97j9CdBiKfrRDLmpfUghr0+oFLKwN7
- YryKRLLruR+YhbD/U9ht3cRYdjQqe6PgFXBLX7MiBWi8u+8fN3Cs92qp/pmPxEKAEOxH/KoKFS6
- x5MQ6iBzD17TcYV4WZdNtI0rHNx/2HdHSqcnxar/LHampxEOmYnnI6tnPFCXkR2oqPt8eE0kqHT
- bAR84q9DckuyTrQTVt2r9bJMHpeAdaOVnwRW/dw+t7y+Yqn3HA+XdEMhk1fYlO/Tl8NlLL1CT5G
- vztdHZUiAf+75fDMVlC4+0MSxb2bT/ZsfTnCeMIJa9ndcydNGKk5nb/2Qmb9pCPzbQli8e6XCt0
- xeHi3dNpeEsedy8xrl7I749IbUqwENPHkwuWBxRE+9A5r5MPQrDtOzrFV9kaIYy+MM9hJvQ1CrW
- HYyKevKdrUVLL9rT8dTp3R/JOt20aJQYMuyvM=
-X-Google-Smtp-Source: AGHT+IHBnGfG7khLKP1s0RApRldK06v5hN/ruWQhJGpH50QRFlAvNpQOQfONaYaPVTmS8VDZDPtYcQ==
-X-Received: by 2002:a05:6a00:23c5:b0:781:1550:1ac7 with SMTP id
- d2e1a72fcca58-7a220a6086fmr5423361b3a.6.1760726870779; 
- Fri, 17 Oct 2025 11:47:50 -0700 (PDT)
+ bh=Uku7aAPcFrSLbT4Wezvfehb1h4Yz0KUtRB+nV1hGm6k=;
+ b=FsGt5syYkn0+4F9Z7SMMWDuqe0CzvGraLD6L9iYvWkuQep+03nRqeABrps36y6NawP
+ xhOMFX/Qy4fWGR2Wf1bMZtlmmSUDKdykl9qKrIaTG3VUfgWHkrjoPPEAynUDlJxb8Umn
+ NAJxV1lMhYRwBQ0n4VY6GSgIE59LC82K9qXIZvjP1yx9DAVRPSSROnDA2kvBa6o38raY
+ Lk2jTXOK3Fy8oV1/eyAyw52g0haEGL9dnabP4K9stt8MYoSR48+XOuc3AVwCUxXkIbfr
+ uScmsc6jbTm0ZR7fc9S4mXGNnyUi+Ih8Ewk/OTP8Cvmcd5+zVMiE3eaeZuI3oNye1ifV
+ jBSA==
+X-Gm-Message-State: AOJu0YwKa5TTy32VDDjKMjsoxzmDlZ465MnR2hR/g1y1CYEmsPB3oI8w
+ gaTaf+QIBKJksD4i5kdxm5FsjLRpLp3giaosBaWnSOMg6wGAMsiA8+YwyVDl+EMcmG0=
+X-Gm-Gg: ASbGncsOu4bC1wZ6HbP7YVqIQWrj/eNDnMkraz3V2N89ND/xyL4c/z9I+dTH+V7ci6i
+ 0FYPGXuG1Pyf0dohw5RcfpqnpBcaHxbCKQBebmsMdftrUjeVWzGV4FLn1mQDHt2YvRe37V1+MOp
+ CuoZMs96E7tblugrnseWb2SA1Z96tPUakdzbgMKenjXtA+V8/Anc5DIBmYZNeKgD6qWt3GggqYm
+ SsX6b38ABSHlA0gOKD6yAcl+rg9D8ImrR8YBIruaF8B7ZhFWHYi0DRYFqfmFJbQqb55X7+KN/PP
+ izo/k9XyCuRrfk0L9R67FPg6snjSGEbL5ywZJYuxRQKDPme7tJqFGprnJfID63tcsrArPNAdWcc
+ v5yNN2wdF80w7VaKgxLG3tieDoQNYv4bEzlJFaMTq6G/35hEOCtycL4wFwjSTjlC5LFgeiyGcUI
+ cbz1jy2Q58PQ/cCwp6TO7SxGXb
+X-Google-Smtp-Source: AGHT+IFvUw3WBtk4jgwLRQ2LURgGvv6bDzvu9p3O9Cc9ClpQ8Zh7sSW5p2VtwBwl3EKkuM3OZigj9w==
+X-Received: by 2002:a17:90b:2d8b:b0:336:bfce:13c9 with SMTP id
+ 98e67ed59e1d1-33bcf8e3d37mr5532297a91.20.1760727832337; 
+ Fri, 17 Oct 2025 12:03:52 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a22ff38d30sm287894b3a.29.2025.10.17.11.47.49
+ 98e67ed59e1d1-33ba96ca5d9sm2800586a91.2.2025.10.17.12.03.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 11:47:50 -0700 (PDT)
-Message-ID: <8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org>
-Date: Fri, 17 Oct 2025 11:47:48 -0700
+ Fri, 17 Oct 2025 12:03:51 -0700 (PDT)
+Message-ID: <3593bf1e-1036-485c-87c9-41fc650823b7@linaro.org>
+Date: Fri, 17 Oct 2025 12:03:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] target-info: Introduce runtime
- TARGET_PHYS_ADDR_SPACE_BITS
-To: Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, pierrick.bouvier@linaro.org,
- qemu-devel@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- Song Gao <gaosong@loongson.cn>, Helge Deller <deller@gmx.de>
-References: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
- <20251015-feature-single-binary-hw-v1-v1-4-8b416eda42cf@rev.ng>
- <673e3c7b-b8ef-4908-b74d-62203b131229@linaro.org>
- <7jzcbl2yqkssu5lshz4umayaesoxwg3gcskrrkobc37df2p4z2@s26yst4mfxoe>
+Subject: Re: [PATCH v2 21/37] target/arm: Extend PAR_EL1 to 128-bit
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-22-richard.henderson@linaro.org>
+ <CAFEAcA9J-g1cKTXk_pv1AWLgx5YksvEGyAbL2Z6coB6=wA0dZw@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <7jzcbl2yqkssu5lshz4umayaesoxwg3gcskrrkobc37df2p4z2@s26yst4mfxoe>
+In-Reply-To: <CAFEAcA9J-g1cKTXk_pv1AWLgx5YksvEGyAbL2Z6coB6=wA0dZw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,97 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 09:11, Anton Johansson wrote:
-> Hmm you're right looking at git grep -C1 TARGET_PHYS_ADDR_SPACE_BITS
-> (output below excluding the hw/riscv change in the following patch),
-> there are really aren't that many uses left and none in common code.
+On 10/17/25 05:49, Peter Maydell wrote:
+> On Tue, 14 Oct 2025 at 21:19, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Do not yet produce the 128-bit AT format result, but zero the
+>> high bits whenever the low bits are written.  This corresponds
+>> to PAR_EL1.D128 = 0, and bits [127:65] as RES0.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> We still got to move it to a runtime value somewhere though, what
-> would be a more suitable location?  Maybe as a field in CPUArchState or
-> some parent QOM machine as only i386, hppa, loongarch, riscv, alpha
-> actually use the definition.
+> 
+>> diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
+>> index 0e8f229aa7..9e6af3d974 100644
+>> --- a/target/arm/tcg/cpregs-at.c
+>> +++ b/target/arm/tcg/cpregs-at.c
+>> @@ -353,6 +353,7 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
+>>
+>>       ss = for_el3 ? arm_security_space(env) : arm_security_space_below_el3(env);
+>>       env->cp15.par_el[1] = do_ats_write(env, value, access_perm, mmu_idx, ss);
+>> +    env->cp15.par_el1_hi = 0;
+>>   }
+>>
+>>   static CPAccessResult ats_access(CPUARMState *env, const ARMCPRegInfo *ri,
+>> @@ -496,6 +497,7 @@ static void ats_s1e1a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+>>       ARMSecuritySpace ss = arm_security_space_below_el3(env);
+>>
+>>       env->cp15.par_el[1] = do_ats_write(env, value, 0, mmu_idx, ss);
+>> +    env->cp15.par_el1_hi = 0;
+> 
+> I guess this is where the downside of not storing the
+> register as an Int128 shows up -- we have to remember
+> to explicitly clear the high half everywhere that we
+> have code that's doing an implicit-write to the 64-bit
+> version of the register.
 
-A fair few of these are arguably wrong.
-
-
->    hw/loongarch/boot.c:    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
->    --
->    hw/loongarch/boot.c-    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
->    hw/loongarch/boot.c:                              0, TARGET_PHYS_ADDR_SPACE_BITS);
->    hw/loongarch/boot.c-    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
->    hw/loongarch/boot.c:                            0, TARGET_PHYS_ADDR_SPACE_BITS);
-
-This is cpu_loongarch_virt_to_phys, and some repetitions.
-
-This should probably use a loongarch-specific runtime function to find the address space 
-range supported by the chosen cpu.  Or perhaps just a target-specific constant mask.
-
-
->    linux-user/alpha/target_proc.h-            "L3 cache\t\t: n/a\n",
->    linux-user/alpha/target_proc.h:            model, TARGET_PAGE_SIZE, TARGET_PHYS_ADDR_SPACE_BITS,
->    linux-user/alpha/target_proc.h-            max_cpus, num_cpus, cpu_mask);
-
-This is the alpha-linux-user implementation of /proc/cpuinfo.
-
-Ideally this should be a target-specific function; see
-
-/* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
-#define TARGET_PHYS_ADDR_SPACE_BITS  44
-
-It's certainly not generic, and it's also not really important.
-
->    --
->    target/hppa/mem_helper.c:    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
->    target/hppa/mem_helper.c:    return sextract64(addr, 0, TARGET_PHYS_ADDR_SPACE_BITS);
->    --
->    target/hppa/mem_helper.c:        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
->    --
->    target/hppa/mem_helper.c-    /* Ignore the bits beyond physical address space. */
->    target/hppa/mem_helper.c:    ent->pa = sextract64(ent->pa, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-
-Similarly
-
-/* ??? PA-8000 through 8600 have 40 bits; PA-8700 and 8900 have 44 bits. */
-# define TARGET_PHYS_ADDR_SPACE_BITS  40
-
-While we don't actually name concrete cpu models, bios advertises the (32-bit) HP B160L 
-machine, which originally had a 7300LC, and the (64-bit) which had a 8700.
-
-I can't find definitive documentation, but I suspect the 7300LC has only 32 physical 
-address bits.  And according to our own comment we get the 8700 value wrong.
-
-In either case, it's not exposed to generic code.
-
->    --
->    target/i386/cpu.c-        if (cpu->phys_bits &&
->    target/i386/cpu.c:            (cpu->phys_bits > TARGET_PHYS_ADDR_SPACE_BITS ||
->    target/i386/cpu.c-            cpu->phys_bits < 32)) {
->    --
->    target/i386/cpu.c-                             " (but is %u)",
->    target/i386/cpu.c:                             TARGET_PHYS_ADDR_SPACE_BITS, cpu->phys_bits);
->    --
->    target/i386/kvm/kvm.c:        QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 52);
->    target/i386/kvm/kvm.c:        assert(cpu->phys_bits <= TARGET_PHYS_ADDR_SPACE_BITS);
-
-All of these are simply making sure that cpu->phys_bits is "in range", which is now 
-irrelevant because TARGET_PHYS_ADDR_SPACE_BITS itself is no longer in use.  They can all 
-be removed.
-
->    --
->    target/i386/tcg/helper-tcg.h:QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR_SPACE_BITS);
-
-Likewise.
-
-
->    target/loongarch/internals.h:#define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
-
-This is used by target/loongarch/tcg/tlb_helper.c.
-
-I'm not sure what the implications are.
-Should it be using a common function with the loongarch boot virt-to-phys?
-Is it re-using TARGET_PHYS_ADDR_SPACE_BITS just because it was convienient?
-
-In either case, it's not exposed to generic code.
+Yes.  Thankfully, PAR_EL1 is the only 128-bit register with implicit writes.
 
 
 r~
