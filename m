@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9802CCCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 06:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAAE0CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 06:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9dnY-0007PP-DB; Fri, 17 Oct 2025 02:18:44 -0400
+	id 1v9dno-0007Xd-Sl; Fri, 17 Oct 2025 02:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v9dnW-0007OV-TJ
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:18:42 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ id 1v9dnn-0007Ww-RK
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:18:59 -0400
+Received: from mail-centralusazon11011059.outbound.protection.outlook.com
+ ([52.101.62.59] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1v9dnT-0000St-6Y
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:18:42 -0400
+ id 1v9dnh-0000Tw-Rj
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 02:18:59 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZKxYtk9Xa3ivljZHi82BGtWpDR+fsASVweUEqlKKEwFA4Zu5FM6aO1mPtdNv8cBo1iJnwvRo+Adr+7rGmfBEesPPlkv+9X/yEnG3+BH0lMynN4HVX7/7Eqq+6iJvdgiOV4s4UJPW0jYLfIfbZX/BGKYdumzbY6tF0XelPkSlFOcX1WKAl7olvINtlLcE5Ohna3QBrEftOkeTLv1nMYvt20zSu272T9JJkvO7ckMjk5YFODTkQoJRcwHKcKxoPjbI03dTloMf2gqHoDtatgP77spU+O8I30B7mUKi5sSkJMxyPub/wxi9su/BZnyRUSpcaiECVYaePcsbqf+k4Jq6KQ==
+ b=nIxWSqePnQLZW85y226b3bRRXhitS+BJyz1bFLyt0GaiT41eWtNg0nCfSmiNWmD356R9XBavMziN//Gcqv3UnUlt/xJa2lsVjpjK++D6uo3rWLERR7NXAcX5XnUNmIrEDy1r8WRFI+W2kcUuP6qlvniFxJ2MoyvXreb5d0vDSlwHb5/nH2K8ahPeQROktIWvYS7iiCUfHqarVd2Gd2IJxuLfrCon+IFaH055KAdoO6UTMOtXqPw4x1WQpaoLG4QYz5CnRaeC4O1Q7ZV5YRludxl0CWsTxDh2x2UmV8Aq4ym2f6z7koMOb2vuXG+kUSdYAD1UGHJ8ESrkwetQ2aveSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OZwM131nG2IqGmMIricq8uWHqKa0RaeYquKKvFxq+Ss=;
- b=Hba+sE75Q4nH4LcYmTtKYFsL6dz8qNWiUDiUa0h2nmcUjC+WFoopmQb5qnPyyIMXUAhzqAiEyZc0+6eb7o38UiYtn4jm+PEhLOSR6FIj+DP/DfwgJN+mBw1tkCoGNjtmoAKEigUAuxfgPwXh4kwPejzeSafVNpo5o/XZ1AOwH00e+SUZZ8MJB5AIJjYcK61CP9dx+i3JuKbcUpTebSS6EjteUS2RLmKIdl6AdjbaBZNtSmoV9GWicJJzhNF9FBCyTcvDmjieggL43Q9OM0P5Q+3Byjf+6iO8jCeP6Gg5y1qBUXIMqjckZm9nMpyN911feQilhCw+p5m7Fkm8YVFVMg==
+ bh=yp6YYcHSu4hYsbVIbMis+AykoOJQuL8XJnXxqCblEaY=;
+ b=mkzDcAfcQa0C3u27qxTRZB4I/HfZOT+I35BYMMI18W5nmewfpYrlr74O6bvJa4TGDd7ZBfqOGen7Fx8kuwIuLo0o6zYwdi6De9ODydkwNHdaejPbV4ySRqBICttE/6+8ConnNxjAs/Q+iwgbdgPjYc/viLhPMZS93TXMHbhctrMBAE6xtNP/JXOp4lmSOxGQTWXEmDrbeNZxRSjfneJFOeFq+ekfC1xFFAtVTURN8FkVaC1D6Dg9ws2OAcqnXvzpQQWnHsElyci2WGw8ZTLWYrp7uWuL/QLGChWguGf6FadvfiBDWpESLsA8Ri7vKA7ORkC7x93cRP3mMvQ+Atlhww==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OZwM131nG2IqGmMIricq8uWHqKa0RaeYquKKvFxq+Ss=;
- b=kfgL/OSADFFUHvUB7M3xul/DcR63BGYPCj+XPBqC2BMJelGgZsc7EGV0zOcf/xY6DL/EdtQHKEuiWdtHXcc3dI/y1bL+emZ+xdKB08GZnrColDxDooPrsHsqQ9ovXZluGfTafLFwiynDR6U7bvIqmGnkfkB9e+sCFhS3UAuC3Ck=
-Received: from CH5PR05CA0012.namprd05.prod.outlook.com (2603:10b6:610:1f0::10)
- by LV9PR12MB9760.namprd12.prod.outlook.com (2603:10b6:408:2f0::12)
+ bh=yp6YYcHSu4hYsbVIbMis+AykoOJQuL8XJnXxqCblEaY=;
+ b=yje9OAFaGHaPzzJs6cT81RlUV0SSYnzaEOPrN/PvtKCk/DncC1CYnhMYitOVIEL20erGr/wHhzaPo2AJLRl5dcptvdhpwOfaM1rzNrH3omSGVbFjvtdPP8fvpe4Dv6q5dXkMeKkZJVLbTN0MKam4PTbUbmLfwqjKIE7kjWhtPxQ=
+Received: from CH2PR03CA0011.namprd03.prod.outlook.com (2603:10b6:610:59::21)
+ by LV8PR12MB9136.namprd12.prod.outlook.com (2603:10b6:408:18e::5)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.13; Fri, 17 Oct
- 2025 06:18:31 +0000
-Received: from CH3PEPF00000016.namprd21.prod.outlook.com
- (2603:10b6:610:1f0:cafe::df) by CH5PR05CA0012.outlook.office365.com
- (2603:10b6:610:1f0::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.6 via Frontend Transport; Fri,
- 17 Oct 2025 06:18:29 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.11; Fri, 17 Oct
+ 2025 06:13:45 +0000
+Received: from DS3PEPF000099DC.namprd04.prod.outlook.com
+ (2603:10b6:610:59:cafe::58) by CH2PR03CA0011.outlook.office365.com
+ (2603:10b6:610:59::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.12 via Frontend Transport; Fri,
+ 17 Oct 2025 06:13:44 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,98 +53,89 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- CH3PEPF00000016.mail.protection.outlook.com (10.167.244.121) with Microsoft
+ DS3PEPF000099DC.mail.protection.outlook.com (10.167.17.198) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9253.0 via Frontend Transport; Fri, 17 Oct 2025 06:18:31 +0000
-Received: from [172.31.35.81] (10.180.168.240) by satlexmb07.amd.com
+ 15.20.9253.7 via Frontend Transport; Fri, 17 Oct 2025 06:13:44 +0000
+Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 16 Oct
- 2025 23:18:27 -0700
-Message-ID: <72b0a089-9148-4257-a0f7-fa9824a97c17@amd.com>
-Date: Fri, 17 Oct 2025 11:48:20 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] amd_iommu: Cleanups and fixes (PART 2)
-Content-Language: en-US
+ 2025 23:13:40 -0700
+From: Sairaj Kodilkar <sarunkod@amd.com>
 To: <qemu-devel@nongnu.org>, <alejandro.j.jimenez@oracle.com>
 CC: <mst@redhat.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
  <philmd@linaro.org>, <suravee.suthikulpanit@amd.com>, <vasant.hegde@amd.com>, 
- <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>, <aik@amd.com>
-References: <20251017061322.1584-1-sarunkod@amd.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20251017061322.1584-1-sarunkod@amd.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+ <marcel.apfelbaum@gmail.com>, <eduardo@habkost.net>, <aik@amd.com>, "Sairaj
+ Kodilkar" <sarunkod@amd.com>
+Subject: [PATCH v3 0/2] amd_iommu: Cleanups and fixes (PART 2)
+Date: Fri, 17 Oct 2025 11:43:20 +0530
+Message-ID: <20251017061322.1584-1-sarunkod@amd.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000016:EE_|LV9PR12MB9760:EE_
-X-MS-Office365-Filtering-Correlation-Id: acf8e306-a107-4e45-f674-08de0d44feb4
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DC:EE_|LV8PR12MB9136:EE_
+X-MS-Office365-Filtering-Correlation-Id: 29b277dd-8220-4841-c9a2-08de0d44539b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ajNqZWM0WlJuM3lqeTErK2FnSG1QQWlmVmdaWHIrVkJzd0p1Z0Y2M3YzMi9O?=
- =?utf-8?B?N1pQRUUrY2tpbnpYQlFnc2lqQXF0c2pGb2U2YUtZVnZCYU0rUi84WnBWdXNQ?=
- =?utf-8?B?dWJjb3doTDlOZ0ttWFlxU0pQaGMyeTBVc0VZb1hveHp2T1o2WS9UVHJ4Y3U3?=
- =?utf-8?B?YTliODN3SzhueERtTDRncjd5NTVGWHFEdS9WTjZ0TGVOcUFWNWtoMXhZR2NC?=
- =?utf-8?B?VnhOWkZ0YVhDQjIxV0xiZUQ0dWhkTXpKWEtYT243ODlZdm50N0NWbTQ5emRw?=
- =?utf-8?B?Sm1FdDl2bnBoQUV4MHhaNEdaUUhJUEpBTXZHa2F4UTBjZFNEWG1jUVFyVlF5?=
- =?utf-8?B?OGQ5SnBuRHBoVzQzRTJkaVJGQVRxbHk0WCtQUGFlS0FMeTJ0R1hDU0hqTGFt?=
- =?utf-8?B?bTk3aG1lMnFXeG9acjhHL2RDVXRPL0JNc0c3Y3ZCNEZoSitsN1FDZzNBYVlV?=
- =?utf-8?B?WGx2dHYxSU5RMXd0ODl6SlFkR0NjRDZWMytERVk5ZzNUcHQyZ0xVMU5LRkxl?=
- =?utf-8?B?Y2o3dUVlZEJ4NFBzUnNqcldER1d5VFpjSVlVS1BWaU04RjRSVElqZUM2c21K?=
- =?utf-8?B?MnVKR05PVWlZcm4vMkZXak5DVUJlVHdiQ21zd1o3MnFWd3l1bEdSUUx6WTY5?=
- =?utf-8?B?cnIvSko3OEc1RWpHSHNqREV4ZFlOVWlXclJiaXRHR1RtWE1iSksxV0crbHFu?=
- =?utf-8?B?cGprS3hNcU5OZkZ4RTU0bmRDVnFaZThaZVhoNVZ3NWxsbVAxak1vVGVlREhC?=
- =?utf-8?B?dW1JdnQwYW45OEJ1Y1ZGdWtIaldjZXAxMnFWY3ZhazI4SmpyYzlNeFF4Um9M?=
- =?utf-8?B?UCtIKzJVZHFIa093WGFYSFVFOXg2RGRGcElYZ2FySE9vQkdrMVNiZWFIMnpa?=
- =?utf-8?B?U3oxd3VFTkVLS3ROSm1nSElHVXlpQ2RGemJjeVVBdVpiMSsvSW5BZWVhbTBP?=
- =?utf-8?B?c25sZE1hSmg1WEdkL0pOd2Y3cy9nRld2ZFpNVUNQSFRJN2cyVDVTeERYYi9h?=
- =?utf-8?B?MTJvTisyM2hTZHV6ZzEzYW5DZ3JKZXh3b2MzY3JYS2N2ME1GMDF5ZndTMTcv?=
- =?utf-8?B?aHRQME5UMjhLK3ZRNFVnY296c1BtbHAwM1RYZFRJQ0VZSUduNzhueVBEemNl?=
- =?utf-8?B?WTEyanlnejMrbzZNS0UrYkZrZlY1encrMEkrVHordks5R0JaWlZsejcvc0VJ?=
- =?utf-8?B?dEFoOXJQdFBkY0tMTnM2S09YcWRRd29FcTJNVUQ5cW5oQ3ErRlFVWUNESEYx?=
- =?utf-8?B?aTVWWnJCc29Qa2Rac3JheVhkbjcvUkV3K1NvdXJ0N2RYcTFPL1RWTENoU2U2?=
- =?utf-8?B?S1JoTWcwY1BXN3pkYWxNZWtrc1BaMzlpRCtwbDVFbndaTUJUTjd6OWZUTFNi?=
- =?utf-8?B?L1g1ZkM3anJmaWVVOXF4N0VBVjBITE54a1hkS0VBbVNXcCtUaW1aSW1wOVRG?=
- =?utf-8?B?ZjIyR2gzUVZOL1lremw4aDU4eWhpT1ZiemhvRnppYkFXeVpOOWJ5a3plR0xC?=
- =?utf-8?B?eG5renM4QWZlUUh6ZmJERi94VGxXNFJVblU3eWpYbWpYZ3dBZ2swbGtTZXQ1?=
- =?utf-8?B?aks0VWZKYU96QndqbEJ2S2paNVcxaUlJMWo3QWMvRW9DUVdlclh2K2tqZnRI?=
- =?utf-8?B?WWZ2Wlp4Z2dVSVhWMWw5L0t5Rm5ZTUNwUVZGMmk4VUp3YUxvV3FpaU5RU2Jv?=
- =?utf-8?B?b01RanNWaU43eE5rUlVxNUU1ZVNuS3ZrVmNOMFFQUFlUZnNtUnl6MjJPcW5Q?=
- =?utf-8?B?MUd3cXJ3NjVMbm5sTVhteEEvd3JXa3BDT1pLckhVdDVjQWVRRE1BSFRVT01R?=
- =?utf-8?B?TVY2UDVBZGRwQ3Zad2RMZVgxcEEyV3BZNE9QM2hiVldnb2x3MURxTnlpM0Vh?=
- =?utf-8?B?T0dLYjluK2J3RDJSTTdnSmhQN3plYmpuVnAyZU1DdTJlNEhQYm5hZ0l2Zjhn?=
- =?utf-8?B?dnc5anNSbCtrYmE4MHU5K0FZejZMSS91bTJWZVNaLys0bWt1TE1uWmFCQWxr?=
- =?utf-8?B?aXlzeDhoWURlQzBZYkZ4NUc0NGNITTlLUUE4Q0Z0UFlLdUdEQmJvWXdHU3c5?=
- =?utf-8?B?Y0o1VHJOa083cG1UbHVickw5SWJxYisrTnNvNlJsYUJNa2tMV1FTY0x5OE5K?=
- =?utf-8?Q?J4EM=3D?=
+ ARA:13230040|376014|82310400026|1800799024|36860700013|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?GRBPOBqB228bBFOuaA1g1a8IYb2VCOI0CZcBPTWVDePYa8XgSekegoV1Uggn?=
+ =?us-ascii?Q?xgHL2TjirFTQT/ewHzMA8I6n3izFkzyJrsgZ3wdCDLF1kWwvFlLDCa3LyjfA?=
+ =?us-ascii?Q?VAnwh+4AyF+nbAFstYN/oV/gsrA2ceGP3T3P2Uwj4Q8fohTA/wgQd4DUBs5U?=
+ =?us-ascii?Q?5HwY0ivXiGfwWfheW8ziDkypPVke68vokh353keKZk3V0b6bi9JzEPfNxe1b?=
+ =?us-ascii?Q?wNcyTZFV46yNFCfWUv//wHwTbvUJ5gQzpXNnoWeO/0sm7LfozTzXLSq7nbip?=
+ =?us-ascii?Q?nGZRrznbzw5FFlvG0/N1iotsIWUJzHULGyPx3JqPOxJLMROtgwRRXVLYP60Q?=
+ =?us-ascii?Q?N5gZzJX96kUumPFYHYYJJmVeV1+zEw2FdoO8u6KhatqUYtH/FYykliQ7G0DX?=
+ =?us-ascii?Q?mkaEttID6fa0PsKx7UjI7tGi+QZH5LELBMJR9WP6GrE2q7e04YqHRa9fkNEC?=
+ =?us-ascii?Q?l0AMlzNpWCQsSMsIHKt9S4/Rioy5d2H1rhyL3Nzr6OH52z8KbGn9YdE7ak/X?=
+ =?us-ascii?Q?3d9hAOY+KQiZcQrm/9GSqvLD30CfOlhei/LT+WltzpU2XR/oDg9mxaPvUjW4?=
+ =?us-ascii?Q?f6bBITmuGM3EvkeNlg/PoCR0dkFusg+Qk9x9ERVKtgFxaCFdfb1yPNjWeaSE?=
+ =?us-ascii?Q?HT3b3/WHrGFezsBf+VaudsU0Wiq4cDOz9DSdZRDy1T2ryu2O5E5pFEXrU51t?=
+ =?us-ascii?Q?fCCN4ym1xwpF2CCcL07YnA/yZq0S0cYQ1JeSBUD0RUvJwPwBQuCMBOtozv6R?=
+ =?us-ascii?Q?qtgpIUkGg5cQYVEFtUm05AbJfMKLZeR8Duhw6PGwZvm8lKle1h1Uu+93k8Hb?=
+ =?us-ascii?Q?WV8HRSIiya8GIo3fBb2REQLVSPDyUHq2QSb3mBit0T5UKCbyEua9yV+hDg4v?=
+ =?us-ascii?Q?EOCfdv4GQNYunFl//cZMGlh78K5M+UaWYpgTQmTnMARL5PS5D3h1djkAbo9d?=
+ =?us-ascii?Q?eUEv5A22plZDDHfP18aOMc2Ou5GJOjU0fGjjLpGrGwgPLAYTolu1xdOhriDM?=
+ =?us-ascii?Q?622/Eedcwmj1EdIJ5YcnyE4ynDtM4f5f7/dVnyNMiVtSoAp8oq7LWy7LKqq0?=
+ =?us-ascii?Q?+5tjktY/kTHdHJryM2RtjOe5l9QO0Wa9130DJx+Q+PuaxM8rbo5pOTx0b7Ox?=
+ =?us-ascii?Q?ATsp9cTuSQBf8eW0MBt3WB1c/qxtiubPpLeC0Wuv+DsKIqxrB+xQOtSY0JnJ?=
+ =?us-ascii?Q?7VBSK7to7S6Z5qXpzy4XM5+ZxUS1UgeljaJCwt6QCpuIYGRERFp0D7xB2+3T?=
+ =?us-ascii?Q?a+lDtB86X7WWWNPw2x3X0nYHzeaHEKbztTvuRlprDKzOQDpYLzmZIaCSFFk3?=
+ =?us-ascii?Q?PWQ8Zg8IEb3hNRWpWltwY05IAx09bhXtvKgYaM9JDCWlLYPIU1h6acXpmqlK?=
+ =?us-ascii?Q?riS/veYm0B3EpvTdFOW/BG4xQglZVz97k46GflrfpYIWQjPHJLdTtBZ9OsCn?=
+ =?us-ascii?Q?Dqx2h7goRBTJIDfIMikHmHDcHW3DAHe4+qUTzkVESRDMLhtPWpsa4pX9lyzj?=
+ =?us-ascii?Q?mL/eyUEZMFvxGFjKpoeJVXhgTiArJ/2yupcY/xo7TEJnoz4sVLPZcCwL4nNy?=
+ =?us-ascii?Q?XH72q6TShqi9MV4kWMc=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013)(13003099007);
+ DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2025 06:18:31.4875 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: acf8e306-a107-4e45-f674-08de0d44feb4
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2025 06:13:44.4045 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 29b277dd-8220-4841-c9a2-08de0d44539b
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000016.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099DC.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV9PR12MB9760
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9136
+Received-SPF: permerror client-ip=52.101.62.59;
  envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,56 +151,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This series provide fixes for following two issues:
+
+1. AMD IOMMU fails to detect the devices when they are attached to PCI bus with
+   bus id != 0.
+   e.g. With following command line, dhclient command fails inside the guest
+
+    -device pcie-root-port,port=0x10,chassis=1,id=pci.1,bus=pcie.0,multifunction=on,addr=0x5 \
+    -netdev user,id=USER0,hostfwd=tcp::3333-:22 \
+    -device virtio-net-pci,id=vnet0,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER0,bus=pci.1,addr=0 \
+
+2. Current AMD IOMMU supports IOVAs upto 60 bit which cause failure while
+   setting up the devices when guest is booted with command line 
+   "iommu.forcedac=1".
+
+   One example of the failure is when there are two virtio ethernet devices
+   attached to the guest with command line
+   
+       -netdev user,id=USER0 \
+       -netdev user,id=USER1 \
+       -device virtio-net-pci,id=vnet0,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER0 \
+       -device virtio-net-pci,id=vnet1,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER1 \
+   
+   In this case dhclient fails for second device with following dmesg
+   
+   [   24.802644] virtio_net virtio0 enp0s1: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 5664000 usecs ago
+   [   29.856716] virtio_net virtio0 enp0s1: NETDEV WATCHDOG: CPU: 59: transmit queue 0 timed out 10720 ms
+   [   29.858585] virtio_net virtio0 enp0s1: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 10720000 usecs ago
+
+-------------------------------------------------------------------------------
+
+Change log:
+----------
+
+* Changes since V2:
+https://lore.kernel.org/qemu-devel/20251013050046.393-1-sarunkod@amd.com/
+P1:
+ - Remove cast from the pointer assignment [MST]
+ - Rename struct amdvi_as_key to AMDViAsKey [Alejandro, MST]
+ - Fix compilation error due to missing 'static' [Alejandro]
+
+P2:
+ - Rename struct amdvi_iotlb_key to AMDViIOTLBKey [Alejandro, MST]
+ - Fix compilation error [Alejandro]
 
 
-On 10/17/2025 11:43 AM, Sairaj Kodilkar wrote:
-> This series provide fixes for following two issues:
->
-> 1. AMD IOMMU fails to detect the devices when they are attached to PCI bus with
->     bus id != 0.
->     e.g. With following command line, dhclient command fails inside the guest
->
->      -device pcie-root-port,port=0x10,chassis=1,id=pci.1,bus=pcie.0,multifunction=on,addr=0x5 \
->      -netdev user,id=USER0,hostfwd=tcp::3333-:22 \
->      -device virtio-net-pci,id=vnet0,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER0,bus=pci.1,addr=0 \
->
-> 2. Current AMD IOMMU supports IOVAs upto 60 bit which cause failure while
->     setting up the devices when guest is booted with command line
->     "iommu.forcedac=1".
->
->     One example of the failure is when there are two virtio ethernet devices
->     attached to the guest with command line
->     
->         -netdev user,id=USER0 \
->         -netdev user,id=USER1 \
->         -device virtio-net-pci,id=vnet0,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER0 \
->         -device virtio-net-pci,id=vnet1,iommu_platform=on,disable-legacy=on,romfile=,netdev=USER1 \
->     
->     In this case dhclient fails for second device with following dmesg
->     
->     [   24.802644] virtio_net virtio0 enp0s1: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 5664000 usecs ago
->     [   29.856716] virtio_net virtio0 enp0s1: NETDEV WATCHDOG: CPU: 59: transmit queue 0 timed out 10720 ms
->     [   29.858585] virtio_net virtio0 enp0s1: TX timeout on queue: 0, sq: output.0, vq: 0x1, name: output.0, 10720000 usecs ago
->
-> -------------------------------------------------------------------------------
->
-> Change log:
-> ----------
->
-> * Changes since V2:
-> https://lore.kernel.org/qemu-devel/20251013050046.393-1-sarunkod@amd.com/
-> P1:
->   - Remove cast from the pointer assignment [MST]
->   - Rename struct amdvi_as_key to AMDViAsKey [Alejandro, MST]
->   - Fix compilation error due to missing 'static' [Alejandro]
->
-> P2:
->   - Rename struct amdvi_iotlb_key to AMDViIOTLBKey [Alejandro, MST]
->   - Fix compilation error [Alejandro]
->
-Correction...
-This is AMDVIAskey and AMDVIIOTLBKey, not AMDViAsKey and AMDViIOTLBKey
+* Changes Since V1:
+https://lore.kernel.org/qemu-devel/20251008164324.21553-1-sarunkod@amd.com/
+P1:
+ - Use fixed type uint8_t for devfn
+ - Use uintptr_t instead of uint64_t
+ - Build hash key using lower 56 bits of bus pointer and 8 bits of devfn
+ - Use gboolean instead of int for amdvi_find_as_by_devid
+ - Update comments
+ - Use IOMMU_NOTIFIER_NONE instead of IOMMU_NONE
 
-Thanks
-Sairaj
+P2:
+ - Reword commit message
+ - Correctly initialize `struct amdvi_iotlb_key`
+ - Remove unused macro
+
+-------------------------------------------------------------------------------
+
+Base commit: (qemu uptream) eb7abb4a719f
+
+-------------------------------------------------------------------------------
+
+
+Sairaj Kodilkar (2):
+  amd_iommu: Fix handling device on buses != 0
+  amd_iommu: Support 64 bit address for IOTLB lookup
+
+ hw/i386/amd_iommu.c | 179 +++++++++++++++++++++++++++-----------------
+ hw/i386/amd_iommu.h |   6 +-
+ 2 files changed, 113 insertions(+), 72 deletions(-)
+
+-- 
+2.34.1
+
 
