@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B32CCD199
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC66CCD195
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9khc-00012Q-Pr; Fri, 17 Oct 2025 09:41:04 -0400
+	id 1v9ksx-0004lc-6e; Fri, 17 Oct 2025 09:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9kha-000126-G8
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:41:02 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v9khV-0001hk-1b
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:41:01 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-46e42fa08e4so18126055e9.3
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:40:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760708449; x=1761313249; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=icNqRkYDJRAB6RHr00zHh3bYRCOwkWInq2ZlFKNfHLg=;
- b=ywat3rq8wBxY1/i3M6m15NvZFjQGunmft0Q5NPURAmjuiJmGekzBWI0nSinxzpHUwD
- CRlYqmnqUZkpJL1Tgf9WZTdBlmIw1AlrORWjnRFW4XFiOBo5DGWA8KNBz7rTOEJU1iys
- nCuhTGJXfyEUZIsLBmYJvsplV/uYtNCd4Rel3JVULohHfWcmZ7j34JhMrSjKTc20GVnt
- wrabCSnoYFpEoXj7ambckI43RCLuOfDMzbI4YIoSh0wnrJvXPklC3E/bSmCVwtFSh47V
- td5hknom5wbrMapeuXPcEMtlk9tq/mCOvshSHm3arfTZG8HFMu/Wie23A8hs4+Tn2uIM
- ryQg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v9ksu-0004kg-7k
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:52:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v9kso-00037L-5L
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:52:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760709152;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iQhsQBJSeg7Qg2pC2jnr0EDVDlslsEoDpdATCX8PPXk=;
+ b=WStwnRm2TTZzxaDNe4BfyjzWxdSAelBYYIcotsUa6sogC81YUI6ns8sS0u5KJYWz+vdG3r
+ y/UBTwXTiNSS/v4O593rN6v5GiV3GOiTAuJMc51rDHTj6xjLxZ14xvf8nDoheSFrDwuwcd
+ UC2XE5bCJC8TRr8+TRLXoT5HJEJ8jMY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-284-x2Iu4b04OfuJRZa_cwifAw-1; Fri, 17 Oct 2025 09:52:31 -0400
+X-MC-Unique: x2Iu4b04OfuJRZa_cwifAw-1
+X-Mimecast-MFC-AGG-ID: x2Iu4b04OfuJRZa_cwifAw_1760709150
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4256fae4b46so1244735f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:52:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760708449; x=1761313249;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=icNqRkYDJRAB6RHr00zHh3bYRCOwkWInq2ZlFKNfHLg=;
- b=FpI8xJN7CHMOPBZzBzJJ98QgQ1TdHej+wv09pRROuWh30XiF4BeKE++V5aQuqwZbwu
- 8YqLJIwyG0WoJZFpsCMZ4cc3hmPNzz1TtqWF0P/YpWhoCEfaBDllNTes5Ij8XGLqHOMX
- j4EiX6JSSh1NyAlAexJHQxZDLtUmQSuAJQFDwqmSzQcSEza7hzKTSz21LHGobb1aF0FA
- TIqcoMEzm4GIIfcnDKWqpObBcXvgc1PabcJRmvtKaFZpcFPhabD/SlL7IRWfD+clKpjS
- BlK1eu4hQlgo0U0Ske62BxAgIB9oshPZT2Y3WHRKOCyxSxAFgx4boMoDUL8AZMooRI9s
- wXbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX//eaiEWaHeQSUxPxsfkg4et/A5YNeW0kyx4EdbcsW5cFDtbz6mwnhUO8AXk9IX+BN5+AbVV5DN+EO@nongnu.org
-X-Gm-Message-State: AOJu0YwXU/3L2y5ir7ZIVwCLAP+a/wj+yzJBNPeVzAnOIlF+ttVGd+Hy
- e8oUMgqL8ktzRVemJiUXZ2pgok8J2z+b/TFOiE2M/r3CDDWF/R0MjshQfGjcAjrUpTg=
-X-Gm-Gg: ASbGncsDcM5fOySkpxu9xnhuZIW05adFG/RX03URujFtPv5DSP0tqXw3ZIx5AWY+Wjb
- sjCMWiKUKwmJRjiE8Wa8O49j5YX0teqO1fOmWSOJ8vTSFslHQPDCTF7v4ULQI7e4zpUZotlsypT
- 8DPVZ0YkSkLB+EOlEGhu6f2WMs3dh9dNlY3Z2B/n/C6PDvif83xyyBO79ty4Fkt7yuCDfM4pT3s
- 5Nmk2pwN2FYWC0sU7Q/Esz0yBNPXiYBdVzKTrai5T8+3eZRRYzrzYyb1VCpD6iDudxns9dVloDZ
- HhoYJ2P1LMXQRD69pQRZp/usQxHkAUSus+4nvRYrKkEaMU8UHAsz9N90LKeW7rf12+iyzcJCR04
- PtDcB8XlFVDr9uL2HE3ZcieetRIpS7vLFBJTo2frN/9LCq46SQdQQivYWQ1iyaIkMNUpupWoxap
- hOVTTL4A/BTY02eRQYdaiSoHwQhONBVJxjumJDkLMpEeK60N2Fx85CKg==
-X-Google-Smtp-Source: AGHT+IHwE0d71v5wCkaVJaRIBovj3dj6VslZKSGY8OpKKfJGG8NC2q9yp7kZIPDXZXwQmZ0JZsNrog==
-X-Received: by 2002:a05:600c:8b66:b0:46e:428a:b4c7 with SMTP id
- 5b1f17b1804b1-471179120ccmr28595485e9.23.1760708449543; 
- Fri, 17 Oct 2025 06:40:49 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42708bcea1bsm2765910f8f.14.2025.10.17.06.40.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 06:40:48 -0700 (PDT)
-Message-ID: <dfe5b374-4674-4cb4-8adb-b00f8e67a03a@linaro.org>
-Date: Fri, 17 Oct 2025 15:40:47 +0200
+ d=1e100.net; s=20230601; t=1760709150; x=1761313950;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iQhsQBJSeg7Qg2pC2jnr0EDVDlslsEoDpdATCX8PPXk=;
+ b=Q8AQwp0W5P9p7XKOo9eBTy8lpz/orBQl/DDxjibl1yX3+2NMFvwQAOPgYFnL5jb74D
+ PfTa7g7VGcGa321rYxMWS0RmUhL1wqZNlHx/VQ7R8FqTnXDqZtj811inhAfMH42DPjs4
+ xwd/w/yMArwCn59AiYXNmSqOe8e1XkANTZxL0MVjnGL04uZsAubB5Pmm9PLBnFr4fo4v
+ bSp9jhWsOt0herIzunuXy+luIZLcub3FJ9+fPZaS4sdSLSeTIxNbZnEYCAfovz3uSG6k
+ SuZCndPVrGIXfcUJbtKIHF9cFgjJvkHvOmZbpnDWTORAQfosCoxoD3BkdGmhfPX4TJ6L
+ qNvw==
+X-Gm-Message-State: AOJu0YxJe78DvGOAgyPHQI2cOPD/3n9osk0hbcUYetA/g68+Rp0jFdZz
+ GbiF0WWc7x8y/+QhNIpHoY1ifXCl9qDR1SOy+bR37/wqKUSpgvRYDm/g2vftQfgNQ7ro6hyxtgJ
+ h1V5Pv1nQWcckaX/9ERe9hj3qwVYbeJaZ+2PuzbLD3a0KzaWQoyaR4OC7
+X-Gm-Gg: ASbGncsn2jgv+g+oXlkOwuyM5yv4fjzKe4+Nc59zvyZ1V8bQAaLKbGr0H6sczgqfel9
+ rfgbsgODERk5cslgzlz94+W5K0Vh60UTnm9e5DiPc/TdQOSI26X+uhsD99U2VWxblwppcWLTW03
+ FAKxr7/aCq9ihSe69nWEZ6V1aMM1F2S2OwfETUIUmsrXQBVJyhZTS1SHTuZ0qNGZV2CpNXgzCvy
+ Lb/A7cgkhHUyYlPkgxwVsCdUpFOUNzselQoCagD40vlWUz+3K/fgTxbOJs2rVxBMlzBDnQf988g
+ wbaStCZVlTV6b3TBbQ1f6H2WSZ4Q2Bpb0Z/jjv9gE2BokyB9T86hAMBkniHPI+cC
+X-Received: by 2002:a05:6000:24c6:b0:427:928:787f with SMTP id
+ ffacd0b85a97d-427092879c8mr922458f8f.21.1760709149640; 
+ Fri, 17 Oct 2025 06:52:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVBPLcl/Rq1/TEU+9oQSTZwnXrWJ9QHP7ayLmkUAzRAkCXP+bfJPbxORpTMQ88Bd/C+sO65g==
+X-Received: by 2002:a05:6000:24c6:b0:427:928:787f with SMTP id
+ ffacd0b85a97d-427092879c8mr922420f8f.21.1760709149031; 
+ Fri, 17 Oct 2025 06:52:29 -0700 (PDT)
+Received: from redhat.com ([31.187.78.207]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42707b482b3sm3729718f8f.50.2025.10.17.06.52.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 06:52:28 -0700 (PDT)
+Date: Fri, 17 Oct 2025 09:52:25 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ hi@alyssa.is, david@redhat.com, jasowang@redhat.com,
+ dbassey@redhat.com, stevensd@chromium.org,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, slp@redhat.com,
+ manos.pitsidianakis@linaro.org, Albert Esteve <aesteve@redhat.com>
+Subject: Re: [PATCH v10 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
+Message-ID: <20251017095217-mutt-send-email-mst@kernel.org>
+References: <20251016143827.1850397-1-aesteve@redhat.com>
+ <20251016150544.GA1174075@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/12] hw/s390x: Remove s390-ccw-virtio-4.2 ->
- s390-ccw-virtio-7.2 machines
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Eric Farman <farman@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- qemu-s390x@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>
-References: <20251017133002.61410-1-philmd@linaro.org>
- <edfb9f1f-b375-4295-8e61-0b86bf5818b5@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <edfb9f1f-b375-4295-8e61-0b86bf5818b5@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251016150544.GA1174075@fedora>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,26 +111,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/25 15:38, Thomas Huth wrote:
-> On 17/10/2025 15.29, Philippe Mathieu-Daudé wrote:
->> Remove the deprecated s390-ccw-virtio-4.2 up to 7.2 machines,
->> which are older than 6 years. Remove resulting dead code.
->>
->> Philippe Mathieu-Daudé (12):
->>    hw/s390x/ccw: Remove deprecated s390-ccw-virtio-4.2 machine
->>    hw/s390x/ccw: Remove SCLPDevice::increment_size field
-
-> NACK.
+On Thu, Oct 16, 2025 at 11:05:44AM -0400, Stefan Hajnoczi wrote:
+> On Thu, Oct 16, 2025 at 04:38:20PM +0200, Albert Esteve wrote:
+> > v9->v10
+> > - Fix transaction_commit invoked without transaction_begin
+> >   on vhost_user_backend_handle_shmem_map() early errors
+> > - Removed fd tracking on VirtioSharedMemoryMapping, it
+> >   is handled by the RAMBlock
+> > - Reject invalid BAR configurations when VIRTIO Shared Memory
+> >   Regions are in use by vhost-user-test-device
 > 
-> Being deprecated does not mean that the deprecation period already expired.
-> Please re-read the paragraph about machine deprecation in docs/about/ 
-> deprecated.rst carefully again.
+> Hi Michael,
+> I have finished reviewing this series. If no one else has comments then
+> it can be considered for merging through your VIRTIO/vhost tree.
+> 
+> Thanks,
+> Stefan
 
-Yes, my bad, I misunderstood the '-M help' output.
+will do, thanks!
 
-Still, please consider the first 2 patches (4.2 is over 6yo).
-
-Regards,
-
-Phil.
 
