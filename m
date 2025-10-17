@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C42CCD195
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CF9CCD199
 	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 13:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9kG5-00083b-Op; Fri, 17 Oct 2025 09:12:37 -0400
+	id 1v9kIg-0004QU-Ic; Fri, 17 Oct 2025 09:15:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v9kFk-0007dR-IH
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:12:19 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1v9kIb-0004LB-62
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:15:13 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v9kFe-0005Kg-U2
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:12:16 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-63cf0df1abbso2119225d50.2
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:12:08 -0700 (PDT)
+ id 1v9kIR-0005dc-S9
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 09:15:11 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-71d71bcab6fso18092987b3.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 06:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760706724; x=1761311524; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760706900; x=1761311700; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=D9xlQoRZeoR1UXPG1KXCkxosrjIsVdx7ZL3Vee6w0bQ=;
- b=O8TSKDSFEPC/bvWpl8qTUxz+E4ytuEkolgACQzUlU6dlLNVQERpX1B+LAUU33nedK+
- wMUOYnL7T44Zp8JOuakoHmd25T8RyfN0HzXsXR2TACUxOLQdoaf8JgwSjyoGTXzhc2o0
- UIETbzJJ+q4XMRd7NuO+XwCb7JyfBuy1Nm1thMUKIndv062dQkvMCD8ZGafCTra9YAZO
- E3haM7c2BZ/3w0jVfNeQHoAyl+4GPEWrxk9BLtqvd25Lv8ERheirRjTg2TO39bFK3vT7
- pghoUBlioLGH75KC5NtS/8MOkJQvBeHqZBa1HXKgUVqGlJSAth0K6GFHlOkyE2GPp+FA
- UDyw==
+ bh=7KBvpUL1h3bSz5p6pHNnSy7lLlY15drjVxsXUrLr7D4=;
+ b=BN/srSQmM/rLN6Wh+ih3e94kJSpkDuif8BaywA9o5+G/WXa3nByDtX97wp7oYJhr86
+ ZyZMIh31gVAzRGzaKUOBWB6f4MhxRIA4s6sx+yWtUSaaS7kjxkQT1+sKOVkHb6RQNL0l
+ 7VKV7GTZSNYH9SFEhvRgRQ7v8gzjNf+5qheMGhlHBzT9YsjgsSOdwxPmJHCi7b9fbv7q
+ wWQKLx9VtKN3RYFl6i0Kw+6vKYuMEcImpKEjC/s6zIJDLpk0GuIHp0+0ONVVN9+FZjxZ
+ 6wMa4P1hg3xuvIkc/iwadPtlfB8aJqUpHeXN6PnzwbAEdb19sXfBKCms+ZPQdUXSBZgX
+ vaXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760706724; x=1761311524;
+ d=1e100.net; s=20230601; t=1760706900; x=1761311700;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D9xlQoRZeoR1UXPG1KXCkxosrjIsVdx7ZL3Vee6w0bQ=;
- b=P9L+GSWmZcNAmzmi5fVLqZwZEkIb5sTrFsryyMPGla9K5kwenO8afkNl16t8KhUKCN
- 6e6ZKvLmePsecLNfO1UA9PacTh01u92ukvRzDsB9BdbgJlO0OaRqIuZNbatS4ivFV4GP
- YfW8JdwWxRJGmaSOaAFUy0chVi7Rkk92idlCjQ4Iej+1H99j9qIugjvOuh9naNMgvbCh
- KhkZ6+t1TlRpiOHA4H0cvmp8nhtDZuYB3PUPZJeyYMqH1or6GpzmtCsIMBuVVCq69E9V
- uU57pOo0gU7MJx9HKANnAkCcn1lSj8TV6STD/tDHCRBZZPbz2hw1PyM24obFk9c73sqE
- nYHw==
-X-Gm-Message-State: AOJu0Yx11FkmgRPeYkTXoWe+qEsXBYm5Ni2iKef2zmshJtf4eNgmMpyG
- ttLnGzjbEqIJaWl7ho6WR74/TsLxmLanolAdeabglEEPd7250EVK3AyDTeM6sRfqFL9pL0Tf4aH
- xu5K+jb6DdWOwX3rgn40hcmEJesnOdbtZVu2gZXIY8Q==
-X-Gm-Gg: ASbGncvuMYLPS3nMWfUn/EmfW9mKYaeeKeZzVig/E7PIpzl6smdZHVBztIaCpNtknZ/
- gtYIzKmUxYEROiERxePYyEhWg4XUzw9GeE0AVMC0ZB3v+2SLkFMWvK5HOdm583uZbfDPB8aajUG
- Wj8xXWChZo1Wp34rWEpwBLe1tatCgbJ0+2kE6NR6VsZHxo/zFrJ9OvHDR9PCSo6MG2gV3NFUoYh
- iWO23A/ZCk5FX9j8MLpxwNzvsm4kEAXe2+EyEi/kLTie17zEF6DgWM32IDct3F+DANv8i7m4lSU
- SsAlpF0=
-X-Google-Smtp-Source: AGHT+IHj32EUe0DPXTrJw6gc1fccEkjFc08onpntnLN/ztdEO8OXcqaA+W0DC0ZIrICEFzGm47HEc5FCcdzBd9pzo/s=
-X-Received: by 2002:a05:690e:4192:b0:636:1b01:63df with SMTP id
- 956f58d0204a3-63e16168e5emr3252986d50.14.1760706724375; Fri, 17 Oct 2025
- 06:12:04 -0700 (PDT)
+ bh=7KBvpUL1h3bSz5p6pHNnSy7lLlY15drjVxsXUrLr7D4=;
+ b=hur8ZXWVo50oJK6Dhf3qTnSjhWPRkpsaTq+0xUSPujafYScxkZisnN4wa+j+6Ju5Hk
+ uUqNiWBu75VAfWSV4LF/8WoRt0o+tMrWjzR7sZy76pwqBGVyLqrxRCt4rrEwwEMvqdo9
+ I5dJGV26mUPWwnamFkbnKcJ53OmezHmZ2oxKCKhFRPutHZOWJsDwZk1A5AJ+zNDY3JKK
+ u/0umaXQcIEnRfN8F4xKJklJPoWMR2qfEWECBVd5aoBKE4NNiXk6Et7WuYcuI/b6TQEk
+ 2LdNAXSCDpUkj0ehkU4/VVZvOz3Aw/6Kb49QLXcCcJBeuFxH2B8MCxKVwKRRvgZ2gacr
+ 7abQ==
+X-Gm-Message-State: AOJu0YxTgiX6mJuCx8KD4ShhZhaM94SodAmDT0iFxAgsVshkd2OJlbhz
+ vcLbmf3nTW+wudZppsk9Ck206czogRk4uCOPW9rou6onE6WshbyaeXPdd7yPlwPQO9ddJ0U8T2t
+ VZEKgL9AYYkiRVoqt0URIL04oCeimXuSPdQ0PxJ56cw==
+X-Gm-Gg: ASbGnctfXrWMoDYNt1tSFDCoOxIh0jTB4zZiQkBGVYl8KF0ADE5/v1qN25qHcZ4zNFk
+ HGJiduf7Dm5Copa0s4zQ9geAwOJuc+GPpvnNCUiqk4YoKt8E8YpGZSmG8LYEyRff126KrA3O5om
+ 5EWwP2EIWpKfor8ypplGgv3UuVDkYErXLWvB4PW0Zd/GijXypKf9nzm5DHrtSvx5omqSvD3Buiv
+ uEyEjz7rAqyAO1iyRlW2k9xpfIilhsKufk7qv7i13xmbEjFX0o1rnJyIbhc1vpSH1t89r+w
+X-Google-Smtp-Source: AGHT+IHJ5wcHMu2tTN7KcRdFZQq6SEIEPVpMtQY7tXYm4VtPs4ymux/OYrfiMuverZzdXuPtaibO7uQ2LGwDZKyZGJs=
+X-Received: by 2002:a53:accc:0:10b0:63d:215c:e29f with SMTP id
+ 956f58d0204a3-63e16199e6emr2858404d50.23.1760706899801; Fri, 17 Oct 2025
+ 06:14:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251014200718.422022-1-richard.henderson@linaro.org>
- <20251014200718.422022-8-richard.henderson@linaro.org>
-In-Reply-To: <20251014200718.422022-8-richard.henderson@linaro.org>
+ <20251014200718.422022-9-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-9-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 17 Oct 2025 14:11:51 +0100
-X-Gm-Features: AS18NWBjL6FzFSgT8OsWQa2THimdmBQGVf5uXcNEKR8NsFgWUidraGP6nLrsSMg
-Message-ID: <CAFEAcA-OoeSq9iOrtf_23-x8tZBCyZJ2wQ2ckrYo6tY8e2w9FQ@mail.gmail.com>
-Subject: Re: [PATCH v2 07/37] target/arm: Add read_raw_cp_reg128,
- write_raw_cp_reg128
+Date: Fri, 17 Oct 2025 14:14:48 +0100
+X-Gm-Features: AS18NWDVETvYNDKD0r02FzQxcODfIwB4zY3T6XrMTE3q-x0uQTCI7BlNhkqSesE
+Message-ID: <CAFEAcA9nA=bsOX35bAPsBRRaZyp9pvMCU_uQ=TUmKpYHBJvRJg@mail.gmail.com>
+Subject: Re: [PATCH v2 08/37] target/arm: Use cpreg_field_type in
+ arm_gen_one_feature_sysreg
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,33 +94,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Oct 2025 at 21:12, Richard Henderson
+On Tue, 14 Oct 2025 at 21:13, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Add the functions and update raw_accessors_invalid to match.
-> Add assertions for !ARM_CP_128BIT in read_raw_cp_reg and
-> write_raw_cp_reg.
+> Deduce bitsize from cpreg_field_type.  With this, we can
+> simplify arm_register_sysreg_for_feature.
 >
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +__attribute__((unused))
-> +static void write_raw_cp_reg128(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                                Int128 v)
-
-Why does this one take an Int128 rather than a lo/hi pair?
-
-> +{
-> +    uint64_t lo = int128_getlo(v);
-> +    uint64_t hi = int128_gethi(v);
-> +
-> +    assert(ri->type & ARM_CP_128BIT);
-> +    if (ri->raw_write128fn) {
-> +        ri->raw_write128fn(env, ri, lo, hi);
-> +    } else if (ri->write128fn) {
-> +        ri->write128fn(env, ri, lo, hi);
-> +    } else {
-> +        raw_write128(env, ri, lo, hi);
-> +    }
-> +}
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
