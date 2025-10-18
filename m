@@ -4,116 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AA8CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 11:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40AACCCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 11:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA4z8-0006R8-Au; Sat, 18 Oct 2025 07:20:30 -0400
+	id 1vA52l-0007Qv-Vk; Sat, 18 Oct 2025 07:24:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1vA4z4-0006Qg-69; Sat, 18 Oct 2025 07:20:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vA52k-0007QK-0Q; Sat, 18 Oct 2025 07:24:14 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1vA4z2-0002lL-4y; Sat, 18 Oct 2025 07:20:25 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59I3S5cV001474;
- Sat, 18 Oct 2025 11:20:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FQcbGZ
- pqUjATbcX0cBP4UcOhkIe7jgxHKVuObclZMBI=; b=VycLpaFB7c3x0IX6cLlr6J
- nzAIoriAHnGCWqh2fSWkYRKo8a7d9lZwPzsYkOY0qX0ZVrif0UvwvhoS5ENeI9xv
- 7lbW+0vDujxOGs6hEkJ00kxPSLB+nLqHIzjMR8XQaSDoabbQvaBisLCrWEE0AQrO
- rA4VGdW7O2eGeTZD45aUWlkWGfdfevhkwHC965vi9OgoeweAPqP81pSXCulveREq
- 4kCUXkOzrm/UhsxRm/nliaRoGek0bM1utD00xNHcSNk70iAuaU1kNT298oPuVYUM
- pp9lxNMi2fVA+4ZJzyB3a57UJJucm3kpGW5uKNA/M7caAN52HL19cABw73Sis9cg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30v952n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 18 Oct 2025 11:20:21 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59IBKLjb026050;
- Sat, 18 Oct 2025 11:20:21 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30v952k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 18 Oct 2025 11:20:21 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59I7m7sO015259;
- Sat, 18 Oct 2025 11:20:20 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r1jst03k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 18 Oct 2025 11:20:20 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59IBKGF858196316
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 18 Oct 2025 11:20:16 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC87D20043;
- Sat, 18 Oct 2025 11:20:16 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 819FB20040;
- Sat, 18 Oct 2025 11:20:14 +0000 (GMT)
-Received: from [9.39.28.54] (unknown [9.39.28.54])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 18 Oct 2025 11:20:14 +0000 (GMT)
-Message-ID: <65b70282-c6ca-4140-92f6-d266082b6d49@linux.ibm.com>
-Date: Sat, 18 Oct 2025 16:50:12 +0530
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vA52h-0003GD-Pp; Sat, 18 Oct 2025 07:24:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A1F5D5972E9;
+ Sat, 18 Oct 2025 13:24:09 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 8fY2bizLRwZf; Sat, 18 Oct 2025 13:24:07 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 8763C5972E0; Sat, 18 Oct 2025 13:24:07 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 84ECB5972DF;
+ Sat, 18 Oct 2025 13:24:07 +0200 (CEST)
+Date: Sat, 18 Oct 2025 13:24:07 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
+In-Reply-To: <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
+Message-ID: <a844d0ea-d05e-2e89-2a23-32309fd55eef@eik.bme.hu>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
+ <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
+ <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
+ <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/8] hw/ppc: Pass dump-sizes property for fadump in
- device tree
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250323174007.221116-1-adityag@linux.ibm.com>
- <20250323174007.221116-7-adityag@linux.ibm.com>
-Content-Language: en-US
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
-In-Reply-To: <20250323174007.221116-7-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 7NNeu7VW4TNrJUSGF6OUjufKGUP8Nhqv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7xvFBmervFR7
- YOI8QZmK3kOV8CdDGxUQ7vtlyask2droVB6msK7nfbzdlpyF/cfK6B25JlHdwEIN6QSObRw0+lN
- FP0ml1COH8NgDql23spW/HiOydX/WZFS4MQ1zobuy46EKKjim8sgcghELp2iAoaszKg7WK8bZy9
- 44Hgiw3u6rtdu7Nz6BZr+559stqWKsGfGhSCY48SrCXRuM5JJeAX2lWav6+gYSF+YF7xTLktvfC
- qVJklJUCj4zql8+l/XCI6iTe0L3qg5YAvPG2nw1kkf89UMayHwJqklFDsrnMXdCTZGBLErxX63f
- RAjEcWn3IBvRWGw3z04Z7u0T09lBKgta2TWdRd+/JzMbq9qCcHMTbK8ljPuVhgEY8ZvBoqj8SHw
- E76uVtUW4CoKCdHDu+T8kv3Sca2Njg==
-X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f377f5 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=f_s96IIItf4NiyCAkXYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: nmifO5uOhH0Lwxt7SaPlvP3-8bqKcb_G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-18_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=sourabhjain@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-286884297-1760786647=:56747"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -131,110 +72,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-286884297-1760786647=:56747
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-
-On 23/03/25 23:10, Aditya Gupta wrote:
-> Platform (ie. QEMU) is expected to pass few device tree properties for
-> details for fadump:
+On Sat, 18 Oct 2025, Harsh Prateek Bora wrote:
+> Hi Mark,
 >
->    * "ibm,configure-kernel-dump-sizes": Space required to store dump data
->      for firmware provided dump sections (ie. CPU & HPTE regions)
->    * "ibm,configure-kernel-dump-version": Versions of fadump supported
+> Thanks much for pitching in to help with reviewing this series.
 >
-> Pass the above device tree nodes so that kernel can reserve sufficient
-> space for preserving the CPU state data
+> On 9/19/25 01:51, BALATON Zoltan wrote:
+>> On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
+>>> On 18/09/2025 19:50, BALATON Zoltan wrote:
+>>>> The raven PCI device does not need a state struct as it has no data to
+>>>> store there any more, so we can remove that to simplify code.
+>>>> 
+>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>> ---
+>>>>   hw/pci-host/raven.c | 30 +-----------------------------
+>>>>   1 file changed, 1 insertion(+), 29 deletions(-)
+>>>> 
+>>>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>>>> index f8c0be5d21..172f01694c 100644
+>>>> --- a/hw/pci-host/raven.c
+>>>> +++ b/hw/pci-host/raven.c
+>>>> @@ -31,7 +31,6 @@
+>>>>   #include "hw/pci/pci_bus.h"
+>>>>   #include "hw/pci/pci_host.h"
+>>>>   #include "hw/qdev-properties.h"
+>>>> -#include "migration/vmstate.h"
+>>>>   #include "hw/intc/i8259.h"
+>>>>   #include "hw/irq.h"
+>>>>   #include "hw/or-irq.h"
+>>>> @@ -40,12 +39,6 @@
+>>>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>>>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+>>>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
+>>>> -
+>>>> -struct RavenPCIState {
+>>>> -    PCIDevice dev;
+>>>> -};
+>>>> -
+>>>>   typedef struct PRePPCIState PREPPCIState;
+>>>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>>>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+>>>> @@ -65,7 +58,6 @@ struct PRePPCIState {
+>>>>       MemoryRegion bm_ram_alias;
+>>>>       MemoryRegion bm_pci_memory_alias;
+>>>>       AddressSpace bm_as;
+>>>> -    RavenPCIState pci_dev;
+>>>>         int contiguous_map;
+>>>>   };
+>>>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, 
+>>>> Error **errp)
+>>>>                             "pci-intack", 1);
+>>>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
+>>>> &s->pci_intack);
+>>>>   -    /* TODO Remove once realize propagates to child devices. */
+>>>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
+>>>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
+>>>> TYPE_RAVEN_PCI_DEVICE);
+>>>>   }
 >
-> Note: As of this patch, the "kernel-dump" device tree entry is still not
-> added for the second boot, so after crash, the second kernel will boot
-> assuming fadump dump is "NOT" active, and try to register for fadump,
-> but since we already have fadump registered in QEMU internal state, the
-> register rtas call will fail with: "DUMP ACTIVE"
+> <snip>
 >
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   hw/ppc/spapr.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 57 insertions(+)
+>>>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, 
+>>>> const void *data)
+>>>>   static const TypeInfo raven_info = {
+>>>>       .name = TYPE_RAVEN_PCI_DEVICE,
+>>>>       .parent = TYPE_PCI_DEVICE,
+>>>> -    .instance_size = sizeof(RavenPCIState),
+>>>>       .class_init = raven_class_init,
+>>>>       .interfaces = (const InterfaceInfo[]) {
+>>>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>>> 
+>>> I agree with removing RavenPCIState, but pci_create_simple() isn't the 
+>>> right solution here because it both init()s and realize()s the inner 
+>>> object. The right way to do this is for the parent to init() its inner 
+>>> object(s) within its init() function, and similarly for it to realize() 
+>>> its inner object(s) within its realize() function.
+>>> 
+>>> FWIW it looks as if the same mistake is present in several other 
+>>> hw/pci-host devices.
+>> 
+>> So maybe that's not a mistake then. There's no need to init and realize it 
+>> separately as this is an internal object which is enough to be created in 
+>> realize method and init and realize there at one go for which 
+>> pci_create_simple is appropriate. I think this inner object would only need 
+>> to be init separately if it exposed something (like a property) that could 
+>> be inspected or set before realize but that's not the case here so it does 
+>> not have to be created in init only in realize. (A lot of simple devices 
+>> don't even have init method only realize so init is only needed for things 
+>> that have to be set before realize.)
 >
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index a415e51d077a..3cbc6a7409b7 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -900,6 +900,61 @@ static int spapr_dt_rng(void *fdt)
->       return ret ? -1 : 0;
->   }
->   
-> +static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
-> +{
-> +    MachineState *ms = MACHINE(spapr);
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +
-> +    uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
-> +    uint64_t fadump_cpu_state_size = 0;
-> +    uint16_t fadump_versions[2] = {
-> +        FADUMP_VERSION /* min supported version */,
-> +        FADUMP_VERSION /* max supported version */
-> +    };
-> +    uint32_t fadump_rgn_sizes[2][3] = {
-> +        {
-> +            cpu_to_be32(FADUMP_CPU_STATE_DATA),
-> +            0, 0 /* Calculated later */
-> +        },
-> +        {
-> +            cpu_to_be32(FADUMP_HPTE_REGION),
-> +            0, 0 /* HPTE region not implemented */
-> +        }
+> Do we have a consensus here ?
 
-#nit-pick
-Why to advertise if we don't support it? Kernel anyways ignores this for 
-now.
+It's hard to get a consensus if only two people care and they have 
+different views... I think a separate init is not needed here and as noted 
+the same pattern is present elsewhere and wasn't criticised or deprecated 
+practice. The separate init and realize is also not a convention known to 
+me (unless needed for other reason like I said above) so I regard it as a 
+personal preference not something that needs to be followed generally.
 
-> +    };
-> +
-> +    /*
-> +     * CPU State Data contains multiple fields such as header, num_cpus and
-> +     * register entries
-> +     *
-> +     * Calculate the maximum CPU State Data size, according to maximum
-> +     * possible CPUs the QEMU VM can have
-> +     *
-> +     * This calculation must match the 'cpu_state_len' calculation done in
-> +     * 'populate_cpu_state_data' in spapr_fadump.c
-> +     */
-> +    fadump_cpu_state_size += sizeof(struct FadumpRegSaveAreaHeader);
-> +    fadump_cpu_state_size += 0xc;                      /* padding as in PAPR */
-> +    fadump_cpu_state_size += sizeof(__be32);           /* num_cpus */
-> +    fadump_cpu_state_size += max_possible_cpus   *     /* reg entries */
-> +                             FADUMP_NUM_PER_CPU_REGS *
-> +                             sizeof(struct FadumpRegEntry);
-> +
-> +    /* Set maximum size for CPU state data region */
-> +    assert(fadump_rgn_sizes[0][0] == cpu_to_be32(FADUMP_CPU_STATE_DATA));
-> +
-> +    /* Upper 32 bits of size, usually 0 */
-> +    fadump_rgn_sizes[0][1] = cpu_to_be32(fadump_cpu_state_size >> 32);
-> +
-> +    /* Lower 32 bits of size */
-> +    fadump_rgn_sizes[0][2] = cpu_to_be32(fadump_cpu_state_size & 0xffffffff);
-> +
-> +    /* Add device tree properties required from platform for fadump */
-> +    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-version",
-> +                    fadump_versions, sizeof(fadump_versions))));
-> +    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
-> +                    fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
-> +}
-> +
->   static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
->   {
->       MachineState *ms = MACHINE(spapr);
-> @@ -1012,6 +1067,8 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
->       _FDT(fdt_setprop(fdt, rtas, "ibm,lrdr-capacity",
->                        lrdr_capacity, sizeof(lrdr_capacity)));
->   
-> +    spapr_dt_rtas_fadump(spapr, fdt, rtas);
-> +
->       spapr_dt_rtas_tokens(fdt, rtas);
->   }
->   
+Mark had a comment on the last patch about enabling a memory region that 
+after thinking about it I think should be in a reset method. I plan to 
+submit a new version with that.
 
+Regards,
+BALATON Zoltan
+--3866299591-286884297-1760786647=:56747--
 
