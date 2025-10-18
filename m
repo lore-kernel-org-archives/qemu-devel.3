@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99EBCCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D8ECCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADzD-00083j-Az; Sat, 18 Oct 2025 16:57:11 -0400
+	id 1vADyt-0007wf-Ey; Sat, 18 Oct 2025 16:56:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz1-0007zT-UR; Sat, 18 Oct 2025 16:57:01 -0400
+ id 1vADys-0007wM-Hr; Sat, 18 Oct 2025 16:56:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz0-0004xV-BJ; Sat, 18 Oct 2025 16:56:59 -0400
+ id 1vADyq-0004vi-Jk; Sat, 18 Oct 2025 16:56:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9DE2A15F87A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3EF3315F875;
  Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 866BD2F0683;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 280322F067E;
  Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- YiFei Zhu <zhuyifei@google.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 17/23] i386/cpu: Prevent delivering SIPI during SMM in
- TCG mode
-Date: Sat, 18 Oct 2025 23:56:35 +0300
-Message-ID: <20251018205644.1185050-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [Stable-10.0.6 01/23] Revert "target/i386: do not expose
+ ARCH_CAPABILITIES on AMD CPU"
+Date: Sat, 18 Oct 2025 23:56:30 +0300
+Message-ID: <20251018205644.1185050-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
@@ -60,79 +60,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+This reverts commit 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
+(v10.0.2-66-g24778b1c7ee7) from the 10.0.x branch.
 
-[commit message by YiFei Zhu]
+The problem is that the change makes qemu 10.0.x non-migratable
+to subsequent qemu versions, since it requires introducing a new
+machine type.
 
-A malicious kernel may control the instruction pointer in SMM in a
-multi-processor VM by sending a sequence of IPIs via APIC:
+This revert re-introduces the problem with windows guests (which
+is already fixed in windows but not in prior versions).
+Details: https://gitlab.com/qemu-project/qemu/-/issues/3001
 
-CPU0			CPU1
-IPI(CPU1, MODE_INIT)
-			x86_cpu_exec_reset()
-			apic_init_reset()
-			s->wait_for_sipi = true
-IPI(CPU1, MODE_SMI)
-			do_smm_enter()
-			env->hflags |= HF_SMM_MASK;
-IPI(CPU1, MODE_STARTUP, vector)
-			do_cpu_sipi()
-			apic_sipi()
-			/* s->wait_for_sipi check passes */
-			cpu_x86_load_seg_cache_sipi(vector)
-
-A different sequence, SMI INIT SIPI, is also buggy in TCG because
-INIT is not blocked or latched during SMM. However, it is not
-vulnerable to an instruction pointer control in the same way because
-x86_cpu_exec_reset clears env->hflags, exiting SMM.
-
-Fixes: a9bad65d2c1f ("target-i386: wake up processors that receive an SMI")
-Analyzed-by: YiFei Zhu <zhuyifei@google.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit df32e5c568c9cf68c15a9bbd98d0c3aff19eab63)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reopens: https://gitlab.com/qemu-project/qemu/-/issues/3001 (for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index d18c1dbf2c..b2a2b671b0 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -645,8 +645,6 @@ void apic_sipi(DeviceState *dev)
- {
-     APICCommonState *s = APIC(dev);
- 
--    cpu_reset_interrupt(CPU(s->cpu), CPU_INTERRUPT_SIPI);
--
-     if (!s->wait_for_sipi)
-         return;
-     cpu_x86_load_seg_cache_sipi(s->cpu, s->sipi_vector);
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index c07b1b16ea..891f7bac46 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -617,6 +617,10 @@ void do_cpu_init(X86CPU *cpu)
- 
- void do_cpu_sipi(X86CPU *cpu)
- {
-+    CPUX86State *env = &cpu->env;
-+    if (env->hflags & HF_SMM_MASK) {
-+        return;
-+    }
-     apic_sipi(cpu->apic_state);
- }
- 
-diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
-index b07cc9f9b1..ea7e42d068 100644
---- a/target/i386/tcg/system/seg_helper.c
-+++ b/target/i386/tcg/system/seg_helper.c
-@@ -182,6 +182,7 @@ bool x86_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-         apic_poll_irq(cpu->apic_state);
-         break;
-     case CPU_INTERRUPT_SIPI:
-+        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
-         do_cpu_sipi(cpu);
-         break;
-     case CPU_INTERRUPT_SMI:
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 70d6095be9..e88e5d17db 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -500,12 +500,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+          * Linux v4.17-v4.20 incorrectly return ARCH_CAPABILITIES on SVM hosts.
+          * We can detect the bug by checking if MSR_IA32_ARCH_CAPABILITIES is
+          * returned by KVM_GET_MSR_INDEX_LIST.
+-         *
+-         * But also, because Windows does not like ARCH_CAPABILITIES on AMD
+-         * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
+-         * KVM sets up.
+          */
+-        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
++        if (!has_msr_arch_capabs) {
+             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
+         }
+     } else if (function == 7 && index == 1 && reg == R_EAX) {
 -- 
 2.47.3
 
