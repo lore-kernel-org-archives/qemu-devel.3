@@ -4,42 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF700CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62660CCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADzZ-0008E4-2d; Sat, 18 Oct 2025 16:57:33 -0400
+	id 1vADz5-0007zg-Fh; Sat, 18 Oct 2025 16:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADzW-0008D5-BH; Sat, 18 Oct 2025 16:57:31 -0400
+ id 1vADyy-0007yZ-RM; Sat, 18 Oct 2025 16:56:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADzU-0004yu-RE; Sat, 18 Oct 2025 16:57:30 -0400
+ id 1vADyx-0004x6-6y; Sat, 18 Oct 2025 16:56:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1FE0115F880;
- Sat, 18 Oct 2025 23:56:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 79CD415F878;
+ Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 070DD2F0689;
- Sat, 18 Oct 2025 23:56:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 60BE92F0681;
+ Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 23/23] linux-user/microblaze: Fix little-endianness
- binary
-Date: Sat, 18 Oct 2025 23:56:41 +0300
-Message-ID: <20251018205644.1185050-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 15/23] target/i386: Fix CR2 handling for non-canonical
+ addresses
+Date: Sat, 18 Oct 2025 23:56:33 +0300
+Message-ID: <20251018205644.1185050-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,60 +60,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Mathias Krause <minipli@grsecurity.net>
 
-MicroBlaze CPU model has a "little-endian" property, pointing to
-the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-Explicit CPU endianness") took care of having all MicroBlaze
-boards with an explicit default endianness, so later commit
-415aae543ed ("target/microblaze: Consider endianness while
-translating code") could infer the endianness at runtime from
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-definition. Doing so, we forgot to make the endianness explicit
-on user emulation, so there all CPUs are started with the default
-"little-endian=off" value, leading to breaking support for little
-endian binaries:
+Commit 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
+accidentally modified CR2 for non-canonical address exceptions while these
+should lead to a #GP / #SS instead -- without changing CR2.
 
-  $ readelf -h ./hello-world-mbel
-  ELF Header:
-    Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
-    Class:                             ELF32
-    Data:                              2's complement, little endian
+Fix that.
 
-  $ qemu-microblazeel ./hello-world-mbel
-  qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-  Segmentation fault (core dumped)
+A KUT test for this was submitted as [1].
 
-Fix by restoring the previous behavior of starting with the
-builtin endianness of the binary:
+[1] https://lore.kernel.org/kvm/20250612141637.131314-1-minipli@grsecurity.net/
 
-  $ qemu-microblazeel ./hello-world-mbel
-  Hello World
-
+Fixes: 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://lore.kernel.org/r/20250612142155.132175-1-minipli@grsecurity.net
 Cc: qemu-stable@nongnu.org
-Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
-Reported-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-Id: <20251006173350.17455-1-philmd@linaro.org>
-(cherry picked from commit 91fc6d8101de97c588e0a4263cf4f6148b3e702a)
-(Mjt: adapt for missing v10.1.0-38-gaf880af8d4
- "linux-user: Move get_elf_cpu_model to target/elfload.c")
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit df9a3372ddebfcfc135861fa2d53cef6f98065f9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
-index 8a8f1debff..cab4c9187c 100644
---- a/linux-user/microblaze/target_elf.h
-+++ b/linux-user/microblaze/target_elf.h
-@@ -9,6 +9,7 @@
- #define MICROBLAZE_TARGET_ELF_H
- static inline const char *cpu_get_model(uint32_t eflags)
- {
--    return "any";
-+    return TARGET_BIG_ENDIAN ? "any,little-endian=off"
-+                             : "any,little-endian=on";
- }
- #endif
+diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
+index 6876329de2..cad42455dc 100644
+--- a/target/i386/tcg/system/excp_helper.c
++++ b/target/i386/tcg/system/excp_helper.c
+@@ -589,7 +589,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+                 if (sext != 0 && sext != -1) {
+                     *err = (TranslateFault){
+                         .exception_index = EXCP0D_GPF,
+-                        .cr2 = addr,
++                        /* non-canonical #GP doesn't change CR2 */
++                        .cr2 = env->cr[2],
+                     };
+                     return false;
+                 }
 -- 
 2.47.3
 
