@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEE9CCD184
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 23:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A0F8CCD199
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 00:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9uIk-0003du-1A; Fri, 17 Oct 2025 19:56:02 -0400
+	id 1v9uTZ-0005kj-Vz; Fri, 17 Oct 2025 20:07:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9uIi-0003dc-Ei
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 19:56:00 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1v9uTW-0005kI-0c
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 20:07:10 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v9uIg-0000Fx-IY
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 19:56:00 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7811fa91774so2261882b3a.0
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 16:55:57 -0700 (PDT)
+ id 1v9uTT-0001O1-PO
+ for qemu-devel@nongnu.org; Fri, 17 Oct 2025 20:07:09 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-290ac2ef203so23865645ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 17:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760745356; x=1761350156; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760746024; x=1761350824; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HJ112Z/iurXexrQzBPlsWARs2RDVzkngIeWSCqLcO2o=;
- b=dmgKUYzmbl0HQvY0MTuLK8u88+fXTiVc9tKc5gQeqBwQ142eM1fx8ULTwgPd7Mfr51
- CY4YIrhvXOzSw1si3afTjefpvJ804/HSJ695i/yZD1INjn8Ivm2EYXyw95YnwsyPN20s
- 3B5VotyGs7KHmzFHin7/ao5+Rl0T3od2bc3MXXBuBY2zSdeL6fzOyTk4XJwabXHmWVM5
- dOumf0fYTnnLi2CIJxseXmrEESCzwYHPO1fYAjvGoVnUhiRS3y2bzII5oqc4fKq4Cedc
- 6Kg41DFswQbeAfUWREjO2JplMYpyyX3uwhFUW8mJUzHYD2oJNDFItRgoGgJc1xmJ5vQa
- QuiA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tj1LiYHZT5JfE4Xte3L5EfRaaL/qpnGtsyvSNv5aynA=;
+ b=eSM4Vx/WPnikbiwHuB3VRMccQu0HIYL78Tfx9GD2H52KQhWV1jIwBg3J/v6l3hmSyG
+ Anl2UnABoa8/ckyha7S6LFOVrwWC85H674taNnef4VEo95ErMxqEk7dJTdeXm7GoCdvs
+ W75hT3p8myHJvCl94wOGrtPpqjc9kLIqtdk/IphmERvx2vp9jhDgGrRaV90Dkbn9ZhAe
+ gp9NK1P8NSDe5P6x3NmrmHqZ9F67BnMvaJYy25n9u4DL6ltGCPnygEdCQZDxavbYuRmJ
+ vEtRCAjYKohCA5qnP449/iTkoa1aeyMB6pQnb5/QDUndxArb7+CZzegOV7oT5LUc42pU
+ 8Upw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760745356; x=1761350156;
+ d=1e100.net; s=20230601; t=1760746024; x=1761350824;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HJ112Z/iurXexrQzBPlsWARs2RDVzkngIeWSCqLcO2o=;
- b=dMM5yVaSi4oMLw7zQacnGqNS9Oiae2MD/aZJqyMGe02iQjM6c/Lmu5nvF8+/Pmn+Jr
- DVmgtSmXW0Otb9W7QTgOCLmwAzycSRoa5MWHB1lx/lMlgIzWpJp1GQIocZkwss8hadyi
- uz5FI2NEfomLNFvHVMy5IOF7VGsVMwS1nkv8x0ecT/geH+HMN7CjBU0/wCRhkk8gRVvR
- k8mFKWP91/GoCRUhmOvCmmCy8QQ3ssm+wro4zzALr99pGH71nN0Dzi4OPLNGLidEi846
- oYgTzkPt++cMUeptnsdtEOBohGXR9pmHLscn34gr5zumHDDmHtA5b/yHNumiQDhcBRku
- JbyQ==
-X-Gm-Message-State: AOJu0Ywy42K0S6/sk3HY/xfqiz95//vIaew7ytcNOBnXRsnyhhlfVPvU
- fnL8/8PIcW19xUPS11Vx5UFdmt5NJynDEavXgThgsLmROAO1Wnb6gUjimHabihqe6tEAKso4RB6
- G6HvizDE=
-X-Gm-Gg: ASbGncvarU51Mb5Eo1ExNFO7EtjrOQ4sBcWwkX77XaCGUdCThwNDnsy5kGI8sOaU+eK
- DsDUMwtSFRkD0oQmKG9ZblW+EybBnPbEBMGWEWdLETK07sxwLuzy9IEImgSQnwI0an9TMHbPz3j
- GjrCLSzU4a7FP+4x8HHm8pcOZk6KZ99wJgYE/8BBRVzatPKLHfyiuRDDIy56nsnJ/NtvT+ki8MG
- +bH0vSip83HtFpsXpHICGzqL2jMaaHMRl7SqSVfzHZ/AWQkZmdnFm6cXgyRuxfDqG+wL8z1QuZh
- 2IYHIZMDQTIQpbdbWheSTYAzFiOmmDjrV2WDH0RE/ioKj/A5MHs4j9AUEFYEeu5v+ZOOWlvWwwR
- nFbEuYX5eV9246odGBU+ZxzG5Cq+vt52tvfXjqHRNgiAqwDiKRRZ4KtBOTVm+6wMFTQVqGwsDEh
- sHKaIF6oi78xDpO3c5St30GPXX
-X-Google-Smtp-Source: AGHT+IEAdf6ewHijFUa7qXNcAHuVfeRvvS4mCELbFzmpktT5sTbrFMPoDYv/glc9IgGagArg/PWCig==
-X-Received: by 2002:a05:6a00:188b:b0:781:2757:1b4f with SMTP id
- d2e1a72fcca58-7a2206eb750mr5785949b3a.7.1760745356158; 
- Fri, 17 Oct 2025 16:55:56 -0700 (PDT)
+ bh=tj1LiYHZT5JfE4Xte3L5EfRaaL/qpnGtsyvSNv5aynA=;
+ b=X+DKTOqgkxinogf9/6cVkclVrUNIC2aoWWMpOprwliE+D354jKhUm6Bloo7maSHv2X
+ BoBKecZ7AVNvWlD/nn9FzEUOHWqGKwaMbVb8Pli42jcN4sAY1luDTO3h4ge3n8hQWwer
+ mfD9d/GjA4K5YnbtIQTofC1hb8idLt5QUxWVPq0vDXhSauDAECcJBZGAA7U3OtzifWfC
+ 2cu23wxl0s1zwo0WOb9F1v4t3StV1Rib0OyppI7SD3SinVtHHOjFd9lAumVghvQpEJ9W
+ Lpb37V95pWoAT8twft/bP3cyuVEDgZ58EQ7HqpYQ0hmJeui3UCYKDNO21QAPHkmCLCJf
+ 9gfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmoRcNlyc4K01VTwPlbsM2jwGd99WYZNlAr1aBkjs2r6iaZfP3lSN3JkiN/SSrMl/ogK2QHYjDn55I@nongnu.org
+X-Gm-Message-State: AOJu0YxesBDNYVuETKWP3o026Zj4vP/TQN8cFG4KcJuLOcv29WXhAXxc
+ FSAnXQ/27LS72VvlINdfrntBEz+Yb7yYE7JT0xx7sV7IQ4dDtzCA+h4gvSucStgc5ow=
+X-Gm-Gg: ASbGncsnfc54CvL5lWc4LALP0JmcgWdQm1ZMS0p4i8PWRZq6mbTm5nXaXE1YLM5a8fq
+ 1B9VmVX9DQbhXbggyNGGXOzFHZPHRop3u6uwrsSKF7LZOiVq/gB5RzQuBlKerj6JuwEaghWR2At
+ 0FIardA++fv9KXA2blx35t7SeiAMjYhJlU9yk09DABlvBAGAHV7LPgmOHv3bF8+KPox/piRV5xo
+ yZAw9MYo/sBGS17la8dUbDsDZ06JqB8HuRWCBhA5JVI2D5jr6K2tHCy46f9cUloPux8r6ae1JB7
+ /hM3UiDLcGPtYwi4ctM6a9TT0AqhUWaUj5lvRXMMftZsor1W32xQCr6t2nwXGmhvYVcEN6emDGD
+ 0weINQO7/bd9+GkKp7hlfHYbQ045sDDekKDVu3o9H0oTc0szfPY13FuZtPi0y4N4Gx5xMWRB1Od
+ Vcw0MPGGsGnO26Bw==
+X-Google-Smtp-Source: AGHT+IFy1wuLj/VcH6k/86y3hTNQs22Vis63lgfA91sUtONqRb57rU2KGZd8TDRwkmRNkkCZtykx9A==
+X-Received: by 2002:a17:903:1a0e:b0:28d:c790:43d0 with SMTP id
+ d9443c01a7336-290ca30e417mr62934035ad.29.1760746024136; 
+ Fri, 17 Oct 2025 17:07:04 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a22ff5d76bsm818020b3a.33.2025.10.17.16.55.55
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2924721936fsm7418545ad.114.2025.10.17.17.07.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Oct 2025 16:55:55 -0700 (PDT)
-Message-ID: <240a1736-2850-454d-8b7b-4574f5a9576b@linaro.org>
-Date: Fri, 17 Oct 2025 16:55:54 -0700
+ Fri, 17 Oct 2025 17:07:03 -0700 (PDT)
+Message-ID: <971171ba-0fe4-46c8-8332-2a0089f679e3@linaro.org>
+Date: Fri, 17 Oct 2025 17:07:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] gdbstub: Export host_to_gdb_errno File-I/O helper
- function
-To: qemu-devel@nongnu.org
-References: <20251017211149.163762-1-yodel.eldar@yodel.dev>
- <20251017211149.163762-3-yodel.eldar@yodel.dev>
+Subject: Re: [PATCH 1/3] gdbstub: Fix %s formatting
+To: Sean Anderson <sean.anderson@linux.dev>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Luc Michel <lmichel@kalray.eu>
+References: <20251017213529.998267-1-sean.anderson@linux.dev>
+ <20251017213529.998267-2-sean.anderson@linux.dev>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251017211149.163762-3-yodel.eldar@yodel.dev>
+In-Reply-To: <20251017213529.998267-2-sean.anderson@linux.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +108,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 14:11, Yodel Eldar via wrote:
-> Move host_to_gdb_errno from target/m68k/m68k-semi.c to
-> gdbstub/syscalls.c. Declare it in include/gdbstub/syscalls.h.
+On 10/17/25 14:35, Sean Anderson wrote:
+> The format string for %s has two format characters. This causes it to
+> emit strings like "466f5bd8/6x" instead of "466f5bd8/6". GDB detects
+> this and returns EIO, causing all open File I/O calls to fail.
 > 
-> Add both newly added GDB File-I/O supported errno values, EIO and
-> ENOSYS, to the mapping.
-> 
-> Signed-off-by: Yodel Eldar<yodel.eldar@yodel.dev>
+> Fixes: 0820a075af ("gdbstub: Adjust gdb_do_syscall to only use uint32_t and uint64_t")
+> Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
 > ---
->   gdbstub/syscalls.c         | 36 ++++++++++++++++++++++++++++++++++++
->   include/gdbstub/syscalls.h |  9 +++++++++
->   target/m68k/m68k-semi.c    | 29 -----------------------------
->   3 files changed, 45 insertions(+), 29 deletions(-)
+> 
+>   gdbstub/syscalls.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
+> index e855df21ab..d8bb90cc1c 100644
+> --- a/gdbstub/syscalls.c
+> +++ b/gdbstub/syscalls.c
+> @@ -127,7 +127,7 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...)
+>               case 's':
+>                   i64 = va_arg(va, uint64_t);
+>                   i32 = va_arg(va, uint32_t);
+> -                p += snprintf(p, p_end - p, "%" PRIx64 "/%x" PRIx32, i64, i32);
+> +                p += snprintf(p, p_end - p, "%" PRIx64 "/%" PRIx32, i64, i32);
+>                   break;
+>               default:
+>               bad_format:
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
