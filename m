@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A65E9CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 04:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72166CCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 05:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9yto-0006gR-45; Sat, 18 Oct 2025 00:50:36 -0400
+	id 1v9zWZ-0002qK-VV; Sat, 18 Oct 2025 01:30:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freddy77@gmail.com>)
- id 1v9yth-0006gA-QJ
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 00:50:30 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <freddy77@gmail.com>)
- id 1v9ytf-0000F3-5L
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 00:50:29 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-63e1c0fd7ddso1276110d50.0
- for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 21:50:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760763023; x=1761367823; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BIcKoM0w5d+FWz+9+3EWxNCBqPh+IYEG3nR6drWx/WA=;
- b=UqcSPkdRKf80u0CIq1wYcn7sh1R/+iXIVtCh4s2FyRkVUCHhGKGoKMt6N7BixnDlNm
- gD0rgGeXI/MWGokyP0sSCNvzi+RcEhy57CTnwpyvIubJT3QoYwIOwGq3vjuPrFPo2CV6
- aOPL6oxPrDtm4Px1aHXct2cY452mgUO9/6HTNGBYUBbMg5hPfitNGVPHP8YMy3FZAF4m
- SdmwVot1ZZBvaJrN8yhKrHzqW/1URG1sxOQdsnR9OvfUi19sQcsd/tMB+ljD3Ii6nS8R
- Pfd1OnMVV4Sh4lgCjHvEhGZLQmJRcSGD3Vg1sBM5lzt7u5rYSZ7zXGjhHFXw8PqrfwtP
- zJmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760763023; x=1761367823;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BIcKoM0w5d+FWz+9+3EWxNCBqPh+IYEG3nR6drWx/WA=;
- b=dLkcEiFoZV5kGZ4zDu3VAaES8dFYiw25Rmjp+B7SZcaygpOk+PP8GxAyQYoPxyyd4t
- HggAcJBDCaX2a4QeJIyl1A2ftdIxEbr4pEdy58dw6JWRH0drcNNr+X+kGHiLiZwY1Kkh
- 7El99icTuloJlRIi2asF90aIIrLAaRwfUNKzuTFSD+jWYn1g0uoCxbbzaPjn94puKC4D
- gb13p1mJv2BECi+MZmvvByV44a20irSFJvnUpDJMfkoA1aM7/Tj8ff6+KKpt21CWD5sC
- jdL8aOO878p0ODPnUpJI/y3/NnQUJK7dJY8CwVPpC08JYlsyeTLYmWjs0nOniwtXlAA/
- GwQA==
-X-Gm-Message-State: AOJu0YzVyaySgG24GqZa1pWklAMcJyUzmmrH6zRZYyY99o1cR9KLHGi+
- zEPF9gb3xqS1NMsbxkRsVCXpJcQg9KRDTq6Sq5v5GiRDe1qQlYUHdbCE4b3t2XMCNBbwPLdwCii
- aC9CgRlE5xtT5vE0ULAifjgn/pz+lOyU=
-X-Gm-Gg: ASbGncvixJvD7eGvIQ1H84Li1HfK/j88NjXav7HAcclFDSnlGjQIXgB3RRPYg4sbS4L
- tqa3zveZXL1qu6UmE9AbhCcgaVbwwRyr+iVbS+42jy63nmTW8VJQ8OPw4Iy8gemFATtVyvmP/Z5
- Oj/SMro2yRfo1Y/TQJMT/iQWOXjo0JlP4XM2iksrHZlIEkWplf7yWxDri18xR3dIsafWUxp8RnX
- 4ncvfDptLvPkrTqcdrOvm+geHovZziqm2Wg/d+Kc+y0/tKveOczdSkx0aDKDuWFdY6OfMA=
-X-Google-Smtp-Source: AGHT+IEilvWbtCW5uBzm7QpX6iKYSCadhAVZKn4tREbb4azBJtfoTD7u65ot1ZeFv6sGpoaqvlRwGvnbmi4Mxk986C4=
-X-Received: by 2002:a05:690e:2505:10b0:63c:efd6:c607 with SMTP id
- 956f58d0204a3-63e160d904emr4363604d50.3.1760763023085; Fri, 17 Oct 2025
- 21:50:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v9zWX-0002q6-SX
+ for qemu-devel@nongnu.org; Sat, 18 Oct 2025 01:30:38 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v9zWV-0006Ak-UU
+ for qemu-devel@nongnu.org; Sat, 18 Oct 2025 01:30:37 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E72415F4FD;
+ Sat, 18 Oct 2025 08:30:18 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4023F2F02D6;
+ Sat, 18 Oct 2025 08:30:21 +0300 (MSK)
+Message-ID: <40530e85-986e-4566-8c52-bb38793232b6@tls.msk.ru>
+Date: Sat, 18 Oct 2025 08:30:21 +0300
 MIME-Version: 1.0
-References: <20251017155136.16540-1-roger.pau@citrix.com>
-In-Reply-To: <20251017155136.16540-1-roger.pau@citrix.com>
-From: Frediano Ziglio <freddy77@gmail.com>
-Date: Sat, 18 Oct 2025 05:50:11 +0100
-X-Gm-Features: AS18NWAhPCgMVZ6RyFOMVIDyG8JZlvyB7tbnYI4D_8IsK9EL7c2IPK05IjJcI0c
-Message-ID: <CAHt6W4cpBv3JhzFJg1pMw+z04uo41po2+GwJW1NZG8PD816U9Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/xen: pass PCI domain to xc_physdev_map_pirq_msi()
-To: Roger Pau Monne <roger.pau@citrix.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, xen-devel@lists.xenproject.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=freddy77@gmail.com; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/8] hex queue
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <bcain@quicinc.com>, Anton Johansson <anjo@rev.ng>
+References: <20251017205028.1105595-1-brian.cain@oss.qualcomm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251017205028.1105595-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,56 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 17, 2025 at 4:52=E2=80=AFPM Roger Pau Monne <roger.pau@citrix.c=
-om> wrote:
->
-> It's currently impossible for passthrough devices on segment different th=
-an
-> 0 to work correctly, as the PCI domain is not provided to
-> xc_physdev_map_pirq_msi(), and hence it's unconditionally assumed that al=
-l
-> devices are on segment 0.
->
-> Adjust the call to xc_physdev_map_pirq_msi() to pass the PCI domain in th=
-e
-> high 16bits of the bus parameter.  On versions of Xen where this is not
-> supported the passed segment will be ignored and assume to be 0, no worse
+On 10/17/25 23:50, Brian Cain wrote:
+> The following changes since commit 18f6f30b0089b470f3e737637a86dfb81ebd6eae:
+> 
+>    Merge tag 'pull-request-2025-10-16' of https://gitlab.com/thuth/qemu into staging (2025-10-16 12:27:12 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/quic/qemu tags/pull-hex-20251017
+> 
+> for you to fetch changes up to f97700e0752753e294db11de8462aef5d8009a89:
+> 
+>    target/hexagon: Only indent on linux (2025-10-17 13:45:46 -0700)
+> 
+> ----------------------------------------------------------------
+> Fixes for linux-user sigcontext save/restore, etc.
+> 
+> misc: avoid inconsistencies w/indent on macOS
+> fix hexagon linux-user sigcontext discrepancy, found by Alex @ Zig
+> 
+> ----------------------------------------------------------------
+> Anton Johansson (2):
+>        target/hexagon: Replace `prepare` script with meson target
+>        target/hexagon: Only indent on linux
+> 
+> Brian Cain (6):
+>        linux-user/hexagon: Fix sigcontext
+>        linux-user/hexagon: use abi_ulong
+>        linux-user/hexagon: Use an array for GPRs
+>        tests/tcg/hexagon: Add cs{0,1} coverage
+>        target/hexagon: handle .new values
+>        target/hexagon: s/pkt_has_store/pkt_has_scalar_store
 
-typo: assumed
+Is there anything in there which should be picked up for active
+qemu stable series (10.0 & 10.1), or is it not worth the effort?
+(the sigcontext fixes seems to be good candidates, though are
+a bit large).
 
-> than the current state.
->
-> Signed-off-by: Roger Pau Monn=C3=A9 <roger.pau@citrix.com>
-> ---
-> Cc: Stefano Stabellini <sstabellini@kernel.org>
-> Cc: Anthony PERARD <anthony@xenproject.org>
-> Cc: Paul Durrant <paul@xen.org>
-> Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-> Cc: xen-devel@lists.xenproject.org
-> ---
->  hw/xen/xen_pt_msi.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
-> index e9ba17317aba..df15ccf0d030 100644
-> --- a/hw/xen/xen_pt_msi.c
-> +++ b/hw/xen/xen_pt_msi.c
-> @@ -138,6 +138,7 @@ static int msi_msix_setup(XenPCIPassthroughState *s,
->          rc =3D xc_physdev_map_pirq_msi(xen_xc, xen_domid, XEN_PT_AUTO_AS=
-SIGN,
->                                       ppirq, PCI_DEVFN(s->real_device.dev=
-,
->                                                        s->real_device.fun=
-c),
-> +                                     ((uint32_t)s->real_device.domain <<=
- 16) |
->                                       s->real_device.bus,
->                                       msix_entry, table_base);
->          if (rc) {
+Thanks,
 
-Reviewed-by: Frediano Ziglio <freddy77@gmail.com>
-
-This was tested on a real machine.
-
-Frediano
+/mjt
 
