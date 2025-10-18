@@ -4,39 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06036CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BECFCCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADzB-00082Y-Vm; Sat, 18 Oct 2025 16:57:10 -0400
+	id 1vADzV-0008CH-Lc; Sat, 18 Oct 2025 16:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz3-0007zc-7Z; Sat, 18 Oct 2025 16:57:01 -0400
+ id 1vADzU-0008AU-15; Sat, 18 Oct 2025 16:57:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz1-0004xh-8w; Sat, 18 Oct 2025 16:57:00 -0400
+ id 1vADzS-0004yd-8l; Sat, 18 Oct 2025 16:57:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFA0415F87B;
- Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0F49515F87F;
+ Sat, 18 Oct 2025 23:56:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 964132F0684;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E770C2F0688;
  Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, YiFei Zhu <zhuyifei@google.com>,
- unvariant.winter@gmail.com, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Gabriel Brookman <brookmangabriel@gmail.com>,
+ =?UTF-8?q?Andreas=20H=C3=BCttel?= <andreas.huettel@ur.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 18/23] i386/tcg/smm_helper: Properly apply DR values
- on SMM entry / exit
-Date: Sat, 18 Oct 2025 23:56:36 +0300
-Message-ID: <20251018205644.1185050-7-mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 22/23] target/hppa: correct size bit parity for fmpyadd
+Date: Sat, 18 Oct 2025 23:56:40 +0300
+Message-ID: <20251018205644.1185050-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,60 +64,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YiFei Zhu <zhuyifei@google.com>
+From: Gabriel Brookman <brookmangabriel@gmail.com>
 
-do_smm_enter and helper_rsm sets the env->dr, but does not sync the
-values with cpu_x86_update_dr7. A malicious kernel may control the
-instruction pointer in SMM by setting a breakpoint on the SMI
-entry point, and after do_smm_enter cpu->breakpoints contains the
-stale breakpoint; and because IDT is not reloaded upon SMI entry,
-the debug exception handler controlled by the malicious kernel
-is invoked.
+For the fmpyadd instruction on the hppa architecture, there is a bit
+used to specify whether the instruction is operating on a 32 bit or
+64 bit floating point register. For most instructions, such a bit is 0
+when operating on the smaller register and 1 when operating on the
+larger register. However, according to page 6-57 of the PA-RISC 1.1
+Architecture and Instruction Set Reference Manual, this convention is
+reversed for the fmpyadd instruction specifically, meaning the bit is
+1 for operations on 32 bit registers and 0 for 64 bit registers. See
+also page 6-18 (fig. 6-8) and 6-19 (table 6-16), where the f field
+for FMPYADD and FMPYSUB is documented. Previously, QEMU decoded this
+operation as operating on the other size of register, leading to bugs
+when translating the fmpyadd instruction. This patch fixes that issue.
 
-Fixes: 01df040b5247 ("x86: Debug register emulation (Jan Kiszka)")
-Reported-by: unvariant.winter@gmail.com
-Signed-off-by: YiFei Zhu <zhuyifei@google.com>
-Link: https://lore.kernel.org/r/2bacb9b24e9d337dbe48791aa25d349eb9c52c3a.1758794468.git.zhuyifei@google.com
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit cdba90ac1b0ac789b10c0b5f6ef7e9558237ec66)
+Reported-by: Andreas Hüttel <andreas.huettel@ur.de>
+Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3096
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-ID: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
+[PMD: Add documentation refs mentioned by Andreas K. Huettel]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit cea82f8cdd07697a48ae1c4e026707463f432a45)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/system/smm_helper.c b/target/i386/tcg/system/smm_helper.c
-index 251eb7856c..fb028a8272 100644
---- a/target/i386/tcg/system/smm_helper.c
-+++ b/target/i386/tcg/system/smm_helper.c
-@@ -168,7 +168,7 @@ void do_smm_enter(X86CPU *cpu)
-                        env->cr[0] & ~(CR0_PE_MASK | CR0_EM_MASK | CR0_TS_MASK |
-                                       CR0_PG_MASK));
-     cpu_x86_update_cr4(env, 0);
--    env->dr[7] = 0x00000400;
-+    helper_set_dr(env, 7, 0x00000400);
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index 4eaac750ea..13c6a55bf2 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -365,10 +365,10 @@ fstd            011100 ..... ..... .. ............1.    @ldstim11
+ &mpyadd         rm1 rm2 ta ra tm
+ @mpyadd         ...... rm1:5 rm2:5 ta:5 ra:5 . tm:5     &mpyadd
  
-     cpu_x86_load_seg_cache(env, R_CS, (env->smbase >> 4) & 0xffff, env->smbase,
-                            0xffffffff,
-@@ -233,8 +233,8 @@ void helper_rsm(CPUX86State *env)
-     env->eip = x86_ldq_phys(cs, sm_state + 0x7f78);
-     cpu_load_eflags(env, x86_ldl_phys(cs, sm_state + 0x7f70),
-                     ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C | DF_MASK));
--    env->dr[6] = x86_ldl_phys(cs, sm_state + 0x7f68);
--    env->dr[7] = x86_ldl_phys(cs, sm_state + 0x7f60);
-+    helper_set_dr(env, 6, x86_ldl_phys(cs, sm_state + 0x7f68));
-+    helper_set_dr(env, 7, x86_ldl_phys(cs, sm_state + 0x7f60));
+-fmpyadd_f       000110 ..... ..... ..... ..... 0 .....  @mpyadd
+-fmpyadd_d       000110 ..... ..... ..... ..... 1 .....  @mpyadd
+-fmpysub_f       100110 ..... ..... ..... ..... 0 .....  @mpyadd
+-fmpysub_d       100110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpyadd_f       000110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpyadd_d       000110 ..... ..... ..... ..... 0 .....  @mpyadd
++fmpysub_f       100110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpysub_d       100110 ..... ..... ..... ..... 0 .....  @mpyadd
  
-     cpu_x86_update_cr4(env, x86_ldl_phys(cs, sm_state + 0x7f48));
-     cpu_x86_update_cr3(env, x86_ldq_phys(cs, sm_state + 0x7f50));
-@@ -268,8 +268,8 @@ void helper_rsm(CPUX86State *env)
-     env->regs[R_EDX] = x86_ldl_phys(cs, sm_state + 0x7fd8);
-     env->regs[R_ECX] = x86_ldl_phys(cs, sm_state + 0x7fd4);
-     env->regs[R_EAX] = x86_ldl_phys(cs, sm_state + 0x7fd0);
--    env->dr[6] = x86_ldl_phys(cs, sm_state + 0x7fcc);
--    env->dr[7] = x86_ldl_phys(cs, sm_state + 0x7fc8);
-+    helper_set_dr(env, 6, x86_ldl_phys(cs, sm_state + 0x7fcc));
-+    helper_set_dr(env, 7, x86_ldl_phys(cs, sm_state + 0x7fc8));
- 
-     env->tr.selector = x86_ldl_phys(cs, sm_state + 0x7fc4) & 0xffff;
-     env->tr.base = x86_ldl_phys(cs, sm_state + 0x7f64);
+ ####
+ # Conditional Branches
 -- 
 2.47.3
 
