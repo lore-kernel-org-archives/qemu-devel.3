@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBBCCCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3809CCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vACHT-0006ji-Tm; Sat, 18 Oct 2025 15:07:56 -0400
+	id 1vACHR-0006jO-3w; Sat, 18 Oct 2025 15:07:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACHJ-0006cl-ML; Sat, 18 Oct 2025 15:07:46 -0400
+ id 1vACHB-0006ZT-Dy; Sat, 18 Oct 2025 15:07:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACHE-00018K-62; Sat, 18 Oct 2025 15:07:44 -0400
+ id 1vACH9-00017o-Ev; Sat, 18 Oct 2025 15:07:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6C98415F7A4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 58B2E15F7A3;
  Sat, 18 Oct 2025 22:06:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31E372F060D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 19F322F060C;
  Sat, 18 Oct 2025 22:07:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Gabriel Brookman <brookmangabriel@gmail.com>,
+ =?UTF-8?q?Andreas=20H=C3=BCttel?= <andreas.huettel@ur.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 23/23] linux-user/microblaze: Fix little-endianness
- binary
-Date: Sat, 18 Oct 2025 22:06:58 +0300
-Message-ID: <20251018190702.1178893-12-mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 22/23] target/hppa: correct size bit parity for fmpyadd
+Date: Sat, 18 Oct 2025 22:06:57 +0300
+Message-ID: <20251018190702.1178893-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
@@ -64,60 +64,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Gabriel Brookman <brookmangabriel@gmail.com>
 
-MicroBlaze CPU model has a "little-endian" property, pointing to
-the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-Explicit CPU endianness") took care of having all MicroBlaze
-boards with an explicit default endianness, so later commit
-415aae543ed ("target/microblaze: Consider endianness while
-translating code") could infer the endianness at runtime from
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-definition. Doing so, we forgot to make the endianness explicit
-on user emulation, so there all CPUs are started with the default
-"little-endian=off" value, leading to breaking support for little
-endian binaries:
+For the fmpyadd instruction on the hppa architecture, there is a bit
+used to specify whether the instruction is operating on a 32 bit or
+64 bit floating point register. For most instructions, such a bit is 0
+when operating on the smaller register and 1 when operating on the
+larger register. However, according to page 6-57 of the PA-RISC 1.1
+Architecture and Instruction Set Reference Manual, this convention is
+reversed for the fmpyadd instruction specifically, meaning the bit is
+1 for operations on 32 bit registers and 0 for 64 bit registers. See
+also page 6-18 (fig. 6-8) and 6-19 (table 6-16), where the f field
+for FMPYADD and FMPYSUB is documented. Previously, QEMU decoded this
+operation as operating on the other size of register, leading to bugs
+when translating the fmpyadd instruction. This patch fixes that issue.
 
-  $ readelf -h ./hello-world-mbel
-  ELF Header:
-    Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00
-    Class:                             ELF32
-    Data:                              2's complement, little endian
-
-  $ qemu-microblazeel ./hello-world-mbel
-  qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-  Segmentation fault (core dumped)
-
-Fix by restoring the previous behavior of starting with the
-builtin endianness of the binary:
-
-  $ qemu-microblazeel ./hello-world-mbel
-  Hello World
-
-Cc: qemu-stable@nongnu.org
-Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
-Reported-by: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+Reported-by: Andreas Hüttel <andreas.huettel@ur.de>
+Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3096
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-ID: <20251009-hppa-correct-fmpyadd-size-bit-decoding-v1-1-f63bb6c3290c@gmail.com>
+[PMD: Add documentation refs mentioned by Andreas K. Huettel]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-Id: <20251006173350.17455-1-philmd@linaro.org>
-(cherry picked from commit 91fc6d8101de97c588e0a4263cf4f6148b3e702a)
-(Mjt: adapt for missing v10.1.0-38-gaf880af8d4
- "linux-user: Move get_elf_cpu_model to target/elfload.c")
+(cherry picked from commit cea82f8cdd07697a48ae1c4e026707463f432a45)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
-index 8a8f1debff..cab4c9187c 100644
---- a/linux-user/microblaze/target_elf.h
-+++ b/linux-user/microblaze/target_elf.h
-@@ -9,6 +9,7 @@
- #define MICROBLAZE_TARGET_ELF_H
- static inline const char *cpu_get_model(uint32_t eflags)
- {
--    return "any";
-+    return TARGET_BIG_ENDIAN ? "any,little-endian=off"
-+                             : "any,little-endian=on";
- }
- #endif
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index 4eaac750ea..13c6a55bf2 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -365,10 +365,10 @@ fstd            011100 ..... ..... .. ............1.    @ldstim11
+ &mpyadd         rm1 rm2 ta ra tm
+ @mpyadd         ...... rm1:5 rm2:5 ta:5 ra:5 . tm:5     &mpyadd
+ 
+-fmpyadd_f       000110 ..... ..... ..... ..... 0 .....  @mpyadd
+-fmpyadd_d       000110 ..... ..... ..... ..... 1 .....  @mpyadd
+-fmpysub_f       100110 ..... ..... ..... ..... 0 .....  @mpyadd
+-fmpysub_d       100110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpyadd_f       000110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpyadd_d       000110 ..... ..... ..... ..... 0 .....  @mpyadd
++fmpysub_f       100110 ..... ..... ..... ..... 1 .....  @mpyadd
++fmpysub_d       100110 ..... ..... ..... ..... 0 .....  @mpyadd
+ 
+ ####
+ # Conditional Branches
 -- 
 2.47.3
 
