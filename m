@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D8ECCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6552ECCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADyt-0007wf-Ey; Sat, 18 Oct 2025 16:56:51 -0400
+	id 1vADzE-00083o-0x; Sat, 18 Oct 2025 16:57:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADys-0007wM-Hr; Sat, 18 Oct 2025 16:56:50 -0400
+ id 1vADz6-00080R-Dt; Sat, 18 Oct 2025 16:57:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADyq-0004vi-Jk; Sat, 18 Oct 2025 16:56:50 -0400
+ id 1vADz3-0004xz-IS; Sat, 18 Oct 2025 16:57:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3EF3315F875;
+ by isrv.corpit.ru (Postfix) with ESMTP id C94C215F87C;
  Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 280322F067E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A7BCB2F0685;
  Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [Stable-10.0.6 01/23] Revert "target/i386: do not expose
- ARCH_CAPABILITIES on AMD CPU"
-Date: Sat, 18 Oct 2025 23:56:30 +0300
-Message-ID: <20251018205644.1185050-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Ogrisegg <tom-bugs-qemu@fnord.at>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 19/23] target/i386: fix x86_64 pushw op
+Date: Sat, 18 Oct 2025 23:56:37 +0300
+Message-ID: <20251018205644.1185050-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
@@ -60,39 +59,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 24778b1c7ee7aca9721ed4757b0e0df0c16390f7
-(v10.0.2-66-g24778b1c7ee7) from the 10.0.x branch.
+From: Thomas Ogrisegg <tom-bugs-qemu@fnord.at>
 
-The problem is that the change makes qemu 10.0.x non-migratable
-to subsequent qemu versions, since it requires introducing a new
-machine type.
+For x86_64 a 16 bit push op (pushw) of a memory address would generate
+a 64 bit store on the stack instead of a 16 bit store.
 
-This revert re-introduces the problem with windows guests (which
-is already fixed in windows but not in prior versions).
-Details: https://gitlab.com/qemu-project/qemu/-/issues/3001
+For example:
+        pushw (%rax)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reopens: https://gitlab.com/qemu-project/qemu/-/issues/3001 (for 10.0.x)
+behaves like
+        pushq (%rax)
+
+which is incorrect.
+
+This patch fixes that.
+
+Signed-off-by: Thomas Ogrisegg <tom-bugs-qemu@fnord.at>
+Link: https://lore.kernel.org/r/20250715210307.GA1115@x1.fnord.at
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 5a2faa0a0a2cbdad4a108a0e122b0e51b9bc94fd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 70d6095be9..e88e5d17db 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -500,12 +500,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-          * Linux v4.17-v4.20 incorrectly return ARCH_CAPABILITIES on SVM hosts.
-          * We can detect the bug by checking if MSR_IA32_ARCH_CAPABILITIES is
-          * returned by KVM_GET_MSR_INDEX_LIST.
--         *
--         * But also, because Windows does not like ARCH_CAPABILITIES on AMD
--         * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
--         * KVM sets up.
-          */
--        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
-+        if (!has_msr_arch_capabs) {
-             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
-         }
-     } else if (function == 7 && index == 1 && reg == R_EAX) {
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index f4cfc196b8..1a3ee3b1f6 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1541,7 +1541,7 @@ static void decode_group4_5(DisasContext *s, CPUX86State *env, X86OpEntry *entry
+         [0x0b] = X86_OP_ENTRYr(CALLF_m, M,p),
+         [0x0c] = X86_OP_ENTRYr(JMP_m,   E,f64,                         zextT0),
+         [0x0d] = X86_OP_ENTRYr(JMPF_m,  M,p),
+-        [0x0e] = X86_OP_ENTRYr(PUSH,    E,f64),
++        [0x0e] = X86_OP_ENTRYr(PUSH,    E,d64),
+     };
+ 
+     int w = (*b & 1);
 -- 
 2.47.3
 
