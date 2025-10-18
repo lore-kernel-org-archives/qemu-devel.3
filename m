@@ -4,32 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2B5CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33321CCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:12:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA8ar-0008CV-Hm; Sat, 18 Oct 2025 11:11:41 -0400
+	id 1vA8aw-0008GC-OC; Sat, 18 Oct 2025 11:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8ap-0008At-AS; Sat, 18 Oct 2025 11:11:39 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vA8as-0008DZ-OE; Sat, 18 Oct 2025 11:11:42 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8an-0005fP-48; Sat, 18 Oct 2025 11:11:39 -0400
+ id 1vA8ar-0005gP-6h; Sat, 18 Oct 2025 11:11:42 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9AE645972F0;
- Sat, 18 Oct 2025 17:11:33 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C22155972F2;
+ Sat, 18 Oct 2025 17:11:39 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Aw74348iQ-IE; Sat, 18 Oct 2025 17:11:31 +0200 (CEST)
+ id kCtEyuRt3L2n; Sat, 18 Oct 2025 17:11:37 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4DA245972E4; Sat, 18 Oct 2025 17:11:31 +0200 (CEST)
-Message-ID: <cover.1760798392.git.balaton@eik.bme.hu>
+ id C4BCF5972E9; Sat, 18 Oct 2025 17:11:37 +0200 (CEST)
+Message-ID: <59db89084080a26119b41af21ad977b6fd86ec0a.1760798392.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1760798392.git.balaton@eik.bme.hu>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+Subject: [PATCH v3 06/13] hw/ppc/pegasos2: Add south bridge pointer in the
+ machine state
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -37,15 +40,14 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 17:11:31 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sat, 18 Oct 2025 17:11:37 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,70 +63,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series changes how the fdt for VOF is generated in pegasos2 by
-moving the static parts to a dtb and only generate the changing parts
-such as memory size and PCI devices programmatically. This simplifies
-the code and allows simply adding emulation of Pegasos I which has a
-different north bridge and slightly different memory map but otherwise
-very similar and can be emulated by reusing parts from the amigaone
-machine. The machine was tested with a Pegasos I ROM image and MorphOS.
+Add field for the south bridge in machine state to have both north and
+south bridges in it.
 
-The first VOF patch (submitted separetely before, the reviewed v3 is
-included here) fixes handling the name property in VOF that cannot be
-represented in a dts as that always takes the path as the name and
-cannot accept an explicit name property but we need the name property
-to appear when guest queries properties which previously was worked
-around by adding it to every node.
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ppc/pegasos2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-The series also adds an extended DEFINE_MACHINE macro that is later
-used for more easily define the abstract machine type and hide most of
-the QOM boiler plate.
-
-Regards,
-BALATON Zoltan
-
-Link to previous version:
-https://patchew.org/QEMU/cover.1751494995.git.balaton@eik.bme.hu/
-
-v3:
-- rebase on master
-
-v2:
-- rebase on master
-- added some R-b tags from Philippe
-- move first patch later (was first to allow merging separately)
-- clarify blurb above
-
-BALATON Zoltan (13):
-  ppc/vof: Make nextprop behave more like Open Firmware
-  hw/ppc/pegasos2: Remove explicit name properties from device tree
-  hw/ppc/pegasos2: Change device tree generation
-  hw/ppc/pegasos2: Remove fdt pointer from machine state
-  hw/ppc/pegasos2: Rename mv field in machine state
-  hw/ppc/pegasos2: Add south bridge pointer in the machine state
-  hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
-  hw/ppc/pegasos2: Move hardware specific parts out of machine reset
-  hw/ppc/pegasos2: Introduce abstract superclass
-  hw/ppc/pegasos2: Add bus frequency to machine state
-  hw/boards: Extend DEFINE_MACHINE macro to cover more use cases
-  hw/ppc/pegasos2: Add Pegasos I emulation
-  hw/ppc/pegasos2: Add VOF support for pegasos1
-
- MAINTAINERS              |   1 +
- hw/ppc/pegasos2.c        | 770 +++++++++++++++++++--------------------
- hw/ppc/vof.c             |  50 ++-
- include/hw/boards.h      |  16 +-
- pc-bios/dtb/meson.build  |   2 +
- pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
- pc-bios/dtb/pegasos1.dts | 125 +++++++
- pc-bios/dtb/pegasos2.dtb | Bin 0 -> 1701 bytes
- pc-bios/dtb/pegasos2.dts | 167 +++++++++
- 9 files changed, 718 insertions(+), 413 deletions(-)
- create mode 100644 pc-bios/dtb/pegasos1.dtb
- create mode 100644 pc-bios/dtb/pegasos1.dts
- create mode 100644 pc-bios/dtb/pegasos2.dtb
- create mode 100644 pc-bios/dtb/pegasos2.dts
-
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index 9b50cd3dab..66bceec5ef 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -69,6 +69,7 @@ struct Pegasos2MachineState {
+ 
+     PowerPCCPU *cpu;
+     DeviceState *nb; /* north bridge */
++    DeviceState *sb; /* south bridge */
+     IRQState pci_irqs[PCI_NUM_PINS];
+     OrIRQState orirq[PCI_NUM_PINS];
+     qemu_irq mv_pirq[PCI_NUM_PINS];
+@@ -174,7 +175,8 @@ static void pegasos2_init(MachineState *machine)
+     pci_bus = mv64361_get_pci_bus(pm->nb, 1);
+ 
+     /* VIA VT8231 South Bridge (multifunction PCI device) */
+-    via = OBJECT(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
++    pm->sb = DEVICE(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
++    via = OBJECT(pm->sb);
+ 
+     /* Set properties on individual devices before realizing the south bridge */
+     if (machine->audiodev) {
 -- 
 2.41.3
 
