@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764FFCCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E49ACCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA8av-0008Ff-Lh; Sat, 18 Oct 2025 11:11:45 -0400
+	id 1vA8b1-0008JC-Fb; Sat, 18 Oct 2025 11:11:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8au-0008FE-P8; Sat, 18 Oct 2025 11:11:44 -0400
+ id 1vA8ay-0008HY-1d; Sat, 18 Oct 2025 11:11:48 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8as-0005gg-CA; Sat, 18 Oct 2025 11:11:44 -0400
+ id 1vA8aw-0005hz-Iy; Sat, 18 Oct 2025 11:11:47 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D30055972F0;
- Sat, 18 Oct 2025 17:11:40 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 124475972F4;
+ Sat, 18 Oct 2025 17:11:45 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id t0DACFwylb9v; Sat, 18 Oct 2025 17:11:38 +0200 (CEST)
+ id cX8MZRavzLAx; Sat, 18 Oct 2025 17:11:43 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D34F55972E0; Sat, 18 Oct 2025 17:11:38 +0200 (CEST)
-Message-ID: <ed95b94037b835f8e9458bb849d1ec29aa38f5d5.1760798392.git.balaton@eik.bme.hu>
+ id 196585972DF; Sat, 18 Oct 2025 17:11:43 +0200 (CEST)
+Message-ID: <d75c8bbed97650f1a4d2d675444582a240a335b4.1760798392.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1760798392.git.balaton@eik.bme.hu>
 References: <cover.1760798392.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 07/13] hw/ppc/pegasos2: Move PCI IRQ routing setup to a
- function
+Subject: [PATCH v3 11/13] hw/boards: Extend DEFINE_MACHINE macro to cover more
+ use cases
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,7 +40,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 17:11:38 +0200 (CEST)
+Date: Sat, 18 Oct 2025 17:11:43 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -64,121 +64,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Collect steps of setting up PCI IRQ routing in one function.
+Add a more general DEFINE_MACHINE_EXTENDED macro and define simpler
+versions with less parameters based on that. This is inspired by how
+the OBJECT_DEFINE macros do this in a similar way to allow using the
+shortened definition in more complex cases too.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/pegasos2.c | 66 +++++++++++++++++++++++------------------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ include/hw/boards.h | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 66bceec5ef..26a571f82e 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -107,6 +107,38 @@ static void pegasos2_pci_irq(void *opaque, int n, int level)
-     qemu_set_irq(pm->via_pirq[n], level);
- }
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 665b620121..fd3d549ff5 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -762,7 +762,8 @@ struct MachineState {
+         } \
+     } while (0)
  
-+/* Set up PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
-+static void pegasos2_setup_pci_irq(Pegasos2MachineState *pm)
-+{
-+    for (int h = 0; h < 2; h++) {
-+        DeviceState *pd;
-+        g_autofree const char *pn = g_strdup_printf("pcihost%d", h);
+-#define DEFINE_MACHINE(namestr, machine_initfn) \
++#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
++                                machine_initfn, ABSTRACT, ...) \
+     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
+     { \
+         MachineClass *mc = MACHINE_CLASS(oc); \
+@@ -770,8 +771,11 @@ struct MachineState {
+     } \
+     static const TypeInfo machine_initfn##_typeinfo = { \
+         .name       = MACHINE_TYPE_NAME(namestr), \
+-        .parent     = TYPE_MACHINE, \
++        .parent     = TYPE_##PARENT_NAME, \
+         .class_init = machine_initfn##_class_init, \
++        .instance_size = sizeof(InstanceName), \
++        .abstract = ABSTRACT, \
++        .interfaces = (const InterfaceInfo[]) { __VA_ARGS__ } , \
+     }; \
+     static void machine_initfn##_register_types(void) \
+     { \
+@@ -779,6 +783,14 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
+ 
++#define DEFINE_MACHINE(namestr, machine_initfn) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, { })
 +
-+        pd = DEVICE(object_resolve_path_component(OBJECT(pm->nb), pn));
-+        assert(pd);
-+        for (int i = 0; i < PCI_NUM_PINS; i++) {
-+            OrIRQState *ori = &pm->orirq[i];
++#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, __VA_ARGS__)
 +
-+            if (h == 0) {
-+                g_autofree const char *n = g_strdup_printf("pci-orirq[%d]", i);
-+
-+                object_initialize_child_with_props(OBJECT(pm), n,
-+                                                   ori, sizeof(*ori),
-+                                                   TYPE_OR_IRQ, &error_fatal,
-+                                                   "num-lines", "2", NULL);
-+                qdev_realize(DEVICE(ori), NULL, &error_fatal);
-+                qemu_init_irq(&pm->pci_irqs[i], pegasos2_pci_irq, pm, i);
-+                qdev_connect_gpio_out(DEVICE(ori), 0, &pm->pci_irqs[i]);
-+                pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->nb, "gpp", 12 + i);
-+                pm->via_pirq[i] = qdev_get_gpio_in_named(pm->sb, "pirq", i);
-+            }
-+            qdev_connect_gpio_out(pd, i, qdev_get_gpio_in(DEVICE(ori), h));
-+        }
-+    }
-+    qdev_connect_gpio_out_named(pm->sb, "intr", 0,
-+                                qdev_get_gpio_in_named(pm->nb, "gpp", 31));
-+}
-+
- static void pegasos2_init(MachineState *machine)
- {
-     Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
-@@ -118,7 +150,6 @@ static void pegasos2_init(MachineState *machine)
-     I2CBus *i2c_bus;
-     const char *fwname = machine->firmware ?: PROM_FILENAME;
-     char *filename;
--    int i;
-     ssize_t sz;
-     uint8_t *spd_data;
+ extern GlobalProperty hw_compat_10_1[];
+ extern const size_t hw_compat_10_1_len;
  
-@@ -169,9 +200,6 @@ static void pegasos2_init(MachineState *machine)
-     /* Marvell Discovery II system controller */
-     pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
-                           qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
--    for (i = 0; i < PCI_NUM_PINS; i++) {
--        pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->nb, "gpp", 12 + i);
--    }
-     pci_bus = mv64361_get_pci_bus(pm->nb, 1);
- 
-     /* VIA VT8231 South Bridge (multifunction PCI device) */
-@@ -185,14 +213,9 @@ static void pegasos2_init(MachineState *machine)
-     }
- 
-     pci_realize_and_unref(PCI_DEVICE(via), pci_bus, &error_abort);
--    for (i = 0; i < PCI_NUM_PINS; i++) {
--        pm->via_pirq[i] = qdev_get_gpio_in_named(DEVICE(via), "pirq", i);
--    }
-     object_property_add_alias(OBJECT(machine), "rtc-time",
-                               object_resolve_path_component(via, "rtc"),
-                               "date");
--    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
--                                qdev_get_gpio_in_named(pm->nb, "gpp", 31));
- 
-     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
-     pci_ide_create_devs(dev);
-@@ -205,30 +228,7 @@ static void pegasos2_init(MachineState *machine)
-     /* other PC hardware */
-     pci_vga_init(pci_bus);
- 
--    /* PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
--    for (int h = 0; h < 2; h++) {
--        DeviceState *pd;
--        g_autofree const char *pn = g_strdup_printf("pcihost%d", h);
--
--        pd = DEVICE(object_resolve_path_component(OBJECT(pm->nb), pn));
--        assert(pd);
--        for (i = 0; i < PCI_NUM_PINS; i++) {
--            OrIRQState *ori = &pm->orirq[i];
--
--            if (h == 0) {
--                g_autofree const char *n = g_strdup_printf("pci-orirq[%d]", i);
--
--                object_initialize_child_with_props(OBJECT(pm), n,
--                                                   ori, sizeof(*ori),
--                                                   TYPE_OR_IRQ, &error_fatal,
--                                                   "num-lines", "2", NULL);
--                qdev_realize(DEVICE(ori), NULL, &error_fatal);
--                qemu_init_irq(&pm->pci_irqs[i], pegasos2_pci_irq, pm, i);
--                qdev_connect_gpio_out(DEVICE(ori), 0, &pm->pci_irqs[i]);
--            }
--            qdev_connect_gpio_out(pd, i, qdev_get_gpio_in(DEVICE(ori), h));
--        }
--    }
-+    pegasos2_setup_pci_irq(pm);
- 
-     if (machine->kernel_filename) {
-         sz = load_elf(machine->kernel_filename, NULL, NULL, NULL,
 -- 
 2.41.3
 
