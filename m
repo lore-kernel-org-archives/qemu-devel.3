@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF47DCCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 14:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68E1CCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 14:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA7YQ-0008LU-Ma; Sat, 18 Oct 2025 10:05:06 -0400
+	id 1vA7Ym-0000Ay-PD; Sat, 18 Oct 2025 10:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA7YF-0008Fd-6i; Sat, 18 Oct 2025 10:04:55 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vA7YM-0008JA-Pq; Sat, 18 Oct 2025 10:05:03 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA7YC-0006wj-Qt; Sat, 18 Oct 2025 10:04:54 -0400
+ id 1vA7YJ-0006yg-9H; Sat, 18 Oct 2025 10:05:02 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 58DCF5972DF;
- Sat, 18 Oct 2025 16:04:49 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C55225972F7;
+ Sat, 18 Oct 2025 16:04:57 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id IcqlEqMfGiKD; Sat, 18 Oct 2025 16:04:47 +0200 (CEST)
+ id gq91xv13vHOr; Sat, 18 Oct 2025 16:04:55 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 589715972E9; Sat, 18 Oct 2025 16:04:47 +0200 (CEST)
-Message-ID: <59675317dc7ad9e7049669baa5389d8f734841d9.1760795082.git.balaton@eik.bme.hu>
+ id C9B745972E9; Sat, 18 Oct 2025 16:04:55 +0200 (CEST)
+Message-ID: <f1d5a64d020af25a085866e2cf6b22d2b73423a2.1760795082.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1760795082.git.balaton@eik.bme.hu>
 References: <cover.1760795082.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 03/16] hw/pci-host/raven: Use DEFINE_TYPES macro
+Subject: [PATCH v4 11/16] hw/pci-host/raven: Simpify discontiguous IO access
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,14 +41,15 @@ Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
  Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 16:04:47 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Sat, 18 Oct 2025 16:04:55 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,91 +65,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert to using DEFINE_TYPES macro and move raven_pcihost_class_init
-so methods of each object are grouped together.
+PREP allows remapping of the 64k ISA IO addresses from the normal
+contiguous IO space into a discontiguous 8MB region and can switch
+between the two modes. We can implement this in a simpler way than is
+done currently using an io region that forwards access to the
+contiguous pci_io region and enabling/disabling the discontiguous
+region as needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/pci-host/raven.c | 57 +++++++++++++++++++++------------------------
- 1 file changed, 26 insertions(+), 31 deletions(-)
+ hw/pci-host/raven.c | 88 ++++++++++++---------------------------------
+ 1 file changed, 22 insertions(+), 66 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index 878c915de5..e0f98afebf 100644
+index bb0be40eb4..bf4f4b7f71 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -304,6 +304,15 @@ static void raven_pcihost_initfn(Object *obj)
-     h->bus = &s->pci_bus;
- }
+@@ -42,17 +42,14 @@ struct PREPPCIState {
+     PCIHostState parent_obj;
  
-+static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-+    dc->realize = raven_pcihost_realizefn;
-+    dc->fw_name = "pci";
-+}
-+
- static void raven_realize(PCIDevice *d, Error **errp)
- {
-     d->config[PCI_CACHE_LINE_SIZE] = 0x08;
-@@ -329,37 +338,23 @@ static void raven_class_init(ObjectClass *klass, const void *data)
-     dc->user_creatable = false;
- }
+     qemu_irq irq;
+-    AddressSpace pci_io_as;
+     MemoryRegion pci_io;
+-    MemoryRegion pci_io_non_contiguous;
++    MemoryRegion pci_discontiguous_io;
+     MemoryRegion pci_memory;
+     MemoryRegion pci_intack;
+     MemoryRegion bm;
+     MemoryRegion bm_ram_alias;
+     MemoryRegion bm_pci_memory_alias;
+     AddressSpace bm_as;
+-
+-    int contiguous_map;
+ };
  
--static const TypeInfo raven_info = {
--    .name = TYPE_RAVEN_PCI_DEVICE,
--    .parent = TYPE_PCI_DEVICE,
--    .class_init = raven_class_init,
--    .interfaces = (const InterfaceInfo[]) {
--        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
--        { },
-+static const TypeInfo raven_types[] = {
-+    {
-+        .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
-+        .parent = TYPE_PCI_HOST_BRIDGE,
-+        .instance_size = sizeof(PREPPCIState),
-+        .instance_init = raven_pcihost_initfn,
-+        .class_init = raven_pcihost_class_init,
-+    },
-+    {
-+        .name = TYPE_RAVEN_PCI_DEVICE,
-+        .parent = TYPE_PCI_DEVICE,
-+        .class_init = raven_class_init,
-+        .interfaces = (const InterfaceInfo[]) {
-+            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+            { },
-+        },
+ #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
+@@ -103,63 +100,28 @@ static const MemoryRegionOps raven_intack_ops = {
      },
  };
  
--static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
+-static inline hwaddr raven_io_address(PREPPCIState *s,
+-                                      hwaddr addr)
++/* Convert 8 MB non-contiguous address to 64k ISA IO address */
++static inline hwaddr raven_io_addr(hwaddr addr)
+ {
+-    if (s->contiguous_map == 0) {
+-        /* 64 KB contiguous space for IOs */
+-        addr &= 0xFFFF;
+-    } else {
+-        /* 8 MB non-contiguous space for IOs */
+-        addr = (addr & 0x1F) | ((addr & 0x007FFF000) >> 7);
+-    }
 -
--    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
--    dc->realize = raven_pcihost_realizefn;
--    dc->fw_name = "pci";
--}
+-    /* FIXME: handle endianness switch */
 -
--static const TypeInfo raven_pcihost_info = {
--    .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
--    .parent = TYPE_PCI_HOST_BRIDGE,
--    .instance_size = sizeof(PREPPCIState),
--    .instance_init = raven_pcihost_initfn,
--    .class_init = raven_pcihost_class_init,
--};
+-    return addr;
++    return ((addr & 0x007FFF000) >> 7) | (addr & 0x1F);
+ }
+ 
+-static uint64_t raven_io_read(void *opaque, hwaddr addr,
+-                              unsigned int size)
++static uint64_t raven_io_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+-    PREPPCIState *s = opaque;
+-    uint8_t buf[4];
 -
--static void raven_register_types(void)
--{
--    type_register_static(&raven_pcihost_info);
--    type_register_static(&raven_info);
--}
+-    addr = raven_io_address(s, addr);
+-    address_space_read(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
+-                       MEMTXATTRS_UNSPECIFIED, buf, size);
 -
--type_init(raven_register_types)
-+DEFINE_TYPES(raven_types)
+-    if (size == 1) {
+-        return buf[0];
+-    } else if (size == 2) {
+-        return lduw_le_p(buf);
+-    } else if (size == 4) {
+-        return ldl_le_p(buf);
+-    } else {
+-        g_assert_not_reached();
+-    }
++    uint64_t val = 0xffffffffULL;
++
++    memory_region_dispatch_read(opaque, raven_io_addr(addr), &val,
++                                size_memop(size) | MO_LE,
++                                MEMTXATTRS_UNSPECIFIED);
++    return val;
+ }
+ 
+-static void raven_io_write(void *opaque, hwaddr addr,
+-                           uint64_t val, unsigned int size)
++static void raven_io_write(void *opaque, hwaddr addr, uint64_t val,
++                           unsigned int size)
+ {
+-    PREPPCIState *s = opaque;
+-    uint8_t buf[4];
+-
+-    addr = raven_io_address(s, addr);
+-
+-    if (size == 1) {
+-        buf[0] = val;
+-    } else if (size == 2) {
+-        stw_le_p(buf, val);
+-    } else if (size == 4) {
+-        stl_le_p(buf, val);
+-    } else {
+-        g_assert_not_reached();
+-    }
+-
+-    address_space_write(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
+-                        MEMTXATTRS_UNSPECIFIED, buf, size);
++    memory_region_dispatch_write(opaque, raven_io_addr(addr), val,
++                                 size_memop(size) | MO_LE,
++                                 MEMTXATTRS_UNSPECIFIED);
+ }
+ 
+ static const MemoryRegionOps raven_io_ops = {
+@@ -208,7 +170,7 @@ static void raven_change_gpio(void *opaque, int n, int level)
+ {
+     PREPPCIState *s = opaque;
+ 
+-    s->contiguous_map = level;
++    memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
+ }
+ 
+ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+@@ -254,23 +216,17 @@ static void raven_pcihost_initfn(Object *obj)
+     MemoryRegion *address_space_mem = get_system_memory();
+ 
+     memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+-    memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
+-                          "pci-io-non-contiguous", 0x00800000);
++    memory_region_init_io(&s->pci_discontiguous_io, obj,
++                          &raven_io_ops, &s->pci_io,
++                          "pci-discontiguous-io", 8 * MiB);
+     memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
+-    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+-
+-    /*
+-     * Raven's raven_io_ops use the address-space API to access pci-conf-idx
+-     * (which is also owned by the raven device). As such, mark the
+-     * pci_io_non_contiguous as re-entrancy safe.
+-     */
+-    s->pci_io_non_contiguous.disable_reentrancy_guard = true;
+ 
+     /* CPU address space */
+     memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+                                 &s->pci_io);
+     memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
+-                                        &s->pci_io_non_contiguous, 1);
++                                        &s->pci_discontiguous_io, 1);
++    memory_region_set_enabled(&s->pci_discontiguous_io, false);
+     memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
+ 
+     /* Bus master address space */
 -- 
 2.41.3
 
