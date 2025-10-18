@@ -4,137 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 904B9CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 08:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CE6CCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 10:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA25e-0003gK-4e; Sat, 18 Oct 2025 04:15:02 -0400
+	id 1vA4ai-0000VE-DA; Sat, 18 Oct 2025 06:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vA25c-0003fg-Ob
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 04:15:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vA4ag-0000Pq-0c; Sat, 18 Oct 2025 06:55:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vA25a-0006hQ-8q
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 04:15:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760775295;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FcwCAzl2Pz0avpVx7jAkFXZuqrxrzUl4WKWSVaClnOU=;
- b=X0Ul2BaPkvfCBzxCRL2UXtl/Y/SnnKghcQpn4RpRKikfhsTrANTVZjByPFX8W/bwt8AA2y
- KLlhYb9Yad+yvo2+6p0EDtxzvpxbSziK2OxiL406kMhD5zp9VrrjL3ddilkS/goFy9y439
- NjF5tbL5/+IGpWNIBQNrnpJ6puTMXZA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-212-U6gdszbwOuKXKhvizUjORQ-1; Sat, 18 Oct 2025 04:14:54 -0400
-X-MC-Unique: U6gdszbwOuKXKhvizUjORQ-1
-X-Mimecast-MFC-AGG-ID: U6gdszbwOuKXKhvizUjORQ_1760775293
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4270a61ec48so1052741f8f.1
- for <qemu-devel@nongnu.org>; Sat, 18 Oct 2025 01:14:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760775293; x=1761380093;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FcwCAzl2Pz0avpVx7jAkFXZuqrxrzUl4WKWSVaClnOU=;
- b=R4YfffWVPmxGn2Gio5PlK3zi/OT+l4dGuDZ2AmqwbAOj38NwoPf8s/ASwhxzXIEmaZ
- smF1K4Hi+xzsdP8tGrEgc6mIIwfsFG9rCpw3zyHZpd36zR754inIK4Y29i3YAU5cjrXD
- lfNTp7PEiWc/0CBzEq2yRKTkT5nKm9mUJTucDRUmMUaqXbwGAZ0XYg4C78vsg1yRM4iq
- smISQxmMl1KErcdDzHVDZYmTLJub7WTmSaq6ePRqgxnduSKtWM/QtanP1mOjR7cG8NVn
- QkVCd7IViMRS+qEyMGDF4RcCjYdcI7rZaxK4kiUj8DXkH/OI1tjINb4MtXG+UfIyeosL
- Pdjg==
-X-Gm-Message-State: AOJu0Yz1ekvCuQN6UnWbVQNeW8RBByEgv3tA/uONAlRujXhZONaQe8EU
- 36t20bq0OavTif11pvD3pUZU+zSORRR4U+5zFFDMt5/RLtvKsiGlwExKz74TgtTUx5GdKXK+ct+
- faVIfw9etud+lFGy8OnutnmAq/dFq0kPDK3oywOSoiQVHxguRLQqovcKC
-X-Gm-Gg: ASbGncskR8rFy/m2BGQIExXd4+9u+HJ+iZ84dYiUMmGdai7ngDUGWFs7CUq8xeTVluP
- EvdfVrMYT5pZvydUDlNQSpYm/6umxK0Ys/O+LC3/zzLP6Zj/5EIdtG6UcUpPYmPJwnkL8p9iApc
- lzS/wKXOLLmI1pLUUM8RrJCWZAXfIuGIOTHMDvXd82On8wsGU2huOY7KzuFhxEalS4an7Tl4G9M
- aS242dcHxZbM7UUGS7o919VewgUGT669Xdpr2YRyD8iQOGGpVUwhKlqItW363JRdixlckkSNobJ
- Rte8IouJ0WCwYgqAxx7JoO4uOZhPjTfksZ2D157dssB1eMgAkggOx6mdkUoDS3orbM0JGj1UJoy
- Rh1MZaKlsK4F/D+LJFpz8OFwQk3xa0HqRtGTlkDnCAa2CY6gWTY48IJCPtli5jdGsHlRqHam857
- xJfQ==
-X-Received: by 2002:a05:6000:2305:b0:3e7:d199:7889 with SMTP id
- ffacd0b85a97d-42704d8f207mr4598140f8f.27.1760775292841; 
- Sat, 18 Oct 2025 01:14:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHd8VElMLi7vDR5vmzE0+2zFmAtJOR3pUHeb5wwqz9634kiI/AWKHFy9QrNxg5m98W0omWL8A==
-X-Received: by 2002:a05:6000:2305:b0:3e7:d199:7889 with SMTP id
- ffacd0b85a97d-42704d8f207mr4598126f8f.27.1760775292436; 
- Sat, 18 Oct 2025 01:14:52 -0700 (PDT)
-Received: from [192.168.10.48] ([151.61.22.175])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-427f009a78csm3504197f8f.26.2025.10.18.01.14.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Oct 2025 01:14:51 -0700 (PDT)
-Message-ID: <2de05b13-f97a-480d-b07c-2a8ffc695c21@redhat.com>
-Date: Sat, 18 Oct 2025 10:14:49 +0200
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vA4ac-00080K-Gq; Sat, 18 Oct 2025 06:55:13 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59I3WWaY030272;
+ Sat, 18 Oct 2025 10:55:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=MFJndc
+ a5cCA95JLyHFhgaZ3+dnYsIENhR/nw04aECME=; b=c7JYfmV+E/iZty2Y1kgUvT
+ nCOxBHcCiJVF/u7FnG27Z5mpZaftE2b64lML6GTu7R8an24rbDQQhTHwKjLsWrX7
+ NKZI8+LEsOg7LioNZ8dxT5Aof1xXVo+bD0Qn73tMp+8nup84rVGeCdjUAH+Kpfoq
+ RWd7wb9JnsE8mwRdtvCYWX+NpJYEncnm5UaBOm36w7OTCBnZC7W/Vc7dTsCF9ihF
+ XV/26xjkscEzpVLofo/XM8R8i7gG8LEoaDUUhXzY7eTDV+i3l7m5GyO0GuNKNWv1
+ cw/C7JxKtdEeoZeM6qszJmEROWm+Kp37v+t0uc+ALYfbByGKWAC3g1O1RUOYT6Lw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32h12at-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 18 Oct 2025 10:55:06 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59IAt6h1029826;
+ Sat, 18 Oct 2025 10:55:06 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32h12ar-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 18 Oct 2025 10:55:06 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59I7KaXl015190;
+ Sat, 18 Oct 2025 10:55:05 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49r1jssx0a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 18 Oct 2025 10:55:05 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59IAt1mO7602582
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 18 Oct 2025 10:55:01 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9FF0E20043;
+ Sat, 18 Oct 2025 10:55:01 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7309120040;
+ Sat, 18 Oct 2025 10:54:59 +0000 (GMT)
+Received: from [9.39.28.54] (unknown [9.39.28.54])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 18 Oct 2025 10:54:59 +0000 (GMT)
+Message-ID: <6a6f9e93-c824-4c6a-a24f-9b6e5f0d9cee@linux.ibm.com>
+Date: Sat, 18 Oct 2025 16:24:57 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/scsi: avoid deadlock upon TMF request cancelling
- with VirtIO
-To: Stefan Hajnoczi <stefanha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, fam@euphon.net, mst@redhat.com, kwolf@redhat.com,
- qemu-stable@nongnu.org
-References: <20251017094518.328905-1-f.ebner@proxmox.com>
- <20251017175433.GA14295@fedora>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v4 5/8] hw/ppc: Implement saving CPU state in Fadump
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-6-adityag@linux.ibm.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20251017175433.GA14295@fedora>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
+In-Reply-To: <20250323174007.221116-6-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX/OQitjkZpieI
+ e17s2BqFgKxnMnKdJnTDqfrNYHrIkx3/c8H6wyGTqnQdr3qpWEc6/PIWrw8G8PNLUV0G7qCl5e0
+ 4MDN8jTqgJNc2RgANWcZqn/UAMHqVn/2/KvSH1lnQkkOS17srwZ15r55HQefFR9jaqO1NmWIxri
+ z60kmu9T7qiJM0IzVPWgk7CEeIXc6xHAuoYV+lqbfbSBS/L+OZ+hD9X5BwAEhQCmS1v/7svP2iL
+ +W0iB53+C5JmDYz2KZrnBst0nXATgQ/ptuvi8HGye6MsJy6gqjUXazRXJQ7LX6SqbnV+v3YBtL1
+ Trko7VEiNIs8/cVd/CAgJh4VQlUU4obbh1JcK1TJaP0YrjULUPJwT+7nRCa6ThLw5Kjabf+1FUT
+ ZTNdMYMxJWT9UPQCiMSyQEw0zpmrbQ==
+X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68f3720a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8 a=4eW5D8OtxJjTOOaoBxwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: DvcthSO2UgKJukbdgBfz_Pr9L-Wc2S_k
+X-Proofpoint-ORIG-GUID: 0tk_pRqNthoyJKwFTLv20pdiJ7NSd3R0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-18_03,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=sourabhjain@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,133 +131,519 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 19:54, Stefan Hajnoczi wrote:
-> On Fri, Oct 17, 2025 at 11:43:30AM +0200, Fiona Ebner wrote:
->> Changes in v2:
->> * Different approach, collect requests for cancelling in a list for a
->>    localized solution rather than keeping track of the lock status via
->>    function arguments.
->>
->>   hw/scsi/virtio-scsi.c | 14 +++++++++++++-
->>   1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> Thanks, applied to my block tree:
-> https://gitlab.com/stefanha/qemu/commits/block
-
-Thanks Stefan; sorry for the delay in reviewing.  The fix
-of releasing the lock around virtio_scsi_tmf_cancel_req():
-
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 9b12ee7f1c6..ac17c97f224 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -1503,6 +1503,10 @@ SCSIRequest *scsi_req_ref(SCSIRequest *req)
-  
-  void scsi_req_unref(SCSIRequest *req)
-  {
-+    if (!req) {
-+        return;
-+    }
-+
-      assert(req->refcount > 0);
-      if (--req->refcount == 0) {
-          BusState *qbus = req->dev->qdev.parent_bus;
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index d817fc42b4c..481e78e4771 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -364,7 +364,11 @@ static void virtio_scsi_do_tmf_aio_context(void *opaque)
-      }
-  
-      WITH_QEMU_LOCK_GUARD(&d->requests_lock) {
-+        SCSIRequest *prev = NULL;
-          QTAILQ_FOREACH(r, &d->requests, next) {
-+            scsi_req_unref(prev);
-+            prev = NULL;
-+
-              VirtIOSCSIReq *cmd_req = r->hba_private;
-              assert(cmd_req); /* request has hba_private while enqueued */
-  
-@@ -374,8 +378,20 @@ static void virtio_scsi_do_tmf_aio_context(void *opaque)
-              if (match_tag && cmd_req->req.cmd.tag != tmf->req.tmf.tag) {
-                  continue;
-              }
-+
-+            /*
-+             * Keep it alive while the lock is released, and also to be
-+             * able to read "next".
-+             */
-+            scsi_req_ref(r);
-+            prev = r;
-+
-+            qemu_mutex_unlock(&d->request_lock);
-              virtio_scsi_tmf_cancel_req(tmf, r);
-+            qemu_mutex_lock(&d->request_lock);
-          }
-+
-+        scsi_req_unref(prev);
-      }
-  
-      /* Incremented by virtio_scsi_do_tmf() */
 
 
-would have a bug too, in that the loop is not using
-QTAILQ_FOREACH_SAFE and scsi_req_dequeue() removes the
-request from the list.
+On 23/03/25 23:10, Aditya Gupta wrote:
+> Kernel expects CPU states/register states in the format mentioned in
+> "Register Save Area" in PAPR.
+>
+> The platform (in our case, QEMU) saves each CPU register in the form of
+> an array of "register entries", the start and end of this array is
+> signified by "CPUSTRT" and "CPUEND" register entries respectively.
+>
+> The CPUSTRT and CPUEND register entry also has 4-byte logical CPU ID,
+> thus storing the CPU ID corresponding to the array of register entries.
+>
+> Each register, and CPUSTRT, CPUEND has a predefined identifier.
+> Implement calculating identifier for a given register in
+> 'fadump_str_to_u64', which has been taken from the linux kernel
+>
+> Similarly GPRs also have predefined identifiers, and a corresponding
+> 64-bit resiter value (split into two 32-bit cells). Implement
+> calculation of GPR identifiers with 'fadump_gpr_id_to_u64'
+>
+> PAPR has restrictions on particular order of few registers, and is
+> free to be in any order for other registers.
+> Some registers mentioned in PAPR have not been exported as they are not
+> implemented in QEMU / don't make sense in QEMU.
+>
+> Implement saving of CPU state according to the PAPR document
+>
+> Note: As of this patch, the "kernel-dump" device tree entry is still not
+> added for the second boot, so after crash, the second kernel will boot
+> assuming fadump dump is "NOT" active, and try to register for fadump,
+> but since we already have fadump registered in QEMU internal state, the
+> register rtas call will fail with: "DUMP ACTIVE"
+>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/spapr_fadump.c         | 336 +++++++++++++++++++++++++++++++++-
+>   include/hw/ppc/spapr_fadump.h |  28 +++
+>   2 files changed, 363 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+> index c105b8d21da5..fc764b46e726 100644
+> --- a/hw/ppc/spapr_fadump.c
+> +++ b/hw/ppc/spapr_fadump.c
+> @@ -8,6 +8,71 @@
+>   #include "qemu/log.h"
+>   #include "hw/ppc/spapr.h"
+>   #include "system/cpus.h"
+> +#include "system/hw_accel.h"
+> +
+> +/*
+> + * Copy the ascii values for first 8 characters from a string into u64
+> + * variable at their respective indexes.
+> + * e.g.
+> + *  The string "FADMPINF" will be converted into 0x4641444d50494e46
+> + */
+> +static uint64_t fadump_str_to_u64(const char *str)
+> +{
+> +    uint64_t val = 0;
+> +    int i;
+> +
+> +    for (i = 0; i < sizeof(val); i++) {
+> +        val = (*str) ? (val << 8) | *str++ : val << 8;
+> +    }
+> +    return val;
+> +}
+> +
+> +/**
+> + * Get the identifier id for register entries of GPRs
+> + *
+> + * It gives the same id as 'fadump_str_to_u64' when the complete string id
+> + * of the GPR is given, ie.
+> + *
+> + *   fadump_str_to_u64("GPR05") == fadump_gpr_id_to_u64(5);
+> + *   fadump_str_to_u64("GPR12") == fadump_gpr_id_to_u64(12);
+> + *
+> + * And so on. Hence this can be implemented by creating a dynamic
+> + * string for each GPR, such as "GPR00", "GPR01", ... "GPR31"
+> + * Instead of allocating a string, an observation from the math of
+> + * 'fadump_str_to_u64' or from PAPR tells us that there's a pattern
+> + * in the identifier IDs, such that the first 4 bytes are affected only by
+> + * whether it is GPR0*, GPR1*, GPR2*, GPR3*.
+> + * Upper half of 5th byte is always 0x3. Lower half (nibble) of 5th byte
+> + * is the tens digit of the GPR id, ie. GPR ID / 10.
+> + * Upper half of 6th byte is always 0x3. Lower half (nibble) of 5th byte
+> + * is the ones digit of the GPR id, ie. GPR ID % 10
+> + *
+> + * For example, for GPR 29, the 5th and 6th byte will be 0x32 and 0x39
+> + */
+> +static uint64_t fadump_gpr_id_to_u64(uint32_t gpr_id)
+> +{
+> +    uint64_t val = 0;
+> +
+> +    /* Valid range of GPR id is only GPR0 to GPR31 */
+> +    assert(gpr_id < 32);
+> +
+> +    /* Below calculations set the 0th to 5th byte */
+> +    if (gpr_id <= 9) {
+> +        val = fadump_str_to_u64("GPR0");
+> +    } else if (gpr_id <= 19) {
+> +        val = fadump_str_to_u64("GPR1");
+> +    } else if (gpr_id <= 29) {
+> +        val = fadump_str_to_u64("GPR2");
+> +    } else {
+> +        val = fadump_str_to_u64("GPR3");
+> +    }
+> +
+> +    /* Set the 6th byte */
+> +    val |= 0x30000000;
+> +    val |= ((gpr_id % 10) << 24);
+> +
+> +    return val;
+> +}
+>   
+>   /*
+>    * Handle the "FADUMP_CMD_REGISTER" command in 'ibm,configure-kernel-dump'
+> @@ -221,14 +286,221 @@ static bool do_preserve_region(FadumpSection *region)
+>       return true;
+>   }
+>   
+> +/*
+> + * Populate the passed CPUs register entries, in the buffer starting at
+> + * the argument 'curr_reg_entry'
+> + *
+> + * The register entries is an array of pair of register id and register
+> + * value, as described in Table 591/592 in section "H.1 Register Save Area"
+> + * in PAPR v2.13
+> + *
+> + * Returns pointer just past this CPU's register entries, which can be used
+> + * as the start address for next CPU's register entries
+> + */
+> +static FadumpRegEntry *populate_cpu_reg_entries(CPUState *cpu,
+> +        FadumpRegEntry *curr_reg_entry)
+> +{
+> +    CPUPPCState *env;
+> +    PowerPCCPU *ppc_cpu;
+> +    uint32_t num_regs_per_cpu = 0;
+> +
+> +    ppc_cpu = POWERPC_CPU(cpu);
+> +    env = cpu_env(cpu);
+> +    num_regs_per_cpu = 0;
+> +
+> +    curr_reg_entry->reg_id =
+> +        cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
+> +    curr_reg_entry->reg_value = ppc_cpu->vcpu_id;
 
-I think scsi_req_ref/unref should also be changed to use atomics.
-free_request is only implemented by hw/usb/dev-uas.c and all the
-others do not need a lock, so we're fine with that.
+Aren't we suppose to store CPU ID in big endian?
+As per PAPR the format CPUSTRT and CPUEND node is
 
-And QOM references held by the requests are not necessary, because
-anyway the requests won't survive scsi_qdev_unrealize (at which
-point the device is certainly alive).  I'll test this, add some
-comments and send a patch:
+8 Bytes Identifier (BE) | 4 Bytes Reserved (0x0) | 4 Bytes Logical CPU 
+ID (BE)
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 9b12ee7f1c6..7fcacc178da 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -838,8 +838,6 @@ SCSIRequest *scsi_req_alloc(const SCSIReqOps *reqops, SCSIDevice *d,
-      req->status = -1;
-      req->host_status = -1;
-      req->ops = reqops;
--    object_ref(OBJECT(d));
--    object_ref(OBJECT(qbus->parent));
-      notifier_list_init(&req->cancel_notifiers);
-  
-      if (reqops->init_req) {
-@@ -1496,15 +1494,15 @@ void scsi_device_report_change(SCSIDevice *dev, SCSISense sense)
-  
-  SCSIRequest *scsi_req_ref(SCSIRequest *req)
-  {
--    assert(req->refcount > 0);
--    req->refcount++;
-+    assert(qatomic_read(&req->refcount) > 0);
-+    qatomic_inc(&req->refcount);
-      return req;
-  }
-  
-  void scsi_req_unref(SCSIRequest *req)
-  {
--    assert(req->refcount > 0);
--    if (--req->refcount == 0) {
-+    assert(qatomic_read(&req->refcount) > 0);
-+    if (qatomic_fetch_dec(&req->refcount) == 1) {
-          BusState *qbus = req->dev->qdev.parent_bus;
-          SCSIBus *bus = DO_UPCAST(SCSIBus, qbus, qbus);
-  
-@@ -1514,8 +1512,6 @@ void scsi_req_unref(SCSIRequest *req)
-          if (req->ops->free_req) {
-              req->ops->free_req(req);
-          }
--        object_unref(OBJECT(req->dev));
--        object_unref(OBJECT(qbus->parent));
-          g_free(req);
-      }
-  }
+It feels like storing vcpu_id as little endian may not get the
+reg entrie for CPUSTRT in above format, isn't it?
+
+Ideally we should have two struct to mange two types of Reg Entries.
+That way we can manage reserved bytes in CPUSTRT/CPUEND node
+easily. I understand that it will bring unnecessary complexity in
+populate_cpu_state_data function. So how about adding a note for
+future reference?
+
+> +    ++curr_reg_entry;
+> +
+> +#define REG_ENTRY(id, val)                             \
+> +    do {                                               \
+> +        curr_reg_entry->reg_id =                       \
+> +            cpu_to_be64(fadump_str_to_u64(#id));       \
+> +        curr_reg_entry->reg_value = cpu_to_be64(val);  \
+> +        ++curr_reg_entry;                              \
+> +        ++num_regs_per_cpu;                            \
+> +    } while (0)
+> +
+> +    REG_ENTRY(ACOP, env->spr[SPR_ACOP]);
+> +    REG_ENTRY(AMR, env->spr[SPR_AMR]);
+> +    REG_ENTRY(BESCR, env->spr[SPR_BESCR]);
+> +    REG_ENTRY(CFAR, env->spr[SPR_CFAR]);
+> +    REG_ENTRY(CIABR, env->spr[SPR_CIABR]);
+> +
+> +    /* Save the condition register */
+> +    REG_ENTRY(CR, ppc_get_cr(env));
+> +
+> +    REG_ENTRY(CTR, env->spr[SPR_CTR]);
+> +    REG_ENTRY(CTRL, env->spr[SPR_CTRL]);
+> +    REG_ENTRY(DABR, env->spr[SPR_DABR]);
+> +    REG_ENTRY(DABRX, env->spr[SPR_DABRX]);
+> +    REG_ENTRY(DAR, env->spr[SPR_DAR]);
+> +    REG_ENTRY(DAWR0, env->spr[SPR_DAWR0]);
+> +    REG_ENTRY(DAWR1, env->spr[SPR_DAWR1]);
+> +    REG_ENTRY(DAWRX0, env->spr[SPR_DAWRX0]);
+> +    REG_ENTRY(DAWRX1, env->spr[SPR_DAWRX1]);
+> +    REG_ENTRY(DPDES, env->spr[SPR_DPDES]);
+> +    REG_ENTRY(DSCR, env->spr[SPR_DSCR]);
+> +    REG_ENTRY(DSISR, env->spr[SPR_DSISR]);
+> +    REG_ENTRY(EBBHR, env->spr[SPR_EBBHR]);
+> +    REG_ENTRY(EBBRR, env->spr[SPR_EBBRR]);
+> +
+> +    REG_ENTRY(FPSCR, env->fpscr);
+> +    REG_ENTRY(FSCR, env->spr[SPR_FSCR]);
+> +
+> +    /* Save the GPRs */
+> +    for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
+> +        curr_reg_entry->reg_id =
+> +            cpu_to_be64(fadump_gpr_id_to_u64(gpr_id));
+> +        curr_reg_entry->reg_value =
+> +            cpu_to_be64(env->gpr[gpr_id]);
+> +        ++curr_reg_entry;
+> +        ++num_regs_per_cpu;
+> +    }
+> +
+> +    REG_ENTRY(IAMR, env->spr[SPR_IAMR]);
+> +    REG_ENTRY(IC, env->spr[SPR_IC]);
+> +    REG_ENTRY(LR, env->spr[SPR_LR]);
+> +
+> +    REG_ENTRY(MSR, env->msr);
+> +    REG_ENTRY(NIA, env->nip);   /* NIA */
+> +    REG_ENTRY(PIR, env->spr[SPR_PIR]);
+> +    REG_ENTRY(PSPB, env->spr[SPR_PSPB]);
+> +    REG_ENTRY(PVR, env->spr[SPR_PVR]);
+> +    REG_ENTRY(RPR, env->spr[SPR_RPR]);
+> +    REG_ENTRY(SPURR, env->spr[SPR_SPURR]);
+> +    REG_ENTRY(SRR0, env->spr[SPR_SRR0]);
+> +    REG_ENTRY(SRR1, env->spr[SPR_SRR1]);
+> +    REG_ENTRY(TAR, env->spr[SPR_TAR]);
+> +    REG_ENTRY(TEXASR, env->spr[SPR_TEXASR]);
+> +    REG_ENTRY(TFHAR, env->spr[SPR_TFHAR]);
+> +    REG_ENTRY(TFIAR, env->spr[SPR_TFIAR]);
+> +    REG_ENTRY(TIR, env->spr[SPR_TIR]);
+> +    REG_ENTRY(UAMOR, env->spr[SPR_UAMOR]);
+> +    REG_ENTRY(VRSAVE, env->spr[SPR_VRSAVE]);
+> +    REG_ENTRY(VSCR, env->vscr);
+> +    REG_ENTRY(VTB, env->spr[SPR_VTB]);
+> +    REG_ENTRY(WORT, env->spr[SPR_WORT]);
+> +    REG_ENTRY(XER, env->spr[SPR_XER]);
+> +
+> +    /*
+> +     * Ignoring transaction checkpoint and few other registers
+> +     * mentioned in PAPR as not supported in QEMU
+> +     */
+> +#undef REG_ENTRY
+> +
+> +    /* End the registers for this CPU with "CPUEND" reg entry */
+> +    curr_reg_entry->reg_id =
+> +        cpu_to_be64(fadump_str_to_u64("CPUEND"));
+
+CPU ID as value to CPUEND reg entry needed, right?
+
+> +
+> +    /*
+> +     * Ensure the number of registers match (+2 for STRT & END)
+> +     *
+> +     * This will help catch an error if in future a new register entry
+> +     * is added/removed while not modifying FADUMP_NUM_PER_CPU_REGS
+> +     */
+> +    assert(FADUMP_NUM_PER_CPU_REGS == num_regs_per_cpu + 2 /*CPUSTRT+CPUEND*/);
+> +
+> +    ++curr_reg_entry;
+> +
+> +    return curr_reg_entry;
+> +}
+> +
+> +/*
+> + * Populate the "Register Save Area"/CPU State as mentioned in section "H.1
+> + * Register Save Area" in PAPR v2.13
+> + *
+> + * It allocates the buffer for this region, then populates the register
+> + * entries
+> + *
+> + * Returns the pointer to the buffer (which should be deallocated by the
+> + * callers), and sets the size of this buffer in the argument
+> + * 'cpu_state_len'
+> + */
+> +static void *populate_cpu_state_data(uint64_t *cpu_state_len)
+> +{
+> +    FadumpRegSaveAreaHeader reg_save_hdr;
+> +    FadumpRegEntry *reg_entries;
+> +    FadumpRegEntry *curr_reg_entry;
+> +    CPUState *cpu;
+> +
+> +    uint32_t num_reg_entries;
+> +    uint32_t reg_entries_size;
+> +    uint32_t num_cpus = 0;
+> +
+> +    void *cpu_state_buffer = NULL;
+> +    uint64_t offset = 0;
+> +
+> +    CPU_FOREACH(cpu) {
+> +        ++num_cpus;
+> +    }
+> +
+> +    reg_save_hdr.version = cpu_to_be32(0);
+> +    reg_save_hdr.magic_number =
+> +        cpu_to_be64(fadump_str_to_u64("REGSAVE"));
+> +
+> +    /* Reg save area header is immediately followed by num cpus */
+> +    reg_save_hdr.num_cpu_offset =
+> +        cpu_to_be32(sizeof(FadumpRegSaveAreaHeader));
+> +
+> +    num_reg_entries = num_cpus * FADUMP_NUM_PER_CPU_REGS;
+> +    reg_entries_size = num_reg_entries * sizeof(FadumpRegEntry);
+> +
+> +    reg_entries = g_new(FadumpRegEntry, num_reg_entries);
+> +
+> +    /* Pointer to current CPU's registers */
+> +    curr_reg_entry = reg_entries;
+> +
+> +    /* Populate register entries for all CPUs */
+> +    CPU_FOREACH(cpu) {
+> +        cpu_synchronize_state(cpu);
+> +        curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
+> +    }
+> +
+> +    *cpu_state_len = 0;
+> +    *cpu_state_len += sizeof(reg_save_hdr);     /* reg save header */
+> +    *cpu_state_len += 0xc;                      /* padding as in PAPR */
+> +    *cpu_state_len += sizeof(__be32);           /* num_cpus */
+> +    *cpu_state_len += reg_entries_size;         /* reg entries */
+> +
+> +    cpu_state_buffer = g_malloc(*cpu_state_len);
+> +
+> +    memcpy(cpu_state_buffer + offset,
+> +            &reg_save_hdr, sizeof(reg_save_hdr));
+> +    offset += sizeof(reg_save_hdr);
+> +
+> +    /* Write num_cpus */
+> +    num_cpus = cpu_to_be32(num_cpus);
+> +    memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(__be32));
+> +    offset += sizeof(__be32);
+> +
+> +    /* Write the register entries */
+> +    memcpy(cpu_state_buffer + offset, reg_entries, reg_entries_size);
+> +    offset += reg_entries_size;
+> +
+> +    return cpu_state_buffer;
+> +}
+> +
+>   /* Preserve the memory locations registered for fadump */
+>   static bool fadump_preserve_mem(SpaprMachineState *spapr)
+>   {
+>       FadumpMemStruct *fdm = &spapr->registered_fdm;
+> +    FadumpSection *cpu_state_region = NULL;
+> +    AddressSpace *default_as = &address_space_memory;
+> +    MemTxResult io_result;
+> +    MemTxAttrs attrs;
+>       uint16_t dump_num_sections, data_type;
+> +    uint64_t dest_addr;
+> +    uint64_t cpu_state_addr, cpu_state_len = 0;
+> +    g_autofree void *cpu_state_buffer = NULL;
+>   
+>       assert(spapr->fadump_registered);
+>   
+> +    /* Mark the memory transaction as privileged memory access */
+> +    attrs.user = 0;
+> +    attrs.memory = 1;
+> +
+>       /*
+>        * Handle all sections
+>        *
+> @@ -241,6 +513,7 @@ static bool fadump_preserve_mem(SpaprMachineState *spapr)
+>       dump_num_sections = be16_to_cpu(fdm->header.dump_num_sections);
+>       for (int i = 0; i < dump_num_sections; ++i) {
+>           data_type = be16_to_cpu(fdm->rgn[i].source_data_type);
+> +        dest_addr = be64_to_cpu(fdm->rgn[i].destination_address);
+>   
+>           /* Reset error_flags & bytes_dumped for now */
+>           fdm->rgn[i].error_flags = 0;
+> @@ -255,7 +528,15 @@ static bool fadump_preserve_mem(SpaprMachineState *spapr)
+>   
+>           switch (data_type) {
+>           case FADUMP_CPU_STATE_DATA:
+> -            /* TODO: Add CPU state data */
+> +            cpu_state_region = &fdm->rgn[i];
+> +            cpu_state_addr    = dest_addr;
+> +            cpu_state_buffer  = populate_cpu_state_data(&cpu_state_len);
+> +
+> +            /*
+> +             * We will write the cpu state data later, as otherwise it
+> +             * might get overwritten by other fadump regions
+
+Isn't the destination address of cpu state data and RMR region are 
+different?
+
+I don't understand the above comment. Can you please give more details.
+
+> +             */
+> +
+>               break;
+>           case FADUMP_HPTE_REGION:
+>               /* TODO: Add hpte state data */
+> @@ -281,6 +562,59 @@ static bool fadump_preserve_mem(SpaprMachineState *spapr)
+>           }
+>       }
+>   
+> +    /* CPU State Region has not been requested by kernel */
+> +    if (!cpu_state_region) {
+> +        return true;
+> +    }
+> +
+> +    /*
+> +     * Write the Register Save Area
+> +     *
+> +     * CPU State/Register Save Area should be written after dumping the
+> +     * memory to prevent overwriting while saving other memory regions
+> +     *
+> +     * eg. If boot memory region is 1G, then both the first 1GB memory, and
+> +     * the Register Save Area needs to be saved at 1GB.
+
+Every region is copied to their destination address and as per below 
+kernel function:
+https://github.com/torvalds/linux/blob/f406055cb18c6e299c4a783fc1effeb16be41803/arch/powerpc/platforms/pseries/rtas-fadump.c#L98
+
+the destination address shouldn't  be same for fadump region then how 
+come there
+is overwrite scenario? Am I missing something?
+
+> +     * And as the CPU_STATE_DATA region comes first than the
+> +     * REAL_MODE_REGION region to be copied, the CPU_STATE_DATA will get
+> +     * overwritten if saved before the 0GB - 1GB region is copied after
+> +     * saving CPU state data
+> +     */
+> +    io_result = address_space_write(default_as, cpu_state_addr, attrs,
+> +            cpu_state_buffer, cpu_state_len);
+
+Hope cpu_state_buffer will be freed automatically...
+
+> +    if ((io_result & MEMTX_DECODE_ERROR) ||
+> +        (io_result & MEMTX_ACCESS_ERROR)) {
+> +        /*
+> +         * Invalid destination address is not an hardware error, instead
+> +         * wrong parameter from the kernel.
+> +         * Return true to let caller know to continue reading other
+> +         * sections
+> +         */
+> +        cpu_state_region->error_flags = FADUMP_ERROR_INVALID_DEST_ADDR;
+> +        cpu_state_region->bytes_dumped = 0;
+> +        return true;
+> +    } else if (io_result != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "FADump: Failed to write CPU state region\n");
+> +        cpu_state_region->bytes_dumped = 0;
+> +
+> +        return false;
+> +    }
+> +
+> +    /*
+> +     * Set bytes_dumped in cpu state region, so kernel knows platform have
+> +     * exported it
+> +     */
+> +    cpu_state_region->bytes_dumped = cpu_to_be64(cpu_state_len);
+> +
+> +    if (cpu_state_region->source_len != cpu_state_region->bytes_dumped) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                "CPU State region's length passed by kernel (0x%lx) !="
+> +                " CPU State region's length exported by QEMU (0x%lx)\n",
+> +                be64_to_cpu(cpu_state_region->source_len),
+> +                be64_to_cpu(cpu_state_region->bytes_dumped));
+> +    }
+> +
+>       return true;
+>   }
+>   
+> diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
+> index d56ca1d6d651..13bdd39a9ec1 100644
+> --- a/include/hw/ppc/spapr_fadump.h
+> +++ b/include/hw/ppc/spapr_fadump.h
+> @@ -48,9 +48,14 @@
+>   #define FADUMP_MAX_SECTIONS            10
+>   #define RTAS_FADUMP_MAX_BOOT_MEM_REGS  7
+>   
+> +/* Number of registers stored per cpu */
+> +#define FADUMP_NUM_PER_CPU_REGS (32 /*GPR*/ + 45 /*others*/ + 2 /*STRT & END*/)
+
+#nit-pick
+How about FADUMP_PER_CPU_REG_ENTRY ?
 
 
-Paolo
+> +
+>   typedef struct FadumpSection FadumpSection;
+>   typedef struct FadumpSectionHeader FadumpSectionHeader;
+>   typedef struct FadumpMemStruct FadumpMemStruct;
+> +typedef struct FadumpRegSaveAreaHeader FadumpRegSaveAreaHeader;
+> +typedef struct FadumpRegEntry FadumpRegEntry;
+>   
+>   struct SpaprMachineState;
+>   
+> @@ -88,6 +93,29 @@ struct FadumpMemStruct {
+>       FadumpSection       rgn[FADUMP_MAX_SECTIONS];
+>   };
+>   
+> +/*
+> + * The firmware-assisted dump format.
+> + *
+> + * The register save area is an area in the partition's memory used to preserve
+> + * the register contents (CPU state data) for the active CPUs during a firmware
+> + * assisted dump. The dump format contains register save area header followed
+> + * by register entries. Each list of registers for a CPU starts with "CPUSTRT"
+> + * and ends with "CPUEND".
+> + */
+> +
+> +/* Register save area header. */
+> +struct FadumpRegSaveAreaHeader {
+> +    __be64    magic_number;
+> +    __be32    version;
+> +    __be32    num_cpu_offset;
+> +};
+> +
+> +/* Register entry. */
+> +struct FadumpRegEntry {
+> +    __be64    reg_id;
+> +    __be64    reg_value;
+> +};
+> +
+>   uint32_t do_fadump_register(struct SpaprMachineState *, target_ulong);
+>   void     trigger_fadump_boot(struct SpaprMachineState *, target_ulong);
+>   #endif /* PPC_SPAPR_FADUMP_H */
 
 
