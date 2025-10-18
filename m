@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F1CCCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A63CCD19F
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vACHB-0006ZW-V7; Sat, 18 Oct 2025 15:07:41 -0400
+	id 1vACH8-0006Vx-OO; Sat, 18 Oct 2025 15:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACGn-0006O8-IT; Sat, 18 Oct 2025 15:07:21 -0400
+ id 1vACGn-0006O9-Oi; Sat, 18 Oct 2025 15:07:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACGl-000100-M5; Sat, 18 Oct 2025 15:07:13 -0400
+ id 1vACGl-000106-PE; Sat, 18 Oct 2025 15:07:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 987B115F79A;
+ by isrv.corpit.ru (Postfix) with ESMTP id ACAC715F79B;
  Sat, 18 Oct 2025 22:06:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5BA382F0603;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6E9C52F0604;
  Sat, 18 Oct 2025 22:07:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
+Cc: qemu-stable@nongnu.org, Jon Kohler <jon@nutanix.com>,
+ Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+ Sean Christopherson <seanjc@google.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 13/23] target/i386: Fix CR2 handling for non-canonical
- addresses
-Date: Sat, 18 Oct 2025 22:06:48 +0300
-Message-ID: <20251018190702.1178893-2-mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 14/23] i386/kvm: Expose ARCH_CAP_FB_CLEAR when
+ invulnerable to MDS
+Date: Sat, 18 Oct 2025 22:06:49 +0300
+Message-ID: <20251018190702.1178893-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
@@ -60,40 +62,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Jon Kohler <jon@nutanix.com>
 
-Commit 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-accidentally modified CR2 for non-canonical address exceptions while these
-should lead to a #GP / #SS instead -- without changing CR2.
+Newer Intel hardware (Sapphire Rapids and higher) sets multiple MDS
+immunity bits in MSR_IA32_ARCH_CAPABILITIES but lacks the hardware-level
+MSR_ARCH_CAP_FB_CLEAR (bit 17):
+    ARCH_CAP_MDS_NO
+    ARCH_CAP_TAA_NO
+    ARCH_CAP_PSDP_NO
+    ARCH_CAP_FBSDP_NO
+    ARCH_CAP_SBDR_SSDP_NO
 
-Fix that.
+This prevents VMs with fb-clear=on from migrating from older hardware
+(Cascade Lake, Ice Lake) to newer hardware, limiting live migration
+capabilities. Note fb-clear was first introduced in v8.1.0 [1].
 
-A KUT test for this was submitted as [1].
+Expose MSR_ARCH_CAP_FB_CLEAR for MDS-invulnerable systems to enable
+seamless migration between hardware generations.
 
-[1] https://lore.kernel.org/kvm/20250612141637.131314-1-minipli@grsecurity.net/
+Note: There is no impact when a guest migrates to newer hardware as
+the existing bit combinations already mark the host as MMIO-immune and
+disable FB_CLEAR operations in the kernel (see Linux's
+arch_cap_mmio_immune() and vmx_update_fb_clear_dis()). See kernel side
+discussion for [2] for additional context.
 
-Fixes: 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20250612142155.132175-1-minipli@grsecurity.net
+[1] 22e1094ca82 ("target/i386: add support for FB_CLEAR feature")
+[2] https://patchwork.kernel.org/project/kvm/patch/20250401044931.793203-1-jon@nutanix.com/
+
+Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Jon Kohler <jon@nutanix.com>
+Link: https://lore.kernel.org/r/20251008202557.4141285-1-jon@nutanix.com
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit df9a3372ddebfcfc135861fa2d53cef6f98065f9)
+(cherry picked from commit 00001a22d183ce96c110690987bf9dd6a8548552)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index 50040f6fca..f622b5d588 100644
---- a/target/i386/tcg/system/excp_helper.c
-+++ b/target/i386/tcg/system/excp_helper.c
-@@ -592,7 +592,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-                 if (sext != 0 && sext != -1) {
-                     *err = (TranslateFault){
-                         .exception_index = EXCP0D_GPF,
--                        .cr2 = addr,
-+                        /* non-canonical #GP doesn't change CR2 */
-+                        .cr2 = env->cr[2],
-                     };
-                     return false;
-                 }
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 96035c27cd..7137b46be1 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -653,6 +653,23 @@ uint64_t kvm_arch_get_supported_msr_feature(KVMState *s, uint32_t index)
+         must_be_one = (uint32_t)value;
+         can_be_one = (uint32_t)(value >> 32);
+         return can_be_one & ~must_be_one;
++    case MSR_IA32_ARCH_CAPABILITIES:
++        /*
++         * Special handling for fb-clear bit in ARCH_CAPABILITIES MSR.
++         * KVM will only report the bit if it is enabled in the host,
++         * but, for live migration capability purposes, we want to
++         * expose the bit to the guest even if it is disabled in the
++         * host, as long as the host itself is not vulnerable to
++         * the issue that the fb-clear bit is meant to mitigate.
++         */
++        if ((value & MSR_ARCH_CAP_MDS_NO) &&
++            (value & MSR_ARCH_CAP_TAA_NO) &&
++            (value & MSR_ARCH_CAP_SBDR_SSDP_NO) &&
++            (value & MSR_ARCH_CAP_FBSDP_NO) &&
++            (value & MSR_ARCH_CAP_PSDP_NO)) {
++                value |= MSR_ARCH_CAP_FB_CLEAR;
++        }
++        return value;
+ 
+     default:
+         return value;
 -- 
 2.47.3
 
