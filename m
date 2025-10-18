@@ -4,75 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546FFCCD199
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 02:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFB9CCD199
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 02:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9wob-0003ej-5f; Fri, 17 Oct 2025 22:37:05 -0400
+	id 1v9wt5-0004uR-CT; Fri, 17 Oct 2025 22:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v9woY-0003eW-Ef
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 22:37:02 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1v9woV-0001ih-D2
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 22:37:02 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxK9I+_fJok5MXAA--.49042S3;
- Sat, 18 Oct 2025 10:36:46 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxH8I6_fJo9afwAA--.16023S3;
- Sat, 18 Oct 2025 10:36:44 +0800 (CST)
-Subject: Re: [PATCH 4/5] target-info: Introduce runtime
- TARGET_PHYS_ADDR_SPACE_BITS
-To: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, pierrick.bouvier@linaro.org,
- qemu-devel@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- Song Gao <gaosong@loongson.cn>, Helge Deller <deller@gmx.de>
-References: <20251015-feature-single-binary-hw-v1-v1-0-8b416eda42cf@rev.ng>
- <20251015-feature-single-binary-hw-v1-v1-4-8b416eda42cf@rev.ng>
- <673e3c7b-b8ef-4908-b74d-62203b131229@linaro.org>
- <7jzcbl2yqkssu5lshz4umayaesoxwg3gcskrrkobc37df2p4z2@s26yst4mfxoe>
- <8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <187c699e-eefa-1d62-34a7-6fd689c10feb@loongson.cn>
-Date: Sat, 18 Oct 2025 10:34:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1v9wt3-0004uE-VP; Fri, 17 Oct 2025 22:41:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1v9wt1-00027q-N9; Fri, 17 Oct 2025 22:41:41 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59HN2kpO021864;
+ Sat, 18 Oct 2025 02:41:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nS8SFH
+ 94APU6OMeU5PPn47bOMxBdPhZ9/avg3G7VWQY=; b=f+WTC+mBTbxnppPa2SRbeD
+ MlJ/nZzHDuHpj7lSD+2hBH1VQgAXiTsXPXxpozu7zSYpzwo5o4t66wmpFlxV8EZG
+ a/wtRGXJG80+4TMDUan3DJHKkhgXeTrMt6ochB0Vpxqr2PCAJlZ3mRdm3sTj4CY8
+ cAL/KVrjMWA917ZOYYyTg0+B71fAugPkiNAt8OFlVAeatqEh3gDmvxQvP1H5VkjS
+ DJT83eojSU9lKcj8tOFnkApj9oLRAoWK9Wg6N8s5D4naVvSj8bk1r/qh5Qex5Kke
+ j94NA60Ap+mfKlE7LoC+M0LYzY/KNsh3VxWMFtLw7rkqKvNmHeegZO38lqSfOSRw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey9e8pw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 18 Oct 2025 02:41:26 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59I2fPLS026072;
+ Sat, 18 Oct 2025 02:41:25 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49qey9e8pu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 18 Oct 2025 02:41:25 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59HLe6FM018826;
+ Sat, 18 Oct 2025 02:41:24 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49r2jn8fns-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 18 Oct 2025 02:41:24 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59I2fNdt19006108
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 18 Oct 2025 02:41:24 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D65B458056;
+ Sat, 18 Oct 2025 02:41:23 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8A3D45803F;
+ Sat, 18 Oct 2025 02:41:21 +0000 (GMT)
+Received: from [9.39.26.64] (unknown [9.39.26.64])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 18 Oct 2025 02:41:21 +0000 (GMT)
+Message-ID: <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
+Date: Sat, 18 Oct 2025 08:11:19 +0530
 MIME-Version: 1.0
-In-Reply-To: <8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
+ <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
+ <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
 Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxH8I6_fJo9afwAA--.16023S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3GrW3KFyfuF17XFyrKw1xZwc_yoW7Wr1kpF
- n3tr1jyrZY9rZYvFW5ur1DJryUAr1fKa1UXFn3GFWrZw45JrnFqr1v9r4a9FnxJr48CrW2
- vF15Jr43uFWDAwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7_MaUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.367,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -EZ34a2aP35XD2OAa3IVSPOv-n6vsbRr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDExMDAxMSBTYWx0ZWRfX/D8df06x5e+Z
+ IGnZWSxFT7sDFtfPuZDYPJ5bCqDiEiqwhAFgN9zEBzfctdTEZdMiDlsA5legqn1itXiIcZJ7NYe
+ iLMR4uk3LCsH1uIsjNNNzjYfEMLDL+VtUyIfLHsjSogKqXZwar4zAZi21hui6b25G0z+qtxnu1i
+ 4n1ArI2uGdR7/PWAisKtWLqc74WFxt7ld179GC7KB++LPd875qhIx47zzTCfhVE+fr5eXPl4eCX
+ StOYC6B0qz9SM2Sv2PAPzUn8cA1EjxXL+rXrlrgBdfkDOQ9CJy4DSdDMuOY3tJ/yh/YQWw/ANRB
+ ll7xxmINtd48Yk+/DSESQQDt5sKSv0AZA2SJv4jYqJUjjOYpKPAaRAumCx+YoiNmxzqslLhLtOk
+ S9vyyQvQI/DjYw2IyOMYk4GwT3nEkA==
+X-Proofpoint-GUID: Ptlz1_L1TWjIKq5rREQ8ABFMtMfpbqop
+X-Authority-Analysis: v=2.4 cv=QZ5rf8bv c=1 sm=1 tr=0 ts=68f2fe56 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=6JeE_j_6ij_iiuWLkdcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+ a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-18_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 impostorscore=0 clxscore=1011 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510110011
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,136 +133,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Mark,
 
+Thanks much for pitching in to help with reviewing this series.
 
-On 2025/10/18 上午2:47, Richard Henderson wrote:
-> On 10/17/25 09:11, Anton Johansson wrote:
->> Hmm you're right looking at git grep -C1 TARGET_PHYS_ADDR_SPACE_BITS
->> (output below excluding the hw/riscv change in the following patch),
->> there are really aren't that many uses left and none in common code.
+On 9/19/25 01:51, BALATON Zoltan wrote:
+> On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
+>> On 18/09/2025 19:50, BALATON Zoltan wrote:
+>>> The raven PCI device does not need a state struct as it has no data to
+>>> store there any more, so we can remove that to simplify code.
+>>>
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>>   hw/pci-host/raven.c | 30 +-----------------------------
+>>>   1 file changed, 1 insertion(+), 29 deletions(-)
+>>>
+>>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>>> index f8c0be5d21..172f01694c 100644
+>>> --- a/hw/pci-host/raven.c
+>>> +++ b/hw/pci-host/raven.c
+>>> @@ -31,7 +31,6 @@
+>>>   #include "hw/pci/pci_bus.h"
+>>>   #include "hw/pci/pci_host.h"
+>>>   #include "hw/qdev-properties.h"
+>>> -#include "migration/vmstate.h"
+>>>   #include "hw/intc/i8259.h"
+>>>   #include "hw/irq.h"
+>>>   #include "hw/or-irq.h"
+>>> @@ -40,12 +39,6 @@
+>>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+>>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
+>>> -
+>>> -struct RavenPCIState {
+>>> -    PCIDevice dev;
+>>> -};
+>>> -
+>>>   typedef struct PRePPCIState PREPPCIState;
+>>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+>>> @@ -65,7 +58,6 @@ struct PRePPCIState {
+>>>       MemoryRegion bm_ram_alias;
+>>>       MemoryRegion bm_pci_memory_alias;
+>>>       AddressSpace bm_as;
+>>> -    RavenPCIState pci_dev;
+>>>         int contiguous_map;
+>>>   };
+>>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState 
+>>> *d, Error **errp)
+>>>                             "pci-intack", 1);
+>>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
+>>> &s->pci_intack);
+>>>   -    /* TODO Remove once realize propagates to child devices. */
+>>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
+>>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
+>>> TYPE_RAVEN_PCI_DEVICE);
+>>>   }
+
+<snip>
+
+>>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, 
+>>> const void *data)
+>>>   static const TypeInfo raven_info = {
+>>>       .name = TYPE_RAVEN_PCI_DEVICE,
+>>>       .parent = TYPE_PCI_DEVICE,
+>>> -    .instance_size = sizeof(RavenPCIState),
+>>>       .class_init = raven_class_init,
+>>>       .interfaces = (const InterfaceInfo[]) {
+>>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
 >>
->> We still got to move it to a runtime value somewhere though, what
->> would be a more suitable location?  Maybe as a field in CPUArchState or
->> some parent QOM machine as only i386, hppa, loongarch, riscv, alpha
->> actually use the definition.
+>> I agree with removing RavenPCIState, but pci_create_simple() isn't the 
+>> right solution here because it both init()s and realize()s the inner 
+>> object. The right way to do this is for the parent to init() its inner 
+>> object(s) within its init() function, and similarly for it to 
+>> realize() its inner object(s) within its realize() function.
+>>
+>> FWIW it looks as if the same mistake is present in several other 
+>> hw/pci-host devices.
 > 
-> A fair few of these are arguably wrong.
-> 
-> 
->>    hw/loongarch/boot.c:    return addr & MAKE_64BIT_MASK(0, 
->> TARGET_PHYS_ADDR_SPACE_BITS);
->>    --
->>    hw/loongarch/boot.c-    *kernel_entry = 
->> extract64(le64_to_cpu(hdr->kernel_entry),
->>    hw/loongarch/boot.c:                              0, 
->> TARGET_PHYS_ADDR_SPACE_BITS);
->>    hw/loongarch/boot.c-    *kernel_low = 
->> extract64(le64_to_cpu(hdr->load_offset),
->>    hw/loongarch/boot.c:                            0, 
->> TARGET_PHYS_ADDR_SPACE_BITS);
-> 
-> This is cpu_loongarch_virt_to_phys, and some repetitions.
-> 
-> This should probably use a loongarch-specific runtime function to find 
-> the address space range supported by the chosen cpu.  Or perhaps just a 
-> target-specific constant mask.
-> 
-> 
->>    linux-user/alpha/target_proc.h-            "L3 cache\t\t: n/a\n",
->>    linux-user/alpha/target_proc.h:            model, TARGET_PAGE_SIZE, 
->> TARGET_PHYS_ADDR_SPACE_BITS,
->>    linux-user/alpha/target_proc.h-            max_cpus, num_cpus, 
->> cpu_mask);
-> 
-> This is the alpha-linux-user implementation of /proc/cpuinfo.
-> 
-> Ideally this should be a target-specific function; see
-> 
-> /* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
-> #define TARGET_PHYS_ADDR_SPACE_BITS  44
-> 
-> It's certainly not generic, and it's also not really important.
-> 
->>    --
->>    target/hppa/mem_helper.c:    
->> QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
->>    target/hppa/mem_helper.c:    return sextract64(addr, 0, 
->> TARGET_PHYS_ADDR_SPACE_BITS);
->>    --
->>    target/hppa/mem_helper.c:        addr |= -1ull << 
->> (TARGET_PHYS_ADDR_SPACE_BITS - 4);
->>    --
->>    target/hppa/mem_helper.c-    /* Ignore the bits beyond physical 
->> address space. */
->>    target/hppa/mem_helper.c:    ent->pa = sextract64(ent->pa, 0, 
->> TARGET_PHYS_ADDR_SPACE_BITS);
-> 
-> Similarly
-> 
-> /* ??? PA-8000 through 8600 have 40 bits; PA-8700 and 8900 have 44 bits. */
-> # define TARGET_PHYS_ADDR_SPACE_BITS  40
-> 
-> While we don't actually name concrete cpu models, bios advertises the 
-> (32-bit) HP B160L machine, which originally had a 7300LC, and the 
-> (64-bit) which had a 8700.
-> 
-> I can't find definitive documentation, but I suspect the 7300LC has only 
-> 32 physical address bits.  And according to our own comment we get the 
-> 8700 value wrong.
-> 
-> In either case, it's not exposed to generic code.
-> 
->>    --
->>    target/i386/cpu.c-        if (cpu->phys_bits &&
->>    target/i386/cpu.c:            (cpu->phys_bits > 
->> TARGET_PHYS_ADDR_SPACE_BITS ||
->>    target/i386/cpu.c-            cpu->phys_bits < 32)) {
->>    --
->>    target/i386/cpu.c-                             " (but is %u)",
->>    target/i386/cpu.c:                             
->> TARGET_PHYS_ADDR_SPACE_BITS, cpu->phys_bits);
->>    --
->>    target/i386/kvm/kvm.c:        
->> QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 52);
->>    target/i386/kvm/kvm.c:        assert(cpu->phys_bits <= 
->> TARGET_PHYS_ADDR_SPACE_BITS);
-> 
-> All of these are simply making sure that cpu->phys_bits is "in range", 
-> which is now irrelevant because TARGET_PHYS_ADDR_SPACE_BITS itself is no 
-> longer in use.  They can all be removed.
-> 
->>    --
->>    target/i386/tcg/helper-tcg.h:QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > 
->> TARGET_PHYS_ADDR_SPACE_BITS);
-> 
-> Likewise.
-> 
-> 
->>    target/loongarch/internals.h:#define TARGET_PHYS_MASK 
->> MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
-> 
-> This is used by target/loongarch/tcg/tlb_helper.c.
-> 
-> I'm not sure what the implications are.
-It is to convert it to physical address for compatible issue. With page 
-directory table, HW discards bits higher than 
-TARGET_PHYS_ADDR_SPACE_BITS for compatible issue since SW has already 
-used in this way.
+> So maybe that's not a mistake then. There's no need to init and realize 
+> it separately as this is an internal object which is enough to be 
+> created in realize method and init and realize there at one go for which 
+> pci_create_simple is appropriate. I think this inner object would only 
+> need to be init separately if it exposed something (like a property) 
+> that could be inspected or set before realize but that's not the case 
+> here so it does not have to be created in init only in realize. (A lot 
+> of simple devices don't even have init method only realize so init is 
+> only needed for things that have to be set before realize.)
 
-SW sets higher bit and treats it as virtual address, software can use it 
-directly with set_pXd() and needs not convert to physical address. In 
-future SW can use page directory table with physical address method, 
-however there is no obvious benefits and motivation :(
+Do we have a consensus here ?
 
-Regards
-Bibo Mao
+regards,
+Harsh
 
-> Should it be using a common function with the loongarch boot virt-to-phys?
-> Is it re-using TARGET_PHYS_ADDR_SPACE_BITS just because it was convienient?
 > 
-> In either case, it's not exposed to generic code.
+> Regards,
+> BALATON Zoltan
 > 
-> 
-> r~
-
 
