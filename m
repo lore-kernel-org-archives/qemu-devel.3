@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98E2CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32DECCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADzF-00086A-QM; Sat, 18 Oct 2025 16:57:13 -0400
+	id 1vADyy-0007yL-3X; Sat, 18 Oct 2025 16:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz9-00081E-BO; Sat, 18 Oct 2025 16:57:07 -0400
+ id 1vADyv-0007xY-OW; Sat, 18 Oct 2025 16:56:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz7-0004yX-Q9; Sat, 18 Oct 2025 16:57:07 -0400
+ id 1vADyt-0004wU-Tf; Sat, 18 Oct 2025 16:56:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF4DE15F87E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E6C415F876;
  Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CE2652F0687;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 376B92F067F;
  Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 21/23] target/i386: user: do not set up a valid LDT on
- reset
-Date: Sat, 18 Oct 2025 23:56:39 +0300
-Message-ID: <20251018205644.1185050-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [Stable-10.0.6 02/23] Revert "i386/cpu: Move adjustment of
+ CPUID_EXT_PDCM before feature_dependencies[] check"
+Date: Sat, 18 Oct 2025 23:56:31 +0300
+Message-ID: <20251018205644.1185050-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
@@ -60,38 +60,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+This reverts commit 3d26cb65c27190e57637644ecf6c96b8c3d246a3
+(v10.0.3-34-g3d26cb65c271) from 10.0.x branch.
 
-In user-mode emulation, QEMU uses the default setting of the LDT base
-and limit, which places it at the bottom 64K of virtual address space.
-However, by default there is no LDT at all in Linux processes, and
-therefore the limit should be 0.
+The problem is that the change makes qemu 10.0.x non-migratable
+to subsequent qemu versions, since it requires introducing a new
+machine type.  This change should not have been picked up for 10.0.x.
 
-This is visible as a NULL pointer dereference in LSL and LAR instructions
-when they try to read the LDT at an unmapped address.
-
-Resolves: #1376
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 58aa1d08bbc406ba3982f32ffb1bef0ff4f8f369)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reopens: https://gitlab.com/qemu-project/qemu/-/issues/3061 (for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 34b52ef7a1..76e0cceb10 100644
+index 58c62ff5b5..34b52ef7a1 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -7513,7 +7513,11 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+@@ -6851,6 +6851,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             /* Fixup overflow: max value for bits 23-16 is 255. */
+             *ebx |= MIN(num, 255) << 16;
+         }
++        if (!cpu->enable_pmu) {
++            *ecx &= ~CPUID_EXT_PDCM;
++        }
+         break;
+     case 2:
+         /* cache info: needed for Pentium Pro compatibility */
+@@ -7840,10 +7843,6 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         }
+     }
  
-     env->idt.limit = 0xffff;
-     env->gdt.limit = 0xffff;
-+#if defined(CONFIG_USER_ONLY)
-+    env->ldt.limit = 0;
-+#else
-     env->ldt.limit = 0xffff;
-+#endif
-     env->ldt.flags = DESC_P_MASK | (2 << DESC_TYPE_SHIFT);
-     env->tr.limit = 0xffff;
-     env->tr.flags = DESC_P_MASK | (11 << DESC_TYPE_SHIFT);
+-    if (!cpu->enable_pmu) {
+-        env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
+-    }
+-
+     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
+         FeatureDep *d = &feature_dependencies[i];
+         if (!(env->features[d->from.index] & d->from.mask)) {
 -- 
 2.47.3
 
