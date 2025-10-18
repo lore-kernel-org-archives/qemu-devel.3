@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1058FCCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 14:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF47DCCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 14:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA7Yf-0008Vd-Qz; Sat, 18 Oct 2025 10:05:22 -0400
+	id 1vA7YQ-0008LU-Ma; Sat, 18 Oct 2025 10:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA7YG-0008HT-L7; Sat, 18 Oct 2025 10:04:56 -0400
+ id 1vA7YF-0008Fd-6i; Sat, 18 Oct 2025 10:04:55 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA7YE-0006xC-QW; Sat, 18 Oct 2025 10:04:56 -0400
+ id 1vA7YC-0006wj-Qt; Sat, 18 Oct 2025 10:04:54 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 73AEF5972F3;
- Sat, 18 Oct 2025 16:04:51 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 58DCF5972DF;
+ Sat, 18 Oct 2025 16:04:49 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id O4FOG8rQsnB7; Sat, 18 Oct 2025 16:04:49 +0200 (CEST)
+ id IcqlEqMfGiKD; Sat, 18 Oct 2025 16:04:47 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6C7505972E9; Sat, 18 Oct 2025 16:04:49 +0200 (CEST)
-Message-ID: <e61d317e01e088f00bec4be683a94118a2e22a5b.1760795082.git.balaton@eik.bme.hu>
+ id 589715972E9; Sat, 18 Oct 2025 16:04:47 +0200 (CEST)
+Message-ID: <59675317dc7ad9e7049669baa5389d8f734841d9.1760795082.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1760795082.git.balaton@eik.bme.hu>
 References: <cover.1760795082.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 05/16] hw/pci-host/raven: Simplify PCI interrupt routing
+Subject: [PATCH v4 03/16] hw/pci-host/raven: Use DEFINE_TYPES macro
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,7 +41,7 @@ Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
  Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 16:04:49 +0200 (CEST)
+Date: Sat, 18 Oct 2025 16:04:47 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -64,116 +64,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to use an or-irq to map interrupt lines to a single IRQ as the
-PCI code can handle this internally so simplify by dropping the or-irq
-similar to how ppc440_pcix.c does it.
+Convert to using DEFINE_TYPES macro and move raven_pcihost_class_init
+so methods of each object are grouped together.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/pci-host/raven.c | 39 +++++++++++++++------------------------
- hw/ppc/prep.c       |  5 ++++-
- 2 files changed, 19 insertions(+), 25 deletions(-)
+ hw/pci-host/raven.c | 57 +++++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 31 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index 51427553b2..a400a22df3 100644
+index 878c915de5..e0f98afebf 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -30,11 +30,8 @@
- #include "hw/pci/pci_device.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/pci/pci_host.h"
--#include "hw/qdev-properties.h"
- #include "hw/intc/i8259.h"
- #include "hw/irq.h"
--#include "hw/or-irq.h"
--#include "qom/object.h"
+@@ -304,6 +304,15 @@ static void raven_pcihost_initfn(Object *obj)
+     h->bus = &s->pci_bus;
+ }
  
- #define TYPE_RAVEN_PCI_DEVICE "raven"
- #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
-@@ -44,8 +41,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PREPPCIState, RAVEN_PCI_HOST_BRIDGE)
- struct PREPPCIState {
-     PCIHostState parent_obj;
++static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
++    dc->realize = raven_pcihost_realizefn;
++    dc->fw_name = "pci";
++}
++
+ static void raven_realize(PCIDevice *d, Error **errp)
+ {
+     d->config[PCI_CACHE_LINE_SIZE] = 0x08;
+@@ -329,37 +338,23 @@ static void raven_class_init(ObjectClass *klass, const void *data)
+     dc->user_creatable = false;
+ }
  
--    OrIRQState *or_irq;
--    qemu_irq pci_irqs[PCI_NUM_PINS];
-+    qemu_irq irq;
-     AddressSpace pci_io_as;
-     MemoryRegion pci_io;
-     MemoryRegion pci_io_non_contiguous;
-@@ -183,16 +179,25 @@ static const MemoryRegionOps raven_io_ops = {
-     .valid.unaligned = true,
+-static const TypeInfo raven_info = {
+-    .name = TYPE_RAVEN_PCI_DEVICE,
+-    .parent = TYPE_PCI_DEVICE,
+-    .class_init = raven_class_init,
+-    .interfaces = (const InterfaceInfo[]) {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-        { },
++static const TypeInfo raven_types[] = {
++    {
++        .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
++        .parent = TYPE_PCI_HOST_BRIDGE,
++        .instance_size = sizeof(PREPPCIState),
++        .instance_init = raven_pcihost_initfn,
++        .class_init = raven_pcihost_class_init,
++    },
++    {
++        .name = TYPE_RAVEN_PCI_DEVICE,
++        .parent = TYPE_PCI_DEVICE,
++        .class_init = raven_class_init,
++        .interfaces = (const InterfaceInfo[]) {
++            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++            { },
++        },
+     },
  };
  
-+/*
-+ * All four IRQ[ABCD] pins from all slots are tied to a single board
-+ * IRQ, so our mapping function here maps everything to IRQ 0.
-+ * The code in pci_change_irq_level() tracks the number of times
-+ * the mapped IRQ is asserted and deasserted, so if multiple devices
-+ * assert an IRQ at the same time the behaviour is correct.
-+ *
-+ * This may need further refactoring for boards that use multiple IRQ lines.
-+ */
- static int raven_map_irq(PCIDevice *pci_dev, int irq_num)
- {
--    return (irq_num + (pci_dev->devfn >> 3)) & 1;
-+    return 0;
- }
- 
- static void raven_set_irq(void *opaque, int irq_num, int level)
- {
--    PREPPCIState *s = opaque;
-+    qemu_irq *irq = opaque;
- 
--    qemu_set_irq(s->pci_irqs[irq_num], level);
-+    qemu_set_irq(*irq, level);
- }
- 
- static AddressSpace *raven_pcihost_set_iommu(PCIBus *bus, void *opaque,
-@@ -220,26 +225,12 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
-     PCIHostState *h = PCI_HOST_BRIDGE(dev);
-     PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
-     MemoryRegion *address_space_mem = get_system_memory();
--    int i;
+-static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
 -
--    /*
--     * According to PReP specification section 6.1.6 "System Interrupt
--     * Assignments", all PCI interrupts are routed via IRQ 15
--     */
--    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
--    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
--                            &error_fatal);
--    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
--    sysbus_init_irq(dev, &s->or_irq->out_irq);
+-    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+-    dc->realize = raven_pcihost_realizefn;
+-    dc->fw_name = "pci";
+-}
 -
--    for (i = 0; i < PCI_NUM_PINS; i++) {
--        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
--    }
- 
-     qdev_init_gpio_in(d, raven_change_gpio, 1);
- 
-+    sysbus_init_irq(dev, &s->irq);
-     h->bus = pci_register_root_bus(d, NULL, raven_set_irq, raven_map_irq,
--                                   s, &s->pci_memory, &s->pci_io, 0, 4,
-+                                   &s->irq, &s->pci_memory, &s->pci_io, 0, 1,
-                                    TYPE_PCI_BUS);
- 
-     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_le_ops, s,
-diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-index 982e40e53e..d3365414d2 100644
---- a/hw/ppc/prep.c
-+++ b/hw/ppc/prep.c
-@@ -304,7 +304,10 @@ static void ibm_40p_init(MachineState *machine)
-     qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
-     qdev_connect_gpio_out(i82378_dev, 0,
-                           qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
+-static const TypeInfo raven_pcihost_info = {
+-    .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
+-    .parent = TYPE_PCI_HOST_BRIDGE,
+-    .instance_size = sizeof(PREPPCIState),
+-    .instance_init = raven_pcihost_initfn,
+-    .class_init = raven_pcihost_class_init,
+-};
 -
-+    /*
-+     * According to PReP specification section 6.1.6 "System Interrupt
-+     * Assignments", all PCI interrupts are routed via IRQ 15
-+     */
-     sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
-     isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
- 
+-static void raven_register_types(void)
+-{
+-    type_register_static(&raven_pcihost_info);
+-    type_register_static(&raven_info);
+-}
+-
+-type_init(raven_register_types)
++DEFINE_TYPES(raven_types)
 -- 
 2.41.3
 
