@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95349CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC18CCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA8wo-0001bJ-Nj; Sat, 18 Oct 2025 11:34:22 -0400
+	id 1vA91R-000353-0I; Sat, 18 Oct 2025 11:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1vA8wm-0001au-JW
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 11:34:20 -0400
+ id 1vA91P-000332-SQ
+ for qemu-devel@nongnu.org; Sat, 18 Oct 2025 11:39:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1vA8wk-0000O7-Pa
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 11:34:20 -0400
+ id 1vA91O-0000qY-85
+ for qemu-devel@nongnu.org; Sat, 18 Oct 2025 11:39:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760801656;
+ s=mimecast20190719; t=1760801943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Og/tNUHrmrh1WVKFecQS3eE9ozKVeoOwfsY1aZHAaUk=;
- b=TGOy84OXVaePOZcbIUD85XD+MMTj2lEhngAI3l7kr0qUIdF/DQOYkXzrPURcSz2FE7Vnzk
- YFR1TkdW/W67lidgr2Sq+rux5EMY110hWovORUoe1I1K/sjDE0tZ9qSn+mNKjVUf3Hu8uh
- 8SC3EE0W0OVXXGWG7TfvtgaT2V1xntg=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5xZVa2LKgl4StM0l75AReodh3pfW5wXYqCzeV2v0XxI=;
+ b=SOXQamOGtYftaO419KOKh/OnZU1u15ZH0h/JYp+dloFwWDkmAvZXTQXAC6qE5j6uP05ic3
+ Ia2O85NX+6AfBAMkDmoI1guqmEdp00U2qtRtg0qc2S5FKEqfQy8XNuOl+VSfDOnWjpPbsr
+ ShGsWy5G/AVx3sPM40PfxTup7CEaU+E=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-RIu4GPUUPKaaQNMhVvJrcw-1; Sat, 18 Oct 2025 11:34:14 -0400
-X-MC-Unique: RIu4GPUUPKaaQNMhVvJrcw-1
-X-Mimecast-MFC-AGG-ID: RIu4GPUUPKaaQNMhVvJrcw_1760801653
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-63c5b404e95so321312a12.0
- for <qemu-devel@nongnu.org>; Sat, 18 Oct 2025 08:34:13 -0700 (PDT)
+ us-mta-644-4_jw6fyQOoGZONP1vjw7ww-1; Sat, 18 Oct 2025 11:39:01 -0400
+X-MC-Unique: 4_jw6fyQOoGZONP1vjw7ww-1
+X-Mimecast-MFC-AGG-ID: 4_jw6fyQOoGZONP1vjw7ww_1760801941
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-63c4f67cd9bso1429125a12.2
+ for <qemu-devel@nongnu.org>; Sat, 18 Oct 2025 08:39:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760801653; x=1761406453;
+ d=1e100.net; s=20230601; t=1760801941; x=1761406741;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Og/tNUHrmrh1WVKFecQS3eE9ozKVeoOwfsY1aZHAaUk=;
- b=DYTrdMviuBLpQLjagATJ/0HwGKCxS2beYk2onQtCU5NV7IytV9xamu9IpgSAVEPoBD
- kqpBMVmlGxUqjaBwpGWds/mfw4ESFbiSIsjNZCLafcF5Qdfgy9DMfX+3iEMe5cPk0/v6
- bgz5EG/tsNGG56zMaE28vrPWjcm314wclFJ5U4scldeuME1x/stSW26Abj/ZU5k+mx9H
- e7bVcLlYc1beI4NDtb9v80li5BOfhPeu6BdVgV8WZ8P8EBzP+ljUSMKSC9paTTyXxhum
- SRHzvTaIn+MBPEgv4KMi6hUIEnWETsYvb6JMJOKop1FaqNxRvtVh2htxhpOJrfbPn3EY
- UvSg==
+ bh=5xZVa2LKgl4StM0l75AReodh3pfW5wXYqCzeV2v0XxI=;
+ b=NVfLheSTZoR5vfSs9+Tqyp4naVKoZZYwZgzqaJhmj7S1qEyymJzFTjdtcvdBTWbbGy
+ ZhcCddQQCR9PyKYhJiO4xW63VwDmS1Ahzq8DBKOmQnLyKYLwF9IDRseqcc1mFPVsLa+h
+ g5xX8u9rdLPCXGl5a8TwXb/kVLAC5+IvOgtGbpJdV5C63QPD0PhNoSZ91fA/2aBZ99pa
+ Uvx8hjdwYxl8ZVcduOiGTZ/9CFlkwTNw1VqwlSHrY+iMXGiaY0+SJOtqFPOXbGCk+dkm
+ lpHo4VQQcQE6ayBr3sCtjUXJnP0a6pIfLkNBX9oq4Qmf0L9ixAQxCbPPKBybMt4uUCnT
+ I5mg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4vXFkGnI7byiVjgUCX6W+2p9dyptNb0wpY+p8VGyP+yeQGU431zJG+dZrj2IGjqdPAtmnZavjf3Wk@nongnu.org
-X-Gm-Message-State: AOJu0YwtQmiuOc51aT1VnXbZnUUNHDGpgR1uWHpENIbkNvILAJHtLuX7
- V3Xk7CetJtG42LtasxnaTG6Ot8MYYJpYK/tbmno5YuFWQ8otrCAMQiZgqimsOwSw70pTszT0JpX
- Fnf2hwMkycrRpjKkF1IZNC3ryN+rgL3PkP85fIxUoIWkwLvSXg8LBgkeSwGd0MV2rebcRO14Ars
- jfeIKHKh36zaFl+zSmvsL2zWuPkqneiEQ=
-X-Gm-Gg: ASbGnctnB0Pb9q/YPmkga3W7+J8Gh/oKgGUbAY7M6qfHclYO3raa/ffKX2MBs9jM0qd
- DHGYpbbFv0egTKL3YvmXdA2nMJFYj8pLtVTVZFj6Y91Th7aYjcjhXApk+fp4cEDd6RoLjpZVvNw
- BnU9jgbjDAt9SvucmAJHFc/y/pgFj+f5o2e3OV+kwHl52MRTJL9WNWBNrd
-X-Received: by 2002:a05:6402:2686:b0:63c:1a7b:b3bb with SMTP id
- 4fb4d7f45d1cf-63c1f631befmr6719212a12.1.1760801652805; 
- Sat, 18 Oct 2025 08:34:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEm0GREF74Vw+OYBl+AyxeZ4wAqWYJi2aZKDgC863RqVX0eadS3ugO01p40hHFZEEyNSvJ+G1XAypXw3atIRhY=
-X-Received: by 2002:a05:6402:2686:b0:63c:1a7b:b3bb with SMTP id
- 4fb4d7f45d1cf-63c1f631befmr6719186a12.1.1760801652432; Sat, 18 Oct 2025
- 08:34:12 -0700 (PDT)
+ AJvYcCXDCjwarFLz2lvDzpUnYPuP5cp+dZmRGBi8d7lC0q9diTD40l18ygu1gBDeTg58aXejJPQpQtnROFn8@nongnu.org
+X-Gm-Message-State: AOJu0Yz2G5lR77c9QP9iN2JDHbBZ/GxcLJjFpt4Ngi746PLlgLqxUq9P
+ dbLqYAqMaCJ6mnmIWyo+2lCinvZDs/MByAtAIQglNMY3ZGhOwuuvN+ZRSnomB33eI9Pg80ELS//
+ ecJ0SVhgqXrU6332oRFJDprZuGVoucAcVwYCkUtORpnOUpfsxl63ihUzkSNAp67FyGcRy2yTU4q
+ JVBNX2FpPAP2fh3i8NONTLaR8biLz5HwQ=
+X-Gm-Gg: ASbGncuQIp+rAghv3uRyJUCrcuJjKmbAZbd8PmOgRhJ+Q/YKEzu/TGibyqORqjSkhD7
+ 6dUJCD887lILee2EYWMvMq6MJ2zTsJfaUMz0lEssV09H/THZIYIxvxRGJE/kgfsBrnWSz7+WUin
+ YZBNA8SEq8l1oYDVuIBvxASpFyh+6PKLc/ExPQxVXguG1nGkTN6ehW+VzP
+X-Received: by 2002:a05:6402:3492:b0:633:7017:fcc1 with SMTP id
+ 4fb4d7f45d1cf-63c1f6458b6mr6820288a12.14.1760801940706; 
+ Sat, 18 Oct 2025 08:39:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGf8wxQ/DPLrsARkcET/HJ1Rl4GTc4nVMC/dc7tggcd26zgtVatfRrJIDLS7uKOQkflmnDaky+XeaS+YiOSj+Q=
+X-Received: by 2002:a05:6402:3492:b0:633:7017:fcc1 with SMTP id
+ 4fb4d7f45d1cf-63c1f6458b6mr6820262a12.14.1760801940287; Sat, 18 Oct 2025
+ 08:39:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
+References: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20251015132136.1083972-1-vsementsov@yandex-team.ru>
 From: Lei Yang <leiyang@redhat.com>
-Date: Sat, 18 Oct 2025 23:33:34 +0800
-X-Gm-Features: AS18NWAPD2Z8w92peeaquRV3QPncaMdeSwypvANLBu6KAwOeiEhV4d0Q6-Dz2Fg
-Message-ID: <CAPpAL=y-iAYCj3k2C561QmAnCLVsvnr+Jntux+tvaTEk5+jVag@mail.gmail.com>
-Subject: Re: [PATCH v3 00/23] vhost refactoring and fixes
+Date: Sat, 18 Oct 2025 23:38:23 +0800
+X-Gm-Features: AS18NWCAN2o1CP--z8UPc4aUZHY1-jPkkQN6q22p79IQ7VFvgwECG1_PytzUpMI
+Message-ID: <CAPpAL=yxPBAMMN+peO4vs6JyP4pcamuJLoOj9aSO37HZUP61-w@mail.gmail.com>
+Subject: Re: [PATCH v8 00/19] virtio-net: live-TAP local migration
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net, 
- qemu-devel@nongnu.org, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+Cc: mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, farosas@suse.de, 
+ sw@weilnetz.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, 
+ philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org, 
+ michael.roth@amd.com, steven.sistare@oracle.com, davydov-max@yandex-team.ru, 
+ yc-core@yandex-team.ru, raphael.s.norwitz@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
@@ -110,75 +113,76 @@ everything works fine.
 
 Tested-by: Lei Yang <leiyang@redhat.com>
 
-
-On Wed, Oct 15, 2025 at 11:03=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Wed, Oct 15, 2025 at 9:21=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> Hi all. That's rebased and updated first part of
->   [PATCH 00/33] vhost-user-blk: live-backend local migration
+> Hi all!
 >
-> v3:
-> 01-05,07-23: add r-b by Daniil
-> 01,03,04,11-12,15,19,22,23: add r-b by Raphael
-> 02: - add a-b by Markus and Raphael
->     - touch-up commit message
-> 06: carefully follow existing pattern
->     of split into features / features_ex
+> Here is a new migration parameter backend-transfer, which, being
+> assisted by new device property backend-transfer, allows to
+> enable local migration of TAP virtio-net backend, including its
+> properties and open fds.
 >
-> Vladimir Sementsov-Ogievskiy (23):
->   vhost-user: rework enabling vrings
->   vhost: drop backend_features field
->   vhost-user: introduce vhost_user_has_protocol_feature() helper
->   vhost: move protocol_features to vhost_user
->   vhost-user-gpu: drop code duplication
->   vhost: make vhost_dev.features private
->   virtio: move common part of _set_guest_notifier to generic code
->   virtio: drop *_set_guest_notifier_fd_handler() helpers
->   vhost-user: keep QIOChannelSocket for backend channel
->   vhost: vhost_virtqueue_start(): fix failure path
->   vhost: make vhost_memory_unmap() null-safe
->   vhost: simplify calls to vhost_memory_unmap()
->   vhost: move vrings mapping to the top of vhost_virtqueue_start()
->   vhost: vhost_virtqueue_start(): drop extra local variables
->   vhost: final refactoring of vhost vrings map/unmap
->   vhost: simplify vhost_dev_init() error-path
->   vhost: move busyloop timeout initialization to vhost_virtqueue_init()
->   vhost: introduce check_memslots() helper
->   vhost: vhost_dev_init(): simplify features initialization
->   hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
->   vhost-user: make trace events more readable
->   vhost-user-blk: add some useful trace-points
->   vhost: add some useful trace-points
+> With this new option, management software doesn't need to
+> initialize new TAP and do a switch to it. Nothing should be
+> done around virtio-net in local migration: it just migrates
+> and continues to use same TAP device. So we avoid extra logic
+> in management software, extra allocations in kernel (for new TAP),
+> and corresponding extra delay in migration downtime.
 >
->  backends/cryptodev-vhost.c     |   9 +-
->  hw/block/trace-events          |  10 ++
->  hw/block/vhost-user-blk.c      |  20 ++-
->  hw/display/vhost-user-gpu.c    |  11 +-
->  hw/net/vhost_net.c             |  35 ++--
->  hw/scsi/vhost-scsi.c           |   1 -
->  hw/scsi/vhost-user-scsi.c      |   1 -
->  hw/virtio/trace-events         |  16 +-
->  hw/virtio/vdpa-dev.c           |   3 +-
->  hw/virtio/vhost-user-base.c    |   8 +-
->  hw/virtio/vhost-user.c         | 285 ++++++++++++++++++++++---------
->  hw/virtio/vhost.c              | 300 +++++++++++++++++----------------
->  hw/virtio/virtio-bus.c         |  18 +-
->  hw/virtio/virtio-hmp-cmds.c    |   2 -
->  hw/virtio/virtio-mmio.c        |  41 +----
->  hw/virtio/virtio-pci.c         |  34 +---
->  hw/virtio/virtio-qmp.c         |  12 +-
->  hw/virtio/virtio.c             |  48 +++---
->  include/hw/virtio/vhost-user.h |   3 +
->  include/hw/virtio/vhost.h      |  63 +++++--
->  include/hw/virtio/virtio-pci.h |   3 -
->  include/hw/virtio/virtio.h     |  16 +-
->  net/vhost-vdpa.c               |   7 +-
->  qapi/virtio.json               |   3 -
->  24 files changed, 537 insertions(+), 412 deletions(-)
+> v8:
+> 14: add a-b by Peter
+> 16: rework to one boolean parameter
+> 17: rework to use per-device property
+> 19: update to use new API
+>
+> Vladimir Sementsov-Ogievskiy (19):
+>   net/tap: net_init_tap_one(): drop extra error propagation
+>   net/tap: net_init_tap_one(): move parameter checking earlier
+>   net/tap: rework net_tap_init()
+>   net/tap: pass NULL to net_init_tap_one() in cases when scripts are
+>     NULL
+>   net/tap: rework scripts handling
+>   net/tap: setup exit notifier only when needed
+>   net/tap: split net_tap_fd_init()
+>   net/tap: tap_set_sndbuf(): add return value
+>   net/tap: rework tap_set_sndbuf()
+>   net/tap: rework sndbuf handling
+>   net/tap: introduce net_tap_setup()
+>   net/tap: move vhost fd initialization to net_tap_new()
+>   net/tap: finalize net_tap_set_fd() logic
+>   migration: introduce .pre_incoming() vmsd handler
+>   net/tap: postpone tap setup to pre-incoming
+>   qapi: introduce backend-transfer migration parameter
+>   virtio-net: support backend-transfer migration for virtio-net/tap
+>   tests/functional: add skipWithoutSudo() decorator
+>   tests/functional: add test_x86_64_tap_migration
+>
+>  hw/core/machine.c                             |   1 +
+>  hw/net/virtio-net.c                           | 151 ++++++-
+>  include/hw/virtio/virtio-net.h                |   1 +
+>  include/migration/vmstate.h                   |   1 +
+>  include/net/tap.h                             |   5 +
+>  migration/migration.c                         |   4 +
+>  migration/options.c                           |  18 +
+>  migration/options.h                           |   2 +
+>  migration/savevm.c                            |  15 +
+>  migration/savevm.h                            |   1 +
+>  net/tap-bsd.c                                 |   3 +-
+>  net/tap-linux.c                               |  19 +-
+>  net/tap-solaris.c                             |   3 +-
+>  net/tap-stub.c                                |   3 +-
+>  net/tap-win32.c                               |  11 +
+>  net/tap.c                                     | 425 +++++++++++++-----
+>  net/tap_int.h                                 |   3 +-
+>  qapi/migration.json                           |  38 +-
+>  tests/functional/qemu_test/decorators.py      |  16 +
+>  tests/functional/test_x86_64_tap_migration.py | 395 ++++++++++++++++
+>  20 files changed, 984 insertions(+), 131 deletions(-)
+>  create mode 100644 tests/functional/test_x86_64_tap_migration.py
 >
 > --
 > 2.48.1
->
 >
 
 
