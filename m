@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC974CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 14:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D393CCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 14:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA7Yo-0000Ec-ET; Sat, 18 Oct 2025 10:05:30 -0400
+	id 1vA7Yd-0008Rm-RD; Sat, 18 Oct 2025 10:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA7YO-0008LT-Va; Sat, 18 Oct 2025 10:05:05 -0400
+ id 1vA7YG-0008HK-EQ; Sat, 18 Oct 2025 10:04:56 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA7YM-0006zD-J6; Sat, 18 Oct 2025 10:05:04 -0400
+ id 1vA7YE-0006xE-SO; Sat, 18 Oct 2025 10:04:56 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id ED7F95972FB;
- Sat, 18 Oct 2025 16:05:00 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 773E85972F4;
+ Sat, 18 Oct 2025 16:04:52 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Wuu03SvqJFsv; Sat, 18 Oct 2025 16:04:59 +0200 (CEST)
+ id dNwca-i1CW49; Sat, 18 Oct 2025 16:04:50 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0129D5972F8; Sat, 18 Oct 2025 16:04:59 +0200 (CEST)
-Message-ID: <b5b0150b6c579b10682f6482e7832cf381ffb759.1760795082.git.balaton@eik.bme.hu>
+ id 789A05972EF; Sat, 18 Oct 2025 16:04:50 +0200 (CEST)
+Message-ID: <68c038fd225463db282d0277d80cb525e0551413.1760795082.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1760795082.git.balaton@eik.bme.hu>
 References: <cover.1760795082.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 14/16] hw/ppc/prep: Always create prep-systemio
+Subject: [PATCH v4 06/16] hw/pci-host/raven: Simplify direct config access
+ address decoding
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,7 +42,7 @@ Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
  Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 16:04:59 +0200 (CEST)
+Date: Sat, 18 Oct 2025 16:04:50 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -65,60 +66,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The prep-systemio device models the system control ports of the 40p
-machine which is not an optional pluggable device but part of the
-system so it should not be disabled by -nodefaults but always created.
-
-Additionally remove some line breaks to make lines related to one
-device appear in one block for logical separation from other devices.
+Use ctz instead of an open coded version and rename function to better
+show what it does.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/ppc/prep.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ hw/pci-host/raven.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-index ead91ec851..973d2fb7eb 100644
---- a/hw/ppc/prep.c
-+++ b/hw/ppc/prep.c
-@@ -317,6 +317,13 @@ static void ibm_40p_init(MachineState *machine)
-     sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
-     isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+index a400a22df3..66dab28a29 100644
+--- a/hw/pci-host/raven.c
++++ b/hw/pci-host/raven.c
+@@ -57,16 +57,9 @@ struct PREPPCIState {
  
-+    /* system control ports */
-+    isa_dev = isa_new("prep-systemio");
-+    dev = DEVICE(isa_dev);
-+    qdev_prop_set_uint32(dev, "ibm-planar-id", 0xfc);
-+    qdev_prop_set_uint32(dev, "equipment", 0xc0);
-+    isa_realize_and_unref(isa_dev, isa_bus, &error_fatal);
-+
-     /* Memory controller */
-     isa_dev = isa_new("rs6000-mc");
-     dev = DEVICE(isa_dev);
-@@ -342,7 +349,6 @@ static void ibm_40p_init(MachineState *machine)
-         dev = DEVICE(isa_dev);
-         qdev_prop_set_uint32(dev, "iobase", 0x830);
-         qdev_prop_set_uint32(dev, "irq", 10);
+ #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
+ 
+-static inline uint32_t raven_pci_io_config(hwaddr addr)
++static inline uint32_t raven_idsel_to_addr(hwaddr addr)
+ {
+-    int i;
 -
-         if (machine->audiodev) {
-             qdev_prop_set_string(dev, "audiodev", machine->audiodev);
-         }
-@@ -353,14 +359,7 @@ static void ibm_40p_init(MachineState *machine)
-         qdev_prop_set_uint32(dev, "config", 12);
-         isa_realize_and_unref(isa_dev, isa_bus, &error_fatal);
+-    for (i = 0; i < 11; i++) {
+-        if ((addr & (1 << (11 + i))) != 0) {
+-            break;
+-        }
+-    }
+-    return (addr & 0x7ff) |  (i << 11);
++    return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
+ }
  
--        isa_dev = isa_new("prep-systemio");
--        dev = DEVICE(isa_dev);
--        qdev_prop_set_uint32(dev, "ibm-planar-id", 0xfc);
--        qdev_prop_set_uint32(dev, "equipment", 0xc0);
--        isa_realize_and_unref(isa_dev, isa_bus, &error_fatal);
--
--        dev = DEVICE(pci_create_simple(pci_bus, PCI_DEVFN(1, 0),
--                                       "lsi53c810"));
-+        dev = DEVICE(pci_create_simple(pci_bus, PCI_DEVFN(1, 0), "lsi53c810"));
-         lsi53c8xx_handle_legacy_cmdline(dev);
-         qdev_connect_gpio_out(dev, 0, qdev_get_gpio_in(i82378_dev, 13));
+ static void raven_pci_io_write(void *opaque, hwaddr addr,
+@@ -74,7 +67,7 @@ static void raven_pci_io_write(void *opaque, hwaddr addr,
+ {
+     PREPPCIState *s = opaque;
+     PCIHostState *phb = PCI_HOST_BRIDGE(s);
+-    pci_data_write(phb->bus, raven_pci_io_config(addr), val, size);
++    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
+ }
  
+ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
+@@ -82,7 +75,7 @@ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
+ {
+     PREPPCIState *s = opaque;
+     PCIHostState *phb = PCI_HOST_BRIDGE(s);
+-    return pci_data_read(phb->bus, raven_pci_io_config(addr), size);
++    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
+ }
+ 
+ static const MemoryRegionOps raven_pci_io_ops = {
 -- 
 2.41.3
 
