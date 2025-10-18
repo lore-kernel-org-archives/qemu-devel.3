@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E08CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2DF2CCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vACH8-0006Vi-Nz; Sat, 18 Oct 2025 15:07:35 -0400
+	id 1vACHB-0006Yy-19; Sat, 18 Oct 2025 15:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACH0-0006QO-I3; Sat, 18 Oct 2025 15:07:30 -0400
+ id 1vACH7-0006Tu-HJ; Sat, 18 Oct 2025 15:07:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACGw-00010X-Gs; Sat, 18 Oct 2025 15:07:26 -0400
+ id 1vACH5-00016D-L6; Sat, 18 Oct 2025 15:07:33 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD34D15F79C;
- Sat, 18 Oct 2025 22:06:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 17FB415F7A0;
+ Sat, 18 Oct 2025 22:06:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 83EF32F0605;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D581E2F0609;
  Sat, 18 Oct 2025 22:07:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- YiFei Zhu <zhuyifei@google.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 15/23] i386/cpu: Prevent delivering SIPI during SMM in
- TCG mode
-Date: Sat, 18 Oct 2025 22:06:50 +0300
-Message-ID: <20251018190702.1178893-4-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 19/23] async: access bottom half flags with
+ qatomic_read
+Date: Sat, 18 Oct 2025 22:06:54 +0300
+Message-ID: <20251018190702.1178893-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
@@ -62,77 +62,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-[commit message by YiFei Zhu]
+Running test-aio-multithread under TSAN reveals data races on bh->flags.
+Because bottom halves may be scheduled or canceled asynchronously,
+without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
+to use a relaxed read to access the flags.
 
-A malicious kernel may control the instruction pointer in SMM in a
-multi-processor VM by sending a sequence of IPIs via APIC:
+Use an acquire load to ensure that anything that was written prior to
+qemu_bh_schedule() is visible.
 
-CPU0			CPU1
-IPI(CPU1, MODE_INIT)
-			x86_cpu_exec_reset()
-			apic_init_reset()
-			s->wait_for_sipi = true
-IPI(CPU1, MODE_SMI)
-			do_smm_enter()
-			env->hflags |= HF_SMM_MASK;
-IPI(CPU1, MODE_STARTUP, vector)
-			do_cpu_sipi()
-			apic_sipi()
-			/* s->wait_for_sipi check passes */
-			cpu_x86_load_seg_cache_sipi(vector)
-
-A different sequence, SMI INIT SIPI, is also buggy in TCG because
-INIT is not blocked or latched during SMM. However, it is not
-vulnerable to an instruction pointer control in the same way because
-x86_cpu_exec_reset clears env->hflags, exiting SMM.
-
-Fixes: a9bad65d2c1f ("target-i386: wake up processors that receive an SMI")
-Analyzed-by: YiFei Zhu <zhuyifei@google.com>
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2749
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/851
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit df32e5c568c9cf68c15a9bbd98d0c3aff19eab63)
+(cherry picked from commit 5142397c79330aab9bef3230991c8ac0c251110f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index bcb103560c..143d08f1aa 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -645,8 +645,6 @@ void apic_sipi(DeviceState *dev)
- {
-     APICCommonState *s = APIC(dev);
+diff --git a/util/async.c b/util/async.c
+index 2719c629ae..a736d2cd0d 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -256,8 +256,9 @@ static int64_t aio_compute_bh_timeout(BHList *head, int timeout)
+     QEMUBH *bh;
  
--    cpu_reset_interrupt(CPU(s->cpu), CPU_INTERRUPT_SIPI);
--
-     if (!s->wait_for_sipi)
-         return;
-     cpu_x86_load_seg_cache_sipi(s->cpu, s->sipi_vector);
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index e0aaed3c4c..693a95558f 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -619,6 +619,10 @@ void do_cpu_init(X86CPU *cpu)
+     QSLIST_FOREACH_RCU(bh, head, next) {
+-        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+-            if (bh->flags & BH_IDLE) {
++        int flags = qatomic_load_acquire(&bh->flags);
++        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++            if (flags & BH_IDLE) {
+                 /* idle bottom halves will be polled at least
+                  * every 10ms */
+                 timeout = 10000000;
+@@ -335,14 +336,16 @@ aio_ctx_check(GSource *source)
+     aio_notify_accept(ctx);
  
- void do_cpu_sipi(X86CPU *cpu)
- {
-+    CPUX86State *env = &cpu->env;
-+    if (env->hflags & HF_SMM_MASK) {
-+        return;
-+    }
-     apic_sipi(cpu->apic_state);
- }
+     QSLIST_FOREACH_RCU(bh, &ctx->bh_list, next) {
+-        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++        int flags = qatomic_load_acquire(&bh->flags);
++        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+             return true;
+         }
+     }
  
-diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
-index d4ea890c12..e7d76e41d2 100644
---- a/target/i386/tcg/system/seg_helper.c
-+++ b/target/i386/tcg/system/seg_helper.c
-@@ -182,6 +182,7 @@ bool x86_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-         apic_poll_irq(cpu->apic_state);
-         break;
-     case CPU_INTERRUPT_SIPI:
-+        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
-         do_cpu_sipi(cpu);
-         break;
-     case CPU_INTERRUPT_SMI:
+     QSIMPLEQ_FOREACH(s, &ctx->bh_slice_list, next) {
+         QSLIST_FOREACH_RCU(bh, &s->bh_list, next) {
+-            if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++            int flags = qatomic_load_acquire(&bh->flags);
++            if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+                 return true;
+             }
+         }
 -- 
 2.47.3
 
