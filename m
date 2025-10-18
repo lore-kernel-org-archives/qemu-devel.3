@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E67FCCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BACECCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vACH6-0006SV-Tm; Sat, 18 Oct 2025 15:07:33 -0400
+	id 1vACHU-0006jr-AW; Sat, 18 Oct 2025 15:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACGz-0006Q1-83; Sat, 18 Oct 2025 15:07:29 -0400
+ id 1vACHB-0006Z7-0Z; Sat, 18 Oct 2025 15:07:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACGv-00010Z-D6; Sat, 18 Oct 2025 15:07:23 -0400
+ id 1vACH9-00017f-44; Sat, 18 Oct 2025 15:07:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D040715F79D;
- Sat, 18 Oct 2025 22:06:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 41BF415F7A2;
+ Sat, 18 Oct 2025 22:06:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 958B12F0606;
- Sat, 18 Oct 2025 22:07:02 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 091122F060B;
+ Sat, 18 Oct 2025 22:07:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, YiFei Zhu <zhuyifei@google.com>,
- unvariant.winter@gmail.com, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 16/23] i386/tcg/smm_helper: Properly apply DR values
- on SMM entry / exit
-Date: Sat, 18 Oct 2025 22:06:51 +0300
-Message-ID: <20251018190702.1178893-5-mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 21/23] accel/tcg: Hoist first page lookup above
+ pointer_wrap
+Date: Sat, 18 Oct 2025 22:06:56 +0300
+Message-ID: <20251018190702.1178893-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,60 +62,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YiFei Zhu <zhuyifei@google.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-do_smm_enter and helper_rsm sets the env->dr, but does not sync the
-values with cpu_x86_update_dr7. A malicious kernel may control the
-instruction pointer in SMM by setting a breakpoint on the SMI
-entry point, and after do_smm_enter cpu->breakpoints contains the
-stale breakpoint; and because IDT is not reloaded upon SMI entry,
-the debug exception handler controlled by the malicious kernel
-is invoked.
+For strict alignment targets we registered cpu_pointer_wrap_notreached,
+but generic code used it before recognizing the alignment exception.
+Hoist the first page lookup, so that the alignment exception happens first.
 
-Fixes: 01df040b5247 ("x86: Debug register emulation (Jan Kiszka)")
-Reported-by: unvariant.winter@gmail.com
-Signed-off-by: YiFei Zhu <zhuyifei@google.com>
-Link: https://lore.kernel.org/r/2bacb9b24e9d337dbe48791aa25d349eb9c52c3a.1758794468.git.zhuyifei@google.com
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit cdba90ac1b0ac789b10c0b5f6ef7e9558237ec66)
+Buglink: https://bugs.debian.org/1112285
+Fixes: a4027ed7d4be ("target: Use cpu_pointer_wrap_notreached for strict align targets")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit ec03dd9723781c7e9d4b4f70c7f54d12da9459d5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/system/smm_helper.c b/target/i386/tcg/system/smm_helper.c
-index 251eb7856c..fb028a8272 100644
---- a/target/i386/tcg/system/smm_helper.c
-+++ b/target/i386/tcg/system/smm_helper.c
-@@ -168,7 +168,7 @@ void do_smm_enter(X86CPU *cpu)
-                        env->cr[0] & ~(CR0_PE_MASK | CR0_EM_MASK | CR0_TS_MASK |
-                                       CR0_PG_MASK));
-     cpu_x86_update_cr4(env, 0);
--    env->dr[7] = 0x00000400;
-+    helper_set_dr(env, 7, 0x00000400);
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 87e14bde4f..b063a572e7 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1744,6 +1744,7 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+                        uintptr_t ra, MMUAccessType type, MMULookupLocals *l)
+ {
+     bool crosspage;
++    vaddr last;
+     int flags;
  
-     cpu_x86_load_seg_cache(env, R_CS, (env->smbase >> 4) & 0xffff, env->smbase,
-                            0xffffffff,
-@@ -233,8 +233,8 @@ void helper_rsm(CPUX86State *env)
-     env->eip = x86_ldq_phys(cs, sm_state + 0x7f78);
-     cpu_load_eflags(env, x86_ldl_phys(cs, sm_state + 0x7f70),
-                     ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C | DF_MASK));
--    env->dr[6] = x86_ldl_phys(cs, sm_state + 0x7f68);
--    env->dr[7] = x86_ldl_phys(cs, sm_state + 0x7f60);
-+    helper_set_dr(env, 6, x86_ldl_phys(cs, sm_state + 0x7f68));
-+    helper_set_dr(env, 7, x86_ldl_phys(cs, sm_state + 0x7f60));
+     l->memop = get_memop(oi);
+@@ -1753,13 +1754,15 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
  
-     cpu_x86_update_cr4(env, x86_ldl_phys(cs, sm_state + 0x7f48));
-     cpu_x86_update_cr3(env, x86_ldq_phys(cs, sm_state + 0x7f50));
-@@ -268,8 +268,8 @@ void helper_rsm(CPUX86State *env)
-     env->regs[R_EDX] = x86_ldl_phys(cs, sm_state + 0x7fd8);
-     env->regs[R_ECX] = x86_ldl_phys(cs, sm_state + 0x7fd4);
-     env->regs[R_EAX] = x86_ldl_phys(cs, sm_state + 0x7fd0);
--    env->dr[6] = x86_ldl_phys(cs, sm_state + 0x7fcc);
--    env->dr[7] = x86_ldl_phys(cs, sm_state + 0x7fc8);
-+    helper_set_dr(env, 6, x86_ldl_phys(cs, sm_state + 0x7fcc));
-+    helper_set_dr(env, 7, x86_ldl_phys(cs, sm_state + 0x7fc8));
+     l->page[0].addr = addr;
+     l->page[0].size = memop_size(l->memop);
+-    l->page[1].addr = (addr + l->page[0].size - 1) & TARGET_PAGE_MASK;
++    l->page[1].addr = 0;
+     l->page[1].size = 0;
+-    crosspage = (addr ^ l->page[1].addr) & TARGET_PAGE_MASK;
  
-     env->tr.selector = x86_ldl_phys(cs, sm_state + 0x7fc4) & 0xffff;
-     env->tr.base = x86_ldl_phys(cs, sm_state + 0x7f64);
+-    if (likely(!crosspage)) {
+-        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
++    /* Lookup and recognize exceptions from the first page. */
++    mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+ 
++    last = addr + l->page[0].size - 1;
++    crosspage = (addr ^ last) & TARGET_PAGE_MASK;
++    if (likely(!crosspage)) {
+         flags = l->page[0].flags;
+         if (unlikely(flags & (TLB_WATCHPOINT | TLB_NOTDIRTY))) {
+             mmu_watch_or_dirty(cpu, &l->page[0], type, ra);
+@@ -1769,18 +1772,18 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+         }
+     } else {
+         /* Finish compute of page crossing. */
+-        int size0 = l->page[1].addr - addr;
++        vaddr addr1 = last & TARGET_PAGE_MASK;
++        int size0 = addr1 - addr;
+         l->page[1].size = l->page[0].size - size0;
+         l->page[0].size = size0;
+-
+         l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
+-                                                         l->page[1].addr, addr);
++                                                         addr1, addr);
+ 
+         /*
+-         * Lookup both pages, recognizing exceptions from either.  If the
+-         * second lookup potentially resized, refresh first CPUTLBEntryFull.
++         * Lookup and recognize exceptions from the second page.
++         * If the lookup potentially resized the table, refresh the
++         * first CPUTLBEntryFull pointer.
+          */
+-        mmu_lookup1(cpu, &l->page[0], l->memop, l->mmu_idx, type, ra);
+         if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
+             uintptr_t index = tlb_index(cpu, l->mmu_idx, addr);
+             l->page[0].full = &cpu->neg.tlb.d[l->mmu_idx].fulltlb[index];
 -- 
 2.47.3
 
