@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23849CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DEC0CCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 19:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vACHO-0006hT-Fz; Sat, 18 Oct 2025 15:07:51 -0400
+	id 1vACHL-0006eg-NI; Sat, 18 Oct 2025 15:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACH7-0006V6-Uz; Sat, 18 Oct 2025 15:07:33 -0400
+ id 1vACH4-0006Qb-3y; Sat, 18 Oct 2025 15:07:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vACH6-00016E-5s; Sat, 18 Oct 2025 15:07:33 -0400
+ id 1vACH1-00014p-SZ; Sat, 18 Oct 2025 15:07:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3164E15F7A1;
- Sat, 18 Oct 2025 22:06:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ED0E015F79E;
+ Sat, 18 Oct 2025 22:06:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E38B72F060A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A89A92F0607;
  Sat, 18 Oct 2025 22:07:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.2 20/23] target/i386: user: do not set up a valid LDT on
- reset
-Date: Sat, 18 Oct 2025 22:06:55 +0300
-Message-ID: <20251018190702.1178893-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Ogrisegg <tom-bugs-qemu@fnord.at>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.2 17/23] target/i386: fix x86_64 pushw op
+Date: Sat, 18 Oct 2025 22:06:52 +0300
+Message-ID: <20251018190702.1178893-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
 References: <qemu-stable-10.1.2-20251018220623@cover.tls.msk.ru>
@@ -60,38 +59,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Thomas Ogrisegg <tom-bugs-qemu@fnord.at>
 
-In user-mode emulation, QEMU uses the default setting of the LDT base
-and limit, which places it at the bottom 64K of virtual address space.
-However, by default there is no LDT at all in Linux processes, and
-therefore the limit should be 0.
+For x86_64 a 16 bit push op (pushw) of a memory address would generate
+a 64 bit store on the stack instead of a 16 bit store.
 
-This is visible as a NULL pointer dereference in LSL and LAR instructions
-when they try to read the LDT at an unmapped address.
+For example:
+        pushw (%rax)
 
-Resolves: #1376
+behaves like
+        pushq (%rax)
+
+which is incorrect.
+
+This patch fixes that.
+
+Signed-off-by: Thomas Ogrisegg <tom-bugs-qemu@fnord.at>
+Link: https://lore.kernel.org/r/20250715210307.GA1115@x1.fnord.at
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 58aa1d08bbc406ba3982f32ffb1bef0ff4f8f369)
+(cherry picked from commit 5a2faa0a0a2cbdad4a108a0e122b0e51b9bc94fd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ab18de894e..25bbbf70cc 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8632,7 +8632,11 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 51038657f0..a50f57dbaa 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1541,7 +1541,7 @@ static void decode_group4_5(DisasContext *s, CPUX86State *env, X86OpEntry *entry
+         [0x0b] = X86_OP_ENTRYr(CALLF_m, M,p),
+         [0x0c] = X86_OP_ENTRYr(JMP_m,   E,f64,                         zextT0),
+         [0x0d] = X86_OP_ENTRYr(JMPF_m,  M,p),
+-        [0x0e] = X86_OP_ENTRYr(PUSH,    E,f64),
++        [0x0e] = X86_OP_ENTRYr(PUSH,    E,d64),
+     };
  
-     env->idt.limit = 0xffff;
-     env->gdt.limit = 0xffff;
-+#if defined(CONFIG_USER_ONLY)
-+    env->ldt.limit = 0;
-+#else
-     env->ldt.limit = 0xffff;
-+#endif
-     env->ldt.flags = DESC_P_MASK | (2 << DESC_TYPE_SHIFT);
-     env->tr.limit = 0xffff;
-     env->tr.flags = DESC_P_MASK | (11 << DESC_TYPE_SHIFT);
+     int w = (*b & 1);
 -- 
 2.47.3
 
