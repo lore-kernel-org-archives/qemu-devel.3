@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C4E2CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03CABCCD1A4
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA8at-0008EG-GJ; Sat, 18 Oct 2025 11:11:43 -0400
+	id 1vA8b1-0008JZ-LT; Sat, 18 Oct 2025 11:11:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8ar-0008CM-8A; Sat, 18 Oct 2025 11:11:41 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vA8aw-0008GD-Ov; Sat, 18 Oct 2025 11:11:46 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8ap-0005fs-Nc; Sat, 18 Oct 2025 11:11:40 -0400
+ id 1vA8au-0005hW-Qu; Sat, 18 Oct 2025 11:11:46 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A61F25972F5;
- Sat, 18 Oct 2025 17:11:37 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 01D945972EF;
+ Sat, 18 Oct 2025 17:11:43 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id TlBUK6klS8c8; Sat, 18 Oct 2025 17:11:35 +0200 (CEST)
+ id McL900EV6yPX; Sat, 18 Oct 2025 17:11:41 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A80A05972EF; Sat, 18 Oct 2025 17:11:35 +0200 (CEST)
-Message-ID: <1c95348927decbe66456a0be2ff5a63073cda90e.1760798392.git.balaton@eik.bme.hu>
+ id 01DEC5972DF; Sat, 18 Oct 2025 17:11:41 +0200 (CEST)
+Message-ID: <0e63602b0381c20c4ef0ac1e741d5250b8b3b257.1760798392.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1760798392.git.balaton@eik.bme.hu>
 References: <cover.1760798392.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 04/13] hw/ppc/pegasos2: Remove fdt pointer from machine
- state
+Subject: [PATCH v3 09/13] hw/ppc/pegasos2: Introduce abstract superclass
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,15 +39,14 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 17:11:35 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sat, 18 Oct 2025 17:11:41 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,50 +62,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The machine class has a field for storing the fdt so we don't need our
-own and can use that instead.
+Rename machine state struct to PegasosMachineState as it will be used
+for pegasos1 too.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/pegasos2.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ hw/ppc/pegasos2.c | 66 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 34 insertions(+), 32 deletions(-)
 
 diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 646755a3cc..7dc7803c64 100644
+index e3c1ee9347..f7999520e4 100644
 --- a/hw/ppc/pegasos2.c
 +++ b/hw/ppc/pegasos2.c
-@@ -74,7 +74,6 @@ struct Pegasos2MachineState {
-     qemu_irq mv_pirq[PCI_NUM_PINS];
-     qemu_irq via_pirq[PCI_NUM_PINS];
-     Vof *vof;
--    void *fdt_blob;
-     uint64_t kernel_addr;
-     uint64_t kernel_entry;
-     uint64_t kernel_size;
-@@ -413,13 +412,11 @@ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
-     d[1] = cpu_to_be64(pm->kernel_size - (pm->kernel_entry - pm->kernel_addr));
-     qemu_fdt_setprop(fdt, "/chosen", "qemu,boot-kernel", d, sizeof(d));
+@@ -57,10 +57,10 @@
  
--    g_free(pm->fdt_blob);
--    pm->fdt_blob = fdt;
+ #define BUS_FREQ_HZ 133333333
+ 
+-#define TYPE_PEGASOS2_MACHINE  MACHINE_TYPE_NAME("pegasos2")
+-OBJECT_DECLARE_TYPE(Pegasos2MachineState, MachineClass, PEGASOS2_MACHINE)
++#define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
++OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
+ 
+-struct Pegasos2MachineState {
++struct PegasosMachineState {
+     MachineState parent_obj;
+ 
+     PowerPCCPU *cpu;
+@@ -78,12 +78,12 @@ struct Pegasos2MachineState {
+     uint64_t initrd_size;
+ };
+ 
+-static void *pegasos2_build_fdt(Pegasos2MachineState *pm, int *fdt_size);
++static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size);
+ 
+ static void pegasos2_cpu_reset(void *opaque)
+ {
+     PowerPCCPU *cpu = opaque;
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(current_machine);
++    PegasosMachineState *pm = PEGASOS_MACHINE(current_machine);
+ 
+     cpu_reset(CPU(cpu));
+     cpu->env.spr[SPR_HID1] = 7ULL << 28;
+@@ -96,7 +96,7 @@ static void pegasos2_cpu_reset(void *opaque)
+ 
+ static void pegasos2_pci_irq(void *opaque, int n, int level)
+ {
+-    Pegasos2MachineState *pm = opaque;
++    PegasosMachineState *pm = opaque;
+ 
+     /* PCI interrupt lines are connected to both MV64361 and VT8231 */
+     qemu_set_irq(pm->mv_pirq[n], level);
+@@ -104,7 +104,7 @@ static void pegasos2_pci_irq(void *opaque, int n, int level)
+ }
+ 
+ /* Set up PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
+-static void pegasos2_setup_pci_irq(Pegasos2MachineState *pm)
++static void pegasos2_setup_pci_irq(PegasosMachineState *pm)
+ {
+     for (int h = 0; h < 2; h++) {
+         DeviceState *pd;
+@@ -137,7 +137,7 @@ static void pegasos2_setup_pci_irq(Pegasos2MachineState *pm)
+ 
+ static void pegasos2_init(MachineState *machine)
+ {
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
++    PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     CPUPPCState *env;
+     MemoryRegion *rom = g_new(MemoryRegion, 1);
+     PCIBus *pci_bus;
+@@ -262,7 +262,7 @@ static void pegasos2_init(MachineState *machine)
+     }
+ }
+ 
+-static uint32_t pegasos2_mv_reg_read(Pegasos2MachineState *pm,
++static uint32_t pegasos2_mv_reg_read(PegasosMachineState *pm,
+                                      uint32_t addr, uint32_t len)
+ {
+     MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 0);
+@@ -272,7 +272,7 @@ static uint32_t pegasos2_mv_reg_read(Pegasos2MachineState *pm,
+     return val;
+ }
+ 
+-static void pegasos2_mv_reg_write(Pegasos2MachineState *pm, uint32_t addr,
++static void pegasos2_mv_reg_write(PegasosMachineState *pm, uint32_t addr,
+                                   uint32_t len, uint32_t val)
+ {
+     MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 0);
+@@ -283,7 +283,7 @@ static void pegasos2_mv_reg_write(Pegasos2MachineState *pm, uint32_t addr,
+ #define PCI0_CFG_ADDR 0xcf8
+ #define PCI1_CFG_ADDR 0xc78
+ 
+-static uint32_t pegasos2_pci_config_read(Pegasos2MachineState *pm, int bus,
++static uint32_t pegasos2_pci_config_read(PegasosMachineState *pm, int bus,
+                                          uint32_t addr, uint32_t len)
+ {
+     hwaddr pcicfg = bus ? PCI1_CFG_ADDR : PCI0_CFG_ADDR;
+@@ -296,7 +296,7 @@ static uint32_t pegasos2_pci_config_read(Pegasos2MachineState *pm, int bus,
+     return val;
+ }
+ 
+-static void pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
++static void pegasos2_pci_config_write(PegasosMachineState *pm, int bus,
+                                       uint32_t addr, uint32_t len, uint32_t val)
+ {
+     hwaddr pcicfg = bus ? PCI1_CFG_ADDR : PCI0_CFG_ADDR;
+@@ -311,7 +311,7 @@ static void pegasos2_superio_write(uint8_t addr, uint8_t val)
+     cpu_physical_memory_write(0xfe0003f1, &val, 1);
+ }
+ 
+-static void pegasos2_chipset_reset(Pegasos2MachineState *pm)
++static void pegasos2_chipset_reset(PegasosMachineState *pm)
+ {
+     pegasos2_mv_reg_write(pm, 0, 4, 0x28020ff);
+     pegasos2_mv_reg_write(pm, 0x278, 4, 0xa31fc);
+@@ -379,7 +379,7 @@ static void pegasos2_chipset_reset(Pegasos2MachineState *pm)
+ 
+ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
+ {
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
++    PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     void *fdt;
+     uint32_t c[2];
+     uint64_t d[2];
+@@ -463,7 +463,7 @@ enum pegasos2_rtas_tokens {
+     RTAS_SYSTEM_REBOOT = 20,
+ };
+ 
+-static target_ulong pegasos2_rtas(PowerPCCPU *cpu, Pegasos2MachineState *pm,
++static target_ulong pegasos2_rtas(PowerPCCPU *cpu, PegasosMachineState *pm,
+                                   target_ulong args_real)
+ {
+     AddressSpace *as = CPU(cpu)->as;
+@@ -566,7 +566,7 @@ static bool pegasos2_cpu_in_nested(PowerPCCPU *cpu)
+ 
+ static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
+ {
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(vhyp);
++    PegasosMachineState *pm = PEGASOS_MACHINE(vhyp);
+     CPUPPCState *env = &cpu->env;
+ 
+     /* The TCG path should also be holding the BQL at this point */
+@@ -629,24 +629,26 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
+     vmc->setprop = pegasos2_setprop;
+ }
+ 
+-static const TypeInfo pegasos2_machine_info = {
+-    .name          = TYPE_PEGASOS2_MACHINE,
+-    .parent        = TYPE_MACHINE,
+-    .class_init    = pegasos2_machine_class_init,
+-    .instance_size = sizeof(Pegasos2MachineState),
+-    .interfaces = (const InterfaceInfo[]) {
+-        { TYPE_PPC_VIRTUAL_HYPERVISOR },
+-        { TYPE_VOF_MACHINE_IF },
+-        { }
++static const TypeInfo pegasos_machine_types[] = {
++    {
++        .name          = TYPE_PEGASOS_MACHINE,
++        .parent        = TYPE_MACHINE,
++        .instance_size = sizeof(PegasosMachineState),
++        .abstract      = true,
++    },
++    {
++        .name          = MACHINE_TYPE_NAME("pegasos2"),
++        .parent        = TYPE_PEGASOS_MACHINE,
++        .class_init    = pegasos2_machine_class_init,
++        .interfaces = (const InterfaceInfo[]) {
++              { TYPE_PPC_VIRTUAL_HYPERVISOR },
++              { TYPE_VOF_MACHINE_IF },
++              { }
++        },
+     },
+ };
+ 
+-static void pegasos2_machine_register_types(void)
+-{
+-    type_register_static(&pegasos2_machine_info);
+-}
 -
-     vof_build_dt(fdt, pm->vof);
-     vof_client_open_store(fdt, pm->vof, "/chosen", "stdout", "/failsafe");
+-type_init(pegasos2_machine_register_types)
++DEFINE_TYPES(pegasos_machine_types)
  
-     /* Set machine->fdt for 'dumpdtb' QMP/HMP command */
-+    g_free(machine->fdt);
-     machine->fdt = fdt;
+ /* FDT creation for passing to firmware */
  
-     pm->cpu->vhyp = PPC_VIRTUAL_HYPERVISOR(machine);
-@@ -559,7 +556,7 @@ static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
-     } else if (env->gpr[3] == KVMPPC_H_RTAS) {
-         env->gpr[3] = pegasos2_rtas(cpu, pm, env->gpr[4]);
-     } else if (env->gpr[3] == KVMPPC_H_VOF_CLIENT) {
--        int ret = vof_client_call(MACHINE(pm), pm->vof, pm->fdt_blob,
-+        int ret = vof_client_call(MACHINE(pm), pm->vof, MACHINE(pm)->fdt,
-                                   env->gpr[4]);
-         env->gpr[3] = (ret ? H_PARAMETER : H_SUCCESS);
-     } else {
+@@ -848,7 +850,7 @@ static void *load_dtb(const char *filename, int *fdt_size)
+     return fdt;
+ }
+ 
+-static void *pegasos2_build_fdt(Pegasos2MachineState *pm, int *fdt_size)
++static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size)
+ {
+     FDTInfo fi;
+     PCIBus *pci_bus;
 -- 
 2.41.3
 
