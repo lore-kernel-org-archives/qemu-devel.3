@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62660CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99EBCCD195
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADz5-0007zg-Fh; Sat, 18 Oct 2025 16:57:03 -0400
+	id 1vADzD-00083j-Az; Sat, 18 Oct 2025 16:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADyy-0007yZ-RM; Sat, 18 Oct 2025 16:56:56 -0400
+ id 1vADz1-0007zT-UR; Sat, 18 Oct 2025 16:57:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADyx-0004x6-6y; Sat, 18 Oct 2025 16:56:56 -0400
+ id 1vADz0-0004xV-BJ; Sat, 18 Oct 2025 16:56:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 79CD415F878;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9DE2A15F87A;
  Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 60BE92F0681;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 866BD2F0683;
  Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 15/23] target/i386: Fix CR2 handling for non-canonical
- addresses
-Date: Sat, 18 Oct 2025 23:56:33 +0300
-Message-ID: <20251018205644.1185050-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ YiFei Zhu <zhuyifei@google.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 17/23] i386/cpu: Prevent delivering SIPI during SMM in
+ TCG mode
+Date: Sat, 18 Oct 2025 23:56:35 +0300
+Message-ID: <20251018205644.1185050-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
@@ -60,40 +60,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Commit 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-accidentally modified CR2 for non-canonical address exceptions while these
-should lead to a #GP / #SS instead -- without changing CR2.
+[commit message by YiFei Zhu]
 
-Fix that.
+A malicious kernel may control the instruction pointer in SMM in a
+multi-processor VM by sending a sequence of IPIs via APIC:
 
-A KUT test for this was submitted as [1].
+CPU0			CPU1
+IPI(CPU1, MODE_INIT)
+			x86_cpu_exec_reset()
+			apic_init_reset()
+			s->wait_for_sipi = true
+IPI(CPU1, MODE_SMI)
+			do_smm_enter()
+			env->hflags |= HF_SMM_MASK;
+IPI(CPU1, MODE_STARTUP, vector)
+			do_cpu_sipi()
+			apic_sipi()
+			/* s->wait_for_sipi check passes */
+			cpu_x86_load_seg_cache_sipi(vector)
 
-[1] https://lore.kernel.org/kvm/20250612141637.131314-1-minipli@grsecurity.net/
+A different sequence, SMI INIT SIPI, is also buggy in TCG because
+INIT is not blocked or latched during SMM. However, it is not
+vulnerable to an instruction pointer control in the same way because
+x86_cpu_exec_reset clears env->hflags, exiting SMM.
 
-Fixes: 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20250612142155.132175-1-minipli@grsecurity.net
+Fixes: a9bad65d2c1f ("target-i386: wake up processors that receive an SMI")
+Analyzed-by: YiFei Zhu <zhuyifei@google.com>
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit df9a3372ddebfcfc135861fa2d53cef6f98065f9)
+(cherry picked from commit df32e5c568c9cf68c15a9bbd98d0c3aff19eab63)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
-index 6876329de2..cad42455dc 100644
---- a/target/i386/tcg/system/excp_helper.c
-+++ b/target/i386/tcg/system/excp_helper.c
-@@ -589,7 +589,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-                 if (sext != 0 && sext != -1) {
-                     *err = (TranslateFault){
-                         .exception_index = EXCP0D_GPF,
--                        .cr2 = addr,
-+                        /* non-canonical #GP doesn't change CR2 */
-+                        .cr2 = env->cr[2],
-                     };
-                     return false;
-                 }
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index d18c1dbf2c..b2a2b671b0 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -645,8 +645,6 @@ void apic_sipi(DeviceState *dev)
+ {
+     APICCommonState *s = APIC(dev);
+ 
+-    cpu_reset_interrupt(CPU(s->cpu), CPU_INTERRUPT_SIPI);
+-
+     if (!s->wait_for_sipi)
+         return;
+     cpu_x86_load_seg_cache_sipi(s->cpu, s->sipi_vector);
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index c07b1b16ea..891f7bac46 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -617,6 +617,10 @@ void do_cpu_init(X86CPU *cpu)
+ 
+ void do_cpu_sipi(X86CPU *cpu)
+ {
++    CPUX86State *env = &cpu->env;
++    if (env->hflags & HF_SMM_MASK) {
++        return;
++    }
+     apic_sipi(cpu->apic_state);
+ }
+ 
+diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
+index b07cc9f9b1..ea7e42d068 100644
+--- a/target/i386/tcg/system/seg_helper.c
++++ b/target/i386/tcg/system/seg_helper.c
+@@ -182,6 +182,7 @@ bool x86_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+         apic_poll_irq(cpu->apic_state);
+         break;
+     case CPU_INTERRUPT_SIPI:
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
+         do_cpu_sipi(cpu);
+         break;
+     case CPU_INTERRUPT_SMI:
 -- 
 2.47.3
 
