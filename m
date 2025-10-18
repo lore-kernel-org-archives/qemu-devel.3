@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9B2CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E8FFCCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 20:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vADzG-00086q-Kf; Sat, 18 Oct 2025 16:57:14 -0400
+	id 1vADyu-0007xV-TK; Sat, 18 Oct 2025 16:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz6-00080S-QG; Sat, 18 Oct 2025 16:57:04 -0400
+ id 1vADys-0007wT-QW; Sat, 18 Oct 2025 16:56:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vADz5-0004y9-4P; Sat, 18 Oct 2025 16:57:04 -0400
+ id 1vADyq-0004vj-SZ; Sat, 18 Oct 2025 16:56:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6B2915F87D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3160115F874;
  Sat, 18 Oct 2025 23:56:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C138F2F0686;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 184C82F067D;
  Sat, 18 Oct 2025 23:56:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.6 20/23] async: access bottom half flags with
- qatomic_read
-Date: Sat, 18 Oct 2025 23:56:38 +0300
-Message-ID: <20251018205644.1185050-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.6 v2 00/23] Patch Round-up for stable 10.0.6,
+ freeze on 2025-10-18 (frozen)
+Date: Sat, 18 Oct 2025 23:56:29 +0300
+Message-ID: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
-References: <qemu-stable-10.0.6-20251018221314@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,59 +59,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+The following patches are queued for QEMU stable v10.0.6:
 
-Running test-aio-multithread under TSAN reveals data races on bh->flags.
-Because bottom halves may be scheduled or canceled asynchronously,
-without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
-to use a relaxed read to access the flags.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
 
-Use an acquire load to ensure that anything that was written prior to
-qemu_bh_schedule() is visible.
+Patch freeze is 2025-10-18 (frozen), and the release is planned for 2025-10-20:
 
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2749
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/851
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 5142397c79330aab9bef3230991c8ac0c251110f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+  https://wiki.qemu.org/Planning/10.0
 
-diff --git a/util/async.c b/util/async.c
-index 863416dee9..c3ddb1c79b 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -256,8 +256,9 @@ static int64_t aio_compute_bh_timeout(BHList *head, int timeout)
-     QEMUBH *bh;
- 
-     QSLIST_FOREACH_RCU(bh, head, next) {
--        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
--            if (bh->flags & BH_IDLE) {
-+        int flags = qatomic_load_acquire(&bh->flags);
-+        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-+            if (flags & BH_IDLE) {
-                 /* idle bottom halves will be polled at least
-                  * every 10ms */
-                 timeout = 10000000;
-@@ -335,14 +336,16 @@ aio_ctx_check(GSource *source)
-     aio_notify_accept(ctx);
- 
-     QSLIST_FOREACH_RCU(bh, &ctx->bh_list, next) {
--        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-+        int flags = qatomic_load_acquire(&bh->flags);
-+        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-             return true;
-         }
-     }
- 
-     QSIMPLEQ_FOREACH(s, &ctx->bh_slice_list, next) {
-         QSLIST_FOREACH_RCU(bh, &s->bh_list, next) {
--            if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-+            int flags = qatomic_load_acquire(&bh->flags);
-+            if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
-                 return true;
-             }
-         }
--- 
-2.47.3
+This release is supposed to go faster, to include two important migration
+fixes, - reverts of two changes from 10.0.4 which causes migration regression
+(the first two patches).
 
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 c5c0b16cf7 Michael Tokarev:
+   Revert "target/i386: do not expose ARCH_CAPABILITIES on AMD CPU"
+02 7917dee17a Michael Tokarev:
+   Revert "i386/cpu: Move adjustment of CPUID_EXT_PDCM before 
+   feature_dependencies[] check"
+03* a1b28f71f7ff Weifeng Liu:
+   ui/gtk: Consider scaling when propagating ui info
+04* c187a67c9dcd Filip Hejsek:
+   ui/gtk: Fix callback function signature
+05* 1c0f5142d921 ShengYi Hung:
+   hid: fix incorrect return value for hid
+06* f65918497cc6 nanliu:
+   docs/devel: Correct uefi-vars-x64 device name
+07* bab681f75204 Stefan Hajnoczi:
+   pcie_sriov: make pcie_sriov_pf_exit() safe on non-SR-IOV devices
+08* a23e719ca8e8 Peter Maydell:
+   target/arm: Don't set HCR.RW for AArch32 only CPUs
+09* c851052a77fd Jim Shu:
+   target/riscv: Fix the mepc when sspopchk triggers the exception
+10* 84c1605b7606 Jim Shu:
+   target/riscv: Fix SSP CSR error handling in VU/VS mode
+11* 0b16c7b6a854 Jim Shu:
+   target/riscv: Fix ssamoswap error handling
+12* 81d1885dcc44 Max Chou:
+   target/riscv: rvv: Fix vslide1[up|down].vx unexpected result when XLEN=32 
+   and SEW=64
+13* 2e54e5fda779 Damien Bergamini:
+   pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
+14 ed26056d90dd Richard W.M. Jones:
+   block/curl.c: Use explicit long constants in curl_easy_setopt calls
+15 df9a3372ddeb Mathias Krause:
+   target/i386: Fix CR2 handling for non-canonical addresses
+16 00001a22d183 Jon Kohler:
+   i386/kvm: Expose ARCH_CAP_FB_CLEAR when invulnerable to MDS
+17 df32e5c568c9 Paolo Bonzini:
+   i386/cpu: Prevent delivering SIPI during SMM in TCG mode
+18 cdba90ac1b0a YiFei Zhu:
+   i386/tcg/smm_helper: Properly apply DR values on SMM entry / exit
+19 5a2faa0a0a2c Thomas Ogrisegg:
+   target/i386: fix x86_64 pushw op
+20 5142397c7933 Paolo Bonzini:
+   async: access bottom half flags with qatomic_read
+21 58aa1d08bbc4 Paolo Bonzini:
+   target/i386: user: do not set up a valid LDT on reset
+22 cea82f8cdd07 Gabriel Brookman:
+   target/hppa: correct size bit parity for fmpyadd
+23 91fc6d8101de Philippe Mathieu-Daudé:
+   linux-user/microblaze: Fix little-endianness binary
+
+(commit(s) marked with * were in previous series and are not resent)
 
