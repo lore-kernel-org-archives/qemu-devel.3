@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55F6CCD195
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33FECCD193
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 15:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vA8ay-0008I8-W2; Sat, 18 Oct 2025 11:11:49 -0400
+	id 1vA8as-0008Ct-Ft; Sat, 18 Oct 2025 11:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8ax-0008GT-7O; Sat, 18 Oct 2025 11:11:47 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vA8aq-0008BF-IB; Sat, 18 Oct 2025 11:11:40 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vA8av-0005hg-JE; Sat, 18 Oct 2025 11:11:46 -0400
+ id 1vA8an-0005fV-Tn; Sat, 18 Oct 2025 11:11:40 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 170E25972F2;
- Sat, 18 Oct 2025 17:11:44 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 85A5D5972DF;
+ Sat, 18 Oct 2025 17:11:35 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id OjiETt4wzEBS; Sat, 18 Oct 2025 17:11:42 +0200 (CEST)
+ id mnHDx4s8zJPG; Sat, 18 Oct 2025 17:11:33 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0F95C5972E9; Sat, 18 Oct 2025 17:11:42 +0200 (CEST)
-Message-ID: <bb655f2827b35951a76d2251f71382c0e7f31d2c.1760798392.git.balaton@eik.bme.hu>
+ id 809F15972EF; Sat, 18 Oct 2025 17:11:33 +0200 (CEST)
+Message-ID: <5a56ace6d4d551d361bdbe23fde5a9202c74afec.1760798392.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1760798392.git.balaton@eik.bme.hu>
 References: <cover.1760798392.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 10/13] hw/ppc/pegasos2: Add bus frequency to machine state
+Subject: [PATCH v3 02/13] hw/ppc/pegasos2: Remove explicit name properties
+ from device tree
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,15 +40,14 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Sat, 18 Oct 2025 17:11:42 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sat, 18 Oct 2025 17:11:33 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,113 +63,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store the bus frequency in the machine state and set it from instance
-init method.
+These are not needed any more now that VOF can handle it.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/pegasos2.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ hw/ppc/pegasos2.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
 
 diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index f7999520e4..ae3f01231d 100644
+index e15cf96427..73995624e5 100644
 --- a/hw/ppc/pegasos2.c
 +++ b/hw/ppc/pegasos2.c
-@@ -55,8 +55,6 @@
- #define H_PRIVILEGE  -3  /* Caller not privileged */
- #define H_PARAMETER  -4  /* Parameter invalid, out-of-range or conflicting */
+@@ -662,7 +662,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     qemu_fdt_setprop_cell(fi->fdt, fi->path, "#size-cells", 1);
+     qemu_fdt_setprop_cell(fi->fdt, fi->path, "#address-cells", 2);
+     qemu_fdt_setprop_string(fi->fdt, fi->path, "device_type", "isa");
+-    qemu_fdt_setprop_string(fi->fdt, fi->path, "name", "isa");
  
--#define BUS_FREQ_HZ 133333333
--
- #define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
- OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
+     /* additional devices */
+     g_string_printf(name, "%s/lpt@i3bc", fi->path);
+@@ -677,7 +676,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(8);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "lpt");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "lpt");
  
-@@ -66,6 +64,7 @@ struct PegasosMachineState {
-     PowerPCCPU *cpu;
-     DeviceState *nb; /* north bridge */
-     DeviceState *sb; /* south bridge */
-+    int bus_freq_hz;
-     IRQState pci_irqs[PCI_NUM_PINS];
-     OrIRQState orirq[PCI_NUM_PINS];
-     qemu_irq mv_pirq[PCI_NUM_PINS];
-@@ -135,7 +134,7 @@ static void pegasos2_setup_pci_irq(PegasosMachineState *pm)
-                                 qdev_get_gpio_in_named(pm->nb, "gpp", 31));
+     g_string_printf(name, "%s/fdc@i3f0", fi->path);
+     qemu_fdt_add_subnode(fi->fdt, name->str);
+@@ -691,7 +689,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(8);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "fdc");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "fdc");
+ 
+     g_string_printf(name, "%s/timer@i40", fi->path);
+     qemu_fdt_add_subnode(fi->fdt, name->str);
+@@ -701,7 +698,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(8);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "timer");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "timer");
+ 
+     g_string_printf(name, "%s/rtc@i70", fi->path);
+     qemu_fdt_add_subnode(fi->fdt, name->str);
+@@ -716,7 +712,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(2);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "rtc");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "rtc");
+ 
+     g_string_printf(name, "%s/keyboard@i60", fi->path);
+     qemu_fdt_add_subnode(fi->fdt, name->str);
+@@ -729,7 +724,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(5);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "keyboard");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "keyboard");
+ 
+     g_string_printf(name, "%s/8042@i60", fi->path);
+     qemu_fdt_add_subnode(fi->fdt, name->str);
+@@ -743,7 +737,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(5);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "8042");
+ 
+     g_string_printf(name, "%s/serial@i2f8", fi->path);
+     qemu_fdt_add_subnode(fi->fdt, name->str);
+@@ -757,7 +750,6 @@ static void dt_isa(PCIBus *bus, PCIDevice *d, FDTInfo *fi)
+     cells[2] = cpu_to_be32(8);
+     qemu_fdt_setprop(fi->fdt, name->str, "reg", cells, 3 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fi->fdt, name->str, "device_type", "serial");
+-    qemu_fdt_setprop_string(fi->fdt, name->str, "name", "serial");
+ 
+     g_string_free(name, TRUE);
  }
- 
--static void pegasos2_init(MachineState *machine)
-+static void pegasos_init(MachineState *machine)
- {
-     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
-     CPUPPCState *env;
-@@ -158,7 +157,7 @@ static void pegasos2_init(MachineState *machine)
+@@ -846,7 +838,6 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
+         j += 5;
      }
+     qemu_fdt_setprop(fi->fdt, node->str, "reg", cells, j * sizeof(cells[0]));
+-    qemu_fdt_setprop_string(fi->fdt, node->str, "name", name ?: pn);
+     if (pci_get_byte(&d->config[PCI_INTERRUPT_PIN])) {
+         qemu_fdt_setprop_cell(fi->fdt, node->str, "interrupts",
+                               pci_get_byte(&d->config[PCI_INTERRUPT_PIN]));
+@@ -916,7 +907,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+     qemu_fdt_setprop_cell(fdt, "/pci@c0000000", "#size-cells", 2);
+     qemu_fdt_setprop_cell(fdt, "/pci@c0000000", "#address-cells", 3);
+     qemu_fdt_setprop_string(fdt, "/pci@c0000000", "device_type", "pci");
+-    qemu_fdt_setprop_string(fdt, "/pci@c0000000", "name", "pci");
  
-     /* Set time-base frequency */
--    cpu_ppc_tb_init(env, BUS_FREQ_HZ / 4);
-+    cpu_ppc_tb_init(env, pm->bus_freq_hz / 4);
-     qemu_register_reset(pegasos2_cpu_reset, pm->cpu);
- 
-     /* RAM */
-@@ -603,6 +602,13 @@ static bool pegasos2_setprop(MachineState *ms, const char *path,
-     return true;
- }
- 
-+static void pegasos2_init(Object *obj)
-+{
-+    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
-+
-+    pm->bus_freq_hz = 133333333;
-+}
-+
- static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -610,7 +616,7 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
-     VofMachineIfClass *vmc = VOF_MACHINE_CLASS(oc);
- 
-     mc->desc = "Genesi/bPlan Pegasos II";
--    mc->init = pegasos2_init;
-+    mc->init = pegasos_init;
-     mc->reset = pegasos2_machine_reset;
-     mc->block_default_type = IF_IDE;
-     mc->default_boot_order = "cd";
-@@ -640,6 +646,7 @@ static const TypeInfo pegasos_machine_types[] = {
-         .name          = MACHINE_TYPE_NAME("pegasos2"),
-         .parent        = TYPE_PEGASOS_MACHINE,
-         .class_init    = pegasos2_machine_class_init,
-+        .instance_init = pegasos2_init,
-         .interfaces = (const InterfaceInfo[]) {
-               { TYPE_PPC_VIRTUAL_HYPERVISOR },
-               { TYPE_VOF_MACHINE_IF },
-@@ -777,7 +784,7 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
-     g_string_free(node, TRUE);
- }
- 
--static void add_cpu_info(void *fdt, PowerPCCPU *cpu)
-+static void add_cpu_info(void *fdt, PowerPCCPU *cpu, int bus_freq)
- {
-     uint32_t cells[2];
- 
-@@ -824,8 +831,8 @@ static void add_cpu_info(void *fdt, PowerPCCPU *cpu)
-     qemu_fdt_setprop_cell(fdt, cp, "reservation-granule-size", 4);
-     qemu_fdt_setprop_cell(fdt, cp, "timebase-frequency",
-                           cpu->env.tb_env->tb_freq);
--    qemu_fdt_setprop_cell(fdt, cp, "bus-frequency", BUS_FREQ_HZ);
--    qemu_fdt_setprop_cell(fdt, cp, "clock-frequency", BUS_FREQ_HZ * 7.5);
-+    qemu_fdt_setprop_cell(fdt, cp, "bus-frequency", bus_freq);
-+    qemu_fdt_setprop_cell(fdt, cp, "clock-frequency", bus_freq * 7.5);
-     qemu_fdt_setprop_cell(fdt, cp, "cpu-version", cpu->env.spr[SPR_PVR]);
-     cells[0] = 0;
-     cells[1] = 0;
-@@ -861,7 +868,7 @@ static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size)
-     }
-     qemu_fdt_setprop_string(fdt, "/", "name", "bplan,Pegasos2");
- 
--    add_cpu_info(fdt, pm->cpu);
-+    add_cpu_info(fdt, pm->cpu, pm->bus_freq_hz);
- 
-     fi.fdt = fdt;
      fi.path = "/pci@c0000000";
+     pci_bus = mv64361_get_pci_bus(pm->mv, 0);
+@@ -951,7 +941,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+     qemu_fdt_setprop_cell(fdt, "/pci@80000000", "#size-cells", 2);
+     qemu_fdt_setprop_cell(fdt, "/pci@80000000", "#address-cells", 3);
+     qemu_fdt_setprop_string(fdt, "/pci@80000000", "device_type", "pci");
+-    qemu_fdt_setprop_string(fdt, "/pci@80000000", "name", "pci");
+ 
+     fi.path = "/pci@80000000";
+     pci_bus = mv64361_get_pci_bus(pm->mv, 1);
+@@ -959,7 +948,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+ 
+     qemu_fdt_add_subnode(fdt, "/failsafe");
+     qemu_fdt_setprop_string(fdt, "/failsafe", "device_type", "serial");
+-    qemu_fdt_setprop_string(fdt, "/failsafe", "name", "failsafe");
+ 
+     qemu_fdt_add_subnode(fdt, "/rtas");
+     qemu_fdt_setprop_cell(fdt, "/rtas", "system-reboot", RTAS_SYSTEM_REBOOT);
+@@ -989,14 +977,12 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+     qemu_fdt_setprop_cell(fdt, "/rtas", "rtas-display-device", 0);
+     qemu_fdt_setprop_cell(fdt, "/rtas", "rtas-size", 20);
+     qemu_fdt_setprop_cell(fdt, "/rtas", "rtas-version", 1);
+-    qemu_fdt_setprop_string(fdt, "/rtas", "name", "rtas");
+ 
+     /* cpus */
+     qemu_fdt_add_subnode(fdt, "/cpus");
+     qemu_fdt_setprop_cell(fdt, "/cpus", "#cpus", 1);
+     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 1);
+     qemu_fdt_setprop_cell(fdt, "/cpus", "#size-cells", 0);
+-    qemu_fdt_setprop_string(fdt, "/cpus", "name", "cpus");
+ 
+     /* FIXME Get CPU name from CPU object */
+     const char *cp = "/cpus/PowerPC,G4";
+@@ -1048,7 +1034,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+     cells[1] = 0;
+     qemu_fdt_setprop(fdt, cp, "reg", cells, 2 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fdt, cp, "device_type", "cpu");
+-    qemu_fdt_setprop_string(fdt, cp, "name", strrchr(cp, '/') + 1);
+ 
+     /* memory */
+     qemu_fdt_add_subnode(fdt, "/memory@0");
+@@ -1056,7 +1041,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+     cells[1] = cpu_to_be32(machine->ram_size);
+     qemu_fdt_setprop(fdt, "/memory@0", "reg", cells, 2 * sizeof(cells[0]));
+     qemu_fdt_setprop_string(fdt, "/memory@0", "device_type", "memory");
+-    qemu_fdt_setprop_string(fdt, "/memory@0", "name", "memory");
+ 
+     qemu_fdt_add_subnode(fdt, "/chosen");
+     if (pm->initrd_addr && pm->initrd_size) {
+@@ -1067,7 +1051,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+     }
+     qemu_fdt_setprop_string(fdt, "/chosen", "bootargs",
+                             machine->kernel_cmdline ?: "");
+-    qemu_fdt_setprop_string(fdt, "/chosen", "name", "chosen");
+ 
+     qemu_fdt_add_subnode(fdt, "/openprom");
+     qemu_fdt_setprop_string(fdt, "/openprom", "model", "Pegasos2,1.1");
 -- 
 2.41.3
 
