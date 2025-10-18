@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72166CCD193
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 05:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC91CCD184
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Oct 2025 05:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9zWZ-0002qK-VV; Sat, 18 Oct 2025 01:30:40 -0400
+	id 1v9zrl-0006wW-4W; Sat, 18 Oct 2025 01:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v9zWX-0002q6-SX
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 01:30:38 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1v9zWV-0006Ak-UU
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 01:30:37 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E72415F4FD;
- Sat, 18 Oct 2025 08:30:18 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4023F2F02D6;
- Sat, 18 Oct 2025 08:30:21 +0300 (MSK)
-Message-ID: <40530e85-986e-4566-8c52-bb38793232b6@tls.msk.ru>
-Date: Sat, 18 Oct 2025 08:30:21 +0300
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1v9zri-0006vZ-QY
+ for qemu-devel@nongnu.org; Sat, 18 Oct 2025 01:52:31 -0400
+Received: from mail-ej1-f53.google.com ([209.85.218.53])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1v9zrg-0008GM-FE
+ for qemu-devel@nongnu.org; Sat, 18 Oct 2025 01:52:30 -0400
+Received: by mail-ej1-f53.google.com with SMTP id
+ a640c23a62f3a-b403bb7843eso471299966b.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Oct 2025 22:52:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760766746; x=1761371546;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kC5/uJPP3WnDo5AHh0vgk9XGDlztc0ecSESwKOHyIvY=;
+ b=OZC8FfNcn91lNfcQ8Ei4oezndsy0aTLDRZI6J4qf2jPZqKd9V2YapU223OEhqK+H24
+ 1Yh/hgGfD4jtkxlMMha7DCL0FR5klCUQwFVD7Busi0f/WCb+NN+fCGhe5ZYHwZA4p4F2
+ 4MY/Nm/FY94fsdA3kZTEOW8RhhAFrIfO6nisMxHFbEPZAgmw0gMvF9f2n9aF+o9pVfiv
+ 921rBDp49h6u0zwqrMVG5TkQgGcjy9X9cEACil23+VRSqP4EN0G5iul3fho4GuFDi+W0
+ 5NPM0Ktb1kV+iaXlXb7pBeAlhiHTKbd+at+DSC+E+I22Zu53x8P3v9a2uRUslwVWVDJR
+ OIdw==
+X-Gm-Message-State: AOJu0YwQ/348y5Q29MndGJyPtooUeUDjN1u0FTSAG1+nnUDRA1E/d5sU
+ Sfrw71E1n/MGQ/en0aDWNq9zn6RufRiWNlSZDYPc7aETOaT7jue9zWO4
+X-Gm-Gg: ASbGncvdCv4iIM6Tx3VzSvFJp2SqBoqDpLe7kQIXjl7HAoOfguqzpJ5HoRRrIt02PS0
+ ORboHJx0fEKBL0eH4pBBn+5jJTxrRFE+vY1+FHL1UZ3lP5hZx5TX6B7Nj7XMPK0DPCN5zdyaX9M
+ tMQOe6fgDDovrbhOIBxWfHViMw0VZd+leMYBuiiTdD1j7xUW9T47x/WU9AiDed9HNnpvAfrPuhU
+ Dy/spGwK2N6OoSTziszNk+vygE+Dz5N2ZVFhg3JiX8Yp1YbpzA8fJS1JCUp/8UBRIzmWwpD+idO
+ QNAIilB6oRBP4uwa+6OVwtGFlxmv7exsL2fD+89hfu+Ob2ZWqtx45HPPtOgaaZdrB8VhobpLn6K
+ ivzoyI1Di2M+tGgMo5q8fofhSQFXCU64ZRoTGbt/hVZzEb7SpFEoFC6oaKRcryUB9O4E4bwUco0
+ 0LYMqf/3yuO/bDcj6sXHp+D0jVy/QRo8rh
+X-Google-Smtp-Source: AGHT+IEwM7hkjdYadSIZ/B1LrJ6NLoLeCs3l9kSDnXN0Bzcy3G/cTbunueoKKeMggcWXJ5k6oQ6wtw==
+X-Received: by 2002:a17:907:c06:b0:b46:8bad:6977 with SMTP id
+ a640c23a62f3a-b647235ff0emr769025566b.18.1760766745781; 
+ Fri, 17 Oct 2025 22:52:25 -0700 (PDT)
+Received: from tpx1 (ltea-047-064-114-135.pools.arcor-ip.net. [47.64.114.135])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b65eb52603fsm167889266b.57.2025.10.17.22.52.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Oct 2025 22:52:25 -0700 (PDT)
+Date: Sat, 18 Oct 2025 07:52:23 +0200
+From: Thomas Huth <huth@tuxfamily.org>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org, Paolo
+ Bonzini <pbonzini@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, Peter Xu <peterx@redhat.com>, Laurent Vivier
+ <laurent@vivier.eu>
+Subject: Re: [PATCH 06/22] hw/m86k: Get cpu first addr space with
+ cpu_get_address_space()
+Message-ID: <20251018075223.4f8c47bd@tpx1>
+In-Reply-To: <20251001150529.14122-7-philmd@linaro.org>
+References: <20251001150529.14122-1-philmd@linaro.org>
+ <20251001150529.14122-7-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] hex queue
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Brian Cain <bcain@quicinc.com>, Anton Johansson <anjo@rev.ng>
-References: <20251017205028.1105595-1-brian.cain@oss.qualcomm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251017205028.1105595-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.218.53; envelope-from=th.huth@gmail.com;
+ helo=mail-ej1-f53.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,44 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 23:50, Brian Cain wrote:
-> The following changes since commit 18f6f30b0089b470f3e737637a86dfb81ebd6eae:
-> 
->    Merge tag 'pull-request-2025-10-16' of https://gitlab.com/thuth/qemu into staging (2025-10-16 12:27:12 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/quic/qemu tags/pull-hex-20251017
-> 
-> for you to fetch changes up to f97700e0752753e294db11de8462aef5d8009a89:
-> 
->    target/hexagon: Only indent on linux (2025-10-17 13:45:46 -0700)
-> 
-> ----------------------------------------------------------------
-> Fixes for linux-user sigcontext save/restore, etc.
-> 
-> misc: avoid inconsistencies w/indent on macOS
-> fix hexagon linux-user sigcontext discrepancy, found by Alex @ Zig
-> 
-> ----------------------------------------------------------------
-> Anton Johansson (2):
->        target/hexagon: Replace `prepare` script with meson target
->        target/hexagon: Only indent on linux
-> 
-> Brian Cain (6):
->        linux-user/hexagon: Fix sigcontext
->        linux-user/hexagon: use abi_ulong
->        linux-user/hexagon: Use an array for GPRs
->        tests/tcg/hexagon: Add cs{0,1} coverage
->        target/hexagon: handle .new values
->        target/hexagon: s/pkt_has_store/pkt_has_scalar_store
+Am Wed,  1 Oct 2025 17:05:11 +0200
+schrieb Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>:
 
-Is there anything in there which should be picked up for active
-qemu stable series (10.0 & 10.1), or is it not worth the effort?
-(the sigcontext fixes seems to be good candidates, though are
-a bit large).
+> In order to remove the convenient CPUState::as field, access
+> the vcpu first address space using the cpu_get_address_space()
+> helper.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/m68k/mcf5208.c |  6 ++++--
+>  hw/m68k/q800.c    | 17 ++++++++++-------
+>  hw/m68k/virt.c    |  5 +++--
+>  3 files changed, 17 insertions(+), 11 deletions(-)
 
-Thanks,
-
-/mjt
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
