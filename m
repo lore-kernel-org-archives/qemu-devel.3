@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B85CCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 21:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148D4CCD1A4
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 21:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAaZ1-0007Pi-E6; Sun, 19 Oct 2025 17:03:39 -0400
+	id 1vAaZE-0007Uz-Ss; Sun, 19 Oct 2025 17:03:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaYy-0007Nw-Pk
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:37 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaZ9-0007Sk-FG
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:47 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaYx-00020u-4Q
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:36 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-63bf76fc9faso6786556a12.2
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 14:03:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaZ6-00022v-48
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:46 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-63c3d7e2217so3760256a12.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 14:03:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760907813; x=1761512613; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760907822; x=1761512622; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HtQk0GJuCq/JgD3T73Q/ujEtbCnLstw5lfgjKUjPFqo=;
- b=aAA8+gX6R/9tKpIDsefUJKgfN1QjO3XBKsLwlPBIrV+92Pc6eRjs8xdErmJo5mHgYM
- xMko4V2v+A4zOZEbYU29bZLHPqXWTgogreSxDcjEvu7M5MzaGWCwd8hghr8xPA76bvd/
- Jj6EOKPWxM2mtpUELd504kMLw+wTk/BPl0DMeBbWRCGAWKP/IAP2w7c5VMOYUlyykiXD
- 7Nw5zyYiCa0yY1902MwnxF7fJcA6in1GOr908PJbgqUNurYd4C5xShHheT0MwLbGLYVs
- iDScGqanfQ0AFw8MKXpFBdro4p1ijHywl6U8ty4D6doLK3L40vEylMC6jEvUytqQlGN1
- jMiA==
+ bh=4M6OPI3ZScUV1Z3V9YEwq0Mmh3V3HGR6RP7L9+iqOHI=;
+ b=RGBiyAzeh+I2fwE7FLEQTcgph2CwfsHeVVXBgGZGDaetEaKBUwkBdareYLl6JjyZ/G
+ itN9CfOud8S4vHcf1FJTq7KsdenzG9iy0viTWE7OM58yuKKLdAjn5wvpSG32vVu1l7PJ
+ ZPmNlgLp3i9G7NaTOMvC6XLdM0+r+NxyMtBtK9hl1utBGynTT+ylEw2x5hXMm+IFjdo9
+ bmnSTI2TnbOCduSH/Y/OiWM6apGDf85TUqBWP+4A5TPIshbRY+aqbK0kxzY6P5tAXjyX
+ 1W3hdCuALwuk0FoG7HwJLOPjbcmwIzHRQ35keFkGbqGbpE7lz8dMQYjF5rm+t5AgiHsN
+ 0+fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760907813; x=1761512613;
+ d=1e100.net; s=20230601; t=1760907822; x=1761512622;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HtQk0GJuCq/JgD3T73Q/ujEtbCnLstw5lfgjKUjPFqo=;
- b=MRMT4Dwvsv0uMIib8LIzeYL+jfjJTOftjR62jW+fb+YFIZc1Z1+0eEsj/27ydiPsbd
- dBP2DaE/phPpYZBysBP9/UQTxYJBrYA8fNye/fiaI6kjFpQhCGXgzxV/7TxCQWf8xuTs
- +EZK2EBWY6zOHajSrifuye435rRb+ljzrL/yH5uRSoUykhQps9mhLiX++QqovjKLwFx4
- 0+QNzJ2WFUA7jEmyN4FxP3XlSaziaV/Ec08WER0f1i8PiikF85KDpiezOVeg8FTewOmY
- f+dRsbg8xvSfu82W4hzelEYy/CfYw2d+lasjZgx5SQAuvCsAb+3CZP1CJek0WG3rTyIe
- lkQQ==
-X-Gm-Message-State: AOJu0Yy0O0ykFOE0xTc1QYU9JRA2+acaPayYcwhPyMw80eODRDmhd6K1
- IYxGauZEtFQR7c6AAnRJT6lp37oWRDthzTM0CKt/GuK4/mV3KClX69MSke/rJAWO
-X-Gm-Gg: ASbGncva+0xzUoUKIuGYVd7I/iMOwqYTvNMmpGCOOV7KyA0HU541MGYwbDeGv7lTlyB
- rVLkRG7LraogLJOMFHgGO1Cs++oQekSnOH165BxmhU9KABRtcz4Bu23h6MsJdLtDltIVEvypYtf
- hwqAckryPiEyuw6uz2SF7torXej3ByTUHLs4aSNlMMlkVcS/7x1o+dEr6CFp2RTmZPH/K1Ts1KK
- FlbWPWJA3gdbFKRxXfHO/57j2c55NHY/fZKkLvdRp8unNJSCjvaQxcAQO4O7bVDHRT6kc2xOwzx
- 0E5QCqmx6XASNM1mZosBFV8BBh6cJtXtny4rDl7bIT7HJsWsjS2Bp4elKeDkqPRNLaVIOZ/tQQL
- UTyjeVa+ZeDsHUbh8fxqDlkHAlZsH01mPDIWH/X793rNuOYEHiymk9shA3hLTJYkx1xvn8B4U13
- rf/jqsknRdghGp4UV3p7tWAJYhC4rliXqLKYzd8+MtVnUfvfbXDqeH668ut4UCiRtXMHyl
-X-Google-Smtp-Source: AGHT+IHY1dRS1/AWHrm1rZJe4vZW5z0gZL042o9tHw8kn9F5IjQFgcfvzYbj4kRdNYLhXWOzFUb3tQ==
-X-Received: by 2002:a05:6402:5189:b0:63c:3efe:d970 with SMTP id
- 4fb4d7f45d1cf-63c3efeee6emr6840546a12.31.1760907813103; 
- Sun, 19 Oct 2025 14:03:33 -0700 (PDT)
+ bh=4M6OPI3ZScUV1Z3V9YEwq0Mmh3V3HGR6RP7L9+iqOHI=;
+ b=HiYoqJyG1tgJPQAuH8ctR8PuIZIQDlCYs1Eg9mdmOWdFbP+tQDvuKcf/rz+VuXQxgH
+ 8o/uyKq4D+uXZviR+UJNZYn1urqrIl1uBML0tb2kOriXJh4IET+Gi562U0wxLwgbzinQ
+ nji0wbXtBRKWaSxFtBZ9TtgMRB1panGGzTtVu4kf46vTL/YSMejKtjA7/QNaQMEFfT38
+ ceLYDR/MrXGvVzmRWxP46D9rd5eGkVaUV5Tgpug3PFxCq24m26aYUSBtuQrSGbrbEXHh
+ r3UKMVPXn84fqbVxVQ+unMbdH98Uf4Hh2FhlInDqqttWQzrkO8XTZjl4LzHsZNsK1uvb
+ noog==
+X-Gm-Message-State: AOJu0YzToFkb0WAiTt+yc72G0LR+26ATnUn8S35TEWGXBTH2bh8bdtM/
+ zlyst03CiJV1zmVADGc9PytlmhKuHfxKQHyJaGFY/XkoR+94Tvks6h1UrcIuTSFk
+X-Gm-Gg: ASbGnctNm9fxqpUVM0lnujBPmalWSc6Dn5PmRE/QBwYJOQGKjYHSCQTdXDU9csa3vdr
+ 95+Wj/z9mp+QeDDnP8wAsUhDfCkYzGlRU6LZ2fPi+oU4swBQju69rO2avnS3M0hv6si+pQ381in
+ iMdoThEnzhZ0lTfHzTTHMQc7WHaBCLVKFIybTpNjq/RW6xHtJrFoH4+/YxBxkbHrCKPF+lD5w0d
+ Tpq6M0fYjxR+VivjJAx5EIfkllOhxRrWiBeUxvsD2uwlqj96cHzorJkxzzUao5O6f/oVfwVrKA6
+ eS+FY9nTRPRWf1hnZqYKsmwPMphzN8zfd1w91maJLmkseGNPYIj3spB3ThARVKvIc5eUPK7reWE
+ JIhyBPfUb/19h5tGkrCGgnh1Gv7V+0+1p5sHHLXbQMk9nyqVfjRbfynbPdk4LBvoVTuNGTTW5dF
+ OtqxupB2RtO1fQjkeX/3vMIyoNgMKHS8qB9a9UKYwgZfPF8zb5q4nbTKaCN+v12mX+TmMr
+X-Google-Smtp-Source: AGHT+IGSAEruyy42RcbostlDmIvNL1l2atIU8PAtqHcOivFYyhlrRwD6QwsSK/hgSujyhUWyY/+Q2w==
+X-Received: by 2002:a05:6402:2681:b0:634:ba7e:f6c8 with SMTP id
+ 4fb4d7f45d1cf-63c1f6d5e1bmr9986226a12.34.1760907821475; 
+ Sun, 19 Oct 2025 14:03:41 -0700 (PDT)
 Received: from archlinux (dynamic-002-245-026-170.2.245.pool.telefonica.de.
  [2.245.26.170]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63c4945f003sm5107655a12.27.2025.10.19.14.03.31
+ 4fb4d7f45d1cf-63c4945f003sm5107655a12.27.2025.10.19.14.03.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Oct 2025 14:03:32 -0700 (PDT)
+ Sun, 19 Oct 2025 14:03:40 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -78,16 +78,17 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Sunil Muthuswamy <sunilmut@microsoft.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 04/10] hw/rtc/mc146818rtc: Use ARRAY_SIZE macro
-Date: Sun, 19 Oct 2025 23:02:57 +0200
-Message-ID: <20251019210303.104718-5-shentey@gmail.com>
+Subject: [PATCH v3 08/10] hw/i386/apic: Ensure own APIC use in apic_msr_{read,
+ write}
+Date: Sun, 19 Oct 2025 23:03:01 +0200
+Message-ID: <20251019210303.104718-9-shentey@gmail.com>
 X-Mailer: git-send-email 2.51.1.dirty
 In-Reply-To: <20251019210303.104718-1-shentey@gmail.com>
 References: <20251019210303.104718-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,34 +111,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoids the error-prone repetition of the array size.
+Avoids the `current_cpu` global and seems more robust by not "forgetting" the
+own APIC and then re-determining it by cpu_get_current_apic() which uses the
+global.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/rtc/mc146818rtc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/hw/i386/apic.h               |  4 ++--
+ hw/intc/apic.c                       | 10 ++--------
+ target/i386/hvf/hvf.c                |  4 ++--
+ target/i386/tcg/system/misc_helper.c |  4 ++--
+ 4 files changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index 61e9c0bf99..5a89062b4c 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -726,13 +726,14 @@ static uint64_t cmos_ioport_read(void *opaque, hwaddr addr,
+diff --git a/include/hw/i386/apic.h b/include/hw/i386/apic.h
+index 871f142888..6a0933f401 100644
+--- a/include/hw/i386/apic.h
++++ b/include/hw/i386/apic.h
+@@ -19,8 +19,8 @@ void apic_sipi(APICCommonState *s);
+ void apic_poll_irq(APICCommonState *s);
+ void apic_designate_bsp(APICCommonState *s, bool bsp);
+ int apic_get_highest_priority_irr(APICCommonState *s);
+-int apic_msr_read(int index, uint64_t *val);
+-int apic_msr_write(int index, uint64_t val);
++int apic_msr_read(APICCommonState *s, int index, uint64_t *val);
++int apic_msr_write(APICCommonState *s, int index, uint64_t val);
+ bool is_x2apic_mode(APICCommonState *s);
  
- void mc146818rtc_set_cmos_data(MC146818RtcState *s, int addr, int val)
- {
--    if (addr >= 0 && addr <= 127)
-+    if (addr >= 0 && addr < ARRAY_SIZE(s->cmos_data)) {
-         s->cmos_data[addr] = val;
-+    }
+ /* pc.c */
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index cb35c80c75..ba0eda3921 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -881,11 +881,8 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
+     return val;
  }
  
- int mc146818rtc_get_cmos_data(MC146818RtcState *s, int addr)
+-int apic_msr_read(int index, uint64_t *val)
++int apic_msr_read(APICCommonState *s, int index, uint64_t *val)
  {
--    assert(addr >= 0 && addr <= 127);
-+    assert(addr >= 0 && addr < ARRAY_SIZE(s->cmos_data));
-     return s->cmos_data[addr];
+-    APICCommonState *s;
+-
+-    s = cpu_get_current_apic();
+     if (!s) {
+         return -1;
+     }
+@@ -1079,11 +1076,8 @@ static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
+     apic_register_write(index, val);
  }
  
+-int apic_msr_write(int index, uint64_t val)
++int apic_msr_write(APICCommonState *s, int index, uint64_t val)
+ {
+-    APICCommonState *s;
+-
+-    s = cpu_get_current_apic();
+     if (!s) {
+         return -1;
+     }
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 8445cadece..33f723a76a 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -527,7 +527,7 @@ void hvf_simulate_rdmsr(CPUState *cs)
+         int ret;
+         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+ 
+-        ret = apic_msr_read(index, &val);
++        ret = apic_msr_read(cpu->apic_state, index, &val);
+         if (ret < 0) {
+             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
+         }
+@@ -638,7 +638,7 @@ void hvf_simulate_wrmsr(CPUState *cs)
+         int ret;
+         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+ 
+-        ret = apic_msr_write(index, data);
++        ret = apic_msr_write(cpu->apic_state, index, data);
+         if (ret < 0) {
+             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
+         }
+diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
+index 9c3f5cc99b..0c32424d36 100644
+--- a/target/i386/tcg/system/misc_helper.c
++++ b/target/i386/tcg/system/misc_helper.c
+@@ -299,7 +299,7 @@ void helper_wrmsr(CPUX86State *env)
+         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+ 
+         bql_lock();
+-        ret = apic_msr_write(index, val);
++        ret = apic_msr_write(env_archcpu(env)->apic_state, index, val);
+         bql_unlock();
+         if (ret < 0) {
+             goto error;
+@@ -477,7 +477,7 @@ void helper_rdmsr(CPUX86State *env)
+         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+ 
+         bql_lock();
+-        ret = apic_msr_read(index, &val);
++        ret = apic_msr_read(x86_cpu->apic_state, index, &val);
+         bql_unlock();
+         if (ret < 0) {
+             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
 -- 
 2.51.1.dirty
 
