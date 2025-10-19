@@ -4,94 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A0ECCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 10:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803CECCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 11:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAQEP-0002Qs-KD; Sun, 19 Oct 2025 06:01:41 -0400
+	id 1vARcp-0003KE-Aq; Sun, 19 Oct 2025 07:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vAQEM-0002QO-1h
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 06:01:38 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vAQEK-0004BK-9f
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 06:01:37 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-b5526b7c54eso2227877a12.0
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 03:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1760868093; x=1761472893; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HyjU7/9cHhxNTXSkm9cndu2yQ2Y1BQpOutCcsIwj1+o=;
- b=R/zhqb54iDwcrONxcuGteAMXt5nNtHvMjAGqX5PCnr7++ijyt2DN59FhgiloXBsrpy
- iVSX0UDVMrXptBgjz6ffMI8/VqHjlLBSdGPiHKZznOMP+LDbSOZMm84FnSSDjaoqCjFS
- MkIEGMw85xkxygWtEIecLOOYEINlu6jKNcQgwQ2+sj98tlmSRLDaN6fNB6UwpKV5GsK9
- F+qdT8TllPL/q3WZTXT98MjYQIsS6X7QVNkw2oZnus2h1t49K/JFpp6tMJy0O46F5SM5
- 2vukHI7hBpaf4gwQ+ccvQ36W6MXVEg7AstSCBIUDXfkzum5PXfNACiFouN/6aR22n7dy
- 4blw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760868093; x=1761472893;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HyjU7/9cHhxNTXSkm9cndu2yQ2Y1BQpOutCcsIwj1+o=;
- b=eqCvazHh5LHAV19uA4w1i2DlXiC8z89WuedRUsqiMKNGjOJ0cwwCuLqsEC+q7O9c4c
- vklXERTTXo8tRVgGnPcpb4w3xWifxTHpLLnDHL6G3HoHF37NoUMW/VuClgkzlt21EBzb
- J1p6DYzap3TfQBLIiGpZTS6BhDx6UuhGFSQ7Oy5iuC8K0iqjc6TcQmwkFK37bIzahQcs
- wrxGLYKzaUaZp71WJdHsBa/1dY6WY3OafT1zMQJ0AVMy2Po9NEqIHYUTv6pHu1XkuHjt
- mVgK72G7ansXPaNOM1SeA3NnuCNzQevxkYeXRw7aqk1FfjkqavtcohlbzYJNPcDy2MYF
- fY/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4ZpPztLSDjwIBX+n4u/e2/rG6GGOznhUVscM0u1wvL757B+FqnBuBHVGQp5W56Tpyr4a8ikgroUJ6@nongnu.org
-X-Gm-Message-State: AOJu0Yy6gaXjT1YrfWsE9fpZBimidsjXj96bpFdtMRqvsAKJRT3kwau4
- 74WYZ0MuaCpYpKx5ykQgp3vBhBfrV1Q/U+IGvp0D2HK4eQAhWiey1J4qNMihnrxA3Xw=
-X-Gm-Gg: ASbGncuBfU5ugEJbI1CkNBKEr7s5wuCSQv/nTvvwtPVHP816pJQwX2BfOGf170XxQ2n
- RdFKbFtoBa2MGvVXbm8sRmx8lXWubrDYyhn7x6s6JPP6wYA7esK+Imm3e8JC/4pe3MAU4tFdI1t
- bpBEbFOhB//8mDIbKeHaqdSWdMkcy1cekgUjw50CpMmnNpuDJTQmXIhPVhMqeRuNLQHxUyy2Y3T
- I2O+G12HjwZdwwzBSOxbZ+sRehWFA6qVUusid4XvMdCC1EVfUcKgeP5RbFHRka4nt56yW1D0QXa
- Z4JXk8mxhtRcJ8L44yaunUw49teJ6AmjBHNCemocpy69thZKt6KvZojH5KbmhkbORqmMhvOTBHv
- u6By5iEYZNn+j/JYDVWfVIbjAk575n8GWMaMCuSv/Sq0dDxQ0H5OLcgcRWWZOJkNqfFIZU5/xcG
- VBg5hWYzYLbun6M50=
-X-Google-Smtp-Source: AGHT+IFoT3oKvPWPF9ubm9p0zYN6K3Pv5NEFGnqIzrpEhrOo5uZueFH3CoXmA/BDSnFyD618t4Yr0g==
-X-Received: by 2002:a17:902:f642:b0:269:9a8f:a4ab with SMTP id
- d9443c01a7336-290cb94ca6fmr108251425ad.60.1760868093523; 
- Sun, 19 Oct 2025 03:01:33 -0700 (PDT)
-Received: from [192.168.68.110] ([152.234.122.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-292471d5c0bsm48360615ad.69.2025.10.19.03.01.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Oct 2025 03:01:32 -0700 (PDT)
-Message-ID: <b3cbe49d-e863-456d-a254-b7514e3bb33a@ventanamicro.com>
-Date: Sun, 19 Oct 2025 07:01:28 -0300
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vARck-0003Jx-9A; Sun, 19 Oct 2025 07:30:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vARci-0006vY-08; Sun, 19 Oct 2025 07:30:54 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59JAgFF5016406;
+ Sun, 19 Oct 2025 11:30:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=517nP2+/TCMkjuIIsMQ5wGWxY6iFTm
+ kqKDynO3jQNBQ=; b=AYTn/djHaksTN6GGGhwkvJauHMEErShzoS+9qsqSIW6H8M
+ dW6RsVJX34Zfblc8Sp+7N2k6MQBjEBP2WLnTf1/EQarrPDNSsrGp50Wk4Xz4Zb6M
+ 8cANzwsiJT+7cjTp2L6tUoGKx/kyWgsLSWehlYP4UE7+VSV38WYPZ51wkEH0u/mF
+ B1KzuWon+yU3Jg/SxJRZ92dwg3iFxKLvAdGSXelnAMd949NOCS1LhdMFORxYy9wb
+ +ijgEImeqcdMXGLzKv5D8utZQkj9nDZAh/Xo4jK9uOlIJ9z5bQr8lj9wdNxPpput
+ 1fTdVCvfruB0Szm/ZYijdRwSJaJ/bpBBw3tFH1xQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32h48t4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 19 Oct 2025 11:30:47 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59JBUk3m005544;
+ Sun, 19 Oct 2025 11:30:46 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32h48t1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 19 Oct 2025 11:30:46 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59J81Dj3024686;
+ Sun, 19 Oct 2025 11:30:46 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqjhc3j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 19 Oct 2025 11:30:46 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59JBUgLq28377596
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 19 Oct 2025 11:30:42 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1F7352004B;
+ Sun, 19 Oct 2025 11:30:42 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE58320040;
+ Sun, 19 Oct 2025 11:30:39 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.26.42]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sun, 19 Oct 2025 11:30:39 +0000 (GMT)
+Date: Sun, 19 Oct 2025 17:00:37 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+Subject: Re: [PATCH v4 1/8] hw/ppc: Implement skeleton code for fadump in
+ PSeries
+Message-ID: <u6e2n2ocb2kskrhwwgzdxmq57yodzcou3eqw34ebxwsgopkkaj@kvbeuydlfn64>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-2-adityag@linux.ibm.com>
+ <b0d6ce61-7e8e-4bf5-99b7-59e434ae0c48@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix a uninitialized variable warning
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org
-References: <20251019-vlen-v1-1-f7352a402f06@rsg.ci.i.u-tokyo.ac.jp>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20251019-vlen-v1-1-f7352a402f06@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b0d6ce61-7e8e-4bf5-99b7-59e434ae0c48@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX8NjQcURAPqNa
+ V5VdDZ/f59dai8/SzD2GWWtTfM1kgwChMwM6S99kzEfNd0P+wwqGl5G7kLTDTLYeCB+ZdIaFJcq
+ iRsRCV7q6G3fsuXq87LuBdCgFneTQdmGajTlRkbQJFZyzF8iawpYLzdPAHtmIcUxBZ8zCHZStFS
+ V3cym+Hew8scJMkBS6nfZeUd4wdp74R3IEkCvKK1Tb/GXSTqZTJyg0sx6+HXB8jPklIEIFhHUN6
+ zOFmhuPVHiDzHaxNAq+z7DkRiKeWv/NuGYXjvGM6z9GXW5PKoQrFAiXl58cou46SBktWucIRWOe
+ H2+XUOOdmNfhnQ6AuNvOn6QfIYLCM4JDsVWalTNRPQau1NnTkaNlxBPZ0SjWwXTw+iG1PNTTlmz
+ ABJ4O+D94g9TAF3CC8xfmxD1GsYE7A==
+X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68f4cbe7 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=P5uEQtg_e8BJcDpjrlcA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: u5WI9AanqWqF6HBOuT-q7tWc2uHGkU08
+X-Proofpoint-ORIG-GUID: eQL4FxIvQaVB37Pr-RTF5i5sYRacLORH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-19_04,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,121 +130,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 25/10/18 05:20PM, Sourabh Jain wrote:
+> 
+> > <...snip...>
+> > +    switch (cmd) {
+> > +    case FADUMP_CMD_REGISTER:
+> > +        ret_val = do_fadump_register();
+> > +        if (ret_val != RTAS_OUT_SUCCESS) {
+> > +            rtas_st(rets, 0, ret_val);
+> > +            return;
+> > +        }
+> > +        break;
+> > +    case FADUMP_CMD_UNREGISTER:
+> > +        if (spapr->fadump_dump_active == 1) {
+> > +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
+> > +            return;
+> > +        }
+> > +
+> > +        spapr->fadump_registered = false;
+> > +        spapr->fadump_dump_active = false;
+> > +        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
+> > +        break;
+> > +    case FADUMP_CMD_INVALIDATE:
+> > +        if (spapr->fadump_dump_active) {
+> > +            spapr->fadump_registered = false;
+> > +            spapr->fadump_dump_active = false;
+> > +            memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
+> 
+> I hope the above actions are good enough to make qemu ready for fadump
+> registration.
 
+I believe so. The various flags are set in do_fadump_register for
+register command, maybe that's why that switch case might not look
+enough, but I think the current one makes sense.
 
-On 10/19/25 5:19 AM, Akihiko Odaki wrote:
-> riscv_cpu_validate_v() left its variable, min_vlen, uninitialized if
-> no vector extension is available, causing a compiler warning. Avoid
-> the warning by calling g_assert_not_reached() in the case.
+> 
+> > +        } else {
+> > +            qemu_log_mask(LOG_GUEST_ERROR,
+> > +                "FADump: Nothing to invalidate, no dump active\n");
+> > +        }
+> 
+> No error code if the kernel issues an invalidate and fadump_dump_active is
+> false?
+> 
+> As per the current kernel code, this situation should not occur, but to be
+> on the safe side,
+> QEMU should not return RTAS_OUT_SUCCESS.
 
-For the compiler point of view the variable will be left uninitialized.
-In reality we'll always set it to at least '32' in validate_v(). This
-is how the function is being called:
-
-     if (cpu->cfg.ext_zve32x) {
-         riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
-         if (local_err != NULL) {
-             error_propagate(errp, local_err);
-             return;
-         }
-     }
-
-This means that inside the function we guarantee that min_vlen will be
-at least set to 32 because cfg->ext_zve32x will always be true:
-
-     if (riscv_has_ext(env, RVV)) {
-         min_vlen = 128;
-     } else if (cfg->ext_zve64x) {
-         min_vlen = 64;
-     } else if (cfg->ext_zve32x) {
-         min_vlen = 32;
-     }
-
-
-To make the compiler happy and the code a bit clearer I suggest initializing
-min_vlen = 32 and folding the "if (cpu->cfg.ext_zve32x)" check inside
-validate_v() for an early exit. Something like this:
-
-
-@@ -417,15 +417,19 @@ static void riscv_cpu_validate_misa_priv(CPURISCVState *env, Error **errp)
-  static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
-                                   Error **errp)
-  {
--    uint32_t min_vlen;
--    uint32_t vlen = cfg->vlenb << 3;
-+    uint32_t min_vlen, vlen;
-+
-+    if (cfg->ext_zve32x) {
-+        return;
-+    }
-+
-+    min_vlen = 32;
-+    vlen = cfg->vlenb << 3;
-  
-      if (riscv_has_ext(env, RVV)) {
-          min_vlen = 128;
-      } else if (cfg->ext_zve64x) {
-          min_vlen = 64;
--    } else if (cfg->ext_zve32x) {
--        min_vlen = 32;
-      }
-  
-      if (vlen > RV_VLEN_MAX || vlen < min_vlen) {
-@@ -676,12 +680,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-          return;
-      }
-  
--    if (cpu->cfg.ext_zve32x) {
--        riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
--        if (local_err != NULL) {
--            error_propagate(errp, local_err);
--            return;
--        }
-+    riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
-+    if (local_err != NULL) {
-+        error_propagate(errp, local_err);
-+        return;
-      }
-
-
-Note: I wonder why we're allowing settings of VLEN and so on when we do
-not have RVV set. Seems like a bug ...
-
+Makes sense. PAPR doesn't say anything about this, but I guess we can
+return PARAM_ERROR (for lack of any better error) in this case.
+Will do.
 
 Thanks,
-
-Daniel
-
-
-
-
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->   target/riscv/tcg/tcg-cpu.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 1150bd14697c..acbfac5d9e2c 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -426,6 +426,8 @@ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
->           min_vlen = 64;
->       } else if (cfg->ext_zve32x) {
->           min_vlen = 32;
-> +    } else {
-> +        g_assert_not_reached();
->       }
->   
->       if (vlen > RV_VLEN_MAX || vlen < min_vlen) {
-> 
-> ---
-> base-commit: c85ba2d7a4056595166689890285105579db446a
-> change-id: 20251019-vlen-30a57c03bd93
-> 
-> Best regards,
-> --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> 
+- Aditya G
 
 
