@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2D9CCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93676CCD183
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAV9H-0001zZ-Bd; Sun, 19 Oct 2025 11:16:43 -0400
+	id 1vAV98-0001vi-1M; Sun, 19 Oct 2025 11:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV9F-0001z2-D6
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:41 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV96-0001vJ-8K
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:32 -0400
 Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV9D-0003CP-QF
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:41 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV94-0003BA-F5
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:32 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id AB3CA60A75
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:38 +0200 (CEST)
-Received: (qmail 23227 invoked by uid 990); 19 Oct 2025 15:16:38 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 66FAD60A6C
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:29 +0200 (CEST)
+Received: (qmail 22990 invoked by uid 990); 19 Oct 2025 15:16:29 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 19 Oct 2025 17:16:34 +0200
+ Sun, 19 Oct 2025 17:16:25 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
-	Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v8 11/25] target/m68k: call plugin trap callbacks
-Date: Sun, 19 Oct 2025 17:15:00 +0200
-Message-ID: <5443bb9ab89d96f0f8670060734226f04d40a668.1760884672.git.neither@nut.email>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>
+Subject: [PATCH v8 07/25] target/avr: call plugin trap callbacks
+Date: Sun, 19 Oct 2025 17:14:56 +0200
+Message-ID: <81eae4d94240303cebbbc8638841249bd7536ede.1760884672.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1760884672.git.neither@nut.email>
 References: <cover.1760884672.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999873) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999884) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.599873
+X-Rspamd-Score: -5.599884
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=FRZ2j8rbmm/3ycj8ZP5YixYFG9zzEquVSOdWN5ofsr0=;
- b=qg2jRGMaQxgS4v8H3+1EeJkm+IB50WNekO6ukmyHdGuRdxcYUvG6S3dhKxTC9OqBVWsQth7iJ9
- UfPDX6kKpHEoJ0uDqc/7CUntmXTx3DJbxd/IjESRYggl+/Iwifbre8p64reXv4kWEIDuKOqZoQ7J
- 7c27lSkc2V0h/OZkszQpBiJkeOBWv0/TlPvmvux12+QVVgTnCOY343uSOqjqqWOGWGUs/vDao03N
- KyIOzlWUieSX4QewVwjwennp95XeO+Sw9VMHJ38ETxih1OATZ42U6sFniqWz9w10SlJreJoRT8Hl
- 747XehRdjohIsmZeGRM9HsNf4K3LtqG3EgwGJxM5wi/DKubl7TLkoijL+Rdq0j/4QsTfqQBMqbn7
- 6JtWOYnBy/sxmWVjfHbJ6/Giqxftab8lpb8d9dPozhldtadX6NhqNOMdlz/2fZt1B+Sch8O97vtW
- 0rC4qtMnsfNWK5ON9BsygmmS/LJNHncr7gqZHeMzU3m2/oP7W9R1eg1hFQCPsQKQ/9ZPiKv+I5GO
- sic6N64GfMjo/ySKijaiMOUoF3OrWbh9E9NVOWEch7mHyFQDZ/yOCSmvjBAhLkp982SQ0/aZot8l
- wcS10EXc+ErGkKMTB/VRbwku0lAU/mnj344gnCtKLTlWZM87dg+U1n2Z09si91ufW9AqhKmHYs/x
- k=
+ bh=2UlKhbKoOoVQGSJ3KTG/q+t+0tUNYOPi6CGni73Tih0=;
+ b=PAP+mvK0AYON9rydNo5drzp7BYiNMLR0B1aa2hhv56xrmR0yw2V1OAUVC6loZmJQNtcVG8tlQD
+ HcxLExFZCq5rFpl/zRvvi6wp9v61mLWFuFXai6KP3c3NLKpKdW951rNEow1vivZBFZD8MmYTdMR9
+ yY7a1jvpX85jr4BwDcOkYRoyWLIsrgjAqdlpvEkn00wQ+W1xxOxAINvajGlFYKEFwRTznePyB8El
+ FIWayMw6EOl/APpAm+8xCoqAqiBwm8bRdUz/ubW8NGTwjXOLw/TCCg/dCXeMq8EW4SQclh8OfrLr
+ 5/HRqqF2n77cZcILcH4z3pUZSLeNKupnnBYaXPanSXY0aqS6c6HmG8o8A53qTmGq+fXfhhqvTZRz
+ Dpc69eGMCrHxmAQV/gtpptt28QD3jYYDS/LVjQw8c08pgmaTh1EU29RSn8/tFHxb4JOsuuthla24
+ LLYZkKbhZiC+gTIYZQMc3ELSklOC+sV1sea/jxlUhArq30cRUSf7eHmHwGAGCLsehXFCOdjFurPy
+ TlEqZ8LMpbcjvRGrsrRNJu4Z3cIzZY/mcIvqVnPnyDHagL9i6WLejUPLPIDmAXpUUcf0xvuCdlE1
+ gW5agQIpPXc7iOdWV3LyGEo8v8KXhaT8m0agm3nPQ5wv1nlc1b0Yee9RVIOx3+evw+shesxQ5u34
+ Q=
 Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
  envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -84,81 +85,36 @@ events as well as the corresponding hook functions. Due to differences
 between architectures, the latter need to be called from target specific
 code.
 
-This change places hooks for Motorola 68000 targets.
+This change places the hook for AVR targets. That architecture appears
+to only know interrupts.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/m68k/op_helper.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ target/avr/helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index f29ae12af8..e9c20a8e03 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -22,6 +22,7 @@
- #include "exec/helper-proto.h"
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index 4b29ab3526..365c8c60e1 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -28,6 +28,7 @@
+ #include "exec/target_page.h"
  #include "accel/tcg/cpu-ldst.h"
- #include "semihosting/semihost.h"
+ #include "exec/helper-proto.h"
 +#include "qemu/plugin.h"
  
- #if !defined(CONFIG_USER_ONLY)
- 
-@@ -183,6 +184,21 @@ static const char *m68k_exception_name(int index)
-     return "Unassigned";
- }
- 
-+static void do_plugin_vcpu_interrupt_cb(CPUState *cs, uint64_t from)
-+{
-+    switch (cs->exception_index) {
-+    case EXCP_SPURIOUS ... EXCP_INT_LEVEL_7:
-+        qemu_plugin_vcpu_interrupt_cb(cs, from);
-+        break;
-+    case EXCP_SEMIHOSTING:
-+        qemu_plugin_vcpu_hostcall_cb(cs, from);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs, from);
-+        break;
-+    }
-+}
-+
- static void cf_interrupt_all(CPUM68KState *env, int is_hw)
+ bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
  {
-     CPUState *cs = env_cpu(env);
-@@ -203,6 +219,7 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
-             return;
-         case EXCP_SEMIHOSTING:
-             do_m68k_semihosting(env, env->dregs[0]);
-+            qemu_plugin_vcpu_hostcall_cb(cs, retaddr);
-             return;
-         }
-     }
-@@ -239,6 +256,8 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
-     env->aregs[7] = sp;
-     /* Jump to vector.  */
-     env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
+@@ -102,6 +103,8 @@ void avr_cpu_do_interrupt(CPUState *cs)
+     env->sregI = 0; /* clear Global Interrupt Flag */
+ 
+     cs->exception_index = -1;
 +
-+    do_plugin_vcpu_interrupt_cb(cs, retaddr);
++    qemu_plugin_vcpu_interrupt_cb(cs, ret);
  }
  
- static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
-@@ -277,6 +296,7 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
-     uint32_t sp;
-     uint32_t vector;
-     uint16_t sr, oldsr;
-+    uint64_t last_pc = env->pc;
- 
-     if (!is_hw) {
-         switch (cs->exception_index) {
-@@ -417,6 +437,8 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
-     env->aregs[7] = sp;
-     /* Jump to vector.  */
-     env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
-+
-+    do_plugin_vcpu_interrupt_cb(cs, last_pc);
- }
- 
- static void do_interrupt_all(CPUM68KState *env, int is_hw)
+ hwaddr avr_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
 -- 
 2.49.1
 
