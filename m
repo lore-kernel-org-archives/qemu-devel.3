@@ -4,89 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B09CCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 18:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56760CCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 19:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAY9A-0005BZ-I5; Sun, 19 Oct 2025 14:28:48 -0400
+	id 1vAYzN-0005B1-4f; Sun, 19 Oct 2025 15:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vAY97-0005A3-Dj
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 14:28:45 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vAY94-0000a5-V0
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 14:28:45 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b49c1c130c9so2186584a12.0
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 11:28:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760898521; x=1761503321; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m+6QxrQ2Grf7WmLsUxgCW2QmJGtF5cs8k5PSTxarhNg=;
- b=KoSmEnLWQ9VlySBJAJryIB/1S4/D7/jMa3wgxXE7R3OuqO0qRdFJ3GsMkZR//QiBvc
- BgIo6cF33twAuggpXBkscatUmd1Muec33ENnlZ6MNYJzVnTL0gHQF9s6XKJVAg8lNZuh
- XpKjr6oDrF97SKvvVr+EeLRSSJAokCG6U3JuKP6fh4ov2vDxX10NuhwMp116Asv4034l
- M8zBSCuPi1J2RDUOObw2330Wi5ljg69KHRXgerY2PZ3FOE/33pQ0fwDyYhKAxyYDYuNN
- nOIB+2RnM2S+aINL/F5a4EcHYjncUYEekcUd2uBCrxhKbIC73nWXQia402IuDB8JMBwj
- o60A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760898521; x=1761503321;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=m+6QxrQ2Grf7WmLsUxgCW2QmJGtF5cs8k5PSTxarhNg=;
- b=vT1Ki0jheLSZvJmVHwshSU8C/yYQGiClNAHAzYKvhru52hpyBVsvHo37j4PBk88Yhs
- GQNO1gaf8dc4tDetRszt1ho1ZQ3akzx0w3qlNrPUcL8tZgmWVHGd8lMyvAJXswmLnZ5C
- ubVMNG9WOn/3FNBZ4KXG726LDuebLw2ZA8lpyR+fq472DnGDlH+YoomRm/zaNOfX2wIx
- QNlbnh8zfpdd18XJKI83aP600yAFk2A1w9sQ40mrTbuSv+5Hs4IOjyIvk1rCCobC7T1P
- s4cwBwnO32NyM90Up1Sax5LoOVpffCLK4SuYNL9RIlT/G97YjPKkhCj6IGjfsHRciIt/
- T4ng==
-X-Gm-Message-State: AOJu0Yz5cTece3sCcu9XFprbKwyCOJTI+cz5CGFzQ6HPzL3UMnSfkBzA
- 1L/Ys48LoVND4ari+E0PCmnDHBvpG00NxyNO8IxO/xPK2HQLdxLjrLMoGTxFlZR4jES44swAnkV
- rBMoHqZ0=
-X-Gm-Gg: ASbGncs70fT3a07AtWQPr607NvELdfyNcv9no7urIQDCCwohORZ7ELmESjJ+IBa9Y0U
- DLcMNtAYOehGPFpOueVRs+2o6lPev5GGH/JHf4liC+loGgS46oePSYv9Fw0r2nwtFTxwa3rFjCX
- BtMpx0mJyxHSCUPxoZvbgker7LR01e60Wm0P4LFSewtUX5MMbJoMZzg5g+5dF2a3AYppw8IcsfO
- pY0ZgkwMOOstg8FwYfeckZnHKAzZa0KTtw+wgjYZA+jL3llB5ni23TxJP9eieAkSqqfut3ZlOZ/
- GQqSXEnRY/kmtfHBxFDoNY2/QQX0WaIug9U4kCiBHi3qbWpWKvVx4Kxsvelarvl7DuzIs1JXJ1k
- QbfyXFSc5DD3i5ov1JkBXm+sJq0004OYM203o9hNce3IYq2bUdskqcCCAvRSrISS9L6Q6kKbSEw
- 7ikG1eUtkSQUpVv9wt
-X-Google-Smtp-Source: AGHT+IHeltuXUntrSR8pI7fDhXAnJinTVYbyajvNUaB6HGYn8fcg7XnlrL347RJIwtLnOX/FkbHJfw==
-X-Received: by 2002:a17:902:db11:b0:28e:a70f:e879 with SMTP id
- d9443c01a7336-290c9c8cc5bmr145108855ad.1.1760898520999; 
- Sun, 19 Oct 2025 11:28:40 -0700 (PDT)
-Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29246ebccf3sm58985775ad.1.2025.10.19.11.28.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Oct 2025 11:28:40 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 7/9] buildsys: Remove support for 32-bit PPC hosts
-Date: Sun, 19 Oct 2025 11:28:32 -0700
-Message-ID: <20251019182834.481541-8-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251019182834.481541-1-richard.henderson@linaro.org>
-References: <20251019182834.481541-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vAYzD-0005Ag-Vo; Sun, 19 Oct 2025 15:22:35 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vAYzB-0006U7-7t; Sun, 19 Oct 2025 15:22:35 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59J8sXFo002476;
+ Sun, 19 Oct 2025 19:22:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pD5kw7
+ J+RAOqSw0hy90uT2CMCDwM1nJjrOaerTW3eqM=; b=GJh7G/rD4iibhINNrvXrjt
+ xKSAvVARfpUrHHyToZmHXbs2raM2qybXfFgxQN8q+xP84VM0zi//N/QRU4+MoLd+
+ zsODfQhlx0RAEBWYCo0J8rbzJ0VP6RTYPK3tPqRONnj9tLP5PWYaRvVwZzKRCszp
+ JGxML8LJLRiMDA1n4wGkNmrdc2PdpqpTmowICu3DHVYhE3lK987FRu9DgDwuE4FF
+ ZdeKnH+yehfE+34lOSqV73NizirphUaiQeeCA0vLzUHxwpbh3S9cAHXjPbsJqtoL
+ qJoZQRleESjaaF7CgbhtgaKOdNPebBXIj9b7EV4DsMDCNX8Cd8mYEGceIqyFmerQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vdbgd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 19 Oct 2025 19:22:30 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59JJMTNk019422;
+ Sun, 19 Oct 2025 19:22:29 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vdbga-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 19 Oct 2025 19:22:29 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59JDuUZa032092;
+ Sun, 19 Oct 2025 19:22:29 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7mjkjm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 19 Oct 2025 19:22:29 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59JJMPo257278826
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 19 Oct 2025 19:22:25 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E89B620043;
+ Sun, 19 Oct 2025 19:22:24 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C01920040;
+ Sun, 19 Oct 2025 19:22:23 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.22.247]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sun, 19 Oct 2025 19:22:22 +0000 (GMT)
+Date: Mon, 20 Oct 2025 00:52:20 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+Subject: Re: [PATCH v4 5/8] hw/ppc: Implement saving CPU state in Fadump
+Message-ID: <gzakxmmxnvzhlogu2577s6zd2jq2fkuixzvhj3zuh56z2hqnxv@4iqas73suad3>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-6-adityag@linux.ibm.com>
+ <6a6f9e93-c824-4c6a-a24f-9b6e5f0d9cee@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <6a6f9e93-c824-4c6a-a24f-9b6e5f0d9cee@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: vU10g8vIO_r40iVO9PMZJnsHy0M5NhUU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX4n4B1s0IAFNl
+ uC1O8K8L2qH/+OdpCavCh0MdC14pojzEwx1Oxtq/PwFd/6Cm7xWajbLTyxCv96ek6FhLlUOzpPZ
+ ksu8X4Y74JEl71/fi/j9PcTMuZA+MFpgv02t5Fa/CI/N5xXXq4IXg8cp/JuEp51PJ3D2jY3QhSA
+ m7bO2pyTqGR1yYdqSNKtR8d8Sa/OylIz7GLQPWSYYGwOsaQFzLez9eu84AXT/P7kOYBVktKdPNm
+ SFSGYnpRhCY0I8ZttVqYJvJyhdhBTUuuG93IuDyiAitM6uJFsAgI9zFujgOLEJtY2vBem4SUdg6
+ Ofb6G1Yy+6NvvKyQ71PohAZcIPXYX+pUhvQmBnhapVItQUmbE8SYwEoqqh6vPfLuQIkDNVFVhbQ
+ aPb3JhYBH2PXcDuFYxd0b9IkmzDNNw==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f53a76 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=tIP5MtDxmwS9JYu4n2gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: ITJCu52YRF823I9ml4oSD20V9-VMBzz2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-19_06,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,143 +131,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 25/10/18 04:24PM, Sourabh Jain wrote:
+> 
+> > <...snip...>
+> > +    curr_reg_entry->reg_id =
+> > +        cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
+> > +    curr_reg_entry->reg_value = ppc_cpu->vcpu_id;
+> 
+> Aren't we suppose to store CPU ID in big endian?
+> As per PAPR the format CPUSTRT and CPUEND node is
+> 
+> 8 Bytes Identifier (BE) | 4 Bytes Reserved (0x0) | 4 Bytes Logical CPU ID
+> (BE)
+> 
+> It feels like storing vcpu_id as little endian may not get the
+> reg entrie for CPUSTRT in above format, isn't it?
 
-Stop detecting 32-bit PPC host as supported.
-See previous commit for rationale.
+Will fix in v5.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[rth: Retain _ARCH_PPC64 check in udiv_qrnnd]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251014173900.87497-4-philmd@linaro.org>
----
- include/qemu/timer.h | 13 +------------
- disas/disas-host.c   |  4 +---
- util/cacheflush.c    |  4 ++--
- configure            | 19 +++++--------------
- 4 files changed, 9 insertions(+), 31 deletions(-)
+> 
+> Ideally we should have two struct to mange two types of Reg Entries.
+> That way we can manage reserved bytes in CPUSTRT/CPUEND node
+> easily. I understand that it will bring unnecessary complexity in
+> populate_cpu_state_data function. So how about adding a note for
+> future reference?
 
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index aec730ac25..406d741120 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -850,12 +850,11 @@ static inline int64_t get_clock(void)
- /*******************************************/
- /* host CPU ticks (if available) */
- 
--#if defined(_ARCH_PPC)
-+#if defined(_ARCH_PPC64)
- 
- static inline int64_t cpu_get_host_ticks(void)
- {
-     int64_t retval;
--#ifdef _ARCH_PPC64
-     /* This reads timebase in one 64bit go and includes Cell workaround from:
-        http://ozlabs.org/pipermail/linuxppc-dev/2006-October/027052.html
-     */
-@@ -863,16 +862,6 @@ static inline int64_t cpu_get_host_ticks(void)
-                           "cmpwi   %0,0\n\t"
-                           "beq-    $-8"
-                           : "=r" (retval));
--#else
--    /* http://ozlabs.org/pipermail/linuxppc-dev/1999-October/003889.html */
--    unsigned long junk;
--    __asm__ __volatile__ ("mfspr   %1,269\n\t"  /* mftbu */
--                          "mfspr   %L0,268\n\t" /* mftb */
--                          "mfspr   %0,269\n\t"  /* mftbu */
--                          "cmpw    %0,%1\n\t"
--                          "bne     $-16"
--                          : "=r" (retval), "=r" (junk));
--#endif
-     return retval;
- }
- 
-diff --git a/disas/disas-host.c b/disas/disas-host.c
-index 8146fafe80..4b06f41fa6 100644
---- a/disas/disas-host.c
-+++ b/disas/disas-host.c
-@@ -56,11 +56,9 @@ static void initialize_debug_host(CPUDebug *s)
-     s->info.cap_mode = CS_MODE_64;
-     s->info.cap_insn_unit = 1;
-     s->info.cap_insn_split = 8;
--#elif defined(_ARCH_PPC)
-+#elif defined(_ARCH_PPC64)
-     s->info.cap_arch = CS_ARCH_PPC;
--# ifdef _ARCH_PPC64
-     s->info.cap_mode = CS_MODE_64;
--# endif
- #elif defined(__riscv)
- #if defined(_ILP32) || (__riscv_xlen == 32)
-     s->info.print_insn = print_insn_riscv32;
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index 17c58918de..69c9614e2c 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -153,7 +153,7 @@ static void arch_cache_info(int *isize, int *dsize)
-     }
- }
- 
--#elif defined(_ARCH_PPC) && defined(__linux__)
-+#elif defined(_ARCH_PPC64) && defined(__linux__)
- # include "elf.h"
- 
- static void arch_cache_info(int *isize, int *dsize)
-@@ -187,7 +187,7 @@ static void fallback_cache_info(int *isize, int *dsize)
-     } else if (*dsize) {
-         *isize = *dsize;
-     } else {
--#if defined(_ARCH_PPC)
-+#if defined(_ARCH_PPC64)
-         /*
-          * For PPC, we're going to use the cache sizes computed for
-          * flush_idcache_range.  Which means that we must use the
-diff --git a/configure b/configure
-index 8263f81370..a2f66f7ff9 100755
---- a/configure
-+++ b/configure
-@@ -391,15 +391,11 @@ elif check_define __sparc__ ; then
-   else
-     cpu="sparc"
-   fi
--elif check_define _ARCH_PPC ; then
--  if check_define _ARCH_PPC64 ; then
--    if check_define _LITTLE_ENDIAN ; then
--      cpu="ppc64le"
--    else
--      cpu="ppc64"
--    fi
-+elif check_define _ARCH_PPC64 ; then
-+  if check_define _LITTLE_ENDIAN ; then
-+    cpu="ppc64le"
-   else
--    cpu="ppc"
-+    cpu="ppc64"
-   fi
- elif check_define __mips__ ; then
-   if check_define __mips64 ; then
-@@ -472,11 +468,6 @@ case "$cpu" in
-     linux_arch=mips
-     ;;
- 
--  ppc)
--    host_arch=ppc
--    linux_arch=powerpc
--    CPU_CFLAGS="-m32"
--    ;;
-   ppc64)
-     host_arch=ppc64
-     linux_arch=powerpc
-@@ -1471,7 +1462,7 @@ probe_target_compiler() {
-         container_image=debian-all-test-cross
-         container_cross_prefix=mips64-linux-gnuabi64-
-         ;;
--      ppc|ppc64|ppc64le)
-+      ppc64|ppc64le)
-         container_image=debian-all-test-cross
-         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
-         ;;
--- 
-2.43.0
+Will add a note about the format.
+I also think another struct might be unnecessary complexity since we
+just need it at 2 instances (CPUSTRT & CPUEND), and can be done with
+simple bit math.
+
+> 
+> > +    ++curr_reg_entry;
+> > +
+> > <...snip...>
+> > +    /* End the registers for this CPU with "CPUEND" reg entry */
+> > +    curr_reg_entry->reg_id =
+> > +        cpu_to_be64(fadump_str_to_u64("CPUEND"));
+> 
+> CPU ID as value to CPUEND reg entry needed, right?
+
+Yes, will add in v5.
+
+> 
+> > +
+> > <...snip...>
+> > +            /*
+> > +             * We will write the cpu state data later, as otherwise it
+> > +             * might get overwritten by other fadump regions
+> 
+> Isn't the destination address of cpu state data and RMR region are
+> different?
+> 
+> I don't understand the above comment. Can you please give more details.
+> 
+> > +             */
+> > +
+> > <...snip...>
+> > +    /*
+> > +     * Write the Register Save Area
+> > +     *
+> > +     * CPU State/Register Save Area should be written after dumping the
+> > +     * memory to prevent overwriting while saving other memory regions
+> > +     *
+> > +     * eg. If boot memory region is 1G, then both the first 1GB memory, and
+> > +     * the Register Save Area needs to be saved at 1GB.
+> 
+> Every region is copied to their destination address and as per below kernel
+> function:
+> https://github.com/torvalds/linux/blob/f406055cb18c6e299c4a783fc1effeb16be41803/arch/powerpc/platforms/pseries/rtas-fadump.c#L98
+> 
+> the destination address shouldn't  be same for fadump region then how come
+> there
+> is overwrite scenario? Am I missing something?
+
+Yes, with current kernel logic, destination address of cpu state data
+and RMR region are different.
+
+I remember having faced some issue in past (don't recall, might have
+been with powernv, or it might not exist anymore) hence the comment.
+
+Ideally kernel should ensure CPU and memory regions don't overlap.
+
+Possible overlap can be like, memory region being 0x0 - 512MB, and
+generally the cpu region's destination also lies in this low memory.
+
+PAPR says nothing about order of saving iirc. I kept current way to
+ensure we have CPU registers even if such overlap happens.
+
+What do you say ? Should we save CPU region first and then go with
+saving memory regions ?
+
+> 
+> > +     * And as the CPU_STATE_DATA region comes first than the
+> > +     * REAL_MODE_REGION region to be copied, the CPU_STATE_DATA will get
+> > +     * overwritten if saved before the 0GB - 1GB region is copied after
+> > +     * saving CPU state data
+> > +     */
+> > +    io_result = address_space_write(default_as, cpu_state_addr, attrs,
+> > +            cpu_state_buffer, cpu_state_len);
+> 
+> Hope cpu_state_buffer will be freed automatically...
+
+Yes, as it's declared with g_autofree, glibc/compiler takes care of
+adding cleanup functions ensuring it gets freed.
+
+> 
+> > <...snip...>
+> > +/* Number of registers stored per cpu */
+> > +#define FADUMP_NUM_PER_CPU_REGS (32 /*GPR*/ + 45 /*others*/ + 2 /*STRT & END*/)
+> 
+> #nit-pick
+> How about FADUMP_PER_CPU_REG_ENTRY ?
+
+How about FADUMP_PER_CPU_NUM_REGS ? Basically explicitly saying it's
+number of registers per cpu ?
+
+Thanks for your reviews Sourabh,
+- Aditya G
 
 
