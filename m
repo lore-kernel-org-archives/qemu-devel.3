@@ -4,106 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69FACCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 22:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346EACCD195
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 23:27:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAc38-0004XC-HP; Sun, 19 Oct 2025 18:38:50 -0400
+	id 1vAcne-0005B1-M6; Sun, 19 Oct 2025 19:26:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAc36-0004WQ-Jg
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 18:38:48 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAc33-0003bN-44
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 18:38:47 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b3b3a6f4dd4so691686366b.0
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 15:38:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760913514; x=1761518314; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1fUlR3DVhrkXnHMUK4SdPqCGl1e6I+hLWWy62h9Hp4c=;
- b=h1mGxFhLVwA0sULH9tMaSn17oDepr+Sv9+joIC/YMDReaUqOthZt9zR+DfTc6DKBnX
- bQWvIlcf5t21QKsEiUHAeqmN+gTLdjEXg5Plda7LEzze0NvK7b3BEO4FMHsFJqPmGI6D
- aFmxBuJ8EDq4pYG+lbYRZbhlPvzEZEictoGl/MO071FEf2334KvDf/0nheXRpBQiuqBC
- kh0RQBkCIMsP+rRf6NMhhexMLIc7VPR8Rta/N8GFv9oaQl2e1lV/okvn6l+Lgk6IKZoi
- /FgBzM44Uzcc+iUn6YqKGPmUXOhhIwOJTzSzMbT/+2p0/A+OGyBWuaM89fYwiZ80viAl
- dmuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760913514; x=1761518314;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1fUlR3DVhrkXnHMUK4SdPqCGl1e6I+hLWWy62h9Hp4c=;
- b=vgcP699K1kF/uZWyTiFQogOoe82Hx91qLLInoRw2TYH6A3jNtWhvPdvui2x4jQgSEP
- TC0Z7GxbMESEDcAlzT8NsazZHz1+WwmgHvO7y6uiPEdJ+fzMNhCNzncREz7b7Z54snQX
- V3lD98aFFZ6Bo44BYQzcDbubrq7O2yPV4fLvdBpk+zEMqKL5E//KNhqWov1Ydoz8arql
- WsCB0DBGuS9EI5R1ytC9+oMssy2Z0MnzI6PjSefVUStQqxFVEsmOH1QZjEydFQ6oHxHk
- MG8UNTqdsGdN4ZKdRLuy9r3/q+Z+QIDkJT9b6JfEcGeC6yyXmApVgPJiZrEVrd+8cd/o
- Lfqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXl0VvBq5xcC62ahOhxLLe/+cTbDp5YyhUzlr6uRQ+VDw0ky7ZCWPAEp7nBaZVN45qUfc/+banma4NL@nongnu.org
-X-Gm-Message-State: AOJu0YzRqrquFxVhjVLkvZecFiHq42LG29AAwwfaC9zV7bmxRQvl5XtG
- 1K/0JlBTTMM4w2VQN/UnGxFVei0OyW/GyWWlGFZuBn8LMlRSRxjqqPo7
-X-Gm-Gg: ASbGncvQHHOrB6Edv0UJeLJujCPJ+wkHeTlC8k9fueNuFuww9sz1OdsErUuSpqG2mn6
- rBEjdmBTl8JJbTqwMtt6Ml6UtNWppjiSk7AXua2Cy2PcLa3difFx9YUJI+Pi/9l04DHVnrwCAhl
- T+MOK7B7CIwVYWr3kaR2k2sX/aSCMfxOkmb3M5+EpFvbKXbIbJp7unKrOUvEwgrB+SC/G+gxosV
- Fnh4+rXlkvaYHsooPYWF8PIe4YbWzkzk6B3EvJCOwDMnuB8aNHmaEwgkA6DkQ+ypagT+0RNZKIi
- 6HdNmnAB9dGU7JsQNMuVtAiqQRndwUfnNsw9M58HnwRWcHaYtGRfsof4XUeEOytV5DpVr1c6tM6
- gCG8YlrIm4ceASIbK3f9XD4RRcNtYWiliF1iLg2sVG4gRzrN2vtk53OTguGl9SAehfUnCc/dgjF
- niC/RGWYDGVwDVOuF1bZM6PMPUm2Ss9906lpV7sO3M40MqS678Sw/3Z1rvQ8ThNP2TtJmrZhtjl
- iSwfdrNTF7R9bl/PEjHSbsNGiuZvwHLtqppYKoQxBjL
-X-Google-Smtp-Source: AGHT+IFY1AOFnz3uKVjIXWfRbHvZOYANfaygBNZ6f59WAGxWoNrkwB1vfYiS+VunXq5N8M44mfer0Q==
-X-Received: by 2002:a17:906:fe41:b0:b45:a6e6:97b4 with SMTP id
- a640c23a62f3a-b64764e2fd5mr1237253066b.50.1760913513550; 
- Sun, 19 Oct 2025 15:38:33 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-1c27-9400-31a8-03e5-9396-b647.310.pool.telefonica.de.
- [2a02:3100:1c27:9400:31a8:3e5:9396:b647])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63c48a928cesm5246447a12.7.2025.10.19.15.38.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Oct 2025 15:38:32 -0700 (PDT)
-Date: Sun, 19 Oct 2025 22:38:28 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-CC: Roman Bolshakov <rbolshakov@ddn.com>, Laurent Vivier <laurent@vivier.eu>, 
- Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, qemu-trivial@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-block@nongnu.org,
- Phil Dennis-Jordan <phil@philjordan.eu>, John Snow <jsnow@redhat.com>,
- kvm@vger.kernel.org, Laurent Vivier <lvivier@redhat.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_09/11=5D_hw/intc/apic=3A_Ensure_?=
- =?US-ASCII?Q?own_APIC_use_in_apic=5Fregister=5F=7Bread=2C_write=7D?=
-In-Reply-To: <3C9DA9B8-8836-42F6-85CD-AB60327363EC@gmail.com>
-References: <20251017141117.105944-1-shentey@gmail.com>
- <20251017141117.105944-10-shentey@gmail.com>
- <f074aed2-7702-4a4a-a7d5-7abeb29ea663@tls.msk.ru>
- <3C9DA9B8-8836-42F6-85CD-AB60327363EC@gmail.com>
-Message-ID: <BDA99DB9-7585-4C1A-9B4A-DC07AE78EBE6@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vAcnc-0005Ag-Lh; Sun, 19 Oct 2025 19:26:52 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vAcna-0000bz-5W; Sun, 19 Oct 2025 19:26:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 608A359703F;
+ Mon, 20 Oct 2025 01:26:44 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 36DITYluydic; Mon, 20 Oct 2025 01:26:42 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 043FB5972E1; Mon, 20 Oct 2025 01:26:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 01EFE5972F4;
+ Mon, 20 Oct 2025 01:26:41 +0200 (CEST)
+Date: Mon, 20 Oct 2025 01:26:41 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
+In-Reply-To: <b83b904c-6dcc-4b4f-afc0-499ffafca15c@ilande.co.uk>
+Message-ID: <818e8c63-9ef1-c2f5-6a85-7ef37a80d44b@eik.bme.hu>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
+ <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
+ <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
+ <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
+ <b83b904c-6dcc-4b4f-afc0-499ffafca15c@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-837372825-1760916402=:79527"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,52 +73,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-837372825-1760916402=:79527
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Am 17=2E Oktober 2025 19:34:36 UTC schrieb Bernhard Beschow <shentey@gmail=
-=2Ecom>:
+On Sun, 19 Oct 2025, Mark Cave-Ayland wrote:
+> On 18/10/2025 03:41, Harsh Prateek Bora wrote:
+>> Hi Mark,
+>> 
+>> Thanks much for pitching in to help with reviewing this series.
 >
+> Hi Harsh,
 >
->Am 17=2E Oktober 2025 14:58:50 UTC schrieb Michael Tokarev <mjt@tls=2Emsk=
-=2Eru>:
->>17=2E10=2E2025 17:11, Bernhard Beschow wrote:
->>> =2E=2E=2E In apic_mem_{read,write}, the
->>> own APIC instance is available as the opaque parameter
->>
->>> diff --git a/hw/intc/apic=2Ec b/hw/intc/apic=2Ec
->>
->>> @@ -876,7 +870,7 @@ static uint64_t apic_mem_read(void *opaque, hwaddr=
- addr, unsigned size)
->>>       }
->>>         index =3D (addr >> 4) & 0xff;
->>> -    apic_register_read(index, &val);
->>> +    apic_register_read(opaque, index, &val);
->>
->>I think it would be better to use local variable here:
->>
->> APICCommonState *s =3D opaque;
->>
->>and use it down the line=2E  Yes, there's just one usage, but it is
->>still clearer this way (in my opinion anyway)=2E
->>
->>Ditto in apic_mem_write=2E
+> No worries - I've looked at raven before when working on adding 40p support 
+> for OpenBIOS, so I do have some familiarity.
 >
->I agree=2E Will fix in the next iteration=2E
+>> On 9/19/25 01:51, BALATON Zoltan wrote:
+>>> On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
+>>>> On 18/09/2025 19:50, BALATON Zoltan wrote:
+>>>>> The raven PCI device does not need a state struct as it has no data to
+>>>>> store there any more, so we can remove that to simplify code.
+>>>>> 
+>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>>> ---
+>>>>>   hw/pci-host/raven.c | 30 +-----------------------------
+>>>>>   1 file changed, 1 insertion(+), 29 deletions(-)
+>>>>> 
+>>>>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>>>>> index f8c0be5d21..172f01694c 100644
+>>>>> --- a/hw/pci-host/raven.c
+>>>>> +++ b/hw/pci-host/raven.c
+>>>>> @@ -31,7 +31,6 @@
+>>>>>   #include "hw/pci/pci_bus.h"
+>>>>>   #include "hw/pci/pci_host.h"
+>>>>>   #include "hw/qdev-properties.h"
+>>>>> -#include "migration/vmstate.h"
+>>>>>   #include "hw/intc/i8259.h"
+>>>>>   #include "hw/irq.h"
+>>>>>   #include "hw/or-irq.h"
+>>>>> @@ -40,12 +39,6 @@
+>>>>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>>>>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+>>>>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
+>>>>> -
+>>>>> -struct RavenPCIState {
+>>>>> -    PCIDevice dev;
+>>>>> -};
+>>>>> -
+>>>>>   typedef struct PRePPCIState PREPPCIState;
+>>>>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>>>>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+>>>>> @@ -65,7 +58,6 @@ struct PRePPCIState {
+>>>>>       MemoryRegion bm_ram_alias;
+>>>>>       MemoryRegion bm_pci_memory_alias;
+>>>>>       AddressSpace bm_as;
+>>>>> -    RavenPCIState pci_dev;
+>>>>>         int contiguous_map;
+>>>>>   };
+>>>>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, 
+>>>>> Error **errp)
+>>>>>                             "pci-intack", 1);
+>>>>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
+>>>>> &s->pci_intack);
+>>>>>   -    /* TODO Remove once realize propagates to child devices. */
+>>>>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
+>>>>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
+>>>>> TYPE_RAVEN_PCI_DEVICE);
+>>>>>   }
+>> 
+>> <snip>
+>> 
+>>>>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, 
+>>>>> const void *data)
+>>>>>   static const TypeInfo raven_info = {
+>>>>>       .name = TYPE_RAVEN_PCI_DEVICE,
+>>>>>       .parent = TYPE_PCI_DEVICE,
+>>>>> -    .instance_size = sizeof(RavenPCIState),
+>>>>>       .class_init = raven_class_init,
+>>>>>       .interfaces = (const InterfaceInfo[]) {
+>>>>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>>>> 
+>>>> I agree with removing RavenPCIState, but pci_create_simple() isn't the 
+>>>> right solution here because it both init()s and realize()s the inner 
+>>>> object. The right way to do this is for the parent to init() its inner 
+>>>> object(s) within its init() function, and similarly for it to realize() 
+>>>> its inner object(s) within its realize() function.
+>>>> 
+>>>> FWIW it looks as if the same mistake is present in several other 
+>>>> hw/pci-host devices.
+>>> 
+>>> So maybe that's not a mistake then. There's no need to init and realize it 
+>>> separately as this is an internal object which is enough to be created in 
+>>> realize method and init and realize there at one go for which 
+>>> pci_create_simple is appropriate. I think this inner object would only 
+>>> need to be init separately if it exposed something (like a property) that 
+>>> could be inspected or set before realize but that's not the case here so 
+>>> it does not have to be created in init only in realize. (A lot of simple 
+>>> devices don't even have init method only realize so init is only needed 
+>>> for things that have to be set before realize.)
+>> 
+>> Do we have a consensus here ?
+>> 
+>> regards,
+>> Harsh
+> Given there is still some ongoing discussion regarding object modelling, I 
+> think this will require a separate tidy-up so let's go with the 
+> pci_create_simple() approach for now.
+>
+> The changes to the interrupt routing and readability of some of the changes 
+> from a developer's perspective are still of concern to me.
 
-I couldn't use the opaque parameter in v3 at all, so I needed an `APICComm=
-onState *s` anyway=2E
+I think simpler is more readable so not having an or-irq object where not 
+needed as the PCI code can handle this makes it more readable (also the 
+same as ppc440_pcix which was previously approved by Peter[1] and a patch 
+to add or-irq there was dropped as unneeded[2] so doing the same thing the 
+same way here is also more readable and more consistent). Thus I think the 
+interrupt routing changes should be OK and having an or-irq is an 
+unneeded complication.
 
-Best regards,
-Bernhard
+What other readablility concerns do you have? Is it about not passing the 
+whole device state struct to callbacks but only what they need from it? 
+I've answered that already and I think that unnecessary casts would not 
+add any readablility. I'd like to hear others' opinion too but it seems 
+not many care so it's only us and we both seem to have strong view on 
+these things so it's hard to come to an agreement.
 
->
->Best regards,
->Bernhard
->
->>
->>But it's more a nitpick really=2E
->>
->>Thanks,
->>
->>/mjt
+Regards,
+BALATON Zoltan
+
+[1] commit 2a9cf49598c65 and 
+https://lists.nongnu.org/archive/html/qemu-ppc/2021-01/msg00031.html
+
+[2] https://lists.nongnu.org/archive/html/qemu-ppc/2020-12/msg00422.html 
+https://lists.nongnu.org/archive/html/qemu-ppc/2020-12/msg00423.html
+--3866299591-837372825-1760916402=:79527--
 
