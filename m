@@ -4,64 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22364CCD184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F5CCCD19F
 	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAV8l-0001mj-7o; Sun, 19 Oct 2025 11:16:11 -0400
+	id 1vAV8o-0001nP-QD; Sun, 19 Oct 2025 11:16:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8i-0001mM-0p
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:08 -0400
-Received: from mailgate01.uberspace.is ([95.143.172.20])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8n-0001nH-5G
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:13 -0400
+Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8f-000381-0q
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:07 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8l-00039G-6s
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:12 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id B98DB60A00
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:15:54 +0200 (CEST)
-Received: (qmail 22280 invoked by uid 990); 19 Oct 2025 15:15:54 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 04CE360A83
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:10 +0200 (CEST)
+Received: (qmail 22621 invoked by uid 990); 19 Oct 2025 15:16:09 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 19 Oct 2025 17:15:50 +0200
+ Sun, 19 Oct 2025 17:16:07 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>
-Subject: [PATCH v8 00/25] tcg-plugins: add hooks for discontinuities
-Date: Sun, 19 Oct 2025 17:14:49 +0200
-Message-ID: <cover.1760884672.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v8 02/25] plugins: add API for registering discontinuity
+ callbacks
+Date: Sun, 19 Oct 2025 17:14:51 +0200
+Message-ID: <3a521f7982dfe1a2a71b4237f6a71c7b10da6598.1760884672.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
+In-Reply-To: <cover.1760884672.git.neither@nut.email>
+References: <cover.1760884672.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -
-X-Rspamd-Report: MID_CONTAINS_FROM(1) BAYES_HAM(-2.303161) MIME_GOOD(-0.1)
-X-Rspamd-Score: -1.403161
+X-Rspamd-Bar: ----
+X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) BAYES_HAM(-3)
+X-Rspamd-Score: -4.6
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=GAaRvvXSNejzXbZqPjuJK3LOkW1WLSl6pUx7jloYvs4=;
- b=awRFR5JjMNPW/QW6xaG+aZ1brkQvS8WfDM1GBAF+f9dz0Cy6G35ujhtb8rH1t88rc2QJhS2Ocy
- W3T09ZrEnYpOX7XfSt/0zvjE7lNxQ4mVL+N2AriwIpct/MxE78CV0VjtCHjMhTjdsAizpnyBXv2f
- MxU3oOyXbHXF82xVqU8q2ihxzuapZ961cTv17k9L+Vcfwj7/gsejruZDzB0PyZWw48iUzKMUIOVg
- 2bMjCTcAq6lLEtYBWNww+KokJVyJUofHSMLJJvhtkV/vq+F/ZJi9XxUxUKbCmd1+eMEYE3U6Y4jm
- vGuzRiiPbeEYY+qwlt+alWZheT/X490t8fTdbKRUzLAwyq45QpfFASbAjeqC6ZgnsW8i1U3vCiRE
- VMrykAJJC0Rxmwj3X45npowA6oXKZ/59lZmRG27sMbevhna9vd9apb78Z+wmEOOu6OKZ7mRdC2ga
- Sraep0Vsg0QpPSWEig20biSJs1y/M1NCT40Q2SAv0CCPRlKfBuMyrZ+LEocfnfv43NcJ/vh+Ll36
- IbkNf8jpKOBjPqrvLob/IhGJ6FDlPLnu5KxViWQY0LMjUXBgTnR7QGO3Hg0ReJmN7XSLVfltaldL
- Lx5UwV6hGOqf5l5s8TFzOfI6xxQ+u+KhziIZLOxLEBixEDIVy9yQm209vLN/ZdKJDUbh2mECKb1g
- 0=
-Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
- helo=mailgate01.uberspace.is
+ bh=QtKA19sfR0JfExEgWblMeLRIoK6HCqGXkcD3ErSDWR8=;
+ b=HU67ZTj2qFYuZJpjRr8hvZkQmjjzjarAe/nSm5BIAxQt/+wLofq14VELlAO31U51k+V/blA9Oi
+ 7G5YJGfm4hX83doSoO5el/ejz2fLl0mTI1WnoxrW+3JsXVSTmkjaewzVDRcpPahWk+y8DPqfXXaE
+ 4pWUWOj6IXNXfVsnIOqCVIGkVVmPIC/v/r2PKh09hfAMVyLZc5ZHpku96OkEMdsdw8UG6O3xsYBr
+ NLlgf+EAkOe5r1iXGa9f9oqoAfp1E2lwObr2+G0o4P6mV7KbfhayOgdvL+7lv+2JaaWjHRYT3pEH
+ J0V8+xGgmNcXfFGPR9KdPk+7yHwhKxV+XQPE/ywF9ZFZbf8K5Wsp+iYHXougRCBrvpwKvHafV3Id
+ qZEce6BHSxM4X+zabiLQrkcICqiCTecM41gr0V8Rt7/p4vGrFbfqxF7GkbYel/B97DvUjqMilknG
+ oZiC79HxrQLs21yUsgXF9ZpN83BxMdIGft2a1pVN9tlwSgAzpRHN2GzUOk2FnRwgrvmMbai0hh5W
+ zqXOy5gzwiawxE8lgu3QgKE+5nbEMbSPr2UMJOPc+DOYiCQ4sBp1yWqk+D75zkaIsSXVE9IXk7g+
+ C5oESBvloGVq8EjegHDnN3maEBTcgvQmJK51Y6ZQAdXNrE2dKo9GntQjClWBF3MWVVvT49oZepzv
+ w=
+Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
+ envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,220 +85,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some analysis greatly benefits, or depends on, information about
-certain types of dicontinuities such as interrupts. For example, we may
-need to handle the execution of a new translation block differently if
-it is not the result of normal program flow but of an interrupt.
+The plugin API allows registration of callbacks for a variety of VCPU
+related events, such as VCPU reset, idle and resume. In addition to
+those events, we recently defined discontinuity events, which include
+traps.
 
-Even with the existing interfaces, it is more or less possible to
-discern these situations, e.g. as done by the cflow plugin. However,
-this process poses a considerable overhead to the core analysis one may
-intend to perform.
+This change introduces a function to register callbacks for these
+events. We define one distinct plugin event type for each type of
+discontinuity, granting fine control to plugins in term of which events
+they receive.
 
-These changes introduce a generic and easy-to-use interface for plugin
-authors in the form of a callback for discontinuities. Patch 1 defines
-an enumeration of some trap-related discontinuities including somewhat
-narrow definitions of the discontinuity evetns and a callback type.
-Patch 2 defines the callback registration function. Patch 3 adds some
-hooks for triggering the callbacks. Patch 4 adds an example plugin
-showcasing the new API.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Julian Ganz <neither@nut.email>
+---
+ include/qemu/plugin-event.h |  3 +++
+ include/qemu/qemu-plugin.h  | 16 ++++++++++++++++
+ plugins/core.c              | 15 +++++++++++++++
+ 3 files changed, 34 insertions(+)
 
-Patches 5 through 22 call the hooks for all architectures but hexagon,
-mapping architecture specific events to the three categories defined in
-patch 1. We don't plan to add hooks for hexagon since despite having
-exceptions apparently doesn't have any discontinuities associated with
-them.
-
-Patch 23 supplies a test plugin asserting some behavior of the plugin
-API w.r.t. the PCs reported by the new API. Finally, patches 24 and 25
-add new tests for riscv which serve as test-cases for the test plugin.
-
-Sidenote: I'm likely doing something wrong for one architecture or
-the other. These patches are untested for most of them.
-
-Richard Henderson proposed streamlining interrupts and exceptions for
-all targets and calling the hooks from a higher level rather than in
-each target code. However, there are a few obstacles and I decided to
-not do this as part of this series.
-
-I also briefly considered adding a syscall discon type following the
-realization that exceptions are also visible outside system emulation
-mode, but decided against that since callbacks for syscall entry and
-exit already exist.
-
-Since v7:
-  - Simplified categorization of exceptions and interrupts for PA-RISC.
-  - Fixed path of captured plugin output for "doubletrap" and
-    "interruptedmemory" tests.
-  - Restructured "interruptedmemory" test program with a tighter loop
-    performing loads and stores, enhancing chances of hitting the test
-    case.
-  - The "interruptedmemory" test now runs for 30s instead of a full
-    minute.
-  - The "interruptedmemory" test now prints a single '.' every 1000000
-    load/store iteration via UART.
-
-Since v6:
-  - The "traps" example plugin now only informs users that interrupts
-    are only availible in system emulation mode rather than erroring
-    out when not run in that mode.
-  - The hostcall hook is now also called for xtensa simcalls (pointed
-    out by Philippe Mathieu-Daudé).
-  - The "discon" testing plugin now uses g_strdup_printf for formatting
-    the reporting message (as suggested by Daniel P. Berrangé).
-    Previously the message was assembled using g_string_append_printf.
-
-Since v5:
-  - The internal function plugin_vcpu_cb__discon now takes the
-    qemu_plugin_event as a parameter instead of determining the event
-    from the discon type.
-  - Fixed computation of the last PC for ARM platforms.
-  - Code mapping ARM exception index to discon type is now shared
-    between m- and a-profile.
-  - Fixed mapping of interrupt number to discon type for HPPA platforms.
-  - Removed exception hook for some internal events for Motorola 68000.
-  - Call hook for unaligned access exceptions on MicroBlaze platforms.
-  - Prevented calling of exception hooks for resets on OpenRISC.
-  - Made the discon test plugin compare hardware addesses transpated
-    with qemu_plugin_translate_vaddr when comparing addresses. Before
-    we'd use a crude bitmask.
-
-Since v4:
-  - Fixed a typo in the documentation of the
-    qemu_plugin_vcpu_discon_cb_t function type (pointed out by Pierrick
-    Bouvier)
-  - Fixed a reference in the documentation of the
-    qemu_plugin_vcpu_discon_cb_t function type
-  - Added hooks for SuperH and TriCore targets
-  - Fixed typos in commit messages (pointed out by Daniel Henrique
-    Barboza)
-
-Since v3 (RFC):
-  - Switched to shifting 1 notation for qemu_plugin_discon_type values
-    (as requested by Pierrick Bouvier)
-  - Added missing documentation of function parameters of function
-    pointer type qemu_plugin_vcpu_discon_cb_t
-  - Added missing documentation of function parameters of
-    qemu_plugin_register_vcpu_discon_cb
-  - Eliminated "to" argument from hooks called from target specific
-    code, i.e. qemu_plugin_vcpu_interrupt_cb and friends, determine "to"
-    address using CPUClass::get_pc
-  - Replaced comment declaring switch-case unreachable with
-    g_assert_not_reached()
-  - Call qemu_plugin_register_vcpu_discon_cb with QEMU_PLUGIN_DISCON_ALL
-    rather than QEMU_PLUGIN_DISCON_TRAPS in "traps" example plugin
-  - Take max_vcpus from qemu_info_t in "traps" example plugin, don't
-    determine it based on VCPU activation
-  - Added a description of the "traps" example plugin (as requested by
-    Pierrick Bouvier)
-  - Added section for the "traps" example plugin in documentation's
-    "Emulation" chapter
-  - Fixed messed-up switch-case in alpha_cpu_do_interrupt
-  - Added hooks for PA-RISC, x86, loongarch, Motorola 68000, MicroBlaze,
-    OpenRISC, Power PC, Renesas Xtreme, IBM System/390 and xtensa
-    targets.
-  - Made "discon" test plugin check PCs in vcpu_discon callback (as
-    requested by Pierrick Bouvier)
-  - Added parameter to "discon" test plugin for controlling which
-    address bits are compared to cope with TBs being used under
-    different virtual addresses
-  - Added parameter to "discon" test plugin for printing a full
-    instruction trace for debugging purposes
-  - Made "discon" test plugin abort by default on address mismatches
-  - Added test-cases for RISC-V
-
-Since v2 (tcg-plugins: add hooks for interrupts, exceptions and traps):
-  - Switched from traps as core concept to more generic discontinuities
-  - Switched from semihosting to hostcall as term for emulated traps
-  - Added enumeration of events and dedicated callback type
-  - Make callback receive event type as well as origin and target PC
-    (as requested by Pierrick Bouvier)
-  - Combined registration functions for different traps into a single
-    one for all types of discontinuities (as requested by Pierrick
-    Bouvier)
-  - Migrated records in example plugin from fully pre-allocated to a
-    scoreboard (as suggested by Pierrick Bouvier)
-  - Handle PSCI calls as hostcall (as pointed out by Peter Maydell)
-  - Added hooks for ARM Cortex M arches (as pointed out by Peter
-    Maydell)
-  - Added hooks for Alpha targets
-  - Added hooks for MIPS targets
-  - Added a plugin for testing some of the interface behaviour
-
-Since v1:
-  - Split the one callback into multiple callbacks
-  - Added a target-agnostic definition of the relevant event(s)
-  - Call hooks from architecture-code rather than accel/tcg/cpu-exec.c
-  - Added a plugin showcasing API usage
-
-Julian Ganz (25):
-  plugins: add types for callbacks related to certain discontinuities
-  plugins: add API for registering discontinuity callbacks
-  plugins: add hooks for new discontinuity related callbacks
-  contrib/plugins: add plugin showcasing new dicontinuity related API
-  target/alpha: call plugin trap callbacks
-  target/arm: call plugin trap callbacks
-  target/avr: call plugin trap callbacks
-  target/hppa: call plugin trap callbacks
-  target/i386: call plugin trap callbacks
-  target/loongarch: call plugin trap callbacks
-  target/m68k: call plugin trap callbacks
-  target/microblaze: call plugin trap callbacks
-  target/mips: call plugin trap callbacks
-  target/openrisc: call plugin trap callbacks
-  target/ppc: call plugin trap callbacks
-  target/riscv: call plugin trap callbacks
-  target/rx: call plugin trap callbacks
-  target/s390x: call plugin trap callbacks
-  target/sh4: call plugin trap callbacks
-  target/sparc: call plugin trap callbacks
-  target/tricore: call plugin trap callbacks
-  target/xtensa: call plugin trap callbacks
-  tests: add plugin asserting correctness of discon event's to_pc
-  tests: add test for double-traps on rv64
-  tests: add test with interrupted memory accesses on rv64
-
- contrib/plugins/meson.build               |   2 +-
- contrib/plugins/traps.c                   |  83 ++++++++
- docs/about/emulation.rst                  |   8 +
- include/qemu/plugin-event.h               |   3 +
- include/qemu/plugin.h                     |  13 ++
- include/qemu/qemu-plugin.h                |  60 ++++++
- plugins/core.c                            |  57 ++++++
- target/alpha/helper.c                     |  13 ++
- target/arm/helper.c                       |  24 +++
- target/arm/internals.h                    |   1 +
- target/arm/tcg/m_helper.c                 |   5 +
- target/avr/helper.c                       |   3 +
- target/hppa/int_helper.c                  |  17 ++
- target/i386/tcg/excp_helper.c             |   3 +
- target/i386/tcg/seg_helper.c              |   4 +
- target/loongarch/tcg/tcg_cpu.c            |   4 +
- target/m68k/op_helper.c                   |  22 +++
- target/microblaze/helper.c                |  10 +
- target/mips/tcg/system/tlb_helper.c       |  11 ++
- target/openrisc/interrupt.c               |  15 ++
- target/ppc/excp_helper.c                  |  41 ++++
- target/riscv/cpu_helper.c                 |   9 +
- target/rx/helper.c                        |  12 ++
- target/s390x/tcg/excp_helper.c            |   8 +
- target/sh4/helper.c                       |   4 +
- target/sparc/int32_helper.c               |   7 +
- target/sparc/int64_helper.c               |  10 +
- target/tricore/op_helper.c                |   5 +
- target/xtensa/exc_helper.c                |   6 +
- target/xtensa/xtensa-semi.c               |   3 +
- tests/tcg/plugins/discons.c               | 221 ++++++++++++++++++++++
- tests/tcg/plugins/meson.build             |   2 +-
- tests/tcg/riscv64/Makefile.softmmu-target |  12 ++
- tests/tcg/riscv64/doubletrap.S            |  73 +++++++
- tests/tcg/riscv64/interruptedmemory.S     |  97 ++++++++++
- 35 files changed, 866 insertions(+), 2 deletions(-)
- create mode 100644 contrib/plugins/traps.c
- create mode 100644 tests/tcg/plugins/discons.c
- create mode 100644 tests/tcg/riscv64/doubletrap.S
- create mode 100644 tests/tcg/riscv64/interruptedmemory.S
-
+diff --git a/include/qemu/plugin-event.h b/include/qemu/plugin-event.h
+index 7056d8427b..1100dae212 100644
+--- a/include/qemu/plugin-event.h
++++ b/include/qemu/plugin-event.h
+@@ -20,6 +20,9 @@ enum qemu_plugin_event {
+     QEMU_PLUGIN_EV_VCPU_SYSCALL_RET,
+     QEMU_PLUGIN_EV_FLUSH,
+     QEMU_PLUGIN_EV_ATEXIT,
++    QEMU_PLUGIN_EV_VCPU_INTERRUPT,
++    QEMU_PLUGIN_EV_VCPU_EXCEPTION,
++    QEMU_PLUGIN_EV_VCPU_HOSTCALL,
+     QEMU_PLUGIN_EV_MAX, /* total number of plugin events we support */
+ };
+ 
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 08bf366e36..60de4fdd3f 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -281,6 +281,22 @@ QEMU_PLUGIN_API
+ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+                                          qemu_plugin_vcpu_simple_cb_t cb);
+ 
++/**
++ * qemu_plugin_register_vcpu_discon_cb() - register a discontinuity callback
++ * @id: plugin ID
++ * @type: types of discontinuities for which to call the callback
++ * @cb: callback function
++ *
++ * The @cb function is called every time a vCPU receives a discontinuity event
++ * of the specified type(s), after the vCPU was prepared to handle the event.
++ * Preparation entails updating the PC, usually to some interrupt handler or
++ * trap vector entry.
++ */
++QEMU_PLUGIN_API
++void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
++                                         enum qemu_plugin_discon_type type,
++                                         qemu_plugin_vcpu_discon_cb_t cb);
++
+ /** struct qemu_plugin_tb - Opaque handle for a translation block */
+ struct qemu_plugin_tb;
+ /** struct qemu_plugin_insn - Opaque handle for a translated instruction */
+diff --git a/plugins/core.c b/plugins/core.c
+index ead09fd2f1..40d001d39a 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -569,6 +569,21 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+     plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_RESUME, cb);
+ }
+ 
++void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
++                                         enum qemu_plugin_discon_type type,
++                                         qemu_plugin_vcpu_discon_cb_t cb)
++{
++    if (type & QEMU_PLUGIN_DISCON_INTERRUPT) {
++        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_INTERRUPT, cb);
++    }
++    if (type & QEMU_PLUGIN_DISCON_EXCEPTION) {
++        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_EXCEPTION, cb);
++    }
++    if (type & QEMU_PLUGIN_DISCON_HOSTCALL) {
++        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_HOSTCALL, cb);
++    }
++}
++
+ void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,
+                                    qemu_plugin_simple_cb_t cb)
+ {
 -- 
 2.49.1
 
