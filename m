@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1714CCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 18:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B09CCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 18:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAY9A-0005Ba-MB; Sun, 19 Oct 2025 14:28:48 -0400
+	id 1vAY9A-0005BZ-I5; Sun, 19 Oct 2025 14:28:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vAY97-00059b-01
+ id 1vAY97-0005A3-Dj
  for qemu-devel@nongnu.org; Sun, 19 Oct 2025 14:28:45 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vAY95-0000aB-Ft
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 14:28:44 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-33bbc4e81dfso3729711a91.1
+ id 1vAY94-0000a5-V0
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 14:28:45 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-b49c1c130c9so2186584a12.0
  for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 11:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760898522; x=1761503322; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760898521; x=1761503321; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sCA4lO39TZ+W18kn7Yc3OzkHymFkx8JhkJlKEUl0Maw=;
- b=xc/3cQCr6uo5Uy3hx6hpt1EOgEDstRFwUErJMq204ln52mPvnRZkOFk6nO51UC2S4z
- nBdmYjokX4897OHXs1aaDdFAktvc+iDo6F56AM7iOVM7wPnQboPn/J9/uFla9znHfV5G
- IzwN7tQv/i3DCKUoQslcktXMcyYDkyq0aVUXmxLb9kjlBPTLtruJcMf8KQVDJ/JAnRYL
- GyRdjA9k8OuV1CwAsbc+tsj9xfxGREOqR2d0/W4FYNTXLHU6jJn7KWP0S/SUa/XD4B+9
- GwORSDc/dqfKLmxwvVlNEo+pD3fP/Lh5W1as5ONodMm5WEIKymxm1NFqzzX24FS0lmMo
- HRSw==
+ bh=m+6QxrQ2Grf7WmLsUxgCW2QmJGtF5cs8k5PSTxarhNg=;
+ b=KoSmEnLWQ9VlySBJAJryIB/1S4/D7/jMa3wgxXE7R3OuqO0qRdFJ3GsMkZR//QiBvc
+ BgIo6cF33twAuggpXBkscatUmd1Muec33ENnlZ6MNYJzVnTL0gHQF9s6XKJVAg8lNZuh
+ XpKjr6oDrF97SKvvVr+EeLRSSJAokCG6U3JuKP6fh4ov2vDxX10NuhwMp116Asv4034l
+ M8zBSCuPi1J2RDUOObw2330Wi5ljg69KHRXgerY2PZ3FOE/33pQ0fwDyYhKAxyYDYuNN
+ nOIB+2RnM2S+aINL/F5a4EcHYjncUYEekcUd2uBCrxhKbIC73nWXQia402IuDB8JMBwj
+ o60A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760898522; x=1761503322;
+ d=1e100.net; s=20230601; t=1760898521; x=1761503321;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sCA4lO39TZ+W18kn7Yc3OzkHymFkx8JhkJlKEUl0Maw=;
- b=L8Dp/yy/ph9uaone9qEQR454iAj30ifudwEISVR8HAqc+Qxhd/lC9ImNYxYnfxOOGp
- hnkk3/Aq/a7GGEERMmJBnyTw9AyUxxP7CFUroegLK22y4wEwy4zcw4qhfIVUoMPQkeWW
- wW0/momIvjznujWiZe2PQA0M3o8RDo6++CThgyzNr/Iz/M4oYY/pw7JdvlQpJtFCU1vQ
- oxORRLSTk85UpsrjlZFYbbhq8O0h7/znzwuYG9Ek0SsF8XkdU93WbaVxAJiYwnre4ydl
- sCVhLfkDURV7O4/QwKTLaFOJDcegp/XkPO9R+D4RoiQoiw3rONj+ASC9fX8c/l5/6AD3
- LOJA==
-X-Gm-Message-State: AOJu0Yy6HmgJgxw7URJJ62yuhfZ4Km2gtaCpRan3Os0GZ5rVqb+TY9cC
- r6s97LVjOFokOXBpyu65Kcm8jX4sGdccvifYz6COPNo6eAzKjXn3US7jD+lb20oFMBny2jVrdVC
- S44IQ4vc=
-X-Gm-Gg: ASbGncv4CXec8+dkUEqJpbrL5XIOopNIuyumVyozSsulABlsEaYIj8k+Ol4D+/kYzIf
- wCaMl3DU3GSLNOiO/Z0pnjQejO+VJ1jMik2poXsGeg96Mn2rnF4k9BSJWNtIKTQ9t3t9QCETYer
- 9ZXEHAWgsh2vg/hf31N2P4SLVjMuzhp/vzAZF3YqJaBFXjW0GZFlI4xnYGIfp29vTdo7Z7J0q+l
- oDnXusOYene4IkAhunZ5lzagfauUxB4tqo2V3jPFwhRo9jO6Z906jBA9Yr0Jv+ouNbkmTTq5/Gx
- nz9wcn2wrgRFDTzAa6TtC9GiFIWANj0pMPZaowqRLj192K3+jANDmx/XEJ6hps2ii7gYzBGf7Zd
- Wl/oObMR5cqiaPsMcBR+0uEKu04/yKAIDXptQYEDP1C9EhBCUk47Q4HW8jBR2kMzpi0aMcd2vPc
- PV5w+VAbA3CwzM92WO
-X-Google-Smtp-Source: AGHT+IFNYzBmy4kDrlDRix3VYVJamW8OtR/x+DG0CcMPRnZDB3yf5t7llpqJ/B1/XGpVlq6vkH4OHA==
-X-Received: by 2002:a17:903:350d:b0:28b:4ca5:d522 with SMTP id
- d9443c01a7336-290cb94765fmr147777345ad.39.1760898521762; 
- Sun, 19 Oct 2025 11:28:41 -0700 (PDT)
+ bh=m+6QxrQ2Grf7WmLsUxgCW2QmJGtF5cs8k5PSTxarhNg=;
+ b=vT1Ki0jheLSZvJmVHwshSU8C/yYQGiClNAHAzYKvhru52hpyBVsvHo37j4PBk88Yhs
+ GQNO1gaf8dc4tDetRszt1ho1ZQ3akzx0w3qlNrPUcL8tZgmWVHGd8lMyvAJXswmLnZ5C
+ ubVMNG9WOn/3FNBZ4KXG726LDuebLw2ZA8lpyR+fq472DnGDlH+YoomRm/zaNOfX2wIx
+ QNlbnh8zfpdd18XJKI83aP600yAFk2A1w9sQ40mrTbuSv+5Hs4IOjyIvk1rCCobC7T1P
+ s4cwBwnO32NyM90Up1Sax5LoOVpffCLK4SuYNL9RIlT/G97YjPKkhCj6IGjfsHRciIt/
+ T4ng==
+X-Gm-Message-State: AOJu0Yz5cTece3sCcu9XFprbKwyCOJTI+cz5CGFzQ6HPzL3UMnSfkBzA
+ 1L/Ys48LoVND4ari+E0PCmnDHBvpG00NxyNO8IxO/xPK2HQLdxLjrLMoGTxFlZR4jES44swAnkV
+ rBMoHqZ0=
+X-Gm-Gg: ASbGncs70fT3a07AtWQPr607NvELdfyNcv9no7urIQDCCwohORZ7ELmESjJ+IBa9Y0U
+ DLcMNtAYOehGPFpOueVRs+2o6lPev5GGH/JHf4liC+loGgS46oePSYv9Fw0r2nwtFTxwa3rFjCX
+ BtMpx0mJyxHSCUPxoZvbgker7LR01e60Wm0P4LFSewtUX5MMbJoMZzg5g+5dF2a3AYppw8IcsfO
+ pY0ZgkwMOOstg8FwYfeckZnHKAzZa0KTtw+wgjYZA+jL3llB5ni23TxJP9eieAkSqqfut3ZlOZ/
+ GQqSXEnRY/kmtfHBxFDoNY2/QQX0WaIug9U4kCiBHi3qbWpWKvVx4Kxsvelarvl7DuzIs1JXJ1k
+ QbfyXFSc5DD3i5ov1JkBXm+sJq0004OYM203o9hNce3IYq2bUdskqcCCAvRSrISS9L6Q6kKbSEw
+ 7ikG1eUtkSQUpVv9wt
+X-Google-Smtp-Source: AGHT+IHeltuXUntrSR8pI7fDhXAnJinTVYbyajvNUaB6HGYn8fcg7XnlrL347RJIwtLnOX/FkbHJfw==
+X-Received: by 2002:a17:902:db11:b0:28e:a70f:e879 with SMTP id
+ d9443c01a7336-290c9c8cc5bmr145108855ad.1.1760898520999; 
+ Sun, 19 Oct 2025 11:28:40 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29246ebccf3sm58985775ad.1.2025.10.19.11.28.41
+ d9443c01a7336-29246ebccf3sm58985775ad.1.2025.10.19.11.28.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Oct 2025 11:28:41 -0700 (PDT)
+ Sun, 19 Oct 2025 11:28:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 8/9] tcg/ppc: Remove dead cases from tcg_target_op_def
-Date: Sun, 19 Oct 2025 11:28:33 -0700
-Message-ID: <20251019182834.481541-9-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 7/9] buildsys: Remove support for 32-bit PPC hosts
+Date: Sun, 19 Oct 2025 11:28:32 -0700
+Message-ID: <20251019182834.481541-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251019182834.481541-1-richard.henderson@linaro.org>
 References: <20251019182834.481541-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,32 +102,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missed some lines when converting to TCGOutOpQemuLdSt*.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Fixes: 86fe5c2597c ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Stop detecting 32-bit PPC host as supported.
+See previous commit for rationale.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[rth: Retain _ARCH_PPC64 check in udiv_qrnnd]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251014173900.87497-4-philmd@linaro.org>
 ---
- tcg/ppc/tcg-target.c.inc | 6 ------
- 1 file changed, 6 deletions(-)
+ include/qemu/timer.h | 13 +------------
+ disas/disas-host.c   |  4 +---
+ util/cacheflush.c    |  4 ++--
+ configure            | 19 +++++--------------
+ 4 files changed, 9 insertions(+), 31 deletions(-)
 
-diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index b8b23d44d5..cd2b68f9e1 100644
---- a/tcg/ppc/tcg-target.c.inc
-+++ b/tcg/ppc/tcg-target.c.inc
-@@ -4435,12 +4435,6 @@ static TCGConstraintSetIndex
- tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index aec730ac25..406d741120 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -850,12 +850,11 @@ static inline int64_t get_clock(void)
+ /*******************************************/
+ /* host CPU ticks (if available) */
+ 
+-#if defined(_ARCH_PPC)
++#if defined(_ARCH_PPC64)
+ 
+ static inline int64_t cpu_get_host_ticks(void)
  {
-     switch (op) {
--    case INDEX_op_qemu_st:
--        return C_O0_I2(r, r);
--    case INDEX_op_qemu_st2:
--        return TCG_TARGET_REG_BITS == 64
--               ? C_O0_I3(o, m, r) : C_O0_I3(r, r, r);
--
-     case INDEX_op_add_vec:
-     case INDEX_op_sub_vec:
-     case INDEX_op_mul_vec:
+     int64_t retval;
+-#ifdef _ARCH_PPC64
+     /* This reads timebase in one 64bit go and includes Cell workaround from:
+        http://ozlabs.org/pipermail/linuxppc-dev/2006-October/027052.html
+     */
+@@ -863,16 +862,6 @@ static inline int64_t cpu_get_host_ticks(void)
+                           "cmpwi   %0,0\n\t"
+                           "beq-    $-8"
+                           : "=r" (retval));
+-#else
+-    /* http://ozlabs.org/pipermail/linuxppc-dev/1999-October/003889.html */
+-    unsigned long junk;
+-    __asm__ __volatile__ ("mfspr   %1,269\n\t"  /* mftbu */
+-                          "mfspr   %L0,268\n\t" /* mftb */
+-                          "mfspr   %0,269\n\t"  /* mftbu */
+-                          "cmpw    %0,%1\n\t"
+-                          "bne     $-16"
+-                          : "=r" (retval), "=r" (junk));
+-#endif
+     return retval;
+ }
+ 
+diff --git a/disas/disas-host.c b/disas/disas-host.c
+index 8146fafe80..4b06f41fa6 100644
+--- a/disas/disas-host.c
++++ b/disas/disas-host.c
+@@ -56,11 +56,9 @@ static void initialize_debug_host(CPUDebug *s)
+     s->info.cap_mode = CS_MODE_64;
+     s->info.cap_insn_unit = 1;
+     s->info.cap_insn_split = 8;
+-#elif defined(_ARCH_PPC)
++#elif defined(_ARCH_PPC64)
+     s->info.cap_arch = CS_ARCH_PPC;
+-# ifdef _ARCH_PPC64
+     s->info.cap_mode = CS_MODE_64;
+-# endif
+ #elif defined(__riscv)
+ #if defined(_ILP32) || (__riscv_xlen == 32)
+     s->info.print_insn = print_insn_riscv32;
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index 17c58918de..69c9614e2c 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -153,7 +153,7 @@ static void arch_cache_info(int *isize, int *dsize)
+     }
+ }
+ 
+-#elif defined(_ARCH_PPC) && defined(__linux__)
++#elif defined(_ARCH_PPC64) && defined(__linux__)
+ # include "elf.h"
+ 
+ static void arch_cache_info(int *isize, int *dsize)
+@@ -187,7 +187,7 @@ static void fallback_cache_info(int *isize, int *dsize)
+     } else if (*dsize) {
+         *isize = *dsize;
+     } else {
+-#if defined(_ARCH_PPC)
++#if defined(_ARCH_PPC64)
+         /*
+          * For PPC, we're going to use the cache sizes computed for
+          * flush_idcache_range.  Which means that we must use the
+diff --git a/configure b/configure
+index 8263f81370..a2f66f7ff9 100755
+--- a/configure
++++ b/configure
+@@ -391,15 +391,11 @@ elif check_define __sparc__ ; then
+   else
+     cpu="sparc"
+   fi
+-elif check_define _ARCH_PPC ; then
+-  if check_define _ARCH_PPC64 ; then
+-    if check_define _LITTLE_ENDIAN ; then
+-      cpu="ppc64le"
+-    else
+-      cpu="ppc64"
+-    fi
++elif check_define _ARCH_PPC64 ; then
++  if check_define _LITTLE_ENDIAN ; then
++    cpu="ppc64le"
+   else
+-    cpu="ppc"
++    cpu="ppc64"
+   fi
+ elif check_define __mips__ ; then
+   if check_define __mips64 ; then
+@@ -472,11 +468,6 @@ case "$cpu" in
+     linux_arch=mips
+     ;;
+ 
+-  ppc)
+-    host_arch=ppc
+-    linux_arch=powerpc
+-    CPU_CFLAGS="-m32"
+-    ;;
+   ppc64)
+     host_arch=ppc64
+     linux_arch=powerpc
+@@ -1471,7 +1462,7 @@ probe_target_compiler() {
+         container_image=debian-all-test-cross
+         container_cross_prefix=mips64-linux-gnuabi64-
+         ;;
+-      ppc|ppc64|ppc64le)
++      ppc64|ppc64le)
+         container_image=debian-all-test-cross
+         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
+         ;;
 -- 
 2.43.0
 
