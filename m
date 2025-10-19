@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73262CCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 21:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F72CCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 22:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAb9Q-0002fh-J8; Sun, 19 Oct 2025 17:41:16 -0400
+	id 1vAbeG-0001GL-3A; Sun, 19 Oct 2025 18:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vAb9O-0002eq-Uz; Sun, 19 Oct 2025 17:41:14 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vAb9M-0006GG-Qk; Sun, 19 Oct 2025 17:41:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=suaanf4twvvD9SQGrkNlps/Nh7szhpTcDagnTus2siE=; b=f3JrFOGdEZrh5T+5z8OUmdKort
- 4iBuuCPz7SyZfU8GpPQWqG+Nq5/Y9ZAMudM6vtW7aNTYIgpvlFjUZA6HFpbvNAWd55N+X2FjLZgAL
- 4MjkYPMVGBl/r6YfGF5lJJIX5UHOdA4SdfKY/OtHHj++S5TTcygnHHyt8Qb2+csmvXFfItqypNJSv
- MRsiCyJ97BbLOo5A9qECfDDiqiH9tP9s9MENhfdFnfw9n0+ediVgc6rjohAFl1HsWNf4z4HfYMxic
- ZnYDKpxOuEoBXbwAWMQNrtf34dzplb3TcVihn9dAlRRzUb+jOhLm8B7oWaKfsaMosJ+TMqxelPQBc
- t9Ylhn6XKjz8UwsJHgNFiHQT2mrfuKbBP85794X6v9xHLk3qEUBVd0k23IGKPEPClMXJCmmbAgO9w
- cXsaVmdRk8bbHJDOlob9pa312dkTRKwLuNrrvIqaww2K0mRHh3MfwGPtiIqiS/GESQlv3TmBRDvzz
- tU4aDkzzE+SJxmwA791OTy4u1mC2IAXKJydlIDoxEEPd0AMnYVNEKLfn0NgfwkhecJLpv9z1MJKI0
- Vr1owFjNLiOono6BLpg79ud5vWBqzrwlEeYK+PEmeVH4Elg+Q1ZnPjrmpcknL/m1cnZ1GcRwm1nQU
- fJ2hM6FKKdCURJIBWSHu/uSjxpmirE7Uql4oOJ4SA=;
-Received: from [2a02:8012:2f01:0:9713:abb1:52ac:51f3]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vAb6r-000AfO-Qo; Sun, 19 Oct 2025 22:38:42 +0100
-Message-ID: <b83b904c-6dcc-4b4f-afc0-499ffafca15c@ilande.co.uk>
-Date: Sun, 19 Oct 2025 22:40:48 +0100
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vAbeE-0001Fw-1g
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 18:13:06 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vAbeB-0000qE-Ul
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 18:13:05 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b4aed12cea3so643837766b.1
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 15:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760911980; x=1761516780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KK7D6YTSQZkeapuroTZ4yl/7gC/TPXja0qEFUPEUH9M=;
+ b=XdKUV9GwaAHRiN70xUkgO7WyuGmmeOKM3HNzMNw995CKwL2SHrwqZH1VOrFRCjdsD4
+ ARRV5AuKXGCAnPOP3uAUMgnYjbSAmN1WiBSt/Pb0reTILvYGcAvxP3AtgeJr2L9h9cAd
+ cDXSgSv7ZG5OZiTwfCq5ONreascnpncBK9GpiOFDPVmXlNzz3P1QdOVbUWAg7cOu09Ay
+ OC5dqJ/HO20KqH8UJ+kmWeidKq3mE/XenwUgCXfrpfzmX58ajjSzr50yZBouqD9LXXTf
+ zIfqZzb6+YBrq7pLTpYdSaF86bkM1d8Vx5LLDqOq7Vi7Gh9kDMEBX1TDcewqe6+bUL2x
+ 8iag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760911980; x=1761516780;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KK7D6YTSQZkeapuroTZ4yl/7gC/TPXja0qEFUPEUH9M=;
+ b=Ar54wTomMKlutgw9mAqmoES266bJPV8YyVCnywex6+bmFLLBNd0tkx8DeIpft5pYQz
+ wVR3lQD4H4TLuvXNgVJTq/nIT2hnbGhx4H/q2ZzXMdodBVumBVI+tIMdG8DKhCIEU246
+ k+xFqNt4HVkdWH6y8/+Okc2IKGf15Od8uGK0VRytW1Zk9znm1dnIk8sIFrOqQH6ZVUgb
+ dsg+XSTqI87ww4H2RGosr30TqAyUCrKQneth6TtXePRl2m+Rmlj4xZnalXvJo3WJy4ln
+ rZ8VrKwa4uTZuG0HZbn8rQACQtlxKAOxkKwpo41IjpURblRWYKT2QI5OWG2OVIG7LvGc
+ Ivzg==
+X-Gm-Message-State: AOJu0YwCEBYXvh6barXRwkwEefs9URIXsYVmoLQcZPDhhzaKvEWYuEE7
+ C6r8GdOceuWp4xxHEIbVFhr0NC0NqevjfPji6guKhuqWnYL1ov0WszuAqA8SBXWD8ZA=
+X-Gm-Gg: ASbGncsW2tOIO6OvkAqIBQuuDitVjUWhkHMmuQSHnKN/o66Qzfl3gsVTJAGTYCbcGSM
+ On+nMLNd/2Cu14GuTlV4cXJ0+yYrSaUYS/n5Upi1KLgH+N0l/mv6nrnELHZv+1g+7yp78cSpkzV
+ ICX9ZaSnes7IDrHzSAMY7N80T2NTfNZQ8exzsCUKp6aU5Uy7GvO7JvvZHNDCVpWme/TQSAuoJcl
+ dCpv411VoXydu8epqJiwbv58N62jEXSqzXc/kysN9U3HJQRPtqRZhDzjYIUOC+Y/CtGTSLnU+bf
+ nQoVRb0yuUSlZ+wnuK3P55A2nse97UHFHnXpG0bLqDQpUkMhbG/k3GFtXTPsVDUZ6uYIGPpskwM
+ NpPHub7Yr9BKCYaqSgZyDxP3NfP9aLIpV1sSAFi1LDE/F69w/q0z2q+AGpCUTqtceUS5zqI7xei
+ xm
+X-Google-Smtp-Source: AGHT+IG16nRtmYMoQYTMm/Slxb+ynR6+K7tCMe3GCTo3TPIMdWwGg8ZAp6N36Ac123A6KaBflTLOnA==
+X-Received: by 2002:a17:906:fe44:b0:b50:b508:d0e9 with SMTP id
+ a640c23a62f3a-b6475125839mr1228631966b.46.1760911980430; 
+ Sun, 19 Oct 2025 15:13:00 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b65eb526325sm600566966b.55.2025.10.19.15.12.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 19 Oct 2025 15:12:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 662EB5F7F1;
+ Sun, 19 Oct 2025 23:12:58 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 02/11] gitlab: drop aarch32 runner and associated bits
+In-Reply-To: <cc5e4aba-7d88-4748-9368-cb8845c82150@linaro.org> (Richard
+ Henderson's message of "Fri, 17 Oct 2025 10:56:19 -0700")
+References: <20251016150357.876415-1-alex.bennee@linaro.org>
+ <20251016150357.876415-3-alex.bennee@linaro.org>
+ <cc5e4aba-7d88-4748-9368-cb8845c82150@linaro.org>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Sun, 19 Oct 2025 23:12:58 +0100
+Message-ID: <87h5vu7d79.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-References: <cover.1758219840.git.balaton@eik.bme.hu>
- <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
- <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
- <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
- <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:9713:abb1:52ac:51f3
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,111 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/10/2025 03:41, Harsh Prateek Bora wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> Hi Mark,
-> 
-> Thanks much for pitching in to help with reviewing this series.
+> On 10/16/25 08:03, Alex Benn=C3=A9e wrote:
+>> diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml b/scrip=
+ts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
+>> deleted file mode 100644
+>> index 0cc34cd10b9..00000000000
+>> --- a/scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
+>> +++ /dev/null
+>> @@ -1,127 +0,0 @@
+>> -# THIS FILE WAS AUTO-GENERATED
+>> -#
+>> -#  $ lcitool variables --cross-arch armv7l ubuntu-2204 qemu
+>> -#
+>> -# https://gitlab.com/libvirt/libvirt-ci
+>
+>
+> Had this file been missing from tests/lcitool/refresh?
 
-Hi Harsh,
+It appears to have been added by hand. In an earlier patch series I had
+to make some changes to lcitool to be able to generate yaml:
 
-No worries - I've looked at raven before when working on adding 40p support for 
-OpenBIOS, so I do have some familiarity.
+  https://gitlab.com/stsquad/libvirt-ci/-/commits/cross-yaml-support
 
-> On 9/19/25 01:51, BALATON Zoltan wrote:
->> On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
->>> On 18/09/2025 19:50, BALATON Zoltan wrote:
->>>> The raven PCI device does not need a state struct as it has no data to
->>>> store there any more, so we can remove that to simplify code.
->>>>
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>>   hw/pci-host/raven.c | 30 +-----------------------------
->>>>   1 file changed, 1 insertion(+), 29 deletions(-)
->>>>
->>>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
->>>> index f8c0be5d21..172f01694c 100644
->>>> --- a/hw/pci-host/raven.c
->>>> +++ b/hw/pci-host/raven.c
->>>> @@ -31,7 +31,6 @@
->>>>   #include "hw/pci/pci_bus.h"
->>>>   #include "hw/pci/pci_host.h"
->>>>   #include "hw/qdev-properties.h"
->>>> -#include "migration/vmstate.h"
->>>>   #include "hw/intc/i8259.h"
->>>>   #include "hw/irq.h"
->>>>   #include "hw/or-irq.h"
->>>> @@ -40,12 +39,6 @@
->>>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
->>>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
->>>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
->>>> -
->>>> -struct RavenPCIState {
->>>> -    PCIDevice dev;
->>>> -};
->>>> -
->>>>   typedef struct PRePPCIState PREPPCIState;
->>>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
->>>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
->>>> @@ -65,7 +58,6 @@ struct PRePPCIState {
->>>>       MemoryRegion bm_ram_alias;
->>>>       MemoryRegion bm_pci_memory_alias;
->>>>       AddressSpace bm_as;
->>>> -    RavenPCIState pci_dev;
->>>>         int contiguous_map;
->>>>   };
->>>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error 
->>>> **errp)
->>>>                             "pci-intack", 1);
->>>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, &s->pci_intack);
->>>>   -    /* TODO Remove once realize propagates to child devices. */
->>>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
->>>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), TYPE_RAVEN_PCI_DEVICE);
->>>>   }
-> 
-> <snip>
-> 
->>>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, const void 
->>>> *data)
->>>>   static const TypeInfo raven_info = {
->>>>       .name = TYPE_RAVEN_PCI_DEVICE,
->>>>       .parent = TYPE_PCI_DEVICE,
->>>> -    .instance_size = sizeof(RavenPCIState),
->>>>       .class_init = raven_class_init,
->>>>       .interfaces = (const InterfaceInfo[]) {
->>>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
->>>
->>> I agree with removing RavenPCIState, but pci_create_simple() isn't the right 
->>> solution here because it both init()s and realize()s the inner object. The right 
->>> way to do this is for the parent to init() its inner object(s) within its init() 
->>> function, and similarly for it to realize() its inner object(s) within its 
->>> realize() function.
->>>
->>> FWIW it looks as if the same mistake is present in several other hw/pci-host devices.
->>
->> So maybe that's not a mistake then. There's no need to init and realize it 
->> separately as this is an internal object which is enough to be created in realize 
->> method and init and realize there at one go for which pci_create_simple is 
->> appropriate. I think this inner object would only need to be init separately if it 
->> exposed something (like a property) that could be inspected or set before realize 
->> but that's not the case here so it does not have to be created in init only in 
->> realize. (A lot of simple devices don't even have init method only realize so init 
->> is only needed for things that have to be set before realize.)
-> 
-> Do we have a consensus here ?
-> 
-> regards,
-> Harsh
-Given there is still some ongoing discussion regarding object modelling, I think this 
-will require a separate tidy-up so let's go with the pci_create_simple() approach for 
-now.
+>
+> There appear to be no more references to ubuntu2204, which is still
+> present in the refresh script.
 
-The changes to the interrupt routing and readability of some of the changes from a 
-developer's perspective are still of concern to me.
+  lcitool dockerfile --layers all ubuntu-2204 qemu
+
+points to:
+
+  tests/tcg/docker/dockerfiles/ubuntu2204.docker
+
+we will bump those in due course although probably not worth rushing
+for 10.2.
 
 
-ATB,
+>
+>
+> r~
 
-Mark.
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
