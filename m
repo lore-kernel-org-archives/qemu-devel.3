@@ -4,102 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE83ACCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 00:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C59CCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 06:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAHPa-0006Np-EZ; Sat, 18 Oct 2025 20:36:38 -0400
+	id 1vANLu-0005iq-Nh; Sun, 19 Oct 2025 02:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vAHPY-0006NX-He
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 20:36:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vAHPW-0003pQ-FM
- for qemu-devel@nongnu.org; Sat, 18 Oct 2025 20:36:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760834186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/EoQQGY1oiKJb347eN4UYnYv72bKi5Q9J1ot1CL6iyI=;
- b=W+ykfqgGELW0jyFMMnZygFxQtsZ3r6jReLvwprnoYo2bTInamIeP0fEZC96NbSIaPBQguu
- l+By3pI/a3Mam7dA3+nLsYTz9fbq7/4iEkTZKBIdqPog+7AqTdshg+UCf56+cNtjCiHJgR
- HNDXBySP2soJyKQwvCoV9XCAUA9mSO8=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-70-D4Ny-iXZMYaROr2fK7Zh-Q-1; Sat, 18 Oct 2025 20:36:24 -0400
-X-MC-Unique: D4Ny-iXZMYaROr2fK7Zh-Q-1
-X-Mimecast-MFC-AGG-ID: D4Ny-iXZMYaROr2fK7Zh-Q_1760834184
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-27c62320f16so31864165ad.1
- for <qemu-devel@nongnu.org>; Sat, 18 Oct 2025 17:36:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1vANLj-0005iR-OG
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 02:57:06 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1vANLh-0008AI-5U
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 02:57:03 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-430d04de73fso695965ab.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Oct 2025 23:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760857018; x=1761461818; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=l8NCTsexsuE/QRcC22pAJHuheJFNXbRo5G9onhkwPRQ=;
+ b=QWkQmrtbCgjR8UnQkfrEN7GX/qx8+Z0FeFGFg2Fc3ISx9to1E/Bl1Q2Ax8HIOaDCF/
+ hl3edAnSiLc2prhIUn1UpfuEIKaTgd+mWM4e1JS4IqehGUBO2ludbQ9aumj+qyC6wAEN
+ jdoI5P7IRE3W2mUQnmZXpjYwVQw5pV09Lg36fwVw4JcLvYSk+cwQmZOBXHWeTTr9qLtZ
+ jz+P4UEaHSb2iMSBIUw8wOQnJsmWva8jgmOl4KLcUA/jKOxLRsq/RoaDl4TT+UMsER0E
+ 4wR5TvA0PYhMdd2tANt52KS6nUOMCj8A9EjHQPlBy6i65+nPcIqspec6HJd/NtehkhGB
+ yYmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760834184; x=1761438984;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/EoQQGY1oiKJb347eN4UYnYv72bKi5Q9J1ot1CL6iyI=;
- b=DIolNUsOCECAd9VEtXUhxcT1x6kGZZc/MdQREAmniUU9Ma+MKhP0UPh29j/XS8YLep
- MXY4i8BN+2uTx1ZLF0wZZkBm14QgEIRhJ1uVmw/LdV0/mDgPRaN8xje/2dS97I/RWpoS
- C1Q39FGr5/qiQc4nM0DZt0p6mVnwld/rKt7jWkefX/CSJXTWcROvGn6MQyPCen2IWzmS
- P6K0ttdy1MfVAunIPF1dpNxe5/IJO/TxA8Ar94EApO9dw/c/u+S07rQdgn94/1VIC2sh
- RTfUm28+2fuxfzuleYCoahy6bFLaIrCZUDQRVbfzCyCGkJwPP6CJNKd1yTPa6LAQnmuP
- 1cPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1XsOMqClPLrVm3ACtWYyMiy67OjggJp67Y06oCta3kNe9wbbLHR1zg0alg+0K4K4x32BwwddBgTLd@nongnu.org
-X-Gm-Message-State: AOJu0YwekDl8TPCyxoH/KZgNlM4czM3q95v2Z84MV2lnwyWwhKvZBUuU
- HYYUDZRJALG6YGzOvyWn17QROau4NSCnTiOzwJRURlBcE/wYGsUuexgJVWKmxZFdRWgYyfnXQ+h
- DHH95fSjS7nuy8KLt42jI1C5jjzBP39rAyxS6Kgj8TC//qK4qCy3Injjg
-X-Gm-Gg: ASbGncs8UbDtaFsCKE3x6XVB8otqa7cUSg/V6Rhs/gOOcWrUKGJe4tCpobbKBVJeGyE
- XCRC2J3q57RGSiXkthHJyQ7Z0AlaeZ5LhH3Z7fLgOlR/b6pybts/YBPGHcfwEGUTm+d5ervlonD
- qY2kdYxXoBTUzJbjn/4sxU6ovUwiSMmo4mmr3BVGH1gzbkTeARvFnToVdgg/YSHJc5y4oDe6KxQ
- uBhn+YSs83S2WJqQsLfw+J5f5k8o0t2UowLY/8rZ4kwL71TMGwoiU55v9OJGwEl2YPi94mvzNFH
- YQvphcPhgSk32uUT90Kh8O+sh757IqxBS69aL8n4bQuswxCKrKyGXnDGd38MaZPw7hMV4/mTd0Z
- 4WGsKWbCvc21QdzeIuIVOuS8zHC29kkqRY4Pg0tU=
-X-Received: by 2002:a17:902:e5cc:b0:267:95ad:8cb8 with SMTP id
- d9443c01a7336-290cb079f2dmr112334475ad.44.1760834183703; 
- Sat, 18 Oct 2025 17:36:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2S1Y6tVMW5wXQjGFG48O8/s51uWjYy/wXrtA1/toNbXZoARSzITJtK2P3m4swRfzaXh2VqA==
-X-Received: by 2002:a17:902:e5cc:b0:267:95ad:8cb8 with SMTP id
- d9443c01a7336-290cb079f2dmr112334235ad.44.1760834183263; 
- Sat, 18 Oct 2025 17:36:23 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2924721948bsm36930935ad.109.2025.10.18.17.36.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Oct 2025 17:36:22 -0700 (PDT)
-Message-ID: <a635de53-71fa-4edb-87c0-8775722c284d@redhat.com>
-Date: Sun, 19 Oct 2025 10:36:16 +1000
+ d=1e100.net; s=20230601; t=1760857018; x=1761461818;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=l8NCTsexsuE/QRcC22pAJHuheJFNXbRo5G9onhkwPRQ=;
+ b=YYX0SWDakxnXYrgB6xODuFsD5oYQeEooDG1P0V4ZspHpoMegipM/dosuqYkse3/GfX
+ ueagVsPZxHhzcicq7i6eNDTOk6hS+HQxQxTxUpXQYzvyXmv8mHgXJ9r0xGbXOgwbgXpa
+ bVisfUNC3sRJvuBL7ATE6sG8GBikqIcUqKLyG6yn0JIZvZIxwrLRw+2++AbIgRkxFBUB
+ AC3lRs6T0WciQKMDgpJpSQ7E44JbIH2YcX4Ufo8dm3vsQlwUYxGYaKsztn9LoqW94Nl4
+ p3+YfWiAg1mn7oDv6PnmUKLLOpqthZ2NJwKNu+BmGXHz70HkLPBbtZ9jmi1FWxiF0A8y
+ pahg==
+X-Gm-Message-State: AOJu0Yy2BqLlekB13SnurLZ1wdS58FKYBdZT99Y6j5iR1zz1wNwvm6wI
+ eVpYDWu4mOiucUKTk7d1r5sdKjuI8u6A10SymORB8546ffnp9RtbVBJrPlUNpqcGww3xOUcpuU1
+ 1oG+QqaAbg7Xb7Xq22Zu0Aj0mMKRwBUY=
+X-Gm-Gg: ASbGnct8HlNe0rQMtIgKQ53pLLS6HaBEPmIR2/YHsuLxtVmGWRdTlXUS7AIglmljqgM
+ JpHNw7/XY5L7GYSfwFhMwwssgDyiGm2x5shKCfwrRwybKBXZF1Ydq2xKR3t+h29w1zDVYfcZeVZ
+ BfFvbPgUPmiym/3/VqsNU4Ha0Ron/61L9+gOFG3VwbdpeTHbTLRul6rt4N9q8JNLSunJymQDPwY
+ 3AjY2FsrUurjcnt5Cr/QRbfxFw+AuoOnTTN6p8s5i4M9WFFN8V90fbSnsbB0lxZuBFWTq6gcyNK
+ A9m5K2UK/PAMmmlBpPp4oyr8pcU=
+X-Google-Smtp-Source: AGHT+IGEgMHe2YciGXS/TuLknjszD0GcsSLGL/S+tsqqCqXlrqy9pNhojYwZ1IaNFfghC7OKB618ut+1++f/RHOGtj0=
+X-Received: by 2002:a05:6e02:491a:b0:430:a8d0:725c with SMTP id
+ e9e14a558f8ab-430c52bec72mr45790275ab.5.1760857017886; Sat, 18 Oct 2025
+ 23:56:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v2 3/3] target/arm/kvm: Support multiple memory
- CPERs injection
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com,
- anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
- pbonzini@redhat.com, mchehab+huawei@kernel.org, Jonathan.Cameron@huawei.com,
- shan.gavin@gmail.com
-References: <20251007060810.258536-1-gshan@redhat.com>
- <20251007060810.258536-4-gshan@redhat.com> <20251017162746.2a99015b@fedora>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20251017162746.2a99015b@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1760798392.git.balaton@eik.bme.hu>
+From: Yogesh Vyas <yvyas1991@gmail.com>
+Date: Sun, 19 Oct 2025 12:26:46 +0530
+X-Gm-Features: AS18NWC_w57trqnZZ3ZqEpaS_MqqUFHFwtxFnSt35vdtYcZNeeHGVGseV14FjxY
+Message-ID: <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
+Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="0000000000000d29e306417d792b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=yvyas1991@gmail.com; helo=mail-il1-x130.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,158 +96,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+--0000000000000d29e306417d792b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/18/25 12:27 AM, Igor Mammedov wrote:
-> On Tue,  7 Oct 2025 16:08:10 +1000
-> Gavin Shan <gshan@redhat.com> wrote:
-> 
->> In the combination of 64KB host and 4KB guest, a problematic host page
->> affects 16x guest pages. In this specific case, it's reasonable to
->> push 16 consecutive memory CPERs. Otherwise, QEMU can run into core
->> dump due to the current error can't be delivered as the previous error
->> isn't acknoledges. It's caused by the nature the host page can be
->> accessed in parallel due to the mismatched host and guest page sizes.
-> 
-> can you explain a bit more what goes wrong?
-> 
-> I'm especially interested in parallel access you've mentioned
-> and why batch adding error records is needed
-> as opposed to adding records every time invalid access happens?
-> 
-> PS:
-> Assume I don't remember details on how HEST works,
-> Answering it in this format also should improve commit message
-> making it more digestible for uninitiated.
-> 
+Hi BALATON,
 
-Thanks for your review and I'm trying to answer your question below. Please let
-me know if there are more questions.
+I tested this series with the provided patches and observed the following:
 
-There are two signals (BUS_MCEERR_AR and BUS_MCEERR_AO) and BUS_MCEERR_AR is
-concerned here. This signal BUS_MCEERR_AR is sent by host's stage2 page fault
-handler when the resolved host page has been marked as marked as poisoned.
-The stage2 page fault handler is invoked on every access to the host page.
+When I run QEMU with the ROM option, the machine boots successfully with
+the below command:
 
-In the combination where host and guest has 64KB and 4KB separately, A 64KB
-host page corresponds to 16x consecutive 4KB guest pages. It means we're
-accessing the 64KB host page when any of those 16x consecutive 4KB guest pages
-is accessed. In other words, a problematic 64KB host page affects the accesses
-on 16x 4KB guest pages. Those 16x 4KB guest pages can be owned by different
-threads on the guest and they run in parallel, potentially to access those
-16x 4KB guest pages in parallel. It potentially leading to 16x BUS_MCEERR_AR
-signals at one point.
+qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \
+                  -cdrom debian-8.11.0-powerpc-netinst.iso \
+                  -device VGA,romfile=3D"" -serial stdio
 
-In current implementation, the error record is built as the following calltrace
-indicates. There are 16 error records in the extreme case (parallel accesses on
-16x 4KB guest pages, mapped to one 64KB host page). However, we can't handle
-multiple error records at once due to the acknowledgement mechanism in
-ghes_record_cper_errors(). For example, the first error record has been sent,
-but not consumed by the guest yet. We fail to send the second error record.
+However, when I try to boot the machine without the ROM using VOF, the
+machine does not come up and no logs appear on stdout:
 
-kvm_arch_on_sigbus_vcpu
-   acpi_ghes_memory_errors
-     ghes_gen_err_data_uncorrectable_recoverable      // Generic Error Data Entry
-     acpi_ghes_build_append_mem_cper                  // Memory Error
-     ghes_record_cper_errors
-       
-So this series improves this situation by simply sending 16x error records in
-one shot for the combination of 64KB host + 4KB guest.
+qemu-system-ppc64 -machine pegasos2 -serial stdio \
+                  -kernel vmlinuz-chrp.initrd -append "---" \
+                  -cdrom debian-8.11.0-powerpc-netinst.iso
 
-Thanks,
-Gavin
+Please let me know if I am missing any parameters or setup required for
+booting via VOF on Pegasos2.
 
+Documentation referred: qemu/docs/system/ppc/amigang.rst
 
->> Imporve push_ghes_memory_errors() to push 16x consecutive memory CPERs
->> for this specific case. The maximal error block size is bumped to 4KB,
->> providing enough storage space for those 16x memory CPERs.
->>
->> Signed-off-by: Gavin Shan <gshan@redhat.com>
->> ---
->>   hw/acpi/ghes.c   |  2 +-
->>   target/arm/kvm.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
->>   2 files changed, 46 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
->> index 045b77715f..5c87b3a027 100644
->> --- a/hw/acpi/ghes.c
->> +++ b/hw/acpi/ghes.c
->> @@ -33,7 +33,7 @@
->>   #define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
->>   
->>   /* The max size in bytes for one error block */
->> -#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
->> +#define ACPI_GHES_MAX_RAW_DATA_LENGTH   (4 * KiB)
->>   
->>   /* Generic Hardware Error Source version 2 */
->>   #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index c5d5b3b16e..3ecb85e4b7 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -11,6 +11,7 @@
->>    */
->>   
->>   #include "qemu/osdep.h"
->> +#include "qemu/units.h"
->>   #include <sys/ioctl.h>
->>   
->>   #include <linux/kvm.h>
->> @@ -2433,10 +2434,53 @@ static void push_ghes_memory_errors(CPUState *c, AcpiGhesState *ags,
->>                                       uint64_t paddr)
->>   {
->>       GArray *addresses = g_array_new(false, false, sizeof(paddr));
->> +    uint64_t val, start, end, guest_pgsz, host_pgsz;
->>       int ret;
->>   
->>       kvm_cpu_synchronize_state(c);
->> -    g_array_append_vals(addresses, &paddr, 1);
->> +
->> +    /*
->> +     * Sort out the guest page size from TCR_EL1, which can be modified
->> +     * by the guest from time to time. So we have to sort it out dynamically.
->> +     */
->> +    ret = read_sys_reg64(c->kvm_fd, &val, ARM64_SYS_REG(3, 0, 2, 0, 2));
->> +    if (ret) {
->> +        goto error;
->> +    }
->> +
->> +    switch (extract64(val, 14, 2)) {
->> +    case 0:
->> +        guest_pgsz = 4 * KiB;
->> +        break;
->> +    case 1:
->> +        guest_pgsz = 64 * KiB;
->> +        break;
->> +    case 2:
->> +        guest_pgsz = 16 * KiB;
->> +        break;
->> +    default:
->> +        error_report("unknown page size from TCR_EL1 (0x%" PRIx64 ")", val);
->> +        goto error;
->> +    }
->> +
->> +    host_pgsz = qemu_real_host_page_size();
->> +    start = paddr & ~(host_pgsz - 1);
->> +    end = start + host_pgsz;
->> +    while (start < end) {
->> +        /*
->> +         * The precise physical address is provided for the affected
->> +         * guest page that contains @paddr. Otherwise, the starting
->> +         * address of the guest page is provided.
->> +         */
->> +        if (paddr >= start && paddr < (start + guest_pgsz)) {
->> +            g_array_append_vals(addresses, &paddr, 1);
->> +        } else {
->> +            g_array_append_vals(addresses, &start, 1);
->> +        }
->> +
->> +        start += guest_pgsz;
->> +    }
->> +
->>       ret = acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC, addresses);
->>       if (ret) {
->>           goto error;
-> 
+Regards,
+Yogesh Vyas
 
+On Sat, Oct 18, 2025 at 8:44=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
+ wrote:
+
+> This series changes how the fdt for VOF is generated in pegasos2 by
+> moving the static parts to a dtb and only generate the changing parts
+> such as memory size and PCI devices programmatically. This simplifies
+> the code and allows simply adding emulation of Pegasos I which has a
+> different north bridge and slightly different memory map but otherwise
+> very similar and can be emulated by reusing parts from the amigaone
+> machine. The machine was tested with a Pegasos I ROM image and MorphOS.
+>
+> The first VOF patch (submitted separetely before, the reviewed v3 is
+> included here) fixes handling the name property in VOF that cannot be
+> represented in a dts as that always takes the path as the name and
+> cannot accept an explicit name property but we need the name property
+> to appear when guest queries properties which previously was worked
+> around by adding it to every node.
+>
+> The series also adds an extended DEFINE_MACHINE macro that is later
+> used for more easily define the abstract machine type and hide most of
+> the QOM boiler plate.
+>
+> Regards,
+> BALATON Zoltan
+>
+> Link to previous version:
+> https://patchew.org/QEMU/cover.1751494995.git.balaton@eik.bme.hu/
+>
+> v3:
+> - rebase on master
+>
+> v2:
+> - rebase on master
+> - added some R-b tags from Philippe
+> - move first patch later (was first to allow merging separately)
+> - clarify blurb above
+>
+> BALATON Zoltan (13):
+>   ppc/vof: Make nextprop behave more like Open Firmware
+>   hw/ppc/pegasos2: Remove explicit name properties from device tree
+>   hw/ppc/pegasos2: Change device tree generation
+>   hw/ppc/pegasos2: Remove fdt pointer from machine state
+>   hw/ppc/pegasos2: Rename mv field in machine state
+>   hw/ppc/pegasos2: Add south bridge pointer in the machine state
+>   hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
+>   hw/ppc/pegasos2: Move hardware specific parts out of machine reset
+>   hw/ppc/pegasos2: Introduce abstract superclass
+>   hw/ppc/pegasos2: Add bus frequency to machine state
+>   hw/boards: Extend DEFINE_MACHINE macro to cover more use cases
+>   hw/ppc/pegasos2: Add Pegasos I emulation
+>   hw/ppc/pegasos2: Add VOF support for pegasos1
+>
+>  MAINTAINERS              |   1 +
+>  hw/ppc/pegasos2.c        | 770 +++++++++++++++++++--------------------
+>  hw/ppc/vof.c             |  50 ++-
+>  include/hw/boards.h      |  16 +-
+>  pc-bios/dtb/meson.build  |   2 +
+>  pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
+>  pc-bios/dtb/pegasos1.dts | 125 +++++++
+>  pc-bios/dtb/pegasos2.dtb | Bin 0 -> 1701 bytes
+>  pc-bios/dtb/pegasos2.dts | 167 +++++++++
+>  9 files changed, 718 insertions(+), 413 deletions(-)
+>  create mode 100644 pc-bios/dtb/pegasos1.dtb
+>  create mode 100644 pc-bios/dtb/pegasos1.dts
+>  create mode 100644 pc-bios/dtb/pegasos2.dtb
+>  create mode 100644 pc-bios/dtb/pegasos2.dts
+>
+> --
+> 2.41.3
+>
+>
+>
+
+--0000000000000d29e306417d792b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0BALATON,<div><br></div><div>I tes=
+ted this series with the provided patches and observed the following:<br><b=
+r>When I run QEMU with the ROM option, the machine boots successfully with =
+the below command:<br><br>qemu-system-ppc64 -machine pegasos2 -bios pegasos=
+2.rom \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -=
+cdrom debian-8.11.0-powerpc-netinst.iso \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -device VGA,romfile=3D&quot;&quot; -seri=
+al stdio<br><br>However, when I try to boot the machine without the ROM usi=
+ng VOF, the machine does not come up and no logs appear on stdout:<br><br>q=
+emu-system-ppc64 -machine pegasos2 -serial stdio \<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -kernel vmlinuz-chrp.initrd -appe=
+nd &quot;---&quot; \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 -cdrom debian-8.11.0-powerpc-netinst.iso<br><br>Please let me=
+ know if I am missing any parameters or setup required for booting via VOF =
+on Pegasos2.<br><br>Documentation referred: qemu/docs/system/ppc/amigang.rs=
+t</div><div><br></div><div>Regards,</div><div>Yogesh Vyas</div></div><br><d=
+iv class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gm=
+ail_attr">On Sat, Oct 18, 2025 at 8:44=E2=80=AFPM BALATON Zoltan &lt;<a hre=
+f=3D"mailto:balaton@eik.bme.hu">balaton@eik.bme.hu</a>&gt; wrote:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">This series changes how t=
+he fdt for VOF is generated in pegasos2 by<br>
+moving the static parts to a dtb and only generate the changing parts<br>
+such as memory size and PCI devices programmatically. This simplifies<br>
+the code and allows simply adding emulation of Pegasos I which has a<br>
+different north bridge and slightly different memory map but otherwise<br>
+very similar and can be emulated by reusing parts from the amigaone<br>
+machine. The machine was tested with a Pegasos I ROM image and MorphOS.<br>
+<br>
+The first VOF patch (submitted separetely before, the reviewed v3 is<br>
+included here) fixes handling the name property in VOF that cannot be<br>
+represented in a dts as that always takes the path as the name and<br>
+cannot accept an explicit name property but we need the name property<br>
+to appear when guest queries properties which previously was worked<br>
+around by adding it to every node.<br>
+<br>
+The series also adds an extended DEFINE_MACHINE macro that is later<br>
+used for more easily define the abstract machine type and hide most of<br>
+the QOM boiler plate.<br>
+<br>
+Regards,<br>
+BALATON Zoltan<br>
+<br>
+Link to previous version:<br>
+<a href=3D"https://patchew.org/QEMU/cover.1751494995.git.balaton@eik.bme.hu=
+/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU/cover.1751=
+494995.git.balaton@eik.bme.hu/</a><br>
+<br>
+v3:<br>
+- rebase on master<br>
+<br>
+v2:<br>
+- rebase on master<br>
+- added some R-b tags from Philippe<br>
+- move first patch later (was first to allow merging separately)<br>
+- clarify blurb above<br>
+<br>
+BALATON Zoltan (13):<br>
+=C2=A0 ppc/vof: Make nextprop behave more like Open Firmware<br>
+=C2=A0 hw/ppc/pegasos2: Remove explicit name properties from device tree<br=
+>
+=C2=A0 hw/ppc/pegasos2: Change device tree generation<br>
+=C2=A0 hw/ppc/pegasos2: Remove fdt pointer from machine state<br>
+=C2=A0 hw/ppc/pegasos2: Rename mv field in machine state<br>
+=C2=A0 hw/ppc/pegasos2: Add south bridge pointer in the machine state<br>
+=C2=A0 hw/ppc/pegasos2: Move PCI IRQ routing setup to a function<br>
+=C2=A0 hw/ppc/pegasos2: Move hardware specific parts out of machine reset<b=
+r>
+=C2=A0 hw/ppc/pegasos2: Introduce abstract superclass<br>
+=C2=A0 hw/ppc/pegasos2: Add bus frequency to machine state<br>
+=C2=A0 hw/boards: Extend DEFINE_MACHINE macro to cover more use cases<br>
+=C2=A0 hw/ppc/pegasos2: Add Pegasos I emulation<br>
+=C2=A0 hw/ppc/pegasos2: Add VOF support for pegasos1<br>
+<br>
+=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =
+=C2=A01 +<br>
+=C2=A0hw/ppc/pegasos2.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 770 ++++++++++++++++++=
++--------------------<br>
+=C2=A0hw/ppc/vof.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5=
+0 ++-<br>
+=C2=A0include/hw/boards.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 16 +-<br>
+=C2=A0pc-bios/dtb/meson.build=C2=A0 |=C2=A0 =C2=A02 +<br>
+=C2=A0pc-bios/dtb/pegasos1.dtb | Bin 0 -&gt; 857 bytes<br>
+=C2=A0pc-bios/dtb/pegasos1.dts | 125 +++++++<br>
+=C2=A0pc-bios/dtb/pegasos2.dtb | Bin 0 -&gt; 1701 bytes<br>
+=C2=A0pc-bios/dtb/pegasos2.dts | 167 +++++++++<br>
+=C2=A09 files changed, 718 insertions(+), 413 deletions(-)<br>
+=C2=A0create mode 100644 pc-bios/dtb/pegasos1.dtb<br>
+=C2=A0create mode 100644 pc-bios/dtb/pegasos1.dts<br>
+=C2=A0create mode 100644 pc-bios/dtb/pegasos2.dtb<br>
+=C2=A0create mode 100644 pc-bios/dtb/pegasos2.dts<br>
+<br>
+-- <br>
+2.41.3<br>
+<br>
+<br>
+</blockquote></div></div>
+
+--0000000000000d29e306417d792b--
 
