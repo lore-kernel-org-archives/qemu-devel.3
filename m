@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766B0CCD1A4
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 21:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94D3CCD195
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 21:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAaZ1-0007Om-4K; Sun, 19 Oct 2025 17:03:39 -0400
+	id 1vAaZD-0007TJ-3R; Sun, 19 Oct 2025 17:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaYy-0007Nv-Gi
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:37 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaZ8-0007SQ-2f
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:46 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaYv-00020X-Ln
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:36 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-63c0eb94ac3so6390658a12.2
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 14:03:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAaZ0-000220-N7
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 17:03:44 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-63befe5f379so4857703a12.1
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 14:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760907812; x=1761512612; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760907817; x=1761512617; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n8oXWw/dktgNDXuS33Gpiga0QxIzazhu/qxi0riXcZ8=;
- b=l4Jvy26MOGYbnAbYUONnTEj9rCv2eYR98vQ1+Xr6wmViLyUlCCpZIC1UjzSKuAfIlY
- WHPsuiXON0hyw9///0ypX8Y2FKQybBK6gAAlJGBgRAhFNi/r082LvqsBm4y4uppix3Xc
- cYiPkzgvg2uO+mCft2QBaosHDcofQIUeRxB06GLv9pXOlJfv1hTwdeITY7DMXRh8lmgL
- 1iCfiHv5S4SQ4lcI1JR+r0kHi4cfzlYzKVOQ3uilTqcNA+BVz/JZ9NbiIzh9n+WAyPn5
- 7JTiCyLXvvSOGPSFiOB1LJAkLQLTKxkmRot50H/VYHCi9yPJEDfh7groFgFlkF86rnzO
- R5wQ==
+ bh=BM6QgAOG34zDGb9jZI8DkkbGa1KuVCoA2kRHxsUOX8Q=;
+ b=SZv5Vr0iMObu4BhFpJxKBcIKHvlnaHn6agsoUIRZ7N4nhYHrvWjVw58B8b52CghCAF
+ SxwnHGJKygA1WZ9cumUg7PygRsypdBar8cVLaFAFWLiOiz7ik5mfj8vMcUx3aYSs8q0j
+ YUEMOzjvcDmu7spZWJpscvOhkh1bdWcmQjnr3sSY9x0gGDZfy/b45olGS7IgwvopzjYs
+ o8CDpW10IMnh4D8KlK17Vyv2r/hQUlkFVqYWaMnF4rKmxEyeUPcLW33N/Md5KE4djuRx
+ HM4uBHbdoGsLJW97bv3LxslYx/LLGw9yar2wLZmsx4xsG1uAOC8OqAue9RotQQ6AClw7
+ e/cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760907812; x=1761512612;
+ d=1e100.net; s=20230601; t=1760907817; x=1761512617;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n8oXWw/dktgNDXuS33Gpiga0QxIzazhu/qxi0riXcZ8=;
- b=N6+3ipwbk3aiMgudtLtUz6vFdCYDU9l2wuX3hD67/7cFguc2nLqHRaWbkMPasaXkGi
- wSrKZsC7z+H5zy5EhwZlt7g9OTBvMZnx45QwsVLqnIIkPhbAY2hRq79N1PB6c1O6Li1e
- CT0VBkAuMLd5120t+BI1hprHVp+hDyWZlcttjz26t8Jyzvd9JBm2kWnMzzFgf1YDEOlU
- teTIJmhwBNMHaw0notURInAnHBQEiLo8I4r3WmOes36B5aFeB7KVnTGFvN8Gf9QBETbG
- hafJFYmjDH3QxJ8eW1DFYvaL0Y7rh3GGqdzm12wyrXwP8mJ6AomIJRNM84Z2u2g1rdNJ
- +HZQ==
-X-Gm-Message-State: AOJu0YwBIMczcd7f3UiTyM0UB3IrGx/6SsrSE55l26B/a3yt2bg0lWrp
- vAnnAvpPmK42fsqAC6Nqr5NQjOwA2kHWHrXSPApcZqjd9GNp9NkBWuuoRPwAQy4y
-X-Gm-Gg: ASbGncv7OxRiuCx6s6N9aDLWMDvyDVk19jO+C7a5ZkKS1fM+fU/sARuBUog8Jg1bcr0
- FkuS9XL3cTmJOl+QVer0n1V/mBkgo804fBRiYVexmQVBpa7rjV/62oZkc9kn6QaVLMfaJWEcNKz
- MXgDPYx97X1c4comhqkOLQ/EZWQu/+/+gbRR7YF5NnRPAxCHgqPN4AXWqlFAUo2YT1lN2EadJ9s
- 3j46oeoWSbQVc/MEfDrCGzGNkDDkWC9XRUhKCnxg3Xm4Vey68lXO7Chn5U/5qjd+yJfj++zbOCq
- QnaHkQQJXaPHgq8XPueu8nfi4IVsBQAavhCiDG4aNSCXwLW83EPzrswDtEmlA+cy6PxV3I+LwrD
- /zugFGtjsTaYAdsTndZLLhuSoVwYBWTT47ez/FDz9bOJC6wohNalUMleulnEG3ApWqOQS6eGvb/
- Z/imsk+UxFsQArN4u1FC5HGibd2HeT1xemIIPtXZSQNMTX4KL/SWloBMOKSOw7rrBMTvGcnR69P
- 4IZ9MU=
-X-Google-Smtp-Source: AGHT+IH6NwbtkR9KVaWZMruOH8E87GbFPMByc6ZZlCT4WKF8R8KBz5UNoPmnk9epw2Cnyh1bEEgmwg==
-X-Received: by 2002:a05:6402:5247:b0:63c:4d42:9928 with SMTP id
- 4fb4d7f45d1cf-63c4d429ba7mr5372081a12.7.1760907811673; 
- Sun, 19 Oct 2025 14:03:31 -0700 (PDT)
+ bh=BM6QgAOG34zDGb9jZI8DkkbGa1KuVCoA2kRHxsUOX8Q=;
+ b=vUyZI9qb44/PXwxSu6uWEMnOmgxhmMMzi7kbWo8CNMSNouD4eHfZOw9ZXR/FocyhPX
+ V05XJ9HoGYTpT6KqkDzXVhhwchbP6cZg04Q2pTFM4E7O2jEswMx9HhiSrvS9e5apa0pz
+ I62kk14iscsan4tMADEVWQ3BdtDhR6CTlHQbcmqGAh6XklziWaD8J0uBFc/PV8vlM4Tt
+ K+Nhq6A/gDc5nEl08fe9GXrCRK25hlfG+bOR7gFSWY/zzPV3LIyKHDaOp83rBEAfQlXk
+ he3r74SMX+SukKRUSMgB0NM0PQ+feWWYHhBi2dUtMRBssPUzv1NmrkwlzixKk7nQkY6m
+ RFEw==
+X-Gm-Message-State: AOJu0YyGU+TbOoSLyk6IcbT6g7s7gJV1SJSiLPGsSw7eb+d/BRATaC52
+ v3ZEawr+JMM3AZoXk4FWgRkJODUBU/EfXwKuHkuGRZkvppwbFQedr11r58rpb01Y
+X-Gm-Gg: ASbGnctb5EGpTIm2mu2b5fzZfVkFGS52i9TP0NKwhb3U41Oh0+IP3hKmUuclT2qKtCB
+ 4vVDXNGOYrBGTd5JgmsTGFakHwgUqrHrIQ0seCdvDtahpfsyanqZB8jUYEs138u/QP4y1G683Hf
+ MSIc8OhnQtD/mx3mqKKL8bPkfVUaBoPW94cSk6ru82bcbZkZeu8NNHPSdYZFPmMo+cFXDJDrFvv
+ ozwweL5KOT2OXViegZSmjkwEsZEr7//o4DgIQjfqjTZ7vhKB9NjD0JFYxfHRtN08qorhFrBx4gC
+ 4cqBR4SSMHu4fQvXvYus0TGm4mZIhLGi1giAFOIcHLGlEo+mfcBUkOlQCPcf7MV88mtl08ANQQP
+ FCX+dd4krGksss0Bfw+ngbtbO6DcqKZhnekTZWvpAa6lId9QAnwt6hMqx9b6xN8c+1cUl5n+Leq
+ 0m3CzS83yedZpt3Lf9VRizCoYMjZY+g3rjmFKMdo8Y6tY90guA3S7j2815Gw==
+X-Google-Smtp-Source: AGHT+IHfMh7JlGToGTRe8mHgwHLoF57dHW5JvMJP8/YOMdu/h8U6uYCeh50ZViHOCSNzKzge6vlIQg==
+X-Received: by 2002:aa7:df90:0:b0:631:bb4e:111a with SMTP id
+ 4fb4d7f45d1cf-63c1f6dbea3mr8083588a12.34.1760907816588; 
+ Sun, 19 Oct 2025 14:03:36 -0700 (PDT)
 Received: from archlinux (dynamic-002-245-026-170.2.245.pool.telefonica.de.
  [2.245.26.170]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63c4945f003sm5107655a12.27.2025.10.19.14.03.29
+ 4fb4d7f45d1cf-63c4945f003sm5107655a12.27.2025.10.19.14.03.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Oct 2025 14:03:30 -0700 (PDT)
+ Sun, 19 Oct 2025 14:03:36 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -79,24 +78,24 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
  Sunil Muthuswamy <sunilmut@microsoft.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 03/10] hw/rtc/mc146818rtc: Convert CMOS_DPRINTF() into
- trace events
-Date: Sun, 19 Oct 2025 23:02:56 +0200
-Message-ID: <20251019210303.104718-4-shentey@gmail.com>
+Subject: [PATCH v3 06/10] hw/ide/ide-internal: Move dma_buf_commit() into ide
+ "namespace"
+Date: Sun, 19 Oct 2025 23:02:59 +0200
+Message-ID: <20251019210303.104718-7-shentey@gmail.com>
 X-Mailer: git-send-email 2.51.1.dirty
 In-Reply-To: <20251019210303.104718-1-shentey@gmail.com>
 References: <20251019210303.104718-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,69 +111,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The identifier suggests that it is a generic DMA function while it is tied
+to IDE. Fix this by adding an "ide_" prefix.
+
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/rtc/mc146818rtc.c | 14 +++-----------
- hw/rtc/trace-events  |  4 ++++
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ hw/ide/ide-internal.h |  2 +-
+ hw/ide/ahci.c         |  8 ++++----
+ hw/ide/core.c         | 10 +++++-----
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index f9f5cf396f..61e9c0bf99 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -43,16 +43,10 @@
- #include "qapi/error.h"
- #include "qapi/qapi-events-misc.h"
- #include "qapi/visitor.h"
-+#include "trace.h"
+diff --git a/hw/ide/ide-internal.h b/hw/ide/ide-internal.h
+index 0d64805da2..281d07c9d5 100644
+--- a/hw/ide/ide-internal.h
++++ b/hw/ide/ide-internal.h
+@@ -398,7 +398,7 @@ int64_t ide_get_sector(IDEState *s);
+ void ide_set_sector(IDEState *s, int64_t sector_num);
  
--//#define DEBUG_CMOS
- //#define DEBUG_COALESCED
+ void ide_start_dma(IDEState *s, BlockCompletionFunc *cb);
+-void dma_buf_commit(IDEState *s, uint32_t tx_bytes);
++void ide_dma_buf_commit(IDEState *s, uint32_t tx_bytes);
+ void ide_dma_error(IDEState *s);
+ void ide_abort_command(IDEState *s);
  
--#ifdef DEBUG_CMOS
--# define CMOS_DPRINTF(format, ...)      printf(format, ## __VA_ARGS__)
--#else
--# define CMOS_DPRINTF(format, ...)      do { } while (0)
--#endif
--
- #ifdef DEBUG_COALESCED
- # define DPRINTF_C(format, ...)      printf(format, ## __VA_ARGS__)
- #else
-@@ -439,8 +433,7 @@ static void cmos_ioport_write(void *opaque, hwaddr addr,
-     if ((addr & 1) == 0) {
-         s->cmos_index = data & 0x7f;
-     } else {
--        CMOS_DPRINTF("cmos: write index=0x%02x val=0x%02" PRIx64 "\n",
--                     s->cmos_index, data);
-+        trace_mc146818_rtc_ioport_write(s->cmos_index, data);
-         switch(s->cmos_index) {
-         case RTC_SECONDS_ALARM:
-         case RTC_MINUTES_ALARM:
-@@ -726,8 +719,7 @@ static uint64_t cmos_ioport_read(void *opaque, hwaddr addr,
-             ret = s->cmos_data[s->cmos_index];
-             break;
-         }
--        CMOS_DPRINTF("cmos: read index=0x%02x val=0x%02x\n",
--                     s->cmos_index, ret);
-+        trace_mc146818_rtc_ioport_read(s->cmos_index, ret);
-         return ret;
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 1303c21cb7..14bc66fb7f 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -1417,7 +1417,7 @@ static void ahci_pio_transfer(const IDEDMA *dma)
      }
- }
-diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
-index b9f2852d35..d2f36217cb 100644
---- a/hw/rtc/trace-events
-+++ b/hw/rtc/trace-events
-@@ -32,6 +32,10 @@ m48txx_nvram_io_write(uint64_t addr, uint64_t value) "io write addr:0x%04" PRIx6
- m48txx_nvram_mem_read(uint32_t addr, uint32_t value) "mem read addr:0x%04x value:0x%02x"
- m48txx_nvram_mem_write(uint32_t addr, uint32_t value) "mem write addr:0x%04x value:0x%02x"
  
-+# mc146818rtc.c
-+mc146818_rtc_ioport_read(uint8_t addr, uint8_t value) "[0x%02" PRIx8 "] -> 0x%02" PRIx8
-+mc146818_rtc_ioport_write(uint8_t addr, uint8_t value) "[0x%02" PRIx8 "] <- 0x%02" PRIx8
-+
- # goldfish_rtc.c
- goldfish_rtc_read(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
- goldfish_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x%08" PRIx64
+     /* Update number of transferred bytes, destroy sglist */
+-    dma_buf_commit(s, size);
++    ide_dma_buf_commit(s, size);
+ 
+ out:
+     /* declare that we processed everything */
+@@ -1482,8 +1482,8 @@ static int32_t ahci_dma_prepare_buf(const IDEDMA *dma, int32_t limit)
+ 
+ /**
+  * Updates the command header with a bytes-read value.
+- * Called via dma_buf_commit, for both DMA and PIO paths.
+- * sglist destruction is handled within dma_buf_commit.
++ * Called via ide_dma_buf_commit, for both DMA and PIO paths.
++ * sglist destruction is handled within ide_dma_buf_commit.
+  */
+ static void ahci_commit_buf(const IDEDMA *dma, uint32_t tx_bytes)
+ {
+@@ -1511,7 +1511,7 @@ static int ahci_dma_rw_buf(const IDEDMA *dma, bool is_write)
+     }
+ 
+     /* free sglist, update byte count */
+-    dma_buf_commit(s, l);
++    ide_dma_buf_commit(s, l);
+     s->io_buffer_index += l;
+ 
+     trace_ahci_dma_rw_buf(ad->hba, ad->port_no, l);
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index b14983ec54..8c380abf7c 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -827,7 +827,7 @@ static void ide_sector_read(IDEState *s)
+                                       ide_sector_read_cb, s);
+ }
+ 
+-void dma_buf_commit(IDEState *s, uint32_t tx_bytes)
++void ide_dma_buf_commit(IDEState *s, uint32_t tx_bytes)
+ {
+     if (s->bus->dma->ops->commit_buf) {
+         s->bus->dma->ops->commit_buf(s->bus->dma, tx_bytes);
+@@ -848,7 +848,7 @@ void ide_set_inactive(IDEState *s, bool more)
+ 
+ void ide_dma_error(IDEState *s)
+ {
+-    dma_buf_commit(s, 0);
++    ide_dma_buf_commit(s, 0);
+     ide_abort_command(s);
+     ide_set_inactive(s, false);
+     ide_bus_set_irq(s->bus);
+@@ -893,7 +893,7 @@ static void ide_dma_cb(void *opaque, int ret)
+     if (ret < 0) {
+         if (ide_handle_rw_error(s, -ret, ide_dma_cmd_to_retry(s->dma_cmd))) {
+             s->bus->dma->aiocb = NULL;
+-            dma_buf_commit(s, 0);
++            ide_dma_buf_commit(s, 0);
+             return;
+         }
+     }
+@@ -912,7 +912,7 @@ static void ide_dma_cb(void *opaque, int ret)
+     sector_num = ide_get_sector(s);
+     if (n > 0) {
+         assert(n * 512 == s->sg.size);
+-        dma_buf_commit(s, s->sg.size);
++        ide_dma_buf_commit(s, s->sg.size);
+         sector_num += n;
+         ide_set_sector(s, sector_num);
+         s->nsector -= n;
+@@ -944,7 +944,7 @@ static void ide_dma_cb(void *opaque, int ret)
+          * Reset the Active bit and don't raise the interrupt.
+          */
+         s->status = READY_STAT | SEEK_STAT;
+-        dma_buf_commit(s, 0);
++        ide_dma_buf_commit(s, 0);
+         goto eot;
+     }
+ 
 -- 
 2.51.1.dirty
 
