@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0250CCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177E4CCD19F
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAV97-0001vU-Ae; Sun, 19 Oct 2025 11:16:33 -0400
+	id 1vAVBs-0001VV-BB; Sun, 19 Oct 2025 11:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV91-0001uY-Oc
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:28 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAVBq-0001Oy-7K
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:19:22 -0400
 Received: from mailgate01.uberspace.is ([95.143.172.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV90-0003Aa-32
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:27 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAVBk-0003Ui-4l
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:19:21 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 0AE1F60A6C
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:25 +0200 (CEST)
-Received: (qmail 22893 invoked by uid 990); 19 Oct 2025 15:16:24 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 4E30060AE2
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:19:14 +0200 (CEST)
+Received: (qmail 26319 invoked by uid 990); 19 Oct 2025 15:19:14 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 19 Oct 2025 17:16:20 +0200
+ Sun, 19 Oct 2025 17:19:10 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH v8 06/25] target/arm: call plugin trap callbacks
-Date: Sun, 19 Oct 2025 17:14:55 +0200
-Message-ID: <57010cfd617c50a0d539d7d69b2ef5c891f2f360.1760884672.git.neither@nut.email>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v8 24/25] tests: add test for double-traps on rv64
+Date: Sun, 19 Oct 2025 17:18:43 +0200
+Message-ID: <311375778957ac6527109ab83ab8c6ba28502fc8.1760884672.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1760884672.git.neither@nut.email>
 References: <cover.1760884672.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999999) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.948666) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.599999
+X-Rspamd-Score: -5.548666
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=eTrUncCA6C2WPlUgxKZyYZpPBpx50vqDZF2D9sdp358=;
- b=pdsX6meunpR1mlv3GZWlKkcnPiZVp00qMihKqdzhYftImRoJ9MKoGLYnWZkst8RN9Y5lvmZ+Sk
- WFqO43NpafuKD9JGAD0WUO9N80qbu6dns90F+fVzOOVLwbRDZe8k5lMxoOM73nkkqVybfvLjl/6V
- s/oafSILhXAcyzFJq5BzNqGSrtyfht7AwvbrltV714Z40ZIkaqIXd9NrKeT/H0AWJ9QutAJwIRj7
- AW98oS9nHjZZlxyymXrH/LHgEkwDgDW2ywcvzi5Xey6+4037cDggtTWVCm3x8Q3jXKRHym5MpDVi
- sVl0ABWC9Yym84Wdr0M/Qi4+Dj6pnjutTI5RkrRxBikbUbh4VaLht/dJPoWvsutzhGZEmXdS1oWk
- RNWOX1wjhvyuQnzzHUGhOgDd+W7YLwtYPUvZZh0vMGa+pQWOZe7gx7jKl+n/DiBV5ityOBfIGjiq
- T/LGF6le1M8WEvlbrJTiK0eN/oRZdFOIQxY67f/yG7YStoUa/Vr2E9r1Bu5tPMaskbIM1x4rC/ZE
- IIEsmFWQtNLFPMuQ4TDE2H2mRtixVOGbnLKl7G/SmzgqObnTMJGI99Z9lVUJkWmFJipmFq+NpBDM
- yYiKTA/vh9YAkgA7fw/MvHOmAO90e4aoGidU2gPfXeePDUoCD1psukMqt5Z577jNS6DuoSk0pAgd
- Y=
+ bh=Z2wOkmJ8TIPZXX3AHPBRN/csViKXwOsK/S8NlkWxpjM=;
+ b=ECkthoac17ixOQqXC92K7zDj0SgIY+WZr5WkKrWXSOMse8iM9Yhtu54/jHAcmcsSQv3aVxrHV+
+ pW+l1Aqev6ju/+mK1iQaoyg+Lq7Bx85P1C7HeUkubQLm0JrotnVXezQHamKs+yeCf+zTVWsTcu6F
+ iqUYbd0EWJg7+4zW4AFQHbZto8iepjRbxjaUv43P7AT8HgkROATYhssvfzZElatbsoH4q5q8A5Wr
+ k7ELfQgAT0yS6trAdawnulp+kSVxMc/B359EfzxvlPKOh1AVeIdzZsusplrdr4CsF6kIwwToruV5
+ 5xpxUpbCQe+AzlCSJzI69OhxYPC3pb5zkalvB5fSBjGKgRUFeE4+vqaLWqWcNJLuVKU5572EDREh
+ fKmJ74I5gtme0o2zDMwvj8XSpQcY+peHYdXP+BveQDKeqVmXliDXv9zLee9f363EjwWez257l+Mt
+ /g9fpV1GoBp/alTTpdOreTnhUdryVJJVWeb9yHrILT7Ft1wyA0dB+gYIQ5xiQoFOW4s08OU49Vst
+ EpmSRBer/aCanP/vI2Mnf9e5G8H6L0x7PVMm61sLA8qBcWT0wgxCiIs9IBAbB2d8Tdqnsl4m0FZm
+ eQtl1rP5tGUh84czbgU+rzgzOAJuTSxIKUlVf/MGN4Ok9fDG3kTf3EcfcbMRYzz4detg9d1YgvrV
+ M=
 Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
  helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -66,7 +68,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,142 +84,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+We do have a number of test-case for various architectures exercising
+their interrupt/exception logic. However, for the recently introduced
+trap API we also want to exercise the logic for double traps on at least
+one architecture.
 
-This change places hooks for ARM (and Aarch64) targets. We decided to
-treat the (V)IRQ, (VI/VF)NMI, (V)FIQ and VSERR exceptions as interrupts
-since they are, presumably, async in nature.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/arm/helper.c       | 24 ++++++++++++++++++++++++
- target/arm/internals.h    |  1 +
- target/arm/tcg/m_helper.c |  5 +++++
- 3 files changed, 30 insertions(+)
+ tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
+ tests/tcg/riscv64/doubletrap.S            | 73 +++++++++++++++++++++++
+ 2 files changed, 79 insertions(+)
+ create mode 100644 tests/tcg/riscv64/doubletrap.S
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 167f2909b3..c30d77bee9 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -34,6 +34,7 @@
- #endif
- #include "cpregs.h"
- #include "target/arm/gtimer.h"
-+#include "qemu/plugin.h"
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 3ca595335d..d9c0036eb4 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -24,5 +24,11 @@ EXTRA_RUNS += run-test-mepc-masking
+ run-test-mepc-masking: test-mepc-masking
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
  
- #define HELPER_H "tcg/helper.h"
- #include "exec/helper-proto.h.inc"
-@@ -8715,6 +8716,24 @@ static void take_aarch32_exception(CPUARMState *env, int new_mode,
-     }
- }
- 
-+void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from)
-+{
-+    switch (cs->exception_index) {
-+    case EXCP_IRQ:
-+    case EXCP_VIRQ:
-+    case EXCP_NMI:
-+    case EXCP_VINMI:
-+    case EXCP_FIQ:
-+    case EXCP_VFIQ:
-+    case EXCP_VFNMI:
-+    case EXCP_VSERR:
-+        qemu_plugin_vcpu_interrupt_cb(cs, from);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs, from);
-+    }
-+}
++EXTRA_RUNS += run-plugin-doubletrap
++run-plugin-doubletrap: doubletrap
++	$(call run-test, $<, \
++	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $<.pout \
++	  $(QEMU_OPTS)$<)
 +
- static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
- {
-     /*
-@@ -9405,6 +9424,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
-     unsigned int new_el = env->exception.target_el;
-+    uint64_t last_pc = cs->cc->get_pc(cs);
- 
-     assert(!arm_feature(env, ARM_FEATURE_M));
- 
-@@ -9421,6 +9441,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
-         arm_handle_psci_call(cpu);
-         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     }
- 
-@@ -9432,6 +9453,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
- #ifdef CONFIG_TCG
-     if (cs->exception_index == EXCP_SEMIHOST) {
-         tcg_handle_semihosting(cs);
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     }
- #endif
-@@ -9457,6 +9479,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     if (!kvm_enabled()) {
-         cpu_set_interrupt(cs, CPU_INTERRUPT_EXITTB);
-     }
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/doubletrap.S b/tests/tcg/riscv64/doubletrap.S
+new file mode 100644
+index 0000000000..b61089c9c1
+--- /dev/null
++++ b/tests/tcg/riscv64/doubletrap.S
+@@ -0,0 +1,73 @@
++	.option norvc
 +
-+    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
- }
- #endif /* !CONFIG_USER_ONLY */
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f539bbe58e..6be044b29d 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -375,6 +375,7 @@ static inline int r14_bank_number(int mode)
- 
- void arm_cpu_register(const ARMCPUInfo *info);
- 
-+void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from);
- void register_cp_regs_for_features(ARMCPU *cpu);
- void init_cpreg_list(ARMCPU *cpu);
- 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index d856e3bc8e..3fb24c7790 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -23,6 +23,7 @@
- #if !defined(CONFIG_USER_ONLY)
- #include "hw/intc/armv7m_nvic.h"
- #endif
-+#include "qemu/plugin.h"
- 
- static void v7m_msr_xpsr(CPUARMState *env, uint32_t mask,
-                          uint32_t reg, uint32_t val)
-@@ -2194,6 +2195,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
-     CPUARMState *env = &cpu->env;
-     uint32_t lr;
-     bool ignore_stackfaults;
-+    uint64_t last_pc = env->regs[15];
- 
-     arm_log_exception(cs);
- 
-@@ -2361,6 +2363,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
-         g_assert_not_reached();
- #endif
-         env->regs[15] += env->thumb ? 2 : 4;
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     case EXCP_BKPT:
-         armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_DEBUG, false);
-@@ -2427,6 +2430,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
- 
-     ignore_stackfaults = v7m_push_stack(cpu);
-     v7m_exception_taken(cpu, lr, false, ignore_stackfaults);
++	.text
++	.global _start
++_start:
++	# Set up vectored interrupts
++	lla	t0, trap
++	add	t0, t0, 1
++	csrw	mtvec, t0
 +
-+    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
- }
- 
- uint32_t HELPER(v7m_mrs)(CPUARMState *env, uint32_t reg)
++	# Enable sw interrupts
++	csrrsi	zero, mie, 0x8
++	csrrsi	zero, mstatus, 0x8
++
++	# Engage the double trap: we trigger an machine-level software
++	# interrupt, which will trap to an illegal instruction
++	lui	t1, 0x02000
++	li	t0, 1
++	sw	t0, 0(t1)
++
++	# If we still not went out via the software interrupt route after a
++	# short while, we failed the test.
++	lui	t0, 0x1
++0:
++	addi	t0, t0, -1
++	bnez	t0, 0b
++	j	fail
++
++trap:
++	j	illegal_insn # Exceptions
++	j	fail # Supervisor software interrupt
++	j	fail
++	.insn	i CUSTOM_0, 0, x0, x0, 0 # Machine software interrupt
++	j	fail
++	j	fail # Supervisor timer interrupt
++	j	fail
++	j	fail # Machine timer interrupt
++	j	fail
++	j	fail # Supervisor external interrupt
++	j	fail
++	j	fail # Machine external interrupt
++	j	fail
++	j	fail # Counter overflow interrupt
++	j	fail
++	j	fail
++
++illegal_insn:
++	# Check whether we really got an illegal instruction
++	csrr	t0, mcause
++	li	t1, 2
++	bne	t0, t1, fail
++	li	a0, 0
++	j	_exit
++fail:
++	li	a0, 1
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.49.1
 
