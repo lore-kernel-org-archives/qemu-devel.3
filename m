@@ -4,83 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C59CCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 06:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E05CCD195
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 07:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vANLu-0005iq-Nh; Sun, 19 Oct 2025 02:57:14 -0400
+	id 1vAOHg-0005wS-Qc; Sun, 19 Oct 2025 03:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1vANLj-0005iR-OG
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 02:57:06 -0400
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1vANLh-0008AI-5U
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 02:57:03 -0400
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-430d04de73fso695965ab.0
- for <qemu-devel@nongnu.org>; Sat, 18 Oct 2025 23:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760857018; x=1761461818; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=l8NCTsexsuE/QRcC22pAJHuheJFNXbRo5G9onhkwPRQ=;
- b=QWkQmrtbCgjR8UnQkfrEN7GX/qx8+Z0FeFGFg2Fc3ISx9to1E/Bl1Q2Ax8HIOaDCF/
- hl3edAnSiLc2prhIUn1UpfuEIKaTgd+mWM4e1JS4IqehGUBO2ludbQ9aumj+qyC6wAEN
- jdoI5P7IRE3W2mUQnmZXpjYwVQw5pV09Lg36fwVw4JcLvYSk+cwQmZOBXHWeTTr9qLtZ
- jz+P4UEaHSb2iMSBIUw8wOQnJsmWva8jgmOl4KLcUA/jKOxLRsq/RoaDl4TT+UMsER0E
- 4wR5TvA0PYhMdd2tANt52KS6nUOMCj8A9EjHQPlBy6i65+nPcIqspec6HJd/NtehkhGB
- yYmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760857018; x=1761461818;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l8NCTsexsuE/QRcC22pAJHuheJFNXbRo5G9onhkwPRQ=;
- b=YYX0SWDakxnXYrgB6xODuFsD5oYQeEooDG1P0V4ZspHpoMegipM/dosuqYkse3/GfX
- ueagVsPZxHhzcicq7i6eNDTOk6hS+HQxQxTxUpXQYzvyXmv8mHgXJ9r0xGbXOgwbgXpa
- bVisfUNC3sRJvuBL7ATE6sG8GBikqIcUqKLyG6yn0JIZvZIxwrLRw+2++AbIgRkxFBUB
- AC3lRs6T0WciQKMDgpJpSQ7E44JbIH2YcX4Ufo8dm3vsQlwUYxGYaKsztn9LoqW94Nl4
- p3+YfWiAg1mn7oDv6PnmUKLLOpqthZ2NJwKNu+BmGXHz70HkLPBbtZ9jmi1FWxiF0A8y
- pahg==
-X-Gm-Message-State: AOJu0Yy2BqLlekB13SnurLZ1wdS58FKYBdZT99Y6j5iR1zz1wNwvm6wI
- eVpYDWu4mOiucUKTk7d1r5sdKjuI8u6A10SymORB8546ffnp9RtbVBJrPlUNpqcGww3xOUcpuU1
- 1oG+QqaAbg7Xb7Xq22Zu0Aj0mMKRwBUY=
-X-Gm-Gg: ASbGnct8HlNe0rQMtIgKQ53pLLS6HaBEPmIR2/YHsuLxtVmGWRdTlXUS7AIglmljqgM
- JpHNw7/XY5L7GYSfwFhMwwssgDyiGm2x5shKCfwrRwybKBXZF1Ydq2xKR3t+h29w1zDVYfcZeVZ
- BfFvbPgUPmiym/3/VqsNU4Ha0Ron/61L9+gOFG3VwbdpeTHbTLRul6rt4N9q8JNLSunJymQDPwY
- 3AjY2FsrUurjcnt5Cr/QRbfxFw+AuoOnTTN6p8s5i4M9WFFN8V90fbSnsbB0lxZuBFWTq6gcyNK
- A9m5K2UK/PAMmmlBpPp4oyr8pcU=
-X-Google-Smtp-Source: AGHT+IGEgMHe2YciGXS/TuLknjszD0GcsSLGL/S+tsqqCqXlrqy9pNhojYwZ1IaNFfghC7OKB618ut+1++f/RHOGtj0=
-X-Received: by 2002:a05:6e02:491a:b0:430:a8d0:725c with SMTP id
- e9e14a558f8ab-430c52bec72mr45790275ab.5.1760857017886; Sat, 18 Oct 2025
- 23:56:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vAOHd-0005wB-Vn
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 03:56:55 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vAOHY-0006JE-Tn
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 03:56:52 -0400
+Received: from [172.130.10.190] ([115.90.12.10]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59J7uA4w057165
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 19 Oct 2025 16:56:11 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=iAYfMb25zetGyBpnLC5umQ5CNZz3PC1iwr7Gum59Tqw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:From:Subject:To;
+ s=rs20250326; t=1760860571; v=1;
+ b=v8B7bXA3EjRomfyDU0xIIFUhsJdj0szwh4PbgD8ILAoyGTkZeY7lIV8vrXOz+bYo
+ 9kRiPUmRD4gf87q+6LBkMm5T7e2u5G67sClFAMKxFkSTz8BjABZBWbgWHhBHjN9+
+ sAbt6i1VbT5u1TRfHtcFLdJZoe885YHNNcx6dc9RrdeKvVdpdaRRZ72B7kBY3XoG
+ n1goiDYD+dKD0i6VceK7xLAQ/lCLDU9ED0H0Vaw4KJjO/hwZY3OdLimTwZy4COJ1
+ Xzdtq0MU8ml6tS03YwjQnJVXWcLhWNdmF6D5owOZq0pz0GwBknHNZ8+OqtLIArPy
+ 5WwK7FWwW7rs3BOBPyEXNg==
+Message-ID: <d2fbae24-18a4-4a98-aad8-f6b2c9c60c4d@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 19 Oct 2025 16:56:10 +0900
 MIME-Version: 1.0
-References: <cover.1760798392.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1760798392.git.balaton@eik.bme.hu>
-From: Yogesh Vyas <yvyas1991@gmail.com>
-Date: Sun, 19 Oct 2025 12:26:46 +0530
-X-Gm-Features: AS18NWC_w57trqnZZ3ZqEpaS_MqqUFHFwtxFnSt35vdtYcZNeeHGVGseV14FjxY
-Message-ID: <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Content-Type: multipart/alternative; boundary="0000000000000d29e306417d792b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
- envelope-from=yvyas1991@gmail.com; helo=mail-il1-x130.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH 07/11] contrib/plugins/uftrace_symbols.py: generate debug
+ files to map symbols to source
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>
+References: <20251016150357.876415-1-alex.bennee@linaro.org>
+ <20251016150357.876415-8-alex.bennee@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251016150357.876415-8-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,210 +85,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000d29e306417d792b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2025/10/17 0:03, Alex Bennée wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Enhance uftrace_symbols.py to generate .dbg files, containing
+> source location for every symbol present in .sym file.
+> It allows to use `uftrace {replay,dump} --srcline` and show origin of
+> functions, connecting trace to original source code.
+> 
+> It was first implemented with pyelftools DWARF parser, which was way
+> too slow (~minutes) to get locations for every symbol in the linux
+> kernel. Thus, we use `addr2line` instead, which runs in seconds.
 
-Hi BALATON,
+nm have option -l, which shows filenames and line numbers. With the 
+option you can avoid executing addr2line and omit the associated logic.
 
-I tested this series with the provided patches and observed the following:
+> 
+> As well, there were some bugs with latest pyelftools release,
+> requiring to run master version, which is not installable with pip.
+> Thus, since we now require binutils (addr2line), we can ditch pyelftools
+> based implementation and simply rely on `nm` to get symbols information,
+> which is faster and better.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   contrib/plugins/uftrace_symbols.py | 120 +++++++++++++++++++----------
+>   1 file changed, 78 insertions(+), 42 deletions(-)
+> 
+> diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+> index b49e03203c8..45fb79c7a58 100755
+> --- a/contrib/plugins/uftrace_symbols.py
+> +++ b/contrib/plugins/uftrace_symbols.py
+> @@ -1,7 +1,7 @@
+>   #!/usr/bin/env python3
+>   # -*- coding: utf-8 -*-
+>   #
+> -# Create symbols and mapping files for uftrace.
+> +# Create symbols, debug and mapping files for uftrace.
+>   #
+>   # Copyright 2025 Linaro Ltd
+>   # Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> @@ -9,44 +9,71 @@
+>   # SPDX-License-Identifier: GPL-2.0-or-later
+>   
+>   import argparse
+> -import elftools # pip install pyelftools
+>   import os
+> -
+> -from elftools.elf.elffile import ELFFile
+> -from elftools.elf.sections import SymbolTableSection
+> -
+> -def elf_func_symbols(elf):
+> -    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
+> -                  if isinstance(s, SymbolTableSection)]
+> -    symbols = []
+> -    for _, section in symbol_tables:
+> -        for _, symbol in enumerate(section.iter_symbols()):
+> -            if symbol_size(symbol) == 0:
+> -                continue
+> -            type = symbol['st_info']['type']
+> -            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
+> -                symbols.append(symbol)
+> -    symbols.sort(key = lambda x: symbol_addr(x))
+> +import subprocess
+> +
+> +class Symbol:
+> +    def __init__(self, name, addr, size):
+> +        self.name = name
+> +        # clamp addr to 48 bits, like uftrace entries
+> +        self.addr = addr & 0xffffffffffff
+> +        self.full_addr = addr
+> +        self.size = size
+> +
+> +    def set_loc(self, file, line):
+> +        self.file = file
+> +        self.line = line
+> +
+> +def get_symbols(elf_file):
+> +    symbols=[]
+> +    try:
+> +        out = subprocess.check_output(['nm', '--print-size', elf_file],
+> +                                      stderr=subprocess.STDOUT,
+> +                                      text=True)
+> +    except subprocess.CalledProcessError as e:
+> +        print(e.output)
+> +        raise
+> +    out = out.strip().split('\n')
+> +    for line in out:
+> +        info = line.split(' ')
+> +        if len(info) == 3:
+> +            # missing size information
+> +            continue
+> +        addr, size, type, name = info
+> +        # add only symbols from .text section
+> +        if type.lower() != 't':
+> +            continue
+> +        addr = int(addr, 16)
+> +        size = int(size, 16)
+> +        symbols.append(Symbol(name, addr, size))
+> +    symbols.sort(key = lambda x: x.addr)
+>       return symbols
+>   
+> -def symbol_size(symbol):
+> -    return symbol['st_size']
+> -
+> -def symbol_addr(symbol):
+> -    addr = symbol['st_value']
+> -    # clamp addr to 48 bits, like uftrace entries
+> -    return addr & 0xffffffffffff
+> -
+> -def symbol_name(symbol):
+> -    return symbol.name
+> +def find_symbols_locations(elf_file, symbols):
+> +    addresses = '\n'.join([hex(x.full_addr) for x in symbols])
+> +    try:
+> +        out = subprocess.check_output(['addr2line', '--exe', elf_file],
+> +                                      stderr=subprocess.STDOUT,
+> +                                      input=addresses, text=True)
+> +    except subprocess.CalledProcessError as e:
+> +        print(e.output)
+> +        raise
+> +    out = out.strip().split('\n')
+> +    assert len(out) == len(symbols)
+> +    for i in range(len(symbols)):
+> +        s = symbols[i]
+> +        file, line = out[i].split(':')
+> +        # addr2line may return 'line (discriminator [0-9]+)' sometimes,
+> +        # remove this to keep only line number.
+> +        line = line.split(' ')[0]
+> +        s.set_loc(file, line)
+>   
+>   class BinaryFile:
+>       def __init__(self, path, map_offset):
+>           self.fullpath = os.path.realpath(path)
+>           self.map_offset = map_offset
+> -        with open(path, 'rb') as f:
+> -            self.elf = ELFFile(f)
+> -            self.symbols = elf_func_symbols(self.elf)
+> +        self.symbols = get_symbols(self.fullpath)
+> +        find_symbols_locations(self.fullpath, self.symbols)
+>   
+>       def path(self):
+>           return self.fullpath
+> @@ -56,24 +83,31 @@ def addr_start(self):
+>   
+>       def addr_end(self):
+>           last_sym = self.symbols[-1]
+> -        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
+> +        return last_sym.addr + last_sym.size + self.map_offset
+>   
+>       def generate_symbol_file(self, prefix_symbols):
+>           binary_name = os.path.basename(self.fullpath)
+> -        sym_file_path = f'./uftrace.data/{binary_name}.sym'
+> +        sym_file_path = os.path.join('uftrace.data', f'{binary_name}.sym')
+>           print(f'{sym_file_path} ({len(self.symbols)} symbols)')
+>           with open(sym_file_path, 'w') as sym_file:
+>               # print hexadecimal addresses on 48 bits
+>               addrx = "0>12x"
+>               for s in self.symbols:
+> -                addr = symbol_addr(s)
+> +                addr = s.addr
+>                   addr = f'{addr:{addrx}}'
+> -                size = f'{symbol_size(s):{addrx}}'
+> -                name = symbol_name(s)
+> +                size = f'{s.size:{addrx}}'
+>                   if prefix_symbols:
+> -                    name = f'{binary_name}:{name}'
+> +                    name = f'{binary_name}:{s.name}'
+>                   print(addr, size, 'T', name, file=sym_file)
+>   
+> +    def generate_debug_file(self):
+> +        binary_name = os.path.basename(self.fullpath)
+> +        dbg_file_path = os.path.join('uftrace.data', f'{binary_name}.dbg')
+> +        with open(dbg_file_path, 'w') as dbg_file:
+> +            for s in self.symbols:
+> +                print(f'F: {hex(s.addr)} {s.name}', file=dbg_file)
+> +                print(f'L: {s.line} {s.file}', file=dbg_file)
+> +
+>   def parse_parameter(p):
+>       s = p.split(":")
+>       path = s[0]
+> @@ -84,7 +118,7 @@ def parse_parameter(p):
+>       offset = s[1]
+>       if not offset.startswith('0x'):
+>           err = f'offset "{offset}" is not an hexadecimal constant. '
+> -        err += 'It should starts with "0x".'
+> +        err += 'It should start with "0x".'
+>           raise ValueError(err)
+>       offset = int(offset, 16)
+>       return path, offset
+> @@ -97,7 +131,7 @@ def is_from_user_mode(map_file_path):
+>       return False
+>   
+>   def generate_map(binaries):
+> -    map_file_path = './uftrace.data/sid-0.map'
+> +    map_file_path = os.path.join('uftrace.data', 'sid-0.map')
+>   
+>       if is_from_user_mode(map_file_path):
+>           print(f'do not overwrite {map_file_path} generated from qemu-user')
+> @@ -124,7 +158,8 @@ def generate_map(binaries):
+>   
+>   def main():
+>       parser = argparse.ArgumentParser(description=
+> -                                     'generate symbol files for uftrace')
+> +                                     'generate symbol files for uftrace. '
+> +                                     'Require binutils (nm and addr2line).')
+>       parser.add_argument('elf_file', nargs='+',
+>                           help='path to an ELF file. '
+>                           'Use /path/to/file:0xdeadbeef to add a mapping offset.')
+> @@ -133,8 +168,8 @@ def main():
+>                           action=argparse.BooleanOptionalAction)
+>       args = parser.parse_args()
+>   
+> -    if not os.path.exists('./uftrace.data'):
+> -        os.mkdir('./uftrace.data')
+> +    if not os.path.exists('uftrace.data'):
+> +        os.mkdir('uftrace.data')
+>   
+>       binaries = []
+>       for file in args.elf_file:
+> @@ -145,6 +180,7 @@ def main():
+>   
+>       for b in binaries:
+>           b.generate_symbol_file(args.prefix_symbols)
+> +        b.generate_debug_file()
+>   
+>       generate_map(binaries)
+>   
 
-When I run QEMU with the ROM option, the machine boots successfully with
-the below command:
-
-qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \
-                  -cdrom debian-8.11.0-powerpc-netinst.iso \
-                  -device VGA,romfile=3D"" -serial stdio
-
-However, when I try to boot the machine without the ROM using VOF, the
-machine does not come up and no logs appear on stdout:
-
-qemu-system-ppc64 -machine pegasos2 -serial stdio \
-                  -kernel vmlinuz-chrp.initrd -append "---" \
-                  -cdrom debian-8.11.0-powerpc-netinst.iso
-
-Please let me know if I am missing any parameters or setup required for
-booting via VOF on Pegasos2.
-
-Documentation referred: qemu/docs/system/ppc/amigang.rst
-
-Regards,
-Yogesh Vyas
-
-On Sat, Oct 18, 2025 at 8:44=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
- wrote:
-
-> This series changes how the fdt for VOF is generated in pegasos2 by
-> moving the static parts to a dtb and only generate the changing parts
-> such as memory size and PCI devices programmatically. This simplifies
-> the code and allows simply adding emulation of Pegasos I which has a
-> different north bridge and slightly different memory map but otherwise
-> very similar and can be emulated by reusing parts from the amigaone
-> machine. The machine was tested with a Pegasos I ROM image and MorphOS.
->
-> The first VOF patch (submitted separetely before, the reviewed v3 is
-> included here) fixes handling the name property in VOF that cannot be
-> represented in a dts as that always takes the path as the name and
-> cannot accept an explicit name property but we need the name property
-> to appear when guest queries properties which previously was worked
-> around by adding it to every node.
->
-> The series also adds an extended DEFINE_MACHINE macro that is later
-> used for more easily define the abstract machine type and hide most of
-> the QOM boiler plate.
->
-> Regards,
-> BALATON Zoltan
->
-> Link to previous version:
-> https://patchew.org/QEMU/cover.1751494995.git.balaton@eik.bme.hu/
->
-> v3:
-> - rebase on master
->
-> v2:
-> - rebase on master
-> - added some R-b tags from Philippe
-> - move first patch later (was first to allow merging separately)
-> - clarify blurb above
->
-> BALATON Zoltan (13):
->   ppc/vof: Make nextprop behave more like Open Firmware
->   hw/ppc/pegasos2: Remove explicit name properties from device tree
->   hw/ppc/pegasos2: Change device tree generation
->   hw/ppc/pegasos2: Remove fdt pointer from machine state
->   hw/ppc/pegasos2: Rename mv field in machine state
->   hw/ppc/pegasos2: Add south bridge pointer in the machine state
->   hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
->   hw/ppc/pegasos2: Move hardware specific parts out of machine reset
->   hw/ppc/pegasos2: Introduce abstract superclass
->   hw/ppc/pegasos2: Add bus frequency to machine state
->   hw/boards: Extend DEFINE_MACHINE macro to cover more use cases
->   hw/ppc/pegasos2: Add Pegasos I emulation
->   hw/ppc/pegasos2: Add VOF support for pegasos1
->
->  MAINTAINERS              |   1 +
->  hw/ppc/pegasos2.c        | 770 +++++++++++++++++++--------------------
->  hw/ppc/vof.c             |  50 ++-
->  include/hw/boards.h      |  16 +-
->  pc-bios/dtb/meson.build  |   2 +
->  pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
->  pc-bios/dtb/pegasos1.dts | 125 +++++++
->  pc-bios/dtb/pegasos2.dtb | Bin 0 -> 1701 bytes
->  pc-bios/dtb/pegasos2.dts | 167 +++++++++
->  9 files changed, 718 insertions(+), 413 deletions(-)
->  create mode 100644 pc-bios/dtb/pegasos1.dtb
->  create mode 100644 pc-bios/dtb/pegasos1.dts
->  create mode 100644 pc-bios/dtb/pegasos2.dtb
->  create mode 100644 pc-bios/dtb/pegasos2.dts
->
-> --
-> 2.41.3
->
->
->
-
---0000000000000d29e306417d792b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0BALATON,<div><br></div><div>I tes=
-ted this series with the provided patches and observed the following:<br><b=
-r>When I run QEMU with the ROM option, the machine boots successfully with =
-the below command:<br><br>qemu-system-ppc64 -machine pegasos2 -bios pegasos=
-2.rom \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -=
-cdrom debian-8.11.0-powerpc-netinst.iso \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -device VGA,romfile=3D&quot;&quot; -seri=
-al stdio<br><br>However, when I try to boot the machine without the ROM usi=
-ng VOF, the machine does not come up and no logs appear on stdout:<br><br>q=
-emu-system-ppc64 -machine pegasos2 -serial stdio \<br>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -kernel vmlinuz-chrp.initrd -appe=
-nd &quot;---&quot; \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 -cdrom debian-8.11.0-powerpc-netinst.iso<br><br>Please let me=
- know if I am missing any parameters or setup required for booting via VOF =
-on Pegasos2.<br><br>Documentation referred: qemu/docs/system/ppc/amigang.rs=
-t</div><div><br></div><div>Regards,</div><div>Yogesh Vyas</div></div><br><d=
-iv class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gm=
-ail_attr">On Sat, Oct 18, 2025 at 8:44=E2=80=AFPM BALATON Zoltan &lt;<a hre=
-f=3D"mailto:balaton@eik.bme.hu">balaton@eik.bme.hu</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">This series changes how t=
-he fdt for VOF is generated in pegasos2 by<br>
-moving the static parts to a dtb and only generate the changing parts<br>
-such as memory size and PCI devices programmatically. This simplifies<br>
-the code and allows simply adding emulation of Pegasos I which has a<br>
-different north bridge and slightly different memory map but otherwise<br>
-very similar and can be emulated by reusing parts from the amigaone<br>
-machine. The machine was tested with a Pegasos I ROM image and MorphOS.<br>
-<br>
-The first VOF patch (submitted separetely before, the reviewed v3 is<br>
-included here) fixes handling the name property in VOF that cannot be<br>
-represented in a dts as that always takes the path as the name and<br>
-cannot accept an explicit name property but we need the name property<br>
-to appear when guest queries properties which previously was worked<br>
-around by adding it to every node.<br>
-<br>
-The series also adds an extended DEFINE_MACHINE macro that is later<br>
-used for more easily define the abstract machine type and hide most of<br>
-the QOM boiler plate.<br>
-<br>
-Regards,<br>
-BALATON Zoltan<br>
-<br>
-Link to previous version:<br>
-<a href=3D"https://patchew.org/QEMU/cover.1751494995.git.balaton@eik.bme.hu=
-/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QEMU/cover.1751=
-494995.git.balaton@eik.bme.hu/</a><br>
-<br>
-v3:<br>
-- rebase on master<br>
-<br>
-v2:<br>
-- rebase on master<br>
-- added some R-b tags from Philippe<br>
-- move first patch later (was first to allow merging separately)<br>
-- clarify blurb above<br>
-<br>
-BALATON Zoltan (13):<br>
-=C2=A0 ppc/vof: Make nextprop behave more like Open Firmware<br>
-=C2=A0 hw/ppc/pegasos2: Remove explicit name properties from device tree<br=
->
-=C2=A0 hw/ppc/pegasos2: Change device tree generation<br>
-=C2=A0 hw/ppc/pegasos2: Remove fdt pointer from machine state<br>
-=C2=A0 hw/ppc/pegasos2: Rename mv field in machine state<br>
-=C2=A0 hw/ppc/pegasos2: Add south bridge pointer in the machine state<br>
-=C2=A0 hw/ppc/pegasos2: Move PCI IRQ routing setup to a function<br>
-=C2=A0 hw/ppc/pegasos2: Move hardware specific parts out of machine reset<b=
-r>
-=C2=A0 hw/ppc/pegasos2: Introduce abstract superclass<br>
-=C2=A0 hw/ppc/pegasos2: Add bus frequency to machine state<br>
-=C2=A0 hw/boards: Extend DEFINE_MACHINE macro to cover more use cases<br>
-=C2=A0 hw/ppc/pegasos2: Add Pegasos I emulation<br>
-=C2=A0 hw/ppc/pegasos2: Add VOF support for pegasos1<br>
-<br>
-=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =
-=C2=A01 +<br>
-=C2=A0hw/ppc/pegasos2.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 770 ++++++++++++++++++=
-+--------------------<br>
-=C2=A0hw/ppc/vof.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5=
-0 ++-<br>
-=C2=A0include/hw/boards.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 16 +-<br>
-=C2=A0pc-bios/dtb/meson.build=C2=A0 |=C2=A0 =C2=A02 +<br>
-=C2=A0pc-bios/dtb/pegasos1.dtb | Bin 0 -&gt; 857 bytes<br>
-=C2=A0pc-bios/dtb/pegasos1.dts | 125 +++++++<br>
-=C2=A0pc-bios/dtb/pegasos2.dtb | Bin 0 -&gt; 1701 bytes<br>
-=C2=A0pc-bios/dtb/pegasos2.dts | 167 +++++++++<br>
-=C2=A09 files changed, 718 insertions(+), 413 deletions(-)<br>
-=C2=A0create mode 100644 pc-bios/dtb/pegasos1.dtb<br>
-=C2=A0create mode 100644 pc-bios/dtb/pegasos1.dts<br>
-=C2=A0create mode 100644 pc-bios/dtb/pegasos2.dtb<br>
-=C2=A0create mode 100644 pc-bios/dtb/pegasos2.dts<br>
-<br>
--- <br>
-2.41.3<br>
-<br>
-<br>
-</blockquote></div></div>
-
---0000000000000d29e306417d792b--
 
