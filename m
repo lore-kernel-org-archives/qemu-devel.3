@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F08ECCD183
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0250CCD184
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAV92-0001sJ-Kb; Sun, 19 Oct 2025 11:16:28 -0400
+	id 1vAV97-0001vU-Ae; Sun, 19 Oct 2025 11:16:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8s-0001p5-Di
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:18 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV91-0001uY-Oc
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:28 -0400
 Received: from mailgate01.uberspace.is ([95.143.172.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8q-00039c-NS
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:18 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV90-0003Aa-32
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:27 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 324BA60A7D
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:14 +0200 (CEST)
-Received: (qmail 22695 invoked by uid 990); 19 Oct 2025 15:16:14 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 0AE1F60A6C
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:25 +0200 (CEST)
+Received: (qmail 22893 invoked by uid 990); 19 Oct 2025 15:16:24 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 19 Oct 2025 17:16:10 +0200
+ Sun, 19 Oct 2025 17:16:20 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v8 03/25] plugins: add hooks for new discontinuity related
- callbacks
-Date: Sun, 19 Oct 2025 17:14:52 +0200
-Message-ID: <8beeef05cf137ca25320930c5f35291ad1a92275.1760884672.git.neither@nut.email>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PATCH v8 06/25] target/arm: call plugin trap callbacks
+Date: Sun, 19 Oct 2025 17:14:55 +0200
+Message-ID: <57010cfd617c50a0d539d7d69b2ef5c891f2f360.1760884672.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1760884672.git.neither@nut.email>
 References: <cover.1760884672.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ----
-X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) BAYES_HAM(-3) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -4.1
+X-Rspamd-Bar: -----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999999) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -5.599999
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=ZSHCzgddnSxTNbITRzGkKXj5uD5IHXB/jqzWZ1YJNrs=;
- b=tD+23aVY+8Rtg7ZIbcBhMvuUXyLYMHkLvFdjrH9gITpDCj+EwpA9CkbbRGsGbjdk2D5vll9Va1
- A2Z5R4OerqMSTZUrHie5vsdigVAViWXPIBmm06eByrP7G+3tx3GFiJFWkESCpLD4QTu49To/07Mp
- 5ZPnvKmkIoj0XlcDaNZnQivh0WKGL6slbIzWK2GYdcPfGsr3zd3T+69yazGqsflBcWzxXH4kHJpW
- dXyBpRm4smBcviN3J7R6SqOPqzZ+2z6+1ar1TM06RlCyciRjVAZ+zaML7490yS6ueJa/gmQf7LPD
- /64q6eng6iJbU0ZYNbGroEpjdKAoAgjdRNH92xjO9ZcqyGc6gKcBEyM5IcLRzdS5nLf6lVyNFtrc
- lFvACASxerzalH49iJYeuJfd4fXjx+9KnBGvvh/4Q7fd+MXJplj0mAsQJBfRW+EktlvA4/yI8a7Y
- Am3+mkTE7BfGQPPISY9xkNXcQw36+sHMIjAc9hbChQMkqL9AmD/FJTHJrRL5+FnYWOUxVxkfl9Fq
- JFQ/dbu+xff6a7dTkxB88CD+9VTtpziRnMJ/1b44YbGCeh3ux5J8FbdcgQ9lshgHOZDuu0DG4QvA
- dEKcBfQsvnbI5sWAt16YBcqBsn0L+KWyDIcZ9c0CwsV2qjEE0/Pgy0L2uV2XEz0PN/pPhtny1Spq
- s=
+ bh=eTrUncCA6C2WPlUgxKZyYZpPBpx50vqDZF2D9sdp358=;
+ b=pdsX6meunpR1mlv3GZWlKkcnPiZVp00qMihKqdzhYftImRoJ9MKoGLYnWZkst8RN9Y5lvmZ+Sk
+ WFqO43NpafuKD9JGAD0WUO9N80qbu6dns90F+fVzOOVLwbRDZe8k5lMxoOM73nkkqVybfvLjl/6V
+ s/oafSILhXAcyzFJq5BzNqGSrtyfht7AwvbrltV714Z40ZIkaqIXd9NrKeT/H0AWJ9QutAJwIRj7
+ AW98oS9nHjZZlxyymXrH/LHgEkwDgDW2ywcvzi5Xey6+4037cDggtTWVCm3x8Q3jXKRHym5MpDVi
+ sVl0ABWC9Yym84Wdr0M/Qi4+Dj6pnjutTI5RkrRxBikbUbh4VaLht/dJPoWvsutzhGZEmXdS1oWk
+ RNWOX1wjhvyuQnzzHUGhOgDd+W7YLwtYPUvZZh0vMGa+pQWOZe7gx7jKl+n/DiBV5ityOBfIGjiq
+ T/LGF6le1M8WEvlbrJTiK0eN/oRZdFOIQxY67f/yG7YStoUa/Vr2E9r1Bu5tPMaskbIM1x4rC/ZE
+ IIEsmFWQtNLFPMuQ4TDE2H2mRtixVOGbnLKl7G/SmzgqObnTMJGI99Z9lVUJkWmFJipmFq+NpBDM
+ yYiKTA/vh9YAkgA7fw/MvHOmAO90e4aoGidU2gPfXeePDUoCD1psukMqt5Z577jNS6DuoSk0pAgd
+ Y=
 Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
  helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -84,110 +82,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The plugin API allows registration of callbacks for a variety of VCPU
-related events, such as VCPU reset, idle and resume. In addition, we
-recently introduced API for registering callbacks for discontinuity
-events, specifically for interrupts, exceptions and host calls.
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-This change introduces the corresponding hooks called from target
-specific code inside qemu.
+This change places hooks for ARM (and Aarch64) targets. We decided to
+treat the (V)IRQ, (VI/VF)NMI, (V)FIQ and VSERR exceptions as interrupts
+since they are, presumably, async in nature.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- include/qemu/plugin.h | 12 ++++++++++++
- plugins/core.c        | 42 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+ target/arm/helper.c       | 24 ++++++++++++++++++++++++
+ target/arm/internals.h    |  1 +
+ target/arm/tcg/m_helper.c |  5 +++++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index 8cf20cd96f..cea0a68858 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -161,6 +161,9 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu);
- void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb);
- void qemu_plugin_vcpu_idle_cb(CPUState *cpu);
- void qemu_plugin_vcpu_resume_cb(CPUState *cpu);
-+void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from);
-+void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from);
-+void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from);
- void
- qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
-                          uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
-@@ -258,6 +261,15 @@ static inline void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
- static inline void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
- { }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 167f2909b3..c30d77bee9 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -34,6 +34,7 @@
+ #endif
+ #include "cpregs.h"
+ #include "target/arm/gtimer.h"
++#include "qemu/plugin.h"
  
-+static inline void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
-+{ }
-+
-+static inline void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
-+{ }
-+
-+static inline void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
-+{ }
-+
- static inline void
- qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
-                          uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6,
-diff --git a/plugins/core.c b/plugins/core.c
-index 40d001d39a..35a252d272 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -105,6 +105,30 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+ #define HELPER_H "tcg/helper.h"
+ #include "exec/helper-proto.h.inc"
+@@ -8715,6 +8716,24 @@ static void take_aarch32_exception(CPUARMState *env, int new_mode,
      }
  }
  
-+/*
-+ * Disable CFI checks.
-+ * The callback function has been loaded from an external library so we do not
-+ * have type information
-+ */
-+QEMU_DISABLE_CFI
-+static void plugin_vcpu_cb__discon(CPUState *cpu,
-+                                   enum qemu_plugin_event ev,
-+                                   enum qemu_plugin_discon_type type,
-+                                   uint64_t from)
++void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from)
 +{
-+    struct qemu_plugin_cb *cb, *next;
-+    uint64_t to = cpu->cc->get_pc(cpu);
-+
-+    if (cpu->cpu_index < plugin.num_vcpus) {
-+        /* iterate safely; plugins might uninstall themselves at any time */
-+        QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-+            qemu_plugin_vcpu_discon_cb_t func = cb->f.vcpu_discon;
-+
-+            func(cb->ctx->id, cpu->cpu_index, type, from, to);
-+        }
++    switch (cs->exception_index) {
++    case EXCP_IRQ:
++    case EXCP_VIRQ:
++    case EXCP_NMI:
++    case EXCP_VINMI:
++    case EXCP_FIQ:
++    case EXCP_VFIQ:
++    case EXCP_VFNMI:
++    case EXCP_VSERR:
++        qemu_plugin_vcpu_interrupt_cb(cs, from);
++        break;
++    default:
++        qemu_plugin_vcpu_exception_cb(cs, from);
 +    }
 +}
 +
- /*
-  * Disable CFI checks.
-  * The callback function has been loaded from an external library so we do not
-@@ -557,6 +581,24 @@ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
+ {
+     /*
+@@ -9405,6 +9424,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+     unsigned int new_el = env->exception.target_el;
++    uint64_t last_pc = cs->cc->get_pc(cs);
+ 
+     assert(!arm_feature(env, ARM_FEATURE_M));
+ 
+@@ -9421,6 +9441,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
+         arm_handle_psci_call(cpu);
+         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
      }
+ 
+@@ -9432,6 +9453,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+ #ifdef CONFIG_TCG
+     if (cs->exception_index == EXCP_SEMIHOST) {
+         tcg_handle_semihosting(cs);
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
+     }
+ #endif
+@@ -9457,6 +9479,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
+     if (!kvm_enabled()) {
+         cpu_set_interrupt(cs, CPU_INTERRUPT_EXITTB);
+     }
++
++    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
+ }
+ #endif /* !CONFIG_USER_ONLY */
+ 
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index f539bbe58e..6be044b29d 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -375,6 +375,7 @@ static inline int r14_bank_number(int mode)
+ 
+ void arm_cpu_register(const ARMCPUInfo *info);
+ 
++void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from);
+ void register_cp_regs_for_features(ARMCPU *cpu);
+ void init_cpreg_list(ARMCPU *cpu);
+ 
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index d856e3bc8e..3fb24c7790 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -23,6 +23,7 @@
+ #if !defined(CONFIG_USER_ONLY)
+ #include "hw/intc/armv7m_nvic.h"
+ #endif
++#include "qemu/plugin.h"
+ 
+ static void v7m_msr_xpsr(CPUARMState *env, uint32_t mask,
+                          uint32_t reg, uint32_t val)
+@@ -2194,6 +2195,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
+     CPUARMState *env = &cpu->env;
+     uint32_t lr;
+     bool ignore_stackfaults;
++    uint64_t last_pc = env->regs[15];
+ 
+     arm_log_exception(cs);
+ 
+@@ -2361,6 +2363,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
+         g_assert_not_reached();
+ #endif
+         env->regs[15] += env->thumb ? 2 : 4;
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
+     case EXCP_BKPT:
+         armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_DEBUG, false);
+@@ -2427,6 +2430,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
+ 
+     ignore_stackfaults = v7m_push_stack(cpu);
+     v7m_exception_taken(cpu, lr, false, ignore_stackfaults);
++
++    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
  }
  
-+void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
-+{
-+    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_EV_VCPU_INTERRUPT,
-+                           QEMU_PLUGIN_DISCON_INTERRUPT, from);
-+}
-+
-+void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
-+{
-+    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_EV_VCPU_EXCEPTION,
-+                           QEMU_PLUGIN_DISCON_EXCEPTION, from);
-+}
-+
-+void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
-+{
-+    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_EV_VCPU_HOSTCALL,
-+                           QEMU_PLUGIN_DISCON_HOSTCALL, from);
-+}
-+
- void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
-                                        qemu_plugin_vcpu_simple_cb_t cb)
- {
+ uint32_t HELPER(v7m_mrs)(CPUARMState *env, uint32_t reg)
 -- 
 2.49.1
 
