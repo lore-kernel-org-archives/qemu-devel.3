@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3CECCCD184
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15520CCD183
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 15:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAV99-0001vm-1F; Sun, 19 Oct 2025 11:16:35 -0400
+	id 1vAV9e-0002EH-OG; Sun, 19 Oct 2025 11:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8x-0001uM-OC
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:28 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV9b-0002Bh-Ka
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:17:03 -0400
 Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV8w-0003A1-1R
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:16:23 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vAV9Y-0003Eu-T3
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 11:17:03 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id BFEBA60A8A
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:20 +0200 (CEST)
-Received: (qmail 22822 invoked by uid 990); 19 Oct 2025 15:16:20 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id C07D760AA0
+ for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 17:16:59 +0200 (CEST)
+Received: (qmail 23758 invoked by uid 990); 19 Oct 2025 15:16:59 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 19 Oct 2025 17:16:18 +0200
+ Sun, 19 Oct 2025 17:16:59 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v8 05/25] target/alpha: call plugin trap callbacks
-Date: Sun, 19 Oct 2025 17:14:54 +0200
-Message-ID: <78ba254c812a91105bf52f6f0ce73774ee2be265.1760884672.git.neither@nut.email>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PATCH v8 19/25] target/sh4: call plugin trap callbacks
+Date: Sun, 19 Oct 2025 17:15:08 +0200
+Message-ID: <f054d7015aeddb50a108b25759f5699853357cbe.1760884672.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1760884672.git.neither@nut.email>
 References: <cover.1760884672.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999999) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.99997) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.599999
+X-Rspamd-Score: -5.59997
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=NQdS6b7lSZHjuzHV/xnNiUQELPfMS5Qhlg2RCswDKUA=;
- b=fXwtBveyFvq0AI6PHHuv98HGkRO/VFi1/YIrcGquxP3qvGKJFxhn9LEqWREm1WCXFEi7x+F2dX
- cghulsD6f9CsGzxSy6H8moihkLuvgwKpoSNrd7k4cpju85tQCl7s8c2ish2kFHATrDdqSMsQO72s
- qf16l+eaA0EaOOzerl2ZKAFyel3d3cz/vzM2k8RCUOjUai2Pv9pvJv+TjC5C4B6dRV4gaeqk8FaR
- jWW15fbxvTrUb8C5ti1Nff0rQiotM46EAV6jC2lGnu3op4XgqVxN7fT3rPxqHBUVoo7ToQ34SYXl
- YjS/IYkgwB2OVtJF5edhKyBvIeixBC50SRuNB7FXGHPGcscdwXjbxw91pMTEvAJfXly63k4LXdzr
- sT0qI2HLKMQeUI3O8UOMhZ8nJFpL6c16uQiS6/zgyA5FU8/N6AJCuZ9iAP4Kf5/jtUv3UA7a0DnS
- 5MA+jCvHkWYf5GvcSyV4mv68v3MhQPT1XWg9rUcIfvz8V+ZLMokRXs5KL4dnj1dsubqhxPDuocLz
- iADYgc7Dh16E0kygOaqduRENhFP6+1P/BigFHRqCPbsMTgWsQH328UTXGcVKIfSylzW5V+7kG4cU
- 4Ky+RuodrPbrzWXt7OWXgyqN9rhJ5zCwkDhBIAjTqywlANf4yKNuiav0WRu2YemIuFyQNz4fmvIg
- 4=
+ bh=henyk1pn+Y7JL09xIai+moS5k8bo4s/ntXusmsrLMEM=;
+ b=ICcGmOSmeYzG63LRRfIlDVCnIBCkhK/f+rmSmydLBxX6i+WX7wFMXukJ5XCpE9HGWjt6t5YZ6n
+ KT4W+YYJOj5TzLHm2PCfwc0Jp4Rl3hor9iuqC+513IY51cQ+o50x5olPSbhBrLZVhUllP9lqSiyN
+ XAMT0MfWWbJewNKmO8L8k6XYtpfaOkyXO6Kg3L5Ra3khBUXk77x8mz334uwsfcwcfGpvsAZUo48I
+ Lp/xKRUinB9F5OyES0Y8K4njtcnAqMZ5+e20RaEge5YIx1fKfAqnb+qcWWwop2C6PlMar0fEkXPh
+ oIq4Q1qcsOCEGSV8ZqU68bRqQJ/bCh0NfAM7/M8yiPssVaoDGUcTCpN0Op0PPPDLByrKT/6WkDYO
+ 49zZqcvp1bmP5V27H6/Qwgvb2buP7xF87kUVzS5K5noruFvBqFLN5eJvo8TzQpQ09PAAK0Iv92ya
+ rLkhd/vzULPc4cQ5S/cKKYahByNRDOZqkN82nFQUInb+Vgm8+sOfaWrIO2LXvDbQ0i/Jl8BhD24u
+ aD6SVWdSHboHHpZdMP5dNWkBiOddiCRgpwHOAlxDiU8BvHkeHQlUZi4A4aL7GHIKGhlwxzINs5Mw
+ NbKRfnfojDYMFIUq1ln2E8T5nakJo8+1RKZ265PYoJU8dfsyKLIRnllJzLHX/Gl2tuDGf3nlO+OZ
+ g=
 Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
  envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -84,52 +85,50 @@ events as well as the corresponding hook functions. Due to differences
 between architectures, the latter need to be called from target specific
 code.
 
-This change places hooks for Alpha targets.
+This change places hooks for SuperH targets.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/alpha/helper.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ target/sh4/helper.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 096eac3445..a9af52a928 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -27,6 +27,7 @@
- #include "exec/helper-proto.h"
- #include "qemu/qemu-print.h"
- #include "system/memory.h"
+diff --git a/target/sh4/helper.c b/target/sh4/helper.c
+index 3b18a320b8..5d6295618f 100644
+--- a/target/sh4/helper.c
++++ b/target/sh4/helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/page-protection.h"
+ #include "exec/target_page.h"
+ #include "exec/log.h"
 +#include "qemu/plugin.h"
  
- 
- #define CONVERT_BIT(X, SRC, DST) \
-@@ -328,6 +329,7 @@ void alpha_cpu_do_interrupt(CPUState *cs)
- {
-     CPUAlphaState *env = cpu_env(cs);
-     int i = cs->exception_index;
+ #if !defined(CONFIG_USER_ONLY)
+ #include "hw/sh4/sh_intc.h"
+@@ -60,6 +61,7 @@ void superh_cpu_do_interrupt(CPUState *cs)
+     CPUSH4State *env = cpu_env(cs);
+     int do_irq = cpu_test_interrupt(cs, CPU_INTERRUPT_HARD);
+     int do_exp, irq_vector = cs->exception_index;
 +    uint64_t last_pc = env->pc;
  
-     if (qemu_loglevel_mask(CPU_LOG_INT)) {
-         static int count;
-@@ -431,6 +433,17 @@ void alpha_cpu_do_interrupt(CPUState *cs)
+     /* prioritize exceptions over interrupts */
  
-     /* Switch to PALmode.  */
-     env->flags |= ENV_FLAG_PAL_MODE;
-+
-+    switch (i) {
-+    case EXCP_SMP_INTERRUPT:
-+    case EXCP_CLK_INTERRUPT:
-+    case EXCP_DEV_INTERRUPT:
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-+        break;
-+    default:
+@@ -176,12 +178,14 @@ void superh_cpu_do_interrupt(CPUState *cs)
+             env->pc = env->vbr + 0x100;
+             break;
+         }
 +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-+        break;
-+    }
- }
+         return;
+     }
  
- bool alpha_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+     if (do_irq) {
+         env->intevt = irq_vector;
+         env->pc = env->vbr + 0x600;
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+         return;
+     }
+ }
 -- 
 2.49.1
 
