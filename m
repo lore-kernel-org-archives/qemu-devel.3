@@ -4,99 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A132CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 12:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D132CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 12:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAorV-0001s9-7m; Mon, 20 Oct 2025 08:19:41 -0400
+	id 1vAorV-0001sB-8v; Mon, 20 Oct 2025 08:19:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAorH-0001l9-OL
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAorF-0001kp-Qt
  for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:19:30 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAorD-0006p8-TR
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:19:27 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b3d50882cc2so818049766b.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 05:19:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAorC-0006p3-Eg
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:19:25 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b660019ac2aso506002366b.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 05:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760962760; x=1761567560; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1760962759; x=1761567559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kT0j/s0XBuP0ITAjNCV5ZQF3F9LmCWWFhKV3gfp9k/0=;
- b=hztNPnoxOrpfLoXPP8uR93C59lHP7cHo9os0kAIisNPXj6KsbXhnc/xLsSCJskApKg
- WH28jd8p1eneYq8d105eM5O25hr1mb0BgwrdxRyRyp9ieLpRJB3WAKVYGLCE6nctBKM3
- wA+WGMkkg05ZaOzrnxUMuhV2q0fDQQ93K8eL0kN+Xsfm5xpudhjnuj5KbKHv76yH7TKc
- L/pHS0hy3kiUKZUVDypWe85DQBms9jxYt9deJHBG6YBvoC6NspEF9S9TF/qp9xs077cE
- JBXYrQK1SG1dvHaZuEnnEwzVwf2hdRtkfTHBOwPBhnM6AJJhjLGqYwp10IgxgLZp8utd
- UOiA==
+ bh=lyxDaz5lwldS2odq0kndOPqeaBXBOv8i/KQNeFpoJK0=;
+ b=Tvqx7xhw9dwL5nNGRel532e91pX/j4uK+YPi4dc06ps6kKOlyAVqP7EDiVIGQCeKex
+ 9RDNATd9W5+PgElhUj6pQiARTcZFlfPaMnec58LjUdYAyeTnDnzDJblxf4KzoFoZM1VO
+ w1BVuNk7A/yBS6GCLiNiKV4jOrjboZhXpLbdh+iZSLfZeI4Je43+FjicziUIuV0haSxm
+ oHipAZ6hWHVyD5u+ynbz2DTIvPO1evOkzSVaW83Yot8oGyr0Mw2SJSByJmKaQy2f+0CM
+ hRCwtZ9t6QkKsvVJhUAL8LGqCwmfIodR63OPFYfz0lRE+h3uC+TUEo5XY0FfQDGbr5rT
+ ByPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760962760; x=1761567560;
+ d=1e100.net; s=20230601; t=1760962759; x=1761567559;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kT0j/s0XBuP0ITAjNCV5ZQF3F9LmCWWFhKV3gfp9k/0=;
- b=Q8juSpweCtPOTknN4w9m6TAYNmdmLnwIVxsuuXLfY2nnM4bNV5JvWTfN7l3wnXA6m4
- 8h+Z3dxLb1sl9NgZv3xeKGaiJQX9GgIi5Jdx8iJhBHnkGG6W8jK+26B8QkmiSV3/frx4
- fPjv4zPNs7H7QydfRWlyfyKoz2QDJPAPgo9ecS1FTZsodG4adbd+FZdhGD2oJIsDMTdX
- 7zBYi3frDReRppjLeOJRn1V44HuujIqAad13LkPbRoBMtZIN+u/VqWPs+KZZ/HzVgJA9
- 8PnRbAOytRRfeayvOT94nVgl8UdjOZI3deKEKQ1nZAkq7bEHSXOXyRn24topishLE1aW
- yHcQ==
-X-Gm-Message-State: AOJu0YwNI1DSj2XLFQl0J33YPQolvNRXFuH8RQ4MovCd6MOPQXwi3NSl
- hzOP5dAAOrH+AWBdQuHqwN979/lPafM56y7+0K94erwe7IkQi+jAsLmLrAsMCw==
-X-Gm-Gg: ASbGnctYpho1IfF/Dago+85/Z8MkFEf9lhxL3KIkmY5JsSwZYvH506s27Zb/XcK6zHt
- R2lAUdmeRfnUClyn/kXe/DedZ7iRdHXX0v9MSf0dGCSmVxnRrPefYS/AmrHbqC3MnE/5JR6NavM
- bUFB6SsK+70NsrqFT4g6D42P/fU9pISd1Qt4ChcZC4mOldA5oTA50UlB7Dp1PlAECSZNAhscWr4
- lSJKUxNkniMpryrj3B0i/f51nXr/qk/kwn77xi2aYh0O7aIQLI4/nD2QRQg5iDRf99D3PPbxJi9
- qaAdn+tQmWWGlXips2QhWnuNIHsFVwZ2zXsLiwhvYDL80ZyzDASthebN3jeoIHe3LVdd3AEBXHA
- iTIT4Sw91y42BhhGKyZgQDQZ5qA05YLq5I8WHqySFMhlBTLoe0Z4TngLkizj4p6uSGsypb/jryH
- Jks0at4iIpakO43jkTlQ==
-X-Google-Smtp-Source: AGHT+IHxPPhHxkb1OPMx+8tRbXsfi7bsKNPwr2ehmzVPkmhExYX3HfawB7KM5n+STVBA8HM1UbVekw==
-X-Received: by 2002:a17:907:3dac:b0:b45:8370:ef10 with SMTP id
- a640c23a62f3a-b647245845bmr1536621066b.22.1760962759904; 
- Mon, 20 Oct 2025 05:19:19 -0700 (PDT)
+ bh=lyxDaz5lwldS2odq0kndOPqeaBXBOv8i/KQNeFpoJK0=;
+ b=mRNLVyYalnQ0MbQ6GtkH0h6dfXTSbhZ1MK3y+aSf1wND9eXENO2s72ufxpGKGajG3k
+ VrEHsQzG7KR4PnqtXbVrATc6YK1hKuR8dNXHRRPErGnCztG3z4r0gFBqYEbDsnlvIVmr
+ 3AhRKEmCTA2ULjIRxZLidktowiEZUSS+l+rJQX1EF9Zf/o3zLi/lbZMoSPd8mve30t8o
+ mY0mc3mET9oGN0nLabEUhG/bW/U4GWC+PN03d6jYQdJp61cuXAmyiiDq9tk9tT8RZh8m
+ Db0snYv+eRSrzHcaAK3kz80GULMNjHnCdT7F7MhEcrXze6g1uGepT0FPcbP0T50fCa1A
+ 5wmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWK/e9pcLTQvuODFbxbPTPWYmBZgW0zLHWUnCJGAQTfp0TeqgheRmbwi+sB/woWDFJGU1ASv9TXmKnJ@nongnu.org
+X-Gm-Message-State: AOJu0YxkJf/v6+N3dJuwlRkJzzVzI0BqM9M2KSJZN2Yoknep9U+HGVO6
+ doWQNzPjhRIztwSySQg5NRApsICZxOIrC8LPnOJzhNOALWNImxwpgteH
+X-Gm-Gg: ASbGnctedHAHPx/gsii5wIIktdyC5ubv/HqQwiGyhyGjigY4Ce1dWOsaL1RvuIF067q
+ /h5iJY/bnoJMPdfRzlF1gJONbU4pwRPrcj4MUxFYQnS+y8cw9tkmAmpJ1lrKQSZCmBs4WM+h5KO
+ eZCGeaoJsFQkOHtzqsbHkecfHDoLuWyazkacHN4RhawIQ4dJ1VgTUw+A9xJ/wd/lrOmnsqyL22v
+ 196XZ0Nx/Lz0VnsvnLThDrYytRYiqokEFPTuDf5t7LDQRb/QnhoriaPbvWUUoQ2br6gXzPUYl2v
+ t3tk2E8eBLPNo2oxX92JHyWzGsCSTIKWiRDsoAg1cJDFAl89TDmzrazvNZ/14MQC0U92B4hj6W+
+ FcXe2lNgsx+gVygzS1M4ZAYTeGVspOgOw6/eVCewudJ+ueaOgdLCS5zOdMMnRJkfUwb8cZcWrP2
+ /kSaitmJI=
+X-Google-Smtp-Source: AGHT+IHhcoQfDqHy3+AakeQGaQU+/hpIbGCmAdGZOGxGrsj7TcbBK2Efm3v7tQ2jCa19teHBfOmKYg==
+X-Received: by 2002:a17:906:7314:b0:b55:befd:8f87 with SMTP id
+ a640c23a62f3a-b6474f1860emr1475435266b.55.1760962758406; 
+ Mon, 20 Oct 2025 05:19:18 -0700 (PDT)
 Received: from ehlo.thunderbird.net ([90.187.110.129])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b65eb0362fbsm784362466b.39.2025.10.20.05.19.19
+ a640c23a62f3a-b65eb525d1asm779197166b.58.2025.10.20.05.19.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 05:19:19 -0700 (PDT)
-Date: Mon, 20 Oct 2025 10:27:14 +0000
+ Mon, 20 Oct 2025 05:19:17 -0700 (PDT)
+Date: Mon, 20 Oct 2025 10:30:37 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-CC: Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Roman Bolshakov <rbolshakov@ddn.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v7_24/24=5D_whpx=3A_apic=3A_use_non-deprec?=
- =?US-ASCII?Q?ated_APIs_to_control_interrupt_controller_state?=
-In-Reply-To: <2cbd9feb-2c20-46e0-af40-0bd64060dfba@linaro.org>
-References: <20251016165520.62532-1-mohamed@unpredictable.fr>
- <20251016165520.62532-25-mohamed@unpredictable.fr>
- <2cbd9feb-2c20-46e0-af40-0bd64060dfba@linaro.org>
-Message-ID: <6982BC4E-1F59-47AD-B6E6-9FFF4212C627@gmail.com>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+CC: marcandre.lureau@redhat.com
+Subject: Re: [PATCH] ui/pixman: Fix crash in qemu_pixman_shareable_free()
+In-Reply-To: <20251013112102.2396012-1-armbru@redhat.com>
+References: <20251013112102.2396012-1-armbru@redhat.com>
+Message-ID: <1C757C57-9134-4C72-8034-DEC70FFD25FB@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,27 +103,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 16=2E Oktober 2025 17:15:42 UTC schrieb Pierrick Bouvier <pierrick=2Ebo=
-uvier@linaro=2Eorg>:
->On 10/16/25 9:55 AM, Mohamed Mediouni wrote:
->> WHvGetVirtualProcessorInterruptControllerState2 and
->> WHvSetVirtualProcessorInterruptControllerState2 are
->> deprecated since Windows 10 version 2004=2E
->>=20
->> Use the non-deprecated WHvGetVirtualProcessorState and
->> WHvSetVirtualProcessorState when available=2E
->>=20
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
->> ---
->>   include/system/whpx-internal=2Eh |  9 +++++++
->>   target/i386/whpx/whpx-apic=2Ec   | 46 +++++++++++++++++++++++++------=
----
->>   2 files changed, 43 insertions(+), 12 deletions(-)
+Am 13=2E Oktober 2025 11:21:02 UTC schrieb Markus Armbruster <armbru@redha=
+t=2Ecom>:
+>Reported-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>Fixes: b296b29d3414 (ui/pixman: Consistent error handling in qemu_pixman_=
+shareable_free())
+>Signed-off-by: Markus Armbruster <armbru@redhat=2Ecom>
+>---
+> ui/qemu-pixman=2Ec | 4 +++-
+> 1 file changed, 3 insertions(+), 1 deletion(-)
 >
->Reviewed-by: Pierrick Bouvier <pierrick=2Ebouvier@linaro=2Eorg>
+>diff --git a/ui/qemu-pixman=2Ec b/ui/qemu-pixman=2Ec
+>index e46c6232cf=2E=2Eaea09755b9 100644
+>--- a/ui/qemu-pixman=2Ec
+>+++ b/ui/qemu-pixman=2Ec
+>@@ -291,7 +291,9 @@ qemu_pixman_shareable_free(qemu_pixman_shareable hand=
+le,
+>     Error *err =3D NULL;
+>=20
+>     qemu_win32_map_free(ptr, handle, &err);
+>-    error_report_err(err);
+>+    if (err) {
+>+        error_report_err(err);
+>+    }
+> #else
+>     qemu_memfd_free(ptr, size, handle);
+> #endif
 
-Couldn't we merge this patch already until the rest of the series is figur=
-ed out?
+Thanks for the quick fix, Markus! The patch is reviewed and I've been test=
+ing it for a week=2E Who is going to merge it?
 
 Best regards,
 Bernhard
