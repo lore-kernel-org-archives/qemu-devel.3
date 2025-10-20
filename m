@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA69CCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF0FCCD19F
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzQT-00051o-8r; Mon, 20 Oct 2025 19:36:29 -0400
+	id 1vAzRm-0005aX-HH; Mon, 20 Oct 2025 19:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzQS-00051W-B9
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:36:28 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ id 1vAzRj-0005a4-JE
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:37:48 -0400
+Received: from mail-io1-xd2f.google.com ([2607:f8b0:4864:20::d2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzQQ-00012s-O0
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:36:28 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-430cb80df33so15475535ab.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:36:26 -0700 (PDT)
+ id 1vAzRh-0001B8-Sf
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:37:47 -0400
+Received: by mail-io1-xd2f.google.com with SMTP id
+ ca18e2360f4ac-93ba2eb817aso465104439f.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761003385; x=1761608185; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761003464; x=1761608264; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=llsahX1QQKQXxlSrxekZyeHmDlAgFPBZQHstRb1cKeg=;
- b=LnR3sMoCYyNz2hB9sq8SDJxgNV6vTaw6Ncrs9kn6YTkV1/N+lskXa1rVCv5eXx6rET
- 72BV1r7IOrSpyHk4D1bkrnHar6XixVoFn9UsLrD2cRTF+TlRhSqYf5EHNUGPzV1rAanS
- dCZAglWGPE5iBTLHasMCsTB7qDU3RwoPDbHztbyWkjHyYYPJ97P9fwvJgHRDKpCGTLII
- tATrQ9DM2//TQNYj/3k1bp7iJdwWLzgzlzZv++dYbTYzb6OiH9pv+4w6o8TZ26rj5kBs
- a5cGB1OAvOAZRO6XbM9zX+jJ7L9HQQ1/dnUXZ559YSqSYl5pTi7Sfi6HWKxGnU5suNsp
- FyQw==
+ bh=EMO0MrFbKexo46fhlROjPVzTaWoxtVfAFFn9D/Anass=;
+ b=Pe3AtA9d44pmAIeD++lxFtTxu9WddzQO7lRcUJrrp57y5yHoRzuiml/GZIdHmALdn/
+ JD4RTwSZGFeIrTs+O51CbV6Fb9497qKQ9Eh2mUYcXZW1jASt5TP5NxpSpgClrUJM6B60
+ is8V1zB76/D9zB1K4AfB9vt9Na93papikYaj1sViVSKPJp0rRwDHFbEWBOncWKPAnB5U
+ Fhy6CSnnuT0Tu6e7FVCkXsjYEHAemfM81627alaR+vn1XVMEaDVvMcVMdvmBBLdHrjiq
+ urLR6HpEtyos9qTl8/Ia0esdW0fk7okWrJ4PNZK5jpNa792/RmdNWqtR21GIYGm5KI1i
+ vtOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761003385; x=1761608185;
+ d=1e100.net; s=20230601; t=1761003464; x=1761608264;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=llsahX1QQKQXxlSrxekZyeHmDlAgFPBZQHstRb1cKeg=;
- b=lbVsawzcOCS5mUIQBIR2+E/X/OB99OpOvavawx9urFQSFQV3VC/tBu4wm22PB5OCyN
- VYYcZviYGw1801SPYQf7xWBuNdDcGQR3B9T1h3DNVnN3IZxDFE5ozh/Mkg/M3WScl/ag
- 8cBs2HsupMLfVXjMGOosD8uQ3qc5sCesX9NIwkKq6TWteSbl7RmndWgsryL9EIP3WiTw
- woeZgCgDuW8p1lzDXPPJQ+SAxsGA3vvOL8cSkvoiCaD7nj17/oa7oCUAEZxXd1lrkX/w
- UzPc31kHj3NzWtG0ArMQABWos5+gHSb/nE9ox4T24YQQvMrZX3arn7tk/2buDGmayAld
- mXOw==
+ bh=EMO0MrFbKexo46fhlROjPVzTaWoxtVfAFFn9D/Anass=;
+ b=m1EXJ/ng8ErXRzKaaueH1GAmNP0l5gz45kAeY6ZHEmAVSBzfdx9qv/8IGvV0MpJHPf
+ SGevCoja//6ckPXDsx9t1Aq2LsKVA7ww9HWWXKeS6rRvNQB2pazgsjVwpJrGICR1wHbp
+ crIiJKrCzkdA7tLSShNcSHgPZUknKWS4V6pDbZnLryArl10N0RcqdsvciM3KGJUVU26b
+ ZWaGlDp85Aw9Y6aBVR8GR0iXig3tY/ThVUWPAr8RinJEoqHqgrDBHiT3Pf4sCk0/5wB/
+ 3FycMyzn0hmyjNVqNhBa4uccRm+7zH+mTg1wnRYkCcesJgOh0A7ATlFWwTHQZ43wTXXE
+ HMKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXksCW+RUeZzezwpZeU5B6EA2S90VyBNUiONt9K+dgUP5JI74jME1gZINPd4du9ESeMB00UsSBjS191@nongnu.org
-X-Gm-Message-State: AOJu0YyJqdOHkM+RAejEIpFStZfYdJ10taEEDx+FZNrsO31NkOjnupLc
- 6KnmmctVTDGqqE2vkK1E7TXgRi3eIZvT0BS9KXHqoaPAPmH6jM7MPBgrMtnEzP3sbV497YkwdDY
- SUxZzTGK6dt2l6GWZfMQfIwdmyaATUiA=
-X-Gm-Gg: ASbGncsCTxKKie+Fu4IGnOtIven+gJACAtlGTqoNG5zwsTOgljvtvMpJgY4u1bMV8cB
- lUO7JpjlxdvU2UNHhxacbsKT0Y7O/vfOMdeRxXw59xSMzMXkwfKjbup7GALED8iPNQ5hSCX9t1L
- lATa6kLteZbafjKU6O69l0nTz27wMWB4EhMLTMMkjLonl0cHPqkErym8RVs1cAmDK159DIEAGvO
- u1gaPBq/o3t9LiFQ+K83bNEgRtS4o4lyLzrcooPUZ7ZckJnYr7oIY+2Dlb5
-X-Google-Smtp-Source: AGHT+IHV1iaqyEBL5ezlvIg/78EDO1LKs0u/7cF8UDErBUL0IvCeBKxCwqzlhbIzs7qyf0WX8xURBP25UK/vGDKKV6Q=
-X-Received: by 2002:a05:6e02:3e06:b0:430:a025:8ac7 with SMTP id
- e9e14a558f8ab-430c5209542mr208174555ab.1.1761003385385; Mon, 20 Oct 2025
- 16:36:25 -0700 (PDT)
+ AJvYcCXzvZKVMFEZQjqCIVlLyki09xt6DK7CUSi+Efrs7WpvQAGsC/j81AsJwVd8HPMGTD6l2/W+yFx0URF4@nongnu.org
+X-Gm-Message-State: AOJu0YxWrf88ysN6eoFnRMMYIOqPA8D4HQTE77DW3XqwgDWg9QFdq5Bx
+ J0eB9kebBOxnGuMdq5uS8+3tsgxu08dav8n9u9uxqWN8Qov42ATUBH803jH4WWsaCi+cNtKPFhi
+ ia3ZM23lpn5QckQGd3EnyGos0PouvxPY=
+X-Gm-Gg: ASbGncv5ghz3tMXL+974gwdZd9LzKafD+dUEzRiI3DwrhthWVd8tYapxisdxOopiR9T
+ Wad4dUtmCI/0FJHjlbsiW3WCJthglOR4hR5iNOESJClNZFhV70hPw4fseFO8YSZRvCsToSz1KxG
+ CYuGHdMweitaMz9JCErU3f3Nt1QouG86EtsnrgEDpNWh44IWgxMUIQsNX6bmV5d3xGUYsgGYwL0
+ +SZYSXXl2f+eBgxI1VxuU/EKJ9uxEZJXeaUwYZfqm+aLgigrLmEuVZowBWT
+X-Google-Smtp-Source: AGHT+IF3q8l57Y1gZ2RrUJGKreTBZ6HgpsP0tygKVG9HBfH4iQg+qcq01nSD4iIaAQLsi5/hIJkjXVw5Xb4tVkXdm7Q=
+X-Received: by 2002:a92:c24f:0:b0:427:6e7f:89f8 with SMTP id
+ e9e14a558f8ab-430c5263cfdmr239305445ab.10.1761003464341; Mon, 20 Oct 2025
+ 16:37:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
- <20251016114104.1384675-14-vsementsov@yandex-team.ru>
-In-Reply-To: <20251016114104.1384675-14-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-15-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-15-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 20 Oct 2025 19:36:14 -0400
-X-Gm-Features: AS18NWBnn0rgFBMOpVZPTFPhNftySnraynoxmO0iChYDPSnm-BIauNXP8gkDbyk
-Message-ID: <CAFubqFvVMWA1RKQqb-ZUBTeDBiOMwd8yi3F6u+sojA4WskCrJQ@mail.gmail.com>
-Subject: Re: [PATCH v2 13/25] vhost-user-blk: postpone connect to pre-incoming
+Date: Mon, 20 Oct 2025 19:37:33 -0400
+X-Gm-Features: AS18NWCDRzg4iLvdZbedBX22_yzrIV5vMo7g5eqAi6kenu-rWaN33-rDQNKG4jU
+Message-ID: <CAFubqFv-sxLUMLuWtGig+GLW5S=A+0VfhLtxmTLbMH5FGcyNww@mail.gmail.com>
+Subject: Re: [PATCH v2 14/25] virtio: introduce .skip_vhost_migration_log()
+ handler
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
  mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
@@ -78,15 +79,15 @@ Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de,
  jasowang@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2f;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,72 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
 
-On Thu, Oct 16, 2025 at 7:46=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+On Thu, Oct 16, 2025 at 7:49=E2=80=AFAM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> That's a preparation for further backend-transfer migration for
-> vhost-user-blk. At initialization time we don't know will
-> user enable backent-transfer (by setting migration parameter) or
-> not. At time of pre-incoming, we know all migration parameters and
-> capabilities. So, now, let's postpone connecting up to pre-incoming
-> for incoming migration.
+> For vhost user backend migration we'll need to disable memory
+> logging on the device. Let's prepare a corresponding handler for
+> the device.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/block/vhost-user-blk.c | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
+>  hw/virtio/vhost.c          | 10 ++++++++++
+>  include/hw/virtio/virtio.h |  2 ++
+>  2 files changed, 12 insertions(+)
 >
-> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index af4a97b8e4..ffdd600526 100644
-> --- a/hw/block/vhost-user-blk.c
-> +++ b/hw/block/vhost-user-blk.c
-> @@ -577,8 +577,10 @@ static void vhost_user_blk_device_realize(DeviceStat=
-e *dev, Error **errp)
->          goto fail;
->      }
->
-> -    if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
-> -        goto fail;
-> +    if (!runstate_check(RUN_STATE_INMIGRATE)) {
-> +        if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
-> +            goto fail;
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 09d00e4d98..3e5192ec23 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1138,6 +1138,16 @@ static int vhost_migration_log(MemoryListener *lis=
+tener, bool enable)
+>      struct vhost_dev *dev =3D container_of(listener, struct vhost_dev,
+>                                           memory_listener);
+>      int r;
+> +
+> +    if (dev->vdev) {
+> +        VirtioDeviceClass *vdc =3D VIRTIO_DEVICE_GET_CLASS(dev->vdev);
+> +
+> +        if (vdc->skip_vhost_migration_log &&
+> +            vdc->skip_vhost_migration_log(dev->vdev)) {
+> +            return 0;
 > +        }
+> +    }
+> +
+>      if (enable =3D=3D dev->log_enabled) {
+>          return 0;
 >      }
->
->      trace_vhost_user_blk_device_realize_out(vdev);
-> @@ -636,10 +638,18 @@ static struct vhost_dev *vhost_user_blk_get_vhost(V=
-irtIODevice *vdev)
->      return &s->dev;
->  }
->
-> +static bool vhost_user_blk_pre_incoming(void *opaque, Error **errp)
-> +{
-> +    VHostUserBlk *s =3D VHOST_USER_BLK(opaque);
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 7db8046766..620ee4e389 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -238,6 +238,8 @@ struct VirtioDeviceClass {
+>      /* May be called even when vdev->vhost_started is false */
+>      struct vhost_dev *(*get_vhost)(VirtIODevice *vdev);
+>      void (*toggle_device_iotlb)(VirtIODevice *vdev);
 > +
-> +    return vhost_user_blk_realize_connect(s, errp) =3D=3D 0;
-> +}
-> +
->  static const VMStateDescription vmstate_vhost_user_blk =3D {
->      .name =3D "vhost-user-blk",
->      .minimum_version_id =3D 1,
->      .version_id =3D 1,
-> +    .pre_incoming =3D vhost_user_blk_pre_incoming,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_VIRTIO_DEVICE,
->          VMSTATE_END_OF_LIST()
-> @@ -647,7 +657,7 @@ static const VMStateDescription vmstate_vhost_user_bl=
-k =3D {
+> +    bool (*skip_vhost_migration_log)(VirtIODevice *vdev);
 >  };
 >
->  static const Property vhost_user_blk_properties[] =3D {
-> -    DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
-> +    DEFINE_PROP_CHR_NO_CONNECT("chardev", VHostUserBlk, chardev),
->      DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
->                         VHOST_USER_BLK_AUTO_NUM_QUEUES),
->      DEFINE_PROP_UINT32("queue-size", VHostUserBlk, queue_size, 128),
+>  void virtio_instance_init_common(Object *proxy_obj, void *data,
 > --
 > 2.48.1
 >
