@@ -4,94 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C56CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BC2CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAwsB-00025C-JE; Mon, 20 Oct 2025 16:52:55 -0400
+	id 1vAwtS-0002TS-EN; Mon, 20 Oct 2025 16:54:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAws9-000254-Ul
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:52:53 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAws7-0006Yr-53
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:52:52 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42421b1514fso2995318f8f.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 13:52:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760993569; x=1761598369; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3WNmbxZIg+q96mpCek2G0iZcQyZcaB8vmSJyXdqlrrI=;
- b=DAlvZ6say5KEWz0s8YYuJ3Y6FA0ByD3cwBd7ZeFMpWF42dTvSQiRhrc2xO+p3XmVpr
- hMcgpQOc/Z/Mh9JnBvTdBlpjY0tSdKVWe0v3K8B1IFu48TDxide5f9ZgpcCeInfTi7Uv
- wo2NoKXw/eXkufglmuDJRu4OOMNFTtYzfXrOS9irx16sHa3fO/6/FIjZdhzsN5gXIPvX
- oW47KMzbqeQ9LHCLCkJb0nG8a2aPG+I0Ul3a1P+Pu3h2SHXv7oUHe3nqF1W+tD5noeTE
- dG3FSCv+BHhLCKz1Hisl0OzGqh34inHXbkCUuZKiaqsF3Hm3hfcVMG9oRhDUT7CAo06U
- EVNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760993569; x=1761598369;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3WNmbxZIg+q96mpCek2G0iZcQyZcaB8vmSJyXdqlrrI=;
- b=WGPtLwEmehg7CtKq2ruJBJpyEmiB7mIiqOsT/wgxJP+F+J7PXyJLJSbYzfmG6dPU//
- WpgO8Im4A4U2IKzcek3QHsUljNTQP1xn03PBOX88YNpHC/W4DXFYVegygNOg4LU+7gC9
- MpNqV7qQHM6aOfcnQ8gT1wOJCMcuWc9AawjoeF+rL7a4r4tQgDW3Jg7Rlen7Dzz9XYsS
- IrPuRGJKFiaDuf5hL7ZDxawpJJluxI7zC2VPzAzcpEa4Ge8q4WkM3Hm4tZfkjPUsTGVC
- KkgpdJlrT8/U8mc0wMLaIwKzHoUTptqcQdH+1eO05RKgkoGYDRLEo2V3iLnLTgUlNbYf
- GLnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzIlblwzl91dephwofykTRjJAph0CutQMoY6apnk1VFFsSo3kzyKExIx+NyoFrP+YVcw8m8QEeE5GK@nongnu.org
-X-Gm-Message-State: AOJu0YzfvY+WA3uYbKG6ZpJxzyh2S24zuZjYTCPpObAUvNFDQtIZdoD9
- vwN4sjk8eTG5qeVmD0YwQz6l1+U5H2vIOXUmeGYOPyX6lfG6Nv+gXC5aqzvxjgJtg/A=
-X-Gm-Gg: ASbGncsFijKhX9OmTPnrQlC3zy8ZEgq3IDsr6UVlvop9Mzj/2CJqTGbdnakJWS2FphW
- IPJ+P6L4AOxlIfkYGV3Cl7zkkoY4EgDZcMM9SNvA9tEtQBeKNhyjNF5Ap0xKV9q59fE87NrjIeU
- h3qfQ26QeXnARIgX8Nbm8xFq46cAQ63emwN9JZc4g9M4E6qMvMq+6T7kMih46nWO+d3PTSKzYh9
- 7M5ScYbm6qPnwju8gv/iHEK7kR6E6IFA7ROGYRbxoze34mlGFWY69AmFJ8g+bLOGW9tAXskKB0M
- MD9nJjlN2kKVCiepfF9yLVSPXuc7Ph9Td7pSUsvtK9A8RwUcs+uXDXz5kpimHxK8QX8IgWre/Uy
- tI/SXCb1BD0P1LA5mKD4UlCqTNGGdWVjzPa0PLHvK2Wa2yO2IRErf7H+fPMrcsgNPrsyPboJ/ql
- dWlS6U43P+FvDTD6JptKgUODUd0/N8yVSVi6su+V6afa2UWF+K0gJo3g==
-X-Google-Smtp-Source: AGHT+IFJOeFiJGdMRc9Z+yJUsROS64JqkJ2mKB9qcjeFEdwUKC6HbxwKwjGJQ96xhM3dV8AZrflKbA==
-X-Received: by 2002:a05:6000:220c:b0:3de:b99d:d43 with SMTP id
- ffacd0b85a97d-42704da613emr9341650f8f.19.1760993568680; 
- Mon, 20 Oct 2025 13:52:48 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce06bsm16628429f8f.45.2025.10.20.13.52.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 13:52:47 -0700 (PDT)
-Message-ID: <dd6eca59-436a-49bc-86f2-d7eb784e05fe@linaro.org>
-Date: Mon, 20 Oct 2025 22:52:46 +0200
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vAwtP-0002TB-9h; Mon, 20 Oct 2025 16:54:11 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vAwtM-0006c2-02; Mon, 20 Oct 2025 16:54:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 477E25972FF;
+ Mon, 20 Oct 2025 22:54:05 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 08hfsvKZhonn; Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2AE1F5972DE; Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 286B759703F;
+ Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
+Date: Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v4 01/16] hw/pci-host/raven: Simplify PCI facing part
+In-Reply-To: <56bb063e-696c-49fb-943a-7ef9f28c4826@linaro.org>
+Message-ID: <45817152-d402-cf83-cbd4-22d7d2c6d60d@eik.bme.hu>
+References: <cover.1760795082.git.balaton@eik.bme.hu>
+ <9f0e1a8860f6a8f00c15e212ba5c46ae6a7fe39a.1760795082.git.balaton@eik.bme.hu>
+ <56bb063e-696c-49fb-943a-7ef9f28c4826@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 12/19] hw/arm/virt: Register valid CPU types
- dynamically
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Anton Johansson <anjo@rev.ng>
-References: <20250422145502.70770-1-philmd@linaro.org>
- <20250422145502.70770-13-philmd@linaro.org>
- <62c23632-b498-4fe9-b337-294b0fe4cec4@linaro.org>
- <4e83559d-bbac-414c-a71f-076e038db772@linaro.org>
-In-Reply-To: <4e83559d-bbac-414c-a71f-076e038db772@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1403972558-1760993643=:81454"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +70,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 20:18, Philippe Mathieu-Daudé wrote:
-> On 22/4/25 19:56, Richard Henderson wrote:
->> On 4/22/25 07:54, Philippe Mathieu-Daudé wrote:
->>> +#ifdef CONFIG_TCG
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a7")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a15")));
->>> +#ifdef TARGET_AARCH64
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a35")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a55")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a72")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a76")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a710")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("a64fx")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("neoverse-n1")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1")));
->>> +        vct = g_slist_prepend(vct, 
->>> g_strdup(ARM_CPU_TYPE_NAME("neoverse-n2")));
->>> +#endif /* TARGET_AARCH64 */
->>
->> Why do these need to be strdup'ed?
-> 
-> g_slist_prepend() expects non-const.
-> 
->>
->> Do you anticipate other instances where these names cannot be 
->> constructed at compile-time?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-In a few patches this become a run-time check:
+--3866299591-1403972558-1760993643=:81454
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-   if (target_aarch64()) {
-     ...
-   }
+On Mon, 20 Oct 2025, Philippe Mathieu-Daudé wrote:
+> On 18/10/25 16:04, BALATON Zoltan wrote:
+>> The raven PCI device does not need a state struct as it has no data to
+>> store there any more, so we can remove that to simplify code.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/pci-host/raven.c | 30 +-----------------------------
+>>   1 file changed, 1 insertion(+), 29 deletions(-)
+>> 
+>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>> index f8c0be5d21..172f01694c 100644
+>> --- a/hw/pci-host/raven.c
+>> +++ b/hw/pci-host/raven.c
+>> @@ -31,7 +31,6 @@
+>>   #include "hw/pci/pci_bus.h"
+>>   #include "hw/pci/pci_host.h"
+>>   #include "hw/qdev-properties.h"
+>> -#include "migration/vmstate.h"
+>>   #include "hw/intc/i8259.h"
+>>   #include "hw/irq.h"
+>>   #include "hw/or-irq.h"
+>> @@ -40,12 +39,6 @@
+>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
+>> -
+>> -struct RavenPCIState {
+>> -    PCIDevice dev;
+>> -};
+>> -
+>>   typedef struct PRePPCIState PREPPCIState;
+>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+>> @@ -65,7 +58,6 @@ struct PRePPCIState {
+>>       MemoryRegion bm_ram_alias;
+>>       MemoryRegion bm_pci_memory_alias;
+>>       AddressSpace bm_as;
+>> -    RavenPCIState pci_dev;
+>>         int contiguous_map;
+>>   };
+>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, 
+>> Error **errp)
+>>                             "pci-intack", 1);
+>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
+>> &s->pci_intack);
+>>   -    /* TODO Remove once realize propagates to child devices. */
+>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
+>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
+>> TYPE_RAVEN_PCI_DEVICE);
+>>   }
+>>     static void raven_pcihost_initfn(Object *obj)
+>> @@ -277,7 +268,6 @@ static void raven_pcihost_initfn(Object *obj)
+>>       PCIHostState *h = PCI_HOST_BRIDGE(obj);
+>>       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
+>>       MemoryRegion *address_space_mem = get_system_memory();
+>> -    DeviceState *pci_dev;
+>>         memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+>>       memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, 
+>> s,
+>> @@ -314,12 +304,6 @@ static void raven_pcihost_initfn(Object *obj)
+>>       pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
+>>         h->bus = &s->pci_bus;
+>> -
+>> -    object_initialize(&s->pci_dev, sizeof(s->pci_dev), 
+>> TYPE_RAVEN_PCI_DEVICE);
+>> -    pci_dev = DEVICE(&s->pci_dev);
+>> -    object_property_set_int(OBJECT(&s->pci_dev), "addr", PCI_DEVFN(0, 0),
+>> -                            NULL);
+>> -    qdev_prop_set_bit(pci_dev, "multifunction", false);
+>>   }
+>>     static void raven_realize(PCIDevice *d, Error **errp)
+>> @@ -329,16 +313,6 @@ static void raven_realize(PCIDevice *d, Error **errp)
+>>       d->config[PCI_CAPABILITY_LIST] = 0x00;
+>>   }
+>>   -static const VMStateDescription vmstate_raven = {
+>> -    .name = "raven",
+>> -    .version_id = 0,
+>> -    .minimum_version_id = 0,
+>> -    .fields = (const VMStateField[]) {
+>> -        VMSTATE_PCI_DEVICE(dev, RavenPCIState),
+>> -        VMSTATE_END_OF_LIST()
+>> -    },
+>> -};
+>> -
+>>   static void raven_class_init(ObjectClass *klass, const void *data)
+>>   {
+>>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>> @@ -350,7 +324,6 @@ static void raven_class_init(ObjectClass *klass, const 
+>> void *data)
+>>       k->revision = 0x00;
+>>       k->class_id = PCI_CLASS_BRIDGE_HOST;
+>>       dc->desc = "PReP Host Bridge - Motorola Raven";
+>> -    dc->vmsd = &vmstate_raven;
+>>       /*
+>>        * Reason: PCI-facing part of the host bridge, not usable without
+>>        * the host-facing part, which can't be device_add'ed, yet.
+>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, const 
+>> void *data)
+>>   static const TypeInfo raven_info = {
+>>       .name = TYPE_RAVEN_PCI_DEVICE,
+>>       .parent = TYPE_PCI_DEVICE,
+>> -    .instance_size = sizeof(RavenPCIState),
+>>       .class_init = raven_class_init,
+>>       .interfaces = (const InterfaceInfo[]) {
+>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>
+> I'd rather this patch split in 2: remove vmstate, mentioning this breaks
+> migration, then use pci_create_simple().
 
-I'll keep as it for now but am opened to simplify on a following up
+I can do the other way around: first convert to pci_create_simple which 
+leaves RavenPCIState pci_dev unused that then can be removed in another 
 patch.
+
+Regards,
+BALATON Zoltan
+--3866299591-1403972558-1760993643=:81454--
 
