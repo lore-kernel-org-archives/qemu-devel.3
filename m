@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FAF6CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA69CCD19F
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzPI-0004NE-SB; Mon, 20 Oct 2025 19:35:16 -0400
+	id 1vAzQT-00051o-8r; Mon, 20 Oct 2025 19:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzPG-0004Mx-TX
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:35:14 -0400
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
+ id 1vAzQS-00051W-B9
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:36:28 -0400
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzPF-000102-7O
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:35:14 -0400
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-430c97cbe0eso29682315ab.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:35:12 -0700 (PDT)
+ id 1vAzQQ-00012s-O0
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:36:28 -0400
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-430cb80df33so15475535ab.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:36:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761003312; x=1761608112; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761003385; x=1761608185; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qp8th4bMseoZh9Xev43d+1FAiXTXTUM4YGnyjc2lfM4=;
- b=UT1pILrm7jlRJu5lxGVyCIm4+T/Cblx0N8A67N3Fsrfy/5pQH7qnyioDyacIOO/UC1
- J0LJR4gr8qH6Ps4zg93rIKxBjy+uT1LAfEG13MN0CWNBURILJuUsTu3lGhthsyf1pDUr
- FeK8AqvCjI1HDh+ID/1p1m8wwlTdQy1jdiJHuA5fwEUyHutUnJhz3KtY0JB2EQEgwiN+
- bFe0OqF5lLFGaBBTFMbRtjuNust8AJirsdU4qOEzWiVWqqrbkrIcy8RG0UOirH6C+UHX
- Lz5pBrGMHigCJfcAIfjrzyR+YyF7EjoSb0X/g+XDYDDnSfsjfEzRuEd+ygYkdqCyVFZA
- 647A==
+ bh=llsahX1QQKQXxlSrxekZyeHmDlAgFPBZQHstRb1cKeg=;
+ b=LnR3sMoCYyNz2hB9sq8SDJxgNV6vTaw6Ncrs9kn6YTkV1/N+lskXa1rVCv5eXx6rET
+ 72BV1r7IOrSpyHk4D1bkrnHar6XixVoFn9UsLrD2cRTF+TlRhSqYf5EHNUGPzV1rAanS
+ dCZAglWGPE5iBTLHasMCsTB7qDU3RwoPDbHztbyWkjHyYYPJ97P9fwvJgHRDKpCGTLII
+ tATrQ9DM2//TQNYj/3k1bp7iJdwWLzgzlzZv++dYbTYzb6OiH9pv+4w6o8TZ26rj5kBs
+ a5cGB1OAvOAZRO6XbM9zX+jJ7L9HQQ1/dnUXZ559YSqSYl5pTi7Sfi6HWKxGnU5suNsp
+ FyQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761003312; x=1761608112;
+ d=1e100.net; s=20230601; t=1761003385; x=1761608185;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qp8th4bMseoZh9Xev43d+1FAiXTXTUM4YGnyjc2lfM4=;
- b=MQN/cpfPEFkbeYw2cLY4WhRZzi9AO5cFRVufmK0uwmEe2H6SqxSmpNUjRc+Ht2IY8M
- 0QSIVkk7z+wi3xWxg3UYvTcGfDC5G7T6PEHCEn/mU3BSnqWSh1me3R8KUpU4YRyZ71FV
- V5GW2+4M5JqPF0/KrwLnTgfIPpGcw20h48FNTrgVhUFBbJGoB/LmjffVvpZ6sYMc1oLL
- UziGrL68iDFC2ivyE14s3ojeGE+7KGooqU++6Abw/ZlC6G7MTB/dx6aySKiZ61geB1Qw
- rdiXmDeeqPB3X/zL7z2AudCEoPNKFQDS2MkK+FiMgB1aR90rHEeuErEhzHqd6LaqYQAm
- ovVQ==
+ bh=llsahX1QQKQXxlSrxekZyeHmDlAgFPBZQHstRb1cKeg=;
+ b=lbVsawzcOCS5mUIQBIR2+E/X/OB99OpOvavawx9urFQSFQV3VC/tBu4wm22PB5OCyN
+ VYYcZviYGw1801SPYQf7xWBuNdDcGQR3B9T1h3DNVnN3IZxDFE5ozh/Mkg/M3WScl/ag
+ 8cBs2HsupMLfVXjMGOosD8uQ3qc5sCesX9NIwkKq6TWteSbl7RmndWgsryL9EIP3WiTw
+ woeZgCgDuW8p1lzDXPPJQ+SAxsGA3vvOL8cSkvoiCaD7nj17/oa7oCUAEZxXd1lrkX/w
+ UzPc31kHj3NzWtG0ArMQABWos5+gHSb/nE9ox4T24YQQvMrZX3arn7tk/2buDGmayAld
+ mXOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1k+eC76mUCETLO39UcdxSVVmSbQ8T1xKvI+id2wA2mayk/N9M1aVDDYzRJV0E8w00j06N5V0CqVGn@nongnu.org
-X-Gm-Message-State: AOJu0YzalN2iQZ5+2taA/dHNVSouOZZRccgzRpeAFxlJPvlllmHuUeM0
- t5pxL9pxXH8qTG0gmLNdVD9sI/mBoWw3NFE2BPe5CS8HMKXjqgBzcg1XK3ZyXcgsnrgv8298dT3
- J21B8Zu7LvojQAJdJ35danwYzGEK4yak=
-X-Gm-Gg: ASbGncvgdTx0okRuawZlhhfGz0ENJN0VTcS88QFMfIiOhwrSySpzGZOR6py/q4j6skM
- xsD11rMV3VfsSFi3KIM+EW9SSRB6yK6XPBjv5kBanAP47JXPChGB9iIHppJ2AUIAAsBYWimC6R4
- 1LAxC6QHWZOgpM1HwJq/yPd43Vb8Yubj+inwV86yzEkCs91Jykg/jq/iFQ7s4FdJQHItbkCJX2o
- eC2a2lT9hutfsayATJF7dABye09nzDA5mZpPxySiB0VAtueWYQTHVTnXr5Nvi+/LyjBBhU=
-X-Google-Smtp-Source: AGHT+IE6PShnI/CRClO5D7qa4+UJR/t4DLb5LjtRmoiSHFq5WUxY0bqCirxan9MtMGsDjG0ViuLHqFJ22muA6ZYVZQE=
-X-Received: by 2002:a05:6e02:156c:b0:430:b32d:c1a1 with SMTP id
- e9e14a558f8ab-430c524e127mr218120825ab.7.1761003311695; Mon, 20 Oct 2025
- 16:35:11 -0700 (PDT)
+ AJvYcCXksCW+RUeZzezwpZeU5B6EA2S90VyBNUiONt9K+dgUP5JI74jME1gZINPd4du9ESeMB00UsSBjS191@nongnu.org
+X-Gm-Message-State: AOJu0YyJqdOHkM+RAejEIpFStZfYdJ10taEEDx+FZNrsO31NkOjnupLc
+ 6KnmmctVTDGqqE2vkK1E7TXgRi3eIZvT0BS9KXHqoaPAPmH6jM7MPBgrMtnEzP3sbV497YkwdDY
+ SUxZzTGK6dt2l6GWZfMQfIwdmyaATUiA=
+X-Gm-Gg: ASbGncsCTxKKie+Fu4IGnOtIven+gJACAtlGTqoNG5zwsTOgljvtvMpJgY4u1bMV8cB
+ lUO7JpjlxdvU2UNHhxacbsKT0Y7O/vfOMdeRxXw59xSMzMXkwfKjbup7GALED8iPNQ5hSCX9t1L
+ lATa6kLteZbafjKU6O69l0nTz27wMWB4EhMLTMMkjLonl0cHPqkErym8RVs1cAmDK159DIEAGvO
+ u1gaPBq/o3t9LiFQ+K83bNEgRtS4o4lyLzrcooPUZ7ZckJnYr7oIY+2Dlb5
+X-Google-Smtp-Source: AGHT+IHV1iaqyEBL5ezlvIg/78EDO1LKs0u/7cF8UDErBUL0IvCeBKxCwqzlhbIzs7qyf0WX8xURBP25UK/vGDKKV6Q=
+X-Received: by 2002:a05:6e02:3e06:b0:430:a025:8ac7 with SMTP id
+ e9e14a558f8ab-430c5209542mr208174555ab.1.1761003385385; Mon, 20 Oct 2025
+ 16:36:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
- <20251016114104.1384675-13-vsementsov@yandex-team.ru>
-In-Reply-To: <20251016114104.1384675-13-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-14-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-14-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 20 Oct 2025 19:35:00 -0400
-X-Gm-Features: AS18NWDZ96Fid4x7kUBx0A9mf3pfa0csLq2Gp6ZAiN_KOiLxD8IkeU6hqjIX4s4
-Message-ID: <CAFubqFsKOJwD8w_jNRCuyTVs=LytbYF+ZsKTP986g-An-6Pbdw@mail.gmail.com>
-Subject: Re: [PATCH v2 12/25] vhost-user-blk: move first vhost_user_blk_init()
- to _realize()
+Date: Mon, 20 Oct 2025 19:36:14 -0400
+X-Gm-Features: AS18NWBnn0rgFBMOpVZPTFPhNftySnraynoxmO0iChYDPSnm-BIauNXP8gkDbyk
+Message-ID: <CAFubqFvVMWA1RKQqb-ZUBTeDBiOMwd8yi3F6u+sojA4WskCrJQ@mail.gmail.com>
+Subject: Re: [PATCH v2 13/25] vhost-user-blk: postpone connect to pre-incoming
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
  mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
@@ -79,8 +78,8 @@ Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de,
  jasowang@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,75 +102,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 16, 2025 at 7:48=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+
+
+On Thu, Oct 16, 2025 at 7:46=E2=80=AFAM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> We'll need to postpone further connecting/reconnecting logic to the
-> later point to support backend-transfer migration for vhost-user-blk.
-> For now, move first call to vhost_user_blk_init() to _realize() (this
-> call will not be postponed). To support this, we also have to move
-> re-initialization to vhost_user_blk_realize_connect_loop().
+> That's a preparation for further backend-transfer migration for
+> vhost-user-blk. At initialization time we don't know will
+> user enable backent-transfer (by setting migration parameter) or
+> not. At time of pre-incoming, we know all migration parameters and
+> capabilities. So, now, let's postpone connecting up to pre-incoming
+> for incoming migration.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/block/vhost-user-blk.c | 17 ++++++++++++++---
->  1 file changed, 14 insertions(+), 3 deletions(-)
+>  hw/block/vhost-user-blk.c | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
 >
 > diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index 36e32229ad..af4a97b8e4 100644
+> index af4a97b8e4..ffdd600526 100644
 > --- a/hw/block/vhost-user-blk.c
 > +++ b/hw/block/vhost-user-blk.c
-> @@ -464,14 +464,12 @@ static int vhost_user_blk_realize_connect(VHostUser=
-Blk *s, Error **errp)
->      DeviceState *dev =3D DEVICE(s);
->      int ret;
->
-> -    s->connected =3D false;
-> -
->      ret =3D qemu_chr_fe_wait_connected(&s->chardev, errp);
->      if (ret < 0) {
->          return ret;
->      }
->
-> -    ret =3D vhost_user_blk_init(dev, true, errp);
-> +    ret =3D vhost_user_blk_connect(dev, errp);
->      if (ret < 0) {
->          qemu_chr_fe_disconnect(&s->chardev);
->          return ret;
-> @@ -501,7 +499,16 @@ static int vhost_user_blk_realize_connect_loop(VHost=
-UserBlk *s, Error **errp)
->              error_prepend(errp, "Reconnecting after error: ");
->              error_report_err(*errp);
->              *errp =3D NULL;
-> +
-> +            s->connected =3D false;
-> +
-> +            ret =3D vhost_user_blk_init(dev, false, errp);
-> +            if (ret < 0) {
-> +                /* No reason to retry initialization */
-> +                return ret;
-> +            }
->          }
-> +
->          ret =3D vhost_user_blk_realize_connect(s, errp);
->      } while (ret < 0 && retries--);
->
-> @@ -566,6 +573,10 @@ static void vhost_user_blk_device_realize(DeviceStat=
+> @@ -577,8 +577,10 @@ static void vhost_user_blk_device_realize(DeviceStat=
 e *dev, Error **errp)
->      s->inflight =3D g_new0(struct vhost_inflight, 1);
->      s->vhost_vqs =3D g_new0(struct vhost_virtqueue, s->num_queues);
->
-
-Why call vhost_user_blk_init() here if we call it in
-host_user_blk_realize_connect_loop()?
-
-> +    if (vhost_user_blk_init(dev, false, errp) < 0) {
-> +        goto fail;
-> +    }
-> +
->      if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
 >          goto fail;
 >      }
+>
+> -    if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
+> -        goto fail;
+> +    if (!runstate_check(RUN_STATE_INMIGRATE)) {
+> +        if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
+> +            goto fail;
+> +        }
+>      }
+>
+>      trace_vhost_user_blk_device_realize_out(vdev);
+> @@ -636,10 +638,18 @@ static struct vhost_dev *vhost_user_blk_get_vhost(V=
+irtIODevice *vdev)
+>      return &s->dev;
+>  }
+>
+> +static bool vhost_user_blk_pre_incoming(void *opaque, Error **errp)
+> +{
+> +    VHostUserBlk *s =3D VHOST_USER_BLK(opaque);
+> +
+> +    return vhost_user_blk_realize_connect(s, errp) =3D=3D 0;
+> +}
+> +
+>  static const VMStateDescription vmstate_vhost_user_blk =3D {
+>      .name =3D "vhost-user-blk",
+>      .minimum_version_id =3D 1,
+>      .version_id =3D 1,
+> +    .pre_incoming =3D vhost_user_blk_pre_incoming,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_VIRTIO_DEVICE,
+>          VMSTATE_END_OF_LIST()
+> @@ -647,7 +657,7 @@ static const VMStateDescription vmstate_vhost_user_bl=
+k =3D {
+>  };
+>
+>  static const Property vhost_user_blk_properties[] =3D {
+> -    DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
+> +    DEFINE_PROP_CHR_NO_CONNECT("chardev", VHostUserBlk, chardev),
+>      DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+>                         VHOST_USER_BLK_AUTO_NUM_QUEUES),
+>      DEFINE_PROP_UINT32("queue-size", VHostUserBlk, queue_size, 128),
 > --
 > 2.48.1
 >
