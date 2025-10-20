@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417EACCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC75CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAmVx-00075Z-RE; Mon, 20 Oct 2025 05:49:17 -0400
+	id 1vAmW9-0007A4-En; Mon, 20 Oct 2025 05:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAmVv-000750-0Q
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:49:15 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAmW6-000790-CW
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:49:26 -0400
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAmVt-0001dM-6s
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:49:14 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAmW2-0001eM-K3
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:49:25 -0400
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-471076f819bso33175165e9.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 02:49:11 -0700 (PDT)
+ 5b1f17b1804b1-47117f92e32so25021745e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 02:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760953750; x=1761558550; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760953760; x=1761558560; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4HKXcyz/2clxRpS46l0Vexb09ZBfH6sW5WdctLeLR9Q=;
- b=vbjQhIDR6JBGTVWD/Eljeo3OWKpGn9WhwNnSRnvYwFs3QUcfLXPknYOVnszMYGHzpP
- tjEj6an7it6fsI0v1YU8nsF7Y+rms4u9K2zC8JrxWf0eFTACkyI9OrTMLWkcArl0z5wM
- GMPD60kNLT8QAr6JHxjVGayHqFMKJVjVOA1Dq6v0wON6ItJNWEswekFQFOW/Li1Ej5Vs
- He7YOKKU3xdz+SXTuWEkrgvc1Ltidi1iasCZPtlLaEvWQF/HQk/BcWjLoJR0yp1bo318
- KBYQUzrljB5Db5Oeho0YPLuWsQChwgtk/Y3OO9FnuJZCZp6mQxGjZX46RbcnOCJA6/WP
- tbFw==
+ bh=gCybBwF6V8sY1v6Bxh03dNHepbxx2PYShng4zrkVJvs=;
+ b=EtcEuUTJ7kgXLnv6cn+9KRRZz/YSE+8zZgoh5kH7zyEDWc2rhpADD6Pg3pMYRv8FVX
+ HbrjSbiD+DKKls+m+mFWc1chZSYPqMZzbkMUAyX+f4K+Yrx9u7QalhhO0AP55Y5OjdST
+ QGmlBSf1isi4eoaYj7Spg/kyME+TG/F4CVtxQovkVfZXY2hZiPIspse3dwMrBlsWDYLg
+ y89sN4K07gYxS4ScOpDSPPntoH0s9qrdBJWfWVQdySb9kDS/YHbrtBMuxCeXJo3sTjrt
+ xWtn5jR/a7XUhNNPDRwbZm1iPiiaDPFd9mYeJu8ikiKc+PHq44r+ZB4wD+2RJHhSkRtR
+ ZjzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760953750; x=1761558550;
+ d=1e100.net; s=20230601; t=1760953760; x=1761558560;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4HKXcyz/2clxRpS46l0Vexb09ZBfH6sW5WdctLeLR9Q=;
- b=MsyPxvabUGKb8a/RbVVLKDwHVD/xl44zZYuYkswHuERM6MuhXz/Tl74nSq43BFxwDP
- QJ1MgvRE8yz2NvoKaJVx/vB4CBhKiHagzkNlKaBQnjs6IbC01XvapYYKB4snGhfjkzQk
- yt9HekqqpML+csynd+8AEnf9QQT5+F9FgP1Z/u/NV/K84Zpo+MmLL0Yl3UWFalto9v5Z
- Xary+7hkRhdEZ9NQA2LkBjSo8RHhxjX3eWHpMkoAC2+l7XsDJJJgEBEhddDZlXsT0mYu
- 8hzqL+vj3+GhTbAtbpz/IC0rP7m32/ppKh9JocBEfpKZ75fIG4bdbj8p0Ci48WX1rHWR
- FFuQ==
-X-Gm-Message-State: AOJu0YxVtbWUiMskJMAZkcuIwvf90v9nVdNJAowMRUse077HX0NXQ9e3
- zCR+qGxwA8Cw/ovAWwZIwYEguIeCTJm9WJWTTvW+n+hBtP38xMLcBX57XULrM+ENsRKzyyB9eft
- ghp1srFk=
-X-Gm-Gg: ASbGncuH3mm/yxuOcSX76+1lWsobaUbhjP14mXqaee6oaFnxqEPESpqtCW/YR9wDqwR
- LxpjzMJ5Lu9QForqaYs2s1i+yuTJSuFGhswIOnEj0MqlTEYZRorShMG83jsqCZaEIKPOWLYRjT2
- mdsbqY0Xr4lklmrcYeCUq/WyKjaadZ7q+gH48Xoq8HMmuGixujPsPKgrKnLDI29OmT7jp7kEAri
- BCMN224QDJNmJgp0fBxmnKlqwRDuOhg4PSt5MGMNuIAd5zCAasWqFjfnY6vd1+n0/QFZRSjfkRs
- wA2w8da46SwmSkRDY2aTdOEVBtGoI22vttX7i8mxgSrRqpS2nsjVFi77ErDOtcByoH1nW78AyLs
- kW2UFFyoR8kyhRC4xJB52IQGs2ryQEUQawA0rXPPoPTJS4HAaxXWwbvDyr0N5oznTOSIXnN+qmT
- F/STKTDzBYMFYfMf81KlG4w25wug9XSXznYfkVAv/HuN7IPub22m17h89KS5jXY9JSirxyekM=
-X-Google-Smtp-Source: AGHT+IEOD348iuHr6ywW2js24djhFGfz7W33unbZqE2zoiAS9OpAq2JBOSB/Negj+LaIlFH7rpqpgA==
-X-Received: by 2002:a05:600c:1d9b:b0:471:a3b:56d with SMTP id
- 5b1f17b1804b1-4711792006bmr102464465e9.34.1760953750028; 
- Mon, 20 Oct 2025 02:49:10 -0700 (PDT)
+ bh=gCybBwF6V8sY1v6Bxh03dNHepbxx2PYShng4zrkVJvs=;
+ b=qGWJ7pJWDo+B5+xrcq2xdJBRx/mJQnMjHBS+tmPg9B9x+I66E+30yMZti4c/96oCVt
+ zF5Zew0YCnZWPHCkSXpJlZ0IJCzqlzbB/NdrEIRGlqDajJTJYONVN5qdoFa8v+bqldTF
+ hn/wO3RteYYQ1S5fNIDlwWnHr99tfEB5WcWb22HyO+J+kj5SC9IS60VkJxw/eiLf4vxT
+ pZdh2aKCYjPHsnY0B+p3Bq/W290ZaDklOocObyRWWDGDvarxE8tHcewRUCXuEhgl1Tb2
+ QYmeBxd9cUzIIY+okUpw6NBEOlX54qT732K79ia4AZ0L3A1x0mj2aYvzjKJHh36FWCMz
+ x6nA==
+X-Gm-Message-State: AOJu0Yz4ncwmnq5t0H5YSXEw9XrM+n5+o4v3cOR0tPvlgJTcR+KCG+Y4
+ E8lzcyTb6b41Fr/lAPgvNNRjKaJ0E432vKpn2s/oTUk10yWZ4tlUOFBkwyx9H6Y1cYPq+X+/MfB
+ PUwurLgk=
+X-Gm-Gg: ASbGncsrb4Kl7rR5B8+LfmaIYPHWpBqqYfM5N2e9qH8J7PG2gr+uO/GsqIFlu23MaHR
+ WRH7ScNmDC1U+QjaOA+onCJ92TLtgL5zoeXNHA11m1ZHnk3Z+1ERX47YEdf6fYi8cQWLffObYFX
+ nalfgx80P2RaBN862Js83wf8EixOt52vU/JsE8HppgUx6211MsID9aGN5G+lRwTLKwh78oP5L+6
+ XWLm4i2Uq2GtHvnJyxhtQwYxaf1XIJuF5p5BBp1gNTrYFk3bksgn7FYzf88DiA8LfKRFDO4rjtp
+ a37+0te5Mqvcpo9LOvdzCZ7LHy4jwdD2MsoQDsMvkqnEAU6SjGL6mjsb+3Tr8Bfn+3r2O5RRcb/
+ ICizT6Bpiin3PQKaRhm/43/QBWrzNbt+TKMwCqMe47mawYO4OBUxNZaQXSO+ljbZVMq3HnrL2Fs
+ 5cMUL4KeDcKZ8zVm46bgwzzBDXNkXNWKo2MvyGdJRVj27dmvIDhw==
+X-Google-Smtp-Source: AGHT+IEHmXNWtmKp5QRazYaA2cfTtkPfZw5w99KPEkQAtn0TsqccJptgUBHKv2uxNZwNf306A88feA==
+X-Received: by 2002:a05:600c:4e89:b0:45d:dc85:c009 with SMTP id
+ 5b1f17b1804b1-471178a236cmr87010555e9.10.1760953760193; 
+ Mon, 20 Oct 2025 02:49:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4711442d6c6sm216578845e9.6.2025.10.20.02.49.08
+ ffacd0b85a97d-427f00ce3aesm14650950f8f.48.2025.10.20.02.49.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 02:49:09 -0700 (PDT)
+ Mon, 20 Oct 2025 02:49:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eric Farman <farman@linux.ibm.com>,
@@ -77,10 +77,10 @@ Cc: Eric Farman <farman@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH v2 1/3] hw/s390x/ccw: Remove deprecated s390-ccw-virtio-4.2
- machine
-Date: Mon, 20 Oct 2025 11:49:00 +0200
-Message-ID: <20251020094903.72182-2-philmd@linaro.org>
+Subject: [PATCH v2 3/3] hw/core/machine: Remove MachineClass::fixup_ram_size
+ callback
+Date: Mon, 20 Oct 2025 11:49:02 +0200
+Message-ID: <20251020094903.72182-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020094903.72182-1-philmd@linaro.org>
 References: <20251020094903.72182-1-philmd@linaro.org>
@@ -111,67 +111,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This machine has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") it can now be removed.
+The MachineClass::fixup_ram_size callback, which was added
+in commit 5c30ef937f5 ("vl/s390x: fixup ram sizes for compat
+machines"), was only used by the s390-ccw-virtio-4.2 machine,
+which got removed. Remove it as now unused.
 
+Reported-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/s390x/s390-virtio-ccw.c | 33 ---------------------------------
- 1 file changed, 33 deletions(-)
+ include/hw/boards.h | 7 -------
+ hw/core/machine.c   | 3 ---
+ 2 files changed, 10 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index ad2c48188a8..64b81345f1e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -715,26 +715,6 @@ static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
-     s390_cpu_restart(S390_CPU(cs));
- }
- 
--static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
--{
--    /* same logic as in sclp.c */
--    int increment_size = 20;
--    ram_addr_t newsz;
--
--    while ((sz >> increment_size) > MAX_STORAGE_INCREMENTS) {
--        increment_size++;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 665b6201214..d0a69cd490b 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -250,12 +250,6 @@ typedef struct {
+  *    It also will be used as a way to option into "-m" option support.
+  *    If it's not set by board, '-m' will be ignored and generic code will
+  *    not create default RAM MemoryRegion.
+- * @fixup_ram_size:
+- *    Amends user provided ram size (with -m option) using machine
+- *    specific algorithm. To be used by old machine types for compat
+- *    purposes only.
+- *    Applies only to default memory backend, i.e., explicit memory backend
+- *    wasn't used.
+  * @smbios_memory_device_size:
+  *    Default size of memory device,
+  *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"
+@@ -325,7 +319,6 @@ struct MachineClass {
+                                                          unsigned cpu_index);
+     const CPUArchIdList *(*possible_cpu_arch_ids)(MachineState *machine);
+     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+-    ram_addr_t (*fixup_ram_size)(ram_addr_t size);
+     uint64_t smbios_memory_device_size;
+     bool (*create_default_memdev)(MachineState *ms, const char *path,
+                                   Error **errp);
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 681adbb7ac5..7aec3916e80 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -648,9 +648,6 @@ static void machine_set_mem(Object *obj, Visitor *v, const char *name,
+         mem->size = mc->default_ram_size;
+     }
+     mem->size = QEMU_ALIGN_UP(mem->size, 8192);
+-    if (mc->fixup_ram_size) {
+-        mem->size = mc->fixup_ram_size(mem->size);
 -    }
--    newsz = sz >> increment_size << increment_size;
--
--    if (sz != newsz) {
--        qemu_printf("Ram size %" PRIu64 "MB was fixed up to %" PRIu64
--                    "MB to match machine restrictions. Consider updating "
--                    "the guest definition.\n", (uint64_t) (sz / MiB),
--                    (uint64_t) (newsz / MiB));
--    }
--    return newsz;
--}
--
- static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
- {
-     S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-@@ -1165,19 +1145,6 @@ static void ccw_machine_5_0_class_options(MachineClass *mc)
- }
- DEFINE_CCW_MACHINE(5, 0);
- 
--static void ccw_machine_4_2_instance_options(MachineState *machine)
--{
--    ccw_machine_5_0_instance_options(machine);
--}
--
--static void ccw_machine_4_2_class_options(MachineClass *mc)
--{
--    ccw_machine_5_0_class_options(mc);
--    mc->fixup_ram_size = s390_fixup_ram_size;
--    compat_props_add(mc->compat_props, hw_compat_4_2, hw_compat_4_2_len);
--}
--DEFINE_CCW_MACHINE(4, 2);
--
- static void ccw_machine_register_types(void)
- {
-     type_register_static(&ccw_machine_info);
+     if ((ram_addr_t)mem->size != mem->size) {
+         error_setg(errp, "ram size %llu exceeds permitted maximum %llu",
+                    (unsigned long long)mem->size,
 -- 
 2.51.0
 
