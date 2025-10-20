@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA3ECCD1A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E00CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAwEX-0008Mk-Pf; Mon, 20 Oct 2025 16:11:58 -0400
+	id 1vAwG6-0000kf-O4; Mon, 20 Oct 2025 16:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwE5-0008CY-SV
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:11:35 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwG4-0000k8-MA
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:13:32 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwE2-0002TA-Rj
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:11:29 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3f99ac9acc4so328839f8f.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 13:11:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwG2-0002g8-NE
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:13:32 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4270a3464caso2074041f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 13:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760991084; x=1761595884; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760991209; x=1761596009; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BOC8KHQT5zdlkcCN6BWQC4klzoLQxyO82TNfKseWIAc=;
- b=IbEcmTFq6SUUM8Z3XdWu/ysRhFWyZunb4VGW/JLvW1p6UYyraTH/7VrWpZk4qSRBe3
- wgmciUZs6q3VjYegsTobiRZrSmHcW/VxPZljT4QVAFBJnhCdPq/gT5Vq0adfsR2gRh5n
- 4k64MRAi0jRdryfMyTqLON0qPmGUlQxW5cLzuPQif54Lbvh677qM6M+aOKjsNQJw1w98
- kOOA8+VFoz7+Gi7uwrPOk2KJAEC54snQGTlnH7xKfao/VGSfed3d5JkaxprrgLZLw7iZ
- +yREm4VkObbYoVfhMHFdYUwOuFboVvALN0Bum5TAtfGXTdX0C3pim6A6OSFolyY9eqj8
- Zwug==
+ bh=+zoKNK2w4s/QFCCtn6WgxyW0olNXNFTF+1SMk5AG7iY=;
+ b=gsHDArmwTiOCkwXHtco8rqenRvVZM0E8Oc8wX8qK7TBDJ6Lw2d7ajIHM+Kpi12xuYf
+ zdtPq7a9gWyl8KyzUHTX653RTRzhowCWaIc3O+xrKBaEv2n04qe9iuk2VQEkTAm5h9t1
+ IffXqvO9/VBK1H6GluCLHtBvPlT3nRVlCMIWFLfK1pxkuVGhVua36qD8olbRIkNmp3M2
+ 6kyy5UHhd7nVQxe6HEU2R1xOM21PTfZhKuawwp+AWNAWohypwc9Rmbw7st4KPXSLHlds
+ UAGLw5J/NxX8rJ+95/7+OOyehT6dTEUH61T9WT/zfEm/Y28nEj4piUV+X4Wv+xcLSTAd
+ P//w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760991084; x=1761595884;
+ d=1e100.net; s=20230601; t=1760991209; x=1761596009;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BOC8KHQT5zdlkcCN6BWQC4klzoLQxyO82TNfKseWIAc=;
- b=ZRDetoBK8epen8IX9m0mw6kenI0zvH9qjTf6wk71DJMQAK6sVaJJvKofdOb6VCu8jD
- kXtCS64z6ynCJZ2HMDTB8U6WdGYrwYv7voh/FyQdcJzmGkwnmi67/EKShwn8F/znPDbg
- Vx2g87RUWBHrX4P9bbsVQm752BJl+Yg8fIBlAs2KxM6jNCCrO+GzR3n/TqGh2rpHD+M5
- RaaYbIiOXaFJIt8Xi9sCZRqTrbTI43maLfJgbuX2x2RioRbwLK4IlldB+KIFYr5W1p5f
- 8nzWDc9Rj3Pv1IjW0WhgoTkF0mDHRokD88r5NqIthAMvkyE6TFu9ayykeLWqCZqJLVRA
- xAaQ==
+ bh=+zoKNK2w4s/QFCCtn6WgxyW0olNXNFTF+1SMk5AG7iY=;
+ b=BmcUIaGGjVCiTk+Zv9J+4aQEenyHbXyp5B8Idv4qnG/kkixEN6oN8c3RJQkjgWBNYH
+ eCvLpndnBpmmnMxD6EyzjhXfL5cx2eusq1W+SVuVIArzo2GDw0p1ebObXsMRuFdYzqDn
+ aLMGOzlLEhRVdKL5FWDtuD2rBYLi3ycU6h9QQbwlCwPI1MFrZkK6tZbcKgO+0cOymSYz
+ hf8i0E5vpOwWDudzHEs0NkmKVOwz2tRem+wUsWILbe/vrFX3fxpuggzwjecqOH4HIYSj
+ s2fLlIkNXpz4ktNIxO+WYirDJK+WcGAFQb7RiJuYsNXBsDMRXMjmaorOmaHLAsIJtpoO
+ zsPg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuXUgCMvccvpht0dB7ZOPX0nRpvaLKZTv2Uew0Nk4T2eQOIRVQXSFU0zTIORWuWX+V855FK1QgrVaK@nongnu.org
-X-Gm-Message-State: AOJu0Yz3WL8Mfv3lj70kqYDY5TJHBx05C3vtaZjh4R+i1DwSs4w7RobW
- zAn3E12VgxRmMdKu4R8mRgPRTprY3L3JUoPPuZJppwlN4EPDX972VgpogP2AjtHco+E=
-X-Gm-Gg: ASbGncuUSHXDY1VFr16hGabys7Ddf2dM5OdvJtefagtLpxwo21AlIwTyo+YjgJtbL3x
- yGyzeUw9aLNjKLnmQiqpGQb4RFSmSehf3yTXQgn8bogH/UG8Ovkt+VXkIA8HIw3PIFz7THLoflJ
- Z+LOQwDA2hRN4z3deGGW+GNiDMf8y0pcC5Hg6ar0gj4NW0E97Kaqjwi4BxDu1bVaUpQcmxPRfsD
- RRvSqx97gSi3WY7VdBukfUWT0+1MiJSkVL8JTeADTLxjgtpJuZRspoMUJbZ99X8wfFRm+HXxEae
- lyPsC2NbWpWMbIhmX2F7ImDKszoZsoO3uiGBv+3QoW6Dl5YENRKs+SD2UZ6TxP39gzD3SKoTgTs
- qNgq7xs4UFM20F6RScXWmMLHRv7+qRXN0hvd8xd9NoriGfTY4l36SLBvNpS/RIz/PxSrPzSFglk
- EJihrBnjs5s9nVqO1aUcSRAQsZl4p3H7wyjheIsXqTfQnaguZLT+w6aQ==
-X-Google-Smtp-Source: AGHT+IGlQit8jxcVermT3Q3KqVwTt/gJVpp0fGqe/gGpdTsTpMenj6k695GicqExOZtqsoDkwoun8w==
-X-Received: by 2002:a05:6000:2010:b0:426:ff7c:86e4 with SMTP id
- ffacd0b85a97d-42704d8df97mr9521343f8f.19.1760991083917; 
- Mon, 20 Oct 2025 13:11:23 -0700 (PDT)
+ AJvYcCWOW8FLilBNYxOOx+oXDN9hz0iMmNCxPYuX9mNEi7flAkDDO2u4F0yNgsEO8Sw9GAJE/lvl2rDxycAO@nongnu.org
+X-Gm-Message-State: AOJu0Yy85ByvkIv94UISp59MAQDahNhJE0TMEPr1jQgG9EAjlsGS0IAY
+ 9H7rdwT/jsWZZKbhmxGlV4ZB9SzZvhsAdZ7T+Xq2n0FtpES/wVP5PYybF6LJ4gaBsGI=
+X-Gm-Gg: ASbGnctZ9M7QnPaGohKUJ+PNZ5bLdmpSnsonNv/Nb6Lj6qMziAsVZ55fL2Aglh+Scrr
+ zVBzx6A46GJAfYjr2v36b5xl5Yw9jkuzyb9dTeNHsbV4VCmvk6XZglt18yfyYvCV1gqUtyI8zfM
+ erTLAsMrGCJIF8sjqWu1PZMroNsmrEpisHFAaRG++cVQBzL8jMhYWksHwSHhxTomY1D6qruO91g
+ VfRJDLxbn4LUPvgIPu3EFBMrzCSCOPLX3+WkbMhzA1uWVjgMnnSWR/vQJuSqDPP9HHEprCrMmBj
+ 6hK9gOzH2wbkPBnOQ+IJGVbS7uMzfz6ycYaKpWXvHPa9ETpQcvehGOA/LkP3pTf08pMrR7lIzcd
+ vsTdR7x4Ik6RBnW0vtW4K3OT+0rtIu5u5uqSsNRnxKDA+3fOI8T9362l0ge7k4I0B8svBbBl3o7
+ mYEDcS5nbslSSvF1BYCTUBgeje41GrBX48rUpHaVht9eA=
+X-Google-Smtp-Source: AGHT+IEqPB/hRgkPJ5+R53aF58Pg77t93tw9HmMNwktTH+cUeYXHWw/J2BomTHalAZd0cwpuZqBthg==
+X-Received: by 2002:a05:6000:22c6:b0:403:8cc:db66 with SMTP id
+ ffacd0b85a97d-42704db5bb3mr8800830f8f.32.1760991209208; 
+ Mon, 20 Oct 2025 13:13:29 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00b9fdfsm16692563f8f.40.2025.10.20.13.11.23
+ 5b1f17b1804b1-47496c14a26sm1216815e9.4.2025.10.20.13.13.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 13:11:23 -0700 (PDT)
-Message-ID: <dbb84bf7-2a5c-4c16-9dad-46669ad9b998@linaro.org>
-Date: Mon, 20 Oct 2025 22:11:22 +0200
+ Mon, 20 Oct 2025 13:13:28 -0700 (PDT)
+Message-ID: <f8c2d8a8-6d9f-465c-921c-1871ca40b111@linaro.org>
+Date: Mon, 20 Oct 2025 22:13:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add missing machine name in the Alpha section
+Subject: Re: [PATCH v2 1/3] target/arm: Implement SME2 support in gdbstub
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20251020140425.45003-1-thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+References: <20251017153027.969016-1-peter.maydell@linaro.org>
+ <20251017153027.969016-2-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251020140425.45003-1-thuth@redhat.com>
+In-Reply-To: <20251017153027.969016-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,20 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/10/25 16:04, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 17/10/25 17:30, Peter Maydell wrote:
+> For SME2, we need to expose the new ZT0 register in the gdbstub XML.
+> gdb documents that the requirements are:
 > 
-> Without a machine name here, get_maintainers.pl uses the "-----..."
-> separator for describing what the maintainer is taking care of:
+>> The ‘org.gnu.gdb.aarch64.sme2’ feature is optional.  If present,
+>> then the ‘org.gnu.gdb.aarch64.sme’ feature must also be present.
+>> The ‘org.gnu.gdb.aarch64.sme2’ feature should contain the
+>> following:
+>>
+>>     - ZT0 is a register of 512 bits (64 bytes).  It is defined as a
+>>       vector of bytes.
 > 
->   $ scripts/get_maintainer.pl -f hw/alpha/dp264.c
->   Richard Henderson <richard.henderson@linaro.org> (maintainer:--------------)
->   qemu-devel@nongnu.org (open list:All patches CC here)
+> Implement this.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+>   configs/targets/aarch64-bsd-user.mak      |  2 +-
+>   configs/targets/aarch64-linux-user.mak    |  2 +-
+>   configs/targets/aarch64-softmmu.mak       |  2 +-
+>   configs/targets/aarch64_be-linux-user.mak |  2 +-
+>   target/arm/internals.h                    |  2 +
+>   target/arm/gdbstub.c                      |  6 +++
+>   target/arm/gdbstub64.c                    | 52 +++++++++++++++++++++++
+>   gdb-xml/aarch64-sme2.xml                  | 14 ++++++
+>   8 files changed, 78 insertions(+), 4 deletions(-)
+>   create mode 100644 gdb-xml/aarch64-sme2.xml
 
-Patch queued, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
