@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE6ACCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AD3CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAkKD-0006lS-Jx; Mon, 20 Oct 2025 03:29:01 -0400
+	id 1vAkLB-000722-8J; Mon, 20 Oct 2025 03:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkK8-0006kg-SN
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:28:57 -0400
-Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkL8-0006yu-Qa
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:29:58 -0400
+Received: from 5.mo548.mail-out.ovh.net ([188.165.49.213])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkK4-0000WB-L3
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:28:56 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.197])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cqn923T4hz5ygS;
- Mon, 20 Oct 2025 07:28:38 +0000 (UTC)
-Received: from kaod.org (37.59.142.103) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkL6-0000aG-Fp
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:29:58 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.107])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cqnBS05vcz5yJt;
+ Mon, 20 Oct 2025 07:29:52 +0000 (UTC)
+Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 20 Oct
- 2025 09:28:37 +0200
+ 2025 09:29:51 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-103G0054fb7cc32-d1d6-4163-b4e1-4d87f315fd4a,
+ (GARM-105G006701c8de3-9a6c-45a2-b8eb-0baf1185b5e0,
  FF32B7A34F2DEDF77D336B29AD6F053710A0DB6D) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <c39cc3e2-bbd3-4ac9-a3e3-ac2515fdb141@kaod.org>
-Date: Mon, 20 Oct 2025 09:28:36 +0200
+Message-ID: <d54934cf-945f-4a08-8710-30f2d5f5eb54@kaod.org>
+Date: Mon, 20 Oct 2025 09:29:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/6] sd: Add RPMB emulation to eMMC model
+Subject: Re: [PATCH v5 1/6] hw/sd/sdcard: Fix size check for backing block
+ image
 To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
 CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
  <bmeng.cn@gmail.com>, <qemu-block@nongnu.org>, Ilias Apalodimas
  <ilias.apalodimas@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>, Alexander Bulekov
- <alxndr@bu.edu>, Alistair Francis <alistair@alistair23.me>, Joel Stanley
- <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
+ Jerome Forissier <jerome.forissier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
+ Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
+ Alexander Bulekov <alxndr@bu.edu>
 References: <cover.1760702638.git.jan.kiszka@siemens.com>
+ <484a8687e5cd44d94597512502180ba1aba57572.1760702638.git.jan.kiszka@siemens.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,35 +89,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <cover.1760702638.git.jan.kiszka@siemens.com>
+In-Reply-To: <484a8687e5cd44d94597512502180ba1aba57572.1760702638.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.103]
-X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG6EX2.mxp5.local (172.16.2.52) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: f4002407-2c46-47c5-868f-29b40cab8406
-X-Ovh-Tracer-Id: 16475574812710570939
+X-Ovh-Tracer-GUID: 683f8e15-a81d-4e46-9618-9ae462679638
+X-Ovh-Tracer-Id: 16496403961444862907
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGQlzlVYbhOAII8hMbfQchPNB7XT1OOlqAlnqnllKf90Qyi3BKBP5lqqDCkNK/760wiSC9W2JqVwfCsbExbIQ9pvqErxQ+N+osjyuS2WMb8yTlhQ7v4aKmgQfdCPo9pDpavXqytOQMEt+ioVBOshsbc7W41i2NAsNWeX5F1Kgp6InFOTnr5YXRybVVyaLrr4DBDRkXn1/6Cbhs9ophDKQ9rCt3lVEGpNrsLIILjyHzBTLtNw9IBW7ij2Oi1rawa+peRb24yDu9YL0VegahgGdTYt8VtQPTsK3lj0qcdtBiAf4nQriN9ewj88iH+C3dFkSbYqW3CwK6eV09j6u5PiGJWWrjFi8X49+4uoOXrCTGYrsnnrlxovQjOoNXrghH7a3YQzEhCOWdVZGKwJAmLLbZHjH7UI8nN47USKUtgyUFba/Fgh6+c85MUd1MhGyEEqVvOIYkNgCGa51+3pk/FCYSzoa+DWb7nQ+rep/JSEkl60WzpeYdSNQCzCts+uFUpJ892EnxlvVR2bUHNAy4LC/0s+jwW+pv8qDOfoPXUYcJdEukJVrxvlVDNdEIQbyNlJZKvP0jBnP3AaJAUy1g1d7PTOzFy4umDOwx/GoEz4QyS7iAPgvSjUWnDfxV0QWCezu8VEu5G0z1D3Xws5qD6dcDOK/c6BuDFNKr2+z0bHMTChw
-DKIM-Signature: a=rsa-sha256; bh=KICs8DkhjPiYGTh500ScPV935mZdL7uEaQTIDwe+TL4=; 
+X-VR-SPAMCAUSE: dmFkZTE/lW0jZdVrBv1TSkjlZWUtv6PAtcBvoIi938bP+Y/NPTl9htWBW4gN8rfCB8HWvMENvNofcahZvkyHRSXr2TSMm+YV06w69AOb45ag5MdVjFmkodck1mV23crisLwTgbVIbBsMVRdeemU3hdXp3oj87/N69y4fg9S/4e/aRsSOZViTIdxDD/zXuT48XcK0B92nMstLirP4x6/B/0SaSuxPFTsU38dpD5iZRPp2qohrewqW9/nfdjK25vP/xK97BipOKlZ4+chD4IKfIbYAFzn54TnQ423ppIqqBz39/lkzAk3a/mJjz7HrbM5NmvSc1tS5+fS47k65rww/6Za41ca+P7jkOlXLg0uPWrUjZ8zSF57qLX5XHc0Uit6O2XIzP1pb56ObjBc8EVG1Or7lUDROqOVZuPVI9C/O0rnAjAjzSrFlc4MJkgyVLyIqz3Cagx7tg2v55z2EwUTvTEs5Ymi4emprXWmiCQS/sWW5QoRWSOc0j8SxqEaoql3MwNyFecfohVhlHdwH4XNey95EgOotWuodstMmn/cjvJ19GKx6FS38n3rA0k7QhgSw9Yqkf9irwA+ja8nT/VWCVUi1qFsQNulr6uZuE3XqagIXL/OoYJf0Rf5Hnq9h9ICHjUCDt/Az0KHoLWz0w8MbI06GRnH6PzMW+8CWvjJrrzdd0hBQIQ
+DKIM-Signature: a=rsa-sha256; bh=+0N6Vrcmz1DOua3YmWrcwJp4FOHmaZfOcePVXIInMZs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760945320; v=1;
- b=Pn9QMaS1/eSdglrvkuErK28mj6U8EtZK4dF4pW03hQfYUfLpLQKi8UQi2fWS/9Pv38e/FfOP
- kg4Pcj+eHhCT1yQWOrCEzxv4cOpiWCx8Doo1s3581DCVvheK6Y28EPNe87qgG+94qlxKlHiqTPD
- +ubOIo47vnrlw6aoD+GDGiX9bIhnFIjIODoF3vv1iq0uTS39n9AVemk4hz6mawPJdfnWNO1W73+
- 8U90d/6lJgO/yCK9K3DDLcNS0TFMYXl5DeWExcuBKSQQrUIa/ppiOuzcdpriCRFupAM524+F071
- dvSOX/tY6uKgwGhVxYr4KLwj12aHnniImDo+DkS9dSlig==
-Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
- helo=3.mo548.mail-out.ovh.net
+ t=1760945392; v=1;
+ b=M460CJHWbMmW3dISU0EMLfrJ6O0+xl83WGpcqYHSgx1O0xYZIDhPxy1hi1zXY/MHdf9/VTjn
+ 4amwoATL8W3YD/7Js0bVUn7S2NmpvTaqMt0Xd16I9fJnEhkJuV4zlYJ783uWFRhk1tYFqOS1fNo
+ JjCkf07P7OkdPSpzE2W1EpjSJRUogMlvj/n52t5XfBjBtcvxzXJ+24M4pvXK1AN72Znv0Jq1frj
+ oHmgpv3/Kf/NEqDMJPnUqtWUUy34MF2Zr/07EurJona1gq4SoB29cnPwPBY6ap5pNlj6bDPEl+h
+ WSxQ2y0pr+Hs+b7jEu58+xKosZT8LtjPAxFyK6H6cjESA==
+Received-SPF: pass client-ip=188.165.49.213; envelope-from=clg@kaod.org;
+ helo=5.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,89 +134,122 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/17/25 14:03, Jan Kiszka wrote:
-> Changes in v5 [1]:
->   - fix regression of patch 1 with unplugged SD cards
->   - address review comments on documentation
+> From: Jan Kiszka <jan.kiszka@siemens.com>
 > 
-> Changes in v4:
->   - add truncation warning to mkemmc.sh
->   - fix typos in doc and mkemmc.sh
+> Alignment rules apply the the individual partitions (user, boot, later
+> on also RPMB) and depend both on the size of the image and the type of
+> the device. Up to and including 2GB, the power-of-2 rule applies to the
+> user data area. For larger images, multiples of 512 sectors must be used
+> for eMMC and multiples of 512K for SD-cards. Fix the check accordingly
+> and also detect if the image is too small to even hold the boot
+> partitions.
 > 
-> Changes in v3:
->   - rebased, dropping merged patches
->   - rework image alignment rules to match hardware
->   - improve/fix mkemmc script
->   - add emmc documentation
-> 
-> Changes in v2:
->   - handle write counter expiry
->   - assert() availability of QCRYPTO_HASH_ALGO_SHA256
->   - add missing SPDX-License-Identifier
-> 
-> This closes an old gap in system integration testing for the very
-> complex ARM firmware stacks by adding fairly advanced Replay Protected
-> Memory Block (RPMB) emulation to the eMMC device model. Key programming
-> and message authentication are working, so is the write counter. Known
-> users are happy with the result. What is missing, but not only for RPMB-
-> related registers, is state persistence across QEMU restarts. This is OK
-> at this stage for most test scenarios, though, and could still be added
-> later on.
-> 
-> What can already be done with it is demonstrated in the WIP branch of
-> isar-cip-core at [2]: TF-A + OP-TEE + StandaloneMM TA + fTPM TA, used by
-> U-Boot and Linux for UEFI variable storage and TPM scenarios. If you
-> want to try: build qemu-arm64 target for trixie with 6.12-cip *head*
-> kernel, enable secure boot and disk encryption, then run
-> 
-> $ QEMU_PATH=/path/to/qemu-build/ ./start-qemu.sh
-> 
-> Deploy snakeoil keys into PK, KEK and db after first boot to enable
-> secure booting:
-> 
-> root@demo:~# cert-to-efi-sig-list PkKek-1-snakeoil.pem PK.esl
-> root@demo:~# sign-efi-sig-list -k PkKek-1-snakeoil.key -c PkKek-1-snakeoil.pem PK PK.esl PK.auth
-> root@demo:~# efi-updatevar -f PK.auth db
-> root@demo:~# efi-updatevar -f PK.auth KEK
-> root@demo:~# efi-updatevar -f PK.auth PK
-> 
-> Note that emulation is a bit slow in general, and specifically the
-> partition encryption on first boot is taking 20 min. - we should
-> probably reduce its size or understand if there is still something to
-> optimize.
-> 
-> Jan
-> 
-> [1] https://github.com/siemens/qemu/commits/queues/emmc/
-> [2] https://gitlab.com/cip-project/cip-core/isar-cip-core/-/commits/wip/qemu-rpmb
-> 
-> CC: Alexander Bulekov <alxndr@bu.edu>
-> CC: Alistair Francis <alistair@alistair23.me>
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> ---
+> CC: Warner Losh <imp@bsdimp.com>
 > CC: Cédric Le Goater <clg@kaod.org>
 > CC: Joel Stanley <joel@jms.id.au>
-> CC: Warner Losh <imp@bsdimp.com>
+> CC: Alistair Francis <alistair@alistair23.me>
+> CC: Alexander Bulekov <alxndr@bu.edu>
+> ---
+>   hw/sd/sd.c | 65 +++++++++++++++++++++++++++++++++++++-----------------
+>   1 file changed, 45 insertions(+), 20 deletions(-)
 > 
-> Jan Kiszka (6):
->    hw/sd/sdcard: Fix size check for backing block image
->    hw/sd/sdcard: Allow user-instantiated eMMC
->    hw/sd/sdcard: Add basic support for RPMB partition
->    hw/sd/sdcard: Handle RPMB MAC field
->    scripts: Add helper script to generate eMMC block device images
->    docs: Add eMMC device model description
-> 
->   docs/system/device-emulation.rst |   1 +
->   docs/system/devices/emmc.rst     |  53 +++++
->   hw/sd/sd.c                       | 352 ++++++++++++++++++++++++++++---
->   hw/sd/sdmmc-internal.h           |  21 ++
->   hw/sd/trace-events               |   2 +
->   scripts/mkemmc.sh                | 218 +++++++++++++++++++
->   6 files changed, 618 insertions(+), 29 deletions(-)
->   create mode 100644 docs/system/devices/emmc.rst
->   create mode 100755 scripts/mkemmc.sh
-> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index d7a496d77c..d1e1bb4f0e 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2759,9 +2759,32 @@ static void sd_instance_finalize(Object *obj)
+>       timer_free(sd->ocr_power_timer);
+>   }
+>   
+> +static void sd_blk_size_error(SDState *sd, int64_t blk_size,
+> +                              int64_t blk_size_aligned, const char *rule,
+> +                              Error **errp)
+> +{
+> +    const char *dev_type = sd_is_emmc(sd) ? "eMMC" : "SD card";
+> +    char *blk_size_str;
+> +
+> +    blk_size_str = size_to_str(blk_size);
+> +    error_setg(errp, "Invalid %s size: %s", dev_type, blk_size_str);
+> +    g_free(blk_size_str);
+> +
+> +    blk_size_str = size_to_str(blk_size_aligned);
+> +    error_append_hint(errp,
+> +                      "%s size has to be %s, e.g. %s.\n"
+> +                      "You can resize disk images with"
+> +                      " 'qemu-img resize <imagefile> <new-size>'\n"
+> +                      "(note that this will lose data if you make the"
+> +                      " image smaller than it currently is).\n",
+> +                      dev_type, rule, blk_size_str);
+> +    g_free(blk_size_str);
+> +}
+> +
+>   static void sd_realize(DeviceState *dev, Error **errp)
+>   {
+>       SDState *sd = SDMMC_COMMON(dev);
+> +    int64_t blk_size = -ENOMEDIUM;
+>       int ret;
+>   
+>       switch (sd->spec_version) {
+> @@ -2774,32 +2797,34 @@ static void sd_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       if (sd->blk) {
+> -        int64_t blk_size;
+> -
+>           if (!blk_supports_write_perm(sd->blk)) {
+>               error_setg(errp, "Cannot use read-only drive as SD card");
+>               return;
+>           }
+>   
+>           blk_size = blk_getlength(sd->blk);
+> -        if (blk_size > 0 && !is_power_of_2(blk_size)) {
+> -            int64_t blk_size_aligned = pow2ceil(blk_size);
+> -            char *blk_size_str;
+> -
+> -            blk_size_str = size_to_str(blk_size);
+> -            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
+> -            g_free(blk_size_str);
+> -
+> -            blk_size_str = size_to_str(blk_size_aligned);
+> -            error_append_hint(errp,
+> -                              "SD card size has to be a power of 2, e.g. %s.\n"
+> -                              "You can resize disk images with"
+> -                              " 'qemu-img resize <imagefile> <new-size>'\n"
+> -                              "(note that this will lose data if you make the"
+> -                              " image smaller than it currently is).\n",
+> -                              blk_size_str);
+> -            g_free(blk_size_str);
+> -
+> +    }
+> +    if (blk_size >= 0) {
+> +        blk_size -= sd->boot_part_size * 2;
+> +        if (blk_size > SDSC_MAX_CAPACITY) {
+> +            if (sd_is_emmc(sd) && blk_size % (1 << HWBLOCK_SHIFT) != 0) {
+> +                int64_t blk_size_aligned =
+> +                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
+> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+> +                                  "multiples of 512", errp);
+> +                return;
+> +            } else if (!sd_is_emmc(sd) && blk_size % (512 * KiB)) {
+> +                int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
+> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+> +                                  "multiples of 512K", errp);
+> +                return;
+> +            }
+> +        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
+> +            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power of 2",
+> +                              errp);
+> +            return;
+> +        } else if (blk_size < 0) {
+> +            error_setg(errp, "eMMC image smaller than boot partitions");
+>               return;
+>           }
+>   
 
-I checked the series on the aspeed tree :
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
