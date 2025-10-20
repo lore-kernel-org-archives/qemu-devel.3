@@ -4,97 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF97CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDC7CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqXl-0002Uv-5c; Mon, 20 Oct 2025 10:07:25 -0400
+	id 1vAqZa-0003Dr-Qu; Mon, 20 Oct 2025 10:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vAqXj-0002UW-AE
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:07:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vAqXf-0006af-KU
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:07:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760969235;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4T6WXifuoHiTbI5bT6KA08RlAabe17r5hMhCM7ERp7E=;
- b=OGIGGCXttR+CCWqE2maxLI9Xe0gzJ5hKkmkubI57QO/sovgQ6MErq97pXge+NRgQay4XWS
- cqaT45zDLSIL2cWouuqK5bq63zmUZwRZxppSojQSAifWrFk8CNu3sLm7x0XRKgFG15T1nT
- 4KR4Y3Rlw6wf7l3J9HnfXp4qsM1seRI=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-nN3qAqgpM5qex1093-PYQw-1; Mon, 20 Oct 2025 10:07:14 -0400
-X-MC-Unique: nN3qAqgpM5qex1093-PYQw-1
-X-Mimecast-MFC-AGG-ID: nN3qAqgpM5qex1093-PYQw_1760969231
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-290da17197eso52151695ad.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 07:07:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vAqZV-0003Cx-Bq
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:09:14 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vAqZQ-0006i7-MU
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:09:12 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-63e16fbdd50so3330452d50.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 07:09:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760969346; x=1761574146; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=R+vWKXYePCWA4bi2+f4sMJFhep6lKGDa+fVhlfdzZ7k=;
+ b=xUOkKoB8nzqZDFGXz+xx9XYQMBJexPenM5rraNAh+AW1nwSWlCiqgr/bDf2fL/lN5J
+ JADcuCk3IB09uFEpBaV81Z6u9OmRKtlpjoGiN+mBxhdWrEYGrSmFP84TMBcE1xa2qaTw
+ bZrd+a9gpi6azilLY80PvsGqz3k1UJ4aexEnGprBAVdG6GADLK/s+qKtbtvvyYK93n6t
+ 0yBbt88LiS8g/93uqwagWdq1XpVkkrjHpA9rcPyNut/wVIf+VpN2eXsxCgjU3NScIQT1
+ w1g/EQj9dCURzXMz65OLPvkI6SfESV5Hkkjto06+4w4QkWVwzZSk4ahkxUj7k070u/eh
+ hkDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760969231; x=1761574031;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4T6WXifuoHiTbI5bT6KA08RlAabe17r5hMhCM7ERp7E=;
- b=OgSpYMtZc0hs5AG5SzJgEnQYQX8P0sPV2rSFzh/YnDs2Q3FuOskJnjQ/jH7Cb4Z31h
- QfqmTJUNYzkVGBVBr4knucwrj+kKM6NFvjOaL+1H9ubGxmj5Tu9siechzHTV/1sp7N/W
- LMnRv+H7KsAm3D7o/2DnZrbKKA4E+Q+SYgNuQt+EQvhhp612LOv7efBmYS7/31oUGvUp
- j2fHAe/6IZ7Xb9BUdYr9d6U+bTf4tRmcsHVAi6l8yNsLKk5uoCAR1ZVpH05MGw+i0G8k
- sUY05FNfMdeBzBzrRhPsxXQUzUwdvv9r64ly3i4gdVqNJOJQR0qC6QOnlN1N4oEbGxo0
- o6RQ==
-X-Gm-Message-State: AOJu0Yypa+QIBgn/jBSa49qqpg8dd/nPMIO2BpVg9qUKOT7lefu5rh/p
- +TRHkKGEjZcrsaY5nIlwyPEMxh/mYsOUco9CqUu9ccxrJKxf084hp0j1VPZirK9P/z8GnqunYks
- Tyvw+RYPuwI3AypgTMVRz291w2FXECvRvhz7eTQ85vdgrfR/c/UVLJVNl6eZn1btHJmG63e0Vid
- QmfHvfwZGGJqnsxSSX2bEVYgXWMd5p0iNZpxrNyyA=
-X-Gm-Gg: ASbGncubTLo9C4iW0mQSg4Mi4336oZlJNFahxkz8nJZdRQsZn/P8irzsAGbhrDAg6NW
- WxLpjPQTMdvaHREO7HjY6e17idMDEftwXrvcSFajYeEc5GPVpC6IS0cDs9LZbLYqDPNMFj+l1dr
- h4rAW5NPYFluBML2qnb+UGukH84UMB0cpmlpNTWo5wGLhUbaGAD4I=
-X-Received: by 2002:a17:903:15ce:b0:273:ab5f:a507 with SMTP id
- d9443c01a7336-290c9cd9f34mr153925925ad.21.1760969230559; 
- Mon, 20 Oct 2025 07:07:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGY5emj6kXjT6DuzK7WiAm3VEwztB0Lzp79cdf2BDxa2N+gLPdrZmuGGbcuXCmyjpY2VlOW89rPSNJ83gbbL3o=
-X-Received: by 2002:a17:903:15ce:b0:273:ab5f:a507 with SMTP id
- d9443c01a7336-290c9cd9f34mr153925545ad.21.1760969230076; Mon, 20 Oct 2025
- 07:07:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760969346; x=1761574146;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=R+vWKXYePCWA4bi2+f4sMJFhep6lKGDa+fVhlfdzZ7k=;
+ b=FeB0PBcOczNPM4H+Jddp4X9BTjzLYEom9h05bwAP3UTH+E5wUWBcsmtYe+t45Lmpnm
+ +SG3Iuf9utipmqUHHVWQr8pXjxtu1ZMnb6C/nqmavRYoVL1WCSJ/295mXIi0ldZhTnHA
+ Y1HX5SO9kqOFUclMS25L+ggBLr00WU89509jzyEiNVghpUw8kHOKksHY1xkzEt6CW+8w
+ fjrGbZkgLuKylrSGKoHap6gVlpB/CxSc8Qd6qVxvw0WK2+DNH5jsHD/QvgNpGZuvbqkN
+ bPopzn2NhrB133RYNRrfuxBX+I643EbtvQ5Mix9nz6gFDpbnZ84yl9c8Ka61G7/nSt3o
+ e76g==
+X-Gm-Message-State: AOJu0Yzs5rpsTkodRU0g0qQyQqUMTyR89Smyk8ODajVBZsf4S1tPi2lj
+ Up4lO7Mm5DHowkF4nwMvdnPmXiD4FWRAab0BFPmzXu4uISnc4NOy7ejM2y2aGJHwbf3yZCz47Tv
+ gTI+llF8DnbNswQCQDpwn0+Pow5Y8I77oaL51xDa3lQ==
+X-Gm-Gg: ASbGncvPMzO+Jysy3Hb7sbo7odyMk/laq18JGa0mlA4Dig3ZXaiQl4cwPR73ZkPQ2PN
+ X813deIZl3OuiZwzsGSHPbNx4CfIaZht8LhXru7H/F9hwcRcXATpIKhvfSdJNbElwJUZIUXD4+h
+ fv+IZwpYmJoO/Edco6gnSi99yjy3t3zvHe3x1r4A8uFqNnttd6g+pRuK4LoqfQkl0iIbxThMrHO
+ furq1CG45+rK/nZBPO7F7+0d73fHV0zX6ivKbx4xFGf6KH629ucR9hVukXwJFTtoLfjn/eF
+X-Google-Smtp-Source: AGHT+IG1g9MIK2HmIcZrQnYY4gQuZUMU8itXPFC/kokpgHb3APNlaF+E+7rux+R5C/rhLYsTPgYNQ3TdDxXz+MsCAPg=
+X-Received: by 2002:a05:690e:d5c:b0:63d:d8c1:4347 with SMTP id
+ 956f58d0204a3-63e160e9854mr10475477d50.5.1760969346395; Mon, 20 Oct 2025
+ 07:09:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251016143827.1850397-1-aesteve@redhat.com>
- <20251016143827.1850397-2-aesteve@redhat.com>
- <a74da624-8665-46d6-846d-15fc932775cc@redhat.com>
-In-Reply-To: <a74da624-8665-46d6-846d-15fc932775cc@redhat.com>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 20 Oct 2025 16:06:58 +0200
-X-Gm-Features: AS18NWB8txtxoc38oZWH1QC_Re_lUgx9hMgDCkQ5YYwS8XQnEZOIKTG8Qz5jXCc
-Message-ID: <CADSE00+Rp5+YqM7MP2MVJecHmUGHL271eq-2gFgSuFAC_H-cMA@mail.gmail.com>
-Subject: Re: [PATCH v10 1/7] vhost-user: Add VirtIO Shared Memory map request
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- hi@alyssa.is, stefanha@redhat.com, jasowang@redhat.com, dbassey@redhat.com, 
- stevensd@chromium.org, Stefano Garzarella <sgarzare@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, slp@redhat.com, manos.pitsidianakis@linaro.org
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-25-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-25-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Oct 2025 15:08:54 +0100
+X-Gm-Features: AS18NWDdNoKF3wHrZijxN11VA7z1qACq_TLm8RjBi4iW4v6zKryskTnAUq0QHMY
+Message-ID: <CAFEAcA83Tgv5CV+EjMDemEb5FQkfAj0en7dq1g4JkxHZ1kKOdQ@mail.gmail.com>
+Subject: Re: [PATCH v2 24/37] target/arm: Use flush_if_asid_change in
+ vmsa_ttbr_write
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,84 +94,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 20, 2025 at 3:50=E2=80=AFPM David Hildenbrand <david@redhat.com=
-> wrote:
+On Tue, 14 Oct 2025 at 21:17, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> > + * Returns: 0 on success, negative errno on failure
-> > + */
-> > +static int
-> > +vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
-> > +                                    QIOChannel *ioc,
-> > +                                    VhostUserHeader *hdr,
-> > +                                    VhostUserPayload *payload,
-> > +                                    int fd)
-> > +{
-> > +    VirtioSharedMemory *shmem;
-> > +    VhostUserMMap *vu_mmap =3D &payload->mmap;
-> > +    VirtioSharedMemoryMapping *existing;
-> > +    Error *local_err =3D NULL;
-> > +    int ret =3D 0;
-> > +
-> > +    if (fd < 0) {
-> > +        error_report("Bad fd for map");
-> > +        ret =3D -EBADF;
-> > +        goto send_reply;
-> > +    }
-> > +
-> > +    if (QSIMPLEQ_EMPTY(&dev->vdev->shmem_list)) {
-> > +        error_report("Device has no VIRTIO Shared Memory Regions. "
-> > +                     "Requested ID: %d", vu_mmap->shmid);
-> > +        ret =3D -EFAULT;
-> > +        goto send_reply;
-> > +    }
-> > +
-> > +    shmem =3D virtio_find_shmem_region(dev->vdev, vu_mmap->shmid);
-> > +    if (!shmem) {
-> > +        error_report("VIRTIO Shared Memory Region at "
-> > +                     "ID %d not found or uninitialized", vu_mmap->shmi=
-d);
-> > +        ret =3D -EFAULT;
-> > +        goto send_reply;
-> > +    }
-> > +
-> > +    if ((vu_mmap->shm_offset + vu_mmap->len) < vu_mmap->len ||
-> > +        (vu_mmap->shm_offset + vu_mmap->len) > shmem->mr.size) {
-> > +        error_report("Bad offset/len for mmap %" PRIx64 "+%" PRIx64,
-> > +                     vu_mmap->shm_offset, vu_mmap->len);
-> > +        ret =3D -EFAULT;
-> > +        goto send_reply;
-> > +    }
-> > +
-> > +    QTAILQ_FOREACH(existing, &shmem->mmaps, link) {
-> > +        if (ranges_overlap(existing->offset, existing->len,
-> > +                           vu_mmap->shm_offset, vu_mmap->len)) {
-> > +            error_report("VIRTIO Shared Memory mapping overlap");
-> > +            ret =3D -EFAULT;
-> > +            goto send_reply;
-> > +        }
-> > +    }
-> > +
-> > +    memory_region_transaction_begin();
+> Only flush the subset of tlbs that are affected by the ttbr
+> register to which we are writing.
 >
-> My only comment would be whether the
-> memory_region_transaction_begin()/memory_region_transaction_commit()
-> should be hidden behind some
-> virtio_add_shmem_map_start()/virtio_add_shmem_map_end() helpers.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/helper.c | 19 ++++++++++++++-----
+>  1 file changed, 14 insertions(+), 5 deletions(-)
 >
-> Talking about memory regions in this function sounds odd given that it's
-> more an implementation detail hidden by other helpers.
->
-> Then, we can also document why these functions exists, and what the
-> contract is for calling them.
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index c6d290ce7c..2b55e219c2 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -2943,11 +2943,20 @@ static void flush_if_asid_change(CPUARMState *env, const ARMCPRegInfo *ri,
+>  static void vmsa_ttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>                              uint64_t value)
+>  {
+> -    /* If the ASID changes (with a 64-bit write), we must flush the TLB.  */
+> -    if (cpreg_field_type(ri) == MO_64 &&
+> -        extract64(raw_read(env, ri) ^ value, 48, 16) != 0) {
+> -        ARMCPU *cpu = env_archcpu(env);
+> -        tlb_flush(CPU(cpu));
+> +    /*
+> +     * If the ASID changes (with a 64-bit write), we must flush the TLB.
+> +     * The non-secure ttbr registers affect the EL1 regime;
+> +     * the secure ttbr registers affect the AA32 EL3 regime.
+> +     */
+> +    if (cpreg_field_type(ri) == MO_64) {
+> +        flush_if_asid_change(env, ri, value,
+> +                             ri->secure & ARM_CP_SECSTATE_S
+> +                             ? (ARMMMUIdxBit_E30_0 |
+> +                                ARMMMUIdxBit_E30_3_PAN |
+> +                                ARMMMUIdxBit_E3)
+> +                             : (ARMMMUIdxBit_E10_1 |
+> +                                ARMMMUIdxBit_E10_1_PAN |
+> +                                ARMMMUIdxBit_E10_0));
+>      }
 
-I understand. I will send a follow up patch with this, and we can
-discuss the solution there. Thanks for giving it another spin!
+What's the value of ri->secure here for the case where EL3 is
+AArch64 and we're in Secure EL1 at AArch32 ?
 
->
-> --
-> Cheers
->
-> David / dhildenb
->
-
+thanks
+-- PMM
 
