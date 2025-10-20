@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D790CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C56CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAwhD-0007p4-3g; Mon, 20 Oct 2025 16:41:36 -0400
+	id 1vAwsB-00025C-JE; Mon, 20 Oct 2025 16:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vAwh8-0007ow-QF
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:41:30 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vAwh6-0005cY-Kv
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:41:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1760992874; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=ZlUOLcnuNaUPyIKS7P72poaHiwAW5guO5D/cdOEzYtJ1fuI7YgrkA2iEej5VHHwBJvgyLg0h0fJxONfMjJG0ZjqU8FDcipALAX2ZNUTuavvhM59KHTfLZ0mHIAcrI1HkXivsiJpZcyvVdoxKM+mDpAyAA7JCNMuHICEsZ3bqaRM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1760992874;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=1hsbfBkta5PdOTHjEnn7MftkaKKMptqLLtF5YZj8go4=; 
- b=UOYo9ezQXdg1leSQjJjsHERW0VBEbkKMTt9CaaY86+9ISoVBUmZp1cBniaWwLBrsC3MIwUsuf1gji74W09seAt06BAIu466Sqq7QNZS9jgV2zNh22xv0gmRh5ROYM7WAGp2uKPbDfQwwND/jMaTN1D+VhLh7qXuzg10ckL1ACd8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1760992874; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=1hsbfBkta5PdOTHjEnn7MftkaKKMptqLLtF5YZj8go4=;
- b=iznnrKmtA410sccCpaWaL3FA2VAWm7QGVS7ln8TQpYvnYf/H9BGiK3gpXR1b07Zk
- 34WwY0VrT1TyzBieurJY+F5g3VCchf7GQ0vbKRkN8UpHrB4zn28c95yzPg1OU4jwwZL
- kf9LAA9dEHqeE374DY0UMKFgFL1LLskAGkTWMUGU=
-Received: by mx.zohomail.com with SMTPS id 1760992871509741.2115563051279;
- Mon, 20 Oct 2025 13:41:11 -0700 (PDT)
-Message-ID: <1e63ee89-66a0-4568-aeb7-b73e72fb5a2e@collabora.com>
-Date: Mon, 20 Oct 2025 23:41:02 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAws9-000254-Ul
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:52:53 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAws7-0006Yr-53
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:52:52 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42421b1514fso2995318f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 13:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760993569; x=1761598369; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3WNmbxZIg+q96mpCek2G0iZcQyZcaB8vmSJyXdqlrrI=;
+ b=DAlvZ6say5KEWz0s8YYuJ3Y6FA0ByD3cwBd7ZeFMpWF42dTvSQiRhrc2xO+p3XmVpr
+ hMcgpQOc/Z/Mh9JnBvTdBlpjY0tSdKVWe0v3K8B1IFu48TDxide5f9ZgpcCeInfTi7Uv
+ wo2NoKXw/eXkufglmuDJRu4OOMNFTtYzfXrOS9irx16sHa3fO/6/FIjZdhzsN5gXIPvX
+ oW47KMzbqeQ9LHCLCkJb0nG8a2aPG+I0Ul3a1P+Pu3h2SHXv7oUHe3nqF1W+tD5noeTE
+ dG3FSCv+BHhLCKz1Hisl0OzGqh34inHXbkCUuZKiaqsF3Hm3hfcVMG9oRhDUT7CAo06U
+ EVNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760993569; x=1761598369;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3WNmbxZIg+q96mpCek2G0iZcQyZcaB8vmSJyXdqlrrI=;
+ b=WGPtLwEmehg7CtKq2ruJBJpyEmiB7mIiqOsT/wgxJP+F+J7PXyJLJSbYzfmG6dPU//
+ WpgO8Im4A4U2IKzcek3QHsUljNTQP1xn03PBOX88YNpHC/W4DXFYVegygNOg4LU+7gC9
+ MpNqV7qQHM6aOfcnQ8gT1wOJCMcuWc9AawjoeF+rL7a4r4tQgDW3Jg7Rlen7Dzz9XYsS
+ IrPuRGJKFiaDuf5hL7ZDxawpJJluxI7zC2VPzAzcpEa4Ge8q4WkM3Hm4tZfkjPUsTGVC
+ KkgpdJlrT8/U8mc0wMLaIwKzHoUTptqcQdH+1eO05RKgkoGYDRLEo2V3iLnLTgUlNbYf
+ GLnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzIlblwzl91dephwofykTRjJAph0CutQMoY6apnk1VFFsSo3kzyKExIx+NyoFrP+YVcw8m8QEeE5GK@nongnu.org
+X-Gm-Message-State: AOJu0YzfvY+WA3uYbKG6ZpJxzyh2S24zuZjYTCPpObAUvNFDQtIZdoD9
+ vwN4sjk8eTG5qeVmD0YwQz6l1+U5H2vIOXUmeGYOPyX6lfG6Nv+gXC5aqzvxjgJtg/A=
+X-Gm-Gg: ASbGncsFijKhX9OmTPnrQlC3zy8ZEgq3IDsr6UVlvop9Mzj/2CJqTGbdnakJWS2FphW
+ IPJ+P6L4AOxlIfkYGV3Cl7zkkoY4EgDZcMM9SNvA9tEtQBeKNhyjNF5Ap0xKV9q59fE87NrjIeU
+ h3qfQ26QeXnARIgX8Nbm8xFq46cAQ63emwN9JZc4g9M4E6qMvMq+6T7kMih46nWO+d3PTSKzYh9
+ 7M5ScYbm6qPnwju8gv/iHEK7kR6E6IFA7ROGYRbxoze34mlGFWY69AmFJ8g+bLOGW9tAXskKB0M
+ MD9nJjlN2kKVCiepfF9yLVSPXuc7Ph9Td7pSUsvtK9A8RwUcs+uXDXz5kpimHxK8QX8IgWre/Uy
+ tI/SXCb1BD0P1LA5mKD4UlCqTNGGdWVjzPa0PLHvK2Wa2yO2IRErf7H+fPMrcsgNPrsyPboJ/ql
+ dWlS6U43P+FvDTD6JptKgUODUd0/N8yVSVi6su+V6afa2UWF+K0gJo3g==
+X-Google-Smtp-Source: AGHT+IFJOeFiJGdMRc9Z+yJUsROS64JqkJ2mKB9qcjeFEdwUKC6HbxwKwjGJQ96xhM3dV8AZrflKbA==
+X-Received: by 2002:a05:6000:220c:b0:3de:b99d:d43 with SMTP id
+ ffacd0b85a97d-42704da613emr9341650f8f.19.1760993568680; 
+ Mon, 20 Oct 2025 13:52:48 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427f00ce06bsm16628429f8f.45.2025.10.20.13.52.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 13:52:47 -0700 (PDT)
+Message-ID: <dd6eca59-436a-49bc-86f2-d7eb784e05fe@linaro.org>
+Date: Mon, 20 Oct 2025 22:52:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rcu: Unify force quiescent state
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
- <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
- <626016e1-c7d8-4377-bf9f-ab0f0eef1457@rsg.ci.i.u-tokyo.ac.jp>
- <f89d4a21-635a-4779-95c1-7db0abe66863@rsg.ci.i.u-tokyo.ac.jp>
- <606c8d41-7f46-41a1-817b-27cb322bd215@collabora.com>
- <1c487aba-55e6-4a59-8755-4adedfc8cc72@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [RFC PATCH v4 12/19] hw/arm/virt: Register valid CPU types
+ dynamically
 Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <1c487aba-55e6-4a59-8755-4adedfc8cc72@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>
+References: <20250422145502.70770-1-philmd@linaro.org>
+ <20250422145502.70770-13-philmd@linaro.org>
+ <62c23632-b498-4fe9-b337-294b0fe4cec4@linaro.org>
+ <4e83559d-bbac-414c-a71f-076e038db772@linaro.org>
+In-Reply-To: <4e83559d-bbac-414c-a71f-076e038db772@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,49 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/20/25 04:14, Akihiko Odaki wrote:
-...
->>> So, if you know some workload that may suffer from the delay, it may be
->>> a good idea to try them with the patches from Alex first, and then think
->>> of a clean solution if it improves performance.
+On 22/4/25 20:18, Philippe Mathieu-Daudé wrote:
+> On 22/4/25 19:56, Richard Henderson wrote:
+>> On 4/22/25 07:54, Philippe Mathieu-Daudé wrote:
+>>> +#ifdef CONFIG_TCG
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a7")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a15")));
+>>> +#ifdef TARGET_AARCH64
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a35")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a55")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a72")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a76")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("cortex-a710")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("a64fx")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("neoverse-n1")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1")));
+>>> +        vct = g_slist_prepend(vct, 
+>>> g_strdup(ARM_CPU_TYPE_NAME("neoverse-n2")));
+>>> +#endif /* TARGET_AARCH64 */
 >>
->> Thanks a lot for the clarification. I'm seeing occasional 10ms stalls
->> with this patch applied, still it's a huge improvement. Looking forward
->> to v2.
+>> Why do these need to be strdup'ed?
 > 
-> Just for (further) clarification, but 10ms stalls are present even
-> without this patch (correct me if I'm wrong). I think the stalls need to
-> be resolved with another patch instead of having v2 of this unless it is
-> a regression.
-
-Stalls present without this patch and they are much worse than with your
-patch. Without your patch - unmaping stalls for 50-100ms, with your
-patch - unmapping stalls for 2-20ms.
-
-There are no stalls at all with patches from Alex, unmapping finishes
-instantly and performance is ideal.
-
->> In addition to a guest waiting for the virgl commands completion, QEMU
->> display updates on host are also blocked while unmapping cmd is
->> suspended. This is a noticeable problem for interactive GFX applications
->> running on guest.
+> g_slist_prepend() expects non-const.
 > 
-> I guess you meant that the scanout commands following unmapping commands
-> are blocked. While I can imagine that can cause frames skipped and
-> damage user experience, it is nice if you know reproduction cases or
-> affected workloads and share them with me.
+>>
+>> Do you anticipate other instances where these names cannot be 
+>> constructed at compile-time?
 
-Correct, scanout commands are blocked.
+In a few patches this become a run-time check:
 
-Running pretty much any VK application with venus reproduces the
-problem. A simple reproduction case is to run vkmark with venus, it
-would noticeably stall between switching benchmark modes and when app quits.
+   if (target_aarch64()) {
+     ...
+   }
 
-With native contexts the problem is much more visible. Running any
-Desktop Environment (KDE Plasma in my case) on guest with amd/intel nctx
-would be freezing badly by moving application window around desktop.
-
--- 
-Best regards,
-Dmitry
+I'll keep as it for now but am opened to simplify on a following up
+patch.
 
