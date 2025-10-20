@@ -4,205 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A21CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE1CCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqA9-0000ew-El; Mon, 20 Oct 2025 09:43:01 -0400
+	id 1vAqGG-0002sm-Kl; Mon, 20 Oct 2025 09:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1vAqA7-0000eQ-Dl
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:42:59 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vAqGD-0002sO-TB
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:49:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1vAqA4-00037f-K5
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:42:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760967777; x=1792503777;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=X98RcGw/v8RNu8hETfeGfKY/tGUSLYHSoLjzGpSTgiY=;
- b=WfY80zBk8DlzfgIF9TMVE8vwnWi9XzykCujnPTBUtIFge35pO/+cQQYf
- K/952WeALjwNwe03olS4zBpFh1rgosAqZDmsTwRSaxxSYVxsRKLABhF3c
- 2RZO7E50z8nE1rM3g1/K6urFUG7u3shnA1RVPmohKfmj9bZgHJWC5KGtB
- gtj9DrMwXc0at5eampFmJ0phbVNB3hyN13pOf0efwN9N0p3B1bGtZz/aR
- 84/Qx3q2DQu7AjFsjKM8fWUKJO2arO88C2qvYSY2g297DGDXwDUtQkVpn
- O/MLu0juFQLPNtDcWuVnANbXM+hMtaCi/N6ZwTV3pr/tPIdVKeMmrQzE6 Q==;
-X-CSE-ConnectionGUID: 6zTQvZywRR6f8GbhTCjh5g==
-X-CSE-MsgGUID: MkzJj/E8SX6IcKfVC5RiDQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="66945383"
-X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="66945383"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2025 06:42:52 -0700
-X-CSE-ConnectionGUID: wSQMe3hlQyq/8+HtyNFkVQ==
-X-CSE-MsgGUID: Lb/22RohQG+N2duIJoHIxg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="183277528"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2025 06:42:52 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 20 Oct 2025 06:42:51 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Mon, 20 Oct 2025 06:42:51 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.42) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 20 Oct 2025 06:42:49 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hQcUesC++J0Aya8PtSXAFJxHjTEB7hb96Xdt6CRCSuqw51LrIsZQBRVihRGHj5Gjvnk0R7pg0O2NpHq6BT6RZ5jFszR2dVDZlRhVxR+P2b6s2BPgvQp7znPSsS77oz09NxeKJTnaPkZ/Eh3Tv9PPDiYPlQRD4IMEIYNrLCW1eY+KTtvWDAQc9nDSlTIJX62UFsl9HTVIWdJXlNI6WPRUfwXdVQ2qcU8nin08vywkE0EuWu64czcD56U/uWQtKcChfVR92nvKbwzIIu8Jt1d2Bx0cyZ1LBTSqsgyCTtUuQXemFyf2fMS/Pbxn6884bkgjxnL4QrIqQiMMmlFTf2TFEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X98RcGw/v8RNu8hETfeGfKY/tGUSLYHSoLjzGpSTgiY=;
- b=AofWAhS8RbC3hnZF2FrOiDy/nT40qG2pxyxiG28/rQRmtHWCkonNAyY7AfYvh5+zp5JSSmIJVDrYc5T2N87wvdUhQMR6FHRx1EyMPkn8xnvuzh5tq0DveC0aQuHvx/FeJYvAoGeSWTP0I1HxZYTpoOwFhATKUkKQEICIXUDMN7dWjpR5lGxkF7QQkEAEdpytplPiyDfRbf121a+XauMq1Gjr+PeG+lpcF8mY8d7+l8fJf615r8suuXtT/NPVtRYiWbyGbB08qokrGAm5yfF+QJ8z41zfN95jmH3EA9XLQPf3vx5xDD+DYdYxEYJ7qK4OmsuUspjZL/NSqpSIgQRicA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ0PR11MB4798.namprd11.prod.outlook.com (2603:10b6:a03:2d5::12)
- by MN2PR11MB4520.namprd11.prod.outlook.com (2603:10b6:208:265::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.13; Mon, 20 Oct
- 2025 13:42:47 +0000
-Received: from SJ0PR11MB4798.namprd11.prod.outlook.com
- ([fe80::d946:6abf:6e7e:fd1e]) by SJ0PR11MB4798.namprd11.prod.outlook.com
- ([fe80::d946:6abf:6e7e:fd1e%7]) with mapi id 15.20.9228.016; Mon, 20 Oct 2025
- 13:42:47 +0000
-Message-ID: <d158193a-c834-4fb9-b36d-487f3be4ab6f@intel.com>
-Date: Mon, 20 Oct 2025 21:49:30 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 15/22] intel_iommu: Bind/unbind guest page table to host
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
-CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <eric.auger@redhat.com>,
- <mst@redhat.com>, <jasowang@redhat.com>, <peterx@redhat.com>,
- <ddutile@redhat.com>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <skolothumtho@nvidia.com>, <joao.m.martins@oracle.com>,
- <clement.mathieu--drif@eviden.com>, <kevin.tian@intel.com>,
- <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>
-References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
- <20250918085803.796942-16-zhenzhong.duan@intel.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20250918085803.796942-16-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: KU0P306CA0079.MYSP306.PROD.OUTLOOK.COM
- (2603:1096:d10:2b::8) To SJ0PR11MB4798.namprd11.prod.outlook.com
- (2603:10b6:a03:2d5::12)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vAqGB-000401-Gx
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:49:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760968149;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Bc6cE2alQ7Jvw0zLHsCJHPNO0E7TeHw5j37Rexdz1Eo=;
+ b=VhK7P5GjAb0GJWimPV0Yy9Zkf5bBUZpAESm/kevUheJ3/f4D9TK5Yn9PPHzLhgx7Sfzwog
+ f4OstRs4qNVzDqXutM0N+u5aEI6yFFr/swBUSpuBA5t2EoPQoAslGZHs05LdnsO8a8Tk3Y
+ 42kNcbCtBy6Fvr1NKWuk7m+vj212Zb8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-pJUSZ1uaOKa5nySXQQn5Uw-1; Mon, 20 Oct 2025 09:49:07 -0400
+X-MC-Unique: pJUSZ1uaOKa5nySXQQn5Uw-1
+X-Mimecast-MFC-AGG-ID: pJUSZ1uaOKa5nySXQQn5Uw_1760968147
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-81a8065daf4so81029316d6.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 06:49:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760968147; x=1761572947;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bc6cE2alQ7Jvw0zLHsCJHPNO0E7TeHw5j37Rexdz1Eo=;
+ b=PLYi130HA3fRjjgg5aYe5sIH7J65voIw1IPVpUfqZjjveHe9Dkq9NLlplzig1sQJI6
+ VQCQGTpPU8IKnj7p7AnBsapB2KU5BDFw6oHNR86C0dEIbNhPSg/DwuIy+VfGyqGle/pp
+ 7ZeSb4a/y8eAqgOPsweq9SQmE5i+MGchP5ztMFi222pm+Is6WhJEowgtlmwh+YgW6roB
+ aUvo50qVV/R/J+zA+rt09KrIBDl0oxuDcBw/OT21Ipi+I5xUeUOkufAX+IAOyvnz1F8j
+ FgNeve0iW27LSx5fv7Yy+MLqtUx+FkSFvu5OoTG9Ci0VNzxDsfUgLvTS0WejjT81sX/Z
+ 05ig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgRwPsniksMHQ+ph5z8/7vflHUynfkDLiZg+yNAeH13IY7uC2eE2lu6DVNrlnRmVoaN0KU25tN2ze2@nongnu.org
+X-Gm-Message-State: AOJu0YwEyyqZoP8R30wd6WWKxQvw8FICLm6YIvLg17SsYGpwJ1wF7W/x
+ w0c13+Sp1JkBa3ZRniwsKEUj0XjFhPG02FR63Q/4wNfm3CaUf3uvZzllyUit5CnGYsrSm7k4pkM
+ lcBbYAehb2plCsGgiL6mZyIc+2d1oe3dRk9Ee9WibiywH+t2y/O7v7Xpv
+X-Gm-Gg: ASbGncuIkQ18KcMWQMbyMG8lMszU6iWM/NJU9nw+5/sUDtGiWnsdwybygkyzhKeNlhH
+ GUnDbnfFXOUf0mpU9JfjJRiYVAFh7K1Udg5A2j/783UcK50XX1QB82V3DBoXaNWgESJiw1dqwkT
+ RkPwMJ2D1G4Ee5s1wX9oN5AyQD8+ekTq9dFyxfqoz6qHRAnDzSdQzFKM47RGkaO0UGV76haHmqa
+ 8IYuesOJwY77LgfFmE1YsbSXon5G7fIIuZkpxwm3ROuNiCp8SPX9Sw/MES2p7CekjpwO3vMOFGD
+ e90cmbc8j+XLp8imtKRDdmc7qyvBdEsm3687bV2TUIDtF//ikGKmilj1+7CEkzMoFKc=
+X-Received: by 2002:a05:6214:19c2:b0:87c:124b:774d with SMTP id
+ 6a1803df08f44-87c2056b02emr168043796d6.17.1760968147274; 
+ Mon, 20 Oct 2025 06:49:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4Z7N+DPwIh5s5Ukl4do46t5XqLcjQLV96bTlgj1InQIQpmQZfniuKfMsyhHohQnaRRIOi6g==
+X-Received: by 2002:a05:6214:19c2:b0:87c:124b:774d with SMTP id
+ 6a1803df08f44-87c2056b02emr168043476d6.17.1760968146829; 
+ Mon, 20 Oct 2025 06:49:06 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87d0288488esm51141806d6.34.2025.10.20.06.49.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Oct 2025 06:49:05 -0700 (PDT)
+Date: Mon, 20 Oct 2025 09:49:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
+ armbru@redhat.com
+Subject: Re: [PATCH] migration: vmsd errp handlers: return bool
+Message-ID: <aPY90JnJtyHZUUuq@x1.local>
+References: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|MN2PR11MB4520:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee8a928d-72a9-43e9-9fef-08de0fde8d9f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|42112799006; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?QVFFMUs5Z1ozMmZpdXlHL09oMG1acGtaYWNvZElvd0lNb1NYMDhMOW5PYTdv?=
- =?utf-8?B?aWYxV1RMVThySVVpTGpBbVY5d1d2bUg5QnZ6T2N1U1pOcEFyWmFCY0drMWY5?=
- =?utf-8?B?VWhFZlhpK2M1T3JGdVhBbS9DeDdicEIwcGdSeEx4TXBEWjFrZFEwODlONmNI?=
- =?utf-8?B?WUtVd2VyZVZHQ2ZrL3RKVzVqVlI3WUJVRzBhdXJrOEpyNVB0a0k0TW5HUDNL?=
- =?utf-8?B?MzVITE9iajBnR2VFVmRmYVlHZElTS05xMVBJWitvOUQzOGNsOHBoaFFPd2I4?=
- =?utf-8?B?MGFLVjd5OE51UVp2NHhuTUJBQ2l5T3FwcEQwTFNtRld1TTYvUkhQOE05VFNn?=
- =?utf-8?B?bkNuNmxiaXU4ZWdBei9EY2FGalMvc3k2K2QxUm0wTGRCMVNtNzFZSlh1NmNn?=
- =?utf-8?B?eFRwZm5ZeXVQQXY2V0RFTCtDRWdKc1ZxOXR6RC9xZzBmaVp0QVdKeWNoVWFo?=
- =?utf-8?B?RE5HNXdGUDRWSXlSc2RwRm9ESVhrRThjVHdvVHNLdDNkVzYwbEJ0TUoxaXhx?=
- =?utf-8?B?VWcwZitsRW9xVVBYTUM5OURTaXR1R2hnR1owZ2hMTXA0dFBsciswa3NhaE5M?=
- =?utf-8?B?UWhmTVlHMUtSQXF2M2l3cFZSUkFSSmdyaWQxenFvZnBrSVU4aSs2RHhyd0l3?=
- =?utf-8?B?eW5VS0NvTXg1US83MUlUNEg1NlUrczh1RWhrb0ZzN0ZMYzROUlR4WDQvbVJW?=
- =?utf-8?B?NDRIeHZSYXA4TmpWOWFWTW4zZ2w3V05BdUduVzJjYzl6MHUrdE54U0Z6dWlY?=
- =?utf-8?B?UTF0UWhkMHdMSFZtVk1JT3dYdFRjRlB1ZCt6SE1ab0tydkVwQXA5NEtobkJT?=
- =?utf-8?B?V1Vqd2pqTUcreFFTSUgyWis3NnptRGhEZ05UbkgzaWFjQncyMW9lbzhxRFRP?=
- =?utf-8?B?UlNYQ1Zrd0M0NDdBMGpCWldMWG85UjdqQUw2NWRkb0lOWXF6bUg0Z0hEY0pF?=
- =?utf-8?B?WFNWdjY2QjdPUXFuUUI4RlJQTnFKckp1MktuU2UvRjlWdzJWeXVVOHB0Ky9B?=
- =?utf-8?B?dHlKZVRwaEQ5elM4R1ZCWWdDQzYrM3k4VFI3Sk1uQWh0MWRRNUFMV2duUlc2?=
- =?utf-8?B?RTNTY1Y1UytINVRGVzFQNHY4TlE2Z0hpSDM3dy81cjVOcFZKQmtxSW1BeGJk?=
- =?utf-8?B?UHI2Tjh2RmpuQlNKZ1FIVmoxOGJZZ254VlZUbVB6Tzk2dkZBRjBsa3NHdVZR?=
- =?utf-8?B?VlViR3NoRmlDdEZLMzc3MFBuQzZzS1hoWmR1dHNyM2ZiN0NnUnBvREdtb2d0?=
- =?utf-8?B?ZGhjRGovT0pSY1d1ZDBCd2ZycHA4RzlpdXpZaktDbklyK3R5UW12VnpDSWgr?=
- =?utf-8?B?dGJIWFhrT0FCaWNoYmZUWnlCa3JUK0cyeFFLRkQrWWd3bzZBcW9EVFBXcmFx?=
- =?utf-8?B?QTU4OXJJMXZ4SW1NdnpIU1hZbno0TE8xZkdLQUt6T25NL1EydHYyK081aWlz?=
- =?utf-8?B?NXk1YlJjbFRVSi9qK1ZhZnU4NDJLWENVUmNtY3l1NG1hakJpb0ZIc2pMQTN1?=
- =?utf-8?B?QjZEMjgrZGtEdTZqdGxMWWlUMVhFTUx2ZDVVcXV3eXA3a3pUQXVNcFg4VnlV?=
- =?utf-8?B?MW4ydmlPSHVJMkpHR1ZaUk51VnVjSys0aUZJQ3Q2azRjWUFVcjdmY2ZJZ212?=
- =?utf-8?B?Q1BTNjJwN3k4c1FjM2krUFlka3ZmamFYcktYVWlva01zTU9md0VuaVRyZFFN?=
- =?utf-8?B?RzMyd2cvR2ZkRSttR2dQV1hDRVpxL1B3eTFLdTliK0REMlBVZzhYaUV1MXQv?=
- =?utf-8?B?MmhUSWR5YUM5dC9JT1AxQUpXTUNZN2xsZXRNWlFYcXBBK1lJT2VBekFpUmlz?=
- =?utf-8?B?MVFWK1ZkcU9lTVlINTJLMWtkZGVodlhvamdwMEl5dUpWZjZCMUIrTUFNVWZO?=
- =?utf-8?B?RzhDRy9LSVBDRzF1dlBLa3ljWGlYeGZGS1hwZGVRaTlGN3JtNnQ3MWExRzd5?=
- =?utf-8?B?aWlBTG0wYUM5cG0wRFpGYUVRTlk2SEpOeExFdEdyWldxK0FGd3NYUkVQaGVh?=
- =?utf-8?B?eVhLa0NwdE1nPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB4798.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(42112799006); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y1VsWjZVc0tsbkVlRnRHSjhyRjIyNWVBbHkwUGVDV1JaUXVEUmF3UkhLV1d2?=
- =?utf-8?B?Q1k0WHBnaGZiVFF0Vis4TUFaSEZTWFJMLzBzVi9EU3lGSi9rWlhxNFlaNXp0?=
- =?utf-8?B?dHMyaitKWStCc0RKNVQzUEFENkEzL052SGdOa3U0SkJQaHNwb0RVbEl2b0pX?=
- =?utf-8?B?L3lpdkZCZnpkTmhkYVhoSFo3VDhrTlVRdWNrUHZoMDkzVVRNdlVMYU9oa0Yz?=
- =?utf-8?B?TDRsL3h1a2svZ3k2TVRDRStkK0ozdUF3M0tkaWJxOWRiNDFmRXVEZDRkSTM0?=
- =?utf-8?B?Nyt2cGtIaU02WkQvNjRIOVlXdTBnbytoRkszeDVDeDlReUF3OUJBa3kwWUVE?=
- =?utf-8?B?cHBEMzBqb0dLbXQ5bklNQUVaUDRISDNsR2taV1h6SFFTRnZ5M2dPZGg0NXNm?=
- =?utf-8?B?RE9FSzNRWGhIeHZOVERtd3Zic1VRejdiSk1lNk94alJoRmhXTTVkaWNRSlNq?=
- =?utf-8?B?bmZXZUhFMkE2OUFwZHliMUdVNFhodWRNeWxFWjB3cUhyMnJMRFlxaDRHWUN4?=
- =?utf-8?B?NGdIeWoyYkVzdVA3bEZRRUY5NEJRaHo5WWF1SmI3MmVydFhZa2VKQkpQM0Y5?=
- =?utf-8?B?ckF0Uk5IYk9ZZG9TYzU0V3pYUFNSRVBHaUhrU21VZEZ2bG54VXZHelJ4dDMy?=
- =?utf-8?B?L2RQQTZwYk9SRGRxL21yK0pXN1lYSDBlZGRJeWRUa1RQTEd5RGxaQndKUDVx?=
- =?utf-8?B?ZnhZNWFWT0FpVHhKbnVxWTUxenhXa2J0alcweC9XUVNIdGtWWldmVzVEalZN?=
- =?utf-8?B?eFUzMkRPMEx3bDVtL2RLVHVWQ3FUNHQxRFQ3L3o1YVN3VTBvQzVRWTErVVVt?=
- =?utf-8?B?c2k1K0lvaFhSY3JTTENsWWRvZWU2SVpta2FHVm1wdStzMno2V2xWeXFQN1RZ?=
- =?utf-8?B?WW5ZeFFHVkxEcHBTNHdXbC90MzNvYUN5cWRMUk5LNWxrcWdJZ29uL3BUaU56?=
- =?utf-8?B?TGppN1hUbC9BVHlnSzk4RHZlRjFMeEg1MjRmenBkeWlFNHJiUUVsVHVIT3Iv?=
- =?utf-8?B?Z3JYejJiaVJib1V5U2dNM0xxdzdZRWppLzNPOHpUQXlvdGIwZWhlTUgyT08w?=
- =?utf-8?B?bTQvN0xWQlllbmFRQU5xV3JXcmRNSHU0YUZYUWN5NnpBbnhnM0xURlA3VlRB?=
- =?utf-8?B?UHFiM29uTzVhQjFFeG0xelM2Ky9YMU9VS042c1p0aVk3c24wTGxmbFJlem50?=
- =?utf-8?B?Tk5xc3NYd0F6MTRLVHk4dkRTVHErc1JFMW56L0FSYkh6a3R6UVpTeFZ0S0Z6?=
- =?utf-8?B?N1Q0UlViR0ZqZTBXU1JCZ09JNDNmSmhNd1NSWU02M3dvTEcwUUlXY1p3Nml1?=
- =?utf-8?B?djFlVVVFcUZzeFQwMFBac0pJbXlWYW13Vy9YUU1xOUpnbUtqbDNrQlptNXdX?=
- =?utf-8?B?K3cvZkhDekc3YmZXWVVUVHpWclYyMnE1VEdJSTlNK3FXOGl6Q1UwTm9LbjRN?=
- =?utf-8?B?c0YvQ2tUR2pxTmVwdnBaQS8wMjdXMkJ1dlNjd0ovdGpVaFlGaFhWTkY2Q28w?=
- =?utf-8?B?dEFCb2tYWWE5dFpjT0pQZldieE1YdUdLd2RiZHVxOXN0OWp5dFBxcTNCdzhx?=
- =?utf-8?B?eEJCQkRJOURsOGZLTXN1Sk9jSTcxL05XVnM3MWJRK2wzNGpBMHcxQWVQajJi?=
- =?utf-8?B?WnpCZWg1ejExRmg2UDlBSm5wQ2ZqQVlNZVZ0bGorZGR5S3ZuN09yd3BNTFhT?=
- =?utf-8?B?aFdlVjBXSFlCKzFOQUF0YzRMSXozV2xhK3dKTFlLUFhKcjJDcUdsM2ZqU1BG?=
- =?utf-8?B?RytSWU1YNVNRTUl4VGREVGtLZGNCZWhTK1J3RlZZUUVPdTBONnk0YUFrR25q?=
- =?utf-8?B?ZFFsS3NiVWloejlrbG04U3NrS1IrL0diTzBib0Y2TjlPbHQxUkswUTY2TGY3?=
- =?utf-8?B?RC9KUlQwUW5KWDlLT1FyR0U3citCa2RrZkl3STZqOExOUENleGxobEpMQXZ1?=
- =?utf-8?B?WXlWSnhmOHNDTVhuUEo0K1FDZ2VmMVo1WTFQdC9sZHlrT2tIaC9PbmZWZldp?=
- =?utf-8?B?aEFzN0tnTTZvdFZFZytHSGtHNEl2ek9aZDBjSnBPczlkeUtMaDhsN054TnQ3?=
- =?utf-8?B?dUdkR2dqRGlNbmQxUld0OHdRM3VhWUpFVVVUR0lVTlhFNnRXcytjZ2gzeUNq?=
- =?utf-8?Q?1XSxucJSJzgCtx+8BUgMz4z2U?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee8a928d-72a9-43e9-9fef-08de0fde8d9f
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4798.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 13:42:47.0481 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xIOlj7WXU8Z5h6eh6pqmK0a25wK2bQ9CNURnbt4/SNfEgfepQPUx4PmRA9BhOCsydH21lET7RWygM8QgaLgR4Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4520
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,13 +106,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On Mon, Oct 20, 2025 at 12:19:07PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> @@ -255,13 +252,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>          qemu_file_set_error(f, ret);
+>          return ret;
+>      }
+> -    if (vmsd->post_load_errp) {
+> -        ret = vmsd->post_load_errp(opaque, version_id, errp);
+> -        if (ret < 0) {
+> -            error_prepend(errp, "post load hook failed for: %s, version_id: "
+> -                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
+> -                          vmsd->version_id, vmsd->minimum_version_id, ret);
+> -        }
+> +    if (vmsd->post_load_errp && !vmsd->post_load_errp(opaque, version_id,
 
-I guess you need to rebase this series on top of the below series. So
-let's resume review after rebase is done. thanks.
+I think this will change the semantics even if I do not expect a real user
+to exist.. if post_load_errp() returned true here, then it'll keep looking
+for post_load() and execute.
 
-https://lore.kernel.org/qemu-devel/20251016074544.377637-1-zhenzhong.duan@intel.com/
+It might still be good to keep the old semantics, so that if
+post_load_errp() is provided, then we ignore post_load().  Same to the rest
+hooks.
 
-Regards,
-Yi Liu
+> +                                                      errp)) {
+> +        error_prepend(errp, "post load hook failed for: %s, version_id: "
+> +                      "%d, minimum_version: %d, ret: %d: ", vmsd->name,
+> +                      vmsd->version_id, vmsd->minimum_version_id, ret);
+> +        ret = -EINVAL;
+>      } else if (vmsd->post_load) {
+>          ret = vmsd->post_load(opaque, version_id);
+>          if (ret < 0) {
+> @@ -438,9 +434,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>      trace_vmstate_save_state_top(vmsd->name);
+>  
+>      if (vmsd->pre_save_errp) {
+> -        ret = vmsd->pre_save_errp(opaque, errp);
+>          trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+> -        if (ret < 0) {
+> +        if (!vmsd->pre_save_errp(opaque, errp)) {
+>              error_prepend(errp, "pre-save for %s failed, ret: %d: ",
+>                            vmsd->name, ret);
+>          }
+> -- 
+> 2.48.1
+> 
+
+-- 
+Peter Xu
+
 
