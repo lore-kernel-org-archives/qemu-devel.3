@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C031CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 12:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB5C3CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 12:49:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vApHt-0007DZ-En; Mon, 20 Oct 2025 08:46:57 -0400
+	id 1vApJt-0008G5-7D; Mon, 20 Oct 2025 08:49:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vApHX-0006x0-5d
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:46:48 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1vApJr-0008Fv-Eq
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:48:59 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vApHM-00025l-AY
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:46:34 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b463f986f80so847277866b.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 05:46:22 -0700 (PDT)
+ id 1vApJo-0002U9-Tq
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:48:59 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-63c0eb94ac3so7634890a12.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 05:48:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760964379; x=1761569179; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e29QLgBd6FcHgVf9Iyy3OwGPEGUkB9UOBMRXzO98Nzo=;
- b=WHhz508m0z6nqYXnoL2eM7n7QopTGlh+PU1UKijGQNz3R8vk7KvymqsGeeesNASq+O
- khnj606MH0D45mzqtR1EhidUPREaDeBujWWfTXmi6T+hsMS39YsRq5slHwnwsk+RqdIv
- aGnXPsaDS54o+hsw9SEo9h7gpeytphPyu5fWG/D8ShQC4mNkVJLkknZBPqswh0sN4pwd
- rmvEPlCQkF9QZnEJz+Q48FR50PWLm3t9hoQ7JBtD4iZkK9TWgtUmCG0hoYiD/BvyqRQO
- 2+5qgMtqu7Qy8nn9xh7zVQ57DCLYbpdI02+y1jiBu/ZTij+qO5PpbAxI3ikTi2qWRsOk
- XgmA==
+ d=linaro.org; s=google; t=1760964533; x=1761569333; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Pf27woCY/QbeJT6OsSE2E4mzSP9ULa6TcpqQcYjqjnE=;
+ b=jwoR6S3om6SSuTpSsUHyRbMLw5TnAcTZDVjb0AjsIreDmAiyBATyTNM1aNHffOwO+J
+ 1Jnr4L8wK9sLc8vRh21xRT5sh1+kyG7XhlCfhLhNWT+GyxvR8YZMiZuHV0y8rynGaR4z
+ ZIpo/KtLv7ejS0zq/IOFovLttj0NVgz3Swv3WkVNhByKDamv3YB4nO/T004L4YIknjib
+ nn9cJYgo72vyGmBGy01vzjGtkUp8mVB4KxDcy17W0Lv2xVA33EY0QObzDH+t8QnIf6CU
+ 9S3jf2Wp4y0i0X59ysu/KJr9t8U6nzGnwL25rl2S/k4SLyehqSz7HP5E5oylEJhMq2XL
+ XaLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760964379; x=1761569179;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=e29QLgBd6FcHgVf9Iyy3OwGPEGUkB9UOBMRXzO98Nzo=;
- b=X+ZwdyIYf51Nz/VQtakQW48sRga8rVr1bEOuRi6OH2XTN780hrNY6pA/nqR0fmGCjX
- 1RyzHvj9Xsj79glm6xzFLt3glg5zaurGPjoFukRdqJhqtDJ4Fyhs/2rnlX5qGG8x5BGn
- 4h5fS5TEhcma7V7+jt3xBZx3g9ia5Fo+uB6aIWuNgUHoATmJa01K8z8iLk1wSRiuZ999
- wU+LzPU1cC3OtpEaYMg37UQR0CTbtAg80Ha2nPK2knrxgMzrPRM315bAO7cSDG1+eT6t
- 9IqCCrwqhscbPt9yTZSXMFltNaX06jAc8MNCn1TON7ji6niRxHh2Q9gnBt/d5TYu64YJ
- HhTQ==
-X-Gm-Message-State: AOJu0Yx9xnxJJn8K/EJXDnFvrmlI7AhcWsveu30yeBxfIj1KQvGxHrs0
- N6H3dLSwfuhRLXhdAegPKWfOw859thQuw+jjHU54R6Wk8m4KKiIt31RyLiPFuyGW12A=
-X-Gm-Gg: ASbGncv8YwPTun/6aBvbM7pveOLEjepAuYcKsMEx9B0noMISjsCIT/Oc+rbORtl5OxC
- tUhuPfYdOaOgfu6xbHTLUIXqPw9Jj7bynjaxNcw5dYWHrwcDt8RaY10tQQ4M1yov+dbh+IoTrd1
- Dqe3KdUzcRSbZPWoaWf9QgVS9nB76429iklJGHaafwmOpaJzOGmG6iKwtY/TnFylinxudCHwkNT
- 6ugBynHzZwyRWghg6fEKwi+svyjghRZQtHBKvigGJz23EwwK5xuoQaw6W/xZtLWimzepk9fXjxA
- QIYcjfy9wTlCyIRz3EtTUt/w7l1mErWhA/UmhWsx6VM9lPgHoc6Q7Y5CLdsZPrlno7uH3c2BATt
- EoIUsy7Pton+Paz7GrkzDfzpqUS1mueLkdqPdnHCiyg1d14ho5vtSvvl6xpC34rosJsMcxBsPkv
- dA
-X-Google-Smtp-Source: AGHT+IFL1t1R2wn69Tdu2sOdWiHiYudWSQ0i/oxyCI+n0P2q7633icI63PyyTSWG4gCJOFNujmQhPA==
-X-Received: by 2002:a17:907:d06:b0:b3b:d167:944a with SMTP id
- a640c23a62f3a-b647551012fmr1534978866b.57.1760964378772; 
- Mon, 20 Oct 2025 05:46:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760964533; x=1761569333;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Pf27woCY/QbeJT6OsSE2E4mzSP9ULa6TcpqQcYjqjnE=;
+ b=fYzs0QEFapOz/fbwnsbjMB7cEWDDG04c3wxxaQjUJwnOR8apN7PesAR+7YgL8ymZww
+ D4VmupBcQo9xeBTmXTYyvsb+YULZUhaKPuddBWU9npk16J++kuS/56HazPSynr6c0zLi
+ 1Gx0g3Xc2dXOc/wXJhYZN0VzPPZ373va6KwQ/6f/tghDWlpcRfVYIDOSX6wYbG9sk3W8
+ t7ZYna6wGx9PMLGbDBhjnzcPAlb8gGht13n4A1Kj9AMr4vHYp6fBmC6EJ9qDlyIOjrzs
+ S7LjHVyKJS6+e8+9OIAAUe3EhWCMtaLNhJ+55SfGsmViyDqKAxqxXXcLcyZbR/zFn5dR
+ tExA==
+X-Gm-Message-State: AOJu0YxC43LsGBed2EUHjeMIMSN3EJtJMuxEGFJveWz1K+O9nypL050U
+ /GR2rUvBRdA3uNI0ZzP8t000HiWzitG84Un2Poy9AfpeuH6PzUxV3iofaGkK7Srg0aP4yx9M3sF
+ qeviTyLs=
+X-Gm-Gg: ASbGncsl9fEftpmOBzEBx46QuDmeZ4dxBZ8cC/oUPBdHC6gxOCyigLKMNWZzdkJM1Rh
+ oNGYcCL3uSee6t9PyPftlQQ2vr0p79WqZQGab3Cj7aMbzpmLcH1G3Fr/Nvo7VWDvpJkiYXVRUuk
+ nwdlUSeRe1Vhk0R/9OelWrpG2Zt4W+/adHJ69nAlO4T+GoxQMSCBppcV2QjuSOHpi15RXp47vci
+ U5qEMPIhHPMSDuR/XTYrKCjqvtUI1VDWOeAlMWqdBndpwh8cJQs9mAjgm35bNDP0OQkl1gC2TNZ
+ 7FdA0TVFTsHHOh7TSh07dKkuWbmXwkvVrDunkWHHjpHg4D3f237xM1tCEscq/CGsiXgN6ozHODu
+ 5zdpoeQpoodzy+eNVfLx6jU+BIJ99zGpn9GCzOXT9pckvQgg1y+886hjJo+crLpq0jZqh1kR7yM
+ vbFsvuxN+xLAw=
+X-Google-Smtp-Source: AGHT+IGgwa6OWpIG4sQNp26WMev2F2Bam+JOW4Zp/OgD44pGPrCQzja2u5mPSfv3Im/8wkqjasD5CQ==
+X-Received: by 2002:a05:6402:34c5:b0:63b:f5cb:e1fa with SMTP id
+ 4fb4d7f45d1cf-63c1f64fd4emr12322104a12.11.1760964532601; 
+ Mon, 20 Oct 2025 05:48:52 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b65ebc474c6sm767523666b.78.2025.10.20.05.46.17
+ 4fb4d7f45d1cf-63c48ab5553sm6673580a12.16.2025.10.20.05.48.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Oct 2025 05:46:17 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BC5DF5F83E;
- Mon, 20 Oct 2025 13:46:16 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,  Andrew Keesler <ankeesler@google.com>,  Daniel
- P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
- <dmitry.osipenko@collabora.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PULL 04/11] Support per-head resolutions with virtio-gpu
-In-Reply-To: <87ms5lu6rx.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 20 Oct 2025 13:55:30 +0200")
-References: <20251020104149.4034124-1-alex.bennee@linaro.org>
- <20251020104149.4034124-5-alex.bennee@linaro.org>
- <87ms5lu6rx.fsf@pond.sub.org>
-User-Agent: mu4e 1.12.14-dev1; emacs 30.1
-Date: Mon, 20 Oct 2025 13:46:16 +0100
-Message-ID: <877bwp91wn.fsf@draig.linaro.org>
+ Mon, 20 Oct 2025 05:48:51 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BE4675F83E;
+ Mon, 20 Oct 2025 13:48:50 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 00/10] maintainer updates (gitlab, check-tcg, virtio-gpu,
+ plugins, docs)
+Date: Mon, 20 Oct 2025 13:48:50 +0100
+Message-ID: <20251020124850.4122520-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,106 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+The following changes since commit 3a2d5612a7422732b648b46d4b934e2e54622fd6:
 
-> I missed this one somehow.  My apologies!
->
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->
->> From: Andrew Keesler <ankeesler@google.com>
->>
->> In 454f4b0f, we started down the path of supporting separate
->> configurations per display head (e.g., you have 2 heads - one with
->> EDID name "AAA" and the other with EDID name "BBB").
->>
->> In this change, we add resolution to this configuration surface (e.g.,
->> you have 2 heads - one with resolution 111x222 and the other with
->> resolution 333x444).
->>
->>   -display vnc=3Dlocalhost:0,id=3Daaa,display=3Dvga,head=3D0 \
->>   -display vnc=3Dlocalhost:1,id=3Dbbb,display=3Dvga,head=3D1 \
->>   -device '{"driver":"virtio-vga",
->>             "max_outputs":2,
->>             "id":"vga",
->>             "outputs":[
->>               {
->>                  "name":"AAA",
->>                  "xres":111,
->>                  "yres":222
->>               },
->>               {
->>                  "name":"BBB",
->>                  "xres":333,
->>                  "yres":444
->>               }
->>             ]}'
->>
->> Here is the behavior matrix of the current resolution configuration
->> surface (xres/yres) with the new resolution configuration surface
->> (outputs[i].xres/yres).
->>
->> Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: current behavior - outputs[0] enabled with default xres/yres
->>
->> Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: current behavior - outputs[0] enabled with xres/yres
->>
->> Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
->>
->> Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
->>
->> Signed-off-by: Andrew Keesler <ankeesler@google.com>
->> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> Message-ID: <20250902141312.750525-2-ankeesler@google.com>
->> [AJB: dropped pointless output_idx range check, tweak commit]
->> Message-ID: <20251016150357.876415-5-alex.bennee@linaro.org>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>
->> diff --git a/qapi/virtio.json b/qapi/virtio.json
->> index 05295ab6655..0ce789bb22f 100644
->> --- a/qapi/virtio.json
->> +++ b/qapi/virtio.json
->> @@ -971,15 +971,21 @@
->>  ##
->>  # @VirtIOGPUOutput:
->>  #
->> -# Describes configuration of a VirtIO GPU output.
->> +# Describes configuration of a VirtIO GPU output. If both xres and
->> +# yres are set, they take precedence over root virtio-gpu
->
-> Please use @NAME to refer to a local member or argument NAME for proper
-> rendering.
->
-> Elsewhere, we use @width and @height.  Consistency is desirable.
->
-> What happens when only one of @xres and @yres are provided?
+  .gitlab-ci.d/buildtest.yml: Install 'file' for the Coverity job (2025-10-19 11:49:36 -0700)
 
-*sigh* OK I'll drop this from the PR.
+are available in the Git repository at:
 
->
->> +# resolution configuration and enable the corresponding output.
->>  #
->>  # @name: the name of the output
->>  #
->> +# @xres: horizontal resolution of the output in pixels (since 10.2)
->> +#
->> +# @yres: vertical resolution of the output in pixels (since 10.2)
->> +#
->>  # Since: 10.1
->>  ##
->>=20=20
->>  { 'struct': 'VirtIOGPUOutput',
->> -  'data': { 'name': 'str' } }
->> +  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
->>=20=20
->>  ##
->>  # @DummyVirtioForceArrays:
->
-> [...]
+  https://gitlab.com/stsquad/qemu.git tags/pull-10.2-maintainer-201025-2
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+for you to fetch changes up to faa29110b903fed29ba27bad3d0d8fcc7a8aa0fa:
+
+  docs/system: merge vhost-user-input into vhost-user-contrib (2025-10-20 13:46:28 +0100)
+
+----------------------------------------------------------------
+maintainer updates (gitlab, check-tcg, virtio-gpu, plugins, docs)
+
+  - drop aarch32 runner from custom runners
+  - use template for aarch64 custom jobs
+  - don't test for atime in linux-test
+  - drop extra draw call causing corruption in gtk-gl-area
+  - add trace event for blob map/unmap
+  - extend ufrace_symbols to generate dbg files
+  - group VirtIO devices in device documentation
+  - merge vhost-user device docs into single file
+
+----------------------------------------------------------------
+Alex Bennée (7):
+      gitlab: use template for ubuntu-24.04-aarch64 jobs
+      gitlab: drop aarch32 runner and associated bits
+      hw/display: add blob map/unmap trace events
+      docs/system: split VirtIO devices from the rest
+      docs/system: unify the naming style for VirtIO devices
+      docs/system: drop vhost-user-rng docs
+      docs/system: merge vhost-user-input into vhost-user-contrib
+
+Dongwon Kim (1):
+      ui/gtk-gl-area: Remove extra draw call in refresh
+
+Peter Maydell (1):
+      tests/tcg/multiarch/linux/linux-test: Don't try to test atime update
+
+Pierrick Bouvier (1):
+      contrib/plugins/uftrace_symbols.py: generate debug files to map symbols to source
+
+ docs/system/device-emulation.rst                   |  18 +-
+ docs/system/devices/vfio-user.rst                  |   2 +-
+ docs/system/devices/vhost-user-input.rst           |  45 ----
+ docs/system/devices/vhost-user-rng.rst             |  41 ----
+ docs/system/devices/virtio/index.rst               |  29 +++
+ docs/system/devices/virtio/vhost-user-contrib.rst  |  87 ++++++++
+ docs/system/devices/{ => virtio}/vhost-user.rst    |  22 +-
+ docs/system/devices/{ => virtio}/virtio-gpu.rst    |   4 +-
+ docs/system/devices/{ => virtio}/virtio-pmem.rst   |   6 +-
+ docs/system/devices/{ => virtio}/virtio-snd.rst    |   2 +-
+ hw/display/virtio-gpu-virgl.c                      |   4 +
+ tests/tcg/multiarch/linux/linux-test.c             |   9 +-
+ ui/gtk-gl-area.c                                   |  17 +-
+ .gitlab-ci.d/custom-runners.yml                    |   1 -
+ .../custom-runners/ubuntu-24.04-aarch32.yml        |  25 ---
+ .../custom-runners/ubuntu-24.04-aarch64.yml        | 230 +++++++++------------
+ contrib/plugins/uftrace_symbols.py                 | 120 +++++++----
+ hw/display/trace-events                            |   2 +
+ scripts/ci/setup/ubuntu/build-environment.yml      |  17 --
+ .../ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml    | 127 ------------
+ 20 files changed, 344 insertions(+), 464 deletions(-)
+ delete mode 100644 docs/system/devices/vhost-user-input.rst
+ delete mode 100644 docs/system/devices/vhost-user-rng.rst
+ create mode 100644 docs/system/devices/virtio/index.rst
+ create mode 100644 docs/system/devices/virtio/vhost-user-contrib.rst
+ rename docs/system/devices/{ => virtio}/vhost-user.rst (77%)
+ rename docs/system/devices/{ => virtio}/virtio-gpu.rst (99%)
+ rename docs/system/devices/{ => virtio}/virtio-pmem.rst (98%)
+ rename docs/system/devices/{ => virtio}/virtio-snd.rst (99%)
+ delete mode 100644 .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+ delete mode 100644 scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
+
+-- 
+2.47.3
+
 
