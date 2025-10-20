@@ -4,147 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD34CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 08:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40EBCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 08:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAlQF-0007yW-BN; Mon, 20 Oct 2025 04:39:19 -0400
+	id 1vAlWP-00010d-Db; Mon, 20 Oct 2025 04:45:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAlQC-0007y1-Ub
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 04:39:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAlQ5-0000bG-Hy
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 04:39:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760949545;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dBQrsLNVS9YVCxdzpk+v0Ay5S1S/5HQo0KlEN+ttWWU=;
- b=a2xpY6CRueDegCUhlGKerGCSiuOJYs51QGkVnZgsbp2nEZxnXDNxbeuWgbizgDchMPdtEh
- IDllOm0WFvi+dK4hxdbWTuV0tna/UHunFnrCiggakgATBOpAJqIz34yfKMo6cxMGW2B8e4
- woqwd6WOS/S8/VgzWGgrOC8BXQe0Grk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-587-b_RKznHaPPWJ1b006pMb3A-1; Mon, 20 Oct 2025 04:39:04 -0400
-X-MC-Unique: b_RKznHaPPWJ1b006pMb3A-1
-X-Mimecast-MFC-AGG-ID: b_RKznHaPPWJ1b006pMb3A_1760949543
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-42700160169so2158613f8f.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 01:39:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760949543; x=1761554343;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dBQrsLNVS9YVCxdzpk+v0Ay5S1S/5HQo0KlEN+ttWWU=;
- b=LFovFsW3vzbLl06ILKWxrrj+KJYjWvg3v2DlE+is3VSWgN3qBybxyLeFlr2EDLKf5U
- ROWfaRVkqG0dgQebhi4K8mYZ8+gqERAg4rQDRfvgn3/gckIoBoluHs99EAHxZgpNh9Vp
- FZDCEcNRKnqFT54EfTluPSZgrwAIbn4tSXfsueWttLKazquY58CUg/hifrEM05y4me9t
- e6Kmp6wUyDxgXuddNE4ZzjFSos8+x5vvudkzmxJFn8w6wgTarvDnJpjHZh7pZrL/w7Q9
- X2DZsbpDcIVkw7vvlh+Ur0ke6DYA9U/Gao6i5z3GQYyAo/facnRIDi0dt1j5gDPywyqq
- VelQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVx7FKYjHAP8Zlj6RL4yNu4OIEqbChzvUYsHmJlAjoT3ZM/36muklbZE6h1JIZECFKYjSWXytDu01Jk@nongnu.org
-X-Gm-Message-State: AOJu0YyR84cWC6iVoCDYOTriJaU64rkG7GFxnUuvBwo94ulWvcp5PPHe
- wibSDPbtNu+zWbjXCXOeCH2X8x9kU6bCgAIRh8EsDcx+bJM65PwGDT5RRiWPEsrsVs0IaY+c4YZ
- Fl8cOkdvOd/zTGy40/GF1HktWjB7ftQ1ZUAvdZdjCZ83mVNZrTHhy4SiW
-X-Gm-Gg: ASbGnctOKvWNHPAkcpiNu0tdfmxoLQt/gYUjn9Vad/tzH105r+jtru4l7nqv//NfH5G
- 1iuQABxGtpDrEJuIgj2ilRwHPDucoxHgAWPe7UpFs7wP7n2jcAEKBSHQ3phl+ppardB6YyQZR4d
- ir1QAVQ3OVBwZaJ1xCEaoYUt0+m6lkgy4ZeBWcn8ZIbzFr1uHJzsfIMD4xAVYPgNF7H4/tvpmN+
- MNgthoRsXktvh0YDxzj5GSmhjvqjtoWqTQQWe7zjz+p4JbHieWqa3v0U2K2e0pdSQuh4PO0F3gB
- l+UYbfhHzOulHpjQQ0EwO2if+YsBTcwK7cG5fiwaLNDem0YX0MTJxF5s3SmekBNjkFboH6JVvr1
- iNKwtSFvnF3zHLkrFwrL60sAAM6ZH4XFoHcS1UQ==
-X-Received: by 2002:a05:6000:4013:b0:427:6c6:4982 with SMTP id
- ffacd0b85a97d-42706c64a96mr7973714f8f.44.1760949543121; 
- Mon, 20 Oct 2025 01:39:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSG6Uw5Mavy5WETng2DuMRCBK8IDIvssOU4+rxwkW8feQ/Ovy9GJd968kEbQ8d68FLma06Ig==
-X-Received: by 2002:a05:6000:4013:b0:427:6c6:4982 with SMTP id
- ffacd0b85a97d-42706c64a96mr7973684f8f.44.1760949542679; 
- Mon, 20 Oct 2025 01:39:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00b988dsm14476517f8f.35.2025.10.20.01.39.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 01:39:02 -0700 (PDT)
-Message-ID: <46047169-739f-4045-a7c0-91d377dfff6e@redhat.com>
-Date: Mon, 20 Oct 2025 10:39:01 +0200
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vAlW7-0000yI-00; Mon, 20 Oct 2025 04:45:30 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vAlW2-0001RH-GD; Mon, 20 Oct 2025 04:45:22 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDHtVyN9vVoH+VSAA--.52986S2;
+ Mon, 20 Oct 2025 16:45:01 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwDnSuiD9vVoghFdAA--.25526S2;
+ Mon, 20 Oct 2025 16:44:54 +0800 (CST)
+Message-ID: <b5300243-01c0-4764-b2d1-5ed8ae70e499@phytium.com.cn>
+Date: Mon, 20 Oct 2025 16:44:50 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] vfio/migration: Add migration blocker if VM memory
- is too large to cause unmap_bitmap failure
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, mst@redhat.com, jasowang@redhat.com,
- yi.l.liu@intel.com, clement.mathieu--drif@eviden.com, eric.auger@redhat.com,
- joao.m.martins@oracle.com, avihaih@nvidia.com, xudong.hao@intel.com,
- giovanni.cabiddu@intel.com, mark.gross@intel.com, arjan.van.de.ven@intel.com
-References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
- <20251017082234.517827-8-zhenzhong.duan@intel.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251017082234.517827-8-zhenzhong.duan@intel.com>
+Subject: Re: [RFC v3 19/21] hw/arm/smmuv3: Use iommu_index to represent the
+ security context
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
+ <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
+ <dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org>
+ <5bde6664-c830-44dd-9513-700980a43ade@phytium.com.cn>
+ <75d10ffd-eafe-4daa-b763-6e1f3e90c766@linaro.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <75d10ffd-eafe-4daa-b763-6e1f3e90c766@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwDnSuiD9vVoghFdAA--.25526S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWjxScMF0wAbsc
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3uryrCryxGFyDJF1UJryUAwb_yoWkWF15pF
+ W8GFy5KrZ8GF1fAr1Iqw1UZrW3t348J3W3Xr1rKF1UAw4DAr92qr40vr1Y9r1DXr48CF1j
+ v34UZrW7urn8ArJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,96 +80,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 10:22, Zhenzhong Duan wrote:
-> With default config, kernel VFIO type1 driver limits dirty bitmap to 256MB
+Hi Pierrick,
+
+On 2025/10/16 15:04, Pierrick Bouvier wrote:
+> On 10/15/25 11:37 PM, Tao Tang wrote:
+>> Hi Pierrick:
+>>
+>> On 2025/10/15 08:02, Pierrick Bouvier wrote:
+>>> Hi Tao,
+>>>
+>>> On 10/12/25 8:15 AM, Tao Tang wrote:
+>>>> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to select
+>>>> the programming interface. To support future extensions like RME, 
+>>>> which
+>>>> defines four security states (Non-secure, Secure, Realm, and Root), 
+>>>> the
+>>>> QEMU model must cleanly separate these contexts for all operations.
+>>>>
+>>>> This commit leverages the generic iommu_index to represent this
+>>>> security context. The core IOMMU layer now uses the SMMU's
+>>>> .attrs_to_index
+>>>> callback to map a transaction's ARMSecuritySpace attribute to the
+>>>> corresponding iommu_index.
+>>>>
+>>>> This index is then passed down to smmuv3_translate and used throughout
+>>>> the model to select the correct register bank and processing logic. 
+>>>> This
+>>>> makes the iommu_index the clear QEMU equivalent of the architectural
+>>>> SEC_SID, cleanly separating the contexts for all subsequent lookups.
+>>>>
+>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>> ---
+>>>>    hw/arm/smmuv3.c | 36 +++++++++++++++++++++++++++++++++++-
+>>>>    1 file changed, 35 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>>>> index c9c742c80b..b44859540f 100644
+>>>> --- a/hw/arm/smmuv3.c
+>>>> +++ b/hw/arm/smmuv3.c
+>>>> @@ -1080,6 +1080,38 @@ static void smmuv3_fixup_event(SMMUEventInfo
+>>>> *event, hwaddr iova)
+>>>>        }
+>>>>    }
+>>>>    +static SMMUSecSID smmuv3_attrs_to_sec_sid(MemTxAttrs attrs)
+>>>> +{
+>>>> +    switch (attrs.space) {
+>>>> +    case ARMSS_Secure:
+>>>> +        return SMMU_SEC_SID_S;
+>>>> +    case ARMSS_NonSecure:
+>>>> +    default:
+>>>> +        return SMMU_SEC_SID_NS;
+>>>> +    }
+>>>> +}
+>>>> +
+>>>> +/*
+>>>> + * ARM IOMMU index mapping (implements SEC_SID from ARM SMMU):
+>>>> + * iommu_idx = 0: Non-secure transactions
+>>>> + * iommu_idx = 1: Secure transactions
+>>>> + *
+>>>> + * The iommu_idx parameter effectively implements the SEC_SID
+>>>> + * (Security Stream ID) attribute from the ARM SMMU architecture
+>>>> specification,
+>>>> + * which allows the SMMU to differentiate between different security
+>>>> state
+>>>> + * transactions at the hardware level.
+>>>> + */
+>>>> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu,
+>>>> MemTxAttrs attrs)
+>>>> +{
+>>>> +    return (int)smmuv3_attrs_to_sec_sid(attrs);
+>>>> +}
+>>>> +
+>>>> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
+>>>> +{
+>>>> +    /* Support 2 IOMMU indexes for now: NS/S */
+>>>> +    return SMMU_SEC_SID_NUM;
+>>>> +}
+>>>> +
+>>>>    /* Entry point to SMMU, does everything. */
+>>>>    static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr
+>>>> addr,
+>>>>                                          IOMMUAccessFlags flag, int
+>>>> iommu_idx)
+>>>> @@ -1087,7 +1119,7 @@ static IOMMUTLBEntry
+>>>> smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>>>>        SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>>>>        SMMUv3State *s = sdev->smmu;
+>>>>        uint32_t sid = smmu_get_sid(sdev);
+>>>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>>>> +    SMMUSecSID sec_sid = iommu_idx;
+>>>>        SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>>>>        SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>>>>                               .sid = sid,
+>>>> @@ -2540,6 +2572,8 @@ static void
+>>>> smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+>>>>          imrc->translate = smmuv3_translate;
+>>>>        imrc->notify_flag_changed = smmuv3_notify_flag_changed;
+>>>> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
+>>>> +    imrc->num_indexes = smmuv3_num_indexes;
+>>>>    }
+>>>>      static const TypeInfo smmuv3_type_info = {
+>>>
+>>> I noticed that this commit breaks boot of a simple Linux kernel. It
+>>> was already the case with v2, and it seems there is a deeper issue.
+>>>
+>>> Virtio drive initialization hangs up with:
+>>> [    9.421906] virtio_blk virtio2: [vda] 20971520 512-byte logical
+>>> blocks (10.7 GB/10.0 GiB)
+>>> smmuv3_translate_disable smmuv3-iommu-memory-region-24-3 sid=0x18
+>>> bypass (smmu disabled) iova:0xfffff040 is_write=1
+>>>
+>>> You can reproduce that with any kernel/rootfs, but if you want a
+>>> simple recipe (you need podman and qemu-user-static):
+>>> $ git clone https://github.com/pbo-linaro/qemu-linux-stack
+>>> $ cd qemu-linux-stack
+>>> $ ./build_kernel.sh
+>>> $ ./build_rootfs.sh
+>>> $ /path/to/qemu-system-aarch64 \
+>>> -nographic -M virt,iommu=smmuv3 -cpu max -kernel out/Image.gz \
+>>> -append "root=/dev/vda rw" out/host.ext4 -trace 'smmuv3*'
+>>>
+>>> Looking more closely,
+>>> we reach SMMU_TRANS_DISABLE, because iommu_idx associated is 1.
+>>> This values comes from smmuv3_attrs_to_sec_sid, by reading
+>>> attrs.space, which is ArmSS_Secure.
+>>>
+>>> The problem is that it's impossible to have anything Secure given that
+>>> all the code above runs in NonSecure world.
+>>> After investigation, the original value read from attrs.space has not
+>>> been set anywhere, and is just the default zero-initialized value
+>>> coming from pci_msi_trigger. It happens that it defaults to SEC_SID_S,
+>>> which probably matches your use case with hafnium, but it's an happy
+>>> accident.
+>>>
+>>> Looking at the SMMU spec, I understand that SEC_SID is configured for
+>>> each stream, and can change dynamically.
+>>> On the opposite, a StreamID is fixed and derived from PCI bus and slot
+>>> for a given device.
+>>>
+>>> Thus, I think we are missing some logic here.
+>>> I'm still trying to understand where the SEC_SID should come from
+>>> initially.
+>>> "The association between a device and the Security state of the
+>>> programming interface is a system-defined property."
+>>> Does it mean we should be able to set a QEMU property for any device?
+>>>
+>>> Does anyone familiar with this has some idea?
+>>>
+>>> As well, we should check the SEC_SID found based on
+>>> SMMU_S_IDR1.SECURE_IMPL.
+>>> 3.10.1 StreamID Security state (SEC_SID)
+>>> If SMMU_S_IDR1.SECURE_IMPL == 0, then incoming transactions have a
+>>> StreamID, and either:
+>>> • A SEC_SID identifier with a value of 0.
+>>> • No SEC_SID identifer, and SEC_SID is implicitly treated as 0.
+>>> If SMMU_S_IDR1.SECURE_IMPL == 1, incoming transactions have a
+>>> StreamID, and a SEC_SID identifier.
+>>>
+>>> Regards,
+>>> Pierrick
+>>
+>> Thank you very much for your detailed review and in-depth analysis, and
+>> for pointing out this critical issue that breaks the Linux boot.
+>>
+>>
+>> To be transparent, my initial approach was indeed tailored to my
+>> specific test case, where I was effectively hardcoding the device's
+>> StreamID to represent it's a so-called Secure device in my self testing.
+>> This clearly isn't a general solution.
+>>
+>
+> It's definitely not a bad approach, and it's a good way to exercise 
+> the secure path. It would have been caught by some of QEMU functional 
+> tests anyway, so it's not a big deal.
+>
+> A solution would be to define the secure attribute as a property of 
+> the PCI device, and query that to identify sec_sid accordingly.
+> As you'll see in 3.10.1 StreamID Security state (SEC_SID), "Whether a 
+> stream is under Secure control or not is a different property to the 
+> target PA space of a transaction.", so we definitely should *not* do 
+> any funky stuff depending on which address is accessed.
 
 
-... VFIO IOMMU Type1 ...
-
-> for unmap_bitmap ioctl so the maximum guest memory region is no more than
-> 8TB size for the ioctl to succeed.
-> 
-> Be conservative here to limit total guest memory to 8TB or else add a
-> migration blocker. IOMMUFD backend doesn't have such limit, one can use
-> IOMMUFD backed device if there is a need to migration such large VM.
-> 
-> Suggested-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/vfio/migration.c | 37 +++++++++++++++++++++++++++++++++++++
->   1 file changed, 37 insertions(+)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 4c06e3db93..1106ca7857 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -16,6 +16,7 @@
->   #include <sys/ioctl.h>
->   
->   #include "system/runstate.h"
-> +#include "hw/boards.h"
->   #include "hw/vfio/vfio-device.h"
->   #include "hw/vfio/vfio-migration.h"
->   #include "migration/misc.h"
-> @@ -1152,6 +1153,35 @@ static bool vfio_viommu_preset(VFIODevice *vbasedev)
->       return vbasedev->bcontainer->space->as != &address_space_memory;
->   }
->   
-> +static bool vfio_dirty_tracking_exceed_limit(VFIODevice *vbasedev)
-> +{
-> +    VFIOContainer *bcontainer = vbasedev->bcontainer;
-> +    uint64_t max_size, page_size;
-> +
-> +    if (!object_dynamic_cast(OBJECT(bcontainer), TYPE_VFIO_IOMMU_LEGACY)) {
-> +        return false;
-> +    }
+Thank you for the encouraging and very constructive feedback.
 
 
-Could we set in the IOMMUFD backend 'dirty_pgsizes' and
-'max_dirty_bitmap_size'to avoid the object_dynamic_cast() ?
+Your proposed solution—to define the security attribute as a property on 
+the PCIDevice—is the perfect way forward to resolve Secure device issue. 
+Perhaps we can implement this functionality in V4 as shown in the 
+following code snippet?
+
+1)  define sec_sid in include/hw/pci/pci_device.h:
+
+struct PCIDevice {
+     DeviceState qdev;
+......
+     /* Add SEC_SID property for SMMU security context */
+     uint8_t sec_sid;  /* 0 = Non-secure, 1 = Secure*/
+......
+
+}
 
 
-Thanks,
+2) then add sec-sid field in the Property of PCI in hw/pci/pci.c:
 
-C.
+static const Property pci_props[] = {
+......
+     /* SEC_SID property: 0=NS, 1=S */
+     DEFINE_PROP_UINT8("sec-sid", PCIDevice, sec_sid, 0),
+
+......
+
+};
 
 
-> +    if (!bcontainer->dirty_pages_supported) {
-> +        return true;
-> +    }
-> +    /*
-> +     * VFIO type1 driver has a limitation of bitmap size on unmap_bitmap
-> +     * ioctl(), calculate the limit and compare with guest memory size to
-> +     * catch dirty tracking failure early.
-> +     *
-> +     * This limit is 8TB with default kernel and QEMU config, we are a bit
-> +     * conservative here as VM memory layout may be nonconsecutive or VM
-> +     * can run with vIOMMU enabled so the limitation could be relaxed. One
-> +     * can also switch to use IOMMUFD backend if there is a need to migrate
-> +     * large VM.
-> +     */
-> +    page_size = 1 << ctz64(bcontainer->dirty_pgsizes);
-> +    max_size = bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * page_size;
-> +
-> +    return current_machine->ram_size > max_size;
-> +}
-> +
->   /*
->    * Return true when either migration initialized or blocker registered.
->    * Currently only return false when adding blocker fails which will
-> @@ -1208,6 +1238,13 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
->           goto add_blocker;
->       }
->   
-> +    if (vfio_dirty_tracking_exceed_limit(vbasedev)) {
-> +        error_setg(&err, "%s: Migration is currently not supported with "
-> +                   "large memory VM due to dirty tracking limitation in "
-> +                   "VFIO type1 driver", vbasedev->name);
-> +        goto add_blocker;
-> +    }
-> +
->       trace_vfio_migration_realize(vbasedev->name);
->       return true;
->   
+3) get sec-sid in smmu_find_add_as(hw/arm/smmu-common.c):
+
+static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+{
+     SMMUState *s = opaque;
+     SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
+     SMMUDevice *sdev;
+     static unsigned int index;
+     ......
+     sdev = sbus->pbdev[devfn];
+     if (!sdev) {
+
+         PCIDevice *pcidev;
+         pcidev = pci_find_device(bus, pci_bus_num(bus), devfn);
+         if (pcidev) {
+             /* Get sec_sid which is originally from QEMU options.
+              * For example:
+              * qemu-system-aarch64 \
+              * -drive if=none,file=/nvme.img,format=raw,id=nvme0 \
+              * -device nvme,drive=nvme0,serial=deadbeef,sec-sid=1
+              *
+              * This NVMe device will have sec_sid = 1.
+             */
+             sdev->sec_sid = pcidev->sec_sid;
+         } else {
+             /* Default to Non-secure if device not found */
+             sdev->sec_sid = 0;
+         }
+
+......
+
+}
+
+The SEC_SID of device will be passed from QEMU options to PCIDevice and 
+then SMMUDevice. This would allow the SMMU model to perform the 
+necessary checks against both the security context of the DMA access and 
+the SMMU_S_IDR1.SECURE_IMPL capability bit.
+
+
+Is this a reasonable implementation approach? I would greatly appreciate 
+any feedback.
+
+
+>
+> By curiosity, which kind of secure device are you using? Is it one of 
+> the device available upstream, or a specific one you have in your fork?
+
+
+I just use IGB NIC for test with Hafnium + OP-TEE software stack.
+
+
+>
+>>
+>> You've raised a crucial architectural point that I hadn't fully
+>> considered: how a standard "Normal World" PCIe device should be properly
+>> associated with the "Secure World". To be honest, I didn't have a clear
+>> answer for this, so your feedback is a perfect opportunity for me to dig
+>> in and understand this area correctly.
+>>
+> It took time for us to reach that question also.
+> Our current understanding is that SEC_SID == Realm is identified by 
+> bits on pci side (part of TDISP protocol), and that secure devices are 
+> indeed hardcoded somewhere.
+>
+> We asked this question to some Arm folks working on this area, to 
+> confirm Secure devices are supposed to be defined this way.
+
+
+Thank you also for sharing the invaluable context from your team's 
+internal discussions and your outreach to the Arm experts. This 
+clarification directly inspired my new proposal as described above.
+
+
+I will proceed with this plan for the v4 patch set. Thanks again for 
+your mentorship and for helping to clarify the correct path forward.
+
+Best regards,
+
+Tao
 
 
