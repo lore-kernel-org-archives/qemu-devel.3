@@ -4,140 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E264CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA19CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vArj3-0007ws-1q; Mon, 20 Oct 2025 11:23:09 -0400
+	id 1vArmK-0000oP-MY; Mon, 20 Oct 2025 11:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vAriz-0007wA-PR
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:23:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vAriv-0001fe-M6
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:23:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760973778;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OUgMNf9aswu/jYXKB9PlGnYovQfUiVNT+tmrdrJLFtA=;
- b=Ye1T35PEMhRAEm9k70WPFyKU5V5DI3oLSXL1TmT+y4SqiORaWliku+Fx6sWa45uqNd+ysO
- 8M48ls1Uh6OB2fQJmM0f5eVrHck69G9CYW6emD3N1qrUk5FKAXqR/pfj/RcfNI3ACl1v6p
- l0+Fe1TGQa8MwD6q+mCpxaVlL2Ug41A=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-aMBmJJlRNdu3ETiDFAzLkA-1; Mon, 20 Oct 2025 11:22:51 -0400
-X-MC-Unique: aMBmJJlRNdu3ETiDFAzLkA-1
-X-Mimecast-MFC-AGG-ID: aMBmJJlRNdu3ETiDFAzLkA_1760973770
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-471005f28d2so17437695e9.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 08:22:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vArmH-0000ns-S7
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:26:29 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vArmA-0002CG-1q
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:26:29 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-63e330a1360so1434245d50.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 08:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760973980; x=1761578780; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xbRc2Y50tjDDzcqSbLJtri+I8B9LM+txZdnW1HHpKJU=;
+ b=cSDym7ZUgnue69p9+QrMRtCvDuRTv20boZmA5zWRDoTHp7ygOBVcUCm+wGzBrmcD0A
+ 4zab9xAyS8fbwPZo7LgvC0Mgjd6BspPXfeGg4j+BFg3KigrzPo9JhPezekp7g/JZycj7
+ DrNFSW4lG+qanDZrUXfTLanbmNR/KCxsC8d4rR+iIQOAZv+wGpEoVOFdGHQp4Bv5+imB
+ +xjU6aU0pXT9L5YP+yv7iiIUMcpmR7wP0Fyl+5U6UB3tEjmoqmv9wWe8WHcDNDnjpSJM
+ s84oSL/8SvugFnTW7HMF2kPSGudUupB3rZUn0Fu5AjUW++JXzj9cBpaz1Uk3R/wJKj23
+ Fbaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760973770; x=1761578570;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1760973980; x=1761578780;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OUgMNf9aswu/jYXKB9PlGnYovQfUiVNT+tmrdrJLFtA=;
- b=vKKSaDeIyEqy1ayVuA6+qbno6XbubxTok74awJpM8HiMRPfK2CkjshWFmM7tFJe6/Z
- ES4vsEPJ3YOm+gOJOdJMVFOy5moCZfjibMk537UtzuhmE4WQwuV1mASpHzazcwX6rveu
- O2wrNhE4HIY5Mc4QxDraFwEhh1EmZez1D88xQyDyP3+t0LRpaPL9TGwe7NwX+9HY43QG
- rq7MVCF1SzILLy2GiCB77K5gMgxVY7dDMn/Vq3lWsEl87NmNFqRQcIqFaIzEjdYOFsnp
- ynRAQC4mGsEppttosSSXWxbaDhEdwLHqw2pVh1ObhePvEPfiD1NYT3vqG/6ONlEniuna
- c7ZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUbFf0NmQjo5aMJUgFgmkdbkRy1N9aG8r8gIX/idj67l7mZ1fILv3AoTQswzj1r14hEx/B6FuZ8uaa8@nongnu.org
-X-Gm-Message-State: AOJu0YxbCoO8nWIzPj/cSILzbPdSujNSmbWBg0SxKL6KfG/RAzwUK0e7
- nrlprqF/0yV+c6QCkonOylThQdpfOrFxEt7Ka+4kOEnF377JVLxTbX0zC01ITTNdjCLGPZF0RT4
- efFExA6AH6110xO5syjzQmb6cfDLtVeUvrLVGIOUgCEsNIL+z2GI7z7vq
-X-Gm-Gg: ASbGncvj6vXP6oLDBzZ4+5rkb1A0zfLqQ4wUZfsMCLbUyWdTmk1lC8Kv7iGBKFdmnAo
- 1UX+pwOmajNTcurSaioectuwvBc74ndUeockF/UHCYG818reshvs4zaPvfm0epfbyxiO9gUI4Mo
- AEZSJ9XGyLmjxgRJtm+qMYiRLx/LJ6wZwZ+1Foe0MyQFZyOitaNFUsB7E7dH2+Vylvz/KCMaIrc
- GwlfxMZ1LtPP5upMPdrCWeZQkGSrp+VBqcKtd03T+uC1gqR/A8Q4Sll7XNp6/rrjHtWh49uL7Vg
- U2fN7oMjyH9aOJzWwG5wVroAIkCqH5ORKZV3M2znbojTtCJtulqWTbqtm+NjJ8n6RE5KTyfo/Nh
- DDKisWZ64kcji9GsLEz9XP/FUahn/sCP4nTOL0K78TAw2tLiw9XwFZ7m+12rnr47Vcrq7rHsHY5
- HzPA==
-X-Received: by 2002:a05:600c:3492:b0:46e:33b2:c8da with SMTP id
- 5b1f17b1804b1-4711791cadfmr118544185e9.32.1760973770123; 
- Mon, 20 Oct 2025 08:22:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpLXHWRH3qCym5vAAg52XcKtHd2mVkWPjeYVifsQGc/9quw22dFTYi7Eb4KsySPjaDYO/YoQ==
-X-Received: by 2002:a05:600c:3492:b0:46e:33b2:c8da with SMTP id
- 5b1f17b1804b1-4711791cadfmr118543965e9.32.1760973769760; 
- Mon, 20 Oct 2025 08:22:49 -0700 (PDT)
-Received: from [192.168.10.27] ([151.61.22.175])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-471553f8a3asm174669895e9.16.2025.10.20.08.22.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 08:22:49 -0700 (PDT)
-Message-ID: <cc709134-2d28-4ac5-b7fe-c61bd1c5ccbf@redhat.com>
-Date: Mon, 20 Oct 2025 17:22:44 +0200
+ bh=xbRc2Y50tjDDzcqSbLJtri+I8B9LM+txZdnW1HHpKJU=;
+ b=CISrjBzKALHFPpRnjoNsS7/51e8QMbcp91VM1svGmw8PQjKHnsboh7UEfOsruYyexl
+ qzN7+mrdZaeJRCRHDV3VowLli5g8bPKimdop9lVl2iE/rEI64YAYHuWNEvogI4RwxT1q
+ PDEvUsogkWGlHiBxSYzol/4I9NLfFBoMhujoH1M2kUtqED5KxTwa/7WrZdWU+aZM5pIc
+ GPsd/YpvZYualNkue/FS950vV721f+YDrCBB9NL4C+dBF3gkYRRAltTppJvHSIuAgJsj
+ UjRBA4F5diB1WbFh8jnJ37RYyuZQqooAzjQOaXWmvPQPi88RRJCpAOU0mne06NWVWE2k
+ cDTg==
+X-Gm-Message-State: AOJu0Yze34R1liC/rcQkBgoQE89Dz4Qvt4VCT2ynPrBOGZleIu3S3rt/
+ 3Y/hQISq6RVcx4yHEeo5krlpjYGkEjiCB6hGDUNLbMn/iinSqpqmwuhG76GwQoet6rsQo5V/kLb
+ yIgZr22OdU4aUxKEetgMRyEJkRUOE17MXp9OQofZzJg==
+X-Gm-Gg: ASbGncuUErwSz/RwCWLRRJZleiryUFz2gEujQjU3WOw9Cafuw7rLdBaxZuaarDFeZpK
+ kfn50liApy6+ugTOBXF1lD2Xxcflp1dFqn71hpbbSs5NSPhM9IPNnS/mZiytagYh8oNq61GshBP
+ SxwmLAfe5q5RVIJOklAJ6MHK6H7DveZyClJUFyFvsbzFbQhmafZ3BDRXG+p8c8uYyb1nYGbXAJ9
+ riI7w5J1uV+hZFLZ0LXdrAe4A51IIHILIjNWa0O+aTGfSur5Za/rCQBwbAUZof4eMtnHrJT
+X-Google-Smtp-Source: AGHT+IF2lA8mPn6ikyx1pTs5VK8SppYjXpbp75WufW7LAzrXWk9WWWZdNcE/2soNUTBUebAdU9o3mmsUK7q4a+t5yWI=
+X-Received: by 2002:a05:690e:155c:20b0:63e:1a76:e9aa with SMTP id
+ 956f58d0204a3-63e1a76ecf5mr8611220d50.61.1760973979616; Mon, 20 Oct 2025
+ 08:26:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: From HUST OpenAtom Club: Inquiry & Contribution Plan for Rust In
- QEMU
-To: "Chao Liu(openatom.club)" <chao.liu@openatom.club>, zhao1.liu@intel.com,
- manos.pitsidianakis@linaro.org, marcandre.lureau@redhat.com,
- philmd@linaro.org
-Cc: qemu-rust@nongnu.org, qemu-devel@nongnu.org, dzm91@openatom.club,
- luojia@openatom.club
-References: <822f8543-10d0-4669-b484-cbd9837e324c@openatom.club>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <822f8543-10d0-4669-b484-cbd9837e324c@openatom.club>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
+ <20251011200337.30258-5-mlugg@mlugg.co.uk>
+In-Reply-To: <20251011200337.30258-5-mlugg@mlugg.co.uk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Oct 2025 16:26:08 +0100
+X-Gm-Features: AS18NWCeODjMrbj78pvHr_w-QmC5kHqgpOAfPSjy9Qxvz-fxvkljpnBl7ZoFhKo
+Message-ID: <CAFEAcA_mLnE5kEBMkpq1fNNq00ivND7wvRyBpxfxWpNSYd=PAA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] tests: add tcg coverage for fixed mremap bugs
+To: Matthew Lugg <mlugg@mlugg.co.uk>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,42 +93,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/20/25 12:56, Chao Liu(openatom.club) wrote:
-> Our initial plan is to add Rust versions of peripheral models for some
-> simple peripherals, such as block devices or I2C devices.
+On Sat, 11 Oct 2025 at 21:20, Matthew Lugg <mlugg@mlugg.co.uk> wrote:
+>
+> These tests cover the first two fixes in this patch series. The final
+> patch is not covered because the bug it fixes is not easily observable
+> by the guest.
+>
+> Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
+> ---
+>  tests/tcg/multiarch/test-mmap.c | 47 +++++++++++++++++++++++++++++----
+>  1 file changed, 42 insertions(+), 5 deletions(-)
 
-Yes, this is a good idea.  I2C would add a second bus in addition to 
-sysbus and could show the limitation of the existing bindings.
+The test case itself looks good, so my review comments
+below are just minor nits.
 
-Several simple devices in such hw/misc/i2c-echo.c, hw/gpio/pcf8574.c or 
-hw/rtc/ds1338.c could be converted to Rust in the same way as pl011 or hpet.
+> diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
+> index 96257f8ebe..64df694d1a 100644
+> --- a/tests/tcg/multiarch/test-mmap.c
+> +++ b/tests/tcg/multiarch/test-mmap.c
+> @@ -22,6 +22,7 @@
+>   * along with this program; if not, see <http://www.gnu.org/licenses/>.
+>   */
+>
+> +#define _GNU_SOURCE
 
-For now, avoid devices that have properties (e.g. hw/sensor/tmp105.c).
+Why do we need to define this now ?
 
-Block devices are substantially more complex, so I'd stay with something 
-simple for now.
+>  #include <stdio.h>
+>  #include <stdlib.h>
+>  #include <stdint.h>
+> @@ -36,12 +37,12 @@
+>  do                                                             \
+>  {                                                              \
+>    if (!(x)) {                                                  \
+> -    fprintf(stderr, "FAILED at %s:%d\n", __FILE__, __LINE__); \
+> +    fprintf(stderr, " FAILED at %s:%d\n", __FILE__, __LINE__); \
 
-Paolo
+I think that this is trying to fix a cosmetic bug in
+the printing of error messages: the tests each print
+some line without a newline, like:
+  fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
+and then for the passing case we add a space and complete the line:
+  fprintf(stdout, " passed\n");
 
-> In addition, we hope to get some other suggestions on what other suitable
-> work we can do regarding Rust In QEMU.
-> 
-> We look forward to your reply and hope to contribute to the Rust In QEMU~
-> 
-> 
-> Link:
-> 
-> [1] HUST OpenAtom Open Source Club:
->       https://hust.openatom.club/news/20250812_intro_to_club/
-> [2] RustSBI Github Repo:
->       https://github.com/rustsbi/rustsbi
-> [3] Learning QEMU Camp:
->       https://opencamp.cn/qemu/camp/2025
-> 
-> 
-> Thanks,
-> Chao
-> 
-> 
+but this fail_unless() macro is not adding the space, so
+presumably we print something awkward like
+check_invalid_mmaps addr=0x12435468FAILED at ...
 
+But we should separate out this trivial cleanup from
+the patch adding a new test case.
+
+>      exit (EXIT_FAILURE);                                       \
+>    }                                                            \
+>  } while (0)
+>
+> -unsigned char *dummybuf;
+> +unsigned char *dummybuf; /* length is 2*pagesize */
+>  static unsigned int pagesize;
+>  static unsigned int pagemask;
+>  int test_fd;
+> @@ -439,21 +440,56 @@ void check_invalid_mmaps(void)
+>  {
+>      unsigned char *addr;
+>
+> +    fprintf(stdout, "%s", __func__);
+> +
+>      /* Attempt to map a zero length page.  */
+>      addr = mmap(NULL, 0, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> -    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
+>      fail_unless(addr == MAP_FAILED);
+>      fail_unless(errno == EINVAL);
+>
+>      /* Attempt to map a over length page.  */
+>      addr = mmap(NULL, -4, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> -    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
+>      fail_unless(addr == MAP_FAILED);
+>      fail_unless(errno == ENOMEM);
+
+Can we leave the printfs for the existing test cases alone?
+You can add a new one for your new subcase:
+       fprintf(stdout, "%s mremap addr=%p", __func__, addr);
+
+> +    /* Attempt to remap a region which exceeds the bounds of memory. */
+> +    addr = mremap((void *)((uintptr_t)pagesize * 10), SIZE_MAX & ~(size_t)pagemask, pagesize, 0);
+> +    fail_unless(addr == MAP_FAILED);
+> +    fail_unless(errno == EFAULT);
+> +
+>      fprintf(stdout, " passed\n");
+>  }
+>
+> +void check_shrink_mmaps(void)
+> +{
+> +    unsigned char *a, *b, *c;
+> +    a = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    b = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +    c = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +
+> +    fail_unless(a != MAP_FAILED);
+> +    fail_unless(b != MAP_FAILED);
+> +    fail_unless(c != MAP_FAILED);
+> +
+> +    /* Ensure we can read the full mappings */
+> +    memcpy(dummybuf, a, 2 * pagesize);
+> +    memcpy(dummybuf, b, 2 * pagesize);
+> +    memcpy(dummybuf, c, 2 * pagesize);
+> +
+> +    /* Shrink the middle mapping in-place; the others should be unaffected */
+> +    b = mremap(b, pagesize * 2, pagesize, 0);
+> +    fail_unless(b != MAP_FAILED);
+> +
+> +    /* Ensure we can still access all valid mappings */
+> +    memcpy(dummybuf, a, 2 * pagesize);
+> +    memcpy(dummybuf, b, pagesize);
+> +    memcpy(dummybuf, c, 2 * pagesize);
+> +
+> +    munmap(a, 2 * pagesize);
+> +    munmap(b, pagesize);
+> +    munmap(c, 2 * pagesize);
+> +}
+> +
+>  int main(int argc, char **argv)
+>  {
+>         char tempname[] = "/tmp/.cmmapXXXXXX";
+> @@ -468,7 +504,7 @@ int main(int argc, char **argv)
+>
+>         /* Assume pagesize is a power of two.  */
+>         pagemask = pagesize - 1;
+> -       dummybuf = malloc (pagesize);
+> +       dummybuf = malloc (pagesize * 2);
+>         printf ("pagesize=%u pagemask=%x\n", pagesize, pagemask);
+>
+>         test_fd = mkstemp(tempname);
+> @@ -496,6 +532,7 @@ int main(int argc, char **argv)
+>         check_file_fixed_eof_mmaps();
+>         check_file_unfixed_eof_mmaps();
+>         check_invalid_mmaps();
+> +    check_shrink_mmaps();
+
+I was going to complain about indent on this line, but the
+problem seems to be that the file is incorrectly
+indented with hardcoded tabs for parts of it.
+
+>         /* Fails at the moment.  */
+>         /* check_aligned_anonymous_fixed_mmaps_collide_with_host(); */
+
+thanks
+-- PMM
 
