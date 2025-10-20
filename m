@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7F9CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E9DCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAwHS-0001vd-3p; Mon, 20 Oct 2025 16:14:58 -0400
+	id 1vAwLB-00033C-4j; Mon, 20 Oct 2025 16:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwHQ-0001vL-KF
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:14:56 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwL8-00032T-N2
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:18:46 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwHK-0002la-GU
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:14:56 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3ee130237a8so3110968f8f.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 13:14:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAwL6-0003B6-UB
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 16:18:46 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4711f156326so34975395e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 13:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760991289; x=1761596089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760991523; x=1761596323; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bF3n/GZ4HV9xqrnxBf8IW6Ugl3uxF1S2doAuPBRXPPE=;
- b=oukqtXST3bqfk25ZWwSZrvqdxG+FaPu05uqW4m7qJZmr24fPUATe3xuMzn0KAlm1iv
- +79ACcXZwc8XM/joohQ2hwDhIiJ5dCVIJ2XCLjoRl/4bWB+oruYrvtwn+Mes4PUnMUMD
- x4AqL8/ogMAtTCflwpoRHL2g353OShSyloF0++e1sRw39zGqozlMIL7SiZ+V0w6w1beW
- JLTcwUQN6FcAD+3jd1JBfFn+6uMdYXCrZj/slXe3PU4Clk3wrcFmqn7U37krGAciRxqL
- pqAA4cv6mDGr92KhgIWOobeZqI3FZJRUWNhSLa8llPgts54JyKl7hXfMdEJJHGCPhEY1
- hu/Q==
+ bh=a9xi0or0x7ZU6pcC1+lqPJVtUwN6O1VEcxIfhitvDu4=;
+ b=dakq0/9e+aIGnZrQliVrLhMabc5IVEcDbr3Ayuis4DIwIJfGWkvXFIHT0pm0I30Fzc
+ F3okzxPx30Eoe7JrbCBb40UmyQD/rPYFds2mKJmxEuSCtjQ2k9KiZVHgXtqL6ZBsTZLJ
+ cNzpdKgfubJ5lwHWEXRT2Js3fcYDySfoE0okrRuuRhFpDj1MFFZlIEuOEPA5cGLyRptw
+ syJKG8RTih6NOgYMFy1A40W7CWp/9gDZu+3A/IQOcP+VyRBAk8sencyakPxD5Uys/QPy
+ MW59jXrlr7c4C5f0wzBbdXetXCclergsbshX7GEoyKYAyt/kvJ49yC13bQkbriL2dD7G
+ 0QNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760991289; x=1761596089;
+ d=1e100.net; s=20230601; t=1760991523; x=1761596323;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bF3n/GZ4HV9xqrnxBf8IW6Ugl3uxF1S2doAuPBRXPPE=;
- b=lnfEJGl/kyBnxzgHrsvcjI8/tj8hW1MYorWFc8XhcXWyGM5OKdMjTlOK1V7baf1jGc
- Kip0dqnw3AsQ8xPUSkyN9dFirMiaQfpp0rwaMNK2iK9lCFrDLFpZ2uZ7TviHwRxTlPlZ
- BSlS0Mg5zUdgtC/FMHNriuVsAusFpLNMolJN/mLFui+x+jwZF5vfklHorzPP/XZ5jygx
- DdnllHtyrojo4O+13WVMotbuPoXc9ofd1fdh+wlwSfEWO4cxDA8+iSfNAwZjzHSd/OVM
- SOoRK1Ksjf2mDgcNmXiDWb6vQob2lqFPYPL12zh2logOwtTiVx1NKFCxHJKrNjqETY0/
- bJyg==
+ bh=a9xi0or0x7ZU6pcC1+lqPJVtUwN6O1VEcxIfhitvDu4=;
+ b=D8J9ksgViIfPYG2CQpihr+QMRr1CIzwPCSnjSPf25xdA5fKnZS7lnaGRjx+eIA4/YS
+ xdV2bZaazGBAfPnrPzOK/1Xuyyv491zUXK4czNR4fCCU3AzR5WhxGFYzEnwrvkcJid0e
+ kLah1gEG6rHZuygze2H4WRRXBKtC3nBxc8MP0UrfNjo9c9oUZdM+u9uXaGy60dBty/GF
+ /aH0hYeLgrSZrd+YhNQByyypRh7V8ziHs/zZbCMYSfzhw+GM875v1bcIxNZIi1wnjFpM
+ 1tyITECRfsrG1fUMNbDhK6RQfRJnu+XvclmQ5gcWDxr1SKcE7c+ygEJyvUk75geLosvw
+ BkoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXebRwutIJ8YwjM22P9JhK2tce+unBhIIoBnW+lJwzbs/zjptYWJTUPcrfuf3WQj+7660tMkL6TbU4/@nongnu.org
-X-Gm-Message-State: AOJu0Yxj1iyL3Vs9AthvyUkVb9s0cS1+pRWPslfz5Q4HaYrL9wBWoQfK
- SUlH+5VsjXuv+7l8RI8SoKmYV/hCnZKm/hpOS498z9xRKhnKjSZwUCWHgYMYsd4q/7vPaC8xsRA
- qa8vLI3Y=
-X-Gm-Gg: ASbGncuHpcpt/o0QM3zG4R/JokNBSogWKtVcsdF790W6s+RLyEJLbE8WmJEd4pmi2sW
- TLyB2yS7u0WeEH5ZcPmmSnXfg84IK25HgGpTqAm8I8OuqmC573r2woRR7PE6/1uSyyvr3KOT6Er
- OgILiF6cmNzS9IlZab7G+Tc8+lmVbkQ+z/yM+oKglzPIRmFPHcYWB86yBp6nBsGap2htEaNclEA
- OII15lfGyXIPstmfYydhZkb43NJjrmI4KwVAbpiIwRT+tPvM1OjppWa828vq5HO5jLb8xOyf2TF
- nhxA1ZpZGlNPfnFT3VapUK95as+BdMYqIGp2JLSQJlr0pQX5Llt9ARe054Sg9P7n1cKKSrCeoXl
- Xc95Q5l0ep7F4fOzBFr8EIenvuR0nG+lf8Q7AP01mqBeI6QwZhmT1uQNLWC7sbGLOIQIJtqyh1w
- xrGMSGyUMxIkf8DWl4GXHWMs8Cl/cVl/vqiaSfiGGNbNpdUSYfS0JF1b6/bwQ8IpwZ
-X-Google-Smtp-Source: AGHT+IGhjYYxSblqi6QSILtnVmOSZzu/yahZA/85t7fpFukQmHr4Jg29HFF6LmUJ1lHI+QZ/0FDiXA==
-X-Received: by 2002:a5d:5f93:0:b0:427:7b7:a86d with SMTP id
- ffacd0b85a97d-42707b7aa0bmr9328269f8f.36.1760991288717; 
- Mon, 20 Oct 2025 13:14:48 -0700 (PDT)
+ AJvYcCVUMACRMx1L0N75+/ob07L7gl8MCSdn3QQh6aRcjLK5ncDGJNFNOvECwfKXwhXAR5/VRjU0mnb1oGXp@nongnu.org
+X-Gm-Message-State: AOJu0YxaJeGpvXDpd2WvLQyhXAdDSScDGXaoSOG2Vc0GYegLZWI5EQGb
+ EDRMgrVgubdlpfaiLQeVVa9VoEVHVjAj6J7EYNnyKDXZejW2M0cdZ6dzuybRmPshvHPM1jTWhfP
+ iRcwdWpQ=
+X-Gm-Gg: ASbGnctoKE1lJZ3l65PSnOBFWXng3ujzqMQ9cP1F+tWCvfNjfbIe9zXwNiGhnMd0xNA
+ OOGrFCR0yeGGOKjQrnDhcE9Jer0UAQYxsLUDAmtfTWKwvECyvDWgRc8/1wAsjAwqZDwE3LHspBe
+ XhIO/iTA+1m1yB6cJgHAwGQcTXC9oRXKD/6laIUGL0oMk9RoAWBuQR5lt/64g0E6zWhTKLvFsNu
+ +5LJWas5z/QpNAAvHVQUHKOVMi10nGu9NtsYiUQ2v2u/4X6MC0dfyvZwm4imzCE+IZrV+iYZFj9
+ 8L6aY4K7czb8vBoEqKRK3eeUQsd4ixc3muKJAGzs+4dQYMiy909mwFaOuVwe7mGJbAfjFuooooQ
+ wtOzrkrVep4UbW2rVqV+oYG8NkfveqBJ/vGeiffN4gF2dnYJ3cP+No0HuArZ6CCcMZgs+ciNo/D
+ /F3HY0tlwMqaqzxCWTm0+3WqAeENs8ReOdN1RjWTiU+C4=
+X-Google-Smtp-Source: AGHT+IGEfoGpkgWAtyjX1cY/IQcpcJOdCr0Psvitn5YpADo988aHVCeZefv3LAlI/UUcZcVZvp8WBg==
+X-Received: by 2002:a05:600c:4e11:b0:471:c72:c807 with SMTP id
+ 5b1f17b1804b1-471179079c7mr117708685e9.22.1760991523420; 
+ Mon, 20 Oct 2025 13:18:43 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce3e2sm16893628f8f.47.2025.10.20.13.14.48
+ 5b1f17b1804b1-471144b5c34sm260890115e9.10.2025.10.20.13.18.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 13:14:48 -0700 (PDT)
-Message-ID: <08aa2ac1-5ed2-4886-968a-8e9a082e1d6f@linaro.org>
-Date: Mon, 20 Oct 2025 22:14:47 +0200
+ Mon, 20 Oct 2025 13:18:42 -0700 (PDT)
+Message-ID: <204af6f8-cb4a-429a-aacf-2fbfb3575a2f@linaro.org>
+Date: Mon, 20 Oct 2025 22:18:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] crypto: validate an error is reported in test
- expected fails
+Subject: Re: [PATCH v4 07/16] hw/pci-host/raven: Rename direct config access
+ ops
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>
-References: <20251020141237.2621796-1-berrange@redhat.com>
- <20251020141237.2621796-4-berrange@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <cover.1760795082.git.balaton@eik.bme.hu>
+ <74fcd70106289663ea426161aada78e879995d6c.1760795082.git.balaton@eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251020141237.2621796-4-berrange@redhat.com>
+In-Reply-To: <74fcd70106289663ea426161aada78e879995d6c.1760795082.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,15 +109,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/10/25 16:12, Daniel P. Berrangé wrote:
-> There was a bug where TLS x509 credentials validation failed
-> to fill out the Error object. Validate this in the failure
-> scenarios.
+On 18/10/25 16:04, BALATON Zoltan wrote:
+> Rename memory io ops implementing PCI configuration direct access to
+> mmcfg which describes better what these are for.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->   tests/unit/test-crypto-tlscredsx509.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   hw/pci-host/raven.c | 17 ++++++++---------
+>   1 file changed, 8 insertions(+), 9 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
