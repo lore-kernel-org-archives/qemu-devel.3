@@ -4,72 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE57CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6CFCCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqdO-0004TC-H8; Mon, 20 Oct 2025 10:13:14 -0400
+	id 1vAqmE-0004ia-0L; Mon, 20 Oct 2025 10:22:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAqdI-0004Rb-E4
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:13:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vAqmA-0004hs-RR; Mon, 20 Oct 2025 10:22:20 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAqdA-0007Ox-0p
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:13:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760969578;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=D+Fm6x+udzx5mdii2jqZ13AnyXmUh+kmRa1848QdHJI=;
- b=PEcT9/mWLJVjx16e8u1ZSRohSIOWVtYNZ7L3jEVuW3be53aIL8zOxKDUesOZ19rAMcCpzn
- YjOX+ZH6E2AHbnssEfcMed6vtmp1ARtc3obQZdhZJhlRY7UX4w2WPztuP3KU60IqDrTL9R
- LAPuZX/73WCbVNaCCs86SUpE14lxaak=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-l7nj3GURPJaHyPyb_6HqhQ-1; Mon,
- 20 Oct 2025 10:12:50 -0400
-X-MC-Unique: l7nj3GURPJaHyPyb_6HqhQ-1
-X-Mimecast-MFC-AGG-ID: l7nj3GURPJaHyPyb_6HqhQ_1760969568
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 505BE1805C10; Mon, 20 Oct 2025 14:12:48 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.161])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DE6891800577; Mon, 20 Oct 2025 14:12:46 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, matoro <matoro_mailinglist_qemu@matoro.tk>
-Subject: [PATCH v3 5/7] crypto: allow client/server cert chains
-Date: Mon, 20 Oct 2025 15:12:35 +0100
-Message-ID: <20251020141237.2621796-6-berrange@redhat.com>
-In-Reply-To: <20251020141237.2621796-1-berrange@redhat.com>
-References: <20251020141237.2621796-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vAqm3-0000N7-DX; Mon, 20 Oct 2025 10:22:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xgNs3vwAV+En/qOoNqwwWpKdYQrgFYUjs5m7li6MGbjcqPDr8nNzO2np0yioNnMDwrXzMtmUL691SXwUNyOldisiQfHu6+9DAYJOsEtHxNoT63Tyb4W4x8KqM+yNJJg9BtAhsNphPjRb+aNWvJdNgnWHb3BHIawYtYV6wUD4fVogbxqb8qnOaYjqY3KUecLZpxSMIoIBi73YNYmMP9V0EPpAS1PpUlWW5ez4PB96/N2ctb7k3m+VgMcZh20ISG6bi5F0SVokqp8uy8/RE0wdXmJHdPmlrtBYEC25jYYxbX/ZAQIZBTHv1F1alxYG5HI/tde4brQe5aRCFXGiilwYqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2wupuepJm+94LT5p/BYjFx/Uw850yz0kK7nLguq9TIc=;
+ b=iG1eAwza1vItZBxKAj7nZFJr1ronta2Y6k9DpKRQzTWGw9sIGvu7myrwfk1yZcWML9eHpMdTbss+1wY7ujV3fB2AgLhp3gMmXbqoWXqclH0wYZn7qcUniIALWiO6Y5UAtq2WgnBseXh/pVxueXef+sMWOMGf1oFCoy8gR8y1J+JKAwAh/3IKKKsjEOX1eohoeNsYfpV5u3D+H9qvsYoHTqNhJBbx8nua6RpPsVk+X2e83I1hVE/hEQXOLw/l/SKgk7uXWFPFR5rF9Lvo/lN8/mgB6aSfM2PCWLAJmKOWtYEB4wT9qR/kdYsrA1IOFNDqjjqM84nc/sbgFSJ5zDPokg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2wupuepJm+94LT5p/BYjFx/Uw850yz0kK7nLguq9TIc=;
+ b=kzFPzTnUjccaTMugjeRKFy3qidmM8geO22bEPyAM3ilNaUZBub/pQbDcidlASvCHYf8fYfRrzeS7sBarEabPqX53RvTOeCoqYb3xEKuv9velOn7olsPhyjf2FNqR+g+vdQWU2sQY+mocORDKfX2b2ojHOo4vhUSXut5hh7CDErp1raJCQydaksCr8HCCBRaG8jbKjdJ+RNY/e2JA6i/AbG/juojwxuHDKF92Sr6alrkG71MkPdh9gz5wjyvhdR44gqL5qfQQdEpWCzX7Cchpvnnv/4Ym6fydfBmYg6ZxHUqt2x8YebNzDKzvwbMUkMxv9EvFRSU+5/eX6qWgnT0MCg==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by PH7PR12MB8124.namprd12.prod.outlook.com (2603:10b6:510:2ba::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.17; Mon, 20 Oct
+ 2025 14:22:00 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9228.015; Mon, 20 Oct 2025
+ 14:22:00 +0000
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: RE: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
+ reset
+Thread-Topic: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
+ reset
+Thread-Index: AQHcPvNf8cNe0zISsE6Kcr2+CesP+rTLGI7Q
+Date: Mon, 20 Oct 2025 14:22:00 +0000
+Message-ID: <CH3PR12MB75485BEEB50D8B5A462D132CABF5A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-20-skolothumtho@nvidia.com>
+ <aPF9l5GwctGN0tqT@Asurada-Nvidia>
+In-Reply-To: <aPF9l5GwctGN0tqT@Asurada-Nvidia>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|PH7PR12MB8124:EE_
+x-ms-office365-filtering-correlation-id: fa85c310-dfa1-4d64-401a-08de0fe40897
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|7416014|38070700021|7053199007; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?ItW0kgu6HtWNX77JPectkqDcfM8BmRcsjDRbMQXFRPLukU82D2K178HD15Ni?=
+ =?us-ascii?Q?AqG8cRCLukdS6300+uH7klTx3IDOMgTAOrZO2tTWupHboJBxeSO6Ay6ihG+0?=
+ =?us-ascii?Q?bqloF9qmEPgeD3vvtJoogAfT0OUMQJJRlAmrG4SFn+tZ89dWKc+ILebPZteN?=
+ =?us-ascii?Q?tKEpFySLcRNrtVYsyQv0QPR6E8RcdXUxh65QEpkaNOBkPJ9WjEW8f8l2nFMr?=
+ =?us-ascii?Q?nMOB8sa7ADT+ql/YA71sXkyZ0VBSYQ5S+mSANKFHjsfThWpgwDKAIMX6Tmkp?=
+ =?us-ascii?Q?J/CktEADBsDDnNXB5P/BWtEfzT6hFAcmPRqpljzougeqHgMqES+TSgpKs6zg?=
+ =?us-ascii?Q?JleVJMSUtPMN4QfP+rwXSmBMtXHnIHnJF06dBN7xgB7Bx7hXEhvnf6FllXJD?=
+ =?us-ascii?Q?hleSyKNxf3a24TOHIpz48yXUlJZLDc+spKMOoTMq9OeBGw9kwnJBaf6cFAfg?=
+ =?us-ascii?Q?mb42lxLRVXFKZJmrv0e3X9aCiMhXg2x+lTtiNadnU3fplz2yWVTa1Ta/ibwV?=
+ =?us-ascii?Q?XFWUxkn26kekDKQyDpjO8OuvvskZVE+UnV5lCCUZDXQRb3muametw2Dztt1x?=
+ =?us-ascii?Q?EGkSYuHCcDmqhf/tVEXiVUNcGL6ewDrwbGakDUlIV9UNSVY1yxebT5AoI/23?=
+ =?us-ascii?Q?wMKoCQTrbJrSKWCDhRP0gX5Qh41bmzyh00yErnbbYZgUj76AFyORrDhiFNdr?=
+ =?us-ascii?Q?0DTuWfZz8LVdXWQyMk6IorBqs674g5L0fjK692F84ZIJA1DND7l1o/KYKIFJ?=
+ =?us-ascii?Q?Ctolr5wGhn3HQ10BJPrhNVPccAuJhXvACfHI+Zcxe200GaKGJ9l8djZpvfp1?=
+ =?us-ascii?Q?cTuV8NrTOxhy15jGU3EtjtppnUkzqqT0khi9GZKKYVfg/RFNpNQjUf4kMBoD?=
+ =?us-ascii?Q?M9T0afwQ911pn3G0qeVkpccfE+cROCjVMuW9RT/561Wa8aUNAb9toaBQcPUK?=
+ =?us-ascii?Q?oAIUM6I4Mlz2jue+vsrgYqE2pUl+8Pylgkk7aH7NxDitrNv5KURzP6EwO083?=
+ =?us-ascii?Q?uO9W+mgO1Q9mO6b0Rrs57NeoN8Qyui24A+Qlxk1lvztJ/Uku29YpFCi/JqcM?=
+ =?us-ascii?Q?9+PxQw4P5ujy4OPt6hFNAjspl1IIhvgRoC78HQtBABSBdDD45gEyPEjeq77U?=
+ =?us-ascii?Q?V+f1hHxQQBaeN2rzuBiTQJFaIdDj7BkdNGPI3kgQ7lmhP6gE0aHw0SjTacqn?=
+ =?us-ascii?Q?I+l0pQd1e8SP6s0BqNyUPWFwiGYWyyUR9KGYz9ZVZZ5a4DMcxVig5okOjIKC?=
+ =?us-ascii?Q?v0HPNmub2NzRKnrCUOc822kwj9u2jw8UTFUBaghtmv+jERrNs0aLnb/TLqGK?=
+ =?us-ascii?Q?guH+ShqdVSfhmWdNiLK9VrQue2269IzbXapWmjj/qEuxYDJKgia8f25/yupx?=
+ =?us-ascii?Q?1e4e7yiXcpdFuIfJdoKJyo43Qv3dPA07Ua4KAMdOoSXkN2ozHCcf2BHFlW7V?=
+ =?us-ascii?Q?2I5YlC7zH851OhzJ27VTPrxGtr1qhKq1XVbeKMMqsmRIDtFJ7vd5aupfG0IV?=
+ =?us-ascii?Q?EAK9CFg7STeYOlhM0x23aQbkNba70g5xIpZL?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700021)(7053199007);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LoQURhSB9iMUeJT/b61qBm7l4oVqqeOuH3wjTXoI2AqzlztjDv17C5LDY3TW?=
+ =?us-ascii?Q?A43pbZYpJErh/FpmWT12rE5hs/qsDPFiXrSqd1j84frKylxE5G7At1hkxLRo?=
+ =?us-ascii?Q?0n2VRi38M5vo0OkG3j1lOvLW35QdomjIurxUTy0YTZoHsb2s0jU1zRTWt+tI?=
+ =?us-ascii?Q?dOYq3wXTxjPQNXKq+PsPExxoi/HJWZozrViKk0oikuOJdhj7Bk2hsaLMlTN3?=
+ =?us-ascii?Q?4MnDSt9iAUUdXD1k3qdalLNvM1ymNMAWZO09DudKlZ2AERXlcu6IEAvc9go5?=
+ =?us-ascii?Q?r3rWOOxFGp4djAhxNHVqtgP3qqD6fLnlEbiYnWaJTp24T016E5Irt3Iw4onx?=
+ =?us-ascii?Q?k6Di5K9WVQycFpHiqBGaC7exOj9D/eeTkP/J6jR7ndvdKTEIvI88E+TZDRTL?=
+ =?us-ascii?Q?PE6CTo+0vR+uGjO/NdAB2qmUOYfRO/6crEUuLPn655YiDAC+kO1qcmS3DVZ7?=
+ =?us-ascii?Q?qJXZv3gZiQWnwYRKdf+1bXWUhxqzq2vkGysU4k4r6fMFrszVK3Sw5Hvfv8X3?=
+ =?us-ascii?Q?VAAfkR7WbbyHOeSP47eCijJt+SBleYl/Zo4Kp0JOsSqtt8j8q637D7y3bisg?=
+ =?us-ascii?Q?MM4uGYBXOFPaqiNEYz8fiMMO8SnHZcgyewrIg4HaJ1phhHXOaMV1FlShrU82?=
+ =?us-ascii?Q?jOq1I6cCJlpX1kfi5OZwym0Ty/X4Isg1cFMkuUQrCfRK+1QHnDNd1eXimmKe?=
+ =?us-ascii?Q?B7GxVlM6Arz5Ul4I2GOc1013ZrflzE7gG+T8JHVRaqiWJiCgfUpBccu1FhgN?=
+ =?us-ascii?Q?i6X55MaS8on7SkEaTvA5r8Lzo7oZ850ySfDEOHZ/DEp3VtYwL9u5mh9UdHPH?=
+ =?us-ascii?Q?rl/Z28EJ7nz8xFWsY3fWdH7bYgN/r+ErbIkRYGKTx8OvDjUR4S/BnmPkNVcS?=
+ =?us-ascii?Q?JTmVC3ZPNW6R0fj6DElnKqg1Ux2PuUkIYPbZNFUoAeXU9V3cVneW+F5wXCPA?=
+ =?us-ascii?Q?OOzY1sAy0K5UoL88hz1noSQp8406mjlkRz4yNzQMP3e2GW61/I2DFmlPnFBr?=
+ =?us-ascii?Q?2JfsWdwtaulbDMCO1gmVtIamgZvhRVKdPr+tz2+nTXkeZEP8QN1+GlTQyNSj?=
+ =?us-ascii?Q?e9f/3ZbeGxf3WU/2bNeDYfC7g6PypmFpIAk+y0NhMFXVG2fcum6KRZws1aNK?=
+ =?us-ascii?Q?TWh5rjfAQwvJE52qtlP8/jn4ZsRQf5vB9BtlqwqRH+TgQ3egMuA/3Llq9leo?=
+ =?us-ascii?Q?EOSuDwOl69atI7ViRGE6FV7SGyk5ybo7ygmxZt6xshDYTW/gT/yterCrHvuV?=
+ =?us-ascii?Q?Ss5bCP6i4nrPsYTJfOAlVcXhWwPNFy7qoHxb1XrulPMjjau/6Ta5I4kmUftC?=
+ =?us-ascii?Q?KI6//oZ+Utu4ck/3mVivT9P7MJGpdNUbBisOR/+w7s6X09xaAb6anO3NgJDX?=
+ =?us-ascii?Q?rQ3ATNUgKHZrdZfqhKa2mpGDvRyG1sAZ2FMVVKsJ4pSNPbeEUdbZ2NSt0ktM?=
+ =?us-ascii?Q?+p5tynpN46b+Bzfj11ZRw6nl1CA8msgn/4hkH/44uZX1TRrzRkBrRHsTOfgf?=
+ =?us-ascii?Q?37XR+cGbWE+JCSRX2VOa1tC3M0/QavHqTuygc4YEbFrEaFNhTGTfXT7aZwS9?=
+ =?us-ascii?Q?iUWwr/lKYUOsBLWLvlhsDFc/MmMxObsZlhzu2mOa?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa85c310-dfa1-4d64-401a-08de0fe40897
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Oct 2025 14:22:00.4210 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dWR3pVLhI3qPxjE82FAagbUv/ZFP+mgwPO7bhbH34KvpASXy7eU1OhiUdH8jUFXPYEkuVnYDLLGNQiZ4YrmDqA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8124
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,384 +177,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: matoro <matoro@users.noreply.github.com>
 
-The existing implementation assumes that client/server certificates are
-single individual certificates.  If using publicly-issued certificates,
-or internal CAs that use an intermediate issuer, this is unlikely to be
-the case, and they will instead be certificate chains.  While this can
-be worked around by moving the intermediate certificates to the CA
-certificate, which DOES currently support multiple certificates, this
-instead allows the issued certificate chains to be used as-is, without
-requiring the overhead of shuffling certificates around.
 
-Corresponding libvirt change is available here:
-https://gitlab.com/libvirt/libvirt/-/merge_requests/222
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 17 October 2025 00:20
+> To: Shameer Kolothum <skolothumtho@nvidia.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
+> <jgg@nvidia.com>; ddutile@redhat.com; berrange@redhat.com; Nathan
+> Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+> smostafa@google.com; wangzhou1@hisilicon.com;
+> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
+> shameerkolothum@gmail.com
+> Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt
+> on reset
+>=20
+> On Mon, Sep 29, 2025 at 02:36:35PM +0100, Shameer Kolothum wrote:
+> > When the guest reboots with devices in nested mode (S1 + S2), any
+> > QEMU/UEFI access to those devices can fail because S1 translation is
+> > not valid during the reboot. For example, a passthrough NVMe device
+> > may hold GRUB boot info that UEFI tries to read during the reboot.
+> >
+> > Set S1 to bypass mode during reset to avoid such failures.
+>=20
+> GBPA is set to bypass on reset so I think it's fine. Yet, maybe the code =
+should
+> check that.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: matoro <matoro_mailinglist_qemu@matoro.tk>
-[DB: adapted for code conflicts with multi-CA patch]
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/tlscredsx509.c                 | 157 ++++++++++++--------------
- tests/unit/test-crypto-tlscredsx509.c |  77 +++++++++++++
- 2 files changed, 147 insertions(+), 87 deletions(-)
+Looking at it again, I think it doesn't now as I moved smmuv3_init_regs() t=
+o
+smmu_realize() in patch #14 and it is not in smmu_reset_exit() path anymore=
+.
 
-diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-index e1f82f1cdc..e21d85fe16 100644
---- a/crypto/tlscredsx509.c
-+++ b/crypto/tlscredsx509.c
-@@ -317,7 +317,8 @@ qcrypto_tls_creds_check_cert(QCryptoTLSCredsX509 *creds,
- 
- static int
- qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
--                                        gnutls_x509_crt_t cert,
-+                                        gnutls_x509_crt_t *certs,
-+                                        unsigned int ncerts,
-                                         gnutls_x509_crt_t *cacerts,
-                                         unsigned int ncacerts,
-                                         const char *cacertFile,
-@@ -325,9 +326,32 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
-                                         bool isCA,
-                                         Error **errp)
- {
--    gnutls_x509_crt_t cert_to_check = cert;
-+    gnutls_x509_crt_t cert_to_check = certs[ncerts - 1];
-     int retval = 0;
--    gnutls_datum_t dn = {};
-+    gnutls_datum_t dn = {}, dnissuer = {};
-+
-+    for (int i = 0; i < (ncerts - 1); i++) {
-+        if (!gnutls_x509_crt_check_issuer(certs[i], certs[i + 1])) {
-+            retval = gnutls_x509_crt_get_dn2(certs[i], &dn);
-+            if (retval < 0) {
-+                error_setg(errp, "Unable to fetch cert DN: %s",
-+                           gnutls_strerror(retval));
-+                return -1;
-+            }
-+            retval = gnutls_x509_crt_get_dn2(certs[i + 1], &dnissuer);
-+            if (retval < 0) {
-+                gnutls_free(dn.data);
-+                error_setg(errp, "Unable to fetch cert DN: %s",
-+                           gnutls_strerror(retval));
-+                return -1;
-+            }
-+            error_setg(errp, "Cert '%s' does not match issuer of cert '%s'",
-+                       dnissuer.data, dn.data);
-+            gnutls_free(dn.data);
-+            gnutls_free(dnissuer.data);
-+            return -1;
-+        }
-+    }
- 
-     for (;;) {
-         gnutls_x509_crt_t cert_issuer = NULL;
-@@ -373,7 +397,8 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
- }
- 
- static int
--qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t cert,
-+qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t *certs,
-+                                  size_t ncerts,
-                                   const char *certFile,
-                                   gnutls_x509_crt_t *cacerts,
-                                   size_t ncacerts,
-@@ -383,7 +408,7 @@ qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t cert,
- {
-     unsigned int status;
- 
--    if (gnutls_x509_crt_list_verify(&cert, 1,
-+    if (gnutls_x509_crt_list_verify(certs, ncerts,
-                                     cacerts, ncacerts,
-                                     NULL, 0,
-                                     0, &status) < 0) {
-@@ -425,66 +450,14 @@ qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t cert,
- }
- 
- 
--static gnutls_x509_crt_t
--qcrypto_tls_creds_load_cert(QCryptoTLSCredsX509 *creds,
--                            const char *certFile,
--                            bool isServer,
--                            Error **errp)
--{
--    gnutls_datum_t data;
--    gnutls_x509_crt_t cert = NULL;
--    g_autofree char *buf = NULL;
--    gsize buflen;
--    GError *gerr = NULL;
--    int ret = -1;
--    int err;
--
--    trace_qcrypto_tls_creds_x509_load_cert(creds, isServer, certFile);
--
--    err = gnutls_x509_crt_init(&cert);
--    if (err < 0) {
--        error_setg(errp, "Unable to initialize certificate: %s",
--                   gnutls_strerror(err));
--        goto cleanup;
--    }
--
--    if (!g_file_get_contents(certFile, &buf, &buflen, &gerr)) {
--        error_setg(errp, "Cannot load CA cert list %s: %s",
--                   certFile, gerr->message);
--        g_error_free(gerr);
--        goto cleanup;
--    }
--
--    data.data = (unsigned char *)buf;
--    data.size = strlen(buf);
--
--    err = gnutls_x509_crt_import(cert, &data, GNUTLS_X509_FMT_PEM);
--    if (err < 0) {
--        error_setg(errp, isServer ?
--                   "Unable to import server certificate %s: %s" :
--                   "Unable to import client certificate %s: %s",
--                   certFile,
--                   gnutls_strerror(err));
--        goto cleanup;
--    }
--
--    ret = 0;
--
-- cleanup:
--    if (ret != 0) {
--        gnutls_x509_crt_deinit(cert);
--        cert = NULL;
--    }
--    return cert;
--}
--
--
- static int
--qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
--                                    const char *certFile,
--                                    gnutls_x509_crt_t **certs,
--                                    unsigned int *ncerts,
--                                    Error **errp)
-+qcrypto_tls_creds_load_cert_list(QCryptoTLSCredsX509 *creds,
-+                                 const char *certFile,
-+                                 gnutls_x509_crt_t **certs,
-+                                 unsigned int *ncerts,
-+                                 bool isServer,
-+                                 bool isCA,
-+                                 Error **errp)
- {
-     gnutls_datum_t data;
-     g_autofree char *buf = NULL;
-@@ -507,7 +480,9 @@ qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
-     if (gnutls_x509_crt_list_import2(certs, ncerts, &data,
-                                      GNUTLS_X509_FMT_PEM, 0) < 0) {
-         error_setg(errp,
--                   "Unable to import CA certificate list %s",
-+                   isCA ? "Unable to import CA certificate list %s" :
-+                   (isServer ? "Unable to import server certificate %s" :
-+                    "Unable to import client certificate %s"),
-                    certFile);
-         return -1;
-     }
-@@ -523,7 +498,8 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
-                                     const char *certFile,
-                                     Error **errp)
- {
--    gnutls_x509_crt_t cert = NULL;
-+    gnutls_x509_crt_t *certs = NULL;
-+    unsigned int ncerts = 0;
-     gnutls_x509_crt_t *cacerts = NULL;
-     unsigned int ncacerts = 0;
-     size_t i;
-@@ -531,41 +507,48 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
- 
-     if (certFile &&
-         access(certFile, R_OK) == 0) {
--        cert = qcrypto_tls_creds_load_cert(creds,
--                                           certFile, isServer,
--                                           errp);
--        if (!cert) {
-+        if (qcrypto_tls_creds_load_cert_list(creds,
-+                                             certFile,
-+                                             &certs,
-+                                             &ncerts,
-+                                             isServer,
-+                                             false,
-+                                             errp) < 0) {
-             goto cleanup;
-         }
-     }
-     if (access(cacertFile, R_OK) == 0) {
--        if (qcrypto_tls_creds_load_ca_cert_list(creds,
--                                                cacertFile,
--                                                &cacerts,
--                                                &ncacerts,
--                                                errp) < 0) {
-+        if (qcrypto_tls_creds_load_cert_list(creds,
-+                                             cacertFile,
-+                                             &cacerts,
-+                                             &ncacerts,
-+                                             isServer,
-+                                             true,
-+                                             errp) < 0) {
-             goto cleanup;
-         }
-     }
- 
--    if (cert &&
--        qcrypto_tls_creds_check_cert(creds,
--                                     cert, certFile, isServer,
--                                     false, errp) < 0) {
--        goto cleanup;
-+    for (i = 0; i < ncerts; i++) {
-+        if (qcrypto_tls_creds_check_cert(creds,
-+                                         certs[i], certFile,
-+                                         isServer, i != 0, errp) < 0) {
-+            goto cleanup;
-+        }
-     }
- 
--    if (cert &&
--        qcrypto_tls_creds_check_authority_chain(creds, cert,
-+    if (ncerts &&
-+        qcrypto_tls_creds_check_authority_chain(creds,
-+                                                certs, ncerts,
-                                                 cacerts, ncacerts,
-                                                 cacertFile, isServer,
-                                                 true, errp) < 0) {
-         goto cleanup;
-     }
- 
--    if (cert && ncacerts &&
--        qcrypto_tls_creds_check_cert_pair(cert, certFile, cacerts,
--                                          ncacerts, cacertFile,
-+    if (ncerts && ncacerts &&
-+        qcrypto_tls_creds_check_cert_pair(certs, ncerts, certFile,
-+                                          cacerts, ncacerts, cacertFile,
-                                           isServer, errp) < 0) {
-         goto cleanup;
-     }
-@@ -573,8 +556,8 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
-     ret = 0;
- 
-  cleanup:
--    if (cert) {
--        gnutls_x509_crt_deinit(cert);
-+    for (i = 0; i < ncerts; i++) {
-+        gnutls_x509_crt_deinit(certs[i]);
-     }
-     for (i = 0; i < ncacerts; i++) {
-         gnutls_x509_crt_deinit(cacerts[i]);
-diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
-index 5f78fe7d6f..546225a191 100644
---- a/tests/unit/test-crypto-tlscredsx509.c
-+++ b/tests/unit/test-crypto-tlscredsx509.c
-@@ -580,6 +580,12 @@ int main(int argc, char **argv)
-                  true, true, GNUTLS_KEY_KEY_CERT_SIGN,
-                  false, false, NULL, NULL,
-                  0, 0);
-+    TLS_ROOT_REQ(someotherrootreq,
-+                 "UK", "some other random CA", NULL, NULL, NULL, NULL,
-+                 true, true, true,
-+                 true, true, GNUTLS_KEY_KEY_CERT_SIGN,
-+                 false, false, NULL, NULL,
-+                 0, 0);
-     TLS_CERT_REQ(cacertlevel1areq, cacertrootreq,
-                  "UK", "qemu level 1a", NULL, NULL, NULL, NULL,
-                  true, true, true,
-@@ -626,6 +632,32 @@ int main(int argc, char **argv)
-         cacertlevel2areq.crt,
-     };
- 
-+    gnutls_x509_crt_t cabundle[] = {
-+        someotherrootreq.crt,
-+        cacertrootreq.crt,
-+    };
-+
-+    gnutls_x509_crt_t servercertchain[] = {
-+        servercertlevel3areq.crt,
-+        cacertlevel2areq.crt,
-+        cacertlevel1areq.crt,
-+    };
-+
-+    gnutls_x509_crt_t servercertchain_incomplete[] = {
-+        servercertlevel3areq.crt,
-+        cacertlevel2areq.crt,
-+    };
-+
-+    gnutls_x509_crt_t servercertchain_unsorted[] = {
-+        servercertlevel3areq.crt,
-+        cacertlevel1areq.crt,
-+        cacertlevel2areq.crt,
-+    };
-+
-+    gnutls_x509_crt_t clientcertchain[] = {
-+        clientcertlevel2breq.crt,
-+        cacertlevel1breq.crt,
-+    };
- 
-     test_tls_write_cert_chain(WORKDIR "cacertchain-ctx.pem",
-                               certchain,
-@@ -665,6 +697,46 @@ int main(int argc, char **argv)
-                  WORKDIR "cacertchain-incomplete-ctx.pem",
-                  servercertlevel3areq.filename, true);
- 
-+    test_tls_write_cert_chain(WORKDIR "servercertchain-ctx.pem",
-+                              servercertchain,
-+                              G_N_ELEMENTS(servercertchain));
-+
-+    TLS_TEST_REG(serverchain, true,
-+                 cacertrootreq.filename,
-+                 WORKDIR "servercertchain-ctx.pem", false);
-+
-+    test_tls_write_cert_chain(WORKDIR "cabundle-ctx.pem",
-+                              cabundle,
-+                              G_N_ELEMENTS(cabundle));
-+
-+    TLS_TEST_REG(multiplecaswithchain, true,
-+                 WORKDIR "cabundle-ctx.pem",
-+                 WORKDIR "servercertchain-ctx.pem", false);
-+
-+    test_tls_write_cert_chain(WORKDIR "servercertchain_incomplete-ctx.pem",
-+                              servercertchain_incomplete,
-+                              G_N_ELEMENTS(servercertchain_incomplete));
-+
-+    TLS_TEST_REG(incompleteserverchain, true,
-+                 cacertrootreq.filename,
-+                 WORKDIR "servercertchain_incomplete-ctx.pem", true);
-+
-+    test_tls_write_cert_chain(WORKDIR "servercertchain_unsorted-ctx.pem",
-+                              servercertchain_unsorted,
-+                              G_N_ELEMENTS(servercertchain_unsorted));
-+
-+    TLS_TEST_REG(unsortedserverchain, true,
-+                 cacertrootreq.filename,
-+                 WORKDIR "servercertchain_unsorted-ctx.pem", true);
-+
-+    test_tls_write_cert_chain(WORKDIR "clientcertchain-ctx.pem",
-+                              clientcertchain,
-+                              G_N_ELEMENTS(clientcertchain));
-+
-+    TLS_TEST_REG(clientchain, false,
-+                 cacertrootreq.filename,
-+                 WORKDIR "clientcertchain-ctx.pem", false);
-+
-     /* Some missing certs - first two are fatal, the last
-      * is ok
-      */
-@@ -734,8 +806,13 @@ int main(int argc, char **argv)
-     test_tls_discard_cert(&cacertlevel2areq);
-     test_tls_discard_cert(&servercertlevel3areq);
-     test_tls_discard_cert(&clientcertlevel2breq);
-+    test_tls_discard_cert(&someotherrootreq);
-     unlink(WORKDIR "cacertchain-ctx.pem");
-     unlink(WORKDIR "cacertchain-with-invalid-ctx.pem");
-+    unlink(WORKDIR "servercertchain-ctx.pem");
-+    unlink(WORKDIR "servercertchain_incomplete-ctx.pem");
-+    unlink(WORKDIR "servercertchain_unsorted-ctx.pem");
-+    unlink(WORKDIR "clientcertchain-ctx.pem");
- 
-     test_tls_cleanup(KEYFILE);
-     rmdir(WORKDIR);
--- 
-2.50.1
+I need to carve out the IDR init separately. I will do that in v5.
 
+> > Reported-by: Matthew R. Ochs <mochs@nvidia.com>
+> > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> > ---
+> >  hw/arm/smmuv3-accel.c | 29 +++++++++++++++++++++++++++++
+> > hw/arm/smmuv3-accel.h |  4 ++++
+> >  hw/arm/smmuv3.c       |  1 +
+> >  3 files changed, 34 insertions(+)
+> >
+> > diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c index
+> > defeddbd8c..8396053a6c 100644
+> > --- a/hw/arm/smmuv3-accel.c
+> > +++ b/hw/arm/smmuv3-accel.c
+> > @@ -634,6 +634,35 @@ static const PCIIOMMUOps smmuv3_accel_ops =3D {
+> >      .get_msi_address_space =3D smmuv3_accel_find_msi_as,  };
+> >
+> > +/*
+> > + * If the guest reboots and devices are configured for S1+S2, Stage1
+> > +must
+> > + * be switched to bypass. Otherwise, QEMU/UEFI may fail when
+> > +accessing a
+> > + * device, e.g. when UEFI retrieves boot partition information from
+> > +an
+> > + * assigned vfio-pci NVMe device.
+> > + */
+> > +void smmuv3_accel_attach_bypass_hwpt(SMMUv3State *s)
+>=20
+> We could rename it to something like smmuv3_accel_reset().
+
+Makes sense.
+
+Thanks,
+Shameer
 
