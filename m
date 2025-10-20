@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E12CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C3B9CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAo7R-0000ae-Aq; Mon, 20 Oct 2025 07:32:05 -0400
+	id 1vAo9v-0001Vs-Ft; Mon, 20 Oct 2025 07:34:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vAo7J-0000ZD-Q4
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:31:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vAo9r-0001UR-5e
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:34:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vAo7C-0000Me-Te
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:31:56 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vAo9p-0000is-49
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:34:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760959907;
+ s=mimecast20190719; t=1760960071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KN7n70MrxioYS4cu0mELxibPwL+asK4raqLtOJt+QMc=;
- b=fNB5uON862punyHGLDlUJgIqj3lxwR3S4QbAd/VMdYLYw0cnZ3UQODe1atuZIOBdhnSVYY
- zFOxO3tbT5cVWW76x9BS7xtO18A64FjS6WAbn5o7A0IpTmioqVyLHlmQN6A+lfnhUw0QLl
- VfMLYTkphTMyb9W0OWb7VrW0ce8Ylg4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tDJrWT8jKWNeER07imwo6J6Vgy9VVmj7DnihJ8EOGYM=;
+ b=eQNt62Effs+3bPnCi1xkyuj/i9TwnlRbUT+uCZ/D5ocGCT0XigzVf8K263wMelo1OHlf2d
+ 3pQ06n064XmmMopZ5xrxU8yM22E6DtrqGuSEwRmiv9PqQrhy2pTwH6/8gcgUEYHwnRWvIq
+ CDmQbFAz1iRVQ3vNCfdUOmLZ4v+amWg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-158-dTa9zAXJN8WbbAYTsoroTA-1; Mon, 20 Oct 2025 07:31:46 -0400
-X-MC-Unique: dTa9zAXJN8WbbAYTsoroTA-1
-X-Mimecast-MFC-AGG-ID: dTa9zAXJN8WbbAYTsoroTA_1760959905
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46e47d14dceso25078055e9.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 04:31:45 -0700 (PDT)
+ us-mta-601-9OuOtieWMJmONHIJXnGuBg-1; Mon, 20 Oct 2025 07:34:29 -0400
+X-MC-Unique: 9OuOtieWMJmONHIJXnGuBg-1
+X-Mimecast-MFC-AGG-ID: 9OuOtieWMJmONHIJXnGuBg_1760960068
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4270848ceffso4622700f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 04:34:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760959905; x=1761564705;
+ d=1e100.net; s=20230601; t=1760960068; x=1761564868;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KN7n70MrxioYS4cu0mELxibPwL+asK4raqLtOJt+QMc=;
- b=XaplIP5XgZTlL8sa12ofvfFS7imoTzA+F1EH4Jv/VO1Qsp13Av3py02X8lt0mA4B3I
- tHNzZ0L4Kik109b42fgLIPHlvsfRCnx1FVKxf/r+j6KwOAyRgP2Lvthi6qr1hItJ1gHt
- sBctZbtadLnQcQ8kR8pvCZ25ny8jvvsFlQWvNVZsRaNA9uz4ppNvbaUgmPKBi3SKOHYm
- +QGCw4h9A/X6TXDEqqxcBEDF6FEzgnppZEAwAlB4HPf+J9SyJO4uqvqTYlWWbV49Xfnm
- R5/TKkRjP9PoUEPNBCIWLgVEYVtiXEklwZ19BQesx0ts8hP/U0xI1vRoqOH8gkiJ9MJH
- v9vw==
-X-Gm-Message-State: AOJu0Yx2l/jchH/STyq0Tzi64fJk0xrQXvE8AAKjpxt4OkzOE9EqeQgL
- mAvEDEDEM8oWclqqklv+aMFm/xlJctQySMP5GDIGUmPKf+qYOvAB/F2wY3w78MEiR9aPAYvDOdc
- xgVDsocWM6LuSqihb8daDWA0MKJklftFoZKPslL4J4G/umIdbgWNcl5ru
-X-Gm-Gg: ASbGncu2/cKItfFASwZfAjGKODYWgSAEQMfT6SNo2EoEhUEx2AWFPbqv1ofwXGFPe6g
- mJYREd4SYGHHhLXH2EgGf3hSxN7UcD39ms45uju7WBaOyD2+gR0eO1auBsBNHSRnhly0HhVLmHK
- dhSr6MIavs/pFfgi5RSfxEsi1+xpmIyLNq5XHwY0l6zfcOUGe4q1QepBbBy8/HVyb4EL8kcz6pM
- 7G8Dq6UT0HEe2nC5NSb9jCIVDdOepohXw5l0hLDFzmyIn//PKcHIRApyOH69zrBHfbsXFM2ilSA
- Nqc2VtL0Z7ZOJDAyJcLYNsg6MxwUgrWnSf9PCbjk5skvk0wJPuNeWc0gVi4MljpHhCmLHBzn99K
- kWaywlKoPMyuSg+QNASH5xifLf1tyukfregn63y/CGpdBl8A5rEEAAxaCm83sF04E7CP9aRnbQt
- Gnq4veWr2UbTV3JrYG40KV5kkI8sQ=
-X-Received: by 2002:a05:600c:444d:b0:46e:396b:f5ae with SMTP id
- 5b1f17b1804b1-471178ada32mr82342975e9.16.1760959904705; 
- Mon, 20 Oct 2025 04:31:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdA4SCA0ov0HwZqZtOA9hLZ0r2hXt+CChLrxLdGZtjAdoMk1LVF5MFx4TXn4SJQmlrm3J5tg==
-X-Received: by 2002:a05:600c:444d:b0:46e:396b:f5ae with SMTP id
- 5b1f17b1804b1-471178ada32mr82342745e9.16.1760959904224; 
- Mon, 20 Oct 2025 04:31:44 -0700 (PDT)
+ bh=tDJrWT8jKWNeER07imwo6J6Vgy9VVmj7DnihJ8EOGYM=;
+ b=Z3LZlCznTY3p+qzM8kkRnrpdwcDIPqAw3QshZRGhhn/w6ugClxzp5cRd+Nq7uQAjuH
+ RjlQ48zpPKZV5QFSYLGCsVsPceGevJMUzTn3QMWvOa0046DWKmI1v7ZO1NGtMjv/g/5W
+ GPHiYQAlklD0Szo8azypZH2A7GKt3Duzv5k9UFKFTaZoV5uNZay1TzHRD1iDxrfQeXop
+ pbwjRqF/87A9usoigbs/fiNg4qoqbSancs7ZYT3aYP7qDKcKRYlmxqfHgbbTEta4VFrc
+ VJt/phtGlDwbwkq9mkFpcUTwz2HR62JwH06fIWCch5rtc8VtQSUEty2FWHQAsEtI6Zi8
+ aDvA==
+X-Gm-Message-State: AOJu0YycrlFDN/prJVpb3FhXKijOTd1rE11lgnvyX8mDRsjuSaw2xnX9
+ z9pSu6D+z5x3qYe4m7AzO01bO4Zm7VM6zbFttundilVPm6kNhhv9bs5ow9oca/u2OquY2DJ5yf0
+ H6orX0UsQSZ5LJlBFpcsczq0y0RbSum9uMpwmfwPE/B7PI7L4HO8qpZV1
+X-Gm-Gg: ASbGncuik3Ab4A8ThJLlvYY4EJ9ptR65ECQuTWTI4wjDKhRdvEA4DGb22VYE/z2pgm/
+ Jb5DCO6NkYNoZnTxnaGFQztsxnLTQ2qE45MtzZP08pzb4J5SchulWRMxOu9Fh/6m8Oq2KgB6VcY
+ hi8qmpkmuH2MaM5ob6QzVubBrXV1sMEcgj0Q0J5lBmBi3I1Yu95JVcVyib6VWsDK/BARRvDi0VZ
+ jHW5P/oedCVxpzvLF0nBiJYCZUyD9m1WN8jKEq3stIiWLYKInZjuHKiHZhzmB6YU+6KQ0witP0D
+ SbeQjHfjh35Ry/rpAgJ18C89fDi8sdb1tdUDpZpq/LBNc98TFYCzJyrnhDIfQtxddpdQHsNeNYk
+ iqI+EDGjg3nXZ5PybdyHrmpvs3UMKxZGM2rumzbPCdddkW0clamsTc71c8iVqudlZkDIuBPq8yq
+ xhksZcgcpXSTQsaeV1zUmxDenX77c=
+X-Received: by 2002:a5d:64e5:0:b0:427:23a:befd with SMTP id
+ ffacd0b85a97d-42704d92befmr9247971f8f.26.1760960068370; 
+ Mon, 20 Oct 2025 04:34:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBXWYD2UdV3XjiYt+vuiiMM2PiU6U8Nknmxlj4V6qk4YIsmXOfQSn9L44uFXpXVIxEjLU9vA==
+X-Received: by 2002:a5d:64e5:0:b0:427:23a:befd with SMTP id
+ ffacd0b85a97d-42704d92befmr9247946f8f.26.1760960067907; 
+ Mon, 20 Oct 2025 04:34:27 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f0c:c200:fa4a:c4ff:1b32:21ce?
  (p200300d82f0cc200fa4ac4ff1b3221ce.dip0.t-ipconnect.de.
  [2003:d8:2f0c:c200:fa4a:c4ff:1b32:21ce])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f009a75bsm15124643f8f.23.2025.10.20.04.31.43
+ ffacd0b85a97d-427f009a75bsm15143274f8f.23.2025.10.20.04.34.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 04:31:43 -0700 (PDT)
-Message-ID: <944cfa69-c7ed-4e18-aab9-db23f38da1a7@redhat.com>
-Date: Mon, 20 Oct 2025 13:31:42 +0200
+ Mon, 20 Oct 2025 04:34:27 -0700 (PDT)
+Message-ID: <6a9bec5f-872f-4b87-ad91-8e7a77d69102@redhat.com>
+Date: Mon, 20 Oct 2025 13:34:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] ram-block-attributes: Avoid the overkill of shared memory
@@ -86,8 +86,6 @@ To: Chenyi Qiang <chenyi.qiang@intel.com>, Peter Xu <peterx@redhat.com>,
 Cc: qemu-devel@nongnu.org, Gao Chao <chao.gao@intel.com>,
  Li Xiaoyao <xiaoyao.li@intel.com>
 References: <20251017081445.175342-1-chenyi.qiang@intel.com>
- <bc7c734d-28c4-4abf-8049-a93e2e5e0b1f@redhat.com>
- <08e0ea1a-34dd-4700-917c-157996586c73@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -134,10 +132,10 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <08e0ea1a-34dd-4700-917c-157996586c73@intel.com>
+In-Reply-To: <20251017081445.175342-1-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -162,65 +160,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.10.25 12:32, Chenyi Qiang wrote:
+On 17.10.25 10:14, Chenyi Qiang wrote:
+> Currently, private memory and shared memory have different backend in
+> CoCo VMs. It is possible for users to specify the shared memory with
+> hugetlbfs backend while private memory with guest_memfd backend only
+> supports 4K page size. In this case, ram_block->page_size is different
+> from the host page size which will trigger the assertion when getting
+> block size. Relax the restriction to allow shared memory to use
+> hugetlbfs backend.
+
+Please mention that the VM can do conversion in base page granularity, 
+consequently that is the granularity in which we have to track things.
+
+And in the relevant setups we assume that target page size == host page 
+size.
+
 > 
+> Fixes: 5d6483edaa92 ("ram-block-attributes: Introduce RamBlockAttributes to manage RAMBlock with guest_memfd")
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
+>   system/ram-block-attributes.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 > 
-> On 10/17/2025 11:13 PM, David Hildenbrand wrote:
->> On 17.10.25 10:14, Chenyi Qiang wrote:
->>> Currently, private memory and shared memory have different backend in
->>> CoCo VMs. It is possible for users to specify the shared memory with
->>> hugetlbfs backend while private memory with guest_memfd backend only
->>> supports 4K page size. In this case, ram_block->page_size is different
->>> from the host page size which will trigger the assertion when getting
->>> block size. Relax the restriction to allow shared memory to use
->>> hugetlbfs backend.
->>>
->>> Fixes: 5d6483edaa92 ("ram-block-attributes: Introduce RamBlockAttributes to manage RAMBlock with guest_memfd")
->>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
->>> ---
->>>    system/ram-block-attributes.c | 7 ++++---
->>>    1 file changed, 4 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
->>> index 68e8a027032..0f39ccf9090 100644
->>> --- a/system/ram-block-attributes.c
->>> +++ b/system/ram-block-attributes.c
->>> @@ -28,10 +28,11 @@ ram_block_attributes_get_block_size(const RamBlockAttributes *attr)
->>>         * Because page conversion could be manipulated in the size of at least 4K
->>>         * or 4K aligned, Use the host page size as the granularity to track the
->>>         * memory attribute.
->>> +     * When hugetlbfs is used as backend of shared memory, ram_block->page_size
->>> +     * is different from host page size. So it is not appropriate to use
->>> +     * ram_block->page_size here.
->>
->> But are we sure everything else is working as expected and that this is not a check that prevents other code from doing the wrong thing?
-> 
-> I think so. The block size must be 4K due to the page conversion could be in the size of 4K and we use "bitmap" to track the status.
+> diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+> index 68e8a027032..0f39ccf9090 100644
+> --- a/system/ram-block-attributes.c
+> +++ b/system/ram-block-attributes.c
+> @@ -28,10 +28,11 @@ ram_block_attributes_get_block_size(const RamBlockAttributes *attr)
+>        * Because page conversion could be manipulated in the size of at least 4K
+>        * or 4K aligned, Use the host page size as the granularity to track the
+>        * memory attribute.
+> +     * When hugetlbfs is used as backend of shared memory, ram_block->page_size
+> +     * is different from host page size. So it is not appropriate to use
+> +     * ram_block->page_size here.
 
-Indeed.
+I don't think that comment is required. The comment above already states 
+the relevant thing: "Use the host page size as the granularity to track 
+the memory attribute."
 
-> I originally missed the case of hugetlb so added an assert() here. But it is allowed to use hugetlb as shared memory backend
-> before shared device assignment patches were introduced.
-> 
->>
->> I recall that punching holes was problematic as the VM shares/unshared 4k chunks.
-> 
-> I can see the kvm_convert_memory() will skip ram_block_discard_range() if using hugetlb backend.
-> It will cause the double-memory consumption (*). Any other problem?
-
-Right.
-
-
-What we should be doing is unifying the retrieval of the block size in 
-ram_block_attributes_create() as well. That's where we allocate it.
-
-So either
-
-a) Use qemu_real_host_page_size() everywhere.
-
-b) Use ram_block_attributes_get_block_size() everywhere.
-
-Could be done in a separate patch.
+Acked-by: David Hildenbrand <david@redhat.com>
 
 -- 
 Cheers
