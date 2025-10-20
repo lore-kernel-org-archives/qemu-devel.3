@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9852ACCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDD1CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAy5L-0006fy-4Q; Mon, 20 Oct 2025 18:10:35 -0400
+	id 1vAy4s-0006TL-Bj; Mon, 20 Oct 2025 18:10:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy5J-0006f8-LR
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:33 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4q-0006SG-Cz
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:04 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy5I-0006JD-0Z
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:33 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4710022571cso41435925e9.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:10:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4o-00063p-LU
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:04 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42701aa714aso2981787f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:10:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760998230; x=1761603030; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=i98Yuq0ltlKlv4yK9SnQK5pu59pN5J9uGirjRSj4vcU=;
- b=i232VvbNgYEESRyBHkcSUnQoNse5LMtARl9jwukQiogohm64Q+JKWVUpxDa4dnHQwe
- UFPrtqisY3Oks6+se3aegYeDVh2l/yPiwAnr08+7qBsJHd68JDM5F1Ax6Mfs+ReJcdyb
- TO2ESPYFG6+C5D/7+AezTO120O4kmhpkOYjUgqJ4LBnl+z0GqMH8M6PqjTV61358YREE
- RIvC0E25Ro7sn/s/pY7DTM3RSAD9z7E4xLqpvQKkw1cl+H2x+S6vF1A65jurGt2kFaRI
- 4WeRXGXDKZbzygrBSU0by0voo9mJ67DWQJGaeEVrOWo6s905lJhkQoG00400JpukDWkQ
- XoJg==
+ d=linaro.org; s=google; t=1760998200; x=1761603000; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=peeMmEa9/4QTziWR6C9i27UArz/pXKVp77TsxavtYSE=;
+ b=cnWjboAeQSEDolcr5doos21LBnosv0WOpUczgFbUk/G6y3MeRwYvys69V/8j1aEx+C
+ 6N6c37OqcpPH+wAnKg3C8v6l47MF0JRtVEf3wUyAIJch4+LItESowcagTAc18JNti/uY
+ XYDKkFKlAMhq5uaNwFs960I0Y5FMAmt4sIAH1dvyGs5fdmHNVJeHLsn+xCaTmgGvJ7Cw
+ occIqoE+v1NUOhhtR+60tdUvT7LTcJ2Z7pgI2FU+xJbTFQbnq8M6ydOYV0GTY+MEF1zN
+ dsW3aGJJJAYotOvckot4+nWeAudiggX53fXyoIvKOYg8vXYaMNq8tEvBmk2tLuqlh/F7
+ zN3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760998230; x=1761603030;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i98Yuq0ltlKlv4yK9SnQK5pu59pN5J9uGirjRSj4vcU=;
- b=DF/kszAoisjB/2dQo2dI3/s7VBX2q84CSzXFKnmk7MuvdViXCFwDdb0KaX0COqGoJT
- nJ13RnIdoGn0FOXMC6gEb+1Fq7lPB2Ogr579x3kieh1RtOB9UHsQ0R6pT0kmQNDywiRu
- 4dI/2/9GUk21v8f+MN8WnqWlXYe9qJJZmvGMH9Tq0t+KoPmo5Hwr63Tqj17wclgjuMWj
- QDXlT2Rvrump2ADKqeVw0p7uCG5Pgr07XdkQVyeMNYCshriFZg0KwvC1pRShHja1s6ER
- Jks8MVZfeenpq9F5Vn7soZi3gk5udJtlLviNJ2qdFvz9MN9Uglzb/nmnIY6QKd/NrBaB
- bEqQ==
-X-Gm-Message-State: AOJu0Yw62PI+j9P3FQ6ZILLrv5wxs36tTKHCVNxcsDPAk7mbZtZItTsi
- oKnlfTkxxfNiSH90i1hk/IPoA3vi7hp6x8uOzLbcHfC8EfnF0NwraxoTcZnifDaaDV4=
-X-Gm-Gg: ASbGncs/XcZeQ8WGra4W8TAr4h8X+IsVGBxEYIBYZh0hnSWDW3gtidEThv6Mz7/KPyM
- zjxMwde0YKtzs4WKgnbKkXHAnHAC5qF5ZqHMbUxd+p6Ur4rmVuzg7EQe4TjpuKnJQ9rwLo+x60J
- uZ/1o5rliOd6RO9eAnxIwldXHgtmQF8jPUVnR9CcrrtVd9JYc78uSxtP1QZ5mlfJvlcFo1lPaVK
- OIZ3LvEJUAHZ7F3xDcU8Obsar1Dvp0vpedCPU1DraBDhkYIPiCkztwfMAwsV//u8jWEnMDSd1bq
- WNpVr42UL/7jNg4/VCEKEkE0GznO/5yj45BFZ/p03heImBTNr8pQqmPa3paxufJvkOrg5+C3D0Y
- Ukl71XSRVuEK8Hg1AjnLbp5aShin+8j5j6n4ccARnzDMB7oyzFlwDiLmouxZuQiMXsLdHz5toiv
- eaeJCQ1awh+opzIcRotBQQThWWt/V4hGcbxTaLBpm28CY=
-X-Google-Smtp-Source: AGHT+IFCdJ33iX9IfoprfwbMNSNRng0Iy4UBXs5y7kA2QBqldWqeZq5YgNhauCzSIulO/79S1LItfA==
-X-Received: by 2002:a05:6000:4011:b0:425:855c:5879 with SMTP id
- ffacd0b85a97d-42704d6c536mr10010310f8f.15.1760998230305; 
- Mon, 20 Oct 2025 15:10:30 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1760998200; x=1761603000;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=peeMmEa9/4QTziWR6C9i27UArz/pXKVp77TsxavtYSE=;
+ b=sgNPQ6N5GHsPVxsyHUlZO3I/GviaYo/K9Q8jRIN1mPIEtG3npfeMD4kLjKi6UkQrcc
+ RJir0rwhuybRsMf+C1+ru/pdtsApivKDdpAZh4nx/TJcxSKmU74Eh5FzdHmKs7e4C9Q9
+ v2zPTqIR0EFM1h9W/eXsfgWzWhDs2qVllZT5DtCNicDVgjbh/c0IJRDD2ylxBgmYsWcg
+ koNrdQgfqVPOFC9+jkUUwbvbdkJSvzSF2kCnXnMpQoGpvSJVbm4z9tRf40/q7KJxlpNU
+ lI47wjtZ7egSkmgaGNMmxfBPAhqtoNRrnhFm7GuepBRWYXsuqmQPCe2/EqKmi3rVKATF
+ MJqw==
+X-Gm-Message-State: AOJu0Yw0e8/06D5ZEHHeI4ZF7sK0alNmLQHpiF7OG6bBlY43qe60k46t
+ +/T4EBYh037aF6umnL0CBcWwTReDKMF6THlHagapGiqCFfoAdODomA+0SEmHWGV0zRbOVkgkNTf
+ HxJxOxpo=
+X-Gm-Gg: ASbGncsrhRKudJsfYH4K46Bfj/iD3ei1yNjLvIBT+vTL3C2BXJUdtgSFj/FOzrffGpT
+ vBjs8xQBm42ylFslZVQqC0t0PE3xOQmOcaYkNhmfItiOwY2hTo2D3LkPX6/f0FmPiKWBBFMPe6U
+ TM1IOM6nUv8T1nkdZQ7QqJbfgbyrAS/Ot/Ba+MISlaaqQe5U0KllgT3h4G2CrQA7/NHuw+ruOFy
+ 9uaAuY4A3KjzF3PhaGrc4JefTVLRQjtmLebslokaakeK4jHnzyl+RpclAlfFGCIf6moLcHBJ1n7
+ rWfChmuLW1yG8KPKX95lJOgt12Y1ujwJsxDDhoXdeIxIX6w7xIdJslmH9CNGCebJbsVNoySj85F
+ F24CrwhN9q2H0iKZfz+rWRX20dq10Trn2dUJCVw/mBhxJXG8AbQM0p/JgdO4ra7Aw+zwzpe/7xV
+ AdmMIOF/d45R+j5mmZX/pDtO0jLpXR8qXNQe2ZDOsxSIa9y9clhAz/gC68NcL+
+X-Google-Smtp-Source: AGHT+IEY9dGVhude0M+GcNa2jlGZLSxiMaf6S+dOd8BRUbbC+FnSri8tG8vaEaVMdmGvsI05jsd+nA==
+X-Received: by 2002:a5d:59af:0:b0:427:60d:c50d with SMTP id
+ ffacd0b85a97d-427060dc758mr9221403f8f.51.1760998200207; 
+ Mon, 20 Oct 2025 15:10:00 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47494ac30b4sm4312245e9.2.2025.10.20.15.10.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 15:10:29 -0700 (PDT)
-Message-ID: <daa0fa36-6441-4936-9975-1bb38bb7935e@linaro.org>
-Date: Tue, 21 Oct 2025 00:10:27 +0200
+ ffacd0b85a97d-427ea5b3f5esm17054127f8f.20.2025.10.20.15.09.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 20 Oct 2025 15:09:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PATCH v6 03/30] hw/boards: Extend DEFINE_MACHINE macro to cover more
+ use cases
+Date: Tue, 21 Oct 2025 00:09:12 +0200
+Message-ID: <20251020220941.65269-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251020220941.65269-1-philmd@linaro.org>
+References: <20251020220941.65269-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/16] hw/pci-host/raven: Simplify PCI facing part
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <cover.1760795082.git.balaton@eik.bme.hu>
- <9f0e1a8860f6a8f00c15e212ba5c46ae6a7fe39a.1760795082.git.balaton@eik.bme.hu>
- <56bb063e-696c-49fb-943a-7ef9f28c4826@linaro.org>
- <45817152-d402-cf83-cbd4-22d7d2c6d60d@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <45817152-d402-cf83-cbd4-22d7d2c6d60d@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,24 +111,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/10/25 22:54, BALATON Zoltan wrote:
-> On Mon, 20 Oct 2025, Philippe Mathieu-Daudé wrote:
->> On 18/10/25 16:04, BALATON Zoltan wrote:
->>> The raven PCI device does not need a state struct as it has no data to
->>> store there any more, so we can remove that to simplify code.
->>>
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>>   hw/pci-host/raven.c | 30 +-----------------------------
->>>   1 file changed, 1 insertion(+), 29 deletions(-)
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
+Add a more general DEFINE_MACHINE_EXTENDED macro and define simpler
+versions with less parameters based on that. This is inspired by how
+the OBJECT_DEFINE macros do this in a similar way to allow using the
+shortened definition in more complex cases too.
 
->> I'd rather this patch split in 2: remove vmstate, mentioning this breaks
->> migration, then use pci_create_simple().
-> 
-> I can do the other way around: first convert to pci_create_simple which 
-> leaves RavenPCIState pci_dev unused that then can be removed in another 
-> patch.
-LGTM, thanks!
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-ID: <d75c8bbed97650f1a4d2d675444582a240a335b4.1760798392.git.balaton@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/boards.h | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 67c94bff1c6..99292edf5a8 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -503,7 +503,8 @@ struct MachineState {
+  *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro, _, tag)
+  */
+ 
+-#define DEFINE_MACHINE(namestr, machine_initfn) \
++#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
++                                machine_initfn, ABSTRACT, ...) \
+     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
+     { \
+         MachineClass *mc = MACHINE_CLASS(oc); \
+@@ -511,8 +512,11 @@ struct MachineState {
+     } \
+     static const TypeInfo machine_initfn##_typeinfo = { \
+         .name       = MACHINE_TYPE_NAME(namestr), \
+-        .parent     = TYPE_MACHINE, \
++        .parent     = TYPE_##PARENT_NAME, \
+         .class_init = machine_initfn##_class_init, \
++        .instance_size = sizeof(InstanceName), \
++        .abstract = ABSTRACT, \
++        .interfaces = (const InterfaceInfo[]) { __VA_ARGS__ }, \
+     }; \
+     static void machine_initfn##_register_types(void) \
+     { \
+@@ -520,6 +524,14 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
+ 
++#define DEFINE_MACHINE(namestr, machine_initfn) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, { })
++
++#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, __VA_ARGS__)
++
+ /*
+  * Helper for dispatching different macros based on how
+  * many __VA_ARGS__ are passed. Supports 1 to 5 variadic
+-- 
+2.51.0
 
 
