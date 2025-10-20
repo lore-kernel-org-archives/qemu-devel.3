@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44920CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 08:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ACC9CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 08:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAlfD-0005Zo-4o; Mon, 20 Oct 2025 04:54:47 -0400
+	id 1vAlfQ-0005d5-JJ; Mon, 20 Oct 2025 04:55:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAlfB-0005Ze-27
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 04:54:45 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAlf4-0002l9-Vj
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 04:54:44 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-4282fba734bso800962f8f.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 01:54:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760950477; x=1761555277; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xs3tYeIUxROfq9Qyi/HAYIGr+WeY+9jWls+cksD7RSw=;
- b=jlGFeI4MkDzcDau19StqQ1y7GnRMh6/WQVnKBU2zMG9KRI8tcQUSnIp9gMF/o3tH6v
- Dtcs/q6fKjgoulFz34labh+xnU20PJg9XqWXswBA8UKHl7x+i3y7EnkiJvBCt0Fo8Sm3
- MLQ79+8qzFPaTgRdSyoQvFk0vvZeTTzCYk45sXlHGbcApd7D4+kJ6ofiKLytkYya9yIW
- qazH/ePg+3ErZzYinYIRW6vr0cG5aTYrxzl6IXvdtRYCWevejKmxEwrzAwDG7pblDKMw
- J5L7XPcpDh0O63lMmJcwDeT2nz8aexW9Iwn+1AzxFWswpOM+HARjT/x8omJDQlcXrrkS
- btYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760950477; x=1761555277;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xs3tYeIUxROfq9Qyi/HAYIGr+WeY+9jWls+cksD7RSw=;
- b=izU4SMQBOqlU9NnoM9gDBiU5ZT7HvPwCHbha+ZwROxPwnASq51FCKmSOTqgmioewLD
- gnCBIpwCCxwp0wS49AftXK8YlrVyFJM02tJZPRrWE0bbKOw5O7g/nZijglaQm3ABDRO+
- yYSi/JgingNckc5x8i1Ul3eZ4Oyvwy+TZCUcncOfnDvIsE7LbHx2tRkvMfytwcG3piZs
- pEGmVyCgUSpy7/cIvqMNVdCJvjF29czEGE04tglgiVr3c9OEzzK/ZVgs5ynGHDf5D8mS
- dnDwnOGe3Insolbev9O7uqaIcZbBFRrOpzkaYytkZr5D4VIjtaDsm8Cxq5amDC6Ytv6t
- exTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsmczDjxAyjDzaTcOyL06L9gJ1PTRcntMC4U9AItBI8EOic4ncsipfCu3D1uH9xnlfYT9jnMgwT6xK@nongnu.org
-X-Gm-Message-State: AOJu0Ywc09Oin4TxvykfWjrROVeyk0T1w0AuQaJp+UltN/WHczzqSXTN
- DxXsWmpBhsIcRtZTL/nBGq/0f7B6SSCcRF2/ELpuooog0FB/W6GdkAyxJb5RheAmCNc=
-X-Gm-Gg: ASbGncv1blPCWTAZEULlxzA5Vq6c04bdNgfxDr6LOiphQyN6ecp6g0eeuNsXtYZGdYw
- bPA2Ocp1mFAQ0+dspsN2qsclDs/Li8tdMJSHtXnARy2GP5xm+SpuGXlb1N9zu4vxcv8/A7BAAtX
- Goo9lcdiUgzhoFSn98iu3FIQC/thX8EPRqClI2VZiVdUALIXy7D5KkPJVao9tSGXwC/ycAyRzET
- /ritZOgrvI2kzXmmuiWv7p26kmIHUW7Nqdhzq4fXLhvVG1tGuJ6yNuzJtVVEfuTisrB05OW8tvp
- uutiUzc9oW6P2qlYBM3Ar6ukdd9+oUx5zh1K2g6jentcumRMJawaGg62rQohWOfECJMe9PprXdY
- kP4kjKMokPG7vyZTzwWo3EEacqdhSsxVpcns8WR/8ob3INwawt/Rged1e0IUeoq5eOtnmmCRNHz
- Bf3/7LP1x1xza3Ebu3ZG6RYCHe9teVLBO2Kc0Lo7MYNLVI+kHduzTuUQ==
-X-Google-Smtp-Source: AGHT+IH7OheyZPs9TPr+otf1kEZ7q1qgXF3Y0MfR0BVQSmBubwt6G2vjxM/oX98m2YpRjvVi9qzEjg==
-X-Received: by 2002:a05:6000:4202:b0:426:d82f:889e with SMTP id
- ffacd0b85a97d-42704d74dc8mr9007569f8f.14.1760950476732; 
- Mon, 20 Oct 2025 01:54:36 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5a1056sm14254801f8f.2.2025.10.20.01.54.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 01:54:36 -0700 (PDT)
-Message-ID: <2047e87f-36e8-4e5c-bdf1-6f08192ab55f@linaro.org>
-Date: Mon, 20 Oct 2025 10:54:35 +0200
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAlfO-0005bz-BK
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 04:54:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAlfI-0002m0-1n
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 04:54:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760950488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=O1N9QInq52Rbjr0nA9tnuHakpsGPPATamIrihiZF08w=;
+ b=c456EXYU2anVFC29li2MaiIr4kdvwixuCnm+x5FJr92KIh6lxlMYuxSffO//bLVS44w4dy
+ QYzRbOXgJxZGWOnRzR93z2zW1DIH1b0zQU7TntTJv/ij1K4HBcNyjGJPv4YlF08BZmuMRs
+ 0IVVqZDof/dFgmJmsfqR4C5axxdFRcs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-85-iChkPPDiOdCetpC1j7ZCAw-1; Mon,
+ 20 Oct 2025 04:54:38 -0400
+X-MC-Unique: iChkPPDiOdCetpC1j7ZCAw-1
+X-Mimecast-MFC-AGG-ID: iChkPPDiOdCetpC1j7ZCAw_1760950477
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33C431805C04; Mon, 20 Oct 2025 08:54:36 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.18])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CE8C1800589; Mon, 20 Oct 2025 08:54:32 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] gitlab-ci: Decrease the size of the compiler cache
+Date: Mon, 20 Oct 2025 10:54:31 +0200
+Message-ID: <20251020085431.23968-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/13] hw/ppc/pegasos2: Change device tree generation
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster
- <armbru@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <cover.1760798392.git.balaton@eik.bme.hu>
- <f52d9cc6af5249e306ba7a9472ef781b8e1260aa.1760798392.git.balaton@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f52d9cc6af5249e306ba7a9472ef781b8e1260aa.1760798392.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,22 +82,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/10/25 17:11, BALATON Zoltan wrote:
-> We generate a flattened device tree programmatically for VOF. Change
-> this to load the static parts from a device tree blob and only
-> generate the parts that depend on run time conditions such as CPU
-> type, memory size and PCI devices. Moving the static parts in a dts
-> makes the board code simpler and more generic.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/ppc/pegasos2.c        | 292 +++++++--------------------------------
->   pc-bios/dtb/meson.build  |   1 +
->   pc-bios/dtb/pegasos2.dtb | Bin 0 -> 1701 bytes
->   pc-bios/dtb/pegasos2.dts | 167 ++++++++++++++++++++++
->   4 files changed, 220 insertions(+), 240 deletions(-)
->   create mode 100644 pc-bios/dtb/pegasos2.dtb
->   create mode 100644 pc-bios/dtb/pegasos2.dts
+From: Thomas Huth <thuth@redhat.com>
 
-Please update MAINTAINERS entries.
+Uploading the cache from the runner takes a long time in the MSYS2
+job, mostly due to the size of the compiler cache.
+However, looking at runs with a non-initialized cache, and by doing
+a "du -sh ." in the build directory, it seems like a build only
+takes about 236 MiB of data, so the compiler cache with 500 MiB
+certainly contains a lot of stale files. Thus decrease the size of
+the ccache to a more reasonable value to speed up the MSYS2 job in
+our CI (and add a "du -sh" at the end to have a reference for the
+required cache size in the future).
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ Looking at the latest runs in the CI, our recent attempt to decrease
+ the cache size by cleaning the pacman cache did not help much:
+ https://gitlab.com/qemu-project/qemu/-/jobs/11747329283
+ ... that run contains the "pacman -Sc" command, but the "Saving cache
+ for successful job" step at the end still takes close to 20 minutes.
+ So we likely have to shrink the compiler cache, too. In this run here:
+ https://gitlab.com/thuth/qemu/-/jobs/11770708859#L1769
+ I added a "du -sh" and you can see that the build directory only
+ takes 236 MB there. So a ccache with the size of 250M should be
+ sufficient for the MSYS2 job.
+
+ .gitlab-ci.d/windows.yml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index 6e1135d8b86..e2fef543899 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -94,7 +94,7 @@ msys2-64bit:
+   - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
+   - $env:CCACHE_BASEDIR = "$env:CI_PROJECT_DIR"
+   - $env:CCACHE_DIR = "$env:CCACHE_BASEDIR/ccache"
+-  - $env:CCACHE_MAXSIZE = "500M"
++  - $env:CCACHE_MAXSIZE = "250M"
+   - $env:CCACHE_DEPEND = 1 # cache misses are too expensive with preprocessor mode
+   - $env:CC = "ccache gcc"
+   - mkdir build
+@@ -103,5 +103,6 @@ msys2-64bit:
+   - ..\msys64\usr\bin\bash -lc "../configure $CONFIGURE_ARGS"
+   - ..\msys64\usr\bin\bash -lc "make -j$env:JOBS"
+   - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
++  - ..\msys64\usr\bin\bash -lc "du -sh ."
+   - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
+   - Write-Output "Finished build at $(Get-Date -Format u)"
+-- 
+2.51.0
+
 
