@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C71DCCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF94CCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAlrq-0001ab-0f; Mon, 20 Oct 2025 05:07:50 -0400
+	id 1vAlwd-0002nT-3b; Mon, 20 Oct 2025 05:12:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vAlrm-0001aH-RY
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:07:47 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ id 1vAlwX-0002lb-74
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:12:42 -0400
+Received: from mail-westus2azon11010007.outbound.protection.outlook.com
+ ([52.101.46.7] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vAlre-0004Yo-BY
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:07:41 -0400
+ id 1vAlwU-0005CM-M2
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:12:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GY/m6LdK9UVYCgMZ0exOWxejhpTbRCcODqeiwjIe1j3Ox17/6/ZCgtpCTmE37Q2NeuVEnKvazH5aGH3xbYEiJyKk9Oa1a+8edY6hi+NOvr4dnbbLXHoJ/B1SEqVygVtFQUGdp/9mAgOVMhxJo9IpE2Njx2CXap8czmZ6ilR78zpomb1tnma2TGgj7XRTOz2kCSD62RhCq16blfAbzyV9NYOJajIW+yq8G4urYVmL5xOtBUdoHkqjc+RvKzHBhIWi8uaWMGSd5mS6TwtOYakfyn9zwD5j6nO7x2UNHb7B2nxr5ik+jCoh12ZWH/9hXsDv6rxBoGwjdrcLwu00+i8kkw==
+ b=j+gD181qPd7/AyvpvSIhcYI11Hh2zIDh4pYGCxDczDYPq9rZXNp2GbX9djZEwMpSKuan3XlcnIMirM++iJaBSP8zgk29H+sTkNM+EI9spYD3Usl0XNHUhZr+q8ypU4zSRwDP1HhFvGJ8SwjfUYydl+RaxQeUOsYlUAzKE0k+gHwcq7LD6rViOwN1RpfCsrlnDarUA5ElQiaPkHQE+3ZkoELlU1NccV7sgB+dP0aFNhD43yCF9Jg1U771xKUT5OAHfWRU4Q+JyXSixlqH+YxChURK+esOKGQJl1vrJWpVdnNPwOXwS7it+F1clHM+lUWUn7whCcASr8EKsa6FAqupsg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fUYDk7Mj/ezG2Vqc0/EbrI76F/k6ZM4eX5cIHx1v65Y=;
- b=b/C5p4pi0QNTaEYoirpCzZHN3pVAz//2mhnV5+gq1dFY03fOM7nOuFSoRJ2EfI4LXX3C42U/4NcbSVG/+WLxFI4Iqn0tU1eQo/AF92V79mch7s9cA0ZOVts7MYchqtNO+UXFpphwwrOoaIYsrhE07LbVj3Qr620FYZqM0qA9fyYZCiJ3IySzuyyHMsuSxpyzuzH0riTUa6qweFBmHcEg5aEXMlmqcl0qkGQNm3KRR4fRNs526CXskaeko4FHFBQGpRkWfAe+8HvZ/RdtLooWwhLHnOwsJyvznXK3ptLDd4JuiMT8e8xMKBKQ1W8OM81IJZTV/8U2Z3BbKOsUFhKz/A==
+ bh=GOZ+nixHazb4HnavPJeXgOtMK07jsp2imIRg0VdfqLA=;
+ b=U4+J7deS+v2dw/Pfz3EMJkUOTbbotCd5m4w5CVMhoZa6UbFwop51SkuIPoB+RovYXYnZ5C6O8LcNRL7G4XKp1rhOQtOjgBTNpIiklNJxOhlEdz0kjnD8FSlvsqNOgh31xb3tZYiYyLz5AgY9rZ0iV/ARFIA9t4HPwSQ36ov+Qxnq9jN/QZWarD2LFmCLe7OSz1xTYjDLbLqlLpuxXY6uizVsyxNB2yeCD26vgBbc99D72GvLUWbDpaKPGpSVasjr0/adgNMkdYP3UCXXpExjvjkRDa/6JYsHcoASVZmI9z77wATWSESj19jj+7EZUQu7l7DKgIvdEdUT/UA5Wzi/Ng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fUYDk7Mj/ezG2Vqc0/EbrI76F/k6ZM4eX5cIHx1v65Y=;
- b=yE8t7L2sPk+BWXd5rhJgX8YIiDLIFeYhgGu5pcCUqzDscl4Y1g18MugtrOLvpPfFUMtOuTL1FVsSrIRnzaFRGSCL63q+pbh3pzb2fgYnlH8EwYqHp4Px3hG6H5g870WyRuqwmj0JhO/qDXJyk/+mzRAkQDhF0lh6xeDG61CVDJ0=
-Received: from BN9PR03CA0876.namprd03.prod.outlook.com (2603:10b6:408:13c::11)
- by CH1PPF0316D269B.namprd12.prod.outlook.com
- (2603:10b6:61f:fc00::604) with Microsoft SMTP Server (version=TLS1_2,
+ bh=GOZ+nixHazb4HnavPJeXgOtMK07jsp2imIRg0VdfqLA=;
+ b=zTMdpxm1XWbECTw3xsPGRtSAuAPv4yN2VmXau/QqCr9kCkWyXykxjqNcvdcVndlLbUPUgaj8z2VmU5DENYVLcXxM0MqN57Cy+7jmkBolc+H1RWeX1KvQWYm/3DWtOQmtHq6IRoiWo8pNEW6deyHIV4bMZjoZDdpXfgE2mfj8od8=
+Received: from BN8PR15CA0019.namprd15.prod.outlook.com (2603:10b6:408:c0::32)
+ by MN0PR12MB6151.namprd12.prod.outlook.com (2603:10b6:208:3c5::13)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.16; Mon, 20 Oct
- 2025 09:07:29 +0000
-Received: from BL6PEPF00022571.namprd02.prod.outlook.com
- (2603:10b6:408:13c:cafe::8b) by BN9PR03CA0876.outlook.office365.com
- (2603:10b6:408:13c::11) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.15 via Frontend Transport; Mon,
- 20 Oct 2025 09:07:29 +0000
+ 2025 09:07:27 +0000
+Received: from BL6PEPF00022573.namprd02.prod.outlook.com
+ (2603:10b6:408:c0:cafe::9d) by BN8PR15CA0019.outlook.office365.com
+ (2603:10b6:408:c0::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.16 via Frontend Transport; Mon,
+ 20 Oct 2025 09:07:27 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,22 +53,20 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BL6PEPF00022571.mail.protection.outlook.com (10.167.249.39) with Microsoft
+ BL6PEPF00022573.mail.protection.outlook.com (10.167.249.41) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9253.7 via Frontend Transport; Mon, 20 Oct 2025 09:07:29 +0000
+ 15.20.9253.7 via Frontend Transport; Mon, 20 Oct 2025 09:07:26 +0000
 Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 20 Oct
- 2025 02:07:26 -0700
+ 2025 02:07:24 -0700
 From: fanhuang <FangSheng.Huang@amd.com>
 To: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>
 CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, <FangSheng.Huang@amd.com>
 Subject: [PATCH v2] numa: add 'spm' option for Specific Purpose Memory
-Date: Mon, 20 Oct 2025 17:07:01 +0800
-Message-ID: <20251020090701.4036748-2-FangSheng.Huang@amd.com>
+Date: Mon, 20 Oct 2025 17:07:00 +0800
+Message-ID: <20251020090701.4036748-1-FangSheng.Huang@amd.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251020090701.4036748-1-FangSheng.Huang@amd.com>
-References: <20251020090701.4036748-1-FangSheng.Huang@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -77,62 +75,64 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00022571:EE_|CH1PPF0316D269B:EE_
-X-MS-Office365-Filtering-Correlation-Id: 47f49e25-172d-4d5e-c6ff-08de0fb81869
+X-MS-TrafficTypeDiagnostic: BL6PEPF00022573:EE_|MN0PR12MB6151:EE_
+X-MS-Office365-Filtering-Correlation-Id: fa541d35-24d7-47dd-f8c8-08de0fb8171d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700013|43062017; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?txzGUIzWkFcWYL3abnpn6SQmOVt2mEUCD8GiUq+fSx6lRV97lz4PwZ90gexI?=
- =?us-ascii?Q?8BCw25XuYUWCQnvqfrwSLd4qub8Azwl+QGbiU1QyT74HI+RIt/P38qhfaXcv?=
- =?us-ascii?Q?iJHu0BbKaP+cU9hKO4ldcbc9hk2NMmK1wHJwHtGqGs1QVEq19UBlO5J7+H7+?=
- =?us-ascii?Q?V1CNcTJZYKLZtL/o9zoRgUBLnLg93hnL0m2FA/M4pFzsro6yBTS5UFrlrOr8?=
- =?us-ascii?Q?c2vzLqEukWLrMfNfCap8BQq28Yl6BZzv/JIMVJ/5dtZYBJ2Q2tOd28DHkRKW?=
- =?us-ascii?Q?DkaopyN2t2gOptrAiOmwSiMWT2DJLJdLyvBN0b/Fjl3FDL3dgsKV6GRvMRlu?=
- =?us-ascii?Q?75wzvih84+1S8Jsve0SZgJArjyDDkH5gNF35VtHycdvmuESDQ8zBN0D2bK4l?=
- =?us-ascii?Q?/mPROuIurpAkcyDEiLjMgYuOCVXwFXyGNAhxxaZ8lTNqKljl34HDjHyQw9Cs?=
- =?us-ascii?Q?kwgHBB0wsDQnj9f6medr5/6hjFp8HtuT3eEbXQtIFXNOyQIIUo/2w2jIcNuk?=
- =?us-ascii?Q?xIncYhiWjGcIwIJiJAvDJ0zjiM04Zyr3gctDvvHIOtnyL6Qk37gjbCfSaOT7?=
- =?us-ascii?Q?3Uy/XTY+14C2RYp7tpLVTe9kBNSCPsYsa9tuaucKmaGdMm5AYYWf2qH5RAru?=
- =?us-ascii?Q?QB3YSLRMwBytxtE/QaTo3BD0ENmc7Us+1423J5+fjTosyC8VvD3t1h0sD/mt?=
- =?us-ascii?Q?GaxturdDsfvHIlZnY2ym7eDeiRKq6aHuPbc65+fOJe8QLtmzj7jKg3p3RK3H?=
- =?us-ascii?Q?6CAzrbn02VG8ai0UfruwsLN5fOAmMIio8bF5ve/aTsMU+cE58+CiFFo7GlKg?=
- =?us-ascii?Q?aVyAfYq06pYeKt0txhyYL7sOU0+S4ymhnuzKJPAUemDfdyfHlGW3new27jee?=
- =?us-ascii?Q?NcWVNDWNQ2dQzSkBH+U5NIW9HBIWXcut57yHrlSuzaljUA34a5Tadey++qKn?=
- =?us-ascii?Q?AbPdpY26/ZD3qxOiU09c1m7Z7Qomds1yOUtG5S/mGLU7XIIxr6iGRy8GedGS?=
- =?us-ascii?Q?y6isb5cWO25nHtBKvuj4t4jGKPKTYzZwoL6ZThQluMg/vr29NgFxkG82AaP2?=
- =?us-ascii?Q?DIr5cGOpOrFAE/f0aKfTcTBMigEi5iUYxSynn5EqCFpZoFHBTlvGyx6Q7+8X?=
- =?us-ascii?Q?FV/KLwai69LghdrD7Qy0hxBV02bZ4KBIBgyYm3X28bCt4xYOELe0uxGfIhjh?=
- =?us-ascii?Q?S4iEfriDP6uayik24bkTHk6VS9Rfze55MI1XTD1r2sRXiH0dvgniKDT1ovmf?=
- =?us-ascii?Q?14PXZYlWVdoM6zZd7y0/BuyFYeg3m2MlGtFsLT1px7ObmybQaL9/9O5a2iJd?=
- =?us-ascii?Q?eBTy8Fjf3wfpv2qOACKopvP2RrRoM1LGhfXcdwwkd5YnllLXJWY1PqlKFNDo?=
- =?us-ascii?Q?3aovAEOQEDELxYFd+GD1OsOvYdgonqJQJnmhFs8+r2OPmZc34OAMtfwTYWuD?=
- =?us-ascii?Q?zFXdruq0HhWf6yERVBq22pL/I/cUJ16RqBfsUvGFg5pmyQLGVXJjsHOulybo?=
- =?us-ascii?Q?KOX7KkjX+PsrpROF0ccDLzjmc2vXYRA/k11j87k3xm42j01LJdJMef0oNPNZ?=
- =?us-ascii?Q?7ai8hQEWZ6qc91UIEqbt8L9lbADMt2yz/rwg78rv?=
+ ARA:13230040|36860700013|1800799024|376014|82310400026|43062017; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?SurfEjDME3ndmItM4fpO+5z5oabI5HonRz2L6nQO6yW52hTshcazrttf0PwF?=
+ =?us-ascii?Q?ajLXD9WLNfFMZqeWs4hri8D0vEG3nO/nUwOPiZVcY/rEycunPb+2ZMjeNScb?=
+ =?us-ascii?Q?x8AMsAo83QP695WZh9WuZAoFMM6U3+TTgnVUwyR+6EuwZhzOGl6Zen7900bQ?=
+ =?us-ascii?Q?144A9YVyc69fs/Io69ZhIBZYX5hMWUpYROfKYNVTiPsQAmk7epCwf+T5yTMx?=
+ =?us-ascii?Q?9b0RH3tmIKMFjToi/K91lVNNZPmt3sW8QY5dNbt5YQKxIqWQSBi/A71VL4SY?=
+ =?us-ascii?Q?VJxrFWNv5NG3lcV6yxAPmvE9PV+d5+WaIzkeJA6KmKhv3at8NMPGb3oOAaHY?=
+ =?us-ascii?Q?PKiBhbtA0jzFB3y3blb/fC5VPfbSFMHyHDcstW1WdSqJDg4d/WRt02gr/7OY?=
+ =?us-ascii?Q?OuzrV9CrO0dyY4rFKvsD4fX78DD9tz8qPNQVWKmrVDPCWaUuV02HSPZ53ueC?=
+ =?us-ascii?Q?YTynHiru3QSdzx1bEJqexzL1dXM/wfGZXh8NBzSGRU2Mci5wHDgN7oSbn8uL?=
+ =?us-ascii?Q?ZVKFDgGSpYjm4ft9Zt9724xcInsas7cQ33iJiRgxOQSOsAuYkcEwPdu9lDMs?=
+ =?us-ascii?Q?61sQq/Wd+LXfmr3mEenBhrbEbDczbdYt9PqBaEC1MGHdWPcRDiCV9ampaCa2?=
+ =?us-ascii?Q?JZu+u0HTVL7TycGkkGdMVxyOEb5bUAhCYk9N1+1cu8PEGCZ7ovktEFAM7rMr?=
+ =?us-ascii?Q?AxyvN5cUu6CKC8vhCUihKVkEwgH0f058lHBrf6vXK9XvW/y5BWRHiigal24d?=
+ =?us-ascii?Q?H407XY/BouelNUV8yeeHmKH1TwS99Dp5lsYc2oqJOz+HCyjs4TsCYu6SXr8c?=
+ =?us-ascii?Q?HdwO7m0bJSbGqu0nhZRmoNrYsr6/rb3RsMfoyTKzLIBxB5izK7T1NWUAc+wS?=
+ =?us-ascii?Q?ANEUd17VuYTo7JUKyQ2B7ZZ6JYbY/V55nN1PvgkCglsQEcE7jE6W+rclhZv1?=
+ =?us-ascii?Q?algI4Ja31FhMvcBNPkzfdagn6CaxNgrzmzJYkm/PZ/bsBvgndvdkHoesxuXn?=
+ =?us-ascii?Q?68Wvlhn8zGZ1qPhh4uK42SogIjM7hLKrbToEQpaFyNb1fKlKJ9sZPrzknIwe?=
+ =?us-ascii?Q?0Zb4XOiRvZqgNsSwztt9G4k0dBcdQb+tYOMQ01ksJX+dgz5O6A2d1HIOTkv4?=
+ =?us-ascii?Q?XAPlYg+ZVH7GwLvZGfup55KRecyZWiQrUDtHbyoq7ds/tp2ZD67xoO0vxIbe?=
+ =?us-ascii?Q?ONPuA7f9NIsDlWkeQUQMnK3kr4qgf9rHAud+pv9iIpd1K90kqPogIudqoZao?=
+ =?us-ascii?Q?0nIJZ/5lC0ql24fJBztZg4FsaGNR8d5rDDE5X3eX7os2MU6vUeJNf4t4Lkfs?=
+ =?us-ascii?Q?AinWirlI1mh7Zj4hynEJ6Ah51jeeb6dNPaRRbvhGxYxe2tEOy6Aq0On9mnn0?=
+ =?us-ascii?Q?QXtWcDTh9dIBKd/Ve/ncPrYrEjkE/+8H0LR9PEohkj9tvhiLcJdlMdKs+771?=
+ =?us-ascii?Q?5vxtKh5jRwYnkwIAROa1i0nyAWko3skRdPBXgCyeve5dnSeI1vjzNi7FN4og?=
+ =?us-ascii?Q?dBGVIQEaq0I7Jar1qZk8UfeY666qbjgKhZOtVEJh5liiuZCG1RLNg0ed0ABG?=
+ =?us-ascii?Q?t5xUezzX0wkTBNFo372ShoZC4vQW7kI21MSnbClD?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013)(43062017);
+ SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026)(43062017);
  DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 09:07:29.0742 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47f49e25-172d-4d5e-c6ff-08de0fb81869
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 09:07:26.8990 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa541d35-24d7-47dd-f8c8-08de0fb8171d
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00022571.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00022573.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPF0316D269B
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6151
+Received-SPF: permerror client-ip=52.101.46.7;
  envelope-from=FangSheng.Huang@amd.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+ helo=CO1PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,298 +148,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support for Specific Purpose Memory (SPM) through the
-NUMA node configuration. When 'spm=on' is specified for a NUMA node,
-QEMU will:
+Hi David and Igor,
 
-1. Set the RAM_SPM flag in the RAM block of the corresponding memory region
-2. Update the overlapping E820 RAM entries before adding E820_SOFT_RESERVED
-3. Set the E820 type to E820_SOFT_RESERVED for this memory region
+I apologize for the delayed response. Thank you very much for your thoughtful
+questions and feedback on the SPM patch series.
 
-This allows guest operating systems to recognize the memory as soft reserved
-memory, which can be used for device-specific memory management without
-E820 table conflicts.
+Before addressing your questions, I'd like to briefly mention what the new
+QEMU patch series additionally resolves:
 
-Usage:
-  -numa node,nodeid=0,memdev=m1,spm=on
+1. **Corrected SPM terminology**: Fixed the description error from the previous
+   version. The correct acronym is "Specific Purpose Memory" (not "special
+   purpose memory" as previously stated).
 
-Signed-off-by: fanhuang <FangSheng.Huang@amd.com>
----
- hw/core/numa.c               |  3 ++
- hw/i386/e820_memory_layout.c | 73 ++++++++++++++++++++++++++++++++++++
- hw/i386/e820_memory_layout.h |  2 +
- hw/i386/pc.c                 | 37 ++++++++++++++++++
- include/exec/cpu-common.h    |  1 +
- include/system/memory.h      |  3 ++
- include/system/numa.h        |  1 +
- qapi/machine.json            |  6 +++
- system/physmem.c             |  7 +++-
- 9 files changed, 132 insertions(+), 1 deletion(-)
+2. **Fixed overlapping E820 entries**: Updated the implementation to properly
+   handle overlapping E820 RAM entries before adding E820_SOFT_RESERVED
+   regions. 
 
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index 218576f745..e680130460 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -163,6 +163,9 @@ static void parse_numa_node(MachineState *ms, NumaNodeOptions *node,
-         numa_info[nodenr].node_memdev = MEMORY_BACKEND(o);
-     }
- 
-+    /* Store spm configuration for later processing */
-+    numa_info[nodenr].is_spm = node->has_spm && node->spm;
-+
-     numa_info[nodenr].present = true;
-     max_numa_nodeid = MAX(max_numa_nodeid, nodenr + 1);
-     ms->numa_state->num_nodes++;
-diff --git a/hw/i386/e820_memory_layout.c b/hw/i386/e820_memory_layout.c
-index 3e848fb69c..5b090ac6df 100644
---- a/hw/i386/e820_memory_layout.c
-+++ b/hw/i386/e820_memory_layout.c
-@@ -46,3 +46,76 @@ bool e820_get_entry(int idx, uint32_t type, uint64_t *address, uint64_t *length)
-     }
-     return false;
- }
-+
-+bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type)
-+{
-+    uint64_t end = start + length;
-+    bool updated = false;
-+    assert(!e820_done);
-+
-+    /* For E820_SOFT_RESERVED, validate range is within E820_RAM */
-+    if (new_type == E820_SOFT_RESERVED) {
-+        bool range_in_ram = false;
-+        for (size_t j = 0; j < e820_entries; j++) {
-+            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
-+            uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
-+            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
-+
-+            if (ram_type == E820_RAM && ram_start <= start && ram_end >= end) {
-+                range_in_ram = true;
-+                break;
-+            }
-+        }
-+        if (!range_in_ram) {
-+            return false;
-+        }
-+    }
-+
-+    /* Find entry that contains the target range and update it */
-+    for (size_t i = 0; i < e820_entries; i++) {
-+        uint64_t entry_start = le64_to_cpu(e820_table[i].address);
-+        uint64_t entry_length = le64_to_cpu(e820_table[i].length);
-+        uint64_t entry_end = entry_start + entry_length;
-+
-+        if (entry_start <= start && entry_end >= end) {
-+            uint32_t original_type = e820_table[i].type;
-+
-+            /* Remove original entry */
-+            memmove(&e820_table[i], &e820_table[i + 1],
-+                    (e820_entries - i - 1) * sizeof(struct e820_entry));
-+            e820_entries--;
-+
-+            /* Add split parts inline */
-+            if (entry_start < start) {
-+                e820_table = g_renew(struct e820_entry, e820_table,
-+                                     e820_entries + 1);
-+                e820_table[e820_entries].address = cpu_to_le64(entry_start);
-+                e820_table[e820_entries].length =
-+                    cpu_to_le64(start - entry_start);
-+                e820_table[e820_entries].type = original_type;
-+                e820_entries++;
-+            }
-+
-+            e820_table = g_renew(struct e820_entry, e820_table,
-+                                 e820_entries + 1);
-+            e820_table[e820_entries].address = cpu_to_le64(start);
-+            e820_table[e820_entries].length = cpu_to_le64(length);
-+            e820_table[e820_entries].type = cpu_to_le32(new_type);
-+            e820_entries++;
-+
-+            if (end < entry_end) {
-+                e820_table = g_renew(struct e820_entry, e820_table,
-+                                     e820_entries + 1);
-+                e820_table[e820_entries].address = cpu_to_le64(end);
-+                e820_table[e820_entries].length = cpu_to_le64(entry_end - end);
-+                e820_table[e820_entries].type = original_type;
-+                e820_entries++;
-+            }
-+
-+            updated = true;
-+            break;
-+        }
-+    }
-+
-+    return updated;
-+}
-diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
-index b50acfa201..657cc679e2 100644
---- a/hw/i386/e820_memory_layout.h
-+++ b/hw/i386/e820_memory_layout.h
-@@ -15,6 +15,7 @@
- #define E820_ACPI       3
- #define E820_NVS        4
- #define E820_UNUSABLE   5
-+#define E820_SOFT_RESERVED  0xEFFFFFFF
- 
- struct e820_entry {
-     uint64_t address;
-@@ -26,5 +27,6 @@ void e820_add_entry(uint64_t address, uint64_t length, uint32_t type);
- bool e820_get_entry(int index, uint32_t type,
-                     uint64_t *address, uint64_t *length);
- int e820_get_table(struct e820_entry **table);
-+bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type);
- 
- #endif
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index bc048a6d13..3e50570484 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -26,6 +26,7 @@
- #include "qemu/units.h"
- #include "exec/target_page.h"
- #include "hw/i386/pc.h"
-+#include "system/ramblock.h"
- #include "hw/char/serial-isa.h"
- #include "hw/char/parallel.h"
- #include "hw/hyperv/hv-balloon.h"
-@@ -787,6 +788,41 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
-     return pc_above_4g_end(pcms) - 1;
- }
- 
-+static int pc_update_spm_memory(RAMBlock *rb, void *opaque)
-+{
-+    X86MachineState *x86ms = opaque;
-+    MachineState *ms = MACHINE(x86ms);
-+    ram_addr_t offset;
-+    ram_addr_t length;
-+    bool is_spm = false;
-+
-+    /* Check if this RAM block belongs to a NUMA node with spm=on */
-+    for (int i = 0; i < ms->numa_state->num_nodes; i++) {
-+        NodeInfo *numa_info = &ms->numa_state->nodes[i];
-+        if (numa_info->is_spm && numa_info->node_memdev) {
-+            MemoryRegion *mr = &numa_info->node_memdev->mr;
-+            if (mr->ram_block == rb) {
-+                /* Mark this RAM block as SPM and set the flag */
-+                rb->flags |= RAM_SPM;
-+                is_spm = true;
-+                break;
-+            }
-+        }
-+    }
-+
-+    if (is_spm) {
-+        offset = qemu_ram_get_offset(rb) +
-+                 (0x100000000ULL - x86ms->below_4g_mem_size);
-+        length = qemu_ram_get_used_length(rb);
-+        if (!e820_update_entry_type(offset, length, E820_SOFT_RESERVED)) {
-+            warn_report("Failed to update E820 entry for SPM at 0x%" PRIx64
-+                        " length 0x%" PRIx64, offset, length);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- /*
-  * AMD systems with an IOMMU have an additional hole close to the
-  * 1Tb, which are special GPAs that cannot be DMA mapped. Depending
-@@ -901,6 +937,7 @@ void pc_memory_init(PCMachineState *pcms,
-     if (pcms->sgx_epc.size != 0) {
-         e820_add_entry(pcms->sgx_epc.base, pcms->sgx_epc.size, E820_RESERVED);
-     }
-+    qemu_ram_foreach_block(pc_update_spm_memory, x86ms);
- 
-     if (!pcmc->has_reserved_memory &&
-         (machine->ram_slots ||
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 9b658a3f48..9b437eaa10 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -89,6 +89,7 @@ ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
- ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
- bool qemu_ram_is_shared(RAMBlock *rb);
-+bool qemu_ram_is_spm(RAMBlock *rb);
- bool qemu_ram_is_noreserve(RAMBlock *rb);
- bool qemu_ram_is_uf_zeroable(RAMBlock *rb);
- void qemu_ram_set_uf_zeroable(RAMBlock *rb);
-diff --git a/include/system/memory.h b/include/system/memory.h
-index aa85fc27a1..0d36cbd30d 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -275,6 +275,9 @@ typedef struct IOMMUTLBEvent {
-  */
- #define RAM_PRIVATE (1 << 13)
- 
-+/* RAM is Specific Purpose Memory */
-+#define RAM_SPM (1 << 14)
-+
- static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
-                                        IOMMUNotifierFlag flags,
-                                        hwaddr start, hwaddr end,
-diff --git a/include/system/numa.h b/include/system/numa.h
-index 1044b0eb6e..438511a756 100644
---- a/include/system/numa.h
-+++ b/include/system/numa.h
-@@ -41,6 +41,7 @@ typedef struct NodeInfo {
-     bool present;
-     bool has_cpu;
-     bool has_gi;
-+    bool is_spm;
-     uint8_t lb_info_provided;
-     uint16_t initiator;
-     uint8_t distance[MAX_NODES];
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 038eab281c..1fa31b0224 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -500,6 +500,11 @@
- # @memdev: memory backend object.  If specified for one node, it must
- #     be specified for all nodes.
- #
-+# @spm: if true, mark the memory region of this node as Specific
-+#     Purpose Memory (SPM). This will set the RAM_SPM flag for the
-+#     corresponding memory region and set the E820 type to
-+#     E820_SOFT_RESERVED. (default: false, since 9.2)
-+#
- # @initiator: defined in ACPI 6.3 Chapter 5.2.27.3 Table 5-145, points
- #     to the nodeid which has the memory controller responsible for
- #     this NUMA node.  This field provides additional information as
-@@ -514,6 +519,7 @@
-    '*cpus':   ['uint16'],
-    '*mem':    'size',
-    '*memdev': 'str',
-+   '*spm':    'bool',
-    '*initiator': 'uint16' }}
- 
- ##
-diff --git a/system/physmem.c b/system/physmem.c
-index ae8ecd50ea..0090d9955d 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1611,6 +1611,11 @@ bool qemu_ram_is_noreserve(RAMBlock *rb)
-     return rb->flags & RAM_NORESERVE;
- }
- 
-+bool qemu_ram_is_spm(RAMBlock *rb)
-+{
-+    return rb->flags & RAM_SPM;
-+}
-+
- /* Note: Only set at the start of postcopy */
- bool qemu_ram_is_uf_zeroable(RAMBlock *rb)
- {
-@@ -2032,7 +2037,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-     ram_flags &= ~RAM_PRIVATE;
- 
-     /* Just support these ram flags by now. */
--    assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
-+    assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_SPM | RAM_NORESERVE |
-                           RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
-                           RAM_READONLY_FD | RAM_GUEST_MEMFD |
-                           RAM_RESIZEABLE)) == 0);
--- 
-2.34.1
+   The previous implementation created overlapping E820 entries by first adding
+   a large E820_RAM entry covering the entire above-4GB memory range, then
+   adding E820_SOFT_RESERVED entries for SPM regions that overlapped with the
+   RAM entry. This violated the E820 specification and caused OVMF/UEFI
+   firmware to receive conflicting memory type information for the same
+   physical addresses.
+
+   The new implementation processes SPM regions first to identify reserved
+   areas, then adds RAM entries around the SPM regions, generating a clean,
+   non-overlapping E820 map.
+
+Now, regarding your questions:
+
+========================================================================
+Why SPM Must Be Boot Memory
+========================================================================
+
+SPM cannot be implemented as hotplug memory (DIMM/NVDIMM) because:
+
+The primary goal of SPM is to ensure that memory is managed by guest
+device drivers, not the guest OS. This requires boot-time discovery
+for three key reasons:
+
+1. SPM regions must appear in the E820 memory map as `E820_SOFT_RESERVED`
+   during firmware initialization, before the OS starts.
+
+2. Hotplug memory is integrated into kernel memory management, making
+   it unavailable for device-specific use.
+
+========================================================================
+Detailed Use Case
+========================================================================
+
+**Background**
+Unified Address Space for CPU and GPU:
+
+Modern heterogeneous computing architectures implement a coherent and
+unified address space shared between CPUs and GPUs. Unlike traditional
+discrete GPU designs with dedicated frame buffer, these accelerators
+connect CPU and GPU through high-speed interconnects (e.g., XGMI):
+
+- **HBM (High Bandwidth Memory)**: Physically attached to each GPU,
+  reported to the OS as driver-managed system memory
+
+- **XGMI (eXternal Global Memory Interconnect, aka. Infinity Fabric)**:
+  Maintains data coherence between CPU and GPU, enabling direct CPU
+  access to GPU HBM without data copying
+
+In this architecture, GPU HBM is reported as system memory to the OS,
+but it needs to be managed exclusively by the GPU driver rather than
+the general OS memory allocator. This driver-managed memory provides
+optimal performance for GPU workloads while enabling coherent CPU-GPU
+data sharing through the XGMI. This is where SPM (Specific Purpose
+Memory) becomes essential.
+
+**Virtualization Scenario**
+
+In virtualization, hypervisor need to expose this memory topology to
+guest VMs while maintaining the same driver-managed vs OS-managed
+distinction.
+
+In this example, `0000:c1:02.0` is a GPU Virtual Function (VF) device
+that requires dedicated memory allocation. The host driver obtains VF
+HBM information and creates a user space device for each VF (for
+example `/dev/vf_hbm_0000.c1.02.0`) providing an mmap() interface that
+allows QEMU to allocate memory from the VF's HBM. By using SPM, this
+memory is reserved exclusively for the GPU driver rather than being
+available for general OS allocation.
+
+**QEMU Configuration**:
+```
+-object memory-backend-ram,size=8G,id=m0 \
+-numa node,nodeid=0,memdev=m0 \
+-object memory-backend-file,size=8G,id=m1,mem-path=/dev/vf_hbm_0000.c1.02.0,prealloc=on,align=16M \
+-numa node,nodeid=1,memdev=m1,spm=on \
+-device vfio-pci,host=0000:c1:02.0,bus=pcie.0
+```
+
+**BIOS-e820**
+
+BIOS provided physical RAM map in which 0x280000000-0x47fffffff as
+soft reserved:
+
+```
+[    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000027fffffff] usable
+[    0.000000] BIOS-e820: [mem 0x0000000280000000-0x000000047fffffff] soft reserved
+```
+
+**Guest OS**
+
+Guest OS sees 8GB (0x280000000-0x47fffffff) as "soft reserved" memory
+that only the GPU driver can use, preventing conflicts with general OS
+memory allocation:
+
+```
+100000000-27fffffff : System RAM
+  1b7a00000-1b8ffffff : Kernel code
+  1b9000000-1b9825fff : Kernel rodata
+  1b9a00000-1b9e775bf : Kernel data
+  1ba397000-1ba7fffff : Kernel bss
+280000000-47fffffff : Soft Reserved
+  280000000-47fffffff : dax0.0
+    280000000-47fffffff : System RAM (kmem)
+```
+
+========================================================================
+
+I hope this addresses your concerns. Please let me know if you need any
+further clarification or have additional questions.
+
+Best regards,
+Jerry Huang
 
 
