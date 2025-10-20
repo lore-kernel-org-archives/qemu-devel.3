@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B28CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE962CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAn0B-0003OQ-MH; Mon, 20 Oct 2025 06:20:31 -0400
+	id 1vAn3U-0004N8-6u; Mon, 20 Oct 2025 06:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAn09-0003O5-3R
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:20:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAn3R-0004JA-JI
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:23:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAn03-0006V3-BV
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:20:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAn3O-000771-QC
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:23:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760955620;
+ s=mimecast20190719; t=1760955829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9aAOu89RQaC9i6mQzQHXCnOK9LydpJ3P0459VtviWM0=;
- b=GL/OCFafENpBuBlk49tPr7vFcv/sqz6bnXhgbwB1+32tHPRHSeZ8ZpwSo5OzwkgooE8/XU
- dqjwQLVMERutFyeX+iIRs2jPUnuwiZMuHvhGRSVbj5XB/aE/bXx5x/K3lFdsfg41qUFRRx
- hYbw4xocavIRiXIPl+d8ikl8DzsY8A4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uoKcw8pyZA9ViiX0QlnZly8imxNfH8hl7G+ZuLX0Wvc=;
+ b=PpMpsOkn9MRG+UYK9zknYtULypIJc/BIBE2n+LCjswTwdpDUzaKkUebUDGQyqBwgVoTf/K
+ Q6m2mgus/5FlCI2ZZKRgdJzYyepwYLuyyBqBYSNb2x/ai11c5opjtNH79mxWArqbTEpBqe
+ Pbeqc0i1/eAkEi8Xae3DFc/BKzmRk0M=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-uAT3u3zOMHyO8b9UttGVUA-1; Mon, 20 Oct 2025 06:20:18 -0400
-X-MC-Unique: uAT3u3zOMHyO8b9UttGVUA-1
-X-Mimecast-MFC-AGG-ID: uAT3u3zOMHyO8b9UttGVUA_1760955617
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-471144baa6bso24979815e9.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:20:18 -0700 (PDT)
+ us-mta-14-WPJbjwyLPCC_4V3fAMqlCg-1; Mon, 20 Oct 2025 06:23:47 -0400
+X-MC-Unique: WPJbjwyLPCC_4V3fAMqlCg-1
+X-Mimecast-MFC-AGG-ID: WPJbjwyLPCC_4V3fAMqlCg_1760955826
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47113dcc15dso30917915e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:23:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760955617; x=1761560417;
+ d=1e100.net; s=20230601; t=1760955826; x=1761560626;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9aAOu89RQaC9i6mQzQHXCnOK9LydpJ3P0459VtviWM0=;
- b=Qc2Tq+FODTe/0vLAy8VI9pMd6OQb5It/RRnCF3JCl9axhW17dIdkIONK/maQe9H2HQ
- YiQ1xJ5l9z54u6NvMjY6j22ifXMqr5Drrfs3RFUZrIQdEbiqflDdydViMNh3mW22/fi1
- Ac5nNeCIYTUckaL/aU2QW1EmJkq+4+CqN9ORuson0j+LFiIgsa+qm9+J0v5xji75XLkW
- j40/2BRAk6M2GzG7vCw2IiET5EhP4/UBpFiq98hBCDWRhLbzC8l+V9DqSOrgv4qOE1LR
- UxGpa23YKJIMFWjLJ4ONiibbIXn+C/IqeFEeM1t4JFn0Vm5eRoYIznVDufVpqdhhbEXM
- 9ITg==
+ bh=uoKcw8pyZA9ViiX0QlnZly8imxNfH8hl7G+ZuLX0Wvc=;
+ b=oO6qa0BC+8GqHMplAoWeHJNMu5wftFygjID4t1KcjphFsvHx5D5dWyqSOpn+7O+n9O
+ PxPbYhOMTGNo1QheqvvcCg097wSzZXzKfaKoCsj8QnQ03J1AOx6OsZ9Ok0SfAl+fGJMJ
+ 8wCdkkoJMYhX8kpasm/zpSlpDiJxHWFW+EY/qfYeKRJLAnhQe40B0ZmcUQY3GnP2myMm
+ 7UZGyqVggZIj0YfdwS2Ag4ENzlmHHtDYi3+gObxBuUL1H2UgBzqCk+nsk3D4Kv0B9oGY
+ Ai1gU1FqHyq99dR/kpKgvl9QYt+LHIgLKUxTpOXc/T3HELx4iKyTfin0fRo2gaGa/SJ/
+ hljw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3Fm8U1JegCH53BNHL040R9JTP0nUWadMtZQNqYU7BOwEIPQf4Gp2AqExIEXCsyf9yNcfqBhSvRZ5r@nongnu.org
-X-Gm-Message-State: AOJu0YxolYpHa2rMdP3YpQZjMSLDICUufdlTH6Kkblrg0xIalAdYl7GX
- 1qmP31f88xsndR5vrqxKp2bwjqb5Kq7i3BAT9RjVOIe6uJlMeN73AR1FBYbeu+CoXlfvKbf07d2
- SupQlHTS8/LNkaNqs5lNjOHlBbEAEgCobd2wTqUCD0liSpbRIZ0vABZyj
-X-Gm-Gg: ASbGncsAUcSGWW8hgeI3bpmWo3joOvLDBv87rQ0RIbmnlOI00EWzl/0Xs3U6F8qPaDm
- bruvVX5aUERAfEVmTBWeSWl8tf9+pOW1/88Tw1iWzDsX+nlA1Sj00/ANCfE4awdfJLDsrRMH5g7
- 2Xo+dwi6KQOV5c4nDit02W/anQNHlaJp+GvfQwnwFuo0uVInOicI44PNFjK0oLpBqGgmPWenXrH
- KbKLljPsgVXdzqGAHuE3iSPPXYzWgsXh16hVuV5zM1OQvweImyEbyBgZnLdqOVPgzYpNKiHIhar
- sqJH8Qc0U2Nf5KvaUbsaTsF0jpqMwOt2x7XkGRvA8AMmsbBAlU/1nmMNsZFjOx7UStuV4+2IFQR
- 440NbJcFMuqxdjSvENsuNP1pLkW+jW532aUfHAEqV
-X-Received: by 2002:a05:600c:3b03:b0:471:14af:c715 with SMTP id
- 5b1f17b1804b1-47117874978mr89721475e9.3.1760955617188; 
- Mon, 20 Oct 2025 03:20:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoJ5Pu99e/J+gOAfGwlq7I8lfozHxbCA+llADW/ig4KtLDbyEsRjsXxY7+5kJQxzoHKwqxiw==
-X-Received: by 2002:a05:600c:3b03:b0:471:14af:c715 with SMTP id
- 5b1f17b1804b1-47117874978mr89721295e9.3.1760955616832; 
- Mon, 20 Oct 2025 03:20:16 -0700 (PDT)
+ AJvYcCXa5S6lvoesmA5T5vXJPTfFfwDLwU3kp+rcuuRTWd9vanL7ptayGr1lEUHUEjYgN/NrYreMca39sq0c@nongnu.org
+X-Gm-Message-State: AOJu0Yw11TH00RGPHVDJAIj8b9sAVPK9mYfXSKwDeLTguGD7BOIYy5ON
+ FGYh7WCs026FEVbJ418YQ22Bt8EiZJZWPjqtAHS5wxX1LOFwmfYOc7INysOLZGnBs7bm/h5amqI
+ YERP5XlGPIiIcJTCI5y1tn03PHGPBd8igMBlxSGPBb0ozmHT+518mw5bx
+X-Gm-Gg: ASbGnctUV+cxCTFOcSBt4WwB2XJT3qESNodT4/CQZ0VqKOfB8VrQOdEPRKuuEpv4dkh
+ CUKlcI10d3R4b2Lc3SyCJmv0NsgrgtQxj/jS5N8cha2qgLllCpQVw0KdNvG1m9/sJC4Pvagplnx
+ dYdSid+YZRRxue8giBe/OQ1bIfZ5EzCKLYfDg81cZG8a9DIfFtD+2EVsL8otcii5gGHe3QrR42t
+ HwIY1cHsA1/34tZOkaWqcTa430fPwErrzBHZDtblsvDWAwritXIbnbu47poZ+t9ipiz6lfXx+ti
+ 5AuK7uEUPY//I0oNzWRLhuJLM8hSMeDiiwbN7ZGEcm7e8NhWJDRENRY5kPNrYOZy0z/HmpLFkj0
+ PeJNeSkMegguZmrXsqxjsmdb4Gk4sixbSeUlHtNrg
+X-Received: by 2002:a05:600c:458b:b0:46e:4246:c90d with SMTP id
+ 5b1f17b1804b1-471178774bfmr85774175e9.11.1760955826412; 
+ Mon, 20 Oct 2025 03:23:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEgwtvv4Pz5hmDP9CWlNAT87b5OVKS7GvlnugJHNO8y0b6JwzK54ROJM6N1h18ZZ1B6IpFV7A==
+X-Received: by 2002:a05:600c:458b:b0:46e:4246:c90d with SMTP id
+ 5b1f17b1804b1-471178774bfmr85773985e9.11.1760955826026; 
+ Mon, 20 Oct 2025 03:23:46 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-114-135.pools.arcor-ip.net.
  [47.64.114.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00b9fa8sm14757545f8f.38.2025.10.20.03.20.15
+ 5b1f17b1804b1-4715520d753sm138146485e9.13.2025.10.20.03.23.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 03:20:16 -0700 (PDT)
-Message-ID: <0b7cb54e-3bea-4989-8c7e-77e910d2f3c6@redhat.com>
-Date: Mon, 20 Oct 2025 12:20:14 +0200
+ Mon, 20 Oct 2025 03:23:45 -0700 (PDT)
+Message-ID: <93dc7be6-cee8-430b-b5b5-96bff9a0b8cc@redhat.com>
+Date: Mon, 20 Oct 2025 12:23:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] hw/s390x/ccw: Remove deprecated
- s390-ccw-virtio-4.2 machine
+Subject: Re: [PATCH v2 2/3] hw/s390x/ccw: Remove SCLPDevice::increment_size
+ field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
@@ -90,7 +90,7 @@ Cc: Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
  <mjrosato@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
 References: <20251020094903.72182-1-philmd@linaro.org>
- <20251020094903.72182-2-philmd@linaro.org>
+ <20251020094903.72182-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -135,10 +135,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251020094903.72182-2-philmd@linaro.org>
+In-Reply-To: <20251020094903.72182-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -147,7 +147,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,15 +164,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/10/2025 11.49, Philippe Mathieu-Daudé wrote:
-> This machine has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") it can now be removed.
+> The SCLPDevice::increment_size field was only used by the
+> s390-ccw-virtio-4.2 machine, which got removed. Remove it
+> as now unused, along with the sclp_memory_init() method.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 33 ---------------------------------
->   1 file changed, 33 deletions(-)
+>   include/hw/s390x/sclp.h |  5 +----
+>   hw/s390x/sclp.c         | 34 +++-------------------------------
+>   2 files changed, 4 insertions(+), 35 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
