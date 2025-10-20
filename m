@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D597CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281E2CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqzM-0001SS-4T; Mon, 20 Oct 2025 10:35:56 -0400
+	id 1vArBX-0006TU-RL; Mon, 20 Oct 2025 10:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vAqz2-0001No-Tp
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:35:38 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1vArBU-0006T1-3N
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:48:28 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vAqyz-0002Ro-B6
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:35:36 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-63e3804362cso983373d50.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 07:35:32 -0700 (PDT)
+ id 1vArBQ-00047a-Js
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:48:26 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-71d60157747so45452517b3.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 07:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760970929; x=1761575729; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760971699; x=1761576499; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nv1W4tZskrBscvRN1tlrQ4eSl+R673rIHpTlM3BXU4w=;
- b=fJWJQkrstxyJoivga6UertdmDg77FSuLIFFfLFkxf70ykNvfKO5ZT0YiA72N4qF0G1
- /YlnR62XE3OcUv1C2RGg/eBzBkwls+XjTkvPEJrnoudc9xj9l23TNe2kWWzEjtlUeYwG
- fDHLhKfvLsgLcuUqwTThEviweDpQcLPh1swGEGnoJL/ubvkUn01ks8ZrzmA9st2ik20J
- b+kRfbjdQwAQun8GdDCcxnq9e3hstF0ZBfUpJzV52ZEhdXVgsZd8qdoNhxJhqIgIQ50h
- 5ILluphs749wZTLh5jCuHx8i8BNKDtKMlwj5pPV29t7oIor0rZcs+2aQbrsvC96v9v9o
- x88Q==
+ bh=Ob5mulAoB3Fjd++6E2t/iYBsMh6K9ZzwzPeOPLwhTT8=;
+ b=YNctILIzo5grSdgGgyGvjh6oCTJWVvZmIvh3nIA19oHeuCQlmbi5HSRtPdC+uK/dGM
+ LKIFbYAZMRN5Dbe0u+kPAuqTDKe/WOl3QfS0LvNkd1P4yny5NuPaBka6Fw/oj5qwTODZ
+ KtxZWeNpJGvYZj/B1wevh7fF4r35z2iA63j0zunpCP2U00KuRhcLsih0O25Ij9//x5nC
+ tvOfLxG/jf9xRO0ecpvRASNZcplFjmdBoyYOxoD+YV7SRrbVVG7/e90xXuWwPSk/0ipx
+ 19K4ZfFHBQrZpEw1pi1wEZ/LcOJHxuBf4l1CZBcmkGVIuskzVfCVCzU4IaCfzxl5Z751
+ YTVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760970929; x=1761575729;
+ d=1e100.net; s=20230601; t=1760971699; x=1761576499;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nv1W4tZskrBscvRN1tlrQ4eSl+R673rIHpTlM3BXU4w=;
- b=JJA+oSaykrzXvQ7NgrZqwNas6CtnxRplv3qq0U506dXHvJihflaXD2jD5alSz6Fpdg
- hQqWlvAcXA9uPSiu9fhLiVWWp2Up2p2pPSwTFoQ5/nFGUdXGQ/3KuexXdcGxCyR/0+5G
- 5vSdgpeNPVbPBGPbmsK8yciaf5ATmfKh+w/cBvM+BNjobyIC1fRkrcVDcLWjlWw9np8r
- Rq8xRQC/7RNPr2zxijs7UMTGUamJOklivl+AG9LllDIj8DPNDOKuTN5FcrW9uvB5y+vB
- shenntFaZldLZsRuoRdHNJj0jEd/aNIZoR5SHIrLWg92rh3a83yEen38zbkPEHYZA+Ga
- JvGQ==
-X-Gm-Message-State: AOJu0Yyl1lO7QblknAR+fIXyJGWBar2OAF/eFGXWI/rDILVyjq6Way+c
- 9BTVqJ6FWGyYgkW3rjQ+hZXPfB7/3th7b9q6YhHyYwCGoCoEgwI4rII4ATBoDMJYalKcUIKgLWO
- nesJHdALilAfUuYz6HFQqlkzhmRuCTHMJiC8zcs+8tA==
-X-Gm-Gg: ASbGncswO0qBrfpXIdoRP8tngT0Qy8pCqwdSEdkDsg93jGscJYPzGSpTNY0wk93ip+T
- 3Cgw85qZ6F/nEnEJNwP37paGcCpdu0CTWUk1oLVXmomzlUUePyeGFvHSFrV7LGjAiXJMIS43f5f
- i66XXx3xSlTqipqS5tKeb/lejVGS1TJ1G/YPlomScqeldRzwNe9+XZ/LTch9bDqZp4u3zGl3eYS
- oonpatsC/149PwogEciApxN297poYG0JXy+l5PZXHeEctxtzAmheuM25WQuYQ==
-X-Google-Smtp-Source: AGHT+IF3c/H7S6yhqU7vRkOD7+risv31vbtQO9ZWUlELg+I3omJWgeMFvYCnFLoMoewhT5BakmDZMhg9clzXzQ8qIJA=
-X-Received: by 2002:a05:690c:314:b0:780:f794:6e21 with SMTP id
- 00721157ae682-7836d1ece75mr218169797b3.24.1760970928822; Mon, 20 Oct 2025
- 07:35:28 -0700 (PDT)
+ bh=Ob5mulAoB3Fjd++6E2t/iYBsMh6K9ZzwzPeOPLwhTT8=;
+ b=wR8LJbCXGK9mc9cu19GSrecBL+WVMQddLsSfC6KLdGrPfekrHmYV+qAeLEiqVaC+pc
+ b87d2RP0Q9Dxmg5DOtzq0kmQC11CWD4fnArE2mzQAm+SPSgxZwNSAF6x0hFyCIIdvnan
+ MsV1dbGAbDHPbutVGGC67mWPzYzFuQv4JfkTGBe8MkEjiLFZdEWbY2BtG0JuR0T+eQOn
+ gx1SxDTDH3DwLcZE3nHoYjA6Ry5QliyEnMGiEOtH/vM5MVvjm3NexOMmAImQR0ot391P
+ vfliGixgpChI5KKeBSb6r2FlBthzg8bnUmEGeJA2FxdlnxSaKxiOoJks6xCnRovKFBE2
+ YNEg==
+X-Gm-Message-State: AOJu0YzdPr89PE5tubitIJrEvNAllC3ZJ74NSmdTasS5bF6y/M2tN8Gn
+ U8dRNrBWD53THn9Rdu+pdr8zzHGd6kj0qORWI9kZP5vo6WFGh/yOs3VkK2A2GRuc/4u5mITukgH
+ qFEqGwkyJbvoPJpa4Om+ZjJkbTYmFN7Sx7HPUoYwCKg==
+X-Gm-Gg: ASbGncvpgUeoEPXN+dHZYdnc8rGcF9N1zqucXT4Zoo+nZCCsFGH15bq+gs8qnwRMKo8
+ YxDKuMpuonzYLpkjHHhUQy9E34F5lENOLm6fZpcDeqHtzpc3FYiPy4M3HtT1G4bx+xzRBEQSdA9
+ Yf+zKvLAw5osRUYyymZGxWiqKJ61ncbOooNmOjUMMSsrd5VxiWikQ/3iMJwbIkWwuhYGrcV1J9j
+ Z+40mFLDjMVslipXvbbjKfNrv5YBI03mr446ZZqzsAFDbz59VGLKHQT4YEPB+8N90Pq8+Gnj0ds
+ Ul5mhfs=
+X-Google-Smtp-Source: AGHT+IEmsms7z81gw0bm66n6iroTbyHy2VdMmXaoCCh6pJr4mkf1L+Y2nA9dDASzLgeYUjU7BXHTh+AUMymRVBTqHcU=
+X-Received: by 2002:a05:690e:1914:b0:63e:24d2:caf4 with SMTP id
+ 956f58d0204a3-63e24d2cbccmr7554031d50.48.1760971698452; Mon, 20 Oct 2025
+ 07:48:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251014200718.422022-1-richard.henderson@linaro.org>
- <20251014200718.422022-28-richard.henderson@linaro.org>
-In-Reply-To: <20251014200718.422022-28-richard.henderson@linaro.org>
+ <20251014200718.422022-29-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-29-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Oct 2025 15:35:16 +0100
-X-Gm-Features: AS18NWASteFK6MNykXNSK0RfUo9gJ4uuOBbJM_dWPxXWXaThnD9BNlIZPJ9W9vw
-Message-ID: <CAFEAcA-exMfT8SUbYxjGJO2csp9h2Nbc5UzuDWZq-PhzJeZ0zQ@mail.gmail.com>
-Subject: Re: [PATCH v2 27/37] target/arm: Implement TLBIP IPAS2E1IS, IPAS2LE1IS
+Date: Mon, 20 Oct 2025 15:48:06 +0100
+X-Gm-Features: AS18NWBOUNbRI924y2gvCtQD3lTNu84WlcX1spT-nZ1W4l4l-gCirw7NNXrodOg
+Message-ID: <CAFEAcA_KXK6UwvbELnhjbXXgoXWnHDhDS_4vP5POoMDWAjZ3Vw@mail.gmail.com>
+Subject: Re: [PATCH v2 28/37] target/arm: Implement TLBIP RVAE1, RVAAE1,
+ RVALE1, RVAALE1
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,14 +95,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Oct 2025 at 21:17, Richard Henderson
+On Tue, 14 Oct 2025 at 21:09, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/tcg/tlb-insns.c | 23 +++++++++++++++++++----
->  1 file changed, 19 insertions(+), 4 deletions(-)
+>  target/arm/tcg/tlb-insns.c | 93 ++++++++++++++++++++++++++++++--------
+>  1 file changed, 74 insertions(+), 19 deletions(-)
 >
+> diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+> index f7510a1208..daadba7bfc 100644
+> --- a/target/arm/tcg/tlb-insns.c
+> +++ b/target/arm/tcg/tlb-insns.c
+> @@ -918,16 +918,43 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+>      return ret;
+>  }
+>
+> -static void do_rvae_write(CPUARMState *env, uint64_t value,
+> -                          int idxmap, bool synced)
+> +static TLBIRange tlbi_aa64_get_range128(CPUARMState *env, ARMMMUIdx mmuidx,
+> +                                        uint64_t vallo, uint64_t valhi)
+>  {
+> -    ARMMMUIdx one_idx = ARM_MMU_IDX_A | ctz32(idxmap);
+> -    TLBIRange range;
+> -    int bits;
+> +    uint64_t uaddr = extract64(valhi << 12, 0, 56);
+> +    ARMVAParameters param = aa64_va_parameters(env, uaddr, mmuidx, true, false);
+> +    TLBIRange ret = { };
+> +    unsigned page_size_granule = extract64(vallo, 46, 2);
+> +    ARMGranuleSize gran = tlbi_range_tg_to_gran_size(page_size_granule);
+>
+> -    range = tlbi_aa64_get_range(env, one_idx, value);
+> -    bits = tlbbits_for_regime(env, one_idx, range.base);
+> +    /* The granule encoded in value must match the granule in use. */
+> +    if (gran != param.gran) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Invalid tlbi page size granule %d\n",
+> +                      page_size_granule);
+
+Having an early-return here would make this code more obviously
+parallel with tlbi_aa64_get_range().
+
+> +    } else {
+> +        unsigned page_shift = arm_granule_bits(gran);
+> +        unsigned num = extract64(vallo, 39, 5);
+> +        unsigned scale = extract64(vallo, 44, 2);
+> +        unsigned exponent = (5 * scale) + 1;
+> +        uint64_t max = 1ull << 56;
+>
+> +        ret.length = (num + 1) << (exponent + page_shift);
+> +        ret.length = MIN(ret.length, max - uaddr);
+> +        /*
+> +         * Note that TLBIPRange ignores the high bits, because the HW TLB
+> +         * does not use it.  But the qemu softmmu tlb does, so sign-extend
+> +         * if and only if the regime has two ranges.
+> +         */
+> +        ret.base = uaddr | (-(uint64_t)param.select << 56);
+
+I think it would be clearer if we wrote this "sign extend
+based on param.select" the same way that tlbi_aa64_get_range()
+does".
+
+Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
