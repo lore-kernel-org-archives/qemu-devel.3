@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C74DCCD184
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 01:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80EECCD195
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 01:37:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAeU0-0004vX-N5; Sun, 19 Oct 2025 21:14:45 -0400
+	id 1vAeos-00016I-6w; Sun, 19 Oct 2025 21:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vAeTy-0004v9-3F
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 21:14:42 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vAeTg-0004ih-Cg
- for qemu-devel@nongnu.org; Sun, 19 Oct 2025 21:14:41 -0400
-Received: from [172.130.10.190] ([115.90.12.10]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59K1EA6q050374
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 20 Oct 2025 10:14:10 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=qSNhZMG4UX4tOsdBTiFEvjTuBik2v2RlMkE5sC6932w=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1760922851; v=1;
- b=jjWXCWo0lIM+gLfclyT+Xi5ZwfMKTLi1d4/eh+oPAAXezI4K+v8YtUyjicR0cKLk
- iJDmQnwSaK79cj4eKtlDzdH2LU74OzW3BYTAWc7u8iQ2pevuj3Si35Es/u5TJJHK
- OGh+97gObnkdFzClfEU+5wuqRMcnVvdsEVPoKxqRUlR7GOEIpQWOR70/OPn+ppXW
- Z69Bh9dqhPlPt1tm8s37sqnzORHPNrf2+Gh2AlxUWcv1vjwdjEQDijwA1GAH6ZyF
- eK93j0ZB7W0/RW2hLBw3AB7rQPROmWCKUARR/RGVkyGx4XLZUbU1iwBtf/1h6igY
- JgIkcyOsxqgRlqft1tjDYA==
-Message-ID: <1c487aba-55e6-4a59-8755-4adedfc8cc72@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 20 Oct 2025 10:14:09 +0900
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1vAeop-00015h-R2
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 21:36:16 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1vAeon-0007Nw-6L
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 21:36:15 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxndL+kfVoiBoYAA--.51215S3;
+ Mon, 20 Oct 2025 09:35:59 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJBxysD7kfVooyj3AA--.61913S3;
+ Mon, 20 Oct 2025 09:35:57 +0800 (CST)
+Subject: Re: [PATCH v8 10/25] target/loongarch: call plugin trap callbacks
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <cover.1760884672.git.neither@nut.email>
+ <deadf813e00387bbcf59e93be411ba44d3c915c8.1760884672.git.neither@nut.email>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <e020ec26-ab0d-db79-94ba-626178e123b8@loongson.cn>
+Date: Mon, 20 Oct 2025 09:36:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rcu: Unify force quiescent state
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
- <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
- <626016e1-c7d8-4377-bf9f-ab0f0eef1457@rsg.ci.i.u-tokyo.ac.jp>
- <f89d4a21-635a-4779-95c1-7db0abe66863@rsg.ci.i.u-tokyo.ac.jp>
- <606c8d41-7f46-41a1-817b-27cb322bd215@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <606c8d41-7f46-41a1-817b-27cb322bd215@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <deadf813e00387bbcf59e93be411ba44d3c915c8.1760884672.git.neither@nut.email>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBxysD7kfVooyj3AA--.61913S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CFW3Jw13tryUKry5WFW3urX_yoW8uF4Dpa
+ n2kr90yrWrtrWDAasrJ3sIqr1DurnrGan29a4xua4Skr1Yqr10g3yvq34DKFyxC3y5Ar4j
+ vFnIyryqvF4UJFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
+ y3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.37, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,128 +83,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/20 5:23, Dmitry Osipenko wrote:
-> On 10/17/25 03:40, Akihiko Odaki wrote:
->> On 2025/10/17 8:43, Akihiko Odaki wrote:
->>> On 2025/10/17 4:33, Dmitry Osipenko wrote:
->>>> On 10/16/25 09:34, Akihiko Odaki wrote:
->>>>> -        /* Wait for one thread to report a quiescent state and try
->>>>> again.
->>>>> +        /*
->>>>> +         * Sleep for a while and try again.
->>>>>             * Release rcu_registry_lock, so rcu_(un)register_thread()
->>>>> doesn't
->>>>>             * wait too much time.
->>>>>             *
->>>>> @@ -133,7 +150,20 @@ static void wait_for_readers(void)
->>>>>             * rcu_registry_lock is released.
->>>>>             */
->>>>>            qemu_mutex_unlock(&rcu_registry_lock);
->>>>> -        qemu_event_wait(&rcu_gp_event);
->>>>> +
->>>>> +        if (forced) {
->>>>> +            qemu_event_wait(&rcu_gp_event);
->>>>> +
->>>>> +            /*
->>>>> +             * We want to be notified of changes made to
->>>>> rcu_gp_ongoing
->>>>> +             * while we walk the list.
->>>>> +             */
->>>>> +            qemu_event_reset(&rcu_gp_event);
->>>>> +        } else {
->>>>> +            g_usleep(10000);
->>>>> +            sleeps++;
->>>>
->>>> Thanks a lot for this RCU improvement. It indeed removes the hard stalls
->>>> with unmapping of virtio-gpu blobs.
->>>>
->>>> Am I understanding correctly that potentially we will be hitting this
->>>> g_usleep(10000) and stall virtio-gpu for the first ~10ms? I.e. the
->>>> MemoryRegion patches from Alex [1] are still needed to avoid stalls
->>>> entirely.
->>>>
->>>> [1]
->>>> https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-
->>>> alex.bennee@linaro.org/
->>>
->>> That is right, but "avoiding stalls entirely" also causes use-after-free.
->>>
->>> The problem with virtio-gpu on TCG is that TCG keeps using the old
->>> memory map until force_rcu is triggered. So, without force_rcu, the
->>> following pseudo-code on a guest will result in use-after-free:
->>>
->>> address = blob_map(resource_id);
->>> blob_unmap(resource_id);
->>>
->>> for (i = 0; i < some_big_number; i++)
->>>     *(uint8_t *)address = 0;
->>>
->>> *(uint8_t *)address will dereference the blob until force_rcu is
->>> triggered, so finalizing MemoryRegion before force_rcu results in use-
->>> after-free.
->>>
->>> The best option to eliminate the delay entirely I have in mind is to
->>> call drain_call_rcu(), but I'm not for such a change (for now).
->>> drain_call_rcu() eliminates the delay if the FlatView protected by RCU
->>> is the only referrer of the MemoryRegion, but that is not guaranteed.
->>>
->>> Performance should not be a concern anyway in this situation. The
->>> guest should not waste CPU time by polling in the first place if you
->>> really care performance; since it's a para-virtualized device and not
->>> a real hardware, CPU time may be shared between the guest and the
->>> device, and thus polling on the guest has an inherent risk of slowing
->>> down the device. For performance-sensitive workloads, the guest should:
->>>
->>> - avoid polling and
->>> - accumulate commands instead of waiting for each
->>>
->>> The delay will be less problematic if the guest does so, and I think
->>> at least Linux does avoid polling.
->>>
->>> That said, stalling the guest forever in this situation is "wrong" (!=
->>> "bad performance"). I wrote this patch to guarantee forward progress,
->>> which is mandatory for semantic correctness.
->>>
->>> Perhaps drain_call_rcu() may make sense also in other, performance-
->>> sensitive scenarios, but it should be added after benchmark or we will
->>> have a immature optimization.
->>
->> I first thought just adding drain_call_rcu() would work but apparently
->> it is not that simple. Adding drain_call_rcu() has a few problems:
->>
->> - It drops the BQL, which should be avoided. Problems caused by
->> run_on_cpu(), which drops the BQL, was discussed on the list for a few
->> times and drain_call_rcu() may also suffer from them.
->>
->> - It is less effective if the RCU thread enters g_usleep() before
->> drain_call_rcu() is called.
->>
->> - It slows down readers due to the nature of drain_call_rcu().
->>
->> So, if you know some workload that may suffer from the delay, it may be
->> a good idea to try them with the patches from Alex first, and then think
->> of a clean solution if it improves performance.
-> 
-> Thanks a lot for the clarification. I'm seeing occasional 10ms stalls
-> with this patch applied, still it's a huge improvement. Looking forward
-> to v2.
+�� 2025/10/19 ����11:14, Julian Ganz д��:
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
+>
+> This change places hooks for loongarch targets. This architecture
+> has one special "exception" for interrupts and no host calls.
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
+>   target/loongarch/tcg/tcg_cpu.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Just for (further) clarification, but 10ms stalls are present even 
-without this patch (correct me if I'm wrong). I think the stalls need to 
-be resolved with another patch instead of having v2 of this unless it is 
-a regression.
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+> index 82b54e6dc3..9d077c56d9 100644
+> --- a/target/loongarch/tcg/tcg_cpu.c
+> +++ b/target/loongarch/tcg/tcg_cpu.c
+> @@ -8,6 +8,7 @@
+>   #include "qemu/accel.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/log.h"
+> +#include "qemu/plugin.h"
+>   #include "accel/accel-cpu-target.h"
+>   #include "accel/tcg/cpu-ldst.h"
+>   #include "accel/tcg/cpu-ops.h"
+> @@ -80,6 +81,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>       int cause = -1;
+>       bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
+>       uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
+> +    uint64_t last_pc = env->pc;
+>   
+>       if (cs->exception_index != EXCCODE_INT) {
+>           qemu_log_mask(CPU_LOG_INT,
+> @@ -190,6 +192,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>                         __func__, env->pc, env->CSR_ERA,
+>                         cause, env->CSR_BADV, env->CSR_DERA, vector,
+>                         env->CSR_ECFG, env->CSR_ESTAT);
+> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+>       } else {
+>           if (tlbfill) {
+>               set_pc(env, env->CSR_TLBRENTRY);
+> @@ -208,6 +211,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>                         tlbfill ? env->CSR_TLBRBADV : env->CSR_BADV,
+>                         env->CSR_BADI, env->gpr[11], cs->cpu_index,
+>                         env->CSR_ASID);
+> +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+>       }
+>       cs->exception_index = -1;
+>   }
 
-> 
-> In addition to a guest waiting for the virgl commands completion, QEMU
-> display updates on host are also blocked while unmapping cmd is
-> suspended. This is a noticeable problem for interactive GFX applications
-> running on guest.
-
-I guess you meant that the scanout commands following unmapping commands 
-are blocked. While I can imagine that can cause frames skipped and 
-damage user experience, it is nice if you know reproduction cases or 
-affected workloads and share them with me.
-
-Regards,
-Akihiko Odaki
 
