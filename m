@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B11CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 19:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A55CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 19:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAvov-0007dG-9B; Mon, 20 Oct 2025 15:45:30 -0400
+	id 1vAvqI-0008UB-TP; Mon, 20 Oct 2025 15:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAvon-0007c5-RV
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:45:24 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAvq5-0008Pr-Hc
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:46:44 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAvoj-0007fm-QX
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:45:21 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b456d2dc440so778383166b.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 12:45:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAvq3-0007zZ-AE
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:46:40 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-63c12ff0c5eso9571481a12.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 12:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1760989515; x=1761594315; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=INq7wg2Y6WBzFJvz6a9Id+InKjDpVsX+YMJN5bL6ovw=;
- b=O+YjFAwLD6OcHCF5HBQPPk7/phN26p8whWzrrVZZ/vcwq3oJWUqlwhjDl9//eZ0ZkR
- ZF3urWir4M8auQQkSGED7F+HqOpiHsDLDahQSxnhSANrwuRenSdzGKjvfIhCNJ2T4vje
- ZCwVVHuAmzvD2b28BJh7XwWVh8Hc7tZYyma5RQMOKtNoCkGGBRKvpp9Zb87taI2ayJrv
- gMJ1Jm+8OuH5lmBZC9+7L8NiRm42j8BGWge+SmRA+C+v6Ue0hOg5XkOXTgsMKGwGjJDY
- WryHBh62kATxT5zRHHdzYFKTD+l/aeaR5kjj4mHEoT3xmhlfB6MvQ07sQyJWmto7Ca3y
- nn7Q==
+ d=linaro.org; s=google; t=1760989596; x=1761594396; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=efnUBJtoAcHsI48xwqaiqY4Xn8auHKuUpGyKZ6tVUok=;
+ b=NRFSuHX3NOPyGeIaDjLpjnjLLC03mvVEPxmvt42lzsfJMoRo8jbswhIcGkxHVNsj7g
+ 6DgJvp49bPFFifv6YJvPyj0VY/guBce/6ILcFheS0PN1O7QQL3+1C/yzRVM6r/1SRCDk
+ dqPFnP9lFF4aX0Jt2gV62Anot7zCYoQMAIZIkmL/sttkeRbYWMWROMtoGdRxLyeyk5bg
+ Gsdzk1exLQQn5hcOP3U0k20u0mWzWbQ/XvL4onc3+bBH6PbzTw6rn2wKru8Ygy39ewku
+ 80AQmvTXj6C6fh7wARRP7tRx/aXDlI66Sftiy23e3uU8m2bBSwzdAxsfqM+99F2N4CvR
+ afZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760989515; x=1761594315;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=INq7wg2Y6WBzFJvz6a9Id+InKjDpVsX+YMJN5bL6ovw=;
- b=e5dKjGhtIstgHA8pvBpPd8V0OYxtbLZEhyzuDPDPdM2diU25fn5fN0NjEpjZtH1OH+
- OgyqIFDedgIuhcJ0aNDjX1BFXCdio/RJqgWdRqtuTjJUFXXduL/lUqkTI7vK8/FtEXfx
- DNQQWz5nCmDvCNUdMg73XXRuyPF7JP28kMXU8xJXOyUrvK7JefpZp4SR+xJI1bdHYxB3
- gUTYIUaJCVnCLcfjTXIiH9sAr+U2LcYvEufmMl9TytcXr5iglbGpFmU0E6uGgZLtcgE9
- W+wQvjnrF7cnkBzsuVcEsodkWjifpYYxCxdtrCSGnj2+SlcVpNYKtnOPgW6p3U7PfrKv
- 7uKA==
-X-Gm-Message-State: AOJu0YyD0i6aUrg1BJStqOIeJRhFpgiAH6soYMZAIUtAVR2Ldh5/93OM
- bUqHe6SGPWe78a+fhWyYuyxgoMk3UOdbYvLnOAPCbDBO8eVgcIJMQCQn
-X-Gm-Gg: ASbGncs/APaLDrQQ/qfRUVIoFLFB2a8A5O1nFAa/tZV+51P8B/OHHEC4ZUm1eTiuFpo
- C9mNVRSQRFLbTNXaBqKe/clldwLnsE5EnuwAH8fjX6JLGn2YLpM9FAf1fH/qBSxxPKHSAb/so/m
- jXEbRRALZSz1hdJv2gwxTyTygsU61Y/6SDUIlHrHbUy/tgu+HFFFI3aPV1whpIyNEOMSoRqe8ob
- zhFfA1Rvp+DTdLiZh3qd9mTF+ttHDu4XxdA+OaMM7Y5DD0IYch1poMWu7Jb5/35aADVO8Rx8aVb
- NCkLQAygq4W3qNijFObeX/jiV3t+sNvTHw5ui5S5qp5Vh5fPVETw7/KZKviepP5CtHKvnZWepuj
- 7A+FWJkdAfgkW89bxfDOa91Hke1jZEJ6cE1UyeJ1YbShLmhGKLVi9+Ursjlf8R9X0wgKZ6ADa/T
- N9Q7hHTbcHaG+phqDt93DjjnUze20L5CRIR/h094HxZV3o4L1vjXINPrPWxng9nQ==
-X-Google-Smtp-Source: AGHT+IHIsCUz++LiGJtnqxWAy3tcsENfgUwQoKY1nPz+w0nvLeNYHjCIOCfBtfBk2VQngwO2sLDUhQ==
-X-Received: by 2002:a17:907:d13:b0:b3e:151b:849e with SMTP id
- a640c23a62f3a-b6472b5fb74mr1804105866b.10.1760989515108; 
- Mon, 20 Oct 2025 12:45:15 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (dynamic-077-183-007-223.77.183.pool.telefonica.de. [77.183.7.223])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b65eb52621csm878965266b.59.2025.10.20.12.45.13
+ d=1e100.net; s=20230601; t=1760989596; x=1761594396;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=efnUBJtoAcHsI48xwqaiqY4Xn8auHKuUpGyKZ6tVUok=;
+ b=Iog6ZgNVXyzF2H9A3CitLToLzQ5cHl9nsKmHV1jsQ7OsIcrbUhvciDtFwkEt8rOnNY
+ XdELNlcKf66hpRaAmLjefQWoEEKtZbQUsf7ilnUuMD1Vpl/FEvre55Y8aOLTG0tv6icM
+ 6Xa8/CITh2QxRG7w4MrHrWzwBCYeYgPFVvOGJLbe6RVKRBXxdEtCbu6NYPHJo/p8LQeL
+ JiH/KfpzrzUZw6nY80HKCeR9/7sEHnMBXKnNnTmHQt0jkQbcYPliT4Cxar3VbU8+gdLi
+ FUzsSpIymVQk4kTtNrzXZaaWs7JqTPryAF3XLMWqe7C/WrfMA/oINjjuI5Xn72A05uoN
+ NJ1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYDLebypPePkyBvb4LJN0RPM05eXjXRJfPCxvDLdKab0vzgjsvNgIi2MLqppUX1Eyxo4BS9+9oj5vE@nongnu.org
+X-Gm-Message-State: AOJu0YxzScrZT5sNar59MUfaHrCuYNxiEpJsRpVkfj0oiWiDvywA9uwC
+ DxHt62nGMNp2WCyqubTfDe8qx43R4pmi7K2kXwXYniCkSpmijoIB+OivR7/zoXjX/Fw=
+X-Gm-Gg: ASbGncsID6g124sBd5t5idzD84UlBhqv4/Nlkv2LwRuwv9AbBc5OWUESN7II/v5rQJF
+ G12CXrIPRMoz8P4Hx/VRfA98blSnmv3vSQmcT8QcZxkMANHJwiUY1Po16VsKv/+1tBRN0IyuPtK
+ 9cxVkSNzCsdtF8lG9ilmoVZ1JMrJvm2dZdcLKMw8KxaeNOT6GDywa93HNAnSMqXVAOoCLADJEaj
+ nu8GTZ0DMP1qwPLV4yqgEBNasO0uTQSgdbecOOL5NrBRFwkfKI7gaTJ7bg3b/WrRuDESpLZ0XGB
+ mElLU7p0892Vg1atwjJtUE6VUhLh23kKyDKqu73jItJuImMbtXlu8qgIqIy4TcnM0FevqybTXhF
+ SHdAfW26ckjb8Z8DwxZ+093YrX2byGL4UDzcYgFGrceeNGb0bXCjzDCcK0QLmcj2zbEbWrqFD1u
+ +IEpvQku8Lp/LTy4hKAFiuswZrYi5Iu2s0C6k332P8XjU=
+X-Google-Smtp-Source: AGHT+IGKNPeOWCexedf8W0yQ2J+cA9hb5DaBazNrSblbC5ZakbQtDuB3PFdEi8rc1GWigbJs9xFjjQ==
+X-Received: by 2002:a05:6402:3585:b0:62f:4828:c7d5 with SMTP id
+ 4fb4d7f45d1cf-63c1e283083mr14893785a12.16.1760989596561; 
+ Mon, 20 Oct 2025 12:46:36 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63c48ab52b6sm7550303a12.10.2025.10.20.12.46.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 12:45:14 -0700 (PDT)
-Date: Mon, 20 Oct 2025 17:27:18 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Markus Armbruster <armbru@redhat.com>
-CC: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
-Subject: Re: [PATCH] ui/pixman: Fix crash in qemu_pixman_shareable_free()
-In-Reply-To: <877bwpu526.fsf@pond.sub.org>
-References: <20251013112102.2396012-1-armbru@redhat.com>
- <1C757C57-9134-4C72-8034-DEC70FFD25FB@gmail.com>
- <877bwpu526.fsf@pond.sub.org>
-Message-ID: <026FC9CD-543B-4A83-9D1A-0C6F59FF9065@gmail.com>
+ Mon, 20 Oct 2025 12:46:36 -0700 (PDT)
+Message-ID: <6c502b49-5e5a-4a97-aca9-ba5ea1e59fcf@linaro.org>
+Date: Mon, 20 Oct 2025 21:46:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 14/16] hw/ppc/prep: Always create prep-systemio
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <cover.1760795082.git.balaton@eik.bme.hu>
+ <b5b0150b6c579b10682f6482e7832cf381ffb759.1760795082.git.balaton@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b5b0150b6c579b10682f6482e7832cf381ffb759.1760795082.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,57 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/10/25 16:04, BALATON Zoltan wrote:
+> The prep-systemio device models the system control ports of the 40p
+> machine which is not an optional pluggable device but part of the
+> system so it should not be disabled by -nodefaults but always created.
+> 
+> Additionally remove some line breaks to make lines related to one
+> device appear in one block for logical separation from other devices.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/ppc/prep.c | 17 ++++++++---------
+>   1 file changed, 8 insertions(+), 9 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Am 20=2E Oktober 2025 12:32:33 UTC schrieb Markus Armbruster <armbru@redha=
-t=2Ecom>:
->Bernhard Beschow <shentey@gmail=2Ecom> writes:
->
->> Am 13=2E Oktober 2025 11:21:02 UTC schrieb Markus Armbruster <armbru@re=
-dhat=2Ecom>:
->>>Reported-by: Bernhard Beschow <shentey@gmail=2Ecom>
->>>Fixes: b296b29d3414 (ui/pixman: Consistent error handling in qemu_pixma=
-n_shareable_free())
->>>Signed-off-by: Markus Armbruster <armbru@redhat=2Ecom>
->>>---
->>> ui/qemu-pixman=2Ec | 4 +++-
->>> 1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>>diff --git a/ui/qemu-pixman=2Ec b/ui/qemu-pixman=2Ec
->>>index e46c6232cf=2E=2Eaea09755b9 100644
->>>--- a/ui/qemu-pixman=2Ec
->>>+++ b/ui/qemu-pixman=2Ec
->>>@@ -291,7 +291,9 @@ qemu_pixman_shareable_free(qemu_pixman_shareable ha=
-ndle,
->>>     Error *err =3D NULL;
->>>=20
->>>     qemu_win32_map_free(ptr, handle, &err);
->>>-    error_report_err(err);
->>>+    if (err) {
->>>+        error_report_err(err);
->>>+    }
->>> #else
->>>     qemu_memfd_free(ptr, size, handle);
->>> #endif
->>
->> Thanks for the quick fix, Markus! The patch is reviewed and I've been t=
-esting it for a week=2E Who is going to merge it?
->
->I can do it=2E
->
->You provided
->
->    Tested-by: Bernhard Beschow
->    Reviewed-by: Bernhard Beschow
->
->without an e-mail address=2E  Intentional?
-
-Oh, that wasn't intentional=2E
-
-> If not, should I use <shentey@gmail=2Ecom>?
-
-Yes, please=2E
-
-Best regards,
-Bernhard
 
