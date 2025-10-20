@@ -4,81 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 249DECCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9865CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:26:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vApr8-00030H-ME; Mon, 20 Oct 2025 09:23:22 -0400
+	id 1vApuB-0004Yz-NL; Mon, 20 Oct 2025 09:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vApr5-0002za-PB
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:23:19 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vApr3-0008NH-NI
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:23:19 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-78487b0960bso18411207b3.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 06:23:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760966595; x=1761571395; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=P9egt/9Hwhp6Onvn+4vsjbCWth6QxdvUQI9K6mF2srk=;
- b=PAa+brgYY/hABkHIW3U7QkH+z8HQjf8ljsGrx3YC3F6X2XFMAGw0PCQoPZgoeDcpvd
- cShfnkoR800xsr35nuXvAsI2Q5OnroM8Je1y0dp9lFyqo6UsTXiWNK+/BBSAwaAzWqsY
- izAneVK+Qs7PEe2BVXYNE1MydiIC7+NshPCLCXjf11oVUVHEuaEPrSv0WgcD20i5dcJl
- kNA5B+x6hewKqbCPmwclA1tjwudczx84i10vUBxm5xhooCqkynesCgSX5jQSCGJoBFJ1
- LJ/trZyq/yRBisQ5ucLCfFsLRo+DN3EkVSRTSWY+BDRDKjnkUJ/k/cLJnzlwIeBgHnw0
- jmug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760966595; x=1761571395;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=P9egt/9Hwhp6Onvn+4vsjbCWth6QxdvUQI9K6mF2srk=;
- b=PDD2cn1jqdqa+GbyZh0PR5G27fALTeWJ/U1KxbAaSTVvKYQHsTdvyQEghyrtRGKBXx
- zbF0LUWHeyDrJJDFLXOXxUHImFPCC0Ci+6+0zQguB4E6dE/8Egihy6hy9J7q7btG4YLv
- T1l+OZN426Rc/PdQZ9kztRkRqaz5gloUX1SVYKC44AkJUvJbvsKciqutn9XsjaQKWVgH
- h2fl1AUpvg7s9ChVNjrqS0T6fywsN6rKb9yuKcrkXb/Kv4PE3/mHU0r5O5qs3F7OLeIb
- SG9b0+2j0osf3VHxcex3n8Hizk4xtTTRvTCnzYQ1+QGY/zjQuXPREMrhP0pg6ZtDyxDk
- FpGg==
-X-Gm-Message-State: AOJu0Yy3xrKX6AsTgO5TtVMxC7mBHOmKE5TtQvfNh4WsD62s6ST/3lxU
- 3TRKJFPCwXFRYItBjU0ugt8mg7ahwGMa+F/FXPL+jUPoIImSU1Hgis8PQk5H1A6IujWT+B16Q2U
- dUkXWh3Gam24HV71ROFSFgQIYBo22p+EDI63I7yg+j+1Zv2vDYCPY
-X-Gm-Gg: ASbGncsCfxIsMPn25nPN9wTVgHuES1hAUzyPgFCeKfkT6QGNK9Ppb8yX28lN/4aJG7h
- bnVeUVua1xaWIRGyzvT0Q7D1NPwDN83QQG8O9csxRrPnOp4aMRc5PrnboyVViPKDGhQLext6SuZ
- j2diTDHsah5ZKIffTg7dLgLoMELSdTSxgyXdkFDPD1w2FE9uIl3WprQcQXOb5DXo+gTqsbGKTht
- AMW3j344Z8yijwYVqmzqF0QIoYNQvsiaiXZ1kCd5rrohchGN4t5yt5XwNOg8e/938ryKtCK
-X-Google-Smtp-Source: AGHT+IG2dPtNBdhu+MWiLmeQmudTw1vZny2562UyoBM+bqLvvazAbgF3CDI3g6RP8F+3zo9+DjQyabMQWQZLRC7X2n8=
-X-Received: by 2002:a05:690e:4086:b0:63e:1878:b951 with SMTP id
- 956f58d0204a3-63e1878b9dcmr9583968d50.64.1760966595297; Mon, 20 Oct 2025
- 06:23:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vApu3-0004Xw-HG; Mon, 20 Oct 2025 09:26:24 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vApu0-0000J2-Gh; Mon, 20 Oct 2025 09:26:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F1EE359730B;
+ Mon, 20 Oct 2025 15:26:16 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id dnRr28yuYBCM; Mon, 20 Oct 2025 15:26:14 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E68DB5972FF; Mon, 20 Oct 2025 15:26:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E4D2459703F;
+ Mon, 20 Oct 2025 15:26:14 +0200 (CEST)
+Date: Mon, 20 Oct 2025 15:26:14 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v3 10/13] hw/ppc/pegasos2: Add bus frequency to machine
+ state
+In-Reply-To: <2ae1a2ba-74b6-4786-9001-29f292d7f144@linaro.org>
+Message-ID: <1d26b401-a8a4-7420-c225-31ed9fcfe24b@eik.bme.hu>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <bb655f2827b35951a76d2251f71382c0e7f31d2c.1760798392.git.balaton@eik.bme.hu>
+ <2ae1a2ba-74b6-4786-9001-29f292d7f144@linaro.org>
 MIME-Version: 1.0
-References: <20251014200718.422022-1-richard.henderson@linaro.org>
- <20251014200718.422022-8-richard.henderson@linaro.org>
-In-Reply-To: <20251014200718.422022-8-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Oct 2025 14:23:02 +0100
-X-Gm-Features: AS18NWA3MraPAwaI5UA27UVboQa0HDxR-eE6mwmdYplIlkFZgL3dOl1o7Qnn-NQ
-Message-ID: <CAFEAcA8w6XV6AAycu1nYSqhpoOr3BsYn-x6Bk=Sybz0=FWK5JQ@mail.gmail.com>
-Subject: Re: [PATCH v2 07/37] target/arm: Add read_raw_cp_reg128,
- write_raw_cp_reg128
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-917270636-1760966774=:46197"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,23 +69,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Oct 2025 at 21:12, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Add the functions and update raw_accessors_invalid to match.
-> Add assertions for !ARM_CP_128BIT in read_raw_cp_reg and
-> write_raw_cp_reg.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/cpregs.h |  1 +
->  target/arm/helper.c | 49 +++++++++++++++++++++++++++++++++++++++++----
->  2 files changed, 46 insertions(+), 4 deletions(-)
->
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-917270636-1760966774=:46197
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+On Mon, 20 Oct 2025, Philippe Mathieu-Daudé wrote:
+> On 18/10/25 17:11, BALATON Zoltan wrote:
+>> Store the bus frequency in the machine state and set it from instance
+>> init method.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/ppc/pegasos2.c | 25 ++++++++++++++++---------
+>>   1 file changed, 16 insertions(+), 9 deletions(-)
+>> 
+>> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+>> index f7999520e4..ae3f01231d 100644
+>> --- a/hw/ppc/pegasos2.c
+>> +++ b/hw/ppc/pegasos2.c
+>> @@ -55,8 +55,6 @@
+>>   #define H_PRIVILEGE  -3  /* Caller not privileged */
+>>   #define H_PARAMETER  -4  /* Parameter invalid, out-of-range or 
+>> conflicting */
+>>   -#define BUS_FREQ_HZ 133333333
+>> -
+>>   #define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
+>>   OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
+>>   @@ -66,6 +64,7 @@ struct PegasosMachineState {
+>>       PowerPCCPU *cpu;
+>>       DeviceState *nb; /* north bridge */
+>>       DeviceState *sb; /* south bridge */
+>> +    int bus_freq_hz;
+>
+> IMHO this field belongs to PegasosMachineClass, being read-only.
 
-thanks
--- PMM
+Reasons for not putting there:
+
+1. I need it in machine init and build_fdt which get the machine state not 
+machine class so would need to copy to machine state even if it was 
+defined in the class.
+
+2. We don't have a PegasosMachineState and it does not seem necessary to 
+add one just for this single value which would then be never used other 
+than copying it to the PegasosMachineState in init.
+
+So for simplicity I've stored it the existing state along other values 
+which seems to be simple enough. I don't see putting it in the class would 
+be simpler.
+
+>>       IRQState pci_irqs[PCI_NUM_PINS];
+>>       OrIRQState orirq[PCI_NUM_PINS];
+>>       qemu_irq mv_pirq[PCI_NUM_PINS];
+>
+>
+>> +static void pegasos2_init(Object *obj)
+>> +{
+>> +    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
+>> +
+>> +    pm->bus_freq_hz = 133333333;
+>> +}
+>> +
+>>   static void pegasos2_machine_class_init(ObjectClass *oc, const void 
+>> *data)
+>>   {
+>>       MachineClass *mc = MACHINE_CLASS(oc);
+>> @@ -610,7 +616,7 @@ static void pegasos2_machine_class_init(ObjectClass 
+>> *oc, const void *data)
+>>       VofMachineIfClass *vmc = VOF_MACHINE_CLASS(oc);
+>>         mc->desc = "Genesi/bPlan Pegasos II";
+>> -    mc->init = pegasos2_init;
+>> +    mc->init = pegasos_init;
+>>       mc->reset = pegasos2_machine_reset;
+>>       mc->block_default_type = IF_IDE;
+>>       mc->default_boot_order = "cd";
+>> @@ -640,6 +646,7 @@ static const TypeInfo pegasos_machine_types[] = {
+>>           .name          = MACHINE_TYPE_NAME("pegasos2"),
+>>           .parent        = TYPE_PEGASOS_MACHINE,
+>>           .class_init    = pegasos2_machine_class_init,
+>> +        .instance_init = pegasos2_init,
+>>           .interfaces = (const InterfaceInfo[]) {
+>>                 { TYPE_PPC_VIRTUAL_HYPERVISOR },
+>>                 { TYPE_VOF_MACHINE_IF },
+>
+> If you want pegasos2_init(), move the definition here to avoid churn
+> in patch #12.
+
+I don't understand what causes the churn as the function is the same, 
+patch 12 only adds one line to it but maybe renaming surrounding functions 
+confused git to generate patch that moves this function and not ammends 
+it. What can I move here to avoid that?
+
+Regards,
+BALATON Zoltan
+--3866299591-917270636-1760966774=:46197--
 
