@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA98CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BA3CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzSG-00061j-9x; Mon, 20 Oct 2025 19:38:20 -0400
+	id 1vAzTI-0007FA-K4; Mon, 20 Oct 2025 19:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vAzSD-0005zJ-S2
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:38:17 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vAzTG-0007DB-AH
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:39:22 -0400
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vAzSB-0001NC-RT
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:38:17 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-269af38418aso59490305ad.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:38:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vAzTE-0001VW-9j
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:39:21 -0400
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-940276d224dso244703039f.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761003494; x=1761608294; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JbO8y8YIRGJ8NkjP3/YApQs91c0gk7hl5Ggg9pFvz5I=;
- b=mTdKEachiCdW8VgLaF3P3naGzCyb7os16tMdmuhbrbhrVZdhbxRiE/15iejVrqIrkV
- KaiYp2KPi+eB5EenOUVLyzs20u8z8GVZWSatUvfHV/shLMq0qcEmhUJMYM8UQFA8sLdE
- VCl77l2CQg0xCP30+AnTpVImKJTtf1wO0rklGz/pv0zjVHfMpMlSgfB/KrKvnRnA16Q4
- X6TWJJOQ+MJI48ZOkq3ex1PKQ5YN48VRZic6JAWR1G1xdiy17XfYX3G4R3939WwsCEKg
- 3tvtbXHA3xJGaCJWu8fl/Puh+xnGIn1UmvH/YWOFIv2OVMvmHzrx+S/p6OQyeCYug8ap
- eZqA==
+ d=gmail.com; s=20230601; t=1761003558; x=1761608358; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YwrEyTPEnTrGScUv80u1JSfh+WEEiM/bAxoY9n77o2o=;
+ b=Z/9UnMl0R+hQ1DVMl2hGWakVtiGr4ebeXSkBfjGCABmG6cwwCcOprnxwSn8+IwaOM/
+ YML/2wA3SQtD2q8clG9JM70g+s+tvSbG32lgz7Rr0X+t7KH5gQTEwY+0XSoxP+2fd9sc
+ gdYBw2iEwu4rkt1yjSyle7y2eMjhNoUUU6V5T4lh85bJl3OqsM8VRvryE+Q1sKGWo7zy
+ aI4bOdki8gGNNK614n6hEyd7cEOf6/N2Ajwv+Gr4Yq1XXMw0/fr3ocQzB4+yBZHag0yZ
+ CKCbPI0L9o1NThnsTr3jQPl4DgCVE9rlqG4r5SGIq3rxBQm+7xUfKlsppMyE4e2BVzDn
+ +O+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761003494; x=1761608294;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JbO8y8YIRGJ8NkjP3/YApQs91c0gk7hl5Ggg9pFvz5I=;
- b=mTd8wTq1kMTp+zBZOFfXgM5A6TcIDNKV3KQMOrJXMY5DlO7by5NsbqNqy20J4IUCSH
- sP1dQRT19JvGz74Bmf7btUkBrVHNBtBgONZxEE43V/Gqd3XKuKPTZ1BwQCFpIfKE6yJa
- Ey4Z/k/2iIxBzSZdhR51weSGPLNH5dC0QcqOq8Z5ebG34zp+aDh2TqH/sksukgZVw+Ks
- BwGrh02D9sDqlK2bZv9YKQqZKKPJfrglQDnqjFT1OUeXMIuO2Pkn63SapHIimIqNTXaw
- FNMCM61HvNqa963d49BYnYq1bOCRXoLe4n2AEte3Lh/lxnejA2H40jL+lAb5y8dRbewM
- FjIg==
+ d=1e100.net; s=20230601; t=1761003558; x=1761608358;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YwrEyTPEnTrGScUv80u1JSfh+WEEiM/bAxoY9n77o2o=;
+ b=nO+5AoS1jBHdIhj5lWf04/jcmofmgHst8VRkezcogz4PkVK0CSCxvLbD3GEPJ+45d2
+ Px1jSQn9LWU7HEgFnSlwTNc5tcb7SYPXH0xonrcevmvNZfCA+0SuDatb1dOd3/+JZWgS
+ zdCB3Xi4Nh04v/OfmcfLM9LdWwxwY/taT7cMCMoAQY9I/x13y1jOacLE+Eu1B1pXFK7p
+ VtPxwre1WcmY1mD+Af0O0UYPHRhZ0g5S+4aBOhu3bsvUHkm0wdVBuximb4Zp+JQF8ThT
+ DKx7eQsxlVsreld6zD49nSCQDwBkFNFo4BalUQVAdZlAnw3jxhVpIECi1IS2E5JDpO7D
+ y0pA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSVTRe2pSN2FDDerA6cbyXSyG2k3sOj8nBYdIczCHmhiBjPphM3fxJubxsDCTYQxHMnd2W4+15Fu7g@nongnu.org
-X-Gm-Message-State: AOJu0YyEOGSIFsbWoei23lwyKOWZN3K3slhK2EGrTFaqWGTZdeOO4BT8
- VT2WktWtv4vV0xI3UUbhVNrIQRNFOWB6npiRBzlHkrAj2n4/E6OAGjrIEtHB8yXFHc4=
-X-Gm-Gg: ASbGncstXBb9c2D0iQ37TaAhd0BnSYy5KLVY0c0RtDDC7mKsnKFcXyYBU+bt3HstrRj
- 4HzLVdnLLG9ZuNqqZJl9sC9/yGltaPW/ANp9//dH7MgQHbRWCqEOFCB3pZt4R8TRH5dadet1Nn8
- XdDFikfYgny+mVHhtNMA8gxevg2idQIkZ+8w9whZBLdbrjxPnlBKI+iifQ15lQWJ+YvSxZf8ioY
- BVxJrHw1EP+cE/SOREY0MQaOaQ0KvH36EGOUT5TlzrWHwDs+QETp32kkPF0Ij4/7irG84prD3N8
- bBlD1MGTD958rs5A2mdipnjkJVKlqWFZF/ISUOXktj6Shqh7bhopEG6GgGODLmvhIHBsOY5mv/V
- /wbcZAAafzNUmwNqyQ3diLhx3bBtw/RmxR/pX55cn0287eG4Qy5mf77rYwUXgbTWJpfSIJ6kYXb
- 6IE8CYgaBwcw4rqkAUooYF7LXs
-X-Google-Smtp-Source: AGHT+IGA5anJWVQxatUVMxNg8eUgmko0qX6je3He3XUnFq1jXaB2lC5RDpwCS+8jZKvElFtF7yekSQ==
-X-Received: by 2002:a17:903:287:b0:24b:4a9a:703a with SMTP id
- d9443c01a7336-290c9cbc0d7mr182893225ad.17.1761003493914; 
- Mon, 20 Oct 2025 16:38:13 -0700 (PDT)
-Received: from [192.168.1.111] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29246fcc2bcsm91521625ad.33.2025.10.20.16.38.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 16:38:13 -0700 (PDT)
-Message-ID: <29fd6a34-7cc9-4a57-b0d1-cf7de6b37ad3@linaro.org>
-Date: Mon, 20 Oct 2025 16:38:12 -0700
+ AJvYcCW+t/buhfZm4VIQhGOPI2CQ3OAPUXOzvPZF9j+w0AX2NMx11UpMHdyXwisE+dFoUp2QCfb2wOabnjV2@nongnu.org
+X-Gm-Message-State: AOJu0YzuL30W4962Dco83Sw/0wDPjS/fvY2WW9M92nHbSsAcVCI+yhvv
+ MNHSiqsKFXnU0LOhqBb7m9OU79qPPD9UzblAG3NHYx6sokNSp5KgAR32lLtpb0KN4VIaTcgD5dA
+ nZQYcuP17f8Au+30XJmu8cNRWlh1UKMs=
+X-Gm-Gg: ASbGncs7gjxhoWyqd3GjwEuRs0A7sqSTV/WU8SXpzROakKO8Vl+Lwb3MR26PVXO3iBb
+ l0vZpXik1Uxc9lpcM3OHQup0qneq2laYcPl+7xuW4HY10bp4LFM/lcmbBjPJTSaUZq38a75lWjU
+ tB8PHWhXYSu1zyPzZsldBVW4YbwmIW0gVL0o6abmQoVT0hJ+I7CLPnG6TOLfBj+shNuTmE3+Qdd
+ IsEOvlaU9fqDTth9dsqmiYD4eiek6GpYwC58DRe8ej52BQKCcZEnktk/3Rr
+X-Google-Smtp-Source: AGHT+IGE/VijscIX2yU4QN64saSBnwzr0T3znZv3o9y4fXkEV655foNcB6XkGtIS6aBcgKN5vLg4OPs1fkWBA2kHIgs=
+X-Received: by 2002:a05:6e02:148d:b0:430:b167:3604 with SMTP id
+ e9e14a558f8ab-430c5209bafmr227864965ab.4.1761003557773; Mon, 20 Oct 2025
+ 16:39:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 24/30] hw/arm/sbsa-ref: Include missing 'cpu.h' header
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
- Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-References: <20251020220941.65269-1-philmd@linaro.org>
- <20251020221508.67413-9-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251020221508.67413-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-18-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-18-vsementsov@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Mon, 20 Oct 2025 19:39:06 -0400
+X-Gm-Features: AS18NWAQSimpp3wWAu_gmzV4zIAPNWX_U_DpM6GJvt-zstNlqqNpJESEdamOh1s
+Message-ID: <CAFubqFt0GWOUAJGU1xxv9zi-FDODqHoa1bho8n5o_OAxF3zkww@mail.gmail.com>
+Subject: Re: [PATCH v2 17/25] vhost: add inflight region backend-transfer
+ vmstate
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
+ mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ steven.sistare@oracle.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
+ jasowang@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -109,24 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-10-20 15:15, Philippe Mathieu-Daudé wrote:
-> "cpu.h" is indirectly pulled in by another header. Include
-> it explicitly in order to avoid when changing default CPPFLAGS path:
-> 
->    hw/arm/sbsa-ref.c:162:25: error: use of undeclared identifier 'ARM_DEFAULT_CPUS_PER_CLUSTER'
->      162 |     uint8_t clustersz = ARM_DEFAULT_CPUS_PER_CLUSTER;
->          |                         ^
->    hw/arm/sbsa-ref.c:163:12: error: call to undeclared function 'arm_build_mp_affinity'
->      163 |     return arm_build_mp_affinity(idx, clustersz);
->          |            ^
->    hw/arm/sbsa-ref.c:746:25: error: use of undeclared identifier 'QEMU_PSCI_CONDUIT_DISABLED'
->      746 |     sms->psci_conduit = QEMU_PSCI_CONDUIT_DISABLED;
->          |                         ^
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/arm/sbsa-ref.c | 1 +
->   1 file changed, 1 insertion(+)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
+
+On Thu, Oct 16, 2025 at 7:49=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> Prepare for future backend-transfer migration of vhost-user-blk.
+> Among other things we'll need to transfer the inflight region, let's
+> prepare for this.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  hw/virtio/vhost.c         | 26 ++++++++++++++++++++++++++
+>  include/hw/virtio/vhost.h |  5 +++++
+>  2 files changed, 31 insertions(+)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 3e5192ec23..63036f8214 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1975,6 +1975,32 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
+>      }
+>  }
+>
+> +static int vhost_inflight_backend_transfer_post_load(void *opaque,
+> +                                                     int version_id)
+> +{
+> +    struct vhost_inflight *inflight =3D opaque;
+> +
+> +    inflight->addr =3D mmap(0, inflight->size, PROT_READ | PROT_WRITE,
+> +                             MAP_SHARED, inflight->fd, inflight->offset)=
+;
+> +    if (inflight->addr =3D=3D MAP_FAILED) {
+> +        return -EINVAL;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +const VMStateDescription vmstate_backend_transfer_vhost_inflight =3D {
+> +    .name =3D "vhost-inflight",
+> +    .post_load =3D vhost_inflight_backend_transfer_post_load,
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_FD(fd, struct vhost_inflight),
+> +        VMSTATE_UINT64(size, struct vhost_inflight),
+> +        VMSTATE_UINT64(offset, struct vhost_inflight),
+> +        VMSTATE_UINT16(queue_size, struct vhost_inflight),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  void vhost_ack_features_ex(struct vhost_dev *hdev, const int *feature_bi=
+ts,
+>                             const uint64_t *features)
+>  {
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index af46d4b5f2..94a0c75fc8 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -587,4 +587,9 @@ static inline int vhost_load_backend_state(struct vho=
+st_dev *dev, QEMUFile *f,
+>  }
+>  #endif
+>
+> +extern const VMStateDescription vmstate_backend_transfer_vhost_inflight;
+> +#define VMSTATE_BACKEND_TRANSFER_VHOST_INFLIGHT(_field, _state) \
+> +    VMSTATE_STRUCT_POINTER(_field, _state, vmstate_inflight, \
+> +                           struct vhost_inflight)
+> +
+>  #endif
+> --
+> 2.48.1
+>
+>
 
