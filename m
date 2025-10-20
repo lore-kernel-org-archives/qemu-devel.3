@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDD1CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB15CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAy4s-0006TL-Bj; Mon, 20 Oct 2025 18:10:06 -0400
+	id 1vAy5c-00070q-Vb; Mon, 20 Oct 2025 18:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4q-0006SG-Cz
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:04 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy5U-0006wB-AD
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:44 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4o-00063p-LU
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:04 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42701aa714aso2981787f8f.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:10:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy5O-0006KF-Gb
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:44 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-471076f819bso38548645e9.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760998200; x=1761603000; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760998237; x=1761603037; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=peeMmEa9/4QTziWR6C9i27UArz/pXKVp77TsxavtYSE=;
- b=cnWjboAeQSEDolcr5doos21LBnosv0WOpUczgFbUk/G6y3MeRwYvys69V/8j1aEx+C
- 6N6c37OqcpPH+wAnKg3C8v6l47MF0JRtVEf3wUyAIJch4+LItESowcagTAc18JNti/uY
- XYDKkFKlAMhq5uaNwFs960I0Y5FMAmt4sIAH1dvyGs5fdmHNVJeHLsn+xCaTmgGvJ7Cw
- occIqoE+v1NUOhhtR+60tdUvT7LTcJ2Z7pgI2FU+xJbTFQbnq8M6ydOYV0GTY+MEF1zN
- dsW3aGJJJAYotOvckot4+nWeAudiggX53fXyoIvKOYg8vXYaMNq8tEvBmk2tLuqlh/F7
- zN3A==
+ bh=9Cw/auqPGZF90bg+tsodLyu1anbpQABoi+IFSvgYon0=;
+ b=zg80fWayYLrf53HlAa+hgpR5HoBUmtyA1SQZFmoT2L0+In1axfLREYDe59wmjeHuFG
+ 9gKAyMJBCODxjc8xj/0Pun0b+PxbwFFpr9w3q7YaxoHEfG27pP77herwmXI7uPzuzOp3
+ jArbh/6P0c7+f0TO0meu8uyF9o53pGVPoFd8DXD/zgZSzuATHid8snoOk2iKaNXqIML3
+ DWGVOGvOVWbDiGtyKbEhwi0cKIkjdgWZGib23GeO67giGHxgYJtn/bY1r/70NeOIN4vw
+ 9xA5nLQVWNc5s8LiiI98Lby9URo/11hnIZdb713ie+Q3Fl05GnYGH9RGJwsHBCUL7f64
+ g8xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760998200; x=1761603000;
+ d=1e100.net; s=20230601; t=1760998237; x=1761603037;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=peeMmEa9/4QTziWR6C9i27UArz/pXKVp77TsxavtYSE=;
- b=sgNPQ6N5GHsPVxsyHUlZO3I/GviaYo/K9Q8jRIN1mPIEtG3npfeMD4kLjKi6UkQrcc
- RJir0rwhuybRsMf+C1+ru/pdtsApivKDdpAZh4nx/TJcxSKmU74Eh5FzdHmKs7e4C9Q9
- v2zPTqIR0EFM1h9W/eXsfgWzWhDs2qVllZT5DtCNicDVgjbh/c0IJRDD2ylxBgmYsWcg
- koNrdQgfqVPOFC9+jkUUwbvbdkJSvzSF2kCnXnMpQoGpvSJVbm4z9tRf40/q7KJxlpNU
- lI47wjtZ7egSkmgaGNMmxfBPAhqtoNRrnhFm7GuepBRWYXsuqmQPCe2/EqKmi3rVKATF
- MJqw==
-X-Gm-Message-State: AOJu0Yw0e8/06D5ZEHHeI4ZF7sK0alNmLQHpiF7OG6bBlY43qe60k46t
- +/T4EBYh037aF6umnL0CBcWwTReDKMF6THlHagapGiqCFfoAdODomA+0SEmHWGV0zRbOVkgkNTf
- HxJxOxpo=
-X-Gm-Gg: ASbGncsrhRKudJsfYH4K46Bfj/iD3ei1yNjLvIBT+vTL3C2BXJUdtgSFj/FOzrffGpT
- vBjs8xQBm42ylFslZVQqC0t0PE3xOQmOcaYkNhmfItiOwY2hTo2D3LkPX6/f0FmPiKWBBFMPe6U
- TM1IOM6nUv8T1nkdZQ7QqJbfgbyrAS/Ot/Ba+MISlaaqQe5U0KllgT3h4G2CrQA7/NHuw+ruOFy
- 9uaAuY4A3KjzF3PhaGrc4JefTVLRQjtmLebslokaakeK4jHnzyl+RpclAlfFGCIf6moLcHBJ1n7
- rWfChmuLW1yG8KPKX95lJOgt12Y1ujwJsxDDhoXdeIxIX6w7xIdJslmH9CNGCebJbsVNoySj85F
- F24CrwhN9q2H0iKZfz+rWRX20dq10Trn2dUJCVw/mBhxJXG8AbQM0p/JgdO4ra7Aw+zwzpe/7xV
- AdmMIOF/d45R+j5mmZX/pDtO0jLpXR8qXNQe2ZDOsxSIa9y9clhAz/gC68NcL+
-X-Google-Smtp-Source: AGHT+IEY9dGVhude0M+GcNa2jlGZLSxiMaf6S+dOd8BRUbbC+FnSri8tG8vaEaVMdmGvsI05jsd+nA==
-X-Received: by 2002:a5d:59af:0:b0:427:60d:c50d with SMTP id
- ffacd0b85a97d-427060dc758mr9221403f8f.51.1760998200207; 
- Mon, 20 Oct 2025 15:10:00 -0700 (PDT)
+ bh=9Cw/auqPGZF90bg+tsodLyu1anbpQABoi+IFSvgYon0=;
+ b=uTMYFwfa2IkTeoZr3IgeI5l9/V57TUBLMhQglBwOLSMh3v07U34I8+xJQMMZfVVNMA
+ 7bINbB7ojuS3aKQdnKozLj46P//m/3UBR8LDSPivtTy3qOoLakKILPOfIzfJSR4CiSeY
+ L0Iypbe8Stu/KL+gXlcf+mRI5BzSdczDWIz11jEyinGjVq6uOE39g3b/3RRC8kI7nrek
+ HcQN+yKOWYcKwq+cFBfANwJn81hjUBIZsZSHJWl4RenaR/UKMEW9XTE7D2J4TGli2bnf
+ 3t28/qqNTv6UK4KxK1PLv3UIqEWldoGsLU4CaP7hR0KDPg/0ApkYJekaxp794pOK4Sq8
+ M6kg==
+X-Gm-Message-State: AOJu0YxFBCUAxZ6QVUbQPzQn6tSm56YkTW7Y1mpzUmA9K+DwJ/snAuYX
+ /Up2t/AlTKvmfwKPGC83fIYvC+cHw1c5jpmf3ncQ9EdLL/HGETunJZgkdoC8jMmZ1tU15FPxWfs
+ IM72piyM=
+X-Gm-Gg: ASbGncvIt/9nuyJLdz1pDaGLbUc0CGAVkb1GQ3E6LsHvV5CSlyetXjreSNmivvQW+vE
+ x+3Wq9CMFa0/AdF8mbEHy5XHCWLkXdVZSKgLT6yTzIz4x0YkDD07fSYj38bkaK9qSWQYLu0oKeM
+ t0fYUnmpV3cUM2HrDWt67YNczlkvoaANKszPJB2lIFncTZjAYxLWXfXwIf/df2F5uPd7nEEIQ1U
+ BZaDMIQaj2xabiDl+UhqOZkEYV+3lFKmOw5vPPHZ3C2Y8SrOk6JZaRd59oci7PTEpK0CJCEeLhi
+ gSOUI5XiZSuHY3Ibbmo/4bZixQPM5caHMYHygvLTBnXGJoaUCXKli+WQ22zVt8ewCFApHPwfqdI
+ bIWZOHKU5847597Bwb9web0CNARMB93eXDTOPw8lgwicD7Ik4R3mlaKkii2wyjQz8w9Mm5aqNrW
+ YUO0H7T0W4L2Ju4r4pDzxGuK+yBUyTv6Mh6wGLoPh4u4lmj76Yzw==
+X-Google-Smtp-Source: AGHT+IFLJcFed2v1EwRR5nAucAd53PrnYFHH3fMQTblIj5z3+zgKP4Me9HwpmLj11s1hThPxS/p+mQ==
+X-Received: by 2002:a05:600c:3b03:b0:471:14af:c715 with SMTP id
+ 5b1f17b1804b1-47117874978mr106495845e9.3.1760998236723; 
+ Mon, 20 Oct 2025 15:10:36 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5b3f5esm17054127f8f.20.2025.10.20.15.09.58
+ 5b1f17b1804b1-47494aad668sm4570025e9.2.2025.10.20.15.10.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 15:09:59 -0700 (PDT)
+ Mon, 20 Oct 2025 15:10:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -73,22 +73,21 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH v6 03/30] hw/boards: Extend DEFINE_MACHINE macro to cover more
- use cases
-Date: Tue, 21 Oct 2025 00:09:12 +0200
-Message-ID: <20251020220941.65269-4-philmd@linaro.org>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v6 10/30] meson: Prepare to accept per-binary TargetInfo
+ structure implementation
+Date: Tue, 21 Oct 2025 00:09:19 +0200
+Message-ID: <20251020220941.65269-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020220941.65269-1-philmd@linaro.org>
 References: <20251020220941.65269-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,62 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+If a file defining the binary TargetInfo structure is available,
+link with it. Otherwise keep using the stub.
 
-Add a more general DEFINE_MACHINE_EXTENDED macro and define simpler
-versions with less parameters based on that. This is inspired by how
-the OBJECT_DEFINE macros do this in a similar way to allow using the
-shortened definition in more complex cases too.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <d75c8bbed97650f1a4d2d675444582a240a335b4.1760798392.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/boards.h | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ MAINTAINERS                 | 1 +
+ meson.build                 | 9 ++++++++-
+ configs/targets/meson.build | 4 ++++
+ 3 files changed, 13 insertions(+), 1 deletion(-)
+ create mode 100644 configs/targets/meson.build
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 67c94bff1c6..99292edf5a8 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -503,7 +503,8 @@ struct MachineState {
-  *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro, _, tag)
-  */
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 667acd933c7..17f90230bf2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2001,6 +2001,7 @@ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Supported
+ F: include/qemu/target-info*.h
+ F: target-info*.c
++F: configs/targets/*.c
  
--#define DEFINE_MACHINE(namestr, machine_initfn) \
-+#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
-+                                machine_initfn, ABSTRACT, ...) \
-     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-@@ -511,8 +512,11 @@ struct MachineState {
-     } \
-     static const TypeInfo machine_initfn##_typeinfo = { \
-         .name       = MACHINE_TYPE_NAME(namestr), \
--        .parent     = TYPE_MACHINE, \
-+        .parent     = TYPE_##PARENT_NAME, \
-         .class_init = machine_initfn##_class_init, \
-+        .instance_size = sizeof(InstanceName), \
-+        .abstract = ABSTRACT, \
-+        .interfaces = (const InterfaceInfo[]) { __VA_ARGS__ }, \
-     }; \
-     static void machine_initfn##_register_types(void) \
-     { \
-@@ -520,6 +524,14 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
+ Xtensa Machines
+ ---------------
+diff --git a/meson.build b/meson.build
+index f4ac0a6e95b..0f27a2a8f90 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3312,6 +3312,7 @@ config_devices_h = {}
+ config_target_h = {}
+ config_target_mak = {}
+ config_base_arch_mak = {}
++config_target_info = {}
  
-+#define DEFINE_MACHINE(namestr, machine_initfn) \
-+    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
-+                            false, { })
+ disassemblers = {
+   'alpha' : ['CONFIG_ALPHA_DIS'],
+@@ -3912,9 +3913,9 @@ specific_ss.add(files('page-vary-target.c'))
+ 
+ common_ss.add(files('target-info.c'))
+ system_ss.add(files('target-info-qom.c'))
+-specific_ss.add(files('target-info-stub.c'))
+ 
+ subdir('backends')
++subdir('configs/targets')
+ subdir('disas')
+ subdir('migration')
+ subdir('monitor')
+@@ -4364,6 +4365,12 @@ foreach target : target_dirs
+     arch_srcs += gdbstub_xml
+   endif
+ 
++  if target in config_target_info
++    arch_srcs += config_target_info[target]
++  else
++    arch_srcs += files('target-info-stub.c')
++  endif
 +
-+#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
-+    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
-+                            false, __VA_ARGS__)
-+
- /*
-  * Helper for dispatching different macros based on how
-  * many __VA_ARGS__ are passed. Supports 1 to 5 variadic
+   t = target_arch[target_base_arch].apply(config_target, strict: false)
+   arch_srcs += t.sources()
+   arch_deps += t.dependencies()
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+new file mode 100644
+index 00000000000..a9f6b24ec01
+--- /dev/null
++++ b/configs/targets/meson.build
+@@ -0,0 +1,4 @@
++foreach target : [
++  ]
++  config_target_info += {target : files(target + '.c')}
++endforeach
 -- 
 2.51.0
 
