@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE78CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC24CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqdK-0004SC-TK; Mon, 20 Oct 2025 10:13:11 -0400
+	id 1vAqfv-0007Yo-Gm; Mon, 20 Oct 2025 10:15:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAqd5-0004Om-1U
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:12:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAqcz-0007L9-6M
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:12:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760969567;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RxLE1DkwIX2gmEDG0+NGb7STB3ydJHOzEc424XDCMtw=;
- b=SHrBQmyH+ppde9iLah5rUHVQqNhj6kbErtmccoDrq2j7TeIkermDeUR5xv1EDWvSZ4oEde
- J7Gx1NFcDNWiKwqSvK+P/PyclpMIW4A0V0e6JSX8GfoGxqTxx5tk6f/NcoQO4EQNXvUjhE
- 27Ewx5wJrIK1k/LqfHNjfmg5Yo2C0UI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-0Z779hikO1eVpYvsB5u7eg-1; Mon,
- 20 Oct 2025 10:12:46 -0400
-X-MC-Unique: 0Z779hikO1eVpYvsB5u7eg-1
-X-Mimecast-MFC-AGG-ID: 0Z779hikO1eVpYvsB5u7eg_1760969565
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 063F41801BFB
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 14:12:45 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.161])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 12F541800451; Mon, 20 Oct 2025 14:12:43 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH v3 3/7] crypto: validate an error is reported in test expected
- fails
-Date: Mon, 20 Oct 2025 15:12:33 +0100
-Message-ID: <20251020141237.2621796-4-berrange@redhat.com>
-In-Reply-To: <20251020141237.2621796-1-berrange@redhat.com>
-References: <20251020141237.2621796-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vAqfR-0007NG-6G
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:15:25 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vAqfH-0007rN-05
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:15:17 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-63e18577613so3495021d50.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 07:15:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760969706; x=1761574506; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2mWS9k5ZzDXSeaA6vdVT8QfX80JDGX6PHd4tnvVM/84=;
+ b=ZRVD2wsGTUlxE4AVYHnfy77wl2+D/ru3owdfrmGZdreSGY+bpymSWn6iAp17SGOTtd
+ Omi21kCouMfxuOZ9haZXN/6zo7gzXgw7NUqKLEsyTW+Dll27GyO40hdy63C2E5LEwjBR
+ 84Oqpn4t56/+z+9edhHss1eF+DvcmBlCRk/OcImp/cYw2F4GyNsx6a+SSAooMxTXHoTo
+ vC09I8tJZ3rLZvy1c0IAMYs27rVgXtftsme2Kg05HFPYfNIUIIeIONo6dpTB1o8bNyjl
+ iyPvIER3SVUKQRHcS9y38L5iyr1n/jRHlNnE3afc/HhKgkxWmZQcPJonVbnI7ufP3nJB
+ KPBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760969706; x=1761574506;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2mWS9k5ZzDXSeaA6vdVT8QfX80JDGX6PHd4tnvVM/84=;
+ b=S04lUZNr7o+Z0EaBikVWWoWh+9EII7jv5LZOW4tlMSVMCHZuFymJL4EjCC0ASqE35p
+ e236TH5680wD/ed6FhyK8aq5tTYJA8GF3OweGLbIpUwgwaHI+q6mLT/UwjFUk4IQ8M6E
+ eri8BXgzRbU7bmzoVyqr0+jxDVoPEsogZAER9dBnwXjIbnx443dGZaaz9mY6yP3Io206
+ ytUa1bB2TGe9BULholsYxfNdUaZg0tGUMRHSOq0p8F0VVPTNt/LPwX+/Ni8TX0rpQSTK
+ uGzDCudT3FUFcDTNZkjz+djWBD8uJa25qU23808xWvxsXjLbW4L1t8JvL2n0X/hY4Gza
+ 7WAw==
+X-Gm-Message-State: AOJu0YxXyzM4wTy8v2arf7Qb2OrLnDrQLZLWUUFF3zox1g64xLa+b/qE
+ cUoNEEvEUV6BU97PSPV97tIwTy7rP71YjrEjk/Xf4hWlLtxZUsKFixWQ32q1aAZiCAQIwj3k8F5
+ qfPO3ifDoHUGhul5NT53+KYSOiQ8X0Dr2S5Pm68742umjYY8Gg0xg
+X-Gm-Gg: ASbGncuXA3E30J6w5uEWnYWIqWTrI1ACAwUEcKy9Up8sQJuw2FTotOfh7/segt8rZxb
+ QGVEYF2rvlL/L9E2I6prtNxN3IM/QnDxSdljwiI9kKIcT0j0Dpp7p8q1ZYUr4iZHLCmMxbLvbgP
+ 6DA4NAsaJrfRvUmIrBJcGXoWfR1O9hetUK39sCgNVXRsCvoyj0cNuDXZadivSJ5wi7KUNE/fcEV
+ BmbB6QRlWWRDpKT8s0RNlw6SoodhsCKHpM8tlx8FW/STe3xK7rcoOWMz9IPIA==
+X-Google-Smtp-Source: AGHT+IGYqixOJRzSn0Do6k6cpOxol9SZ+SrOneIJSAiXXAxA5he80qD4xhN8EjvKr4td36HhfoezuStrzGzfErVRpe0=
+X-Received: by 2002:a05:690e:1209:b0:636:1a8d:9d43 with SMTP id
+ 956f58d0204a3-63e161c65f4mr9087918d50.40.1760969705726; Mon, 20 Oct 2025
+ 07:15:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-26-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-26-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Oct 2025 15:14:53 +0100
+X-Gm-Features: AS18NWBg0vW-Drd44P4O3CVZHAFPREI7HJsC4-iKjXZDQouJF9OhnH2H-rWnz_Q
+Message-ID: <CAFEAcA_FXddPSD_rHaW1zgB0MKpsJxcUoUe-jBE5ZZmwbg1j4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 25/37] target/arm: Extend TTBR system registers to
+ 128-bit
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,42 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There was a bug where TLS x509 credentials validation failed
-to fill out the Error object. Validate this in the failure
-scenarios.
+On Tue, 14 Oct 2025 at 21:09, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> So far, just extend the data type and check access; do not yet
+> consume the 128-bit table format.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/unit/test-crypto-tlscredsx509.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
-index a7ea5f422d..85f51aee1b 100644
---- a/tests/unit/test-crypto-tlscredsx509.c
-+++ b/tests/unit/test-crypto-tlscredsx509.c
-@@ -73,6 +73,7 @@ static void test_tls_creds(const void *opaque)
-     struct QCryptoTLSCredsTestData *data =
-         (struct QCryptoTLSCredsTestData *)opaque;
-     QCryptoTLSCreds *creds;
-+    Error *err = NULL;
- 
- #define CERT_DIR "tests/test-crypto-tlscredsx509-certs/"
-     g_mkdir_with_parents(CERT_DIR, 0700);
-@@ -111,10 +112,12 @@ static void test_tls_creds(const void *opaque)
-          QCRYPTO_TLS_CREDS_ENDPOINT_SERVER :
-          QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT),
-         CERT_DIR,
--        data->expectFail ? NULL : &error_abort);
-+        data->expectFail ? &err : &error_abort);
- 
-     if (data->expectFail) {
-         g_assert(creds == NULL);
-+        g_assert(err != NULL);
-+        error_free(err);
-     } else {
-         g_assert(creds != NULL);
-     }
--- 
-2.50.1
 
+> @@ -6196,9 +6244,12 @@ static const ARMCPRegInfo contextidr_el2 = {
+>  static const ARMCPRegInfo vhe_reginfo[] = {
+>      { .name = "TTBR1_EL2", .state = ARM_CP_STATE_AA64,
+>        .opc0 = 3, .opc1 = 4, .crn = 2, .crm = 0, .opc2 = 1,
+> -      .access = PL2_RW, .writefn = vmsa_tcr_ttbr_el2_write,
+> -      .raw_writefn = raw_write,
+> -      .fieldoffset = offsetof(CPUARMState, cp15.ttbr1_el[2]) },
+> +      .type = ARM_CP_128BIT,
+> +      .access = PL2_RW, .access128fn = access_d128,
+> +      .writefn = vmsa_tcr_ttbr_el2_write, .raw_writefn = raw_write,
+> +      .write128fn = vmsa_tcr_ttbr_el2_write128, .raw_write128fn = raw_write128,
+> +      .fieldoffset = offsetof(CPUARMState, cp15.ttbr1_el[2]),
+> +      .fieldoffset = offsetof(CPUARMState, cp15.ttbr1_el_hi[2]) },
+
+We set .fieldoffset twice -- one of these should be .fieldoffsethi.
+
+>  #ifndef CONFIG_USER_ONLY
+>      { .name = "CNTHV_CVAL_EL2", .state = ARM_CP_STATE_AA64,
+>        .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 3, .opc2 = 2,
+> --
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
