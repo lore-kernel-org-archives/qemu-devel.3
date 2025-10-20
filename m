@@ -4,58 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF2ECCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 623F4CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vArTl-0001cy-0L; Mon, 20 Oct 2025 11:07:22 -0400
+	id 1vArVL-0003Av-PW; Mon, 20 Oct 2025 11:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sean.anderson@linux.dev>)
- id 1vArTa-0001XQ-ML
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:07:11 -0400
-Received: from out-181.mta0.migadu.com ([2001:41d0:1004:224b::b5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sean.anderson@linux.dev>)
- id 1vArTX-00077D-MI
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:07:10 -0400
-Message-ID: <a8bd9ca0-3b65-4581-9ed9-b123aa38af52@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1760972821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ybE+BuGmmeUy8hJ2CkCWLW/fn7XSQ9a4rtkI4CI9MYM=;
- b=cVKfv6eUFdc42pSIWGgy2rzM6JOoFHdr2cMUmvzsur45Wmt9/m+uih5TakwlSWD2yq1cJT
- g11rn/YLcqpBqbABN9Qe0l3sZFy/8D58K7jQKKodqaaZnmVbS8CHyuSp9QTYB+g25ICGVs
- 0eeUSA+kWPCZgWgQ0zEGayhFs23vruE=
-Date: Mon, 20 Oct 2025 11:06:58 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vArVJ-0003Ag-0p
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:08:57 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vArVC-0007IH-LL
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:08:56 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-781421f5be6so55278547b3.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 08:08:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760972928; x=1761577728; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zkWe8tVUSX8+dRg2RhxjKQN6I4yEPZ0U/wr7UIMGhS8=;
+ b=pF5S8Sm4Zb8+NUreok0ThchYXddpsyYIDz5qX1s+4WfAUxxDa0QWfcAt0fcYmN9Kl7
+ MDknJZhWKEeOv19v/o0ADJH3IYXV4Q0IUZsRA1bBBWhufdZP8otTX7SRcRWEaUdnc1ey
+ Urw/ValAp4IxuTa6/RgH/08mHJjo9N3PyVlNxfHCZWdG0MXtUnX14fKaUc1CvuCDMBC3
+ P2/bA8exOX3yxsJP5u3CCGLSMvjQSKEXa2TBBY7yAzAzh+5m2Y9NozgEWeoXY5RGC3oy
+ RlJ+Qcc8FCBCnywEIqDGm13Q/wxQ75Ikupz1VmvUZ74+U7PMdo5QHx3ftcly+n7Z+n+B
+ ks3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760972928; x=1761577728;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zkWe8tVUSX8+dRg2RhxjKQN6I4yEPZ0U/wr7UIMGhS8=;
+ b=jTaTQ4+7dqHOZoMMP9S3THBTaJckZXxKdg2PR88xh6EwPGOLJjqS3wNjNTs3s/UYpZ
+ DLUWjdXKfY3Enl9oYDCFZtCMNi2wL0UeB7XKBYzJSP6Xk0I64k1Uv5YNrZBZhpDEDc9R
+ JkHACfNCKYyPW9s9e/Nqad+EL7+uqvxM8SzU7AFdzCneWOxXXnjLIPJ/BJlruyWh5glm
+ syKsdCX7BwFF/FZfPHD+XJPi/DEoD1lEpJAVMfwE32wAhFsLFnyvtfeL4QSdOqAsQ/Uz
+ 9g0H7ac+9dn3lH4375dOivfSDl8cSiW2JG1/69LQ66aIIqBmpahNl6HHhNX83yqfEw9i
+ jJ4w==
+X-Gm-Message-State: AOJu0Yy6rdizYREoxk28KQFA+Np4PPSEYCFdOKsU1xfz2lLILTn3HuWW
+ RSNroAdrNHoa+5hItlLXWVrvKYNO87oO6aqOtwkioD09C0dmk+He7joEbu8ZnGlg2emhPQm3Na+
+ L2cXxuNBLPRgeZb2Gx056CKHRKjS+QhgFHbdqNZaj4A==
+X-Gm-Gg: ASbGncs3UEwg4I2TXkGUKXeU93mC0l/2Xogy1x+gM7M1NJlf8r3ym30uvQVwCPPc3C9
+ V2BHEF2VRr7nuS6N4sd6NbQ62wE9Bx4yuHVK9mhPaFmy1jJ9L2eEBjqmh5cxLJaOeMdmkzwqcza
+ LPrejH5Weg2211CNmntW6TkNR9Y+GrIzgSkgcK9OcUua/8Rgxb/sGyrynLWUQxOpZ9A2fzhR6Ws
+ z6Saqe/1qVhxVfoK8y63AzN5wpuJhE6vbe3JOcdmpRwiKNmwvYKidUwmLU9lw==
+X-Google-Smtp-Source: AGHT+IENa8+lOiAi2ZmezKK3JuawQb4+5ZJrD6bX2uO4B/qA/Ox3dmM0xB1FVnsx9oTKKiLOUBq7w4ZSVuJq8xMQq0I=
+X-Received: by 2002:a05:690e:408b:b0:63e:2284:83c6 with SMTP id
+ 956f58d0204a3-63e22848539mr8547532d50.49.1760972923444; Mon, 20 Oct 2025
+ 08:08:43 -0700 (PDT)
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/3] semihosting: Fix a few semihosting bugs
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Luc Michel <lmichel@kalray.eu>
-References: <20251017213529.998267-1-sean.anderson@linux.dev>
- <871pmx8vk1.fsf@draig.linaro.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Sean Anderson <sean.anderson@linux.dev>
-In-Reply-To: <871pmx8vk1.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::b5;
- envelope-from=sean.anderson@linux.dev; helo=out-181.mta0.migadu.com
+References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
+ <20251011200337.30258-2-mlugg@mlugg.co.uk>
+In-Reply-To: <20251011200337.30258-2-mlugg@mlugg.co.uk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Oct 2025 16:08:31 +0100
+X-Gm-Features: AS18NWAbGZG_Q933dYn_a7r-u3vJmOET6H1STkN7QHRhPxxa_WLXbK6zXioy4P8
+Message-ID: <CAFEAcA_dkQEmOHg1ixd_OV-ctXg3BCOWjLtS4Aa8Cc-QeLpzOg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] linux-user: fix mremap unmapping adjacent region
+To: Matthew Lugg <mlugg@mlugg.co.uk>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,41 +93,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/20/25 11:03, Alex Bennée wrote:
-> Sean Anderson <sean.anderson@linux.dev> writes:
-> 
->> While discussing [1], it came to my attention that QEMU does not
->> properly truncate/error SYS_FLEN on 32-bit systems.
-> 
-> TIL that semihostingfs was a thing!
-> 
->> Fix this, and some
->> other bugs with GDB File I/O that I found while working on this series.
->> That said, GDB File I/O has been substantially broken for two years now,
->> so it makes me wonder if anyone actually uses it!
-> 
-> I suspect this is at the upper end of things to use semihosting for as
-> its real purpose is to help bootstrap things on the barest of metal
-> until you have enough bits going to selfhost. In QEMU land it is a
-> convenient way to do host calls for test cases.
-> 
-> We don't have much actual testing of semihosting in the tree although I
-> do run Peter's semihosting tests from time to time:
-> 
->   https://git.linaro.org/people/peter.maydell/semihosting-tests.git/
-> 
-> the tests do include flen() but obviously don't cover the extreme
-> filesize cases or overflow.
-> 
->> It would certainly
->> simplify the implementation if we didn't have to support it.
-> 
-> While semihosting does have the concept of optional extensions SYS_FLEN
-> is not one of them.
+On Sat, 11 Oct 2025 at 21:20, Matthew Lugg <mlugg@mlugg.co.uk> wrote:
+>
+> This typo meant that calls to `mremap` which shrink a mapping by some N
+> bytes would, when the virtual address space was pre-reserved (e.g.
+> 32-bit guest on 64-bit host), unmap the N bytes following the *original*
+> mapping.
+>
+> Signed-off-by: Matthew Lugg <mlugg@mlugg.co.uk>
+> ---
+>  linux-user/mmap.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+> index 847092a28a..ec8392b35b 100644
+> --- a/linux-user/mmap.c
+> +++ b/linux-user/mmap.c
+> @@ -1164,7 +1164,8 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+>                      errno = ENOMEM;
+>                      host_addr = MAP_FAILED;
+>                  } else if (reserved_va && old_size > new_size) {
+> -                    mmap_reserve_or_unmap(old_addr + old_size,
+> +                    /* Re-reserve pages we just shrunk out of the mapping */
+> +                    mmap_reserve_or_unmap(old_addr + new_size,
+>                                            old_size - new_size);
+>                  }
+>              }
+> --
 
-The above comments refer to GDB File I/O, which currently cannot open
-files due to the problem fixed in patch 1/3. FLEN is not really broken
-for most use-cases (as long as the user doesn't access large files).
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
---Sean
+I agree with your cover letter:
+
+Cc: qemu-stable@nongnu.org
+
+I think this has been broken for a long time, right back to
+the introduction of pre-allocated guest address space in
+commit 68a1c8168, where the code was clearly confused between
+old_size and new_size:
+
++            if (host_addr != MAP_FAILED && reserved_va && old_size >
+new_size) {
++                mmap_reserve(old_addr + old_size, new_size - old_size);
++            }
+
+In 2020 commit 257a7e212d5e5 fixed half of this problem
+(swapping the two sizes in the second argument to
+mmap_reserve()) but we didn't notice that the first
+argument was also wrong.
+
+thanks
+-- PMM
 
