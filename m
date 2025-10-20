@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BA3CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA48ECCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:40:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzTI-0007FA-K4; Mon, 20 Oct 2025 19:39:24 -0400
+	id 1vAzTy-0007nB-Ht; Mon, 20 Oct 2025 19:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzTG-0007DB-AH
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:39:22 -0400
-Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vAzTw-0007mG-Cj
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:40:04 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzTE-0001VW-9j
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:39:21 -0400
-Received: by mail-io1-xd32.google.com with SMTP id
- ca18e2360f4ac-940276d224dso244703039f.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:39:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vAzTu-0001Xu-Bn
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:40:03 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-b6271ea3a6fso3215827a12.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761003558; x=1761608358; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YwrEyTPEnTrGScUv80u1JSfh+WEEiM/bAxoY9n77o2o=;
- b=Z/9UnMl0R+hQ1DVMl2hGWakVtiGr4ebeXSkBfjGCABmG6cwwCcOprnxwSn8+IwaOM/
- YML/2wA3SQtD2q8clG9JM70g+s+tvSbG32lgz7Rr0X+t7KH5gQTEwY+0XSoxP+2fd9sc
- gdYBw2iEwu4rkt1yjSyle7y2eMjhNoUUU6V5T4lh85bJl3OqsM8VRvryE+Q1sKGWo7zy
- aI4bOdki8gGNNK614n6hEyd7cEOf6/N2Ajwv+Gr4Yq1XXMw0/fr3ocQzB4+yBZHag0yZ
- CKCbPI0L9o1NThnsTr3jQPl4DgCVE9rlqG4r5SGIq3rxBQm+7xUfKlsppMyE4e2BVzDn
- +O+Q==
+ d=linaro.org; s=google; t=1761003599; x=1761608399; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IwBtYzNUfDJzGm83MEhycUupDJg6ryKcQcfhK3mDxaM=;
+ b=vOuag9z1XIIET9BGJxVG0iZ8PaPg0NtwYXARnSxcZvOsUFBHChYoaZA8I5qy4OJUHw
+ a7shVeHeyTvVgjIUKfw2sNsfcYV7VG3rC/QulQWcEozCmo7zTh4Ty4qg2pM0tWRMRD6e
+ E74ME2jNoAYgC/3w1VnL0lqILt8IZ7gYK4LXnqCrvkLH00UoX3dacwzLu3UVt9Vif3Xk
+ eOosORuWLjIMwBd43xpyIB8+jcpO/S98J03A2uc8iXaLDn96qogysNxUPKBx+4qNrf5N
+ lUhHjqA8MpTc4HZ6LjAPGLImwtap1zy8cirDxX9Lf5RqNQX9FpDRr6TEikxpyMOGmVSF
+ 2ftA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761003558; x=1761608358;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YwrEyTPEnTrGScUv80u1JSfh+WEEiM/bAxoY9n77o2o=;
- b=nO+5AoS1jBHdIhj5lWf04/jcmofmgHst8VRkezcogz4PkVK0CSCxvLbD3GEPJ+45d2
- Px1jSQn9LWU7HEgFnSlwTNc5tcb7SYPXH0xonrcevmvNZfCA+0SuDatb1dOd3/+JZWgS
- zdCB3Xi4Nh04v/OfmcfLM9LdWwxwY/taT7cMCMoAQY9I/x13y1jOacLE+Eu1B1pXFK7p
- VtPxwre1WcmY1mD+Af0O0UYPHRhZ0g5S+4aBOhu3bsvUHkm0wdVBuximb4Zp+JQF8ThT
- DKx7eQsxlVsreld6zD49nSCQDwBkFNFo4BalUQVAdZlAnw3jxhVpIECi1IS2E5JDpO7D
- y0pA==
+ d=1e100.net; s=20230601; t=1761003599; x=1761608399;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IwBtYzNUfDJzGm83MEhycUupDJg6ryKcQcfhK3mDxaM=;
+ b=luFKJeVDkaVIrlp7+mFJirdlKbj8JI4LKSVsn8Bu8Wr8sQq1HqyE42Lp5L//jcbaFO
+ PKMHRe0jsigMHoUbCG0XREmrftG3tzAnPPTB90stPQBPU70xznpwPxSpkVDXBgZny/hn
+ uUO/8/QxmzOU16iXDvZQEzrjQg3YHCJ5nLY1j2/xSbYHmjEkRoDSfUH8rfD63UDsYbCK
+ oMejgXQqjgIHKuOKZ/8T+ruSJi+8VY1CkAKb/VoE2BXHnEdYh4IaHspv2ufHOayOM9n8
+ fiJtZ/pIO84JVeO1L6RRh5dLE515EGSSYQYjlu5I+x8g2Bi0pli/lsYBZATGJ55JHqw3
+ P8XA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+t/buhfZm4VIQhGOPI2CQ3OAPUXOzvPZF9j+w0AX2NMx11UpMHdyXwisE+dFoUp2QCfb2wOabnjV2@nongnu.org
-X-Gm-Message-State: AOJu0YzuL30W4962Dco83Sw/0wDPjS/fvY2WW9M92nHbSsAcVCI+yhvv
- MNHSiqsKFXnU0LOhqBb7m9OU79qPPD9UzblAG3NHYx6sokNSp5KgAR32lLtpb0KN4VIaTcgD5dA
- nZQYcuP17f8Au+30XJmu8cNRWlh1UKMs=
-X-Gm-Gg: ASbGncs7gjxhoWyqd3GjwEuRs0A7sqSTV/WU8SXpzROakKO8Vl+Lwb3MR26PVXO3iBb
- l0vZpXik1Uxc9lpcM3OHQup0qneq2laYcPl+7xuW4HY10bp4LFM/lcmbBjPJTSaUZq38a75lWjU
- tB8PHWhXYSu1zyPzZsldBVW4YbwmIW0gVL0o6abmQoVT0hJ+I7CLPnG6TOLfBj+shNuTmE3+Qdd
- IsEOvlaU9fqDTth9dsqmiYD4eiek6GpYwC58DRe8ej52BQKCcZEnktk/3Rr
-X-Google-Smtp-Source: AGHT+IGE/VijscIX2yU4QN64saSBnwzr0T3znZv3o9y4fXkEV655foNcB6XkGtIS6aBcgKN5vLg4OPs1fkWBA2kHIgs=
-X-Received: by 2002:a05:6e02:148d:b0:430:b167:3604 with SMTP id
- e9e14a558f8ab-430c5209bafmr227864965ab.4.1761003557773; Mon, 20 Oct 2025
- 16:39:17 -0700 (PDT)
+ AJvYcCVU7AcNa8D99EFyKY/FjfV8iWxHPmFOsDS5AxXcNUekcHR607EhfRpBM92pkL2FtRLLzgImybuI4ud7@nongnu.org
+X-Gm-Message-State: AOJu0YziVAdkWKobV7RLL+3NuVTT8hX6ap2ZOtKFUy165lW5RKYxDn9B
+ Mr74W3D1CTUMmlJQeA6rt2Qi+U3IEYLXJ8ldafiHZ9VOFVFVSCDeqNfaPE4QFQKDrUg=
+X-Gm-Gg: ASbGncvFNtqRWbeVEjkgzu9vuzRu3U9bZYPg+wfd+R1EryZLWq7ICwoM3HfkY6pbD6r
+ sKZFjSHhccmd1KzEbwUlVSoBafRey+XiUP4Rovp75epgdko6qW9U4c/JrtgBUN1hivlCVJehAAK
+ jVnaoRtCM3EF3qQSsJ0/Q8LUxtC8/tpHBu/Z6WjVB4Q5MhdGKKKpU0GuLaAD6vwvG/fA172bbEJ
+ Uel7TqNAldr6toQJcDwDO+kWx4UPs2zeIleGx6847uG28011PHucf+iRGiGIWC5ru9pS7tCfNyw
+ 90Bc8/FMdDhlUtOb0xffhlXepaYdUfoYQcIc0N0vkHAU1/ZeXpjOJDi9Tc89i+F6ZqUDFXvycgg
+ ukRWRYKZMlNS5mkq2tlGTqU9rO1K2hb8uFyEStjRpHcMhQxyd2NQZhprtnrcGKozD0/xUFz5MrW
+ jc2D1Lxh1lF64AJcNaeokrKYNx
+X-Google-Smtp-Source: AGHT+IG3qW/73MkrtiQiIQ7dEorifELi1QS4vqEtx8fS9jF/8Ro67dZgobaz642FwYUuiDlajfBCVQ==
+X-Received: by 2002:a17:902:ce12:b0:24c:7b94:2f53 with SMTP id
+ d9443c01a7336-290c9c8a765mr166336435ad.6.1761003599606; 
+ Mon, 20 Oct 2025 16:39:59 -0700 (PDT)
+Received: from [192.168.1.111] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29246ebcf67sm91566325ad.15.2025.10.20.16.39.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 16:39:59 -0700 (PDT)
+Message-ID: <3a68e872-93c2-4ee5-8936-2441a34fc19c@linaro.org>
+Date: Mon, 20 Oct 2025 16:39:58 -0700
 MIME-Version: 1.0
-References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
- <20251016114104.1384675-18-vsementsov@yandex-team.ru>
-In-Reply-To: <20251016114104.1384675-18-vsementsov@yandex-team.ru>
-From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 20 Oct 2025 19:39:06 -0400
-X-Gm-Features: AS18NWAQSimpp3wWAu_gmzV4zIAPNWX_U_DpM6GJvt-zstNlqqNpJESEdamOh1s
-Message-ID: <CAFubqFt0GWOUAJGU1xxv9zi-FDODqHoa1bho8n5o_OAxF3zkww@mail.gmail.com>
-Subject: Re: [PATCH v2 17/25] vhost: add inflight region backend-transfer
- vmstate
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
- mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
- kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
- armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- steven.sistare@oracle.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
- jasowang@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd32.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 25/30] hw/arm/sbsa-ref: Build only once
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Luc Michel <luc.michel@amd.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20251020220941.65269-1-philmd@linaro.org>
+ <20251020222010.68708-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20251020222010.68708-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -103,78 +108,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-
-
-On Thu, Oct 16, 2025 at 7:49=E2=80=AFAM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> Prepare for future backend-transfer migration of vhost-user-blk.
-> Among other things we'll need to transfer the inflight region, let's
-> prepare for this.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 2025-10-20 15:20, Philippe Mathieu-Daudé wrote:
+> Since previous commit allowed the use of accelerator definitions
+> in common code, we can now move sbsa-ref.c to arm_common_ss[].
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/virtio/vhost.c         | 26 ++++++++++++++++++++++++++
->  include/hw/virtio/vhost.h |  5 +++++
->  2 files changed, 31 insertions(+)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 3e5192ec23..63036f8214 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1975,6 +1975,32 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
->      }
->  }
->
-> +static int vhost_inflight_backend_transfer_post_load(void *opaque,
-> +                                                     int version_id)
-> +{
-> +    struct vhost_inflight *inflight =3D opaque;
-> +
-> +    inflight->addr =3D mmap(0, inflight->size, PROT_READ | PROT_WRITE,
-> +                             MAP_SHARED, inflight->fd, inflight->offset)=
-;
-> +    if (inflight->addr =3D=3D MAP_FAILED) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +const VMStateDescription vmstate_backend_transfer_vhost_inflight =3D {
-> +    .name =3D "vhost-inflight",
-> +    .post_load =3D vhost_inflight_backend_transfer_post_load,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_FD(fd, struct vhost_inflight),
-> +        VMSTATE_UINT64(size, struct vhost_inflight),
-> +        VMSTATE_UINT64(offset, struct vhost_inflight),
-> +        VMSTATE_UINT16(queue_size, struct vhost_inflight),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  void vhost_ack_features_ex(struct vhost_dev *hdev, const int *feature_bi=
-ts,
->                             const uint64_t *features)
->  {
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index af46d4b5f2..94a0c75fc8 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -587,4 +587,9 @@ static inline int vhost_load_backend_state(struct vho=
-st_dev *dev, QEMUFile *f,
->  }
->  #endif
->
-> +extern const VMStateDescription vmstate_backend_transfer_vhost_inflight;
-> +#define VMSTATE_BACKEND_TRANSFER_VHOST_INFLIGHT(_field, _state) \
-> +    VMSTATE_STRUCT_POINTER(_field, _state, vmstate_inflight, \
-> +                           struct vhost_inflight)
-> +
->  #endif
-> --
-> 2.48.1
->
->
+>   hw/arm/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
