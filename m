@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CE8CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 12:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20C0CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 12:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vApA2-0000Oq-Sx; Mon, 20 Oct 2025 08:38:51 -0400
+	id 1vApA2-0000Pj-SA; Mon, 20 Oct 2025 08:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1vAp9w-0000Fj-V1
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:38:46 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ id 1vAp9y-0000IT-UY
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:38:47 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1vAp9o-0000jr-OT
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:38:42 -0400
+ id 1vAp9q-0000k6-TD
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 08:38:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1760963917; x=1792499917;
+ t=1760963919; x=1792499919;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=U9VKFczGUpgJJKVdHUnONeeyhdMiRQuvthFxTVkZPRk=;
- b=TalwQrUUJXHMe+J/sX9DT3KIzXGTYoWHsGYrV3EK8tQOnioYONSlWtpr
- KPkpt4bntWgiiM7qG5R/7A5HhH93AOJ3jd8o++S0Z8FR0Q8Y7NmYYEQM4
- j4VZTCRdH5IZknJGQi6Z1Irc4OMx3qpowy357sBvEsMhez/r4CHBnb1GR
- 5jgFoHl0ZRDMFeNBkLmwNnVCkn97Nkq5WCsbt8SwbQy4SfgaGHfhMfqIX
- QzIAGTETpP73iLZTDb6ixPVTLuHqsHz93I6jTwQaivOYUjo78B2b/FOOd
- DkBIr/9xQ1WD0QD8qSVbFTTNLi3/9bNJ75Xs4TrMCyln2L743ZjdGr7YN A==;
-X-CSE-ConnectionGUID: 8f/53bp3QbOpfH0I4uympA==
-X-CSE-MsgGUID: HevqPIOGRgy4tGud7uZn9Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62110155"
-X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="62110155"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2025 05:38:29 -0700
-X-CSE-ConnectionGUID: PW2nkDEnS8OX7IcsclBEtA==
-X-CSE-MsgGUID: DTaKThMNSOmI80qhkOjhmw==
+ bh=UKO2GXT4RnCgMg+fKh64qAlskKAvlmAjW69nsXwzMOk=;
+ b=A++4NF4ONDnzaMxK9odwaXmth687zs0N82Sn70VMiByB0jPTOOe9QL2C
+ 2SWa2Rpbg0mTx410m+eAXvfmXncVSjJIx1RhiEnfX49LTiZKJNzt13Kf+
+ W/h0GZBmeGAEH3+ZWvNZKHWxPTVK5ef8Sz1t3NbeqKo3wyyRbKiUUeWP/
+ ZJsDSODO33uuyXa9Ju6sY4wcMi/etlOdTxCH4BcgGXAUnafBNOHFW/rbe
+ xZUrXrf84DKShHQ0CFDnHhgJ/3+q4kzAAQdif4u0tqthSU13bLPG7eOWF
+ LnrUuSbeetbYvgv8Wv4/yH4TvwmjoQIScsTToSgFjcrttOai/KBq2dL/X g==;
+X-CSE-ConnectionGUID: ZPwlh19yTQKs5CpOX+FElQ==
+X-CSE-MsgGUID: L8/8qGkzTQ2Xh9RhroQRlA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="65691564"
+X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="65691564"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Oct 2025 05:38:34 -0700
+X-CSE-ConnectionGUID: oB5DQ0gDR9an3apnXPL0qA==
+X-CSE-MsgGUID: sjO3zOI8T9+HTwJi3hZpPQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="183336515"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2025 05:38:28 -0700
+X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="183265223"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Oct 2025 05:38:34 -0700
 Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 20 Oct 2025 05:38:26 -0700
+ 15.2.2562.27; Mon, 20 Oct 2025 05:38:33 -0700
 Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
  ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Mon, 20 Oct 2025 05:38:26 -0700
-Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.25) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ 15.2.2562.27 via Frontend Transport; Mon, 20 Oct 2025 05:38:33 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.55)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Mon, 20 Oct 2025 05:38:25 -0700
+ 15.2.2562.27; Mon, 20 Oct 2025 05:38:33 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sbfOtuBezjpGsukzNDX3Cl/TsRWW+auSlkeU5eHcNOYG18GZ+gPc85edRH6V4Xm4IJkj/WMB/OVJ/XBhk3drIXBP+wPewOts7oS4eAQBnVdZKUbCPAtvgyckeKOtj2qWmTGsRL8I87ievQaUqeYwGqnDnyoBkQPg+rpXKvzNMofBY3tRi0pIrMd9IPm1Qk8KG3TR0AGnyrid0BVD5f6cO2wgBpc06ayQQiEzT/JwfaNj/K6v/+h3r7yS/WpmePN+M5PPub+LMuMNrD6v2d4IQsHkOEVBCHc6nix7WkYdhN2GnyaFy8vRsiOaL+YfPdkVGTSZryZ2UMrG5ths0kjNzA==
+ b=ip0/3+5mHLVH6coyfBvcbqQT4vv0V16GrsiTE6TnEAWZCQOCHQg0JiT7cwofdtnTMp8FOmpMwDGOSFq6S7kYMzrfC+JIQuF3+QsnN/P5Q1zByMNjldQg4g3ErIsc61nzj4E9fWsbYJe7XiRFl7VK6b6F6L8V3tiFvzoq5D6hr8L/BR23BWndvLTRVHtiPqq58VwiztF4fOsiSNDPUmoCdzVIWPNG799vVXTwx7LXcRuEQyI948GejHgGRQkqyhP01HMvxxCgMkYZm8mwtRnoVDlufjtXHKESRXfv/tzD/hIRItuA+QqiVb7JoI6eOfZ6P88BS8pSYs788wp2tHMYpw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Mh5+fXTIpzXxB20AmzGpFRecWTsmfsvv1bgJcMMGywc=;
- b=x1xGhdrPA6Ms/n8Sfj6PJsRXaWUBjq2HZjYL4gK1Fo/3rwbX7k05ucA5DdM7ev8Vp+4FvyGk/H0GL8ARvO9p1wuECWUXDLSTuc1kh1B/7Ue/wFrStqw9dd1zqPbaUO5SZZxL38EquksMPtQ097Y8oT9RVGLPul4qYzMIEiu5orE7+JfD9gF04dZj5tuqrQ2h6lrj+GHlmtDJc3Gc6zcnBxG/PZUtH93oe1joM/4k5nxBd3RDIpVo/najBp2vF+2UTzWQjZ4C+7VpuIrUh7/1tGi7YcWSsTkcrHtRSHkRfKxUvdPbS/H3Ylinq6vf7Byo/HVx/RCSaGteu83ORlckfw==
+ bh=RzQIno+3pBP6rVLDGu+R57eZ1ki1KvJWHsbaqInZNHc=;
+ b=eibHJDOlEVaxzb17bp5xCS//4bLCGtlp4FIRnkoXga/1eFAPW9PXlGws8V6Au3yOX67LRxj/hz1TdVMeBicfyDHOgzCn9Mj9AD2SCGpT3Xm9z/MPXc2/SUtuIY8rrb/VSJWgd4O60/7XnnLEb4C/pSEd9sdgroA9CYOYwwRvcnOaTtfZ5ZIfdiyY6M1HOutTLXVD9GnLqtRFaDzyx10WRBRfvxXmxh3IjIIkzRWaiYnSD64vzWYSDcaStsCScXD1msbN1wXEQYvyk9igMP+V62HmvkJ8WSwNUJp2PgVehXZWPokuGLYdRrl+4H3YYCIKuLOD2RM0zWN1pYjVb+XybQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ0PR11MB4798.namprd11.prod.outlook.com (2603:10b6:a03:2d5::12)
- by IA4PR11MB9059.namprd11.prod.outlook.com (2603:10b6:208:560::19)
- with Microsoft SMTP Server (version=TLS1_2,
+ by SJ5PPFB8C3A0B7C.namprd11.prod.outlook.com
+ (2603:10b6:a0f:fc02::84c) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.16; Mon, 20 Oct
- 2025 12:38:23 +0000
+ 2025 12:38:31 +0000
 Received: from SJ0PR11MB4798.namprd11.prod.outlook.com
  ([fe80::d946:6abf:6e7e:fd1e]) by SJ0PR11MB4798.namprd11.prod.outlook.com
  ([fe80::d946:6abf:6e7e:fd1e%7]) with mapi id 15.20.9228.016; Mon, 20 Oct 2025
- 12:38:23 +0000
-Message-ID: <e7cdcee2-1df1-40fd-8f46-42e8c75185d1@intel.com>
-Date: Mon, 20 Oct 2025 20:45:10 +0800
+ 12:38:31 +0000
+Message-ID: <ddbed964-1bd6-4a14-889e-db3e34d3d0d8@intel.com>
+Date: Mon, 20 Oct 2025 20:45:22 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] vfio/iommufd: Query dirty bitmap before DMA unmap
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, Avihai Horon
- <avihaih@nvidia.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "Hao, Xudong" <xudong.hao@intel.com>, "Cabiddu,
- Giovanni" <giovanni.cabiddu@intel.com>, "Gross, Mark" <mark.gross@intel.com>, 
- "Van De Ven, Arjan" <arjan.van.de.ven@intel.com>
+Subject: Re: [PATCH v2 5/8] vfio/iommufd: Add
+ IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
+CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <mst@redhat.com>,
+ <jasowang@redhat.com>, <clement.mathieu--drif@eviden.com>,
+ <eric.auger@redhat.com>, <joao.m.martins@oracle.com>, <avihaih@nvidia.com>,
+ <xudong.hao@intel.com>, <giovanni.cabiddu@intel.com>, <mark.gross@intel.com>, 
+ <arjan.van.de.ven@intel.com>
 References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
- <20251017082234.517827-3-zhenzhong.duan@intel.com>
- <e620aadd-c70b-43d3-9832-0cc1fc9d7c3c@nvidia.com>
- <IA3PR11MB9136BCC9994E40C674FE495792F5A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <20251017082234.517827-6-zhenzhong.duan@intel.com>
+Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <IA3PR11MB9136BCC9994E40C674FE495792F5A@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <20251017082234.517827-6-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: PS2PR01CA0037.apcprd01.prod.exchangelabs.com
@@ -107,97 +102,95 @@ X-ClientProxiedBy: PS2PR01CA0037.apcprd01.prod.exchangelabs.com
  (2603:10b6:a03:2d5::12)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|IA4PR11MB9059:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0d741f1e-4238-4307-f446-08de0fd58f11
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|SJ5PPFB8C3A0B7C:EE_
+X-MS-Office365-Filtering-Correlation-Id: 62297bc6-2bb5-40e8-090e-08de0fd593a5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|42112799006|376014|1800799024|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dTJQK2JpZng0UEdDYVdNTmtlSHllbkxGK2pDZnhQbElmcWR3UWhtTXFQeXBu?=
- =?utf-8?B?RmpLWXhYWFVvY2xIOGlhQ002R0JDSjA2OGRQdTNFSzEwNEwzR0RJSnRldnJ1?=
- =?utf-8?B?WEUraVcvSmFLREl2UHlhSlJ2alZRTWJpZ0xMUXJncGdMS0ZJR1gxeDllSFhh?=
- =?utf-8?B?NkFNWEtxUWFPWlZWQ2I4NERRN0w0ME1pZmZqZERvendrL1ROS1RVTUZHaURa?=
- =?utf-8?B?OW5HRDkzMHpwTUVPYnVCVjB5QmVUNUJmWGlaUGFaVXgrcDg4VW5zK1hTQ2l0?=
- =?utf-8?B?QlNzSFNUTDAvbXBOY1ZnMVBkQjdBRmJrMkRPV1hJWlAwRzJYN0NVVi9LT0Na?=
- =?utf-8?B?TkVSRTJvL2d3RFVZbHFVS0hjK3hnTzc2aXJUdkxvRllBcHN1QjNEYVpUR0VR?=
- =?utf-8?B?dEJublVmT0RhcVp0UVdyQWVGbldxQ3RPTzVXVTNmNVpqOXQ5ODJ6dmNiQy9v?=
- =?utf-8?B?Ym5kbE45MVVMWUl0TUlpR3pPc0V4NXNvVzY4WWxhTzQ1NEliMThZNzNWRmhx?=
- =?utf-8?B?MTl4Vkw0YXJERUkyazN0ZzNta2VDWjBWNUF5TzhaQ1FQcU85TjRSSjVmU2kz?=
- =?utf-8?B?ZFNBNVRzNFMwY0FQZ1ZmNUkxalB5TjdRZ1JYamhZQzdkWEZLL1ZQcW1YUW0v?=
- =?utf-8?B?ZG1CUUZCSjBCdjRsbGVxQkp3ZEJCc0pqSFpmWlZ0SUM0MjJ2NU1WV0FNcm5C?=
- =?utf-8?B?cWYvM2ovUFRZbHN5NzhjYnJjek5JQklSbmo5eFhHdnBjcE14NmhtMGt1NmJ2?=
- =?utf-8?B?V0dXS3Bzd2IyZCtLb29sNkw3ZHdEWEloNnMyVk9BbmZsRjBHSXJoL2ZvQnRv?=
- =?utf-8?B?NXpSM09wbU54ZW9mMnhWdndVZkNnakJDNVZyZ3BRUUhRR0N0TlJJWUtRdzB1?=
- =?utf-8?B?MVY1aGtnM0pUM0JJVkRGYVV5bzl6NC9BL08zQVF3Y21ZTTFLL3lZOEdaZmxD?=
- =?utf-8?B?RDNqNVM0MVlsajdjTzltMDM5NFNYdENha2w0bUduenpEV2htNEhhR213ZVZY?=
- =?utf-8?B?Ym10cXdsOG5JTWttdEpqUTIvU0pMVVNEQjFld2J1THR2YWV5RGl5R3QwT1Za?=
- =?utf-8?B?bzJCeXZvbW90K2ZrUFFTU2UxUlcxc3pRa0Q5ODY3eElnbG5QQU1Oa1I0UU56?=
- =?utf-8?B?ZFhlakNtdDBwbTNkdG9iODRXNG9oWUdSSjNYV1hVTFBmVnV6V1MyUC9wNlVS?=
- =?utf-8?B?Y2hsUU5JNzNnTTJKdE1Xa09FZE1OR0gybENFTi9kOEJnVlh4VXhZaHJXS1cx?=
- =?utf-8?B?NjJ6dklrUG11dlk4YjBOeFdnZ3hhVG1BMW0xUmM3OVBXWlZJNUJrOTFmbWdw?=
- =?utf-8?B?eUMrV1R5NGIrTnp0STZsbmxhMlhld0hKdzF0cHVFY09YR2JkOHJFRjhSbXh0?=
- =?utf-8?B?d2I1TStscWJYdGZieFd1L0p4YTJCRG5lV3JUand6Q1doejRGUjA2NW5pWGRR?=
- =?utf-8?B?ODJOMmR0cHFzT3oxc09wTFF3aTFBOWdSTWhoWTgrUnlGMjcwZU9ZeDQ1cGxi?=
- =?utf-8?B?a25hYVJQWk1mTnlNU3VNQm1FeUFLRWtGWXNISSsyRG9vTDVsajZxb0FGVW5B?=
- =?utf-8?B?ZFdMWmxTMEZVYXlIRm1FSkl5bjhJbWdWS2NtQ3dmVXVnTDVVTHFMYU9jWm4z?=
- =?utf-8?B?bFU5eEY3dExQLzZRYWhOUDVRUGtsMFowa1RXUnA1MGpwNFhueWgvajhnMkZo?=
- =?utf-8?B?Q09wVFZnOHlEMzFCdTJscXlPUUNMTTFDYnZYMkJUdDNVYi8xbFZIeVlVVk9s?=
- =?utf-8?B?OWs3dmJsRzJHWnkvNmVmRTVhUEJONUtXWnhDbXF2aUl2dE54RmliOW5RdXBx?=
- =?utf-8?B?enc0Mk5sTTNSeDFqY0hMb01FN204NjBCR1BtSFY3UHV4Nk9sVVBIUEVIV3lY?=
- =?utf-8?B?c3RmNDNzNkNDdmZ5NXNVWTZBZWxSTGw0anlFTTVaVHJzUWV4KzZJZnUrWnhx?=
- =?utf-8?Q?OY/bofmG1sjAA6Sb/Va4Z6DVIH88dC0U?=
+X-Microsoft-Antispam: BCL:0; ARA:13230040|42112799006|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?STI0M2VlTkwxTEFBTHd1U25qZ3QzaFJ0NWlHN05xbWtQUjRYMjRVRDFvSDRo?=
+ =?utf-8?B?elVVYURCU1d6ZGNpVVNjQ2N6M09BcW13UjBuWitlblIwY2M3MjYxbjkxbTd0?=
+ =?utf-8?B?SzErUTVWUzBxeDRtWnZKTXhHZEE3U0FDcmJ0dzVyRzVoMm5IamtnWkdnSTdx?=
+ =?utf-8?B?U2RDOFk3bXdrVklkR1M5TDFjK3dUK3B2aFh3aERrdGVoVFFYSVhsOGhqZmo2?=
+ =?utf-8?B?cG5URytNbXFXb0ZwZS9mU1lEU2tRcTU1cmVRZkJUZjFiRFJXMnN2ZVUrNHUx?=
+ =?utf-8?B?aHlydzRxUit6MlFzenNQd0RnOFVJSnR0Ym1nL1lweDRmNXNZSkg0b3dEVUZa?=
+ =?utf-8?B?Wm83RmdkUWkzQzB6N011UWVTZ1NvT04yOHIxUG5RQmpqUWVYeTYzRnpNbUNI?=
+ =?utf-8?B?dGJSTmpMTFdrS1JUeHpDSStvSjI1S09uZGFJd0xsRUFiTzBULzJuN2NIUTFF?=
+ =?utf-8?B?SEtLcTdvWFdTQjR6NEhvVUMwSWpaYnJqTEp5Z3RsOHpuQ0EzUVE4aVFzSHpX?=
+ =?utf-8?B?QTVveWtLTVY3ZGlvV2NhUmdlY0diZVZTYVBGb21TVWo0MWNkM2pWZFg0QzdN?=
+ =?utf-8?B?K1ZrUGoxUitQY3puVTBqbDFPQXBVR0o0VXdjUXlodDFWTGE1bW9vRTlMOStQ?=
+ =?utf-8?B?dzN0NEtsNEJta2RYS1F1bUZ1aWZ0dXg5b2NKeUdqODNMMjk2bUpBcHh3cFo5?=
+ =?utf-8?B?MlZIbGJHQ2RONGozQTBNRitCTWxkakV1WktwYTZDVUVGbW9XWGUrcWY2d3Jy?=
+ =?utf-8?B?WlIwaFF5SDlidUdPSit6R2J1SFc4bGxlS1J0NWRNS0JjSVd0VkpWQ2RjZjJJ?=
+ =?utf-8?B?Nkxyc3JCK1NEZmd3VU5BZlA0N2lqTDQvTmF3VXg2cUthL3l4L1lwS2k5b1Az?=
+ =?utf-8?B?S2xFc2pTbHp4K2Q5SlNoK0VPQkN0SzRqejh4RGdkbHIzOXJwWHQ4emtERFUv?=
+ =?utf-8?B?anV3WXB3SHFMRDR1ektVMUNBakdScW5EckkzclBKcS92cDBuRGRudk1OMUgx?=
+ =?utf-8?B?WWlwNXBuTTBRL2RKdk01NEhPcUVjY0VXdGhYeUZtRHFLWmx0RTVlWXN3aUtI?=
+ =?utf-8?B?WC9vT216ZXExRW8vUzJZMjV2WFJ1alg3YW83c0d4TzQ5bmNuTFBXRE04Z3RY?=
+ =?utf-8?B?SHUzYVJFUmxoK3pmWDNpcHNocnlDMjU1akZZVjZkZFFWZzZ0emFrU3l1Rmwv?=
+ =?utf-8?B?bHZraEowQy9BcnFqbDFhbTBJdGs2L0JWRk0zZ0pRRjhHRTNJNVBrcDRUQ21m?=
+ =?utf-8?B?UzFiZzkweFFFeGp2NDJSUS82S0VjOGdQeUZaOXNjVklOYTJ1bHc0T1FLWDBY?=
+ =?utf-8?B?LzA3SUVkRjV6QUdSNU1XWHROZnBqZUpuRUY4cWN4UDlnYW5uc0h3K0dYaHNC?=
+ =?utf-8?B?SmtnZ3lYcUEyOVBUTmYxdnErOVZvUUIxSXNhTUVFRmIzbDZBbnp3TWlRNnFj?=
+ =?utf-8?B?VzQrSGw3aWxKTXJ0NkdiczBaeW5NamRjV1l6OWtVRDJYUzQ2TDM5VDBVbUFO?=
+ =?utf-8?B?MUNLTWVnclhKU1M4MU5IQUllazVWMi9IcXo1bERZTGFkWm00UmVWcUZPUW1E?=
+ =?utf-8?B?Mm05MjdUMFgyZXAzVFcxcFhCT1FqSDhZSWlBMnhkUktyWXZmZ1VLTVJoWEdl?=
+ =?utf-8?B?Zko4Y3BRUzNkNmVsUnBpbU43ZkE5c2RydVlBWEdYVmxpSmFocE56eXhNeVFE?=
+ =?utf-8?B?SEdmUCthOTJNVWRvYmw2KzZ5dHlta2FFVkVUbm5EUmNXOFQ5UzdPbjdDQkRI?=
+ =?utf-8?B?SGJWZGhTVGJPYlFXOEFxRElka2JNM2FSbDBqQ1lyVi9KZ2xxWnNmTjdCbngy?=
+ =?utf-8?B?engwdkg3ZVo0blJnOVNYdVRQY0UyWmo0ZDVselVDR2hHdWVubW5HNEpMeGRG?=
+ =?utf-8?B?c0RxU0lPZHlZakR5bEZ6TTZvWDVvaFliRHpwWG1SNC9hVElBQmwrTTdTMDlz?=
+ =?utf-8?Q?EdPlkXQCwECqRJQTSOktJtnxsL/FqqdD?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR11MB4798.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(42112799006)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(42112799006)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c293d1VpeWNrcHI0OElCblIyQTdLdnZLRDNiaHhpZHJuc3h2KzBhL0paMTZY?=
- =?utf-8?B?K2NzT01oNUd2aGF2emFEK0o4UCtUOHY0SDJ3ank4NnUzcTQvQkprTEF0NHQz?=
- =?utf-8?B?QlQ0aTdqQ1M2TWJDVzJ2aFhhWDF4N0k2aWpRa295bTcyLytRL0xabVpPTmhx?=
- =?utf-8?B?M2lBbUtteDd3a0pHanhBT2N1blNFcFVUK3JoRFFxTmhUL2tXNHJhS2R4TnFF?=
- =?utf-8?B?SWZlVm90YnhiTUJNTERMQzJPY2xqRG9pcitUck9KQUJ5bW14ZFQxNkRPOGhQ?=
- =?utf-8?B?VzA0SHpjdzhSNzRGSUdYY0pkdjlHWTRyR1JFZmw5V2E2Qk9CSUZNdHhWOCs0?=
- =?utf-8?B?TmdMcmo2VnhJZ0JqaUREalBLdWlzRW9FREdSbitRM25oY3R2b25sSnJqczNz?=
- =?utf-8?B?TDhUblVGYmFPcmQzU0V3ZjdDbG1McFd0S1BScnFvNkNtY3NxVTkrZWY3RXFm?=
- =?utf-8?B?aVc1MHZOZnJOM0t3cW1Yem44ckplZjN6b1ZTWTNKOHh4d2UwUk1sMEJmMktL?=
- =?utf-8?B?Y0k4dkhvdUxKQkdQQ2kyUFBpdW9NU0d5SERZc2E4NGZGV0RxZC9rRjBaRmp3?=
- =?utf-8?B?MmZlZ3lZUE53VVhJbjZWWWpCNGR4QStJMVZaK2Z0L3ZnUzRzNlRjRUdneHdp?=
- =?utf-8?B?N05ad2NOci9nNmM4R2Nab3lHbDk0VDVMRlQvWHNDMFhDZEZad2owUjZLeEUz?=
- =?utf-8?B?QWFSdTNRWUJUTFB2Zzh6RWdrdTBqNUk1bG9pK3dIUE1aTG1TUEJJNlhzSFgr?=
- =?utf-8?B?VURoVkZzT0FudWplaTN5TWhlZFdrdVhRZHY3TnhHYlkrT2FVbHRSK25RSWF4?=
- =?utf-8?B?c0lHVlg2QVFFbmxHRkFBa2pFT2p0Ym5FUE9XU1FYRndYKzU3OFJZeFRLc1dG?=
- =?utf-8?B?dGpNUzRRVFVLZU1tWHM3TlV5NGJlQ1Z3TGRMODllbzBpVmY2YVNQUUFNRENK?=
- =?utf-8?B?bWJVSVdxNktNSkVRT2ppWUFTTDBBS0FFaU50VVFMK0s3MGFaYXM0V0lKVnhz?=
- =?utf-8?B?ZkN0NFoxMnJYN3ovazBDRGkrR3lsZHh6dEttbWR4emJZK0VRZ3cwR3hWMm4z?=
- =?utf-8?B?am10Y2VVU3ZkM0VZci9LYnpMdTAvUlprenJoWk43YlVUVlRieU1FRHJXZXZH?=
- =?utf-8?B?bWhVZDdKTjI5SGxzMVV1OFhmMU5hekdNUC9jYWVueTJZdTdZWW03NnFyN3lR?=
- =?utf-8?B?clo3d1JhWnhwd1lYeVFBTjJ6djdqaTh3NVJLZ00vZDRuRlI5Q25sa2dnWUM3?=
- =?utf-8?B?Nnh0VVc2R083ekxDUU15d2xvNTJqdEtsRWZqczJvbzF4RVhzVlI1SG5maU1D?=
- =?utf-8?B?Sk5IR09Db05hbFdyOWpWei9JQUF0Q2NqUEV5WHExYTQxVGlSUDhkckVQN3o1?=
- =?utf-8?B?czNYU0R2eTRjRU4rVGYyOTltRzRrRXphdXBBTW1BVlZsRElsRzhpeXpNd0FK?=
- =?utf-8?B?K08yTjdmaCtJeWFZL0NWcEJuOEpQckFWNGZoOHlrZTJTUFc5cW9ZbFk3V2Ru?=
- =?utf-8?B?RlNUMHphRjBxOGhOMzIxUnAwSXJNY0xxMnJFREhTejUzcEZIQ3podFkzWjl3?=
- =?utf-8?B?Y2t6MkVJWGxNdENvenhReTNwTkIrQUNScDdsWEhsVGszVXl5Tk85VVh1cWNC?=
- =?utf-8?B?Y1FxL1hkNStiR3hoM0N3MFFWUmNjQnVrTll2dHp3SE1XeVVrWmtXeU1MRzUv?=
- =?utf-8?B?eWh5emtHQlUyUUJ5eXlMSlQ3MXdlbXNMRmxsSXRHMEZtL2thdkxYUmtmOGlk?=
- =?utf-8?B?dGdmOWgwcEgzQ3dsb01QcHgzT1N1QVdNTGtWRi9TVHNJOXhCWmMweUh3WGla?=
- =?utf-8?B?S1prelM2alhHTGxtUGtHemI0aWJ2dXJSUnFGVUJOSjlNb3RTbmpwemlTam9B?=
- =?utf-8?B?K2d1a1NDMTNCZFdOVjJNem44T05FWkc3KzUyNml1NGdPNjAvZ3hBYktiMTZH?=
- =?utf-8?B?V3psaXVZa0NWaE91Mk9yVk11eGk0SmN3bDIxNFdlaXY3OGdTZURjck5JT093?=
- =?utf-8?B?YjNjVEFXWEtQREp5bklvM2ora1IwWFl3VTl4eXVQZ1E0enRLNjZHeHU1S0g4?=
- =?utf-8?B?VjRRSC9VVGx4dWNYN1lwallBZ1FlUXUwM0hvMTF1T0NSRmMxOFdIN21kSEJG?=
- =?utf-8?Q?FX1/yJ7ZPgVICQ9/9rvLs26A1?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d741f1e-4238-4307-f446-08de0fd58f11
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SGM5dUlYNkRqdytBQ1J2V2FramRkeXVmbW12TEZoN09ySTVIV0ZjODRyejYv?=
+ =?utf-8?B?WUp6QkFBNnV4Q2wyNTJ3cHVDc2NPNy8xWTlVTDhJbEFHR1dnUnVYOE5NYW9a?=
+ =?utf-8?B?U0s0ODBJakJuR2Nob2k2dlBETW00RnZ6ZzBqZkFsNHBHMXNuTk5GcEpWdDVS?=
+ =?utf-8?B?NklRV0lhbkdrWFhiNkJVeE5ZSEw2dHIrcHFzVmg3TzBGcFZNSUY3ck1MMUU2?=
+ =?utf-8?B?ZHRLUFNiL0N5NDcxc29HaW9OcXVvYmg4czJHYUhid3NwZ0RNb0V2ZldySFV1?=
+ =?utf-8?B?NklvWTdIL3BxMGQ1amtlVHVJdkJ1ZlJxMDhBam9XTGQ2S2U4b21xeUdROTkx?=
+ =?utf-8?B?S1FwNkdhdTk4YldGanQ0MlZiQlBRN3ozR2ZobmhFWko0T2Jlc1pLOHE5Um4z?=
+ =?utf-8?B?WmNPaUNUN2thQ2xTVnlEeEhDSnIza0ZXOHVPWlUycmJMSjVYQnZFbEw0NTB6?=
+ =?utf-8?B?SU9QOHBDTnB3cmVyTzdRVDZSMDdXUHBkdjhubXpPeUxySWgxbXZnWVpOaml2?=
+ =?utf-8?B?S3BGK1pSOFlhVkhZdVJmUm5RYTFTb291ZzgwdVgwTXdMeFo4MEdwRklHdEZX?=
+ =?utf-8?B?a0FnOWl2MUNUSWhyMk5oQU5UQUwzcHZiQ2t0UXZHWEV6aUFnSWU0eDJNVU1k?=
+ =?utf-8?B?VkhNUTJlSHErclBvVno3ZVk5OCtBNlJJSlZ5Z3NFbWxXTXQ2MmNWWDVBNEF2?=
+ =?utf-8?B?dlRybnBUQkszcThqbDloTklxNjl3Q281MFRkQzNPc0hVUmxWRml3am96MnNl?=
+ =?utf-8?B?eW9ycmppb0MvdGNvZkVFd3dNSzBmeFhrV1BoTzNETlp6aHowck96K3pWVFVN?=
+ =?utf-8?B?L2FqYWFOZm5qNU0ray9NM1RUbkdVM29ra0ZYeVEvV2R0N0FhUnJ2akdydGRF?=
+ =?utf-8?B?ekZsZ1VMZHc5dGt5cFJNYnViUlo5eUxGUk03Ung5b0luN0ZqenNXNXBDSFUr?=
+ =?utf-8?B?dFRieHlQbFR1Q1FYK0JzcXBmN0cvcTNDeWpYb3ZzYkxuSlNXZ2twdEZ1WjdZ?=
+ =?utf-8?B?VVFHS0kvWjNpZnppejBnUE16MTRHR3o5R3ZocUZGcGNIdktubFdPdWgyTXIz?=
+ =?utf-8?B?ZjVScFZmSUxmODI1WDdDTG5rRTcreG1yckJoYWxMZmhlc0FISW9OVng1ZWF1?=
+ =?utf-8?B?RWlYZVU5V1doTEg3TWE3a3RNY3k4NGE3UU9OZ2N0SFUreVhZVkxUVmo5U3JN?=
+ =?utf-8?B?Z0czbTlBRnNlNVM0R0JGL0ZSZW1YYlFjYUU3ZkRqS2c4OERmZ3F5b2hSSVVH?=
+ =?utf-8?B?Y0JDcC9Hb1RjNHo3ZFZ5aFkyYnFlT0h4ZTEyK3BKdUgxVHNjUWZUWE10YW5H?=
+ =?utf-8?B?bFM4MVBpbzA1VDlFQ0djaWtWVk1kaUJrZEp6VWo5cHgwdE5MellPOWQwQ3JV?=
+ =?utf-8?B?dzdyWG1kdWljUkJMVjNJZk50ZG9xM0pmU0E1aHRURGFtVmozMFdXTnIvN3lD?=
+ =?utf-8?B?Mkh2RmZaU2NRUU12eFFBQTh2Qmx3Z24xdFlKdlBhd2xvYXdaZHA4MmxSaUgr?=
+ =?utf-8?B?ZW0zcmlnbzdhTnUrdVVZR3ExOGpZanhvNlNDT0pPQkJlMzRucElhdUNJVit4?=
+ =?utf-8?B?VERYaUFSZ1JHcEFBTXJRclk2WEgxeDdqdkxTazA0OHp5cDk4UllFSDRlalgv?=
+ =?utf-8?B?SVh4OWQralk3eEhXSE9DY2lqOUxzd1I5TkpXRGNMZk9OSlFXTWs3NDFMYTV6?=
+ =?utf-8?B?OS8rb0ltMmIzYk50UVFkMk1jdjBIbUpJNUtDMmEycGl4M3FkU0NlQkpEclNJ?=
+ =?utf-8?B?bHdLYkVZeGFSKzZLYlFVMWVlSHpYMzNNZWE1TTExYS8xdXl1cHNzazJMSWQ0?=
+ =?utf-8?B?dlBwcDNjU0RjRTJPUWxtbzkxWXNZNG1Pcnh2Vyt6L1ZtSVhFNjFBdVNHaVRP?=
+ =?utf-8?B?QkdPRTV1dFlqR3VLV2s0SlpqNTZpUmJMODFSdTFMbEJScTR1ZzRGK05TTjY5?=
+ =?utf-8?B?clplcVl2TC82UG4xL2dOQzhQSVBYaCtPSzE1M2lJblg4enBvLzZlSUFMQ0JV?=
+ =?utf-8?B?VVByeWdmcHZPZ3BRNEsyQjVxSmhYSUNJRW1LVXQybk9MTU5NSk9BRFl2YnJH?=
+ =?utf-8?B?Sm80Q1RvQlJucXFGTE80TVc4aG9tQlhBaGVtVUZMd2RydVNGR2ZsRldOTEZu?=
+ =?utf-8?Q?BAgG6Pw7YubVauyANbULWY0zb?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62297bc6-2bb5-40e8-090e-08de0fd593a5
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4798.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 12:38:23.7991 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 12:38:31.4728 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bXTny7DjixCneJotgJ+AH9FNVueKlmOTxJM+VqUXG3EKquMD0TgRIqcJL8mAoKIZbluE0a1ln0fu/dW6pikWaQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB9059
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4ymCuY+J335o0aLDJfmj+ap0M8lyZxXvnFgW3Djrc8eor8QqbfI+el96+a5ukfcKdKJLxU+KKvxD0Nae75f+Jw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFB8C3A0B7C
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -206,7 +199,7 @@ X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -222,94 +215,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/10/20 18:00, Duan, Zhenzhong wrote:
-> Hi
+On 2025/10/17 16:22, Zhenzhong Duan wrote:
+> Pass IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR when doing the last dirty
+> bitmap query right before unmap, no PTEs flushes. This accelerates the
+> query without issue because unmap will tear down the mapping anyway.
 > 
->> -----Original Message-----
->> From: Avihai Horon <avihaih@nvidia.com>
->> Subject: Re: [PATCH v2 2/8] vfio/iommufd: Query dirty bitmap before DMA
->> unmap
->>
->> Hi,
->>
->> On 17/10/2025 11:22, Zhenzhong Duan wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> When a existing mapping is unmapped, there could already be dirty bits
->>> which need to be recorded before unmap.
->>>
->>> If query dirty bitmap fails, we still need to do unmapping or else there
->>> is stale mapping and it's risky to guest.
->>>
->>> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
->>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> Tested-by: Xudong Hao <xudong.hao@intel.com>
->>> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
->>> ---
->>>    hw/vfio/iommufd.c | 8 +++++++-
->>>    1 file changed, 7 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->>> index 976c0a8814..404e6249ca 100644
->>> --- a/hw/vfio/iommufd.c
->>> +++ b/hw/vfio/iommufd.c
->>> @@ -74,7 +74,13 @@ static int iommufd_cdev_unmap(const
->> VFIOContainer *bcontainer,
->>>        if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
->>>            if
->> (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
->>>                bcontainer->dirty_pages_supported) {
->>> -            /* TODO: query dirty bitmap before DMA unmap */
->>> +            ret = vfio_container_query_dirty_bitmap(bcontainer, iova,
->> size,
->>> +
->> iotlb->translated_addr,
->>> +
->> &local_err);
->>> +            if (ret) {
->>> +                error_report_err(local_err);
->>> +            }
->>> +            /* Unmap stale mapping even if query dirty bitmap fails */
->>>                return iommufd_backend_unmap_dma(be, ioas_id, iova,
->> size);
->>
->> If query dirty bitmap fails, shouldn't we unmap and return the query
->> bitmap error to fail migration? Otherwise, migration may succeed with
->> some dirtied pages not being migrated.
-> 
-> Oh, good catch. Will make below change:
-> 
+> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Tested-by: Xudong Hao <xudong.hao@intel.com>
+> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+> ---
+>   include/system/iommufd.h | 2 +-
+>   backends/iommufd.c       | 5 +++--
+>   hw/vfio/iommufd.c        | 5 +++--
+>   backends/trace-events    | 2 +-
+>   4 files changed, 8 insertions(+), 6 deletions(-)
+
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index a659f36a20..767a8e4cb6 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -64,7 +64,7 @@ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+>   bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>                                         uint64_t iova, ram_addr_t size,
+>                                         uint64_t page_size, uint64_t *data,
+> -                                      Error **errp);
+> +                                      uint64_t flags, Error **errp);
+>   bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+>                                         uint32_t data_type, uint32_t entry_len,
+>                                         uint32_t *entry_num, void *data,
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index fdfb7c9d67..086bd67aea 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -361,7 +361,7 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+>                                         uint32_t hwpt_id,
+>                                         uint64_t iova, ram_addr_t size,
+>                                         uint64_t page_size, uint64_t *data,
+> -                                      Error **errp)
+> +                                      uint64_t flags, Error **errp)
+>   {
+>       int ret;
+>       struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap = {
+> @@ -371,11 +371,12 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+>           .length = size,
+>           .page_size = page_size,
+>           .data = (uintptr_t)data,
+> +        .flags = flags,
+>       };
+>   
+>       ret = ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP, &get_dirty_bitmap);
+>       trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id, iova, size,
+> -                                           page_size, ret ? errno : 0);
+> +                                           flags, page_size, ret ? errno : 0);
+>       if (ret) {
+>           error_setg_errno(errp, errno,
+>                            "IOMMU_HWPT_GET_DIRTY_BITMAP (iova: 0x%"HWADDR_PRIx
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 6457cef344..937b80340c 100644
 > --- a/hw/vfio/iommufd.c
 > +++ b/hw/vfio/iommufd.c
-> @@ -65,7 +65,7 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
->       uint32_t ioas_id = container->ioas_id;
->       bool need_dirty_sync = false;
->       Error *local_err = NULL;
-> -    int ret;
-> +    int ret, unmap_ret;
-> 
->       if (unmap_all) {
->           size = UINT64_MAX;
-> @@ -82,7 +82,14 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
->                   error_report_err(local_err);
->               }
->               /* Unmap stale mapping even if query dirty bitmap fails */
-> -            return iommufd_backend_unmap_dma(be, ioas_id, iova, size);
-> +            unmap_ret = iommufd_backend_unmap_dma(be, ioas_id, iova, size);
-> +
-> +            /*
-> +             * If dirty tracking fails, return the failure to VFIO core to
-> +             * fail the migration, or else there will be dirty pages missed
-> +             * to be migrated.
-> +             */
-> +            return unmap_ret ? : ret;
+> @@ -74,7 +74,8 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
+>       if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+>           if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+>               bcontainer->dirty_pages_supported) {
+> -            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size, 0,
+> +            ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
+> +                                                    IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR,
+>                                                       iotlb->translated_addr,
+>                                                       &local_err);
+>               if (ret) {
+> @@ -224,7 +225,7 @@ static int iommufd_query_dirty_bitmap(const VFIOContainer *bcontainer,
+>           if (!iommufd_backend_get_dirty_bitmap(container->be, hwpt->hwpt_id,
+>                                                 iova, size, page_size,
+>                                                 (uint64_t *)vbmap->bitmap,
+> -                                              errp)) {
+> +                                              backend_flag, errp)) {
+>               return -EINVAL;
 >           }
-
-do we need a async way to fail migration? This unmap path is not
-necessarily in the migration path.
-
-Regards,
-Yi Liu
+>       }
+> diff --git a/backends/trace-events b/backends/trace-events
+> index 56132d3fd2..e1992ba12f 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -19,5 +19,5 @@ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+>   iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
+>   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+>   iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+> -iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+> +iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+>   iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
 
