@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FAACCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D7A3CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAnL2-0007aY-Ag; Mon, 20 Oct 2025 06:42:04 -0400
+	id 1vAnKy-0007Xd-4f; Mon, 20 Oct 2025 06:42:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vAnKz-0007Yv-Qi
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:42:01 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1vAnKw-0007Wy-Io
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:58 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vAnKx-0000hG-Hq
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:42:01 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-62fca01f0d9so8674059a12.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:59 -0700 (PDT)
+ id 1vAnKu-0000gH-0v
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:58 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-63c2d72581fso4681791a12.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760956917; x=1761561717; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760956914; x=1761561714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HXw1SscUx+MXLaJBI0mjTbbWzaRi5EgFazzwVthoJSQ=;
- b=NCEVImll5vI/o4bEffAJJL6SWdnsDVdtUzUT0IZuvbsibnLCbkwPOHett/5uVaSZeH
- MfSBspUd8TNTtaXFUPbpWMNVV7JwnDslv/0QyERQ9SNqXDgl4og3V2EM7YuICqU3Q73O
- a4WtAufhYv+gHUNwiFrjpSPKYTlBTDqvrlcdTgVNeSntcPtSNH6NrSiO3pNDRcWfc8qP
- fwDuQ2C4T0CN+5PgwvgvvTR6THpxEAKrGBxSuRTxHjbzYX9oQWQpRkJyqdwAD5vhJz3G
- f5ZFAEmR5aBeY+IH14wjmVoG0I80H3SfcQmlcd/HMxZSSzjlju8PH3QjZgY2U2jLOKc2
- S0Ow==
+ bh=KmuoIaZJYNvFdS9rN3/tOhcWyvPFH8X8zZaP+5cgj7Y=;
+ b=BSEk8dfFKg1ERZuw4Agz9aa2SgqVmus2zsiEY0mJfyk47PjXOiegAsJfQ7r0si8sH8
+ TzCZYoLIyMubadWcXQXBrnWvG6QLBpX/pD4Sl9nHuDKLpY/Kew5OohpQkXG3Eqm9L6Rv
+ +hv8hA05AXJL9NrwOYMikCqASPXre/XwEjmNrrqI8rHeR1/8ZobKK5NMp6gVa/bZtLq1
+ Y28rsYgK0+VXq0ne2mv6yK15S2vLNH4LkrYY/DrHkbzZgAjkpKY/he02LJTxGApNfJHP
+ rawSzaxjOpUCMhNXQDdlofAlZdYWqyJZH/UUHVA2zaRNdn5TKOJgGmaQ3u6rS/M9Z79i
+ Z4Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760956917; x=1761561717;
+ d=1e100.net; s=20230601; t=1760956914; x=1761561714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HXw1SscUx+MXLaJBI0mjTbbWzaRi5EgFazzwVthoJSQ=;
- b=JOA8IR1ozzdKq0ch3WkHclRHD8yymyvhyzFcAlX3HwYkq1sCLnG6xaYkDxtsiy1rVC
- P2Lne7PLtFYcyVrqqcbCQahz/NlScFus2dCvfB9rVTLFkAQLy0csiChTNxeMFvr4qR9p
- g5sTIsQM/b31dw3uOV7eW4ZoVi8rWbp6rDP0gghRN/MtLpuVdB2o1jZH5Axxrsp1QNhs
- oD7+LRoUURIiG4jk9vNvMgWaEYAXLc/8R2F3MDYoj3GxldXx3OCpAw6qe/iwAygCFQ3m
- PrbMbeghg4JlKxwY61ck73Ff8OyBG/hDyIxZdcNyQljMXOHmAcLsNixGJGxwbx8IuQko
- 9fhg==
-X-Gm-Message-State: AOJu0YyyauKteKJmYi1VKstI0G1UyfApV5rzoq59jZEucL2JwlDb7U+R
- SqcB2l6Ai8gFPSstlpfx4S8b2cH24jARzti923H+japD4+NYRzFzUdGGBZpw3JdjZI8=
-X-Gm-Gg: ASbGncsIW6JTdgbNz7OmFdHVldtHS9LFt90ub7wC2GbHN/4cs8+M/jo2wXR8wbS9hQY
- vFXOmCn+nawPWBnbPoqdAFb0iDWSj/dKuQqk8kWA1+VamV0SHbVbjhHnBX6A6gYSRAT/Fxq+uxN
- 6uM/tQiUMgXCsBqD+WEBUxWFjQ9xCfCTmA66BNPBH0W7FiBa/96044E0XVo8H5k+d7opz472XQ7
- AP5U/0KKj391gwpOVMZPsvo7bH4ZmnC1Z1J8E8cO97yLOXFBPsTdslOayBH6T1FNTDC6xmUap26
- 9PceyHPT5xfu0ntdmnvdj+iCxE/0q5JVjnScGf2rRJxpAIkNjrfaxwmpzSbC1yd99ICR6GruFc1
- 22qhmOFQ38FBF2zRGjclMOahH83P5XORJt6dg5i0fUG0lsvOMGBFR0cmca87DTIHqbNMzkK9SC7
- M8XC9ma6yJ7oI=
-X-Google-Smtp-Source: AGHT+IFOPWMzOVmS+J+ogN5oE/tyavikzUZ4TCy31qq5WO+3y0n7TAgOJYkbD9PehL0tw13o/r3Avw==
-X-Received: by 2002:a17:907:9607:b0:b3e:26ae:7288 with SMTP id
- a640c23a62f3a-b6471d48331mr1417981966b.8.1760956917493; 
- Mon, 20 Oct 2025 03:41:57 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b65ebf434f0sm748865066b.82.2025.10.20.03.41.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=KmuoIaZJYNvFdS9rN3/tOhcWyvPFH8X8zZaP+5cgj7Y=;
+ b=jHsgHAunXGeMDDeSGffymHUCUiyaZ+TX6X3oIOOLYg9t/c5crvwPd8vuzwPIKwvGIO
+ bR0Yvt0Sg1qrhuZsqpBcO8/D1ShrOCjmenSJRI2BH5/3OoPRoK7WNHnO3yGfBN4uZjiZ
+ kmUDBCf/ioDCIFABXVsPQZjWJo/sISmph1wHdXcbjut5j9g0D0RscGnSe5i1GPo4BSUD
+ gvh4HoGKJIJmBCmIwLfW2AOQyl5LbgG8C+lKKZDtqCMg61TGWQxRLZdqnJYQzQLw5IZo
+ RItCg8l3B7XVT1cDWNRyGdPt+/0h+EliLmtgDuDz0PEaiFNqmbDcmQzROsvBf6p24PJF
+ Q/ug==
+X-Gm-Message-State: AOJu0YyVUmdpZ9MlYljWHjmXLKnSJhqWubzCMMthFFdgFFrufO/Y2Hy5
+ CplvEIwbJ9DaGpTL0Ucp8xhlT5JZqnBlTci6t2uOBMC80Cmm9XnPsfud1oT5WVukjw4=
+X-Gm-Gg: ASbGncu/OO5S5KGh4BmljpM7/L6CCX7DiaweFFQlmyQTPRu/QL7TPHYIYT//bjt9QuR
+ s/3VAaHLMgz7f+uHPB2YfFX7Y9FzCNpzWX7mDpbJ9KNYox+9OmD8KpM4rIn1iJl2UXsyAWXTEKq
+ nzinEU66ErKgWTXxv3g3wEH+ZtDJq5yZL/OyxfEgpj38V3ysynCUtEaQIiF4orV1lsQ1QpM1Znw
+ V5f54CVq0cDeZf5+nxKadGGTapCq+lz7Ork2gjmv8fkcP67wiS4feE9DdG3z5BCWOccjkU6HIpx
+ VzswBzRmv+5hh88PVkQh4FAkjxphLkif2brbV28WqzvkIXjYWGkGGsDWZHkZkgLbOjeH/C63U9k
+ LJQ0W1h0pnGEZlv1ugyoA5qfm536pRfaJPNsATAwzELllLhp3XBSITbzzBrrajrLsj4+46AJ8dP
+ 1VfjrDr8S9dAk=
+X-Google-Smtp-Source: AGHT+IGEnHTAs6zU3fPWxPyPSJsBGHsRI4QAhZ31vHAAF4emgvdV5hhENK6LCrx0IrP5mUqymE7tcA==
+X-Received: by 2002:a05:6402:524c:b0:633:7017:fcbc with SMTP id
+ 4fb4d7f45d1cf-63c1f69cd11mr12764098a12.15.1760956914229; 
  Mon, 20 Oct 2025 03:41:54 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63c4949bed7sm6346663a12.35.2025.10.20.03.41.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Oct 2025 03:41:51 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5CF2D60D98;
- Mon, 20 Oct 2025 11:41:50 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id EEE655F9F7;
+ Mon, 20 Oct 2025 11:41:49 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 08/11] docs/system: split VirtIO devices from the rest
-Date: Mon, 20 Oct 2025 11:41:46 +0100
-Message-ID: <20251020104149.4034124-9-alex.bennee@linaro.org>
+Cc: Andrew Keesler <ankeesler@google.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 04/11] Support per-head resolutions with virtio-gpu
+Date: Mon, 20 Oct 2025 11:41:42 +0100
+Message-ID: <20251020104149.4034124-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251020104149.4034124-1-alex.bennee@linaro.org>
 References: <20251020104149.4034124-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,127 +109,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In an effort to tidy up our device documentation split the VirtIO docs
-from the rest of the index and put the index to them at the front of
-the list. Sort the remaining entries alphabetically and tweak the
-references appropriately.
+From: Andrew Keesler <ankeesler@google.com>
 
-Add a short preface to the VirtIO section nudging users to use VirtIO
-unless they specifically want a particular piece of hardware
-emulation.
+In 454f4b0f, we started down the path of supporting separate
+configurations per display head (e.g., you have 2 heads - one with
+EDID name "AAA" and the other with EDID name "BBB").
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Message-ID: <20251016150357.876415-9-alex.bennee@linaro.org>
+In this change, we add resolution to this configuration surface (e.g.,
+you have 2 heads - one with resolution 111x222 and the other with
+resolution 333x444).
+
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+                 "xres":111,
+                 "yres":222
+              },
+              {
+                 "name":"BBB",
+                 "xres":333,
+                 "yres":444
+              }
+            ]}'
+
+Here is the behavior matrix of the current resolution configuration
+surface (xres/yres) with the new resolution configuration surface
+(outputs[i].xres/yres).
+
+Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with default xres/yres
+
+Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with xres/yres
+
+Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Signed-off-by: Andrew Keesler <ankeesler@google.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250902141312.750525-2-ankeesler@google.com>
+[AJB: dropped pointless output_idx range check, tweak commit]
+Message-ID: <20251016150357.876415-5-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
-index 911381643f1..db714ad47aa 100644
---- a/docs/system/device-emulation.rst
-+++ b/docs/system/device-emulation.rst
-@@ -82,22 +82,18 @@ Emulated Devices
- .. toctree::
-    :maxdepth: 1
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 05295ab6655..0ce789bb22f 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -971,15 +971,21 @@
+ ##
+ # @VirtIOGPUOutput:
+ #
+-# Describes configuration of a VirtIO GPU output.
++# Describes configuration of a VirtIO GPU output. If both xres and
++# yres are set, they take precedence over root virtio-gpu
++# resolution configuration and enable the corresponding output.
+ #
+ # @name: the name of the output
+ #
++# @xres: horizontal resolution of the output in pixels (since 10.2)
++#
++# @yres: vertical resolution of the output in pixels (since 10.2)
++#
+ # Since: 10.1
+ ##
  
-+   devices/virtio/index.rst
-+
-    devices/can.rst
-+   devices/canokey.rst
-    devices/ccid.rst
-    devices/cxl.rst
--   devices/vfio-user.rst
--   devices/ivshmem.rst
-+   devices/igb.rst
-    devices/ivshmem-flat.rst
-+   devices/ivshmem.rst
-    devices/keyboard.rst
-    devices/net.rst
-    devices/nvme.rst
--   devices/usb.rst
--   devices/vhost-user.rst
--   devices/virtio-gpu.rst
--   devices/virtio-pmem.rst
--   devices/virtio-snd.rst
--   devices/vhost-user-input.rst
--   devices/vhost-user-rng.rst
--   devices/canokey.rst
-    devices/usb-u2f.rst
--   devices/igb.rst
-+   devices/usb.rst
-+   devices/vfio-user.rst
-diff --git a/docs/system/devices/vfio-user.rst b/docs/system/devices/vfio-user.rst
-index b6dcaa5615e..30c2215f4ea 100644
---- a/docs/system/devices/vfio-user.rst
-+++ b/docs/system/devices/vfio-user.rst
-@@ -6,7 +6,7 @@ vfio-user
+ { 'struct': 'VirtIOGPUOutput',
+-  'data': { 'name': 'str' } }
++  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
  
- QEMU includes a ``vfio-user`` client. The ``vfio-user`` specification allows for
- implementing (PCI) devices in userspace outside of QEMU; it is similar to
--``vhost-user`` in this respect (see :doc:`vhost-user`), but can emulate arbitrary
-+``vhost-user`` in this respect (see :doc:`virtio/vhost-user`), but can emulate arbitrary
- PCI devices, not just ``virtio``. Whereas ``vfio`` is handled by the host
- kernel, ``vfio-user``, while similar in implementation, is handled entirely in
- userspace.
-diff --git a/docs/system/devices/virtio/index.rst b/docs/system/devices/virtio/index.rst
-new file mode 100644
-index 00000000000..fc457ca74c7
---- /dev/null
-+++ b/docs/system/devices/virtio/index.rst
-@@ -0,0 +1,30 @@
-+VirtIO Devices
-+==============
+ ##
+ # @DummyVirtioForceArrays:
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 7269477a1c8..14058f6bffb 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -233,6 +233,15 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+     g->req_state[0].width = g->conf.xres;
+     g->req_state[0].height = g->conf.yres;
+ 
++    for (output_idx = 0, node = g->conf.outputs;
++         node; output_idx++, node = node->next) {
++        if (node->value->has_xres && node->value->has_yres) {
++            g->enabled_output_bitmask |= (1 << output_idx);
++            g->req_state[output_idx].width = node->value->xres;
++            g->req_state[output_idx].height = node->value->yres;
++        }
++    }
 +
-+VirtIO devices are paravirtualized devices designed to be efficient to
-+emulate and virtualize. Unless you are specifically trying to exercise
-+a driver for some particular hardware they are the recommended device
-+models to use for virtual machines.
-+
-+The `VirtIO specification`_ is an open standard managed by OASIS. It
-+describes how a *driver* in a guest operating system interacts with
-+the *device* model provided by QEMU. Multiple Operating Systems
-+support drivers for VirtIO with Linux perhaps having the widest range
-+of device types supported.
-+
-+The device implementation can either be provided wholly by QEMU, or in
-+concert with the kernel (known as *vhost*). The device implementation
-+can also be off-loaded to an external process via :ref:`vhost user
-+<vhost_user>`.
-+
-+.. toctree::
-+   :maxdepth: 1
-+
-+   virtio-gpu.rst
-+   virtio-pmem.rst
-+   virtio-snd.rst
-+   vhost-user.rst
-+   vhost-user-input.rst
-+   vhost-user-rng.rst
-+
-+.. _VirtIO specification: https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
-diff --git a/docs/system/devices/vhost-user-input.rst b/docs/system/devices/virtio/vhost-user-input.rst
-similarity index 100%
-rename from docs/system/devices/vhost-user-input.rst
-rename to docs/system/devices/virtio/vhost-user-input.rst
-diff --git a/docs/system/devices/vhost-user-rng.rst b/docs/system/devices/virtio/vhost-user-rng.rst
-similarity index 100%
-rename from docs/system/devices/vhost-user-rng.rst
-rename to docs/system/devices/virtio/vhost-user-rng.rst
-diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
-similarity index 100%
-rename from docs/system/devices/vhost-user.rst
-rename to docs/system/devices/virtio/vhost-user.rst
-diff --git a/docs/system/devices/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-similarity index 100%
-rename from docs/system/devices/virtio-gpu.rst
-rename to docs/system/devices/virtio/virtio-gpu.rst
-diff --git a/docs/system/devices/virtio-pmem.rst b/docs/system/devices/virtio/virtio-pmem.rst
-similarity index 100%
-rename from docs/system/devices/virtio-pmem.rst
-rename to docs/system/devices/virtio/virtio-pmem.rst
-diff --git a/docs/system/devices/virtio-snd.rst b/docs/system/devices/virtio/virtio-snd.rst
-similarity index 100%
-rename from docs/system/devices/virtio-snd.rst
-rename to docs/system/devices/virtio/virtio-snd.rst
+     g->hw_ops = &virtio_gpu_ops;
+     for (i = 0; i < g->conf.max_outputs; i++) {
+         g->scanout[i].con =
 -- 
 2.47.3
 
