@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC819CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D03CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAnJO-0002X8-Gm; Mon, 20 Oct 2025 06:40:24 -0400
+	id 1vAnKw-0007Wh-57; Mon, 20 Oct 2025 06:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAnIZ-00011F-OJ
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:39:37 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vAnKt-0007UO-Sj
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:55 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAnIV-0000Il-Ju
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:39:31 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4711f156326so28246915e9.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:39:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vAnKr-0000fl-Qj
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:55 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b5c18993b73so690485666b.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760956763; x=1761561563; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W8V6t72s6m9O+rQuQWdHSJVeQu4En69ObrbMa64lrwE=;
- b=lWKyBFS8fQhE2glG10K/BI9LJ+Uzk0lRbzDkzQ3d52HleGTfDRqHozcbahkv58edm2
- x2enwj5HJDAmZRhQetxzpLBDbdNPNhc1xXHqfS29w5/Hob543ZxnHupcdyb89OLItTuq
- R4eahJrNmvLIqaCbX03kixMudDqdwDacpCs9S0fu2erBLQU7ItFadQa7opyGPTaBLqjU
- ik02UF1BKt1d2jP8YHgfxHeM+lriLhQOceFJ9acdvzLmfsnhtkizCyXkZg0anrrUAZF3
- oaJcYD3+zPbZBJMq2j5rCYaj8PH5AKDDDsjUJNQamKk7m9JdR6rxkFGDu99ASxqiI8u/
- KQkA==
+ d=linaro.org; s=google; t=1760956912; x=1761561712; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QjI1tf1SSK5JtEpNnx+nHv2CokSkFY5nLJW1sivoQOc=;
+ b=RgKxj82zOJgNMNX3yPePcnptXrdeBpLQvigcLZFn1M7zJ3lmF7Hip12k5WemnUwjRA
+ b0QQrgn5wHKzEHM9tvQwytiQooc06w7M5TCxPbDeU73Z/h10tlt4H7pUPUe87TcPVc5t
+ a9JksHxFHKHns5zsZ/NNrloQXEa68kFl9k4/AJTMhNla/CMgUYedN7nqbL7egs1tTUGP
+ Xr8cw4CMsQs129/dgQFftcGqwrZxHlyQH7gSeb89H2BFZA9g0SzZwe79ggfJtcT/rE2J
+ lFtHAFW2isKvsh/VpUZB+9v/5Kw85abRrwjZUzmsH5Cx7EpCYP35ebhVMiITh0yT87SY
+ F1hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760956763; x=1761561563;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=W8V6t72s6m9O+rQuQWdHSJVeQu4En69ObrbMa64lrwE=;
- b=wsQZ2u9R6eDWcrSY9qfsL2pdibIrT7QoRvRTM91V/O/xZMpRr1cI9rcUDWA/KHItjN
- Vgbn0/7m/IhYNP5TY2TtyUHKsn9+r05bIizcj1tOi+nE1rrOMRM04cwV8pqm+7aefLTR
- Pltjv9/Q1jLk7tsvIq9AheaEAhC4+z8M1RuS0+kibJXazLaBDbhdQgp/IPGy7oO7SwSZ
- qkDDuK0I8KIf2OpTo4eHKQEdz6Ds2AY+dwS5jtioB3tDOY/2pEuJhFlIOFVapnrZbbfk
- 6EPzRlGLr8RG2KvFWNoVrS9MexPGFYslUlBcL5WTZ+JiIoS/NoOHqL/pm7fegMH95F7Q
- umLA==
-X-Gm-Message-State: AOJu0YyjfdBekas7DwC1HWkvJeIY2pfzARIdMoaIs7/qY8NiTOXw7ZBT
- T9ow+GkZIr6lQgcn/et32mlY7bvHqh5wYbtbJ/AR9MMTKFsBmntpxs9iqnYbkRCiZTMZhnOjqCh
- QD5wLasE=
-X-Gm-Gg: ASbGncsd/zqdJ6T6t6VszVuSGgbTMoIL9K8DeUxGnwwRPB3zEBx0Y6LoA/ke0T4EXUd
- Dhg8b1Qx1Urc/ITTQAaMX2n6BDe92WmHuHNdSFZaMLiNIm6gX9cyiCxse5RxNMDUvBc36I+SFsz
- pPotBxX0Hhgm8BijKzvzCOASe6ulwoI/LO1sLyVUNR2Wfg1AdQbq6mOkwmFLwMPdHW2SMeqqT0k
- V5WlStsAWRWYRLQynvTvpUYVc8oB/ZcIJuf74GW4O5D9DoR6edQmWBOqTb/MXfdkcTWMTsbdpcZ
- QOBD3Wl6Ss4sWfquutNb/myM3VIRjoo5/aweCI0+2bLTAlzPtAIKVSsiLdbL8omDsCC2i+uYJvb
- 5Ij+jetd5tP21aULsfUNJeh9TO+4wRb2UFygMYBJv8S6uP44HYKjV6GRlqG7e3bEYbl+F0Cr6RS
- 1LQg4H3cywyYN+zjDb/qUEEkhEPDsA4llhCBl1SfKJeXT1ywyOow==
-X-Google-Smtp-Source: AGHT+IGtRhefuOKzzFl9+PdkwonrQEzKn77Y5Nm+6QawC0+EavDuvCFIl4z0qnwNmWAUflc1D40aEw==
-X-Received: by 2002:a5d:5f82:0:b0:425:8133:8a89 with SMTP id
- ffacd0b85a97d-42704d75729mr9332637f8f.22.1760956763315; 
- Mon, 20 Oct 2025 03:39:23 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5b3d4csm14321834f8f.19.2025.10.20.03.39.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 03:39:22 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1760956912; x=1761561712;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QjI1tf1SSK5JtEpNnx+nHv2CokSkFY5nLJW1sivoQOc=;
+ b=SC9SxAT1HnU4YFKitSEOjpU5yi/dcTn36sPCf9JuN9PB/zbQsxgh8V/TPhvyQDK9kt
+ eBzp6KG6vqZCnazNGQGoriQm+BZJP5e7gn2q6pHEmaejgqphk58dM+pwc+iaGjgq9x3s
+ d7koyRyQ3RyL6f8IOhoV4MZAs32B4Od8aA5/HFbu1ilySNBbgz97DbWL1KeKoSciowoV
+ x9YG16DQm0by4m9iONvc3zrYIuFJFpJy2fFXmxIjwtbKKl/49U2n8sfKuElI8WQr5jpt
+ okcjHwiFkF02BO6PBgQIIPtpWR6LJEOXaMOHcKSzFMuVp9Kjg3jL0PP6usPaWQVOaJIv
+ qLXQ==
+X-Gm-Message-State: AOJu0YygrqmwPGBpNS8kR45Y8xoUF4FIML7m6q6q4x5xAsfTnZNlBVE+
+ wOiAnDXWdqcMOZ3Z65nX7xSc6PQgl1jqXZWcXd5zmsK7mfWIGMGbzc/dmVB1jsftKrjWSqYxe6r
+ Ne2MraZY=
+X-Gm-Gg: ASbGncsmuA1l8NF/suxs+c7wqGoWetyVsL9I97kS+DyJvjXr3Kxkwjzma5bLGNNVpDN
+ qeaFrhdLptyaWmamDEBjRcyb6nwBrBsp20iWVqNw4YWoI3mEF36mHzCmr2j+OlCc3Jr2jpeYO2M
+ 5vatZkrekkVNnTSdWT4PXVPkMEE3Ni0IlIQ/VHmRB96/dHj7HJUZq5xsKLbyPM/frQ4KTOhSbhD
+ 6md5PEl8VgIbVfkyYCiK7cKtYVwLBjRYFwl7hzcFzFiPgur7jSxX0DqD+72RHcHwfHuQUpoDqrU
+ AhS3a5IOvEEYQJMtjik7MapptHTKzp63ebeBzTKBIHNtOqjqtxn10rSG8e5HUc6AqEcYiwXHHFE
+ IOEZ6WCehDXcSj4cI9lpF2aFG1u+w7Ljh/SGnR5YGvxLMyEM7SkJDjABqj0L/vn05CSBnUCj7VH
+ Fn
+X-Google-Smtp-Source: AGHT+IH2E5QmxWO8mVuPZ0Art1QyIRvzVIp0iM7WfBnY/Z5oT1QIDlIhW5Os3YATR4fRnGM84555iA==
+X-Received: by 2002:a17:907:3e8c:b0:b0a:aa7e:a191 with SMTP id
+ a640c23a62f3a-b6475708eafmr1617336566b.57.1760956911768; 
+ Mon, 20 Oct 2025 03:41:51 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63c4949beedsm6274074a12.40.2025.10.20.03.41.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Oct 2025 03:41:50 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 91D2C5F83E;
+ Mon, 20 Oct 2025 11:41:49 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-ppc@nongnu.org, kvm@vger.kernel.org,
- Chinmay Rath <rathc@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 13/18] hw/ppc/spapr: Remove SpaprMachineClass::phb_placement
- callback
-Date: Mon, 20 Oct 2025 12:38:09 +0200
-Message-ID: <20251020103815.78415-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251020103815.78415-1-philmd@linaro.org>
-References: <20251020103815.78415-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 00/11] maintainer updates (gitlab, check-tcg, virtio-gpu,
+ plugins, docs)
+Date: Mon, 20 Oct 2025 11:41:38 +0100
+Message-ID: <20251020104149.4034124-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,185 +102,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SpaprMachineClass::phb_placement callback was only used by
-the pseries-4.0 machine, which got removed. Remove it as now
-unused, directly calling spapr_phb_placement().
-Move spapr_phb_placement() definition to avoid forward declaration.
+The following changes since commit 3a2d5612a7422732b648b46d4b934e2e54622fd6:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/ppc/spapr.h |   5 --
- hw/ppc/spapr.c         | 114 ++++++++++++++++++++---------------------
- 2 files changed, 55 insertions(+), 64 deletions(-)
+  .gitlab-ci.d/buildtest.yml: Install 'file' for the Coverity job (2025-10-19 11:49:36 -0700)
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 4c1acd7af5e..82f556f97e1 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -149,11 +149,6 @@ struct SpaprMachineClass {
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
-     bool pre_6_2_numa_affinity;
--
--    bool (*phb_placement)(SpaprMachineState *spapr, uint32_t index,
--                          uint64_t *buid, hwaddr *pio,
--                          hwaddr *mmio32, hwaddr *mmio64,
--                          unsigned n_dma, uint32_t *liobns, Error **errp);
-     SpaprResizeHpt resize_hpt_default;
-     SpaprCapabilities default_caps;
-     SpaprIrq *irq;
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index e861a2e7466..200e68b8bc2 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4067,12 +4067,62 @@ int spapr_phb_dt_populate(SpaprDrc *drc, SpaprMachineState *spapr,
-     return 0;
- }
- 
-+static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
-+                                uint64_t *buid, hwaddr *pio,
-+                                hwaddr *mmio32, hwaddr *mmio64,
-+                                unsigned n_dma, uint32_t *liobns, Error **errp)
-+{
-+    /*
-+     * New-style PHB window placement.
-+     *
-+     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
-+     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
-+     * windows.
-+     *
-+     * Some guest kernels can't work with MMIO windows above 1<<46
-+     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
-+     *
-+     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
-+     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
-+     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
-+     * 1TiB 64-bit MMIO windows for each PHB.
-+     */
-+    const uint64_t base_buid = 0x800000020000000ULL;
-+    int i;
-+
-+    /* Sanity check natural alignments */
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % SPAPR_PCI_MEM32_WIN_SIZE) != 0);
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % SPAPR_PCI_IO_WIN_SIZE) != 0);
-+    /* Sanity check bounds */
-+    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
-+                      SPAPR_PCI_MEM32_WIN_SIZE);
-+    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
-+                      SPAPR_PCI_MEM64_WIN_SIZE);
-+
-+    if (index >= SPAPR_MAX_PHBS) {
-+        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
-+                   SPAPR_MAX_PHBS - 1);
-+        return false;
-+    }
-+
-+    *buid = base_buid + index;
-+    for (i = 0; i < n_dma; ++i) {
-+        liobns[i] = SPAPR_PCI_LIOBN(index, i);
-+    }
-+
-+    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
-+    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
-+    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
-+    return true;
-+}
-+
- static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                Error **errp)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(OBJECT(hotplug_dev));
-     SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(dev);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     const unsigned windows_supported = spapr_phb_windows_supported(sphb);
-     SpaprDrc *drc;
- 
-@@ -4091,12 +4141,10 @@ static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-      * This will check that sphb->index doesn't exceed the maximum number of
-      * PHBs for the current machine type.
-      */
--    return
--        smc->phb_placement(spapr, sphb->index,
--                           &sphb->buid, &sphb->io_win_addr,
--                           &sphb->mem_win_addr, &sphb->mem64_win_addr,
--                           windows_supported, sphb->dma_liobn,
--                           errp);
-+    return spapr_phb_placement(spapr, sphb->index,
-+                               &sphb->buid, &sphb->io_win_addr,
-+                               &sphb->mem_win_addr, &sphb->mem64_win_addr,
-+                               windows_supported, sphb->dma_liobn, errp);
- }
- 
- static void spapr_phb_plug(HotplugHandler *hotplug_dev, DeviceState *dev)
-@@ -4344,57 +4392,6 @@ static const CPUArchIdList *spapr_possible_cpu_arch_ids(MachineState *machine)
-     return machine->possible_cpus;
- }
- 
--static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
--                                uint64_t *buid, hwaddr *pio,
--                                hwaddr *mmio32, hwaddr *mmio64,
--                                unsigned n_dma, uint32_t *liobns, Error **errp)
--{
--    /*
--     * New-style PHB window placement.
--     *
--     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
--     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
--     * windows.
--     *
--     * Some guest kernels can't work with MMIO windows above 1<<46
--     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
--     *
--     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
--     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
--     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
--     * 1TiB 64-bit MMIO windows for each PHB.
--     */
--    const uint64_t base_buid = 0x800000020000000ULL;
--    int i;
--
--    /* Sanity check natural alignments */
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % SPAPR_PCI_MEM32_WIN_SIZE) != 0);
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % SPAPR_PCI_IO_WIN_SIZE) != 0);
--    /* Sanity check bounds */
--    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
--                      SPAPR_PCI_MEM32_WIN_SIZE);
--    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
--                      SPAPR_PCI_MEM64_WIN_SIZE);
--
--    if (index >= SPAPR_MAX_PHBS) {
--        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
--                   SPAPR_MAX_PHBS - 1);
--        return false;
--    }
--
--    *buid = base_buid + index;
--    for (i = 0; i < n_dma; ++i) {
--        liobns[i] = SPAPR_PCI_LIOBN(index, i);
--    }
--
--    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
--    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
--    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
--    return true;
--}
--
- static ICSState *spapr_ics_get(XICSFabric *dev, int irq)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(dev);
-@@ -4605,7 +4602,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
-     smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
-     fwc->get_dev_path = spapr_get_fw_dev_path;
-     nc->nmi_monitor_handler = spapr_nmi;
--    smc->phb_placement = spapr_phb_placement;
-     vhc->cpu_in_nested = spapr_cpu_in_nested;
-     vhc->deliver_hv_excp = spapr_exit_nested;
-     vhc->hypercall = emulate_spapr_hypercall;
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-10.2-maintainer-201025-1
+
+for you to fetch changes up to 2687249db27b4d23dfc69cb144015509ef72dc40:
+
+  docs/system: merge vhost-user-input into vhost-user-contrib (2025-10-20 10:41:14 +0100)
+
+----------------------------------------------------------------
+maintainer updates (gitlab, check-tcg, virtio-gpu, plugins, docs)
+
+  - drop aarch32 runner from custom runners
+  - use template for aarch64 custom jobs
+  - don't test for atime in linux-test
+  - support per-head resolution for virtio-gpu
+  - drop extra draw call causing corruption in gtk-gl-area
+  - add trace event for blob map/unmap
+  - extend ufrace_symbols to generate dbg files
+  - group VirtIO devices in device documentation
+  - merge vhost-user device docs into single file
+
+----------------------------------------------------------------
+Alex Bennée (7):
+      gitlab: use template for ubuntu-24.04-aarch64 jobs
+      gitlab: drop aarch32 runner and associated bits
+      hw/display: add blob map/unmap trace events
+      docs/system: split VirtIO devices from the rest
+      docs/system: unify the naming style for VirtIO devices
+      docs/system: drop vhost-user-rng docs
+      docs/system: merge vhost-user-input into vhost-user-contrib
+
+Andrew Keesler (1):
+      Support per-head resolutions with virtio-gpu
+
+Dongwon Kim (1):
+      ui/gtk-gl-area: Remove extra draw call in refresh
+
+Peter Maydell (1):
+      tests/tcg/multiarch/linux/linux-test: Don't try to test atime update
+
+Pierrick Bouvier (1):
+      contrib/plugins/uftrace_symbols.py: generate debug files to map symbols to source
+
+ docs/system/device-emulation.rst                   |  18 +-
+ docs/system/devices/vfio-user.rst                  |   2 +-
+ docs/system/devices/vhost-user-input.rst           |  45 ----
+ docs/system/devices/vhost-user-rng.rst             |  41 ----
+ docs/system/devices/virtio/index.rst               |  29 +++
+ docs/system/devices/virtio/vhost-user-contrib.rst  |  87 ++++++++
+ docs/system/devices/{ => virtio}/vhost-user.rst    |  22 +-
+ docs/system/devices/{ => virtio}/virtio-gpu.rst    |   4 +-
+ docs/system/devices/{ => virtio}/virtio-pmem.rst   |   6 +-
+ docs/system/devices/{ => virtio}/virtio-snd.rst    |   2 +-
+ qapi/virtio.json                                   |  10 +-
+ hw/display/virtio-gpu-base.c                       |   9 +
+ hw/display/virtio-gpu-virgl.c                      |   4 +
+ tests/tcg/multiarch/linux/linux-test.c             |   9 +-
+ ui/gtk-gl-area.c                                   |  17 +-
+ .gitlab-ci.d/custom-runners.yml                    |   1 -
+ .../custom-runners/ubuntu-24.04-aarch32.yml        |  25 ---
+ .../custom-runners/ubuntu-24.04-aarch64.yml        | 230 +++++++++------------
+ contrib/plugins/uftrace_symbols.py                 | 120 +++++++----
+ hw/display/trace-events                            |   2 +
+ scripts/ci/setup/ubuntu/build-environment.yml      |  17 --
+ .../ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml    | 127 ------------
+ 22 files changed, 361 insertions(+), 466 deletions(-)
+ delete mode 100644 docs/system/devices/vhost-user-input.rst
+ delete mode 100644 docs/system/devices/vhost-user-rng.rst
+ create mode 100644 docs/system/devices/virtio/index.rst
+ create mode 100644 docs/system/devices/virtio/vhost-user-contrib.rst
+ rename docs/system/devices/{ => virtio}/vhost-user.rst (77%)
+ rename docs/system/devices/{ => virtio}/virtio-gpu.rst (99%)
+ rename docs/system/devices/{ => virtio}/virtio-pmem.rst (98%)
+ rename docs/system/devices/{ => virtio}/virtio-snd.rst (99%)
+ delete mode 100644 .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
+ delete mode 100644 scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
+
 -- 
-2.51.0
+2.47.3
 
 
