@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF036CCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CBDCCD19F
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAy4h-0006Q8-H7; Mon, 20 Oct 2025 18:09:55 -0400
+	id 1vAy57-0006bu-1G; Mon, 20 Oct 2025 18:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4g-0006Ph-1b
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:09:54 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy54-0006bE-Ql
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:18 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4d-00062j-Pk
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:09:53 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-426edfffc66so3605218f8f.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:09:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy53-0006Hr-6N
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:18 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47103b6058fso34344005e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760998190; x=1761602990; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760998215; x=1761603015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6E1wKLq7nmDSAhd/TLUL+t/dNL7Yzwczc0AaVB8kGis=;
- b=EVrdonAzejxc/KksvQ64undNU1pZDZ2024Ll39uOPSIllVTYxyZMg7XmOyA9PnW4ei
- bADbeQbE0GqZrVB/jAgqIujs50hIAZ9IBWEXFK3vRuFVor+iVJY+2k+E01hXbnaa8HKM
- lEejH/MUdfZB0yzzh1ieazNUXGnB7S1Ld9jMJGy0JfcsqSBNwaTPyyIu0odlxJ1obXsl
- EhbEJ9fUMYaoK7u7I6RbHuL2r58sDegUI772Oti4uGnb1F9m1PCwKMN3nzrookhfTpDy
- zRCG44c1iEynyC4p7R3ELB1AGf6NqMA3dNIxQPeoyyeTJdsYbWACLz67WEGgcUz9nJrC
- AhfA==
+ bh=9sl5D2OBPAk30ix5XFbA96G64ecqbTuVPaB9Fe4lYaE=;
+ b=Jt4nZNglwi8mzrVe7AICukwaap0SA/wBBoRJ5aD8jbuO3dPtNbb2VrGiYN1s1IIEZW
+ U2zPsCk424Bp8T0HGBz7FtpUYG+7ZIJBRD1e/4RrIvkeJ0TH64x7vrKS7Ulj9ycQDc5D
+ nA07kmb/D+PX15rxa1jBYzl9uK1/0BmuhljFli2/gsp/VQC0Cnj4PQtM8DXT7JhpZarO
+ 73T5A+g7G3rzgNoxgloTHuyw/Wt+xaynFLcX7uZEizXS5KJi5vTmkHeI0SQ9wyjyETRx
+ qx37ExlBNA0nK4xR/pDqPMg/ao9Xlm2pcUfRUqLT/4ut1JO8zHHwO6I/A+EQXaFMxWpR
+ oFYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760998190; x=1761602990;
+ d=1e100.net; s=20230601; t=1760998215; x=1761603015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6E1wKLq7nmDSAhd/TLUL+t/dNL7Yzwczc0AaVB8kGis=;
- b=wsmFL/FA0kIg2kBRrG+XgWDrcIkEKQ/Ntx9KZ2zwOtDvTs2AEbHxB6MOmA8TSDEMru
- np7DO1fbRWWpcKkBIQY0MMpzrfXnnptj6u5cwpLKizyIylVdpnkHMa4V2EpUjJjwiwXf
- dGvodl9eFE6TvF6hrFP5lhWoTYg9DedPPuypD4POwKJj+n2mVq+5n/zK0RttugLgTrWs
- 7g4QVw/Nn07Y1b1BYY5Vbyp//qttGgH0DQ86K7rBUNLVcP3hulXqKzhwM7ufEn9QWCk+
- QsKxTJinN26zcbdUymj/f3ZHcUzumSYKEf9o4DR3vIQodEePA1jXtWNUakq3MUTnkx8I
- wGJw==
-X-Gm-Message-State: AOJu0Yz/sTvrxnRu8pPyrKJ5pFEaPf/h07yaVYi6OvGFHUnH1FuG4abA
- /JGg60MfMdqXOOG2P6Qs89JZLUZdXAv7tLP755YcXemJrJHIbeuH5Hudiq64kxLG5o3p3fboHzN
- aIjswbCY=
-X-Gm-Gg: ASbGncsdv/csboEwFD53l+sEhk4S7xeTFwv50URFZe8wAJBV9M5OxOM0X13m9GsgjAT
- uMLqK+B+Gi2sTv1PN1xbUC06kHmulocJstywNwJ7gnhA3X1Uzr5H2ZLsK+O8kOCuoXfFqjQ4TU/
- zCadhB+mLLhDCV3ZE9TM9P2/49SpEQSjSI5VeFfmDXA1AcjFBVJ1QZ95mBQSQGudjv9BbGVtyau
- hF7pHubMiYyZ5YdnSVJ8cPfCEWlpcLYluGAQTBSlpxT4n2bPt73Y/8TmlMndovbBcGp+DJvj0a9
- TakuhytCMJoYBd0RNWpwkoH3obIWtIiKr9ZCEY0QG0kd5qoM02LnrvYlLWNtxorJ/cTBfMZCObf
- VOAJrkrRgYQwWGgzZGBkjLoLHRedcvI/ZO9Y7KkdRuAi3dIldA726P95tDEvj3WnTDX7jhJofHw
- T2VxiNpNgzqqppLB51HCSW7dDMBlC/heeR0+hogDtt+H0TQH57IGdwi8mwOyLc
-X-Google-Smtp-Source: AGHT+IHuNcuKUHXB8XXESFW6EINic5NBOMyERNnN4lco+C4wFOEKCzTkC7rJIY4k3+kEALoUhRsxuA==
-X-Received: by 2002:a05:6000:400f:b0:426:ff91:2f25 with SMTP id
- ffacd0b85a97d-426ff9142c8mr10911496f8f.21.1760998189735; 
- Mon, 20 Oct 2025 15:09:49 -0700 (PDT)
+ bh=9sl5D2OBPAk30ix5XFbA96G64ecqbTuVPaB9Fe4lYaE=;
+ b=G2sBxK2NBajNgRbKv8SoQhKuE4oeNTn9QTCAKGvpPA9b5zx4slFbWQuctUhCHGNXcA
+ N7joAKCIFhLQKiPoI3JXRTWx5x0ByZbT4dfE8Q6VFRlr6+aUDHI0g0jvyx9MVxBP6V4K
+ 2fp83sh6ZmeKwseLN/dfIf4h8h33/ym5ak2wgYM0vWT7b3y++O4ohl/TTPEieSToQdzl
+ NB+2zw0JludwHs+gWRYM6AdsQ7mspMZBa3C8sRzELhW8XlQxq1MJVx0lvWdTL7GfTlo8
+ JlHwtmnJOXEETUkPN8qdzoAZv55TFPW1imA5yoBHJuraHdyuRFCxoHdM/3Apex/IDEs9
+ F2/g==
+X-Gm-Message-State: AOJu0Yz4zOm8K6nN0oDgI0EIOCUhCVNgTdhmrElcg0nClr6g8o3f2tum
+ 0entPQ2+xlQFIRmQr9C+y49KS2qBOx+x0jgGwn2Hf4Ak4vr7dZXQCtBd3Yw0hnVuJXSQUnhS2fb
+ YMQBv9TE=
+X-Gm-Gg: ASbGncteOWuPdCLiiePL307eGa826O7Brf3HzvOpMOFX2jxM4LEHvRahT9ifAHkRYUJ
+ 6VA7hALPiS/1XTIvUKs+gBsqhiGnJ2u4qhQegHpWisYAWzUe+fCpDqQpk8sFeNeUP6nkPDZftRJ
+ GZdhbfm8ifhhP650THmZD0q7UQ5tknbyxVJOfMeLXcDMNVYP3sKaseaj5Jps7cGppjh0O2Gxwaz
+ tqLnpl7eBNCIydFcu27tD9qSFbONDy/HllkT2ufjR9KrfLaTTFRrQmXVEDuSNMb5vtJfIzVga3Z
+ 0aPciGSY9ta/Jii9ZXDCfEUDSVDbvyM5AV+M7NazzQk6h8sXF3C6tyoN2ExKgY9fRP1dMLH8Wxt
+ oTB5d6ruD98+goxDjcR8TBMvC08YJVTvQQKjOjJ08peoxpFE6F5uKU80ZNOolxq7y3X7QPnywqK
+ P579iA2qedA4A/ZMyqICGUu1BA+7ThMNYJoffBtsSsZ67LmXAUWA==
+X-Google-Smtp-Source: AGHT+IE+vX4pO5dXERXxNooJDvsEmYVIlONKnJr6ISUfLsDV7Tbejw7J4MCHCnZoj53rT51/Mtwlow==
+X-Received: by 2002:a05:600d:1c:b0:46d:e5bd:2ba4 with SMTP id
+ 5b1f17b1804b1-47109b5f38fmr102660625e9.18.1760998215231; 
+ Mon, 20 Oct 2025 15:10:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47152959b55sm168862565e9.6.2025.10.20.15.09.48
+ 5b1f17b1804b1-4715257d916sm158729025e9.4.2025.10.20.15.10.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 15:09:49 -0700 (PDT)
+ Mon, 20 Oct 2025 15:10:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -76,25 +76,25 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH v6 01/30] hw/core: Filter machine list available for a
- particular target binary
-Date: Tue, 21 Oct 2025 00:09:10 +0200
-Message-ID: <20251020220941.65269-2-philmd@linaro.org>
+Subject: [PATCH v6 06/30] hw/core: Allow ARM/Aarch64 binaries to use the
+ 'none' machine
+Date: Tue, 21 Oct 2025 00:09:15 +0200
+Message-ID: <20251020220941.65269-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020220941.65269-1-philmd@linaro.org>
 References: <20251020220941.65269-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,80 +110,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Binaries can register a QOM type to filter their machines
-by filling their TargetInfo::machine_typename field.
-
-Commit 28502121be7 ("system/vl: Filter machine list available
-for a particular target binary") added the filter to
-machine_help_func() but missed the other places where the machine
-list must be filtered, such QMP 'query-machines' command used by
-QTests, and select_machine(). Fix that.
+When we'll start to use target_machine_typename() to filter
+machines for the ARM/Aarch64 binaries, the 'none' machine
+would be filtered. Register the proper interfaces to keep
+it available.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/core/machine-qmp-cmds.c | 4 +++-
- monitor/qemu-config-qmp.c  | 3 ++-
- system/vl.c                | 3 ++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ hw/core/null-machine.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 51d5c230f7e..28dfd3e15bd 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -20,6 +20,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
-+#include "qemu/target-info.h"
- #include "qemu/target-info-qapi.h"
- #include "qom/qom-qobject.h"
- #include "system/hostmem.h"
-@@ -94,9 +95,10 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
- MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-                                     Error **errp)
+diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+index a6e477a2d88..67b769bd3e0 100644
+--- a/hw/core/null-machine.c
++++ b/hw/core/null-machine.c
+@@ -16,6 +16,7 @@
+ #include "hw/boards.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
++#include "hw/arm/machines-qom.h"
+ 
+ static void machine_none_init(MachineState *mch)
  {
--    GSList *el, *machines = object_class_get_list(TYPE_MACHINE, false);
-+    GSList *el, *machines;
-     MachineInfoList *mach_list = NULL;
+@@ -55,4 +56,7 @@ static void machine_none_machine_init(MachineClass *mc)
+     mc->no_cdrom = 1;
+ }
  
-+    machines = object_class_get_list(target_machine_typename(), false);
-     for (el = machines; el; el = el->next) {
-         MachineClass *mc = el->data;
-         const char *default_cpu_type = machine_class_default_cpu_type(mc);
-diff --git a/monitor/qemu-config-qmp.c b/monitor/qemu-config-qmp.c
-index 9a3b183602d..8bd28fc2328 100644
---- a/monitor/qemu-config-qmp.c
-+++ b/monitor/qemu-config-qmp.c
-@@ -1,5 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-misc.h"
- #include "qobject/qlist.h"
-@@ -128,7 +129,7 @@ static CommandLineParameterInfoList *query_all_machine_properties(void)
-     ObjectProperty *prop;
-     bool is_new;
- 
--    machines = object_class_get_list(TYPE_MACHINE, false);
-+    machines = object_class_get_list(target_machine_typename(), false);
-     assert(machines);
- 
-     /* Loop over all machine classes */
-diff --git a/system/vl.c b/system/vl.c
-index 646239e4a69..a96063f9901 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1672,7 +1672,8 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
- {
-     ERRP_GUARD();
-     const char *machine_type = qdict_get_try_str(qdict, "type");
--    g_autoptr(GSList) machines = object_class_get_list(TYPE_MACHINE, false);
-+    g_autoptr(GSList) machines = object_class_get_list(target_machine_typename(),
-+                                                       false);
-     MachineClass *machine_class = NULL;
- 
-     if (machine_type) {
+-DEFINE_MACHINE("none", machine_none_machine_init)
++DEFINE_MACHINE_WITH_INTERFACES("none", machine_none_machine_init,
++                               { TYPE_TARGET_AARCH64_MACHINE },
++                               { TYPE_TARGET_ARM_MACHINE },
++                               { })
 -- 
 2.51.0
 
