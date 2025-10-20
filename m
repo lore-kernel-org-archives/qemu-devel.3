@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F92CCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378A1CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzWj-0003JS-Ry; Mon, 20 Oct 2025 19:43:00 -0400
+	id 1vAzWx-0003dm-Uz; Mon, 20 Oct 2025 19:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vAzWa-00037f-9d
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:42:49 -0400
+ id 1vAzWv-0003bP-Lo
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:43:09 -0400
 Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vAzWY-0001x0-7f
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:42:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1761003754; cv=none; 
+ id 1vAzWt-0001yI-U9
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:43:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1761003776; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=T77Tv7fE5Y7hN31+IBvr714/NrinmH7uNh+cTbq59Vj1mRyybP+x7pl7YDWSl0Jv4K5fpdUvb+GFo1C1ctSiP6MDDWnddK62j2hqKPhLj3FgmtRhDIa4YnCh+/tYmCT02HJm1NAeUDwkuxnaLGQVHoiS+eZfrJoiqvrgnMCszgQ=
+ b=bnSDKhKbYxJoZMNbjFR5ho4i6WkLko682Z0xom/nX9y4mbpBkqFjNtH6xbA5DHBJcaGgcT+hHl2OVdJ50MAd1DMSV8qYEd8ZsbRh+SACuvzwd/FmiG5a2Huh5DYAJKiWjk00r+5cIL0MJ7dkofekGNLHl4UqZ0pGjUN4vlAcIjY=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1761003754;
+ s=zohoarc; t=1761003776;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=1vnXoumb5Cu4fx3WBEBaRML7/dsVe7+Sa9Z1XGhzax0=; 
- b=mLa/GMyUqejJ3p3HZbBw0a4gB79L7s6INCmy1hUxJ9FE0pTlFk22KfxV/q+wxtAsfazLHRYQbdN2LpyqP4JaJJ0bO6GFd/l3iUXRFNGi2zkGds5jiTGOHoHWrrAsaHv1M1DWvyYtaVjze8HjtLCUsQSeOUmMZ6Q1MFOF9D9+Wc8=
+ bh=xoNYZD9pDu+P2E5/JLiwc710z+NNAcl0Hckzln/LmX4=; 
+ b=AUif5b14EC+z/4gSXtHSFsxRzUsooJIGWr07KJG4m4fYzaunypXZl42uNnH3fyp9A0VKFBGl+dSWbLmbdhMaMUlkuz/kOXc8onCc8eVQS32OZkqM9UhAqww+ryXIV8tgc+JumN9vEpsbzCTCAh8+JHqH7gphEKXhlJwJupC9Ts4=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761003754; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761003776; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=1vnXoumb5Cu4fx3WBEBaRML7/dsVe7+Sa9Z1XGhzax0=;
- b=K9s0qGiHQ/Igoq4w29UDec/HPx4ti7jdIg2NUzD1SlccW/56royaEODmkBB9enCU
- txrzXU3T/kqf14w8/7UtJypwKT53LHHMQBrGcsnGxeQvSVCyIZlRNyj0LcDqLBaDSUs
- noPId0zcUtybVtO7Y/3ak2BksMPugtSw3eLmRsW4=
-Received: by mx.zohomail.com with SMTPS id 1761003751576308.51367258590744;
- Mon, 20 Oct 2025 16:42:31 -0700 (PDT)
+ bh=xoNYZD9pDu+P2E5/JLiwc710z+NNAcl0Hckzln/LmX4=;
+ b=RqC/l5bRc9mwUofHHNHMoSI56o+KEQ/TQM6jlgDTKZX/hjOITDFCFmsYE6OztW2w
+ OU+ImxKmRaLLoyJW/qu4pcu7rxlhwzx+ybZ8bxZumVnqc7KJmPdbelcoYxeMAbRkgdf
+ e6NLgPFINA5cw/y2jj/X06OwoZnTUaS+4FJt/DQw=
+Received: by mx.zohomail.com with SMTPS id 1761003775334300.48194411016993;
+ Mon, 20 Oct 2025 16:42:55 -0700 (PDT)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -59,9 +59,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
-Subject: [PATCH v14 03/10] virtio-gpu: Handle virgl fence creation errors
-Date: Tue, 21 Oct 2025 02:39:42 +0300
-Message-ID: <20251020233949.506088-4-dmitry.osipenko@collabora.com>
+Subject: [PATCH v14 07/10] ui/gtk: Don't disable scanout when display is
+ refreshed
+Date: Tue, 21 Oct 2025 02:39:46 +0300
+Message-ID: <20251020233949.506088-8-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
 References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
@@ -94,65 +95,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Print out error messages when virgl fence creation fails to aid debugging
-of the fence-related bugs.
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ ui/gtk-egl.c     | 1 -
+ ui/gtk-gl-area.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 94ddc01f91c6..cd8b367f6fa6 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -872,6 +872,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-                                       struct virtio_gpu_ctrl_command *cmd)
- {
-     bool cmd_suspended = false;
-+    int ret;
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index ae9239999cdb..0dbb429958e5 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -180,7 +180,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
  
-     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
- 
-@@ -972,14 +973,30 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
- #if VIRGL_VERSION_MAJOR >= 1
-     if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
--        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
--                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
--                                            cmd->cmd_hdr.ring_idx,
--                                            cmd->cmd_hdr.fence_id);
-+        uint32_t flags = VIRGL_RENDERER_FENCE_FLAG_MERGEABLE;
-+
-+        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
-+                                                  cmd->cmd_hdr.ring_idx,
-+                                                  cmd->cmd_hdr.fence_id);
-+        if (ret) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: virgl_renderer_context_create_fence error: %s",
-+                          __func__, strerror(-ret));
-+        }
-         return;
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_egl_set_scanout_mode(vc, false);
+         gd_egl_draw(vc);
      }
- #endif
--    virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
-+
-+    /*
-+     * Unlike other virglrenderer functions, this one returns a positive
-+     * error code.
-+     */
-+    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
-+    if (ret) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: virgl_renderer_create_fence error: %s",
-+                      __func__, strerror(ret));
-+    }
  }
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 05fc38096eca..88496c3dbfc6 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -184,7 +184,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
  
- static void virgl_write_fence(void *opaque, uint32_t fence)
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_gl_area_set_scanout_mode(vc, false);
+         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+     }
+ }
 -- 
 2.51.0
 
