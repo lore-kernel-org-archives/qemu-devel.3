@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64BD8CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5844FCCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAm5w-0005z6-QW; Mon, 20 Oct 2025 05:22:24 -0400
+	id 1vAm6z-0006Fa-1u; Mon, 20 Oct 2025 05:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAm5v-0005yx-SW
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:22:23 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAm6m-0006EJ-Hh
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:23:17 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAm5r-0006lz-Ml
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:22:23 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4710683a644so36784925e9.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 02:22:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAm6j-0006o9-Uj
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:23:16 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3ecdf2b1751so2293711f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 02:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760952138; x=1761556938; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760952192; x=1761556992; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UWRjhxb+gyKvKWcOh9+4cyOuV0mefOIUwVxvlJJDpQY=;
- b=GCtq93cplsYccWuJCul1rjSs2Am8mttFbU6PH/t44bQANNjflozm6/J89yHo/ji2TJ
- MJwGcct2OVwNCIjbeIkZTXVwdQMt4CJRPh0o1XZaO72OtFkpDs7U3FiPjAA7iZr9XK9S
- HOPWpCh3+3j+e1rPHeEbtXVVglPav7SL0lRMcdzY1jBnHVqkn/WhMln78uY1y/3Nsqzo
- lm55ERYktq/8xgyhl52AlDemEpRG1o7N6lUWqeqsGj7tJtvFAAOPUbUQ1y4ZkLaSbQIt
- NjA2KBzG2IOlQXPeCBODA+vNl1/+1erqlWKqE3maLjgLbEqIDUnRf4cNlv6YkFc1Vajh
- N/1A==
+ bh=BE0R9EVQJAztMsG2wgbqSHdCis6S2l/YOu3o+hecgZo=;
+ b=qJbV8e70VEQ35Pg2+4XTJCXkEzYtBze7yEl8KEHzUCyyF6ErMzMXyp96EFOFl4PE/y
+ WnNZJWh2/yFRGS/2L0yXTtWFQwtofQnCwgQHTIFCjqr7aS6vrl6wb9FBjtid0bODUxG0
+ Iwgq2p6jyfkvjF9jcW+6vWiXl8Tv2oj/5SA1XvRCWGmUxzSgtUntyIOhPcTt6P9H6h3H
+ H2H/V4W7tWwuOgnXsVN2ccNyTXMcISBM21nqNpnEtRn5Sk5q0tzyK1sUfn1dRFlBNfP+
+ IZkB4qLUmJh+ilvtwkSEQRc8bnEOQ4lVjJGyCoa4sU14C3Hqt4F+0OMIw/KkhY/kag9D
+ AF6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760952138; x=1761556938;
+ d=1e100.net; s=20230601; t=1760952192; x=1761556992;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UWRjhxb+gyKvKWcOh9+4cyOuV0mefOIUwVxvlJJDpQY=;
- b=Zv/3sTdzJ00p9uAe8oxTz57BCcFLSJBXDUCfSh/kQ2DOXqQZx+Xd1Gq0MYBe+5Wpeu
- 0QecmMNo2yMX9QnYPpZjsN3sNQSDxHojckx3KlWNv8cCuSg4ycwrrz9yoeOGOOusciNo
- DWi18QlvN/FfOiTGu0F8Iz7G7aArWivZFFIx6RDDLHuoatZajO8yDvXqzhazJWl9aRez
- tTj6ymZIPdR+RKG8900/pS2NONDrYhrma3e33oyQwLf8vVg6U+NtW7ptiObPLYMBZRSR
- EXwTtFSto6BEDhWPMBJGHtuU4yTHL5d1V8T0wfr6gYEC1SrwHxh+3SK7SqUEZ8rmyv0q
- 5b2g==
+ bh=BE0R9EVQJAztMsG2wgbqSHdCis6S2l/YOu3o+hecgZo=;
+ b=Ujqs/2carWndwxp1l7pN2/gd1rWgxbol3WUd2wxF1hf/3xe6a+3zrVlt2vVkMdGE1n
+ mKx/DGh2KrArWfwLXOyYV7oT0xxT075oh1UWdl2tYE750PqiL2XYs2UuPATf3cHi7pWw
+ IqkZfqrtvqbxFxic7Pq29+c2DvS/PoviiaqfAhiwqGWdun3atNnr2U6/XSlqJe3fnlN4
+ 0vqkqfUqC7U3TdChD+C3tJuHCL+a+ckA4XyWDu2g53RP4/zijPXPmzmL5ez4OFh531vB
+ gzCVzheA3w5jIXmUDfeqLN8cxyjCIazhxlMu0v7bAghQyoR5RI6xlGXnfgiQ3kL6uaRT
+ IO3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXhgVMwlRyMWG14MKOg7lXsBSCil9Ab11kTU7cPxuWpJV/SJ9abB5PKyFSpHRKgXTUdR74A4D9drSg@nongnu.org
-X-Gm-Message-State: AOJu0Yyn9W0yRyCYJwfjBXZnI+WanH4JWSXtOMOczch0vIi8v1QWC4NE
- tr24rqJBxWx7T5kxrlVzqbrSFxxlLFZjkXclIYNbeTkYMtT+WK8Qe8aXNPOJCBILA23+0YVSsj1
- OcxM6v+M=
-X-Gm-Gg: ASbGncsV1Dh8Ni56kUNoVDJYteD1hLPWj+fDq5c2FyysLxhVcsJ2CnKhwo7t5Ymj/Sl
- AaBiRRjZta5yfMvs2OeNM76b0bbmC59NXJ7hXYOUXnMA0V3amTqLPLOjzlw6RKzpwqFcmMvGLYJ
- iYlEsoOye7IBnMUntoZMlLO8wq7nQfVrfinezIQCG0zZit3w+7nV5KwPtp5bEpmLu5ND/8nqbxH
- ml8JVnxAhUKrvl5mRsKxxXuMUOTQXm6K8V9YsfCSvNNJH+xtkLEaAEs5Ho1iPgbesaDGfrGrtfp
- 8MqQ/BD5Zc54sb7IGTP6bbOBYuJLNlEAdwt1MEYTdCmvHVT+CwZgrcTrQwQvwrynx7+fz0tV649
- KQbN/fiiD1Uki4x+p7lYujrnPuhceoabpLFOsAAwJ/Y0PKh00KLr/S3F1lythjLNGyQ6NkmIC5w
- UNv5kfiDtpLSET57BGlPO196tojTxSL7gqON1Vg6xeFgu6cqNLz7dFGg==
-X-Google-Smtp-Source: AGHT+IGk9JerB5VH5Bc1+wspOurenN6W4CswekXAcxBNYBPP28lYrksG6ZcsoSNFNlvKDEgFtqW+3A==
-X-Received: by 2002:a05:600d:42ed:b0:471:331:8058 with SMTP id
- 5b1f17b1804b1-47109927255mr76796565e9.7.1760952137598; 
- Mon, 20 Oct 2025 02:22:17 -0700 (PDT)
+ AJvYcCWZ/md6Klws7WkyEXpjXWRnNCzbL3yetxjP6auCBrowD6C6TbQwX9xRT1/kAd/LFX0xkpAVI1sNt1vg@nongnu.org
+X-Gm-Message-State: AOJu0YyYotcZbOu0VxHOK85BeJKZgRJF9ZsesbBuh5vrNbGlPTXeb6C9
+ /fPgwM5fOhzlL6wLZqnf9sBukvtmp9hmP2YpafJ82iWob+hKdbV/LgI2YkprdgdWdLw=
+X-Gm-Gg: ASbGncvOkZtLGUR7nkcOlol/hY+lQjGF8cPwK2f2vGsBfcoCt72jxXJscH0aOvHGjVN
+ UQOUweoVwgU6hmZsFSVH+If9DiecOz2Fl+2S3inkC1/G6AXCS3vauVGrp9VrUt2YUw+c8zoZF/H
+ GiZZ6Eb/byjDz1j714DYD4gPhHGJk2E9ygfWtoztXrP5H6XcJnIyQLXN1/uFneIdo52dWhW+bfE
+ TMzmD4gcYyHaQ7h25HbbTKRYiaMrB1eaKl3hDa9JAfFwqUXiKFxxtlMfvOpnaGCejY9ot78HFug
+ HSWVT/2XvbTzY/fQePvxXtnGBdDObgxCq0YnQQsGdc1fuFQt5Csg7aH7nvdJgZO8GwdEA0D6jlQ
+ v6bNXxmkwRcioOEV93sIpvCiEI4aoMGhMhKGTSOCW/uhqepSFPop+piGc1HGUgugWs4l1GEO/ul
+ jiukFKHF6BmdqUl3axsomYZP6EPqJNXYKAmWAM2BkdjtTLReqY5w+mle+m4ttsNPTn
+X-Google-Smtp-Source: AGHT+IHPBLeO67RYp3ZD+dhreblaQlQFoC4SoKeDnBlXZVpPCc78K6+Wq86JdbHoZocX7echMLhLwg==
+X-Received: by 2002:a05:6000:22c6:b0:427:15:ff3b with SMTP id
+ ffacd0b85a97d-42704d145d4mr8301718f8f.13.1760952192186; 
+ Mon, 20 Oct 2025 02:23:12 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4714fb1b668sm154729265e9.0.2025.10.20.02.22.16
+ ffacd0b85a97d-427f009a9a9sm14729916f8f.29.2025.10.20.02.23.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 02:22:16 -0700 (PDT)
-Message-ID: <102a9874-27db-4073-b4ff-dddeb450ff5e@linaro.org>
-Date: Mon, 20 Oct 2025 11:22:15 +0200
+ Mon, 20 Oct 2025 02:23:11 -0700 (PDT)
+Message-ID: <07d282b9-e8f5-4886-83a2-47cb2ca7ce87@linaro.org>
+Date: Mon, 20 Oct 2025 11:23:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c/smbus_eeprom: Add minimum write recovery time for DDR2
+Subject: Re: [PATCH] gitlab-ci: Decrease the size of the compiler cache
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Corey Minyard <cminyard@mvista.com>
-References: <20251008122502.9DA8956F301@zero.eik.bme.hu>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251020085431.23968-1-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251008122502.9DA8956F301@zero.eik.bme.hu>
+In-Reply-To: <20251020085431.23968-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,30 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 14:25, BALATON Zoltan wrote:
-> This is needed for newer u-boot-sam460ex versions to pass the DRAM
-> setup.
+On 20/10/25 10:54, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Uploading the cache from the runner takes a long time in the MSYS2
+> job, mostly due to the size of the compiler cache.
+> However, looking at runs with a non-initialized cache, and by doing
+> a "du -sh ." in the build directory, it seems like a build only
+> takes about 236 MiB of data, so the compiler cache with 500 MiB
+> certainly contains a lot of stale files. Thus decrease the size of
+> the ccache to a more reasonable value to speed up the MSYS2 job in
+> our CI (and add a "du -sh" at the end to have a reference for the
+> required cache size in the future).
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/i2c/smbus_eeprom.c | 1 +
->   1 file changed, 1 insertion(+)
+>   Looking at the latest runs in the CI, our recent attempt to decrease
+>   the cache size by cleaning the pacman cache did not help much:
+>   https://gitlab.com/qemu-project/qemu/-/jobs/11747329283
+>   ... that run contains the "pacman -Sc" command, but the "Saving cache
+>   for successful job" step at the end still takes close to 20 minutes.
+>   So we likely have to shrink the compiler cache, too. In this run here:
+>   https://gitlab.com/thuth/qemu/-/jobs/11770708859#L1769
+>   I added a "du -sh" and you can see that the build directory only
+>   takes 236 MB there. So a ccache with the size of 250M should be
+>   sufficient for the MSYS2 job.
 > 
-> diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
-> index 0a1088fbb0..26e211b31a 100644
-> --- a/hw/i2c/smbus_eeprom.c
-> +++ b/hw/i2c/smbus_eeprom.c
-> @@ -288,6 +288,7 @@ uint8_t *spd_data_generate(enum sdram_type type, ram_addr_t ram_size)
->       spd[33] = 8;    /* addr/cmd hold time */
->       spd[34] = 20;   /* data input setup time */
->       spd[35] = 8;    /* data input hold time */
-> +    spd[36] = (type == DDR2 ? 13 << 2 : 0); /* min. write recovery time */
+>   .gitlab-ci.d/windows.yml | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-We are adapting DDR2 values on a method written for SDR/DDR[1].
-Better would be to split and correctly document each format,
-using proper values.
-
-Anyhow, for this patch:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
