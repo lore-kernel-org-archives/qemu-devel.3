@@ -4,78 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD48CCCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 18:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2004ECCD1A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 18:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAv0y-00052u-4k; Mon, 20 Oct 2025 14:53:52 -0400
+	id 1vAv4w-0005yp-7c; Mon, 20 Oct 2025 14:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vAv0v-00052V-OG
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 14:53:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vAv4p-0005yN-M5; Mon, 20 Oct 2025 14:57:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vAv0r-0001n6-VQ
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 14:53:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760986421;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=18Zh+lr0m3wfH+K8eYEPWzw2d+QR0EMIe9iuWhiTmWw=;
- b=YJeZlr9/NIC67NJa5/INh0yYBrWnhW6EMsDAQfk1mAgKKPl8nj6cgvIGjx5yAr7fxnsXbP
- ssnA8HaexW6VZCc1xy2imqEwm0MVOffcpeC+UXdauq1jcJ+/lIsiz5wC6hcDQGW2x0Xl+w
- Gv8YZXOfr/7zgVTX+EPKnbiKNiUrNtY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-8kK-mQjLPAyUkBP3v0bm2Q-1; Mon,
- 20 Oct 2025 14:53:39 -0400
-X-MC-Unique: 8kK-mQjLPAyUkBP3v0bm2Q-1
-X-Mimecast-MFC-AGG-ID: 8kK-mQjLPAyUkBP3v0bm2Q_1760986418
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8AD6D1800657; Mon, 20 Oct 2025 18:53:38 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.188])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 570DA1955F22; Mon, 20 Oct 2025 18:53:37 +0000 (UTC)
-Date: Mon, 20 Oct 2025 14:53:36 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Aarushi Mehta <mehta.aaru20@gmail.com>,
- Fam Zheng <fam@euphon.net>, Stefano Garzarella <sgarzare@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
- qemu-block@nongnu.org, hibriansong@gmail.com,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 03/12] tests/unit: skip test-nested-aio-poll with
- io_uring
-Message-ID: <20251020185336.GA119797@fedora>
-References: <20250910175703.374499-1-stefanha@redhat.com>
- <20250910175703.374499-4-stefanha@redhat.com>
- <aOfEwOXrPMDI3lQN@redhat.com>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vAv4l-00028I-HB; Mon, 20 Oct 2025 14:57:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KCpjm1008364;
+ Mon, 20 Oct 2025 18:57:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5IDgqL
+ tvEAKknlMu8EdmmvYJ42e0e/gHvwB/ShQFQNA=; b=f5cGzQui5UUCnHHIY8kc2E
+ A5qmcGWOGq1NeUbD/4KELmwnImw35kgsZMqHmOKQHsDc1aGwmK19pKCLnr8ncpsO
+ nF+gucNlXibCBIdSbS79B30jHLuFDZWQwRx1u1ieq7vQupJHMICiay+fpvXV6IQJ
+ /TGUfLPYQldkfb6QBObLOy8nI6gG+7fGyWh364nq4PngHaF5dRActG2jcXtpjkrV
+ DbC+t6Uze7n0a4rHpxG568Jv+0EsQ1mXD9vrKN2FU4OD4LX9Syi4w3jdZnebf6I1
+ NN3YQZ1vy+j5ajfmhoKfNwnQkg+xhQYE6QCQktq3mnmkxZKUsHIOzq3Is8K+G6AA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32ha0a9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 18:57:43 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59KIbslu024677;
+ Mon, 20 Oct 2025 18:57:42 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqjq3w3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 18:57:42 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59KIvfS951315084
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Oct 2025 18:57:41 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3856A58057;
+ Mon, 20 Oct 2025 18:57:41 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB55458066;
+ Mon, 20 Oct 2025 18:57:40 +0000 (GMT)
+Received: from [9.61.78.141] (unknown [9.61.78.141])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 20 Oct 2025 18:57:40 +0000 (GMT)
+Message-ID: <1f4cd71a-e373-4b79-b070-8567b8bf9d3a@linux.ibm.com>
+Date: Mon, 20 Oct 2025 14:57:40 -0400
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ZSk2lSSllTwQ4R8N"
-Content-Disposition: inline
-In-Reply-To: <aOfEwOXrPMDI3lQN@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] pc-bios/s390-ccw: Fix Misattributed Function
+ Prototypes
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+ <20251020162023.3649165-2-jrossi@linux.ibm.com>
+ <f1fa94aa-d0b3-4855-ba83-30b8239297ef@redhat.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <f1fa94aa-d0b3-4855-ba83-30b8239297ef@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXwpvH/ff4lMnF
+ KKbWZ2rfgQJKfMuwGx5+isG0CAK+77Zj0gE30ouQNiQ5Ggbba+6xeI1iOZBtRtuqId5wMzPn45h
+ NY1hiIraDkXJsQAyizVp3cC74KujMGylS8iwx05zLL9NEEvvyc8OJoBIgqT77CtUItnrNeN8WO5
+ Nh7ivcLfPogaE8ESs/vnT2iCErnCI3m+f79PQ3O3V3uiPyVo84lnre3oEVAtjeiZ7ys3JylgljL
+ /PTy6R4AelceAKIz9dfc9+7nRvGEv6DBzCDTmd22dJqQZWWIUsFZtx8QFqjgYy/OoCqK81h/NI7
+ frv70itsyx94apNah+BE0YMnj+pRlBvvtbM9iDP501mD7OGiUyVXPSNY93rm0ZWH0BgvIz7pOFP
+ xmRbTT0c2VJtVzqmZeE3xxjggID4rA==
+X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68f68627 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=Cq4k7Z7riBiSKpyquisA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: ymbIfb78_cmrHAM_Fkwadl9xDmU89zL3
+X-Proofpoint-ORIG-GUID: ymbIfb78_cmrHAM_Fkwadl9xDmU89zL3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_05,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,51 +125,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---ZSk2lSSllTwQ4R8N
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 09, 2025 at 04:20:48PM +0200, Kevin Wolf wrote:
-> Am 10.09.2025 um 19:56 hat Stefan Hajnoczi geschrieben:
-> > test-nested-aio-poll relies on internal details of how fdmon-poll.c
-> > handles AioContext polling. Skip it when other fdmon implementations are
-> > in use.
-> >=20
-> > Note that this test is only built on POSIX systems so it is safe to
-> > include "util/aio-posix.h".
-> >=20
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Reviewed-by: Eric Blake <eblake@redhat.com>
->=20
-> Maybe give a specific example of what fails with other fdmon
-> implementations?
+On 10/20/25 12:50 PM, Thomas Huth wrote:
+> On 20/10/2025 18.20, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> The virtio-blkdev functions are incorrectly listed in s390-ccw.h as 
+>> belonging to
+>> virtio.c.  Additionally, virtio_load_direct() has an unused 
+>> subchan_id argument.
+>>
+>> Remove the unused argument and move the prototypes to virtio.h so 
+>> that they are
+>> independent from the CCW bus.
+>>
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>
+> I'd maybe spell "Misattributed Function Prototypes" with small letters 
+> in the title, but apart from that, patch looks good to me:
+>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>
+Thanks Thomas,
 
-Yes, I'll update the commit description.
+I'm not sure why I wrote it like that.  I notice now I did the same 
+thing with "Architecture" in patch 3.  I'll fix the capitalization in 
+both patches for the next version.
 
-> Could we change the test to downgrade to fdmon-poll instead of skipping
-> the test entirely?
-
-I don't think so because io_uring is permanently enabled and there is no
-way to switch back to ppoll at runtime.
-
-Stefan
-
---ZSk2lSSllTwQ4R8N
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmj2hTAACgkQnKSrs4Gr
-c8ig3Qf+JXh0dH8dtesvbRZAFHbOEmhlqVYjrUlHEggurG6RnXQyJtSbu+caBI/f
-PH8AL8olJnf40VpUH9ISKoCD6U2OlTu/WHLR/o72WnWS38sddZ7+C9Ib6hi0RJeq
-yS4gL4ydHHJGBQ1/Bg9HXLj98dVnFbF1xfAKb7C3CXPkySFiezXqCx2NFw+f9Mxc
-bYTb//psVdQWBFT9yFLBlkKpyophtSrCzsQlsaJ7xAtKp0Fouqu1AIlH6z3omnbZ
-aD44Ln6waZUTRRGsnalwcVn8szCVcNWfc2mBtO0UMdLsI3m7PHiZChiValCilOE9
-xGasgTTydU/7B2Hgt19PmrfAHXPDaA==
-=6/JS
------END PGP SIGNATURE-----
-
---ZSk2lSSllTwQ4R8N--
-
+Regards,
+Jared Rossi
 
