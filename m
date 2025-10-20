@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FE3CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884C7CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqdS-0004UA-Do; Mon, 20 Oct 2025 10:13:18 -0400
+	id 1vAqdM-0004SR-Ua; Mon, 20 Oct 2025 10:13:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAqdB-0004QQ-Qw
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:13:03 -0400
+ id 1vAqd9-0004Ps-1H
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:12:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAqd6-0007O2-Kx
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:13:00 -0400
+ id 1vAqd1-0007MD-5p
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:12:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760969573;
+ s=mimecast20190719; t=1760969568;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rwyeltibNzBtJsNdJOwERFp7vskY9/i6QuYMvBJOxMo=;
- b=ZIT68oTNNDSUHJvue85oT7SfBLT64JCasbfRp6klgh22DCS1PPeOu5mWjyTqD8f0+AC8i9
- MuVBcqaZ8uGpejRw7hrOROYdK60S0Zs97JVUf5iuhQal1z6wEpycfPOwGsTOF0BdLqlc4X
- yCKTRZEvGa2gK/CoHTtZCrcotcW/SWk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=VIg4ibiegQVk6RIUfT2XAEW8SEIIE1PfZIYQeghdcfI=;
+ b=bakEl/z+cpAmvqP5k8A2qFzhL0Ry95JWmudqUJDm0tnHjG3psU/FRTNJ7Pg8a57plSq0iB
+ 2iPLwgiB6A+podcVKIpntm62cjur/Cr+wweTjaTwxvBvjSf54/Xy1K4Q8EhWobOebrPGno
+ MG20BPyOB46fmj4mBKxeJX0m66XYPzw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-_4PR_Wa3MJ2UpDgXc7J_gg-1; Mon,
- 20 Oct 2025 10:12:52 -0400
-X-MC-Unique: _4PR_Wa3MJ2UpDgXc7J_gg-1
-X-Mimecast-MFC-AGG-ID: _4PR_Wa3MJ2UpDgXc7J_gg_1760969571
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-MjwRTiSPNL21817tVGLxlQ-1; Mon,
+ 20 Oct 2025 10:12:47 -0400
+X-MC-Unique: MjwRTiSPNL21817tVGLxlQ-1
+X-Mimecast-MFC-AGG-ID: MjwRTiSPNL21817tVGLxlQ_1760969566
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84CA8195411E
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 14:12:51 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 796E918002F5
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 14:12:46 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.161])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 889EA1800452; Mon, 20 Oct 2025 14:12:50 +0000 (UTC)
+ id 5F3891800451; Mon, 20 Oct 2025 14:12:45 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eric Blake <eblake@redhat.com>
-Subject: [PATCH v3 7/7] crypto: switch to newer gnutls API for distinguished
- name
-Date: Mon, 20 Oct 2025 15:12:37 +0100
-Message-ID: <20251020141237.2621796-8-berrange@redhat.com>
+Subject: [PATCH v3 4/7] crypto: fix error reporting in cert chain checks
+Date: Mon, 20 Oct 2025 15:12:34 +0100
+Message-ID: <20251020141237.2621796-5-berrange@redhat.com>
 In-Reply-To: <20251020141237.2621796-1-berrange@redhat.com>
 References: <20251020141237.2621796-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,44 +86,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new API automatically allocates the right amount of memory
-to hold the distinguished name, avoiding the need to loop and
-realloc.
+The loop that checks the CA certificate chain can fail to report
+an error message if one of the certs in the chain has an issuer
+that is not present in the chain. In this case, the outer loop
+'while (checking_issuer)' will terminate after failing to find
+the issuer, and no error message will be reported.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/tlssession.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ crypto/tlscredsx509.c                 | 33 ++++++++++++++++++---------
+ tests/unit/test-crypto-tlscredsx509.c | 12 ++++++++++
+ 2 files changed, 34 insertions(+), 11 deletions(-)
 
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index ac38c2121d..00c7ab567b 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -409,20 +409,14 @@ qcrypto_tls_session_check_certificate(QCryptoTLSSession *session,
-         }
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index 4169ad9a75..e1f82f1cdc 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -326,11 +326,11 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+                                         Error **errp)
+ {
+     gnutls_x509_crt_t cert_to_check = cert;
+-    bool checking_issuer = true;
+     int retval = 0;
++    gnutls_datum_t dn = {};
  
-         if (i == 0) {
--            size_t dnameSize = 1024;
--            session->peername = g_malloc(dnameSize);
--        requery:
--            ret = gnutls_x509_crt_get_dn(cert, session->peername, &dnameSize);
-+            gnutls_datum_t dname = {};
-+            ret = gnutls_x509_crt_get_dn2(cert, &dname);
-             if (ret < 0) {
--                if (ret == GNUTLS_E_SHORT_MEMORY_BUFFER) {
--                    session->peername = g_realloc(session->peername,
--                                                  dnameSize);
--                    goto requery;
+-    while (checking_issuer) {
+-        checking_issuer = false;
++    for (;;) {
++        gnutls_x509_crt_t cert_issuer = NULL;
+ 
+         if (gnutls_x509_crt_check_issuer(cert_to_check,
+                                          cert_to_check)) {
+@@ -345,19 +345,30 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+         for (int i = 0; i < ncacerts; i++) {
+             if (gnutls_x509_crt_check_issuer(cert_to_check,
+                                              cacerts[i])) {
+-                retval = qcrypto_tls_creds_check_cert(
+-                    creds, cacerts[i], cacertFile,
+-                    isServer, isCA, errp);
+-                if (retval < 0) {
+-                    return retval;
 -                }
-                 error_setg(errp, "Cannot get client distinguished name: %s",
-                            gnutls_strerror(ret));
-                 goto error;
+-                cert_to_check = cacerts[i];
+-                checking_issuer = true;
++                cert_issuer = cacerts[i];
+                 break;
              }
-+            session->peername = (char *)g_steal_pointer(&dname.data);
-             if (session->authzid) {
-                 bool allow;
+         }
++        if (!cert_issuer) {
++            break;
++        }
++
++        if (qcrypto_tls_creds_check_cert(creds, cert_issuer, cacertFile,
++                                         isServer, isCA, errp) < 0) {
++            return -1;
++        }
++
++        cert_to_check = cert_issuer;
+     }
  
++    retval = gnutls_x509_crt_get_dn2(cert_to_check, &dn);
++    if (retval < 0) {
++        error_setg(errp, "Unable to fetch cert DN: %s",
++                   gnutls_strerror(retval));
++        return -1;
++    }
++    error_setg(errp, "Cert '%s' has no issuer in CA chain", dn.data);
++    gnutls_free(dn.data);
+     return -1;
+ }
+ 
+diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
+index 85f51aee1b..5f78fe7d6f 100644
+--- a/tests/unit/test-crypto-tlscredsx509.c
++++ b/tests/unit/test-crypto-tlscredsx509.c
+@@ -643,6 +643,15 @@ int main(int argc, char **argv)
+                               certchain_with_invalid,
+                               G_N_ELEMENTS(certchain_with_invalid));
+ 
++    gnutls_x509_crt_t certchain_incomplete[] = {
++        cacertrootreq.crt,
++        cacertlevel2areq.crt,
++    };
++
++    test_tls_write_cert_chain(WORKDIR "cacertchain-incomplete-ctx.pem",
++                              certchain_incomplete,
++                              G_N_ELEMENTS(certchain_incomplete));
++
+     TLS_TEST_REG(chain1, true,
+                  WORKDIR "cacertchain-ctx.pem",
+                  servercertlevel3areq.filename, false);
+@@ -652,6 +661,9 @@ int main(int argc, char **argv)
+     TLS_TEST_REG(certchainwithexpiredcert, false,
+                  WORKDIR "cacertchain-with-invalid-ctx.pem",
+                  clientcertlevel2breq.filename, false);
++    TLS_TEST_REG(chainincomlpete, true,
++                 WORKDIR "cacertchain-incomplete-ctx.pem",
++                 servercertlevel3areq.filename, true);
+ 
+     /* Some missing certs - first two are fatal, the last
+      * is ok
 -- 
 2.50.1
 
