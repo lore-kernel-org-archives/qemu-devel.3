@@ -4,78 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8623CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 17:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D750CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 17:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAtox-0003id-Lx; Mon, 20 Oct 2025 13:37:24 -0400
+	id 1vAu7q-0007vT-Fl; Mon, 20 Oct 2025 13:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAtov-0003iL-Jk
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:37:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAtot-0001v2-AX
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:37:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760981835;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3cMlwzP/y6PSCORNFNuJoF060xT8jNxumZ1oyoWYfq0=;
- b=OrOJQ+PSJbCI68Z3Ja0Uvj8khFWxZUj8/2SjTCqbwH6Nhhtf4ww8j0GzDKUAly22cqcjiZ
- xcllB/G+2xJ2zLOgw0/eOWL57X/hvz2EQ/KjMrJf2nY7jaeqP+w2UdwR++UTX0ntd4sWSG
- /7+RKzNWMYtX0fUUHaPAOmQiZbcrAZQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-_YWo8O5hMfqpO5eCWdWJzA-1; Mon,
- 20 Oct 2025 13:37:11 -0400
-X-MC-Unique: _YWo8O5hMfqpO5eCWdWJzA-1
-X-Mimecast-MFC-AGG-ID: _YWo8O5hMfqpO5eCWdWJzA_1760981828
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5A4B1956095; Mon, 20 Oct 2025 17:37:07 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.161])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC0EB1800451; Mon, 20 Oct 2025 17:37:05 +0000 (UTC)
-Date: Mon, 20 Oct 2025 18:37:02 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2] gitlab-ci: Decrease the size of the compiler cache
-Message-ID: <aPZzPnJJZJfRZerL@redhat.com>
-References: <20251020161759.50241-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAu7n-0007v4-QU
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:56:52 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAu7h-00045A-Ci
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:56:50 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4282fba734bso1083392f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 10:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760983002; x=1761587802; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VYJb7V5ZuM8dItSAc00vCEiwBfQP+gF15LRF3BIKW0U=;
+ b=djgFL072e1DqTv0ZwzhwvBbpzVxtYHggPBDGtbQxsHyZv0NOr6nbCTjfwIlZ44a3Ap
+ 7IKjdyljbeeJcguT+s9Vx1Tj7WFfg3FuOYfARHUrggthUr2UB155zXN7KR3LGiJqRBOk
+ MSuCu863LfYZb4fHEZyiESoKHkfg+Oxh+owPtVwuOJvOLROS2qftbBKKfTON0jOf5b3j
+ ogDM+peXBcZhot2bhefNsHqTaG8mW48gj7NKTpFSvvfQjU25cjkKvXip6eTcmRPyHeAM
+ pEA6AoGz2GXUdC3WLYmd6UbJiGnQCv4FtL5kFgK6TQgXdtG7DU3WQSaRd07DKhjQZJok
+ +Zng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760983002; x=1761587802;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VYJb7V5ZuM8dItSAc00vCEiwBfQP+gF15LRF3BIKW0U=;
+ b=tE73AsLzHX8uFGSxEsVcEY0//PAVNfSMOMP9Hu/h/iSKf/NxkAgSB5i0m0kZWY3xZD
+ H/xaOFLfs5knuUYmwNDA7xz3uszhTb1oFV4Kq3NNWkwIpy3Ed3TcQvL8Cw2/+0swM6Os
+ 3rtp2PDPxeTRgWZZnR75bw/4eQqMHmJjpnLzddpuIo02pmW5P6oRhyspyyDvAlOtqe87
+ XSL31O4dYsm9KovkDhVvSpPSVdHHrEQ3ucTEiQkp2xKgholXPT71SJoBgM8nblsUZG+P
+ FlZt2PMNbUVSoXY4bPQw8ty2KPp88Uv8lUeCL1YoM25lX9ZplRirHhGI6G4Zbaf4XI3H
+ rYaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9xO0cxyGXIeWLvI4VTMguX3AJGu+UeXukl9pQDqI50J5hBraHjoWkX2HEGifoHT8L6es55/cUHomE@nongnu.org
+X-Gm-Message-State: AOJu0YzmtgNyopvnsuUKjCYzvZrZq1rt02xEaevNBPG0vj8fWg8PoHBr
+ muNige11//zsKocnBEqpjMbRSlgsrozPgbGiVezkbr5ZFNLX+8RDb0Jw6DpV1DFKuQE=
+X-Gm-Gg: ASbGncvgew000esaWFvXxUB3mwqO44iPyCkXi9L5LLh8hmPlnTvPJMfcpmcT+nem5Vm
+ ZWvmeoyeZKkVaOQ+Pm7tZRQsQHX0uZmEFFVTFKC8A2p76BrHffzvtq65IwP6Gs9ntKTq5PHeNTA
+ qhydMKwvg98Y5kxuzUbgkY8MYvmJ7ku4k6q7M/UX8CE33kTBkhkYxyvqny1FfNnd9n97nRlj0Du
+ DCSnZ+mBj0E5WToxd0D6lqwcfzawfFSXDTBur/oxpwFu5JbTkyQ4uTDeLVRSb5ldlUR8acP3CfQ
+ 9ZD80umlolMit2jnB1KtFM5Ml/xq+vsLhBr1nNUJR3EgghJCGz/khkDVXK0nDmKzlYeF2Ym4dVq
+ RY9d38Djwy8POlDhK9K0YvnIM3o/f0UXOJfNWE3TyeLTZBDGv00RZGCXkNoUbAnN+d0YM1RBNe4
+ H9PwxZAZatBE76DrSqMG/iBVUgMcpXqXFqpGYqKg+Nmp6eklDJwX1/IA==
+X-Google-Smtp-Source: AGHT+IEzd5CND2C9k9hY29kJMEDCvwU+rRdPai+OPHl14mkiJNfxZjlUQhXUX0mW4obfLTxSvnhWLA==
+X-Received: by 2002:a05:6000:400a:b0:425:769e:515a with SMTP id
+ ffacd0b85a97d-42704d9e8f7mr10602220f8f.42.1760983002169; 
+ Mon, 20 Oct 2025 10:56:42 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427f009a797sm16414377f8f.27.2025.10.20.10.56.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 10:56:41 -0700 (PDT)
+Message-ID: <778a093a-bc42-45fb-b466-15be9a655a05@linaro.org>
+Date: Mon, 20 Oct 2025 19:56:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] gitlab-ci: Decrease the size of the compiler cache
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251020161759.50241-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20251020161759.50241-1-thuth@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,11 +102,10 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 20, 2025 at 06:17:59PM +0200, Thomas Huth wrote:
+On 20/10/25 18:17, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
 > Uploading the cache from the runner takes a long time in the MSYS2
@@ -110,19 +123,11 @@ On Mon, Oct 20, 2025 at 06:17:59PM +0200, Thomas Huth wrote:
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  v2: Decrease cache size to 180M and save cache-log.txt as artifact
+>   v2: Decrease cache size to 180M and save cache-log.txt as artifact
 > 
->  .gitlab-ci.d/windows.yml | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>   .gitlab-ci.d/windows.yml | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
