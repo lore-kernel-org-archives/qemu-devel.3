@@ -4,108 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE77CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3308FCCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAsdq-0005Bb-NY; Mon, 20 Oct 2025 12:21:50 -0400
+	id 1vAscj-0003j6-DF; Mon, 20 Oct 2025 12:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vAsdo-00058Q-Q5
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:21:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vAscf-0003gy-VP; Mon, 20 Oct 2025 12:20:38 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vAsdk-0000xk-Lz
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:21:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760977302;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TMuhqLCiwvXGhWuHTfUFcUWo7NHSVOEqil3zUev/Yug=;
- b=a5of/dl43CDAcErQ3b7QJUnaHGkKr5h9gSplp1rzGplVnzQ6/7U8QPhGyOCCEhzyNo3d3V
- 80HDgRvAQ6zBWe6zxw9CpK5hKxdC3cyZibWIYZI1ol+jTVTeQs/k1g8POulShCKBZvH3am
- 8dmVt5fmxlg2Domh+rzzHR3sXG3iZuw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-bxxsV7GxPkqjb1RnU-WuBg-1; Mon, 20 Oct 2025 12:21:40 -0400
-X-MC-Unique: bxxsV7GxPkqjb1RnU-WuBg-1
-X-Mimecast-MFC-AGG-ID: bxxsV7GxPkqjb1RnU-WuBg_1760977299
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f924ae2a89so5566670f8f.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 09:21:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760977299; x=1761582099;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TMuhqLCiwvXGhWuHTfUFcUWo7NHSVOEqil3zUev/Yug=;
- b=rtRetNdia5bzy/eCR9dqwnwyewC40Nq8lBBihVa7TzhZEtjX/b4itdJkjtgpHbrUID
- H8oLeq7elB8WcWwBfiblCXiMV+CjrLrgoYtVgkR8aP4a4wLcKQwI7pqiOPnjwliGYG8T
- Pi25CQArpJ5+YusF7ZMRNMNWh1uHdfeovj2/pag1beeLMA/vjYVlqZNNUO6/qLtylg7W
- BsDsvgwylw7m31JhD69nFXTJoEJm7SuvvEibj2G0Ha5wxQutYYAqyDpC21yuMnK0mUDb
- OHBvAPBkJECYAAsB/0ij5SHLT+2fbfXRvIZ5WgMF6PCYvuswm0btMDIdqYOXEMuUxxfI
- EvpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU485Bk6obFfNH4ITMkSNS4pQSvEv4f5wzQXmodNZ532+9kU1i5DHhpjyO45EHMVQaD4oQOmj0iG041@nongnu.org
-X-Gm-Message-State: AOJu0YzMYzyILTw3EFeNDtggCXsBAHKl2PaWQju0csx51OVglfYkrxPP
- 6tdXXwD9wmgjRfFgYDKm4Lv7sjGm+DhtexTIOf0TlCENNDZ5Yxg7+oxhjb715u+VK6QHsia0hjl
- gWVoOFjzk+vjNE0AbvCJ28eZPHJdDOXN80EucRI9+E/YSpQ7tGROEjvU+
-X-Gm-Gg: ASbGncuaeUjhirzRnd4J0V57bG/X6Y0m74Hg3iPUE98uesUk2isjRNjCvJ7PvVIGLa4
- 2AokA82apPGpC2m3qN1XwZBJuqvC04silCYRqcjXMfkgE31oqflvtyK2rDT4B6pMZE29/qGBBsz
- gwOTCef36aefNLi8A45RUEkEuAnm9H4fV5rpL43Vqed1hkSIkBWlnjdY+rzrggsDTV7Bm3nKjFX
- xYAd74SsTi0rGe+IK3e0gupBjsblqZ0UEW7YvZmI9HONoNbBPqW8v+RdYo5B2KFtINQskopWfYU
- VBeG3OHJ5bcVkF2Kfu+jEChwptGyoHJqa+6I1V1ZDXkb3DM7WViOXEvj3S9LzQL9HplwZ74b5Sv
- oSuoA
-X-Received: by 2002:a05:6000:41f4:b0:427:614:83da with SMTP id
- ffacd0b85a97d-4270614850bmr9459390f8f.48.1760977298751; 
- Mon, 20 Oct 2025 09:21:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGK1UI06KtBEwhhq8nnp2NmuOuW1bNA2Uh80dIcvi53PgnJznSKm7vuRcy8FWkfVEkUDEr3HA==
-X-Received: by 2002:a05:6000:41f4:b0:427:614:83da with SMTP id
- ffacd0b85a97d-4270614850bmr9459371f8f.48.1760977298331; 
- Mon, 20 Oct 2025 09:21:38 -0700 (PDT)
-Received: from [192.168.43.95] ([37.166.134.90])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5a0f19sm16190908f8f.9.2025.10.20.09.21.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 09:21:37 -0700 (PDT)
-Message-ID: <94132491-1af5-491e-ac98-68e4313bf6af@redhat.com>
-Date: Mon, 20 Oct 2025 18:21:34 +0200
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vAscd-0000sP-JU; Mon, 20 Oct 2025 12:20:37 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KFNawE013009;
+ Mon, 20 Oct 2025 16:20:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=fuuANGqPQMbYTgFcN
+ f4ybcycvExWfEtGEzuckzyU/xo=; b=G+4Qi4IB0nMElkZnxkRHtg6SbPnA4LjnK
+ xOp/fImA1MUgWb+G3wS30wLNG8tKV9BDGFa5eSEgZq2JSAV7Il1Zpp8z5cP7YTxk
+ kJTgHY2oA2wufWkToIWbfok/KOJITDE6WjXHWCd3p+C89DbYD2esbQPq32fQWA2Y
+ yz28M08OOF0Q58JQrYV6uP50H/vyhDLn+WvI9F72+qQ7BebagE3EWdoBkB5gbQPn
+ b1oc/DglBX/FNE6pCy3GmYKB2KGc4lo8gZfEVn7VvKcyHKH2vQHI97SLS/t3vEAe
+ caltaVO8xTIcIOKsGYToysjU7hK88oYZWBZk1Pv5LOyM++DCfcC+A==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c1e30-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 16:20:33 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59KE09Gg014685;
+ Mon, 20 Oct 2025 16:20:33 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7rxrqr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 16:20:33 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59KGKWOh6685296
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Oct 2025 16:20:32 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 19DB758067;
+ Mon, 20 Oct 2025 16:20:32 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4694E58065;
+ Mon, 20 Oct 2025 16:20:31 +0000 (GMT)
+Received: from t15.ibmuc.com (unknown [9.61.78.141])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 Oct 2025 16:20:31 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
+Subject: [PATCH 3/7] pc-bios/s390-ccw: Introduce CLP Architecture
+Date: Mon, 20 Oct 2025 12:20:19 -0400
+Message-ID: <20251020162023.3649165-4-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+References: <20251020162023.3649165-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Eric Auger <eric.auger@redhat.com>
-Subject: Re: [PATCH v4 11/27] hw/pci/pci: Introduce optional
- get_msi_address_space() callback
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-12-skolothumtho@nvidia.com>
-Content-Language: en-US
-In-Reply-To: <20250929133643.38961-12-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: OQPkbTRD8irdY8VpwRP8berbbGQGncZ6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX/jkiGFz4wmI1
+ VwYjNgWyrHih7RXNQSNpjHes4vNyRj4wC5dwcaOZM9qkUGN3lK2L6rwfoRLc3MYX3bs9ahb/M8a
+ g43E5waYUTixGE8xD5TGXNfoo496Nkko3TlnMUrJi8MBzV8Y+YkA4FGbKZO9sGJIjStTTnCU5m/
+ RoPeX3ceIWOPgySLBW8ZDISe7UuSpnNSxNiFD4X7x8ICoEfdkF1JRz/SHy8IfbKjt/zW0N0i7Fo
+ g8S7qeQZyOHlKjJ2ZH1W/UdqVKEjtkZ+7bS2XGPJNBTNmlVaGD4q/dOsRf9448DnR89uP4dlZuk
+ oPIF42wgPFoy8fGS4h0jGbZNbE+YVfB9pgoQJ/I/ZpsXjeRBKhZT5jubmmLFAUKN9T3Vni8nBuC
+ WqLuDJenmekHXiYN0rPPsD1r8zVGbQ==
+X-Proofpoint-GUID: OQPkbTRD8irdY8VpwRP8berbbGQGncZ6
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f66151 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=B6FfjjnMrpp8agTJrekA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_04,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,137 +113,184 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-On 9/29/25 3:36 PM, Shameer Kolothum wrote:
-> On ARM, when a device is behind an IOMMU, its MSI doorbell address is
-> subject to translation by the IOMMU. This behavior affects vfio-pci
-> passthrough devices assigned to guests using an accelerated SMMUv3.
->
-> In this setup, we configure the host SMMUv3 in nested mode, where
-> VFIO sets up the Stage-2 (S2) mappings for guest RAM, while the guest
-> controls Stage-1 (S1). To allow VFIO to correctly configure S2 mappings,
-> we currently return the system address space via the get_address_space()
-> callback for vfio-pci devices.
->
-> However, QEMU/KVM also uses this same callback path when resolving the
-> address space for MSI doorbells:
->
-> kvm_irqchip_add_msi_route()
->   kvm_arch_fixup_msi_route()
->     pci_device_iommu_address_space()
->      get_address_space()
->
-> This will cause the device to be configured with wrong MSI doorbell
-> address if it return the system address space.
-returns
-> Introduce an optional get_msi_address_space() callback and use that in
-> the above path if available. This will enable IOMMU implementations to
-> make use of this if  required.
-if required
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---	
->  hw/pci/pci.c         | 19 +++++++++++++++++++
->  include/hw/pci/pci.h | 16 ++++++++++++++++
->  target/arm/kvm.c     |  2 +-
->  3 files changed, 36 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 1315ef13ea..6f9e1616dd 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2964,6 +2964,25 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
->      return &address_space_memory;
->  }
->  
-> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev)
-> +{
-> +    PCIBus *bus;
-> +    PCIBus *iommu_bus;
-> +    int devfn;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-> +    if (iommu_bus) {
-> +        if (iommu_bus->iommu_ops->get_msi_address_space) {
-> +            return iommu_bus->iommu_ops->get_msi_address_space(bus,
-> +                                 iommu_bus->iommu_opaque, devfn);
-See my reply to Nicolin's comment. From a high level point of view the
-semantic of
+Call Logical Processor (CLP) Architecture is used for managing PCI functions on
+s390x. Define and include the structures and routines needed to interact with
+PCI devices during IPL.
 
-get_msi_address_space versus get_address_space
- does not look very clear. I have the impression for HW nested implementation you were forced to return the &system_address through the get_address_space
- although there is a protecting IOMMU and you need another callback for return a proper IOMMU as for MSIs. This is still unclear and looks hacky to me at this point. I think we need to get the semantic of get_msi_address_space vs get_address_space more solid and you need to explain why get_address_space
-is mandated to return &system_address in our case. 
-Maybe you explained that earlier in some thread but I fail to find those info again in the commit messages/comments and I think this is important.
+Headers in ~/qemu/include/hw are not normally visible and must be included
+using a relative path.  Due to this, the QEMU_PACKED macro must also be defined
+here.
 
-> +        } else {
-> +            return iommu_bus->iommu_ops->get_address_space(bus,
-> +                                 iommu_bus->iommu_opaque, devfn);
-> +        }
-> +    }
-> +    return &address_space_memory;
-> +}
-> +
->  int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
->                                    IOMMUNotify fn, void *opaque)
->  {
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index c54f2b53ae..0d3b351903 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -652,6 +652,21 @@ typedef struct PCIIOMMUOps {
->                              uint32_t pasid, bool priv_req, bool exec_req,
->                              hwaddr addr, bool lpig, uint16_t prgi, bool is_read,
->                              bool is_write);
-> +    /**
-> +     * @get_msi_address_space: get the address space for MSI doorbell address
-> +     * for devices
-> +     *
-> +     * Optional callback which returns a pointer to an #AddressSpace. This
-> +     * is required if MSI doorbell also gets translated through IOMMU(eg: ARM)
-IOMMU (
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ pc-bios/s390-ccw/clp.h    |  24 +++++++++
+ pc-bios/s390-ccw/clp.c    | 106 ++++++++++++++++++++++++++++++++++++++
+ pc-bios/s390-ccw/Makefile |   2 +-
+ 3 files changed, 131 insertions(+), 1 deletion(-)
+ create mode 100644 pc-bios/s390-ccw/clp.h
+ create mode 100644 pc-bios/s390-ccw/clp.c
 
-> +     *
-> +     * @bus: the #PCIBus being accessed.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number
-> +     */
-> +    AddressSpace * (*get_msi_address_space)(PCIBus *bus, void *opaque,
-> +                                            int devfn);
->  } PCIIOMMUOps;
->  
->  bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-> @@ -660,6 +675,7 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
->  bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
->                                   Error **errp);
->  void pci_device_unset_iommu_device(PCIDevice *dev);
-> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev);
->  
->  /**
->   * pci_device_get_viommu_flags: get vIOMMU flags.
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index b8a1c071f5..10eb8655c6 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -1611,7 +1611,7 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level)
->  int kvm_arch_fixup_msi_route(struct kvm_irq_routing_entry *route,
->                               uint64_t address, uint32_t data, PCIDevice *dev)
->  {
-> -    AddressSpace *as = pci_device_iommu_address_space(dev);
-> +    AddressSpace *as = pci_device_iommu_msi_address_space(dev);
->      hwaddr xlat, len, doorbell_gpa;
->      MemoryRegionSection mrs;
->      MemoryRegion *mr;
-Thanks
-
-Eric
+diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
+new file mode 100644
+index 0000000000..cb130e5e90
+--- /dev/null
++++ b/pc-bios/s390-ccw/clp.h
+@@ -0,0 +1,24 @@
++/*
++ * Call Logical Processor (CLP) architecture definitions
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef CLP_H
++#define CLP_H
++
++#ifndef QEMU_PACKED
++#define QEMU_PACKED __attribute__((packed))
++#endif
++
++#include <stdint.h>
++#include "../../include/hw/s390x/s390-pci-clp.h"
++
++int clp_pci(void *data);
++int enable_pci_function(uint32_t *fhandle);
++int enumerate_pci_functions(void);
++
++#endif
+diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
+new file mode 100644
+index 0000000000..45d496fc18
+--- /dev/null
++++ b/pc-bios/s390-ccw/clp.c
+@@ -0,0 +1,106 @@
++/*
++ * Call Logical Processor (CLP) architecture
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "clp.h"
++#include <stdio.h>
++#include <string.h>
++
++int clp_pci(void *data)
++{
++    struct { uint8_t _[2048]; } *req = data;
++    int cc = 3;
++
++    asm volatile (
++        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "+d" (cc), "+m" (*req)
++        : [req] "a" (req)
++        : "cc");
++    return cc;
++}
++
++/*
++ * Get the PCI function entry for a given function ID
++ * Return 0 on success, 1 if the FID is not found, or a negative RC on error
++ */
++int find_pci_function(uint32_t fid, ClpFhListEntry *entry)
++{
++    int rc;
++    int count = 0;
++    int limit = PCI_MAX_FUNCTIONS;
++    ClpReqRspListPci rrb;
++
++    rrb.request.hdr.len = 32;
++    rrb.request.hdr.cmd = 0x02;
++    rrb.request.resume_token = 0;
++    rrb.response.hdr.len = sizeof(ClpRspListPci);
++
++    do {
++        rc = clp_pci(&rrb);
++        if (rc) {
++            return -rc;
++        }
++
++        if (rrb.response.hdr.rsp != 0x0010) {
++            printf("Failed to list PCI functions: %x", rrb.response.hdr.rsp);
++            return -1;
++        }
++
++        /* Resume token set when max enteries are returned */
++        if (rrb.response.resume_token) {
++            count = CLP_FH_LIST_NR_ENTRIES;
++            rrb.request.resume_token = rrb.response.resume_token;
++        } else {
++            count = (rrb.response.hdr.len - 32) / sizeof(ClpFhListEntry);
++        }
++
++        limit -= count;
++
++        for (int i = 0; i < count; i++) {
++            if (rrb.response.fh_list[i].fid == fid) {
++                memcpy(entry, &rrb.response.fh_list[i], sizeof(ClpFhListEntry));
++                return 0;
++            }
++        }
++
++    } while (rrb.request.resume_token && limit);
++
++    return 1;
++}
++
++/*
++ * Enable the PCI function associated with a given handle
++ * Return 0 on success or a negative RC on error
++ */
++int enable_pci_function(uint32_t *fhandle)
++{
++    ClpReqRspSetPci rrb;
++    int rc;
++
++    rrb.request.hdr.len = 32;
++    rrb.request.hdr.cmd = 0x05;
++    rrb.request.fh = *fhandle;
++    rrb.request.oc = 0;
++    rrb.request.ndas = 1;
++    rrb.response.hdr.len = 32;
++
++    rc = clp_pci(&rrb);
++    if (rc) {
++        return -rc;
++    }
++
++    if (rrb.response.hdr.rsp != 0x0010) {
++        printf("Failed to enable PCI function: %x", rrb.response.hdr.rsp);
++        return -1;
++    }
++
++    *fhandle = rrb.response.fh;
++    return 0;
++}
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index 3577ac381a..89a42ae506 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+ 
+ OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+       virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+-      virtio-ccw.o
++      virtio-ccw.o clp.o
+ 
+ SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+ 
+-- 
+2.49.0
 
 
