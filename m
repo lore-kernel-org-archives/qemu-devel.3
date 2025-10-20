@@ -4,118 +4,200 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AD3CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E4BCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAkLB-000722-8J; Mon, 20 Oct 2025 03:30:01 -0400
+	id 1vAkNk-0008Jm-PK; Mon, 20 Oct 2025 03:32:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkL8-0006yu-Qa
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:29:58 -0400
-Received: from 5.mo548.mail-out.ovh.net ([188.165.49.213])
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1vAkNd-0008JJ-Hi
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:32:34 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkL6-0000aG-Fp
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:29:58 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.107])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cqnBS05vcz5yJt;
- Mon, 20 Oct 2025 07:29:52 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1vAkNM-00010v-L6
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:32:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1760945536; x=1792481536;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=sjeL8iPwAT4qct9oBCI+hAUvllDRItioqHjoj1yt7Gs=;
+ b=nQ7cjrKOt8q7X3sCo+goxN9uQS7RNElAZhxGlw64Ed/+UkcsR8wPf4yq
+ O+pyrra+xbjHly6/ndyb6ZFG54jinqxoU+1D5Dj5N0Lcl1XoEH/RDp4Kh
+ rhdUWYF6SMgvaOIR1fv2wDnuzRZ4xgP90iLxhk5hZzuRc32OC2G0E/ew8
+ UtSPUt8ytqAdxoQ4d0wW890QtYKZENRKxa2+VEzPQ6NPBvSuasUjp9D/J
+ QeNgY2VRzC5G2cxY6S4Fy+1/YpGTBM2Zsml6cataSw5Ll8C14gEI79r5G
+ lRp+8Jvg2O8PLF7FTKqGYAQx2nPjPo+hAte9mlTOfArmd38+n+opkigeT w==;
+X-CSE-ConnectionGUID: 7gjlXiSTTYiwMfSEqILaFg==
+X-CSE-MsgGUID: xWuStHTKSG6QPab/muQP/A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11587"; a="65674056"
+X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="65674056"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Oct 2025 00:32:11 -0700
+X-CSE-ConnectionGUID: 4XnzGJbPRK+w3JrZqom8kg==
+X-CSE-MsgGUID: fEoCcLS+SpejqOg/i9aR5A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,242,1754982000"; d="scan'208";a="183215517"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Oct 2025 00:32:11 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Mon, 20 Oct 2025 00:32:10 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Mon, 20 Oct 2025 00:32:10 -0700
+Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.13) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Mon, 20 Oct 2025 00:32:10 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HwLek0f6E85ih2JNIMIeyw48Hh1/mkFYbbQaIFjFV6G51lWbK7wGASei3Jl9xhd9wIF5tqsVV2W1mEX8HELH+vCPu3wVdZkWZZaFt6HqmT8ts9jdkg3DvyMo3Zb1YMII+tSXjmcSPkz6hjXR6CGjr0+G0P2Qk1IULLqiC7SW/BoaIrXWqmRUD1jC227yJrTgmJPfeoVJqu9XTADndpBwsPnBNPg+hWhisAoNjZRAeTsSTNxtBi3+f93osv4oKI7nvvB6DIZ+pI4mwnYwxzJ+xMOl06CNUPsjzKitCiFvv5AyeMzeGuzLdNULgPB78gMgRtcqvYMvbKDp4LxzmoyRKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kL2+C1Le21PQs00X37rFxMCaFG7dDPWFXMHmezTmhAc=;
+ b=LSj1lVD65Ifai+UALfbPbOYcPgUqklzz0JjjY27E1LwEnidu+036W6XUX0zjdwElvW/nk6bLBSHrlrEZyPu9Hbeen+vAk6IeXEQ5qoGNsN7kJULke9VPhqlyob/kQxbD/5xGaWfBP2mYOV6/leZiq4KOFdyK9QOHkGxwJO8iiQqLXEonk6QdiHgmMWY7Jh3JFcY/pPMf8xa0kkgp/vxzoGg6ZHIjUWMEMAX/NzM/pxyUN65NqrcNvH935S0RxO6qwXTGPnkPKgfu8T3apMF0INkRPSSE2/7tMw5WoN+K4O1oOiV8eWUacqz1hrg8QtJCAY5XDt4UmK8CsGM/8UCNEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ0PR11MB4798.namprd11.prod.outlook.com (2603:10b6:a03:2d5::12)
+ by MN0PR11MB6057.namprd11.prod.outlook.com (2603:10b6:208:375::9)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 20 Oct
- 2025 09:29:51 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006701c8de3-9a6c-45a2-b8eb-0baf1185b5e0,
- FF32B7A34F2DEDF77D336B29AD6F053710A0DB6D) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d54934cf-945f-4a08-8710-30f2d5f5eb54@kaod.org>
-Date: Mon, 20 Oct 2025 09:29:50 +0200
-MIME-Version: 1.0
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.16; Mon, 20 Oct
+ 2025 07:32:08 +0000
+Received: from SJ0PR11MB4798.namprd11.prod.outlook.com
+ ([fe80::d946:6abf:6e7e:fd1e]) by SJ0PR11MB4798.namprd11.prod.outlook.com
+ ([fe80::d946:6abf:6e7e:fd1e%7]) with mapi id 15.20.9228.015; Mon, 20 Oct 2025
+ 07:32:08 +0000
+Message-ID: <5cabe9ba-fad4-4f23-9d00-10f775f12f7d@intel.com>
+Date: Mon, 20 Oct 2025 15:38:54 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
- <bmeng.cn@gmail.com>, <qemu-block@nongnu.org>, Ilias Apalodimas
- <ilias.apalodimas@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
- Alexander Bulekov <alxndr@bu.edu>
-References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <484a8687e5cd44d94597512502180ba1aba57572.1760702638.git.jan.kiszka@siemens.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <484a8687e5cd44d94597512502180ba1aba57572.1760702638.git.jan.kiszka@siemens.com>
+Subject: Re: [PATCH v2 6/8] intel_iommu: Fix unmap_bitmap failure with legacy
+ VFIO backend
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
+CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <mst@redhat.com>,
+ <jasowang@redhat.com>, <clement.mathieu--drif@eviden.com>,
+ <eric.auger@redhat.com>, <joao.m.martins@oracle.com>, <avihaih@nvidia.com>,
+ <xudong.hao@intel.com>, <giovanni.cabiddu@intel.com>, <mark.gross@intel.com>, 
+ <arjan.van.de.ven@intel.com>
+References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
+ <20251017082234.517827-7-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <20251017082234.517827-7-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG6EX2.mxp5.local (172.16.2.52) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 683f8e15-a81d-4e46-9618-9ae462679638
-X-Ovh-Tracer-Id: 16496403961444862907
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE/lW0jZdVrBv1TSkjlZWUtv6PAtcBvoIi938bP+Y/NPTl9htWBW4gN8rfCB8HWvMENvNofcahZvkyHRSXr2TSMm+YV06w69AOb45ag5MdVjFmkodck1mV23crisLwTgbVIbBsMVRdeemU3hdXp3oj87/N69y4fg9S/4e/aRsSOZViTIdxDD/zXuT48XcK0B92nMstLirP4x6/B/0SaSuxPFTsU38dpD5iZRPp2qohrewqW9/nfdjK25vP/xK97BipOKlZ4+chD4IKfIbYAFzn54TnQ423ppIqqBz39/lkzAk3a/mJjz7HrbM5NmvSc1tS5+fS47k65rww/6Za41ca+P7jkOlXLg0uPWrUjZ8zSF57qLX5XHc0Uit6O2XIzP1pb56ObjBc8EVG1Or7lUDROqOVZuPVI9C/O0rnAjAjzSrFlc4MJkgyVLyIqz3Cagx7tg2v55z2EwUTvTEs5Ymi4emprXWmiCQS/sWW5QoRWSOc0j8SxqEaoql3MwNyFecfohVhlHdwH4XNey95EgOotWuodstMmn/cjvJ19GKx6FS38n3rA0k7QhgSw9Yqkf9irwA+ja8nT/VWCVUi1qFsQNulr6uZuE3XqagIXL/OoYJf0Rf5Hnq9h9ICHjUCDt/Az0KHoLWz0w8MbI06GRnH6PzMW+8CWvjJrrzdd0hBQIQ
-DKIM-Signature: a=rsa-sha256; bh=+0N6Vrcmz1DOua3YmWrcwJp4FOHmaZfOcePVXIInMZs=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1760945392; v=1;
- b=M460CJHWbMmW3dISU0EMLfrJ6O0+xl83WGpcqYHSgx1O0xYZIDhPxy1hi1zXY/MHdf9/VTjn
- 4amwoATL8W3YD/7Js0bVUn7S2NmpvTaqMt0Xd16I9fJnEhkJuV4zlYJ783uWFRhk1tYFqOS1fNo
- JjCkf07P7OkdPSpzE2W1EpjSJRUogMlvj/n52t5XfBjBtcvxzXJ+24M4pvXK1AN72Znv0Jq1frj
- oHmgpv3/Kf/NEqDMJPnUqtWUUy34MF2Zr/07EurJona1gq4SoB29cnPwPBY6ap5pNlj6bDPEl+h
- WSxQ2y0pr+Hs+b7jEu58+xKosZT8LtjPAxFyK6H6cjESA==
-Received-SPF: pass client-ip=188.165.49.213; envelope-from=clg@kaod.org;
- helo=5.mo548.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PUZP153CA0002.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:301:c2::12) To SJ0PR11MB4798.namprd11.prod.outlook.com
+ (2603:10b6:a03:2d5::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB4798:EE_|MN0PR11MB6057:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7c5c37c6-2bab-4ffa-8ba4-08de0faac689
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0; ARA:13230040|366016|1800799024|376014|42112799006;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZXprN3BRV2dZYjdzNmFIM1NXYmRoNnJxaXY2MENuYVlhWFZJdTR6cC8yWWV0?=
+ =?utf-8?B?cjNGM1h6dFUyR2d0YzJkNG1udmtDVlQ2bVZXTTFSNVlhNG1xcGpCSVdiS0FY?=
+ =?utf-8?B?eWF2M2l2d1o1Z0xNRXNZdm5MSGEzNUsydERzanF6akdHbXZHbEN0a2hKQ3pX?=
+ =?utf-8?B?RTltZVlMaks5VE1SUDR5MHBRVnl2ZnpBRUw5MEFVZnlhU0pVVExFSlIrYjZB?=
+ =?utf-8?B?SHdIV2JiSmc4dG9HWWJnM2VDenkzSlhnWk1aZ3FFTC9MYTBHSlFCSUxHNTND?=
+ =?utf-8?B?dEIrRU0yQlZ0dk5EcnJ1THFKK0hTMnFZVlVvVzFEdk8wRTIwb0NDS2tlMk40?=
+ =?utf-8?B?dkYvWllhZUJqRCtEZE5xallyQ2RidkxVa25WYURGUERxb3RNS0p0RC9iQmRN?=
+ =?utf-8?B?K0NseFFhbkxlSzRTMG8zZEdGWGNNc0FjYUlCaW44cFg5dUdWbGxqRDRtSENr?=
+ =?utf-8?B?c0trQlVodHEwR0dwL1I4cTd4QzNMSHI0bjNMOTN6RklCR1RhSjVwU2V5NmRX?=
+ =?utf-8?B?NzAyNzczUUZDSmdBOWZwK0IwOGUwSG1VVHhESXNncHpzZ2FFTjliOC81THJZ?=
+ =?utf-8?B?YXIxNFFrazQzb20vYW40eFJNZXdMM0Q4RlBzQ1ZJOUFRMEpva0ZIdStXOHY4?=
+ =?utf-8?B?RW0wZUpCYklrQUU5aGdTbVoyQVdhQnJaMU5nZlpROEE0QnNxRHZtQWVzZTNk?=
+ =?utf-8?B?cm1IZDErb0F2aVhIeG1PdkFDa0U4TWxsd3hYNXJKeG9WYnMwVUpaTGNLR2N4?=
+ =?utf-8?B?V1l5cUhpYUhzR0JScEdSNXNvdTRnWGhMMkhWNTREMHJNTTlsaEZYS3FFS0tU?=
+ =?utf-8?B?dE5pSW0wdkJMVzRTbWMrUmdMbWxJQk5ZZzByc0pOTjFWU2E3aHk0WmNucG90?=
+ =?utf-8?B?MDhWZ0wyMDJmWXhoK1ZoWDMxY1R4RFFzZ1JFMitvNUoyc3Q5bVBSSzV6dlow?=
+ =?utf-8?B?ektwRjhKNDdUcFVFa3pSbGNOT0xjWlFJOE5DOEZidjVYTkhuTkp6NFFXbnd4?=
+ =?utf-8?B?NXQzU043R3dseHpEUnEwQ1NiVW11dk9VN3dMbkdMby9tb0ZVOUwxSStXSXFa?=
+ =?utf-8?B?L3pySHlaMElZMFpLZkpqSXR1Z2ViSGF6K2o5RmFjN1lRbkJodWVvR0RwUzV0?=
+ =?utf-8?B?c3VRb0t5WXVJSk92MlgybTdUZFc2dzVQTGV3R0xDc09iNzlHdUsxZUdneFh2?=
+ =?utf-8?B?dEtnWnBoU3JNbVNwN1NlcWlNbzRWWmRoVHRyNDZKbDhLcllZWGg1N0Y4Q0ht?=
+ =?utf-8?B?NWtOd2hjTktucm1xbjYxVjRGWmJRaVh1S3pWNnFPZC85MHFicW8wbFBVZlFk?=
+ =?utf-8?B?YzRMZ1lwR28xeTdqekRsaGZqcXVER1MyUzBFZnRIWDc1UlBTRVYwY1kxcm1P?=
+ =?utf-8?B?c1pKOFVmZlIwMWFzcThvd3ozYnc1SlQ3YitjOHpZVXBtSHdGb0N3dlhmRjRQ?=
+ =?utf-8?B?Y0F1bklOSzJLSTlDNjNnRkxOeEorVTlGM0Z0Nmp3aUZDVzJyMGRPWWl5UXRG?=
+ =?utf-8?B?WUhNWk1kVDVWRUc0R3ZZa29uWUMydjBIa3V3Q1B2SEF6YlorWkFCNGNEdEhx?=
+ =?utf-8?B?YVRMS2tMSlpTclhHeVFISWZSSXpCRnNUbjZ4R21BYU9TYWFmM3N0a0djbjZn?=
+ =?utf-8?B?NnpzMVpiSWIxRG5GWGtBRERYZlYyQWRqR2hWOCtONHplSlJpUFlvY1MvYXJL?=
+ =?utf-8?B?KzhGWm4vK3dvSlBjTWRHSUYxM0dwNmJidHhtaU5BYWRZKzhMcm84eFljTllQ?=
+ =?utf-8?B?bGhYVFVQQ2VTMTFvdzlRR3VTZFQ2cGs3bnFSUW9EOVhsNm8yRFR0dHg5L2pE?=
+ =?utf-8?B?Z0NuRXpuWnhXY25PTk5VeUxXSEpoRU0waEFnRDkyNUV1Q3VURFEvWHlXT1Y2?=
+ =?utf-8?B?bkx6R2IwYXhNNW9wbktYYVVVUVZUWCtUTW1LY0N0S3pVOHpaMDJKYlJidzNI?=
+ =?utf-8?Q?lYtKKYSwPHK/VlLy4Q26EN80az31g6vv?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB4798.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(42112799006); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?elFmNWZGWnErbS9GeFFZQ3pucGloanZwc21pb2FsMHhCdTdTYlN4Qmg3L3k1?=
+ =?utf-8?B?VWFlNkUrZXJUWWZtd2xwS3ROb2ZyNkFGK284WCtCYWpvRnNocHU0UWhGK0x6?=
+ =?utf-8?B?R0ZBbVBvSVJYTVNCMjBRWG0xbXo2Ykp4L3pnSXkzQzNkbW9wU2JOcHBXVjVE?=
+ =?utf-8?B?SDRwYXd3cDF1RzFUcjRLb2pxdXBjS1RoN2dHTW9Ic3laTXVNbVdaQnJQOGt6?=
+ =?utf-8?B?R0ZYMm53L0Y0eitQK0lOUThLNm55TjhXQUp5S2tsYnlMaFM0dVM4c055NWV4?=
+ =?utf-8?B?MXdCbUowMW93bW02M3pudDNXblhuNHBmUThRME1HTFNnSVFNdnk0dm1Pb09a?=
+ =?utf-8?B?eDJqeklmSDlzbWtidFRsQnA4cysvTHNzQUk1cmtBcU1mM1dkSUpjMWJaeHk3?=
+ =?utf-8?B?cFovQjJUbkluUUd5WGFWdm55dldWZkxGV2FzOTlnZ1NOeWtlYVdybGZKd1RX?=
+ =?utf-8?B?OFZkSUVFeTc4UjBLdExjekh1MS90T3NPT1VXdUIycU1SVUVDeFJqRURzeWhn?=
+ =?utf-8?B?Z1JwZzIrV09LWnl1cS8vVU1iaWsyTmRnUW1sL09Wc1Q4aTZGM3U2YXAyUWR2?=
+ =?utf-8?B?S2ZUU0xhZnB6b2hnQ2Vsa3FXWUJEVVF0RlBDZklnQWc1Mzd6TitPYnhUUEtQ?=
+ =?utf-8?B?Q0RRSTVidU9nSytZMTRRUStWVEpPSTJ2SUdKVGcxanZSaCtLaVpSUUZmVElG?=
+ =?utf-8?B?WFhTcFh6a01Bd2h4aTZJZ2lEVUVIb25SdXJLencrRTBqckFRNmtxRFJPTjlX?=
+ =?utf-8?B?ZDZ3QmpqTlZEa1pTOTNHZWZmczZIdFBXRzBQZzhBOTNnb0lrN1VwSzV6YWcw?=
+ =?utf-8?B?SGI5T2YxY1REWEk5Q2kzNTE0MTRLWUkzak5xT0grcHg1T3lERWxEbS94M0Fx?=
+ =?utf-8?B?RXovV3oxRXYybm9YdFBES0FkZXpqdVdjWFlycmFkZnVlRmkvdU1HYkN4VEc2?=
+ =?utf-8?B?VjhScDh5Z0V5b2xzZ1gyajdhVU5uWGp2UkdKZjNYaDNhVnVpK1RvV3NxS2x2?=
+ =?utf-8?B?VFlwN1o3ZnV4TVgycW5YYnZhYlB5UVFlTjY5R1hhWE5nN0dSWG8vM2lvOW1X?=
+ =?utf-8?B?cXNJSmZkN3p3SmZCeWxQTTZPUXEweERRNmFUNC9nQjVLMzhhaXc5bnN6Wk16?=
+ =?utf-8?B?VDNSSXpVT3VlWkVZdlg2ZHkvY1FkR0YvSmk0RS9MZ29PQzBxQzJqQW02VSs4?=
+ =?utf-8?B?bXptNFIrY3dPanJWditaWUc0RGp0d0N2enowbWcrQlBnay8rMU5nWFIvUHRC?=
+ =?utf-8?B?SHpYTjJibXVVdXZKN0NkRzNMRFVaRk9VUWg2YkRWMDBoeStQK0xPNWtHNjFD?=
+ =?utf-8?B?L1B6UHNvdnRpYmthSlJpc200ZW55eSsyMFVhNkxXd203a2MzRUZ6NHQwWjdR?=
+ =?utf-8?B?WTV3UGZxRGNSVzZCOWphUUV1M1l6YWJQU0Nqa29UYjdrclRqcjZzK0tXRDNI?=
+ =?utf-8?B?MDVJbmdINUk3YzJBbGZXdEZkVTRrQ3hiRGRvNjgxTnFJdGI1dTZhN1lXTkxp?=
+ =?utf-8?B?bFdpeTE4aWRzL3ZpTDR6Wk5xYzB2QlpaV0YzWVRCa1RLQTRPM0VmTTZDZ3VJ?=
+ =?utf-8?B?MTRKd2hJeEEvUmhJWDhYdVcxcmVzREdmaW80ZXI2QXVzT241VG1ndkNDM2Z4?=
+ =?utf-8?B?MzlmR29XY3d2cFlWcXp0alI1R0phem42SEV1TXVaaUpuODlOZUpjVUVTQW4z?=
+ =?utf-8?B?WVdQOEtwN3pJcUJnbzlrNzhoUUNyb28veWZmQlF5L1IwNUZlaDJqWDEzQmJW?=
+ =?utf-8?B?WTcwZEtmRjdZYkQ2ZWNkblBWS21HOWZ0ZGJ6a3pnUUhxMi9vcGkraFR5U1JS?=
+ =?utf-8?B?emtzdGJPeitkZmt0REhrR21ScnJIY2RkNVdVZXBmaHhvbUVVMUpFNjVLVXZ6?=
+ =?utf-8?B?ODRRZ2pjTjh3dG5aVzVKbTEyTms5cEtVZXlpZ0xtSnNEYXh1SjFVakF3SzBj?=
+ =?utf-8?B?NzVNVStLUnpHa2w3aFU0L0dSQzBPWmltQkJjSjMvdFhoNG0zVkNJMWpGS0hw?=
+ =?utf-8?B?ZElkWVBCOFZyTXJyNjRIRnJTUEk3bzJzVmkvRXRSNnRudTIrZ1lCT2tLNzJG?=
+ =?utf-8?B?a0wrc3JtLzM2a1VmRllZbnhWRFhEeGc4cTZ1QVgrcW5mdkFyMHpMMU82KzQw?=
+ =?utf-8?Q?HVwlApspKFYsItUAQfmF8FZn9?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7c5c37c6-2bab-4ffa-8ba4-08de0faac689
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4798.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 07:32:08.5562 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DcVV5SVTpHiahztfEzBKuR18mCRmw8Dl/84paaO59YX7RjZbobZsTizNl5UpeWgUO3EFt3Zw7u35l/BW3szF9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB6057
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -133,127 +215,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 14:03, Jan Kiszka wrote:
-> From: Jan Kiszka <jan.kiszka@siemens.com>
+On 2025/10/17 16:22, Zhenzhong Duan wrote:
+> If a VFIO device in guest switches from IOMMU domain to block domain,
+> vtd_address_space_unmap() is called to unmap whole address space.
 > 
-> Alignment rules apply the the individual partitions (user, boot, later
-> on also RPMB) and depend both on the size of the image and the type of
-> the device. Up to and including 2GB, the power-of-2 rule applies to the
-> user data area. For larger images, multiples of 512 sectors must be used
-> for eMMC and multiples of 512K for SD-cards. Fix the check accordingly
-> and also detect if the image is too small to even hold the boot
-> partitions.
+> If that happens during migration, migration fails with legacy VFIO
+> backend as below:
 > 
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> Status: failed (vfio_container_dma_unmap(0x561bbbd92d90, 0x100000000000, 0x100000000000) = -7 (Argument list too long))
+> 
+> Because legacy VFIO limits maximum bitmap size to 256MB which maps to 8TB on
+> 4K page system, when 16TB sized UNMAP notification is sent, unmap_bitmap
+> ioctl fails.
+
+It would be great to add some words to note why vIOMMU can trigger this.
+
+> Fix it by iterating over DMAMap list to unmap each range with active mapping
+> when migration is active. If migration is not active, unmapping the whole
+> address space in one go is optimal.
+> 
+> There is no such limitation with iommufd backend, but it's still not optimal
+> to allocate large bitmap, e.g., there may be large hole between IOVA ranges,
+> allocating large bitmap and dirty tracking on the hole is time consuming and
+> useless work.
+> 
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
 > ---
-> CC: Warner Losh <imp@bsdimp.com>
-> CC: Cédric Le Goater <clg@kaod.org>
-> CC: Joel Stanley <joel@jms.id.au>
-> CC: Alistair Francis <alistair@alistair23.me>
-> CC: Alexander Bulekov <alxndr@bu.edu>
-> ---
->   hw/sd/sd.c | 65 +++++++++++++++++++++++++++++++++++++-----------------
->   1 file changed, 45 insertions(+), 20 deletions(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index d7a496d77c..d1e1bb4f0e 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -2759,9 +2759,32 @@ static void sd_instance_finalize(Object *obj)
->       timer_free(sd->ocr_power_timer);
+>   hw/i386/intel_iommu.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 42 insertions(+)
+
+with above comment, the patch LGTM.
+
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 6a168d5107..f32d4f5a15 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -37,6 +37,7 @@
+>   #include "system/system.h"
+>   #include "hw/i386/apic_internal.h"
+>   #include "kvm/kvm_i386.h"
+> +#include "migration/misc.h"
+>   #include "migration/vmstate.h"
+>   #include "trace.h"
+>   
+> @@ -4533,6 +4534,42 @@ static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+>       vtd_iommu_unlock(s);
 >   }
 >   
-> +static void sd_blk_size_error(SDState *sd, int64_t blk_size,
-> +                              int64_t blk_size_aligned, const char *rule,
-> +                              Error **errp)
+> +/*
+> + * Unmapping a large range in one go is not optimal during migration because
+> + * a large dirty bitmap needs to be allocated while there may be only small
+> + * mappings, iterate over DMAMap list to unmap each range with active mapping.
+> + */
+> +static void vtd_address_space_unmap_in_migration(VTDAddressSpace *as,
+> +                                                 IOMMUNotifier *n)
 > +{
-> +    const char *dev_type = sd_is_emmc(sd) ? "eMMC" : "SD card";
-> +    char *blk_size_str;
+> +    const DMAMap *map;
+> +    const DMAMap target = {
+> +        .iova = n->start,
+> +        .size = n->end,
+> +    };
+> +    IOVATree *tree = as->iova_tree;
 > +
-> +    blk_size_str = size_to_str(blk_size);
-> +    error_setg(errp, "Invalid %s size: %s", dev_type, blk_size_str);
-> +    g_free(blk_size_str);
+> +    /*
+> +     * DMAMap is created during IOMMU page table sync, it's either 4KB or huge
+> +     * page size and always a power of 2 in size. So the range of DMAMap could
+> +     * be used for UNMAP notification directly.
+> +     */
+> +    while ((map = iova_tree_find(tree, &target))) {
+> +        IOMMUTLBEvent event;
 > +
-> +    blk_size_str = size_to_str(blk_size_aligned);
-> +    error_append_hint(errp,
-> +                      "%s size has to be %s, e.g. %s.\n"
-> +                      "You can resize disk images with"
-> +                      " 'qemu-img resize <imagefile> <new-size>'\n"
-> +                      "(note that this will lose data if you make the"
-> +                      " image smaller than it currently is).\n",
-> +                      dev_type, rule, blk_size_str);
-> +    g_free(blk_size_str);
+> +        event.type = IOMMU_NOTIFIER_UNMAP;
+> +        event.entry.iova = map->iova;
+> +        event.entry.addr_mask = map->size;
+> +        event.entry.target_as = &address_space_memory;
+> +        event.entry.perm = IOMMU_NONE;
+> +        /* This field is meaningless for unmap */
+> +        event.entry.translated_addr = 0;
+> +        memory_region_notify_iommu_one(n, &event);
+> +
+> +        iova_tree_remove(tree, *map);
+> +    }
 > +}
 > +
->   static void sd_realize(DeviceState *dev, Error **errp)
+>   /* Unmap the whole range in the notifier's scope. */
+>   static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
 >   {
->       SDState *sd = SDMMC_COMMON(dev);
-> +    int64_t blk_size = -ENOMEDIUM;
->       int ret;
+> @@ -4542,6 +4579,11 @@ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+>       IntelIOMMUState *s = as->iommu_state;
+>       DMAMap map;
 >   
->       switch (sd->spec_version) {
-> @@ -2774,32 +2797,34 @@ static void sd_realize(DeviceState *dev, Error **errp)
->       }
->   
->       if (sd->blk) {
-> -        int64_t blk_size;
-> -
->           if (!blk_supports_write_perm(sd->blk)) {
->               error_setg(errp, "Cannot use read-only drive as SD card");
->               return;
->           }
->   
->           blk_size = blk_getlength(sd->blk);
-> -        if (blk_size > 0 && !is_power_of_2(blk_size)) {
-> -            int64_t blk_size_aligned = pow2ceil(blk_size);
-> -            char *blk_size_str;
-> -
-> -            blk_size_str = size_to_str(blk_size);
-> -            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
-> -            g_free(blk_size_str);
-> -
-> -            blk_size_str = size_to_str(blk_size_aligned);
-> -            error_append_hint(errp,
-> -                              "SD card size has to be a power of 2, e.g. %s.\n"
-> -                              "You can resize disk images with"
-> -                              " 'qemu-img resize <imagefile> <new-size>'\n"
-> -                              "(note that this will lose data if you make the"
-> -                              " image smaller than it currently is).\n",
-> -                              blk_size_str);
-> -            g_free(blk_size_str);
-> -
+> +    if (migration_is_running()) {
+> +        vtd_address_space_unmap_in_migration(as, n);
+> +        return;
 > +    }
-> +    if (blk_size >= 0) {
-> +        blk_size -= sd->boot_part_size * 2;
-> +        if (blk_size > SDSC_MAX_CAPACITY) {
-> +            if (sd_is_emmc(sd) && blk_size % (1 << HWBLOCK_SHIFT) != 0) {
-> +                int64_t blk_size_aligned =
-> +                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
-> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
-> +                                  "multiples of 512", errp);
-> +                return;
-> +            } else if (!sd_is_emmc(sd) && blk_size % (512 * KiB)) {
-> +                int64_t blk_size_aligned = ((blk_size >> 19) + 1) << 19;
-> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
-> +                                  "multiples of 512K", errp);
-> +                return;
-> +            }
-> +        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
-> +            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power of 2",
-> +                              errp);
-> +            return;
-> +        } else if (blk_size < 0) {
-> +            error_setg(errp, "eMMC image smaller than boot partitions");
->               return;
->           }
->   
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> +
+>       /*
+>        * Note: all the codes in this function has a assumption that IOVA
+>        * bits are no more than VTD_MGAW bits (which is restricted by
 
