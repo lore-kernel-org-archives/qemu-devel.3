@@ -4,106 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1CDCCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5704DCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:36:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vArtc-0002zQ-Ld; Mon, 20 Oct 2025 11:34:04 -0400
+	id 1vArvH-00043Z-L9; Mon, 20 Oct 2025 11:35:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1vArtY-0002yo-5R
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:34:00 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vArvF-00041t-EZ; Mon, 20 Oct 2025 11:35:45 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1vArtV-0003C0-5g
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:33:59 -0400
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 64F363F520
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:33:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1760974432;
- bh=9XIEVV1pj1LnQwNUr1MYMbaN9TF3CykKwSeIUaz/ofg=;
- h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
- To:Cc:Content-Type;
- b=m7uf4UgKYPEh//jGMdNoLspV1gAQl89VbhMQDevh3J7a18eoMry+wrRAHsWjXz3ut
- wjgaGMJmyX1jMQO0ptXuw9Nn77Nn6V4nvc25F7ZKcM/wJpf7ub5IcPqnXT7FgUKJJY
- 7pRjhd6+06kCLBQITDvD2QTsjuFq1EKB9Jrjf18qtlbwkK4snyRZSITBmHRQHN6E8s
- 6FwCrZw5g1L1iyxzjdBkQP1KYuVkaBdBxeUnaV20W2AXgKcw+9WtSWhwy8P+NekCQC
- Ekc+7jOMoTCELjcJYC3j9215Cg+vDvo0i72nOgAwWDVwL1WRp4fL3qQMHU5VFX8Hzc
- ZAOTWkvONQyRZ4HVJ2QJbLU0/O7tqwrAUR2g4uhixq8CzpBThOTPTGfEL/Lw3d/vDj
- Dlt72cUL+5n74paBSjvugSpbeEXazlCiJt32hT5ihSJ9xOW5v5LZCLzhDFOCThxWln
- XpEfdW5XnswpTXfDnly2lGLlne+dwxKrA9oe210zaPXfzsW08VQTIPXrtWGdDEivVh
- L14FdBu5SsicoOp0k7uhiMGdFrr4MEMjkl+CBgTybbI/JNowvbMGq5ecFIid5VYLDt
- lkBEmxUtXKiBp34+fnnKQpkNm6D/iNYo/mlfnDuRZpevhIK2X53r+zS1paavt0H8u5
- NOMSArcXGCeiyXbRALFjSqEs=
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-b5516e33800so6463793a12.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 08:33:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760974430; x=1761579230;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9XIEVV1pj1LnQwNUr1MYMbaN9TF3CykKwSeIUaz/ofg=;
- b=ZSn1tBvkQQm8yuDieoo/2iC7PkxGoXQ9A9h1NFwqh1fr5+wPQzcQj+ySQoeGTekE2y
- kR0c2gT4wEPGNRrxHXBZfyZBjaqJW+U4WFPBmGaYhQPceWcsWp4bbA/ttj5zAvK+jV0f
- M0C7uKXIwdPwAYZOde1jCRsV8RuM+MEwfJtVqHcesOisIIfE3N0Jk1skfr3JHpFdtg+n
- +j/u1qEWHuZ41DHnhkj4vHrd3mxGXnbf5kXdXlfcWrGlmWBVFaYUZeKcy2BBSdP2mddU
- ec3QqSAAjW/yuj7LcfCe92EQ+398G78jmjqhMgRvV0J40tmpix+SHup07iJz1BtaGFQh
- rbFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLWtSW/hFKVXIudvam5SQvVWVq2j8BIM76fiUkOX8SUe0DXUk73HoS3H1hSyJNYj1krnagp3ETiMJ2@nongnu.org
-X-Gm-Message-State: AOJu0YzuCCCrEGwGRB5L/90ZifDluDml3qaybRvBH6trqBJJbfEpjPM5
- tWhRzzkUqHDC2fN4ziDdc3+x8E5sGzm1RT7+rQo9snmCbyayiE+evkVQFeaWSZPszgu6V8zISsf
- 6o6ya7rcJLjrtJSlX1qzK0OuAYj6TcHywWdc/XpINFaTIHn/ScGRiQ2ksMSf9RQMaU786qyV0Jw
- wd5ztZbPIO86v655B7jQJFcO8/j0gpQVcE2v9l113VMiNqDrk=
-X-Gm-Gg: ASbGncunploTaGNl9FaqzhZA7OQKPmNNoOeEw8XpdzNh0z+JwT1pNQxfEKxY6SnTgJ5
- E5XcvLJ7LalUGiGDq6PL2LrsUQ5I/uh49PVBCW1JwZJNLe4xnUqTXeURoIg6A1CRfSyEfshsykH
- njmv92GE75DP34kyvPPbDOgTFErjhVz70fbnXPVu2hLWjYHH8+mTeh
-X-Received: by 2002:a17:902:e546:b0:269:91b2:e9d6 with SMTP id
- d9443c01a7336-290cb65c529mr177402915ad.46.1760974430331; 
- Mon, 20 Oct 2025 08:33:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNThXnFmh94o4SmP939+cR9q7DMPbb8SuByENcAI0z/jIb0hlWas2bkkumw47ktsfyWKhC4I0Sjpob4o3wPWU=
-X-Received: by 2002:a17:902:e546:b0:269:91b2:e9d6 with SMTP id
- d9443c01a7336-290cb65c529mr177402635ad.46.1760974429853; Mon, 20 Oct 2025
- 08:33:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vArvB-0003ea-8Q; Mon, 20 Oct 2025 11:35:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7D21B597310;
+ Mon, 20 Oct 2025 17:35:34 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id N-EqypJd_Seh; Mon, 20 Oct 2025 17:35:32 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 7249959730C; Mon, 20 Oct 2025 17:35:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 70547597309;
+ Mon, 20 Oct 2025 17:35:32 +0200 (CEST)
+Date: Mon, 20 Oct 2025 17:35:32 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v3 11/13] hw/boards: Extend DEFINE_MACHINE macro to cover
+ more use cases
+In-Reply-To: <00108467-9f4f-4078-a430-0f18297da94c@linaro.org>
+Message-ID: <814b7e32-07ae-5872-f94f-cf5b04dac2d7@eik.bme.hu>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <d75c8bbed97650f1a4d2d675444582a240a335b4.1760798392.git.balaton@eik.bme.hu>
+ <9a1fe708-66a1-489c-ad2f-23705497c470@linaro.org>
+ <00108467-9f4f-4078-a430-0f18297da94c@linaro.org>
 MIME-Version: 1.0
-References: <20251017213529.998267-1-sean.anderson@linux.dev>
- <20251017213529.998267-4-sean.anderson@linux.dev>
- <4d1a679a-f1c2-487b-bddb-eaf7dd56fd0e@canonical.com>
- <56d70072-67ee-471a-9b9a-c3257886d668@linux.dev>
-In-Reply-To: <56d70072-67ee-471a-9b9a-c3257886d668@linux.dev>
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Date: Mon, 20 Oct 2025 17:33:37 +0200
-X-Gm-Features: AS18NWAIXQXq1aOXOWPXvFkoruAR-1lxP6HUNmCkxuYSVHu5YFldzNK-UbI-QJ8
-Message-ID: <CAM=mAOn0vTDhaW3fYKK+E2t6R18+KA0ZgwantE5+9PwGCMPFKg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] semihosting: Check for overflow in FLEN on 32-bit
- systems
-To: Sean Anderson <sean.anderson@linux.dev>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Luc Michel <lmichel@kalray.eu>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "qemu-devel@nongnu.org Developers" <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000059ac17064198cf79"
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-405740523-1760974426=:88125"
+Content-ID: <d127653f-05b1-bb30-256b-4bf75d61b50a@eik.bme.hu>
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,146 +72,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000059ac17064198cf79
-Content-Type: text/plain; charset="UTF-8"
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Sean Anderson <sean.anderson@linux.dev> schrieb am Mo., 20. Okt. 2025,
-16:21:
+--3866299591-405740523-1760974426=:88125
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <67d2f488-712f-613b-f74c-66153b511b0c@eik.bme.hu>
 
-> On 10/18/25 03:21, Heinrich Schuchardt wrote:
-> > On 10/17/25 23:35, Sean Anderson wrote:
-> >> When semihosting 32-bit systems, the return value of FLEN will be stored
-> >> in a 32-bit integer. To prevent wraparound, return -1 and set EOVERFLOW.
-
->> This matches the behavior of stat(2). Static files don't need to be
-> >> checked, since are always small.
-> >>
-> >> Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-> >> ---
-> >>
-> >>   semihosting/arm-compat-semi.c | 17 ++++++++++++++---
-> >>   1 file changed, 14 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/semihosting/arm-compat-semi.c
-> b/semihosting/arm-compat-semi.c
-> >> index c5a07cb947..57453ca6be 100644
-> >> --- a/semihosting/arm-compat-semi.c
-> >> +++ b/semihosting/arm-compat-semi.c
-> >> @@ -305,8 +305,19 @@ static uint64_t common_semi_flen_buf(CPUState *cs)
-> >>       return sp - 64;
-> >>   }
-> >>   +static void common_semi_flen_cb(CPUState *cs, uint64_t ret, int err)
-> >> +{
-> >> +    CPUArchState *env = cpu_env(cs);
-> >> +
-> >> +    if (!err && !is_64bit_semihosting(env) && ret > INT32_MAX) {
-> >
-> >
-> > The issue with the current implementation is that files with file sizes
-> over 4 GiB will be reported as file size < 4 -GiB on 32bit systems. Thanks
-> for addressing this.
-> >
-> > But unfortunately with your change you are additionally dropping support
-> for file sizes 2 GiB to 4 GiB on 32bit devices. This should be avoided.
-> >
-> > The semihosting specification specifies that the value returned in r0
-> should be -1 if an error occurs. So on 32 bit systems 0xffffffff should be
-> returned.
-> >
-> > As file sizes cannot be negative there is not reason to assume that the
-> value in r0 has to be interpreted by semihosting clients as signed.
-> >
-> > Please, change your commit to check against 0xffffffff.
-> >
-> > It might make sense to contact ARM to make their specification clearer.
+On Mon, 20 Oct 2025, Philippe Mathieu-Daudé wrote:
+> +Pierrick
 >
-> stat(2) will return -1/EOVERFLOW on 32-bit hosts for files over 2 GiB. I
-> believe we should be consistent.
+> On 20/10/25 17:05, Philippe Mathieu-Daudé wrote:
+>> On 18/10/25 17:11, BALATON Zoltan wrote:
+>>> Add a more general DEFINE_MACHINE_EXTENDED macro and define simpler
+>>> versions with less parameters based on that. This is inspired by how
+>>> the OBJECT_DEFINE macros do this in a similar way to allow using the
+>>> shortened definition in more complex cases too.
+>>> 
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>>   include/hw/boards.h | 16 ++++++++++++++--
+>>>   1 file changed, 14 insertions(+), 2 deletions(-)
+>>> 
+>>> diff --git a/include/hw/boards.h b/include/hw/boards.h
+>>> index 665b620121..fd3d549ff5 100644
+>>> --- a/include/hw/boards.h
+>>> +++ b/include/hw/boards.h
+>>> @@ -762,7 +762,8 @@ struct MachineState {
+>>>           } \
+>>>       } while (0)
+>>> -#define DEFINE_MACHINE(namestr, machine_initfn) \
+>>> +#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
+>>> +                                machine_initfn, ABSTRACT, ...) \
+>>>       static void machine_initfn##_class_init(ObjectClass *oc, const void 
+>>> *data) \
+>>>       { \
+>>>           MachineClass *mc = MACHINE_CLASS(oc); \
+>>> @@ -770,8 +771,11 @@ struct MachineState {
+>>>       } \
+>>>       static const TypeInfo machine_initfn##_typeinfo = { \
+>>>           .name       = MACHINE_TYPE_NAME(namestr), \
+>>> -        .parent     = TYPE_MACHINE, \
+>>> +        .parent     = TYPE_##PARENT_NAME, \
+>>>           .class_init = machine_initfn##_class_init, \
+>>> +        .instance_size = sizeof(InstanceName), \
+>>> +        .abstract = ABSTRACT, \
 >
+> IIUC we don't want to have abstract type with interfaces, but
+> only QOM leaves. So maybe better always use .abstract = false in
+> DEFINE_MACHINE_EXTENDED()?
 
-That may have been true historically.
+Where did you get that from? What about these then:
 
-Current 32-bit Linux supports 64-bit file systems and reports the length of
-files beyond 2 GiB without error.
+static const TypeInfo pnv_psi_info
+static const TypeInfo spapr_machine_info
+static const TypeInfo e1000_base_info
+static const TypeInfo ivshmem_common_info
+static const TypeInfo macio_type_info
+static const TypeInfo bus_info
+static const TypeInfo device_type_info
+static const TypeInfo hppa_machine_types
+static const TypeInfo qxl_pci_type_info
+static const TypeInfo pic_common_type
+static const TypeInfo xive2_router_info
+static const TypeInfo arm_gic_common_type
+static const TypeInfo arm_gicv3_common_type
+static const TypeInfo ioapic_common_type
+static const TypeInfo loongarch_extioi_common_types
+static const TypeInfo rp_info
+static const TypeInfo virt_machine_info (hw/arm/virt.c)
+static const TypeInfo mps2tz_info
+static const TypeInfo armsse_info
+static const TypeInfo m48txx_isa_type_info
+static const TypeInfo m48txx_sysbus_type_info
+static const TypeInfo pci_ide_type_info
+static const TypeInfo ccw_machine_info
+static const TypeInfo virtio_ccw_md_info
+static const TypeInfo pc_machine_info
+static const TypeInfo x86_machine_info
+static const TypeInfo vfio_pci_device_info
+static const TypeInfo ehci_pci_type_info
+static const TypeInfo xhci_pci_info
+static const TypeInfo uhci_pci_type_info
+static const TypeInfo via_pm_info
+static const TypeInfo via_isa_info
+static const TypeInfo piix_pci_type_info
+static const TypeInfo pcie_slot_type_info
+static const TypeInfo pci_bridge_type_info
+static const TypeInfo intel_hda_info
+static const TypeInfo virtio_md_pci_info
 
-Best regards
+>>> +        .interfaces = (const InterfaceInfo[]) { __VA_ARGS__ } , \
+>> 
+>> IIUC Richard asked for array argument in order to save .rodata?
 
-Heinrich
+Do you have an example for that? I'm not sure what do you mean.
 
---00000000000059ac17064198cf79
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Regards,
+BALATON Zoltan
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Sean Anderson &lt;<a href=3D"mai=
-lto:sean.anderson@linux.dev">sean.anderson@linux.dev</a>&gt; schrieb am Mo.=
-, 20. Okt. 2025, 16:21:<br></div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 10/18/25=
- 03:21, Heinrich Schuchardt wrote:<br>
-&gt; On 10/17/25 23:35, Sean Anderson wrote:<br>
-&gt;&gt; When semihosting 32-bit systems, the return value of FLEN will be =
-stored<br>
-&gt;&gt; in a 32-bit integer. To prevent wraparound, return -1 and set EOVE=
-RFLOW.</blockquote></div></div><div dir=3D"auto"><div class=3D"gmail_quote =
-gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 =
-0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-&gt;&gt; This matches the behavior of stat(2). Static files don&#39;t need =
-to be<br>
-&gt;&gt; checked, since are always small.<br>
-&gt;&gt;<br>
-&gt;&gt; Signed-off-by: Sean Anderson &lt;<a href=3D"mailto:sean.anderson@l=
-inux.dev" target=3D"_blank" rel=3D"noreferrer">sean.anderson@linux.dev</a>&=
-gt;<br>
-&gt;&gt; ---<br>
-&gt;&gt;<br>
-&gt;&gt; =C2=A0 semihosting/arm-compat-semi.c | 17 ++++++++++++++---<br>
-&gt;&gt; =C2=A0 1 file changed, 14 insertions(+), 3 deletions(-)<br>
-&gt;&gt;<br>
-&gt;&gt; diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compa=
-t-semi.c<br>
-&gt;&gt; index c5a07cb947..57453ca6be 100644<br>
-&gt;&gt; --- a/semihosting/arm-compat-semi.c<br>
-&gt;&gt; +++ b/semihosting/arm-compat-semi.c<br>
-&gt;&gt; @@ -305,8 +305,19 @@ static uint64_t common_semi_flen_buf(CPUState=
- *cs)<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return sp - 64;<br>
-&gt;&gt; =C2=A0 }<br>
-&gt;&gt; =C2=A0 +static void common_semi_flen_cb(CPUState *cs, uint64_t ret=
-, int err)<br>
-&gt;&gt; +{<br>
-&gt;&gt; +=C2=A0=C2=A0=C2=A0 CPUArchState *env =3D cpu_env(cs);<br>
-&gt;&gt; +<br>
-&gt;&gt; +=C2=A0=C2=A0=C2=A0 if (!err &amp;&amp; !is_64bit_semihosting(env)=
- &amp;&amp; ret &gt; INT32_MAX) {<br>
-&gt; <br>
-&gt; <br>
-&gt; The issue with the current implementation is that files with file size=
-s over 4 GiB will be reported as file size &lt; 4 -GiB on 32bit systems. Th=
-anks for addressing this.<br>
-&gt; <br>
-&gt; But unfortunately with your change you are additionally dropping suppo=
-rt for file sizes 2 GiB to 4 GiB on 32bit devices. This should be avoided.<=
-br>
-&gt; <br>
-&gt; The semihosting specification specifies that the value returned in r0 =
-should be -1 if an error occurs. So on 32 bit systems 0xffffffff should be =
-returned.<br>
-&gt; <br>
-&gt; As file sizes cannot be negative there is not reason to assume that th=
-e value in r0 has to be interpreted by semihosting clients as signed.<br>
-&gt; <br>
-&gt; Please, change your commit to check against 0xffffffff.<br>
-&gt; <br>
-&gt; It might make sense to contact ARM to make their specification clearer=
-.<br>
-<br>
-stat(2) will return -1/EOVERFLOW on 32-bit hosts for files over 2 GiB. I be=
-lieve we should be consistent.<br></blockquote></div></div><div dir=3D"auto=
-"><br></div><div dir=3D"auto">That may have been true historically.</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">Current 32-bit Linux supports 6=
-4-bit file systems and reports the length of files beyond 2 GiB without err=
-or.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Best regards</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">Heinrich</div></div>
-
---00000000000059ac17064198cf79--
+>>>       }; \
+>>>       static void machine_initfn##_register_types(void) \
+>>>       { \
+>>> @@ -779,6 +783,14 @@ struct MachineState {
+>>>       } \
+>>>       type_init(machine_initfn##_register_types)
+>>> +#define DEFINE_MACHINE(namestr, machine_initfn) \
+>>> +    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, 
+>>> machine_initfn, \
+>>> +                            false, { })
+>>> +
+>>> +#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
+>>> +    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, 
+>>> machine_initfn, \
+>>> +                            false, __VA_ARGS__)
+>>> +
+>>>   extern GlobalProperty hw_compat_10_1[];
+>>>   extern const size_t hw_compat_10_1_len;
+>
+>
+--3866299591-405740523-1760974426=:88125--
 
