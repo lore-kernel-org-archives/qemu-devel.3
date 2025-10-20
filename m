@@ -4,59 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B640CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E037CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAm36-0004kU-Nd; Mon, 20 Oct 2025 05:19:28 -0400
+	id 1vAm4e-0005Ni-7S; Mon, 20 Oct 2025 05:21:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vAm32-0004kE-GZ
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:19:24 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vAm4Z-0005NQ-6j
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:21:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vAm2z-00065d-P0
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:19:24 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9297:0:640:61e7:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B9C2280794;
- Mon, 20 Oct 2025 12:19:12 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a51::1:37])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AJRWei3FoKo0-lxC7R4Py; Mon, 20 Oct 2025 12:19:12 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760951952;
- bh=7kIPUyfA296TEPUovVoKhXBwjsl3BvS8mp986COa+xo=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=soJ8BdBSFkqoaFM/7Wa6eqpezsDbpMf/jQ629tIkZvNXkVJToR4+33pxuMzsYF4W2
- b5kxZkfao6hf1HBV/2dB3ZlooEVUo4yzqdI0Q5fmWo/OtQi2lu+J0Pvg54IH7pHl/h
- taJIq9mU7WwXT3b2Cz8C0tuMO0WIF9eq2KLhHld0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: peterx@redhat.com
-Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- vsementsov@yandex-team.ru, armbru@redhat.com
-Subject: [PATCH] migration: vmsd errp handlers: return bool
-Date: Mon, 20 Oct 2025 12:19:07 +0300
-Message-ID: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vAm4V-0006av-KD
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:20:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760952051;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=PmjvDPuE1H6ZPCE6uWR3s5XS9Yeu8TcPutCr0BqztjI=;
+ b=gmhXjN1tQ5hWHUVMXFJFvv+embo8LFCrSFUlB3FBHLj6pXH5rknfsru+Aj4z9uibOTT8pg
+ QqAsy12TyieB50xZ0aa8HBbF+abDViNnM259oq7jUkMfnm4xZH4VI+V9DJqjXeT/ZCzOeg
+ T7Zlhh4ic+Lg1SiPeFOKo3TXHFOZbxY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-R1athjHINOisAUPL8JVCXg-1; Mon,
+ 20 Oct 2025 05:20:47 -0400
+X-MC-Unique: R1athjHINOisAUPL8JVCXg-1
+X-Mimecast-MFC-AGG-ID: R1athjHINOisAUPL8JVCXg_1760952046
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E14A18001D1; Mon, 20 Oct 2025 09:20:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.161])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 981CA180044F; Mon, 20 Oct 2025 09:20:44 +0000 (UTC)
+Date: Mon, 20 Oct 2025 10:20:41 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] gitlab-ci: Decrease the size of the compiler cache
+Message-ID: <aPX-6dp65xXGtxja@redhat.com>
+References: <20251020085431.23968-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251020085431.23968-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,170 +85,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recently we moved to returning errp. Why to keep int return value?
-Generally it doesn't help: you can't use in a logic of handling
-an error, as you are never sure, that in future the logic in
-the stack will not change: it may start to return another error
-code in the same case, or return same error code in another case.
+On Mon, Oct 20, 2025 at 10:54:31AM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> Uploading the cache from the runner takes a long time in the MSYS2
+> job, mostly due to the size of the compiler cache.
+> However, looking at runs with a non-initialized cache, and by doing
+> a "du -sh ." in the build directory, it seems like a build only
+> takes about 236 MiB of data, so the compiler cache with 500 MiB
+> certainly contains a lot of stale files. Thus decrease the size of
+> the ccache to a more reasonable value to speed up the MSYS2 job in
+> our CI (and add a "du -sh" at the end to have a reference for the
+> required cache size in the future).
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  Looking at the latest runs in the CI, our recent attempt to decrease
+>  the cache size by cleaning the pacman cache did not help much:
+>  https://gitlab.com/qemu-project/qemu/-/jobs/11747329283
+>  ... that run contains the "pacman -Sc" command, but the "Saving cache
+>  for successful job" step at the end still takes close to 20 minutes.
+>  So we likely have to shrink the compiler cache, too. In this run here:
+>  https://gitlab.com/thuth/qemu/-/jobs/11770708859#L1769
+>  I added a "du -sh" and you can see that the build directory only
+>  takes 236 MB there. So a ccache with the size of 250M should be
+>  sufficient for the MSYS2 job.
 
-Actually, we can only rely on concrete errno code when get it
-_directly_ from documented library function or syscall. This way we
-handle for example EINTR. But later in a stack, we can only add
-this errno to the textual error by strerror().
+FWIW, in my fork I see
 
-Let this new, recently added API be simpler and clearer, let it
-return simple boolean value, so we shouldn't think:
+Cacheable calls:   638 / 647 (98.61%)
+  Hits:            629 / 638 (98.59%)
+    Direct:        629 / 629 (100.0%)
+    Preprocessed:    0 / 629 ( 0.00%)
+  Misses:            9 / 638 ( 1.41%)
+Uncacheable calls:   9 / 647 ( 1.39%)
+Local storage:
+  Cache size (GB): 0.1 / 0.5 (29.54%)
+  Hits:            629 / 638 (98.59%)
+  Misses:            9 / 638 ( 1.41%)
 
-  - should we handle different error codes differently
-    (if yes - how exactly, if no - why do we need this information?)
+IOW, even ~160 MB is sufficient for 99% cache hit, so 250 MB is
+about 2/3rds spare headroom.
 
-  - should we add it to errp, or it was already added earlier in
-    the stack
+If I look at the saving cache part in my fork job I see:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- backends/tpm/tpm_emulator.c   | 10 ++++------
- docs/devel/migration/main.rst |  6 +++---
- include/migration/vmstate.h   |  6 +++---
- migration/vmstate.c           | 31 +++++++++++++------------------
- 4 files changed, 23 insertions(+), 30 deletions(-)
+  msys64/var/cache: found 284 matching artifact files and directories 
+  ccache: found 12825 matching artifact files and directories 
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index dacfca5ab7..3937ac5572 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -947,24 +947,22 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
- 
- /*
-  * Load the TPM state blobs into the TPM.
-- *
-- * Returns negative errno codes in case of error.
-  */
--static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
-+static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
- {
-     TPMBackend *tb = opaque;
-     int ret;
- 
-     ret = tpm_emulator_set_state_blobs(tb, errp);
-     if (ret < 0) {
--        return ret;
-+        return false;
-     }
- 
-     if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
--        return -EIO;
-+        return false;
-     }
- 
--    return 0;
-+    return true;
- }
- 
- static const VMStateDescription vmstate_tpm_emulator = {
-diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-index 1afe7b9689..234d280249 100644
---- a/docs/devel/migration/main.rst
-+++ b/docs/devel/migration/main.rst
-@@ -446,15 +446,15 @@ The functions to do that are inside a vmstate definition, and are called:
- 
- Following are the errp variants of these functions.
- 
--- ``int (*pre_load_errp)(void *opaque, Error **errp);``
-+- ``bool (*pre_load_errp)(void *opaque, Error **errp);``
- 
-   This function is called before we load the state of one device.
- 
--- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
-+- ``bool (*post_load_errp)(void *opaque, int version_id, Error **errp);``
- 
-   This function is called after we load the state of one device.
- 
--- ``int (*pre_save_errp)(void *opaque, Error **errp);``
-+- ``bool (*pre_save_errp)(void *opaque, Error **errp);``
- 
-   This function is called before we save the state of one device.
- 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 63ccaee07a..dbe330dd5f 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -218,11 +218,11 @@ struct VMStateDescription {
-     int minimum_version_id;
-     MigrationPriority priority;
-     int (*pre_load)(void *opaque);
--    int (*pre_load_errp)(void *opaque, Error **errp);
-+    bool (*pre_load_errp)(void *opaque, Error **errp);
-     int (*post_load)(void *opaque, int version_id);
--    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
-+    bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
-     int (*pre_save)(void *opaque);
--    int (*pre_save_errp)(void *opaque, Error **errp);
-+    bool (*pre_save_errp)(void *opaque, Error **errp);
-     int (*post_save)(void *opaque);
-     bool (*needed)(void *opaque);
-     bool (*dev_unplug_pending)(void *opaque);
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 81eadde553..026fd6f1a4 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -153,15 +153,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
-         return -EINVAL;
-     }
--    if (vmsd->pre_load_errp) {
--        ret = vmsd->pre_load_errp(opaque, errp);
--        if (ret < 0) {
--            error_prepend(errp, "pre load hook failed for: '%s', "
--                          "version_id: %d, minimum version_id: %d, "
--                          "ret: %d: ", vmsd->name, vmsd->version_id,
--                          vmsd->minimum_version_id, ret);
--            return ret;
--        }
-+    if (vmsd->pre_load_errp && !vmsd->pre_load_errp(opaque, errp)) {
-+        error_prepend(errp, "pre load hook failed for: '%s', "
-+                      "version_id: %d, minimum version_id: %d, "
-+                      "ret: %d: ", vmsd->name, vmsd->version_id,
-+                      vmsd->minimum_version_id, ret);
-+        return -EINVAL;
-     } else if (vmsd->pre_load) {
-         ret = vmsd->pre_load(opaque);
-         if (ret) {
-@@ -255,13 +252,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         qemu_file_set_error(f, ret);
-         return ret;
-     }
--    if (vmsd->post_load_errp) {
--        ret = vmsd->post_load_errp(opaque, version_id, errp);
--        if (ret < 0) {
--            error_prepend(errp, "post load hook failed for: %s, version_id: "
--                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
--                          vmsd->version_id, vmsd->minimum_version_id, ret);
--        }
-+    if (vmsd->post_load_errp && !vmsd->post_load_errp(opaque, version_id,
-+                                                      errp)) {
-+        error_prepend(errp, "post load hook failed for: %s, version_id: "
-+                      "%d, minimum_version: %d, ret: %d: ", vmsd->name,
-+                      vmsd->version_id, vmsd->minimum_version_id, ret);
-+        ret = -EINVAL;
-     } else if (vmsd->post_load) {
-         ret = vmsd->post_load(opaque, version_id);
-         if (ret < 0) {
-@@ -438,9 +434,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-     trace_vmstate_save_state_top(vmsd->name);
- 
-     if (vmsd->pre_save_errp) {
--        ret = vmsd->pre_save_errp(opaque, errp);
-         trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
--        if (ret < 0) {
-+        if (!vmsd->pre_save_errp(opaque, errp)) {
-             error_prepend(errp, "pre-save for %s failed, ret: %d: ",
-                           vmsd->name, ret);
-         }
+while in QEMU job I see
+
+  msys64/var/cache: found 342 matching artifact files and directories 
+  ccache: found 46881 matching artifact files and directories 
+
+so the ccache usage is almost x4 bigger in terms of # of files, so
+that does likely account for a good portion of the time.
+
+I'm surprised the msys64/var/cache is still bigger than my fork though,
+as I would have expected them to be basically the same.
+
+I wonder if we shouldn't recursively list the msys64 cache as a debug
+aid ?
+
+>  .gitlab-ci.d/windows.yml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+> index 6e1135d8b86..e2fef543899 100644
+> --- a/.gitlab-ci.d/windows.yml
+> +++ b/.gitlab-ci.d/windows.yml
+> @@ -94,7 +94,7 @@ msys2-64bit:
+>    - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
+>    - $env:CCACHE_BASEDIR = "$env:CI_PROJECT_DIR"
+>    - $env:CCACHE_DIR = "$env:CCACHE_BASEDIR/ccache"
+> -  - $env:CCACHE_MAXSIZE = "500M"
+> +  - $env:CCACHE_MAXSIZE = "250M"
+>    - $env:CCACHE_DEPEND = 1 # cache misses are too expensive with preprocessor mode
+>    - $env:CC = "ccache gcc"
+>    - mkdir build
+> @@ -103,5 +103,6 @@ msys2-64bit:
+>    - ..\msys64\usr\bin\bash -lc "../configure $CONFIGURE_ARGS"
+>    - ..\msys64\usr\bin\bash -lc "make -j$env:JOBS"
+>    - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
+> +  - ..\msys64\usr\bin\bash -lc "du -sh ."
+
+Do we want to keep this in the final commit ?
+
+We have ccache size printed, and we could do with msys64/var/cache
+size being printed at least.
+
+>    - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
+>    - Write-Output "Finished build at $(Get-Date -Format u)"
+
+With regards,
+Daniel
 -- 
-2.48.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
