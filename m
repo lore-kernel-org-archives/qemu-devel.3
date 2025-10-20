@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D96FCCD1A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A0C1CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAscg-0003hH-Oo; Mon, 20 Oct 2025 12:20:38 -0400
+	id 1vAscn-0003k7-4s; Mon, 20 Oct 2025 12:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vAsce-0003gG-Bh; Mon, 20 Oct 2025 12:20:36 -0400
+ id 1vAsci-0003iZ-Jr; Mon, 20 Oct 2025 12:20:40 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vAscb-0000s3-JX; Mon, 20 Oct 2025 12:20:36 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59K7b6ll013852;
- Mon, 20 Oct 2025 16:20:29 GMT
+ id 1vAscg-0000su-88; Mon, 20 Oct 2025 12:20:40 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59K7Jg8m025774;
+ Mon, 20 Oct 2025 16:20:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=+7RVkQphPBI9uc1emd7t+KOiFYLoFApwpsZu9p1jY
- Wg=; b=V1A4Y+JzTuMnGb6+VurUMK0HcezGr4ol8ldMKg9j37L06efxa8/h2NUWA
- c+1BIWd6LuQdLotDTdWDQSAhtc+27WeHUCf2NuxqPicnSf+ABm5U2pF1SJoueaJM
- PfgsCq0kl9Hgd5BCXcv3liDu9sj5KSGouzpaqIIElhQ89BHz0e3PnnmdQ/q9yacM
- 9J/d4D5c1/Ea9b6PQZgCxWV+E78b+J2KFfNBL4GVC5YCuG0oY/FcpiWO5BZf4rHz
- w5drbCWQxaJYSoVpDuVB5mff/K18wsGJ9ePvEH4ogCz4aCUreSOsPQ5O5XjCFWrD
- fXgB7wzNeUVgZxJ44L0bqbvvPnKgQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vhbye-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=7dewvaRSqeMbVtAS3
+ xQlODzV1Ib0tyTeVwjFS/WUHtI=; b=k6ZjThf2UCehHzvXwHkqEDItMspJtiEUi
+ jl7SHOsNVawdFSJQmeieDHA6APedl8RC7ZOsLhprS4VPYX+EmYyLXXcOtMWSiEvk
+ 4AhdDCfrOhadDBHjJuSJTplYjmqWdkIGYk/IqdTeNPKPzsnRgbFH62ki6wAdQZ8X
+ cHGuprI3S9hFRLaWroQwIjPK8GBBoaWJMADh630PRRtt11/i2+I4t0pwXcnWx7VM
+ tNKYpucnCdu4DQS6zeaY41A8eubeelbpM1WbJewuNoVP5TjcCQbfvtG5fV2Mp8Xz
+ nRt/H6jn0e+Kam/Ae7YVM0uBFg0/5f0udPVO9ba9m7cQQhyYecuAA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32h9b8x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 16:20:29 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59KEPCYA017117;
- Mon, 20 Oct 2025 16:20:28 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vnkxpmw2-1
+ Mon, 20 Oct 2025 16:20:36 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59KFKYQf002320;
+ Mon, 20 Oct 2025 16:20:35 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqej6bra-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 16:20:28 +0000
+ Mon, 20 Oct 2025 16:20:35 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59KGKESx17760840
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59KGKXkC50004272
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 Oct 2025 16:20:14 GMT
+ Mon, 20 Oct 2025 16:20:34 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AACC58056;
- Mon, 20 Oct 2025 16:20:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9DE6C5806A;
+ Mon, 20 Oct 2025 16:20:33 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F1CC15805D;
- Mon, 20 Oct 2025 16:20:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0635E58065;
+ Mon, 20 Oct 2025 16:20:33 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.78.141])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 20 Oct 2025 16:20:25 +0000 (GMT)
+ Mon, 20 Oct 2025 16:20:32 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH 0/7] s390x: Add support for virtio-blk-pci IPL device
-Date: Mon, 20 Oct 2025 12:20:16 -0400
-Message-ID: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+Subject: [PATCH 4/7] pc-bios/s390-ccw: Introduce PCI device IPL format
+Date: Mon, 20 Oct 2025 12:20:20 -0400
+Message-ID: <20251020162023.3649165-5-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+References: <20251020162023.3649165-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: W_VZM80rJpKO1Q6Rs5314CUL433TSfNR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7WHqZBhdwKBQ
- O8YnLLxfA2BkkABWYknc3kL8l/uPXcjuSXg+bS+zYMnUz1QDmzjYSfpl8jpqqaw2zwpsE9PBHss
- gf9iSXXA0Gjl8G8i/TwITEUDu57EO0wVNcG8xlXpZxzhgV7rznFUnIVGLWe88Rh9AqsetgS1QfR
- T1+zIAw9FQVdKzZ2eKTCT8yyD1nFEbNEtupW7IVGVHWgW2QFFzBj/MJeJWLHV9Xhp+WO4Rnwra/
- dbGVSw1mmj0u3VzxggjeYHsVOfL5/zrUr862tp+WzBa0s11ztPD1YoBbcS3l5EimR0JltOyR6Lb
- JSWjqbUTI1CqKHNSkNVvSs32gZPN7th2UMpcOS895CjqTdNPAEmr/pRDLfcxBAtYKX2phz1/X9x
- yK/7UkN5GdVr+mZQFcz+FtnSuFsEiw==
-X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f6614d cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8
- a=SM3XVfEbigzPBRV1TjsA:9 a=poXaRoVlC6wW9_mwW8W4:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-ORIG-GUID: W_VZM80rJpKO1Q6Rs5314CUL433TSfNR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX1RUTUM/nsCIu
+ kwfu7WtQtkxAJG+RfQe6nRUcKHufm4m3uMUI3mpJ0fVclYkh+jRYHj8QkJFpoLfgwXMi1/mhFgx
+ YsUKF+28Urj1V13D26h5XRF1o3Ls+2Fb2mLP1pm9S88xjE0gORt65iiIkn5mPg/Yq9+Inn/rgdJ
+ rLRjJ37tBvJub9APWNDit8CKppRtljAv0lDw7IAi3mPedXHU6WH8PuJrU92IzifpydxOf004igb
+ I9VWAGRCuLUhwCxHGub4Zv69WrGWC2yYjrLEo6mnSTCNb4qZq+L246QfdTCcdvh5C5k7e3yUo/O
+ ytCtZvcey6Hb3RTwqwPBdM+g99w00RtszsdhuM6+YPYfZ6NNabUkO2uN6vhPKTkEIvnycHQ1m88
+ BadVQYmT9j+Uhgc657Sr9Jj2nCWkyg==
+X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68f66154 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=WVVyr85AwjsCaWk6uVoA:9
+X-Proofpoint-GUID: 5gyt6_4q8d7toDRzPnYLcQbeSksvy5Eg
+X-Proofpoint-ORIG-GUID: 5gyt6_4q8d7toDRzPnYLcQbeSksvy5Eg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-20_04,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
@@ -117,85 +118,338 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-This patch series introduces an IPLB subtype to support PCI devices, which may
-be built if a device has been assigned a boot index and is identified as a PCI
-device with a corresponding s390 PCI Bus device.
+Define selected s390x PCI instructions and extend IPLB to allow PCI devices.
 
-A simple test to check basic functionality is added to the cdrom-tests in qtest.
-
-Boot support is only added for virtio-blk-pci at this time and has the
-following limitations:
-    1) A PCI device must be assigned a boot index to be eligible for boot
-    2) A PCI boot device cannot be assigned a per-device loadparm
-
-Point 1 relates to boot device probing, which occurs if no device has been
-assigned a boot index.  Currently, there is a basic probing routine to scan
-through the CCW devices for any devices that *might* boot, and to then try
-booting them; however, the routine provides limited coverage even for CCW
-devices (some CCW devices, such as net devices, are not probed).  The PCI bus
-could be added to this routine in a similarly limited form, or it may be more
-desirable to do a comprehensive enhancement of the probing routine as a separate
-patch series.
-
-Point 2 relates to the QOM device properties.  The loadparm is specific to s390x
-and has generally only been relevant for CCW devices, of which bootable types
-have a corresponding QOM property for the loadparm.  There is some precedence
-for making the s390x loadparm property assignable to non-CCW devices (see QEMU
-commit 429442e), but it may not be an acceptable solution for generic PCI
-devices, in which case an alternative solution would be needed.
-
-Further consideration is needed on how to best handle to above points and
-feedback is encouraged.  Additionally, it is worth noting that all of the s390 
-BIOS code lives in the "s390-ccw" directory.  Should the entire directory be
-renamed, given that non-ccw devices will be supported?
-
-Referenced commit ID 429442e: hw: Add "loadparm" property to scsi disk devices
-for booting on s390x (https://gitlab.com/qemu-project/qemu/-/commit/429442e52d94f890fa194a151e8cd649b04e9e63)
-
-Jared Rossi (7):
-  pc-bios/s390-ccw: Fix Misattributed Function Prototypes
-  pc-bios/s390-ccw: Split virtio-ccw and generic virtio
-  pc-bios/s390-ccw: Introduce CLP Architecture
-  pc-bios/s390-ccw: Introduce PCI device IPL format
-  pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
-  s390x: Build IPLB for virtio-pci devices
-  tests/qtest: Add s390x PCI boot test to cdrom-test.c
-
- hw/s390x/ipl.h                   |   8 +-
- include/hw/s390x/ipl/qipl.h      |  15 ++
- include/hw/s390x/s390-pci-bus.h  |   2 +
- pc-bios/s390-ccw/clp.h           |  24 +++
- pc-bios/s390-ccw/iplb.h          |   4 -
- pc-bios/s390-ccw/pci.h           |  77 +++++++
- pc-bios/s390-ccw/s390-ccw.h      |   4 -
- pc-bios/s390-ccw/virtio-ccw.h    |  25 +++
- pc-bios/s390-ccw/virtio-pci.h    |  73 +++++++
- pc-bios/s390-ccw/virtio-scsi.h   |   2 +-
- pc-bios/s390-ccw/virtio.h        |  17 +-
- hw/s390x/ipl.c                   |  56 ++++-
- hw/s390x/s390-pci-bus.c          |   2 +-
- pc-bios/s390-ccw/bootmap.c       |   2 +-
- pc-bios/s390-ccw/clp.c           | 106 +++++++++
- pc-bios/s390-ccw/main.c          |  72 ++++++-
- pc-bios/s390-ccw/pci.c           | 191 +++++++++++++++++
- pc-bios/s390-ccw/virtio-blkdev.c |  62 ++++--
- pc-bios/s390-ccw/virtio-ccw.c    | 240 +++++++++++++++++++++
- pc-bios/s390-ccw/virtio-net.c    |   5 +-
- pc-bios/s390-ccw/virtio-pci.c    | 357 +++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/virtio-scsi.c   |   7 +-
- pc-bios/s390-ccw/virtio.c        | 214 ++++--------------
- tests/qtest/cdrom-test.c         |   7 +
- pc-bios/s390-ccw/Makefile        |   3 +-
- 25 files changed, 1342 insertions(+), 233 deletions(-)
- create mode 100644 pc-bios/s390-ccw/clp.h
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ include/hw/s390x/ipl/qipl.h |   9 ++
+ pc-bios/s390-ccw/pci.h      |  77 +++++++++++++++
+ pc-bios/s390-ccw/pci.c      | 191 ++++++++++++++++++++++++++++++++++++
+ pc-bios/s390-ccw/Makefile   |   2 +-
+ 4 files changed, 278 insertions(+), 1 deletion(-)
  create mode 100644 pc-bios/s390-ccw/pci.h
- create mode 100644 pc-bios/s390-ccw/virtio-ccw.h
- create mode 100644 pc-bios/s390-ccw/virtio-pci.h
- create mode 100644 pc-bios/s390-ccw/clp.c
  create mode 100644 pc-bios/s390-ccw/pci.c
- create mode 100644 pc-bios/s390-ccw/virtio-ccw.c
- create mode 100644 pc-bios/s390-ccw/virtio-pci.c
 
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index aadab87c2e..efd7b3797c 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -104,6 +104,14 @@ struct IplBlockQemuScsi {
+ } QEMU_PACKED;
+ typedef struct IplBlockQemuScsi IplBlockQemuScsi;
+ 
++struct IplBlockPci {
++    uint32_t reserved0[80];
++    uint8_t  opt;
++    uint8_t  reserved1[3];
++    uint32_t fid;
++} QEMU_PACKED;
++typedef struct IplBlockPci IplBlockPci;
++
+ union IplParameterBlock {
+     struct {
+         uint32_t len;
+@@ -119,6 +127,7 @@ union IplParameterBlock {
+             IplBlockFcp fcp;
+             IPLBlockPV pv;
+             IplBlockQemuScsi scsi;
++            IplBlockPci pci;
+         };
+     } QEMU_PACKED;
+     struct {
+diff --git a/pc-bios/s390-ccw/pci.h b/pc-bios/s390-ccw/pci.h
+new file mode 100644
+index 0000000000..b5dc5bff35
+--- /dev/null
++++ b/pc-bios/s390-ccw/pci.h
+@@ -0,0 +1,77 @@
++/*
++ * s390x PCI definitions
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef PCI_H
++#define PCI_H
++
++#include <stdint.h>
++#include "clp.h"
++
++#define ZPCI_CREATE_REQ(handle, space, len)                    \
++    ((uint64_t) handle << 32 | space << 16 | len)
++
++union register_pair {
++    unsigned __int128 pair;
++    struct {
++        unsigned long even;
++        unsigned long odd;
++    };
++};
++
++#define PCIFIB_FC_ENABLED      0x80
++#define PCIFIB_FC_ERROR        0x40
++#define PCIFIB_FC_BLOCKED      0x20
++#define PCIFIB_FC_DMAREG       0x10
++
++#define PCIST_DISABLED         0x0
++#define PCIST_ENABLED          0x1
++
++#define PCI_CAPABILITY_LIST    0x34 /* Offset of first capability list entry */
++
++struct PciFib {
++    uint32_t reserved0[2];
++    uint8_t fcflags;
++    uint8_t reserved1[3];
++    uint32_t reserved2;
++    uint64_t pba;
++    uint64_t pal;
++    uint64_t iota;
++    uint16_t isc:4;
++    uint16_t noi:12;
++    uint8_t reserved3:2;
++    uint8_t aibvo:6;
++    uint8_t s:1;
++    uint8_t reserved4:1;
++    uint8_t aisbo:6;
++    uint32_t reserved5;
++    uint64_t aibv;
++    uint64_t aisb;
++    uint64_t fmba;
++    uint32_t reserved6[2];
++};
++typedef struct PciFib PciFib;
++
++struct PciDevice {
++    uint16_t device_id;
++    uint16_t vendor_id;
++    uint32_t fid;
++    uint32_t fhandle;
++    uint8_t status;
++    PciFib fib;
++};
++typedef struct PciDevice PciDevice;
++
++int pci_write(uint32_t fhandle, uint64_t offset, uint64_t data, uint8_t len);
++int pci_read(uint32_t fhandle, uint64_t offset, uint8_t picas, void *buf, uint8_t len);
++uint8_t find_cap_pos(uint32_t fhandle, uint64_t cfg_type);
++int pci_dev_enable(PciDevice *pcidev);
++int get_fib(PciFib *fib, uint32_t fhandle);
++int set_fib(PciFib *fib, uint32_t fhandle, uint8_t dma_as, uint8_t opcontrol);
++
++#endif
+diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
+new file mode 100644
+index 0000000000..f776bc064c
+--- /dev/null
++++ b/pc-bios/s390-ccw/pci.c
+@@ -0,0 +1,191 @@
++/*
++ * s390x PCI funcionality
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "clp.h"
++#include "pci.h"
++#include <stdio.h>
++
++/* PCI load */
++static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset, uint8_t *status)
++{
++    union register_pair req_off = {.even = req, .odd = offset};
++    int cc = -1;
++    uint64_t __data = 0x92;
++
++    asm volatile (
++        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "+d" (cc), [data] "=d" (__data),
++          [req_off] "+&d" (req_off.pair) :: "cc");
++    *status = req_off.even >> 24 & 0xff;
++    *data = __data;
++    return cc;
++}
++
++/* PCI store */
++int pcistg(uint64_t data, uint64_t req, uint64_t offset, uint8_t *status)
++{
++    union register_pair req_off = {.even = req, .odd = offset};
++    int cc = -1;
++
++    asm volatile (
++        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "+d" (cc), [req_off] "+&d" (req_off.pair)
++        : [data] "d" (data)
++        : "cc");
++    *status = req_off.even >> 24 & 0xff;
++    return cc;
++}
++
++/* store PCI function controls */
++int stpcifc(uint64_t req, PciFib *fib, uint8_t *status)
++{
++    uint8_t cc;
++
++    asm volatile (
++        "     .insn   rxy,0xe300000000d4,%[req],%[fib]\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "=d" (cc), [req] "+d" (req), [fib] "+Q" (*fib)
++        : : "cc");
++    *status = req >> 24 & 0xff;
++    return cc;
++}
++
++/* modify PCI function controls */
++int mpcifc(uint64_t req, PciFib *fib, uint8_t *status)
++{
++    uint8_t cc;
++
++    asm volatile (
++        "     .insn   rxy,0xe300000000d0,%[req],%[fib]\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "=d" (cc), [req] "+d" (req), [fib] "+Q" (*fib)
++        : : "cc");
++    *status = req >> 24 & 0xff;
++    return cc;
++}
++
++int pci_write(uint32_t fhandle, uint64_t offset, uint64_t data, uint8_t len)
++{
++
++    uint64_t req = ZPCI_CREATE_REQ(fhandle, 4, len);
++    uint8_t status;
++    int rc;
++
++    rc = pcistg(data, req, offset, &status);
++    if (rc == 1) {
++        return status;
++    } else if (rc) {
++        return rc;
++    }
++
++    return 0;
++}
++
++int pci_read(uint32_t fhandle, uint64_t offset, uint8_t picas, void *buf, uint8_t len)
++{
++    uint64_t req;
++    uint64_t data;
++    uint8_t status;
++    int readlen;
++    int i = 0;
++    int rc = 0;
++
++    while (len > 0 && !rc) {
++        data = 0;
++        readlen = len > 8 ? 8 : len;
++        req = ZPCI_CREATE_REQ(fhandle, picas, readlen);
++        rc = pcilg(&data, req, offset + (i * 8), &status);
++        ((uint64_t *)buf)[i] = data;
++        len -= readlen;
++        i++;
++    }
++
++    if (rc == 1) {
++        return status;
++    } else if (rc) {
++        return rc;
++    }
++
++    return 0;
++}
++
++/*
++ * Find the position of the capability config within PCI configuration
++ * space for a given cfg type.  Return the position if found, otherwise 0.
++ */
++uint8_t find_cap_pos(uint32_t fhandle, uint64_t cfg_type) {
++    uint64_t req, next, cfg;
++    uint8_t status;
++    int rc;
++
++    req = ZPCI_CREATE_REQ(fhandle, 0xf, 1);
++    rc = pcilg(&next, req, PCI_CAPABILITY_LIST, &status);
++    rc = pcilg(&cfg, req, next + 3, &status);
++
++    while (!rc && (cfg != cfg_type) && next) {
++        rc = pcilg(&next, req, next + 1, &status);
++        rc = pcilg(&cfg, req, next + 3, &status);
++    }
++
++    return rc ? 0 : next;
++}
++
++int pci_dev_enable(PciDevice *pcidev)
++{
++    int rc;
++
++    rc = enable_pci_function(&pcidev->fhandle);
++    if (rc) {
++        return rc;
++    }
++
++    pcidev->status = PCIST_ENABLED;
++
++    return get_fib(&pcidev->fib, pcidev->fhandle);
++}
++
++int get_fib(PciFib *fib, uint32_t fhandle)
++{
++    uint64_t req = ZPCI_CREATE_REQ(fhandle, 0, 0);
++    uint8_t status;
++    int rc;
++
++    rc = stpcifc(req, fib, &status);
++
++    if (rc == 1) {
++        return status;
++    } else if (rc) {
++        return rc;
++    }
++
++    return 0;
++}
++
++int set_fib(PciFib *fib, uint32_t fhandle, uint8_t dma_as, uint8_t opcontrol)
++{
++    uint64_t req = ZPCI_CREATE_REQ(fhandle, dma_as, opcontrol);
++    uint8_t status;
++    int rc;
++
++    rc = mpcifc(req, fib, &status);
++
++    if (rc == 1) {
++        return status;
++    } else if (rc) {
++        return rc;
++    }
++
++    return 0;
++}
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index 89a42ae506..1f17f98fc1 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+ 
+ OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+       virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+-      virtio-ccw.o clp.o
++      virtio-ccw.o clp.o pci.o
+ 
+ SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+ 
 -- 
 2.49.0
 
