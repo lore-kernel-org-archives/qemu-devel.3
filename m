@@ -4,119 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E07CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 05:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2063CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 05:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAihT-0003Fb-0o; Mon, 20 Oct 2025 01:44:55 -0400
+	id 1vAihV-0003IU-Hu; Mon, 20 Oct 2025 01:44:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1vAihI-0003Eh-8V; Mon, 20 Oct 2025 01:44:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1vAihO-0003Fq-54
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 01:44:54 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1vAihF-0007tg-Lw; Mon, 20 Oct 2025 01:44:43 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59JKibP0029261;
- Mon, 20 Oct 2025 05:44:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=chmjDV
- LMYFgUxZLDpt1C2oSMUrUSxCTzE2t2+SWoH/g=; b=boBNLtWzRNlaz0p4z7r1RL
- +E7WfbqOt1Ov6eAQQyEgk7qyiK+Q8qlr1w7zYn0XNRYOT3zwP7AIAe2NXmfj9QfX
- qBbC3N6MpIcdp4ekpcWAWgU3RZ6WOrseUjBpJEeb7gCGvk++X+IIhan4JjAfZmLC
- MyHnm66y9tx7A984JpPL64Nr04yS+m3YVK+61mHRWRFygPkio4DFcRDPZ4csx6dI
- ylbAX+PdQHpV3nEz+5BTpB2szRX8+6MCCG/0QcUz60YY9T1YUxjn6zZrp/gJk8RO
- LEghBqpqDKp98eNQKkz/0ByRpjkbjQ8Kf82MXqElCt0dzZoHyqgxdaOmAtZggXxw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33eyu67-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 05:44:39 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59K5eokP003144;
- Mon, 20 Oct 2025 05:44:38 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33eyu66-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 05:44:38 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59K2jbKd011053;
- Mon, 20 Oct 2025 05:44:38 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx0v01y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 05:44:37 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59K5iYEG20971842
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 Oct 2025 05:44:34 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4EB4C20043;
- Mon, 20 Oct 2025 05:44:34 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 67B7320040;
- Mon, 20 Oct 2025 05:44:32 +0000 (GMT)
-Received: from [9.124.220.242] (unknown [9.124.220.242])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 20 Oct 2025 05:44:32 +0000 (GMT)
-Message-ID: <c79ac8e0-9d87-4c39-89b0-5e6a9981eedd@linux.ibm.com>
-Date: Mon, 20 Oct 2025 11:14:31 +0530
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1vAihL-0007ti-S5
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 01:44:49 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C2A80807BB;
+ Mon, 20 Oct 2025 08:44:37 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6bf:803e:400:cd4:cafc:37a3:de4])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id TiN4Nb4FbmI0-m7kHZoz4; Mon, 20 Oct 2025 08:44:37 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1760939077;
+ bh=uOg/6TfaArQwoomphYHbobxb61e9PvCzzjvhJyJo4HE=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=yNwYxDayPPUSeIyVWc83XbY53GYm4v/o3UYMIdPpG17afFoAVKuaihbd+uE5n7MSD
+ 1j0degqsI4rGJSbypHMlM8pX3sjrvUQu+TBgOB/q5Jjalgsjrgz4rITMF4PpkY46af
+ 357zXbRV3+gfRUsTKAsygQbpmZg6FgpHfPb+URhY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Raphael Norwitz <raphael@enfabrica.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH 0/2] vhost-user-blk: support inflight migration
+Date: Mon, 20 Oct 2025 10:44:12 +0500
+Message-Id: <20251020054413.2614932-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/8] hw/ppc: Pass dump-sizes property for fadump in
- device tree
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250323174007.221116-1-adityag@linux.ibm.com>
- <20250323174007.221116-7-adityag@linux.ibm.com>
- <65b70282-c6ca-4140-92f6-d266082b6d49@linux.ibm.com>
- <wr5sfi6omicfuxnfua7pjkbm345niursrgrddfdkbzcexeqoap@xyqknkyfqmif>
-Content-Language: en-US
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
-In-Reply-To: <wr5sfi6omicfuxnfua7pjkbm345niursrgrddfdkbzcexeqoap@xyqknkyfqmif>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68f5cc47 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=7osF5HoJbqPopLT3g4MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: mPL2Q2udU_canFF21iPuQ6jEnrgo5EHC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9eYJjYtTO/gy
- bEhuDb132hByyhiBJeFj2brgiJ6a7xFqqERZH6XVYrpplPfLc8K8WuEdNOLpyERHLjQ3hHTpy/D
- MoAqRfU0liPRszMqdpVlazYIRNBWLAV7/FIuYtRcI8M3MB1cd7gsooMgKE8rlO/2e7d9Ajzad0P
- kBWnab2z21zFNfOTdIN2B5XsBxFLXiv00d8O/HlXAoBwT6YVqfJTSL2Pp7CdJUiwPVP4BGGYFQc
- rZxdr/8EL1hEqKpRLFsQHlQWe5a3Cl2s21gS3+QfNBL9cRUzRtGzE3aKUpu48oFSnjyUBeyL29X
- caQaV43Ir6ydM2vJ6bV2ea8S6lOfnF+27Y3GhITk/PVpe4JKt66cemdQ38CD/TSaw8yxRbq1j4v
- SKTGGK8tj8yQhrVym3/Cfa9KeKIJTw==
-X-Proofpoint-ORIG-GUID: rFEckr8sdUlp7Cw1jn-pFzvt0BsP1LYe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_01,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=sourabhjain@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -134,38 +78,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi!
 
+During inter-host migration, waiting for disk requests to be drained
+in the vhost-user backend can incur significant downtime.
 
-On 20/10/25 01:00, Aditya Gupta wrote:
-> On 25/10/18 04:50PM, Sourabh Jain wrote:
->>
->>> <...snip...>
->>> +    uint32_t fadump_rgn_sizes[2][3] = {
->>> +        {
->>> +            cpu_to_be32(FADUMP_CPU_STATE_DATA),
->>> +            0, 0 /* Calculated later */
->>> +        },
->>> +        {
->>> +            cpu_to_be32(FADUMP_HPTE_REGION),
->>> +            0, 0 /* HPTE region not implemented */
->>> +        }
->> #nit-pick
->> Why to advertise if we don't support it? Kernel anyways ignores this for
->> now.
-> Nice catch.
-> PAPR doesn't seem to say about HPTE being optional anywhere, nor being
-> mandatory, so to be on safe side, exported it with 0 size until/if
-> it's implemented.
->
-> PAPR R1–7.3.30–7 says this (trimmed, emphasis mine):
->
-> 	The platform 'must' present the RTAS property,
-> 	“ibm,configure-kernel-dump-sizes” in the OF device tree, which
-> 	describes space required for 'firmware defined dump sections', where
-> 	the 'firmware defined dump sections' are:
-> 		0x0001 = CPU State Data
-> 		0x0002 = Hardware Page Table for Real Mode Region
-Yeah lets advertise HPTE with zero size.
+This can be avoided if QEMU migrates the inflight region in vhost-user-blk. 
+Thus, during the qemu migration, the vhost-user backend can cancel all inflight requests and
+then, after migration, they will be executed on another host. 
 
-- Sourabh
+At first, I tried to implement migration for all vhost-user devices that support inflight at once, 
+but this would require a lot of changes both in vhost-user-blk (to transfer it to the base class) and 
+in the vhost-user-base base class (inflight implementation and remodeling + a large refactor).
+
+Therefore, for now I decided to leave this idea for later and 
+implement the migration of the inflight region first for vhost-user-blk.
+
+Alexandr Moshkov (2):
+  vhost: support inflight save/load
+  vhost-user-blk: support inflight migration
+
+ hw/block/vhost-user-blk.c | 52 ++++++++++++++++++++++++++++++++++++
+ hw/virtio/vhost.c         | 56 +++++++++++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost.h |  2 ++
+ migration/options.c       |  7 +++++
+ migration/options.h       |  1 +
+ qapi/migration.json       |  9 +++++--
+ 6 files changed, 125 insertions(+), 2 deletions(-)
+
+-- 
+2.34.1
+
 
