@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D750CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 17:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507ADCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 17:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAu7q-0007vT-Fl; Mon, 20 Oct 2025 13:56:54 -0400
+	id 1vAu8i-00081u-6B; Mon, 20 Oct 2025 13:57:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAu7n-0007v4-QU
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:56:52 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAu8f-00081c-KA
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:57:45 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAu7h-00045A-Ci
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:56:50 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4282fba734bso1083392f8f.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 10:56:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAu8e-00048H-0w
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 13:57:45 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-46fcf9f63b6so25070735e9.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 10:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760983002; x=1761587802; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760983060; x=1761587860; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VYJb7V5ZuM8dItSAc00vCEiwBfQP+gF15LRF3BIKW0U=;
- b=djgFL072e1DqTv0ZwzhwvBbpzVxtYHggPBDGtbQxsHyZv0NOr6nbCTjfwIlZ44a3Ap
- 7IKjdyljbeeJcguT+s9Vx1Tj7WFfg3FuOYfARHUrggthUr2UB155zXN7KR3LGiJqRBOk
- MSuCu863LfYZb4fHEZyiESoKHkfg+Oxh+owPtVwuOJvOLROS2qftbBKKfTON0jOf5b3j
- ogDM+peXBcZhot2bhefNsHqTaG8mW48gj7NKTpFSvvfQjU25cjkKvXip6eTcmRPyHeAM
- pEA6AoGz2GXUdC3WLYmd6UbJiGnQCv4FtL5kFgK6TQgXdtG7DU3WQSaRd07DKhjQZJok
- +Zng==
+ bh=QC4fy6Rk4oJr0RT8D196WRp8Eid0gaDOgS1JjoVfAFU=;
+ b=WIx6KRlZkohiXqn70CVZk5q3Q2FXq0Z1cGEiR7RTcXDmMm8UMmz8He52JXNrnrjzjP
+ bdcLcm6rnkMqtIem7oKCKTU6j4vY3UvsE6X8eRcts74H4qdOdCSDrxidbMevm0n6Tt6Y
+ TINLJTveJwopWoZd2sgPOAANIzAilGI1IIbsAA1/CnQggEitBptwUq4BCaDcfUy17Aks
+ MToKTQy7kP7TrJYuQNuMxAJkjkTga+qTDLjRlhV/qMFyHdEIY6RlZ2M9kHtA9tO+LZ5D
+ qSLbQgbdae7unWJWphuApu+Bqe641ughIswdEQ2xW2HUylJfHOotI4lp+nykWf7VVO9n
+ MchA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760983002; x=1761587802;
+ d=1e100.net; s=20230601; t=1760983060; x=1761587860;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VYJb7V5ZuM8dItSAc00vCEiwBfQP+gF15LRF3BIKW0U=;
- b=tE73AsLzHX8uFGSxEsVcEY0//PAVNfSMOMP9Hu/h/iSKf/NxkAgSB5i0m0kZWY3xZD
- H/xaOFLfs5knuUYmwNDA7xz3uszhTb1oFV4Kq3NNWkwIpy3Ed3TcQvL8Cw2/+0swM6Os
- 3rtp2PDPxeTRgWZZnR75bw/4eQqMHmJjpnLzddpuIo02pmW5P6oRhyspyyDvAlOtqe87
- XSL31O4dYsm9KovkDhVvSpPSVdHHrEQ3ucTEiQkp2xKgholXPT71SJoBgM8nblsUZG+P
- FlZt2PMNbUVSoXY4bPQw8ty2KPp88Uv8lUeCL1YoM25lX9ZplRirHhGI6G4Zbaf4XI3H
- rYaw==
+ bh=QC4fy6Rk4oJr0RT8D196WRp8Eid0gaDOgS1JjoVfAFU=;
+ b=s7mZZgtv3upxoAnKr7QQS4e2Vn3Vaz5ej0EzSkmOeqGtpnkjz4RcwW5qpXpgxFt277
+ 62abPsImDyhXEZsOJQ5LMTvorBQnBlPyHWQggoA3b2ICYgml8Lz8leb9/guANd7aXzBG
+ IbnZ2/nSWutr01fpPnzrTGBnnqNALXupBolHiUp44tm6KnDyMJk4vGo0PBfeqfsnXrvT
+ rdACAY5jf21DAulBNvYXljdY5mTkzrYwW+h8zpE/UtjXESVMP+aaj17CkU6rY12cB+DB
+ aYF5+VXcLflJ0SuEdN8MgAXnduRA0DbuLMG2afriDa/V3eb0KF1Xn/QRJAyReTf7hKbR
+ KTTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9xO0cxyGXIeWLvI4VTMguX3AJGu+UeXukl9pQDqI50J5hBraHjoWkX2HEGifoHT8L6es55/cUHomE@nongnu.org
-X-Gm-Message-State: AOJu0YzmtgNyopvnsuUKjCYzvZrZq1rt02xEaevNBPG0vj8fWg8PoHBr
- muNige11//zsKocnBEqpjMbRSlgsrozPgbGiVezkbr5ZFNLX+8RDb0Jw6DpV1DFKuQE=
-X-Gm-Gg: ASbGncvgew000esaWFvXxUB3mwqO44iPyCkXi9L5LLh8hmPlnTvPJMfcpmcT+nem5Vm
- ZWvmeoyeZKkVaOQ+Pm7tZRQsQHX0uZmEFFVTFKC8A2p76BrHffzvtq65IwP6Gs9ntKTq5PHeNTA
- qhydMKwvg98Y5kxuzUbgkY8MYvmJ7ku4k6q7M/UX8CE33kTBkhkYxyvqny1FfNnd9n97nRlj0Du
- DCSnZ+mBj0E5WToxd0D6lqwcfzawfFSXDTBur/oxpwFu5JbTkyQ4uTDeLVRSb5ldlUR8acP3CfQ
- 9ZD80umlolMit2jnB1KtFM5Ml/xq+vsLhBr1nNUJR3EgghJCGz/khkDVXK0nDmKzlYeF2Ym4dVq
- RY9d38Djwy8POlDhK9K0YvnIM3o/f0UXOJfNWE3TyeLTZBDGv00RZGCXkNoUbAnN+d0YM1RBNe4
- H9PwxZAZatBE76DrSqMG/iBVUgMcpXqXFqpGYqKg+Nmp6eklDJwX1/IA==
-X-Google-Smtp-Source: AGHT+IEzd5CND2C9k9hY29kJMEDCvwU+rRdPai+OPHl14mkiJNfxZjlUQhXUX0mW4obfLTxSvnhWLA==
-X-Received: by 2002:a05:6000:400a:b0:425:769e:515a with SMTP id
- ffacd0b85a97d-42704d9e8f7mr10602220f8f.42.1760983002169; 
- Mon, 20 Oct 2025 10:56:42 -0700 (PDT)
+ AJvYcCXNW/HSiEiwAXdEZncfXkloCwxNtAybydmkQD/wNJ64ZrgRtIwDJVt+h1GgHUslvbI5uQ5xpZzgaX4H@nongnu.org
+X-Gm-Message-State: AOJu0YxcoU/zo4r5Mu+ydm0oHefMkz+FV5h4xHZEG5ZPU691/wK7VDk4
+ 1Xpwh2lwKXYye9gf6eUGMkcUCRevRXGHMv8knVMizKYHWlyFIQFVf/UuvTWTBtHKQpg=
+X-Gm-Gg: ASbGncucQxY6hZN6n9ZXVc4Vj1GIY9loJFR8589KBaCzq4P3f4uzjEPzHLV4cD9iWyf
+ JhrHB21twc3VED9EcvN9TSofGQ2M+uV2OcLffuPve5aoG9dP8OB7pNMn7x9/tuYbuqUBfgtvTUD
+ g5NmIKWkQf2GNCFaPLXDLiI40ROILNTYAXDzapFvOLcOSCf4mkhMyAx5XgVMDYlGMBZ2RNHkvXB
+ 4fvZzVGdEH2JZSpp6qHy1TJvIEawQTjsTmdt0bmXl0GX4yQQedUzAFL4+l1ba9PONGE5uSZ8SdR
+ Zlx4MOOadSG0yKfiA6SJJzTyrjjLhnn9n0JM0Epot6BT80qGUBrJDlecOYVeW1AhYZk7ebHoVJr
+ lpshw+xuPl/R6XFTW+Fy468yLUOIP0duV8zLgIqR7MiIKdn5JQ4LywiInxDQ+5VfeL6Lw3P0d/P
+ evmZk6IpUitQmLg35Du9mw7aE+LdU77SICu2LKVsG3WpcOcEbPxo0Xhg==
+X-Google-Smtp-Source: AGHT+IEqPs/K0yjS9ReXNNv+PoSxYI5svfpCTA9SVmr76ZvPEpjoVA8ThjK9WjZGsqNkSyBj+59pTQ==
+X-Received: by 2002:a05:600c:6095:b0:471:95a:60c9 with SMTP id
+ 5b1f17b1804b1-4711786d054mr113832905e9.8.1760983059922; 
+ Mon, 20 Oct 2025 10:57:39 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f009a797sm16414377f8f.27.2025.10.20.10.56.41
+ 5b1f17b1804b1-471556e1892sm153262685e9.18.2025.10.20.10.57.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 10:56:41 -0700 (PDT)
-Message-ID: <778a093a-bc42-45fb-b466-15be9a655a05@linaro.org>
-Date: Mon, 20 Oct 2025 19:56:40 +0200
+ Mon, 20 Oct 2025 10:57:39 -0700 (PDT)
+Message-ID: <fedd5ea5-3398-49f1-bf15-87d14d9e0c5b@linaro.org>
+Date: Mon, 20 Oct 2025 19:57:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] gitlab-ci: Decrease the size of the compiler cache
+Subject: Re: [PATCH v2 1/2] migration: vmstate_save_state_v(): fix error path
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251020161759.50241-1-thuth@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
+Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
+ armbru@redhat.com, berrange@redhat.com
+References: <20251020160344.2401137-1-vsementsov@yandex-team.ru>
+ <20251020160344.2401137-2-vsementsov@yandex-team.ru>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251020161759.50241-1-thuth@redhat.com>
+In-Reply-To: <20251020160344.2401137-2-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,28 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/10/25 18:17, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 20/10/25 18:03, Vladimir Sementsov-Ogievskiy wrote:
+> In case of pre_save_errp, on error, we continue processing fields,
+> unlike case of pre_save, where we return immediately. Behavior
+> for pre_save_errp case is wrong, we must return here, like for
+> pre_save.
 > 
-> Uploading the cache from the runner takes a long time in the MSYS2
-> job, mostly due to the size of the compiler cache.
-> However, looking at runs with a non-poluted cache, it seems like
-> you can get a build with a 99% hit rate already with ~ 160 MiB cache
-> size, so the compiler cache with 500 MiB certainly contains a lot of
-> stale files. Thus decrease the size of the ccache to a more reasonable
-> value to speed up the MSYS2 job in our CI.
-> 
-> While at it, also add a "du -sh" for the build folder to get a better
-> feeling for the amount of object code that is required for the build,
-> and publish the list of files in /var/cache to be able to better
-> analyze what is really clogging our cache here.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Fixes: 40de712a89
+>   "migration: Add error-parameterized function variants in VMSD struct"
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   v2: Decrease cache size to 180M and save cache-log.txt as artifact
-> 
->   .gitlab-ci.d/windows.yml | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   migration/vmstate.c | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
