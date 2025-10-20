@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82903CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 060BFCCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAoAu-0002WW-ED; Mon, 20 Oct 2025 07:35:40 -0400
+	id 1vAoFu-0006Ni-Dk; Mon, 20 Oct 2025 07:40:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAoAr-0002VT-Sc
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:35:37 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAoAp-00016n-9y
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:35:37 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47103b6058fso30198895e9.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 04:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760960133; x=1761564933; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S13OAGdaDHxB33SgD+W/tXYSpC7CzxHFsXBICbw81Dc=;
- b=kj67OZKSGcMiA4SXtYRpbADnh3rN4SxKMAVYAyin44Eb92BJFb2KcfHC3McTOlVkln
- 56OEq3ZOJfWRmAroQYbvDqyeBMB0hBVIxLr6rzsqk+RdtLH1ZkPuJR9zXZRpH2Yf46vJ
- 1XNXO2SkQ18saYhYrBOWFgO3ONiSieeYi+qM94rjKqCHsy3ZTU7kiLaSlYzrPdhHkr/j
- yGlzUPD1jUDe7TPdhbnKIq4x6IjblfaoKEoiSJoafzuKBHGa7v5oFq4a4xFqyu5NS9dA
- f1XrNeDhh28I+E8obDK69GqC4pF2QA6feS0sFarjfXt8W2ka9xO4WrKsuk4rctqza+IL
- 4Ugg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760960133; x=1761564933;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S13OAGdaDHxB33SgD+W/tXYSpC7CzxHFsXBICbw81Dc=;
- b=wHRaoh2VV2ZNGe1+OoraWEw716Ofapm7NxmUbA3rgd4fD+lplsY3+WzJIrZRohUC8E
- 0SzIGrXMiLB1tnftna16SMUYV+JXGgKQwzxLRh0yJHVxjeZGPDdS4nnHynRgt/boCait
- ecFMGNhnXshQog78LQ6htigm3KeuAVnNr4OlFsnuVsEYAq6uunagHx4pa6CCnv5tuGjL
- 5B4NKes1vlEnD5T0NgO2h0ykxHI2dvhSvFG8NNEQ4A8uWPREZ23l2fs5cwUma9+ewilA
- DwBMzUFoR9Nw4HwfdhpqoZveOrQm3xaUmhSOd6/IqRtqr17SCIT4FU8NTNtFRD2uU5bO
- 5mlw==
-X-Gm-Message-State: AOJu0Yy56jREPInDRPTuOu6hA5zGbkAWV4c29weXmKcqwVzJcN8PknZC
- HlucxIcI4wqSEveRf+Jw1CHG1V3OcyXrTaCV6tLj3Uqzfgibd9lnrwsUBl+TLm0+Jc8Sc5885/i
- jpFRiCE4=
-X-Gm-Gg: ASbGncvWd782wH0tN/q8HL4DrKwYPllmtXMzWQ/mi+bfnE/30BhYYt7geiz3t5Bu/Sc
- SOhT1+DQLv65tgr3ia2QFqda3ev2wT39ErBXc4DVBKg43YR2oLjrCOFeFhbrHJKNZWbxvMkMZwN
- Ucy9LwUswsOXViM9OCo3MSCXUO8xUdAbcvfO9c/gqi2cge3lwJP1r22xHNoqAcx6C+U8HRE+aTK
- n/1CdHeGX8EN8c2lbz1sEJNhRSzGPgndMS5NpxJDBE7vuplm7jHuLICw8rt6exQYXeOh3JK/+Wn
- QsR0crTHPI2+O6M2o6Qg4jLlEORlAJYx6TcEoV6hTKhFnKxFVAit67pUts/c6hv8GyyG4veWDXO
- 4s5ZxCMoGtNC7+9+Z8U5LXtcHV4h7ooZAxMP/cdU4r3wREwoU9HTh0npnK4OmvQe04Pm+7hQODw
- pGmZij9O82/wftYUZ+Os5bqw3EkZbyQ+lHlTfRI30mOVN22OcMDQ==
-X-Google-Smtp-Source: AGHT+IHDgvdsyRBoa6BCavsmZEBa5Tkw6MjsxGG/H09wCivMI1OQ9hkaGo/cc3BuEl5TEQ0UmvIeFA==
-X-Received: by 2002:a05:600c:8183:b0:45f:29eb:2148 with SMTP id
- 5b1f17b1804b1-4711724e5bcmr94251665e9.7.1760960133000; 
- Mon, 20 Oct 2025 04:35:33 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5bbc50sm15087183f8f.21.2025.10.20.04.35.32
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 04:35:32 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Chinmay Rath <rathc@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 16/18] hw/ppc/spapr: Remove SpaprMachineClass::linux_pci_probe
- field
-Date: Mon, 20 Oct 2025 13:35:19 +0200
-Message-ID: <20251020113521.81495-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251020103815.78415-1-philmd@linaro.org>
-References: <20251020103815.78415-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vAoFo-0006MQ-DB
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:40:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vAoFk-0001gy-G5
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:40:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760960437;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=fzIxZ0oUmw3zhinDxWb7sXqppuCZIGPUhmoaXMVWQ/E=;
+ b=h/GkQ/Y6vhNmtqvGzaN4JDR4wLVEI3JvqxzEZAM+8POJhCU7FI4ytMJbeR44MnEEeWZQoE
+ 7lYjBNCF8m5EUdnrL7BXMtp3+8mXamlHVSv9cBmBfAPWAr1bjtSxEWLpI/B03s8zGfhFVb
+ 0k3M1vxYyLVmIMGG8o0itcBDbebajiw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-C2CLmfV-PtuUpUDuIPP1Pg-1; Mon,
+ 20 Oct 2025 07:40:34 -0400
+X-MC-Unique: C2CLmfV-PtuUpUDuIPP1Pg-1
+X-Mimecast-MFC-AGG-ID: C2CLmfV-PtuUpUDuIPP1Pg_1760960432
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 973E51956050; Mon, 20 Oct 2025 11:40:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.161])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94A7D30001BC; Mon, 20 Oct 2025 11:40:30 +0000 (UTC)
+Date: Mon, 20 Oct 2025 12:40:27 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Markus Armbruster <armbru@redhat.com>, peterx@redhat.com,
+ stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration: vmsd errp handlers: return bool
+Message-ID: <aPYfqzljT3q2noDb@redhat.com>
+References: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
+ <87347d7s0j.fsf@pond.sub.org>
+ <0ce2f913-36c2-44a2-8141-256ff847529d@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0ce2f913-36c2-44a2-8141-256ff847529d@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,66 +84,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SpaprMachineClass::linux_pci_probe field was only used by the
-pseries-4.1 machine, which got removed. Remove it as now unused.
+On Mon, Oct 20, 2025 at 02:22:22PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 20.10.25 14:05, Markus Armbruster wrote:
+> > Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> > 
+> > > Recently we moved to returning errp. Why to keep int return value?
+> > > Generally it doesn't help: you can't use in a logic of handling
+> > > an error, as you are never sure, that in future the logic in
+> > > the stack will not change: it may start to return another error
+> > > code in the same case, or return same error code in another case.
+> > > 
+> > > Actually, we can only rely on concrete errno code when get it
+> > > _directly_ from documented library function or syscall. This way we
+> > > handle for example EINTR. But later in a stack, we can only add
+> > > this errno to the textual error by strerror().
+> > 
+> > It's a matter of the function's contract, actually.
+> > 
+> > If the contract is "Return negative value on failure", checking for
+> > failure is all you can do with it.  Same information as "Return false on
+> > failure".
+> > 
+> > If the contract is "Return negative errno on failure", the function is
+> > responsible for returning values that make sense.  Ideally, the contract
+> > spells them all out.
+> > 
+> 
+> Do you know an example in code where we have both errno return value
+> and errp, and the return value make sense and used by callers?
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/ppc/spapr.h | 3 ---
- hw/ppc/spapr.c         | 6 +-----
- 2 files changed, 1 insertion(+), 8 deletions(-)
+If there are examples of that, I would generally consider them to be
+bugs.
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 1629baf12ac..60d9a8a0377 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -139,11 +139,8 @@ struct SpaprCapabilities {
-  * SpaprMachineClass:
-  */
- struct SpaprMachineClass {
--    /*< private >*/
-     MachineClass parent_class;
- 
--    /*< public >*/
--    bool linux_pci_probe;
-     hwaddr rma_limit;          /* clamp the RMA to this size */
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index c8558e47db2..30ffcbf3d2b 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1072,7 +1072,6 @@ static void spapr_dt_ov5_platform_support(SpaprMachineState *spapr, void *fdt,
- static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
- {
-     MachineState *machine = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(machine);
-     int chosen;
- 
-     _FDT(chosen = fdt_add_subnode(fdt, 0, "chosen"));
-@@ -1143,9 +1142,7 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
-          * We can deal with BAR reallocation just fine, advertise it
-          * to the guest
-          */
--        if (smc->linux_pci_probe) {
--            _FDT(fdt_setprop_cell(fdt, chosen, "linux,pci-probe-only", 0));
--        }
-+        _FDT(fdt_setprop_cell(fdt, chosen, "linux,pci-probe-only", 0));
- 
-         spapr_dt_ov5_platform_support(spapr, fdt, chosen);
-     }
-@@ -4638,7 +4635,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
-     smc->default_caps.caps[SPAPR_CAP_AIL_MODE_3] = SPAPR_CAP_ON;
-     spapr_caps_add_properties(smc);
-     smc->irq = &spapr_irq_dual;
--    smc->linux_pci_probe = true;
-     xfc->match_nvt = spapr_match_nvt;
-     vmc->client_architecture_support = spapr_vof_client_architecture_support;
-     vmc->quiesce = spapr_vof_quiesce;
+IMHO if a method is using "Error **errp", then it should be considered
+forbidden to return 'errno' values.
+
+If there is a need for distinguishing some cases from others, then keep
+with int '0/-1' example, but turn it into a multi-value return such as
+1/0/-1, or 0/-1/-2/-3/..., etc with named constants for the unusual
+scenarios. An example of that would be QIOChannel were we introduced
+"#define QIO_CHANNEL_ERR_BLOCK -2" to replace the need for EAGAIN checks
+in callers.
+
+With regards,
+Daniel
 -- 
-2.51.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
