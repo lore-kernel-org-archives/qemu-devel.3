@@ -4,91 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF90CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 19:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63052CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 19:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAvRk-0001se-Lb; Mon, 20 Oct 2025 15:21:34 -0400
+	id 1vAvbd-0003uL-Kg; Mon, 20 Oct 2025 15:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAvRf-0001sF-UD
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:21:28 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAvRc-00050W-SD
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:21:27 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-421851bcb25so2778213f8f.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 12:21:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760988083; x=1761592883; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=d5oX/dVngrWwYgEAjMZ5eA0XwcyGfjsg5vZuWHlLquI=;
- b=kcnoY13+EmYxRZ1Kd354PguS1fUkHYfj0SLWGxtQxdMN822N/4XucsO0Jm2UnvYgrW
- KGlU5LHXF5CZ83l+POMSJacQbsVaLmL3bStnb5ASomSA/t95NqFHRATH9mi+fileR83h
- zA5WOxL5gcV/dV/0rNAIe2UT7tumegoYfGC3RBMWG2GzdVQZm4aCYnDqnyjB4XGWBuc2
- HYnhWw/C3IHfMrx+9FCBzYEWr8MvWl+eBRxzZFPL60pNqbtmVI5fQnMhAbANR+lZRT5C
- XhASb5bpkKnJEJY39XfRikbqn3pXn0RoMwyAbm2Z/kfYyFaS5IhIcUggqMOon5Olw+aD
- 7kzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760988083; x=1761592883;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d5oX/dVngrWwYgEAjMZ5eA0XwcyGfjsg5vZuWHlLquI=;
- b=mD0389oqOYpGBZW0dIuUZyuQzevIZRfURSiGswsagl1XY40JHk+7RTNVF5rzdky0k6
- AqEpGVix4upmn3YhMbZUzZDFZsHCIimR4e3mCDrtDurl6dF4eMw1yPeoSFq+GKFOoNX1
- bd7w5ZlSITx7OrYkb4XBw+g6e6VidANaugpPqgTdcJcvKznASsUOh0wwPAprtfKuFW6F
- 7GCm2jMsrSTAlWHTJtGFlBs3S1zDj/IpDCbBgIZMDj19DzelIgJW7HJ6cj035SX20U6D
- dW5QsaBr/IX1CSynodBXalN2wSUv+7oJTSNXEwFlNVcC9j3raN5Pw6c00dYRwnPLr4F6
- Pn3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKbr4bHdkZs1krPEJUNLvKHlVfBwOOVxDuVy0x6Cqelto/ZpyoOAR9kW6EMQvxRPy5m/75zNxCJekr@nongnu.org
-X-Gm-Message-State: AOJu0Yy8Da6HEaivC/dhVhze0r2YykABKCipWCcmiQI9EZNGzrnslCHm
- 1SsEzDUawO0UoRYt8saBhTDZq8NshmTeLO6qNZTLkplSCQ9l4g32EoGfFff0E+oq4uw=
-X-Gm-Gg: ASbGncvZo6D+th+36H4ucxpT5RrUZUsi+DojB3VpeyT2IqHTUx21ZH6h3R6yxubTrYB
- tzVXuQIpXZkUFKGAwpc2ECuJcukWcwitVESfg3XHSndh0IzkmKsXt9ndOHzsz8uapwCm1vT1Niq
- +lr8KRXCHYeULyZu9anqq9NDOKdyajukmIQfgWrvX8yGoKnXsPR5gG3g9YFzJhMh1MW9YsZdSdM
- q+wEVRhuU1FA6ikdr5oy1jo18xGoT2viBBdLrQBxx+RoCLEx2zzmctevfXHNftGvs/gV/NQT78V
- STIn8LEq6NW9VwJTF9txinGCnfApNX2RaSxQH/ZnbDH8prPrXbVbpmZqu9+TM5udV868mI/k7Ex
- 96zU7ICagDR9gOBaoq35Rjcb0+jU7K2jECA+KQgBTkCc9SCHUINmEHEUo2VPFzblQ1MfdOY/YTu
- F9sdp4PhxNuqtS+ZnznIKXeiw4mt0E3dZvoAo9sAfvb+tlNsN7eXaZ1A==
-X-Google-Smtp-Source: AGHT+IETbkaajZKDtUvfodjkEB1/bVdY7KitcQzgE5FtPzHYIDW7MZbj31ih3AE87xH+3f6Owm8xDw==
-X-Received: by 2002:a05:6000:2008:b0:3ee:d165:2edd with SMTP id
- ffacd0b85a97d-42704d78cccmr9062200f8f.28.1760988082712; 
- Mon, 20 Oct 2025 12:21:22 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427e1be5d6csm16630489f8f.0.2025.10.20.12.21.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 12:21:22 -0700 (PDT)
-Message-ID: <b2a91079-f6b5-4bb5-89c3-18307481c7a9@linaro.org>
-Date: Mon, 20 Oct 2025 21:21:21 +0200
+ (Exim 4.90_1) (envelope-from <sean.anderson@linux.dev>)
+ id 1vAvba-0003tQ-UV
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:31:42 -0400
+Received: from out-178.mta1.migadu.com ([95.215.58.178])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sean.anderson@linux.dev>)
+ id 1vAvbX-00065S-Iw
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:31:42 -0400
+Message-ID: <91710089-5b3a-4be8-9554-90e46b991011@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1760988696;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ltkWJsnMETc1huyxRpsSMG8XwhlbhLdo4LNc0depd70=;
+ b=s+WmNyJaNRGUxBxvyZnJDM/iqvWVRV4rekHr6ZSOAOQiBvY9Y4zx2GUXNpaeexZucRCdr/
+ Y3r6/maJmNoTzaZWdW3oI15rURf/X7bZCuTtxZDb1MyKioX4xDxwMMi4VnGOYUfQK87gLI
+ 69Pr/FKt+mQm6cRy4wQPeiIn/b4O6jU=
+Date: Mon, 20 Oct 2025 15:31:28 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] hw/riscv: adding support for NeoRV32 RiscV MCU
+Subject: Re: [PATCH 3/3] semihosting: Check for overflow in FLEN on 32-bit
+ systems
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Luc Michel <lmichel@kalray.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+References: <20251017213529.998267-1-sean.anderson@linux.dev>
+ <20251017213529.998267-4-sean.anderson@linux.dev>
+ <4d1a679a-f1c2-487b-bddb-eaf7dd56fd0e@canonical.com>
+ <56d70072-67ee-471a-9b9a-c3257886d668@linux.dev>
+ <CAFEAcA_-08zVV6U2jVhNbYAwkLYXdjOzmRP-ZutjAKPuiGQ-_w@mail.gmail.com>
 Content-Language: en-US
-To: Michael Levit <michael@videogpu.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, pbonzini@redhat.com
-References: <20251020181435.8242-1-michael@videogpu.com>
- <20251020181435.8242-2-michael@videogpu.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251020181435.8242-2-michael@videogpu.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Sean Anderson <sean.anderson@linux.dev>
+In-Reply-To: <CAFEAcA_-08zVV6U2jVhNbYAwkLYXdjOzmRP-ZutjAKPuiGQ-_w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.178;
+ envelope-from=sean.anderson@linux.dev; helo=out-178.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,69 +78,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
-
-On 20/10/25 20:14, Michael Levit wrote:
-> From: Michael <michael@videogpu.com>
+On 10/20/25 12:33, Peter Maydell wrote:
+> On Mon, 20 Oct 2025 at 16:01, Sean Anderson <sean.anderson@linux.dev> wrote:
+>>
+>> On 10/18/25 03:21, Heinrich Schuchardt wrote:
+>> > On 10/17/25 23:35, Sean Anderson wrote:
+>> >> When semihosting 32-bit systems, the return value of FLEN will be stored
+>> >> in a 32-bit integer. To prevent wraparound, return -1 and set EOVERFLOW.
+>> >> This matches the behavior of stat(2). Static files don't need to be
+>> >> checked, since are always small.
+>> >>
+>> >> Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+>> >> ---
+>> >>
+>> >>   semihosting/arm-compat-semi.c | 17 ++++++++++++++---
+>> >>   1 file changed, 14 insertions(+), 3 deletions(-)
+>> >>
+>> >> diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
+>> >> index c5a07cb947..57453ca6be 100644
+>> >> --- a/semihosting/arm-compat-semi.c
+>> >> +++ b/semihosting/arm-compat-semi.c
+>> >> @@ -305,8 +305,19 @@ static uint64_t common_semi_flen_buf(CPUState *cs)
+>> >>       return sp - 64;
+>> >>   }
+>> >>   +static void common_semi_flen_cb(CPUState *cs, uint64_t ret, int err)
+>> >> +{
+>> >> +    CPUArchState *env = cpu_env(cs);
+>> >> +
+>> >> +    if (!err && !is_64bit_semihosting(env) && ret > INT32_MAX) {
+>> >
+>> >
+>> > The issue with the current implementation is that files with file sizes over 4 GiB will be reported as file size < 4 -GiB on 32bit systems. Thanks for addressing this.
+>> >
+>> > But unfortunately with your change you are additionally dropping support for file sizes 2 GiB to 4 GiB on 32bit devices. This should be avoided.
+>> >
+>> > The semihosting specification specifies that the value returned in r0 should be -1 if an error occurs. So on 32 bit systems 0xffffffff should be returned.
+>> >
+>> > As file sizes cannot be negative there is not reason to assume that the value in r0 has to be interpreted by semihosting clients as signed.
+>> >
+>> > Please, change your commit to check against 0xffffffff.
+>> >
+>> > It might make sense to contact ARM to make their specification clearer.
+>>
+>> stat(2) will return -1/EOVERFLOW on 32-bit hosts for files over 2 GiB. I believe we should be consistent.
 > 
-> 1) Initial support for Neorv32 soft-core MCU
-> 2) IMEM, DMEM memory regions, bootloader ROM
-> 3) Basic support for UART0 (no interrupts yet)
-> 4) Basic support for SPI
-> 5) Added SPI flash memory for loading firmware following  bootloader
-> 6) Based on Neorv32 RTL implementation repo
->     https://github.com/stnolting/neorv32
->     commit id 7d0ef6b2
+> I can see both sides of this one -- the semihosting spec
+> is pretty old and was designed (to the extent it was designed)
+> back in an era when 2GB of RAM or a 2GB file was pretty
+> implausible sounding. (And today there's not much appetite
+> for making updates to it for AArch32, because 32-bit is
+> the past, not the future, and in any case you have to deal
+> with all the existing implementations of the spec so
+> changes are super painful to try to promulgate.)
 > 
-> Signed-off-by: Michael Levit <michael@videogpu.com>
-> ---
->   .gitignore                                  |   1 +
->   configs/devices/riscv32-softmmu/default.mak |   1 +
->   docs/system/riscv/neorv32.rst               | 110 +++++
->   hw/char/Kconfig                             |   3 +
->   hw/char/meson.build                         |   1 +
->   hw/char/neorv32_uart.c                      | 311 ++++++++++++
->   hw/misc/Kconfig                             |   2 +
->   hw/misc/meson.build                         |   1 +
->   hw/misc/neorv32_sysinfo.c                   | 183 +++++++
->   hw/misc/neorv32_sysinfo.h                   |  79 +++
->   hw/misc/neorv32_sysinfo_rtl.h               | 134 ++++++
->   hw/riscv/Kconfig                            |   8 +
->   hw/riscv/meson.build                        |   1 +
->   hw/riscv/neorv32.c                          | 219 +++++++++
->   hw/ssi/Kconfig                              |   4 +
->   hw/ssi/meson.build                          |   1 +
->   hw/ssi/neorv32_spi.c                        | 504 ++++++++++++++++++++
->   include/hw/char/neorv32_uart.h              |  68 +++
->   include/hw/riscv/neorv32.h                  |  60 +++
->   include/hw/ssi/neorv32_spi.h                |  70 +++
->   target/riscv/cpu-qom.h                      |   2 +
->   target/riscv/cpu.c                          |  18 +
->   target/riscv/cpu.h                          |   3 +
->   target/riscv/cpu_cfg.h                      |   1 +
->   target/riscv/cpu_cfg_fields.h.inc           |   1 +
->   target/riscv/cpu_vendorid.h                 |   2 +
->   target/riscv/meson.build                    |   1 +
->   target/riscv/neorv32_csr.c                  |  54 +++
->   28 files changed, 1843 insertions(+)
+> Our QEMU implementation of SYS_ISERROR() says "anything that's
+> a negative 32-bit integer is an error number" for 32-bit hosts,
+> which I suppose you might count on the side of "check
+> against INT32_MAX".
+> 
+> I think overall that if we think that anybody is or might be
+> using semihosting with files in that 2..4GB size, we should
+> err on the side of preserving that functionality. Otherwise
+> somebody will report it as a bug and we'll want to fix it
+> as a regression. And it doesn't seem impossible that somebody
+> out there is doing so.
+> 
+> If we report 2..4GB file sizes as if the file size value
+> was an unsigned integer, then clients that expect that will
+> work, and clients that treat any negative 32-bit value as
+> an error will also work in the sense that they'll handle it
+> as an error in the same way they would have done for -1.
+> So that is the safest approach from a back-compat point
+> of view, and I think that's what I lean towards doing.
 
-Thanks for your contribution! However I'm afraid this patch is too big
-to be reviewed without missing something. I'd suggest splitting like
-the 6 bullets you enumerated.
+Actually, some existing targets don't handle "negative" file sizes
+properly. In particular, newlib generally treats the result as an int or
+an off_t, which is a long (except on cygwin). Both of those types are
+32 bits or smaller on (I)LP32. So if you return a 3 GiB size it will be
+treated as -1 GiB. This will break lseek with SEEK_END, since newlib
+uses the signed result of flen to recompute a new absolute offset.
 
-> diff --git a/.gitignore b/.gitignore
-> index 61fa39967b..b53806de50 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -9,6 +9,7 @@
->   .clang-format
->   .gdb_history
->   cscope.*
-> +phases.hold
+IMO the spec is unclear, and this is reflected in the varying semantics
+of differing implementations. I think returning any negative number
+other than -1 is just inviting bugs.
 
-Not sure from where this file comes; maybe a shell typo?
-Regards,
-
-Phil.
-
+--Sean
 
