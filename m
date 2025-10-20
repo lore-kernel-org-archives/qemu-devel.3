@@ -4,117 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D324ACCD1A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 19:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B11CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 19:45:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAvnn-0007CE-0j; Mon, 20 Oct 2025 15:44:19 -0400
+	id 1vAvov-0007dG-9B; Mon, 20 Oct 2025 15:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vAvnk-0007BV-4J; Mon, 20 Oct 2025 15:44:16 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vAvnh-0007PW-W8; Mon, 20 Oct 2025 15:44:15 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KDOebk004702;
- Mon, 20 Oct 2025 19:44:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Bn/fhjxfklOL1FGBkzhnnxSTvVE9nK
- idd7DDXrjTAbs=; b=LF3Ev4zmLEq6bQfk4tnziPLKiH8/YlSZYHGQmM/0QrXdsl
- S5G82ueHReVLBBROK4bu5P7FfrhSYChMyBMjoj5HNCm3ymQiYR1pwORkInZ9E+FD
- Bda34lwT3ESwr2TkDOLckmtY4NHPEPUC2ecRN4JxFJE7CWmS+9P/+1LamNJEsl0R
- KVCwP4q0lZhg8QE2//YdNVtdtEfteyTtvqP34cs3Cy6erjmpYVfVuAr6iZuObrCH
- LUlh/zF3fRDjxZGZE0OyTWsYHq1GCaXpiXt7cCuJ3oRUg+K26BxYctcKJzXeDhBp
- q0msJR7iRzh5d8v9R1yyjlmlkKKzOSFcV11/1GyA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c27jj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 19:44:10 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59KJhwQH032032;
- Mon, 20 Oct 2025 19:44:09 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c27jf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 19:44:09 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59KJ25Kf002320;
- Mon, 20 Oct 2025 19:44:08 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqej74wp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 19:44:08 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59KJi5Ms26280234
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 Oct 2025 19:44:05 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2EEA120043;
- Mon, 20 Oct 2025 19:44:05 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EAFF020040;
- Mon, 20 Oct 2025 19:44:02 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.220.224])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 20 Oct 2025 19:44:02 +0000 (GMT)
-Date: Tue, 21 Oct 2025 01:14:00 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-Subject: Re: [PATCH v4 7/8] hw/ppc: Enable fadump for PSeries
-Message-ID: <xorza3ueibrlphfam2zd6y5lqfbcb3pigkagdd7s7f7iftdu7c@5x5qq56bii4v>
-References: <20250323174007.221116-1-adityag@linux.ibm.com>
- <20250323174007.221116-8-adityag@linux.ibm.com>
- <1d3f2a26-73be-4c09-814e-92e2933a04a0@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAvon-0007c5-RV
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:45:24 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vAvoj-0007fm-QX
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 15:45:21 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b456d2dc440so778383166b.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 12:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1760989515; x=1761594315; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=INq7wg2Y6WBzFJvz6a9Id+InKjDpVsX+YMJN5bL6ovw=;
+ b=O+YjFAwLD6OcHCF5HBQPPk7/phN26p8whWzrrVZZ/vcwq3oJWUqlwhjDl9//eZ0ZkR
+ ZF3urWir4M8auQQkSGED7F+HqOpiHsDLDahQSxnhSANrwuRenSdzGKjvfIhCNJ2T4vje
+ ZCwVVHuAmzvD2b28BJh7XwWVh8Hc7tZYyma5RQMOKtNoCkGGBRKvpp9Zb87taI2ayJrv
+ gMJ1Jm+8OuH5lmBZC9+7L8NiRm42j8BGWge+SmRA+C+v6Ue0hOg5XkOXTgsMKGwGjJDY
+ WryHBh62kATxT5zRHHdzYFKTD+l/aeaR5kjj4mHEoT3xmhlfB6MvQ07sQyJWmto7Ca3y
+ nn7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760989515; x=1761594315;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=INq7wg2Y6WBzFJvz6a9Id+InKjDpVsX+YMJN5bL6ovw=;
+ b=e5dKjGhtIstgHA8pvBpPd8V0OYxtbLZEhyzuDPDPdM2diU25fn5fN0NjEpjZtH1OH+
+ OgyqIFDedgIuhcJ0aNDjX1BFXCdio/RJqgWdRqtuTjJUFXXduL/lUqkTI7vK8/FtEXfx
+ DNQQWz5nCmDvCNUdMg73XXRuyPF7JP28kMXU8xJXOyUrvK7JefpZp4SR+xJI1bdHYxB3
+ gUTYIUaJCVnCLcfjTXIiH9sAr+U2LcYvEufmMl9TytcXr5iglbGpFmU0E6uGgZLtcgE9
+ W+wQvjnrF7cnkBzsuVcEsodkWjifpYYxCxdtrCSGnj2+SlcVpNYKtnOPgW6p3U7PfrKv
+ 7uKA==
+X-Gm-Message-State: AOJu0YyD0i6aUrg1BJStqOIeJRhFpgiAH6soYMZAIUtAVR2Ldh5/93OM
+ bUqHe6SGPWe78a+fhWyYuyxgoMk3UOdbYvLnOAPCbDBO8eVgcIJMQCQn
+X-Gm-Gg: ASbGncs/APaLDrQQ/qfRUVIoFLFB2a8A5O1nFAa/tZV+51P8B/OHHEC4ZUm1eTiuFpo
+ C9mNVRSQRFLbTNXaBqKe/clldwLnsE5EnuwAH8fjX6JLGn2YLpM9FAf1fH/qBSxxPKHSAb/so/m
+ jXEbRRALZSz1hdJv2gwxTyTygsU61Y/6SDUIlHrHbUy/tgu+HFFFI3aPV1whpIyNEOMSoRqe8ob
+ zhFfA1Rvp+DTdLiZh3qd9mTF+ttHDu4XxdA+OaMM7Y5DD0IYch1poMWu7Jb5/35aADVO8Rx8aVb
+ NCkLQAygq4W3qNijFObeX/jiV3t+sNvTHw5ui5S5qp5Vh5fPVETw7/KZKviepP5CtHKvnZWepuj
+ 7A+FWJkdAfgkW89bxfDOa91Hke1jZEJ6cE1UyeJ1YbShLmhGKLVi9+Ursjlf8R9X0wgKZ6ADa/T
+ N9Q7hHTbcHaG+phqDt93DjjnUze20L5CRIR/h094HxZV3o4L1vjXINPrPWxng9nQ==
+X-Google-Smtp-Source: AGHT+IHIsCUz++LiGJtnqxWAy3tcsENfgUwQoKY1nPz+w0nvLeNYHjCIOCfBtfBk2VQngwO2sLDUhQ==
+X-Received: by 2002:a17:907:d13:b0:b3e:151b:849e with SMTP id
+ a640c23a62f3a-b6472b5fb74mr1804105866b.10.1760989515108; 
+ Mon, 20 Oct 2025 12:45:15 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-077-183-007-223.77.183.pool.telefonica.de. [77.183.7.223])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b65eb52621csm878965266b.59.2025.10.20.12.45.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 12:45:14 -0700 (PDT)
+Date: Mon, 20 Oct 2025 17:27:18 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Markus Armbruster <armbru@redhat.com>
+CC: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
+Subject: Re: [PATCH] ui/pixman: Fix crash in qemu_pixman_shareable_free()
+In-Reply-To: <877bwpu526.fsf@pond.sub.org>
+References: <20251013112102.2396012-1-armbru@redhat.com>
+ <1C757C57-9134-4C72-8034-DEC70FFD25FB@gmail.com>
+ <877bwpu526.fsf@pond.sub.org>
+Message-ID: <026FC9CD-543B-4A83-9D1A-0C6F59FF9065@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1d3f2a26-73be-4c09-814e-92e2933a04a0@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Q9cimp00x3NkMKaWMjA_9ut1iCVozgD1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXyGEfOhpyTeDv
- LjvnjNGciC02TnZq4t+eHIdA3y9Ynx5Z75K1JJXmNfpgx16HcgcYnJHM6p+HjPxw0iKVrllDdRW
- pJl1fl+VmuA182fnpkf0Sq0KINCXN6dbi7KaWOY/QJSdYy3FBbZvlNjsPkeaN5RgpSAM0kkVXKu
- 0sQJATJhnhy5unY+jRkCOZM1bvfjmjBrQu6/YfY/K+UDVRiTClPahZjqBqoyWlhapk/Nwnx4Dql
- 0JI5c8T+5iMHFbOxpPN+hzDuZF/pwFAWa2JViPoQN5dmxYhVm/jc5+aOe5FLfk47m55B8oNtf+v
- FY/wua2kLGPEIXHxWsSGcAsx43wgXuEzPebbCMr0iLosDOSQbzfUnaIfNPoJVkM/1oGPa/giiN5
- IjXzPXHVITk27FgUSVhzYerA22hNwQ==
-X-Proofpoint-GUID: x5Mib331ZVWdsegZMXyz7m_VbdafEI83
-X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f6910a cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Qf_wr7Qep9whXJSVnEEA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_05,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,65 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Sourabh,
 
-On 25/10/18 05:34PM, Sourabh Jain wrote:
-> 
-> 
-> > <...snip...>
-> > The fadump boot after crash:
-> > 
-> >      [    0.000000] rtas fadump: Firmware-assisted dump is active.
-> >      [    0.000000] fadump: Updated cmdline: debug fadump=on crashkernel=1G
-> >      [    0.000000] fadump: Firmware-assisted dump is active.
-> 
-> Kernel is printing twice about fadump is active. :)
 
-Yeah i noticed, that seems to be the case atleast with 6.14
+Am 20=2E Oktober 2025 12:32:33 UTC schrieb Markus Armbruster <armbru@redha=
+t=2Ecom>:
+>Bernhard Beschow <shentey@gmail=2Ecom> writes:
+>
+>> Am 13=2E Oktober 2025 11:21:02 UTC schrieb Markus Armbruster <armbru@re=
+dhat=2Ecom>:
+>>>Reported-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>>Fixes: b296b29d3414 (ui/pixman: Consistent error handling in qemu_pixma=
+n_shareable_free())
+>>>Signed-off-by: Markus Armbruster <armbru@redhat=2Ecom>
+>>>---
+>>> ui/qemu-pixman=2Ec | 4 +++-
+>>> 1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>>diff --git a/ui/qemu-pixman=2Ec b/ui/qemu-pixman=2Ec
+>>>index e46c6232cf=2E=2Eaea09755b9 100644
+>>>--- a/ui/qemu-pixman=2Ec
+>>>+++ b/ui/qemu-pixman=2Ec
+>>>@@ -291,7 +291,9 @@ qemu_pixman_shareable_free(qemu_pixman_shareable ha=
+ndle,
+>>>     Error *err =3D NULL;
+>>>=20
+>>>     qemu_win32_map_free(ptr, handle, &err);
+>>>-    error_report_err(err);
+>>>+    if (err) {
+>>>+        error_report_err(err);
+>>>+    }
+>>> #else
+>>>     qemu_memfd_free(ptr, size, handle);
+>>> #endif
+>>
+>> Thanks for the quick fix, Markus! The patch is reviewed and I've been t=
+esting it for a week=2E Who is going to merge it?
+>
+>I can do it=2E
+>
+>You provided
+>
+>    Tested-by: Bernhard Beschow
+>    Reviewed-by: Bernhard Beschow
+>
+>without an e-mail address=2E  Intentional?
 
-> 
-> > <...snip...>
-> >       MachineState *ms = MACHINE(spapr);
-> >       MachineClass *mc = MACHINE_GET_CLASS(ms);
-> > +    FadumpMemStruct *fdm = &spapr->registered_fdm;
-> > +    uint16_t dump_status_flag;
-> > +    bool     is_next_boot_fadump;
-> >       uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
-> >       uint64_t fadump_cpu_state_size = 0;
-> > @@ -953,6 +956,18 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
-> >                       fadump_versions, sizeof(fadump_versions))));
-> >       _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
-> >                       fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
-> > +
-> > +    dump_status_flag = be16_to_cpu(fdm->header.dump_status_flag);
-> > +    is_next_boot_fadump =
-> 
-> Do we really need is_next_boot_fadump variable?
+Oh, that wasn't intentional=2E
 
-Agreed, not needed now, will remove it in v5.
+> If not, should I use <shentey@gmail=2Ecom>?
 
-> 
-> > +        (dump_status_flag & FADUMP_STATUS_DUMP_TRIGGERED) != 0;
-> > +    if (is_next_boot_fadump) {
-> > +        uint64_t fdm_size =
-> > +            sizeof(struct FadumpSectionHeader) +
-> > +            (be16_to_cpu(fdm->header.dump_num_sections) *
-> > +            sizeof(struct FadumpSection));
-> > +
-> > +        _FDT((fdt_setprop(fdt, rtas, "ibm,kernel-dump", fdm, fdm_size)));
-> 
-> Is this common in QEMU to call _FDT to add prop to the FDT? Feels odd.
+Yes, please=2E
 
-Yes, that's just a wrapper for error checking in QEMU, used extensively
-atleast in hw/ppc
-
-Thanks for your reviews Sourabh !
-
-- Aditya G
-
-> 
-> > +    }
-> >   }
-> >   static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
-> 
+Best regards,
+Bernhard
 
