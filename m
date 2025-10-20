@@ -4,100 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08E5CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A03A2CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 14:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqJH-0005By-1S; Mon, 20 Oct 2025 09:52:27 -0400
+	id 1vAqRr-0008EM-Jh; Mon, 20 Oct 2025 10:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vAqJF-0005BF-Is
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:52:25 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vAqRg-00088t-Q8
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:01:10 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vAqJB-0004OE-7Z
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:52:23 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7c27a099d61so1477457a34.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 06:52:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vAqRb-00060e-S9
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 10:01:08 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-780fe76f457so50692187b3.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 07:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760968330; x=1761573130; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vGaptLZdRXQmNub+MDMzGPiNrFK3okAxxPEwkBCT91I=;
- b=PlXa6DuzB1pdM0b2xbGa2PBbxjo0rHA3UCRdDOM02aYWr7sQ0fe44pJKS8z1UReXGg
- OGRAVq66tZqKAlIYDkIrPbXKIN0W3xvNqL130kf6poMtLwTOWOMJZU5UjnsuC5e/GGkc
- RKljZeYp+RWYKAlxg3N0nwI3PmbapoiCCCyjJ98L/uDX4ssl6hwFzjvKE5Hm+iv+ch/S
- 5kPQj0/dbXZuE6FVmwRIF0XhH5ENiKalNR2dakVQwJRTFGRzFdv9bU1mi3eISN41IFvg
- oGOnaX+ARtamPjcV//Ree0foGSMkw2v1ZV2f+bMYnBfcObElf3Fi2DcojGZjTPnlKtj7
- GK8w==
+ d=linaro.org; s=google; t=1760968860; x=1761573660; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=P3wd36Shxgxe9blQXOHxYRpdz75/BpPqk627GopzNUA=;
+ b=Siqu9k1Vqjsh3xZvqBHMu5gtaaY3H237n1wnc5oPKTMwqJxuV61ADWfNJSDVCPyhkK
+ FIh0DbtX5yq8+s7NtGNT1bLkqXjLaUJQHxP9R0D+Kew+gbs4csxa/sh/KwUYeacSgAQX
+ jyf20tOJHrwMe8zxEZSFndS0fiSzEdv2e56HTeVZ4iOk9kkO8gdTB5zS1dVr/LY+00Kz
+ k0XbFPrGfjBt0r06rgkrVbOyGmkgO74kiTU8XDmrOvycazemuyJAiO2Wdyy9irXFpr9h
+ bfakgJc33ZLxUYPEyJKugglaHUxLY/vTlIYUUzmKNfKGY/RMV4YqbQQBUG3S1fselK18
+ ZOYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760968330; x=1761573130;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vGaptLZdRXQmNub+MDMzGPiNrFK3okAxxPEwkBCT91I=;
- b=l8pQuEy8aivpZkPMgfkJc1WWVSE1U7FCYP2dAAmdQHAs6Qo21XiJnVKRMC8/ZZs1eo
- iu8PIvG3o+NmGZ1LhVRbxldKwn7fuyFBQhxV46CssPoNwb6VNo84pt4kSnLZB5+PGXBZ
- KWE1zewiE8VcW/KS0u/zQXwBImoR9bCBSV4rE6J0elWxF7IWqG0PP4u/VGWt9XtGvvFF
- +vejmojS6kJorln2h2hTYYr7IAHAzdETLC7PpHv32KbvB8e6C9aB5TXZtdGhbox/9CTg
- GjPDI0UcGqdqqur0TrjhZ8PUS0+AqPEcAoQEV3zRVaoVVLXgD4vukab7m3Is41wsucNX
- e5fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsNs3V6QQ/diGt8bK6b1Dj9teK0ReD7xXAotzSxl3l1jXuueyVVH/gS2oHBH7+HhVtgO+fqJE+5DoJ@nongnu.org
-X-Gm-Message-State: AOJu0Yzq3I+qwUE8ck+m4UyJf07ylcUKIHPoXR1b/skv/qT1svMkcGN5
- LlQGIZgm39MyudKZWXFJKhzpckFOEthi1YtKRipfi0SS3n3gf5suQaHCp1SG8ZDalGE=
-X-Gm-Gg: ASbGncs3IxX2NEad1wDW0OSPRyrFfWoREFjr73E9pdkxoKH8/gb8EqWrBHT7sw/FlLO
- Zt6nipdYvhhIzFKTp4ij18w2YkBFR1G3rYTPWgP71nWATU8YIb1bVeUyX6I0BUy8NNyIeJHorV2
- zj+8mtg8CX4ksbz9PXVDRHtCuT7yVzS6Igv9V/yTI0ilR6QWuottvUvu01pRBMxckUbgaFGQQnq
- 8VXXhRkqUFnQVsro5+mlF3gmm4D5k+MjXDG7TV7pOO7epSSRX9zpJVZWK+uTNrJbEZejeNL2YqQ
- hmPuDThe+nYfrrDhBetyItwAClS31qYFRG/RdV/pFgjArLdsfx464q6bVL8E9x2xY1d/pRPPMHV
- QQvwkEqseRjZCYkj2yK+OxVimHi6NmRXXPQZDZ3Lem+hyZsDmEcTzsfgCxpoGX90vDZ+3BemgW9
- fb0Ix5D7FKE4RRgTMMQSSGunxHICItvb53Y/8A2XZDvsllYIhjlZ/9Qw==
-X-Google-Smtp-Source: AGHT+IGVEwkJ3+8W+SQyb8/gUDqT8a5q/fx5ppLFGYyb4DGPwDCrA/bXnPrKuhmiecnKbTIl+lOF4w==
-X-Received: by 2002:a05:6830:388d:b0:7bd:2e41:32d0 with SMTP id
- 46e09a7af769-7c27cb00a11mr6190556a34.16.1760968330065; 
- Mon, 20 Oct 2025 06:52:10 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:b401:1d95:5a7c:524e:bcac:abea?
- ([2804:7f0:b401:1d95:5a7c:524e:bcac:abea])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7c2887a1a3csm2681882a34.2.2025.10.20.06.52.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 06:52:09 -0700 (PDT)
-Message-ID: <34d24ef9-6617-46b7-8e9e-631c49f4994f@linaro.org>
-Date: Mon, 20 Oct 2025 10:52:02 -0300
+ d=1e100.net; s=20230601; t=1760968860; x=1761573660;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=P3wd36Shxgxe9blQXOHxYRpdz75/BpPqk627GopzNUA=;
+ b=obAjwBFAFF7yU1vkLKNgLJ0O/loPkwTEwaztvFonjErBvKEUCQcpCLSXNAxHwartf2
+ E1HL0BFJEGDYeacOcYN3lOSTMxDjU+xumlL5xZD7CQeMCEU+Oj38wEuTR/mKuUl6wYjf
+ BupLOzHKsP9rQKVIi1J4sWg1avOuCxSvZr0bk/aO5b2KVTrH3zxxgRF43sXymSWeMqO2
+ NljkcW9Mprr/Iho0DAAqo9nz4QL/PVDFVZ6SkvUa/TG6ZFtDvqHGXkfa86a+Z3zKGygf
+ 3pb9k29YwBPse5fvL2tDiu/wjUBDmYt7WtQVn05o2w7SdZIlfYaWzduOiknjSCS7cgiv
+ jzpw==
+X-Gm-Message-State: AOJu0YwV2e4mVG80VcWNfkjaymSM7r3bjuJFAjRPAmE998W7T5kB6+CR
+ yLEp8l0AiNBLP4Mem6f4JhN/ptZLycxTJvB21R4NELVa/851TVzl1XL9eC/LDl9u7+ND6FCYiyG
+ F9W4SJTH6gpw4CNEWy/YIqkMm5iFU5p4/+ykYmMfWCw==
+X-Gm-Gg: ASbGncv/EQMq7508L/rrWdofWyCwaW8kw/+dWJFBs4GL+Pz2xg1NFKNNe6+yUZL9QUN
+ AfdpI1fBOcYSn8y3P2P8j9SmZZLgYA/3MJUJORidG4d2iOw/HLP3yaPTqRu1oJGolkJatCPF1SX
+ DT6b8eVeS3G9hLYpU1olKIc7EssqtXiexmLMGCJXUQBlRx4Et1u0nepmK0U828+MmNNFyd7EsaE
+ xT4WUi8DioW2y9qa68UFU5ZrjsNQe1z4zzBQ0Td2e4v/xY4TrrG7Th+gSEreQ==
+X-Google-Smtp-Source: AGHT+IGVBnFKrYgi9RkzyS75ncWeNASH3ZXNO2YpafsvqsIijCPaDQGZuuXrFZu0bJcpzWES/A7MULL8uzpqtdOhoGQ=
+X-Received: by 2002:a05:690c:4c10:b0:784:933d:40a0 with SMTP id
+ 00721157ae682-784933d4d71mr72998847b3.31.1760968859865; Mon, 20 Oct 2025
+ 07:00:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 2/8] hw/core/machine: topology functions capabilities
- added
-To: Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org
-Cc: anisinha@redhat.com, armbru@redhat.com, berrange@redhat.com,
- dapeng1.mi@linux.intel.com, eric.auger@redhat.com, farman@linux.ibm.com,
- imammedo@redhat.com, jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- linuxarm@huawei.com, maobibo@loongson.cn, mst@redhat.com,
- mtosatti@redhat.com, peter.maydell@linaro.org, philmd@linaro.org,
- qemu-arm@nongnu.org, richard.henderson@linaro.org, shannon.zhaosl@gmail.com,
- yangyicong@hisilicon.com, zhao1.liu@intel.com
-References: <20250827142152.206-1-alireza.sanaee@huawei.com>
- <20250827142152.206-3-alireza.sanaee@huawei.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250827142152.206-3-alireza.sanaee@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=gustavo.romero@linaro.org; helo=mail-ot1-x32f.google.com
+References: <20251014200718.422022-1-richard.henderson@linaro.org>
+ <20251014200718.422022-23-richard.henderson@linaro.org>
+In-Reply-To: <20251014200718.422022-23-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Oct 2025 15:00:48 +0100
+X-Gm-Features: AS18NWA0eFd7_3KMEizLYLWpA4TQbbTTmZGogc3gJG24ycD77pyvYK6CU-9HPHs
+Message-ID: <CAFEAcA-dV4_WtGuU9020xpCFJ=EP_3wGPU+hs8cq914JNCT3Ow@mail.gmail.com>
+Subject: Re: [PATCH v2 22/37] target/arm: Consolidate definitions of TTBR[01]
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,180 +93,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alireza,
+On Tue, 14 Oct 2025 at 21:10, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Create a function define_ttbr_register which handles the 3
+> distinct cases for TTBR[01] registers.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-On 8/27/25 11:21, Alireza Sanaee wrote:
-> Add two functions one of which finds the lowest level cache defined in
-
-Maybe s/lowest level cache/lowest cache level/?
-
-
-> the cache description input, and the other checks if caches are defined
-> at a particular level.
-
-Maybe improve the comment message with smtg like "if a given cache topology is defined
-at a particular cache level"? For reviewing this series I'm sticking with
-the term "cache level" to mean the levels as in L1, L2, etc., and with the term
-"topology level" to mean "thread", "core", "module", etc.
-
-
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->   hw/core/machine-smp.c | 56 +++++++++++++++++++++++++++++++++++++++++++
->   include/hw/boards.h   |  5 ++++
->   2 files changed, 61 insertions(+)
-> 
-> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-> index 0be0ac044c..32f3e7d6c9 100644
-> --- a/hw/core/machine-smp.c
-> +++ b/hw/core/machine-smp.c
-> @@ -406,3 +406,59 @@ bool machine_check_smp_cache(const MachineState *ms, Error **errp)
->   
->       return true;
->   }
-> +
-> +/*
-> + * This function assumes l3 and l2 have unified cache and l1 is split l1d and
-> + * l1i.
-> + */
-
-Please, let's pick a form to write Ln cache and try to be consistent using it.
-I prefer L1, L1d, etc. Here you're using l3, l2 form but in the comment on
-machine_defines_cache_at_topo_level just below you use L2, L3. Also to be observed
-in the other patches in this series.
-
-
-> +bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
-> +                                                   int *level_found,
-> +                                                   CpuTopologyLevel topo_level)
-
-"level_found" sounds a bit like a bool? how about "lowest_cache_level" instead?
-
-
+> +static void define_ttbr_registers(ARMCPU *cpu)
 > +{
+> +    /*
+> +     * For v8:
+> +     * The aarch64 regs are primary, since they might be 128-bit.
+> +     * The aarch32 64-bit non-secure regs are secondary to aa64 el1.
+> +     * The aarch32 64-bit httbr is secondary to aa64 el2.
+> +     * The aarch32 64-bit secure ttbr0 is secondary to aa64 el3.
+> +     * The aarch32 64-bit secure ttbr1 is primary.
+> +     *
+> +     * For v7:
+> +     * The aarch32 64-bit s+ns regs are primary.
+> +     *
+> +     * The aarch32 32-bit regs are secondary to one of the above,
+> +     * and we also don't expose them to gdb.
+> +     */
+> +    static const ARMCPRegInfo ttbrv8_reginfo[] = {
+> +        { .name = "TTBR0_EL1", .state = ARM_CP_STATE_AA64,
+> +          .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
+> +          .access = PL1_RW, .accessfn = access_tvm_trvm,
+> +          .fgt = FGT_TTBR0_EL1,
+> +          .nv2_redirect_offset = 0x200 | NV2_REDIR_NV1,
+> +          .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 2, 0, 0),
+> +          .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 2, 0, 0),
+> +          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
+> +          .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[1]) },
+> +        { .name = "TTBR1_EL1", .state = ARM_CP_STATE_AA64,
+> +          .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 1,
+> +          .access = PL1_RW, .accessfn = access_tvm_trvm,
+> +          .fgt = FGT_TTBR1_EL1,
+> +          .nv2_redirect_offset = 0x210 | NV2_REDIR_NV1,
+> +          .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 2, 0, 1),
+> +          .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 2, 0, 1),
+> +          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
+> +          .fieldoffset = offsetof(CPUARMState, cp15.ttbr1_el[1]) },
+> +        { .name = "TTBR0_EL2", .state = ARM_CP_STATE_AA64,
+> +          .opc0 = 3, .opc1 = 4, .crn = 2, .crm = 0, .opc2 = 0,
+> +          .access = PL2_RW, .resetvalue = 0,
+> +          .writefn = vmsa_tcr_ttbr_el2_write, .raw_writefn = raw_write,
+> +          .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2]) },
+> +        { .name = "TTBR0_EL3", .state = ARM_CP_STATE_AA64,
+> +          .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 0, .opc2 = 0,
+> +          .access = PL3_RW, .resetvalue = 0,
+> +          .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[3]) },
+> +    };
 > +
-> +    CpuTopologyLevel level;
+> +    static ARMCPRegInfo ttbr64_reginfo[] = {
+> +        [0 ... 3] = {
+> +            .cp = 15, .crm = 2, .type = ARM_CP_64BIT,
+
+I think I would prefer it if we listed the full encoding
+fields in each array element, rather than factoring out the
+common parts like this. I think it's easier to read and
+confirm what register encoding is being dealt with when
+it's all on one line in the standard order rather than split
+up into multiple lines.
+
+> +            .access = PL1_RW, .accessfn = access_tvm_trvm,
+
+This applies the accessfn to the HTTBR, which is harmless
+because the accessfn doesn't trap unless at EL1, but also
+means we'll do an unnecessary function call out to C code
+for every access to it.
+
+> +            .writefn = vmsa_ttbr_write, .raw_writefn = raw_write
+> +        },
+> +        [0 ... 1].opc1 = 0,
+> +        [0].name = "TTBR0",
+> +        [0].secure = ARM_CP_SECSTATE_NS,
+> +        [0].fieldoffset = offsetof(CPUARMState, cp15.ttbr0_ns),
+> +        [1].name = "TTBR0_S",
+> +        [1].secure = ARM_CP_SECSTATE_S,
+> +        [1].fieldoffset = offsetof(CPUARMState, cp15.ttbr0_s),
 > +
-> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
-> +    if (level == topo_level) {
-> +        *level_found = 1;
-> +        return true;
+> +        [2 ... 3].opc1 = 1,
+> +        [2].name = "TTBR1",
+> +        [2].secure = ARM_CP_SECSTATE_NS,
+> +        [2].fieldoffset = offsetof(CPUARMState, cp15.ttbr1_ns),
+> +        [3].name = "TTBR1_S",
+> +        [3].secure = ARM_CP_SECSTATE_S,
+> +        [3].fieldoffset = offsetof(CPUARMState, cp15.ttbr1_s),
+> +
+> +        [4] = {
+> +            .name = "HTTBR", .cp = 15, .crm = 2, .opc1 = 4,
+> +            .access = PL2_RW, .type = ARM_CP_64BIT,
+> +            .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2])
+> +        },
+> +    };
+> +
+> +    static ARMCPRegInfo ttbr32_reginfo[] = {
+> +        { .name = "TTBR0", .cp = 15, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
+> +          .access = PL1_RW, .accessfn = access_tvm_trvm,
+> +          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
+> +          .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr0_s),
+> +                                 offsetof(CPUARMState, cp15.ttbr0_ns) } },
+> +        { .name = "TTBR1", .cp = 15, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 1,
+> +          .access = PL1_RW, .accessfn = access_tvm_trvm,
+> +          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
+> +          .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr1_s),
+> +                                 offsetof(CPUARMState, cp15.ttbr1_ns) } },
+> +    };
+> +
+> +    CPUARMState *env = &cpu->env;
+> +
+> +    /* With only VMSA, define a 32-bit reg that filters bits from write. */
+
+What do you mean by "filters bits from write" here ?
+
+> +    if (!arm_feature(env, ARM_FEATURE_LPAE)) {
+> +        define_arm_cp_regs(cpu, ttbr32_reginfo);
+> +        return;
 > +    }
 > +
-> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
-> +    if (level == topo_level) {
-> +        *level_found = 1;
-> +        return true;
+> +    /* With LPAE, the 32-bit regs are aliases of 64-bit regs. */
+> +    for (int i = 0; i < ARRAY_SIZE(ttbr32_reginfo); ++i) {
+> +        ttbr32_reginfo[i].type = ARM_CP_ALIAS | ARM_CP_NO_GDB;
+> +    }
+> +    define_arm_cp_regs(cpu, ttbr32_reginfo);
+> +
+> +    if (arm_feature(env, ARM_FEATURE_V8)) {
+> +        define_arm_cp_regs(cpu, ttbrv8_reginfo);
+> +
+> +        ttbr64_reginfo[0].type |= ARM_CP_ALIAS;
+> +        ttbr64_reginfo[1].type |= ARM_CP_ALIAS;
+> +        ttbr64_reginfo[2].type |= ARM_CP_ALIAS;
+> +        /* Index 3, TTBR1_S, is not an alias. */
+> +        ttbr64_reginfo[4].type |= ARM_CP_ALIAS;
 > +    }
 > +
-> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
-> +    if (level == topo_level) {
-> +        *level_found = 2;
-> +        return true;
-> +    }
-> +
-> +    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
-> +    if (level == topo_level) {
-> +        *level_found = 3;
-> +        return true;
-> +    }
-> +
-> +    return false;
+> +    define_arm_cp_regs(cpu, ttbr64_reginfo);
 > +}
 
-hmm it's a bit unfortunate that the cache level structure we use in QEMU
-(actually it's a simple enum) doesn't allow us to obtain promptly the cache
-level itself. Maybe, although just a slight enhancement, would be better to
-iterate over the cache levels defined in QEMU and just set the cache level
-for the separate cache levels, like:
-
-enum CacheLevelAndType cache_level;
-enum CpuTopologyLevel t;
-
-for (cache_level = CACHE_LEVEL_AND_TYPE_L1D;
-      cache_level < CACHE_LEVEL_AND_TYPE__MAX;
-      cache_level++) {
-     t = machine_get_cache_topo_level(ms, cache_level);
-     if (t == topo_level) {
-         /* Assume L1 is split into L1d and L1i caches. */
-         if (cache_level == CACHE_LEVEL_AND_TYPE_L1D ||
-             cache_level == CACHE_LEVEL_AND_TYPE_L1I) {
-             *lowest_cache_level = 1; /* L1 */
-         } else {
-             /* Assume the other caches are unified. */
-             *lowest_cache_level = cache_level;
-         }
-
-         return true;
-     }
-}
-
-return false;
-
-That won't avoid adding the separate caches in this function if new ones
-are added to QEMU but will avoid adding the unified ones. Wdyt?
-
-
-> +/*
-> + * Check if there are caches defined at a particular level. It supports only
-> + * L1, L2 and L3 caches, but this can be extended to more levels as needed.
-> + *
-> + * Return True on success, False otherwise.
-> + */
-> +bool machine_defines_cache_at_topo_level(const MachineState *ms,
-> +                                       CpuTopologyLevel level)
-
-How about using "topology" for CpuTopologyLevel var. instead of "level". We use
-level in "cache level" and in "topology level" currently, so I think it's better
-being more specific here.
-
-
-> +{
-> +    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3) == level ||
-> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2) == level ||
-> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I) == level ||
-> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D) == level) {
-> +        return true;
-> +    }
-> +    return false;
-> +}
-
-How about checking for all the levels defined in QEMU now and in future? That looks
-possible, like:
-
-enum CacheLevelAndType cache_level;
-
-for (cache_level = CACHE_LEVEL_AND_TYPE_L1D;
-      cache_level < CACHE_LEVEL_AND_TYPE__MAX;
-      cache_level++) {
-     if (machine_get_cache_topo_level(ms, cache_level) == topology) {
-         return true;
-     }
-}
-
-return false;
-
-?
-
-
-Cheers,
-Gustavo
-
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index f94713e6e2..3c1a999791 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -55,6 +55,11 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
->                                     CpuTopologyLevel level);
->   bool machine_check_smp_cache(const MachineState *ms, Error **errp);
->   void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
-> +bool machine_defines_cache_at_topo_level(const MachineState *ms,
-> +                                       CpuTopologyLevel level);
-> +bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
-> +                                                   int *level_found,
-> +                                                   CpuTopologyLevel topo_level);
->   
->   /**
->    * machine_class_allow_dynamic_sysbus_dev: Add type to list of valid devices
-
+thanks
+-- PMM
 
