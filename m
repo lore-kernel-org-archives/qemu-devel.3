@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346EACCD195
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Oct 2025 23:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211A5CCD184
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 00:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAcne-0005B1-M6; Sun, 19 Oct 2025 19:26:54 -0400
+	id 1vAdg1-0004wv-Gp; Sun, 19 Oct 2025 20:23:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vAcnc-0005Ag-Lh; Sun, 19 Oct 2025 19:26:52 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vAdfz-0004wn-Ih
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 20:23:03 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vAcna-0000bz-5W; Sun, 19 Oct 2025 19:26:52 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 608A359703F;
- Mon, 20 Oct 2025 01:26:44 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 36DITYluydic; Mon, 20 Oct 2025 01:26:42 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 043FB5972E1; Mon, 20 Oct 2025 01:26:42 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 01EFE5972F4;
- Mon, 20 Oct 2025 01:26:41 +0200 (CEST)
-Date: Mon, 20 Oct 2025 01:26:41 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
-In-Reply-To: <b83b904c-6dcc-4b4f-afc0-499ffafca15c@ilande.co.uk>
-Message-ID: <818e8c63-9ef1-c2f5-6a85-7ef37a80d44b@eik.bme.hu>
-References: <cover.1758219840.git.balaton@eik.bme.hu>
- <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
- <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
- <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
- <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
- <b83b904c-6dcc-4b4f-afc0-499ffafca15c@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vAdfw-0008Lx-Ny
+ for qemu-devel@nongnu.org; Sun, 19 Oct 2025 20:23:03 -0400
+Received: from [172.130.10.190] ([115.90.12.10]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59K0MP9p030037
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 20 Oct 2025 09:22:53 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=3zkTLDd1D34rXR4r8ns0CHeyU0fL8yF7KtP3Llx5CmQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1760919774; v=1;
+ b=n1N4vZebfL/B6IwvDH3OonUtnbnGEsTtMBtgkVDOsDefjfOjQpCBBeoTRxw6EVZX
+ XjoD+dcvkk8epAomzrayaSha5oCJBIDJcgHu/jvMqEANUtLbWEalz6GnI3hz8cgM
+ /k4U8/gtjrDVxEgkO224QU+hcvg26ukeNjvKpQgmOHau9ZynCr4uM/zYTf04u6Ys
+ M/SFMbp2DArEjP/wDsdtygQtLQ2MDIy4RtyxMnPFy9lR9xT3POXwPie6aTQcAPHF
+ LrZWhybD/SP9p/5PK+1E5LFMz51S1P4MLye1O4/lI4GPtdggz0mcpXbl7PWaKb8U
+ Gud5zK7MW9Aw46VRTboKww==
+Message-ID: <aafbce70-45a1-45cd-9006-df0871fdb3d9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 20 Oct 2025 09:22:24 +0900
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-837372825-1760916402=:79527"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Fix a uninitialized variable warning
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+References: <20251019-vlen-v1-1-f7352a402f06@rsg.ci.i.u-tokyo.ac.jp>
+ <b3cbe49d-e863-456d-a254-b7514e3bb33a@ventanamicro.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <b3cbe49d-e863-456d-a254-b7514e3bb33a@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,141 +76,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2025/10/19 19:01, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 10/19/25 5:19 AM, Akihiko Odaki wrote:
+>> riscv_cpu_validate_v() left its variable, min_vlen, uninitialized if
+>> no vector extension is available, causing a compiler warning. Avoid
+>> the warning by calling g_assert_not_reached() in the case.
+> 
+> For the compiler point of view the variable will be left uninitialized.
+> In reality we'll always set it to at least '32' in validate_v(). This
+> is how the function is being called:
+> 
+>      if (cpu->cfg.ext_zve32x) {
+>          riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+>          if (local_err != NULL) {
+>              error_propagate(errp, local_err);
+>              return;
+>          }
+>      }
+> 
+> This means that inside the function we guarantee that min_vlen will be
+> at least set to 32 because cfg->ext_zve32x will always be true:
+> 
+>      if (riscv_has_ext(env, RVV)) {
+>          min_vlen = 128;
+>      } else if (cfg->ext_zve64x) {
+>          min_vlen = 64;
+>      } else if (cfg->ext_zve32x) {
+>          min_vlen = 32;
+>      }
+> 
+> 
+> To make the compiler happy and the code a bit clearer I suggest 
+> initializing
+> min_vlen = 32 and folding the "if (cpu->cfg.ext_zve32x)" check inside
+> validate_v() for an early exit. Something like this:
+> 
+> 
+> @@ -417,15 +417,19 @@ static void 
+> riscv_cpu_validate_misa_priv(CPURISCVState *env, Error **errp)
+>   static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
+>                                    Error **errp)
+>   {
+> -    uint32_t min_vlen;
+> -    uint32_t vlen = cfg->vlenb << 3;
+> +    uint32_t min_vlen, vlen;
+> +
+> +    if (cfg->ext_zve32x) {
+> +        return;
+> +    }
+> +
+> +    min_vlen = 32;
+> +    vlen = cfg->vlenb << 3;
+> 
+>       if (riscv_has_ext(env, RVV)) {
+>           min_vlen = 128;
+>       } else if (cfg->ext_zve64x) {
+>           min_vlen = 64;
+> -    } else if (cfg->ext_zve32x) {
+> -        min_vlen = 32;
+>       }
 
---3866299591-837372825-1760916402=:79527
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+What about:
 
-On Sun, 19 Oct 2025, Mark Cave-Ayland wrote:
-> On 18/10/2025 03:41, Harsh Prateek Bora wrote:
->> Hi Mark,
->> 
->> Thanks much for pitching in to help with reviewing this series.
->
-> Hi Harsh,
->
-> No worries - I've looked at raven before when working on adding 40p support 
-> for OpenBIOS, so I do have some familiarity.
->
->> On 9/19/25 01:51, BALATON Zoltan wrote:
->>> On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
->>>> On 18/09/2025 19:50, BALATON Zoltan wrote:
->>>>> The raven PCI device does not need a state struct as it has no data to
->>>>> store there any more, so we can remove that to simplify code.
->>>>> 
->>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>>> ---
->>>>>   hw/pci-host/raven.c | 30 +-----------------------------
->>>>>   1 file changed, 1 insertion(+), 29 deletions(-)
->>>>> 
->>>>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
->>>>> index f8c0be5d21..172f01694c 100644
->>>>> --- a/hw/pci-host/raven.c
->>>>> +++ b/hw/pci-host/raven.c
->>>>> @@ -31,7 +31,6 @@
->>>>>   #include "hw/pci/pci_bus.h"
->>>>>   #include "hw/pci/pci_host.h"
->>>>>   #include "hw/qdev-properties.h"
->>>>> -#include "migration/vmstate.h"
->>>>>   #include "hw/intc/i8259.h"
->>>>>   #include "hw/irq.h"
->>>>>   #include "hw/or-irq.h"
->>>>> @@ -40,12 +39,6 @@
->>>>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
->>>>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
->>>>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
->>>>> -
->>>>> -struct RavenPCIState {
->>>>> -    PCIDevice dev;
->>>>> -};
->>>>> -
->>>>>   typedef struct PRePPCIState PREPPCIState;
->>>>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
->>>>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
->>>>> @@ -65,7 +58,6 @@ struct PRePPCIState {
->>>>>       MemoryRegion bm_ram_alias;
->>>>>       MemoryRegion bm_pci_memory_alias;
->>>>>       AddressSpace bm_as;
->>>>> -    RavenPCIState pci_dev;
->>>>>         int contiguous_map;
->>>>>   };
->>>>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, 
->>>>> Error **errp)
->>>>>                             "pci-intack", 1);
->>>>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
->>>>> &s->pci_intack);
->>>>>   -    /* TODO Remove once realize propagates to child devices. */
->>>>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
->>>>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
->>>>> TYPE_RAVEN_PCI_DEVICE);
->>>>>   }
->> 
->> <snip>
->> 
->>>>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, 
->>>>> const void *data)
->>>>>   static const TypeInfo raven_info = {
->>>>>       .name = TYPE_RAVEN_PCI_DEVICE,
->>>>>       .parent = TYPE_PCI_DEVICE,
->>>>> -    .instance_size = sizeof(RavenPCIState),
->>>>>       .class_init = raven_class_init,
->>>>>       .interfaces = (const InterfaceInfo[]) {
->>>>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
->>>> 
->>>> I agree with removing RavenPCIState, but pci_create_simple() isn't the 
->>>> right solution here because it both init()s and realize()s the inner 
->>>> object. The right way to do this is for the parent to init() its inner 
->>>> object(s) within its init() function, and similarly for it to realize() 
->>>> its inner object(s) within its realize() function.
->>>> 
->>>> FWIW it looks as if the same mistake is present in several other 
->>>> hw/pci-host devices.
->>> 
->>> So maybe that's not a mistake then. There's no need to init and realize it 
->>> separately as this is an internal object which is enough to be created in 
->>> realize method and init and realize there at one go for which 
->>> pci_create_simple is appropriate. I think this inner object would only 
->>> need to be init separately if it exposed something (like a property) that 
->>> could be inspected or set before realize but that's not the case here so 
->>> it does not have to be created in init only in realize. (A lot of simple 
->>> devices don't even have init method only realize so init is only needed 
->>> for things that have to be set before realize.)
->> 
->> Do we have a consensus here ?
->> 
->> regards,
->> Harsh
-> Given there is still some ongoing discussion regarding object modelling, I 
-> think this will require a separate tidy-up so let's go with the 
-> pci_create_simple() approach for now.
->
-> The changes to the interrupt routing and readability of some of the changes 
-> from a developer's perspective are still of concern to me.
+     if (riscv_has_ext(env, RVV)) {
+         min_vlen = 128;
+     } else if (cfg->ext_zve64x) {
+         min_vlen = 64;
+     } else if (cfg->ext_zve32x) {
+         min_vlen = 32;
+     } else {
+         return;
+     }
 
-I think simpler is more readable so not having an or-irq object where not 
-needed as the PCI code can handle this makes it more readable (also the 
-same as ppc440_pcix which was previously approved by Peter[1] and a patch 
-to add or-irq there was dropped as unneeded[2] so doing the same thing the 
-same way here is also more readable and more consistent). Thus I think the 
-interrupt routing changes should be OK and having an or-irq is an 
-unneeded complication.
+Always initializing min_vlen with 32 looks a bit misleading to me. 
+min_vlen is inherently dependent on the RVV and zve* flags; initializing 
+the value after checking the flags show that more clearly.
 
-What other readablility concerns do you have? Is it about not passing the 
-whole device state struct to callbacks but only what they need from it? 
-I've answered that already and I think that unnecessary casts would not 
-add any readablility. I'd like to hear others' opinion too but it seems 
-not many care so it's only us and we both seem to have strong view on 
-these things so it's hard to come to an agreement.
+And I find separating the cfg->ext_zve64x and cfg->ext_zve32x checks a 
+bit awkward as they are semantically not that different. In terms of 
+semantics, I see the code like as follows:
+
+if (RVV) {
+   initialize the extension parameters for RVV
+} else if (zve64x) {
+   initialize the extension parameters for zve64x
+} else if (zve32x) {
+   initialize the extension parameters for zve32x
+} else {
+   no vector extension is present so skip validation
+}
+
+> 
+>       if (vlen > RV_VLEN_MAX || vlen < min_vlen) {
+> @@ -676,12 +680,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU 
+> *cpu, Error **errp)
+>           return;
+>       }
+> 
+> -    if (cpu->cfg.ext_zve32x) {
+> -        riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+> -        if (local_err != NULL) {
+> -            error_propagate(errp, local_err);
+> -            return;
+> -        }
+> +    riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+> +    if (local_err != NULL) {
+> +        error_propagate(errp, local_err);
+> +        return;
+
+Removing this duplicate cpu->cfg.ext_zve32x looks good.
+
+>       }
+> 
+> 
+> Note: I wonder why we're allowing settings of VLEN and so on when we do
+> not have RVV set. Seems like a bug ...
+
+I think this is because the ordering of property setting is not 
+deterministic. It is possible to set the vlen property before setting 
+the v, zve64x or zve32x properties.
 
 Regards,
-BALATON Zoltan
-
-[1] commit 2a9cf49598c65 and 
-https://lists.nongnu.org/archive/html/qemu-ppc/2021-01/msg00031.html
-
-[2] https://lists.nongnu.org/archive/html/qemu-ppc/2020-12/msg00422.html 
-https://lists.nongnu.org/archive/html/qemu-ppc/2020-12/msg00423.html
---3866299591-837372825-1760916402=:79527--
+Akihiko Odaki
 
