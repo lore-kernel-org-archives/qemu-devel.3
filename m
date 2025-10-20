@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A9BCCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6907ACCD19F
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzEH-0007ou-BW; Mon, 20 Oct 2025 19:23:53 -0400
+	id 1vAzEi-0008A9-Gd; Mon, 20 Oct 2025 19:24:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzEF-0007ol-2B
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:23:51 -0400
-Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
+ id 1vAzEf-000834-Tv
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:24:17 -0400
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzED-0007vC-9l
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:23:50 -0400
-Received: by mail-il1-x12c.google.com with SMTP id
- e9e14a558f8ab-430d78a15b1so18678935ab.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:23:48 -0700 (PDT)
+ id 1vAzEb-0007ww-7Z
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:24:14 -0400
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-93e2c9821fcso429309439f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761002628; x=1761607428; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761002652; x=1761607452; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WJ+dJc5yM/b/W3h+TlZlZ1bgfEF08dwB9tQn1juSLso=;
- b=OxK1n38bzlOZ3kwwx37VZ/ni6atr8+cH4JBW121GCZ8w3MMJzxEzCsEWZkXVXRweSG
- 1bxCxwrDCc/Tp2QZUi5xQ4Yno2ch8/Av+ZduCi9mHTuXamaWtZUglCNSpETD7NtPJX6q
- XcI+HwVwYOQ6gO5JTWMYEXLXPr1qdTQQ1WtXxG7d2VFn8/Xh9y29y71L+LGdq/LuP/Ro
- 9hTgcKYVmj27PR/T7N9L5dD9N3RnfLBJjpdMyBMxrO6edf/0In0heAO7mHOyLriQBxDO
- 40XqHWv6XfWD0ABIyxlgcOt1dLz12TZU9o6HCkZcmrystFGEm5wO/3yEpO7PGC4BSybV
- 1hRg==
+ bh=w22TRU42ecEcxOFEqrS0eubFdFOwhubRTQPU2aD4/dA=;
+ b=eT5ei2DYtxZKk7MMaY1vgmgGxraY2jzNhMgKWD1apivhFTBNX2WPzcUPgsHpo6X8Kg
+ gcG8l6Est5QvLiPENFG9/1oknwlQU7AR4X3z49Mz7gsRg6l0TXl7jkuJ42DaYi9dtXeO
+ ezjDCs5h9sspndz8IxJuLYv2f3h8PIGRWzltjWf0Tw24DfO9+AmgpRHvbk1KvN7OUNqQ
+ ZOYntI0ndB7CF9r1RxqLJhwNvbYeAZwZ7ycIBSPqg+rMxv0mW0chmObhHpiXWzXE3gsT
+ HafnWk8MTbU5wo9rloWdklPyf+dbDN8G5qU8MuOUrUjGBABsyhbKSyOeek6RM+5hwOrI
+ +t5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761002628; x=1761607428;
+ d=1e100.net; s=20230601; t=1761002652; x=1761607452;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WJ+dJc5yM/b/W3h+TlZlZ1bgfEF08dwB9tQn1juSLso=;
- b=d5K2FSsyjt1BnvAlgcEn40NKsWOeJt98Wvp15zc4hS0dwQWkdKWkhj2opryytO+YyL
- VtwoSCGqVLtmYgE6UMsIpSxAcS9tZ4+Ga9k31DHHXRm4yOGkuzd3OMBUZBzYcqr6FVD4
- wa+JRBafOh6zOkYyV8qnf4ZSYUz4QUxJPCFZtRXhPCc3iJ5WVPWCkzThlXago49Ki/DH
- x5MMBC+OgKYvL1Fn06F2a0SssnWRzBh6gVAHQqEmIjBwB5SPo4CSc3LF00M5yZukl/hg
- wlOFaBlhIPcCDSMcE7YwEx0OfkDVu7ABqE2XwIKx9iNvpQee68uMzvFMOqI2aUV4b6VR
- MneQ==
+ bh=w22TRU42ecEcxOFEqrS0eubFdFOwhubRTQPU2aD4/dA=;
+ b=UIz1i0IZbwaMl8z7PFq7P1SImUISfmHHwfzp0KCXZi0KZwCTzIuxzqna64KiPS0baP
+ EGAYXvCzGiMQZKyaEv/lQnfBEwWTmqCO+7m0gnV171EZFbfrje8ClbpBUdSw/LKelKRO
+ zbIs0p3V7wOSYl/zSe3YaLjgRpWrL7BNbCjwqI7Ig51VvMYhsNk1sBhl4+V5Tzwf+VI9
+ q+XFnMKaxm7GnKeyQrEtH6Oyi+RXFoPvJ4vfy6JblDz9Cv7ak5VINsNOc4jbA77ehT8u
+ gbZ+fjUzyn3USdCWkcZMqxOGfnAGxTiiPr0m88t6++xR+19ImIOKWTXhCpsj+1iDIVI+
+ gAdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRjtt074h5LLCZ6VrLWkEXpuNaTC57dMoU+hQrRwThH3o504X29Rgk5m6JrmD+A5ohrCeNnpsHQrbr@nongnu.org
-X-Gm-Message-State: AOJu0YyKqpmiVAg9HdQNdask1HgjZt6N4FsucTMRa2+5v4u9zJurAlkc
- m9Yg2pEW+2m9GPXU5HklEEpTH9v8SmQgiW7VViPUi8BWCbVxRNypR9anj41uN5k5/5pwBWAncHk
- R9t4sq8E6GXF3z6G7oDkLb/UNtogioZw=
-X-Gm-Gg: ASbGncsSz2bk5cuEHa9ElRjz9WZ+u0BpgJgMd4oTJdPt8zA7uWPIAYxmFKMtuGrsAUq
- +fIwGO0vyNEwDcRumMXcNnOjWFpnjbiBR5buHtO6ahlK8RFnf4/zTQyrEDlUTU1rdCidZ7OFkD0
- 1ERLmuZ/o7P3Sl7IDlQ4do822KIMBqLnqAjjSMMTlqVG7leGfyekmsXBlDqUwTOVMJzZEaSCEcn
- M1otMYysejCwO5zoVTqD3O03KmIzfrY9HOBtK4v3POeNG2IL5MQV+yBsrc+gCEUz5nwmgU=
-X-Google-Smtp-Source: AGHT+IFv/k3DyQasGUHGOvNV9eXw9XScd7ywXY17sHBFtiPN4Q6QGq2aexkDCFAkUf35GN8EfmR6pQe3kcRvjp/47N0=
-X-Received: by 2002:a05:6e02:2585:b0:430:ac72:f9f with SMTP id
- e9e14a558f8ab-430c5268eecmr192944775ab.20.1761002628010; Mon, 20 Oct 2025
- 16:23:48 -0700 (PDT)
+ AJvYcCXbqt4FRC8xAziGKuFTOmwvSlSI0kYuLi2q9wDxKmZi3aBpAsYweTtjQQ3dYhP7ZwP1QOaVbK9NhNwO@nongnu.org
+X-Gm-Message-State: AOJu0Yz2C/KQejuYCCrPa6GTrWGFoLW3/3vw27GGl4ls9GrfT0LN1XZq
+ DR8eLkCsDjGNGDnngFr3ZaSHNrEjnGwQeGwNl1XbdjSJxw+p5tsZS70TwpryPDJz0atc40YRIeA
+ kvWIGFIYNFGZuSXrhSD4uAnBIbUrnMmg=
+X-Gm-Gg: ASbGncuE1ZlFy01hIPfpdc12pQ9MAYC39EjJTwUlN7bRlCB+xAHBAoEByQRQdb/P7Mn
+ tSnRROE1i1SibQFSdfxVhza0K0YQb+eTuxvI1sB+BR4quosraCnU8bBYKmvCTuip6NFm02Tlh4+
+ kN9Xw/f3YHjH1m4QBs6dqcDvuwyuMB9iD7Qh4jPoWByjAelOJOgj9EVNtvoBFb9g8yem25UHRcY
+ CaLrY7AD/6Io5Zj/Sd6Ils7W0lD0oOBDuVv3tmuTplh38xvPp8IjR2Ql/Y7
+X-Google-Smtp-Source: AGHT+IHF7n99kBtbVrEHZR8qpz9MzAENtZ3BCIYmGhYVqhSVQFLlgMtNu4je4hnymcfTuxqbuSQEOxEdYotnIFE3kug=
+X-Received: by 2002:a05:6602:6d14:b0:940:d327:8fd6 with SMTP id
+ ca18e2360f4ac-940d3279111mr1224510739f.7.1761002652089; Mon, 20 Oct 2025
+ 16:24:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
- <20251016114104.1384675-8-vsementsov@yandex-team.ru>
-In-Reply-To: <20251016114104.1384675-8-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-9-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-9-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 20 Oct 2025 19:23:36 -0400
-X-Gm-Features: AS18NWB1Nx4VByKpoCqNtV_J7v11BdzsbkhGhGSCmNZsxa6IeekQN1VH_jd1li8
-Message-ID: <CAFubqFsRbdqv62A19GyQKv0WdHJHXnCXK69wn7OFZC21HaBCFA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/25] vhost-user-blk: vhost_user_blk_connect() move
- connected check to caller
+Date: Mon, 20 Oct 2025 19:24:01 -0400
+X-Gm-Features: AS18NWAVokgPPkWcRJ8-Ol8PuWinUuZAqxMLcAuQoMik9cu8Wlk2e7sNIO1Mavo
+Message-ID: <CAFubqFuqgRQCg8TTwnAK7j2PMjgdQjWoEhpYFmD22NS9oeMdHg@mail.gmail.com>
+Subject: Re: [PATCH v2 08/25] vhost-user-blk: vhost_user_blk_connect(): call
+ vhost_dev_connect()
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
  mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
@@ -79,8 +79,8 @@ Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de,
  jasowang@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12c;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,59 +105,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
-On Thu, Oct 16, 2025 at 7:47=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+On Thu, Oct 16, 2025 at 7:46=E2=80=AFAM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> vhost_user_blk_connect() has two callers:
->
-> - vhost_user_blk_realize_connect(), which directly set .connected =3D fal=
-se
-> before call
->
-> - vhost_user_blk_event(), where we want this check
->
-> Move the check to the only caller which needs it, to simplify further
-> refactoring.
+> Call vhost_dev_connect() directly, to simplify further refactoring.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/block/vhost-user-blk.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+>  hw/block/vhost-user-blk.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index a92426f18c..57214a69cd 100644
+> index 57214a69cd..f2ecf81e4d 100644
 > --- a/hw/block/vhost-user-blk.c
 > +++ b/hw/block/vhost-user-blk.c
-> @@ -352,9 +352,7 @@ static int vhost_user_blk_connect(DeviceState *dev, E=
-rror **errp)
+> @@ -363,7 +363,12 @@ static int vhost_user_blk_connect(DeviceState *dev, =
+Error **errp)
 >
->      trace_vhost_user_blk_connect_in(vdev);
->
-> -    if (s->connected) {
-> -        return 0;
-> -    }
-> +    assert(!s->connected);
->
->      s->dev.num_queues =3D s->num_queues;
->      s->dev.nvqs =3D s->num_queues;
-> @@ -411,10 +409,12 @@ static void vhost_user_blk_event(void *opaque, QEMU=
-ChrEvent event)
->
->      switch (event) {
->      case CHR_EVENT_OPENED:
-> -        if (vhost_user_blk_connect(dev, &local_err) < 0) {
-> -            error_report_err(local_err);
-> -            qemu_chr_fe_disconnect(&s->chardev);
-> -            return;
-> +        if (!s->connected) {
-> +            if (vhost_user_blk_connect(dev, &local_err) < 0) {
-> +                error_report_err(local_err);
-> +                qemu_chr_fe_disconnect(&s->chardev);
-> +                return;
-> +            }
->          }
->          break;
->      case CHR_EVENT_CLOSED:
+>      s->vhost_user.supports_config =3D true;
+>      ret =3D vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_U=
+SER, 0,
+> -                         true, errp);
+> +                         false, errp);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    ret =3D vhost_dev_connect(&s->dev, errp);
+>      if (ret < 0) {
+>          return ret;
+>      }
 > --
 > 2.48.1
 >
