@@ -4,57 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BC2CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 20:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D76CCD19F
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 21:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAwtS-0002TS-EN; Mon, 20 Oct 2025 16:54:14 -0400
+	id 1vAxdU-00027W-MK; Mon, 20 Oct 2025 17:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vAwtP-0002TB-9h; Mon, 20 Oct 2025 16:54:11 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vAxdR-00025b-2d
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 17:41:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vAwtM-0006c2-02; Mon, 20 Oct 2025 16:54:11 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 477E25972FF;
- Mon, 20 Oct 2025 22:54:05 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 08hfsvKZhonn; Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2AE1F5972DE; Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 286B759703F;
- Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
-Date: Mon, 20 Oct 2025 22:54:03 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v4 01/16] hw/pci-host/raven: Simplify PCI facing part
-In-Reply-To: <56bb063e-696c-49fb-943a-7ef9f28c4826@linaro.org>
-Message-ID: <45817152-d402-cf83-cbd4-22d7d2c6d60d@eik.bme.hu>
-References: <cover.1760795082.git.balaton@eik.bme.hu>
- <9f0e1a8860f6a8f00c15e212ba5c46ae6a7fe39a.1760795082.git.balaton@eik.bme.hu>
- <56bb063e-696c-49fb-943a-7ef9f28c4826@linaro.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vAxdJ-0003GQ-MB
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 17:41:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760996495;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PxHC3QnWvbwXPfESkmPkMTwiHEY2wH1rzZ6PTLjmNfc=;
+ b=RBoGKf80T+vO4o9CiTW6+IJ18ummPxQIBrlz2eI3armJWjJmhfDb9p9wwhZqJQWi3M68UP
+ K3oaUZQA00C3UxBDfFseMh2Zz1luhitle50CjJWjLyrMoxjCZgxesTnO6X+77mNOeQiu+N
+ 96OjtQiFksZtDpi6eWLmtaeGW3PrO5k=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-58-oWE60cfxPQef-KS4dSiUkw-1; Mon, 20 Oct 2025 17:41:34 -0400
+X-MC-Unique: oWE60cfxPQef-KS4dSiUkw-1
+X-Mimecast-MFC-AGG-ID: oWE60cfxPQef-KS4dSiUkw_1760996493
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-87c247591ddso144851926d6.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 14:41:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760996493; x=1761601293;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PxHC3QnWvbwXPfESkmPkMTwiHEY2wH1rzZ6PTLjmNfc=;
+ b=R9lkHHZNPxr30vHXAKn8iXz7PDSVSkf+OaFwoes5/1n7bbhnfE2qjxiOIvIVyBqCEb
+ uRLvi8kKpD0NErwka7gpHiCuuyzp8QkgDhIU2pl7/U+gqAwetDvq2TyH8OsQgyjBsGaO
+ T6OTBXPQI9BzmY9qo0AoUTM3KfWE+NcFiR4wuBIblrdOOjz4gewP9NB/GOA/1TNKq7Lg
+ 59m+pNdP9FKZml0GSzU2tCWNu/yWGUSGAtqytYslvbDnO51EaQChMyOWksDhX3vNSs9F
+ RKPrX3e1jDYYbwdWp2f/l9ChbQj381aWR+eZjX3tsLHWqxas+8htygBzt6tNkEHoqKIb
+ WSrQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWH61+SQdzVp/Rlk1vrYa/t8uZM/PgXZ3FRRMigoLC5JUAjZ56eA230a9ES0486wbPzJLc3sn8cDwtX@nongnu.org
+X-Gm-Message-State: AOJu0Ywqa5LNgcWYZLb6cdbdnI2P32CgeF+Nj1ySewW6HRS4Sygn8xID
+ ZYVCQwncSHziEAQ33o7SMlQQ7GZ1/UiNrQ8uazwYlEjvJIf7QpQdWGudbSeLtjqo+dSaELiR085
+ eonL7FRiMlszxVNVGTdKiD1a3SczuSEDaO3yC7/ImiFsJREv0mqyzTCmZ
+X-Gm-Gg: ASbGncvcrJey7FdlRBwqCMOxKL461AUboHkl4Kjtp9CLDfW/AilJuabJYhsbKNQELMr
+ 6fqj24ONrqwJCB+LgY3+lho667acPLH+yQpCILJUdpt9Dn6c3YPelJR7JkLABZmNwZ0OBt0qpDR
+ ID9zvDHXSAVZYJ+gNxaN3HSX0drbZ7WmExCZZlQutS7x6bbhBcbZIefJcN0i2YuyR0SLzRsXdKt
+ EY91jZ5CHseW1aU357UNYNa0qIg7WG6qecQQfb6qOCCKS44Ko0CnhcxvDLpMNQ3wL23Ug8aQb3j
+ ikLMffhKAgg7bEVn30EWUmhu7Yg4lx8TBha1HDFcFpwBybi2bd+URXvG8x5YuURMdLQ=
+X-Received: by 2002:a05:6214:5196:b0:87c:1fd9:da4a with SMTP id
+ 6a1803df08f44-87c2055e680mr243961116d6.2.1760996493335; 
+ Mon, 20 Oct 2025 14:41:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4RUmA/saiJc7LdhVEqVsDXIYYRpBEWiWdtdQmTw1Fwg4mMdBgbi/lxr10KSHrCV+MEqGNQw==
+X-Received: by 2002:a05:6214:5196:b0:87c:1fd9:da4a with SMTP id
+ 6a1803df08f44-87c2055e680mr243960656d6.2.1760996492755; 
+ Mon, 20 Oct 2025 14:41:32 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87d02895c5bsm57943296d6.30.2025.10.20.14.41.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Oct 2025 14:41:32 -0700 (PDT)
+Date: Mon, 20 Oct 2025 17:41:30 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Cc: Hailiang Zhang <zhanghailiang@xfusion.com>, qemu-devel@nongnu.org,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Yury Kotov <yury-kotov@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Prasad Pandit <ppandit@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH RFC 0/9] migration: Threadify loadvm process
+Message-ID: <aPasigsOmIKvoqqm@x1.local>
+References: <20250827205949.364606-1-peterx@redhat.com>
+ <CAK3tnvKa=C-9qkOuyB+sZB8+o6YU0V+qaYheK-h9KBEumpyfBw@mail.gmail.com>
+ <aObW9WrmWzTWs4N0@x1.local>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1403972558-1760993643=:81454"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aObW9WrmWzTWs4N0@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,128 +115,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Oct 08, 2025 at 05:26:13PM -0400, Peter Xu wrote:
+> On Thu, Sep 04, 2025 at 04:27:39PM +0800, Zhang Chen wrote:
+> > > I confess I didn't test anything on COLO but only from code observations
+> > > and analysis.  COLO maintainers: could you add some unit tests to QEMU's
+> > > qtests?
+> > 
+> > For the COLO part, I think remove the coroutines related code is OK for me.
+> > Because the original coroutine still need to call the
+> > "colo_process_incoming_thread".
+> 
+> Chen, thanks for the comment.  It's still reassuring.
+> 
+> > 
+> > Hi Hailiang, any comments for this part?
+> 
+> Any further comment on this series would always be helpful.
+> 
+> It'll be also great if anyone can come up with a selftest for COLO.  Now
+> any new migration features needs both unit test and doc to get merged.
+> COLO was merged earlier so it doesn't need to, however these will be
+> helpful for sure to make sure COLO won't be easily broken.
 
---3866299591-1403972558-1760993643=:81454
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Chen/Hailiang:
 
-On Mon, 20 Oct 2025, Philippe Mathieu-Daudé wrote:
-> On 18/10/25 16:04, BALATON Zoltan wrote:
->> The raven PCI device does not need a state struct as it has no data to
->> store there any more, so we can remove that to simplify code.
->> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/pci-host/raven.c | 30 +-----------------------------
->>   1 file changed, 1 insertion(+), 29 deletions(-)
->> 
->> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
->> index f8c0be5d21..172f01694c 100644
->> --- a/hw/pci-host/raven.c
->> +++ b/hw/pci-host/raven.c
->> @@ -31,7 +31,6 @@
->>   #include "hw/pci/pci_bus.h"
->>   #include "hw/pci/pci_host.h"
->>   #include "hw/qdev-properties.h"
->> -#include "migration/vmstate.h"
->>   #include "hw/intc/i8259.h"
->>   #include "hw/irq.h"
->>   #include "hw/or-irq.h"
->> @@ -40,12 +39,6 @@
->>   #define TYPE_RAVEN_PCI_DEVICE "raven"
->>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
->>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
->> -
->> -struct RavenPCIState {
->> -    PCIDevice dev;
->> -};
->> -
->>   typedef struct PRePPCIState PREPPCIState;
->>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
->>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
->> @@ -65,7 +58,6 @@ struct PRePPCIState {
->>       MemoryRegion bm_ram_alias;
->>       MemoryRegion bm_pci_memory_alias;
->>       AddressSpace bm_as;
->> -    RavenPCIState pci_dev;
->>         int contiguous_map;
->>   };
->> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, 
->> Error **errp)
->>                             "pci-intack", 1);
->>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
->> &s->pci_intack);
->>   -    /* TODO Remove once realize propagates to child devices. */
->> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
->> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
->> TYPE_RAVEN_PCI_DEVICE);
->>   }
->>     static void raven_pcihost_initfn(Object *obj)
->> @@ -277,7 +268,6 @@ static void raven_pcihost_initfn(Object *obj)
->>       PCIHostState *h = PCI_HOST_BRIDGE(obj);
->>       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
->>       MemoryRegion *address_space_mem = get_system_memory();
->> -    DeviceState *pci_dev;
->>         memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
->>       memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, 
->> s,
->> @@ -314,12 +304,6 @@ static void raven_pcihost_initfn(Object *obj)
->>       pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
->>         h->bus = &s->pci_bus;
->> -
->> -    object_initialize(&s->pci_dev, sizeof(s->pci_dev), 
->> TYPE_RAVEN_PCI_DEVICE);
->> -    pci_dev = DEVICE(&s->pci_dev);
->> -    object_property_set_int(OBJECT(&s->pci_dev), "addr", PCI_DEVFN(0, 0),
->> -                            NULL);
->> -    qdev_prop_set_bit(pci_dev, "multifunction", false);
->>   }
->>     static void raven_realize(PCIDevice *d, Error **errp)
->> @@ -329,16 +313,6 @@ static void raven_realize(PCIDevice *d, Error **errp)
->>       d->config[PCI_CAPABILITY_LIST] = 0x00;
->>   }
->>   -static const VMStateDescription vmstate_raven = {
->> -    .name = "raven",
->> -    .version_id = 0,
->> -    .minimum_version_id = 0,
->> -    .fields = (const VMStateField[]) {
->> -        VMSTATE_PCI_DEVICE(dev, RavenPCIState),
->> -        VMSTATE_END_OF_LIST()
->> -    },
->> -};
->> -
->>   static void raven_class_init(ObjectClass *klass, const void *data)
->>   {
->>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
->> @@ -350,7 +324,6 @@ static void raven_class_init(ObjectClass *klass, const 
->> void *data)
->>       k->revision = 0x00;
->>       k->class_id = PCI_CLASS_BRIDGE_HOST;
->>       dc->desc = "PReP Host Bridge - Motorola Raven";
->> -    dc->vmsd = &vmstate_raven;
->>       /*
->>        * Reason: PCI-facing part of the host bridge, not usable without
->>        * the host-facing part, which can't be device_add'ed, yet.
->> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, const 
->> void *data)
->>   static const TypeInfo raven_info = {
->>       .name = TYPE_RAVEN_PCI_DEVICE,
->>       .parent = TYPE_PCI_DEVICE,
->> -    .instance_size = sizeof(RavenPCIState),
->>       .class_init = raven_class_init,
->>       .interfaces = (const InterfaceInfo[]) {
->>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
->
-> I'd rather this patch split in 2: remove vmstate, mentioning this breaks
-> migration, then use pci_create_simple().
+I may use some help from COLO side.
 
-I can do the other way around: first convert to pci_create_simple which 
-leaves RavenPCIState pci_dev unused that then can be removed in another 
-patch.
+Just now, I did give it a shot with the current docs/COLO-FT.txt and it
+didn't really work for me.
 
-Regards,
-BALATON Zoltan
---3866299591-1403972558-1760993643=:81454--
+The cmdlines I used almost followed the doc, however I changed a few
+things.  For example, on secondary VM I added "file.locking=off" for drive
+"parent0" because otherwise the "nbd-server-add" command will fail taking
+the lock and it won't ever boot.  Meanwhile I switched to socket netdev
+from tap, in my case I only plan to run the COLO main routine, I hope
+that's harmless too but let me know if it is a problem.
+
+So below are the final cmdlines I used..
+
+For primary:
+
+bin=~/git/qemu/bin/qemu-system-x86_64
+$bin -enable-kvm -cpu qemu64,kvmclock=on \
+     -m 512 -smp 1 -qmp stdio \
+     -device piix3-usb-uhci -device usb-tablet -name primary \
+     -netdev socket,id=hn0,listen=127.0.0.1:10000 \
+     -device rtl8139,id=e0,netdev=hn0 \
+     -chardev socket,id=mirror0,host=0.0.0.0,port=9003,server=on,wait=off \
+     -chardev socket,id=compare1,host=0.0.0.0,port=9004,server=on,wait=on \
+     -chardev socket,id=compare0,host=127.0.0.1,port=9001,server=on,wait=off \
+     -chardev socket,id=compare0-0,host=127.0.0.1,port=9001 \
+     -chardev socket,id=compare_out,host=127.0.0.1,port=9005,server=on,wait=off \
+     -chardev socket,id=compare_out0,host=127.0.0.1,port=9005 \
+     -object filter-mirror,id=m0,netdev=hn0,queue=tx,outdev=mirror0 \
+     -object filter-redirector,netdev=hn0,id=redire0,queue=rx,indev=compare_out \
+     -object filter-redirector,netdev=hn0,id=redire1,queue=rx,outdev=compare0 \
+     -object iothread,id=iothread1 \
+     -object colo-compare,id=comp0,primary_in=compare0-0,secondary_in=compare1,outdev=compare_out0,iothread=iothread1 \
+     -drive if=ide,id=colo-disk0,driver=quorum,read-pattern=fifo,vote-threshold=1,children.0.file.filename=./primary.qcow2,children.0.driver=qcow2
+
+For secondary (testing locally, hence using 127.0.0.1 as primary_ip):
+
+bin=~/git/qemu/bin/qemu-system-x86_64 
+primary_ip=127.0.0.1
+$bin -enable-kvm -cpu qemu64,kvmclock=on -m 512 -smp 1 -qmp stdio \
+     -device piix3-usb-uhci -device usb-tablet -name secondary \
+     -netdev socket,id=hn0,connect=127.0.0.1:10000 \
+     -device rtl8139,id=e0,netdev=hn0 \
+     -chardev socket,id=red0,host=$primary_ip,port=9003,reconnect-ms=1000 \
+     -chardev socket,id=red1,host=$primary_ip,port=9004,reconnect-ms=1000 \
+     -object filter-redirector,id=f1,netdev=hn0,queue=tx,indev=red0 \
+     -object filter-redirector,id=f2,netdev=hn0,queue=rx,outdev=red1 \
+     -object filter-rewriter,id=rew0,netdev=hn0,queue=all \
+     -drive if=none,id=parent0,file.filename=primary.qcow2,driver=qcow2,file.locking=off \
+     -drive if=none,id=childs0,driver=replication,mode=secondary,file.driver=qcow2,top-id=colo-disk0,file.file.filename=secondary-active.qcow2,file.backing.driver=qcow2,file.backing.file.filename=secondary-hidden.qcow2,file.backing.backing=parent0 \
+     -drive if=ide,id=colo-disk0,driver=quorum,read-pattern=fifo,vote-threshold=1,children.0=childs0 \
+     -incoming tcp:0.0.0.0:9998
+
+I started secondary, then primary, run the suggested QMP commands on
+secondary first, then the bunch of QMP commands on primary.  I got below
+error:
+
+x1:colo $ ./primary.sh 
+qemu-system-x86_64: -chardev socket,id=compare1,host=0.0.0.0,port=9004,server=on,wait=on: info: QEMU waiting for connection on: disconnected:tcp:0.0.0.0:9004,server=on
+{"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 10}, "package": "v10.1.0-1513-g94586867df"}, "capabilities": ["oob"]}}
+VNC server running on ::1:5900
+{"execute":"qmp_capabilities"}
+{"return": {}}
+{"execute": "human-monitor-command", "arguments": {"command-line": "drive_add -n buddy driver=replication,mode=primary,file.driver=nbd,file.host=127.0.0.2,file.port=9999,file.export=parent0,node-name=replication0"}}
+{"return": ""}
+{"execute": "x-blockdev-change", "arguments":{"parent": "colo-disk0", "node": "replication0" } }
+{"return": {}}
+{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {"capability": "x-colo", "state": true } ] } }
+{"return": {}}
+{"execute": "migrate", "arguments": {"uri": "tcp:127.0.0.2:9998" } }
+{"return": {}}
+{"timestamp": {"seconds": 1760996025, "microseconds": 483349}, "event": "STOP"}
+
+x1:colo $ ./secondary.sh 
+{"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 10}, "package": "v10.1.0-1513-g94586867df"}, "capabilities": ["oob"]}}
+VNC server running on ::1:5901
+{"execute":"qmp_capabilities"}
+{"return": {}}
+{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {"capability": "x-colo", "state": true } ] } }
+{"return": {}}
+{"execute": "nbd-server-start", "arguments": {"addr": {"type": "inet", "data": {"host": "0.0.0.0", "port": "9999"} } } }
+{"return": {}}
+{"execute": "nbd-server-add", "arguments": {"device": "parent0", "writable": true } }
+{"return": {}}
+{"timestamp": {"seconds": 1760996025, "microseconds": 695059}, "event": "RESUME"}
+qemu-system-x86_64: Can't receive COLO message: Input/output error
+{"timestamp": {"seconds": 1760996025, "microseconds": 695369}, "event": "COLO_EXIT", "data": {"mode": "secondary", "reason": "error"}}
+
+Do you know what I missed?  Or does it mean that COLO is broken?
+
+Meanwhile, do you know if COLO still being used by anyone?  I'm pretty sure
+both Fabiano and myself are not looking after it..  I remember Dave used to
+try it, but it might be a long time ago too.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
