@@ -4,92 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E75CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE6ACCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAjyU-0002xZ-GQ; Mon, 20 Oct 2025 03:06:34 -0400
+	id 1vAkKD-0006lS-Jx; Mon, 20 Oct 2025 03:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjyQ-0002vK-EH
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:06:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkK8-0006kg-SN
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:28:57 -0400
+Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjyN-0005Ph-Cg
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:06:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760943986;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ai/yShZHk+riMx1f0kiK5SfADJKfTagkY4WhzydwFgQ=;
- b=UAd+V81IzcLGCw2woRHL/W9OP+d0skREVOQMowxsqJnzZME1vCjyZvgaifB1T5vv5gnUfG
- L1Suh6bZm/tmd0BDqQEmCxA/9UQ247I/Ze3fcsMZFuKjZkrae/FgFqa7yX8GsPK4zvRFi+
- ftV6WGvqYiesT9GvrZc7rNtOgj4QE1c=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-eKosTEdrM2mwX9cBt056vg-1; Mon, 20 Oct 2025 03:06:24 -0400
-X-MC-Unique: eKosTEdrM2mwX9cBt056vg-1
-X-Mimecast-MFC-AGG-ID: eKosTEdrM2mwX9cBt056vg_1760943983
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ecdb10a612so4902562f8f.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 00:06:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760943983; x=1761548783;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ai/yShZHk+riMx1f0kiK5SfADJKfTagkY4WhzydwFgQ=;
- b=Deigj5+5yFALjwIa1Ig5QkHx/IyB9mPMfsOhzxYR9ETRV0zo/PW7D7jdGNkmqf7MpF
- lxHphcAlPTFsmEya299AaYUwqRdveuFE8yGW8jUmsHgTcZVQK0CjQuh9bD6lrzfr8NDJ
- xtplMEydi51OjAF02ZgZ0GxuCyCbGg0uaYVu2CuQA9oNhhc/Vb1EFbN+UB9Ve+U4zK0I
- TOc1o6nz2BK65EYsxrY78Ue47ZBUYPC8PX15scG/daM+P5cQL1KO8Q6hovkOLMw76bH3
- FktCuFtcxOIPzbHoSCBCGj7+AVUKyVSD+Dl1PwF7ng8FX6sgGMj8KZB1NW9mGKujEMS2
- cQtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWdHorFlEGBIeF3LqrkOXDCWzTNbBCq6vD5lDrlZo2W3RSM4lpv1IpbAzJ8fL8/eyz4Bkeg97EixA2p@nongnu.org
-X-Gm-Message-State: AOJu0YzkCIf6+53cP2rYuBWh60Xfx0G6NwYGbsaiv8L15euiiNvzkTIm
- ftf1N9O3WBg7r0eCnMGqsYSrWJKLMEodjcVROJWlvA8zzXArz2C6Mkn3ddt2wkSzBNQLGol5ttA
- ATSoeWHEZIkXgLdDlJ80S4u/sVOJD5JhrLUsud07X7U47oXaGQywbmyzH
-X-Gm-Gg: ASbGncvLTaP+fcVcccJ4onhjKOZNfDP3A9Pgk7VBnqF0MY913fteocI0om/E7Z5i3Fx
- Icd1ZX0cCNWM5bCLk3re3StoQ/0N+Se+iVL4flveojyS6haJhyLSz7+Dw91PllJn39XAY7vGbDa
- hfBTyBPlal7gydHjTtnL4Y4octMyZSjpEh33/F82iDnzQW41C+mKG7mbLxHhFf4JgZqtOANfVRZ
- YXB9nZOwWSZexwyaTQMa5L53u2zC8pWHlh1qadD7vZ2nuB0mcIOeS/pOpq4Q9f4SbT0AnDbgEiU
- Tw5rOs0Q2B18zwsuV5exnwueZmGXMpu+NDdJjfcofU07E7RxiXzDhtQ4po4w09/a44nB4OftPU+
- mxEDxcJrKx+pntddmB3TBHVRoyvHHgtzW25IDPQ==
-X-Received: by 2002:a5d:5f82:0:b0:425:86c8:c4ff with SMTP id
- ffacd0b85a97d-42704d90011mr9083425f8f.22.1760943983479; 
- Mon, 20 Oct 2025 00:06:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVx+rbEQKUHyPWHklCaY9m9OAPQ+RL83zDTlfQQcJlZOPYwhT5E3sgegEEm3VnGB7kvWnQig==
-X-Received: by 2002:a5d:5f82:0:b0:425:86c8:c4ff with SMTP id
- ffacd0b85a97d-42704d90011mr9083404f8f.22.1760943983100; 
- Mon, 20 Oct 2025 00:06:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5a0f88sm13302461f8f.7.2025.10.20.00.06.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 00:06:22 -0700 (PDT)
-Message-ID: <62f6fa9d-bd5f-4f63-ad76-f5856bfd8468@redhat.com>
-Date: Mon, 20 Oct 2025 09:06:21 +0200
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vAkK4-0000WB-L3
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:28:56 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.197])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cqn923T4hz5ygS;
+ Mon, 20 Oct 2025 07:28:38 +0000 (UTC)
+Received: from kaod.org (37.59.142.103) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 20 Oct
+ 2025 09:28:37 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-103G0054fb7cc32-d1d6-4163-b4e1-4d87f315fd4a,
+ FF32B7A34F2DEDF77D336B29AD6F053710A0DB6D) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <c39cc3e2-bbd3-4ac9-a3e3-ac2515fdb141@kaod.org>
+Date: Mon, 20 Oct 2025 09:28:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] intel_iommu: Fix unmap_bitmap failure with legacy
- VFIO backend
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, mst@redhat.com, jasowang@redhat.com,
- yi.l.liu@intel.com, clement.mathieu--drif@eviden.com, eric.auger@redhat.com,
- joao.m.martins@oracle.com, avihaih@nvidia.com, xudong.hao@intel.com,
- giovanni.cabiddu@intel.com, mark.gross@intel.com, arjan.van.de.ven@intel.com
-References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
- <20251017082234.517827-7-zhenzhong.duan@intel.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH v5 0/6] sd: Add RPMB emulation to eMMC model
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
+CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
+ <bmeng.cn@gmail.com>, <qemu-block@nongnu.org>, Ilias Apalodimas
+ <ilias.apalodimas@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>, Alexander Bulekov
+ <alxndr@bu.edu>, Alistair Francis <alistair@alistair23.me>, Joel Stanley
+ <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
+Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
  yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
@@ -99,52 +55,67 @@ Autocrypt: addr=clg@redhat.com; keydata=
  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
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251017082234.517827-7-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ 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
+In-Reply-To: <cover.1760702638.git.jan.kiszka@siemens.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Originating-IP: [37.59.142.103]
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: f4002407-2c46-47c5-868f-29b40cab8406
+X-Ovh-Tracer-Id: 16475574812710570939
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGQlzlVYbhOAII8hMbfQchPNB7XT1OOlqAlnqnllKf90Qyi3BKBP5lqqDCkNK/760wiSC9W2JqVwfCsbExbIQ9pvqErxQ+N+osjyuS2WMb8yTlhQ7v4aKmgQfdCPo9pDpavXqytOQMEt+ioVBOshsbc7W41i2NAsNWeX5F1Kgp6InFOTnr5YXRybVVyaLrr4DBDRkXn1/6Cbhs9ophDKQ9rCt3lVEGpNrsLIILjyHzBTLtNw9IBW7ij2Oi1rawa+peRb24yDu9YL0VegahgGdTYt8VtQPTsK3lj0qcdtBiAf4nQriN9ewj88iH+C3dFkSbYqW3CwK6eV09j6u5PiGJWWrjFi8X49+4uoOXrCTGYrsnnrlxovQjOoNXrghH7a3YQzEhCOWdVZGKwJAmLLbZHjH7UI8nN47USKUtgyUFba/Fgh6+c85MUd1MhGyEEqVvOIYkNgCGa51+3pk/FCYSzoa+DWb7nQ+rep/JSEkl60WzpeYdSNQCzCts+uFUpJ892EnxlvVR2bUHNAy4LC/0s+jwW+pv8qDOfoPXUYcJdEukJVrxvlVDNdEIQbyNlJZKvP0jBnP3AaJAUy1g1d7PTOzFy4umDOwx/GoEz4QyS7iAPgvSjUWnDfxV0QWCezu8VEu5G0z1D3Xws5qD6dcDOK/c6BuDFNKr2+z0bHMTChw
+DKIM-Signature: a=rsa-sha256; bh=KICs8DkhjPiYGTh500ScPV935mZdL7uEaQTIDwe+TL4=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1760945320; v=1;
+ b=Pn9QMaS1/eSdglrvkuErK28mj6U8EtZK4dF4pW03hQfYUfLpLQKi8UQi2fWS/9Pv38e/FfOP
+ kg4Pcj+eHhCT1yQWOrCEzxv4cOpiWCx8Doo1s3581DCVvheK6Y28EPNe87qgG+94qlxKlHiqTPD
+ +ubOIo47vnrlw6aoD+GDGiX9bIhnFIjIODoF3vv1iq0uTS39n9AVemk4hz6mawPJdfnWNO1W73+
+ 8U90d/6lJgO/yCK9K3DDLcNS0TFMYXl5DeWExcuBKSQQrUIa/ppiOuzcdpriCRFupAM524+F071
+ dvSOX/tY6uKgwGhVxYr4KLwj12aHnniImDo+DkS9dSlig==
+Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
+ helo=3.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,38 +131,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clément, Yi Liu,
+On 10/17/25 14:03, Jan Kiszka wrote:
+> Changes in v5 [1]:
+>   - fix regression of patch 1 with unplugged SD cards
+>   - address review comments on documentation
+> 
+> Changes in v4:
+>   - add truncation warning to mkemmc.sh
+>   - fix typos in doc and mkemmc.sh
+> 
+> Changes in v3:
+>   - rebased, dropping merged patches
+>   - rework image alignment rules to match hardware
+>   - improve/fix mkemmc script
+>   - add emmc documentation
+> 
+> Changes in v2:
+>   - handle write counter expiry
+>   - assert() availability of QCRYPTO_HASH_ALGO_SHA256
+>   - add missing SPDX-License-Identifier
+> 
+> This closes an old gap in system integration testing for the very
+> complex ARM firmware stacks by adding fairly advanced Replay Protected
+> Memory Block (RPMB) emulation to the eMMC device model. Key programming
+> and message authentication are working, so is the write counter. Known
+> users are happy with the result. What is missing, but not only for RPMB-
+> related registers, is state persistence across QEMU restarts. This is OK
+> at this stage for most test scenarios, though, and could still be added
+> later on.
+> 
+> What can already be done with it is demonstrated in the WIP branch of
+> isar-cip-core at [2]: TF-A + OP-TEE + StandaloneMM TA + fTPM TA, used by
+> U-Boot and Linux for UEFI variable storage and TPM scenarios. If you
+> want to try: build qemu-arm64 target for trixie with 6.12-cip *head*
+> kernel, enable secure boot and disk encryption, then run
+> 
+> $ QEMU_PATH=/path/to/qemu-build/ ./start-qemu.sh
+> 
+> Deploy snakeoil keys into PK, KEK and db after first boot to enable
+> secure booting:
+> 
+> root@demo:~# cert-to-efi-sig-list PkKek-1-snakeoil.pem PK.esl
+> root@demo:~# sign-efi-sig-list -k PkKek-1-snakeoil.key -c PkKek-1-snakeoil.pem PK PK.esl PK.auth
+> root@demo:~# efi-updatevar -f PK.auth db
+> root@demo:~# efi-updatevar -f PK.auth KEK
+> root@demo:~# efi-updatevar -f PK.auth PK
+> 
+> Note that emulation is a bit slow in general, and specifically the
+> partition encryption on first boot is taking 20 min. - we should
+> probably reduce its size or understand if there is still something to
+> optimize.
+> 
+> Jan
+> 
+> [1] https://github.com/siemens/qemu/commits/queues/emmc/
+> [2] https://gitlab.com/cip-project/cip-core/isar-cip-core/-/commits/wip/qemu-rpmb
+> 
+> CC: Alexander Bulekov <alxndr@bu.edu>
+> CC: Alistair Francis <alistair@alistair23.me>
+> CC: Cédric Le Goater <clg@kaod.org>
+> CC: Joel Stanley <joel@jms.id.au>
+> CC: Warner Losh <imp@bsdimp.com>
+> 
+> Jan Kiszka (6):
+>    hw/sd/sdcard: Fix size check for backing block image
+>    hw/sd/sdcard: Allow user-instantiated eMMC
+>    hw/sd/sdcard: Add basic support for RPMB partition
+>    hw/sd/sdcard: Handle RPMB MAC field
+>    scripts: Add helper script to generate eMMC block device images
+>    docs: Add eMMC device model description
+> 
+>   docs/system/device-emulation.rst |   1 +
+>   docs/system/devices/emmc.rst     |  53 +++++
+>   hw/sd/sd.c                       | 352 ++++++++++++++++++++++++++++---
+>   hw/sd/sdmmc-internal.h           |  21 ++
+>   hw/sd/trace-events               |   2 +
+>   scripts/mkemmc.sh                | 218 +++++++++++++++++++
+>   6 files changed, 618 insertions(+), 29 deletions(-)
+>   create mode 100644 docs/system/devices/emmc.rst
+>   create mode 100755 scripts/mkemmc.sh
+> 
 
-On 10/17/25 10:22, Zhenzhong Duan wrote:
-> If a VFIO device in guest switches from IOMMU domain to block domain,
-> vtd_address_space_unmap() is called to unmap whole address space.
-> 
-> If that happens during migration, migration fails with legacy VFIO
-> backend as below:
-> 
-> Status: failed (vfio_container_dma_unmap(0x561bbbd92d90, 0x100000000000, 0x100000000000) = -7 (Argument list too long))
-> 
-> Because legacy VFIO limits maximum bitmap size to 256MB which maps to 8TB on
-> 4K page system, when 16TB sized UNMAP notification is sent, unmap_bitmap
-> ioctl fails.
-> 
-> Fix it by iterating over DMAMap list to unmap each range with active mapping
-> when migration is active. If migration is not active, unmapping the whole
-> address space in one go is optimal.
-> 
-> There is no such limitation with iommufd backend, but it's still not optimal
-> to allocate large bitmap, e.g., there may be large hole between IOVA ranges,
-> allocating large bitmap and dirty tracking on the hole is time consuming and
-> useless work.
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
-> ---
->   hw/i386/intel_iommu.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 42 insertions(+)
-> 
+I checked the series on the aspeed tree :
 
-Could you ack this change please ?
+Tested-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
