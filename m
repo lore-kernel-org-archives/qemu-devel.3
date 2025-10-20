@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D7A3CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC29CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAnKy-0007Xd-4f; Mon, 20 Oct 2025 06:42:00 -0400
+	id 1vAnL0-0007ZS-3b; Mon, 20 Oct 2025 06:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vAnKw-0007Wy-Io
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:58 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1vAnKv-0007WO-Dz
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:57 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vAnKu-0000gH-0v
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:58 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-63c2d72581fso4681791a12.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:55 -0700 (PDT)
+ id 1vAnKt-0000g1-BF
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:57 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b3b3a6f4dd4so781890666b.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760956914; x=1761561714; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760956913; x=1761561713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KmuoIaZJYNvFdS9rN3/tOhcWyvPFH8X8zZaP+5cgj7Y=;
- b=BSEk8dfFKg1ERZuw4Agz9aa2SgqVmus2zsiEY0mJfyk47PjXOiegAsJfQ7r0si8sH8
- TzCZYoLIyMubadWcXQXBrnWvG6QLBpX/pD4Sl9nHuDKLpY/Kew5OohpQkXG3Eqm9L6Rv
- +hv8hA05AXJL9NrwOYMikCqASPXre/XwEjmNrrqI8rHeR1/8ZobKK5NMp6gVa/bZtLq1
- Y28rsYgK0+VXq0ne2mv6yK15S2vLNH4LkrYY/DrHkbzZgAjkpKY/he02LJTxGApNfJHP
- rawSzaxjOpUCMhNXQDdlofAlZdYWqyJZH/UUHVA2zaRNdn5TKOJgGmaQ3u6rS/M9Z79i
- Z4Jw==
+ bh=pdpnkMbbUpYrtLpkGWrMXiavm+tcMRwuxpmilKnsCCA=;
+ b=Kb98qTObo78LlPgezIQ+zQFQLHFBtFAYShB/+IR4OKK5dV7crAwkVlf7FqNyrDlDTZ
+ i0agl9YSScPSEog1H8SqgSJRTsnR6bVHXM1Cg13h7k504EOUKpJ0Q8JmWvaN/JvRIpq1
+ okuSKTcRMWHCid9x9EGNpaHK2+Kgc59nw1heduZGqsOcs/WsGx3L6gfjADuTxfcMrx9s
+ 8zs8HY/ExstZzUIU28PidqNvNsQiDacnq0N+W/mjoaRTnXXwDrrqg9IKNT1PsgrZXTeT
+ PLElMOeX3TcRrJnVEqMWVdf3ZNEgN948VcOSrwQ9VnhLxUxIB549qlhVVRnIzBVBBGa7
+ rRQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760956914; x=1761561714;
+ d=1e100.net; s=20230601; t=1760956913; x=1761561713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KmuoIaZJYNvFdS9rN3/tOhcWyvPFH8X8zZaP+5cgj7Y=;
- b=jHsgHAunXGeMDDeSGffymHUCUiyaZ+TX6X3oIOOLYg9t/c5crvwPd8vuzwPIKwvGIO
- bR0Yvt0Sg1qrhuZsqpBcO8/D1ShrOCjmenSJRI2BH5/3OoPRoK7WNHnO3yGfBN4uZjiZ
- kmUDBCf/ioDCIFABXVsPQZjWJo/sISmph1wHdXcbjut5j9g0D0RscGnSe5i1GPo4BSUD
- gvh4HoGKJIJmBCmIwLfW2AOQyl5LbgG8C+lKKZDtqCMg61TGWQxRLZdqnJYQzQLw5IZo
- RItCg8l3B7XVT1cDWNRyGdPt+/0h+EliLmtgDuDz0PEaiFNqmbDcmQzROsvBf6p24PJF
- Q/ug==
-X-Gm-Message-State: AOJu0YyVUmdpZ9MlYljWHjmXLKnSJhqWubzCMMthFFdgFFrufO/Y2Hy5
- CplvEIwbJ9DaGpTL0Ucp8xhlT5JZqnBlTci6t2uOBMC80Cmm9XnPsfud1oT5WVukjw4=
-X-Gm-Gg: ASbGncu/OO5S5KGh4BmljpM7/L6CCX7DiaweFFQlmyQTPRu/QL7TPHYIYT//bjt9QuR
- s/3VAaHLMgz7f+uHPB2YfFX7Y9FzCNpzWX7mDpbJ9KNYox+9OmD8KpM4rIn1iJl2UXsyAWXTEKq
- nzinEU66ErKgWTXxv3g3wEH+ZtDJq5yZL/OyxfEgpj38V3ysynCUtEaQIiF4orV1lsQ1QpM1Znw
- V5f54CVq0cDeZf5+nxKadGGTapCq+lz7Ork2gjmv8fkcP67wiS4feE9DdG3z5BCWOccjkU6HIpx
- VzswBzRmv+5hh88PVkQh4FAkjxphLkif2brbV28WqzvkIXjYWGkGGsDWZHkZkgLbOjeH/C63U9k
- LJQ0W1h0pnGEZlv1ugyoA5qfm536pRfaJPNsATAwzELllLhp3XBSITbzzBrrajrLsj4+46AJ8dP
- 1VfjrDr8S9dAk=
-X-Google-Smtp-Source: AGHT+IGEnHTAs6zU3fPWxPyPSJsBGHsRI4QAhZ31vHAAF4emgvdV5hhENK6LCrx0IrP5mUqymE7tcA==
-X-Received: by 2002:a05:6402:524c:b0:633:7017:fcbc with SMTP id
- 4fb4d7f45d1cf-63c1f69cd11mr12764098a12.15.1760956914229; 
- Mon, 20 Oct 2025 03:41:54 -0700 (PDT)
+ bh=pdpnkMbbUpYrtLpkGWrMXiavm+tcMRwuxpmilKnsCCA=;
+ b=QJ1uq+K9vQZtwiG6EjUf2P7/DwPGrjYvVMqJRoUeyFUqO8NnOJF0X292cknyt9BKFq
+ IoEco47TChwFee+Ufku1WW2h9iNwy5QXuMMVofxaBeifHlDtWdODRupqTKuoZxqqKpNQ
+ k0Ob+ATzZRQ6zUNVkW/icWKVxsJTL8fExID1WtWBEfWo1YsMoeVIDuEMrorac9UVyfo+
+ iccRarfSBfJdILrIlnjHfVooJwNhEYfwdaumXdNK1JmXChg1F+2uVOjQKTcT6VPa9O+W
+ xgq4oDPu0HAm7JKgbtZN4+pHdS0D4Cd9eZh/cQYuRA5hl4ydqikP+6Z+izfsNK+8mi9z
+ Qo+g==
+X-Gm-Message-State: AOJu0Yw/1poSozjcZziaDnHnZqTYaT/5NTym9dlf2KfCKLrt4Em+SFpg
+ kamOoD2tFm60HzVc2Zvtx+tHhmcx6hFV0UQQRsPew4/2DFueRcSzp6GC2eTctriNa8ZsvL88H4f
+ IeMP4af0=
+X-Gm-Gg: ASbGncu3FFiO4pUjA+lkVwBnmwW+lhFifsegCvBDwSDr2xvB0JF3StgtzrGukN27xnw
+ pVZQlWRQjKPCizySAP0ajMPV0vDd4OqEM+7jNgfwsKyt5im/hWArWA6zikoxtuX/+AzT4mpIpgt
+ kXJnKP6uEs9zxWQLzK+3ApoeLolaPgCpv5ADVfkQ6gwiU0fFoMkEjgV56WRLusaHra7yukGZXN+
+ Guts4LCKeLLOBNeCmzvOckUDABoVegnzv1J5J2s0IVz3se8gozqFdh0WjGksX0G2ab1lqW0P8/u
+ 7wTGKFQ+wA6iWDZHLjjlQ6yOLp+Qi/9/hhxJWOu8QmZtsnzVYCsUHI5j7f+KRhMdkTSD6Cvk4yZ
+ d1A5Z1H1IhptVy4TeVZnXTzgIs2IXPgeac6DsJbIhesFNcU4YcJLvvMZLS3I19068kqoHySW3PX
+ kzqeYo8LFj+38=
+X-Google-Smtp-Source: AGHT+IGPcKbhjk7sTWmD13E2n3JKvkcNRO1Xsan0ivp9dCNie+2dSpUFEnn2P87sh/KlCc/t5vRfxw==
+X-Received: by 2002:a17:907:7b87:b0:b2d:d7ba:8e7b with SMTP id
+ a640c23a62f3a-b647463a2d7mr1457036366b.23.1760956913116; 
+ Mon, 20 Oct 2025 03:41:53 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63c4949bed7sm6346663a12.35.2025.10.20.03.41.50
+ a640c23a62f3a-b65e83937a3sm757643366b.23.2025.10.20.03.41.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Oct 2025 03:41:51 -0700 (PDT)
+ Mon, 20 Oct 2025 03:41:50 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EEE655F9F7;
+ by draig.lan (Postfix) with ESMTP id D67445F905;
  Mon, 20 Oct 2025 11:41:49 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Andrew Keesler <ankeesler@google.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 04/11] Support per-head resolutions with virtio-gpu
-Date: Mon, 20 Oct 2025 11:41:42 +0100
-Message-ID: <20251020104149.4034124-5-alex.bennee@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 03/11] tests/tcg/multiarch/linux/linux-test: Don't try to test
+ atime update
+Date: Mon, 20 Oct 2025 11:41:41 +0100
+Message-ID: <20251020104149.4034124-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251020104149.4034124-1-alex.bennee@linaro.org>
 References: <20251020104149.4034124-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,105 +108,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Keesler <ankeesler@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-In 454f4b0f, we started down the path of supporting separate
-configurations per display head (e.g., you have 2 heads - one with
-EDID name "AAA" and the other with EDID name "BBB").
+The linux-test test includes an attempt to check the utime and stat
+syscalls by setting the atime and mtime of a file to specific values,
+and then calling stat() to check that the values read back correctly.
 
-In this change, we add resolution to this configuration surface (e.g.,
-you have 2 heads - one with resolution 111x222 and the other with
-resolution 333x444).
+Unfortunately this is flaky, as it will fail if some other process
+(for instance a virus scanner, backup program, etc) gets in and reads
+the file between the utime() and stat() call, resulting in a host
+syscall sequence like this:
 
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA",
-                 "xres":111,
-                 "yres":222
-              },
-              {
-                 "name":"BBB",
-                 "xres":333,
-                 "yres":444
-              }
-            ]}'
+utimensat(AT_FDCWD, "file2",
+  [{tv_sec=1001, tv_nsec=0} /* 1970-01-01T01:16:41+0100 */,
+   {tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */], 0) = 0
+# successfully set atime to 1001 and mtime to 1000
+statx(AT_FDCWD, "file2", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT,
+  STATX_BASIC_STATS,
+  {stx_mask=STATX_BASIC_STATS|STATX_MNT_ID,
+   stx_blksize=4096, stx_attributes=0, stx_nlink=1, stx_uid=32808,
+   stx_gid=32808, stx_mode=S_IFREG|0600, stx_ino=21659016,
+   stx_size=100, stx_blocks=8,
+   stx_attributes_mask=STATX_ATTR_COMPRESSED|STATX_ATTR_IMMUTABLE|
+         STATX_ATTR_APPEND|STATX_ATTR_NODUMP|STATX_ATTR_ENCRYPTED|
+         STATX_ATTR_AUTOMOUNT|STATX_ATTR_MOUNT_ROOT|STATX_ATTR_VERITY|
+         STATX_ATTR_DAX,
+   stx_atime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+   stx_ctime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+   stx_mtime={tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */,
+   stx_rdev_major=0, stx_rdev_minor=0, stx_dev_major=252,
+   stx_dev_minor=0, stx_mnt_id=0x1f}) = 0
+# but when we statx the file, we get back an mtime of 1000
+# but an atime corresponding to when the other process read it
 
-Here is the behavior matrix of the current resolution configuration
-surface (xres/yres) with the new resolution configuration surface
-(outputs[i].xres/yres).
+and which will cause the test program to fail with the error
+message "stat time".
 
-Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with default xres/yres
+In theory we could defend against this by e.g.  operating on files in
+a dummy loopback mount filesystem which we mounted as 'noatime', but
+this isn't worth the hassle.  Just drop the check on atime.
 
-Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with xres/yres
-
-Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-
-Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-
-Signed-off-by: Andrew Keesler <ankeesler@google.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250902141312.750525-2-ankeesler@google.com>
-[AJB: dropped pointless output_idx range check, tweak commit]
-Message-ID: <20251016150357.876415-5-alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251016150357.876415-4-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 05295ab6655..0ce789bb22f 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -971,15 +971,21 @@
- ##
- # @VirtIOGPUOutput:
- #
--# Describes configuration of a VirtIO GPU output.
-+# Describes configuration of a VirtIO GPU output. If both xres and
-+# yres are set, they take precedence over root virtio-gpu
-+# resolution configuration and enable the corresponding output.
- #
- # @name: the name of the output
- #
-+# @xres: horizontal resolution of the output in pixels (since 10.2)
-+#
-+# @yres: vertical resolution of the output in pixels (since 10.2)
-+#
- # Since: 10.1
- ##
- 
- { 'struct': 'VirtIOGPUOutput',
--  'data': { 'name': 'str' } }
-+  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
- 
- ##
- # @DummyVirtioForceArrays:
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 7269477a1c8..14058f6bffb 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -233,6 +233,15 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-     g->req_state[0].width = g->conf.xres;
-     g->req_state[0].height = g->conf.yres;
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         node; output_idx++, node = node->next) {
-+        if (node->value->has_xres && node->value->has_yres) {
-+            g->enabled_output_bitmask |= (1 << output_idx);
-+            g->req_state[output_idx].width = node->value->xres;
-+            g->req_state[output_idx].height = node->value->yres;
-+        }
+diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
+index 64f57cb287e..bf6e0fda262 100644
+--- a/tests/tcg/multiarch/linux/linux-test.c
++++ b/tests/tcg/multiarch/linux/linux-test.c
+@@ -155,9 +155,14 @@ static void test_file(void)
+         error("stat mode");
+     if ((st.st_mode & 0777) != 0600)
+         error("stat mode2");
+-    if (st.st_atime != 1001 ||
+-        st.st_mtime != 1000)
++    /*
++     * Only check mtime, not atime: other processes such as
++     * virus scanners might race with this test program and get
++     * in and update the atime, causing random failures.
++     */
++    if (st.st_mtime != 1000) {
+         error("stat time");
 +    }
-+
-     g->hw_ops = &virtio_gpu_ops;
-     for (i = 0; i < g->conf.max_outputs; i++) {
-         g->scanout[i].con =
+ 
+     chk_error(stat(tmpdir, &st));
+     if (!S_ISDIR(st.st_mode))
 -- 
 2.47.3
 
