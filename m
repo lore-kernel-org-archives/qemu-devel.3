@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E037CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64BD8CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 09:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAm4e-0005Ni-7S; Mon, 20 Oct 2025 05:21:04 -0400
+	id 1vAm5w-0005z6-QW; Mon, 20 Oct 2025 05:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAm4Z-0005NQ-6j
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:21:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAm4V-0006av-KD
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:20:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760952051;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=PmjvDPuE1H6ZPCE6uWR3s5XS9Yeu8TcPutCr0BqztjI=;
- b=gmhXjN1tQ5hWHUVMXFJFvv+embo8LFCrSFUlB3FBHLj6pXH5rknfsru+Aj4z9uibOTT8pg
- QqAsy12TyieB50xZ0aa8HBbF+abDViNnM259oq7jUkMfnm4xZH4VI+V9DJqjXeT/ZCzOeg
- T7Zlhh4ic+Lg1SiPeFOKo3TXHFOZbxY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-R1athjHINOisAUPL8JVCXg-1; Mon,
- 20 Oct 2025 05:20:47 -0400
-X-MC-Unique: R1athjHINOisAUPL8JVCXg-1
-X-Mimecast-MFC-AGG-ID: R1athjHINOisAUPL8JVCXg_1760952046
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E14A18001D1; Mon, 20 Oct 2025 09:20:46 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.161])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 981CA180044F; Mon, 20 Oct 2025 09:20:44 +0000 (UTC)
-Date: Mon, 20 Oct 2025 10:20:41 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yonggang Luo <luoyonggang@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] gitlab-ci: Decrease the size of the compiler cache
-Message-ID: <aPX-6dp65xXGtxja@redhat.com>
-References: <20251020085431.23968-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAm5v-0005yx-SW
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:22:23 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAm5r-0006lz-Ml
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 05:22:23 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4710683a644so36784925e9.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 02:22:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760952138; x=1761556938; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UWRjhxb+gyKvKWcOh9+4cyOuV0mefOIUwVxvlJJDpQY=;
+ b=GCtq93cplsYccWuJCul1rjSs2Am8mttFbU6PH/t44bQANNjflozm6/J89yHo/ji2TJ
+ MJwGcct2OVwNCIjbeIkZTXVwdQMt4CJRPh0o1XZaO72OtFkpDs7U3FiPjAA7iZr9XK9S
+ HOPWpCh3+3j+e1rPHeEbtXVVglPav7SL0lRMcdzY1jBnHVqkn/WhMln78uY1y/3Nsqzo
+ lm55ERYktq/8xgyhl52AlDemEpRG1o7N6lUWqeqsGj7tJtvFAAOPUbUQ1y4ZkLaSbQIt
+ NjA2KBzG2IOlQXPeCBODA+vNl1/+1erqlWKqE3maLjgLbEqIDUnRf4cNlv6YkFc1Vajh
+ N/1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760952138; x=1761556938;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UWRjhxb+gyKvKWcOh9+4cyOuV0mefOIUwVxvlJJDpQY=;
+ b=Zv/3sTdzJ00p9uAe8oxTz57BCcFLSJBXDUCfSh/kQ2DOXqQZx+Xd1Gq0MYBe+5Wpeu
+ 0QecmMNo2yMX9QnYPpZjsN3sNQSDxHojckx3KlWNv8cCuSg4ycwrrz9yoeOGOOusciNo
+ DWi18QlvN/FfOiTGu0F8Iz7G7aArWivZFFIx6RDDLHuoatZajO8yDvXqzhazJWl9aRez
+ tTj6ymZIPdR+RKG8900/pS2NONDrYhrma3e33oyQwLf8vVg6U+NtW7ptiObPLYMBZRSR
+ EXwTtFSto6BEDhWPMBJGHtuU4yTHL5d1V8T0wfr6gYEC1SrwHxh+3SK7SqUEZ8rmyv0q
+ 5b2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXhgVMwlRyMWG14MKOg7lXsBSCil9Ab11kTU7cPxuWpJV/SJ9abB5PKyFSpHRKgXTUdR74A4D9drSg@nongnu.org
+X-Gm-Message-State: AOJu0Yyn9W0yRyCYJwfjBXZnI+WanH4JWSXtOMOczch0vIi8v1QWC4NE
+ tr24rqJBxWx7T5kxrlVzqbrSFxxlLFZjkXclIYNbeTkYMtT+WK8Qe8aXNPOJCBILA23+0YVSsj1
+ OcxM6v+M=
+X-Gm-Gg: ASbGncsV1Dh8Ni56kUNoVDJYteD1hLPWj+fDq5c2FyysLxhVcsJ2CnKhwo7t5Ymj/Sl
+ AaBiRRjZta5yfMvs2OeNM76b0bbmC59NXJ7hXYOUXnMA0V3amTqLPLOjzlw6RKzpwqFcmMvGLYJ
+ iYlEsoOye7IBnMUntoZMlLO8wq7nQfVrfinezIQCG0zZit3w+7nV5KwPtp5bEpmLu5ND/8nqbxH
+ ml8JVnxAhUKrvl5mRsKxxXuMUOTQXm6K8V9YsfCSvNNJH+xtkLEaAEs5Ho1iPgbesaDGfrGrtfp
+ 8MqQ/BD5Zc54sb7IGTP6bbOBYuJLNlEAdwt1MEYTdCmvHVT+CwZgrcTrQwQvwrynx7+fz0tV649
+ KQbN/fiiD1Uki4x+p7lYujrnPuhceoabpLFOsAAwJ/Y0PKh00KLr/S3F1lythjLNGyQ6NkmIC5w
+ UNv5kfiDtpLSET57BGlPO196tojTxSL7gqON1Vg6xeFgu6cqNLz7dFGg==
+X-Google-Smtp-Source: AGHT+IGk9JerB5VH5Bc1+wspOurenN6W4CswekXAcxBNYBPP28lYrksG6ZcsoSNFNlvKDEgFtqW+3A==
+X-Received: by 2002:a05:600d:42ed:b0:471:331:8058 with SMTP id
+ 5b1f17b1804b1-47109927255mr76796565e9.7.1760952137598; 
+ Mon, 20 Oct 2025 02:22:17 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4714fb1b668sm154729265e9.0.2025.10.20.02.22.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 02:22:16 -0700 (PDT)
+Message-ID: <102a9874-27db-4073-b4ff-dddeb450ff5e@linaro.org>
+Date: Mon, 20 Oct 2025 11:22:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251020085431.23968-1-thuth@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i2c/smbus_eeprom: Add minimum write recovery time for DDR2
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Corey Minyard <cminyard@mvista.com>
+References: <20251008122502.9DA8956F301@zero.eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251008122502.9DA8956F301@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,106 +100,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 20, 2025 at 10:54:31AM +0200, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 8/10/25 14:25, BALATON Zoltan wrote:
+> This is needed for newer u-boot-sam460ex versions to pass the DRAM
+> setup.
 > 
-> Uploading the cache from the runner takes a long time in the MSYS2
-> job, mostly due to the size of the compiler cache.
-> However, looking at runs with a non-initialized cache, and by doing
-> a "du -sh ." in the build directory, it seems like a build only
-> takes about 236 MiB of data, so the compiler cache with 500 MiB
-> certainly contains a lot of stale files. Thus decrease the size of
-> the ccache to a more reasonable value to speed up the MSYS2 job in
-> our CI (and add a "du -sh" at the end to have a reference for the
-> required cache size in the future).
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  Looking at the latest runs in the CI, our recent attempt to decrease
->  the cache size by cleaning the pacman cache did not help much:
->  https://gitlab.com/qemu-project/qemu/-/jobs/11747329283
->  ... that run contains the "pacman -Sc" command, but the "Saving cache
->  for successful job" step at the end still takes close to 20 minutes.
->  So we likely have to shrink the compiler cache, too. In this run here:
->  https://gitlab.com/thuth/qemu/-/jobs/11770708859#L1769
->  I added a "du -sh" and you can see that the build directory only
->  takes 236 MB there. So a ccache with the size of 250M should be
->  sufficient for the MSYS2 job.
-
-FWIW, in my fork I see
-
-Cacheable calls:   638 / 647 (98.61%)
-  Hits:            629 / 638 (98.59%)
-    Direct:        629 / 629 (100.0%)
-    Preprocessed:    0 / 629 ( 0.00%)
-  Misses:            9 / 638 ( 1.41%)
-Uncacheable calls:   9 / 647 ( 1.39%)
-Local storage:
-  Cache size (GB): 0.1 / 0.5 (29.54%)
-  Hits:            629 / 638 (98.59%)
-  Misses:            9 / 638 ( 1.41%)
-
-IOW, even ~160 MB is sufficient for 99% cache hit, so 250 MB is
-about 2/3rds spare headroom.
-
-If I look at the saving cache part in my fork job I see:
-
-  msys64/var/cache: found 284 matching artifact files and directories 
-  ccache: found 12825 matching artifact files and directories 
-
-while in QEMU job I see
-
-  msys64/var/cache: found 342 matching artifact files and directories 
-  ccache: found 46881 matching artifact files and directories 
-
-so the ccache usage is almost x4 bigger in terms of # of files, so
-that does likely account for a good portion of the time.
-
-I'm surprised the msys64/var/cache is still bigger than my fork though,
-as I would have expected them to be basically the same.
-
-I wonder if we shouldn't recursively list the msys64 cache as a debug
-aid ?
-
->  .gitlab-ci.d/windows.yml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>   hw/i2c/smbus_eeprom.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-> index 6e1135d8b86..e2fef543899 100644
-> --- a/.gitlab-ci.d/windows.yml
-> +++ b/.gitlab-ci.d/windows.yml
-> @@ -94,7 +94,7 @@ msys2-64bit:
->    - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
->    - $env:CCACHE_BASEDIR = "$env:CI_PROJECT_DIR"
->    - $env:CCACHE_DIR = "$env:CCACHE_BASEDIR/ccache"
-> -  - $env:CCACHE_MAXSIZE = "500M"
-> +  - $env:CCACHE_MAXSIZE = "250M"
->    - $env:CCACHE_DEPEND = 1 # cache misses are too expensive with preprocessor mode
->    - $env:CC = "ccache gcc"
->    - mkdir build
-> @@ -103,5 +103,6 @@ msys2-64bit:
->    - ..\msys64\usr\bin\bash -lc "../configure $CONFIGURE_ARGS"
->    - ..\msys64\usr\bin\bash -lc "make -j$env:JOBS"
->    - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
-> +  - ..\msys64\usr\bin\bash -lc "du -sh ."
+> diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
+> index 0a1088fbb0..26e211b31a 100644
+> --- a/hw/i2c/smbus_eeprom.c
+> +++ b/hw/i2c/smbus_eeprom.c
+> @@ -288,6 +288,7 @@ uint8_t *spd_data_generate(enum sdram_type type, ram_addr_t ram_size)
+>       spd[33] = 8;    /* addr/cmd hold time */
+>       spd[34] = 20;   /* data input setup time */
+>       spd[35] = 8;    /* data input hold time */
+> +    spd[36] = (type == DDR2 ? 13 << 2 : 0); /* min. write recovery time */
 
-Do we want to keep this in the final commit ?
+We are adapting DDR2 values on a method written for SDR/DDR[1].
+Better would be to split and correctly document each format,
+using proper values.
 
-We have ccache size printed, and we could do with msys64/var/cache
-size being printed at least.
-
->    - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
->    - Write-Output "Finished build at $(Get-Date -Format u)"
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Anyhow, for this patch:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
