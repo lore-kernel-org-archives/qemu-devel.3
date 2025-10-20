@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF25CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E75CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAjtq-0000Gc-LH; Mon, 20 Oct 2025 03:01:46 -0400
+	id 1vAjyU-0002xZ-GQ; Mon, 20 Oct 2025 03:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjtp-0000DX-AH
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:01:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjyQ-0002vK-EH
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:06:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjtn-0004bh-5r
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:01:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjyN-0005Ph-Cg
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:06:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760943701;
+ s=mimecast20190719; t=1760943986;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=O4csDwzdMwQjW6uP3/tlSZE/YYA/ukAkP3Ck8FP+lCo=;
- b=ZG9eMT1rmi7LorX44OzcUUgpFKIB8QJKybN8crlvOrL2dMkyEV6qD5TDNoZfhOP3mQj9wJ
- IP5hGbdpxx3tfNOrDlGuU25CfEQl1+VIA3dGM8gJIjRxpmmrC5fhWPCe6jb7ekrW7sD11h
- vyKWll50EK6vqgVi/xUiBvTGcleaEKE=
+ bh=ai/yShZHk+riMx1f0kiK5SfADJKfTagkY4WhzydwFgQ=;
+ b=UAd+V81IzcLGCw2woRHL/W9OP+d0skREVOQMowxsqJnzZME1vCjyZvgaifB1T5vv5gnUfG
+ L1Suh6bZm/tmd0BDqQEmCxA/9UQ247I/Ze3fcsMZFuKjZkrae/FgFqa7yX8GsPK4zvRFi+
+ ftV6WGvqYiesT9GvrZc7rNtOgj4QE1c=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-FgJNX3HYM0eko3_DIjjTgg-1; Mon, 20 Oct 2025 03:01:40 -0400
-X-MC-Unique: FgJNX3HYM0eko3_DIjjTgg-1
-X-Mimecast-MFC-AGG-ID: FgJNX3HYM0eko3_DIjjTgg_1760943699
+ us-mta-592-eKosTEdrM2mwX9cBt056vg-1; Mon, 20 Oct 2025 03:06:24 -0400
+X-MC-Unique: eKosTEdrM2mwX9cBt056vg-1
+X-Mimecast-MFC-AGG-ID: eKosTEdrM2mwX9cBt056vg_1760943983
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4278c82dce6so1259547f8f.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 00:01:39 -0700 (PDT)
+ ffacd0b85a97d-3ecdb10a612so4902562f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 00:06:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760943699; x=1761548499;
+ d=1e100.net; s=20230601; t=1760943983; x=1761548783;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=O4csDwzdMwQjW6uP3/tlSZE/YYA/ukAkP3Ck8FP+lCo=;
- b=B7pYL4EaeycV/4ply042FfAYlkl+bem8rpfwkUzTnGHHuLDw1+uoJ+q7IrQZ2ug7SI
- dSM1Adj66ZNsx8Fn4gl2p0bYU+LO0ICdN+8erHSpeZKAcJ42nbyZfqTLW5bOSweycWRj
- PHDsb6JDP9zuYAV49ChmTLR1NymhDqxa4B5j8H9nLmkDeIV+hWNRvGWN2dpd4sS63hec
- 3tpdHl3s5Lz8vDuVSNcEDdl6eJ1iADDJXZYGRUXm1Lvfp0aNfwhhi9J9XfzUD7lqFjTu
- TjFqZqjHxMhBx6dg+zdQQmur+TPmFo9ncLVNSx5xOzE5KOuWzv9+SFoiakXQTdQ1tGXS
- 389Q==
+ bh=ai/yShZHk+riMx1f0kiK5SfADJKfTagkY4WhzydwFgQ=;
+ b=Deigj5+5yFALjwIa1Ig5QkHx/IyB9mPMfsOhzxYR9ETRV0zo/PW7D7jdGNkmqf7MpF
+ lxHphcAlPTFsmEya299AaYUwqRdveuFE8yGW8jUmsHgTcZVQK0CjQuh9bD6lrzfr8NDJ
+ xtplMEydi51OjAF02ZgZ0GxuCyCbGg0uaYVu2CuQA9oNhhc/Vb1EFbN+UB9Ve+U4zK0I
+ TOc1o6nz2BK65EYsxrY78Ue47ZBUYPC8PX15scG/daM+P5cQL1KO8Q6hovkOLMw76bH3
+ FktCuFtcxOIPzbHoSCBCGj7+AVUKyVSD+Dl1PwF7ng8FX6sgGMj8KZB1NW9mGKujEMS2
+ cQtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJK4/3z1YPCOyJeeiYCOMtKNLmEcHonLT32PhyE+jMX7+6gBJ4B6UmJtZo63qYkkzkCjXL+Ngv6APh@nongnu.org
-X-Gm-Message-State: AOJu0YyNDX2JPY/F4WOEJ9AVy9WGKLilzFKO5F+u1n4Am2fjXMta83V5
- 8Ibf4aA/+E8CNW0Wr73es0wB1pcPKZL4RphiQmXS5G7h35kUHZbvHTmkycPiks3D0bd/7Ksbbb9
- HHR4FA3lJvLwS/IWGLX5+nxHwjvPiOTMXiYHa3/uFZlJhmb0hhTAFNa3N
-X-Gm-Gg: ASbGncu2nuWpukhBOUJ8T4TLYjY4FyD4xCKw7/436maZynKZWvPXaFYDGMMMJoMjtQY
- tl1iuvJXy6nqgZq+nfhdNjVI1wFzMY1E1OhVOyfR0uiUzw1PxmXotzJnBX/OTLkcEygeB2ofAsm
- GKDE9qWGLZZ917NlA89HWTKuGuwfeSmQC3uQiQN889SlCkwhLztzNK2SN0gku6eeyTlfivE88NL
- BLKT8vKmEx3sbYCqJnVhfaWX+QV4Wx+suyKmJpqVtapKIBsBUWcUvk8ZxaTEi4Hs4cyOBUbramz
- WUR3YKCpW/Zbf6VCB23FaNXg9PaQLMu95Gt9prdgaTuiUmm5pGA6R/pKSHlymOp3P+BTWKhkeDo
- OXEAEAl6Rd7qKpHcKLIyL0guo+pDaVRF+YzzbfQ==
-X-Received: by 2002:a05:600c:a4c:b0:46e:37fc:def0 with SMTP id
- 5b1f17b1804b1-471178a23c5mr86786055e9.9.1760943698803; 
- Mon, 20 Oct 2025 00:01:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGn/J0Cm9I+MTQhBFYSicXQ6ymFGLHI8scfSmgmPuR2eObPd0fMMAufcHu3UGlz01oh/HBabQ==
-X-Received: by 2002:a05:600c:a4c:b0:46e:37fc:def0 with SMTP id
- 5b1f17b1804b1-471178a23c5mr86785755e9.9.1760943698417; 
- Mon, 20 Oct 2025 00:01:38 -0700 (PDT)
+ AJvYcCWdHorFlEGBIeF3LqrkOXDCWzTNbBCq6vD5lDrlZo2W3RSM4lpv1IpbAzJ8fL8/eyz4Bkeg97EixA2p@nongnu.org
+X-Gm-Message-State: AOJu0YzkCIf6+53cP2rYuBWh60Xfx0G6NwYGbsaiv8L15euiiNvzkTIm
+ ftf1N9O3WBg7r0eCnMGqsYSrWJKLMEodjcVROJWlvA8zzXArz2C6Mkn3ddt2wkSzBNQLGol5ttA
+ ATSoeWHEZIkXgLdDlJ80S4u/sVOJD5JhrLUsud07X7U47oXaGQywbmyzH
+X-Gm-Gg: ASbGncvLTaP+fcVcccJ4onhjKOZNfDP3A9Pgk7VBnqF0MY913fteocI0om/E7Z5i3Fx
+ Icd1ZX0cCNWM5bCLk3re3StoQ/0N+Se+iVL4flveojyS6haJhyLSz7+Dw91PllJn39XAY7vGbDa
+ hfBTyBPlal7gydHjTtnL4Y4octMyZSjpEh33/F82iDnzQW41C+mKG7mbLxHhFf4JgZqtOANfVRZ
+ YXB9nZOwWSZexwyaTQMa5L53u2zC8pWHlh1qadD7vZ2nuB0mcIOeS/pOpq4Q9f4SbT0AnDbgEiU
+ Tw5rOs0Q2B18zwsuV5exnwueZmGXMpu+NDdJjfcofU07E7RxiXzDhtQ4po4w09/a44nB4OftPU+
+ mxEDxcJrKx+pntddmB3TBHVRoyvHHgtzW25IDPQ==
+X-Received: by 2002:a5d:5f82:0:b0:425:86c8:c4ff with SMTP id
+ ffacd0b85a97d-42704d90011mr9083425f8f.22.1760943983479; 
+ Mon, 20 Oct 2025 00:06:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVx+rbEQKUHyPWHklCaY9m9OAPQ+RL83zDTlfQQcJlZOPYwhT5E3sgegEEm3VnGB7kvWnQig==
+X-Received: by 2002:a5d:5f82:0:b0:425:86c8:c4ff with SMTP id
+ ffacd0b85a97d-42704d90011mr9083404f8f.22.1760943983100; 
+ Mon, 20 Oct 2025 00:06:23 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4715520dd65sm127926885e9.15.2025.10.20.00.01.37
+ ffacd0b85a97d-427ea5a0f88sm13302461f8f.7.2025.10.20.00.06.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 00:01:37 -0700 (PDT)
-Message-ID: <2a211e1c-e2ac-42c0-be70-4fb226f57e69@redhat.com>
-Date: Mon, 20 Oct 2025 09:01:37 +0200
+ Mon, 20 Oct 2025 00:06:22 -0700 (PDT)
+Message-ID: <62f6fa9d-bd5f-4f63-ad76-f5856bfd8468@redhat.com>
+Date: Mon, 20 Oct 2025 09:06:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] vfio/iommufd: Add
- IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR flag support
+Subject: Re: [PATCH v2 6/8] intel_iommu: Fix unmap_bitmap failure with legacy
+ VFIO backend
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, mst@redhat.com, jasowang@redhat.com,
  yi.l.liu@intel.com, clement.mathieu--drif@eviden.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, avihaih@nvidia.com, xudong.hao@intel.com,
  giovanni.cabiddu@intel.com, mark.gross@intel.com, arjan.van.de.ven@intel.com
 References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
- <20251017082234.517827-6-zhenzhong.duan@intel.com>
+ <20251017082234.517827-7-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251017082234.517827-6-zhenzhong.duan@intel.com>
+In-Reply-To: <20251017082234.517827-7-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -160,26 +160,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Clément, Yi Liu,
+
 On 10/17/25 10:22, Zhenzhong Duan wrote:
-> Pass IOMMU_HWPT_GET_DIRTY_BITMAP_NO_CLEAR when doing the last dirty
-> bitmap query right before unmap, no PTEs flushes. This accelerates the
-> query without issue because unmap will tear down the mapping anyway.
+> If a VFIO device in guest switches from IOMMU domain to block domain,
+> vtd_address_space_unmap() is called to unmap whole address space.
 > 
-> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> If that happens during migration, migration fails with legacy VFIO
+> backend as below:
+> 
+> Status: failed (vfio_container_dma_unmap(0x561bbbd92d90, 0x100000000000, 0x100000000000) = -7 (Argument list too long))
+> 
+> Because legacy VFIO limits maximum bitmap size to 256MB which maps to 8TB on
+> 4K page system, when 16TB sized UNMAP notification is sent, unmap_bitmap
+> ioctl fails.
+> 
+> Fix it by iterating over DMAMap list to unmap each range with active mapping
+> when migration is active. If migration is not active, unmapping the whole
+> address space in one go is optimal.
+> 
+> There is no such limitation with iommufd backend, but it's still not optimal
+> to allocate large bitmap, e.g., there may be large hole between IOVA ranges,
+> allocating large bitmap and dirty tracking on the hole is time consuming and
+> useless work.
+> 
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Tested-by: Xudong Hao <xudong.hao@intel.com>
 > Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
 > ---
->   include/system/iommufd.h | 2 +-
->   backends/iommufd.c       | 5 +++--
->   hw/vfio/iommufd.c        | 5 +++--
->   backends/trace-events    | 2 +-
->   4 files changed, 8 insertions(+), 6 deletions(-)
+>   hw/i386/intel_iommu.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 42 insertions(+)
 > 
 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Could you ack this change please ?
 
 Thanks,
 
