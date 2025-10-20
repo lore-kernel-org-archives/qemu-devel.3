@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31189CCD199
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD600CCD1A7
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 07:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAjt4-000898-3n; Mon, 20 Oct 2025 03:00:58 -0400
+	id 1vAjsv-00087N-I6; Mon, 20 Oct 2025 03:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjt1-00088j-Sj
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:00:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjsq-00085l-PN
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:00:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjsz-0004UP-Dt
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:00:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vAjsl-0004S4-BR
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 03:00:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760943650;
+ s=mimecast20190719; t=1760943635;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nPnS977vRtUX7XQYo41fY1RfprVT0/lLAdzhFiqwd6Q=;
- b=gteDn+aib2Np66HH74gLPlq0U1nvNT/+3kCn1gUyTbEciuPZuw/bcIdK1qp24GNEGEBbul
- CRwXSSE7MZoXt3Ce7vvYaa7BnmwzB40sufptPiQKiJiWekjDMKlJvhrRu/LmUrBLYpg+u1
- ykkO6CIHB/G9Qd6LDP8jFlUx5FzLypg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6wNPLDl8MD4i61uKNeTQL7aBrwXfw0FJuEf4WaInSRo=;
+ b=N382lNg+zI/mHHZkvFMc3rgyT4+Wletr3+OdrydlqdPqA6pohX807FER4oJJaHc6ZlxZ98
+ zfZNlHyhUHjTOtq2KKXmXHUw5G/TFRMbr6MMWBxvKJ5mIoDTfOp33PgQn+jsPBiGmAFnsX
+ Q2xknWN4imJtKpho8FUu7/PkqevRKXA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-xwQQ4m2KNBiHnOpwBUuIpA-1; Mon, 20 Oct 2025 03:00:48 -0400
-X-MC-Unique: xwQQ4m2KNBiHnOpwBUuIpA-1
-X-Mimecast-MFC-AGG-ID: xwQQ4m2KNBiHnOpwBUuIpA_1760943647
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3f6b44ab789so1883535f8f.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 00:00:48 -0700 (PDT)
+ us-mta-133-Y28BeXocOsK7wBNjVOoT7Q-1; Mon, 20 Oct 2025 03:00:32 -0400
+X-MC-Unique: Y28BeXocOsK7wBNjVOoT7Q-1
+X-Mimecast-MFC-AGG-ID: Y28BeXocOsK7wBNjVOoT7Q_1760943630
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-427015f63faso2084157f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 00:00:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760943647; x=1761548447;
+ d=1e100.net; s=20230601; t=1760943630; x=1761548430;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nPnS977vRtUX7XQYo41fY1RfprVT0/lLAdzhFiqwd6Q=;
- b=obB98wERtUxBLKdQb+PLsSrP+0Fz9cBQR5cD2KWnvKg4DxEQ0/GX2Q+3lkUluwn7n+
- ocbowlrqxbOPPgZxEV2/G465A6FLhpvwXaug0ctj5DTW+ItpoeQNU5sN3DDcc1kO/9Kp
- 2f1eswheIPznmS1OWILbYBIPR1BPu0cUvSMdMsf1K7WD59tbvO5dNn6VRORhqj4QS76K
- Uo6lCNXl7Gwk6cX9NWR/qDhMHsZLR4LSOT35Uo8buwiVY35SeIWvdJVuw6NX7Vnzd3x7
- WjiaEbgVonYDWNEEgCcC4ouaFK3PYagy81jWe4T+rbzJStqWRyTI1Z0VZL3SIzmNNNrf
- iETw==
+ bh=6wNPLDl8MD4i61uKNeTQL7aBrwXfw0FJuEf4WaInSRo=;
+ b=XJegq7/WkyqMtsmTWFymFqsou84LVbKkr/fCRuv3eRkPAb1TjdRnHOrHBPqLhcyqpH
+ P4Y3SUVdT60C67VwotzBxEfd8PkOTcJI4GtaJbDz3cE4U0ofOTSOhJ2lWXVUW5dU1001
+ +Pf89RYKNwHz3Hh9Qp9/cKNWdz/5GzYIcgGuYG4OlDPJzuSPinB6E7aRCZWy2SE1C9jj
+ BXZEN6dMO2bCE/oPU2reBXpMKNSm3ANUfR2HsDfnZEXfuhzlWbqIAc6lapU3TdjEuJqR
+ Q4Kn5qh3ST8sW6cgBnA2KYZ4nMBUQ230wysjZF6fL5u9BGGrz7ykkCJjJ82PtRZ0nmtZ
+ TrIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlnJxqyZRgwWkjvPSi+P8esLqN9SBXehQrpJgbNY2aMe4ABnB2KLsvdSwYnkVQgSb7miGMa3plxL09@nongnu.org
-X-Gm-Message-State: AOJu0Yyrxiyn25Kus9sjpUb/P4NbGPqeA0djSjZQCGBmjSiTepwFZ3Fc
- j7ygfIYdd5vE7ra2PccNaHAFGb/ruS8W6+H2Mh+WxCfireVDQ9VWb2d8EfJBkxRI9IdHYZAhvHC
- tWaiRLcL50i2NvWEDiDHiVW39WAXLFScIK7EE21YlgMze8vzYf1c5kexV
-X-Gm-Gg: ASbGncv6Yi9EL2Pq56S0n9P63tQOVOhrCaQJpmoFiigh9LZxxMkW6476leSpeaB4op5
- +n1kaWB30FwAFtH1P2IS8UWyucInuxGBiLadKTMezqDg06EJF/0wzCtnhA14o7oqss6dGOlA0S1
- aixHVDC5UP+o8rGAxITSSVZOXoYbzNimcGZpajfj87I9kHvG6GUiV+XMYXc4eJ+1826Wb4QS66Z
- VK6XBIHVglywPANQ/FxAYMjobBjTy52i3lqKQEDI8U0nqBt+yJYToTDUZH8d+WTslJCPhUFDrUI
- 6UmSrfr4HXOtWlRNQHgI/MyHoT+QG6QLJVDCv9lu8dqeUUfi9TrNThSvP1Ut7zHKxmvJ4d7SY11
- XTH1VMvGh6bHNoDnrv1Hpr2EI6UET1dN3+HkbUA==
-X-Received: by 2002:a05:6000:428a:b0:428:3cd7:a340 with SMTP id
- ffacd0b85a97d-4283cd7a42dmr4990543f8f.35.1760943647277; 
- Mon, 20 Oct 2025 00:00:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWIyqoyr8+NhZCuT0gbnCssRbt4XLCyfjqwm9KfsDegni0EZrLAyuHIx7mUa936jgIpMyA6g==
-X-Received: by 2002:a05:6000:428a:b0:428:3cd7:a340 with SMTP id
- ffacd0b85a97d-4283cd7a42dmr4990512f8f.35.1760943646772; 
- Mon, 20 Oct 2025 00:00:46 -0700 (PDT)
+ AJvYcCVNvH/iiXBLHe+72sZu7e9uSO9/+2reSPicSq2fEZxRHKOkectF5OmTEc53oR3O5zgNEQMxcuI5/cfJ@nongnu.org
+X-Gm-Message-State: AOJu0YyxRR6PXLVFzEre9upTWzGTqx1HJVxdvOn8azsi3njmDu9Iys3v
+ 0rkDnkGyyvskLxkA4Zp6XHkUaD04b9FgWG1I4oYxiBamUXrXE6a4kUlEaUKfXu4IyfVzJY29nnk
+ dEACJToApgZT7inMSY+kgO9XSnIPKG7zZoUzQHo0UpzToX6abnK4h6aNy8Fhqa5D3
+X-Gm-Gg: ASbGncuuthDRi0S0dTgzW916LMbbgFEdXYoWPgPyGxmhwSFZ0tGn6QO7N/BhqYHO6oc
+ rqyJTm4RBGvPQmQP3DBTm8GUQgQGgP5YhDv/mQt5IBx/lHBimMk2TEDvSC3Ivk44SnLwxaJL747
+ T8UXuNzHFyXpxPSsoWhRWzZEJjcr+pMcvIGhuvn7R9hMoWxujF2zUIn0t4Fho1VCil2UM1AqbB1
+ J22Xf6YK4ebeeWoq4exYEB7ZBkbgu9fw3oWRGl5joUiisgwl7p6f+gztfgFlq+njWFaC2Pj1Dw2
+ Zj8k/KKamLsl2mFf2oLP4QaBeMYWq3d8kNnf0Aw7PwGY6osSvkcsie+6mOlsdg4lbElfn6w1lGE
+ P6YDrSvp4HObsi16bBXpPsJ04cgRhKXdK+QkIWA==
+X-Received: by 2002:a05:6000:144a:b0:427:e1bf:13bd with SMTP id
+ ffacd0b85a97d-427e1bf1a74mr4708572f8f.52.1760943629516; 
+ Mon, 20 Oct 2025 00:00:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxwiDYkV1eBs9wDJ0CTLQKvtd1gsm8QQOw1H/40W09rQcUjqx+vlR6+ncWwXdxUC8c3Ge3Gg==
+X-Received: by 2002:a05:6000:144a:b0:427:e1bf:13bd with SMTP id
+ ffacd0b85a97d-427e1bf1a74mr4708537f8f.52.1760943629120; 
+ Mon, 20 Oct 2025 00:00:29 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5b3acfsm13697628f8f.14.2025.10.20.00.00.45
+ ffacd0b85a97d-427ea5b3b45sm13883689f8f.11.2025.10.20.00.00.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 00:00:46 -0700 (PDT)
-Message-ID: <0925d04c-42f5-488d-8c39-7367768610fa@redhat.com>
-Date: Mon, 20 Oct 2025 09:00:45 +0200
+ Mon, 20 Oct 2025 00:00:28 -0700 (PDT)
+Message-ID: <c7c41fb8-93e4-42cf-99a1-34cdc1ea204d@redhat.com>
+Date: Mon, 20 Oct 2025 09:00:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] vfio/container-legacy: rename
- vfio_dma_unmap_bitmap() to vfio_legacy_dma_unmap_get_dirty_bitmap()
+Subject: Re: [PATCH v2 1/8] vfio/iommufd: Add framework code to support
+ getting dirty bitmap before unmap
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, mst@redhat.com, jasowang@redhat.com,
  yi.l.liu@intel.com, clement.mathieu--drif@eviden.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, avihaih@nvidia.com, xudong.hao@intel.com,
  giovanni.cabiddu@intel.com, mark.gross@intel.com, arjan.van.de.ven@intel.com
 References: <20251017082234.517827-1-zhenzhong.duan@intel.com>
- <20251017082234.517827-4-zhenzhong.duan@intel.com>
+ <20251017082234.517827-2-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251017082234.517827-4-zhenzhong.duan@intel.com>
+In-Reply-To: <20251017082234.517827-2-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -161,45 +161,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/17/25 10:22, Zhenzhong Duan wrote:
-> This is to follow naming style in container-legacy.c to have low level functions
-> with vfio_legacy_ prefix.
+> Currently we support device and iommu dirty tracking, device dirty tracking
+> is preferred.
 > 
-> No functional changes.
+> Add the framework code in iommufd_cdev_unmap() to choose either device or
+> iommu dirty tracking, just like vfio_legacy_dma_unmap_one().
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/vfio/container-legacy.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
-> index 8e9639603e..b7e3b892b9 100644
-> --- a/hw/vfio/container-legacy.c
-> +++ b/hw/vfio/container-legacy.c
-> @@ -68,9 +68,10 @@ static int vfio_ram_block_discard_disable(VFIOLegacyContainer *container,
->       }
->   }
->   
-> -static int vfio_dma_unmap_bitmap(const VFIOLegacyContainer *container,
-> -                                 hwaddr iova, uint64_t size,
-> -                                 IOMMUTLBEntry *iotlb)
-> +static int
-> +vfio_legacy_dma_unmap_get_dirty_bitmap(const VFIOLegacyContainer *container,
-> +                                       hwaddr iova, uint64_t size,
-> +                                       IOMMUTLBEntry *iotlb)
->   {
->       const VFIOContainer *bcontainer = VFIO_IOMMU(container);
->       struct vfio_iommu_type1_dma_unmap *unmap;
-> @@ -141,7 +142,8 @@ static int vfio_legacy_dma_unmap_one(const VFIOLegacyContainer *container,
->       if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
->           if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
->               bcontainer->dirty_pages_supported) {
-> -            return vfio_dma_unmap_bitmap(container, iova, size, iotlb);
-> +            return vfio_legacy_dma_unmap_get_dirty_bitmap(container, iova, size,
-> +                                                          iotlb);
->           }
->   
->           need_dirty_sync = true;
+> Tested-by: Xudong Hao <xudong.hao@intel.com>
+> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
