@@ -4,60 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DD4CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B79CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 15:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vArNc-00065t-Sh; Mon, 20 Oct 2025 11:01:01 -0400
+	id 1vArQT-00079O-Kj; Mon, 20 Oct 2025 11:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
- id 1vAnZd-0006v6-GD
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:57:09 -0400
-Received: from sg-1-244.ptr.blmpb.com ([118.26.132.244])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vArQ6-00074Y-TY
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:03:38 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
- id 1vAnZX-0002iG-Ab
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:57:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1760957795;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=imTz6YPfqLKwEiSi/9l87KLIRg+AtWmIedUdwb1xCqk=;
- b=UoNn7Ma+AGaFv5EcHcDHD4ezxmrmdhfwHQgkEJ9x3glFtKSTlGVtfMZnmGWl4FddLKWKKg
- vvhz66vRWsXyWwZnuU1I1ZUeL26EK7nwo6AyopZ5QqcheGPrbOe7j8n/lFLCKiGu2sOrHK
- hXZjduW1snS/+ACVbH797a+XaCYUnrgYxI3p+nvx2SGJPTfZJxgGgg3pEb+yPjr1DRYSVj
- bmmeQGUpJAf8xBPW5RN4fSKf7eaVLbwX+tF8BVnuDXtOcRMhBLwIpc2YKuCWIErsOE9U7l
- r+HiS6b2x7hffNqvqiQ30YegziDegWbEH6T5oAi9ZYR96C0OHtpNVF2ohq+Q+Q==
-Mime-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Type: text/plain; charset=UTF-8
-X-Original-From: "Chao Liu(openatom.club)" <chao.liu@openatom.club>
-Content-Transfer-Encoding: 7bit
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, 
- <manos.pitsidianakis@linaro.org>, <marcandre.lureau@redhat.com>, 
- <philmd@linaro.org>
-Cc: <qemu-rust@nongnu.org>, <qemu-devel@nongnu.org>, <dzm91@openatom.club>, 
- <luojia@openatom.club>
-Message-Id: <822f8543-10d0-4669-b484-cbd9837e324c@openatom.club>
-Subject: From HUST OpenAtom Club: Inquiry & Contribution Plan for Rust In QEMU
-Date: Mon, 20 Oct 2025 18:56:28 +0800
-From: "Chao Liu(openatom.club)" <chao.liu@openatom.club>
-Received: from [192.168.71.4] ([114.88.97.170]) by smtp.feishu.cn with ESMTPS;
- Mon, 20 Oct 2025 18:56:32 +0800
-X-Lms-Return-Path: <lba+268f61561+440237+nongnu.org+chao.liu@openatom.club>
-Received-SPF: pass client-ip=118.26.132.244;
- envelope-from=chao.liu@openatom.club; helo=sg-1-244.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vArQ3-0006cj-1T
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 11:03:34 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b3c2c748bc8so568781066b.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 08:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1760972608; x=1761577408; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0ZMc9myImumVcUr4HSNELyTv4GbJyH7GYYA1sVKIt1M=;
+ b=xC2A9kFgMLsO1i5D45wfSp3FxHb4xIDUsPV/kV+EuidXJ3yvZegdouliHxo8ZDZaHZ
+ 4PSh+AaCmqA+QNtSeF6LjI6ehCf3GUHXASXLqe8KnAGyxZBHtlpNGQttFjto6cym5z7u
+ TOT366B2kWI9+DGKLC79cCAUGqh4gVHQRDlR2ubtL7rHWQHdw0IUTIxs8do0eR3N4ULS
+ 9OAu5va34WIQ7IWDkNeH8tcfdklQ8VuCPj/aw+k/EkTB3CehQQwLt7IJHDg1kl2KT8ch
+ O7boBil0BdT5JwPPHyRXXjIaMc8CkaWd+ofh8N81si8++NzW9O66wdVF3s6rGzJuVRlP
+ I2jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760972608; x=1761577408;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0ZMc9myImumVcUr4HSNELyTv4GbJyH7GYYA1sVKIt1M=;
+ b=r/VLzYTnK06hXGkP8RbVp6p7LMRp6saOTWNctaVU8SoOX7q0qd0sgY3UftHsFuH5sM
+ kelSzfFCaB1HmTgpu5sdycetM6q9RERVC1hjqoqcddBIbOaMsIbnYGCfAvIyvrnEuDGN
+ lRvJ2AKVcVAeTEZFw58xDOvmL3v7hNLHWmOi4CuaAURi5o0OvDJsIX0OZl7b9NjlJxDe
+ FlqJGJoL+UMERIE4CPIB4zxa8MFoc+9NhWkxRSRkoGc1IIu7Aff7bfGkuYzzniN+e/O7
+ tP7yNczKKSaG+uRYJrepUl09soLYz+kSTcZ2xmjppVeQF9UfTIXVruSAgdzZSXPuSjQ3
+ xatQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUg7LF7kTiHEptaNPjYK8aGAk3wzN3mSXYxntB+y58bZunfYO0rxCTEdtQJJiardRqvKXc074EVhHlR@nongnu.org
+X-Gm-Message-State: AOJu0YwhAYZcX4KF+1W1EeMeDLNZ997M65ybJ5EYM5HTpZ4UsqEUNQhM
+ 5T7l8jn0W4rx6xlMt508jAh3hgLco9HlF20FH15CN1jWm7sJuGBNxqC6VyddT8bSuB4=
+X-Gm-Gg: ASbGncuqDNMlV1w+HfibNe1Tx8/GtpqhS9Tr2wsvhQsZGKg9PAcRcx40uTpS5Yr/nZl
+ VWce17wzSC+cWkAejPMu0spvP0I8vNbpSCyo+dwmjl0Q2sxPDOhrXqseGNPbPr3OHxGKMTsh6qq
+ CzzfgeNVCqiCXBZSIltcrEQHp5YQ1JSXhQVrCOeOS9vFhItURI/Ia9rpYHdg4rPPbV8gAvcY++M
+ Mne8yJU5jWFIx6+WmhWr+Ghns5X7Fgx+9e7w1egJvAp8a2kv5TLNZbbLP1oJ2qv3s5Fc89rsttw
+ cf3sUiZPaQlMeDWavb1r9C9O+JL30xHc0owxgm1YlaTLay9XWQEGIjxIhSj1wmKrSKkZsN6nEkP
+ qpAZmIAQLMFdfaRvvqCANsmj6OvkHIGJCDnFtZMI9B1YjdNiAx6YTIHN8qg/beAnZIZswy3q8x8
+ ST
+X-Google-Smtp-Source: AGHT+IFD4Iiva9OIXG7VcGAZ9gCbM5/c8ixv7EJAcwT5bUkhH1a2OtvzkuKZ24WJ8Zmu6CVn9hAw4A==
+X-Received: by 2002:a17:907:2687:b0:b5f:d46c:4b7 with SMTP id
+ a640c23a62f3a-b64768bc7d5mr1715303566b.55.1760972607989; 
+ Mon, 20 Oct 2025 08:03:27 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6aaf93a32asm362907266b.51.2025.10.20.08.03.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Oct 2025 08:03:27 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 796455F83E;
+ Mon, 20 Oct 2025 16:03:26 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Sean Anderson <sean.anderson@linux.dev>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,  Luc Michel
+ <lmichel@kalray.eu>
+Subject: Re: [PATCH 0/3] semihosting: Fix a few semihosting bugs
+In-Reply-To: <20251017213529.998267-1-sean.anderson@linux.dev> (Sean
+ Anderson's message of "Fri, 17 Oct 2025 17:35:26 -0400")
+References: <20251017213529.998267-1-sean.anderson@linux.dev>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Mon, 20 Oct 2025 16:03:26 +0100
+Message-ID: <871pmx8vk1.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 20 Oct 2025 11:00:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,47 +109,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Sean Anderson <sean.anderson@linux.dev> writes:
 
-We are the OpenAtom Open Source Club[1] of Huazhong University of Science
-and Technology(HUST). Recently, we have established a new group focusing
-on the Rust In QEMU, aiming to make some contributions to the upstream.
+> While discussing [1], it came to my attention that QEMU does not
+> properly truncate/error SYS_FLEN on 32-bit systems.
 
-Prior to this, we have already achieved some results in the field of
-open-source basic software and education using Rust. For example, we
-lead the development of RustSBI[2], an open-source firmware written in
-Rust, that has been adopted as a reference implementation by the
-RISC-V SBI Specification.
+TIL that semihostingfs was a thing!
 
-We also hosted a QEMU open-source learning training camp[3] in China,
-with the number of registrants currently approaching 1,000. In the
-training camp's curriculum system, we included contents related to
-Rust for QEMU and continuously shared the latest progress of the
-QEMU upstream.
+> Fix this, and some
+> other bugs with GDB File I/O that I found while working on this series.
+> That said, GDB File I/O has been substantially broken for two years now,
+> so it makes me wonder if anyone actually uses it!
 
-We have reviewed the progress of Rust in the recent QEMU versions,
-and the results are very encouraging. Rust is basically in a usable
-state for QEMU peripheral modeling.
+I suspect this is at the upper end of things to use semihosting for as
+its real purpose is to help bootstrap things on the barest of metal
+until you have enough bits going to selfhost. In QEMU land it is a
+convenient way to do host calls for test cases.
 
-Our initial plan is to add Rust versions of peripheral models for some
-simple peripherals, such as block devices or I2C devices.
+We don't have much actual testing of semihosting in the tree although I
+do run Peter's semihosting tests from time to time:
 
-In addition, we hope to get some other suggestions on what other suitable
-work we can do regarding Rust In QEMU.
+  https://git.linaro.org/people/peter.maydell/semihosting-tests.git/
 
-We look forward to your reply and hope to contribute to the Rust In QEMU~
+the tests do include flen() but obviously don't cover the extreme
+filesize cases or overflow.
 
+> It would certainly
+> simplify the implementation if we didn't have to support it.
 
-Link:
+While semihosting does have the concept of optional extensions SYS_FLEN
+is not one of them.
 
-[1] HUST OpenAtom Open Source Club:
-     https://hust.openatom.club/news/20250812_intro_to_club/
-[2] RustSBI Github Repo:
-     https://github.com/rustsbi/rustsbi
-[3] Learning QEMU Camp:
-     https://opencamp.cn/qemu/camp/2025
+>
+> [1] https://lore.kernel.org/u-boot/20251017195322.GF6688@bill-the-cat/T/#=
+m493c42570d3103b8c606c5f50faeb78d27719de6
+>
+>
+> Sean Anderson (3):
+>   gdbstub: Fix %s formatting
+>   semihosting: Fix GDB File-I/O FLEN
+>   semihosting: Check for overflow in FLEN on 32-bit systems
+>
+>  gdbstub/syscalls.c            |  2 +-
+>  semihosting/arm-compat-semi.c | 22 +++++++++++++++-------
+>  2 files changed, 16 insertions(+), 8 deletions(-)
 
-
-Thanks,
-Chao
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
