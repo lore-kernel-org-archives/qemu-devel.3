@@ -4,103 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59791CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE77CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAscr-0003mD-DR; Mon, 20 Oct 2025 12:20:50 -0400
+	id 1vAsdq-0005Bb-NY; Mon, 20 Oct 2025 12:21:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vAsck-0003jZ-GT; Mon, 20 Oct 2025 12:20:42 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vAsdo-00058Q-Q5
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:21:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vAsch-0000t6-IH; Mon, 20 Oct 2025 12:20:42 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KC2fg3006614;
- Mon, 20 Oct 2025 16:20:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=s69IrhSy7IoKpJv12
- smthmV3ue0ebcyT7BZnXMXeGUY=; b=XfZYpVDODc8jbyIz8ECH1zaYFB2lLUK3r
- PNtLsDbs7apbK5jQBH/nSUdf73uos8h19cPxmL5AQ3kxSoOrlQbRT8WmVUILeodh
- lY07fGX6w7lfUZbb6tMnXFsFzrYquob6tMWBYhU//FM9YoV2+foCzmeLAZphQab9
- unjalpsle+IgSabbHdE4/FjQ4ho+S3TvHsHuhvLLrRwflNqG2VLZzkIAFjk/UIdm
- ZfBc4yFw7WfIQGI6MKd5DvGgKrqFyRQC1venFkpO7oIK5SophWHyIeusCChcEgor
- HdCinM8TuELK12PXkWWHi/3JrglmqndcD/FzC7+0m4D4KY8Q052Ug==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326jg1k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 16:20:37 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59KEgxOo032096;
- Mon, 20 Oct 2025 16:20:36 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7mph79-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 20 Oct 2025 16:20:36 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59KGKZ1I15467154
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 20 Oct 2025 16:20:35 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 354085805D;
- Mon, 20 Oct 2025 16:20:35 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 888B258052;
- Mon, 20 Oct 2025 16:20:34 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.78.141])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 20 Oct 2025 16:20:34 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH 5/7] pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
-Date: Mon, 20 Oct 2025 12:20:21 -0400
-Message-ID: <20251020162023.3649165-6-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251020162023.3649165-1-jrossi@linux.ibm.com>
-References: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vAsdk-0000xk-Lz
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:21:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760977302;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TMuhqLCiwvXGhWuHTfUFcUWo7NHSVOEqil3zUev/Yug=;
+ b=a5of/dl43CDAcErQ3b7QJUnaHGkKr5h9gSplp1rzGplVnzQ6/7U8QPhGyOCCEhzyNo3d3V
+ 80HDgRvAQ6zBWe6zxw9CpK5hKxdC3cyZibWIYZI1ol+jTVTeQs/k1g8POulShCKBZvH3am
+ 8dmVt5fmxlg2Domh+rzzHR3sXG3iZuw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-bxxsV7GxPkqjb1RnU-WuBg-1; Mon, 20 Oct 2025 12:21:40 -0400
+X-MC-Unique: bxxsV7GxPkqjb1RnU-WuBg-1
+X-Mimecast-MFC-AGG-ID: bxxsV7GxPkqjb1RnU-WuBg_1760977299
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3f924ae2a89so5566670f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 09:21:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760977299; x=1761582099;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TMuhqLCiwvXGhWuHTfUFcUWo7NHSVOEqil3zUev/Yug=;
+ b=rtRetNdia5bzy/eCR9dqwnwyewC40Nq8lBBihVa7TzhZEtjX/b4itdJkjtgpHbrUID
+ H8oLeq7elB8WcWwBfiblCXiMV+CjrLrgoYtVgkR8aP4a4wLcKQwI7pqiOPnjwliGYG8T
+ Pi25CQArpJ5+YusF7ZMRNMNWh1uHdfeovj2/pag1beeLMA/vjYVlqZNNUO6/qLtylg7W
+ BsDsvgwylw7m31JhD69nFXTJoEJm7SuvvEibj2G0Ha5wxQutYYAqyDpC21yuMnK0mUDb
+ OHBvAPBkJECYAAsB/0ij5SHLT+2fbfXRvIZ5WgMF6PCYvuswm0btMDIdqYOXEMuUxxfI
+ EvpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU485Bk6obFfNH4ITMkSNS4pQSvEv4f5wzQXmodNZ532+9kU1i5DHhpjyO45EHMVQaD4oQOmj0iG041@nongnu.org
+X-Gm-Message-State: AOJu0YzMYzyILTw3EFeNDtggCXsBAHKl2PaWQju0csx51OVglfYkrxPP
+ 6tdXXwD9wmgjRfFgYDKm4Lv7sjGm+DhtexTIOf0TlCENNDZ5Yxg7+oxhjb715u+VK6QHsia0hjl
+ gWVoOFjzk+vjNE0AbvCJ28eZPHJdDOXN80EucRI9+E/YSpQ7tGROEjvU+
+X-Gm-Gg: ASbGncuaeUjhirzRnd4J0V57bG/X6Y0m74Hg3iPUE98uesUk2isjRNjCvJ7PvVIGLa4
+ 2AokA82apPGpC2m3qN1XwZBJuqvC04silCYRqcjXMfkgE31oqflvtyK2rDT4B6pMZE29/qGBBsz
+ gwOTCef36aefNLi8A45RUEkEuAnm9H4fV5rpL43Vqed1hkSIkBWlnjdY+rzrggsDTV7Bm3nKjFX
+ xYAd74SsTi0rGe+IK3e0gupBjsblqZ0UEW7YvZmI9HONoNbBPqW8v+RdYo5B2KFtINQskopWfYU
+ VBeG3OHJ5bcVkF2Kfu+jEChwptGyoHJqa+6I1V1ZDXkb3DM7WViOXEvj3S9LzQL9HplwZ74b5Sv
+ oSuoA
+X-Received: by 2002:a05:6000:41f4:b0:427:614:83da with SMTP id
+ ffacd0b85a97d-4270614850bmr9459390f8f.48.1760977298751; 
+ Mon, 20 Oct 2025 09:21:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGK1UI06KtBEwhhq8nnp2NmuOuW1bNA2Uh80dIcvi53PgnJznSKm7vuRcy8FWkfVEkUDEr3HA==
+X-Received: by 2002:a05:6000:41f4:b0:427:614:83da with SMTP id
+ ffacd0b85a97d-4270614850bmr9459371f8f.48.1760977298331; 
+ Mon, 20 Oct 2025 09:21:38 -0700 (PDT)
+Received: from [192.168.43.95] ([37.166.134.90])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427ea5a0f19sm16190908f8f.9.2025.10.20.09.21.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 09:21:37 -0700 (PDT)
+Message-ID: <94132491-1af5-491e-ac98-68e4313bf6af@redhat.com>
+Date: Mon, 20 Oct 2025 18:21:34 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68f66155 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=IFyg070M5ZGC1bApo04A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXwMssPJ2FGpJd
- aOnomox9OGd7vBQV6VlQcGRWTt1l/vki8dU3bh1VDGutJ9DlLjcdqZdgMJejgC8Z2obXBLdYRdO
- UfpVjiy6dJCoYfJZwTFFJUXE2MPMsDC3Ve+Jn69ZL5ejaxMy4Bblq+jeqqysMHdRW6zo89psnmk
- lFedoFojjc9S28qmqGoZQ41uQPP5Ey+8XHOhIs/o1XH9MPkgRGmi+iAWeDf8ckLUdIQQ+M8G6Aa
- DV4GFvFPVgMRryjCJbPPeC7SMDiF3DNBLxVniPHGk/XIWv7fsT7pt+IYIC2ujdRq2/0pYjOwLfd
- seefV4uZs3g7b1vmX6V2eIwO5KAQ7YJxaj/7AZxg8D1ea40A3Dsw0NiM/rKBcTNyFxA+LtrTK7p
- iLEBo3I0MKWB7gX3mBARz37nswIQ8A==
-X-Proofpoint-GUID: ioaRqS4mle85IvG-8eUwUjXZfXtokjGq
-X-Proofpoint-ORIG-GUID: ioaRqS4mle85IvG-8eUwUjXZfXtokjGq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_04,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+From: Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v4 11/27] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ shameerkolothum@gmail.com
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-12-skolothumtho@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <20250929133643.38961-12-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,658 +118,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Hi Shameer
 
-Enable virt-queue PCI configuration and add routines for virtio-blk-pci devices.
+On 9/29/25 3:36 PM, Shameer Kolothum wrote:
+> On ARM, when a device is behind an IOMMU, its MSI doorbell address is
+> subject to translation by the IOMMU. This behavior affects vfio-pci
+> passthrough devices assigned to guests using an accelerated SMMUv3.
+>
+> In this setup, we configure the host SMMUv3 in nested mode, where
+> VFIO sets up the Stage-2 (S2) mappings for guest RAM, while the guest
+> controls Stage-1 (S1). To allow VFIO to correctly configure S2 mappings,
+> we currently return the system address space via the get_address_space()
+> callback for vfio-pci devices.
+>
+> However, QEMU/KVM also uses this same callback path when resolving the
+> address space for MSI doorbells:
+>
+> kvm_irqchip_add_msi_route()
+>   kvm_arch_fixup_msi_route()
+>     pci_device_iommu_address_space()
+>      get_address_space()
+>
+> This will cause the device to be configured with wrong MSI doorbell
+> address if it return the system address space.
+returns
+> Introduce an optional get_msi_address_space() callback and use that in
+> the above path if available. This will enable IOMMU implementations to
+> make use of this if  required.
+if required
+> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---	
+>  hw/pci/pci.c         | 19 +++++++++++++++++++
+>  include/hw/pci/pci.h | 16 ++++++++++++++++
+>  target/arm/kvm.c     |  2 +-
+>  3 files changed, 36 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 1315ef13ea..6f9e1616dd 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2964,6 +2964,25 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+>      return &address_space_memory;
+>  }
+>  
+> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev)
+> +{
+> +    PCIBus *bus;
+> +    PCIBus *iommu_bus;
+> +    int devfn;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
+> +    if (iommu_bus) {
+> +        if (iommu_bus->iommu_ops->get_msi_address_space) {
+> +            return iommu_bus->iommu_ops->get_msi_address_space(bus,
+> +                                 iommu_bus->iommu_opaque, devfn);
+See my reply to Nicolin's comment. From a high level point of view the
+semantic of
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- pc-bios/s390-ccw/clp.h           |   2 +-
- pc-bios/s390-ccw/virtio-pci.h    |  73 +++++++
- pc-bios/s390-ccw/virtio.h        |   1 +
- pc-bios/s390-ccw/main.c          |  59 ++++-
- pc-bios/s390-ccw/virtio-blkdev.c |   3 +
- pc-bios/s390-ccw/virtio-pci.c    | 357 +++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/virtio.c        |   5 +
- pc-bios/s390-ccw/Makefile        |   2 +-
- 8 files changed, 498 insertions(+), 4 deletions(-)
- create mode 100644 pc-bios/s390-ccw/virtio-pci.h
- create mode 100644 pc-bios/s390-ccw/virtio-pci.c
+get_msi_address_space versus get_address_space
+ does not look very clear. I have the impression for HW nested implementation you were forced to return the &system_address through the get_address_space
+ although there is a protecting IOMMU and you need another callback for return a proper IOMMU as for MSIs. This is still unclear and looks hacky to me at this point. I think we need to get the semantic of get_msi_address_space vs get_address_space more solid and you need to explain why get_address_space
+is mandated to return &system_address in our case. 
+Maybe you explained that earlier in some thread but I fail to find those info again in the commit messages/comments and I think this is important.
 
-diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
-index cb130e5e90..52232c4c48 100644
---- a/pc-bios/s390-ccw/clp.h
-+++ b/pc-bios/s390-ccw/clp.h
-@@ -19,6 +19,6 @@
- 
- int clp_pci(void *data);
- int enable_pci_function(uint32_t *fhandle);
--int enumerate_pci_functions(void);
-+int find_pci_function(uint32_t fid, ClpFhListEntry *entry);
- 
- #endif
-diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
-new file mode 100644
-index 0000000000..09fff015cb
---- /dev/null
-+++ b/pc-bios/s390-ccw/virtio-pci.h
-@@ -0,0 +1,73 @@
-+/*
-+ * Definitions for virtio-pci
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef VIRTIO_PCI_H
-+#define VIRTIO_PCI_H
-+
-+/* Common configuration */
-+#define VIRTIO_PCI_CAP_COMMON_CFG          1
-+/* Notifications */
-+#define VIRTIO_PCI_CAP_NOTIFY_CFG          2
-+/* ISR access */
-+#define VIRTIO_PCI_CAP_ISR_CFG             3
-+/* Device specific configuration */
-+#define VIRTIO_PCI_CAP_DEVICE_CFG          4
-+/* PCI configuration access */
-+#define VIRTIO_PCI_CAP_PCI_CFG             5
-+/* Additional shared memory capability */
-+#define VIRTIO_PCI_CAP_SHARED_MEMORY_CFG   8
-+/* PCI vendor data configuration */
-+#define VIRTIO_PCI_CAP_VENDOR_CFG          9
-+
-+/* Offsets within capability header */
-+#define VIRTIO_PCI_CAP_VNDR        0
-+#define VIRTIO_PCI_CAP_NEXT        1
-+#define VIRTIO_PCI_CAP_LEN         2
-+#define VIRTIO_PCI_CAP_CFG_TYPE    3
-+#define VIRTIO_PCI_CAP_BAR         4
-+#define VIRTIO_PCI_CAP_OFFSET      8
-+#define VIRTIO_PCI_CAP_LENGTH      12
-+
-+#define VIRTIO_PCI_NOTIFY_CAP_MULT 16 /* VIRTIO_PCI_CAP_NOTIFY_CFG only */
-+
-+/* Common Area Offsets for virtio-pci queue */
-+#define VPCI_C_OFFSET_DFSELECT      0
-+#define VPCI_C_OFFSET_DF            4
-+#define VPCI_C_OFFSET_GFSELECT      8
-+#define VPCI_C_OFFSET_GF            12
-+#define VPCI_C_COMMON_NUMQ          18
-+#define VPCI_C_OFFSET_STATUS        20
-+#define VPCI_C_OFFSET_Q_SELECT      22
-+#define VPCI_C_OFFSET_Q_SIZE        24
-+#define VPCI_C_OFFSET_Q_ENABLE      28
-+#define VPCI_C_OFFSET_Q_NOFF        30
-+#define VPCI_C_OFFSET_Q_DESCLO      32
-+#define VPCI_C_OFFSET_Q_DESCHI      36
-+#define VPCI_C_OFFSET_Q_AVAILLO     40
-+#define VPCI_C_OFFSET_Q_AVAILHI     44
-+#define VPCI_C_OFFSET_Q_USEDLO      48
-+#define VPCI_C_OFFSET_Q_USEDHI      52
-+
-+#define VPCI_S_RESET            0
-+#define VPCI_S_ACKNOWLEDGE      1
-+#define VPCI_S_DRIVER           2
-+#define VPCI_S_DRIVER_OK        4
-+#define VPCI_S_FEATURES_OK      8
-+
-+#define VIRTIO_F_VERSION_1      (1 << (32 - 32)) /* Feature bit 32 */
-+
-+#define VIRT_Q_SIZE 16
-+
-+long virtio_pci_notify(uint32_t fhandle, int vq_id);
-+int virtio_pci_setup(VDev *vdev);
-+int virtio_pci_setup_device(void);
-+int virtio_pci_reset(VDev *vdev);
-+void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
-+
-+#endif
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 1c1017a0db..4e4a7280b6 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -259,6 +259,7 @@ struct VDev {
-     uint8_t scsi_dev_heads;
-     bool scsi_device_selected;
-     ScsiDevice selected_scsi_device;
-+    uint32_t pci_fh;
-     uint32_t max_transfer;
-     uint32_t guest_features[2];
- };
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 7299b8911f..69e7d39862 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -15,8 +15,10 @@
- #include "s390-arch.h"
- #include "s390-ccw.h"
- #include "cio.h"
-+#include "clp.h"
- #include "virtio.h"
- #include "virtio-scsi.h"
-+#include "virtio-pci.h"
- #include "dasd-ipl.h"
- 
- SubChannelId blk_schid = { .one = 1 };
-@@ -150,6 +152,20 @@ static bool find_subch(int dev_no)
-     return false;
- }
- 
-+static bool find_fid(uint32_t fid) {
-+    ClpFhListEntry entry;
-+    VDev *vdev = virtio_get_device();
-+
-+    if (find_pci_function(fid, &entry)) {
-+        return false;
-+    }
-+
-+    vdev->pci_fh = entry.fh;
-+    virtio_pci_id2type(vdev, entry.device_id);
-+
-+    return (vdev->type != 0);
-+}
-+
- static void menu_setup(void)
- {
-     if (memcmp(loadparm_str, LOADPARM_PROMPT, LOADPARM_LEN) == 0) {
-@@ -233,6 +249,9 @@ static bool find_boot_device(void)
-         blk_schid.ssid = iplb.scsi.ssid & 0x3;
-         found = find_subch(iplb.scsi.devno);
-         break;
-+     case S390_IPL_TYPE_PCI:
-+        found = find_fid(iplb.pci.fid);
-+        break;
-     default:
-         puts("Unsupported IPLB");
-     }
-@@ -269,7 +288,7 @@ static int virtio_setup(void)
-     return ret;
- }
- 
--static void ipl_boot_device(void)
-+static void ipl_ccw_device(void)
- {
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-@@ -282,7 +301,43 @@ static void ipl_boot_device(void)
-         }
-         break;
-     default:
--        printf("Attempting to boot from unexpected device type 0x%X\n", cutype);
-+        printf("Cannot boot CCW device with cu type 0x%X\n", cutype);
-+    }
-+}
-+
-+static void ipl_pci_device(void)
-+{
-+    VDev *vdev = virtio_get_device();
-+    vdev->is_cdrom = false;
-+    vdev->scsi_device_selected = false;
-+
-+    if (virtio_pci_setup_device()) {
-+        return;
-+    }
-+
-+    switch (vdev->type) {
-+    case VIRTIO_ID_BLOCK:
-+        if (virtio_setup() == 0) {
-+            zipl_load();
-+        }
-+        break;
-+    default:
-+        printf("Cannot boot PCI device type 0x%X\n", vdev->type);
-+    }
-+}
-+
-+static void ipl_boot_device(void)
-+{
-+    switch (ipl_type) {
-+    case S390_IPL_TYPE_QEMU_SCSI:
-+    case S390_IPL_TYPE_CCW:
-+        ipl_ccw_device();
-+        break;
-+    case S390_IPL_TYPE_PCI:
-+        ipl_pci_device();
-+        break;
-+    default:
-+        puts("Unrecognized IPL type!");
-     }
- }
- 
-diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-index df6a6d5b70..c5b65d021b 100644
---- a/pc-bios/s390-ccw/virtio-blkdev.c
-+++ b/pc-bios/s390-ccw/virtio-blkdev.c
-@@ -13,6 +13,7 @@
- #include "virtio.h"
- #include "virtio-ccw.h"
- #include "virtio-scsi.h"
-+#include "virtio-pci.h"
- 
- #define VIRTIO_BLK_F_GEOMETRY   (1 << 4)
- #define VIRTIO_BLK_F_BLK_SIZE   (1 << 6)
-@@ -243,6 +244,8 @@ int virtio_blk_setup_device()
-     case S390_IPL_TYPE_CCW:
-         vdev->schid = blk_schid;
-         return virtio_ccw_setup(vdev);
-+    case S390_IPL_TYPE_PCI:
-+        return virtio_pci_setup(vdev);
-     }
- 
-     return 1;
-diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-new file mode 100644
-index 0000000000..b6cb4a661a
---- /dev/null
-+++ b/pc-bios/s390-ccw/virtio-pci.c
-@@ -0,0 +1,357 @@
-+/*
-+ * Functionality for virtio-pci
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "clp.h"
-+#include "pci.h"
-+#include "helper.h"
-+#include "s390-ccw.h"
-+#include "virtio.h"
-+#include "bswap.h"
-+#include "virtio-pci.h"
-+#include "s390-time.h"
-+#include <stdio.h>
-+
-+/* Variable offsets used for reads/writes to modern memory region BAR 4 */
-+uint32_t common_offset;
-+uint32_t device_offset;
-+uint32_t notify_offset;
-+uint32_t notify_mult;
-+uint16_t q_notify_offset;
-+
-+static int virtio_pci_set_status(VDev *vdev, uint8_t status)
-+{
-+    uint64_t status64 = status;
-+
-+    return pci_write(vdev->pci_fh, VPCI_C_OFFSET_STATUS, status64, 1);
-+}
-+
-+static int virtio_pci_get_status(VDev *vdev, uint8_t *status)
-+{
-+    uint64_t status64;
-+    int rc;
-+
-+    rc = pci_read(vdev->pci_fh, VPCI_C_OFFSET_STATUS, 4, &status64, 1);
-+    if (rc) {
-+        puts("Failed to read virtio-pci status");
-+        return rc;
-+    }
-+
-+    *status = (uint8_t) status64;
-+    return 0;
-+}
-+
-+static int virtio_pci_get_hfeatures(VDev *vdev, uint64_t *features)
-+{
-+    uint64_t feat0, feat1;
-+    uint32_t selector;
-+    int rc;
-+
-+    selector = bswap32(0);
-+    rc = pci_write(vdev->pci_fh, VPCI_C_OFFSET_DFSELECT, selector, 4);
-+    rc |= pci_read(vdev->pci_fh, VPCI_C_OFFSET_DF, 4, &feat0, 4);
-+    feat0 = bswap32(feat0);
-+
-+    selector = bswap32(1);
-+    rc |= pci_write(vdev->pci_fh, VPCI_C_OFFSET_DFSELECT, selector, 4);
-+    rc |= pci_read(vdev->pci_fh, VPCI_C_OFFSET_DF, 4, &feat1, 4);
-+    feat1 = bswap32(feat1);
-+
-+    *features = feat1 << 32;
-+    *features |= feat0;
-+
-+    return rc;
-+}
-+
-+static int virtio_pci_set_gfeatures(VDev *vdev)
-+{
-+    uint64_t feats;
-+    uint32_t selector;
-+    int rc;
-+
-+    selector = bswap32(0);
-+    rc = pci_write(vdev->pci_fh, VPCI_C_OFFSET_GFSELECT, selector, 4);
-+
-+    feats = bswap32((uint64_t)vdev->guest_features[1]);
-+    rc |= pci_write(vdev->pci_fh, VPCI_C_OFFSET_GF, feats, 4);
-+
-+    selector = bswap32(1);
-+    rc |= pci_write(vdev->pci_fh, VPCI_C_OFFSET_GFSELECT, selector, 4);
-+
-+    feats = bswap32((uint64_t)vdev->guest_features[0]);
-+    rc |= pci_write(vdev->pci_fh, VPCI_C_OFFSET_GF, feats, 4);
-+
-+    return rc;
-+}
-+
-+static int virtio_pci_get_blk_config(VDev *vdev)
-+{
-+    return pci_read(vdev->pci_fh, device_offset, 4, (uint64_t *)&vdev->config.blk,
-+                    sizeof(VirtioBlkConfig));
-+
-+}
-+
-+int virtio_pci_set_selected_vq(VDev *vdev, uint16_t queue_num)
-+{
-+    uint16_t le_queue_num;
-+
-+    le_queue_num = bswap16(queue_num);
-+    return pci_write(vdev->pci_fh, VPCI_C_OFFSET_Q_SELECT, (uint64_t)le_queue_num, 2);
-+}
-+
-+int virtio_pci_set_queue_size(VDev *vdev, uint16_t queue_size)
-+{
-+    uint16_t le_queue_size;
-+
-+    le_queue_size = bswap16(queue_size);
-+    return pci_write(vdev->pci_fh, VPCI_C_OFFSET_Q_SIZE, (uint64_t)le_queue_size, 2);
-+}
-+
-+static int virtio_pci_set_queue_enable(VDev *vdev, uint16_t enabled)
-+{
-+    uint16_t le_enabled;
-+
-+    le_enabled = bswap16(enabled);
-+    return pci_write(vdev->pci_fh, VPCI_C_OFFSET_Q_ENABLE, (uint64_t)le_enabled, 2);
-+}
-+
-+static int set_pci_vq_addr(VDev *vdev, void* addr, uint64_t config_offset_lo)
-+{
-+    uint32_t le_lo, le_hi;
-+    uint32_t tmp;
-+    int rc;
-+
-+    tmp = (uint32_t)(((uint64_t)addr) >> 32);
-+    le_hi = bswap32(tmp);
-+
-+    tmp = (uint32_t)((uint64_t)addr & 0xFFFFFFFF);
-+    le_lo = bswap32(tmp);
-+
-+    rc =  pci_write(vdev->pci_fh, config_offset_lo, (uint64_t)le_lo, 4);
-+    rc |=  pci_write(vdev->pci_fh, config_offset_lo + 4, (uint64_t)le_hi, 4);
-+
-+    return rc;
-+}
-+
-+/* virtio spec v1.1 para 4.1.2.1 */
-+void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
-+{
-+    switch(device_id) {
-+    case 0x1001:
-+        vdev->type = VIRTIO_ID_BLOCK;
-+        break;
-+    case 0x1000: /* Other valid but currently unsupported virtio device types */
-+    case 0x1004:
-+    default:
-+        vdev->type = 0;
-+    }
-+}
-+
-+/*
-+ * Read PCI configuration space to find the offset of the Common, Device, and
-+ * Notification memory regions within the modern memory space.
-+ * Returns 0 if success, 1 if a capability could not be located, or a
-+ * negative RC if the configuration read failed.
-+ */
-+static int virtio_pci_read_pci_cap_config(VDev *vdev)
-+{
-+    uint8_t pos;
-+    uint64_t data;
-+
-+    /* Common cabilities */
-+    pos = find_cap_pos(vdev->pci_fh, VIRTIO_PCI_CAP_COMMON_CFG);
-+    if (!pos) {
-+        puts("Failed to locate PCI common configuration");
-+        return 1;
-+    }
-+    if (pci_read(vdev->pci_fh, pos + VIRTIO_PCI_CAP_OFFSET, 15, &data, 4)) {
-+        return -EIO;
-+    }
-+    common_offset = bswap32(data);
-+
-+    /* Device cabilities */
-+    pos = find_cap_pos(vdev->pci_fh, VIRTIO_PCI_CAP_DEVICE_CFG);
-+    if (!pos) {
-+        puts("Failed to locate PCI device configuration");
-+        return 1;
-+    }
-+    if (pci_read(vdev->pci_fh, pos + VIRTIO_PCI_CAP_OFFSET, 15, &data, 4)) {
-+        return -EIO;
-+    }
-+    device_offset = bswap32(data);
-+
-+    /* Notification cabilities */
-+    pos = find_cap_pos(vdev->pci_fh, VIRTIO_PCI_CAP_NOTIFY_CFG);
-+    if (!pos) {
-+        puts("Failed to locate PCI notification configuration");
-+        return 1;
-+    }
-+    if (pci_read(vdev->pci_fh, pos + VIRTIO_PCI_CAP_OFFSET, 15, &data, 4)) {
-+        return -EIO;
-+    }
-+    notify_offset = bswap32(data);
-+
-+    if (pci_read(vdev->pci_fh, pos + VIRTIO_PCI_NOTIFY_CAP_MULT, 15, &data, 4)) {
-+        return -EIO;
-+    }
-+    notify_mult = bswap32(data);
-+
-+    if (pci_read(vdev->pci_fh, device_offset + VPCI_C_OFFSET_Q_NOFF, 4, &data, 2)) {
-+        return -EIO;
-+    }
-+    q_notify_offset = bswap16(data);
-+
-+    return 0;
-+}
-+
-+int virtio_pci_reset(VDev *vdev)
-+{
-+    int rc;
-+    uint8_t status = VPCI_S_RESET;
-+
-+    rc = virtio_pci_set_status(vdev, status);
-+    rc |= virtio_pci_get_status(vdev, &status);
-+
-+    if (rc || status) {
-+        puts("Failed to reset virtio-pci device");
-+        return 1;
-+    }
-+
-+    return 0;
-+}
-+
-+int virtio_pci_setup(VDev *vdev)
-+{
-+    VRing *vr;
-+    int rc;
-+    uint64_t pci_features, data;
-+    uint8_t status;
-+    int i = 0;
-+
-+    vdev->config.blk.blk_size = 0;
-+    vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
-+    vdev->cmd_vr_idx = 0;
-+
-+    if (virtio_reset(vdev)) {
-+        return -EIO;
-+    }
-+
-+    status = VPCI_S_ACKNOWLEDGE;
-+    rc = virtio_pci_set_status(vdev, status);
-+    if (rc) {
-+        puts("Virtio-pci device Failed to ACKNOWLEDGE");
-+        return -EIO;
-+    }
-+
-+    virtio_pci_read_pci_cap_config(vdev);
-+    if (rc) {
-+        printf("Invalid PCI capabilities");
-+        return -EIO;
-+    }
-+
-+    switch (vdev->type) {
-+    case VIRTIO_ID_BLOCK:
-+        vdev->nr_vqs = 1;
-+        vdev->cmd_vr_idx = 0;
-+        virtio_pci_get_blk_config(vdev);
-+        break;
-+    default:
-+        puts("Unsupported virtio device");
-+        return -ENODEV;
-+    }
-+
-+    status |= VPCI_S_DRIVER;
-+    rc = virtio_pci_set_status(vdev, status);
-+    if (rc) {
-+        puts("Set status failed");
-+        return -EIO;
-+    }
-+
-+    /* Feature negotiation */
-+    rc = virtio_pci_get_hfeatures(vdev, &pci_features);
-+    if (rc) {
-+        puts("Failed to get feature bits");
-+        return -EIO;
-+    }
-+
-+    rc = virtio_pci_set_gfeatures(vdev);
-+    if (rc) {
-+        puts("Failed to set feature bits");
-+        return -EIO;
-+    }
-+
-+    /* Configure virt-queues for pci */
-+    for (i = 0; i < vdev->nr_vqs; i++) {
-+        VqInfo info = {
-+            .queue = (unsigned long long) virtio_get_ring_area() + (i * VIRTIO_RING_SIZE),
-+            .align = KVM_S390_VIRTIO_RING_ALIGN,
-+            .index = i,
-+            .num = 0,
-+        };
-+
-+        vr = &vdev->vrings[i];
-+        rc = pci_read(vdev->pci_fh, VPCI_C_COMMON_NUMQ, 4, &data, 2);
-+        if (rc) {
-+            return rc;
-+        }
-+
-+        info.num = data;
-+        vring_init(vr, &info);
-+
-+        rc = virtio_pci_set_selected_vq(vdev, vr->id);
-+        if (rc) {
-+            puts("Failed to set selected virt-queue");
-+            return -EIO;
-+        }
-+
-+        rc = virtio_pci_set_queue_size(vdev, 16);
-+        if (rc) {
-+            puts("Failed to set virt-queue size");
-+            return -EIO;
-+        }
-+
-+        rc = set_pci_vq_addr(vdev, vr->desc, VPCI_C_OFFSET_Q_DESCLO);
-+        rc |= set_pci_vq_addr(vdev, vr->avail, VPCI_C_OFFSET_Q_AVAILLO);
-+        rc |= set_pci_vq_addr(vdev, vr->used, VPCI_C_OFFSET_Q_USEDLO);
-+        if (rc) {
-+            puts("Failed to set virt-queue address");
-+            return -EIO;
-+        }
-+
-+        rc = virtio_pci_set_queue_enable(vdev, true);
-+        if (rc) {
-+            puts("Failed to set virt-queue enabled");
-+            return -EIO;
-+        }
-+    }
-+
-+    status |= VPCI_S_FEATURES_OK | VPCI_S_DRIVER_OK;
-+    return virtio_pci_set_status(vdev, status);
-+}
-+
-+int virtio_pci_setup_device(void)
-+{
-+    int rc;
-+    VDev *vdev = virtio_get_device();
-+
-+    rc = enable_pci_function(&vdev->pci_fh);
-+    if (rc) {
-+        puts("Failed to enable PCI function");
-+        return rc;
-+    }
-+
-+    return 0;
-+}
-+
-+long virtio_pci_notify(uint32_t fhandle, int vq_id)
-+{
-+    uint64_t notice = 1;
-+    uint32_t offset = notify_offset + vq_id * q_notify_offset;
-+
-+    return pci_write(fhandle, offset, notice, 4);
-+}
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index 05cfca4dad..dba30335b7 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -14,6 +14,7 @@
- #include "virtio.h"
- #include "virtio-scsi.h"
- #include "virtio-ccw.h"
-+#include "virtio-pci.h"
- #include "bswap.h"
- #include "helper.h"
- #include "s390-time.h"
-@@ -97,6 +98,8 @@ bool vring_notify(VRing *vr)
-     case S390_IPL_TYPE_QEMU_SCSI:
-     case S390_IPL_TYPE_CCW:
-         vr->cookie = virtio_ccw_notify(vr->schid, vr->id, vr->cookie);
-+    case S390_IPL_TYPE_PCI:
-+        vr->cookie = virtio_pci_notify(virtio_get_device()->pci_fh, vr->id);
-     }
- 
-     return vr->cookie >= 0;
-@@ -181,6 +184,8 @@ int virtio_reset(VDev *vdev)
-     case S390_IPL_TYPE_QEMU_SCSI:
-     case S390_IPL_TYPE_CCW:
-         return virtio_ccw_reset(vdev);
-+    case S390_IPL_TYPE_PCI:
-+        return virtio_pci_reset(vdev);
-     }
- 
-     return -1;
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 1f17f98fc1..589962b998 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
- 
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
-       virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
--      virtio-ccw.o clp.o pci.o
-+      virtio-ccw.o clp.o pci.o virtio-pci.o
- 
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
- 
--- 
-2.49.0
+> +        } else {
+> +            return iommu_bus->iommu_ops->get_address_space(bus,
+> +                                 iommu_bus->iommu_opaque, devfn);
+> +        }
+> +    }
+> +    return &address_space_memory;
+> +}
+> +
+>  int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
+>                                    IOMMUNotify fn, void *opaque)
+>  {
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index c54f2b53ae..0d3b351903 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -652,6 +652,21 @@ typedef struct PCIIOMMUOps {
+>                              uint32_t pasid, bool priv_req, bool exec_req,
+>                              hwaddr addr, bool lpig, uint16_t prgi, bool is_read,
+>                              bool is_write);
+> +    /**
+> +     * @get_msi_address_space: get the address space for MSI doorbell address
+> +     * for devices
+> +     *
+> +     * Optional callback which returns a pointer to an #AddressSpace. This
+> +     * is required if MSI doorbell also gets translated through IOMMU(eg: ARM)
+IOMMU (
+
+> +     *
+> +     * @bus: the #PCIBus being accessed.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number
+> +     */
+> +    AddressSpace * (*get_msi_address_space)(PCIBus *bus, void *opaque,
+> +                                            int devfn);
+>  } PCIIOMMUOps;
+>  
+>  bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
+> @@ -660,6 +675,7 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
+>  bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+>                                   Error **errp);
+>  void pci_device_unset_iommu_device(PCIDevice *dev);
+> +AddressSpace *pci_device_iommu_msi_address_space(PCIDevice *dev);
+>  
+>  /**
+>   * pci_device_get_viommu_flags: get vIOMMU flags.
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index b8a1c071f5..10eb8655c6 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -1611,7 +1611,7 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level)
+>  int kvm_arch_fixup_msi_route(struct kvm_irq_routing_entry *route,
+>                               uint64_t address, uint32_t data, PCIDevice *dev)
+>  {
+> -    AddressSpace *as = pci_device_iommu_address_space(dev);
+> +    AddressSpace *as = pci_device_iommu_msi_address_space(dev);
+>      hwaddr xlat, len, doorbell_gpa;
+>      MemoryRegionSection mrs;
+>      MemoryRegion *mr;
+Thanks
+
+Eric
 
 
