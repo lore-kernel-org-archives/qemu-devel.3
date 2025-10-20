@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE1CCCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED92ACCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 13:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAqGG-0002sm-Kl; Mon, 20 Oct 2025 09:49:20 -0400
+	id 1vAqGr-00032i-8m; Mon, 20 Oct 2025 09:49:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vAqGD-0002sO-TB
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:49:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1vAqGo-00032Q-Jj
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:49:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vAqGB-000401-Gx
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:49:17 -0400
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1vAqGl-00041X-RJ
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 09:49:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760968149;
+ s=mimecast20190719; t=1760968188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bc6cE2alQ7Jvw0zLHsCJHPNO0E7TeHw5j37Rexdz1Eo=;
- b=VhK7P5GjAb0GJWimPV0Yy9Zkf5bBUZpAESm/kevUheJ3/f4D9TK5Yn9PPHzLhgx7Sfzwog
- f4OstRs4qNVzDqXutM0N+u5aEI6yFFr/swBUSpuBA5t2EoPQoAslGZHs05LdnsO8a8Tk3Y
- 42kNcbCtBy6Fvr1NKWuk7m+vj212Zb8=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ej8351/0UvMa/41ngEr3sh4LZ9iC70aq0b1MPPoDwSo=;
+ b=TcdkSZtFgjIDCdWIAw3IgB69fyXph5DW+pqPgR8lSPxvSIC45iNBDqVpvo5UACtk4z3zDt
+ ZARC4mmWErs/OxxU0rNopsOOm6oit9tofQsSx+FxiNFGLDUsFo/on8PgK9eh+G0yZgfOsM
+ IYWbe/l+TMlM7d/YZ91V82ZtvRo57bE=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-pJUSZ1uaOKa5nySXQQn5Uw-1; Mon, 20 Oct 2025 09:49:07 -0400
-X-MC-Unique: pJUSZ1uaOKa5nySXQQn5Uw-1
-X-Mimecast-MFC-AGG-ID: pJUSZ1uaOKa5nySXQQn5Uw_1760968147
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-81a8065daf4so81029316d6.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 06:49:07 -0700 (PDT)
+ us-mta-371-1193aKMjMAeeJjhkmusCvw-1; Mon, 20 Oct 2025 09:49:45 -0400
+X-MC-Unique: 1193aKMjMAeeJjhkmusCvw-1
+X-Mimecast-MFC-AGG-ID: 1193aKMjMAeeJjhkmusCvw_1760968184
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-b56ae0c8226so2905500a12.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 06:49:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760968147; x=1761572947;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bc6cE2alQ7Jvw0zLHsCJHPNO0E7TeHw5j37Rexdz1Eo=;
- b=PLYi130HA3fRjjgg5aYe5sIH7J65voIw1IPVpUfqZjjveHe9Dkq9NLlplzig1sQJI6
- VQCQGTpPU8IKnj7p7AnBsapB2KU5BDFw6oHNR86C0dEIbNhPSg/DwuIy+VfGyqGle/pp
- 7ZeSb4a/y8eAqgOPsweq9SQmE5i+MGchP5ztMFi222pm+Is6WhJEowgtlmwh+YgW6roB
- aUvo50qVV/R/J+zA+rt09KrIBDl0oxuDcBw/OT21Ipi+I5xUeUOkufAX+IAOyvnz1F8j
- FgNeve0iW27LSx5fv7Yy+MLqtUx+FkSFvu5OoTG9Ci0VNzxDsfUgLvTS0WejjT81sX/Z
- 05ig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgRwPsniksMHQ+ph5z8/7vflHUynfkDLiZg+yNAeH13IY7uC2eE2lu6DVNrlnRmVoaN0KU25tN2ze2@nongnu.org
-X-Gm-Message-State: AOJu0YwEyyqZoP8R30wd6WWKxQvw8FICLm6YIvLg17SsYGpwJ1wF7W/x
- w0c13+Sp1JkBa3ZRniwsKEUj0XjFhPG02FR63Q/4wNfm3CaUf3uvZzllyUit5CnGYsrSm7k4pkM
- lcBbYAehb2plCsGgiL6mZyIc+2d1oe3dRk9Ee9WibiywH+t2y/O7v7Xpv
-X-Gm-Gg: ASbGncuIkQ18KcMWQMbyMG8lMszU6iWM/NJU9nw+5/sUDtGiWnsdwybygkyzhKeNlhH
- GUnDbnfFXOUf0mpU9JfjJRiYVAFh7K1Udg5A2j/783UcK50XX1QB82V3DBoXaNWgESJiw1dqwkT
- RkPwMJ2D1G4Ee5s1wX9oN5AyQD8+ekTq9dFyxfqoz6qHRAnDzSdQzFKM47RGkaO0UGV76haHmqa
- 8IYuesOJwY77LgfFmE1YsbSXon5G7fIIuZkpxwm3ROuNiCp8SPX9Sw/MES2p7CekjpwO3vMOFGD
- e90cmbc8j+XLp8imtKRDdmc7qyvBdEsm3687bV2TUIDtF//ikGKmilj1+7CEkzMoFKc=
-X-Received: by 2002:a05:6214:19c2:b0:87c:124b:774d with SMTP id
- 6a1803df08f44-87c2056b02emr168043796d6.17.1760968147274; 
- Mon, 20 Oct 2025 06:49:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4Z7N+DPwIh5s5Ukl4do46t5XqLcjQLV96bTlgj1InQIQpmQZfniuKfMsyhHohQnaRRIOi6g==
-X-Received: by 2002:a05:6214:19c2:b0:87c:124b:774d with SMTP id
- 6a1803df08f44-87c2056b02emr168043476d6.17.1760968146829; 
- Mon, 20 Oct 2025 06:49:06 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87d0288488esm51141806d6.34.2025.10.20.06.49.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Oct 2025 06:49:05 -0700 (PDT)
-Date: Mon, 20 Oct 2025 09:49:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- armbru@redhat.com
-Subject: Re: [PATCH] migration: vmsd errp handlers: return bool
-Message-ID: <aPY90JnJtyHZUUuq@x1.local>
-References: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
+ d=1e100.net; s=20230601; t=1760968184; x=1761572984;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ej8351/0UvMa/41ngEr3sh4LZ9iC70aq0b1MPPoDwSo=;
+ b=AuacYviZxrHe9TdFQhMr4/EPijG8MbiOv42jiJq1gHDwfI8Y42F6moDqKMeuwqrTpx
+ tUBYMOO6sCFWsFJCZUsJ6w/8UkDQ3r7sCey0B6B0G6x/54DM/Vj9oY9BeQlzEGUNuCm6
+ reI3Qqv6iuQ4muyutJVu8GKD9kd1gzVODg4O1NyI74ISwN8tF5a2dpuGmDPPwfVIxWzG
+ XmXAdUhTOwCVorPb0XRT7PBiEGNwAfYKohCZJwYcLSRXmyeZSSHai8TF0xrbkHubj+pv
+ JyKHRFySshY12U5GxTFXj9iGV5mbg0e09ALmhygUZCF+nPIfLmU97O+bSbho1Hvcv176
+ 9m4Q==
+X-Gm-Message-State: AOJu0Yy+50/Zvu4MUr0xk+gJQHw1qjLTnxkYKObxO7KXVnO2wiJpY4Zc
+ oVuQhQFSqSHo3JOTB6k9x0Er5Sv2bVHJLSjG3kfwOETTkZONiVnPvdzhcct86efXu3yUIZOJie4
+ MH2K89DoLIyx+yJ8nIdqfhaYYUfnEC5xsKn/IVVSiYEyHHCamAzhnolEhpKjdmGKk1XJiieQEaI
+ 2+MB5GuZFe/hMtWsUYagJKxsze1ZyApYE=
+X-Gm-Gg: ASbGncuRZWl5OmIVqI5LzF+Oiv78AlM0zlssG6J3oRFnYFwzMB9CBiqwFBdSaOA2slC
+ SqQK5LIRcSUQlI0CP3LHGAcUNxep13zJ1BDefhXbI+Ymf9Gc2j0KDzL5SYvTtd3Tt7DhZLOgjKW
+ Dht1UuzKjXGTQ8XY8oXUY/KQanTKxAWBDVtmlR8IboWSB6JUcD1xk=
+X-Received: by 2002:a17:903:3bce:b0:27e:ec72:f67 with SMTP id
+ d9443c01a7336-290c9c89dd4mr148886085ad.6.1760968184181; 
+ Mon, 20 Oct 2025 06:49:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvKTg2YlkFHJmdM+9+OVL9F38ORTWDZyybsCrkTvqUCamklZVk0sGW4sQO836taHG/lQNXAV2omfzoEUxTc3Y=
+X-Received: by 2002:a17:903:3bce:b0:27e:ec72:f67 with SMTP id
+ d9443c01a7336-290c9c89dd4mr148885725ad.6.1760968183750; Mon, 20 Oct 2025
+ 06:49:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20251016143827.1850397-1-aesteve@redhat.com>
+ <20251016143827.1850397-4-aesteve@redhat.com>
+ <20251020132700.GB115852@fedora>
+In-Reply-To: <20251020132700.GB115852@fedora>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Mon, 20 Oct 2025 15:49:31 +0200
+X-Gm-Features: AS18NWCtHbIDfSM3NXFRL4oBoCwqGdhf4jcRBcpYrP9ESG2OkFSdAJ7q_myfnJo
+Message-ID: <CADSE00KCyFrc_f06B-OJ4zUG+nr8FhVkO_5WsJ2N39REWUMKKg@mail.gmail.com>
+Subject: Re: [PATCH v10 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ hi@alyssa.is, david@redhat.com, jasowang@redhat.com, dbassey@redhat.com, 
+ stevensd@chromium.org, Stefano Garzarella <sgarzare@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, slp@redhat.com, manos.pitsidianakis@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,52 +110,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 20, 2025 at 12:19:07PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> @@ -255,13 +252,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->          qemu_file_set_error(f, ret);
->          return ret;
->      }
-> -    if (vmsd->post_load_errp) {
-> -        ret = vmsd->post_load_errp(opaque, version_id, errp);
-> -        if (ret < 0) {
-> -            error_prepend(errp, "post load hook failed for: %s, version_id: "
-> -                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
-> -                          vmsd->version_id, vmsd->minimum_version_id, ret);
-> -        }
-> +    if (vmsd->post_load_errp && !vmsd->post_load_errp(opaque, version_id,
+On Mon, Oct 20, 2025 at 3:27=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Thu, Oct 16, 2025 at 04:38:23PM +0200, Albert Esteve wrote:
+> > Add SHMEM_MAP/_UNMAP request to the vhost-user
+> > spec documentation.
+> >
+> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > ---
+> >  docs/interop/vhost-user.rst | 58 +++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 58 insertions(+)
+> >
+> > diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> > index 436a94c0ee..8143d56419 100644
+> > --- a/docs/interop/vhost-user.rst
+> > +++ b/docs/interop/vhost-user.rst
+> > @@ -350,6 +350,27 @@ Device state transfer parameters
+> >    In the future, additional phases might be added e.g. to allow
+> >    iterative migration while the device is running.
+> >
+> > +MMAP request
+> > +^^^^^^^^^^^^
+> > +
+> > ++-------+---------+-----------+------------+-----+-------+
+> > +| shmid | padding | fd_offset | shm_offset | len | flags |
+> > ++-------+---------+-----------+------------+-----+-------+
+> > +
+> > +:shmid: a 8-bit shared memory region identifier
+> > +
+> > +:fd_offset: a 64-bit offset of this area from the start
+> > +            of the supplied file descriptor
+> > +
+> > +:shm_offset: a 64-bit offset from the start of the
+> > +             pointed shared memory region
+> > +
+> > +:len: a 64-bit size of the memory to map
+> > +
+> > +:flags: a 64-bit value:
+> > +  - 0: Pages are mapped read-only
+> > +  - 1: Pages are mapped read-write
+> > +
+> >  C structure
+> >  -----------
+> >
+> > @@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with =
+the following struct:
+> >            VhostUserInflight inflight;
+> >            VhostUserShared object;
+> >            VhostUserTransferDeviceState transfer_state;
+> > +          VhostUserMMap mmap;
+> >        };
+> >    } QEMU_PACKED VhostUserMsg;
+> >
+> > @@ -1057,6 +1079,7 @@ Protocol features
+> >    #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
+> >    #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
+> >    #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
+> > +  #define VHOST_USER_PROTOCOL_F_SHMEM                20
+> >
+> >  Front-end message types
+> >  -----------------------
+> > @@ -1865,6 +1888,41 @@ is sent by the front-end.
+> >    when the operation is successful, or non-zero otherwise. Note that i=
+f the
+> >    operation fails, no fd is sent to the backend.
+> >
+> > +``VHOST_USER_BACKEND_SHMEM_MAP``
+> > +  :id: 9
+> > +  :equivalent ioctl: N/A
+> > +  :request payload: fd and ``struct VhostUserMMap``
+> > +  :reply payload: N/A
+> > +
+> > +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
+> > +  successfully negotiated, this message can be submitted by the backen=
+ds to
+> > +  advertise a new mapping to be made in a given VIRTIO Shared Memory R=
+egion.
+> > +  Upon receiving the message, the front-end will mmap the given fd int=
+o the
+> > +  VIRTIO Shared Memory Region with the requested ``shmid``.
+> > +  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
+> > +  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
+> > +  must respond with zero when operation is successfully completed,
+> > +  or non-zero otherwise.
+> > +
+> > +  Mapping over an already existing map is not allowed and requests sha=
+ll fail.
+> > +  Therefore, the memory range in the request must correspond with a va=
+lid,
+> > +  free region of the VIRTIO Shared Memory Region. Also, note that mapp=
+ings
+> > +  consume resources and that the request can fail when there are no re=
+sources
+> > +  available.
+>
+> If you respin this series or send follow-up patches, please extend this
+> to mention that mappings are automatically unmapped by the frontend
+> across device reset. This behavior is already implemented in the patch
+> series but needs to be part of the spec so that spec implementors are
+> aware of it.
 
-I think this will change the semantics even if I do not expect a real user
-to exist.. if post_load_errp() returned true here, then it'll keep looking
-for post_load() and execute.
+Sounds good!
 
-It might still be good to keep the old semantics, so that if
-post_load_errp() is provided, then we ignore post_load().  Same to the rest
-hooks.
-
-> +                                                      errp)) {
-> +        error_prepend(errp, "post load hook failed for: %s, version_id: "
-> +                      "%d, minimum_version: %d, ret: %d: ", vmsd->name,
-> +                      vmsd->version_id, vmsd->minimum_version_id, ret);
-> +        ret = -EINVAL;
->      } else if (vmsd->post_load) {
->          ret = vmsd->post_load(opaque, version_id);
->          if (ret < 0) {
-> @@ -438,9 +434,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->      trace_vmstate_save_state_top(vmsd->name);
->  
->      if (vmsd->pre_save_errp) {
-> -        ret = vmsd->pre_save_errp(opaque, errp);
->          trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
-> -        if (ret < 0) {
-> +        if (!vmsd->pre_save_errp(opaque, errp)) {
->              error_prepend(errp, "pre-save for %s failed, ret: %d: ",
->                            vmsd->name, ret);
->          }
-> -- 
-> 2.48.1
-> 
-
--- 
-Peter Xu
+>
+> > +
+> > +``VHOST_USER_BACKEND_SHMEM_UNMAP``
+> > +  :id: 10
+> > +  :equivalent ioctl: N/A
+> > +  :request payload: ``struct VhostUserMMap``
+> > +  :reply payload: N/A
+> > +
+> > +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
+> > +  successfully negotiated, this message can be submitted by the backen=
+ds so
+> > +  that the front-end un-mmaps a given range (``shm_offset``, ``len``) =
+in the
+> > +  VIRTIO Shared Memory Region with the requested ``shmid``. Note that =
+the
+> > +  given range shall correspond to the entirety of a valid mapped regio=
+n.
+> > +  A reply is generated indicating whether unmapping succeeded.
+> > +
+> >  .. _reply_ack:
+> >
+> >  VHOST_USER_PROTOCOL_F_REPLY_ACK
+> > --
+> > 2.49.0
+> >
 
 
