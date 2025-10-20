@@ -4,62 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21ED6CCD1A4
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2918CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 16:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAsMd-0005CJ-6Q; Mon, 20 Oct 2025 12:04:03 -0400
+	id 1vAsX1-0000qA-EC; Mon, 20 Oct 2025 12:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vAsMW-00054C-A5
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:03:57 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vAsWz-0000oV-HN
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:14:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vAsMT-0007Zz-GQ
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:03:56 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AD17580A00;
- Mon, 20 Oct 2025 19:03:49 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a51::1:37])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id k3YMa23Nr8c0-mPOb6J6r; Mon, 20 Oct 2025 19:03:49 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1760976229;
- bh=6zqo4jU0YEgQOc8lb6T4oucS4xa0BgaQP+604C70JGQ=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=RaW/YMQB6K4sbL1+HDWg9xllyxPFnhu9ylEupnAzRUT3iQCx1/36i59HICl6l6r0b
- Grsvm7Hz9RlZlHugiHpN/bBs6OVDDb5rpxc3RCLzSXd2qwFq36wRbuJh3aG4BthmEX
- 6dC/DiykGukibwkdJfLW+ttgKtBeXbD6ZE47wSCc=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: peterx@redhat.com
-Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- armbru@redhat.com, berrange@redhat.com,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v2 2/2] migration: vmsd errp handlers: return bool
-Date: Mon, 20 Oct 2025 19:03:44 +0300
-Message-ID: <20251020160344.2401137-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251020160344.2401137-1-vsementsov@yandex-team.ru>
-References: <20251020160344.2401137-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vAsWx-0000Dv-At
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 12:14:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1760976879;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zlASHT4nSdfSAEAwYMZrrN6ZSMgiz2XvepN8CyW/p44=;
+ b=TUbln+TWSzWUVKYEjTqwY9+r/8boDKJu1VN+tfgtoTXTFa6UnWOGWgaQnQK7D1G1LAksZY
+ F65wFHzMx32ko76hY1w/YJzE9SRVa7rI3K5Khf04sDbq5gkI8vGfCpqlmfUgxISMhEoWV6
+ FerHoDgoNyo6nWkh8AY/EHVn6Q12Lpk=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-192-3aMMRnnEO6KfyL4nkMPjmg-1; Mon, 20 Oct 2025 12:14:37 -0400
+X-MC-Unique: 3aMMRnnEO6KfyL4nkMPjmg-1
+X-Mimecast-MFC-AGG-ID: 3aMMRnnEO6KfyL4nkMPjmg_1760976876
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-426ec5e9278so5886662f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 09:14:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760976876; x=1761581676;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zlASHT4nSdfSAEAwYMZrrN6ZSMgiz2XvepN8CyW/p44=;
+ b=mgTuvaV1vjtT+xsxFEeHpQX16EIoYggN9ZRagTOrVkQPgKz5bFfmgeC5bbhPm2SmII
+ 08AFnCpW8JsE+pKu3jSs4rdugnehzH0cv4Z00odN7DO9n+9XhY7vmNztFGYZm+SJ7HZ7
+ A3MwSra2nRJho1bpjNXa4bqZtc0Vp2LglSmvW3ZW/yGH7qYXK0+RjFnVyOzFDyYS4TTN
+ BNscSnHMzPXEFWI5Ki3u8pdOhYS74ViQexNndx+WIlI5rMcCEX0qLbfw6mPt5UYby4w3
+ 2K1UIy/wj/1Hm1F1xA/voR8+F3j4nrSAJ2+E9JeNL8vwWZRCMNUnEylQp5uXiCClV3Kp
+ 8X1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUH84FlLNakriSd+EqqQ0H2WhEqufAj5LKU9fI0FDZkNbCiDAFk040Ga2VvGaAkLKPA+6T8Th+YJfDW@nongnu.org
+X-Gm-Message-State: AOJu0YztkA0NhZPazBuaBIdD+uP8TcUU5I5afwdlT8kenESu3B+xUPml
+ pKBHGVw8P/x+aPQO7uWOYRfmwNKbqzb1AyGp6OFxsRlrKHJlzN874cQ54LaR0kuN0b8z2Vi7zAJ
+ PkHrGLyeGaKTRYp1NFgfZ1SZnTZWP+4cDsL7xC7cUxcmfJ6afYS4hUh+8
+X-Gm-Gg: ASbGncvtACbBOg9dFIdAGouHKXmap5d7jnulIR4PoJ7WHjXwe+/2Tb4/z+6XbHvqVGb
+ Dt3y14AfaNHUfW7t9YZOm+Weu26NoSkjnyCc7VsN6EUbQ5JmMVpXHpgemvBDAWErbRfeKFYwYL4
+ HdwEoz8+whKiPP74cMfBRklpvtp1BeiGO/FM2BM5oEUbC7oy9FqERcbYBw3Fj85lKLflYTFdOSB
+ EDWVcqhKIUTBp8JIpwIknx6q459/kE5ntGXHDWYAHZHimRKXIqE2pDraL/hU0oTGD/WgUbB6xo5
+ Q3u9Yl6Jw0OeEC0mB6bui/TZoQ12kTU6oLYLpRkDQiDGiCMCFU+4f81JVx9XaGkJ3KIrgL4/oqp
+ Pawib
+X-Received: by 2002:a05:6000:258a:b0:428:4082:c8e9 with SMTP id
+ ffacd0b85a97d-4284082cadamr4943050f8f.62.1760976876223; 
+ Mon, 20 Oct 2025 09:14:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmqb8TlE8fpgh12Fjzby7oqjgUptW2DxpK2mLKwUMsGCcloIZlmxmt3EJsFSAJpRbF8QRTMQ==
+X-Received: by 2002:a05:6000:258a:b0:428:4082:c8e9 with SMTP id
+ ffacd0b85a97d-4284082cadamr4943028f8f.62.1760976875815; 
+ Mon, 20 Oct 2025 09:14:35 -0700 (PDT)
+Received: from [192.168.43.95] ([37.166.134.90])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4283e7804f4sm13938556f8f.10.2025.10.20.09.14.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Oct 2025 09:14:35 -0700 (PDT)
+Message-ID: <291fe8be-405e-4ea3-acfb-d090f6a7cd15@redhat.com>
+Date: Mon, 20 Oct 2025 18:14:33 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 11/27] hw/pci/pci: Introduce optional
+ get_msi_address_space() callback
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ jgg@nvidia.com, ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ shameerkolothum@gmail.com
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-12-skolothumtho@nvidia.com>
+ <aPFx7Egdny+JCO9U@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aPFx7Egdny+JCO9U@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,167 +120,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recently we moved to returning errp. Why to keep int return value?
-Generally it doesn't help: you can't use in a logic of handling
-an error, as you are never sure, that in future the logic in
-the stack will not change: it may start to return another error
-code in the same case, or return same error code in another case.
+Hi Nicolin, Shameer,
 
-Actually, we can only rely on concrete errno code when get it
-_directly_ from documented library function or syscall. This way we
-handle for example EINTR. But later in a stack, we can only add
-this errno to the textual error by strerror().
+On 10/17/25 12:30 AM, Nicolin Chen wrote:
+> On Mon, Sep 29, 2025 at 02:36:27PM +0100, Shameer Kolothum wrote:
+>> On ARM, when a device is behind an IOMMU, its MSI doorbell address is
+>> subject to translation by the IOMMU. This behavior affects vfio-pci
+>> passthrough devices assigned to guests using an accelerated SMMUv3.
+>>
+>> In this setup, we configure the host SMMUv3 in nested mode, where
+>> VFIO sets up the Stage-2 (S2) mappings for guest RAM, while the guest
+>> controls Stage-1 (S1). To allow VFIO to correctly configure S2 mappings,
+>> we currently return the system address space via the get_address_space()
+>> callback for vfio-pci devices.
+>>
+>> However, QEMU/KVM also uses this same callback path when resolving the
+>> address space for MSI doorbells:
+>>
+>> kvm_irqchip_add_msi_route()
+>>   kvm_arch_fixup_msi_route()
+>>     pci_device_iommu_address_space()
+>>      get_address_space()
+>>
+>> This will cause the device to be configured with wrong MSI doorbell
+>> address if it return the system address space.
+> I think it'd be nicer to elaborate why a wrong address will be returned:
+>
+> --------------------------------------------------------------------------
+> On ARM, a device behind an IOMMU requires translation for its MSI doorbell
+> address. When HW nested translation is enabled, the translation will also
+> happen in two stages: gIOVA => gPA => ITS page.
+>
+> In the accelerated SMMUv3 mode, both stages are translated by the HW. So,
+> get_address_space() returns the system address space for stage-2 mappings,
+> as the smmuv3-accel model doesn't involve in either stage.
+I don't understand "doesn't involve in either stage". This is still not
+obious to me that for an HW accelerated nested IOMMU get_address_space()
+shall return the system address space. I think this deserves to be
+explained and maybe documented along with the callback.
+>
+> On the other hand, this callback is also invoked by QEMU/KVM:
+>
+>  kvm_irqchip_add_msi_route()
+>    kvm_arch_fixup_msi_route()
+>      pci_device_iommu_address_space()
+>       get_address_space()
+>
+> What KVM wants is to translate an MSI doorbell gIOVA to a vITS page (gPA),
+> so as to inject IRQs to the guest VM. And it expected get_address_space()
+> to return the address space for stage-1 mappings instead. Apparently, this
+> is broken.
+"Apparently this is broken". Please clarify what is broken. Definitively if
 
-Let this new, recently added API be simpler and clearer, let it
-return simple boolean value, so we shouldn't think:
+pci_device_iommu_address_space(dev) retruns @adress_system_memory no
+translation is attempted.
 
-  - should we handle different error codes differently
-    (if yes - how exactly, if no - why do we need this information?)
+kvm_arch_fixup_msi_route() was introduced by 
+https://lore.kernel.org/all/1523518688-26674-12-git-send-email-eric.auger@redhat.com/
 
-  - should we add it to errp, or it was already added earlier in
-    the stack
+This relies on the vIOMMU translate callback which is supposed to be bypassed in general with VFIO devices. Isn't needed only for emulated devices?
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- backends/tpm/tpm_emulator.c   | 10 ++++------
- docs/devel/migration/main.rst |  6 +++---
- include/migration/vmstate.h   |  6 +++---
- migration/vmstate.c           | 24 +++++++++++-------------
- 4 files changed, 21 insertions(+), 25 deletions(-)
+May you and shameer discussed that in a previous thread. Might be worth to add the link to this discussion.
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index dacfca5ab7..3937ac5572 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -947,24 +947,22 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
- 
- /*
-  * Load the TPM state blobs into the TPM.
-- *
-- * Returns negative errno codes in case of error.
-  */
--static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
-+static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
- {
-     TPMBackend *tb = opaque;
-     int ret;
- 
-     ret = tpm_emulator_set_state_blobs(tb, errp);
-     if (ret < 0) {
--        return ret;
-+        return false;
-     }
- 
-     if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
--        return -EIO;
-+        return false;
-     }
- 
--    return 0;
-+    return true;
- }
- 
- static const VMStateDescription vmstate_tpm_emulator = {
-diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-index 1afe7b9689..234d280249 100644
---- a/docs/devel/migration/main.rst
-+++ b/docs/devel/migration/main.rst
-@@ -446,15 +446,15 @@ The functions to do that are inside a vmstate definition, and are called:
- 
- Following are the errp variants of these functions.
- 
--- ``int (*pre_load_errp)(void *opaque, Error **errp);``
-+- ``bool (*pre_load_errp)(void *opaque, Error **errp);``
- 
-   This function is called before we load the state of one device.
- 
--- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
-+- ``bool (*post_load_errp)(void *opaque, int version_id, Error **errp);``
- 
-   This function is called after we load the state of one device.
- 
--- ``int (*pre_save_errp)(void *opaque, Error **errp);``
-+- ``bool (*pre_save_errp)(void *opaque, Error **errp);``
- 
-   This function is called before we save the state of one device.
- 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 63ccaee07a..dbe330dd5f 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -218,11 +218,11 @@ struct VMStateDescription {
-     int minimum_version_id;
-     MigrationPriority priority;
-     int (*pre_load)(void *opaque);
--    int (*pre_load_errp)(void *opaque, Error **errp);
-+    bool (*pre_load_errp)(void *opaque, Error **errp);
-     int (*post_load)(void *opaque, int version_id);
--    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
-+    bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
-     int (*pre_save)(void *opaque);
--    int (*pre_save_errp)(void *opaque, Error **errp);
-+    bool (*pre_save_errp)(void *opaque, Error **errp);
-     int (*post_save)(void *opaque);
-     bool (*needed)(void *opaque);
-     bool (*dev_unplug_pending)(void *opaque);
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index fd066f910e..921e09c38e 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -154,13 +154,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         return -EINVAL;
-     }
-     if (vmsd->pre_load_errp) {
--        ret = vmsd->pre_load_errp(opaque, errp);
--        if (ret < 0) {
-+        if (!vmsd->pre_load_errp(opaque, errp)) {
-             error_prepend(errp, "pre load hook failed for: '%s', "
--                          "version_id: %d, minimum version_id: %d, "
--                          "ret: %d: ", vmsd->name, vmsd->version_id,
--                          vmsd->minimum_version_id, ret);
--            return ret;
-+                          "version_id: %d, minimum version_id: %d: "
-+                          vmsd->name, vmsd->version_id,
-+                          vmsd->minimum_version_id);
-+            return -EINVAL;
-         }
-     } else if (vmsd->pre_load) {
-         ret = vmsd->pre_load(opaque);
-@@ -256,11 +255,11 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         return ret;
-     }
-     if (vmsd->post_load_errp) {
--        ret = vmsd->post_load_errp(opaque, version_id, errp);
--        if (ret < 0) {
-+        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
-             error_prepend(errp, "post load hook failed for: %s, version_id: "
--                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
--                          vmsd->version_id, vmsd->minimum_version_id, ret);
-+                          "%d, minimum_version: %d: ", vmsd->name,
-+                          vmsd->version_id, vmsd->minimum_version_id);
-+            ret = -EINVAL;
-         }
-     } else if (vmsd->post_load) {
-         ret = vmsd->post_load(opaque, version_id);
-@@ -438,12 +437,11 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-     trace_vmstate_save_state_top(vmsd->name);
- 
-     if (vmsd->pre_save_errp) {
--        ret = vmsd->pre_save_errp(opaque, errp);
-         trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
--        if (ret < 0) {
-+        if (!vmsd->pre_save_errp(opaque, errp)) {
-             error_prepend(errp, "pre-save for %s failed, ret: %d: ",
-                           vmsd->name, ret);
--            return ret;
-+            return -EINVAL;
-         }
-     } else if (vmsd->pre_save) {
-         ret = vmsd->pre_save(opaque);
--- 
-2.48.1
+Thanks
+
+Eric
+
+
+>
+> Introduce an optional get_msi_address_space() callback and use that in the
+> above path.
+> --------------------------------------------------------------------------
+>
+>> @@ -652,6 +652,21 @@ typedef struct PCIIOMMUOps {
+>>                              uint32_t pasid, bool priv_req, bool exec_req,
+>>                              hwaddr addr, bool lpig, uint16_t prgi, bool is_read,
+>>                              bool is_write);
+>> +    /**
+>> +     * @get_msi_address_space: get the address space for MSI doorbell address
+>> +     * for devices
+> +     * @get_msi_address_space: get the address space to translate MSI doorbell
+> +     * address for a device
+>
+>> +     *
+>> +     * Optional callback which returns a pointer to an #AddressSpace. This
+>> +     * is required if MSI doorbell also gets translated through IOMMU(eg: ARM)
+> through vIOMMU (e.g. ARM).
+>
+> With these,
+>
+> Reviewed-by Nicolin Chen <nicolinc@nvidia.com>
+>
 
 
