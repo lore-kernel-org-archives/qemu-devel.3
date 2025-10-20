@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB15CCD1A2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF036CCD19F
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAy5c-00070q-Vb; Mon, 20 Oct 2025 18:10:53 -0400
+	id 1vAy4h-0006Q8-H7; Mon, 20 Oct 2025 18:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy5U-0006wB-AD
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:44 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4g-0006Ph-1b
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:09:54 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy5O-0006KF-Gb
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:10:44 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-471076f819bso38548645e9.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:10:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy4d-00062j-Pk
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:09:53 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-426edfffc66so3605218f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760998237; x=1761603037; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760998190; x=1761602990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9Cw/auqPGZF90bg+tsodLyu1anbpQABoi+IFSvgYon0=;
- b=zg80fWayYLrf53HlAa+hgpR5HoBUmtyA1SQZFmoT2L0+In1axfLREYDe59wmjeHuFG
- 9gKAyMJBCODxjc8xj/0Pun0b+PxbwFFpr9w3q7YaxoHEfG27pP77herwmXI7uPzuzOp3
- jArbh/6P0c7+f0TO0meu8uyF9o53pGVPoFd8DXD/zgZSzuATHid8snoOk2iKaNXqIML3
- DWGVOGvOVWbDiGtyKbEhwi0cKIkjdgWZGib23GeO67giGHxgYJtn/bY1r/70NeOIN4vw
- 9xA5nLQVWNc5s8LiiI98Lby9URo/11hnIZdb713ie+Q3Fl05GnYGH9RGJwsHBCUL7f64
- g8xg==
+ bh=6E1wKLq7nmDSAhd/TLUL+t/dNL7Yzwczc0AaVB8kGis=;
+ b=EVrdonAzejxc/KksvQ64undNU1pZDZ2024Ll39uOPSIllVTYxyZMg7XmOyA9PnW4ei
+ bADbeQbE0GqZrVB/jAgqIujs50hIAZ9IBWEXFK3vRuFVor+iVJY+2k+E01hXbnaa8HKM
+ lEejH/MUdfZB0yzzh1ieazNUXGnB7S1Ld9jMJGy0JfcsqSBNwaTPyyIu0odlxJ1obXsl
+ EhbEJ9fUMYaoK7u7I6RbHuL2r58sDegUI772Oti4uGnb1F9m1PCwKMN3nzrookhfTpDy
+ zRCG44c1iEynyC4p7R3ELB1AGf6NqMA3dNIxQPeoyyeTJdsYbWACLz67WEGgcUz9nJrC
+ AhfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760998237; x=1761603037;
+ d=1e100.net; s=20230601; t=1760998190; x=1761602990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9Cw/auqPGZF90bg+tsodLyu1anbpQABoi+IFSvgYon0=;
- b=uTMYFwfa2IkTeoZr3IgeI5l9/V57TUBLMhQglBwOLSMh3v07U34I8+xJQMMZfVVNMA
- 7bINbB7ojuS3aKQdnKozLj46P//m/3UBR8LDSPivtTy3qOoLakKILPOfIzfJSR4CiSeY
- L0Iypbe8Stu/KL+gXlcf+mRI5BzSdczDWIz11jEyinGjVq6uOE39g3b/3RRC8kI7nrek
- HcQN+yKOWYcKwq+cFBfANwJn81hjUBIZsZSHJWl4RenaR/UKMEW9XTE7D2J4TGli2bnf
- 3t28/qqNTv6UK4KxK1PLv3UIqEWldoGsLU4CaP7hR0KDPg/0ApkYJekaxp794pOK4Sq8
- M6kg==
-X-Gm-Message-State: AOJu0YxFBCUAxZ6QVUbQPzQn6tSm56YkTW7Y1mpzUmA9K+DwJ/snAuYX
- /Up2t/AlTKvmfwKPGC83fIYvC+cHw1c5jpmf3ncQ9EdLL/HGETunJZgkdoC8jMmZ1tU15FPxWfs
- IM72piyM=
-X-Gm-Gg: ASbGncvIt/9nuyJLdz1pDaGLbUc0CGAVkb1GQ3E6LsHvV5CSlyetXjreSNmivvQW+vE
- x+3Wq9CMFa0/AdF8mbEHy5XHCWLkXdVZSKgLT6yTzIz4x0YkDD07fSYj38bkaK9qSWQYLu0oKeM
- t0fYUnmpV3cUM2HrDWt67YNczlkvoaANKszPJB2lIFncTZjAYxLWXfXwIf/df2F5uPd7nEEIQ1U
- BZaDMIQaj2xabiDl+UhqOZkEYV+3lFKmOw5vPPHZ3C2Y8SrOk6JZaRd59oci7PTEpK0CJCEeLhi
- gSOUI5XiZSuHY3Ibbmo/4bZixQPM5caHMYHygvLTBnXGJoaUCXKli+WQ22zVt8ewCFApHPwfqdI
- bIWZOHKU5847597Bwb9web0CNARMB93eXDTOPw8lgwicD7Ik4R3mlaKkii2wyjQz8w9Mm5aqNrW
- YUO0H7T0W4L2Ju4r4pDzxGuK+yBUyTv6Mh6wGLoPh4u4lmj76Yzw==
-X-Google-Smtp-Source: AGHT+IFLJcFed2v1EwRR5nAucAd53PrnYFHH3fMQTblIj5z3+zgKP4Me9HwpmLj11s1hThPxS/p+mQ==
-X-Received: by 2002:a05:600c:3b03:b0:471:14af:c715 with SMTP id
- 5b1f17b1804b1-47117874978mr106495845e9.3.1760998236723; 
- Mon, 20 Oct 2025 15:10:36 -0700 (PDT)
+ bh=6E1wKLq7nmDSAhd/TLUL+t/dNL7Yzwczc0AaVB8kGis=;
+ b=wsmFL/FA0kIg2kBRrG+XgWDrcIkEKQ/Ntx9KZ2zwOtDvTs2AEbHxB6MOmA8TSDEMru
+ np7DO1fbRWWpcKkBIQY0MMpzrfXnnptj6u5cwpLKizyIylVdpnkHMa4V2EpUjJjwiwXf
+ dGvodl9eFE6TvF6hrFP5lhWoTYg9DedPPuypD4POwKJj+n2mVq+5n/zK0RttugLgTrWs
+ 7g4QVw/Nn07Y1b1BYY5Vbyp//qttGgH0DQ86K7rBUNLVcP3hulXqKzhwM7ufEn9QWCk+
+ QsKxTJinN26zcbdUymj/f3ZHcUzumSYKEf9o4DR3vIQodEePA1jXtWNUakq3MUTnkx8I
+ wGJw==
+X-Gm-Message-State: AOJu0Yz/sTvrxnRu8pPyrKJ5pFEaPf/h07yaVYi6OvGFHUnH1FuG4abA
+ /JGg60MfMdqXOOG2P6Qs89JZLUZdXAv7tLP755YcXemJrJHIbeuH5Hudiq64kxLG5o3p3fboHzN
+ aIjswbCY=
+X-Gm-Gg: ASbGncsdv/csboEwFD53l+sEhk4S7xeTFwv50URFZe8wAJBV9M5OxOM0X13m9GsgjAT
+ uMLqK+B+Gi2sTv1PN1xbUC06kHmulocJstywNwJ7gnhA3X1Uzr5H2ZLsK+O8kOCuoXfFqjQ4TU/
+ zCadhB+mLLhDCV3ZE9TM9P2/49SpEQSjSI5VeFfmDXA1AcjFBVJ1QZ95mBQSQGudjv9BbGVtyau
+ hF7pHubMiYyZ5YdnSVJ8cPfCEWlpcLYluGAQTBSlpxT4n2bPt73Y/8TmlMndovbBcGp+DJvj0a9
+ TakuhytCMJoYBd0RNWpwkoH3obIWtIiKr9ZCEY0QG0kd5qoM02LnrvYlLWNtxorJ/cTBfMZCObf
+ VOAJrkrRgYQwWGgzZGBkjLoLHRedcvI/ZO9Y7KkdRuAi3dIldA726P95tDEvj3WnTDX7jhJofHw
+ T2VxiNpNgzqqppLB51HCSW7dDMBlC/heeR0+hogDtt+H0TQH57IGdwi8mwOyLc
+X-Google-Smtp-Source: AGHT+IHuNcuKUHXB8XXESFW6EINic5NBOMyERNnN4lco+C4wFOEKCzTkC7rJIY4k3+kEALoUhRsxuA==
+X-Received: by 2002:a05:6000:400f:b0:426:ff91:2f25 with SMTP id
+ ffacd0b85a97d-426ff9142c8mr10911496f8f.21.1760998189735; 
+ Mon, 20 Oct 2025 15:09:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47494aad668sm4570025e9.2.2025.10.20.15.10.35
+ 5b1f17b1804b1-47152959b55sm168862565e9.6.2025.10.20.15.09.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 15:10:36 -0700 (PDT)
+ Mon, 20 Oct 2025 15:09:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -74,20 +74,20 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v6 10/30] meson: Prepare to accept per-binary TargetInfo
- structure implementation
-Date: Tue, 21 Oct 2025 00:09:19 +0200
-Message-ID: <20251020220941.65269-11-philmd@linaro.org>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PATCH v6 01/30] hw/core: Filter machine list available for a
+ particular target binary
+Date: Tue, 21 Oct 2025 00:09:10 +0200
+Message-ID: <20251020220941.65269-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020220941.65269-1-philmd@linaro.org>
 References: <20251020220941.65269-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,77 +110,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a file defining the binary TargetInfo structure is available,
-link with it. Otherwise keep using the stub.
+Binaries can register a QOM type to filter their machines
+by filling their TargetInfo::machine_typename field.
+
+Commit 28502121be7 ("system/vl: Filter machine list available
+for a particular target binary") added the filter to
+machine_help_func() but missed the other places where the machine
+list must be filtered, such QMP 'query-machines' command used by
+QTests, and select_machine(). Fix that.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- MAINTAINERS                 | 1 +
- meson.build                 | 9 ++++++++-
- configs/targets/meson.build | 4 ++++
- 3 files changed, 13 insertions(+), 1 deletion(-)
- create mode 100644 configs/targets/meson.build
+ hw/core/machine-qmp-cmds.c | 4 +++-
+ monitor/qemu-config-qmp.c  | 3 ++-
+ system/vl.c                | 3 ++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 667acd933c7..17f90230bf2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2001,6 +2001,7 @@ M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Supported
- F: include/qemu/target-info*.h
- F: target-info*.c
-+F: configs/targets/*.c
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 51d5c230f7e..28dfd3e15bd 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -20,6 +20,7 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/type-helpers.h"
+ #include "qemu/uuid.h"
++#include "qemu/target-info.h"
+ #include "qemu/target-info-qapi.h"
+ #include "qom/qom-qobject.h"
+ #include "system/hostmem.h"
+@@ -94,9 +95,10 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
+ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+                                     Error **errp)
+ {
+-    GSList *el, *machines = object_class_get_list(TYPE_MACHINE, false);
++    GSList *el, *machines;
+     MachineInfoList *mach_list = NULL;
  
- Xtensa Machines
- ---------------
-diff --git a/meson.build b/meson.build
-index f4ac0a6e95b..0f27a2a8f90 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3312,6 +3312,7 @@ config_devices_h = {}
- config_target_h = {}
- config_target_mak = {}
- config_base_arch_mak = {}
-+config_target_info = {}
++    machines = object_class_get_list(target_machine_typename(), false);
+     for (el = machines; el; el = el->next) {
+         MachineClass *mc = el->data;
+         const char *default_cpu_type = machine_class_default_cpu_type(mc);
+diff --git a/monitor/qemu-config-qmp.c b/monitor/qemu-config-qmp.c
+index 9a3b183602d..8bd28fc2328 100644
+--- a/monitor/qemu-config-qmp.c
++++ b/monitor/qemu-config-qmp.c
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qobject/qlist.h"
+@@ -128,7 +129,7 @@ static CommandLineParameterInfoList *query_all_machine_properties(void)
+     ObjectProperty *prop;
+     bool is_new;
  
- disassemblers = {
-   'alpha' : ['CONFIG_ALPHA_DIS'],
-@@ -3912,9 +3913,9 @@ specific_ss.add(files('page-vary-target.c'))
+-    machines = object_class_get_list(TYPE_MACHINE, false);
++    machines = object_class_get_list(target_machine_typename(), false);
+     assert(machines);
  
- common_ss.add(files('target-info.c'))
- system_ss.add(files('target-info-qom.c'))
--specific_ss.add(files('target-info-stub.c'))
+     /* Loop over all machine classes */
+diff --git a/system/vl.c b/system/vl.c
+index 646239e4a69..a96063f9901 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1672,7 +1672,8 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
+ {
+     ERRP_GUARD();
+     const char *machine_type = qdict_get_try_str(qdict, "type");
+-    g_autoptr(GSList) machines = object_class_get_list(TYPE_MACHINE, false);
++    g_autoptr(GSList) machines = object_class_get_list(target_machine_typename(),
++                                                       false);
+     MachineClass *machine_class = NULL;
  
- subdir('backends')
-+subdir('configs/targets')
- subdir('disas')
- subdir('migration')
- subdir('monitor')
-@@ -4364,6 +4365,12 @@ foreach target : target_dirs
-     arch_srcs += gdbstub_xml
-   endif
- 
-+  if target in config_target_info
-+    arch_srcs += config_target_info[target]
-+  else
-+    arch_srcs += files('target-info-stub.c')
-+  endif
-+
-   t = target_arch[target_base_arch].apply(config_target, strict: false)
-   arch_srcs += t.sources()
-   arch_deps += t.dependencies()
-diff --git a/configs/targets/meson.build b/configs/targets/meson.build
-new file mode 100644
-index 00000000000..a9f6b24ec01
---- /dev/null
-+++ b/configs/targets/meson.build
-@@ -0,0 +1,4 @@
-+foreach target : [
-+  ]
-+  config_target_info += {target : files(target + '.c')}
-+endforeach
+     if (machine_type) {
 -- 
 2.51.0
 
