@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AD1CCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE17CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 22:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAy8k-0005JU-G9; Mon, 20 Oct 2025 18:14:06 -0400
+	id 1vAy8k-0005Ju-QM; Mon, 20 Oct 2025 18:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy8h-0005HF-H5
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:14:03 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy8j-0005Ij-B3
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:14:05 -0400
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy8c-0006V9-GV
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:14:02 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAy8f-0006Vk-FW
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 18:14:04 -0400
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so29099675e9.3
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:13:45 -0700 (PDT)
+ 5b1f17b1804b1-46e6ba26c50so31953155e9.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 15:13:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760998424; x=1761603224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760998435; x=1761603235; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jmGk5ww52rySfPa3ko3wyuX1izMOGeRMMwZAnOTeG10=;
- b=Bfdo5NL/jaFONN/aMQ2fHZPgTQe850lLjILS3WQ1QSYRN8KNZmQF+kVAX9CXyv+fwg
- MxvMxHfeMRbUOhV0kjBG+bd1swh6hLm70xzUujkIPW3P8/nfyEQ6txfMb8qfKDkU9Tfe
- lbSgqx9Bp3bhwndrAv71URmPyZgUCqSgjCHqZjt+MzBZvN7HQ/Tsxni+HxDNTEH7t/9x
- EhuBuhmQT3bXkrrqhg7yU9JCbwwQSuiOcDOrCs0AwZy6qXbFbVtSo0tBfFT/+A7h0EMN
- kES6q+LuXFF5b43De6gn3ZcmRAWLnMoJlweSdYpOHzRb04yiDNHf9QOaMGXNC4s3FB0E
- J/Yw==
+ bh=+e7VY5y1q7fPnyvbmyUJua9whr/xsLflgiFLuiD5Ih8=;
+ b=lQQ9qlSMBTHbk1z1gENldiiTOdPU5cg5ps0Hqkytn2hiQBGwJ6gHHum+1WrPlXx8VX
+ fnNu+HoSg2IbjsUT6XEenId/V1d6ytXTxeRGg1O7kdr1FIfwo977UOj3FUBvfEAMzVNO
+ oCphHwRI/DL9m9EgowRDG/Ut7Tf6KIICnEH7lTuKw9dECu12hH0wSSPsL7FCvDz3Xp3G
+ qNgdeyGY6IQcvO5rZWjzeBe1Vh33++4yBNmKil8PP2b3EGSIn0o0olTNDhC273lVzVpG
+ FHWjEIpUVOg/N4Fof44rY5KY+sn5TWhHJNEebuk0456zpsQr9ZLmEelgh4+xWqVdSrW3
+ pfNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760998424; x=1761603224;
+ d=1e100.net; s=20230601; t=1760998435; x=1761603235;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jmGk5ww52rySfPa3ko3wyuX1izMOGeRMMwZAnOTeG10=;
- b=sHexaWZK9PXqe+4c+E2yubR3YjWYLVusXgPTUgWAp4+Unv3qntdSdbi0Rt4hqfJrp1
- vbVBAnBHb7a5+FCsN/CLDiY+7i5W5FMRb2fjDo55A2NYQvr4wVAYTO1cT/dP5eRFuGmO
- 0D+cZ4vWgmXXbS5802GytjvSxO1hOj40yG4XjLHjlpOdHFRGq6NbEhXwBRaMrUoF4R6+
- kx0mXUCkpzXdaw1Sff7+GxdlSpow2lxpeDzjNG4dRWRihUtMUKxzytHplUO4i5llssCM
- wDPLm4+1MHnOGk9PH9i3IB3E+UH4KuuC8IPEX5yiR2AZDvgyYuqbzohSuOD2nkSXLvvk
- AvwQ==
-X-Gm-Message-State: AOJu0YzekLdJO0/KmBXyx8ox/dUe80YdAl6zhb+M5XMRVz89MBWFyBGd
- z7Sy56udS+tOPYTuWibhe0FLYDomcKJ85k3XplYwqmaRYSiRiFZqkxoKlQcKXd7JY7i6M1t5So3
- L0UfHg1E=
-X-Gm-Gg: ASbGncua8vui7QY7EwPULXgRrhP6ca6B8/Eij5vZcrE5Cs+qiKsZN6hFAX66Qsmt7lN
- ockCx40dhKWz5HV/L7uZSEkHzJt/m36j9lqNA5G/bX3aG1+frnOXo8YSyZBizmwv8IaixaKZAaB
- Pd/mzQCMn0Wh0tTihvahHVuKnYiumYUhJy1ecsunL81ZRN0xxK40/Uhg9CEXa3+P5lHC7IkuPdU
- o3NjpQR6raf81u45C1lkl+w7phRSfEujLrt/BUGi7IxK6wPbAJPIu6wb2867FHvexC7PpD4HcKj
- DgTXTkgsy1A9/0yIPk31bOwaY1xAgCYvErH1NgLXa6mEbmpRI7P158L2A1W/NsXbvak1CEpHHkw
- TmwIxJ76F9DmKumrVH9LqIdwnEwqSzHALLsF2kRal4YMwyD87Rs8Av/pvdGFJXYxaBCGioS20E1
- egK5moy0UpxEK/CvttT/5DLCEd+Sk5GrT1xF6BxYsDKTXs8xnmxfkmD1N71+Ub
-X-Google-Smtp-Source: AGHT+IFkz0Av3W/g1VhOZxXU6mjDc5TaUKOSOc0zH9wva6/d5f82wvJvMWfD58bsSr17NAceqqtGvQ==
-X-Received: by 2002:a05:600d:8231:b0:471:1db3:6105 with SMTP id
- 5b1f17b1804b1-4711db36173mr65383545e9.33.1760998424482; 
- Mon, 20 Oct 2025 15:13:44 -0700 (PDT)
+ bh=+e7VY5y1q7fPnyvbmyUJua9whr/xsLflgiFLuiD5Ih8=;
+ b=oWE2FxqtZY6P4YRupbCtX4pExjaUkWPPgRxGXxXch3ctg8S4XIHUDznXeWeVWPPvoO
+ isBYLwRRgmqHErk/I82LLglSM1j/Wx9Qb2PSvXE0D7Ltn6wWxEacNkQknt/5SgbySEch
+ plm5dfUElQA9EgsucGEKEPv+dGe7Dc4X/OT2W56dL02G4Xv4hBrqdXwflxc4/669R4fv
+ UFs520BzA3LFbMdfauQLi/vRUdyxL6/MlCbD/lN0bcw7qg9LUzBgvDjQjCyqYD4fy6R7
+ 4Ek10RPE9ReKIedLL4bz42hrFqzoByWoktJWNyuvXjcLEskmaNV+DrNjh1TytyA5bQTI
+ kJHQ==
+X-Gm-Message-State: AOJu0YynLHsAXdH1GrV7MMVUmxBj3VdAGqBlmUalY596cjMjyzkiEKQu
+ /LbAWBDY+fbZ4XIrp1040D4Zna6qbGoM4WGSbSO/7VvkB/lxrcv9LcXZhKgS3ZupzH91q98Y/E1
+ /3vGJkao=
+X-Gm-Gg: ASbGnctzA7gfTSNlu0r86IUQlTwj7gT8BGGXcdd/UMQsVeHu1pwmYkXhLhTwnVXOGu8
+ 0xG5nRUCLDGWHrPPJYFQa+HurCPC3C6yi3rvm7Lct1U45ogpGZcPpDZwjqdo9Juyy21EhS8Lwq9
+ 2VqYsKkI9XIVZv7SdepxTOiSHgIwR58tYlBMU7zB/EyAipZc7OJyUik44IWVhFGQDkWwsJ5xUj0
+ zhiEKhMRHX5HMBrChCXbsbsNOXcfBB2WF3gxsWYgnCq0zTkUOHJZmwN1Uso/rhmqjElXOZ8hApS
+ sPV5xeVQIPuyCjBNk4YfQdyQJyLhn4eALFZMBaD5Qi+RFQzKVkAMvgfqXa3sF9rzrLtr0iYYZ5q
+ uBGE8v3Q5aWsGyEXl+y8MbS9oN4fyMgMdT5wjdlpI4Y6sHgp0LcQHN4ffUBKs5KsWm1n49uEu1/
+ QjUdepKDdKDFnTeH9F/Ym0Jzr+cKtlQKnK7d0s40yTiiAM7MKxa2FjHQICknX3
+X-Google-Smtp-Source: AGHT+IGtAoswsOqV2aBqA209eTMwKY6N297qrLfd/+nlmxs0B2DzWhPZz43+vA7zY4vg6H+eYwyhJg==
+X-Received: by 2002:a05:6000:2911:b0:426:fec1:a58e with SMTP id
+ ffacd0b85a97d-42704e0e681mr10936952f8f.53.1760998435377; 
+ Mon, 20 Oct 2025 15:13:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471529598c9sm162711665e9.5.2025.10.20.15.13.42
+ ffacd0b85a97d-427f00cdf6csm17124823f8f.43.2025.10.20.15.13.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 15:13:43 -0700 (PDT)
+ Mon, 20 Oct 2025 15:13:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 12/30] hw/arm/aspeed: Build objects once
-Date: Tue, 21 Oct 2025 00:13:17 +0200
-Message-ID: <20251020221336.66479-2-philmd@linaro.org>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 14/30] hw/core/machine: Allow dynamic registration of valid
+ CPU types
+Date: Tue, 21 Oct 2025 00:13:19 +0200
+Message-ID: <20251020221336.66479-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020220941.65269-1-philmd@linaro.org>
 References: <20251020220941.65269-1-philmd@linaro.org>
@@ -108,99 +106,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now than Aspeed machines can be filtered when running a
-qemu-system-arm or qemu-system-aarch64 binary, we can
-remove the TARGET_AARCH64 #ifdef'ry and compile the
-aspeed.c file once, moving it from arm_ss[] source set
-to arm_common_ss[].
+Add MachineClass::get_valid_cpu_types(), a helper that
+returns a dynamic list of CPU types. Since the helper
+takes a MachineState argument, we know the machine is
+created by the time we call it.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/aspeed.c    | 6 ------
- hw/arm/meson.build | 9 ++++-----
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ include/hw/boards.h |  4 ++++
+ hw/core/machine.c   | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 0cd76b587f7..d1a746e3b0b 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -180,13 +180,11 @@ struct AspeedMachineState {
- #define AST2600_EVB_HW_STRAP1 0x000000C0
- #define AST2600_EVB_HW_STRAP2 0x00000003
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index a60e1d83390..8fc34579412 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -259,6 +259,9 @@ typedef struct {
+  * @smbios_memory_device_size:
+  *    Default size of memory device,
+  *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"
++ * @get_valid_cpu_types:
++ *    Returns a list of valid CPU types for this board. May be NULL
++ *    if not needed.
+  */
+ struct MachineClass {
+     /*< private >*/
+@@ -305,6 +308,7 @@ struct MachineClass {
+     bool ignore_memory_transaction_failures;
+     int numa_mem_align_shift;
+     const char * const *valid_cpu_types;
++    GPtrArray *(*get_valid_cpu_types)(const MachineState *ms);
+     strList *allowed_dynamic_sysbus_devices;
+     bool auto_enable_numa_with_memhp;
+     bool auto_enable_numa_with_memdev;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 681adbb7ac5..5d9684fbc85 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1573,6 +1573,8 @@ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
+      */
+     if (mc->valid_cpu_types) {
+         assert(mc->valid_cpu_types[0] != NULL);
++        assert(!mc->get_valid_cpu_types);
++
+         for (i = 0; mc->valid_cpu_types[i]; i++) {
+             if (object_class_dynamic_cast(oc, mc->valid_cpu_types[i])) {
+                 break;
+@@ -1599,6 +1601,32 @@ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
+                 error_append_hint(errp, "\n");
+             }
  
--#ifdef TARGET_AARCH64
- /* AST2700 evb hardware value */
- /* SCU HW Strap1 */
- #define AST2700_EVB_HW_STRAP1 0x00000800
- /* SCUIO HW Strap1 */
- #define AST2700_EVB_HW_STRAP2 0x00000700
--#endif
- 
- /* Rainier hardware value: (QEMU prototype) */
- #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
-@@ -1869,7 +1867,6 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
--#ifdef TARGET_AARCH64
- static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
- {
-     AspeedSoCState *soc = bmc->soc;
-@@ -1921,7 +1918,6 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
--#endif
- 
- static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-                                                      const void *data)
-@@ -2074,7 +2070,6 @@ static const TypeInfo aspeed_machine_types[] = {
-         .parent         = TYPE_ASPEED_MACHINE,
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
-         .interfaces     = arm_aarch64_machine_interfaces,
--#ifdef TARGET_AARCH64
-     }, {
-         .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
-@@ -2085,7 +2080,6 @@ static const TypeInfo aspeed_machine_types[] = {
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2700a1_evb_class_init,
-         .interfaces    = aarch64_machine_interfaces,
--#endif
-     }, {
-         .name          = TYPE_ASPEED_MACHINE,
-         .parent        = TYPE_MACHINE,
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index b88b5b06d7e..98783bbbdeb 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -40,20 +40,19 @@ arm_common_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal.c', 'x
- arm_common_ss.add(when: 'CONFIG_FSL_IMX25', if_true: files('fsl-imx25.c', 'imx25_pdk.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
--arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-+arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed.c',
-   'aspeed_soc_common.c',
-+  'aspeed_coprocessor_common.c',
-   'aspeed_ast2400.c',
-   'aspeed_ast2600.c',
-   'aspeed_ast10x0.c',
--  'aspeed_eeprom.c',
--  'fby35.c'))
--arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-   'aspeed_ast27x0.c',
-   'aspeed_ast27x0-fc.c',
-   'aspeed_ast27x0-ssp.c',
-   'aspeed_ast27x0-tsp.c',
--  'aspeed_coprocessor_common.c'))
-+  'aspeed_eeprom.c',
-+  'fby35.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
- arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
- arm_common_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
++            return false;
++        }
++    } else if (mc->get_valid_cpu_types) {
++        GPtrArray *vct = mc->get_valid_cpu_types(machine);
++        bool valid = false;
++
++        for (i = 0; i < vct->len; i++) {
++            if (object_class_dynamic_cast(oc, vct->pdata[i])) {
++                valid = true;
++                break;
++            }
++        }
++
++        if (!valid) {
++            g_autofree char *requested = cpu_model_from_type(machine->cpu_type);
++
++            error_setg(errp, "Invalid CPU model: %s", requested);
++            error_append_hint(errp, "The valid models are: ");
++            for (i = 0; i < vct->len; i++) {
++                g_autofree char *model = cpu_model_from_type(vct->pdata[i]);
++                error_append_hint(errp, "%s%s",
++                                  model, i + 1 == vct->len ? "\n" : ", ");
++            }
++        }
++        g_ptr_array_free(vct, true);
++        if (!valid) {
+             return false;
+         }
+     }
 -- 
 2.51.0
 
