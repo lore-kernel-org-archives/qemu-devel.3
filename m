@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07810CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5BACCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAoB4-0002ZR-1q; Mon, 20 Oct 2025 07:35:50 -0400
+	id 1vAoAq-0002UJ-26; Mon, 20 Oct 2025 07:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAoB0-0002Yh-DD
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:35:46 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAoAn-0002TS-3d
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:35:33 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAoAy-00019N-Eh
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:35:46 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47117e75258so14895545e9.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 04:35:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAoAk-000161-NE
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:35:32 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-471075c0a18so44970635e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 04:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760960142; x=1761564942; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760960128; x=1761564928; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=71R8sAvBEiNvqEf9kiOYU72VRXxnt/PEhui8Mhvi1Og=;
- b=dMJA4sSRZfBlddDezyGAUzfKCVKFEroR3E6cSn0jtmPydHzpaZedJxq6LP+DdW0Z/V
- 7hJgXvdc7U0JG/E7PX5roLCJznugJHDkKO9MUgDQwBJvExb1igp2dDONfMEbC5q7+xTY
- lEKrnM6pJRbcy8tERZlylVndWAA8xYZ0plh0FPoVgC3UAW+RNdH9MxV8tjn9k/gMg7Z/
- TCZwwY4UA30pRCKVHhKNGx+4kZLtIgbszVCMr0iiI9IqUxJn9Zaz3kO2tX9nxGfnSzn6
- tOVaqXJsmJAjhnWaFxVOmNVPUdFxQBj52cYMQbqS/gH+NHymtaHkDIV91vWB8IIj7R9d
- pRXg==
+ bh=UAkkZcqWQBPqLRoYMt3hCTfFtTwm8REFlMaR8FUYzOw=;
+ b=v0raHShWB9tF/43c3qL3sMheg00M9fl5ofmQIjBkQV6WaRuLfStaLiTl/+dSYcc981
+ aKxyuiz0Fc3KAoG5hAMFZ+Vp+k8nf4y8BPpcLUSaXbSSSLzq8HwWfcoWEFutP8eIhB/q
+ Jhiqm4z3uPm3jRAsdBVpgxfyO/dLEtSMrhu0o8juxTYX86DbylSetCbfui//ptGxydWn
+ EnuQ1zPUE8H9tjknsvtLIGK09XwNj4Ue3h16T43W7+2eFOmY5uEGeTKEhrBOt/WR1vVR
+ jl3wjh80f9Raq10yTukp97+sV+EaWZWn8jC29+5C0Uv0JoK64t7SyDGKM6XdvlYCwNt9
+ kY0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760960142; x=1761564942;
+ d=1e100.net; s=20230601; t=1760960128; x=1761564928;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=71R8sAvBEiNvqEf9kiOYU72VRXxnt/PEhui8Mhvi1Og=;
- b=ngFA6RQjKtQgLEGS/KW7E5OW8MV77pi+QmN2VR4evLiQyMgjXwPheLrbZJELbeWpbm
- /43eiRSPwBp6HFMXNXhjErEkxunmYw34iQgpXFMMErO8Uf/FDd95sgxhLhe/SwfVAnZy
- I/ryQr3ZZcQHSItAm71amkFJJj78cIC2HuOpHkeotZkxVVxgvxqIhUfOSUJl99EeMuzb
- efPiBGtigcRS1Up2RjKstyT1S8z6nBu9Ho8CPKeOH9yaKe5THganpdgT/S+aOcibxphM
- yvULTCGuxZdWNhqzoSHta2YTrhQETxYmDkEsx5LUahDcj4pjoZEbrtYTBpODjkhGFaKf
- kk4w==
-X-Gm-Message-State: AOJu0YxEPgHzXozESOmrVjsOHRoo3UJV9HkCj8pYfdugMy+7Ms+BHsCX
- 75yy9r6FlDhfsD7HQJOBqZrcXbAqxSFS8Jbwj+lV4UYNPhnjjlMDgpxkZkBMBo8g4IBmJPls7ia
- i/UQO8L4=
-X-Gm-Gg: ASbGncvH6k5u0ETvAjnSvVSPSnQXDfZkBI2P5PG5WZ/EzGS/wvATzTDVfJn7UBngUw0
- 1cDW8VbaNATnRbl7yG/ToUQBHvWRSN08t+7sz7D+jG8x9teqcn0fABXH1tAyMMQ3395fHJdh7Mm
- dI70JgsCZFFuSbCNLtX/ixy+1wi4JNggQU6+Kw0njGluE3vYoMX+FftgvuGiIXuSkBfmZjdt2W3
- gSZYXWLv6T2J15SS9DAd59dfcZOTk2wH2senmfGwmip4oz2rzepPHF3ehvl3+hHA1SVuNOtuFtS
- sMZ4q7ILurAgnj9sr6wBRGtDshCBVA3HC0OhvAs6vffDPjonJ6XCiS8IF9skLpBgqorIapzp9Ok
- yo5zczPONLOxgzx2rTTTIv8CMSW7/5DJo6zwxbrJuzRiO79FpjKMXMiZbxQIZ+8k2YbBbg6q4zn
- EGdnEO5fDhphDlTqqbeAUHpgHqDPODk5ACAigvphx9pKZiaZXM/gAeUh5PUOCp
-X-Google-Smtp-Source: AGHT+IEPx0SE5xUIDTfxvhDNmRz2LWgkyKXl8jschWeu+y/qt79zcqlwmwc9t+0lsEUm/8AyI37oAg==
-X-Received: by 2002:a05:600c:3513:b0:46f:b340:75e7 with SMTP id
- 5b1f17b1804b1-471178748a9mr100220295e9.8.1760960142366; 
- Mon, 20 Oct 2025 04:35:42 -0700 (PDT)
+ bh=UAkkZcqWQBPqLRoYMt3hCTfFtTwm8REFlMaR8FUYzOw=;
+ b=tuJ6Oi1uFU31dgAIyi4vJmn94snsYsxPZqgXeG0KVhcsdOihreIC5vAFL4yDKKcRaW
+ 0Bt7hChZnj1Ex9kBGBnzEPwQ8YIBlpnBYDiiE27XzjihfGFqX5rq7ir1rodO3i0NYNkh
+ uygPYG8EOJSxnQh7Qc8qa4jzAZ0HckRjLC660uf/mGu5UULwdRrkRjN27ruZDkigoWBC
+ HVl0CyP3gP8LZ0d+83vVs7+xI9EuMfx4IIQWSmvf1uhsvbzZGqluYwn03KfK2UDohMux
+ eOyazPWZkHOnbEMnCUB5ipOYWCivJ8OA0O6Qrc4TaUj6lqjW8EVr2kSYGtu4toPg6dT5
+ atuQ==
+X-Gm-Message-State: AOJu0Yyi7kQRjimnocradchRh6LXUyrZZHg2ZYud72GmYM22WcE+Z4rH
+ KmfDgD6/U0G+dWsTjPUqYlrtbWQ0jS9GOpP1MTwgXlMslfGc6M+eng4ilSVjE5cNo8ML/09WI6d
+ HB1SOfT8=
+X-Gm-Gg: ASbGnct+MS4rJajT7Xl9+LUlconWF6wyi8SXn8iXRv/7XGggHBUwc+L1rTMYyLtgYAo
+ DvuMTUyMo0wJhHkIxzc4mW2tVLpDnKddMVP3TBIDUAHSWIlyJWqkwxx61pWA8GGpWPnfjRJyapX
+ xTBQThmpEW5Wk3KvDuIeg2DM/7lm3WlvrHX9wifluTHpqXrnGQJK4NBm8uyuDDrGTZKBuYmkUOf
+ umidCwiS3kEkQ3k/IUP4f1yl3g88dZ7LMPHghOMaPMowJ9gjUwAlVvosF8HYXXWfqrZIL8Tbpi6
+ o7VZ2xKBEGFxHwo+Pbbh2ajJnhC494FtUrfmLBKW40PO4XBODrOCASgy2U+NqP05W4/Wh7JiArI
+ evkpVIZSIdRX2rXhhjV1iLSAoLkZMkYFsMjbTN8QwyIy229wyabuELgAEk+KcrkwkAovw4/Unuc
+ dciH1OJMExg44L8t9BBZ619Acksta01Ih94Ezc44hViXOM08jCvA==
+X-Google-Smtp-Source: AGHT+IF2AFfYUbg6zZHrbdDsDhS2C/ImRRjkdhB/lLsq6EYZa7SyNf2IVzSoyfvyJJ0wStkrODlcEw==
+X-Received: by 2002:a05:600c:5029:b0:46e:3686:a2dd with SMTP id
+ 5b1f17b1804b1-47117879c4dmr86035915e9.11.1760960128118; 
+ Mon, 20 Oct 2025 04:35:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce178sm14714271f8f.46.2025.10.20.04.35.41
+ 5b1f17b1804b1-4711442d6c6sm221017245e9.6.2025.10.20.04.35.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 04:35:41 -0700 (PDT)
+ Mon, 20 Oct 2025 04:35:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Chinmay Rath <rathc@linux.ibm.com>,
@@ -71,17 +71,18 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 18/18] hw/ppc/spapr: Remove SpaprMachineClass::rma_limit field
-Date: Mon, 20 Oct 2025 13:35:21 +0200
-Message-ID: <20251020113521.81495-5-philmd@linaro.org>
+Subject: [PATCH 15/18] hw/ppc/spapr: Remove
+ SpaprMachineClass::smp_threads_vsmt field
+Date: Mon, 20 Oct 2025 13:35:18 +0200
+Message-ID: <20251020113521.81495-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020103815.78415-1-philmd@linaro.org>
 References: <20251020103815.78415-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,55 +105,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SpaprMachineClass::rma_limit field was only used by the
-pseries-4.2 machine, which got removed. Remove it as now unused.
+The SpaprMachineClass::smp_threads_vsmt field was only used by the
+pseries-4.1 machine, which got removed. Remove it as now unused.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
  include/hw/ppc/spapr.h |  1 -
- hw/ppc/spapr.c         | 10 ----------
- 2 files changed, 11 deletions(-)
+ hw/ppc/spapr.c         | 11 -----------
+ 2 files changed, 12 deletions(-)
 
 diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 60d9a8a0377..b9d884745fe 100644
+index 82f556f97e1..1629baf12ac 100644
 --- a/include/hw/ppc/spapr.h
 +++ b/include/hw/ppc/spapr.h
-@@ -141,7 +141,6 @@ struct SpaprCapabilities {
- struct SpaprMachineClass {
-     MachineClass parent_class;
+@@ -144,7 +144,6 @@ struct SpaprMachineClass {
  
--    hwaddr rma_limit;          /* clamp the RMA to this size */
+     /*< public >*/
+     bool linux_pci_probe;
+-    bool smp_threads_vsmt; /* set VSMT to smp_threads by default */
+     hwaddr rma_limit;          /* clamp the RMA to this size */
      bool pre_5_1_assoc_refpoints;
      bool pre_5_2_numa_associativity;
-     bool pre_6_2_numa_affinity;
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 97211bc2ddc..52333250c68 100644
+index 546e100c9cd..c8558e47db2 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -2728,7 +2728,6 @@ static PCIHostState *spapr_create_default_phb(void)
- static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
+@@ -2588,7 +2588,6 @@ static CPUArchId *spapr_find_cpu_slot(MachineState *ms, uint32_t id, int *idx)
+ static void spapr_set_vsmt_mode(SpaprMachineState *spapr, Error **errp)
  {
-     MachineState *machine = MACHINE(spapr);
+     MachineState *ms = MACHINE(spapr);
 -    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     hwaddr rma_size = machine->ram_size;
-     hwaddr node0_size = spapr_node0_size(machine);
- 
-@@ -2741,15 +2740,6 @@ static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
-      */
-     rma_size = MIN(rma_size, 1 * TiB);
- 
--    /*
--     * Clamp the RMA size based on machine type.  This is for
--     * migration compatibility with older qemu versions, which limited
--     * the RMA size for complicated and mostly bad reasons.
--     */
--    if (smc->rma_limit) {
--        rma_size = MIN(rma_size, smc->rma_limit);
--    }
--
-     if (rma_size < MIN_RMA_SLOF) {
-         error_setg(errp,
-                    "pSeries SLOF firmware requires >= %" HWADDR_PRIx
+     Error *local_err = NULL;
+     bool vsmt_user = !!spapr->vsmt;
+     int kvm_smt = kvmppc_smt_threads();
+@@ -2624,15 +2623,6 @@ static void spapr_set_vsmt_mode(SpaprMachineState *spapr, Error **errp)
+             return;
+         }
+         /* In this case, spapr->vsmt has been set by the command line */
+-    } else if (!smc->smp_threads_vsmt) {
+-        /*
+-         * Default VSMT value is tricky, because we need it to be as
+-         * consistent as possible (for migration), but this requires
+-         * changing it for at least some existing cases.  We pick 8 as
+-         * the value that we'd get with KVM on POWER8, the
+-         * overwhelmingly common case in production systems.
+-         */
+-        spapr->vsmt = MAX(8, smp_threads);
+     } else {
+         spapr->vsmt = smp_threads;
+     }
+@@ -4649,7 +4639,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
+     spapr_caps_add_properties(smc);
+     smc->irq = &spapr_irq_dual;
+     smc->linux_pci_probe = true;
+-    smc->smp_threads_vsmt = true;
+     xfc->match_nvt = spapr_match_nvt;
+     vmc->client_architecture_support = spapr_vof_client_architecture_support;
+     vmc->quiesce = spapr_vof_quiesce;
 -- 
 2.51.0
 
