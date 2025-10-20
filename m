@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD62CCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22200CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:17:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAz7X-0003Bt-1t; Mon, 20 Oct 2025 19:16:55 -0400
+	id 1vAz7l-0003Lk-Lo; Mon, 20 Oct 2025 19:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vAz7W-0003BN-A0
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:16:54 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vAz7k-0003LL-En
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:17:08 -0400
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vAz7U-00078h-KU
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:16:54 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-33082c95fd0so4904218a91.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:16:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vAz7i-00079v-Cq
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:17:08 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-42e2c336adcso21857665ab.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761002211; x=1761607011; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/8yStAvkW0oGQ/5TyFOpnzmT8UGmTer1uPM3qhfTqDs=;
- b=uyFYYlMXV9RHrIl390qc34NEPHk7dDFmYZKzRfpyn5mAGHIJMVuUTnS0fOoa7IboZW
- FOQa7QgEWQ+MWbTQAq8d5iWJB2618JOThliv01MJxwb5uB/7EpFEQ9atgsA6pM5EaEvn
- 8V673Aj/fXKEUptTP/xQDA6aZ8e67oJPpNwGk+WekuJuOoSm+oa8RiJ8HbgV/2AK7v5H
- QA1j+RWAyMQ5/I/s7ZWkxtXfcgg3QcfrAmlNOR72/ujFJahpbv+eMi5cPcuTWYHDsF3i
- W+vLauTYQgD9arfBTdc+7YF5J0+9MH/2McU2S8DwJW+lLH6LHzUyD3T5dDMXWbCPHU6V
- CRRQ==
+ d=gmail.com; s=20230601; t=1761002225; x=1761607025; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CIZ7+dar2IMzE/9lzWBMeeov1+9KMuszhnka4CDxnG8=;
+ b=g/dBUV+CDNeoTyR1t3w4DeT9+HC8R3IpWeLmpzsPfHwYAzzaZAa5lxvAXMvwH9SahP
+ uB1Ixp7YTNscN8Rj8DJo2M+Cy8ysQUx1AlMd1nhQubCgMak1dnFAPWLz3MABy7P2BiMn
+ RSIJtGt5wteN8X6epJUu8At+Wo2vIPyebh4fZD55FFrg9El6StFpl514LS7gVylqSJjf
+ eihJ65mwHHKJuM3taNQZ6hvXnTLBStbZJgfKO1YI3SR9WYsD9qyzfUTqlnbwfilPOb79
+ HGtFNg3+LSqWP8oPctLqPyQ0momxzSLj49D9ja7xvEjhjkZjzL3PBT4+6LVyM2qgjEuq
+ hyrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761002211; x=1761607011;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/8yStAvkW0oGQ/5TyFOpnzmT8UGmTer1uPM3qhfTqDs=;
- b=BqnUVg88Ahkoi6cCHynt7Tk/Y5pe3txRPpDtjyR8K7MuDBVTRaDMd+wBcktqCyY4Gt
- fA+lvoe2d6YeQhonFZjEYPgPv+cAwr1ldSUsrPi+e4FrLTwaarnwRBq+RSwFT6FLT3O+
- jcOeZw/V0uhGTYDz7z06Hd7yft49IVMKqFl4T8sbp9f+Y34+8/EbxK8ZWVfV2DYnfRjK
- g9yctQut+KZ+carK7AX/2um/7e63tnZhlZ6jDPp+NWswaySB6KlfBZ5nVBVcUPIGeuVo
- xKN7429e6moePtoLSNmp/icuP2juH5vLzHA/qjuDLHDBJuViAk3vS+inOZaCh9jON4Ne
- qJ/w==
+ d=1e100.net; s=20230601; t=1761002225; x=1761607025;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CIZ7+dar2IMzE/9lzWBMeeov1+9KMuszhnka4CDxnG8=;
+ b=UwOlx5fEHuVU352TwIJxdt3vMYpf25pQCA4+pjGj8sXN4RuBb1KQzlJ5GJAgc/+YI3
+ aJDOGx9O09dqvwLX3z48fToaqq/TbkavtLNWWGMq9iVku62KvOlf/955r0/dL9Ce34f7
+ 9jySpbJ5Flm5IyUvsrhaYYG3iMQwuy82mu8jPfmSU77FpAmxUqfLroU9YTdwNMSdFt21
+ omwLHN920h/CUnmaOFE8oWXNqAftbxV21d8uRehBc4I3t+5iQjmhSZnCMKyLxzb7XTP1
+ HBspj4XqheHGC67uXUCy9tqi6JSl/9rywLs6TrgFZkCMgFOBrZlCzawma+t0kPMOVGJR
+ taiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWPdwfsseIZJkwkjigMluOndAgnieDzN7nv7NqxCLJKcl8239dewSdAlK5Yn8/Z5pT9B5Cbszd+Hem@nongnu.org
-X-Gm-Message-State: AOJu0YxdjpzSH4YOOe4G2ephFyL5xoritCI7cg6+fIVHKIKcaQp8jSJc
- E3x79b389Z/ZHejyZdD5qbVry4ayWvBVSKv2JkaWYqWYBugHyFQgBcuVt6fTKybko0g=
-X-Gm-Gg: ASbGncu4S/FDzqUwXyBNC6ZxBpFpkbHuBW2x4QBGUoUAtelDVPVwfmlF61/qQf91ERq
- JSav4mLj7U69SQ5QvchJaFP92UMiWmAWeblCvIzXhYHsTsa4fe/x367SBKrQdfxF1lxeg1tuxQl
- 3IBFGqV5eVMQYJR4hdKVtXV7QHsrZaB6I8ZSxscxNCPKQqPIUn4rRW+hETnkpgEyaKQ+z2FlAtL
- Ne7BxXvE0v2NyycpW55/p5PzPHWGP7ju1ezhonXmVRw6ZGd7hH96meNbbJNY7ZRzcJ72yLCx357
- ITkA48Waf3PL9Jr0S3FN3iDqGaqknrTBklI/cRm5Zft+QFhxl0CwnOTFfa1syah6IHMyzA2HyS5
- v5nOEt+Byu76BUhxfkr2/RFRaeCN03Kn775iWm8JC1VfF3MaQIIsAAvjXIU24fCBfVvdp+QfF5w
- IGBb2UCKfFQr/a/aNc1+qXA67j
-X-Google-Smtp-Source: AGHT+IF38Xi50afvx+5RLZzIHXPnvtwaw42G1kifuOepNH1Swg4855sLwKp074kFkHPWtGfppmGSPw==
-X-Received: by 2002:a17:90a:c2c3:b0:32e:4924:6902 with SMTP id
- 98e67ed59e1d1-33bcf85a829mr17506516a91.3.1761002211054; 
- Mon, 20 Oct 2025 16:16:51 -0700 (PDT)
-Received: from [192.168.1.111] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33d5ddf1f7asm9023037a91.1.2025.10.20.16.16.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 16:16:50 -0700 (PDT)
-Message-ID: <338c9465-e2c7-457a-b2f1-25f3dd6ee283@linaro.org>
-Date: Mon, 20 Oct 2025 16:16:49 -0700
+ AJvYcCUHKICZf9+YUxuKJ50mQMOcN2/EApSYBL/4hfr9FbMpdozfGOCkn699dyGCBTdDTj6yjQOmOxTtw9KD@nongnu.org
+X-Gm-Message-State: AOJu0Yyav/Iu+RATgj//O5uRGSyM0gi8Ck88sItydcpnbyerBMobYzse
+ at1fLuGKZo8IdhQ5u1cWootMQOsavZK3V+81j/i1VtBhkdfcE73EHA12NAWuO42D7mgli8GfjOO
+ ESVXEkWLMd3ap7Zq4mEjwkymI+ktVcTVEOPhuT6M=
+X-Gm-Gg: ASbGnctNsbEcoVjWyW0LAhPfAZoV1R8OefMqVEyc2FT3uA8AzizD8C1/VlBhjlkOH+s
+ F3q0at69y5JZHuD/jP+WYctIRBy5/v8S8nbozCLcrC81IF3RK9+t4t/zwA93GWWfXloDqyGcq/k
+ DHZydZc0hTbyDmFYTh3tswynW+QEkseEekFyS7PpXhXNaJHMzjqbhBy3hVZsCdJFk/wHXLH1IL8
+ PjIpn63XQQAznIyBn8etz1Nbxy26RTalhnzTmdZ7OQ7sLthrfyxXZsvgx93k9K012o1Arw=
+X-Google-Smtp-Source: AGHT+IGq2TtR7T4m46A3PHF8MXLk42MJOYD1l1vjKxRfNuMyZePo6zytbtYtTcEe68uMb53gI5I0wKw0pr/vniXYeoQ=
+X-Received: by 2002:a05:6e02:154a:b0:426:e20b:f5d4 with SMTP id
+ e9e14a558f8ab-430c52200admr237343575ab.10.1761002224931; Mon, 20 Oct 2025
+ 16:17:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 21/30] hw/arm/virt: Replace TARGET_AARCH64 ->
- target_aarch64()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20251020220941.65269-1-philmd@linaro.org>
- <20251020221508.67413-6-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251020221508.67413-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
+References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-3-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-3-vsementsov@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Mon, 20 Oct 2025 19:16:53 -0400
+X-Gm-Features: AS18NWDxgcIlx5AAUQQXaHSooOM2VgYoTdwNFxWnMLelunubapV651-G_jOep14
+Message-ID: <CAFubqFuFYvEjm=SatMXH0Z69Z-kDQGiCuUDQ5wTsA6BVKLcbBA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/25] vhost: reorder logic in vhost_dev_init()
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
+ mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ steven.sistare@oracle.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
+ jasowang@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,59 +102,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-10-20 15:14, Philippe Mathieu-Daudé wrote:
-> Replace the target-specific TARGET_AARCH64 definition
-> by a call to the generic target_aarch64() helper.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+
+
+On Thu, Oct 16, 2025 at 7:47=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> We are going to split vhost_dev_init() so that the first part will do
+> early initialization of QEMU structures, but don't communicate with
+> backend, and the second part will do backend communication. We need
+> this for future support for backend-transfer migration support for
+> vhost-user-blk (backend will not be available in the early
+> initialization point).
+>
+> With this commit, we simply reorder the logic in vhost_dev_init()
+> in accordance with idea of further split.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   hw/arm/virt.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index d3809754460..dda8edb2745 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -32,6 +32,7 @@
->   #include "qemu/datadir.h"
->   #include "qemu/units.h"
->   #include "qemu/option.h"
-> +#include "qemu/target-info.h"
->   #include "monitor/qdev.h"
->   #include "hw/sysbus.h"
->   #include "hw/arm/boot.h"
-> @@ -3263,7 +3264,8 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
->       if (tcg_enabled()) {
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a7")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a15")));
-> -#ifdef TARGET_AARCH64
+>  hw/virtio/vhost.c | 60 +++++++++++++++++++++++------------------------
+>  1 file changed, 30 insertions(+), 30 deletions(-)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 9fc6e7ba65..551d1687fc 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1637,26 +1637,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *o=
+paque,
+>          goto fail;
+>      }
+>
+> -    r =3D hdev->vhost_ops->vhost_set_owner(hdev);
+> -    if (r < 0) {
+> -        error_setg_errno(errp, -r, "vhost_set_owner failed");
+> -        goto fail;
+> -    }
+> -
+> -    r =3D vhost_dev_init_features(hdev);
+> -    if (r < 0) {
+> -        error_setg_errno(errp, -r, "vhost_init_features failed");
+> -        goto fail;
+> -    }
+> -
+> -    for (i =3D 0; i < hdev->nvqs; ++i, ++n_initialized_vqs) {
+> -        r =3D vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index +=
+ i);
+> -        if (r < 0) {
+> -            error_setg_errno(errp, -r, "Failed to initialize virtqueue %=
+d", i);
+> -            goto fail;
+> -        }
+> -    }
+> -
+>      hdev->memory_listener =3D (MemoryListener) {
+>          .name =3D "vhost",
+>          .begin =3D vhost_begin,
+> @@ -1677,6 +1657,36 @@ int vhost_dev_init(struct vhost_dev *hdev, void *o=
+paque,
+>          .region_del =3D vhost_iommu_region_del,
+>      };
+>
+> +    hdev->mem =3D g_malloc0(offsetof(struct vhost_memory, regions));
+> +    hdev->n_mem_sections =3D 0;
+> +    hdev->mem_sections =3D NULL;
+> +    hdev->log =3D NULL;
+> +    hdev->log_size =3D 0;
+> +    hdev->log_enabled =3D false;
+> +    hdev->started =3D false;
+> +    memory_listener_register(&hdev->memory_listener, &address_space_memo=
+ry);
+> +    QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+> +
+> +    r =3D hdev->vhost_ops->vhost_set_owner(hdev);
+> +    if (r < 0) {
+> +        error_setg_errno(errp, -r, "vhost_set_owner failed");
+> +        goto fail;
 > +    }
-> +    if (tcg_enabled() && target_aarch64()) {
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a35")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a55")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a72")));
-> @@ -3273,15 +3275,14 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n1")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n2")));
-> -#endif /* TARGET_AARCH64 */
->       }
-> -#ifdef TARGET_AARCH64
-> +    if (target_aarch64()) {
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
->           if (kvm_enabled() || hvf_enabled()) {
->               g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
->           }
-> -#endif /* TARGET_AARCH64 */
+> +
+> +    r =3D vhost_dev_init_features(hdev);
+> +    if (r < 0) {
+> +        error_setg_errno(errp, -r, "vhost_init_features failed");
+> +        goto fail;
 > +    }
->       g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("max")));
->   
->       return vct;
-
-❤️
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
+> +
+> +    for (i =3D 0; i < hdev->nvqs; ++i, ++n_initialized_vqs) {
+> +        r =3D vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index +=
+ i);
+> +        if (r < 0) {
+> +            error_setg_errno(errp, -r, "Failed to initialize virtqueue %=
+d", i);
+> +            goto fail;
+> +        }
+> +    }
+> +
+>      if (hdev->migration_blocker =3D=3D NULL) {
+>          if (!vhost_dev_has_feature_ex(hdev, VHOST_F_LOG_ALL)) {
+>              error_setg(&hdev->migration_blocker,
+> @@ -1694,16 +1704,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *o=
+paque,
+>          }
+>      }
+>
+> -    hdev->mem =3D g_malloc0(offsetof(struct vhost_memory, regions));
+> -    hdev->n_mem_sections =3D 0;
+> -    hdev->mem_sections =3D NULL;
+> -    hdev->log =3D NULL;
+> -    hdev->log_size =3D 0;
+> -    hdev->log_enabled =3D false;
+> -    hdev->started =3D false;
+> -    memory_listener_register(&hdev->memory_listener, &address_space_memo=
+ry);
+> -    QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+> -
+>      if (!check_memslots(hdev, errp)) {
+>          r =3D -EINVAL;
+>          goto fail;
+> --
+> 2.48.1
+>
+>
 
