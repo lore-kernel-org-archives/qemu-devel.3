@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C6DCCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4CACCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAytY-0004jR-6K; Mon, 20 Oct 2025 19:02:28 -0400
+	id 1vAytw-00057x-As; Mon, 20 Oct 2025 19:02:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vAytU-0004ig-P7
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:02:25 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1vAytt-00054c-TK
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:02:50 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vAytT-0005pV-4J
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:02:24 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7833765433cso6143354b3a.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:02:22 -0700 (PDT)
+ id 1vAyts-0005sC-9L
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:02:49 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7a1603a098eso3020509b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:02:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761001341; x=1761606141; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761001366; x=1761606166; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lKQiBx3avU8YZ9m2YOG0TV0wASw9xoOxm5btFj6dHr0=;
- b=a0wwsFxx8NN7P07dE2juNHVmFaZk5gwbtkYtWJ4b7gQ/piavKZTZ1rQJ1MWP+QGuzZ
- 5H3kzjustYORN9NOQY+fHakcwclw9w6/haUd7mx3eYhRANGbVmZZvWmio9BdBVBqfEXv
- 5XsDVIwreCyw5AR0JFoYVEqsJU4JAco2MmqDKhTn+V+je94GDEgdWaSl+Hpr6eMaPBuY
- k1lYlO3N/XZ4dNmjs0TOdHzzOG3PtkfWpTY2twBSYJYnrb+q/WqqwHEoJs+F7o0Oq9Sg
- 0hDTGr5u9ytXHXL4rzi4myCp62pjNBfJNm0SbgtfulgP2Ln8I3XsJRAacUiey4iaknLo
- KEFA==
+ bh=z2um92yXr1aIjgkBdR9GQ5+cVtbbBFhBD83xlz0b/hA=;
+ b=znI6V00BI6jYAwVBd8VD3y0NP81q+DxONSn6NmOVp3O8h4G/myqVlF1nkpbANHdzNj
+ 7zrd8LZX7XEsdy2EDsg6VuJtWjjHC+Q4b6WpWsZLNwkhBqv+hKHJhJPZRh+CivaGMnxp
+ mW0RUeKQsMb8xd+Ev3CNwGW8vEhbsJSmZ4koPIvV9IbcqCrux1Vgwi6Ha91K/3N3xCLQ
+ LY3jUsvjI5/dElpChClGyqkRNCEqQgk18N03EkZpP70HX2uAll7eyyHZoNG592QEC0hX
+ 5PrtlFYlOhevrIRHbXiJNrbkrmn0dF0EbIcXRjYJpvQyODX3x3G1i49eKB+Qf/KvbS19
+ 0xPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761001341; x=1761606141;
+ d=1e100.net; s=20230601; t=1761001366; x=1761606166;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lKQiBx3avU8YZ9m2YOG0TV0wASw9xoOxm5btFj6dHr0=;
- b=owknqUB2GFVoFvN+CCXsSoOmh3LnCgDDcFptA+hqjV2QH61X3LnkmPX4TfyLc4VTP0
- OcnUSJVp1UpvCupMjrsPY7EQ2xJOO4THX+ZNzOacr6HyaCS3ykfUu0kMV920c1EK91FC
- 1h5Ic0FgdEdJjq3dB6cwbL47bu9SHHbXb9St5o7GaQctYZieddTRxhDaP6qRomfzYNFS
- 99rvEJOCajXhKeVK9iPdhQ23/PJ6Dsfec25AwRKdvg8VX831aDP8VbuKCPp1TMj+/Wa3
- C+dlMpbHsvpmZtt2O6abQ25iya5Qz2wafmQ9VEdNwg756I7CHzjU+40Q52MR3OD8erOK
- E0fg==
+ bh=z2um92yXr1aIjgkBdR9GQ5+cVtbbBFhBD83xlz0b/hA=;
+ b=BaEK7u7vc/QQNEo4HIJ1y6xgkRGBZJM3JTdFf7G9PupeudK9jEd8l3g0vF1wD1Mf+5
+ H+fmqHXu2yrmZeaMNGyqjDAy790gjCow7Z2R5uPWj123qs0wIsw65wBnOGDLxFBPWdKn
+ n+COpQQ2q2Qt+LXrnt2N7pdfok1+WQbQjIKeV7OfM8yrC+EbwBfsf5CmhxN4VbfWCNRR
+ 8Y9fxk/nXxxtVzS9V71gaBdWMUMDZba4uGcjnQ/7dwWQaUBw0PmT4YsJA+1IQvz63854
+ zWSwc/P8/ZwhSz/xFn88ME7Id1EpF5nVcyeCLOcGmDfwTKtKmst/SBWlr1SEkkNIYqJ8
+ /R+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUek/a9p8BlIIWAywGJ+af7pIw78wJHTaRPsaCV0qaURbK8ogbwB/nA+DFX0AQ0LciY590/KHjkIPyE@nongnu.org
-X-Gm-Message-State: AOJu0YxN4/xxp3Na+ioDoCBOPlRH7H/e8mVm/1A/E2hOdXfI1o+LWW9V
- /hZO6loGFeZgvZwSEueJYj2h0kaB/i26ixmbFQ78/69onfPEClqD0/vtU/rLYzYoKMY=
-X-Gm-Gg: ASbGncuOxqAMqFRqIz4TAwx3yyO215EWCQpDiJ9ibOSNqL+mq7cPvm0WIAxvtSP8krz
- BXUyyccwTY2pKfkrFsIkRcCY5sHJ4uTeYmiyzgo62Y5JtWkf2UKjMqPx5gKcPkvevPbC53h0ruc
- 1Bl0/GdoHvaPE1IooVPQ0HCRKgvLlIEEVLR/rKgEN3KDtrawRGSfS5zLK1+gYxMRd3H8Jb5Jj0t
- pH/dwjNWoT8X2w0Zcy8un8/G52nlWZhGzfYP00GdZhq3k8womyVFhCknQD60LC/eGVJJg5pHEQp
- MkyfmDOwIXIzdYxDEcvrfKGL3L/UZX1P/3UTIxj+JuJDrRmJ1jk7EveJguNyQRFRuSIhfokfRnV
- juVcWsSds764q8jkjVpu/Qr9QHQ3dKsEbmCtFygHfASGtA2kjcIMiIpFCEb/sw0voahWzW0mwrL
- S6ZXvknoqT/OGNvlYNaloXUaqY
-X-Google-Smtp-Source: AGHT+IH8M+1NSIqEwgfpM+kkITpLxR+XrCaSz4MoGC8fqcsZk0y39HZ5IrUf9IBkukGARrCWO+/wSw==
-X-Received: by 2002:a05:6a20:5493:b0:334:84f7:5646 with SMTP id
- adf61e73a8af0-334a8650262mr21096957637.58.1761001341286; 
- Mon, 20 Oct 2025 16:02:21 -0700 (PDT)
+ AJvYcCVb8BUsqshrHJTiXIVYXogjqppsZ0SvCF1uBjOjyuoi7YSrl4j5JrBoSVd0UoMBTuq5o3v2XFgE035M@nongnu.org
+X-Gm-Message-State: AOJu0YyYknYbC+a6ajp3FoWinnoDqRiGIcTVXhWevMz3GluBUYdv2a1Y
+ XjQ0d0a5P5c78mVl96x0wv5A44eDkjyG5rilgLCkg7h+NMDR32cN8TXiC3HoioYzQZ4=
+X-Gm-Gg: ASbGnctF1GrBZDo5sfuq0476vGwXrPFaK2F5u+OiYQAus8E7OqmVIptKRBfoUICeWZm
+ eugI6dFwc2j+21bi9UX/j4OibPVhJANp0qJxh15Epj0VGO3vOKc2+vn63U4byg5ZCYofiZTdtif
+ ulNXYhfw9bHzN5uBdHi53S4mRHwyzLxn1UR03102rGlyibGLj0nEsoSw9OnXSRyPBEGSsqmjfR5
+ dCCaYoeJ0IuMDOEHp6Auuimw01IAbJDt6tzItGdsvNHMZVlykNoaRIQEFRXyEEwMH6qvPnVJ+e7
+ incVfvqkVVl62Y5OnscCW96ABAwNfY4th47jj20nUgRMs+ArRReMp01JCSC51dzuVksegIGTZ8G
+ xHraL3P5uLQ6iXCX/nQCVTN25ViSShYict42UHLc6mVl/heF/8lsXpjCuLVHTcAP348BhIqf8a+
+ xDp6Pa++QRbS2lLQ==
+X-Google-Smtp-Source: AGHT+IEBIyQN4SCFFQ7hdXsAs4JWBKK2NtyulPAwRd8PaO/NuVZIubmQec1t9h9KuJp8t5gwY+wKpw==
+X-Received: by 2002:a17:90a:ec8b:b0:32e:a10b:ce48 with SMTP id
+ 98e67ed59e1d1-33bcf86c996mr21051673a91.12.1761001365852; 
+ Mon, 20 Oct 2025 16:02:45 -0700 (PDT)
 Received: from [192.168.1.111] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a22ff158bdsm9626215b3a.16.2025.10.20.16.02.19
+ 98e67ed59e1d1-33d5de14becsm9177503a91.10.2025.10.20.16.02.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 16:02:20 -0700 (PDT)
-Message-ID: <9c1e6a3c-2ef2-41c0-826e-88d5d0edbd25@linaro.org>
-Date: Mon, 20 Oct 2025 16:02:19 -0700
+ Mon, 20 Oct 2025 16:02:45 -0700 (PDT)
+Message-ID: <f853622f-ac71-4e17-9f64-699e91636da2@linaro.org>
+Date: Mon, 20 Oct 2025 16:02:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/30] hw/core: Filter machine list available for a
- particular target binary
+Subject: Re: [PATCH v6 02/30] hw/boards: Move DEFINE_MACHINE() definition
+ closer to its doc string
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -85,20 +85,20 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>
 References: <20251020220941.65269-1-philmd@linaro.org>
- <20251020220941.65269-2-philmd@linaro.org>
+ <20251020220941.65269-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251020220941.65269-2-philmd@linaro.org>
+In-Reply-To: <20251020220941.65269-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,21 +115,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025-10-20 15:09, Philippe Mathieu-Daudé wrote:
-> Binaries can register a QOM type to filter their machines
-> by filling their TargetInfo::machine_typename field.
-> 
-> Commit 28502121be7 ("system/vl: Filter machine list available
-> for a particular target binary") added the filter to
-> machine_help_func() but missed the other places where the machine
-> list must be filtered, such QMP 'query-machines' command used by
-> QTests, and select_machine(). Fix that.
+> Code movement to have the DEFINE_MACHINE() definition follow
+> its usage documentation comment.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/core/machine-qmp-cmds.c | 4 +++-
->   monitor/qemu-config-qmp.c  | 3 ++-
->   system/vl.c                | 3 ++-
->   3 files changed, 7 insertions(+), 3 deletions(-)
+>   include/hw/boards.h | 34 +++++++++++++++++-----------------
+>   1 file changed, 17 insertions(+), 17 deletions(-)
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
