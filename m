@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2482FCCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E1FCCD19F
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzBv-0006St-Sn; Mon, 20 Oct 2025 19:21:29 -0400
+	id 1vAzCZ-000793-PB; Mon, 20 Oct 2025 19:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzBk-0006QY-2f
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:21:16 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ id 1vAzCW-00076C-4W
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:22:04 -0400
+Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vAzBi-0007fa-CN
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:21:15 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-430e1f19a1aso6697945ab.1
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:21:13 -0700 (PDT)
+ id 1vAzCP-0007kv-57
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:22:03 -0400
+Received: by mail-io1-xd34.google.com with SMTP id
+ ca18e2360f4ac-92b92e4b078so206058039f.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761002473; x=1761607273; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761002515; x=1761607315; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eO1qBNylAidQji0t0OGUHyI0nQj6u5lFJ86Komnwup4=;
- b=ivr4Zs2ZVhQ0hHWu5NsKiBf29Tdc+5hz+zvhRbPo6eBXh+U6B7xOgyRiGPVRNNTkux
- 7ZJnqqDZBhYR2UEli3hL8cQwfL+WE50GR0FiyckXcxPiNYYqXT8fMAiVqsGpvnpVlroE
- VWe1LYHOq3eKTI32mfnmqHleVf5zVzj4AbsNoLh28NNpiqR3Rbm9kTX27O5sx09he3z3
- jn4J87fyRag6L7paG+xvLUHK2nXKny6LZbJ3rby3IsOsGGT4QGfmbf+3dZvedy4rAZU+
- n7LE2rGU4N1G7f6nGpcQbCMdMRvR7i+p99sjijNj16U9aGs+/urxJ2HU2z+qPm1Mnokr
- pYNQ==
+ bh=qDHz0SEdezA336YipDRgwHx7tbNa3wsUzsqvX082OBI=;
+ b=QY0cB0tSjlA6bmAO/5dMBJGOOiJDoXoPFEL3a5XJUSItXseeaM3oTSQ90vIOeN6E6v
+ 8YzviToEL4NSE7g7L9MUM5Lj5vnoTTtuE0/zj47IRrZ59vp0wIYKi4wExAXupielj2rC
+ 7v5gg5SWKQ6jGamsngcu8N6sOI5FFmzZL38oU+9X8EzV2vT6L9U7lE/Wm8riS9jykyGc
+ zaf/eBr52JnKjOx1wFGyoAnpCa3TCse/MEMTT/IwI7dJYfau0s0L8EWKzGQwjHet69QA
+ ylNHfoPSyHl4q+FdBxELjwGNinkYiuw3h7knTnKstI0VyCQSYRGDiCgcJLZ9UO8JrG02
+ w4CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761002473; x=1761607273;
+ d=1e100.net; s=20230601; t=1761002515; x=1761607315;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eO1qBNylAidQji0t0OGUHyI0nQj6u5lFJ86Komnwup4=;
- b=KENYhvMvJpNpvOQLr905gDNWhxnG6orVx6nPEZ4nz4b9TDkegOjMZFISq04H17otee
- WbvDreXvJ1qQu6nBVR4+KC6p5/8Eb5XI30at4b6ivjQMG/YLPeItQ/MWZBI8HsbA6AR0
- t0p0ik4boh3+tZbKlLL0mpNZnCcDRIeDOWVvuUlcqDM2+xiaarQguq+Slx3ZpfsOQdhL
- M7PLaRCl80n9ij+hZ29ZodLUDKdExvIdwWPZ9+qI18AidV8ziAtNNKZnY5i89R2YA3ES
- xJyBpbNQj94MLz5zdj25lwXE5Zw8yhNFNhyRhIcbsCujOok9zQsOsoUmKxu/vR4EF+My
- gQzw==
+ bh=qDHz0SEdezA336YipDRgwHx7tbNa3wsUzsqvX082OBI=;
+ b=plLDROtU/QAif/ZHjKPPwjgIBRCs3CdwDg/a61Ays1O+3V/Xmxrt1NSBDgPq2KmEqA
+ eylqVuBtPHpjdtNBTuVOs/QBsJSofr4gHQBYW8F+5yDLS6BY/5qVvwyQ8f9lspnxEY7Z
+ rG5HqTvYEhxXkLck6GufH3pQwjAt/gSloAymQoJda+9PnNM+ttT6RM+LM0fQ5n8szg0v
+ vh6zcpyeKXU4vq+/yi6JC4Umxk1i1XfbQzK82fK6QBQDsAH33CVw/Y7RdIcotgkcFXIs
+ Y+YEWmLaFIWsr6pyKUj04EriWa718wD/dtjGt/+v2IlVXnvXTmvn/2Y6LDUFfsbEN7Qn
+ XhjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuEkcSEu0W2dpU54NANsfmRuA9Ur2oQpOcCUYqmNnUIbdBfafnTnWSdKUd5E4yk0bfAL8MZMtegzcD@nongnu.org
-X-Gm-Message-State: AOJu0YzYqUpS8aQOr3jLirEXeoMv0Use1SI5OMdtPjYLUdowwsgObVgW
- 3fMbI+MMRrIslegTJxuewJcFFaZ6j6NMV6QWlSiaP7gGfrQ+eo49ugsti3UkdDFuX/6eoXwL5Zo
- BJD2CTTMFfTSJfZHFnPpfo3aDGLbHuWY=
-X-Gm-Gg: ASbGncvpqrJzUeEqA4ZR+503IFsjJygpZiytyvYzwt51n3rUSagp3QeHkKfLSq4OjWt
- 3xHGWT6WZaXpb9tLNQy06dJnmVH1QCwVzbWFzLK/D7u6uuuIWvdNHwZ9BtZRMix2p8GdcV/0ha0
- mxVaueO1XRRY9Uv9pLChdM6bORNyN+NU9Ol6JTKmW0YtQ+QW8hQHMAc88UnWyzpo4/GWs/ITuu/
- VicLeW+9p2FiA/hO9zxvTJnO1bFXqxpoyD5RcMSruotuJN8t0z3OETV0O1/
-X-Google-Smtp-Source: AGHT+IEu41zqVI4r9Mx18UU8oLFJU/xhWif4eDr7xkoWO5Rx51vLVNTupVSUncbzWdFMwRlBkBYLWtKIhUM7PcG/1bA=
-X-Received: by 2002:a05:6e02:1563:b0:42f:a72e:e179 with SMTP id
- e9e14a558f8ab-430b43675e3mr268276735ab.11.1761002473094; Mon, 20 Oct 2025
- 16:21:13 -0700 (PDT)
+ AJvYcCXLXYw9LBin6UP7QATVhbMWnmG0wai6P9TLwEin9KVNJ7OwCMatylRHekT2BERcN6Ae45XJnHoO0Hyr@nongnu.org
+X-Gm-Message-State: AOJu0Yw1YgdE8jVWVYsolJhjRpp0LzuTw06CyuSYPYzdEo0qzLVedfRB
+ 0jEFOmMS5sRfwyWcVWSveSHgY6qm5JATSEUgkhXdzzPGYsRgaPh2qbRScwb3TGptOf4oPKuChTj
+ X+LmuLwPoNPvMYEpWTcnaunv49PGNL9E=
+X-Gm-Gg: ASbGncv8l2kknBw6BMJiDxqjpcyryROPgtXlNqOQbAHYaUlLfvVf41KVboJk25LVi65
+ XoSjF90c0ADTx+IIjL7FzPcit2Kko0F/CLe3pXk/Al59tvoqYNVgUbzh20C25PB95R+OXA4O1x3
+ husrMeWX447oe+HML7nvTMQOmzY1rUxeWt7YuNePw7AzGStgZsBaTwC7hFMU+dr+7BAQAfohtKp
+ aReGivDYztwh14J3XP1q0m8IqlRO4UZgyxDFI1R8Uvp584+M5vEELAguMAl
+X-Google-Smtp-Source: AGHT+IFyv1Ubl3VjC2mbci1lrMgtzqbJZ5zerb9WLzpMEGJGYP5Y5Ksg4jRFWEGMMLUjXqo0rYEKYRTZ7la0tPm49dY=
+X-Received: by 2002:a05:6602:14d1:b0:940:da07:61ff with SMTP id
+ ca18e2360f4ac-940da076a2bmr850135139f.8.1761002515508; Mon, 20 Oct 2025
+ 16:21:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
- <20251016114104.1384675-6-vsementsov@yandex-team.ru>
-In-Reply-To: <20251016114104.1384675-6-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-7-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-7-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 20 Oct 2025 19:21:02 -0400
-X-Gm-Features: AS18NWCG7J8BZzbaIhfxw5jeHYvigtg-GNWuZ9V15cwlQrcvBgVNU1tSKpzqzhc
-Message-ID: <CAFubqFtwJtzSzpXgBUxuEvrKGsx8R6sJ-0cG5YEJjCBs=NEMHw@mail.gmail.com>
-Subject: Re: [PATCH v2 05/25] vhost: split vhost_dev_connect() out of
- vhost_dev_init()
+Date: Mon, 20 Oct 2025 19:21:44 -0400
+X-Gm-Features: AS18NWCg7_QHIv5Xd42LNW_ESNshmC3O4SlANgfPO6VEm28T0PdQ3ETqkootydQ
+Message-ID: <CAFubqFuS=HZ2uqaKsXJ1dEBHwK4JADP3ROyWHL=YhzRgcdSN4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 06/25] vhost-user: support connect api
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
  mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
@@ -79,15 +78,15 @@ Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de,
  jasowang@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d34;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,107 +102,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just a tracepoint suggestion. Otherwise LGTM.
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
-On Thu, Oct 16, 2025 at 7:46=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+On Thu, Oct 16, 2025 at 7:47=E2=80=AFAM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> Split vhost_dev_init() so that the first part will do early
-> initialization of QEMU structures, but don't communicate with backend,
-> and the second part will do backend communication.
+> Memory allocation and connecting of structures remain ins _init(),
+> communication with backend goes to _connect().
 >
-> We need this for future support for backend-transfer migration support
-> for vhost-user-blk (backend will not be available in the early
-> initialization point).
+> We need this for further support of backend-transfer migration of
+> vhost-user-blk, as we'll need to postpone (or not do) initial
+> communication to backend.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/virtio/vhost.c         | 27 +++++++++++++++++++++------
->  include/hw/virtio/vhost.h |  2 ++
->  2 files changed, 23 insertions(+), 6 deletions(-)
+>  hw/virtio/vhost-user.c | 32 ++++++++++++++++++++------------
+>  1 file changed, 20 insertions(+), 12 deletions(-)
 >
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index f733e98b4a..09d00e4d98 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1619,7 +1619,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
-aque,
->                     VhostBackendType backend_type, uint32_t busyloop_time=
-out,
->                     bool connect, Error **errp)
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index e45b74eddd..c5cb5ed528 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -2270,21 +2270,12 @@ static int vhost_user_postcopy_notifier(NotifierW=
+ithReturn *notifier,
+>      return 0;
+>  }
+>
+> -static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+> -                                   Error **errp)
+> +static int vhost_user_backend_connect(struct vhost_dev *dev, Error **err=
+p)
 >  {
-> -    int i, r, n_initialized_vqs =3D 0;
-> +    int i, r;
+>      uint64_t features, ram_slots;
+> -    struct vhost_user *u;
+> -    VhostUserState *vus =3D (VhostUserState *) opaque;
+> +    struct vhost_user *u =3D dev->opaque;
+>      int err;
 >
->      trace_vhost_dev_init_in(hdev);
->
-> @@ -1640,9 +1640,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
-aque,
->       */
->      assert(connect || hdev->vhost_ops->vhost_backend_connect);
->
-> -    /* TDDO: support connect=3Dfalse */
-> -    assert(connect);
+> -    assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_USER);
 > -
->      r =3D hdev->vhost_ops->vhost_backend_init(hdev, opaque, errp);
->      if (r < 0) {
->          goto fail;
-> @@ -1678,6 +1675,26 @@ int vhost_dev_init(struct vhost_dev *hdev, void *o=
-paque,
->      memory_listener_register(&hdev->memory_listener, &address_space_memo=
-ry);
->      QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
->
-> +    trace_vhost_dev_init_out(hdev);
-> +
-> +    return connect ? vhost_dev_connect(hdev, errp) : 0;
-> +
-> +fail:
-> +    vhost_dev_cleanup(hdev);
-> +    return r;
-> +}
-> +
-> +int vhost_dev_connect(struct vhost_dev *hdev, Error **errp)
-> +{
-> +    int i, r, n_initialized_vqs =3D 0;
-> +
-
-Let's add tracepoints for connect here?
-
-> +    if (hdev->vhost_ops->vhost_backend_connect) {
-> +        r =3D hdev->vhost_ops->vhost_backend_connect(hdev, errp);
-> +        if (r < 0) {
-> +            goto fail;
-> +        }
-> +    }
-> +
->      r =3D hdev->vhost_ops->vhost_set_owner(hdev);
->      if (r < 0) {
->          error_setg_errno(errp, -r, "vhost_set_owner failed");
-> @@ -1720,8 +1737,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
-aque,
->          goto fail;
+> -    u =3D g_new0(struct vhost_user, 1);
+> -    u->user =3D vus;
+> -    u->dev =3D dev;
+> -    dev->opaque =3D u;
+> -
+>      err =3D vhost_user_get_features(dev, &features);
+>      if (err < 0) {
+>          error_setg_errno(errp, -err, "vhost_backend_init failed");
+> @@ -2292,7 +2283,7 @@ static int vhost_user_backend_init(struct vhost_dev=
+ *dev, void *opaque,
 >      }
 >
-> -    trace_vhost_dev_init_out(hdev);
-> -
+>      if (virtio_has_feature(features, VHOST_USER_F_PROTOCOL_FEATURES)) {
+> -        bool supports_f_config =3D vus->supports_config ||
+> +        bool supports_f_config =3D u->user->supports_config ||
+>              (dev->config_ops && dev->config_ops->vhost_dev_config_notifi=
+er);
+>          uint64_t protocol_features;
+>
+> @@ -2408,6 +2399,22 @@ static int vhost_user_backend_init(struct vhost_de=
+v *dev, void *opaque,
 >      return 0;
+>  }
 >
->  fail:
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index 74ed24232e..af46d4b5f2 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -158,6 +158,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaq=
-ue,
->                     uint32_t busyloop_timeout,
->                     bool connect, Error **errp);
->
-> +int vhost_dev_connect(struct vhost_dev *hdev, Error **errp);
+> +static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+> +                                   Error **errp)
+> +{
+> +    struct vhost_user *u;
+> +    VhostUserState *vus =3D (VhostUserState *) opaque;
 > +
->  /**
->   * vhost_dev_cleanup() - tear down and cleanup vhost interface
->   * @hdev: the common vhost_dev structure
+> +    assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_USER);
+> +
+> +    u =3D g_new0(struct vhost_user, 1);
+> +    u->user =3D vus;
+> +    u->dev =3D dev;
+> +    dev->opaque =3D u;
+> +
+> +    return 0;
+> +}
+> +
+>  static int vhost_user_backend_cleanup(struct vhost_dev *dev)
+>  {
+>      struct vhost_user *u;
+> @@ -3133,6 +3140,7 @@ void vhost_user_qmp_status(struct vhost_dev *dev, V=
+irtioStatus *status)
+>  const VhostOps user_ops =3D {
+>          .backend_type =3D VHOST_BACKEND_TYPE_USER,
+>          .vhost_backend_init =3D vhost_user_backend_init,
+> +        .vhost_backend_connect =3D vhost_user_backend_connect,
+>          .vhost_backend_cleanup =3D vhost_user_backend_cleanup,
+>          .vhost_backend_memslots_limit =3D vhost_user_memslots_limit,
+>          .vhost_backend_no_private_memslots =3D vhost_user_no_private_mem=
+slots,
 > --
 > 2.48.1
 >
