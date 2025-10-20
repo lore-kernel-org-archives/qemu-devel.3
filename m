@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3D0CCD19F
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913D7CCD1A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 23:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAzaj-0008J5-27; Mon, 20 Oct 2025 19:47:05 -0400
+	id 1vAze2-0000rB-Ar; Mon, 20 Oct 2025 19:50:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vAzaZ-0008He-GT
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:46:58 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vAzaV-0002NY-HM
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:46:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1761003996; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=li9AlhS66bSqE+OTJ44gf60RTeu3maIY8ZaFudfAcGcEDPI+q4WzOaH7iED+bZIor63ikyXYZvXFntLN3dVtUWNnztRYKFM03xbNs8uzaSOV/C7Q533CQ7Mhao5ejHzSgAcyQ5A1D9Q64Iu22UBjAHNSkOmPEF3OokuNy5HyisU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1761003996;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=mPq5MNQnGOG/ZhljP5lpfmos4nglNZXg4ukVwtcB9es=; 
- b=DwZxPQZGiEN7J/S3Tt5U1Gsib6VOrXqf8395SUdeII4cvehXmxhMzk+sza61UlhoprDpSTjTiD37ff+3k+nqt4tVWRWN+Ce98rDoPG5B8PH3/Z3/cukU+qbF3GFG+aUwoC1oOZ/oBa/wBdmxrbgAzwj+oYvM1jmAV8JcOCO3PdU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761003996; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=mPq5MNQnGOG/ZhljP5lpfmos4nglNZXg4ukVwtcB9es=;
- b=Xd4K9mUheiG0pBoO16UN1GZZ/Q/+FxZlFjAsT61ehz4Cny9cfbhbr/+7ahmzOJgG
- HTd4vlUX8ExZBrD7gKRGxiF5nI67ntDeo5Xv8trHct3/OmfpHZUHIhSElIOr/d29X/d
- DSOUDfIfjmfVnX673N+H3M++rkmHapDd3XPBNV44=
-Received: by mx.zohomail.com with SMTPS id 1761003993008584.7266929698293;
- Mon, 20 Oct 2025 16:46:33 -0700 (PDT)
-Message-ID: <9c7842b2-e76b-4bfd-b5c3-945087e9e272@collabora.com>
-Date: Tue, 21 Oct 2025 02:46:24 +0300
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vAzdr-0000q6-JE
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:50:22 -0400
+Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vAzdp-0002jf-9D
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 19:50:19 -0400
+Received: by mail-io1-xd34.google.com with SMTP id
+ ca18e2360f4ac-940e06b4184so102186139f.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 16:50:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761004216; x=1761609016; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qc6d0Fejx/5V39Ubz2j+y4zGnbVtOL1bnUPsm5G3FPA=;
+ b=LiLpSi8Pa3JSWrPXkU/LTpNch5yOPfkVrDvb2io6JxObuTTMwUe2FCl7MYcLRaYQhq
+ BKXoaXeSSkaDS6kBCOLB2vAjmyObNJbQtF12GsZ/io2n47s7fTBljYCwPpZ0q4JCZALc
+ 7a4mhqUoOy/opfPRORtyqBo9vT4hfV+I48DkdzWNkgbxcD1fgeGEkVRLVtU639FOszsO
+ 1ZR7ii4LopgaYKKibVJasI5PbFbpiFMTldMnyFt787rcT7nuXbfuPVPAGKTxz2Bw09oW
+ OzD8W9h61dBsarVOqOsln3+qgTZcZKGUHfa4EdFuFGAD5sScTyl6mUKzZj6slrCx0lfy
+ /3Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761004216; x=1761609016;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qc6d0Fejx/5V39Ubz2j+y4zGnbVtOL1bnUPsm5G3FPA=;
+ b=AU3Npe7PbJ1UJWkcltaqwD8HOVSJCite27HtTbazDv+InFJgdDOU6cMT7Dbql2Q54L
+ uV0JF7HbzU359+WUU/2K3iqhHkmNeze4CNwG5jMwyKBI/qH8mi243EVoaTWwIbXmxWzQ
+ uy4r9w/pn+41kZeykklfQh0ZixoA53Fpbc6BSfn/5wIecI4O/k/RVdgIyKHQ1HxCX4se
+ DNrHRV5E+4rNUfpMOihHo/8jpLckIQf60VYM1nsHawOFKZh8Bs1O8d+Qst+QeK4YPYhq
+ CobHbwnviz7jAUqJzz3TVedi8p98v5Us4520g1bnxn7DHZEm0SbsCyJvQ5imCrrQAQhu
+ a9cQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfANJdQ0s3NBZlDMxgU1DlGzuOENlpEJV7OEnwBwCOYYr5UimoDbN2hU7XFwL+FpDYkbhsyte5pm+3@nongnu.org
+X-Gm-Message-State: AOJu0YyUZNi96hAerlPhWzswPZn+WwPj2TbPl36wxyo135yroioxT/eR
+ q7hBcrtiiYLmjd2eOn0O+h2w30GlfgNq8912XrUHymHwFknie03s1KeGLoWN7BE9i2FVnrckwcW
+ xJ8TJ/v+IrQ6nZio1boeFRRHEXoT+Jgk=
+X-Gm-Gg: ASbGnctice0O0o2SU/5klNG3SUDgUEUdGYXODD5o9FK9C2w546eYe44Vz0nixkXjREx
+ iIScHtEKZeZHMAPpQ78KD5OOl5FHdWToKzP85zhZAc+gY/ADeRPBCDoYFwqMra2DFPnOYjhDoKv
+ RZmWXhotO1CQEQ1EZ0AGHnUyl+zuqYiFbRmaT20QpCPcF6X6wY7b6HupOiaP7YGkqjgJgbl0VHI
+ 2gVrTWGEVWGqywBkDwKa6IAGp6OpiRbkLoXphw5jKbJ4Bcz4IjEbtccsT3gGiE7sIFyly4=
+X-Google-Smtp-Source: AGHT+IGNQwsOIhyuLQQe9DWb/KqnfyUXCPOAS30ujarmcQKsf19jG0UsBaSL8FZbj5UbQo01LKx/piBvdJdtfYUqr3A=
+X-Received: by 2002:a05:6602:487:b0:93e:3805:4683 with SMTP id
+ ca18e2360f4ac-93e7622fc91mr2558113439f.1.1761004215700; Mon, 20 Oct 2025
+ 16:50:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 00/10] Support virtio-gpu DRM native context
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
-References: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20251020233949.506088-1-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-20-vsementsov@yandex-team.ru>
+In-Reply-To: <20251016114104.1384675-20-vsementsov@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Mon, 20 Oct 2025 19:50:05 -0400
+X-Gm-Features: AS18NWD4olMq9kC630eou0008JEw-IsOs4jXMBG3hNE2QfLeXXWcxKM9oW1SZBc
+Message-ID: <CAFubqFse1Q0YhHo6Qmrv7KrqJgjw0Zcx4QhueZh4u0PVjGOBVA@mail.gmail.com>
+Subject: Re: [PATCH v2 19/25] vhost: support backend-transfer migration
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
+ mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ steven.sistare@oracle.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
+ jasowang@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d34;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-io1-xd34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,251 +102,294 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/25 02:39, Dmitry Osipenko wrote:
-> This patchset adds DRM native context support to VirtIO-GPU on QEMU.
-> 
-> Contarary to Virgl and Venus contexts that mediates high level GFX APIs,
-> DRM native context [1] mediates lower level kernel driver UAPI, which
-> reflects in a less CPU overhead and less/simpler code needed to support it.
-> DRM context consists of a host and guest parts that have to be implemented
-> for each GPU driver. On a guest side, DRM context presents a virtual GPU as
-> a real/native host GPU device for GL/VK applications.
-> 
-> [1] https://www.youtube.com/watch?v=9sFP_yddLLQ
-> 
-> Today there are four DRM native context drivers existing in a wild:
-> 
->   - Freedreno (Qualcomm SoC GPUs), completely upstreamed
->   - AMDGPU, completely upstreamed
->   - Intel (i915), merge requests are opened
->   - Asahi (Apple SoC GPUs), partially merged upstream
-> 
-> # How to try out DRM context:
-> 
-> 1. DRM context uses host blobs and on host requires v6.13 or newer version
-> of Linux kernel that contains necessary KVM fixes.
-> 
-> 2. Use latest available Mesa (both guest and host) and libvirglrenderer 
-> versions. On guest, build Mesa with enabled virtio native context support.
-> 
-> 3. On guest, use latest Linux kernel v6.14 or newer.
-> 
-> Example QEMU cmdline that enables DRM context:
-> 
->   qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=on,drm_native_context=on \
->       -machine q35,accel=kvm -m 8G
-> 
-> # Notes about known problems:
-> 
-> 1. DRM contexts are mapping host blobs extensively and these mapping
-> operations work slowly in QEMU. We will need to optimize hostmem
-> unmapping that currently happens in a deffered RCU work, blocking
-> GPU for a substantial time. WIP fixes available at [2][3].
-> 
-> [2] https://lore.kernel.org/qemu-devel/20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp/
-> [3] https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-alex.bennee@linaro.org/
-> 
-> 2. Linux kernel virtio-gpu driver doesn't limit display refresh rate,
-> causing poor performance. Fix availalble in drm-misc-next tree [4]
-> and should land upstream with v6.19+ kernel.
-> 
-> [4] https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/a036f5fceedb9fbd715565fef7b824a121503de7
-> 
-> 3. Xorg on guest creates initial dumb buffer that is a vrend buffer, which
->    can't be re-used by native contexts. This may cause drawing artifacts.
->    Boot kernel with disabled fbdev using drm_client_lib.active="" kernel
->    cmdline parameter to work around the issue.
-> 
->    Wayland on guest isn't affected by this issue.
-> 
-> Changelog:
-> 
-> v14:- Rebased on top of recent QEMU staging tree.
-> 
->     - DRM native context in QEMU now requires virglrenderer v1.2.0+
->       containing fix for async-fencing not working after guest reboot.
-> 
->     - Updated doc patch with new Asahi nctx rquirements info. Asahi
->       support landed to virglrenderer v1.2.0.
-> 
-> v13:- Updated Asahi nctx MR link in the doc patch. Old MR was closed
->       and new opened.
-> 
->     - Fixed compiler warning about unused variable when using older
->       virglrenderer version.
-> 
-> v12:- Rebased on top of recent QEMU/staging and a fix from Yiwei Zhang:
-> 
->         https://lore.kernel.org/qemu-devel/20250518152651.334115-1-zzyiwei@gmail.com/
-> 
->     - Async-fence and native context features now require virglrenderer > 1.1.1
->       that contains fix needed for resetting virtio-gpu-gl properly on QEMU
->       reboot:
-> 
->         https://gitlab.freedesktop.org/virgl/virglrenderer/-/commit/6f4681ff09cb17aa2d6715dbc6034eb3abe5711d
-> 
->     - Added r-b from Akihiko Odaki to the doc patch.
-> 
->     - Corrected resetting of async fences list that was done on scanout
->       reset in v11 instead of virtio-gpu reset.
-> 
-> v11:- Added column for libvirglrenderer host requrements versions and 
->       corrected Asahi kernel link. Suggested by Akihiko Odaki.
-> 
-> v10:- Added links to Asahi and i915 virglrenderer MRs, link to Asahi host
->       kernel. Suggested by Akihiko Odaki.
-> 
->     - Renamed gfxstream guest requrements table's colum to match the host
->       requirements table. Suggested by Akihiko Odaki.
-> 
-> v9: - Updated doc patch by addresing review comments from Akihiko Odaki.
->       Made kernel requirements section specific to guest kernel and
->       removed reference to host requirements. Removed examples of
->       external projects' build flags.
-> 
->     - Added guest kernel minimum versions to the guest requirements table.
-> 
-> v8: - Addressed review comments from Akihiko Odaki on the doc patch.
-> 
->     - Added r-bs from Akihiko Odaki on the doc patches.
-> 
->     - Extended vrend doc with info about hostmem requirement for GL 4.6
-> 
-> v7: - Added r-b from Alex Bennée to the async fencing patch.
-> 
->     - Updated virtio-gpu doc patch with addressed review comments
->       from Akihiko Odaki.
-> 
-> v6: - Fixed compilation warning using older version of virglrenderer,
->       which wasn't fixed properly in v5.
-> 
->     - Added t-bs from Alex Bennée.
-> 
->     - Added patches to improve virgl/venus doc by adding links
->       to the Mesa doc as was suggested by Akihiko Odaki.
-> 
->     - Updated patch that documents guest/host requirements. Added
->       links to Asahi nctx and reworked the doc structure by adding
->       requirements to each context-type section instead of having
->       one big blob or requirements, which was objected by Akihiko Odaki.
-> 
-> v5: - Added r-bs from Akihiko Odaki.
-> 
->     - Added acks from Michael Tsirkin.
-> 
->     - Fixed compilation warning using older version of virglrenderer that
->       was reported by Alex Bennée. Noticed that I need to keep old
->       virgl_write_fence() code around for the older virglrenderer in
->       "Support  asynchronous fencing" patch, so added it back and verified
->       that old virglrenderer works properly.
-> 
->     - Added new patch from Alex Bennée that adds more virtio-gpu 
->       documentation with a couple corrections and additions to it from me.
-> 
->     - Rebased patches on top of latest staging tree.
-> 
-> v4: - Improved SDL2/dmabuf patch by reusing existing Meson X11 config 
->       option, better handling EGL error and extending comment telling
->       that it's safe to enable SDL2 EGL preference hint. As was suggested
->       by Akihiko Odaki.
-> 
->     - Replaced another QSLIST_FOREACH_SAFE with QSLIST_EMPTY+FIRST in
->       the async-fencing patch for more consistency of the code. As was
->       suggested by Akihiko Odaki.
-> 
->     - Added missing braces around if-statement that was spotted by
->       Alex Bennée.
-> 
->     - Renamed 'drm=on' option of virtio-gpu-gl device to 
->       'drm_native_context=on' for more clarity as was suggested by 
->       Alex Bennée. Haven't added added new context-type option that 
->       was also proposed by Alex, might do it with a separate patch.
->       This context-type option will duplicate and depecate existing
->       options, but in a longer run likely will be worthwhile adding
->       it.
-> 
->     - Dropped Linux headers-update patch as headers has been updated
->       in the staging tree.
-> 
-> v3: - Improved EGL presence-check code on X11 systems for the SDL2
->       hint that prefers EGL over GLX by using better ifdefs and checking
->       Xlib presence at a build time to avoid build failure if lib SDL2
->       and system are configured with a disabled X11 support. Also added
->       clarifying comment telling that X11 hint doesn't affect Wayland
->       systems. Suggested by Akihiko Odaki.
-> 
->     - Corrected strerror(err) that used negative error where it should
->       be positive and vice versa that was caught by Akihiko Odaki. Added
->       clarifying comment for the case where we get positive error code
->       from virglrenderer that differs from other virglrenderer API functions.
-> 
->     - Improved QSLIST usage by dropping mutex protecting the async fence
->       list and using atomic variant of QSLIST helpers instead. Switched away
->       from using FOREACH helper to improve readability of the code, showing
->       that we don't precess list in unoptimal way. Like was suggested by
->       Akihiko Odaki.
-> 
->     - Updated patchset base to Venus v18.
-> 
-> v2: - Updated SDL2-dmabuf patch by making use of error_report() and
->       checking presense of X11+EGL in the system before making SDL2
->       to prefer EGL backend over GLX, suggested by Akihiko Odaki.
-> 
->     - Improved SDL2's dmabuf-presence check that wasn't done properly
->       in v1, where EGL was set up only after first console was fully
->       inited, and thus, SDL's display .has_dmabuf callback didn't work
->       for the first console. Now dmabuf support status is pre-checked
->       before console is registered.
-> 
->     - Updated commit description of the patch that fixes SDL2's context
->       switching logic with a more detailed explanation of the problem.
->       Suggested by Akihiko Odaki.
-> 
->     - Corrected rebase typo in the async-fencing patch and switched
->       async-fencing to use a sigle-linked list instead of the double,
->       as was suggested by Akihiko Odaki.
-> 
->     - Replaced "=true" with "=on" in the DRM native context documentation
->       example and made virtio_gpu_virgl_init() to fail with a error message
->       if DRM context can't be initialized instead of giving a warning
->       message, as was suggested by Akihiko Odaki.
-> 
->     - Added patchew's dependecy tag to the cover letter as was suggested by
->       Akihiko Odaki.
-> 
-> Alex Bennée (1):
->   docs/system: virtio-gpu: Document host/guest requirements
-> 
-> Dmitry Osipenko (8):
->   ui/sdl2: Restore original context after new context creation
->   virtio-gpu: Handle virgl fence creation errors
->   virtio-gpu: Support asynchronous fencing
->   virtio-gpu: Support DRM native context
->   ui/sdl2: Don't disable scanout when display is refreshed
->   ui/gtk: Don't disable scanout when display is refreshed
->   docs/system: virtio-gpu: Add link to Mesa VirGL doc
->   docs/system: virtio-gpu: Update Venus link
-> 
-> Pierre-Eric Pelloux-Prayer (1):
->   ui/sdl2: Implement dpy dmabuf functions
-> 
->  docs/system/devices/virtio-gpu.rst | 116 +++++++++++++++++-
->  hw/display/virtio-gpu-gl.c         |   7 ++
->  hw/display/virtio-gpu-virgl.c      | 185 ++++++++++++++++++++++++++++-
->  hw/display/virtio-gpu.c            |  15 +++
->  include/hw/virtio/virtio-gpu.h     |  14 +++
->  include/ui/sdl2.h                  |   7 ++
->  meson.build                        |   8 +-
->  ui/gtk-egl.c                       |   1 -
->  ui/gtk-gl-area.c                   |   1 -
->  ui/sdl2-gl.c                       |  70 ++++++++++-
->  ui/sdl2.c                          |  42 +++++++
->  11 files changed, 449 insertions(+), 17 deletions(-)
-> 
+Overall looks good. Just a nit.
 
-+ Akihiko Odaki using the new email address
+Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 
--- 
-Best regards,
-Dmitry
+On Thu, Oct 16, 2025 at 7:44=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> Introduce vhost_dev.backend_transfer field,
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  hw/virtio/vhost.c         | 121 +++++++++++++++++++++++++++++++++-----
+>  include/hw/virtio/vhost.h |   7 +++
+>  2 files changed, 113 insertions(+), 15 deletions(-)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 63036f8214..c46203eb9c 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1325,6 +1325,8 @@ out:
+>      return ret;
+>  }
+>
+> +static void vhost_virtqueue_error_notifier(EventNotifier *n);
+> +
+>  int vhost_virtqueue_start(struct vhost_dev *dev,
+>                            struct VirtIODevice *vdev,
+>                            struct vhost_virtqueue *vq,
+> @@ -1350,7 +1352,13 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          return r;
+>      }
+>
+> -    vq->num =3D state.num =3D virtio_queue_get_num(vdev, idx);
+> +    vq->num =3D virtio_queue_get_num(vdev, idx);
+> +
+> +    if (dev->backend_transfer) {
+> +        return 0;
+> +    }
+> +
+> +    state.num =3D vq->num;
+>      r =3D dev->vhost_ops->vhost_set_vring_num(dev, &state);
+>      if (r) {
+>          VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
+> @@ -1428,6 +1436,10 @@ static int do_vhost_virtqueue_stop(struct vhost_de=
+v *dev,
+>
+>      trace_vhost_virtque_stop_in(dev, vdev->name, idx);
+>
+> +    if (dev->backend_transfer) {
+> +        return 0;
+> +    }
+> +
+>      if (virtio_queue_get_desc_addr(vdev, idx) =3D=3D 0) {
+>          /* Don't stop the virtqueue which might have not been started */
+>          return 0;
+> @@ -1565,10 +1577,14 @@ fail_call:
+>
+>  static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
+>  {
+> -    event_notifier_cleanup(&vq->masked_notifier);
+> +    if (!vq->dev->backend_transfer) {
+> +        event_notifier_cleanup(&vq->masked_notifier);
+> +    }
+>      if (vq->dev->vhost_ops->vhost_set_vring_err) {
+>          event_notifier_set_handler(&vq->error_notifier, NULL);
+> -        event_notifier_cleanup(&vq->error_notifier);
+> +        if (!vq->dev->backend_transfer) {
+> +            event_notifier_cleanup(&vq->error_notifier);
+> +        }
+>      }
+>  }
+>
+> @@ -1635,6 +1651,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *op=
+aque,
+>
+>      hdev->vdev =3D NULL;
+>      hdev->migration_blocker =3D NULL;
+> +    hdev->_features_wait_incoming =3D true;
+>      hdev->busyloop_timeout =3D busyloop_timeout;
+>
+>      for (i =3D 0; i < hdev->nvqs; ++i) {
+> @@ -1717,6 +1734,8 @@ int vhost_dev_connect(struct vhost_dev *hdev, Error=
+ **errp)
+>          goto fail;
+>      }
+>
+> +    hdev->_features_wait_incoming =3D false;
+> +
+>      for (i =3D 0; i < hdev->nvqs; ++i, ++n_initialized_vqs) {
+>          r =3D vhost_virtqueue_connect(hdev->vqs + i, hdev->vq_index + i)=
+;
+>          if (r < 0) {
+> @@ -1808,8 +1827,11 @@ void vhost_dev_disable_notifiers_nvqs(struct vhost=
+_dev *hdev,
+>       */
+>      memory_region_transaction_commit();
+>
+> -    for (i =3D 0; i < nvqs; ++i) {
+> -        virtio_bus_cleanup_host_notifier(VIRTIO_BUS(qbus), hdev->vq_inde=
+x + i);
+> +    if (!hdev->backend_transfer) {
+> +        for (i =3D 0; i < nvqs; ++i) {
+> +            virtio_bus_cleanup_host_notifier(VIRTIO_BUS(qbus),
+> +                                             hdev->vq_index + i);
+> +        }
+>      }
+>      virtio_device_release_ioeventfd(vdev);
+>  }
+> @@ -1967,6 +1989,11 @@ void vhost_get_features_ex(struct vhost_dev *hdev,
+>  {
+>      const int *bit =3D feature_bits;
+>
+> +    if (hdev->_features_wait_incoming) {
+> +        /* Excessive set is enough for early initialization. */
+> +        return;
+> +    }
+> +
+>      while (*bit !=3D VHOST_INVALID_FEATURE_BIT) {
+>          if (!vhost_dev_has_feature_ex(hdev, *bit)) {
+>              virtio_clear_feature_ex(features, *bit);
+> @@ -2001,6 +2028,54 @@ const VMStateDescription vmstate_backend_transfer_=
+vhost_inflight =3D {
+>      }
+>  };
+>
+> +const VMStateDescription vmstate_vhost_virtqueue =3D {
+> +    .name =3D "vhost-virtqueue",
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_EVENT_NOTIFIER(error_notifier, struct vhost_virtqueue),
+> +        VMSTATE_EVENT_NOTIFIER(masked_notifier, struct vhost_virtqueue),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static int vhost_dev_post_load(void *opaque, int version_id)
+> +{
+> +    struct vhost_dev *hdev =3D opaque;
+> +    Error *err =3D NULL;
+> +    int i;
+> +
+> +    if (!check_memslots(hdev, &err)) {
+> +        error_report_err(err);
+> +        return -EINVAL;
+> +    }
+> +
+> +    hdev->_features_wait_incoming =3D false;
+> +
+> +    if (hdev->vhost_ops->vhost_set_vring_err) {
+> +        for (i =3D 0; i < hdev->nvqs; ++i) {
+> +            event_notifier_set_handler(&hdev->vqs[i].error_notifier,
+> +                                       vhost_virtqueue_error_notifier);
+> +        }
+> +    }
+> +
+
+nit: spurious newline
+
+> +
+> +    return 0;
+> +}
+> +
+> +const VMStateDescription vmstate_vhost_dev =3D {
+> +    .name =3D "vhost-dev",
+> +    .post_load =3D vhost_dev_post_load,
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_UINT64(_features, struct vhost_dev),
+> +        VMSTATE_UINT64(max_queues, struct vhost_dev),
+> +        VMSTATE_UINT32_EQUAL(nvqs, struct vhost_dev, NULL),
+> +        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(vqs, struct vhost_dev,
+> +                                             nvqs,
+> +                                             vmstate_vhost_virtqueue,
+> +                                             struct vhost_virtqueue),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+>  void vhost_ack_features_ex(struct vhost_dev *hdev, const int *feature_bi=
+ts,
+>                             const uint64_t *features)
+>  {
+> @@ -2127,19 +2202,24 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtI=
+ODevice *vdev, bool vrings)
+>      hdev->started =3D true;
+>      hdev->vdev =3D vdev;
+>
+> -    r =3D vhost_dev_set_features(hdev, hdev->log_enabled);
+> -    if (r < 0) {
+> -        goto fail_features;
+> +    if (!hdev->backend_transfer) {
+> +        r =3D vhost_dev_set_features(hdev, hdev->log_enabled);
+> +        if (r < 0) {
+> +            warn_report("%s %d", __func__, __LINE__);
+> +            goto fail_features;
+> +        }
+>      }
+>
+>      if (vhost_dev_has_iommu(hdev)) {
+>          memory_listener_register(&hdev->iommu_listener, vdev->dma_as);
+>      }
+>
+> -    r =3D hdev->vhost_ops->vhost_set_mem_table(hdev, hdev->mem);
+> -    if (r < 0) {
+> -        VHOST_OPS_DEBUG(r, "vhost_set_mem_table failed");
+> -        goto fail_mem;
+> +    if (!hdev->backend_transfer) {
+> +        r =3D hdev->vhost_ops->vhost_set_mem_table(hdev, hdev->mem);
+> +        if (r < 0) {
+> +            VHOST_OPS_DEBUG(r, "vhost_set_mem_table failed");
+> +            goto fail_mem;
+> +        }
+>      }
+>      for (i =3D 0; i < hdev->nvqs; ++i) {
+>          r =3D vhost_virtqueue_start(hdev,
+> @@ -2179,13 +2259,13 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtI=
+ODevice *vdev, bool vrings)
+>          }
+>          vhost_dev_elect_mem_logger(hdev, true);
+>      }
+> -    if (vrings) {
+> +    if (vrings && !hdev->backend_transfer) {
+>          r =3D vhost_dev_set_vring_enable(hdev, true);
+>          if (r) {
+>              goto fail_log;
+>          }
+>      }
+> -    if (hdev->vhost_ops->vhost_dev_start) {
+> +    if (hdev->vhost_ops->vhost_dev_start && !hdev->backend_transfer) {
+>          r =3D hdev->vhost_ops->vhost_dev_start(hdev, true);
+>          if (r) {
+>              goto fail_start;
+> @@ -2207,6 +2287,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIOD=
+evice *vdev, bool vrings)
+>      }
+>      vhost_start_config_intr(hdev);
+>
+> +    hdev->backend_transfer =3D false;
+> +
+>      trace_vhost_dev_start_out(hdev, vdev->name);
+>      return 0;
+>  fail_iotlb:
+> @@ -2262,9 +2344,18 @@ static int do_vhost_dev_stop(struct vhost_dev *hde=
+v, VirtIODevice *vdev,
+>      if (hdev->vhost_ops->vhost_dev_start) {
+>          hdev->vhost_ops->vhost_dev_start(hdev, false);
+>      }
+> -    if (vrings) {
+> +    if (vrings && !hdev->backend_transfer) {
+>          vhost_dev_set_vring_enable(hdev, false);
+>      }
+> +
+> +    if (hdev->backend_transfer) {
+> +        for (i =3D 0; i < hdev->nvqs; ++i) {
+> +            struct vhost_virtqueue *vq =3D hdev->vqs + i;
+> +
+> +            event_notifier_set_handler(&vq->error_notifier, NULL);
+> +        }
+> +    }
+> +
+>      for (i =3D 0; i < hdev->nvqs; ++i) {
+>          rc |=3D do_vhost_virtqueue_stop(hdev,
+>                                        vdev,
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 94a0c75fc8..55ad822848 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -105,6 +105,9 @@ struct vhost_dev {
+>      VIRTIO_DECLARE_FEATURES(_features);
+>      VIRTIO_DECLARE_FEATURES(acked_features);
+>
+> +    bool _features_wait_incoming;
+> +    bool backend_transfer;
+> +
+>      uint32_t busyloop_timeout;
+>      uint64_t max_queues;
+>      uint64_t backend_cap;
+> @@ -592,4 +595,8 @@ extern const VMStateDescription vmstate_backend_trans=
+fer_vhost_inflight;
+>      VMSTATE_STRUCT_POINTER(_field, _state, vmstate_inflight, \
+>                             struct vhost_inflight)
+>
+> +extern const VMStateDescription vmstate_vhost_dev;
+> +#define VMSTATE_BACKEND_TRANSFER_VHOST(_field, _state) \
+> +    VMSTATE_STRUCT(_field, _state, 0, vmstate_vhost_dev, struct vhost_de=
+v)
+> +
+>  #endif
+> --
+> 2.48.1
+>
+>
 
