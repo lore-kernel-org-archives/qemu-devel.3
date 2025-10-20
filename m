@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2084DCCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0DB2CCD193
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 11:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAnyT-0004ch-GG; Mon, 20 Oct 2025 07:22:49 -0400
+	id 1vAo3U-00070t-Gk; Mon, 20 Oct 2025 07:28:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAnyR-0004c6-Ay
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:22:47 -0400
+ id 1vAo3Q-00070f-VX
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:27:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vAnyO-0007Ei-0Z
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:22:47 -0400
+ id 1vAo3O-00082M-W1
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 07:27:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760959363;
+ s=mimecast20190719; t=1760959673;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bw5wI8Cdfh2NdDWKH0I8UFb2+F2bLkh/qyJGWki94Mk=;
- b=AqfOpZrOGeZBRVz20Hpr5lnOCHzyXKCIsGGKwmOTUpx24C0BZPDXa4SHRNh9qRhpPFxRuN
- ngPHEfeZRzqHH7z0EQLBAplk7O0zmV757yA7ltnDRdMQpIoPiuvtCORfgqia/g4AFtZ1JA
- yMvGoYuATIuVbazexR57/8alJwTkLts=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=t7L+POjpZ+nexZn+121R/bpzOmbKvh3DTBgM3o1BvLY=;
+ b=b/ognUeXpTpAFpuoVfe3BTgx0V9aSLJWodiaEDSUrZfEYVgZB/01bZuUHftWuIKs418a+3
+ 18zU4O6dVtruLkjRJIrYKpWfzd5f9kihJAlSEBZZf0hT6DVvQsXFTwE5r2abXGsq+E0sYk
+ C0ANdPmi7cOBQfoJcni+tUTVrirK5W8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-e_4VfOTAP-m2J0-MXkGYYg-1; Mon,
- 20 Oct 2025 07:22:41 -0400
-X-MC-Unique: e_4VfOTAP-m2J0-MXkGYYg-1
-X-Mimecast-MFC-AGG-ID: e_4VfOTAP-m2J0-MXkGYYg_1760959360
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-RpbweNPWN-6wkoKU3nVfjw-1; Mon,
+ 20 Oct 2025 07:27:51 -0400
+X-MC-Unique: RpbweNPWN-6wkoKU3nVfjw-1
+X-Mimecast-MFC-AGG-ID: RpbweNPWN-6wkoKU3nVfjw_1760959671
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD82C1800669; Mon, 20 Oct 2025 11:22:40 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BEF6F195608D
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 11:27:50 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.161])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 895931800578; Mon, 20 Oct 2025 11:22:39 +0000 (UTC)
-Date: Mon, 20 Oct 2025 12:22:36 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E4AE01800577; Mon, 20 Oct 2025 11:27:49 +0000 (UTC)
+Date: Mon, 20 Oct 2025 12:27:46 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, matoro <matoro_mailinglist_qemu@matoro.tk>
-Subject: Re: [PATCH v2 3/6] crypto: allow client/server cert chains
-Message-ID: <aPYbfNkO6Jdo2gDt@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 4/6] crypto: stop requiring "key encipherment" usage
+ in x509 certs
+Message-ID: <aPYcsgMUo7zwqRHY@redhat.com>
 References: <20250919101022.1491007-1-berrange@redhat.com>
- <20250919101022.1491007-4-berrange@redhat.com>
- <jczraatcitsz3tf5aznkeaiffanysz4dlvn7opoyibofvr2loj@u3wumm3rwdq5>
+ <20250919101022.1491007-5-berrange@redhat.com>
+ <b7ffwoujpgryclocsq5tf6nmz24ziaastfjbt2av2gftc5pvbr@qroqdsicq3so>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <jczraatcitsz3tf5aznkeaiffanysz4dlvn7opoyibofvr2loj@u3wumm3rwdq5>
+In-Reply-To: <b7ffwoujpgryclocsq5tf6nmz24ziaastfjbt2av2gftc5pvbr@qroqdsicq3so>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -90,106 +92,69 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 16, 2025 at 10:28:59AM -0500, Eric Blake wrote:
-> On Fri, Sep 19, 2025 at 11:10:19AM +0100, Daniel P. Berrangé wrote:
-> > From: matoro <matoro@users.noreply.github.com>
-> 
-> The CC: line has a different email address for matoro than the git
-> author attribution.  Does that matter?  I'm not a fan of github's
-> attempt to make it difficult to reach a contributor outside the github
-> walled garden.
-> 
+On Thu, Oct 16, 2025 at 10:41:47AM -0500, Eric Blake wrote:
+> On Fri, Sep 19, 2025 at 11:10:20AM +0100, Daniel P. Berrangé wrote:
+> > This usage flag was deprecated by RFC8813, such that it is
+> > forbidden to be present for certs using ECDSA/ECDH algorithms,
+> > and in TLS 1.3 is conceptually obsolete.
 > > 
-> > The existing implementation assumes that client/server certificates are
-> > single individual certificates.  If using publicly-issued certificates,
-> > or internal CAs that use an intermediate issuer, this is unlikely to be
-> > the case, and they will instead be certificate chains.  While this can
-> > be worked around by moving the intermediate certificates to the CA
-> > certificate, which DOES currently support multiple certificates, this
-> > instead allows the issued certificate chains to be used as-is, without
-> > requiring the overhead of shuffling certificates around.
+> > As such many valid certs will no longer have this key usage
+> > flag set, and QEMU should not be rejecting them, as this
+> > prevents use of otherwise valid & desirable algorithms.
 > > 
-> > Corresponding libvirt change is available here:
-> > https://gitlab.com/libvirt/libvirt/-/merge_requests/222
-> > 
-> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Signed-off-by: matoro <matoro_mailinglist_qemu@matoro.tk>
-> > [DB: adapted for code conflicts with multi-CA patch]
 > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > > ---
-> >  crypto/tlscredsx509.c                 | 156 ++++++++++++--------------
-> >  tests/unit/test-crypto-tlscredsx509.c |  77 +++++++++++++
-> >  2 files changed, 147 insertions(+), 86 deletions(-)
+> >  crypto/tlscredsx509.c                 | 10 +-------
+> >  docs/system/tls.rst                   | 13 +++-------
+> >  tests/unit/crypto-tls-x509-helpers.h  |  6 ++---
+> >  tests/unit/test-crypto-tlscredsx509.c | 36 +++++++++++++--------------
+> >  tests/unit/test-crypto-tlssession.c   | 14 +++++------
+> >  tests/unit/test-io-channel-tls.c      |  4 +--
+> >  6 files changed, 34 insertions(+), 49 deletions(-)
 > 
-> >  
-> > -static gnutls_x509_crt_t
-> > -qcrypto_tls_creds_load_cert(QCryptoTLSCredsX509 *creds,
-> > -                            const char *certFile,
-> > -                            bool isServer,
-> > -                            Error **errp)
-> > -{
-> 
-> > -
-> >  static int
-> > -qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
-> > -                                    const char *certFile,
-> > -                                    gnutls_x509_crt_t **certs,
-> > -                                    unsigned int *ncerts,
-> > -                                    Error **errp)
-> > +qcrypto_tls_creds_load_cert_list(QCryptoTLSCredsX509 *creds,
-> > +                                 const char *certFile,
-> > +                                 gnutls_x509_crt_t **certs,
-> > +                                 unsigned int *ncerts,
-> > +                                 bool isServer,
-> > +                                 bool isCA,
-> > +                                 Error **errp)
-> >  {
-> 
-> Nice consolidation to reduce duplication.
-> 
-> > @@ -520,41 +497,48 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
-> 
-> >  
-> > -    if (cert &&
-> > -        qcrypto_tls_creds_check_cert(creds,
-> > -                                     cert, certFile, isServer,
-> > -                                     false, errp) < 0) {
-> > -        goto cleanup;
-> > +    for (i = 0; i < ncerts; i++) {
-> > +        if (qcrypto_tls_creds_check_cert(creds,
-> > +                                         certs[i], certFile,
-> > +                                         isServer, (i != 0), errp) < 0) {
-> 
-> The () around 'i != 0' look extraneous to me; but that's trivial
-> formatting so I'm not opposed to keeping them.  On the other hand...
+> My understanding is that the reason you coded all the sanity checks
+> into qemu was to provide saner error messages for users that create
+> invalid keys than what gnutls does (keys are already hard enough to
+> create securely, so it is nice to be told how to fix your key rather
+> than just "it didn't work").  I also understand that newer algorithms
+> really can't use this flag, and we don't want to reject use of better
+> algorithms, so this patch makes sense as documented.
 
-Yeah, I'll loose the ()
+Yes, admin configuration mistakes with TLS certs are an incredibly
+common problem, frustratingly hard to diagnose, especially when the
+failure only happens at runtime, not startup. So this code is mostly
+about "sanity checks" on configuration.
 
-> 
-> > +            goto cleanup;
-> > +        }
-> >      }
-> >  
-> > -    if (cert &&
-> > -        qcrypto_tls_creds_check_authority_chain(creds, cert,
-> > +    if (ncerts &&
-> 
-> ...here you are doing an implicit conversion of ncerts to bool; why
-> not do the same implicit conversion of 'i' rather than explicit '(i !=
-> 0)' above?
+> Still, is there any risk that for older algorithms, where the 'key
+> encipherment' bit did matter, that we could now end up processing an
+> incomplete key that we would have previously rejected with a nice
+> message but which now goes to gnutls and reverts back to the poorer
+> error message quality or even worse being used despite being a
+> security risk?  I don't think it is a high risk - fewer people would
+> be generating certificates that explicitly request an older algorithm
+> but not following all the recommended steps, compared to the more
+> common case of people following your documentation and getting the
+> newest defaults that just work; anyone determined enough to get an
+> older algorithm deserves the breakage if their explicit instructions
+> to override the default are weaker than normal.
 
-IMHO using an int in a conditional expression  "if (<int vriable>)"
-has pretty clear intent.
+Yes, it is a slight degradation in the checks we are doing in
+certain scenarios. As the world moves increasingly towards
+eliptic curves and/or post-quantum crypto, the check is less
+and less important. So its an acceptable tradeoff. I've got
+another series coming soon that supports post-quantum crypto
+better in QEMU
 
-Passing an int to a parameter that expects a bool could just as easily be
-indicative of a code bug, as it could be intentionally relying on the
-type conversion. IOW, it has fuzzy intent.
-
-So although I didn't write this patch, I would be inclined to write it
-the same way it is done here.
-
+> In saying that, I'm hoping that gnutls still diagnoses certs that
+> cannot be properly used for the purpose at hand (whether or not the
+> 'key encipherment' bit must be set or cleared), even if it gives a
+> less-than-stellar diagnostic message about rejecting a cert.  If I'm
+> wrong, and an incomplete cert with an older algorithm but missing the
+> bit turns into a security bypass, it's much more than QEMU that would
+> be impacted.  So, I'm comfortable with:
 > 
 > Reviewed-by: Eric Blake <eblake@redhat.com>
+
 
 With regards,
 Daniel
