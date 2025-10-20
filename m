@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5D4CCD193
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CD8CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAnJ7-0001tw-Ms; Mon, 20 Oct 2025 06:40:06 -0400
+	id 1vAnHp-0000eM-3I; Mon, 20 Oct 2025 06:38:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAnI6-0000lp-Mz
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:39:06 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAnHl-0000d0-UU
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:38:42 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAnI4-0000GU-Mj
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:39:02 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-46e542196c7so33457705e9.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:38:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vAnHj-0000Et-KT
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:38:41 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3ee64bc6b85so5700560f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760956737; x=1761561537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1760956717; x=1761561517; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qI+hF79G3saS4cJM9gBn0qvW7x/aK3K4EItDfXm9eIU=;
- b=nr621hplieuOYnv9ySTfae4yw73s1+XQi5hmYq7Tdq8uXpztfGawEVM/e0nBVTFZQZ
- 9ehm3vVXbGAtU2RJrH6wGVnPU/p7/PTmSkqXW4o915dqCYeF41fId2nkUUwllKrWNCiE
- sfYT5m4BQ4+dDiHwmQ20qr6YcdZf8SnBHYODaSQZRMJpddfN9sAB+clVvPxFIYGYmg+I
- b+E/YDTSx/p46tzC/k/tumoqN4Y7UnQhZ5tNRKSkUwLrRw+Fmf/v7a0Kq1QNpWd3y35s
- 7UQgqDs3hxVGR9BqVTtmKK9FIyGtsyFa1Kt+G2Qh2B4PDH0bTN62ZNMXVLdP5vcV8uZC
- F0og==
+ bh=0ihxvz/zYsaWUtfE9vP9orWGk1XOSmxd+RXF63zIcqM=;
+ b=c0pc5gQsT1vNbbLMIvUyJWH96PuuPNXuecRBE6RB+68+5KC5wn3sR0k19bM7hbUlRI
+ 7+UEsCm61C+soSoyRZrKaXPy38Qx12WjDWX73LerV5Ya8rHhPLm1tUqoULI/DYzoCICv
+ zqSC/DgwwGISdQF127tId8uF58PIzSDl3VFcmju5W4XjSu8iuMKlLGAmjZfmC+1dx32A
+ yBtFqLIp7a+86r1VxBuWfMNmE885t9InqS8hbu85durWt3bFb6P/LE1TwF4KuXoDDQPn
+ jd0Oul95fQYgeH8vHkm2Q2VaM1OSXX2S75jby30WFAScocgbJClN0yPmol3eSx+bv2zu
+ Y3gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760956737; x=1761561537;
+ d=1e100.net; s=20230601; t=1760956717; x=1761561517;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qI+hF79G3saS4cJM9gBn0qvW7x/aK3K4EItDfXm9eIU=;
- b=wKOGGkfGVyEqQadNOaOAdwqUpO4Ef9hJvAe7+8zB8AIj+jYiGVWn4AWXSkzEZvZFCd
- msN2Sr0o9+uWsbXKHkAKzrv074/5xViDiPnXyxOH1g1R/+fxFUs7lJhwjfwEv/eCepi6
- YSt6NIgX1aeHc+n4FXrsnN7vaatoUvvcM/ttLcBAxm2X+hKrmm+GR/qK+8a2Bdzzzb22
- PG+F1OJq1hDXRYSPvlTpl3odX6e7ZnVobROCr8rDYQne/EhfhmSRNFj/of8tp1BhicTJ
- WS793kG682LLvjN4aNSXIgCQrnHI4bHSYXJmaGPRY+eeEQmP4/lUvMd3rn4XXyCIMIMV
- WkHA==
-X-Gm-Message-State: AOJu0Yxb6lqqBusboSTniczGYB+T14YQRZ9WXryYL6OKuzZRE4bdXeK7
- kKTl8X6SxdQqjSCfYDbsbjXEkda8xxlf1oheKHjVslzBL5rnQGLh6TD6ULul6zsRxU0Q6dpQitk
- jyJgKvzE=
-X-Gm-Gg: ASbGncul29XTj+wHi53LbqhjMOr2YxGRUn6JujQ7d2z8Mr4frx4TlLsB4Tsvn3qoZvR
- RfnIip2lmx3jwI9Gnt4qjebLZCFyfmJiV6o6oCzwPBzr9tf/TFdONp93vB3jf5zB5Cm1aq/4IMv
- XJ/e0PaAQpz0w4rlrKIYTa/Hca727j9y1rkWUxUwbFZSz3cvM5gATagVLjh5wEjJmdXMecSWVbX
- iVn28h9D/EQjfDKOr3/7nsfjQ6DIGUQ8ulBlIhVPUe+tNwl4cwrtlUEfwcZP5rLal7CK5JMLxyr
- 7gkHvHQL6xWmkSWmQxqmrSHB0+mP0NXrXW4gTApKgkdXl5WHqKCyMoPGGuoTFgAfBy4z0Cvl3Vj
- mNiLQiPUsGeOl+cuoiPvtBcfgk+ZD+EHSVqpra0tBy+YZC/61oZrURLXHJcMI1nm/LbQTZ9bNzb
- Rr4TYSBbLgPeK1Ff+pDneGEoU+GDmODl7TXr2FeD9atZQsq0cJYw==
-X-Google-Smtp-Source: AGHT+IGkiVeRk8iHXbbwarjONT3Tc41KOvva+qopWq1+Dk4GjlVt2+f7Q0Q/jxdpBNdogpqMLN5a2w==
-X-Received: by 2002:adf:a30a:0:b0:427:537:39e0 with SMTP id
- ffacd0b85a97d-42705373ac1mr6211391f8f.14.1760956736641; 
- Mon, 20 Oct 2025 03:38:56 -0700 (PDT)
+ bh=0ihxvz/zYsaWUtfE9vP9orWGk1XOSmxd+RXF63zIcqM=;
+ b=Fa0BIKWK2osXCZJk+XQRPCYltEGE0uN4dN6087kU2hfQz6dqi8gFB5saelRFoEwRH7
+ HbV8q4dlMy9JvFizYReJ1h3/9wnRyKmeNdDo3B2aql7vSN6jztVCrpHwuOwoPt6AJ3eb
+ JZAqos0vRwJW+lNcV5Cj8vqRYDOovHACP/NDlPkOyLTsdg49QVtJDutwClktX1GhuLrW
+ p18gSlMTUtwvawIbpJLcZH0QOBGxVX86EY7Xmsk6BNEPiY5fM2sUKxz/8AWTFKjq5i5a
+ WlmraYLHydHHAAr0Nj/44uta+zTbe8ahLuiPzW0tEpzeLpjfFBjbfzboIWNWEKMaGzLi
+ L9/Q==
+X-Gm-Message-State: AOJu0Yy61HPzf34UkOmI7yPf97J0u4ZSYsxtmIYpgROiVKsk4x1h9HBQ
+ J57sYNP/sNndWOVK48Q+6XS2cQ8WHNEdx5cfJlh39enHtGX2Xg6JhDoulOIxTaBrYzrbcLJHEHP
+ /jUGA3eo=
+X-Gm-Gg: ASbGncsN6w5myX8uKKpAP4Ua0uqxvg6o/mVRgik5kQa6iiYcA/cs2NJ85tnmmf4W4/8
+ EBBeNGwPbpc3mtIdhzUs/z6v8ydph7lexgRE1HAggJd9wwWhR2BFWdESL0Ej4x1bjsrBmYAe7mN
+ 77//Ue5pRoCy/cXzY+TTNi4fDEDSoNEcuzejv4BZoopE0sdFTREjgNG3HLvNgi5XyVbefNBL1AA
+ e93VyYjCN5YsoR+k9AkLcwXV1dF0lvSRJv4k1afJBwn1hOGlnEV20U+/ekWG5bbjZGu9ZMY2Af9
+ EW/AhvH/qjxVSYBgdjRKnXJw7+l+soUyQaHFAY1lZsg3Zfq7NT2A+zxf5+oICplgsQyL3C01um2
+ siZ7q8dZktetoEeor92VHcl/qnZpa4Q0sNWWUvqG5zKBNX6KUFVZGGg0gnGznwcadr7eWw9Sfvo
+ xdZOBEf1KR85nKNMIBunW/a6V/xtBPNMyhXOA7RreQpPIjsm/v0gKlPLaE+V03
+X-Google-Smtp-Source: AGHT+IFxCHaLufk14XE5nX0AAEVGB8FvcIDFeS8snE/LozpgkoX/10SV+mciQRu6gpCSHDLuCGf/jA==
+X-Received: by 2002:a05:6000:4021:b0:426:d836:f323 with SMTP id
+ ffacd0b85a97d-42704d7e928mr8617320f8f.13.1760956717468; 
+ Mon, 20 Oct 2025 03:38:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4715257d972sm141722655e9.1.2025.10.20.03.38.55
+ ffacd0b85a97d-427ea5a0e9csm14845298f8f.5.2025.10.20.03.38.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 20 Oct 2025 03:38:56 -0700 (PDT)
+ Mon, 20 Oct 2025 03:38:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
@@ -71,17 +71,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
  Chinmay Rath <rathc@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 08/18] target/ppc/kvm: Remove kvmppc_get_host_model() as unused
-Date: Mon, 20 Oct 2025 12:38:04 +0200
-Message-ID: <20251020103815.78415-9-philmd@linaro.org>
+Subject: [PATCH 04/18] hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
+Date: Mon, 20 Oct 2025 12:38:00 +0200
+Message-ID: <20251020103815.78415-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251020103815.78415-1-philmd@linaro.org>
 References: <20251020103815.78415-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,52 +104,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The SpaprMachineClass::nr_xirqs field was only used by the
+pseries-3.0 machine, which got removed. Remove it as now unused.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/kvm_ppc.h | 6 ------
- target/ppc/kvm.c     | 5 -----
- 2 files changed, 11 deletions(-)
+ include/hw/ppc/spapr.h |  1 -
+ hw/ppc/spapr.c         |  1 -
+ hw/ppc/spapr_irq.c     | 22 +++++++---------------
+ 3 files changed, 7 insertions(+), 17 deletions(-)
 
-diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
-index f24cc4de3c2..742881231e1 100644
---- a/target/ppc/kvm_ppc.h
-+++ b/target/ppc/kvm_ppc.h
-@@ -21,7 +21,6 @@
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 0c1e5132de2..494367fb99a 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -145,7 +145,6 @@ struct SpaprMachineClass {
+     /*< public >*/
+     bool dr_phb_enabled;       /* enable dynamic-reconfig/hotplug of PHBs */
+     bool update_dt_enabled;    /* enable KVMPPC_H_UPDATE_DT */
+-    uint32_t nr_xirqs;
+     bool broken_host_serial_model; /* present real host info to the guest */
+     bool pre_4_1_migration; /* don't migrate hpt-max-page-size */
+     bool linux_pci_probe;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 426a778d3e8..b5d20bc1756 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4691,7 +4691,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
+     smc->dr_phb_enabled = true;
+     smc->linux_pci_probe = true;
+     smc->smp_threads_vsmt = true;
+-    smc->nr_xirqs = SPAPR_NR_XIRQS;
+     xfc->match_nvt = spapr_match_nvt;
+     vmc->client_architecture_support = spapr_vof_client_architecture_support;
+     vmc->quiesce = spapr_vof_quiesce;
+diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
+index 14e47acc65b..2ce323457be 100644
+--- a/hw/ppc/spapr_irq.c
++++ b/hw/ppc/spapr_irq.c
+@@ -279,15 +279,11 @@ void spapr_irq_dt(SpaprMachineState *spapr, uint32_t nr_servers,
  
- uint32_t kvmppc_get_tbfreq(void);
- uint64_t kvmppc_get_clockfreq(void);
--bool kvmppc_get_host_model(char **buf);
- int kvmppc_get_hasidle(CPUPPCState *env);
- int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
- int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
-@@ -128,11 +127,6 @@ static inline uint32_t kvmppc_get_tbfreq(void)
-     return 0;
+ uint32_t spapr_irq_nr_msis(SpaprMachineState *spapr)
+ {
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+-
+-    return smc->nr_xirqs + SPAPR_XIRQ_BASE - SPAPR_IRQ_MSI;
++    return SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE - SPAPR_IRQ_MSI;
  }
  
--static inline bool kvmppc_get_host_model(char **buf)
--{
--    return false;
--}
--
- static inline uint64_t kvmppc_get_clockfreq(void)
+ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
  {
-     return 0;
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index cb61e99f9d4..43124bf1c78 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -1864,11 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
-     return cached_tbfreq;
- }
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+-
+     if (kvm_enabled() && kvm_kernel_irqchip_split()) {
+         error_setg(errp, "kernel_irqchip split mode not supported on pseries");
+         return;
+@@ -308,7 +304,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
+         object_property_add_child(OBJECT(spapr), "ics", obj);
+         object_property_set_link(obj, ICS_PROP_XICS, OBJECT(spapr),
+                                  &error_abort);
+-        object_property_set_int(obj, "nr-irqs", smc->nr_xirqs, &error_abort);
++        object_property_set_int(obj, "nr-irqs", SPAPR_NR_XIRQS, &error_abort);
+         if (!qdev_realize(DEVICE(obj), NULL, errp)) {
+             return;
+         }
+@@ -322,7 +318,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
+         int i;
  
--bool kvmppc_get_host_model(char **value)
--{
--    return g_file_get_contents("/proc/device-tree/model", value, NULL, NULL);
--}
--
- /* Try to find a device tree node for a CPU with clock-frequency property */
- static int kvmppc_find_cpu_dt(char *buf, int buf_len)
+         dev = qdev_new(TYPE_SPAPR_XIVE);
+-        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
++        qdev_prop_set_uint32(dev, "nr-irqs", SPAPR_NR_XIRQS + SPAPR_IRQ_NR_IPIS);
+         /*
+          * 8 XIVE END structures per CPU. One for each available
+          * priority
+@@ -349,7 +345,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
+     }
+ 
+     spapr->qirqs = qemu_allocate_irqs(spapr_set_irq, spapr,
+-                                      smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
++                                      SPAPR_NR_XIRQS + SPAPR_IRQ_NR_IPIS);
+ 
+     /*
+      * Mostly we don't actually need this until reset, except that not
+@@ -364,11 +360,10 @@ int spapr_irq_claim(SpaprMachineState *spapr, int irq, bool lsi, Error **errp)
  {
+     SpaprInterruptController *intcs[] = ALL_INTCS(spapr);
+     int i;
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+     int rc;
+ 
+     assert(irq >= SPAPR_XIRQ_BASE);
+-    assert(irq < (smc->nr_xirqs + SPAPR_XIRQ_BASE));
++    assert(irq < (SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE));
+ 
+     for (i = 0; i < ARRAY_SIZE(intcs); i++) {
+         SpaprInterruptController *intc = intcs[i];
+@@ -388,10 +383,9 @@ void spapr_irq_free(SpaprMachineState *spapr, int irq, int num)
+ {
+     SpaprInterruptController *intcs[] = ALL_INTCS(spapr);
+     int i, j;
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+ 
+     assert(irq >= SPAPR_XIRQ_BASE);
+-    assert((irq + num) <= (smc->nr_xirqs + SPAPR_XIRQ_BASE));
++    assert((irq + num) <= (SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE));
+ 
+     for (i = irq; i < (irq + num); i++) {
+         for (j = 0; j < ARRAY_SIZE(intcs); j++) {
+@@ -408,8 +402,6 @@ void spapr_irq_free(SpaprMachineState *spapr, int irq, int num)
+ 
+ qemu_irq spapr_qirq(SpaprMachineState *spapr, int irq)
+ {
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+-
+     /*
+      * This interface is basically for VIO and PHB devices to find the
+      * right qemu_irq to manipulate, so we only allow access to the
+@@ -418,7 +410,7 @@ qemu_irq spapr_qirq(SpaprMachineState *spapr, int irq)
+      * interfaces, we can change this if we need to in future.
+      */
+     assert(irq >= SPAPR_XIRQ_BASE);
+-    assert(irq < (smc->nr_xirqs + SPAPR_XIRQ_BASE));
++    assert(irq < (SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE));
+ 
+     if (spapr->ics) {
+         assert(ics_valid_irq(spapr->ics, irq));
 -- 
 2.51.0
 
