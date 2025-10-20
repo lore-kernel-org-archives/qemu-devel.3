@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D03CCD199
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADE4CCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 10:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAnKw-0007Wh-57; Mon, 20 Oct 2025 06:41:58 -0400
+	id 1vAnL4-0007b5-JR; Mon, 20 Oct 2025 06:42:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vAnKt-0007UO-Sj
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:55 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1vAnL1-0007aF-Go
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:42:03 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vAnKr-0000fl-Qj
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:41:55 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b5c18993b73so690485666b.0
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:53 -0700 (PDT)
+ id 1vAnKx-0000hO-Uf
+ for qemu-devel@nongnu.org; Mon, 20 Oct 2025 06:42:03 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-63c3d7e2217so4734294a12.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 03:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1760956912; x=1761561712; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QjI1tf1SSK5JtEpNnx+nHv2CokSkFY5nLJW1sivoQOc=;
- b=RgKxj82zOJgNMNX3yPePcnptXrdeBpLQvigcLZFn1M7zJ3lmF7Hip12k5WemnUwjRA
- b0QQrgn5wHKzEHM9tvQwytiQooc06w7M5TCxPbDeU73Z/h10tlt4H7pUPUe87TcPVc5t
- a9JksHxFHKHns5zsZ/NNrloQXEa68kFl9k4/AJTMhNla/CMgUYedN7nqbL7egs1tTUGP
- Xr8cw4CMsQs129/dgQFftcGqwrZxHlyQH7gSeb89H2BFZA9g0SzZwe79ggfJtcT/rE2J
- lFtHAFW2isKvsh/VpUZB+9v/5Kw85abRrwjZUzmsH5Cx7EpCYP35ebhVMiITh0yT87SY
- F1hA==
+ d=linaro.org; s=google; t=1760956918; x=1761561718; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ELSBQuMi69ksRrGoaFSVPzgb08tBcEHEChhlePgTciE=;
+ b=rrgIRQTvX1nErTG7cIXaBgV7+Zv87UPpuCJd6tmdAlRtVVJUkeq7nMaFPDHPcqrg14
+ 8mUE9473H0pj6jgM9hySu8A/ZbQtcIrAw6Kc7zn6iyxAKf3Fww1Rr3TdRh0rBwCJEAA6
+ g9q2Fva6JtlSLjFS9AyYoAAkpYd2AN7gp9uTLBNntpdjgAfgp20BEQcqzvP/5QUJCzKf
+ 9HUYkpX8LwaFJByEFYUfgOxXLB1by0ly78+TsrvOeKfuVKclKkeebj4/QQEolWHCRCKj
+ zIrJ857xIdRn7+pah6P0WGtoF8TC6Jp6U1NIMUEbxdS9NxobfYE12z+0TAy2nchUytaS
+ hjCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760956912; x=1761561712;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QjI1tf1SSK5JtEpNnx+nHv2CokSkFY5nLJW1sivoQOc=;
- b=SC9SxAT1HnU4YFKitSEOjpU5yi/dcTn36sPCf9JuN9PB/zbQsxgh8V/TPhvyQDK9kt
- eBzp6KG6vqZCnazNGQGoriQm+BZJP5e7gn2q6pHEmaejgqphk58dM+pwc+iaGjgq9x3s
- d7koyRyQ3RyL6f8IOhoV4MZAs32B4Od8aA5/HFbu1ilySNBbgz97DbWL1KeKoSciowoV
- x9YG16DQm0by4m9iONvc3zrYIuFJFpJy2fFXmxIjwtbKKl/49U2n8sfKuElI8WQr5jpt
- okcjHwiFkF02BO6PBgQIIPtpWR6LJEOXaMOHcKSzFMuVp9Kjg3jL0PP6usPaWQVOaJIv
- qLXQ==
-X-Gm-Message-State: AOJu0YygrqmwPGBpNS8kR45Y8xoUF4FIML7m6q6q4x5xAsfTnZNlBVE+
- wOiAnDXWdqcMOZ3Z65nX7xSc6PQgl1jqXZWcXd5zmsK7mfWIGMGbzc/dmVB1jsftKrjWSqYxe6r
- Ne2MraZY=
-X-Gm-Gg: ASbGncsmuA1l8NF/suxs+c7wqGoWetyVsL9I97kS+DyJvjXr3Kxkwjzma5bLGNNVpDN
- qeaFrhdLptyaWmamDEBjRcyb6nwBrBsp20iWVqNw4YWoI3mEF36mHzCmr2j+OlCc3Jr2jpeYO2M
- 5vatZkrekkVNnTSdWT4PXVPkMEE3Ni0IlIQ/VHmRB96/dHj7HJUZq5xsKLbyPM/frQ4KTOhSbhD
- 6md5PEl8VgIbVfkyYCiK7cKtYVwLBjRYFwl7hzcFzFiPgur7jSxX0DqD+72RHcHwfHuQUpoDqrU
- AhS3a5IOvEEYQJMtjik7MapptHTKzp63ebeBzTKBIHNtOqjqtxn10rSG8e5HUc6AqEcYiwXHHFE
- IOEZ6WCehDXcSj4cI9lpF2aFG1u+w7Ljh/SGnR5YGvxLMyEM7SkJDjABqj0L/vn05CSBnUCj7VH
- Fn
-X-Google-Smtp-Source: AGHT+IH2E5QmxWO8mVuPZ0Art1QyIRvzVIp0iM7WfBnY/Z5oT1QIDlIhW5Os3YATR4fRnGM84555iA==
-X-Received: by 2002:a17:907:3e8c:b0:b0a:aa7e:a191 with SMTP id
- a640c23a62f3a-b6475708eafmr1617336566b.57.1760956911768; 
- Mon, 20 Oct 2025 03:41:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1760956918; x=1761561718;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ELSBQuMi69ksRrGoaFSVPzgb08tBcEHEChhlePgTciE=;
+ b=Y6uk36foFaDGebHlhk1ca4Qh8q7VydtMuLAw4v0yCq3AS4Z2/sgQXJQ2Y6QAiyFfdu
+ LSFqCJTQwwO5lJSGYMMMcLT7MoJr4VbeYzX3jLF76lh4PmDDVr6MMQB/ANprImYjhygx
+ D8KP0Dv5nsTgVSSUquUN9scGDi9v0kmI79mzSe5Qe/G4E80v9ComcYNC3fhQPDb3Hzc2
+ x7/M6ZEV2OZX6j93Rg8kd35+YkJ1EXUCXkAIjnohjR7oR+ufuwW57nM/P0jODMgY1OZ6
+ /dJvuEeUqrNcYRo12mn3xF/WEq9ZLiigTg8ID4Y/pRx5sXmvita0MO3XFYFHFiv6tWHI
+ ziRg==
+X-Gm-Message-State: AOJu0YxnsGMpwmMuU/diV0ANwL6wMRcTJ/dG5O3n5PdM3RP0EAQGUCQ4
+ NmDy1S939co4RkQfGvzA1sQMq5Al8MsrAOb9gqKjQfVSLRUi0SuT4j/FyQEcFHJBaac=
+X-Gm-Gg: ASbGnctuvfmUa2iXpPrwBkkWyERqCsAEtqmh3PxJtoCZWM+mZFbqlISSAYHVWiL12dV
+ b8vYwl60xepA26aKIzTKSxxA0whilu1vLR+aIykjYJl7tAnuLdYb3YS2kUqqzeHzXokDAM3RCZH
+ b1I4pJghDiJalpA001kYzzZNmz4zngKFjE8IgF31eBT090GZHMLnzMNaJOxZHB0nuu0cFZ+hY+h
+ CgshS018E+C9S89gr/OFus6eFqPwlfWuVIEJ0Qo3lO37c7n/89PAEnsXTXXxlVhFVC0o+xeB83o
+ a6DQNwwIgnSZdYEHF7iqf2mzjRSjT0P9jdopjwG8/e6H+gRTbnKjOzBeMOFUE93iUltzQpCydIN
+ /u2qcwNDfSVr/jumO8Q1VdQ9MR3VxafhtWM5NlF7cCm4TGHbIAfo0jrXIE9jvmD5n3zhNtD635J
+ lq
+X-Google-Smtp-Source: AGHT+IHoULyPH2gmZw3im31Fc69Un7htfppLcemwi8zPCWrOz9q0Zwshv3p0vA/ubptaYA42RTeKaw==
+X-Received: by 2002:a17:906:dc8f:b0:b40:8954:a8a9 with SMTP id
+ a640c23a62f3a-b6474b371efmr1385192166b.34.1760956918200; 
+ Mon, 20 Oct 2025 03:41:58 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63c4949beedsm6274074a12.40.2025.10.20.03.41.50
+ a640c23a62f3a-b65e83937a3sm757652566b.23.2025.10.20.03.41.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Oct 2025 03:41:50 -0700 (PDT)
+ Mon, 20 Oct 2025 03:41:54 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 91D2C5F83E;
- Mon, 20 Oct 2025 11:41:49 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 42FF160D77;
+ Mon, 20 Oct 2025 11:41:50 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 00/11] maintainer updates (gitlab, check-tcg, virtio-gpu,
- plugins, docs)
-Date: Mon, 20 Oct 2025 11:41:38 +0100
-Message-ID: <20251020104149.4034124-1-alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 07/11] contrib/plugins/uftrace_symbols.py: generate debug files
+ to map symbols to source
+Date: Mon, 20 Oct 2025 11:41:45 +0100
+Message-ID: <20251020104149.4034124-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251020104149.4034124-1-alex.bennee@linaro.org>
+References: <20251020104149.4034124-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,87 +108,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3a2d5612a7422732b648b46d4b934e2e54622fd6:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-  .gitlab-ci.d/buildtest.yml: Install 'file' for the Coverity job (2025-10-19 11:49:36 -0700)
+Enhance uftrace_symbols.py to generate .dbg files, containing
+source location for every symbol present in .sym file.
+It allows to use `uftrace {replay,dump} --srcline` and show origin of
+functions, connecting trace to original source code.
 
-are available in the Git repository at:
+It was first implemented with pyelftools DWARF parser, which was way
+too slow (~minutes) to get locations for every symbol in the linux
+kernel. Thus, we use `addr2line` instead, which runs in seconds.
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-10.2-maintainer-201025-1
+As well, there were some bugs with latest pyelftools release,
+requiring to run master version, which is not installable with pip.
+Thus, since we now require binutils (addr2line), we can ditch pyelftools
+based implementation and simply rely on `nm` to get symbols information,
+which is faster and better.
 
-for you to fetch changes up to 2687249db27b4d23dfc69cb144015509ef72dc40:
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251016150357.876415-8-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-  docs/system: merge vhost-user-input into vhost-user-contrib (2025-10-20 10:41:14 +0100)
-
-----------------------------------------------------------------
-maintainer updates (gitlab, check-tcg, virtio-gpu, plugins, docs)
-
-  - drop aarch32 runner from custom runners
-  - use template for aarch64 custom jobs
-  - don't test for atime in linux-test
-  - support per-head resolution for virtio-gpu
-  - drop extra draw call causing corruption in gtk-gl-area
-  - add trace event for blob map/unmap
-  - extend ufrace_symbols to generate dbg files
-  - group VirtIO devices in device documentation
-  - merge vhost-user device docs into single file
-
-----------------------------------------------------------------
-Alex Bennée (7):
-      gitlab: use template for ubuntu-24.04-aarch64 jobs
-      gitlab: drop aarch32 runner and associated bits
-      hw/display: add blob map/unmap trace events
-      docs/system: split VirtIO devices from the rest
-      docs/system: unify the naming style for VirtIO devices
-      docs/system: drop vhost-user-rng docs
-      docs/system: merge vhost-user-input into vhost-user-contrib
-
-Andrew Keesler (1):
-      Support per-head resolutions with virtio-gpu
-
-Dongwon Kim (1):
-      ui/gtk-gl-area: Remove extra draw call in refresh
-
-Peter Maydell (1):
-      tests/tcg/multiarch/linux/linux-test: Don't try to test atime update
-
-Pierrick Bouvier (1):
-      contrib/plugins/uftrace_symbols.py: generate debug files to map symbols to source
-
- docs/system/device-emulation.rst                   |  18 +-
- docs/system/devices/vfio-user.rst                  |   2 +-
- docs/system/devices/vhost-user-input.rst           |  45 ----
- docs/system/devices/vhost-user-rng.rst             |  41 ----
- docs/system/devices/virtio/index.rst               |  29 +++
- docs/system/devices/virtio/vhost-user-contrib.rst  |  87 ++++++++
- docs/system/devices/{ => virtio}/vhost-user.rst    |  22 +-
- docs/system/devices/{ => virtio}/virtio-gpu.rst    |   4 +-
- docs/system/devices/{ => virtio}/virtio-pmem.rst   |   6 +-
- docs/system/devices/{ => virtio}/virtio-snd.rst    |   2 +-
- qapi/virtio.json                                   |  10 +-
- hw/display/virtio-gpu-base.c                       |   9 +
- hw/display/virtio-gpu-virgl.c                      |   4 +
- tests/tcg/multiarch/linux/linux-test.c             |   9 +-
- ui/gtk-gl-area.c                                   |  17 +-
- .gitlab-ci.d/custom-runners.yml                    |   1 -
- .../custom-runners/ubuntu-24.04-aarch32.yml        |  25 ---
- .../custom-runners/ubuntu-24.04-aarch64.yml        | 230 +++++++++------------
- contrib/plugins/uftrace_symbols.py                 | 120 +++++++----
- hw/display/trace-events                            |   2 +
- scripts/ci/setup/ubuntu/build-environment.yml      |  17 --
- .../ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml    | 127 ------------
- 22 files changed, 361 insertions(+), 466 deletions(-)
- delete mode 100644 docs/system/devices/vhost-user-input.rst
- delete mode 100644 docs/system/devices/vhost-user-rng.rst
- create mode 100644 docs/system/devices/virtio/index.rst
- create mode 100644 docs/system/devices/virtio/vhost-user-contrib.rst
- rename docs/system/devices/{ => virtio}/vhost-user.rst (77%)
- rename docs/system/devices/{ => virtio}/virtio-gpu.rst (99%)
- rename docs/system/devices/{ => virtio}/virtio-pmem.rst (98%)
- rename docs/system/devices/{ => virtio}/virtio-snd.rst (99%)
- delete mode 100644 .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch32.yml
- delete mode 100644 scripts/ci/setup/ubuntu/ubuntu-2204-armhf-cross.yml
-
+diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+index b49e03203c8..45fb79c7a58 100755
+--- a/contrib/plugins/uftrace_symbols.py
++++ b/contrib/plugins/uftrace_symbols.py
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #
+-# Create symbols and mapping files for uftrace.
++# Create symbols, debug and mapping files for uftrace.
+ #
+ # Copyright 2025 Linaro Ltd
+ # Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+@@ -9,44 +9,71 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ import argparse
+-import elftools # pip install pyelftools
+ import os
+-
+-from elftools.elf.elffile import ELFFile
+-from elftools.elf.sections import SymbolTableSection
+-
+-def elf_func_symbols(elf):
+-    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
+-                  if isinstance(s, SymbolTableSection)]
+-    symbols = []
+-    for _, section in symbol_tables:
+-        for _, symbol in enumerate(section.iter_symbols()):
+-            if symbol_size(symbol) == 0:
+-                continue
+-            type = symbol['st_info']['type']
+-            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
+-                symbols.append(symbol)
+-    symbols.sort(key = lambda x: symbol_addr(x))
++import subprocess
++
++class Symbol:
++    def __init__(self, name, addr, size):
++        self.name = name
++        # clamp addr to 48 bits, like uftrace entries
++        self.addr = addr & 0xffffffffffff
++        self.full_addr = addr
++        self.size = size
++
++    def set_loc(self, file, line):
++        self.file = file
++        self.line = line
++
++def get_symbols(elf_file):
++    symbols=[]
++    try:
++        out = subprocess.check_output(['nm', '--print-size', elf_file],
++                                      stderr=subprocess.STDOUT,
++                                      text=True)
++    except subprocess.CalledProcessError as e:
++        print(e.output)
++        raise
++    out = out.strip().split('\n')
++    for line in out:
++        info = line.split(' ')
++        if len(info) == 3:
++            # missing size information
++            continue
++        addr, size, type, name = info
++        # add only symbols from .text section
++        if type.lower() != 't':
++            continue
++        addr = int(addr, 16)
++        size = int(size, 16)
++        symbols.append(Symbol(name, addr, size))
++    symbols.sort(key = lambda x: x.addr)
+     return symbols
+ 
+-def symbol_size(symbol):
+-    return symbol['st_size']
+-
+-def symbol_addr(symbol):
+-    addr = symbol['st_value']
+-    # clamp addr to 48 bits, like uftrace entries
+-    return addr & 0xffffffffffff
+-
+-def symbol_name(symbol):
+-    return symbol.name
++def find_symbols_locations(elf_file, symbols):
++    addresses = '\n'.join([hex(x.full_addr) for x in symbols])
++    try:
++        out = subprocess.check_output(['addr2line', '--exe', elf_file],
++                                      stderr=subprocess.STDOUT,
++                                      input=addresses, text=True)
++    except subprocess.CalledProcessError as e:
++        print(e.output)
++        raise
++    out = out.strip().split('\n')
++    assert len(out) == len(symbols)
++    for i in range(len(symbols)):
++        s = symbols[i]
++        file, line = out[i].split(':')
++        # addr2line may return 'line (discriminator [0-9]+)' sometimes,
++        # remove this to keep only line number.
++        line = line.split(' ')[0]
++        s.set_loc(file, line)
+ 
+ class BinaryFile:
+     def __init__(self, path, map_offset):
+         self.fullpath = os.path.realpath(path)
+         self.map_offset = map_offset
+-        with open(path, 'rb') as f:
+-            self.elf = ELFFile(f)
+-            self.symbols = elf_func_symbols(self.elf)
++        self.symbols = get_symbols(self.fullpath)
++        find_symbols_locations(self.fullpath, self.symbols)
+ 
+     def path(self):
+         return self.fullpath
+@@ -56,24 +83,31 @@ def addr_start(self):
+ 
+     def addr_end(self):
+         last_sym = self.symbols[-1]
+-        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
++        return last_sym.addr + last_sym.size + self.map_offset
+ 
+     def generate_symbol_file(self, prefix_symbols):
+         binary_name = os.path.basename(self.fullpath)
+-        sym_file_path = f'./uftrace.data/{binary_name}.sym'
++        sym_file_path = os.path.join('uftrace.data', f'{binary_name}.sym')
+         print(f'{sym_file_path} ({len(self.symbols)} symbols)')
+         with open(sym_file_path, 'w') as sym_file:
+             # print hexadecimal addresses on 48 bits
+             addrx = "0>12x"
+             for s in self.symbols:
+-                addr = symbol_addr(s)
++                addr = s.addr
+                 addr = f'{addr:{addrx}}'
+-                size = f'{symbol_size(s):{addrx}}'
+-                name = symbol_name(s)
++                size = f'{s.size:{addrx}}'
+                 if prefix_symbols:
+-                    name = f'{binary_name}:{name}'
++                    name = f'{binary_name}:{s.name}'
+                 print(addr, size, 'T', name, file=sym_file)
+ 
++    def generate_debug_file(self):
++        binary_name = os.path.basename(self.fullpath)
++        dbg_file_path = os.path.join('uftrace.data', f'{binary_name}.dbg')
++        with open(dbg_file_path, 'w') as dbg_file:
++            for s in self.symbols:
++                print(f'F: {hex(s.addr)} {s.name}', file=dbg_file)
++                print(f'L: {s.line} {s.file}', file=dbg_file)
++
+ def parse_parameter(p):
+     s = p.split(":")
+     path = s[0]
+@@ -84,7 +118,7 @@ def parse_parameter(p):
+     offset = s[1]
+     if not offset.startswith('0x'):
+         err = f'offset "{offset}" is not an hexadecimal constant. '
+-        err += 'It should starts with "0x".'
++        err += 'It should start with "0x".'
+         raise ValueError(err)
+     offset = int(offset, 16)
+     return path, offset
+@@ -97,7 +131,7 @@ def is_from_user_mode(map_file_path):
+     return False
+ 
+ def generate_map(binaries):
+-    map_file_path = './uftrace.data/sid-0.map'
++    map_file_path = os.path.join('uftrace.data', 'sid-0.map')
+ 
+     if is_from_user_mode(map_file_path):
+         print(f'do not overwrite {map_file_path} generated from qemu-user')
+@@ -124,7 +158,8 @@ def generate_map(binaries):
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=
+-                                     'generate symbol files for uftrace')
++                                     'generate symbol files for uftrace. '
++                                     'Require binutils (nm and addr2line).')
+     parser.add_argument('elf_file', nargs='+',
+                         help='path to an ELF file. '
+                         'Use /path/to/file:0xdeadbeef to add a mapping offset.')
+@@ -133,8 +168,8 @@ def main():
+                         action=argparse.BooleanOptionalAction)
+     args = parser.parse_args()
+ 
+-    if not os.path.exists('./uftrace.data'):
+-        os.mkdir('./uftrace.data')
++    if not os.path.exists('uftrace.data'):
++        os.mkdir('uftrace.data')
+ 
+     binaries = []
+     for file in args.elf_file:
+@@ -145,6 +180,7 @@ def main():
+ 
+     for b in binaries:
+         b.generate_symbol_file(args.prefix_symbols)
++        b.generate_debug_file()
+ 
+     generate_map(binaries)
+ 
 -- 
 2.47.3
 
