@@ -4,144 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CE9CCD1A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 04:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB8DCCD199
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Oct 2025 05:24:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vAhRS-0002ei-9t; Mon, 20 Oct 2025 00:24:18 -0400
+	id 1vAiMw-0004y8-2T; Mon, 20 Oct 2025 01:23:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAhRQ-0002eO-Jy
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 00:24:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vAiMr-0004xJ-Kl; Mon, 20 Oct 2025 01:23:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vAhRO-0008E0-Gw
- for qemu-devel@nongnu.org; Mon, 20 Oct 2025 00:24:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1760934251;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JlbeOKJA9ekSEIyb9m7z7OtU+jEv17RQeHu/JWzq72g=;
- b=dqQV3B5xDgoRJ6FX/d0qLhhqVPnoWTtxYT7I9S7wJwmsarzpz//EkIpjYj8ZQJbtnvuCWg
- hcZTH4DkxIQ/GwQemkQ0xDPtlHmZZ/BqBQX0xhautv8BE1FDSoVwMFekhD80uYAtnsMHn4
- VrvySk3BjmWAa9DG5HdiTcWA14lRaSM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-72443fYQNzqSixUSWFfe7A-1; Mon, 20 Oct 2025 00:24:09 -0400
-X-MC-Unique: 72443fYQNzqSixUSWFfe7A-1
-X-Mimecast-MFC-AGG-ID: 72443fYQNzqSixUSWFfe7A_1760934248
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b56f1c14b71so57684466b.2
- for <qemu-devel@nongnu.org>; Sun, 19 Oct 2025 21:24:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1760934248; x=1761539048;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JlbeOKJA9ekSEIyb9m7z7OtU+jEv17RQeHu/JWzq72g=;
- b=LPP1B3iOhGPmOUGOoULqsfnpI/K0zpbaKzkz2bgJ0vwazIQmIA+F9XxlTlNhTZs/Wl
- foSWTLoIGphtdznwURFSw8T+bT5EV9wnJqYbRHd9SwgZYF9pGMBUF4FI648LZmdsidV+
- cJkuF+hs84AebhddT3TFdU2TNEl/7YkTjFAeiy+GaLa17cD+Zr4TEPel1RA3iE/qDkkW
- MJO504dETNAa5ad3/k7z2L/48WmUtfTcF3cLn5BodES/Fhi4v2XMM/dy001/1A9/ho4I
- TMZD+srSfVgx2hslOGcW1eb861d1Rjh/+4J6DRM0bcLpJ0H1fN361Oi+fm+I1ldnkO9G
- L1OA==
-X-Gm-Message-State: AOJu0Yz4+sfVhDuiPSs/Tk2ahmizefTX5pQSVQoHLpKEvFnri+0BDOxa
- npf7RAUs2xCxhuZuM9NQ3hMbcR5lIPxxFs2SP+HFBzRnE924bTfaI+qRHDVW7L3lRZj4nSqtj2r
- xED+2Qsd3Xa+RNIqiXJZ/eO8cAPAwJuy9ATqJZQPZYv4u/8BJwCPekF/t
-X-Gm-Gg: ASbGncuamMQ1bcgFFFrODC6gG5sXjcaQYdlW79sdAn5Dzc4pNl15jsn3D8h/93FCrBc
- M1QCTBsoACPZfh1htgWvNK9AbBOT/RcSnT08nOiat/bz7r+X7hAGKtDS3xtYbGOJaaM1hfEyQx+
- 3u7qsYALnMGZhWI6zr6k0vFcK7Y+SS3u1IYnFOjSAyJHNjOcBEHlD7lXvBNBAzQ+IBruEIYjArG
- moDbr4dX0DxPQgOeFOfhpeyULzGXijzYKh1Izx6KDm169MVJ7JGoaGKGu7avGu9rC0eolLYJD/Z
- pRs1rmt3PLVEkccCLMM2GtUuXg5mIYVntxRZFobvAUKIyXeCderjyV+6m9fA8OeqjtK/JMgFqa1
- Ssftx8a3S12wPzImMGkNT+SnFh2nbK33lwoCsfc8b
-X-Received: by 2002:a17:906:fe45:b0:b60:d888:32d9 with SMTP id
- a640c23a62f3a-b6471d45a8cmr1369405866b.11.1760934248324; 
- Sun, 19 Oct 2025 21:24:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHpqj/7X1o9f85t64y+IM/s7GWMba5i7Ei3f2dCsUnxphknRGVA5+fo4G4H4kIDI+tClCGA3A==
-X-Received: by 2002:a17:906:fe45:b0:b60:d888:32d9 with SMTP id
- a640c23a62f3a-b6471d45a8cmr1369403466b.11.1760934247922; 
- Sun, 19 Oct 2025 21:24:07 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-114-135.pools.arcor-ip.net.
- [47.64.114.135]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b65e7e984f2sm671390566b.13.2025.10.19.21.24.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Oct 2025 21:24:07 -0700 (PDT)
-Message-ID: <f928e02c-064d-4b1c-aaa7-9b9160e83c11@redhat.com>
-Date: Mon, 20 Oct 2025 06:24:05 +0200
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vAiMp-0006BX-CN; Mon, 20 Oct 2025 01:23:37 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59JLv943030017;
+ Mon, 20 Oct 2025 05:23:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=gLDRyd
+ aDJ3BznQM/dcvfkngB8yt1ORIIMutubl9SOE8=; b=M0QE7bHfoxaMmnozH1pbp5
+ e5LhyP65m0F7JIh/CKoOHsLJyiXW33JgLy5evYbxJC8z8ndnVPmn25tDMTBasg6E
+ //JBDiRhemZrHLwO+WakZNWfkrOyHGEmkFP9H2oDzJUYltArM6QklWlF2N1cicfx
+ oMBSWLxYdrDwX5vOilXoPQYYo3az1nz+lenytGu9OrH1PTgx8QA4KPVrYrGwACVv
+ LmTcrBPam82KsEr3iJTmXs3mWG4BCBuFVKKFopwgktQUiVWjd6ImCgQ+L5e9sUY6
+ WYFfWP+T2p3VeSNOs8Jlgw3GPR6XkRTnSOzo5ftPKGhqWolrwbI5x5bbiRIcPbcw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31rqs6v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 05:23:30 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59K5NU7Q001603;
+ Mon, 20 Oct 2025 05:23:30 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31rqs6t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 05:23:29 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59K1jtxx024690;
+ Mon, 20 Oct 2025 05:23:28 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqjm477-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Oct 2025 05:23:28 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59K5NO9k43057660
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Oct 2025 05:23:24 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BA1992004B;
+ Mon, 20 Oct 2025 05:23:24 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C726920040;
+ Mon, 20 Oct 2025 05:23:22 +0000 (GMT)
+Received: from [9.124.220.242] (unknown [9.124.220.242])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 Oct 2025 05:23:22 +0000 (GMT)
+Message-ID: <20657aaf-2326-4be1-b7e6-d3928ac8eb97@linux.ibm.com>
+Date: Mon, 20 Oct 2025 10:53:00 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/ppc: Remove the unusable e200 CPUs
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20251017144504.563594-1-thuth@redhat.com>
- <295be472-7778-49f7-9ede-e5ef51dd908e@linux.ibm.com>
- <3c2d1838-0fc9-46e3-a6b4-382ecc4d4ff8@kaod.org>
- <a69c0e62-1cfa-474d-abe1-151df0caf234@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v4 1/8] hw/ppc: Implement skeleton code for fadump in
+ PSeries
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-2-adityag@linux.ibm.com>
+ <0827c237-df2b-4a7a-8157-c496c4fa98cc@linux.ibm.com>
+ <m5l3cqemaikgnrjqej3zqcdpo4o6ukj3id3ojx2ron4wjpbtul@roskcbsdes2g>
+ <x2eomjkxpq2znoxm3wuw4qtcxhz4sted7l7ql6pjxgy6yy3nxx@qz437owiq5w4>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <a69c0e62-1cfa-474d-abe1-151df0caf234@linux.ibm.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
+In-Reply-To: <x2eomjkxpq2znoxm3wuw4qtcxhz4sted7l7ql6pjxgy6yy3nxx@qz437owiq5w4>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: IAq3IXbkFrF1hmbkqrbUTTpdvDeK5ldR
+X-Proofpoint-GUID: 9jy24sE6uno1eje3u1-pMQQKlr9uK2I3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX2i1x9+nmQxHj
+ sjmIskGCUC+oCYvBI/kuV/3/hiAKjWw+mDKWm6DUtp3C4ugEDqWpqe1vhvaDCfQ83U+0skt0mQN
+ E+sI4q5tC8CHQFhhVyh8PVyZviP9d17gkLDTvqXYQrwuRAZwBvKNLw3hnv9/yLL/aDO60B4eJ+M
+ +HWLaWqIMwMdUtw/DRZuk6pfy7vy33nAGJpBpMQbIJWpCi37yCaPbT175JRIqivFd3LZxe/Wo9r
+ 8llOmK5d/+ingsIDfKswjbKJVfGwgUx11PTAPwb+VW6FrENtYcTvgheHaMMstYbShHtLXZNqNc/
+ sUkIcuWZ+8s3TEp+uyE9/WJFkIIu+dDVZgUOW5nyHU7o1uwPegNLtF5MshbPZU/06VjK29SUShp
+ ef2y1H2wW0EnBcdse4IELMw4c/v/JQ==
+X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68f5c752 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=1qlc2dnvocV2h5NDR1gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=sourabhjain@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,83 +135,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/10/2025 08.07, Harsh Prateek Bora wrote:
-> 
-> 
-> On 10/18/25 11:31, Cédric Le Goater wrote:
->> On 10/17/25 17:50, Harsh Prateek Bora wrote:
->>>
->>>
->>> On 10/17/25 20:15, Thomas Huth wrote:
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> There is currently no machine in QEMU (except the "none" machine)
->>>> that can be run with one of the e200 ppc CPUs - all machines either
->>>> complain about an invalid CPU type or crash QEMU immediatly.
->>>>
->>>> Looking at the history of this CPU type, it seems like it has never
->>>> been used in QEMU and only implemented as a placeholder (see e.g. the
->>>> comment about unimplemented instructions in the POWERPC_FAMILY(e200)
->>>> section of cpu_init.c). Being completely unused and unusable since
->>>> such a long time, let's just remove it now.
->>>>
->>>> Note: The init_excp_e200() is used by the e500 CPUs, too, so we
->>>> rename this function to init_excp_e500() instead of removing it.
->>>>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   target/ppc/cpu-models.h |   4 --
->>>>   target/ppc/cpu-models.c |   5 --
->>>>   target/ppc/cpu_init.c   | 147 +---------------------------------------
->>>>   3 files changed, 2 insertions(+), 154 deletions(-)
->>>>
->>>> diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
->>>> index c6cd27f390e..a439eb37ee4 100644
->>>> --- a/target/ppc/cpu-models.h
->>>> +++ b/target/ppc/cpu-models.h
->>>> @@ -120,10 +120,6 @@ enum {
->>>>   #define CPU_POWERPC_MPC5200_v12      CPU_POWERPC_G2LEgp1
->>>>   #define CPU_POWERPC_MPC5200B_v20     CPU_POWERPC_G2LEgp1
->>>>   #define CPU_POWERPC_MPC5200B_v21     CPU_POWERPC_G2LEgp1
->>>> -    /* e200 family */
->>>> -    /* e200 cores */
->>>> -    CPU_POWERPC_e200z5             = 0x81000000,
->>>> -    CPU_POWERPC_e200z6             = 0x81120000,
->>>>       /* e300 family */
->>>>       /* e300 cores */
->>>>       CPU_POWERPC_e300c1             = 0x00830010,
->>>> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
->>>> index 89ae763c7f6..26b6debcfc9 100644
->>>> --- a/target/ppc/cpu-models.c
->>>> +++ b/target/ppc/cpu-models.c
->>>> @@ -244,11 +244,6 @@
->>>>                       CPU_POWERPC_MPC5200B_v20, POWERPC_SVR_5200B_v20, 
->>>> G2LE)
->>>>       POWERPC_DEF_SVR("mpc5200b_v21", "MPC5200B v2.1",
->>>>                       CPU_POWERPC_MPC5200B_v21, POWERPC_SVR_5200B_v21, 
->>>> G2LE)
->>>> -    /* e200 
->>>> family                                                           */
->>>> -    POWERPC_DEF("e200z5",        CPU_POWERPC_e200z5, e200,
->>>> -                "PowerPC e200z5 core")
->>>> -    POWERPC_DEF("e200z6",        CPU_POWERPC_e200z6, e200,
->>>> -                "PowerPC e200z6 core")
->>>
->>> While I hope removal of e200 should be fine, I am thinking if we want to
->>> deprecate it in this cycle and remove it in next ?
+
+
+On 17/10/25 17:14, Aditya Gupta wrote:
+> On 25/10/17 05:08PM, Aditya Gupta wrote:
+>> Hello Sourabh,
 >>
->> Since it was never usable (I don't remember of any tests for these
->> CPUs), I agree with Thomas to bypass the deprecation process.
+>> Thanks for your detailed reviews.
+>>
+>> On 25/10/17 02:10PM, Sourabh Jain wrote:
+>>> Hello Aditya,
+>>>
+>>>> <...snip...>
+>>>> +/* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
+>>>> +static void rtas_configure_kernel_dump(PowerPCCPU *cpu,
+>>>> +                                   SpaprMachineState *spapr,
+>>>> +                                   uint32_t token, uint32_t nargs,
+>>>> +                                   target_ulong args,
+>>>> +                                   uint32_t nret, target_ulong rets)
+>>>> +{
+>>>> +    target_ulong cmd = rtas_ld(args, 0);
+>>>> +    uint32_t ret_val;
+>>>> +
+>>>> +    /* Number of outputs has to be 1 */
+>>>> +    if (nret != 1) {
+>>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>>> +                "FADump: ibm,configure-kernel-dump RTAS called with nret != 1.\n");
+>>>
+>>> No rtas_st for above failure?
+>> Will add.
+>>
+>> Also I think I should remove the LOG_GUEST_ERROR, since I mostly use it
+>> for qemu side errors, wrong parameters is an invalid usage rather than>
+>> guest/qemu error.
+>>
+>> What do you say ? Should I remove qemu_log_mask here ?
+>>
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    /* Number of inputs has to be 3 */
+>>>> +    if (nargs != 3) {
+>>>> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+>>> No qemu_log_mask for the above failure?
+>> Thinking to remove it, as mentioned above.
+> On a second thought, I will keep the qemu_log_mask as suggested.
+> More logs helps for debug if kernel passes invalid arguments to fadump.
+>
+> Is that okay ?
+Yes, lets keep the debug logs.
 
-Yes, that's what I was thinking, too: If nobody could have ever used it, 
-there's no point in marking it as deprecated first.
-
-> Sure, reasonable.
-> 
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-Thanks!
-
-  Thomas
-
+- Sourabh
 
