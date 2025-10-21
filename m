@@ -4,93 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CDECCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D01DCCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEEW-0003oe-S9; Tue, 21 Oct 2025 11:25:09 -0400
+	id 1vBEHL-0005ro-OH; Tue, 21 Oct 2025 11:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vBEES-0003nq-54
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:25:04 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vBEEQ-0003UW-4t
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:25:03 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vBEEL-00000001BMh-3uhx; Tue, 21 Oct 2025 17:24:57 +0200
-Message-ID: <8321fed4-a85b-495f-915b-dbe12b26d774@maciej.szmigiero.name>
-Date: Tue, 21 Oct 2025 17:24:52 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBEHK-0005rK-5T
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:28:02 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBEHI-000436-5u
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:28:01 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-63e255e9a20so4081630d50.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761060478; x=1761665278; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L43iFA6FCfUUf1K+8zhEfbHuhMh3iTL3XpwYLLEoK/E=;
+ b=dyzmcDhmfl4P7B9wTIhU8O1Affb2LR/H9xX0gwC9gBv2VGnIfX+cWPdFssLQvOZLq1
+ WtPz4tyT93ePYlWPpW109EmrizCgRFmdf/8Z+1E9oTg2EkGVc1Z6Us36wwqxcwBfC3So
+ nE+FVB1ORLoujppUFbfhEpCmJqc06dSlTa1RYhPY20gSRuVs7MiUVla+0OPDPA9maNtf
+ XBGwHxhAW+vVAbijeswY+PTCn9UYr4qIi+cPyzPdp2R5VSRo+nUNTPePk3FvL5MkDU1V
+ 3OHODwfC3cFFkgQqHOe44VQNoOp90T+tGcNprQnZXRYx3hfHzpSSgajodmK3y/FIwvwS
+ MnJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761060478; x=1761665278;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L43iFA6FCfUUf1K+8zhEfbHuhMh3iTL3XpwYLLEoK/E=;
+ b=nPVq8q0hTpqOgTufRbi0obQSvqkN8+/geNfvoIYVn9qJ6NLAxsfGSZ2kPSHkuzliBw
+ 5yn7d+bBzpE9pOWUzl6zZY90LoEfTrrfq7mycJr2TnnbbZrGmS2SKITuqJ7macY7TmG+
+ TrrNS2gleJxtjkskPVBjuP0y2VV9dwv1ZJgxwhZcTBaTbkZbuv7VZqOUZUGQanBuTBfk
+ bKZEyb+KS8wdbllsdHxfqr87YNpgkRXUt2DMscRwBEFZO2VjDOdbYV84IhTtlxHnGdB6
+ 4qGlF4fzhDouDCKK9RjkCE0czvfv6F1Kp2hyPlXOOhOrUe0Idu1tUNfYxBMgKPKNozYq
+ I1cQ==
+X-Gm-Message-State: AOJu0Yy6go4+pHe1VzIS11jUCnGoGhGfaR+G1DePHjRjnORokmSCdPQO
+ gCT89B3zwDl3Jug/5HjUPwt5Bcz+ElgS1FoIkOJjzr6fzseCUdeUEU5mmHjzjyUd2Sa/a/QU8tn
+ 2Ccz5ZEcXA8snAiphK86SsLbKP3T6NCuKmYfljT6PerSjhxJhPOuY
+X-Gm-Gg: ASbGnctE1cZxfnSOpmWbh2dmJYWCihoPx+ERDgy8lT1XQHA5hMOvLELUMfdq1PefUan
+ kD0TFVJufw840FxGb/60CZXCioRAuXqYpl2J0jg1fL/SpOXVBkbYVOwoHj66i4ktAHBBIcIp6xS
+ 2llVWKFnt3OHd8U3xrbCbFQH1/cY+/WSz91Ur1BVNd1bGYHI3NjxzNcRQyNxw2Dmx/5HkBYMT5N
+ q87uGgTzl7A0rmSzMBVhwbXPHr37a55NLdmp6pRVXUvSzPaXou6hnQATNcreARPAjq/oEhE
+X-Google-Smtp-Source: AGHT+IHXEvlVagaBtex2xOBTyaa5RDaQHRvY6tHDX0avh6T/TMdrwa0WHXDIfDEtaY4AEOLPb3UmQJxtD+/sPh91AW8=
+X-Received: by 2002:a05:690e:1443:b0:63e:1ef8:ca3 with SMTP id
+ 956f58d0204a3-63e1ef81ademr12006718d50.50.1761060478152; Tue, 21 Oct 2025
+ 08:27:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/vfio/helpers: Check base architecture at runtime
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
- <anjo@rev.ng>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Luc Michel <luc.michel@amd.com>
-References: <20251020222315.68963-1-philmd@linaro.org>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20251020222315.68963-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+References: <20251009075026.505715-1-pbonzini@redhat.com>
+ <20251009075026.505715-29-pbonzini@redhat.com>
+In-Reply-To: <20251009075026.505715-29-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 21 Oct 2025 16:27:46 +0100
+X-Gm-Features: AS18NWBtbUhvSUWEWnKLO5gCiy6It_W1zAhd7iJ8T-5Te_EDTwhsjvYOoCwj4Lk
+Message-ID: <CAFEAcA-NPDB7TMFeGJqaYJUZG13Lkxfc7o8yUbJfighH_xp8Dg@mail.gmail.com>
+Subject: Re: [PULL 28/35] target/i386/mshv: Implement mshv_vcpu_run()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,52 +93,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.10.2025 00:23, Philippe Mathieu-Daudé wrote:
-> Replace the compile time check of the TARGET_ARM definition
-> by a runtime call to target_base_arm().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20251020220941.65269-1-philmd@linaro.org>
-> ---
->   hw/vfio/helpers.c | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-> index 23d13e5db5f..007c37b28b8 100644
-> --- a/hw/vfio/helpers.c
-> +++ b/hw/vfio/helpers.c
-> @@ -20,6 +20,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/target-info.h"
->   #include <sys/ioctl.h>
->   
->   #include "system/kvm.h"
-> @@ -220,9 +221,5 @@ bool vfio_arch_wants_loading_config_after_iter(void)
->        * See commit d329f5032e17 ("vfio: Move the saving of the config space to
->        * the right place in VFIO migration").
->        */
-> -#if defined(TARGET_ARM)
-> -    return true;
-> -#else
-> -    return false;
-> -#endif
-> +    return target_base_arm();
->   }
+On Thu, 9 Oct 2025 at 08:56, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+>
+> Add the main vCPU execution loop for MSHV using the MSHV_RUN_VP ioctl.
+>
+> The execution loop handles guest entry and VM exits. There are handlers for
+> memory r/w, PIO and MMIO to which the exit events are dispatched.
+>
+> In case of MMIO the i386 instruction decoder/emulator is invoked to
+> perform the operation in user space.
 
-The only reason why vfio_arch_wants_loading_config_after_iter() was
-introduced is that its only caller (vfio_load_config_after_iter())
-lives in a target-independent file (migration-multifd.c) so it could
-not test TARGET_ARM directly, see:
-https://lore.kernel.org/qemu-devel/8a541c48-15d9-4609-bad7-a1606eeff22e@maciej.szmigiero.name/
+Hi; Coverity complains about this code (CID 1641395):
 
-If target-independent-safe target_base_arm() were to be used instead
-I think this helper won't make sense anymore and so this target_base_arm()
-call (and the associated comment) should be moved to vfio_load_config_after_iter().
+> +static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
+> +{
+> +    uint8_t access_type = info->header.intercept_access_type;
+> +    uint16_t port = info->port_number;
+> +    bool repop = info->access_info.rep_prefix == 1;
+> +    size_t repeat = repop ? info->rcx : 1;
+> +    size_t insn_len = info->header.instruction_length;
+> +    bool direction_flag;
+> +    uint32_t reg_names[3];
+> +    uint64_t reg_values[3];
+> +    int ret;
+> +    X86CPU *x86_cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86_cpu->env;
+> +
+> +    ret = fetch_guest_state(cpu);
+> +    if (ret < 0) {
+> +        error_report("Failed to fetch guest state");
+> +        return -1;
+> +    }
+> +
+> +    direction_flag = (env->eflags & DESC_E_MASK) != 0;
+> +
+> +    if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
+> +        ret = handle_pio_str_write(cpu, info, repeat, port, direction_flag);
+> +        if (ret < 0) {
+> +            error_report("Failed to handle pio str write");
+> +            return -1;
+> +        }
+> +        reg_names[0] = HV_X64_REGISTER_RSI;
+> +        reg_values[0] = info->rsi;
+> +    } else {
+> +        ret = handle_pio_str_read(cpu, info, repeat, port, direction_flag);
 
-Thanks,
-Maciej
+We set ret to the return value here, but there's no error check.
+Should there be one here?
 
+Coverity complains because we assign to 'ret' here but
+then never read it again before we overwrite it with
+the call to set_x64_registers().
+
+> +        reg_names[0] = HV_X64_REGISTER_RDI;
+> +        reg_values[0] = info->rdi;
+> +    }
+> +
+> +    reg_names[1] = HV_X64_REGISTER_RIP;
+> +    reg_values[1] = info->header.rip + insn_len;
+> +    reg_names[2] = HV_X64_REGISTER_RAX;
+> +    reg_values[2] = info->rax;
+> +
+> +    ret = set_x64_registers(cpu, reg_names, reg_values);
+> +    if (ret < 0) {
+> +        error_report("Failed to set x64 registers");
+> +        return -1;
+> +    }
+> +
+> +    cpu->accel->dirty = false;
+> +
+> +    return 0;
+> +}
+
+
+thanks
+-- PMM
 
