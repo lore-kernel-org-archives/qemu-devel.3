@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BA7CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAD1BCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB7zQ-0000dV-No; Tue, 21 Oct 2025 04:45:09 -0400
+	id 1vB7zU-0000nV-7s; Tue, 21 Oct 2025 04:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7z5-0000Io-DK
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:49 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7yq-00009Y-GZ
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:39 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7z1-0000yx-Tg
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47114a40161so10079185e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 01:44:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7yo-0000xq-He
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:32 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ecde0be34eso3636691f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 01:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761036282; x=1761641082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761036267; x=1761641067; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a6Urqf2BFQoz6tGL67HiUuAvlfebveNoSUnXOo9Qq+w=;
- b=bQ0/NrlVxXwZf6EQvIUK7VPhTU6wt89GcphafSFpXEZ3uveQXBDt+XbQ3MeoN/wobe
- 5JoThl+/QtPswtF56YaVk1uZeOREN3I3YbOYPcx+YBwaXroa4i36u0Pl7AP9FNPMrhiM
- Q8Mtoig4fbXl5mfkrfE5Cie/oHpjnINUA33SQFYAnziaRzfnkgiSgWjfmzOpxOYmV+zD
- KpZLcNpR8owc/ajm4cvERcqQNXWq/v9l+biPehlAPshJX5u/k5ipXKaIBulav8gZcbDx
- DDh3V4USs+C8XjbE/UVFX6j4joAISikzUiMUShbIHGV1fWkHaGSwpxW/Ben3/NbRBoO5
- e1rQ==
+ bh=da9rOiPMCykHVjkJsbrqebc9pkYcny2T2/SQshegPgk=;
+ b=dSP+7oAtRFSbR7i0WgqS0ztVqZvziNY7ohwWsI+j+InECt+lJ90dWsqTC7O7JTQFVi
+ 4Ikj+tCB/e/XN406GPwBa0zCS+BsiUhBXCjh/qwhldKTa1qkmQjEr8XG2qKBGgGe11dU
+ kbFXd6moofBIO7vaS5TjsQuSAnFGh7J6v8jrXzCOw88vGNxYRRWeaeKwFcssMEmSmXku
+ ZPE9Y65Yt+lOLweVm+HWRuJnGzfpgSbyj5nh7crLx3vkKRiYt2BJiDS7dJKUW7/UkBpA
+ QmvXAd63my5cguXzZJfqZ9DFyvQ4TsNVqhWnupLw5SWw4P53KJRn4rzXh2nRfHKFaXGq
+ xfjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761036282; x=1761641082;
+ d=1e100.net; s=20230601; t=1761036267; x=1761641067;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a6Urqf2BFQoz6tGL67HiUuAvlfebveNoSUnXOo9Qq+w=;
- b=DoF4oUGl6yxk6wMhSlXSJtCDpzEQlkS69eMT453Np7lRCKOJvUEd5OoVydPOsYZRnI
- /5JyCeC4Js9GBLusvNRIXjQT/XOUEjYGiQEKUPSfPEMMpoQCg7WnUqXStczhkN3ojbPZ
- Puy990gmD/lYGhCh+CO2q/lBw7NRRZN11vtc2Edx4lRJyJq4ZR3YPn6VGoWz3zFDIxwC
- 0xWZ0L8do5qjuzQxBMNgqNgkBaDh9SSrgaJB26EPgl79fyhO6E+k898PiQWuxR68tKPw
- j4JXWJ1WH66jQvmjGYYEWkLGq8YGMvVnrHtxWQhH8xGQaznUcpaHdz7fXBYSda3HESZp
- w7dA==
-X-Gm-Message-State: AOJu0Yyu3mvsNkMsqfbSP4rVI5sY3z2Atukvm4baFlX4DPqj+ZUVj7Cn
- cHWt/aJv3F9c6UGn2tFN1eBySuaDU+DYy7Br75ky298LczXJ8/svu3Vqu9oV5K5EBT9Cdl9UcSb
- hHN0JGMM=
-X-Gm-Gg: ASbGncskoaaLoRdSyfHa422ZY5cAJfeZv2jrrimRFZsqrYDEl80x9EMYh/9q9sS2fNt
- gJmWQZUEAuH9TRYm+2AmEmK0YtdvgiB9nIA7thf/tyCezcBg+k077thg8VZTmbNYobt3Fhvinsv
- BgnHHbOfxyQNF3P26mQAVpr/aJutCDTlhOI83QLd54Ul+CV+tc2JrgfzibS/JvDOjwPqfcAOhPH
- A7n4gKSs6+xRupiraT7fIR5oQPkxDmA7d/rX3wT8Cqq3A8MHM7tW22vzoJmfSByXjOVxTqFH7qz
- AHBTpIlqlrC1/26S05b/TjRRfd3xovIFnMZzNXWVPnMQq4xJM1IVVXVIAM2a43ZaiocG35I+33w
- 8kucK09BTI59jkayhM24pwWpOwyVj7Ztjsb49H+jz4Qk8bXlqu3i26JdEkTb3bcijOET+0QY5hR
- rH6fArqr96MIYWuU94STKYbNBdhwMdMRavLaGO1RBaT9YIf7bMvQ==
-X-Google-Smtp-Source: AGHT+IHH5GeVeaqK1SOYHRnV5hnEGg+hDnGH3BWGPiH6VG3b1oQcncz2qQzO9HI9FYrWzz+B7lIX0Q==
-X-Received: by 2002:a05:600c:871a:b0:46f:b43a:aeef with SMTP id
- 5b1f17b1804b1-4711791d923mr96345475e9.38.1761036281808; 
- Tue, 21 Oct 2025 01:44:41 -0700 (PDT)
+ bh=da9rOiPMCykHVjkJsbrqebc9pkYcny2T2/SQshegPgk=;
+ b=SWR+eBG4hyCBGOl2zEhf82lBfVFLxscAbJqLnaTDwa4TkzRfqmK8Be0nHljFYy0ZMs
+ sZ+XQmX1ycLxdPX7pkD5XVK6UedNedW1D3ptDzgQwju9wBshwPtFw8MTGDZgdsgKAovC
+ T/LZ62a8SXtc/uh99NTaDzmv5OGlvt82luoRAMf2u00GEVdKEl9KQAJBWT6owPTvDs2f
+ +WuT2cgC0vAmILVOuURT2qX471ouXpIjfsyt73I8jHZKnWOodcuE/eJ9BTLOfNEnoTbM
+ blf++SoXyxnwjAZK/nsqFinLbMvwt/LcAweAoHLdY0lLu7XNKuXkPHpM9genVUd6T/8a
+ U17w==
+X-Gm-Message-State: AOJu0Yx+PX1Uzn5S/kVKpBbK7VH1mdTlYNxMT+amuIFa+Nl+jrNYkGUX
+ 1wIh9qLDf/MJNTGu95tX+XOjcA0s4ANEYc9ONWGecBhvH9FLKe4wK68inI/5rNxTg2vfhDFsgju
+ Z5l434Fs=
+X-Gm-Gg: ASbGncsXyLirn+1CldiA9MInoP6bXMkK29ElgLouHzdEcLOwxcUh79z8Pu5nrY+8UdC
+ dQfNOUeYFWPx5wRqQ+kwk5JG0AF0Bw+KMnj0ODQiZNSmc/gXLErNpA+Qwqpgq1/QW15pmUwW5gr
+ tyGul9ffT9cTNtREWOMZOuV+/wc32eEwajK3B2s3WDjiGGCfWfbWULJyY6u8a5+gSKpFwtEBxOX
+ bas7Dg8iA28Il0rCCa/qOtb/I5aca1qZQN3OD9FIrj7DBDijHOwfI2GgRKGuXtqlmYMepRuI9ig
+ Xiz/OjwrvBwTAdS6d5CWzh53qzWXbnyxlWq9+oG5zrGwHguJMAZcNLH7r9aM56qr+qv0NYp5w9Z
+ ZHo+N+pSG154OdlzzTgCzUkwpECRnkBJWFvLayOWSm2WdvkHcVHQSAQndmQXYlwVHdOMRzyIt1d
+ IUkZtlLrGU6ZC3KNMgpc6RTt8CYwCd3sCv+5ek4XFyNPQcFHFwwA==
+X-Google-Smtp-Source: AGHT+IGdNU6grxDa0fovZHVQYjLk03VGAqM6vVuoTYaGlfenMJOg7eXSZCsDKxqPUFu1TflYXqOl4A==
+X-Received: by 2002:a5d:5849:0:b0:3e7:6424:1b47 with SMTP id
+ ffacd0b85a97d-42704b3db46mr13625580f8f.6.1761036267320; 
+ Tue, 21 Oct 2025 01:44:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496c43f68sm11891395e9.5.2025.10.21.01.44.40
+ ffacd0b85a97d-427ea5b3dabsm20200098f8f.16.2025.10.21.01.44.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 01:44:41 -0700 (PDT)
+ Tue, 21 Oct 2025 01:44:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
@@ -73,17 +73,17 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 11/11] ppc/spapr: remove deprecated machine pseries-4.2
-Date: Tue, 21 Oct 2025 10:43:45 +0200
-Message-ID: <20251021084346.73671-12-philmd@linaro.org>
+Subject: [PATCH v2 08/11] ppc/spapr: remove deprecated machine pseries-4.0
+Date: Tue, 21 Oct 2025 10:43:42 +0200
+Message-ID: <20251021084346.73671-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021084346.73671-1-philmd@linaro.org>
 References: <20251021084346.73671-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,82 +108,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Remove the pseries-4.2 machine specific logic as had been deprecated and
-due for removal now as per policy.
+pseries-4.0 had been deprecated and due for removal now as per policy.
+Also remove pre-4.1 migration hacks which were introduced for backward
+compatibility.
 
 Suggested-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
+[PMD: Remove SpaprMachineClass::pre_4_1_migration field]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/ppc/spapr.h |  1 -
+ include/hw/ppc/spapr.h |  3 ---
  hw/ppc/spapr.c         | 27 ---------------------------
- 2 files changed, 28 deletions(-)
+ hw/ppc/spapr_caps.c    | 12 +-----------
+ 3 files changed, 1 insertion(+), 41 deletions(-)
 
 diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 60d9a8a0377..b9d884745fe 100644
+index 1db67784de8..58d31b096cd 100644
 --- a/include/hw/ppc/spapr.h
 +++ b/include/hw/ppc/spapr.h
-@@ -141,7 +141,6 @@ struct SpaprCapabilities {
+@@ -139,11 +139,8 @@ struct SpaprCapabilities {
+  * SpaprMachineClass:
+  */
  struct SpaprMachineClass {
+-    /*< private >*/
      MachineClass parent_class;
  
--    hwaddr rma_limit;          /* clamp the RMA to this size */
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
-     bool pre_6_2_numa_affinity;
+-    /*< public >*/
+-    bool pre_4_1_migration; /* don't migrate hpt-max-page-size */
+     bool linux_pci_probe;
+     bool smp_threads_vsmt; /* set VSMT to smp_threads by default */
+     hwaddr rma_limit;          /* clamp the RMA to this size */
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index a06392beff1..b6f151d7468 100644
+index ad9fc61c299..deab613e070 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -2729,7 +2729,6 @@ static PCIHostState *spapr_create_default_phb(void)
- static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
- {
-     MachineState *machine = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     hwaddr rma_size = machine->ram_size;
-     hwaddr node0_size = spapr_node0_size(machine);
+@@ -4969,33 +4969,6 @@ static void spapr_machine_4_1_class_options(MachineClass *mc)
  
-@@ -2742,15 +2741,6 @@ static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
-      */
-     rma_size = MIN(rma_size, 1 * TiB);
- 
--    /*
--     * Clamp the RMA size based on machine type.  This is for
--     * migration compatibility with older qemu versions, which limited
--     * the RMA size for complicated and mostly bad reasons.
--     */
--    if (smc->rma_limit) {
--        rma_size = MIN(rma_size, smc->rma_limit);
--    }
--
-     if (rma_size < MIN_RMA_SLOF) {
-         error_setg(errp,
-                    "pSeries SLOF firmware requires >= %" HWADDR_PRIx
-@@ -4913,23 +4903,6 @@ static void spapr_machine_5_0_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE(5, 0);
+ DEFINE_SPAPR_MACHINE(4, 1);
  
 -/*
-- * pseries-4.2
+- * pseries-4.0
 - */
--static void spapr_machine_4_2_class_options(MachineClass *mc)
+-static bool phb_placement_4_0(SpaprMachineState *spapr, uint32_t index,
+-                              uint64_t *buid, hwaddr *pio,
+-                              hwaddr *mmio32, hwaddr *mmio64,
+-                              unsigned n_dma, uint32_t *liobns, Error **errp)
+-{
+-    if (!spapr_phb_placement(spapr, index, buid, pio, mmio32, mmio64, n_dma,
+-                             liobns, errp)) {
+-        return false;
+-    }
+-    return true;
+-}
+-static void spapr_machine_4_0_class_options(MachineClass *mc)
 -{
 -    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
 -
--    spapr_machine_5_0_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_4_2, hw_compat_4_2_len);
--    smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] = SPAPR_CAP_OFF;
--    smc->default_caps.caps[SPAPR_CAP_FWNMI] = SPAPR_CAP_OFF;
--    smc->rma_limit = 16 * GiB;
--    mc->nvdimm_supported = false;
+-    spapr_machine_4_1_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_4_0, hw_compat_4_0_len);
+-    smc->phb_placement = phb_placement_4_0;
+-    smc->irq = &spapr_irq_xics;
+-    smc->pre_4_1_migration = true;
 -}
 -
--DEFINE_SPAPR_MACHINE(4, 2);
+-DEFINE_SPAPR_MACHINE(4, 0);
 -
  static void spapr_machine_register_types(void)
  {
      type_register_static(&spapr_machine_info);
+diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+index 0f94c192fd4..170795ad6ad 100644
+--- a/hw/ppc/spapr_caps.c
++++ b/hw/ppc/spapr_caps.c
+@@ -66,7 +66,6 @@ typedef struct SpaprCapabilityInfo {
+     void (*apply)(SpaprMachineState *spapr, uint8_t val, Error **errp);
+     void (*cpu_apply)(SpaprMachineState *spapr, PowerPCCPU *cpu,
+                       uint8_t val, Error **errp);
+-    bool (*migrate_needed)(void *opaque);
+ } SpaprCapabilityInfo;
+ 
+ static void spapr_cap_get_bool(Object *obj, Visitor *v, const char *name,
+@@ -336,11 +335,6 @@ static void cap_hpt_maxpagesize_apply(SpaprMachineState *spapr,
+     spapr_check_pagesize(spapr, qemu_minrampagesize(), errp);
+ }
+ 
+-static bool cap_hpt_maxpagesize_migrate_needed(void *opaque)
+-{
+-    return !SPAPR_MACHINE_GET_CLASS(opaque)->pre_4_1_migration;
+-}
+-
+ static bool spapr_pagesize_cb(void *opaque, uint32_t seg_pshift,
+                               uint32_t pshift)
+ {
+@@ -793,7 +787,6 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+         .type = "int",
+         .apply = cap_hpt_maxpagesize_apply,
+         .cpu_apply = cap_hpt_maxpagesize_cpu_apply,
+-        .migrate_needed = cap_hpt_maxpagesize_migrate_needed,
+     },
+     [SPAPR_CAP_NESTED_KVM_HV] = {
+         .name = "nested-hv",
+@@ -982,11 +975,8 @@ int spapr_caps_post_migration(SpaprMachineState *spapr)
+ static bool spapr_cap_##sname##_needed(void *opaque)    \
+ {                                                       \
+     SpaprMachineState *spapr = opaque;                  \
+-    bool (*needed)(void *opaque) =                      \
+-        capability_table[cap].migrate_needed;           \
+                                                         \
+-    return needed ? needed(opaque) : true &&            \
+-           spapr->cmd_line_caps[cap] &&                 \
++    return spapr->cmd_line_caps[cap] &&                 \
+            (spapr->eff.caps[cap] !=                     \
+             spapr->def.caps[cap]);                      \
+ }                                                       \
 -- 
 2.51.0
 
