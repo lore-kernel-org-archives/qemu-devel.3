@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28374CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 17:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F756CCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 17:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBG4o-0004xG-An; Tue, 21 Oct 2025 13:23:14 -0400
+	id 1vBGDH-0000K5-Pv; Tue, 21 Oct 2025 13:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBG4m-0004x8-9I
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:23:12 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ id 1vBGDG-0000Jt-Ga
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:31:58 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBG4j-0002LQ-6b
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:23:12 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-63e35e48a27so2601853d50.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 10:23:08 -0700 (PDT)
+ id 1vBGDE-0003ST-AP
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:31:58 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-471131d6121so46004785e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 10:31:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761067387; x=1761672187; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hIBfe4Wnho7Byyf823qbIiyCVdxG61+caeMyboIh5DY=;
- b=b3VbTKsMGGoTZ7RudIex5apKdcMEB8HDz7uQVC5XzpgDRRhBrfjlRlDNqtduQvjRJP
- 0cgLzkM1XxS38yygftMHootKYqTOp6HwW4sErArXV6G0yS+6EkEobC2djbFeHl4ukpCe
- vfy22RTz6bCp8q9h6uhESfQCaISQG8iXGxDFUg2xCkWz2BLVNHHS+Bucm6JbO9IYoSLn
- jLeJhJn+VESun+IZ/Cp2ztygQEC8/lV66ECMe75JUrfnWlxCtM8ei5CiRN/CYK3wHoHC
- mT20IEk7oZfCUHAEHhHC5MWkV022JqGw66Jw2kIT/Hi7btJt52QRwOZ9T6kTcsy/gpkm
- R/QA==
+ d=linaro.org; s=google; t=1761067914; x=1761672714; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fzYRYzOJyVbAdZ4b5oTMi1DK6fs6nMUpWqgzZh8E360=;
+ b=WfIZOuuQKoDwqyODvAq8HGuK/1sXlIB2ksKNmGeAW8PRXKGYSioCCfCVV0rHD0OcTC
+ ZbXtcqd+5Pjxp7nV1Kvwbk8/2FyrgOfR8feAkwlbcC0FVfh3qTUu8o7c4Pr7gQOO6K5x
+ u1LHLIvgk+IOBvnwAcYW6gF6pBfPUSVNPVIN5sVa1qmNOOVJ5qP73OrSPHUzNNvUqJjJ
+ cj//DtBvR3U78dvhlX+Ul6lejEWiRdBN5CeZx4syosWrIrqxFDTx3Q30CJoPwd9B94Yi
+ srcc7Nc+42AG7WzNm/nBw9gDgXNVMn8Amf2SEy6EGEHLkfd4YbaBqCtTIkG9X4j2oyKd
+ eU0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761067387; x=1761672187;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1761067914; x=1761672714;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hIBfe4Wnho7Byyf823qbIiyCVdxG61+caeMyboIh5DY=;
- b=MeXA42mLTybk5KY9t65Ozc7v4R5huNX9BdORr6r6xjYJVew3K8Ayy0vHdJm/fdZ+ao
- 8ZP6N0xnIWLUMA/SoSg1s22UT9tZCjrPqm+kQ8QVtfzAxOWE+2SK1/9fLIjZztsm6ctd
- YnrxCqRqF5LXwp64c+E/DgLm0AYlKqdGKJghbJGj2aDFmZLBJS6M96anNxBNie3GmlqH
- G/uruUA0yVOECPzSd3PLOYcDTpyzEV7bfH41EM3jHPGdVb2X3Ow6TglY1xSbUHYtCsT7
- Zvhshwr6GeBDHTRs8Mukzch8aOkuXrs0z+sMW690XxIuIgbn9zoCrZm/QRVRs/w62ndb
- 1pgA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUqOr9HCsAYBxlLHSJNdy28/s905FuVxrLwr3xv/HjoVgi9eDGL5aVddD5jZX8QlLQfJC09FROKtbfq@nongnu.org
-X-Gm-Message-State: AOJu0YwF39PIkVGlDbKaXrUD/s83GOe1+mmNARRRnRCbdj9UNlEu8Iyb
- 7deAmYQr4gYw1KNrbI48qdVip9y2B7pC9mPO/XzdVMWOSeCfFdAk8C9uJouxNFJhzYFw2UbzX4r
- ndOBGRxkFy1ThTOejQLDsuJBUYrgj0kYKBXdd2y99tA==
-X-Gm-Gg: ASbGnctacx6tvBWqIrTd1GfIAMJc9xiOymWpP0EQXTH0z5QdOo7Ml1i5/eVXmpK5+Qy
- EovSQKBpSSRcI2cbURN8N1CMHL4SsR8egS6LfxCh9LyH6JPf7SPvrN/jO7mzembG7RmoV1h629k
- l2j+VxxdTVM4AeKAIhljtfWcs1k1pSCdY+FiEM9Bmb1ByBoiT9zmvRmFJ3ZNnHiwYZy6XKJf/u0
- J08fCE/EM5r1NeMTeeMn85IUQVIkAt6JEx+DIbR76p3A8o+vZ8jddWN28o934P1iwhV5TJN
-X-Google-Smtp-Source: AGHT+IFAg2YumcuySjrtvUyNbSj7QbdEdxEKe/E54v0oRTAWP52JZPz4gKVQhtXhxZT/tbuTYzOytjU9qmbScF8/i2I=
-X-Received: by 2002:a05:690e:2505:10b0:63d:f608:4cb6 with SMTP id
- 956f58d0204a3-63e1613e4c4mr12950510d50.23.1761067387367; Tue, 21 Oct 2025
- 10:23:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-3-peterx@redhat.com>
- <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
- <aPex9SsQOup69DRI@x1.local>
- <CAFEAcA85DRf5918ea9N66+Z7M_vVGNy+-SdSx17E5MGOf_cbMA@mail.gmail.com>
- <aPe4yBqkPTiDiYXq@x1.local>
- <CAFEAcA8e7qKGm7vq-8TFC40VMfoGU_O5+U0rrKG+Z8M3fVdRfg@mail.gmail.com>
- <aPe9Z0IiEI6mzCdY@x1.local>
-In-Reply-To: <aPe9Z0IiEI6mzCdY@x1.local>
+ bh=fzYRYzOJyVbAdZ4b5oTMi1DK6fs6nMUpWqgzZh8E360=;
+ b=LiDKYT+cfJ6LsNk1A4tCKZrYCaJu8c7AREi1PSAOdYjlwyetXFkyjzHD9dudV7mlqm
+ qxdhY46mXeVVzTF3BQubpPI1WcgYLhLSp7v3qqUuC9/R8JefZqx6yqP7aZ9NqWu8u7j8
+ 1Q4oQV75GYw+g2f7APFYsoQy6JpgcCe/lykaQWSe/lX18GetGpjaBWNtjzEXwklMNTla
+ eC+PUvhA4M81aM949AqqzB1E39l2w2N48xL6osdgDCXN5Tqay+nHDu2wkgjDiTSj5EZj
+ cFa2u3n6KbYkqcvRt490M87wczm9ZZCgwSxOyralI2tAMTJInrzTYoqPqa4WxujDOiiR
+ PAUw==
+X-Gm-Message-State: AOJu0YzurySXTDsSwRVTMzSmTsV3gSmzKJj58V38hlZJTpFbdKTj5kFy
+ Db/RKGX/kNiSrRwHV+F4NnfjHjY5JhLSEkMsoICVIgy7hxX9U/Y5r1NaZksWuAWLwCvH4JdiODu
+ w3r5q
+X-Gm-Gg: ASbGncsDU7HGZs9yxV2xWL8rLJq9VWIwZL6vOgMlhUKRA/m2v9Fv09vWySj2uZqCxrd
+ 9giB5vQAp/UwyGMNePx4wt31+qtoftPL8gjoPhK9uT1V+qS6OE6/Ru6DHBN7azUZB1khOjgTviQ
+ +gkAwKfzzQBpevSCWzBWopmexKWkEhWdGyo5S6OQa/Ng4qINToGX9fgf8hfcZpa3uXN5SGuHHY1
+ Q6eiP0xBc1Ya37o8c2p1Iw/xPTGW8htTXDmQ8Avs2jBS975zR+EqeMptheY+j+6p13jovdDHjcw
+ KArPDn+oqgUPuXRrZMpoZNTfnU7G8uuiK2SjxSW9YV5PTo8jmwHZWnHMlzTpVG27ss32zliEgre
+ WVMTKJXMtuQ/wUESwQG+yeThsmJDZ+cCf+H9ehVkII3iWQqsJ0/2AHV+OuHpjR8VZnopTT696Ie
+ 9T5fRGZ+tlo+0jP0eG
+X-Google-Smtp-Source: AGHT+IHoZibVoYDCFsP0Kogi2h9l99+QLKbH1uiWDwb3/4qM+8rIySnCCz6JwkyOYT8JNK1220IqQQ==
+X-Received: by 2002:a05:600c:3b03:b0:46e:53cb:9e7f with SMTP id
+ 5b1f17b1804b1-471178a3ff6mr127808055e9.18.1761067913955; 
+ Tue, 21 Oct 2025 10:31:53 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475c4369b3esm2354725e9.13.2025.10.21.10.31.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 10:31:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Oct 2025 18:22:55 +0100
-X-Gm-Features: AS18NWC_vI-Q1FXMFZypmrjV0mO6ysNm7tRRKf-V8veof-YZ7Q6T9GGKj8FfwgU
-Message-ID: <CAFEAcA_BAxh8BAYPAbPEp_P98gMUdZqZ=2XZHrmGQ+GyEViF_Q@mail.gmail.com>
-Subject: Re: [PULL 02/45] migration: push Error **errp into
- vmstate_load_state()
-To: Peter Xu <peterx@redhat.com>
-Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH] target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
+Date: Tue, 21 Oct 2025 18:31:51 +0100
+Message-ID: <20251021173152.1695997-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,58 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Oct 2025 at 18:05, Peter Xu <peterx@redhat.com> wrote:
->
-> On Tue, Oct 21, 2025 at 05:49:51PM +0100, Peter Maydell wrote:
-> > I suppose so, but that seems like something in practice
-> > we make a lot of use of. It's really handy to be able to
-> > say "this is how you obtain the integer you wanted to put
-> > in the migration stream" -- we do a fair amount of that
-> > in target/arm/machine.c for instance. But those don't
-> > need to return a failure, I suppose.
->
-> That's exactly what pre_save() / post_load() should do, IMHO.
->
-> Taking example of the arm's case here:
->
-> static int put_fpscr(QEMUFile *f, void *opaque, size_t size,
->                      const VMStateField *field, JSONWriter *vmdesc)
-> {
->     ARMCPU *cpu = opaque;
->     CPUARMState *env = &cpu->env;
->     uint32_t fpscr = vfp_fpcr_fpsr_needed(opaque) ? 0 : vfp_get_fpscr(env);
->
->     qemu_put_be32(f, fpscr);
->     return 0;
-> }
->
-> The .pre_save() should be exactly the logic that generalize whatever we
-> have had in QEMU's structs into a pure uint32_t, put that into a temp
-> u32. Then migration should be able to transfer that using whatever way it
-> prefers.  When using qemufile API, it should use vmstate_info_uint32 so as
-> to not open-code qemu_put_be32().
+In the decode_group9() function, if we don't recognise the insn as
+one that we should handle, we leave the 'entry' pointer unaltered.
+Because the X86OpEntry struct has a union for the gen and decode
+pointers, this means that the top level code will call decode.e.gen()
+which tries to use the decode function pointer (still set to
+decode_group9) as a gen function pointer.
 
-I think this is very ugly, because it means that the device state
-struct ends up with a pile of extra fields whose only purpose
-is to be temporarily used during migration. Having a function
-which does the "figure out the value at the point where we want it"
-is a much nicer API because it keeps the migration related
-complication in the migration code, and keeps it out of the
-data structures that all the rest of the code has to work with.
+This is undefined behaviour, but seems to be mostly harmless in
+practice (we call decode_group9() again with bogus arguments and it
+does nothing).  If you have CFI enabled then it will trip the CFI
+check:
 
-> Now, we have a major issue with qemufile and all the APIs that bound to it
-> when we want to move the IO layers from qemufile to iochannels, exactly
-> because we lack such abstraction layer, where we mixed up "this is how you
-> obtain the integer" and "send this integer to the wire" operations in one
-> API.
+../target/i386/tcg/decode-new.c.inc:2862:9: runtime error: control flow integrity check for type 'void (struct DisasContext *, struct X86DecodedInsn *)' failed during indirect function call
 
-Yeah, this is unfortunate. But I don't think the solution is
-to require a lot of extra device state struct fields to carry
-temporary data for migration. It would be better to have an
-API similar to the existing get/put functions but which
-passes the data back to the caller instead of calling
-qemu_put_be32() itself.
+Set *entry to UNKNOWN_OPCODE to provoke the #UD exception, as we do
+in decode_group1A() and decode_group11() for similar situations.
 
-thanks
--- PMM
+Thanks to the bug reporter for the clear description and analysis of
+the bug and the simple reproducer.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3172
+Fixes: fcd16539ebfe2 ("target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/i386/tcg/decode-new.c.inc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index a50f57dbaab..f4192f10068 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -335,6 +335,8 @@ static void decode_group9(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+         *entry = group9_reg;
+     } else if (op == 1) {
+         *entry = REX_W(s) ? cmpxchg16b : cmpxchg8b;
++    } else {
++        *entry = UNKNOWN_OPCODE;
+     }
+ }
+ 
+-- 
+2.43.0
+
 
