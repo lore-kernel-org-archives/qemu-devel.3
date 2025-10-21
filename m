@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511D2CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1C3CCD1AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJH3-0005aO-U8; Tue, 21 Oct 2025 16:48:05 -0400
+	id 1vBJHE-00063w-Mn; Tue, 21 Oct 2025 16:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGv-00052n-FR
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:57 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHC-0005yM-MQ
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:15 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGr-00016x-EG
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:55 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-471075c0a18so63482475e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJH9-00018o-6A
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:13 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-46b303f7469so48892315e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079670; x=1761684470; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079689; x=1761684489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EJemuqupst2Ai9qCdTK6nCWULI+YOTVngNae3E/sjFk=;
- b=GqRkBD8ephUjoG2C6H2jAKCULHjoTHRraRvaP+Vl+ysuaI75Uic4VA7nsFoLWOm3rt
- lN2g/x6ou/wvwbVReuqxIrqy62v9xaI/Sqlw5P70oEFoVx6kpekLk+vj8Pny9gDxwqgz
- RVvM94L68w8i0/zM3B3hCvljc/RQ3x4MEsV8dJDZyvX0L2MfOjpMXOfNXhyYenhtgzVp
- 6ogSfqXUoGGnQxslOaFKA5SvU9dZmJWvUtyK9OoZEjuwdjXV4pKxKhA9o/BJPvB7oEIx
- lH/d6wgLKY3ovrzmSv1WC6fkc2QJEClVVRHHUk2sUb3Oluw3Eg1/G4GTN0D1r3kCANUN
- D2cw==
+ :reply-to; bh=Vutle4YXIOFFrBvcNunmt19xjODe06KxvyMmRyQ1onQ=;
+ b=Os/M8WOM/UQSyyEWo/mF3s4FzkiwXOoa+LZnJmLgroG9Z2qn7mxvV0qq1COkqpgBS/
+ +kxS4nIorHTU75BIBsqedoMXKjukmIDfztPu0jiVRy8gOOgwtCpCQ/Iw4Mgzk8fMeeGz
+ QGlRIhD0gMGjOqyxk+nJlmKhMoDqzEbX0nLleg8AeacZflbLLjoHryo/fgCr8M6kEygg
+ I1KoPUJZHEpdKyzvTjToEaMkk8em5L8RDeye9q45dFTyreQtmPJK6b5Kui4iKUTHmdlF
+ NnPjMtOZ1XeOEJ+XFcPj26YLP1CwdnPwufgi76vjiLSRvAjkvjRLJPq580FNitZr3kq1
+ Tscw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079670; x=1761684470;
+ d=1e100.net; s=20230601; t=1761079689; x=1761684489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EJemuqupst2Ai9qCdTK6nCWULI+YOTVngNae3E/sjFk=;
- b=NI2q8zqvo6RryQEfMaCxRbhh0UCmfIljX95GMCM7RD722f3wq8Bk719fon/zVaWm0m
- jVKAXWXC6fYR37yp1B32/sPOyoHtE6tUjXCMlrbsJrXzJg/vkN1+SUEM6txAv1C7GOGH
- kbEYjF/WrdDNgLgmzwiKWrzPEiCZU0p6+z48iPKedPZTRNKgI8UarUMMEagcmdsBhkDw
- t59u/vxefFb//npyehvYL5XDnVfKqzybWxdP8/Dsj/vZwqA+Zvw9921TZIdMb+0ePCzE
- FIrYWnzZmGRllFkhMsEZJkLUU/nU0Ca8cNQK+DvoisElXakS3naIwenJ/0sclZt/4Jb9
- C6mw==
-X-Gm-Message-State: AOJu0YzgS+/+vp1NH5szE3eGSCkTQqAvanr9R4//ltIgnQu6TPxACSwN
- hqIe7bdRAzLunkjOnBguFSfHzlTsrH7Ics13dEMOhQCnG2zKQM9r8PUOXGQAkMIzlcaqpcSCSnI
- 9o18r10k=
-X-Gm-Gg: ASbGncs9XGpxaWTDzJvPqquCBacMlfsfJ/XvxoUxumL8Og0uW6rxa94RLYK6j0nD8lR
- BWzQplHLqJWU2vM0aMj9GloVztM/q43XkYI/2pTV725drEMGEx8fnPQVji882arsZzKeIHYoCti
- ndAVOj4mczoGadFtBxfoowgUGeVfMrHHkUML8O/nPnK6W9pzOUxx6sgy3JjGjov8cZby4565ukn
- G73IyDsP8oLQOAhpP9rhr5NQmMCNGBa7LMZoT6EDQEMhn6kJ0awA3cZeHjGSXa9Wbfua68ICb3a
- 2X2XNl4ZSfzd1fNVy9mZ0FyCSTIOZXvIL1VCA7VON++6lB97ORgBMnY5/AERG6wgKl19IVQl0fR
- NOBrmYdxWEirv6ejKWPfQyx1nS4EvUa7sBYziWa9QfDTa594IEqPzxdu2E7z/bc1vBO7HNAfEZg
- 6IscaLVL0sLsMoSN76QMCjVtPHjv8yJAbL3EqHKAVhTR3utp83ag==
-X-Google-Smtp-Source: AGHT+IHSORdgmZcUET0S8ZpPmEAoJpYctNxZHRpLR6bSm9ZYyor4wKtdDsPVf3sfNgHtvgspHPLwYQ==
-X-Received: by 2002:a05:600c:818f:b0:46f:b42e:ed86 with SMTP id
- 5b1f17b1804b1-4711791fbdemr127820105e9.39.1761079670289; 
- Tue, 21 Oct 2025 13:47:50 -0700 (PDT)
+ bh=Vutle4YXIOFFrBvcNunmt19xjODe06KxvyMmRyQ1onQ=;
+ b=DAotKQ5cLjYF/Dj6hiNKM7n5MHWDh5/NNBlgHYV1peB7QhG7MxslCw5wyfPXSeHtvW
+ Mzui5koYJdi3dcPcDwo63tX8ph0Ab8XD9qfVNSGw+p0k+wQf1t2b0hB4z7JYTHtJ7S3t
+ WBELqn313yWZePSMod+HUR8FKWHaMq9zs8+6fInW+EzQ97X5A/YM8Q1/jJatqPBlPnMf
+ BIQxHDYW8D3TAaC7IwVuiQqOun+e1eYuNjxNqCX9Wl0cCGARyDXHkD3KjuzJRpxyiVfF
+ rgM4r3O5odbebgADBIs+QRBtUCuFYSsUiHEMCUlXdqlVLevzv2a+Q8qeY4LtL1oTx8LW
+ X6cw==
+X-Gm-Message-State: AOJu0YyiNys1Ot+x2tnlnPt1wtHEyRzWS79XYJuBTj9BJd99Dx7rauta
+ RkM3U9utT8DgFsPipvd20YEWFCGYguEqkP1z916acjQP5xLNGzVURyhIBj0A+x9mKA4+9eyEI2x
+ HMQAy370=
+X-Gm-Gg: ASbGncsnrLautBb9qPsCqqtBHfvpWgEh/C3hIWkQb8AXH5fBoc5jhvAaT/U7g8sCbJ9
+ 9RBOgAx/2iahD7BfbIPZfcBUpUuQsKSRS1oU1f/E85QoDv5EQymyB2VgQuUzBpoR4DkpQ71HU8A
+ xMJca4btLUq22UN+5jnz+bZw9yG0a7KKYHp581F6G5tV1dDXIE7wWR/B3Zj1IizJNh7+AECotFv
+ gr3wDVxOOyPlYessaCh0/09PQAgSYUI99HAjX1iMl3OhpaKXrCTucTPFtzSvJETp/syhfLEPwyZ
+ hwl7kSG5Mly6lbgDGbQzkVW+0onk+1hORzoEcK9FlDxnm+x7Ph3PYsCTWBwqyTdRZsXK4LCLP0T
+ VvIF9086O70c+BYa8I2RB1q+hQgp4MA5l8uVuDZAJouZg863p8LaOA6H2C91i4nLH3vEh4kr9xa
+ 5iNWL1+NZ1+YLFzHBondkKJsYYCZpHjBLQeac6qMnJRaUn4dcPjMiObUCHY+fN
+X-Google-Smtp-Source: AGHT+IHHhz0PfA4M2bG/xsFIM88eKoKfDlYj8m8DXImZxQr/P1sFLrzxhwCGvoejWOU2po78eDzrMg==
+X-Received: by 2002:a05:600c:548a:b0:471:669:e95d with SMTP id
+ 5b1f17b1804b1-4711787dcc8mr120147665e9.12.1761079688803; 
+ Tue, 21 Oct 2025 13:48:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c429e7ecsm9577485e9.10.2025.10.21.13.47.49
+ ffacd0b85a97d-427f009a9a9sm22537515f8f.29.2025.10.21.13.48.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:47:49 -0700 (PDT)
+ Tue, 21 Oct 2025 13:48:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/45] hw/boards: Move DEFINE_MACHINE() definition closer to
- its doc string
-Date: Tue, 21 Oct 2025 22:46:24 +0200
-Message-ID: <20251021204700.56072-11-philmd@linaro.org>
+Subject: [PULL 14/45] hw/ppc/e500: Check for compatible CPU type instead of
+ aborting ungracefully
+Date: Tue, 21 Oct 2025 22:46:28 +0200
+Message-ID: <20251021204700.56072-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,67 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Code movement to have the DEFINE_MACHINE() definition follow
-its usage documentation comment.
+From: Thomas Huth <thuth@redhat.com>
 
+When using the ppce500 machine with an embedded CPU type that has
+the right MMU model, but is not part of the e500 CPU family, QEMU
+currently aborts ungracefully:
+
+ $ ./qemu-system-ppc -machine ppce500 -cpu e200z5 -nographic
+ qemu-system-ppc: ../qemu/hw/core/gpio.c:108: qdev_get_gpio_in_named:
+  Assertion `n >= 0 && n < gpio_list->num_in' failed.
+ Aborted (core dumped)
+
+The ppce500 machine expects a CPU with certain GPIO interrupt pins,
+so let's replace the coarse check for the MMU_BOOKE206 model with
+a more precise check that only allows CPUs from the e500 family.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3162
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-ID: <20251015111243.1585018-1-thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20251020220941.65269-3-philmd@linaro.org>
 ---
- include/hw/boards.h | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ hw/ppc/e500.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 014007920dd..a214e3322ad 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -506,6 +506,23 @@ struct MachineState {
-  *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro, _, tag)
-  */
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 723c97fad2e..3d69428f31c 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -20,6 +20,7 @@
+ #include "qemu/guest-random.h"
+ #include "exec/target_page.h"
+ #include "qapi/error.h"
++#include "cpu-models.h"
+ #include "e500.h"
+ #include "e500-ccsr.h"
+ #include "net/net.h"
+@@ -942,9 +943,8 @@ void ppce500_init(MachineState *machine)
+         env = &cpu->env;
+         cs = CPU(cpu);
  
-+#define DEFINE_MACHINE(namestr, machine_initfn) \
-+    static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
-+    { \
-+        MachineClass *mc = MACHINE_CLASS(oc); \
-+        machine_initfn(mc); \
-+    } \
-+    static const TypeInfo machine_initfn##_typeinfo = { \
-+        .name       = MACHINE_TYPE_NAME(namestr), \
-+        .parent     = TYPE_MACHINE, \
-+        .class_init = machine_initfn##_class_init, \
-+    }; \
-+    static void machine_initfn##_register_types(void) \
-+    { \
-+        type_register_static(&machine_initfn##_typeinfo); \
-+    } \
-+    type_init(machine_initfn##_register_types)
-+
- /*
-  * Helper for dispatching different macros based on how
-  * many __VA_ARGS__ are passed. Supports 1 to 5 variadic
-@@ -765,23 +782,6 @@ struct MachineState {
-         } \
-     } while (0)
- 
--#define DEFINE_MACHINE(namestr, machine_initfn) \
--    static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
--    { \
--        MachineClass *mc = MACHINE_CLASS(oc); \
--        machine_initfn(mc); \
--    } \
--    static const TypeInfo machine_initfn##_typeinfo = { \
--        .name       = MACHINE_TYPE_NAME(namestr), \
--        .parent     = TYPE_MACHINE, \
--        .class_init = machine_initfn##_class_init, \
--    }; \
--    static void machine_initfn##_register_types(void) \
--    { \
--        type_register_static(&machine_initfn##_typeinfo); \
--    } \
--    type_init(machine_initfn##_register_types)
--
- extern GlobalProperty hw_compat_10_1[];
- extern const size_t hw_compat_10_1_len;
+-        if (env->mmu_model != POWERPC_MMU_BOOKE206) {
+-            error_report("MMU model %i not supported by this machine",
+-                         env->mmu_model);
++        if (!(POWERPC_CPU_GET_CLASS(cpu)->svr & POWERPC_SVR_E500)) {
++            error_report("This machine needs a CPU from the e500 family");
+             exit(1);
+         }
  
 -- 
 2.51.0
