@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48079CCD1A7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512DDCCD1AA
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBCGC-0002H2-Tm; Tue, 21 Oct 2025 09:18:44 -0400
+	id 1vBCG6-0002GX-PJ; Tue, 21 Oct 2025 09:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCG8-0002Gp-Pc
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:41 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCG4-0002GJ-2m
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:36 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCG6-0002YS-M4
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:40 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3ecde0be34eso3827462f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:18:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCG2-0002Xr-3o
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:35 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-426fc536b5dso3099852f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761052716; x=1761657516; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761052712; x=1761657512; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fajL8D4qjkZYuIz+6S2Vfjd7bqCu0mIrYWtAC9gi6bw=;
- b=xXGIcEND3zDm2NFfOc/i8aYWrRrZ/UkxN9d/9UCA6AhVYOMH09xXA9vwXa7bYzSy01
- +5Sc0x+agYJpm4VHgG0RLMSGJ+ldDrmZywyf/FKU7Zksj+jacmCqg4iJjBvdhxlDoM0l
- 26OzsK2V52D/H9AZ1moK6Yaoaz+FRLIs8FtJuZVQhWITRGGjIScX0NU7Te0dcEAFFqNE
- HTt+XB9s1AAU4/VWiJROUSs3M8hsPWPpLs2+U56VVnxx7S+yJVZ3CzybCC0c0AO19kqX
- /B/G7recMXbxKpKP/40AQAQMnUcs3GE55BC0jVxJOELCYtzAzc24sqLlpZQU5ulCi3zS
- sFag==
+ bh=aoKouDHRM63ur8bgDiAr/baaSlSpEgMJ6p1OQu1/W50=;
+ b=nBrRKvSk8kalJRqmHD8bwmfRuqNDhxEodkMgOkx3yB/tUIUfyP/qPPfE/iMoYALXbo
+ HyIRc3LSG7+PnNfnG4BgPdnyK0ERjEAjfJyWB1/VoHHoAdO0FgfhrNia+XbRYM3jBUxF
+ 15MWTZnacbqK0b7YU8OZOke6fYCLCzabbMpok3KKIT9UJTRaE3/laarrRLpWdOPgZl4r
+ eg20VmmvUMZYI+nv2F1lvRHcILvzm8qrPONv1GhqRsBxoXlVhXDwjdJU7EHi+4pO6Yar
+ kTGmOel+PcdamL3u2GvSWgWy0/0TQl7hPu9Dg00w8JnX5VMqqP+qCTU8LthMKNswmGb8
+ EtSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761052716; x=1761657516;
+ d=1e100.net; s=20230601; t=1761052712; x=1761657512;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fajL8D4qjkZYuIz+6S2Vfjd7bqCu0mIrYWtAC9gi6bw=;
- b=XqA1ziTp3em//B3BBqm2mQQqkJuJ4zRZTvtgWSo/bzXE6g8BbH5JdeVE9NDlgQ3ijQ
- L0DwPlsWjnZGQykXp2uwB/oDwndLzQ+NSN8z7rsgL1cFAcO9+sYjVQnx1SSNM6yRHjvj
- H9HhW63I+khhdBvHZHCGTP8QyTpXI9aKPcA57zlYx0pb9NTyQ8vAwzoq/hMfhZoabCQH
- D4iug5PKxRaAH+TXDIk0K183Fujv9xFa+OgBRcuP97HrXnJiXB5rRxDHRoaE6ELYyDb7
- bX/lHAvISQrRIot1a76l3m03WwuYW8vftUh/lCBDKx1Oi/LWlRD4bSgd8Qi6ZMIZLpNW
- pnHQ==
+ bh=aoKouDHRM63ur8bgDiAr/baaSlSpEgMJ6p1OQu1/W50=;
+ b=WP3jWnlzJSH9zFMU8Srhf5Mm1KBEy1+6WxOzaXb+/GwQWGwlOLf5RyrlzGvIEQijMw
+ ht/f3tkxXvIh2dQdnaRC/5eMZurC8pnbrgZSkDLEiPtFgJPwiB6i10URdQlwON8CllCe
+ 3YwQwK7dScwbefq7ojMrNLrWJPfhRheDKSMxuf/pj4w2ctD1GQe8RguVtPVGGj8xTBqI
+ XXh8sK85zHVgdEEX5RjUzFDvtRZEjX1RIjIyns8JsihRIvBiS47KUx1MFIU5wcY6VyeM
+ 4yhWRIBTm+LHtAupgkfIA9Nc03Bo70km8rm42qVVXBUPsmueoVf3DSjLNtMH149Muqkp
+ 5Yvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUy+vdF7dek5u7RUxzCLHo7vEJRAu5aVE2fnmEw1jzypFxbzS3wiGsJ9/RSNQe05/BsH9ooclZZ/Zie@nongnu.org
-X-Gm-Message-State: AOJu0YwMiwZpl21C/q/G19rYKylCzDMfbeuOZuYnPJLayTjlJcoHLP1e
- Ldq/Vkr3S5X4AM/gb1e7Sl6ilPGcyXU3Ko89AtRpru02EFVfq/7YH8Juts6dDo2Qh+0=
-X-Gm-Gg: ASbGnctJBaFDNvjP0uTirPjSK8HDgIps0cZuLoBh4G3xJywVlrN1NS3c78qGsLh7CgG
- ZF8EkDGIlrm0LAMxELbNdrda6o+Ag1U0Znoq4I6v+eqAa+slcDThtAY39TGEQiqvx8L7HiR/Gxh
- HghirBU6k9AcmSHtHklnocJEZ540vEZjsD5p8NRrFqbTRWGYcAiOR2d/iZkuloug96kTXjs6TVg
- 30/8MDnvXe4gDEkKulo4D2kHpEWBKBTlbcQb2ouiIqpjuEZ2FCRVn4k0qk/dTYAWtyYedOI/nWm
- YV23rSWIrp9xb5UDmqw/9yncZDCuhc2G5nrWm1eZW4jN2KAr8Jma8LxiNbXO0j/vuwTDMuiKsmM
- 5cs/sMC6FNa+sJIgVHBcRxqbdWaNGJEvlkAa53I9ALQguA2EnNtngJxbk6/K6t8MaIvGxPdUIoZ
- dbStYyJPiFI8BG5hSjoMd2qZvWYAqGwQ8xg8qb8nrtGpHIo5392+iy8Um3d3hTV/zUmrDGP80=
-X-Google-Smtp-Source: AGHT+IGdTf3jbXDnwIVm5nOMuReJXchf9bxXuWcDAyHHZRdqU61kWM7AjqAkvt/WVHCD/TuSyK8iag==
-X-Received: by 2002:a5d:5886:0:b0:410:f600:c35e with SMTP id
- ffacd0b85a97d-426fb6a7055mr13815590f8f.8.1761052716385; 
- Tue, 21 Oct 2025 06:18:36 -0700 (PDT)
+ AJvYcCVIj0s+s9u2f8tZxvSVCv7RiXebE+dulv1xh6bmg0sRSRhcYwip14pARmU/NGHP2SJcMAwIS5XsP40M@nongnu.org
+X-Gm-Message-State: AOJu0YyD8jDA7C77eRCn7RScfJnXbmLsbrlZkytX0R72ZIt6PRVve6k0
+ yUxchwHqzbr8cveZqLFXo4KyBI8KYZvVsMG8BCjbnwy+Ptxfw0BlYWKBLienaWj4vR0=
+X-Gm-Gg: ASbGnctoi50B1Y/qDOrVxpFmlH0pzxl+U6pH1yQrSh0pI22b+9VmqbJ1vOPPUeQfluo
+ pbz030LZBGeFtBQ3cesQQ8qHoMAaUZM8l2rc8v3XTVHz5IR0FGnkZU7lULHpDD/cEip79jC3b0S
+ Iz90FhaFfcXuGRzowY4Q+aPHdPh3Cr7SXGdEDARP6z3oCpXh2Oc3JpW9dSOa5tWmDoeW9mVV4p5
+ iRD6im1PyYk08E1RXsXxRF5Yq0/w70W2HD1zjMPAP3QcamFye4v9aFVlPpNqWvIoEhgrUuWfhKc
+ Br6N400rMFImgM+OzRZJw2wYvvJgqgRfYQhH+8tOY7hjqiDDG8bYLP8o2KeIm37tEiF97u3JWEE
+ t/1Aw6bBRWIQTdTMeroPIKoZIDr/hsG/eR4L97/lxeup5AE/LibJlB+ESO1YJe6nI1AYSc5VLc8
+ Xt1NCEk6agh/BNKRmw4hX3gsPQMzgIQmzlwIUgti7EK8Ysv/ZCHQ==
+X-Google-Smtp-Source: AGHT+IHHUkiq/drGct6Hys9nEIgCTKXHqdZpC96vX11imtoQQ+eM4Z1KkqZY1aVH/uIyonDQJXR0Jg==
+X-Received: by 2002:a05:6000:26ca:b0:428:3c66:a013 with SMTP id
+ ffacd0b85a97d-4283c66a3f8mr7877888f8f.55.1761052711702; 
+ Tue, 21 Oct 2025 06:18:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471144239f4sm282487475e9.2.2025.10.21.06.18.35
+ ffacd0b85a97d-427ea5b3c65sm20280934f8f.15.2025.10.21.06.18.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 06:18:35 -0700 (PDT)
+ Tue, 21 Oct 2025 06:18:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
@@ -72,17 +72,18 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/3] hw/audio: Remove intel_hda_and_codec_init()
-Date: Tue, 21 Oct 2025 15:18:23 +0200
-Message-ID: <20251021131825.99390-3-philmd@linaro.org>
+Subject: [PATCH 1/3] docs: Update mentions of removed '-soundhw' command line
+ option
+Date: Tue, 21 Oct 2025 15:18:22 +0200
+Message-ID: <20251021131825.99390-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021131825.99390-1-philmd@linaro.org>
 References: <20251021131825.99390-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,55 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`-soundhw hda` was removed in commit 039a68373c4 ("introduce -audio
-as a replacement for -soundhw").
+The `-soundhw` CLI was removed in commit 039a68373c4 ("introduce
+-audio as a replacement for -soundhw"). Remove outdated comments
+and update the document mentioning the old usage.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/audio/intel-hda.c | 23 -----------------------
- 1 file changed, 23 deletions(-)
+ docs/qdev-device-use.txt | 4 ++--
+ system/qdev-monitor.c    | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-index 0d35afa4ab4..83bb7e597db 100644
---- a/hw/audio/intel-hda.c
-+++ b/hw/audio/intel-hda.c
-@@ -1301,28 +1301,6 @@ static const TypeInfo hda_codec_device_type_info = {
-     .class_init = hda_codec_device_class_init,
- };
+diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
+index 043ae461140..fb420da2a9e 100644
+--- a/docs/qdev-device-use.txt
++++ b/docs/qdev-device-use.txt
+@@ -311,9 +311,9 @@ constraints.
  
--/*
-- * create intel hda controller with codec attached to it,
-- * so '-soundhw hda' works.
-- */
--static int intel_hda_and_codec_init(const char *audiodev)
--{
--    g_autoptr(QDict) props = qdict_new();
--    DeviceState *intel_hda, *codec;
--    BusState *hdabus;
--
--    qdict_put_str(props, "driver", "intel-hda");
--    intel_hda = qdev_device_add_from_qdict(props, false, &error_fatal);
--    hdabus = QLIST_FIRST(&intel_hda->child_bus);
--
--    codec = qdev_new("hda-duplex");
--    qdev_prop_set_string(codec, "audiodev", audiodev);
--    qdev_realize_and_unref(codec, hdabus, &error_fatal);
--    object_unref(intel_hda);
--
--    return 0;
--}
--
- static void intel_hda_register_types(void)
- {
-     type_register_static(&hda_codec_bus_info);
-@@ -1330,7 +1308,6 @@ static void intel_hda_register_types(void)
-     type_register_static(&intel_hda_info_ich6);
-     type_register_static(&intel_hda_info_ich9);
-     type_register_static(&hda_codec_device_type_info);
--    audio_register_model_with_cb("hda", "Intel HD Audio", intel_hda_and_codec_init);
- }
+ Host and guest part of audio devices have always been separate.
  
- type_init(intel_hda_register_types)
+-The old way to define guest audio devices is -soundhw C1,...
++The old way to define guest audio devices was -soundhw C1,...
+ 
+-The new way is to define each guest audio device separately with
++The current way is to define each guest audio device separately with
+ -device.
+ 
+ Map from -soundhw sound card name to -device:
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 4b732f579ad..5c95926aadd 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -73,9 +73,9 @@ typedef struct QDevAlias
+ 
+ /* Please keep this table sorted by typename. */
+ static const QDevAlias qdev_alias_table[] = {
+-    { "AC97", "ac97" }, /* -soundhw name */
++    { "AC97", "ac97" },
+     { "e1000", "e1000-82540em" },
+-    { "ES1370", "es1370" }, /* -soundhw name */
++    { "ES1370", "es1370" },
+     { "ich9-ahci", "ahci" },
+     { "lsi53c895a", "lsi" },
+     { "virtio-9p-device", "virtio-9p", QEMU_ARCH_VIRTIO_MMIO },
 -- 
 2.51.0
 
