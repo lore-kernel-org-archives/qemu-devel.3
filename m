@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699C8CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C00CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8Iv-0002Lk-TD; Tue, 21 Oct 2025 05:05:18 -0400
+	id 1vB8Ht-0001JD-J1; Tue, 21 Oct 2025 05:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8Ij-0002G4-VD
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:06 -0400
+ id 1vB8Hr-0001IS-KZ
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:04:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8Ii-00043E-4j
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:05 -0400
+ id 1vB8Hp-0003wG-NP
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:04:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761037503;
+ s=mimecast20190719; t=1761037447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=edCqxjm6+it+f/NsFNu07UOMBwGQMYEzCgffa4wotb8=;
- b=iVJa2vP6jfiPQBLbNc0H5UtbMXV1qMq7LWivr7Sra3cBAp7vOneWpKGEwHzuuGWVxng7OA
- Eb7UglXqPs2ga8QfJx0GHIUP8QUTZetM3r4+0YDxFckXL0hn3oJiWGOJuiV6Ox/GoVCR6G
- LLM0hfzwTo2wbeFAmxoNc7VB2JLs2H4=
+ bh=J9IAdG5rzuIrqLOFVf+CxNICco+IVeMK3mKBrGKBsU4=;
+ b=VcqH3Uqm2uyK0YI27BlBn910g2BJH7LmSq0viDslXpq/1YesgC72ZelQdbh5+NFEzDgVMQ
+ vlxHdQHsaLe/KXsfwZGOr7YV3Gxv5JJMRSYkpVA3j/9AGLN2WXH7Os6/Pm28pRYLqYBa0A
+ u6+9LdvLonsTDnb8128X4ZddoTHKid0=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-nzzETLJiNqGnbY-9I7__8Q-1; Tue,
- 21 Oct 2025 05:04:58 -0400
-X-MC-Unique: nzzETLJiNqGnbY-9I7__8Q-1
-X-Mimecast-MFC-AGG-ID: nzzETLJiNqGnbY-9I7__8Q_1761037497
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-g5xmTvT5MB6rTWqCNmXD3w-1; Tue,
+ 21 Oct 2025 05:04:02 -0400
+X-MC-Unique: g5xmTvT5MB6rTWqCNmXD3w-1
+X-Mimecast-MFC-AGG-ID: g5xmTvT5MB6rTWqCNmXD3w_1761037441
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 809101800654; Tue, 21 Oct 2025 09:04:57 +0000 (UTC)
+ id 95E6E18001D1; Tue, 21 Oct 2025 09:04:01 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F2570180057C; Tue, 21 Oct 2025 09:04:55 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5275630001BE; Tue, 21 Oct 2025 09:03:59 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
@@ -54,18 +54,17 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 17/43] audio: register backends in /audiodevs container
-Date: Tue, 21 Oct 2025 13:02:48 +0400
-Message-ID: <20251021090317.425409-18-marcandre.lureau@redhat.com>
+Subject: [PATCH 07/43] docs: update -soundhw -> -device list
+Date: Tue, 21 Oct 2025 13:02:38 +0400
+Message-ID: <20251021090317.425409-8-marcandre.lureau@redhat.com>
 In-Reply-To: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -94,52 +93,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-QOM tree now has /audiodevs objects.
+(note: I wonder if pcspk was really an option when -soundhw was
+available, since it was not user-creatable)
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 8 ++++++++
- qom/object.c  | 1 +
- 2 files changed, 9 insertions(+)
+ docs/qdev-device-use.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index 754952ce58..4714ed0b9f 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1726,6 +1726,11 @@ void audio_create_default_audiodevs(void)
-     }
- }
- 
-+static Object *get_audiodevs_root(void)
-+{
-+    return object_get_container("audiodevs");
-+}
+diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
+index c98c86d828..043ae46114 100644
+--- a/docs/qdev-device-use.txt
++++ b/docs/qdev-device-use.txt
+@@ -324,8 +324,10 @@ Map from -soundhw sound card name to -device:
+     gus         -device gus,iobase=IOADDR,irq=IRQ,dma=DMA,freq=F
+     hda         -device intel-hda,msi=MSI -device hda-duplex
+     sb16        -device sb16,iobase=IOADDR,irq=IRQ,dma=DMA,dma16=DMA16,version=V
+-    adlib       not yet available with -device
+-    pcspk       not yet available with -device
++    adlib       -device adlib,iobase=IOADDR,freq=F
 +
- /*
-  * if we have dev, this function was called because of an -audiodev argument =>
-  *   initialize a new state with it
-@@ -1742,6 +1747,9 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
-     struct audio_driver *driver;
++    pcspk       Not available with -device,
++                but audiodev can be set with -machine pcspk-audiodev=<name>
  
-     s = AUDIO_STATE(object_new(TYPE_AUDIO_STATE));
-+    if (!object_property_try_add_child(get_audiodevs_root(), dev->id, OBJECT(s), errp)) {
-+        goto out;
-+    }
- 
-     if (!atexit_registered) {
-         atexit(audio_cleanup);
-diff --git a/qom/object.c b/qom/object.c
-index 1856bb36c7..4f32c1aba7 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1730,6 +1730,7 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
- }
- 
- static const char *const root_containers[] = {
-+    "audiodevs",
-     "chardevs",
-     "objects",
-     "backend"
+ For PCI devices, you can add bus=PCI-BUS,addr=DEVFN to control the PCI
+ device address, as usual.
 -- 
 2.51.0
 
