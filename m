@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F353CCCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A3ECCD1AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBIX9-0005Yy-3j; Tue, 21 Oct 2025 16:00:39 -0400
+	id 1vBIYO-0006EO-6Y; Tue, 21 Oct 2025 16:01:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIX7-0005Yk-Bw
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:00:37 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIYL-0006DZ-PK
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:01:54 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIX4-0000Ou-Gg
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:00:36 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIYJ-0000Sy-Ua
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:01:53 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4710ff3ae81so22376895e9.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:00:34 -0700 (PDT)
+ 5b1f17b1804b1-475c1f433d8so5713805e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761076832; x=1761681632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761076910; x=1761681710; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iDJCpBi5LhPRhogX48q7arQaOvoVP3BKJdF6FUPLKyo=;
- b=PWH2Uzqg6epyQs89dnBGkzCo3kqjXk3rnq3iItyNi9dwOM44ZSpVhD6b4aamXm2OQc
- PouhQpSCsL5yuUNgP+p0/h9ZxhL1qwOFf/Dmtm2x9qOuhyYZEnD69iEg+MnsIP9BWdmS
- 4AwZa/YjIPfkoKysU22GtIfdEvyrdBBTbfRZS0KIKGyMcDkMRQXXBjfpsEmfzyyoq253
- Nrw259W2gZIo5uIMZAc83622sgyG7mv9QIk7zwvJ45qkzuUMlydZ5kfcDVIGp6VUqirz
- 4oyMvyLB0Iz4k9yFMg6n8t5Gc2I0xBQ1TnuMB9gKmjjicD+XJEoTYs/UNa9RjPjlpLCC
- a/mQ==
+ bh=3t6jljj2ZTmv6gwX1KY3njvVAgWGqPCmbyoVVZKjRXE=;
+ b=xGsNgMFYxSTZjLJARFKlukxks6YB6r66vRsKMxYiHulvxP7r4kCgL/CR3fMdu/mhSq
+ XId2sYu5xeDPNVMWqH5pMzFztIDNkNmePwH8FklUdiy2fiAX4SFOdbU+vxvmu7kz6jU1
+ dz874+LHjHpWjX1oYRMGJEniY1O8HV+u2IIJzCadPwaIoXXoqENgd2AgIlkS+Xzxws3n
+ YWMZ7hnKQaJGw4kufC2r4ogYl4eKCBdkNvk5CK5iDlC8XFe41IBhSg3IbAqTSzQpPNkN
+ uondHOYnMLMPPjGbQHsPbriOLti8ds0r3jZBzezlZGPEztgW2UuJcbp8iSlyTFN9EkHq
+ J6aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761076832; x=1761681632;
+ d=1e100.net; s=20230601; t=1761076910; x=1761681710;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iDJCpBi5LhPRhogX48q7arQaOvoVP3BKJdF6FUPLKyo=;
- b=ZS+dGmHlvrSon3RM3DUfZgJHUu3ZSJmwjwbLNYM2uolrGFuBTXHwXPQw1+4Fhlfunp
- RK84G3zmhbUVYb0Z0fyo5WkzFbjUozfylsnvQMYUw0GZN4Dy/xEU0HJRsb5KCNJrLWI5
- yHYbxIaGrHfbvr3baIRis5Xboxm08LKUzw5T8Q4ogvk4MfHM60jDfduAJ8XJKSVFyIpk
- iwbWrg0Z3dGPq4qRFGNDbwZspjZU1uX8dsjRPOjCichMfe9zK3CcA9wzC1BLFWUzij62
- gI4h3yP+J7O1qJLv9WFq4BFoqW5kp/1uVD/Oht8o0f1iTjCqwFu/9BGHnR8O2iA6PdF3
- N6Ig==
+ bh=3t6jljj2ZTmv6gwX1KY3njvVAgWGqPCmbyoVVZKjRXE=;
+ b=Cv+EWEzxMkqOQyVOR2RweVbotHvtan7rxm2jin/5Z/JU0mmfp15yaSBkMlDqJ94waC
+ B8k0hx5wlCkNKPg1bFLx6yV3upAj5N4MsWc7DtqYMFTD1yIjugkGILyfUh8W24+SDXuT
+ pZBOFUXfZifjZPgWgewzu8JDowVIBMlAFSvWlumZkTjmARn41JqpO12sW2SY+dPlEQ48
+ 8Vk5Z8c74CMsMhMeBPm0SjSAdHPDnfMl/Lr22Z/RUSnkPEcO+w4+VqsD8DyUmh7h6IHC
+ THuzvMUa9Uni9b7T0iCaa6KvUkgjpx5bTzZwWWRs1a2zqm8+kAXHOnqszHqhhQ2vzXPG
+ +Kqw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHAfvOpECBOckrJSMrzs6gaQn9SdF8Fgvsf9sxhVhcJHbz79Lx8Lq6jC8eO5vt91fSoTz6MzpCxATi@nongnu.org
-X-Gm-Message-State: AOJu0Yyc0F4I8Og7KciWGzAT0COwN1rtUzbX7EKIdfdn4d5nby73JN0B
- 2FQGoyPe2cJcfwBToAO2EpuMZt56z1edzDJstWKakkNZpBQfeyht8tIu6azxijgPrc8=
-X-Gm-Gg: ASbGncvM11cmol3S6ZZ5+G1Iji+BZeUOruD8lmV17+sXwfSfglletBSdopIXMpABKlF
- FHnxyo9hBlQFEeEpjed1vdViK58nSKcTVXgQQaT9Wo6SfiCOYT2unDYPZ1K0pFPGA8Jkb7gyg9w
- yAjmyapl+ewpws/OX22oN5UehctP9t+gJ5xeiay0M4k8TC3sDZDiBJqSaz5fxz+0cmATpwHuA7I
- 75/MHpxJoYlBf3JK0K6h0xYFYVAKGud7btMRRd9mtKCTUEb1vWcPkJMJ735/8g+THPbavYvyZks
- 0jl9DD2w5qznB4cVji1K/gUiAncliKmaMc2D4abixGC31wnnMblBbCqQ5PrP7G7moZwwFhLFV/K
- afLdl7C7mZJpOBSALA62Cd+igfyH7CU8AM1W6WK+nyY45IFsWkdBK0ZCX4dIfezraOFAooaEmVi
- UXwZbr8lWCyMsqubwN2YntpFw7BpTWVu+tVTeV4AuUA899jDlrQqHdmA==
-X-Google-Smtp-Source: AGHT+IHhZQQCfzXiGcpczApJaRHqlfsMTvEmaARVZAsDeeeiIAbP1kJQ+g89m/b/KgjaMrrUgFYx5A==
-X-Received: by 2002:a05:600c:34d0:b0:471:114e:5894 with SMTP id
- 5b1f17b1804b1-471179122aamr140933555e9.25.1761076832400; 
- Tue, 21 Oct 2025 13:00:32 -0700 (PDT)
+ AJvYcCWd7YRvSLTRLFqEK4Iw5P/V3+6pjFGWRO8dpSKoJDlNk0NolQMPIo0KXaZmq2lP4n0CHje8piDEkDZS@nongnu.org
+X-Gm-Message-State: AOJu0Yy5Uf9vUnMsS5X/pXAcADOpIJjaTk4gRCtHfjjJLksCa7TTrHLt
+ HD6HcrU0QW6Z8uFR5xLYpk1BNNxY7J4kO8b8khmM61gndETfhBCbgAK5gMqs6okNQiw=
+X-Gm-Gg: ASbGncsta3tCfrSDPdpMoEamH2E1C88thS8oDaFq313PqaTNgPHzTZ0oHWNo8gVOSCZ
+ poLl60jgV6CwlOIa7b1OP3oaDQLA4jR6WDHGMA7RzHUOBmYXRUeZwj5ytg5xhPgI8jSPQso5Mzw
+ 8uo5n/EiL9il47pu3MTdG7PyIxkb/BBMsLUS8bAAGHBxhOE1UsmTmgYtCSWEXgjT+XjGYJN8i1J
+ i+edQJSDZvlpotDFYLDVMRL9mxG5pn6HBgfuwEXKJeCk0OrciSJJWXpjo3Nam552pjXNk5aLOhl
+ +0cV0OGpc8K7S24/+ij5cDx42ex968EZRp5EinACf9TwZCMA/ooloc5oKyTlVrQ0JBF/OBidh/a
+ jEINS7T8xF5/7twGSADGGRUjhzfMp0glwEPHDVHZoVK+NLamkH35zOkXcsHV99Jx6pevmYzvueC
+ DtNwgtjTguR/71cWyMQkfu27UNN7vVZ9BuPTNcQ2M2iBfLiSDy73s/1Q==
+X-Google-Smtp-Source: AGHT+IFpeWZEwGdFFlRCxN6+Ir9dKwNteGxH0MzWSlLOKSVwwYrY+hD5vbGe4lsapuuRY/eBEel+2g==
+X-Received: by 2002:a05:600c:444d:b0:471:15bb:ad7f with SMTP id
+ 5b1f17b1804b1-471178b04cfmr119573135e9.17.1761076910141; 
+ Tue, 21 Oct 2025 13:01:50 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c42b4867sm8101305e9.14.2025.10.21.13.00.31
+ 5b1f17b1804b1-474949f0312sm24387635e9.0.2025.10.21.13.01.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 13:00:31 -0700 (PDT)
-Message-ID: <a7949fa7-e02c-46d8-98b1-776bdfb879bc@linaro.org>
-Date: Tue, 21 Oct 2025 22:00:31 +0200
+ Tue, 21 Oct 2025 13:01:49 -0700 (PDT)
+Message-ID: <a6e30c8f-4e6c-4c62-81ca-ce5c77499d98@linaro.org>
+Date: Tue, 21 Oct 2025 22:01:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 17/25] target/rx: call plugin trap callbacks
+Subject: Re: [PATCH v8 20/25] target/sparc: call plugin trap callbacks
 Content-Language: en-US
 To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Yoshinori Sato <yoshinori.sato@nifty.com>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
 References: <cover.1760884672.git.neither@nut.email>
- <b3333ba5003a4cbe023278e8692168daa5f544c2.1760884672.git.neither@nut.email>
+ <fd15fe51fb446f9549445f82df659e092275debc.1760884672.git.neither@nut.email>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b3333ba5003a4cbe023278e8692168daa5f544c2.1760884672.git.neither@nut.email>
+In-Reply-To: <fd15fe51fb446f9549445f82df659e092275debc.1760884672.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
@@ -110,14 +111,16 @@ On 19/10/25 17:15, Julian Ganz wrote:
 > between architectures, the latter need to be called from target specific
 > code.
 > 
-> This change places hooks for Renesas Xtreme targets.
+> This change places hooks for SPARC (32bit and 64bit) targets. We treat
+> any interrupt other than EXTINT and IVEC as exceptions as they appear to
+> be synchroneous events.
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 > Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->   target/rx/helper.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>   target/sparc/int32_helper.c |  7 +++++++
+>   target/sparc/int64_helper.c | 10 ++++++++++
+>   2 files changed, 17 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
