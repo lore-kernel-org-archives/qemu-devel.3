@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D25CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABBD5CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8J6-00037s-Ke; Tue, 21 Oct 2025 05:05:28 -0400
+	id 1vB8Iy-0002WD-U5; Tue, 21 Oct 2025 05:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8J4-000330-MS
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:26 -0400
+ id 1vB8In-0002Kx-W9
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8Ix-0004Dh-ID
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:26 -0400
+ id 1vB8Il-0004Bb-MC
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761037518;
+ s=mimecast20190719; t=1761037506;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T5DGuhfLFoc7PT62ZhKWesCEDaDqaTP9IZTqxum1alU=;
- b=LdRn//DtKvv3FaiWhuKI7ERsV/80TgcIQMGnhFq0LSdAqDQd8h89Zb7OfZSj11ITH/Yy9X
- UGdkq4ZktYf4gdbZWxvTrlkmL3wSvf8PLFIA9pcxaD8jhoACnduIE7OMWdNGHleKHGWAqp
- +WSIX/yFxHmR6VRpPkT36+hHmKiR8yA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FLEI5r8xSCcIi/mpDWX2V2kYmxCGJyy1gpArtFcbbmg=;
+ b=IqjrnzOon+K/z50rTVhsH3MQDOjousw5uyWofraXs3NeXUHaB9tldboVAFo32kZmNFTeFY
+ QKJhtFF2tfmmHVHvwUeTS1u1EFyfyGerWle7nopaiH973qkDMcfXEf9i96JLB6Pq1j6tIl
+ Rn7zNjoP9pRKqlmU7r0YBogmzURlDvY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-JPC7Dc8LMGW6s6BzGREGpg-1; Tue,
- 21 Oct 2025 05:05:14 -0400
-X-MC-Unique: JPC7Dc8LMGW6s6BzGREGpg-1
-X-Mimecast-MFC-AGG-ID: JPC7Dc8LMGW6s6BzGREGpg_1761037513
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-YX_KUfNWN7i0rhFzBbaJog-1; Tue,
+ 21 Oct 2025 05:05:03 -0400
+X-MC-Unique: YX_KUfNWN7i0rhFzBbaJog-1
+X-Mimecast-MFC-AGG-ID: YX_KUfNWN7i0rhFzBbaJog_1761037502
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60F5C1956086; Tue, 21 Oct 2025 09:05:13 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A3D718001D1; Tue, 21 Oct 2025 09:05:02 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 059FD19541B2; Tue, 21 Oct 2025 09:05:11 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 90BBE180057C; Tue, 21 Oct 2025 09:05:01 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
@@ -55,15 +55,15 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 20/43] audio/dsound: simplify init()
-Date: Tue, 21 Oct 2025 13:02:51 +0400
-Message-ID: <20251021090317.425409-21-marcandre.lureau@redhat.com>
+Subject: [PATCH 18/43] audio: use /audiodevs qom container
+Date: Tue, 21 Oct 2025 13:02:49 +0400
+Message-ID: <20251021090317.425409-19-marcandre.lureau@redhat.com>
 In-Reply-To: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -92,75 +92,132 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use dsound_audio_fini() on error & fail if the capture failed to
-initialize too.
+audio_cleanup() is already called at exit (similar to chardev)
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/dsoundaudio.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ audio/audio_int.h |  2 --
+ audio/audio.c     | 48 ++++++++++++++++++-----------------------------
+ 2 files changed, 18 insertions(+), 32 deletions(-)
 
-diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
-index f3bb48d007..d54d79d41c 100644
---- a/audio/dsoundaudio.c
-+++ b/audio/dsoundaudio.c
-@@ -638,7 +638,7 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
-     hr = CoInitialize (NULL);
-     if (FAILED (hr)) {
-         dsound_logerr (hr, "Could not initialize COM\n");
--        g_free(s);
-+        dsound_audio_fini(s);
-         return NULL;
-     }
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index b2b4d2d10e..4187a2dbfc 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -235,8 +235,6 @@ typedef struct AudioState {
  
-@@ -651,19 +651,14 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
-         );
-     if (FAILED (hr)) {
-         dsound_logerr (hr, "Could not create DirectSound instance\n");
--        g_free(s);
-+        dsound_audio_fini(s);
-         return NULL;
-     }
- 
-     hr = IDirectSound_Initialize (s->dsound, NULL);
-     if (FAILED (hr)) {
-         dsound_logerr (hr, "Could not initialize DirectSound\n");
+     bool timer_running;
+     uint64_t timer_last;
 -
--        hr = IDirectSound_Release (s->dsound);
--        if (FAILED (hr)) {
--            dsound_logerr (hr, "Could not release DirectSound\n");
--        }
--        g_free(s);
-+        dsound_audio_fini(s);
-         return NULL;
+-    QTAILQ_ENTRY(AudioState) list;
+ } AudioState;
+ 
+ extern const struct mixeng_volume nominal_volume;
+diff --git a/audio/audio.c b/audio/audio.c
+index 4714ed0b9f..3af5f2670b 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -102,8 +102,6 @@ static audio_driver *audio_driver_lookup(const char *name)
+     return NULL;
+ }
+ 
+-static QTAILQ_HEAD(AudioStateHead, AudioState) audio_states =
+-    QTAILQ_HEAD_INITIALIZER(audio_states);
+ static AudioState *default_audio_state;
+ 
+ const struct mixeng_volume nominal_volume = {
+@@ -1676,14 +1674,16 @@ static void audio_state_finalize(Object *obj)
+     }
+ }
+ 
++static Object *get_audiodevs_root(void)
++{
++    return object_get_container("audiodevs");
++}
++
+ void audio_cleanup(void)
+ {
+     default_audio_state = NULL;
+-    while (!QTAILQ_EMPTY(&audio_states)) {
+-        AudioState *s = QTAILQ_FIRST(&audio_states);
+-        QTAILQ_REMOVE(&audio_states, s, list);
+-        object_unref(s);
+-    }
++
++    object_unparent(get_audiodevs_root());
+ }
+ 
+ static bool vmstate_audio_needed(void *opaque)
+@@ -1726,11 +1726,6 @@ void audio_create_default_audiodevs(void)
+     }
+ }
+ 
+-static Object *get_audiodevs_root(void)
+-{
+-    return object_get_container("audiodevs");
+-}
+-
+ /*
+  * if we have dev, this function was called because of an -audiodev argument =>
+  *   initialize a new state with it
+@@ -1739,7 +1734,6 @@ static Object *get_audiodevs_root(void)
+  */
+ static AudioState *audio_init(Audiodev *dev, Error **errp)
+ {
+-    static bool atexit_registered;
+     int done = 0;
+     const char *drvname;
+     VMChangeStateEntry *vmse;
+@@ -1747,14 +1741,6 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
+     struct audio_driver *driver;
+ 
+     s = AUDIO_STATE(object_new(TYPE_AUDIO_STATE));
+-    if (!object_property_try_add_child(get_audiodevs_root(), dev->id, OBJECT(s), errp)) {
+-        goto out;
+-    }
+-
+-    if (!atexit_registered) {
+-        atexit(audio_cleanup);
+-        atexit_registered = true;
+-    }
+ 
+     if (dev) {
+         /* -audiodev option */
+@@ -1802,7 +1788,10 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
+                "(Audio can continue looping even after stopping the VM)\n");
      }
  
-@@ -676,17 +671,15 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
-         );
-     if (FAILED (hr)) {
-         dsound_logerr (hr, "Could not create DirectSoundCapture instance\n");
--    } else {
--        hr = IDirectSoundCapture_Initialize (s->dsound_capture, NULL);
--        if (FAILED (hr)) {
--            dsound_logerr (hr, "Could not initialize DirectSoundCapture\n");
-+        dsound_audio_fini(s);
-+        return NULL;
+-    QTAILQ_INSERT_TAIL(&audio_states, s, list);
++    if (!object_property_try_add_child(get_audiodevs_root(), dev->id, OBJECT(s), errp)) {
++        goto out;
 +    }
++    object_unref(s);
+     QLIST_INIT (&s->card_head);
+     vmstate_register_any(NULL, &vmstate_audio, s);
+     return s;
+@@ -2249,15 +2238,14 @@ int audio_buffer_bytes(AudiodevPerDirectionOptions *pdo,
  
--            hr = IDirectSoundCapture_Release (s->dsound_capture);
--            if (FAILED (hr)) {
--                dsound_logerr (hr, "Could not release DirectSoundCapture\n");
--            }
--            s->dsound_capture = NULL;
+ AudioState *audio_state_by_name(const char *name, Error **errp)
+ {
+-    AudioState *s;
+-    QTAILQ_FOREACH(s, &audio_states, list) {
+-        assert(s->dev);
+-        if (strcmp(name, s->dev->id) == 0) {
+-            return s;
 -        }
-+    hr = IDirectSoundCapture_Initialize (s->dsound_capture, NULL);
-+    if (FAILED (hr)) {
-+        dsound_logerr (hr, "Could not initialize DirectSoundCapture\n");
-+        dsound_audio_fini(s);
++    Object *obj = object_resolve_path_component(get_audiodevs_root(), name);
++
++    if (!obj) {
++        error_setg(errp, "audiodev '%s' not found", name);
 +        return NULL;
++    } else {
++        return AUDIO_STATE(obj);
      }
+-    error_setg(errp, "audiodev '%s' not found", name);
+-    return NULL;
+ }
  
-     err = dsound_set_cooperative_level(s);
+ const char *audio_get_id(QEMUSoundCard *card)
 -- 
 2.51.0
 
