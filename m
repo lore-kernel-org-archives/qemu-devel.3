@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F2DCCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:54:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C0CCCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJJ4-0003oN-UV; Tue, 21 Oct 2025 16:50:11 -0400
+	id 1vBJJX-0005SE-2y; Tue, 21 Oct 2025 16:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIx-00033U-AE
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:03 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJN-00050M-28
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:30 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIt-0001IQ-CB
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:01 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4710665e7deso23270075e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:49:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJH-0001Xh-Fv
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:27 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47117f92e32so40263095e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079796; x=1761684596; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079819; x=1761684619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=E3RZP+uPdi/u4o2bwW6kEbE3vICc4qLss0EKsxFjnU8=;
- b=SL9lA8/cDXs5s6IaEQxVdz0qIIn0EE+NcgJLRGWMnKTNvPDCCVQBKhTz03Gt4t4lZu
- omPncDw0ypdwtTi9sYt5smrs+ZY9vFw1YEitOuGRPAtVzumrtgkaW91p1EEODLZ1accj
- Nnga3Uiosu2zXJ9ol55yL5hNOQYWyB1PDslYznQQvFlr+F7+rpRT6PkzUAuFQGWEdu61
- cOKgVE2ztNwcQA9Dn0qbHgJW2WcHt9R7udd/gKJhEMXbJGNm3b0OjhNkirIthYOU+VWq
- aHe71U2X/5dkZX9xNrBoQJbgK64HhzbgAfmmwEamAI3mBqIj6pvELYzljoBWT8TMdunw
- Kuug==
+ :reply-to; bh=8+mIUrwS9misif/yxHTdNYcYKWXudE/3bhL49JVCt/E=;
+ b=Hyk8dd1Bv3ZNL1UnQH2AMIUN/3Pbfv7SDu4h3oqK/DQsMIUc3lyzcL0bo9ozMv0Uo/
+ GmA3AZBwFSIq9Q6N1c4foFaEFZ3RUejuFAY12pYP44J94atdJ5KP3GiTWJUP4P1mRI7p
+ FqHv8zpEj+IMFyzW7wo/epyQ6pkke8IbPMTnO8AhwX2NVv1L0/JRiheJ8opb+ZG9sTaK
+ 57uSnwggQaaCPrniMX3WuG/MZCRZqMkMe08bmc7XTrhjfktJ802Nev9jQAFMLM7rNgC2
+ oQl8Ynuy/EvIPZatt044ZvNXAoWotAYINJdks5f7sG0GVt2TSD72mnOyY2PD3ymEuslO
+ 8A/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079796; x=1761684596;
+ d=1e100.net; s=20230601; t=1761079819; x=1761684619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E3RZP+uPdi/u4o2bwW6kEbE3vICc4qLss0EKsxFjnU8=;
- b=hHmNq3pjXTCl9mtSJ2mE3bNUcL3MSHIys02dy3TAvYzzoUHz7Ku4xYH7SX4DHyL7bm
- jgVpvgS8eM/zULRhhFfx5mKsOshihUo5drfPrpeTw/Tz9eRjJ3Nl5e6D3P1KbwOsRukC
- sd+3mAXl9grAlJOncvqvbzqZiLABHBdaW5iH/l+siv97SO24KyRdzos8jfoHTro2oc6m
- BecwZkAzDbCJDcAIw7QZ55f1GTPWnVwSOGMSIBwdOuzGw0MOkgEFxzBGwqdiweM4Wjcn
- aKydHLmDf6i87p087TGjueJCh0M3NiIl1qoEzxz77YTjB1aTfBRd3mkHwkX7MGXblHpo
- 5d3w==
-X-Gm-Message-State: AOJu0YzTdsClPQWHJzVd54brDP4O4JCSfJoFHddr8K40TWcXe+x5UqYN
- /c+TSrVAuNXFJZgR/QG9Bfj+gxWDBblm1Emq1DT4Pg0NUPkPy4ORPMiJlUCQwRrqvo7UjfKBHVR
- dLnH0nxY=
-X-Gm-Gg: ASbGncvFUIGt2AjR3/GQfnFWQ+AGnQZ3loF/Mqeui6sKLMlFS2eoQ4QarAVUqMl2o98
- WdeYTbw9SrmoP9ftL4ms+6nDJ5qlM54dkO6lj5AdF2xW3wLgrDtAuIaLonNWEaahXup945pHJYb
- fkxR2hpaHsZI0Xb0V/Tpl7fl9cqbgLDtC5BhITDXhXigcl1/Loux/ORB3oLQFoot4a6511Z0ZG/
- cKs9Tk7s/6eaDEvWf4CuCwKstpPnTFFuXGBTDntD7rFfX2S9Ypc2f4Cx+Laj1yKLP5HRW4IQLr7
- RGbeP8VlTXuAqxL9DstiGwiS+81MR59Z7XKl6YSDsY/X2yiw0A4+sUd+4jKC40ZawnzE1vSaIoT
- UGW+JIMRZFqJs6Cy6qK2wnUmps53gwwUrQlmhPIr9Qdsd02SXfO3wDx/QNB67I5ltGDNZPPCpeF
- 4L/BYkjJQ77uJVXawc7J2c7BEdFvCKxR/4PROEwCBHQm5+9ZcSPkJ1Sa+/i6xe
-X-Google-Smtp-Source: AGHT+IHs/8+blCKIUcT171bl2SUi0LuixDfcpAzy8HZtzRCdAy0bihBr8Np6wBz+OV/4DPY5L2Vy8g==
-X-Received: by 2002:a05:600c:8b0d:b0:46e:39e1:fc27 with SMTP id
- 5b1f17b1804b1-4711787442amr136670605e9.5.1761079796447; 
- Tue, 21 Oct 2025 13:49:56 -0700 (PDT)
+ bh=8+mIUrwS9misif/yxHTdNYcYKWXudE/3bhL49JVCt/E=;
+ b=Tpmkl42PzZXdg+WlBMBx36+oozErCNnPs+rlAnOp6BzAHanwk5P7IEZzUfaXMl12hw
+ Ze8jQ2kTke+EADqXiw/bJWPXP92oyUUH12IwoTQkCBfP8z+OjpV35OwLpkrnjgqBPc9G
+ 3r9wxgi9mNEw4DQcDX66YqOyRJe+daAJsMMZBOFDDK8USFiXbNJ9xSnfYXg2Si2liE2d
+ dXjNZ0VyQ4YcQ0y9ugCukqk1LKRgg+CPgw7Xk2MKD67ks7YJiHY2dxrV2A/9sQxNtY0t
+ qpoJ/ae1BR1VbNq5uy/Ye5Sxx77vTJDSMeRbW1OyBTgnaWauuE2G9TS6awR46Y0nd4QW
+ h0gA==
+X-Gm-Message-State: AOJu0Yz9EcGdd2f+kEjvcMNeCdA7pu917WklCfrln6xNPS3zl+OtW2YZ
+ NpucgBfgEVy3rEuVLNaaSDX1qPoYK3HFhNQ24KOBLRJgd/zTmf5o/0jz6DRXv59XaHNi4heMryc
+ ofYy9++8=
+X-Gm-Gg: ASbGncuG//p+ageMIYZL1KatDs2J/YPeIghpxeBLeHtAk7em1cafG4eHEgqyDVxPC4X
+ eDt9d7pEfCE68O9zSVf6gB3gWhNl80BryynqNmJFerVyDinDq8V49gNCGx+hw5fHLMuO+wE14E7
+ TvW+BCklpOVd7lwtHltLfs6Hkjuf9IZl4PfoTBVb/MGW7ZbWoaMyKnpZC+pJVeFEVFcR/btudQd
+ 5TPZXVFlhHmu5DJsP9H4vLr+WFBXcdNDXKs54rGQ8J7RzLVAGfDXchfKxgTnmD0Urfdr2AE3vpj
+ aP55nsngMVw039J+WwA6aP30qxNHpcU3djPGM3+npVXRpt144KfhFOKcJz7Qt6qHNsxzVypMJ/Q
+ jt9VVXdtTUZHbJSjHWjG9FfblSDwtyFCvFCr2wUlDAGmaT5MDf2sUGJWAU0Hsn4/BWJesOpkoWZ
+ WHMp/aJXuejnZBU/Rk8soRLW8vBM5x5CbhMyZwQsYQ5XqI4RuC+8VNgrdv7b1A
+X-Google-Smtp-Source: AGHT+IH0ckarYdOwYsc7SCvkF/M81GmT8bT9QiINHVfg7YgXaK9BKSGgOX6NFVZ+bu0EXGT7QJtgjg==
+X-Received: by 2002:a05:600c:4f95:b0:46e:345d:dfde with SMTP id
+ 5b1f17b1804b1-471178ac017mr120968615e9.16.1761079818825; 
+ Tue, 21 Oct 2025 13:50:18 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce678sm22286950f8f.51.2025.10.21.13.49.55
+ 5b1f17b1804b1-475c42d9524sm9275545e9.18.2025.10.21.13.50.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:49:55 -0700 (PDT)
+ Tue, 21 Oct 2025 13:50:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 37/45] hw/pcspk: use explicitly the required PIT types
-Date: Tue, 21 Oct 2025 22:46:51 +0200
-Message-ID: <20251021204700.56072-38-philmd@linaro.org>
+Subject: [PULL 42/45] qemu/target-info: Include missing 'qapi-types-common.h'
+ header
+Date: Tue, 21 Oct 2025 22:46:56 +0200
+Message-ID: <20251021204700.56072-43-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+When adding the TargetInfo::@endianness field in commit a37aec2e7d8,
+we neglected to include the "qapi-types-common.h" header to get the
+EndianMode enum definition. Fix that.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251021090317.425409-5-marcandre.lureau@redhat.com>
+Fixes: a37aec2e7d8 ("qemu/target-info: Add target_endian_mode()")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20251020220941.65269-10-philmd@linaro.org>
 ---
- include/hw/timer/i8254.h | 4 ++--
- hw/audio/pcspk.c         | 2 +-
- hw/timer/i8254_common.c  | 6 ++----
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ include/qemu/target-info-impl.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/timer/i8254.h b/include/hw/timer/i8254.h
-index 8402caad307..f7148d92865 100644
---- a/include/hw/timer/i8254.h
-+++ b/include/hw/timer/i8254.h
-@@ -75,7 +75,7 @@ static inline ISADevice *kvm_pit_init(ISABus *bus, int base)
-     return d;
- }
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index 17887f64e26..e446585bf53 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -9,6 +9,7 @@
+ #ifndef QEMU_TARGET_INFO_IMPL_H
+ #define QEMU_TARGET_INFO_IMPL_H
  
--void pit_set_gate(ISADevice *dev, int channel, int val);
--void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info);
-+void pit_set_gate(PITCommonState *pit, int channel, int val);
-+void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info);
++#include "qapi/qapi-types-common.h"
+ #include "qapi/qapi-types-machine.h"
  
- #endif /* HW_I8254_H */
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 610a5b21626..9cf78ff55fa 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -51,7 +51,7 @@ struct PCSpkState {
-     uint8_t sample_buf[PCSPK_BUF_LEN];
-     QEMUSoundCard card;
-     SWVoiceOut *voice;
--    void *pit;
-+    PITCommonState *pit;
-     unsigned int pit_count;
-     unsigned int samples;
-     unsigned int play_pos;
-diff --git a/hw/timer/i8254_common.c b/hw/timer/i8254_common.c
-index ad091594cde..419d4cd6e57 100644
---- a/hw/timer/i8254_common.c
-+++ b/hw/timer/i8254_common.c
-@@ -32,9 +32,8 @@
- #include "migration/vmstate.h"
- 
- /* val must be 0 or 1 */
--void pit_set_gate(ISADevice *dev, int channel, int val)
-+void pit_set_gate(PITCommonState *pit, int channel, int val)
- {
--    PITCommonState *pit = PIT_COMMON(dev);
-     PITChannelState *s = &pit->channels[channel];
-     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
- 
-@@ -139,9 +138,8 @@ void pit_get_channel_info_common(PITCommonState *s, PITChannelState *sc,
-     info->out = pit_get_out(sc, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
- }
- 
--void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info)
-+void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info)
- {
--    PITCommonState *pit = PIT_COMMON(dev);
-     PITChannelState *s = &pit->channels[channel];
-     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
- 
+ typedef struct TargetInfo {
 -- 
 2.51.0
 
