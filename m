@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B7ACCD1AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A32CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:10:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBIgT-0007nh-Qg; Tue, 21 Oct 2025 16:10:18 -0400
+	id 1vBIgo-00080O-PW; Tue, 21 Oct 2025 16:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIgN-0007nC-Kg
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:10:11 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIgn-0007zs-EW
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:10:37 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIgK-0001Nu-Rx
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:10:10 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3ecde0be34eso154833f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:10:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIgl-0001Qj-JC
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:10:37 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-42701b29a7eso146840f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761077405; x=1761682205; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761077434; x=1761682234; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0JseKUjW9Ni9RmsgjQpjjRbH/EH5VYgj/JYe7RyFRv8=;
- b=D3CsvDlaHQcNjwu7+S8i4Xq0hCG9/aDXbV/Sst+KWDc2u5XxDmOhdXfS9lgqsLTRfx
- IEgnayJjn39yRWVMaROPR4mjqeH09olcPhApihXp0lp838f7zNkDYKjS9QcULMlzNRHM
- MUJ8eTV+VF//AJVr2Sc+VkxTZ3bcKRyquZBDiaOysErEtsrD9hlVJKv6BN08DsOiEllI
- dZqFaKh7lgzN2b3if7L8hXj9ZWiJ/6Q+tLuuvxdZzRtqPmh870kulBBxLFlEvYJIoefj
- ZJOpaS2I2xW+LssW4oFMAKzVr30Z5zfKbCfI6wMiyy7FlZWIkNg/fRhg6pSQsaXlJAAO
- jwGw==
+ bh=8DeKayB3rUV/2TwSJN5N7AYFxngbIR1RSPDKVmKK66c=;
+ b=OTpjnP2Te2eTs5TUIfQsvVPOuG4EjBdUyOjZghg0Xwkz/IarIKgg7ZYNhTsAqysVcW
+ hbFChUvI42csW1Q/Em/46HRSyiT2vDNjrkr+C3axxVWFgnbKoWoxpa6vc+uNRJksEigh
+ Fz6dBk8N5H7kS8PBSpoBsP4wRWHVlHRyMRsNsIi8JlZaLKzT3ggjBUt7aLYrB4IlGguo
+ +t0BCN2hKlH/RrN+a1Ybxah3AKM9yw6Kt1nG77f00o6VVKNIsmaU4e0ANdt+STv2iTMC
+ LuIM0qQ+pqy1dN5yLPNpULhk3A42MMnl56lXrgbKF5T9hjlkoYbob37JBmFW6AnpBve5
+ dybg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761077405; x=1761682205;
+ d=1e100.net; s=20230601; t=1761077434; x=1761682234;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0JseKUjW9Ni9RmsgjQpjjRbH/EH5VYgj/JYe7RyFRv8=;
- b=vOqabqJ7rgnHjIXKXpZmZ7fjsEEA/kOiGAY19xx/VciNsTC4Hmx9hgzEItLbIKCbGI
- 4oONcIQSZ3pDfPckwVtOvA352CpFD6N3QQX3TOt5rEan4pGxFOGT1BbM5tdRXBjrINf0
- ckEUNU+Y4wPVMw81/4iR0i6G+KzOfpGbrlALHkcIggMZ4c0JKQQldcqUE/NkaQT7bF3o
- pefRD8qcdtvwIDH3rnLzm6nIbrq9cHRv6e+2MbJCMPJO11l2+ZAKV9gC+ONB6A63pHP3
- YsuXgetuYXJzVw4GLqEr+lvj7pvtZKDumHpb8g43paOZdsLakFYAm6OQmee4wlJQvZM3
- zexg==
+ bh=8DeKayB3rUV/2TwSJN5N7AYFxngbIR1RSPDKVmKK66c=;
+ b=LSKPjT78bqjVHGjcL3e91qNAqT+HHJyfcFLSj6vSy7FxMwoLuYW6Tp9H0cf99N8Jlk
+ v6tTbTQJc3b9L9fr7HNwZMCB5/GqDwJi52BS8ggV01rU6bYM2nfuiUeYYGWO/PU7aKgP
+ 7udUwPopACk536cQSe4oCzT0UxpYgMeWjvcHoxPGHatd6E8wOK4Bfu6VApBJDV7wdCN3
+ 08AeHmtdBK7vFV9pn27VePNJ1MA+xYg/fskcL57v9VTHRKwzlU2TmoRrBZzT0R1PwWxo
+ FDc/kDjXjrjai9TePGVvLAMeUloMKNR/mIrkT4imv2CiOpi6gJyP+GWV6iSgmegbjRuo
+ ncxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3hz+WmpHlduF+FHcsl6XA+qBiR77sw8Cf9NjjjqOekO9EWpOFjSxZI5SOQwX9lAd87FsW1x2uSlUF@nongnu.org
-X-Gm-Message-State: AOJu0Yyyg/BmlRfQQMBXksyp6vF3tw0DNmQJxcYzAC+gBzcvRBOvCmz0
- qWdFFTnMpL1DzPD4rlj7Q8f61ASCzATwE71mz/o7f7eHjnmhLkfb8HS1AP5d+gB2NyM=
-X-Gm-Gg: ASbGnctN2VtBWi7aUvZGX2q1RbDN7yfBCo4BzwCfSnc9Wi4xJHvHw4EOUhWtgQYjHBz
- /FQOrpmVKqll1G7y+sZxZ0utVHtsO2clXPJqguOX60eXgrtZRJmjri9AuYUTO1uCec2tVIMGr8N
- 1F9P4sz6AVQwu0FKDjYl6ifDN005/G+IrvzkuNlwKm2UaXjWiGsXkEn/3I6y5ywv2bYqV1M/fJf
- Sr+xRZZ9vGanjLKrgcykNbnpuEGSaCuWsaQBcekxux1rgOtt/cJfoDcaLkMp8v89tHNNII8LSed
- tKc+23ML1dN6hZpzjY9lc6fEfvc8rK9EexEROSyM2xf9FrdrVsf2nAqtnpJGTEtLQLJ2SWjpKo7
- GK52BHPhq74X06+KofkyTTKf9em7aytud46WWf8NnIgFnAj7nhB9r2qv7zBYIFG25C1YK5nbgYp
- YO7K1XQF99qqptKbzU+SxT6UPox5jwD2ZBaCnmDXyGIo4=
-X-Google-Smtp-Source: AGHT+IEt2JlcgEve3V1V+C/D0KlmC0sN3t6ooiqC/wt9L+uMBR0041WKDfUR7L3Oq2RylK9fq4MtJQ==
-X-Received: by 2002:a05:6000:2002:b0:428:3bf5:b3a3 with SMTP id
- ffacd0b85a97d-4285317da0cmr729871f8f.1.1761077404987; 
- Tue, 21 Oct 2025 13:10:04 -0700 (PDT)
+ AJvYcCVEW/rpDffJhl1GjVJwl3uBJUvVcugDicCjE68OahtV+L0fTjC1DAkFl0EMAs8HiKDV9DL/AHFe5xDP@nongnu.org
+X-Gm-Message-State: AOJu0Yzf9qkn0QK0yLl3zDt3FJR10s98rley+AlOtnm16E87mrLsA4Yv
+ DT9e6QhGB+wqOIvWaXIFdvVx6sK6jY9kz2bfSdUoUpQEg5exyaWywcGURMNIFbsNe7E=
+X-Gm-Gg: ASbGncsV31TKGbRlqYeiQJl47yLZBpFuVlEsC5PxIylWnKCP4s+zszeO4F658GvfzrT
+ 4Ba6jq90bzL8m+DSJSowbKrySwJzI64/SDg8nMym3IIe8w2FCl15Gv5CNSHkje1RsnExhkUlb+4
+ blIy/cMzeUV9hl/9vcINWnUZyodxKWqkALMmJLWPLqEIw44No/cmtU6L1LGooA3wiAhJ6vw8owL
+ QaBWbJFt7NXTpvT0b/EB/9wWx32MVNYeZz+PRXTgyAXeaCVvxXTFXLa58TxxZelvK6sONWuwUBf
+ xX4gpFFLeqJAacY56U0ZYJMh7GqVXJoNKl+vi88Edakl6SAy1VD1HUzbsk0HHXVpJGb0wySlJ3+
+ MEyOpW+eQ8RAExSDa6kCD3J1GDiSPtGHHqnyXUyjjBYBBQqQO4Toq6uvTO3piigHFQMTi7pTzxe
+ 1TYQVkSiB3bLmNmW0ccGRL1qNAnoz1z3cBxR5Xe56/EMh/rxVLQUWvNg==
+X-Google-Smtp-Source: AGHT+IFeRmDbVP6jbEV6EjyG7vXJTBXd4NCtgscg+2i6SktcEvvX9SgJPKDGNX3hH9GocJygxfW8tQ==
+X-Received: by 2002:a05:6000:4313:b0:3ec:42f9:953e with SMTP id
+ ffacd0b85a97d-428531880c2mr777047f8f.7.1761077433694; 
+ Tue, 21 Oct 2025 13:10:33 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c428f709sm10056955e9.8.2025.10.21.13.10.04
+ ffacd0b85a97d-427f00b9fa8sm22240594f8f.38.2025.10.21.13.10.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 13:10:04 -0700 (PDT)
-Message-ID: <2a0a4cde-1427-4d87-a331-f4ed6fa64aa2@linaro.org>
-Date: Tue, 21 Oct 2025 22:10:03 +0200
+ Tue, 21 Oct 2025 13:10:32 -0700 (PDT)
+Message-ID: <46315adb-ba18-431c-ba5b-1f987d5c8a16@linaro.org>
+Date: Tue, 21 Oct 2025 22:10:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 05/25] target/alpha: call plugin trap callbacks
+Subject: Re: [PATCH v8 07/25] target/avr: call plugin trap callbacks
 Content-Language: en-US
 To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>
 References: <cover.1760884672.git.neither@nut.email>
- <78ba254c812a91105bf52f6f0ce73774ee2be265.1760884672.git.neither@nut.email>
+ <81eae4d94240303cebbbc8638841249bd7536ede.1760884672.git.neither@nut.email>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <78ba254c812a91105bf52f6f0ce73774ee2be265.1760884672.git.neither@nut.email>
+In-Reply-To: <81eae4d94240303cebbbc8638841249bd7536ede.1760884672.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,60 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Julian,
-
 On 19/10/25 17:14, Julian Ganz wrote:
 > We recently introduced API for registering callbacks for trap related
 > events as well as the corresponding hook functions. Due to differences
 > between architectures, the latter need to be called from target specific
 > code.
 > 
-> This change places hooks for Alpha targets.
+> This change places the hook for AVR targets. That architecture appears
+> to only know interrupts.
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->   target/alpha/helper.c | 13 +++++++++++++
->   1 file changed, 13 insertions(+)
-> 
-> diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-> index 096eac3445..a9af52a928 100644
-> --- a/target/alpha/helper.c
-> +++ b/target/alpha/helper.c
-> @@ -27,6 +27,7 @@
->   #include "exec/helper-proto.h"
->   #include "qemu/qemu-print.h"
->   #include "system/memory.h"
-> +#include "qemu/plugin.h"
->   
->   
->   #define CONVERT_BIT(X, SRC, DST) \
-> @@ -328,6 +329,7 @@ void alpha_cpu_do_interrupt(CPUState *cs)
->   {
->       CPUAlphaState *env = cpu_env(cs);
->       int i = cs->exception_index;
-> +    uint64_t last_pc = env->pc;
->   
->       if (qemu_loglevel_mask(CPU_LOG_INT)) {
->           static int count;
-> @@ -431,6 +433,17 @@ void alpha_cpu_do_interrupt(CPUState *cs)
->   
->       /* Switch to PALmode.  */
->       env->flags |= ENV_FLAG_PAL_MODE;
-> +
-> +    switch (i) {
-> +    case EXCP_SMP_INTERRUPT:
-> +    case EXCP_CLK_INTERRUPT:
-> +    case EXCP_DEV_INTERRUPT:
-> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> +        break;
-> +    default:
-> +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-> +        break;
+>   target/avr/helper.c | 3 +++
+>   1 file changed, 3 insertions(+)
 
-Shouldn't we handle EXCP_CALL_PAL with qemu_plugin_vcpu_hostcall_cb()?
-
-> +    }
->   }
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
