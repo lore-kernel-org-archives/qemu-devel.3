@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0C1CCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 17:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB96ACCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 17:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBGQT-00059S-LE; Tue, 21 Oct 2025 13:45:38 -0400
+	id 1vBGSg-000632-8w; Tue, 21 Oct 2025 13:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGQR-00055V-Rb
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:45:35 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGSe-00062e-Gq
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:47:52 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGQP-0005md-M1
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:45:35 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46e6ba26c50so38424035e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 10:45:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGSc-00064U-Aj
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:47:52 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-46b303f755aso63159885e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 10:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761068730; x=1761673530; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761068868; x=1761673668; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XHBuhRPRLbOSNiZ0G0iBGYbxL5H81DmDmTj6zZRytoY=;
- b=Pgmr1mKDdvXJcEbOYR4DZfBrV3F4VxTjLLbBRQbCfNBOLsxP61Y19BskqpS9DVrMJF
- rXFW3qEBqik2OB+/2rPeivE2KzrKvdMOo0kCsrcONrFzw3/IRCPXWZvfyIlYv2TK3M2a
- zjwQ9WqIjAkt2CcU/Uusqaumkmlz6tf8tfpe/vd5DyCaId3yd6UZ9lLBLVZsFLd7GTvQ
- D3MpetZfts+rLdCcOqLli/B3Dw9NP72F8qWQtsfULCuknFnVL68DzdVHiE4o3F0iJ5ZC
- qTJhn18nwDgJy1NLeD1niwOFRFAIrKlmzb5zYXT4yuKEVD8ucctBByFNyLxNjU90XjTw
- IPPQ==
+ bh=7ZJ8rn732TfJ48h7DbPKX97XzS5mXFLtabG3ZNCjuP4=;
+ b=sXt/YzJ8MBONBfSPjDMLOmadd4baagynr96vb/Dle7rYYzmekHWznI7xsyFT6b+1I2
+ WytPrPmEJsXKTLfNeGDge8WDqr8Dy6PYEOxbN4gfbLS7q8gEKbCLxzglbwhU7zTT4Zqi
+ t/V8aRsIkubq1QdiHwahYGbXzkqbmjG2GXDpg27gIZCkckuZINewaRSnXxW+knjqzSMo
+ aMhBWj9xQl5t0qQdrkEyEA4Y9V4r78sptNo6BAVoPdXApOvA3bqK98pskpv6zbNOWhFL
+ 86U+IkG5PLTy3p4ClwyARQAeSIZPS23O+m2c9nZQI9j1B9o5Y6SJABwItE8mSW1o3jfO
+ a+xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761068730; x=1761673530;
+ d=1e100.net; s=20230601; t=1761068868; x=1761673668;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XHBuhRPRLbOSNiZ0G0iBGYbxL5H81DmDmTj6zZRytoY=;
- b=sDUOtqeZf1+QgP5JOeu1go6CC/xGSYrKV9lf7oQlAY3YHA+VMd0NniF/kqx8JbjEYg
- J5+ooaT6RkR31I75cjxpQ/kvXCdBE8qLZP7lx9l2R4oopzt4d4L9/z6qC7v45TwtoiSx
- zR29tvNGhfPOm8IIp1vo1K4TAG7//q9Fk2EW+0+LapiDF/ENDxgyfRN3Wl9iAnwGAP4m
- QCQ11a22mOUsK2M9yEbs2EWFBc+mV3z1DdfkFLeSA+M8AZ+otnNikpkUdUZ+fHVxtYrQ
- hUqWjn+EK6Xpn/rKNZ2XZKgWjPObjRIBZmik+Ya0gfrJFSj09ZjCdRcvJwKQ6+wP2AfB
- KQ+A==
+ bh=7ZJ8rn732TfJ48h7DbPKX97XzS5mXFLtabG3ZNCjuP4=;
+ b=XFZQVS+DtU8ZcrGYlA5cHaDh5zsFOjxWkjjFAsWCtPu3vScYkmvu6CPs9ExYKTJ+gC
+ jWo3XBL6W2zcblcSGQW7WnTQqEjkQY6B0MY1tc4HgUZdu/RPEe4gEueZIwgyZ5RYv1yF
+ SvnK83QIqNtca3P6O8OYB03z1aGP3mOAfDnudqgHjTUtPcpqOiHCLnlAZ6lwcrb746aA
+ ohRMRpIsjDBik+hHeMzzzaRDq6nqozAGumU1SBzI/YB5AU1vESiRiQ93YwnrDpT4ShfH
+ bulpYXhbKkUaVkwQfTSSr2R627Jitvv6XTn6bex6U6EG7SkcyCO8j0Eh92/7NPr0r4V3
+ KMXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwNTmym/zn3zuG9FRZJEjicO9RWym8Sy5Ib+HOqboa+qbH+yQfkHegSFz+SsW0a2Y3H5IdiaOadLwi@nongnu.org
-X-Gm-Message-State: AOJu0YxlHiMedas8El0VbBig789aj36lSgv7BQzDPo63gX9i3lko8gJj
- vWO2QlxIvane4mIqm83UkUHlqnEXzZvVZHIRBmrdJfMEc97vnBih/dvT/aII/sIvtBzAnyhFNUZ
- RCFyF24s=
-X-Gm-Gg: ASbGncvIXGDb4aufnpQOXK0lxH/DZA90DwpZoO9DKBVchm/uV4m+9mvuuJrQvsf4JJf
- H+b8HLtJbyoDFcMHEnH0IfYKfI4YvQbAmnsdi2Eo5z0u+nO+cYmwznlFWlcGq4rqZo0s2+UTuMt
- bMvOhyqHGFYPS1xtsRkkIe9ZiOwejrzJVKfhUz4fKgycwSsHAm3SnwuwlgTg6HLu1wakqmw7Os7
- BLtcJ+L2/iTIZLJHQ/AA0bYwDfoyy97IbgSPM/T4uY9PTKtfCEn+0xxsf6eySmC8cpOgxSxSaki
- lVBwGtVOxRQ7P5977fP7So7Uw1R9+lSXiHsiph8C9E4wE+hkXrJ4PDCizbJbEXkSs9+IrEVhgby
- yssKkyMuaN/XdmODmrifB8mvS5xj6LpGUET4qDk5xn+oIZrD9G4x9YdlGr6ST4TzwUbd6+tzOA4
- 1gDbG0i/jmqrZiApy32YGcqHYYh3KOjM+L8KwWk6mpOkabeSAsCgYs0g==
-X-Google-Smtp-Source: AGHT+IFTl2+tr/zqnBX/4QDIsgAkWw+1z/sD+VgHs9CkiI0r/d1gJKTwHfRkUcqihFLY4S8731ZPvA==
-X-Received: by 2002:a05:600c:1d9b:b0:471:a3b:56d with SMTP id
- 5b1f17b1804b1-4711792006bmr150621985e9.34.1761068730252; 
- Tue, 21 Oct 2025 10:45:30 -0700 (PDT)
+ AJvYcCWvbaUZuHB7AG+etGlFFpbrbamXaHV5cBmoVcpQjC4hiXm0xTnv1uG0vof5W8tDbpeKxj70W+pl5FvZ@nongnu.org
+X-Gm-Message-State: AOJu0YzKfSp7OFf0RuxNNDQ+cywWhwqAsdE8u72QTy1aSlPbenJVKojz
+ G9UFW5iRozM+dN+JkC67FYmqzSAk4dtAUKZsbqTs+LZ/qFx2vvpdRhU4qqL1XyPpTzU=
+X-Gm-Gg: ASbGncvWskIYt9Cr70sGrsZtCrZLnK9hjDwjkTHNaS+3DG1JEPWH6C6pDplHKcu2q9w
+ 5e0uxRSR42sTPTf2UtiIv1DSGJr6RM9RnHbJgjsauwmQh2FUsNGEeD9zWuZjUSZk+hRBB2M3jHN
+ ASQkAvf/aG6AJvFRh/M2zNFK0Ku0fZfXfE6leYrQbK08GIKpuMnlcSVOR/4deE8R7szVkTvwq1V
+ 7trdsiS49gDhoVXa05NAWHBDSbgoc5+BMbf5BpX0ldAE2nYzjyQoKZwXD7TxAJfWj257C1XBJAg
+ 49RyvS8FQGGzNGoh2M2QFRhcRwuRrq7Xl6OHjU3pTbvIQVMx5ic73z9S/bQaErjSTnSDr0m4HTf
+ PG88Ctm5wQSVOkEZ4hKeUBeA6wZiI5Kv7aintw//D+fWgwQ1/KcB4cafMYLp74yLF6y4PaXX/eq
+ w8F5niIDlQWC746W3j42q+jkmjYxZ6O69mXQlAwKDFDAS18xt7d9JUUw==
+X-Google-Smtp-Source: AGHT+IGwq6zPPsmpi+85UFxOUfl+mAJusQY8JfAqDTkS3XMlTc9nnZvIYzRNzlsASpYsWf6ZWsmRmw==
+X-Received: by 2002:a05:600c:811b:b0:471:13fa:1b84 with SMTP id
+ 5b1f17b1804b1-4711787c803mr130610815e9.12.1761068867983; 
+ Tue, 21 Oct 2025 10:47:47 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c427f685sm3648875e9.2.2025.10.21.10.45.29
+ 5b1f17b1804b1-475c438caeesm2912855e9.18.2025.10.21.10.47.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 10:45:29 -0700 (PDT)
-Message-ID: <ef0a247e-9337-4919-8e16-5e25ad35154e@linaro.org>
-Date: Tue, 21 Oct 2025 19:45:28 +0200
+ Tue, 21 Oct 2025 10:47:47 -0700 (PDT)
+Message-ID: <ea52c490-e99e-4193-bc05-059b02f5745e@linaro.org>
+Date: Tue, 21 Oct 2025 19:47:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/43] hw/pcspk: make 'pit' a class property
+Subject: Re: [PATCH 15/43] hw/audio: drop audio_model.isa
 Content-Language: en-US
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-6-marcandre.lureau@redhat.com>
+ <20251021090317.425409-16-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251021090317.425409-6-marcandre.lureau@redhat.com>
+In-Reply-To: <20251021090317.425409-16-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,17 +109,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 21/10/25 11:02, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> This should be functionally equivalent. (for some reason, the device
-> property was convert to an object instance property in commit 873b4d3f0571)
-
-This commit is from 2016; DEFINE_PROP_LINK() was added in 2017,
-in commit 5b4ff3c6613.
-
+> That's no longer necessary, the code is bus-agnostic.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/audio/pcspk.c | 6 +-----
->   1 file changed, 1 insertion(+), 5 deletions(-)
+>   include/hw/audio/model.h  | 2 +-
+>   hw/audio/ac97.c           | 2 +-
+>   hw/audio/adlib.c          | 2 +-
+>   hw/audio/cs4231a.c        | 2 +-
+>   hw/audio/es1370.c         | 2 +-
+>   hw/audio/gus.c            | 2 +-
+>   hw/audio/model.c          | 7 +------
+>   hw/audio/sb16.c           | 2 +-
+>   hw/audio/virtio-snd-pci.c | 2 +-
+>   9 files changed, 9 insertions(+), 14 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
