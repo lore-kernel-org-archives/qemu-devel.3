@@ -4,81 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD7DCCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B90CCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:37:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEPm-0001wH-1o; Tue, 21 Oct 2025 11:36:46 -0400
+	id 1vBEQc-0002Rf-Dl; Tue, 21 Oct 2025 11:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBEPk-0001w0-AH
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:36:44 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBEPi-0005KA-DX
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:36:44 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-63e10cd6efeso5507695d50.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761061000; x=1761665800; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BhO+EL2rp3xRGrAorTviBtcREoQQpVtKTK3qqKUTnX4=;
- b=m8MZV6bgbxFJpDr8h234ybo6HEQ0ucxl5N5Ts1VOLW38NVUdwsxv550cBV/GdCsqMw
- Tujrb7rYSVljfstSxD9MmNyD8d6dunYwUPHAD9ybsWlDAnLfRynhBxGnR8GIhwIccap+
- WRBudveghQAxg1u2OkHVHYEK0EU2gBO0hmm3v77lxRfhuMNVKIUbnVcNJk+LnGxeudX7
- I2NmbPcGTa0uQ+PMzRyCZiJvxHB68oPh7SlU8s9tP36y+mK/UTQb4E7I0VD2knp/60Ng
- yyvGLKmIoDOvu4CNkrcc+KYW7VSwY2RvXljQG0tMrhuwimDzdlDiiXO43WMeYTE3kxA5
- gHWw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBEQW-0002OT-4F
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:37:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBEQR-0005QB-UR
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:37:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761061046;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1sVBnCX9iGglYltjPY+kimPtobtO6Xzl8Hi21FEAenI=;
+ b=HscFQMFMtamre+TfSh37ebEzn2l1AhemEJzUP41I9zql1NTPhNQ6650umH10/PtnmTrsSh
+ ne00pe6nqbNOeNWpN7hRnWQHtrs+sAE680533CbJaantZemRMzz3+tVxNKpLQVY4zWUMQQ
+ D8ZKyk+qaBNHKAn8KPckWi1zQHUINkI=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-LXZvSiCnOtmGF2pfzdPpyg-1; Tue, 21 Oct 2025 11:37:24 -0400
+X-MC-Unique: LXZvSiCnOtmGF2pfzdPpyg-1
+X-Mimecast-MFC-AGG-ID: LXZvSiCnOtmGF2pfzdPpyg_1761061044
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-88ea6169a96so286116085a.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:37:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761061000; x=1761665800;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BhO+EL2rp3xRGrAorTviBtcREoQQpVtKTK3qqKUTnX4=;
- b=niVh7AF0wzQgJsUDGSV3Oy4VzVIEjGRz1Haf+oDKfGCiy0M2Z080gz9Abjen1cfGKe
- ZsWRXgROGZLwtazRPFbO+9P36I06OBu2TiaWtxDDauzndS0MeQSZzWJ4v4mEYagvRLT0
- jmzQlrlAqviztZsg1if7qhU/nc9/h6vd31o5YffRLly8/L1TeV7pDMyJ0NuRp6/DXTwl
- 0RDFCZwDYxd/lVqypPKgYEyQG/+wkCMynoQ/TG8nVnCvg5hySGTbSbz2KgBjW8Hf1zkt
- cQ00SdcRo0XPQUcmb/Q5RkoxPzpgkL5XE84/Jw89FoUg8Yv92UpsouiQgz1EWRmvcxRq
- thnw==
-X-Gm-Message-State: AOJu0Yy+OThF/FHelEJ6ykmf06gBdvm6iIP04V7oiwYVkY+aaLKAvdzP
- Nqe6Ri5ygxnXMSCbxC4ra3OcQuZnQBgGl8/KWz3yshPOoF/GZwUi0jbM7x3TwRJUX/HUKQdFgBn
- ObT7V9iyogIZmoENRl7J+9h46jUydna28NnieY8eqSw==
-X-Gm-Gg: ASbGncueFvvHNMsUMSA6XxT+H98w2IKvyo/l5WFc/KuGpiieuwoJa0wAnWxlkIwbu9J
- SlncyYWh6PdFRnzoZtpcUtZCx/9s+M3TeGHLWnKr5sU1xa5m44wWySu9QEv9xlzdDJbNJGQjAof
- LLPCrSdLYubIl540MURQIbHKSCthm5vx5CoFBf3XEccRIVMJzSFVJML6UotIv+HbCHSWuEaeufN
- O+dbQjVnsX2TdLvbc48IBoxjj8ylzYs2E4TD1Me/ghVaLX43rlRw1GJot4Cqhg95ITfod8s
-X-Google-Smtp-Source: AGHT+IHgYLyI6SB/jy8gLWW8NicF6oCBSWN1os9aImOUnbEt28AIbhGZ7XME0WFHrpV9GLbaF2tyyWdgkz+UDyWDZqc=
-X-Received: by 2002:a05:690c:10c:b0:781:49b9:a79f with SMTP id
- 00721157ae682-7836d381650mr262223107b3.66.1761061000344; Tue, 21 Oct 2025
- 08:36:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761061044; x=1761665844;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1sVBnCX9iGglYltjPY+kimPtobtO6Xzl8Hi21FEAenI=;
+ b=KLKgYeL/edCy27mggezWzm0tgKzFK2HkxdzfFfkiHLix15L7q6HEmGw56cic8SMvdU
+ PRzP/QD0hXSv7mbbJp3uyAWsGxzjJEcCwLMLRbhsdqloHPsvQXYUJBeqT6mykgZeLiHj
+ uLl7hN5nQ7/ipgM3TuTEbYuHVVkdMi2D6sQhMIDXXJBeTj64Ycyl+eA8vzsG3avF4SC+
+ TFy/NHJp7vD0OuSHRwbAfYLMCKial7pazhk8zcZvtBeFNIvkcFaN1+vENgZkwg+hxYII
+ p+ZIatgyXG0y1cNl3WED3/FwL9zdrUNQBf0rFCEpSVMk0aVZmL4eeDgi/qWKwX419ZUz
+ kP3g==
+X-Gm-Message-State: AOJu0YyDMs1TGozMtCP9nQapP4IJSKcGUgXdHUcMv+rb/cxR+qSoF9Sg
+ IY90Apona3nvb+TILZspxDbXeklqqhUY9geN+UvtiSPX/3T0ckYoH/PLMZFf8EuvbeZ8Ii1KXz1
+ j2FHBKF7at5MYku4OEns7aUrUpKEYRIDNJ+khZnLN2z1XYjD3I3lLqct4
+X-Gm-Gg: ASbGncthj6THtozdu7tqBpL1gWi2u9FxH6+40COkGRVGaeqodmNMQV0cj9ei4KGjtmv
+ 10HLLrQtu+YYeA+UbEsLkpgojXIAcMXMQkrp6jaun0tJA8tJod0v842zpTyV4xr1cC/yZ+VXngk
+ FS/whOv7gpSmS6rF6SI/AlJZp8GYvPPiXqQcuQiEVs8x8pwmHmVzb30zQKlvDX4zEjii8wz5h2T
+ pFEe30A4xZhNnTp63TDygBnrAMrnqBmyMO0zTdvOhn4cMznamxf+i8OZBi/tGa73LijnmJ//ME4
+ ylwmEAfb1NFHc0kVV2UTyA+KzNpBeLPeShd6TWPXqwF22Q4Iq7fwcvfA1W2yTqX34Ps=
+X-Received: by 2002:a05:620a:4089:b0:82a:bb78:20c4 with SMTP id
+ af79cd13be357-8906e2ce6f0mr2004703885a.8.1761061044286; 
+ Tue, 21 Oct 2025 08:37:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBLeps9r35348GfVHRxFPU301PgMFnbNUru0gZHojOXav1xTuCGKsSrQHVnhcxFsfaFsy4YQ==
+X-Received: by 2002:a05:620a:4089:b0:82a:bb78:20c4 with SMTP id
+ af79cd13be357-8906e2ce6f0mr2004699185a.8.1761061043669; 
+ Tue, 21 Oct 2025 08:37:23 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-891cefba77asm790898685a.33.2025.10.21.08.37.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 08:37:23 -0700 (PDT)
+Date: Tue, 21 Oct 2025 11:37:21 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Arun Menon <armenon@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PULL 23/45] migration: Capture error in
+ postcopy_ram_listen_thread()
+Message-ID: <aPeosY5_MvfqtiuE@x1.local>
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-24-peterx@redhat.com>
+ <CAFEAcA9otBWtR7rPQ0Y9aBm+7ZWJzd4VWpXrAmGr8XspPn+zpw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250311125815.903177-1-npiggin@gmail.com>
- <20250311125815.903177-71-npiggin@gmail.com>
-In-Reply-To: <20250311125815.903177-71-npiggin@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Oct 2025 16:36:29 +0100
-X-Gm-Features: AS18NWAOVrENKdxAc2A5WMRE88aOVkYmA8vQgxzSz7MsseEpl7dZlO5l-EXi1hg
-Message-ID: <CAFEAcA8pgga4g3yex=EsfOOC7SVaAccOs-CEjzYmb0XCY1H-Sg@mail.gmail.com>
-Subject: Re: [PULL 70/72] ppc/amigaone: Add kernel and initrd support
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- BALATON Zoltan <balaton@eik.bme.hu>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9otBWtR7rPQ0Y9aBm+7ZWJzd4VWpXrAmGr8XspPn+zpw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,44 +112,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Mar 2025 at 13:24, Nicholas Piggin <npiggin@gmail.com> wrote:
->
-> From: BALATON Zoltan <balaton@eik.bme.hu>
->
-> Add support for -kernel, -initrd and -append command line options.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> Message-ID: <489b1be5d95d5153e924c95b0691b8b53f9ffb9e.1740673173.git.balaton@eik.bme.hu>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
+On Tue, Oct 21, 2025 at 03:53:11PM +0100, Peter Maydell wrote:
+> On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > From: Arun Menon <armenon@redhat.com>
+> >
+> > This is an incremental step in converting vmstate loading
+> > code to report error via Error objects instead of directly
+> > printing it to console/monitor.
+> > postcopy_ram_listen_thread() calls qemu_loadvm_state_main()
+> > to load the vm, and in case of a failure, it should set the error
+> > in the migration object.
+> >
+> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > Tested-by: Fabiano Rosas <farosas@suse.de>
+> > Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-23-36f11a6fb9d3@redhat.com
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> 
+> Hi; Coverity reports a memory leak (CID 1641390) as a
+> result of this change:
+> 
+> >  migration/savevm.c | 8 ++++++--
+> >  1 file changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index 34b7a28d38..996673b679 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2095,6 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> >      QEMUFile *f = mis->from_src_file;
+> >      int load_res;
+> >      MigrationState *migr = migrate_get_current();
+> > +    Error *local_err = NULL;
+> >
+> >      object_ref(OBJECT(migr));
+> >
+> > @@ -2111,7 +2112,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> >      qemu_file_set_blocking(f, true, &error_fatal);
+> >
+> >      /* TODO: sanity check that only postcopiable data will be loaded here */
+> > -    load_res = qemu_loadvm_state_main(f, mis, &error_fatal);
+> > +    load_res = qemu_loadvm_state_main(f, mis, &local_err);
+> 
+> Here, a failure in this function will allocate an Error
+> object and set local_err to point to it.
+> 
+> >
+> >      /*
+> >       * This is tricky, but, mis->from_src_file can change after it
+> > @@ -2137,7 +2138,10 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> >                           __func__, load_res);
+> >              load_res = 0; /* prevent further exit() */
+> >          } else {
+> > -            error_report("%s: loadvm failed: %d", __func__, load_res);
+> > +            error_prepend(&local_err,
+> > +                          "loadvm failed during postcopy: %d: ", load_res);
+> > +            migrate_set_error(migr, local_err);
+> > +            error_report_err(local_err);
+> >              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> >                                             MIGRATION_STATUS_FAILED);
+> 
+> In this brach of the if(), we error_report_err(), which will
+> free the error object. But in the other branch of the
+> if(), we never do anything with local_err, and so we never free
+> the error object.
+> 
+> I think the true-branch of the if() needs to either
+> incorporate the error into something, or else error_free() it.
 
-Hi; Coverity reports a memory leak in this function
-(CID 1641398):
+Thanks Peter, I'll sent patches for both issues raised in the pull.
 
-> +static void create_bd_info(hwaddr addr, ram_addr_t ram_size)
-> +{
-> +    struct bd_info *bd = g_new0(struct bd_info, 1);
+-- 
+Peter Xu
 
-We allocate the bd_info struct here...
-
-> +
-> +    bd->bi_memsize =    cpu_to_be32(ram_size);
-> +    bd->bi_flashstart = cpu_to_be32(PROM_ADDR);
-> +    bd->bi_flashsize =  cpu_to_be32(1); /* match what U-Boot detects */
-> +    bd->bi_bootflags =  cpu_to_be32(1);
-> +    bd->bi_intfreq =    cpu_to_be32(11.5 * BUS_FREQ_HZ);
-> +    bd->bi_busfreq =    cpu_to_be32(BUS_FREQ_HZ);
-> +    bd->bi_baudrate =   cpu_to_be32(115200);
-> +
-> +    cpu_physical_memory_write(addr, bd, sizeof(*bd));
-
-...but we never free it or keep a pointer to it.
-
-I guess we can mark it g_autofree ?
-
-> +}
-
-thanks
--- PMM
 
