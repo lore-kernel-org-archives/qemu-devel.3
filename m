@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1BA7CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E399BCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB91O-0005QV-Bl; Tue, 21 Oct 2025 05:51:14 -0400
+	id 1vB91f-00063E-K3; Tue, 21 Oct 2025 05:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB90t-0004yv-HP
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:50:45 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB91d-00061l-L3
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:51:29 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB90p-0002Ag-Ug
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:50:42 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-474975af41dso4571815e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 02:50:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB91b-0002Ct-Kc
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:51:29 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-471bde1e8f8so11553035e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 02:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761040237; x=1761645037; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761040285; x=1761645085; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mMJX/wH+okVW0st25o6WzIyQncimisroFN+FHTLvLoI=;
- b=Xu4YuM0WxhArduZiBCSBofTNogbQ21MGb/qqHWEVSHXYVPo2gEG72Vhr72s9cmGxxa
- lcsEFfkQBWG9XIfq5Mq1dTFqAOxK6UeLfWgBz8Ft05kMVCsHaGVuBLRjm4lyFRZYudk5
- 6WpnlEdfj0hn3Ak0qb0t/EguJGiXK33+uMV9fnRhHBghwnSWNVzEr1P0l+f00FkUZi5m
- yU4GBRRT5neguQOvrRqVyA9jUmlWsT8ulsF4aM3YsFOKI5qGXctbd1EOySI0NjUqvMT1
- GC+7zG8aesKL65i3ngg/DRf6sUazwRAeVN9L4KZQGJnpu2oVAenLJV+bFAlBkwm8sRt2
- nueg==
+ bh=OXjkFIoAAgmasmjFb0TbxMhIf9ixAUHzDjHgk6jgWoA=;
+ b=EIi7DCB1fsqlSOzTSOj9sZu5ZHCc9OXi1/gQb8gkz4Bp5ep/LaFKZv6Y88Q3jow5Y3
+ iBwx2aM6OCkI0ZxtpkiIadECBB1LfW6kYBrypwXxqsRnq68Poe99UCX1I2RpFb9mOYl/
+ 8VZ1uNv6Wzd5lwHfNf7Krq4mBnxvJKblGyP1/Go/Gl+bc/ytlrqP7b7m6cZjKvSWMq56
+ vq8/br74lP6ZAAtkru4AVyJZXDwutynopM8HMtOp8C2Zk4C9CsPKobU+dEkEQgNZSEa+
+ BhP/Ihz3aC+8LvC+2lokz4U74/8dmh5PFiYw1KS2NsayJHmCaclz8XRbjyOBLAInkrEA
+ cgQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761040237; x=1761645037;
+ d=1e100.net; s=20230601; t=1761040285; x=1761645085;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mMJX/wH+okVW0st25o6WzIyQncimisroFN+FHTLvLoI=;
- b=Q8kkoQGbtiXxGYc0igY1hl35zpA89bxsLX2MAT44R9nWLw7p6BAt+98S5cGJ/6tDYp
- aIKZR4PMXlcVvBG4EHcJ6/Y51GeTdhM+MeeRIZErSBM+Md2XecP8buQlVXpOjf2k9AQc
- EX+vl17cgvDGnHqRfN03x3bELN9bOXkVT7epDY/6rUUiRqdg7H91B2aiOzrp5A8EEPjJ
- NpqTVLRkntoaWnM4myPGAJ92Az474gwOSnVJ7y61g5p3YSLO+hOWcSxKmb2oCFazjeiD
- dd6bedfOctpjatMLQKXXwap5OK1FnzKR2637qrDOfsjURljT8l29JTh+fw2aku6OBxee
- 6+LQ==
+ bh=OXjkFIoAAgmasmjFb0TbxMhIf9ixAUHzDjHgk6jgWoA=;
+ b=us2MSkYucR2hGSU/lJWp3lFL+nk3g82oq0GKzj76biLz6icTDbAO0Li7AV3VACNUEe
+ U4/nSdyPWYJScSfRIaCv/L5w9DMR0XQh26Q5U4XHB3bVp5cDP1PazRwyTfUqdfYWpLOG
+ 119KUpJxYKVgBaonmjyK/U0uN7hTnwA8X6mIAON78zZIxdGxm9xbHbsUJRRZuc1sY5m1
+ XW/o1pgmdJTejwXNI4jRO/BteHeAMXkkhIqdW1sSp6CyhXz1AmAa4hfbax6lpE1QyroL
+ qxmBUGqh//PLSbjKwWCoI5h4QIfD/MSAY/HSzIIHkb1ywvhWu8KBXQzHGnQgUy37K2on
+ AqLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBg8QOl7OsjJzS7vWbS/RLhMDkN4UtDnStM7/0afYFbDpogdchAjYAef/cyPGa9SVNh98LWBc3gHMp@nongnu.org
-X-Gm-Message-State: AOJu0YwfUcjeXKLfDNN687vVQ1KovnQAA8DKxPbiCBotvAmp2MRIW8VZ
- 1KI1YAewjEH+ZjcFK24u0BbddgkeTiaTb/yL6e9cLEq365j2OibmfBdeb7wjApORYrYHszjKieK
- GobCgfso=
-X-Gm-Gg: ASbGnctHdJLpnub+Q9iCVOv6Eb9uosIRT18uaxbdnV9eDJbXtKFw+faCv2v/geEEVjl
- UX9u8is7FPJoWSdlC3KEreLsPHkSlh9MQrOOkPAucc9OZCDuXI5PPNnurkTvR7Q7+9mlmUyxiWl
- 9iaJ9jFKBOLwU9KWfPYI5MDXdaFUatT7e+6QhlRNep8jMu0M3msLuPpKENDLDGdYG2euWt8Lrdf
- wg43F0fbxQjZuz+LKs8ZVmp1PCLvWhupWQubZFMHsSWGIGd3xJzjH1l5ccDg8nZ4dA8JjFh10Lv
- bpfTrYrGfksUD0CiI8T313KWsRRnSQWk8vFF6cvLOCjrW0R2ZJyCRer1MVqQwMPtijBHAbgLDS3
- u/x71OsIDgEl2y2oxyvwqE/hrjhuZ1Fabv0biOzStoc8eZO1w35uGPffErTKo4EcQ3wTyHFOWCK
- BZVfXt9dj9s5yka6/0Tccfk+LGR28RlgEs7/9eQcLgEyAe4jhOi3X9Wg==
-X-Google-Smtp-Source: AGHT+IGg1tI+3+XDYpm+9bksDztDbROJGdR4CD8WHoGwTyKzN+GjZkTRh6POc/u+T3S5RJSo/4TQBg==
-X-Received: by 2002:a05:600c:310e:b0:471:1645:458d with SMTP id
- 5b1f17b1804b1-471179122ccmr108006745e9.20.1761040237512; 
- Tue, 21 Oct 2025 02:50:37 -0700 (PDT)
+ AJvYcCXDliRjBT1/EizohCU3mcWkDFJuM6wpJp4xWjUEErfm+0xIc23fokJYOmcKbIE/OVtTp4v0T4L7FBjK@nongnu.org
+X-Gm-Message-State: AOJu0YyxawgPx2nwfhaRuyZxMzviQdYDh1+LI7IGadTSrOEFyBRFcH1c
+ 1lC4E1xww4tg0sIRaQ448cIR7FunKWdQMvBv2zfYa6mMA36l9yngAeOcv0nsSCHLFeI=
+X-Gm-Gg: ASbGncvMkM5GiGlq4x+9Rm+JOpOqyesWsFGFLWDFgHah5+QAZVYc/ZY1FcFR7L0mzuE
+ jKg3mRYw3sTtrXeINMNPx0NvqObNIySX2g8IOvuiR3lMudEZmuGllqOJAq0n2YU4W18l8Uy9FNF
+ 6IiQVT798VVZHh2AA2pIhFgJPONM8S3w7VNncg5cv8Hor8FYy4UK8dZiYjyEAv+TCDhY2++tcYe
+ i8A+XH0+w2GYenxwm+XjCCb5OoCYTXZX9DcP78x0gN9exWtqm6EgsRs3bxgIMknEitPOSY8vqhe
+ ySuUR+VoPEFSHkw/BpSS1tQgvCVjNNhIGWXCblx5UBkwOMfrXzL1J/NB2NTs5CyUjs0d+L3AgsF
+ myybEyq69w7QfGbqv8JoVXUzt0cq8pr9R7jFO8hmFsGqbxEDmtpCZjSgOlnhLQFMXzwScNHFycf
+ m+wfjQoEXwArm/uJkF5BCCgc/R/wGuuJHl76myZUK9pjIVKp7fhLV3tA==
+X-Google-Smtp-Source: AGHT+IERKJ3E89yYiqqf8WoIaIQukKLVFgTptz67X8IA131Po6xmnthjTr8ZrTiKnH0nCXxM6YpgjA==
+X-Received: by 2002:a05:600c:470d:b0:45f:2cd5:5086 with SMTP id
+ 5b1f17b1804b1-4711786d5a3mr115602345e9.3.1761040285230; 
+ Tue, 21 Oct 2025 02:51:25 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471144b5d48sm276468865e9.9.2025.10.21.02.50.36
+ ffacd0b85a97d-427f00ce178sm19476864f8f.46.2025.10.21.02.51.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 02:50:37 -0700 (PDT)
-Message-ID: <4247d2bc-a732-4f97-8b29-df4dcfebb6f7@linaro.org>
-Date: Tue, 21 Oct 2025 11:50:36 +0200
+ Tue, 21 Oct 2025 02:51:24 -0700 (PDT)
+Message-ID: <0744dcff-440f-42bc-9f23-cf8612689511@linaro.org>
+Date: Tue, 21 Oct 2025 11:51:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/43] hw/pcspk: use explicitly the required PIT types
+Subject: Re: [PATCH 06/43] hw/pcspk: check the "pit" is set
 Content-Language: en-US
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-5-marcandre.lureau@redhat.com>
+ <20251021090317.425409-7-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251021090317.425409-5-marcandre.lureau@redhat.com>
+In-Reply-To: <20251021090317.425409-7-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,12 +108,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 21/10/25 11:02, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
+> We don't let the user create a "isa-pcspk" via -device yet (in theory,
+> we could, and fallback on a lookup PIT), but we can add some safety
+> checks that the property was correctly set nonetheless.
+> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/hw/timer/i8254.h | 4 ++--
->   hw/audio/pcspk.c         | 2 +-
->   hw/timer/i8254_common.c  | 6 ++----
->   3 files changed, 5 insertions(+), 7 deletions(-)
+>   hw/audio/pcspk.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
