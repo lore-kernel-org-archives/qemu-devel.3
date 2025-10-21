@@ -4,86 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45F2CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A815CCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJJd-0005mK-0d; Tue, 21 Oct 2025 16:50:45 -0400
+	id 1vBJQN-0008SQ-TN; Tue, 21 Oct 2025 16:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJV-0005La-HF
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:37 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBJQH-0008Ri-NG
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:57:38 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJT-0001ZI-Hg
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:37 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3ee12807d97so5701075f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:50:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079833; x=1761684633; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5pCkwXJ0ZMdPMUhQ4XQ9aG/lFbpQNR5L7Pb23bpOUK8=;
- b=p/FmL8PvTjlEdEzy39R1+gDQ7BmyPA4iIwZLYdDRqJYb8SfENwWXbRYrZSe+wWU6LN
- yhBPVspOu/E+vsydFzxl7cXJTMpvzPDg4+vCtgnxzkzoStJK+m/HPPhCw3hM86nqxgKQ
- Dv5kB2Yhw8VX4xVrrQcNKHrDlaFlzXGtYhNcfN2lp/pSY16/X4u1UuyWwmdwx5uY6Lw3
- d9FYYhJlH1Vi527imsZoI8Ig8k82lf0QcpjduUOw6RxIaMTCQ/RX/wxzurVU+00sh0qm
- 5p7xxvUPWQ4kZSqaElN8M+SwlJTKJVT0BZNDop7ELyT03N3iwqaw94NJRj0EY63luMkl
- RAbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079833; x=1761684633;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5pCkwXJ0ZMdPMUhQ4XQ9aG/lFbpQNR5L7Pb23bpOUK8=;
- b=qRK6fBVaX8u8+tqQ7qNayjQF0m11j3cG6So9kZv9ni7GV7vucO4QDucngtpgIjaxKv
- YHiGvFOlZQBINImhTZwmV0k4o4I7KJWs7+JDzyAab66tNFZ3ziHywyPC0z1EQc0TcJs7
- feZq4sAwRiLzPd+lGW+/QY7sttadymjSH3yCVpYqIlFUWHJrAGqdm7dMxLrpG8++B86k
- Vc77682L7mLMHp0nH4KUFR9g62OBHMwGJRg7qFPuuYUEa2yNqHtC0MEWS+/GWj/GYkyG
- a7+TAFZwhnXG+COzZMzVEMAwOHg8Rqk7PvJYgQqrKwxjzrRUF3P4AaA+f8KkY1jU+8lA
- gcDw==
-X-Gm-Message-State: AOJu0YxcQ+QlOpC9mdVO+INMXa/GFYDnkRJcZQF1BrdCvAG+0KGpzr4U
- pt63H7U4Qo/9RRi3eXwjtVtCi9WzctFpWSmNWaFRT8V3J7UxQXzeumevo5mANG8Yx5/t/N96fBm
- PDCS4WVo=
-X-Gm-Gg: ASbGncuZ1G4GEwGcdz+iDWl7b0MDBm1VomecVcxa+gR6U2ldY99Ic7U7zAcLYD+YFaO
- 9Exn867T3boqfp/BqrFy570GmY8NY04eoxd0RBraEH8NbAQ1K2BrGDedDvthSerJYeZVi+wf03z
- 4tj4TzLMTFen9GTaVy7XqJJFMmACwa109E4kYDNZR0bXBVP2mJlWPiQe4ED0yotEzfJdl1TjAvK
- aIkAGerCsRDmV8Yd2OwdZEROKijftNZLgPbYJdI6SBoqKr8rUME8YET6e54wheW223lURncUWK9
- WUwGua8hVG/BMiK99Sv8A3G03Zt0ZJ/RS90wge3+AqnWpRzvBOWXAPJx0er5gldc6spiUbfD8gC
- M8E8aViWEKkjucHvaVZX/nAIYDwtaLUyC9Zlb1ET8/vwm72x6YKXU4Uuf16z/PCdEfMtKXJPVmB
- mRX8YhHBb+mUNW1wTaVry7p0jfCBG1XDgU3WDmxqdl+VyW3eNRaQ==
-X-Google-Smtp-Source: AGHT+IGs2Z3YSA1x/PxUxi5iw2Iw8Rtin3k+88j0qCKZCdFaNJOWoZWsMHacOKp4FGrMNQ593EYyzA==
-X-Received: by 2002:a05:6000:22c6:b0:427:23a:c339 with SMTP id
- ffacd0b85a97d-42704d6c507mr12832022f8f.14.1761079832754; 
- Tue, 21 Oct 2025 13:50:32 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00b985esm22665976f8f.34.2025.10.21.13.50.31
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:50:32 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 45/45] docs: Update mentions of removed '-soundhw' command line
- option
-Date: Tue, 21 Oct 2025 22:46:59 +0200
-Message-ID: <20251021204700.56072-46-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
-References: <20251021204700.56072-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBJQE-0002Dt-GK
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:57:37 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F064D21187;
+ Tue, 21 Oct 2025 20:57:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761080248; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C8NgEsvKHw4S/0o9XZLFVi0wqJV4aLQ5QpnfJp2smIw=;
+ b=zl08H+V2b9H/odq9By+hsSd0SyjiAxMLGUMbgdWFgIAO4ivPMDY3Q6cO9AwSrkD6bOnH6B
+ p3WTBBYNbDaS8SowUl2lyVn/9fvgaWOc5hj9tyUjEc8DbQxqptqh6WRBQyESuLHc5ZzeJ4
+ MLX/Yf5CQFloWgsAhmVu8PpPyEpIJuE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761080248;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C8NgEsvKHw4S/0o9XZLFVi0wqJV4aLQ5QpnfJp2smIw=;
+ b=Lxmwkk15+oyCtIe5tuK+g+bNdbZGbDTQAo8oCM74YQqO2P64ym3Z20FMm9KVpu8c7rzov+
+ PObXePgy6BuySoBA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pfsvATfO;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sU2ngF7A
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761080243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C8NgEsvKHw4S/0o9XZLFVi0wqJV4aLQ5QpnfJp2smIw=;
+ b=pfsvATfOr9yXC6KGsBRsRphA7jv7d2FkHeTgsKyWjSssuJ4I5g4OPB2MyhoCBGQY6C+ce1
+ KDXj0TxAEYtkDVDPzU7FLiw/o24PCtSuvclM/InZYDd5zmhMlJ7+kJKWjjHjTCiA8d8d5x
+ VTO4R3RxSV7IvxozCVGqv9mXu+dMTIs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761080243;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C8NgEsvKHw4S/0o9XZLFVi0wqJV4aLQ5QpnfJp2smIw=;
+ b=sU2ngF7AGrXZ23O04cXcj96A2vxU/7Gcry2UpvfN+MtV7Fklk+cgQlMKLG8EXrPv+nr8fK
+ K9hFHqgobgMvAnDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 688E9139D2;
+ Tue, 21 Oct 2025 20:57:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SYMMC7Pz92hUXAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 21 Oct 2025 20:57:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, John Snow <jsnow@redhat.com>, Laurent Vivier
+ <laurent@vivier.eu>, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-trivial@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Sunil Muthuswamy
+ <sunilmut@microsoft.com>, Marcelo Tosatti <mtosatti@redhat.com>, Michael
+ Tokarev <mjt@tls.msk.ru>, Richard Henderson
+ <richard.henderson@linaro.org>, qemu-block@nongnu.org, Paolo Bonzini
+ <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Bernhard Beschow
+ <shentey@gmail.com>
+Subject: Re: [PATCH 8/8] tests/qtest/ds1338-test: Reuse from_bcd()
+In-Reply-To: <20251017113338.7953-9-shentey@gmail.com>
+References: <20251017113338.7953-1-shentey@gmail.com>
+ <20251017113338.7953-9-shentey@gmail.com>
+Date: Tue, 21 Oct 2025 17:57:20 -0300
+Message-ID: <87ikg8t1lb.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: F064D21187
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-2.79)[99.09%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,habkost.net,vivier.eu,vger.kernel.org,intel.com,nongnu.org,gmail.com,microsoft.com,tls.msk.ru,linaro.org];
+ MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,51 +137,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The `-soundhw` CLI was removed in commit 039a68373c4 ("introduce
--audio as a replacement for -soundhw"). Remove outdated comments
-and update the document mentioning the old usage.
+Bernhard Beschow <shentey@gmail.com> writes:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20251021131825.99390-2-philmd@linaro.org>
----
- docs/qdev-device-use.txt | 4 ++--
- system/qdev-monitor.c    | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+> from_bcd() is a public API function which can be unit-tested. Reuse it to avoid
+> code duplication.
+>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
-index 043ae461140..fb420da2a9e 100644
---- a/docs/qdev-device-use.txt
-+++ b/docs/qdev-device-use.txt
-@@ -311,9 +311,9 @@ constraints.
- 
- Host and guest part of audio devices have always been separate.
- 
--The old way to define guest audio devices is -soundhw C1,...
-+The old way to define guest audio devices was -soundhw C1,...
- 
--The new way is to define each guest audio device separately with
-+The current way is to define each guest audio device separately with
- -device.
- 
- Map from -soundhw sound card name to -device:
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 2ac92d0a076..ec4a2394ceb 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -73,9 +73,9 @@ typedef struct QDevAlias
- 
- /* Please keep this table sorted by typename. */
- static const QDevAlias qdev_alias_table[] = {
--    { "AC97", "ac97" }, /* -soundhw name */
-+    { "AC97", "ac97" },
-     { "e1000", "e1000-82540em" },
--    { "ES1370", "es1370" }, /* -soundhw name */
-+    { "ES1370", "es1370" },
-     { "ich9-ahci", "ahci" },
-     { "lsi53c895a", "lsi" },
-     { "virtio-9p-device", "virtio-9p", QEMU_ARCH_VIRTIO_MMIO },
--- 
-2.51.0
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
