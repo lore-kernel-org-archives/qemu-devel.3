@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB71CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D3DCCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJGz-0005Jw-Sz; Tue, 21 Oct 2025 16:48:01 -0400
+	id 1vBJGz-0005HA-Re; Tue, 21 Oct 2025 16:48:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGk-0004y7-9W
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGe-0004wE-AO
  for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:47 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGi-00015t-Co
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so37842575e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGZ-00014v-TU
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:37 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-471191ac79dso51270725e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079661; x=1761684461; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XQQ5psxWRgNiatcKRVUGVhz6uu63XiXm8T64eSiUx9s=;
- b=Yh6xAlyxDL6wGILeqtykZGKs+pg9KBT9Upcis6d3zy/suzcSix8HISaofJYdyGPq9i
- oBeTkLSWXMl2Lo8hu25xzDAPPG9f0gphDutG0U/o0GDiZN9/tsktbWr/0A5kQwcOuZoR
- BQtoVkUgz9Cty1ZONMkq1Bu39yEsJEjsvmGxq+OMTDZPawoNDSRxzD2EqXVuCD+U5Shy
- 6dY0yD2RCGZ/8yf8D8/cVqszJC9d8kmFaAaWhWY6x0xRqREzuRgTxP1mx9F9HstbQzAz
- IhLh+zjW8XPP/HkL9oJbaa2QdSesHnAYq0cqgJ/a8WpN/0V8Net76hMtciXpyknUhMKv
- TE9g==
+ d=linaro.org; s=google; t=1761079652; x=1761684452; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bbj4DnU9UMuayjGZMJyam2c15BZ4ZqrND3uomWVqkE8=;
+ b=Ply08PmbEkZYScdrfHz2Oon/EMjCnz0pMY4fPpdq1MGfTaIjhrLtKupT8EEaEAqsfo
+ K9tf/EG8Svo5EI9Wp5ORv4gp6qFxjMqMJwDg9Es8ov4wQKbcN0sw0khuw7n2PeFwQSF3
+ /2GL9pxibxSGMLg6d4ETrznWXwJPl6wu14SAvoq8C8/qFU2EyVk7UFbOEzGU1hUPV/Kk
+ ZfLiYrZXzqWG5vX1dAqwLayei+G+ZwwYcPlbSTMyHezmX+wyWTJTstlogz+5CqmqvWmg
+ POLeyEO+FEMmwF4eHdyUJj0Sx1rsrh3407IsLlGRxnQDLx3WsMY/QFl7d9ENd0jwFBYD
+ lYdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079661; x=1761684461;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XQQ5psxWRgNiatcKRVUGVhz6uu63XiXm8T64eSiUx9s=;
- b=IcMTSypv5/22Z5FPhnw5AgRbpHBPvRH1T953gL4X15yesalkFJZNG0qSegD78dKlnz
- M9z1bEjnbTtr32RLK6GH5ME00deV6H8+Fn8fuCENBjGkgcnMK0PuTcAnYeKtkdn/Fpxo
- 8o63iNSZOSzJnalVlRIUp4xVO/ZdmW7Zp5BnF5/zI80UcVuez15eFF1gOKkyFwQXxXqF
- umZfVY6No27JYUuvodLqmkFX3G/PhMSWXJbd+fyYdiSo10d5KDN8u31JtgqoV9RZ4LT4
- 3wlDbJxPjPwKnrWE5gmyeD0AlQlWSg5pgFkMUV1sGFTm+cXyUxmvUhOEHvVLoge76vsj
- BjRQ==
-X-Gm-Message-State: AOJu0YyZPWbnmt9sHa4mvrRr4185k2zxLThAIvzdWaXP7J2d6E9aodR0
- LbZNtQQwKMV8fgs+vJCBTjqppmQWpc8p+FKLVDaDBNLm6r8MLM1EI6WVzGQWahEzHkrndn2GnNq
- YkhUftsk=
-X-Gm-Gg: ASbGncsjuF2IfqA79g3i0lJQSjNTBW/o53GcZZQ1BDgjwe3Prx9+Ivxahfdn4HXQ2JN
- h4xNwN9ubq2Zv/UPJGlQOc7W5An1DC0j880ptaddNZeD1gB4uslntj+E6LVuBVIxgxTLgu8/UKo
- NOvbfw9qVNpAdgyMVE0BjKMB0Rde16zk52I2YddydTCC5ISkWPSpu8vtqO5LCHUvsw5jMNVVXY7
- 9fOLgo3Gn+PXvTrhBcPgm9HqjnZT1KqPc9ON9m7xRkN6VVJgF0O58+4asDbD0XCRtdGTWOfqJGp
- ZrHOL12KheeRvMQMhjI/luB6A8OZz7zclnCN8nW5J0iocD/yaQbWSOMZBGPLxxpdXi8dROOV/Wl
- VnUGSaBHvfHU5wOQY3/KpJJZwSGNOO0chH61nWvIq/4h09FP7mJqEijDU9XyDE3KSrubGhMWLRd
- 8CFk3T7eZboVeW2QyI9as99oTQDMfxHMcWOUk9rrephKnqF7Q5PQeolCxK+R2GKFNONs9WlQA=
-X-Google-Smtp-Source: AGHT+IFD1N3bpaDZizMwReNy1Um64LrLL22FZCa17VDuRV4mh+iFz17s3VGAB+2P7aEsjYJF+CnA0A==
-X-Received: by 2002:a05:600c:800f:b0:471:700:f281 with SMTP id
- 5b1f17b1804b1-471179041b6mr137163555e9.25.1761079661188; 
- Tue, 21 Oct 2025 13:47:41 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1761079652; x=1761684452;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bbj4DnU9UMuayjGZMJyam2c15BZ4ZqrND3uomWVqkE8=;
+ b=kJyId4/sum9FGRgwWBLx96nsfSAybq1OL6vZAxvVy8G1QKq3srW2kLac7pnXhdt5+M
+ A5GqXQIa/dzHRPF8YlDA69fKiBR93tVvltnGiLDtNaAtH/YU1toripm7/Hc8KrXb1Ohv
+ WpR4DUIZIemDzzV9IftNyZvRS+1fMOQwESS6loBOsCI7IqMGme76hZ5xgcu0JdoXxV2r
+ B/2xObj24Og4gItrQk9tIAr218geRJie8YJh6XwwfXnOnqQ65aV2Wy5DwyQTPpNmKnxa
+ 4F16RCLHLNyYE28PGfGYO0N3cyp5CMCm3ayuOCm7us7eIlZ3M0JY1JGFoJLal1eCdzQG
+ wGFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkvUA5wFvLtyq9oLinMswwa96HMhpYW4W9zeqyEMRDTY05j+EuI4efmwFKVl4vxI1HzDRm6gw480vN@nongnu.org
+X-Gm-Message-State: AOJu0Yzb/oZHQN6543NMCygmXELYvRI6aHfkCqVYMj3JGZ0vT7KgbBf9
+ ILFWbdgKMmm4gPq7VFB49b3ViarRn012f7FMGcPFB4YpKHe+jMr5QQyDY/KMJLPUZ4w7l7JBGL3
+ ig2qvN+M=
+X-Gm-Gg: ASbGncuTJX1V/ZcbbqkPAw9KEh28owAA16VJ+Vl+lYqZRXqFFA55rosMNoTYlFq/6ei
+ S5KEZzhncHGJAdKSBtGb7WOX9rSwz5I3s9vtNHIXhs8HCNvgphLh5i4iQLmZHWhcJ+XNpwCr9/Q
+ PhuX+7UAumtLd/X++TE+GrSv4ubYZyj2wAuFNWphKC34A/cBil0hlT6a3SMBXFPBvsDM9tamrTj
+ tdAYxsWGYkB2cxK8HZEh6p0B5BHwUN4iP7sVhfsCLh3rNS0viUdyL1y1b7zaSx1GrC/1tFPvUo+
+ z/lIZ7BJWKHV3Dioai5QjvNCOkq5ORvp9RzotJaf7291V+dfFU5YmdTSeVWrE53DWZiO96DGejZ
+ hNelGWSkJaJmQNwBqcSR/YO4umptNGCSe3FE9+R3P08KWWMPbSpEwfsMuPb/ZEQ4G+hnQ1NjEkF
+ UWIzmRP2edhUs5uZ58qujPw7oxTLjyZbwErYeZJtCvl5Ihtxo1OO64CQ==
+X-Google-Smtp-Source: AGHT+IG+mCw6CFnC9+i5Zw9JMUhd4HTOjLTt1QfZ7Vbl7xNLvhfutdApr28Hi2ofRzqrxb+leeVItw==
+X-Received: by 2002:a05:600c:5299:b0:470:ff87:6c2d with SMTP id
+ 5b1f17b1804b1-4711791781fmr146572925e9.29.1761079652358; 
+ Tue, 21 Oct 2025 13:47:32 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c427f77bsm10042785e9.3.2025.10.21.13.47.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:47:40 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 08/45] hw/core/machine: Allow dynamic registration of valid CPU
- types
-Date: Tue, 21 Oct 2025 22:46:22 +0200
-Message-ID: <20251021204700.56072-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
-References: <20251021204700.56072-1-philmd@linaro.org>
+ 5b1f17b1804b1-47496b09bc4sm24261565e9.2.2025.10.21.13.47.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 13:47:31 -0700 (PDT)
+Message-ID: <8fdacbaf-f760-41b1-9313-fbe8d9c66a4a@linaro.org>
+Date: Tue, 21 Oct 2025 22:47:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 05/25] target/alpha: call plugin trap callbacks
+Content-Language: en-US
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <cover.1760884672.git.neither@nut.email>
+ <78ba254c812a91105bf52f6f0ce73774ee2be265.1760884672.git.neither@nut.email>
+ <2a0a4cde-1427-4d87-a331-f4ed6fa64aa2@linaro.org>
+ <20bf0927d2331f70d92048726362558d78caa4a8@nut.email>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20bf0927d2331f70d92048726362558d78caa4a8@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,89 +106,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add MachineClass::get_valid_cpu_types(), a helper that
-returns a dynamic list of CPU types. Since the helper
-takes a MachineState argument, we know the machine is
-created by the time we call it.
+On 21/10/25 22:38, Julian Ganz wrote:
+> Hi Philippe,
+> 
+> October 21, 2025 at 10:10 PM, "Philippe Mathieu-Daudé" wrote:
+>> On 19/10/25 17:14, Julian Ganz wrote:
+>>> We recently introduced API for registering callbacks for trap related
+>>>   events as well as the corresponding hook functions. Due to differences
+>>>   between architectures, the latter need to be called from target specific
+>>>   code.
+>>>   This change places hooks for Alpha targets.
+>>>   Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>>   Signed-off-by: Julian Ganz <neither@nut.email>
+>>>   ---
+>>>   target/alpha/helper.c | 13 +++++++++++++
+>>>   1 file changed, 13 insertions(+)
+>>>   diff --git a/target/alpha/helper.c b/target/alpha/helper.c
+>>>   index 096eac3445..a9af52a928 100644
+>>>   --- a/target/alpha/helper.c
+>>>   +++ b/target/alpha/helper.c
+>>>   @@ -27,6 +27,7 @@
+>>>   #include "exec/helper-proto.h"
+>>>   #include "qemu/qemu-print.h"
+>>>   #include "system/memory.h"
+>>>   +#include "qemu/plugin.h"
+>>>   > > #define CONVERT_BIT(X, SRC, DST) \
+>>>   @@ -328,6 +329,7 @@ void alpha_cpu_do_interrupt(CPUState *cs)
+>>>   {
+>>>   CPUAlphaState *env = cpu_env(cs);
+>>>   int i = cs->exception_index;
+>>>   + uint64_t last_pc = env->pc;
+>>>   > if (qemu_loglevel_mask(CPU_LOG_INT)) {
+>>>   static int count;
+>>>   @@ -431,6 +433,17 @@ void alpha_cpu_do_interrupt(CPUState *cs)
+>>>   > /* Switch to PALmode. */
+>>>   env->flags |= ENV_FLAG_PAL_MODE;
+>>>   +
+>>>   + switch (i) {
+>>>   + case EXCP_SMP_INTERRUPT:
+>>>   + case EXCP_CLK_INTERRUPT:
+>>>   + case EXCP_DEV_INTERRUPT:
+>>>   + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+>>>   + break;
+>>>   + default:
+>>>   + qemu_plugin_vcpu_exception_cb(cs, last_pc);
+>>>   + break;
+>>>
+>> Shouldn't we handle EXCP_CALL_PAL with qemu_plugin_vcpu_hostcall_cb()?
+> 
+> Host calls are exclusively calls that are handled outside the emulation,
+> on the host, regardless of whether they are hypervisor calls or not. In
+> that respect EXCP_CALL_PAL looks to me like a regular exception that is
+> handled by translated code within the emulation.
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20251020220941.65269-4-philmd@linaro.org>
----
- include/hw/boards.h |  4 ++++
- hw/core/machine.c   | 28 ++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
-
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index d0a69cd490b..c45272b7414 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -253,6 +253,9 @@ typedef struct {
-  * @smbios_memory_device_size:
-  *    Default size of memory device,
-  *    SMBIOS 3.1.0 "7.18 Memory Device (Type 17)"
-+ * @get_valid_cpu_types:
-+ *    Returns a list of valid CPU types for this board. May be NULL
-+ *    if not needed.
-  */
- struct MachineClass {
-     /*< private >*/
-@@ -299,6 +302,7 @@ struct MachineClass {
-     bool ignore_memory_transaction_failures;
-     int numa_mem_align_shift;
-     const char * const *valid_cpu_types;
-+    GPtrArray *(*get_valid_cpu_types)(const MachineState *ms);
-     strList *allowed_dynamic_sysbus_devices;
-     bool auto_enable_numa_with_memhp;
-     bool auto_enable_numa_with_memdev;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 7aec3916e80..cd2f1414a77 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1570,6 +1570,8 @@ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
-      */
-     if (mc->valid_cpu_types) {
-         assert(mc->valid_cpu_types[0] != NULL);
-+        assert(!mc->get_valid_cpu_types);
-+
-         for (i = 0; mc->valid_cpu_types[i]; i++) {
-             if (object_class_dynamic_cast(oc, mc->valid_cpu_types[i])) {
-                 break;
-@@ -1596,6 +1598,32 @@ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
-                 error_append_hint(errp, "\n");
-             }
- 
-+            return false;
-+        }
-+    } else if (mc->get_valid_cpu_types) {
-+        GPtrArray *vct = mc->get_valid_cpu_types(machine);
-+        bool valid = false;
-+
-+        for (i = 0; i < vct->len; i++) {
-+            if (object_class_dynamic_cast(oc, vct->pdata[i])) {
-+                valid = true;
-+                break;
-+            }
-+        }
-+
-+        if (!valid) {
-+            g_autofree char *requested = cpu_model_from_type(machine->cpu_type);
-+
-+            error_setg(errp, "Invalid CPU model: %s", requested);
-+            error_append_hint(errp, "The valid models are: ");
-+            for (i = 0; i < vct->len; i++) {
-+                g_autofree char *model = cpu_model_from_type(vct->pdata[i]);
-+                error_append_hint(errp, "%s%s",
-+                                  model, i + 1 == vct->len ? "\n" : ", ");
-+            }
-+        }
-+        g_ptr_array_free(vct, true);
-+        if (!valid) {
-             return false;
-         }
-     }
--- 
-2.51.0
-
+OK, thanks.
 
