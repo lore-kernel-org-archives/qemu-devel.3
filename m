@@ -4,118 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3F4CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC16CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBAWT-0000pK-VM; Tue, 21 Oct 2025 07:27:26 -0400
+	id 1vBAX1-00011F-A2; Tue, 21 Oct 2025 07:27:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vBAWR-0000p4-8S; Tue, 21 Oct 2025 07:27:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBAWn-0000zm-Uw
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:27:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vBAWN-0007Jt-ID; Tue, 21 Oct 2025 07:27:22 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8GsF5017546;
- Tue, 21 Oct 2025 11:27:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Tcjchj
- A6/+BVFcTNQO+/OKE///DuvSoP75TVH+UCWyQ=; b=DsnwwVaDJpWC2ZZjtPjUxd
- uCmk20Bf7Yngq1r7jM5xGcffOwGpL9DXj6vfjD0WnsV4K+9MNeAloxUvuDp99L+F
- AwE/FvEPrnf4hfWZE8RHayHm3K9cWVWA87w1ik+7+yU5AsnjyJvQMUDzkNOiwl9/
- Pgka0OsIaFqkE21ic8BNG2MhTlSTwoqDkau6y33rFr3IELHtuHOmXMKubd632sFr
- Kk4SUZv+p5IZ7z3RurnROVX9uVjdNfj4HO22Yzd/6FDF2nnQ4GiuBXq+HH+zbMD6
- FYwf1xAKGbkJ85e0IfuNrjlp032a0R/WcsffUN1Oygi7ZQzd0BID9yCDowLl4JLw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33f6p8t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 11:27:14 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LBIOtk013218;
- Tue, 21 Oct 2025 11:27:13 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33f6p8q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 11:27:13 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59LAuTTf014669;
- Tue, 21 Oct 2025 11:27:12 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7s2mm5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 11:27:12 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59LBQxJR29491846
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Oct 2025 11:26:59 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1D915805E;
- Tue, 21 Oct 2025 11:27:11 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 202D958051;
- Tue, 21 Oct 2025 11:27:09 +0000 (GMT)
-Received: from [9.79.201.141] (unknown [9.79.201.141])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 21 Oct 2025 11:27:08 +0000 (GMT)
-Message-ID: <7f3143bc-505e-4120-938a-fa4bed982f7d@linux.ibm.com>
-Date: Tue, 21 Oct 2025 16:57:06 +0530
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBAWl-0007MU-Hp
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:27:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761046060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8pGLKaqGnJKDrDV2wGKfHSVbXHdu/XElhHAxcATXJxY=;
+ b=RBPRT01JFRB44Fq/tgS9tgXN2p4bbOk7sqx/dpF0uvCIxj095gTrPiwY17rf25uXuL7lkg
+ jRJnCynB3lmS7ZuShIj9B75ifLiMK9WN7lCf0W1Ww9zdtOvlVDhqxzRzpYWKxGtQUpDVPg
+ 9FjFQOfBdb/MygEBFc4Csbfp0GThJ68=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-297-X-K0pAMHP3edTPFaBD30Vg-1; Tue, 21 Oct 2025 07:27:39 -0400
+X-MC-Unique: X-K0pAMHP3edTPFaBD30Vg-1
+X-Mimecast-MFC-AGG-ID: X-K0pAMHP3edTPFaBD30Vg_1761046058
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-40fd1b17d2bso3232930f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 04:27:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761046058; x=1761650858;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8pGLKaqGnJKDrDV2wGKfHSVbXHdu/XElhHAxcATXJxY=;
+ b=nkDk8dseaLWEU6Lucy9Edw/1fC2o1MJI/2cj50wsRiy3hhCX3Xb//ak2X60oMRFgsD
+ aUMOa3pX+36lB2U2ZFQxK9z9jYD9NJgkm7Y77ouxnZLxoPZd8KsgiwkrbnIZucjmKDOB
+ EbsxHLH26nnOKmTw8Bnf7KVUrSPUEcu2ur3ZZJgxVaN6im8f9oPsrS3mLncanAP4H4DU
+ EHtrv/depvWdgu9TOP6mmbMe4cE5bx7+xCCUqQORH+MZ7CZYhYI91iW9Wq7f4eSy3008
+ SQfN4njzO/FabGX1/VMjKG8Uhu+OY8godhyy716DVRYzh/Ww62IrHg1fwS85WpCDhoMV
+ Fz6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVji+9OungaVWalCs+1pC1ueMPkY7FSxtZMdBtrJt7MElXRoxUSO5m/va6dnrnQX+RwApdTVGwxZG7J@nongnu.org
+X-Gm-Message-State: AOJu0YxsRqy0o2Kgitx8As0TB37ihuE+xq+54CqUwGhOS7ILOCglg6m/
+ lW708DRJoB3aKyqsrbfO9Zm8TEjxp5hOq+1vA8L7EdpyfFg48XvPKlhxQdYm2+AlNeyMDt7feuH
+ NwWf/gllDdhj5SsaPh/NJAZu0C+CmMb2ZW/NgLuwheQvGWZyWZcXdRL0/
+X-Gm-Gg: ASbGncuZ14YweMg5EaPgBcraGxbvh8CL3HyrVgfPYR/UlZE7swMA7DD09ggeU40oQCg
+ QCmWf9XA6h3INO8zzKWIqqKZaaoyJdXFbf/HrIxWt7jMJUJ/eNFC5zTdbdaEuujdANaK2SwScYG
+ XtF8k1SJsXFj77cW9dBh/EfJ87icXFi3bMNhabjodvBUv9lrOc3riGlwaf0z6xMFH0zf/8igJgg
+ zsLKORkT18gD010tMWU8HWY7os2trE1z9vxgvoHqqSp99eiutYat99sVdCwb8prQCPS4ES20m53
+ gP2UXOaqMhB81TdYf2oyI6Vdxri8yrkPqVsIj/oluSkC+8ER4PI1cAfa6y71UY4SkQlIYINAiHd
+ RhB7D04gXpSewOtCLPQlN1Hjt
+X-Received: by 2002:a5d:5f56:0:b0:3ed:f690:a390 with SMTP id
+ ffacd0b85a97d-42704defec8mr10865774f8f.40.1761046057892; 
+ Tue, 21 Oct 2025 04:27:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9+K8oi3WJ9AJjToPTqHbRjNRUW6Ky8vzF/Hiaz3BFXBzAR9iJ2HJhq0lcJoeL2yifBnmNYQ==
+X-Received: by 2002:a5d:5f56:0:b0:3ed:f690:a390 with SMTP id
+ ffacd0b85a97d-42704defec8mr10865755f8f.40.1761046057450; 
+ Tue, 21 Oct 2025 04:27:37 -0700 (PDT)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427ea5b3d4csm19420301f8f.19.2025.10.21.04.27.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 04:27:36 -0700 (PDT)
+Message-ID: <7a48dd72-2942-476f-b720-5cd88ff7c3e7@redhat.com>
+Date: Tue, 21 Oct 2025 13:27:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/11] hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251021084346.73671-1-philmd@linaro.org>
- <20251021084346.73671-6-philmd@linaro.org>
+Subject: Re: [PATCH 07/43] docs: update -soundhw -> -device list
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
+ <vr_qemu@t-online.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
+ <20251021090317.425409-8-marcandre.lureau@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20251021084346.73671-6-philmd@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251021090317.425409-8-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68f76e12 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=vLoeH9cbTDQAPZaO96UA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: 2uTicLUVE8LEfvx4Yfdfrn4kf_sw6Wn7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX8E/s87B9akSr
- AmdiBld3qK00zSBQtRZFL+sAxBY9zTiOBmZhH7/d8SdTqUpKHQLGIuie3gneg+Q2KzxfH2IQi3v
- T4eCo1/4qguB4dZyZFusZ5o7p0H53cKCYDNPekbvMMpIc+vDzu+YjA1VCT3BEvpd+7Wzrxs7iF3
- Vo3r9y+/iybBFj/0alG4UjuurZcR1wdSuQS4/mtHWljU4wwNQaYeCFV+OZXSxuryOwPVGQTbuf7
- 9gNeeexPTVTj0vV2sKzNCHIzexwVsjNAv/8b12URc7iIUPcmpaJUQU2Ulk4fRyXuVetSFHKL6UK
- ykj+8lYEB9EJ2C6aZUL+sbjjTXCIFSvuP40djug+XTZFV8EjqCkbePwZyyZ09nKciT8Jef1tUfh
- Mv6kjIZbMtP7FW/Dtz2NDjejU9ZUZg==
-X-Proofpoint-ORIG-GUID: 5CcphESwmciE-fSZgbOPW1R0dGg74zBB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,50 +158,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21/10/2025 11.02, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> (note: I wonder if pcspk was really an option when -soundhw was
+> available, since it was not user-creatable)
 
-On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Running an old version of QEMU:
+
+$ i386-softmmu/qemu-system-i386 -soundhw help
+Valid sound card names (comma separated):
+sb16        Creative Sound Blaster 16
+es1370      ENSONIQ AudioPCI ES1370
+ac97        Intel 82801AA AC97 Audio
+adlib       Yamaha YM3812 (OPL2)
+gus         Gravis Ultrasound GF1
+cs4231a     CS4231A
+hda         Intel HD Audio
+pcspk       PC speaker
+
+... it seems like it was at least selectable there (no clue whether it 
+worked as expected, though).
+
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/ppc/spapr_events.c | 12 ++++--------
->   1 file changed, 4 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
-> index 548a190ce89..892ddc7f8f7 100644
-> --- a/hw/ppc/spapr_events.c
-> +++ b/hw/ppc/spapr_events.c
-> @@ -1041,16 +1041,14 @@ void spapr_clear_pending_hotplug_events(SpaprMachineState *spapr)
+>   docs/qdev-device-use.txt | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
+> index c98c86d828..043ae46114 100644
+> --- a/docs/qdev-device-use.txt
+> +++ b/docs/qdev-device-use.txt
+> @@ -324,8 +324,10 @@ Map from -soundhw sound card name to -device:
+>       gus         -device gus,iobase=IOADDR,irq=IRQ,dma=DMA,freq=F
+>       hda         -device intel-hda,msi=MSI -device hda-duplex
+>       sb16        -device sb16,iobase=IOADDR,irq=IRQ,dma=DMA,dma16=DMA16,version=V
+> -    adlib       not yet available with -device
+> -    pcspk       not yet available with -device
+> +    adlib       -device adlib,iobase=IOADDR,freq=F
+> +
+> +    pcspk       Not available with -device,
+> +                but audiodev can be set with -machine pcspk-audiodev=<name>
 >   
->   void spapr_events_init(SpaprMachineState *spapr)
->   {
-> -    int epow_irq = SPAPR_IRQ_EPOW;
-> -
-> -    spapr_irq_claim(spapr, epow_irq, false, &error_fatal);
-> +    spapr_irq_claim(spapr, SPAPR_IRQ_EPOW, false, &error_fatal);
->   
->       QTAILQ_INIT(&spapr->pending_events);
->   
->       spapr->event_sources = spapr_event_sources_new();
->   
->       spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_EPOW,
-> -                                 epow_irq);
-> +                                 SPAPR_IRQ_EPOW);
->   
->       /* NOTE: if machine supports modern/dedicated hotplug event source,
->        * we add it to the device-tree unconditionally. This means we may
-> @@ -1061,12 +1059,10 @@ void spapr_events_init(SpaprMachineState *spapr)
->        * checking that it's enabled.
->        */
->       if (spapr->use_hotplug_event_source) {
-> -        int hp_irq = SPAPR_IRQ_HOTPLUG;
-> -
-> -        spapr_irq_claim(spapr, hp_irq, false, &error_fatal);
-> +        spapr_irq_claim(spapr, SPAPR_IRQ_HOTPLUG, false, &error_fatal);
->   
->           spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_HOT_PLUG,
-> -                                     hp_irq);
-> +                                     SPAPR_IRQ_HOTPLUG);
->       }
->   
->       spapr->epow_notifier.notify = spapr_powerdown_req;
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+>   For PCI devices, you can add bus=PCI-BUS,addr=DEVFN to control the PCI
+>   device address, as usual.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
