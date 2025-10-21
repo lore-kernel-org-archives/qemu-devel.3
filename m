@@ -4,111 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C76BCCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C175CCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBClY-00040R-Uc; Tue, 21 Oct 2025 09:51:09 -0400
+	id 1vBCjD-0001vz-29; Tue, 21 Oct 2025 09:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vBClI-0003qg-Iv; Tue, 21 Oct 2025 09:50:55 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vBCj9-0001us-Gz; Tue, 21 Oct 2025 09:48:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vBClG-0007Ar-2z; Tue, 21 Oct 2025 09:50:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=LHZXynPB0hLQ+CBy8lrGdpgfsv32Vai29vkeHTpK2ck=; b=AaJoJRCrdJAEQGZf
- w9YjMn4734mkUHeOBJkdePtpJDTHkk2w0ISZh4Y3GmCbHPFjkCYBAHHj37lXx1pDzaoAxr4GoJNko
- ZwfZbctB8awpat4JKKZzK7Ns6cbh8Df0Ji2xKMCszqHMUVVgd+wywJpLbDx1pMUVvMj6znwEbGZtz
- AWAU8OtbzMUmRs1NPVC7lRi8NwfLEQIBy3fgpb+xKUw0twzTBjxPeGCFLmMCFYapg2UIJJxgf8C88
- 9cypXp+mGgtoL9b6Iw8hSZv5wYZgy/f40cHt/kKq6uZ5C0Hm2gJwc8Bz+y30h1MLM7USJRUv+fETC
- Ya35X/iXopHXlilz8A==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1vBCk5-000B3N-1t;
- Tue, 21 Oct 2025 13:49:37 +0000
-Date: Tue, 21 Oct 2025 13:49:37 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- Alberto Garcia <berto@igalia.com>, Thomas Huth <huth@tuxfamily.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Magnus Damm <magnus.damm@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vBCj6-0006nt-MW; Tue, 21 Oct 2025 09:48:39 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LBbhVE017699;
+ Tue, 21 Oct 2025 13:48:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=p9xYzrSuULCjYN4zHsL2hyaUDlGl
+ ia52wfrtxg6IY2Y=; b=oQaHfWkpRFhnBRJqWESq/Mk7pWoRoqP0k77/8IbRr4gC
+ +SoH6En/maCq22h64OskV+C1FZa9SzcuYTvJjbNNyWJGFgXFF3JGVgMAeWDp2Yp/
+ yE34+FucvpubaJ1/RWSUlku5MK7mtY77vBr17BNH94QCMmP/dea+hhX9YI7Xdpqo
+ 4qlhPa5kPsv9zqTBOTKCp34h+g1+tL23/QO2UrTVupfmBzYfLvhi7xWy5o3B+8FA
+ 6JiYa33pS0y8RzfJ+Y7Rf8Xrj1kOYq0NusrxtLKn5HR3r551Urw4K+lIuZizA0LB
+ ZFxP7foSI95pqMZI7g8z57JeYyXsDMsDtqrnsTvoEA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vnyjt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 13:48:33 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LDmXra017058;
+ Tue, 21 Oct 2025 13:48:33 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vnyjq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 13:48:33 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59LCuYXc011049;
+ Tue, 21 Oct 2025 13:48:32 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx12qyk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 13:48:32 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LDmSV932571812
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 13:48:28 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 60FFD2004B;
+ Tue, 21 Oct 2025 13:48:28 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F62220040;
+ Tue, 21 Oct 2025 13:48:25 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.124.222.96]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 21 Oct 2025 13:48:25 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-ppc@nongnu.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Collin L. Walling" <walling@linux.ibm.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Corey Minyard <minyard@acm.org>,
- Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>,
- Michael Rolnik <mrolnik@gmail.com>,
- Antony Pavlov <antonynpavlov@gmail.com>, Joel Stanley <joel@jms.id.au>,
- Vijai Kumar K <vijai@behindbytes.com>, Samuel Tardieu <sam@rfc1149.net>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- "reviewer:vhost-user-scmi" <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Jason Wang <jasowang@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>,
- Lukas Straub <lukasstraub2@web.de>,
- "open list:Sharp SL-5500 Co..." <qemu-arm@nongnu.org>,
- "open list:S390 SCLP-backed..." <qemu-s390x@nongnu.org>,
- "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
- "open list:virtiofs" <virtio-fs@lists.linux.dev>,
- "open list:Rust-related patc..." <qemu-rust@nongnu.org>
-Subject: Re: [PATCH] char: rename CharBackend->CharFrontend
-Message-ID: <aPePcTKl6s4FoLCL@gallifrey>
-References: <20251021122533.721467-1-marcandre.lureau@redhat.com>
- <CAFEAcA-jPE_onLYLMxgcAOB7dWRXOLJrWcGPnR0NUdjYytPDVA@mail.gmail.com>
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 0/8] Implement Firmware Assisted Dump for PSeries
+Date: Tue, 21 Oct 2025 19:18:10 +0530
+Message-ID: <20251021134823.1861675-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-jPE_onLYLMxgcAOB7dWRXOLJrWcGPnR0NUdjYytPDVA@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 13:49:19 up 176 days, 22:02,  1 user,  load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: SKg7EzX1TXteYYDGs6ZgQy0yvbuhr4DJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX5DyrKFlM/68x
+ Hy7Nj7KOCULBKe8GCI/jajwNQsCKlAf2uyOGtOPZj0rrHakx1u1SaCNLzq3AXeVLPGLFYym3968
+ BLdyGCoxxkoyiWYghnSZX//FtfUQmXWYnn9iVoXF3IiganvYqjqQ6lMOCSjM3+gZkhwhKRfwPxW
+ hBChbrf4QBk5UAHsN0PIzBaBlGsFwz8P0PtR5F1l1U79auvwAV73pXAUUQKd1jGDJoH1rrKRYtD
+ wbN+tTSkdZNiyx6LVRxh1EmeMJRyKMjbpdISoRwLKSYlyPoSGaX5sMNYNiWOwBCjFPgNNu/vKwx
+ oUabYOclL0bhe6u20CiRK/fVYurX74xzpx8KWKHS7zicTXUgcnjfwe3fdp1Rkdcv9I+4hqhW+VF
+ pyhKsR/c+amYvj7R2eSE5FpMOKXB6w==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f78f31 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=p0WdMEafAAAA:8 a=wEDoamZ1AAAA:20 a=NEAV23lmAAAA:8 a=9QOFE4DMaUSoLvWVQo8A:9
+ a=QEXdDO2ut3YA:10 a=poXaRoVlC6wW9_mwW8W4:22 a=yULaImgL6KKpOYXvFmjq:22
+ a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
+X-Proofpoint-ORIG-GUID: 8jmXaxnCjeJYcyLVjxCSfvZXJ7M67urz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_02,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,30 +131,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Maydell (peter.maydell@linaro.org) wrote:
-> Marc-André Lureau <marcandre.lureau@redhat.com> wrote:
-> > The actual backend is "Chardev", CharBackend is the frontend side of it,
-> > let's rename it for readability.
-> 
-> I always thought the "frontend" was the device the guest
-> saw (the 16650 UART or whatever). invocation.html has bits
-> talking about "virtio hvc console frontend device" which
-> seem like they also use that terminology.
-> 
-> If we want to clean up the naming it might be helpful to have
-> a comment somewhere documenting the different components and
-> what names we give them and how they fit together (or even
-> better, something in docs/devel/...)
+Overview
+=========
 
-Or something more descriptive like 'CharGuestSide'
+Implemented Firmware Assisted Dump (fadump) on PSeries machine in QEMU.
 
-Dave
+Fadump is an alternative dump mechanism to kdump, in which we the firmware
+does a memory preserving boot, and the second/crashkernel is booted fresh
+like a normal system reset, instead of the crashed kernel loading the
+second/crashkernel in case of kdump.
 
-> thanks
-> -- PMM
+This requires implementing the "ibm,configure-kernel-dump" RTAS call in
+QEMU.
+
+While booting with fadump=on, Linux will register fadump memory regions.
+
+Some memory regions like Real Mode Memory regions, and custom memory
+regions declared by OS basically require copying the requested memory
+range to a destination
+
+While other memory regions are populated by the firmware/platform (QEMU in
+this case), such as CPU State Data and HPTE.
+We pass the sizes for these data segment to the kernel as it needs to know
+how much memory to reserve (ibm,configure-kernel-dump-sizes).
+
+Then after a crash, once Linux does a OS terminate call, we trigger fadump
+if fadump was registered.
+
+Implementing the fadump boot as:
+    * pause all vcpus (will save registers later)
+    * preserve memory regions specified by fadump
+    * do a memory preserving reboot (using GUEST_RESET as it doesn't clear
+      the memory)
+
+And then we pass a metadata (firmware memory structure) as
+"ibm,kernel-dump" in the device tree, containing all details of the
+preserved memory regions to the kernel.
+
+Refer the Patch #7: "hw/ppc: Enable fadump for PSeries" for logs of a
+succesfful fadump crash
+
+Note: HPTE region has not been implemented. It's not planned as of now.
+
+Testing
+=======
+
+Has been tested with following QEMU options:
+
+* make check-functional-ppc64
+* smt1/smt4
+* with/without e1000e device
+* gitlab ci: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2111480523
+
+Following vmcore has been generated with v5 of this series, booted with
+-smp 4: https://ibm.box.com/s/dv92hdi67hh0588xn8cbvkjmlcy04d7h
+
+Git Tree for Testing
+====================
+
+https://github.com/adi-g15-ibm/qemu/tree/fadump-pseries-v5
+
+Note: You will need a way to get the /proc/vmcore out of the VM for testing
+with crash-utility
+
+I use the following command line which sets up networking:
+    "-net user,hostfwd=tcp::10022-:22 -net nic"
+
+And a rootfs with ssh support, then copy the /proc/vmcore with networking
+(can do compression using gzip before ssh, but compression might take lot
+of time if done inside the VM)
+
+Changelog
+=========
+v5:
+  + rebased to upstream, implemented reviews by sourabh and harsh
+  + [patch #1]: patch #1 and #2 of v4 merged into one
+  + [patch #3]: copy memory region in chunks of 32MB instead of all at once
+  + [patch #4]: fix endianness of vcpu id in CPUSTRT/CPUEND entries
+  + [patch #5]: replaced type __be32 with uint32_t
+  + [patch #7]: increased timeout for few messages to 20 seconds
+  + [patch #8]: update maintainers file for fadump
+
+v4
+  + [patch #8/8]: fixed kvm testcase, add license
+
+v3:
+  + [patch #3,7]: fix compile errors (#define declared in a later patch
+                  but used in this patch, unused var)
+  + [patch #4/8]: use 'g_autofree' for cpu buffer, and replace g_malloc with
+                  g_try_malloc
+  + [patch #5/8]: use 'g_new' instead of 'malloc', add null check for cpu
+                  region
+  - nothing in other patches has been changed compared to v2
+
+v2:
+  + rearrange code so that no unused functions get introduced in any patch
+  + add functional test for pseries as suggested by nick
+  + fix multiple issues pointed by harsh and nick
+  + fix bug in cpu register saving where it was being stored in
+    little-endian
+  - removed 'is_next_boot_fadump' and used fadump header's status flag to
+    store it
+  + fixed multiple style issues (naming, unneeded diffs etc)
+
+Aditya Gupta (8):
+  hw/ppc: Implement fadump register command
+  hw/ppc: Trigger Fadump boot if fadump is registered
+  hw/ppc: Preserve memory regions registered for fadump
+  hw/ppc: Implement saving CPU state in Fadump
+  hw/ppc: Pass dump-sizes property for fadump in device tree
+  hw/ppc: Enable fadump for PSeries
+  tests/functional: Add test for fadump in PSeries
+  MAINTAINERS: Add entry for FADump (pSeries)
+
+ MAINTAINERS                               |   8 +
+ hw/ppc/meson.build                        |   1 +
+ hw/ppc/spapr.c                            |  69 ++
+ hw/ppc/spapr_fadump.c                     | 730 ++++++++++++++++++++++
+ hw/ppc/spapr_rtas.c                       |  76 +++
+ include/hw/ppc/spapr.h                    |  11 +-
+ include/hw/ppc/spapr_fadump.h             | 124 ++++
+ tests/functional/ppc64/meson.build        |   2 +
+ tests/functional/ppc64/test_fadump.py     | 182 ++++++
+ tests/functional/qemu_test/linuxkernel.py |  59 ++
+ 10 files changed, 1261 insertions(+), 1 deletion(-)
+ create mode 100644 hw/ppc/spapr_fadump.c
+ create mode 100644 include/hw/ppc/spapr_fadump.h
+ create mode 100755 tests/functional/ppc64/test_fadump.py
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.51.0
+
 
