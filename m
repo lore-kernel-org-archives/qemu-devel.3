@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7076FCCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D19C7CCD1AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBIUR-00030h-Qh; Tue, 21 Oct 2025 15:57:51 -0400
+	id 1vBIUx-0003he-8u; Tue, 21 Oct 2025 15:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIUP-0002vq-1j
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:49 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIUv-0003cf-DX
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:58:21 -0400
 Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIUN-0008Iu-4P
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:48 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIUt-0008LH-GF
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:58:21 -0400
 Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42701b29a7eso141170f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:57:46 -0700 (PDT)
+ ffacd0b85a97d-426f1574a14so4185961f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761076665; x=1761681465; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761076698; x=1761681498; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CQXoaofo6NfrBJoG83XIWxyM0hiwuc3u3KVa34QWk1g=;
- b=JxjyUcRPuF1OKt6Prj4t7puDjoaAvD+oQA+MVFTjxH4hJb2vC4es5acm79Z6MNaKOG
- R6/Ed6c6Tv/p1dF0Z5XSOOPpgD4MuVxqulA4w/XwE0ZFu3QF7YuhX3t+dJSeYmomflxj
- rLXNtUi1/D0G06zISOO+1vDjIQxdGdcgGHwK9on2YxtGnXkPOJBDPlGQ+v0S/lBXZCxp
- pYhCZln3mteC6hS/0owbUmVGyfhvBmWq3+FHAg/2sum80Q9Wd6ZDMcA1v26MPwLYaqo7
- 6mxumFTWrc0ofwUp+uGz79jxc+ZEOqmrbqlyhgsiuvjwf/Tlxh4bm4Q0ZOyOOrSbHz1a
- uRZw==
+ bh=v/JG2A61AFTHbxScHI2kgOyOavzxQU3W8Rq7xF91G/o=;
+ b=GpQC5CAGdUxjKbPuR+pOKzF7ZpbKXvp9sxLHb13pU9iVQcoJtS1sBo9FVsPl+dwbid
+ 4wwu9XP9mz0Jd/URp3k1ssu3xdEhlodcXxdZGnzqNGXDSpAUf5aA0K6pHXuHa+jvt25v
+ v/TNo5xRhUIVshKoQSbG3lATJNBjr5j0Db5k4Eu9YSPjJy/ZhE8QEaNirVRSgixmBJl9
+ KF54PhU4NpGFtZh2fRMA/qw3vSSaOA6qbCnpe4EPGifn0ukom4Tu3J/bu2xZA+r5NkBM
+ 7K2QQ7ynoAM70wqbpOBCAdPwDaNK6Uw6b5BIrrAKgnD0MWPy7u5vC13Te/oesqXPchM1
+ HbpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761076665; x=1761681465;
+ d=1e100.net; s=20230601; t=1761076698; x=1761681498;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CQXoaofo6NfrBJoG83XIWxyM0hiwuc3u3KVa34QWk1g=;
- b=LsGKa2JDzGIN8aszzTyE5RPdZU7VHowQPsHeGk3Y010H1ipMQkeiE+q3mZ1y3EbiRc
- GE59kY6ixOLWPTBt7msxgIkbXtY+ll8eu4uJ+prA+0UlgLiGFK2eoXaNaaviDoIs8I3S
- FCA+S8Q4wXJcTef2qAMlSvX+0Sd8z2kVghdA0PhIIvvsKtzK5ZJIaM4oY9rKjadqxjmh
- zIqPVA4ZfVt6/ZLjYEfw5inMw4Ka+WmG4hCYHThsbGupHdIyXEN53zEWDwe94UuTVKXe
- OOOTPSQiqCphdkCuTg0pAcQMln0d3M3pYBm0lrCw7gym+hXCiLOq6o2d3LUHRtRN2FUa
- a32w==
+ bh=v/JG2A61AFTHbxScHI2kgOyOavzxQU3W8Rq7xF91G/o=;
+ b=e9q0smciQFHEg5PgSVcD1WfRKE7NyONfDyi4Ig9ObCBQbPW8wdlnn9Y/UC+Hd67SFY
+ L8ON0xUroh3OXx5Czr2O4Qp8pON4l/HuaehNnDVFoO9iGp3wLG09nvHopmwgGuQRSa4k
+ 5AlwF21FUTerG3+lpjbP0jemOeoHG68+N5JAahWtS6AE436O4RLtqj/fTzwL38BrZtZ0
+ qb928bRB7CuE37KMfCJsbeUhoeDqYnvZkTSNgYqxJo2z1YCP2tTPKARrnnDZsWiDrJWU
+ 6CzNYt80G1BQk+PuRCh6cvOpjCxiwiARBksVOYcQpUJMtMgu0xk2+722LfFlISFtlFQc
+ zX/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVG2CsHvpY6MLplYHzK9Qiv9/FO173JYqR9E+RD96dh+Ru76UJCDMm9AHIWxwAeHLa8Cqht+vLwCJS@nongnu.org
-X-Gm-Message-State: AOJu0YwhY+NhlhLXZuTyQFTlpMbSotuvdrnyYWDpWwHojE+Y4VNZKS9+
- GBNrxTM4FERBDAsh5s+kF8xcR5M28v+EPjHQmvO1qO1YqwraC4YwmIyCfX0bC1yA8BoDbaUn5fN
- hXkQ2qRw=
-X-Gm-Gg: ASbGnctb2+4Gkv6uFhiNaTi4r42brwtyl4ktYLyeALc00fvRuO9jITCkjSxeEnYEc1W
- AvLMfbRofuZMa+TzKuBfdXo2HAEEiSCkvMZ1FOcqZimwDCBwFBh/CUXAOW6U+t5iVK6KVDZ5xwZ
- DhddPLS2rWQDUkKLg3Rfy2pA4+LtiqEVfVrysOL7LA3RAIboRb/xe7JQGPuY8BaP7KvauC5/l7/
- 2woua6MxDmcgepgvffyQ0gWyFh4/54Jr+gM8nmBrrdsIFqpjCFEu9rxOqZwfRyrfYq2+JJzKrZT
- LaTw2jiVie/zByMNEU3Y+eZpSkuNbwakiO7MO2e9tcHg+aa2NbIOEOacvMvVfx+GLp+iJrVsqDE
- 1oGGVWfsticB1KIVGqOZFCQjCGVzuIUgi4SEB0Emzv5qkchPA1hT7V5XN4EwVGmw8KN2yO34wRo
- ZE72nBZ4A+VsekttSo3AYiDI0Y5YNptuffnIIeqJL9qvhAgVufUIFWFWcxylklHMtF
-X-Google-Smtp-Source: AGHT+IG7V11Gsmi38zj7BQw6tFq6nWVZu5+Mb+omvmoPZ3hIoiZnID8wTr5t4dZov4FkUbR4JA2rIg==
-X-Received: by 2002:a05:6000:4026:b0:426:fff3:5d1d with SMTP id
- ffacd0b85a97d-428531dc844mr681286f8f.28.1761076665188; 
- Tue, 21 Oct 2025 12:57:45 -0700 (PDT)
+ AJvYcCUgmzWhPzaqrU3LW4JBpOWwddtzIlOvKWy2D/1u8BDQbhz/IV4NaYcsd+iKhJCAxWDpTQ5/qomwB2wk@nongnu.org
+X-Gm-Message-State: AOJu0YxggdIXh2kZo9PxaCAGykdjMNHGgZqjLAvtVEW4J6kl1CHZPsEc
+ mVl0/n64hFKvIOpY3pbMk9rD9/Uqy3RxqcUoxpBqAH1VoqocZmYx3Uj6ujVPPWWe8G/qk6p4RC4
+ JzjgFLbA=
+X-Gm-Gg: ASbGnctKyxsyw7SrIvpozsO+6DiQOLxyXnfF8zEbSQHFDYztlTbIsU2/0J6R2wzgp/G
+ QLNkahpPD+/l03NYlc3bnpu8f4+CMH5eXLUqj1QgOo9G24VoD+kdBGGB5r2EC0w4PoK7rtxBWOp
+ 1yUx6aTJxtcg6QdU5rp1ovudqmSaCFIGwcaHijh1tvmhymbhyziRRwViuCxLGECtI5xWPv2emkg
+ q0a6bQP7a2kcft369qbseSN/Xe/UFQ6EgmPrpSOXsYH0KHy8UhnOqc19TlC+Oat25q+0isbtbpA
+ WjC+kFkqbJtyLAxCOSqJwHtsyAnZ9ismAuOq4QJ9PZRjYfdia94LiAyaZGW6l5J3w82IxqT68Y3
+ boeOjOS2QqDDDc2AMF+lT0y5nK3ErUUaZX/flSsLg7V6vGIgX2hlMN88Y+54KtEqzFoDWXxox2C
+ q5jejKl4TdyRvLkWfGfuLio2cDBcx9paTcyhtDhIfEYB10P3P10ymC3g==
+X-Google-Smtp-Source: AGHT+IG5qKbBUnee6OpI7Hz82b7NS/YhuXzmiLtycdzsZLb4Vl7yUoGyxXEkSzUc3z6osCZHVvsV4g==
+X-Received: by 2002:a05:6000:22c6:b0:3f0:2ab8:710f with SMTP id
+ ffacd0b85a97d-42704d83514mr10124474f8f.8.1761076698126; 
+ Tue, 21 Oct 2025 12:58:18 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c428a5bcsm8688745e9.7.2025.10.21.12.57.44
+ 5b1f17b1804b1-475c4342373sm9177905e9.12.2025.10.21.12.58.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 12:57:44 -0700 (PDT)
-Message-ID: <c69f0494-e4b1-4107-adc4-5abd1d258742@linaro.org>
-Date: Tue, 21 Oct 2025 21:57:44 +0200
+ Tue, 21 Oct 2025 12:58:17 -0700 (PDT)
+Message-ID: <76792ed3-6bed-43cc-ac4f-d3ce71f2c4b9@linaro.org>
+Date: Tue, 21 Oct 2025 21:58:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/25] target/i386: call plugin trap callbacks
+Subject: Re: [PATCH v8 11/25] target/m68k: call plugin trap callbacks
 Content-Language: en-US
 To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
+Cc: Laurent Vivier <laurent@vivier.eu>
 References: <cover.1760884672.git.neither@nut.email>
- <5fb50dd708c97604112c95fcf33045cfe215901a.1760884672.git.neither@nut.email>
+ <5443bb9ab89d96f0f8670060734226f04d40a668.1760884672.git.neither@nut.email>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5fb50dd708c97604112c95fcf33045cfe215901a.1760884672.git.neither@nut.email>
+In-Reply-To: <5443bb9ab89d96f0f8670060734226f04d40a668.1760884672.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
@@ -106,31 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/10/25 17:14, Julian Ganz wrote:
+On 19/10/25 17:15, Julian Ganz wrote:
 > We recently introduced API for registering callbacks for trap related
 > events as well as the corresponding hook functions. Due to differences
 > between architectures, the latter need to be called from target specific
 > code.
 > 
-> This change places the hook for x86 targets.
+> This change places hooks for Motorola 68000 targets.
 > 
 > Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->   target/i386/tcg/excp_helper.c | 3 +++
->   target/i386/tcg/seg_helper.c  | 4 ++++
->   2 files changed, 7 insertions(+)
-
-
->   G_NORETURN void helper_raise_interrupt(CPUX86State *env, int intno,
->                                             int next_eip_addend)
-> @@ -93,6 +94,7 @@ void raise_interrupt2(CPUX86State *env, int intno,
->                         uintptr_t retaddr)
-
-As a future cleanup, rename raise_interrupt2() -> raise_exception()?
-
->   {
->       CPUState *cs = env_cpu(env);
-> +    uint64_t last_pc = env->eip + env->segs[R_CS].base;
+>   target/m68k/op_helper.c | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
