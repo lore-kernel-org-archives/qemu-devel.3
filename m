@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F793CCD1A7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C06CCD1AF
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBGl6-0001Pm-4f; Tue, 21 Oct 2025 14:06:56 -0400
+	id 1vBGkf-0001NI-Qi; Tue, 21 Oct 2025 14:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vBGl2-0001Pd-Bi
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:52 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vBGka-0001Mt-Jp
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:25 -0400
+Received: from mail-il1-x135.google.com ([2607:f8b0:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vBGky-0008MF-Ti
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:51 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b5a631b9c82so3852889a12.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:06:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vBGkY-0008Kl-Rf
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:24 -0400
+Received: by mail-il1-x135.google.com with SMTP id
+ e9e14a558f8ab-430d0d37fd7so896515ab.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761070007; x=1761674807; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dvLZkVfc1JG+QQQ7InzLgwDS5ubXKKyjx0FX5JlIpks=;
- b=HaybcBTXOUzvhhehtl9H/a8dhmjyUjEgm9wzQSeIqxeV+s4P3pEVzb1jYS2ZRY1xXd
- xTXnXYaHw8AgpQQnrG34hWdxF9oIOhEX0HAZVTCI732h/o3/nmPDl8hTpolgTBkPyhAf
- si0wFN+patLL9Tjtc9aJ7uJpN3G4eFTHm3ti/WIU+aQrUSjKtq0h3fSFwCYg+9w2I/40
- ntFJsfDVuVWZQygVIOkS2DAPTT5CK0yaILooEB3xhNjxn70DTzrZOXr5yZ3ZgnTuqz6R
- RVJbTvmBeZs7PT3R1HLMhdPfbBAovFDxT2DrPWCLnctafIWsRi2UbBNa++7Jq635hlmP
- 3sQw==
+ d=gmail.com; s=20230601; t=1761069981; x=1761674781; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sufgHMdCMhpSWkImek1HLx/zIK/9XVZ1Oufl0EUUyXY=;
+ b=HhMRIR7CnvC0XARdzt/r08fvHnVeZdpTIutwwKw12H62MCmsLG1hq2skJIqsggdtLJ
+ dLPBWHxNwm5OkOdV0n6w7g+im6vP1YOoPiotrp00wc9O5b/BFraa3TJ5gD1tfAAj21Hv
+ l5YtGaArRfe9fWFs0uiAjbXXyq1pBmJsumg+i40F+LZ/QpejS7pgSUiM48ku/tJXJrkN
+ K1dMB7z8BbMwt2Rp7um7PeBb3lGMimBkMkEst/oN+QggFlIzUNWrq1TluaJuesXLMYP8
+ hL5ebIJhQoMbzpTkuazveHydgqrzUyFayTkfjLnO+fh9CsxJY1n9COHwGaXqseSahkvY
+ J+/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761070007; x=1761674807;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dvLZkVfc1JG+QQQ7InzLgwDS5ubXKKyjx0FX5JlIpks=;
- b=IFCF4t4P5hw/Gj+vUyYIMeU7v7O2qFOWh3D0HkEl3rppS0lbgJpwuXh/BJwItsAflC
- HCHyXwi/Dl9aPWgMyDGa/5zPi0dR9DMBsN3A2ftq0bjLaNtxRlmf7/f9Hj4CUbOLrHrq
- dgGgkzJkdlgma+4hgu5dO5IkvfwCXXxRc0KDlBChkwGMaKKDuodh58Ym2LL2xbclTE42
- yF7J/as3NJQXhDVPr3M8MioHQeHeeVNBOh2bQ/pPom4JPDxXgZjNLLb10NpvO94I59Mo
- yKY3V0N1N31uh6ybW5XsqGlrzjQZuoo6hYlisYZQMmvxKEMcaBChVl7wkkKityUyV7Fz
- /j2A==
-X-Gm-Message-State: AOJu0Yw+s+VJ3KDK+fiGBLNMv8c4tPwoQkODWaHfVlEj4HjHUsurECQq
- 36LbN0s5fNzfmaYSvtEch5odL1DiFNq93A/QqF2AdBS/eKFHH2xqrBgByjosQaXb/wA=
-X-Gm-Gg: ASbGncsCctdb9rjlNkgv0lKUGBG8BfTOBePyOFlul3oTeO9iEnf711/X8umDM91zFA4
- BHteYt41hhXHlLB+ko1DeyRAT6bd0s2eOb74Gxih9jDBBUqnBldYF0I5M1fxHIdGiHULgViTYob
- qztvF6m6WDEaQEiP6b0LeoTm2dFCcFZE0Js3xjA0yR4uCO1P5aX6h/hLZ6NZWZ+61ROKFNandZZ
- 9fnkEypxNsPmULs6WCoqgjchWj7eaZ4xwFcjntCDGFKZAhiz3vSvP3rngOUFT2gOR6jU2SHzm4g
- wWkjzWeRSOGAy1JamPrKHrRhsPLagu0UQmTRYXYeJ967+iuB9Ya9USTsZCf+ekbipOE4URrd6ZU
- /hQyVJTcZmnuL53OVSwpI30EQiguzT2xzV6Z5nDPMz1W0Vhh+o7L2llZGBm42uECU+N00W/jdAK
- zKivm+dR78BejEDWZDr5lTg+Y=
-X-Google-Smtp-Source: AGHT+IGivorxOnM+ImIyQsqfmSmlKnBw9ePTEgvNl/qkhwal/Y9DnWmQLBbaotst2zgWZXcU66oZjg==
-X-Received: by 2002:a17:902:e881:b0:269:7c21:f3f8 with SMTP id
- d9443c01a7336-290cb07d394mr256735485ad.39.1761070006431; 
- Tue, 21 Oct 2025 11:06:46 -0700 (PDT)
-Received: from [192.168.68.110] ([189.38.141.22])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-292471d5c0bsm114829805ad.69.2025.10.21.11.06.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 11:06:46 -0700 (PDT)
-Message-ID: <46b6cbff-0dfe-4c77-84a0-cadbb238eab7@ventanamicro.com>
-Date: Tue, 21 Oct 2025 15:06:41 -0300
+ d=1e100.net; s=20230601; t=1761069981; x=1761674781;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sufgHMdCMhpSWkImek1HLx/zIK/9XVZ1Oufl0EUUyXY=;
+ b=S598duyeVsaTn7+LItjv8sLUtMwZ9xDmVFvCfk4vG/amfOulTekW8AHlG/aZVpWydd
+ o6xaUPHam+TTaluNh7A8pb/Pt74McEeS0avuYZUx1YzlYMSXGUilebMDfACHvpSvFD2L
+ W7aGBG/nPNCAV3dTPFwIZBQb1gVPsu7hLu6Zp81LpUXLNtwmgGm8SGxRWGujsN6fMkjw
+ It9iCIbyWi7tYpVkIyT+rxOpQubcva5Apj8DOG0NLYigNnQrQBa+YVSDOXQCI8BhAbaS
+ nCGzChwcceN5/5c4sNd6a4QwbgITmUOXtvWGqY/O4JVBdGeQc6gPLp4Ve4biNWMxPitX
+ 1Cwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWWIZ2o46hGfuNx1i/P3lbu0eHDoYOMe/FmDnjDsapT3CrVcPJNFlp0owK3m0I+5OXklAwVhqJy/coh@nongnu.org
+X-Gm-Message-State: AOJu0Yx/AXKdVhGxg3OU1E3QoUOEGmyfjhV0Mrwd9t35Rx8hFR5MULuk
+ ECmgkR+6ugUtz0jfD0xEngfg72eaN0EJ8FM5NrZ2TchqXCRDE2mmMQ+Ez0rni2gg8auIUlpJhfS
+ a2GZlp0SBiwVqoGjUUj2B3BJl9M5OdVA=
+X-Gm-Gg: ASbGncvM+97xfBB51wga2hNCbSLBI65YIbLp1ejmXqMK3rhp04cYepx7r0d39MfdxF7
+ ukKHjSt0/ss3BtCa/uZzZcNzEJDzaJ65tF2gUizBaY8aiEldyNv4y7QdonSG/uZQFmDjn71oFEs
+ wfSxMXJX8uzI2mCY5SNXpDhSZJvIeeIegQOaW4572nQHsQRtzPaCGYrLhQTGV+ITm4Hisizv/Cd
+ dQBX0JqQjYSrzwEv5e1K/YokausfyLyaJlzBcPyvd7+Q+P/IG5LJ22HGxAafJw8+lSG+VY=
+X-Google-Smtp-Source: AGHT+IG7AwPiaN+L2hlh2ryT/irzWtao5CVgocGktgREFGsHXyVbsU9/ie3AlNvyjuzB27NvFsIkKlLh+LoKiDUz5ZQ=
+X-Received: by 2002:a92:cd8f:0:b0:430:b004:3d5c with SMTP id
+ e9e14a558f8ab-431d309940bmr11408305ab.9.1761069981014; Tue, 21 Oct 2025
+ 11:06:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 04/26] target/riscv: implement MonitorDef HMP API
-To: Peter Maydell <peter.maydell@linaro.org>, alistair23@gmail.com
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20251003032718.1324734-1-alistair.francis@wdc.com>
- <20251003032718.1324734-5-alistair.francis@wdc.com>
- <CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52e.google.com
+References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
+ <20251016114104.1384675-13-vsementsov@yandex-team.ru>
+ <CAFubqFsKOJwD8w_jNRCuyTVs=LytbYF+ZsKTP986g-An-6Pbdw@mail.gmail.com>
+ <a9afaaef-08a9-44cb-b401-b5b3bac1bff4@yandex-team.ru>
+In-Reply-To: <a9afaaef-08a9-44cb-b401-b5b3bac1bff4@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Tue, 21 Oct 2025 14:06:09 -0400
+X-Gm-Features: AS18NWAa9VPDXW8jrBcsCWFh_vHDpp1r1dXj5laE7vDWzVcrQKZre1hTwNSwbw0
+Message-ID: <CAFubqFvQY_FN2yTJz_Yyf0AVhjFjPXfE5ndn3o6OhDP375mn9w@mail.gmail.com>
+Subject: Re: [PATCH v2 12/25] vhost-user-blk: move first vhost_user_blk_init()
+ to _realize()
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
+ mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ steven.sistare@oracle.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
+ jasowang@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::135;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,99 +105,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+ACK on your point. One more question about setting s->connected =3D false.
 
+On Tue, Oct 21, 2025 at 12:29=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 21.10.25 02:35, Raphael Norwitz wrote:
+> > On Thu, Oct 16, 2025 at 7:48=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+> > <vsementsov@yandex-team.ru> wrote:
+> >>
+> >> We'll need to postpone further connecting/reconnecting logic to the
+> >> later point to support backend-transfer migration for vhost-user-blk.
+> >> For now, move first call to vhost_user_blk_init() to _realize() (this
+> >> call will not be postponed). To support this, we also have to move
+> >> re-initialization to vhost_user_blk_realize_connect_loop().
+> >>
+> >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru=
+>
+> >> ---
+> >>   hw/block/vhost-user-blk.c | 17 ++++++++++++++---
+> >>   1 file changed, 14 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> >> index 36e32229ad..af4a97b8e4 100644
+> >> --- a/hw/block/vhost-user-blk.c
+> >> +++ b/hw/block/vhost-user-blk.c
+> >> @@ -464,14 +464,12 @@ static int vhost_user_blk_realize_connect(VHostU=
+serBlk *s, Error **errp)
+> >>       DeviceState *dev =3D DEVICE(s);
+> >>       int ret;
+> >>
+> >> -    s->connected =3D false;
+> >> -
+> >>       ret =3D qemu_chr_fe_wait_connected(&s->chardev, errp);
+> >>       if (ret < 0) {
+> >>           return ret;
+> >>       }
+> >>
+> >> -    ret =3D vhost_user_blk_init(dev, true, errp);
+> >> +    ret =3D vhost_user_blk_connect(dev, errp);
+> >>       if (ret < 0) {
+> >>           qemu_chr_fe_disconnect(&s->chardev);
+> >>           return ret;
+> >> @@ -501,7 +499,16 @@ static int vhost_user_blk_realize_connect_loop(VH=
+ostUserBlk *s, Error **errp)
+> >>               error_prepend(errp, "Reconnecting after error: ");
+> >>               error_report_err(*errp);
+> >>               *errp =3D NULL;
+> >> +
 
-On 10/21/25 12:23 PM, Peter Maydell wrote:
-> On Fri, 3 Oct 2025 at 04:29, <alistair23@gmail.com> wrote:
->>
->> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>
->> The MonitorDef API is related to two HMP monitor commands: 'p' and 'x':
->>
->> (qemu) help p
->> print|p /fmt expr -- print expression value (use $reg for CPU register access)
->> (qemu) help x
->> x /fmt addr -- virtual memory dump starting at 'addr'
->>
->> For x86, one of the few targets that implements it, it is possible to
->> print the PC register value with $pc and use the PC value in the 'x'
->> command as well.
->>
->> Those 2 commands are hooked into get_monitor_def(), called by
->> exp_unary() in hmp.c. The function tries to fetch a reg value in two
->> ways: by reading them directly via a target_monitor_defs array or using
->> a target_get_monitor_def() helper. In RISC-V we have *A LOT* of
->> registers and this number will keep getting bigger, so we're opting out
->> of an array declaration.
->>
->> We're able to retrieve all regs but vregs because the API only fits an
->> uint64_t and vregs have 'vlen' size that are bigger than that.
-> 
-> Hi; Coverity complains about these functions
-> (CID 161401, CID 1641393):
-> 
->> +static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
->> +                                 target_ulong *val, bool is_gprh)
->> +{
->> +    const char * const *reg_names;
->> +    target_ulong *vals;
->> +
->> +    if (is_gprh) {
->> +        reg_names = riscv_int_regnamesh;
->> +        vals = env->gprh;
->> +    } else {
->> +        reg_names = riscv_int_regnames;
->> +        vals = env->gpr;
->> +    }
->> +
->> +    for (int i = 0; i < 32; i++) {
->> +        g_autofree char *reg_name = g_strdup(reg_names[i]);
->> +        char *reg1 = strtok(reg_name, "/");
->> +        char *reg2 = strtok(NULL, "/");
->> +
->> +        if (strcasecmp(reg1, name) == 0 ||
-> 
-> Coverity complains because we call strtok() to get reg1,
-> and that might return NULL, but strcasecmp() wants a
-> non-NULL pointer.
-> 
-> Similarly with the use of strtok() in reg_is_u64_fpu().
-> 
-> We could fix this with an assert(reg1) since the
-> names are compile-time fixed and it would be an error
-> for the string to be empty.
-> 
-> But taking a step back, strtok() isn't thread safe.
-> Maybe we should use g_strsplit() instead ?
-> 
-> More speculatively, do we need to care about locale here?
-> strcasecmp() does a locale-aware comparison, which is
-> probably not what we want. (Notoriously Turkish locales
-> don't have the upper/lowercase mapping you would expect
-> for "i" and "I".) glib has a g_ascii_strcasecmp() which
-> might be helpful here.
+Having removed setting s->connected =3D false from
+vhost_user_blk_realize_connect() we will now only set s->connected =3D
+false here in the if (*errp) {} error path. Shouldn't we also set
+s->connected =3D false outside the error path here or in
+vhost_user_blk_device_realize()?
 
-I don't mind doing both changes. I'll see if things are still working as
-expected after doing them and send a fix.
+> >> +            s->connected =3D false;
+> >> +
+> >> +            ret =3D vhost_user_blk_init(dev, false, errp);
+> >> +            if (ret < 0) {
+> >> +                /* No reason to retry initialization */
+> >> +                return ret;
+> >> +            }
+> >>           }
+> >> +
+> >>           ret =3D vhost_user_blk_realize_connect(s, errp);
+> >>       } while (ret < 0 && retries--);
+> >>
+> >> @@ -566,6 +573,10 @@ static void vhost_user_blk_device_realize(DeviceS=
+tate *dev, Error **errp)
+> >>       s->inflight =3D g_new0(struct vhost_inflight, 1);
+> >>       s->vhost_vqs =3D g_new0(struct vhost_virtqueue, s->num_queues);
+> >>
+> >
+> > Why call vhost_user_blk_init() here if we call it in
+> > host_user_blk_realize_connect_loop()?
+>
+> To be able to postpone the whole realize-connect-loop to the later
+> point (not in realize) in further commits.
+>
+> So this first init will stay in realize, for early initialization of the =
+device.
+>
 
-And thanks for the analysis and heads up! I saw the Coverity Scan email in
-my inbox today and haven't opened it yet. Seems like I'm on the hook for
-CID 161401 and CID 1641393.
+Makes sense - I missed that vhost_user_blk_init() is only called in
+the error path.
 
-
-Daniel
-
-> 
->> +            (reg2 && strcasecmp(reg2, name) == 0)) {
->> +            *val = vals[i];
->> +            return true;
->> +        }
->> +    }
->> +
->> +    return false;
->> +}
-> 
-> thanks
-> -- PMM
-
+> >
+> >> +    if (vhost_user_blk_init(dev, false, errp) < 0) {
+> >> +        goto fail;
+> >> +    }
+> >> +
+> >>       if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
+> >>           goto fail;
+> >>       }
+> >> --
+> >> 2.48.1
+> >>
+> >>
+>
+>
+> --
+> Best regards,
+> Vladimir
 
