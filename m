@@ -4,81 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DD3CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805D9CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBAfn-0003oM-JS; Tue, 21 Oct 2025 07:37:03 -0400
+	id 1vBAiD-0004ml-VP; Tue, 21 Oct 2025 07:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBAff-0003na-7B
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:36:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBAi7-0004mB-Ku; Tue, 21 Oct 2025 07:39:28 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBAfZ-0008V8-Pw
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:36:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761046599;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=q9P2A02qk1hJkWtOHE6LNT+E/1tpKEatH+3vX8IiLIg=;
- b=Nw1AprAciV8ZyM+k3t+QleqJU2VUHfdCJASPtJC9IyBY8yrER6cbdBs3YY+Pc5z3lr/Uit
- C/7kQuGZuOhhV9yAlwdUlF6PA6Pu4zVFJI+6Qii6EDBcToaHjdW9XvbsNh/6sSbosGY8H2
- rOlhWU8xal/KqbESl2xxpjIfD8H5oGg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-ioV5v2KVOhe3LPQIDL05gQ-1; Tue,
- 21 Oct 2025 07:36:37 -0400
-X-MC-Unique: ioV5v2KVOhe3LPQIDL05gQ-1
-X-Mimecast-MFC-AGG-ID: ioV5v2KVOhe3LPQIDL05gQ_1761046596
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1CC41956058; Tue, 21 Oct 2025 11:36:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B133C195419F; Tue, 21 Oct 2025 11:36:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4138A21E6A27; Tue, 21 Oct 2025 13:36:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- peterx@redhat.com,
- stefanb@linux.vnet.ibm.com,  farosas@suse.de,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration: vmsd errp handlers: return bool
-In-Reply-To: <c11428cf-5ca1-40c4-a098-2d23d9fd8b04@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Mon, 20 Oct 2025 21:43:45 +0300")
-References: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
- <87347d7s0j.fsf@pond.sub.org>
- <0ce2f913-36c2-44a2-8141-256ff847529d@yandex-team.ru>
- <aPYfqzljT3q2noDb@redhat.com> <871pmxskug.fsf@pond.sub.org>
- <7d059286-f6a2-4dae-8af1-78a3c1fc5cb4@yandex-team.ru>
- <87zf9lplvc.fsf@pond.sub.org>
- <c11428cf-5ca1-40c4-a098-2d23d9fd8b04@yandex-team.ru>
-Date: Tue, 21 Oct 2025 13:36:32 +0200
-Message-ID: <871pmwo5a7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBAi2-0000FA-EZ; Tue, 21 Oct 2025 07:39:26 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KMn6ew017502;
+ Tue, 21 Oct 2025 11:39:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ObN/jW
+ yz7jZQNGrgvSTAzT/wTutn7xnYw0hdm2qBObw=; b=U5rLIf7iLlvnPRY5oSGNIX
+ LzZlhQrPq7jsg5rDOoenwaKAGmn4Zth5nTV7jRNcstdtEyOiLK2nYgausHjV7SGj
+ G/+fg3xrq+q+dO4dV/HJvvUzg/ZheX/XMO4ABf+pG/FDfltrbyu8ZIaFr+qiD37B
+ /MvuNqMCLFfatiSdUopeRYUtYGo9vT52WvNn4UhcnHcTCCa8Hp4ZW3HB3obaPoKE
+ EfzZD5QMJnysIIbsgFN6uUQuy8RFx041o89iq0aUqrRQOhJ+w2KjatioVRljiX3t
+ 9BNUWQ1C6ICap+UHgjgPAuSHFs1n03xHEs2GAG/l1nYm5tfWSDGh2oZ/A9fFbdIw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vncp6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:39:18 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LBbfiv018048;
+ Tue, 21 Oct 2025 11:39:17 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vncp3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:39:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8x7uO011049;
+ Tue, 21 Oct 2025 11:39:17 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx126eg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:39:17 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LBdGLm31588914
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 11:39:16 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 997555805A;
+ Tue, 21 Oct 2025 11:39:16 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C828258051;
+ Tue, 21 Oct 2025 11:39:13 +0000 (GMT)
+Received: from [9.79.201.141] (unknown [9.79.201.141])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 21 Oct 2025 11:39:13 +0000 (GMT)
+Message-ID: <028fdb03-7bee-4a76-932e-a9247db2f2ac@linux.ibm.com>
+Date: Tue, 21 Oct 2025 17:09:11 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/11] target/ppc/kvm: Remove kvmppc_get_host_model()
+ as unused
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20251021084346.73671-1-philmd@linaro.org>
+ <20251021084346.73671-8-philmd@linaro.org>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20251021084346.73671-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: OVF4HSMUdKU4xD4M7yuaZHQSyX2ecGbI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX4vncOItRNi2d
+ CaKERxfIYEBxGH+vspKGf1Eogx7Op4/isnCS+wwyiDnTF6zQkf93qMvY17aB0FGMfl1VK6UnATQ
+ FMfSkCbB/NGl0amXqf5WHat5pbSrZrZTfgjhHzXVSrV1abaaVD6GYMBLEGdr5Lf32BuzRYq2J9H
+ LmtsugNBPcymXRk2GwHlc4UCQA4JXRAKGFs66Ipkd4dFbIL6VIrIDmjB6Picua7ughWzfSbwt35
+ C3NHw62EMbMKojT3+LTr5KoVjJdd9Q1t2MkDQt2StV7dhigK3bX0SwvUPe18r6aAA313CnUMMQy
+ c+QwECZz0SFWg6NMZQrEx+I5gLqQX+GCSUrDhgvjgIEJ7tnFwXK4+QMr7dxtUmuad76ttTzhBSY
+ c2609UvahKWtf4RANW5HOk90Plxzbw==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f770e6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=cvRlsbrwNaNk8C4OaOUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: VFnuAz9LCY3QvhfgGYR41l5ntqgq0HH2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,140 +132,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> On 20.10.25 19:40, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>=20
->>> On 20.10.25 17:34, Markus Armbruster wrote:
->>>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-[...]
-
->>>>> IMHO if a method is using "Error **errp", then it should be considered
->>>>> forbidden to return 'errno' values.
->>>>
->>>> Several subsystems disagree :)
->>>
->>> I'd vote, that in 99% (or more) cases, they don't reasonably disagree,
->>> but blindly follow usual pattern of returning -errno together with
->>> errp, while having no reasonable contract on concrete errno values,
->>> and with this errno finally unused (used only to check, it is it < 0,
->>> like boolean). In other words, the only contract they have is
->>> "< 0 is error, otherwise success".
->>
->> Functions that could just as well return -1 instead of errno exist.
->>
->> Functions that return negative errno with callers that use them also
->> exist.
+On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/ppc/kvm_ppc.h | 6 ------
+>   target/ppc/kvm.c     | 5 -----
+>   2 files changed, 11 deletions(-)
 >
-> But do functions that return negative errno together with errp, with
-> callers that use this errno exit? I don't ask to find, that's not simple.
-> I just say, that I myself don't know any of such functions.
->
->
-> upd: I found two!
->
-> how:
->
-> 1. git grep -A 20 'ret =3D .*errp)'
-> 2. in opened pager, do `/if \(ret =3D=3D -E`
->
->
-> in iommufd_cdev_autodomains_get() we do something just wrong: we clear er=
-rp
-> after iommufd_cdev_attach_ioas_hwpt(), but return false, which is treated
-> as error (but with cleared errp!) by callers...
-
-Returning failure without setting an error is commonly wrong, and when
-it's not, it's a bad interface.  However, I can't see how this function
-could do that.  Can you enlighten me?
-
-> in qemu_read_default_config_file() we do correct thing, but keeping in mi=
-nd,
-> that it's very seldom practice (around one case), we'd better add a boole=
-an
-> parameter to qemu_read_config_file(), and parse errno exactly after call =
-to
-> fopen().
-
-In my opinion, this function is just fine.  There are of course other
-ways to skin this cat.
-
-> trying with local_err gives a bit more:
->
-> git grep -A 20 'ret =3D .*&\(local_\)\?err)' | grep 'ret =3D=3D -E'
-> block.c-    if (ret =3D=3D -ENOTSUP) {
-> block.c-    if (ret =3D=3D -EFBIG) {
-> block/snapshot.c-    if (ret =3D=3D -ENOENT || ret =3D=3D -EINVAL) {
-> hw/core/loader-fit.c-    if (ret =3D=3D -ENOENT) {
-> hw/scsi/megasas.c-        assert(!ret || ret =3D=3D -ENOTSUP);
-> hw/scsi/mptsas.c-        assert(!ret || ret =3D=3D -ENOTSUP);
-> hw/usb/hcd-xhci-pci.c-        assert(!ret || ret =3D=3D -ENOTSUP);
-> hw/vfio/pci.c-        if (ret =3D=3D -ENOTSUP) {
-> nbd/server.c-    } while (ret =3D=3D -EAGAIN && !client->quiescing);
-> nbd/server.c-    if (ret =3D=3D -EAGAIN) {
-> nbd/server.c-    if (ret =3D=3D -EIO) {
-> qemu-img.c-        if (ret =3D=3D -ENOTSUP) {
->
->
-> I still think, that these are very seldom cases, some of them are just wr=
-ong,
-> some make sense, but their contract may be simplified.
->
->> I'm not going to speculate on relative frequency.
->>
->> I much prefer written function contracts.  But if a caller relies on
->> negative errno codes, there is an unwritten contract whether we like it
->> or not.
->
-> Agree.
->
-> I just want to say, that usual pattern
->
-> int func1(..., Error *errp) {
->     ...
->     ret =3D func2(..., Error *errp);
->     if (ret < 0) {
->         return ret;
->     }
->     ...
-> }
->
-> is very error-prone, if func1 has some unwritten contract about _differen=
-t_
-> errno values. As this unwritten contract may be easily broken somewhere
-> in the stack, not exactly in func1.
-
-I readily concede:
-
-(1) If func() lacks a written contract, passing on func2()'s value makes
-the implied contract harder to see.
-
-(2) If func() has a written contract, passing on func2()'s value makes
-it harder to verify, and easier to break accidentally.
-
-(3) When no caller needs to discriminate between different errors,
-returning -1 or false results in a slightly simpler interface.
-
-Still, has this plagued us in practice?
-
-The only issue in this area that has plagued me enough to remember is
-functions returning both -1 and negative errno.  Which works fine as
-long as callers only check for negative, but is in my opinion
-intolerably sloppy.  Whether the function takes an errp or not doesn't
-matter.
-
-I don't think a blanket prohibition of returning negative errno makes
-sense.  Discouraging it maybe, but given how rarely it's done, I doubt
-it's worth the bother.
-
-Do feel free to send patches to simplify interfaces regardless.
-
->>>> Quick & dirty search without a claim to accuracy or completeness:
->>>>       $ git-ls-files \*.[ch] | xargs awk '/, Error \*\*errp/ { on=3D1 =
-} on && /return -E/ { print FILENAME ":" FNR ":" $0 } /^}/ { on=3D0 }'
->>
->> [...]
-
+> diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+> index f24cc4de3c2..742881231e1 100644
+> --- a/target/ppc/kvm_ppc.h
+> +++ b/target/ppc/kvm_ppc.h
+> @@ -21,7 +21,6 @@
+>   
+>   uint32_t kvmppc_get_tbfreq(void);
+>   uint64_t kvmppc_get_clockfreq(void);
+> -bool kvmppc_get_host_model(char **buf);
+>   int kvmppc_get_hasidle(CPUPPCState *env);
+>   int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
+>   int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
+> @@ -128,11 +127,6 @@ static inline uint32_t kvmppc_get_tbfreq(void)
+>       return 0;
+>   }
+>   
+> -static inline bool kvmppc_get_host_model(char **buf)
+> -{
+> -    return false;
+> -}
+> -
+>   static inline uint64_t kvmppc_get_clockfreq(void)
+>   {
+>       return 0;
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index cb61e99f9d4..43124bf1c78 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -1864,11 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
+>       return cached_tbfreq;
+>   }
+>   
+> -bool kvmppc_get_host_model(char **value)
+> -{
+> -    return g_file_get_contents("/proc/device-tree/model", value, NULL, NULL);
+> -}
+> -
+>   /* Try to find a device tree node for a CPU with clock-frequency property */
+>   static int kvmppc_find_cpu_dt(char *buf, int buf_len)
+>   {
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
 
