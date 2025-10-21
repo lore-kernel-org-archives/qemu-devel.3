@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45492CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAAECCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJHm-0008M0-NF; Tue, 21 Oct 2025 16:48:50 -0400
+	id 1vBJHM-0006mR-08; Tue, 21 Oct 2025 16:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHk-00089X-Bq
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:48 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHJ-0006eM-Mg
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:21 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHf-0001A3-HD
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:48 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so40256245e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:48:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHF-00019G-JS
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:21 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3ee130237a8so3922469f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079708; x=1761684508; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079694; x=1761684494; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lWr7qEOB0Wvdd9KbFII+oaJFwDA5Ps8upXl6LmkSiEU=;
- b=wIuaSOFIMQaxhZ4Ji8o+gPYgYDw9HI35ItrMHm6q0VuZM2d4lVrx10tKwMIj6eg8jf
- lLQ5OQf5Quhj3aCeih2/fh+jJu2VR5bQ1Rg9ioJ7Pa6mW3pTzPoSIhvZThSjnYhVJMwK
- 0gE/5cSex0gBYWOyoufxtu60fERw/vMPgGcUBa9k4yK9SxfVtpgFp50FMFgKg9t4HXE0
- YUY13PnUTP2QQU2qRAomIMGy53v8G9EGH8dWJCRDofQP8y4t5NkzBlv93TKAEd489mM1
- Vb+s5O9mqI27o5Tnb9DnwXtssGWkKDPUrxHpNF6MPhM58ZyPp9SDsqmomwfochTgqbf1
- 222A==
+ :reply-to; bh=Q+nGj84oA5Nf5HI4XwQsUpDQo9dIo/p1hzBMc/Uthic=;
+ b=ghgZjyuvcFcF0/0LFBEMC3V3P5BXQIep9kX1rnXhty3WxiMKfOzk8JTcxVzkXD6n2l
+ NRxztGreg6DMIhoL0ocbe5L61D+4c42D5vNOGPLSyBXzG9kNb3LIKApL+CKRm04Foe1I
+ WheeOiOQnAgoJdmeVduuKag91ISrXzaS0Q/f2ECewaoOig3GuR5y8agQtqa3qQnjdfdw
+ HurNQJrxhseOrycHUvzrkUjyxcOdq59SjnsyVqsxXfh+gZV4RbYpGgfD5HCYuuHqJGJh
+ U+bYxcbDjbI2kRkrk+wIQGetVt0VCKPHE03pPsDJ+i03yNL9Re9qmoaXGn1yXYbRJnc7
+ yLfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079708; x=1761684508;
+ d=1e100.net; s=20230601; t=1761079694; x=1761684494;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lWr7qEOB0Wvdd9KbFII+oaJFwDA5Ps8upXl6LmkSiEU=;
- b=q1PvG8VdECJR+aDmspxFdPY5YpEhrW+Qcn54pdjRudERcwCNG7ji2IhsnImAmNdzoS
- lSnUpP8wg7RFN079cizAcGeTeNrRIU5x1i2EJfPvIsiber5D0y934z/L6dCrkjsJRmQD
- zphwE4+Nz3n0Jqdc3gha2Qdioq+9K10SDlWuNac4a5OwgER9+unocN9WYWorNkm5gfFO
- boiburhPCqIdPaFk7zXvkOOXlA8dnGrMZskga2p4Fq+mQd432YpFrTC1msM2CClC25ax
- OpCWV31SugFC0R+bn1uH3uvIgL2AOYcrGCrGRAvKguEJEK/Em9mgosDVQtxf6HZ7ZAI5
- iI4w==
-X-Gm-Message-State: AOJu0Yz61aRotw9Ev0JwLV3DKQcTZJ2z9CRtN0l4uS2aifPuQbA21vN3
- nr2objT26GyM9A7IMzrR6L0Dc6+n7reyT+59FhjHfW6ytgDe9uze9SgGxuCGttTgf5BEsL3LsYC
- b+qUB2OI=
-X-Gm-Gg: ASbGncs/Yco7V6Rl4sqtzlxP3lVcSmRlTZx2iJj+UBeJNTPq+FIr0MQ+ADk6/pTnigo
- OxRL73X9CfxP4JNLLL9auZwNH2TFcE26KkTHlwUtUAT8n+lN5KrXXZ4tDTvx56WpJeogfbyfIjS
- 5JvI/mj4lbRuE4OdicUMi1a7YccFNTzz3Tsb2XqfOLJFnwJq0+c+a+9wgEkuPAob99gBGpWyr+W
- mj5FlOjRqJtWr3mSJHiP/7koRTqN652LP05JJ9PlkWoby1AWh7b//ETTR+Vb90ms+2uDUe6CYAt
- 8s0r6XQxGaFzhBslhzN89Q0TEamOQgXXz7nfOJMnj8NYuHygD1JRd4ERzRffJuChPqu43CUUVJD
- duzgcYMWrQ9YFqp8pxzoE16YWSIYvDd6GOuTnWqp00gqa7D74B96dhvi4XVZGvDfJo60qvSkd7b
- 5udhUDduUeqN08Rh3YIsCnLK9JR6c1wugAN9MAKdC+BO7O698bMlCiKmJg1u0Q
-X-Google-Smtp-Source: AGHT+IHktbrj0wKz0uueX9HDEMPfrSrxwKAIdGEAQhgBb6Dka2ESQ9O2jE00dpxIS4WpA0CKySfQlw==
-X-Received: by 2002:a05:600c:4e89:b0:45d:dc85:c009 with SMTP id
- 5b1f17b1804b1-471178a236cmr128546155e9.10.1761079708023; 
- Tue, 21 Oct 2025 13:48:28 -0700 (PDT)
+ bh=Q+nGj84oA5Nf5HI4XwQsUpDQo9dIo/p1hzBMc/Uthic=;
+ b=Hm86biZQ/s9eNgcmpuTjrQWczgm2epUtgrCnHLjq0COHPcydQnjVUC/tRhv5aqScYG
+ Hm5H1TAPfegv/Hw2VRpjmX5lz24SZuS9BKQQI70bXkDqK8WtOYpvq0c/TkoS+oqmGOmp
+ EgE6UTa6VxOvUnOqzY30VaJcMKYPcdDiM96GY3FDxbnR3wkfnVR/QydZtF86mWZCHvNF
+ j/rIx4LOT09XkTAp19zYp1q+PK5mSMLzKtc5pS7qDeZMi2gLOIzxRLlezQCtW6XtPlzl
+ fzBX5ObTDugbpWhalfJQ0Uyx19SUHzkiTwh/j3RwWCZ4n6bCQA4Y9fJqAEbXI/bk5/b2
+ Skww==
+X-Gm-Message-State: AOJu0Yx7m3P5jkPf1R41fvdxjBI6/eAYKU2VI3YUxKSTVniB5iNFoOAz
+ EZ3S6fvJ06tWE9UBH46B5lw2YYGXUG+2+poo4xQ+nnu7ZXCIFhbTV/T41zI8L8zbUIj7euRTZlG
+ SCVaKIIw=
+X-Gm-Gg: ASbGncsdOzdA2WIAKYxKtAD8IItfcyuEuipAowgCrlkYf/xvkxP8uFlkuZrr+rG6QJs
+ 1LdeLh2iGucLHSe7Vcma78ywzwhXbTpsIYMZQGRTMiiB+HNsM+kmNvokxLWpXON9LLbFLvsatp+
+ a3rdhCUM9NVLV9Q8d0+HAxhPb6fjdnOPFU+aoaGAy4+fer7YPhWdUyFb19+B2yEO+H2g1AoSjV4
+ Jn79bskE6UmtqFPKUF5TIkNGg06YttDnEWvsT++Bou0P/85i+3tprdlFWooDuAAWsnfdL/ygMBG
+ H9TtaDugjj4UP9thT4yth+FuBwAOKxmacEZRUAkY4XshH0Hzic98BMZXkFXqjrI7vcdAeBSDVPB
+ Daxr1wHOc0TAjqos8jUFxCb65RF1DFCCjAvDFR1arl2oqk3UShG4vFaF9cdP3yxRRyqBBFlTWvA
+ YTusJPi+cjhdmMeFjyy1uij3BDspRpMoREKnaMoRacbXvyW1laOQ==
+X-Google-Smtp-Source: AGHT+IHHbxFhLgwcCn6aezB1693narYiwd2irD1vYqde0u/HTlK17e1WmlBn706iGD4kVPiO0Wy+Yw==
+X-Received: by 2002:a05:6000:1884:b0:3e5:394d:10bb with SMTP id
+ ffacd0b85a97d-42704defebdmr12687402f8f.41.1761079694524; 
+ Tue, 21 Oct 2025 13:48:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c427c3ecsm10317625e9.2.2025.10.21.13.48.27
+ ffacd0b85a97d-427f00b9fa8sm22364672f8f.38.2025.10.21.13.48.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:48:27 -0700 (PDT)
+ Tue, 21 Oct 2025 13:48:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/45] hw/core/register: add the REGISTER_ARRAY type
-Date: Tue, 21 Oct 2025 22:46:32 +0200
-Message-ID: <20251021204700.56072-19-philmd@linaro.org>
+Subject: [PULL 15/45] hw/openrisc/openrisc_sim: Avoid buffer overflow build
+ error
+Date: Tue, 21 Oct 2025 22:46:29 +0200
+Message-ID: <20251021204700.56072-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,113 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luc Michel <luc.michel@amd.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-Introduce the REGISTER_ARRAY QOM type. This type reuses the existing
-RegisterInfoArray struct. When `register_init_block' is called, it creates
-a REGISTER_ARRAY object and parents it to the calling device. This way
-it gets finalized when the device is. The memory region is parented to
-the REGISTER_ARRAY object to ensure correct finalizing order.
+Resolves this build breakage (which is actually a false-positive)
 
-The finalize function of the REGISTER_ARRAY type performs the necessary
-cleaning that used to be done by `register_finalize_block'. The latter
-is left empty and will be removed when all the register API users have
-been refactored.
+../hw/openrisc/openrisc_sim.c: In function ‘openrisc_sim_init’:
+../hw/openrisc/openrisc_sim.c:284:45: error: ‘__builtin___snprintf_chk’ output may be truncated before the last format character [-Werror=format-truncation=]
+     snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+                                             ^
+In file included from /usr/include/stdio.h:964:0,
+                 from /data/qemu/include/qemu/osdep.h:114,
+                 from ../hw/openrisc/openrisc_sim.c:21:
+/usr/include/bits/stdio2.h:54:10: note: ‘__builtin___snprintf_chk’ output between 8 and 9 bytes into a destination of size 8
+   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        __glibc_objsize (__s), __fmt,
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        __va_arg_pack ());
+        ~~~~~~~~~~~~~~~~~
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Message-ID: <20251017161809.235740-3-luc.michel@amd.com>
+by using a modern, more robust allocation pattern.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <298bd904-1ee9-439e-8220-7a24e0952861@siemens.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/register.h |  4 ++++
- hw/core/register.c    | 26 ++++++++++++++++++++++----
- 2 files changed, 26 insertions(+), 4 deletions(-)
+ hw/openrisc/openrisc_sim.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/hw/register.h b/include/hw/register.h
-index 4d13ea183c7..65c82600e06 100644
---- a/include/hw/register.h
-+++ b/include/hw/register.h
-@@ -83,6 +83,8 @@ struct RegisterInfo {
-     void *opaque;
- };
- 
-+#define TYPE_REGISTER_ARRAY "qemu-register-array"
-+OBJECT_DECLARE_SIMPLE_TYPE(RegisterInfoArray, REGISTER_ARRAY)
- 
- /**
-  * This structure is used to group all of the individual registers which are
-@@ -96,6 +98,8 @@ struct RegisterInfo {
-  */
- 
- struct RegisterInfoArray {
-+    Object parent_obj;
-+
-     MemoryRegion mem;
- 
-     int num_elements;
-diff --git a/hw/core/register.c b/hw/core/register.c
-index 2553cb15aba..1612ad174f9 100644
---- a/hw/core/register.c
-+++ b/hw/core/register.c
-@@ -245,10 +245,16 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
-                                               size_t data_size_bits)
+diff --git a/hw/openrisc/openrisc_sim.c b/hw/openrisc/openrisc_sim.c
+index 880c8ebbb8b..b7d9cdd9007 100644
+--- a/hw/openrisc/openrisc_sim.c
++++ b/hw/openrisc/openrisc_sim.c
+@@ -247,10 +247,10 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+                                      OpenRISCCPU *cpus[], int irq_pin,
+                                      int uart_idx)
  {
-     const char *device_prefix = object_get_typename(OBJECT(owner));
--    RegisterInfoArray *r_array = g_new0(RegisterInfoArray, 1);
-+    Object *obj;
-+    RegisterInfoArray *r_array;
-     int data_size = data_size_bits >> 3;
++    g_autofree char *alias = g_strdup_printf("serial%d", uart_idx);
+     void *fdt = state->fdt;
+     char *nodename;
+     qemu_irq serial_irq;
+-    char alias[sizeof("serial0")];
      int i;
  
-+    obj = object_new(TYPE_REGISTER_ARRAY);
-+    object_property_add_child(OBJECT(owner), "reg-array[*]", obj);
-+    object_unref(obj);
-+
-+    r_array = REGISTER_ARRAY(obj);
-     r_array->r = g_new0(RegisterInfo *, num);
-     r_array->num_elements = num;
-     r_array->debug = debug_enabled;
-@@ -267,7 +273,7 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
-         r_array->r[i] = r;
+     if (num_cpus > 1) {
+@@ -281,7 +281,6 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
+         /* The /chosen node is created during fdt creation. */
+         qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", nodename);
      }
+-    snprintf(alias, sizeof(alias), "serial%d", uart_idx);
+     qemu_fdt_setprop_string(fdt, "/aliases", alias, nodename);
  
--    memory_region_init_io(&r_array->mem, OBJECT(owner), ops, r_array,
-+    memory_region_init_io(&r_array->mem, OBJECT(r_array), ops, r_array,
-                           device_prefix, memory_size);
- 
-     return r_array;
-@@ -309,15 +315,27 @@ RegisterInfoArray *register_init_block64(DeviceState *owner,
-                                data, ops, debug_enabled, memory_size, 64);
- }
- 
--void register_finalize_block(RegisterInfoArray *r_array)
-+static void register_array_finalize(Object *obj)
- {
-+    RegisterInfoArray *r_array = REGISTER_ARRAY(obj);
-+
-     g_free(r_array->r);
--    g_free(r_array);
- }
- 
-+void register_finalize_block(RegisterInfoArray *r_array)
-+{
-+}
-+
-+static const TypeInfo register_array_info = {
-+    .name  = TYPE_REGISTER_ARRAY,
-+    .parent = TYPE_OBJECT,
-+    .instance_size = sizeof(RegisterInfoArray),
-+    .instance_finalize = register_array_finalize,
-+};
- 
- static void register_register_types(void)
- {
-+    type_register_static(&register_array_info);
- }
- 
- type_init(register_register_types)
+     g_free(nodename);
 -- 
 2.51.0
 
