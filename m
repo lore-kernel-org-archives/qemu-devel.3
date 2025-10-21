@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1376CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FADCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJIn-0002m5-Jh; Tue, 21 Oct 2025 16:49:55 -0400
+	id 1vBJJR-00053U-Ow; Tue, 21 Oct 2025 16:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIQ-00029s-Tf
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:49:33 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJJ-0004wn-8A
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:26 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIO-0001Fb-SX
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:49:30 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so40259965e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:49:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJD-0001X9-HN
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:24 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4711f156326so46984295e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:50:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079767; x=1761684567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079814; x=1761684614; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=x+PjU2MklfbFewUcVF0ps3xlghKX/9R0SWTbCRF7v2o=;
- b=vONn6SOLLf31T63h0NQLcJMAF+bvsOJn+o6NJjvOuzEe/tcURPg8EOTUL1brUjaW56
- jEFSotg6WB/8xxGywtU1vi9ySrdvIj1N7LDbPKXokS8rEnXts3xyrXP84AS7zX9eIr/Z
- DoV8MIKcT6SnEcMxspRQ3eqGvChF1gZcvZNkB40udH81/mEeY33mWQPQ31T3gvybJWSv
- zRyussCRPbaM3s7pNX2pBaho8nKRr0XfPR9WzHOjfXct3+Kw2mRdrvzPQ++Owag/OjUh
- huvY/U5hUdq/PfNg/n+ypomwrC6z/YBB02K8bWE8Iv4XrgBrILmnYNgziVEfaHxXb4Sh
- epaQ==
+ :reply-to; bh=oo0V2NSC+Um6jMwrxg0bGYRYcKSTrlyh1iPnhHilHTI=;
+ b=uEN5KHScp8VbtV9T0zn/Q/mAVqNnoHlqdhAcuqWrm1u8uUVmc/wCUsZU76TvhUD41N
+ gWfVnXkvFQXWZCzH5NqBPZukR+Bx2UjzTusH/v/HwLEq4hrgCHBOtLgYXgkuPieF2mvt
+ c5TKCcFwWwYINWjxG9k7PSEVy3x1yjJpG13jzQiWmsvzm7sBewWe3gqtngaOLyly3B3f
+ CLbZPPuwXmuRZiaE+kXbDzdurnrNuX5rk8jVgB1hKI5zps74eG8FumBsPmzM5DyXU9I0
+ 2dncPY0u6kwk2Ez7IoONxP+2ZsCjAZaquDjxgdvNm3NP3hK9poPhohRyWzrzr15M9Afb
+ DJkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079767; x=1761684567;
+ d=1e100.net; s=20230601; t=1761079814; x=1761684614;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x+PjU2MklfbFewUcVF0ps3xlghKX/9R0SWTbCRF7v2o=;
- b=sENpL+JFep2yohyr6gK62yriVVXwOVu3HkXPIcb4MPfkvckeGZPZcuWVecyprX52T5
- w35faHx5hKAVRfEtyGUoXCA/FC8WaHf31/uk1JfdiYnIb1hXmL1cWdmk9SFx9dRYRHop
- qibqEsEZfpdVPTi3dDX8wpxfQT89zYn6JYanApgX/erkIQP9Hnga1TM3POSxTTMIY4ZS
- GZ0xWxwechrKX9+f6Xy2R8wr7ACDDStpDziFu81XzE4oy5jxhTm/K4HVAVZH8BIThuDq
- zGolVw1WGA1oBtNejBQp5VrM1TegharfJytciVbiLZcTu7TYFMEPf7nTqzEgSb2VhQ6H
- tGzg==
-X-Gm-Message-State: AOJu0YyD1sAR63v8QZdI7i2261fbMJz1k2PIJz6P2Bec+oEfCF1ryeb3
- TSsV7Drs+vmu5SyjRgtk00JSAAhOJC4oSBwf+/B7rwYe1OsUu1VBR7BOsENVC1LWbO9L1pCMgnv
- 5U4rQVYI=
-X-Gm-Gg: ASbGncu0UEg0vgnwE0PMHinDkFDXp1vuPGX5TB98bGvLFnrIliguSbRIUD6Haf5H+1X
- EdC176oqmI/tEMyps9YzfFM2+pP7n6GoX4Nr6gw0zes7W+7w6t5ImWbaE5nzP+t5aCN8aNjp/nQ
- +Ns2iazNT1eQCusM2QZTKBOoYtB6fK4G7GMn127lnywVxp9ZDtIe58NM4fQQO/nzf4N1jMg0tkm
- HavjmT8X2pWQNnJolFEug1uYSA0hXx/7yDB+0bGAiuBXsSyLgo5pcUU0HxbfovcOuw17G6eR6Fq
- BstxMAnrcrjEMUJm1XY4c4/OnYXny+E7QxEwUZJ20NnYzwmwD2votVMOhxVAWBGPpuqREmtx6X8
- ShwMXQA2NEo2+O+uF/0nnk/HGS2nSx6fWEjyzQhtZ4JYM5REDu0R+rB57WxlmiXytsgl+bHFyen
- czP26qlpimO+yL1p0+nYQz4kyOGkATfbxfMaRS1KSvCogVCaLJwg==
-X-Google-Smtp-Source: AGHT+IFW8RvIRYkD9WUJa4fXbIu+drS5wxPOWxUAzNAbpM6odumKt2njizWORZ0bW2YSBx0kE/rGSQ==
-X-Received: by 2002:a05:600c:4f95:b0:46e:345d:dfde with SMTP id
- 5b1f17b1804b1-471178ac017mr120956265e9.16.1761079766971; 
- Tue, 21 Oct 2025 13:49:26 -0700 (PDT)
+ bh=oo0V2NSC+Um6jMwrxg0bGYRYcKSTrlyh1iPnhHilHTI=;
+ b=qJh3IVGS8Pj0nPAL+SHNrklnGBqL6e9x9eWvIPK/xZxG4M47gs8S5w9dosxvB0AC2c
+ YCnnTVg0acTeb42D3ssERKNaFDPu9dLfp2HTE837SOT9idD/nsKri2CU3HYLUWEODbe2
+ 5EpLBlrafj+5mD8c/3Su69NwRwihMGvbb+/2978bp4/YuDslln8B7O/P9FSXWCPg4YOi
+ rcLGM4524ra8588VIkYWYCp292Ohm+VGImMJJKJw7DgijdOAsi/zf6V39IzEEzH0NfWe
+ r9qPJ88tVitaIHnMbuE32JVWKFaJJX52hl06Bb6K9M9APLu7oov6n0pG9hti6xn63ywB
+ v0Ow==
+X-Gm-Message-State: AOJu0YwkvZVnZhh+FPRtyQJToPPPXYfR0oHd7GNBFLOUGCPWckdBc14c
+ hiay+XG4D63SJmyUmhwU9J/M3gW+nU8a3GaxRgUjit2se8+NOG3E5YJorzN6oXPtjkMZKeRppVI
+ /NOLHTZY=
+X-Gm-Gg: ASbGncvlFXiW8496zbvKO7UxjArZUt71x0aW6Sz0A4diYA/pGRcGa2xhJ5BMnM0dP4d
+ zTvyXjP7xapMhShbrTCq3E7uqNVEIwksudUXGb51kjyP6BFdNxqDv32GVxNBl2rgaW2646Ri6Ue
+ 3QMkLqJhC1e44U8ki0JGuAl1c1Jde9H6jVQEOR6pTdvGX+DRy8xopKOcKtHn2LHbIkgRdvmhlM5
+ Pwrfd4RndiVIhZCcRJu9jMLNPM4Qnsp97d7EcDkuKFPjt+q6s0bzhBAhxoyE/LnyMcIu0biXFdB
+ v2KjDxYekUWchzI/FqxJPnDgCqfizspmNS7klVHOWg6WYnBqWnDo6TvXyExJHO+hJQttG7BWAoP
+ iPpTna9FdK3Xgkohc0jMS75lIdC1Vcn/omWCeA/n49TKnipRim5GIyAKWZ/EF2UgudwNtWZJ6nC
+ WGal+gslWQV06Ye6G1c3rg+1fe/9AN5A+YDGShOpx4SYS4WOMcuMWZfELlhjz8q+k+3xPvmqg=
+X-Google-Smtp-Source: AGHT+IHW9KWXdQ9OX3Lnp+QOQw5xni6Go8DaTVEzBnIrHOe65hDSyauG18ERjCA+0sgirIl14cCE/A==
+X-Received: by 2002:a05:600c:470d:b0:471:a98:998d with SMTP id
+ 5b1f17b1804b1-471178a4ac3mr123228265e9.12.1761079814429; 
+ Tue, 21 Oct 2025 13:50:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496d23237sm22851335e9.10.2025.10.21.13.49.26
+ 5b1f17b1804b1-475c4342860sm9313135e9.11.2025.10.21.13.50.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:49:26 -0700 (PDT)
+ Tue, 21 Oct 2025 13:50:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/45] hw/i386/apic: Ensure own APIC use in apic_msr_{read,
- write}
-Date: Tue, 21 Oct 2025 22:46:45 +0200
-Message-ID: <20251021204700.56072-32-philmd@linaro.org>
+Subject: [PULL 41/45] hw/ppc/spapr: Rename resize_hpt_err to errp
+Date: Tue, 21 Oct 2025 22:46:55 +0200
+Message-ID: <20251021204700.56072-42-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,112 +99,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Vishal Chourasia <vishalc@linux.ibm.com>
 
-Avoids the `current_cpu` global and seems more robust by not "forgetting" the
-own APIC and then re-determining it by cpu_get_current_apic() which uses the
-global.
+Rename resize_hpt_err to standard errp naming convention.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251019210303.104718-9-shentey@gmail.com>
+Message-ID: <20251021105442.1474602-9-vishalc@linux.ibm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/apic.h               |  4 ++--
- hw/intc/apic.c                       | 10 ++--------
- target/i386/hvf/hvf.c                |  4 ++--
- target/i386/tcg/system/misc_helper.c |  4 ++--
- 4 files changed, 8 insertions(+), 14 deletions(-)
+ hw/ppc/spapr.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/i386/apic.h b/include/hw/i386/apic.h
-index 871f1428885..6a0933f401c 100644
---- a/include/hw/i386/apic.h
-+++ b/include/hw/i386/apic.h
-@@ -19,8 +19,8 @@ void apic_sipi(APICCommonState *s);
- void apic_poll_irq(APICCommonState *s);
- void apic_designate_bsp(APICCommonState *s, bool bsp);
- int apic_get_highest_priority_irr(APICCommonState *s);
--int apic_msr_read(int index, uint64_t *val);
--int apic_msr_write(int index, uint64_t val);
-+int apic_msr_read(APICCommonState *s, int index, uint64_t *val);
-+int apic_msr_write(APICCommonState *s, int index, uint64_t val);
- bool is_x2apic_mode(APICCommonState *s);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 97ab6bebd25..e0a2e5a984d 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2817,7 +2817,7 @@ static void spapr_machine_init(MachineState *machine)
+     int i;
+     MemoryRegion *sysmem = get_system_memory();
+     long load_limit, fw_size;
+-    Error *resize_hpt_err = NULL;
++    Error *errp = NULL;
+     NICInfo *nd;
  
- /* pc.c */
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index cb35c80c75b..ba0eda39217 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -881,11 +881,8 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
-     return val;
- }
+     if (!filename) {
+@@ -2845,7 +2845,7 @@ static void spapr_machine_init(MachineState *machine)
+     /* Determine capabilities to run with */
+     spapr_caps_init(spapr);
  
--int apic_msr_read(int index, uint64_t *val)
-+int apic_msr_read(APICCommonState *s, int index, uint64_t *val)
- {
--    APICCommonState *s;
--
--    s = cpu_get_current_apic();
-     if (!s) {
-         return -1;
-     }
-@@ -1079,11 +1076,8 @@ static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
-     apic_register_write(index, val);
- }
- 
--int apic_msr_write(int index, uint64_t val)
-+int apic_msr_write(APICCommonState *s, int index, uint64_t val)
- {
--    APICCommonState *s;
--
--    s = cpu_get_current_apic();
-     if (!s) {
-         return -1;
-     }
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 8445cadecec..33f723a76a7 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -527,7 +527,7 @@ void hvf_simulate_rdmsr(CPUState *cs)
-         int ret;
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
- 
--        ret = apic_msr_read(index, &val);
-+        ret = apic_msr_read(cpu->apic_state, index, &val);
-         if (ret < 0) {
-             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
+-    kvmppc_check_papr_resize_hpt(&resize_hpt_err);
++    kvmppc_check_papr_resize_hpt(&errp);
+     if (spapr->resize_hpt == SPAPR_RESIZE_HPT_DEFAULT) {
+         /*
+          * If the user explicitly requested a mode we should either
+@@ -2853,10 +2853,10 @@ static void spapr_machine_init(MachineState *machine)
+          * it's not set explicitly, we reset our mode to something
+          * that works
+          */
+-        if (resize_hpt_err) {
++        if (errp) {
+             spapr->resize_hpt = SPAPR_RESIZE_HPT_DISABLED;
+-            error_free(resize_hpt_err);
+-            resize_hpt_err = NULL;
++            error_free(errp);
++            errp = NULL;
+         } else {
+             spapr->resize_hpt = smc->resize_hpt_default;
          }
-@@ -638,7 +638,7 @@ void hvf_simulate_wrmsr(CPUState *cs)
-         int ret;
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+@@ -2864,14 +2864,14 @@ static void spapr_machine_init(MachineState *machine)
  
--        ret = apic_msr_write(index, data);
-+        ret = apic_msr_write(cpu->apic_state, index, data);
-         if (ret < 0) {
-             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
-         }
-diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
-index 9c3f5cc99b3..0c32424d36a 100644
---- a/target/i386/tcg/system/misc_helper.c
-+++ b/target/i386/tcg/system/misc_helper.c
-@@ -299,7 +299,7 @@ void helper_wrmsr(CPUX86State *env)
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+     assert(spapr->resize_hpt != SPAPR_RESIZE_HPT_DEFAULT);
  
-         bql_lock();
--        ret = apic_msr_write(index, val);
-+        ret = apic_msr_write(env_archcpu(env)->apic_state, index, val);
-         bql_unlock();
-         if (ret < 0) {
-             goto error;
-@@ -477,7 +477,7 @@ void helper_rdmsr(CPUX86State *env)
-         int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
+-    if ((spapr->resize_hpt != SPAPR_RESIZE_HPT_DISABLED) && resize_hpt_err) {
++    if ((spapr->resize_hpt != SPAPR_RESIZE_HPT_DISABLED) && errp) {
+         /*
+          * User requested HPT resize, but this host can't supply it.  Bail out
+          */
+-        error_report_err(resize_hpt_err);
++        error_report_err(errp);
+         exit(1);
+     }
+-    error_free(resize_hpt_err);
++    error_free(errp);
  
-         bql_lock();
--        ret = apic_msr_read(index, &val);
-+        ret = apic_msr_read(x86_cpu->apic_state, index, &val);
-         bql_unlock();
-         if (ret < 0) {
-             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
+     spapr->rma_size = spapr_rma_size(spapr, &error_fatal);
+ 
 -- 
 2.51.0
 
