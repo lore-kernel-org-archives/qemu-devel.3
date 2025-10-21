@@ -4,197 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE53FCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D02B4CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB7hv-0001R6-GH; Tue, 21 Oct 2025 04:27:03 -0400
+	id 1vB7n6-0002X6-BW; Tue, 21 Oct 2025 04:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vB7ht-0001Ql-44
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:27:01 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1vB7n4-0002Wi-BD; Tue, 21 Oct 2025 04:32:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vB7hq-00076e-4f
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:27:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761035218; x=1792571218;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=jUIZmd7JIICPUzVy47QppSw3s/xKoMIh18kG258C9lM=;
- b=XkFD1Oa2Sq+NYX3xJe6IrCtQi7s17lmksPNdKLgeg974lI8HK6s1Q9p4
- Lrk4tJW9SsY3UMaZ5p5KcYRSC69PnNlvSF3Nf3mmYT3iOis/V3UHNKEAF
- mu7O9A1NiiVDhwSLxGJtXsq8sS8N0204bLtrmr0Ug0lc+GlK+wur3GK1O
- eQOixMCahYNtAX3ZgPhmt3Yp4MJH/jJO4Pgi4msYGtZ5QeMWweLviroYi
- sfAHQDfppItNYO0IFP6JmcpBOyV3uM5ML6948823QNd6BTHWupiLlcwHY
- AlgUsX8qjFshyTGl4xvQQT/CGyVSiYFRtfoRxQV106+6tQJeTHUEqOpG1 w==;
-X-CSE-ConnectionGUID: RhM71/RGSUWHC4Li4XyU0w==
-X-CSE-MsgGUID: zRvo2qiPT/CHE6kzx4zKlA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63197006"
-X-IronPort-AV: E=Sophos;i="6.19,244,1754982000"; d="scan'208";a="63197006"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Oct 2025 01:26:54 -0700
-X-CSE-ConnectionGUID: RKEtcbOHQuivHNPdqAbbyQ==
-X-CSE-MsgGUID: W4dK7p5eT0epcDK+M08tPw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,244,1754982000"; d="scan'208";a="220705030"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Oct 2025 01:26:55 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Tue, 21 Oct 2025 01:26:53 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27 via Frontend Transport; Tue, 21 Oct 2025 01:26:53 -0700
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.61) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.27; Tue, 21 Oct 2025 01:26:53 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vU+wssEQ30x+8GUj02J/4alLUHE9X4rvhk713d/WWmcwQb7tF7yOee9tBDiptCI0SxnY9r89GAkFxG2+D18zbj24Z1ZDLSQXohtf9+omDINSbON0fcBBsnqqfrAY8gwrlUbXOTjfjxQ5yfr5r/wdakJEOz37yhzjS/4KEAD/bz6a9Xb4BsaAtjDaaaUIwhc0nlTaCd01Y+M0uFhYWGf14A2wiWVIZVg4fBzD0WMeyfGi43M7VFTHAASsBTzFoWJSckXQ7lmgC55G1NwluLAWhhYn0u0FrdZdnE78Rhi4eJxFvIRS1hLak2y1qoAZlaEErD4HkTvEd4SE/eAvTxSghA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jUIZmd7JIICPUzVy47QppSw3s/xKoMIh18kG258C9lM=;
- b=kl/6hgW9Uumt5erO58bjqL+CrvmG2NNidD1B7HhgwRcbVMqRb6gY4atfiBhRg57isG8JIULBI70Yhm4CErH1mnvB6C4DhPddDqgeBxMMYC6/rIn4tBgKFJb2tpH2UK+VGjO7nIhIlPgXOT1hPMrj65Q+oBD7/mnprcciBjD3pgibbqJc26Xj7nCzAglbYDJRwMk42V+0erUSWT9xEXuE+L2GWMUSgPoOQIG6fMvKf2yGfflV/zMFTIoxXkfb+kntxxrSvE1Drhgf/SjwgfvOyNSC5jrxk4OzTL7G4msO5sPFjDbqIgdQHit7XOsBfFHTvSbRu60DdgVZJYI2F0gwvg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by DS4PPF2F49754B6.namprd11.prod.outlook.com (2603:10b6:f:fc02::1a)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.16; Tue, 21 Oct
- 2025 08:26:51 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9228.015; Tue, 21 Oct 2025
- 08:26:51 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
- Kevin" <kevin.tian@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun
- <yi.y.sun@linux.intel.com>
-Subject: RE: [PATCH v6 15/22] intel_iommu: Bind/unbind guest page table to host
-Thread-Topic: [PATCH v6 15/22] intel_iommu: Bind/unbind guest page table to
- host
-Thread-Index: AQHcKHqV+eql//4WfkqjZkntzH311LTLP8EAgADf0RA=
-Date: Tue, 21 Oct 2025 08:26:51 +0000
-Message-ID: <IA3PR11MB9136117156C708D20F95162692F2A@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
- <20250918085803.796942-16-zhenzhong.duan@intel.com>
- <d158193a-c834-4fb9-b36d-487f3be4ab6f@intel.com>
-In-Reply-To: <d158193a-c834-4fb9-b36d-487f3be4ab6f@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS4PPF2F49754B6:EE_
-x-ms-office365-filtering-correlation-id: 85bfef7a-0a7b-44ee-c846-08de107b960d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?Um3VmumlrFrGqc2DcWe2GZCLE2JBmM3VhAVuL5g2F++sJN6U0oig1Y5KMAEZ?=
- =?us-ascii?Q?q7XIH4QZM7kDYFydr8+PZX+kceyj8swyhMWoeBSNWDwFoCu+UC8ygl9aZo0M?=
- =?us-ascii?Q?VlKK+ui71ksWqQQFRN+CxjdJMcGrrMbXnKbrnjhmHopeyrEFZZQgt6Ug74ay?=
- =?us-ascii?Q?98vboRGSlgocqGYn0aP+b9UFpC6ix7EIkZK7RCpUpWArcL3MnAUqF5E3KTKs?=
- =?us-ascii?Q?HYwo5XElu1hPBcO/PRdrxEGjDoTg3vC9lc8oOv5yOW4oGY/W04xe1RKD89Jx?=
- =?us-ascii?Q?7ivWGN9O5QNM5ckvL7Cu5jXyzJq6CNauh/eGzoxQsc0QVxgf9Z+Awt8wFK5x?=
- =?us-ascii?Q?7sQE5VPwtwY90+IqkGOowwCqecoP+Aw5F+sQfw4r/X2QRolZrzyjHG0Kcl1A?=
- =?us-ascii?Q?hSuSHhpsxrosn0Q/5M/NI9513HG7sLY0U4vZ0Qp0o6l9kr5dfzn0M1oljvpb?=
- =?us-ascii?Q?nD+a1/0PMcG1rZ6DrvTzS4GITtb5zaIRQlNti2wgDVef8CbSTK1htE07vlfS?=
- =?us-ascii?Q?QOsChn54Ed7AZp4u0VtNyiUlTB9dxFfgU1l1hjZYUabyn72yeGjVYzeqer0q?=
- =?us-ascii?Q?7OWeLcMALdwPT9k9ApgYe5QUxv+wm/KYHw/xLr0oskAOluw2CcSyKf82dPks?=
- =?us-ascii?Q?rHjAOu+OJosFcNDUY4w+YqETLOYKdy1AHUYadGas/NAUzY1Ue17VphLgWb+j?=
- =?us-ascii?Q?utoTGtljzDhCf+QNYaIUdJs0uAfiArxZu7v5aqKFooxPffUgoDQnOu3hDU3S?=
- =?us-ascii?Q?lsRRSItXpA2aDGlf62rwd9qHURZKDNEUENYjkTuMS3bWb10H4SfimnO/+Sn4?=
- =?us-ascii?Q?82K0H/GlUAcBUhLAR874KnwL0M6rLYTB3ssBVIAE30k5qZImnjpXUi/Pcetl?=
- =?us-ascii?Q?3y+kaLrX0qBD2kzZNv+AWigqO5OMkRD32UBky/FqsE5m/CCZMxOyaZKSYUQ4?=
- =?us-ascii?Q?qWjuXZAyVwoGymxbe+JobWgW6lUVmF2szc/2VllJDMJH/rrqe7TRHQwmIPk6?=
- =?us-ascii?Q?KcdoYV+i+CP/qIXKCrr2bzNISshXUMKNtJbTP6bbORbtUWXzqf0hV+lfMBp2?=
- =?us-ascii?Q?GeG80d3YtGCiGYTPP1Qdg/0DWT7eDaxFDWHNlPN12GXeUEErUDr3uEeFGyNz?=
- =?us-ascii?Q?5iE0a/csAMAAN+QgziRt191wubpAZ6OG3kDaQRedIA+l1ULq/LH62r8jS5S1?=
- =?us-ascii?Q?HfbE75fUZEH6VSnL/1VodiTUIPciU4vwAk9kf7rWuSpKSxKwFW94C1G6XtBR?=
- =?us-ascii?Q?bkn9RcY/vJPBw/aaTYB+1ycfl4h4gHnwTApQ+aR5lkn02IYjc25JhGIxKzLG?=
- =?us-ascii?Q?5ag7i4e0ghHf6tlta8UuaPEl2+dKwUOoTqVpV7LdNtdTzBMJ6wdlik4sR2eK?=
- =?us-ascii?Q?EyMrsou4yHvJibnIHhTia6Trzqc1GJJ4NTzsTY7mfaDJ9QCMZnluGMBRj+Dm?=
- =?us-ascii?Q?KkKl26x5clX8gic8rp7gvJxhVEB0by1N/GCfHb7gZ/MDW2xOJvKhSu3Evx6k?=
- =?us-ascii?Q?6lOh5fDLebYUjBjdUa/ofSeJodHvbXDHLJmF?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?fLh43P8SDntmaz/NIGVteDfON9jvLreOVJI7preSa47orggjJGTY9B56weAT?=
- =?us-ascii?Q?pV8epGNObdwIr9FQGhmA2FMLlozgz42aprrYLSiJmi3ZUTY09hqUWFlFtVXe?=
- =?us-ascii?Q?k01PqJazyOR18JdehiAuY67WaN/uwYbIxRk47Kp39/heFR8igwUHV+H0dahn?=
- =?us-ascii?Q?edcHyG7MHA5PbBcSYxcUt0NlpSu07T0DBJnh37JFzEPyNwC8orx9apjuTrsz?=
- =?us-ascii?Q?xw/pgt9+P8Xn80yh1g2p1v1HRYFevLUiuaEJ+s5EqSR5c+6CsbftNBsNEzxT?=
- =?us-ascii?Q?rvG03lxEyL28StkpVFktX2L/HeVHRHj8V37RL1EWBfXvDVsUnOpGTXdJ1o9f?=
- =?us-ascii?Q?Apye08ruwdUHo2K++ktQpuPOR3jjcdzNbz6/cYhxGP/s+ymYf0+2Zhq/q1P3?=
- =?us-ascii?Q?8y7v0LcogAqOYI4zYUBMrKXRqtvZPvkfK9bJj98XOGMDYFKjBbxpWKD8WwDU?=
- =?us-ascii?Q?llyskZ/UT8hFGzwiJw9HUzBmRM1cBXVcwUkxvvAD+WKVge2lOX4IPLkS73BD?=
- =?us-ascii?Q?RHv0pe0BjmMA+JOpYl4m3lW2JUuI7YTtny4u1/V/haSNCTNBx5aQIccjnIyo?=
- =?us-ascii?Q?Dvli3InEBM7gy6YcsMYNuvbyMDq1RiuUMlDeoIBhm/ArzQdFMPRaXZ//kOfz?=
- =?us-ascii?Q?99FANGdc8Cm2FZCKVgss/9vqSOEk1dQbYLS5n/d/UOh7hB1PELMXbleKQxk3?=
- =?us-ascii?Q?aik81GHk4JjjV379l0RvzVTjx2V1U5tQ49gwsrhVN+dEsI4VJSAJDyQ2vT4N?=
- =?us-ascii?Q?H7ISSaCYNqP9bT3QYXhfI/nM6ULPsKXrSAWYOmSKB3091juKpmQbcvbaKmLq?=
- =?us-ascii?Q?KCcwkBWuYuFPsXPOMmIfSMCv06SGIiALTccZY7/qdrUs2U2vNWh0dOE3w1oj?=
- =?us-ascii?Q?CAoCqBhsysQITCNq37rH8yqOWmBUNwp97zKQsLX14ixQ+W8ScvBpIMFqB3S7?=
- =?us-ascii?Q?n6dI28/IEQDX4G/rEglkLEiYx5NCCj2+xgazDWTXEbWA4RtScNSGmj+rdtH0?=
- =?us-ascii?Q?66rxBXqVrnl5FJ1WzUEdSL9LuEsg9Bx4e/UQSeWoYQy+1QiFByXU21lCRwVs?=
- =?us-ascii?Q?BrUUdFIdA9Ici2UoDbhfhVVa0hz8WAamYafyPuF/xiYNFxIetpuivVC3mG7v?=
- =?us-ascii?Q?nNg5DSgHrdCnTMGf0wRlIsH896wLR3xPUZ9qUpa7IIiOBEIwsZ+y1gwHYlEE?=
- =?us-ascii?Q?nltjWgl81il+I4kEyzcS7zDi5yEWg1DlWOF0293DbjZ9Uh0jvfEqrdgSkcYP?=
- =?us-ascii?Q?yekUMlEikftRK7h7C4g3n9E8AjL0VE676DBdu3vjXcvlP/R8TW2NWgu85Amw?=
- =?us-ascii?Q?OuGYp4PWnMQnz/XulC0s+UqcRJ+ATPRj9Nytuc1x6i6bw0wfXumPyEbCiEOx?=
- =?us-ascii?Q?dd4kP7n+kzB642RGU+NEhnz3o1vpIwUfhdV1D0+X1dTTaiI/S2VZpiRrO+CG?=
- =?us-ascii?Q?GjtUkgwSh94oZZwDVlwcjwAT0bQxdau1KSkwoXKorLRYCAYrd5hX0go1/ihS?=
- =?us-ascii?Q?nXQhkQ9DO4BoZHg8aH/PgJVfKwLlInMQLo8dq+p9+iQhcVXQgN8vMipRUgsR?=
- =?us-ascii?Q?GzXmu9TKEPan2p/8wepGXaon5Yy21DavyNFSL16F?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1vB7n1-0007i3-1t; Tue, 21 Oct 2025 04:32:21 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8R3c4009507;
+ Tue, 21 Oct 2025 08:31:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=vLnCawyDL/VEHAnnaV3vKnHHhkUKR8
+ 864vG/Umi8hzk=; b=fhKvkx/o3BGBiyxaTTr95mVemsmXpto6GAxWFevBRyIquz
+ AmSRk93bc31L/C91AXZISe1ttBCxjK6Xa8xWH/rWJegaA+/W1wkhB6R+jK3TwBii
+ jTrAfgGJpCCvT8JfF3FPd5guO4oSfvbRixeYSYCc6LOxnxz7lmaZxL05ZAhjHsLD
+ cC0ZPFbAWRoNLw4timMP2zM5y61Oo3vr6MJGw+cxFnW2JSIUxgE2yAfRK/qVzyPb
+ j+TcyT6MEGN0mhjoXyVgNCxjdCWrch4K/IfJXQih4u367CD+GJbrbAGII1MpbTgI
+ CqI897nTK6BecuyOQGB+txZA50fVY8EElLI0CK4Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326nxk6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 08:31:59 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59L8Ru0x029252;
+ Tue, 21 Oct 2025 08:31:58 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326nxk2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 08:31:58 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L6sdxL014685;
+ Tue, 21 Oct 2025 08:31:57 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7s20re-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 08:31:57 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59L8VsAL44695882
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 08:31:54 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2844A20043;
+ Tue, 21 Oct 2025 08:31:54 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3643020040;
+ Tue, 21 Oct 2025 08:31:48 +0000 (GMT)
+Received: from linux.ibm.com (unknown [9.39.24.196])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 21 Oct 2025 08:31:47 +0000 (GMT)
+Date: Tue, 21 Oct 2025 14:01:45 +0530
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
+ richard.henderson@linaro.org, alistair@alistair23.me,
+ alex.bennee@linaro.org, deller@gmx.de, pbonzini@redhat.com,
+ eduardo@habkost.net, minyard@acm.org, gaosong@loongson.cn,
+ maobibo@loongson.cn, laurent@vivier.eu, edgar.iglesias@gmail.com,
+ hpoussin@reactos.org, david@redhat.com, chigot@adacore.com,
+ konrad.frederic@yahoo.fr, atar4qemu@gmail.com, jcmvbkbc@gmail.com
+Subject: Re: [Patch v4 1/5] hw/core/loader: capture Error from
+ load_image_targphys
+Message-ID: <aPdE8Wff6L8i4ybB@linux.ibm.com>
+References: <20251017181250.1421446-2-vishalc@linux.ibm.com>
+ <20251017181250.1421446-4-vishalc@linux.ibm.com>
+ <0026ec98-fa2b-7bf2-e40e-b8938b4f8c6f@eik.bme.hu>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85bfef7a-0a7b-44ee-c846-08de107b960d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2025 08:26:51.7412 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4lapeOQ4fPZM+iLK0wMb1geJ6PljqLySEqxyK5va1BG2VgfU+Pp0HBLHJP6G15ZkGYe8O0LjyKmUKKrRvGEF5LtHNY2mNjE3hBvnKwqLMBA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF2F49754B6
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.14;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0026ec98-fa2b-7bf2-e40e-b8938b4f8c6f@eik.bme.hu>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68f744ff cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=LDkM-SLTlzFY3Jr0tcQA:9 a=CjuIK1q_8ugA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9arYl3HVnCBc
+ feSoF2AP3ThgRKJTgQgRg1qy1BCujulOUN0MqnzUZA/lYF3GSVLG9eN0yjBHdtJVS3MPw1NIzIV
+ JXf4LgIril3M+m9KwyUJR97cXWKKcl+9nysAYCWuEvnmMzfCNuYqPm7xGXTJU1nsShadDCfEtkj
+ 6v/gf9txlHUduVLMaFb15NrzI1whP7I9Yv4ZX5zZAGGdDsvzJSjm4RHyn50YScUbZVOLhps8BlV
+ 66Z8gCAE3rbcTisNWykfgbUEPEKDvz9oatYcKevnZUnmIP1bskNsiQpMl8ofEmkiXMQCFC3YaTD
+ /4dMAMoFMP+biKvfRzjEWZNrQCkbW3KhsKe+CCSloGs3493vI4KsJaNH5dbc6XtA/8A24VgBiQA
+ yi/WGdVn8mDd2LnnYtY05uGmfvP6zg==
+X-Proofpoint-GUID: wqtQcZgA523dsswzzDWqq1KDOuDvhP9W
+X-Proofpoint-ORIG-GUID: iTeW5zL9F6ZJ5UWl1Igzof67VcwtTyPh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -210,26 +134,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Yi,
-
-Got it, will do.
+On Fri, Oct 17, 2025 at 09:25:41PM +0200, BALATON Zoltan wrote:
+> On Fri, 17 Oct 2025, Vishal Chourasia wrote:
+> > Add Error **errp parameter to load_image_targphys(),
+> > load_image_targphys_as(), and get_image_size() to enable better
+> > error reporting when image loading fails.
+> > 
+> > Pass NULL for errp in all existing call sites to maintain current
+> > behavior. No functional change intended in this patch.
+> > 
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+> > ---
+> > hw/alpha/dp264.c         |  4 ++--
+> > hw/arm/armv7m.c          |  2 +-
+> > hw/arm/boot.c            |  5 +++--
+> > hw/arm/digic_boards.c    |  2 +-
+> > hw/arm/highbank.c        |  3 ++-
+> > hw/arm/raspi.c           |  2 +-
+> > hw/arm/vexpress.c        |  2 +-
+> > hw/core/generic-loader.c |  3 ++-
+> > hw/core/guest-loader.c   |  2 +-
+> > hw/core/loader.c         | 40 ++++++++++++++++++++++++++++++++--------
+> > hw/hppa/machine.c        |  5 +++--
+> > hw/i386/multiboot.c      |  2 +-
+> > hw/i386/x86-common.c     |  4 ++--
+> > hw/ipmi/ipmi_bmc_sim.c   |  2 +-
+> > hw/loongarch/boot.c      |  5 ++---
+> > hw/m68k/an5206.c         |  2 +-
+> > hw/m68k/mcf5208.c        |  4 ++--
+> > hw/m68k/next-cube.c      |  2 +-
+> > hw/m68k/q800.c           |  7 ++++---
+> > hw/m68k/virt.c           |  4 ++--
+> > hw/microblaze/boot.c     |  5 +++--
+> > hw/mips/boston.c         |  2 +-
+> > hw/mips/fuloong2e.c      |  9 +++++----
+> > hw/mips/jazz.c           |  2 +-
+> > hw/mips/loongson3_virt.c | 10 ++++++----
+> > hw/mips/malta.c          |  9 +++++----
+> > hw/nubus/nubus-device.c  |  2 +-
+> > hw/openrisc/boot.c       |  5 +++--
+> > hw/pci/pci.c             |  2 +-
+> > hw/ppc/amigaone.c        |  4 ++--
+> > hw/ppc/e500.c            |  5 +++--
+> > hw/ppc/mac_newworld.c    |  9 ++++++---
+> > hw/ppc/mac_oldworld.c    |  9 ++++++---
+> > hw/ppc/pegasos2.c        |  5 +++--
+> > hw/ppc/pnv.c             |  9 ++++++---
+> > hw/ppc/ppc440_bamboo.c   |  3 ++-
+> > hw/ppc/prep.c            |  8 +++++---
+> > hw/ppc/sam460ex.c        |  3 ++-
+> > hw/ppc/spapr.c           |  8 ++++----
+> > hw/ppc/virtex_ml507.c    |  5 +++--
+> > hw/riscv/boot.c          |  7 ++++---
+> > hw/rx/rx-gdbsim.c        |  2 +-
+> > hw/s390x/ipl.c           |  8 +++++---
+> > hw/sh4/r2d.c             |  8 +++++---
+> > hw/smbios/smbios.c       |  2 +-
+> > hw/sparc/leon3.c         |  4 ++--
+> > hw/sparc/sun4m.c         |  8 +++++---
+> > hw/sparc64/sun4u.c       |  7 ++++---
+> > hw/xtensa/xtfpga.c       |  3 ++-
+> > include/hw/loader.h      |  8 +++++---
+> > system/device_tree.c     |  2 +-
+> > 51 files changed, 168 insertions(+), 107 deletions(-)
+> [...]
+> 
+> > diff --git a/hw/core/loader.c b/hw/core/loader.c
+> > index 477661a025..e40cba1b9f 100644
+> > --- a/hw/core/loader.c
+> > +++ b/hw/core/loader.c
+> > @@ -48,6 +48,7 @@
+> > #include "qapi/error.h"
+> > #include "qapi/qapi-commands-machine.h"
+> > #include "qapi/type-helpers.h"
+> > +#include "qemu/units.h"
+> > #include "trace.h"
+> > #include "hw/hw.h"
+> > #include "disas/disas.h"
+> > @@ -61,23 +62,31 @@
+> > #include "hw/nvram/fw_cfg.h"
+> > #include "system/memory.h"
+> > #include "hw/boards.h"
+> > +#include "qapi/error.h"
+> > #include "qemu/cutils.h"
+> > #include "system/runstate.h"
+> > #include "tcg/debuginfo.h"
+> > 
+> > +#include <errno.h>
+> > #include <zlib.h>
+> > 
+> > static int roms_loaded;
+> > 
+> > /* return the size or -1 if error */
+> > -int64_t get_image_size(const char *filename)
+> > +int64_t get_image_size(const char *filename, Error **errp)
+> > {
+> >     int fd;
+> >     int64_t size;
+> >     fd = open(filename, O_RDONLY | O_BINARY);
+> > -    if (fd < 0)
+> > +    if (fd < 0) {
+> > +        error_setg_file_open(errp, errno, filename);
+> >         return -1;
+> > +    }
+> >     size = lseek(fd, 0, SEEK_END);
+> > +    if (size < 0) {
+> > +        error_setg_errno(errp, errno, "lseek failure: %s", filename);
+> > +        return -1;
+> > +    }
+> >     close(fd);
+> >     return size;
+> > }
+> > @@ -118,23 +127,38 @@ ssize_t read_targphys(const char *name,
+> > }
+> > 
+> > ssize_t load_image_targphys(const char *filename,
+> > -                            hwaddr addr, uint64_t max_sz)
+> > +                            hwaddr addr, uint64_t max_sz, Error **errp)
+> > {
+> > -    return load_image_targphys_as(filename, addr, max_sz, NULL);
+> > +    return load_image_targphys_as(filename, addr, max_sz, NULL, errp);
+> > }
+> > 
+> > /* return the size or -1 if error */
+> > ssize_t load_image_targphys_as(const char *filename,
+> > -                               hwaddr addr, uint64_t max_sz, AddressSpace *as)
+> > +                               hwaddr addr, uint64_t max_sz, AddressSpace *as,
+> > +                               Error **errp)
+> > {
+> > +    ERRP_GUARD();
+> >     ssize_t size;
+> > 
+> > -    size = get_image_size(filename);
+> > -    if (size < 0 || size > max_sz) {
+> > +    size = get_image_size(filename, errp);
+> > +    if (*errp) {
+> >         return -1;
+> >     }
+> > +
+> > +    if (size == 0) {
+> > +        error_setg(errp, "empty file");
+> > +        return -1;
+> > +    }
+> > +
+> > +    if (size > max_sz) {
+> > +        error_setg(errp, "%s exceeds maximum image size (%" PRIu64 " MiB)",
+> > +                   filename, (long unsigned int) max_sz / MiB);
+> > +        return -1;
+> > +    }
+> > +
+> >     if (size > 0) {
+> >         if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
+> > +            error_setg(errp, "failed to add file as ROM");
+> >             return -1;
+> 
+> These in this file are functional changes adding new messages so that
+> contradicts the commmit message and maybe should be in its own patch for
+> easier review.
+Sure, I will split it into separate patch.
 
 Thanks
-Zhenzhong
-
->-----Original Message-----
->From: Liu, Yi L <yi.l.liu@intel.com>
->Subject: Re: [PATCH v6 15/22] intel_iommu: Bind/unbind guest page table to
->host
->
->Hi Zhenzhong,
->
->I guess you need to rebase this series on top of the below series. So
->let's resume review after rebase is done. thanks.
->
->https://lore.kernel.org/qemu-devel/20251016074544.377637-1-zhenzhong.d
->uan@intel.com/
->
->Regards,
->Yi Liu
+vishalc
 
