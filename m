@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561BECCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7076FCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBITu-0002dQ-Dh; Tue, 21 Oct 2025 15:57:18 -0400
+	id 1vBIUR-00030h-Qh; Tue, 21 Oct 2025 15:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBITl-0002cK-3a
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:09 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIUP-0002vq-1j
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:49 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBITj-0008Ed-5s
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:08 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7c2766675adso3647709a34.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:57:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIUN-0008Iu-4P
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:48 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42701b29a7eso141170f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761076625; x=1761681425; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=AjyONCkRbAa4eIFLOL0u6R/QoJrD/nuI/ZLrBKUnC/Q=;
- b=eYnBRgzvAlzM+58H72fenA5cVs7FP5WaPRyrz5HCfZQlcSlWaDEdkfKa/RcyTaPYji
- cRcwU+Ov7OS4HXlnLVbb/AkdNyMd4JZe+R+EHk8fOPvrbJvN9h90yXANfP5Cz78MZsue
- bX4KDvTtqYKhb2IJcX3LKDzPtTeJJJpz6L595ixY98cwBdwmkg7Y/EQfBC1FeOJR29Lg
- VVC4M1f0CjlVOXQTyv4hGd8WAJeFOtWY9iwhfAMOiw7agawCdnhIMpIAl9uwlSPBvucc
- gHSlUVyNb+uYWT/kOw//q2mQCt6Wg10KeDJSdYBSCJz4mn8q8QbsF1Ft0qKQXlpXeQU2
- QF9g==
+ d=linaro.org; s=google; t=1761076665; x=1761681465; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CQXoaofo6NfrBJoG83XIWxyM0hiwuc3u3KVa34QWk1g=;
+ b=JxjyUcRPuF1OKt6Prj4t7puDjoaAvD+oQA+MVFTjxH4hJb2vC4es5acm79Z6MNaKOG
+ R6/Ed6c6Tv/p1dF0Z5XSOOPpgD4MuVxqulA4w/XwE0ZFu3QF7YuhX3t+dJSeYmomflxj
+ rLXNtUi1/D0G06zISOO+1vDjIQxdGdcgGHwK9on2YxtGnXkPOJBDPlGQ+v0S/lBXZCxp
+ pYhCZln3mteC6hS/0owbUmVGyfhvBmWq3+FHAg/2sum80Q9Wd6ZDMcA1v26MPwLYaqo7
+ 6mxumFTWrc0ofwUp+uGz79jxc+ZEOqmrbqlyhgsiuvjwf/Tlxh4bm4Q0ZOyOOrSbHz1a
+ uRZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761076625; x=1761681425;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761076665; x=1761681465;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AjyONCkRbAa4eIFLOL0u6R/QoJrD/nuI/ZLrBKUnC/Q=;
- b=vNZfHNSHAYs574hEFoRo85nZqvvf8gQi9eE1g5bm2HJb9soDRGeeT1d0xbyTjGTeCx
- +I0KCr8zwt87GWNchC6ka40EHGnRLbFW12H6iwFBYP/hWPbJaqW9zuhJ7aTwlptuKhTz
- xayrdRfR1fKeXGeda/PJh/xXj0f0hIHPOF5hX4pJSx/E+WhuL41mtqgc72EANBNL1DqF
- NVm/5IAtpHR1FYMSmO878MONywH5oryidtGF4desk+aPhdv4Kk3QVyYu/E93rgyLdaJc
- sjQ3DK9gWZtMxbWc8p7AaKwqNxG1B4C9pp4bFMDITMVldYPbE3OgBYzR9gAlWVSQFnEa
- nwEw==
-X-Gm-Message-State: AOJu0Yxtdqd/2JPUcP592lWFHobeBf1ISAPsO2v+rD9FH8hg00GLDeVG
- vgYlCVVKgPa4RTNq49Elt5nl9+kfuwuXF2mKBPGTUcl7t7pNBmh3bKPsW8H+PJ2Ns8r+AyOWLPK
- vcmlD
-X-Gm-Gg: ASbGncuhmtUyMoQr3SZQjKT2ksEUoNg0Rr0vxaDbjtk1nwtqXndi1mFdqKTZ1BJxfbt
- 42vD8Q8aTyPFJRn69caJsBcgUC+2yv30QcanrpokzvypeWy8Ldn34xEy6fFoGuDHcSypx8OEUvy
- YhzayVtCU7IfHwNck1X7YyGu1yxwOU1lVZXZxQAjYE9FmN0e/TQ3sEYEbhdaeiVlWhFNDIayGH8
- 2hoiu5+J4RECoDc/zlSMWdrB/v6i/MyPkywKQ0EUED7gYCIAam7kR1zmoEQM9xmfi9VM8Rda+5N
- dAy1iEb/rOl68dbYD1v8X2cT1AjbBMZstomkALPy2RQyIKQZRmJcfY0wI+dUd58lrzhoohQPxMr
- 9t2w/Y2PcmbO8oGE+91e74LRhxxSG4QJxZWo4RUgp3F7p3qy3vLvAxGp5sz1g97Cu9/tmOsgThX
- tQ6dZuQZef1Hq6BsgmTPpAsWEIR4Av11cgULt3IHz5Onr5n3ZlVgJbNJkyiCzuq4G22TawPw==
-X-Google-Smtp-Source: AGHT+IHGHwHCabKDrkxEjif0h1GNnPcI+KAkNvQgsB9fy2YwAZ8bMxKjkXVS5FvI1sFny8eZBoP4EA==
-X-Received: by 2002:a05:6808:6902:b0:441:d7c3:e4f0 with SMTP id
- 5614622812f47-443a2ecf367mr7784957b6e.9.1761076625623; 
- Tue, 21 Oct 2025 12:57:05 -0700 (PDT)
-Received: from [10.128.41.227] (c-174-170-192-123.hsd1.tx.comcast.net.
- [174.170.192.123]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-651d3f3d553sm3037750eaf.17.2025.10.21.12.57.05
- for <qemu-devel@nongnu.org>
+ bh=CQXoaofo6NfrBJoG83XIWxyM0hiwuc3u3KVa34QWk1g=;
+ b=LsGKa2JDzGIN8aszzTyE5RPdZU7VHowQPsHeGk3Y010H1ipMQkeiE+q3mZ1y3EbiRc
+ GE59kY6ixOLWPTBt7msxgIkbXtY+ll8eu4uJ+prA+0UlgLiGFK2eoXaNaaviDoIs8I3S
+ FCA+S8Q4wXJcTef2qAMlSvX+0Sd8z2kVghdA0PhIIvvsKtzK5ZJIaM4oY9rKjadqxjmh
+ zIqPVA4ZfVt6/ZLjYEfw5inMw4Ka+WmG4hCYHThsbGupHdIyXEN53zEWDwe94UuTVKXe
+ OOOTPSQiqCphdkCuTg0pAcQMln0d3M3pYBm0lrCw7gym+hXCiLOq6o2d3LUHRtRN2FUa
+ a32w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVG2CsHvpY6MLplYHzK9Qiv9/FO173JYqR9E+RD96dh+Ru76UJCDMm9AHIWxwAeHLa8Cqht+vLwCJS@nongnu.org
+X-Gm-Message-State: AOJu0YwhY+NhlhLXZuTyQFTlpMbSotuvdrnyYWDpWwHojE+Y4VNZKS9+
+ GBNrxTM4FERBDAsh5s+kF8xcR5M28v+EPjHQmvO1qO1YqwraC4YwmIyCfX0bC1yA8BoDbaUn5fN
+ hXkQ2qRw=
+X-Gm-Gg: ASbGnctb2+4Gkv6uFhiNaTi4r42brwtyl4ktYLyeALc00fvRuO9jITCkjSxeEnYEc1W
+ AvLMfbRofuZMa+TzKuBfdXo2HAEEiSCkvMZ1FOcqZimwDCBwFBh/CUXAOW6U+t5iVK6KVDZ5xwZ
+ DhddPLS2rWQDUkKLg3Rfy2pA4+LtiqEVfVrysOL7LA3RAIboRb/xe7JQGPuY8BaP7KvauC5/l7/
+ 2woua6MxDmcgepgvffyQ0gWyFh4/54Jr+gM8nmBrrdsIFqpjCFEu9rxOqZwfRyrfYq2+JJzKrZT
+ LaTw2jiVie/zByMNEU3Y+eZpSkuNbwakiO7MO2e9tcHg+aa2NbIOEOacvMvVfx+GLp+iJrVsqDE
+ 1oGGVWfsticB1KIVGqOZFCQjCGVzuIUgi4SEB0Emzv5qkchPA1hT7V5XN4EwVGmw8KN2yO34wRo
+ ZE72nBZ4A+VsekttSo3AYiDI0Y5YNptuffnIIeqJL9qvhAgVufUIFWFWcxylklHMtF
+X-Google-Smtp-Source: AGHT+IG7V11Gsmi38zj7BQw6tFq6nWVZu5+Mb+omvmoPZ3hIoiZnID8wTr5t4dZov4FkUbR4JA2rIg==
+X-Received: by 2002:a05:6000:4026:b0:426:fff3:5d1d with SMTP id
+ ffacd0b85a97d-428531dc844mr681286f8f.28.1761076665188; 
+ Tue, 21 Oct 2025 12:57:45 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475c428a5bcsm8688745e9.7.2025.10.21.12.57.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 12:57:05 -0700 (PDT)
-Message-ID: <bc074822-a6bd-4cd0-8679-fbc68600bf15@linaro.org>
-Date: Tue, 21 Oct 2025 14:57:03 -0500
+ Tue, 21 Oct 2025 12:57:44 -0700 (PDT)
+Message-ID: <c69f0494-e4b1-4107-adc4-5abd1d258742@linaro.org>
+Date: Tue, 21 Oct 2025 21:57:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] linux-user: fix reserved_va page leak in do_munmap
-To: qemu-devel@nongnu.org
-References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
- <20251011200337.30258-4-mlugg@mlugg.co.uk>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v8 09/25] target/i386: call plugin trap callbacks
 Content-Language: en-US
-In-Reply-To: <20251011200337.30258-4-mlugg@mlugg.co.uk>
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <cover.1760884672.git.neither@nut.email>
+ <5fb50dd708c97604112c95fcf33045cfe215901a.1760884672.git.neither@nut.email>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5fb50dd708c97604112c95fcf33045cfe215901a.1760884672.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,31 +106,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/11/25 15:03, Matthew Lugg wrote:
-> The previous logic here had an off-by-one error: assuming 4k pages on
-> host and guest, if `len == 4097` (indicating to unmap 2 pages), then
-> `last = start + 4096`, so `real_last = start + 4095`, so ultimately
-> `real_len = 4096`. I do not believe this could cause any observable bugs
-> in guests, because `target_munmap` page-aligns the length it passes in.
-> However, calls to this function in `target_mremap` do not page-align the
-> length, so those calls could "drop" pages, leading to a part of the
-> reserved region becoming unmapped. At worst, a host allocation could get
-> mapped into that hole, then clobbered by a new guest mapping.
+On 19/10/25 17:14, Julian Ganz wrote:
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
 > 
-> A simple fix didn't feel ideal here, because I think this function was
-> not written as well as it could be. Instead, the logic is simpler if we
-> use `end = start + len` instead of `last = start + len - 1` (overflow
-> does not cause any problem here), and use offsets in the loops (avoiding
-> overflows since the offset is never larger than the host page size).
-
-No, it is not simpler with 'end', because end == 0 is 'valid' in the sense that the range 
-goes from [start, (abi_ptr)-1].  But having end <= start is awkward in the extreme.
-
-Thus we prefer the inclusive range [start, last] to the exclusive range [start, end).
-
-Not everything has been converted away from 'end', but we certainly should not regress 
-existing code.
+> This change places the hook for x86 targets.
+> 
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
+>   target/i386/tcg/excp_helper.c | 3 +++
+>   target/i386/tcg/seg_helper.c  | 4 ++++
+>   2 files changed, 7 insertions(+)
 
 
-r~
+>   G_NORETURN void helper_raise_interrupt(CPUX86State *env, int intno,
+>                                             int next_eip_addend)
+> @@ -93,6 +94,7 @@ void raise_interrupt2(CPUX86State *env, int intno,
+>                         uintptr_t retaddr)
+
+As a future cleanup, rename raise_interrupt2() -> raise_exception()?
+
+>   {
+>       CPUState *cs = env_cpu(env);
+> +    uint64_t last_pc = env->eip + env->segs[R_CS].base;
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
