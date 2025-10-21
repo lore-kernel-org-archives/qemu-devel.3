@@ -4,111 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA5ACCD1A7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B4FCCD1B9
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 16:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBF2j-0006ee-6a; Tue, 21 Oct 2025 12:17:02 -0400
+	id 1vBF37-00076l-4w; Tue, 21 Oct 2025 12:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vBF2Y-0006FK-PF
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:16:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBF2n-0006tM-4L
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:17:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vBF2V-00020I-H9
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:16:50 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBF2k-00021h-Lv
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761063400;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1761063420;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=gUfxbCJU0O58X9kYLTKNd/jDB9XXAb8h/+FGLLp0ww4=;
- b=bMfNyXXOyS6/8U3Z4Z0Wid06TVsP5nFKDT3ifMQi4qRVnUoUyCXM8hiYFDyEYESDrRYn3i
- u41Ew+Bh2Lo4yo/uoeBjeBV1sre0K5FSPajl09JfISC8tHSS95SmQ3wNnjYG6lW21C/Btb
- UIAUgjLBWZgThDDDIoWSGYTZu7QXCDI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3Lo7+CNfsGIcNSGdYpiAnUPzCn7col2IHeF9S06Rdcc=;
+ b=f+iM5A8UxpDjGYck4NqG/ljJdMavs9LMPScm4V/gAPI8KsQd7HumRKUXWhAIXUQYXI4DHF
+ rQBeP8yZqr7Ftrw5JAe18Gu+dd8r53KjtkDGAkemEamAQB8PGqDetUbEW6zEXJlRUtZOQv
+ l9qHiFaiV3MksbbPHuAbgEao1aMPD6c=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-wIW9cJKHMKeM4KJ6Vke0vA-1; Tue, 21 Oct 2025 12:16:38 -0400
-X-MC-Unique: wIW9cJKHMKeM4KJ6Vke0vA-1
-X-Mimecast-MFC-AGG-ID: wIW9cJKHMKeM4KJ6Vke0vA_1761063398
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-46e4cb3e4deso186855e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 09:16:38 -0700 (PDT)
+ us-mta-609-i0xs_BRFOvWjc4GaEFXPGA-1; Tue, 21 Oct 2025 12:16:58 -0400
+X-MC-Unique: i0xs_BRFOvWjc4GaEFXPGA-1
+X-Mimecast-MFC-AGG-ID: i0xs_BRFOvWjc4GaEFXPGA_1761063418
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-81d800259e3so92540376d6.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 09:16:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761063397; x=1761668197;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gUfxbCJU0O58X9kYLTKNd/jDB9XXAb8h/+FGLLp0ww4=;
- b=eYT1i/4moaa9HxTj0JYgjbuMeG39YDpmHsVKZ5jTR222A5GQk/PY8/11OW3tesrRxZ
- HHY9w+UrohBAyqftOTHLY49phxkHRNjFYt6KZMvRRIDJUGTlB+D3YiJpL7dh8RfJSyxh
- AileLvlaKNAk4s3tT7tYJLA3mqG84Z/OYkorE4F9ptyNGlx7sAMzeYJO71rHzS2+OvoG
- Lz0junFifym0nKc8gagVOSE9gnVy1OQ8e6noAtVwSccZReASoQ46tuRJTQUdgYaQ7wEg
- vn7N41X3h7D5/5gNsQoG6A62caMVH10VzIXbYstXFXuNXBkSBxdQOGU0gpZ7p4o0ka1q
- mfrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUkkUBrPUbt+3zflwsI3d4gEQxmNsEWmuTlYA7EqBJMQbssbbK84e5XDGOF4l6A3uolLIj6wXEq7yaM@nongnu.org
-X-Gm-Message-State: AOJu0Yy5S7FPhf6/VbXzuxrWbqxns1w/KedyVs4BPnqmXLpRSc40rUPw
- t8fiJpZmkgFXuSYElUC65z+NyPwOkaEFaknD66HXp4Qlrc4uCWeDommKTL8ielYKQhY7D7Sw421
- eHiUPIlDTkCjvwS28YBhk3weYDg4arjC9UA8mv/LLVzujLZoKmr4/bKO8
-X-Gm-Gg: ASbGncv9yuM7efYhzXgkA2wnqISvBe/jw1MsC0GaLIc7mi4E/xDXrs5eIVr98z6NM6/
- XnFq/zBYBTFRpTlNA4nwuBjgje0Ef3mgw/UQ9Sc3+URQkh0yawTNAZa9GdbFT/kbPUJVdIKusu+
- +yYkRUjYRS4EMS+82UGoQLqoqJU87yusmdPMmsixkx60cxYbSpbTARuac+J7W4baAFtjp99/Bb1
- uxEVA9p/JtYQTxhsFrdfuIG/A77MISWwyLt0b6NLEx6RYaoEw7aNggjeYR3BRAEiUCbUKIP6I9d
- 1Co7GBqFT2Hfkyt1fz6xSx+jrgtin40SdiuAPaJqgVLhgXaaSA3kF7uDVPVDan+NpFtTKbHsrz3
- rKJnG
-X-Received: by 2002:a05:600c:468b:b0:45b:92a6:63e3 with SMTP id
- 5b1f17b1804b1-475c3eaf656mr2128635e9.9.1761063397476; 
- Tue, 21 Oct 2025 09:16:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEqUF2Nl1eabLNJoukdEvoP9IAE9TrACLu+/Cjiv5t5AUKxzkiuEZId+H1bpbkJZ2FzpyLKA==
-X-Received: by 2002:a05:600c:468b:b0:45b:92a6:63e3 with SMTP id
- 5b1f17b1804b1-475c3eaf656mr2128225e9.9.1761063396972; 
- Tue, 21 Oct 2025 09:16:36 -0700 (PDT)
-Received: from [192.168.43.95] ([78.245.103.33])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c427ed3fsm246295e9.1.2025.10.21.09.16.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 09:16:36 -0700 (PDT)
-Message-ID: <a6beff3c-f704-4e0e-9ae9-c8c150845fa0@redhat.com>
-Date: Tue, 21 Oct 2025 18:16:34 +0200
+ d=1e100.net; s=20230601; t=1761063418; x=1761668218;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3Lo7+CNfsGIcNSGdYpiAnUPzCn7col2IHeF9S06Rdcc=;
+ b=GbOv+8lcd85dKr0kffe/fN35UwtqkHNweq3/hm1gk8T6B6CM042l9L4LOgXcEXt8qA
+ tX+lACsyhGQFR37OczizbaJt57JpQ3ruJJInlXw8u0vpW4KKf5EnboP1b6YlukRvlcy1
+ 9nLiYnXv9cL508861CZdhP9VTmMZ+bqAV2E0WO5Aa7gl3fSilNr+U+gQtBwOR9JTkGGB
+ PuWXHMZXI7gEuZ4jLLlr+sTICeojxsMjQas0v33SD2oyX3VmUbDW/GYnk1HPCyBZ8N1o
+ 4Wo9Yt4cKIibGlH/m2NmdPOts2qjIocfdEeWGKOE/dMUQgzaJckwlIWqyHBVMSmREsf2
+ rFJg==
+X-Gm-Message-State: AOJu0YwjJ7YPz0eHp9IGoKOFF9HCrNeToSl1Zs5fwpsZlGZowYM9gHJJ
+ 2HNG4t414ZChignKgBDopW/jPvQoN+Ibmx0/h0it9CQMjsgFnSf6+iz86YankYc+LytN0VG187X
+ 4+1L0wInsH8SNVJgXefc+/huuZAhCuwNUNn2XhydVyD1B+1sgqcljtey6
+X-Gm-Gg: ASbGncuMQcNajq1D5LHMbrb2KQDKLxU2V2s1xq6HaRR0KTcXQe16NSs0vb2h1OifT1v
+ CUZgdVdE+vjo5mMixHKoiuUFeoNcylDvaGMCkYbGnyNPqiCMw0WVvmAN+NKMVYnonHFgkDePd2+
+ JpYuJFePwamf2Th8P3ve9WuL8GBvleg+8nhf7HuwygWACexz2ccAVaA0/2uMxaiyqrj0XDdKUh1
+ xefNQGbQ+Wl/N5+4zWTMNCvYmdWQZAAMYkMX0dhp3lqvbbCCfd+h71ofs0gvrmZcbkMj7VHR6pQ
+ 2Yk2AvQ3L+Zx0ROL5dCiRPSMZWEIiCREZAPvfZ8WYdcNyrBUm7Rx4v4ckTk1ZrWmi4I=
+X-Received: by 2002:ad4:5ae4:0:b0:87c:2868:51d4 with SMTP id
+ 6a1803df08f44-87c286857fdmr204932836d6.28.1761063417444; 
+ Tue, 21 Oct 2025 09:16:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHE8MYyozbH9PPCoxpJ7ndND5YfjbRDNs+vMsw/ri0Gd8KOwiEAG5CDoch4VS+R7pYBdS9kfQ==
+X-Received: by 2002:ad4:5ae4:0:b0:87c:2868:51d4 with SMTP id
+ 6a1803df08f44-87c286857fdmr204932036d6.28.1761063416810; 
+ Tue, 21 Oct 2025 09:16:56 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87cf5235156sm70943456d6.27.2025.10.21.09.16.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 09:16:56 -0700 (PDT)
+Date: Tue, 21 Oct 2025 12:16:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Arun Menon <armenon@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PULL 02/45] migration: push Error **errp into
+ vmstate_load_state()
+Message-ID: <aPex9SsQOup69DRI@x1.local>
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-3-peterx@redhat.com>
+ <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/27] hw/arm/smmuv3-accel: Make use of
- get_msi_address_space() callback
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-13-skolothumtho@nvidia.com>
- <8ce5574e-3e31-456c-9579-0fbf8526651f@redhat.com>
- <CH3PR12MB754810AE8D308630041F9AFEABF2A@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB754810AE8D308630041F9AFEABF2A@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,7 +94,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,117 +107,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On Tue, Oct 21, 2025 at 04:43:52PM +0100, Peter Maydell wrote:
+> On Fri, 3 Oct 2025 at 16:39, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > From: Arun Menon <armenon@redhat.com>
+> >
+> > This is an incremental step in converting vmstate loading
+> > code to report error via Error objects instead of directly
+> > printing it to console/monitor.
+> > It is ensured that vmstate_load_state() must report an error
+> > in errp, in case of failure.
+> >
+> > The errors are temporarily reported using error_report_err().
+> > This is removed in the subsequent patches in this series,
+> > when we are actually able to propagate the error to the calling
+> > function using errp. Whereas, if we want the function to exit on
+> > error, then error_fatal is passed.
+> 
+> > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> > index de35902213..e61585aa61 100644
+> > --- a/hw/display/virtio-gpu.c
+> > +++ b/hw/display/virtio-gpu.c
+> > @@ -1347,7 +1347,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+> >      }
+> >
+> >      /* load & apply scanout state */
+> > -    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
+> > +    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &error_fatal);
+> 
+> This is in a migration VMState .get function -- shouldn't we
+> be passing failure up to the caller, rather than exiting
+> with error_fatal here ?
+> 
+> The commit message says some of this is fixed in subsequent
+> patches, but as of today this is still the code in git.
+> The other callsites which pass error_fatal to vmstate_load_state()
+> also look wrong:
+> 
+> hw/s390x/virtio-ccw.c:    return vmstate_load_state(f,
+> &vmstate_virtio_ccw_dev, dev, 1, &error_fatal);
+> hw/virtio/virtio-mmio.c:    return vmstate_load_state(f,
+> &vmstate_virtio_mmio, proxy, 1, &error_fatal);
+> hw/virtio/virtio-pci.c:    return vmstate_load_state(f,
+> &vmstate_virtio_pci, proxy, 1, &error_fatal);
+> 
+> as they are written to return an error value that they'll
+> never see because of the use of error_fatal here.
 
-On 10/21/25 10:15 AM, Shameer Kolothum wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 20 October 2025 17:44
->> To: Shameer Kolothum <skolothumtho@nvidia.com>; qemu-
->> arm@nongnu.org; qemu-devel@nongnu.org
->> Cc: peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>; Nicolin
->> Chen <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
->> Nathan Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
->> smostafa@google.com; wangzhou1@hisilicon.com;
->> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
->> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
->> shameerkolothum@gmail.com
->> Subject: Re: [PATCH v4 12/27] hw/arm/smmuv3-accel: Make use of
->> get_msi_address_space() callback
->>
->> External email: Use caution opening links or attachments
->>
->>
->> Hi Shameer,
->>
->> On 9/29/25 3:36 PM, Shameer Kolothum wrote:
->>> Here we return the IOMMU address space if the device has S1 translation
->>> enabled by Guest. Otherwise return system address space.
->>>
->>> Signed-off-by: Shameer Kolothum
->> <shameerali.kolothum.thodi@huawei.com>
->>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->>> ---
->>>  hw/arm/smmuv3-accel.c | 21 +++++++++++++++++++++
->>>  1 file changed, 21 insertions(+)
->>>
->>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->>> index 790887ac31..f4e01fba6d 100644
->>> --- a/hw/arm/smmuv3-accel.c
->>> +++ b/hw/arm/smmuv3-accel.c
->>> @@ -387,6 +387,26 @@ static void
->> smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
->>>      }
->>>  }
->>>
->>> +static AddressSpace *smmuv3_accel_find_msi_as(PCIBus *bus, void
->> *opaque,
->>> +                                              int devfn)
->>> +{
->>> +    SMMUState *bs = opaque;
->>> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
->>> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus,
->> bus, devfn);
->>> +    SMMUDevice *sdev = &accel_dev->sdev;
->>> +
->>> +    /*
->>> +     * If the assigned vfio-pci dev has S1 translation enabled by
->>> +     * Guest, return IOMMU address space for MSI translation.
->>> +     * Otherwise, return system address space.
->>> +     */
->>> +    if (accel_dev->s1_hwpt) {
->>> +        return &sdev->as;
->>> +    } else {
->>> +        return &address_space_memory;
->>> +    }
->> At the moment I don't understand this code either. In case of emulated
->> device it then returns address_space_memory whereas I would have
->> expected the opposite. I definitively need to trace things ;-)
-Thank you for the traces!
-> We have,
-> [VIRT_GIC_ITS] =            { 0x08080000, 0x00020000 },
->
-> I added a few prints in kvm_arch_fixup_msi_route() so that it may help
-> to understand how the translation of MSI doorbell is performed here.
->
-> If we return IOMMU addr space(&sdev->as) here,
->
-> kvm_arch_fixup_msi_route: MSI IOVA=0xffbf0040 msi_addr_lo=0xffbf0040 msi_addr_hi=0x0
-so this gIOVA
-> kvm_arch_fixup_msi_route: Translated doorbell_gpa= 0x8090040
-> kvm_arch_fixup_msi_route: ret:MSI IOVA=0xffbf0040 translated: msi_addr_lo=0x8090040 msi_addr_hi=0x0
->
-> It gets the correct vITS gpA address after the translation through address_space_translate().
-I agree it needs to be translated into the vITS doorbell reg.
->
-> Since host uses the (MSI_IOVA_BASE, MSI_IOVA_LENGTH) for ITS doorbell mapping 
-> and using IORT RMR we make sure there is an identity mapping for that range, it all
-> works fine.
->
-> Now, suppose if we return system addr space(&address_space_memory):
->
-> kvm_arch_fixup_msi_route: MSI IOVA=0xffbf0040 msi_addr_lo 0xffbf0040 msi_addr_hi 0x0
-> kvm_arch_fixup_msi_route:  address_space_memory, nothing to do, return
->
-> And the device doorbell gets configured with gIOVA 0xffbf0040 instead of the vITS gPA
-> as Nicolin explained in the other thread.
-I agree that for MSI support you must remy on the IOMMU MR translate
-function, even for VFIO devices.
+Indeed a fair question to ask.
 
-Thanks
+> 
+> Do you have plans for further cleanup/extension of the
+> use of Error here that would let these functions pass
+> the Error back up the chain ?
 
-Eric
->
-> Hope this helps.
->
-> Thanks,
-> Shameer
->
+It would be non-trivial though as we'll need to change VMStateInfo.get()
+API and that'll be another lot of churns.
+
+Arun, should we pass NULL for above three occurances, so that we will still
+not brute force quit when error happens?  Do you want to send a patch?
+
+-- 
+Peter Xu
 
 
