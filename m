@@ -4,176 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFAAECCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 07:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E4DCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 07:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB6SK-0003QL-C1; Tue, 21 Oct 2025 03:06:52 -0400
+	id 1vB74W-0000uy-Ef; Tue, 21 Oct 2025 03:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vB6SG-0003P4-GW; Tue, 21 Oct 2025 03:06:48 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vB6SC-0004xA-Ay; Tue, 21 Oct 2025 03:06:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=volV3DA4DbaKcaWM8Orf2LW2/R7N5Rgs5ksEx/ruSsRWSjQelYC9sC+ZN+f7h+UTC9QTOEscwygnsYTNt/36Ce93uxM753dM//ODePUCTZsLGOJvG9e555kb0N/7cgJqEd/O/KZTl8tF0SityKK9UICX2yVeGIlXO47kcd9a0jNrX5mxbSyuzjdKXxurBMxMu407qjeOTKPhAsrlchFjFn87SHYTmJ2XEUsxQudP7Wy8d0mRy9l6BdOhisNZKEeUf/CKPqbKZ9z8H9nWr8XeSvKYwRoXSaqnkY1Kn60P4G40n2MQGJYxc9YZz2vlEnWwKx1LvgDzJoU8AaRbr1EawQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lBZtKd8+t5V945c40ulLfbatUonF4inz90IhgkvIkGY=;
- b=ip22fjFSkEPPD6z9kQQ6sNblwcvDY6co14xx9fECI8g1KNNrmS2jK+wEWb09ZMUoG/i/KOyzo4S0+qPnPKDwNwJ2X9vUXzd8VaDunLle5pS/BP3Kt0Nx4msPAhDFpdV4TDZafhCHepr2dfoOw1g8/PWqPMhyehrDquBfhKIv9yJ5yXqAiN5w35XiEhj/OZPIJi3vh2ryh+rqGHEbrnHny1+qg00Vjw3vTnjvU3HGIPAtBcxU45R+WqJaSPzoIPr5uFLPQ/pbsrDy1uOVAwdtNuN8DOK+IpQxqHnezEDoSkytUQOGNUej01nrKdlBek0ZxtQ9RB/q3zcVnYt428oR8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lBZtKd8+t5V945c40ulLfbatUonF4inz90IhgkvIkGY=;
- b=hQ5r6ghVvspsxt8FLSgc+Ze/qNK8MnN7g82oBbY0UKqw6swDc+x6gkYAX6kxwmcI0f7i7v2lXkcCAO8c90Row5YwdBD+HbWZieEKO1ZMBe1vbO5pIREUgxTwDkjZshUMhA16hwxYeSdza5thpdXJRb8KbeShENRlAl1JQqpu4vRq4yfKBKn/muwnFM8CD74A7P/CVfYRYPgwJb2Oe3+M+e/tGext2qPICxJwI/PXgYXKYe0iYs/LnPc3NbzQJTOAfd5H72mr9aKeZ+UHpY3InZuzVMOv3DJY1wZEohBEvEuj7zo6oQE7m4HYsOfgsptWG2hoskzEIrHMwzyyFoCblg==
-Received: from KL1PR0601MB4196.apcprd06.prod.outlook.com (2603:1096:820:30::6)
- by PS1PPFF8B9260ED.apcprd06.prod.outlook.com (2603:1096:308::26f)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.15; Tue, 21 Oct
- 2025 07:06:36 +0000
-Received: from KL1PR0601MB4196.apcprd06.prod.outlook.com
- ([fe80::13a8:12fc:7753:8156]) by KL1PR0601MB4196.apcprd06.prod.outlook.com
- ([fe80::13a8:12fc:7753:8156%6]) with mapi id 15.20.9228.016; Tue, 21 Oct 2025
- 07:06:36 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>,
- "'qemu-arm@nongnu.org'" <qemu-arm@nongnu.org>, "open list:All patches CC
- here" <qemu-devel@nongnu.org>
-CC: 'Andrew Jeffery' <andrew@codeconstruct.com.au>, Joel Stanley
- <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Patrick
- Williams <patrick@stwcx.xyz>
-Subject: RE: aspeed: Split the machine definition into individual source files
-Thread-Topic: aspeed: Split the machine definition into individual source files
-Thread-Index: AQHb4PvonkQ5WUYo0k+UuuoQJWjdG7TEwxGggACgzwCABzH94IAAUq2AgAAAUoCAAAbrgIAAAHRA
-Date: Tue, 21 Oct 2025 07:06:35 +0000
-Message-ID: <KL1PR0601MB419671D3A296A0B12483EADDFCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
-References: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
- <KL1PR0601MB41966988C6264D25E6782045FCE9A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
- <965c2eb3-639e-4792-bd8d-f47682099601@kaod.org>
- <KL1PR0601MB419628CE287BDF2715845C4BFCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
- <d51ad87c-8076-4f86-b9ed-388313ae9e2d@kaod.org>
- <KL1PR0601MB4196F40949678039B771F610FCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
- <779258ba-20f2-49ea-abc5-790db8162742@kaod.org>
-In-Reply-To: <779258ba-20f2-49ea-abc5-790db8162742@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: KL1PR0601MB4196:EE_|PS1PPFF8B9260ED:EE_
-x-ms-office365-filtering-correlation-id: b5cd6060-f8ff-4314-0c2b-08de10705fa2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?aGk1R3RaTEVnelZSd0JWZEVEa0FJVmJJWDRaSHBwN2wwSXlWOVlwY0Q2NTBo?=
- =?utf-8?B?QVRoZWJ6bndzRlJWL3JRUm9XMTlRRlFZRVBWS0s1bFRXbTlaM3ZCQnFOQ2ww?=
- =?utf-8?B?TStxL0s4RDFFYXoyV0R4blVmMS9RZHJyUk1LUUtyai9GL0sxL1hkQWNxUjhj?=
- =?utf-8?B?MHNvcktxVWNZRG9DM2VCMnY1TEZaRE54VGZXM0dvY2lhZG5oa1lwSnYrQkpo?=
- =?utf-8?B?aGpONUF0aHdqZ2d1cFAyYjNDcldKSkN5aytWMkxYak8wdXBONXdzcjNBTzR0?=
- =?utf-8?B?OVNFQVNWWlg2MTZqQ1U1U28zdCtPS29STHlPTmhrWVZhMUEyR3VOUVRPRTh2?=
- =?utf-8?B?QVNDSUhob0MrNUp3TE5tSDNIclB0dVU2VEJ1bll1Uk05QVVFNzltNitmZHhL?=
- =?utf-8?B?cEw2K0xBcFExOXlIQnQxTkY3U3BvWm1hUTltYVZQTW9pZEd0dU9MdjhkejZ2?=
- =?utf-8?B?WlJrTG5RajZySytybkgwOEF6czJCV1JWVDJPMVdKdUx2QTF1ZjZwMFd5bVdK?=
- =?utf-8?B?WlQyTTM1VU1XdlU1V3p5MkRQdkswNUxwMVNsNUYxRUpwa2k5ZkZnVFF3Q29D?=
- =?utf-8?B?dHU1SG0vR1RwaG5tTExlYnZZY2JibENUTzVPMmQ1eVVwMWlUWFVtK0wxVkFF?=
- =?utf-8?B?aHpPQmJ5UjhIMDNtSHBncFVvK2M4UFlHTWRURkN4NWxmSERhc0lNS0dDT1Ux?=
- =?utf-8?B?OWFqYnV3UHpCbkhqcXJ2SGFSQm9rMDFDNEQ5cnoxa2l3Zmo2Yk5wM1dSdnJH?=
- =?utf-8?B?MEE3am52TjF1dWVjNjQ5d3U2cVo2SVdnU1JPdDZVLzNOaVUzbzlkNGdOdUZo?=
- =?utf-8?B?NUFmNTdyaUZCT3k3QTVoL1Z2TE9qYVdHOWR3YUZKbWRESUQwWnV1WmZ5TTU2?=
- =?utf-8?B?YjZ0Mi9MTlFHcm9YeWNmUXI3cTV2N2t3cE1sNGpGYkVCTVMzWDM2NTgwR09L?=
- =?utf-8?B?c0QyQUtRbUxRODJqNlRJV2NuV3pYQ2tCOUVmeHJBWUp3aVExMi9lVmdjNkhk?=
- =?utf-8?B?Y25BZy9NZGM5V2VsT0sybXFQK2lGN3RmcXVrdkxqSm9jTk9ESTYwWUNjczdH?=
- =?utf-8?B?NHJIb2dsS2J5Yko3ZVRtK0haYUJIUndIb0VyS0E1aXdrNWJFU1hVbTF2cnl5?=
- =?utf-8?B?cWtLdE82VHhqVlNlSTlyTmJyeGZQNlNLVGcxK3NSbWd3Sk9IMG5pa05SNFAx?=
- =?utf-8?B?dHhNTWFpZHZXOE45WW9yWmhTSWhXV2orcXU5bXhaMjNtNWxBOHc3VExPVllM?=
- =?utf-8?B?Y1dPVHBoNjhWZjFXeXhnYjYrMTJsNFRqQ3VDd3R3Vk90enVsSEdIOHFOMEdm?=
- =?utf-8?B?eUU5bWw2clRGWHl5SzQ1ak04S1JnQldKb0FpUzdhWGZHeUFrUHFUekI5dllI?=
- =?utf-8?B?ZjdVNnpMU3hoVXZaRlZLUDVZWVRSY0hqQVc0V09TVy9KQTI2L1VRbGJXNStS?=
- =?utf-8?B?ZXlldFBuZk1GNk1UN1IyODlhQ0RCK1hBRkpDRUdHUEdSMXcxMUhDOGNFdkhQ?=
- =?utf-8?B?dURSZXF3WWx3R0xGdmoyNk5Yd050aEJaRStaVDNleW5UUWN5RkFCRG1pVUlS?=
- =?utf-8?B?UFIxU0tKVkcrQVBKbk05WXJ5RGpOOWlZYlJzY0JrQWVJM0d5b20rY3FXVGVl?=
- =?utf-8?B?dFhNc21wOXhURXc3RUl6bDNtbUxtV1RFTy9qSVpubXJ5Yk5DY29xRkU4VXBI?=
- =?utf-8?B?dUpranlNT0w1eno2ejBqMk10Ym1UQUdKcmRlV3BSZHNhUFhWNXNwaFdDWUR4?=
- =?utf-8?B?Z2xDT1l6aHZRUElPY2lLNGxqUWRNMkcyaDUyV000MGlKQ2RhS1QvcUc3RTcw?=
- =?utf-8?B?eURrWEtlUjZFdDVYMForWm5zM1BVajloZ1gzdmZJc3lZVDJ3djNTdE55NXBU?=
- =?utf-8?B?RlU3WGdCWlBOQzFCanJQQWVLUmZqM3hTRDc4K2poZjdaeGxwT3hBTVljajZi?=
- =?utf-8?B?eEZVNC9adXo3Rk85b2NyQzNtTGZKYnd6RTdIa25FM0dUUU1VWHp6SDYxV2hV?=
- =?utf-8?B?NkdLVVU3RWsrUmR1T001cGROV0lqMVZqYWZpZTFjbVYyWHY5eHFiRjJYL1Vi?=
- =?utf-8?Q?OpLAhb?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:KL1PR0601MB4196.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?b0h1NGM5ZXNxTWd3S3lCeXpMU0toVWhKVHVZeUhMU2JEOHdXYlJYUHU4SDFB?=
- =?utf-8?B?dFJNQm55NVp1eThUcWdqQkxZUlcrU3J3TFQ5Vkw5dktraGlSUjFkeTdiaFdL?=
- =?utf-8?B?cm5ZY3lPb1ZycldCbzU3OUk4OTFxMFYrRFhpYzRUQysrUVpCckZVVWpzNmtw?=
- =?utf-8?B?T0dEYm9XWEU2bXR2T1RTbCttZXArYUVJaWF1K1hPcjJUdlhMR1BzandGWjVq?=
- =?utf-8?B?c0JKdU5yQjlzSFVKVnM2QlFEM0kzZEV3NURMQlJMWVgrOTZzalBJNGRRY2M0?=
- =?utf-8?B?cUErWEhESml4a1VvMFNiS1ZyUXFROXMrSW94MERNdC93Zk94M2J4blhGLzFD?=
- =?utf-8?B?T1pBeE42U2xwbjJlUnNkK2ZJR3h2eW1ZT1FaY2hxMGkyc0xOL3ZBSjhpbFFR?=
- =?utf-8?B?WWFsbk96UFZtcml2M1h1Y0R4anVoMHBaVmp3dlRZQi9KNVQ4NVhRU2pxWS9F?=
- =?utf-8?B?cEk1Nzhrdm1PZkJudVROeDlBYlVvZmFEUnBZQjZkbkZYa1RJVEc1Q05tMURm?=
- =?utf-8?B?U0FDUnBPZ0pEVE1KVzRCMzFLaWNzZzllVDJ3N3VycmpBN0Rhc0tvcVNhUE1Q?=
- =?utf-8?B?NjJvRWpGcVFsZFlSQ2RYRjBjd1MyZEl5SzVQengyYXRVc0lveDQvZHphQnE5?=
- =?utf-8?B?aXl1UlNNVXFrNWFMWWpLNktNbnZkY1hadmRIcCtMMFdhUEI1aEhVRWhqUFZP?=
- =?utf-8?B?dkVQZHpad3J6aHlmWnJkcjZUUnhCYkRRSzAxbTl0STUvbjhObXJ4OHdTNmJs?=
- =?utf-8?B?UkZpbjFMa1hTUmRXcTkzOEJMZEZWby9vbTJzNm8yeWFDUG04dENEUlJabHMv?=
- =?utf-8?B?VG53STFmelE1c2diaWpEM3VXbGtRTC91QmZxb1BTRlE2UFJqVW9INE1wQ3FJ?=
- =?utf-8?B?V1NoVWIrWU0zb25nSXVudDliKzBDaENPODFuRW5GczJzbVNYTVNMRms5ZGFZ?=
- =?utf-8?B?eXJ2U3lTcEVRbnVHREFBa00xZHlJL3J6MXl4ZFR3SEw4eFBrL1NUSDFLMXpw?=
- =?utf-8?B?L0wxejROdXZYazZIV2dKUHBkOUNJdjNzRFZRd3o2dDgxbmt5RnpUNE4vWVZk?=
- =?utf-8?B?RmRiVUN1SVR0ZUM4YVlEVHhLUERLQ2k2REZrT0FodTZSUmM3TW9SSlAyVjJ0?=
- =?utf-8?B?VDkxa0RHellwMTNJOUFLc2FLdENuMzFzWXFYZjhnenJ4KzJ0UTN0RWRxY0FP?=
- =?utf-8?B?WGlTakMxWEdBQ052dFIwaHBDWnFsVnVvWWNOQnFTeDdJcnpLMk54djhKd2Jx?=
- =?utf-8?B?YkVvZGRkVTVua2txdmliNXBSL2U4N0FpS3ZSR01FN0VsOFJya1R4aHhKTG9M?=
- =?utf-8?B?Um1NSG5XM1Rpa3o4YWxvQ01RMk5PckZ2azRleVhUTTlwTkw3TkNDZ3VzMlkx?=
- =?utf-8?B?OGVMUVo5cFlxZTNpaDdHZ01yb2Q4cWQ4TEVVaGxGc1lMWmY4dktYRm1MU29N?=
- =?utf-8?B?TEs1bGZnYkV3bERJeSt0WUk3Q0orT1lkQjZvNHJoaUxQOEFqSFBaRjlONU5W?=
- =?utf-8?B?SmczazJIQTF5ZStId1k0bGNIY1ZrcmpneFFucE9Bc28zelJueURNbkVENkl6?=
- =?utf-8?B?Z1Y2QlVUZmViZDNSQXpTTnIwVG84R1B0MTdsSmVIM2QyZmVpVnhXZjlVUjdO?=
- =?utf-8?B?UHBKNTZPYWhvUGx3RmZWRmczaHM2cmNTc1k1bVNNcDhkL2Z1SCtHNnkxK1da?=
- =?utf-8?B?cHdGeVNmbDN6R1B2UXZoZDF4UWNYNmR5MzFjbXltdnhsVEw4ajBXc2U2YXp2?=
- =?utf-8?B?L2F1ZzA3NXNkdGFQK04vcWpVNG4zTG5LWTN0V2s0TURoS0xGNUhMOU1jYml2?=
- =?utf-8?B?V2dIZEw2UDA2UWM4TVhoOEZKcE9sS2FGVjZ3dy91Y25sOHZkVWlhUE04STM2?=
- =?utf-8?B?SGZXdExUeTY0MWNNbmpUWG1wMW9JeVdoRC9PL3RSeHFMby9MNS8wSnNpYS9G?=
- =?utf-8?B?dGZsRXAydWVSS1hyNFJSd0R3UUMvYTU4YjNUMUY4ZTNzaVVORXM0L3ZmbXU0?=
- =?utf-8?B?UE03bHZ2ZE90MkJDV0hqVmk1Umtrc08wYmNleVphODZhSVMzQmZZYWtqRzBH?=
- =?utf-8?B?TXdnRXhwc0dEbFpYR1ZIQkpUTFRJUldIQzlxMklWVDZjNFpKOE9vTUFDRXBB?=
- =?utf-8?Q?+sADkbpEMna/AlSGpn/sbjFg1?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB74U-0000uJ-Dm
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:46:18 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB74P-00020d-Su
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:46:18 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso5266744f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 00:46:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761032771; x=1761637571; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LIYtnVBl4SF0o8KcOR6H46cacGNMKA1Sg+xze/mfewg=;
+ b=fpa6Fhsn9ya9oC2uZd4EEQ0Lh6FRmDKb7DUKMOWM/+hFPCc/n7pnW1lvsZholJZn+7
+ BfE0Vi4IFRH6rerXyBA9Npqt2GrbxTV2kufBByVCEFbdhE5wWEU6vFOPzb8euomUB4Yv
+ xDM/Pk1EIdREkBniEMqx4b9I5bJxj2goBwkXX5xM1hWxTV/5q4g37XBnUS/Ks2FVhs5i
+ 4baWwDGq8tvhmauNmQwo56hL8hXQCmpj25uQ7LlF/J4ciw0H3DMG1qQrXkBX3uAyaq0H
+ 3CAfJSjzeXLi5KnvYBwwiOG9jQSPyDpo87h+nDChiSR6vV406B/xEbEDzS9/S+boxqMI
+ /oAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761032771; x=1761637571;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LIYtnVBl4SF0o8KcOR6H46cacGNMKA1Sg+xze/mfewg=;
+ b=v/Z5h1JpvVlbwtShgdrQem7KBY1KM5T3N4pF59bBBK7WpESak8LlFMSwfW5BrnXd6Y
+ wZv1Xl7KuO+8uK5HmVKd0tkFbV9eFjdPbponwDU3MnkK8qjIFXwTWWOF1jqjiWnvze2h
+ +ZXGsnlKygHxzKVbMFAXFBx7Xm0q4YNa+I6imlfC0SazqFfY+eeEDqax/9OJ+nRq5gT3
+ oIxnmdadyNKESR7zsO9ctgiTd6K3MZz6tnxMzgIHaPAnSkScKaDQwlwGGjbX+5L49uKS
+ rnwx0fY8uQf1+2G3xqGwg0qNMPSqrjIWqAMuCt1bRGmcvKyk609AFyUZMVos/CyEvRR8
+ x++A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcwo4D2dTx50xV+asSFlZ/gfHzvE8NJIOW2qWCTSnaAYDUO6+miAkP1+f+5h5PLFg2ds12qOLOEh29@nongnu.org
+X-Gm-Message-State: AOJu0Yzcsckhh18uypOYnqV0PgBfYC/xihF4rhTVF8qH9bGWsuDePH44
+ /WidR43O3oxGY14V27nRkYjOwxRNb5uIxQYCt07rRkf3aXitVqfdSdYmZ0yjBVA66F0=
+X-Gm-Gg: ASbGnctTV+tRxGQDiCO9x5v4LPj9kqyHuh4X+GFifP22Mw5L3OlYzp7R/pPu2JnRGQO
+ U7JKt9DfO6NRMtw4TfCoEWltEqVmkmtsxX7aqh5EmVPuz34jvzvDxlzwZQfxLkSws6Ltnqz+dm0
+ cYA/bi73ndabGiOJKhXBusH2wW+DfjDTGqEIDZHNNXDGnohPl5FpTPYHKrqcYZI9rdO9IiKflF2
+ vyNTA5n7Wq4bKBeNjU5kYGZnY4u5KEboxjkiUG7WWlWNVc1rekawVrmMIZ+Z4eNsO7oGuB+i4/e
+ AujhL+Gg9FOFyxJ4d4/VIVdkXy+ahjKwir576uAviirS/n6kSoh5K8D1cC2b/yKUfoFPXBe+JFV
+ RBjg/OB0/VO8Y4ciSb+UvmBpRCKnpYQatnksYPVPqx2QV7FL8V2pq6oPUCyBaEDUi1cS3ltDyoD
+ hpajF+5F6+PdRQUSJ1BeUKkfjWJHHLV54MSP0CxOFH80Y=
+X-Google-Smtp-Source: AGHT+IFzm7l05bRYkAbQXtdzhU8KlaqVqQyHgxFk+gHF51ax0yzC2pmzP0mgQwV44h1915sJXvod8g==
+X-Received: by 2002:a05:6000:1884:b0:427:167:c2ce with SMTP id
+ ffacd0b85a97d-42704dc9f6cmr11375768f8f.42.1761032771340; 
+ Tue, 21 Oct 2025 00:46:11 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427ea5b3acfsm18788634f8f.14.2025.10.21.00.46.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 00:46:10 -0700 (PDT)
+Message-ID: <6dcf7f38-5d1d-47a0-b647-b63b9151b4b6@linaro.org>
+Date: Tue, 21 Oct 2025 09:46:09 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB4196.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5cd6060-f8ff-4314-0c2b-08de10705fa2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2025 07:06:35.9580 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hscVfGfX3+VEMRfXHJG4iwwoFrWGXoRWpwxQfmYWMg+w+3Dy5NTn2z5AcCiAxTB3FV1sGZoUSn5CWThZKa+mdwLMOTpo4lf0hHNtJ6kUc8c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PPFF8B9260ED
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/18] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
+ pseries-4.2 machines
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ qemu-ppc@nongnu.org, kvm@vger.kernel.org,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20251020103815.78415-1-philmd@linaro.org>
+ <fdb7e249-b801-4f57-943d-71e620df2fb3@linux.ibm.com>
+ <8993a80c-6cb5-4c5b-a0ef-db9257c212be@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <8993a80c-6cb5-4c5b-a0ef-db9257c212be@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -189,14 +108,459 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYw0KDQo+ID4+DQo+ID4NCj4gPiBody9hcm0vYXNwZWVkX2FzdDI2MDBfIGZieTM1
-LmMgKGZieTM1LWJtYyBmcm9tIGFzcGVlZC5jKQ0KPiA+IGh3L2FybS9hc3BlZWRfYXN0MjYwMF9m
-YnkzNS5jICAoaHcvYXJtL2ZieTM1LmMpDQo+ID4NCj4gPiBCb3RoIHRoZW0gdXNlIHRoZSBzYW1l
-IG5hbWUuIERvIHlvdSBtZWFuIHRvIG1vdmUgdGhlbSBpbiBvbmUgZmlsZT8NCj4gT2guIEkgZm9y
-Z290IHRoYXQgd2UgaGFkIDIgbWFjaGluZXMuDQo+IA0KPiBJIHdvdWxkIGxlYXZlIGh3L2FybS9m
-YnkzNS5jIHVudG91Y2hlZC4gSSBhbSB0aGlua2luZyBvZiBkcm9wcGluZyB0aGUNCj4gImZieTM1
-IiBtYWNoaW5lIHNpbmNlIGl0IGl0IG5vdCBtYWludGFpbmVkIGFuZCB3ZSBoYXZlIGFub3RoZXIg
-bXVsdGktc29jDQo+IG1hY2hpbmU6ICJhc3QyNzAwZmMiLg0KPiANCg0KVGhhbmtzIGZvciB5b3Vy
-IHN1Z2dlc3Rpb25zLg0KV2lsbCBkby4NCg0KSmFtaW4NCj4gVGhhbmtzLA0KPiANCj4gQy4NCj4g
-DQoNCg==
+On 21/10/25 08:31, Cédric Le Goater wrote:
+> Hi
+> 
+> On 10/21/25 06:54, Harsh Prateek Bora wrote:
+>> +Cedric
+>>
+>> Hi Phillipe,
+>>
+>> It had been done and the patches were reviewed already here (you were 
+>> in CC too):
+>>
+>> https://lore.kernel.org/qemu-devel/20251009184057.19973-1- 
+>> harshpb@linux.ibm.com/
+> 
+> I would take the already reviewed patches, as that work is done. This 
+> series
+> is fine, but it is extra effort for removing dead code, which isn't worth
+> the time.
+
+My bad for missing a series reviewed 2 weeks ago (and not yet merged).
+
+Please consider cherry-picking the patches doing these cleanups then,
+which were missed because "too many things changed in a single patch"
+IMHO:
+
+-- >8 --
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index a9cf8677ac8..b9d884745fe 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -139,19 +139,11 @@ struct SpaprCapabilities {
+   * SpaprMachineClass:
+   */
+  struct SpaprMachineClass {
+-    /*< private >*/
+      MachineClass parent_class;
+
+-    /*< public >*/
+-    uint32_t nr_xirqs;
+      bool pre_5_1_assoc_refpoints;
+      bool pre_5_2_numa_associativity;
+      bool pre_6_2_numa_affinity;
+-
+-    bool (*phb_placement)(SpaprMachineState *spapr, uint32_t index,
+-                          uint64_t *buid, hwaddr *pio,
+-                          hwaddr *mmio32, hwaddr *mmio64,
+-                          unsigned n_dma, uint32_t *liobns, Error **errp);
+      SpaprResizeHpt resize_hpt_default;
+      SpaprCapabilities default_caps;
+      SpaprIrq *irq;
+diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+index a1d9ce9f9aa..742881231e1 100644
+--- a/target/ppc/kvm_ppc.h
++++ b/target/ppc/kvm_ppc.h
+@@ -21,8 +21,6 @@
+
+  uint32_t kvmppc_get_tbfreq(void);
+  uint64_t kvmppc_get_clockfreq(void);
+-bool kvmppc_get_host_model(char **buf);
+-bool kvmppc_get_host_serial(char **buf);
+  int kvmppc_get_hasidle(CPUPPCState *env);
+  int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
+  int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
+@@ -129,16 +127,6 @@ static inline uint32_t kvmppc_get_tbfreq(void)
+      return 0;
+  }
+
+-static inline bool kvmppc_get_host_model(char **buf)
+-{
+-    return false;
+-}
+-
+-static inline bool kvmppc_get_host_serial(char **buf)
+-{
+-    return false;
+-}
+-
+  static inline uint64_t kvmppc_get_clockfreq(void)
+  {
+      return 0;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d704b8ce211..52333250c68 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2050,11 +2049,6 @@ static const VMStateDescription 
+vmstate_spapr_irq_map = {
+      },
+  };
+
+-static bool spapr_dtb_needed(void *opaque)
+-{
+-    return true; /* backward migration compat */
+-}
+-
+  static int spapr_dtb_pre_load(void *opaque)
+  {
+      SpaprMachineState *spapr = (SpaprMachineState *)opaque;
+@@ -2070,7 +2064,6 @@ static const VMStateDescription vmstate_spapr_dtb = {
+      .name = "spapr_dtb",
+      .version_id = 1,
+      .minimum_version_id = 1,
+-    .needed = spapr_dtb_needed,
+      .pre_load = spapr_dtb_pre_load,
+      .fields = (const VMStateField[]) {
+          VMSTATE_UINT32(fdt_initial_size, SpaprMachineState),
+@@ -2976,9 +2969,9 @@ static void spapr_machine_init(MachineState *machine)
+       * connectors for a PHBs PCI slots) are added as needed during their
+       * parent's realization.
+       */
+-     for (i = 0; i < SPAPR_MAX_PHBS; i++) {
+-         spapr_dr_connector_new(OBJECT(machine), TYPE_SPAPR_DRC_PHB, i);
+-     }
++    for (i = 0; i < SPAPR_MAX_PHBS; i++) {
++        spapr_dr_connector_new(OBJECT(machine), TYPE_SPAPR_DRC_PHB, i);
++    }
+
+      /* Set up PCI */
+      spapr_pci_rtas_init();
+@@ -4051,12 +4044,62 @@ int spapr_phb_dt_populate(SpaprDrc *drc, 
+SpaprMachineState *spapr,
+      return 0;
+  }
+
++static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
++                                uint64_t *buid, hwaddr *pio,
++                                hwaddr *mmio32, hwaddr *mmio64,
++                                unsigned n_dma, uint32_t *liobns, Error 
+**errp)
++{
++    /*
++     * New-style PHB window placement.
++     *
++     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
++     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
++     * windows.
++     *
++     * Some guest kernels can't work with MMIO windows above 1<<46
++     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
++     *
++     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
++     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
++     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
++     * 1TiB 64-bit MMIO windows for each PHB.
++     */
++    const uint64_t base_buid = 0x800000020000000ULL;
++    int i;
++
++    /* Sanity check natural alignments */
++    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
++    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
++    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % 
+SPAPR_PCI_MEM32_WIN_SIZE) != 0);
++    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % 
+SPAPR_PCI_IO_WIN_SIZE) != 0);
++    /* Sanity check bounds */
++    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
++                      SPAPR_PCI_MEM32_WIN_SIZE);
++    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
++                      SPAPR_PCI_MEM64_WIN_SIZE);
++
++    if (index >= SPAPR_MAX_PHBS) {
++        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
++                   SPAPR_MAX_PHBS - 1);
++        return false;
++    }
++
++    *buid = base_buid + index;
++    for (i = 0; i < n_dma; ++i) {
++        liobns[i] = SPAPR_PCI_LIOBN(index, i);
++    }
++
++    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
++    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
++    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
++    return true;
++}
++
+  static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, 
+DeviceState *dev,
+                                 Error **errp)
+  {
+      SpaprMachineState *spapr = SPAPR_MACHINE(OBJECT(hotplug_dev));
+      SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(dev);
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+      const unsigned windows_supported = spapr_phb_windows_supported(sphb);
+      SpaprDrc *drc;
+
+@@ -4075,12 +4118,10 @@ static bool spapr_phb_pre_plug(HotplugHandler 
+*hotplug_dev, DeviceState *dev,
+       * This will check that sphb->index doesn't exceed the maximum 
+number of
+       * PHBs for the current machine type.
+       */
+-    return
+-        smc->phb_placement(spapr, sphb->index,
+-                           &sphb->buid, &sphb->io_win_addr,
+-                           &sphb->mem_win_addr, &sphb->mem64_win_addr,
+-                           windows_supported, sphb->dma_liobn,
+-                           errp);
++    return spapr_phb_placement(spapr, sphb->index,
++                               &sphb->buid, &sphb->io_win_addr,
++                               &sphb->mem_win_addr, &sphb->mem64_win_addr,
++                               windows_supported, sphb->dma_liobn, errp);
+  }
+
+  static void spapr_phb_plug(HotplugHandler *hotplug_dev, DeviceState *dev)
+@@ -4328,57 +4369,6 @@ static const CPUArchIdList 
+*spapr_possible_cpu_arch_ids(MachineState *machine)
+      return machine->possible_cpus;
+  }
+
+-static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
+-                                uint64_t *buid, hwaddr *pio,
+-                                hwaddr *mmio32, hwaddr *mmio64,
+-                                unsigned n_dma, uint32_t *liobns, Error 
+**errp)
+-{
+-    /*
+-     * New-style PHB window placement.
+-     *
+-     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
+-     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
+-     * windows.
+-     *
+-     * Some guest kernels can't work with MMIO windows above 1<<46
+-     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
+-     *
+-     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
+-     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
+-     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
+-     * 1TiB 64-bit MMIO windows for each PHB.
+-     */
+-    const uint64_t base_buid = 0x800000020000000ULL;
+-    int i;
+-
+-    /* Sanity check natural alignments */
+-    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
+-    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
+-    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % 
+SPAPR_PCI_MEM32_WIN_SIZE) != 0);
+-    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % 
+SPAPR_PCI_IO_WIN_SIZE) != 0);
+-    /* Sanity check bounds */
+-    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
+-                      SPAPR_PCI_MEM32_WIN_SIZE);
+-    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
+-                      SPAPR_PCI_MEM64_WIN_SIZE);
+-
+-    if (index >= SPAPR_MAX_PHBS) {
+-        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
+-                   SPAPR_MAX_PHBS - 1);
+-        return false;
+-    }
+-
+-    *buid = base_buid + index;
+-    for (i = 0; i < n_dma; ++i) {
+-        liobns[i] = SPAPR_PCI_LIOBN(index, i);
+-    }
+-
+-    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
+-    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
+-    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
+-    return true;
+-}
+-
+  static ICSState *spapr_ics_get(XICSFabric *dev, int irq)
+  {
+      SpaprMachineState *spapr = SPAPR_MACHINE(dev);
+@@ -4589,7 +4579,6 @@ static void spapr_machine_class_init(ObjectClass 
+*oc, const void *data)
+      smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
+      fwc->get_dev_path = spapr_get_fw_dev_path;
+      nc->nmi_monitor_handler = spapr_nmi;
+-    smc->phb_placement = spapr_phb_placement;
+      vhc->cpu_in_nested = spapr_cpu_in_nested;
+      vhc->deliver_hv_excp = spapr_exit_nested;
+      vhc->hypercall = emulate_spapr_hypercall;
+@@ -4636,7 +4625,6 @@ static void spapr_machine_class_init(ObjectClass 
+*oc, const void *data)
+      smc->default_caps.caps[SPAPR_CAP_AIL_MODE_3] = SPAPR_CAP_ON;
+      spapr_caps_add_properties(smc);
+      smc->irq = &spapr_irq_dual;
+-    smc->nr_xirqs = SPAPR_NR_XIRQS;
+      xfc->match_nvt = spapr_match_nvt;
+      vmc->client_architecture_support = 
+spapr_vof_client_architecture_support;
+      vmc->quiesce = spapr_vof_quiesce;
+diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
+index 548a190ce89..892ddc7f8f7 100644
+--- a/hw/ppc/spapr_events.c
++++ b/hw/ppc/spapr_events.c
+@@ -1041,16 +1041,14 @@ void 
+spapr_clear_pending_hotplug_events(SpaprMachineState *spapr)
+
+  void spapr_events_init(SpaprMachineState *spapr)
+  {
+-    int epow_irq = SPAPR_IRQ_EPOW;
+-
+-    spapr_irq_claim(spapr, epow_irq, false, &error_fatal);
++    spapr_irq_claim(spapr, SPAPR_IRQ_EPOW, false, &error_fatal);
+
+      QTAILQ_INIT(&spapr->pending_events);
+
+      spapr->event_sources = spapr_event_sources_new();
+
+      spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_EPOW,
+-                                 epow_irq);
++                                 SPAPR_IRQ_EPOW);
+
+      /* NOTE: if machine supports modern/dedicated hotplug event source,
+       * we add it to the device-tree unconditionally. This means we may
+@@ -1061,12 +1059,10 @@ void spapr_events_init(SpaprMachineState *spapr)
+       * checking that it's enabled.
+       */
+      if (spapr->use_hotplug_event_source) {
+-        int hp_irq = SPAPR_IRQ_HOTPLUG;
+-
+-        spapr_irq_claim(spapr, hp_irq, false, &error_fatal);
++        spapr_irq_claim(spapr, SPAPR_IRQ_HOTPLUG, false, &error_fatal);
+
+          spapr_event_sources_register(spapr->event_sources, 
+EVENT_CLASS_HOT_PLUG,
+-                                     hp_irq);
++                                     SPAPR_IRQ_HOTPLUG);
+      }
+
+      spapr->epow_notifier.notify = spapr_powerdown_req;
+diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
+index 317d57a3802..2ce323457be 100644
+--- a/hw/ppc/spapr_irq.c
++++ b/hw/ppc/spapr_irq.c
+@@ -279,15 +279,11 @@ void spapr_irq_dt(SpaprMachineState *spapr, 
+uint32_t nr_servers,
+
+  uint32_t spapr_irq_nr_msis(SpaprMachineState *spapr)
+  {
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+-
+-    return SPAPR_XIRQ_BASE + smc->nr_xirqs - SPAPR_IRQ_MSI;
++    return SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE - SPAPR_IRQ_MSI;
+  }
+
+  void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
+  {
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+-
+      if (kvm_enabled() && kvm_kernel_irqchip_split()) {
+          error_setg(errp, "kernel_irqchip split mode not supported on 
+pseries");
+          return;
+@@ -308,7 +304,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error 
+**errp)
+          object_property_add_child(OBJECT(spapr), "ics", obj);
+          object_property_set_link(obj, ICS_PROP_XICS, OBJECT(spapr),
+                                   &error_abort);
+-        object_property_set_int(obj, "nr-irqs", smc->nr_xirqs, 
+&error_abort);
++        object_property_set_int(obj, "nr-irqs", SPAPR_NR_XIRQS, 
+&error_abort);
+          if (!qdev_realize(DEVICE(obj), NULL, errp)) {
+              return;
+          }
+@@ -322,7 +318,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error 
+**errp)
+          int i;
+
+          dev = qdev_new(TYPE_SPAPR_XIVE);
+-        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + 
+SPAPR_IRQ_NR_IPIS);
++        qdev_prop_set_uint32(dev, "nr-irqs", SPAPR_NR_XIRQS + 
+SPAPR_IRQ_NR_IPIS);
+          /*
+           * 8 XIVE END structures per CPU. One for each available
+           * priority
+@@ -349,7 +345,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error 
+**errp)
+      }
+
+      spapr->qirqs = qemu_allocate_irqs(spapr_set_irq, spapr,
+-                                      smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
++                                      SPAPR_NR_XIRQS + SPAPR_IRQ_NR_IPIS);
+
+      /*
+       * Mostly we don't actually need this until reset, except that not
+@@ -364,11 +360,10 @@ int spapr_irq_claim(SpaprMachineState *spapr, int 
+irq, bool lsi, Error **errp)
+  {
+      SpaprInterruptController *intcs[] = ALL_INTCS(spapr);
+      int i;
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+      int rc;
+
+      assert(irq >= SPAPR_XIRQ_BASE);
+-    assert(irq < (smc->nr_xirqs + SPAPR_XIRQ_BASE));
++    assert(irq < (SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE));
+
+      for (i = 0; i < ARRAY_SIZE(intcs); i++) {
+          SpaprInterruptController *intc = intcs[i];
+@@ -388,10 +383,9 @@ void spapr_irq_free(SpaprMachineState *spapr, int 
+irq, int num)
+  {
+      SpaprInterruptController *intcs[] = ALL_INTCS(spapr);
+      int i, j;
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+
+      assert(irq >= SPAPR_XIRQ_BASE);
+-    assert((irq + num) <= (smc->nr_xirqs + SPAPR_XIRQ_BASE));
++    assert((irq + num) <= (SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE));
+
+      for (i = irq; i < (irq + num); i++) {
+          for (j = 0; j < ARRAY_SIZE(intcs); j++) {
+@@ -408,8 +402,6 @@ void spapr_irq_free(SpaprMachineState *spapr, int 
+irq, int num)
+
+  qemu_irq spapr_qirq(SpaprMachineState *spapr, int irq)
+  {
+-    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+-
+      /*
+       * This interface is basically for VIO and PHB devices to find the
+       * right qemu_irq to manipulate, so we only allow access to the
+@@ -418,7 +410,7 @@ qemu_irq spapr_qirq(SpaprMachineState *spapr, int irq)
+       * interfaces, we can change this if we need to in future.
+       */
+      assert(irq >= SPAPR_XIRQ_BASE);
+-    assert(irq < (smc->nr_xirqs + SPAPR_XIRQ_BASE));
++    assert(irq < (SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE));
+
+      if (spapr->ics) {
+          assert(ics_valid_irq(spapr->ics, irq));
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index cd60893a17d..43124bf1c78 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -1864,17 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
+      return cached_tbfreq;
+  }
+
+-bool kvmppc_get_host_serial(char **value)
+-{
+-    return g_file_get_contents("/proc/device-tree/system-id", value, NULL,
+-                               NULL);
+-}
+-
+-bool kvmppc_get_host_model(char **value)
+-{
+-    return g_file_get_contents("/proc/device-tree/model", value, NULL, 
+NULL);
+-}
+-
+  /* Try to find a device tree node for a CPU with clock-frequency 
+property */
+  static int kvmppc_find_cpu_dt(char *buf, int buf_len)
+  {
+---
 
