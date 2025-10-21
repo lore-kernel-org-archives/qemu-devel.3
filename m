@@ -4,80 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B467CCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F384FCCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEbU-0006Ur-0T; Tue, 21 Oct 2025 11:48:52 -0400
+	id 1vBEg4-0008G4-Gp; Tue, 21 Oct 2025 11:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBEbS-0006UY-CC
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:48:50 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBEfz-0008F9-Jj
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:53:31 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBEbP-0006pe-Fc
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:48:49 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-7847ee5f59dso46856407b3.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:48:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBEfw-0007Pf-QC
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:53:31 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-426fd62bfeaso2658353f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:53:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761061723; x=1761666523; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+XQlvPldcBObR86sqjK8x+H0Kz9EtpThz3BgqMC5bkc=;
- b=pGnPx4tgC+jg7XGByw3XgW9qnvq0/2VmriGnaDenmoQuTyzqrQBfPAIEHRFyIKGixL
- vh9I2RoBdFlr91GueK5TYFrpUwAO0CrEJFaiw4FggnYGlXhgEygt6+65jR97fFrSg8lZ
- 5vSE4nCGwNsVtdZcEDGZYbRyi+GE1qyLqzpOQdU9v941LA5oYAZCms8Nrp6KIzAI0Se6
- pCvDuhtCO9+T83jGizFZ6LM3zvhK1aBvfO04iKHbW6Fn/W0CSjCfl/XEm/4eYr6/f7ab
- Tg1sKjT71KSJLbHlwRH/d2oZAdJ1xmC098mifJ1MQwCNp/d1kge8FON1XG/WRxHitjB+
- xJhA==
+ d=linaro.org; s=google; t=1761062006; x=1761666806; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KZ69YW3o/ePIBmzVDZBdMJkANEHjJp/sF786gwRA3Mw=;
+ b=ffgDoE7tUvo61kUbQ8EZTfyea6XtlxefQy65z5RIz74/+ZDhc7yLreXTlpCXyxKVN8
+ hmX10Ccf2dW+QS1xfa5VMNYnHl1Hdb6+wxdh+r3E0UkiZtt9g6epAzj7QZl50UveVoNj
+ Xl9UydEy+j8ySJxlcvW4f2QUu8deMPeXNp6FG3X1EXw9N3Sz0qxTXEcDk13h9Zb5SiiP
+ uA1w2+dYOnYMMq9ArX7WqWf1G5Je6GI4S67OBcN5Wu3uxEdsEJDTnDyCaqLjeNlVWqtl
+ ntf5FSyZ6VXMaHaumDgbSztZ8pY27vzLjPFi3G183w5PMcbHVhqIX29YSpnVguOfLuNV
+ cMsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761061723; x=1761666523;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+XQlvPldcBObR86sqjK8x+H0Kz9EtpThz3BgqMC5bkc=;
- b=Uda4gRWQso90dPckxcKX24XR/L2CXUQa2biFpacHccdxeoOtX8fknRpcRApER9S0+8
- 4zOrQAt9FD0teM5G3JkkSFJkhPX19y8i5tWV3701inNi03sgZG8tXv0zimezTU7tG6aI
- tB81HasIZdFWbUI5cohYwbuf02IoAO9lp2xdulFjfgSFLK2U+5g1/IKr3SmfGhiNoAOo
- Cma7Ad0R9F7TbyBXqe/G3u5bb1dK6gupvlWsRjb4D3FJeo2qZhGNzP3W/idnrpjCnhQk
- HoOgH0M7UuBLj2AcDTbr08GsqhknyfgxMNTGGqzLFOlMMpCD9cF9M/vD/4CVobJnvozG
- gbeA==
-X-Gm-Message-State: AOJu0YzyaVBb3GY0IY3/p20VujviBAnGuoJeqoNKJl1TeP6DXwDEoCq1
- JkCbaCZuC8uB//OxU/tsawuedhZ9fuMV1Pgl+HxuwzXBxcvd4OB5spWIuFJhppjM6O7t5HkPFzi
- XCxLba1Q9J8VJXqydOvrxrAd+4smC7i/eOvVfIewRgg==
-X-Gm-Gg: ASbGnct3hW+q/jo0pX1csp0mxX2k3efLmfpPN7sHj+KYLjCVHxL39LUv+NceD246nYg
- NmRG4Mw4eI8x14wZ011c/8OE1q4wcfydbfMzOpIpyrBOa9sc2RuL/BRiGlXZj76vXti6fuH29Fq
- UqX0qG8aMOpsKl0PC6CKdf5Mf1i5wcuOcTVQE7D5R2CY6+l5H5t6Ar1sg+h69lSRPjo93A74oWK
- vHcwpiFCUVFe9slzSuzPcwV+qBSUO6pTK+6FZf3G0f4VK93W4ZBc1+NCpOpvFhn953pr++B
-X-Google-Smtp-Source: AGHT+IFUvL0EQZbBUPijffI0h1tcpC13pfLrxHQzVFLYYqHHSUdzuHlG6BPxLl4/HYTwQkguQj2HQ2S9+w0bT8064BM=
-X-Received: by 2002:a53:accc:0:10b0:63e:e5f:9e8c with SMTP id
- 956f58d0204a3-63e161785d7mr12480143d50.2.1761061723697; Tue, 21 Oct 2025
- 08:48:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761062006; x=1761666806;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KZ69YW3o/ePIBmzVDZBdMJkANEHjJp/sF786gwRA3Mw=;
+ b=hfCAGyHVkHBb0Z87vCNd8C1+6hZtzPosbL+Y40qutYkEQGb6M1yAMtbVmHk7hECimv
+ jgh/IYoxw6DCAzyIztt0rvIHhSQj/XM5OYVcTL/2yXVjT1VE7456+hpXYlAO+PZiidph
+ MwATAo0Ze4CkV7pXb1fP4pXRoB1OVQ6orVEJRykOeRY9NaHNu2BE8VuOGeByujdAlpUV
+ WW4FJfut9ZQm8TTMVKeAiGyjP0aGP/pIapSMhlw4CLW7npHMxro1EDLAJVrlDw7RPOKp
+ SkvKnQY73bmI0xYvBUhlx1i4eSChcJi5pxxKz8+0ql4sd9oxfiRmeMfhY1KZquO7f46k
+ OAkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUaYOH2ZxGby92CAdLdsv2UPMJAdKcuoLG3r+DTH4qNejX4/BDnmaE1al4/+LecJRE35qWKl3NYdcE@nongnu.org
+X-Gm-Message-State: AOJu0YwjkuSToT+FyvafnWrhzTLUuHy4QC9BG4pn6GwIdm/qwsJpmFEg
+ kYomEH9A7YQb300DTc1/eo/SSjtcLDNtH2irRRdTXTfTS9lR/j4QpLb/oKIXFJqRGhA=
+X-Gm-Gg: ASbGnctkP2tLImbyjFuuio63vvCpNwM0M9bwjoAcjhXvoeXS9QzJpCrWbcfOxAh54HD
+ hNcX3fZLY5LH7l1rHmj2XXsROEbfKnn63tY9R7C52A+DRsTEAHNxXa8wUNlC5p0WJyplUL0fYyY
+ mpwTZ3MOo236KbWf2uOeIimjQvaL5uh5ss79vtA51UK9U+BlmqRmxOYair9Ruyjzj+/zXYeroYT
+ YH2BX5y/JN+vsxB8GwyjJOWM1MENCk6gvlylxgsikTlDA+TP22EJ3GQXbYQYnZIZ5daG2O3s1yq
+ YZQNe9gnjutni7ylzoS6o83AFDcbEIo5n+JYDlOk8/rKFzqNwRxk220a9mVm8fkxdKe5CKTQ+R0
+ Eqe0WmzLwCOveKvNa4GPYTG0YffzgppxcxsT2s/yD74XJPz6/kDYha2lg3ISyPmiSqwWDgnLTDn
+ kF8IzD+f9Hp/AOWHj9/frZGls3Hzt1dEyUoE7HBmZ4K48=
+X-Google-Smtp-Source: AGHT+IHL2e+xkqrY2z45o8okqwvYRzoRFUyKTPAOhBYDif7RCGI5WWGGcqLjIX5xt/og3eQoETXiqw==
+X-Received: by 2002:a05:6000:290f:b0:428:436d:7d7e with SMTP id
+ ffacd0b85a97d-428436d8072mr7663928f8f.60.1761062005961; 
+ Tue, 21 Oct 2025 08:53:25 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427ea5b3c56sm21201225f8f.18.2025.10.21.08.53.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 08:53:25 -0700 (PDT)
+Message-ID: <af8debe8-8bde-4e16-840e-9d1c760e23d0@linaro.org>
+Date: Tue, 21 Oct 2025 17:53:24 +0200
 MIME-Version: 1.0
-References: <20251009075026.505715-1-pbonzini@redhat.com>
- <20251009075026.505715-17-pbonzini@redhat.com>
-In-Reply-To: <20251009075026.505715-17-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Oct 2025 16:48:32 +0100
-X-Gm-Features: AS18NWBd9uKE29_yiZLAFZi683ID9TkdzC3Y1_cqSScxVgHPN_cJhDTYfkCE51Q
-Message-ID: <CAFEAcA--=G3j=jDXvT-Afzk=Hbo_3y_6S6CwJRJynzN+ueydBQ@mail.gmail.com>
-Subject: Re: [PULL 16/35] accel/mshv: Add vCPU creation and execution loop
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/10] hw/rtc/mc146818rtc: Assert correct usage of
+ mc146818rtc_set_cmos_data()
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ kvm@vger.kernel.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Cameron Esfahani <dirty@apple.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, John Snow <jsnow@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+References: <20251019210303.104718-1-shentey@gmail.com>
+ <20251019210303.104718-6-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251019210303.104718-6-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,55 +116,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Oct 2025 at 08:53, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> From: Magnus Kulke <magnuskulke@linux.microsoft.com>
->
-> Create MSHV vCPUs using MSHV_CREATE_VP and initialize their state.
-> Register the MSHV CPU execution loop loop with the QEMU accelerator
-> framework to enable guest code execution.
->
-> The target/i386 functionality is still mostly stubbed out and will be
-> populated in a later commit in this series.
->
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> Link: https://lore.kernel.org/r/20250916164847.77883-11-magnuskulke@linux.microsoft.com
-> [Fix g_free/g_clear_pointer confusion; rename qemu_wait_io_event;
->  mshv.h/mshv_int.h split. - Paolo]
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On 19/10/25 23:02, Bernhard Beschow wrote:
+> The offset is never controlled by the guest, so any misuse constitutes a
+> programming error and shouldn't be silently ignored. Fix this by using assert().
+
+Would be nice to document the prototype.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> 
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
-
-
-Hi; Coverity points out a problem with this code (CID 1641400):
-
->  static void mshv_start_vcpu_thread(CPUState *cpu)
->  {
-> -    error_report("unimplemented");
-> -    abort();
-> +    char thread_name[VCPU_THREAD_NAME_SIZE];
-
-Here we create an array, which we don't initialize...
-
-> +
-> +    cpu->thread = g_malloc0(sizeof(QemuThread));
-> +    cpu->halt_cond = g_malloc0(sizeof(QemuCond));
-> +
-> +    qemu_cond_init(cpu->halt_cond);
-> +
-> +    trace_mshv_start_vcpu_thread(thread_name, cpu->cpu_index);
-
-...and here we tell the trace event to print the uninitialized
-array as a string, which will print garbage...
-
-> +    qemu_thread_create(cpu->thread, thread_name, mshv_vcpu_thread, cpu,
-> +                       QEMU_THREAD_JOINABLE);
-
-...and we pass the uninitialized array to qemu_thread_create() too.
-
-Something needs to init the array here :-)
-
-> +}
-
-thanks
--- PMM
+>   hw/rtc/mc146818rtc.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 
