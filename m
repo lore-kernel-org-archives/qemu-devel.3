@@ -4,76 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCDECCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 12:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA628CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 12:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBBsi-0004h6-Td; Tue, 21 Oct 2025 08:54:29 -0400
+	id 1vBBu2-0005XU-Cl; Tue, 21 Oct 2025 08:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBBsR-0004ZY-S9
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:54:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vBBty-0005X4-PO
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:55:46 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBBsO-00082V-Eb
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:54:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761051244;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iH6PuMJGmxGvFdajJJjmEmrdgOHbHtyZw3IVcrS+uXk=;
- b=gatN9FdIQl5S3bYJphl2HjBDmfYsd2D5ZSsDgGx/ssg9LaP7lu42u72y1i78SczVo5DgmL
- +qVHTfuradN4XrMt5xnX+YLgzbKL02h8dLCP3W+mVgqphxZnDCi1hfpB+irOi4zwODLEii
- rhIXD6Vs8efN5ihrdZFOGVwecsDkXSE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-Of459TNONFSywo-E0SYCxA-1; Tue,
- 21 Oct 2025 08:54:03 -0400
-X-MC-Unique: Of459TNONFSywo-E0SYCxA-1
-X-Mimecast-MFC-AGG-ID: Of459TNONFSywo-E0SYCxA_1761051242
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vBBtu-0008Iw-1h
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:55:44 -0400
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9BDC51800592; Tue, 21 Oct 2025 12:54:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 525B130001BE; Tue, 21 Oct 2025 12:54:02 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9EDE521E6A27; Tue, 21 Oct 2025 14:53:59 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  Daniel P. =?utf-8?Q?Berr?=
- =?utf-8?Q?ang=C3=A9?=
- <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH] RFC: qdev: add legacy properties only for those
- print()-able
-In-Reply-To: <20251015105419.2975542-1-marcandre.lureau@redhat.com> (marcandre
- lureau's message of "Wed, 15 Oct 2025 14:54:19 +0400")
-References: <20251015105419.2975542-1-marcandre.lureau@redhat.com>
-Date: Tue, 21 Oct 2025 14:53:59 +0200
-Message-ID: <87o6q0mn4o.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id D1FDF3F66F
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:55:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1761051333;
+ bh=teQ7noeix4gMctnSWDVFaMK0VGY4Pt2D3JojboZwfnI=;
+ h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+ To:Cc:Content-Type;
+ b=CzulezxKyUeQ4TJ34Lo+kP74+2Kw246XCtFwtL/l7ZbSUUrM2dqnYcwrJU8tzfSBK
+ cgVE26+1Pqk7vvRxqA3ao1k9xImLU4rqcDaSCpt/c+UNzEJwEa6mrOX99V4VBk7XY6
+ THlZZwSeQPrBAFrtB4FZqUxxHaYQ6qmmaonwimaAAMZpBB/A0h2NB02Cawg535jI/6
+ BY65/H2Ys9KBmzEtfTnhw7kG/f2NoQBl9G2IK11rtNiB2KGm4KO0CCG/IbE1NSknPU
+ +H9P9N7FroadAQvycrReqQooGKz552vI6ETRiP0gsuRuI8SN/IsfkPYGlbpuimn4R2
+ ucuxpztXjbz3daMjkZcw8297kcyfttZHS+3NUwOirBi5n6ujUKPk2Y1G26u28GcH2l
+ 6r/1vV/NLZYG5Cl/wdkRI0GkRF4nPVYSb7lwir7HY4k8QQYzN7DDP6224VrK3sq0Ra
+ dm/+WZRZZTAU/Xp6V+q6RpYw61vp/3QePOcNct7SSnRm8nmN9PFCeDjmXiR7fNbyB5
+ WrxfUgUnLbLl9mhh9kTL7SKylRyDqk7JQO/4gzJV2qQazljGqO38ghN5j1rMcP5iX0
+ ygMprN7QEkNAyVPOz76dxgwEgC6umrTQvn0fUXSWepeSGuT+Avqd7J/grlKnDHD/Ey
+ MkgFAehpQvoo57yZJZjLGnmI=
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-7848b193cc5so41967657b3.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 05:55:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761051327; x=1761656127;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=teQ7noeix4gMctnSWDVFaMK0VGY4Pt2D3JojboZwfnI=;
+ b=w6E2zBsISWr7BH8csWG8TwrlXWffj7LMPx4N2JEDHuwCpZugjxHBsvfho4v2I6xw0W
+ RGnwAUXxc+amFOmNEcMTvJAqs6ENe/yb0xuRQtfRc0/w9pTIEaJMwm+WlPeDSqO3NfOZ
+ cDiA0fGMhKYE+JXTUTeOvMuKi3uIcpebaXX+5XSglgIOdjWIPGPmQOo26cJ5EQCRv29Q
+ gCHmzNkPH2lowsz67FhDw8uNiSLuZ25sTXMwYy8TzOSlrUhigBmFcRJo6UyAoapVbn6U
+ mGS0boS+j5FpldPbb8qsMg5f3sEWQUHwBbW6vHvvk3l1oU1MNqomJ9pFGv+rDwsH+FSJ
+ 71fg==
+X-Gm-Message-State: AOJu0YxOQBeXN+KkVAIfZMNBq5NimlG97Ptvw9Ah6ra2vSjYz823FU6O
+ Ylw446h4kZiJWZBz5WuhLQr4wfG5awcA+skr4kcdv6UAwfU5TdGmlOnSi6L1+VIQ6y9pj31z4XN
+ 4RQKBYsvNvn9wcxHkD2hrF9QJ1tdgsCCMNmGem6LU1DiLmEPJyO7wPbdCxGaUFMdhlOz4hBNj/+
+ Aepnv1TFl4xMSFw/l5QJMRf1NqFOK495N35FrLQv9AftCuO1o=
+X-Gm-Gg: ASbGncvX/+r5bTORJZnPjJwzdeUdQBvVHVzD2sjaxNXwVBDMeg2kHf4AHupHhxaFIVp
+ l3YLifETfqAaZoYBomlaZP1gOcmxDnlfiqe1k7IC2owosyNb4AQOUeTp2K+680t/adUq2xiFGij
+ rnDf0/7Pzgq+A7uIM583eG6EUa8yFbnCpjnTo2flaecSJ0P07LBrNyBixMATf0EFDvonJYe4UDY
+ eD+qd0PSJuYVVw=
+X-Received: by 2002:a05:690e:d56:b0:63c:f5a6:f2d3 with SMTP id
+ 956f58d0204a3-63e1624b72fmr11727869d50.34.1761051327346; 
+ Tue, 21 Oct 2025 05:55:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEF/4UBnLMTnib4kkUWMEceV7R2YgIgdSHwRMevodP7zwh78sWb+Vl3tgXQ/vgOTCmsVEZzIoiBRfp0YO+YvSE=
+X-Received: by 2002:a05:690e:d56:b0:63c:f5a6:f2d3 with SMTP id
+ 956f58d0204a3-63e1624b72fmr11727856d50.34.1761051327040; Tue, 21 Oct 2025
+ 05:55:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20251020-fix-3149-v1-1-04b2d4db5179@canonical.com>
+ <edbc31b7-545b-416b-a5c1-eee3276ac9d8@yandex-team.ru>
+In-Reply-To: <edbc31b7-545b-416b-a5c1-eee3276ac9d8@yandex-team.ru>
+From: Wesley Hershberger <wesley.hershberger@canonical.com>
+Date: Tue, 21 Oct 2025 07:55:15 -0500
+X-Gm-Features: AS18NWCqBDAHMO4AXplXODcLnUsF6HOAYITOBZXQWwEO0YRBG0ftwrWr3Nspcy8
+Message-ID: <CADzzt1CAxiFpVoXiH9=K7SJ1YTN3zRA2K=YxTgkibibRGuOcWA@mail.gmail.com>
+Subject: Re: [PATCH] stream: Remove bdrv from job in .clean()
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=wesley.hershberger@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,110 +114,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
-
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On Tue, Oct 21, 2025 at 1:05=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
 >
-> The link properties are not printed in "info qtree", I don't know if
-> this was intentional. We currently register legacy properties for
-> link/ptr properties, but they don't have PropertyInfo getters (only
-> ObjectPropertyAccessor, when using non-legacy properties)
+> > This can cause races with qmp query-named-block nodes as described in
+> >   #3149.
 >
-> By not registering a (unusable?) legacy property, "info qtree" can now
-> print the link.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/core/qdev-properties.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> index b7e8a89ba5..fe260a9670 100644
-> --- a/hw/core/qdev-properties.c
-> +++ b/hw/core/qdev-properties.c
-> @@ -1143,14 +1143,13 @@ static void qdev_class_add_legacy_property(Device=
-Class *dc, const Property *prop
->  {
->      g_autofree char *name =3D NULL;
->=20=20
-> -    /* Register pointer properties as legacy properties */
-> -    if (!prop->info->print && prop->info->get) {
-> +    if (!prop->info->print) {
->          return;
->      }
->=20=20
->      name =3D g_strdup_printf("legacy-%s", prop->name);
->      object_class_property_add(OBJECT_CLASS(dc), name, "str",
-> -        prop->info->print ? qdev_get_legacy_property : prop->info->get,
-> +        qdev_get_legacy_property,
->          NULL, NULL, (Property *)prop);
->  }
+> Hmm. But why it lead to segfault? Ok, children kept in global_bdrv_states=
+.
+> and referenced by the job itself (as I can assume from the patch). What's
+> wrong with the state, so we went in segfault?
 
-The old code confuses me.  Let's go through it real slow.
+My understanding is that when bdrv_replace_node_common is called with
+`detach_subchain=3Dtrue` then `children` is cleared. Here's a trace from
+stream_clean (line numbers approximate on v10.1.0):
 
-    /**
-     * qdev_class_add_legacy_property:
-     * @dev: Device to add the property to.
-     * @prop: The qdev property definition.
-     *
-     * Add a legacy QOM property to @dev for qdev property @prop.
-     *
-     * Legacy properties are string versions of QOM properties.  The format=
- of
-     * the string depends on the property type.  Legacy properties are only
-     * needed for "info qtree".
-     *
-     * Do not use this in new code!  QOM Properties added through this inte=
-rface
-     * will be given names in the "legacy" namespace.
-     */
-    static void qdev_class_add_legacy_property(DeviceClass *dc, const Prope=
-rty *prop)
-    {
-        g_autofree char *name =3D NULL;
+ - stream_clean (block/stream.c L131)
+ - bdrv_cor_filter_drop (block/copy-on-read.c L274)
+ - bdrv_drop_filter (block.c L5466)
+ - bdrv_replace_node_common (block.c L5404)
+    (called with `detach_subchain=3Dtrue`)
+ - bdrv_remove_child (block.c L5335)
+ - bdrv_replace_child_tran (block.c L2489)
+ - bdrv_replace_child_noperm (block.c L2944)
+ - bdrv_child_cb_detach (BdrvChildClass.detach) (block.c L1492)
 
-        /* Register pointer properties as legacy properties */
+I can observe that children.lh_first =3D=3D NULL in gdb.
 
-The comment talks about "pointer properties".  We used to call
-properties defined with DEFINE_PROP_PTR() that way, but these were
-deleted years ago.  The comment is even older.  I'm going to ignore it.
+> Also, would be good to write the segfault backtrace here, for someone
+> to search the fix through git.
 
-        if (!prop->info->print && prop->info->get) {
-            return;
-        }
+I'll include the backtrace from #3149 in the commit message of my next
+submission.
 
-To get here, prop->info->print || !prop->info->get.
-
-        name =3D g_strdup_printf("legacy-%s", prop->name);
-        object_class_property_add(OBJECT_CLASS(dc), name, "str",
-            prop->info->print ? qdev_get_legacy_property : prop->info->get,
-            NULL, NULL, (Property *)prop);
-
-If qdev property @prop has a .print() method, we create a QOM property
-"legacy-FOO" of type "str" with qdev_get_legacy_property() as .get(),
-and no .set() or .release().
-
-qdev_get_legacy_property() is a QOM .get() wrapping around qdev
-.print(): it calls .print() to format the property value as a string
-(arbitrarily limited to 1023 characters), then visits it with
-visit_type_str().
-
-Aside: there seems to be just one property that implements .print():
-DEFINE_PROP_PCI_DEVFN(), in qdev_prop_pci_devfn.  Quite a lot of
-infrastructure just for that.
-
-Else, prop->info->get is null, because prop->info->print || !prop->info->ge=
-t.
-So we create a QOM property "legacy-FOO" with no .get(), .set(),
-.release().  Why?
-
-Your patch gets rid of these.  How does this make "info qtree" show link
-properties?  Hmm...  qdev_print_props() uses "legacy-FOO" instead of
-"FOO" when it exists.  But a "legacy-FOO" without a .get() will fail.
-When it does, the property is skipped.
-
-Is this what makes the patch work?
-
-    }
-
+Thanks so much for the review!
+~Wesley
 
