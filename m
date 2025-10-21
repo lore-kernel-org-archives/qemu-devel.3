@@ -4,101 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E74CCD19F
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 04:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F36CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 05:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB4O6-0007Zi-DL; Tue, 21 Oct 2025 00:54:22 -0400
+	id 1vB4UC-0000JA-IP; Tue, 21 Oct 2025 01:00:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vB4O4-0007Z9-41; Tue, 21 Oct 2025 00:54:20 -0400
+ id 1vB4U9-0000Ig-U4; Tue, 21 Oct 2025 01:00:38 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vB4O1-0002O1-8b; Tue, 21 Oct 2025 00:54:19 -0400
+ id 1vB4U7-0003Jd-Lk; Tue, 21 Oct 2025 01:00:37 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L2vl1v007748;
- Tue, 21 Oct 2025 04:54:14 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KJbFu3027999;
+ Tue, 21 Oct 2025 05:00:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NFKh4h
- t4hFSOdQzwq1AmS2Pc/7IYmgtNIe2JKEo3f1A=; b=i7rQU2GvxaQ1FaYQ/zO+am
- rnLFGbAsU2QquOrVkvlcuONR2Ake5xwBfBbqCzCC4YenhPcAS1VuZNuUV/8YeU9B
- /VGvMCKJ8elUpaZdGkpQ+UWVHeG9KYswDLgRSXhOmCIXcEJG80F7MPxDEW/oBlwE
- ductAtvQ40xb9COEJRGtfjJmcxV7Oz6gRQjB1MkGkw7xgOgaoM0yWF3TYldn4UOv
- 4tf6ONYiMFnGs8iH3ag4uUL/0hyvmcj+vWBTv4azDJrFnmzH/0FBcZrbhgDr/XaS
- QuplXX7AnTD/geeKKInkalgSdhomqG6fqzFWT98dWJP8gWwnTuCYBzpJ6mULdn3g
+ :message-id:mime-version:references:subject:to; s=pp1; bh=hkLjLX
+ uhWlcLuAWFnSTolEP7tzkfOaRh7Ur6irOuPdA=; b=LBl/UWpZs259kprXf4xYcl
+ 9LRrALAZeKg7iXJZGAEhAXGQBV/7LJoik0wYJtc+dAjvnCbHcJMYty8SW5gZwNlA
+ fcI2GKmTJA3Z6tbLe41fy2DvX52TGpk7gjtbuQWKlZVolou8r/4Yvkb0KMIAdfSK
+ Fhak3vbECa4coSA3wEgBYORPdIlz8v6BuOoeXZiCj2c7fE3crtWDHjX8w5K/IvF7
+ XecS9v0WKYx6zlj92DdB251UlFy7Rs04Xl367BbVw7Mqq/u1bAYv0JN+aej+vQYG
+ SnqJuDQukA6AQGvFP//dHkP6Rf2HeF9VZ5ekdIPhmk2K1N0JQfdxZeWPdpMtpb2Q
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326n2x7-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326n3uw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 04:54:14 +0000 (GMT)
+ Tue, 21 Oct 2025 05:00:31 +0000 (GMT)
 Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59L4pbl6018349;
- Tue, 21 Oct 2025 04:54:13 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326n2x6-1
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59L4xNDa001294;
+ Tue, 21 Oct 2025 05:00:31 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326n3un-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 04:54:13 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L28jeG017081;
- Tue, 21 Oct 2025 04:54:12 GMT
+ Tue, 21 Oct 2025 05:00:30 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L4HfpH002381;
+ Tue, 21 Oct 2025 05:00:30 GMT
 Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vnkxs5u2-1
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqej8w61-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 04:54:12 +0000
+ Tue, 21 Oct 2025 05:00:30 +0000
 Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
  [10.241.53.104])
  by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59L4sBSE7799986
+ 59L50Sqc6423746
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Oct 2025 04:54:11 GMT
+ Tue, 21 Oct 2025 05:00:28 GMT
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A719958067;
- Tue, 21 Oct 2025 04:54:11 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BA83358067;
+ Tue, 21 Oct 2025 05:00:28 +0000 (GMT)
 Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D68F5805D;
- Tue, 21 Oct 2025 04:54:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 067AF58068;
+ Tue, 21 Oct 2025 05:00:26 +0000 (GMT)
 Received: from [9.109.242.24] (unknown [9.109.242.24])
  by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 21 Oct 2025 04:54:08 +0000 (GMT)
-Message-ID: <fdb7e249-b801-4f57-943d-71e620df2fb3@linux.ibm.com>
-Date: Tue, 21 Oct 2025 10:24:07 +0530
+ Tue, 21 Oct 2025 05:00:25 +0000 (GMT)
+Message-ID: <22f3b73d-c068-4df6-9eaa-4012068ab289@linux.ibm.com>
+Date: Tue, 21 Oct 2025 10:30:24 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/18] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
- pseries-4.2 machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- qemu-ppc@nongnu.org, kvm@vger.kernel.org,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20251020103815.78415-1-philmd@linaro.org>
+Subject: Re: [PATCH v4 0/8] Implement Firmware Assisted Dump for PSeries
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
+ shivangu@linux.ibm.com
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
 Content-Language: en-US
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20251020103815.78415-1-philmd@linaro.org>
+In-Reply-To: <20250323174007.221116-1-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68f711f6 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68f7136f cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=GLR4iIx02OIjODZsis0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=oH34dK2VZjykjzsv8OSz:22 a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
- a=jd6J4Gguk5HxikPWLKER:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXxB7aRVRdXeK8
- zCu5U3Kd3m8aTvInr6WvcUe3K6HULugPO07gbG8JZFuS5WQOsehXKUXFvzepSmqsUykGMTLdvVx
- GcKpBjnXjhNT0RgcdPl0Mf3HN0FjM8UopDoEJDnMx/EuAWuTfumUMNr/mp8viqz8y31zFs6MSyo
- H/QfZ1Ja9g2P26HZ8U3pTdS3twQUKnlM0k1Ci9Lx53ikkM+yZrHfvqkkGDjZwtIQc8FZevJCU3g
- mRoAvaeHRuwLIpnk2CpwV55VxD5JvBojrD6LEZBYsoobj2QGM46MiyWN7nbhdoB3iuyoQiRbO+a
- JRJc3uUW17dpsPyLaY0oY0PN3ldTsWQ809FsteHx204Ts5Scol/pS6CFPh9PJpXg2n4j/OJe+qG
- +uR3zIHXb3UUJyD2Tb5gDnqow+K8xg==
-X-Proofpoint-GUID: D5oKnqXmEzXn5SbvMkWos5pkiqF7rwDb
-X-Proofpoint-ORIG-GUID: WDuAOAPfPmu7T1bLe9QYgK9nl7Nvr96M
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=dYOz5sho_cLMNvMCarkA:9
+ a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX/EFN7nsniS0T
+ nBg2VnbJdP+G2yVsAkj7mh20Vh2Y09nEy4E0daEIZok3Rig4P3nGkRsJOIqMsm7dZWEJuumfeoA
+ AO/GTwEDufDKJ329St78Egf5hX2PbWynxtZFxQ6QoY/9DA4HtTb8BzJKzkOyoBDdiuoxvCl+wDX
+ esjZNC3ZBy2K8aNcl9nc4tk9fLSzUiUd+wBBNQmGgI1FPqyOkLvxkqGHqjIcJJEBiIraOteRqE9
+ QclxYvmoQwHzUoHx5DZGKVn9RE6eB7qW5+QYwcl1uNiUDLih5eTqtDk4vZcUeCNt5qYa3KMQo3S
+ Rz/95o9QPd5f5OBkRVjXGbxdeBLLzibIdrKrQ90OTzz0GCgJRgNjGer5oVd9ISkg2R8FzrAw5R0
+ R0G+Ki1CYG8R1GlpunQ62qzpngyFsQ==
+X-Proofpoint-GUID: uE-zast49RiMlLYOQNN5nL1alpQoL2j3
+X-Proofpoint-ORIG-GUID: ojXCs3OK3EzNzFnKz9OkYN7fPmTwiKe7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
@@ -132,61 +132,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Cedric
++ Shivang - FYI
 
-Hi Phillipe,
-
-It had been done and the patches were reviewed already here (you were in 
-CC too):
-
-https://lore.kernel.org/qemu-devel/20251009184057.19973-1-harshpb@linux.ibm.com/
-
-Let us try to avoid duplication of implementation/review efforts.
-If the motivation to re-do is just to split, I think let us consider the 
-original series to avoid duplication of review efforts. I should 
-probably send more frequent PRs to avoid such scenarios in future.
-
-Thanks for your contribution in reviewing other patches though. It's 
-highly appreciated.
+Hi Aditya,
+Could you please keep Shivang in Cc when you post v5 ? TIA.
 
 regards,
 Harsh
 
-On 10/20/25 16:07, Philippe Mathieu-Daudé wrote:
-> Remove the deprecated pseries-3.0 up to pseries-4.2 machines,
-> which are older than 6 years. Remove resulting dead code.
+On 3/23/25 23:09, Aditya Gupta wrote:
+> Overview
+> =========
 > 
-> Philippe Mathieu-Daudé (18):
->    hw/ppc/spapr: Remove deprecated pseries-3.0 machine
->    hw/ppc/spapr: Remove SpaprMachineClass::spapr_irq_xics_legacy field
->    hw/ppc/spapr: Remove SpaprMachineClass::legacy_irq_allocation field
->    hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
->    hw/ppc/spapr: Remove deprecated pseries-3.1 machine
->    hw/ppc/spapr: Remove SpaprMachineClass::broken_host_serial_model field
->    target/ppc/kvm: Remove kvmppc_get_host_serial() as unused
->    target/ppc/kvm: Remove kvmppc_get_host_model() as unused
->    hw/ppc/spapr: Remove SpaprMachineClass::dr_phb_enabled field
->    hw/ppc/spapr: Remove SpaprMachineClass::update_dt_enabled field
->    hw/ppc/spapr: Remove deprecated pseries-4.0 machine
->    hw/ppc/spapr: Remove SpaprMachineClass::pre_4_1_migration field
->    hw/ppc/spapr: Remove SpaprMachineClass::phb_placement callback
->    hw/ppc/spapr: Remove deprecated pseries-4.1 machine
->    hw/ppc/spapr: Remove SpaprMachineClass::smp_threads_vsmt field
->    hw/ppc/spapr: Remove SpaprMachineClass::linux_pci_probe field
->    hw/ppc/spapr: Remove deprecated pseries-4.2 machine
->    hw/ppc/spapr: Remove SpaprMachineClass::rma_limit field
+> Implemented Firmware Assisted Dump (fadump) on PSeries machine in QEMU.
 > 
->   include/hw/ppc/spapr.h     |  16 --
->   include/hw/ppc/spapr_irq.h |   1 -
->   target/ppc/kvm_ppc.h       |  12 --
->   hw/ppc/spapr.c             | 298 ++++++++-----------------------------
->   hw/ppc/spapr_caps.c        |   6 -
->   hw/ppc/spapr_events.c      |  20 +--
->   hw/ppc/spapr_hcall.c       |   5 -
->   hw/ppc/spapr_irq.c         |  36 +----
->   hw/ppc/spapr_pci.c         |  32 +---
->   hw/ppc/spapr_vio.c         |   9 --
->   target/ppc/kvm.c           |  11 --
->   11 files changed, 75 insertions(+), 371 deletions(-)
+> Fadump is an alternative dump mechanism to kdump, in which we the firmware
+> does a memory preserving boot, and the second/crashkernel is booted fresh
+> like a normal system reset, instead of the crashed kernel loading the
+> second/crashkernel in case of kdump.
+> 
+> This requires implementing the "ibm,configure-kernel-dump" RTAS call in
+> QEMU.
+> 
+> While booting with fadump=on, Linux will register fadump memory regions.
+> 
+> Some memory regions like Real Mode Memory regions, and custom memory
+> regions declared by OS basically require copying the requested memory
+> range to a destination
+> 
+> While other memory regions are populated by the firmware/platform (QEMU in
+> this case), such as CPU State Data and HPTE.
+> We pass the sizes for these data segment to the kernel as it needs to know
+> how much memory to reserve (ibm,configure-kernel-dump-sizes).
+> 
+> Then after a crash, once Linux does a OS terminate call, we trigger fadump
+> if fadump was registered.
+> 
+> Implementing the fadump boot as:
+>      * pause all vcpus (will save registers later)
+>      * preserve memory regions specified by fadump
+>      * do a memory preserving reboot (using GUEST_RESET as it doesn't clear
+>        the memory)
+> 
+> And then we pass a metadata (firmware memory structure) as
+> "ibm,kernel-dump" in the device tree, containing all details of the
+> preserved memory regions to the kernel.
+> 
+> Refer the Patch #7/8: "hw/ppc: Enable fadump for PSeries" for logs of a
+> succesfful fadump crash
+> 
+> Note: HPTE region has not been implemented. It's not planned as of now.
+> 
+> Testing
+> =======
+> 
+> Has been tested with following QEMU options:
+> 
+> * firmware: x-vof and SLOF
+> * tcg & kvm
+> * l1 guest and l2 guest
+> * with/without smp
+> * cma/nocma
+> * default crashkernel values (can fail with big initrd) and crashkernel=1G
+> 
+> Git Tree for Testing
+> ====================
+> 
+> https://github.com/adi-g15-ibm/qemu/tree/fadump-pseries-v4
+> 
+> Note: You will need a way to get the /proc/vmcore out of the VM for testing
+> with crash-utility
+> 
+> I use the following command line which sets up networking:
+>      "-net user,hostfwd=tcp::10022-:22 -net nic"
+> 
+> And a rootfs with ssh support, then copy the /proc/vmcore with networking
+> (can do compression using gzip before ssh, but compression might take lot
+> of time if done inside the VM)
+> 
+> Test vmcore for Testing with crash-utility
+> ==========================================
+> 
+> Can use vmlinux and vmcore available at https://github.com/adi-g15-ibm/qemu/releases/tag/test-images-fadump-pseries-v2
+> Above vmcore was generated with upstream qemu with these fadump patches
+> applied, and in a KVM VM
+> A limitation with above vmcore is it was a single CPU VM
+> 
+> Changelog
+> =========
+> v4
+>    + [patch #8/8]: fixed kvm testcase, add license
+> 
+> v3:
+>    + [patch #3,7]: fix compile errors (#define declared in a later patch
+>                    but used in this patch, unused var)
+>    + [patch #4/8]: use 'g_autofree' for cpu buffer, and replace g_malloc with
+>                    g_try_malloc
+>    + [patch #5/8]: use 'g_new' instead of 'malloc', add null check for cpu
+>                    region
+>    - nothing in other patches has been changed compared to v2
+> 
+> v2:
+>    + rearrange code so that no unused functions get introduced in any patch
+>    + add functional test for pseries as suggested by nick
+>    + fix multiple issues pointed by harsh and nick
+>    + fix bug in cpu register saving where it was being stored in
+>      little-endian
+>    - removed 'is_next_boot_fadump' and used fadump header's status flag to
+>      store it
+>    + fixed multiple style issues (naming, unneeded diffs etc)
+> 
+> Aditya Gupta (8):
+>    hw/ppc: Implement skeleton code for fadump in PSeries
+>    hw/ppc: Implement fadump register command
+>    hw/ppc: Trigger Fadump boot if fadump is registered
+>    hw/ppc: Preserve memory regions registered for fadump
+>    hw/ppc: Implement saving CPU state in Fadump
+>    hw/ppc: Pass dump-sizes property for fadump in device tree
+>    hw/ppc: Enable fadump for PSeries
+>    tests/functional: Add test for fadump in PSeries
+> 
+>   hw/ppc/meson.build                        |   1 +
+>   hw/ppc/spapr.c                            |  72 +++
+>   hw/ppc/spapr_fadump.c                     | 685 ++++++++++++++++++++++
+>   hw/ppc/spapr_rtas.c                       |  71 +++
+>   include/hw/ppc/spapr.h                    |  11 +-
+>   include/hw/ppc/spapr_fadump.h             | 121 ++++
+>   tests/functional/meson.build              |   2 +
+>   tests/functional/qemu_test/linuxkernel.py |  59 ++
+>   tests/functional/test_ppc64_fadump.py     | 182 ++++++
+>   9 files changed, 1203 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/ppc/spapr_fadump.c
+>   create mode 100644 include/hw/ppc/spapr_fadump.h
+>   create mode 100755 tests/functional/test_ppc64_fadump.py
 > 
 
