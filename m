@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E43CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33281CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:51:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJIZ-0002V8-KS; Tue, 21 Oct 2025 16:49:40 -0400
+	id 1vBJJZ-0005YZ-1f; Tue, 21 Oct 2025 16:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIK-00026Z-Pm
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:49:31 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJR-00054T-90
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:33 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIG-0001Ee-KI
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:49:23 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47117e75258so28945865e9.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:49:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJJP-0001YZ-9C
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:32 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-471bde1e8f8so14477055e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079757; x=1761684557; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079828; x=1761684628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dEqUJ6VzdguNYBQGctiSO6TrLInk/uHfft6teX8fIpI=;
- b=WVwmriWhKaxQlrTSyrcs+x2YGp1XNFZ1qrie7OzLGGyCBqlk2RyS8UvQDtMOkjlHT0
- GxFitszArlmAjaJuQV/BXVukFUSkjYWQDQZKwY1ti8/nzBfDfXf0DO8R6jDwOtnsqN4w
- lpQOFAA385x1FqLxsIqqHxlRA44WJPgCKPg+NHxPRrLTNIPFuEWUyBCXDrLbG/oPngju
- bL+MkzmYhXLgDMe/9EnJeZQ9m0Xru5gJ8QPK7149c7KoJfIWF5D7d5uSrc0L/A4fgm1b
- dLN3G/Xcv9YJ8DE80zoI+zMXfup+IkepOsASHv8JEYxjH6QniW5CK5or/w5rtIqOqxYO
- d14w==
+ :reply-to; bh=XmIazvnMcS62evWaxsTSFabokho2yYFz693QcRgJ7JQ=;
+ b=B0nP/4oNgLLbSsyMveFlgJXdsE+jJjhbrDrQvZRJgjcbrRHrbDR8hiNhb7XviD2rGO
+ JjX+r+E1NnOOfWEH9YdEPoij8J4mdXkBk4HIyWrINlNlCO3sWvyrPKh0TPb71nAc2T7h
+ bHDA5143RtqT+PYLeZolPuzaBrAUk+U0zQble9alNJVog4kQZuY8pLB8W/rL0AHMNH5W
+ pNnvBZpBdA4i26pRKBiwIC4zEuNCzDNqMzb9ChhV1huGVogbeoTa7Br8Jeeqj2Bxxumm
+ oHFNoPx9puOopDS4nxYoJGMAzQ2NqTMhe47E+s2FADIGMLMjr8Y3a4S7DeDJI7vEhFe3
+ NZjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079757; x=1761684557;
+ d=1e100.net; s=20230601; t=1761079828; x=1761684628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dEqUJ6VzdguNYBQGctiSO6TrLInk/uHfft6teX8fIpI=;
- b=CyxiOitrOmpp7fM8A/6qC9WofELWAtan7cj+jBVBBgu3bBI0Om4TRkX8qBMu7VMIxF
- GjbGhL0HIjQgJ55hf9+6zmlBw/zVHHzo+Eum6IH/xvEP3h5AeYO1/Yo6aCYXHtENatPj
- NutLqHwN7RCkz5ssVcsilFA+LjOTQXw8KV2YOa1LxLpzJCguwDLPtqP9uf5EXGJd+21A
- k7iTMG3IBmYk6TRa4kXiBxSl+Hh4ZS2FhxzlgDL+E9GOcijQTTIVbOSRu1WwjJH9LObO
- i9GsbcgIPH06J34ixggbAEXXjYypfShu5m5HJBrEcZY7TGz2Cj5/Zgk5yoB20LVrCB4u
- mpLA==
-X-Gm-Message-State: AOJu0Ywzg80XQi4xOaJRk9uUzx1zy3NhblBJ1YEjI/S2/eUEgc1VjTCG
- DiTZbUXMdwE21B6USfJQ+rizBOfhT1DNkioBVXFbTXKuLdsr5jjmDBJFI//PZ+TEPT9iRzITTzq
- zwpHK8es=
-X-Gm-Gg: ASbGnctFtVm2ATdyNY68e9eofW3tS8YjDSZsPS+2LulIYjiDNhIoS0zbKJyNbOPCyBy
- iBpWyoOwmf8DtAC6IG54BKnLSaHEYxlpjXi4ndyygQPOsRh20UXoVIbqjrksbXu7uKis6JYZKuR
- Kwx0gStTf2/1Gs+GXU4G5ZfkTnBMLTIisGBz0Vi1HFfDXqieKS7WrJQ811cYvdeXoRxKdv+R4lF
- P5KpplOD73xKK+8jE/HpVSmKBYypiDvbXAMdWl1XP3yb2wk/8juOeBu5lwIR3fgDavPem8hBkRr
- UQ5ByLQux9oxpvdFmTJ2zN1TMcTDoiJQfQGwRx2Ju7b0xNVRLAmp6AvreVtBA2vQvD+Gz5uzkpj
- l5n8uIQ1H4ib9yTTa0GdS/wav9z3J6m9D1zUuN7xvS/BUKOh5MkJyVE6Zv7plyVozPHaqD66iN4
- MdXLn0ilB/jAqJSXeB2WA7z4a8sHPcC+CzI08LxWHyauQFkL64mQ==
-X-Google-Smtp-Source: AGHT+IEDldZ9dOy+9juFawfW5DFsoS8TXzInBbT4Yecn1ZTmaKB3zUCSJ7QIcF8kWfCSiEZaEPMtcg==
-X-Received: by 2002:a05:600c:3492:b0:471:1774:3003 with SMTP id
- 5b1f17b1804b1-4711791c88bmr135935055e9.29.1761079757172; 
- Tue, 21 Oct 2025 13:49:17 -0700 (PDT)
+ bh=XmIazvnMcS62evWaxsTSFabokho2yYFz693QcRgJ7JQ=;
+ b=CvuYQy8RAwCBOSkxfS8HsOkhxOFgWzJf1VpoTl5ifW/IEkSPvfVvlHGBYx9O/1Q2z4
+ AeBMZ/9ttbQSP6BfjUr+AkAGOyxLiwb2J2xFSLDumHY75zloUJpiztPYvH9bP9N8ANvV
+ uRc49+aK19DOVnpzTFa45bIsL+pmRz++D9dJ2Xvsy/ANcVtkmcFXZCpKDgtU5a4L3kMW
+ Dcm2kQt0VboKwcA6sq56Yytcb59Yu0IjfgizoTS9R+iBm8oaZUP2BKtcSPQ3ux7EWdoI
+ gxE6JSvdEUvwKAhMYS2pSRzpQV2GaKWcvuYbwnSZFPs+C5Eny9SVNqN4YJyWhRKAZV7I
+ RJ8g==
+X-Gm-Message-State: AOJu0Yw8H+i9gLMnUiqWFuQAA342L19RBv8/EiqsZYBJFTtV/MAhYlrp
+ XQdSn6d37RHHeGDOxYM2wLX9MedBwYn4h+4XB6k64GLIl+VL5oqPtX86/R7ftfhDmKoSNexfIU9
+ 1joH94Ww=
+X-Gm-Gg: ASbGncuVdXRdaV8asLHYAOmdsr6r10Hc/e86NIJ8iVhaxMXJ1KCGgM16tM3ykzIg735
+ JWlV47liwryHYABS5u+Z0fv9yGScQIzBa3JjSBeCamX7cSqcmH5Gc98RvZXDHlfPxEmdR1yIVXC
+ 39zR2y/8+qMkwbYxXwQN5izs0SYXeC3JqRXZgx6YcWrjTuqUVoI6JLqRkPsq7Xl0WJf3jtv/7cn
+ xTUigUPC6ru45dEpiwXWeAvh/KR9ZQeQjgxrGYaYmqigDkfmZSukzyGuPAS+f5sjOTVwR2d+k4H
+ XwKqQBO17h0h/svoj4JdieeUNnI2rXVQKASWQo2xu1O1skIS2UPpL6m07EDqrA7CiuehQ26s35L
+ 39980cdQN3sX4p/yEXXuU/gxjjPKYO84RIQKdFpPElkk75fw2PgtFEAs/Nfwov80QTHwdGVFAeP
+ lIKLstw7glXgH0hDaLHdhmmZalb2CGnnf1zVfZZd0xxRDevpSIb3b1hadUUssFt3OERxtHodI=
+X-Google-Smtp-Source: AGHT+IFD2zqidMb3YwCAOpr2QWjvLy+xm/westVdlBAQozpnhsbyCRWRM9DdfVYm+sSDkpgfJp/RZA==
+X-Received: by 2002:a05:600c:4f89:b0:46e:3edc:2811 with SMTP id
+ 5b1f17b1804b1-4711787750dmr123687955e9.14.1761079827785; 
+ Tue, 21 Oct 2025 13:50:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c42d9524sm9241145e9.18.2025.10.21.13.49.16
+ 5b1f17b1804b1-475c427ed3fsm11858105e9.1.2025.10.21.13.50.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:49:16 -0700 (PDT)
+ Tue, 21 Oct 2025 13:50:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/45] hw/ide/ide-internal: Move dma_buf_commit() into ide
- "namespace"
-Date: Tue, 21 Oct 2025 22:46:43 +0200
-Message-ID: <20251021204700.56072-30-philmd@linaro.org>
+Subject: [PULL 44/45] docs: update -soundhw -> -device list
+Date: Tue, 21 Oct 2025 22:46:58 +0200
+Message-ID: <20251021204700.56072-45-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,116 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The identifier suggests that it is a generic DMA function while it is tied
-to IDE. Fix this by adding an "ide_" prefix.
+(note: I wonder if pcspk was really an option when -soundhw was
+available, since it was not user-creatable)
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251019210303.104718-7-shentey@gmail.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20251021090317.425409-8-marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ide/ide-internal.h |  2 +-
- hw/ide/ahci.c         |  8 ++++----
- hw/ide/core.c         | 10 +++++-----
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ docs/qdev-device-use.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ide/ide-internal.h b/hw/ide/ide-internal.h
-index 0d64805da20..281d07c9d58 100644
---- a/hw/ide/ide-internal.h
-+++ b/hw/ide/ide-internal.h
-@@ -398,7 +398,7 @@ int64_t ide_get_sector(IDEState *s);
- void ide_set_sector(IDEState *s, int64_t sector_num);
+diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
+index c98c86d8280..043ae461140 100644
+--- a/docs/qdev-device-use.txt
++++ b/docs/qdev-device-use.txt
+@@ -324,8 +324,10 @@ Map from -soundhw sound card name to -device:
+     gus         -device gus,iobase=IOADDR,irq=IRQ,dma=DMA,freq=F
+     hda         -device intel-hda,msi=MSI -device hda-duplex
+     sb16        -device sb16,iobase=IOADDR,irq=IRQ,dma=DMA,dma16=DMA16,version=V
+-    adlib       not yet available with -device
+-    pcspk       not yet available with -device
++    adlib       -device adlib,iobase=IOADDR,freq=F
++
++    pcspk       Not available with -device,
++                but audiodev can be set with -machine pcspk-audiodev=<name>
  
- void ide_start_dma(IDEState *s, BlockCompletionFunc *cb);
--void dma_buf_commit(IDEState *s, uint32_t tx_bytes);
-+void ide_dma_buf_commit(IDEState *s, uint32_t tx_bytes);
- void ide_dma_error(IDEState *s);
- void ide_abort_command(IDEState *s);
- 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 1303c21cb70..14bc66fb7fa 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -1417,7 +1417,7 @@ static void ahci_pio_transfer(const IDEDMA *dma)
-     }
- 
-     /* Update number of transferred bytes, destroy sglist */
--    dma_buf_commit(s, size);
-+    ide_dma_buf_commit(s, size);
- 
- out:
-     /* declare that we processed everything */
-@@ -1482,8 +1482,8 @@ static int32_t ahci_dma_prepare_buf(const IDEDMA *dma, int32_t limit)
- 
- /**
-  * Updates the command header with a bytes-read value.
-- * Called via dma_buf_commit, for both DMA and PIO paths.
-- * sglist destruction is handled within dma_buf_commit.
-+ * Called via ide_dma_buf_commit, for both DMA and PIO paths.
-+ * sglist destruction is handled within ide_dma_buf_commit.
-  */
- static void ahci_commit_buf(const IDEDMA *dma, uint32_t tx_bytes)
- {
-@@ -1511,7 +1511,7 @@ static int ahci_dma_rw_buf(const IDEDMA *dma, bool is_write)
-     }
- 
-     /* free sglist, update byte count */
--    dma_buf_commit(s, l);
-+    ide_dma_buf_commit(s, l);
-     s->io_buffer_index += l;
- 
-     trace_ahci_dma_rw_buf(ad->hba, ad->port_no, l);
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index b14983ec54f..8c380abf7c1 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -827,7 +827,7 @@ static void ide_sector_read(IDEState *s)
-                                       ide_sector_read_cb, s);
- }
- 
--void dma_buf_commit(IDEState *s, uint32_t tx_bytes)
-+void ide_dma_buf_commit(IDEState *s, uint32_t tx_bytes)
- {
-     if (s->bus->dma->ops->commit_buf) {
-         s->bus->dma->ops->commit_buf(s->bus->dma, tx_bytes);
-@@ -848,7 +848,7 @@ void ide_set_inactive(IDEState *s, bool more)
- 
- void ide_dma_error(IDEState *s)
- {
--    dma_buf_commit(s, 0);
-+    ide_dma_buf_commit(s, 0);
-     ide_abort_command(s);
-     ide_set_inactive(s, false);
-     ide_bus_set_irq(s->bus);
-@@ -893,7 +893,7 @@ static void ide_dma_cb(void *opaque, int ret)
-     if (ret < 0) {
-         if (ide_handle_rw_error(s, -ret, ide_dma_cmd_to_retry(s->dma_cmd))) {
-             s->bus->dma->aiocb = NULL;
--            dma_buf_commit(s, 0);
-+            ide_dma_buf_commit(s, 0);
-             return;
-         }
-     }
-@@ -912,7 +912,7 @@ static void ide_dma_cb(void *opaque, int ret)
-     sector_num = ide_get_sector(s);
-     if (n > 0) {
-         assert(n * 512 == s->sg.size);
--        dma_buf_commit(s, s->sg.size);
-+        ide_dma_buf_commit(s, s->sg.size);
-         sector_num += n;
-         ide_set_sector(s, sector_num);
-         s->nsector -= n;
-@@ -944,7 +944,7 @@ static void ide_dma_cb(void *opaque, int ret)
-          * Reset the Active bit and don't raise the interrupt.
-          */
-         s->status = READY_STAT | SEEK_STAT;
--        dma_buf_commit(s, 0);
-+        ide_dma_buf_commit(s, 0);
-         goto eot;
-     }
- 
+ For PCI devices, you can add bus=PCI-BUS,addr=DEVFN to control the PCI
+ device address, as usual.
 -- 
 2.51.0
 
