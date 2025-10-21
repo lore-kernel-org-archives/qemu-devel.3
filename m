@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 300A9CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51DE7CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBI2y-0005SQ-Q2; Tue, 21 Oct 2025 15:29:28 -0400
+	id 1vBI91-00074D-MP; Tue, 21 Oct 2025 15:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBI2w-0005SF-2D
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:29:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBI2r-0003WP-KP
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:29:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761074958;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0ixacuwCkCKqdqOHzSXsw8PhEGE3LuuGi4CoIQhqx/o=;
- b=VE2zrcbhkDX501V/jklRk8p9nOd4cIWCg4zqaEj8b3VM6s4BMFrVey6qjyysYXOtUv8MXI
- Rp4tbnoGsAppypu/V5FBKH7Tn5m9vfMmKXOFq6Fhoh0xAAqyUZdZCURXpqB9+uAh40VTxj
- yaipV7p/ILdk7GANJXN2qF+7N+pn1zc=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-uJGnzwB5OcyaN3SBDcws3Q-1; Tue, 21 Oct 2025 15:29:17 -0400
-X-MC-Unique: uJGnzwB5OcyaN3SBDcws3Q-1
-X-Mimecast-MFC-AGG-ID: uJGnzwB5OcyaN3SBDcws3Q_1761074956
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4e88947a773so13410961cf.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:29:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761074956; x=1761679756;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vBI8y-00073k-KB
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:35:40 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vBI8s-0004sG-RU
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:35:38 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b3e9d633b78so54572166b.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:35:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761075330; x=1761680130; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0ixacuwCkCKqdqOHzSXsw8PhEGE3LuuGi4CoIQhqx/o=;
- b=MI8KzH7LTfJlAy2L8THzuW3XDLDTLWpXeKdqEC+ISTjLA3/+yQjJe/4M1rDFXV8Coi
- MpX+E7SFq8xUcHfjLm/xaI07jVL/Duv5jcNciybK0N2eQONAa8bkfWtauTfEu4j7VPY8
- 3+dWyA08pzqtshG8FL7993auQLGCx1LtH2pdIN2ZtTpCCfY1d2jKqYE5fAmSrA9ckNdH
- GU583PCg5uOheyXLHl51ydEB36WdPntWDWiFaaS98hJdkpyPcvWhifkVRiVFtbLKyl1j
- AQPzuMlvA2tQnmU+0+JQR8iFxVzBDuzJfrZaL+agSeZNk5g6cGb9qDnjV7TxzHXWRb0c
- C1Sg==
-X-Gm-Message-State: AOJu0YwGvlnJxwsNBkhGcfMcT53FehT3FW6cqcQ9M93TgGgXM536WLLu
- xrcZzaJCc+IBsF7aKGh336ovv4dsBopEXNodD2gMAlQW3mWuL/HggeB2W4q4fBk8vs/2Uc07kdV
- HX8wZYtBfXelJvwJpsxiFhcB4A7jJXaIVQJ0HErVbyAb3D6Bu/lVuCACZNpHTmvIp
-X-Gm-Gg: ASbGncstrxtLNvriQZs23x9GIBIxrMR5J3kCLgL+Ygvpve6tWa5ki9Low4BnqkXvO2h
- WjfFmp/bzEMuGMUWcazEXC9lnrFfFCEbnR0bKIKP2fAfaz+0pflrBO7H0piGPHINpOF/5Jt24sA
- WGZBjooeVvU9LCn0Q87Bq6zyGnBzA4fj+SK+wchGHUiebdXU82xyFegKe9swoeZxAQJwDN6jzuu
- 67Nfg82mEhvFLwpvqUYQu04coXMhZ6jVikKZVOBbtASLG8eqzuAhBWXaWKubaEWGYdcb1X6kBSW
- ofrf0a/EqlKe2h4hZemNcx4HLD0vUg2Uu8cUz8Za/rJLQLS9S6egXnaUaSJJPSDPPBg=
-X-Received: by 2002:ac8:7d4a:0:b0:4e8:b9fd:59ee with SMTP id
- d75a77b69052e-4e8b9fd5d13mr124593171cf.74.1761074955974; 
- Tue, 21 Oct 2025 12:29:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFReXzI2gn+wwy7V2J+YL3iNDj+UGo9Bo1JhvkhGj0AF+Vxg+BHeO4DWfTp0GufwcalRAMFsg==
-X-Received: by 2002:ac8:7d4a:0:b0:4e8:b9fd:59ee with SMTP id
- d75a77b69052e-4e8b9fd5d13mr124592841cf.74.1761074955480; 
- Tue, 21 Oct 2025 12:29:15 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-891cc8d5edasm826949285a.7.2025.10.21.12.29.14
+ bh=igTlV4nIHpwO38Q+bIc/j39Edl6xWMG/E2oJ/ZLJcjI=;
+ b=lUuo1L9q8z/NzAsu9JosUgKkOkC0EA8fitVw17+w4xXARDLJkIDVqCyYBP/R3dfTvO
+ iOZBJpL67o0IiOe3c9L7YI8NvbD1PxTLh1Qwql9DJeMwe5dTNHtiC9VjE/myPMeX/qdk
+ hH6BTD9dQ2m2lhN7q2FWvjkEEAI89aK8XxS4iIHHEc83ynSmOsvikSYTR7cmQZlyseuY
+ 8a9Qz69u6m5n9c0UCsAW4LviDWOWkceYpwjMB+T5i2qYtp7599LnQ7oELEMOB4Av71CA
+ 0VVzbu626exAQAD/U9q0nJVmGYSf5Qarbw0731SGz2b0plf89eSwAmisaQW475UiCLay
+ mhpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761075330; x=1761680130;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=igTlV4nIHpwO38Q+bIc/j39Edl6xWMG/E2oJ/ZLJcjI=;
+ b=Y53lSWY3hA0/DsiTCANV2omKqtCwhEZKXhQMHGtM2Ifq96JwKVBHKXuchRWTGqqsgq
+ peBOWK2KBOwpxVXYkHJyCwIABwnT8GDGbrXybQJWvdtYOAvgbj43rL8hKZe3z/8xfho4
+ WaQMivzfpeyRPZ7JVKrb85XxxMJuNoImiX3VplxBMYQYX2ESrno5lqMsRQfW2c44PDpe
+ hV/RVCMv5FREl+HBnVP14SgOqVtLNoqTvdL6MuVY/X9zAoGykFQTb+sn9KfAuikZsWHm
+ g5DjNzRtMxJ4Nnoy5XEmWiBPV3/uAaRhIqKuhjVXb/zOjuaBLaTXsIIfVx0qNl9JwX16
+ EGkA==
+X-Gm-Message-State: AOJu0Yze6UHmhmFJEcRUJ3RTLbgRCp8PI3NfkIMB1H3Y7HNLOFc0e7hP
+ O0YqANoVSjZPdM1NhQg9WrZQvdVp6TkmOwyJ4ZVCevm3GPZrlXKi3tLyibXI+z9RPG0=
+X-Gm-Gg: ASbGnctDVGi3HkuwuIItJRyrf0O5auVtYRYd6YUu7h+2UaKWJNJiBGX5+uGGSPLLbqd
+ pCAX3scgO3nywiJ1b/PG+JlSkuPhY6kzBz/mnFgK9nW2peW9JrYIi7gPc0ISruzM5/+i7fL9/Rs
+ P1a9FMvy+Hr08gc1ByAD7h+XUQ2Bc/YPfALX5SHYFCkU42s266arQpgjBbQZ7AF2kB6mB5ntl78
+ LTBuvvyCnFj1nH13DlPrEKTn4qyebiCSQfGzU2t/3F1HLB+xUwCr8lMILFsJRa+7Hj3uAEXnDJR
+ yRAEuJUTTQuTlPXU+uH2arxVOSYWoEi9Z3KvrPkO3K3C1ZLgUmY+VIdjrAzIjFrmN09EPeAyrV1
+ r5krnZw1t3KlwIh3wry9GNT2cb0Eo1mKFHruwXR6/VRzcJeJDp2VxdRhxN6InaijL3BdespOJWM
+ Pv
+X-Google-Smtp-Source: AGHT+IHK5btsdY4EJxHqllLllKlFEcvNo4pba8Vg99slzarXqmOZQ1+HrFhz4T4hxTuEuUz8J2yeag==
+X-Received: by 2002:a17:907:84d:b0:b33:821f:156e with SMTP id
+ a640c23a62f3a-b6d2c005771mr132232066b.12.1761075330533; 
+ Tue, 21 Oct 2025 12:35:30 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b65ebb49a83sm1154587866b.72.2025.10.21.12.35.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Oct 2025 12:29:14 -0700 (PDT)
-Date: Tue, 21 Oct 2025 15:29:12 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Raphael Norwitz <raphael@enfabrica.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 1/2] vhost: support inflight save/load
-Message-ID: <aPffCBqvNKmOE-CG@x1.local>
-References: <20251020054413.2614932-1-dtalexundeer@yandex-team.ru>
- <20251020054413.2614932-2-dtalexundeer@yandex-team.ru>
+ Tue, 21 Oct 2025 12:35:29 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 101295F7D7;
+ Tue, 21 Oct 2025 20:35:29 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, Richard Henderson
+ <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <ehabkost@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Edgar E. Iglesias <edgar.iglesias@gmail.com>, Stafford Horne
+ <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath
+ <rathc@linux.ibm.com>
+Subject: Re: [PATCH v8 00/25] tcg-plugins: add hooks for discontinuities
+In-Reply-To: <cover.1760884672.git.neither@nut.email> (Julian Ganz's message
+ of "Sun, 19 Oct 2025 17:14:49 +0200")
+References: <cover.1760884672.git.neither@nut.email>
+User-Agent: mu4e 1.12.14-dev1; emacs 30.1
+Date: Tue, 21 Oct 2025 20:35:29 +0100
+Message-ID: <87347c6oam.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251020054413.2614932-2-dtalexundeer@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,115 +109,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 20, 2025 at 10:44:14AM +0500, Alexandr Moshkov wrote:
-> vhost_dev_load_inflight and vhost_dev_save_inflight have been deleted
-> by:
-> 
-> abe9ff2 ("vhost: Remove unused vhost_dev_{load|save}_inflight")
-> 
-> So, now they are needed for future commit.
-> Return them, and their helper vhost_dev_resize_inflight.
-> 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> ---
->  hw/virtio/vhost.c         | 56 +++++++++++++++++++++++++++++++++++++++
->  include/hw/virtio/vhost.h |  2 ++
->  2 files changed, 58 insertions(+)
-> 
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 266a11514a..16ce9a6037 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -2013,6 +2013,62 @@ int vhost_dev_get_inflight(struct vhost_dev *dev, uint16_t queue_size,
->      return 0;
->  }
->  
-> +static int vhost_dev_resize_inflight(struct vhost_inflight *inflight,
-> +                                     uint64_t new_size)
-> +{
-> +    Error *err = NULL;
-> +    int fd = -1;
-> +    void *addr = qemu_memfd_alloc("vhost-inflight", new_size,
-> +                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-> +                                  &fd, &err);
-> +    if (err) {
-> +        error_report_err(err);
-> +        return -ENOMEM;
-> +    }
-> +
-> +    vhost_dev_free_inflight(inflight);
-> +    inflight->offset = 0;
-> +    inflight->addr = addr;
-> +    inflight->fd = fd;
-> +    inflight->size = new_size;
-> +
-> +    return 0;
-> +}
-> +
-> +void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f)
-> +{
-> +    if (inflight->addr) {
-> +        qemu_put_be64(f, inflight->size);
-> +        qemu_put_be16(f, inflight->queue_size);
-> +        qemu_put_buffer(f, inflight->addr, inflight->size);
-> +    } else {
-> +        qemu_put_be64(f, 0);
-> +    }
+Julian Ganz <neither@nut.email> writes:
 
-Can we use VMSD (extra fields, or subsections) to describe any new data for
-migration?
+> Some analysis greatly benefits, or depends on, information about
+> certain types of dicontinuities such as interrupts. For example, we may
+> need to handle the execution of a new translation block differently if
+> it is not the result of normal program flow but of an interrupt.
+<snip>
+>
+> Sidenote: I'm likely doing something wrong for one architecture or
+> the other. These patches are untested for most of them.
 
-In general, we want to avoid using qemufile API as much as possible in the
-future.  Hard-coded VMStateInfo is not suggested.
+Well they pass check-tcg which is good. Last call for reviews from:
 
-Thanks,
+ hppa=20
+ i386
+ m68k
+ microblaze
+ openrisc
+ ppc
 
-> +}
-> +
-> +int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f)
-> +{
-> +    uint64_t size;
-> +
-> +    size = qemu_get_be64(f);
-> +    if (!size) {
-> +        return 0;
-> +    }
-> +
-> +    if (inflight->size != size) {
-> +        int ret = vhost_dev_resize_inflight(inflight, size);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +    }
-> +
-> +    inflight->queue_size = qemu_get_be16(f);
-> +
-> +    qemu_get_buffer(f, inflight->addr, size);
-> +
-> +    return 0;
-> +}
-> +
->  static int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
->  {
->      if (!hdev->vhost_ops->vhost_set_vring_enable) {
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index 08bbb4dfe9..da1f0c2361 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -402,6 +402,8 @@ int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
->  
->  void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
->  void vhost_dev_free_inflight(struct vhost_inflight *inflight);
-> +void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f);
-> +int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f);
->  int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev);
->  int vhost_dev_set_inflight(struct vhost_dev *dev,
->                             struct vhost_inflight *inflight);
-> -- 
-> 2.34.1
-> 
+Unless anyone has a screaming reason not to I don't see why we can't
+merge if the tests are passing ok.
 
--- 
-Peter Xu
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
