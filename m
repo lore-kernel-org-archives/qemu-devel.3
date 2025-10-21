@@ -4,146 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BE8CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 10:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA9DCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 10:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB9vl-0003e0-50; Tue, 21 Oct 2025 06:49:29 -0400
+	id 1vBA1N-00053g-HW; Tue, 21 Oct 2025 06:55:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vB9vj-0003df-2y
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:49:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1vBA1K-00052T-A5; Tue, 21 Oct 2025 06:55:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vB9vg-0000Ge-SL
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:49:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761043749;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KY+yCMuINXwsw12FS7Y8ZwL2QHEE4bvr8BezQyVIjXg=;
- b=e6uVj7iph0qN4JsX4s+y8/YE6WaxO9GpeyaxJhErR8Wm/t5a1ZIMlm72sm5/XHDpUZShfJ
- owCuXkNYCLcYfMv4NJyMJH0bH+5t4Zb6VHGtHaDhdRzPywDp7TIBXO9bnhmavhY8XXJS7J
- YUlM2aixaCgIFSuYlpjTIMElW5Ejrj8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-676-Vc1NgvNlOB6neqIoyHpsrQ-1; Tue, 21 Oct 2025 06:49:08 -0400
-X-MC-Unique: Vc1NgvNlOB6neqIoyHpsrQ-1
-X-Mimecast-MFC-AGG-ID: Vc1NgvNlOB6neqIoyHpsrQ_1761043747
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3ee130237e1so2372899f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 03:49:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761043747; x=1761648547;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KY+yCMuINXwsw12FS7Y8ZwL2QHEE4bvr8BezQyVIjXg=;
- b=l40gap5io2zwsPJHrZRyRWUglBCwOq96fJD9dSUOOSARs2d88JlYrrwTijbweUV+6i
- bnmMBa1f60XbBG70eww6f951rpycXUec1yIV4oqApGEfkeI5V8JK9QRbEjEkdYMuNVij
- D2RPyULPOLi5v31i0J1yd3SZaPleqSFcs17G5/RdquMbBMZ9xlgqMN+C9KGSZQbFKlSj
- XJCnEo4O1iIBQ2tKviMsU04anbCvdvbaiFeyfKeCvVdmYcuqAkk37h8omMW3b31fqdkx
- 2b6PvfZn+2vWdX3RQoGviS4MOnO2ISWtd/2hmMScggOCaT1EyB5nHivYkGuQXMVGniv6
- B08g==
-X-Gm-Message-State: AOJu0YzoZleQwZlKB3RppGV08bc7IO28tbxIHdx7eThNm800ThhhsL1D
- 4CtedRN5Kn4g8u/spU8Q6H3CR3kt1YNotP+UHZI5fY3ymjt1CxAIV5RIR9oV//DAVAI7EnN/vUv
- 61UCY8IDh7D9Pp6flD1n5LXpjIYaQqRh1tFUVI9OXy1iujPrBlw19lHwu
-X-Gm-Gg: ASbGncvoh/VPsz7HrJ90jWQrmIo8rAMygihIgNxE/T5ypFrIsnSXeutJtfg4ns3RL3i
- K8UxLr7bwjmFwYGub8asnqxelPVOo0gF5tvsmbKMtX+oOrLwEQJUMau1ZfpRu3UF/uMCYhuxloc
- cq7LxS9UldblqYmDDcel/PHAPzHNUeHog8hHi8yooPgEM3ivFKK7uP8eFzRBOJz2QoEF8kVi2IZ
- DFa24jgqU4+SHLZ33PoZUwS4nyGuo8VxZ/3hFYflEE1HI61oGncIyR8Hu6F/+kGc7FbopBvJQsS
- mCKcq0P/AG0KpiMJq75t4+ZK77KNRsg9pDd1CO+dTT95VU7gSbpuhmRZSRxRpZg2M9NNmbriiGl
- BiAady2R7qgkmQqAOPa2h4pSyXySJXkW27JHw1xLLjEWdosCsyJPSi14p9jSFjdee0aP6UVEXW+
- 3vNw==
-X-Received: by 2002:a5d:5d82:0:b0:428:3fcb:197f with SMTP id
- ffacd0b85a97d-4283fcb1b44mr7192617f8f.63.1761043746918; 
- Tue, 21 Oct 2025 03:49:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4ePyzsLTQU3d4iCNe2rkkZG1XGmMd5C3QmQYhTNZXg5vS4Gj5yRSLbjeIByBXZSzhASXOCQ==
-X-Received: by 2002:a5d:5d82:0:b0:428:3fcb:197f with SMTP id
- ffacd0b85a97d-4283fcb1b44mr7192582f8f.63.1761043746496; 
- Tue, 21 Oct 2025 03:49:06 -0700 (PDT)
-Received: from [192.168.10.27] ([151.61.22.175])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-427f00ba070sm19960195f8f.42.2025.10.21.03.49.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 03:49:05 -0700 (PDT)
-Message-ID: <32170b83-473c-4eb8-96dc-9180c51fe872@redhat.com>
-Date: Tue, 21 Oct 2025 12:48:58 +0200
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1vBA1H-0001Lh-8K; Tue, 21 Oct 2025 06:55:13 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L63tCw023364;
+ Tue, 21 Oct 2025 10:55:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=lhRdA36Lgh7gA6F/ogk8Zu0KQa9R
+ KIHQrPdRjf3aSQE=; b=cXbIkx0MidumXe2EA0IYFF5mCdOYwUOo7l+AUtCGThMZ
+ gyBDnzA01luEYkKON0P2slXIbpeceFkdkWgSggVVUzdQBMNXniZoVk3KAxKuPkHq
+ VkWHCLNmWQ73puYUwqB6qqEiQ2L/GgqG/Ek7r3icn1dPRvhO1nO8KZGi8OAd1CoZ
+ 3P+uhQNhzoTpNmkTA2O9A5yZrsGT0bh+8D+R2PPIDUG1j7MvUwIAWAcgAC6Q4/f0
+ WWLCH3aHFFEAHauTU1MDeqrvdQeeuI+hCgF7x086MvrXeebMuUXApA7MSnazpB41
+ aadxOR7tqrKsKhF2swhPqcsafje8IFRnfWP8EUDs3A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vn79s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 10:55:06 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LAt6Tt015422;
+ Tue, 21 Oct 2025 10:55:06 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vn79p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 10:55:06 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8nrFt011015;
+ Tue, 21 Oct 2025 10:55:05 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx121t9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 10:55:05 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LAt1QI49283574
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 10:55:01 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B74EE20043;
+ Tue, 21 Oct 2025 10:55:01 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 38FBC20040;
+ Tue, 21 Oct 2025 10:54:59 +0000 (GMT)
+Received: from vishalc-ibm.ibm.com (unknown [9.39.24.196])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 21 Oct 2025 10:54:58 +0000 (GMT)
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+To: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
+ balaton@eik.bme.hu, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ berrange@redhat.com
+Cc: Vishal Chourasia <vishalc@linux.ibm.com>
+Subject: [Patch v5 0/6] hw/core/loader: capture Error from load_image_targphys
+Date: Tue, 21 Oct 2025 16:24:37 +0530
+Message-ID: <20251021105442.1474602-2-vishalc@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 34/43] audio: rename AudioState -> AudioBE
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-35-marcandre.lureau@redhat.com>
- <1bd34160-d034-465b-a1ac-0e734ed40484@redhat.com>
- <d26b8838-c4a9-443f-a651-f46901a40865@redhat.com>
- <CAJ+F1CLoaufD_1tFUd_1uckWZLXVQ7E-GpRDZRDXtfi6unBw7A@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAJ+F1CLoaufD_1tFUd_1uckWZLXVQ7E-GpRDZRDXtfi6unBw7A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: gkXDEoYI6NZ3j9FSO8LvOqBc9w9-98L3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7V9GscCrDHvr
+ N64OOGAt32R4ZMTmz1ktBQVLysHQiWbM0OX5Cd9sY4Madz0rrnL7kMrcFJJHsv8s/uWm6oxL67j
+ MiyzHisxb7hiFgPG0MMlBle2Tl1K/39uBtS3/hDdgFUZodAEuHiVeUNLuYTyGG0miUQ+Tle392J
+ iYORNMIDbdSYOy3XQHXgLAbJnoWVyS3AP8yaQsJ4tqwwfmSpT7F1xTiJWLmInnR8mDCg73ALVQt
+ UxEWUYNBf8d9MB1mtEV8jU9WtA9oA0PDD+kmEifv3Wb/Ndn2jCFMKWAxEKaYX+D+S0tly0iJ+hE
+ 6AHkoSxzVZ/gOfG+xDYqjiL3VHamb7jYSIs9nIX3q/XQsjFU2zmzorWU1T3tvhM+DDb8wQEuCIo
+ o7pWSUCO2y8tOwJbpAjDgaJDnVmxyQ==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f7668a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=-7clNU1bOBsGld0-t7AA:9 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: 9gYmfxH-9FgL8gpnXytgp_TO22jbfT1d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,46 +124,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/25 12:40, Marc-André Lureau wrote:
->>> BE and FE aren't used in existing code though.  Looking at current use:
-> 
-> There is a top-level backends/ though. I meant to say that it's
-> usually clearer for everyone when we talk about "backend" vs
-> "frontend" (or not?), and I wish we would follow that naming more in
-> the code.
+Currently, when QEMU fails to load images (kernel, BIOS, initrd) via
+load_image_targphys(), the error messages are not descriptive enough
+for users to understand why the loading failed. This series adds the
+ability to pass Error information through the loader functions to
+provide more detailed error reporting.
 
-Yes, but the front-end should have a *pointer* to a backend.
+v5:
+- Moved the patch which replaces open() with qemu_open() earlier in the
+  series
+- Incorporated minor changes in the error messages requested by Balaton
+- Moved check for size zero in load_image_targphys_as() into it's
+  separate patch 
 
->>> - BlockDriverState*/BlockBackend*
-> 
-> I am not very familiar with the block subsystem, but it is seems
-> BlockBackend is actually the backend and BlockDriverState is
-> implementation data detail. Correct me if I'm wrong
+v4:
+- Reject empty files (`size == 0`) with an appropriate error. [1/5]
+- Populate error when `rom_add_file_fixed_as()` fails. [1/5]
+- Add missing check in hw/ppc/virtex_ml507.c [5/5]
+- Fixed checkpatch warnings [5/5]
+- Check errp for failures from load_image_targphys/load_image_targphys_as [3,5/5]
+- Remove unused variables [5/5]
 
-Yes, note the "*".  What I meant above is "the frontend has a 
-BlockBackend*, which itself has the internal BlockDriverState*".  Same 
-for character and NICs below.
+v3:
+- Use qemu_open() instead of open() in get_image_size() (danpb)
+- Remove redundant error_setg_file_open() call (danpb)
+- Use error_prepend()/error_reportf_err() to preserve underlying
+  error details (danpb)
 
->>> - Chardev*/CharBackend
->>>
-> 
-> Those are actually always confusing... and I remember I attempted to
-> rename it in the past... CharBackend is the front-end side..
+Vishal Chourasia (6):
+  hw/core/loader: Use qemu_open() instead of open() in get_image_size()
+  hw/core/loader: capture Error from load_image_targphys
+  hw/core/loader: add check for zero size in load_image_targphys_as
+  hw/core: Pass errp to load_image_targphys_as()
+  hw/ppc/spapr: Rename resize_hpt_err to errp
+  hw/ppc: Pass errp to load_image_targphys() and report errors
 
-Yes, they are confusing.  I'm not sure why it failed, but 
-s/CharBackend/CharFrontend/ does get my vote.
+ hw/alpha/dp264.c         |  4 ++--
+ hw/arm/armv7m.c          |  2 +-
+ hw/arm/boot.c            |  5 +++--
+ hw/arm/digic_boards.c    |  2 +-
+ hw/arm/highbank.c        |  3 ++-
+ hw/arm/raspi.c           |  2 +-
+ hw/arm/vexpress.c        |  2 +-
+ hw/core/generic-loader.c |  8 +++++---
+ hw/core/guest-loader.c   |  7 ++++---
+ hw/core/loader.c         | 36 ++++++++++++++++++++++++++++--------
+ hw/hppa/machine.c        |  5 +++--
+ hw/i386/multiboot.c      |  2 +-
+ hw/i386/x86-common.c     |  4 ++--
+ hw/ipmi/ipmi_bmc_sim.c   |  2 +-
+ hw/loongarch/boot.c      |  5 ++---
+ hw/m68k/an5206.c         |  2 +-
+ hw/m68k/mcf5208.c        |  4 ++--
+ hw/m68k/next-cube.c      |  2 +-
+ hw/m68k/q800.c           |  7 ++++---
+ hw/m68k/virt.c           |  4 ++--
+ hw/microblaze/boot.c     |  5 +++--
+ hw/mips/boston.c         |  2 +-
+ hw/mips/fuloong2e.c      |  9 +++++----
+ hw/mips/jazz.c           |  2 +-
+ hw/mips/loongson3_virt.c | 10 ++++++----
+ hw/mips/malta.c          |  9 +++++----
+ hw/nubus/nubus-device.c  |  2 +-
+ hw/openrisc/boot.c       |  5 +++--
+ hw/pci/pci.c             |  2 +-
+ hw/ppc/amigaone.c        | 15 ++++++++-------
+ hw/ppc/e500.c            | 18 ++++++++++--------
+ hw/ppc/mac_newworld.c    | 28 ++++++++++++++++++----------
+ hw/ppc/mac_oldworld.c    | 28 ++++++++++++++++++----------
+ hw/ppc/pegasos2.c        | 18 ++++++++++++------
+ hw/ppc/pnv.c             | 30 +++++++++++++++---------------
+ hw/ppc/ppc440_bamboo.c   | 10 ++++++----
+ hw/ppc/prep.c            | 27 +++++++++++++++++----------
+ hw/ppc/sam460ex.c        | 10 ++++++----
+ hw/ppc/spapr.c           | 35 ++++++++++++++++++-----------------
+ hw/ppc/virtex_ml507.c    | 18 ++++++++++++------
+ hw/riscv/boot.c          |  7 ++++---
+ hw/rx/rx-gdbsim.c        |  2 +-
+ hw/s390x/ipl.c           |  8 +++++---
+ hw/sh4/r2d.c             |  8 +++++---
+ hw/smbios/smbios.c       |  2 +-
+ hw/sparc/leon3.c         |  4 ++--
+ hw/sparc/sun4m.c         |  8 +++++---
+ hw/sparc64/sun4u.c       |  7 ++++---
+ hw/xtensa/xtfpga.c       |  3 ++-
+ include/hw/loader.h      |  8 +++++---
+ system/device_tree.c     |  2 +-
+ 51 files changed, 268 insertions(+), 182 deletions(-)
 
->> QEMUSoundCard's name field is basically unused, and QEMUSoundCard should
->> be just an Audiodev*.  There's no need for a separate AudioFE struct.
-> 
-> For audio, it's pretty obvious that we have "backend" object to
-> implement the host audio subsystem details, while "QEMUSoundCard" is
-> the "frontend", or "client/user" context.
-
-I agree, but unlike character devices, QEMUSoundCard is not needed at 
-all.  So you can drop it and only leave Audiodev*, or AudioBackend* (but 
-I prefer Audiodev* which matches both the option name and Chardev*).
-
-Paolo
+-- 
+2.51.0
 
 
