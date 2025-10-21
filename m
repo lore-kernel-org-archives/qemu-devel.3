@@ -4,67 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A17ACCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50865CCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJ7q-0001FA-Rg; Tue, 21 Oct 2025 16:38:34 -0400
+	id 1vBJEa-0004Ac-5X; Tue, 21 Oct 2025 16:45:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vBJ7o-0001DR-L1
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:38:32 -0400
-Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBJEY-0004AI-7g
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:45:30 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vBJ7l-0007mu-QJ
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:38:32 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id F20B860E3A
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 22:38:23 +0200 (CEST)
-Received: (qmail 21228 invoked by uid 990); 21 Oct 2025 20:38:23 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Tue, 21 Oct 2025 22:38:23 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBJEV-0000Ub-P9
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:45:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D8D41211BA;
+ Tue, 21 Oct 2025 20:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761079520; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rd4e1hgWP5nobV/uKOhh1uJhGcqM717KZaXJpj2yTD4=;
+ b=WsqNJRsgS7feMohlZvpduqG1Q6cro9MEd4cCS+duX0Nd4l5VWKOsIcWsXIiHOxEiMLgEMF
+ oyY8FVGpI0XkdqXCIRtZTjaLNwdbVCJt/aG32usujGfBYE8FDFh2wF0wm9WkJCIg07x+oi
+ MhMpzfTiy4JHOjdqw+IAp4ugwRe5a1o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761079520;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rd4e1hgWP5nobV/uKOhh1uJhGcqM717KZaXJpj2yTD4=;
+ b=J0jahQKuIPTbixH4W2tkTNN6Kw65jvccu29QZb30W88bkCexz4X0fPIWkQdzymDy4CMQtU
+ vF+KHrGp7NDIdqAA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761079515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rd4e1hgWP5nobV/uKOhh1uJhGcqM717KZaXJpj2yTD4=;
+ b=rqRxoZ04CD/q8FxhCZrKGs/foltm6cdstwuM8MVbP+pfbjyb+RwJ7066ZhTQoZ2/wpWzhL
+ pAdDy+/wHyM8DnnsuVRHc4UuL08L8U8qspmBQqg/TXkxoc5W0IQyHO25607mZcgicuO9+K
+ fNsjW0Ir1F5UIWUsMcJQFm+CK8hxSQQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761079515;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rd4e1hgWP5nobV/uKOhh1uJhGcqM717KZaXJpj2yTD4=;
+ b=S2gFLf9Lzc8+7HPV/lnog2XA61QNrkbl95UrsoGuje+Nnu9FbgJCD1xdzhy6tmpm89FY6r
+ RIt9CI8+Uz8q/FDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5E4CD139D2;
+ Tue, 21 Oct 2025 20:45:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WgYUCdvw92iXUQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 21 Oct 2025 20:45:15 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Arun Menon <armenon@redhat.com>, peterx@redhat.com, Peter Maydell
+ <peter.maydell@linaro.org>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 1/3] migration: Fix error leak in
+ postcopy_ram_listen_thread()
+In-Reply-To: <20251021184132.2635958-2-peterx@redhat.com>
+References: <20251021184132.2635958-1-peterx@redhat.com>
+ <20251021184132.2635958-2-peterx@redhat.com>
+Date: Tue, 21 Oct 2025 17:45:12 -0300
+Message-ID: <87qzuwt25j.fsf@suse.de>
 MIME-Version: 1.0
-Date: Tue, 21 Oct 2025 20:38:23 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <20bf0927d2331f70d92048726362558d78caa4a8@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH v8 05/25] target/alpha: call plugin trap callbacks
-To: "=?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Richard Henderson" <richard.henderson@linaro.org>
-In-Reply-To: <2a0a4cde-1427-4d87-a331-f4ed6fa64aa2@linaro.org>
-References: <cover.1760884672.git.neither@nut.email>
- <78ba254c812a91105bf52f6f0ce73774ee2be265.1760884672.git.neither@nut.email>
- <2a0a4cde-1427-4d87-a331-f4ed6fa64aa2@linaro.org>
-X-Rspamd-Bar: ---
-X-Rspamd-Report: BAYES_HAM(-2.999996) MIME_GOOD(-0.1)
-X-Rspamd-Score: -3.099996
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=1IARiEa4pidO8jEUcrex2Yhx+c0PT4Z63mvUTn3sJhA=;
- b=aZUyvYqDtKkkC8psK4IyUboNUuT4fUsMHTCGS8feeNZeQCu/HdaPNMrvMsQdLHhpJEbNZXykco
- wIp3+ky+UIR+n3LCfZXqnbicRKyHEfEklVXonT0TeXdwkTne0aJIC2dr7Wn0wKPIM1ytJQBY55jV
- wKBCxvlnEJafeImVWM7CPongynIG7iyi/DZdnBN3QBOvkw0A1BXYildrWqeeb/ovbk4pkTcn6YKJ
- AoNcGfVUyqjkiEKCfn5vxOzJTcCgIQ3jtoq4feU+m4NdGJ8F1VAVP9IXH8cSRVTbpVqN3FCXrT4A
- C6T5BlIhVcSqxSG3US5fd7wS7saICn4l0qHjcUKnmbjoMjASduHnIB5bBUMS6Br2IMp1pJYn/JBQ
- BQ+qjV2pt/PObgNNHD1aR3oZPbj0zf1DjAIGifAN7DTMshPXZfafGA6iytv81Ta8TOFm1Amwh8hs
- Ax8eiwrR3wrU1SzlD3PLMF/m3y5vxlaueV3hRBVru7IxdmRjr8WyFL6FL1dfeiBRswbWsjHVKJKX
- xm+LESMXpY/yEAwevV9Dgt/OOIZXnAqV12wUv1aPigEfvM9Y32mCB23iy2N4fxFwPe3zrWv+wvaX
- NBPAiBiz+IQcpca5ax5zwcJgA7scSCBpvmdm9e5XvFdrEA6QHBFP+9Ipd2Id87u75ieaLQdAbzpY
- 8=
-Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
- envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,61 +117,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+Peter Xu <peterx@redhat.com> writes:
 
-October 21, 2025 at 10:10 PM, "Philippe Mathieu-Daud=C3=A9" wrote:
-> On 19/10/25 17:14, Julian Ganz wrote:
-> > We recently introduced API for registering callbacks for trap related
-> >  events as well as the corresponding hook functions. Due to differenc=
-es
-> >  between architectures, the latter need to be called from target spec=
-ific
-> >  code.
-> >  This change places hooks for Alpha targets.
-> >  Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> >  Signed-off-by: Julian Ganz <neither@nut.email>
-> >  ---
-> >  target/alpha/helper.c | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> >  diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-> >  index 096eac3445..a9af52a928 100644
-> >  --- a/target/alpha/helper.c
-> >  +++ b/target/alpha/helper.c
-> >  @@ -27,6 +27,7 @@
-> >  #include "exec/helper-proto.h"
-> >  #include "qemu/qemu-print.h"
-> >  #include "system/memory.h"
-> >  +#include "qemu/plugin.h"
-> >  > > #define CONVERT_BIT(X, SRC, DST) \
-> >  @@ -328,6 +329,7 @@ void alpha_cpu_do_interrupt(CPUState *cs)
-> >  {
-> >  CPUAlphaState *env =3D cpu_env(cs);
-> >  int i =3D cs->exception_index;
-> >  + uint64_t last_pc =3D env->pc;
-> >  > if (qemu_loglevel_mask(CPU_LOG_INT)) {
-> >  static int count;
-> >  @@ -431,6 +433,17 @@ void alpha_cpu_do_interrupt(CPUState *cs)
-> >  > /* Switch to PALmode. */
-> >  env->flags |=3D ENV_FLAG_PAL_MODE;
-> >  +
-> >  + switch (i) {
-> >  + case EXCP_SMP_INTERRUPT:
-> >  + case EXCP_CLK_INTERRUPT:
-> >  + case EXCP_DEV_INTERRUPT:
-> >  + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> >  + break;
-> >  + default:
-> >  + qemu_plugin_vcpu_exception_cb(cs, last_pc);
-> >  + break;
-> >=20
->=20Shouldn't we handle EXCP_CALL_PAL with qemu_plugin_vcpu_hostcall_cb()=
-?
+> As reported and analyzed by Peter:
+>
+> https://lore.kernel.org/r/CAFEAcA9otBWtR7rPQ0Y9aBm+7ZWJzd4VWpXrAmGr8XspPn+zpw@mail.gmail.com
+>
+> Fix it by freeing the error.  When at it, always reset the local_err
+> pointer in both paths.
+>
+> Cc: Arun Menon <armenon@redhat.com>
+> Resolves: Coverity CID 1641390
+> Fixes: 94272d9b45 ("migration: Capture error in postcopy_ram_listen_thread()")
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/savevm.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index aafa40d779..635fa2f918 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2136,17 +2136,18 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>          if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
+>              !migrate_postcopy_ram() && migrate_dirty_bitmaps())
+>          {
+> -            error_report("%s: loadvm failed during postcopy: %d. All states "
+> +            error_report("%s: loadvm failed during postcopy: %s. All states "
 
-Host calls are exclusively calls that are handled outside the emulation,
-on the host, regardless of whether they are hypervisor calls or not. In
-that respect EXCP_CALL_PAL looks to me like a regular exception that is
-handled by translated code within the emulation.
+Do we want to keep the %d for consistency with the way we report the
+error below?
 
-Regards,
-Julian
+loadvm failed during postcopy: %d: %s
+
+>                           "are migrated except dirty bitmaps. Some dirty "
+>                           "bitmaps may be lost, and present migrated dirty "
+>                           "bitmaps are correctly migrated and valid.",
+> -                         __func__, load_res);
+> +                         __func__, error_get_pretty(local_err));
+> +            g_clear_pointer(&local_err, error_free);
+>              load_res = 0; /* prevent further exit() */
+>          } else {
+>              error_prepend(&local_err,
+>                            "loadvm failed during postcopy: %d: ", load_res);
+>              migrate_set_error(migr, local_err);
+> -            error_report_err(local_err);
+> +            g_clear_pointer(&local_err, error_report_err);
+>              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+>                                             MIGRATION_STATUS_FAILED);
+>          }
 
