@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD51CCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD7DCCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEO2-0000ra-OU; Tue, 21 Oct 2025 11:34:58 -0400
+	id 1vBEPm-0001wH-1o; Tue, 21 Oct 2025 11:36:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBENs-0000pd-JG
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:34:48 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1vBEPk-0001w0-AH
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:36:44 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBENo-0004m1-VY
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:34:48 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-63e393c49f1so2501273d50.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:34:44 -0700 (PDT)
+ id 1vBEPi-0005KA-DX
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:36:44 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-63e10cd6efeso5507695d50.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:36:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761060883; x=1761665683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761061000; x=1761665800; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0gOgi7jadNBzCHQfEI9RsHFCcQe3JXhk2fO1mNw4Rs4=;
- b=mclVw7JHxo2lT/6lJxLKLdC8gbccSTz/QpIEBTEyOfWQZ6Ewjd3qBNHMiuu+loRHAk
- 7t/CAnyu4IZ86/toNZc8U+g+mMqFcQcWZJQDeMznuciGKy4YtCUgWsIdVvxrgKnuBmkR
- 1GVExRLA7Gu6IKyWv3qECAkImG2aNmbopkkrami0s2vpeCUkvvg1rVbZWXcOuDNNnSq8
- EuJZLkeMH9ls+EWL1kvlDs7rACEBYLct+zKFCdQ0MXjHxUdABR1rQhvkeUWUDmnIM9qa
- 0zM2qaMCGS5fzhTHVaYqakRxQ0W6Bv2uOjC3zzwe2jahpw35DXQFQEo1XDq3y56KnRMr
- Qm1Q==
+ bh=BhO+EL2rp3xRGrAorTviBtcREoQQpVtKTK3qqKUTnX4=;
+ b=m8MZV6bgbxFJpDr8h234ybo6HEQ0ucxl5N5Ts1VOLW38NVUdwsxv550cBV/GdCsqMw
+ Tujrb7rYSVljfstSxD9MmNyD8d6dunYwUPHAD9ybsWlDAnLfRynhBxGnR8GIhwIccap+
+ WRBudveghQAxg1u2OkHVHYEK0EU2gBO0hmm3v77lxRfhuMNVKIUbnVcNJk+LnGxeudX7
+ I2NmbPcGTa0uQ+PMzRyCZiJvxHB68oPh7SlU8s9tP36y+mK/UTQb4E7I0VD2knp/60Ng
+ yyvGLKmIoDOvu4CNkrcc+KYW7VSwY2RvXljQG0tMrhuwimDzdlDiiXO43WMeYTE3kxA5
+ gHWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761060883; x=1761665683;
+ d=1e100.net; s=20230601; t=1761061000; x=1761665800;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0gOgi7jadNBzCHQfEI9RsHFCcQe3JXhk2fO1mNw4Rs4=;
- b=LszoKoF5ikwc6asphShw3m+G4TG52asXvZkld+xjzidmtJ44pdzPVVpW9YuxSNlmXr
- 2q57gY31smOSAOwZcbdV7qIvy0JJkpddnDN5g/sNlOp2IlPfHY+9VWJ3QSh/LESQMVRk
- zQEdtiAzIPKTJCzZ0ymrh39urOdL5GI/BfygTHi548haT6HYutPfS9GCbKDIaubgYyCJ
- fZfxX2Tk0d3GdkfV68ImlBGfS/fF+16x9IyxOsq7Viso24ABw+uou13VMmlYPiHWCSEy
- WSGybBoAytQ6VsasyvDxb6Jkv2ol4Xc+NPE1vHIjD/8SJ/kptLNzWObKIVzAs1drZzmf
- p2/g==
-X-Gm-Message-State: AOJu0YwnkKyQ/yAGphiXMEi1G1ChI4GCAYHms2KMQKpbfnbQXsbvLux5
- Yhk8/lgEANCKRnYFRddCrF23xxGgAPsi8MAAxXfzPyFyt/kvInkiO/ZcakfHbc36VcWod6hco4x
- cGd65Rv6mjzxi+lBt4DM4+Bpl35LwS3m77qM8SeI0Yg==
-X-Gm-Gg: ASbGncvrww+wnedsgqmCzGSNffRjlOyMY3Imv0U8uXQz/zHaNpd3vYw4tPshyxHQRHt
- V95FrRCjqIv4Bh7yywjqOoABD/iBHsEyRr3B7boq29x14BollF2Dje9pbe0zGr+MTRCacNm5B8+
- 2IasOTdpgPmsdsMHn6+C4LZyKN809KQHK7/YfS/AtgNF3893cL86vAPMqe69P4MImw3HK+eMl7q
- dMpH3Hwp2XfGnm0Mqhw5aj+B0tW4bLGc3ms/sRH/a4Uv9H5AwAsYCQTDeFfz/WB8XniByKQeJur
- 2z4+yWw=
-X-Google-Smtp-Source: AGHT+IFKPTIPymKahbrZnMkuCX7GC/X4Cp2rBFGOTgu+TE6gsaGp2Wocreim8DcjEDsuQWmpUYoBlEVNka1ksZ4evso=
-X-Received: by 2002:a05:690e:d56:b0:63b:47b3:4fef with SMTP id
- 956f58d0204a3-63e160e9866mr12776754d50.14.1761060883263; Tue, 21 Oct 2025
- 08:34:43 -0700 (PDT)
+ bh=BhO+EL2rp3xRGrAorTviBtcREoQQpVtKTK3qqKUTnX4=;
+ b=niVh7AF0wzQgJsUDGSV3Oy4VzVIEjGRz1Haf+oDKfGCiy0M2Z080gz9Abjen1cfGKe
+ ZsWRXgROGZLwtazRPFbO+9P36I06OBu2TiaWtxDDauzndS0MeQSZzWJ4v4mEYagvRLT0
+ jmzQlrlAqviztZsg1if7qhU/nc9/h6vd31o5YffRLly8/L1TeV7pDMyJ0NuRp6/DXTwl
+ 0RDFCZwDYxd/lVqypPKgYEyQG/+wkCMynoQ/TG8nVnCvg5hySGTbSbz2KgBjW8Hf1zkt
+ cQ00SdcRo0XPQUcmb/Q5RkoxPzpgkL5XE84/Jw89FoUg8Yv92UpsouiQgz1EWRmvcxRq
+ thnw==
+X-Gm-Message-State: AOJu0Yy+OThF/FHelEJ6ykmf06gBdvm6iIP04V7oiwYVkY+aaLKAvdzP
+ Nqe6Ri5ygxnXMSCbxC4ra3OcQuZnQBgGl8/KWz3yshPOoF/GZwUi0jbM7x3TwRJUX/HUKQdFgBn
+ ObT7V9iyogIZmoENRl7J+9h46jUydna28NnieY8eqSw==
+X-Gm-Gg: ASbGncueFvvHNMsUMSA6XxT+H98w2IKvyo/l5WFc/KuGpiieuwoJa0wAnWxlkIwbu9J
+ SlncyYWh6PdFRnzoZtpcUtZCx/9s+M3TeGHLWnKr5sU1xa5m44wWySu9QEv9xlzdDJbNJGQjAof
+ LLPCrSdLYubIl540MURQIbHKSCthm5vx5CoFBf3XEccRIVMJzSFVJML6UotIv+HbCHSWuEaeufN
+ O+dbQjVnsX2TdLvbc48IBoxjj8ylzYs2E4TD1Me/ghVaLX43rlRw1GJot4Cqhg95ITfod8s
+X-Google-Smtp-Source: AGHT+IHgYLyI6SB/jy8gLWW8NicF6oCBSWN1os9aImOUnbEt28AIbhGZ7XME0WFHrpV9GLbaF2tyyWdgkz+UDyWDZqc=
+X-Received: by 2002:a05:690c:10c:b0:781:49b9:a79f with SMTP id
+ 00721157ae682-7836d381650mr262223107b3.66.1761061000344; Tue, 21 Oct 2025
+ 08:36:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-43-peterx@redhat.com>
-In-Reply-To: <20251003153948.1304776-43-peterx@redhat.com>
+References: <20250311125815.903177-1-npiggin@gmail.com>
+ <20250311125815.903177-71-npiggin@gmail.com>
+In-Reply-To: <20250311125815.903177-71-npiggin@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Oct 2025 16:34:32 +0100
-X-Gm-Features: AS18NWBMMUZGSp6h0bwYquZR9BAWGRM5PG813Ky55z3-GqorAwP1pd0Bw19hVW4
-Message-ID: <CAFEAcA82ih8RVCm-u1oxiS0V2K4rV4jMzNb13pAV=e2ivmiDRA@mail.gmail.com>
-Subject: Re: [PULL 42/45] migration: cpr-exec mode
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>,
- Markus Armbruster <armbru@redhat.com>
+Date: Tue, 21 Oct 2025 16:36:29 +0100
+X-Gm-Features: AS18NWAOVrENKdxAc2A5WMRE88aOVkYmA8vQgxzSz7MsseEpl7dZlO5l-EXi1hg
+Message-ID: <CAFEAcA8pgga4g3yex=EsfOOC7SVaAccOs-CEjzYmb0XCY1H-Sg@mail.gmail.com>
+Subject: Re: [PULL 70/72] ppc/amigaone: Add kernel and initrd support
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ BALATON Zoltan <balaton@eik.bme.hu>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,50 +94,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
+On Tue, 11 Mar 2025 at 13:24, Nicholas Piggin <npiggin@gmail.com> wrote:
 >
-> From: Steve Sistare <steven.sistare@oracle.com>
+> From: BALATON Zoltan <balaton@eik.bme.hu>
 >
-> Add the cpr-exec migration mode.  Usage:
->   qemu-system-$arch -machine aux-ram-share=on ...
->   migrate_set_parameter mode cpr-exec
->   migrate_set_parameter cpr-exec-command \
->     <arg1> <arg2> ... -incoming <uri-1> \
->   migrate -d <uri-1>
+> Add support for -kernel, -initrd and -append command line options.
+>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> Message-ID: <489b1be5d95d5153e924c95b0691b8b53f9ffb9e.1740673173.git.balaton@eik.bme.hu>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
 
-Hi; Coverity complains about this code (CID 1641397):
+Hi; Coverity reports a memory leak in this function
+(CID 1641398):
 
-> +static void cpr_exec_cb(void *opaque)
+> +static void create_bd_info(hwaddr addr, ram_addr_t ram_size)
 > +{
-> +    MigrationState *s = migrate_get_current();
-> +    char **argv = strv_from_str_list(s->parameters.cpr_exec_command);
-> +    Error *err = NULL;
+> +    struct bd_info *bd = g_new0(struct bd_info, 1);
+
+We allocate the bd_info struct here...
+
 > +
-> +    /*
-> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
-> +     * earlier because they should not persist across miscellaneous fork and
-> +     * exec calls that are performed during normal operation.
-> +     */
-> +    cpr_exec_preserve_fds();
+> +    bd->bi_memsize =    cpu_to_be32(ram_size);
+> +    bd->bi_flashstart = cpu_to_be32(PROM_ADDR);
+> +    bd->bi_flashsize =  cpu_to_be32(1); /* match what U-Boot detects */
+> +    bd->bi_bootflags =  cpu_to_be32(1);
+> +    bd->bi_intfreq =    cpu_to_be32(11.5 * BUS_FREQ_HZ);
+> +    bd->bi_busfreq =    cpu_to_be32(BUS_FREQ_HZ);
+> +    bd->bi_baudrate =   cpu_to_be32(115200);
 > +
-> +    trace_cpr_exec();
-> +    execvp(argv[0], argv);
-> +
-> +    /*
-> +     * exec should only fail if argv[0] is bogus, or has a permissions problem,
-> +     * or the system is very short on resources.
-> +     */
-> +    g_strfreev(argv);
+> +    cpu_physical_memory_write(addr, bd, sizeof(*bd));
 
-Here we free the argv array...
+...but we never free it or keep a pointer to it.
 
-> +    cpr_exec_unpreserve_fds();
-> +
-> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
+I guess we can mark it g_autofree ?
 
-...but here we read from the freed memory argv[0].
+> +}
 
-Presumably we can just move the free down a bit ?
-
+thanks
 -- PMM
 
