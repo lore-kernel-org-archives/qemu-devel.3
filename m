@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B5DCCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F2DCCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJHr-0000ER-4W; Tue, 21 Oct 2025 16:48:55 -0400
+	id 1vBJJ4-0003oN-UV; Tue, 21 Oct 2025 16:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHo-000075-KO
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:52 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIx-00033U-AE
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:03 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHg-0001B5-0r
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:52 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46b303f755aso64862905e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:48:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJIt-0001IQ-CB
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:50:01 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4710665e7deso23270075e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079721; x=1761684521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079796; x=1761684596; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KarjRMReFBr6aXs6DXwNVmSxe1Qqf0rq+Hp4zCMDXIw=;
- b=kvtJbHfyf8OBcxD1Of72yGSzcQN0i17qPiDCmm2sUmPNWFFOez0jxK+NUv/Zp6ZMUy
- 44fiP2KeSlM0Bg4jVuQrmgfWfEed9DDFvExXoMmS1GZLD5aOT94Tut2vsJUKj7ygv//T
- 11MH3cUJTnMCWvS4o/DTmdDGn1QR1nDLEEM7tCVLH/OIp3fjlNQrleyqcnmTvxqwiUP2
- byvuqEryzPbe/IaszDv18JbhBy2w2Gl3DNvBLyEsdaFf2VIsqQrxtKzUkCfxXidbVunn
- ARk1HVUbXNt9V2dHdV6CMNGpZN1TizfX5Ql1bOhKa+QTHnR3QNaXh4ScZqflwBFQJFtp
- URDw==
+ :reply-to; bh=E3RZP+uPdi/u4o2bwW6kEbE3vICc4qLss0EKsxFjnU8=;
+ b=SL9lA8/cDXs5s6IaEQxVdz0qIIn0EE+NcgJLRGWMnKTNvPDCCVQBKhTz03Gt4t4lZu
+ omPncDw0ypdwtTi9sYt5smrs+ZY9vFw1YEitOuGRPAtVzumrtgkaW91p1EEODLZ1accj
+ Nnga3Uiosu2zXJ9ol55yL5hNOQYWyB1PDslYznQQvFlr+F7+rpRT6PkzUAuFQGWEdu61
+ cOKgVE2ztNwcQA9Dn0qbHgJW2WcHt9R7udd/gKJhEMXbJGNm3b0OjhNkirIthYOU+VWq
+ aHe71U2X/5dkZX9xNrBoQJbgK64HhzbgAfmmwEamAI3mBqIj6pvELYzljoBWT8TMdunw
+ Kuug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079721; x=1761684521;
+ d=1e100.net; s=20230601; t=1761079796; x=1761684596;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KarjRMReFBr6aXs6DXwNVmSxe1Qqf0rq+Hp4zCMDXIw=;
- b=sBfDPwPbFiis+3yxKFi+A8JcDsM/c0kaNLv0rwRIHTkUqG9QUjPi/iyqhykfKhsqae
- 5mWdTfRtdYfw5iZ1AWDvkpfU7JkWtP1SGYWU8+ZLLt5lrBjRh18fY6tm4FeSOwiOOUUp
- RnruME7RdU5l4HdXBg7bzNjJs8wmSrO0/9lklE800RfL+cfCi+gZS+GoL/zuJf93WllM
- +6Pc3zkyrjcfIxfoQdn15O2jxkHcFmmRqEmOmAmhaVpS1f0fFdaHVi3LPRHIDkch5dcS
- gorA+418X5gbOcJxvXlAdViQi9xviRojr/2UGP5tU9ODwkaV8zogrXdrbqo4GMBmsaMm
- Xzfg==
-X-Gm-Message-State: AOJu0YzK31BH4vyIFYzFt1uBorfUNB3EbG3eR8AmIVIU6hCXKvfiCWcS
- LVMfHpAHOpVwOfiA4AQEx983y5CcuGXO4MBRxVCSfpBJoTHhyoGdGM3z/q0YdYD5DRoD0cSyFl5
- Oof7xe9U=
-X-Gm-Gg: ASbGnctvBPNZMYCFAbjh6NVukTjfdniHxVa/BGAlx4Z9KZ/46UZco2zx6Uc+NnO4yL6
- 840tQEVJjsfCh6eMs0gtO39Y3Gte1AG9ExmTnf/g7c9F3zg1C0T2l1JGSbJStvXYf9eVAH4fl/R
- /KxiDACcyXZkHLFVKU0eqsWVLRSi1kVbzlH7BX9LNV8e7ecUyb5j2JPiCHOrYWfYde0Fq5xfme+
- 66x1Lf1+NQ5jmGiatocxBH1INLj+6IEp1JzaVn414cISjdIdoUzQ+xRlcHtwH11CRMDmtxJfx4o
- IUlOU99d8/tVHP2C1W3nBUFpy6hjG8rqGCIBEMkZwXG2csmpMhmef4bPSdm1MquVwPoL+eZkxbG
- 0sN+GUN7nHNs/h+Td28npIFso/DcHI1CputeZCg1fSMsn1J1Fd2ktupbA+8c9GXS7DiX8V6yYov
- ocOd7TtAUqW2zUUGHJnbY6qhqXJrXyJoO+WAwGBFRkxlwWKs4jwg==
-X-Google-Smtp-Source: AGHT+IGAJhewCXhBudnXN1xErnFhAK2LieWkMn/v0aeG2RhSEB29iRjOdQsaATDfvlMNNT5GgayXYw==
-X-Received: by 2002:a05:600d:416b:b0:46e:1f92:49aa with SMTP id
- 5b1f17b1804b1-4711787c0b3mr141642025e9.15.1761079721363; 
- Tue, 21 Oct 2025 13:48:41 -0700 (PDT)
+ bh=E3RZP+uPdi/u4o2bwW6kEbE3vICc4qLss0EKsxFjnU8=;
+ b=hHmNq3pjXTCl9mtSJ2mE3bNUcL3MSHIys02dy3TAvYzzoUHz7Ku4xYH7SX4DHyL7bm
+ jgVpvgS8eM/zULRhhFfx5mKsOshihUo5drfPrpeTw/Tz9eRjJ3Nl5e6D3P1KbwOsRukC
+ sd+3mAXl9grAlJOncvqvbzqZiLABHBdaW5iH/l+siv97SO24KyRdzos8jfoHTro2oc6m
+ BecwZkAzDbCJDcAIw7QZ55f1GTPWnVwSOGMSIBwdOuzGw0MOkgEFxzBGwqdiweM4Wjcn
+ aKydHLmDf6i87p087TGjueJCh0M3NiIl1qoEzxz77YTjB1aTfBRd3mkHwkX7MGXblHpo
+ 5d3w==
+X-Gm-Message-State: AOJu0YzTdsClPQWHJzVd54brDP4O4JCSfJoFHddr8K40TWcXe+x5UqYN
+ /c+TSrVAuNXFJZgR/QG9Bfj+gxWDBblm1Emq1DT4Pg0NUPkPy4ORPMiJlUCQwRrqvo7UjfKBHVR
+ dLnH0nxY=
+X-Gm-Gg: ASbGncvFUIGt2AjR3/GQfnFWQ+AGnQZ3loF/Mqeui6sKLMlFS2eoQ4QarAVUqMl2o98
+ WdeYTbw9SrmoP9ftL4ms+6nDJ5qlM54dkO6lj5AdF2xW3wLgrDtAuIaLonNWEaahXup945pHJYb
+ fkxR2hpaHsZI0Xb0V/Tpl7fl9cqbgLDtC5BhITDXhXigcl1/Loux/ORB3oLQFoot4a6511Z0ZG/
+ cKs9Tk7s/6eaDEvWf4CuCwKstpPnTFFuXGBTDntD7rFfX2S9Ypc2f4Cx+Laj1yKLP5HRW4IQLr7
+ RGbeP8VlTXuAqxL9DstiGwiS+81MR59Z7XKl6YSDsY/X2yiw0A4+sUd+4jKC40ZawnzE1vSaIoT
+ UGW+JIMRZFqJs6Cy6qK2wnUmps53gwwUrQlmhPIr9Qdsd02SXfO3wDx/QNB67I5ltGDNZPPCpeF
+ 4L/BYkjJQ77uJVXawc7J2c7BEdFvCKxR/4PROEwCBHQm5+9ZcSPkJ1Sa+/i6xe
+X-Google-Smtp-Source: AGHT+IHs/8+blCKIUcT171bl2SUi0LuixDfcpAzy8HZtzRCdAy0bihBr8Np6wBz+OV/4DPY5L2Vy8g==
+X-Received: by 2002:a05:600c:8b0d:b0:46e:39e1:fc27 with SMTP id
+ 5b1f17b1804b1-4711787442amr136670605e9.5.1761079796447; 
+ Tue, 21 Oct 2025 13:49:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c427ed3fsm11788005e9.1.2025.10.21.13.48.40
+ ffacd0b85a97d-427f00ce678sm22286950f8f.51.2025.10.21.13.49.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:48:40 -0700 (PDT)
+ Tue, 21 Oct 2025 13:49:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/45] hw/net/can/xlnx-versal-canfd: refactor the banked
- registers logic
-Date: Tue, 21 Oct 2025 22:46:35 +0200
-Message-ID: <20251021204700.56072-22-philmd@linaro.org>
+Subject: [PULL 37/45] hw/pcspk: use explicitly the required PIT types
+Date: Tue, 21 Oct 2025 22:46:51 +0200
+Message-ID: <20251021204700.56072-38-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,221 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luc Michel <luc.michel@amd.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The CANFD device has several groups of registers:
-  - the main control registers from 0x0 to 0xec
-  - several banks of multiple registers. The number of banks is either
-    hardcoded, or configurable using QOM properties:
-      - Tx registers
-      - Filter registers
-      - Tx events registers
-      - Rx0 registers
-      - Rx1 registers
-
-As of now, all the registers are handled using the register API. The
-banked register logic results in a convoluted code to correctly allocate
-the register descriptors for the register API. This code bypasses the
-standard register API creation function (register_init_block). The
-resulting code leaks memory when the device is finalized.
-
-This commit introduces decoding logic for the banked registers. Those
-registers are quite simple in practice. Accessing them triggers no
-side-effect (only the filter registers need a check to catch guest
-invalid behaviour). Starting from the Tx events registers, they are all
-read-only.
-
-The main device memory region is changed to an I/O one, calling the
-new decoding logic when accessed. The register API memory region still
-overlaps all of it so for now the introduced code has no effect. The
-next commit will remove the register API usage for banked registers.
-
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Signed-off-by: Luc Michel <luc.michel@amd.com>
-Message-ID: <20251017161809.235740-6-luc.michel@amd.com>
-[PMD: Have canfd_decode_reg_bank() take optional @idx, types fixups]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251021090317.425409-5-marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/net/can/xlnx-versal-canfd.c | 150 ++++++++++++++++++++++++++++++++-
- 1 file changed, 146 insertions(+), 4 deletions(-)
+ include/hw/timer/i8254.h | 4 ++--
+ hw/audio/pcspk.c         | 2 +-
+ hw/timer/i8254_common.c  | 6 ++----
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index 99bbdd7d3fe..04f9a6d57d7 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1410,6 +1410,22 @@ static uint64_t canfd_srr_pre_write(RegisterInfo *reg, uint64_t val64)
-     return s->regs[R_SOFTWARE_RESET_REGISTER];
+diff --git a/include/hw/timer/i8254.h b/include/hw/timer/i8254.h
+index 8402caad307..f7148d92865 100644
+--- a/include/hw/timer/i8254.h
++++ b/include/hw/timer/i8254.h
+@@ -75,7 +75,7 @@ static inline ISADevice *kvm_pit_init(ISABus *bus, int base)
+     return d;
  }
  
-+static void filter_reg_write(XlnxVersalCANFDState *s, hwaddr addr,
-+                             unsigned bank_idx, uint32_t val)
-+{
-+    size_t reg_idx = addr / sizeof(uint32_t);
-+
-+    if (!(s->regs[R_ACCEPTANCE_FILTER_CONTROL_REGISTER] & (1 << bank_idx))) {
-+        s->regs[reg_idx] = val;
-+    } else {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-+
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Acceptance filter register 0x%"
-+                      HWADDR_PRIx " changed while filter %u enabled\n",
-+                      path, addr, bank_idx + 1);
-+    }
-+}
-+
- static uint64_t filter_mask(RegisterInfo *reg, uint64_t val64)
+-void pit_set_gate(ISADevice *dev, int channel, int val);
+-void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info);
++void pit_set_gate(PITCommonState *pit, int channel, int val);
++void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info);
+ 
+ #endif /* HW_I8254_H */
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index 610a5b21626..9cf78ff55fa 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -51,7 +51,7 @@ struct PCSpkState {
+     uint8_t sample_buf[PCSPK_BUF_LEN];
+     QEMUSoundCard card;
+     SWVoiceOut *voice;
+-    void *pit;
++    PITCommonState *pit;
+     unsigned int pit_count;
+     unsigned int samples;
+     unsigned int play_pos;
+diff --git a/hw/timer/i8254_common.c b/hw/timer/i8254_common.c
+index ad091594cde..419d4cd6e57 100644
+--- a/hw/timer/i8254_common.c
++++ b/hw/timer/i8254_common.c
+@@ -32,9 +32,8 @@
+ #include "migration/vmstate.h"
+ 
+ /* val must be 0 or 1 */
+-void pit_set_gate(ISADevice *dev, int channel, int val)
++void pit_set_gate(PITCommonState *pit, int channel, int val)
  {
-     XlnxVersalCANFDState *s = XILINX_CANFD(reg->opaque);
-@@ -1763,9 +1779,135 @@ static void xlnx_versal_canfd_ptimer_cb(void *opaque)
-     /* No action required on the timer rollover. */
+-    PITCommonState *pit = PIT_COMMON(dev);
+     PITChannelState *s = &pit->channels[channel];
+     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
+ 
+@@ -139,9 +138,8 @@ void pit_get_channel_info_common(PITCommonState *s, PITChannelState *sc,
+     info->out = pit_get_out(sc, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
  }
  
-+static bool canfd_decode_reg_bank(XlnxVersalCANFDState *s, hwaddr addr,
-+                                  hwaddr first_reg, hwaddr last_reg,
-+                                  size_t num_banks, unsigned *idx,
-+                                  hwaddr *offset)
-+{
-+    hwaddr base = addr - first_reg;
-+    hwaddr span = last_reg - first_reg + sizeof(uint32_t);
-+    unsigned index = base / span;
-+
-+    if (index >= num_banks) {
-+        return false;
-+    }
-+    if (idx) {
-+        *idx = index;
-+    }
-+
-+    *offset = base % span;
-+    *offset += first_reg;
-+
-+    return true;
-+}
-+
-+/*
-+ * Decode the given addr into a (idx, offset) pair:
-+ *   - idx is the bank index of the register at addr,
-+ *   - offset is the register offset relative to bank 0
-+ *
-+ * @return true is the decoding succeded, false otherwise
-+ */
-+static bool canfd_decode_addr(XlnxVersalCANFDState *s, hwaddr addr,
-+                              unsigned *idx, hwaddr *offset)
-+{
-+    if (addr <= A_RX_FIFO_WATERMARK_REGISTER) {
-+        /* from 0x0 to 0xec. Handled by the register API */
-+        g_assert_not_reached();
-+    } else if (addr < A_TB_ID_REGISTER) {
-+        /* no register in this gap */
-+        return false;
-+    } else if (addr < A_AFMR_REGISTER) {
-+        /* TX registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_TB_ID_REGISTER, A_TB_DW15_REGISTER,
-+                                     s->cfg.tx_fifo, idx, offset);
-+    } else if (addr < A_TXE_FIFO_TB_ID_REGISTER) {
-+        /* Filter registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_AFMR_REGISTER, A_AFIR_REGISTER,
-+                                     32, idx, offset);
-+    } else if (addr < A_RB_ID_REGISTER) {
-+        /* TX event registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_TXE_FIFO_TB_ID_REGISTER,
-+                                     A_TXE_FIFO_TB_DLC_REGISTER,
-+                                     32, idx, offset);
-+    } else if (addr < A_RB_ID_REGISTER_1) {
-+        /* RX0 registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_RB_ID_REGISTER,
-+                                     A_RB_DW15_REGISTER,
-+                                     s->cfg.rx0_fifo, idx, offset);
-+    } else if (addr <= A_RB_DW15_REGISTER_1) {
-+        /* RX1 registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_RB_ID_REGISTER_1,
-+                                     A_RB_DW15_REGISTER_1,
-+                                     s->cfg.rx1_fifo, idx, offset);
-+    }
-+
-+    /* decode error */
-+    return false;
-+}
-+
-+static uint64_t canfd_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    XlnxVersalCANFDState *s = XILINX_CANFD(opaque);
-+    hwaddr reg_offset;
-+    uint64_t ret;
-+
-+    if (!canfd_decode_addr(s, addr, NULL, &reg_offset)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, TYPE_XILINX_CANFD
-+                      ": read to unknown register at address 0x%"
-+                      HWADDR_PRIx "\n", addr);
-+        return 0;
-+    }
-+
-+    switch (reg_offset) {
-+    default:
-+        ret = s->regs[addr / sizeof(uint32_t)];
-+    }
-+
-+    return ret;
-+}
-+
-+static void canfd_write(void *opaque, hwaddr addr, uint64_t value,
-+                        unsigned size)
-+{
-+    XlnxVersalCANFDState *s = XILINX_CANFD(opaque);
-+    unsigned bank_idx;
-+    hwaddr reg_offset;
-+
-+    if (!canfd_decode_addr(s, addr, &bank_idx, &reg_offset)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, TYPE_XILINX_CANFD
-+                      ": write to unknown register at address 0x%"
-+                      HWADDR_PRIx "\n", addr);
-+        return;
-+    }
-+
-+    if (addr >= A_TXE_FIFO_TB_ID_REGISTER) {
-+        /* All registers from TX event regs to the end are read-only */
-+        qemu_log_mask(LOG_GUEST_ERROR, TYPE_XILINX_CANFD
-+                      ": write to read-only register at 0x%" HWADDR_PRIx "\n",
-+                      addr);
-+        return;
-+    }
-+
-+    switch (reg_offset) {
-+    case A_AFMR_REGISTER:
-+    case A_AFIR_REGISTER:
-+        filter_reg_write(s, addr, bank_idx, value);
-+        break;
-+
-+    default:
-+        s->regs[addr / sizeof(uint32_t)] = value;
-+    }
-+}
-+
- static const MemoryRegionOps canfd_ops = {
--    .read = register_read_memory,
--    .write = register_write_memory,
-+    .read = canfd_read,
-+    .write = canfd_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-@@ -2018,8 +2160,8 @@ static void canfd_init(Object *obj)
+-void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info)
++void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info)
  {
-     XlnxVersalCANFDState *s = XILINX_CANFD(obj);
+-    PITCommonState *pit = PIT_COMMON(dev);
+     PITChannelState *s = &pit->channels[channel];
+     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
  
--    memory_region_init(&s->iomem, obj, TYPE_XILINX_CANFD,
--                       XLNX_VERSAL_CANFD_R_MAX * 4);
-+    memory_region_init_io(&s->iomem, obj, &canfd_ops, s, TYPE_XILINX_CANFD,
-+                          XLNX_VERSAL_CANFD_R_MAX * 4);
- }
- 
- static const VMStateDescription vmstate_canfd = {
 -- 
 2.51.0
 
