@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36CFCCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B34FCCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB7yb-0008Tv-QB; Tue, 21 Oct 2025 04:44:17 -0400
+	id 1vB7zQ-0000cV-2u; Tue, 21 Oct 2025 04:45:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7ya-0008TQ-Ne
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:16 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7yk-00008z-3v
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:32 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7yY-0000wA-NP
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:16 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3ecde0be34eso3636500f8f.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 01:44:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7yi-0000xP-8Z
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:44:25 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47100eae3e5so8719905e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 01:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761036252; x=1761641052; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761036262; x=1761641062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fggegq+zKz5OUQPZsxqCN6WOO/FKu9sNtbgG7iUQYj8=;
- b=UfCYlxyVTyQXwCnvkH1HIXVyl8OdP5RlQUSw72QVhlXcFsmh9jSWTeGzWb/TVW24Xa
- QNGp1ZSZx+zg81cxnDXlkAsAeWGEI40v4vaKyW4hEEGBrVSBbcHR0Euk/AH5fcItUQVs
- aeamnG+hnO87BCodCVY4XHDK3EppmtPrJ9nTlUFMccgPHqgMgvpD7kPG7XJul5kpJ+0E
- vpQApL4EqtCXTbzKRHZ+uSg6zMXmW57o1Aon5hybxgng0jMtA2Lmk3tdUId1bq5ejJRC
- NB84KGx737UpHAE+IVQCz6dNJZAty287Hjswm4xjpVfEAObbHzzZxc2j058KS38/Z9qn
- Iwog==
+ bh=qI+hF79G3saS4cJM9gBn0qvW7x/aK3K4EItDfXm9eIU=;
+ b=ETsqUbdKHnwMAqctzEbyxKSbNzR6g2eLtI12NigYzvBcytiCys3HaXU0WpbnUH9evv
+ qv5VseI4ff4VUsPEov94zg/YHFwfc4rogamcUKYa0sX6G9y+ojth6c72RA2sP4R2bxNI
+ fKmMSJ86blPBHvh/rLS0A08ZqTAMu9gWMPU5S7gJ6y2wUsIDgnCQJ/JjJKfg6DhOWAe9
+ DtAl/joz033KNq46tTX9Q788/vdR+v0h54zDSIFk7dpHCNCkQdlcY5DvxkeF0lMDztt8
+ X/p6Tczw4CaEIWPraOOs8ZLKKMtMW7P3n/5mys8VzZXzNEdV9dGOY9sSphCrZRoQ45sy
+ C/1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761036252; x=1761641052;
+ d=1e100.net; s=20230601; t=1761036262; x=1761641062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fggegq+zKz5OUQPZsxqCN6WOO/FKu9sNtbgG7iUQYj8=;
- b=K04pwb+3IzT9uTptI06+GWXB5hQqJx3OEFLM6GCLYK6CLzgk1gizTSFhpMQ8KyZVSi
- tZ9ZRQNJysDoQWfayt/VraUlI2qf9rTP/o+1ch9M6+8HeLRJWTP6hj20O2CzWeKTAit/
- +rUuSqpaJeAhduvTngjlnNR4Ks2HzlVkw9HLJkEUTSc+UYAuUUaiX4Q8DiRTcKNugVtK
- OmpARB0C6lURBFNanq2LBDJJiLY1kv9vlqhnk8lGNXHvD750l8XoxIBHg0cb9EmO1Rox
- jj0OG8Gq6aRI7TgaVuHnzgZhwDdJZLspO3sSlH5YWlz2hCTgSmDs24GdCkz/y1DFhX5z
- TBIw==
-X-Gm-Message-State: AOJu0YxArIn/9V0bTUEhdnj7Zx7gJTlMPew5Oa4uFNP4Cm972+Su9HC+
- ozLmLxZ+d20e0K3EuK3/Y65kSyEg+00retiMXrHztVDI99CrJVrT8Z+yy4/QTZvfvVRWRsuyHIe
- kXnp0dDY=
-X-Gm-Gg: ASbGncsQCIDfdYEY1/zx9ih8mAr6bdF6LbYxAa10/d4JaxoJH913H3hoTORzSDlK90u
- 3G8ea2qKBUwUtumnTx/JVEjOB4nJbYHRyY8CwoM1lz7Z/7GBqQ9QtWvdmf8KM7GfqEQ96HuCAzj
- GL+JV23t+D4phfIWkrz7AemqDdNx4iUF4cTjhbo601bVBr/233iwe4uE06B0/64bkK3yZZV0g7m
- kspOZ+qIkTi1/jd8TdOtAIritf6NU0SBomSm5A/cvsTmCUEZ6KkI8xPHm+l2r1wS0OhPwR1kaYd
- ffZCncjj7Jg96+hnYr6iWgUEl/1VnDOzxrWgZ0eIzK5QGYnLSvg7YVVRLc3UVeItvNqU92maQ58
- xhd//A00G1gBBkuDxihaKxVc5+hlGtL9L9+XUUKVmOIq/0uyDA4YRqRT8GSsNCjXvS2iDDxMXlr
- NHb+Vcl4biqr9h+c4ZpyKQiJ/7ENs7lj5f14igRVhRW7N6ScMupj2PYAM3PyHG
-X-Google-Smtp-Source: AGHT+IEoYici4uejy48h7rF7LlsVTKlA5+khtpcojAL22mlKWdDcTixLD0jI1vVMR+Nu/9WOupMBrA==
-X-Received: by 2002:a05:6000:4205:b0:3ec:db87:ff53 with SMTP id
- ffacd0b85a97d-42704b5a931mr12540847f8f.12.1761036252539; 
- Tue, 21 Oct 2025 01:44:12 -0700 (PDT)
+ bh=qI+hF79G3saS4cJM9gBn0qvW7x/aK3K4EItDfXm9eIU=;
+ b=sNIj7D+bCJHCtQs5Aha4BLmUY0CFcaOvNi0g2PU+udwODIjRVsqG1/sFQIYTPxnkcC
+ uP5o152NVnT2JNHwY817/ZlAwjfpA4OA1WsYPzN4R6nneRv1xgXekuQ8SdFWNtM12jGC
+ AHLTsWyf38ToKyxb4DyBFPQtztURvSlawEJ+ccUZ7XfOP3NObAWYix8qLSyVuLCo01dE
+ JtcIeQmTXcWEBtptCIMFZadnKN+puPltpRYI4ybJkE/K+NU4ulIosdanwpMH/lZiXyR2
+ Y+7PSnMvJPwT9w0bY0T1yKsahHeCoIBM/4B+YMowgZgnVbts4Ovh0rPiaMk40Gw1WiOD
+ VfBg==
+X-Gm-Message-State: AOJu0Yw8vVy+KNMprUT9Wp3aNG7efV4fvziAxEYMowQY2C4TaPCqpWYA
+ CX5cclBG6UTEPREQPjCwwGZzmo/uUjVWjz3ZtjhvEViHRU0kzLeULi3MmQsiUyoeyo1iCg2rFaJ
+ +gZuXmIE=
+X-Gm-Gg: ASbGnctWg3DI2sv2+7VgeV+gyQC8N+CtFN2/H89QZAyWoCeKjrj/hWaabIbo2ozge6U
+ Kz5UcW23jwPMINYArwHOIAbASwpnYtaynOIutTORSdoaK2jHSFSXwhh6VasPNVuv+iiy/ZGRkwc
+ cNtAAteJn+L3wQV0JZla7xrn0qMpktLhOFuUsAOz1vzDpEpEy5oUMzWQYvLa3LfGHdyQR69F5Ve
+ NqdhF6SRPi5K/PutHySGv0j6INQv/eIXFeUiI8v4B8ouijO6cR0BmamjasXmODTiif8uGcaGJUb
+ rhgjdKOUjaoAE/Wglo2WMb9S4TgKup7XFQRwPLDA4Yu7qRzNsSG59UbkMoRu7jTiivKFwCyrFhh
+ 7NFkeMyfpi4gujfOr4ZZds57uemX46zEznql9aK+qRUWf6/UCd22779ehNggguVk/iqkK5o21qc
+ QiKnxcPzxytcB1nYIxJ+60H73iGkyf7KL2ibMqia5DRRk5MKUqUw==
+X-Google-Smtp-Source: AGHT+IE8rS6VZYx/i8JiXQJLTMpGlcor/1LQLKzg9IWBTT3rtLq5Bk5Lslt0pycRlR21ilSWorrGLA==
+X-Received: by 2002:a05:600c:8b62:b0:45d:d97c:235e with SMTP id
+ 5b1f17b1804b1-47117876bcdmr112776075e9.12.1761036262467; 
+ Tue, 21 Oct 2025 01:44:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce3e2sm19285508f8f.47.2025.10.21.01.44.11
+ ffacd0b85a97d-427ea5a0f7dsm18934148f8f.4.2025.10.21.01.44.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 01:44:11 -0700 (PDT)
+ Tue, 21 Oct 2025 01:44:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
@@ -72,17 +72,18 @@ Cc: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 05/11] hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
-Date: Tue, 21 Oct 2025 10:43:39 +0200
-Message-ID: <20251021084346.73671-6-philmd@linaro.org>
+Subject: [PATCH v2 07/11] target/ppc/kvm: Remove kvmppc_get_host_model() as
+ unused
+Date: Tue, 21 Oct 2025 10:43:41 +0200
+Message-ID: <20251021084346.73671-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021084346.73671-1-philmd@linaro.org>
 References: <20251021084346.73671-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,47 +108,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/spapr_events.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ target/ppc/kvm_ppc.h | 6 ------
+ target/ppc/kvm.c     | 5 -----
+ 2 files changed, 11 deletions(-)
 
-diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
-index 548a190ce89..892ddc7f8f7 100644
---- a/hw/ppc/spapr_events.c
-+++ b/hw/ppc/spapr_events.c
-@@ -1041,16 +1041,14 @@ void spapr_clear_pending_hotplug_events(SpaprMachineState *spapr)
+diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+index f24cc4de3c2..742881231e1 100644
+--- a/target/ppc/kvm_ppc.h
++++ b/target/ppc/kvm_ppc.h
+@@ -21,7 +21,6 @@
  
- void spapr_events_init(SpaprMachineState *spapr)
+ uint32_t kvmppc_get_tbfreq(void);
+ uint64_t kvmppc_get_clockfreq(void);
+-bool kvmppc_get_host_model(char **buf);
+ int kvmppc_get_hasidle(CPUPPCState *env);
+ int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
+ int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
+@@ -128,11 +127,6 @@ static inline uint32_t kvmppc_get_tbfreq(void)
+     return 0;
+ }
+ 
+-static inline bool kvmppc_get_host_model(char **buf)
+-{
+-    return false;
+-}
+-
+ static inline uint64_t kvmppc_get_clockfreq(void)
  {
--    int epow_irq = SPAPR_IRQ_EPOW;
+     return 0;
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index cb61e99f9d4..43124bf1c78 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -1864,11 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
+     return cached_tbfreq;
+ }
+ 
+-bool kvmppc_get_host_model(char **value)
+-{
+-    return g_file_get_contents("/proc/device-tree/model", value, NULL, NULL);
+-}
 -
--    spapr_irq_claim(spapr, epow_irq, false, &error_fatal);
-+    spapr_irq_claim(spapr, SPAPR_IRQ_EPOW, false, &error_fatal);
- 
-     QTAILQ_INIT(&spapr->pending_events);
- 
-     spapr->event_sources = spapr_event_sources_new();
- 
-     spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_EPOW,
--                                 epow_irq);
-+                                 SPAPR_IRQ_EPOW);
- 
-     /* NOTE: if machine supports modern/dedicated hotplug event source,
-      * we add it to the device-tree unconditionally. This means we may
-@@ -1061,12 +1059,10 @@ void spapr_events_init(SpaprMachineState *spapr)
-      * checking that it's enabled.
-      */
-     if (spapr->use_hotplug_event_source) {
--        int hp_irq = SPAPR_IRQ_HOTPLUG;
--
--        spapr_irq_claim(spapr, hp_irq, false, &error_fatal);
-+        spapr_irq_claim(spapr, SPAPR_IRQ_HOTPLUG, false, &error_fatal);
- 
-         spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_HOT_PLUG,
--                                     hp_irq);
-+                                     SPAPR_IRQ_HOTPLUG);
-     }
- 
-     spapr->epow_notifier.notify = spapr_powerdown_req;
+ /* Try to find a device tree node for a CPU with clock-frequency property */
+ static int kvmppc_find_cpu_dt(char *buf, int buf_len)
+ {
 -- 
 2.51.0
 
