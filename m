@@ -4,67 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62D0CCD19F
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 03:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C27CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 04:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB3PI-0004uo-JD; Mon, 20 Oct 2025 23:51:32 -0400
+	id 1vB3aG-0006Wm-QV; Tue, 21 Oct 2025 00:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vB3PB-0004uU-Gq; Mon, 20 Oct 2025 23:51:25 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vB3P7-0002VI-So; Mon, 20 Oct 2025 23:51:25 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDHzpouA_do8MoTAQ--.56S2;
- Tue, 21 Oct 2025 11:51:10 +0800 (CST)
-Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDHLesoA_doiR9gAA--.27814S2;
- Tue, 21 Oct 2025 11:51:08 +0800 (CST)
-Message-ID: <9091bc65-75ff-48d3-aeb1-548853763054@phytium.com.cn>
-Date: Tue, 21 Oct 2025 11:51:03 +0800
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vB3a8-0006WN-L3; Tue, 21 Oct 2025 00:02:45 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vB3a6-0003dw-5q; Tue, 21 Oct 2025 00:02:44 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KMSf3q008824;
+ Tue, 21 Oct 2025 04:02:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=vdEes4
+ 9G/6NJj1oN3C3mKUHGugc87JzmB2o4oksKee8=; b=ND2HV/lhMEqrAXyI5cvMJ9
+ D+IYme/fanI3fWTgg3TQHdDoCCbwLhPF6ekfU06XFDg1MgoMbx3dQOhAdmsXQOO8
+ zcobEr6yzcPFzi42LDfgVeD1zpm5lTWoJPihUAeEPlXdxf/UKBObW9YniXVU5y6V
+ rIY9RdT6sz60QNrq00IQvC2gu/T584vAmJHs08zA9XkPFVbyP9doPkUFd5ZS7Cng
+ Xn7agUYTVsIJ1z76A7yPidh4V7q2+NJJuagVEnFKye9SXyRx+AnMgUidWJgUdH2S
+ rhwMBJ+hdJcTmWvVlIgFAtSSSSJ9CT4CxXWSCn3ujj6rehfxTirikMvnQG4dHAqQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c3q82-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 04:02:28 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59L42RH1001685;
+ Tue, 21 Oct 2025 04:02:27 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c3q7y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 04:02:27 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L3fq5J032096;
+ Tue, 21 Oct 2025 04:02:27 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7mrvtv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 04:02:27 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59L42Qjw14418492
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 04:02:26 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63B6258069;
+ Tue, 21 Oct 2025 04:02:26 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 26EF358056;
+ Tue, 21 Oct 2025 04:02:24 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 21 Oct 2025 04:02:23 +0000 (GMT)
+Message-ID: <855a1360-c937-402c-825d-bcf2d9050aee@linux.ibm.com>
+Date: Tue, 21 Oct 2025 09:32:22 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 19/21] hw/arm/smmuv3: Use iommu_index to represent the
- security context
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
- <dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org>
- <5bde6664-c830-44dd-9513-700980a43ade@phytium.com.cn>
- <75d10ffd-eafe-4daa-b763-6e1f3e90c766@linaro.org>
- <b5300243-01c0-4764-b2d1-5ed8ae70e499@phytium.com.cn>
- <9bb20018-3349-4557-b004-ce4861d9abde@linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <9bb20018-3349-4557-b004-ce4861d9abde@linaro.org>
+Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
+ <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
+ <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
+ <a95fed21-de1c-4dc8-a776-a6a2acd4b7d3@linux.ibm.com>
+ <b83b904c-6dcc-4b4f-afc0-499ffafca15c@ilande.co.uk>
+ <818e8c63-9ef1-c2f5-6a85-7ef37a80d44b@eik.bme.hu>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <818e8c63-9ef1-c2f5-6a85-7ef37a80d44b@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDHLesoA_doiR9gAA--.27814S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAJBWj1R5QGogACsl
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvAXoW3CrW8GF4UCr15ArWDCw4kZwb_yoW8WFykKo
- WfGrsxXw4Fqr47uF1UC34DJFyrAw1rGr1DZryUXr47JF4vq3WUu348Ga4UXayUtFy8Grsr
- Ja45J3WrAFyUJF1rn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
- J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
- UUUUUUU==
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ps6oB2DR9yi2H5mMSm_f8N34woht4LIY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX/wqZjysLf7xz
+ aaHrUrr7K1+bd5squ7mcV+0sBrOHJ9R1Q8tWzJejJNIG51SC9xdywji0oD9vncYjWUI/rBnczn+
+ QrQAtfF+TpuX+c1oMbABbIIzV7SCvtSUr3Eo6LV01/gmmc1YvfH1S5XYK+VrUzau8BM9Z72BT9K
+ 2KsOhBc8PdB4A7XxBTWNHpHNksPtnoxdt6np9Ng5yVxuSKLAAEzbUGoW7bBQudBHC+rc3040T+O
+ jGTfp1NMMPbg6cUt7kV0PsaduSriVyqclKG/XhSRH6PKbPFBRdt3jqAL2N0hYNkQydgDmHky3Ee
+ XT3OIw3VFJCYok3cZjG2ho4ai7SX03UzOaPPI1+a/XK7uPIhO5sPbUIUW3rI9Hh+OL0YiV6wwZ5
+ svodh16i8Qh+fmTSjyRaVgJYxhp/0w==
+X-Proofpoint-GUID: ck4Qwud0HYqpR24h8_zJ5qQ5tbzzN7Va
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f705d4 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=69wJf7TsAAAA:8 a=MBbOA-HLD692_vL6JOgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=RAnounYMGgIA:10 a=kDwrXxujhdMA:10
+ a=yII1x0vjwq8A:10 a=Fg1AiH1G6rFz08G2ETeA:22 a=oH34dK2VZjykjzsv8OSz:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=jd6J4Gguk5HxikPWLKER:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,428 +137,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
 
-On 2025/10/21 06:55, Pierrick Bouvier wrote:
-> On 2025-10-20 01:44, Tao Tang wrote:
->> Hi Pierrick,
+
+On 10/20/25 04:56, BALATON Zoltan wrote:
+> On Sun, 19 Oct 2025, Mark Cave-Ayland wrote:
+>> On 18/10/2025 03:41, Harsh Prateek Bora wrote:
+>>> Hi Mark,
+>>>
+>>> Thanks much for pitching in to help with reviewing this series.
 >>
->> On 2025/10/16 15:04, Pierrick Bouvier wrote:
->>> On 10/15/25 11:37 PM, Tao Tang wrote:
->>>> Hi Pierrick:
->>>>
->>>> On 2025/10/15 08:02, Pierrick Bouvier wrote:
->>>>> Hi Tao,
->>>>>
->>>>> On 10/12/25 8:15 AM, Tao Tang wrote:
->>>>>> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to 
->>>>>> select
->>>>>> the programming interface. To support future extensions like RME,
->>>>>> which
->>>>>> defines four security states (Non-secure, Secure, Realm, and Root),
->>>>>> the
->>>>>> QEMU model must cleanly separate these contexts for all operations.
+>> Hi Harsh,
+>>
+>> No worries - I've looked at raven before when working on adding 40p 
+>> support for OpenBIOS, so I do have some familiarity.
+
+Nice, thanks.
+
+>>
+>>> On 9/19/25 01:51, BALATON Zoltan wrote:
+>>>> On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
+>>>>> On 18/09/2025 19:50, BALATON Zoltan wrote:
+>>>>>> The raven PCI device does not need a state struct as it has no 
+>>>>>> data to
+>>>>>> store there any more, so we can remove that to simplify code.
 >>>>>>
->>>>>> This commit leverages the generic iommu_index to represent this
->>>>>> security context. The core IOMMU layer now uses the SMMU's
->>>>>> .attrs_to_index
->>>>>> callback to map a transaction's ARMSecuritySpace attribute to the
->>>>>> corresponding iommu_index.
->>>>>>
->>>>>> This index is then passed down to smmuv3_translate and used 
->>>>>> throughout
->>>>>> the model to select the correct register bank and processing logic.
->>>>>> This
->>>>>> makes the iommu_index the clear QEMU equivalent of the architectural
->>>>>> SEC_SID, cleanly separating the contexts for all subsequent lookups.
->>>>>>
->>>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 >>>>>> ---
->>>>>>     hw/arm/smmuv3.c | 36 +++++++++++++++++++++++++++++++++++-
->>>>>>     1 file changed, 35 insertions(+), 1 deletion(-)
+>>>>>>   hw/pci-host/raven.c | 30 +-----------------------------
+>>>>>>   1 file changed, 1 insertion(+), 29 deletions(-)
 >>>>>>
->>>>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->>>>>> index c9c742c80b..b44859540f 100644
->>>>>> --- a/hw/arm/smmuv3.c
->>>>>> +++ b/hw/arm/smmuv3.c
->>>>>> @@ -1080,6 +1080,38 @@ static void smmuv3_fixup_event(SMMUEventInfo
->>>>>> *event, hwaddr iova)
->>>>>>         }
->>>>>>     }
->>>>>>     +static SMMUSecSID smmuv3_attrs_to_sec_sid(MemTxAttrs attrs)
->>>>>> +{
->>>>>> +    switch (attrs.space) {
->>>>>> +    case ARMSS_Secure:
->>>>>> +        return SMMU_SEC_SID_S;
->>>>>> +    case ARMSS_NonSecure:
->>>>>> +    default:
->>>>>> +        return SMMU_SEC_SID_NS;
->>>>>> +    }
->>>>>> +}
->>>>>> +
->>>>>> +/*
->>>>>> + * ARM IOMMU index mapping (implements SEC_SID from ARM SMMU):
->>>>>> + * iommu_idx = 0: Non-secure transactions
->>>>>> + * iommu_idx = 1: Secure transactions
->>>>>> + *
->>>>>> + * The iommu_idx parameter effectively implements the SEC_SID
->>>>>> + * (Security Stream ID) attribute from the ARM SMMU architecture
->>>>>> specification,
->>>>>> + * which allows the SMMU to differentiate between different 
->>>>>> security
->>>>>> state
->>>>>> + * transactions at the hardware level.
->>>>>> + */
->>>>>> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu,
->>>>>> MemTxAttrs attrs)
->>>>>> +{
->>>>>> +    return (int)smmuv3_attrs_to_sec_sid(attrs);
->>>>>> +}
->>>>>> +
->>>>>> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
->>>>>> +{
->>>>>> +    /* Support 2 IOMMU indexes for now: NS/S */
->>>>>> +    return SMMU_SEC_SID_NUM;
->>>>>> +}
->>>>>> +
->>>>>>     /* Entry point to SMMU, does everything. */
->>>>>>     static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, 
->>>>>> hwaddr
->>>>>> addr,
->>>>>> IOMMUAccessFlags flag, int
->>>>>> iommu_idx)
->>>>>> @@ -1087,7 +1119,7 @@ static IOMMUTLBEntry
->>>>>> smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->>>>>>         SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->>>>>>         SMMUv3State *s = sdev->smmu;
->>>>>>         uint32_t sid = smmu_get_sid(sdev);
->>>>>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->>>>>> +    SMMUSecSID sec_sid = iommu_idx;
->>>>>>         SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->>>>>>         SMMUEventInfo event = {.type = SMMU_EVT_NONE,
->>>>>>                                .sid = sid,
->>>>>> @@ -2540,6 +2572,8 @@ static void
->>>>>> smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
->>>>>>           imrc->translate = smmuv3_translate;
->>>>>>         imrc->notify_flag_changed = smmuv3_notify_flag_changed;
->>>>>> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
->>>>>> +    imrc->num_indexes = smmuv3_num_indexes;
->>>>>>     }
->>>>>>       static const TypeInfo smmuv3_type_info = {
->>>>>
->>>>> I noticed that this commit breaks boot of a simple Linux kernel. It
->>>>> was already the case with v2, and it seems there is a deeper issue.
->>>>>
->>>>> Virtio drive initialization hangs up with:
->>>>> [    9.421906] virtio_blk virtio2: [vda] 20971520 512-byte logical
->>>>> blocks (10.7 GB/10.0 GiB)
->>>>> smmuv3_translate_disable smmuv3-iommu-memory-region-24-3 sid=0x18
->>>>> bypass (smmu disabled) iova:0xfffff040 is_write=1
->>>>>
->>>>> You can reproduce that with any kernel/rootfs, but if you want a
->>>>> simple recipe (you need podman and qemu-user-static):
->>>>> $ git clone https://github.com/pbo-linaro/qemu-linux-stack
->>>>> $ cd qemu-linux-stack
->>>>> $ ./build_kernel.sh
->>>>> $ ./build_rootfs.sh
->>>>> $ /path/to/qemu-system-aarch64 \
->>>>> -nographic -M virt,iommu=smmuv3 -cpu max -kernel out/Image.gz \
->>>>> -append "root=/dev/vda rw" out/host.ext4 -trace 'smmuv3*'
->>>>>
->>>>> Looking more closely,
->>>>> we reach SMMU_TRANS_DISABLE, because iommu_idx associated is 1.
->>>>> This values comes from smmuv3_attrs_to_sec_sid, by reading
->>>>> attrs.space, which is ArmSS_Secure.
->>>>>
->>>>> The problem is that it's impossible to have anything Secure given 
->>>>> that
->>>>> all the code above runs in NonSecure world.
->>>>> After investigation, the original value read from attrs.space has not
->>>>> been set anywhere, and is just the default zero-initialized value
->>>>> coming from pci_msi_trigger. It happens that it defaults to 
->>>>> SEC_SID_S,
->>>>> which probably matches your use case with hafnium, but it's an happy
->>>>> accident.
->>>>>
->>>>> Looking at the SMMU spec, I understand that SEC_SID is configured for
->>>>> each stream, and can change dynamically.
->>>>> On the opposite, a StreamID is fixed and derived from PCI bus and 
->>>>> slot
->>>>> for a given device.
->>>>>
->>>>> Thus, I think we are missing some logic here.
->>>>> I'm still trying to understand where the SEC_SID should come from
->>>>> initially.
->>>>> "The association between a device and the Security state of the
->>>>> programming interface is a system-defined property."
->>>>> Does it mean we should be able to set a QEMU property for any device?
->>>>>
->>>>> Does anyone familiar with this has some idea?
->>>>>
->>>>> As well, we should check the SEC_SID found based on
->>>>> SMMU_S_IDR1.SECURE_IMPL.
->>>>> 3.10.1 StreamID Security state (SEC_SID)
->>>>> If SMMU_S_IDR1.SECURE_IMPL == 0, then incoming transactions have a
->>>>> StreamID, and either:
->>>>> • A SEC_SID identifier with a value of 0.
->>>>> • No SEC_SID identifer, and SEC_SID is implicitly treated as 0.
->>>>> If SMMU_S_IDR1.SECURE_IMPL == 1, incoming transactions have a
->>>>> StreamID, and a SEC_SID identifier.
->>>>>
->>>>> Regards,
->>>>> Pierrick
->>>>
->>>> Thank you very much for your detailed review and in-depth analysis, 
->>>> and
->>>> for pointing out this critical issue that breaks the Linux boot.
->>>>
->>>>
->>>> To be transparent, my initial approach was indeed tailored to my
->>>> specific test case, where I was effectively hardcoding the device's
->>>> StreamID to represent it's a so-called Secure device in my self 
->>>> testing.
->>>> This clearly isn't a general solution.
->>>>
+>>>>>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>>>>>> index f8c0be5d21..172f01694c 100644
+>>>>>> --- a/hw/pci-host/raven.c
+>>>>>> +++ b/hw/pci-host/raven.c
+>>>>>> @@ -31,7 +31,6 @@
+>>>>>>   #include "hw/pci/pci_bus.h"
+>>>>>>   #include "hw/pci/pci_host.h"
+>>>>>>   #include "hw/qdev-properties.h"
+>>>>>> -#include "migration/vmstate.h"
+>>>>>>   #include "hw/intc/i8259.h"
+>>>>>>   #include "hw/irq.h"
+>>>>>>   #include "hw/or-irq.h"
+>>>>>> @@ -40,12 +39,6 @@
+>>>>>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>>>>>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+>>>>>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
+>>>>>> -
+>>>>>> -struct RavenPCIState {
+>>>>>> -    PCIDevice dev;
+>>>>>> -};
+>>>>>> -
+>>>>>>   typedef struct PRePPCIState PREPPCIState;
+>>>>>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>>>>>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+>>>>>> @@ -65,7 +58,6 @@ struct PRePPCIState {
+>>>>>>       MemoryRegion bm_ram_alias;
+>>>>>>       MemoryRegion bm_pci_memory_alias;
+>>>>>>       AddressSpace bm_as;
+>>>>>> -    RavenPCIState pci_dev;
+>>>>>>         int contiguous_map;
+>>>>>>   };
+>>>>>> @@ -268,8 +260,7 @@ static void 
+>>>>>> raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>>>>>>                             "pci-intack", 1);
+>>>>>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
+>>>>>> &s->pci_intack);
+>>>>>>   -    /* TODO Remove once realize propagates to child devices. */
+>>>>>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
+>>>>>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
+>>>>>> TYPE_RAVEN_PCI_DEVICE);
+>>>>>>   }
 >>>
->>> It's definitely not a bad approach, and it's a good way to exercise
->>> the secure path. It would have been caught by some of QEMU functional
->>> tests anyway, so it's not a big deal.
+>>> <snip>
 >>>
->>> A solution would be to define the secure attribute as a property of
->>> the PCI device, and query that to identify sec_sid accordingly.
->>> As you'll see in 3.10.1 StreamID Security state (SEC_SID), "Whether a
->>> stream is under Secure control or not is a different property to the
->>> target PA space of a transaction.", so we definitely should *not* do
->>> any funky stuff depending on which address is accessed.
->>
->>
->> Thank you for the encouraging and very constructive feedback.
->>
->>
->> Your proposed solution—to define the security attribute as a property on
->> the PCIDevice—is the perfect way forward to resolve Secure device issue.
->> Perhaps we can implement this functionality in V4 as shown in the
->> following code snippet?
->>
->> 1)  define sec_sid in include/hw/pci/pci_device.h:
->>
->> struct PCIDevice {
->>       DeviceState qdev;
->> ......
->>       /* Add SEC_SID property for SMMU security context */
->>       uint8_t sec_sid;  /* 0 = Non-secure, 1 = Secure*/
->> ......
->>
->> }
->>
->>
->> 2) then add sec-sid field in the Property of PCI in hw/pci/pci.c:
->>
->> static const Property pci_props[] = {
->> ......
->>       /* SEC_SID property: 0=NS, 1=S */
->>       DEFINE_PROP_UINT8("sec-sid", PCIDevice, sec_sid, 0),
->>
->> ......
->>
->> };
->>
->>
->> 3) get sec-sid in smmu_find_add_as(hw/arm/smmu-common.c):
->>
->> static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int 
->> devfn)
->> {
->>       SMMUState *s = opaque;
->>       SMMUPciBus *sbus = 
->> g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
->>       SMMUDevice *sdev;
->>       static unsigned int index;
->>       ......
->>       sdev = sbus->pbdev[devfn];
->>       if (!sdev) {
->>
->>           PCIDevice *pcidev;
->>           pcidev = pci_find_device(bus, pci_bus_num(bus), devfn);
->>           if (pcidev) {
->>               /* Get sec_sid which is originally from QEMU options.
->>                * For example:
->>                * qemu-system-aarch64 \
->>                * -drive if=none,file=/nvme.img,format=raw,id=nvme0 \
->>                * -device nvme,drive=nvme0,serial=deadbeef,sec-sid=1
->>                *
->>                * This NVMe device will have sec_sid = 1.
->>               */
->>               sdev->sec_sid = pcidev->sec_sid;
->>           } else {
->>               /* Default to Non-secure if device not found */
->>               sdev->sec_sid = 0;
->>           }
->>
->> ......
->>
->> }
->>
->> The SEC_SID of device will be passed from QEMU options to PCIDevice and
->> then SMMUDevice. This would allow the SMMU model to perform the
->> necessary checks against both the security context of the DMA access and
->> the SMMU_S_IDR1.SECURE_IMPL capability bit.
->>
->>
->> Is this a reasonable implementation approach? I would greatly appreciate
->> any feedback.
->>
->
-> Yes, this looks reasonable.
-> However, for Realm support, the sec_sid is not static, and can be 
-> changed dynamically by the device itself, after interaction with RMM 
-> firmware, following TDISP protocol (T bit is set in PCI transactions, 
-> which we don't model in QEMU).
->
-> See 3.9.4 SMMU interactions with the PCIe fields T, TE and XT.
->
-> This T bit state is currently stored out of QEMU, as we use the 
-> external program spdm-emu for all that. So, we implemented a very 
-> hacky solution detecting when this device it set in "Realm" mode based 
-> on config prefetch with this new sec_sid:
-> https://github.com/pbo-linaro/qemu/commit/c4db6f72c26ac52739814621ce018e65869f934b 
->
-> It uses a dictionnary simply because of lifetime issue, as the config 
-> seems to be emitted before the first access of the device in our case. 
-> I didn't dig further. It all cases, it's ugly, not a reference, and 
-> just a work in progress to show you how we need to update it.
-
-
-Thank you for the detailed feedback and for approving the new direction. 
-I'm glad we are aligned on the path forward.
-
-
-It's interesting that you mention the dynamic update mechanism for 
-Realm. In my early testing, before submitting the RFC patches, I 
-actually experimented with a similar dynamic approach. I defined a 
-custom QMP interface to directly modify a bitmap structure inside the 
-SMMU model, which was used to dynamically mark or unmark a StreamID as 
-secure. The lookup logic was something like this:
-
-bool smmuv3_sid_is_secure(uint32_t sid)
-{
-     uint32_t chunk_idx;
-     uint32_t bit_idx;
-     SidBitmapChunk *chunk;
-
-     chunk_idx = SID_INDEX(sid);
-     bit_idx = SID_BIT(sid);
-
-     /* Check if we have a bitmap for this chunk */
-     chunk = sid_manager.chunks[chunk_idx];
-     if (!chunk) {
-         return false;
-     }
-     /* Fast bitmap lookup */
-     return test_bit(bit_idx, chunk->bitmap);
-}
-
-
-Ultimately, I didn't include this in the patch series because managing 
-the security context completely separately from the device felt a bit 
-strange and wasn't a clean architectural fit.
-
->
-> All that to said that even though we can provide this static property 
-> for devices that are always secure, the design will have to support 
-> dynamic changes as well. Not a big deal, and you can keep this out of 
-> scope for now, we'll change that later when adding Realms support.
-> As long as we have something that does not break non secure use case 
-> while allowing secure devices, I think we're good!
-
-
-I completely agree. I will proceed with an initial version based on the 
-static property approach we discussed, ensuring that Non-secure 
-regression tests pass. The behavior will be as follows as you suggested 
-in previous thread:
-
-- For a Non-secure device (sec_sid=0), all accesses will be treated as 
-Non-secure.
-
-- For a Secure device (sec_sid=1), if MemTxAttrs.space is Secure and 
-SMMU_S_IDR1.SECURE_IMPL == 1, the access will be Secure.
-
-- For a Secure device (sec_sid=1), if MemTxAttrs.space is Non-secure, 
-the access will remain Non-secure.
-
-
->>
->>>
->>> By curiosity, which kind of secure device are you using? Is it one of
->>> the device available upstream, or a specific one you have in your fork?
->>
->>
->> I just use IGB NIC for test with Hafnium + OP-TEE software stack.
->>
->>
->>>
+>>>>>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass 
+>>>>>> *klass, const void *data)
+>>>>>>   static const TypeInfo raven_info = {
+>>>>>>       .name = TYPE_RAVEN_PCI_DEVICE,
+>>>>>>       .parent = TYPE_PCI_DEVICE,
+>>>>>> -    .instance_size = sizeof(RavenPCIState),
+>>>>>>       .class_init = raven_class_init,
+>>>>>>       .interfaces = (const InterfaceInfo[]) {
+>>>>>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>>>>>
+>>>>> I agree with removing RavenPCIState, but pci_create_simple() isn't 
+>>>>> the right solution here because it both init()s and realize()s the 
+>>>>> inner object. The right way to do this is for the parent to init() 
+>>>>> its inner object(s) within its init() function, and similarly for 
+>>>>> it to realize() its inner object(s) within its realize() function.
+>>>>>
+>>>>> FWIW it looks as if the same mistake is present in several other 
+>>>>> hw/pci-host devices.
 >>>>
->>>> You've raised a crucial architectural point that I hadn't fully
->>>> considered: how a standard "Normal World" PCIe device should be 
->>>> properly
->>>> associated with the "Secure World". To be honest, I didn't have a 
->>>> clear
->>>> answer for this, so your feedback is a perfect opportunity for me 
->>>> to dig
->>>> in and understand this area correctly.
->>>>
->>> It took time for us to reach that question also.
->>> Our current understanding is that SEC_SID == Realm is identified by
->>> bits on pci side (part of TDISP protocol), and that secure devices are
->>> indeed hardcoded somewhere.
+>>>> So maybe that's not a mistake then. There's no need to init and 
+>>>> realize it separately as this is an internal object which is enough 
+>>>> to be created in realize method and init and realize there at one go 
+>>>> for which pci_create_simple is appropriate. I think this inner 
+>>>> object would only need to be init separately if it exposed something 
+>>>> (like a property) that could be inspected or set before realize but 
+>>>> that's not the case here so it does not have to be created in init 
+>>>> only in realize. (A lot of simple devices don't even have init 
+>>>> method only realize so init is only needed for things that have to 
+>>>> be set before realize.)
 >>>
->>> We asked this question to some Arm folks working on this area, to
->>> confirm Secure devices are supposed to be defined this way.
+>>> Do we have a consensus here ?
+>>>
+>>> regards,
+>>> Harsh
+>> Given there is still some ongoing discussion regarding object 
+>> modelling, I think this will require a separate tidy-up so let's go 
+>> with the pci_create_simple() approach for now.
+
+Sure, thanks for considering.
+
 >>
->>
->> Thank you also for sharing the invaluable context from your team's
->> internal discussions and your outreach to the Arm experts. This
->> clarification directly inspired my new proposal as described above.
->>
->
-> We didn't receive an answer, but after looking more at how secure 
-> world is modelled (with separate address space), it makes sense to 
-> have this description built in in the firmware or the platform itself.
->
-> I'm not familiar with Hafnium, but I don't expect any device to 
-> transition from Non secure to Secure world similar to Realm approach.
+>> The changes to the interrupt routing and readability of some of the 
+>> changes from a developer's perspective are still of concern to me.
+> 
+> I think simpler is more readable so not having an or-irq object where 
+> not needed as the PCI code can handle this makes it more readable (also 
+> the same as ppc440_pcix which was previously approved by Peter[1] and a 
+> patch to add or-irq there was dropped as unneeded[2] so doing the same 
+> thing the same way here is also more readable and more consistent). Thus 
+> I think the interrupt routing changes should be OK and having an or-irq 
+> is an unneeded complication.
+> 
+> What other readablility concerns do you have? Is it about not passing 
+> the whole device state struct to callbacks but only what they need from 
+> it? I've answered that already and I think that unnecessary casts would 
+> not add any readablility. I'd like to hear others' opinion too but it 
+> seems not many care so it's only us and we both seem to have strong view 
+> on these things so it's hard to come to an agreement.
 
+I think since the changes are contained to prep/raven (which although I 
+am not so familiar with), I hope we just need to ensure changes are safe 
+enough and can be provided a R-b to be considered for merge and any 
+improvements can be done as a follow-up later as needed. Thanks again.
 
-This has been a long-standing question of mine as well. Your intuition 
-makes perfect sense to me: if a device can switch between Secure and 
-Non-secure states at will, it seems physically insecure. A device could 
-be compromised while in the Non-secure state and then carry that 
-compromised state into the Secure World, which would undermine the very 
-protections the SMMU aims to provide. For the Realm state, I am not very 
-familiar with Realm either, but I will definitely study the PCIe and 
-SMMU specifications to better understand the mechanisms that ensure 
-security during these dynamic transitions between Realm and Non-Realm state.
+regards,
+Harsh
 
-
->
->>
->> I will proceed with this plan for the v4 patch set. Thanks again for
->> your mentorship and for helping to clarify the correct path forward.
->>
->
-> Thanks for your series, it's definitely a great base to work on Realm 
-> support, and we'll be glad to publish this later, after secure support 
-> is merged. It will be your turn to review and give feedback if you 
-> want :)
-
-
-Thank you for the kind offer! I would be absolutely thrilled to 
-contribute in any way I can to the future Realm support work and I look 
-forward to it.
-
-
-Yours,
-
-Tao
-
+> 
+> Regards,
+> BALATON Zoltan
+> 
+> [1] commit 2a9cf49598c65 and 
+> https://lists.nongnu.org/archive/html/qemu-ppc/2021-01/msg00031.html
+> 
+> [2] https://lists.nongnu.org/archive/html/qemu-ppc/2020-12/msg00422.html 
+> https://lists.nongnu.org/archive/html/qemu-ppc/2020-12/msg00423.html
 
