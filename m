@@ -4,52 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28947CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 07:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2130CCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 07:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB6QG-0002A7-VR; Tue, 21 Oct 2025 03:04:45 -0400
+	id 1vB6RU-0002WC-E0; Tue, 21 Oct 2025 03:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vB6Q3-000292-GO
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:04:34 -0400
-Received: from 5.mo552.mail-out.ovh.net ([188.165.45.220])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vB6RS-0002Vo-8o
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:05:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vB6Py-0004Uy-O9
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:04:30 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.200])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4crNZK6bdNz6Mvt;
- Tue, 21 Oct 2025 07:04:09 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 21 Oct
- 2025 09:04:00 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S002fcacd121-de81-4a3e-b56e-d9688529a327,
- 2E289DBED20BDC21D191179C8FCAB8BCAFA041EF) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <779258ba-20f2-49ea-abc5-790db8162742@kaod.org>
-Date: Tue, 21 Oct 2025 09:03:59 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vB6RQ-0004t0-7o
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:05:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761030353;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=q7vYavpC/cOHPtpc0FQPfjALNpsLqem+CR2QQmBQQbA=;
+ b=fjzUbU/Ebl0v/q44v1XrgUmO2KnjtJGM8eOf+OrHMqZHTq00JmYlo+KjaRV7gZDD+hp63V
+ LRvUUcqykOSFKxPUvI9rTJUTWfoZlI2+m5RKayK/3ynlNDnURrAi4+/oyxts5gItNwHxUq
+ m9n4cqCJZZODkj7pbi2ctB+5XZ1OFTs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-228-8bQAi19NN1-KTDEmQJ0nfg-1; Tue, 21 Oct 2025 03:05:51 -0400
+X-MC-Unique: 8bQAi19NN1-KTDEmQJ0nfg-1
+X-Mimecast-MFC-AGG-ID: 8bQAi19NN1-KTDEmQJ0nfg_1761030351
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47106720618so32482625e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 00:05:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761030350; x=1761635150;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q7vYavpC/cOHPtpc0FQPfjALNpsLqem+CR2QQmBQQbA=;
+ b=thitMQ3I0ExHo8DbbENJLpvPKrHSzZZkqHd9GKkiZrzxwYFMYm20NIjnoAc1cqAiHo
+ VJm6XRBm5+MnDweFYL/dCCVcX5kUyMd01FuSKL33cHbq2vsn9IFYG0mZSnv4ghT+6LWJ
+ n4BIUSbR4XMu7FiCzr5kh2+ngi/VImkUZjbmVnCMmDl1DRD9iloZe8T1u8PrpD74rjqb
+ 9JXleWXjqnTtHTg0Qql1JP7CW02lGUXGIAiEWchi/jgrlNCHE1khusfC2qS1RK0eYsch
+ Hgvr31QLarTPY9gRgVoaKgB07Oi2iF21rF/9HCoh4gZPE1ctliSS6hSgmmxKK6QR9COm
+ Cjqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAnW0o+awVf2g3FCgKCbTrCPFA6LELzXQLU9WFi2buPBiu/OxfznRVSi7qYs7LdasoLkdBhr3UEk2+@nongnu.org
+X-Gm-Message-State: AOJu0Yz8Ua6OyoGjAGQc9gWiDx5WhQsmpxsp7QXsnva2R0sg2PozvhQH
+ EEzXgDmZ/H3y02ZiYvqpA+Fiz+3uRtC0QkcsNO4nx6gR/CGfdpLs75VUwFccdWaxdjpMIo3PrPK
+ rcBmSjm0kCv9ntm/L1QpjLqOBWPz/E/9+9EOSd7/+YDApwff1CYk75Qce
+X-Gm-Gg: ASbGncu+S6Y7ohW0HpjDbvFtHSCZhd/fheP7BFxSi0jHNJBpACUbiU/EbBTC7QxOCyL
+ LJqjBsF8jUBW4jh4Jfqg1VZ+FMKeyfCj1BCbcr+DN3Jy91OXVCgtQwZymbO4SfRkOozGUNG7my0
+ EK6NEoMCDPHza/5ERyBcSELmQdgNMzuoKIucGK3wvyZXFwG99/yv9TEiCdP40/s956ipTmFVRT0
+ WUx9Q6Ec0hnloQUZaIDFpV/IzF57aF8TpyZX7zvlhbaqszor5MOPDE75jduesxY4NjpcVSNg8qJ
+ 4EJu2j7TsJeJIo8zyK1iV3WPz+H0WT+30GYFB0S/CmoCviSeBMETb2sLRDbriSBIPSFAZtN+4WW
+ YJZ+bKaOAN32Tp+cGFymb6ZzJd/zPMZHALFgEgw==
+X-Received: by 2002:a05:600c:8105:b0:45b:6b57:5308 with SMTP id
+ 5b1f17b1804b1-47117872704mr113481785e9.7.1761030350605; 
+ Tue, 21 Oct 2025 00:05:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9ZCuMApAV+RPALM1h6/g9a0Q+zUr3p0RmnVwbMKMyWA6TQUSPisj59AK+J/FWIlJXFYiDOQ==
+X-Received: by 2002:a05:600c:8105:b0:45b:6b57:5308 with SMTP id
+ 5b1f17b1804b1-47117872704mr113481585e9.7.1761030350179; 
+ Tue, 21 Oct 2025 00:05:50 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427f00ce3e2sm18914582f8f.47.2025.10.21.00.05.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 00:05:49 -0700 (PDT)
+Message-ID: <1892476d-6176-4a49-92c9-bae0d0c3a0ba@redhat.com>
+Date: Tue, 21 Oct 2025 09:05:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: aspeed: Split the machine definition into individual source files
-To: Jamin Lin <jamin_lin@aspeedtech.com>, "'qemu-arm@nongnu.org'"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: 'Andrew Jeffery' <andrew@codeconstruct.com.au>, Joel Stanley
- <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Patrick
- Williams <patrick@stwcx.xyz>
-References: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
- <KL1PR0601MB41966988C6264D25E6782045FCE9A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
- <965c2eb3-639e-4792-bd8d-f47682099601@kaod.org>
- <KL1PR0601MB419628CE287BDF2715845C4BFCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
- <d51ad87c-8076-4f86-b9ed-388313ae9e2d@kaod.org>
- <KL1PR0601MB4196F40949678039B771F610FCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Subject: Re: [PATCH] hw/vfio/helpers: Check base architecture at runtime
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Avihai Horon <avihaih@nvidia.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson
+ <anjo@rev.ng>, Zhao Liu <zhao1.liu@intel.com>,
+ Luc Michel <luc.michel@amd.com>
+References: <20251020222315.68963-1-philmd@linaro.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
+Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
  yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
@@ -59,67 +100,52 @@ Autocrypt: addr=clg@kaod.org; keydata=
  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
- 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
-In-Reply-To: <KL1PR0601MB4196F40949678039B771F610FCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20251020222315.68963-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 0939ad59-a114-4b39-93b6-8751c2403637
-X-Ovh-Tracer-Id: 3485786113336445743
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEVZXy/23PwzPgprudguE4OHQqOb2Vr0bJDUKORiww5SWdthmIrBPGDNnOknHx0r9fL+BFP6tkgUkRIzi4qLC3w6oKZaKlm5FzhP7UtJnNgWGd+/7oLB40d/k61vkyn3cAh6w1K5KDLq+p5g7Baaly2/nfCYhNlXOb2kqUFqHkqmtlw1B3TUoEe+dsOws3RnBdblXkCmS8vwPY88q1DG/6AaN4rUp3vW1hWWdr/qLzzSmI/E/2rroLSRgrdKRJFgz34oSpnwAcFBmfSqCRv90GmotdPT1vku8qrBNLqyrjcAH48h8Z+LlpBOzpz/v1eqCMmRVL8Xsw4kuR9lOXVBR65mb9AuMUAmMVgufHIWjeXNMVsZcYRDUiel1onAqM3A9qzXojNSml0ILZ2sOMK6M+F5XR8FhYtV1DNUSBGFHmaNecU1DM39cNjhdAkar3RfEtaYVGyurOMQ3+j8wxbDwrSEkKs4bpItKp/ZD9fi36jREhxBVt7Y57gp98qSDjEfDUb6GAF2hGqZ7fva/d/H0NRa/ywY73m+KcUP1xrIh6V1N3snpo+rUjEyYiB/wkIUC9lR8Lp3xB2tk67V2tgv5AMEZ9RWv/WHHW5aDk5ra2cmtZpZYQEJGotKwXzDMhm97x9BR1cUkgCURJYE+ICkc6pU651sQxPV4rIeYqx31npIA
-DKIM-Signature: a=rsa-sha256; bh=pkbMDWG33KfuOpbg5XxifDfNmyveQuO8qBWbzV7wiSI=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1761030259; v=1;
- b=XG3MCBszxxNP2NdzPA31eaUqKmSGd2VxzDGRicg55bsf/Bc1imoTd0+hJaibrIIV89OUWcAA
- JPmXxXrnnRQqGO+CkxKUpjHZr86uMBINjI+HpUnepF9cGRTl0SkmlOcNiL6/YMvMTDHAceoBO1+
- gVmwRJiqRJqLppO0h+IFKJty/pLs/nBWCLghu34pZrdbwo/0L+QMCuTJ4RQXXlhda1f02IfsFkf
- rBzDPC92Oeengju9tY72trIwnYFfjYeNaKWIDrCx8X4cBgfC5Ug02LwGGF4imCQOebrdMdZ4iJh
- BTwXCipDVC5A4QRcHOrhyPj85CQakzGvT4KyK56hsFtgg==
-Received-SPF: pass client-ip=188.165.45.220; envelope-from=clg@kaod.org;
- helo=5.mo552.mail-out.ovh.net
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,66 +161,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/21/25 08:41, Jamin Lin wrote:
-> Hi Cédric,
+On 10/21/25 00:23, Philippe Mathieu-Daudé wrote:
+> Replace the compile time check of the TARGET_ARM definition
+> by a runtime call to target_base_arm().
 > 
->> Subject: Re: aspeed: Split the machine definition into individual source files
->>
->> Hi,
->>
->>
->>> Patch series 1
->>> hw/arm/aspeed_ast1030_evb.c (ast1030-evb) ---> or
->>> hw/arm/aspeed_ast10x0_evb.c, then we can place (ast1030-evb and
->>> ast1060-evb) hw/arm/aspeed_ast27x0_evb.c (ast2700a0-evb,
->>> ast2700a1-evb)
->>>
->>> Patch series 2
->>> hw/arm/aspeed_ast2400_palmetto.c (palmetto-bmc)
->>> hw/arm/aspeed_ast2400_quanta-q71l.c (quanta-q71l-bmc)
->>> hw/arm/aspeed_ast2400_supermicrox11.c (supermicrox11-bmc)
->>>
->>> Patch series 3
->>> hw/arm/aspeed_ast2500_evb.c (ast2500-evb)
->>> hw/arm/aspeed_ast2500_romulus.c (romulus-bmc)
->>> hw/arm/aspeed_ast2500_sonorapass.c (sonorapass-bmc)
->>> hw/arm/aspeed_ast2500_witherspoon.c (witherspoon-bmc)
->>> hw/arm/aspeed_ast2500_yosemitev2.c (yosemitev2-bmc)
->>> hw/arm/aspeed_ast2500_supermicro-x11spi.c (supermicro-x11spi-bmc)
->>> hw/arm/aspeed_ast2500_fp5280g2.c (fp5280g2-bmc)
->>> hw/arm/aspeed_ast2500_g220a.c (g220a-bmc)
->>> hw/arm/aspeed_ast2500_tiogapass.c (tiogapass-bmc)
->>>
->>> Patch series 4
->>> hw/arm/aspeed_ast2600_evb.c (ast2600-evb)
->>> hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c (qcom-dc-scm-v1-b mc)
->>> hw/arm/aspeed_ast2600_qcom-firework-bmc.c (qcom-firework-bmc)
->>> hw/arm/aspeed_ast2600_rainier.c (rainier-bmc)
->>> hw/arm/aspeed_ast2600_fuji.c (fuji-bmc)
->>> hw/arm/aspeed_ast2600_bletchley.c (bletchley-bmc)
->>> hw/arm/aspeed_ast2600_ fby35.c (fby35-bmc)
->>>
->>> For the FBY35 platform, since it includes both AST1030 and AST2600, we may
->> consider renaming the file to:
->>> hw/arm/aspeed_ast1030_ast2600_fby35.c  (hw/arm/fby35.c)
->>
->> Since ast2600 is the main SoC of the fby35, "hw/arm/aspeed_ast2600_fby35.c"
->> should be a more relevant name.
->>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Based-on: <20251020220941.65269-1-philmd@linaro.org>
+> ---
+>   hw/vfio/helpers.c | 7 ++-----
+>   1 file changed, 2 insertions(+), 5 deletions(-)
 > 
-> hw/arm/aspeed_ast2600_ fby35.c (fby35-bmc from aspeed.c)
-> hw/arm/aspeed_ast2600_fby35.c  (hw/arm/fby35.c)
-> 
-> Both them use the same name. Do you mean to move them in one file?
-Oh. I forgot that we had 2 machines.
+> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+> index 23d13e5db5f..007c37b28b8 100644
+> --- a/hw/vfio/helpers.c
+> +++ b/hw/vfio/helpers.c
+> @@ -20,6 +20,7 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/target-info.h"
+>   #include <sys/ioctl.h>
+>   
+>   #include "system/kvm.h"
+> @@ -220,9 +221,5 @@ bool vfio_arch_wants_loading_config_after_iter(void)
+>        * See commit d329f5032e17 ("vfio: Move the saving of the config space to
+>        * the right place in VFIO migration").
+>        */
+> -#if defined(TARGET_ARM)
+> -    return true;
+> -#else
+> -    return false;
+> -#endif
+> +    return target_base_arm();
 
-I would leave hw/arm/fby35.c untouched. I am thinking of dropping
-the "fby35" machine since it it not maintained and we have another
-multi-soc machine: "ast2700fc".
+
+is that a new helper ? I don't see it being used anywhere else.
 
 Thanks,
 
 C.
-
 
 
