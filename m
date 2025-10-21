@@ -4,91 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F9ACCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 07:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2431CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 07:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB7BU-0002zn-IN; Tue, 21 Oct 2025 03:53:32 -0400
+	id 1vB7BX-00030E-39; Tue, 21 Oct 2025 03:53:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7BT-0002z9-E7
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:53:31 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7BP-0002o4-SG
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:53:31 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4285169c005so100072f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 00:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761033200; x=1761638000; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4XSzm0wfUSA4CIUhFWciPqUNrYgEsNDDhSIDvvR9MXA=;
- b=B9n2DoaafE7jElxj45XyA0gXigsHAqsUSGiFk/h5KjYht/0SVsoQBM80CwVNNy4DZG
- umu9wDczD8wn1GRYlWdFZEHKmEAEHg4rLz7efspCQSW4zBCOr3QXe8yBb5EgDbjZ9kDs
- cFk6o+DNkm8VzY9UyTJTvfDidVyNHVdkIg4ya90d8QlVmm6H8YmNpeVtvrkdLWEwFeWr
- I5ta9EaxHEorRaqkRv+T+4AbFY1kNjtxQKNR+gAKCAtFt7E09XVNiX8YtwEsRFUHT7ao
- 3cNt5XYNdmmVYJy+VP/T9V9hFVdPFq+CQ6l1ZLiWaaY2ZQ0ETwv1GA0DS/sLN6YzqLXY
- Y8mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761033200; x=1761638000;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4XSzm0wfUSA4CIUhFWciPqUNrYgEsNDDhSIDvvR9MXA=;
- b=Ve+oicnmxPSDsZNBAB1A3JdCUjAnD6PwXNCmAz/PTpl7LM4EKEHKrqT11JQd2S+Lis
- 7mBnCLZsRuoYSl6FQASIW2aiw1hcVYpNyhzbo9dv0zl2j7DRP7G5NvvMtrwPKTUajiOx
- FdDlUyhNgssgWpA/u5EzkEAqcf7UW5Oy735H8yItJ//lsTgrX/snqkU7Fsc/CTuE7luU
- Sa+hRVwAV2UtwI6qij0v/bDA0ClLQFHTyh6UZDpl+gDMq65V0XC12/NM6jLsBhsPCltr
- iGgQCBf+diPUWi5Ay0/v6b5cg1tejrqdk2i1kIOhgt+PtEn1WEkf/GIuSNsoWrafnrwI
- oTjg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWShz9Oek2IM4iH/d7Ez2TFiT8OaCAIvRYXhitKacyf0L7QntYqua1lrovQUbOlvTHSW+FjarfV3XHG@nongnu.org
-X-Gm-Message-State: AOJu0YwOykDj/raIG3NdKj/erMSUQ4tLVsESFxCOK73OYfuAl+8A5B58
- IZzf6btHY21q3EgFiWUauI9UA7S04/WXPTaguSxottJZE7++ExDH4D7oZ+X6OLSkbn4=
-X-Gm-Gg: ASbGncslo9RmtEDjKT3qFp+d8g6fNPAuuJVXOG+BeVt8eOHjXsaYl19BgifvIU5LY+y
- HS80/aPgruMJHib8M3clGTVNbOQ0gJw+OUJqTu6HmI90q0lxGtkr0jXReny5dX9e1k1E7qPu2sw
- fASu0X/vaf4ypQDL3omgyNDAYQoX/9sFKGlgdD2N1xSINQaJn1atxBO8N77LAk7DBEOt7rGeY3C
- bDy+PO7KSDBMUIZYMBC5KxBAv7XONlAwKLyly6/EL45iob63I8EzHILwuHmsJbshs/oKE5Gah+Q
- zRX+J6MJ9mRJAJoylVJHsoswtfrK2zfd4Ys3kmzfecGMaEU2ZScPPfBlVm9Yvlc37DfcKIi9QUF
- Q9LgQwTouYOtiwEQ5tFMHPPl/ihWmSbLcWQmtBlVszzOnyhatgzQPgG2vdRMHNRt/p+fUNUqjwY
- KwXZR2diggmoSqSg9GC5TB5LkZoMBssdHgFBEzTcKZgBybrlE+7N8Qgw==
-X-Google-Smtp-Source: AGHT+IGE/vHKF0Erfc5wVRVZkuf2QIZN0tTKp1Pxq4T4C2tMAQMK2l5Jk6432IoFNv1goONmMlkQVQ==
-X-Received: by 2002:a05:6000:4285:b0:3eb:9447:b97a with SMTP id
- ffacd0b85a97d-42704dab1e2mr10803396f8f.54.1761033200022; 
- Tue, 21 Oct 2025 00:53:20 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471553f8a3asm212347275e9.16.2025.10.21.00.53.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 00:53:19 -0700 (PDT)
-Message-ID: <60f2024e-324e-4856-952b-59ededfb2468@linaro.org>
-Date: Tue, 21 Oct 2025 09:53:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/30] qemu/target-info: Add target_base_arch()
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org
-References: <20251020220941.65269-1-philmd@linaro.org>
- <20251020221508.67413-4-philmd@linaro.org>
- <bc03818e-d76a-4301-931a-058f21bb6847@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bc03818e-d76a-4301-931a-058f21bb6847@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <dhruv.choudhary@nutanix.com>)
+ id 1vB7BU-000301-OH
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:53:33 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dhruv.choudhary@nutanix.com>)
+ id 1vB7BR-0002oD-EE
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 03:53:32 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 59KL1Wlv174894; Tue, 21 Oct 2025 00:53:22 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=bysjUPv+FWPWP
+ AOcErYgnUZRv27R9o8yCk2sCtp63e4=; b=oEyo741Lpv1q56sPsqgK8b6LcrkjS
+ j7yDXyRn78vzRQwhtaoHyy5mNEGYBb4N2sSg5XSRQCCzFUQc8hCNqtA35Yb74y5r
+ XgRXCjAKkHhpNICrZJinaIAVFCnPDjid53DAsZOEJcu7AKd1a/3wxRSbEJTmBEtE
+ hKBvRz5CB6ZXBtqQRiarCK+S1jKPKnIVxeLyxmU/7Me1EbouD/WBgqQdDuZOV1sh
+ FqugOF5wxRmWi7J9fyZSM2ZicjnJtzwryD3U+3zCglGZxQDyMAEsTgEtCPCehnux
+ YHGl4U4TA9vX3hn2toYs0eWLx5x2wfdUonMmXQByUBQZmsrhlzlN04RzQ==
+Received: from co1pr03cu002.outbound.protection.outlook.com
+ (mail-westus2azon11020103.outbound.protection.outlook.com [52.101.46.103])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 49wvmsrw3u-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 00:53:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MYpMWycmQrDni6xwPBs12NfFoxjJztIU7HDFN2josXf2BkFMsUnGWxBBU+rSb2GGRXyg2kaju/ezONJCIwNv6M55ATA7RjMscpUpFetzPytXLxKpyiv2f3vwrw4StJ4+o4a7X0aRz1qIcxeyqiATEYYz8FaQuUk+AcfHWuXE7yeXfh3hNQTQPK14tcfaqnYnNPI4fTq2hdq5+j8T92xK6f6hlYWZlgPRrV/Y5gPel2OVCuOBIINze8CynCjUbnXRmVWioTsxiAMlFX3norD/xodSv/oybU+l//hZ4FbAPRQC+L3K/41p9WN4zfBGczXtvdYG1cxKqNUPQOEbT51DCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bysjUPv+FWPWPAOcErYgnUZRv27R9o8yCk2sCtp63e4=;
+ b=x8vV5/sbfy1k8UVR5oocfjW342PwlpxNTIzyc5Ef6FEorLM5r3cX9eTC5pHYXbnjqHRq1vOn6DvZ1PXTfles6nVAKxsdlV+kjYkczbIASjCcZKsETQ764RIxJM6sf6HJEI/120kBeaY9Rg+3Nwp2Ht7IeZWiUtA02oj8HbMWW/xvwfdk09feOJGm17HVAqpwb2GIlV/DECfNUwTbr9b5kDbpnypU3sOl4S04WVNLuZKpeLzXruspHujUQ4Yzx1xLeqPbnMZOnY4uCj32VJvBQRpA3XMl8hd1tSVGUY9WkNN1WEiMIY4h8Aje95Lkys8o3uuDMIJbsxN9VZX00lbkiA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bysjUPv+FWPWPAOcErYgnUZRv27R9o8yCk2sCtp63e4=;
+ b=QitPcQ6Mt1FoiTd3C7S0Jz7ACFFdjOMBr/m8TI78qeiVGxhP4TBhOQmJB7w0XaISwTsDJpCbyjcf/FkxVM+0LVZpNmFfCRGV5DWaJQIckszxZGwTctdRg3s23mh6A0F2CSGxJmQVpndWJ4bqoJ5hDCNf3aakoyB+pCM3psUalVAbYAyvs580U5zkeXcQ8K8AvkeJmeYQzISAw6BOog4gzu+2nmOhGVX2soWFLIhuv+A99g02X18ausbZexe2i40t5wxO9om5zec6UQzrdJaIGm7FhyvTHtNssWbSYCLvzKOJwZ3aXLQ6y5R9nUg+DrEbyA66JQxmIR1v3NA1TqT5oA==
+Received: from MWHPR0201MB3402.namprd02.prod.outlook.com
+ (2603:10b6:301:7f::28) by DS0PR02MB9322.namprd02.prod.outlook.com
+ (2603:10b6:8:140::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.12; Tue, 21 Oct
+ 2025 07:53:19 +0000
+Received: from MWHPR0201MB3402.namprd02.prod.outlook.com
+ ([fe80::9f1a:782d:b770:bf4b]) by MWHPR0201MB3402.namprd02.prod.outlook.com
+ ([fe80::9f1a:782d:b770:bf4b%2]) with mapi id 15.20.9253.011; Tue, 21 Oct 2025
+ 07:53:19 +0000
+From: Dhruv Choudhary <dhruv.choudhary@nutanix.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Cc: Dhruv Choudhary <dhruv.choudhary@nutanix.com>
+Subject: [PATCH] Improve error propagation via return path
+Date: Tue, 21 Oct 2025 07:52:53 +0000
+Message-ID: <20251021075254.600961-1-dhruv.choudhary@nutanix.com>
+X-Mailer: git-send-email 2.39.3
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-ClientProxiedBy: SA9PR13CA0083.namprd13.prod.outlook.com
+ (2603:10b6:806:23::28) To MWHPR0201MB3402.namprd02.prod.outlook.com
+ (2603:10b6:301:7f::28)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWHPR0201MB3402:EE_|DS0PR02MB9322:EE_
+X-MS-Office365-Filtering-Correlation-Id: 26d42bc1-9de0-4474-5718-08de1076e64e
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?1LjlxCM+OiG5GQewldIZxsfcAxhbEiQ0SD/D7+97kkoSlSXcr+ko45T2V88A?=
+ =?us-ascii?Q?i7Pl/Rpt2bpt1bcWJhuds0l3bRzCuwDO/U/bJ21dnvYr5Ma8YDFGEkxbGT66?=
+ =?us-ascii?Q?A8F0hD9pFw7G9JTilsCCnbb7TrilxKKPRTLUxFGYSdHrhwxpp9/IfMx6A2+E?=
+ =?us-ascii?Q?YHLpPM6IqdpgdFqh4t/LMOxZ4Vefis1mmjFux/HuRlJVPv8/UA47WQg53U5o?=
+ =?us-ascii?Q?sLyhkDkJkQKGrwDNmekqcXkyfGa9T4QCR3mzzFlK6HcRZp9ebll7hzeCZDAP?=
+ =?us-ascii?Q?MtL3Hsa9ZaHpNoVSg0uTxaDyfzmFqL6uHy0B75qjuWN/XcMuE/XA7DYyFmOi?=
+ =?us-ascii?Q?JkwNwAEJQouwc7l6Ytdh2ygVrX4LRdddL3tLwFZbI1CE29AWsAlD74XTHpam?=
+ =?us-ascii?Q?TtZG99dCrIJCPzuGXQF6erpq99ZVZXkxD1D7+5xsOvh4zwserELFSdCYptfD?=
+ =?us-ascii?Q?OHkHCiZHKbgcaORtFun7bto1DWjOafvzjCYCIsCULVVuJn4RWfMuL/13Rlke?=
+ =?us-ascii?Q?3Cyp0uj6/p+6n3BUfMIAG996XWspUnX8veuBewv01stuev8zcLZgXrTsmHWA?=
+ =?us-ascii?Q?RuZb4HQ7BNXktare+nVQJLmgdO3yfU24kaxDODb6ZxcIZxc4IrWkkzf0OG+Y?=
+ =?us-ascii?Q?Czttf4E0hMjTUgTx+bPj3/AbB+JH2USxLYsYbSQsv7eWxbT/GKjMndUNCaYq?=
+ =?us-ascii?Q?FrIlwqCAS9hE/qqbFGQCTz9IJ4jPf75Z345wR6CLVvYVIxBH81LugZQIXB82?=
+ =?us-ascii?Q?e+stjB+cLs7MzCkupuC9y0FpF/b+RWimjU2V4M9AicA+9lXUpqrTP/sF/5DQ?=
+ =?us-ascii?Q?yQzdn07gsziGtIEuO1h7PWRMqUQrO9E96se7nklJdzoKyVc7X+x216zTKBih?=
+ =?us-ascii?Q?0kDF0KeE0/ithMjsc03G1Ub5rmKqq1WNHixsXStZFS92QBMoRmSSr0BIyon7?=
+ =?us-ascii?Q?9BXcv3i90t9k1yUU39f97JeJLRQLp7vy96h6l3zBLp+lVHNBmQYXmq9YX/U8?=
+ =?us-ascii?Q?k41Qe+e2rO2VZ5Q12SVs3FQx5+TmTLMXcYUpZnFkBoBlw0pFKBkHFGOttD0c?=
+ =?us-ascii?Q?OqC3DggaCvCeLHLSzBNEmJBuQGjEuIHSVcn2mzaNz2r+hy39e0EOFnXSepkB?=
+ =?us-ascii?Q?vQd75uHRfpi8TWxqeUA6jSWI5tDWc/jXNnM810Us9fIyGu3Oi8ESdv+04KAn?=
+ =?us-ascii?Q?Mh99FAhbToCFKYoI9r1h3wAbIkjjNIl33mbNRd5ZIgOMOoEMwrNQZ8o3zuzd?=
+ =?us-ascii?Q?eySjWnF0SNQtFXdwfuMPaax5GghizVEBmEuNWjRBEDHusqLZB6R9Zzt+UcZY?=
+ =?us-ascii?Q?cBgv2874akZfCVLK0Qfd4NjhtCJKz1thjqeGBZ+StTgSlq+wtGjZETrcm6Yo?=
+ =?us-ascii?Q?dKWH1gSK3tJxCwIS4Dzv3H3Cwie07CC1mRMbVc0WqsrecaP7UBRVOHGTVOeD?=
+ =?us-ascii?Q?4mp8Z+b02cPa0OzdlovDppIRwPVHXfOC?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MWHPR0201MB3402.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?B0bVR2fLXhtgUzFM+eEwMzB0kHxu3D1q7mD/T8yIGoDz90sEKOWTGJIIpFCR?=
+ =?us-ascii?Q?pJyemFW4qG74OvtearCA2kg9CXpvpzN7YEfPf75RSDduiBKLroitfN+a5UHW?=
+ =?us-ascii?Q?mK108Y5KXWMpw+cZ3Yf6GKuDv6YyBQySTpqndzSvsD/mXQDfx+N2eWqZNkCZ?=
+ =?us-ascii?Q?I76vEYvlp6ligj0AmQyF21si7y+Nm/1YOUKjStyG1ZOkQY6jkVz9LJEzaO2c?=
+ =?us-ascii?Q?nWGsE0NK6bf9DS5asjh+dBqecrR9DvhVW3o/l6yVe9CxLhq/lDF+y16ds4e0?=
+ =?us-ascii?Q?fSZYgaPy5kSJ071PEISHSK/5mcTQiIbFZk8TAjyZ27KV+OdlFEMZ9a0AhSb2?=
+ =?us-ascii?Q?zsPTD76oRxxYCnX56Gle+tKTzr9yN4+F9mNCwQV6TQNCetq/MMzk4U27ZGXX?=
+ =?us-ascii?Q?FMXPOhbVHB2DpULGoqOYWuz7GFouDHwzPhNU39mOiv0XFP05VxiLYMT5ly1N?=
+ =?us-ascii?Q?v3f8RcZVaZ1mRwD4N8+euJohpS48n8aszVQR1q+cifaIEoJl4+8Z1asVEe6d?=
+ =?us-ascii?Q?azOuf0NrZili9F5c3I0vvKnseeSjO7/WVnX5cp32QQnBPTHXhDPn0KY6vzBA?=
+ =?us-ascii?Q?rQUt21ANE21gXU2cVXHF+tvdKPMve9gH1TQqTz+7AXocjjEKuP6mBUKcMHrN?=
+ =?us-ascii?Q?eOuIaYKPp1DGHEg+5g3in2bG1PP3vjz22KMWyq7iWcD5OXD0knuwkKiBneSI?=
+ =?us-ascii?Q?/b0omRUaJHyAhdsB4R+LDO/WjXYVG37j2Dplmg2Djg6aDmJeNqOgyo1j1Uds?=
+ =?us-ascii?Q?HkJkFmrk/whsFBGOCArh/q4rrzTgyFMKfT+NWXv9Yrx2w6P2ymHKkBEs3CK1?=
+ =?us-ascii?Q?y03nuiIaw9XNYGj8x2Y4+pIUZxc1/yIXR2R1MWEijEqv5OFQl8Izhl564QHH?=
+ =?us-ascii?Q?zAZJtrQTgSF//TEEuFXdxQcb5x3esb3zqNwBxc89NsCU6+rzrn4icZURWa6y?=
+ =?us-ascii?Q?7WOpd5HU2xte2I/0iaY6TDzS88w7QP2nU3M20N9N3NL9W/Tuil0FyZmmuhrN?=
+ =?us-ascii?Q?RGqjAFPyDa24F8UnKoXztHKk2cENUmxrbuKUPDgIMfPJNE1hgTJuEZey+Cnk?=
+ =?us-ascii?Q?klcGCTyPD/xQDPBMYqsbReqbMT0GtoWXs+o4fKXbWywUkmcs+1yRIBXjeIxH?=
+ =?us-ascii?Q?Puta78LL8lB5XvTMpXGgeE4saQkB08EUysgkN0SRUi3xvzLbfby536AWeTqx?=
+ =?us-ascii?Q?1TKft67UciMZjKmxQ7DjdqcfeGW2GsQ3RrlBRZR13Hg6QZPp3lZHBBcEzvVX?=
+ =?us-ascii?Q?AQPc7KfK+B0Ou1DY88nbaNMyTr+GekdYAt0PQvOIqm0OYc2G0npsZmt5gL8/?=
+ =?us-ascii?Q?uCPdX3syUGK9pXBwIsYtKMxJ6KkYA3eM65Qob1LOe7brrt1jFLJc4TU3UFBu?=
+ =?us-ascii?Q?fOUAa/kZuuslPVA5FhHRqAARHFIFMvx3rRfI5gfJ6gZdniZKr1m0MFHn7Y7Y?=
+ =?us-ascii?Q?YyBYgFA6teNNN0TT2ZmO+JXLuJlB8TKc412S+7p4I5kLVL2/yXvJfcMuEZVd?=
+ =?us-ascii?Q?KH3b1kHSRVwDsGL3Q9xWt72pTRpAWbvIXy9B5PEfMkkjS3bHx+Q8SXFgkDTd?=
+ =?us-ascii?Q?QPwWRgI84aImO+onBvodUyhWYrT49e7tGEoKtKx9jpWNiQCzMh01fG3bXzmn?=
+ =?us-ascii?Q?mQ=3D=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 26d42bc1-9de0-4474-5718-08de1076e64e
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR0201MB3402.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2025 07:53:19.1351 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UlX7VGHAq1piLQJpugaZm34p8oOpjJ4PdH29gBzAiKSo2iLdaPPmAkAG46ZSZHj9Ti+fF3Ze8GSz4pPTbQ242usc9kcwpot8pD9Maaj0VZw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB9322
+X-Proofpoint-ORIG-GUID: sqD_2AIYTA-3e6uF9uYPZXlOC5gTdJGC
+X-Proofpoint-GUID: sqD_2AIYTA-3e6uF9uYPZXlOC5gTdJGC
+X-Authority-Analysis: v=2.4 cv=HK3O14tv c=1 sm=1 tr=0 ts=68f73bf2 cx=c_pps
+ a=85R27yqqIDOPhBwKPsrjTg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=x6icFKpwvdMA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=64Cc0HZtAAAA:8 a=5K0ATu8qAg4PA-M--3sA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDIxMDA2MSBTYWx0ZWRfXzIbZJ/AvsEH6
+ v7ruBf+ae7mUYJqWHAYZqokt7GRSqMnO4AG4Fj4wzYznu2aVlGp+iNbbJAx9vHe9LR3nbemi2+n
+ iYbMtZVzjwUze5TQaDRNX2ar0z5ickTn/2VXYs5a8oR6vJVkAX6c7G+4UBxH1ELSWDSPbwyU2Vs
+ QB45uTeYTJSfu7ap+0dAUwpGaxsGNZdc072N2G19d52yc0EZjydn/z/AV1br92DXf20TjFAzPAf
+ j4r5GEy1GiBBDWGGAe0JJnS9ReRtvcW0zJBzXEQMpy+Zskc1wvtLyCqwrsb+K6+SOhNmx+e2Br9
+ n9+Yv76wkbvsLrcfrAt6FuK31nTY6R1BXEePXs27lw0haKXSwJv/hmRQt6egbEKGtE2ntWfoXnl
+ gDGEmC6C9iGrOlKjQErI4mwZChBRdQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=dhruv.choudhary@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,109 +192,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/25 01:15, Pierrick Bouvier wrote:
-> On 2025-10-20 15:14, Philippe Mathieu-Daudé wrote:
->> When multiple QEMU targets are variants (word size, endianness)
->> of the same base architecture, target_base_arch() returns this
->> base. For example, for the Aarch64 target it will return
->> SYS_EMU_TARGET_ARM as common base.
->>
-> 
-> I'm not sure that reusing semantic on a subset of this enum is the best 
-> idea, so many things can go wrong.
-> 
-> More widely, I don't know where we would need to access this, versus 
-> specific functions like target_base_arm().
-> If a code needs to check various base archs target_base_*, or it can use 
-> a switch with all variants.
+Use the return-path thread to send error details from the
+destination to the source on a migration failure. Management
+applications can then query the source QEMU for errors, as
+the single source of truth, making failures easy to trace.
 
-Yeah, good point. I'll just drop this single patch.
+Signed-off-by: Dhruv Choudhary <dhruv.choudhary@nutanix.com>
+---
+ migration/migration.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-> 
-> If we really want to have this target_base concept, at least it deserves 
-> it's own enum, separate from SYS_EMU_TARGET.
-> 
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/qemu/target-info-impl.h |  2 ++
->>   include/qemu/target-info-qapi.h |  7 +++++++
->>   target-info-stub.c              |  1 +
->>   target-info.c                   | 10 ++++++++++
->>   4 files changed, 20 insertions(+)
->>
->> diff --git a/include/qemu/target-info-impl.h b/include/qemu/target- 
->> info-impl.h
->> index e446585bf53..2c171f8359b 100644
->> --- a/include/qemu/target-info-impl.h
->> +++ b/include/qemu/target-info-impl.h
->> @@ -17,6 +17,8 @@ typedef struct TargetInfo {
->>       const char *target_name;
->>       /* related to TARGET_ARCH definition */
->>       SysEmuTarget target_arch;
->> +    /* related to TARGET_BASE_ARCH definition (target/${base_arch}/ 
->> path) */
->> +    SysEmuTarget target_base_arch;
->>       /* runtime equivalent of TARGET_LONG_BITS definition */
->>       unsigned long_bits;
->>       /* runtime equivalent of CPU_RESOLVING_TYPE definition */
->> diff --git a/include/qemu/target-info-qapi.h b/include/qemu/target- 
->> info-qapi.h
->> index d5ce0523238..65ed4ca8eea 100644
->> --- a/include/qemu/target-info-qapi.h
->> +++ b/include/qemu/target-info-qapi.h
->> @@ -19,6 +19,13 @@
->>    */
->>   SysEmuTarget target_arch(void);
->> +/**
->> + * target_base_arch:
->> + *
->> + * Returns: QAPI SysEmuTarget enum (i.e. SYS_EMU_TARGET_I386).
->> + */
->> +SysEmuTarget target_base_arch(void);
->> +
->>   /**
->>    * target_endian_mode:
->>    *
->> diff --git a/target-info-stub.c b/target-info-stub.c
->> index d96d8249c1d..d2cfca1b4c2 100644
->> --- a/target-info-stub.c
->> +++ b/target-info-stub.c
->> @@ -19,6 +19,7 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != 
->> sizeof(CPUState));
->>   static const TargetInfo target_info_stub = {
->>       .target_name = TARGET_NAME,
->>       .target_arch = SYS_EMU_TARGET__MAX,
->> +    .target_base_arch = SYS_EMU_TARGET__MAX,
-> 
-> And nothing can enforce base and arch match by design, which is a 
-> problem IMHO.
-> 
->>       .long_bits = TARGET_LONG_BITS,
->>       .cpu_type = CPU_RESOLVING_TYPE,
->>       .machine_typename = TYPE_MACHINE,
->> diff --git a/target-info.c b/target-info.c
->> index e567cb4c40a..332198e40a2 100644
->> --- a/target-info.c
->> +++ b/target-info.c
->> @@ -33,6 +33,16 @@ SysEmuTarget target_arch(void)
->>       return arch;
->>   }
->> +SysEmuTarget target_base_arch(void)
->> +{
->> +    SysEmuTarget base_arch = target_info()->target_base_arch;
->> +
->> +    if (base_arch == SYS_EMU_TARGET__MAX) {
->> +        base_arch = target_arch();
->> +    }
->> +    return base_arch;
-> 
-> More confusing, we can eventually return a non base arch if base arch 
-> was not correctly set above.
-> 
->> +}
->> +
->>   const char *target_cpu_type(void)
->>   {
->>       return target_info()->cpu_type;
+diff --git a/migration/migration.c b/migration/migration.c
+index a63b46bbef..123cffb286 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -87,6 +87,7 @@ enum mig_rp_message_type {
+     MIG_RP_MSG_RECV_BITMAP,  /* send recved_bitmap back to source */
+     MIG_RP_MSG_RESUME_ACK,   /* tell source that we are ready to resume */
+     MIG_RP_MSG_SWITCHOVER_ACK, /* Tell source it's OK to do switchover */
++    MIG_RP_MSG_ERROR,        /* propogate error to source */
+ 
+     MIG_RP_MSG_MAX
+ };
+@@ -608,6 +609,17 @@ int migrate_send_rp_req_pages(MigrationIncomingState *mis,
+     return migrate_send_rp_message_req_pages(mis, rb, start);
+ }
+ 
++static void migrate_send_rp_error(MigrationIncomingState *mis, Error *errp)
++{
++    const char *rpmsg = error_get_pretty(errp);
++    if (!mis->to_src_file) {
++        mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
++    }
++    migrate_send_rp_message(mis, MIG_RP_MSG_ERROR,
++                            (uint16_t)(strlen(rpmsg) + 1),
++                            (char *)rpmsg);
++}
++
+ static bool migration_colo_enabled;
+ bool migration_incoming_colo_enabled(void)
+ {
+@@ -905,8 +917,12 @@ process_incoming_migration_co(void *opaque)
+     }
+ 
+     if (ret < 0) {
+-        error_prepend(&local_err, "load of migration failed: %s: ",
+-                      strerror(-ret));
++        error_prepend(&local_err, "destination error : load of migration failed:
++                       %s: ", strerror(-ret));
++        /* Check if return path is enabled and then send error to source */
++        if (migrate_postcopy_ram() || migrate_return_path()) {
++            migrate_send_rp_error(mis, local_err);
++        }
+         goto fail;
+     }
+ 
+@@ -2437,6 +2453,7 @@ static struct rp_cmd_args {
+     [MIG_RP_MSG_RECV_BITMAP]    = { .len = -1, .name = "RECV_BITMAP" },
+     [MIG_RP_MSG_RESUME_ACK]     = { .len =  4, .name = "RESUME_ACK" },
+     [MIG_RP_MSG_SWITCHOVER_ACK] = { .len =  0, .name = "SWITCHOVER_ACK" },
++    [MIG_RP_MSG_ERROR]          = { .len = -1, .name = "ERROR"},
+     [MIG_RP_MSG_MAX]            = { .len = -1, .name = "MAX" },
+ };
+ 
+@@ -2667,6 +2684,10 @@ static void *source_return_path_thread(void *opaque)
+             trace_source_return_path_thread_switchover_acked();
+             break;
+ 
++        case MIG_RP_MSG_ERROR:
++            error_setg(&err, "%s", (char *)buf);
++            goto out;
++
+         default:
+             break;
+         }
+-- 
+2.39.3
 
 
