@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A23C8CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45492CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJHs-0000Fd-Fe; Tue, 21 Oct 2025 16:48:56 -0400
+	id 1vBJHm-0008M0-NF; Tue, 21 Oct 2025 16:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHp-0000B3-II
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:53 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHk-00089X-Bq
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:48 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHm-0001Bf-2j
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:53 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-471b80b994bso43074905e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:48:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJHf-0001A3-HD
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:48:48 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47117f92e32so40256245e9.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079726; x=1761684526; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079708; x=1761684508; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pm3cCQ10tYk8d37QLddrP30Ira7iE5Xo6EG/tSdEOMU=;
- b=ONPl/mviAiPnYPpO+s+pG5C/7W7YWnywePAT/DuR8iockeRHOSRf5h+HmYcZ733WHc
- BPkxpb5ej5QgrBpxisdPWNokAgVAHuGAkVwDhMVauHMu3Ctz21cYqvd50AQiVIBb6v6S
- /XoR9Q5qAqusNF2gGo7JRLNrHBq9MmXId88qxCFoVnoxJQAbayV/H35VTjOJB1J0SRoW
- 7I5n+QtK67/mciFAlelID+R/LhrdQCEP2biRfMOMfmQtn+sVKzebeq6rd91ZWyMYsEad
- o7AJfTkW/jB2V16Y1RSUb8RzLk+kDxec0ywkSGf0ijFk9b9Ni74dNfn55N7KKeI+7rEt
- EfBA==
+ :reply-to; bh=lWr7qEOB0Wvdd9KbFII+oaJFwDA5Ps8upXl6LmkSiEU=;
+ b=wIuaSOFIMQaxhZ4Ji8o+gPYgYDw9HI35ItrMHm6q0VuZM2d4lVrx10tKwMIj6eg8jf
+ lLQ5OQf5Quhj3aCeih2/fh+jJu2VR5bQ1Rg9ioJ7Pa6mW3pTzPoSIhvZThSjnYhVJMwK
+ 0gE/5cSex0gBYWOyoufxtu60fERw/vMPgGcUBa9k4yK9SxfVtpgFp50FMFgKg9t4HXE0
+ YUY13PnUTP2QQU2qRAomIMGy53v8G9EGH8dWJCRDofQP8y4t5NkzBlv93TKAEd489mM1
+ Vb+s5O9mqI27o5Tnb9DnwXtssGWkKDPUrxHpNF6MPhM58ZyPp9SDsqmomwfochTgqbf1
+ 222A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079726; x=1761684526;
+ d=1e100.net; s=20230601; t=1761079708; x=1761684508;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pm3cCQ10tYk8d37QLddrP30Ira7iE5Xo6EG/tSdEOMU=;
- b=foo4mai//5npxfImu9cvVDREQGK2sg7VbUURtMde1ZNw95xsdMdXk5sZLJY07uZxvS
- 7gVLm1nJEx1QP6c4NAnXCCFGWxq8CQMS22VKtozkT6vsywgwIRcKj+JFKAzO2YNdFWTp
- VdajEljqVysBxGRN8dObSHPv2c5HHn3HdU3b5yoNpZSXtl50U+tqRVLet5gYZuk20TjY
- rKATPBvt/FKV3CNTWsM2MA6Oh8C19IJpf8Re71T6RuasZFk6ZwNKtiAw7hWFXxu1r+s7
- 8HVCrAnn+WRk0YUSPg+ALd06D68UeaZQQ5OdP4fZjVdEcou+PXpTku9ZAKnTwEDFt08K
- P7kQ==
-X-Gm-Message-State: AOJu0YxrNQq2L7gTKAsTLeYXi7e6KFU4yfmmt4nwGnEFkvF9ILuQ9YDU
- 7tnWXrV+Spm5X0BCaP2UHMzzqytrbakNwC8B2bvsIHiJF+XC594TljBCzs+OIuj5wA2a75pVdXl
- w6n9h8OU=
-X-Gm-Gg: ASbGnctA09ZQHM/ezRyX5dLOLS5YeyX8xmeGxTs+e2yC3zIlXn20I2i40rAgWM3Yv4s
- Smd0SAKvGqvtRTm5Zmy2moobHYzAQIQSV02ZTEn2jU8TzuWsgL1N/BtTAqv57DWSjR1xF+j2I3a
- rK1scXjSOmYEmduBu2EIqm8zlNb8HcDc3wBwJcln7lGQaefpZzPsHNOdodVVcMei9hqMyd7Sa4X
- xzp4eYrAJ3Y4mcbmHjroO/wt0aN9fmajqBmyYLZ9AUIcM77KZQF7QYFxTEJmhvBUE8d9JfaVvWj
- E92HM1s9lMin+65kasfRJeHWzTiTPGZyhnFjfKbksg6N9vP5ALIvrRsUU5utDX2x8AnSM63rdmb
- y3ERzSgB5fJLaaSqFMpgc3R8pc2qsDtRHRYFeUdIvNrHpVJq79nHaKzm+cv4P/sI2c6fPWIgM0e
- Ajjq/A/L/5xbi/J/twiU2i9Tz8z+kcjSRxVbUXepgmkhkI/RIQDw==
-X-Google-Smtp-Source: AGHT+IF9xeU35tnwNruu0VbMQf5zaeTVg+1Ap70Go1+m30PtINYvI0CUtLPXw/XQ05R1ZZ/o/vlrmA==
-X-Received: by 2002:a05:600c:470d:b0:471:7c8:ddf7 with SMTP id
- 5b1f17b1804b1-471178a7447mr121045525e9.14.1761079725951; 
- Tue, 21 Oct 2025 13:48:45 -0700 (PDT)
+ bh=lWr7qEOB0Wvdd9KbFII+oaJFwDA5Ps8upXl6LmkSiEU=;
+ b=q1PvG8VdECJR+aDmspxFdPY5YpEhrW+Qcn54pdjRudERcwCNG7ji2IhsnImAmNdzoS
+ lSnUpP8wg7RFN079cizAcGeTeNrRIU5x1i2EJfPvIsiber5D0y934z/L6dCrkjsJRmQD
+ zphwE4+Nz3n0Jqdc3gha2Qdioq+9K10SDlWuNac4a5OwgER9+unocN9WYWorNkm5gfFO
+ boiburhPCqIdPaFk7zXvkOOXlA8dnGrMZskga2p4Fq+mQd432YpFrTC1msM2CClC25ax
+ OpCWV31SugFC0R+bn1uH3uvIgL2AOYcrGCrGRAvKguEJEK/Em9mgosDVQtxf6HZ7ZAI5
+ iI4w==
+X-Gm-Message-State: AOJu0Yz61aRotw9Ev0JwLV3DKQcTZJ2z9CRtN0l4uS2aifPuQbA21vN3
+ nr2objT26GyM9A7IMzrR6L0Dc6+n7reyT+59FhjHfW6ytgDe9uze9SgGxuCGttTgf5BEsL3LsYC
+ b+qUB2OI=
+X-Gm-Gg: ASbGncs/Yco7V6Rl4sqtzlxP3lVcSmRlTZx2iJj+UBeJNTPq+FIr0MQ+ADk6/pTnigo
+ OxRL73X9CfxP4JNLLL9auZwNH2TFcE26KkTHlwUtUAT8n+lN5KrXXZ4tDTvx56WpJeogfbyfIjS
+ 5JvI/mj4lbRuE4OdicUMi1a7YccFNTzz3Tsb2XqfOLJFnwJq0+c+a+9wgEkuPAob99gBGpWyr+W
+ mj5FlOjRqJtWr3mSJHiP/7koRTqN652LP05JJ9PlkWoby1AWh7b//ETTR+Vb90ms+2uDUe6CYAt
+ 8s0r6XQxGaFzhBslhzN89Q0TEamOQgXXz7nfOJMnj8NYuHygD1JRd4ERzRffJuChPqu43CUUVJD
+ duzgcYMWrQ9YFqp8pxzoE16YWSIYvDd6GOuTnWqp00gqa7D74B96dhvi4XVZGvDfJo60qvSkd7b
+ 5udhUDduUeqN08Rh3YIsCnLK9JR6c1wugAN9MAKdC+BO7O698bMlCiKmJg1u0Q
+X-Google-Smtp-Source: AGHT+IHktbrj0wKz0uueX9HDEMPfrSrxwKAIdGEAQhgBb6Dka2ESQ9O2jE00dpxIS4WpA0CKySfQlw==
+X-Received: by 2002:a05:600c:4e89:b0:45d:dc85:c009 with SMTP id
+ 5b1f17b1804b1-471178a236cmr128546155e9.10.1761079708023; 
+ Tue, 21 Oct 2025 13:48:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c4378cbesm9203365e9.16.2025.10.21.13.48.45
+ 5b1f17b1804b1-475c427c3ecsm10317625e9.2.2025.10.21.13.48.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:48:45 -0700 (PDT)
+ Tue, 21 Oct 2025 13:48:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/45] hw/net/can/xlnx-versal-canfd: remove register API usage
- for banked regs
-Date: Tue, 21 Oct 2025 22:46:36 +0200
-Message-ID: <20251021204700.56072-23-philmd@linaro.org>
+Subject: [PULL 18/45] hw/core/register: add the REGISTER_ARRAY type
+Date: Tue, 21 Oct 2025 22:46:32 +0200
+Message-ID: <20251021204700.56072-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,383 +101,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Luc Michel <luc.michel@amd.com>
 
-Now that we have a simple decoding logic for all the banked registers,
-remove the register API usage for them. This restricts the register API
-usage to only the base registers (from 0x0 to 0xec).
+Introduce the REGISTER_ARRAY QOM type. This type reuses the existing
+RegisterInfoArray struct. When `register_init_block' is called, it creates
+a REGISTER_ARRAY object and parents it to the calling device. This way
+it gets finalized when the device is. The memory region is parented to
+the REGISTER_ARRAY object to ensure correct finalizing order.
 
-This also removes all the custom code that was creating register
-descriptors for the register API and was leading to memory leaks when
-the device was finalized.
+The finalize function of the REGISTER_ARRAY type performs the necessary
+cleaning that used to be done by `register_finalize_block'. The latter
+is left empty and will be removed when all the register API users have
+been refactored.
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 Signed-off-by: Luc Michel <luc.michel@amd.com>
-Message-ID: <20251017161809.235740-7-luc.michel@amd.com>
+Message-ID: <20251017161809.235740-3-luc.michel@amd.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/net/xlnx-versal-canfd.h |   8 -
- hw/net/can/xlnx-versal-canfd.c     | 303 ++---------------------------
- 2 files changed, 15 insertions(+), 296 deletions(-)
+ include/hw/register.h |  4 ++++
+ hw/core/register.c    | 26 ++++++++++++++++++++++----
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/net/xlnx-versal-canfd.h b/include/hw/net/xlnx-versal-canfd.h
-index ad3104dd13f..396f90d6dc1 100644
---- a/include/hw/net/xlnx-versal-canfd.h
-+++ b/include/hw/net/xlnx-versal-canfd.h
-@@ -54,14 +54,6 @@ typedef struct XlnxVersalCANFDState {
-     qemu_irq                irq_addr_err;
- 
-     RegisterInfo            reg_info[XLNX_VERSAL_CANFD_R_MAX];
--    RegisterAccessInfo      *tx_regs;
--    RegisterAccessInfo      *rx0_regs;
--    RegisterAccessInfo      *rx1_regs;
--    RegisterAccessInfo      *af_regs;
--    RegisterAccessInfo      *txe_regs;
--    RegisterAccessInfo      *rx_mailbox_regs;
--    RegisterAccessInfo      *af_mask_regs_mailbox;
--
-     uint32_t                regs[XLNX_VERSAL_CANFD_R_MAX];
- 
-     ptimer_state            *canfd_timer;
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index 04f9a6d57d7..5735639b85a 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1426,46 +1426,6 @@ static void filter_reg_write(XlnxVersalCANFDState *s, hwaddr addr,
-     }
- }
- 
--static uint64_t filter_mask(RegisterInfo *reg, uint64_t val64)
--{
--    XlnxVersalCANFDState *s = XILINX_CANFD(reg->opaque);
--    uint32_t reg_idx = (reg->access->addr) / 4;
--    uint32_t val = val64;
--    uint32_t filter_offset = (reg_idx - R_AFMR_REGISTER) / 2;
--
--    if (!(s->regs[R_ACCEPTANCE_FILTER_CONTROL_REGISTER] &
--        (1 << filter_offset))) {
--        s->regs[reg_idx] = val;
--    } else {
--        g_autofree char *path = object_get_canonical_path(OBJECT(s));
--
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: Acceptance filter %d not enabled\n",
--                      path, filter_offset + 1);
--    }
--
--    return s->regs[reg_idx];
--}
--
--static uint64_t filter_id(RegisterInfo *reg, uint64_t val64)
--{
--    XlnxVersalCANFDState *s = XILINX_CANFD(reg->opaque);
--    hwaddr reg_idx = (reg->access->addr) / 4;
--    uint32_t val = val64;
--    uint32_t filter_offset = (reg_idx - R_AFIR_REGISTER) / 2;
--
--    if (!(s->regs[R_ACCEPTANCE_FILTER_CONTROL_REGISTER] &
--        (1 << filter_offset))) {
--        s->regs[reg_idx] = val;
--    } else {
--        g_autofree char *path = object_get_canonical_path(OBJECT(s));
--
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: Acceptance filter %d not enabled\n",
--                      path, filter_offset + 1);
--    }
--
--    return s->regs[reg_idx];
--}
--
- static uint64_t canfd_tx_fifo_status_prew(RegisterInfo *reg, uint64_t val64)
- {
-     XlnxVersalCANFDState *s = XILINX_CANFD(reg->opaque);
-@@ -1591,125 +1551,6 @@ static uint64_t canfd_write_check_prew(RegisterInfo *reg, uint64_t val64)
-     return 0;
- }
- 
--static const RegisterAccessInfo canfd_tx_regs[] = {
--    {   .name = "TB_ID_REGISTER",  .addr = A_TB_ID_REGISTER,
--    },{ .name = "TB0_DLC_REGISTER",  .addr = A_TB0_DLC_REGISTER,
--    },{ .name = "TB_DW0_REGISTER",  .addr = A_TB_DW0_REGISTER,
--    },{ .name = "TB_DW1_REGISTER",  .addr = A_TB_DW1_REGISTER,
--    },{ .name = "TB_DW2_REGISTER",  .addr = A_TB_DW2_REGISTER,
--    },{ .name = "TB_DW3_REGISTER",  .addr = A_TB_DW3_REGISTER,
--    },{ .name = "TB_DW4_REGISTER",  .addr = A_TB_DW4_REGISTER,
--    },{ .name = "TB_DW5_REGISTER",  .addr = A_TB_DW5_REGISTER,
--    },{ .name = "TB_DW6_REGISTER",  .addr = A_TB_DW6_REGISTER,
--    },{ .name = "TB_DW7_REGISTER",  .addr = A_TB_DW7_REGISTER,
--    },{ .name = "TB_DW8_REGISTER",  .addr = A_TB_DW8_REGISTER,
--    },{ .name = "TB_DW9_REGISTER",  .addr = A_TB_DW9_REGISTER,
--    },{ .name = "TB_DW10_REGISTER",  .addr = A_TB_DW10_REGISTER,
--    },{ .name = "TB_DW11_REGISTER",  .addr = A_TB_DW11_REGISTER,
--    },{ .name = "TB_DW12_REGISTER",  .addr = A_TB_DW12_REGISTER,
--    },{ .name = "TB_DW13_REGISTER",  .addr = A_TB_DW13_REGISTER,
--    },{ .name = "TB_DW14_REGISTER",  .addr = A_TB_DW14_REGISTER,
--    },{ .name = "TB_DW15_REGISTER",  .addr = A_TB_DW15_REGISTER,
--    }
--};
--
--static const RegisterAccessInfo canfd_rx0_regs[] = {
--    {   .name = "RB_ID_REGISTER",  .addr = A_RB_ID_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DLC_REGISTER",  .addr = A_RB_DLC_REGISTER,
--        .ro = 0xfe1fffff,
--    },{ .name = "RB_DW0_REGISTER",  .addr = A_RB_DW0_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW1_REGISTER",  .addr = A_RB_DW1_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW2_REGISTER",  .addr = A_RB_DW2_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW3_REGISTER",  .addr = A_RB_DW3_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW4_REGISTER",  .addr = A_RB_DW4_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW5_REGISTER",  .addr = A_RB_DW5_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW6_REGISTER",  .addr = A_RB_DW6_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW7_REGISTER",  .addr = A_RB_DW7_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW8_REGISTER",  .addr = A_RB_DW8_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW9_REGISTER",  .addr = A_RB_DW9_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW10_REGISTER",  .addr = A_RB_DW10_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW11_REGISTER",  .addr = A_RB_DW11_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW12_REGISTER",  .addr = A_RB_DW12_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW13_REGISTER",  .addr = A_RB_DW13_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW14_REGISTER",  .addr = A_RB_DW14_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW15_REGISTER",  .addr = A_RB_DW15_REGISTER,
--        .ro = 0xffffffff,
--    }
--};
--
--static const RegisterAccessInfo canfd_rx1_regs[] = {
--    {   .name = "RB_ID_REGISTER_1",  .addr = A_RB_ID_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DLC_REGISTER_1",  .addr = A_RB_DLC_REGISTER_1,
--        .ro = 0xfe1fffff,
--    },{ .name = "RB0_DW0_REGISTER_1",  .addr = A_RB0_DW0_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW1_REGISTER_1",  .addr = A_RB_DW1_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW2_REGISTER_1",  .addr = A_RB_DW2_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW3_REGISTER_1",  .addr = A_RB_DW3_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW4_REGISTER_1",  .addr = A_RB_DW4_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW5_REGISTER_1",  .addr = A_RB_DW5_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW6_REGISTER_1",  .addr = A_RB_DW6_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW7_REGISTER_1",  .addr = A_RB_DW7_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW8_REGISTER_1",  .addr = A_RB_DW8_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW9_REGISTER_1",  .addr = A_RB_DW9_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW10_REGISTER_1",  .addr = A_RB_DW10_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW11_REGISTER_1",  .addr = A_RB_DW11_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW12_REGISTER_1",  .addr = A_RB_DW12_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW13_REGISTER_1",  .addr = A_RB_DW13_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW14_REGISTER_1",  .addr = A_RB_DW14_REGISTER_1,
--        .ro = 0xffffffff,
--    },{ .name = "RB_DW15_REGISTER_1",  .addr = A_RB_DW15_REGISTER_1,
--        .ro = 0xffffffff,
--    }
--};
--
--/* Acceptance filter registers. */
--static const RegisterAccessInfo canfd_af_regs[] = {
--    {   .name = "AFMR_REGISTER",  .addr = A_AFMR_REGISTER,
--        .pre_write = filter_mask,
--    },{ .name = "AFIR_REGISTER",  .addr = A_AFIR_REGISTER,
--        .pre_write = filter_id,
--    }
--};
--
--static const RegisterAccessInfo canfd_txe_regs[] = {
--    {   .name = "TXE_FIFO_TB_ID_REGISTER",  .addr = A_TXE_FIFO_TB_ID_REGISTER,
--        .ro = 0xffffffff,
--    },{ .name = "TXE_FIFO_TB_DLC_REGISTER",  .addr = A_TXE_FIFO_TB_DLC_REGISTER,
--        .ro = 0xffffffff,
--    }
--};
--
- static const RegisterAccessInfo canfd_regs_info[] = {
-     {   .name = "SOFTWARE_RESET_REGISTER",  .addr = A_SOFTWARE_RESET_REGISTER,
-         .pre_write = canfd_srr_pre_write,
-@@ -1915,6 +1756,16 @@ static const MemoryRegionOps canfd_ops = {
-     },
+diff --git a/include/hw/register.h b/include/hw/register.h
+index 4d13ea183c7..65c82600e06 100644
+--- a/include/hw/register.h
++++ b/include/hw/register.h
+@@ -83,6 +83,8 @@ struct RegisterInfo {
+     void *opaque;
  };
  
-+static const MemoryRegionOps canfd_regs_ops = {
-+    .read = register_read_memory,
-+    .write = register_write_memory,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
++#define TYPE_REGISTER_ARRAY "qemu-register-array"
++OBJECT_DECLARE_SIMPLE_TYPE(RegisterInfoArray, REGISTER_ARRAY)
+ 
+ /**
+  * This structure is used to group all of the individual registers which are
+@@ -96,6 +98,8 @@ struct RegisterInfo {
+  */
+ 
+ struct RegisterInfoArray {
++    Object parent_obj;
 +
- static void canfd_reset(DeviceState *dev)
+     MemoryRegion mem;
+ 
+     int num_elements;
+diff --git a/hw/core/register.c b/hw/core/register.c
+index 2553cb15aba..1612ad174f9 100644
+--- a/hw/core/register.c
++++ b/hw/core/register.c
+@@ -245,10 +245,16 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
+                                               size_t data_size_bits)
  {
-     XlnxVersalCANFDState *s = XILINX_CANFD(dev);
-@@ -1994,140 +1845,16 @@ static int xlnx_canfd_connect_to_bus(XlnxVersalCANFDState *s,
-     return can_bus_insert_client(bus, &s->bus_client);
+     const char *device_prefix = object_get_typename(OBJECT(owner));
+-    RegisterInfoArray *r_array = g_new0(RegisterInfoArray, 1);
++    Object *obj;
++    RegisterInfoArray *r_array;
+     int data_size = data_size_bits >> 3;
+     int i;
+ 
++    obj = object_new(TYPE_REGISTER_ARRAY);
++    object_property_add_child(OBJECT(owner), "reg-array[*]", obj);
++    object_unref(obj);
++
++    r_array = REGISTER_ARRAY(obj);
+     r_array->r = g_new0(RegisterInfo *, num);
+     r_array->num_elements = num;
+     r_array->debug = debug_enabled;
+@@ -267,7 +273,7 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
+         r_array->r[i] = r;
+     }
+ 
+-    memory_region_init_io(&r_array->mem, OBJECT(owner), ops, r_array,
++    memory_region_init_io(&r_array->mem, OBJECT(r_array), ops, r_array,
+                           device_prefix, memory_size);
+ 
+     return r_array;
+@@ -309,15 +315,27 @@ RegisterInfoArray *register_init_block64(DeviceState *owner,
+                                data, ops, debug_enabled, memory_size, 64);
  }
  
--#define NUM_REG_PER_AF      ARRAY_SIZE(canfd_af_regs)
--#define NUM_AF              32
--#define NUM_REG_PER_TXE     ARRAY_SIZE(canfd_txe_regs)
--#define NUM_TXE             32
--
--static int canfd_populate_regarray(XlnxVersalCANFDState *s,
--                                  RegisterInfoArray *r_array, int pos,
--                                  const RegisterAccessInfo *rae,
--                                  int num_rae)
--{
--    int i;
--
--    for (i = 0; i < num_rae; i++) {
--        int index = rae[i].addr / 4;
--        RegisterInfo *r = &s->reg_info[index];
--
--        *r = (RegisterInfo) {
--            .data = &s->regs[index],
--            .data_size = sizeof(uint32_t),
--            .access = &rae[i],
--            .opaque = OBJECT(s),
--        };
--
--        r_array->r[i + pos] = r;
--    }
--    return i + pos;
--}
--
--static void canfd_create_rai(RegisterAccessInfo *rai_array,
--                                const RegisterAccessInfo *canfd_regs,
--                                int template_rai_array_sz,
--                                int num_template_to_copy)
--{
--    int i;
--    int reg_num;
--
--    for (reg_num = 0; reg_num < num_template_to_copy; reg_num++) {
--        int pos = reg_num * template_rai_array_sz;
--
--        memcpy(rai_array + pos, canfd_regs,
--               template_rai_array_sz * sizeof(RegisterAccessInfo));
--
--        for (i = 0; i < template_rai_array_sz; i++) {
--            const char *name = canfd_regs[i].name;
--            uint64_t addr = canfd_regs[i].addr;
--            rai_array[i + pos].name = g_strdup_printf("%s%d", name, reg_num);
--            rai_array[i + pos].addr = addr + pos * 4;
--        }
--    }
--}
--
--static RegisterInfoArray *canfd_create_regarray(XlnxVersalCANFDState *s)
--{
--    const char *device_prefix = object_get_typename(OBJECT(s));
--    uint64_t memory_size = XLNX_VERSAL_CANFD_R_MAX * 4;
--    int num_regs;
--    int pos = 0;
--    RegisterInfoArray *r_array;
--
--    num_regs = ARRAY_SIZE(canfd_regs_info) +
--                s->cfg.tx_fifo * NUM_REGS_PER_MSG_SPACE +
--                s->cfg.rx0_fifo * NUM_REGS_PER_MSG_SPACE +
--                NUM_AF * NUM_REG_PER_AF +
--                NUM_TXE * NUM_REG_PER_TXE;
--
--    s->tx_regs = g_new0(RegisterAccessInfo,
--                        s->cfg.tx_fifo * ARRAY_SIZE(canfd_tx_regs));
--
--    canfd_create_rai(s->tx_regs, canfd_tx_regs,
--                     ARRAY_SIZE(canfd_tx_regs), s->cfg.tx_fifo);
--
--    s->rx0_regs = g_new0(RegisterAccessInfo,
--                         s->cfg.rx0_fifo * ARRAY_SIZE(canfd_rx0_regs));
--
--    canfd_create_rai(s->rx0_regs, canfd_rx0_regs,
--                     ARRAY_SIZE(canfd_rx0_regs), s->cfg.rx0_fifo);
--
--    s->af_regs = g_new0(RegisterAccessInfo,
--                        NUM_AF * ARRAY_SIZE(canfd_af_regs));
--
--    canfd_create_rai(s->af_regs, canfd_af_regs,
--                     ARRAY_SIZE(canfd_af_regs), NUM_AF);
--
--    s->txe_regs = g_new0(RegisterAccessInfo,
--                         NUM_TXE * ARRAY_SIZE(canfd_txe_regs));
--
--    canfd_create_rai(s->txe_regs, canfd_txe_regs,
--                     ARRAY_SIZE(canfd_txe_regs), NUM_TXE);
--
--    if (s->cfg.enable_rx_fifo1) {
--        num_regs += s->cfg.rx1_fifo * NUM_REGS_PER_MSG_SPACE;
--
--        s->rx1_regs = g_new0(RegisterAccessInfo,
--                             s->cfg.rx1_fifo * ARRAY_SIZE(canfd_rx1_regs));
--
--        canfd_create_rai(s->rx1_regs, canfd_rx1_regs,
--                         ARRAY_SIZE(canfd_rx1_regs), s->cfg.rx1_fifo);
--    }
--
--    r_array = g_new0(RegisterInfoArray, 1);
--    r_array->r = g_new0(RegisterInfo * , num_regs);
--    r_array->num_elements = num_regs;
--    r_array->prefix = device_prefix;
--
--    pos = canfd_populate_regarray(s, r_array, pos,
--                                  canfd_regs_info,
--                                  ARRAY_SIZE(canfd_regs_info));
--    pos = canfd_populate_regarray(s, r_array, pos,
--                                  s->tx_regs, s->cfg.tx_fifo *
--                                  NUM_REGS_PER_MSG_SPACE);
--    pos = canfd_populate_regarray(s, r_array, pos,
--                                  s->rx0_regs, s->cfg.rx0_fifo *
--                                  NUM_REGS_PER_MSG_SPACE);
--    if (s->cfg.enable_rx_fifo1) {
--        pos = canfd_populate_regarray(s, r_array, pos,
--                                      s->rx1_regs, s->cfg.rx1_fifo *
--                                      NUM_REGS_PER_MSG_SPACE);
--    }
--    pos = canfd_populate_regarray(s, r_array, pos,
--                                  s->af_regs, NUM_AF * NUM_REG_PER_AF);
--    pos = canfd_populate_regarray(s, r_array, pos,
--                                  s->txe_regs, NUM_TXE * NUM_REG_PER_TXE);
--
--    memory_region_init_io(&r_array->mem, OBJECT(s), &canfd_ops, r_array,
--                          device_prefix, memory_size);
--    return r_array;
--}
--
- static void canfd_realize(DeviceState *dev, Error **errp)
+-void register_finalize_block(RegisterInfoArray *r_array)
++static void register_array_finalize(Object *obj)
  {
-     XlnxVersalCANFDState *s = XILINX_CANFD(dev);
-     RegisterInfoArray *reg_array;
++    RegisterInfoArray *r_array = REGISTER_ARRAY(obj);
++
+     g_free(r_array->r);
+-    g_free(r_array);
+ }
  
--    reg_array = canfd_create_regarray(s);
-+    reg_array = register_init_block32(dev, canfd_regs_info,
-+                                      ARRAY_SIZE(canfd_regs_info), s->reg_info,
-+                                      s->regs, &canfd_regs_ops, false,
-+                                      A_RX_FIFO_WATERMARK_REGISTER
-+                                          + sizeof(uint32_t));
-     memory_region_add_subregion(&s->iomem, 0x00, &reg_array->mem);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-     sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq_canfd_int);
++void register_finalize_block(RegisterInfoArray *r_array)
++{
++}
++
++static const TypeInfo register_array_info = {
++    .name  = TYPE_REGISTER_ARRAY,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(RegisterInfoArray),
++    .instance_finalize = register_array_finalize,
++};
+ 
+ static void register_register_types(void)
+ {
++    type_register_static(&register_array_info);
+ }
+ 
+ type_init(register_register_types)
 -- 
 2.51.0
 
