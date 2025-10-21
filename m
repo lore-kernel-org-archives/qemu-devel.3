@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB60ECCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 14:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D11CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 14:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBDjx-0005Bj-13; Tue, 21 Oct 2025 10:53:33 -0400
+	id 1vBDjx-0005Ct-UQ; Tue, 21 Oct 2025 10:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBDjm-00059O-Fz
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:53:23 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBDjq-00059y-H7
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:53:28 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBDji-0007Xi-DC
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:53:20 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4711f156326so43874805e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 07:53:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBDjo-0007YY-68
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:53:26 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-6360397e8c7so5795130d50.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 07:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761058396; x=1761663196; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MVnIcv6wpbRHfrTNL4tWp8Jqn8R3H5q+xlspGqWOfao=;
- b=MyecDPnMjxkBNskRSBzrE4x3QYi/O9J7OWgIythzkAzZfe0bKGIuyE9ooBMNwM5+09
- NLW1odVpJqLLIIENzg8wjaQVQOE9xJp0xt8w8AbguOLegcAhq1yZQcaF0RDN4mgUXyr1
- 3WF3pNmrv2S/K4InTzDWfNIhTM8E/lZYWgd5EWdJEFDgRxsEQM7MRE/tcN4dTeJrgm8u
- hPaGV4EZj4W2535niHR7gUnDT42jITOaC2HYuwHsxQyxpWrrURh5ca+28PmE7sIDBgMN
- xOotF6RIfY5upaZGI5b1m43X7bX758E5zluSaG8iYQ8ojMmjcHZP+xJkBlZpY5RfV6Zi
- Kaow==
+ d=linaro.org; s=google; t=1761058402; x=1761663202; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LQAijONfUONASIqkcmGwsLwEJ3D0Z+GzArhZwaGXdDU=;
+ b=Pr/rvAnhIqGiTzXc5sQcglpy/0/MldGpu68QsgZOxZH+Ls/iifHdPrU640X9G/HvA5
+ GkRgILsruBdKlMUQkJt4ibUMOUctkcQ64uVwkNkaLoiHMb4T+U3924P9IR7AmxgUt8Pg
+ QGvhyGGji85C4cY4Ab/lMVNojcWkSJGL5zJ7BAmfD5yhWYBXPoxsvtxLfYEsZJVY7LEC
+ KRoeNc5Oee+UJYYp40HlN2NjK7J6lIT3BKPK/SFKlIT5UUAnnrkeRNsAOdB4X1TLPitQ
+ 3muZUr5+eiBsjAKd+4przBxkc3m58lKxZUcg+yfiFhuRRjjeu36vPxtyCnBy78ioiaUo
+ OYNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761058396; x=1761663196;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MVnIcv6wpbRHfrTNL4tWp8Jqn8R3H5q+xlspGqWOfao=;
- b=iW5+NGEnyxTmpTYvBk3hSttD3RcoDy05s6HhpjwGDxJuaiTAm38NEOsOeVOlGh9Jwx
- rR09OxazH6edfGksPmXb9uKMLHkPWeMlYh4Bk/7tr3qJjE7maasqJJ+k1trTR/tHzrGi
- X/PDHO/m8a0iaEOLBGD1X2/IQiAve0wfmMeN4Qu5aJIRUTb3Y11IB/uhBfgDmMHMUdU3
- uPsxU7i4zAlV7blTaFpMCNx55cBi2OijR9BP9lXoeH89nVMwIF6yGKxBghnAHKHIodE7
- 9Cpj4BOxGYiTs0/cmQ7XHrT/mbMQNP4+B2RDOQzHOZVhv/xwnwXO4GRYDAcJYehG2U3J
- t7Jg==
-X-Gm-Message-State: AOJu0YyLagQxQ1nN+yYJt2wPYrudW0gVMTARnhvgy8fFm5g6zZCGIMkt
- zxUJE25mR1+vsI6XUq+pwsoPndRQMVlRpV+fAiNrm/Ga4jmhOqXL3aslDbRa3gGzo7JwwhPY7KY
- pUMAVRGY=
-X-Gm-Gg: ASbGncssT9WipLhWvyQ8vMnqnXB5g8ij+zicGtpr30J+4blfvp8qR8OoWYd7icQB8TG
- 9o0eLULGmHaN4YzDeboQldKMGBEF4KMgy8RMiNT0QV/XOViJShQTXxsSQKp1COKtCWGl0x8fhOD
- 0fdByPijUjm034tiacwv+dnoL0EYgAuZAaPkiejbGixF1pVqUUXkNWzxZrwsI+m34sMsXn6Fo4Y
- tOMsS7Q4tLRadf+8DsBWFZzrtLEah72DGjSBWrgro/nCRniaBHHHPnTgCUtvhkMrl1k5r5I5m7q
- q9VJIEnd6SA0l63DvLvK4ilwhd/9xp12A4u86tjryLEBVo9M9OJv/gak8q9sz042l/T1kGjJDkf
- pzQMxw4ytwCwiU8qNCoTUwZHX1z+Bm/lq8HD3l0ggii5J9CCVwLHjzHjB0uifXj9d0ww6d3GEkV
- 6LcptaguC2Hu1vYUYain1dRTEOLKWU5dLXejBtiL+JK5ulY1FxdTMvOzkrzunEfQFJHHH+hO0=
-X-Google-Smtp-Source: AGHT+IEYJDoQQSAN5VthxcVOeBgHBGl95cNTPBPha3rR2zTBcOQ5ZsgFUCegQrHpYAPXBKSWPNeHww==
-X-Received: by 2002:a05:600c:4e11:b0:471:c72:c807 with SMTP id
- 5b1f17b1804b1-471179079c7mr142401585e9.22.1761058395936; 
- Tue, 21 Oct 2025 07:53:15 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f009a797sm20694706f8f.27.2025.10.21.07.53.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 07:53:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
-Date: Tue, 21 Oct 2025 16:53:13 +0200
-Message-ID: <20251021145313.4584-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ d=1e100.net; s=20230601; t=1761058402; x=1761663202;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LQAijONfUONASIqkcmGwsLwEJ3D0Z+GzArhZwaGXdDU=;
+ b=vZjrxLLEhymXpmZNQcQdJ0slTKPDJXXnoUEFDt0API0C2KvsLgSY2JGJyYDvVt5J3A
+ oIachgay03Wi8qzjefZJ8luvA9T9XOdxhqkjisyIusR8VWzL1qnJh8ivOXpbJ5DcED7l
+ Fb4dWjBfxoWWGHeUASZJSrEyGsYb2Nv1oDMVfFVSR+vXQycxpb7eZwk7O4BQssYO6cAC
+ N3pEJmTyFZYJQknIh+4Ga7g0v9W4OqyMCiZ8/hNypCXwI460Mk5/IePYL7zDRvXilHIj
+ +8qB9DTw9t1h/PlLvS7nlhL8NOPo+j9MHFs24C/wBcBMBDsBjoKexEIXPvATcU3tUVcP
+ FYfw==
+X-Gm-Message-State: AOJu0Yx/5wbeo7TRgQ6D6i/tm5iU++oVGl3oJYYjgYUhR6QrbKAQX0++
+ DyiFRLoEMuNUitA6ARr0GGZSBqWZM2OopgZu0KlBOJU+C1mWWN10eth6OE9uZfapSO8Nu5/mVNu
+ XE7WKd4F4u9isWAYZ+zywT9VdE0Emljw3kqI3rZt+PQ==
+X-Gm-Gg: ASbGnctIarEzS9jGCdVnOkHPZDzYp0TIj3t5OasdewkCRm8N2UywBmi6/8JgoyJ3Hag
+ pccylvRDx3m/LiYcrYUDSD7IKCrrtKP4wL7pclbjqcXSbp9aaMDMeNMUCp6UN6dvqM0c0EDg2+4
+ iuceBfbkFIbLtjAjXVa94JyYGP1kkqoyaRpyTmqjFpxeFpWxD7ZOp5U/o41jUuAhfqR3WUISyzz
+ XkP9Z/UboiwUv6ZH/x8yFS8/IShJXYF6tpm4LLG0LvT6o0lzzRVSSkDvJaMRmqeF3KHesaZ
+X-Google-Smtp-Source: AGHT+IFI4Uv121disECUGdA7/+pzfei0K0/ylQViD+enFkurDbUDurw4Z8DWwAOepxv6pCXehukq+O9Egdxt/bk4cWI=
+X-Received: by 2002:a05:690e:1405:b0:63e:33d1:72d1 with SMTP id
+ 956f58d0204a3-63e33d1762cmr7010472d50.66.1761058402447; Tue, 21 Oct 2025
+ 07:53:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-24-peterx@redhat.com>
+In-Reply-To: <20251003153948.1304776-24-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 21 Oct 2025 15:53:11 +0100
+X-Gm-Features: AS18NWDre70ZP06hzXnwJxmvgNV4_Ci_aIWizrlgnxZLBBN_qoON3DW88Jl2HBs
+Message-ID: <CAFEAcA9otBWtR7rPQ0Y9aBm+7ZWJzd4VWpXrAmGr8XspPn+zpw@mail.gmail.com>
+Subject: Re: [PULL 23/45] migration: Capture error in
+ postcopy_ram_listen_thread()
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Arun Menon <armenon@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,93 +100,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-uint8_t is good enough to hold a property "between 0 and 0xff".
+On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
+>
+> From: Arun Menon <armenon@redhat.com>
+>
+> This is an incremental step in converting vmstate loading
+> code to report error via Error objects instead of directly
+> printing it to console/monitor.
+> postcopy_ram_listen_thread() calls qemu_loadvm_state_main()
+> to load the vm, and in case of a failure, it should set the error
+> in the migration object.
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> Tested-by: Fabiano Rosas <farosas@suse.de>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-23-36f11=
+a6fb9d3@redhat.com
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
 
-Define pullups/pulldowns properties using DEFINE_PROP_UINT8()
-macro, remove unnecessary range checks in pl061_realize().
-Update the two caller sites.
+Hi; Coverity reports a memory leak (CID 1641390) as a
+result of this change:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v2: qdev_prop_set_uint32 -> qdev_prop_set_uint8 in callers (Peter)
----
- hw/arm/virt.c        |  4 ++--
- hw/gpio/pl061.c      | 16 ++++------------
- hw/vmapple/vmapple.c |  4 ++--
- 3 files changed, 8 insertions(+), 16 deletions(-)
+>  migration/savevm.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 34b7a28d38..996673b679 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2095,6 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaqu=
+e)
+>      QEMUFile *f =3D mis->from_src_file;
+>      int load_res;
+>      MigrationState *migr =3D migrate_get_current();
+> +    Error *local_err =3D NULL;
+>
+>      object_ref(OBJECT(migr));
+>
+> @@ -2111,7 +2112,7 @@ static void *postcopy_ram_listen_thread(void *opaqu=
+e)
+>      qemu_file_set_blocking(f, true, &error_fatal);
+>
+>      /* TODO: sanity check that only postcopiable data will be loaded her=
+e */
+> -    load_res =3D qemu_loadvm_state_main(f, mis, &error_fatal);
+> +    load_res =3D qemu_loadvm_state_main(f, mis, &local_err);
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 175023897a7..28e842f22ea 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1133,8 +1133,8 @@ static void create_gpio_devices(const VirtMachineState *vms, int gpio,
- 
-     pl061_dev = qdev_new("pl061");
-     /* Pull lines down to 0 if not driven by the PL061 */
--    qdev_prop_set_uint32(pl061_dev, "pullups", 0);
--    qdev_prop_set_uint32(pl061_dev, "pulldowns", 0xff);
-+    qdev_prop_set_uint8(pl061_dev, "pullups", 0);
-+    qdev_prop_set_uint8(pl061_dev, "pulldowns", 0xff);
-     s = SYS_BUS_DEVICE(pl061_dev);
-     sysbus_realize_and_unref(s, &error_fatal);
-     memory_region_add_subregion(mem, base, sysbus_mmio_get_region(s, 0));
-diff --git a/hw/gpio/pl061.c b/hw/gpio/pl061.c
-index 1acca3f2f80..a3ac038c2f7 100644
---- a/hw/gpio/pl061.c
-+++ b/hw/gpio/pl061.c
-@@ -79,8 +79,8 @@ struct PL061State {
-     qemu_irq out[N_GPIOS];
-     const unsigned char *id;
-     /* Properties, for non-Luminary PL061 */
--    uint32_t pullups;
--    uint32_t pulldowns;
-+    uint8_t pullups;
-+    uint8_t pulldowns;
- };
- 
- static const VMStateDescription vmstate_pl061 = {
-@@ -547,14 +547,6 @@ static void pl061_realize(DeviceState *dev, Error **errp)
- {
-     PL061State *s = PL061(dev);
- 
--    if (s->pullups > 0xff) {
--        error_setg(errp, "pullups property must be between 0 and 0xff");
--        return;
--    }
--    if (s->pulldowns > 0xff) {
--        error_setg(errp, "pulldowns property must be between 0 and 0xff");
--        return;
--    }
-     if (s->pullups & s->pulldowns) {
-         error_setg(errp, "no bit may be set both in pullups and pulldowns");
-         return;
-@@ -562,8 +554,8 @@ static void pl061_realize(DeviceState *dev, Error **errp)
- }
- 
- static const Property pl061_props[] = {
--    DEFINE_PROP_UINT32("pullups", PL061State, pullups, 0xff),
--    DEFINE_PROP_UINT32("pulldowns", PL061State, pulldowns, 0x0),
-+    DEFINE_PROP_UINT8("pullups", PL061State, pullups, 0xff),
-+    DEFINE_PROP_UINT8("pulldowns", PL061State, pulldowns, 0x0),
- };
- 
- static void pl061_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index 1e4365f32c9..f3cff329244 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -326,8 +326,8 @@ static void create_gpio_devices(const VMAppleMachineState *vms, int gpio,
- 
-     pl061_dev = qdev_new("pl061");
-     /* Pull lines down to 0 if not driven by the PL061 */
--    qdev_prop_set_uint32(pl061_dev, "pullups", 0);
--    qdev_prop_set_uint32(pl061_dev, "pulldowns", 0xff);
-+    qdev_prop_set_uint8(pl061_dev, "pullups", 0);
-+    qdev_prop_set_uint8(pl061_dev, "pulldowns", 0xff);
-     s = SYS_BUS_DEVICE(pl061_dev);
-     sysbus_realize_and_unref(s, &error_fatal);
-     memory_region_add_subregion(mem, base, sysbus_mmio_get_region(s, 0));
--- 
-2.51.0
+Here, a failure in this function will allocate an Error
+object and set local_err to point to it.
 
+>
+>      /*
+>       * This is tricky, but, mis->from_src_file can change after it
+> @@ -2137,7 +2138,10 @@ static void *postcopy_ram_listen_thread(void *opaq=
+ue)
+>                           __func__, load_res);
+>              load_res =3D 0; /* prevent further exit() */
+>          } else {
+> -            error_report("%s: loadvm failed: %d", __func__, load_res);
+> +            error_prepend(&local_err,
+> +                          "loadvm failed during postcopy: %d: ", load_re=
+s);
+> +            migrate_set_error(migr, local_err);
+> +            error_report_err(local_err);
+>              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACT=
+IVE,
+>                                             MIGRATION_STATUS_FAILED);
+
+In this brach of the if(), we error_report_err(), which will
+free the error object. But in the other branch of the
+if(), we never do anything with local_err, and so we never free
+the error object.
+
+I think the true-branch of the if() needs to either
+incorporate the error into something, or else error_free() it.
+
+thanks
+-- PMM
 
