@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433F9CCD1AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C345CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJR5-0000fH-Ht; Tue, 21 Oct 2025 16:58:27 -0400
+	id 1vBJQy-0000OA-To; Tue, 21 Oct 2025 16:58:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJR4-0000Wr-4U
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:58:26 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJQt-0000KJ-Eb
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:58:16 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJR2-0002Nc-1G
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:58:25 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-470ffbf2150so1643365e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:58:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJQp-0002KV-JQ
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:58:13 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso5893768f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761080302; x=1761685102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761080289; x=1761685089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GhKwIpK6oHtKElKWV9wfvCnnIBbAtivgR1l9aH1KDRU=;
- b=d7eG6t4VUVxk+Ey2vwF972TzngwI/r9GsMe1ewd6JK1YFuxmcwzBBM1ZWea4JlbSr5
- 7UJdjBaLU3SZdOAnLqTYwsZhaSJGUr5Og7ycZBalp2ucbHhY8gGEcvTQOc9P8j9qXPni
- RA1R9FvY3TfPwQoHcg2h1G9InW414SDLvOA8QSPFlge114uyN/GRV0L7p7SFYz3reyZy
- FC9BncCeEbJqSDJhnkTamRB6N+DpWFYj3rJA7wSzahNm7OmjypqUCnMznQCd1qWdjQc5
- B1V+lX6rm7yi7pvXAOYUPQT3OPBNJJPspQxIcXsc6tVFHhrcdKqIou4f9J/4RI9tpGJb
- HnwA==
+ bh=9sl5D2OBPAk30ix5XFbA96G64ecqbTuVPaB9Fe4lYaE=;
+ b=XNVb3k9MBJThoZ44+XQjrO+b6QKnaFu5xafRltySz0G64Z9YG4sIdvyhFoYVg1xtZt
+ NFmD9tCd28Vcw9pb5f2G+TJP5C9mpBDfmCzKDafvlcBYVVi8pJbR2MmW8tXZsb1ks9cR
+ BH99lh4ZCgxL3yl6DQHg3xNRTTsvAfYiI63frvgAyRq5PCyclQRtusvRJ4p5rNKb6YKR
+ EEKt5Ay1qoCRTUsmfngGuarhy+5ZDct/O7/HcZahM1NlZymXTBua+r/IFzrQNa0n8gr6
+ nsjsX/rqwsuk07RNN+OsAZIf+SlcVQV971w08c0v8R1s57HVkDswZg18+kMqfBs4q1rC
+ WpRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761080302; x=1761685102;
+ d=1e100.net; s=20230601; t=1761080289; x=1761685089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GhKwIpK6oHtKElKWV9wfvCnnIBbAtivgR1l9aH1KDRU=;
- b=fs3Kdw5gkosQrycJK+pJ/CvIhUQxDYUCZmEv8P5ZPyb6Dc3VeUZlEeVR3YxNVd+aIL
- /8IxzROpuFldjV19d6Ze/G8V5cMEOxAsSD8LWQ5FUAz5YMwf7gcnocbfit/G8SN2/Ab9
- owOiUUDRlwndhWXTrTo2xUrIA1idRxSe+Uw4DU8aP56OlGtfbC0mNR7UDQj2S5+V6fqe
- oGKsD5vV/2gwddKKjElF2Q7sqtOynXLXBSEX0A7rVsoUhlJLPGRoKgP01L7r5iu1uKAJ
- B9ctdP0ccsNuvZhZ+a7CXjFb8Lp0soSVkhYt/5lHpbqBwNwmS8AbX1QTVa69BY4ShxKI
- R20w==
-X-Gm-Message-State: AOJu0YyYT1qh3JqbOApo12fcE5932z9gEinTnmM4whgiSpy6f6jL2SL9
- B0m5ONnGw6YB33PxLdjp7oBc1PNDX7kuM2Nzo6VIre+RhGvPj6YbWAsJI7IihSCeNyy3IRW4+jI
- qmbHJQHA=
-X-Gm-Gg: ASbGnctMcjZOkADgYKxnSCqGVijUOa4O/RQqVQJbvvitdsjiAqfSPCsTCuXWcFHTfhE
- bV6NUyynqnmy0ebXuv+r1ZNewIOTsxtyMmUx4+MXWNvtuLYV/5NyEJd68wmy89Mp6dLiIJLq9hT
- A6C88xOwYbkbgiYFCjgg7He1lNXvNhOT/dP9g+2cF7sHGLlH3yz6Yod6rpaYw8+Wau06EeCs3jF
- hI8dDg3nD3X9gb0MXJilyLK8tP3EzsWyD26f5cE7HV4iMNOjh+Np0sPe7zOCV0dggYdmtBBjmEC
- +HoEDuoAQZuTHYTUUJZgbWDCVgQPZ7IE7mQxQlSoSm+euRe85sEW9uK52gfkM6nkoJ7FNZmW7J0
- E8G35DWkvrQvklLEt8TbCso16PbkdBu4Uwyh6UlNtmY2idCqRX0sJizrNhg0pHf7gm98H8Xg30j
- g8hzRhNnC/wrumFcwBuy32uBO7FKp5KKv+iP6iTjego3DrNP5ayLxByVPxr1DE
-X-Google-Smtp-Source: AGHT+IEd/UUE56W5KjJpwQejPhpsH9urDl28j9H+KgQrbuItNFnqsfDOrr3Ib4fSrJ/nhkRfeiCx7A==
-X-Received: by 2002:a05:6000:310e:b0:426:dac0:8ee8 with SMTP id
- ffacd0b85a97d-428532554b6mr823031f8f.10.1761080301940; 
- Tue, 21 Oct 2025 13:58:21 -0700 (PDT)
+ bh=9sl5D2OBPAk30ix5XFbA96G64ecqbTuVPaB9Fe4lYaE=;
+ b=bRVulpgg7KeRGOidDLoYdBJ8xf5ZmGAIE+7Lix5OMce8dg5nqdSEyFXXwI3TW1GNJY
+ yQ6MeL93v62eY4LFhvP8duUxLoGQvg7CGWTa8IJbuEcjI8RzRt9x86armT8PtkQW4sdF
+ RJiiJQPNpHklTzpIlQOfyn55y2nhgg6vUiVm5lF13HR7ducRf02DibE5rK/vouEBUuoI
+ LU5s9YJsBHvlQ78DQA6aNLdpl7tjw99Ii7vuXrg2xEfhxqnMFhy+7a+ZEbuxRU0l4mFB
+ +2iHck2QYkm5ECvdnzribW8WqsR8x11a4cHuw5YLQK9kln37waGdadqJ49yfLstiWBqa
+ Qsog==
+X-Gm-Message-State: AOJu0YwwQZ/wmOtR1aepS2xgvEW8g/TzjLejw6V+B17jXnlp+HUZPEKk
+ 9mAWwyMUdH4OFnE9Mz09W3th6ffxfJnN8oBfoI09a1jLBxGHSDFUG+z8GnEFu0Dfci0myG+zpBf
+ 2NSAJ+jc=
+X-Gm-Gg: ASbGncsbBVp5PcxXCPRLDLLzkb60WOcRo4i2u74YBIbydECbMgElIdpaFFlREQ8aPTJ
+ 7V0nTDHmZFyPiJrBOaXaFdTB+9/YtTWE8KFjpAoTDZTtwXbeH7xml9pR6/+CB2UgZ9+29u+tmqC
+ Z8ASDuFR2HSV5aqNzyub0BA2/7I0w9tAi8y7jSQL/wxWbW38NYKauVdZSSC+yaTKXFQYjDc4awG
+ ylSvogRCBS/Znc3q+slzcGKmMi4apD/2+Y7f1m8OHB5tyvnh4zwnwcLAjvVX8cOkW98qlt1gmnY
+ dpSiepyFiDd5UpNyASFIOcv7NzqqKxW1pQrRowVwv/xvLI+kkrDyJuZHfZlZ3AuuUD/NNEBovVl
+ nOOPtrAghF1Sddnyl+Lkum15JuMrnynqAF5Tq9Xt8f8ytPtuV2tuRQhA0BySQ8rzOO+FpklnF/f
+ 8dvrm1yaeRWCOy91RzcMQznxs8zoE0BVzarqY4i28IeqRgEYGW+tFBo08GggFH
+X-Google-Smtp-Source: AGHT+IEcYx2NWo7ZVGfQ4bQn+5YRxVCrdpGy3IdED3MhyOFuAHW7g1LXvX5oHMpDysX6MzPHpf7wkg==
+X-Received: by 2002:a05:6000:1a8e:b0:427:60d:c505 with SMTP id
+ ffacd0b85a97d-427060dc6eamr11476513f8f.15.1761080289506; 
+ Tue, 21 Oct 2025 13:58:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5b3c34sm21788824f8f.17.2025.10.21.13.58.20
+ ffacd0b85a97d-427f00b9853sm21746997f8f.33.2025.10.21.13.58.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:58:21 -0700 (PDT)
+ Tue, 21 Oct 2025 13:58:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc.michel@amd.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v7 03/19] hw/arm: Add DEFINE_MACHINE_ARM() /
- DEFINE_MACHINE_AARCH64() macros
-Date: Tue, 21 Oct 2025 22:57:24 +0200
-Message-ID: <20251021205741.57109-4-philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PATCH v7 02/19] hw/core: Allow ARM/Aarch64 binaries to use the
+ 'none' machine
+Date: Tue, 21 Oct 2025 22:57:23 +0200
+Message-ID: <20251021205741.57109-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021205741.57109-1-philmd@linaro.org>
 References: <20251021205741.57109-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,96 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A machine defined with the DEFINE_MACHINE_ARM() macro will
-be available in both qemu-system-arm and qemu-system-aarch64
-binaries.
-
-One defined with DEFINE_MACHINE_AARCH64() will only be
-available in the qemu-system-aarch64 binary.
+When we'll start to use target_machine_typename() to filter
+machines for the ARM/Aarch64 binaries, the 'none' machine
+would be filtered. Register the proper interfaces to keep
+it available.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/arm/machines-qom.h | 28 ++++++++++++++++++++++++++++
- target/arm/machine.c          | 18 ++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ hw/core/null-machine.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/machines-qom.h b/include/hw/arm/machines-qom.h
-index a17225f5f92..3f64d5eb024 100644
---- a/include/hw/arm/machines-qom.h
-+++ b/include/hw/arm/machines-qom.h
-@@ -9,10 +9,38 @@
- #ifndef HW_ARM_MACHINES_QOM_H
- #define HW_ARM_MACHINES_QOM_H
- 
-+#include "hw/boards.h"
-+
- #define TYPE_TARGET_ARM_MACHINE \
-         "target-info-arm-machine"
- 
- #define TYPE_TARGET_AARCH64_MACHINE \
-         "target-info-aarch64-machine"
- 
-+/*
-+ * A machine filtered with arm_machine_interfaces[] or
-+ * arm_aarch64_machine_interfaces[] will be available
-+ * in both qemu-system-arm and qemu-system-aarch64 binaries.
-+ *
-+ * One filtered with aarch64_machine_interfaces[] will only
-+ * be available in the qemu-system-aarch64 binary.
-+ */
-+extern const InterfaceInfo arm_machine_interfaces[];
-+extern const InterfaceInfo arm_aarch64_machine_interfaces[];
-+extern const InterfaceInfo aarch64_machine_interfaces[];
-+
-+/*
-+ * A machine defined with the DEFINE_MACHINE_ARM() macro will be
-+ * available in both qemu-system-arm and qemu-system-aarch64 binaries.
-+ *
-+ * One defined with DEFINE_MACHINE_AARCH64() will only be available in
-+ * the qemu-system-aarch64 binary.
-+ */
-+#define DEFINE_MACHINE_ARM(namestr, machine_initfn) \
-+        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
-+                                            arm_machine_interfaces)
-+#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
-+        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
-+                                            aarch64_machine_interfaces)
-+
- #endif
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 44a0cf844b0..0befdb0b28a 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -9,6 +9,7 @@
- #include "migration/qemu-file-types.h"
- #include "migration/vmstate.h"
- #include "target/arm/gtimer.h"
+diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+index a6e477a2d88..67b769bd3e0 100644
+--- a/hw/core/null-machine.c
++++ b/hw/core/null-machine.c
+@@ -16,6 +16,7 @@
+ #include "hw/boards.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
 +#include "hw/arm/machines-qom.h"
  
- static bool vfp_needed(void *opaque)
+ static void machine_none_init(MachineState *mch)
  {
-@@ -1212,3 +1213,20 @@ const VMStateDescription vmstate_arm_cpu = {
-         NULL
-     }
- };
-+
-+const InterfaceInfo arm_machine_interfaces[] = {
-+    { TYPE_TARGET_ARM_MACHINE },
-+    { TYPE_TARGET_AARCH64_MACHINE },
-+    { }
-+};
-+
-+const InterfaceInfo arm_aarch64_machine_interfaces[] = {
-+    { TYPE_TARGET_ARM_MACHINE },
-+    { TYPE_TARGET_AARCH64_MACHINE },
-+    { }
-+};
-+
-+const InterfaceInfo aarch64_machine_interfaces[] = {
-+    { TYPE_TARGET_AARCH64_MACHINE },
-+    { }
-+};
+@@ -55,4 +56,7 @@ static void machine_none_machine_init(MachineClass *mc)
+     mc->no_cdrom = 1;
+ }
+ 
+-DEFINE_MACHINE("none", machine_none_machine_init)
++DEFINE_MACHINE_WITH_INTERFACES("none", machine_none_machine_init,
++                               { TYPE_TARGET_AARCH64_MACHINE },
++                               { TYPE_TARGET_ARM_MACHINE },
++                               { })
 -- 
 2.51.0
 
