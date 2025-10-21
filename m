@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55045CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 12:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451A8CCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 12:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBBwc-0006Ad-LZ; Tue, 21 Oct 2025 08:58:30 -0400
+	id 1vBBwU-00069c-Mf; Tue, 21 Oct 2025 08:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vBBwb-0006A9-4k
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:58:29 -0400
-Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vBBwY-0000GL-UL
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:58:28 -0400
-Received: by mail-qk1-x735.google.com with SMTP id
- af79cd13be357-890deb84f95so621172585a.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 05:58:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761051505; x=1761656305; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=96CYvlD6uhLxBW8TiRf/cv97M07vTXYDF933VGBl2m4=;
- b=awRnMpl3UzItFTMRhzMak8MWphg6OXaZ2/pySX6Bc8Ye6wi5Bj9eDSMHQUpzO2E0un
- vzrxUjE0mK+ufjO3meCVP1/+Jm4Cijwm40L6fi/oT0ufYT5cTu5KELFhyjFKOfJeQIaO
- 741s5/0OQ3eJDwikYxzvPwJz9sBwjoM7ZDcyzrIM3wzGFJZs0cRIDlYSdus6f408Rp52
- NhLV42LO8YbwtfT/0udHQuBdEBOVuN1w5RcLeTI5Vqw/aDNiI25/Rz9h7KJb9ra+321P
- vALN0ltzMqQ4XtUW3CyQ8JZ5u0LNjLlI1vN8/O22yno/eDrhveRBMpV6bCrqp+TQYZp5
- JoeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761051505; x=1761656305;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=96CYvlD6uhLxBW8TiRf/cv97M07vTXYDF933VGBl2m4=;
- b=OQYRvT4iJdtEwU798+Buiyib6McjUqlXkTi9KUprlZd+RvqiYUe7ii3hyAQ7JwBcYS
- cExeB83kF6SY6yhLlHIucSEjA391rMPIikGs3bZBx+taCiQLkDSp2/JAKs+rQHk8pjt7
- tm8O1NwQsRxnk8A+QifDvFNYVxNsBHloGHvdhaREQDTZGNmnLrDt0yIAJ6gmQutPM2hS
- 9JUwCKK6Dbb8fPOFWCyh7iz2vSQcog7Q6lJg+O2vy+OtXFkI5iqgXG5mpwtOSUP7PR87
- 6/RKn1ETheNrinuCaw7pqZ0/JPOADNQYgks5gRTiVGfKMccczWHxpVA8uudNaohft7fu
- MxUg==
-X-Gm-Message-State: AOJu0YxcVCfqP3c2VaQmfoaJi5la7tc358IyW0pz3D+ZQnvQosjZsBih
- 4/KUd5suTfUHt5LIcBFypYhazDl0OuF7U+vU6NBMXAvW5ENZUNE/yjrDvR99IoK/PLGHZBqbvyq
- 2duehUIdvNJW4WxaAAqyPA4jVZPENcAc=
-X-Gm-Gg: ASbGncspyA+NbHSwodK8d7bRCihCGLk+4zgLQLj05R4FhXdmBtzX637zXX7CU2RJ8+X
- yNTFQWnW65jD5igCcDhiHUO5Uh3cUidBpoOQ9olng9ddMZCiNqBfWSVLjZM1ETKaLBuedtxQjAk
- 83E+xuUO0G7v6rH+30TMr575dVQx+z0MUKvYi1l1IpixgLi3ALQG3wD/LUyfKgCCCLeMe0q37Bs
- sa6Rd7XNNz10BEmGe0N7EmQSQ1F9OJOk2KNjo7U/vJZ2pVL7Ioe7qsbrfn/ogiaEkIfc9H7qyL7
- tVV5AtVvxG7VSvzP
-X-Google-Smtp-Source: AGHT+IEt5410kUkhnjNKwQAwOSJAuLd22xXcG1+N7T5FKUMl0Z4g4dYBqiJqYqU3VDkWsGbDIbABUIiusl8bNhgAvnI=
-X-Received: by 2002:ac8:7f44:0:b0:4e8:b478:66 with SMTP id
- d75a77b69052e-4e8b4780995mr115322371cf.82.1761051505046; 
- Tue, 21 Oct 2025 05:58:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBBwQ-00069J-ND
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:58:18 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBBwN-0000An-IY
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 08:58:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EDABA5972E3;
+ Tue, 21 Oct 2025 14:58:12 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id J2gg7NigFLSw; Tue, 21 Oct 2025 14:58:10 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E20745972E1; Tue, 21 Oct 2025 14:58:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DFDBF5972DE;
+ Tue, 21 Oct 2025 14:58:10 +0200 (CEST)
+Date: Tue, 21 Oct 2025 14:58:10 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@gmail.com>
+cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>, 
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH 34/43] audio: rename AudioState -> AudioBE
+In-Reply-To: <CAJ+F1CKoi5iYZHTxMWKUtx=kRbW2BjtoAzMVGLe8by0Dnmb+KQ@mail.gmail.com>
+Message-ID: <4e621485-01c0-653f-b521-9fcc4272fa92@eik.bme.hu>
+References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
+ <20251021090317.425409-35-marcandre.lureau@redhat.com>
+ <1bd34160-d034-465b-a1ac-0e734ed40484@redhat.com>
+ <d26b8838-c4a9-443f-a651-f46901a40865@redhat.com>
+ <CAJ+F1CLoaufD_1tFUd_1uckWZLXVQ7E-GpRDZRDXtfi6unBw7A@mail.gmail.com>
+ <32170b83-473c-4eb8-96dc-9180c51fe872@redhat.com>
+ <CAJ+F1CKoi5iYZHTxMWKUtx=kRbW2BjtoAzMVGLe8by0Dnmb+KQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20251015105419.2975542-1-marcandre.lureau@redhat.com>
- <87o6q0mn4o.fsf@pond.sub.org>
-In-Reply-To: <87o6q0mn4o.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 21 Oct 2025 16:58:13 +0400
-X-Gm-Features: AS18NWDmJOIoYlqGEn3ar7nl0DFPKUYkZk0dX_xv1dcgEyZYZS2qa3OUHVsXl2Q
-Message-ID: <CAJ+F1CJ6UiUZ=rY_O41Za=yPSDoW2atbM8Yk_oSdpQ+Nkjz1uw@mail.gmail.com>
-Subject: Re: [PATCH] RFC: qdev: add legacy properties only for those
- print()-able
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x735.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-2015573042-1761051490=:49605"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,124 +80,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, Oct 21, 2025 at 4:55=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> marcandre.lureau@redhat.com writes:
->
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > The link properties are not printed in "info qtree", I don't know if
-> > this was intentional. We currently register legacy properties for
-> > link/ptr properties, but they don't have PropertyInfo getters (only
-> > ObjectPropertyAccessor, when using non-legacy properties)
-> >
-> > By not registering a (unusable?) legacy property, "info qtree" can now
-> > print the link.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  hw/core/qdev-properties.c | 5 ++---
-> >  1 file changed, 2 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> > index b7e8a89ba5..fe260a9670 100644
-> > --- a/hw/core/qdev-properties.c
-> > +++ b/hw/core/qdev-properties.c
-> > @@ -1143,14 +1143,13 @@ static void qdev_class_add_legacy_property(Devi=
-ceClass *dc, const Property *prop
-> >  {
-> >      g_autofree char *name =3D NULL;
-> >
-> > -    /* Register pointer properties as legacy properties */
-> > -    if (!prop->info->print && prop->info->get) {
-> > +    if (!prop->info->print) {
-> >          return;
-> >      }
-> >
-> >      name =3D g_strdup_printf("legacy-%s", prop->name);
-> >      object_class_property_add(OBJECT_CLASS(dc), name, "str",
-> > -        prop->info->print ? qdev_get_legacy_property : prop->info->get=
-,
-> > +        qdev_get_legacy_property,
-> >          NULL, NULL, (Property *)prop);
-> >  }
->
-> The old code confuses me.  Let's go through it real slow.
->
->     /**
->      * qdev_class_add_legacy_property:
->      * @dev: Device to add the property to.
->      * @prop: The qdev property definition.
->      *
->      * Add a legacy QOM property to @dev for qdev property @prop.
->      *
->      * Legacy properties are string versions of QOM properties.  The form=
-at of
->      * the string depends on the property type.  Legacy properties are on=
-ly
->      * needed for "info qtree".
->      *
->      * Do not use this in new code!  QOM Properties added through this in=
-terface
->      * will be given names in the "legacy" namespace.
->      */
->     static void qdev_class_add_legacy_property(DeviceClass *dc, const Pro=
-perty *prop)
->     {
->         g_autofree char *name =3D NULL;
->
->         /* Register pointer properties as legacy properties */
->
-> The comment talks about "pointer properties".  We used to call
-> properties defined with DEFINE_PROP_PTR() that way, but these were
-> deleted years ago.  The comment is even older.  I'm going to ignore it.
->
->         if (!prop->info->print && prop->info->get) {
->             return;
->         }
->
-> To get here, prop->info->print || !prop->info->get.
->
->         name =3D g_strdup_printf("legacy-%s", prop->name);
->         object_class_property_add(OBJECT_CLASS(dc), name, "str",
->             prop->info->print ? qdev_get_legacy_property : prop->info->ge=
-t,
->             NULL, NULL, (Property *)prop);
->
-> If qdev property @prop has a .print() method, we create a QOM property
-> "legacy-FOO" of type "str" with qdev_get_legacy_property() as .get(),
-> and no .set() or .release().
->
-> qdev_get_legacy_property() is a QOM .get() wrapping around qdev
-> .print(): it calls .print() to format the property value as a string
-> (arbitrarily limited to 1023 characters), then visits it with
-> visit_type_str().
->
-> Aside: there seems to be just one property that implements .print():
-> DEFINE_PROP_PCI_DEVFN(), in qdev_prop_pci_devfn.  Quite a lot of
-> infrastructure just for that.
->
-> Else, prop->info->get is null, because prop->info->print || !prop->info->=
-get.
-> So we create a QOM property "legacy-FOO" with no .get(), .set(),
-> .release().  Why?
->
-> Your patch gets rid of these.  How does this make "info qtree" show link
-> properties?  Hmm...  qdev_print_props() uses "legacy-FOO" instead of
-> "FOO" when it exists.  But a "legacy-FOO" without a .get() will fail.
-> When it does, the property is skipped.
->
-> Is this what makes the patch work?
->
+--3866299591-2015573042-1761051490=:49605
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
+On Tue, 21 Oct 2025, Marc-André Lureau wrote:
+> On Tue, Oct 21, 2025 at 2:49 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> On 10/21/25 12:40, Marc-André Lureau wrote:
+>>>>> BE and FE aren't used in existing code though.  Looking at current use:
+>>>
+>>> There is a top-level backends/ though. I meant to say that it's
+>>> usually clearer for everyone when we talk about "backend" vs
+>>> "frontend" (or not?), and I wish we would follow that naming more in
+>>> the code.
+>>
+>> Yes, but the front-end should have a *pointer* to a backend.
+>>
+>>>>> - BlockDriverState*/BlockBackend*
+>>>
+>>> I am not very familiar with the block subsystem, but it is seems
+>>> BlockBackend is actually the backend and BlockDriverState is
+>>> implementation data detail. Correct me if I'm wrong
+>>
+>> Yes, note the "*".  What I meant above is "the frontend has a
+>> BlockBackend*, which itself has the internal BlockDriverState*".  Same
+>> for character and NICs below.
+>>
+>>>>> - Chardev*/CharBackend
+>>>>>
+>>>
+>>> Those are actually always confusing... and I remember I attempted to
+>>> rename it in the past... CharBackend is the front-end side..
+>>
+>> Yes, they are confusing.  I'm not sure why it failed, but
+>> s/CharBackend/CharFrontend/ does get my vote.
+>>
+>>>> QEMUSoundCard's name field is basically unused, and QEMUSoundCard should
+>>>> be just an Audiodev*.  There's no need for a separate AudioFE struct.
+>>>
+>>> For audio, it's pretty obvious that we have "backend" object to
+>>> implement the host audio subsystem details, while "QEMUSoundCard" is
+>>> the "frontend", or "client/user" context.
+>>
+>> I agree, but unlike character devices, QEMUSoundCard is not needed at
+>> all.  So you can drop it and only leave Audiodev*, or AudioBackend* (but
+>> I prefer Audiodev* which matches both the option name and Chardev*).
+>>
+>
+> I see, I'll try to remove QEMUSoundCard.
+>
+> AudioState can't easily be renamed to "Audiodev" though, since that's
+> the QAPI type name. There are slight typename differences between QAPI
+> types for chardev and audiodev. Is it breaking QMP APIs to change
+> typenames? I guess not, I might be wrong. However, this will likely
+> break external code generators based on QAPI (qapi-rs etc)..
 
-Yes, that matches my understanding and I agree about your feeling
-about the infrastructure just for DEVFN. But at the same time, it's
-nice to have and I don't have a proposal to change that :)
+I'm getting lost where this is going but keeping AudioState for the QOM 
+type seems better than using another name just to try to be consistent 
+with char backends that was said to have a confusing naming above. So 
+maybe keep the QOM convention for audio and call it AudioState and later 
+try to match Char to this if that needs similar QOM'ification? If this is 
+replacing QEMUSoundCard then maybe AudioCard can also be considered for 
+keeping consistency with local names. But I don't know what I'm talking 
+about so I stop here and let you agree on something.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Regards,
+BALATON Zoltan
+--3866299591-2015573042-1761051490=:49605--
 
