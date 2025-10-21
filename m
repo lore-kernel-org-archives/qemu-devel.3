@@ -4,102 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32570CCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 14:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C3CCCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 14:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBD5Q-0000b3-Of; Tue, 21 Oct 2025 10:11:41 -0400
+	id 1vBD60-0000pj-2R; Tue, 21 Oct 2025 10:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBD5L-0000Zw-SG
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:11:36 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBD5m-0000ke-VE; Tue, 21 Oct 2025 10:12:05 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBD5J-0001b8-48
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:11:35 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 45ABE5972E3;
- Tue, 21 Oct 2025 16:11:28 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id C9aojm23aPQB; Tue, 21 Oct 2025 16:11:26 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 189265972E2; Tue, 21 Oct 2025 16:11:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 142B45972DE;
- Tue, 21 Oct 2025 16:11:26 +0200 (CEST)
-Date: Tue, 21 Oct 2025 16:11:26 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-cc: qemu-devel@nongnu.org, pbonzini@redhat.com, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Igor Mitsyanko <i.mitsyanko@gmail.com>, 
- =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
- Frederic Konrad <konrad.frederic@yahoo.fr>, 
- Alberto Garcia <berto@igalia.com>, Thomas Huth <huth@tuxfamily.org>, 
- Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jason Herne <jjherne@linux.ibm.com>, 
- Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Magnus Damm <magnus.damm@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- "Collin L. Walling" <walling@linux.ibm.com>, 
- Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Corey Minyard <minyard@acm.org>, 
- Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Samuel Thibault <samuel.thibault@ens-lyon.org>, 
- Michael Rolnik <mrolnik@gmail.com>, 
- Antony Pavlov <antonynpavlov@gmail.com>, Joel Stanley <joel@jms.id.au>, 
- Vijai Kumar K <vijai@behindbytes.com>, Samuel Tardieu <sam@rfc1149.net>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Raphael Norwitz <raphael@enfabrica.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, 
- "reviewer:vhost-user-scmi" <mzamazal@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
- Jason Wang <jasowang@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>, 
- Lukas Straub <lukasstraub2@web.de>
-Subject: Re: [PATCH] char: rename CharBackend->CharFrontend
-In-Reply-To: <CAMxuvaz8GueSp-vPHFWnbv+Odcy63Cz_hZHd3NzReWXp3pnsqg@mail.gmail.com>
-Message-ID: <6c5e599f-f106-e89e-2a2d-6760a2b65c08@eik.bme.hu>
-References: <20251021122533.721467-1-marcandre.lureau@redhat.com>
- <01a51fe7-4414-e787-ddf5-5ede0c1e1e74@eik.bme.hu>
- <CAMxuvaz8GueSp-vPHFWnbv+Odcy63Cz_hZHd3NzReWXp3pnsqg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBD5k-0001ee-HM; Tue, 21 Oct 2025 10:12:02 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LCDhB2001179;
+ Tue, 21 Oct 2025 13:26:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cwImrI
+ ZkdEztsUTOZiZHWIUdy0Yh1BFQJW+Pg4Ay8sk=; b=pu/8MhRQ3wURxI81YLuigO
+ A5h/fOIOw0sm7erlsyaSl82w52zlGxh1Pb1cGgN4zI1g8WLhCyRxLhovWUiuRgNk
+ gy1Cvnf6HLtXcE6Iq3Qw4Ttq40iuMwXufzB2MqxRSFrjwFWFWu6dFeCGL9evehTk
+ SJE7NrvrJTXVUa7//fTmkgR7qzgyU9Gsq54OEju17obQhuItNBR9tX+g0fv9cMFV
+ Ye6QMaYiW8KR6CYRtRj6jc4YRO+i96p9F37S0AI9hGaM4jS0Gx3WkET4O8of3wTc
+ P9Wq4mCs/ItazHHJADB11ClauCxWVhXAIR8gNG2WWyjdVcTuqaXILToL3sSMzokg
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33f778a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 13:26:35 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LDFEL4001474;
+ Tue, 21 Oct 2025 13:26:35 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33f7784-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 13:26:35 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59LCj5wB002324;
+ Tue, 21 Oct 2025 13:26:34 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejar0s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 13:26:34 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LDQX5663832428
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 13:26:33 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E5B75805F;
+ Tue, 21 Oct 2025 13:26:33 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A19E758043;
+ Tue, 21 Oct 2025 13:26:30 +0000 (GMT)
+Received: from [9.39.25.124] (unknown [9.39.25.124])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 21 Oct 2025 13:26:30 +0000 (GMT)
+Message-ID: <602c19bc-bed9-43c2-b98c-491b75921604@linux.ibm.com>
+Date: Tue, 21 Oct 2025 18:55:53 +0530
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1519664904-1761055886=:98406"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/11] hw/ppc/spapr: Inline spapr_dtb_needed()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20251021084346.73671-1-philmd@linaro.org>
+ <20251021084346.73671-5-philmd@linaro.org>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20251021084346.73671-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68f78a0b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=Rnii0OVWSoyPs2-5-ZUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: OJPBdmFxcI1nz1-YSuMhFXb9JA2ldvK7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX+kRD5Uf7tfgT
+ rTBvnuRFfZd8npAFBRc2yNrzDtXpgb6Iwcr1HCRkIUgMg01u1GXmnPf20fsmwGgXpU4T6rAlqP8
+ ccJ4nCx/TqKiwng1D8ohreXFQSkuAj2oUfELEeFIYAYxda/cqPSPm4Qzglh3j4CgF2RhEgyP9WG
+ KFKwXruEDuYbHbGCchKm9dXLRAWVtsyy/m3VmeOmBThg2vGELmRjwtjlXrDLBboHqTvXAEr4nRY
+ e+kkOVgEom1fdQMoO1N80X2M1Vi6AeiXcZAc1tJz3gDV+N+hMtrUCE9Qff9Xx9MGQKWy/v7GZOt
+ dHNx5DT1rsdMf3sombt/84+xlYDiSt1M/Gha7pcL7oFLVWl3qMHhZk7VZ1IpZcJrf8PsakhmbLK
+ DW7fMXc/TkWkxIbUrWBvHs2Uca+afg==
+X-Proofpoint-ORIG-GUID: dTGD7Ser0z01z-nMZKlhEMcmtjKsd02O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,51 +131,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hey Philippe,
+The commit message says that this commit is inline-ing 
+spapr_dtb_needed(), but it is actually removing it. I think it's better 
+to convey that in the commit message.
+Or did I miss something ?
 
---3866299591-1519664904-1761055886=:98406
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/ppc/spapr.c | 6 ------
+>   1 file changed, 6 deletions(-)
+>
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 458d1c29b4d..ad9fc61c299 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -2053,11 +2053,6 @@ static const VMStateDescription vmstate_spapr_irq_map = {
+>       },
+>   };
+>   
+> -static bool spapr_dtb_needed(void *opaque)
+> -{
+> -    return true; /* backward migration compat */
+> -}
+> -
+>   static int spapr_dtb_pre_load(void *opaque)
+>   {
+>       SpaprMachineState *spapr = (SpaprMachineState *)opaque;
+> @@ -2073,7 +2068,6 @@ static const VMStateDescription vmstate_spapr_dtb = {
+>       .name = "spapr_dtb",
+>       .version_id = 1,
 
-On Tue, 21 Oct 2025, Marc-André Lureau wrote:
-> On Tue, Oct 21, 2025 at 5:25 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
->> On Tue, 21 Oct 2025, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> /**
->>> - * struct CharBackend - back end as seen by front end
->>> + * struct CharFrontend - back end as seen by front end
->>
->> I stopped here, haven't read the rest of the patch but the above comment
->> seems to become inconsistent. Which is the front end and back end now?
->>
->>
-> It's the "frontend side" of a chardev "backend". Naming it CharBackend has
-> always been the source of confusion, since the actual backend is Chardev.
-> There was earlier attempt to rename it and various complains. I believe
-> this is is long overdue.
-
-Comment after patch says: "CharFrontend - back end as seen by front end" 
-This can't be consistent as it calls CharFrontend a back end.
-
-Maybe it's actually the frontend/backend terminology what is confusing so 
-just swapping the names won't fix that. Better find some clearer naming 
-instead? Maybe something with Guest/Host or we already have 
-chardev/blockdev/audiodev (matching the command options to specify these) 
-for backends so call backends like that. But then I don't know what to 
-call guest side as it's added by -device so could be CharDevice but 
-CharDevice and Chardev does not seem too clear either. Maybe ChardevGuest 
-ChardevHost or something along those lines?
-
-Alternatively it may be easier to just add a file to docs first, listing 
-these for existing frontend/backend pairs and explaining which is which 
-before renaming anything and once we have a list of all of them at one 
-place we can see what is the easiest way to rename them with least churn. 
-I think that's similar to what Peter also proposed in previous reply. I'm 
-afraid that renaming only some of these won't make them less confusing.
+Does this version number need to be incremented ?
 
 Regards,
-BALATON Zoltan
---3866299591-1519664904-1761055886=:98406--
+Chinmay
+
+>       .minimum_version_id = 1,
+> -    .needed = spapr_dtb_needed,
+>       .pre_load = spapr_dtb_pre_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32(fdt_initial_size, SpaprMachineState),
 
