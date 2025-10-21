@@ -4,90 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CB6CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9473BCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBAAR-0001ju-DQ; Tue, 21 Oct 2025 07:04:39 -0400
+	id 1vBADw-000322-6R; Tue, 21 Oct 2025 07:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBAAM-0001ih-Aj
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:04:34 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <msuchanek@suse.de>) id 1vBADu-00030t-GV
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:08:14 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBAAK-0003GO-Di
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:04:34 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47114a40161so11605005e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 04:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761044669; x=1761649469; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8vv9/PEKtlnIDMF7ULGPxN0cdBSG0BVV0CmxG/jvMKQ=;
- b=V03Yuj/T7OHMHX35yeb756wRfYv7vgDo411NgOYF0t0by4kd64oShefRulMFBo+o5D
- AfBR37eQcLUREMlmRvYRil5UhOCyuuav4IgPqbAevcu1b2uqHtHphoWDSzM214LhIQOh
- VW40/VrMrl2QByTPu9DjWHIYM52ILNS6Nmfhp844zM2ml3S7lfSL0+uDJ6xFvtA2+R/q
- 3pAin5vqeui0MKZX3T1X9KQMC9GbsHxqLUQqYyG8i656l6V5RxKjBoyKYIIMit8JfHuH
- LrV8XaCHTBL8MJ9og16EuvyLzoncDChs6CNcHiTmAfInsT+3cudEjx0nJUQguzK5+jlF
- pf9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761044669; x=1761649469;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8vv9/PEKtlnIDMF7ULGPxN0cdBSG0BVV0CmxG/jvMKQ=;
- b=xIzPFxYlbzNDbPmW1LmNtG1A+PaGPxIwLL3+QMUmZFFOWVrUjwwcn1iwelbLiILyQX
- Oxs95wU2iHgfL+dxUmHyfDQr4CEED6CIPemwlUsbMUeHnOZ9SvHIKi07ONTqP2AMTtJJ
- eVSh9SQRzdAeKZ2Kv7AhL5sUvTHxEhwcfy/RHbRKVC7yDXZN5FJ1wE11ccjiu5PwMbUC
- 7ZsqQm49LfHrrUZozyz3NhuZtchh8Qw+PcmnfdAfssdFTwx+BJfycXxSo97KzcoXG2km
- J1AyDX9mzgHEk7RM1n8BHgNxng65bSp2g/7Tqgkbocvg1bI2gQC/z0mDGMZiu3m17djz
- 4syQ==
-X-Gm-Message-State: AOJu0YxFtzvaLlXtywmtOV5Fr9m+crcnBA5hZfdhAonxTbR+4yVeGXFt
- CZtGMpETdhk5Tzn4HL82Ld6qpKDZFAQgJ8D8Nn8fZw06Rh+U6Ag1Xud7sYMnQlgOJ/coPYdxUki
- bnRSylgY=
-X-Gm-Gg: ASbGncsbJWlfIEg+E2JGQHEuYBf2g7VCJ4j4rW7sbNFI7V9b9aIqPp9u8+kqqVcT7cZ
- KC+e8C/GS0vsu8d7+9+1Jn1MjlH0wFGG4if7cXaQzmybcxaiOWxjhB2cd7w3aoS5hL/8okOfwgg
- pRagL9VL8q3u8d75cBcaLutjcFje4M8tAQl1yryw+nU4lGxyv+4M4W5MkimDTOZ7vlevKXY02mX
- Na4aHtufaF9odzVESLUS61aftX4x0xmT6ipQ9o6uCzyuBfOcNc5UBAcnGsJDWzEFG3/ju1iRbc+
- 6umv5bnjW0YhRvAEhR8//IRHWLGMj8j6bjpUm2jjYKPEoY7b76oC4bVPOUOzHh5RaHuo2SJvgGH
- aQmDIq91llIO/A9JK8XNgvBHzuvGuo5Mz+byNhRlJQx1ma+G1PujxZq2jr5ZSn9vfJFGK7m5pCQ
- V1TDL8kZRU7LX3YIoaPEpTHSyYqPD7/mZIzrS9XCxrCU3p8K1BFA==
-X-Google-Smtp-Source: AGHT+IGB+0YzsJHVRX/3U55NHWvcBKArwVcVnTolWAKZQazTpcc+LydtphPE38wdTc/ZbSViVDe04g==
-X-Received: by 2002:a05:600d:420f:b0:471:131f:85b7 with SMTP id
- 5b1f17b1804b1-4711787dcbdmr117863165e9.15.1761044669496; 
- Tue, 21 Oct 2025 04:04:29 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496d26affsm13793315e9.12.2025.10.21.04.04.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 04:04:28 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, qemu-arm@nongnu.org,
- Troy Lee <leetroy@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/arm/aspeed: Remove ast2700fc self-aliasing
-Date: Tue, 21 Oct 2025 13:04:27 +0200
-Message-ID: <20251021110427.93991-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <msuchanek@suse.de>) id 1vBADs-000437-Dg
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:08:14 -0400
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 82D611F397;
+ Tue, 21 Oct 2025 11:08:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761044884; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AaBBd+XdryUfpAsID7YC7Ekp97FYZ09q7tdZODr7lks=;
+ b=ubj3blZhn7dJbHx6ALKD0ISKr/cmhyzYQl2hRSLgIKbVR92Fp3/hJgCoP7Whj+7OUHlMA9
+ cZlT7drJ6jg4OLmJbPSHfnPZPKesiCsVDQsH0fjnRCXrL2yGohWqqRFpY9pspJhUQ3luzN
+ 8ZmQUY2/rpg7FGKTIgqDZeuHJCXuhts=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761044884;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AaBBd+XdryUfpAsID7YC7Ekp97FYZ09q7tdZODr7lks=;
+ b=rnq1UIRVjq6ZITQA/eaMk71CQCsyuxsbrstkgcjh7EhOTXUCUL4LCR0XY+FvFNCdsGmkNT
+ ydQxx2pJRI8Q8UCg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761044880; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AaBBd+XdryUfpAsID7YC7Ekp97FYZ09q7tdZODr7lks=;
+ b=B/lq3WTD319V36Nb4MLJVyyeULhm50bw+ULGwvnlOEDhiF5yx39eauFSn71Lj7yh0Cylc+
+ 6vN2HBcj0a226D5Yp8aKq5uBXPTiS2/Nc9qFUfblU7zBjNhe4yUax+c22mG6JrRJ9rHbXH
+ xmy5O6EtL3G26o1QI6mddXv9lWtsDHM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761044880;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AaBBd+XdryUfpAsID7YC7Ekp97FYZ09q7tdZODr7lks=;
+ b=dx2E3qT9/Gvlkm58DN/iTQygC9LYkVHzTXnwGobWYkBE3ylrhqeh8jsw66DlyCq7Tdhu7p
+ uf//8HCHtTa3NeCQ==
+Date: Tue, 21 Oct 2025 13:07:59 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH v2 00/11] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
+ pseries-4.2 machines
+Message-ID: <aPdpjysqFBAMTvG-@kitsune.suse.cz>
+References: <20251021084346.73671-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+In-Reply-To: <20251021084346.73671-1-philmd@linaro.org>
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[9]; RCVD_COUNT_ZERO(0.00)[0];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[kitsune.suse.cz:mid,kitsune.suse.cz:helo];
+ FREEMAIL_CC(0.00)[nongnu.org,linux.ibm.com,gmail.com,vger.kernel.org,redhat.com];
+ MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=msuchanek@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,31 +116,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove pointless alias to the very same machine:
+Hello,
 
-  $ qemu-system-aarch64 -M help | fgrep ast2700fc
-  ast2700fc            ast2700 full core support (alias of ast2700fc)
-  ast2700fc            ast2700 full core support
+I noticed removal of old pSeries revisions.
 
-Fixes: a74faf35efc ("hw/arm: Introduce ASPEED AST2700 A1 full core machine")
-Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
----
- hw/arm/aspeed_ast27x0-fc.c | 1 -
- 1 file changed, 1 deletion(-)
+FTR to boot Linux 3.0 I need pSeries-2.7 (already removed earlier).
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index a61ecff3909..463dd30cc5d 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -180,7 +180,6 @@ static void ast2700fc_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
--    mc->alias = "ast2700fc";
-     mc->desc = "ast2700 full core support";
-     mc->init = ast2700fc_init;
-     mc->no_floppy = 1;
--- 
-2.51.0
+The thing that broke booting linux 3.0 for me is
+357d1e3bc7d2d80e5271bc4f3ac8537e30dc8046 spapr: Improved placement of
+PCI host bridges in guest memory map
 
+I do not use Linux 3.0 anymore which is the reason I did not notice this
+breakage due to old platform revision removal.
+
+At the same time quemu is sometimes touted as a way to run old OS
+revisions. That does not work very well for pSeries.
+
+Thanks
+
+Michal
+
+On Tue, Oct 21, 2025 at 10:43:34AM +0200, Philippe Mathieu-DaudÈ wrote:
+> v2: Rebased on https://lore.kernel.org/qemu-devel/20251009184057.19973-1-harshpb@linux.ibm.com/
+> 
+> Remove the deprecated pseries-3.0 up to pseries-4.2 machines,
+> which are older than 6 years. Remove resulting dead code.
+> 
+> Harsh Prateek Bora (5):
+>   ppc/spapr: remove deprecated machine pseries-3.0
+>   ppc/spapr: remove deprecated machine pseries-3.1
+>   ppc/spapr: remove deprecated machine pseries-4.0
+>   ppc/spapr: remove deprecated machine pseries-4.1
+>   ppc/spapr: remove deprecated machine pseries-4.2
+> 
+> Philippe Mathieu-DaudÈ (6):
+>   hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
+>   hw/ppc/spapr: Inline spapr_dtb_needed()
+>   hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
+>   target/ppc/kvm: Remove kvmppc_get_host_serial() as unused
+>   target/ppc/kvm: Remove kvmppc_get_host_model() as unused
+>   hw/ppc/spapr: Remove SpaprMachineClass::phb_placement callback
+> 
+>  include/hw/ppc/spapr.h     |  16 --
+>  include/hw/ppc/spapr_irq.h |   1 -
+>  target/ppc/kvm_ppc.h       |  12 --
+>  hw/ppc/spapr.c             | 299 ++++++++-----------------------------
+>  hw/ppc/spapr_caps.c        |  12 +-
+>  hw/ppc/spapr_events.c      |  20 +--
+>  hw/ppc/spapr_hcall.c       |   5 -
+>  hw/ppc/spapr_irq.c         |  36 +----
+>  hw/ppc/spapr_pci.c         |  32 +---
+>  hw/ppc/spapr_vio.c         |   9 --
+>  target/ppc/kvm.c           |  11 --
+>  11 files changed, 77 insertions(+), 376 deletions(-)
+> 
+> -- 
+> 2.51.0
+> 
+> 
 
