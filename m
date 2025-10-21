@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B84CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 116F5CCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJGT-0004nq-F9; Tue, 21 Oct 2025 16:47:30 -0400
+	id 1vBJGS-0004nP-PO; Tue, 21 Oct 2025 16:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGQ-0004kH-6R
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGQ-0004kO-IO
  for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:26 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGO-00013d-9L
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:25 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46e6a689bd0so57697215e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGJ-000131-56
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:26 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-42701b29a7eso162192f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079641; x=1761684441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761079637; x=1761684437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5qQhUmfu0ijfC215SBBbz2xixP8xuF3X5oCDjiJUZ2A=;
- b=St09JX1WXvMi3TuZtFCdhu7tgrA69CFNeKk9pfUf/QuICf2rSa9rKVQRtWgHMrU16P
- ejPVt9EyZACF44L2NQi0/laBfhpOrJ57gu1zdtrib/x2dHxoF8hvSFoVOtVuv47V5h9z
- ZnAXgK6qhwmHk79q9T1ZU8wFgdLucNxWxUGju7LNDemvCk3JvzrMsRx/0YwToeYXmlGD
- DbPFB4s2L+lL4sckEZs4sKFwPI0a8mjUj05hS+0dp60E+/LDa8XCpfUheLsYT4/YNtnE
- gw4O7vwgBUZWE5onOVzVHGw2TChGeflClOK6IXnw2wpN7mLzfVHFDFb6tufuO7Qitr/T
- bCCg==
+ :reply-to; bh=KBC6i3+MkunkUVGrLLzktXv08p0y8JKjQ+ZBub6zkz0=;
+ b=u30Cdq++sWEtXvlyYu9N7XCiYxhnGUc/S3dDhVTjFNkstHfnaUb6UOTYbbqssWkULY
+ 4aLgxCRiVEpwDNA6BIxwUjcaJpYxDKWBzjlZmxOufWcrNqQUenqR/0usgWp/5hXofJ3Q
+ iqW7UfTIxkJiDKxqlwLjZxgMqdmgl3GpKwcVwRwxSq1g0BNTZ3dyJ8nBoUSb+theAmSK
+ sP9RmGNg3imwUixJjtmW4xql7mGrUwV+3pO4X9S4cTUdn++rKZYcWK8pIBVvKr5/l+1o
+ DOS7tNTLaMn4UbJYo7y2CA2NhFGVOvRk3U5vpg0EeZN42Egs/yFFIYHNnEYOAHHhwF+8
+ Sf0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079641; x=1761684441;
+ d=1e100.net; s=20230601; t=1761079637; x=1761684437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5qQhUmfu0ijfC215SBBbz2xixP8xuF3X5oCDjiJUZ2A=;
- b=pANizN5CFCZgnV1ToAh34oPvU6yr3MGF4ovQuVOFBksx7h265IOYQpG8qlrJwY2ReQ
- Bxim4WC7ZgmB63KDHldMmye2MfU/bP7O4N/BOhM0TTuJnaQEXTOLaYSEzzQ25a81NxYc
- yU757pqOgIAu6Qaqg5WS5zWQ8F5Vix1Hk9UkG6Ofr7L3QNY0k3vKAzhaswWP2OWjFhXJ
- sa6D7Tvb8gFgm310b2IFI8S2iMeatJsFcs/hfFgTPiSbRWQupICB3E6zfftuRLx3kNHB
- dr8S0D3/FzEslV8vkCmwQUTWpk8A8N1o33hTyWyiPIJYCvnX7/Ui9rLSVJ36KjNs+bC5
- oI/w==
-X-Gm-Message-State: AOJu0YzVfAFy4RqKdCyIjRpelMIuxjJwER4mdVP5s3EtQRvo9L54UWXO
- 9Bwa4BIi+wLdvaPkrLMBjhJ4mQY16cs6QwxharIjkomaCRX1uMO8w6LhvpRvhudhYcn+I34muNU
- rU+YILNk=
-X-Gm-Gg: ASbGncu1ACtb5UHz01JNECXLCtjQ6OAgHRcebnC8TdTBlSL36q9s6q/u7VQnTi4leR7
- be4FqV/iRvcRiMz0k5faTS9FLHoMmBPG6akEv3Wh0Boh8BeFdP455stRMnFg7694yAbTTfCkG0i
- v7eqFCeFWaQT1dxM1enM3vIrbPN+ZgHP2TSDeP/yUvnbdKzW0rbdYz0R2GScmDxGRerD+q1Dw4a
- jennh0OVrP06wDmLbncjJYRkUG3W2wUwQyLpNupmwEBeEZkmolK+MLmjqdnC/CMOQxP1dPYrG0i
- vPy1kBxQGNHQlKTpRyj/IDJvJs6Iw9qoTQNc6+KAf5+i4d42XmEGDOVP848wWQ5LkbGsa7zWSy7
- 0BEQC5/gnrCDPSax9dwPZIm7iVZpObOkjnB6eK+W24LxNl7H9n6BtWS4gzsRIn5vIADp8NNdKMH
- VrZUqtYBxVNqUS/j8UWJo19IIuYkjuDOuWaG193bpA//bFbyRjSA==
-X-Google-Smtp-Source: AGHT+IHL43kyulivHlVCJS6paN4cUn6qlNtFfSWej8eFue1H4lrFvaNuevJDG70UFO/41MiB0eeQLA==
-X-Received: by 2002:a05:600c:1f93:b0:46e:761b:e7ff with SMTP id
- 5b1f17b1804b1-4711791c66fmr151450385e9.28.1761079641565; 
- Tue, 21 Oct 2025 13:47:21 -0700 (PDT)
+ bh=KBC6i3+MkunkUVGrLLzktXv08p0y8JKjQ+ZBub6zkz0=;
+ b=T6dZ9jGhZcSMLqgP23hE9hXD06m0Nn+bT3Jwxlo0NgIqg41lrA+nWVh2khLNOLiO0d
+ CRzmbSgtNOVjo5O2PQeaoklpVeSGT3H9Thejw6cwA4UJFoCQGXEobEpVqLG1rsEIw+P1
+ Cije2uCU3wFcZZbM1v9Di+Fhv0mZnPwEXtAfzA4Ew8MOA9+BA0mDtPfYpzdZNGUNdFXM
+ 2JAneduShKSDeGNu1AzUPFwCcldcHF9hxpD4KuzrUnq810T9JvKZQ0AF6eGo1WA3XWnr
+ AN5rtFLZ2ULWLq+ppGdLF3ANgOypUOxsFbhk/dx69IsArR5PuiZkQ4t9TD5cwO6FWILE
+ YLSw==
+X-Gm-Message-State: AOJu0Yx5BcDAgp6YzUhGfRSm1SUgeOqQWG8cbPfnG0DR1ItJHeCWroZd
+ Iz7QOhQZjR6eGlqeX724rnI39zDRI+RdtMmHM4DZkH7J5qod4UsTfXsJjy9PRi6b5MN3oTo6KPF
+ VpF27U0c=
+X-Gm-Gg: ASbGnctTwcK5UFMB2tjpt/KPgTP8rcsiANl3hrigqroaj8h5cjZWpTeJB1HsGEqg9Oi
+ 50ElV7xD/Y4KtpqgniOFQf4qPcBxsNAIiYYIG+7OiN8Wd+pEtB75yf1j9EAXd7WNqBWZKGmTnMx
+ eRUMwOJTLPmfGg/9S55BM2hQI9u10iSku4bbBut4EmLV0zam0OcLmCgaTxzp+Niy3Zv3nsR+Y7D
+ TEBXIBdww+BmwcCWhlHyrcRTn4LyubGY8VFv10Cpc8pbKPLzLGN25wqYGJPfEbvlUyVs3p83mXV
+ Tw+Lbc4xtkn9hGGL62Cji5Zuj5gomoWrV1jNDFO8WvNUORpwaSt818IlFaV25NJ4CxMPw/1v2Wz
+ azkWXriPMyBg2SJbLhO6CMSdkguHWcujAyZ9OB8zBl1M/1CPhukQZQKX7EuxJD7T7IPZ/2PXeeK
+ x6PTOMrqxxr/27PaIk7T4OfrUdlZzDVpiq+JTltlZNtFs0SnVtpQ==
+X-Google-Smtp-Source: AGHT+IHnLdnMmTbkUjNXGUHggtxg4iuU2A0hrWWQjX7MLFRqPTa2tri0jrlcUwU3+hAlbOQ/3FP9+w==
+X-Received: by 2002:a05:6000:248a:b0:3e9:54d1:e708 with SMTP id
+ ffacd0b85a97d-4285326f900mr656353f8f.20.1761079637046; 
+ Tue, 21 Oct 2025 13:47:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c42b4867sm9603925e9.14.2025.10.21.13.47.20
+ ffacd0b85a97d-427ea5a102fsm21995469f8f.1.2025.10.21.13.47.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:47:21 -0700 (PDT)
+ Tue, 21 Oct 2025 13:47:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/45] hw/pci-host/raven: Simplify direct config access address
- decoding
-Date: Tue, 21 Oct 2025 22:46:18 +0200
-Message-ID: <20251021204700.56072-5-philmd@linaro.org>
+Subject: [PULL 03/45] hw/virtio: Compile virtio-mem.c once
+Date: Tue, 21 Oct 2025 22:46:17 +0200
+Message-ID: <20251021204700.56072-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
 References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,61 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+Remove unused "system/ram_addr.h" header. This file doesn't
+use any target specific definitions anymore, compile it once
+by moving it to system_virtio_ss[].
 
-Use ctz instead of an open coded version and rename function to better
-show what it does.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <68c038fd225463db282d0277d80cb525e0551413.1760795082.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20250502214551.80401-6-philmd@linaro.org>
 ---
- hw/pci-host/raven.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ hw/virtio/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index f8c0be5d21c..ee9058e262a 100644
---- a/hw/pci-host/raven.c
-+++ b/hw/pci-host/raven.c
-@@ -72,16 +72,9 @@ struct PRePPCIState {
- 
- #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
- 
--static inline uint32_t raven_pci_io_config(hwaddr addr)
-+static inline uint32_t raven_idsel_to_addr(hwaddr addr)
- {
--    int i;
--
--    for (i = 0; i < 11; i++) {
--        if ((addr & (1 << (11 + i))) != 0) {
--            break;
--        }
--    }
--    return (addr & 0x7ff) |  (i << 11);
-+    return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
- }
- 
- static void raven_pci_io_write(void *opaque, hwaddr addr,
-@@ -89,7 +82,7 @@ static void raven_pci_io_write(void *opaque, hwaddr addr,
- {
-     PREPPCIState *s = opaque;
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
--    pci_data_write(phb->bus, raven_pci_io_config(addr), val, size);
-+    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
- }
- 
- static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
-@@ -97,7 +90,7 @@ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
- {
-     PREPPCIState *s = opaque;
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
--    return pci_data_read(phb->bus, raven_pci_io_config(addr), size);
-+    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
- }
- 
- static const MemoryRegionOps raven_pci_io_ops = {
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 48b9fedfa56..affd66887db 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -57,7 +57,7 @@ specific_virtio_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-bal
+ specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs.c'))
+ specific_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c'))
+ specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
+-specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
++system_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: files('virtio-nsm.c'))
+ system_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('cbor-helpers.c'), libcbor])
+ system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
 -- 
 2.51.0
 
