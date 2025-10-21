@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13A8ACCD184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D44B3CCD1A7
 	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:59:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBCsw-0000gh-2Z; Tue, 21 Oct 2025 09:58:48 -0400
+	id 1vBCs8-0000GC-8r; Tue, 21 Oct 2025 09:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vBCsf-0000W9-20
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:58:30 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vBCsc-0007zq-4U
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:58:27 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7811fa91774so4993658b3a.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:58:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761055103; x=1761659903; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pPdygudXA5Lxli1F/++PwS4Z3c1EOK1lIXgoZ6EeQsQ=;
- b=TFGqHwg7hH2xldqgUC1mwqR3qW4aNiF3iz6QG5PAeGPGR4bwtXqw09iOSZqyQDbaSf
- BqT2EUAIen/U3ECJVUINI12ucqWU9A+jqJ2VqC2l9XatvtWSwqx5cxE5oULj2MIBDhx8
- 4daVIroorEvC2aN4OBenphJcCpxnTOW6nqkzOwqgZ1b+Lk9MbqX6J3Nl2TMUG9ATej0C
- l03vWDd4Wm9q1ylXoNti2a0z421uuTiRtv318bZ5t/UrtqPHc8pR0UDLP/J9P07UeLh7
- o3yjbEfzH6D8nGKig8ZyQMN2rTb2m1U7XxMo1UOHTIcYFK+WB/nluhD7/pFm+dA6CTdn
- zReA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761055103; x=1761659903;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pPdygudXA5Lxli1F/++PwS4Z3c1EOK1lIXgoZ6EeQsQ=;
- b=b4128rbOVy2vuc0rtgHXwL+EbdTL/eeGVzhOpY1HgskwBCf/rws21h9JhIcASJVFKw
- RQJEZH2pD04+fDlrJMxMd7me1CRU8Uj8osd/o+4UZp7FVJyjOdYri65XANeMaplfOJlF
- Orq9VkEjK967qllYtE5bhrIpFJg9gIcJC8O+f7a5QW04o6V64lSfC+kS3E7h4zoQ+zxj
- DexgtCTD58E00FxEuhc+Dpg/tH//IMJ3pgXzuuNya/3nR1M2+X1VHa3hrobApSSEZB+s
- DSLJZU1LMefsRh3kYQ38zPpRuHQivMH0pDlj0kx0LegczD/xMgGeR+JFV+X2l50VL1Fd
- Cilg==
-X-Gm-Message-State: AOJu0Yx6xDf+mNFzU1FWHsc7rCWHpS2qu2RHvHevnJMq4YUZbUUWkqCM
- dfMEqAVtSKKPUYUxbX8pVkprkIf92SeX14kuKgRMZSqfTpr2E2e7nlmI05mYzVQoaiBgSh40t++
- WQ3B+YgtyhjJGgFYecypWlp4wM59/2JtJMQGBOQ3aoA==
-X-Gm-Gg: ASbGncs+vu3uyHYqx5cJUr/x6u9hjQkpvqjo0zZizdefbfHYQQzZR4tikm3yMeBp4R0
- k3U9Qu4ta9Bg3uNkhd9hGfZNFM2QiUR3Dpn0GKlMPwF2vAYaSo2fWiwIYvClXpDYJWIe3L3GQlq
- sQx+QJhFyyVXOKXUmvxdp53tsHArMJ9Ztcjoq047l3V5JKwualvysOcx4k1ZK22+7k6lVEYXnfz
- 88cbyAc7o/7ewmm6S4WHNUvatwTPthyvdkIFfkWdkkLbok1ZRqw5rLuVKAFHzlFMBqE1A==
-X-Google-Smtp-Source: AGHT+IE0+jvJP+jHgFuOGd7AG/ldZHoV3AfhKDbcZoT/QZC6z/r+l4UHVkiL0/gXj0woSudmdvCYrWf6uSTZqfAxvCw=
-X-Received: by 2002:a17:903:94e:b0:290:533b:25c9 with SMTP id
- d9443c01a7336-290c9c8ae4dmr192613605ad.2.1761055103171; Tue, 21 Oct 2025
- 06:58:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs3-0000Em-Af
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs1-0007x5-8n
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761055068;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vt6uwhyIK+73+a2uJbub1PjgJdGjN+jo4yTjn3+Yv3w=;
+ b=IetEASl5o8w7yg3pShMovXlrz62Kk1c0WzlaMBFOOnQxlinKMw+a7GKpgHJjUbYVjikzyG
+ NeHid+ujT/KKpNp9u8v6PoWcApQSak9M3pUAA/J0W8jBPjrntWzm4Ld4bXMLb9YZ0RqRFg
+ Aa5a8pI4fGWgcgVoZP9zVyjhlL1FWi4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-lHsfAsHgMiG0WcsMKvDoxQ-1; Tue,
+ 21 Oct 2025 09:57:44 -0400
+X-MC-Unique: lHsfAsHgMiG0WcsMKvDoxQ-1
+X-Mimecast-MFC-AGG-ID: lHsfAsHgMiG0WcsMKvDoxQ_1761055063
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27219195609F; Tue, 21 Oct 2025 13:57:43 +0000 (UTC)
+Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
+ [10.33.192.176])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 090DB19560A2; Tue, 21 Oct 2025 13:57:41 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 3/6] hw/s390x/ccw: Remove deprecated s390-ccw-virtio-4.2 machine
+Date: Tue, 21 Oct 2025 15:57:32 +0200
+Message-ID: <20251021135735.96145-4-thuth@redhat.com>
+In-Reply-To: <20251021135735.96145-1-thuth@redhat.com>
+References: <20251021135735.96145-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20251017155136.16540-1-roger.pau@citrix.com>
-In-Reply-To: <20251017155136.16540-1-roger.pau@citrix.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Tue, 21 Oct 2025 15:58:09 +0200
-X-Gm-Features: AS18NWA58CeS14FdkkCNsTOZQHqLAPZdt-7l1MEooVrAG7tg9H44TnVA3_KoSpQ
-Message-ID: <CAJy5ezpoN0mdSWStgF_RjtrnkbfkaMMsnrHHGuiQqNd4aNp0nQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/xen: pass PCI domain to xc_physdev_map_pirq_msi()
-To: Roger Pau Monne <roger.pau@citrix.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org
-Content-Type: multipart/alternative; boundary="000000000000dabea70641ab9724"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-pf1-x431.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,61 +84,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000dabea70641ab9724
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On Fri, Oct 17, 2025 at 5:51=E2=80=AFPM Roger Pau Monne <roger.pau@citrix.c=
-om>
-wrote:
+This machine has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") it can now be removed.
 
-> It's currently impossible for passthrough devices on segment different th=
-an
-> 0 to work correctly, as the PCI domain is not provided to
-> xc_physdev_map_pirq_msi(), and hence it's unconditionally assumed that al=
-l
-> devices are on segment 0.
->
-> Adjust the call to xc_physdev_map_pirq_msi() to pass the PCI domain in th=
-e
-> high 16bits of the bus parameter.  On versions of Xen where this is not
-> supported the passed segment will be ignored and assume to be 0, no worse
-> than the current state.
->
-> Signed-off-by: Roger Pau Monn=C3=A9 <roger.pau@citrix.com>
->
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251020094903.72182-2-philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/s390-virtio-ccw.c | 33 ---------------------------------
+ 1 file changed, 33 deletions(-)
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index ad2c48188a8..64b81345f1e 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -715,26 +715,6 @@ static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
+     s390_cpu_restart(S390_CPU(cs));
+ }
+ 
+-static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
+-{
+-    /* same logic as in sclp.c */
+-    int increment_size = 20;
+-    ram_addr_t newsz;
+-
+-    while ((sz >> increment_size) > MAX_STORAGE_INCREMENTS) {
+-        increment_size++;
+-    }
+-    newsz = sz >> increment_size << increment_size;
+-
+-    if (sz != newsz) {
+-        qemu_printf("Ram size %" PRIu64 "MB was fixed up to %" PRIu64
+-                    "MB to match machine restrictions. Consider updating "
+-                    "the guest definition.\n", (uint64_t) (sz / MiB),
+-                    (uint64_t) (newsz / MiB));
+-    }
+-    return newsz;
+-}
+-
+ static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
+ {
+     S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+@@ -1165,19 +1145,6 @@ static void ccw_machine_5_0_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(5, 0);
+ 
+-static void ccw_machine_4_2_instance_options(MachineState *machine)
+-{
+-    ccw_machine_5_0_instance_options(machine);
+-}
+-
+-static void ccw_machine_4_2_class_options(MachineClass *mc)
+-{
+-    ccw_machine_5_0_class_options(mc);
+-    mc->fixup_ram_size = s390_fixup_ram_size;
+-    compat_props_add(mc->compat_props, hw_compat_4_2, hw_compat_4_2_len);
+-}
+-DEFINE_CCW_MACHINE(4, 2);
+-
+ static void ccw_machine_register_types(void)
+ {
+     type_register_static(&ccw_machine_info);
+-- 
+2.51.0
 
---000000000000dabea70641ab9724
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Oct 17,=
- 2025 at 5:51=E2=80=AFPM Roger Pau Monne &lt;<a href=3D"mailto:roger.pau@ci=
-trix.com">roger.pau@citrix.com</a>&gt; wrote:<br></div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
-04,204,204);padding-left:1ex">It&#39;s currently impossible for passthrough=
- devices on segment different than<br>
-0 to work correctly, as the PCI domain is not provided to<br>
-xc_physdev_map_pirq_msi(), and hence it&#39;s unconditionally assumed that =
-all<br>
-devices are on segment 0.<br>
-<br>
-Adjust the call to xc_physdev_map_pirq_msi() to pass the PCI domain in the<=
-br>
-high 16bits of the bus parameter.=C2=A0 On versions of Xen where this is no=
-t<br>
-supported the passed segment will be ignored and assume to be 0, no worse<b=
-r>
-than the current state.<br>
-<br>
-Signed-off-by: Roger Pau Monn=C3=A9 &lt;<a href=3D"mailto:roger.pau@citrix.=
-com" target=3D"_blank">roger.pau@citrix.com</a>&gt;<br></blockquote><div><b=
-r></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.igl=
-esias@amd.com">edgar.iglesias@amd.com</a>&gt;</div><div><br></div></div></d=
-iv>
-
---000000000000dabea70641ab9724--
 
