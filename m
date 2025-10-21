@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D65CCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED2BCCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBCG0-0002Fw-TA; Tue, 21 Oct 2025 09:18:32 -0400
+	id 1vBCGF-0002HZ-F6; Tue, 21 Oct 2025 09:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCFz-0002Fo-KK
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:31 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCGD-0002HK-C4
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:45 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCFx-0002XI-OI
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:31 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3f99ac9acc4so1120787f8f.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:18:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBCGB-0002Yp-9A
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:18:45 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-475c1f433d8so1942155e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761052707; x=1761657507; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YUrXfs78t2/pPyUV1D8Kof5PgM5d9w3SNyN0XND7iuI=;
- b=bxZ6ZpXNuRJ7B64p7rHOa7pPXTDHDIVEfEFYia/f4lnLcgQsQbU6amHPN+M2npdihJ
- VLVrEYTUhofIzOvzJ0tl/GIHkGPnjoxEF3Y0I/+Tyl1PgtmWdftdQ3E/QnYnowXAvpch
- 6iYqAEK7Ot63DYwBmiv3LzdD4/2qEZCg/Rv4EF8Eon+yLSKsj/lIJ1M4j/QlHnjMA4Gp
- Dtk6VY6X0TLOZVcP+tv1U79n6sYfyfKk2sVCoaOGLeSQgox0Iu4KT7cZabkas+Sv0QTL
- HWIcdVBZanB9+xNLgKwFViEbWhXeL+05Ljgoj1oLPk9BN+q7G9yrjvDR3+AXMf2pQ/Fz
- TgZA==
+ d=linaro.org; s=google; t=1761052721; x=1761657521; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P0uUVCcSfLTNFb2IKz4tw3RJXNvASiNTQpt4aEdv6HM=;
+ b=ka9dMAwO5GFwxqp8JuDlpkm/xF1E8uxdkjI7KEwQcuY7ASswrLQ0HlL/drpQWgTbht
+ I26ZNti48DJR3oKOnRLtaHskbM6+mvCowXUsx6n9qdC9QrS0sIE4jochRRoqoawJAWPk
+ RC05pDDBpepUolVfJe3WVPfK1W2MpN9Wpf01P3pWptksg4eA5iZtx/MVb4Sdgi6PKmm5
+ Ti6ukecyMa49USR431sxa9lCHhOhI2/D55+4cZNOhslfC9fwWOYOu31IyKosULF9f2RQ
+ RFmVMbuSAqNaO4RQo/MKX3fqGv+6dnPWQLYXjEJCH1cDwCzVhG3pZKRo20sdaFG9DFKC
+ 2j9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761052707; x=1761657507;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YUrXfs78t2/pPyUV1D8Kof5PgM5d9w3SNyN0XND7iuI=;
- b=XLBEj8biOZxuUOTL/NtAM6GpiKfbaqQxhFXC4JkwSWyn57a4pM0MdirMD/u4cQ6tqY
- DUyK8vC6g0/NvvCz96xmLcB9y4F5lgZR2J0BayHnJ93cEF3QwW4bevLZCDIH1m+3GJo0
- c0qlOqADUoKgbVKNZjWe4J+/Wua5nQrj8rZ4T8NJ5boR/V0GQcKBIwVQsoWVS3XI89lW
- KM0PrnzeOrduQp345bOSLFlYTvu6N6F3ME8wK2fQObRCjFPFp9Pbtg0jHUug1tLHN4hf
- 1Gbm04h4yusMTTMwasp5G5TlKOjjHMCp34MAwESMuklzyliYg2ahZkv5jHqU2HxS27D+
- CgHQ==
+ d=1e100.net; s=20230601; t=1761052721; x=1761657521;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P0uUVCcSfLTNFb2IKz4tw3RJXNvASiNTQpt4aEdv6HM=;
+ b=SI1razr4WCSpc2wxB2RY4NsNDCUcrVOh6aBuH50kZIhfNYi85IKddvfKk4AwWW6mFt
+ HzUNmIWqNwgS58iBTvvT1GllH4MeWhCjIlC8wMXJzFhegRiOmIjQr7A0tRxb8+FXphab
+ Fog//q3Q26KOYtYr9Ns94LaHXcTqEKumTTHArl+N6Miq9P+LupbVsZisuYyIE+GLzWgB
+ tpnkme4o5w+ECWJtcbbKJ/AkUcG6tnd023fx4KQCys1U7cejf/GEep/Ur0YLpK6k5l1p
+ 0ueQ1Xx1BqXwnq4eF+bHVUecUATFFgkgAUSdRPa0Kh2G1pUz1M0duNSyFG7P1+1dizeY
+ LBrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQ+nVTAR/YxuxtucxCDY9R/yvthzMKW4Dx/n+uAdrg/J5Rl4T/IPQmFMe5AoAjnKzbHQDVx0y6nzcj@nongnu.org
-X-Gm-Message-State: AOJu0Yylz15fhOw1UuaGAXN7QflFdVfcJg+SXeiDu4c7+OGnzhyOBC+g
- gOuZgKJrstn1Yn2dWWr7O/gWtXb9Me74w9ctpXncdQD9KQBb26ovFw3y1i+EHaTFTiM=
-X-Gm-Gg: ASbGnctYIiQd54DRc3SEDgnYEdYIALx0LxUgbhGcv4rRdah+3ZJnZNB23Rz5fpqI75+
- ryK0nZv5pV5+Phwg/nt/XhG/xco6NruUUB+wUk2B9zVkVdSzI3f4OgTKCOg821JFSnSt8w23Nu2
- 6+hWD6U2h2UKi1nQ8s50nYmzvMWQJObgD0RkX48gxv1gYdF3BzGc+aibMDIoWu+19x6pQjlVWwS
- 2hIT9grpTImsWaB2XK+9l6u8TGF7K5NlFm1XecOT6FA7OvbEEJVM5ZwD58XsUmnOLNqkHaR4sh1
- pe/YGShniniYtxtNXyqWsAZWVm5/qoKAsFcau4JTtWxFymsw06dzQoTSdq+muhHfdR57s877Mh2
- ERrtN7EK5OF8qtqtu5yTxW7c/Sv2tInjZKqxdoDP+xWwlPxmXYCA2OBd7k3xQNJGztVpnugexZL
- 5DK+zYekDXDIsbY/xTuDmkq8OUh1/ZcGLtto3eKJwuqnCIqVK8GA==
-X-Google-Smtp-Source: AGHT+IE8YCn8DDZVoVj83d5CMo4EixaDnEbvhciDXYqQZybmRzLDGJRXSauQmu9JPyeOeMUoKrunxA==
-X-Received: by 2002:a05:6000:26c8:b0:427:72d1:e3b1 with SMTP id
- ffacd0b85a97d-42772d1f20amr8312439f8f.41.1761052706860; 
- Tue, 21 Oct 2025 06:18:26 -0700 (PDT)
+ AJvYcCVmbs/4O1cy0vnuGMlxDKW3/wbbPMzUowRcNtAoSYcP6GHGpQYvpRJ5LXP3M7vudQ6RfMmx15cA/oiT@nongnu.org
+X-Gm-Message-State: AOJu0YyJtgz+HCoA5/ejE7UTbNurfnTRGWmFsNifJsCZMhYBVQui80dZ
+ enpbXE8ZJnO6IfoJtXwNgOkVTYMzOvjcM1RhHxcJKUluxO4osu23XrKFstTJn8a9Mwo=
+X-Gm-Gg: ASbGncvKTdGSgCdFfIx+3PwEygSbilnJK/1uaG1jt46WWd0ldiPnygoZpUv+bvPdHWr
+ QPUv9K9RqXeqSVPC6aBp9EpDxryq37pLfTX9T6vV73aZZnZK/DvdONoZg8WRfleA91CDEoSya2M
+ g+SVodUQxHz6YYx9wO0uVeaJAtXnK7Lzgy0XwUFgoe26qut8YWWUIRlyB7LLBudObovhBOrKUcL
+ eWJwP1+GZjYzwSnRfeeAyJdHmWXKzbsu9p6SoR4Hxvnu7+p0yLINOHvZsElMMhZjHfaydpdQtS7
+ wHXCwSwaVNBwBVJy+ufAY0uqcIL3PryMAYx5vqwmM+M2cl/V9vCOf5qzfNNFWLUQ83JwBnJW+Yr
+ 7VfXHyltfLWGYI3d/HjHXmtHdOgHciZLKfIt8bXeFoC+06tz/t1joCnky02vw153bVt6gtr11Ze
+ X7/qt3veM43/OwDJwMd4IC81fpvC357rvymMZShDliR1Clmsk++Q==
+X-Google-Smtp-Source: AGHT+IFKy3bSBEz8fQTS59zTV+WvhpfKv8SoUOxzKPyUGE+4h7zk2iI0bC/V12ulczUPJEplRfXZzA==
+X-Received: by 2002:a05:600c:34d0:b0:471:1717:409 with SMTP id
+ 5b1f17b1804b1-471179071b4mr109526995e9.23.1761052721093; 
+ Tue, 21 Oct 2025 06:18:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5a0f19sm20473196f8f.9.2025.10.21.06.18.26
+ 5b1f17b1804b1-471144b5d48sm284179415e9.9.2025.10.21.06.18.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 06:18:26 -0700 (PDT)
+ Tue, 21 Oct 2025 06:18:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
@@ -71,15 +72,17 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/3] hw/audio: Remove legacy code related to '-soundhw hda'
-Date: Tue, 21 Oct 2025 15:18:21 +0200
-Message-ID: <20251021131825.99390-1-philmd@linaro.org>
+Subject: [PATCH 3/3] hw/audio: Remove unused audio_register_model_with_cb()
+Date: Tue, 21 Oct 2025 15:18:24 +0200
+Message-ID: <20251021131825.99390-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251021131825.99390-1-philmd@linaro.org>
+References: <20251021131825.99390-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,23 +105,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Few more patches following Marc-André cleanups, allowing
-to remove audio_register_model_with_cb().
+We remove the last use of audio_register_model_with_cb(),
+remove it as not needed anymore, simplifying audio_model_init().
 
-Based-on: <20251021090317.425409-1-marcandre.lureau@redhat.com>
-
-Philippe Mathieu-Daudé (3):
-  docs: Update mentions of removed '-soundhw' command line option
-  hw/audio: Remove intel_hda_and_codec_init()
-  hw/audio: Remove unused audio_register_model_with_cb()
-
- docs/qdev-device-use.txt |  4 ++--
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
  include/hw/audio/model.h |  2 --
- hw/audio/intel-hda.c     | 23 -----------------------
  hw/audio/model.c         | 26 +++++++-------------------
- system/qdev-monitor.c    |  4 ++--
- 5 files changed, 11 insertions(+), 48 deletions(-)
+ 2 files changed, 7 insertions(+), 21 deletions(-)
 
+diff --git a/include/hw/audio/model.h b/include/hw/audio/model.h
+index ebe456c22ff..b812c9211a0 100644
+--- a/include/hw/audio/model.h
++++ b/include/hw/audio/model.h
+@@ -1,8 +1,6 @@
+ #ifndef HW_AUDIO_MODEL_H
+ #define HW_AUDIO_MODEL_H
+ 
+-void audio_register_model_with_cb(const char *name, const char *descr,
+-                                  int (*init_audio_model)(const char *audiodev));
+ void audio_register_model(const char *name, const char *descr,
+                           const char *typename);
+ 
+diff --git a/hw/audio/model.c b/hw/audio/model.c
+index 924a41e0ac9..d1e00b4eaa4 100644
+--- a/hw/audio/model.c
++++ b/hw/audio/model.c
+@@ -34,22 +34,11 @@ struct audio_model {
+     const char *name;
+     const char *descr;
+     const char *typename;
+-    int (*init)(const char *audiodev);
+ };
+ 
+ static struct audio_model audio_models[9];
+ static int audio_models_count;
+ 
+-void audio_register_model_with_cb(const char *name, const char *descr,
+-                                  int (*init_audio_model)(const char *audiodev))
+-{
+-    assert(audio_models_count < ARRAY_SIZE(audio_models) - 1);
+-    audio_models[audio_models_count].name = name;
+-    audio_models[audio_models_count].descr = descr;
+-    audio_models[audio_models_count].init = init_audio_model;
+-    audio_models_count++;
+-}
+-
+ void audio_register_model(const char *name, const char *descr,
+                           const char *typename)
+ {
+@@ -105,17 +94,16 @@ void audio_set_model(const char *name, const char *audiodev)
+ void audio_model_init(void)
+ {
+     struct audio_model *c = selected;
++    DeviceState *dev;
++    BusState *bus;
+ 
+     if (!c) {
+         return;
+     }
+ 
+-    if (c->typename) {
+-        DeviceState *dev = qdev_new(c->typename);
+-        BusState *bus = qdev_find_default_bus(DEVICE_GET_CLASS(dev), &error_fatal);
+-        qdev_prop_set_string(dev, "audiodev", audiodev_id);
+-        qdev_realize_and_unref(dev, bus, &error_fatal);
+-    } else {
+-        c->init(audiodev_id);
+-    }
++    g_assert(c->typename);
++    dev = qdev_new(c->typename);
++    bus = qdev_find_default_bus(DEVICE_GET_CLASS(dev), &error_fatal);
++    qdev_prop_set_string(dev, "audiodev", audiodev_id);
++    qdev_realize_and_unref(dev, bus, &error_fatal);
+ }
 -- 
 2.51.0
 
