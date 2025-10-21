@@ -4,46 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605B4CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14C5CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBAb3-0002jq-Aq; Tue, 21 Oct 2025 07:32:09 -0400
+	id 1vBAfk-0003nx-1d; Tue, 21 Oct 2025 07:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vBAaW-0002gX-DJ; Tue, 21 Oct 2025 07:31:37 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBAfb-0003mz-4n; Tue, 21 Oct 2025 07:36:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vBAaQ-0007om-B2; Tue, 21 Oct 2025 07:31:34 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 6470FA721A;
- Tue, 21 Oct 2025 13:31:16 +0200 (CEST)
-Message-ID: <f2f25f68-a660-4203-9cce-a4d137015991@proxmox.com>
-Date: Tue, 21 Oct 2025 13:31:15 +0200
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBAfX-0008V6-Am; Tue, 21 Oct 2025 07:36:50 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L1wCNs023518;
+ Tue, 21 Oct 2025 11:36:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qcZU/p
+ N2tuV/PgXpaqeha0Av0//BrntA0yr7jG0T988=; b=aqoLqVmm2++SYMhgCXXtZC
+ tzlYEP5sGUrv1l8TA5hZgs+uGmb1en5qbgBtvp0zI7gS77J9ubdjk6J9JtXDI5fY
+ iVRdonBI1WsEUbUiDC+6tEx/XIy53aEuZHpvsNYcBaioWWO2jr68ey/NA1d2yqnO
+ 28ktreXHO5OI7w+qoPzslANhyB8RCfoYuUClWc4dgYmmElJ6+imo3wBE3PeyMz9M
+ evX0Ui11enT2F2OWnqwJcwuKkNGxTYARAv6MaAKidPzE+6mIh3bxnD2k1wNVlGfQ
+ US3EchpFSNm0s6N26IpQawFyGSvXp50FdtKX3FmbGTd4bAinX6CEWt+5/yPFFQ7g
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vncbw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:36:38 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LBWdM1005627;
+ Tue, 21 Oct 2025 11:36:38 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vncbu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:36:38 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59LAqrok014650;
+ Tue, 21 Oct 2025 11:36:37 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7s2nfs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:36:37 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LBaa0T10945382
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 11:36:36 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B3D245805C;
+ Tue, 21 Oct 2025 11:36:36 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1988558093;
+ Tue, 21 Oct 2025 11:36:34 +0000 (GMT)
+Received: from [9.79.201.141] (unknown [9.79.201.141])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 21 Oct 2025 11:36:33 +0000 (GMT)
+Message-ID: <e9cd32c2-7e38-4d7f-aa97-138d53eb530d@linux.ibm.com>
+Date: Tue, 21 Oct 2025 17:06:31 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] block: refresh filter parents when child was
- resized
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, fam@euphon.net, stefanha@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com
-References: <20250917115509.401015-1-f.ebner@proxmox.com>
+Subject: Re: [PATCH v2 06/11] target/ppc/kvm: Remove kvmppc_get_host_serial()
+ as unused
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20251021084346.73671-1-philmd@linaro.org>
+ <20251021084346.73671-7-philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250917115509.401015-1-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1761046269117
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20251021084346.73671-7-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: BE7zzDZZhZ4KivfZNgIXzhbg18U3mJqQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7h2PyKMBnTfe
+ rzyha/HZTJaKYbxtufID4zk0PGomNqAZ5Wpb51fHIV4YBpNWPZUHOZPrVAQX48x4f/+DvuTb4BM
+ hQFCXxWZr9xuM/B07g2KNSTryAG2Aqwj5NP8KVx95xfufVEuEYNP1SuK0oHTqVHgEEah0MzP0Vr
+ jtN4dLmLUKrGvO7MliJhztcPJwHmNpXBxnux4V2FkqbLbh7H0RlDqGw2DD3WjRdz0b8uYxD9OOx
+ WZfBUkiD6FvL21hZTHSKJjZ3kvJR6cI3TDiqW6KCENlnbKJ0dLH1R01Csk+NoM9LN6PVSaBvuCB
+ Y7GlvtDzPoYpdwmwNbYfXNiD7yITVBk21hMluupNILN4/GMXAnUGvWUQPFNMiDbS8sgj9yEsnnz
+ K6VpqBLmZum6Ac6ZnZojZC77RJ5qHQ==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f77046 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=cvRlsbrwNaNk8C4OaOUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: sjzkwcplo6_88gfInGQk4ReUpLT_v9uY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -61,41 +132,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping
 
-Am 17.09.25 um 3:50 PM schrieb Fiona Ebner:
-> Changes in v2:
-> * Check for BDRV_CHILD_FILTERED rather than bs->drv->is_filter which
->   is more generic and for example, also covers the case when the
->   child of a 'raw' node is resized.
-> * Expand commit message for main patch, i.e. 3/5.
-> * Add test for resizing the filtered 'file' node of a 'raw' node.
-> 
-> Resizing a node below a filter would result in the filter still
-> reporting the old size. Implement a 'resize' callback for the
-> child_of_bds class, that refreshes filter parents recursively.
-> 
-> Fiona Ebner (5):
->   include/block/block_int-common: document when resize callback is used
->   block: make bdrv_co_parent_cb_resize() a proper IO API function
->   block: implement 'resize' callback for child_of_bds class
->   iotests: add test for resizing a node below filters
->   iotests: add test for resizing a 'file' node below a 'raw' node
-> 
->  block.c                                       | 12 +++
->  block/io.c                                    |  9 +--
->  include/block/block_int-common.h              |  5 +-
->  include/block/block_int-io.h                  |  6 ++
->  tests/qemu-iotests/tests/resize-below-filter  | 73 +++++++++++++++++++
->  .../tests/resize-below-filter.out             |  5 ++
->  tests/qemu-iotests/tests/resize-below-raw     | 53 ++++++++++++++
->  tests/qemu-iotests/tests/resize-below-raw.out |  5 ++
->  8 files changed, 161 insertions(+), 7 deletions(-)
->  create mode 100755 tests/qemu-iotests/tests/resize-below-filter
->  create mode 100644 tests/qemu-iotests/tests/resize-below-filter.out
->  create mode 100755 tests/qemu-iotests/tests/resize-below-raw
->  create mode 100644 tests/qemu-iotests/tests/resize-below-raw.out
-> 
-
-
+On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/ppc/kvm_ppc.h | 6 ------
+>   target/ppc/kvm.c     | 6 ------
+>   2 files changed, 12 deletions(-)
+>
+> diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+> index a1d9ce9f9aa..f24cc4de3c2 100644
+> --- a/target/ppc/kvm_ppc.h
+> +++ b/target/ppc/kvm_ppc.h
+> @@ -22,7 +22,6 @@
+>   uint32_t kvmppc_get_tbfreq(void);
+>   uint64_t kvmppc_get_clockfreq(void);
+>   bool kvmppc_get_host_model(char **buf);
+> -bool kvmppc_get_host_serial(char **buf);
+>   int kvmppc_get_hasidle(CPUPPCState *env);
+>   int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
+>   int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
+> @@ -134,11 +133,6 @@ static inline bool kvmppc_get_host_model(char **buf)
+>       return false;
+>   }
+>   
+> -static inline bool kvmppc_get_host_serial(char **buf)
+> -{
+> -    return false;
+> -}
+> -
+>   static inline uint64_t kvmppc_get_clockfreq(void)
+>   {
+>       return 0;
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index cd60893a17d..cb61e99f9d4 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -1864,12 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
+>       return cached_tbfreq;
+>   }
+>   
+> -bool kvmppc_get_host_serial(char **value)
+> -{
+> -    return g_file_get_contents("/proc/device-tree/system-id", value, NULL,
+> -                               NULL);
+> -}
+> -
+>   bool kvmppc_get_host_model(char **value)
+>   {
+>       return g_file_get_contents("/proc/device-tree/model", value, NULL, NULL);
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
 
