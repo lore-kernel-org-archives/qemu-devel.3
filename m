@@ -4,91 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB43BCCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3648DCCD1AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBGvb-00049x-GQ; Tue, 21 Oct 2025 14:17:47 -0400
+	id 1vBH6e-0005tv-BV; Tue, 21 Oct 2025 14:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGvY-00049p-O2
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:17:44 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGvW-0001FE-G4
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:17:44 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3ed20bdfdffso5451281f8f.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761070659; x=1761675459; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3By8Kfq8PqUAkjy9XCGQQ4sbeJUGg88Lrj9uzfNivJA=;
- b=Tykjiq+faTCnF1dRLq1d81TMWBPa3QkSCK+6sp2jwfs2hZOZFjOeSSVWIuQVjuyndQ
- NN9yt+HTggLSPZk73UoDDKo5aNtKPv+MxEOe9709oB2A+wTxryi81tm+H+5pLsrblsZF
- ae1FdOLItje6M6u/FOOlqeC7cbETv9MQKNSV+nYodPb1ZFMUz2fckJqyeWIwJREXMLO/
- x4Tcv7M9vrq/oTMGVm+AlgYe+//LlRaY0CN9EbL9ZS6HOqj9/9KrbZTEhJMmYoclQU9s
- LA/6wyoluXT8BGlhcgjwRx2xbKc+o8fbTqAaLtnl0GsYJt2QotfLN8s7hym3bNcRMS8O
- Gdzw==
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vBH6d-0005ti-2a
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:29:11 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vBH6a-0002lP-6A
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:29:10 -0400
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id CEDAB3F5B1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 18:29:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1761071345;
+ bh=AS0lTqmmkOpJrR4sxZB7xwYi3HvtM+NM7I37otTWXlI=;
+ h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc;
+ b=CXSNIva7UYQBjCr0Sl7RN171PI9PuCbuogXX49fKjt+D+HTpAQvHWH1uEwTfVZoVn
+ erUQNNsMpVmHJ/hoNjege1oxxiouLq3AqOmYg+UYyU49w+Yw5JgY9YtB0ATMFGl5wc
+ X+6qulT+LrRBumrhjxeoZz2NH/usoYweK6BxsTB+NHxUeVYM0cd2c/tZyBQllXC7Xa
+ L/HNTWYQK7EpkuEboSvdYGnWAq/bJUUI6JVGPlgKBcDRXlrcJswcWo7I/e5dRl87gY
+ 4/lZYemFJaEa+HNjNCjOuoztmDrPV+gt3+0eZcg/KAszblfMcWxXUAVbVg7FTB5/mR
+ XYL9yFOQxZHvgeMKPKPmmvsVHQo/fKeA0+j7aG23wwQ6U+RU8HCpGWY5nFSUqOXm5Y
+ uOL79higNeoq3m5WG7cbS2fQjWsSQ1zSBIAKP/fb8jGvKMJt5rJ7rGCFzKKIzbl/Z5
+ ps0BLvBynIEg+Z2p2NKyHLpx3IvyIFUDnPTFHszpSZ13CznMc1kboVOSeT8JeYSDr7
+ BICymLXELZkRguJ2MYJowCoftN8L1/jNDI6qYjeTTjVofiZWWjsV3WF4CqIhKBrWAe
+ QLfpHtiGyuTFYICjEUutM3T+A4iRjOuqjPKQ0xwMPJIC+mQewFjJlNTSbrE+ZichU0
+ lJyPksUPsIg4tJbk4xE8i6JE=
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-430ca900e35so173030225ab.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:29:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761070659; x=1761675459;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3By8Kfq8PqUAkjy9XCGQQ4sbeJUGg88Lrj9uzfNivJA=;
- b=SV23VsUx+l8iX7VDalM2bSG5tUAutsM5bmjmr8kO+Ya3Hl5xgCxEhgE62L6bDQZh9c
- hloRBE4Jeglh4cgWxYt+HnFIpePwT3Nd73VzaeHy1N6GZaV/xq+OaB5bP8adRgeZig+a
- W3q/sco1hjUW+HCR0q5OXjJQpWmeQbzS7QL35Bok2bK0jqzLCNcHuM2oKcArferfPFQz
- LC8j8kv2HreVuj8fRVMApu4b4QoqnVQJKK3oTWwvrF2I+XHwdy8T035M0N969+qQaOZf
- fR5npvPQ370K7ASvUIES0e9DTp8n/B9GZo7SLo6Regw9HA8FXaEd/IWaHYiye2ZqOMge
- hzig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAjoO1SWUrg8bJPbvMtO0RhucP1o4E04ZOPa5KSkHI7XOuQsnqB358rw1mj9OCHSm8PAbPwYv0yDbj@nongnu.org
-X-Gm-Message-State: AOJu0YxZnCfPFlDSDqbE6PL3KsItJJ8sd0ZDF/YIbsQHW0VTLSafh4p3
- Dd87f0MFn/PadOEzu+IpmC5MC8uVpMf1lmQK1ZvyxprSOr2UNcgnB/M97XYKlGd0HoM=
-X-Gm-Gg: ASbGncuxfzXH3oBVxgVXV9z5mIuOHsbauuCZpmDbkAj8wV1K6SBClORllPNa0uEjO8J
- l3zaMwLM8YsGR0PZ4kvij80wmNB1ZG4gm+KYQhFGBtXZma9GJslD7T2HbnbCc4mYn/6/NdUaGgj
- uXBJ6Nys0um+GSPIbeiLQ9xAh7i29u2EDBiIB03w4ncYgRk7yuITHz9NxA//L+lak8Ift0Ilx/t
- Ck6ZHk1XWLEn/Gm1vqEgbgX9rfJNSXCeNv5c8/dQKfTeWAPclPr29fE6F2GTVEzLAh8wkyglEGA
- 1/E7sFeROVKrlcd3gQnpc16T7RnXd248/NPvKORcsWcbErv32CS1JfsRf0CDVQe2GaJA5gJuUuQ
- s+nZ/PhTw8cQk4xJCwZyT+r5nvtvlR5a4rs0JHrrc+ieiY6NNhZJENHNPfP83K6WvaYUcqS2kQS
- O/4nSSGaZ5LiOP4TEmTd79WrzW7fSIAKAAg//ZsLMV6cQ=
-X-Google-Smtp-Source: AGHT+IFYvono0+s4yexjoDgBI8G1uVs124bbeyNjyszamDItzmgYjRHhATdxny95FDdp2D2tr30L9Q==
-X-Received: by 2002:a05:6000:2404:b0:427:5e5:a09c with SMTP id
- ffacd0b85a97d-42705e5a09fmr10995058f8f.37.1761070659110; 
- Tue, 21 Oct 2025 11:17:39 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47494aa0336sm23611425e9.1.2025.10.21.11.17.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 11:17:38 -0700 (PDT)
-Message-ID: <d4bb9b02-5cdc-4da5-926b-7bb17f78bcfc@linaro.org>
-Date: Tue, 21 Oct 2025 20:17:37 +0200
+ d=1e100.net; s=20230601; t=1761071344; x=1761676144;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AS0lTqmmkOpJrR4sxZB7xwYi3HvtM+NM7I37otTWXlI=;
+ b=Vu/Cce04cmnnQrLkz8YxxZ0xT/MGVUE4wqFV+O434/3bF7R2OTkaLpFWg/WDNJDncz
+ GZKGFIDZIOrSyXR6DlyjArll56SrcFsIbf4s1v6cwvRxK2cNlLRWxn4UmGzSfs/NaFdO
+ OEaUxBSsn6T7724662VBsunu0E00Pyj/FWM0j8bNhIW3Ua7lN13yqaAgo9baDADAmgzN
+ ACn4ROE/GBhb/ZHvUqng9E4HecqFfaQavag8oWEzbaPBoaQbQDJyb3DOFoeKlEVsbeSI
+ YiYCk7C/aRzDddDwbJH9zRgQ3oEmo4rtlSezziMxjruWHQkCHwMGdr8RLooM4GyOSZQR
+ ty4A==
+X-Gm-Message-State: AOJu0Yw0rJPZyPtiu8ZnLHCmvibxUs7DxqnicMe30Wo8ZB+eCf6J7+VA
+ cuB8+QnEuUj+Py7ap8hNHd6ZRDOCP+hprPN+zOvnQWCiOz4BldRQ3hwpiCacarJtJs4YMJBBHGd
+ 6yLwuv2RufmpAmrZW4W4VxgIq4gW5VBZrz7CRaJ+2PEJ1tQQQ92XH83AOFP7SCNoqyJRgDWDH
+X-Gm-Gg: ASbGncvB8bsfdfs3MI8GeJDxmcaEw6AM7CXjSgbKWM/f7TzZp3VBqUOHZry6I5YmT/X
+ iQfWuc6LejOSJWb0EF9LfcYajCc7I3Tq6vYRBG+8Lllw2kOYkhWTMYq4OMfdseWBgiOqVrhOHnb
+ 1XoXwfpzEoUZaJtuAh6xW1tmEU85aAU1ca/dPmRt9m2ZPy6FJyOxaT2As/X8M1p4RGRE+pOd9Oj
+ d8zrK2wr9M4o+jafLzasobUvyGdgjZeQnoByS4IFp/ALOhdk3EzWHPQtqaxBNSj0y3nMwsfnS13
+ Jiiw2AJ972bUKCYhMVIfaKlOiev+dm1am4ojKUWCc7ohnmX8vfalAJy/4SKnc+PFD8JNXNGo3qt
+ 2VCJ3pbQy520ztbJE
+X-Received: by 2002:a05:6e02:1a2b:b0:430:ab98:7b27 with SMTP id
+ e9e14a558f8ab-430c527d375mr255432615ab.20.1761071344174; 
+ Tue, 21 Oct 2025 11:29:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOUJEO0qjqlqF4QdAHPvZrJB8djGw213eq0HARcRFCw2mi+AI5KQy8M6YaZRz9TfAdXhLshw==
+X-Received: by 2002:a05:6e02:1a2b:b0:430:ab98:7b27 with SMTP id
+ e9e14a558f8ab-430c527d375mr255432275ab.20.1761071343784; 
+ Tue, 21 Oct 2025 11:29:03 -0700 (PDT)
+Received: from resolute.lxd ([147.219.77.79]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-5a8a95feda4sm4308901173.11.2025.10.21.11.29.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 11:29:03 -0700 (PDT)
+From: Wesley Hershberger <wesley.hershberger@canonical.com>
+Date: Tue, 21 Oct 2025 13:28:43 -0500
+Subject: [PATCH v2] stream: Remove bdrv from job in .clean()
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/xen: pass PCI domain to xc_physdev_map_pirq_msi()
-Content-Language: en-US
-To: Roger Pau Monne <roger.pau@citrix.com>, qemu-devel@nongnu.org
-Cc: Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-References: <20251017155136.16540-1-roger.pau@citrix.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251017155136.16540-1-roger.pau@citrix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251021-fix-3149-v2-1-5ffbe701e964@canonical.com>
+X-B4-Tracking: v=1; b=H4sIANrQ92gC/22MQQ7CIBBFr9LMWgxDQVNX3sN0QWGwkyg0YBpNw
+ 93Frl2+/1/eBoUyU4FLt0GmlQun2EAdOnCzjXcS7BuDksqgVFIEfose9SCCREsnFazpHTR9ydS
+ +PXUbG89cXil/9vKKv/VPZEWBQupJee0ng+fh6mxMkZ19HF16wlhr/QIKsiaJpAAAAA==
+X-Change-ID: 20251020-fix-3149-f01ae62fa53c
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ qemu-block@nongnu.org, 
+ Wesley Hershberger <wesley.hershberger@canonical.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3931;
+ i=wesley.hershberger@canonical.com; h=from:subject:message-id;
+ bh=7OctQSxSIfTId1+aU/eH3Ys6uVks7TE7+O/6cw4PuU0=;
+ b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBo99Du9YZquXNs4MLHotfuhFJGvtMpg9WxXPTEi
+ iDYZwg/p6mJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCaPfQ7gAKCRD5KICs4jod
+ ueqNDADStKTVHSuQcsvEaZgA3nB0XWEpO/qsqj1qcIsScpAF5CreccJBwcPz04irq5odAQpd9Fa
+ dDTwAEmHOgV1iNWtwUqmOoixd14m8pACdW2YkM4jJrzaT58PTtE+vBENkWGKVNtnTK00G/DU6I0
+ 8xQl9xTLiBElrOm8EfkZTBXG2atAiRXvxmK0mudlnvcISfsk4TOAutQja5Q/om70AD2gAsOAHWf
+ mCfP8Qa87cb6SzktXZdz4G5u35Py/Q1ksZlcHDeHECQyW3KLCCNL6fsg2Rce4YRSRfVuV8QAIqJ
+ UDgDPTydE72aHYF7rP/NJBh/sBDQOFz7e93H7do4ZTrvUBMZE5aKQytkuod+aNkAMtN0hRY1iOr
+ wIjDns8Ccp5OCzCELQZJjdflACZYA9l4TJD/hfBRuxyR1mqzlOxzOdnj2XzPxXi5q0M8Clp1BGJ
+ mGgksWF13CjYHs25yZ4P0CAUGdyAMV294buXcoDDluwxl51ygYZu6RUYoraWrbUGxrV4U=
+X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
+ fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=wesley.hershberger@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,45 +135,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/10/25 17:51, Roger Pau Monne wrote:
-> It's currently impossible for passthrough devices on segment different than
-> 0 to work correctly, as the PCI domain is not provided to
-> xc_physdev_map_pirq_msi(), and hence it's unconditionally assumed that all
-> devices are on segment 0.
-> 
-> Adjust the call to xc_physdev_map_pirq_msi() to pass the PCI domain in the
-> high 16bits of the bus parameter.  On versions of Xen where this is not
-> supported the passed segment will be ignored and assume to be 0, no worse
-> than the current state.
-> 
-> Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-> ---
-> Cc: Stefano Stabellini <sstabellini@kernel.org>
-> Cc: Anthony PERARD <anthony@xenproject.org>
-> Cc: Paul Durrant <paul@xen.org>
-> Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-> Cc: xen-devel@lists.xenproject.org
-> ---
->   hw/xen/xen_pt_msi.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
-> index e9ba17317aba..df15ccf0d030 100644
-> --- a/hw/xen/xen_pt_msi.c
-> +++ b/hw/xen/xen_pt_msi.c
-> @@ -138,6 +138,7 @@ static int msi_msix_setup(XenPCIPassthroughState *s,
->           rc = xc_physdev_map_pirq_msi(xen_xc, xen_domid, XEN_PT_AUTO_ASSIGN,
->                                        ppirq, PCI_DEVFN(s->real_device.dev,
->                                                         s->real_device.func),
-> +                                     ((uint32_t)s->real_device.domain << 16) |
->                                        s->real_device.bus,
+This is similar to bdc4c4c5e372756a5ba3fb3a61e585b02f0dd7f4
+(qmp blockdev-backup). The cor_filter_bs was added to the blockjob as
+the main BDS (by passing it to block_job_create), so
+bdrv_cor_filter_drop doesn't actually remove it from global_bdrv_states.
 
-Alternatively:
+This can cause races with qmp query-named-block nodes as described in
+ #3149. Stacktrace:
 
-   deposit32(s->real_device.bus, 16, 16, s->real_device.domain)
+0  bdrv_refresh_filename (bs=0x5efed72f8350)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:8082
+1  0x00005efea73cf9dc in bdrv_block_device_info
+    (blk=0x0, bs=0x5efed72f8350, flat=true, errp=0x7ffeb829ebd8)
+    at block/qapi.c:62
+2  0x00005efea7391ed3 in bdrv_named_nodes_list
+    (flat=<optimized out>, errp=0x7ffeb829ebd8)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:6275
+3  0x00005efea7471993 in qmp_query_named_block_nodes
+    (has_flat=<optimized out>, flat=<optimized out>, errp=0x7ffeb829ebd8)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/blockdev.c:2834
+4  qmp_marshal_query_named_block_nodes
+    (args=<optimized out>, ret=0x7f2b753beec0, errp=0x7f2b753beec8)
+    at qapi/qapi-commands-block-core.c:553
+5  0x00005efea74f03a5 in do_qmp_dispatch_bh (opaque=0x7f2b753beed0)
+    at qapi/qmp-dispatch.c:128
+6  0x00005efea75108e6 in aio_bh_poll (ctx=0x5efed6f3f430)
+    at util/async.c:219
+7  0x00005efea74ffdb2 in aio_dispatch (ctx=0x5efed6f3f430)
+    at util/aio-posix.c:436
+8  0x00005efea7512846 in aio_ctx_dispatch (source=<optimized out>,
+    callback=<optimized out>,user_data=<optimized out>)
+    at util/async.c:361
+9  0x00007f2b77809bfb in ?? ()
+    from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+10 0x00007f2b77809e70 in g_main_context_dispatch ()
+    from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+11 0x00005efea7517228 in glib_pollfds_poll () at util/main-loop.c:287
+12 os_host_main_loop_wait (timeout=0) at util/main-loop.c:310
+13 main_loop_wait (nonblocking=<optimized out>) at util/main-loop.c:589
+14 0x00005efea7140482 in qemu_main_loop () at system/runstate.c:905
+15 0x00005efea744e4e8 in qemu_default_main (opaque=opaque@entry=0x0)
+    at system/main.c:50
+16 0x00005efea6e76319 in main
+    (argc=<optimized out>, argv=<optimized out>)
+    at system/main.c:93
 
->                                        msix_entry, table_base);
->           if (rc) {
-Patch queued, thanks!
+As in bdc4c4c, there is no function to remove just the cor_filter_bs
+from the job, so drop all the job's nodes as they are no longer needed.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3149
+Buglink: https://bugs.launchpad.net/bugs/2126951
+Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
+---
+This patch fixes the issue described in Gitlab #3149. Please see the bug
+for additional context & reproducer for the issue.
+
+I'm happy to discuss alternative approaches or resubmit as needed.
+
+`make check-block` passes locally.
+
+A review would be greatly appreciated as a customer's production is
+impacted.
+
+First-time patch mailer so please pardon any mistakes.
+---
+Changes in v2:
+- Added backtrace to commit message
+- Link to v1: https://lore.kernel.org/qemu-devel/20251020-fix-3149-v1-1-04b2d4db5179@canonical.com
+---
+ block/stream.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/block/stream.c b/block/stream.c
+index c0616b69e259bf5a9b146dadd9dbac62bfaa9f23..1733abd8f96d7847701f54a7a55d3284387b8582 100644
+--- a/block/stream.c
++++ b/block/stream.c
+@@ -132,6 +132,12 @@ static void stream_clean(Job *job)
+ {
+     StreamBlockJob *s = container_of(job, StreamBlockJob, common.job);
+ 
++    /*
++     * The job still holds a reference to cor_filter_bs; drop all bdrv to
++     * ensure that it is unref-ed
++     */
++    block_job_remove_all_bdrv(&s->common);
++
+     if (s->cor_filter_bs) {
+         bdrv_cor_filter_drop(s->cor_filter_bs);
+         s->cor_filter_bs = NULL;
+
+---
+base-commit: 3a2d5612a7422732b648b46d4b934e2e54622fd6
+change-id: 20251020-fix-3149-f01ae62fa53c
+
+Best regards,
+-- 
+Wesley Hershberger <wesley.hershberger@canonical.com>
 
 
