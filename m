@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D14CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 16:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B51CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 16:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEzh-0004Ik-Vb; Tue, 21 Oct 2025 12:13:54 -0400
+	id 1vBEzj-0004Je-8a; Tue, 21 Oct 2025 12:13:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vBEzd-0004ES-NJ
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:13:51 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1vBEzh-0004IR-CG
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:13:53 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vBEzW-0001at-OA
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:13:48 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-77f343231fcso3979379b3a.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 09:13:42 -0700 (PDT)
+ id 1vBEzd-0001bi-H7
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:13:53 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-7a1603a098eso3602107b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 09:13:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1761063220; x=1761668020; darn=nongnu.org;
+ d=sifive.com; s=google; t=1761063226; x=1761668026; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=27TC79UHh7APf1kYdEu3SyfuDzXTlSkrNQqbdUNBRwU=;
- b=EFv3JipMcTxiZuEB7b541OD7aenJEphRSygWyuDqyjnLJvaPT9MQWevA/J6camucTb
- gpwjl0lju3tIDleq9f6/7IT8heL+js2g2FXowc7Je7df2N09e7xG+qfAxGAOl4Cz3Gxk
- mfqFaBE7CCoSXA3HFpofh9V1hVv/maeP1HEYfgKHoZ310BIyVwudumhvOrMyBsqzgnvR
- XD7zxVGq4RE/hC3YgAKA8Cp0fftgmE2xDZxJKQaq28WdZwfpXnMKDslhMYHcdV+PGc/W
- HloS/CfL1+B+5MAnR5WfaiTcoP0kWlvqG2MiMcH0emf2IUZXimsy5kaSxibnHgIUPL2Z
- vUEQ==
+ bh=IPid8O/40LFlUrPqK0SELP2UT4eulj7CVPfrAr1p+ws=;
+ b=WOJUrlxyQXIn+XM+I1rhxKaCMBtpB4mHqTguBc55vaP1rPUJnMWyC9yT1IEuBVsKYu
+ zgQeTVgFwDuYIzHpgoKHA76TC0myWFqB6YorHJLEx9sXa60IWjzOrot3bD1y+DYYnfpJ
+ edfDAT1vCu+fqzPI/lyBvlYJkVf9Tsm7cvDFbMExENJ3DoJmWzofPCzar+E2WXAJqjwU
+ swLcj7xJ7mkN4YAcpnkZyRULi/I4GMQ5G4fWI+tKwwkVqtpXw1q8JznhuxYe5kAv3dSl
+ UWq5PKpV5zZU+h79hr4pGw2eENGlhpoXUm38GMbUoBOSuHVfKB7NuG9rV89J/OM0xt/r
+ pdAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761063220; x=1761668020;
+ d=1e100.net; s=20230601; t=1761063226; x=1761668026;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=27TC79UHh7APf1kYdEu3SyfuDzXTlSkrNQqbdUNBRwU=;
- b=FzVJ853y+1ZZtydhCNr8yDJm34VtBF6Lei6nnMtpybM9VCt4BRVML7VKBZst2/qDLA
- U8gyqxPCvbuVrYL6lQKtytDvcKk8l39A7ZpAqXnkstNDuknEkWadIAgpcHaUrkH8xn0B
- 9M9Y0y4xBoJur9iCC9ibyZ46PX2FYKHDbHgv7hIE2nZm/K84b/N0+IKo+xJ+KQLZWVnr
- BoQMHR8setJd7Y7aX9tciJTQcI00d/F6uAjUtO03dAEt8mjZlXCUiNIEGv9o/kll/lH/
- guBG7Qo2hYVmedS9Jtwqkr/4t2Ceo1ElpaZH1Ke1o1lnM1oKjOTKALWEzcuP+P3+M61o
- qceA==
-X-Gm-Message-State: AOJu0YyhmiFJVUSvTKTmTx5dd+FNGy5kAzUNhSApgflYHgzehlLBUQu9
- WmcxzLSusEznDbwiTVXg/OoRNFm1hk7OxNYWaECx74lmWoD56+jznl/fIxY7z8V+JOF/+P/qYed
- KLFyBWaeZqZs9XuvV7mFV79g5e80eTsaEvBXTnd6JvrtUlilnWg0t9ucDLBUkEKTN+yIXtWsVFW
- GG5qnlacxwHAc0rRPnd1vZQjlX3eVy3D/IWGD/HA==
-X-Gm-Gg: ASbGncuIf8l1Uf4scAr5TwRwZG4N4MZF8gFTgOfJ7UiB22aNdNhxR6gX1JjW34a+WWc
- yfvCp77twkhbjB07mf3wywpInQH9eNoLKiRcZxl0Rm+iMRCI0BMVlrVQ87ZcaPbauVd6VeFWydo
- jxYdqdHUQvcKRzaQnAv0Sa9zGCkixY7lWbCuf0CsmvfLHjg1qyFvw2plEvZ9KwfCZx2lqi4G8Fe
- 92elBnct1Kza92ubRH8TBBt1vbXHHq9E0spQqocuPAq2trRop0BsqBrekHLUTU6tuWr2KhT476E
- w40SELs47K2dmb9yBMSGQE47LnisTmZxBU7puP+Oo3BC1j3Bfqj9RuD486Xx7q6KOEXlhNlcpcW
- x0UDv09klEav/BJ/SXl5x34bpPG7LnljV5bVqtTQi1JuJqxP2ha04wLkKaB/8ELXYi8Z3NC4+D5
- 8UW6wll9+pEBMzihKnI0WJjJDwGWQlloZt
-X-Google-Smtp-Source: AGHT+IEvKEZ/oorCPRUE3+2drUtMz/WjilkHhFd+68pw51VUwa/jNnxVq8UgoGwKNSE66uhNYDRydA==
-X-Received: by 2002:a05:6a00:4b0f:b0:777:797b:7318 with SMTP id
- d2e1a72fcca58-7a220a5e685mr19877401b3a.7.1761063220131; 
- Tue, 21 Oct 2025 09:13:40 -0700 (PDT)
+ bh=IPid8O/40LFlUrPqK0SELP2UT4eulj7CVPfrAr1p+ws=;
+ b=Tw8ZXa+LIcA07M9sRrrVW6iLUVHsVQVCwzc8VSLb4oU1jo6WIEao0OMC9GXbu3nCT5
+ MUxC1B0vQIA0i3s6sVG0w9pI9rhElYo3OtlCii5uAf6IUaVqNtbV37uo4H6AFb5s7kcd
+ aQIoIN1KI95doYEZRNLwk+o/eq9nZuSBS7eva3gMOgVy8rfTERJgSv3mNZYU8n8Ymu0U
+ g33kGVx2vGsevKFQ9oLnzn64Jx5z3CfCfJJzAmKF3+8rv1PFPDDi9eqBMH+vTI8up65T
+ yl641us/PZf1xTWjDVsiVgGbUbuVv1WxiLSvZChmvJRZzxlfSNpCzr1SQgcrHyPi1DdH
+ 84QQ==
+X-Gm-Message-State: AOJu0YxwEXDZk2LibEx4MXoD24hiMuGUkTbF1ve5bAE1qnYCjOKtOVl5
+ a8drjoUqhLo1Pu3W1lj4kgnp2/DuQwYUBRCfeDjM6RNva5pyThVV9A9aS2ng5mPXT/ssyAu0AuT
+ Qry/wY3gCfFQyPCSix9q5oc0xKndR4weo1ZMMwPsqUu5+IN+5ptHZlnnnrawh6X5N+WK+4VrrZZ
+ eaP0kcYf3mU3p4i+jCQPUsvf8V6Zvekk2yom0UzQ==
+X-Gm-Gg: ASbGncv5LnIbamUOtcrbYPCZ8G1h9oDWSiO9hxfInM9oLCM9GX468iLlpYrvnyXLm6/
+ Y6W2G1zq/XOa3bhcG/nvhFsfMVHL4e88QF0aO1KxeTzsH168jMs3d/my1c28iKingUOqB39IKs3
+ qSkxyhVcZ+cA2zviFoP+DoJXhcrBmYZ/HLVS2+5d9KsmnGDdYbO6b8kLqOm1U8CQ9x63uMTuUcb
+ CSkf+syDB78FHBlh/O//P8yCZdYbLMF4jep5+PmzGCfzH6jBQkPjQN6D+yUME26aii4D12kayUr
+ xG3CWLjJhLIjnb0sVwf9s2M0LDD7fJPu8Wk7fRSTKc2bSh7xSwwHKc8/ES63Oeehu+Ylw8BPRtF
+ XXk0dkbWULvTOHHLwdBPKg/crt/DSLcQ35cbxLuulIx28dqRZnII5Vh/4eSYHqxchO0vT1kLpDM
+ rCf7CEH+ciyHGPCR/xme1dTg==
+X-Google-Smtp-Source: AGHT+IHRpNcOULa6siOygj7bHDL86wtI9uZwhVGxYVuwKJq4fP0bxUJjSmKp+5DHkiIWGu4RHtkblw==
+X-Received: by 2002:a05:6a00:886:b0:77d:b0cf:ca14 with SMTP id
+ d2e1a72fcca58-7a220af0525mr20092587b3a.22.1761063225839; 
+ Tue, 21 Oct 2025 09:13:45 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a23010f7c7sm11731157b3a.54.2025.10.21.09.13.34
+ d2e1a72fcca58-7a23010f7c7sm11731157b3a.54.2025.10.21.09.13.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Oct 2025 09:13:39 -0700 (PDT)
+ Tue, 21 Oct 2025 09:13:45 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -96,17 +96,16 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
  qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v3 09/18] target/riscv: Allow global WG config to set WG CPU
- callbacks
-Date: Wed, 22 Oct 2025 00:13:15 +0800
-Message-ID: <20251021161325.585278-2-jim.shu@sifive.com>
+Subject: [PATCH v3 10/18] target/riscv: Implement WorldGuard CSRs
+Date: Wed, 22 Oct 2025 00:13:16 +0800
+Message-ID: <20251021161325.585278-3-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251021155548.584543-1-jim.shu@sifive.com>
 References: <20251021155548.584543-1-jim.shu@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,30 +128,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some WG CPU functions depend on global WG config (like num-of-world), so
-we let the global WG config device to set callbacks of a RISC-V HART.
+The WG v0.4 specification adds 3 CSRs to configure S/U/HS/VS-mode WIDs
+of CPUs in the higher privileged modes.
+
+The Smwg extension at least requires a RISC-V HART to have M/U-mode, and
+the Sswg/Smwgd extension at least requires a RISC-V HART to have
+M/S/U-mode.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/cpu.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/cpu.c |   4 ++
+ target/riscv/cpu.h |   5 +++
+ target/riscv/csr.c | 107 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 116 insertions(+)
 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 03946439f2..22b4070476 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -795,6 +795,10 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+         env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+     }
+ 
++    if (riscv_cpu_cfg(env)->ext_smwg && env->wg_reset) {
++        env->wg_reset(env);
++    }
++
+     if (kvm_enabled()) {
+         kvm_riscv_reset_vcpu(cpu);
+     }
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index b121e3bca9..8e18b5f13e 100644
+index 8e18b5f13e..e99aa11140 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -513,6 +513,10 @@ struct CPUArchState {
-     target_ulong rnmip;
+@@ -514,6 +514,11 @@ struct CPUArchState {
      uint64_t rnmi_irqvec;
      uint64_t rnmi_excpvec;
-+
-+    /* machine specific WorldGuard callback */
-+    void (*wg_reset)(CPURISCVState *env);
-+    void (*wid_to_mem_attrs)(MemTxAttrs *attrs, uint32_t wid);
- };
  
- /*
++    /* RISC-V WorldGuard */
++    target_ulong mlwid;
++    target_ulong slwid;
++    target_ulong mwiddeleg;
++
+     /* machine specific WorldGuard callback */
+     void (*wg_reset)(CPURISCVState *env);
+     void (*wid_to_mem_attrs)(MemTxAttrs *attrs, uint32_t wid);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 5c91658c3d..be62a30953 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5470,6 +5470,109 @@ static RISCVException write_mnstatus(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++/* RISC-V Worldguard */
++static RISCVException worldguard_umode(CPURISCVState *env, int csrno)
++{
++    if (!riscv_cpu_cfg(env)->ext_smwg) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    return umode(env, csrno);
++}
++
++static RISCVException worldguard_sumode(CPURISCVState *env, int csrno)
++{
++    RISCVException ret;
++
++    if (!riscv_cpu_cfg(env)->ext_sswg) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    ret = smode(env, csrno);
++
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    return umode(env, csrno);
++}
++
++static RISCVException rmw_mlwid(CPURISCVState *env, int csrno,
++                                target_ulong *ret_val,
++                                target_ulong new_val, target_ulong wr_mask)
++{
++    CPUState *cs = env_cpu(env);
++    RISCVCPU *cpu = RISCV_CPU(cs);
++    target_ulong new_mlwid = (env->mlwid & ~wr_mask) | (new_val & wr_mask);
++
++    if (ret_val) {
++        *ret_val = env->mlwid;
++    }
++
++    g_assert(cpu->cfg.mwidlist);
++    if (!(BIT(new_mlwid) & cpu->cfg.mwidlist)) {
++        /* Set WID to lowest legal value if writing illegal value (WARL) */
++        new_mlwid = find_first_bit((unsigned long *)&cpu->cfg.mwidlist, 32);
++    }
++
++    if (env->mlwid != new_mlwid) {
++        env->mlwid = new_mlwid;
++        tlb_flush(cs);
++    }
++
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException rmw_slwid(CPURISCVState *env, int csrno,
++                                target_ulong *ret_val,
++                                target_ulong new_val, target_ulong wr_mask)
++{
++    target_ulong new_slwid = (env->slwid & ~wr_mask) | (new_val & wr_mask);
++
++    if (!env->mwiddeleg) {
++        /*
++         * When mwiddeleg CSR is zero, access to slwid raises an illegal
++         * instruction exception.
++         */
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    if (ret_val) {
++        *ret_val = env->slwid;
++    }
++
++    if (!(BIT(new_slwid) & env->mwiddeleg)) {
++        /* Set WID to lowest legal value if writing illegal value (WARL) */
++        new_slwid = find_first_bit(
++            (unsigned long *)&env->mwiddeleg, TARGET_LONG_BITS);
++    }
++
++    if (env->slwid != new_slwid) {
++        env->slwid = new_slwid;
++        tlb_flush(env_cpu(env));
++    }
++
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException rmw_mwiddeleg(CPURISCVState *env, int csrno,
++                                    target_ulong *ret_val,
++                                    target_ulong new_val, target_ulong wr_mask)
++{
++    CPUState *cs = env_cpu(env);
++    RISCVCPU *cpu = RISCV_CPU(cs);
++
++    if (ret_val) {
++        *ret_val = env->mwiddeleg;
++    }
++
++    env->mwiddeleg = (env->mwiddeleg & ~wr_mask) | (new_val & wr_mask);
++
++    /* Core wgMarker can only have WID value in mwidlist. */
++    env->mwiddeleg &= cpu->cfg.mwidlist;
++
++    return RISCV_EXCP_NONE;
++}
+ #endif
+ 
+ /* Crypto Extension */
+@@ -6667,5 +6770,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_SCOUNTOVF]      = { "scountovf", sscofpmf,  read_scountovf,
+                              .min_priv_ver = PRIV_VERSION_1_12_0 },
+ 
++    /* RISC-V WorldGuard */
++    [CSR_MLWID]     = { "mlwid",     worldguard_umode,  NULL, NULL, rmw_mlwid },
++    [CSR_SLWID]     = { "slwid",     worldguard_sumode, NULL, NULL, rmw_slwid },
++    [CSR_MWIDDELEG] = { "mwiddeleg", worldguard_sumode, NULL, NULL, rmw_mwiddeleg },
+ #endif /* !CONFIG_USER_ONLY */
+ };
 -- 
 2.43.0
 
