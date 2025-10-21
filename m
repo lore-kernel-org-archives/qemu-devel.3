@@ -4,116 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E78CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD06CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 08:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB7qz-0005Nu-HX; Tue, 21 Oct 2025 04:36:25 -0400
+	id 1vB7vv-0007Er-HH; Tue, 21 Oct 2025 04:41:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1vB7qx-0005Kz-K3; Tue, 21 Oct 2025 04:36:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1vB7qu-0008V3-2S; Tue, 21 Oct 2025 04:36:23 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L1tmnP029037;
- Tue, 21 Oct 2025 08:36:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=+1u8UTq0npzp06k4ZLQwSWETqGG8QS
- 6FWc2IxB0cS14=; b=Gwyvf6C5XIY1phF7B7yosgWzf1jIaCpMqwMAc7hK2MhSEI
- msm1dBctH+x3O1fiV38FpYPU113KprXxjvUggaSls6RC8mByZbpZwLMjPcCGY3bm
- br4PRqMjz9XtHWU/BJxOP/GLERB5IHhe/W+U1DycqNbiEPYZ0pcBiSFz80ajARFy
- 7tpdyUljkuJG1t/9tG+9bLQyvM5lqHyIWYwda3i6hNQkRhO4V5/Kr4d0YA612vy8
- mnyFbRYCV5s4Ltzc73oMb9pUiShQA1Lzb8hBeA2iDgAs8so0dk342XhYPeImuqb/
- 86axCxFfhS6N9rrOQFF6UdwZkWKlsGEN1E+AxGfg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vmnet-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 08:36:14 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59L8RB2b026794;
- Tue, 21 Oct 2025 08:36:13 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vmneq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 08:36:13 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L4CR8p024686;
- Tue, 21 Oct 2025 08:36:13 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqjsrfn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 08:36:12 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59L8a8bx27328886
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Oct 2025 08:36:08 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A81A20043;
- Tue, 21 Oct 2025 08:36:08 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B998020040;
- Tue, 21 Oct 2025 08:36:05 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.39.24.196])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 21 Oct 2025 08:36:05 +0000 (GMT)
-Date: Tue, 21 Oct 2025 14:06:03 +0530
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
- hpoussin@reactos.org
-Subject: Re: [Patch v4 5/5] hw/ppc: Pass errp to load_image_targphys() and
- report errors
-Message-ID: <aPdF85opOl2fAC1d@linux.ibm.com>
-References: <20251017181250.1421446-2-vishalc@linux.ibm.com>
- <20251017182426.1423403-2-vishalc@linux.ibm.com>
- <76c10ae5-a249-2f0e-a10b-053863210764@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7vt-0007D4-2b
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:41:29 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB7vq-0000hG-FK
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 04:41:28 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso5311244f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 01:41:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761036084; x=1761640884; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9pdjAhGPOKbiWGXRfMs4/Rv2ViRZ+hqcx69OXv2qTHA=;
+ b=ctG56pT39yLogszykA8gD9fpuLDqRyeXYM3Klo0p31Df1nfujVEDUiR0fBpkwI+WhR
+ c7Hy3gKaKaA94lS7BXneBZanhlU2Or6TP6NvOyx5mRpSoe2ALWodw7uh0Lk9ypeLK0JQ
+ wPJYQVa0e8bVnSeXqPDegpuLyC9J1aOuE3EV3Eo3BAaI5EVwvV8kg+t8A5J9Mr6P2WaD
+ 7DILtfsdK0aSTRc+5eHmR+OAYwZahCqx0qFJovGhrzgvvie/7/iLH+a5qZ+xARLeUy3v
+ AhN7mzm00RyWWwaZwkZ52CJjUdwzrc44SS1wEmFYcoWw0pegiqPcxjo7RSwMOJ9kc3yF
+ MFLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761036084; x=1761640884;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9pdjAhGPOKbiWGXRfMs4/Rv2ViRZ+hqcx69OXv2qTHA=;
+ b=WDnWgcm9cQAgX298LzcLxmodBmw0+qkgk9uvWmSU5Cv8GC99aXvskHNa3yKHVbuXRo
+ HbCpVU+aBqKaufX349mRTdq8Auk0MFzDoBjGBOxgEDj1D2guR6fXRjAAmRQPiKQIK3HH
+ ysigJACjnWHXqUmfS+gUtoPhvQxjtpEwhukQ4+xcL6PEOmoCoNPhJW6SvtvSeYYn46mj
+ XzAt3SzseWv4RGkC5UzJeXEmUCT5c+9Y8Ev0A4Us2+a+9RCfOhWe9dfMudvR7SuGBNC1
+ ot0L26pQzrCBNz048XE0iPL6gLiG/rwi6O3bLhGFNFk7D6L9zb4hY83sTe//3/m3IPR4
+ ipeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9Edn6UJlup9f3DxsFlQVeAQg/tdsJVxpEAEp0u+C1a2j1cqtLbxRHuSIfPXdHNz1gFCpZnQZwhJCF@nongnu.org
+X-Gm-Message-State: AOJu0Yytopb2I1RKEpWcR2FAVMbkSaJD0JtnyC6Nin6k5qEy1h4PNIjE
+ yC9BJ5XStIrqqgNL7BOpcKWV+hbTuwKrqgbEIEJ88J5HC3azRyJBhOkuUDZHu2aRipU=
+X-Gm-Gg: ASbGncvT8kLrMMBGpoM1JaPl9Z1CDkRQ726l18cACLXNtsPSEBwsvAj66k5RB2wE1Tm
+ 8WNuU4PGGeqliG9yMyarH5JhHCl9sr5Rqo41v1EHmhVjYQtVHmrjn14WtHAxdtVedZnpJtI4ZQ9
+ dX4JwX5WlZ1PrRhb4ruYm/MrU9dEu5rfrhDEyyj3sjCTm+bihX7tt2kukcXdUNkk+cYvd7eoeaq
+ tYuSFQ3aVMJBUHHRcJfwIVn+3B2CMhmXlx/0Qo0I2fjdFQe15yRA/i6obgglBnLjeYLYnZ1WaNa
+ gGNXmrGmYBJtGTkMvP6JPlEHMJ46DKXT+ZhQoe2NQjkho0eTSBDn/xh3OSGGIETosGv/51AqR8B
+ IGc1GqREEeL6ymI3E/BKkX0AXbYYv6H5lxeoj6WG/H9rVxAQyiTKn8yopFByK/qV6jNkfrQAThK
+ lDDgiauPTmycUvW35idjJTFFKDRTN6ll8ZmDjVRXQ8MegtrxQMXxG29A==
+X-Google-Smtp-Source: AGHT+IHLb2hhls7CmzdC5uuJ3k8uDyLGIIrHJLKfQUIGVoKZG6uX7C3odt0aWNSChx6y9ZBdugjjtw==
+X-Received: by 2002:a05:6000:40e0:b0:428:3c4f:2c4b with SMTP id
+ ffacd0b85a97d-4283c4f2dbcmr7502853f8f.46.1761036084042; 
+ Tue, 21 Oct 2025 01:41:24 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427f00b9fdfsm19074155f8f.40.2025.10.21.01.41.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 01:41:23 -0700 (PDT)
+Message-ID: <6308d43b-32d0-47fb-a103-9105d56ab31c@linaro.org>
+Date: Tue, 21 Oct 2025 10:41:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <76c10ae5-a249-2f0e-a10b-053863210764@eik.bme.hu>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: GM-4ENXBXN9Srq8QImAr3uNwYZv0gL58
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX1nw8NNqZwKeU
- AU88wVUniWEhhWNKCGMMH5+W1n7PwHqojwC4PLn5x2bdarZ+0S+sEFScq4c+FEZh09qwEJ1IrNZ
- tgFSqcKxiI9HrJVtv2R+f/MMQJtKMA/8h2GbmjoeuXdWvcv9Sd0eP+PjNyTsNCBRIYfSEiFTak+
- rhg8yKwvezVFBcAzFBJNCfMSTNOqAIt87mloXGJeJjFCVwq1r/RmbmEPi+p1l+Nic1Dfg0ok2M0
- CuN4un6rYNvViGl28aapXaGF0Mt/3uyf6yIX18ApBVIaW2QF2S1+fHz78jNgo8NcWBe6PKy76Co
- CxuBCwqm1NvhEPVozvHWJE79RjwtXeCmJO5e5EVuyWgwSLVlBfK+nRTa2aGmw/mhH+PAyGp/a7U
- Npe0TWYsRvpUL/6unAGPZtYg0ksFVw==
-X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f745fe cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=43qqzYKZ_0OxntUHnLIA:9 a=CjuIK1q_8ugA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: BXGWwyWMYBumySuyCqUZ087J165-SIuk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-20_07,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/18] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
+ pseries-4.2 machines
+Content-Language: en-US
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ qemu-ppc@nongnu.org, kvm@vger.kernel.org,
+ Chinmay Rath <rathc@linux.ibm.com>
+References: <20251020103815.78415-1-philmd@linaro.org>
+ <fdb7e249-b801-4f57-943d-71e620df2fb3@linux.ibm.com>
+ <8993a80c-6cb5-4c5b-a0ef-db9257c212be@redhat.com>
+ <6dcf7f38-5d1d-47a0-b647-b63b9151b4b6@linaro.org>
+ <6c1c6488-679b-4bb8-8fb2-569a9f705ba7@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6c1c6488-679b-4bb8-8fb2-569a9f705ba7@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,557 +110,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 17, 2025 at 09:41:23PM +0200, BALATON Zoltan wrote:
-> On Fri, 17 Oct 2025, Vishal Chourasia wrote:
-> > Pass errp to load_image_targphys() calls in ppc machine initialization
-> > to capture detailed error information when loading firmware, kernel,
-> > and initrd images.
-> > 
-> > Use error_reportf_err() instead of error_report() to print the
-> > underlying error details along with context about which image failed
-> > to load.
-> > 
-> > Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-> > ---
-> > hw/ppc/amigaone.c      | 15 ++++++++-------
-> > hw/ppc/e500.c          | 17 +++++++++--------
-> > hw/ppc/mac_newworld.c  | 26 ++++++++++++++++----------
-> > hw/ppc/mac_oldworld.c  | 26 ++++++++++++++++----------
-> > hw/ppc/pegasos2.c      | 17 +++++++++++------
-> > hw/ppc/pnv.c           | 31 ++++++++++++++-----------------
-> > hw/ppc/ppc440_bamboo.c |  9 +++++----
-> > hw/ppc/prep.c          | 25 +++++++++++++++----------
-> > hw/ppc/sam460ex.c      |  9 +++++----
-> > hw/ppc/spapr.c         | 15 ++++++++-------
-> > hw/ppc/virtex_ml507.c  | 17 +++++++++++------
-> > 11 files changed, 118 insertions(+), 89 deletions(-)
-> > 
-> > diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> > index 5c5acc9872..bd14bed243 100644
-> > --- a/hw/ppc/amigaone.c
-> > +++ b/hw/ppc/amigaone.c
-> > @@ -276,6 +276,7 @@ static void amigaone_init(MachineState *machine)
-> >     DriveInfo *di;
-> >     hwaddr loadaddr;
-> >     struct boot_info *bi = NULL;
-> > +    Error *errp = NULL;
-> > 
-> >     /* init CPU */
-> >     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
-> > @@ -324,9 +325,9 @@ static void amigaone_init(MachineState *machine)
-> >             error_report("Could not find firmware '%s'", machine->firmware);
-> >             exit(1);
-> >         }
-> > -        sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, NULL);
-> > -        if (sz <= 0 || sz > PROM_SIZE) {
-> > -            error_report("Could not load firmware '%s'", filename);
-> > +        sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "Could not load firmware '%s': ", filename);
-> >             exit(1);
-> >         }
-> >     }
-> > @@ -413,10 +414,10 @@ static void amigaone_init(MachineState *machine)
-> >         loadaddr = ROUND_UP(loadaddr + 4 * MiB, 4 * KiB);
-> >         loadaddr = MAX(loadaddr, INITRD_MIN_ADDR);
-> >         sz = load_image_targphys(machine->initrd_filename, loadaddr,
-> > -                                 bi->bd_info - loadaddr, NULL);
-> > -        if (sz <= 0) {
-> > -            error_report("Could not load initrd '%s'",
-> > -                         machine->initrd_filename);
-> > +                                 bi->bd_info - loadaddr, &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "Could not load initrd '%s': ",
-> > +                              machine->initrd_filename);
-> >             exit(1);
-> >         }
-> >         bi->initrd_start = loadaddr;
-> > diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-> > index 30937a4a92..48e238f3a4 100644
-> > --- a/hw/ppc/e500.c
-> > +++ b/hw/ppc/e500.c
-> > @@ -932,6 +932,7 @@ void ppce500_init(MachineState *machine)
-> >     MemoryRegion *ccsr_addr_space;
-> >     SysBusDevice *s;
-> >     I2CBus *i2c;
-> > +    Error *errp = NULL;
-> > 
-> >     irqs = g_new0(IrqLines, smp_cpus);
-> >     for (i = 0; i < smp_cpus; i++) {
-> > @@ -1227,10 +1228,10 @@ void ppce500_init(MachineState *machine)
-> >         kernel_base = cur_base;
-> >         kernel_size = load_image_targphys(machine->kernel_filename,
-> >                                           cur_base,
-> > -                                          machine->ram_size - cur_base, NULL);
-> > -        if (kernel_size < 0) {
-> > -            error_report("could not load kernel '%s'",
-> > -                         machine->kernel_filename);
-> > +                                          machine->ram_size - cur_base, &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load kernel '%s': ",
-> > +                              machine->kernel_filename);
-> >             exit(1);
-> >         }
-> > 
-> > @@ -1242,11 +1243,11 @@ void ppce500_init(MachineState *machine)
-> >         initrd_base = (cur_base + INITRD_LOAD_PAD) & ~INITRD_PAD_MASK;
-> >         initrd_size = load_image_targphys(machine->initrd_filename, initrd_base,
-> >                                           machine->ram_size - initrd_base,
-> > -                                          NULL);
-> > +                                          &errp);
-> > 
-> > -        if (initrd_size < 0) {
-> > -            error_report("could not load initial ram disk '%s'",
-> > -                         machine->initrd_filename);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load initial ram disk '%s': ",
-> > +                              machine->initrd_filename);
-> >             exit(1);
-> >         }
-> > 
-> > diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-> > index 004efc6b97..00d1b490d4 100644
-> > --- a/hw/ppc/mac_newworld.c
-> > +++ b/hw/ppc/mac_newworld.c
-> > @@ -156,6 +156,7 @@ static void ppc_core99_init(MachineState *machine)
-> >     DeviceState *uninorth_internal_dev = NULL, *uninorth_agp_dev = NULL;
-> >     hwaddr nvram_addr = 0xFFF04000;
-> >     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
-> > +    Error *errp = NULL;
-> > 
-> >     /* init CPUs */
-> >     for (i = 0; i < machine->smp.cpus; i++) {
-> > @@ -189,12 +190,17 @@ static void ppc_core99_init(MachineState *machine)
-> >         if (bios_size <= 0) {
-> >             /* or load binary ROM image */
-> >             bios_size = load_image_targphys(filename, PROM_BASE, PROM_SIZE,
-> > -                                            NULL);
-> > +                                            &errp);
-> >         }
-> >         g_free(filename);
-> >     }
-> >     if (bios_size < 0 || bios_size > PROM_SIZE) {
-> > -        error_report("could not load PowerPC bios '%s'", bios_name);
-> > +        if (!errp) {
-> > +            error_setg(&errp, ": exceeds max supported file size %lu",
+On 21/10/25 10:34, Harsh Prateek Bora wrote:
 > 
-> The starting colon looks odd. What is this appended to? If not the name of
-> the file then "exceeds" also looks wrong, if it's the text in
-> error_reportf_err below then that already ends in a colon. Also either don't
-> convert to megabytes or add that to text after the number to make it clear
-> what measurement unit it is.
-Yes, It will get appended to the message in the error_reportf_err, which
-already contains a colon. I will retain one of those. Also, I will add
-the missing unit.
+> 
+> On 10/21/25 13:16, Philippe Mathieu-Daudé wrote:
+>> On 21/10/25 08:31, Cédric Le Goater wrote:
+>>> Hi
+>>>
+>>> On 10/21/25 06:54, Harsh Prateek Bora wrote:
+>>>> +Cedric
+>>>>
+>>>> Hi Phillipe,
+>>>>
+>>>> It had been done and the patches were reviewed already here (you 
+>>>> were in CC too):
+>>>>
+>>>> https://lore.kernel.org/qemu-devel/20251009184057.19973-1- 
+>>>> harshpb@linux.ibm.com/
+>>>
+>>> I would take the already reviewed patches, as that work is done. This 
+>>> series
+>>> is fine, but it is extra effort for removing dead code, which isn't 
+>>> worth
+>>> the time.
+>>
+>> My bad for missing a series reviewed 2 weeks ago (and not yet merged).
+>>
+>> Please consider cherry-picking the patches doing these cleanups then,
+>> which were missed because "too many things changed in a single patch"
+>> IMHO:
+>>
+>> -- >8 --
+> 
+> Thanks for highlighting the delta cleanups, we can take care.
 
-Thanks,
-vishalc
-> 
-> Regards,
-> BALATON Zoltan
-> 
-> > +                       PROM_SIZE / MiB);
-> > +        }
-> > +        error_reportf_err(errp, "could not load PowerPC bios '%s': ",
-> > +                          bios_name);
-> >         exit(1);
-> >     }
-> > 
-> > @@ -212,11 +218,11 @@ static void ppc_core99_init(MachineState *machine)
-> >             kernel_size = load_image_targphys(machine->kernel_filename,
-> >                                               kernel_base,
-> >                                               machine->ram_size - kernel_base,
-> > -                                              NULL);
-> > +                                              &errp);
-> >         }
-> > -        if (kernel_size < 0) {
-> > -            error_report("could not load kernel '%s'",
-> > -                         machine->kernel_filename);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load kernel '%s': ",
-> > +                              machine->kernel_filename);
-> >             exit(1);
-> >         }
-> >         /* load initrd */
-> > @@ -225,10 +231,10 @@ static void ppc_core99_init(MachineState *machine)
-> >             initrd_size = load_image_targphys(machine->initrd_filename,
-> >                                               initrd_base,
-> >                                               machine->ram_size - initrd_base,
-> > -                                              NULL);
-> > -            if (initrd_size < 0) {
-> > -                error_report("could not load initial ram disk '%s'",
-> > -                             machine->initrd_filename);
-> > +                                              &errp);
-> > +            if (errp) {
-> > +                error_reportf_err(errp, "couldn't load initial ram disk '%s': ",
-> > +                                  machine->initrd_filename);
-> >                 exit(1);
-> >             }
-> >             cmdline_base = TARGET_PAGE_ALIGN(initrd_base + initrd_size);
-> > diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-> > index c7e44d49b0..2af74e13ef 100644
-> > --- a/hw/ppc/mac_oldworld.c
-> > +++ b/hw/ppc/mac_oldworld.c
-> > @@ -108,6 +108,7 @@ static void ppc_heathrow_init(MachineState *machine)
-> >     DriveInfo *dinfo, *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
-> >     void *fw_cfg;
-> >     uint64_t tbfreq = kvm_enabled() ? kvmppc_get_tbfreq() : TBFREQ;
-> > +    Error *errp = NULL;
-> > 
-> >     /* init CPUs */
-> >     for (i = 0; i < machine->smp.cpus; i++) {
-> > @@ -144,13 +145,18 @@ static void ppc_heathrow_init(MachineState *machine)
-> >         if (bios_size <= 0) {
-> >             /* or if could not load ELF try loading a binary ROM image */
-> >             bios_size = load_image_targphys(filename, PROM_BASE, PROM_SIZE,
-> > -                                            NULL);
-> > +                                            &errp);
-> >             bios_addr = PROM_BASE;
-> >         }
-> >         g_free(filename);
-> >     }
-> >     if (bios_size < 0 || bios_addr - PROM_BASE + bios_size > PROM_SIZE) {
-> > -        error_report("could not load PowerPC bios '%s'", bios_name);
-> > +        if (!errp) {
-> > +            error_setg(&errp, ": exceeds max supported file size (%" PRIu64 " MiB)",
-> > +                       PROM_SIZE / MiB);
-> > +        }
-> > +        error_reportf_err(errp, "could not load PowerPC bios '%s': ",
-> > +                          bios_name);
-> >         exit(1);
-> >     }
-> > 
-> > @@ -168,11 +174,11 @@ static void ppc_heathrow_init(MachineState *machine)
-> >             kernel_size = load_image_targphys(machine->kernel_filename,
-> >                                               kernel_base,
-> >                                               machine->ram_size - kernel_base,
-> > -                                              NULL);
-> > +                                              &errp);
-> >         }
-> > -        if (kernel_size < 0) {
-> > -            error_report("could not load kernel '%s'",
-> > -                         machine->kernel_filename);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load kernel '%s': ",
-> > +                              machine->kernel_filename);
-> >             exit(1);
-> >         }
-> >         /* load initrd */
-> > @@ -182,10 +188,10 @@ static void ppc_heathrow_init(MachineState *machine)
-> >             initrd_size = load_image_targphys(machine->initrd_filename,
-> >                                               initrd_base,
-> >                                               machine->ram_size - initrd_base,
-> > -                                              NULL);
-> > -            if (initrd_size < 0) {
-> > -                error_report("could not load initial ram disk '%s'",
-> > -                             machine->initrd_filename);
-> > +                                              &errp);
-> > +            if (errp) {
-> > +                error_reportf_err(errp, "couldn't load initial ram disk '%s': ",
-> > +                                  machine->initrd_filename);
-> >                 exit(1);
-> >             }
-> >             cmdline_base = TARGET_PAGE_ALIGN(initrd_base + initrd_size);
-> > diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> > index 1f754df0e2..72d6e7117f 100644
-> > --- a/hw/ppc/pegasos2.c
-> > +++ b/hw/ppc/pegasos2.c
-> > @@ -129,6 +129,7 @@ static void pegasos2_init(MachineState *machine)
-> >     int i;
-> >     ssize_t sz;
-> >     uint8_t *spd_data;
-> > +    Error *errp = NULL;
-> > 
-> >     /* init CPU */
-> >     pm->cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
-> > @@ -164,10 +165,14 @@ static void pegasos2_init(MachineState *machine)
-> >                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-> >     if (sz <= 0) {
-> >         sz = load_image_targphys(filename, pm->vof ? 0 : PROM_ADDR, PROM_SIZE,
-> > -                                 NULL);
-> > +                                 &errp);
-> >     }
-> >     if (sz <= 0 || sz > PROM_SIZE) {
-> > -        error_report("Could not load firmware '%s'", filename);
-> > +        if (!errp) {
-> > +            error_setg(&errp, ": exceeds max supported file size %lu",
-> > +                       PROM_SIZE / MiB);
-> > +        }
-> > +        error_reportf_err(errp, "Could not load firmware '%s': ", filename);
-> >         exit(1);
-> >     }
-> >     g_free(filename);
-> > @@ -260,10 +265,10 @@ static void pegasos2_init(MachineState *machine)
-> >         pm->initrd_addr = ROUND_UP(pm->initrd_addr, 4);
-> >         pm->initrd_addr = MAX(pm->initrd_addr, INITRD_MIN_ADDR);
-> >         sz = load_image_targphys(machine->initrd_filename, pm->initrd_addr,
-> > -                                 machine->ram_size - pm->initrd_addr, NULL);
-> > -        if (sz <= 0) {
-> > -            error_report("Could not load initrd '%s'",
-> > -                         machine->initrd_filename);
-> > +                                 machine->ram_size - pm->initrd_addr, &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "Could not load initrd '%s': ",
-> > +                              machine->initrd_filename);
-> >             exit(1);
-> >         }
-> >         pm->initrd_size = sz;
-> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > index 1c0dadda87..f5224537d3 100644
-> > --- a/hw/ppc/pnv.c
-> > +++ b/hw/ppc/pnv.c
-> > @@ -1009,12 +1009,12 @@ static void pnv_init(MachineState *machine)
-> >     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
-> >     int max_smt_threads = pmc->max_smt_threads;
-> >     char *fw_filename;
-> > -    long fw_size;
-> >     uint64_t chip_ram_start = 0;
-> >     int i;
-> >     char *chip_typename;
-> >     DriveInfo *pnor;
-> >     DeviceState *dev;
-> > +    Error *errp = NULL;
-> > 
-> >     if (kvm_enabled()) {
-> >         error_report("machine %s does not support the KVM accelerator",
-> > @@ -1068,24 +1068,21 @@ static void pnv_init(MachineState *machine)
-> >         exit(1);
-> >     }
-> > 
-> > -    fw_size = load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
-> > -                                  NULL);
-> > -    if (fw_size < 0) {
-> > -        error_report("Could not load OPAL firmware '%s'", fw_filename);
-> > +    if (load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
-> > +                                  &errp) < 0) {
-> > +        error_reportf_err(errp, "Could not load OPAL firmware '%s': ",
-> > +                          fw_filename);
-> >         exit(1);
-> >     }
-> >     g_free(fw_filename);
-> > 
-> >     /* load kernel */
-> >     if (machine->kernel_filename) {
-> > -        long kernel_size;
-> > -
-> > -        kernel_size = load_image_targphys(machine->kernel_filename,
-> > -                                          KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE,
-> > -                                          NULL);
-> > -        if (kernel_size < 0) {
-> > -            error_report("Could not load kernel '%s'",
-> > -                         machine->kernel_filename);
-> > +        if (load_image_targphys(machine->kernel_filename,
-> > +                                KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE,
-> > +                                &errp) < 0) {
-> > +            error_reportf_err(errp, "Could not load kernel '%s': ",
-> > +                              machine->kernel_filename);
-> >             exit(1);
-> >         }
-> >     }
-> > @@ -1095,10 +1092,10 @@ static void pnv_init(MachineState *machine)
-> >         pnv->initrd_base = INITRD_LOAD_ADDR;
-> >         pnv->initrd_size = load_image_targphys(machine->initrd_filename,
-> >                                                pnv->initrd_base,
-> > -                                               INITRD_MAX_SIZE, NULL);
-> > -        if (pnv->initrd_size < 0) {
-> > -            error_report("Could not load initial ram disk '%s'",
-> > -                         machine->initrd_filename);
-> > +                                               INITRD_MAX_SIZE, &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "Could not load initial ram disk '%s': ",
-> > +                              machine->initrd_filename);
-> >             exit(1);
-> >         }
-> >     }
-> > diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-> > index 7c66912c10..64b5d9a4c4 100644
-> > --- a/hw/ppc/ppc440_bamboo.c
-> > +++ b/hw/ppc/ppc440_bamboo.c
-> > @@ -141,6 +141,7 @@ static void bamboo_init(MachineState *machine)
-> >     DeviceState *uicdev;
-> >     SysBusDevice *uicsbd;
-> >     int success;
-> > +    Error *errp = NULL;
-> > 
-> >     if (kvm_enabled()) {
-> >         error_report("machine %s does not support the KVM accelerator",
-> > @@ -243,11 +244,11 @@ static void bamboo_init(MachineState *machine)
-> >     if (initrd_filename) {
-> >         initrd_size = load_image_targphys(initrd_filename, RAMDISK_ADDR,
-> >                                           machine->ram_size - RAMDISK_ADDR,
-> > -                                          NULL);
-> > +                                          &errp);
-> > 
-> > -        if (initrd_size < 0) {
-> > -            error_report("could not load ram disk '%s' at %x",
-> > -                         initrd_filename, RAMDISK_ADDR);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load ram disk '%s' at %x: ",
-> > +                              initrd_filename, RAMDISK_ADDR);
-> >             exit(1);
-> >         }
-> >     }
-> > diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> > index edd3da7102..43972d5f8d 100644
-> > --- a/hw/ppc/prep.c
-> > +++ b/hw/ppc/prep.c
-> > @@ -250,6 +250,7 @@ static void ibm_40p_init(MachineState *machine)
-> >     uint32_t kernel_base = 0, initrd_base = 0;
-> >     long kernel_size = 0, initrd_size = 0;
-> >     char boot_device;
-> > +    Error *errp = NULL;
-> > 
-> >     if (kvm_enabled()) {
-> >         error_report("machine %s does not support the KVM accelerator",
-> > @@ -280,10 +281,14 @@ static void ibm_40p_init(MachineState *machine)
-> >     bios_size = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-> >                          ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-> >     if (bios_size < 0) {
-> > -        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE, NULL);
-> > +        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE, &errp);
-> >     }
-> >     if (bios_size < 0 || bios_size > BIOS_SIZE) {
-> > -        error_report("Could not load bios image '%s'", filename);
-> > +        if (!errp) {
-> > +            error_setg(&errp, ": exceeds max supported file size %lu",
-> > +                       BIOS_SIZE / MiB);
-> > +        }
-> > +        error_reportf_err(errp, "Could not load bios image '%s': ", filename);
-> >         return;
-> >     }
-> >     g_free(filename);
-> > @@ -381,10 +386,10 @@ static void ibm_40p_init(MachineState *machine)
-> >         kernel_size = load_image_targphys(machine->kernel_filename,
-> >                                           kernel_base,
-> >                                           machine->ram_size - kernel_base,
-> > -                                          NULL);
-> > -        if (kernel_size < 0) {
-> > -            error_report("could not load kernel '%s'",
-> > -                         machine->kernel_filename);
-> > +                                          &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load kernel '%s': ",
-> > +                              machine->kernel_filename);
-> >             exit(1);
-> >         }
-> >         fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_ADDR, kernel_base);
-> > @@ -395,10 +400,10 @@ static void ibm_40p_init(MachineState *machine)
-> >             initrd_size = load_image_targphys(machine->initrd_filename,
-> >                                               initrd_base,
-> >                                               machine->ram_size - initrd_base,
-> > -                                              NULL);
-> > -            if (initrd_size < 0) {
-> > -                error_report("could not load initial ram disk '%s'",
-> > -                             machine->initrd_filename);
-> > +                                              &errp);
-> > +            if (errp) {
-> > +                error_reportf_err(errp, "couldn't load initial ram disk '%s': ",
-> > +                                  machine->initrd_filename);
-> >                 exit(1);
-> >             }
-> >             fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_ADDR, initrd_base);
-> > diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-> > index 68d3eacbff..9102bfb6d1 100644
-> > --- a/hw/ppc/sam460ex.c
-> > +++ b/hw/ppc/sam460ex.c
-> > @@ -262,6 +262,7 @@ static void sam460ex_init(MachineState *machine)
-> >     struct boot_info *boot_info;
-> >     uint8_t *spd_data;
-> >     int success;
-> > +    Error *errp = NULL;
-> > 
-> >     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
-> >     env = &cpu->env;
-> > @@ -495,10 +496,10 @@ static void sam460ex_init(MachineState *machine)
-> >         initrd_size = load_image_targphys(machine->initrd_filename,
-> >                                           RAMDISK_ADDR,
-> >                                           machine->ram_size - RAMDISK_ADDR,
-> > -                                          NULL);
-> > -        if (initrd_size < 0) {
-> > -            error_report("could not load ram disk '%s' at %x",
-> > -                    machine->initrd_filename, RAMDISK_ADDR);
-> > +                                          &errp);
-> > +        if (errp) {
-> > +            error_reportf_err(errp, "could not load ram disk '%s' at %x: ",
-> > +                              machine->initrd_filename, RAMDISK_ADDR);
-> >             exit(1);
-> >         }
-> >     }
-> > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> > index e51540a5ad..18d73868ed 100644
-> > --- a/hw/ppc/spapr.c
-> > +++ b/hw/ppc/spapr.c
-> > @@ -2824,9 +2824,10 @@ static void spapr_machine_init(MachineState *machine)
-> >         error_report("Could not find LPAR firmware '%s'", bios_name);
-> >         exit(1);
-> >     }
-> > -    fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, NULL);
-> > -    if (fw_size <= 0) {
-> > -        error_report("Could not load LPAR firmware '%s'", filename);
-> > +    fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, &errp);
-> > +    if (errp) {
-> > +        error_reportf_err(errp, "Could not load LPAR firmware '%s': ",
-> > +                          filename);
-> >         exit(1);
-> >     }
-> > 
-> > @@ -3089,10 +3090,10 @@ static void spapr_machine_init(MachineState *machine)
-> >             spapr->initrd_size = load_image_targphys(initrd_filename,
-> >                                                 spapr->initrd_base,
-> >                                                 load_limit - spapr->initrd_base,
-> > -                                                NULL);
-> > -            if (spapr->initrd_size < 0) {
-> > -                error_report("could not load initial ram disk '%s'",
-> > -                             initrd_filename);
-> > +                                                &errp);
-> > +            if (errp) {
-> > +                error_reportf_err(errp, "couldn't load initial ram disk '%s': ",
-> > +                                  initrd_filename);
-> >                 exit(1);
-> >             }
-> >         }
-> > diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-> > index 00d9ab7509..e1b658bcda 100644
-> > --- a/hw/ppc/virtex_ml507.c
-> > +++ b/hw/ppc/virtex_ml507.c
-> > @@ -195,6 +195,7 @@ static void virtex_init(MachineState *machine)
-> >     qemu_irq irq[32], cpu_irq;
-> >     int kernel_size;
-> >     int i;
-> > +    Error *errp = NULL;
-> > 
-> >     /* init CPUs */
-> >     cpu = ppc440_init_xilinx(machine->cpu_type, 400000000);
-> > @@ -253,7 +254,12 @@ static void virtex_init(MachineState *machine)
-> >             /* If we failed loading ELF's try a raw image.  */
-> >             kernel_size = load_image_targphys(kernel_filename,
-> >                                               boot_offset,
-> > -                                              machine->ram_size, NULL);
-> > +                                              machine->ram_size, &errp);
-> > +            if (errp) {
-> > +                error_reportf_err(errp, "couldn't load kernel '%s': ",
-> > +                                  kernel_filename);
-> > +                exit(1);
-> > +            }
-> >             boot_info.bootstrap_pc = boot_offset;
-> >             high = boot_info.bootstrap_pc + kernel_size + 8192;
-> >         }
-> > @@ -265,11 +271,10 @@ static void virtex_init(MachineState *machine)
-> >             initrd_base = high = ROUND_UP(high, 4);
-> >             initrd_size = load_image_targphys(machine->initrd_filename,
-> >                                               high, machine->ram_size - high,
-> > -                                              NULL);
-> > -
-> > -            if (initrd_size < 0) {
-> > -                error_report("couldn't load ram disk '%s'",
-> > -                             machine->initrd_filename);
-> > +                                              &errp);
-> > +            if (errp) {
-> > +                error_reportf_err(errp, "couldn't load ram disk '%s': ",
-> > +                                  machine->initrd_filename);
-> >                 exit(1);
-> >             }
-> >             high = ROUND_UP(high + initrd_size, 4);
-> > 
-> 
+I'll do the job and repost, don't do it.
 
