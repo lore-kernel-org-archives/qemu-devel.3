@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E38CCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 12:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB08BCCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 12:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBBqK-0003Cw-HP; Tue, 21 Oct 2025 08:52:01 -0400
+	id 1vBBqq-0003UG-TU; Tue, 21 Oct 2025 08:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1vBBqI-0003B0-0h; Tue, 21 Oct 2025 08:51:58 -0400
+ id 1vBBqi-0003NR-Be; Tue, 21 Oct 2025 08:52:25 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1vBBqC-0007tU-Pl; Tue, 21 Oct 2025 08:51:57 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8HWuJ003883;
- Tue, 21 Oct 2025 12:51:41 GMT
+ id 1vBBqe-0007v9-Jf; Tue, 21 Oct 2025 08:52:24 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LAAMPx031838;
+ Tue, 21 Oct 2025 12:52:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:sender:subject:to; s=pp1; bh=b+vWZdSuLVEjsi//TA2ccCR
- gl6r1Li7/byQ7fuhWL90=; b=HhYhHYHrrtzT5UlYkWCO7Mt43L0oWDtzaLxNB/j
- tv9ufqNZMbCDN7xqg6Ys2coFD8PX5iVcRgfZy1yoOu0DHYApynNycKwsEf0PRl0I
- jAZopdb1GypdQcOB7AKq/3dchuszhXqFCxezbX1iCvSpZrpOTGz/xpPQOYJTMjzR
- 8s9t5oOUjcO9mYKVOX7gEIPg7A2xJeq+p4Y1qtobqRN4Fs8SEJ+yPclMLftctN2L
- Pl+d79bAQJpEOF8hmG4F679dS51Nb3rSUDBsbU/HwtKJekLM96Aty2NiIL8ueI/8
- HFArTSuF312hrKDDP8o61kCuVCDzdHfukRVkW3iasp/Ldzg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v326q0tp-1
+ :references:sender:subject:to; s=pp1; bh=2aTT1ZoIiy0Yev3B//YT5KR
+ 96K+LmveIGB3insz6HWU=; b=qabT9DAbi4Tnd2H0rY/juHXHtPlfFXcOhPtJwwP
+ G+KIigKC9JripEDfBA8dIX5ke6wzN4fThsKMrJFwbvtmeANFaKczn6jgOWr7XgD0
+ jWyhSMW4Aet8eRUvT5lXEazGo5+gt4AX7beJw0lVZzvLcjZ5QjcQlnQD8rpuTROT
+ anJ6/v/y7i7lXhCJxgjZq0ki+eQGRkayf/9LlRYoVuUOE7oARyO4R+ImCJ0PFRDy
+ 3VbwQ0DMa6/sfUTWiiulALCxtqY2848YBKlSWRosFSqvkhXVbLVJdW4Cmwj/N/e3
+ oVzhiBw5C6ApiCKRuXSL+gyEmdei/azaNrmI254/LOCY/bQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33f71cn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 12:51:41 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59LC3nIL032142;
- Tue, 21 Oct 2025 12:51:39 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7mtqjj-1
+ Tue, 21 Oct 2025 12:52:16 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59LC7YFW024987;
+ Tue, 21 Oct 2025 12:52:15 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqjtpmj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 12:51:39 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59LCpZ7Z53543368
+ Tue, 21 Oct 2025 12:52:15 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LCqB0I36635128
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Oct 2025 12:51:35 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8B532004B;
- Tue, 21 Oct 2025 12:51:35 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B694620049;
- Tue, 21 Oct 2025 12:51:35 +0000 (GMT)
+ Tue, 21 Oct 2025 12:52:11 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 95FA32004B;
+ Tue, 21 Oct 2025 12:52:11 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 85D3820043;
+ Tue, 21 Oct 2025 12:52:11 +0000 (GMT)
 Received: from vela (unknown [9.155.211.212])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 21 Oct 2025 12:51:35 +0000 (GMT)
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 21 Oct 2025 12:52:11 +0000 (GMT)
 Received: from brueckner by vela with local (Exim 4.98.2)
- (envelope-from <brueckner@linux.ibm.com>) id 1vBBpv-00000000DnL-1E0y;
- Tue, 21 Oct 2025 14:51:35 +0200
-Date: Tue, 21 Oct 2025 14:51:35 +0200
+ (envelope-from <brueckner@linux.ibm.com>) id 1vBBqV-00000000Dou-15Zf;
+ Tue, 21 Oct 2025 14:52:11 +0200
+Date: Tue, 21 Oct 2025 14:52:11 +0200
 From: Hendrik Brueckner <brueckner@linux.ibm.com>
 To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
 Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
@@ -69,34 +69,35 @@ Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
  Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
  Hendrik Brueckner <brueckner@linux.ibm.com>,
  Michael Mueller <mimu@linux.ibm.com>
-Subject: Re: [PATCH v3 1/2] qapi/machine-s390x: add QAPI event
- SCLP_CPI_INFO_AVAILABLE
-Message-ID: <aPeB188DtsMaq95U@linux.ibm.com>
+Subject: Re: [PATCH v3 2/2] tests/functional: add tests for SCLP event CPI
+Message-ID: <aPeB-9qspIgbWGtg@linux.ibm.com>
 References: <20251016121708.334133-1-shalini@linux.ibm.com>
+ <20251016121708.334133-2-shalini@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251016121708.334133-1-shalini@linux.ibm.com>
+In-Reply-To: <20251016121708.334133-2-shalini@linux.ibm.com>
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68f781dd cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68f78200 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=RKBmHt94fYA7jx5VqUUA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXyOqZEUOVLADh
- dv5ddcPJsYvfg9OnqblU/j3yMLebtWI2o5zsYFgZ+KZ0/nIQVN6bBssTxUvaM0Qd1d+ix22LivM
- w1+r83gHL4cOgHUpQJNpm7A536u99rlczirZD6EdUTxtZxS5G0ILDdFHopgDt7rAOmlxy7MKXWY
- GV3Ft/ELozMGrCSu5v9V9tTtltUkyNJpKBkYlhsYJfniXygvsveqkAVTSSPUFlY1E7jGRoNLcCa
- vMW5pAqJm7/RM8pmONgcVyY9u/g/YlleZYaOEX95etJpItdq8gvFHpi6gSRFChHc790bDD4enaQ
- Ece9NgAigTZh4M4rWJFJ41fppipVOSGRjRn+fDyY2Vkwt1Rnd3396pWvxR+Vk80g4MEmXmX/MtM
- fzroqdWMCIeccqimwVrpceQmI+p2iQ==
-X-Proofpoint-GUID: YawUYoWQjCkJRhXRTsDgLrf99OK8ncCx
-X-Proofpoint-ORIG-GUID: YawUYoWQjCkJRhXRTsDgLrf99OK8ncCx
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=WP5zsaevAAAA:8 a=1wHtL1Bk02DuYSqJXVUA:9
+ a=CjuIK1q_8ugA:10 a=t8Kx07QrZZTALmIZmm-o:22 a=poXaRoVlC6wW9_mwW8W4:22
+X-Proofpoint-GUID: n-nOUHdA7jz91xeNCi-8OFvfl9IghtPj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX3QE6anemZKw0
+ gQ11o63sCWdLWwhaN21GnB/5u7YhBa95QEMh9HNcuYstorEuoibX5KkIwRLUWssKsxyoJjc8SzD
+ vqXxxnK7r5vVV7Wq2cyJxwxsWpZXb77Q1r0Ji1rV1bGlu/JVih6e4iNQsuinJ4MxBVSONFZSKp4
+ RFqkP6S9y77bEIP+R/FaYn8jURdnSlLn5RJqs0K3Iqssiqa7WSmkqCzYUhGmOLt78G1wzIyFTOX
+ 5KcoRc2yU4BZGNDh1e71tGifo+vEZpmOJL94bxAsnECsGcB27aA+dG8zk3QzgA4S2azE/usUDO8
+ Aa0lDwUwgPlHF0DzrTrP3m7j40k+sHzBldfCgEUw95bbNZ7yeB9AZrMrZiDjfNfXXheQoq9VqYO
+ /hdDQlO04ifiL+mSdrOdRBltE05eSQ==
+X-Proofpoint-ORIG-GUID: n-nOUHdA7jz91xeNCi-8OFvfl9IghtPj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1011
+ clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
 Received-SPF: pass client-ip=148.163.156.1;
@@ -124,68 +125,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 16, 2025 at 02:17:07PM +0200, Shalini Chellathurai Saroja wrote:
-> Add QAPI event SCLP_CPI_INFO_AVAILABLE to notify the availability
-> of Control-Program Identification data in QOM.
+On Thu, Oct 16, 2025 at 02:17:08PM +0200, Shalini Chellathurai Saroja wrote:
+> Add tests for SCLP event type Control-Program Identification.
 > 
 > Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
 > Suggested-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/s390x/sclpcpi.c      |  4 ++++
->  qapi/machine-s390x.json | 21 +++++++++++++++++++++
->  2 files changed, 25 insertions(+)
+>  tests/functional/s390x/test_ccw_virtio.py | 26 +++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
 > 
-> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-> index 7aa039d510..68fc1b809b 100644
-> --- a/hw/s390x/sclpcpi.c
-> +++ b/hw/s390x/sclpcpi.c
-> @@ -54,6 +54,7 @@
->  #include "hw/s390x/event-facility.h"
->  #include "hw/s390x/ebcdic.h"
->  #include "qapi/qapi-visit-machine.h"
-> +#include "qapi/qapi-events-machine-s390x.h"
->  #include "migration/vmstate.h"
+> diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional/s390x/test_ccw_virtio.py
+> index 453711aa0f..0455337856 100755
+> --- a/tests/functional/s390x/test_ccw_virtio.py
+> +++ b/tests/functional/s390x/test_ccw_virtio.py
+> @@ -15,6 +15,7 @@
+>  import tempfile
 >  
->  typedef struct Data {
-> @@ -106,6 +107,9 @@ static int write_event_data(SCLPEvent *event, EventBufferHeader *evt_buf_hdr)
->      e->timestamp = qemu_clock_get_ns(QEMU_CLOCK_HOST);
+>  from qemu_test import QemuSystemTest, Asset
+> +from qemu_test import exec_command
+>  from qemu_test import exec_command_and_wait_for_pattern
+>  from qemu_test import wait_for_console_pattern
 >  
->      cpim->ebh.flags = SCLP_EVENT_BUFFER_ACCEPTED;
-> +
-> +    qapi_event_send_sclp_cpi_info_available();
-> +
->      return SCLP_RC_NORMAL_COMPLETION;
->  }
+> @@ -270,5 +271,30 @@ def test_s390x_fedora(self):
+>                          'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
+>                          ' sleep 1 ; done', 'Start virtcrypto_remove.')
 >  
-> diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
-> index 966dbd61d2..8412668b67 100644
-> --- a/qapi/machine-s390x.json
-> +++ b/qapi/machine-s390x.json
-> @@ -119,3 +119,24 @@
->  { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
->    'features': [ 'unstable' ]
->  }
+> +        # Test SCLP event Control-Program Identification (CPI)
+> +        cpi = '/sys/firmware/cpi/'
+> +        sclpcpi = '/machine/sclp/s390-sclp-event-facility/sclpcpi'
+> +        self.log.info("Test SCLP event CPI")
+> +        exec_command(self, 'echo TESTVM > ' + cpi + 'system_name')
+> +        exec_command(self, 'echo LINUX > ' + cpi + 'system_type')
+> +        exec_command(self, 'echo TESTPLEX > ' + cpi + 'sysplex_name')
+> +        exec_command(self, 'echo 0x001a000000060b00 > ' + cpi + 'system_level')
+> +        exec_command_and_wait_for_pattern(self,
+> +                                          'echo 1 > ' + cpi + 'set', ':/#')
+> +        try:
+> +            event = self.vm.event_wait('SCLP_CPI_INFO_AVAILABLE')
+> +        except TimeoutError:
+> +            self.fail('Timed out waiting for the SCLP_CPI_INFO_AVAILABLE event')
+> +        ts = self.vm.cmd('qom-get', path=sclpcpi, property='timestamp')
+> +        self.assertNotEqual(ts, 0)
+> +        name = self.vm.cmd('qom-get', path=sclpcpi, property='system_name')
+> +        self.assertEqual(name.strip(), 'TESTVM')
+> +        typ = self.vm.cmd('qom-get', path=sclpcpi, property='system_type')
+> +        self.assertEqual(typ.strip(), 'LINUX')
+> +        sysplex = self.vm.cmd('qom-get', path=sclpcpi, property='sysplex_name')
+> +        self.assertEqual(sysplex.strip(), 'TESTPLEX')
+> +        level = self.vm.cmd('qom-get', path=sclpcpi, property='system_level')
+> +        self.assertEqual(level, 0x001a000000060b00)
 > +
-> +##
-> +# @SCLP_CPI_INFO_AVAILABLE:
-> +#
-> +# Emitted when the Control-Program Identification data is available
-> +# in the QOM tree.
-> +#
-> +# Features:
-> +#
-> +# @unstable: This event is experimental.
-> +#
-> +# Since: 10.2
-> +#
-> +# .. qmp-example::
-> +#
-> +#     <- { "event": "SCLP_CPI_INFO_AVAILABLE",
-> +#          "timestamp": { "seconds": 1401385907, "microseconds": 422329 } }
-> +##
-> +{ 'event': 'SCLP_CPI_INFO_AVAILABLE',
-> +  'features': [ 'unstable' ]
-> +}
+>  if __name__ == '__main__':
+>      QemuSystemTest.main()
 
 Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
