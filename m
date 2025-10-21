@@ -4,92 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 777DBCCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5939CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8zj-00047q-LN; Tue, 21 Oct 2025 05:49:31 -0400
+	id 1vB907-0004B5-SG; Tue, 21 Oct 2025 05:49:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB8zh-00047P-8t
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:49:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB8zf-0001vW-IX
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:49:28 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47495477241so5765815e9.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 02:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761040165; x=1761644965; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uxsoay4HCzhiBRdkJZpSgZ5muvUN4gGA/uvE3ytVGyE=;
- b=SBxvS21MCtURvq6ULOlVdOQW3OY/cYlm38Zom9wa5iu/SASLCpmUTRTvgsOQqELnk+
- wiPG1K07BByKUbGyEwY6WhkWk6z8eX/StrEuZdb0tUZqSpcPQTyzRKEQ7D6o3UXiVqUD
- HaPGsdPISbn1LBwUFQNCMlUk0mTm8I1y51CsjcW3yRY+jb3tBIgZwWf1kvGNkCB4hXUs
- +qXqAGhXMT8rvnzUch+ZqrpOWNMKqPmxiOYIm9JWw5k3RIbaiYEAr9s6TNARsx0RYjyz
- scHVEY34fb2AQQiO7H08cKzzI7REWDcc6A51nEE34klCGZvi17C0XKxsEP+FPwq1b1gJ
- N+9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761040165; x=1761644965;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uxsoay4HCzhiBRdkJZpSgZ5muvUN4gGA/uvE3ytVGyE=;
- b=RY4zgyCVL5umAEibLazSLBrLcfxYLm2V2JxTBAWw+9w7f1M/JIj+YQjqNdSvPc4kQY
- mktEYQfy1nOn2QUiHXoWtpQIL/MIjYeTTFgO25ZJ46uGIUmevhBQr3E7bJrtbvTtx1Cz
- 2asneGMfCqvRUVC/twUVVTiFgvJQPOjvxx/mOFFW5vpk0PQmIA8XCq7GRW1n/4vxSnIm
- M6+RIFBHJNmFDeqvjSWrmVz9/twHsCW9yDGNyAiV1Pyb1YUgvujOhk88BAPUTuYFqDIf
- YIeFBmqPXal1+K7TjuAXvlzBS1//FTMS9VNBIO8bRK0ZcrJ5DGjLW1aiguWFah+ohcLu
- 2uOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUsYSYPdhlnm11Cjw/r7oGs+tWvMqIbISFpH5coTQVhTEerpKUpYoNQ51ocIpzoCg8jm8P59YaRd+5G@nongnu.org
-X-Gm-Message-State: AOJu0YwW4cNnk3RDyxgAaghcVi1RALKxmmEplCmtNve53fiN8AAMikVU
- YD1O2HIYVIKhtNL4AN3N010p57QddD8izTELjzvPdDDXSDJIyOfbN2h/+e9bwERH57w=
-X-Gm-Gg: ASbGncsUVGvVu5VIdnPIrb3U8nSAClCrkmGxVNwygRbV1uGeR6iw3kV6vD/5E9x5L95
- 27laOkVGMUEGtlHyrokDC77oq7AvsbWSO85xzW44HcS7dEZFP9fVyQK57j9f4U3Bjox8WRddNK4
- h6+nSS7bVwCSYqb/zOOGjtnXJMFJoOFBdt2Q1JVGC8wMvLrfOXIVs1C2Vsr3ExJxkZlzL3EdFQl
- PO2S5nh2bDfUw24KRSZGMb7KS4hybvHqAoFPTG84x/crJQ2ui61k8PoQfuM5/QjaQe3Xktp9+kV
- o+P8TBlhvWu2BAjtbW9O98lE0nT4YBILyAe9by9dW+BbuUefz7IRJC2WHaw+8tvEyKkQwNmNT+B
- PcmxP45renfuYGaLmZF8gdNshNMTDwrBCoRgokP0lUIgUzTgAplaI1nusjxyE4utOw4e4K1gKwY
- klqX8TvisNP5BaCxLVSTvsfrrsUNjppdHv+VxazDvubp4=
-X-Google-Smtp-Source: AGHT+IFNMaTukQ6dC4ZrpBMRNENqOvSE714Vv5iK804eCNIZTB6B3ldn2srQApiwwNBqgWrfWnYRLQ==
-X-Received: by 2002:a05:600c:1907:b0:46e:206a:78cc with SMTP id
- 5b1f17b1804b1-4711791c3b0mr134217795e9.28.1761040165368; 
- Tue, 21 Oct 2025 02:49:25 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5a0f88sm18790778f8f.7.2025.10.21.02.49.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 02:49:24 -0700 (PDT)
-Message-ID: <89dfd1e5-8672-486d-b45f-16a07eb2f2ea@linaro.org>
-Date: Tue, 21 Oct 2025 11:49:23 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vB905-00049y-Ey
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:49:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vB903-0001wH-IW
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:49:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761040189;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oX9qVRapdRnyLzUm3e38l1BBYvYc94xxQZWwXn/YXjQ=;
+ b=XHVedbluHGxHHKev2aT+aEMsfALXSZZadyLhtWfw/ZOVLKe67j4EUej8kXC3fuLDfvlb7q
+ GFrzg++kCHAVo0E7X+dO83SJKGITwmZB87URaQzUTQ9VZDMdJQZepDWJ43uoiy+kUpF+29
+ XhBfavLIAoVIQq9MbE5XBYSEMfdnNFI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-VjdO5ZAFMKq7bGz0EIF-cA-1; Tue,
+ 21 Oct 2025 05:49:47 -0400
+X-MC-Unique: VjdO5ZAFMKq7bGz0EIF-cA-1
+X-Mimecast-MFC-AGG-ID: VjdO5ZAFMKq7bGz0EIF-cA_1761040186
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 795031800654; Tue, 21 Oct 2025 09:49:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B00F1955F22; Tue, 21 Oct 2025 09:49:46 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9BFA021E6A27; Tue, 21 Oct 2025 11:49:43 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+Subject: [PULL 0/1] Error reporting patches for 2025-10-21
+Date: Tue, 21 Oct 2025 11:49:42 +0200
+Message-ID: <20251021094943.3585876-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/43] hw/audio: remove global pcspk
-Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-4-marcandre.lureau@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251021090317.425409-4-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +81,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/25 11:02, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> It is no longer used since commit 6033b9ecd4 ("pc: remove -soundhw pcspk")
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/audio/pcspk.c | 4 ----
->   1 file changed, 4 deletions(-)
+The following changes since commit 3a2d5612a7422732b648b46d4b934e2e54622fd6:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  .gitlab-ci.d/buildtest.yml: Install 'file' for the Coverity job (2025-10-19 11:49:36 -0700)
+
+are available in the Git repository at:
+
+  https://repo.or.cz/qemu/armbru.git tags/pull-error-2025-10-21
+
+for you to fetch changes up to 1a5319e26797404a5f7738111ba788b593483af6:
+
+  ui/pixman: Fix crash in qemu_pixman_shareable_free() (2025-10-21 09:54:48 +0200)
+
+----------------------------------------------------------------
+Error reporting patches for 2025-10-21
+
+----------------------------------------------------------------
+Markus Armbruster (1):
+      ui/pixman: Fix crash in qemu_pixman_shareable_free()
+
+ ui/qemu-pixman.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+-- 
+2.49.0
 
 
