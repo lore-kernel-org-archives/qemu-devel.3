@@ -4,53 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10998CCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 648FACCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:58:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBCs6-0000F0-2s; Tue, 21 Oct 2025 09:57:54 -0400
+	id 1vBCsJ-0000H9-Cc; Tue, 21 Oct 2025 09:58:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs0-0000DJ-Mi
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs8-0000G3-1j
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCrx-0007we-U3
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs4-0007xq-Bl
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761055064;
+ s=mimecast20190719; t=1761055071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=szPxpttNSZBGBgRs5/zRXAVwbzz9nfEweIAoiIl71+Q=;
- b=LM1gR6zZpJ35x9EBJUixS9MtCReuV7RkDffGcb8gBSuWWjgrJDwTl2X2MYex83ET5fF1Rj
- 3qNiFcHbwWIgks+wKLvR4vY9VqbJTNTXMxshHVAbPazrBsv65MaSU8bo03+jqMaIeaFp93
- jiZfSK0YljMXrmn6lUcvz3e0XmnyjD4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nMX5dMJBLwOdR9O82a01i56scmDpujZek0VL+du5ZCo=;
+ b=QJUfI+jvWwAJqY3lbWsaG/Ud98p5G5bHU59nC3wI18lrEP5SJE0XuHlAb4iPiNwXZddo7E
+ YVUuqKFbyZ1GTbGf/xDQ7LauIoof27EY5HD2bwo/6k0tfBTDlJfpF/ZOqiBkAgwA+brGTE
+ HLZqGdkIoWTaWnLDiBoN4wFMLgAYCPw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-Lo5v7p8POz6m0nEFHf0LZQ-1; Tue,
- 21 Oct 2025 09:57:39 -0400
-X-MC-Unique: Lo5v7p8POz6m0nEFHf0LZQ-1
-X-Mimecast-MFC-AGG-ID: Lo5v7p8POz6m0nEFHf0LZQ_1761055058
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-lRwNOAFrOeWOHelZ36i2_Q-1; Tue,
+ 21 Oct 2025 09:57:49 -0400
+X-MC-Unique: lRwNOAFrOeWOHelZ36i2_Q-1
+X-Mimecast-MFC-AGG-ID: lRwNOAFrOeWOHelZ36i2_Q_1761055068
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29E6E1956086; Tue, 21 Oct 2025 13:57:38 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2556D1808985; Tue, 21 Oct 2025 13:57:48 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4015119560A2; Tue, 21 Oct 2025 13:57:36 +0000 (UTC)
+ id CC8DB19560B0; Tue, 21 Oct 2025 13:57:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 0/6] s390x patches + gitlab-CI fix
-Date: Tue, 21 Oct 2025 15:57:29 +0200
-Message-ID: <20251021135735.96145-1-thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 6/6] gitlab-ci: Decrease the size of the compiler cache
+Date: Tue, 21 Oct 2025 15:57:35 +0200
+Message-ID: <20251021135735.96145-7-thuth@redhat.com>
+In-Reply-To: <20251021135735.96145-1-thuth@redhat.com>
+References: <20251021135735.96145-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,47 +85,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Richard!
+From: Thomas Huth <thuth@redhat.com>
 
-The following changes since commit 3a2d5612a7422732b648b46d4b934e2e54622fd6:
+Uploading the cache from the runner takes a long time in the MSYS2
+job, mostly due to the size of the compiler cache.
+However, looking at runs with a non-poluted cache, it seems like
+you can get a build with a 99% hit rate already with ~ 160 MiB cache
+size, so the compiler cache with 500 MiB certainly contains a lot of
+stale files. Thus decrease the size of the ccache to a more reasonable
+value to speed up the MSYS2 job in our CI.
 
-  .gitlab-ci.d/buildtest.yml: Install 'file' for the Coverity job (2025-10-19 11:49:36 -0700)
+While at it, also add a "du -sh" for the build folder to get a better
+feeling for the amount of object code that is required for the build,
+and publish the list of files in /var/cache to be able to better
+analyze what is really clogging our cache here.
 
-are available in the Git repository at:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20251020161759.50241-1-thuth@redhat.com>
+---
+ .gitlab-ci.d/windows.yml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-10-21
-
-for you to fetch changes up to 8a2b283efa007f705f12784fc10185435bd1852f:
-
-  gitlab-ci: Decrease the size of the compiler cache (2025-10-21 15:47:45 +0200)
-
-----------------------------------------------------------------
-- Add a missing QAPI event + functional test for the CPI feature on s390x
-- Remove the obsolete s390-ccw-virtio-4.2 machine type
-- 2nd try to fix the slow cache up/download in the MSYS2 CI job
-
-----------------------------------------------------------------
-Philippe Mathieu-Daudé (3):
-      hw/s390x/ccw: Remove deprecated s390-ccw-virtio-4.2 machine
-      hw/s390x/ccw: Remove SCLPDevice::increment_size field
-      hw/core/machine: Remove MachineClass::fixup_ram_size callback
-
-Shalini Chellathurai Saroja (2):
-      qapi/machine-s390x: add QAPI event SCLP_CPI_INFO_AVAILABLE
-      tests/functional: add tests for SCLP event CPI
-
-Thomas Huth (1):
-      gitlab-ci: Decrease the size of the compiler cache
-
- qapi/machine-s390x.json                   | 21 +++++++++++++++++++
- include/hw/boards.h                       |  7 -------
- include/hw/s390x/sclp.h                   |  5 +----
- hw/core/machine.c                         |  3 ---
- hw/s390x/s390-virtio-ccw.c                | 33 ------------------------------
- hw/s390x/sclp.c                           | 34 +++----------------------------
- hw/s390x/sclpcpi.c                        |  4 ++++
- .gitlab-ci.d/windows.yml                  |  5 ++++-
- tests/functional/s390x/test_ccw_virtio.py | 26 +++++++++++++++++++++++
- 9 files changed, 59 insertions(+), 79 deletions(-)
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index 6e1135d8b86..5dbdabfbec0 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -25,6 +25,7 @@ msys2-64bit:
+     expire_in: 7 days
+     paths:
+       - build/meson-logs
++      - build/cache-log.txt
+     reports:
+       junit: build/meson-logs/*.junit.xml
+   before_script:
+@@ -94,7 +95,7 @@ msys2-64bit:
+   - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
+   - $env:CCACHE_BASEDIR = "$env:CI_PROJECT_DIR"
+   - $env:CCACHE_DIR = "$env:CCACHE_BASEDIR/ccache"
+-  - $env:CCACHE_MAXSIZE = "500M"
++  - $env:CCACHE_MAXSIZE = "180M"
+   - $env:CCACHE_DEPEND = 1 # cache misses are too expensive with preprocessor mode
+   - $env:CC = "ccache gcc"
+   - mkdir build
+@@ -103,5 +104,7 @@ msys2-64bit:
+   - ..\msys64\usr\bin\bash -lc "../configure $CONFIGURE_ARGS"
+   - ..\msys64\usr\bin\bash -lc "make -j$env:JOBS"
+   - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
++  - ..\msys64\usr\bin\bash -lc "ls -lR /var/cache > cache-log.txt"
++  - ..\msys64\usr\bin\bash -lc "du -sh ."
+   - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
+   - Write-Output "Finished build at $(Get-Date -Format u)"
+-- 
+2.51.0
 
 
