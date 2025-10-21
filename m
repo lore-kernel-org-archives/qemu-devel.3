@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A3F2CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 04:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02EACCD19F
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 04:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB4LR-0006Nq-CV; Tue, 21 Oct 2025 00:51:38 -0400
+	id 1vB4LR-0006Nd-8T; Tue, 21 Oct 2025 00:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vB4LP-0006NC-CZ; Tue, 21 Oct 2025 00:51:35 -0400
+ id 1vB4LP-0006NB-Cf; Tue, 21 Oct 2025 00:51:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vB4LN-00025W-1l; Tue, 21 Oct 2025 00:51:34 -0400
+ id 1vB4LN-00024l-1q; Tue, 21 Oct 2025 00:51:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF6CB16039D;
- Tue, 21 Oct 2025 07:51:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 476E716039C;
+ Tue, 21 Oct 2025 07:51:12 +0300 (MSK)
 Received: from tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with SMTP id E5B682F1F86;
- Tue, 21 Oct 2025 07:51:27 +0300 (MSK)
-Received: (nullmailer pid 6362 invoked by uid 1000);
- Tue, 21 Oct 2025 04:51:27 -0000
-Subject: [ANNOUNCE] QEMU 10.0.6 Stable released
+ by tsrv.corpit.ru (Postfix) with SMTP id 38EA62F1F85;
+ Tue, 21 Oct 2025 07:51:20 +0300 (MSK)
+Received: (nullmailer pid 6272 invoked by uid 1000);
+ Tue, 21 Oct 2025 04:51:20 -0000
+Subject: [ANNOUNCE] QEMU 10.1.2 Stable released
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Oct 2025 07:51:27 +0300
-Message-Id: <1761022287.744330.6357.nullmailer@tls.msk.ru>
+Date: Tue, 21 Oct 2025 07:51:20 +0300
+Message-Id: <1761022280.036705.6267.nullmailer@tls.msk.ru>
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -60,75 +60,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi everyone,
 
-The QEMU v10.0.6 stable release is now available.
+The QEMU v10.1.2 stable release is now available.
 
 You can grab the tarball from our download page here:
 
   https://www.qemu.org/download/#source
 
-  https://download.qemu.org/qemu-10.0.6.tar.xz
-  https://download.qemu.org/qemu-10.0.6.tar.xz.sig (signature)
+  https://download.qemu.org/qemu-10.1.2.tar.xz
+  https://download.qemu.org/qemu-10.1.2.tar.xz.sig (signature)
 
-v10.0.6 is now tagged in the official qemu.git repository, and the
-stable-10.0 branch has been updated accordingly:
+v10.1.2 is now tagged in the official qemu.git repository, and the
+stable-10.1 branch has been updated accordingly:
 
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.0
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.1
 
-There are 23 changes since the previous v10.0.5 release.
+There are 23 changes since the previous v10.1.1 release.
 
 Thank you everyone who has been involved and helped with the stable series!
 
 /mjt
 
-Changelog (stable-10.0-hash master-hash Author Name: Commmit-Subject):
+Changelog (stable-10.1-hash master-hash Author Name: Commmit-Subject):
 
-e098f79eb2 Michael Tokarev:
- Update version for 10.0.6 release
-536f5ac0d7 91fc6d8101 Philippe Mathieu-Daudé:
+ccaea6b265 Michael Tokarev:
+ Update version for 10.1.2 release
+acef0da910 91fc6d8101 Philippe Mathieu-Daudé:
  linux-user/microblaze: Fix little-endianness binary
-2d33b0091b cea82f8cdd Gabriel Brookman:
+e80709183c cea82f8cdd Gabriel Brookman:
  target/hppa: correct size bit parity for fmpyadd
-e2a2cdb07d 58aa1d08bb Paolo Bonzini:
+e14614fe78 ec03dd9723 Richard Henderson:
+ accel/tcg: Hoist first page lookup above pointer_wrap
+95c1555cd8 58aa1d08bb Paolo Bonzini:
  target/i386: user: do not set up a valid LDT on reset
-bbdedf42f2 5142397c79 Paolo Bonzini:
+4e58c5bf0c 5142397c79 Paolo Bonzini:
  async: access bottom half flags with qatomic_read
-df1d0ce23b 5a2faa0a0a Thomas Ogrisegg:
+f316e90a82 0d22b621b7 Paolo Bonzini:
+ target/i386: fix access to the T bit of the TSS
+b70ff85fef 5a2faa0a0a Thomas Ogrisegg:
  target/i386: fix x86_64 pushw op
-c3f08ed6d0 cdba90ac1b YiFei Zhu:
+68630e6701 cdba90ac1b YiFei Zhu:
  i386/tcg/smm_helper: Properly apply DR values on SMM entry / exit
-1e8a7c403a df32e5c568 Paolo Bonzini:
+cf8dff8d9f df32e5c568 Paolo Bonzini:
  i386/cpu: Prevent delivering SIPI during SMM in TCG mode
-c1ff7b6eba 00001a22d1 Jon Kohler:
+9ca80ff527 00001a22d1 Jon Kohler:
  i386/kvm: Expose ARCH_CAP_FB_CLEAR when invulnerable to MDS
-ec60491c80 df9a3372dd Mathias Krause:
+19ab9f3102 df9a3372dd Mathias Krause:
  target/i386: Fix CR2 handling for non-canonical addresses
-a0f78ee586 ed26056d90 Richard W.M. Jones:
+f0839fec94 ed26056d90 Richard W.M. Jones:
  block/curl.c: Use explicit long constants in curl_easy_setopt calls
-47f00fd978 2e54e5fda7 Damien Bergamini:
- pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
-381a32c3e2 81d1885dcc Max Chou:
+400eeeefee 6529f31e0d Hector Cao:
+ target/i386: add compatibility property for pdcm feature
+608a19009a e9efa4a771 Paolo Bonzini:
+ target/i386: add compatibility property for arch_capabilities
+be9075c7c9 81d1885dcc Max Chou:
  target/riscv: rvv: Fix vslide1[up|down].vx unexpected result when XLEN=32 and SEW=64
-0c21b32947 0b16c7b6a8 Jim Shu:
+3a184ef664 0b16c7b6a8 Jim Shu:
  target/riscv: Fix ssamoswap error handling
-e277608eae 84c1605b76 Jim Shu:
+45a31df407 84c1605b76 Jim Shu:
  target/riscv: Fix SSP CSR error handling in VU/VS mode
-f64329b0cc c851052a77 Jim Shu:
+1cea32f332 c851052a77 Jim Shu:
  target/riscv: Fix the mepc when sspopchk triggers the exception
-a81e4657ad a23e719ca8 Peter Maydell:
+19a3344754 a23e719ca8 Peter Maydell:
  target/arm: Don't set HCR.RW for AArch32 only CPUs
-7402c4dfe6 bab681f752 Stefan Hajnoczi:
+3a27ff6cb9 bab681f752 Stefan Hajnoczi:
  pcie_sriov: make pcie_sriov_pf_exit() safe on non-SR-IOV devices
-63180b62bf f65918497c nanliu:
+30ff0b5651 f65918497c nanliu:
  docs/devel: Correct uefi-vars-x64 device name
-45cd6b147b 1c0f5142d9 ShengYi Hung:
+3870276618 1c0f5142d9 ShengYi Hung:
  hid: fix incorrect return value for hid
-8ec0e0b502 c187a67c9d Filip Hejsek:
- ui/gtk: Fix callback function signature
-c784ce6703 a1b28f71f7 Weifeng Liu:
- ui/gtk: Consider scaling when propagating ui info
-7917dee17a Michael Tokarev:
- Revert "i386/cpu: Move adjustment of CPUID_EXT_PDCM before feature_dependencies[] check"
-c5c0b16cf7 Michael Tokarev:
- Revert "target/i386: do not expose ARCH_CAPABILITIES on AMD CPU"
+c3ae83117d 2e54e5fda7 Damien Bergamini:
+ pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
 
 
