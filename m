@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2513BCCD1AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561BECCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBITG-0002XV-8X; Tue, 21 Oct 2025 15:56:38 -0400
+	id 1vBITu-0002dQ-Dh; Tue, 21 Oct 2025 15:57:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBITE-0002X5-55
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:56:36 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBITl-0002cK-3a
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:09 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBITC-0008BG-8O
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:56:35 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b3e234fcd4bso1077663366b.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBITj-0008Ed-5s
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:57:08 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-7c2766675adso3647709a34.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:57:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761076590; x=1761681390; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QSNk3fQC7FUJp+xwNXZk/ZRMBwI7o4RgTmRYh+T11Xs=;
- b=sjc8lFr0VMrRGR6f8RP7QlVICRWEX1b1wgUrqSP9Tzzyb11pvTBaTo6ZUmAQ7zyfCn
- xByJhVrxfw1345NCa+9cx4NgCDQz9KmepDbrYzPxU4xSJquunS2KMPOK4BY5Fo714paz
- wk6vkT3PqvRO8xyEmcAYLSSu0flQNKGUR80xpBXoUJxvdbsxDN2mMxnuhOwAWB8EDu3V
- SmLHK+pa1q21/kLG8c+dlFzPL1lYVcARpUdm0rap4zPmOkxp8ZL7cg7Di82cgjCgYK2D
- z+ixYYdecvcCqnJSsFFP7iy/O/oh5wkM6G9uWH/KLfP/197vfS8Dto4RtI959KW1dAKV
- 1HkQ==
+ d=linaro.org; s=google; t=1761076625; x=1761681425; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AjyONCkRbAa4eIFLOL0u6R/QoJrD/nuI/ZLrBKUnC/Q=;
+ b=eYnBRgzvAlzM+58H72fenA5cVs7FP5WaPRyrz5HCfZQlcSlWaDEdkfKa/RcyTaPYji
+ cRcwU+Ov7OS4HXlnLVbb/AkdNyMd4JZe+R+EHk8fOPvrbJvN9h90yXANfP5Cz78MZsue
+ bX4KDvTtqYKhb2IJcX3LKDzPtTeJJJpz6L595ixY98cwBdwmkg7Y/EQfBC1FeOJR29Lg
+ VVC4M1f0CjlVOXQTyv4hGd8WAJeFOtWY9iwhfAMOiw7agawCdnhIMpIAl9uwlSPBvucc
+ gHSlUVyNb+uYWT/kOw//q2mQCt6Wg10KeDJSdYBSCJz4mn8q8QbsF1Ft0qKQXlpXeQU2
+ QF9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761076590; x=1761681390;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761076625; x=1761681425;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QSNk3fQC7FUJp+xwNXZk/ZRMBwI7o4RgTmRYh+T11Xs=;
- b=Xu5patFBG/n8Ff4+c5lj+4awFtL4Ta3BLBMYx2ikh6/8Hn3Bi/Ci1hH4BlLTli66bP
- SUJ1vWre4yEybbCTUx61bksMyX29XGX46jYj4fuJm9lWxOjIvv25CAqVrdAp/beqWGMr
- cE7O7NnGavybtEU8xf9RNNMpP/Lj2H5+85Zpf8gN6hqUN61HVSPR1dIKwGbIDbAwUVNj
- implZW7Q6jTsTVEYI17dc3bWCHgkAFUF1Y+y1/gA6XnDBBwNxdLiQSOMIDLbbzUkh3bS
- EL+BAU4DleTwO89vcJXrJy2WgNAr6Cxm5O08U/BjsCxirFJuNdC+AIkSHLa3LsPVIn1Q
- sZMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVU8VqJUmyhpQVhca+7lYkgeXV8BMXzs+Ue9xqctg89eyndbaqMdTEQlcLIeKdpA+luRONzBAVTiabQ@nongnu.org
-X-Gm-Message-State: AOJu0Yy6BXEh6YEtyUY41r4SmXvR7C7GSETo6i84GQ8ZnSfSe+PXz7SG
- ZBU5P7YI9bYCWG8QrRG/fS/aG5aMNbOZZgHmrfMMzO2gA9MhgnNSRkTbe4MeyFszBfY=
-X-Gm-Gg: ASbGnct9SszuF6oFxtluowytEP/3UDH85aLcS4uPsNwTox/AL/MRVDbjNRq72waBV20
- TKHS8FIl0qJ2w0XppDWOIILQcPWeYhzLxKdugF4gzSGJtg/8vbjI1gjGIvy0fVip1XsPCY0HiOI
- Dq6+1XO09rOQkzdaHT+T9ys5/OyGldNZhj9opm7bpmxf4sIe5Zwd/r8SgP0IuZYaQjYrdSf6u+7
- lRcSpvEJ6aMObTQr3Abr4+Jy2pBnY9GWeHZqp8JMYHKPFcQ6S3Jrgx3ouUKUU6OgrbQd5epcIyd
- WLFttZJa/JFxocRcAe2/vKhCRCjAhylGTaJffN0CYV1SUHLwJQrtKiqihNx/5hJXBc4uXpC5/P/
- wAEFE5YpnYu5/XDox1FsxDD5Km2TJanvIr/3cjTMztf1Uynhm7cu8+HCaPqYZ8QCfhBjNAWOHRz
- b9GPh3w0rTcc2P0Mcljy0Ue+qyT2aMgAeB7aV/5QYStQs=
-X-Google-Smtp-Source: AGHT+IEtUe0Yx+i8/DatB18gYd3+BKP8adC5t27eNmTCL2v5sHiqbRdI3G1pFl9syjJgWvubVwOHUw==
-X-Received: by 2002:a17:907:1c0a:b0:b49:96e4:1832 with SMTP id
- a640c23a62f3a-b6474637f5emr2067228066b.65.1761076589981; 
- Tue, 21 Oct 2025 12:56:29 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b65e7da35c3sm1135694966b.4.2025.10.21.12.56.28
+ bh=AjyONCkRbAa4eIFLOL0u6R/QoJrD/nuI/ZLrBKUnC/Q=;
+ b=vNZfHNSHAYs574hEFoRo85nZqvvf8gQi9eE1g5bm2HJb9soDRGeeT1d0xbyTjGTeCx
+ +I0KCr8zwt87GWNchC6ka40EHGnRLbFW12H6iwFBYP/hWPbJaqW9zuhJ7aTwlptuKhTz
+ xayrdRfR1fKeXGeda/PJh/xXj0f0hIHPOF5hX4pJSx/E+WhuL41mtqgc72EANBNL1DqF
+ NVm/5IAtpHR1FYMSmO878MONywH5oryidtGF4desk+aPhdv4Kk3QVyYu/E93rgyLdaJc
+ sjQ3DK9gWZtMxbWc8p7AaKwqNxG1B4C9pp4bFMDITMVldYPbE3OgBYzR9gAlWVSQFnEa
+ nwEw==
+X-Gm-Message-State: AOJu0Yxtdqd/2JPUcP592lWFHobeBf1ISAPsO2v+rD9FH8hg00GLDeVG
+ vgYlCVVKgPa4RTNq49Elt5nl9+kfuwuXF2mKBPGTUcl7t7pNBmh3bKPsW8H+PJ2Ns8r+AyOWLPK
+ vcmlD
+X-Gm-Gg: ASbGncuhmtUyMoQr3SZQjKT2ksEUoNg0Rr0vxaDbjtk1nwtqXndi1mFdqKTZ1BJxfbt
+ 42vD8Q8aTyPFJRn69caJsBcgUC+2yv30QcanrpokzvypeWy8Ldn34xEy6fFoGuDHcSypx8OEUvy
+ YhzayVtCU7IfHwNck1X7YyGu1yxwOU1lVZXZxQAjYE9FmN0e/TQ3sEYEbhdaeiVlWhFNDIayGH8
+ 2hoiu5+J4RECoDc/zlSMWdrB/v6i/MyPkywKQ0EUED7gYCIAam7kR1zmoEQM9xmfi9VM8Rda+5N
+ dAy1iEb/rOl68dbYD1v8X2cT1AjbBMZstomkALPy2RQyIKQZRmJcfY0wI+dUd58lrzhoohQPxMr
+ 9t2w/Y2PcmbO8oGE+91e74LRhxxSG4QJxZWo4RUgp3F7p3qy3vLvAxGp5sz1g97Cu9/tmOsgThX
+ tQ6dZuQZef1Hq6BsgmTPpAsWEIR4Av11cgULt3IHz5Onr5n3ZlVgJbNJkyiCzuq4G22TawPw==
+X-Google-Smtp-Source: AGHT+IHGHwHCabKDrkxEjif0h1GNnPcI+KAkNvQgsB9fy2YwAZ8bMxKjkXVS5FvI1sFny8eZBoP4EA==
+X-Received: by 2002:a05:6808:6902:b0:441:d7c3:e4f0 with SMTP id
+ 5614622812f47-443a2ecf367mr7784957b6e.9.1761076625623; 
+ Tue, 21 Oct 2025 12:57:05 -0700 (PDT)
+Received: from [10.128.41.227] (c-174-170-192-123.hsd1.tx.comcast.net.
+ [174.170.192.123]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-651d3f3d553sm3037750eaf.17.2025.10.21.12.57.05
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 12:56:29 -0700 (PDT)
-Message-ID: <5e2ee9bf-b5cc-42eb-929d-f31efc1193f8@linaro.org>
-Date: Tue, 21 Oct 2025 21:56:28 +0200
+ Tue, 21 Oct 2025 12:57:05 -0700 (PDT)
+Message-ID: <bc074822-a6bd-4cd0-8679-fbc68600bf15@linaro.org>
+Date: Tue, 21 Oct 2025 14:57:03 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 08/25] target/hppa: call plugin trap callbacks
+Subject: Re: [PATCH 3/4] linux-user: fix reserved_va page leak in do_munmap
+To: qemu-devel@nongnu.org
+References: <20251011200337.30258-1-mlugg@mlugg.co.uk>
+ <20251011200337.30258-4-mlugg@mlugg.co.uk>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-References: <cover.1760884672.git.neither@nut.email>
- <f34973e93815d100d8216173eddb7d4f72cea847.1760884672.git.neither@nut.email>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f34973e93815d100d8216173eddb7d4f72cea847.1760884672.git.neither@nut.email>
+In-Reply-To: <20251011200337.30258-4-mlugg@mlugg.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,21 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/10/25 17:14, Julian Ganz wrote:
-> We identified a number of exceptions as interrupts, and we assume every
-> other exception is a (syncroneous) exceptions. PA-RISC appears to not
-
-Typo "synchronous".
-
-> have any form of host-call.
+On 10/11/25 15:03, Matthew Lugg wrote:
+> The previous logic here had an off-by-one error: assuming 4k pages on
+> host and guest, if `len == 4097` (indicating to unmap 2 pages), then
+> `last = start + 4096`, so `real_last = start + 4095`, so ultimately
+> `real_len = 4096`. I do not believe this could cause any observable bugs
+> in guests, because `target_munmap` page-aligns the length it passes in.
+> However, calls to this function in `target_mremap` do not page-align the
+> length, so those calls could "drop" pages, leading to a part of the
+> reserved region becoming unmapped. At worst, a host allocation could get
+> mapped into that hole, then clobbered by a new guest mapping.
 > 
-> This change places the hook for PA-RISC targets.
-> 
-> Signed-off-by: Julian Ganz <neither@nut.email>
-> ---
->   target/hppa/int_helper.c | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
+> A simple fix didn't feel ideal here, because I think this function was
+> not written as well as it could be. Instead, the logic is simpler if we
+> use `end = start + len` instead of `last = start + len - 1` (overflow
+> does not cause any problem here), and use offsets in the loops (avoiding
+> overflows since the offset is never larger than the host page size).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+No, it is not simpler with 'end', because end == 0 is 'valid' in the sense that the range 
+goes from [start, (abi_ptr)-1].  But having end <= start is awkward in the extreme.
 
+Thus we prefer the inclusive range [start, last] to the exclusive range [start, end).
+
+Not everything has been converted away from 'end', but we certainly should not regress 
+existing code.
+
+
+r~
 
