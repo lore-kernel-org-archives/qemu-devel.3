@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55983CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE103CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8Hc-0001Fn-Ma; Tue, 21 Oct 2025 05:03:56 -0400
+	id 1vB8Ia-0001vi-Fl; Tue, 21 Oct 2025 05:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8Hb-0001Fb-SY
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:03:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vB8IW-0001qD-Uz
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:04:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8HX-0003uw-TJ
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:03:54 -0400
+ id 1vB8IU-0003yk-PC
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:04:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761037430;
+ s=mimecast20190719; t=1761037489;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oRJnHg9mCdPZO18IoDbCGbmaztLw98nZx1iDHyng678=;
- b=Wbh+xdzzMZV/SmokSJBcRYQXnWrVBF/riQchscfeP//7ao0dMqK63Z+yZC6ixC+14p0vIs
- lIZ6jEaBbz81YJRZM/7JBH3KCN9jtxfQk8oVZWGPaiWn2yqR4RqcARLzcu/DOs3bqCNhUs
- NJzuDoJrv8ymvbwHCtf9+6Ea1fo29lg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mwqZAO19swjAeOZ+xIDLvgyRQnidIjgaxUjdfCadzPM=;
+ b=K5enT32/aN8/QqGjOHjDaUDqbIdAe1R/CmONJu4Wb9qXQlBj6bjLIWgr0ILv+jZi3zqZ3M
+ oPLB9PWjqVzpEgg/BOJEt3Sy+yGOse3o29s3KSNVVzkQ5LLh4aKTGLWW2ZYCGUFE2WgS/G
+ 64StqJleHlycDaMkN3x+SdAmUHJv/40=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-JxEKliB3M_qqMYuJlpZM9w-1; Tue,
- 21 Oct 2025 05:03:46 -0400
-X-MC-Unique: JxEKliB3M_qqMYuJlpZM9w-1
-X-Mimecast-MFC-AGG-ID: JxEKliB3M_qqMYuJlpZM9w_1761037425
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-PXFHkp80NYawM48JuEOy-g-1; Tue,
+ 21 Oct 2025 05:04:47 -0400
+X-MC-Unique: PXFHkp80NYawM48JuEOy-g-1
+X-Mimecast-MFC-AGG-ID: PXFHkp80NYawM48JuEOy-g_1761037486
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3AEB19560B0; Tue, 21 Oct 2025 09:03:45 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B76F1956089; Tue, 21 Oct 2025 09:04:46 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2031F1955F22; Tue, 21 Oct 2025 09:03:43 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5330930001BE; Tue, 21 Oct 2025 09:04:44 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
@@ -54,17 +54,18 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 04/43] hw/pcspk: use explicitly the required PIT types
-Date: Tue, 21 Oct 2025 13:02:35 +0400
-Message-ID: <20251021090317.425409-5-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH 15/43] hw/audio: drop audio_model.isa
+Date: Tue, 21 Oct 2025 13:02:46 +0400
+Message-ID: <20251021090317.425409-16-marcandre.lureau@redhat.com>
 In-Reply-To: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -92,66 +93,172 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+That's no longer necessary, the code is bus-agnostic.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/timer/i8254.h | 4 ++--
- hw/audio/pcspk.c         | 2 +-
- hw/timer/i8254_common.c  | 6 ++----
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ include/hw/audio/model.h  | 2 +-
+ hw/audio/ac97.c           | 2 +-
+ hw/audio/adlib.c          | 2 +-
+ hw/audio/cs4231a.c        | 2 +-
+ hw/audio/es1370.c         | 2 +-
+ hw/audio/gus.c            | 2 +-
+ hw/audio/model.c          | 7 +------
+ hw/audio/sb16.c           | 2 +-
+ hw/audio/virtio-snd-pci.c | 2 +-
+ 9 files changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/include/hw/timer/i8254.h b/include/hw/timer/i8254.h
-index 8402caad30..f7148d9286 100644
---- a/include/hw/timer/i8254.h
-+++ b/include/hw/timer/i8254.h
-@@ -75,7 +75,7 @@ static inline ISADevice *kvm_pit_init(ISABus *bus, int base)
-     return d;
+diff --git a/include/hw/audio/model.h b/include/hw/audio/model.h
+index 55d6ac7f6e..ebe456c22f 100644
+--- a/include/hw/audio/model.h
++++ b/include/hw/audio/model.h
+@@ -4,7 +4,7 @@
+ void audio_register_model_with_cb(const char *name, const char *descr,
+                                   int (*init_audio_model)(const char *audiodev));
+ void audio_register_model(const char *name, const char *descr,
+-                          int isa, const char *typename);
++                          const char *typename);
+ 
+ void audio_model_init(void);
+ void audio_print_available_models(void);
+diff --git a/hw/audio/ac97.c b/hw/audio/ac97.c
+index 2e1be5089e..3d3c667e86 100644
+--- a/hw/audio/ac97.c
++++ b/hw/audio/ac97.c
+@@ -1360,7 +1360,7 @@ static const TypeInfo ac97_info = {
+ static void ac97_register_types(void)
+ {
+     type_register_static(&ac97_info);
+-    audio_register_model("ac97", "Intel 82801AA AC97 Audio", 0, TYPE_AC97);
++    audio_register_model("ac97", "Intel 82801AA AC97 Audio", TYPE_AC97);
  }
  
--void pit_set_gate(ISADevice *dev, int channel, int val);
--void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info);
-+void pit_set_gate(PITCommonState *pit, int channel, int val);
-+void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info);
- 
- #endif /* HW_I8254_H */
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 1b0cc08119..60cedcb375 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -50,7 +50,7 @@ struct PCSpkState {
-     uint8_t sample_buf[PCSPK_BUF_LEN];
-     QEMUSoundCard card;
-     SWVoiceOut *voice;
--    void *pit;
-+    PITCommonState *pit;
-     unsigned int pit_count;
-     unsigned int samples;
-     unsigned int play_pos;
-diff --git a/hw/timer/i8254_common.c b/hw/timer/i8254_common.c
-index ad091594cd..419d4cd6e5 100644
---- a/hw/timer/i8254_common.c
-+++ b/hw/timer/i8254_common.c
-@@ -32,9 +32,8 @@
- #include "migration/vmstate.h"
- 
- /* val must be 0 or 1 */
--void pit_set_gate(ISADevice *dev, int channel, int val)
-+void pit_set_gate(PITCommonState *pit, int channel, int val)
+ type_init(ac97_register_types)
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index a7c2efd87c..0bc0359ae6 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -323,7 +323,7 @@ static const TypeInfo adlib_info = {
+ static void adlib_register_types (void)
  {
--    PITCommonState *pit = PIT_COMMON(dev);
-     PITChannelState *s = &pit->channels[channel];
-     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
- 
-@@ -139,9 +138,8 @@ void pit_get_channel_info_common(PITCommonState *s, PITChannelState *sc,
-     info->out = pit_get_out(sc, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+     type_register_static (&adlib_info);
+-    audio_register_model("adlib", ADLIB_DESC, 1, TYPE_ADLIB);
++    audio_register_model("adlib", ADLIB_DESC, TYPE_ADLIB);
  }
  
--void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info)
-+void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info)
+ type_init (adlib_register_types)
+diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
+index 1f7e0a33c0..18db8da324 100644
+--- a/hw/audio/cs4231a.c
++++ b/hw/audio/cs4231a.c
+@@ -723,7 +723,7 @@ static const TypeInfo cs4231a_info = {
+ static void cs4231a_register_types (void)
  {
--    PITCommonState *pit = PIT_COMMON(dev);
-     PITChannelState *s = &pit->channels[channel];
-     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
+     type_register_static (&cs4231a_info);
+-    audio_register_model("cs4231a", "CS4231A", 1, TYPE_CS4231A);
++    audio_register_model("cs4231a", "CS4231A", TYPE_CS4231A);
+ }
  
+ type_init (cs4231a_register_types)
+diff --git a/hw/audio/es1370.c b/hw/audio/es1370.c
+index 913c9022f6..8cb47589c3 100644
+--- a/hw/audio/es1370.c
++++ b/hw/audio/es1370.c
+@@ -905,7 +905,7 @@ static const TypeInfo es1370_info = {
+ static void es1370_register_types (void)
+ {
+     type_register_static (&es1370_info);
+-    audio_register_model("es1370", "ENSONIQ AudioPCI ES1370", 0, TYPE_ES1370);
++    audio_register_model("es1370", "ENSONIQ AudioPCI ES1370", TYPE_ES1370);
+ }
+ 
+ type_init (es1370_register_types)
+diff --git a/hw/audio/gus.c b/hw/audio/gus.c
+index ac9332ea3d..16785ce226 100644
+--- a/hw/audio/gus.c
++++ b/hw/audio/gus.c
+@@ -319,7 +319,7 @@ static const TypeInfo gus_info = {
+ static void gus_register_types (void)
+ {
+     type_register_static (&gus_info);
+-    audio_register_model("gus", "Gravis Ultrasound GF1", 1, TYPE_GUS);
++    audio_register_model("gus", "Gravis Ultrasound GF1", TYPE_GUS);
+ }
+ 
+ type_init (gus_register_types)
+diff --git a/hw/audio/model.c b/hw/audio/model.c
+index 4f6a234159..924a41e0ac 100644
+--- a/hw/audio/model.c
++++ b/hw/audio/model.c
+@@ -28,14 +28,12 @@
+ #include "qapi/error.h"
+ #include "qom/object.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/isa/isa.h"
+ #include "hw/audio/model.h"
+ 
+ struct audio_model {
+     const char *name;
+     const char *descr;
+     const char *typename;
+-    int isa;
+     int (*init)(const char *audiodev);
+ };
+ 
+@@ -48,18 +46,16 @@ void audio_register_model_with_cb(const char *name, const char *descr,
+     assert(audio_models_count < ARRAY_SIZE(audio_models) - 1);
+     audio_models[audio_models_count].name = name;
+     audio_models[audio_models_count].descr = descr;
+-    audio_models[audio_models_count].isa = 0;
+     audio_models[audio_models_count].init = init_audio_model;
+     audio_models_count++;
+ }
+ 
+ void audio_register_model(const char *name, const char *descr,
+-                          int isa, const char *typename)
++                          const char *typename)
+ {
+     assert(audio_models_count < ARRAY_SIZE(audio_models) - 1);
+     audio_models[audio_models_count].name = name;
+     audio_models[audio_models_count].descr = descr;
+-    audio_models[audio_models_count].isa = isa;
+     audio_models[audio_models_count].typename = typename;
+     audio_models_count++;
+ }
+@@ -120,7 +116,6 @@ void audio_model_init(void)
+         qdev_prop_set_string(dev, "audiodev", audiodev_id);
+         qdev_realize_and_unref(dev, bus, &error_fatal);
+     } else {
+-        assert(!c->isa);
+         c->init(audiodev_id);
+     }
+ }
+diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
+index 0d9fa74108..cd7e813d05 100644
+--- a/hw/audio/sb16.c
++++ b/hw/audio/sb16.c
+@@ -1471,7 +1471,7 @@ static const TypeInfo sb16_info = {
+ static void sb16_register_types (void)
+ {
+     type_register_static (&sb16_info);
+-    audio_register_model("sb16", "Creative Sound Blaster 16", 1, TYPE_SB16);
++    audio_register_model("sb16", "Creative Sound Blaster 16", TYPE_SB16);
+ }
+ 
+ type_init (sb16_register_types)
+diff --git a/hw/audio/virtio-snd-pci.c b/hw/audio/virtio-snd-pci.c
+index b78eaff851..230581ed63 100644
+--- a/hw/audio/virtio-snd-pci.c
++++ b/hw/audio/virtio-snd-pci.c
+@@ -74,7 +74,7 @@ static const VirtioPCIDeviceTypeInfo virtio_snd_pci_info = {
+ static void virtio_snd_pci_register(void)
+ {
+     virtio_pci_types_register(&virtio_snd_pci_info);
+-    audio_register_model("virtio", "Virtio Sound", 0, TYPE_VIRTIO_SND_PCI);
++    audio_register_model("virtio", "Virtio Sound", TYPE_VIRTIO_SND_PCI);
+ }
+ 
+ type_init(virtio_snd_pci_register);
 -- 
 2.51.0
 
