@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C238CCD1AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E52FCCCD1AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBIVl-0004JU-6w; Tue, 21 Oct 2025 15:59:13 -0400
+	id 1vBIWG-0004rD-Id; Tue, 21 Oct 2025 15:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIVj-0004J2-5I
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:59:11 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIWA-0004pZ-0d
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:59:39 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIVh-0008PI-C2
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:59:10 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-471066cfc2aso14025005e9.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:59:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBIW7-0008Qp-BI
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:59:36 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47118259fd8so37533195e9.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761076747; x=1761681547; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761076773; x=1761681573; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4Tx+EoVhcEqE1CTtCgl+Yox25O5k+KD6JTQOFcz3j3Y=;
- b=SBWn+yeDLIgo54TBhjyNyhSj0YvplyZ6k7XlbSpfkAUx6RPJFyRm7l6OHYwGi/j+FL
- 2ewC3oujzl/9sMJfUBcVkRqYVS8fxQjzgp1X8dsvqtx+d/XORyFg2yFgv5GKM8oe3GRT
- RS6SiSbICC3sU6liVK1SZEMFGoecAn+2+pVQ2nvHLiW8L9jXCV8cEz6HHziDvIyQRDWj
- yUlBbEUApfrSnrl6TY+HaGk4Oovtq2fRiTvrq7vpcjOlhCpdEXQRz6kxxoSYwrGvOHnU
- eI3DZBPv75zvgGKnr5WWh+zXvZxftQprujkw5hoN74OGjHfsI2VVQFBSi8JMheknc6yY
- WfsA==
+ bh=j48KuoDHtbbwSAUnEQ6mzXdYYHkCq/HBNozjTY/XuIU=;
+ b=Tybe9BgxaiKt2fu/oLXXaQ4U2zir2guoVsGUKRuc83fq03xHUPthdJzMQLWt4iB41B
+ 7KcetD4aiRv/YnUmXQUSVDfiWweyFrz0HclyXXXyEVIcA6rmFn9y/yM0gf334jH9NWg0
+ GlSIbLtSdaSYjkiBQhbGY76UN3Jpv1LV8XU1YchP27Bv2fv3k10KmqhS92dSmIOPrrbU
+ 8bAm90dK6IafEYYDKKApRgyn8tZ4AT0y+q6EUNzUAbOnmdaBSwQVXDkj7dX7UhaNbmIm
+ fTm6Kru/X4h9yKgYiNgoPGoNPZgyAZ/2Wk+L5Gsgk0o72b7iwU29X0WRPLkBCUkVPI89
+ vFEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761076747; x=1761681547;
+ d=1e100.net; s=20230601; t=1761076773; x=1761681573;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4Tx+EoVhcEqE1CTtCgl+Yox25O5k+KD6JTQOFcz3j3Y=;
- b=wPjdUQIC4bk4wNDDSVs7AeO/z6ihfZSMwg2UY5OcY3Ms/gAk/0Wp38sDavMEJr+DS/
- WZOVxekrmYq7iJUyAFlL6WXvrZCBmY0fLybx6jRC5kJ9x/mt1MvXsWJEDfMB8FBOEgDE
- yh0E7wcBt7ZysamqUSRbXFiEkRiRsx3aRVX/zJN50nVZIO88NHs6x5/R8WIlGRQM2y+0
- Gyw3XEw2CjPhysp5s5KIEb5Su4XceqztvvbBTNOrQbXFbjpFBNrWbHtwf1cevzxVODSH
- 0KNGNkFJTi1snzg0K1Mv9BsG9MIlHNnWEakcjms3N9G+0K3pD7Sg6qnerqJDtS2vn7/h
- YhdA==
+ bh=j48KuoDHtbbwSAUnEQ6mzXdYYHkCq/HBNozjTY/XuIU=;
+ b=KUctVV5btbHfRmiN3DU+AoFvQlL2MPi2Qp1VnPC+04LcBVmVMkGvkW4F15CcRTFFuO
+ LRfntaa6pA5DW8ipC8jSk+POUA269uD8ilooVBQn6ZSIUaRJBF2dyNjZKt85hRvTQLws
+ fSCrgypTWQCM/UJT2IjrlBlc/CLk6vkVqu1+TBT5hCulRL0GS9tWyNA/ipbmVmqTopcP
+ A0UIudOHOCKrmRQsSDY5fTbK5WZiTxTtLCsBeLgtOVguSwqqVxYeVx+Fs9t6eG9E7KaL
+ uL3/iDLnA7hKQbj5Ky31Z7YrtK5zeiMGpgl9yAcS/pBBOlyV8M++19Kz4lbMzy4tys38
+ U5QQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5y4trUx9lnDKl0YlnH78g95RKV5t7EXyci/ejUdpzum5MOKCF9jZi/f5detPBpSGPbChEMgDwIN+e@nongnu.org
-X-Gm-Message-State: AOJu0YyQy5gq4781l0CU1+YpqjOGy7GEzRjg/Xadw7APtXIp7JGIeaMJ
- /VwTwNdCN16MindI+Vz3TJzrcFh2Zq/tgjtU9jjNbgsEJv8ustcnjU8bvRGxLM+9ymQ=
-X-Gm-Gg: ASbGncuMPhy1F70KtB+Ru48npSSEYccYxQj+K9tR24d/Bj2zHy1lIN4T3iEMUT8mhXz
- PMJC/SOS4eI+KL4y7vDkR0NZZL+1cmg6umTgHza+XYLs59jGEu+15Iq3Wo4ZVIlU4ckRqrM5zui
- qUR6wIVFgBcU2/g9CVvwcznbnt22re+geQb7k5NV1rnM/03MEAq/U1G0MsVTTedg9SidHbwFuuQ
- 6EHv7x+M6qkMP0l6ic3MLcXcL3TRLzmv+a6GRJzY9GC6rQmuD0kIBQCgv0/qC8P75/amIMEDls3
- jWjnotNqjKfxB8nQB0EXceYoILopM0fk0czpiBxA+p1bvl8o1XaoCICn5vzI0ZRzmBaPPsv2umU
- 50SJHEaflvDwCPlMFcUe/6Y5TfAL6CEAcgyh/KYAVMAQGhXg6tzvDWd4xw4uaTeI59kHhH5EXwQ
- RxqtVY5raYsTnSnmhhnxdbC5h5q97z6dQiGg/aB6yaqkI=
-X-Google-Smtp-Source: AGHT+IE08KTszMASyduyPuJ/g9V5i89UznVhg3v+3+j96Hp44H5rJplCl1YXiPaicbIdPdf5QulBWQ==
-X-Received: by 2002:a05:600c:548c:b0:46f:b42e:e39f with SMTP id
- 5b1f17b1804b1-4711791d96cmr127215765e9.40.1761076747350; 
- Tue, 21 Oct 2025 12:59:07 -0700 (PDT)
+ AJvYcCUeLfD4aHyS/U85liB9TTmlHXR22pxRfig4to8jnl2TkgeOCnKYlaxAy4bnUhu11rP7rXYKVNquoM+O@nongnu.org
+X-Gm-Message-State: AOJu0YwZEWHXIqJLvQrY+7+JWHyZUDFCtdJwXbCfEzlUGNxzVnLZ3OuF
+ ufwQEsDTWmjYXPQsAekbv6MAPJE4g2XI0XJnN/HYEkt4BM5sn+mhRTBokOa/eLHpZbo=
+X-Gm-Gg: ASbGncv3gBa48GvImyvH8HT7SFnZyEuHXanYLXHxz+VLqADZTuu6bm7UKCL2dSXhgz9
+ VGsrNdLHJ0rtm1AGptQ8o1YgxUq2ZsXvPX6CZLxOMSBs9JQ8tWJg1M8/RZjmdwbLsuJOaK820Db
+ NRYA+3Ny5IWIlYsb52NAmnKJHE05v8yKNyUeu6dRV2zMPcu6gp4uZOHkIMt2q+puX7+nM0E1lzq
+ RmzYeQMeJr8JmkynKPGNDV3IrOrRAmWUEdJaQ42e+gJBaaX3pJcvdHGfMJjrSYqHYf01QUm5waR
+ MbyjjbK3RUYJC1ppop269gNpwKJGRi88M12Aa2CYLCeKwebKrhCEN47xitZ9H6j6XPXqgPCNkbw
+ XLTYVoQ79ZGHCl412DBIlPqwoSgV2UUuCUfIcGfoKgiJQbX7CeR+GFTTcfeWbtSi4Og/9vlthYF
+ sv5kop9eyBqcDOVMJh2R1XZ6vxwXehZA8Sf+XlSW4+sY9zM39dB36pxw==
+X-Google-Smtp-Source: AGHT+IE4oyrgTRYmvh8uMaDX8oqegQtOUnQVlXJSo3J4IvNmYspq1ZzPSOFinC8CvPmF5nMRhCK41Q==
+X-Received: by 2002:a05:600c:5298:b0:46d:996b:826a with SMTP id
+ 5b1f17b1804b1-4711791d69fmr122957245e9.36.1761076773521; 
+ Tue, 21 Oct 2025 12:59:33 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496c43f68sm22821525e9.5.2025.10.21.12.59.06
+ 5b1f17b1804b1-475c427c3casm8116985e9.4.2025.10.21.12.59.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 12:59:06 -0700 (PDT)
-Message-ID: <c14d255e-dc6a-4662-90db-0adfbb07c9a6@linaro.org>
-Date: Tue, 21 Oct 2025 21:59:05 +0200
+ Tue, 21 Oct 2025 12:59:32 -0700 (PDT)
+Message-ID: <48e098b8-284a-40f1-8257-c1ddd4bb5679@linaro.org>
+Date: Tue, 21 Oct 2025 21:59:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 13/25] target/mips: call plugin trap callbacks
+Subject: Re: [PATCH v8 14/25] target/openrisc: call plugin trap callbacks
 Content-Language: en-US
 To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
+Cc: Stafford Horne <shorne@gmail.com>
 References: <cover.1760884672.git.neither@nut.email>
- <90f894e51477495903fc0594e6957c6b2b5c8bc4.1760884672.git.neither@nut.email>
+ <7525e266c45664ce58a2c6c7f92318cad8e6caf7.1760884672.git.neither@nut.email>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <90f894e51477495903fc0594e6957c6b2b5c8bc4.1760884672.git.neither@nut.email>
+In-Reply-To: <7525e266c45664ce58a2c6c7f92318cad8e6caf7.1760884672.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,16 +109,13 @@ On 19/10/25 17:15, Julian Ganz wrote:
 > between architectures, the latter need to be called from target specific
 > code.
 > 
-> This change places hooks for MIPS targets. We consider the exceptions
-> NMI and EXT_INTERRUPT to be asynchronous interrupts rather than
-> exceptions.
+> This change places hooks for OpenRISC targets. We treat anything other
+> than resets, timer and device interrupts as exceptions.
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->   target/mips/tcg/system/tlb_helper.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+>   target/openrisc/interrupt.c | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
