@@ -4,72 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C39CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCCCCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBAqn-000690-2M; Tue, 21 Oct 2025 07:48:25 -0400
+	id 1vBArH-0006CC-Nr; Tue, 21 Oct 2025 07:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vBAqk-00068V-Hg
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:48:22 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBArF-0006Bd-CD; Tue, 21 Oct 2025 07:48:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vBAqh-0001CK-25
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:48:22 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 9C4DA80A9A;
- Tue, 21 Oct 2025 14:48:09 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a4c::1:32] (unknown
- [2a02:6bf:8080:a4c::1:32])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8mUwS00IpmI0-Zp4nD1By; Tue, 21 Oct 2025 14:48:09 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761047289;
- bh=jvCg+BDu57NFeImjRXTV1warbNsnPGWlu3fk+giAL94=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=07P88HlU2O3+vkDevwhf9ybHz4qB8incVh21w4nFcl0L+nExruPhNyotkvt/J8mRq
- UsLZ+tt906WN0lN3i/UTH7WGk0qOiwzkT0K8/zXxEo37CmA87VFR7YiuQDJDKIAWpu
- u3GiuzoLGvE60UvNIFXE0g2GwmlsoV7Y7zA9eIms=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3c3a7c5d-4bc4-4498-9c6b-aa5134a3cb67@yandex-team.ru>
-Date: Tue, 21 Oct 2025 14:48:08 +0300
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vBArC-0001Kq-2I; Tue, 21 Oct 2025 07:48:53 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59L0nHpq030621;
+ Tue, 21 Oct 2025 11:48:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BsXRN8
+ ZkKjDQ3GCgX2SZL7Ql40UHIDVUIj58pBKJ+ms=; b=FfNr3GcY2AFATBmdyt4Y5O
+ mWfqEmcxShkVNiNvyo4voL3DNbGAsz3u9eEV2DkvunFpUKGtn0CWMWTNYllvkn8/
+ u5nEYILZbuiRZGUjGpZBeEJi6g2im5ymz6ZpN7uLy5d1d81R+zbIe0ZhWCb6bsch
+ IP+2KXVAtRMizfgaoEVP/X3KUCFowBPreGMJ9UukXDI2DuxWS/eAmCCcra9f+/JK
+ OMiAec62QAjEdH7VLgyjHrvZV60Geta+A5JL+Pnxbi5G6bj7m/i2dFW6TUsz8F9x
+ cI2U26V9Zp6OgaC+CKllkyn7TEAI+czJXugtqVMguH4dMPTY6YaqsXe+qbZtAqqQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c5fra-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:48:47 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LBmlai029444;
+ Tue, 21 Oct 2025 11:48:47 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31c5fr7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:48:47 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L80hXX032092;
+ Tue, 21 Oct 2025 11:48:46 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7mtf2b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 21 Oct 2025 11:48:46 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59LBmjCj51642692
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 21 Oct 2025 11:48:46 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D607D5805A;
+ Tue, 21 Oct 2025 11:48:45 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 287015805C;
+ Tue, 21 Oct 2025 11:48:43 +0000 (GMT)
+Received: from [9.79.201.141] (unknown [9.79.201.141])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 21 Oct 2025 11:48:42 +0000 (GMT)
+Message-ID: <75f6cd69-d1c9-4ad1-b0aa-22b555c0ded0@linux.ibm.com>
+Date: Tue, 21 Oct 2025 17:18:40 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] migration: vmsd errp handlers: return bool
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- peterx@redhat.com, stefanb@linux.vnet.ibm.com, farosas@suse.de,
+Subject: Re: [PATCH v2 09/11] hw/ppc/spapr: Remove
+ SpaprMachineClass::phb_placement callback
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-References: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
- <87347d7s0j.fsf@pond.sub.org>
- <0ce2f913-36c2-44a2-8141-256ff847529d@yandex-team.ru>
- <aPYfqzljT3q2noDb@redhat.com> <871pmxskug.fsf@pond.sub.org>
- <7d059286-f6a2-4dae-8af1-78a3c1fc5cb4@yandex-team.ru>
- <87zf9lplvc.fsf@pond.sub.org>
- <c11428cf-5ca1-40c4-a098-2d23d9fd8b04@yandex-team.ru>
- <871pmwo5a7.fsf@pond.sub.org>
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20251021084346.73671-1-philmd@linaro.org>
+ <20251021084346.73671-10-philmd@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <871pmwo5a7.fsf@pond.sub.org>
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20251021084346.73671-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pRZwONH8SKrguf3gPTqXOXECYFRyoDhY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX+4fDutZTfO0s
+ Q3M0DguuQ39OJ27PJTnzuKxqFATx4wqVkTnygs2X0rK55kTje2AXz8O6KggMUjUcw9c093mJd0e
+ 2MT9JXgwMBMr3VF7sldhe9sfAKs1goaXhYahhjnJKEdPWIOy1VdKzZYSQohO0I+SMvSRwYbmiRz
+ 7tYyYyO/Fukt/jtqPypG1FDY6Bw8O+mYYyjuiKr4sXsGlqqIW/Exz3PdepWNIibuV/JnnLcwnrm
+ UQ4hQCHWEO1uF5iGdoNnwmDgzOFwtE4E7b3dNGilctKeuZgN4mH0uEbShKyKL8h6Ac2KeRoRfz8
+ q5qen5/phVskvGLDhK/+y7EMunVDS5t4kwLHAw5xioznrPq8vidzeySaakcnmQO/RxlAlqwNh0v
+ WrbR007TsrDQ45OgjHKj/rv0X5LXgA==
+X-Proofpoint-GUID: 8RGSN6O7iBi9lEzQojbKTAlDUIdh7f6k
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f7731f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=HSANSet5BusWp_HOxUwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,144 +132,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.10.25 14:36, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> On 20.10.25 19:40, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> On 20.10.25 17:34, Markus Armbruster wrote:
->>>>> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> [...]
-> 
->>>>>> IMHO if a method is using "Error **errp", then it should be considered
->>>>>> forbidden to return 'errno' values.
->>>>>
->>>>> Several subsystems disagree :)
->>>>
->>>> I'd vote, that in 99% (or more) cases, they don't reasonably disagree,
->>>> but blindly follow usual pattern of returning -errno together with
->>>> errp, while having no reasonable contract on concrete errno values,
->>>> and with this errno finally unused (used only to check, it is it < 0,
->>>> like boolean). In other words, the only contract they have is
->>>> "< 0 is error, otherwise success".
->>>
->>> Functions that could just as well return -1 instead of errno exist.
->>>
->>> Functions that return negative errno with callers that use them also
->>> exist.
->>
->> But do functions that return negative errno together with errp, with
->> callers that use this errno exit? I don't ask to find, that's not simple.
->> I just say, that I myself don't know any of such functions.
->>
->>
->> upd: I found two!
->>
->> how:
->>
->> 1. git grep -A 20 'ret = .*errp)'
->> 2. in opened pager, do `/if \(ret == -E`
->>
->>
->> in iommufd_cdev_autodomains_get() we do something just wrong: we clear errp
->> after iommufd_cdev_attach_ioas_hwpt(), but return false, which is treated
->> as error (but with cleared errp!) by callers...
-> 
-> Returning failure without setting an error is commonly wrong, and when
-> it's not, it's a bad interface.  However, I can't see how this function
-> could do that.  Can you enlighten me?
 
-Oops, I missed "continue;" looking at later "return false;". So this case
-is fine too.
-
-> 
->> in qemu_read_default_config_file() we do correct thing, but keeping in mind,
->> that it's very seldom practice (around one case), we'd better add a boolean
->> parameter to qemu_read_config_file(), and parse errno exactly after call to
->> fopen().
-> 
-> In my opinion, this function is just fine.  There are of course other
-> ways to skin this cat.
-> 
->> trying with local_err gives a bit more:
->>
->> git grep -A 20 'ret = .*&\(local_\)\?err)' | grep 'ret == -E'
->> block.c-    if (ret == -ENOTSUP) {
->> block.c-    if (ret == -EFBIG) {
->> block/snapshot.c-    if (ret == -ENOENT || ret == -EINVAL) {
->> hw/core/loader-fit.c-    if (ret == -ENOENT) {
->> hw/scsi/megasas.c-        assert(!ret || ret == -ENOTSUP);
->> hw/scsi/mptsas.c-        assert(!ret || ret == -ENOTSUP);
->> hw/usb/hcd-xhci-pci.c-        assert(!ret || ret == -ENOTSUP);
->> hw/vfio/pci.c-        if (ret == -ENOTSUP) {
->> nbd/server.c-    } while (ret == -EAGAIN && !client->quiescing);
->> nbd/server.c-    if (ret == -EAGAIN) {
->> nbd/server.c-    if (ret == -EIO) {
->> qemu-img.c-        if (ret == -ENOTSUP) {
->>
->>
->> I still think, that these are very seldom cases, some of them are just wrong,
->> some make sense, but their contract may be simplified.
->>
->>> I'm not going to speculate on relative frequency.
->>>
->>> I much prefer written function contracts.  But if a caller relies on
->>> negative errno codes, there is an unwritten contract whether we like it
->>> or not.
->>
->> Agree.
->>
->> I just want to say, that usual pattern
->>
->> int func1(..., Error *errp) {
->>      ...
->>      ret = func2(..., Error *errp);
->>      if (ret < 0) {
->>          return ret;
->>      }
->>      ...
->> }
->>
->> is very error-prone, if func1 has some unwritten contract about _different_
->> errno values. As this unwritten contract may be easily broken somewhere
->> in the stack, not exactly in func1.
-> 
-> I readily concede:
-> 
-> (1) If func() lacks a written contract, passing on func2()'s value makes
-> the implied contract harder to see.
-> 
-> (2) If func() has a written contract, passing on func2()'s value makes
-> it harder to verify, and easier to break accidentally.
-> 
-> (3) When no caller needs to discriminate between different errors,
-> returning -1 or false results in a slightly simpler interface.
-> 
-> Still, has this plagued us in practice?
-> 
-> The only issue in this area that has plagued me enough to remember is
-> functions returning both -1 and negative errno.  Which works fine as
-> long as callers only check for negative, but is in my opinion
-> intolerably sloppy.  Whether the function takes an errp or not doesn't
-> matter.
-> 
-> I don't think a blanket prohibition of returning negative errno makes
-> sense.  Discouraging it maybe, but given how rarely it's done, I doubt
-> it's worth the bother.
-
-Agreed.
-
-> 
-> Do feel free to send patches to simplify interfaces regardless.
-> 
-
-First is "[PATCH v2 2/2] migration: vmsd errp handlers: return bool" :)
-Now I'm fine to reword the commit message in more relaxed attitude
-to returning -errno.
-
--- 
-Best regards,
-Vladimir
+On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
+> The SpaprMachineClass::phb_placement callback was only used by
+> the pseries-4.0 machine, which got removed. Remove it as now
+> unused, directly calling spapr_phb_placement().
+> Move spapr_phb_placement() definition to avoid forward declaration.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+>   include/hw/ppc/spapr.h |   5 --
+>   hw/ppc/spapr.c         | 114 ++++++++++++++++++++---------------------
+>   2 files changed, 55 insertions(+), 64 deletions(-)
+>
+> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+> index 58d31b096cd..bd783e92e15 100644
+> --- a/include/hw/ppc/spapr.h
+> +++ b/include/hw/ppc/spapr.h
+> @@ -147,11 +147,6 @@ struct SpaprMachineClass {
+>       bool pre_5_1_assoc_refpoints;
+>       bool pre_5_2_numa_associativity;
+>       bool pre_6_2_numa_affinity;
+> -
+> -    bool (*phb_placement)(SpaprMachineState *spapr, uint32_t index,
+> -                          uint64_t *buid, hwaddr *pio,
+> -                          hwaddr *mmio32, hwaddr *mmio64,
+> -                          unsigned n_dma, uint32_t *liobns, Error **errp);
+>       SpaprResizeHpt resize_hpt_default;
+>       SpaprCapabilities default_caps;
+>       SpaprIrq *irq;
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index deab613e070..97736bba5a1 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -4068,12 +4068,62 @@ int spapr_phb_dt_populate(SpaprDrc *drc, SpaprMachineState *spapr,
+>       return 0;
+>   }
+>   
+> +static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
+> +                                uint64_t *buid, hwaddr *pio,
+> +                                hwaddr *mmio32, hwaddr *mmio64,
+> +                                unsigned n_dma, uint32_t *liobns, Error **errp)
+> +{
+> +    /*
+> +     * New-style PHB window placement.
+> +     *
+> +     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
+> +     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
+> +     * windows.
+> +     *
+> +     * Some guest kernels can't work with MMIO windows above 1<<46
+> +     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
+> +     *
+> +     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
+> +     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
+> +     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
+> +     * 1TiB 64-bit MMIO windows for each PHB.
+> +     */
+> +    const uint64_t base_buid = 0x800000020000000ULL;
+> +    int i;
+> +
+> +    /* Sanity check natural alignments */
+> +    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
+> +    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
+> +    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % SPAPR_PCI_MEM32_WIN_SIZE) != 0);
+> +    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % SPAPR_PCI_IO_WIN_SIZE) != 0);
+> +    /* Sanity check bounds */
+> +    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
+> +                      SPAPR_PCI_MEM32_WIN_SIZE);
+> +    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
+> +                      SPAPR_PCI_MEM64_WIN_SIZE);
+> +
+> +    if (index >= SPAPR_MAX_PHBS) {
+> +        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
+> +                   SPAPR_MAX_PHBS - 1);
+> +        return false;
+> +    }
+> +
+> +    *buid = base_buid + index;
+> +    for (i = 0; i < n_dma; ++i) {
+> +        liobns[i] = SPAPR_PCI_LIOBN(index, i);
+> +    }
+> +
+> +    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
+> +    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
+> +    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
+> +    return true;
+> +}
+> +
+>   static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>                                  Error **errp)
+>   {
+>       SpaprMachineState *spapr = SPAPR_MACHINE(OBJECT(hotplug_dev));
+>       SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(dev);
+> -    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
+>       const unsigned windows_supported = spapr_phb_windows_supported(sphb);
+>       SpaprDrc *drc;
+>   
+> @@ -4092,12 +4142,10 @@ static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>        * This will check that sphb->index doesn't exceed the maximum number of
+>        * PHBs for the current machine type.
+>        */
+> -    return
+> -        smc->phb_placement(spapr, sphb->index,
+> -                           &sphb->buid, &sphb->io_win_addr,
+> -                           &sphb->mem_win_addr, &sphb->mem64_win_addr,
+> -                           windows_supported, sphb->dma_liobn,
+> -                           errp);
+> +    return spapr_phb_placement(spapr, sphb->index,
+> +                               &sphb->buid, &sphb->io_win_addr,
+> +                               &sphb->mem_win_addr, &sphb->mem64_win_addr,
+> +                               windows_supported, sphb->dma_liobn, errp);
+>   }
+>   
+>   static void spapr_phb_plug(HotplugHandler *hotplug_dev, DeviceState *dev)
+> @@ -4345,57 +4393,6 @@ static const CPUArchIdList *spapr_possible_cpu_arch_ids(MachineState *machine)
+>       return machine->possible_cpus;
+>   }
+>   
+> -static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
+> -                                uint64_t *buid, hwaddr *pio,
+> -                                hwaddr *mmio32, hwaddr *mmio64,
+> -                                unsigned n_dma, uint32_t *liobns, Error **errp)
+> -{
+> -    /*
+> -     * New-style PHB window placement.
+> -     *
+> -     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
+> -     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
+> -     * windows.
+> -     *
+> -     * Some guest kernels can't work with MMIO windows above 1<<46
+> -     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
+> -     *
+> -     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
+> -     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
+> -     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
+> -     * 1TiB 64-bit MMIO windows for each PHB.
+> -     */
+> -    const uint64_t base_buid = 0x800000020000000ULL;
+> -    int i;
+> -
+> -    /* Sanity check natural alignments */
+> -    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
+> -    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
+> -    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % SPAPR_PCI_MEM32_WIN_SIZE) != 0);
+> -    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % SPAPR_PCI_IO_WIN_SIZE) != 0);
+> -    /* Sanity check bounds */
+> -    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
+> -                      SPAPR_PCI_MEM32_WIN_SIZE);
+> -    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
+> -                      SPAPR_PCI_MEM64_WIN_SIZE);
+> -
+> -    if (index >= SPAPR_MAX_PHBS) {
+> -        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
+> -                   SPAPR_MAX_PHBS - 1);
+> -        return false;
+> -    }
+> -
+> -    *buid = base_buid + index;
+> -    for (i = 0; i < n_dma; ++i) {
+> -        liobns[i] = SPAPR_PCI_LIOBN(index, i);
+> -    }
+> -
+> -    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
+> -    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
+> -    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
+> -    return true;
+> -}
+> -
+>   static ICSState *spapr_ics_get(XICSFabric *dev, int irq)
+>   {
+>       SpaprMachineState *spapr = SPAPR_MACHINE(dev);
+> @@ -4606,7 +4603,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
+>       smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
+>       fwc->get_dev_path = spapr_get_fw_dev_path;
+>       nc->nmi_monitor_handler = spapr_nmi;
+> -    smc->phb_placement = spapr_phb_placement;
+>       vhc->cpu_in_nested = spapr_cpu_in_nested;
+>       vhc->deliver_hv_excp = spapr_exit_nested;
+>       vhc->hypercall = emulate_spapr_hypercall;
 
