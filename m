@@ -4,87 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D11CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 14:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BEA0CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 14:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBDjx-0005Ct-UQ; Tue, 21 Oct 2025 10:53:34 -0400
+	id 1vBDkk-0005PU-Jr; Tue, 21 Oct 2025 10:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBDjq-00059y-H7
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:53:28 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBDjo-0007YY-68
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:53:26 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-6360397e8c7so5795130d50.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 07:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761058402; x=1761663202; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LQAijONfUONASIqkcmGwsLwEJ3D0Z+GzArhZwaGXdDU=;
- b=Pr/rvAnhIqGiTzXc5sQcglpy/0/MldGpu68QsgZOxZH+Ls/iifHdPrU640X9G/HvA5
- GkRgILsruBdKlMUQkJt4ibUMOUctkcQ64uVwkNkaLoiHMb4T+U3924P9IR7AmxgUt8Pg
- QGvhyGGji85C4cY4Ab/lMVNojcWkSJGL5zJ7BAmfD5yhWYBXPoxsvtxLfYEsZJVY7LEC
- KRoeNc5Oee+UJYYp40HlN2NjK7J6lIT3BKPK/SFKlIT5UUAnnrkeRNsAOdB4X1TLPitQ
- 3muZUr5+eiBsjAKd+4przBxkc3m58lKxZUcg+yfiFhuRRjjeu36vPxtyCnBy78ioiaUo
- OYNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761058402; x=1761663202;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LQAijONfUONASIqkcmGwsLwEJ3D0Z+GzArhZwaGXdDU=;
- b=vZjrxLLEhymXpmZNQcQdJ0slTKPDJXXnoUEFDt0API0C2KvsLgSY2JGJyYDvVt5J3A
- oIachgay03Wi8qzjefZJ8luvA9T9XOdxhqkjisyIusR8VWzL1qnJh8ivOXpbJ5DcED7l
- Fb4dWjBfxoWWGHeUASZJSrEyGsYb2Nv1oDMVfFVSR+vXQycxpb7eZwk7O4BQssYO6cAC
- N3pEJmTyFZYJQknIh+4Ga7g0v9W4OqyMCiZ8/hNypCXwI460Mk5/IePYL7zDRvXilHIj
- +8qB9DTw9t1h/PlLvS7nlhL8NOPo+j9MHFs24C/wBcBMBDsBjoKexEIXPvATcU3tUVcP
- FYfw==
-X-Gm-Message-State: AOJu0Yx/5wbeo7TRgQ6D6i/tm5iU++oVGl3oJYYjgYUhR6QrbKAQX0++
- DyiFRLoEMuNUitA6ARr0GGZSBqWZM2OopgZu0KlBOJU+C1mWWN10eth6OE9uZfapSO8Nu5/mVNu
- XE7WKd4F4u9isWAYZ+zywT9VdE0Emljw3kqI3rZt+PQ==
-X-Gm-Gg: ASbGnctIarEzS9jGCdVnOkHPZDzYp0TIj3t5OasdewkCRm8N2UywBmi6/8JgoyJ3Hag
- pccylvRDx3m/LiYcrYUDSD7IKCrrtKP4wL7pclbjqcXSbp9aaMDMeNMUCp6UN6dvqM0c0EDg2+4
- iuceBfbkFIbLtjAjXVa94JyYGP1kkqoyaRpyTmqjFpxeFpWxD7ZOp5U/o41jUuAhfqR3WUISyzz
- XkP9Z/UboiwUv6ZH/x8yFS8/IShJXYF6tpm4LLG0LvT6o0lzzRVSSkDvJaMRmqeF3KHesaZ
-X-Google-Smtp-Source: AGHT+IFI4Uv121disECUGdA7/+pzfei0K0/ylQViD+enFkurDbUDurw4Z8DWwAOepxv6pCXehukq+O9Egdxt/bk4cWI=
-X-Received: by 2002:a05:690e:1405:b0:63e:33d1:72d1 with SMTP id
- 956f58d0204a3-63e33d1762cmr7010472d50.66.1761058402447; Tue, 21 Oct 2025
- 07:53:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vBDki-0005LT-1v
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:54:20 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vBDke-0007cR-4R
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 10:54:19 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C7AC980999;
+ Tue, 21 Oct 2025 17:54:10 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a4c::1:32] (unknown
+ [2a02:6bf:8080:a4c::1:32])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 9sXUj50bA4Y0-hfhZqJzY; Tue, 21 Oct 2025 17:54:10 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761058450;
+ bh=VAdHesSoxs37kLDzbyR6zJ1Crp6IOCk7Vb1U9TBKeRY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=JKP6w61Nod3DPfgf0YwxW6s5B7k0KktyoEf6bTYUSH2SjkGeIFEburIomkkLJqSb8
+ JwQ+GDETugP/YLV0iglF3OIhfFS9EQ8XKL5WsxDlL3M9UR4FGS78bomtDVFrcSVpPx
+ xBc8IxVmTfJA8VFsjsTKz3JZBhojG1nDPQDW+3wU=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <41985b55-f99d-47ff-964c-79adc05f3ea1@yandex-team.ru>
+Date: Tue, 21 Oct 2025 17:54:09 +0300
 MIME-Version: 1.0
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-24-peterx@redhat.com>
-In-Reply-To: <20251003153948.1304776-24-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 21 Oct 2025 15:53:11 +0100
-X-Gm-Features: AS18NWDre70ZP06hzXnwJxmvgNV4_Ci_aIWizrlgnxZLBBN_qoON3DW88Jl2HBs
-Message-ID: <CAFEAcA9otBWtR7rPQ0Y9aBm+7ZWJzd4VWpXrAmGr8XspPn+zpw@mail.gmail.com>
-Subject: Re: [PULL 23/45] migration: Capture error in
- postcopy_ram_listen_thread()
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Arun Menon <armenon@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Improve error propagation via return path
+To: Peter Xu <peterx@redhat.com>, Dhruv Choudhary <dhruv.choudhary@nutanix.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251021075254.600961-1-dhruv.choudhary@nutanix.com>
+ <aPeaBNIzrq0Ni4IM@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aPeaBNIzrq0Ni4IM@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,84 +79,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
->
-> From: Arun Menon <armenon@redhat.com>
->
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> postcopy_ram_listen_thread() calls qemu_loadvm_state_main()
-> to load the vm, and in case of a failure, it should set the error
-> in the migration object.
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> Tested-by: Fabiano Rosas <farosas@suse.de>
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Link: https://lore.kernel.org/r/20250918-propagate_tpm_error-v14-23-36f11=
-a6fb9d3@redhat.com
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
+On 21.10.25 17:34, Peter Xu wrote:
+> On Tue, Oct 21, 2025 at 07:52:53AM +0000, Dhruv Choudhary wrote:
+>> Use the return-path thread to send error details from the
+>> destination to the source on a migration failure. Management
+>> applications can then query the source QEMU for errors, as
+>> the single source of truth, making failures easy to trace.
+>>
+>> Signed-off-by: Dhruv Choudhary <dhruv.choudhary@nutanix.com>
+> 
+> +Vladimir, Dan
+> 
+> IIUC we may still need to know whether the src QEMU supports this message
+> or not.
+> 
+> OTOH, we have introduced exit-on-error since 9.1:
+> 
+> # @exit-on-error: Exit on incoming migration failure.  Default true.
+> #     When set to false, the failure triggers a :qapi:event:`MIGRATION`
+> #     event, and error details could be retrieved with `query-migrate`.
+> #     (since 9.1)
+> 
+> This patch is going the other way.  That feature suggests the mgmt query
+> the error from dest directly.
+> 
+> We should stick with one plan rather than doing both.
+> 
 
-Hi; Coverity reports a memory leak (CID 1641390) as a
-result of this change:
+Why?
 
->  migration/savevm.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 34b7a28d38..996673b679 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2095,6 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaqu=
-e)
->      QEMUFile *f =3D mis->from_src_file;
->      int load_res;
->      MigrationState *migr =3D migrate_get_current();
-> +    Error *local_err =3D NULL;
->
->      object_ref(OBJECT(migr));
->
-> @@ -2111,7 +2112,7 @@ static void *postcopy_ram_listen_thread(void *opaqu=
-e)
->      qemu_file_set_blocking(f, true, &error_fatal);
->
->      /* TODO: sanity check that only postcopiable data will be loaded her=
-e */
-> -    load_res =3D qemu_loadvm_state_main(f, mis, &error_fatal);
-> +    load_res =3D qemu_loadvm_state_main(f, mis, &local_err);
+exit-on-error=false is good anyway: when QMP connection is established, the
+management of target QEMU process is the same: we do call qmp commands to
+add devices, etc. We get QMP events. Actually, exiting is unexpected, better
+to fit into QMP protocol, continuing to send events and wait for qmp quit
+to exit.
 
-Here, a failure in this function will allocate an Error
-object and set local_err to point to it.
+Passing error back to the source simply improves error message on source,
+which otherwise is often confusing.
 
->
->      /*
->       * This is tricky, but, mis->from_src_file can change after it
-> @@ -2137,7 +2138,10 @@ static void *postcopy_ram_listen_thread(void *opaq=
-ue)
->                           __func__, load_res);
->              load_res =3D 0; /* prevent further exit() */
->          } else {
-> -            error_report("%s: loadvm failed: %d", __func__, load_res);
-> +            error_prepend(&local_err,
-> +                          "loadvm failed during postcopy: %d: ", load_re=
-s);
-> +            migrate_set_error(migr, local_err);
-> +            error_report_err(local_err);
->              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACT=
-IVE,
->                                             MIGRATION_STATUS_FAILED);
+Using both, we of course see same error in two places.. But we do have two
+QEMU processes, which both handled by on-host managing services. We should
+correctly report error on both parts anyway.
 
-In this brach of the if(), we error_report_err(), which will
-free the error object. But in the other branch of the
-if(), we never do anything with local_err, and so we never free
-the error object.
+Improving error messages on source is just and improvement, which makes
+current behavior better (with or without exit-on-error=false).
 
-I think the true-branch of the if() needs to either
-incorporate the error into something, or else error_free() it.
+Removing exit-on-error=false semantics (with or without passing errors back)
+would be a step backward, to violating of QMP protocol by unexpected exits.
 
-thanks
--- PMM
+
+> 
+>> ---
+>>   migration/migration.c | 25 +++++++++++++++++++++++--
+>>   1 file changed, 23 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index a63b46bbef..123cffb286 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -87,6 +87,7 @@ enum mig_rp_message_type {
+>>       MIG_RP_MSG_RECV_BITMAP,  /* send recved_bitmap back to source */
+>>       MIG_RP_MSG_RESUME_ACK,   /* tell source that we are ready to resume */
+>>       MIG_RP_MSG_SWITCHOVER_ACK, /* Tell source it's OK to do switchover */
+>> +    MIG_RP_MSG_ERROR,        /* propogate error to source */
+>>   
+>>       MIG_RP_MSG_MAX
+>>   };
+>> @@ -608,6 +609,17 @@ int migrate_send_rp_req_pages(MigrationIncomingState *mis,
+>>       return migrate_send_rp_message_req_pages(mis, rb, start);
+>>   }
+>>   
+>> +static void migrate_send_rp_error(MigrationIncomingState *mis, Error *errp)
+>> +{
+>> +    const char *rpmsg = error_get_pretty(errp);
+>> +    if (!mis->to_src_file) {
+>> +        mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
+>> +    }
+>> +    migrate_send_rp_message(mis, MIG_RP_MSG_ERROR,
+>> +                            (uint16_t)(strlen(rpmsg) + 1),
+>> +                            (char *)rpmsg);
+>> +}
+>> +
+>>   static bool migration_colo_enabled;
+>>   bool migration_incoming_colo_enabled(void)
+>>   {
+>> @@ -905,8 +917,12 @@ process_incoming_migration_co(void *opaque)
+>>       }
+>>   
+>>       if (ret < 0) {
+>> -        error_prepend(&local_err, "load of migration failed: %s: ",
+>> -                      strerror(-ret));
+>> +        error_prepend(&local_err, "destination error : load of migration failed:
+>> +                       %s: ", strerror(-ret));
+>> +        /* Check if return path is enabled and then send error to source */
+>> +        if (migrate_postcopy_ram() || migrate_return_path()) {
+>> +            migrate_send_rp_error(mis, local_err);
+>> +        }
+>>           goto fail;
+>>       }
+>>   
+>> @@ -2437,6 +2453,7 @@ static struct rp_cmd_args {
+>>       [MIG_RP_MSG_RECV_BITMAP]    = { .len = -1, .name = "RECV_BITMAP" },
+>>       [MIG_RP_MSG_RESUME_ACK]     = { .len =  4, .name = "RESUME_ACK" },
+>>       [MIG_RP_MSG_SWITCHOVER_ACK] = { .len =  0, .name = "SWITCHOVER_ACK" },
+>> +    [MIG_RP_MSG_ERROR]          = { .len = -1, .name = "ERROR"},
+>>       [MIG_RP_MSG_MAX]            = { .len = -1, .name = "MAX" },
+>>   };
+>>   
+>> @@ -2667,6 +2684,10 @@ static void *source_return_path_thread(void *opaque)
+>>               trace_source_return_path_thread_switchover_acked();
+>>               break;
+>>   
+>> +        case MIG_RP_MSG_ERROR:
+>> +            error_setg(&err, "%s", (char *)buf);
+>> +            goto out;
+>> +
+>>           default:
+>>               break;
+>>           }
+>> -- 
+>> 2.39.3
+>>
+> 
+
+
+-- 
+Best regards,
+Vladimir
 
