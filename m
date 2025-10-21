@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BDBCCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD64FCCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBCVb-0005MJ-EC; Tue, 21 Oct 2025 09:34:39 -0400
+	id 1vBCVz-0005Xr-Rb; Tue, 21 Oct 2025 09:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vBCVI-0005KU-AX
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:34:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBCVx-0005WE-7g; Tue, 21 Oct 2025 09:35:01 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vBCMr-0003TQ-4t
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:34:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761053072;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Si5sYidSgOyKOBouiuY7SuAOZNYUofTTfdg+V1lFVA=;
- b=TMM4w4cnjV1q/Ph831wZ8GbnOgTwhqxjUI5KrZobZ2mY4a+TBtTbvbv2/CW9iIE2aMOVCh
- 09OIu2D+WpBuPTIDObFvkf/nEIUlNnKRfYz70qxGdSXOJr9uEK7u+U+YoTAK/SKdrrpa+X
- jLGBWL2dyABB88nEDX74+MBeqRO46o8=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-rW_Wfn15N3qKHhqU9kUjxA-1; Tue, 21 Oct 2025 09:24:30 -0400
-X-MC-Unique: rW_Wfn15N3qKHhqU9kUjxA-1
-X-Mimecast-MFC-AGG-ID: rW_Wfn15N3qKHhqU9kUjxA_1761053070
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-32eb18b5659so4594329a91.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:24:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761053070; x=1761657870;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6Si5sYidSgOyKOBouiuY7SuAOZNYUofTTfdg+V1lFVA=;
- b=JZWVIewO2CidmBYrMOVe9H2bGnlD12ZH5X3g8iapBfQ+fw0nqueuXV+uUrbFHPks2C
- v9QWfSzjjnmWGm+jTJ0CZQwuBOceA1N1zLobKLoa4zRH794/xIGTSRLAIJYD0bpqZGNl
- dm/MOBnUmYH3kywp5hMbByfRNDidWZ8qEHXrqBpbWXau967vgoZ6ayo7xZD4aEcCxyVs
- gcbT3J+yLxSDaSW8Pe8714Rcy+rTKmFCRJr+hJUkipg6SEwCcBFGTP9K+ysJebP88nPV
- C3PMEtiCnC0Q9x23pmuwD+l/3rbYjCQj/s743diaXPIAE/98jGGZA6oUgeqnWBG0N5iZ
- 5zrg==
-X-Gm-Message-State: AOJu0YzxICTIxREpR56WjY55oeNZCARYQz5EfpoYUuLL1+yDNGh0NN51
- yiEbnSseV8BiRCn8QN2MHYIsXiiteMjuyA9uYBTGTYCh2pkCukRybVOJFy65fCRKXkFp3m7iAZF
- lDQtHDjXRmYCUAEK1ZOBNl24fS0mFsVC/2ot+czauU0uCrbjGiWc61ccnMO+udT1RpdGj6rEVOH
- +WN6d2KvAwXn1aEdaBwCWJ0GUxhQsfGMM=
-X-Gm-Gg: ASbGnctEVHgcxSjqrFSi0iOLhRUf5X6EErCzmJFY7dTQ05IOjmrJ6e98iINLHpUBXni
- QeCnXEloIojSj1tfoCLneIFMlJezPI2Pve/K4Ln/N4LzHR+7HqS2+wLMKJZWUuzgZoewpchlBRO
- KQ3gYoS/VFwVih/ISh7vv/GsIBpDpon5YjqRGXx7QNjjWESc/YFT0GxJZhCiN79Sa75MojCrUzr
- oqECIZRLu6FCso=
-X-Received: by 2002:a17:90b:2247:b0:32d:e780:e9d5 with SMTP id
- 98e67ed59e1d1-33bcf8e5f10mr22942549a91.22.1761053069701; 
- Tue, 21 Oct 2025 06:24:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjruiiry2LGiHfcxlt27mMcM64Ks/i97oK3sHlL0fdGtbn03/sckYUFou/CukjfoQKFP0uZaKhEwOhVj+Sci8=
-X-Received: by 2002:a17:90b:2247:b0:32d:e780:e9d5 with SMTP id
- 98e67ed59e1d1-33bcf8e5f10mr22942513a91.22.1761053069208; Tue, 21 Oct 2025
- 06:24:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBCV8-0003mR-5c; Tue, 21 Oct 2025 09:35:00 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 832FD5972E3;
+ Tue, 21 Oct 2025 15:25:07 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id Gg8qekahyVnk; Tue, 21 Oct 2025 15:25:05 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 25D775972E4; Tue, 21 Oct 2025 15:25:05 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 218E05972E1;
+ Tue, 21 Oct 2025 15:25:05 +0200 (CEST)
+Date: Tue, 21 Oct 2025 15:25:05 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+cc: qemu-devel@nongnu.org, pbonzini@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ Zhenwei Pi <pizhenwei@bytedance.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Amit Shah <amit@kernel.org>, Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Alberto Garcia <berto@igalia.com>, Thomas Huth <huth@tuxfamily.org>, 
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Jason Herne <jjherne@linux.ibm.com>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Magnus Damm <magnus.damm@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ "Collin L. Walling" <walling@linux.ibm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Corey Minyard <minyard@acm.org>, 
+ Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Samuel Thibault <samuel.thibault@ens-lyon.org>, 
+ Michael Rolnik <mrolnik@gmail.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, Joel Stanley <joel@jms.id.au>, 
+ Vijai Kumar K <vijai@behindbytes.com>, Samuel Tardieu <sam@rfc1149.net>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Raphael Norwitz <raphael@enfabrica.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ "reviewer:vhost-user-scmi" <mzamazal@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
+ Jason Wang <jasowang@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Lukas Straub <lukasstraub2@web.de>, 
+ "open list:Sharp SL-5500 Co..." <qemu-arm@nongnu.org>, 
+ "open list:S390 SCLP-backed..." <qemu-s390x@nongnu.org>, 
+ "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>, 
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, 
+ "open list:virtiofs" <virtio-fs@lists.linux.dev>, 
+ "open list:Rust-related patc..." <qemu-rust@nongnu.org>
+Subject: Re: [PATCH] char: rename CharBackend->CharFrontend
+In-Reply-To: <20251021122533.721467-1-marcandre.lureau@redhat.com>
+Message-ID: <01a51fe7-4414-e787-ddf5-5ede0c1e1e74@eik.bme.hu>
+References: <20251021122533.721467-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20251021131825.99390-1-philmd@linaro.org>
- <20251021131825.99390-3-philmd@linaro.org>
-In-Reply-To: <20251021131825.99390-3-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 21 Oct 2025 17:24:17 +0400
-X-Gm-Features: AS18NWAoNFkYA9Hgr0kpbLrC_Ug-MAkyG2rDc_3UcOCr-QjzohF2rYwlCjbmaVM
-Message-ID: <CAMxuvaxTYZTzWr85io2whE+soM8Ji58uV-BbfE8B9kpLzdFMwA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] hw/audio: Remove intel_hda_and_codec_init()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000009f081f0641ab1e8b"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1500696156-1761053105=:49605"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,152 +118,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009f081f0641ab1e8b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hi
+--3866299591-1500696156-1761053105=:49605
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On Tue, Oct 21, 2025 at 5:18=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> `-soundhw hda` was removed in commit 039a68373c4 ("introduce -audio
-> as a replacement for -soundhw").
+On Tue, 21 Oct 2025, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 >
+> The actual backend is "Chardev", CharBackend is the frontend side of it,
+> let's rename it for readability.
 >
-Sorry, that "hda" (=3D intel-hda + hda-duplex) short form is used by -audio=
-.
-
-
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  hw/audio/intel-hda.c | 23 -----------------------
->  1 file changed, 23 deletions(-)
+> chardev/chardev-internal.h           |  12 +-
+> include/chardev/char-fe.h            |  67 +++++----
+> include/chardev/char.h               |   4 +-
+> include/hw/char/avr_usart.h          |   2 +-
+> include/hw/char/bcm2835_aux.h        |   2 +-
+> include/hw/char/cadence_uart.h       |   2 +-
+> include/hw/char/cmsdk-apb-uart.h     |   2 +-
+> include/hw/char/digic-uart.h         |   2 +-
+> include/hw/char/escc.h               |   2 +-
+> include/hw/char/goldfish_tty.h       |   2 +-
+> include/hw/char/ibex_uart.h          |   2 +-
+> include/hw/char/imx_serial.h         |   2 +-
+> include/hw/char/max78000_uart.h      |   2 +-
+> include/hw/char/nrf51_uart.h         |   2 +-
+> include/hw/char/parallel.h           |   2 +-
+> include/hw/char/pl011.h              |   2 +-
+> include/hw/char/renesas_sci.h        |   2 +-
+> include/hw/char/riscv_htif.h         |   2 +-
+> include/hw/char/serial.h             |   2 +-
+> include/hw/char/shakti_uart.h        |   2 +-
+> include/hw/char/sifive_uart.h        |   2 +-
+> include/hw/char/stm32f2xx_usart.h    |   2 +-
+> include/hw/char/stm32l4x5_usart.h    |   2 +-
+> include/hw/misc/ivshmem-flat.h       |   2 +-
+> include/hw/qdev-properties-system.h  |   2 +-
+> include/hw/virtio/vhost-user-base.h  |   2 +-
+> include/hw/virtio/vhost-user-blk.h   |   2 +-
+> include/hw/virtio/vhost-user-fs.h    |   2 +-
+> include/hw/virtio/vhost-user-scmi.h  |   2 +-
+> include/hw/virtio/vhost-user-vsock.h |   2 +-
+> include/hw/virtio/vhost-user.h       |   8 +-
+> include/hw/virtio/virtio-gpu.h       |   2 +-
+> include/hw/virtio/virtio-scsi.h      |   2 +-
+> include/system/qtest.h               |   4 +-
+> include/system/vhost-user-backend.h  |   2 +-
+> monitor/monitor-internal.h           |   2 +-
+> backends/cryptodev-vhost-user.c      |   2 +-
+> backends/rng-egd.c                   |   2 +-
+> backends/tpm/tpm_emulator.c          |   4 +-
+> chardev/char-fe.c                    | 142 +++++++++----------
+> chardev/char-hub.c                   |  18 +--
+> chardev/char-mux.c                   |  40 +++---
+> chardev/char.c                       |   8 +-
+> gdbstub/system.c                     |   2 +-
+> hw/arm/strongarm.c                   |   2 +-
+> hw/char/debugcon.c                   |   2 +-
+> hw/char/exynos4210_uart.c            |   2 +-
+> hw/char/grlib_apbuart.c              |   2 +-
+> hw/char/ipoctal232.c                 |   2 +-
+> hw/char/mcf_uart.c                   |   2 +-
+> hw/char/sclpconsole-lm.c             |   2 +-
+> hw/char/sclpconsole.c                |   2 +-
+> hw/char/sh_serial.c                  |   2 +-
+> hw/char/spapr_vty.c                  |   2 +-
+> hw/char/terminal3270.c               |   2 +-
+> hw/char/virtio-console.c             |   2 +-
+> hw/char/xen_console.c                |   2 +-
+> hw/char/xilinx_uartlite.c            |   2 +-
+> hw/core/qdev-properties-system.c     |  16 +--
+> hw/ipmi/ipmi_bmc_extern.c            |   2 +-
+> hw/mips/boston.c                     |   2 +-
+> hw/mips/malta.c                      |   2 +-
+> hw/misc/ivshmem-pci.c                |   2 +-
+> hw/ppc/spapr_rtas.c                  |   2 +-
+> hw/riscv/riscv_hart.c                |   2 +-
+> hw/usb/ccid-card-passthru.c          |   2 +-
+> hw/usb/dev-serial.c                  |   2 +-
+> hw/usb/redirect.c                    |   2 +-
+> hw/virtio/vhost-stub.c               |   2 +-
+> hw/virtio/vhost-user.c               |  20 +--
+> net/colo-compare.c                   |  10 +-
+> net/filter-mirror.c                  |   4 +-
+> net/passt.c                          |   2 +-
+> net/slirp.c                          |   2 +-
+> net/vhost-user.c                     |   2 +-
+> semihosting/console.c                |   6 +-
+> system/qtest.c                       |  20 +--
+> target/hppa/sys_helper.c             |   2 +-
+> target/xtensa/xtensa-semi.c          |   2 +-
+> tests/qtest/vhost-user-test.c        |  16 +--
+> tests/unit/test-char.c               | 198 +++++++++++++--------------
+> tests/unit/test-yank.c               |  12 +-
+> rust/bindings/src/lib.rs             |   4 +-
+> rust/chardev/src/bindings.rs         |   6 +-
+> rust/chardev/src/chardev.rs          |  26 ++--
+> rust/hw/char/pl011/src/device.rs     |  12 +-
+> rust/hw/core/src/qdev.rs             |   2 +-
+> 87 files changed, 392 insertions(+), 393 deletions(-)
 >
-> diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-> index 0d35afa4ab4..83bb7e597db 100644
-> --- a/hw/audio/intel-hda.c
-> +++ b/hw/audio/intel-hda.c
-> @@ -1301,28 +1301,6 @@ static const TypeInfo hda_codec_device_type_info =
-=3D {
->      .class_init =3D hda_codec_device_class_init,
->  };
+> diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
+> index 9752dd75f7..8ea10414ab 100644
+> --- a/chardev/chardev-internal.h
+> +++ b/chardev/chardev-internal.h
+> @@ -37,9 +37,9 @@
+> struct MuxChardev {
+>     Chardev parent;
+>     /* Linked frontends */
+> -    CharBackend *backends[MAX_MUX];
+> -    /* Linked backend */
+> -    CharBackend chr;
+> +    CharFrontend *frontends[MAX_MUX];
+> +    /* frontend of the underlying muxed chardev */
+> +    CharFrontend chr;
+>     unsigned long mux_bitset;
+>     int focus;
+>     bool term_got_escape;
+> @@ -64,8 +64,8 @@ typedef struct HubCharBackend HubCharBackend;
+>  * `hub->backends` array
+>  */
+> struct HubCharBackend {
+> -    HubChardev   *hub;
+> -    CharBackend  be;
+> +    HubChardev *hub;
+> +    CharFrontend fe;
+>     unsigned int be_ind;
+> };
 >
-> -/*
-> - * create intel hda controller with codec attached to it,
-> - * so '-soundhw hda' works.
-> - */
-> -static int intel_hda_and_codec_init(const char *audiodev)
-> -{
-> -    g_autoptr(QDict) props =3D qdict_new();
-> -    DeviceState *intel_hda, *codec;
-> -    BusState *hdabus;
-> -
-> -    qdict_put_str(props, "driver", "intel-hda");
-> -    intel_hda =3D qdev_device_add_from_qdict(props, false, &error_fatal)=
-;
-> -    hdabus =3D QLIST_FIRST(&intel_hda->child_bus);
-> -
-> -    codec =3D qdev_new("hda-duplex");
-> -    qdev_prop_set_string(codec, "audiodev", audiodev);
-> -    qdev_realize_and_unref(codec, hdabus, &error_fatal);
-> -    object_unref(intel_hda);
-> -
-> -    return 0;
-> -}
-> -
->  static void intel_hda_register_types(void)
->  {
->      type_register_static(&hda_codec_bus_info);
-> @@ -1330,7 +1308,6 @@ static void intel_hda_register_types(void)
->      type_register_static(&intel_hda_info_ich6);
->      type_register_static(&intel_hda_info_ich9);
->      type_register_static(&hda_codec_device_type_info);
-> -    audio_register_model_with_cb("hda", "Intel HD Audio",
-> intel_hda_and_codec_init);
->  }
+> @@ -108,7 +108,7 @@ DECLARE_INSTANCE_CHECKER(HubChardev, HUB_CHARDEV,
+> #define CHARDEV_IS_HUB(chr)                                \
+>     object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_HUB)
 >
->  type_init(intel_hda_register_types)
-> --
-> 2.51.0
+> -bool mux_chr_attach_frontend(MuxChardev *d, CharBackend *b,
+> +bool mux_chr_attach_frontend(MuxChardev *d, CharFrontend *c,
+>                              unsigned int *tag, Error **errp);
+> bool mux_chr_detach_frontend(MuxChardev *d, unsigned int tag);
+> void mux_set_focus(Chardev *chr, unsigned int focus);
+> diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+> index 8ef05b3dd0..cb28692f38 100644
+> --- a/include/chardev/char-fe.h
+> +++ b/include/chardev/char-fe.h
+> @@ -8,12 +8,12 @@ typedef void IOEventHandler(void *opaque, QEMUChrEvent event);
+> typedef int BackendChangeHandler(void *opaque);
 >
->
+> /**
+> - * struct CharBackend - back end as seen by front end
+> + * struct CharFrontend - back end as seen by front end
 
---0000000000009f081f0641ab1e8b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I stopped here, haven't read the rest of the patch but the above comment 
+seems to become inconsistent. Which is the front end and back end now?
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 21, 2=
-025 at 5:18=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:ph=
-ilmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">`-soundhw hda` was removed in commit 039a=
-68373c4 (&quot;introduce -audio<br>
-as a replacement for -soundhw&quot;).<br>
-<br></blockquote><div><br></div><div>Sorry, that &quot;hda&quot; (=3D intel=
--hda=C2=A0+ hda-duplex)=C2=A0short form is used by -audio.</div><div>=C2=A0=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
----<br>
-=C2=A0hw/audio/intel-hda.c | 23 -----------------------<br>
-=C2=A01 file changed, 23 deletions(-)<br>
-<br>
-diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c<br>
-index 0d35afa4ab4..83bb7e597db 100644<br>
---- a/hw/audio/intel-hda.c<br>
-+++ b/hw/audio/intel-hda.c<br>
-@@ -1301,28 +1301,6 @@ static const TypeInfo hda_codec_device_type_info =3D=
- {<br>
-=C2=A0 =C2=A0 =C2=A0.class_init =3D hda_codec_device_class_init,<br>
-=C2=A0};<br>
-<br>
--/*<br>
-- * create intel hda controller with codec attached to it,<br>
-- * so &#39;-soundhw hda&#39; works.<br>
-- */<br>
--static int intel_hda_and_codec_init(const char *audiodev)<br>
--{<br>
--=C2=A0 =C2=A0 g_autoptr(QDict) props =3D qdict_new();<br>
--=C2=A0 =C2=A0 DeviceState *intel_hda, *codec;<br>
--=C2=A0 =C2=A0 BusState *hdabus;<br>
--<br>
--=C2=A0 =C2=A0 qdict_put_str(props, &quot;driver&quot;, &quot;intel-hda&quo=
-t;);<br>
--=C2=A0 =C2=A0 intel_hda =3D qdev_device_add_from_qdict(props, false, &amp;=
-error_fatal);<br>
--=C2=A0 =C2=A0 hdabus =3D QLIST_FIRST(&amp;intel_hda-&gt;child_bus);<br>
--<br>
--=C2=A0 =C2=A0 codec =3D qdev_new(&quot;hda-duplex&quot;);<br>
--=C2=A0 =C2=A0 qdev_prop_set_string(codec, &quot;audiodev&quot;, audiodev);=
-<br>
--=C2=A0 =C2=A0 qdev_realize_and_unref(codec, hdabus, &amp;error_fatal);<br>
--=C2=A0 =C2=A0 object_unref(intel_hda);<br>
--<br>
--=C2=A0 =C2=A0 return 0;<br>
--}<br>
--<br>
-=C2=A0static void intel_hda_register_types(void)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0type_register_static(&amp;hda_codec_bus_info);<br>
-@@ -1330,7 +1308,6 @@ static void intel_hda_register_types(void)<br>
-=C2=A0 =C2=A0 =C2=A0type_register_static(&amp;intel_hda_info_ich6);<br>
-=C2=A0 =C2=A0 =C2=A0type_register_static(&amp;intel_hda_info_ich9);<br>
-=C2=A0 =C2=A0 =C2=A0type_register_static(&amp;hda_codec_device_type_info);<=
-br>
--=C2=A0 =C2=A0 audio_register_model_with_cb(&quot;hda&quot;, &quot;Intel HD=
- Audio&quot;, intel_hda_and_codec_init);<br>
-=C2=A0}<br>
-<br>
-=C2=A0type_init(intel_hda_register_types)<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
-
---0000000000009f081f0641ab1e8b--
-
+Regards,
+BALATON Zoltan
+--3866299591-1500696156-1761053105=:49605--
 
