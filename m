@@ -4,119 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805D9CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C39CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 11:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBAiD-0004ml-VP; Tue, 21 Oct 2025 07:39:37 -0400
+	id 1vBAqn-000690-2M; Tue, 21 Oct 2025 07:48:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vBAi7-0004mB-Ku; Tue, 21 Oct 2025 07:39:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vBAqk-00068V-Hg
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:48:22 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vBAi2-0000FA-EZ; Tue, 21 Oct 2025 07:39:26 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59KMn6ew017502;
- Tue, 21 Oct 2025 11:39:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ObN/jW
- yz7jZQNGrgvSTAzT/wTutn7xnYw0hdm2qBObw=; b=U5rLIf7iLlvnPRY5oSGNIX
- LzZlhQrPq7jsg5rDOoenwaKAGmn4Zth5nTV7jRNcstdtEyOiLK2nYgausHjV7SGj
- G/+fg3xrq+q+dO4dV/HJvvUzg/ZheX/XMO4ABf+pG/FDfltrbyu8ZIaFr+qiD37B
- /MvuNqMCLFfatiSdUopeRYUtYGo9vT52WvNn4UhcnHcTCCa8Hp4ZW3HB3obaPoKE
- EfzZD5QMJnysIIbsgFN6uUQuy8RFx041o89iq0aUqrRQOhJ+w2KjatioVRljiX3t
- 9BNUWQ1C6ICap+UHgjgPAuSHFs1n03xHEs2GAG/l1nYm5tfWSDGh2oZ/A9fFbdIw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vncp6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 11:39:18 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59LBbfiv018048;
- Tue, 21 Oct 2025 11:39:17 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vncp3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 11:39:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59L8x7uO011049;
- Tue, 21 Oct 2025 11:39:17 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx126eg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 21 Oct 2025 11:39:17 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59LBdGLm31588914
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 21 Oct 2025 11:39:16 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 997555805A;
- Tue, 21 Oct 2025 11:39:16 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C828258051;
- Tue, 21 Oct 2025 11:39:13 +0000 (GMT)
-Received: from [9.79.201.141] (unknown [9.79.201.141])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 21 Oct 2025 11:39:13 +0000 (GMT)
-Message-ID: <028fdb03-7bee-4a76-932e-a9247db2f2ac@linux.ibm.com>
-Date: Tue, 21 Oct 2025 17:09:11 +0530
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vBAqh-0001CK-25
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 07:48:22 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 9C4DA80A9A;
+ Tue, 21 Oct 2025 14:48:09 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a4c::1:32] (unknown
+ [2a02:6bf:8080:a4c::1:32])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 8mUwS00IpmI0-Zp4nD1By; Tue, 21 Oct 2025 14:48:09 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761047289;
+ bh=jvCg+BDu57NFeImjRXTV1warbNsnPGWlu3fk+giAL94=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=07P88HlU2O3+vkDevwhf9ybHz4qB8incVh21w4nFcl0L+nExruPhNyotkvt/J8mRq
+ UsLZ+tt906WN0lN3i/UTH7WGk0qOiwzkT0K8/zXxEo37CmA87VFR7YiuQDJDKIAWpu
+ u3GiuzoLGvE60UvNIFXE0g2GwmlsoV7Y7zA9eIms=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3c3a7c5d-4bc4-4498-9c6b-aa5134a3cb67@yandex-team.ru>
+Date: Tue, 21 Oct 2025 14:48:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] target/ppc/kvm: Remove kvmppc_get_host_model()
- as unused
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH] migration: vmsd errp handlers: return bool
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ peterx@redhat.com, stefanb@linux.vnet.ibm.com, farosas@suse.de,
  qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251021084346.73671-1-philmd@linaro.org>
- <20251021084346.73671-8-philmd@linaro.org>
+References: <20251020091907.2173711-1-vsementsov@yandex-team.ru>
+ <87347d7s0j.fsf@pond.sub.org>
+ <0ce2f913-36c2-44a2-8141-256ff847529d@yandex-team.ru>
+ <aPYfqzljT3q2noDb@redhat.com> <871pmxskug.fsf@pond.sub.org>
+ <7d059286-f6a2-4dae-8af1-78a3c1fc5cb4@yandex-team.ru>
+ <87zf9lplvc.fsf@pond.sub.org>
+ <c11428cf-5ca1-40c4-a098-2d23d9fd8b04@yandex-team.ru>
+ <871pmwo5a7.fsf@pond.sub.org>
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20251021084346.73671-8-philmd@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <871pmwo5a7.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: OVF4HSMUdKU4xD4M7yuaZHQSyX2ecGbI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX4vncOItRNi2d
- CaKERxfIYEBxGH+vspKGf1Eogx7Op4/isnCS+wwyiDnTF6zQkf93qMvY17aB0FGMfl1VK6UnATQ
- FMfSkCbB/NGl0amXqf5WHat5pbSrZrZTfgjhHzXVSrV1abaaVD6GYMBLEGdr5Lf32BuzRYq2J9H
- LmtsugNBPcymXRk2GwHlc4UCQA4JXRAKGFs66Ipkd4dFbIL6VIrIDmjB6Picua7ughWzfSbwt35
- C3NHw62EMbMKojT3+LTr5KoVjJdd9Q1t2MkDQt2StV7dhigK3bX0SwvUPe18r6aAA313CnUMMQy
- c+QwECZz0SFWg6NMZQrEx+I5gLqQX+GCSUrDhgvjgIEJ7tnFwXK4+QMr7dxtUmuad76ttTzhBSY
- c2609UvahKWtf4RANW5HOk90Plxzbw==
-X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f770e6 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=cvRlsbrwNaNk8C4OaOUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: VFnuAz9LCY3QvhfgGYR41l5ntqgq0HH2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-21_01,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,53 +85,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21.10.25 14:36, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> On 20.10.25 19:40, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> On 20.10.25 17:34, Markus Armbruster wrote:
+>>>>> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> [...]
+> 
+>>>>>> IMHO if a method is using "Error **errp", then it should be considered
+>>>>>> forbidden to return 'errno' values.
+>>>>>
+>>>>> Several subsystems disagree :)
+>>>>
+>>>> I'd vote, that in 99% (or more) cases, they don't reasonably disagree,
+>>>> but blindly follow usual pattern of returning -errno together with
+>>>> errp, while having no reasonable contract on concrete errno values,
+>>>> and with this errno finally unused (used only to check, it is it < 0,
+>>>> like boolean). In other words, the only contract they have is
+>>>> "< 0 is error, otherwise success".
+>>>
+>>> Functions that could just as well return -1 instead of errno exist.
+>>>
+>>> Functions that return negative errno with callers that use them also
+>>> exist.
+>>
+>> But do functions that return negative errno together with errp, with
+>> callers that use this errno exit? I don't ask to find, that's not simple.
+>> I just say, that I myself don't know any of such functions.
+>>
+>>
+>> upd: I found two!
+>>
+>> how:
+>>
+>> 1. git grep -A 20 'ret = .*errp)'
+>> 2. in opened pager, do `/if \(ret == -E`
+>>
+>>
+>> in iommufd_cdev_autodomains_get() we do something just wrong: we clear errp
+>> after iommufd_cdev_attach_ioas_hwpt(), but return false, which is treated
+>> as error (but with cleared errp!) by callers...
+> 
+> Returning failure without setting an error is commonly wrong, and when
+> it's not, it's a bad interface.  However, I can't see how this function
+> could do that.  Can you enlighten me?
 
-On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/ppc/kvm_ppc.h | 6 ------
->   target/ppc/kvm.c     | 5 -----
->   2 files changed, 11 deletions(-)
->
-> diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
-> index f24cc4de3c2..742881231e1 100644
-> --- a/target/ppc/kvm_ppc.h
-> +++ b/target/ppc/kvm_ppc.h
-> @@ -21,7 +21,6 @@
->   
->   uint32_t kvmppc_get_tbfreq(void);
->   uint64_t kvmppc_get_clockfreq(void);
-> -bool kvmppc_get_host_model(char **buf);
->   int kvmppc_get_hasidle(CPUPPCState *env);
->   int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
->   int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
-> @@ -128,11 +127,6 @@ static inline uint32_t kvmppc_get_tbfreq(void)
->       return 0;
->   }
->   
-> -static inline bool kvmppc_get_host_model(char **buf)
-> -{
-> -    return false;
-> -}
-> -
->   static inline uint64_t kvmppc_get_clockfreq(void)
->   {
->       return 0;
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index cb61e99f9d4..43124bf1c78 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -1864,11 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
->       return cached_tbfreq;
->   }
->   
-> -bool kvmppc_get_host_model(char **value)
-> -{
-> -    return g_file_get_contents("/proc/device-tree/model", value, NULL, NULL);
-> -}
-> -
->   /* Try to find a device tree node for a CPU with clock-frequency property */
->   static int kvmppc_find_cpu_dt(char *buf, int buf_len)
->   {
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+Oops, I missed "continue;" looking at later "return false;". So this case
+is fine too.
+
+> 
+>> in qemu_read_default_config_file() we do correct thing, but keeping in mind,
+>> that it's very seldom practice (around one case), we'd better add a boolean
+>> parameter to qemu_read_config_file(), and parse errno exactly after call to
+>> fopen().
+> 
+> In my opinion, this function is just fine.  There are of course other
+> ways to skin this cat.
+> 
+>> trying with local_err gives a bit more:
+>>
+>> git grep -A 20 'ret = .*&\(local_\)\?err)' | grep 'ret == -E'
+>> block.c-    if (ret == -ENOTSUP) {
+>> block.c-    if (ret == -EFBIG) {
+>> block/snapshot.c-    if (ret == -ENOENT || ret == -EINVAL) {
+>> hw/core/loader-fit.c-    if (ret == -ENOENT) {
+>> hw/scsi/megasas.c-        assert(!ret || ret == -ENOTSUP);
+>> hw/scsi/mptsas.c-        assert(!ret || ret == -ENOTSUP);
+>> hw/usb/hcd-xhci-pci.c-        assert(!ret || ret == -ENOTSUP);
+>> hw/vfio/pci.c-        if (ret == -ENOTSUP) {
+>> nbd/server.c-    } while (ret == -EAGAIN && !client->quiescing);
+>> nbd/server.c-    if (ret == -EAGAIN) {
+>> nbd/server.c-    if (ret == -EIO) {
+>> qemu-img.c-        if (ret == -ENOTSUP) {
+>>
+>>
+>> I still think, that these are very seldom cases, some of them are just wrong,
+>> some make sense, but their contract may be simplified.
+>>
+>>> I'm not going to speculate on relative frequency.
+>>>
+>>> I much prefer written function contracts.  But if a caller relies on
+>>> negative errno codes, there is an unwritten contract whether we like it
+>>> or not.
+>>
+>> Agree.
+>>
+>> I just want to say, that usual pattern
+>>
+>> int func1(..., Error *errp) {
+>>      ...
+>>      ret = func2(..., Error *errp);
+>>      if (ret < 0) {
+>>          return ret;
+>>      }
+>>      ...
+>> }
+>>
+>> is very error-prone, if func1 has some unwritten contract about _different_
+>> errno values. As this unwritten contract may be easily broken somewhere
+>> in the stack, not exactly in func1.
+> 
+> I readily concede:
+> 
+> (1) If func() lacks a written contract, passing on func2()'s value makes
+> the implied contract harder to see.
+> 
+> (2) If func() has a written contract, passing on func2()'s value makes
+> it harder to verify, and easier to break accidentally.
+> 
+> (3) When no caller needs to discriminate between different errors,
+> returning -1 or false results in a slightly simpler interface.
+> 
+> Still, has this plagued us in practice?
+> 
+> The only issue in this area that has plagued me enough to remember is
+> functions returning both -1 and negative errno.  Which works fine as
+> long as callers only check for negative, but is in my opinion
+> intolerably sloppy.  Whether the function takes an errp or not doesn't
+> matter.
+> 
+> I don't think a blanket prohibition of returning negative errno makes
+> sense.  Discouraging it maybe, but given how rarely it's done, I doubt
+> it's worth the bother.
+
+Agreed.
+
+> 
+> Do feel free to send patches to simplify interfaces regardless.
+> 
+
+First is "[PATCH v2 2/2] migration: vmsd errp handlers: return bool" :)
+Now I'm fine to reword the commit message in more relaxed attitude
+to returning -errno.
+
+-- 
+Best regards,
+Vladimir
 
