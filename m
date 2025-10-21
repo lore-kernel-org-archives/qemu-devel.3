@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C06CCD1AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC91CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBGkf-0001NI-Qi; Tue, 21 Oct 2025 14:06:30 -0400
+	id 1vBGo3-0002co-Gp; Tue, 21 Oct 2025 14:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vBGka-0001Mt-Jp
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:25 -0400
-Received: from mail-il1-x135.google.com ([2607:f8b0:4864:20::135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vBGkY-0008Kl-Rf
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:24 -0400
-Received: by mail-il1-x135.google.com with SMTP id
- e9e14a558f8ab-430d0d37fd7so896515ab.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:06:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761069981; x=1761674781; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sufgHMdCMhpSWkImek1HLx/zIK/9XVZ1Oufl0EUUyXY=;
- b=HhMRIR7CnvC0XARdzt/r08fvHnVeZdpTIutwwKw12H62MCmsLG1hq2skJIqsggdtLJ
- dLPBWHxNwm5OkOdV0n6w7g+im6vP1YOoPiotrp00wc9O5b/BFraa3TJ5gD1tfAAj21Hv
- l5YtGaArRfe9fWFs0uiAjbXXyq1pBmJsumg+i40F+LZ/QpejS7pgSUiM48ku/tJXJrkN
- K1dMB7z8BbMwt2Rp7um7PeBb3lGMimBkMkEst/oN+QggFlIzUNWrq1TluaJuesXLMYP8
- hL5ebIJhQoMbzpTkuazveHydgqrzUyFayTkfjLnO+fh9CsxJY1n9COHwGaXqseSahkvY
- J+/A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBGnz-0002bR-2s
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:09:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBGnw-0000Cq-7u
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:09:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761070188;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PWyBcu85Qzt+QiSiRjojBT3ZvVL/2JPHnHYZ1qAfsXs=;
+ b=hT+aIbnCHxM+kKngJjhEjZ8qc/0Cn6WZ9q9pfGhiEKlu4wNRWS80FNdWvmC+WD7CNMkj+F
+ 4sEKUeb9JapiIynMO0KBz3F4elTZhZhdfTB/uWb28iHU9ncTlweLCJPrbh2YxSah0Fva9S
+ xWaFMvwLUS0cw/wgcmMoYXu/O2G9LLQ=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-76-as3U83GpOKGjJ5kOSROkVA-1; Tue, 21 Oct 2025 14:09:47 -0400
+X-MC-Unique: as3U83GpOKGjJ5kOSROkVA-1
+X-Mimecast-MFC-AGG-ID: as3U83GpOKGjJ5kOSROkVA_1761070186
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-78e30eaca8eso277224926d6.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:09:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761069981; x=1761674781;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sufgHMdCMhpSWkImek1HLx/zIK/9XVZ1Oufl0EUUyXY=;
- b=S598duyeVsaTn7+LItjv8sLUtMwZ9xDmVFvCfk4vG/amfOulTekW8AHlG/aZVpWydd
- o6xaUPHam+TTaluNh7A8pb/Pt74McEeS0avuYZUx1YzlYMSXGUilebMDfACHvpSvFD2L
- W7aGBG/nPNCAV3dTPFwIZBQb1gVPsu7hLu6Zp81LpUXLNtwmgGm8SGxRWGujsN6fMkjw
- It9iCIbyWi7tYpVkIyT+rxOpQubcva5Apj8DOG0NLYigNnQrQBa+YVSDOXQCI8BhAbaS
- nCGzChwcceN5/5c4sNd6a4QwbgITmUOXtvWGqY/O4JVBdGeQc6gPLp4Ve4biNWMxPitX
- 1Cwg==
+ d=1e100.net; s=20230601; t=1761070186; x=1761674986;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PWyBcu85Qzt+QiSiRjojBT3ZvVL/2JPHnHYZ1qAfsXs=;
+ b=bs2Nzr80TNiDTDzpXZYb54FKmPOgR+YCXGW9/w4m/DHkKAWOQEml/kL2Kemtg2PbxZ
+ J2vvsXixg6Pf5a4wt6/BeHVpbtVfOE24H/TQzHx3XHxNtLf/V6oviKANF6qwgRv5vLN8
+ LRJFvn/2g5NTARwnfBDSct5g7AmnXPUc2DdLLh9Kwg4GfcUp33IUbYTecb6Y9m9UFOpG
+ k2kF0//MfGwMV2bmwt2FUGJQi78ev0ozTd0rrSz5Bo4kQfQ59juRrfHx8FKJGxGm1jKm
+ o5v2Mj36QeFVatt26MwI30rWIMTEQGkE830B0tiW/wlSTNZqFoxB5yw/aYqr93ks8H8r
+ WybQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWIZ2o46hGfuNx1i/P3lbu0eHDoYOMe/FmDnjDsapT3CrVcPJNFlp0owK3m0I+5OXklAwVhqJy/coh@nongnu.org
-X-Gm-Message-State: AOJu0Yx/AXKdVhGxg3OU1E3QoUOEGmyfjhV0Mrwd9t35Rx8hFR5MULuk
- ECmgkR+6ugUtz0jfD0xEngfg72eaN0EJ8FM5NrZ2TchqXCRDE2mmMQ+Ez0rni2gg8auIUlpJhfS
- a2GZlp0SBiwVqoGjUUj2B3BJl9M5OdVA=
-X-Gm-Gg: ASbGncvM+97xfBB51wga2hNCbSLBI65YIbLp1ejmXqMK3rhp04cYepx7r0d39MfdxF7
- ukKHjSt0/ss3BtCa/uZzZcNzEJDzaJ65tF2gUizBaY8aiEldyNv4y7QdonSG/uZQFmDjn71oFEs
- wfSxMXJX8uzI2mCY5SNXpDhSZJvIeeIegQOaW4572nQHsQRtzPaCGYrLhQTGV+ITm4Hisizv/Cd
- dQBX0JqQjYSrzwEv5e1K/YokausfyLyaJlzBcPyvd7+Q+P/IG5LJ22HGxAafJw8+lSG+VY=
-X-Google-Smtp-Source: AGHT+IG7AwPiaN+L2hlh2ryT/irzWtao5CVgocGktgREFGsHXyVbsU9/ie3AlNvyjuzB27NvFsIkKlLh+LoKiDUz5ZQ=
-X-Received: by 2002:a92:cd8f:0:b0:430:b004:3d5c with SMTP id
- e9e14a558f8ab-431d309940bmr11408305ab.9.1761069981014; Tue, 21 Oct 2025
- 11:06:21 -0700 (PDT)
+ AJvYcCVX7lRWYssRekblpu2c8c7eA4CtvUPjNtI98TPWRUoL19Eh7+m7PSMlBc6HqOthMhsFUUq4IBnBM/JH@nongnu.org
+X-Gm-Message-State: AOJu0Yxlom9E0Hfa+XRA+H8KNNHoAEX2/tWst0hJZ+C7ieQrjzU6YJpy
+ aWlRDQp8opXmATIFKek5N2oQwJVBNJTyiiFTh6xQw1gMvRl/k1dakOXEyEioM2xu/8GuTLCTwgQ
+ 7ds45uGw5V5+js1d9UxAnjEE3XfX94qYsc2PnDsxh8Bc2bND+jI1lgBha
+X-Gm-Gg: ASbGncsVSQ4zuf5o0KxO5UpciQlz1IjMrrEjKpC5cxHrmbzZMV3fQ5N1R+fZmYny8Qx
+ /HQrKG6MW+7+W7oVvYILyw+bVO+3KGJD/wftzKhl7mpvT4h9AJ/dxLzoi+uMNDtrSnCKJ/HajqZ
+ 7YAzKU5Ku8gaNB9YwSH9EFV438NbKXV9PVD/6VPSmkuiD3lUNTJvhqH7+fr7ZCpol/8Y0tEvvqB
+ Ju5KKpIGu23HWQcbO7VJLLQ3YlaBPWC4Ao/+xo9TwegCFSXXU5KrFDb3+Rq0HckEcU0lBhe4Il+
+ g5QlIl+1FdgL/CBhcz7Ia0M2NbBanCTdm9byE4Op4iHoafglM9mV9zEItgMb2anctLw=
+X-Received: by 2002:a05:6214:518b:b0:87c:203e:69fe with SMTP id
+ 6a1803df08f44-87c20596becmr240193646d6.25.1761070186153; 
+ Tue, 21 Oct 2025 11:09:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+NZSK68TFm9VxW/1d+sKYjnic7bUDGZTB6vsKCH18FBC9yOF2ig/TW2WktZeGBtCbMKMYig==
+X-Received: by 2002:a05:6214:518b:b0:87c:203e:69fe with SMTP id
+ 6a1803df08f44-87c20596becmr240193136d6.25.1761070185576; 
+ Tue, 21 Oct 2025 11:09:45 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87cf521be67sm73247866d6.16.2025.10.21.11.09.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 11:09:45 -0700 (PDT)
+Date: Tue, 21 Oct 2025 14:09:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PULL 02/45] migration: push Error **errp into
+ vmstate_load_state()
+Message-ID: <aPfMZ4ugzwbAy_93@x1.local>
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-3-peterx@redhat.com>
+ <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
+ <aPex9SsQOup69DRI@x1.local>
+ <CAFEAcA85DRf5918ea9N66+Z7M_vVGNy+-SdSx17E5MGOf_cbMA@mail.gmail.com>
+ <aPe4yBqkPTiDiYXq@x1.local>
+ <CAFEAcA8e7qKGm7vq-8TFC40VMfoGU_O5+U0rrKG+Z8M3fVdRfg@mail.gmail.com>
+ <aPe9Z0IiEI6mzCdY@x1.local>
+ <CAFEAcA_BAxh8BAYPAbPEp_P98gMUdZqZ=2XZHrmGQ+GyEViF_Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
- <20251016114104.1384675-13-vsementsov@yandex-team.ru>
- <CAFubqFsKOJwD8w_jNRCuyTVs=LytbYF+ZsKTP986g-An-6Pbdw@mail.gmail.com>
- <a9afaaef-08a9-44cb-b401-b5b3bac1bff4@yandex-team.ru>
-In-Reply-To: <a9afaaef-08a9-44cb-b401-b5b3bac1bff4@yandex-team.ru>
-From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Tue, 21 Oct 2025 14:06:09 -0400
-X-Gm-Features: AS18NWAa9VPDXW8jrBcsCWFh_vHDpp1r1dXj5laE7vDWzVcrQKZre1hTwNSwbw0
-Message-ID: <CAFubqFvQY_FN2yTJz_Yyf0AVhjFjPXfE5ndn3o6OhDP375mn9w@mail.gmail.com>
-Subject: Re: [PATCH v2 12/25] vhost-user-blk: move first vhost_user_blk_init()
- to _realize()
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: raphael@enfabrica.net, pbonzini@redhat.com, farosas@suse.de, 
- mst@redhat.com, sgarzare@redhat.com, marcandre.lureau@redhat.com, 
- kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com, 
- armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- steven.sistare@oracle.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, 
- jasowang@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::135;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x135.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA_BAxh8BAYPAbPEp_P98gMUdZqZ=2XZHrmGQ+GyEViF_Q@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,107 +118,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ACK on your point. One more question about setting s->connected =3D false.
-
-On Tue, Oct 21, 2025 at 12:29=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
->
-> On 21.10.25 02:35, Raphael Norwitz wrote:
-> > On Thu, Oct 16, 2025 at 7:48=E2=80=AFAM Vladimir Sementsov-Ogievskiy
-> > <vsementsov@yandex-team.ru> wrote:
-> >>
-> >> We'll need to postpone further connecting/reconnecting logic to the
-> >> later point to support backend-transfer migration for vhost-user-blk.
-> >> For now, move first call to vhost_user_blk_init() to _realize() (this
-> >> call will not be postponed). To support this, we also have to move
-> >> re-initialization to vhost_user_blk_realize_connect_loop().
-> >>
-> >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru=
->
-> >> ---
-> >>   hw/block/vhost-user-blk.c | 17 ++++++++++++++---
-> >>   1 file changed, 14 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> >> index 36e32229ad..af4a97b8e4 100644
-> >> --- a/hw/block/vhost-user-blk.c
-> >> +++ b/hw/block/vhost-user-blk.c
-> >> @@ -464,14 +464,12 @@ static int vhost_user_blk_realize_connect(VHostU=
-serBlk *s, Error **errp)
-> >>       DeviceState *dev =3D DEVICE(s);
-> >>       int ret;
-> >>
-> >> -    s->connected =3D false;
-> >> -
-> >>       ret =3D qemu_chr_fe_wait_connected(&s->chardev, errp);
-> >>       if (ret < 0) {
-> >>           return ret;
-> >>       }
-> >>
-> >> -    ret =3D vhost_user_blk_init(dev, true, errp);
-> >> +    ret =3D vhost_user_blk_connect(dev, errp);
-> >>       if (ret < 0) {
-> >>           qemu_chr_fe_disconnect(&s->chardev);
-> >>           return ret;
-> >> @@ -501,7 +499,16 @@ static int vhost_user_blk_realize_connect_loop(VH=
-ostUserBlk *s, Error **errp)
-> >>               error_prepend(errp, "Reconnecting after error: ");
-> >>               error_report_err(*errp);
-> >>               *errp =3D NULL;
-> >> +
-
-Having removed setting s->connected =3D false from
-vhost_user_blk_realize_connect() we will now only set s->connected =3D
-false here in the if (*errp) {} error path. Shouldn't we also set
-s->connected =3D false outside the error path here or in
-vhost_user_blk_device_realize()?
-
-> >> +            s->connected =3D false;
-> >> +
-> >> +            ret =3D vhost_user_blk_init(dev, false, errp);
-> >> +            if (ret < 0) {
-> >> +                /* No reason to retry initialization */
-> >> +                return ret;
-> >> +            }
-> >>           }
-> >> +
-> >>           ret =3D vhost_user_blk_realize_connect(s, errp);
-> >>       } while (ret < 0 && retries--);
-> >>
-> >> @@ -566,6 +573,10 @@ static void vhost_user_blk_device_realize(DeviceS=
-tate *dev, Error **errp)
-> >>       s->inflight =3D g_new0(struct vhost_inflight, 1);
-> >>       s->vhost_vqs =3D g_new0(struct vhost_virtqueue, s->num_queues);
-> >>
+On Tue, Oct 21, 2025 at 06:22:55PM +0100, Peter Maydell wrote:
+> On Tue, 21 Oct 2025 at 18:05, Peter Xu <peterx@redhat.com> wrote:
 > >
-> > Why call vhost_user_blk_init() here if we call it in
-> > host_user_blk_realize_connect_loop()?
->
-> To be able to postpone the whole realize-connect-loop to the later
-> point (not in realize) in further commits.
->
-> So this first init will stay in realize, for early initialization of the =
-device.
->
-
-Makes sense - I missed that vhost_user_blk_init() is only called in
-the error path.
-
+> > On Tue, Oct 21, 2025 at 05:49:51PM +0100, Peter Maydell wrote:
+> > > I suppose so, but that seems like something in practice
+> > > we make a lot of use of. It's really handy to be able to
+> > > say "this is how you obtain the integer you wanted to put
+> > > in the migration stream" -- we do a fair amount of that
+> > > in target/arm/machine.c for instance. But those don't
+> > > need to return a failure, I suppose.
 > >
-> >> +    if (vhost_user_blk_init(dev, false, errp) < 0) {
-> >> +        goto fail;
-> >> +    }
-> >> +
-> >>       if (vhost_user_blk_realize_connect_loop(s, errp) < 0) {
-> >>           goto fail;
-> >>       }
-> >> --
-> >> 2.48.1
-> >>
-> >>
->
->
-> --
-> Best regards,
-> Vladimir
+> > That's exactly what pre_save() / post_load() should do, IMHO.
+> >
+> > Taking example of the arm's case here:
+> >
+> > static int put_fpscr(QEMUFile *f, void *opaque, size_t size,
+> >                      const VMStateField *field, JSONWriter *vmdesc)
+> > {
+> >     ARMCPU *cpu = opaque;
+> >     CPUARMState *env = &cpu->env;
+> >     uint32_t fpscr = vfp_fpcr_fpsr_needed(opaque) ? 0 : vfp_get_fpscr(env);
+> >
+> >     qemu_put_be32(f, fpscr);
+> >     return 0;
+> > }
+> >
+> > The .pre_save() should be exactly the logic that generalize whatever we
+> > have had in QEMU's structs into a pure uint32_t, put that into a temp
+> > u32. Then migration should be able to transfer that using whatever way it
+> > prefers.  When using qemufile API, it should use vmstate_info_uint32 so as
+> > to not open-code qemu_put_be32().
+> 
+> I think this is very ugly, because it means that the device state
+> struct ends up with a pile of extra fields whose only purpose
+> is to be temporarily used during migration. Having a function
+> which does the "figure out the value at the point where we want it"
+> is a much nicer API because it keeps the migration related
+> complication in the migration code, and keeps it out of the
+> data structures that all the rest of the code has to work with.
+
+It'll be a temporary struct, can be allocated only in a pre_save() and
+freed in a post_save(), for example.  And IIUC most of the devices do not
+need it when there're already good representation of the data for migration
+within the device object.  AFAICT, the latter is the common case.
+
+> 
+> > Now, we have a major issue with qemufile and all the APIs that bound to it
+> > when we want to move the IO layers from qemufile to iochannels, exactly
+> > because we lack such abstraction layer, where we mixed up "this is how you
+> > obtain the integer" and "send this integer to the wire" operations in one
+> > API.
+> 
+> Yeah, this is unfortunate. But I don't think the solution is
+> to require a lot of extra device state struct fields to carry
+> temporary data for migration. It would be better to have an
+> API similar to the existing get/put functions but which
+> passes the data back to the caller instead of calling
+> qemu_put_be32() itself.
+
+Yes.  I feel like what we said do not conflict with each other.
+
+What you mentioned looks like a per-field version of VMSD's pre/post hooks,
+so AFAIU get() is almost a post_load(), and put() is almost a pre_save(),
+only that it will be per-vmsd-field, rather than per-vmsd.
+
+The important part is IO path separations, IMHO.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
