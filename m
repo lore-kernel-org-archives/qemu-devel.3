@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8F0CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 10:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A18ACCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 10:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB9DN-00033p-B1; Tue, 21 Oct 2025 06:03:37 -0400
+	id 1vB9EV-0003Zs-34; Tue, 21 Oct 2025 06:04:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB9DK-00033J-Lk
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:03:34 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB9EQ-0003ZZ-Df
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:04:44 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB9DI-0003VB-KK
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:03:34 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-46b303f755aso57068225e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 03:03:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB9EM-0003YU-NL
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:04:40 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-471193a9d9eso48595545e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 03:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761041010; x=1761645810; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761041077; x=1761645877; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1axWyVGRyg48iv/Z+Xv2C7Pd7jYANzGPekLkLE+A/xc=;
- b=ohAIdmRPbotTYF5Xp6PBuE3ynRvH31HY1lrl+unm2OoIk/MtnNMw8EDvsRlM4JSbvh
- u/pA8gW+giPd6563VaWbBMXI1st6a8kfGqBkWAYbyb3PD/49Dr6uo1bCVcdGh80hVHc0
- VRp4N4ckmhWLc2LBDabzCC2NuFGI9I/f9aWi/EAR5cckcGid0axeHukblfxoAvzVMo1+
- /kApnJpocnS716IOvbhHnJIwfQ8lcKCsmDGV8K4BcnbGNhE3nAvYL6nHhbv7jRpDZsaT
- 4bUQ16F35EYUA86mVisWVmwfB9vr8IhABZ1HGBXx7cQ8i2+7VHjBUJ30KvyezM0xRIlA
- Imgw==
+ bh=zrEth1XP6xGs2sKx42w1lY93vz+lWYWYh+FPp3nRTMQ=;
+ b=yfkrmupFN7UtzglF5ARh9vRW63COHq4ZYOdSlO7JRyU3x1ZCedmk822eb0vfk9T2H8
+ 3NY0L5BW/7cVEezOgpOLqRz6+6q+qy+aTEk+WMflAkhy5Qx2+PZqGSa3NC4ua7ADsbA2
+ t4J4qMHJg0Ap6FAbrk7dAl+4B2cbTRslVxymIAzzRZAulvDeewTHloGkswtJiSf7IP/o
+ oiIT1/T+XZPhzRx4Ohleqow2bkyChCygYaCBx+5tWhyP0LVfNlKLVVxMiJAX1tvUT3Or
+ ikNHmIGi0ZEuyyXYACafxn3C6Qrpyg2HFgTNQ8E33yDwDuH9uxquTrRRjCPNevE16/Kt
+ npTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761041010; x=1761645810;
+ d=1e100.net; s=20230601; t=1761041077; x=1761645877;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1axWyVGRyg48iv/Z+Xv2C7Pd7jYANzGPekLkLE+A/xc=;
- b=LGVs5OcLSvocbqo3R1e5FE7W4GKdkZ+NwLnf6SasDDkZbhv095TkPYtyRUMTvdqfEG
- NkC+z47hsftZfCKPW9wbwbdAtE1ZdHWS/EpFRiRVgVwJZRwz4RByA0+0ej7cHDdKSXFL
- Pt8M/aWPNxDvTgAjZRu7ILihh2R8b0xqaSVgxlrB9KcfGMakGjClhbEadux2IwRxX1Yz
- nNP6whbbqxNe6ooJUpaukqsV/t/hXU3TXnwSFuNhvlIH1YNkErqN1zTA+9kDJLxCLfG2
- YISpG5Nq2zrf4IXmEzB8Z2ZGO6z1z0hs8N2lHSqv1nIubJNWc79tw52EnCnZuKbXgy1I
- USMA==
+ bh=zrEth1XP6xGs2sKx42w1lY93vz+lWYWYh+FPp3nRTMQ=;
+ b=CHcZ/rgKwbsFVlVekl2ZX9ItTYTjZqDwyPUyyinEcbow7wOVB7zy5AYMw2eB+E+6Af
+ XnDb/LfY+OgA+Q/dRBNmrOF0Y7wDsO516Vw33d8nqXwgK46J6mztayqVYh2UhbcrP8o4
+ 2yqCM6rhceDmFz357gXa31g5A1YiMqR/6on6aAnZ1N0SR7RWonGVrYx4GdYy08cGQcd+
+ ovXUaD+yCs3KaxYV8TjDqIo4rHhFzy07AZHxT7k4rchIA4NWIlmab4F+ICScLrKlwyUQ
+ MkKJbeCaVZzVy1phVT+PNj3+6zPX7LVGDSxEZOxjxAb+lEJ5QGJ+W+Hcg6sPaBn5r29w
+ e9Jw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1L8IOh1qFoQfr7/kY37cxFGfxCmNOb+mNMvcK5cijgn6CNm4McxJIqkU873SkxufDPGMOhq0nIWFb@nongnu.org
-X-Gm-Message-State: AOJu0Yz7OR2MfaQPEDt3Y0zvhfbA/CQCCxQGsAc8+WmVst6CEr1aBaXw
- TAjmIdGQGau7IojkcrN/qR9Ar26s4MdyYnVOL9fBik11/5mn3AI2BBgrXJ5NNkT0bXQ=
-X-Gm-Gg: ASbGncuKF84asBeKKv8PdFda/mSX/1txZiEEZ24jfCIixn1rRW1u13r1Pk6QIq+nFXt
- 5Dus3oMcXPoHEAtiEhdqlgFCOGX75OBFYeR+5F9Aj8F569fmltnQOg8tX29q/pC6qxGq0xe3Dvp
- c7hSNdXFuuwKPprKIma1EAyyE2isSBVslo27oHA4HWiUyiUcuCzVkrvQqKe7JB7f6Yrg84o/ck6
- S+8Pogdw2vlTj+vsAE8VNeyL9zIeT+9kOSsvoLw/G+QRrTWUKFNW8L9Lyd5uhtppkPOqjfPGFbg
- SRBJ0KZaGLtEFtDsjyJcbRm2Ubzrcj3EiNJqJTQlxmBS4miQq1mO+H5CWkgrIWMXrXKFciGr+8z
- tz5oE18wMO8NGQufA2mHlSYfS+S47pN867nYpJkEDAX/YTj6b/Bw5wrhYWfFIocx0IDRXCK6Y1n
- NpE23emPr/0AHZJsQM5jmkZ98mQkSuypc2NqL+DUVl7Ebf3A6QvmqPgQ==
-X-Google-Smtp-Source: AGHT+IEcqcAIb20xxq9m2joks9fak4yt1Uh6cr7KwLHC68Wf0NcFKa/aRL8/eYva7NiWs9aFiawwJg==
-X-Received: by 2002:a05:600c:548c:b0:46d:5189:3583 with SMTP id
- 5b1f17b1804b1-471177bad0dmr114203045e9.0.1761041010166; 
- Tue, 21 Oct 2025 03:03:30 -0700 (PDT)
+ AJvYcCUfvjeofVBG+4vYt70EmdGHquIjw6z84mpOt0SXfCDro0FDR5EOAyyRPf5nktosG1/VXeriiwNZojUc@nongnu.org
+X-Gm-Message-State: AOJu0Yyd2UIBFy5dz2bPwOlB87xIz24/8JpKf8ZKE2pxEXpNjxzvstEP
+ OsL2pbGCN9QVIcAMcG8CTeSk+AFiS4Fy2JGdZcTJsDuXsVPhfcqEYKOfG/bqa+voklQ=
+X-Gm-Gg: ASbGnctl9w/6kqZLTH9yO+uhlkPmoLgsARowxe76m9+aNQsQRNRN/kXHJTKD26UEMeO
+ k5I/DSLXDS2iyh5L7+hQEY1q8EDOWVPpq1mLk44V8xutci38JNjknTFXLvH/XVUHvm2z1Knb9wP
+ XlNtW7AvwRJ7CLR6w5xtvuk8xrvfMkdOTggrJ8L1eTr/2EbM5y1WNVTZBSYRUwwXuu9cDocy4b0
+ a3r7LOBzhQr5OT9NFnRTyLgU6wA/q5yrMfOFi9yMejMfNIZOgyMlceBgTG1KJNC2fbbWM+p0qS8
+ /UtX3PJw7GVmS7XiB/75ajLxPtiNSelGB1BdZR8zoKTjkdaxzYacQXB7pXczkqfFlCLSdjzHPtu
+ 1ivk2fHb1JTQF3wZRTLF0ulnIgDcdMtx3bi9Osd+jzsKAOuQaf86W04cf6WndMikTUQbJrG5xKy
+ Hh6TMi2gclhhW53PH4A8Fg7sf+SWuVQhIvrICOSPZqQgU=
+X-Google-Smtp-Source: AGHT+IFBPzJnzNGAqd5QohFm00w6DteOHi+5mDoycw5Lj6/WuNtyvPHGnJcxivKUo5mwgq1UJE933Q==
+X-Received: by 2002:a05:600c:37c7:b0:46e:1fb7:a1b3 with SMTP id
+ 5b1f17b1804b1-4711790b56emr99185395e9.23.1761041075459; 
+ Tue, 21 Oct 2025 03:04:35 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496c14a26sm13327635e9.4.2025.10.21.03.03.28
+ 5b1f17b1804b1-471144b5c91sm272016335e9.11.2025.10.21.03.04.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 03:03:29 -0700 (PDT)
-Message-ID: <82acf617-9585-4750-8bed-c32dbe651574@linaro.org>
-Date: Tue, 21 Oct 2025 12:03:28 +0200
+ Tue, 21 Oct 2025 03:04:34 -0700 (PDT)
+Message-ID: <5df75eec-29a6-46df-b2c1-95c32a137866@linaro.org>
+Date: Tue, 21 Oct 2025 12:04:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 34/43] audio: rename AudioState -> AudioBE
+Subject: Re: [PATCH 02/43] hw/audio: rename model list function
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, marcandre.lureau@redhat.com,
- qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?Volker_R=C3=BCmelin?=
- <vr_qemu@t-online.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Gerd Hoffmann <kraxel@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-35-marcandre.lureau@redhat.com>
- <1bd34160-d034-465b-a1ac-0e734ed40484@redhat.com>
- <d26b8838-c4a9-443f-a651-f46901a40865@redhat.com>
+ <20251021090317.425409-3-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d26b8838-c4a9-443f-a651-f46901a40865@redhat.com>
+In-Reply-To: <20251021090317.425409-3-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,32 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/25 11:40, Paolo Bonzini wrote:
-> On 10/21/25 11:30, Paolo Bonzini wrote:
->> On 10/21/25 11:03, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> Naming is hard. But in general in QEMU, a host "backend" is the term
->>> used to fullfill the request made by the device "frontend".
->>>
->>> Note that "audiodev" is the corresponding QAPI type name (or 
->>> configuration).
->>
->> BE and FE aren't used in existing code though.  Looking at current use:
->>
->> - BlockDriverState*/BlockBackend*
->>
->> - Chardev*/CharBackend
->>
->> - NetClientState*/NICState*
->>
->> ... it's actually quite common for the *frontend* to have a pointer or 
->> object of type FooBackend; that would give Audiodev* and AudioBackend*.
+On 21/10/25 11:02, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Hmm, I have to correct myself.
-> 
-> QEMUSoundCard's name field is basically unused, and QEMUSoundCard should 
-> be just an Audiodev*.  There's no need for a separate AudioFE struct.
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   include/hw/audio/soundhw.h | 2 +-
+>   hw/audio/soundhw.c         | 4 ++--
+>   system/vl.c                | 2 +-
+>   3 files changed, 4 insertions(+), 4 deletions(-)
 
-AudioBackend is still a better name than AudioBE though.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
