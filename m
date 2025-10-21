@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B26ECCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 10:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D90BCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 10:01:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB99P-0001Dd-NE; Tue, 21 Oct 2025 05:59:31 -0400
+	id 1vB9BP-0002Vw-Il; Tue, 21 Oct 2025 06:01:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB99C-0001DI-2a
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:59:19 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB9BO-0002Vi-7m
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:01:34 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB997-0002yf-1Y
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:59:15 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3f2cf786abeso4143057f8f.3
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 02:59:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vB9BM-0003Nh-0B
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 06:01:33 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4711810948aso36632955e9.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 03:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761040751; x=1761645551; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761040890; x=1761645690; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=d5uaF7+pUnU3aSevWsBmpC+HpDp4hJZMzzoI7TT8nSY=;
- b=hj0kI8RujDd5SG8QNCFREzgFUSydt0x7dtk2abSwGYrwxTtenloBKwbBzsaaPBeaaY
- B5/h6jI3vrtcm37DsiVzL8bQLTXHZqI4AJ6fG8YKqcSGU4wA3pUlZ0/4rQPtdFMm7T28
- K/eerFRnCb+ZrTEzQQfmPIz9ZKdKeHGanfbe+K+c79YpVoP/MzqXOSI9UTItkSQlluUH
- Cv1GIgf8c/M3tzEdP96uvP5RW+3NnMUzd+ARsImCgQ/bO3zbJU+17NHfBUk3wEUQGDgt
- E+8KdXe0MlVVyhX3veqNP3OMqaUM2rro2IFB8nc3OrCFcWQXecIyXYFtG62Ut4KZ4yiZ
- 62aQ==
+ bh=pwgfOhp/2ij9lnaA+c2M8qIuZDMTiHP92piX+EKP6bc=;
+ b=dPtEJXumVoHUBNeMdH8be9zjQYMN6mRvU24A5pIPvOURCa4OdP9l5/joVUKHR5wxrD
+ dMNXnvEIeqMSAoZ1H2xlJYHvDPlNb8EIiUHkBa5uOreTlk95d0E+NilVpKCryJkLb+Il
+ t9w8hlU+se5nlQacaV1yrDVCW/TNwaXtbrLNIJS/X3lRUgFeM0lt4+Lp+hoqgE1HXFyz
+ ejVA0ZDMI/Je5ruIEJUi/Zw2Kb7JHwLMwFGzlchDPujYbM90maIMpftELWaBbXuS+JVH
+ CzQGLpA6hNxYh2GYDNMxGBguCSR9eSmkQnFVIwtiXzYyanhwu0iSFfhNjIAEx98vV5MM
+ Wz3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761040751; x=1761645551;
+ d=1e100.net; s=20230601; t=1761040890; x=1761645690;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d5uaF7+pUnU3aSevWsBmpC+HpDp4hJZMzzoI7TT8nSY=;
- b=Zxk0Cyx1AFcVa9usjlHOXVFN85Yk8FHfrCq8XZiTDNlAXHE2Fbgfye+I3q0VuWks3C
- PmTnbPPzwFXxC4s6AALM9KSv0G4Ze70dXx7EkF1aDU85wkeiyEk/gOm76wY5s7mqZZuo
- rsRW+tl91971wCjzlVGx1C7gDkqZZ8XNOLtmdeCWEOeY5kSF6U1Y6lpQ8bwbJFRwEDS8
- Xz9n5iyPnX6+dSZYyk9NGW06iMmnkS7pWJ4hZ55pfyOftj+nRWkzn4Bat/Emh38182Gu
- jx+JqRC2KsSmLSUVpuOstfA6h39hmSCSbtJdcmpln6tDEVyRD9rT1Rdsa6ySkF+xFKi+
- Qo+Q==
+ bh=pwgfOhp/2ij9lnaA+c2M8qIuZDMTiHP92piX+EKP6bc=;
+ b=Na1GW9gtGYxQdKxYKDpzMnn7Q+zFjFjyj40uaFbCn9Jg5LEUbBrSsgI2jXSNBObyu1
+ ZMVdrUtZugi1WceWBLrwRUfKLZYG0LGQxLXLXyJzloBwH6OSWQDOejdCZHTM/WNJEofP
+ ccRGLtI4YeZHWjpKA7LMh/nbpnVcS2gC69J8EYoMSE8k98RINdcT8h1IBcdLXvUU9/1I
+ 2A6/Zcdp5XuEfjAkriGpllUA8fCaKswuady4jHT7jlViTkfKefvYk7Kdrq4BwIbTpSF2
+ pDiwj8ROShffYdJ+K/t5Jh9pyeWFEsxnrFSfyQsUN1JIoC/sPlFQ7wz2+7JoO0nHwBst
+ L3Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUW2HWwI4qmLi+tGr+TXtcfWE+CJRyKqo0+PfY4rOGEbZQFfyO7dyr2GUlS6cj+S4xQmLGzT6YvIjD9@nongnu.org
-X-Gm-Message-State: AOJu0Yy2PNSiCEmISsE6c8dyxNzHq0LpRiM7LeRENLi9GRHnApViBLwn
- EnnkIDHo7ECyxG5s+rRTWcoQ1hRiR1shGCKzNXm7ovx9ON9+9B5j/JaQScBfxz4xd1M=
-X-Gm-Gg: ASbGncvIoRiymLUYDQG0DBsUpS2NfcJOCVH3oObCzWcxqycENCzJzVGb0iv8gcR161k
- CYx+aEPy7W9gmXgGuuPC5R6OFc9+eYZ4oDTrk03lFZFgFTI2yAWI6DuNRjqkegowpT4+FGWC41W
- +wamEtWt1mbVK348/VxBm7Vk/LU6SZWjH3AXpIoYfHHSo0Q/UoLWTj5P664OPud9yMRsaNOBHzw
- DOgGr5QR3ONaJYb6K+yIMocB5Eul0/hPyLm0496gQjUCGQwJY9BbiGh5FfKYDo6CWVRKYSsGnUQ
- KL4/xjBePyfuHjYpBpAdPnRmNvCCnX8sFlWF94NolCM3LNrZjYxqHJ6D7oH5yPj5F/PByhaLVFX
- hz4KwnBVWoG9frKq1iksxFtJTRc4xB5JDhJU4GJV7XRcLDDyRmIBoH5FvlsRZ+HTG75iTvjLryZ
- rc5tdPgQnyEZMgpFJpvs1Wcbk9xthHJLEjYm6YTMKtRXAz0d3sDeqAng==
-X-Google-Smtp-Source: AGHT+IGJy8UDTUjDUl/JEKOt1ASrmp/wL63Ng0lsxfHT7V+SP9tJjsNsUgT6kLl/GAt25nFwm2j0IA==
-X-Received: by 2002:a05:6000:2f83:b0:427:4b0:b3e5 with SMTP id
- ffacd0b85a97d-42704d99d9cmr12136964f8f.47.1761040751179; 
- Tue, 21 Oct 2025 02:59:11 -0700 (PDT)
+ AJvYcCVTYH7xRRRP5H8deojUKPxh8tmqca7x2PUg74wMCifNyFcX6Wep360ov4iDaJabL7ZjpV73O4msMEdQ@nongnu.org
+X-Gm-Message-State: AOJu0YwWH65ROcJD7VPnyP0yvqHBLq0U3ci/xLRpjIV6CWER7ucwiWJw
+ 8u3EZ5yR6wAXp6y5YYUHEh0KfJHZMWnakewjNHfdMY0IQ9gcllPOyW+pPcIScx6KCn8=
+X-Gm-Gg: ASbGncvVnYYY5FAWHJAMYhHWgOwCeThGSii8Y6jEIUB024COG+A7Bd543mc1R3cbvQb
+ OTlPnowZeQA7hCnhjCGgk8zb9gmAs5KCA5RgECHyBhdFB1agTsDVOwdReofyx+uWrJ2dCWPljgw
+ 4PWbY5KPn2lwKrI1hWeYHvpl+qrZhoIfoLHzKlrzIlCDgkaFtL36hvPTsfOGawjGlUEGDUiIM5M
+ 7n42tB3etPzpdpLfNMGyM15KEtsDiSD/+yGys14h3KBOhBOzkQjzAnC4icPaap5/ZX+tb+ZAw18
+ mXrXMyLg2nBDIo5dogRB2bevJ/AfKFiTogieum3Cvx3Eaa/mgZPtqwZ3+8ZRfJVI45+be/SgQ7P
+ 5IVTAStHt7TJPT8W3yjXbwZ6+7escaS7f5NhIzonDNe7qBV4anjVLNYplhp7P2dLW5d4+F7fA+V
+ o4Dj0YLW/p77qkqbkxjg7xw3X8iGK48Diz0E1G9JJA/R3Yk6r3HvTrvA==
+X-Google-Smtp-Source: AGHT+IERV0oHns6B5iA6/gFiljyOCPcITw+hfzi338TeUN72rBdTfFHuGwofVfnfrX+607kiwGiRgg==
+X-Received: by 2002:a05:600d:630a:b0:471:1b25:fa00 with SMTP id
+ 5b1f17b1804b1-4711b25fd7cmr75003045e9.36.1761040889838; 
+ Tue, 21 Oct 2025 03:01:29 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce08asm19395822f8f.44.2025.10.21.02.59.10
+ 5b1f17b1804b1-471144c831asm265022405e9.13.2025.10.21.03.01.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 02:59:10 -0700 (PDT)
-Message-ID: <05aa8f94-06f2-465d-939b-5db6eb607e0d@linaro.org>
-Date: Tue, 21 Oct 2025 11:59:09 +0200
+ Tue, 21 Oct 2025 03:01:29 -0700 (PDT)
+Message-ID: <aa7cde28-29f7-4134-a494-0db6a1cfb745@linaro.org>
+Date: Tue, 21 Oct 2025 12:01:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/43] audio: register backends in /audiodevs container
+Subject: Re: [PATCH 31/43] hw/audio: replace AUD_log() usage
 Content-Language: en-US
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+ Gerd Hoffmann <kraxel@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-18-marcandre.lureau@redhat.com>
+ <20251021090317.425409-32-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251021090317.425409-18-marcandre.lureau@redhat.com>
+In-Reply-To: <20251021090317.425409-32-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,30 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/25 11:02, marcandre.lureau@redhat.com wrote:
+On 21/10/25 11:03, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> QOM tree now has /audiodevs objects.
+> AUD_log() is just printf(stderr, "prefix: "..), we can use
+> error_report() or warn_report() appropriately instead.
+> 
+> Ideally it should be converted to traces, but there are many places to
+> convert, this is left for another day.
+> 
+> Avoid bit-rot by using conditionals.
+> 
+> The patch could be splitted if necessary.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   audio/audio.c | 8 ++++++++
->   qom/object.c  | 1 +
->   2 files changed, 9 insertions(+)
-> 
-> diff --git a/audio/audio.c b/audio/audio.c
-> index 754952ce58..4714ed0b9f 100644
-> --- a/audio/audio.c
-> +++ b/audio/audio.c
-> @@ -1726,6 +1726,11 @@ void audio_create_default_audiodevs(void)
->       }
->   }
->   
-> +static Object *get_audiodevs_root(void)
-> +{
-> +    return object_get_container("audiodevs");
-> +}
+>   hw/audio/ac97.c    | 120 ++++++++++++++++++++++-----------------------
+>   hw/audio/adlib.c   |  20 +++-----
+>   hw/audio/cs4231a.c |  40 +++++++--------
+>   hw/audio/es1370.c  |  24 ++++-----
+>   hw/audio/gus.c     |  21 ++++----
+>   hw/audio/pcspk.c   |   2 +-
+>   hw/audio/sb16.c    |  93 +++++++++++++++++------------------
+>   7 files changed, 151 insertions(+), 169 deletions(-)
 
-Move before audio_cleanup() to avoid next patch churn.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
