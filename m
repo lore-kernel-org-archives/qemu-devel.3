@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 823EACCD1AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF3BCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBJGD-0004jJ-PK; Tue, 21 Oct 2025 16:47:13 -0400
+	id 1vBJGC-0004i0-5m; Tue, 21 Oct 2025 16:47:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGC-0004iw-Eb
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:12 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJG8-0004fT-Jq
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:09 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJGA-00012I-82
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:12 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-4285169c005so487084f8f.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJG5-00011n-OB
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:47:08 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-4270a3464bcso3237524f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761079628; x=1761684428; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=h2Si+mJWkJrlCMUzyJdIDCI/yIQ7Fr+yrGGAP8w/vlU=;
- b=S2WVc5W2sivWyabA0PPVSesJX2jIsU+sMrkMOGecjPo3vN7aS8PunCUOis3jHKeemw
- kK2V8mMpVfmCo1nAjgzepzUtsB54QKrt06VB/3AWgGNVLlxEhbTqEMYHFMmy4kIbKIQU
- PSCHlps7gHlkqdCffnsCEQSa/ghbxqA6/b5toqC5uDE8kNL1VNyo1SjKaEqk5jfzIscM
- PKJWQldc0RwUy8yK1IS++pXy9lEzsCC6ZKgh6Ms+R1QKPHD+jduEJXH2/PbXWKj+X/iT
- Df+OMYcRpoGYGSY3ZdKaXo/2OJsImFUBIDuhiOF6UMLVVhW0NuMPDTkoes9z8t7beXaA
- W+1g==
+ d=linaro.org; s=google; t=1761079622; x=1761684422; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SmgyS4eCFxBNR+aoRbMLUjN0W+K6Q4Qi4xNfHKtGesM=;
+ b=Kprt2SUZAFL/8oMNSYpow8D6aVb8Cuvkb6+mM7UeY2Hg2Mw65pQhVS0MFXK0Sv698T
+ EybGUzymPiUnjLgHOOH+T11RQySDKiaGcJbmiUh1cCym6KVvYBsD5DNuznlOFX7EP9+P
+ lCkRKs4XzisYl9hT4Vo65X5+WfxbAkLevElaJYP5NAeVN4uC/DylwyJX9v8IfztyS/zh
+ WfcpisYj0jW8l1qAotheG8ALATqEkhrML3aV5AFDctOQOVRCmDiqDBJYlh1HYlnNoSqt
+ 6jWclSY25KuBFzaFAPbz3lIfCTR2FqeimMl584/I6vdHSBRFxZhZrGzcmYCYs1xx/smx
+ /idA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761079628; x=1761684428;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=h2Si+mJWkJrlCMUzyJdIDCI/yIQ7Fr+yrGGAP8w/vlU=;
- b=lshr01E0hiwi05AmwDYjIj8WIsRIYSz15JSbNByQJ2uK9RWKBRD6RndYGuaV1de75U
- fWJ8wM/Izz8ORxbqs/ToZ99m34dPPSsuhqgV5/+CLY/bU3kqGrJ5P1C6Tk0AOG3KWfja
- FmY5aU4vS3elQxdJRFFqyVA2lC/+cLaGwIKK4Ity/ZvcMEpbcv9+VG+lTbKAshGMuq7o
- oN012HUatr9PK8xanQAcrN5AD/VLBjg48//HsJ5Pj09asygcP6LFDh9cyY61bNnT5ECa
- Bg8ELvqxseVNXtMWHSTZzrTZRcWS0rdmK5sL416RsfB337jIoHdaNs7ykUrC7/ZyjHDk
- AFDg==
-X-Gm-Message-State: AOJu0YwoV4asxl6L5qt/MCAEj4cY6VohkfU3+wCK/DrVhgURqhv3JT9t
- AN5ag8TW9miMKlfzxg97gQee8agUCObQPN1ENyH2mWMQ4EJPEWfoK+uxqLIv7J7ZTzL42qFpSbi
- nO1fJqRA=
-X-Gm-Gg: ASbGncsj99SElRZrh5bKAVJTmrzO4rOllWqlalWfKVAEA2LTD58g/AOsUrpkdY93+VC
- E4Jh0N4yVMcBVhZZTGg/gaZYtqBFD7alWoL83F1/MW5vvFfZmKs8bpYRG/+26Afwfy144BNa0rT
- qWU/twM+nvPLZ5m2B7QrLEsLM1ZiNnNjtjLsJvLr9VswIMJbe5/k7fzeM+XhkAP6SYO+FfvId8B
- iV1Ma11fYayog9pajgi98phznp5gWPN+YhS51YAAlxUfkomT9bAbSnkuuu6fO+vQlCMifeSebYG
- hT/WBLCcSXeIFu/vLGY/DMn1GqlWfnju4zD5mxsxWeymbKSHn1AvZRpzRKqpl6+a9R8Qrf2D8AY
- cTtf7yAx3ZSM59X7oZHPQX4fApRZ+P8+oxU66rAbVi19jcp8P06c9xSR0BqFFpoR7lVwdk++FVN
- 4pd5seW4Qf4cpyL9gkxHyYYooz4PWySu323SWWSkrfcZx9gJPWqg==
-X-Google-Smtp-Source: AGHT+IFns7fQqBu0rwakO++TuxNGLsQP+qNtcuIaKEQzTSdtPd35VB3+sfGVbHjUawFHuaE4zMt6oA==
-X-Received: by 2002:a05:6000:22c5:b0:427:492:79e5 with SMTP id
- ffacd0b85a97d-42704d7504emr11058490f8f.21.1761079627784; 
- Tue, 21 Oct 2025 13:47:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761079622; x=1761684422;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SmgyS4eCFxBNR+aoRbMLUjN0W+K6Q4Qi4xNfHKtGesM=;
+ b=Ik3wWg9Rc1tAluCt4Yp+sS+3WAusQxcVEPMt6aCkSKHfOYH5UY6A33tCFKt4MwRrTr
+ NBfgUdP55d0kQc8EiEGp07cvN6PE36Q2XugVrhWnm9e+giIU28DsYm8u1tjfqK9Zrnk8
+ dYHHsS6BtUvFS/HSZ8wanVIxiyCCUxe8jI/MepPDhHVRVArIzA2LNyA8VV2qF3KL97RL
+ QCtmB92TUgBfILJG8iOLK41rdt5KbMNj4ueiK01YPav2eFb0Ibci2y6lZBytx8AoJCSi
+ 9yAHDJTR3eN/xXMC+vMCRhrPhS3FIUJNfCQD4KkLr3jfy61MMoyMdxDTttAAUVxO/1wd
+ BmyA==
+X-Gm-Message-State: AOJu0YwRE/YRipV7uVITizxTbJUrXHjLqu823KiT79T0tPyyh3dHHQ3I
+ TF8kkleR+wWxJu9Frua1qceqyMzOfql4enuTfkwLFA0QCuCzpxP6034TGZc7oCUfrYIwRdHc2RA
+ nxzjq2ag=
+X-Gm-Gg: ASbGncua+uac5FjelsbRuFh4hwO4Yh5w81xOBAA+AcMiPzfoxV4Q211M4W7ofvfs93U
+ gKIu57TpvpJowTB/0LWq6IKzmEzuzmoOHVDczGBynvrrUuLUeY0dtLJvQKMd4t9OPCu6Ms8edSp
+ mjpSa8/0jmSp61q898hTrTrON23PC2jWa5f7YGT/qlOWevW65KxtFIrXBL24an7EJRh/5Vfe6JH
+ pckrNA7o09a387cWluy1AQCv4fLb/P9CjjnkFFJKKEAlWY/gTlBPXSi2QVWtIyQLnOirKbuRdhY
+ 0h79+5+iRIPW0aMI4rtc1jZQxZvWV3PfTzlwZ90mkY6p2mnaoGco0hbl8fgERugAPTbl+QFrst/
+ arwMVyoKKOkxkTpEVp+PrnC4hYgTLD+tDBZtjnBbDIsiS7UnxyuikBHKjgodAzjy/nShcEtaeKB
+ LVyeGVAOMbma50n5vgy2lsNj7Dlq/Vhj6jZoxVw3edDH3nPq7jz0Tiih6Lotrr
+X-Google-Smtp-Source: AGHT+IHx4+eeSRA0ueqK1eroufLMYDsubASensdg4qj5qvdm1+kQFWvSqnskcPlFEmFPgHDx0VY4aQ==
+X-Received: by 2002:a05:6000:2888:b0:427:2e8:fe53 with SMTP id
+ ffacd0b85a97d-42704d7eac3mr10748664f8f.6.1761079621759; 
+ Tue, 21 Oct 2025 13:47:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ba01bsm21596285f8f.41.2025.10.21.13.47.05
+ 5b1f17b1804b1-475c4369b5esm10319515e9.15.2025.10.21.13.47.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 13:47:06 -0700 (PDT)
+ Tue, 21 Oct 2025 13:47:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/45] hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT
- to runtime
-Date: Tue, 21 Oct 2025 22:46:15 +0200
-Message-ID: <20251021204700.56072-2-philmd@linaro.org>
+Subject: [PULL 00/45] Misc HW patches for 2025-10-21
+Date: Tue, 21 Oct 2025 22:46:14 +0200
+Message-ID: <20251021204700.56072-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
-References: <20251021204700.56072-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,70 +96,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use target_arch() to check at runtime which target architecture
-is being run.
+The following changes since commit 3c0b42c68f98fb276fa248012642be8cbf2cab70:
 
-Note, since TARGET_ARM is defined for TARGET_AARCH64, we
-check for both ARM & AARCH64 enum values.
+  Merge tag 'pull-request-2025-10-21' of https://gitlab.com/thuth/qemu into staging (2025-10-21 08:59:35 -0500)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20250502214551.80401-4-philmd@linaro.org>
----
- hw/virtio/virtio-mem.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 15ba6799f22..f16445b9347 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -15,6 +15,7 @@
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "qemu/target-info-qapi.h"
- #include "system/numa.h"
- #include "system/system.h"
- #include "system/ramblock.h"
-@@ -170,13 +171,20 @@ static bool virtio_mem_has_shared_zeropage(RAMBlock *rb)
-  * necessary (as the section size can change). But it's more likely that the
-  * section size will rather get smaller and not bigger over time.
-  */
--#if defined(TARGET_X86_64) || defined(TARGET_I386) || defined(TARGET_S390X)
--#define VIRTIO_MEM_USABLE_EXTENT (2 * (128 * MiB))
--#elif defined(TARGET_ARM)
--#define VIRTIO_MEM_USABLE_EXTENT (2 * (512 * MiB))
--#else
--#error VIRTIO_MEM_USABLE_EXTENT not defined
--#endif
-+static uint64_t virtio_mem_usable_extent_size(void)
-+{
-+    switch (target_arch()) {
-+    case SYS_EMU_TARGET_I386:
-+    case SYS_EMU_TARGET_X86_64:
-+    case SYS_EMU_TARGET_S390X:
-+        return 2 * 128 * MiB;
-+    case SYS_EMU_TARGET_AARCH64:
-+    case SYS_EMU_TARGET_ARM:
-+        return 2 * 512 * MiB;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
- 
- static bool virtio_mem_is_busy(void)
- {
-@@ -699,7 +707,7 @@ static void virtio_mem_resize_usable_region(VirtIOMEM *vmem,
-                                             bool can_shrink)
- {
-     uint64_t newsize = MIN(memory_region_size(&vmem->memdev->mr),
--                           requested_size + VIRTIO_MEM_USABLE_EXTENT);
-+                           requested_size + virtio_mem_usable_extent_size());
- 
-     /* The usable region size always has to be multiples of the block size. */
-     newsize = QEMU_ALIGN_UP(newsize, vmem->block_size);
+  https://github.com/philmd/qemu.git tags/hw-misc-20251021
+
+for you to fetch changes up to 3365d7da6156d7db990490f6cae2dc89950ac920:
+
+  docs: Update mentions of removed '-soundhw' command line option (2025-10-21 22:33:49 +0200)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Replace compile-time checks by runtime ones to build virtio-mem.c once
+- Cleanups in Raven PCI host bridge, audio and PC devices
+- Allow machine dynamic registration of valid CPU types
+- Introduce DEFINE_MACHINE_WITH_INTERFACE[_ARRAY]() macros
+- Set DDR2 minimum write recovery time in EEPROM SPD
+- Have PPCe500 machines abort gracefully when using invalid CPU
+- Prevent buffer overflow in openrisc_sim_init()
+- Pass PCI domain to Xen xc_physdev_map_pirq_msi()
+- Fix register API leaks
+- Simplify Xilinx CANFD model
+- Unconditionally create System I/O on PReP machine
+- Update documentation around '-soundhw' command line option
+
+Various "WARNING: line over 80 characters" ignored.
+
+----------------------------------------------------------------
+
+BALATON Zoltan (6):
+  hw/pci-host/raven: Simplify direct config access address decoding
+  hw/pci-host/raven: Rename direct config access ops
+  hw/pci-host/raven: Use correct parameter in direct access ops
+  hw/boards: Extend DEFINE_MACHINE macro to cover more use cases
+  hw/i2c/smbus_eeprom: Add minimum write recovery time for DDR2
+  hw/ppc/prep: Always create prep-systemio
+
+Bernhard Beschow (10):
+  hw/timer/i8254: Add I/O trace events
+  hw/audio/pcspk: Add I/O trace events
+  hw/rtc/mc146818rtc: Convert CMOS_DPRINTF() into trace events
+  hw/rtc/mc146818rtc: Use ARRAY_SIZE macro
+  hw/rtc/mc146818rtc: Assert correct usage of
+    mc146818rtc_set_cmos_data()
+  hw/ide/ide-internal: Move dma_buf_commit() into ide "namespace"
+  hw/i386/apic: Prefer APICCommonState over DeviceState
+  hw/i386/apic: Ensure own APIC use in apic_msr_{read,write}
+  hw/intc/apic: Pass APICCommonState to apic_register_{read,write}
+  tests/qtest/ds1338-test: Reuse from_bcd()
+
+Jan Kiszka (1):
+  hw/openrisc/openrisc_sim: Avoid buffer overflow build error
+
+Luc Michel (6):
+  hw/core/register: remove the REGISTER device type
+  hw/core/register: add the REGISTER_ARRAY type
+  hw/core/register: remove the calls to `register_finalize_block'
+  hw/core/register: remove the `register_finalize_block' function
+  hw/net/can/xlnx-versal-canfd: refactor the banked registers logic
+  hw/net/can/xlnx-versal-canfd: remove register API usage for banked
+    regs
+
+Marc-André Lureau (8):
+  hw/audio: improve error reports
+  hw/audio: rename model list function
+  hw/audio: remove global pcspk
+  hw/pcspk: use explicitly the required PIT types
+  hw/pcspk: make 'pit' a class property
+  hw/pcspk: check the "pit" is set
+  hw/audio: replace AUD_log() usage
+  docs: update -soundhw -> -device list
+
+Philippe Mathieu-Daudé (10):
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT to runtime
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
+  hw/virtio: Compile virtio-mem.c once
+  hw/core: Filter machine list available for a particular target binary
+  hw/core/machine: Allow dynamic registration of valid CPU types
+  hw/core: Introduce MachineClass::get_default_cpu_type() helper
+  hw/boards: Move DEFINE_MACHINE() definition closer to its doc string
+  hw/boards: Introduce DEFINE_MACHINE_WITH_INTERFACE_ARRAY() macro
+  qemu/target-info: Include missing 'qapi-types-common.h' header
+  docs: Update mentions of removed '-soundhw' command line option
+
+Roger Pau Monné (1):
+  hw/xen: pass PCI domain to xc_physdev_map_pirq_msi()
+
+Thomas Huth (2):
+  hw/ppc/e500: Check for compatible CPU type instead of aborting
+    ungracefully
+  MAINTAINERS: Add missing machine name in the Alpha section
+
+Vishal Chourasia (1):
+  hw/ppc/spapr: Rename resize_hpt_err to errp
+
+ MAINTAINERS                            |   1 +
+ docs/qdev-device-use.txt               |  10 +-
+ hw/ide/ide-internal.h                  |   2 +-
+ include/hw/audio/soundhw.h             |   2 +-
+ include/hw/boards.h                    |  60 +++-
+ include/hw/i386/apic.h                 |  37 ++-
+ include/hw/i386/apic_internal.h        |   7 +-
+ include/hw/misc/xlnx-versal-crl.h      |   1 -
+ include/hw/misc/xlnx-versal-xramc.h    |   1 -
+ include/hw/misc/xlnx-zynqmp-apu-ctrl.h |   1 -
+ include/hw/misc/xlnx-zynqmp-crf.h      |   1 -
+ include/hw/net/xlnx-versal-canfd.h     |   8 -
+ include/hw/nvram/xlnx-bbram.h          |   1 -
+ include/hw/register.h                  |  25 +-
+ include/hw/timer/i8254.h               |   4 +-
+ include/qemu/target-info-impl.h        |   1 +
+ target/i386/cpu.h                      |   5 +-
+ target/i386/kvm/kvm_i386.h             |   2 +-
+ target/i386/whpx/whpx-internal.h       |   4 +-
+ hw/audio/ac97.c                        | 124 +++----
+ hw/audio/adlib.c                       |  24 +-
+ hw/audio/cs4231a.c                     |  44 +--
+ hw/audio/es1370.c                      |  24 +-
+ hw/audio/gus.c                         |  25 +-
+ hw/audio/pcspk.c                       |  29 +-
+ hw/audio/sb16.c                        | 115 ++++---
+ hw/audio/soundhw.c                     |  21 +-
+ hw/core/machine-qmp-cmds.c             |   4 +-
+ hw/core/machine.c                      |  38 +++
+ hw/core/register.c                     |  38 +--
+ hw/i2c/smbus_eeprom.c                  |   1 +
+ hw/i386/kvm/apic.c                     |   3 +-
+ hw/i386/vapic.c                        |   2 +-
+ hw/i386/x86-cpu.c                      |   2 +-
+ hw/ide/ahci.c                          |   8 +-
+ hw/ide/core.c                          |  10 +-
+ hw/intc/apic.c                         | 126 +++----
+ hw/intc/apic_common.c                  |  56 ++--
+ hw/misc/xlnx-versal-crl.c              |  38 +--
+ hw/misc/xlnx-versal-trng.c             |   1 -
+ hw/misc/xlnx-versal-xramc.c            |  12 +-
+ hw/misc/xlnx-zynqmp-apu-ctrl.c         |  12 +-
+ hw/misc/xlnx-zynqmp-crf.c              |  12 +-
+ hw/net/can/xlnx-versal-canfd.c         | 433 +++++++++----------------
+ hw/nvram/xlnx-bbram.c                  |  13 +-
+ hw/nvram/xlnx-versal-efuse-ctrl.c      |   1 -
+ hw/nvram/xlnx-zynqmp-efuse.c           |   8 -
+ hw/openrisc/openrisc_sim.c             |   3 +-
+ hw/pci-host/raven.c                    |  40 +--
+ hw/ppc/e500.c                          |   6 +-
+ hw/ppc/prep.c                          |  17 +-
+ hw/ppc/spapr.c                         |  16 +-
+ hw/rtc/mc146818rtc.c                   |  20 +-
+ hw/timer/i8254.c                       |   6 +
+ hw/timer/i8254_common.c                |   6 +-
+ hw/virtio/virtio-mem.c                 | 100 +++---
+ hw/xen/xen_pt_msi.c                    |   1 +
+ monitor/qemu-config-qmp.c              |   3 +-
+ system/qdev-monitor.c                  |   4 +-
+ system/vl.c                            |   7 +-
+ target/i386/cpu-apic.c                 |  18 +-
+ target/i386/cpu-dump.c                 |   2 +-
+ target/i386/cpu.c                      |   2 +-
+ target/i386/hvf/hvf.c                  |   4 +-
+ target/i386/kvm/kvm.c                  |   2 +-
+ target/i386/tcg/system/misc_helper.c   |   4 +-
+ target/i386/whpx/whpx-apic.c           |   3 +-
+ tests/qtest/ds1338-test.c              |  12 +-
+ hw/audio/trace-events                  |   4 +
+ hw/rtc/trace-events                    |   4 +
+ hw/timer/trace-events                  |   4 +
+ hw/virtio/meson.build                  |   2 +-
+ 72 files changed, 760 insertions(+), 927 deletions(-)
+
 -- 
 2.51.0
 
