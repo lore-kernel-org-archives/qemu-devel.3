@@ -4,93 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCAACCD19F
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 06:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60915CCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 06:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB5uR-0001LE-4S; Tue, 21 Oct 2025 02:31:51 -0400
+	id 1vB60q-0002s2-QA; Tue, 21 Oct 2025 02:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vB5uL-0001Kz-NT
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 02:31:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vB60h-0002qT-KP
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 02:38:21 -0400
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vB5uI-0007yY-Qv
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 02:31:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761028300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mJdetGy7s6Eh0AFewJxRezzgesEUhmlB3Y3ANnfqFAo=;
- b=SDguyHaGAW9bjhU87qtNyirXsmvTiF92XyYgCo2gneIjjJq9aHssvQaz03TSIwIyHoADRc
- xGUVsS72emwnMWDi9rxTFC9uo3M/Bh7gI2etoWwFo5XzZLp+MdWmzA+9yr0g6JXBZRpjeQ
- uCkhjYibYKYUCEqNNeleKzUxMDbp5Wo=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-EG8wDLZxPeCQsOtNgq3hTw-1; Tue, 21 Oct 2025 02:31:38 -0400
-X-MC-Unique: EG8wDLZxPeCQsOtNgq3hTw-1
-X-Mimecast-MFC-AGG-ID: EG8wDLZxPeCQsOtNgq3hTw_1761028297
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e47d14dceso32609575e9.2
- for <qemu-devel@nongnu.org>; Mon, 20 Oct 2025 23:31:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761028297; x=1761633097;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mJdetGy7s6Eh0AFewJxRezzgesEUhmlB3Y3ANnfqFAo=;
- b=pSf9iiL+edHQjLA8k240yQyN8US5e5O2v0xAVq3E3YFLhR9XoWZiIKpDNETbpQaQGc
- M1N+aThaGgLcX7hlrlOInlYbGm6FwPsFt9vWIM6CXEjAyHnzA3MJTU//mgVkSjyZ53R0
- SDxVRwx1SB9wl1YH+21+rcbiU0JL2C5LKBwuMC5JnrqoUJrcdB/0Bdo0bV3xVfuc8pNq
- AHfGHDDOBn2sFGxq6YhpgMmrpKKeRqe7MDwcr6oFxl1/sgQFkDNz/HHDJAlftb1n3CNk
- XNPaev1FzNLcC8dLhyO6PL0Nj3mAhNerjXpiDFgq3hIjRbeiBWnHJfdT2vywT4SGmOco
- RXMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW001llmTDR25Fq/inO6KTd8pMeJC5sWWDe8PFZgVTyyxarqmOEuTWm2EpnmFEFNkdwZNDZ5YHnv7ne@nongnu.org
-X-Gm-Message-State: AOJu0Ywq76tBpq1npqCenWGwGkhYiiyp1y8qXSeSZECuRTT2y1Pmo/du
- Sk2j+6uH/b2XpJ2TyfW2ExmVM2nwYFxv/nnvRV/bTmkcWv/T4xk4iClk8mO4OefK29mu/fm1Q4G
- pf780Jg166PoALKWpBshcV71/fwXaHFZuv8m9LJ1pxu5S8pFB1Zci5Frw
-X-Gm-Gg: ASbGncvuYPgAFKVo065Saa6dTjyGIt14Ge27xGvPtWUAB544GaFxqdB/eBGqOdGZT4M
- XnSq6FjyST/YwxZ1z+h48NGiAUHdoS/9SRSij4ksR1tyvFIj1HcQ5YWB2txtpLeAvfC/vJY0SkF
- w+WP14yIDmVC4Kl/BfVI64fZ+RWRyxSFFDGupgsdDe3SzNuZWPw+OH/TW7ogpKMnn/0RphX3v7N
- TYyGx/I5tjxP2ixEXzA/Rgofws80o01MTR27OM3gSnBe6GX/hF/Fot6NzNDh3IhhzQ6ylACSaM3
- SAC+oI8APn7/q2vDEkgA3FE81zOohuYHVhzct3eFA/jAyKQsJzfww7tUyN37h9rrxk4AfA1xjGk
- K98ex2GPN5vMZY6qsKwdCRiHmMobzwjULOuXCWg==
-X-Received: by 2002:a05:600c:3492:b0:471:1774:3003 with SMTP id
- 5b1f17b1804b1-4711791c88bmr114393315e9.29.1761028297299; 
- Mon, 20 Oct 2025 23:31:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVXDUTvidurILZlOGQfMaqSjOeQ1X+IsWdk1WGAGQttjMvrC8S2YoiOfR4b/NSqr2LLboAXQ==
-X-Received: by 2002:a05:600c:3492:b0:471:1774:3003 with SMTP id
- 5b1f17b1804b1-4711791c88bmr114393105e9.29.1761028296900; 
- Mon, 20 Oct 2025 23:31:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-471144239f4sm265962245e9.2.2025.10.20.23.31.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Oct 2025 23:31:35 -0700 (PDT)
-Message-ID: <8993a80c-6cb5-4c5b-a0ef-db9257c212be@redhat.com>
-Date: Tue, 21 Oct 2025 08:31:34 +0200
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vB60d-0000Wf-EA
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 02:38:19 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.1])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4crN0H5vnHz5wPX;
+ Tue, 21 Oct 2025 06:38:07 +0000 (UTC)
+Received: from kaod.org (37.59.142.114) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 21 Oct
+ 2025 08:38:06 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-114S008bce79b10-607d-4143-8e2e-12425c97bdf8,
+ 2E289DBED20BDC21D191179C8FCAB8BCAFA041EF) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <d51ad87c-8076-4f86-b9ed-388313ae9e2d@kaod.org>
+Date: Tue, 21 Oct 2025 08:38:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/18] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
- pseries-4.2 machines
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- qemu-ppc@nongnu.org, kvm@vger.kernel.org,
- Chinmay Rath <rathc@linux.ibm.com>
-References: <20251020103815.78415-1-philmd@linaro.org>
- <fdb7e249-b801-4f57-943d-71e620df2fb3@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: aspeed: Split the machine definition into individual source files
+To: Jamin Lin <jamin_lin@aspeedtech.com>, "'qemu-arm@nongnu.org'"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: 'Andrew Jeffery' <andrew@codeconstruct.com.au>, Joel Stanley
+ <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, Patrick
+ Williams <patrick@stwcx.xyz>
+References: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
+ <KL1PR0601MB41966988C6264D25E6782045FCE9A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
+ <965c2eb3-639e-4792-bd8d-f47682099601@kaod.org>
+ <KL1PR0601MB419628CE287BDF2715845C4BFCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
+Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
  yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
@@ -100,52 +57,67 @@ Autocrypt: addr=clg@redhat.com; keydata=
  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
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <fdb7e249-b801-4f57-943d-71e620df2fb3@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <KL1PR0601MB419628CE287BDF2715845C4BFCF2A@KL1PR0601MB4196.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.114]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 44204d84-942c-49e8-9bbd-16b10294d7e8
+X-Ovh-Tracer-Id: 3048655475195808559
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGwSkciloGouJnZzxwIP12v0kmLDrSJ4BLaNUBKSzv7bGqDDjCBofrlVjuvrwmJqVBY7qFdzFF9gPna/8CNEysi2xc7Ll7r/IkUvzHYM9a7R3QqyhgQQASaOCcebN3pXd5AmzSOVueVe9Z+r5/qkthbkB2/+tYLFhsLS0P2YmIGRY/YQlELcc99BUU01CjZ4gyzR94Da6nHrxQaMFKZDAWphPPuDMYNBricjP1m1gCJoGDYPtEdI+1OsYYeCqVN7xSzTGM2A7AyRYoUzHouMGx52ZKu3j6JsgBKYVC1WRJDyeOOdzBt60liSMMCt+n7D72hJwqIxu55tjgHosKmCt/aM4z8opHEIC1UTXQD1xXTdqoC9cA0ES7IqVjAy3c+CNtFkW0sfXFsk1ol9x0AnJMdUs2T70FlIXMkOmwc2Nb7/AGulXnVHXGHfH4vhquZEnvQB0mUrhK8AKhD9xgoWxWs49svBDiELy88NG1l7pCm4G8/p9E68SwWsEbSEroLeGp8cgmrTiUgKeWuu5u1V8PJUxR07eBL+bPX30kWNDI7Ll0ZY2NzyAwY9m3EWREmDfdeWF6DQikbVorhzZIIbVWJ/AUHROQe0hq0jGGuD6Co2Y0npAedd47XPwRjHdzaqSFkSOtbRIbIg/KoAUAPMi0LJAHfJStW6Ms4BujxSb4Khw
+DKIM-Signature: a=rsa-sha256; bh=wWTwHAHFSt01lzXeU9PXDm6bQs3oetps6Qz1SmSH97M=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1761028689; v=1;
+ b=GNEdz9SH718vsB2JjuuYlm4PDZCkDaGOf0/RQLb5g4IpNHiVyQb0qWUzUSw/zi7UAQWzkHiv
+ tw7SULrAC+lMIwO7UL+bKt6lQEAXMQCbTQGid6lltYBMpPQ8qkugqmQcf93556qD52L2FQZxoPB
+ 3HF/T//g5hF1XrIzxcArej5Jr+zT06dc5ZwN0q6X6yU2yaT7MDur08BL4lDcJTdKfWyqU0mUIQh
+ GGj93wegUWM21cvhIED+ecxEAEQ4oN2UdYOW9s3OgZJO7m+9VYFWJEgDlR3/lDNbW02vQ5gJW2r
+ rhMO+SEd7geztzIkgkwwW+gVMeDHVGo3QOCwlatfMF8wQ==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,75 +133,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi,
 
-On 10/21/25 06:54, Harsh Prateek Bora wrote:
-> +Cedric
-> 
-> Hi Phillipe,
-> 
-> It had been done and the patches were reviewed already here (you were in CC too):
-> 
-> https://lore.kernel.org/qemu-devel/20251009184057.19973-1-harshpb@linux.ibm.com/
 
-I would take the already reviewed patches, as that work is done. This series
-is fine, but it is extra effort for removing dead code, which isn't worth
-the time.
+> Patch series 1
+> hw/arm/aspeed_ast1030_evb.c (ast1030-evb) ---> or hw/arm/aspeed_ast10x0_evb.c, then we can place (ast1030-evb and ast1060-evb)
+> hw/arm/aspeed_ast27x0_evb.c (ast2700a0-evb, ast2700a1-evb)
+> 
+> Patch series 2
+> hw/arm/aspeed_ast2400_palmetto.c (palmetto-bmc)
+> hw/arm/aspeed_ast2400_quanta-q71l.c (quanta-q71l-bmc)
+> hw/arm/aspeed_ast2400_supermicrox11.c (supermicrox11-bmc)
+> 
+> Patch series 3
+> hw/arm/aspeed_ast2500_evb.c (ast2500-evb)
+> hw/arm/aspeed_ast2500_romulus.c (romulus-bmc)
+> hw/arm/aspeed_ast2500_sonorapass.c (sonorapass-bmc)
+> hw/arm/aspeed_ast2500_witherspoon.c (witherspoon-bmc)
+> hw/arm/aspeed_ast2500_yosemitev2.c (yosemitev2-bmc)
+> hw/arm/aspeed_ast2500_supermicro-x11spi.c (supermicro-x11spi-bmc)
+> hw/arm/aspeed_ast2500_fp5280g2.c (fp5280g2-bmc)
+> hw/arm/aspeed_ast2500_g220a.c (g220a-bmc)
+> hw/arm/aspeed_ast2500_tiogapass.c (tiogapass-bmc)
+> 
+> Patch series 4
+> hw/arm/aspeed_ast2600_evb.c (ast2600-evb)
+> hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c (qcom-dc-scm-v1-b mc)
+> hw/arm/aspeed_ast2600_qcom-firework-bmc.c (qcom-firework-bmc)
+> hw/arm/aspeed_ast2600_rainier.c (rainier-bmc)
+> hw/arm/aspeed_ast2600_fuji.c (fuji-bmc)
+> hw/arm/aspeed_ast2600_bletchley.c (bletchley-bmc)
+> hw/arm/aspeed_ast2600_ fby35.c (fby35-bmc)
+> 
+> For the FBY35 platform, since it includes both AST1030 and AST2600, we may consider renaming the file to:
+> hw/arm/aspeed_ast1030_ast2600_fby35.c  (hw/arm/fby35.c)
 
+Since ast2600 is the main SoC of the fby35, "hw/arm/aspeed_ast2600_fby35.c"
+should be a more relevant name.
+
+The rest looks good to me.
 
 Thanks,
 
 C.
-
-
-
-
-> 
-> Let us try to avoid duplication of implementation/review efforts.
-> If the motivation to re-do is just to split, I think let us consider the original series to avoid duplication of review efforts. I should probably send more frequent PRs to avoid such scenarios in future.
-> 
-> Thanks for your contribution in reviewing other patches though. It's highly appreciated.
-> 
-> regards,
-> Harsh
-> 
-> On 10/20/25 16:07, Philippe Mathieu-Daudé wrote:
->> Remove the deprecated pseries-3.0 up to pseries-4.2 machines,
->> which are older than 6 years. Remove resulting dead code.
->>
->> Philippe Mathieu-Daudé (18):
->>    hw/ppc/spapr: Remove deprecated pseries-3.0 machine
->>    hw/ppc/spapr: Remove SpaprMachineClass::spapr_irq_xics_legacy field
->>    hw/ppc/spapr: Remove SpaprMachineClass::legacy_irq_allocation field
->>    hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
->>    hw/ppc/spapr: Remove deprecated pseries-3.1 machine
->>    hw/ppc/spapr: Remove SpaprMachineClass::broken_host_serial_model field
->>    target/ppc/kvm: Remove kvmppc_get_host_serial() as unused
->>    target/ppc/kvm: Remove kvmppc_get_host_model() as unused
->>    hw/ppc/spapr: Remove SpaprMachineClass::dr_phb_enabled field
->>    hw/ppc/spapr: Remove SpaprMachineClass::update_dt_enabled field
->>    hw/ppc/spapr: Remove deprecated pseries-4.0 machine
->>    hw/ppc/spapr: Remove SpaprMachineClass::pre_4_1_migration field
->>    hw/ppc/spapr: Remove SpaprMachineClass::phb_placement callback
->>    hw/ppc/spapr: Remove deprecated pseries-4.1 machine
->>    hw/ppc/spapr: Remove SpaprMachineClass::smp_threads_vsmt field
->>    hw/ppc/spapr: Remove SpaprMachineClass::linux_pci_probe field
->>    hw/ppc/spapr: Remove deprecated pseries-4.2 machine
->>    hw/ppc/spapr: Remove SpaprMachineClass::rma_limit field
->>
->>   include/hw/ppc/spapr.h     |  16 --
->>   include/hw/ppc/spapr_irq.h |   1 -
->>   target/ppc/kvm_ppc.h       |  12 --
->>   hw/ppc/spapr.c             | 298 ++++++++-----------------------------
->>   hw/ppc/spapr_caps.c        |   6 -
->>   hw/ppc/spapr_events.c      |  20 +--
->>   hw/ppc/spapr_hcall.c       |   5 -
->>   hw/ppc/spapr_irq.c         |  36 +----
->>   hw/ppc/spapr_pci.c         |  32 +---
->>   hw/ppc/spapr_vio.c         |   9 --
->>   target/ppc/kvm.c           |  11 --
->>   11 files changed, 75 insertions(+), 371 deletions(-)
->>
-> 
 
 
