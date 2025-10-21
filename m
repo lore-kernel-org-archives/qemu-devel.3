@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA91CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 16:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB64CCD1AF
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 16:14:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEzl-0004Lj-Vb; Tue, 21 Oct 2025 12:13:58 -0400
+	id 1vBEzs-0004Of-6k; Tue, 21 Oct 2025 12:14:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vBEzk-0004KJ-AH
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:13:56 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1vBEzq-0004Nc-Nq
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:14:02 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vBEzi-0001cT-8A
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:13:56 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7930132f59aso7741338b3a.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 09:13:53 -0700 (PDT)
+ id 1vBEzn-0001dS-H6
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 12:14:02 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-782a77b5ec7so5370626b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 09:13:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1761063232; x=1761668032; darn=nongnu.org;
+ d=sifive.com; s=google; t=1761063238; x=1761668038; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KBqwCM6wM6yghlxF77/Wnstb6LPR3AQsGDjym+XGAI8=;
- b=SnTBS1ji8aNOO09GrgeqvewVZOaK8gKKUWxXq81xfOK6zg/K3CaxAFjUtQuO7Y1xBd
- UJtnCZazcoPkjMjkcNEt9erm0rAg0SD4InIdif6UqvnP2I2hLOer2SxnaI1uhM0gM1z6
- mib0BrNQBxNYGwudTMMaGEfWIbbFGxnXg7+NTRRuL93MkTU5vl3xMgo4mw7qAeqFjiTn
- /LSLNp8fg195pr6wH3XVPbgwuCLePWq7Jj1s+1xBnWihE2d8hRvKRj+OqJwRDvcG6byS
- gQDPvcHquJsBX/TPnSnk1J21RUGMYHeDhnsS1TvTT0+LgQvUSodu9O3XEy7ElJx4URc6
- Pc2A==
+ bh=2TCE8SvaITfs8coL27qj39ul3rERe6+OoO3JJ8MTgYA=;
+ b=Mf0SpKW+NgKLKFwOUrqxSp81iM7H0HyZ7DJILfjfZJtr6Sy/Ux/EXFy7pXKhPgHYuZ
+ U1B1NiSmXAOR+o1hIUFT3E9a7A1YKgG9JrvHLVixp9usYB7AaKEtg8JAUqkNZy8zI+Cw
+ r0W8ksnB0FDOviDTZD6cnQ1JpfcUT8hPxoxYFddvrBsQhw47m8dvmSgfbK5M83eflVpT
+ N04IkrZdXkYE5lqIiSiXuqf6Vz+QZPnzJ/RFt5pSAKAp/qQTqWrUNQ4jQRXhehqTHfvh
+ Ll1ooyxHTb++jZb2XReNaGHRnf2serfvP0nu1DlC+BtuQy1HW3pg9ICWFVvmNRdN/BiN
+ h9TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761063232; x=1761668032;
+ d=1e100.net; s=20230601; t=1761063238; x=1761668038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KBqwCM6wM6yghlxF77/Wnstb6LPR3AQsGDjym+XGAI8=;
- b=mKLudReeIZBaxWshAT5wcideSOyn5tg66ywRLrZ+nRMt+y4jDUFHKUTsVevpnXXMYt
- Oj32fBm1zIqRxP/Nv3VzD1WErcVEs29SGFEGhr6OcrgUyJMqpxgmxo6y/nACBw/apN6l
- QpcY7fKW1RDB4nDURqt8OMyU/GUWmxDQiJi8m8owbPWQQUezRYEALKDlVFky7myD746V
- hXD838m6i+HYb3CvIBL9CdclUATKJyd2V5si7M+SC1AXBztJQdGoJ2mk7o7+NHgVOySA
- CHzCw775X45cGvrcspy36SqkJv3CfAlXXwRZ0j7okS+Hr4DHRnAEM8FJz020uVQjjFsB
- c8QQ==
-X-Gm-Message-State: AOJu0YyPRkoCWk/7kJ60RcjZL0P/rvZpTa7pLkPoFctAyqiQl70Qb65J
- +kXsv0rM2y02bPx4m4ceLbD0eijlgOrq1QXZj3ePkxRQhcbtAFcX/F8FhtNrYzkWoPfey1IwpNR
- 5j3duqKM4XidOuBKnnCVuRIcuYn0F1KoWuifXyfykWEAvMxr87hM14WW1Yib5j4r8MDs2RzsVH+
- I8Xy1N6u6FafVK9kKxj3ckiK03KYjMQ+OEHYaJzg==
-X-Gm-Gg: ASbGncvwe8gxnbsdDB3O3qOSf6prNAohrrs3rfVt1hicYqeVn8FW3G90qzMJ51tOYL1
- 3EVmwP+bAcizU2dAVBXsFxv9d8XLS0IkzKHGg/Gnw8O9Tp7agXkS0vdY22W7WsQakkt0f8uIUq/
- 7mylrxrOw+7UMV+J0DEBqQydabigYkQsZIuKeizpUSbq8nFkjLaG6V2qnLWnZTRC9H+/Xxje6zh
- eLRFfUiWc7wGcqny6LL9zBfL77ck6kXy1szRIbICoQq5j5BOcmj1Rnch8xv3HICvpA/jzzfxzlY
- QV7buIs3hE75af81KBB9Rzxiyn/eOukbOShJbQ6h7252EQvbZpCsyqwSITbMgxgH3YufpEqqVFw
- z1AbkbKCjyHsO403/hn58ZxQ8vpZ4fDC0ZX/qGt01ECQ0Mw3p2PczzTSzO2v0vD+nHXwmV9jGdz
- AqiDue64jj7ZnNjS2j+ha1Jg==
-X-Google-Smtp-Source: AGHT+IFQhd6ho7BqlWu0WB0x8T6aRoHrh9WS3PUXQqbREbT20oiydj94YL7jqKF36KXQ2ehaCmreTw==
-X-Received: by 2002:a05:6a00:1894:b0:781:1dc6:4e69 with SMTP id
- d2e1a72fcca58-7a220aabb68mr22685131b3a.14.1761063231605; 
- Tue, 21 Oct 2025 09:13:51 -0700 (PDT)
+ bh=2TCE8SvaITfs8coL27qj39ul3rERe6+OoO3JJ8MTgYA=;
+ b=Cai0VAKMvToH71PyYUcxof3ViF/gKWJ7St+bL5pntUG0p9c4blV7c6kBzuo4cEbYJW
+ Ocz3XS5Gj6KCOQhs+H63a4yc+naVaSKGSHbJeL4RBNTF0FYT6PLaw01R1hBR0iKZFFex
+ j6Lcr7yjIk+IiCAl7uoa7z51LsZAaBxme+titFp+SM4mlS9z60uU0b9XYE69XTaFhbLI
+ Qq7/tzTccvSlWMXAK6S8oP9VaGD+OEAxoZ0ZuA+91jN3X34jjRzdH0LL66L6LTWSfaaI
+ zs62HYgM/xhwSwyJGs2my/alEArhAIqaZGX/tMRhX22J5zSs1s5z7go+cien8iAYv6rc
+ nLfg==
+X-Gm-Message-State: AOJu0YzMOM8HBrtEImlswt6AhfzHN7fBHiVBOiX7w1pkr8gRDeBTcm4c
+ IbxM+w8/r08ARzJa0hCMU1JYXE8lnMRz937lenOM5nW/7klzBtns1KuPTGMEzwrfKtTxgkQjgUy
+ 76s2sm7Wu1sa/prLLoBli5y+bAKSZwMZ9T4ZbKtjl2tzlkxHn83IEmP2knx9uuNf/JWwyh2gooI
+ i5Cgi6HDfA26yZthY/Oq6HwY+t12WYppDyC7X1Gw==
+X-Gm-Gg: ASbGncsh49T9UF/mO9/glsKGVJIQxRVzUtKi8lN11SfkkAqySxetiJj405MJWhhhUEn
+ YbhUE9L8ATiamBTz+/Q//OAQlGKB44RWkrdrVvtH7zhmFXS0gzTuakooz/yAQTEC+upC+KLy1iU
+ f6gK2usN4dMae06VVEczSH/S1rD+8jFUqyDLTBDbV4Mih5gUN3qhLPX1e2L6bmAPCLGH73ZiCim
+ /mu3yucUv6i6J3Zpha+xu6EOt+6dmaTGxMNlWlCbBx/iqTNo6QLh15k1ER/t2kW6x2S8/5YPhKR
+ 5Wb0PzxAhg4ikav9iCp+WBi3clRoung0wJf7H6Vb/DWy8nR1EXaxQW46IINfSx6aSNGxOjWGfT5
+ l7g/vcNHHzcM7YBYfZqKqmA+vj9d4NNywppabLteAd+JvrZnJ5G1l8lkypLPsPp8gx6QVlBPi3j
+ f+FjtaVjuFmwLW91fuvuSl3UauBhxz1YaI
+X-Google-Smtp-Source: AGHT+IEA5R+f82XyVar/ubEBqZZMWM8CYNx9jQMOmBq14yxF9TVlfPiAIb0+PERnaH4eGAVT1rGM+g==
+X-Received: by 2002:a05:6a20:7351:b0:334:912f:acda with SMTP id
+ adf61e73a8af0-334a8525d01mr23518065637.23.1761063237325; 
+ Tue, 21 Oct 2025 09:13:57 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a23010f7c7sm11731157b3a.54.2025.10.21.09.13.46
+ d2e1a72fcca58-7a23010f7c7sm11731157b3a.54.2025.10.21.09.13.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Oct 2025 09:13:51 -0700 (PDT)
+ Tue, 21 Oct 2025 09:13:56 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -96,17 +96,16 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
  qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v3 11/18] target/riscv: Add WID to MemTxAttrs of CPU memory
- transactions
-Date: Wed, 22 Oct 2025 00:13:17 +0800
-Message-ID: <20251021161325.585278-4-jim.shu@sifive.com>
+Subject: [PATCH v3 12/18] target/riscv: Expose CPU options of WorldGuard
+Date: Wed, 22 Oct 2025 00:13:18 +0800
+Message-ID: <20251021161325.585278-5-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251021155548.584543-1-jim.shu@sifive.com>
 References: <20251021155548.584543-1-jim.shu@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,137 +128,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a RISC-V HART has WG extension, their memory transactions will
-contain WID. Support MemTxAttrs in RISC-V target and add WID inside if
-a HART has WG extension.
+Expose WG CPU extensions (Smwg, Sswg, Smwgd) and WG CPU configs
+(mwid, mwidlist).
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- target/riscv/cpu.c        |  2 +-
- target/riscv/cpu.h        |  1 +
- target/riscv/cpu_helper.c | 51 ++++++++++++++++++++++++++++++++++++---
- 3 files changed, 50 insertions(+), 4 deletions(-)
+ target/riscv/cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 22b4070476..32a9f8a6a4 100644
+index 32a9f8a6a4..b8704e7e88 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2678,7 +2678,7 @@ static int64_t riscv_get_arch_id(CPUState *cs)
+@@ -1380,6 +1380,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+     MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
  
- static const struct SysemuCPUOps riscv_sysemu_ops = {
-     .has_work = riscv_cpu_has_work,
--    .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
-+    .get_phys_page_attrs_debug = riscv_cpu_get_phys_page_attrs_debug,
-     .write_elf64_note = riscv_cpu_write_elf64_note,
-     .write_elf32_note = riscv_cpu_write_elf32_note,
-     .legacy_vmsd = &vmstate_riscv_cpu,
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index e99aa11140..e2436fdcd8 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -625,6 +625,7 @@ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
- bool cpu_get_fcfien(CPURISCVState *env);
- bool cpu_get_bcfien(CPURISCVState *env);
- bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt);
-+hwaddr riscv_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr, MemTxAttrs *attrs);
- G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-                                                MMUAccessType access_type,
-                                                int mmu_idx, uintptr_t retaddr);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index d2be660d58..64e5557f0a 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -136,6 +136,34 @@ bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
- }
- 
- #ifndef CONFIG_USER_ONLY
-+static uint32_t riscv_cpu_wg_get_wid(CPURISCVState *env, int mode)
-+{
-+    CPUState *cs = env_cpu(env);
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+    bool virt = env->virt_enabled;
++    /* RISC-V WorldGuard v0.4 */
++    MULTI_EXT_CFG_BOOL("x-smwg", ext_smwg, false),
++    MULTI_EXT_CFG_BOOL("x-smwgd", ext_smwgd, false),
++    MULTI_EXT_CFG_BOOL("x-sswg", ext_sswg, false),
 +
-+    if (mode == PRV_M) {
-+        return cpu->cfg.mwid;
-+    } else if (mode == PRV_S) {
-+        if (!virt || !env->mwiddeleg) {
-+            /* HS-mode, S-mode w/o RVH, or VS-mode but mwiddeleg = 0 */
-+            return env->mlwid;
-+        } else {
-+            /* VS-mode */
-+            return env->slwid;
-+        }
-+    } else if (mode == PRV_U) {
-+        if (!riscv_has_ext(env, RVS) || !env->mwiddeleg) {
-+            /* M/U mode CPU or mwiddeleg = 0 */
-+            return env->mlwid;
-+        } else {
-+            return env->slwid;
-+        }
-+    }
+     { },
+ };
+ 
+@@ -2648,6 +2653,9 @@ static const Property riscv_cpu_properties[] = {
+      * it with -x and default to 'false'.
+      */
+     DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
 +
-+    return cpu->cfg.mwid;
-+}
-+
- void riscv_cpu_set_wg_mwid(CPURISCVState *env, uint32_t mwid)
- {
-     CPUState *cs = env_cpu(env);
-@@ -1675,13 +1703,22 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-     env->two_stage_indirect_lookup = two_stage_indirect;
- }
++    DEFINE_PROP_UINT32("x-mwid", RISCVCPU, cfg.mwid, UINT32_MAX),
++    DEFINE_PROP_UINT32("x-mwidlist", RISCVCPU, cfg.mwidlist, UINT32_MAX),
+ };
  
--hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-+hwaddr riscv_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr, MemTxAttrs *attrs)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-     hwaddr phys_addr;
-     int prot;
-     int mmu_idx = riscv_env_mmu_index(&cpu->env, false);
-+    int mode = mmuidx_priv(mmu_idx);
-+    uint32_t wid;
-+
-+    if (riscv_cpu_cfg(env)->ext_smwg && env->wid_to_mem_attrs) {
-+        wid = riscv_cpu_wg_get_wid(env, mode);
-+        env->wid_to_mem_attrs(attrs, wid);
-+    } else {
-+        *attrs = MEMTXATTRS_UNSPECIFIED;
-+    }
- 
-     if (get_physical_address(env, &phys_addr, &prot, addr, NULL, 0, mmu_idx,
-                              true, env->virt_enabled, true, false)) {
-@@ -1793,12 +1830,20 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     int mode = mmuidx_priv(mmu_idx);
-     /* default TLB page size */
-     hwaddr tlb_size = TARGET_PAGE_SIZE;
-+    uint32_t wid;
-+    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
- 
-     env->guest_phys_fault_addr = 0;
- 
-     qemu_log_mask(CPU_LOG_MMU, "%s ad %" VADDR_PRIx " rw %d mmu_idx %d\n",
-                   __func__, address, access_type, mmu_idx);
- 
-+    if (riscv_cpu_cfg(env)->ext_smwg && env->wid_to_mem_attrs) {
-+        mode = mmuidx_priv(mmu_idx);
-+        wid = riscv_cpu_wg_get_wid(env, mode);
-+        env->wid_to_mem_attrs(&attrs, wid);
-+    }
-+
-     pmu_tlb_fill_incr_ctr(cpu, access_type);
-     if (two_stage_lookup) {
-         /* Two stage lookup */
-@@ -1891,8 +1936,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     }
- 
-     if (ret == TRANSLATE_SUCCESS) {
--        tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
--                     prot, access_type, mmu_idx, tlb_size);
-+        tlb_set_page_with_attrs(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
-+                                attrs, prot, access_type, mmu_idx, tlb_size);
-         return true;
-     } else if (probe) {
-         return false;
+ static const gchar *riscv_gdb_arch_name(CPUState *cs)
 -- 
 2.43.0
 
