@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB96ACCD1A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 17:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F793CCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBGSg-000632-8w; Tue, 21 Oct 2025 13:47:54 -0400
+	id 1vBGl6-0001Pm-4f; Tue, 21 Oct 2025 14:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGSe-00062e-Gq
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:47:52 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vBGl2-0001Pd-Bi
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:52 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGSc-00064U-Aj
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 13:47:52 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-46b303f755aso63159885e9.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 10:47:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vBGky-0008MF-Ti
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:06:51 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b5a631b9c82so3852889a12.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761068868; x=1761673668; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1761070007; x=1761674807; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7ZJ8rn732TfJ48h7DbPKX97XzS5mXFLtabG3ZNCjuP4=;
- b=sXt/YzJ8MBONBfSPjDMLOmadd4baagynr96vb/Dle7rYYzmekHWznI7xsyFT6b+1I2
- WytPrPmEJsXKTLfNeGDge8WDqr8Dy6PYEOxbN4gfbLS7q8gEKbCLxzglbwhU7zTT4Zqi
- t/V8aRsIkubq1QdiHwahYGbXzkqbmjG2GXDpg27gIZCkckuZINewaRSnXxW+knjqzSMo
- aMhBWj9xQl5t0qQdrkEyEA4Y9V4r78sptNo6BAVoPdXApOvA3bqK98pskpv6zbNOWhFL
- 86U+IkG5PLTy3p4ClwyARQAeSIZPS23O+m2c9nZQI9j1B9o5Y6SJABwItE8mSW1o3jfO
- a+xw==
+ bh=dvLZkVfc1JG+QQQ7InzLgwDS5ubXKKyjx0FX5JlIpks=;
+ b=HaybcBTXOUzvhhehtl9H/a8dhmjyUjEgm9wzQSeIqxeV+s4P3pEVzb1jYS2ZRY1xXd
+ xTXnXYaHw8AgpQQnrG34hWdxF9oIOhEX0HAZVTCI732h/o3/nmPDl8hTpolgTBkPyhAf
+ si0wFN+patLL9Tjtc9aJ7uJpN3G4eFTHm3ti/WIU+aQrUSjKtq0h3fSFwCYg+9w2I/40
+ ntFJsfDVuVWZQygVIOkS2DAPTT5CK0yaILooEB3xhNjxn70DTzrZOXr5yZ3ZgnTuqz6R
+ RVJbTvmBeZs7PT3R1HLMhdPfbBAovFDxT2DrPWCLnctafIWsRi2UbBNa++7Jq635hlmP
+ 3sQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761068868; x=1761673668;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761070007; x=1761674807;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7ZJ8rn732TfJ48h7DbPKX97XzS5mXFLtabG3ZNCjuP4=;
- b=XFZQVS+DtU8ZcrGYlA5cHaDh5zsFOjxWkjjFAsWCtPu3vScYkmvu6CPs9ExYKTJ+gC
- jWo3XBL6W2zcblcSGQW7WnTQqEjkQY6B0MY1tc4HgUZdu/RPEe4gEueZIwgyZ5RYv1yF
- SvnK83QIqNtca3P6O8OYB03z1aGP3mOAfDnudqgHjTUtPcpqOiHCLnlAZ6lwcrb746aA
- ohRMRpIsjDBik+hHeMzzzaRDq6nqozAGumU1SBzI/YB5AU1vESiRiQ93YwnrDpT4ShfH
- bulpYXhbKkUaVkwQfTSSr2R627Jitvv6XTn6bex6U6EG7SkcyCO8j0Eh92/7NPr0r4V3
- KMXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvbaUZuHB7AG+etGlFFpbrbamXaHV5cBmoVcpQjC4hiXm0xTnv1uG0vof5W8tDbpeKxj70W+pl5FvZ@nongnu.org
-X-Gm-Message-State: AOJu0YzKfSp7OFf0RuxNNDQ+cywWhwqAsdE8u72QTy1aSlPbenJVKojz
- G9UFW5iRozM+dN+JkC67FYmqzSAk4dtAUKZsbqTs+LZ/qFx2vvpdRhU4qqL1XyPpTzU=
-X-Gm-Gg: ASbGncvWskIYt9Cr70sGrsZtCrZLnK9hjDwjkTHNaS+3DG1JEPWH6C6pDplHKcu2q9w
- 5e0uxRSR42sTPTf2UtiIv1DSGJr6RM9RnHbJgjsauwmQh2FUsNGEeD9zWuZjUSZk+hRBB2M3jHN
- ASQkAvf/aG6AJvFRh/M2zNFK0Ku0fZfXfE6leYrQbK08GIKpuMnlcSVOR/4deE8R7szVkTvwq1V
- 7trdsiS49gDhoVXa05NAWHBDSbgoc5+BMbf5BpX0ldAE2nYzjyQoKZwXD7TxAJfWj257C1XBJAg
- 49RyvS8FQGGzNGoh2M2QFRhcRwuRrq7Xl6OHjU3pTbvIQVMx5ic73z9S/bQaErjSTnSDr0m4HTf
- PG88Ctm5wQSVOkEZ4hKeUBeA6wZiI5Kv7aintw//D+fWgwQ1/KcB4cafMYLp74yLF6y4PaXX/eq
- w8F5niIDlQWC746W3j42q+jkmjYxZ6O69mXQlAwKDFDAS18xt7d9JUUw==
-X-Google-Smtp-Source: AGHT+IGwq6zPPsmpi+85UFxOUfl+mAJusQY8JfAqDTkS3XMlTc9nnZvIYzRNzlsASpYsWf6ZWsmRmw==
-X-Received: by 2002:a05:600c:811b:b0:471:13fa:1b84 with SMTP id
- 5b1f17b1804b1-4711787c803mr130610815e9.12.1761068867983; 
- Tue, 21 Oct 2025 10:47:47 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c438caeesm2912855e9.18.2025.10.21.10.47.47
+ bh=dvLZkVfc1JG+QQQ7InzLgwDS5ubXKKyjx0FX5JlIpks=;
+ b=IFCF4t4P5hw/Gj+vUyYIMeU7v7O2qFOWh3D0HkEl3rppS0lbgJpwuXh/BJwItsAflC
+ HCHyXwi/Dl9aPWgMyDGa/5zPi0dR9DMBsN3A2ftq0bjLaNtxRlmf7/f9Hj4CUbOLrHrq
+ dgGgkzJkdlgma+4hgu5dO5IkvfwCXXxRc0KDlBChkwGMaKKDuodh58Ym2LL2xbclTE42
+ yF7J/as3NJQXhDVPr3M8MioHQeHeeVNBOh2bQ/pPom4JPDxXgZjNLLb10NpvO94I59Mo
+ yKY3V0N1N31uh6ybW5XsqGlrzjQZuoo6hYlisYZQMmvxKEMcaBChVl7wkkKityUyV7Fz
+ /j2A==
+X-Gm-Message-State: AOJu0Yw+s+VJ3KDK+fiGBLNMv8c4tPwoQkODWaHfVlEj4HjHUsurECQq
+ 36LbN0s5fNzfmaYSvtEch5odL1DiFNq93A/QqF2AdBS/eKFHH2xqrBgByjosQaXb/wA=
+X-Gm-Gg: ASbGncsCctdb9rjlNkgv0lKUGBG8BfTOBePyOFlul3oTeO9iEnf711/X8umDM91zFA4
+ BHteYt41hhXHlLB+ko1DeyRAT6bd0s2eOb74Gxih9jDBBUqnBldYF0I5M1fxHIdGiHULgViTYob
+ qztvF6m6WDEaQEiP6b0LeoTm2dFCcFZE0Js3xjA0yR4uCO1P5aX6h/hLZ6NZWZ+61ROKFNandZZ
+ 9fnkEypxNsPmULs6WCoqgjchWj7eaZ4xwFcjntCDGFKZAhiz3vSvP3rngOUFT2gOR6jU2SHzm4g
+ wWkjzWeRSOGAy1JamPrKHrRhsPLagu0UQmTRYXYeJ967+iuB9Ya9USTsZCf+ekbipOE4URrd6ZU
+ /hQyVJTcZmnuL53OVSwpI30EQiguzT2xzV6Z5nDPMz1W0Vhh+o7L2llZGBm42uECU+N00W/jdAK
+ zKivm+dR78BejEDWZDr5lTg+Y=
+X-Google-Smtp-Source: AGHT+IGivorxOnM+ImIyQsqfmSmlKnBw9ePTEgvNl/qkhwal/Y9DnWmQLBbaotst2zgWZXcU66oZjg==
+X-Received: by 2002:a17:902:e881:b0:269:7c21:f3f8 with SMTP id
+ d9443c01a7336-290cb07d394mr256735485ad.39.1761070006431; 
+ Tue, 21 Oct 2025 11:06:46 -0700 (PDT)
+Received: from [192.168.68.110] ([189.38.141.22])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-292471d5c0bsm114829805ad.69.2025.10.21.11.06.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 21 Oct 2025 10:47:47 -0700 (PDT)
-Message-ID: <ea52c490-e99e-4193-bc05-059b02f5745e@linaro.org>
-Date: Tue, 21 Oct 2025 19:47:46 +0200
+ Tue, 21 Oct 2025 11:06:46 -0700 (PDT)
+Message-ID: <46b6cbff-0dfe-4c77-84a0-cadbb238eab7@ventanamicro.com>
+Date: Tue, 21 Oct 2025 15:06:41 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/43] hw/audio: drop audio_model.isa
+Subject: Re: [PULL 04/26] target/riscv: implement MonitorDef HMP API
+To: Peter Maydell <peter.maydell@linaro.org>, alistair23@gmail.com
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20251003032718.1324734-1-alistair.francis@wdc.com>
+ <20251003032718.1324734-5-alistair.francis@wdc.com>
+ <CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
- <20251021090317.425409-16-marcandre.lureau@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251021090317.425409-16-marcandre.lureau@redhat.com>
+In-Reply-To: <CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,24 +105,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/25 11:02, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> That's no longer necessary, the code is bus-agnostic.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   include/hw/audio/model.h  | 2 +-
->   hw/audio/ac97.c           | 2 +-
->   hw/audio/adlib.c          | 2 +-
->   hw/audio/cs4231a.c        | 2 +-
->   hw/audio/es1370.c         | 2 +-
->   hw/audio/gus.c            | 2 +-
->   hw/audio/model.c          | 7 +------
->   hw/audio/sb16.c           | 2 +-
->   hw/audio/virtio-snd-pci.c | 2 +-
->   9 files changed, 9 insertions(+), 14 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+On 10/21/25 12:23 PM, Peter Maydell wrote:
+> On Fri, 3 Oct 2025 at 04:29, <alistair23@gmail.com> wrote:
+>>
+>> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>
+>> The MonitorDef API is related to two HMP monitor commands: 'p' and 'x':
+>>
+>> (qemu) help p
+>> print|p /fmt expr -- print expression value (use $reg for CPU register access)
+>> (qemu) help x
+>> x /fmt addr -- virtual memory dump starting at 'addr'
+>>
+>> For x86, one of the few targets that implements it, it is possible to
+>> print the PC register value with $pc and use the PC value in the 'x'
+>> command as well.
+>>
+>> Those 2 commands are hooked into get_monitor_def(), called by
+>> exp_unary() in hmp.c. The function tries to fetch a reg value in two
+>> ways: by reading them directly via a target_monitor_defs array or using
+>> a target_get_monitor_def() helper. In RISC-V we have *A LOT* of
+>> registers and this number will keep getting bigger, so we're opting out
+>> of an array declaration.
+>>
+>> We're able to retrieve all regs but vregs because the API only fits an
+>> uint64_t and vregs have 'vlen' size that are bigger than that.
+> 
+> Hi; Coverity complains about these functions
+> (CID 161401, CID 1641393):
+> 
+>> +static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
+>> +                                 target_ulong *val, bool is_gprh)
+>> +{
+>> +    const char * const *reg_names;
+>> +    target_ulong *vals;
+>> +
+>> +    if (is_gprh) {
+>> +        reg_names = riscv_int_regnamesh;
+>> +        vals = env->gprh;
+>> +    } else {
+>> +        reg_names = riscv_int_regnames;
+>> +        vals = env->gpr;
+>> +    }
+>> +
+>> +    for (int i = 0; i < 32; i++) {
+>> +        g_autofree char *reg_name = g_strdup(reg_names[i]);
+>> +        char *reg1 = strtok(reg_name, "/");
+>> +        char *reg2 = strtok(NULL, "/");
+>> +
+>> +        if (strcasecmp(reg1, name) == 0 ||
+> 
+> Coverity complains because we call strtok() to get reg1,
+> and that might return NULL, but strcasecmp() wants a
+> non-NULL pointer.
+> 
+> Similarly with the use of strtok() in reg_is_u64_fpu().
+> 
+> We could fix this with an assert(reg1) since the
+> names are compile-time fixed and it would be an error
+> for the string to be empty.
+> 
+> But taking a step back, strtok() isn't thread safe.
+> Maybe we should use g_strsplit() instead ?
+> 
+> More speculatively, do we need to care about locale here?
+> strcasecmp() does a locale-aware comparison, which is
+> probably not what we want. (Notoriously Turkish locales
+> don't have the upper/lowercase mapping you would expect
+> for "i" and "I".) glib has a g_ascii_strcasecmp() which
+> might be helpful here.
+
+I don't mind doing both changes. I'll see if things are still working as
+expected after doing them and send a fix.
+
+And thanks for the analysis and heads up! I saw the Coverity Scan email in
+my inbox today and haven't opened it yet. Seems like I'm on the hook for
+CID 161401 and CID 1641393.
+
+
+Daniel
+
+> 
+>> +            (reg2 && strcasecmp(reg2, name) == 0)) {
+>> +            *val = vals[i];
+>> +            return true;
+>> +        }
+>> +    }
+>> +
+>> +    return false;
+>> +}
+> 
+> thanks
+> -- PMM
 
 
