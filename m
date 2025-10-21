@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36086CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9008FCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8JH-0003Zq-Ce; Tue, 21 Oct 2025 05:05:39 -0400
+	id 1vB8Jo-0004JX-Au; Tue, 21 Oct 2025 05:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8JF-0003UP-NU
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:37 -0400
+ id 1vB8Jg-00049V-Ai
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:06:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8JD-0004EV-NQ
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:37 -0400
+ id 1vB8Je-0004G8-Cn
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:06:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761037534;
+ s=mimecast20190719; t=1761037559;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5VivmlLMnXRxx6PS1LLoJpztwyYc6uGdFp5WcViyarE=;
- b=AELGKKyLzLfOX74cPXGJho6FHKuxlMYJNZPrdTp3cZisvcL3XoLy0VL8gZ//vOaHwP/nsW
- CQjaOM0Y3KVUOJcD9AvDHhKQBzcucN/yiT/5yJu9Duu0TyU3RwDHtLPK0Svxzil94+XagJ
- BV/oo/pRXvDvonp8QhdCpU5dgFB9WBE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=0IKJ1Ws/UNnAOSMqJqiAkjVIMdrL3tCZMUq99IEVYyQ=;
+ b=PQ9+7GT5pZPdcJpGH6aSspu5Jh9RtYA2wy6xJyufihnlkWS1a0lmziAVaso+v7eapW6goj
+ xUrf1lhV0WOYeGn7Z+dIU2A1hW7iuRIJYgJNGkOjWj3LSfOI2kxvtEnXHgwlJeM/NX+OkW
+ rF4AYvg1gW73sOPKsToVB29r8RCjWC8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-nI1T6DU0NV6HgG1YILpHyQ-1; Tue,
- 21 Oct 2025 05:05:30 -0400
-X-MC-Unique: nI1T6DU0NV6HgG1YILpHyQ-1
-X-Mimecast-MFC-AGG-ID: nI1T6DU0NV6HgG1YILpHyQ_1761037529
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-2-AAlTVaTBPy2dVbp7JLiXoQ-1; Tue,
+ 21 Oct 2025 05:05:56 -0400
+X-MC-Unique: AAlTVaTBPy2dVbp7JLiXoQ-1
+X-Mimecast-MFC-AGG-ID: AAlTVaTBPy2dVbp7JLiXoQ_1761037555
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B477180135A; Tue, 21 Oct 2025 09:05:29 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 460161954199; Tue, 21 Oct 2025 09:05:55 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDE191800577; Tue, 21 Oct 2025 09:05:27 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 02C2F30001BE; Tue, 21 Oct 2025 09:05:53 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
@@ -55,15 +55,15 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 23/43] audio: move period tick initialization
-Date: Tue, 21 Oct 2025 13:02:54 +0400
-Message-ID: <20251021090317.425409-24-marcandre.lureau@redhat.com>
+Subject: [PATCH 28/43] audio: remove some needless headers
+Date: Tue, 21 Oct 2025 13:02:59 +0400
+Message-ID: <20251021090317.425409-29-marcandre.lureau@redhat.com>
 In-Reply-To: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -92,44 +92,144 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Part of QOM-ification.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ audio/audio.h       | 1 -
+ audio/audio.c       | 3 ---
+ audio/dbusaudio.c   | 2 --
+ audio/dsoundaudio.c | 1 -
+ audio/mixeng.c      | 4 +++-
+ audio/noaudio.c     | 2 --
+ audio/wavaudio.c    | 3 ---
+ audio/wavcapture.c  | 1 -
+ 8 files changed, 3 insertions(+), 14 deletions(-)
 
+diff --git a/audio/audio.h b/audio/audio.h
+index f56a8c8baf..58fa8d7423 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -27,7 +27,6 @@
+ 
+ #include "qemu/queue.h"
+ #include "qapi/qapi-types-audio.h"
+-#include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+ 
+ typedef void (*audio_callback_fn) (void *opaque, int avail);
 diff --git a/audio/audio.c b/audio/audio.c
-index bffb8cddb0..dcaf86a586 100644
+index 934a67ad19..0f3093ad59 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -1582,6 +1582,13 @@ static bool audio_driver_init(AudioState *s, struct audio_driver *drv,
-     audio_init_nb_voices_out(s, drv, 1);
-     audio_init_nb_voices_in(s, drv, 0);
-     s->drv = drv;
-+
-+    if (dev->timer_period <= 0) {
-+        s->period_ticks = 1;
-+    } else {
-+        s->period_ticks = dev->timer_period * (int64_t)SCALE_US;
-+    }
-+
-     return true;
- }
+@@ -25,7 +25,6 @@
+ #include "qemu/osdep.h"
+ #include "audio.h"
+ #include "migration/vmstate.h"
+-#include "monitor/monitor.h"
+ #include "qemu/timer.h"
+ #include "qapi/error.h"
+ #include "qapi/clone-visitor.h"
+@@ -33,7 +32,6 @@
+ #include "qapi/qapi-visit-audio.h"
+ #include "qapi/qapi-commands-audio.h"
+ #include "qobject/qdict.h"
+-#include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+@@ -41,7 +39,6 @@
+ #include "system/system.h"
+ #include "system/replay.h"
+ #include "system/runstate.h"
+-#include "ui/qemu-spice.h"
+ #include "trace.h"
  
-@@ -1768,12 +1775,6 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
-         }
-     }
+ #define AUDIO_CAP "audio"
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index b44fdd1511..908214a170 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -24,9 +24,7 @@
  
--    if (dev->timer_period <= 0) {
--        s->period_ticks = 1;
--    } else {
--        s->period_ticks = dev->timer_period * (int64_t)SCALE_US;
--    }
--
-     vmse = qemu_add_vm_change_state_handler (audio_vm_change_state_handler, s);
-     if (!vmse) {
-         dolog ("warning: Could not register change state handler\n"
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+-#include "qemu/timer.h"
+ #include "qemu/dbus.h"
+ 
+ #ifdef G_OS_UNIX
+diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
+index 6a8b7f1a19..003ef27365 100644
+--- a/audio/dsoundaudio.c
++++ b/audio/dsoundaudio.c
+@@ -31,7 +31,6 @@
+ 
+ #define AUDIO_CAP "dsound"
+ #include "audio_int.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ 
+diff --git a/audio/mixeng.c b/audio/mixeng.c
+index 703ee5448f..be38617e9b 100644
+--- a/audio/mixeng.c
++++ b/audio/mixeng.c
+@@ -24,11 +24,13 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/bswap.h"
+-#include "qemu/error-report.h"
+ #include "audio.h"
+ 
+ #define AUDIO_CAP "mixeng"
+ #include "audio_int.h"
++#ifdef FLOAT_MIXENG
++#include "qemu/error-report.h"
++#endif
+ 
+ /* 8 bit */
+ #define ENDIAN_CONVERSION natural
+diff --git a/audio/noaudio.c b/audio/noaudio.c
+index 1b60d8518a..34ff1d2a27 100644
+--- a/audio/noaudio.c
++++ b/audio/noaudio.c
+@@ -23,10 +23,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "audio.h"
+-#include "qemu/timer.h"
+ 
+ #define AUDIO_CAP "noaudio"
+ #include "audio_int.h"
+diff --git a/audio/wavaudio.c b/audio/wavaudio.c
+index a8798a1c42..a098b20cad 100644
+--- a/audio/wavaudio.c
++++ b/audio/wavaudio.c
+@@ -23,10 +23,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+-#include "qemu/timer.h"
+-#include "qapi/opts-visitor.h"
+ #include "audio.h"
+ 
+ #define AUDIO_CAP "wav"
+diff --git a/audio/wavcapture.c b/audio/wavcapture.c
+index c60286e162..b990844d48 100644
+--- a/audio/wavcapture.c
++++ b/audio/wavcapture.c
+@@ -1,6 +1,5 @@
+ #include "qemu/osdep.h"
+ #include "qemu/qemu-print.h"
+-#include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "audio.h"
+ 
 -- 
 2.51.0
 
