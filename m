@@ -4,71 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A87CCD1AF
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB427CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 20:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBIvM-0003gc-RP; Tue, 21 Oct 2025 16:25:40 -0400
+	id 1vBJ1n-0005bP-5d; Tue, 21 Oct 2025 16:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vBIvI-0003fp-CG
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:25:36 -0400
-Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJ1l-0005ao-7D
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:32:17 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1vBIvF-0004Oa-Sv
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:25:35 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id CD8E960DC7
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 22:25:22 +0200 (CEST)
-Received: (qmail 5199 invoked by uid 990); 21 Oct 2025 20:25:22 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Tue, 21 Oct 2025 22:25:22 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBJ1h-0006ET-JH
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 16:32:16 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47106fc51faso71466915e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 13:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761078732; x=1761683532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TMQVGYbBwTPfjpT7yEW5e+oix7imfwHLBURkwy6U+Pc=;
+ b=QtPRrA/tpWe+by+IxA0Fg8LcjUbd9boW808La1jnNJJfHRI7/sqdpyEs9K52ogmNRI
+ mOUSGUn7RJStjb0p9rsU4tLtIaOvHe2QXoZFlKjUsk61HvvJaHcmC9WLJyTkBRrE1hvn
+ NkW8soy2H11id6XOfSkEIlg/OvgA53dgGt/N/5T9fTOaijbeL5DgLnObQT3dCRGlUcAQ
+ IA5/9PiJFjyNiEP0zL6gtCGkHq5WlRzPYPLrGFXQowHKOy8+iDjohYzFVqmWlIm6lR9W
+ uQQ9N83dGmH04l79PjXt7jVGTUhdeSfE4jq6IfFBJ9Kr4Z4SV9Anz1cOCICp2q8dY258
+ XUlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761078732; x=1761683532;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TMQVGYbBwTPfjpT7yEW5e+oix7imfwHLBURkwy6U+Pc=;
+ b=ODz0w7yP70cPojUPwXTB73yk7rcwbbn3pdLHxaLq/Oacpb+tssd4E4/ftwzyB3PIuO
+ mQ/0bkZikMYKhcomuuAFCm/8kUwTeBOxC+oSTWVffVQvLtUATlJrMw9bS8XFt8cGVzpn
+ c3//h08BJcP1LVIb+vIUNYLw087tDugshCt0qmQSNCqgqk3wilU7x5SkbVI9AaXQqVjI
+ Nxl+Lj8yTvZerHMwYr+rMIrxY/THjfMrA3YOBK8ehfV3TxRZWW7IK+E0Wql7P/i1OuhA
+ +mdVlnMKdNotcYiLVWhPyb7y/oiRvAmcSbIVFtatoyxSQ+oWxHPjEtrKm2+I8kpAM8Vd
+ Oj/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUiImZT3FdShOln3PDL98FqxKXRmrhSR5VSBvIwnUCSIhETXm3Bz0yfJb/vVfss9rRTpkBSdIqjOze9@nongnu.org
+X-Gm-Message-State: AOJu0YwYQBs0FIEzkVwqlXEd9BkYyzkfmpPQVyCtcumoaIwtxS0EaKDE
+ 1lLPztHijRPIeNS3/OgRgxtqYltbZjR62NMfYKZhJjSnKBPFbYiUocqU/brOPb/WTok=
+X-Gm-Gg: ASbGnctENw+HmgEobg+VoaIbFmKd6hkTmMDhq4meIpfqmUXIHhgMBCaC+7tO2MGnZ6M
+ +8VuZYeFWjVDF24B8Ugw/YbgB5pUPYAJrqQ/j+HQf9YMRKNPe6vACa86s9ZkGEeCxeg6AnYQcOU
+ WYwPSJmVs3wDn11CpW3oh8mDYowMMwwGFIqSJ7G5wV3d2lkBCFHKNfZzwskwNTW5RHy5IqQVZGs
+ eS/aAX1bocputUOyPzOEswGitdah9ScVsA9LLryVJs46lSqApj3SNzy21mKX0tIn0RC4EUC0nLW
+ D5gfeuxR83+NBHEXttOfug5Dbgdr7Dzb2P99rftCIwb9QAgrCpihgq+1bnk/It9764Kognw4KP5
+ Mdn2T5jmA2G5Kzv+IjozRY9y22wbvU44NlzJAOMZBK60veWGt+MBxXW/FQJ0kCk1+PBy5gZGubA
+ uqd8DHlKWPNmX8jfrh9DMGlYcRPQbljxzxQgSKbxbvaHg=
+X-Google-Smtp-Source: AGHT+IFYOB9UU5ydnY3/Edq8wbAEHG0j1YT+12KSppxWMhpai3G1EDe90HqNzmCGoBLD7R/zfooiWA==
+X-Received: by 2002:a05:600c:3e07:b0:46e:4783:1a7a with SMTP id
+ 5b1f17b1804b1-471178705bbmr137925855e9.3.1761078731740; 
+ Tue, 21 Oct 2025 13:32:11 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475c438caeesm8607715e9.18.2025.10.21.13.32.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 13:32:11 -0700 (PDT)
+Message-ID: <e079b37a-34d9-4ff7-87a9-4dd9de49e49c@linaro.org>
+Date: Tue, 21 Oct 2025 22:32:09 +0200
 MIME-Version: 1.0
-Date: Tue, 21 Oct 2025 20:25:21 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <a8d2f909aa7e429b3b5b1d0a342e9656e1492f59@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH v8 18/25] target/s390x: call plugin trap callbacks
-To: "=?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "David Hildenbrand" <david@redhat.com>, "Richard Henderson"
- <richard.henderson@linaro.org>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
- "Thomas Huth" <thuth@redhat.com>, "open list:S390 TCG CPUs"
- <qemu-s390x@nongnu.org>
-In-Reply-To: <ad294ba0-5c22-4583-9f24-8514c6bef633@linaro.org>
-References: <cover.1760884672.git.neither@nut.email>
- <50a092042a41f7d679df2b6577edcba1d9316829.1760884672.git.neither@nut.email>
- <ad294ba0-5c22-4583-9f24-8514c6bef633@linaro.org>
-X-Rspamd-Bar: ---
-X-Rspamd-Report: BAYES_HAM(-2.999986) MIME_GOOD(-0.1)
-X-Rspamd-Score: -3.099986
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=LOP5Mx3H01ca9E+MwnFHQV8LoDAmmU1BTeX96MAcMZc=;
- b=eeaiDk3xV1W6iK2MNl0xkS60ncElRkZ4XNBKfkhucY98b+mAXjrt3YTsOnGBpw2EH3262wMXxC
- c3TqRFQvkUT0JITIB3E9slUfaxeeoYRWQEyTk0V+oYi9+lwU5PrfazsN1fHnzMPUOrcIY8aNbr3t
- ON+fI7ogK3ktf6xChKufq9buqaX1EJt9xOyDR8QjMdyzc1Z7ZR2MkjL6ABLsHO9pvbfolhGmy9Fc
- oxcJRoFd4daidjU6vSW+hunGColztgW8WzGJaAE0ULK/FYIRkSL+mkBFtWP/3dV6ObxV2gK1CWBm
- oJx3VNHd6c3KVXgTdgsn0lJL2PIsvrEIvYYzT4wpvOMPXkTRrQ8Sc9JFpIBea7ob5LaUKYR5o0qx
- ltXlNMOjOkg+42dFiR9kaX6oviTGFERJRlYkGCvyqlG4SAFU12PBXTelMWmuIIkAP5n0wgkYk7us
- Vd027JG6XvYlHpVEqT8MLe2QnvcSA/oUslcTdUL6kFFmiRgdJ3lYAhL4iF2GH0KZQarP8JZvxZVF
- ORGsxfExqDLH5nxBSXAOg84h6F4Ur56WSJmiTjLytZ02/ovL4zG91RU5i+SgcpNJ/J0m/9Zo8vF5
- ygZb7fvoOHfu6j+e7+lHDBUVJpkg+18t0Rq7yyQqq9S3O6PFEyfWDmrrffr5Oo+Jsn+LNsUzzzbi
- U=
-Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
- envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/10] Cleanup patches, mostly PC-related
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ kvm@vger.kernel.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Cameron Esfahani <dirty@apple.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, John Snow <jsnow@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+References: <20251019210303.104718-1-shentey@gmail.com>
+ <0e7af78a-6156-437a-b76d-8453898a5b57@linaro.org>
+In-Reply-To: <0e7af78a-6156-437a-b76d-8453898a5b57@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,51 +115,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+On 21/10/25 18:07, Philippe Mathieu-Daudé wrote:
+> On 19/10/25 23:02, Bernhard Beschow wrote:
+> 
+>> Bernhard Beschow (10):
+>>    hw/timer/i8254: Add I/O trace events
+>>    hw/audio/pcspk: Add I/O trace events
+>>    hw/rtc/mc146818rtc: Convert CMOS_DPRINTF() into trace events
+>>    hw/rtc/mc146818rtc: Use ARRAY_SIZE macro
+>>    hw/rtc/mc146818rtc: Assert correct usage of
+>>      mc146818rtc_set_cmos_data()
+>>    hw/ide/ide-internal: Move dma_buf_commit() into ide "namespace"
+>>    hw/i386/apic: Prefer APICCommonState over DeviceState
+>>    hw/i386/apic: Ensure own APIC use in apic_msr_{read,write}
+>>    hw/intc/apic: Pass APICCommonState to apic_register_{read,write}
+>>    tests/qtest/ds1338-test: Reuse from_bcd()
+> 
+> Thanks, except if Paolo/MST/Igor object, series queued squashing:
+> 
+> -- >8 --
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 67ff52a8b40..d981ca05977 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -29,2 +29,3 @@
+>   #include "exec/memop.h"
+> +#include "hw/i386/apic.h"
+>   #include "hw/i386/topology.h"
+> @@ -2352,3 +2352,3 @@ struct ArchCPU {
+>          user */
+> -    struct APICCommonState *apic_state;
+> +    APICCommonState *apic_state;
+>       struct MemoryRegion *cpu_as_root, *cpu_as_mem, *smram;
+> diff --git a/target/i386/whpx/whpx-internal.h b/target/i386/whpx/whpx- 
+> internal.h
+> index 066e16bd8e2..2dcad1f5650 100644
+> --- a/target/i386/whpx/whpx-internal.h
+> +++ b/target/i386/whpx/whpx-internal.h
+> @@ -7,2 +7,4 @@
+> 
+> +#include "hw/i386/apic.h"
+> +
+>   typedef enum WhpxBreakpointState {
+> @@ -46,3 +48,3 @@ struct whpx_state {
+>   extern struct whpx_state whpx_global;
+> -void whpx_apic_get(struct APICCommonState *s);
+> +void whpx_apic_get(APICCommonState *s);
+> 
+> ---
 
-October 21, 2025 at 10:07 PM, "Philippe Mathieu-Daud=C3=A9" wrote:
-> On 19/10/25 17:15, Julian Ganz wrote:
-> >  @@ -531,21 +533,27 @@ try_deliver:
-> >  switch (cs->exception_index) {
-> >  case EXCP_PGM:
-> >  do_program_interrupt(env);
-> >  + qemu_plugin_vcpu_exception_cb(cs, last_pc);
-> >  break;
-> >  case EXCP_SVC:
-> >  do_svc_interrupt(env);
-> >  + qemu_plugin_vcpu_exception_cb(cs, last_pc);
-> >  break;
-> >  case EXCP_EXT:
-> >  do_ext_interrupt(env);
-> >  + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> >  break;
-> >  case EXCP_IO:
-> >  do_io_interrupt(env);
-> >  + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> >  break;
-> >  case EXCP_MCHK:
-> >  do_mchk_interrupt(env);
-> >  + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> >  break;
-> >  case EXCP_RESTART:
-> >  do_restart_interrupt(env);
-> >  + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> >  break;
-> >  case EXCP_STOP:
-> >  do_stop_interrupt(env);
-> >=20
->=20Shouldn't we also track the STOP interrupt?
->=20
->=20 qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
->=20
->=20If not, please mention why in the patch description.
+Also squashing:
 
-My expectation was that this exception is not observable in software
-running on the target anyway, and that is would lead to a VCPU exit. For
-which we already have qemu_plugin_register_vcpu_exit_cb. If I'm wrong
-about that than we do want to also track STOP interrupts. If not I'll
-add a sentence about that in the commit message.
-
-Regards,
-Julian
+-- >8 --
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 077ef18686b..aad253af158 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -1056,4 +1055,0 @@ static void apic_mem_write(void *opaque, hwaddr 
+addr, uint64_t val,
+-    if (!s) {
+-        return;
+-    }
+-
+@@ -1072,0 +1069,4 @@ static void apic_mem_write(void *opaque, hwaddr 
+addr, uint64_t val,
++    if (!s) {
++        return;
++    }
++
+---
 
