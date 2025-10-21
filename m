@@ -4,63 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 648FACCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37A0CCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 13:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBCsJ-0000H9-Cc; Tue, 21 Oct 2025 09:58:15 -0400
+	id 1vBCsi-0000b5-Tn; Tue, 21 Oct 2025 09:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs8-0000G3-1j
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBCsf-0000W8-1f
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:58:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBCs4-0007xq-Bl
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:57:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBCsa-0007zZ-Pl
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 09:58:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761055071;
+ s=mimecast20190719; t=1761055101;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nMX5dMJBLwOdR9O82a01i56scmDpujZek0VL+du5ZCo=;
- b=QJUfI+jvWwAJqY3lbWsaG/Ud98p5G5bHU59nC3wI18lrEP5SJE0XuHlAb4iPiNwXZddo7E
- YVUuqKFbyZ1GTbGf/xDQ7LauIoof27EY5HD2bwo/6k0tfBTDlJfpF/ZOqiBkAgwA+brGTE
- HLZqGdkIoWTaWnLDiBoN4wFMLgAYCPw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-lRwNOAFrOeWOHelZ36i2_Q-1; Tue,
- 21 Oct 2025 09:57:49 -0400
-X-MC-Unique: lRwNOAFrOeWOHelZ36i2_Q-1
-X-Mimecast-MFC-AGG-ID: lRwNOAFrOeWOHelZ36i2_Q_1761055068
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2556D1808985; Tue, 21 Oct 2025 13:57:48 +0000 (UTC)
-Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
- [10.33.192.176])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CC8DB19560B0; Tue, 21 Oct 2025 13:57:46 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 6/6] gitlab-ci: Decrease the size of the compiler cache
-Date: Tue, 21 Oct 2025 15:57:35 +0200
-Message-ID: <20251021135735.96145-7-thuth@redhat.com>
-In-Reply-To: <20251021135735.96145-1-thuth@redhat.com>
-References: <20251021135735.96145-1-thuth@redhat.com>
+ bh=cXpcost0SeoDXjVWuuZ2RUAR5mmmaYchsv4OvkP0tmc=;
+ b=PEXyj//u2c5DwBhGvnquqZBFeTHbzyWLNbFCvrxWMuXJB+Izfsjm3xaktEiC0GZ1nKpo6+
+ rPG3daTidx2XB5sfGV2YrFVLvQe/1SUfVOEw1qYLOBa5krgRSncmzNH4/7byLkbUMS53wI
+ l1qHrjugfZlaU9nrUzfkvIQGG9AamZY=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-352-9SqdaElOOSaxxcLL6mADfw-1; Tue, 21 Oct 2025 09:58:19 -0400
+X-MC-Unique: 9SqdaElOOSaxxcLL6mADfw-1
+X-Mimecast-MFC-AGG-ID: 9SqdaElOOSaxxcLL6mADfw_1761055099
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-88f81cf8244so3369662085a.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 06:58:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761055099; x=1761659899;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cXpcost0SeoDXjVWuuZ2RUAR5mmmaYchsv4OvkP0tmc=;
+ b=tnvwS2n7My1vJzLPqOK3mPHwJkp6j1lqg9lgDt1ndvRdyob0haTncM8UT59Fi++v8n
+ rvi0njThXvoMMOneSYVQhAN8DJDlvXaQX2KebYc4/xEcytF0OYmjZ1jTuRy/gsczr0Wi
+ xGihDhnlCTgHCSh9KeH1s1KCm0+1Z9hCb8g7hw9m+WgmTeoeHcMTwf9bf1kiWsA7zrvJ
+ p8YR/l/Ok3jWnBwuy1pq111Aikn66N8sq2zMUiEPt9G8XoDVcrGhBbZQh1YgXoj1zFhi
+ OGk8n9kQSyQQcJu+1CD0bYqFFYxjeA5PeR1HPRo20fNdyZw7akTOEWuoGnYS2AO+RC09
+ jNBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW374f7gTRju/C7FgyDY55qicGgFcqLcF1X5Wo4iCdAM7CVwLOOvnatJx8cG6E8nCTWBAEFa/QRckLa@nongnu.org
+X-Gm-Message-State: AOJu0YzIU2xGCej1PaSo5nvgZ7mUX+FT5f/+qQAUVrlb/+aQTzEtw3cM
+ dPC9vYunt9U0YvQ04fcGZUNFiyEtMMr3xfXAab81UDEGXb3DRvnFTS2WMGl5Y1HzAaO8QZpmT85
+ +m3pkvYS9cJPVmPWHlHnk4RsH+UJAZA6B9prrZGMgq28Zsja6D/d0XBNB
+X-Gm-Gg: ASbGncvHcwHJBtWClN6bOr8tsvFgqb/VC/o2GJqueaXdxcKxeCnSuPJ9JaUdKJzcO0S
+ EErx2i6HhdBJYVC2R77cbSu1owAFIr2ciFhgd0/qUtUZvJb1LOXl47ZgC98fHUlCo38uEoKp4C2
+ GCuD/JYEf/JZPoWnMuI2J1flQpXU6Yn7inMGxuRpQprx1JYRzY6PfmBza5/34ckqM+HY682e1h8
+ 6vWx11Cg7fPfS93B8gh17Yo20Ehp4l+xWzrW9YKp0bKvCzeO7G2CDDHaFf8fmZBL2zQmOd8p/Lx
+ 9wb0ekuBuWNJrFVN7vA3wNJAaPpXWXusSlmmpSzkzwHsUEdqN2WUhnrldz+4Ol7qClY=
+X-Received: by 2002:a05:620a:2a0d:b0:890:686b:a109 with SMTP id
+ af79cd13be357-8906e6b7489mr1991702785a.25.1761055098977; 
+ Tue, 21 Oct 2025 06:58:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENclV5VRzTEloyumyj0VfhEJLKCeaoPhgcqAs7N46HLuPO9frUo/bkT0hwGbfBwQpSb2vRQw==
+X-Received: by 2002:a05:620a:2a0d:b0:890:686b:a109 with SMTP id
+ af79cd13be357-8906e6b7489mr1991698585a.25.1761055098303; 
+ Tue, 21 Oct 2025 06:58:18 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-891cfb57f1dsm765026085a.62.2025.10.21.06.58.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 06:58:17 -0700 (PDT)
+Date: Tue, 21 Oct 2025 09:58:00 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: Lukas Straub <lukasstraub2@web.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, qemu-devel@nongnu.org,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Yury Kotov <yury-kotov@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Prasad Pandit <ppandit@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH RFC 0/9] migration: Threadify loadvm process
+Message-ID: <aPeRaOv3BkRYohqA@x1.local>
+References: <20250827205949.364606-1-peterx@redhat.com>
+ <CAK3tnvKa=C-9qkOuyB+sZB8+o6YU0V+qaYheK-h9KBEumpyfBw@mail.gmail.com>
+ <aObW9WrmWzTWs4N0@x1.local> <aPasigsOmIKvoqqm@x1.local>
+ <20251021000854.5cd97864@penguin>
+ <CAK3tnv+dREd=iNsZdK-Th9rrF1wRvxZrR=Pc+yE21V=2Bc=s+g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <CAK3tnv+dREd=iNsZdK-Th9rrF1wRvxZrR=Pc+yE21V=2Bc=s+g@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,59 +119,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Tue, Oct 21, 2025 at 10:31:50AM +0800, Zhang Chen wrote:
+> On Tue, Oct 21, 2025 at 6:09 AM Lukas Straub <lukasstraub2@web.de> wrote:
+> >
+> > On Mon, 20 Oct 2025 17:41:30 -0400
+> > Peter Xu <peterx@redhat.com> wrote:
+> >
+> > > On Wed, Oct 08, 2025 at 05:26:13PM -0400, Peter Xu wrote:
+> > > > On Thu, Sep 04, 2025 at 04:27:39PM +0800, Zhang Chen wrote:
+> > > > > > I confess I didn't test anything on COLO but only from code observations
+> > > > > > and analysis.  COLO maintainers: could you add some unit tests to QEMU's
+> > > > > > qtests?
+> > > > >
+> > > > > For the COLO part, I think remove the coroutines related code is OK for me.
+> > > > > Because the original coroutine still need to call the
+> > > > > "colo_process_incoming_thread".
+> > > >
+> > > > Chen, thanks for the comment.  It's still reassuring.
+> > > >
+> > > > >
+> > > > > Hi Hailiang, any comments for this part?
+> > > >
+> > > > Any further comment on this series would always be helpful.
+> > > >
+> > > > It'll be also great if anyone can come up with a selftest for COLO.  Now
+> > > > any new migration features needs both unit test and doc to get merged.
+> > > > COLO was merged earlier so it doesn't need to, however these will be
+> > > > helpful for sure to make sure COLO won't be easily broken.
+> > >
+> > > Chen/Hailiang:
+> > >
+> > > I may use some help from COLO side.
+> > >
+> > > Just now, I did give it a shot with the current docs/COLO-FT.txt and it
+> > > didn't really work for me.
+> > >
+> > > The cmdlines I used almost followed the doc, however I changed a few
+> > > things.  For example, on secondary VM I added "file.locking=off" for drive
+> > > "parent0" because otherwise the "nbd-server-add" command will fail taking
+> > > the lock and it won't ever boot.  Meanwhile I switched to socket netdev
+> > > from tap, in my case I only plan to run the COLO main routine, I hope
+> > > that's harmless too but let me know if it is a problem.
+> > >
+> > > So below are the final cmdlines I used..
+> > >
+> > > For primary:
+> > >
+> > > bin=~/git/qemu/bin/qemu-system-x86_64
+> > > $bin -enable-kvm -cpu qemu64,kvmclock=on \
+> > >      -m 512 -smp 1 -qmp stdio \
+> > >      -device piix3-usb-uhci -device usb-tablet -name primary \
+> > >      -netdev socket,id=hn0,listen=127.0.0.1:10000 \
+> > >      -device rtl8139,id=e0,netdev=hn0 \
+> > >      -chardev socket,id=mirror0,host=0.0.0.0,port=9003,server=on,wait=off \
+> > >      -chardev socket,id=compare1,host=0.0.0.0,port=9004,server=on,wait=on \
+> > >      -chardev socket,id=compare0,host=127.0.0.1,port=9001,server=on,wait=off \
+> > >      -chardev socket,id=compare0-0,host=127.0.0.1,port=9001 \
+> > >      -chardev socket,id=compare_out,host=127.0.0.1,port=9005,server=on,wait=off \
+> > >      -chardev socket,id=compare_out0,host=127.0.0.1,port=9005 \
+> > >      -object filter-mirror,id=m0,netdev=hn0,queue=tx,outdev=mirror0 \
+> > >      -object filter-redirector,netdev=hn0,id=redire0,queue=rx,indev=compare_out \
+> > >      -object filter-redirector,netdev=hn0,id=redire1,queue=rx,outdev=compare0 \
+> > >      -object iothread,id=iothread1 \
+> > >      -object colo-compare,id=comp0,primary_in=compare0-0,secondary_in=compare1,outdev=compare_out0,iothread=iothread1 \
+> > >      -drive if=ide,id=colo-disk0,driver=quorum,read-pattern=fifo,vote-threshold=1,children.0.file.filename=./primary.qcow2,children.0.driver=qcow2
+> > >
+> > > For secondary (testing locally, hence using 127.0.0.1 as primary_ip):
+> > >
+> > > bin=~/git/qemu/bin/qemu-system-x86_64
+> > > primary_ip=127.0.0.1
+> > > $bin -enable-kvm -cpu qemu64,kvmclock=on -m 512 -smp 1 -qmp stdio \
+> > >      -device piix3-usb-uhci -device usb-tablet -name secondary \
+> > >      -netdev socket,id=hn0,connect=127.0.0.1:10000 \
+> > >      -device rtl8139,id=e0,netdev=hn0 \
+> > >      -chardev socket,id=red0,host=$primary_ip,port=9003,reconnect-ms=1000 \
+> > >      -chardev socket,id=red1,host=$primary_ip,port=9004,reconnect-ms=1000 \
+> > >      -object filter-redirector,id=f1,netdev=hn0,queue=tx,indev=red0 \
+> > >      -object filter-redirector,id=f2,netdev=hn0,queue=rx,outdev=red1 \
+> > >      -object filter-rewriter,id=rew0,netdev=hn0,queue=all \
+> > >      -drive if=none,id=parent0,file.filename=primary.qcow2,driver=qcow2,file.locking=off \
+> > >      -drive if=none,id=childs0,driver=replication,mode=secondary,file.driver=qcow2,top-id=colo-disk0,file.file.filename=secondary-active.qcow2,file.backing.driver=qcow2,file.backing.file.filename=secondary-hidden.qcow2,file.backing.backing=parent0 \
+> > >      -drive if=ide,id=colo-disk0,driver=quorum,read-pattern=fifo,vote-threshold=1,children.0=childs0 \
+> > >      -incoming tcp:0.0.0.0:9998
+> > >
+> >
+> > Hi Peter,
+> > You have to use -incoming defer and enable x-colo on the
+> > secondary side before starting migration.
+> >
+> > And primary.qcow2 should be a separate image (with same content) for
+> > each qemu instance.
+> 
+> Yes, Lukas is right. Qemu can't allow 2 VM touch 1 image.
+> So, you can try to "cp primary.qcow2 secondary.qcow2",
+> then change the secondary side to " -drive
+> if=none,id=parent0,file.filename=secondary.qcow2,driver=qcow2,file.locking=off
+> \"
 
-Uploading the cache from the runner takes a long time in the MSYS2
-job, mostly due to the size of the compiler cache.
-However, looking at runs with a non-poluted cache, it seems like
-you can get a build with a 99% hit rate already with ~ 160 MiB cache
-size, so the compiler cache with 500 MiB certainly contains a lot of
-stale files. Thus decrease the size of the ccache to a more reasonable
-value to speed up the MSYS2 job in our CI.
+Thanks both.
 
-While at it, also add a "du -sh" for the build folder to get a better
-feeling for the amount of object code that is required for the build,
-and publish the list of files in /var/cache to be able to better
-analyze what is really clogging our cache here.
+I think the doc says otherwise.. do you mean the doc is wrong and needs
+fixing at least?
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251020161759.50241-1-thuth@redhat.com>
----
- .gitlab-ci.d/windows.yml | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+I created the secondary.qcow2, and switched to that, still it hit the same
+error.
 
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index 6e1135d8b86..5dbdabfbec0 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -25,6 +25,7 @@ msys2-64bit:
-     expire_in: 7 days
-     paths:
-       - build/meson-logs
-+      - build/cache-log.txt
-     reports:
-       junit: build/meson-logs/*.junit.xml
-   before_script:
-@@ -94,7 +95,7 @@ msys2-64bit:
-   - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
-   - $env:CCACHE_BASEDIR = "$env:CI_PROJECT_DIR"
-   - $env:CCACHE_DIR = "$env:CCACHE_BASEDIR/ccache"
--  - $env:CCACHE_MAXSIZE = "500M"
-+  - $env:CCACHE_MAXSIZE = "180M"
-   - $env:CCACHE_DEPEND = 1 # cache misses are too expensive with preprocessor mode
-   - $env:CC = "ccache gcc"
-   - mkdir build
-@@ -103,5 +104,7 @@ msys2-64bit:
-   - ..\msys64\usr\bin\bash -lc "../configure $CONFIGURE_ARGS"
-   - ..\msys64\usr\bin\bash -lc "make -j$env:JOBS"
-   - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
-+  - ..\msys64\usr\bin\bash -lc "ls -lR /var/cache > cache-log.txt"
-+  - ..\msys64\usr\bin\bash -lc "du -sh ."
-   - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
-   - Write-Output "Finished build at $(Get-Date -Format u)"
+Step 1: start primary QEMU
+
+bin=~/git/qemu/bin/qemu-system-x86_64
+$bin -enable-kvm -cpu qemu64,kvmclock=on \
+     -m 512 -smp 1 -qmp stdio \
+     -device piix3-usb-uhci -device usb-tablet -name primary \
+     -netdev socket,id=hn0,listen=127.0.0.1:10000 \
+     -device rtl8139,id=e0,netdev=hn0 \
+     -chardev socket,id=mirror0,host=0.0.0.0,port=9003,server=on,wait=off \
+     -chardev socket,id=compare1,host=0.0.0.0,port=9004,server=on,wait=on \
+     -chardev socket,id=compare0,host=127.0.0.1,port=9001,server=on,wait=off \
+     -chardev socket,id=compare0-0,host=127.0.0.1,port=9001 \
+     -chardev socket,id=compare_out,host=127.0.0.1,port=9005,server=on,wait=off \
+     -chardev socket,id=compare_out0,host=127.0.0.1,port=9005 \
+     -object filter-mirror,id=m0,netdev=hn0,queue=tx,outdev=mirror0 \
+     -object filter-redirector,netdev=hn0,id=redire0,queue=rx,indev=compare_out \
+     -object filter-redirector,netdev=hn0,id=redire1,queue=rx,outdev=compare0 \
+     -object iothread,id=iothread1 \
+     -object colo-compare,id=comp0,primary_in=compare0-0,secondary_in=compare1,outdev=compare_out0,iothread=iothread1 \
+     -drive if=ide,id=colo-disk0,driver=quorum,read-pattern=fifo,vote-threshold=1,children.0.file.filename=./primary.qcow2,children.0.driver=qcow2
+
+Step 2: start secondary QEMU
+
+bin=~/git/qemu/bin/qemu-system-x86_64 
+primary_ip=127.0.0.1
+$bin -enable-kvm -cpu qemu64,kvmclock=on -m 512 -smp 1 -qmp stdio \
+     -device piix3-usb-uhci -device usb-tablet -name secondary \
+     -netdev socket,id=hn0,connect=127.0.0.1:10000 \
+     -device rtl8139,id=e0,netdev=hn0 \
+     -chardev socket,id=red0,host=$primary_ip,port=9003,reconnect-ms=1000 \
+     -chardev socket,id=red1,host=$primary_ip,port=9004,reconnect-ms=1000 \
+     -object filter-redirector,id=f1,netdev=hn0,queue=tx,indev=red0 \
+     -object filter-redirector,id=f2,netdev=hn0,queue=rx,outdev=red1 \
+     -object filter-rewriter,id=rew0,netdev=hn0,queue=all \
+     -drive if=none,id=parent0,file.filename=secondary.qcow2,driver=qcow2,file.locking=off \
+     -drive if=none,id=childs0,driver=replication,mode=secondary,file.driver=qcow2,top-id=colo-disk0,file.file.filename=secondary-active.qcow2,file.backing.driver=qcow2,file.backing.file.filename=secondary-hidden.qcow2,file.backing.backing=parent0 \
+     -drive if=ide,id=colo-disk0,driver=quorum,read-pattern=fifo,vote-threshold=1,children.0=childs0 \
+     -incoming tcp:0.0.0.0:9998
+
+Step 3: Run these commands on secondary QEMU
+
+{"execute":"qmp_capabilities"}
+{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {"capability": "x-colo", "state": true } ] } }
+{"execute": "nbd-server-start", "arguments": {"addr": {"type": "inet", "data": {"host": "0.0.0.0", "port": "9999"} } } }
+{"execute": "nbd-server-add", "arguments": {"device": "parent0", "writable": true } }
+
+Step 4: Run these commands on primary QEMU
+
+{"execute":"qmp_capabilities"}
+{"execute": "human-monitor-command", "arguments": {"command-line": "drive_add -n buddy driver=replication,mode=primary,file.driver=nbd,file.host=127.0.0.2,file.port=9999,file.export=parent0,node-name=replication0"}}
+{"execute": "x-blockdev-change", "arguments":{"parent": "colo-disk0", "node": "replication0" } }
+{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {"capability": "x-colo", "state": true } ] } }
+{"execute": "migrate", "arguments": {"uri": "tcp:127.0.0.2:9998" } }
+
+What I got:
+
+Primary QEMU output:
+
+qemu-system-x86_64: -chardev socket,id=compare1,host=0.0.0.0,port=9004,server=on,wait=on: info: QEMU waiting for connection on: disconnected:tcp:0.0.0.0:9004,server=on
+{"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 10}, "package": "v10.1.0-1513-g94586867df"}, "capabilities": ["oob"]}}
+VNC server running on ::1:5901
+{"error": {"class": "GenericError", "desc": "JSON parse error, stray '\f'"}}
+{"execute":"qmp_capabilities"}
+{"return": {}}
+{"execute": "human-monitor-command", "arguments": {"command-line": "drive_add -n buddy driver=replication,mode=primary,file.driver=nbd,file.host=127.0.0.2,file.port=9999,file.export=parent0,node-name=replication0"}}
+{"return": ""}
+{"execute": "x-blockdev-change", "arguments":{"parent": "colo-disk0", "node": "replication0" } }
+{"return": {}}
+{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {"capability": "x-colo", "state": true } ] } }
+{"return": {}}
+{"execute": "migrate", "arguments": {"uri": "tcp:127.0.0.2:9998" } }
+{"return": {}}
+{"timestamp": {"seconds": 1761054720, "microseconds": 515770}, "event": "STOP"}
+
+Secondary QEMU output:
+
+{"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 10}, "package": "v10.1.0-1513-g94586867df"}, "capabilities": ["oob"]}}
+VNC server running on ::1:5900
+{"execute":"qmp_capabilities"}
+{"return": {}}
+{"execute": "migrate-set-capabilities", "arguments": {"capabilities": [ {"capability": "x-colo", "state": true } ] } }
+{"return": {}}
+{"execute": "nbd-server-start", "arguments": {"addr": {"type": "inet", "data": {"host": "0.0.0.0", "port": "9999"} } } }
+{"return": {}}
+{"execute": "nbd-server-add", "arguments": {"device": "parent0", "writable": true } }
+{"return": {}}
+{"timestamp": {"seconds": 1761054721, "microseconds": 188336}, "event": "RESUME"}
+qemu-system-x86_64: Can't receive COLO message: Input/output error
+{"timestamp": {"seconds": 1761054721, "microseconds": 188883}, "event": "COLO_EXIT", "data": {"mode": "secondary", "reason": "error"}}
+
+Thanks,
+
 -- 
-2.51.0
+Peter Xu
 
 
