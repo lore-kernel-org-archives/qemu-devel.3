@@ -4,95 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E110CCD1B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 15:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF91FCCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 16:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBEly-0005HD-T5; Tue, 21 Oct 2025 11:59:42 -0400
+	id 1vBEin-0000vR-Ao; Tue, 21 Oct 2025 11:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBElj-00058n-AG
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:59:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBElb-0008CY-1o
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:59:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761062353;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dnO8YVQo5sXjYRrz3znPcdceLNpP0ZhJ4rfrmcJXm1E=;
- b=O3MtH0WlSuPz3ZAukBeO2YeTE93s8fMsYwxWoIPwiNQ+lvCSGMVaOwez0xOvcP8kLr2XIj
- GdWyABZNYwekNl+VgXpTTxAQyennxSB028bvS3wlNnhPaUWktM4FtKrX1JW54I/CtubWtL
- yDCX16nD/WmcemWD6zVONHqqBiSrabY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-hj8D9OSdOhyprVKrmnp8aw-1; Tue, 21 Oct 2025 11:59:12 -0400
-X-MC-Unique: hj8D9OSdOhyprVKrmnp8aw-1
-X-Mimecast-MFC-AGG-ID: hj8D9OSdOhyprVKrmnp8aw_1761062352
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8787a94467cso227133306d6.0
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:59:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761062352; x=1761667152;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vBEid-0000pm-QA
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:56:17 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1vBEia-0007l7-9W
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 11:56:15 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-77f67ba775aso7486383b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 08:56:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1761062170; x=1761666970; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dnO8YVQo5sXjYRrz3znPcdceLNpP0ZhJ4rfrmcJXm1E=;
- b=M8govfDlMgrIVUMhO58OoX9Sk5by5wFsaAilOYtRe8tS8vPuJgd4T9UJcOXQomAoIT
- wpNQ+xtvHdup3R7Cp78BIWcxvEl5eNH7Khiut5OwmIavV42f+FQiERzKtCmg7tBlUxwE
- w0UJ6TIMajKeAnJP3/SJpXOL503E+Q0TEyK9FfF2Hrf0A5TeIFwh2L1v8TTIblD5JTPC
- fHuRi/u9IDXz+gQCBa3kD7wqFq13wyBZbUZhJWSFkEOo/0Mz29mBIxXwRacxOU3q6Q5K
- 1+r24oPXL8Ax8G8Sz8lDsOOxwHDAYDcRXJXR5gf3n9oQmJ2WrQOxtFOah3uENuBvGlbI
- WDtw==
-X-Gm-Message-State: AOJu0YxRUryv3XRIhh64921fK9DdwZuDzWBmi1FXcHm6H2hKvMYFrMli
- KS3LNtOmKb7g7HVHCHeKo65MP7/3SNhd6NSMQsy1sODiDVi2c5Srwn7etvjrxRj28aQh2GBDy5A
- lP4ORkCA8Ot5qiKIrD7PtiwVh4ILj8Bb7nPxonMgJtEsd7sXNnqTLPEusKDAcYecg
-X-Gm-Gg: ASbGncvjl5dn6APT8j4DZl9n93r429Tplz/mEBzsoEwAZnobeONc7KBvEZws/xU7vO1
- 31hn3I7xqROsxxDaZqRouzeXMow/uJCWEP+0P4SfI+hLwdzB8SvwZHk9f1Qn1/Qms5KxeB8FSiT
- h0IupgvJLrV2N1BG2jiTWl+Dt2wT/OaVUpiQEg/D4yu0L+6RSVlkJVyz1TOqb2wf+DrfgUc0oWl
- 4MM7RKAcxfbs82HzAQG9dDwIiyM07oTCzXr5LLLwK0X4Uf6lNrtauEC7GlLMC/XVvxD/b9rbDy5
- 7TnNCu2zcXtjltziyE3nucQfCjCgc6GeWxa5QsF9RJLxJ8EWfa2FY/tCFnQQjJEfjvY=
-X-Received: by 2002:ad4:5cc1:0:b0:7ef:f440:2b40 with SMTP id
- 6a1803df08f44-87c20817f04mr216863666d6.53.1761062351625; 
- Tue, 21 Oct 2025 08:59:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrk8lTodkYMfkdFUBJL/FgmS70MQXDlBI76VTYqBC4yA7VQajKcMHee7yVma1lE6mgXZ8N3w==
-X-Received: by 2002:ad4:5cc1:0:b0:7ef:f440:2b40 with SMTP id
- 6a1803df08f44-87c20817f04mr216863396d6.53.1761062351176; 
- Tue, 21 Oct 2025 08:59:11 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87d028932d3sm71192476d6.41.2025.10.21.08.59.09
+ bh=ItEDascWURdtiJBIFOxPqFxdsposkPVgAOSmqvZV7F4=;
+ b=VZGkaLV7jqRVLYo7QXIMCTZ34wg0JdWFhmfdkcVggYH6gDbZXau1MDyIXdBNo3W9/S
+ lf/vKTnunIWw5jkVsqgmaWGhJutaEEc6p9PGrpoCqZIItNKMklYbXVtGiAwoOYv12M4i
+ N52tZLNAvg8Xby8zj8EUARr5Uf3WaYmCwJ+7lCp/b3+EGtn+syQCjo0KX/SDbZyJ2Vkh
+ hc3X8ZMOq2/EzAVXF9oYDoc7Nlfs0PrVSaN9YCRa7AZn9YI6+Z7c9HeV4I9E92cfcyo+
+ V1qpB/SESY9G10x7Z8VqCgVPNCIXn5rd6ALWaGzBHzFIw85vxqfpjvM/tN2nBF+iWhip
+ WaTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761062170; x=1761666970;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ItEDascWURdtiJBIFOxPqFxdsposkPVgAOSmqvZV7F4=;
+ b=JyIBt9NFIcgaxYZ02Qg+xa2bwtLoNuBFwPAZeic9sdybk97yxyrShsPACEAV4LSGKB
+ bz/tOFHmRw2lKOO1tYDJF5yWJ7ZWtggUTxpF0pR/7wGiRm+/Ei/R+IF1WP18AiO1p1Jm
+ 8mZZwnzPxrNQxPwGazu6IDTHDTjB2zjpiy4dpUkBenmJSq0Ir1j5UtbqyIfEimiD4w3U
+ P9IptpjNvNxmDtICM9lDO2Bf95lGW2pW+FwhgTFFV+FrK2xceXG8sPxstW7XBqjRecbg
+ A2E07pBFzdxVbabEfDVDI0PEeSQxmQ2hKglVJavVvBt/1pz2QeAT1a+9nzd1DLsEo1gK
+ B9lQ==
+X-Gm-Message-State: AOJu0YzxUwNj/zkNs9sehS8dINZLN+Gs8Id2frscQcKNnD5wVO3GnQLP
+ 48w2NmFte087rMPr34lcZ68qW2/0UshjifAeEXlijKA/0BVH/QA8sdlC4YMqVyyrtAYAGD19qt/
+ okeCHldVZgxcIM8kd83JdAW9H3AoRaTefS9fukm/Gy4gB0SuIkRC5+O+tfvcaDY5wlXqiD72xam
+ 96WwjSNC/UZMiPQz0FphgRpjs5ZLR1sCdlfX+yhg==
+X-Gm-Gg: ASbGncsFo6QlBcLIjzMUweLp8QkKyNSiaIT54PU2bZ2elXx4w63oq2hot8eGedIsGLl
+ mn7qOpYrKLww9yNTBIllV7tkWrYjtggSDktq/nmtknGbdaK2YbqTrrvSL7TMg/hFE0P3/Wnj+BI
+ v/V1G3l3XYCh0kSJYwa4Cvt4kFBcO+QDJXb/0rkp7HSAOkkT0Ab9dMSQPHrPnDpNLcz59hElQa0
+ 8P6dxcrzBIdQjpYOEjeQmp/H9fx5S3+kK2tr0lFmtCuqUFfIPvKwlbXYT2I9odDROpohadZpjlH
+ k+UsGf61KIZ5zwif4/Ja4uT2vCxoZNhu0Ou0UP29KvJ9+aX3Ome9jetQXHqBVoiKdlWM5IIHeIC
+ lFzDC84KtGQtGwrdrqJFBFB7ZaxdZhadlnWG1tz96pZfH2PUu+Mp0mnE6BdHzzsSzlTJLlCu/pk
+ JKX6Qpe7yu7WFA9XSOHUJTjOCx/VsfA2k6
+X-Google-Smtp-Source: AGHT+IEn0Qt6Oo+4e0ngsjIqW8GIuRuTZTtXWnxt3lGQr7smV5xgsnGddwfD17jHYxwNbaGUbIg5Ag==
+X-Received: by 2002:a05:6a20:158a:b0:2e5:655c:7f93 with SMTP id
+ adf61e73a8af0-334a8616c19mr24469072637.33.1761062169916; 
+ Tue, 21 Oct 2025 08:56:09 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33d5de11392sm11490177a91.7.2025.10.21.08.56.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Oct 2025 08:59:10 -0700 (PDT)
-Date: Tue, 21 Oct 2025 11:59:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PULL 42/45] migration: cpr-exec mode
-Message-ID: <aPetzFnweUu8cxEw@x1.local>
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-43-peterx@redhat.com>
- <CAFEAcA82ih8RVCm-u1oxiS0V2K4rV4jMzNb13pAV=e2ivmiDRA@mail.gmail.com>
+ Tue, 21 Oct 2025 08:56:09 -0700 (PDT)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Michael Rolnik <mrolnik@gmail.com>, Helge Deller <deller@gmx.de>,
+ Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
+ qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
+ Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH v3 02/18] system/physmem: Remove the assertion of page-aligned
+ section number
+Date: Tue, 21 Oct 2025 23:55:32 +0800
+Message-ID: <20251021155548.584543-3-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251021155548.584543-1-jim.shu@sifive.com>
+References: <20251021155548.584543-1-jim.shu@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA82ih8RVCm-u1oxiS0V2K4rV4jMzNb13pAV=e2ivmiDRA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,58 +129,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 21, 2025 at 04:34:32PM +0100, Peter Maydell wrote:
-> On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > From: Steve Sistare <steven.sistare@oracle.com>
-> >
-> > Add the cpr-exec migration mode.  Usage:
-> >   qemu-system-$arch -machine aux-ram-share=on ...
-> >   migrate_set_parameter mode cpr-exec
-> >   migrate_set_parameter cpr-exec-command \
-> >     <arg1> <arg2> ... -incoming <uri-1> \
-> >   migrate -d <uri-1>
-> 
-> Hi; Coverity complains about this code (CID 1641397):
-> 
-> > +static void cpr_exec_cb(void *opaque)
-> > +{
-> > +    MigrationState *s = migrate_get_current();
-> > +    char **argv = strv_from_str_list(s->parameters.cpr_exec_command);
-> > +    Error *err = NULL;
-> > +
-> > +    /*
-> > +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
-> > +     * earlier because they should not persist across miscellaneous fork and
-> > +     * exec calls that are performed during normal operation.
-> > +     */
-> > +    cpr_exec_preserve_fds();
-> > +
-> > +    trace_cpr_exec();
-> > +    execvp(argv[0], argv);
-> > +
-> > +    /*
-> > +     * exec should only fail if argv[0] is bogus, or has a permissions problem,
-> > +     * or the system is very short on resources.
-> > +     */
-> > +    g_strfreev(argv);
-> 
-> Here we free the argv array...
-> 
-> > +    cpr_exec_unpreserve_fds();
-> > +
-> > +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
-> 
-> ...but here we read from the freed memory argv[0].
-> 
-> Presumably we can just move the free down a bit ?
+The physical section number is no longer ORed into the IOTLB entries
+together with a page-aligned pointer, so it no longer needs to be
+page-aligned.
 
-Yep, will change this to:
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ system/physmem.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
-    g_clear_pointer(&argv, g_strfreev);
-
+diff --git a/system/physmem.c b/system/physmem.c
+index c163d6b856..23d9b92954 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1305,12 +1305,6 @@ static subpage_t *subpage_init(FlatView *fv, hwaddr base);
+ static uint16_t phys_section_add(PhysPageMap *map,
+                                  MemoryRegionSection *section)
+ {
+-    /* The physical section number is ORed with a page-aligned
+-     * pointer to produce the iotlb entries.  Thus it should
+-     * never overflow into the page-aligned value.
+-     */
+-    assert(map->sections_nb < TARGET_PAGE_SIZE);
+-
+     if (map->sections_nb == map->sections_nb_alloc) {
+         map->sections_nb_alloc = MAX(map->sections_nb_alloc * 2, 16);
+         map->sections = g_renew(MemoryRegionSection, map->sections,
 -- 
-Peter Xu
+2.43.0
 
 
