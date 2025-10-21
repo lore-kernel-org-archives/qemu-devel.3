@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38A2CCD1B9
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:12:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 300A9CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 19:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBHl1-0007x7-19; Tue, 21 Oct 2025 15:10:55 -0400
+	id 1vBI2y-0005SQ-Q2; Tue, 21 Oct 2025 15:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vBHky-0007vS-UL
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:10:53 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBI2w-0005SF-2D
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:29:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vBHkw-00088O-DF
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:10:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBI2r-0003WP-KP
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 15:29:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761073848;
+ s=mimecast20190719; t=1761074958;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Hp1AlwBKaosqt/AqfQMcdFj6nOyPI2+Y+tY/gtR5KxM=;
- b=bGBzHwVg+uRXzNLn3cjQKapmRfbxxc0RQA95bbVDVuIjfCCT6rCjWunKS/b9MO9v1mrYii
- LLgJsLTMsr9abUIOtpSmuDJXA5LDzvnNhm1m2kVnOLl3HBLmXprV4ZM//sxknqq/wKJbdz
- 1JCgX2v0bJVW7o+pNzQvHp3d3EhyvBs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-e_B5QE1ZPKiO04tO5vWlNg-1; Tue,
- 21 Oct 2025 15:10:39 -0400
-X-MC-Unique: e_B5QE1ZPKiO04tO5vWlNg-1
-X-Mimecast-MFC-AGG-ID: e_B5QE1ZPKiO04tO5vWlNg_1761073836
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1812C195609E; Tue, 21 Oct 2025 19:10:36 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.154])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0FC11800452; Tue, 21 Oct 2025 19:10:34 +0000 (UTC)
-Date: Tue, 21 Oct 2025 15:10:33 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Aarushi Mehta <mehta.aaru20@gmail.com>,
- Fam Zheng <fam@euphon.net>, Stefano Garzarella <sgarzare@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
- qemu-block@nongnu.org, hibriansong@gmail.com,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 05/12] aio: remove aio_context_use_g_source()
-Message-ID: <20251021191033.GB4837@fedora>
-References: <20250910175703.374499-1-stefanha@redhat.com>
- <20250910175703.374499-6-stefanha@redhat.com>
- <aOfY8TgysdujAL-l@redhat.com> <aOfp6I_v6N3dc-YB@redhat.com>
+ bh=0ixacuwCkCKqdqOHzSXsw8PhEGE3LuuGi4CoIQhqx/o=;
+ b=VE2zrcbhkDX501V/jklRk8p9nOd4cIWCg4zqaEj8b3VM6s4BMFrVey6qjyysYXOtUv8MXI
+ Rp4tbnoGsAppypu/V5FBKH7Tn5m9vfMmKXOFq6Fhoh0xAAqyUZdZCURXpqB9+uAh40VTxj
+ yaipV7p/ILdk7GANJXN2qF+7N+pn1zc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-uJGnzwB5OcyaN3SBDcws3Q-1; Tue, 21 Oct 2025 15:29:17 -0400
+X-MC-Unique: uJGnzwB5OcyaN3SBDcws3Q-1
+X-Mimecast-MFC-AGG-ID: uJGnzwB5OcyaN3SBDcws3Q_1761074956
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4e88947a773so13410961cf.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 12:29:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761074956; x=1761679756;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0ixacuwCkCKqdqOHzSXsw8PhEGE3LuuGi4CoIQhqx/o=;
+ b=MI8KzH7LTfJlAy2L8THzuW3XDLDTLWpXeKdqEC+ISTjLA3/+yQjJe/4M1rDFXV8Coi
+ MpX+E7SFq8xUcHfjLm/xaI07jVL/Duv5jcNciybK0N2eQONAa8bkfWtauTfEu4j7VPY8
+ 3+dWyA08pzqtshG8FL7993auQLGCx1LtH2pdIN2ZtTpCCfY1d2jKqYE5fAmSrA9ckNdH
+ GU583PCg5uOheyXLHl51ydEB36WdPntWDWiFaaS98hJdkpyPcvWhifkVRiVFtbLKyl1j
+ AQPzuMlvA2tQnmU+0+JQR8iFxVzBDuzJfrZaL+agSeZNk5g6cGb9qDnjV7TxzHXWRb0c
+ C1Sg==
+X-Gm-Message-State: AOJu0YwGvlnJxwsNBkhGcfMcT53FehT3FW6cqcQ9M93TgGgXM536WLLu
+ xrcZzaJCc+IBsF7aKGh336ovv4dsBopEXNodD2gMAlQW3mWuL/HggeB2W4q4fBk8vs/2Uc07kdV
+ HX8wZYtBfXelJvwJpsxiFhcB4A7jJXaIVQJ0HErVbyAb3D6Bu/lVuCACZNpHTmvIp
+X-Gm-Gg: ASbGncstrxtLNvriQZs23x9GIBIxrMR5J3kCLgL+Ygvpve6tWa5ki9Low4BnqkXvO2h
+ WjfFmp/bzEMuGMUWcazEXC9lnrFfFCEbnR0bKIKP2fAfaz+0pflrBO7H0piGPHINpOF/5Jt24sA
+ WGZBjooeVvU9LCn0Q87Bq6zyGnBzA4fj+SK+wchGHUiebdXU82xyFegKe9swoeZxAQJwDN6jzuu
+ 67Nfg82mEhvFLwpvqUYQu04coXMhZ6jVikKZVOBbtASLG8eqzuAhBWXaWKubaEWGYdcb1X6kBSW
+ ofrf0a/EqlKe2h4hZemNcx4HLD0vUg2Uu8cUz8Za/rJLQLS9S6egXnaUaSJJPSDPPBg=
+X-Received: by 2002:ac8:7d4a:0:b0:4e8:b9fd:59ee with SMTP id
+ d75a77b69052e-4e8b9fd5d13mr124593171cf.74.1761074955974; 
+ Tue, 21 Oct 2025 12:29:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFReXzI2gn+wwy7V2J+YL3iNDj+UGo9Bo1JhvkhGj0AF+Vxg+BHeO4DWfTp0GufwcalRAMFsg==
+X-Received: by 2002:ac8:7d4a:0:b0:4e8:b9fd:59ee with SMTP id
+ d75a77b69052e-4e8b9fd5d13mr124592841cf.74.1761074955480; 
+ Tue, 21 Oct 2025 12:29:15 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-891cc8d5edasm826949285a.7.2025.10.21.12.29.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Oct 2025 12:29:14 -0700 (PDT)
+Date: Tue, 21 Oct 2025 15:29:12 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Raphael Norwitz <raphael@enfabrica.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 1/2] vhost: support inflight save/load
+Message-ID: <aPffCBqvNKmOE-CG@x1.local>
+References: <20251020054413.2614932-1-dtalexundeer@yandex-team.ru>
+ <20251020054413.2614932-2-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ZI9TI34x7a45ZZUF"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aOfp6I_v6N3dc-YB@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20251020054413.2614932-2-dtalexundeer@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,83 +109,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Oct 20, 2025 at 10:44:14AM +0500, Alexandr Moshkov wrote:
+> vhost_dev_load_inflight and vhost_dev_save_inflight have been deleted
+> by:
+> 
+> abe9ff2 ("vhost: Remove unused vhost_dev_{load|save}_inflight")
+> 
+> So, now they are needed for future commit.
+> Return them, and their helper vhost_dev_resize_inflight.
+> 
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>  hw/virtio/vhost.c         | 56 +++++++++++++++++++++++++++++++++++++++
+>  include/hw/virtio/vhost.h |  2 ++
+>  2 files changed, 58 insertions(+)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 266a11514a..16ce9a6037 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -2013,6 +2013,62 @@ int vhost_dev_get_inflight(struct vhost_dev *dev, uint16_t queue_size,
+>      return 0;
+>  }
+>  
+> +static int vhost_dev_resize_inflight(struct vhost_inflight *inflight,
+> +                                     uint64_t new_size)
+> +{
+> +    Error *err = NULL;
+> +    int fd = -1;
+> +    void *addr = qemu_memfd_alloc("vhost-inflight", new_size,
+> +                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> +                                  &fd, &err);
+> +    if (err) {
+> +        error_report_err(err);
+> +        return -ENOMEM;
+> +    }
+> +
+> +    vhost_dev_free_inflight(inflight);
+> +    inflight->offset = 0;
+> +    inflight->addr = addr;
+> +    inflight->fd = fd;
+> +    inflight->size = new_size;
+> +
+> +    return 0;
+> +}
+> +
+> +void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f)
+> +{
+> +    if (inflight->addr) {
+> +        qemu_put_be64(f, inflight->size);
+> +        qemu_put_be16(f, inflight->queue_size);
+> +        qemu_put_buffer(f, inflight->addr, inflight->size);
+> +    } else {
+> +        qemu_put_be64(f, 0);
+> +    }
 
---ZI9TI34x7a45ZZUF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Can we use VMSD (extra fields, or subsections) to describe any new data for
+migration?
 
-On Thu, Oct 09, 2025 at 06:59:20PM +0200, Kevin Wolf wrote:
-> Am 09.10.2025 um 17:46 hat Kevin Wolf geschrieben:
-> > Am 10.09.2025 um 19:56 hat Stefan Hajnoczi geschrieben:
-> > > There is no need for aio_context_use_g_source() now that epoll(7) and
-> > > io_uring(7) file descriptor monitoring works with the glib event loop.
-> > > AioContext doesn't need to be notified that GSource is being used.
-> > >=20
-> > > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > > Reviewed-by: Eric Blake <eblake@redhat.com>
-> >=20
-> > We should probably mention in the commit message that this causes the
-> > default fdmon on Linux to change from poll to io_uring. It's a small
-> > code change, but it makes QEMU use a completely different code path by
-> > default.
->=20
-> Just to make sure, I ran 'make check' after this patch and it's failing
-> for me:
->=20
->  10/401 qemu:qtest+qtest-x86_64 / qtest-x86_64/ahci-test                 =
-   TIMEOUT        150.02s   killed by signal 15 SIGTERM
-> 133/401 qemu:unit / test-aio                                             =
-   TIMEOUT         30.01s   killed by signal 15 SIGTERM
-> 137/401 qemu:unit / test-bdrv-drain                                      =
-   TIMEOUT         30.01s   killed by signal 15 SIGTERM
-> 142/401 qemu:unit / test-block-iothread                                  =
-   TIMEOUT         30.01s   killed by signal 15 SIGTERM
-> 192/401 qemu:doc+rust / rust-bql-rs-doctests                             =
-   FAIL             0.84s   exit status 101
-> 311/401 qemu:block / io-qcow2-267                                        =
-   ERROR            3.20s   exit status 1
-> 321/401 qemu:block / io-qcow2-copy-before-write                          =
-   TIMEOUT        180.01s   killed by signal 15 SIGTERM
->=20
-> Some of them look unrelated, but I have confirmed that the three unit
-> tests still pass before this patch (and still hang after the complete
-> series).
+In general, we want to avoid using qemufile API as much as possible in the
+future.  Hard-coded VMStateInfo is not suggested.
 
-I can't reproduce these failures, regardless of whether sysctl
-kernel.io_uring_disabled is 0 or 1.
+Thanks,
 
-Can you launch the unit tests from your terminal and post the output?
+> +}
+> +
+> +int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f)
+> +{
+> +    uint64_t size;
+> +
+> +    size = qemu_get_be64(f);
+> +    if (!size) {
+> +        return 0;
+> +    }
+> +
+> +    if (inflight->size != size) {
+> +        int ret = vhost_dev_resize_inflight(inflight, size);
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+> +    }
+> +
+> +    inflight->queue_size = qemu_get_be16(f);
+> +
+> +    qemu_get_buffer(f, inflight->addr, size);
+> +
+> +    return 0;
+> +}
+> +
+>  static int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
+>  {
+>      if (!hdev->vhost_ops->vhost_set_vring_enable) {
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 08bbb4dfe9..da1f0c2361 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -402,6 +402,8 @@ int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
+>  
+>  void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+>  void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+> +void vhost_dev_save_inflight(struct vhost_inflight *inflight, QEMUFile *f);
+> +int vhost_dev_load_inflight(struct vhost_inflight *inflight, QEMUFile *f);
+>  int vhost_dev_prepare_inflight(struct vhost_dev *hdev, VirtIODevice *vdev);
+>  int vhost_dev_set_inflight(struct vhost_dev *dev,
+>                             struct vhost_inflight *inflight);
+> -- 
+> 2.34.1
+> 
 
-  $ cd qemu
-  $ build/tests/unit/test-aio
-  $ build/tests/unit/test-bdrv-drain
-  $ build/tests/unit/test-block-iothread
-
-That will show exactly which sub-test case is hanging.
-
-Other information that might help: your host kernel version and liburing
-version.
-
-Thank you!
-
-Stefan
-
---ZI9TI34x7a45ZZUF
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmj32qkACgkQnKSrs4Gr
-c8gtvQf/US8d09joOpvBOMo2hlzX1sQWttutvUe1grHkYOBiSR3Wkz1Gc4GAeyUj
-ke9P1gPPdvO01hTvds33blgyPWxZN8m5/YyZsrOWKN9PUMuu+RROe1qvGab4dXsc
-HB7voaBQPdJFlUYccf3UtUOqbZPDRcljQpesau3RZkvNMuUqLhPDdrZO/R3bFdym
-Xv5Dcj+ifH1ELPXN1/zyumiSR/9RnHcEu0u31ZyTaA8rhA5JOmmNSiL1+0mjdmVQ
-BdadKeNIarlnwMuEej2zzoe/tZ5NL0n2wa55SiEzwwKu8Ox1U7afZsOpp4uJ/zuJ
-8P3vviCH68f98gM51FPL6CO9LFpMpQ==
-=YJ2h
------END PGP SIGNATURE-----
-
---ZI9TI34x7a45ZZUF--
+-- 
+Peter Xu
 
 
