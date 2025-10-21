@@ -4,105 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC91CCD184
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB43BCCD1A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 18:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBGo3-0002co-Gp; Tue, 21 Oct 2025 14:09:59 -0400
+	id 1vBGvb-00049x-GQ; Tue, 21 Oct 2025 14:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBGnz-0002bR-2s
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:09:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBGnw-0000Cq-7u
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:09:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761070188;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PWyBcu85Qzt+QiSiRjojBT3ZvVL/2JPHnHYZ1qAfsXs=;
- b=hT+aIbnCHxM+kKngJjhEjZ8qc/0Cn6WZ9q9pfGhiEKlu4wNRWS80FNdWvmC+WD7CNMkj+F
- 4sEKUeb9JapiIynMO0KBz3F4elTZhZhdfTB/uWb28iHU9ncTlweLCJPrbh2YxSah0Fva9S
- xWaFMvwLUS0cw/wgcmMoYXu/O2G9LLQ=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-as3U83GpOKGjJ5kOSROkVA-1; Tue, 21 Oct 2025 14:09:47 -0400
-X-MC-Unique: as3U83GpOKGjJ5kOSROkVA-1
-X-Mimecast-MFC-AGG-ID: as3U83GpOKGjJ5kOSROkVA_1761070186
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-78e30eaca8eso277224926d6.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:09:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGvY-00049p-O2
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:17:44 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBGvW-0001FE-G4
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 14:17:44 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3ed20bdfdffso5451281f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 11:17:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761070659; x=1761675459; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3By8Kfq8PqUAkjy9XCGQQ4sbeJUGg88Lrj9uzfNivJA=;
+ b=Tykjiq+faTCnF1dRLq1d81TMWBPa3QkSCK+6sp2jwfs2hZOZFjOeSSVWIuQVjuyndQ
+ NN9yt+HTggLSPZk73UoDDKo5aNtKPv+MxEOe9709oB2A+wTxryi81tm+H+5pLsrblsZF
+ ae1FdOLItje6M6u/FOOlqeC7cbETv9MQKNSV+nYodPb1ZFMUz2fckJqyeWIwJREXMLO/
+ x4Tcv7M9vrq/oTMGVm+AlgYe+//LlRaY0CN9EbL9ZS6HOqj9/9KrbZTEhJMmYoclQU9s
+ LA/6wyoluXT8BGlhcgjwRx2xbKc+o8fbTqAaLtnl0GsYJt2QotfLN8s7hym3bNcRMS8O
+ Gdzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761070186; x=1761674986;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PWyBcu85Qzt+QiSiRjojBT3ZvVL/2JPHnHYZ1qAfsXs=;
- b=bs2Nzr80TNiDTDzpXZYb54FKmPOgR+YCXGW9/w4m/DHkKAWOQEml/kL2Kemtg2PbxZ
- J2vvsXixg6Pf5a4wt6/BeHVpbtVfOE24H/TQzHx3XHxNtLf/V6oviKANF6qwgRv5vLN8
- LRJFvn/2g5NTARwnfBDSct5g7AmnXPUc2DdLLh9Kwg4GfcUp33IUbYTecb6Y9m9UFOpG
- k2kF0//MfGwMV2bmwt2FUGJQi78ev0ozTd0rrSz5Bo4kQfQ59juRrfHx8FKJGxGm1jKm
- o5v2Mj36QeFVatt26MwI30rWIMTEQGkE830B0tiW/wlSTNZqFoxB5yw/aYqr93ks8H8r
- WybQ==
+ d=1e100.net; s=20230601; t=1761070659; x=1761675459;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3By8Kfq8PqUAkjy9XCGQQ4sbeJUGg88Lrj9uzfNivJA=;
+ b=SV23VsUx+l8iX7VDalM2bSG5tUAutsM5bmjmr8kO+Ya3Hl5xgCxEhgE62L6bDQZh9c
+ hloRBE4Jeglh4cgWxYt+HnFIpePwT3Nd73VzaeHy1N6GZaV/xq+OaB5bP8adRgeZig+a
+ W3q/sco1hjUW+HCR0q5OXjJQpWmeQbzS7QL35Bok2bK0jqzLCNcHuM2oKcArferfPFQz
+ LC8j8kv2HreVuj8fRVMApu4b4QoqnVQJKK3oTWwvrF2I+XHwdy8T035M0N969+qQaOZf
+ fR5npvPQ370K7ASvUIES0e9DTp8n/B9GZo7SLo6Regw9HA8FXaEd/IWaHYiye2ZqOMge
+ hzig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVX7lRWYssRekblpu2c8c7eA4CtvUPjNtI98TPWRUoL19Eh7+m7PSMlBc6HqOthMhsFUUq4IBnBM/JH@nongnu.org
-X-Gm-Message-State: AOJu0Yxlom9E0Hfa+XRA+H8KNNHoAEX2/tWst0hJZ+C7ieQrjzU6YJpy
- aWlRDQp8opXmATIFKek5N2oQwJVBNJTyiiFTh6xQw1gMvRl/k1dakOXEyEioM2xu/8GuTLCTwgQ
- 7ds45uGw5V5+js1d9UxAnjEE3XfX94qYsc2PnDsxh8Bc2bND+jI1lgBha
-X-Gm-Gg: ASbGncsVSQ4zuf5o0KxO5UpciQlz1IjMrrEjKpC5cxHrmbzZMV3fQ5N1R+fZmYny8Qx
- /HQrKG6MW+7+W7oVvYILyw+bVO+3KGJD/wftzKhl7mpvT4h9AJ/dxLzoi+uMNDtrSnCKJ/HajqZ
- 7YAzKU5Ku8gaNB9YwSH9EFV438NbKXV9PVD/6VPSmkuiD3lUNTJvhqH7+fr7ZCpol/8Y0tEvvqB
- Ju5KKpIGu23HWQcbO7VJLLQ3YlaBPWC4Ao/+xo9TwegCFSXXU5KrFDb3+Rq0HckEcU0lBhe4Il+
- g5QlIl+1FdgL/CBhcz7Ia0M2NbBanCTdm9byE4Op4iHoafglM9mV9zEItgMb2anctLw=
-X-Received: by 2002:a05:6214:518b:b0:87c:203e:69fe with SMTP id
- 6a1803df08f44-87c20596becmr240193646d6.25.1761070186153; 
- Tue, 21 Oct 2025 11:09:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+NZSK68TFm9VxW/1d+sKYjnic7bUDGZTB6vsKCH18FBC9yOF2ig/TW2WktZeGBtCbMKMYig==
-X-Received: by 2002:a05:6214:518b:b0:87c:203e:69fe with SMTP id
- 6a1803df08f44-87c20596becmr240193136d6.25.1761070185576; 
- Tue, 21 Oct 2025 11:09:45 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87cf521be67sm73247866d6.16.2025.10.21.11.09.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Oct 2025 11:09:45 -0700 (PDT)
-Date: Tue, 21 Oct 2025 14:09:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PULL 02/45] migration: push Error **errp into
- vmstate_load_state()
-Message-ID: <aPfMZ4ugzwbAy_93@x1.local>
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-3-peterx@redhat.com>
- <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
- <aPex9SsQOup69DRI@x1.local>
- <CAFEAcA85DRf5918ea9N66+Z7M_vVGNy+-SdSx17E5MGOf_cbMA@mail.gmail.com>
- <aPe4yBqkPTiDiYXq@x1.local>
- <CAFEAcA8e7qKGm7vq-8TFC40VMfoGU_O5+U0rrKG+Z8M3fVdRfg@mail.gmail.com>
- <aPe9Z0IiEI6mzCdY@x1.local>
- <CAFEAcA_BAxh8BAYPAbPEp_P98gMUdZqZ=2XZHrmGQ+GyEViF_Q@mail.gmail.com>
+ AJvYcCXAjoO1SWUrg8bJPbvMtO0RhucP1o4E04ZOPa5KSkHI7XOuQsnqB358rw1mj9OCHSm8PAbPwYv0yDbj@nongnu.org
+X-Gm-Message-State: AOJu0YxZnCfPFlDSDqbE6PL3KsItJJ8sd0ZDF/YIbsQHW0VTLSafh4p3
+ Dd87f0MFn/PadOEzu+IpmC5MC8uVpMf1lmQK1ZvyxprSOr2UNcgnB/M97XYKlGd0HoM=
+X-Gm-Gg: ASbGncuxfzXH3oBVxgVXV9z5mIuOHsbauuCZpmDbkAj8wV1K6SBClORllPNa0uEjO8J
+ l3zaMwLM8YsGR0PZ4kvij80wmNB1ZG4gm+KYQhFGBtXZma9GJslD7T2HbnbCc4mYn/6/NdUaGgj
+ uXBJ6Nys0um+GSPIbeiLQ9xAh7i29u2EDBiIB03w4ncYgRk7yuITHz9NxA//L+lak8Ift0Ilx/t
+ Ck6ZHk1XWLEn/Gm1vqEgbgX9rfJNSXCeNv5c8/dQKfTeWAPclPr29fE6F2GTVEzLAh8wkyglEGA
+ 1/E7sFeROVKrlcd3gQnpc16T7RnXd248/NPvKORcsWcbErv32CS1JfsRf0CDVQe2GaJA5gJuUuQ
+ s+nZ/PhTw8cQk4xJCwZyT+r5nvtvlR5a4rs0JHrrc+ieiY6NNhZJENHNPfP83K6WvaYUcqS2kQS
+ O/4nSSGaZ5LiOP4TEmTd79WrzW7fSIAKAAg//ZsLMV6cQ=
+X-Google-Smtp-Source: AGHT+IFYvono0+s4yexjoDgBI8G1uVs124bbeyNjyszamDItzmgYjRHhATdxny95FDdp2D2tr30L9Q==
+X-Received: by 2002:a05:6000:2404:b0:427:5e5:a09c with SMTP id
+ ffacd0b85a97d-42705e5a09fmr10995058f8f.37.1761070659110; 
+ Tue, 21 Oct 2025 11:17:39 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47494aa0336sm23611425e9.1.2025.10.21.11.17.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 11:17:38 -0700 (PDT)
+Message-ID: <d4bb9b02-5cdc-4da5-926b-7bb17f78bcfc@linaro.org>
+Date: Tue, 21 Oct 2025 20:17:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_BAxh8BAYPAbPEp_P98gMUdZqZ=2XZHrmGQ+GyEViF_Q@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/xen: pass PCI domain to xc_physdev_map_pirq_msi()
+Content-Language: en-US
+To: Roger Pau Monne <roger.pau@citrix.com>, qemu-devel@nongnu.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+References: <20251017155136.16540-1-roger.pau@citrix.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251017155136.16540-1-roger.pau@citrix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,76 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 21, 2025 at 06:22:55PM +0100, Peter Maydell wrote:
-> On Tue, 21 Oct 2025 at 18:05, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Tue, Oct 21, 2025 at 05:49:51PM +0100, Peter Maydell wrote:
-> > > I suppose so, but that seems like something in practice
-> > > we make a lot of use of. It's really handy to be able to
-> > > say "this is how you obtain the integer you wanted to put
-> > > in the migration stream" -- we do a fair amount of that
-> > > in target/arm/machine.c for instance. But those don't
-> > > need to return a failure, I suppose.
-> >
-> > That's exactly what pre_save() / post_load() should do, IMHO.
-> >
-> > Taking example of the arm's case here:
-> >
-> > static int put_fpscr(QEMUFile *f, void *opaque, size_t size,
-> >                      const VMStateField *field, JSONWriter *vmdesc)
-> > {
-> >     ARMCPU *cpu = opaque;
-> >     CPUARMState *env = &cpu->env;
-> >     uint32_t fpscr = vfp_fpcr_fpsr_needed(opaque) ? 0 : vfp_get_fpscr(env);
-> >
-> >     qemu_put_be32(f, fpscr);
-> >     return 0;
-> > }
-> >
-> > The .pre_save() should be exactly the logic that generalize whatever we
-> > have had in QEMU's structs into a pure uint32_t, put that into a temp
-> > u32. Then migration should be able to transfer that using whatever way it
-> > prefers.  When using qemufile API, it should use vmstate_info_uint32 so as
-> > to not open-code qemu_put_be32().
+On 17/10/25 17:51, Roger Pau Monne wrote:
+> It's currently impossible for passthrough devices on segment different than
+> 0 to work correctly, as the PCI domain is not provided to
+> xc_physdev_map_pirq_msi(), and hence it's unconditionally assumed that all
+> devices are on segment 0.
 > 
-> I think this is very ugly, because it means that the device state
-> struct ends up with a pile of extra fields whose only purpose
-> is to be temporarily used during migration. Having a function
-> which does the "figure out the value at the point where we want it"
-> is a much nicer API because it keeps the migration related
-> complication in the migration code, and keeps it out of the
-> data structures that all the rest of the code has to work with.
-
-It'll be a temporary struct, can be allocated only in a pre_save() and
-freed in a post_save(), for example.  And IIUC most of the devices do not
-need it when there're already good representation of the data for migration
-within the device object.  AFAICT, the latter is the common case.
-
+> Adjust the call to xc_physdev_map_pirq_msi() to pass the PCI domain in the
+> high 16bits of the bus parameter.  On versions of Xen where this is not
+> supported the passed segment will be ignored and assume to be 0, no worse
+> than the current state.
 > 
-> > Now, we have a major issue with qemufile and all the APIs that bound to it
-> > when we want to move the IO layers from qemufile to iochannels, exactly
-> > because we lack such abstraction layer, where we mixed up "this is how you
-> > obtain the integer" and "send this integer to the wire" operations in one
-> > API.
+> Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+> ---
+> Cc: Stefano Stabellini <sstabellini@kernel.org>
+> Cc: Anthony PERARD <anthony@xenproject.org>
+> Cc: Paul Durrant <paul@xen.org>
+> Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+> Cc: xen-devel@lists.xenproject.org
+> ---
+>   hw/xen/xen_pt_msi.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> Yeah, this is unfortunate. But I don't think the solution is
-> to require a lot of extra device state struct fields to carry
-> temporary data for migration. It would be better to have an
-> API similar to the existing get/put functions but which
-> passes the data back to the caller instead of calling
-> qemu_put_be32() itself.
+> diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
+> index e9ba17317aba..df15ccf0d030 100644
+> --- a/hw/xen/xen_pt_msi.c
+> +++ b/hw/xen/xen_pt_msi.c
+> @@ -138,6 +138,7 @@ static int msi_msix_setup(XenPCIPassthroughState *s,
+>           rc = xc_physdev_map_pirq_msi(xen_xc, xen_domid, XEN_PT_AUTO_ASSIGN,
+>                                        ppirq, PCI_DEVFN(s->real_device.dev,
+>                                                         s->real_device.func),
+> +                                     ((uint32_t)s->real_device.domain << 16) |
+>                                        s->real_device.bus,
 
-Yes.  I feel like what we said do not conflict with each other.
+Alternatively:
 
-What you mentioned looks like a per-field version of VMSD's pre/post hooks,
-so AFAIU get() is almost a post_load(), and put() is almost a pre_save(),
-only that it will be per-vmsd-field, rather than per-vmsd.
+   deposit32(s->real_device.bus, 16, 16, s->real_device.domain)
 
-The important part is IO path separations, IMHO.
-
-Thanks,
-
--- 
-Peter Xu
+>                                        msix_entry, table_base);
+>           if (rc) {
+Patch queued, thanks!
 
 
