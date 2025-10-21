@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE103CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20649CCD1AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8Ia-0001vi-Fl; Tue, 21 Oct 2025 05:04:56 -0400
+	id 1vB8JB-0003Jn-7a; Tue, 21 Oct 2025 05:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8IW-0001qD-Uz
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:04:52 -0400
+ id 1vB8J9-0003Fn-47
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8IU-0003yk-PC
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:04:52 -0400
+ id 1vB8J2-0004Dt-Gz
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:05:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761037489;
+ s=mimecast20190719; t=1761037523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mwqZAO19swjAeOZ+xIDLvgyRQnidIjgaxUjdfCadzPM=;
- b=K5enT32/aN8/QqGjOHjDaUDqbIdAe1R/CmONJu4Wb9qXQlBj6bjLIWgr0ILv+jZi3zqZ3M
- oPLB9PWjqVzpEgg/BOJEt3Sy+yGOse3o29s3KSNVVzkQ5LLh4aKTGLWW2ZYCGUFE2WgS/G
- 64StqJleHlycDaMkN3x+SdAmUHJv/40=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=qkzbrmyTwzsUPm+IgyKPZIwl+rvV+nRn9814G1hr6PQ=;
+ b=ZIbzYNS3iAtdzBOA9KmTu40aCJGedKWfByiuiAVW6qK85fw8XJplpby4TPlic2riCEff0k
+ t+nskJRAVQC8YUTq+1stACxugzsDrdOvpQX+ePHJyWtY44jAZ1n+MebbpLGIKys2k+6/y/
+ FKTolxWlLHR6PO/0txwbYMTryF5nCkg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-PXFHkp80NYawM48JuEOy-g-1; Tue,
- 21 Oct 2025 05:04:47 -0400
-X-MC-Unique: PXFHkp80NYawM48JuEOy-g-1
-X-Mimecast-MFC-AGG-ID: PXFHkp80NYawM48JuEOy-g_1761037486
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-gGoEjpYaO9GRUZkj7bN2HA-1; Tue,
+ 21 Oct 2025 05:05:19 -0400
+X-MC-Unique: gGoEjpYaO9GRUZkj7bN2HA-1
+X-Mimecast-MFC-AGG-ID: gGoEjpYaO9GRUZkj7bN2HA_1761037518
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B76F1956089; Tue, 21 Oct 2025 09:04:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C6301800592; Tue, 21 Oct 2025 09:05:18 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5330930001BE; Tue, 21 Oct 2025 09:04:44 +0000 (UTC)
+ id 736BE3000218; Tue, 21 Oct 2025 09:05:17 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
@@ -54,11 +54,10 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH 15/43] hw/audio: drop audio_model.isa
-Date: Tue, 21 Oct 2025 13:02:46 +0400
-Message-ID: <20251021090317.425409-16-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH 21/43] audio/dsound: report init error via **errp
+Date: Tue, 21 Oct 2025 13:02:52 +0400
+Message-ID: <20251021090317.425409-22-marcandre.lureau@redhat.com>
 In-Reply-To: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -93,172 +92,349 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-That's no longer necessary, the code is bus-agnostic.
+Whenever NULL is returned, errp should be set.
+
+Inline SetCooperativeLevel call to simplify code.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/audio/model.h  | 2 +-
- hw/audio/ac97.c           | 2 +-
- hw/audio/adlib.c          | 2 +-
- hw/audio/cs4231a.c        | 2 +-
- hw/audio/es1370.c         | 2 +-
- hw/audio/gus.c            | 2 +-
- hw/audio/model.c          | 7 +------
- hw/audio/sb16.c           | 2 +-
- hw/audio/virtio-snd-pci.c | 2 +-
- 9 files changed, 9 insertions(+), 14 deletions(-)
+ audio/dsoundaudio.c | 182 +++++++++++++++++++-------------------------
+ 1 file changed, 79 insertions(+), 103 deletions(-)
 
-diff --git a/include/hw/audio/model.h b/include/hw/audio/model.h
-index 55d6ac7f6e..ebe456c22f 100644
---- a/include/hw/audio/model.h
-+++ b/include/hw/audio/model.h
-@@ -4,7 +4,7 @@
- void audio_register_model_with_cb(const char *name, const char *descr,
-                                   int (*init_audio_model)(const char *audiodev));
- void audio_register_model(const char *name, const char *descr,
--                          int isa, const char *typename);
-+                          const char *typename);
+diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
+index d54d79d41c..6a8b7f1a19 100644
+--- a/audio/dsoundaudio.c
++++ b/audio/dsoundaudio.c
+@@ -33,6 +33,7 @@
+ #include "audio_int.h"
+ #include "qemu/host-utils.h"
+ #include "qemu/module.h"
++#include "qapi/error.h"
  
- void audio_model_init(void);
- void audio_print_available_models(void);
-diff --git a/hw/audio/ac97.c b/hw/audio/ac97.c
-index 2e1be5089e..3d3c667e86 100644
---- a/hw/audio/ac97.c
-+++ b/hw/audio/ac97.c
-@@ -1360,7 +1360,7 @@ static const TypeInfo ac97_info = {
- static void ac97_register_types(void)
+ #include <windows.h>
+ #include <mmsystem.h>
+@@ -64,162 +65,154 @@ typedef struct {
+     dsound *s;
+ } DSoundVoiceIn;
+ 
+-static void dsound_log_hresult (HRESULT hr)
++static const char *dserror (HRESULT hr)
  {
-     type_register_static(&ac97_info);
--    audio_register_model("ac97", "Intel 82801AA AC97 Audio", 0, TYPE_AC97);
-+    audio_register_model("ac97", "Intel 82801AA AC97 Audio", TYPE_AC97);
- }
- 
- type_init(ac97_register_types)
-diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
-index a7c2efd87c..0bc0359ae6 100644
---- a/hw/audio/adlib.c
-+++ b/hw/audio/adlib.c
-@@ -323,7 +323,7 @@ static const TypeInfo adlib_info = {
- static void adlib_register_types (void)
- {
-     type_register_static (&adlib_info);
--    audio_register_model("adlib", ADLIB_DESC, 1, TYPE_ADLIB);
-+    audio_register_model("adlib", ADLIB_DESC, TYPE_ADLIB);
- }
- 
- type_init (adlib_register_types)
-diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
-index 1f7e0a33c0..18db8da324 100644
---- a/hw/audio/cs4231a.c
-+++ b/hw/audio/cs4231a.c
-@@ -723,7 +723,7 @@ static const TypeInfo cs4231a_info = {
- static void cs4231a_register_types (void)
- {
-     type_register_static (&cs4231a_info);
--    audio_register_model("cs4231a", "CS4231A", 1, TYPE_CS4231A);
-+    audio_register_model("cs4231a", "CS4231A", TYPE_CS4231A);
- }
- 
- type_init (cs4231a_register_types)
-diff --git a/hw/audio/es1370.c b/hw/audio/es1370.c
-index 913c9022f6..8cb47589c3 100644
---- a/hw/audio/es1370.c
-+++ b/hw/audio/es1370.c
-@@ -905,7 +905,7 @@ static const TypeInfo es1370_info = {
- static void es1370_register_types (void)
- {
-     type_register_static (&es1370_info);
--    audio_register_model("es1370", "ENSONIQ AudioPCI ES1370", 0, TYPE_ES1370);
-+    audio_register_model("es1370", "ENSONIQ AudioPCI ES1370", TYPE_ES1370);
- }
- 
- type_init (es1370_register_types)
-diff --git a/hw/audio/gus.c b/hw/audio/gus.c
-index ac9332ea3d..16785ce226 100644
---- a/hw/audio/gus.c
-+++ b/hw/audio/gus.c
-@@ -319,7 +319,7 @@ static const TypeInfo gus_info = {
- static void gus_register_types (void)
- {
-     type_register_static (&gus_info);
--    audio_register_model("gus", "Gravis Ultrasound GF1", 1, TYPE_GUS);
-+    audio_register_model("gus", "Gravis Ultrasound GF1", TYPE_GUS);
- }
- 
- type_init (gus_register_types)
-diff --git a/hw/audio/model.c b/hw/audio/model.c
-index 4f6a234159..924a41e0ac 100644
---- a/hw/audio/model.c
-+++ b/hw/audio/model.c
-@@ -28,14 +28,12 @@
- #include "qapi/error.h"
- #include "qom/object.h"
- #include "hw/qdev-properties.h"
--#include "hw/isa/isa.h"
- #include "hw/audio/model.h"
- 
- struct audio_model {
-     const char *name;
-     const char *descr;
-     const char *typename;
--    int isa;
-     int (*init)(const char *audiodev);
- };
- 
-@@ -48,18 +46,16 @@ void audio_register_model_with_cb(const char *name, const char *descr,
-     assert(audio_models_count < ARRAY_SIZE(audio_models) - 1);
-     audio_models[audio_models_count].name = name;
-     audio_models[audio_models_count].descr = descr;
--    audio_models[audio_models_count].isa = 0;
-     audio_models[audio_models_count].init = init_audio_model;
-     audio_models_count++;
- }
- 
- void audio_register_model(const char *name, const char *descr,
--                          int isa, const char *typename)
-+                          const char *typename)
- {
-     assert(audio_models_count < ARRAY_SIZE(audio_models) - 1);
-     audio_models[audio_models_count].name = name;
-     audio_models[audio_models_count].descr = descr;
--    audio_models[audio_models_count].isa = isa;
-     audio_models[audio_models_count].typename = typename;
-     audio_models_count++;
- }
-@@ -120,7 +116,6 @@ void audio_model_init(void)
-         qdev_prop_set_string(dev, "audiodev", audiodev_id);
-         qdev_realize_and_unref(dev, bus, &error_fatal);
-     } else {
--        assert(!c->isa);
-         c->init(audiodev_id);
+-    const char *str = "BUG";
+-
+     switch (hr) {
+     case DS_OK:
+-        str = "The method succeeded";
+-        break;
++        return "The method succeeded";
+ #ifdef DS_NO_VIRTUALIZATION
+     case DS_NO_VIRTUALIZATION:
+-        str = "The buffer was created, but another 3D algorithm was substituted";
+-        break;
++        return "The buffer was created, but another 3D algorithm was substituted";
+ #endif
+ #ifdef DS_INCOMPLETE
+     case DS_INCOMPLETE:
+-        str = "The method succeeded, but not all the optional effects were obtained";
+-        break;
++        return "The method succeeded, but not all the optional effects were obtained";
+ #endif
+ #ifdef DSERR_ACCESSDENIED
+     case DSERR_ACCESSDENIED:
+-        str = "The request failed because access was denied";
+-        break;
++        return "The request failed because access was denied";
+ #endif
+ #ifdef DSERR_ALLOCATED
+     case DSERR_ALLOCATED:
+-        str = "The request failed because resources, "
+-              "such as a priority level, were already in use "
+-              "by another caller";
+-        break;
++        return "The request failed because resources, "
++               "such as a priority level, were already in use "
++               "by another caller";
+ #endif
+ #ifdef DSERR_ALREADYINITIALIZED
+     case DSERR_ALREADYINITIALIZED:
+-        str = "The object is already initialized";
+-        break;
++        return "The object is already initialized";
+ #endif
+ #ifdef DSERR_BADFORMAT
+     case DSERR_BADFORMAT:
+-        str = "The specified wave format is not supported";
+-        break;
++        return "The specified wave format is not supported";
+ #endif
+ #ifdef DSERR_BADSENDBUFFERGUID
+     case DSERR_BADSENDBUFFERGUID:
+-        str = "The GUID specified in an audiopath file "
+-              "does not match a valid mix-in buffer";
+-        break;
++        return "The GUID specified in an audiopath file "
++               "does not match a valid mix-in buffer";
+ #endif
+ #ifdef DSERR_BUFFERLOST
+     case DSERR_BUFFERLOST:
+-        str = "The buffer memory has been lost and must be restored";
+-        break;
++        return "The buffer memory has been lost and must be restored";
+ #endif
+ #ifdef DSERR_BUFFERTOOSMALL
+     case DSERR_BUFFERTOOSMALL:
+-        str = "The buffer size is not great enough to "
+-              "enable effects processing";
+-        break;
++        return "The buffer size is not great enough to "
++               "enable effects processing";
+ #endif
+ #ifdef DSERR_CONTROLUNAVAIL
+     case DSERR_CONTROLUNAVAIL:
+-        str = "The buffer control (volume, pan, and so on) "
+-              "requested by the caller is not available. "
+-              "Controls must be specified when the buffer is created, "
+-              "using the dwFlags member of DSBUFFERDESC";
+-        break;
++        return "The buffer control (volume, pan, and so on) "
++               "requested by the caller is not available. "
++               "Controls must be specified when the buffer is created, "
++               "using the dwFlags member of DSBUFFERDESC";
+ #endif
+ #ifdef DSERR_DS8_REQUIRED
+     case DSERR_DS8_REQUIRED:
+-        str = "A DirectSound object of class CLSID_DirectSound8 or later "
+-              "is required for the requested functionality. "
+-              "For more information, see IDirectSound8 Interface";
+-        break;
++        return "A DirectSound object of class CLSID_DirectSound8 or later "
++               "is required for the requested functionality. "
++               "For more information, see IDirectSound8 Interface";
+ #endif
+ #ifdef DSERR_FXUNAVAILABLE
+     case DSERR_FXUNAVAILABLE:
+-        str = "The effects requested could not be found on the system, "
+-              "or they are in the wrong order or in the wrong location; "
+-              "for example, an effect expected in hardware "
+-              "was found in software";
+-        break;
++        return "The effects requested could not be found on the system, "
++               "or they are in the wrong order or in the wrong location; "
++               "for example, an effect expected in hardware "
++               "was found in software";
+ #endif
+ #ifdef DSERR_GENERIC
+     case DSERR_GENERIC:
+-        str = "An undetermined error occurred inside the DirectSound subsystem";
+-        break;
++        return "An undetermined error occurred inside the DirectSound subsystem";
+ #endif
+ #ifdef DSERR_INVALIDCALL
+     case DSERR_INVALIDCALL:
+-        str = "This function is not valid for the current state of this object";
+-        break;
++        return "This function is not valid for the current state of this object";
+ #endif
+ #ifdef DSERR_INVALIDPARAM
+     case DSERR_INVALIDPARAM:
+-        str = "An invalid parameter was passed to the returning function";
+-        break;
++        return "An invalid parameter was passed to the returning function";
+ #endif
+ #ifdef DSERR_NOAGGREGATION
+     case DSERR_NOAGGREGATION:
+-        str = "The object does not support aggregation";
+-        break;
++        return "The object does not support aggregation";
+ #endif
+ #ifdef DSERR_NODRIVER
+     case DSERR_NODRIVER:
+-        str = "No sound driver is available for use, "
+-              "or the given GUID is not a valid DirectSound device ID";
+-        break;
++        return "No sound driver is available for use, "
++               "or the given GUID is not a valid DirectSound device ID";
+ #endif
+ #ifdef DSERR_NOINTERFACE
+     case DSERR_NOINTERFACE:
+-        str = "The requested COM interface is not available";
+-        break;
++        return "The requested COM interface is not available";
+ #endif
+ #ifdef DSERR_OBJECTNOTFOUND
+     case DSERR_OBJECTNOTFOUND:
+-        str = "The requested object was not found";
+-        break;
++        return "The requested object was not found";
+ #endif
+ #ifdef DSERR_OTHERAPPHASPRIO
+     case DSERR_OTHERAPPHASPRIO:
+-        str = "Another application has a higher priority level, "
++        return "Another application has a higher priority level, "
+               "preventing this call from succeeding";
+-        break;
+ #endif
+ #ifdef DSERR_OUTOFMEMORY
+     case DSERR_OUTOFMEMORY:
+-        str = "The DirectSound subsystem could not allocate "
++        return "The DirectSound subsystem could not allocate "
+                "sufficient memory to complete the caller's request";
+-        break;
+ #endif
+ #ifdef DSERR_PRIOLEVELNEEDED
+     case DSERR_PRIOLEVELNEEDED:
+-        str = "A cooperative level of DSSCL_PRIORITY or higher is required";
+-        break;
++        return "A cooperative level of DSSCL_PRIORITY or higher is required";
+ #endif
+ #ifdef DSERR_SENDLOOP
+     case DSERR_SENDLOOP:
+-        str = "A circular loop of send effects was detected";
+-        break;
++        return "A circular loop of send effects was detected";
+ #endif
+ #ifdef DSERR_UNINITIALIZED
+     case DSERR_UNINITIALIZED:
+-        str = "The Initialize method has not been called "
+-              "or has not been called successfully "
+-              "before other methods were called";
+-        break;
++        return "The Initialize method has not been called "
++               "or has not been called successfully "
++               "before other methods were called";
+ #endif
+ #ifdef DSERR_UNSUPPORTED
+     case DSERR_UNSUPPORTED:
+-        str = "The function called is not supported at this time";
+-        break;
++        return "The function called is not supported at this time";
+ #endif
+     default:
+-        AUD_log (AUDIO_CAP, "Reason: Unknown (HRESULT 0x%lx)\n", hr);
+-        return;
++        return NULL;
++    }
++
++}
++
++static void dserror_set(Error **errp, HRESULT hr, const char *msg)
++{
++    const char *str = dserror(hr);
++
++    if (str) {
++        error_setg(errp, "%s: %s", msg, str);
++    } else {
++        error_setg(errp, "%s: Unknown (HRESULT: 0x%lx)", msg, hr);
      }
- }
-diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
-index 0d9fa74108..cd7e813d05 100644
---- a/hw/audio/sb16.c
-+++ b/hw/audio/sb16.c
-@@ -1471,7 +1471,7 @@ static const TypeInfo sb16_info = {
- static void sb16_register_types (void)
- {
-     type_register_static (&sb16_info);
--    audio_register_model("sb16", "Creative Sound Blaster 16", 1, TYPE_SB16);
-+    audio_register_model("sb16", "Creative Sound Blaster 16", TYPE_SB16);
++}
++
++static void dsound_log_hresult (HRESULT hr)
++{
++    const char *str = dserror(hr);
+ 
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", str);
++    if (str) {
++        AUD_log (AUDIO_CAP, "Reason: %s\n", str);
++    } else {
++        AUD_log (AUDIO_CAP, "Reason: Unknown (HRESULT: 0x%lx)\n", hr);
++    }
  }
  
- type_init (sb16_register_types)
-diff --git a/hw/audio/virtio-snd-pci.c b/hw/audio/virtio-snd-pci.c
-index b78eaff851..230581ed63 100644
---- a/hw/audio/virtio-snd-pci.c
-+++ b/hw/audio/virtio-snd-pci.c
-@@ -74,7 +74,7 @@ static const VirtioPCIDeviceTypeInfo virtio_snd_pci_info = {
- static void virtio_snd_pci_register(void)
- {
-     virtio_pci_types_register(&virtio_snd_pci_info);
--    audio_register_model("virtio", "Virtio Sound", 0, TYPE_VIRTIO_SND_PCI);
-+    audio_register_model("virtio", "Virtio Sound", TYPE_VIRTIO_SND_PCI);
+ static void G_GNUC_PRINTF (2, 3) dsound_logerr (
+@@ -359,27 +352,6 @@ static void dsound_clear_sample (HWVoiceOut *hw, LPDIRECTSOUNDBUFFER dsb,
+     dsound_unlock_out (dsb, p1, p2, blen1, blen2);
  }
  
- type_init(virtio_snd_pci_register);
+-static int dsound_set_cooperative_level(dsound *s)
+-{
+-    HRESULT hr;
+-    HWND hwnd;
+-
+-    hwnd = GetDesktopWindow();
+-    hr = IDirectSound_SetCooperativeLevel (
+-        s->dsound,
+-        hwnd,
+-        DSSCL_PRIORITY
+-        );
+-
+-    if (FAILED (hr)) {
+-        dsound_logerr (hr, "Could not set cooperative level for window %p\n",
+-                       hwnd);
+-        return -1;
+-    }
+-
+-    return 0;
+-}
+-
+ static void dsound_enable_out(HWVoiceOut *hw, bool enable)
+ {
+     HRESULT hr;
+@@ -621,7 +593,6 @@ static void dsound_audio_fini (void *opaque)
+ 
+ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+ {
+-    int err;
+     HRESULT hr;
+     dsound *s = g_new0(dsound, 1);
+     AudiodevDsoundOptions *dso;
+@@ -637,7 +608,7 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+ 
+     hr = CoInitialize (NULL);
+     if (FAILED (hr)) {
+-        dsound_logerr (hr, "Could not initialize COM\n");
++        dserror_set(errp, hr, "Could not initialize COM");
+         dsound_audio_fini(s);
+         return NULL;
+     }
+@@ -650,14 +621,14 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+         (void **) &s->dsound
+         );
+     if (FAILED (hr)) {
+-        dsound_logerr (hr, "Could not create DirectSound instance\n");
++        dserror_set(errp, hr, "Could not create DirectSound instance");
+         dsound_audio_fini(s);
+         return NULL;
+     }
+ 
+     hr = IDirectSound_Initialize (s->dsound, NULL);
+     if (FAILED (hr)) {
+-        dsound_logerr (hr, "Could not initialize DirectSound\n");
++        dserror_set(errp, hr, "Could not initialize DirectSound");
+         dsound_audio_fini(s);
+         return NULL;
+     }
+@@ -670,21 +641,26 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+         (void **) &s->dsound_capture
+         );
+     if (FAILED (hr)) {
+-        dsound_logerr (hr, "Could not create DirectSoundCapture instance\n");
++        dserror_set(errp, hr, "Could not create DirectSoundCapture instance");
+         dsound_audio_fini(s);
+         return NULL;
+     }
+ 
+     hr = IDirectSoundCapture_Initialize (s->dsound_capture, NULL);
+     if (FAILED (hr)) {
+-        dsound_logerr (hr, "Could not initialize DirectSoundCapture\n");
++        dserror_set(errp, hr, "Could not initialize DirectSoundCapture");
+         dsound_audio_fini(s);
+         return NULL;
+     }
+ 
+-    err = dsound_set_cooperative_level(s);
+-    if (err) {
+-        dsound_audio_fini (s);
++    hr = IDirectSound_SetCooperativeLevel (
++        s->dsound,
++        GetDesktopWindow(),
++        DSSCL_PRIORITY
++    );
++    if (FAILED (hr)) {
++        dserror_set(errp, hr, "Could not set cooperative level");
++        dsound_audio_fini(s);
+         return NULL;
+     }
+ 
 -- 
 2.51.0
 
