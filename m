@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64917CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12802CCD184
+	for <qemu-devel@archiver.kernel.org>; Tue, 21 Oct 2025 09:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vB8Kr-00071o-S5; Tue, 21 Oct 2025 05:07:17 -0400
+	id 1vB8HQ-0001E7-Dn; Tue, 21 Oct 2025 05:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8KV-0006oB-4A
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:06:57 -0400
+ id 1vB8HL-0001DE-33
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:03:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vB8KS-0004Ow-Q7
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:06:54 -0400
+ id 1vB8HH-0003tI-2v
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 05:03:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761037611;
+ s=mimecast20190719; t=1761037413;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2dFt3SyQn/4VSg6MIGWMIRzoazNm5yv+QD/kuyUHOcI=;
- b=HCTjstycEmTZl3weF5hAHzfbdpXdl6r4ePLgZ72c4sRBfOG3Hdl31MV2nvghnbR3Dz6N5h
- NMI44Z77BMMxrbtHhvL2tohYSrW4+95GLENunGL+RIGWn2HobFBP2056cwFQWnkhEr3Qm/
- F/mZOIMbLfAdb/Ov7cqsxP0b56oStSU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=fWre/z+vR/CLqO7zzWmcSy+RcJw8bmgEDmfOcom/YjM=;
+ b=cGyp7ehAxC+kbQfha8PDKwi6TRLOYmPSyvy9WzsqvK56LXn9fBI+fQqL5OV0EdbCGb083L
+ U1Gf5H+ir8na66SFm09kY7gaiHfnWnvvMox7OvgdhxqZAD620DzSgCfqNfeLG7SXzSGxvh
+ W9qt0zHp3LgPpkt4U93nBXw0d6yst94=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-34-PDF8AoglMmyx1vvBnza2wQ-1; Tue,
- 21 Oct 2025 05:06:48 -0400
-X-MC-Unique: PDF8AoglMmyx1vvBnza2wQ-1
-X-Mimecast-MFC-AGG-ID: PDF8AoglMmyx1vvBnza2wQ_1761037607
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-hyWAkD73OeCk9xc0to2nLg-1; Tue,
+ 21 Oct 2025 05:03:29 -0400
+X-MC-Unique: hyWAkD73OeCk9xc0to2nLg-1
+X-Mimecast-MFC-AGG-ID: hyWAkD73OeCk9xc0to2nLg_1761037408
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E95D719560B7; Tue, 21 Oct 2025 09:06:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 733B9180065F; Tue, 21 Oct 2025 09:03:28 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5FC619560A2; Tue, 21 Oct 2025 09:06:45 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D27F41955F22; Tue, 21 Oct 2025 09:03:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
@@ -55,16 +55,15 @@ Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 37/43] audio/dbus: use a helper function to set the backend
- dbus server
-Date: Tue, 21 Oct 2025 13:03:08 +0400
-Message-ID: <20251021090317.425409-38-marcandre.lureau@redhat.com>
+Subject: [PATCH 01/43] hw/audio: improve error reports
+Date: Tue, 21 Oct 2025 13:02:32 +0400
+Message-ID: <20251021090317.425409-2-marcandre.lureau@redhat.com>
 In-Reply-To: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 References: <20251021090317.425409-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -93,122 +92,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+The -audiodev argument is 'model=..', use same terminology.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.h     |  6 ++++++
- audio/audio_int.h |  2 +-
- audio/audio.c     | 14 ++++++++++++++
- audio/dbusaudio.c |  6 ++++--
- ui/dbus.c         |  8 +-------
- 5 files changed, 26 insertions(+), 10 deletions(-)
+ hw/audio/soundhw.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/audio/audio.h b/audio/audio.h
-index 85e588a885..1f37cc3164 100644
---- a/audio/audio.h
-+++ b/audio/audio.h
-@@ -28,6 +28,9 @@
- #include "qemu/queue.h"
- #include "qapi/qapi-types-audio.h"
- #include "hw/qdev-properties-system.h"
-+#ifdef CONFIG_GIO
-+#include "gio/gio.h"
-+#endif
+diff --git a/hw/audio/soundhw.c b/hw/audio/soundhw.c
+index d18fd9fa05..b06552e7a8 100644
+--- a/hw/audio/soundhw.c
++++ b/hw/audio/soundhw.c
+@@ -70,7 +70,7 @@ void show_valid_soundhw(void)
+     struct soundhw *c;
  
- typedef void (*audio_callback_fn) (void *opaque, int avail);
+     if (soundhw_count) {
+-         printf("Valid sound card names (comma separated):\n");
++         printf("Valid audio device model names:\n");
+          for (c = soundhw; c->name; ++c) {
+              printf ("%-11s %s\n", c->name, c->descr);
+          }
+@@ -88,7 +88,7 @@ void select_soundhw(const char *name, const char *audiodev)
+     struct soundhw *c;
  
-@@ -157,6 +160,9 @@ void audio_help(void);
- AudioBE *audio_be_by_name(const char *name, Error **errp);
- AudioBE *audio_get_default_audio_be(Error **errp);
- const char *audio_fe_get_be_id(AudioFE *fe);
-+#ifdef CONFIG_GIO
-+bool audio_be_set_dbus_server(AudioBE *be, GDBusObjectManagerServer *server, bool p2p, Error **errp);
-+#endif
- 
- #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
-     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 5943dc3b2a..8c2dae21ab 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -147,7 +147,7 @@ struct audio_driver {
-     void *(*init) (Audiodev *, Error **);
-     void (*fini) (void *);
- #ifdef CONFIG_GIO
--    void (*set_dbus_server) (AudioBE *s, GDBusObjectManagerServer *manager, bool p2p);
-+    bool (*set_dbus_server) (AudioBE *s, GDBusObjectManagerServer *manager, bool p2p, Error **errp);
- #endif
-     struct audio_pcm_ops *pcm_ops;
-     int max_voices_out;
-diff --git a/audio/audio.c b/audio/audio.c
-index 35753ebb97..2207cad5d7 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -2232,6 +2232,20 @@ AudioBE *audio_be_by_name(const char *name, Error **errp)
-     }
- }
- 
-+#ifdef CONFIG_GIO
-+bool audio_be_set_dbus_server(AudioBE *be, GDBusObjectManagerServer *server, bool p2p, Error **errp)
-+{
-+    assert(be != NULL);
-+
-+    if (!be->drv->set_dbus_server) {
-+        error_setg(errp, "Audiodev '%s' is not compatible with DBus", be->dev->id);
-+        return false;
-+    }
-+
-+    return be->drv->set_dbus_server(be, server, p2p, errp);
-+}
-+#endif
-+
- const char *audio_fe_get_be_id(AudioFE *card)
- {
-     if (card->be) {
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 873f76a89e..3344cbb030 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -645,8 +645,8 @@ dbus_audio_register_in_listener(AudioBE *s,
-                                         arg_listener, false);
- }
- 
--static void
--dbus_audio_set_server(AudioBE *s, GDBusObjectManagerServer *server, bool p2p)
-+static bool
-+dbus_audio_set_server(AudioBE *s, GDBusObjectManagerServer *server, bool p2p, Error **errp)
- {
-     DBusAudio *da = s->drv_opaque;
- 
-@@ -669,6 +669,8 @@ dbus_audio_set_server(AudioBE *s, GDBusObjectManagerServer *server, bool p2p)
-     g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(da->audio),
-                                          G_DBUS_INTERFACE_SKELETON(da->iface));
-     g_dbus_object_manager_server_export(da->server, da->audio);
-+
-+    return true;
- }
- 
- static struct audio_pcm_ops dbus_pcm_ops = {
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 962b4a8c1e..7d44287673 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -221,15 +221,9 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
- 
-     if (dd->audiodev && *dd->audiodev) {
-         AudioBE *audio_be = audio_be_by_name(dd->audiodev, errp);
--        if (!audio_be) {
-+        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
-             return;
-         }
--        if (!g_str_equal(audio_be->drv->name, "dbus")) {
--            error_setg(errp, "Audiodev '%s' is not compatible with DBus",
--                       dd->audiodev);
--            return;
--        }
--        audio_be->drv->set_dbus_server(audio_be, dd->server, dd->p2p);
+     if (selected) {
+-        error_report("only one -soundhw option is allowed");
++        error_report("only one -audio option is allowed");
+         exit(1);
      }
  
-     consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
+@@ -101,7 +101,7 @@ void select_soundhw(const char *name, const char *audiodev)
+     }
+ 
+     if (!c->name) {
+-        error_report("Unknown sound card name `%s'", name);
++        error_report("Unknown audio device model `%s'", name);
+         show_valid_soundhw();
+         exit(1);
+     }
+@@ -140,4 +140,3 @@ void soundhw_init(void)
+         c->init_pci(pci_bus, audiodev_id);
+     }
+ }
+-
 -- 
 2.51.0
 
