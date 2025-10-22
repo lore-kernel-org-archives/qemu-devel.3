@@ -4,59 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7482DCCF9E1
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0023CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXo1-0000yg-Lm; Wed, 22 Oct 2025 08:19:05 -0400
+	id 1vBXoC-000122-Lr; Wed, 22 Oct 2025 08:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXny-0000yR-Ka
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXoA-00011O-Ce
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXnt-00071K-OY
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:01 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo8-00072v-A8
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761135532;
+ s=mimecast20190719; t=1761135551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0FK+knJZayxg7BS7fbMe+D61WT87hhNpRhM5eVAqDYE=;
- b=X6YlvR+ptQVlwjufC5t6ML4I8K5jdcHT1x5rZdi8wTuDd6OAo4dEZS6nkarb2bFUxAvQKj
- LjyXAMA3Zstfbg/sisj4drsoCcU6cItl/MpEopm9Z0z560XQWgskxroGZIEibDWfGXwVGO
- Em+pIw6wgFX4g+IGGdq3qoJZ3eivlO4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KkuOgutKsnzyz6zzREuIi83VHqQxaO3yShxiifas0sI=;
+ b=hRli+5M4zc3A4h6cs12K9MG49Sqm+yY2OcdmnuQjk2E4lDc1LpUp5aWZfFlLTAYsdssLwo
+ /mlp63vKOlXuWHzmF7ZKrJmL51I9iT9Tg5mYMqE1U4Atx6RMFxaS0+qG0NGZI/oGB4fUX0
+ X6S/Nvr72po59Kiz36Bv70LtPik4HSU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-qtgLBfoTNi-S2xNL1343ww-1; Wed,
- 22 Oct 2025 08:18:51 -0400
-X-MC-Unique: qtgLBfoTNi-S2xNL1343ww-1
-X-Mimecast-MFC-AGG-ID: qtgLBfoTNi-S2xNL1343ww_1761135530
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-MChlWZTgMPWKR6rUC3qOWQ-1; Wed,
+ 22 Oct 2025 08:19:07 -0400
+X-MC-Unique: MChlWZTgMPWKR6rUC3qOWQ-1
+X-Mimecast-MFC-AGG-ID: MChlWZTgMPWKR6rUC3qOWQ_1761135546
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60966195422F
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:18:50 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9DDAC1956094; Wed, 22 Oct 2025 12:19:06 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.12])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 80340180044F; Wed, 22 Oct 2025 12:18:48 +0000 (UTC)
+ id 56CD81800452; Wed, 22 Oct 2025 12:19:04 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ John Levon <levon@movementarian.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 00/12] vfio queue
-Date: Wed, 22 Oct 2025 14:18:34 +0200
-Message-ID: <20251022121846.874152-1-clg@redhat.com>
+Subject: [PULL 06/12] vfio/container: Support unmap all in one ioctl()
+Date: Wed, 22 Oct 2025 14:18:40 +0200
+Message-ID: <20251022121846.874152-7-clg@redhat.com>
+In-Reply-To: <20251022121846.874152-1-clg@redhat.com>
+References: <20251022121846.874152-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,61 +85,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3c0b42c68f98fb276fa248012642be8cbf2cab70:
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-  Merge tag 'pull-request-2025-10-21' of https://gitlab.com/thuth/qemu into staging (2025-10-21 08:59:35 -0500)
+VFIO type1 kernel uAPI supports unmapping whole address space in one call
+since commit c19650995374 ("vfio/type1: implement unmap all"). Use the
+unmap_all variant whenever it's supported in kernel.
 
-are available in the Git repository at:
+Opportunistically pass VFIOLegacyContainer pointer in low level function
+vfio_legacy_dma_unmap_one().
 
-  https://github.com/legoater/qemu/ tags/pull-vfio-20251022
-
-for you to fetch changes up to ecbe424a63c9f860a901d6a4a75724b046abd796:
-
-  vfio: only check region info cache for initial regions (2025-10-22 08:12:52 +0200)
-
-----------------------------------------------------------------
-vfio queue:
-
-* Fix CPR transfer
-* Add support for VFIO_DMA_UNMAP_FLAG_ALL
-* Fix vfio-user documentation
-* Update Alex Williamson's email address
-* Fix for vfio-region cache for the vGPU use case
-
-----------------------------------------------------------------
-Alex Williamson (1):
-      MAINTAINERS: Update Alex Williamson's email address
-
-John Levon (3):
-      docs/system/devices/vfio-user: fix formatting
-      vfio: rename field to "num_initial_regions"
-      vfio: only check region info cache for initial regions
-
-Zhenzhong Duan (8):
-      vfio/container: Remap only populated parts in a section
-      vfio/cpr-legacy: drop an erroneous assert
-      vfio/iommufd: Set cpr.ioas_id on source side for CPR transfer
-      vfio/iommufd: Restore vbasedev's reference to hwpt after CPR transfer
-      accel/kvm: Fix an erroneous check on coalesced_mmio_ring
-      vfio/container: Support unmap all in one ioctl()
-      vfio/iommufd: Support unmap all in one ioctl()
-      vfio/listener: Add an assertion for unmap_all
-
- MAINTAINERS                             |  4 ++--
- docs/system/devices/vfio-user.rst       |  2 +-
+Co-developed-by: John Levon <levon@movementarian.org>
+Signed-off-by: John Levon <levon@movementarian.org>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20251009040134.334251-2-zhenzhong.duan@intel.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
  include/hw/vfio/vfio-container-legacy.h |  1 +
- include/hw/vfio/vfio-cpr.h              |  2 +-
- include/hw/vfio/vfio-device.h           |  2 +-
- accel/kvm/kvm-all.c                     |  3 ++-
- hw/vfio-user/device.c                   |  2 +-
- hw/vfio/ccw.c                           |  4 ++--
- hw/vfio/container-legacy.c              | 38 ++++++++++++++++++--------------
- hw/vfio/cpr-legacy.c                    | 22 +++++++++++++------
- hw/vfio/device.c                        | 39 +++++++++++++++++++++------------
- hw/vfio/iommufd.c                       | 26 ++++++----------------
- hw/vfio/listener.c                      |  5 +++--
- hw/vfio/pci.c                           |  4 ++--
- .mailmap                                |  1 +
- 15 files changed, 86 insertions(+), 69 deletions(-)
+ hw/vfio/container-legacy.c              | 38 ++++++++++++++-----------
+ 2 files changed, 23 insertions(+), 16 deletions(-)
+
+diff --git a/include/hw/vfio/vfio-container-legacy.h b/include/hw/vfio/vfio-container-legacy.h
+index 74a72df018b50490b95d80044a31247ba7c9fc3b..ffd594e80d64ee11ebc48940bc481b9aafc127d4 100644
+--- a/include/hw/vfio/vfio-container-legacy.h
++++ b/include/hw/vfio/vfio-container-legacy.h
+@@ -30,6 +30,7 @@ struct VFIOLegacyContainer {
+ 
+     int fd; /* /dev/vfio/vfio, empowered by the attached groups */
+     unsigned iommu_type;
++    bool unmap_all_supported;
+     QLIST_HEAD(, VFIOGroup) group_list;
+     VFIOContainerCPR cpr;
+ };
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index a3615d7b5dba8fce2f633e986036241e3cfd935d..8e9639603e08b2e1b13f1cd2ca51cc3e48913135 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -121,14 +121,14 @@ unmap_exit:
+     return ret;
+ }
+ 
+-static int vfio_legacy_dma_unmap_one(const VFIOContainer *bcontainer,
++static int vfio_legacy_dma_unmap_one(const VFIOLegacyContainer *container,
+                                      hwaddr iova, uint64_t size,
+-                                     IOMMUTLBEntry *iotlb)
++                                     uint32_t flags, IOMMUTLBEntry *iotlb)
+ {
+-    const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
++    const VFIOContainer *bcontainer = VFIO_IOMMU(container);
+     struct vfio_iommu_type1_dma_unmap unmap = {
+         .argsz = sizeof(unmap),
+-        .flags = 0,
++        .flags = flags,
+         .iova = iova,
+         .size = size,
+     };
+@@ -170,25 +170,28 @@ static int vfio_legacy_dma_unmap(const VFIOContainer *bcontainer,
+                                  hwaddr iova, uint64_t size,
+                                  IOMMUTLBEntry *iotlb, bool unmap_all)
+ {
++    const VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
++    uint32_t flags = 0;
+     int ret;
+ 
+     if (unmap_all) {
+-        /* The unmap ioctl doesn't accept a full 64-bit span. */
+-        Int128 llsize = int128_rshift(int128_2_64(), 1);
+-
+-        ret = vfio_legacy_dma_unmap_one(bcontainer, 0, int128_get64(llsize),
+-                                        iotlb);
++        if (container->unmap_all_supported) {
++            flags = VFIO_DMA_UNMAP_FLAG_ALL;
++        } else {
++            /* The unmap ioctl doesn't accept a full 64-bit span. */
++            Int128 llsize = int128_rshift(int128_2_64(), 1);
++            size = int128_get64(llsize);
++
++            ret = vfio_legacy_dma_unmap_one(container, 0, size, flags, iotlb);
++            if (ret) {
++                return ret;
++            }
+ 
+-        if (ret == 0) {
+-            ret = vfio_legacy_dma_unmap_one(bcontainer, int128_get64(llsize),
+-                                            int128_get64(llsize), iotlb);
++            iova = size;
+         }
+-
+-    } else {
+-        ret = vfio_legacy_dma_unmap_one(bcontainer, iova, size, iotlb);
+     }
+ 
+-    return ret;
++    return vfio_legacy_dma_unmap_one(container, iova, size, flags, iotlb);
+ }
+ 
+ static int vfio_legacy_dma_map(const VFIOContainer *bcontainer, hwaddr iova,
+@@ -519,6 +522,9 @@ static bool vfio_legacy_setup(VFIOContainer *bcontainer, Error **errp)
+ 
+     vfio_get_info_iova_range(info, bcontainer);
+ 
++    ret = ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL);
++    container->unmap_all_supported = !!ret;
++
+     vfio_get_iommu_info_migration(container, info);
+     return true;
+ }
+-- 
+2.51.0
 
 
