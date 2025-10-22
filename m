@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A0CCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B0ACCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXMn-0007jo-Fc; Wed, 22 Oct 2025 07:50:59 -0400
+	id 1vBXP5-0000NZ-4q; Wed, 22 Oct 2025 07:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBXMm-0007hU-69
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:50:56 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBXMi-0003rp-FT
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:50:55 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-784966ad073so45312057b3.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761133850; x=1761738650; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wYNtjsVMvszdoj9Jt0oH1SPp7y+wTPBy9VWR/t5hIgA=;
- b=Uo50Zlvam9cz2+82yY4691DqgFhcj2Iq6/V+Sn345hbmzVlrPvT+mSEkYxIj7YOIKj
- nboqP2Q447gvr03ZMcjVxTrRXI/oNbd6Wt7xNpDZYZE0qWLAP2REWQIzE4g7RkkpiREO
- DfNLt5k7SKifZgopk7CKIsPJD0Q8OljWuU3c6yn4/fTtlnYPZ6B8xEvhyUAYscq7SLr1
- MTTqZ5RXekY/7tWIq9OAF0/J6otAyT3bPuojBnoYwpwytVT6RQn3t7gKj8JUkYLl6npx
- +3QqLIf4wk8n6aRg5PIHp782+y2XjLoKr7fwFKRStgpIxTbCxNDj/h1McjuoJkU3OFSS
- hd4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761133850; x=1761738650;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wYNtjsVMvszdoj9Jt0oH1SPp7y+wTPBy9VWR/t5hIgA=;
- b=LUfHzbUVVCtH3KZxFXMPn4Et3P1HTtFeBTrsWq98oKbYII6DmIOxEaGKgo3Tb9Ufr8
- Snex7buU3IFpWGC66G2wUT/vZUffom9vUSRNMYHLqqlTzIF2TE6q4B+wjSHmKcoyafgK
- 7NmWaiOFDZip6/4dczXHFkSodxhMNxL/KGo0Xp3YRIWbgqOTv0bY/n/E6F0wQxJj9hte
- sSedaiC7LIHE91t/q0dK2aNbWumu8osP9sgJD/ehrPLZN933V9YubBqpubQMNiwsV/MK
- LoaWBsP18GDzJcd72QDoeD/YhAYmoufeeVuZIWP9vP/Q0p6eM56fwXyl2aGGGCK43HLu
- L/0A==
-X-Gm-Message-State: AOJu0YzBx9LvWDXImOn04f8gfdcnWd3020DvMnQ6uyIJdChIG57n9f+v
- rpSBzB13pp25VRPw57gEE0DVVTd+YW4Ic7Lh55fNUpjtfTD/Od6za7xJ5F2iUmy8Q4lB47UfZaR
- /gKrwI7dESryU/QBAFlvoAeRbsJvHd5P1+noO4WWSYQ==
-X-Gm-Gg: ASbGnct0shoHO/st6s9Ovg5MEt8jlVcJVHYWSLKBpBPhKzaczHK0nM+n4sS09fBU5cJ
- kXBzIuP9dMkA99mECbTpcniglJU1CLVtXSPMB4NVopFVTPiQxzzdWap31zR7JBOWjPyJybQi4af
- SxalSmtV0qzT4yYO6nBVOjHHJ7cdj8SECXfqUXwINOzSLEH+b9pixBtROcPBtx0pqcaGA4oRKTj
- SZoLLOLWspWMJKaXvkhoDNniwvEMhc4T1Jt8J5cu/xIPKutiydsVmXS9uzJUg==
-X-Google-Smtp-Source: AGHT+IEDjXij1tw5GXjjZseQwbkws1Zpkbm30dNkmjFji58zZKa/tMq3kDeRtoUXQm68u/l4lj9lYAkODgCyS0WiBWg=
-X-Received: by 2002:a05:690e:144c:b0:63e:3084:4809 with SMTP id
- 956f58d0204a3-63e30844b2fmr10598929d50.33.1761133850423; Wed, 22 Oct 2025
- 04:50:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
+ id 1vBXOt-0000N5-Gv; Wed, 22 Oct 2025 07:53:08 -0400
+Received: from m.syntacore.com ([178.249.69.228])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
+ id 1vBXOl-0003wI-Jy; Wed, 22 Oct 2025 07:53:06 -0400
+Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
+ by m.syntacore.com (Postfix) with ESMTP id D7B9A1A0002;
+ Wed, 22 Oct 2025 11:52:52 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com D7B9A1A0002
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
+ t=1761133972; bh=48uiUuIA3hPr5jwoWkHueLUx8bqmxbk944pCbWvQkeU=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=JoSljbcLw7w28s+2w1OxvRDZglBz/6nuDVDZLlMp0cqVhZyi1Axq1QLtUPn8IFD1c
+ FyZXhUJZQDWakGwqVe2XXCrhFQeck62C+K6229Se0u/KaCloJe3sctd84bc3JAQAZy
+ HxdJw7CXrYinpT0y8NJPAMNeTPE9ZfAKgAMwzzzQycq9FynQlrBDkuf3OirSERmDZi
+ 1EBWc+9HyLcMxdxU73CbeXuvvicBmzzpalwYhGAX/40A0zWzFEz2sPKvkXK3uFqbdL
+ HCSUdbIQj1h9JYu6PW89Dh11xPl5KcTaHA03vIqZNdPD7hIJN3ANaixHWtFAu+sU5w
+ B4E3HMKUIUrkg==
+Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
+ [10.76.202.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by m.syntacore.com (Postfix) with ESMTPS;
+ Wed, 22 Oct 2025 11:52:52 +0000 (UTC)
+Received: from mail.syntacore.com (172.17.58.29) by
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 22 Oct 2025 14:52:29 +0300
+From: Nikita Novikov <n.novikov@syntacore.com>
+To: <richard.henderson@linaro.org>
+CC: <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
+ Nikita Novikov <n.novikov@syntacore.com>
+Subject: [PATCH] accel/tcg: Pass actual memop_size to tlb_fill instead of 0
+Date: Wed, 22 Oct 2025 14:52:13 +0300
+Message-ID: <20251022115213.91457-1-n.novikov@syntacore.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <20251021205741.57109-1-philmd@linaro.org>
-In-Reply-To: <20251021205741.57109-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 22 Oct 2025 12:50:38 +0100
-X-Gm-Features: AS18NWDnNrVzi40OCE3sR3euJo3fyyOr1VvT4KwJxHaELlmKQullAI18OrBq6Lw
-Message-ID: <CAFEAcA8A5xa0nJUczM_BDCvVu+sP-tdbt_CxDGos6hKW27qEZA@mail.gmail.com>
-Subject: Re: [PATCH v7 00/19] single-binary: Make hw/arm/ common
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>, 
- Luc Michel <luc.michel@amd.com>, Zhao Liu <zhao1.liu@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [172.17.58.29]
+X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
+ S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
+X-KSMG-AntiPhishing: not scanned, disabled by settings
+X-KSMG-AntiSpam-Interceptor-Info: not scanned
+X-KSMG-AntiSpam-Status: not scanned, disabled by settings
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
+ bases: 2025/10/22 06:57:00 #27791190
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 5
+Received-SPF: pass client-ip=178.249.69.228;
+ envelope-from=n.novikov@syntacore.com; helo=m.syntacore.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,18 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Oct 2025 at 21:57, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Series fully reviewed.
->
-> Since v6:
-> - Addressed Jan comment
-> - Removed aspeed/raspi meson patches
+Recent debugging of misaligned access handling on RISC-V revealed that we
+always call `tlb_fill` with `memop_size == 0`. This behavior effectively
+disables natural alignment checks in `riscv_tlb_fill_align()`, because we
+have to fall back from `memop_size` to `size` when computing the alignment bits.
 
-I'm assuming you'll take this via your own tree like the
-other single-binary stuff -- let me know if you want me
-to take it into target-arm instead.
+With `memop_size == 0`, misaligned cross-page stores end up reported as
+`store access fault` (AF, cause=7) instead of the expected
+`store page fault` (PF, cause=15), since the “misalign” path triggers before
+the second page translation can fault. This breaks misaligned accesses at
+page boundaries.
 
--- PMM
+After switching to pass the real `l->memop` into `tlb_fill`, the cross-page
+faults are no longer mis-classified as AF.
+
+Fixes: ec03dd972378 ("accel/tcg: Hoist first page lookup above pointer_wrap")
+
+Signed-off-by: Nikita Novikov <n.novikov@syntacore.com>
+---
+ accel/tcg/cputlb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 631f1fe135..271c061be1 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1782,7 +1782,7 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+          * If the lookup potentially resized the table, refresh the
+          * first CPUTLBEntryFull pointer.
+          */
+-        if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
++        if (mmu_lookup1(cpu, &l->page[1], l->memop, l->mmu_idx, type, ra)) {
+             uintptr_t index = tlb_index(cpu, l->mmu_idx, addr);
+             l->page[0].full = &cpu->neg.tlb.d[l->mmu_idx].fulltlb[index];
+         }
+-- 
+2.51.0
+
 
