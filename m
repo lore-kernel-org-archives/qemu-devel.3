@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1B2CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C465CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBZWZ-0002N5-JC; Wed, 22 Oct 2025 10:09:11 -0400
+	id 1vBZqS-00066C-2R; Wed, 22 Oct 2025 10:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBZWU-0002Ma-JO
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:09:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBZWO-0002av-3B
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:09:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761142138;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+vDjnzrbU8LrYUNj3f7aSg/oxvbRwX7zoBUf1/4p4yY=;
- b=Z9uZxZ8vSNaBTbz8lFawMEYW0UliprF/iB0dNRMuQkio8tTQ3Xn7TxVPQJlPEMV7qLewWM
- 2jTom5BiBz3W19fN6lhB+WgNzDYtGWKPix/q+sN/9gvyigc6IrZWttMerpdt0RzqAtOHIr
- hlQAEqlaKAgnUm8GBlxlciOZ0GXp+Zc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-Lt24Ry_vPVqgsW-txqARig-1; Wed,
- 22 Oct 2025 10:08:50 -0400
-X-MC-Unique: Lt24Ry_vPVqgsW-txqARig-1
-X-Mimecast-MFC-AGG-ID: Lt24Ry_vPVqgsW-txqARig_1761142129
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF40518002DD; Wed, 22 Oct 2025 14:08:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69D2C300019F; Wed, 22 Oct 2025 14:08:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B267021E6A27; Wed, 22 Oct 2025 16:08:45 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  berrange@redhat.com,
- eduardo@habkost.net,  philmd@linaro.org
-Subject: Re: [PATCH 1/3] qdev: Change PropertyInfo method print() to return
- malloc'ed string
-In-Reply-To: <CAJ+F1CKdasvQ14r+e2OEKFk+=4Yu2Mgg8EqSe_ZNQJDVoyiEKA@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Wed, 22 Oct 2025
- 14:59:57 +0400")
-References: <20251022101420.36059-1-armbru@redhat.com>
- <20251022101420.36059-2-armbru@redhat.com>
- <CAJ+F1CKdasvQ14r+e2OEKFk+=4Yu2Mgg8EqSe_ZNQJDVoyiEKA@mail.gmail.com>
-Date: Wed, 22 Oct 2025 16:08:45 +0200
-Message-ID: <87v7k7c9le.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBZqO-00065v-DX
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:29:41 -0400
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBZqK-0004lZ-KJ
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:29:39 -0400
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-44575bc8d88so1943964b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 07:29:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761143373; x=1761748173; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gtKjwt2uw3AHi2g6FRHSAGnxG+XjSD4UHpww+w9jcH8=;
+ b=YHoU0jb5GO8qqrshla/WRiqirHG9vvBeVhlDwqHgt+CsZHEkJDIAGwHqitE5xuKsSe
+ cPJUhkaY+WSduhxLSarJM5zoJx7lqr9mHTlY9mRQRDS80kqqaIIXSZYGv1X3rrTH/3WX
+ fy/8Pi20j7oY16gEkZySskNPkC2WHOyRCtPiChiBaRWeybvFCnMHIvoypkFo4iiBI+BO
+ MqKMjrJgmk7aXHAKtVu9T3/FEwNggHCVhoqE1p52wJzUyetnemcMJ5m62t81SMa3WRf6
+ sN1gNvhLdt+3ggKK9EpWMm6JHWes1jbJFqy9Cley+ymW/dNB9It1TG/uZ+ZttRSmXzTw
+ yXuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761143373; x=1761748173;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gtKjwt2uw3AHi2g6FRHSAGnxG+XjSD4UHpww+w9jcH8=;
+ b=bXDZVqwgjYxUUOA4qrT1IQc53jnViFWMuLpX2xoVlgR5RJ7Acn7gYYgY5PGwmO8VsH
+ mLK8nV70OX9rd8Ml0HFHNNRy80CXqw4i5XCxGAB0Br4Q/+bL/wvG4yfR4m0jaPJKmjO8
+ YWcr9KiQmae1l/J16ClDNMGq8sR7hpuJNzWdyEuG90TmzT1RwBpSgLcI1Rvpd3mX8YMB
+ PUZrmr4NOH7C1fszwgJZU/MWSMZjT1Zz3Y4SnUXxh36O8ChFkiLBJbwx1jsh8I/t5Gxi
+ nios2Ecnn2doxQ57duLeF1ovcHqFlYvpAyzx61KK3w1O48q9t4nivcJGvPT2vFdDrLBb
+ KdKQ==
+X-Gm-Message-State: AOJu0YyN55I1/x9xng4SYMkxo5KrPAM2dQDtNph3oWa+SLl22XYUxfB2
+ edzJOioKO4A3Fs63scS8IJpbrCVsAmQZtA/wjEhjIByiQ2T2Qj9TmzcJValBo5e6+95oaXrZVhH
+ +DTj8
+X-Gm-Gg: ASbGnctWbx2PZVkTMJPafpRc0OWlACOrI4xL847dx32aVWuxGSKHHhZSX18+k6r9Iwz
+ P4tqV1EN/WN28LdA+sMa8WoRI5YacOTne0z+yLtTN+qNzKvI7KiJJT/7QsYdp7EXCcmAwJPwyYZ
+ UFZryhY58HOYcQP0ejlCcISm7jHF0DeZurdSxb3m5O1qEJxYiq5h1Z8kmmvuP9oy2+WT2p/4XFd
+ 1YMmbYpPQdqGb64QuP/Duywr24CGlSoX0BnHqVrHklVuggYet+iMCt8N0/HwQTuPteVBP3cnxaJ
+ knps5Bf0THSaOTmCILRhyratoG2IC9r6Kk7p3JqiP0ShFMHef+ULe8rKWFgS+L64S3km8xvERBu
+ 1KArxTIySTVHv5JGhbFsq+l1DPPe9cjrz3AwH5SbMkTFgOd+hvDbRrXCYxxfQhQEJ9SIPMINiAG
+ jeigcO/iANXyuA2srJQachIGzDj5Pn0yymYPuKnA==
+X-Google-Smtp-Source: AGHT+IGD8xkBbVCHZF7+RH1nCFoLhPB0DQnKXSLeLPYGBGgtNDm4lvnMfokjv8LBzy2NgYtBQfXH+Q==
+X-Received: by 2002:a05:6808:1b0d:b0:441:8f74:f11 with SMTP id
+ 5614622812f47-443a314433fmr10189098b6e.59.1761143373283; 
+ Wed, 22 Oct 2025 07:29:33 -0700 (PDT)
+Received: from [10.128.41.227] ([50.194.179.134])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-651d3a9a5casm3488789eaf.2.2025.10.22.07.29.32
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 07:29:32 -0700 (PDT)
+Message-ID: <5892c81b-f0e7-4358-b0ee-645cd633c104@linaro.org>
+Date: Wed, 22 Oct 2025 09:29:30 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/45] Misc HW patches for 2025-10-21
+To: qemu-devel@nongnu.org
+References: <20251021204700.56072-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251021204700.56072-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,49 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
+On 10/21/25 15:46, Philippe Mathieu-Daudé wrote:
+> The following changes since commit 3c0b42c68f98fb276fa248012642be8cbf2cab70:
+> 
+>    Merge tag 'pull-request-2025-10-21' ofhttps://gitlab.com/thuth/qemu into staging (2025-10-21 08:59:35 -0500)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git tags/hw-misc-20251021
+> 
+> for you to fetch changes up to 3365d7da6156d7db990490f6cae2dc89950ac920:
+> 
+>    docs: Update mentions of removed '-soundhw' command line option (2025-10-21 22:33:49 +0200)
+> 
+> ----------------------------------------------------------------
+> Misc HW patches
+> 
+> - Replace compile-time checks by runtime ones to build virtio-mem.c once
+> - Cleanups in Raven PCI host bridge, audio and PC devices
+> - Allow machine dynamic registration of valid CPU types
+> - Introduce DEFINE_MACHINE_WITH_INTERFACE[_ARRAY]() macros
+> - Set DDR2 minimum write recovery time in EEPROM SPD
+> - Have PPCe500 machines abort gracefully when using invalid CPU
+> - Prevent buffer overflow in openrisc_sim_init()
+> - Pass PCI domain to Xen xc_physdev_map_pirq_msi()
+> - Fix register API leaks
+> - Simplify Xilinx CANFD model
+> - Unconditionally create System I/O on PReP machine
+> - Update documentation around '-soundhw' command line option
+> 
+> Various "WARNING: line over 80 characters" ignored.
 
-> Hi
->
-> On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Simpler (more so after the next commit), and no risk of truncation
->> because the caller's buffer is too small.  Performance doesn't matter;
->> the method is only used for "info qdev".
->>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-[...]
-
->> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
->> index b7e8a89ba5..422a486969 100644
->> --- a/hw/core/qdev-properties.c
->> +++ b/hw/core/qdev-properties.c
->> @@ -1117,12 +1117,11 @@ static void qdev_get_legacy_property(Object *obj=
-, Visitor *v,
->>                                       Error **errp)
->>  {
->>      const Property *prop =3D opaque;
->> +    char *s;
->
-> Why not g_autofree ?
-
-Old habits...  I think it's a wash here, because there's just one path
-through the function.
-
->> -    char buffer[1024];
->> -    char *ptr =3D buffer;
->> -
->> -    prop->info->print(obj, prop, buffer, sizeof(buffer));
->> -    visit_type_str(v, name, &ptr, errp);
->> +    s =3D prop->info->print(obj, prop);
->> +    visit_type_str(v, name, &s, errp);
->> +    g_free(s);
->
-> otherwise,
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-Thanks!
-
+r~
 
