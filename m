@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29922CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BBACCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBe87-0003Gx-RW; Wed, 22 Oct 2025 15:04:15 -0400
+	id 1vBe8Y-0003Mn-1n; Wed, 22 Oct 2025 15:04:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBe86-0003GZ-6X
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:04:14 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBe83-0006Ql-G6
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:04:13 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so46496585e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:04:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761159850; x=1761764650; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/4mC/N34KIicgtLB15T2UrKEYsyaVU4QAItwSTvn++0=;
- b=NQxbsowVm5Pm/K0KRqMSst8Gweim92m9hr1ZRYM5KruejxEOOPgATIUmpBa/Pj6Onm
- 8ou9wLWJ67ognRjtCOaUql8eLU/jxGA86W53aj/eYw9TmrDNdeEPphRdAk99j13Wu3/e
- +SAUoITD24JByUOvYWLSft3wBQrpLEHazvHSt0z8hOV/YXwNFajGTKrnhU825Q97vuyD
- 5RTyOoix2tho956PIGoMbRJCXIqA03x7YynH9CKoXhyffq8fkq31zcRKMnj5FILzFXA5
- 4q9tVQwZzv4ojDxaYjmqiDuwnwj2KaKkVpFAelNtRLwbkbdUrAMXGgqPq2ckpTwh+xZz
- fZhQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBe8S-0003Il-4K
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:04:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBe8O-0006S4-IX
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:04:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761159870;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3NFNwBM4HOw5L4kpkavYak7hDLndWRsBxcKwAsErvpw=;
+ b=Y9m145IPedhsxlQhs5gdvIA12mB8bMoDiFYZFPorvFHABiYcjE8dRlceJlvZ1AbqP1V3NW
+ 7wsNCAiFunLhzw/EumvTKy2vK7yPb2J4/Ef0yJEjBwLzkXM07mmSatjEc7yR4ArRfU4EMW
+ MsNQx/vIrxPxAQIsFoDcqqd3jrQEttE=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-295-sKgNS7DjNR--aFDVjHijFg-1; Wed, 22 Oct 2025 15:04:28 -0400
+X-MC-Unique: sKgNS7DjNR--aFDVjHijFg-1
+X-Mimecast-MFC-AGG-ID: sKgNS7DjNR--aFDVjHijFg_1761159868
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-87c1cc5a75dso349757866d6.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:04:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761159850; x=1761764650;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/4mC/N34KIicgtLB15T2UrKEYsyaVU4QAItwSTvn++0=;
- b=RLYbpsT4zINOQPaxirWxBU6j6tJsS2mpBu755Pq6/Cj4M377cH0B8XeaIkYSm3e9FI
- a/e4vscY09NeVPypTf2rzbmL7ZyZ+qZStyp6w+eS7NymRNnfK+2KDFYuFqCzEoSgxkKN
- nEivNG7mfVo1IjpcKcQRvC7JFope5c2tN+2JWf+6poQxDqdKYg1IvGB1SaVvn8K94sOu
- ITiXNbYdVMNyoZ5jG96LU12v2WOhU0JOXG5IBcqGJ+MFaaiAecNuqz3ieUZNFZZTsgMx
- BFMOOCzatBGutA0TbR5phI+pqI6BdQ0TrC3BbIZNk0AJr85atOeSz25YBBLBLQRMQoTO
- LdpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUH791oL1aq7Wf35dux1joOreeAhXuaaUv/NT1fJMFbhQQiNmAxB24WZSP5xu6sLg1w0NrrsFoFjOB8@nongnu.org
-X-Gm-Message-State: AOJu0Yyg4dwoCcbZa6iVe4s1h0ibbQ66H2CnIm031hJ0H8KV8lIP909V
- cP+MAooLCf5q8RmXrIrJxAkX+n4Srf/1VWpCfdYP+dHTSRxBg6huZAQ4Tk7dZrUJBXM=
-X-Gm-Gg: ASbGncssQgUDMwkMtDfeoqdJ4gcs+Zt+/IFy8uc+1hj7IVSv5v61lg8ogw1p07WssT9
- iaV/i9dYTal6GncyGJnNklCDkfjDoQVFaRd4kMUY7S3srAtQDfD2n8h+KT8HucsDnBrbuT6dXBX
- RswVAYJ+tjIe8vK5Gu24Ox6HWjh9UnRiRCIvO8/YVh4DniTvqFfIhAHOEiBGRGLqz5+mSU1aCFJ
- D3OzllB2lPYQieHwBUn3NmNA/EGnd7L7IpXUTLkDjocNztd24Uz0MzPt5ESnrr4+K+DZY5ftIyv
- 2Qnlb00hhK/KRlX6Gpvu6NdBUwCcDJRnopF3OKZMQw1YrOKB61BHepnuKbeIbKtk21zMnkfEM6g
- oc71lKDr7Zh2H6ULw386jN8sTZxrZ5K1V/UsiGrjl07dLoLyUR0h1JYumhKS+ihGFm8R4MfpvFd
- VxOqDgrFGL6s0BNOudlxs8Kmbauq6WnXZ1dwqV2qQDdeXbCLLw3qWc2FyCqxU/zfuu
-X-Google-Smtp-Source: AGHT+IEc8BUmiPokMgqfPooThQuetaqBzc9CMPi/17PYIgfsTItbgJ5/bhAkQfyG5OT3FKrO3iJjVw==
-X-Received: by 2002:a05:600c:34d0:b0:45f:2922:2aef with SMTP id
- 5b1f17b1804b1-47117911751mr173186005e9.28.1761159849865; 
- Wed, 22 Oct 2025 12:04:09 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c42d828asm58608455e9.17.2025.10.22.12.04.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 12:04:09 -0700 (PDT)
-Message-ID: <de499f61-2d63-44de-b68b-240a16381cf2@linaro.org>
-Date: Wed, 22 Oct 2025 21:04:08 +0200
+ d=1e100.net; s=20230601; t=1761159868; x=1761764668;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3NFNwBM4HOw5L4kpkavYak7hDLndWRsBxcKwAsErvpw=;
+ b=jLe2cKrs3+EXaFiUuDuZW5BIZPI9/qKxxFTXOfm4HzGuNEqZZ60KkH/JazgM+IStqg
+ iC3w/kPVGBopy1ht4pkOGiCtnO6GxCFhhLWzyv4OOFDeCh5zUpOrFMYNw3Dy+AU1o9Hj
+ 8m+3SuJnIeKNsNnKR8DTw5vm0JGD5r71riNes/r6GhbInVbHEH8XVAdtHUgSfPPxw6lJ
+ lLMFiFywzvYQrdBN6hDFdmJRNbAqe0Ye8ZV79CGlsDjvJ89xqZkdLcKiTo982lXItPnc
+ hh0j6RuxkWLAB3tqj9nu5+z8NT6q9wZqeDkac88GKLiRNTTkYk7cZQp7VMrnlL93uJ03
+ Axew==
+X-Gm-Message-State: AOJu0YzURfdSjo9sZ7evvuH9xttH5kUDQeCKMwimv9pFe14n8L1fnxL/
+ +EZhbZqCB439DXPQURYOAvNC4M48m0I9b71obmVlCAC+VAgFQ8kHDa6kFR5/H8NxucPo6KvaAdo
+ p2cYO61T3YjWBWR1nWYiwfeRo7kSXUl7SFMaalsO0DiiZqdeNQ3I3ZNoPXaYcZnTg4DVHo9WAHI
+ f47+oTAaq0MoMEKbU6wXlY6pGddRXP99Wde6SHqw==
+X-Gm-Gg: ASbGnctHHwUYvj8UzUo2klj3rl9agIpWvr+AeWJ3oI6C9ch/2UTDFf23fjObttUuCCR
+ wBKFCRKHfakr8yKX+YZVRe19JRWj5bDu1hylPbeEiF7W3xku93gONlAiwuzE481GucKJGy7uGnx
+ VCqGpaQWV1W0G+SvJWP3tzTqQMCprFl1f0M0pfAndlL7Zu3+1BPjrte5J1f9UtPbv1VJQ5Tnnma
+ J+YkXJNrLsKmnjNMEfI2DH19meKIgyCBXGcSaJr2yItmPi14adiI7ppf7G7+A3nj2/SKYN7/hki
+ xM145P7Nf3VHN4hYsUoxITvaiUcw4RnRLhKdkn5ju2sI33lO2ae7tcE+bGc4KF78
+X-Received: by 2002:a05:6214:40f:b0:87b:d338:bdaa with SMTP id
+ 6a1803df08f44-87c206497a4mr27752086d6.52.1761159867884; 
+ Wed, 22 Oct 2025 12:04:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH61uEuN1jH3XvJYK/OG47bvP1rQtGy+7bXqsN93CPb116bKLm8GYEu+UahC4Nkw1E4r2+qjQ==
+X-Received: by 2002:a05:6214:40f:b0:87b:d338:bdaa with SMTP id
+ 6a1803df08f44-87c206497a4mr27751536d6.52.1761159867302; 
+ Wed, 22 Oct 2025 12:04:27 -0700 (PDT)
+Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87f8ff3f362sm379956d6.12.2025.10.22.12.04.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Oct 2025 12:04:26 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
+ Juraj Marcin <jmarcin@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH] migration/qmp: Update "resume" flag doc in "migrate" command
+Date: Wed, 22 Oct 2025 15:04:25 -0400
+Message-ID: <20251022190425.2730441-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/net/rocker: Don't overflow in of_dpa_mask2prefix()
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowang@redhat.com>
-References: <20251016145407.781978-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251016145407.781978-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,41 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/10/25 16:54, Peter Maydell wrote:
-> In of_dpa_mask2prefix() we do "(2 << i)" for a loop where i can go up
-> to 31.  At i == 31 we shift off the top end of an integer.  This
-> doesn't actually calculate the wrong value in practice, because we
-> calculate 0 - 1 which is the 0xffffffff mask we wanted (and for QEMU
-> shifting off the top of a signed integer is not UB); but it makes
-> Coverity complain.
-> 
-> We could fix this simply by using "2ULL" (where the "(2ULL << i) - 1"
-> expression also evaluates to 0xffffffff for i == 31), but in fact
-> this function is a slow looping implementation of counting the number
-> of trailing zeroes in the (network-order) input mask:
-> 
->   0bxxxxxxxxx1 => 32
->   0bxxxxxxxx10 => 31
->   0bxxxxxxx100 => 30
->   ...
->   0bx100000000 => 2
->   0b1000000000 => 1
->   0b0000000000 => 0
-> 
-> Replace the implementation with 32 - ctz32().
-> 
-> Coverity: CID 1547602
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I submitted the "2ULL" version of the patch back in July;
-> Philippe suggested this improvement but I never got round to
-> going back and checking it gave the same answers and resending.
-> ---
->   hw/net/rocker/rocker_of_dpa.c | 11 +----------
->   1 file changed, 1 insertion(+), 10 deletions(-)
+It wasn't obvious how the resume flag should be used when staring at the
+QAPI doc.  Enrich it to be crystal clear.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ qapi/migration.json | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Thanks!
+diff --git a/qapi/migration.json b/qapi/migration.json
+index be0f3fcc12..48856078db 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1732,7 +1732,10 @@
+ # @detach: this argument exists only for compatibility reasons and is
+ #     ignored by QEMU
+ #
+-# @resume: resume one paused migration, default "off".  (since 3.0)
++# @resume: when set, resume one paused postcopy migration, using the new
++#     URI/channels specified to replace the old/broken channels.  The user
++#     should make sure the migration is in "postcopy-paused" state before
++#     the resume request.  Default "off".  (since 3.0)
+ #
+ # Features:
+ #
+-- 
+2.50.1
+
 
