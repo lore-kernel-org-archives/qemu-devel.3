@@ -4,77 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A17DCCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C93ACCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBUZd-0004wu-6F; Wed, 22 Oct 2025 04:52:01 -0400
+	id 1vBUcL-0005SV-4E; Wed, 22 Oct 2025 04:54:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBUZb-0004wl-QP
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:51:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vBUcF-0005Rx-Om
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:54:44 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBUZa-0007V2-4t
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:51:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761123115;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HTVfpZ74qmUbTKaRa/nuyPzTywqjM3Wm6K/B+nnaUVk=;
- b=hzSyXJqcm+lnj7GRJxp60bAN8EsMx9r8uknVXRlghpTmrY61p78KN6zfNC8iPMv2K2wjLP
- zpwY3ovQU7iK5ISZybe1iB3RyV2AwoM6UNHWA/KZ4wuKWZYWLiy7BKdUHCatLOTBuRaxLS
- gcoey+Fg1lm5ccB6UIDEXNs5X46uQkM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-kzR3WXixPjG9lgj5cv38sg-1; Wed,
- 22 Oct 2025 04:51:52 -0400
-X-MC-Unique: kzR3WXixPjG9lgj5cv38sg-1
-X-Mimecast-MFC-AGG-ID: kzR3WXixPjG9lgj5cv38sg_1761123111
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E651319541BD; Wed, 22 Oct 2025 08:51:50 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A7F3180044F; Wed, 22 Oct 2025 08:51:50 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id EC86F18000B5; Wed, 22 Oct 2025 10:51:47 +0200 (CEST)
-Date: Wed, 22 Oct 2025 10:51:47 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 5/5] igvm: add MAINTAINERS entry
-Message-ID: <3hkj3ririipknv74qz3d7i3vgfn7hbfp5vibdfe6ax4jebgshd@44gfd4sj4ogw>
-References: <20251015112342.1672955-1-kraxel@redhat.com>
- <20251015112342.1672955-6-kraxel@redhat.com>
- <b59aaee4-89c6-4033-946f-bc2702993294@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vBUc8-0007bN-Ae
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:54:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cs2xL5Pfsz6K6WV;
+ Wed, 22 Oct 2025 16:52:54 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id 9A1891402F5;
+ Wed, 22 Oct 2025 16:54:18 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 22 Oct
+ 2025 09:54:17 +0100
+Date: Wed, 22 Oct 2025 09:54:16 +0100
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-devel@nongnu.org>, <mst@redhat.com>, <imammedo@redhat.com>,
+ <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <nicolinc@nvidia.com>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH 0/3] hw/pci-host/gpex-acpi: Fix _DSM function 0 support
+ and update BIOS table tests
+Message-ID: <20251022095416.00003545@huawei.com>
+In-Reply-To: <20251022080639.243965-1-skolothumtho@nvidia.com>
+References: <20251022080639.243965-1-skolothumtho@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b59aaee4-89c6-4033-946f-bc2702993294@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,41 +70,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 08:57:39AM +0200, Philippe Mathieu-Daudé wrote:
-> On 15/10/25 13:23, Gerd Hoffmann wrote:
-> > Add Roy (being the original author) as maintainer.  Add myself as
-> > reviewer.  Status to be decided.
-> > 
-> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> > ---
-> >   MAINTAINERS | 9 +++++++++
-> >   1 file changed, 9 insertions(+)
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 84cfd85e1fa1..3ebcbcdfdb04 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -3893,6 +3893,15 @@ F: roms/edk2-*
-> >   F: tests/data/uefi-boot-images/
-> >   F: tests/uefi-test-tools/
-> > +IGVM Firmware
-> > +M: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> > +R: Gerd Hoffmann <kraxel@redhat.com>
-> > +S: TBD
+On Wed, 22 Oct 2025 09:06:36 +0100
+Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+
+> Hi,
 > 
-> If not Supported, then Maintained?
+> This small series fixes a compliance issue in the _DSM (Device Specific
+> Method) implementation for the GPEX host bridge ACPI tables and updates
+> the corresponding BIOS-table test refrence blobs.
+> 
+> This patch was originally part of the "Add support for user-creatable
+> accelerated SMMUv3" series [0]. Based on feedback received and as it is a
+> common standalone fix, it is now being sent as a separate series.
+> 
+> Please take a look.
+> 
+> Thanks,
+> Shameer
+> [0] https://lore.kernel.org/qemu-devel/20250929133643.38961-16-skolothumtho@nvidia.com/
 
-I was hoping for Roy (as original igvm author) offers an opinion on
-this.  Not sure he is still working on igvm though given that there
-wasn't a single reply from him so far.  Should he moved on to other
-things it doesn't make much sense to add him as maintainer ...
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+(mostly in the earlier thread - but that didn't have the test tables updates which
+are now here).
 
-Roy?
-
-take care,
-  Gerd
+> 
+> Eric Auger (1):
+>   hw/pci-host/gpex-acpi: Fix _DSM function 0 support return value
+> 
+> Shameer Kolothum (2):
+>   tests/qtest/bios-tables-test: Prepare for _DSM change in the DSDT
+>     table
+>   tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _DSM change
+> 
+>  hw/pci-host/gpex-acpi.c                       |   2 +-
+>  tests/data/acpi/aarch64/virt/DSDT             | Bin 5337 -> 5337 bytes
+>  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5423 -> 5423 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 6246 -> 6246 bytes
+>  .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 5391 -> 5391 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6698 -> 6698 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7812 -> 7812 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev  | Bin 10274 -> 10274 bytes
+>  .../data/acpi/aarch64/virt/DSDT.smmuv3-legacy | Bin 10274 -> 10274 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5539 -> 5539 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 5354 -> 5354 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4603 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5824 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4609 bytes
+>  .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4905 bytes
+>  tests/data/acpi/riscv64/virt/DSDT             | Bin 3538 -> 3538 bytes
+>  tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 2985 -> 2985 bytes
+>  17 files changed, 1 insertion(+), 1 deletion(-)
+> 
 
 
