@@ -4,120 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4BAECCD1BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66428CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSsj-0002yl-W1; Wed, 22 Oct 2025 03:03:38 -0400
+	id 1vBSqG-00016A-W8; Wed, 22 Oct 2025 03:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vBSsT-0002Vw-UU; Wed, 22 Oct 2025 03:03:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vBSpe-0000t6-HR
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:00:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1vBSsR-0000b8-RX; Wed, 22 Oct 2025 03:03:21 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59LMeLlV016406;
- Wed, 22 Oct 2025 07:03:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=QOLj5V
- QaUwHOEH8RL6jeG0xU7RG3kgqnclCQRhLvZMc=; b=V1899jEURJMolk++yByj1/
- tuj7iY/aO4sQ1fdjYMVjvE1ZI5KTTy9/B35iBeg7n/90jj/j16hDvTae/kjzfX3T
- A2Wbqc9sGM4ZrTXmONNwZVYDNZD9ApPr/2VUXd1j1NuFOlNzK0Zp8dzys7pUiSQ/
- NyvT0GFqWqMzB0uTtoCH2ZTugwkP94tQGUu0A1K5IGRJ58PFuHPYqhfRKQwJcuPH
- suR70FPuL+wElnV1PzwDg8PSTj9bXuobPTzkFv+Xneuiw83fByZbwMG3Y/llhaz/
- WsGvVDrJCecXPxco4y3rNrLAbDZSXg50vAjP/zXhpL0Y4UqAZyrUS7dCy9ixLMVw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hhrn0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 07:03:17 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59M73Dt8024333;
- Wed, 22 Oct 2025 07:03:17 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hhrmw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 07:03:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59M6gI4c017058;
- Wed, 22 Oct 2025 07:03:16 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vnkxy383-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 07:03:16 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59M73FLY26804774
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 Oct 2025 07:03:15 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7D7F658063;
- Wed, 22 Oct 2025 07:03:15 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B6C9D58043;
- Wed, 22 Oct 2025 07:03:12 +0000 (GMT)
-Received: from [9.79.201.141] (unknown [9.79.201.141])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 22 Oct 2025 07:03:12 +0000 (GMT)
-Message-ID: <27da22c4-6212-4ff9-8f11-e04b35039a2b@linux.ibm.com>
-Date: Wed, 22 Oct 2025 12:33:09 +0530
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vBSpU-0000CJ-Rs
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:00:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761116415;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FjSR33DsJvkrIe60x4ku9xd2w76HTZjoQHJctCihqkc=;
+ b=jKvrZY73V3LVWok3tGdXmjtxjEP0isWeXO4UCv+X5t32pgqD1OQcrXeBcjIT+1MRNUqvFF
+ ZmOrW26eNAw9am2UkEG9uycQw9gBD3BlMr+Jqu1DbXa9AeLLr1fNFvVyQD6+1yoCDNs/N+
+ F833hxKDnQ27mqB6sPkDddxaz4bntzE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-VAzbYpjXNo-rGasQMb2SLQ-1; Wed,
+ 22 Oct 2025 03:00:10 -0400
+X-MC-Unique: VAzbYpjXNo-rGasQMb2SLQ-1
+X-Mimecast-MFC-AGG-ID: VAzbYpjXNo-rGasQMb2SLQ_1761116409
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2D16195608A; Wed, 22 Oct 2025 07:00:08 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 84FF818003FC; Wed, 22 Oct 2025 07:00:07 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v2 36/42] audio/dbus: use a helper function to set the backend
+ dbus server
+Date: Wed, 22 Oct 2025 10:56:31 +0400
+Message-ID: <20251022065640.1172785-37-marcandre.lureau@redhat.com>
+In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
+References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] hw/ppc/spapr: Inline spapr_dtb_needed()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20251021084346.73671-1-philmd@linaro.org>
- <20251021084346.73671-5-philmd@linaro.org>
- <602c19bc-bed9-43c2-b98c-491b75921604@linux.ibm.com>
- <d264c81b-119e-439f-a4c2-68a7336d6ba6@linaro.org>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <d264c81b-119e-439f-a4c2-68a7336d6ba6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX2I0X0TmC3bRo
- k9dU7S0E50pNSj4qkxHWC4ACpm5oesDmxtRaoLDzueUN44XDV7bM2dsLuMadGH1c9eCBIXHywpZ
- XGcmDrbB/1R1gC31nN/t06TNaNxDCW91b0QrjM5JkjfttMAPspikEuf0uEkKr8Io9QVS2RWeZtq
- 29Gg8rIswTFaHLTueXrRerGQSoKM8RLjamp/5qrbIeKfMX9C4EUrAZQ0NS9+NGUjwNj8e2ik3V/
- QGNeaY1OSsQk7RQpYskCuOqoMqhtEiDK+RNyDY/lWHpH45t34izljkRLsQd5V5B5gL/sTO2Q9sn
- AU9Zd7H25ATXYl1m3cassb//sYg226wMG50sXBiZxBkVYmirAXo8OVNAIXcxafNvouxoQFUfHrn
- d85DbodhKkV0cXJx6L/OoytZgIYtag==
-X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68f881b5 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=MvvTU35B-mzZJSykrPEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: swkTMFdgntB-3iu97LvVOF7k4NDyeK2l
-X-Proofpoint-ORIG-GUID: LC3uRKAJMFZE3SgYcC_85cXVAQLOsIDl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_02,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,64 +90,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On 10/21/25 19:51, Philippe Mathieu-Daudé wrote:
-> On 21/10/25 15:25, Chinmay Rath wrote:
->> Hey Philippe,
->> The commit message says that this commit is inline-ing 
->> spapr_dtb_needed(), but it is actually removing it. I think it's 
->> better to convey that in the commit message.
->> Or did I miss something ?
->>
->> On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/ppc/spapr.c | 6 ------
->>>   1 file changed, 6 deletions(-)
->>>
->>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->>> index 458d1c29b4d..ad9fc61c299 100644
->>> --- a/hw/ppc/spapr.c
->>> +++ b/hw/ppc/spapr.c
->>> @@ -2053,11 +2053,6 @@ static const VMStateDescription 
->>> vmstate_spapr_irq_map = {
->>>       },
->>>   };
->>> -static bool spapr_dtb_needed(void *opaque)
->>> -{
->>> -    return true; /* backward migration compat */
->>> -}
->>> -
->>>   static int spapr_dtb_pre_load(void *opaque)
->>>   {
->>>       SpaprMachineState *spapr = (SpaprMachineState *)opaque;
->>> @@ -2073,7 +2068,6 @@ static const VMStateDescription 
->>> vmstate_spapr_dtb = {
->>>       .name = "spapr_dtb",
->>>       .version_id = 1,
->>
->> Does this version number need to be incremented ?
->
-> No, this is a no-op.
->
->>
->> Regards,
->> Chinmay
->>
->>>       .minimum_version_id = 1,
->>> -    .needed = spapr_dtb_needed,
->
-> Here is the inlining, as '.needed = true' is the default.
-Ahh I see.
-> Would "Inline and remove spapr_dtb_needed()" be clearer?
-Yeah that'd be nice.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/audio.h     |  6 ++++++
+ audio/audio_int.h |  2 +-
+ audio/audio.c     | 14 ++++++++++++++
+ audio/dbusaudio.c |  6 ++++--
+ ui/dbus.c         |  8 +-------
+ 5 files changed, 26 insertions(+), 10 deletions(-)
 
-Thanks,
-Chinmay
->
->>>       .pre_load = spapr_dtb_pre_load,
->>>       .fields = (const VMStateField[]) {
->>>           VMSTATE_UINT32(fdt_initial_size, SpaprMachineState),
->
->
+diff --git a/audio/audio.h b/audio/audio.h
+index 4c596fcc7f..216b95eb4f 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -28,6 +28,9 @@
+ #include "qemu/queue.h"
+ #include "qapi/qapi-types-audio.h"
+ #include "hw/qdev-properties-system.h"
++#ifdef CONFIG_GIO
++#include "gio/gio.h"
++#endif
+ 
+ typedef void (*audio_callback_fn) (void *opaque, int avail);
+ 
+@@ -150,6 +153,9 @@ void audio_help(void);
+ AudioBackend *audio_be_by_name(const char *name, Error **errp);
+ AudioBackend *audio_get_default_audio_be(Error **errp);
+ const char *audio_be_get_id(AudioBackend *be);
++#ifdef CONFIG_GIO
++bool audio_be_set_dbus_server(AudioBackend *be, GDBusObjectManagerServer *server, bool p2p, Error **errp);
++#endif
+ 
+ #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
+     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 210457e0c4..f077f741c8 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -145,7 +145,7 @@ struct audio_driver {
+     void *(*init) (Audiodev *, Error **);
+     void (*fini) (void *);
+ #ifdef CONFIG_GIO
+-    void (*set_dbus_server) (AudioBackend *s, GDBusObjectManagerServer *manager, bool p2p);
++    bool (*set_dbus_server) (AudioBackend *be, GDBusObjectManagerServer *manager, bool p2p, Error **errp);
+ #endif
+     struct audio_pcm_ops *pcm_ops;
+     int max_voices_out;
+diff --git a/audio/audio.c b/audio/audio.c
+index a2350cfe23..92768fc81c 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -2223,6 +2223,20 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
+     }
+ }
+ 
++#ifdef CONFIG_GIO
++bool audio_be_set_dbus_server(AudioBackend *be, GDBusObjectManagerServer *server, bool p2p, Error **errp)
++{
++    assert(be != NULL);
++
++    if (!be->drv->set_dbus_server) {
++        error_setg(errp, "Audiodev '%s' is not compatible with DBus", be->dev->id);
++        return false;
++    }
++
++    return be->drv->set_dbus_server(be, server, p2p, errp);
++}
++#endif
++
+ const char *audio_be_get_id(AudioBackend *be)
+ {
+     if (be) {
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index 49cef38e3e..33d6365811 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -645,8 +645,8 @@ dbus_audio_register_in_listener(AudioBackend *s,
+                                         arg_listener, false);
+ }
+ 
+-static void
+-dbus_audio_set_server(AudioBackend *s, GDBusObjectManagerServer *server, bool p2p)
++static bool
++dbus_audio_set_server(AudioBackend *s, GDBusObjectManagerServer *server, bool p2p, Error **errp)
+ {
+     DBusAudio *da = s->drv_opaque;
+ 
+@@ -669,6 +669,8 @@ dbus_audio_set_server(AudioBackend *s, GDBusObjectManagerServer *server, bool p2
+     g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(da->audio),
+                                          G_DBUS_INTERFACE_SKELETON(da->iface));
+     g_dbus_object_manager_server_export(da->server, da->audio);
++
++    return true;
+ }
+ 
+ static struct audio_pcm_ops dbus_pcm_ops = {
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 84cff47ec7..fbe108af1e 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -221,15 +221,9 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+ 
+     if (dd->audiodev && *dd->audiodev) {
+         AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
+-        if (!audio_be) {
++        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
+             return;
+         }
+-        if (!g_str_equal(audio_be->drv->name, "dbus")) {
+-            error_setg(errp, "Audiodev '%s' is not compatible with DBus",
+-                       dd->audiodev);
+-            return;
+-        }
+-        audio_be->drv->set_dbus_server(audio_be, dd->server, dd->p2p);
+     }
+ 
+     consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
+-- 
+2.51.0
+
 
