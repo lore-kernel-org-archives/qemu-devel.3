@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13315CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 23:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A443ACCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 23:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBiPi-0002b8-5R; Wed, 22 Oct 2025 19:38:42 -0400
+	id 1vBii4-0004ST-GS; Wed, 22 Oct 2025 19:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBiPf-0002an-W8
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:38:40 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1vBii2-0004RM-Rs
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:57:38 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBiPd-0001nY-1F
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:38:38 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-63b9da57cecso251650a12.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 16:38:36 -0700 (PDT)
+ id 1vBii0-0003PT-UX
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:57:38 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-7849f01e56eso2262207b3.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 16:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761176315; x=1761781115; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761177455; x=1761782255; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wcd3GKf4iO/YvwvpEcTaeZS7OOZnj+rYcVkGI6Xlh/Q=;
- b=IBzuBZ4+yGGzFu62WLPmylddvHJt4IrOrOJ26hIxIFWkZkJiWWHfLZRZBpXrGCapZv
- uvU9Gqv0JiGElKTSLcu+rAggXYjOfou2Dq3qnM1HZzfWi3T5pPfoCj8bJvuYtDR5/O9U
- 8NPOIp4ajS17UPRNo9g+IIwsUByWIQQf/5uHd05fUXAfkof5V7+V/uIqGcUoafqppTxF
- mByMvg/2YU27yDZkjOySA/rgf4EtzRjUU5pdLqCG8Ot42RJItZLOAPa9KLfUwPFhxJ+5
- 7YF2q199bj1aUVcwtn23hEIBKsF18hQCufw9PkBrDO5Re/mCVqnFF6GBkIM0nvMO24JC
- WPUw==
+ bh=XMPRTuQWnHVvVcdEtHlUA7TNmKlGkGfYrVz2tXnkjw8=;
+ b=OPEtGYS2tc/dGfvSnMvQb+pdEUa9En18fwV1qToieB6GjVRHP1rjhtud3ILS5HhGET
+ PWlsbc8f1l4SZe8QC/+pNsMzHk4KlnL7CMiolpckGF+n2FixDv6z1a/4al38a8enUmfI
+ 3XR7dk31ca7WXqICBL5864meEz9SNJqI1oxtoyUY5/wJCpOo5Y6J/MBqWqBEhEBm24jK
+ sUBbCipjO0AhX2dtzlhkD7ljku2rQCglf896Rq/0QM7xDqe+cx6lbAuViV3JqsUR/TKM
+ aH0i3Vl8uFvXkC/jHDAxuQyEZ2c0rRFDwl5m8NJ77wEjRboV1pYqI39xxxTNOn8Jo+7o
+ hmlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761176315; x=1761781115;
+ d=1e100.net; s=20230601; t=1761177455; x=1761782255;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wcd3GKf4iO/YvwvpEcTaeZS7OOZnj+rYcVkGI6Xlh/Q=;
- b=aZSkmmtQ27OXOYku2dlouM2mbqQ0E847BgjqE684rXsYddVUNlGC4dCzwngP3K2scS
- wbts0nr0sCXkjFFncw6wb0b6995oEwx98+wWQdwQGGrDGmf5WVb94W/sfgl6GdRj4k10
- O1nWS389Wh0DoTFfFuMb7b6V8jZ7ydxrWRAGLO7yhRUHzkZN4OjW75O3Mk7IFyyVvE/7
- gVv6WxzLY7m3xdJmUVhXVfxvioW0X8JxBdcOH8f1m9gfotNacOoCvk0h6T2K0vLKfe1p
- VU+qdyPVJVtSyOxBu28YyqUuzs/OWgRpWKRLVZT02xz3fvqMh78pKfXT1GZxxEG2Dn7I
- ySnw==
-X-Gm-Message-State: AOJu0Yzz7UiyXfVpJE7gHc/STVWPqYWbfTcs9EapGsK4Bt2miq0/h8A+
- vltVJS0MhGDiaVcrr8xuXik23k9F9dbQZ4R+LIgvgqUoDDzD2NJwlMB4bG27nMW/fBU0PXBfTvb
- 8Hj6IJod8YJU3cMWXdWh+eFoVFBOwi0Q=
-X-Gm-Gg: ASbGncs46eWigN8d6921uLXFtSzU1RbYqH+fyM91heMqMpt7DKYXg4MP0cJccD4ABGc
- znzFgHRdYOoVgqtf0lkZbaPXba3+bcOzdVFb2h7m2WBcZnwKa1l84i84WXAPMqdKA3wnEsu609G
- Lowuw+Nt9iSWZ7pl4dwjTzL+ApDQx7K+DNepeD2bNXbDru4x36ndn89/PgaYC3BtQGKTYTEWe0t
- 0tNkyV0oavdIgRNSJmqahufr36pqKl8iNdnMnhDacT+6/I0H2FOQn1dCLHBGto/IzVqICUO+tmP
- ZfeMsvtDUoCyuUnvn7wu+FpJ8g==
-X-Google-Smtp-Source: AGHT+IHPoQbc1gW9VLLebbxrz4HlyBqcHbdgkYwcmYCJsfxilU9p5kNTheUvO2dSUUISWaNKyB+L1mRyerydV29wd70=
-X-Received: by 2002:a05:6402:13ca:b0:637:f07d:e80f with SMTP id
- 4fb4d7f45d1cf-63c1f58c0d3mr22311254a12.0.1761176314655; Wed, 22 Oct 2025
- 16:38:34 -0700 (PDT)
+ bh=XMPRTuQWnHVvVcdEtHlUA7TNmKlGkGfYrVz2tXnkjw8=;
+ b=aFMX/u8+/s4wt0YnAHwoposD/C1f26p9TCmGnXH7EeAz8m8Oy6hIFypSmkQIawGIop
+ khXG0PC2Y/YvZ9PfpNo5BZsl5zPB/gMghSOxLkTLqlUUYc163QQroxo+eO1rLwUE7fxA
+ FABAsI/uKCf4vZ85mKm5cCcxoiOYoPr5indN4uuN7QCZ/3J3X9AfdhyF2HMheH2v+Dom
+ 4a8wt/77uF6pC8IDX9Gge2xC6Q5axvwUsFn4r/ZMIajl+SchJonflk5UlDzSqa/nvppB
+ X7k+j6dey+5Exq1/jsVX7a0gpZsCpwGj1xjYhP7YCkYglZfCfDf6VmychSD34oMI41m2
+ 2wAw==
+X-Gm-Message-State: AOJu0YwL7udHyifPBzEv8nnn6thOEFd7WBgotC4G5lmp8j/JeoJyU+Wu
+ QU+Pk9ntYrRIVTqulSvLSDMgm7MLWgigIelT3W5ltasce9k55YELVtxHgooXfkgdftA+XlOUGWB
+ IRZYCJoMk1KI5Q4et4TrgxC8YtqIo440=
+X-Gm-Gg: ASbGnctjNGfLNX3DLzYZ/1iEOmpMoZckGsdj49NhtT+YliqpCqLW8Lzop9xV+Hy8ide
+ sJqQu+sTbMuE1ei21N5C1w8GJDuNQtjx5vjLW1uQTUd+5eoHW4ztDmgVqMP+bNcSusb9Vj642pw
+ 2e/slF5kB1yWRL1HXdBfo95PN6JIXI1QC/cWXIXRo9ZORvvo4yuoz6TpY+APwuwizywEoKj1H9I
+ wXVwkZ2bhqWq/CePa/4q7cKvgxaeW8Wp4SgV760j822NLTxF33otxbnsJc8hp8GPcIDnpYVfnop
+ duN1u1s5sYRs+b4=
+X-Google-Smtp-Source: AGHT+IHjKK77EoQUL/3nFesR/wOi5ZWMSi8GZ1vcVDDQ2PrMPNc8/Cexbq/815/iKEwVn206osdmuzMJ2OEOP3XctSo=
+X-Received: by 2002:a05:690c:22c6:b0:784:8286:fde3 with SMTP id
+ 00721157ae682-78482870f7emr155994957b3.42.1761177454948; Wed, 22 Oct 2025
+ 16:57:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251022124340.493358-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20251022124340.493358-1-dbarboza@ventanamicro.com>
+References: <20251022111105.483992-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20251022111105.483992-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 23 Oct 2025 09:38:08 +1000
-X-Gm-Features: AS18NWD2rxiXMvn89dmoiGVB_TcRbiBjhcCiPJqYF0XNmoupxZRsi_96k4qLrdw
-Message-ID: <CAKmqyKN+8mh8cv4GVMzmS+kcu+C4z7FAHsx-6aQS3U9=sWAAjw@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: fix riscv_cpu_sirq_pending() mask
+Date: Thu, 23 Oct 2025 09:57:07 +1000
+X-Gm-Features: AS18NWDWA0_3xqlTQWfNW3p1IZtMs5d3eUdgfeOWzia3JvT4rXzScXLNhdZHvog
+Message-ID: <CAKmqyKP5GK0w=vN9R467dVPha+GeUeiHN1gf5h3U3xp5BAKsDg@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv/kvm: fix env->priv setting in
+ reset_regs_csr()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=alistair23@gmail.com; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,47 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 10:45=E2=80=AFPM Daniel Henrique Barboza
+On Wed, Oct 22, 2025 at 9:12=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
-> pending interrupts without apparent reason. There's no special treatment
-> for these ints as far as the spec goes, and this filtering is causing
-> read_stopi() to miss those VS interrupts [1].
+> This patch was originally made by Gitlab user Bo Gan (@ganboing) 4
+> months ago in the context of issue [1]. I asked the author to send a
+> patch to the mailing list ~3 months ago and got no reply. I'm sending
+> the patch myself because we already missed 10.1 without this fix.
 >
-> We shouldn't return delegated VS interrupts in S-mode though, so change
-> the current mask with "~env->hideleg". Note that this is the same
-> handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
+> I'll also just post verbatim Bo Gan comment in the commit msg:
 >
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2820
+> "In RISCV Linux with KVM enabled, gdbstub is broken. The
+> get_physical_address isn't able to page-walk correctly and resolve the
+> physical page. This is due to that the vcpu is being treated as starting
+> in M mode even if KVM enabled. However, with KVM, the vcpu is actually
+> started in S mode. The mmu_idx will give 3 (M), instead of 1 (S),
+> resulting in Guest PA =3D=3D VA (wrong)!"
 >
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
+> Set env->priv to PRV_S in kvm_riscv_reset_regs_csr() since the VCPU is
+> always started in S-mode for KVM.
+>
+> [1] https://gitlab.com/qemu-project/qemu/-/issues/2991
+>
+> Cc: qemu-stable@nongnu.org
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2991
+> Originally-by: Bo Gan (@ganboing in Gitlab)
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  target/riscv/cpu_helper.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  target/riscv/kvm/kvm-cpu.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 3479a62cc7..360db133e2 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 0dd0d59d41..000e44b2b7 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -705,6 +705,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *e=
+nv)
+>      env->satp =3D 0;
+>      env->scounteren =3D 0;
+>      env->senvcfg =3D 0;
+> +    env->priv =3D PRV_S;
+>  }
 >
->  int riscv_cpu_sirq_pending(CPURISCVState *env)
->  {
-> -    uint64_t irqs =3D riscv_cpu_all_pending(env) & env->mideleg &
-> -                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
-> +    uint64_t irqs =3D riscv_cpu_all_pending(env) & env->mideleg & ~env->=
-hideleg;
->      uint64_t irqs_f =3D env->mvip & env->mvien & ~env->mideleg & env->si=
-e;
->
->      return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
+>  static int kvm_riscv_get_regs_fp(CPUState *cs)
 > --
 > 2.51.0
 >
