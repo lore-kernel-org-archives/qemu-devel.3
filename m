@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5AEACCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F06CCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBS7f-00066S-Is; Wed, 22 Oct 2025 02:14:59 -0400
+	id 1vBSfR-0004cl-QQ; Wed, 22 Oct 2025 02:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBS7d-00065m-Qx
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:14:57 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBSfP-0004cM-L4
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:49:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBS7b-0001lb-CT
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:14:57 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBSfL-0006mp-FW
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:49:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761113691;
+ s=mimecast20190719; t=1761115785;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=I5ixQfNhfT+e5PbUTPDynB03zItav8ExQy1fDr5oi+k=;
- b=R65AbF+PIKwQzHJYXaoKPmopRDdLkaVAxY1ETpUiWSriLZKUqn1UeWGp4gLmOHii1sB4z4
- DZPSbSyl0Krcb6BGTLjqq56dZ6eN2P3VoLzi6Mqi557Up5Rty4Osxs6trUVsgwvBO+XBAt
- Bk/VqhGrUnjYncxbjmpSgJdjYd/aXoU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TgYTd1QRh5ucVTrlkNjILDr6Wy/cP2WRDp2FnoGcR0c=;
+ b=Cbm+jiOiV+ayPAjQkwZclft/i8FLjH83ZJp5mkf+7QHMQvk69KcYaCSuT1TOjEr8092bvO
+ Sg8p16TXXUkbNnb4hF1nhRUd0T+tDuWCjYylW59VFYI0Ad/qsaYE4I1kSIWLB7UR7w0ayI
+ CAIpUQXg+Ym+Ff9pu7Hp9anio/WlRHE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-d8Mg4sxcPu6pl7Ai8RAtkw-1; Wed,
- 22 Oct 2025 02:14:49 -0400
-X-MC-Unique: d8Mg4sxcPu6pl7Ai8RAtkw-1
-X-Mimecast-MFC-AGG-ID: d8Mg4sxcPu6pl7Ai8RAtkw_1761113688
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-eDouBI8OM1ufYEY-qJ4fdg-1; Wed,
+ 22 Oct 2025 02:49:41 -0400
+X-MC-Unique: eDouBI8OM1ufYEY-qJ4fdg-1
+X-Mimecast-MFC-AGG-ID: eDouBI8OM1ufYEY-qJ4fdg_1761115780
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89368195422D; Wed, 22 Oct 2025 06:14:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5B8330001BF; Wed, 22 Oct 2025 06:14:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3802021E6A27; Wed, 22 Oct 2025 08:14:45 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: peterx@redhat.com,  stefanb@linux.vnet.ibm.com,  farosas@suse.de,
- qemu-devel@nongnu.org,  armbru@redhat.com,  berrange@redhat.com
-Subject: Re: [PATCH v2 2/2] migration: vmsd errp handlers: return bool
-In-Reply-To: <9064223d-6f35-4023-b5b6-99b8d766f506@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Tue, 21 Oct 2025 14:50:36 +0300")
-References: <20251020160344.2401137-1-vsementsov@yandex-team.ru>
- <20251020160344.2401137-3-vsementsov@yandex-team.ru>
- <9064223d-6f35-4023-b5b6-99b8d766f506@yandex-team.ru>
-Date: Wed, 22 Oct 2025 08:14:45 +0200
-Message-ID: <87ecqviht6.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D759195609F; Wed, 22 Oct 2025 06:49:40 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2728119560A2; Wed, 22 Oct 2025 06:49:40 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id A05D818000B5; Wed, 22 Oct 2025 08:49:37 +0200 (CEST)
+Date: Wed, 22 Oct 2025 08:49:37 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Roy Hopkins <roy.hopkins@randomman.co.uk>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v3 3/5] igvm: add support for initial register state load
+ in native mode
+Message-ID: <z6vhggiboli7ddgqcrff64m2zitt2dkxtboukqvumuomruhl2j@5jlwsdd2behs>
+References: <20251015112342.1672955-1-kraxel@redhat.com>
+ <20251015112342.1672955-4-kraxel@redhat.com>
+ <65hphgivdhi53wjhi5xwsw2fankzmjuj67jbjglf6wculmdsqc@n6vssl7awugo>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <65hphgivdhi53wjhi5xwsw2fankzmjuj67jbjglf6wculmdsqc@n6vssl7awugo>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,45 +88,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+  Hi,
 
-> On 20.10.25 19:03, Vladimir Sementsov-Ogievskiy wrote:
->> Recently we moved to returning errp. Why to keep int return value?
->> Generally it doesn't help: you can't use in a logic of handling
->> an error, as you are never sure, that in future the logic in
->> the stack will not change: it may start to return another error
->> code in the same case, or return same error code in another case.
->> Actually, we can only rely on concrete errno code when get it
->> _directly_ from documented library function or syscall. This way we
->> handle for example EINTR. But later in a stack, we can only add
->> this errno to the textual error by strerror().
->> Let this new, recently added API be simpler and clearer, let it
->> return simple boolean value, so we shouldn't think:
->>    - should we handle different error codes differently
->>      (if yes - how exactly, if no - why do we need this information?)
->>    - should we add it to errp, or it was already added earlier in
->>      the stack
->
->
-> Less aggressive commit message may be:
->
-> Switch the new API to simple bool-returning interface, as return value
-> is not used otherwise than check is function failed or not. No logic
-> depend on concrete errno values.
+> > +        error_setg(
+> > +            errp,
+> > +            "A VP context is present in the IGVM file but is not supported "
+> > +            "by the current system.");
+> 
+> It is pre-existing, but should we avoid splitting error messages to simplify
+> searching for them in the code?
 
-Good, except it isn't quite accurate: callers include the return value
-in error messages.
+checkpatch.pl throws an error about a long line if I drop the split.
 
-They format it as a number, which is inappropriate.
-
-If they formatted it appropriately, with strerror(), would that be
-helpful?  I *think* the answer is no.  The functions set an Error, and
-their callers prepend to that Error's message.  The original Error
-should suffice to tell what went wrong.  The prepended text's purpose is
-to add context.
-
-I think the easiest way to make this argument is to split this patch
-into a part changing the error messages, and a part changing the return
-type.
+take care,
+  Gerd
 
 
