@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 756C4CCD1BE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A8DCCD1AB
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSmm-0008Ke-A1; Wed, 22 Oct 2025 02:57:28 -0400
+	id 1vBSng-0002lH-2A; Wed, 22 Oct 2025 02:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSmi-0008E1-6m
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:24 -0400
+ id 1vBSnc-0002cR-Kf
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSmg-00083V-Pq
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:23 -0400
+ id 1vBSna-0008El-Pq
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116242;
+ s=mimecast20190719; t=1761116297;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OrjtDXtBAQBNieIaUjAWciIjKkR5YYxe6JyMLio1rDU=;
- b=TBfcLIvjlE6Q4nMHXxACFy2sOXWbzZARPxR44hUkdVG8LBm1KdDurwTWZ0JD5AZxF63B7F
- 4AJuSFVo2QFyrde/2m0XgOUlMY5tQi+mcWsT2YIZ5P9ObTSHVlwXJO4vHsHg8Is3MNodYw
- TkK2U+zKeT50w+EEDmSsIVFFgk1kCGU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7AhsANNLrtfRCdhH/sgNTMRB0jOkot8Dm/EOkC2K6qo=;
+ b=hsyekAKbcyPE/nIKbdlQFNuri5Or/afL6p7lY61vbjKTsfPeC2dBvTSnIsYvhGPkuJAsKI
+ eILRRkNu/fxKJRfPytnys/pNREDuOGms6xQ6qPHQ9uZLjb8GvdDWXioXLBgJ6SyKtG85rD
+ OxFl9HlQj3Tkn+JQ9bJmnxQqBcAGG8A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-1HGVVF0rMNubpez4pnw55A-1; Wed,
- 22 Oct 2025 02:57:20 -0400
-X-MC-Unique: 1HGVVF0rMNubpez4pnw55A-1
-X-Mimecast-MFC-AGG-ID: 1HGVVF0rMNubpez4pnw55A_1761116239
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-cibZdwH1MC2pPHTRU3oRGw-1; Wed,
+ 22 Oct 2025 02:58:15 -0400
+X-MC-Unique: cibZdwH1MC2pPHTRU3oRGw-1
+X-Mimecast-MFC-AGG-ID: cibZdwH1MC2pPHTRU3oRGw_1761116294
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 637AE18009C2; Wed, 22 Oct 2025 06:57:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43D651800C36; Wed, 22 Oct 2025 06:58:14 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E8199180057D; Wed, 22 Oct 2025 06:57:17 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F021119541B2; Wed, 22 Oct 2025 06:58:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,15 +54,15 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 06/42] hw/pcspk: check the "pit" is set
-Date: Wed, 22 Oct 2025 10:56:01 +0400
-Message-ID: <20251022065640.1172785-7-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 16/42] audio: start making AudioState a QOM Object
+Date: Wed, 22 Oct 2025 10:56:11 +0400
+Message-ID: <20251022065640.1172785-17-marcandre.lureau@redhat.com>
 In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -91,32 +91,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-We don't let the user create a "isa-pcspk" via -device yet (in theory,
-we could, and fallback on a lookup PIT), but we can add some safety
-checks that the property was correctly set nonetheless.
+QOM brings some conveniences for introspection, type checking, reference
+counting, interfaces etc. This is only the first step to introduce QOM
+in audio/ (I have more in the pipeline)
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/audio/pcspk.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ audio/audio.h     |  7 +++++++
+ audio/audio_int.h |  2 ++
+ audio/audio.c     | 43 ++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 41 insertions(+), 11 deletions(-)
 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 40572241cb..8ea3a161a4 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -181,6 +181,11 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
-     ISADevice *isadev = ISA_DEVICE(dev);
-     PCSpkState *s = PC_SPEAKER(dev);
+diff --git a/audio/audio.h b/audio/audio.h
+index eb5b5d662d..e41c5bc55a 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -80,6 +80,10 @@ typedef struct SWVoiceOut SWVoiceOut;
+ typedef struct CaptureVoiceOut CaptureVoiceOut;
+ typedef struct SWVoiceIn SWVoiceIn;
  
-+    if (!s->pit) {
-+        error_setg(errp, "pcspk: No \"pit\" set or available");
-+        return;
-+    }
++struct AudioStateClass {
++    ObjectClass parent_class;
++};
 +
-     isa_register_ioport(isadev, &s->ioport, s->iobase);
+ typedef struct AudioState AudioState;
+ typedef struct QEMUSoundCard {
+     char *name;
+@@ -182,4 +186,7 @@ const char *audio_get_id(QEMUSoundCard *card);
+ #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
+     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
  
-     if (s->card.state && AUD_register_card(s_spk, &s->card, errp)) {
++#define TYPE_AUDIO_STATE "audio-state"
++OBJECT_DECLARE_TYPE(AudioState, AudioStateClass, AUDIO_STATE)
++
+ #endif /* QEMU_AUDIO_H */
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index f78ca05f92..b2b4d2d10e 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -217,6 +217,8 @@ struct SWVoiceCap {
+ };
+ 
+ typedef struct AudioState {
++    Object parent;
++
+     struct audio_driver *drv;
+     Audiodev *dev;
+     void *drv_opaque;
+diff --git a/audio/audio.c b/audio/audio.c
+index 6197fa1788..754952ce58 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -1617,8 +1617,19 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
+     audio_reset_timer (s);
+ }
+ 
+-static void free_audio_state(AudioState *s)
++static void audio_state_init(Object *obj)
+ {
++    AudioState *s = AUDIO_STATE(obj);
++
++    QLIST_INIT (&s->hw_head_out);
++    QLIST_INIT (&s->hw_head_in);
++    QLIST_INIT (&s->cap_head);
++    s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
++}
++
++static void audio_state_finalize(Object *obj)
++{
++    AudioState *s = AUDIO_STATE(obj);
+     HWVoiceOut *hwo, *hwon;
+     HWVoiceIn *hwi, *hwin;
+ 
+@@ -1663,8 +1674,6 @@ static void free_audio_state(AudioState *s)
+         timer_free(s->ts);
+         s->ts = NULL;
+     }
+-
+-    g_free(s);
+ }
+ 
+ void audio_cleanup(void)
+@@ -1673,7 +1682,7 @@ void audio_cleanup(void)
+     while (!QTAILQ_EMPTY(&audio_states)) {
+         AudioState *s = QTAILQ_FIRST(&audio_states);
+         QTAILQ_REMOVE(&audio_states, s, list);
+-        free_audio_state(s);
++        object_unref(s);
+     }
+ }
+ 
+@@ -1732,18 +1741,13 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
+     AudioState *s;
+     struct audio_driver *driver;
+ 
+-    s = g_new0(AudioState, 1);
++    s = AUDIO_STATE(object_new(TYPE_AUDIO_STATE));
+ 
+-    QLIST_INIT (&s->hw_head_out);
+-    QLIST_INIT (&s->hw_head_in);
+-    QLIST_INIT (&s->cap_head);
+     if (!atexit_registered) {
+         atexit(audio_cleanup);
+         atexit_registered = true;
+     }
+ 
+-    s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
+-
+     if (dev) {
+         /* -audiodev option */
+         s->dev = dev;
+@@ -1796,7 +1800,7 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
+     return s;
+ 
+ out:
+-    free_audio_state(s);
++    object_unref(s);
+     return NULL;
+ }
+ 
+@@ -2320,3 +2324,20 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
+     }
+     return ret;
+ }
++
++static const TypeInfo audio_state_info = {
++    .name = TYPE_AUDIO_STATE,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(AudioState),
++    .instance_init = audio_state_init,
++    .instance_finalize = audio_state_finalize,
++    .abstract = false, // todo, subclass and make it abstract
++    .class_size = sizeof(AudioStateClass),
++};
++
++static void register_types(void)
++{
++    type_register_static(&audio_state_info);
++}
++
++type_init(register_types);
 -- 
 2.51.0
 
