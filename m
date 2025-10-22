@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D1E3CCD1AB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DED1CCF9E2
 	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 15:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBaRW-00008t-I6; Wed, 22 Oct 2025 11:08:02 -0400
+	id 1vBaRK-00007x-Qj; Wed, 22 Oct 2025 11:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaRV-00008W-BE
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:08:01 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaRJ-00007o-Kx
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:07:49 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaRT-00019a-BS
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:08:01 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4711b95226dso59251245e9.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 08:07:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaRH-00019L-PG
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:07:49 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4710022571cso59487445e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 08:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761145677; x=1761750477; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BZKU6hQIClGvtrfJAuNwgzsS5Iba6xqxjP2d0zQb+XM=;
- b=jPhndJ/vpp//npU6nBWY6M9Gonw5kMgnabKQAG+k19r64PDtvFndi5pPJtJcxsRD+b
- N7Vx+V74KnyTkJr8LiQuf0N9e97Yl1ZC/mXdWeyT3N4nEbDSApuJaqzov/9km06UjQBp
- ffIB4XwyKPRRFaVWU6pk/8SRzXmFXCgfX4rKWSBcZ5OhiO4NIcPpDX13v1SC+qjom374
- qNjuiK/xCE51tfiO1Onkm2gMtIoy6/rbKDqoTNFgSmSQ5q2lHQNVsjHMCMX4NGa1A3AH
- yxBc9UaSW9C7dwPPkm8UWtg2Vt2j3szkeFUcAr11uWRfH5FafUhDndof3c89FHJsIclg
- Txeg==
+ d=linaro.org; s=google; t=1761145665; x=1761750465; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=741mPyG7Ws82CP12XuRIk4udW4zd+s4zP/CIYSMvu2c=;
+ b=Jf2m68henQyw/gMbGifTk5DcBL3ZLC+wD5e3PH0QiKyd2bLtNyVAI4P98AqOamY6I1
+ OJKPLIkW0+dyKYcxZMTO1pmYWzDPhUWTxBQjq8bKFNzznizwEIGTgGGkQhym0NG3EZsb
+ h1vkQwJ9ZdyNLeXWqqZB8ta39PD1f5HncSUL1Ee/VdQiqiBN+u1eNFeBzXn0bR/T9lDq
+ L8b4dEQNRYMXfzAqj3iReqlhxiS0ZkkZaOsGY/s2Cg5S7b2sMzaxNUL8xlUCdnG5B5eZ
+ CNrTpBUzlSK/h9uKuCpWeIUf+vfbJDUolhYasHKDif5ftpMjucy8RQ+3vm7DsPWnzIkK
+ 7WhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761145677; x=1761750477;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BZKU6hQIClGvtrfJAuNwgzsS5Iba6xqxjP2d0zQb+XM=;
- b=SX7Av4WiKMB2qnyvbH6wJmd3KtGxaGCOc3a16N5oSEF4Xn6gsISMko5dqFgD+MQ28e
- TjZa9Yf1fqbdbSfEAbbB04fFofmNMrDsF7KfVlRaAAKFOJ/ObRnFnERWLe1krRFYU5pI
- 9+B+7ZDbE5F8OWEcRXDRcBsaoUE4T3EJ5yGCzkVtSB2pqVeIqcoa4rXoqcK0HYeq9gPA
- gUrJxfoN2TK+W2Qzkq3fWZM29+urafAjS8Wbw20XzVrkrZNqyOsOHU0GLNULojdTlC1k
- LhApSyFLfrI5uQPLM3Zk2Gs0qa7/DhqafChUFT5gWTP1mC3ObbpxAxpHPduZUJ7r77N/
- EIbA==
-X-Gm-Message-State: AOJu0Yxz7jwipO49PsTDz+bDVyZP1YebB3Hx7M/evh6Qfn6FxKr4R50F
- lEwyYU94yQ0g85I4tTYPl05akRqCMY2Yl6PJQRrgfb16VzRFtEBPfETweAZ6orfgGMGUGdiaD7m
- jP/FfuIA=
-X-Gm-Gg: ASbGncvYZ+HFTZuEmcaQnjF/r5FVZfCBRm3cKLCObT2am8w/nCcZbv785sLVK2NtD52
- j00elmdsfex7jd3a96wa1UdH8qnD4J3eGhzuytTQRtY0z1VLqIxKw69cVMMwIlQp9wkSphMxZ/i
- ewamBBDSVmDpbcL1N/7vG5iv+UFKzFfo+mZr14a9GtFkK6FpgSCo/e/kqsSDt0U7tF+yAfU/znI
- LbW4Ua8v69dZVH0/NrAU0p7vJmVM3OcjojnJPldSH3LlHHBq+OXXThSMaq0alKAgH/jgzRVes8v
- 3WZL7vvdNjIC83F1U4QMq/rKfh6YH0r6gHT3Z9NI9jCIBHx7E6Xqz6iI1FZ3+C/DKeGapUH3P2J
- 9d/BooY93hdMwGzsGty4dxM0+vfz2ndNEjkljwPIQL0MzzFiQOA64RwoJC/S4U3NUIaKCBHrHOH
- mgpSWVUjnIMz3aNe+75vzGwSOm6Q147wzfF52WLzfFAYNlxrWy9g9bhnwEyqr9
-X-Google-Smtp-Source: AGHT+IFHZjDIJVPW+NYgPV4I8tz4+wgdxvpS6R1G/GZ+Ri+IqcQQCWbE3FrOhDJ2dnLeAYmQCzfdpw==
-X-Received: by 2002:a05:600c:1396:b0:46c:adf8:c845 with SMTP id
- 5b1f17b1804b1-471178aba5bmr141017705e9.16.1761145677128; 
- Wed, 22 Oct 2025 08:07:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761145665; x=1761750465;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=741mPyG7Ws82CP12XuRIk4udW4zd+s4zP/CIYSMvu2c=;
+ b=s4WH0CQt4gIuCKzuY4LBLtR89nIBIBIJa8dJlTzz1r/IQ5CxFv2s2ChULvUXWfzk3g
+ pJXJBhTYFAxRErCPPcHrIWhlS4hZDfC4zTCtb+dD2myZhMK4EKs/nsC7xskRjoyy5oAC
+ W9zPX3VOMEQhw1rU/NJc4Z16gdWJtZQmFlHBt9+/qoIishl70X+4IFTV6qnn8CcIrIlI
+ 5P1McV0mergGLXVvVzM/EcbxSv21ZeodRLcLZVl3jkoL0syVW4WIRmIzsK8HwBByaUOy
+ XZQEVQrbVNZY4LbF/owAq5pqba0SXD17GvFSRhjv1CKJqLC6SoEEtpESqbIzoLxCGoCg
+ IyPw==
+X-Gm-Message-State: AOJu0YwQYrzV0pk//LlGdJp5/H40NWAMKEAWSkgBYXj6tIrW3SSi0dDV
+ BaNSMb8sjoS193SI2EB/lHT2EIdordm+SWpV229xSaW6F9TiABx53dsOzSwQHfE3mu432CWzMUR
+ tLW+/NGI=
+X-Gm-Gg: ASbGncs2oZeNOt7RgHLQRpOEszvAe+/QvupqRKzrPXfXdG4KMCN6VMhsqlV0XBZZtlX
+ xEJfkH93iNGpegbuQO8yWFRO5kCxVW+wAn0HwWZSAmsVVYXgXdq5BQRDzWzAZAjR/+Z74++jPp5
+ MaOUp/ihfzsYb0lwgoFO6jRtqfWWIX/Y5Q7Huni+/+VLD4mIfvX5kBpW0d6zDyPGiX/rlAlXcXg
+ DUPwA6VmccTTqXiKjFqB3gjZZBRSgKNcp7RiNw8sB1peu471f4fILEWkKX56uFB8LZYncGZG276
+ CDd2yhtlBp/FhpuMvCBFkGSxoQEBUUiXrgExAgQEx8mOCQQUhJR0dIN7Ogah2wP+yL0SyZElEQy
+ JLqOgV+OqscZoNHbJqyzc9iiHwuKydUD7ARfRoVE+zwJ0axIr8EBIZpPbVe/TY/xIjQTN2bRqVi
+ VniS2AuJouTrscap7WNdKV60fUyNRpl2NWoACtT/xiA3XgcByfrg==
+X-Google-Smtp-Source: AGHT+IG36aBy54Abgq1JyrsOME5NLqF0vOw5hlJNh88XQ751TonZSB9/lORTHwaZp+L5GHWM150X8A==
+X-Received: by 2002:a05:600c:3e05:b0:471:16f3:e542 with SMTP id
+ 5b1f17b1804b1-47117870720mr184679845e9.2.1761145665205; 
+ Wed, 22 Oct 2025 08:07:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f009a96asm26012893f8f.31.2025.10.22.08.07.56
+ 5b1f17b1804b1-475c42d9524sm46335915e9.18.2025.10.22.08.07.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Oct 2025 08:07:56 -0700 (PDT)
+ Wed, 22 Oct 2025 08:07:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -71,17 +70,16 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/9] chardev/char-fe: Improve @docstrings
-Date: Wed, 22 Oct 2025 17:07:35 +0200
-Message-ID: <20251022150743.78183-2-philmd@linaro.org>
+Subject: [PATCH v2 0/9] chardev: Improve @docstring and clarify
+ qemu_chr_write() uses
+Date: Wed, 22 Oct 2025 17:07:34 +0200
+Message-ID: <20251022150743.78183-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251022150743.78183-1-philmd@linaro.org>
-References: <20251022150743.78183-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,163 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Describe the @c (this is the *frontend*) and @s (the *backend*)
-parameters. Fill qemu_chr_fe_[gs]et_msgfds() method docstrings.
+v2:
+- Document ChardevClass::chr_write() and qemu_chr_write[_all]()
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+Few chardev fixes:
+- preserve %errno
+- allow partial writes in qemu_chr_write()
+
+Improve chardev methods documentation.
+
+While @c for frontend and @s for backend is accepted, it
+confuses me, so I prefer to document for my own mental health.
+
+Based-on: <20251022074612.1258413-1-marcandre.lureau@redhat.com>
+
+Philippe Mathieu-Daudé (9):
+  chardev/char-fe: Improve @docstrings
+  chardev/char-io: Add @docstrings for io_channel_send[_full]()
+  chardev/char: Improve ChardevClass::chr_write() docstring
+  chardev/char: Document qemu_chr_write[_all]()
+  chardev/char-pty: Do not ignore chr_write() failures
+  chardev/char: Allow partial writes in qemu_chr_write()
+  chardev/char: Preserve %errno in qemu_chr_write()
+  chardev/char-hub: Retry when qemu_chr_fe_write() can not write
+  hw/char: Simplify when qemu_chr_fe_write() could not write
+
  include/chardev/char-fe.h | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ include/chardev/char-io.h | 18 ++++++++++++++++++
+ include/chardev/char.h    | 35 ++++++++++++++++++++++++++++++++++-
+ chardev/char-hub.c        |  2 +-
+ chardev/char-pty.c        |  2 +-
+ chardev/char.c            |  7 ++++++-
+ hw/char/cadence_uart.c    |  2 +-
+ hw/char/ibex_uart.c       |  2 +-
+ hw/char/sifive_uart.c     |  2 +-
+ 9 files changed, 86 insertions(+), 8 deletions(-)
 
-diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
-index 7901856f951..c183432825b 100644
---- a/include/chardev/char-fe.h
-+++ b/include/chardev/char-fe.h
-@@ -26,6 +26,8 @@ struct CharFrontend {
- 
- /**
-  * qemu_chr_fe_init:
-+ * @c: the character frontend
-+ * @s: the character backend
-  *
-  * Initializes the frontend @c for the given Chardev backend @s. Call
-  * qemu_chr_fe_deinit() to remove the association and release the backend.
-@@ -47,6 +49,7 @@ void qemu_chr_fe_deinit(CharFrontend *c, bool del);
- 
- /**
-  * qemu_chr_fe_get_driver:
-+ * @c: the character frontend
-  *
-  * Returns: the driver associated with a CharFrontend or NULL if no
-  * associated Chardev.
-@@ -58,6 +61,7 @@ Chardev *qemu_chr_fe_get_driver(CharFrontend *c);
- 
- /**
-  * qemu_chr_fe_backend_connected:
-+ * @c: the character frontend
-  *
-  * Returns: true if there is a backend associated with @c.
-  */
-@@ -102,6 +106,7 @@ void qemu_chr_fe_set_handlers_full(CharFrontend *c,
- 
- /**
-  * qemu_chr_fe_set_handlers:
-+ * @c: the character frontend
-  *
-  * Version of qemu_chr_fe_set_handlers_full() with sync_state = true.
-  */
-@@ -116,6 +121,7 @@ void qemu_chr_fe_set_handlers(CharFrontend *c,
- 
- /**
-  * qemu_chr_fe_take_focus:
-+ * @c: the character frontend
-  *
-  * Take the focus (if the front end is muxed).
-  *
-@@ -125,6 +131,7 @@ void qemu_chr_fe_take_focus(CharFrontend *c);
- 
- /**
-  * qemu_chr_fe_accept_input:
-+ * @c: the character frontend
-  *
-  * Notify that the frontend is ready to receive data
-  */
-@@ -132,6 +139,7 @@ void qemu_chr_fe_accept_input(CharFrontend *c);
- 
- /**
-  * qemu_chr_fe_disconnect:
-+ * @c: the character frontend
-  *
-  * Close a fd accepted by character backend.
-  * Without associated Chardev, do nothing.
-@@ -148,6 +156,7 @@ int qemu_chr_fe_wait_connected(CharFrontend *c, Error **errp);
- 
- /**
-  * qemu_chr_fe_set_echo:
-+ * @c: the character frontend
-  * @echo: true to enable echo, false to disable echo
-  *
-  * Ask the backend to override its normal echo setting.  This only really
-@@ -169,6 +178,7 @@ void qemu_chr_fe_set_open(CharFrontend *c, bool is_open);
- 
- /**
-  * qemu_chr_fe_printf:
-+ * @c: the character frontend
-  * @fmt: see #printf
-  *
-  * Write to a character backend using a printf style interface.  This
-@@ -197,6 +207,7 @@ typedef gboolean (*FEWatchFunc)(void *do_not_use, GIOCondition condition, void *
- 
- /**
-  * qemu_chr_fe_add_watch:
-+ * @c: the character frontend
-  * @cond: the condition to poll for
-  * @func: the function to call when the condition happens
-  * @user_data: the opaque pointer to pass to @func
-@@ -219,6 +230,7 @@ guint qemu_chr_fe_add_watch(CharFrontend *c, GIOCondition cond,
- 
- /**
-  * qemu_chr_fe_write:
-+ * @c: the character frontend to write to
-  * @buf: the data
-  * @len: the number of bytes to send
-  *
-@@ -233,6 +245,7 @@ int qemu_chr_fe_write(CharFrontend *c, const uint8_t *buf, int len);
- 
- /**
-  * qemu_chr_fe_write_all:
-+ * @c: the character frontend to write to
-  * @buf: the data
-  * @len: the number of bytes to send
-  *
-@@ -248,6 +261,7 @@ int qemu_chr_fe_write_all(CharFrontend *c, const uint8_t *buf, int len);
- 
- /**
-  * qemu_chr_fe_read_all:
-+ * @c: the character frontend to read from
-  * @buf: the data buffer
-  * @len: the number of bytes to read
-  *
-@@ -260,6 +274,7 @@ int qemu_chr_fe_read_all(CharFrontend *c, uint8_t *buf, int len);
- 
- /**
-  * qemu_chr_fe_ioctl:
-+ * @c: the character frontend to control
-  * @cmd: see CHR_IOCTL_*
-  * @arg: the data associated with @cmd
-  *
-@@ -273,6 +288,7 @@ int qemu_chr_fe_ioctl(CharFrontend *c, int cmd, void *arg);
- 
- /**
-  * qemu_chr_fe_get_msgfd:
-+ * @c: the character frontend to access
-  *
-  * For backends capable of fd passing, return the latest file descriptor passed
-  * by a client.
-@@ -286,9 +302,12 @@ int qemu_chr_fe_get_msgfd(CharFrontend *c);
- 
- /**
-  * qemu_chr_fe_get_msgfds:
-+ * @c: the character frontend
-+ * @fds: an array of ancillary file descriptors to get
-+ * @num: the maximum number of ancillary file descriptors to get in @fds
-  *
-  * For backends capable of fd passing, return the number of file received
-- * descriptors and fills the fds array up to num elements
-+ * descriptors and fills the fds array up to @num elements
-  *
-  * Returns: -1 if fd passing isn't supported or there are no pending file
-  *          descriptors.  If file descriptors are returned, subsequent calls to
-@@ -299,6 +318,9 @@ int qemu_chr_fe_get_msgfds(CharFrontend *c, int *fds, int num);
- 
- /**
-  * qemu_chr_fe_set_msgfds:
-+ * @c: the character frontend
-+ * @fds: an array of ancillary file descriptors to set
-+ * @num: the number of ancillary file descriptors to set
-  *
-  * For backends capable of fd passing, set an array of fds to be passed with
-  * the next send operation.
 -- 
 2.51.0
 
