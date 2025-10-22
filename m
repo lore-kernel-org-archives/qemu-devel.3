@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2907FCCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A04CCCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXo8-000112-5V; Wed, 22 Oct 2025 08:19:12 -0400
+	id 1vBXoQ-00015G-2K; Wed, 22 Oct 2025 08:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo5-00010P-RL
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXoO-00014n-Ne
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo4-00072P-0U
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXoM-00074F-Qe
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761135546;
+ s=mimecast20190719; t=1761135565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=A5Ad/N+nePZpXSyZ1Bg+sV63303rHbg2A64+yZ90JzY=;
- b=adkJtzeZXAjVaC/Gj0tKOCcjXnfzY3VcbmLWgQcl2c+3+WsCM/fEhCj6h6fwGPXjZICyia
- 5H9WHkGxT8xyiyjgasML3yTkSd95a+Sw5KBy/qyfAGnxKhtTeJnqi6W8YaN6k5hC7KQ/rl
- 7gW5viBzH0t5axPaVGbdLuvhjCJY6P8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=D7kgzKTYZ8ou97BveS1sALexRkahzseuftgDs0yDqws=;
+ b=Y2qETNp5bqClgDjqUHyZedK7joUG0uBCsVKQGCiP2Q4RbhYULWFw8M8DIXMEZaRrxxNrUy
+ AkhXmDjVe133x/6dFI4LgqFq5Y4dThkCWKjEZYg2NKT4S0kM04U2b6ZZZh0TTwF7WBdtaM
+ Vi+C0ncYtkAZjW3+UeNSa9AbDLdSD6U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-OnecN58qMZOwA-7dlW0rjQ-1; Wed,
- 22 Oct 2025 08:19:04 -0400
-X-MC-Unique: OnecN58qMZOwA-7dlW0rjQ-1
-X-Mimecast-MFC-AGG-ID: OnecN58qMZOwA-7dlW0rjQ_1761135543
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-z7F5lkEpNC2wGwz9Ajqrgw-1; Wed,
+ 22 Oct 2025 08:19:24 -0400
+X-MC-Unique: z7F5lkEpNC2wGwz9Ajqrgw-1
+X-Mimecast-MFC-AGG-ID: z7F5lkEpNC2wGwz9Ajqrgw_1761135562
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CBCD8180899E; Wed, 22 Oct 2025 12:19:03 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E3030195606C; Wed, 22 Oct 2025 12:19:21 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.12])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 89AE1180044F; Wed, 22 Oct 2025 12:19:01 +0000 (UTC)
+ id DC52E1800452; Wed, 22 Oct 2025 12:19:19 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 05/12] accel/kvm: Fix an erroneous check on coalesced_mmio_ring
-Date: Wed, 22 Oct 2025 14:18:39 +0200
-Message-ID: <20251022121846.874152-6-clg@redhat.com>
+ John Levon <john.levon@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Alex Williamson <alex@shazbot.org>
+Subject: [PULL 12/12] vfio: only check region info cache for initial regions
+Date: Wed, 22 Oct 2025 14:18:46 +0200
+Message-ID: <20251022121846.874152-13-clg@redhat.com>
 In-Reply-To: <20251022121846.874152-1-clg@redhat.com>
 References: <20251022121846.874152-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,37 +85,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: John Levon <john.levon@nutanix.com>
 
-According to KVM uAPI, coalesced mmio page is KVM_COALESCED_MMIO_PAGE_OFFSET
-offset from kvm_run pages. For x86 it's 2 pages offset, for arm it's 1 page
-offset currently. We shouldn't presume it's hardcoded 1 page or else
-coalesced_mmio_ring will not be cleared in do_kvm_destroy_vcpu() in x86.
+It is semantically valid for a VFIO device to increase the number of
+regions after initialization. In this case, we'd attempt to check for
+cached region info past the size of the ->reginfo array. Check for the
+region index and skip the cache in these cases.
 
-Fixes: 7ed0919119b0 ("migration: close kvm after cpr")
-Cc: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
-Link: https://lore.kernel.org/qemu-devel/20250928085432.40107-6-zhenzhong.duan@intel.com
+This also works around some VGPU use cases which appear to be a bug,
+where VFIO_DEVICE_QUERY_GFX_PLANE returns a region index beyond the
+reported ->num_regions.
+
+Fixes: 95cdb024 ("vfio: add region info cache")
+Signed-off-by: John Levon <john.levon@nutanix.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Alex Williamson <alex@shazbot.org>
+Link: https://lore.kernel.org/qemu-devel/20251014151227.2298892-3-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- accel/kvm/kvm-all.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/vfio/device.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 56031925c4e9e6d46fb0e026e7b8dede2dabc7d2..f9254ae6546671e4569c190a098447becbdac0e0 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -525,7 +525,8 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 52079f4cf5bda7c1d9e6e3791a6c340a0e3f57ba..8b63e765acbacdccc5365d000e2aa9bd49ae9701 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -205,10 +205,19 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+     int fd = -1;
+     int ret;
+ 
+-    /* check cache */
+-    if (vbasedev->reginfo[index] != NULL) {
+-        *info = vbasedev->reginfo[index];
+-        return 0;
++    /*
++     * We only set up the region info cache for the initial number of regions.
++     *
++     * Since a VFIO device may later increase the number of regions then use
++     * such regions with an index past ->num_initial_regions, don't attempt to
++     * use the info cache in those cases.
++     */
++    if (index < vbasedev->num_initial_regions) {
++        /* check cache */
++        if (vbasedev->reginfo[index] != NULL) {
++            *info = vbasedev->reginfo[index];
++            return 0;
++        }
      }
  
-     /* If I am the CPU that created coalesced_mmio_ring, then discard it */
--    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
-+    if (s->coalesced_mmio_ring ==
-+           (void *)cpu->kvm_run + s->coalesced_mmio * PAGE_SIZE) {
-         s->coalesced_mmio_ring = NULL;
+     *info = g_malloc0(argsz);
+@@ -236,10 +245,12 @@ retry:
+         goto retry;
      }
  
+-    /* fill cache */
+-    vbasedev->reginfo[index] = *info;
+-    if (vbasedev->region_fds != NULL) {
+-        vbasedev->region_fds[index] = fd;
++    if (index < vbasedev->num_initial_regions) {
++        /* fill cache */
++        vbasedev->reginfo[index] = *info;
++        if (vbasedev->region_fds != NULL) {
++            vbasedev->region_fds[index] = fd;
++        }
+     }
+ 
+     return 0;
 -- 
 2.51.0
 
