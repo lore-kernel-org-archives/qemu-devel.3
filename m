@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F0DCCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C2DCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBeDw-0006Bj-NX; Wed, 22 Oct 2025 15:10:16 -0400
+	id 1vBeE4-0006Hb-QR; Wed, 22 Oct 2025 15:10:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBeDo-0006Aw-Hc
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:10:09 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBeE1-0006H5-TE
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:10:21 -0400
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBeDm-0007eq-KO
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:10:08 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3ece1102998so5901368f8f.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:10:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBeDz-0007jy-He
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:10:21 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-7b4f7a855baso7448a34.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761160204; x=1761765004; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1761160218; x=1761765018; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DB/IQfi2vbMxTfrSwHEtAr4KGOyICMgdRUrHmc8JTgE=;
- b=qhrkSdfOBghYIt+DJ2nenxNMf5pjEGAK/l4oxA6lceqnKi81wJlezSpLd6bCV5oo+v
- 1cI14Qg72cF9USwPEaea9q41efqIN8E9AqBx7GfBxA0VCkOSSBwr6tsu1njoY9LYGSkB
- NQnCl7I3Mt2PHuy/Ps/+DRF9LPAfnGqg6HqaO8qzDOW98W+UmxHR3ivFEqaJNfNtsAAy
- qLZ3PLX+Fy8BS7iSJ+wn2XlB9Taj8m0pfaMTotwVNG1qw/yotMObQ5fxXMH2oUzq+gSJ
- wX8p/LMLWSwGTSK86iIy0EGBYmCh1qaYb6QctmzHXlhnPrZ5NWSmspdNkyC7ta+Cm5mr
- cKKQ==
+ bh=rhxl521kQPT0vbS2vdF8H+QZj0yDHPTg5s1ROOPzNYQ=;
+ b=vbv81rX3TQJMT4hC1V7WenkJOk2YuT/AB+KRpLcpfscHSVxUallseAHyT/UcLQ+ogY
+ Cdta7wkICoUelzSV4f7EcMZX/ZrtRkHjT6bD1GdoPfToMrBobF0Xnm8aJ12fPYhoojHB
+ frtRA/eVeqZ6WRJTgG4DY7c5HBYrCqxe6gcFyLNRd12IUjomAPWIneW6LhQW8LRqNsc3
+ LFaWl0QTai7w6j81GilICxy82CVcg7Tegx38p2qvVEexN+PLJH36oa8YHZbhN9UBl7pD
+ TmFS5lepfjMkb93F2ySppKO9QtvV5eRjDNFV70kxkvnLBzVBr6OxyejLUM5P0UYFSm5B
+ WW4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761160204; x=1761765004;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761160218; x=1761765018;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DB/IQfi2vbMxTfrSwHEtAr4KGOyICMgdRUrHmc8JTgE=;
- b=TKcFryw7OhuuFUL1/J4exKBv0IH6IY0w0AeAjxAe3kYiC96v99D+Aj1PyuxR1FI7wn
- ktenLMWvHFaEj+hJRC1T4kvPpv40j++CnoN4lWRY/LsYSsLfyh8916l1DjVF967lNvbJ
- cuIzS4SmCEhr2IWsahMOdj02xgvKkZlYow2hGXh+G2+PNadiIovybHL52XN+LdLxhpnB
- uXbFxvnvOKf5+GL4RwkgYnfw+ABg05WvP5dhXvP20WK34FrWVPCjtgT5xm7B5tvVToq9
- fIVOeLEO3wR1mQFASQJBvE7vG4ylS74jcmQ1e+8VbNXfowB/zLhLcRy/DM3oxA7e5/OG
- WlaA==
+ bh=rhxl521kQPT0vbS2vdF8H+QZj0yDHPTg5s1ROOPzNYQ=;
+ b=Ms9VHev/6E/UKIgEztN/GrJrC4y815ZS8LkYmfhTdx2SY+y6uDe4NHnLsAFgwBdSXu
+ PRd1UQAzPY8D/6Ik9R5z6jIiNt1Y/zu+ZUZLOhHk/TVe3UMrQDex+9UaKk7wHdH2mToV
+ dqnOVUlD7sT1s8wOeGVf60E9U2flNqU/ZDoFB85b0q/Rnf9FbBnvf7wAsQMGJOZESliG
+ 5tz7fppNqAQeh0rmZvDGjg6k3zRDadg0EItnoTjY30ZC4CUSmSxroPxmgHhoAmqpMbQp
+ a9LWwpvSGtJUaPgxpxq78+cAN+v+TwovVNHB0vcoZvmy3bBjiiPjvII+AKlZfMGnsP9V
+ nAvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqbPsaXidkFxv3J8PB9PEGHhX2PSIYI8uHwPwD5j0rAcwDC+4UtuIPL96QbxUzT0ClC9/3dniOt6gZ@nongnu.org
-X-Gm-Message-State: AOJu0YzkEsLfdvHQmTE/LmsgTrJW/599fWA73vzx8HMDT+pnuvqa8XFA
- hl3H+4DYCE34CqykNI6i1UhvgUUkG9h+aeLggWaMKq4GGDKlzVyHxTssUCxrJ+vs4e7n1moTKLL
- FHqWcfoE=
-X-Gm-Gg: ASbGncvtQgiIVBA8+cp45VTuZH/fQy5XoF+CcEz0k/p6xjzBtK6FF7iSAwpAJaQVk2e
- rELY+lUrihoFO+mYysAUqaBjALpNA5oqkfrwneaR+v0yPbDNhpdBLuDRTUNujDHKFtJ7ph5Iwt1
- FqYDCC7y78a5dBdkGvAZWGtyUA8EPtlNpd29L4oRLns21b5itUvDuhfNrSWktCTBEwDKEpgQCYJ
- bxF0NBSU+OwbXhZgoTixrMxxH4B9F8TQMLEk3qtn9BIsHzk9jpMH1Bmr/MIVREy0x5G/5qLms8N
- 3hR/0Vk/e+U8r1SPY6QL26QdgVZ8I/sOmA9YoIY3oBp9lLAeh2NrXNdIAbd59lWtiRnh9rsQnAr
- 3k3vILgJIPvcD6Es9kVIGq/e5KJ30czzjwUin7V0NiCdwtQ4ltEcksjU2Z9h2/2lfC/H6sipBdT
- qoaSCVz2ahpfvxIUeJcZa+kPq7xLGOYgdbyhMtxTGUYQ+wDEJWlIXNGQ==
-X-Google-Smtp-Source: AGHT+IGE3S0vQgfKTYpePl6U/dHUaxVS3sZgP5cMOOWlTn1/qcM2IQtO29lvXpGrXtmuodL0h3S+Cg==
-X-Received: by 2002:a05:6000:2305:b0:427:928:7888 with SMTP id
- ffacd0b85a97d-42709287b06mr12055474f8f.55.1761160204542; 
- Wed, 22 Oct 2025 12:10:04 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c428a5bcsm58840155e9.7.2025.10.22.12.10.03
+ AJvYcCUv6w4AOnexH+TLs5FshsZNEnyNvZbc6Vio8s4ca/7K01tCqIAF2K3wCL1I0taMFVZLfXX+vHFAcv5D@nongnu.org
+X-Gm-Message-State: AOJu0YzwNvrOhfvK2Z+Of+qmjofV4zIa89UlzWBKAAVPyBTcunI46gU3
+ IjPETKHcV2neDc9aQdFDcjDAgkRr8bb43JZRXQ1yvyDGSwMb8ahmh7F50i87FJD0ytg=
+X-Gm-Gg: ASbGncv1M7U7mcNX7/MHjD4vRSKvrxcmGeWlHQJghTVj1iHOTyYwRARS91pEsimI/dC
+ UIX8TY1Q4Wd7IEEY2FlDIkDHZKn3h/9K8q9vwmwlaiSg2YtLWvfn0aN5B1kFmUWlbGk/22sIR8e
+ MWshTQ2lgD8yACtizqLZrOYAXre9yDvRje6x9ez7izv+t/5aKHsVGE0XM48P36Ww3GeYT/+d2yO
+ VvL7DL4JniyxgD+KNYOTU0tVd9IRkXw/nD/+l0x2CVdUCQi71TdRMW+YHgwjgTP/5NU0LpbsZ1O
+ TUdIVSfDafmEURUVL7O4ZWx5U5kwdzhETHuDEKKcTX9GAH067A6JfZrDVJ+kUXOcHzEx81956us
+ Fo76WMWYr1GRa23i6oyoNIIG8zV61Pg69I+RdJ2LcGX6B10U25vUMvw/LHtpp1RjIIPrMhcx4nY
+ GB11YhrOMd+EqFZbL54Qa0leHYBrtCuxc0f/Zxc1YATN1gCDjEV5XcDOFO5tip
+X-Google-Smtp-Source: AGHT+IFl0i3mLty5ScM9F1h0Ifrsre8sYoh175ophQwoIhiiyF02u/yT/Rx917UHv0hZbdoZbjbnmQ==
+X-Received: by 2002:a05:6830:6d0e:b0:79f:19f:809 with SMTP id
+ 46e09a7af769-7c27c5449c4mr10821105a34.0.1761160218154; 
+ Wed, 22 Oct 2025 12:10:18 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3?
+ ([2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7c288932dc5sm4813719a34.31.2025.10.22.12.10.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 12:10:04 -0700 (PDT)
-Message-ID: <a3413bbd-e98c-4267-81c7-aa42aeda8a09@linaro.org>
-Date: Wed, 22 Oct 2025 21:10:03 +0200
+ Wed, 22 Oct 2025 12:10:17 -0700 (PDT)
+Message-ID: <b250c6ff-d687-46b7-b540-61b67eba8903@linaro.org>
+Date: Wed, 22 Oct 2025 14:10:14 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] tests/functional: Fix problems in testcase.py
- reported by pylint
+Subject: Re: [PATCH 10/10] hw/hppa: Add 715 machine type including NCR710 SCSI
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+References: <20251017200653.23337-1-deller@kernel.org>
+ <20251017200653.23337-11-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251015095454.1575318-1-thuth@redhat.com>
- <20251015095454.1575318-5-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251015095454.1575318-5-thuth@redhat.com>
+In-Reply-To: <20251017200653.23337-11-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,28 +107,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/10/25 11:54, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> - put 3rd party "import pycotap" after the standard imports
-> - "help" is a built-in function in Python, don't use it as a variable name
-> - put the doc strings in the right locations (after the "def" line)
-> - use isinstance() instead of checking via type()
-> - use lazy logging strings
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/qemu_test/testcase.py | 251 +++++++++++++------------
->   1 file changed, 126 insertions(+), 125 deletions(-)
+On 10/17/25 15:06, deller@kernel.org wrote:
+> @@ -363,8 +365,20 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+>   
+>       /* SCSI disk setup. */
+>       if (drive_get_max_bus(IF_SCSI) >= 0) {
+> -        dev = DEVICE(pci_create_simple(pci_bus, -1, "lsi53c895a"));
+> -        lsi53c8xx_handle_legacy_cmdline(dev);
+> +        if (pci_bus) {
+> +            dev = DEVICE(pci_create_simple(pci_bus, -1, "lsi53c895a"));
+> +            lsi53c8xx_handle_legacy_cmdline(dev);
+> +        } else {
+> +            dev = lasi_ncr710_init(addr_space,
+> +                       translate(NULL, LASI_HPA_715 + 0x6000),
+> +                       qdev_get_gpio_in(lasi_dev, LASI_IRQ_SCSI_HPA));
+
+Indentation past (.
+
+> +            if (dev) {
+> +                lasi_ncr710_handle_legacy_cmdline(dev);
+> +            } else {
+> +                qemu_log("HPPA Machine: Warning - "
+> +                         "Failed to create LASI NCR710 controller\n");
+
+When can the init fail?
+Should you be passing down an Error pointer?
+Would an assert be sufficient?
+
+> +    /* Create ISA bus, needed for PS/2 kbd/mouse port emulation */
+> +    isa_bus = hppa_isa_bus(translate(NULL, IDE_HPA));
+> +    assert(isa_bus);
+
+... like here.
+
+As an aside, we could usefully mark such functions returns_nonnull.
+Or even __attribute__((malloc, returns_nonnull)) to indicate a new object.
+That's obviously separate from adding the 715 machine, but it's something that we should 
+think about rolling out tree-wide.
 
 
-> -    def run_cmd(self, bin_path, args=[]):
-> +    def run_cmd(self, bin_path, args=None):
-> +        if args is None:
-> +            args = []
-
-For my own education, what is the issue reported here?
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+r~
 
