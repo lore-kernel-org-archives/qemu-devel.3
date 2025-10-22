@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49371CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A0CCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXLp-0006jt-O7; Wed, 22 Oct 2025 07:49:57 -0400
+	id 1vBXMn-0007jo-Fc; Wed, 22 Oct 2025 07:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vBXLk-0006jX-Vm
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:49:52 -0400
-Received: from mail-qk1-x730.google.com ([2607:f8b0:4864:20::730])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBXMm-0007hU-69
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:50:56 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vBXLj-0003Yl-EA
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:49:52 -0400
-Received: by mail-qk1-x730.google.com with SMTP id
- af79cd13be357-88f79ae58f0so939435685a.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:49:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBXMi-0003rp-FT
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:50:55 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-784966ad073so45312057b3.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761133790; x=1761738590; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761133850; x=1761738650; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3AE9YhejqwmJkEXrvvR0AWExh0C/M7UF/K66oXrDBPY=;
- b=bXs3mKRK3rgW4Mf5uaMaawrxSbOQsyxdsGRPFd/I8IxbVptm/hmxf0fnCzoG5xMYT3
- xy2JBKyvzdlZJzjOBVY8yK2wFOQjaM+/CjOfTZjkQdY2RKDgRIZQaMZq/S6SosCKP5ZG
- E73iqhBypFqMms1juWPEN5AzND/XKA35A0nNf8glFjmi2gNdl1ppt+1j8yBaZoV4q80W
- DaHHp/lklt5wRtaIw86ki+Lu1mC1SZaGnongP4hboC4kM6MKT1CrjbuBPT3H/PQd9eaM
- r5e1V0CPPchkOLMxzN7GrN63VdI2KGFiYVEGTKyrob7kocwgYsRiQbZTYsO+DvkpnzbT
- +Y1g==
+ bh=wYNtjsVMvszdoj9Jt0oH1SPp7y+wTPBy9VWR/t5hIgA=;
+ b=Uo50Zlvam9cz2+82yY4691DqgFhcj2Iq6/V+Sn345hbmzVlrPvT+mSEkYxIj7YOIKj
+ nboqP2Q447gvr03ZMcjVxTrRXI/oNbd6Wt7xNpDZYZE0qWLAP2REWQIzE4g7RkkpiREO
+ DfNLt5k7SKifZgopk7CKIsPJD0Q8OljWuU3c6yn4/fTtlnYPZ6B8xEvhyUAYscq7SLr1
+ MTTqZ5RXekY/7tWIq9OAF0/J6otAyT3bPuojBnoYwpwytVT6RQn3t7gKj8JUkYLl6npx
+ +3QqLIf4wk8n6aRg5PIHp782+y2XjLoKr7fwFKRStgpIxTbCxNDj/h1McjuoJkU3OFSS
+ hd4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761133790; x=1761738590;
+ d=1e100.net; s=20230601; t=1761133850; x=1761738650;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3AE9YhejqwmJkEXrvvR0AWExh0C/M7UF/K66oXrDBPY=;
- b=MZUxomfne2Lnoowyopkhu2zmRWWUZ68EFtdG/jDDQGlCjI6O7ReCDn4OmTz61+i+Wm
- O32aWcYHJh8r+XWHctdmMMx5xakz9FLMdn8zLC8BRwggcVNK6g4bWhzVmgqoXTFHCEiW
- MiNd+5DEYo/uTiY2B877K3EoFEVGVWcFqbmBufUbVtFk/tiAXGLFtU1n+cIBpv2BZB8r
- qLldk6E+LEmtnaALx9aNSY2FcgSbxQ8vNEvP8LGAfSHekcPsQyc3NzGRLghUQjScC8IR
- GxLqeYGNeeb4BozFYTSVEDFRdIDUm0XZfohPQGA4iTp77iT/ZIYT6swCRjaEQ6rZ9quq
- fpLQ==
-X-Gm-Message-State: AOJu0YxesHexvZL4KqUWiB4mrJ2ryNlGIrmlGE3VM1B9YujS5A4udH8i
- PMH/l8HJ+kmGEGs6vHLOzkBFJLbc0MdpZM02f1leCDrgFgOoHsLAazk24DjKMhWuYfAXoS2o2Sk
- dL2o6xHJvdwR+zU37Wbyt4cMoiRhNiQY=
-X-Gm-Gg: ASbGnctLyZLR/+g5tmCsMiFGAqLiQp3C9oMuLgpr7w10c4BYgwCHXsdpGA/gb6vS5Ia
- ngV8joFX5foZfJycmsjVEXnHTNPj2Mph7H6LMAdDnv+5zNalb+Tj8/MEcNqohSfBshXKZFgyp7q
- NsW31qd3ThT2Q5WDzHHbaQRIGpzlNFfDPy5OyZ/O6CoQaNabZ5zzEu0WpBVHj+DaG5sXZfUcaec
- b9EiDkynTfG1Ql9uIxEFRdkV+rY/fyIUdO1FAqYo11Gqhml5UDzp7DAY3Gtc4u4Cqo07RWe2+4H
- 0PUsYomA1jeA9n/i
-X-Google-Smtp-Source: AGHT+IEZB7Vf/HnkgOy9TOAe1cAibuhyeoTlj4PdZGwzYwVEL8Vz9cXg7LtcgTnENWjLwpvBudukk0os04utMiDz84g=
-X-Received: by 2002:a05:620a:7084:b0:892:9838:b17a with SMTP id
- af79cd13be357-8929838b4e5mr1400273385a.3.1761133789808; Wed, 22 Oct 2025
- 04:49:49 -0700 (PDT)
+ bh=wYNtjsVMvszdoj9Jt0oH1SPp7y+wTPBy9VWR/t5hIgA=;
+ b=LUfHzbUVVCtH3KZxFXMPn4Et3P1HTtFeBTrsWq98oKbYII6DmIOxEaGKgo3Tb9Ufr8
+ Snex7buU3IFpWGC66G2wUT/vZUffom9vUSRNMYHLqqlTzIF2TE6q4B+wjSHmKcoyafgK
+ 7NmWaiOFDZip6/4dczXHFkSodxhMNxL/KGo0Xp3YRIWbgqOTv0bY/n/E6F0wQxJj9hte
+ sSedaiC7LIHE91t/q0dK2aNbWumu8osP9sgJD/ehrPLZN933V9YubBqpubQMNiwsV/MK
+ LoaWBsP18GDzJcd72QDoeD/YhAYmoufeeVuZIWP9vP/Q0p6eM56fwXyl2aGGGCK43HLu
+ L/0A==
+X-Gm-Message-State: AOJu0YzBx9LvWDXImOn04f8gfdcnWd3020DvMnQ6uyIJdChIG57n9f+v
+ rpSBzB13pp25VRPw57gEE0DVVTd+YW4Ic7Lh55fNUpjtfTD/Od6za7xJ5F2iUmy8Q4lB47UfZaR
+ /gKrwI7dESryU/QBAFlvoAeRbsJvHd5P1+noO4WWSYQ==
+X-Gm-Gg: ASbGnct0shoHO/st6s9Ovg5MEt8jlVcJVHYWSLKBpBPhKzaczHK0nM+n4sS09fBU5cJ
+ kXBzIuP9dMkA99mECbTpcniglJU1CLVtXSPMB4NVopFVTPiQxzzdWap31zR7JBOWjPyJybQi4af
+ SxalSmtV0qzT4yYO6nBVOjHHJ7cdj8SECXfqUXwINOzSLEH+b9pixBtROcPBtx0pqcaGA4oRKTj
+ SZoLLOLWspWMJKaXvkhoDNniwvEMhc4T1Jt8J5cu/xIPKutiydsVmXS9uzJUg==
+X-Google-Smtp-Source: AGHT+IEDjXij1tw5GXjjZseQwbkws1Zpkbm30dNkmjFji58zZKa/tMq3kDeRtoUXQm68u/l4lj9lYAkODgCyS0WiBWg=
+X-Received: by 2002:a05:690e:144c:b0:63e:3084:4809 with SMTP id
+ 956f58d0204a3-63e30844b2fmr10598929d50.33.1761133850423; Wed, 22 Oct 2025
+ 04:50:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
- <20251022065640.1172785-14-marcandre.lureau@redhat.com>
- <91f1eeb7-00ef-c8a7-7025-b8d9e43da42b@eik.bme.hu>
-In-Reply-To: <91f1eeb7-00ef-c8a7-7025-b8d9e43da42b@eik.bme.hu>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 22 Oct 2025 15:49:37 +0400
-X-Gm-Features: AS18NWDmbiA307lkHXG2zk4eYVbB2rmFI1SX_YXCrAzRyu2dkpG9kVzI8jCi0GY
-Message-ID: <CAJ+F1C+nFFU+pOjQ_5gMKFxKHvzA1t_Wpu5Z5F4k0pQAMeC32w@mail.gmail.com>
-Subject: Re: [PATCH v2 13/42] hw/audio: simplify 'hda' audio init code
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+References: <20251021205741.57109-1-philmd@linaro.org>
+In-Reply-To: <20251021205741.57109-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 22 Oct 2025 12:50:38 +0100
+X-Gm-Features: AS18NWDnNrVzi40OCE3sR3euJo3fyyOr1VvT4KwJxHaELlmKQullAI18OrBq6Lw
+Message-ID: <CAFEAcA8A5xa0nJUczM_BDCvVu+sP-tdbt_CxDGos6hKW27qEZA@mail.gmail.com>
+Subject: Re: [PATCH v7 00/19] single-binary: Make hw/arm/ common
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>, 
+ Luc Michel <luc.michel@amd.com>, Zhao Liu <zhao1.liu@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::730;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x730.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,90 +95,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Wed, Oct 22, 2025 at 3:42=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
- wrote:
+On Tue, 21 Oct 2025 at 21:57, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> On Wed, 22 Oct 2025, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > For consistency, use only qdev_device_add() to instantiate the devices.
-> > We can't rely on automatic bus lookup for the "hda-duplex" device thoug=
-h
-> > as it may end up on a different "intel-hda" bus...
+> Series fully reviewed.
 >
-> Maybe this needs a better commit message. My first question was how is
-> this simpler when it's 6 lines more and at least to me less obvious what
-> it does. The real goal may be to make it independent from PCI for the nex=
-t
-> patch so maybe that's what the commit message should also say.
+> Since v6:
+> - Addressed Jan comment
+> - Removed aspeed/raspi meson patches
 
-I agree it's not as simple and generalized as I wish it would have ended.
+I'm assuming you'll take this via your own tree like the
+other single-binary stuff -- let me know if you want me
+to take it into target-arm instead.
 
-But this allows to make init() callback bus-agnostic though. I will
-add this to the commit message.
-
-There might be other ways to do that.
-
-> Regards,
-> BALATON Zoltan
->
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> > hw/audio/intel-hda.c | 14 ++++++++++----
-> > 1 file changed, 10 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-> > index 6a0db0dd9e..14bcf1257d 100644
-> > --- a/hw/audio/intel-hda.c
-> > +++ b/hw/audio/intel-hda.c
-> > @@ -21,6 +21,7 @@
-> > #include "hw/pci/pci.h"
-> > #include "hw/qdev-properties.h"
-> > #include "hw/pci/msi.h"
-> > +#include "monitor/qdev.h"
-> > #include "qemu/timer.h"
-> > #include "qemu/bitops.h"
-> > #include "qemu/log.h"
-> > @@ -30,6 +31,7 @@
-> > #include "intel-hda.h"
-> > #include "migration/vmstate.h"
-> > #include "intel-hda-defs.h"
-> > +#include "qobject/qdict.h"
-> > #include "system/dma.h"
-> > #include "qapi/error.h"
-> > #include "qom/object.h"
-> > @@ -1305,15 +1307,19 @@ static const TypeInfo hda_codec_device_type_inf=
-o =3D {
-> >  */
-> > static int intel_hda_and_codec_init(PCIBus *bus, const char *audiodev)
-> > {
-> > -    DeviceState *controller;
-> > +    g_autoptr(QDict) props =3D qdict_new();
-> > +    DeviceState *intel_hda, *codec;
-> >     BusState *hdabus;
-> > -    DeviceState *codec;
-> >
-> > -    controller =3D DEVICE(pci_create_simple(bus, -1, "intel-hda"));
-> > -    hdabus =3D QLIST_FIRST(&controller->child_bus);
-> > +    qdict_put_str(props, "driver", "intel-hda");
-> > +    intel_hda =3D qdev_device_add_from_qdict(props, false, &error_fata=
-l);
-> > +    hdabus =3D QLIST_FIRST(&intel_hda->child_bus);
-> > +
-> >     codec =3D qdev_new("hda-duplex");
-> >     qdev_prop_set_string(codec, "audiodev", audiodev);
-> >     qdev_realize_and_unref(codec, hdabus, &error_fatal);
-> > +    object_unref(intel_hda);
-> > +
-> >     return 0;
-> > }
-> >
-> >
-
-
-
---=20
-Marc-Andr=C3=A9 Lureau
+-- PMM
 
