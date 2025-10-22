@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B1ECCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 15:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5781CCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 15:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBaXc-0005A5-Es; Wed, 22 Oct 2025 11:14:20 -0400
+	id 1vBaZy-0005vQ-2d; Wed, 22 Oct 2025 11:16:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaXX-00059f-Te
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:14:16 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaZv-0005uw-LO
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:16:43 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaXV-0001o5-TA
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:14:15 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42701b29a7eso710410f8f.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 08:14:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBaZt-00027d-4W
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:16:43 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47112edf9f7so34315335e9.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 08:16:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761146050; x=1761750850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761146198; x=1761750998; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pZXsBTvqT+mTy9u5hKRQLXtczC/UMiSzERNg+wW8V7s=;
- b=afnQtwtt1u8DN8+PesQNWdzeVCmb1phoEA2MRLiLUcy+6zulpFkj5GkbQJS26oFpXY
- DS0aIFRNLITOYfXMeXF5LGqVh6+PLQaCfD+KSwXbkc2Nf+xdFrMcTfrDWZOJ51WslDdF
- uaXq6Qvb/q6/5szTNP3tqThgYcEnNt95wnCJlEGms2iSPkt4vpOif821R6qNqlUoJFAb
- KElMYt3f1dsSaIpllDSV6PlpThJecrP/CtsCzSOXkHscBObio8J1SmeXQ1VFNLPtBFKY
- M6nCiUcZPnentJ6MA9t5alF/8GRpYLKKyR/CfcbP/R+ffptLuH2Qy0bi9Sz2BW0Xtfyo
- c/Cg==
+ bh=QGhQj3qeF7DjAi3dEJ9yvYLAGI6ZoSW4Gh34WzcOOj0=;
+ b=Dohj7gaPzl8VJe0okL+TAUkcAvCqVySqF8wnTK2esavvjUL+icMnSIKyfDPtPaqg2q
+ OlG4kkT20rw3ZyDd0UA5tlYAPKtA70EGcOSvs1urfgNjWIL/lMj4WmjAZWRRsCjqAq5e
+ dwj0kMAKYf80saE70/ekDICVrLgr8CcT+WtTlMdIpuCvb6jaqTXlsUw+QQA7cRCaDn3u
+ qiy1yEM/OP0i4Ytok8m9sDor1LwBf36SbtEFBumI75MiCguSo5AUp248jRI5n4Ptb3K+
+ WMuu3/NCUVM5QlNCQtBZ9J2e9YgwgOejGihGVj79EwIoMovAxI3d3Si/chp9NEs0prLZ
+ q4+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761146050; x=1761750850;
+ d=1e100.net; s=20230601; t=1761146198; x=1761750998;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pZXsBTvqT+mTy9u5hKRQLXtczC/UMiSzERNg+wW8V7s=;
- b=LersCKPZpG0BtUKA8nIma0dpQ9nvU+wR7XAARvQv7Fvc/bsLvG4R0SnEL3hDrCHoz4
- DTTP+wX2RQeRLtPNhO9lGIEEHyzdKdzZPP5rUZeeWjmonLj/2NzT1uv5tssBW7Yk4S6g
- xELEMqsADtGUldwr9dwmXezPOfJ5It8P4q+/W/h+6i5PTt5j6BDRwtzXLbfCJa2onB7j
- kBYI+csPVph8lI33lLTrSWzVjAIKl3DHkXuuxRgVjzlXW4K5IjfjxiNBaHHX3xstehDN
- g+zcZHwVUqmB5/YL+C6Knwxk4Cfz5iNv9bRGHE21MNnklCbhcaVYcA0ertvZyNJ6dFyP
- owig==
-X-Gm-Message-State: AOJu0YycRrWCLMkJLeCfNAhwBcuKE3TLVKc22Un3Dvf/7S5kdTKf0neg
- 4is1g0+I1MJ/GivTpVrXDL3CB4EChZj7HplqMcNMJ0Zg1vgD3SMyuLVb8jCT+EbkFkHm4TDEnyE
- k9Y7M43o=
-X-Gm-Gg: ASbGncu+5SmgwzoHgXU8Y0UQPbrBH43qVr6c0tSuz4soWA3OIYYtVCkmg+wo9KLNfYB
- 22jVWyfJ5oMqW/FCsFjib3LGbXn1M8BR1UpgR728sukzzsPNTSxWZLvs2eehTs2YOV2p3szZeVD
- XKMFuGzqX+Q0m/jKCoUerA+apztcUkwXDOBTNnjwzHxxH+C6WhzEbefEAIy9mBAAOy29kUGkbhp
- OPc2Gtl5T4KtliLP16IWR53LJNXaVclNmGkOX+6OzyRWRlc3VYHbKW86Y3S7wFVq9/qiIykTc7B
- TtUOTxXOjFuaBbTbnRc9dr/jzjDOPLiWpmy1vefKn9EkfFDX0dsXWdZ2ArW2AdD+lcJ+s71MaeN
- cKwmLeaSPk+PF1cQC8auXjE4gR5x3c2W24lv6qVsBUjgJ9yo9Np3yJ9hEsbatrZeYl8Oo3jA1+m
- tjn5AXOHC9v1R/s8Os9gMmTYc5IgZBj4NQSLQQfbkVr3uJ5T2kTuWfQA==
-X-Google-Smtp-Source: AGHT+IENz5Re14iNj4wRS2LlTa0/PA8a0JYkQKzM5p/Hfb2I6nsaINhW/1UQ2+ica26IjY4yGfo4dg==
-X-Received: by 2002:a05:6000:438a:b0:428:3bf5:b3a3 with SMTP id
- ffacd0b85a97d-42856a2c80fmr1303277f8f.1.1761146050423; 
- Wed, 22 Oct 2025 08:14:10 -0700 (PDT)
+ bh=QGhQj3qeF7DjAi3dEJ9yvYLAGI6ZoSW4Gh34WzcOOj0=;
+ b=AFmxI6tBveFLG3Bz8Yx5lyd3/Gzr02E5EE3S3+tpSL89drzhRwnLcy+5zBwnLBTmc4
+ xD0DmtCXV6uj9frRGGL8Ym8jCTScpJwXtrTdFBFc9R5wRJVdrNQPkiOdirwRE8y8daOP
+ PtZg3LJqawUnj1/IawmvrC7Tn1D5shQR7XZe51JnIAnM3rMlzOqyCuAw3YlIlKgjdFkY
+ 0J6COCM8+R28+DDX//NHadlK357cMM7uyDKnQ2Uvm7q8vas2bL/XeC1hTekZTtdJSokV
+ ub3P7CTreztFPZlv14HQBe1book4WcEnxrZr1NKgIq60xbdVwpulfyuR+FCDLw0a8dDi
+ taAg==
+X-Gm-Message-State: AOJu0YyVcNuxKSiBornlJL1GhUkq9zJuOOgyDHgXv6oRjRAYMIC8WKYh
+ 7KND72F54Tw12H6J09zIwdpED7oj3Jjk1KD/OmG/uTGCfzn+rmsqQpSMznW2UdodcJGFr2VtTSE
+ Q69ji82Y=
+X-Gm-Gg: ASbGncui4EPY62fVVsE2QJEq7dhI8miP6RC+BpvhngTtKkbC84pkYlQdZqMcCgryhq3
+ HA/vvVHpr0Z7Sgcuxrvttpm5kWjtouTwBud7kXfI3aPxyuqxUGVf2jtq93yHkMvth2JvQcrA+1c
+ BQ0hyLNTcRiz7zHfiu9DYe/CMu6UHYqEF4CY9ng68o0RyiY3Xlc/Df4FwnZpCdXHcP/GinPAlFL
+ LzqEjuY1KNvCZ5EW71xyBjPasVQD3p3BG/9aXOPrdIpadf5LXMOE1SczUmTi4KD+kYmh9bjaVZU
+ G0MMRuJObHXnUqCR4AuS4vyCDeYRAYJi+zTYZmS3WziS3uPXE1BYc6O+Lq93fWeVztmXt5Ps61q
+ F7nj0OdCVRSMcFCrHWlUGrFx4R5lece7VW607t5uWEHhd/4brrIVDLEW5H66l57mn2zs9UqPhHO
+ RX0uDzrBnoNttbgyGwc21exxHRUgK9B4gaGyO8vQlDZbw=
+X-Google-Smtp-Source: AGHT+IHmisrky+JBSjViV+1fWgbUMFI/q40HG/v2HIzPSFo1MTuCd/tm8pm/7LrG1JMH6W5BmEa+zQ==
+X-Received: by 2002:a05:6000:1884:b0:3ee:15c6:9a6b with SMTP id
+ ffacd0b85a97d-42704dccd35mr13636355f8f.48.1761146198430; 
+ Wed, 22 Oct 2025 08:16:38 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427ea5a0f19sm25710132f8f.9.2025.10.22.08.14.09
+ ffacd0b85a97d-427ea5a0f7dsm25186600f8f.4.2025.10.22.08.16.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 08:14:09 -0700 (PDT)
-Message-ID: <d29d2888-0a95-464b-a5f9-e8433be2b895@linaro.org>
-Date: Wed, 22 Oct 2025 17:14:09 +0200
+ Wed, 22 Oct 2025 08:16:37 -0700 (PDT)
+Message-ID: <83fe1094-0d74-41aa-9e43-f783cbbf3325@linaro.org>
+Date: Wed, 22 Oct 2025 17:16:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] chardev/char: Preserve %errno in qemu_chr_write()
+Subject: Re: [PATCH v2 0/9] chardev: Improve @docstring and clarify
+ qemu_chr_write() uses
 Content-Language: en-US
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable@nongnu.org
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20251022150743.78183-1-philmd@linaro.org>
- <20251022150743.78183-8-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251022150743.78183-8-philmd@linaro.org>
+In-Reply-To: <20251022150743.78183-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,57 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/10/25 17:07, Philippe Mathieu-Daudé wrote:
-> qemu_chr_write() dispatches to ChardevClass::chr_write(),
-> and is expected to propagate the backend error, not some
-> unrelated one produce by "best effort" logfile or replay.
-> Preserve and return the relevant %errno.
+> v2:
+> - Document ChardevClass::chr_write() and qemu_chr_write[_all]()
 > 
-> Cc: qemu-stable@nongnu.org
-
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   chardev/char.c | 5 +++++
->   1 file changed, 5 insertions(+)
+> Few chardev fixes:
+> - preserve %errno
+> - allow partial writes in qemu_chr_write()
 > 
-> diff --git a/chardev/char.c b/chardev/char.c
-> index 5c8130b2435..2af402d9855 100644
-> --- a/chardev/char.c
-> +++ b/chardev/char.c
-> @@ -113,6 +113,7 @@ static int qemu_chr_write_buffer(Chardev *s,
->                                    int *offset, bool write_all)
->   {
->       ChardevClass *cc = CHARDEV_GET_CLASS(s);
-> +    int saved_errno;
->       int res = 0;
->       *offset = 0;
->   
-> @@ -138,6 +139,7 @@ static int qemu_chr_write_buffer(Chardev *s,
->               break;
->           }
->       }
-> +    saved_errno = errno;
->       if (*offset > 0) {
->           /*
->            * If some data was written by backend, we should
-> @@ -154,6 +156,7 @@ static int qemu_chr_write_buffer(Chardev *s,
->            */
->           qemu_chr_write_log(s, buf, len);
->       }
-> +    errno = saved_errno;
->       qemu_mutex_unlock(&s->chr_write_lock);
->   
->       return res;
-> @@ -186,7 +189,9 @@ int qemu_chr_write(Chardev *s, const uint8_t *buf, int len, bool write_all)
->       res = qemu_chr_write_buffer(s, buf, len, &offset, write_all);
->   
->       if (qemu_chr_replay(s) && replay_mode == REPLAY_MODE_RECORD) {
-> +        int saved_errno = errno;
->           replay_char_write_event_save(res, offset);
-> +        errno = saved_errno;
->       }
->   
->       if (res < 0 && offset == 0) {
+> Improve chardev methods documentation.
 
+Sigh, this is still missing the qemu_chr_fe_write() @docstring
+update requested by Peter:
+https://lore.kernel.org/qemu-devel/CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
 
