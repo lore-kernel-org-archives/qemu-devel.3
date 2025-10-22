@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44ED3CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 10:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AED3CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 10:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBVrY-0000TC-9g; Wed, 22 Oct 2025 06:14:36 -0400
+	id 1vBVrY-0000TD-JI; Wed, 22 Oct 2025 06:14:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBVrU-0000SH-4y
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 06:14:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBVrV-0000Sc-Pd
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 06:14:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBVrS-0000N8-5S
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 06:14:31 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBVrS-0000NB-8T
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 06:14:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761128068;
+ s=mimecast20190719; t=1761128069;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=XgrQgtsvhT478P9b/yzIirHz5rDq6Wp7Ehm2pI+bIKI=;
- b=d7mLpTi+h8Dw41pMIn3fqPt2vVQVbojksiPPK1tOVOJRwob79/EqQcyF1kHYO5M0W2hB3t
- H890blZqb8rH1UpnzcipzpDh4xS7qfi3kuPrz+Sh8H1XmdQIoOhx987HvXPMVgz4iVI9hb
- mGUUfcOOQ2KonZalrONCmXJXy0lngN4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HE1TvwewyDrdHtzvkatS97V25+LHqy98C9ssz/Lcwoo=;
+ b=VBWlCJe/kPr8MIJeBRBde5wU15QJmVhTUNkMfvr55JRc/GK5cNXvh5P2zu7jZDa8vO8zFE
+ 0D913QjEAh31wGC01SC/BEOKADTbBnrBNrL1HLQJg7HnRvOZb+2n3pCYMKKhK9zQW2YErn
+ XUMH2s8y3whR/yIIwdQeDZPKS89K1OM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-BjIvZ-jKMeWai8qnInueYA-1; Wed,
- 22 Oct 2025 06:14:24 -0400
-X-MC-Unique: BjIvZ-jKMeWai8qnInueYA-1
-X-Mimecast-MFC-AGG-ID: BjIvZ-jKMeWai8qnInueYA_1761128064
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-GGN5FxHaPlCqD_4S384amA-1; Wed,
+ 22 Oct 2025 06:14:25 -0400
+X-MC-Unique: GGN5FxHaPlCqD_4S384amA-1
+X-Mimecast-MFC-AGG-ID: GGN5FxHaPlCqD_4S384amA_1761128064
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB6E11955EC2; Wed, 22 Oct 2025 10:14:23 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2ECF4180AEBE; Wed, 22 Oct 2025 10:14:24 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 327DD19560B4; Wed, 22 Oct 2025 10:14:23 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E5CB1953984; Wed, 22 Oct 2025 10:14:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 70FDB21E6A27; Wed, 22 Oct 2025 12:14:20 +0200 (CEST)
+ id 777A421E6925; Wed, 22 Oct 2025 12:14:20 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  eduardo@habkost.net, philmd@linaro.org
-Subject: [PATCH 0/3] qdev: Fix "info qtree" to show links
-Date: Wed, 22 Oct 2025 12:14:17 +0200
-Message-ID: <20251022101420.36059-1-armbru@redhat.com>
+Subject: [PATCH 2/3] qdev: Fix "info qtree" to show links
+Date: Wed, 22 Oct 2025 12:14:19 +0200
+Message-ID: <20251022101420.36059-3-armbru@redhat.com>
+In-Reply-To: <20251022101420.36059-1-armbru@redhat.com>
+References: <20251022101420.36059-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,21 +84,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an alternative to Marc-André's "[PATCH] RFC: qdev: add legacy
-properties only for those print()-able"
-Message-ID: <20251015105419.2975542-1-marcandre.lureau@redhat.com>
+qdev_print_props() retrieves a property's value from its legacy
+property if it exists.  A legacy property is created by
+qdev_class_add_legacy_property() when the property has a print()
+method or does not have a get() method.
 
-Markus Armbruster (3):
-  qdev: Change PropertyInfo method print() to return malloc'ed string
-  qdev: Fix "info qtree" to show links
-  qdev: Legacy properties are now unused, drop
+If it has a print() method, the legacy property's value is obtained
+from the property's print() method.  This is used to format PCI
+addresses nicely, i.e. like 01.3 instead of 11.
 
- include/hw/qdev-properties.h     |  2 +-
- hw/core/qdev-properties-system.c |  7 ++---
- hw/core/qdev-properties.c        | 47 --------------------------------
- system/qdev-monitor.c            |  7 ++---
- 4 files changed, 7 insertions(+), 56 deletions(-)
+Else, if doesn't have a get() method, the legacy property is
+unreadable.  "info qtree" silently skips unreadable properties.
 
+Link properties don't have a get() method, and are therefore skipped.
+This is wrong, because the underlying QOM property *is* readable.
+
+Change qdev_print_props() to simply use a print() method directly if
+it exists, else get the value via QOM.
+
+"info qtree" now shows links fine.  For instance, machine "pc" onboard
+device "PIIX4_PM" property "bus" is now visible.
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ system/qdev-monitor.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 2ac92d0a07..850f0c6606 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -745,19 +745,18 @@ static void qdev_print_props(Monitor *mon, DeviceState *dev, DeviceClass *dc,
+     for (int i = 0, n = dc->props_count_; i < n; ++i) {
+         const Property *prop = &dc->props_[i];
+         char *value;
+-        char *legacy_name = g_strdup_printf("legacy-%s", prop->name);
+ 
+-        if (object_property_get_type(OBJECT(dev), legacy_name, NULL)) {
+-            value = object_property_get_str(OBJECT(dev), legacy_name, NULL);
++        if (prop->info->print) {
++            value = prop->info->print(OBJECT(dev), prop);
+         } else {
+             value = object_property_print(OBJECT(dev), prop->name, true,
+                                           NULL);
+         }
+-        g_free(legacy_name);
+ 
+         if (!value) {
+             continue;
+         }
++
+         qdev_printf("%s = %s\n", prop->name,
+                     *value ? value : "<null>");
+         g_free(value);
 -- 
 2.49.0
 
