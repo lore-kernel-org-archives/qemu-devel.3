@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62578CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 15:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86822CCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 15:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBahB-0007lu-3b; Wed, 22 Oct 2025 11:24:13 -0400
+	id 1vBak8-0000RD-PN; Wed, 22 Oct 2025 11:27:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBah9-0007lP-MS
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:24:11 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBah7-00034f-LA
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:24:11 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3ee64bc6b85so8969334f8f.3
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 08:24:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761146647; x=1761751447; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X5jmEOby2nS4Gf9uvI2Y8UICeyB9COHpy7ZN4V5tpnU=;
- b=Vj9fKNae4ADoD2MEMFahSgz7xEJyo/rLyAOF/BC7LjF8lcITQuyWsyncmgL+fECZL6
- +MS97BvWXu5p2h5gau5t/MlM2HS0LRmvvLBvNcZukZ07Nq4iNcWV/R4CGYUJT7NAG8MJ
- 46PNknBTglNRt5NTcEH9+llhQEr+dp1XL0OR5VUepLTCdu4KylmU4OKPHFVQoZnYeEc+
- eWdLUWuBfQvblrYLZLhlZ73BX9QCBajjo4I49MlSJgojw+Rs89/poCL1iieBnpgT9/77
- W5/ZV7x7GxBuV3/DZXAaA+qQDTSJUW7F0YcRTzV2VDJcxjapndYDIEbC7XMmgulz2gNd
- oPdw==
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1vBak1-0000Ok-NL
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:27:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1vBajy-0003OS-NH
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 11:27:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761146824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EQdg7L7Qzdrzwh58aH961jrH5pZkPkCtRRFctHkHpDY=;
+ b=EfCRk0rcpcWbZSgiCNHuEbM2ABfzUls03P2hYEuzh/ttcNK40Bim3tYjagI+cqwcFvMWtq
+ XUtHOonkItbQgoHDMqRcPoXqsqKEo/G8yxgRVRwnnE6M2y9/GZYr1XqsZRQZUPn8iMk1Te
+ 1/D66OB6rvikN/QQaoDhPyT8MbcfIwY=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-474-vjkL4krmO0OBkaFDto51ew-1; Wed, 22 Oct 2025 11:27:03 -0400
+X-MC-Unique: vjkL4krmO0OBkaFDto51ew-1
+X-Mimecast-MFC-AGG-ID: vjkL4krmO0OBkaFDto51ew_1761146823
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-87c1cc5a75dso343469876d6.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 08:27:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761146647; x=1761751447;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X5jmEOby2nS4Gf9uvI2Y8UICeyB9COHpy7ZN4V5tpnU=;
- b=B0PR1UncTbcRfGFgEYHJx5Zptjobpv995NXTZN9M6cfuh5rhmbtuXNInZM7fH9WjKk
- vgOcywOxz/azCJzfQR8pW2EPXmRRD9lrtm7T0sLCS9Oop5UU7DLzlNe7pS+R3Cg9gcAi
- luUtLAqLqn0nweKgkE+kRwa4esXif+IyYEcYc/CJa5k8HaEsvDLugkg7q1GReagxuAv4
- J+ZrYF27FYTI471EknaSLMXvt5fBJAZ3X4CGkeCjyEgNF9MSptUHvY7cGLOTSwnIxT4N
- 0UiTlGryjjLXxS3eSmoVQ77f3515ZmMmkcDMow1GYd7yP60FzscX6rzajnJlfBJ+xy5L
- 3BfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXKclh3Ie+4ONq9fDFVAYqL/M3nNaJGQdsRj2QfWQ7E4FOtfQHtbxqKNB+762T3e3JhNBek1LNbWuc5@nongnu.org
-X-Gm-Message-State: AOJu0YzlFNv0kvrK07YL6omTBBqDiMfe6+yaDCZMOjX/ehtbwGxLQQGK
- NN8aQY7pROF3MJTp1JwgPXX46b/wnuCOq08jbrJtxHwEW8X4I6fmgUpFnDJbkW+GZk0=
-X-Gm-Gg: ASbGncsBWGe0NK5FluQkuE1Z9+tf+CUMrQr/+wYfYK+SLt8yZE69cYreOIxct4PGEgB
- icVc+tKinNvtf8Ri70WhLQva/EKxHy3iLq+5IUG7GWmZLS+aW8kG2d4zo/TGIf3OTobi+9WBp7c
- 0KpTmYDO/nqf85SzdO0mnh2ADPEgYQfBdiPmUF08QXvHjQI2hSvTgGjHrg1X79XiXs9vbsbA8fX
- l2mVVpuS94HBsz5F/v+xg216iBYFjMDHSwpsuVjCDLEWz0a4lBCaQS2w3JiTc3Hg0EukNquqsSb
- JpbqudpZMfH5tR91Xh3tfRGU8sNuBdLUTzb/xo81B0OnXgzceei7yOMNv9qE3GcNN9eoB5AUL/a
- 9INmrcSSDUsr0w99vilMd0oHFqSgKnqaTtxpGRUvXLlaPJyUVSpTlgHUwYUHJmsPDWM+hr69HaH
- JX2BOH1Ih3j62aoieXpYdJVQmEvGfMvDkZ3JG7tq0drpHHaMgmogHN1w==
-X-Google-Smtp-Source: AGHT+IG9cr/kBTy+D9KRZLBnm0+J6p9Yl6N8jh7AMazMf2/9BRMNHQvzLYiAZBFcYN1QeZRcqeJE+w==
-X-Received: by 2002:a05:6000:22c5:b0:3f2:b077:94bc with SMTP id
- ffacd0b85a97d-42704d7e9c4mr12946434f8f.4.1761146647339; 
- Wed, 22 Oct 2025 08:24:07 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496b09bc4sm40726075e9.2.2025.10.22.08.24.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 08:24:06 -0700 (PDT)
-Message-ID: <c292db71-8f6a-4086-92af-9f2d19afecc3@linaro.org>
-Date: Wed, 22 Oct 2025 17:24:05 +0200
+ d=1e100.net; s=20230601; t=1761146823; x=1761751623;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EQdg7L7Qzdrzwh58aH961jrH5pZkPkCtRRFctHkHpDY=;
+ b=MwQqQKF7UgZzjMvZyDdwUF2/XqV15Yg99BNY6k+OhWMxI08zODDfYzuA9F4c9McomR
+ B9CyYD8dUeCgBETr7b12H4V3atuw8fLqoypJKvo2k53vc/eQ7NS0yxgN72Me2WAwyV24
+ vl40GsHgV66aMEjVHYNS2yz52L09uYT6ltCZeqhj5szurs6V1wM8adfUfOGuDDMz7VdD
+ WToyO+F0vKqi3ImoFy4SJM/xUNYYwDbFnZwnyCEXv/F6dl+dHT/SU/zbv6JCkTjUq368
+ LGNW0SYierW7yOgA+f0ExfldlRBs3iHR/l0BNJx7n2eIKnVwjyAESv8Nn76arJ++HBzq
+ CSeQ==
+X-Gm-Message-State: AOJu0YzivRkj2Z1lLqFhh9GG2LHLguMP68FDMYQdsyx1MVKpG1Cvu9eQ
+ hhKXxJeMRfBozp4KAixiCSMcGKO/k++1DE+X5zZ/Vww6spKwFkUgwYCzSgFzK5sk60FL0fVyCVx
+ 3f9RLcffR52Wn3rlE8fQoM6CNaorOxpZUIfgQCaKy4uqwMDig3tBc154T
+X-Gm-Gg: ASbGncvw8XWOzr1Pp6HKDMigDCXXgXnLDWhWzNCAoMc/LuNe4qNixS6NjaPqIta/mVo
+ XuwAT2Dam0lx7YE3Gn1IUkAJMIAr5BHoBrWHGuSPz2si3s6IGCaSuFQ+bVIsA2u0E+0ECfh77bZ
+ M9nu3ACKWj5n3hEc0dRD2sNgje5nbnqPhpZZ0hsc6fOGhVEZpw8Wpa3TUG2cvBPRAofHTIBSB82
+ LFwALqrAQKVnnmB4JD1fuby82Dqg2px9HQ0ivNUaBDc03+eH9CD/lwozSxDIHuFOOvl10Dd4Ii0
+ 87LvO/fiBb/tBgmo59OgP35GduvnZpSJiZR62oVdU/XqxG0GmrljvTYS0AULKTadrMK30KeCtNv
+ G6c0=
+X-Received: by 2002:a05:6214:2dc2:b0:87c:208b:9539 with SMTP id
+ 6a1803df08f44-87c208b97c9mr325339386d6.28.1761146822719; 
+ Wed, 22 Oct 2025 08:27:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGDsJ4wLh9DTrdGB/rRaQMLbfy+kNCHT774VLw+9h0uhzrzfhULC78uOhB+w+j3dIzbqbRbZA==
+X-Received: by 2002:a05:6214:2dc2:b0:87c:208b:9539 with SMTP id
+ 6a1803df08f44-87c208b97c9mr325339036d6.28.1761146822371; 
+ Wed, 22 Oct 2025 08:27:02 -0700 (PDT)
+Received: from leonardi-redhat ([151.29.47.252])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-87d01efa7e0sm90861706d6.36.2025.10.22.08.27.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Oct 2025 08:27:01 -0700 (PDT)
+Date: Wed, 22 Oct 2025 17:26:57 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>
+Subject: Re: [PATCH v4 4/5] igvm: add support for initial register state load
+ in native mode
+Message-ID: <72idlxesghjbccqtu7ljkcokhhxqavjjmwg7otwb4gt7k5uqsu@bmpipofiuc4c>
+References: <20251022084439.242476-1-kraxel@redhat.com>
+ <20251022084439.242476-5-kraxel@redhat.com>
+ <ijrybqltievczxvugi4hhnftqqeg42o6vshhnirrz2ugeotplf@cq62mc5seswc>
+ <5pt6iktxt7fjegov2axrrux3woywuze3cqqmiptwdzayl6vvam@fjm6yyypscrg>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Pass actual memop_size to tlb_fill instead of 0
-Content-Language: en-US
-To: Nikita Novikov <n.novikov@syntacore.com>, richard.henderson@linaro.org
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-References: <20251022115213.91457-1-n.novikov@syntacore.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251022115213.91457-1-n.novikov@syntacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <5pt6iktxt7fjegov2axrrux3woywuze3cqqmiptwdzayl6vvam@fjm6yyypscrg>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,30 +113,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/10/25 13:52, Nikita Novikov wrote:
-> Recent debugging of misaligned access handling on RISC-V revealed that we
-> always call `tlb_fill` with `memop_size == 0`. This behavior effectively
-> disables natural alignment checks in `riscv_tlb_fill_align()`, because we
-> have to fall back from `memop_size` to `size` when computing the alignment bits.
-> 
-> With `memop_size == 0`, misaligned cross-page stores end up reported as
-> `store access fault` (AF, cause=7) instead of the expected
-> `store page fault` (PF, cause=15), since the “misalign” path triggers before
-> the second page translation can fault. This breaks misaligned accesses at
-> page boundaries.
-> 
-> After switching to pass the real `l->memop` into `tlb_fill`, the cross-page
-> faults are no longer mis-classified as AF.
-> 
-> Fixes: ec03dd972378 ("accel/tcg: Hoist first page lookup above pointer_wrap")
-> 
-> Signed-off-by: Nikita Novikov <n.novikov@syntacore.com>
-> ---
->   accel/tcg/cputlb.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Gerd,
 
-Good catch!
+On Wed, Oct 22, 2025 at 04:37:33PM +0200, Gerd Hoffmann wrote:
+>  Hi,
+>
+>> > +struct IgvmNativeVpContextX64 {
+>> > +    uint64_t rax;
+>> > +    uint64_t rcx;
+>> > +    uint64_t rdx;
+>> > +    uint64_t rbx;
+>> > +    uint64_t rsp;
+>> > +    uint64_t rbp;
+>> > +    uint64_t rsi;
+>> > +    uint64_t rdi;
+>> > +    uint64_t r8;
+>> > +    uint64_t r9;
+>> > +    uint64_t r10;
+>> > +    uint64_t r11;
+>> > +    uint64_t r12;
+>> > +    uint64_t r13;
+>> > +    uint64_t r14;
+>> > +    uint64_t r15;
+>> > +    uint64_t rip;
+>> > +    uint64_t rflags;
+>> > +    uint64_t idtr_base;
+>> > +    uint16_t idtr_limit;
+>> > +    uint16_t reserved[2];
+>> > +    uint16_t gdtr_limit;
+>> > +    uint64_t gdtr_base;
+>> > +
+>> > +    uint16_t code_selector;
+>> > +    uint16_t code_attributes;
+>> > +    uint32_t code_base;
+>> > +    uint32_t code_limit;
+>> > +
+>> > +    uint16_t data_selector;
+>> > +    uint16_t data_attributes;
+>> > +    uint32_t data_base;
+>> > +    uint32_t data_limit;
+>> > +
+>> > +    uint64_t gs_base;
+>> > +    uint64_t cr0;
+>> > +    uint64_t cr3;
+>> > +    uint64_t cr4;
+>> > +    uint64_t efer;
+>> > +};
+>
+>> IIUC `R_TR` and `R_LDTR` are used by HVF in QEMU. Is there a reason 
+>> why you
+>> didn't add them here?
+>
+>They are not present in IgvmNativeVpContextX64, so you can't set them
+>via igvm for the initial vcpu state.  Of course the guest can set them
+>later on.
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks for the clarification.
+
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+
+>take care,
+>  Gerd
+>
 
 
