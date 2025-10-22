@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B57CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F850CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSrL-00022w-4f; Wed, 22 Oct 2025 03:02:16 -0400
+	id 1vBSoi-0007QU-2e; Wed, 22 Oct 2025 02:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSq6-00014z-CH
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:01:04 -0400
+ id 1vBSof-0007GL-TR
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:59:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSq3-0000LQ-EU
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:00:53 -0400
+ id 1vBSoe-0008L5-5s
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:59:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116448;
+ s=mimecast20190719; t=1761116363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H9quFj1kc8GcFcrXgts+32Be2wYOyQrTvnJ7+W0o4Xo=;
- b=YbTOJAlz/jpYwDBH1W+6kxYLdiyqpiTSwWk9CVa1cnuSQ1j8h/hK08ccLR7eky51NacxIg
- 9stzsMM3N+qSdXRlVa8JwDOhTwlPYJ0c34NWpav8arYGH3tvykz2ZvNrz+4NQAPON/IWFW
- priGf2LcwzPYiBkHoF3o0p6ZNaxGw3k=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=TGkgJzyrJPclmcCsN9Df1/UmShCK43qWv4Y75ZfMMVk=;
+ b=QFOCtYceowUQEmqsjKRLa58LWs3XRqQ8Yk8SOg8PJJj8cjx6yp6w5FGUHQA/Mf1rgrtagn
+ DnjbrxxC9++H0WF7CBi7asErnUkN5szkS3HL+iuduQOnevL6b4i9mrfh1y1KXqZS0AWDjG
+ 4Nr25nZB1WXn+1sxczSlU7dxus5Et/4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-dDruFRCINWetcAGN4OJ3JQ-1; Wed,
- 22 Oct 2025 03:00:44 -0400
-X-MC-Unique: dDruFRCINWetcAGN4OJ3JQ-1
-X-Mimecast-MFC-AGG-ID: dDruFRCINWetcAGN4OJ3JQ_1761116443
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-sF2TYB63OZOo1aXP-Eo6sw-1; Wed,
+ 22 Oct 2025 02:59:21 -0400
+X-MC-Unique: sF2TYB63OZOo1aXP-Eo6sw-1
+X-Mimecast-MFC-AGG-ID: sF2TYB63OZOo1aXP-Eo6sw_1761116360
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92FE81808997; Wed, 22 Oct 2025 07:00:43 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 991E619560B0; Wed, 22 Oct 2025 06:59:20 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5555019560B4; Wed, 22 Oct 2025 07:00:41 +0000 (UTC)
+ id 449751955F01; Wed, 22 Oct 2025 06:59:18 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v2 42/42] docs: Update mentions of removed '-soundhw' command
- line option
-Date: Wed, 22 Oct 2025 10:56:37 +0400
-Message-ID: <20251022065640.1172785-43-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v2 28/42] audio: remove some needless headers
+Date: Wed, 22 Oct 2025 10:56:23 +0400
+Message-ID: <20251022065640.1172785-29-marcandre.lureau@redhat.com>
 In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -90,51 +89,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The `-soundhw` CLI was removed in commit 039a68373c4 ("introduce
--audio as a replacement for -soundhw"). Remove outdated comments
-and update the document mentioning the old usage.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- docs/qdev-device-use.txt | 4 ++--
- system/qdev-monitor.c    | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ audio/audio.h       | 1 -
+ audio/audio.c       | 3 ---
+ audio/dbusaudio.c   | 2 --
+ audio/dsoundaudio.c | 1 -
+ audio/mixeng.c      | 4 +++-
+ audio/noaudio.c     | 2 --
+ audio/wavaudio.c    | 3 ---
+ audio/wavcapture.c  | 1 -
+ 8 files changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
-index 043ae46114..fb420da2a9 100644
---- a/docs/qdev-device-use.txt
-+++ b/docs/qdev-device-use.txt
-@@ -311,9 +311,9 @@ constraints.
+diff --git a/audio/audio.h b/audio/audio.h
+index e41c5bc55a..3be0c4f24f 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -27,7 +27,6 @@
  
- Host and guest part of audio devices have always been separate.
+ #include "qemu/queue.h"
+ #include "qapi/qapi-types-audio.h"
+-#include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
  
--The old way to define guest audio devices is -soundhw C1,...
-+The old way to define guest audio devices was -soundhw C1,...
+ typedef void (*audio_callback_fn) (void *opaque, int avail);
+diff --git a/audio/audio.c b/audio/audio.c
+index 934a67ad19..0f3093ad59 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -25,7 +25,6 @@
+ #include "qemu/osdep.h"
+ #include "audio.h"
+ #include "migration/vmstate.h"
+-#include "monitor/monitor.h"
+ #include "qemu/timer.h"
+ #include "qapi/error.h"
+ #include "qapi/clone-visitor.h"
+@@ -33,7 +32,6 @@
+ #include "qapi/qapi-visit-audio.h"
+ #include "qapi/qapi-commands-audio.h"
+ #include "qobject/qdict.h"
+-#include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+@@ -41,7 +39,6 @@
+ #include "system/system.h"
+ #include "system/replay.h"
+ #include "system/runstate.h"
+-#include "ui/qemu-spice.h"
+ #include "trace.h"
  
--The new way is to define each guest audio device separately with
-+The current way is to define each guest audio device separately with
- -device.
+ #define AUDIO_CAP "audio"
+diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+index b44fdd1511..908214a170 100644
+--- a/audio/dbusaudio.c
++++ b/audio/dbusaudio.c
+@@ -24,9 +24,7 @@
  
- Map from -soundhw sound card name to -device:
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 9ed05d5d5a..f2aa400a77 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -73,9 +73,9 @@ typedef struct QDevAlias
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+-#include "qemu/timer.h"
+ #include "qemu/dbus.h"
  
- /* Please keep this table sorted by typename. */
- static const QDevAlias qdev_alias_table[] = {
--    { "AC97", "ac97" }, /* -soundhw name */
-+    { "AC97", "ac97" },
-     { "e1000", "e1000-82540em" },
--    { "ES1370", "es1370" }, /* -soundhw name */
-+    { "ES1370", "es1370" },
-     { "ich9-ahci", "ahci" },
-     { "lsi53c895a", "lsi" },
-     { "virtio-9p-device", "virtio-9p", QEMU_ARCH_VIRTIO_MMIO },
+ #ifdef G_OS_UNIX
+diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
+index 6a8b7f1a19..003ef27365 100644
+--- a/audio/dsoundaudio.c
++++ b/audio/dsoundaudio.c
+@@ -31,7 +31,6 @@
+ 
+ #define AUDIO_CAP "dsound"
+ #include "audio_int.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ 
+diff --git a/audio/mixeng.c b/audio/mixeng.c
+index 703ee5448f..be38617e9b 100644
+--- a/audio/mixeng.c
++++ b/audio/mixeng.c
+@@ -24,11 +24,13 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/bswap.h"
+-#include "qemu/error-report.h"
+ #include "audio.h"
+ 
+ #define AUDIO_CAP "mixeng"
+ #include "audio_int.h"
++#ifdef FLOAT_MIXENG
++#include "qemu/error-report.h"
++#endif
+ 
+ /* 8 bit */
+ #define ENDIAN_CONVERSION natural
+diff --git a/audio/noaudio.c b/audio/noaudio.c
+index 1b60d8518a..34ff1d2a27 100644
+--- a/audio/noaudio.c
++++ b/audio/noaudio.c
+@@ -23,10 +23,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "audio.h"
+-#include "qemu/timer.h"
+ 
+ #define AUDIO_CAP "noaudio"
+ #include "audio_int.h"
+diff --git a/audio/wavaudio.c b/audio/wavaudio.c
+index a8798a1c42..a098b20cad 100644
+--- a/audio/wavaudio.c
++++ b/audio/wavaudio.c
+@@ -23,10 +23,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/host-utils.h"
+ #include "qemu/module.h"
+-#include "qemu/timer.h"
+-#include "qapi/opts-visitor.h"
+ #include "audio.h"
+ 
+ #define AUDIO_CAP "wav"
+diff --git a/audio/wavcapture.c b/audio/wavcapture.c
+index c60286e162..b990844d48 100644
+--- a/audio/wavcapture.c
++++ b/audio/wavcapture.c
+@@ -1,6 +1,5 @@
+ #include "qemu/osdep.h"
+ #include "qemu/qemu-print.h"
+-#include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "audio.h"
+ 
 -- 
 2.51.0
 
