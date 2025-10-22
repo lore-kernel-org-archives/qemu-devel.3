@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91A41CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01292CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSn6-0001Cu-K4; Wed, 22 Oct 2025 02:57:48 -0400
+	id 1vBSnK-0001ip-5H; Wed, 22 Oct 2025 02:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSn4-00017a-Rk
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vBSnI-0001hE-1k
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSn3-00086N-37
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:46 -0400
+ id 1vBSnG-00087o-AJ
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116264;
+ s=mimecast20190719; t=1761116277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nGMm2WNlAwuqkjgPVmmBw8DnVNZofzxhoHILFvByxx8=;
- b=VvK5o/wf/VXEwymg0m/NutcrR4V30ahPKjVQacrqGL6RJ8onmks8PgbX1g1Nb0QWROM+C2
- fhfrr05yHkEt7JA+hB+wWQ12r4evC2mDA8DMZ9Nacxf657NsTPmR3XAJxr3ypxBmFjzfdM
- wetVbZDfgUrkgY2XnHmoUqA5v+hbbFo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GJHhV44xA2yV6Pwkj+xG4UfO7EkjL4EsvWC4IiZRDKY=;
+ b=Pk3hUPYKArydlrHW8uOyASENP0BSUGSAqX1Krpm74dhWVSqIqhONEYuunmrpsTLsRhW75b
+ 2b3OYaR75lsqL1Je2uf4CrRGhw13/bgyNbj1ghk/Km7GhmT1aJTWOB2BB5SXhO9HMHq49Y
+ pYPXxL/ouT9mXnORcHhststg4WAcT0g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-Iv6VYl_cMiGuafVjEsYzzA-1; Wed,
- 22 Oct 2025 02:57:41 -0400
-X-MC-Unique: Iv6VYl_cMiGuafVjEsYzzA-1
-X-Mimecast-MFC-AGG-ID: Iv6VYl_cMiGuafVjEsYzzA_1761116260
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-3Q8tBEQ8PyCb41a6kFDucw-1; Wed,
+ 22 Oct 2025 02:57:53 -0400
+X-MC-Unique: 3Q8tBEQ8PyCb41a6kFDucw-1
+X-Mimecast-MFC-AGG-ID: 3Q8tBEQ8PyCb41a6kFDucw_1761116272
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2547195422D; Wed, 22 Oct 2025 06:57:40 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B6E71956096; Wed, 22 Oct 2025 06:57:52 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B3AA21956056; Wed, 22 Oct 2025 06:57:39 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2278B3000218; Wed, 22 Oct 2025 06:57:50 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 10/42] audio: rename audio_define->audio_add_audiodev()
-Date: Wed, 22 Oct 2025 10:56:05 +0400
-Message-ID: <20251022065640.1172785-11-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 12/42] hw/audio/virtio-snd-pci: remove custom model callback
+Date: Wed, 22 Oct 2025 10:56:07 +0400
+Message-ID: <20251022065640.1172785-13-marcandre.lureau@redhat.com>
 In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,93 +93,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-For readability.
+virtio-snd can rely on the default code to instantiate the device and
+set the audiodev.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- audio/audio.h | 4 ++--
- audio/audio.c | 8 ++++----
- system/vl.c   | 6 +++---
- 3 files changed, 9 insertions(+), 9 deletions(-)
+ hw/audio/virtio-snd-pci.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/audio/audio.h b/audio/audio.h
-index fcc22307be..eb5b5d662d 100644
---- a/audio/audio.h
-+++ b/audio/audio.h
-@@ -168,8 +168,8 @@ void audio_sample_to_uint64(const void *samples, int pos,
- void audio_sample_from_uint64(void *samples, int pos,
-                             uint64_t left, uint64_t right);
+diff --git a/hw/audio/virtio-snd-pci.c b/hw/audio/virtio-snd-pci.c
+index 613538e46f..b78eaff851 100644
+--- a/hw/audio/virtio-snd-pci.c
++++ b/hw/audio/virtio-snd-pci.c
+@@ -71,24 +71,10 @@ static const VirtioPCIDeviceTypeInfo virtio_snd_pci_info = {
+     .class_init    = virtio_snd_pci_class_init,
+ };
  
--void audio_define(Audiodev *audio);
--void audio_define_default(Audiodev *dev, Error **errp);
-+void audio_add_audiodev(Audiodev *audio);
-+void audio_add_default_audiodev(Audiodev *dev, Error **errp);
- void audio_parse_option(const char *opt);
- void audio_create_default_audiodevs(void);
- void audio_init_audiodevs(void);
-diff --git a/audio/audio.c b/audio/audio.c
-index 89f091bc88..6197fa1788 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1712,7 +1712,7 @@ void audio_create_default_audiodevs(void)
-             visit_type_Audiodev(v, NULL, &dev, &error_fatal);
-             visit_free(v);
- 
--            audio_define_default(dev, &error_abort);
-+            audio_add_default_audiodev(dev, &error_abort);
-         }
-     }
- }
-@@ -2142,10 +2142,10 @@ void audio_parse_option(const char *opt)
-     visit_type_Audiodev(v, NULL, &dev, &error_fatal);
-     visit_free(v);
- 
--    audio_define(dev);
-+    audio_add_audiodev(dev);
- }
- 
--void audio_define(Audiodev *dev)
-+void audio_add_audiodev(Audiodev *dev)
+-/* Create a Virtio Sound PCI device, so '-audio driver,model=virtio' works. */
+-static int virtio_snd_pci_init(PCIBus *bus, const char *audiodev)
+-{
+-    DeviceState *vdev = NULL;
+-    VirtIOSoundPCI *dev = NULL;
+-
+-    vdev = qdev_new(TYPE_VIRTIO_SND_PCI);
+-    assert(vdev);
+-    dev = VIRTIO_SND_PCI(vdev);
+-    qdev_prop_set_string(DEVICE(&dev->vdev), "audiodev", audiodev);
+-    qdev_realize_and_unref(vdev, BUS(bus), &error_fatal);
+-    return 0;
+-}
+-
+ static void virtio_snd_pci_register(void)
  {
-     AudiodevListEntry *e;
- 
-@@ -2156,7 +2156,7 @@ void audio_define(Audiodev *dev)
-     QSIMPLEQ_INSERT_TAIL(&audiodevs, e, next);
+     virtio_pci_types_register(&virtio_snd_pci_info);
+-    audio_register_model_with_cb("virtio", "Virtio Sound", virtio_snd_pci_init);
++    audio_register_model("virtio", "Virtio Sound", 0, TYPE_VIRTIO_SND_PCI);
  }
  
--void audio_define_default(Audiodev *dev, Error **errp)
-+void audio_add_default_audiodev(Audiodev *dev, Error **errp)
- {
-     AudiodevListEntry *e;
- 
-diff --git a/system/vl.c b/system/vl.c
-index d20a9cbe08..7187b24449 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2264,7 +2264,7 @@ static void qemu_record_config_group(const char *group, QDict *dict,
-         Audiodev *dev = NULL;
-         Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(dict));
-         if (visit_type_Audiodev(v, NULL, &dev, errp)) {
--            audio_define(dev);
-+            audio_add_audiodev(dev);
-         }
-         visit_free(v);
- 
-@@ -3086,11 +3086,11 @@ void qemu_init(int argc, char **argv)
-                 visit_type_Audiodev(v, NULL, &dev, &error_fatal);
-                 visit_free(v);
-                 if (model) {
--                    audio_define(dev);
-+                    audio_add_audiodev(dev);
-                     select_soundhw(model, dev->id);
-                     g_free(model);
-                 } else {
--                    audio_define_default(dev, &error_fatal);
-+                    audio_add_default_audiodev(dev, &error_fatal);
-                 }
-                 break;
-             }
+ type_init(virtio_snd_pci_register);
 -- 
 2.51.0
 
