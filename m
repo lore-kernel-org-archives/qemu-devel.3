@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10935CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A73BCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:38:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBZsn-0007JE-80; Wed, 22 Oct 2025 10:32:09 -0400
+	id 1vBZyF-0008WP-Sy; Wed, 22 Oct 2025 10:37:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBZsf-0007Db-M6
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:32:04 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBZsc-00052U-NI
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:32:01 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7c0e8367d4eso2374323a34.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 07:31:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761143516; x=1761748316; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=u5F569Kj5IT9zkOFE5x+E5Dmrt3rMNP1fLrTfr3rdRg=;
- b=XV0aXpbQrXQy4R3tTw1FNSxFKLJOXPLGvMHWuofllEqXC7vQqZoGtAlZ8G9cYKTHVr
- +Pum3kJxza/q1Kr1JHEHAnF3+nWtoFFPY7yEvZX0s5iNZ4q1oXjferR/JrBOrWia9B/p
- Cxoyi3fPMCtc7D2wp2DpDG3QQsfBb0AWI11SBGiw6g99SkrSamqoowSwZSo9HJo1CF8y
- dQ+DEXnG/0A/nKdLSuxlLcva6p01we1gK+CArJ7jTcOBquKigngWwbVNyRg1l5LjgLKp
- VqaFrAA698crAZxYqznMnZt7/uJ+DmrwMTPOxf8rMV0lMbJrwzI3DWMs62Fwh4bMLSKc
- 26OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761143516; x=1761748316;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u5F569Kj5IT9zkOFE5x+E5Dmrt3rMNP1fLrTfr3rdRg=;
- b=uglyTqOEiWzgw2+QF3JNvBASdjQKG5W4/cWKWXzlktpm0PTdPgXRl3FdwgKX4vaCjl
- d/9KWQwJIkZ7CN+hd81TdKqGvn+hc7Rs7PaqkRp0TDKZxvz0V+QO49TrW5dopzQo9REW
- 1c7s6D7CDrUbVmsRVZWKWm3qMsB3GanDv9l0jfcSXlu60z10GY+GjXfejTiLJ4pIny4p
- ISk0KDQsCjy7IbqG1ZSM4+hmK1yeh+rqJyc9+JJrqW4WR0SS8QG4mWdzFj/axF2ben4+
- KtBY6C+uQPDVzyv2qE2q4RH/QSggLizjoEnFdiB0207T9YFOWO6ORzwHRVnsr5ht/8U0
- 5ESQ==
-X-Gm-Message-State: AOJu0YxUd3DEB/2+dEqQwm085pcNdfoWoNf4+0P7yleDQkAonXX7ve+B
- DbjbAuZIxTbM4S/T5MX+O3Zv8KyjpZGFwVUaLtxIMRfHOP8wkbyX0yf4bEr3Gb27tG8b5RPdelI
- MWuk8
-X-Gm-Gg: ASbGnctq9J2MzSxyq8K49TP6mvKV4HPP7T11QvPxkuwJGLwUVcfSlLkfzY1C0ferpAH
- A902ZwnxID2jr6NcefB3qBjb5Q/1GX0Lf6m/MX101nu7M84+dYvDBG7KXttpL4ILB4/t9+P/Jpj
- GlRtVqChfn9/I9EYVEhvY6A+iW48DwOh6HOpDu50meYgEMv9Pc2PBpXiDmSrNnJT8i43xjPcRYM
- arzs+gBOcws9wzmCX2/PO60HUELjIsWrZqpNA/2MIZBPJi1xFyjoXEnZhn1BhbNz8cO2XUvfTsy
- 0+kfjjY3BRimLl9NSRNKHJUTYu8yDibt11Tv0BUPAo3p4sRXNP58/3fsOFlxYeZ3FldJWBKbEch
- rSVkU+5dGCalMhNEJ5bRfCNBbe8fcF12DZ7yTtinEadfSaOtc9ZalvC5boJaAcHtXhYPWRRDgSP
- BK+fl3OCOPqCL4YV5eMZsUCJzkMkxW+hBv2e4Vqg==
-X-Google-Smtp-Source: AGHT+IEd/R8i/2aprODsJQlcn5r56XFWddLlTXHSBdr8EUjVBy5GX/cqazcO21c4fRNCQFJxoOksuQ==
-X-Received: by 2002:a05:6830:4901:b0:759:19:a328 with SMTP id
- 46e09a7af769-7c27ca51324mr10704482a34.16.1761143515855; 
- Wed, 22 Oct 2025 07:31:55 -0700 (PDT)
-Received: from [10.128.41.227] ([50.194.179.134])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7c2887b926fsm4693666a34.14.2025.10.22.07.31.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 07:31:53 -0700 (PDT)
-Message-ID: <da1a0b39-0747-4b96-914a-0cfee8e87e76@linaro.org>
-Date: Wed, 22 Oct 2025 09:31:51 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBZyD-0008WH-Kn
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:37:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBZyA-0005k9-Ea
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:37:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761143860;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=67FSug6zeEedWhs7HHydiqrnW3dFyI+2T7i1JWF+OZ8=;
+ b=a1aK9Yf8wFS2Bk20V+c5GnI2kCo21y55MFfyEeetEBvGs/Bt1QJ/4jXgYLMrzrS562MHvP
+ dKqecH55TDueyZtphon2Osv8Sxm68UvE3z9Hjcx4G7LChdG9a+5hS+UfJOZ9Flbwx7fyxp
+ NrnGktjPP1PPuSQP7uoiAOviLkBy6K8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-wWXdZ0h-M1qN675zwDtK9w-1; Wed,
+ 22 Oct 2025 10:37:37 -0400
+X-MC-Unique: wWXdZ0h-M1qN675zwDtK9w-1
+X-Mimecast-MFC-AGG-ID: wWXdZ0h-M1qN675zwDtK9w_1761143856
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D92718002E4; Wed, 22 Oct 2025 14:37:36 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA62A1800451; Wed, 22 Oct 2025 14:37:35 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 291B318000B5; Wed, 22 Oct 2025 16:37:33 +0200 (CEST)
+Date: Wed, 22 Oct 2025 16:37:33 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>
+Subject: Re: [PATCH v4 4/5] igvm: add support for initial register state load
+ in native mode
+Message-ID: <5pt6iktxt7fjegov2axrrux3woywuze3cqqmiptwdzayl6vvam@fjm6yyypscrg>
+References: <20251022084439.242476-1-kraxel@redhat.com>
+ <20251022084439.242476-5-kraxel@redhat.com>
+ <ijrybqltievczxvugi4hhnftqqeg42o6vshhnirrz2ugeotplf@cq62mc5seswc>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/12] vfio queue
-To: qemu-devel@nongnu.org
-References: <20251022121846.874152-1-clg@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251022121846.874152-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ijrybqltievczxvugi4hhnftqqeg42o6vshhnirrz2ugeotplf@cq62mc5seswc>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/25 07:18, Cédric Le Goater wrote:
-> The following changes since commit 3c0b42c68f98fb276fa248012642be8cbf2cab70:
-> 
->    Merge tag 'pull-request-2025-10-21' ofhttps://gitlab.com/thuth/qemu into staging (2025-10-21 08:59:35 -0500)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/legoater/qemu/ tags/pull-vfio-20251022
-> 
-> for you to fetch changes up to ecbe424a63c9f860a901d6a4a75724b046abd796:
-> 
->    vfio: only check region info cache for initial regions (2025-10-22 08:12:52 +0200)
-> 
-> ----------------------------------------------------------------
-> vfio queue:
-> 
-> * Fix CPR transfer
-> * Add support for VFIO_DMA_UNMAP_FLAG_ALL
-> * Fix vfio-user documentation
-> * Update Alex Williamson's email address
-> * Fix for vfio-region cache for the vGPU use case
+  Hi,
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+> > +struct IgvmNativeVpContextX64 {
+> > +    uint64_t rax;
+> > +    uint64_t rcx;
+> > +    uint64_t rdx;
+> > +    uint64_t rbx;
+> > +    uint64_t rsp;
+> > +    uint64_t rbp;
+> > +    uint64_t rsi;
+> > +    uint64_t rdi;
+> > +    uint64_t r8;
+> > +    uint64_t r9;
+> > +    uint64_t r10;
+> > +    uint64_t r11;
+> > +    uint64_t r12;
+> > +    uint64_t r13;
+> > +    uint64_t r14;
+> > +    uint64_t r15;
+> > +    uint64_t rip;
+> > +    uint64_t rflags;
+> > +    uint64_t idtr_base;
+> > +    uint16_t idtr_limit;
+> > +    uint16_t reserved[2];
+> > +    uint16_t gdtr_limit;
+> > +    uint64_t gdtr_base;
+> > +
+> > +    uint16_t code_selector;
+> > +    uint16_t code_attributes;
+> > +    uint32_t code_base;
+> > +    uint32_t code_limit;
+> > +
+> > +    uint16_t data_selector;
+> > +    uint16_t data_attributes;
+> > +    uint32_t data_base;
+> > +    uint32_t data_limit;
+> > +
+> > +    uint64_t gs_base;
+> > +    uint64_t cr0;
+> > +    uint64_t cr3;
+> > +    uint64_t cr4;
+> > +    uint64_t efer;
+> > +};
 
-r~
+> IIUC `R_TR` and `R_LDTR` are used by HVF in QEMU. Is there a reason why you
+> didn't add them here?
+
+They are not present in IgvmNativeVpContextX64, so you can't set them
+via igvm for the initial vcpu state.  Of course the guest can set them
+later on.
+
+take care,
+  Gerd
+
 
