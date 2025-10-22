@@ -4,95 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D58CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 18:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A9DCCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 18:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBdx6-0006uL-Bq; Wed, 22 Oct 2025 14:52:52 -0400
+	id 1vBdzU-0007Yr-HG; Wed, 22 Oct 2025 14:55:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBdx2-0006u6-Iw
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:52:50 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBdzT-0007Yc-H5
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:55:19 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBdwz-0004ug-JD
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:52:47 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7c3e26d534fso973761a34.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 11:52:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBdzR-0005Fm-Sd
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:55:19 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-4270a3464caso3108737f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 11:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761159163; x=1761763963; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1761159315; x=1761764115; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nAoR1fPW7L8P5579GewsgGbyeG9xFMQ7kS8pk0R+Zl4=;
- b=N7jTuK4mDcgZLwrRayxyLzK6HhPlNkbMZuhiCCIv7cqAWDZU8yMpq73bCnz7qkJ14J
- IGhIEq2saAqBLKu1+Je1FQCh7PIX/Nzc2+rGPadfn1FI9PbRjfnShkuyrq+g3ycC37JK
- YSuqloMw0Q+EK/KZTeLdz9yTHuYkJkFmWKHxdxq1ibMEW0iUmRKbX1P2lrMTikwivt6c
- BqeIIWT4tNz/NVVONZ4aaEzThnQ68LRHY4rVl9ZmHWMGNXhT3S9T9pnGeqUr4bj6O1MG
- DtThLRFywVqkwspf2dFvLgzmjNuJgtDe4duWbAVH1yqfxUOXYcqn+Wm87ioTwQpHpAwY
- uBZg==
+ bh=QGkHgFHWO0U4DFQBXgyqF0iZP7bVTfnDWioQ3Y6m0Ac=;
+ b=bgucnWy7AKa+hRE7YhD8DjzDPhAH0v3G6wsaPo9W1JV2vd94Idu3Bh9+mCOlixHbvb
+ LXwWGDva49+iZqnR4tj1OkbrsgAVFRAOMBIJNF/Z5NwTXbUPF5FcvKOPNGDfedelFTW+
+ rGAif/QSqXvaE7aaI2FeQanYsjz41yBTfXAFCjHnRpwm0P34jWm0Pn/IXKgBOVdyu3cb
+ qwzBsrr9xXOThzGA/OELWowv9S+q8vqLmhnqnmuc4rW9XjoXHxcPzS0hY26XKweL9lV7
+ n884rqVuVTPO91IFpOw2cVty+A+6DlOThiaGxtg/nH3w2GONCLfwntVcpuRfKAb3Cfq4
+ xhsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761159163; x=1761763963;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20230601; t=1761159315; x=1761764115;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nAoR1fPW7L8P5579GewsgGbyeG9xFMQ7kS8pk0R+Zl4=;
- b=tK0Wf+MEhibSPDOEz1Emw8XzthXlePJr7tSCNn1KvyRUpMRDWpMXBkLyquxES3SWE7
- DQm4SKuR9BhrPmtonjzTihcTgBLN6yFgbBzgg2Wjh6PtRYDYHB6LIBydDbJoOSBYINjw
- 4a/2OA15Pt7tJvGbgJ/xCRuJmPU5RMTZemRd0EMNsKApYIHxjHbwzKEZ8TiNtk4hQAnY
- Id8ov0rBFsIC8tGodKbjMZZJ9ObK+022p/jUUsTkjHgQskNhZ4wUqde8vzXteRwOQbeG
- ICSJOz8e4dJLxP/o4xUrR4waOFn/nrcTiyGS4MR0SiXd/TCgZ+o1PLWgewGjVVveJWEX
- dcNw==
+ bh=QGkHgFHWO0U4DFQBXgyqF0iZP7bVTfnDWioQ3Y6m0Ac=;
+ b=M4LD8UOpmQ9WTCRJ6ptuMpCiDbsYezP+WZOtOAknZHq1jwWUFL+gMo/fZsIBz/DHeW
+ Gw5wf6+0LHH7H8VNs6656CdkEYQbO16AX0aw+5YnOEY9Cd1uWWlkF+e4NZicFJXuZW3M
+ ZFKc3a+RrAcyGVhv60tDADBjtqq9OIw8qji4Dmweql2MsRTiX8b01Kw0YvpOIgBL8knx
+ I27tELNFfwG1/fgKuiuLRw3xLB/24/v5ErY4mBZ/FOKGvGFwdC+Z3vJjrBKFc1wgNmTH
+ Q9GevXW+xDay7lbd/kO//eKtN5Cc4+9ebPCOP+n+LXo4xywKpeiUTj8Dq9P00HWt1hry
+ ut7g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXC9pASOaIZ4jcPT6I9zzYIZQ0Y0p5XPOCtM/omZZ7tGqYeQQhN5evx7loRaVlo/bS/SJRJ7YWbBwxf@nongnu.org
-X-Gm-Message-State: AOJu0Yy8ol72aYAFf/dQ72ASlly1fIIlMZYbZ9sw4JfrrJfAQ8CxFFzf
- bNIcIMNF4GQDDrGuJ0AOka33Xnno6nxEsq5FAKykr5DhGqAzVq0/PTmX9coMJ5zYcl0=
-X-Gm-Gg: ASbGncvCGW09N6v7hywF2VJlnWH7ym1ruDSMmY7jblhemtUnQGTIW3aRPUMzL6zYy53
- JgS5YGXWIsyzDr6xojFDOW5Dz/6s4JzAZ6to9cyefhvMgmmFVmWRvud9Y1759mrZDY0Dn0XoqSk
- ZpMpXgnS2PmQxbelnQ9GqHZ6DWOa3tMNV1lJRJCakgJiPT4i8CH3YzU/wFpDuX/jv1v7+gILOXn
- qq7a8h8TFnnSUSHm61fRb6zD8ctmlQdTbhxPnUcVqYpj13tKH55vTeqptx4aOjDiVyjRT7rX1EQ
- 1ybX0WlOdimdJcBRFBaXOi0XkuDizcpme1dVHH5aXigQDx78BctNcL5PdHS6qcU3hHpDrhJ2O2J
- HXkQrOtKip8qYocdFGjzvdKUiKZ6sKy0Y42gLU3HDw+kn2eD2r/3KFf2hXD/gEjbyPqVblVxgLl
- 00D/THQvTyO/QUFUXv1AMTL6Nk/dOLfiECTSstewY1FltCeT5JCCapiWfMsNbu
-X-Google-Smtp-Source: AGHT+IF9hi+gVnvWwjXnJCs/893CMhmR2sUJT9wHz1v05kVr6oWSf+T74+UOKdGfYKh8lUfYw+6tGA==
-X-Received: by 2002:a05:6830:264d:b0:78a:8b0d:cd29 with SMTP id
- 46e09a7af769-7c27cad9784mr12336967a34.13.1761159163527; 
- Wed, 22 Oct 2025 11:52:43 -0700 (PDT)
-Received: from ?IPV6:2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3?
- ([2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7c3e326df99sm767388a34.33.2025.10.22.11.52.42
+ AJvYcCV08wZ72SwoRp1hfg4AUTvD5YP0pQGCzJSCKYwSPxlt1Lm7kKQQjGJSA3ujtZkgxRWzN6Q+dpPwi2ko@nongnu.org
+X-Gm-Message-State: AOJu0Yy5zdQWngIdI0OqGywTrKoh+oIpAlH8EgMLBL2HsrkH76+eDK4H
+ hOjj1P3CrEJTMk2/igScfDMQOaWUwXgMPGQKdvkDWk9GkYyd2a3m41/ZcAvLwSlLiUY=
+X-Gm-Gg: ASbGncs5srasNqRILkeHWL51yCRYgZA4zJGGtCRLXgvwZAFNkf53NxDsN1ljgySOSB/
+ PqLFxdgzZgSqXFDVf+E5ZG/GDx2jwDuOzOBqxiBELsrYIDzDieNSabWz3im9H5lcCNqOXeu4kEg
+ GZvVrJjRVwF5/RKRvkqhXMUiy9aVqpFET74hTNyJO/K7gioKBYUFL2kV0FV6BvkB1xUeAaMpD6c
+ aDdGI+K2XceAA2pXgb0SPD7blv425QKq1zbaZ+kb/eb+ARIO+zFOi613t64pS/8A9wRYMSAOS1V
+ EK/Ricy1RKeThiEl1Bgt7vLCa1ZULuD4vUk2NjycmSnTt61LVTOVgROQCzFpDCLhb1OmAQDRABc
+ Qj4+NmQUp9PQEa2RH+st8mx2ZhRZDbBlwYwKNxKNnACVNWni0ehX6Oj2kJLbl6zkqb/lr0xCNUw
+ pRQkTvmkNa/dwfABzH7OhU+oqUnH+r0FNaNpxUydZsXGI=
+X-Google-Smtp-Source: AGHT+IFYXDlLQ7YP0z8og7q6VrFv/s7meAZcL3aZjFzVSsJLj81XC/yv3vsS1AASm9CKvPhjtxR4XQ==
+X-Received: by 2002:a05:6000:1a8e:b0:427:60d:c505 with SMTP id
+ ffacd0b85a97d-427060dc6eamr14277953f8f.15.1761159314792; 
+ Wed, 22 Oct 2025 11:55:14 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427ea5a0f88sm25419514f8f.7.2025.10.22.11.55.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 11:52:43 -0700 (PDT)
-Message-ID: <4225e42d-e732-4f25-a74f-f95c090948d5@linaro.org>
-Date: Wed, 22 Oct 2025 13:52:40 -0500
+ Wed, 22 Oct 2025 11:55:14 -0700 (PDT)
+Message-ID: <5930e266-cd3a-4ce9-94dc-2849d5c7c18d@linaro.org>
+Date: Wed, 22 Oct 2025 20:55:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] hw/hppa: Add the NCR 710 SCSI driver to hppa
- machines
-To: deller@kernel.org, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-References: <20251017200653.23337-1-deller@kernel.org>
- <20251017200653.23337-8-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v7 13/24] whpx: copy over memory management logic from hvf
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251016165520.62532-1-mohamed@unpredictable.fr>
+ <20251016165520.62532-14-mohamed@unpredictable.fr>
 Content-Language: en-US
-In-Reply-To: <20251017200653.23337-8-deller@kernel.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251016165520.62532-14-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,30 +119,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 15:06, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
+On 16/10/25 18:55, Mohamed Mediouni wrote:
+> This allows edk2 to work, although u-boot is still not functional.
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   hw/hppa/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
-> index cab21045de..5ea7d9b9bf 100644
-> --- a/hw/hppa/Kconfig
-> +++ b/hw/hppa/Kconfig
-> @@ -17,6 +17,7 @@ config HPPA_B160L
->       select IDE_CMD646
->       select MC146818RTC
->       select LSI_SCSI_PCI
-> +    select NCR710_SCSI
->       select LASI_82596
->       select LASIPS2
->       select PARALLEL
+>   accel/whpx/whpx-common.c | 201 ++++++++++++++++++++++++++++-----------
+>   1 file changed, 147 insertions(+), 54 deletions(-)
 
-I'm not up on how much explicit and recursive config we should have.  This should already 
-be included via LASI, correct?
-
-
-r~
+Is migration working with this code? AFAICT it isn't with HVF.
 
