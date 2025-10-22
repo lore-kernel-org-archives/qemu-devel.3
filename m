@@ -4,153 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7986DCCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF4DCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBTuR-0000Oy-6a; Wed, 22 Oct 2025 04:09:27 -0400
+	id 1vBTur-0000gk-Ok; Wed, 22 Oct 2025 04:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vBTuE-0000LO-1P
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:09:15 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vBTuB-00021g-RO
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:09:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=R5esdebqXoBROT3FrIitlGZEidPoLOeXYqhWEvmTIOZiqGIOVAKX7QplY65qAFtW63c+UuWmPHJLOZEsH5s9pjM2BgPHgjA+WqJHeSFfIqZvZU2RfUSXszF2ty7gxkf9kFYO7CbdRkpjk/z27RGlMSHlaykVcwMecrz/guGG7Z5kNCnApYltMiFCxFc5h794F6SwdlLUpHzyT/+XfCnjMzaFqkqH4gYb85rv2PDIXGksAIDkH4pu16f6G7DvKucNhLGb+dYOjCf1d6wnc6ibh+c3fVWTnUkmZU1evK0rw9NG00HSsq3Gztm80wcKtDuj5ul2CuXWjLumIWyIc6jVqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HeKLRoI/GOzcZInDgzCjka2RIHMo+M3jpFBcK8PbrkA=;
- b=NhH0Po/U+KSEUo+Jnfd+5LuYLXcx26OOuSL8i8LJJKfJId3LF1wXfV6TlADl0d7NFhK4pZBIy1kEaZModp9oqCt1ymdjHtV5k65ZNumSkHpDUtPHbywgbHH4YIu3HfoSev6DzW0a1qa4HP7JCQJaNkmCQLktc8eg/vn+11wRvYEGWWhO4+JukpNuzwf7CuyUoQmmuUKRghKOeULYUHp0P4OVkdJEZAf/b9acIIU2yw/AE9u/L0DLYvaNvPMqwAYdr9wQrZ5JXJGz7z2OZHl+/YCxhFAnzsspHP2imKKDp8Lby5cM7hXV0UA9Jz7lyJut3l+qE+sJSJHImeYr0Mha7g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HeKLRoI/GOzcZInDgzCjka2RIHMo+M3jpFBcK8PbrkA=;
- b=qMGx5ICTXZBV1LFFYHL75Ou2E+3st/xLTl2yyaijxnEe/MIrOEE0+E7c/cES9rHaNqQvOB8wqKcBhf1rhIzYHVGGCT4xMCmmbsF8EXGhWPo8exaOZVMD/ngghHWJITEIs/yZ4sq2hGo/mrY902y5oD5s3p6WfgvVhNaSD4/IUzA2dBxa3JZMyDTgBXcegDhiLNsiIxAPlDsjTs4FVZ6HgsyeQqQoqq9RBVFCqEKxp6Cg9QKpvMzdajigVYCt21SbPfjcQmidCkjViWhTQrmgsiQX2HKFoJpRhqNGsVAiLJf05d4Vb878w+jpcMkpgpHR7ei7tlCbZ9XbDJDc03mgUg==
-Received: from MN2PR22CA0003.namprd22.prod.outlook.com (2603:10b6:208:238::8)
- by SA0PR12MB4365.namprd12.prod.outlook.com (2603:10b6:806:96::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.17; Wed, 22 Oct
- 2025 08:09:03 +0000
-Received: from MN1PEPF0000F0E5.namprd04.prod.outlook.com
- (2603:10b6:208:238:cafe::5e) by MN2PR22CA0003.outlook.office365.com
- (2603:10b6:208:238::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9228.17 via Frontend Transport; Wed,
- 22 Oct 2025 08:09:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MN1PEPF0000F0E5.mail.protection.outlook.com (10.167.242.43) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9253.7 via Frontend Transport; Wed, 22 Oct 2025 08:09:03 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.34; Wed, 22 Oct
- 2025 01:08:49 -0700
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 22 Oct
- 2025 01:08:41 -0700
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <imammedo@redhat.com>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH 3/3] tests/qtest/bios-tables-test: Update DSDT blobs after
- GPEX _DSM change
-Date: Wed, 22 Oct 2025 09:06:39 +0100
-Message-ID: <20251022080639.243965-4-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251022080639.243965-1-skolothumtho@nvidia.com>
-References: <20251022080639.243965-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBTuo-0000Zs-JU
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:09:50 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBTuk-00025x-KW
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:09:50 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47117f92e32so43305105e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 01:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761120585; x=1761725385; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r5W3vw0dKWSTSqpjqiTpD1sBd7qgaB5sDy0DD3Bgxoo=;
+ b=RE9D3i1aUxKs9ENlAdpfWxgLCOxkodNGSaeBAFd2aQ5kyq0tjo9LkmRd3TvFdVG7OX
+ Q+faih/pIqP/MKDzYnG6xRIglQ6GQdY2LxTL9knV1b8KtodVMs3CU9c3geS6sLgZUn1q
+ zJmN0F+7VAELztdwJdWSl9iOVsdExf3STQxrUjpYak/zxGYE6W42SdK8/jzP2vR5tKwc
+ a1MxW/5lnfrty4igGCfv+6nO6CIhtcNwbiSY1CtYRChOAKcel17q7tMAZiqXSseOokVq
+ buLdVo++gflIcWKQxGK6uuffWiuBzXpvx+6lm772ZgcD1crAPpkux28dcknOy1+kZoRo
+ ctgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761120585; x=1761725385;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r5W3vw0dKWSTSqpjqiTpD1sBd7qgaB5sDy0DD3Bgxoo=;
+ b=Qmuy2+um8w/hHbYi2/l+tHDzlkX3QLfdxChqT9bD5YRVH45Ztxr1wmc17/YccOjC1p
+ nCmln9jWZpC9+zNQwoQQOiSAmTv8EDyRJx+WEJgvxQ8PYp4kjh9a8hN4d0klwroUokcW
+ ZkXnQnsCPrkvlNaptdSAq47hko0qQq8xsiwFKcgQzzEhm+WNnOklL1m26N0SvxYjjCtA
+ KKwRgXyZnjZlbGuqLtKPZCG77FtGSN52R/a9Avf1/5slwYQAjadOp5djRe8Sa4nErwAN
+ XbJsdBMY0poHq7eMMrv27/Bi8i5XQpE1on9KnVjhxiXKSbhw7Zludz98SIYCqosVxdgr
+ EKZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUsmtSW9ND7gLwPM7b3bfHYnva2wRQo/i01g9rBD4zREHDeFG51V4r5k7XJPne9BYoJ/fk25482sm5i@nongnu.org
+X-Gm-Message-State: AOJu0YyapEgRqJs0Uh0YRJlQvwsMBOoEAEka2hjxkz9LB5YZ8SbT+dP7
+ 8cPlAs2v/1+L1BonlY94yg0b47u+RY408v72wsBdWgqsw5vboUPuJ7r/I+mKNETFmL0=
+X-Gm-Gg: ASbGncvQcaTkjJJoRAO8oRQXqXkzYSUIbBK43UjbFtp6Yi+5ErpMPNcTr0tMcXVTH+v
+ rfslWZkHJSDde52AWHCWZS1NtPwJrclrEuKPx4NlPi/r6DxfZf776jPtpsm0XmpAqpxfwG2zxcW
+ FWjsHNhjdLhFvz3OjaTTg2qCT7bJD9LdQSw01Yx0L7Z/NhCtWK4OOxq5XSq2dWIe0OwwKpFI9TX
+ GgzHM1Z8EXW0Pwb9Lp4eej1YIvFEYelrgcEGIg0zHQZ7xPUGbXAg29n6V0Zj9j8izrx8mPuQvlN
+ wsJepNwWl5VH2s6lk9TqYm48i/NrFGx0idvrrdz7Z1ct57p/NoDAaH6y4Od/9bOEiVqSodVoG/E
+ UPiufoXVZadXJ4k2JA4MhsE+yiKPW2LyaPRH9DHMr82EOSN+CVUsaB3KjSvXifNlHYUnHmPvPtX
+ pJ3lwI3pkBVGhqy2N/cfjbeZlR1MIJUACkjmzJDa2b3xU1zdlkI70b4DcxbmuW6rqw
+X-Google-Smtp-Source: AGHT+IG5BpeXiJ6nHMocdx8fLCUYDlkFMY0PuWuFCGQMHFAZ8n3dQ7nToTymecUtEebWDB9IZS4Cfw==
+X-Received: by 2002:a05:600c:3149:b0:470:bcc4:b0a0 with SMTP id
+ 5b1f17b1804b1-47117925919mr168171395e9.34.1761120584565; 
+ Wed, 22 Oct 2025 01:09:44 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-427f00b985esm24733044f8f.34.2025.10.22.01.09.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 01:09:43 -0700 (PDT)
+Message-ID: <36b8e200-10ab-48b0-beda-9ca2c42f2b48@linaro.org>
+Date: Wed, 22 Oct 2025 10:09:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] char: rename CharBackend->CharFrontend
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
+ <chigot@adacore.com>, Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Alberto Garcia <berto@igalia.com>, Thomas Huth <huth@tuxfamily.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Magnus Damm <magnus.damm@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Collin L. Walling" <walling@linux.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Corey Minyard <minyard@acm.org>,
+ Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Antony Pavlov <antonynpavlov@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, Vijai Kumar K <vijai@behindbytes.com>,
+ Samuel Tardieu <sam@rfc1149.net>, Gustavo Romero
+ <gustavo.romero@linaro.org>, Raphael Norwitz <raphael@enfabrica.net>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ "reviewer:vhost-user-scmi" <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Zhang Chen
+ <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, Lukas Straub <lukasstraub2@web.de>,
+ "open list:Sharp SL-5500 Co..." <qemu-arm@nongnu.org>,
+ "open list:S390 SCLP-backed..." <qemu-s390x@nongnu.org>,
+ "open list:sPAPR (pseries)" <qemu-ppc@nongnu.org>,
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ "open list:virtiofs" <virtio-fs@lists.linux.dev>,
+ "open list:Rust-related patc..." <qemu-rust@nongnu.org>
+References: <20251022074612.1258413-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251022074612.1258413-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.126.231.35]
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E5:EE_|SA0PR12MB4365:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5206c192-1355-4d77-bad2-08de114243b2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZkdMN0JlNGxram0wWTd0Zkp2SEZqWGM3YUdrUEZMR1JJMHppS3dkR1cyeGFz?=
- =?utf-8?B?UXpZUHJIK2p4V1VpS3ZLekQxVHVpMG5ZZUVNMVkxTzhESlg2RTQ0S0VpQjR1?=
- =?utf-8?B?a1FjVTdtRE9ESVl1cXQzcnRNNU95SXByTmw5a3ZGMnRzOU4zQWhiT1dsRHUz?=
- =?utf-8?B?QzRJOEVjNkJya1VjeWwxbkNEams1RW5IREw1T0lMTmhiT2liVVllbEtYek1V?=
- =?utf-8?B?YURteExCNStVeWQvMmdNUXpYa3VVaENxZm5Da3cvWFFDc2ZTMDIzamhTWDBM?=
- =?utf-8?B?ZzBKRmNZZ280SVc4UXQwTHRDWTJ1M1MvWm9WMkVYYkFBQVFMMDU1Y0xHYkFT?=
- =?utf-8?B?MTZveGw5MjNacWVISW9KYlE1Y1BpeHN2QkFveTArUFZFamZoUG5uRnF1Z1ph?=
- =?utf-8?B?VGc0QzMxbW9Zc0NBdUNZVUVJUmpsdjdPRDRmOVk5ZHFxV1dzS2pSM1VuYU5W?=
- =?utf-8?B?YkhlNG1IZVowQ2c4SmlTMy8vL1JBdkZZL3VqbzcwUjA3V0pRT0pMbjZVWDBV?=
- =?utf-8?B?cnYyTWJ4YVJpN3dtYmI2dWdaT0ZaaVhDY0had3FGRy8yNE5GakVPYVdZQjNR?=
- =?utf-8?B?WWwxTDdnZWllQjNDQjR3QnpKU21zZzY5ZjREZ0E4YmJkUHM1bzhEQ3N5WXlm?=
- =?utf-8?B?YnlpUXBuSW9DMmF5alNRTkFOYldqTnRrZ3VwbjZBUHE3Q2l0dzhxSXdSSU51?=
- =?utf-8?B?RnpWTlU4RHQrazY2SnNRU0dyOFgzQUp3dENnOUVhNjBEM2lqMXhhZ2t2SHEr?=
- =?utf-8?B?ZnlsYzhpeXM2U3F5bm8wak5tTHdZM0o4elpyMWwxTUpBNkVycHJlMWlWV3c2?=
- =?utf-8?B?MG5zcmlvSUdkTHJCTjlFYjBZZTlsaHBVdkIveGJ2ZFhzNTIrbFRCeTNCMmky?=
- =?utf-8?B?TFhmbXJ5VUMxN2FRRWJxc1hrYkFocUhpb0RKY0FRNW1qeDlWcDFndFZMOVAy?=
- =?utf-8?B?TzRDVDRFWERJa1pvbndaMnNzTjNUTXB4eWk5Z3NRWWNLb1JwVkN4Y1YxZnVS?=
- =?utf-8?B?MU9FaGFqZHRTZVpVbGFpeXQ1bzNQRi9zS2MxdzJaZVJ4Ry9zKzYxSTVwTHhK?=
- =?utf-8?B?L05HZndlS0NSNCtuakVuTVlTckk4ZVZtaHhzL2FEQmpsWFRrckt2eUdlYi9p?=
- =?utf-8?B?Rk41ZXRTczdoRjNBYzgwSDcvSmlOL21WRHMyblliT3pMYUtwUEJRL2Y0S29l?=
- =?utf-8?B?LzBzTG4xMnB3VGN5TzV3Y0pCcTV4bDhWZFYyOVBMUTZYaXRaVmRqZnVlOFZY?=
- =?utf-8?B?WVROZ1F2Qm5nZHI0dG5kWVdrZXJpNmlBaUJLcjYvam4rTDhFOFJ4bXpWbGF5?=
- =?utf-8?B?RXZkZFZHRU9KcE5iV1d6SFhOWUlpZS9aejRNRGFpN0h5YTFUK3hKL3VJTG5O?=
- =?utf-8?B?RUhmQURQS04rdEVkOHlncEI4MVg2cHVkV2ZuaTlrbWVYOXVHVXFXa1RxcXNh?=
- =?utf-8?B?RXlCMm4weElVYjBUSjAwNzY0eHg2a0FRcTZMSnhWY3J3aDBIT3BoaU9DK3Rw?=
- =?utf-8?B?dWdteDZuZXY3aHA1UXNXMEVDYnVUbm9VYmNyaWdkcnNKVEROaDFSalVrZTN0?=
- =?utf-8?B?bWRWN25ocUxnTy90cW5YdHdNbVl2am01SlR0ZWVuM1VnRkZFYnpHT1c1b3Js?=
- =?utf-8?B?d1lDS3p2dFhIVjlTMTJiTForcGpvdnVIbWM3TGlyN203VlV2UUNwUkZjV2hS?=
- =?utf-8?B?VHZ3M1VnMTZocFNqL0J3MGd5T044MGJibGczMFNZWGRiSkFHdFpFcXJHZnV5?=
- =?utf-8?B?ay9NVTNMT2pKblJQa2I3bzNPQTUvSHAveUpnMEo1RGhEbFlhZHBkcXJMR3o3?=
- =?utf-8?B?TWV0aHkwOW5BRlFmbVg4QVc3T3NnRVZnelNzOHIvQk5uVUE4amRycUZLOTNl?=
- =?utf-8?B?MEhCdHZlK0trSjRrYjFONmJ4KzZZTS9TMGtVbmd5MjVLazU0ZzBNd1Rpem1N?=
- =?utf-8?B?WnJXbURBeW4xQ054Vm50YitIemp5Vnh3NDFPYjJ2ZUhyQW1iaVJnT3UwYnBF?=
- =?utf-8?B?M3c0b1NPVUNhZ1FmT2U5SGx2eSs1L1U4SGxGZDJzYlpjVTg4WDF1d1lSYUND?=
- =?utf-8?B?bjhuY1JUQ2RrRFpGMFlTc1IwenhkbVZzd0dYNkVlV3VHUG1BMSs4QXdBakEx?=
- =?utf-8?Q?PXto=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2025 08:09:03.2702 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5206c192-1355-4d77-bad2-08de114243b2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E5.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4365
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=skolothumtho@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,272 +153,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the reference DSDT blobs after GPEX _DSM change. This affects the
-aarch64 'virt', riscv64 "virt", loongarch64 "virt" and the x86 'microvm'
-machines.
+On 22/10/25 09:46, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> The actual backend is "Chardev", CharBackend is the frontend side of
+> it (whatever talks to the backend), let's rename it for readability.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   chardev/chardev-internal.h           |  12 +-
+>   include/chardev/char-fe.h            |  67 +++++----
+>   include/chardev/char.h               |   4 +-
+...
 
-DSDT diff is the same for all the machines/tests:
+> diff --git a/chardev/chardev-internal.h b/chardev/chardev-internal.h
+> index 9752dd75f7..8ea10414ab 100644
+> --- a/chardev/chardev-internal.h
+> +++ b/chardev/chardev-internal.h
+> @@ -37,9 +37,9 @@
+>   struct MuxChardev {
+>       Chardev parent;
+>       /* Linked frontends */
+> -    CharBackend *backends[MAX_MUX];
+> -    /* Linked backend */
+> -    CharBackend chr;
+> +    CharFrontend *frontends[MAX_MUX];
+> +    /* frontend of the underlying muxed chardev */
+> +    CharFrontend chr;
+>       unsigned long mux_bitset;
+>       int focus;
+>       bool term_got_escape;
+> diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+> index 8ef05b3dd0..7901856f95 100644
+> --- a/include/chardev/char-fe.h
+> +++ b/include/chardev/char-fe.h
+> @@ -8,12 +8,12 @@ typedef void IOEventHandler(void *opaque, QEMUChrEvent event);
+>   typedef int BackendChangeHandler(void *opaque);
+>   
+>   /**
+> - * struct CharBackend - back end as seen by front end
+> + * struct CharFrontend - Chardev as seen by front end
+>    * @fe_is_open: the front end is ready for IO
+>    *
+>    * The actual backend is Chardev
+>    */
+> -struct CharBackend {
+> +struct CharFrontend {
+>       Chardev *chr;
+>       IOEventHandler *chr_event;
+>       IOCanReadHandler *chr_can_read;
+> @@ -27,53 +27,52 @@ struct CharBackend {
+>   /**
+>    * qemu_chr_fe_init:
+>    *
+> - * Initializes a front end for the given CharBackend and
+> - * Chardev. Call qemu_chr_fe_deinit() to remove the association and
+> - * release the driver.
+> + * Initializes the frontend @c for the given Chardev backend @s. Call
+> + * qemu_chr_fe_deinit() to remove the association and release the backend.
+>    *
+>    * Returns: false on error.
+>    */
+> -bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp);
+> +bool qemu_chr_fe_init(CharFrontend *c, Chardev *s, Error **errp);
 
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT, Fri Oct 10 11:18:21 2025
-+ * Disassembly of /tmp/aml-E6V9D3, Fri Oct 10 11:18:21 2025
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-  *     Length           0x000014D9 (5337)
-  *     Revision         0x02
-- *     Checksum         0xA4
-+ *     Checksum         0xA5
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
+IMO even clearer for this API would be to use:
 
-@@ -1822,33 +1822,33 @@
-                 Else
-                 {
-                     CDW1 |= 0x04
-                 }
+   bool qemu_chr_fe_init(CharFrontend *fe, Chardev *be, Error **errp);
 
-                 Return (Arg3)
-             }
+and update documentation accordingly.
 
-             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
-             {
-                 If ((Arg0 == ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
-                 {
-                     If ((Arg2 == Zero))
-                     {
-                         Return (Buffer (One)
-                         {
--                             0x01                                             // .
-+                             0x00                                             // .
-                         })
-                     }
-                 }
+>   
+>   /**
+>    * qemu_chr_fe_deinit:
+> - * @b: a CharBackend
+> + * @c: a CharFrontend
+>    * @del: if true, delete the chardev backend
+>   *
+> - * Dissociate the CharBackend from the Chardev.
+> + * Dissociate the CharFrontend from the Chardev.
+>    *
+>    * Safe to call without associated Chardev.
+>    */
+> -void qemu_chr_fe_deinit(CharBackend *b, bool del);
+> +void qemu_chr_fe_deinit(CharFrontend *c, bool del);
+>   
+>   /**
+>    * qemu_chr_fe_get_driver:
+>    *
+> - * Returns: the driver associated with a CharBackend or NULL if no
+> + * Returns: the driver associated with a CharFrontend or NULL if no
+>    * associated Chardev.
+>    * Note: avoid this function as the driver should never be accessed directly,
+>    *       especially by the frontends that support chardevice hotswap.
+>    *       Consider qemu_chr_fe_backend_connected() to check for driver existence
+>    */
+> -Chardev *qemu_chr_fe_get_driver(CharBackend *be);
+> +Chardev *qemu_chr_fe_get_driver(CharFrontend *c);
+>   
+>   /**
+>    * qemu_chr_fe_backend_connected:
+>    *
+> - * Returns: true if there is a chardevice associated with @be.
+> + * Returns: true if there is a backend associated with @c.
+>    */
+> -bool qemu_chr_fe_backend_connected(CharBackend *be);
+> +bool qemu_chr_fe_backend_connected(CharFrontend *c);
 
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5337 -> 5337 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5423 -> 5423 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 6246 -> 6246 bytes
- .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 5391 -> 5391 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6698 -> 6698 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7812 -> 7812 bytes
- tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev  | Bin 10274 -> 10274 bytes
- .../data/acpi/aarch64/virt/DSDT.smmuv3-legacy | Bin 10274 -> 10274 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5539 -> 5539 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 5354 -> 5354 bytes
- tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4603 bytes
- tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5824 bytes
- tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4609 bytes
- .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4905 bytes
- tests/data/acpi/riscv64/virt/DSDT             | Bin 3538 -> 3538 bytes
- tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 2985 -> 2985 bytes
- tests/qtest/bios-tables-test-allowed-diff.h   |  16 ----------------
- 17 files changed, 16 deletions(-)
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
-index 38f01adb61e6e4704821cee5e397888bb6b7e46d..35a862e44714d26ded01d40dc147e76cc73a1c84 100644
-GIT binary patch
-delta 26
-icmcbqc~g_iCD<k8rU(NA)6$Jx7Q&1So1KNHF#-T`5(jwz
-
-delta 26
-icmcbqc~g_iCD<k8rU(NA(~^x`7Q&2-o1KNHF#-T`3<r4t
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-index 37a9af713b94a3fd34907dc86c40aaa79e93239c..7ce35f0d8606d17f3ddb9aa090c97c7ac9a38982 100644
-GIT binary patch
-delta 26
-hcmZ3lwO)(MCD<iIUzCA?sbC{lpD-iC=9$9N7y)3m2K4{{
-
-delta 26
-hcmZ3lwO)(MCD<iIUzCA?DSsnZpD-ii=9$9N7y)3g2K4{{
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-index 04427e2d8eb8d2db0a7ae3dbe546d9072406d09b..6d1765c31017dede80d1d87f8fa7c6dd055d1839 100644
-GIT binary patch
-delta 26
-hcmaE6@XUbACD<h-O@e`esc<8gg)k$-W@lk#Rsd@^29E#$
-
-delta 26
-hcmaE6@XUbACD<h-O@e`esbC|Qg)k%IW@lk#Rsd@;29E#$
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-index 43ab60496e5a06706d4626d9e7b58b2d7e809e75..61cce30c7471faa4a9b7e3562dcb4ab9b3519a21 100644
-GIT binary patch
-delta 26
-hcmeCz>eu3O33dtL7iC~z^4Z8`A<W3I*;)7uBLGsg1^WO1
-
-delta 26
-hcmeCz>eu3O33dtL7iC~z^4`d0A<W3Q*;)7uBLGsa1^WO1
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
-index 3c391674446167bc9c79fd5dcb1c37e80cc7bbae..ffc5f1c0d1090582672c60ade3eb1bc41acc5ef7 100644
-GIT binary patch
-delta 26
-hcmZ2wvdV<ZCD<iIONxPk>B>ef3t>iv&CbHl*#KgY2MquK
-
-delta 26
-hcmZ2wvdV<ZCD<iIONxPk>GDP{3t>ja&CbHl*#KgS2MquK
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
-index 71c632cedcca63a77a4cdde53d9bc392102687b6..f98dcbfc6b823bce6d5710e8056a4e260fb92a02 100644
-GIT binary patch
-delta 33
-ncmZp%ZL#HY33dr-kz-(B65YtPONfzS^HCu#E+BP5W(y+#m9q%&
-
-delta 33
-ncmZp%ZL#HY33dr-kz-(B65hzQONfzi^HCu#E+BP5W(y+#m7oal
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
-index e8c2b376df7bddc2392945ea8cbb550b3d3b5e26..6c12a7aaf8a6315bac968a685f5b6673e7248817 100644
-GIT binary patch
-delta 55
-zcmZ1!uqc4bCD<iINrQobY4t{~T|$fun~w_haPlxL5oBg$h;H&^@iCZuLC9<Ka+$51
-KK*?COql^H#4-gjs
-
-delta 55
-zcmZ1!uqc4bCD<iINrQobX~jmaT|$hEn~w_haPlxN5oBg$h;H&^@iCZuLC9<Ka+$51
-KK*?COql^H!*$@{1
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
-index e8c2b376df7bddc2392945ea8cbb550b3d3b5e26..6c12a7aaf8a6315bac968a685f5b6673e7248817 100644
-GIT binary patch
-delta 55
-zcmZ1!uqc4bCD<iINrQobY4t{~T|$fun~w_haPlxL5oBg$h;H&^@iCZuLC9<Ka+$51
-KK*?COql^H#4-gjs
-
-delta 55
-zcmZ1!uqc4bCD<iINrQobX~jmaT|$hEn~w_haPlxN5oBg$h;H&^@iCZuLC9<Ka+$51
-KK*?COql^H!*$@{1
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
-index 9f22cd3dc81efe3ebcb8caf913842a8dea910627..208a3163a6bf2a59cf421418dcb16ad1156285c6 100644
-GIT binary patch
-delta 26
-icmZ3iy;z&eCD<iou_yxr)69)rOd^a7n|Vd1F#-T#9R_9q
-
-delta 26
-icmZ3iy;z&eCD<iou_yxr(~ON=Od^bon|Vd1F#-T#7Y1ek
-
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-index dd3775a0762ae1a5ddb89dd656d81eee581dccb6..f81e3e6cc794d77ea66b7e27b1afe56e248132b6 100644
-GIT binary patch
-delta 26
-hcmaE*`AU<^CD<k8l?Vd^llw+43t>iv&CbHh83A%X2VVdH
-
-delta 26
-hcmaE*`AU<^CD<k8l?Vd^liNlv3t>ja&CbHh83A%R2VVdH
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT b/tests/data/acpi/loongarch64/virt/DSDT
-index 55aa34f988d6ef69293e91c5fe45bee0a02bc5f1..09aa903c4e875f541223e36f59b28e101599df20 100644
-GIT binary patch
-delta 26
-icmeyZ{9BpJCD<k8w;%%pW6Vab$vlh<o9FSwvH}2l69@SK
-
-delta 26
-icmeyZ{9BpJCD<k8w;%%pWAsL@$vljVo9FSwvH}2l4F~xE
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.memhp b/tests/data/acpi/loongarch64/virt/DSDT.memhp
-index c0955eb60448cc5f4d38d410abc260ae54ea2e9a..a069d6878fb45fa6b0e6342eedb0eb3d25eb20da 100644
-GIT binary patch
-delta 26
-icmX@0dq9`VCD<k8fEWV<W8y}x$vlh<o9FQ;aRC5qod+-g
-
-delta 26
-icmX@0dq9`VCD<k8fEWV<W5PzR$vljVo9FQ;aRC5qmj^Ha
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.numamem b/tests/data/acpi/loongarch64/virt/DSDT.numamem
-index 61e47e7252155dcf9c76879c4f60f4b3eef63f86..78ece52f57a383db128c7d1a08526e15ab911bb7 100644
-GIT binary patch
-delta 26
-hcmZovX;k5I33dr#6k=dte7=!uG7lre=6O8HtN>Vb2A==`
-
-delta 26
-hcmZovX;k5I33dr#6k=dte72EmG7lr;=6O8HtN>VV2A==`
-
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.topology b/tests/data/acpi/loongarch64/virt/DSDT.topology
-index b2afebc938ce45d798c8aa5f45a463f1617e257e..7ab23f47cc82dd7bc1975e17893a8cd61039e66d 100644
-GIT binary patch
-delta 26
-icmZ3fwo;ADCD<iIQ<#B)@%%=v$vlh<o9FR#vjG5Njt4CO
-
-delta 26
-icmZ3fwo;ADCD<iIQ<#B)@!UqP$vljVo9FR#vjG5NhzBhI
-
-diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
-index 527f239dab13a00ad42e5a70b8dc2b89f12aa84a..968e1a15c87bb5753b3a84ddb357e26312767220 100644
-GIT binary patch
-delta 25
-gcmca4eMy?jCD<k85-$S-lj=sUVqQju$#uLT0Ac+G$N&HU
-
-delta 25
-gcmca4eMy?jCD<k85-$S-lgdV}VqQkZ$#uLT0AcqA$N&HU
-
-diff --git a/tests/data/acpi/x86/microvm/DSDT.pcie b/tests/data/acpi/x86/microvm/DSDT.pcie
-index ba258f454dc0e59ef2fd67e0ce37e270e7c122e8..b646a05551c1ed902413a462442346ce246f8675 100644
-GIT binary patch
-delta 25
-gcmZ1}zEYgaCD<ioB{u^D(~pf@mfVaClU=w|0bO|puK)l5
-
-delta 25
-gcmZ1}zEYgaCD<ioB{u^D)Ax;BmfVbtlU=w|0bO$juK)l5
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index e2fce2e972..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,17 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT",
--"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/DSDT.memhp",
--"tests/data/acpi/aarch64/virt/DSDT.pxb",
--"tests/data/acpi/aarch64/virt/DSDT.topology",
--"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
--"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
--"tests/data/acpi/aarch64/virt/DSDT.viot",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
--"tests/data/acpi/riscv64/virt/DSDT",
--"tests/data/acpi/loongarch64/virt/DSDT",
--"tests/data/acpi/loongarch64/virt/DSDT.topology",
--"tests/data/acpi/loongarch64/virt/DSDT.numamem",
--"tests/data/acpi/loongarch64/virt/DSDT.memhp",
--"tests/data/acpi/x86/microvm/DSDT.pcie",
--- 
-2.43.0
-
+LGTM otherwise!
 
