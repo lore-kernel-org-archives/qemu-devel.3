@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF740CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1CACCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:57:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSmg-0008CZ-Go; Wed, 22 Oct 2025 02:57:22 -0400
+	id 1vBSmp-0008W8-MO; Wed, 22 Oct 2025 02:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSmZ-00088u-Cv
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vBSmn-0008QE-SA
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSmX-00082Y-RO
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:15 -0400
+ id 1vBSmm-000846-2v
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116233;
+ s=mimecast20190719; t=1761116247;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l8qpVhvjDcxiMsJKwJtb1U9iBXYjSTlqxniLyPurnXs=;
- b=HuYWKAzkXR6qI1+M0XLjz8RmNY8ucPxVgjfF5FTqds/vRLL5+xCND6889lBoTlIZRHTSQ6
- 8KC2uqWQvJiPBdETqRP3aeegC/KgJJiIbQiM06Xvattpi/V6mE60zBv2MVb/hLxPbXdyZ3
- Pne82BpUXWZf5iqPr96vgaL4q3EqSxo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cMUwGFNb07Qm+jO9Ii1yrIe9dztkSD6REgFslsXC07o=;
+ b=KmCRjYOlUY6TlpCMDZTp1mjvbk4Khxj3TN6A5tYPkkWHspqR6/O0G+HraCueA+CBy0ozd2
+ Wq2A+R6vO9gFTB4lbDdozXLamXpNnBsHLE1W6KWnOTvd/bUtM07XQlzpOkQILUpiwL+zmi
+ LEvWa4cfhkRY8Y4RyWGCp9JyUhTRHRQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-KUool44WPwG1UfpRghdDLA-1; Wed,
- 22 Oct 2025 02:57:09 -0400
-X-MC-Unique: KUool44WPwG1UfpRghdDLA-1
-X-Mimecast-MFC-AGG-ID: KUool44WPwG1UfpRghdDLA_1761116228
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-lAPOzBU_Ol6zI1TXc98Wkg-1; Wed,
+ 22 Oct 2025 02:57:25 -0400
+X-MC-Unique: lAPOzBU_Ol6zI1TXc98Wkg-1
+X-Mimecast-MFC-AGG-ID: lAPOzBU_Ol6zI1TXc98Wkg_1761116244
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3AF41956089; Wed, 22 Oct 2025 06:57:08 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD2D6195608D; Wed, 22 Oct 2025 06:57:24 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3291180045B; Wed, 22 Oct 2025 06:57:06 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 74DF430001BF; Wed, 22 Oct 2025 06:57:23 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 04/42] hw/pcspk: use explicitly the required PIT types
-Date: Wed, 22 Oct 2025 10:55:59 +0400
-Message-ID: <20251022065640.1172785-5-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 07/42] docs: update -soundhw -> -device list
+Date: Wed, 22 Oct 2025 10:56:02 +0400
+Message-ID: <20251022065640.1172785-8-marcandre.lureau@redhat.com>
 In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,67 +92,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/timer/i8254.h | 4 ++--
- hw/audio/pcspk.c         | 2 +-
- hw/timer/i8254_common.c  | 6 ++----
- 3 files changed, 5 insertions(+), 7 deletions(-)
+(note: it's unclear whether -soundhw pcspk was
+working as expected, since it was not user-creatable)
 
-diff --git a/include/hw/timer/i8254.h b/include/hw/timer/i8254.h
-index 8402caad30..f7148d9286 100644
---- a/include/hw/timer/i8254.h
-+++ b/include/hw/timer/i8254.h
-@@ -75,7 +75,7 @@ static inline ISADevice *kvm_pit_init(ISABus *bus, int base)
-     return d;
- }
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ docs/qdev-device-use.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/docs/qdev-device-use.txt b/docs/qdev-device-use.txt
+index c98c86d828..043ae46114 100644
+--- a/docs/qdev-device-use.txt
++++ b/docs/qdev-device-use.txt
+@@ -324,8 +324,10 @@ Map from -soundhw sound card name to -device:
+     gus         -device gus,iobase=IOADDR,irq=IRQ,dma=DMA,freq=F
+     hda         -device intel-hda,msi=MSI -device hda-duplex
+     sb16        -device sb16,iobase=IOADDR,irq=IRQ,dma=DMA,dma16=DMA16,version=V
+-    adlib       not yet available with -device
+-    pcspk       not yet available with -device
++    adlib       -device adlib,iobase=IOADDR,freq=F
++
++    pcspk       Not available with -device,
++                but audiodev can be set with -machine pcspk-audiodev=<name>
  
--void pit_set_gate(ISADevice *dev, int channel, int val);
--void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info);
-+void pit_set_gate(PITCommonState *pit, int channel, int val);
-+void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info);
- 
- #endif /* HW_I8254_H */
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 1b0cc08119..60cedcb375 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -50,7 +50,7 @@ struct PCSpkState {
-     uint8_t sample_buf[PCSPK_BUF_LEN];
-     QEMUSoundCard card;
-     SWVoiceOut *voice;
--    void *pit;
-+    PITCommonState *pit;
-     unsigned int pit_count;
-     unsigned int samples;
-     unsigned int play_pos;
-diff --git a/hw/timer/i8254_common.c b/hw/timer/i8254_common.c
-index ad091594cd..419d4cd6e5 100644
---- a/hw/timer/i8254_common.c
-+++ b/hw/timer/i8254_common.c
-@@ -32,9 +32,8 @@
- #include "migration/vmstate.h"
- 
- /* val must be 0 or 1 */
--void pit_set_gate(ISADevice *dev, int channel, int val)
-+void pit_set_gate(PITCommonState *pit, int channel, int val)
- {
--    PITCommonState *pit = PIT_COMMON(dev);
-     PITChannelState *s = &pit->channels[channel];
-     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
- 
-@@ -139,9 +138,8 @@ void pit_get_channel_info_common(PITCommonState *s, PITChannelState *sc,
-     info->out = pit_get_out(sc, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
- }
- 
--void pit_get_channel_info(ISADevice *dev, int channel, PITChannelInfo *info)
-+void pit_get_channel_info(PITCommonState *pit, int channel, PITChannelInfo *info)
- {
--    PITCommonState *pit = PIT_COMMON(dev);
-     PITChannelState *s = &pit->channels[channel];
-     PITCommonClass *c = PIT_COMMON_GET_CLASS(pit);
- 
+ For PCI devices, you can add bus=PCI-BUS,addr=DEVFN to control the PCI
+ device address, as usual.
 -- 
 2.51.0
 
