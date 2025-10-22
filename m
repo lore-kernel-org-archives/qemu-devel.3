@@ -4,95 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E10CCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6203CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBTpR-0007he-6n; Wed, 22 Oct 2025 04:04:17 -0400
+	id 1vBTuC-0000L0-3S; Wed, 22 Oct 2025 04:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBTpO-0007hO-Qd
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:04:14 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBTpM-0001OJ-FZ
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:04:14 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3ecdf2b1751so3932918f8f.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 01:04:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761120250; x=1761725050; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Mvry+m78wLjS3xG2HLg1gJnJN9aP8X25PCNMtTPet6c=;
- b=suRUmJjLxznKt4jiU/HcpTzgYUXe6iIcvwJt/rxcc+p2VCTmsPGRbjBiCCuyHwUfsU
- 0qUbODCIZeSj3PiBuX6xgjuMktOwy67BjfXhactzvGNlcy/Rdg1b1pW9kM8vlAVWoGbT
- nvRzFq8cDQR3uQg1tsl/OmNn6ehSZkMvcHYLFknHTu+LqvrwEXvWRQHPhvFjOOac8wq+
- nG4yuPVTO7AjgB68BtJuOiGLCLJS2XwPqlkbusigJG3Tyx+cmsURKTyVonTNrpEQOe1X
- rtiEdGGKW8x5QOVTG/HGi8fLHuKuQgc6YhCvWixNAXNM3q0KRySLHmR/wIsBdtznutcP
- r1WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761120250; x=1761725050;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mvry+m78wLjS3xG2HLg1gJnJN9aP8X25PCNMtTPet6c=;
- b=SMgsaX3IkDmCskIlO36GH2Q55Sak7ozB27pvnztT1l1zskMXCBpMewrHZjXanfXqkE
- sh3OjS1rPIE+znPC1YudKzXKGJt/Bt1aQAi0dQvOkqkD8Vt65mT98m74qZqDriBzM71B
- vdz+i7Ykk3af+HId0+VZ9tW8dhx8OardIKXQZFfCN6PjtyPc89MRJs0ea0BdjMiNcMHZ
- WMH9axm0wMOBpnP+a6lJ9nrMPQZP6DrdVOHkXLwdZWNjJwqUv5JsR23m7oOHYdx/wK8Z
- eLzBRBwDRwF7k+GOrR77a3Hl78zT33/k6Re08WxSJEY4KvPIa4+Jl+IWff4UwH7zAxn9
- y2Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/DEA+iKcQ6UJ5EiWEaV8nOqyUohd6QWNDQXezhqIbqG11/TiR+4XG0RwL6LRqPxRQ99j6dc38Jl+3@nongnu.org
-X-Gm-Message-State: AOJu0YzxTub3wriaQqY0kBi48Pv4kQ+4Lqpfc4cLz0G6Rt9oFXsT4XBA
- hcML8S27wmOgSSym2Kxf2CebIbpSSG5N3tEM3iUH7tqHnX516u8R55xMP46EXgLT+tw=
-X-Gm-Gg: ASbGnctn0tcoN4BolwUz3zdMwDvoQtZ3b1fnrpGCuI5fIzZrNjcrlKS06+0Bh5dp3Qd
- v5U86C1rv1r90xJV/KMDJDLIzRxYJRz7+nN6+A6LIBujMrAZzPY1pG52ewUewXIOPuv5GpIlS3p
- ucGelcFsE8E/CpK0LL9VYB4i6g+MlUC4jJaTuMPL2zCoSISUHu0Qg/lahg9TvvtFU212qVTk+b8
- UEVnphgTxOy+GrIHnn3k5Jv17/OKiMWM9YKcANJBF1TS3ELiBijbfFK7B0usGZB7ZVAK0SRQOqX
- tQzwkBqQ65Di8QVkFu7VtzDz5Hni2t5rRJkEyphgBfVNkPrg44danZ+b5nnY5rbg7XEqyrEEXv/
- CBspprHnpwY2zDqZUafz/tTXzr6gKJvHGCER19WczKCF2iWZgS194L9Wt5Sj4GVCyRBWl2g9e36
- OwEyH1tJmvMfmYYXX1LcSq0YzKqKUqQ0+LzS2W5aAEWWY=
-X-Google-Smtp-Source: AGHT+IEbIjcq8R2vEYjVhpQLgR+Kv4l2G8tjxvo1oaoFacA4JaYFCs0yApsa5UHgbqTIS591W5bMuQ==
-X-Received: by 2002:a05:6000:22c6:b0:427:15:ff3b with SMTP id
- ffacd0b85a97d-42704d145d4mr13262303f8f.13.1761120249986; 
- Wed, 22 Oct 2025 01:04:09 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00b988dsm24406219f8f.35.2025.10.22.01.04.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 01:04:09 -0700 (PDT)
-Message-ID: <88445f7d-dc78-4b66-8129-d8abe1e19a8c@linaro.org>
-Date: Wed, 22 Oct 2025 10:04:08 +0200
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vBTu7-0000Ki-Rg
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:09:07 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vBTu6-0001yQ-0o
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:09:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gmYeZGlogH2CERWxjq9CA+Dr+OAlY147vPF8UFCVv72UJkSOC8HtijCWnIUdfYf1adY5LFyXkmfi6H06a/dDvKnvrMaZBxomhq5SoOCPV07m3xH7GuGJ7/I4chcuMeOxNsnEc22sUEvvKrFkVLxEfqnJrHmqdZ1QNwxcnlHGm+LKEtw5OaBhTgYb+wI79g8SE2KSKv09LKZIHCVkkpAVjRER+I8r7BYwdYqLufC32wNXvcyPZBdRRZMpS0I3Pln/+tGte+xn1veJZBb0DzC40YYqVCeYGemy1dazMUZW0YyA3DkZADF79KxNXCx4iSZ+jjrQb0vOU3cFlkxISYu57g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tJBhvcFKY897vnt0+XsT6f6xdYujCNcODJ/XuFtGe4s=;
+ b=bKZDNKqWIlmua14CSx6kqqfyPZarVqRn7b1uA5e5gNR2habs4MiPcjIpkqht5DcgrToOq+3ceZtMuk1za2Zl+1EmlFrYVCEpRqUXJfzchhmQdt6NxbYlWY4bEBuMKLRm6/BWGk8lWIOcw8N+p6LzLamIgOhv9i3WeiLwCJ/nAv44CqcF7AtrwduJUO63axIk5zq3t24ItdMwgpOqIMty1a75bS9ovvb0fw54IbJ2B9wVpUn5qi/sNl6xtGclfQMtBQICO1Fl0GM1gScy8Ovn83tMCy9nZo8aGURS5ztBN7IEuh1BlPojj7AxSChGaO98upWpUHhzdUUveaDh0TZN8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tJBhvcFKY897vnt0+XsT6f6xdYujCNcODJ/XuFtGe4s=;
+ b=KIqZ27a2G8B2MmrP7DoApDGKqMYQ1H270SQb7ZwkMI9lSqSxJTNqhMQ5fWnLdsOmm+VQeC3ALQaPwlPbqwiBQkPFMaIGUxrFdiccjWaKQ9ck7xfZU9HwOKFlzBpkANYyaEkKJQliAuOVI4Xzbao6EFscK2rfyZPbBDuHnTjIl/VHWAEtagmcfH3z2/p+oHcHRlW60FJpUhu3MKZZQWOggQB2Bq4WOrcAl2JTjlj4UjDyubIxv181J/Ny6eTGmyLIIDn8T3nDmeAY9rkzGeu7WoDOftTuuK90TtBxWVCe33SkE6du9Qe9zE6Y+vfBAbr7UHliaEbXJCMqe+cwa/It6Q==
+Received: from BLAPR05CA0004.namprd05.prod.outlook.com (2603:10b6:208:36e::8)
+ by CY8PR12MB7340.namprd12.prod.outlook.com (2603:10b6:930:50::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.12; Wed, 22 Oct
+ 2025 08:08:55 +0000
+Received: from MN1PEPF0000F0E1.namprd04.prod.outlook.com
+ (2603:10b6:208:36e:cafe::e1) by BLAPR05CA0004.outlook.office365.com
+ (2603:10b6:208:36e::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.12 via Frontend Transport; Wed,
+ 22 Oct 2025 08:08:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ MN1PEPF0000F0E1.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9253.7 via Frontend Transport; Wed, 22 Oct 2025 08:08:54 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.34; Wed, 22 Oct
+ 2025 01:08:36 -0700
+Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 22 Oct
+ 2025 01:08:33 -0700
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <imammedo@redhat.com>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: [PATCH 1/3] tests/qtest/bios-tables-test: Prepare for _DSM change in
+ the DSDT table
+Date: Wed, 22 Oct 2025 09:06:37 +0100
+Message-ID: <20251022080639.243965-2-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251022080639.243965-1-skolothumtho@nvidia.com>
+References: <20251022080639.243965-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/42] hw/audio: use better naming for -audio model
- handling code
-Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
- <20251022065640.1172785-12-marcandre.lureau@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251022065640.1172785-12-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.126.231.35]
+X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E1:EE_|CY8PR12MB7340:EE_
+X-MS-Office365-Filtering-Correlation-Id: a250b9ac-565d-4fd9-f004-08de11423e64
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NFl6S3dudnJjWEQ5ckM5OTZSSWwyMXlET2ZzVnBWQktTcEtmYUJ1M2RoeVkz?=
+ =?utf-8?B?OStHVHRYY01NWjBNRWRSeDlQY0JlOTVxbXlIbDJiTHkvZG1aUGljSjRlZVY2?=
+ =?utf-8?B?ZEh2bTB3anFmK0M5Q2VhT2tDcTR6K0pNSXI2S0Y1akdqRExDaEVsV3J2Zm1i?=
+ =?utf-8?B?Y1hQcW1XMThyekZkcVpnSnFsM3A3UlBEVENnem1UZ2hCdDVkYWZDNDJFbW03?=
+ =?utf-8?B?cERuMnUwK0VyZjJvVkFCZzZyRS9wRk9FSnIzU0R2aVhzTUt6YlVyWmNUUzRa?=
+ =?utf-8?B?Wng1OEdIb2kxQ1dKbG1nZHRYcXQ2RUl4ci9DSlFJa3F1SGFiK3pibG9pVUtQ?=
+ =?utf-8?B?RHVSeHVsMWlDeitUbUMzOUczQzMvS3hJZ1hYN1F4dHNlT25LSEdFaFhmVnB3?=
+ =?utf-8?B?cE5RWjRjVVA1OGF4cXVieUdSUzRST2hFUC9OODRybkhuN2t6YU1VZC9UZFR6?=
+ =?utf-8?B?WWV0NURtcHVrSW9KSHdXZVNyNWh4YzZac2lBWkJPSFJVbFYxRy9uV0dsYkIz?=
+ =?utf-8?B?UEJ0bnNXdHQvcXBqb2wyODU2SDhRelQzMW44M3lrOXZ4eDZZQThiYjJOZzJM?=
+ =?utf-8?B?U3ZTNnVOaVFsNGxNZ1NqV1NEd2ZMQko5N0wzbERKR2hEc3dBRjdBV1ZWTEU4?=
+ =?utf-8?B?NndXd01pcDdzcGFYRnRBM2JVRjhWZncwbXRieGlCTEdEWmZXUklWRFIvR2Zi?=
+ =?utf-8?B?aDlwTGdkbVZheEpPYVBpN00zaXpkOXkzUmdHS1IwdG5sdlM5UHduRnVzQUtC?=
+ =?utf-8?B?YmtNZ0hydWxpd01sS0p6NnVMTWV2NC9SN09tWVlzOHliak1JeUVsamFQNjgw?=
+ =?utf-8?B?Qnd1YW90eEdlNllsWEduNW45b3VYaUtLME04V3FvY0lITUdkSjIvOWl4bjlm?=
+ =?utf-8?B?UFVYRzRQS0VFT08yRm4yUDRoRDBWVDFCVWJ3ek5MVXQwMFFzb0lQY1UxNWd3?=
+ =?utf-8?B?NllOZXJaRG9zOG13TUpBSThndlpjcitGUVBPZkl6VUlRcnNiZC9nbDZ4QTZ0?=
+ =?utf-8?B?TERDWjJ1NU1qZE5DYlkyYmFUWkdTNzNjYlU2Um9qUU44NTVEeGtZclhMMjho?=
+ =?utf-8?B?ZzlLeUZncituNTd0dHRnSExRYzNVUk5hSlVvdkhLN1JHQ05rS1hPU2VWYS9h?=
+ =?utf-8?B?STdCQjNTRGxvL2JJWkRXSEF3d3pzYzVJOXViSlRzcnhieVhOeWZuVmxHRkpa?=
+ =?utf-8?B?Y3g5aVhmcFlDelhTUWtCV2Q2RkhZSHU5OE9SKy91RVl0NUM4RDZXdm1aTVZX?=
+ =?utf-8?B?c1FkRXhkWVpvT2NObm5LRk5IRTFZbWVac0VHbzRGeGJucVZpSGNjM1VOamht?=
+ =?utf-8?B?TGJiN2JvZ011NlBlRC94TlF0WkFBSlhycU0xYi85TUZFSUFjcjk4UDExOC9V?=
+ =?utf-8?B?WFFBMXYyUURERWJIRHlWN0R1RnJNQzNuQk8rYnJGb0Nydi9VOFo3TWhzRFd6?=
+ =?utf-8?B?WGhWQkI5Q0JaUjIvYXNrSlZEZjk5VVlYOS81UHVRYzFYTmNFTmhHVDFxTWI2?=
+ =?utf-8?B?c0FINzMxTC9OUHkrSGFHa2k4eHg3T29EOGMzRllVUUEwSTFPTCtHaFZlUWlM?=
+ =?utf-8?B?NC81c0ppbzZVR3g2ZHVRREJCdVdHMWNHNWpwM0tIWjJvaE5ib2F5YldNUDY0?=
+ =?utf-8?B?MUlYUUpYRDJsUlgxS3dKVlNDQWdrUDd5dkRpTG14RmFVY01iYlVpSWtWZnFw?=
+ =?utf-8?B?YTZmUDdoamRaWEJMZFQwS0JZb2RFeGNtdDRSNHhBcFNVM3RtZzFlNFMzWVZI?=
+ =?utf-8?B?OVc2UzJrZGMrV2JOOW42UW9sTjB5M0RSd0RnWG9UTGhoVkhLTnpjVm50SFly?=
+ =?utf-8?B?ZnVpemZUcDE5UFlHWWtERGNSZVpTT3hzWHVuM1lrL2UxaUJhR3gxMFJpR3Jm?=
+ =?utf-8?B?UUJvdHdYeXhYell3eUdaZVUrTlN2RG5nVDJESC84cVBCQ1RncmpvVHdUL2dU?=
+ =?utf-8?B?TDlXNEwwa0xXZDFCTk8rWjBEdE1ZNThPVERoOEppNUJ6cWdZVFJkaGQxbXR2?=
+ =?utf-8?B?eENHcUtwRjVEQnJjdjhqellTWnB6cDYwWkdqaFJYR1VTWFhidi9NTVF0aHlL?=
+ =?utf-8?B?YTVqQmF5dmdPSGhZaXZ3VUdBREhvWUtzdkxGVFlNc1N5SUYxa0V4Q2NzcnJW?=
+ =?utf-8?Q?xAt4=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2025 08:08:54.3670 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a250b9ac-565d-4fd9-f004-08de11423e64
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E1.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7340
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,84 +167,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/10/25 08:56, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> All the functions are about "-audio model=" handling, a simpler
-> way to setup audio. Rename functions/variables to reflect this better.
-> 
-> audio_register_model_with_cb() dropped "pci" from the name, since it
-> will be generalized next.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   include/hw/audio/model.h                      | 13 +++++
->   include/hw/audio/soundhw.h                    | 13 -----
->   hw/audio/ac97.c                               |  5 +-
->   hw/audio/adlib.c                              |  4 +-
->   hw/audio/cs4231a.c                            |  4 +-
->   hw/audio/es1370.c                             |  5 +-
->   hw/audio/gus.c                                |  4 +-
->   hw/audio/intel-hda.c                          |  4 +-
->   hw/audio/{soundhw.c => model.c}               | 58 +++++++++----------
->   hw/audio/pcspk.c                              |  2 +-
->   hw/audio/sb16.c                               |  5 +-
->   hw/audio/virtio-snd-pci.c                     |  4 +-
->   system/vl.c                                   |  6 +-
->   hw/audio/meson.build                          |  2 +-
->   .../codeconverter/test_regexps.py             |  2 +-
->   15 files changed, 64 insertions(+), 67 deletions(-)
->   create mode 100644 include/hw/audio/model.h
->   delete mode 100644 include/hw/audio/soundhw.h
->   rename hw/audio/{soundhw.c => model.c} (68%)
-> 
-> diff --git a/include/hw/audio/model.h b/include/hw/audio/model.h
-> new file mode 100644
-> index 0000000000..27ae7dcc31
-> --- /dev/null
-> +++ b/include/hw/audio/model.h
-> @@ -0,0 +1,13 @@
-> +#ifndef HW_AUDIO_MODEL_H
-> +#define HW_AUDIO_MODEL_H
+Subsequent patch will fix the GPEX _DSM method. Add the affected DSDT blobs
+to allowed-diff list for bios-table tests.
 
-Pre-existing, but add missing license tag?
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-> +
-> +void audio_register_model_with_cb(const char *name, const char *descr,
-> +                                  int (*init_pci)(PCIBus *bus, const char *audiodev));
-> +void audio_register_model(const char *name, const char *descr,
-> +                          int isa, const char *typename);
-> +
-> +void audio_model_init(void);
-> +void audio_print_available_models(void);
-> +void audio_set_model(const char *name, const char *audiodev);
-> +
-> +#endif
-> diff --git a/include/hw/audio/soundhw.h b/include/hw/audio/soundhw.h
-> deleted file mode 100644
-> index 83b3011083..0000000000
-> --- a/include/hw/audio/soundhw.h
-> +++ /dev/null
-> @@ -1,13 +0,0 @@
-> -#ifndef HW_SOUNDHW_H
-> -#define HW_SOUNDHW_H
-> -
-> -void pci_register_soundhw(const char *name, const char *descr,
-> -                          int (*init_pci)(PCIBus *bus, const char *audiodev));
-> -void deprecated_register_soundhw(const char *name, const char *descr,
-> -                                 int isa, const char *typename);
-
-Please mention in patch description why this interface is not
-anymore deprecated.
-
-Otherwise,
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> -
-> -void soundhw_init(void);
-> -void audio_print_available_models(void);
-> -void select_soundhw(const char *name, const char *audiodev);
-> -
-> -#endif
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..e2fce2e972 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,17 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/DSDT",
++"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
++"tests/data/acpi/aarch64/virt/DSDT.memhp",
++"tests/data/acpi/aarch64/virt/DSDT.pxb",
++"tests/data/acpi/aarch64/virt/DSDT.topology",
++"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
++"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
++"tests/data/acpi/aarch64/virt/DSDT.viot",
++"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
++"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
++"tests/data/acpi/riscv64/virt/DSDT",
++"tests/data/acpi/loongarch64/virt/DSDT",
++"tests/data/acpi/loongarch64/virt/DSDT.topology",
++"tests/data/acpi/loongarch64/virt/DSDT.numamem",
++"tests/data/acpi/loongarch64/virt/DSDT.memhp",
++"tests/data/acpi/x86/microvm/DSDT.pcie",
+-- 
+2.43.0
 
 
