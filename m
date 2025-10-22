@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05387CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D69A3CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXz1-0001GJ-6C; Wed, 22 Oct 2025 08:30:27 -0400
+	id 1vBY8I-0002mq-3q; Wed, 22 Oct 2025 08:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXyr-00018S-9h
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:30:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXyp-0008Mx-6B
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:30:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761136214;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KA8xEAyx6y77z8VjzGcdEiGx9scJIiR54DJNfg8a8AQ=;
- b=Yf4fgStK9Q8K520PcsJo/CHj08Yq7CcwPrpRIofJ65fDxdju97Vds82g79AbD691urdLBG
- 41E6q3BTiF4C1r/9Af2ODoLVsGtJqtQ1QObjMrQmg/8FEHAZQ2DEaSnfI9pDk66l5MhYxG
- qYcRUWlzGtg8xXmm1mj52EOz998iK9A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-KMRJ_7PGPAChnfK2pRcIQw-1; Wed,
- 22 Oct 2025 08:30:11 -0400
-X-MC-Unique: KMRJ_7PGPAChnfK2pRcIQw-1
-X-Mimecast-MFC-AGG-ID: KMRJ_7PGPAChnfK2pRcIQw_1761136209
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 314D018007EB; Wed, 22 Oct 2025 12:30:09 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8CE03180057E; Wed, 22 Oct 2025 12:30:07 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 03/16] hw/arm/ast27x0: Add SRAM link and alias mapping for SSP
- coprocessor
-Date: Wed, 22 Oct 2025 14:29:40 +0200
-Message-ID: <20251022122953.877335-4-clg@redhat.com>
-In-Reply-To: <20251022122953.877335-1-clg@redhat.com>
-References: <20251022122953.877335-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vBY8C-0002lP-EL
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:39:58 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vBY89-0000nJ-Az
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:39:55 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-b67ae7e76abso4944550a12.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 05:39:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1761136791; x=1761741591; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IhEfUnJbedqXtXc59HXLL8G3nrFMZ+OiEtJN/yYY9LY=;
+ b=ks258BY4rjYYBVz2oD9j+VusQlf/cCMMfEiSNnN6r/GruogL0+oeikh9eNrBndDBWl
+ eMQBDe1HgKOzXnOqFNBgAfFRlXTdWIp92L8yuMsTakYytfOjYitZgkDFIVU9JFI9shR2
+ lmZgWvEh2Eguvb1IMQQ+ze75+kASeS+VR9GVQTttbU83vjyhF3gGOK3gBs+7eB+GD6Wf
+ xJJSTzYtNr5l8PwquZEtXtdYzcY7zJP2pqDnvQMQRo4GiQIWBi3uMggi8rUhz2s7GicO
+ Ez4D82JBFQfXsY5nOKjR4bDk0Dzmujt8/yaQ4UZsBAimgFO/bE7/hlXfii0A6Af8QHzz
+ 7PgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761136791; x=1761741591;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IhEfUnJbedqXtXc59HXLL8G3nrFMZ+OiEtJN/yYY9LY=;
+ b=bKDPhigIE33zqdP/VPJhhIGjEg1iwzG6o0QdvSKO6AJQp79b6TqX3UA5GQZFEUGnBP
+ 95A/VB2uM44+WIXav7qYRme/3E1oPMkHcVST6BHLSxcZXvQ0srNSyj48+T25UijEcarM
+ f3OjrescO/kUNqwUBNt3YbMCSalWDoKkux3oxLQFLOElJeFxk++dqRNf1zMXtaNvBvAY
+ +DyT8fXALYiQNUKD3enjAcAe7/hvWNAnjW9JskDYPBsS6ew1WRlX9Cs73JaHFNkgFz0o
+ T/YfzcVnLpFEhzqcz+E1cwbPUumX2Lj3Ku1jXDoSb+4VUgHzbxloHxBQGESds3/VaTzW
+ VpUw==
+X-Gm-Message-State: AOJu0YxcSIaxj/SHU2J0KENIV6SWKYBcCBiIPR2P3YLnGH19O1H175Ab
+ 7OFpvun9awGtqIYPbStMXzzrIAw003Ubo03LJPdSZ5+dp8R9qnCEbhPbV1TikBHUDUk=
+X-Gm-Gg: ASbGncsJar1loLbxzepzAuBBSpmO06StYh3uDrUVrrGtrJGjmwg6vMTELDcCcugCJjd
+ 8/P+qhMbHJIUHMSNG7vl972BaMCFCMnBAB3NNgYaW4qPYl6nfVNp1vO2YURzAZPmhT7u7E4KnRX
+ 1DKWu/YlRpSBYr5IkdlANJxPNtDY5NjJERBz3vwRzWDynViZFP6jZH0jVR3nAnBXw0BmQP8hHpH
+ 7d/AhYMvm21mJ8Dfs8ZRIbWVnxLnltd6wtNbdcXuzN/iT3lwLdf+89RssHyhHAgHXG4QGediuk+
+ hOggor8rQhqb47TP72jEerulLqH+IgvuBCaM6OA5L4SRGIcAc3ZKFEGoMH5of2Pinu7Z7K9YKYt
+ Sah00W1/Pt9AwoQ4+r4GkeYw71zbSkK/0eaj3Qp4XJQtYd6flYA+q/ztuy6aZVAx/BhO04XFR31
+ OHVkmQcDYPA/sU2Msr7qoFFfw=
+X-Google-Smtp-Source: AGHT+IFsF+4slgHzT8HLO/0Q5Nu4gywgmp1Sk0enKQujao8NE4xkfQBM0JO0ByDDwlzM1KnfU45/pA==
+X-Received: by 2002:a17:903:11ce:b0:269:9adf:839 with SMTP id
+ d9443c01a7336-290c9ca7e27mr271296505ad.19.1761136791362; 
+ Wed, 22 Oct 2025 05:39:51 -0700 (PDT)
+Received: from [192.168.68.110] ([189.38.141.22])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29247219457sm137503265ad.113.2025.10.22.05.39.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 05:39:50 -0700 (PDT)
+Message-ID: <06684337-601b-47d3-925f-b5a693aef244@ventanamicro.com>
+Date: Wed, 22 Oct 2025 09:39:45 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/riscv-qmp-cmds.c: coverity-related fixes
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ qemu-stable@nongnu.org
+References: <20251022110524.483588-1-dbarboza@ventanamicro.com>
+ <CAFEAcA-gF4himAj7k03cES2-USbE-xs7f5LZEPQaCqHhDieiEA@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-gF4himAj7k03cES2-USbE-xs7f5LZEPQaCqHhDieiEA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,115 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-AST2700 has a 128KB SRAM, physically mapped at 0x10000000–0x1001FFFF for
-the PSP (CA35) processor. The SSP coprocessor shares this same SRAM but
-accesses it through a different address window at 0x70000000–0x7001FFFF.
 
-To model this shared-memory behavior in QEMU, this commit introduces a
-linked SRAM property and alias mapping between the PSP and SSP subsystems.
+On 10/22/25 8:59 AM, Peter Maydell wrote:
+> On Wed, 22 Oct 2025 at 12:05, Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+>>
+>> Coverity CID 1641401 reports that, in reg_is_ulong_integer(), we're
+>> dereferencing a NULL pointer in "reg1" when using it in strcasecmp()
+>> call. A similar case is reported with CID 1641393.
+>>
+>> In theory that will never happen - it's guaranteed that both "reg1" and
+>> "reg2" is non-NULL because we're retrieving them in compile-time from
+>> static arrays. Coverity doesn't know that though.
+>>
+>> To make Coverity happier and add a bit more clarity in the code,
+>> g_assert() each token to make it clear that those 2 values aren't
+>> supposed to be NULL ever. Do that in both reg_is_ulong_integer() and
+>> reg_is_u64_fpu().
+>>
+>> We're also taking the opportunity to implement suggestions made by Peter
+>> in [1] in both functions:
+>>
+>> - use g_strsplit() instead of strtok();
+>> - use g_ascii_strcasecmp() instead of strcasecmp().
+>>
+>> [1] https://lore.kernel.org/qemu-devel/CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com/
+>>
+>> Coverity: CID 1641393, 1641401
+>> Fixes: e06d209aa6 ("target/riscv: implement MonitorDef HMP API")
+>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/riscv-qmp-cmds.c | 22 ++++++++++++----------
+>>   1 file changed, 12 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+>> index c499f9b9a7..7bde7090ab 100644
+>> --- a/target/riscv/riscv-qmp-cmds.c
+>> +++ b/target/riscv/riscv-qmp-cmds.c
+>> @@ -273,12 +273,13 @@ static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
+>>       }
+>>
+>>       for (int i = 0; i < 32; i++) {
+>> -        g_autofree char *reg_name = g_strdup(reg_names[i]);
+>> -        char *reg1 = strtok(reg_name, "/");
+>> -        char *reg2 = strtok(NULL, "/");
+>> +        g_autofree char **reg_name = g_strsplit(reg_names[i], "/", 2);
+> 
+> g_autofree frees with g_free(), which isn't the right thing for
+> freeing an array of pointers. To do autofree here we need
+> 
+>   g_auto(GStrv) reg_name = g_strsplit(...);
+> 
+> (GStrv is the glib type for gchar**; the headers give it an
+> auto-free mechanism that calls g_strfreev().)
 
-Changes include:
-- Add a "MemoryRegion *sram" link and "MemoryRegion sram_alias" to
-  AspeedCoprocessorState.
-- Register the new "sram" property in aspeed_coprocessor_common.c.
-- In aspeed_ast27x0-fc.c, connect the SSP coprocessor’s "sram" link to
-  the PSP’s SRAM region.
-- In aspeed_ast27x0-ssp.c, create an alias mapping for SRAM at
-  0x70000000 – 0x7001FFFF in the SSP’s memory map.
+I saw some instances of "g_autofree char **" and figured that it was ok to use
+g_autofree in this case too (just git grepping, didn't dive deeper to figure
+out context and so on).
 
-This ensures that the SSP can correctly access the shared SRAM contents
-through its own address space while maintaining a consistent physical
-backing region. It also guarantees that the SRAM is realized before the
-SSP device, ensuring successful alias setup.
+I'll send a v2 with g_auto(GSrv). Thanks,
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251015062210.3128710-4-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/arm/aspeed_coprocessor.h | 3 ++-
- hw/arm/aspeed_ast27x0-fc.c          | 4 ++++
- hw/arm/aspeed_ast27x0-ssp.c         | 7 +++++++
- hw/arm/aspeed_coprocessor_common.c  | 2 ++
- 4 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-index 0c7168a89c15..d9a5f517d7c7 100644
---- a/include/hw/arm/aspeed_coprocessor.h
-+++ b/include/hw/arm/aspeed_coprocessor.h
-@@ -17,7 +17,8 @@ struct AspeedCoprocessorState {
- 
-     MemoryRegion *memory;
-     MemoryRegion sdram;
--    MemoryRegion sram;
-+    MemoryRegion *sram;
-+    MemoryRegion sram_alias;
-     Clock *sysclk;
- 
-     AspeedSCUState scu;
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index a61ecff3909b..25e668a648fa 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -118,6 +118,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
-     AspeedCoprocessorState *soc;
-     AspeedCoprocessorClass *sc;
-     Ast2700FCState *s = AST2700A1FC(machine);
-+    AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
-+
-     s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-     clock_set_hz(s->ssp_sysclk, 200000000ULL);
- 
-@@ -134,6 +136,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
-     sc = ASPEED_COPROCESSOR_GET_CLASS(soc);
-     aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART4, sc->uarts_base,
-                             sc->uarts_num, serial_hd(1));
-+    object_property_set_link(OBJECT(&s->ssp), "sram",
-+                             OBJECT(&psp->sram), &error_abort);
-     if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {
-         return false;
-     }
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index 9f3a1933a066..66c4ef6d1b74 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -20,6 +20,7 @@
- 
- static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
-     [ASPEED_DEV_SDRAM]     =  0x00000000,
-+    [ASPEED_DEV_SRAM]      =  0x70000000,
-     [ASPEED_DEV_INTC]      =  0x72100000,
-     [ASPEED_DEV_SCU]       =  0x72C02000,
-     [ASPEED_DEV_SCUIO]     =  0x74C02000,
-@@ -195,6 +196,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-                                 sc->memmap[ASPEED_DEV_SDRAM],
-                                 &s->sdram);
- 
-+    /* SRAM */
-+    memory_region_init_alias(&s->sram_alias, OBJECT(s), "sram.alias",
-+                             s->sram, 0, memory_region_size(s->sram));
-+    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM],
-+                                &s->sram_alias);
-+
-     /* SCU */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-diff --git a/hw/arm/aspeed_coprocessor_common.c b/hw/arm/aspeed_coprocessor_common.c
-index 8a94b44f07f2..8322ad5eb544 100644
---- a/hw/arm/aspeed_coprocessor_common.c
-+++ b/hw/arm/aspeed_coprocessor_common.c
-@@ -25,6 +25,8 @@ static void aspeed_coprocessor_realize(DeviceState *dev, Error **errp)
- static const Property aspeed_coprocessor_properties[] = {
-     DEFINE_PROP_LINK("memory", AspeedCoprocessorState, memory,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
-+    DEFINE_PROP_LINK("sram", AspeedCoprocessorState, sram, TYPE_MEMORY_REGION,
-+                     MemoryRegion *),
- };
- 
- static void aspeed_coprocessor_class_init(ObjectClass *oc, const void *data)
--- 
-2.51.0
+Daniel
+
+
+
+
+  
+
+> 
+> thanks
+> -- PMM
 
 
