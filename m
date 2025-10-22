@@ -4,119 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22583CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 09:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 235ADCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 10:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBVbK-0006gQ-Ks; Wed, 22 Oct 2025 05:57:50 -0400
+	id 1vBVlZ-0007x8-0U; Wed, 22 Oct 2025 06:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1vBVbI-0006fo-OO; Wed, 22 Oct 2025 05:57:48 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vBVlW-0007wS-L9
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 06:08:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1vBVbF-0007C2-PN; Wed, 22 Oct 2025 05:57:48 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M8W4ei011630;
- Wed, 22 Oct 2025 09:57:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sglHjd
- 0MbegJDGZMVSZwxgjI0sstG9jvH8zxs7DqlQA=; b=HyudFv3aKJcvI6ki8ThzWA
- eQCULpqd4oC7b4/XHEV7A4bM00ExoggqcCBPxlMxPlF4gLcOuXI2aRY8hNKAU/dl
- f0ed1vDWJxKUpaTII0CT2Q1RipPch10ojdtEB5aNsWHs5iCLWkvFGXt/jcUuCo/K
- CuUWBr9/J2YV/fY1veH84wcHl2fbQhML+PfJXDIehrlVK47mPFm3ujQgZi/CYymH
- 76P2kwnz8X2Saz2pJQiMxfPn4nCx8AFc+YYxYgCL1zMbxOssGv+EUwq9IXip69Oh
- Iafx2X6LhI4eVozL7ZSSjfEPkrCOIZ/IQtZJP3wDst5+aj3877B/6HqJIqP4pz9A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31camjd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 09:57:38 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59M9Vr7X028750;
- Wed, 22 Oct 2025 09:57:38 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31camj9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 09:57:38 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59M8M4et011066;
- Wed, 22 Oct 2025 09:57:37 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx17awu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 09:57:37 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59M9vXhd56033566
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 Oct 2025 09:57:33 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A0BA2200DE;
- Wed, 22 Oct 2025 09:57:33 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 722C4200DC;
- Wed, 22 Oct 2025 09:57:31 +0000 (GMT)
-Received: from [9.39.25.31] (unknown [9.39.25.31])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 22 Oct 2025 09:57:31 +0000 (GMT)
-Message-ID: <5696ab54-e3d7-447e-9b06-52df38bf3b73@linux.ibm.com>
-Date: Wed, 22 Oct 2025 15:27:30 +0530
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vBVlR-0008CR-T8
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 06:08:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761127693;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rrJD2aykImgZuv8mCfWO7a1gXkuVk8mizg4XSEnTEio=;
+ b=W6en7aIKh9hpJCT6fzI3q+tRzdpg2wAp0VerfjAragQHGp1NM5c+cRlWjxZ1EerdhNDT+L
+ wtDeel1oKkxOcPfvV6CnhfGe16zqmLOzERWhn3Du7xw2X8gSAMm8ty2IUIL8+utZs+oOjK
+ gSptRZab2IJiM7PBIooaUXZ/zTZaNt8=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-77-EfZYrj4bNgmJeLXaqWvA7w-1; Wed, 22 Oct 2025 06:08:12 -0400
+X-MC-Unique: EfZYrj4bNgmJeLXaqWvA7w-1
+X-Mimecast-MFC-AGG-ID: EfZYrj4bNgmJeLXaqWvA7w_1761127691
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-32eb864fe90so2143360a91.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 03:08:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761127691; x=1761732491;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rrJD2aykImgZuv8mCfWO7a1gXkuVk8mizg4XSEnTEio=;
+ b=T/0AuABNp9Br4nufUnSK6D3XZz37FnrsfctPxgf0rKtrmFTeqdTRJNLOEK4F73mywC
+ +O478hTnCsexOdhZyKc7EX2zuqkHZziVhKZJf28NbXmUxSx8BthvAxvbxB5iKIpp+nZa
+ eFMQNUm6p5ZFBUezUX9SZXyGoigFTtw9X87/0oTlnJ88zsFuZg64L1XT1eZPtJANqUAr
+ ZsYHuhp1iGi218sIy2DU8f04u6JBPrSSk5sogRCEBNLo3ZXUj7TXNRcC/cyvZ8gH4zKV
+ gyImwlU4qbDDeI6OZBuKXIqt3vCVl2Mhqr9hGGwvRg/egCXGMMNCv1lEtGoBmYgytN8a
+ 9eIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVxeQ+o75QPyuTq/HYI5+jJe9dhm2MBunBpT2Xp61/Hdv+T+Io2GlKmq7GTzn+/+Eca3/U0IW78+Wp@nongnu.org
+X-Gm-Message-State: AOJu0YzXG8eCckIhXKtMxqiiDaGobmN+hRllMAioO3mS75Z8dVkO0lyU
+ 9XIguFiYpeVuVu2INmLK2hLRP3exw0M613gmAiBBVTChFj7qdc02sdMaW8EsRAxiwsVUd6CW9gt
+ iWu0BARCCdQs9bTRAt68cow2UptTAu4M+ADElvPw5g+Wu4iDEehQiX14N
+X-Gm-Gg: ASbGnctZ483gc6H2N33fMEu+PXUJ5MHE9k5R9F7JFETP3M2kgHq7+WlpBEvZHjaDnKC
+ FJB08xDbxll/Bgc/dVm1rLmM34hqOAYbkk4QbnQSd3jocEqtFO7D9/4K5WOVb7xNtALEb83LJsz
+ Opu69GeKqy0DYRzBposFlWuepSlQDH4PVgn/fFASucgCjGW8+Ly/tdckn+Nb8YHYts5cu//QkAc
+ iiTPLUDDpl/GRGbnXaBRnEl/jQklpfJQvGF00AdAFm7RM0FA/9KtkcyRxnJrtloPWhwz3Z8enrF
+ dqvyxcoLUKGt8VMMvtwaA2rMK3yLlYu/+sgb5ws7t5MK/smnwfcO3Hfpx5zi0xdnSTJNCPuWR7l
+ MfaOJa5rAT9+xa+hZRNF64Nte2oUeYD9ru1odPiA=
+X-Received: by 2002:a17:90a:ec8b:b0:330:6d5e:f174 with SMTP id
+ 98e67ed59e1d1-33bcf8ec602mr26802517a91.20.1761127691355; 
+ Wed, 22 Oct 2025 03:08:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2pDrHwUoML4XgEoRBI9H3xxrPRmHdkaibIZ3hcNEZi3EBMLwtVA075Dl5IkCHLEFjpqlyMQ==
+X-Received: by 2002:a17:90a:ec8b:b0:330:6d5e:f174 with SMTP id
+ 98e67ed59e1d1-33bcf8ec602mr26802465a91.20.1761127690919; 
+ Wed, 22 Oct 2025 03:08:10 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33e208f9e29sm1299103a91.1.2025.10.22.03.07.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 03:08:10 -0700 (PDT)
+Message-ID: <b1c0a0a8-3b94-47ee-ab8b-e42099f3f1a8@redhat.com>
+Date: Wed, 22 Oct 2025 20:07:54 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v5 6/6] hw/ppc: Pass errp to load_image_targphys() and
- report errors
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
- hpoussin@reactos.org
-References: <20251021105442.1474602-2-vishalc@linux.ibm.com>
- <20251021105442.1474602-11-vishalc@linux.ibm.com>
- <86222acd-6ccd-b833-84da-8851f5cb29f2@eik.bme.hu>
-Content-Language: en-US, en-IN
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-In-Reply-To: <86222acd-6ccd-b833-84da-8851f5cb29f2@eik.bme.hu>
+Subject: Re: [PATCH RFC V6 00/24] Support of Virtual CPU Hotplug-like Feature
+ for ARMv8+ Arch
+To: salil.mehta@opnsrc.net, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com
+Cc: salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, imammedo@redhat.com,
+ armbru@redhat.com, andrew.jones@linux.dev, david@redhat.com,
+ philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
+ oliver.upton@linux.dev, pbonzini@redhat.com, rafael@kernel.org,
+ borntraeger@linux.ibm.com, alex.bennee@linaro.org,
+ gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com
+References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QRU40eVR8zwy_Sy-GkdAF3MAlnVw69Pu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX+4HrkhtObt9R
- ss7CIb7h2dd0Ay8+N7pf9YjEMOSHokJ76YXX2NAjAAmgW6sN3j0i+v3OEcWvyhGE15DSn62RMYE
- cJDyBTCM2Eon4VgqwS4P1j6gTMQcGy63Fpa1wVzcaOWCkNErevBSVos4tics1jOeaDLkud+U+Gs
- vp2SZ3DE4xhPcai0Mh/NEx251Cqu/x0SMsPU7Bh7XbyJ+Aa0jpYS9bdF54PfzRIeOB0fsOAOheV
- Y6Xq7zm8BDSS2txehvHLr64ThE8B4XtE3eERk6ySQmUaCPMckz9j6uB2+odOmxiwH6CxIoXZjrQ
- S3LjUGltLr5qbJcOt1xWPg55Q1U2UWBtr+HoG2xi+Dnpqwp50ipuRLjZmPVRVxFjzjyfqf+IjFg
- eEcPU+DCWstDFtOWrbf6/nrbF4tLPg==
-X-Proofpoint-GUID: XEC17EAurzlF0czbGT-ww5jwtQbRhXOd
-X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f8aa92 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=hSTLkurHX-YfEhOL52UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_03,2025-10-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vishalc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,88 +126,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Salil,
 
-On 21/10/25 18:09, BALATON Zoltan wrote:
-> On Tue, 21 Oct 2025, Vishal Chourasia wrote:
->> Pass errp to load_image_targphys() calls in ppc machine initialization
->> to capture detailed error information when loading firmware, kernel,
->> and initrd images.
->>
->> Use error_reportf_err() instead of error_report() to print the
->> underlying error details along with context about which image failed
->> to load.
->>
->> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
->> ---
->> hw/ppc/amigaone.c      | 15 ++++++++-------
->> hw/ppc/e500.c          | 17 +++++++++--------
->> hw/ppc/mac_newworld.c  | 25 +++++++++++++++----------
->> hw/ppc/mac_oldworld.c  | 25 +++++++++++++++----------
->> hw/ppc/pegasos2.c      | 17 +++++++++++------
->> hw/ppc/pnv.c           | 31 ++++++++++++++-----------------
->> hw/ppc/ppc440_bamboo.c |  9 +++++----
->> hw/ppc/prep.c          | 25 +++++++++++++++----------
->> hw/ppc/sam460ex.c      |  9 +++++----
->> hw/ppc/spapr.c         | 15 ++++++++-------
->> hw/ppc/virtex_ml507.c  | 17 +++++++++++------
->> 11 files changed, 116 insertions(+), 89 deletions(-)
->>
->> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
->> index 5c5acc9872..bd14bed243 100644
->> --- a/hw/ppc/amigaone.c
->> +++ b/hw/ppc/amigaone.c
->> @@ -276,6 +276,7 @@ static void amigaone_init(MachineState *machine)
->>     DriveInfo *di;
->>     hwaddr loadaddr;
->>     struct boot_info *bi = NULL;
->> +    Error *errp = NULL;
->>
->>     /* init CPU */
->>     cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
->> @@ -324,9 +325,9 @@ static void amigaone_init(MachineState *machine)
->>             error_report("Could not find firmware '%s'", 
->> machine->firmware);
->>             exit(1);
->>         }
->> -        sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, NULL);
->> -        if (sz <= 0 || sz > PROM_SIZE) {
->> -            error_report("Could not load firmware '%s'", filename);
->> +        sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, 
->> &errp);
->> +        if (errp) {
->> +            error_reportf_err(errp, "Could not load firmware '%s': 
->> ", filename);
->>             exit(1);
->
-> If all that's done with an errp is checking for error, printing it and 
-> then exit then isn't that what passing &error_fatal is for? So these 
-> should all just do that instead of open coding it, don't they? This 
-> would lose the general local error messages and those would be 
-> replaced by the more specific ones from the load functions that should 
-> be enough. (I'm always unsure how to correctly use error and errp so 
-> some more expert opinion could be useful but otherwise this series 
-> does not seem to simplify things much.)
+On 10/1/25 11:01 AM, salil.mehta@opnsrc.net wrote:
+> 
+> ===================
+> (VII) Commands Used
+> ===================
+> 
+> A. Qemu launch commands to init the machine (with 6 possible vCPUs):
+> 
+> $ qemu-system-aarch64 --enable-kvm -machine virt,gic-version=3 \
+> -cpu host -smp cpus=4,disabled=2 \
+> -m 300M \
+> -kernel Image \
+> -initrd rootfs.cpio.gz \
+> -append "console=ttyAMA0 root=/dev/ram rdinit=/init maxcpus=2 acpi=force" \
+> -nographic \
+> -bios QEMU_EFI.fd \
+> 
 
-I am planning to add filename information inside the 
-load_image_targphys() so that we won't need additional error reporting 
-regarding the file type in the caller.
-We can use error_fatal where ever we are just exiting after printing the 
-error. However, in some cases, it may proceed for different reasons in 
-which case errp would be more appropriate.
+The parameter 'disabled=2' isn't correct here and it needs to be 'disabledcpus=2'.
+Otherwise, the VM won't be started due to the unrecognized parameter.
 
-> If you don't want to convert all these other machines I'm also OK with 
-> leaving these passing NULL to load_image_targphys for now and keep 
-> current error handling which can then be converted later so 
-> alternatively you can drop this patch if you can't finish it before 
-> the freeze. 
-
-I will try to improve at least for the PPC boards and see if that would 
-work better.
+$ /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64       \
+   --enable-kvm -machine virt,gic-version=3 -cpu host,sve=off    \
+   -smp cpus=4,disabled=2 -m 1024M                               \
+   -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image \
+   -initrd /home/gavin/sandbox/images/rootfs.cpio.xz -nographic
+qemu-system-aarch64: Parameter 'smp.disabled' is unexpected
 
 Thanks,
-Vishal
+Gavin
 
->
-> Regards,
-> BALATON Zoltan
 
