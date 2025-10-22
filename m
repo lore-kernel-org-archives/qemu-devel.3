@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25E8CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 00:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E2ACCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 00:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBMY3-0006E5-02; Tue, 21 Oct 2025 20:17:51 -0400
+	id 1vBMrQ-000854-Tx; Tue, 21 Oct 2025 20:37:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBMY1-0006Dj-Ce
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 20:17:49 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBMXy-0000W5-Om
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 20:17:49 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-3c9975a3d6eso1271735fac.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 17:17:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761092264; x=1761697064; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=63bijM+RyKfULurmcfUd1JATQGt+xLDjTNgaKx3DqBE=;
- b=yTJfbaKvBf8+aUJTuCA90y9l32l5a1b36k3DfKzOQYyvAM0peBcH7dlohnwsQNpXf0
- hYKCpinm5092WhNr1stiMpIr9VfNpx8KVZDnpq2Ijw/VFj1GhrA1P4nUMcCt6rzzedsC
- Z9cTU8EPNuLMp4wl1XP8cgB1QZbaOtzaMmQgxlO/7OHmM8n1V8XeamC7LdFOnFopVGU3
- N1OAizLRC6lMxXKpN5gFNHD8aqzO14jM2IkCoYGPmBan0KINbi4vSinoJYeROhNTowQm
- asNxOje5T8eQ1cKcUSw2HNVMjS98Xl6K4RjQAJVov7dfDarLajcgz3sWq7DP/MD3oYfN
- 12/A==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vBMrO-00084f-79
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 20:37:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vBMrJ-00038N-A6
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 20:37:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761093461;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+KMzEnjn33ZqfWfYmeD/CGQoDFyU3sQRyIYSyadcsUg=;
+ b=XNSZSBoJKcL2GO/YVnCKrOWDnvd6RzKCtbQocH3ZFQNgk0zTv4+isCOShXr40dzxfoKRz0
+ pE8qyRwPQFoDrH4PpldoZxO5E0CFkTwChrOjDjjj0G03fZMpmI0cL8i9UcNkrVMGYwpn18
+ kVV89Dm8kwGytSLq0qOgg4DCA21bQBQ=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-135-O-XrnS_zOwK_b7nkjgjzOA-1; Tue, 21 Oct 2025 20:37:39 -0400
+X-MC-Unique: O-XrnS_zOwK_b7nkjgjzOA-1
+X-Mimecast-MFC-AGG-ID: O-XrnS_zOwK_b7nkjgjzOA_1761093458
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-78378ec9d66so77577457b3.3
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 17:37:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761092264; x=1761697064;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1761093458; x=1761698258;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=63bijM+RyKfULurmcfUd1JATQGt+xLDjTNgaKx3DqBE=;
- b=BtKZ8sSA08EMBvMw5nH3BmKP3DQmB+LwoLTIUU2SY/henCG3Hg/zl6m7y7W/2aTOtY
- YXJWwbCSoorOkcHtMS3HeUTVvhKJp7SZ9PA5RWg5B6ZiHuKhcVoKLRoLv5pCAHglGwF6
- mVY2e8NbGNLkn/Rt+fxDQQkCqSzVw7Wa34liwGiEWTtqrv5gq8CGxWhFf8Jc1qt1sQVg
- PSsP4o0dp0TIXV4A+vBhnaHHNS0o8AI4ZMorn4SJKEOEExPKglWrosrlgGNrr1FFvKFn
- S6xjP0odrxM2c73ZGNlr7usjaNkIjhxZzElioS+SQZYiNAr6vclPVBC8494By3EXzm15
- q4GA==
-X-Gm-Message-State: AOJu0YzLSdXZVt2SKiZAMv+N5mhu/9YHs5t0wj+Ox3wwrLyQtPxwipm9
- wr7T2tP1pKEm0OcFpGStGOpYhBX0Hgs5LLFSbrKmwNLHe3qAufV3KXC8rfpGIS+2Qgjv6G587Xt
- xDrYY
-X-Gm-Gg: ASbGncv1zvybCWyJhz5Sijc2tY3apPa8aNCi3iec7FWFh/MqARXErhvGyXGVkfNXc1I
- TrK68FWa+sSu7hKqU/SWIN8G7ssP4slwR7Qow3U15x5h0ZZVS/igg3XFIoCzqOUrzQsrVLwlCfA
- CFxHWZ0vo7EAc6SN9i1X+Gg2v5jVca3hG8vt7cHjhSHvT+fMU76mq2zn3eIRhCZsd4rCm+KgsRj
- DujhuHzeatH+M0Ca6xuqx5sLQ1f7Okw870lu2j7lHm0Chp/N2vC84c8MPMTK9ZWuYSZwME0+YAA
- H1vkTj5Ky3Qg6qMWJF/w1r2lUGfZpMbaYa+1A4hdBv/ghgYGABJhsW2D6Ft4aYpKgkGYICHavJs
- q3TUXF/Q3EF7PXs8btGDJ8p/EKIB6YZUZnC0zG800nNGFQCba8k5/qvBI9i3fWEEAprbryDXszJ
- nhWV8RCw==
-X-Google-Smtp-Source: AGHT+IEOSSfGX359NjbE4gxKLob53AyrTclNq9c6Z8B3icMh81jq+kgbUZIc5oT8PjntutlelnESEg==
-X-Received: by 2002:a05:6870:1f05:b0:3c9:83d4:db66 with SMTP id
- 586e51a60fabf-3c98d1e2699mr8694000fac.48.1761092264446; 
- Tue, 21 Oct 2025 17:17:44 -0700 (PDT)
-Received: from stoup.. ([50.194.179.134]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3c9aec66f50sm3516152fac.0.2025.10.21.17.17.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Oct 2025 17:17:43 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] accel/tcg: Introduce and use MO_ALIGN_TLB_ONLY
-Date: Tue, 21 Oct 2025 19:17:40 -0500
-Message-ID: <20251022001741.222499-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=+KMzEnjn33ZqfWfYmeD/CGQoDFyU3sQRyIYSyadcsUg=;
+ b=v74pCHSyGL811rcA8I9Xsjj7LkfJ3y4wttTdggky9cDYM6XwKySVBip7QHmUY0Ggnw
+ p5EgrgjcKwPkF0ytSDzWe8C/ZMlsybuiJlVBHefAqEUkF3e5H/7hHWb4YBktKyuzSh3+
+ wf4bZcHiqQhJmd//VHRM7IW+OdXbm/8d1yokgigKx0gl/RSyb8ApAfMoHIOpQizQv6uO
+ 9p655HP7f+jLQpxgWCmfVPNPXzwMv23fq9FNTQJHLoWHOwCIumV/5PVNevgXB0V0HdBJ
+ fAGyalq5qsU+1mT4BYhqlVyE/xObi+j6CPow/3JidpRBzb+AEOl++5xRhlKGC5BoQE8U
+ 8HiQ==
+X-Gm-Message-State: AOJu0Yw4kdOrzp2iADYmQzBafP2xr0x8G6FO9hNE/C4S37VjgDmGj4lK
+ /3F3+Vp8pBf3dcocy4o6p9cVxTgu+eOX/XM0Tw7Z4usbx5xQ5LtWOV4v4BA7gN46uyCXqcr3umE
+ 3E8qj6o3sn661OOBj4jRQE9W29YKEapdhJBwd131EEwv2wzsLSjOeO4E+da1StTn0tGwYvJK7h7
+ 7IKwX2TF7UBfK6LYrOmh3jpi+qZs/W+wI=
+X-Gm-Gg: ASbGncuPL3M3eJZYxd3/huIWgk1dI5SDHJ35BNeb0jzz+XDnOiuGSRorOrpI+A+8+q8
+ BKaKdfyIR0oDvf/ZpY0I5oJ77LzknqLg3aGhbeG191trrl+7RXP2pvIcvT52YXvqZX+bbFD1pTD
+ 7MxARQJt3J2D4AtLQxFO7OAkVJ3GMQEN9fh2/55dSsPXuKHd3RAr+O
+X-Received: by 2002:a05:690e:1553:10b0:63e:14b1:4811 with SMTP id
+ 956f58d0204a3-63e1617644fmr13606691d50.11.1761093458362; 
+ Tue, 21 Oct 2025 17:37:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtVUn4n+Ch5zMK+qH4LOkEtWy+EQOlP2NR/N7t/fxtp/FJFMMNSli13nRcATYxwfIuC4hMYm3D8huugFOzVlU=
+X-Received: by 2002:a05:690e:1553:10b0:63e:14b1:4811 with SMTP id
+ 956f58d0204a3-63e1617644fmr13606673d50.11.1761093457994; Tue, 21 Oct 2025
+ 17:37:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
+References: <20250916162404.9195-1-jsnow@redhat.com>
+ <20250916162404.9195-5-jsnow@redhat.com>
+ <7be48ced-52c0-4526-bcaa-632165408396@redhat.com>
+In-Reply-To: <7be48ced-52c0-4526-bcaa-632165408396@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 21 Oct 2025 20:37:25 -0400
+X-Gm-Features: AS18NWBIgFvmg8s5emFSXe4-2FxU1GwOkk2GeE61CE499SCaRjXHTwQcPvR2eHQ
+Message-ID: <CAFn=p-Yf8Q3=4g+GoixLJAoLNoDUeN2MpUTot1TSPo_YhzVj6Q@mail.gmail.com>
+Subject: Re: [PULL 04/19] python: backport 'protocol: adjust logging name when
+ changing client name'
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Kevin Wolf <kwolf@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>, 
+ Qemu-block <qemu-block@nongnu.org>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000fb01190641b485fd"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,264 +106,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For Arm, we need 3 cases: (1) the alignment required when accessing
-Normal memory, (2) the alignment required when accessing Device memory,
-and (3) the atomicity of the access.
+--000000000000fb01190641b485fd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When we added TLB_CHECK_ALIGNED, we assumed that cases 2 and 3 were
-identical, and thus used memop_atomicity_bits for TLB_CHECK_ALIGNED.
+On Wed, Oct 15, 2025, 3:11=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote:
 
-This is incorrect for multiple reasons, including that the atomicity
-of the access is adjusted depending on whether or not we are executing
-within a serial context.
+> On 16/09/2025 18.23, John Snow wrote:
+> > The client name is mutable, so the logging name should also change to
+> > reflect it when it changes.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > cherry picked from commit
+> python-qemu-qmp@e10b73c633ce138ba30bc8beccd2ab31989eaf3d
+> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > ---
+> >   python/qemu/qmp/protocol.py | 24 ++++++++++++++++++++----
+> >   1 file changed, 20 insertions(+), 4 deletions(-)
+>
+>   Hi John,
+>
+> there is a regression when running "scripts/device-crash-test -q": It now
+> prints:
+>
+> ERROR: Negotiation failed: EOFError
+> ERROR: Failed to establish session: EOFError
+>
+> all the time. See also for example:
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/11715477453#L145
+>
+> Bisecting the issue pointed me to this patch here. Could you please have =
+a
+> look?
+>
+>   Thanks,
+>    Thomas
+>
+>
+> > diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
+> > index 86e588881b7..ec4762c567b 100644
+> > --- a/python/qemu/qmp/protocol.py
+> > +++ b/python/qemu/qmp/protocol.py
+> > @@ -217,10 +217,8 @@ class AsyncProtocol(Generic[T]):
+> >       # -------------------------
+> >
+> >       def __init__(self, name: Optional[str] =3D None) -> None:
+> > -        #: The nickname for this connection, if any.
+> > -        self.name: Optional[str] =3D name
+> > -        if self.name is not None:
+> > -            self.logger =3D self.logger.getChild(self.name)
+> > +        self._name: Optional[str]
+> > +        self.name =3D name
+> >
+> >           # stream I/O
+> >           self._reader: Optional[StreamReader] =3D None
+> > @@ -257,6 +255,24 @@ def __repr__(self) -> str:
+> >           tokens.append(f"runstate=3D{self.runstate.name}")
+> >           return f"<{cls_name} {' '.join(tokens)}>"
+> >
+> > +    @property
+> > +    def name(self) -> Optional[str]:
+> > +        """
+> > +        The nickname for this connection, if any.
+> > +
+> > +        This name is used for differentiating instances in debug outpu=
+t.
+> > +        """
+> > +        return self._name
+> > +
+> > +    @name.setter
+> > +    def name(self, name: Optional[str]) -> None:
+> > +        logger =3D logging.getLogger(__name__)
+> > +        if name:
+> > +            self.logger =3D logger.getChild(name)
+> > +        else:
+> > +            self.logger =3D logger
+> > +        self._name =3D name
+> > +
+> >       @property  # @upper_half
+> >       def runstate(self) -> Runstate:
+> >           """The current `Runstate` of the connection."""
+>
 
-For Arm, what is true is that there is an underlying alignment
-requirement of the access, and for that access Normal memory
-will support unalignement.
+... odd that it's this patch. I will have a look and issue a fix shortly.
 
-Introduce MO_ALIGN_TLB_ONLY to indicate that the alignment
-specified in MO_AMASK only applies when the TLB entry has
-TLB_CHECK_ALIGNED set; otherwise no alignment required.
+Thanks for the report.
 
-Introduce memop_tlb_alignment_bits with an additional bool
-argument that specifies whether TLB_CHECK_ALIGNED is set.
-All other usage of memop_alignment_bits assumes it is not.
+--000000000000fb01190641b485fd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Remove memop_atomicity_bits as unused; it didn't properly
-support MO_ATOM_SUBWORD anyway.
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 15, 2025, 3:11=E2=80=
+=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com<=
+/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 16/09/2025 18.23,=
+ John Snow wrote:<br>
+&gt; The client name is mutable, so the logging name should also change to<=
+br>
+&gt; reflect it when it changes.<br>
+&gt; <br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; cherry picked from commit python-qemu-qmp@e10b73c633ce138ba30bc8beccd2=
+ab31989eaf3d<br>
+&gt; Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@re=
+dhat.com" target=3D"_blank" rel=3D"noreferrer">berrange@redhat.com</a>&gt;<=
+br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0python/qemu/qmp/protocol.py | 24 ++++++++++++++++++++----<=
+br>
+&gt;=C2=A0 =C2=A01 file changed, 20 insertions(+), 4 deletions(-)<br>
+<br>
+=C2=A0 Hi John,<br>
+<br>
+there is a regression when running &quot;scripts/device-crash-test -q&quot;=
+: It now <br>
+prints:<br>
+<br>
+ERROR: Negotiation failed: EOFError<br>
+ERROR: Failed to establish session: EOFError<br>
+<br>
+all the time. See also for example:<br>
+<br>
+<a href=3D"https://gitlab.com/qemu-project/qemu/-/jobs/11715477453#L145" re=
+l=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-proje=
+ct/qemu/-/jobs/11715477453#L145</a><br>
+<br>
+Bisecting the issue pointed me to this patch here. Could you please have a =
+look?<br>
+<br>
+=C2=A0 Thanks,<br>
+=C2=A0 =C2=A0Thomas<br>
+<br>
+<br>
+&gt; diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py=
+<br>
+&gt; index 86e588881b7..ec4762c567b 100644<br>
+&gt; --- a/python/qemu/qmp/protocol.py<br>
+&gt; +++ b/python/qemu/qmp/protocol.py<br>
+&gt; @@ -217,10 +217,8 @@ class AsyncProtocol(Generic[T]):<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0# -------------------------<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0def __init__(self, name: Optional[str] =3D N=
+one) -&gt; None:<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 #: The nickname for this connection, if a=
+ny.<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"http://self.name" rel=3D"noref=
+errer noreferrer" target=3D"_blank">self.name</a>: Optional[str] =3D name<b=
+r>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if <a href=3D"http://self.name" rel=3D"no=
+referrer noreferrer" target=3D"_blank">self.name</a> is not None:<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.logger =3D self.logger=
+.getChild(<a href=3D"http://self.name" rel=3D"noreferrer noreferrer" target=
+=3D"_blank">self.name</a>)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 self._name: Optional[str]<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"http://self.name" rel=3D"noref=
+errer noreferrer" target=3D"_blank">self.name</a> =3D name<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# stream I/O<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0self._reader: Optional[StreamR=
+eader] =3D None<br>
+&gt; @@ -257,6 +255,24 @@ def __repr__(self) -&gt; str:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tokens.append(f&quot;runstate=
+=3D{<a href=3D"http://self.runstate.name" rel=3D"noreferrer noreferrer" tar=
+get=3D"_blank">self.runstate.name</a>}&quot;)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return f&quot;&lt;{cls_name} {=
+&#39; &#39;.join(tokens)}&gt;&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +=C2=A0 =C2=A0 @property<br>
+&gt; +=C2=A0 =C2=A0 def name(self) -&gt; Optional[str]:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 The nickname for this connection, if any.=
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 This name is used for differentiating ins=
+tances in debug output.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return self._name<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 @name.setter<br>
+&gt; +=C2=A0 =C2=A0 def name(self, name: Optional[str]) -&gt; None:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 logger =3D logging.getLogger(__name__)<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if name:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.logger =3D logger.getC=
+hild(name)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 else:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.logger =3D logger<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 self._name =3D name<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0@property=C2=A0 # @upper_half<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0def runstate(self) -&gt; Runstate:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;&quot;&quot;The current =
+`Runstate` of the connection.&quot;&quot;&quot;<br></blockquote></div></div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">... odd that it&#39;s this p=
+atch. I will have a look and issue a fix shortly.</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">Thanks for the report.</div><div dir=3D"auto"><br=
+></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><=
+blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
+ #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
 
-Update target/arm finalize_memop_atom to set MO_ALIGN_TLB_ONLY
-when strict alignment isn't otherwise required.
-
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3171
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
-
-PS: There are a number of uses of align_mem for AdvSIMD, SVE and SME.
-I have not re-familiarized myself with the effects of SCR.A and
-Normal/Device memory for those cases.  I may well have missed something.
-
----
- include/exec/memop.h            | 43 +++++++++++++++------------------
- target/arm/tcg/translate.h      |  4 +--
- accel/tcg/cputlb.c              | 13 +---------
- target/arm/ptw.c                |  2 +-
- target/arm/tcg/translate-a64.c  | 10 +++-----
- target/arm/tcg/translate-neon.c |  2 +-
- tcg/tcg.c                       | 10 +++++---
- 7 files changed, 35 insertions(+), 49 deletions(-)
-
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index cf7da3362e..799b5b4221 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -72,6 +72,16 @@ typedef enum MemOp {
-     MO_ALIGN_64 = 6 << MO_ASHIFT,
-     MO_ALIGN    = MO_AMASK,
- 
-+    /*
-+     * MO_ALIGN_TLB_ONLY:
-+     * Apply MO_AMASK only along the TCG slow path if TLB_CHECK_ALIGNED
-+     * is set; otherwise unaligned access is permitted.
-+     * This is used by target/arm, where unaligned accesses are
-+     * permitted for pages marked Normal but aligned accesses are
-+     * required for pages marked Device.
-+     */
-+    MO_ALIGN_TLB_ONLY = 1 << 8,
-+
-     /*
-      * MO_ATOM_* describes the atomicity requirements of the operation:
-      * MO_ATOM_IFALIGN: the operation must be single-copy atomic if it
-@@ -104,7 +114,7 @@ typedef enum MemOp {
-      * size of the operation, if aligned.  This retains the behaviour
-      * from before this field was introduced.
-      */
--    MO_ATOM_SHIFT         = 8,
-+    MO_ATOM_SHIFT         = 9,
-     MO_ATOM_IFALIGN       = 0 << MO_ATOM_SHIFT,
-     MO_ATOM_IFALIGN_PAIR  = 1 << MO_ATOM_SHIFT,
-     MO_ATOM_WITHIN16      = 2 << MO_ATOM_SHIFT,
-@@ -169,16 +179,16 @@ static inline MemOp size_memop(unsigned size)
- }
- 
- /**
-- * memop_alignment_bits:
-+ * memop_tlb_alignment_bits:
-  * @memop: MemOp value
-  *
-- * Extract the alignment size from the memop.
-+ * Extract the alignment size for use with TLB_CHECK_ALIGNED.
-  */
--static inline unsigned memop_alignment_bits(MemOp memop)
-+static inline unsigned memop_tlb_alignment_bits(MemOp memop, bool tlb_check)
- {
-     unsigned a = memop & MO_AMASK;
- 
--    if (a == MO_UNALN) {
-+    if (a == MO_UNALN || (!tlb_check && (memop & MO_ALIGN_TLB_ONLY))) {
-         /* No alignment required.  */
-         a = 0;
-     } else if (a == MO_ALIGN) {
-@@ -191,28 +201,15 @@ static inline unsigned memop_alignment_bits(MemOp memop)
-     return a;
- }
- 
--/*
-- * memop_atomicity_bits:
-+/**
-+ * memop_alignment_bits:
-  * @memop: MemOp value
-  *
-- * Extract the atomicity size from the memop.
-+ * Extract the alignment size from the memop.
-  */
--static inline unsigned memop_atomicity_bits(MemOp memop)
-+static inline unsigned memop_alignment_bits(MemOp memop)
- {
--    unsigned size = memop & MO_SIZE;
--
--    switch (memop & MO_ATOM_MASK) {
--    case MO_ATOM_NONE:
--        size = MO_8;
--        break;
--    case MO_ATOM_IFALIGN_PAIR:
--    case MO_ATOM_WITHIN16_PAIR:
--        size = size ? size - 1 : 0;
--        break;
--    default:
--        break;
--    }
--    return size;
-+    return memop_tlb_alignment_bits(memop, false);
- }
- 
- #endif
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 9a85ea74db..b62104b4ae 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -744,8 +744,8 @@ static inline TCGv_ptr fpstatus_ptr(ARMFPStatusFlavour flavour)
-  */
- static inline MemOp finalize_memop_atom(DisasContext *s, MemOp opc, MemOp atom)
- {
--    if (s->align_mem && !(opc & MO_AMASK)) {
--        opc |= MO_ALIGN;
-+    if (!(opc & MO_AMASK)) {
-+        opc |= MO_ALIGN | (s->align_mem ? 0 : MO_ALIGN_TLB_ONLY);
-     }
-     return opc | atom | s->be_data;
- }
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 631f1fe135..fd1606c856 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1668,18 +1668,7 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
- 
-     if (likely(!maybe_resized)) {
-         /* Alignment has not been checked by tlb_fill_align. */
--        int a_bits = memop_alignment_bits(memop);
--
--        /*
--         * This alignment check differs from the one above, in that this is
--         * based on the atomicity of the operation. The intended use case is
--         * the ARM memory type field of each PTE, where access to pages with
--         * Device memory type require alignment.
--         */
--        if (unlikely(flags & TLB_CHECK_ALIGNED)) {
--            int at_bits = memop_atomicity_bits(memop);
--            a_bits = MAX(a_bits, at_bits);
--        }
-+        int a_bits = memop_tlb_alignment_bits(memop, flags & TLB_CHECK_ALIGNED);
-         if (unlikely(addr & ((1 << a_bits) - 1))) {
-             cpu_unaligned_access(cpu, addr, access_type, mmu_idx, ra);
-         }
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index d4386ede73..939215d096 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -2351,7 +2351,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-      * CPUs with ARM_FEATURE_LPAE but not ARM_FEATURE_V7VE anyway.)
-      */
-     if (device) {
--        unsigned a_bits = memop_atomicity_bits(memop);
-+        unsigned a_bits = memop_tlb_alignment_bits(memop, true);
-         if (address & ((1 << a_bits) - 1)) {
-             fi->type = ARMFault_Alignment;
-             goto do_fault;
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 3292d7cbfd..08b21d7dbf 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -3691,9 +3691,8 @@ static bool trans_STP(DisasContext *s, arg_ldstpair *a)
-      * In all cases, issue one operation with the correct atomicity.
-      */
-     mop = a->sz + 1;
--    if (s->align_mem) {
--        mop |= (a->sz == 2 ? MO_ALIGN_4 : MO_ALIGN_8);
--    }
-+    mop |= (a->sz == 2 ? MO_ALIGN_4 : MO_ALIGN_8);
-+    mop |= (s->align_mem ? 0 : MO_ALIGN_TLB_ONLY);
-     mop = finalize_memop_pair(s, mop);
-     if (a->sz == 2) {
-         TCGv_i64 tmp = tcg_temp_new_i64();
-@@ -3742,9 +3741,8 @@ static bool trans_LDP(DisasContext *s, arg_ldstpair *a)
-      * since that reuses the most code below.
-      */
-     mop = a->sz + 1;
--    if (s->align_mem) {
--        mop |= (a->sz == 2 ? MO_ALIGN_4 : MO_ALIGN_8);
--    }
-+    mop |= (a->sz == 2 ? MO_ALIGN_4 : MO_ALIGN_8);
-+    mop |= (s->align_mem ? 0 : MO_ALIGN_TLB_ONLY);
-     mop = finalize_memop_pair(s, mop);
-     if (a->sz == 2) {
-         int o2 = s->be_data == MO_LE ? 32 : 0;
-diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
-index 844d2e29e4..e3c7d9217b 100644
---- a/target/arm/tcg/translate-neon.c
-+++ b/target/arm/tcg/translate-neon.c
-@@ -520,7 +520,7 @@ static bool trans_VLDST_multiple(DisasContext *s, arg_VLDST_multiple *a)
-     if (a->align) {
-         align = pow2_align(a->align + 2); /* 4 ** a->align */
-     } else {
--        align = s->align_mem ? MO_ALIGN : 0;
-+        align = MO_ALIGN | (s->align_mem ? 0 : MO_ALIGN_TLB_ONLY);
-     }
- 
-     /*
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 294762c283..fbf09f5c82 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -3039,20 +3039,22 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
-             case INDEX_op_qemu_ld2:
-             case INDEX_op_qemu_st2:
-                 {
--                    const char *s_al, *s_op, *s_at;
-+                    const char *s_al, *s_tlb, *s_op, *s_at;
-                     MemOpIdx oi = op->args[k++];
-                     MemOp mop = get_memop(oi);
-                     unsigned ix = get_mmuidx(oi);
- 
-+                    s_tlb = mop & MO_ALIGN_TLB_ONLY ? "tlb+" : "";
-                     s_al = alignment_name[(mop & MO_AMASK) >> MO_ASHIFT];
-                     s_op = ldst_name[mop & (MO_BSWAP | MO_SSIZE)];
-                     s_at = atom_name[(mop & MO_ATOM_MASK) >> MO_ATOM_SHIFT];
--                    mop &= ~(MO_AMASK | MO_BSWAP | MO_SSIZE | MO_ATOM_MASK);
-+                    mop &= ~(MO_AMASK | MO_BSWAP | MO_SSIZE |
-+                             MO_ATOM_MASK | MO_ALIGN_TLB_ONLY);
- 
-                     /* If all fields are accounted for, print symbolically. */
-                     if (!mop && s_al && s_op && s_at) {
--                        col += ne_fprintf(f, ",%s%s%s,%u",
--                                          s_at, s_al, s_op, ix);
-+                        col += ne_fprintf(f, ",%s%s%s%s,%u",
-+                                          s_at, s_al, s_tlb, s_op, ix);
-                     } else {
-                         mop = get_memop(oi);
-                         col += ne_fprintf(f, ",$0x%x,%u", mop, ix);
--- 
-2.43.0
+--000000000000fb01190641b485fd--
 
 
