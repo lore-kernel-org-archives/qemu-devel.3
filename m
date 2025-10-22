@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B94B3CCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A77D0CCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBWkT-00088N-BD; Wed, 22 Oct 2025 07:11:21 -0400
+	id 1vBWmo-0000aR-76; Wed, 22 Oct 2025 07:13:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vBWkQ-00086K-El
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:11:18 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vBWmk-0000aD-D7
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:13:42 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vBWkN-0007dS-8E
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:11:18 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b6329b6e3b0so686577a12.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:11:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vBWmc-0007ra-L5
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:13:41 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-4e2d2d764a3so8086771cf.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761131473; x=1761736273; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mbyA/LiI1lhWjIzquLDGeFGiPJ0qcFYc5ZQP/Jy2ZhU=;
- b=Um39HYyMBtRsflQw3WHbMpP+qCptOJY32FjH9PFXZiRUZ3+05fCEPPoZ5wp+KtWJQB
- bOOFj/gVbBho8DHaii2ERd50xAIsV0S7JhFpeWOGmlL7muKgIqkv6OTPPx7JHN0nPs5m
- r7TOkt7gNuSW/hd5cjke36u+mcEJgcyjl7ovV3TsH5tqq7B2FGd2FnhtWVIIREIhLb29
- tJTdBRjNsAO51fXTw7SNVc5vvtXHpWDGJwX8q4JNGsyD6n6qAZb9AorPP02X4+TCXoRY
- 0a6+FPvgjnkRORrMwT4wHUSus0ZxJiQmsU8f/n7xEFjcekv55E+ZL4WzX5DzzkSPWR5r
- S4Wg==
+ d=gmail.com; s=20230601; t=1761131613; x=1761736413; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gJm3aHrIHKXcpk9IUMUX6l4uxbOhXHibBE+5xKgDqfE=;
+ b=h5gyaFk32t4+zZmeoJDqsDadapaeEU19/GxEW5c8rXF4BakLLfZg8vZesJxI4U4JMt
+ 9bGHm8ybRWgSe4ij1GQ8EQA9UsshGtTrL6mW8M223oFQnjvVYjQeL0YCw2xQkiY6G54p
+ M+k8rbZW39BIMa8jgTqAHvwod6Ct352BM5SrFvqrWh6/2edQ574gVfj9uE2TAQeEDVgw
+ 3BkK8YlgaMqaPFxZqb9RNVVaio84ZhC9ZSmn8Q/jmXUHoo0igv+SPYcwMBMNDGPK18Fy
+ p6zKmmod3HpnErt/emqJcwXuMQzL2CLH3c8opPBTaRTupm2jnACZeGbxtXZIJIeKUd3x
+ WmTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761131473; x=1761736273;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mbyA/LiI1lhWjIzquLDGeFGiPJ0qcFYc5ZQP/Jy2ZhU=;
- b=uixoTULvUzTfCqo6iSkj5tOIZuZQm83IV1jjU1xtRoB1y7tdIuJ3pgx/jVtTNY/Ol3
- 99KYc5Vyo/gAnOtcPjGDqc7fhhD2A2RE86MfLz7iOVL+9UCWm7yNbynOAILYuOzJ199F
- SAJcJmQtHf6S/+oQeyMF1ck7f36O4UZTz2I50D+dTU05dVxwoHodQXGvA14FbLod4k7r
- uWLkLSwKjhqxNA0hi/f8OmDiyJepjhdAE88KZ0fj4IOlmww5h3mbMdQGoCl0zndkuUiE
- djKTdf+bYOI6WspPmtBSjdv2eDKxxTY9DB414BLrxuWmdj/KnRpUU+/ug6sU8XwN7EdN
- 8krQ==
-X-Gm-Message-State: AOJu0YxBIK718PfCLf3Yb7hYEYo1Nzwv13YsaUoAwousHCGbp3K6bElO
- iHewBBAz4IjwNErPvbEguZ6KEP9Od43UGqYUZb2kGOCTCc6EF/uMOhU7gPFjCoFt0pr0wjgnT61
- hyjL00pY=
-X-Gm-Gg: ASbGnctaW3ZG030osRNElq9Vk3V5BKxHY9VmjUp8oxRkdopkjc43Y0P74t+Ii3JQXA1
- 0EQRbLK0yEasiHM9WL0fF823R+A/HootnBsKr+Dq1upVuR5n/zXRlTLxfpj6xla8e8S46P0raz0
- xzovXiX24nyd2XmRuQC1euQXmfn+wTomEVplc6pa5kDMNdwFID2mnjrEti60iSMDeQgzuvq88Nv
- KwRzL5zgxO/naR5qnmLXPTxvCATaua92j4iDaS6zXxDNESUf/upRqg6f7mWkAmI0Hbultk302vJ
- +SGZVxpce9jbU25rCDaXAJOyFcr77bBSKc7x5IQJCnmwaBWIJrJHdYQmYP4UVsz0oasEZi/5No+
- 5z/dtM78YKqX6bM8iSyR8jHSUxW/qRb7lDKK6t/L1vI24V8otw0hnDlsPK41H6Qs2i0bck0dcoF
- 2YlmubZX4xwHsgoyJf4RU552OaEe+A
-X-Google-Smtp-Source: AGHT+IGpnQ1WUR2JlEHnERhpXDlvfDqcMy6x6gUIqfA7lpXUxIQC/jCHDqNObfEk1+rw0RO0UhC4Xw==
-X-Received: by 2002:a17:903:186:b0:274:506d:7fcc with SMTP id
- d9443c01a7336-2935dff65a7mr15558835ad.6.1761131473104; 
- Wed, 22 Oct 2025 04:11:13 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com
- ([2804:7f0:bcc1:92d3:4170:1cad:ed8e:78ba])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29246ebcf88sm137457155ad.2.2025.10.22.04.11.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 04:11:12 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-stable@nongnu.org
-Subject: [PATCH] target/riscv/kvm: fix env->priv setting in reset_regs_csr()
-Date: Wed, 22 Oct 2025 08:11:05 -0300
-Message-ID: <20251022111105.483992-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.51.0
+ d=1e100.net; s=20230601; t=1761131613; x=1761736413;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gJm3aHrIHKXcpk9IUMUX6l4uxbOhXHibBE+5xKgDqfE=;
+ b=dS88bCq7qDb4XKQPR30jVBZ8S4V2A/og77ofY2XQdLOrPCJ01H3fCiHcm+Z3Agxkaz
+ eRvZZjlumjAlVwEawMhGm6NGCQIx+DzFH4xjeY/Vgs0/z9NrYcAnDUC3dutqvRSUWwDs
+ vY5EB52z7ipYwAQYVRyDdJQjRDdW09229MkCWFvN8sTdqD4qvBS9Aj2EEzN7aUiV1yxz
+ EERHGAhzJB0r9X6NDm7gvu44xqm+Hw/uZFV9BYSRqbI3NxnDVYFg/i/D2mRsDP+UeAEe
+ 0fM1d0fecVP1obXwVo9Jt45TDTYIrghz3+fGDJqsQNzkmsj02DyURmBDzyS5+PVfBnDw
+ XrmA==
+X-Gm-Message-State: AOJu0Ywlc76+oykP2bSCeHPldBr4eg/TSSiDDdnQTyTkgWoXmRMjE9fQ
+ CS9YYEsj/9lOJ3B2phT9tgSX4b7nyv6pwdruUVjBaaCP/pnrmU8ebp09XnFs66Y2r4bnuLl6qm4
+ IQSL2e/+b1dkRqbGe/h8AlQkctuE8H6I=
+X-Gm-Gg: ASbGncvRf9phYft3RjqdKqM5Dtx/DKXZCLtUutMoX3B+VuZO/BevtERQiDsUQcAWaXP
+ Sb8uW8JLf//ZNXa1RqPdbSbHIcca6ecQIwEqpwIFrhvdMfwhs9s+OoOuD2U0iu6yo+YpdB7JguI
+ rA2oGRMLjB/jomyZlqShMVIxtUo0xE8k+gYZZEl6if25U3VwxMJ5fha/RSp5xtzQCzoUm+srjOk
+ mm+b7ykyTK55GmObvP9/QvKi3eWNnDmka+f1ZXA+nrRaelEH4EBe910zAF3nqL8w+smtrNj9nLF
+ XIWxWkYuEa7JR3QaQ7JfB2fg9Qk=
+X-Google-Smtp-Source: AGHT+IFvhzdDL0BVkKsDcow3tfRWYKIYb/DHj9NL+++5t9I0gVhWpLNlwVE1Hi+8R1pwnMzeylQm/mNECa9wvJD0sus=
+X-Received: by 2002:ac8:7f46:0:b0:4e8:bad8:7c18 with SMTP id
+ d75a77b69052e-4e8bad87fcbmr120235941cf.15.1761131613092; Wed, 22 Oct 2025
+ 04:13:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x529.google.com
+References: <20251022101420.36059-1-armbru@redhat.com>
+ <20251022101420.36059-4-armbru@redhat.com>
+In-Reply-To: <20251022101420.36059-4-armbru@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 22 Oct 2025 15:13:20 +0400
+X-Gm-Features: AS18NWDGAkkdcL7SKwq8TBcJS9Xr0FiVDYwGsBElYTx5VUp2a69tgQYvF_-OOfM
+Message-ID: <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] qdev: Legacy properties are now unused, drop
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com, 
+ eduardo@habkost.net, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +97,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch was originally made by Gitlab user Bo Gan (@ganboing) 4
-months ago in the context of issue [1]. I asked the author to send a
-patch to the mailing list ~3 months ago and got no reply. I'm sending
-the patch myself because we already missed 10.1 without this fix.
+Hi
 
-I'll also just post verbatim Bo Gan comment in the commit msg:
 
-"In RISCV Linux with KVM enabled, gdbstub is broken. The
-get_physical_address isn't able to page-walk correctly and resolve the
-physical page. This is due to that the vcpu is being treated as starting
-in M mode even if KVM enabled. However, with KVM, the vcpu is actually
-started in S mode. The mmu_idx will give 3 (M), instead of 1 (S),
-resulting in Guest PA == VA (wrong)!"
+On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Set env->priv to PRV_S in kvm_riscv_reset_regs_csr() since the VCPU is
-always started in S-mode for KVM.
+I don't think we have much reasonable way to use those "legacy-*"
+properties from qom-get and similar, so it's probably ok to just
+remove them without deprecation.
 
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2991
+Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2991
-Originally-by: Bo Gan (@ganboing in Gitlab)
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/kvm/kvm-cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+> ---
+>  hw/core/qdev-properties.c | 46 ---------------------------------------
+>  1 file changed, 46 deletions(-)
+>
+> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+> index 422a486969..46a12652f4 100644
+> --- a/hw/core/qdev-properties.c
+> +++ b/hw/core/qdev-properties.c
+> @@ -1108,51 +1108,6 @@ static void qdev_class_add_property(DeviceClass *k=
+lass, const char *name,
+>      object_class_property_set_description(oc, name, prop->info->descript=
+ion);
+>  }
+>
+> -/**
+> - * Legacy property handling
+> - */
+> -
+> -static void qdev_get_legacy_property(Object *obj, Visitor *v,
+> -                                     const char *name, void *opaque,
+> -                                     Error **errp)
+> -{
+> -    const Property *prop =3D opaque;
+> -    char *s;
+> -
+> -    s =3D prop->info->print(obj, prop);
+> -    visit_type_str(v, name, &s, errp);
+> -    g_free(s);
+> -}
+> -
+> -/**
+> - * qdev_class_add_legacy_property:
+> - * @dev: Device to add the property to.
+> - * @prop: The qdev property definition.
+> - *
+> - * Add a legacy QOM property to @dev for qdev property @prop.
+> - *
+> - * Legacy properties are string versions of QOM properties.  The format =
+of
+> - * the string depends on the property type.  Legacy properties are only
+> - * needed for "info qtree".
+> - *
+> - * Do not use this in new code!  QOM Properties added through this inter=
+face
+> - * will be given names in the "legacy" namespace.
+> - */
+> -static void qdev_class_add_legacy_property(DeviceClass *dc, const Proper=
+ty *prop)
+> -{
+> -    g_autofree char *name =3D NULL;
+> -
+> -    /* Register pointer properties as legacy properties */
+> -    if (!prop->info->print && prop->info->get) {
+> -        return;
+> -    }
+> -
+> -    name =3D g_strdup_printf("legacy-%s", prop->name);
+> -    object_class_property_add(OBJECT_CLASS(dc), name, "str",
+> -        prop->info->print ? qdev_get_legacy_property : prop->info->get,
+> -        NULL, NULL, (Property *)prop);
+> -}
+> -
+>  void device_class_set_props_n(DeviceClass *dc, const Property *props, si=
+ze_t n)
+>  {
+>      /* We used a hole in DeviceClass because that's still a lot. */
+> @@ -1165,7 +1120,6 @@ void device_class_set_props_n(DeviceClass *dc, cons=
+t Property *props, size_t n)
+>      for (size_t i =3D 0; i < n; ++i) {
+>          const Property *prop =3D &props[i];
+>          assert(prop->name);
+> -        qdev_class_add_legacy_property(dc, prop);
+>          qdev_class_add_property(dc, prop->name, prop);
+>      }
+>  }
+> --
+> 2.49.0
+>
+>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 0dd0d59d41..000e44b2b7 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -705,6 +705,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-     env->satp = 0;
-     env->scounteren = 0;
-     env->senvcfg = 0;
-+    env->priv = PRV_S;
- }
- 
- static int kvm_riscv_get_regs_fp(CPUState *cs)
--- 
-2.51.0
 
+--
+Marc-Andr=C3=A9 Lureau
 
