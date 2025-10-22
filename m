@@ -4,60 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5115CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957CCCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSkN-0007Kz-SD; Wed, 22 Oct 2025 02:55:00 -0400
+	id 1vBSmK-00085V-Uk; Wed, 22 Oct 2025 02:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1vBSkG-0007Hp-Ak
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:54:54 -0400
-Received: from smtp233.sjtu.edu.cn ([202.120.2.233])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vBSmI-00085M-8i
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:56:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1vBSkE-0007fi-1H
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:54:52 -0400
-Received: from mta91.sjtu.edu.cn (unknown [10.118.0.91])
- by smtp233.sjtu.edu.cn (Postfix) with ESMTPS id 6C31A101B6934;
- Wed, 22 Oct 2025 14:54:46 +0800 (CST)
-Received: from mstore136.sjtu.edu.cn (unknown [10.118.0.136])
- by mta91.sjtu.edu.cn (Postfix) with ESMTP id 3F65E37C8FB;
- Wed, 22 Oct 2025 14:54:46 +0800 (CST)
-Date: Wed, 22 Oct 2025 14:54:46 +0800 (CST)
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>, 
- alex bennee <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- richard henderson <richard.henderson@linaro.org>, 
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>, 
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-Message-ID: <577112454.5812719.1761116086174.JavaMail.zimbra@sjtu.edu.cn>
-In-Reply-To: <1341969682.5812455.1761115945695.JavaMail.zimbra@sjtu.edu.cn>
-References: <1341969682.5812455.1761115945695.JavaMail.zimbra@sjtu.edu.cn>
-Subject: [RFC PATCH V2 2/2] tcg tests: add a test to verify the syscall
- filter plugin API
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vBSmG-00080V-LR
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:56:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761116215;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Sn6D8TaKLKB7thke8D1SYCsRnUDMQrsF66p9VZMru88=;
+ b=UZhAYlBFESdGBv9EM3DXdazq5JvG1DYTgq77tvOf/ExnZCzSK2Ua80V4y1kd+52IR/OfAl
+ gE/MlOG5I6d/FGz8ULeuTyFUjqgfSRR582qezH5tA/MIThzckfJ2Zw0/v5PZg3uJ16LdBw
+ O7BOx0NyNM+RqpOnNzVwR3BNZXQvTbw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-AJYHHLv0Nne9VY9fouGbgg-1; Wed,
+ 22 Oct 2025 02:56:52 -0400
+X-MC-Unique: AJYHHLv0Nne9VY9fouGbgg-1
+X-Mimecast-MFC-AGG-ID: AJYHHLv0Nne9VY9fouGbgg_1761116211
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EA75180035A; Wed, 22 Oct 2025 06:56:51 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A28A819560B0; Wed, 22 Oct 2025 06:56:49 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v2 01/42] hw/audio: improve error reports
+Date: Wed, 22 Oct 2025 10:55:56 +0400
+Message-ID: <20251022065640.1172785-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
+References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [119.237.255.163]
-X-Mailer: Zimbra 10.0.14_GA_4767 (ZimbraWebClient - GC141
- (Win)/10.0.15_GA_4781)
-Thread-Topic: tcg tests: add a test to verify the syscall filter plugin API
-Thread-Index: O8UVQ/TJHmck9snQ4N2r1rVTqb8mpCd4fjGN
-Received-SPF: pass client-ip=202.120.2.233;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp233.sjtu.edu.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,93 +89,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a syscall filter callback in tests/tcg/plugins/sycall.c,
-returns a specific value for a magic system call number, and check
-it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+The -audiodev argument is 'model=..', use same terminology.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/tcg/multiarch/Makefile.target              |  4 +++-
- tests/tcg/multiarch/test-plugin-syscall-filter.c | 21 +++++++++++++++++++++
- tests/tcg/plugins/syscall.c                      | 14 ++++++++++++++
- 3 files changed, 38 insertions(+), 1 deletion(-)
+ hw/audio/soundhw.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index f5b4d2b813..4005e3a8a9 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -202,8 +202,10 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
- 	CHECK_PLUGIN_OUTPUT_COMMAND= \
- 	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
- 	$(QEMU) $<
-+run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
+diff --git a/hw/audio/soundhw.c b/hw/audio/soundhw.c
+index d18fd9fa05..b06552e7a8 100644
+--- a/hw/audio/soundhw.c
++++ b/hw/audio/soundhw.c
+@@ -70,7 +70,7 @@ void show_valid_soundhw(void)
+     struct soundhw *c;
  
--EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
-+EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
-+			   			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
- endif
+     if (soundhw_count) {
+-         printf("Valid sound card names (comma separated):\n");
++         printf("Valid audio device model names:\n");
+          for (c = soundhw; c->name; ++c) {
+              printf ("%-11s %s\n", c->name, c->descr);
+          }
+@@ -88,7 +88,7 @@ void select_soundhw(const char *name, const char *audiodev)
+     struct soundhw *c;
  
- # Update TESTS
-diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-new file mode 100644
-index 0000000000..e8676e4c29
---- /dev/null
-+++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-@@ -0,0 +1,21 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This test attempts to execute a magic syscall. The syscall test plugin
-+ * should intercept this and returns an expected value.
-+ */
-+
-+#include <stdint.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+
-+int main(int argc, char *argv[])
-+{
-+    long ret = syscall(0x66CCFF);
-+    if (ret != 0xFFCC66) {
-+        perror("ERROR: syscall returned unexpected value!!!");
-+        return EXIT_FAILURE;
-+    }
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-index 42801f5c86..310f69ff05 100644
---- a/tests/tcg/plugins/syscall.c
-+++ b/tests/tcg/plugins/syscall.c
-@@ -170,6 +170,19 @@ static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
+     if (selected) {
+-        error_report("only one -soundhw option is allowed");
++        error_report("only one -audio option is allowed");
+         exit(1);
+     }
+ 
+@@ -101,7 +101,7 @@ void select_soundhw(const char *name, const char *audiodev)
+     }
+ 
+     if (!c->name) {
+-        error_report("Unknown sound card name `%s'", name);
++        error_report("Unknown audio device model `%s'", name);
+         show_valid_soundhw();
+         exit(1);
+     }
+@@ -140,4 +140,3 @@ void soundhw_init(void)
+         c->init_pci(pci_bus, audiodev_id);
      }
  }
- 
-+static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
-+                         int64_t num, uint64_t a1, uint64_t a2,
-+                         uint64_t a3, uint64_t a4, uint64_t a5,
-+                         uint64_t a6, uint64_t a7, uint64_t a8, uint64_t *ret)
-+{
-+    if (num == 0x66CCFF) {
-+        *ret = 0xFFCC66;
-+        qemu_plugin_outs("syscall 0x66CCFF filtered, ret=0xFFCC66\n");
-+        return true;
-+    }
-+    return false;
-+}
-+
- static void print_entry(gpointer val, gpointer user_data)
- {
-     SyscallStats *entry = (SyscallStats *) val;
-@@ -255,6 +268,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
- 
-     qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
-     qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
-+    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
-     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-     return 0;
- }
-
+-
 -- 
-2.25.1
+2.51.0
+
 
