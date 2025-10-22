@@ -4,68 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FE2CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C851CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXiH-000865-VS; Wed, 22 Oct 2025 08:13:09 -0400
+	id 1vBXo3-0000zM-42; Wed, 22 Oct 2025 08:19:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBXiG-000841-7F
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:13:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo0-0000yp-BH
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBXiD-0006Xx-P6
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:13:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXny-00071W-EV
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761135183;
+ s=mimecast20190719; t=1761135541;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N3N+OkwY0E4YV57KWU839CSjIKngYfZ1ERB/MbF1Y4o=;
- b=E5Wa/g1JI1q5/Tj4zEQc1/FBBcOomEymZZf+yIXNHSzXRjKdGSHzZ/qVt84ItYVsIC/7G0
- jw6S2muSyVGJzN1rpRNWMFCKOrZ7rF33mdj5s/JbUb5fML++boNWUxrFmew7olBzkxE3Pm
- CgHC1vzpZ9U+cEsiOSvyR8Ks3m6iFN4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=I/vHRPUGqrgjZdNlDXp3raXYca232VkVWeH0CgAlUCo=;
+ b=XT2KGwUPA7f/b6UnCtcdRIpOEn9JijBp71jDhbTz0Nuf+EMnJcKxd0hoHrJq+7i3VUCSaF
+ 0ihK5m/9BJb3dC1meYNSNYMZirm0TOlKtZsn52yR+o1LnBSfJ50QTDqxA3iDBpS7wa9X10
+ YMSPb5TPbEOu+guh6UP/OmN8k6XeI5I=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-OvFSMotxNIOrR4ks5sDoXg-1; Wed,
- 22 Oct 2025 08:13:00 -0400
-X-MC-Unique: OvFSMotxNIOrR4ks5sDoXg-1
-X-Mimecast-MFC-AGG-ID: OvFSMotxNIOrR4ks5sDoXg_1761135178
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-E2Xfwm_SNtitePvU3StDeg-1; Wed,
+ 22 Oct 2025 08:18:57 -0400
+X-MC-Unique: E2Xfwm_SNtitePvU3StDeg-1
+X-Mimecast-MFC-AGG-ID: E2Xfwm_SNtitePvU3StDeg_1761135536
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7BEA1801376; Wed, 22 Oct 2025 12:12:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5021119560B4; Wed, 22 Oct 2025 12:12:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 94B9921E6A27; Wed, 22 Oct 2025 14:12:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  berrange@redhat.com,
- eduardo@habkost.net,  philmd@linaro.org
-Subject: Re: [PATCH 3/3] qdev: Legacy properties are now unused, drop
-In-Reply-To: <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Wed, 22 Oct 2025
- 15:13:20 +0400")
-References: <20251022101420.36059-1-armbru@redhat.com>
- <20251022101420.36059-4-armbru@redhat.com>
- <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
-Date: Wed, 22 Oct 2025 14:12:54 +0200
-Message-ID: <87ms5jf83d.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C76A1954190; Wed, 22 Oct 2025 12:18:56 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.12])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 355891800451; Wed, 22 Oct 2025 12:18:53 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 02/12] vfio/cpr-legacy: drop an erroneous assert
+Date: Wed, 22 Oct 2025 14:18:36 +0200
+Message-ID: <20251022121846.874152-3-clg@redhat.com>
+In-Reply-To: <20251022121846.874152-1-clg@redhat.com>
+References: <20251022121846.874152-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,46 +85,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-> Hi
->
->
-> On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->
-> I don't think we have much reasonable way to use those "legacy-*"
-> properties from qom-get and similar, so it's probably ok to just
-> remove them without deprecation.
+vfio_legacy_cpr_dma_map() is not only used in post_load on destination
+but also error recovery path on source side. Assert it for destination
+is wrong.
 
-Almost all of them are unreadable via qom-get:
+Fixes: 7e9f21411302 ("vfio/container: restore DMA vaddr")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
+Link: https://lore.kernel.org/qemu-devel/20250928085432.40107-3-zhenzhong.duan@intel.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/cpr-legacy.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-    (qemu) qom-get /machine/unattached/device[3]/pm bus
-    "/machine/i440fx/pci.0"
-    (qemu) qom-get /machine/unattached/device[3]/pm legacy-bus
-    Error: Property 'PIIX4_PM.legacy-bus' is not readable
-
-Same for all the other properties where the qdev property doesn't have a
-.get().
-
-Only the ones with a .print() are readable, i.e. only PCI address
-properties:
-
-    (qemu) qom-get /machine/unattached/device[3]/pm addr
-    11
-    (qemu) qom-get /machine/unattached/device[3]/pm legacy-addr
-    "01.3"
-
-PATCH 2's commit message explains why.
-
-If a deprecation period is wanted, I'll replace this patch.
-
-If not, I can work the above into the commit message.
-
-> Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-Thanks!
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index b4581e8f859323c1c45560f7d345b34f1ed9bd85..7184c9399128e71a658da51ba10c2440f1e54d92 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -52,8 +52,6 @@ static int vfio_legacy_cpr_dma_map(const VFIOContainer *bcontainer,
+         .size = size,
+     };
+ 
+-    g_assert(cpr_is_incoming());
+-
+     if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map)) {
+         return -errno;
+     }
+-- 
+2.51.0
 
 
