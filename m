@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2C4CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F156CCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBe4j-0001bC-HW; Wed, 22 Oct 2025 15:00:47 -0400
+	id 1vBe50-0001iX-9k; Wed, 22 Oct 2025 15:01:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBe4h-0001a8-82
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:43 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBe4j-0001bM-FE
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:46 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBe4f-000658-1l
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:42 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-475c696ab72so6557335e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:00:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBe4h-00066f-RF
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:45 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-784807fa38dso66326607b3.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761159639; x=1761764439; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1761159642; x=1761764442; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2IfWHImcaqyKSRvjEy3I4vyXN8NDG7NL01bd1QTvyuI=;
- b=iORlB/jcl6ti7/slU9+ykx5xj0/+TKdQQtKDmSmHqUScV/3ZnI/phEKFWcHyrk8dge
- y0nmLdaDbMYneX2E+a8oObmzpooCPMW3D/0NSNMmjta9oVzUEfuqimOwZf5FLr/cl1Yd
- fIP1JebAOfakhyUvsKJH0OQu4lTkGSuk/oEHgMve7dpKEi9aa/Q7rpKiEjQzkCoMipz+
- 8XKsJOLGTcxbHU+5IcVLnfsBxzcrSFHwvOI2RfoMmVB4+VocNhh1VGkKPg+08fYUGSsq
- aN1wvPaa6E7JCAHp/YAbda2q9LYGJqa+BAc1ZWJGdjwpJ+ULzpqoAcgW+/iX/u9NRVLu
- jzpA==
+ bh=xNtQODdDeKe2RwUnE/y4c0CBppMhFRfl2cE43QP9v1g=;
+ b=Gpk4WkGFDE+Fo/LkEpv0na76AzQtjGkOC4YfwJaJq/GBF5rbKllywjUwVpYmqSRThI
+ hDbt5sDLMRchyeET/EDvxkEgA+hdDxzXxXVbQNyCbXgNdo9kn70tOLWAbIG+UzAoQzgO
+ T5rdRWFEfJm6+Gd1eCQfv2UhOKIcZLkG4vr2c0kRVcSY3x15KMdW4DS8vUwFQ9tjUV+x
+ 3xVBuF4S1kw6/A2GQmos5RPVh3dtc55bRAWfwR8n4ewHuCbNMzaOzMKOGULdz1bc+tmB
+ RNNIdxHUUV55SAlqLxpXCuBoi/ml+KKw/7cB9/NCr5XNqMS4Jru7B6mZPDbtBqXxtRVh
+ AcYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761159639; x=1761764439;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761159642; x=1761764442;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2IfWHImcaqyKSRvjEy3I4vyXN8NDG7NL01bd1QTvyuI=;
- b=satHjiTpM75IKh30Ktkzu5bGLJmBWgwZI4s78dIB3fvAs2pYV/qSBDQFLx8wKJwi2z
- eSiABr1/Z+H5Z9Kkrv/mrNf4ZjgJVwUZ77RkK2KXd+dqgREs3DmvrmmOUZgXZT9xo53i
- fS+ZYwZl0Jx87S3gS+VYsJrsSIGdDRiR18YGwZGjPLFPJOUsuAV3RNOity463FeWdhT2
- uWYQEAtghlPlNTE/QJOAe9GbXX4X3IkyEwByUo+9fEvHu8NEz/ETmSEFovlIxCjrQvMk
- SgovpVubYQOv3M/djJwdDplzL/eVJ0U2MBVrGp9DgA3LeeEma/hZmRtfHIq+KYaGvJeW
- 6gZA==
+ bh=xNtQODdDeKe2RwUnE/y4c0CBppMhFRfl2cE43QP9v1g=;
+ b=WdQWWoVgEQXmVYxvMnStzquf0p1QqU8sOdNBxUOfR7ZtH+s3yUC5m4Z8PgR4GeI5Yw
+ eTpbga5sZnX+re3LWPFhD15BhWNtt2SYH540UC+0vcJwaj25+ko0ZvHM//egBOM0SU8Y
+ Z/1xawfCqnI+9Ud90JnqU7htwx08F1CO6hy3hpg4gy4uTTLHlKLaqxJjPonDn1aVmR5N
+ 8Z/lNj1Qkwdn2H9o9WNvyTkDEVpXN72Yvd8PmcpjZp6u/B2RMxoEvDYrPrn0G8Qq8A5j
+ AGZHU24nBDTbcVLuldH2zVDoKf52K1eH6nQbyKvUeDfV9x0nH7VEX4FKsOanaPKj3gI9
+ NHMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgypYIG2gobtjeRtAIe9jp/L0pg3YRt57rbXKDzsJOx/gqtQfLSE/d+OYC7JvgkH2tR681f+ADTeN6@nongnu.org
-X-Gm-Message-State: AOJu0YwMJkv0vQdfbmbeIQ7cO9feXWuXF9ez7YY57arqeDECVBnBlhXB
- SL3dgHSSe6vHJN0IUxigQ6tT2RIuZ/+Qf+QWIvDoXGQDGdOo2MQ0DQhegLkHd6UxsSE=
-X-Gm-Gg: ASbGncuHQgzkoF9ziMc29x7n254VF788HhFYVSEr5cgTAwJf/ml9/dP0YZUQPVoPxe8
- pKOhaRbAgRA1ddpyHGca8YkVGKcA09aJea+S3EfHzjgsWW16EzAvUCkUQWD9FWmITNsRM1mQhMo
- DJ494q+1gWQX004r8zvJUrUwEPLDVL0zhG8hDueesKm0Gn4QSnQeFrzPOwBzW4E7iFkTCT8Jtkk
- MvmDswpuAA535jVBZDmHWAkZ6r2pepHtbxM4kzPAlZx91UiwtTKgMIU8U8wD1O7YYSFz54/euYA
- +R3BqATeav1Ew+wHnd4e+IvtBjYzhZAxgXVEOXb6uwEEgXcBCnv0KOaFEZivM6eTlzxIA1tQvFY
- hZYmBA22TFyLi6AeNSBt1kBdmKCUP/zi2QR2ysmKzyI7eEd3T6UbUtOVMiLo6V065UM4Ion0SrT
- yYXcxDh1WY2E0ARfyMvT3lv+Q+P/suakkE0RdpPGTMH68=
-X-Google-Smtp-Source: AGHT+IFZu+BOH2IdWbpF3UTHfMahdXQwUmkMifbliwRjHLrW2rXpl0TcCPpBUwvFFrSrT+VtnH/k0g==
-X-Received: by 2002:a05:600c:450a:b0:471:21:554a with SMTP id
- 5b1f17b1804b1-4711787c0c0mr131881085e9.13.1761159639031; 
- Wed, 22 Oct 2025 12:00:39 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c428dafesm55172395e9.6.2025.10.22.12.00.38
+ AJvYcCVvxad42V3uCh7pAiKt/pRKbMxP4qDC7rUsvqCN6QLmikMz3zMXSBHQvjWvyuQcpW9eJcbxeoOFOenq@nongnu.org
+X-Gm-Message-State: AOJu0YxyytWk1TxXN+b+SoLFgUftvaCdxlJZFph3mbpkSIVLfRbrg6qP
+ DzsNMmuoASYSORw0K1lJvBS70IJwSEWERutx0LtxvVr+umd4OzUmN//bhJDRXuZtI58=
+X-Gm-Gg: ASbGncsq6EiecpaLNsTMBrLUZ+Doa0HND7YKcCvrXAuwbAlGl5RE6ztZ27DLMEcUrd9
+ O/M0/yZYaH6qkr9seGKboGpRcMwyh1CYJJYUqFwwmU4cWUl8iMeaDaqjYeECfyRzZwWmkC9K/28
+ AGj5qyOY4vk7w538CCW9VK16sBnsqkXY6hIQEUJIlxreyoErBBXlQovNq+MhpjNVkhpRZE5eSFz
+ wnHksDnVBJhFlR2ZBRDVAZPr6Tt7mOoLfYBO34qujMsNjghEKXRWER2PmOZi47KRo5o+WnXwu04
+ ML1jCmBuLgUVUo/zZGRwGBdG2esxmbbXls94X0ti17NRIFfN200YUPuKMKtzkLylQcVan3Fac3s
+ NNh8GrWdP9lv9Xi+5UZESy+ZJqBxydBkoHfu8pvJsRNaOBJGGRxMJ7sax0lsJt4TzOGWZsEwpND
+ fcQFDxc2uxcSCjKTego7cctkc8E6BLJC0HDp1SdwvZ3jkNiHCwxdef7NaNZVOCADdX3DA49MM=
+X-Google-Smtp-Source: AGHT+IFb11/9qSj3V54bLxAyxEZ1F23hfaAVA2M8romJN7f78DRLtGsSPRK19RX3HDwIDWwOrtD4hA==
+X-Received: by 2002:a05:690c:608a:b0:785:c770:fd97 with SMTP id
+ 00721157ae682-785c7710004mr18956107b3.69.1761159642337; 
+ Wed, 22 Oct 2025 12:00:42 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3?
+ ([2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-785cd6c8a46sm89647b3.42.2025.10.22.12.00.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 12:00:38 -0700 (PDT)
-Message-ID: <6c4d97fc-56fc-417c-9f2b-6a89c9c86591@linaro.org>
-Date: Wed, 22 Oct 2025 21:00:37 +0200
+ Wed, 22 Oct 2025 12:00:41 -0700 (PDT)
+Message-ID: <a6755f4f-1d65-488f-8f02-a3851c058d17@linaro.org>
+Date: Wed, 22 Oct 2025 14:00:38 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: Set FPCR exception flag bits for non-trapped
- exceptions
+Subject: Re: [PATCH 09/10] hw/hppa: Require SeaBIOS version 19 for 715 machine
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+References: <20251017200653.23337-1-deller@kernel.org>
+ <20251017200653.23337-10-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Gabriel Brookman <brookmangabriel@gmail.com>
-References: <20251017085350.895681-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251017085350.895681-1-peter.maydell@linaro.org>
+In-Reply-To: <20251017200653.23337-10-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,57 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Gabriel
-
-On 17/10/25 10:53, Peter Maydell wrote:
-> In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
-> we added the code for setting up the registers correctly on trapping
-> FP exceptions, we accidentally broke the handling of the flag bits
-> for non-trapping exceptions.
+On 10/17/25 15:06, deller@kernel.org wrote:
+> From: Helge Deller<deller@gmx.de>
 > 
-> In update_fr0_op() we incorrectly zero out the flag bits and the C
-> bit, so any fp operation would clear previously set flag bits. We
-> also stopped setting the flag bits when the fp operation raises
-> an exception and the trap is not enabled.
+> Require at least SeaBIOS version 19 before adding the 715 machine.  This is
+> required, because the machine inventory of the 715 is provided by the SeaBIOS
+> firmware.
 > 
-> Adjust the code so that we set the Flag bits for every exception that
-> happened and where the trap is not enabled.  (This is the correct
-> behaviour for the case where an instruction triggers two exceptions,
-> one of which traps and one of which does not; that can only happen
-> for inexact + underflow or inexact + overflow.)
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Helge Deller<deller@gmx.de>
 > ---
->   target/hppa/fpu_helper.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
-> index 45353202fae..2d272730f60 100644
-> --- a/target/hppa/fpu_helper.c
-> +++ b/target/hppa/fpu_helper.c
-> @@ -94,7 +94,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
->   {
->       uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
->       uint32_t hard_exp = 0;
-> -    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
-> +    uint32_t shadow = env->fr0_shadow;
-> +    uint32_t to_flag = 0;
->       uint32_t fr1 = 0;
->   
->       if (likely(soft_exp == 0)) {
-> @@ -122,6 +123,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
->               fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
->           }
->       }
-> +    /* Set the Flag bits for every exception that was not enabled */
-> +    to_flag = hard_exp & ~shadow;
-> +    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
-> +
->       env->fr0_shadow = shadow;
->       env->fr[0] = (uint64_t)shadow << 32 | fr1;
->   
+>   hw/hppa/machine.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
