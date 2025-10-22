@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CFBCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 23:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2A1CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 23:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBijI-0004iF-C6; Wed, 22 Oct 2025 19:58:56 -0400
+	id 1vBijo-0005Ey-O9; Wed, 22 Oct 2025 19:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBijB-0004fn-7Q
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:58:50 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1vBijn-0005BA-6h
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:59:27 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBij7-0003ZA-Be
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:58:48 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-78485808eb3so1822427b3.3
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 16:58:45 -0700 (PDT)
+ id 1vBijj-0003dv-Jo
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:59:26 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-63e35e48a25so212410d50.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 16:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761177523; x=1761782323; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761177561; x=1761782361; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V9uzGB6Y2KUsQdK7LRQHU0rGmgGqs1b/9+E+uxY6U7c=;
- b=OoOJhLzA3S87VFgDa+q9NSys4rQMRLp8LcSILIWzEwS483jQzMUXBkg7PbTLVBpOOg
- v9O2PWZx6q4B1iJ36c3pZ/NryER4OHoSh2nZJwH/ntAmPrVES8orsfYZyHP8/UIsAjeR
- aUbEet0gnTVndQniEfKcZcZYEDdUZa/4oV7rb8VRdfQg45kpIn5bmHlU1Mi/po0dg02m
- 7OJd06fNd6nXFnOJDjlNhhWJ2iHwtaad0TQJrr6Z/JiR0AaNkWHs0A3GVqKTIZW8+GP3
- GandM2urmJ2pN7U6JhoKMM/AABr2FWps2Q5BSfLl+KVXI26DFRSQ05qcug71FeP27O3p
- Pjyg==
+ bh=FLWZ+0qHFrVJn8iYqQ+SA8YPdrOvX0d5ClWfqeLAdUo=;
+ b=K2uaMm04QdErIHQkcLqV64L2YnQz/DELM3wzJ0USLBJ8jh0EX4rng/48OWj97xVix7
+ fQ1lshgeCdirNvPjihQiUqSFYgtmQTonnYBhFJa181CaoJN/HtXh2rA3v4zi+7kdQqh9
+ /oocpRvGYytV6rlVjgYIrqzEPolDY3jnOMAMMXYoUv/unbB3MvLvoKu/hnzd0iPOM8DC
+ g2CyN32kcYQaTQuWg4IEd0XyQkKVQd5waWy7OfDyQZ9zsbIaNOmOX7l7YMX0yQ9ry41o
+ nBFqcYySwvPQinBmyV5+JXZZO29DV6W7FgD6w5DSBdWZc/KwNC7etgk26kIlB/08sK1I
+ 9tog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761177523; x=1761782323;
+ d=1e100.net; s=20230601; t=1761177561; x=1761782361;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V9uzGB6Y2KUsQdK7LRQHU0rGmgGqs1b/9+E+uxY6U7c=;
- b=D/yrn8q8PlRC8p3yp/fkHB9+E4iVUh2Nzi8GyxynLDRIL58zcY+L7i45ib0cr5zatY
- hEUNrPWL/lUpFGbqjah92hyolR0Nj4mJyOxsRgOrr9/wOzCBDuDVj3TaQAdcXuSYGYCY
- 6KxH2LmOUPAZhYKKwxffSpIrGvtiE03uCSgXALXnBlzpgOgNdJicUlQN6bheeEfw/rAv
- hB+riAR0MgZejvAwZ+fMNzRXEH1GDjkXJc0Uri5RBfeZO2aQPUz/Q2wSNFuQWAfc/5ns
- ru5bv7YGTkAVGUyjEr8C0OaN1jIP1QBXFEecsX6YZiY4D1/VgODv1UqyOVBym5JDFBGf
- hzmA==
-X-Gm-Message-State: AOJu0Ywd5C3nMO0gfad2jwuUYQ/yQ8q6nYZTb6Y2SL/YpuWbfG4Ojxza
- YH7ZOFL5zTGyU0M0vJhsr3TqAoXsYtzJdU15wdAYV372gh1kdGCGIhxl50S6169VKFpFKDneoTF
- 60oMgnQJVqY0cNYZwT0B9xeaTB2LfPDs=
-X-Gm-Gg: ASbGnctlNaJNYnvPPwMCKEJBvsIoR3VBZ/xEs5PdLY6e09rjwo5OiZChl8uxJOTLTGv
- bJoIjw259Z71kRJS1doYPaYd6To/XifbTW4opuRVas1YzPePoh4xl4YSugEYaNhGrC6QfxYovc5
- ZfAqx/VX1QOu3A4IgGorU8wHnkwSonIJDvGTfdRZZKVm92O3mfB8JWYaKoCgH8Fq/aKvAmLFK6p
- sX5/3RupaPTUg8ORz3eJh9x7q9omfVbm/ZmrAyhqZPlr50wi/vp363knvev5o7ZaKMiTjyW3zkm
- p8Wqg/hiRXsMYXQ=
-X-Google-Smtp-Source: AGHT+IEbtD+bNCOZiRB0RLxw3rwl9TuaA4hZUnFWW7qt2B85CAQhPR4iteZru6PeNMzZIRT3C1feTfP8wOLLKu2htxU=
-X-Received: by 2002:a05:690e:11cb:b0:63b:6b56:e6af with SMTP id
- 956f58d0204a3-63e161993damr15859662d50.36.1761177523490; Wed, 22 Oct 2025
- 16:58:43 -0700 (PDT)
+ bh=FLWZ+0qHFrVJn8iYqQ+SA8YPdrOvX0d5ClWfqeLAdUo=;
+ b=NcGNjWyfuwjRCq6ZJYqUpUFuwN8AMHLp6v3ZUIPuG594siWNloKRFEgO8CulGJc3Ip
+ GwPZZp6k8hoHYPwySep0vedjJB5BddAYghm0oEFw0xjtu+fYUNmfkQMDxFTEQWijvjMd
+ lMkeJlaxsMJZfSYfv6NF6AqT/FZFrvsTf8KyAENu0bXyWj7kpXCFRqATRc+uA5eMFOOL
+ sJgsnOsMJjljw6uCyXMNYkCEoziZf2KnEQCr0kkZ0yjGc41ALAAtmqTpWvTek1QNwd+8
+ 9tdgA2auvSNT/GyiOXLAOLl7UW/9AkIukr2Jn/ir93Em3Nr2ia+SThvR8LI3OunyvLcU
+ yPvQ==
+X-Gm-Message-State: AOJu0YyR7MZ81aD7/gLWyPk96QcqhmVthH8DUjCJj2LygjrwZIzgIcU7
+ Il5nVPOsYgPh2zBFEI7e8wPDdu0K9u+gIkGlY+uK1udjwnS0PW6MgsJ3tWdlacMJLtSKUjMQuMY
+ HkfyBauklsyLAajEuIsJEZrQi0+3Jf2U=
+X-Gm-Gg: ASbGncuegRyCaB/NQFsITuW2YIlx2O8AZvmuJbPXF8NvNNO6YMLKg9aRFCkerN1t18S
+ N7c3xKnFeQ59gtDK1qj7kGDvUfQNIxH+goejHMWp4anaxGuJBHZdzKz+26iGNcVdc+CCAB+XP17
+ 6t2h4Sz/Td5GE+esYEdxaO4tIQ3ClorGsquDEf+hNW99aa3D8RXRW/yDDKMUndse8tjTLmIPxJ4
+ BPzma6TSqqPL8crfKl4wwMNGnChgN/enfBhTVsJYxN0152X8sRJCDjp0c96alr2NmEp29Ze2vPF
+ 4FG5dV06Uyq08M7Z2hXfI7lbVvub5yp1eGC4
+X-Google-Smtp-Source: AGHT+IGdLMq+Ap7ju7sJ6s9eL17YCINNsFADhFbWqkDLYjjFfE8TxZx8Kdq4CvGKT2zFb9Ms5+T/12IeML+dZ6YhlWg=
+X-Received: by 2002:a05:690e:2514:20b0:63e:8e4:4774 with SMTP id
+ 956f58d0204a3-63e16187fccmr15576486d50.15.1761177561160; Wed, 22 Oct 2025
+ 16:59:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251022125643.588947-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20251022125643.588947-1-dbarboza@ventanamicro.com>
+References: <20251022124340.493358-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20251022124340.493358-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 23 Oct 2025 09:58:15 +1000
-X-Gm-Features: AS18NWAIQNHQCh5Mp94JgHsjlcQ18pwwA-U8wkyMHM2VL46LfaHW-8rU6YMk-dk
-Message-ID: <CAKmqyKMHUeL+ScaBJKdgPmM=onS5qnNNR4Z0qWYf3c9zfOkbbg@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv/riscv-qmp-cmds.c: coverity-related fixes
+Date: Thu, 23 Oct 2025 09:58:53 +1000
+X-Gm-Features: AS18NWCRCHvvguLVR0biTYx2m7Tfk0lUfAX2A7d1Et40qxzmfVIos9IjfTlCd2I
+Message-ID: <CAKmqyKOqKh2_8C+nfrKOMSmVegAhXArfYp1AveJYTi=emXYidQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: fix riscv_cpu_sirq_pending() mask
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- Peter Maydell <peter.maydell@linaro.org>
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=alistair23@gmail.com; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=alistair23@gmail.com; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,34 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 10:57=E2=80=AFPM Daniel Henrique Barboza
+On Wed, Oct 22, 2025 at 10:45=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Coverity CID 1641401 reports that, in reg_is_ulong_integer(), we're
-> dereferencing a NULL pointer in "reg1" when using it in strcasecmp()
-> call. A similar case is reported with CID 1641393.
+> We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
+> pending interrupts without apparent reason. There's no special treatment
+> for these ints as far as the spec goes, and this filtering is causing
+> read_stopi() to miss those VS interrupts [1].
 >
-> In theory that will never happen - it's guaranteed that both "reg1" and
-> "reg2" is non-NULL because we're retrieving them in compile-time from
-> static arrays. Coverity doesn't know that though.
+> We shouldn't return delegated VS interrupts in S-mode though, so change
+> the current mask with "~env->hideleg". Note that this is the same
+> handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
 >
-> To make Coverity happier and add a bit more clarity in the code,
-> g_assert() each token to make it clear that those 2 values aren't
-> supposed to be NULL ever. Do that in both reg_is_ulong_integer() and
-> reg_is_u64_fpu().
+> [1] https://gitlab.com/qemu-project/qemu/-/issues/2820
 >
-> We're also taking the opportunity to implement suggestions made by Peter
-> in [1] in both functions:
->
-> - use g_strsplit() instead of strtok();
-> - use g_ascii_strcasecmp() instead of strcasecmp().
->
-> [1] https://lore.kernel.org/qemu-devel/CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+=
-A-VkQS5V6f0+BFRAA@mail.gmail.com/
->
-> Coverity: CID 1641393, 1641401
-> Fixes: e06d209aa6 ("target/riscv: implement MonitorDef HMP API")
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Thanks!
@@ -135,62 +121,25 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
+>  target/riscv/cpu_helper.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
-> Changes from v1:
-> - use g_auto(GStrv) instead of g_autofree
-> - v1 link: https://lore.kernel.org/qemu-riscv/20251022110524.483588-1-dba=
-rboza@ventanamicro.com/
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 3479a62cc7..360db133e2 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
 >
+>  int riscv_cpu_sirq_pending(CPURISCVState *env)
+>  {
+> -    uint64_t irqs =3D riscv_cpu_all_pending(env) & env->mideleg &
+> -                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
+> +    uint64_t irqs =3D riscv_cpu_all_pending(env) & env->mideleg & ~env->=
+hideleg;
+>      uint64_t irqs_f =3D env->mvip & env->mvien & ~env->mideleg & env->si=
+e;
 >
->  target/riscv/riscv-qmp-cmds.c | 22 ++++++++++++----------
->  1 file changed, 12 insertions(+), 10 deletions(-)
->
-> diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.=
-c
-> index c499f9b9a7..d5e9bec0f8 100644
-> --- a/target/riscv/riscv-qmp-cmds.c
-> +++ b/target/riscv/riscv-qmp-cmds.c
-> @@ -273,12 +273,13 @@ static bool reg_is_ulong_integer(CPURISCVState *env=
-, const char *name,
->      }
->
->      for (int i =3D 0; i < 32; i++) {
-> -        g_autofree char *reg_name =3D g_strdup(reg_names[i]);
-> -        char *reg1 =3D strtok(reg_name, "/");
-> -        char *reg2 =3D strtok(NULL, "/");
-> +        g_auto(GStrv) reg_name =3D g_strsplit(reg_names[i], "/", 2);
->
-> -        if (strcasecmp(reg1, name) =3D=3D 0 ||
-> -            (reg2 && strcasecmp(reg2, name) =3D=3D 0)) {
-> +        g_assert(reg_name[0]);
-> +        g_assert(reg_name[1]);
-> +
-> +        if (g_ascii_strcasecmp(reg_name[0], name) =3D=3D 0 ||
-> +            g_ascii_strcasecmp(reg_name[1], name) =3D=3D 0) {
->              *val =3D vals[i];
->              return true;
->          }
-> @@ -294,12 +295,13 @@ static bool reg_is_u64_fpu(CPURISCVState *env, cons=
-t char *name, uint64_t *val)
->      }
->
->      for (int i =3D 0; i < 32; i++) {
-> -        g_autofree char *reg_name =3D g_strdup(riscv_fpr_regnames[i]);
-> -        char *reg1 =3D strtok(reg_name, "/");
-> -        char *reg2 =3D strtok(NULL, "/");
-> +        g_auto(GStrv) reg_name =3D g_strsplit(riscv_fpr_regnames[i], "/"=
-, 2);
-> +
-> +        g_assert(reg_name[0]);
-> +        g_assert(reg_name[1]);
->
-> -        if (strcasecmp(reg1, name) =3D=3D 0 ||
-> -            (reg2 && strcasecmp(reg2, name) =3D=3D 0)) {
-> +        if (g_ascii_strcasecmp(reg_name[0], name) =3D=3D 0 ||
-> +            g_ascii_strcasecmp(reg_name[1], name) =3D=3D 0) {
->              *val =3D env->fpr[i];
->              return true;
->          }
+>      return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
 > --
 > 2.51.0
 >
