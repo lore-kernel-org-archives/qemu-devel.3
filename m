@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41AE1CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FE2CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:13:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXhH-0007KX-HC; Wed, 22 Oct 2025 08:12:08 -0400
+	id 1vBXiH-000865-VS; Wed, 22 Oct 2025 08:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vBXhE-0007JW-1s
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:12:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBXiG-000841-7F
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:13:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vBXhC-0006KD-5Q
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:12:03 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBXiD-0006Xx-P6
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:13:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761135121;
+ s=mimecast20190719; t=1761135183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O1Ns62Il11dff67zEJEgsd6ELKS8+Lx43eNF7ALkIgY=;
- b=dtOTz6WBPML9Zjl1IkDEALXHgaqQOIXzEFzf62aIwrqOQQQARq3/yDcnKpvnO1XAkgaR0/
- NtEC3ZCO+WYO8r0X2zXMHypVLgEOpZ+lLhyo9VteqX90QmEVLyZ2CHypu9sN12KRlbB9Ud
- B81YYQL3z0dWe6F2AyAwZvCwkf8fJ/8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-7wk0L4gINlqZRqdkS8T-Ig-1; Wed, 22 Oct 2025 08:10:42 -0400
-X-MC-Unique: 7wk0L4gINlqZRqdkS8T-Ig-1
-X-Mimecast-MFC-AGG-ID: 7wk0L4gINlqZRqdkS8T-Ig_1761135042
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-78e5b6f1296so197093986d6.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 05:10:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761135041; x=1761739841;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=O1Ns62Il11dff67zEJEgsd6ELKS8+Lx43eNF7ALkIgY=;
- b=RU9MEhvbmt9ZVWMZYRTC5R2IMR3rT8Q0RhxF4z8nV5mhnlSpNpxC1XiAeaAzOv2yrw
- FiRU868UeT53nJ77teKsR9qX5UxD/cm4W9+9nlmHMV5v/wpXPyJ18RGboMB+wZrnDFJH
- Idfa0zR2BncHg7IvlwuwbOnOpn2KQdWchQrT9uwNIeln8szqnQVRdRpTIvPwcdY8hDvy
- daTqFhj1oWGMze65eO4XybuMWgOnhq9Pbz6Uvzy4cca8X6BI20Xxn6Tgw29Ulkvmhaja
- MNTNI8vM6Lc6kHZCLPwmMjnIXM4D+lsOIfblhCFzTXJPm2AKi+IspF75oRTg2v3cowVu
- XzvA==
-X-Gm-Message-State: AOJu0Yyu0tdmnWEEFEdBlbZIbr4sY//OMK31uz1QkDV8rp4d3xHpzCvy
- 3U155tr46ikIw5WCRU9+lLXBaxOFZifbXhL2gJrpxfHsQ1uAINcHLwQ3uHPyKp1n7ngR3/YhPjq
- jNvCodnbw0dI8kmYFBW+HTJvir64DJs8m54e4y7GqKPbKnxdBQk3BgZ38
-X-Gm-Gg: ASbGncviHd0tj1NH9FW9LzhIcK8tj4IK2eG7s3NaOP6gsexgpe/Ey1fz9gXSkXQaqHp
- tS3kGPtHXPVhDbdjsRhJp8VUPt09v1vJyiCfkRVoOMEB+jIEvgJ2M6+6rC6HZebrjLA+A89Z6Or
- wkWIv5seRQjYRtlEV0WaH3nTCMyznUgTqhJk/Y2gZstSG0jdMWELVESqft4PTwDNa6ZeGiVdHUq
- vgLJLNNTXQwP8E/2q2HMy6WD8aC5p2yS6xZ8j+Zb5OLPIGxTH8Hzso2VO2zT0MYHBPxXHhYyG/8
- Wl0bCKfh/BwpRKX8y5tRQzEcr+C47AuB6ik2QL2VJqScD0uW043gq7OnP4a0f6BfxA4nIcFVd2Y
- AbPU=
-X-Received: by 2002:a05:6214:2a87:b0:87d:e5dd:38ae with SMTP id
- 6a1803df08f44-87de5dd40efmr84211706d6.9.1761135041678; 
- Wed, 22 Oct 2025 05:10:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqCDslirHqdpfO22qOm9tEQYWnZ7iFtFe7CbTLed/NQcipuaiCs18Kd9HIt0acLFNIpHzwow==
-X-Received: by 2002:a05:6214:2a87:b0:87d:e5dd:38ae with SMTP id
- 6a1803df08f44-87de5dd40efmr84211356d6.9.1761135041314; 
- Wed, 22 Oct 2025 05:10:41 -0700 (PDT)
-Received: from leonardi-redhat ([151.29.47.252])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-87d028ad9a7sm86701066d6.48.2025.10.22.05.10.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 05:10:41 -0700 (PDT)
-Date: Wed, 22 Oct 2025 14:10:37 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: Re: [PATCH v4 2/5] igvm: fix off by one bug in memmap entry count
- checking
-Message-ID: <fjw5ao27rwi2gaujth7xt22fjylpwoqd6qfuucltwpoznhjkx5@givogb6n44tt>
-References: <20251022084439.242476-1-kraxel@redhat.com>
- <20251022084439.242476-3-kraxel@redhat.com>
+ bh=N3N+OkwY0E4YV57KWU839CSjIKngYfZ1ERB/MbF1Y4o=;
+ b=E5Wa/g1JI1q5/Tj4zEQc1/FBBcOomEymZZf+yIXNHSzXRjKdGSHzZ/qVt84ItYVsIC/7G0
+ jw6S2muSyVGJzN1rpRNWMFCKOrZ7rF33mdj5s/JbUb5fML++boNWUxrFmew7olBzkxE3Pm
+ CgHC1vzpZ9U+cEsiOSvyR8Ks3m6iFN4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-OvFSMotxNIOrR4ks5sDoXg-1; Wed,
+ 22 Oct 2025 08:13:00 -0400
+X-MC-Unique: OvFSMotxNIOrR4ks5sDoXg-1
+X-Mimecast-MFC-AGG-ID: OvFSMotxNIOrR4ks5sDoXg_1761135178
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7BEA1801376; Wed, 22 Oct 2025 12:12:57 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5021119560B4; Wed, 22 Oct 2025 12:12:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 94B9921E6A27; Wed, 22 Oct 2025 14:12:54 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  berrange@redhat.com,
+ eduardo@habkost.net,  philmd@linaro.org
+Subject: Re: [PATCH 3/3] qdev: Legacy properties are now unused, drop
+In-Reply-To: <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Wed, 22 Oct 2025
+ 15:13:20 +0400")
+References: <20251022101420.36059-1-armbru@redhat.com>
+ <20251022101420.36059-4-armbru@redhat.com>
+ <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
+Date: Wed, 22 Oct 2025 14:12:54 +0200
+Message-ID: <87ms5jf83d.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251022084439.242476-3-kraxel@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,30 +90,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 10:44:36AM +0200, Gerd Hoffmann wrote:
->Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->---
-> backends/igvm.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/backends/igvm.c b/backends/igvm.c
->index 723d45b755a0..055bbba745ad 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -567,7 +567,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
->
->             retval = ctx->cgsc->get_mem_map_entry(entry, &cgmm_entry, errp);
->             while (retval == 0) {
->-                if (entry > max_entry_count) {
->+                if (entry >= max_entry_count) {
->                     error_setg(
->                         errp,
->                         "IGVM: guest memory map size exceeds parameter area defined in IGVM file");
->-- 2.51.0
->
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
 
-LGTM!
+> Hi
+>
+>
+> On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>
+> I don't think we have much reasonable way to use those "legacy-*"
+> properties from qom-get and similar, so it's probably ok to just
+> remove them without deprecation.
 
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Almost all of them are unreadable via qom-get:
+
+    (qemu) qom-get /machine/unattached/device[3]/pm bus
+    "/machine/i440fx/pci.0"
+    (qemu) qom-get /machine/unattached/device[3]/pm legacy-bus
+    Error: Property 'PIIX4_PM.legacy-bus' is not readable
+
+Same for all the other properties where the qdev property doesn't have a
+.get().
+
+Only the ones with a .print() are readable, i.e. only PCI address
+properties:
+
+    (qemu) qom-get /machine/unattached/device[3]/pm addr
+    11
+    (qemu) qom-get /machine/unattached/device[3]/pm legacy-addr
+    "01.3"
+
+PATCH 2's commit message explains why.
+
+If a deprecation period is wanted, I'll replace this patch.
+
+If not, I can work the above into the commit message.
+
+> Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+Thanks!
 
 
