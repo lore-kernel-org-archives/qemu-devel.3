@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E0CCCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44DACCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:06:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBWaM-0001Y3-II; Wed, 22 Oct 2025 07:00:54 -0400
+	id 1vBWf6-0005ba-8Y; Wed, 22 Oct 2025 07:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBWaI-0001WO-8f
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:00:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBWaA-0005d2-Cv
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:00:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761130840;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/bvTOU0HYOLSAJaQ2Au/rTDDGroYRoRbK9NjFAix4UU=;
- b=IpIO48n4XZuHizGcuDTdIRy0U2FJvykvvYYMZqq8e0b29H7cmAI2VVheYygtkQCPwws8nA
- dvyefwU3daEzU2q+lxqeK8rDXrWTBrCZ4AKZzQ7YFKczDBehBOKXtyo4x+XLvve/5ch41d
- Q6xLmcXKhVLJN2B6X6993AAqv6eGUDM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-YhbvZUUOOl6vF_HyeKMIfw-1; Wed,
- 22 Oct 2025 07:00:37 -0400
-X-MC-Unique: YhbvZUUOOl6vF_HyeKMIfw-1
-X-Mimecast-MFC-AGG-ID: YhbvZUUOOl6vF_HyeKMIfw_1761130835
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5275F19560B4; Wed, 22 Oct 2025 11:00:35 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27601180057E; Wed, 22 Oct 2025 11:00:34 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 2A30018003AA; Wed, 22 Oct 2025 13:00:28 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vBWf3-0005av-Lm
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:05:45 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vBWez-0006dY-U8
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:05:44 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-27eceb38eb1so68617735ad.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1761131139; x=1761735939; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FUOfyFuvAmLFwE8+R36LTL7/r9hMJZoegojkEohliwU=;
+ b=aJkyRifhrBCSoHAZNB6jES6HNGbAuDmGbisemd+xZugZns2yRuqT0JgeZ3COv6fMr4
+ r+uui4pmtQlEbiZA/kM6/HQqEgQ89GrWUh7Ng7VPNSv6biAdXev8vsJzEKt7j1oFLbNT
+ jNzxBfyLZcQAHp6u3MWp83oFVxrB4pVSfACGr7QTYRDA6+S3OeSF70hdRI0xOOuO/05R
+ 151ji58Ies8p579/FiZ+67nTcugJV1yoU3NgD76myg3F5aG9F48Ve7X5ajFcwSj3k+zJ
+ BkcwuwcSN6Bi6B5M/f6Mbh+MGSecyOktxZrf6FQ47X2LhaJYBOJXJdzLGBQwijfGMgi+
+ UeLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761131139; x=1761735939;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FUOfyFuvAmLFwE8+R36LTL7/r9hMJZoegojkEohliwU=;
+ b=cfcyofsPqRZOFRgdFUK6O2e8O6KqoYAus8r4t/YBZngzaKQ6RqLY6mPXlcum7S2yEU
+ 7Gj9knuf6dufnWBMvcyOc0XgV2VnfmhUmfGqi6nTHjlAQBkLKSzj7izv/XweYK/TsjM1
+ 5J9wlzZ4+JARJDllYPKNmjKU3I4sDspf4TfN546HRQTZ8agfVTsdtETYlFxQPYs4uy6I
+ 3QYAMXK8OhxrSfoE8O5IJpdZL7n4UwnE2vSSfYiTOWecneuBJPJaF4ZRD0ExvLvtXOGR
+ QtXT1hrZ+4zOO9G+d0xPv9W6ERkvrbHLriKCLqrPp5oFPYy33j5lzpiYsf9WbybUhAAM
+ Jzgw==
+X-Gm-Message-State: AOJu0Yyib2O8YrxirWzeEIavzTbXfKJTuW5argK2RpSuvkaMiawiObCh
+ 0DpH3yLcVVdkARPPs47B+NrNLrRY6w8Btwl2hQsckS2sFpEGexUHpW++V0J5tnG1wAKdl0RddQ0
+ PNBiEJfI=
+X-Gm-Gg: ASbGncu/xz8HLV1yI+WLD3aviHvp4b4f3B95T9mQjnwFqwm7Un3KtjAKuKRiFKYeciV
+ PRRxDXmSlfhzZsOJrqezWnAxxButQ0PLZHdNPhPQ3vOxeCVXBTvK9EiDNc0GjQ5xVElqmIOW0gB
+ Vekb+sXG8Yw37KIFzUFwNYJVbMU4ctVqpf9ZhNs5KHMOgM4svEn+As2hvdCefgtBo9kSWftCJ2I
+ LMYNV0CEfJLrzsMtokxvRp5X5rWtFP5CC2Yz2/DsR9sfKZBw0E77jwMAXzf3M/hNeLWgCMYxarf
+ QmLv4Kfxo7rbSsCZPgl7E8lOeGqtg7iexu1MfIrxSbByboznOd1j+rhEkuZVswuy0Sop3/o7BZd
+ xcbMfzdasGjAf/wIWz5Jpz+ngQ32xladhPWF0nYFs8EZEdyLjHBPHSbKG03goIq5W4iaEimtraB
+ 7I3Ymro7LXBGjgbLIxv7LckON/pTSphBqxB02McKKhmH26HJcC+A==
+X-Google-Smtp-Source: AGHT+IENB2ljRQaNH8NbAiDcnjF9tBRKeEUswLVM0gEf8GUbCVe18uSwQ6EuoeYwduOieQIjfBosSg==
+X-Received: by 2002:a17:903:244f:b0:261:e1c0:1c44 with SMTP id
+ d9443c01a7336-290cc2f83a5mr268514345ad.40.1761131138952; 
+ Wed, 22 Oct 2025 04:05:38 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com
+ ([2804:7f0:bcc1:92d3:4170:1cad:ed8e:78ba])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2930340092dsm16897975ad.42.2025.10.22.04.05.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Oct 2025 04:05:38 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
- Fabiano Rosas <farosas@suse.de>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 2/3] hw/uefi: add 'info firmware-log' hmp monitor command.
-Date: Wed, 22 Oct 2025 13:00:26 +0200
-Message-ID: <20251022110027.441780-3-kraxel@redhat.com>
-In-Reply-To: <20251022110027.441780-1-kraxel@redhat.com>
-References: <20251022110027.441780-1-kraxel@redhat.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] target/riscv/riscv-qmp-cmds.c: coverity-related fixes
+Date: Wed, 22 Oct 2025 08:05:24 -0300
+Message-ID: <20251022110524.483588-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,84 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds the hmp variant of the query-firmware-log qmp command.
+Coverity CID 1641401 reports that, in reg_is_ulong_integer(), we're
+dereferencing a NULL pointer in "reg1" when using it in strcasecmp()
+call. A similar case is reported with CID 1641393.
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20251017115006.2696991-3-kraxel@redhat.com>
+In theory that will never happen - it's guaranteed that both "reg1" and
+"reg2" is non-NULL because we're retrieving them in compile-time from
+static arrays. Coverity doesn't know that though.
+
+To make Coverity happier and add a bit more clarity in the code,
+g_assert() each token to make it clear that those 2 values aren't
+supposed to be NULL ever. Do that in both reg_is_ulong_integer() and
+reg_is_u64_fpu().
+
+We're also taking the opportunity to implement suggestions made by Peter
+in [1] in both functions:
+
+- use g_strsplit() instead of strtok();
+- use g_ascii_strcasecmp() instead of strcasecmp().
+
+[1] https://lore.kernel.org/qemu-devel/CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com/
+
+Coverity: CID 1641393, 1641401
+Fixes: e06d209aa6 ("target/riscv: implement MonitorDef HMP API")
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- include/monitor/hmp.h |  1 +
- hw/uefi/ovmf-log.c    | 27 +++++++++++++++++++++++++++
- hmp-commands-info.hx  | 13 +++++++++++++
- 3 files changed, 41 insertions(+)
+ target/riscv/riscv-qmp-cmds.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 897dfaa2b6d9..83721b5ffc6d 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -179,5 +179,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
- void hmp_info_mtree(Monitor *mon, const QDict *qdict);
- void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
- void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
-+void hmp_info_firmware_log(Monitor *mon, const QDict *qdict);
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index c499f9b9a7..7bde7090ab 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -273,12 +273,13 @@ static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
+     }
  
- #endif
-diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-index 0d4bd503a06a..fe8acbd19236 100644
---- a/hw/uefi/ovmf-log.c
-+++ b/hw/uefi/ovmf-log.c
-@@ -231,3 +231,30 @@ FirmwareLog *qmp_query_firmware_log(Error **errp)
-     ret->log = g_base64_encode((const guchar *)log->str, log->len);
-     return ret;
- }
+     for (int i = 0; i < 32; i++) {
+-        g_autofree char *reg_name = g_strdup(reg_names[i]);
+-        char *reg1 = strtok(reg_name, "/");
+-        char *reg2 = strtok(NULL, "/");
++        g_autofree char **reg_name = g_strsplit(reg_names[i], "/", 2);
+ 
+-        if (strcasecmp(reg1, name) == 0 ||
+-            (reg2 && strcasecmp(reg2, name) == 0)) {
++        g_assert(reg_name[0]);
++        g_assert(reg_name[1]);
 +
-+void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
-+{
-+    g_autofree gchar *log_esc = NULL;
-+    g_autofree guchar *log_out = NULL;
-+    Error *err = NULL;
-+    FirmwareLog *log;
-+    gsize log_len;
++        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
++            g_ascii_strcasecmp(reg_name[1], name) == 0) {
+             *val = vals[i];
+             return true;
+         }
+@@ -294,12 +295,13 @@ static bool reg_is_u64_fpu(CPURISCVState *env, const char *name, uint64_t *val)
+     }
+ 
+     for (int i = 0; i < 32; i++) {
+-        g_autofree char *reg_name = g_strdup(riscv_fpr_regnames[i]);
+-        char *reg1 = strtok(reg_name, "/");
+-        char *reg2 = strtok(NULL, "/");
++        g_autofree char **reg_name = g_strsplit(riscv_fpr_regnames[i], "/", 2);
 +
-+    log = qmp_query_firmware_log(&err);
-+    if (err)  {
-+        hmp_handle_error(mon, err);
-+        return;
-+    }
-+
-+    g_assert(log != NULL);
-+    g_assert(log->log != NULL);
-+
-+    if (log->version) {
-+        g_autofree gchar *esc = g_strescape(log->version, NULL);
-+        monitor_printf(mon, "[ firmware version: %s ]\n", esc);
-+    }
-+
-+    log_out = g_base64_decode(log->log, &log_len);
-+    log_esc = g_strescape((gchar *)log_out, "\r\n");
-+    monitor_printf(mon, "%s\n", log_esc);
-+}
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 25b4aed51f56..33cf740bbc1b 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -995,3 +995,16 @@ SRST
-   ``info cryptodev``
-     Show the crypto devices.
- ERST
-+
-+    {
-+        .name       = "firmware-log",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "show the firmware (ovmf) debug log",
-+        .cmd        = hmp_info_firmware_log,
-+    },
-+
-+SRST
-+  ``info firmware-log``
-+    Show the firmware (ovmf) debug log.
-+ERST
++        g_assert(reg_name[0]);
++        g_assert(reg_name[1]);
+ 
+-        if (strcasecmp(reg1, name) == 0 ||
+-            (reg2 && strcasecmp(reg2, name) == 0)) {
++        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
++            g_ascii_strcasecmp(reg_name[1], name) == 0) {
+             *val = env->fpr[i];
+             return true;
+         }
 -- 
 2.51.0
 
