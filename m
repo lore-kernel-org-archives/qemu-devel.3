@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91BBCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7782DCCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBeTn-0002tX-0g; Wed, 22 Oct 2025 15:26:39 -0400
+	id 1vBeTw-0002wI-Ug; Wed, 22 Oct 2025 15:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTf-0002sv-Ry
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTn-0002ts-VI
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTd-0001XO-Cw
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:30 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTl-0001aI-En
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761161188;
+ s=mimecast20190719; t=1761161196;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lEZkhyoFmaVmDzC4IYCUW4XvW8OD8L6dAS9sarlyY8A=;
- b=Z+cenydxgVKLPZWGA56LHOo3WgFVXdDzYpXrhDOcEp7T56PNbBxectmQeIM4W7OB//LHGj
- X10yBt+XHOX5Ajt8Qm1rkLLpH1NAkrCr+skzUu/EfLi5KMc1KtHZk2SzXLVYsk8HUhqW3K
- Mo2DxaFRsonB5FyRdVfet504PlKdyhY=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fOhkWGBswSimZhnhemfbMKnjzI+fXszEQjpRE4VPOI8=;
+ b=JuM+ERecdkS0QW+QzwIXV0lOc00K6/x6vKJG510pl3sX3Homa08llm8TCY2OoFBxHgjZHe
+ jyRXHFvolcVtoE/iJQtpDpPoywSr/Ek+WvyUoKdS3alRr4UhfY2BI2t1ziWuoipQI9/6Mx
+ i6NvL3RAYd0WfqdcznQfY/63KNuwDmg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-6KnhmGIHNYme-L0CzaxcVw-1; Wed, 22 Oct 2025 15:26:26 -0400
-X-MC-Unique: 6KnhmGIHNYme-L0CzaxcVw-1
-X-Mimecast-MFC-AGG-ID: 6KnhmGIHNYme-L0CzaxcVw_1761161186
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4e8a73256easo47324441cf.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:26:26 -0700 (PDT)
+ us-mta-453-drhglUVyPgO_8hWNbnXhiA-1; Wed, 22 Oct 2025 15:26:35 -0400
+X-MC-Unique: drhglUVyPgO_8hWNbnXhiA-1
+X-Mimecast-MFC-AGG-ID: drhglUVyPgO_8hWNbnXhiA_1761161194
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4e89265668fso42320391cf.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:26:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761161186; x=1761765986;
+ d=1e100.net; s=20230601; t=1761161194; x=1761765994;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lEZkhyoFmaVmDzC4IYCUW4XvW8OD8L6dAS9sarlyY8A=;
- b=qyb8guPxHcZJcUxX3mmm5mV6wPxCeo/KPUX/9wN4Cs6/lOyIIr3a4UFz7/MlPLon72
- AMn1QV0F0T+BbiZB9AQqxMj+x3TrLt4QjNjI3zG449RmCJenWRBbx5hJHOy8mrpLemr6
- lze8C1dtGGGoocMX0p9JQilpJgjM3PtY9lzgQcBUxIRt2woBJYAirJvx2RTxPqiQFpVd
- B0uw6H6+SzydEYjrLrO8bErqXu639q2BANJxpfVqjaH5TefkEcetyZALYUoBL0NyydzD
- 60ssFvpQ1zlTR5GjeAC3HkIZB8X07LpUw+16Hf331IVnnisa8NtJ0UVCsYqN3HH4M99e
- ypPg==
-X-Gm-Message-State: AOJu0YyIv4kuesKmQM7B6PjEyiFMB/6R5kmoZ5XncSlhxqdr82SUxPzk
- X62UO5EYaUDz3L3p9VCie6ukUxFyZxWtmYe+8Ca/unWPwT8uPgfpCWAC5yjaiRz1n9+qm9t5tnr
- mzSQVuC49wfmLUYujujmJDRgOL25JdwxtfRp0Z69F+NJwbLo7A2iLDTKJExzXlOFpKnu0mALwGj
- +2OpwKOcFRziQL8GEhsAKIlcu+9BBRzGL7ZgVj9Q==
-X-Gm-Gg: ASbGncvXAZ9VHmiPJuFbwtNdeSTFdHzh6Mhq2Hpk5jSMR5WaHlNtWvm6ZLWYP2fqHTK
- atIIeQUIowgyn89BwZkP+CTSeQ5rLttRdK6jGnTOuepPsucom3niwPuAcN5E3jvs3RTlvk9sHnI
- slf52snzs6tX91bOCkNSRow39xcqrT53nJm31XtOF9SQa8qHz5uR5kZK5L+Pzt0dGux6KnrinCw
- 6NcUbq3cPD6C2wbODyztM5Uyg+/I8V4OqSqyoPFxPS4ArWEVK0LXbZU2a+FhG5H7QJJABNYjYlW
- IprjwmLs7rAXtCVxlCfRl88Dy2t6RUGsLzwMAewwI/1Nqd9PdhGYDRhB9D1g1plS
-X-Received: by 2002:ac8:7fc8:0:b0:4b3:4fa9:4cd2 with SMTP id
- d75a77b69052e-4eb7331fff9mr69350061cf.33.1761161185834; 
- Wed, 22 Oct 2025 12:26:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8kQu6hhKmMWi+k3MxYkOzl1GpTzwGguJhzriIZxs7mUS/Ndio7/tWDGOt/FIXdcCcVRHyVA==
-X-Received: by 2002:ac8:7fc8:0:b0:4b3:4fa9:4cd2 with SMTP id
- d75a77b69052e-4eb7331fff9mr69349511cf.33.1761161185234; 
- Wed, 22 Oct 2025 12:26:25 -0700 (PDT)
+ bh=fOhkWGBswSimZhnhemfbMKnjzI+fXszEQjpRE4VPOI8=;
+ b=lA3gOllVn2hvdkUqWUUFFpRlMvSU0E1wJdboZaEevhiA1uULr1sEmksC8kjfY4a1f+
+ Vgub1XvikKM17xyNhcKnX5wJzsvz+4WabHRDJkdnRR6xjh2cnKu2ff/Z6OhzOX+GD64C
+ /E2xqZycpEwTW0z6dTeLZBsSE9bbdv+I1ylnvpC7/Mib4P5Xr3dq0GPcJzQfYf8KEKwy
+ olWsIqkivICNogRiver4HXtHovqc6lzeS/t2PWoNp8j1cxhbEbFaxjMkboI9iPSC8yU9
+ bLLKXB3ztGbCNVbazytwrxlEXqGgHkWPX45h9CsXl3FzqnuHzAYw5XKaALKYlCUCNooF
+ v+8Q==
+X-Gm-Message-State: AOJu0YyS6UFXmpk1PQKYJt2Wpao83lmhs1MBLoRWhV+vfzQ4a6/anS0/
+ Yk48MIDcj0uuNoenF8zI0ZAjb9Uu2t8fy8hDlc7p4EsCoNaiLPBigYla3M0dxOTdNjiIK5wzwwn
+ Q5H7AM0oOrBTMHV4MwdqSH0lcgT3814aZkyDP447UFnkI3MB01ftZu6u5lfrrSaGz9kZeAwKAMq
+ uZAg7iflN7YiCjbcch0AxmvwEy6pSMRjVCb803zg==
+X-Gm-Gg: ASbGncvV7+YMqejpUJsFqk//4Hcq1X/I2YFZJJ39c7sGyZ1nO5VEPMFllzeDuhZ2sMq
+ iY0BuztrA1DOB28rhDOgRRHBPfOLzSzVa92v5xuNjT5rkXDADqCmmCqO7Ue1lp8TirqcVD1pO54
+ Ek4rgAwgYXaFW88mNiLw41kOcl0y4Pd/Mm3V/3higKQbXT1qZtmeYgCwYEOKjHvg6Ga5XytOeU2
+ wSDY9o9sNbT1H+D0GNwamKoy8lmOgTfXJNLmFagPMRpM6AsZsBbPFd51wEAKniZlwgJtHWFjxbh
+ 5RkjUabf0pQ8/BCGkNhbquEzijZM7KZknb56sJ67CA9qBOmg7R2oFa6cahmhjBRf
+X-Received: by 2002:ac8:5ac6:0:b0:4de:cb90:dbe4 with SMTP id
+ d75a77b69052e-4e89d393b93mr287185051cf.66.1761161194054; 
+ Wed, 22 Oct 2025 12:26:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJ8zZNeARO/JM75anJs6i/kTg4x4XiXSoJyeRTsYAiP17yDsWdwepbnJDPz65oJf4yguXO9g==
+X-Received: by 2002:ac8:5ac6:0:b0:4de:cb90:dbe4 with SMTP id
+ d75a77b69052e-4e89d393b93mr287184651cf.66.1761161193521; 
+ Wed, 22 Oct 2025 12:26:33 -0700 (PDT)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e8aaf34307sm99748561cf.1.2025.10.22.12.26.23
+ d75a77b69052e-4e8aaf34307sm99748561cf.1.2025.10.22.12.26.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 12:26:24 -0700 (PDT)
+ Wed, 22 Oct 2025 12:26:32 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li Zhijian <lizhijian@fujitsu.com>,
@@ -80,16 +80,16 @@ Cc: Li Zhijian <lizhijian@fujitsu.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 06/13] migration: Introduce WITH_BQL_HELD() /
- WITH_BQL_RELEASED()
-Date: Wed, 22 Oct 2025 15:26:05 -0400
-Message-ID: <20251022192612.2737648-7-peterx@redhat.com>
+Subject: [PATCH 11/13] migration/ram: Remove workaround on ram yield during
+ load
+Date: Wed, 22 Oct 2025 15:26:10 -0400
+Message-ID: <20251022192612.2737648-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251022192612.2737648-1-peterx@redhat.com>
 References: <20251022192612.2737648-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,126 +114,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the helpers to conditionally take or release BQL for a process.
+This reverts e65cec5e5d97927d22b39167d3e8edeffc771788.
 
+RAM load path had a hack in the past explicitly yield the thread to the
+main coroutine when RAM load spinning in a tight loop.  Not needed now
+because precopy RAM load now happens without the main thread.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.h | 95 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 95 insertions(+)
+ migration/ram.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 01329bf824..e1c5029110 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -20,6 +20,7 @@
- #include "qobject/json-writer.h"
- #include "qemu/thread.h"
- #include "qemu/coroutine.h"
-+#include "qemu/main-loop.h"
- #include "io/channel.h"
- #include "io/channel-buffer.h"
- #include "net/announce.h"
-@@ -42,6 +43,100 @@
- #define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
- #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
+diff --git a/migration/ram.c b/migration/ram.c
+index 29f016cb25..16e81cf3bb 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4304,7 +4304,7 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
+ static int ram_load_precopy(QEMUFile *f)
+ {
+     MigrationIncomingState *mis = migration_incoming_get_current();
+-    int flags = 0, ret = 0, invalid_flags = 0, i = 0;
++    int flags = 0, ret = 0, invalid_flags = 0;
  
-+struct WithBqlHeldAuto;
-+typedef struct WithBqlHeldAuto WithBqlHeldAuto;
-+
-+static inline WithBqlHeldAuto *
-+with_bql_held_auto_lock(bool bql_held, const char *file, int line)
-+{
-+    assert(bql_held == bql_locked());
-+    if (!bql_held) {
-+        bql_lock_impl(file, line);
-+        return (WithBqlHeldAuto *)1;
-+    }
-+    return (WithBqlHeldAuto *)2;
-+}
-+
-+static inline void
-+with_bql_held_auto_unlock(WithBqlHeldAuto *v)
-+{
-+    assert(bql_locked());
-+    if (v == (WithBqlHeldAuto *)1) {
-+        bql_unlock();
-+    }
-+}
-+
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(WithBqlHeldAuto, with_bql_held_auto_unlock);
-+
-+#define  _WITH_BQL_HELD(bql_held, var)                              \
-+    for (g_autoptr(WithBqlHeldAuto) var =                           \
-+             with_bql_held_auto_lock(bql_held, __FILE__, __LINE__); \
-+         var;                                                       \
-+         with_bql_held_auto_unlock(var), var = NULL)
-+
-+/**
-+ * WITH_BQL_HELD(): Run a block of code, making sure BQL is held
-+ * @bql_held: Whether BQL is already held
-+ *
-+ * Example use case:
-+ *
-+ * WITH_BQL_HELD(bql_held) {
-+ *     // BQL is guaranteed to be held within this block.
-+ *     // If bql_held==false, bql will be released when the block finishes.
-+ * }
-+ */
-+#define  WITH_BQL_HELD(bql_held)                                    \
-+    _WITH_BQL_HELD(bql_held, glue(with_bql_held_var, __COUNTER__))
-+
-+struct WithBqlReleaseAuto;
-+typedef struct WithBqlReleaseAuto WithBqlReleaseAuto;
-+
-+static inline WithBqlReleaseAuto *
-+with_bql_release_auto_unlock(bool bql_held)
-+{
-+    assert(bql_held == bql_locked());
-+    if (bql_held) {
-+        bql_unlock();
-+        return (WithBqlReleaseAuto *)1;
-+    }
-+    return (WithBqlReleaseAuto *)2;
-+}
-+
-+static inline void
-+with_bql_release_auto_lock(WithBqlReleaseAuto *v)
-+{
-+    assert(!bql_locked());
-+    if (v == (WithBqlReleaseAuto *)1) {
-+        /*
-+         * NOTE: cleanup function cannot take more than 1 argument.  Keep
-+         * it simple here by not passing __FILE__/__LINE__ from the caller.
-+         */
-+        bql_lock_impl(__FILE__, __LINE__);
-+    }
-+}
-+
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(WithBqlReleaseAuto, with_bql_release_auto_lock);
-+
-+#define  _WITH_BQL_RELEASED(bql_held, var)              \
-+    for (g_autoptr(WithBqlReleaseAuto) var =            \
-+             with_bql_release_auto_unlock(bql_held);    \
-+         var;                                           \
-+         with_bql_release_auto_lock(var), var = NULL)
-+
-+/**
-+ * WITH_BQL_RELEASED(): Run a block of code, making sure BQL is release
-+ * @bql_held: Whether BQL is already held
-+ *
-+ * Example use case:
-+ *
-+ * WITH_BQL_RELEASE(bql_held) {
-+ *     // BQL is guaranteed to be release within this block.
-+ *     // If bql_held==true, bql will be re-taken when the block finishes.
-+ * }
-+ */
-+#define  WITH_BQL_RELEASED(bql_held)                                    \
-+    _WITH_BQL_RELEASED(bql_held, glue(with_bql_release_var, __COUNTER__))
-+
- struct PostcopyBlocktimeContext;
- typedef struct ThreadPool ThreadPool;
+     if (migrate_mapped_ram()) {
+         invalid_flags |= (RAM_SAVE_FLAG_HOOK | RAM_SAVE_FLAG_MULTIFD_FLUSH |
+@@ -4317,17 +4317,6 @@ static int ram_load_precopy(QEMUFile *f)
+         void *host = NULL, *host_bak = NULL;
+         uint8_t ch;
  
+-        /*
+-         * Yield periodically to let main loop run, but an iteration of
+-         * the main loop is expensive, so do it each some iterations
+-         */
+-        if ((i & 32767) == 0 && qemu_in_coroutine()) {
+-            aio_co_schedule(qemu_get_current_aio_context(),
+-                            qemu_coroutine_self());
+-            qemu_coroutine_yield();
+-        }
+-        i++;
+-
+         addr = qemu_get_be64(f);
+         ret = qemu_file_get_error(f);
+         if (ret) {
 -- 
 2.50.1
 
