@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50E3CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 02:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C576CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 02:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBOYy-00074r-TO; Tue, 21 Oct 2025 22:26:56 -0400
+	id 1vBOYn-00072C-80; Tue, 21 Oct 2025 22:26:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vBOYw-000744-0i
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 22:26:54 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vBOYl-00071X-Fo
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 22:26:43 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vBOYt-0000yJ-T4
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 22:26:53 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-290dc630a07so33910145ad.1
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 19:26:51 -0700 (PDT)
+ id 1vBOYj-0000wi-JH
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 22:26:43 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-269af38418aso78436455ad.1
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 19:26:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1761100010; x=1761704810; darn=nongnu.org;
+ d=sifive.com; s=google; t=1761099999; x=1761704799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=bYWfU3Ybv8UMfXDoLYIZExvngPG0XH9qkihRnX+Zfvs=;
- b=Euv9mtmGxlcBRMG9daFM+OYJNpS6b4oPiNvAPZa1w1tjTLKmGKfy22Ols2uJA+xb4O
- sruonwPw6n2YkL+8WKj6wkErSEKjQ6FnnpqAuBsqPMsAFvCPW0VSq5jvEdDltqnaqH+i
- EjljFQ/o0SFv33SaraIGfcT28LZ/GEGSYs/XuebFGBe5wZVYnqpnOgwBmsaMKdGL0uMs
- 1YfTf/xoGE5NUGDRLRQ4YhDViB/P9L0vu21NegbL1lgK6zQvYkLngegM2NPtrJJf6qcb
- NOpJM3ed5uwl0NyXDvWBmvVMOmMZz9lZeZbyPe0DsF8T6i0RQe4cZxOx0SvQ69aO+bGT
- m4uw==
+ b=mFQ42KHDaMe0xQom01hozNjHKp9QvEYY/EKRJCr2QdhMVUu4AXL1o2gVhc96Xz9SbC
+ tKoaLfsGyW0oMgWLnQ6eknhQnzCgCyqWptd7bnkROkBIg43U5/ECNn8eg7FfHHiRIAFT
+ JDOLJExaOhbf5wQOA5tf8Q0wGMLjDEFukZpap/LSnEi4a80MP/wZSddWH5Ck8bsDDeDY
+ +Ht8Pm4K3Doiuy5KIkxdx50ZvHwdz0aI9kDv31dLzoK9ih9bSkIKHPA5YhZOEqNUDoZb
+ ky9FvOvm1VWbx/He2ifZIkQt8D25u0rpTJdrzBy/fuD/KtFWn/jNezQwbX/oY7uXXo5y
+ wdmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761100010; x=1761704810;
+ d=1e100.net; s=20230601; t=1761099999; x=1761704799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=bYWfU3Ybv8UMfXDoLYIZExvngPG0XH9qkihRnX+Zfvs=;
- b=IOkZBzDlyWPzo7UCNyLRHfg0waE00spIEIjwr39F1IEJ/FcqfNBbhtUAI7O9PVm3FQ
- aqvSVGAD720ff300zRrmhBCCdQXnQL+/rm8bLG5dRumWAvzmXuSYu8TUz5IOpOk5U9TH
- BMwAJ5j9YeQm86F2pU1QcUZ13QhAL7Y/FpffJmftbcS6FVSSEGp2OJwbDg01mz26n4/5
- djXl1uczYE2WoZ1HVvzOLMyBNbFKKD0KQ6b4WQ/1bd46x6/jpn02e2yFpnpYiQD9eVfJ
- kwpxAsv6evcMCsSx8eUL2Po/nJEpwExCAOC8NOvVtBLVbSIbJKxiDPH6/znmnp9SKrnu
- xprA==
-X-Gm-Message-State: AOJu0YxrL/mAy00Ct5gVp7jhSjI/vzh01SZXEm5r2xTuB7VP3cks8Zl5
- VlHH4B7RD5EAj0+gSZycjLQypTU39T/OdF/0GwnBODoD7rUAHTqQdWgGAHVsmi/hW0sMosESTM3
- xzomFZi1WLhYDokWpwMcaxd0OsffT9MhPLAURtKCITnDZ3RR2RQuHZn9GVUDGjXod98HWRA4XLF
- vVNT5hwJ8khuMs99ca2Hh8CQsLkAzT4LV0Mp+OBIqZ
-X-Gm-Gg: ASbGnctyNz4FGSPQPBCsxxRgQQG/BzaTP4ICEmDGlXXCxwI2YaYehd+l19ldZTKoUiO
- dqFS79ZBz6t0iKDmNo+qsAEiaeczwefR6dxt6iDm1et63Wmz1De6/wAVvkL0dHY/IUw7ydc4Vo9
- gEgb04KKXbHck9VTfV1rBX2XxXJ9GNh4YgrPsBk7GhorDRowumyiuEuKorHRxX3l0xZ6mZqwk1L
- zVMR6zDqRo8vrpcKD+T6y202t9jZgrAKdUG3AR7+8uZsAlJV0do7g+Dn7nnulSHVnScEU8fOo8P
- WDO/aYpvx/cvsP9q81iRAMX+trscScgWib9zEnl3iZdcl4lmsj7mW4xdWkuDS9+YFvcbgWbTGpB
- XGkChkddhlkAkzBdrZ+bgmGVk/52XfIm+ujtt4WDe9n9y51hYAtvHbFUDepsk4nqI1Crgw6/WxI
- 0P+U1eqia97rmPAiaWONTowa+om6TZklhKsz2oDmasIrgmA/Jm6w==
-X-Google-Smtp-Source: AGHT+IELOz5bK+BMNWzDq3/hRBaG9HYO6yks1D1dkK1YPSz/O4c0BqOLJQDPdkTwCrinrnDw5CmUXQ==
-X-Received: by 2002:a17:902:c951:b0:25c:b1d6:c41a with SMTP id
- d9443c01a7336-290c9cf3517mr253158195ad.11.1761100009456; 
- Tue, 21 Oct 2025 19:26:49 -0700 (PDT)
+ b=LAYT7Om5i/BqxH3tlvgIIBinHcan9ZwwBOb5htlBuxpUGlDWnPUkmQLkGo74YGXWW8
+ T3QnBB937icDqrZLAEd1XFe6bg3Xw/Eb0DHL/A/+jsvI8cyGHf13VfQtilRaatS89rg0
+ MR0Jd9tQ7xO0VVIUkWN54wzPPMgv9jbRiXhLmBmtTdTjwdiIBrtdocOVCmOPmzsu30AZ
+ cYQUEoVstJaGJ3tIpmhC7T+8bqL9aYsk64kgVlTNguyULM3B6WoPOHaQrddp77LEGvMK
+ N0nXeWOUeAZV/lhxnebk2LOi/7sHhCkPmDtTMyZSFEujm+3eUgcz3dPmkgqWyagcFElz
+ WHng==
+X-Gm-Message-State: AOJu0YytgBqGM1nje3K7fUimbycx1Q6kKdLeJZIXku5EcVpGvajO+LYG
+ fGRJYlukqTkfUXPTksRiXJh94e96pkFU094m6t/ZT/nbUFHxc8dR2CNa9HGxA0v7L5i9kLZ/RCB
+ kER66JCLwjPDVJx0D+RaSzyc0WsaAndQQToi0aphYbE5IwqQg9d7tWxxpnuupk11oO6mJai5eO4
+ K5DuZ/KjRpiyH/jtrdygcE4u9k6wuzdIVx772d1mVK
+X-Gm-Gg: ASbGnctQcB0YrWnsiHmdSCoW3JjXlIiwZvjDBENgCrS2llg2z/seU+1pWtOxi5p+44U
+ Fz1bNl6iq2KTrE2POydJKEPZjRkkW4gHlC3GKs5xUaO1xkvr2nV4HB9UEat6vSyA2GNB0nuDP2G
+ JKogBcU758HGlB4vlFUvXLtNPxRnkhPxLJIgRrZ/bSpzF/M22ww1kxUhEQi6GJPhpYeki+XB4RM
+ 8CXpvf0FFs6dbaJfgSo3N3hQ6CPVQoPIgGJ1heFADvnU6XG12f3MYYYIe6K27syfxP+TXkewnfM
+ AT4NNw6pE5V7lQ86sYqJb4kDuPSwjY6dMEXhH+OtV1DriHjnlvv3nQbKAN+eVkGT0Tc3JwtQHxK
+ LJ0F/PE//pUb+t3ON2Um2jgE/WAsRCYs6vz6HhXcjaSyoWZxkflQTUfZ7A+0Tnf4OaNxfJaY7jT
+ bv7URnKhmIRejuRuNXo3k/tggsXnvNWEldLyFaiB5orMtz6PUEdWVlm4ymNxTH
+X-Google-Smtp-Source: AGHT+IHrnWkZFh02KcWnwFZ6SA0AevY3gArLXrkmpSsvhFAFWPgLULqpv20TSwEPyQQxl+Ph3vdVyQ==
+X-Received: by 2002:a17:902:ce12:b0:26b:da03:60db with SMTP id
+ d9443c01a7336-290c9ca6b1cmr238723685ad.13.1761099999416; 
+ Tue, 21 Oct 2025 19:26:39 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.196])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2930340092dsm4673545ad.42.2025.10.21.19.26.47
+ d9443c01a7336-2930340092dsm4673545ad.42.2025.10.21.19.26.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 19:26:48 -0700 (PDT)
+ Tue, 21 Oct 2025 19:26:39 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -77,16 +77,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v2 1/2] target/riscv: Make PMP granularity configurable
-Date: Wed, 22 Oct 2025 10:26:27 +0800
-Message-ID: <20251022022628.41307-5-jay.chang@sifive.com>
+Subject: [PATCH v1 1/2] target/riscv: Make PMP granularity configurable
+Date: Wed, 22 Oct 2025 10:26:24 +0800
+Message-ID: <20251022022628.41307-2-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251022022628.41307-1-jay.chang@sifive.com>
 References: <20251022022628.41307-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=jay.chang@sifive.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=jay.chang@sifive.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
