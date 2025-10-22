@@ -4,132 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86428CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05387CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBY2h-0004ws-Fx; Wed, 22 Oct 2025 08:34:16 -0400
+	id 1vBXz1-0001GJ-6C; Wed, 22 Oct 2025 08:30:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBY2d-0004l7-Fh
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:34:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXyr-00018S-9h
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:30:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBY2a-0000Ey-Qx
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:34:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXyp-0008Mx-6B
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:30:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761136447;
+ s=mimecast20190719; t=1761136214;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BnMdoa9n+q6p9Kvuj0asoAMuPstvTZk8i0GRXg9/YJ8=;
- b=SKnE+r1EIcY4ZHaD69lPxPkHau57bGY+6ekmrBveQVsu/jAsaUyZTUdijrWBwwBRKBsZwp
- EbCClMm250iHTRUIlR3ycYT4Qt+jxl2obnGO4r0GNUpDhn+lyPCK4Ov0cPDfEkC9y3UM/H
- LBcwtpirvCYkfXuh1a7X0X3sG7Mpuvw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534--dRoJ4D3P8uJszCGGWcMsQ-1; Wed, 22 Oct 2025 08:34:05 -0400
-X-MC-Unique: -dRoJ4D3P8uJszCGGWcMsQ-1
-X-Mimecast-MFC-AGG-ID: -dRoJ4D3P8uJszCGGWcMsQ_1761136444
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-47105bfcf15so37358105e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 05:34:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761136444; x=1761741244;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BnMdoa9n+q6p9Kvuj0asoAMuPstvTZk8i0GRXg9/YJ8=;
- b=dxbghWY62Vx+KE5AO+yG/WG3qQWv1/ewpSc01D1c9GY/rQQX9d4decC9KmJMS/hFo8
- 5ZduP/jX2UA2QoDFDOgXFVe28fBk63xilUK2umVJrp38miezKndWSSJg1ZFw/8ZPQ1/V
- ZPh7CZxjvAqCoRBrR3AK174UcRgxVZak30/8bn1YRYg7DkmsWIMSvwpZAj5xNnxSMS1v
- o3sR7aVQzlMae5SMeN86pXAPLTOTu3OXpk9BnjHfvaVqFIARkZksDAlXRhtvNZ5JVCUb
- T1pSSjOVGv5Luz12C3jRK7uzJVEUCrtm2GKR+aY/eeeLkrn80x2+5H7J09uqWbB7NWkh
- b07A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXV21DlfnseIID9++phTBHhHhCFxVeNE9G+gsFTv5NB+eRzsfuG2smXbWR2go/UMmRO2nNp1GyruZo5@nongnu.org
-X-Gm-Message-State: AOJu0Ywd4WKFFNyJDU2pBTVad1NaPeyPZptAo3KYnyLupezYAiY6iZSB
- ECNdd+jfh7qL+s2WlGXUBQaRr80yEllYCtUaMJQ+m1TKQozcB5ahLbfmobbrdeSkqhT2efhqrUN
- sH7pBeqwcs5Df91j0EM5b98gaCwLGH6smRz6qW42UFGV/EzWJpvHVWhlR
-X-Gm-Gg: ASbGncvqkrW0lrIyoWx7pKmyUGxzlYw7qa81AVqPkr4jWzrXPcfE1kdepfcagX+KgM4
- wWtUxss9vZGoiPm+7Qr5n9bEEUnYs4DpXAXVnKvuaeVtWF68gNmEhYHvv7O1VPTOgKqPD9WonpF
- zHWdNmt0QN81kebpy/Qxs8ly8tb0Qku5F2QizP+VPMjm1RopUNihy04SFZfrbH0Opmko3HIc4L/
- aM6yotjwvnQnG4eLrceIre9ip4SXqEBtlgy1CbyU7xGeBunNHGtE89+mAiPW4f61WhePYzk3cF6
- LyvIarC+2kdO+hS54/nofUO4lsvlDN+VdXp627eFgrl4I3bhz/cBcbTlaIbvkmuwe/P6Qr4exa8
- UZ8+GazS+kuAKodcO2syB+CNrf3cR43X4kDDXIQ==
-X-Received: by 2002:a05:600c:870e:b0:46e:37a7:48d1 with SMTP id
- 5b1f17b1804b1-4711791f94dmr193960075e9.34.1761136444263; 
- Wed, 22 Oct 2025 05:34:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYlPhbh84R7es/W3oYjHzPzgKTCft6JlDCvR9RUx3DkYisdYU9w6aGGbdRsetue7zPqlqstQ==
-X-Received: by 2002:a05:600c:870e:b0:46e:37a7:48d1 with SMTP id
- 5b1f17b1804b1-4711791f94dmr193959815e9.34.1761136443822; 
- Wed, 22 Oct 2025 05:34:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c41ca845sm43694865e9.0.2025.10.22.05.34.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 05:34:02 -0700 (PDT)
-Message-ID: <f863c93d-9bff-4be9-bd1e-344bfaf12ce8@redhat.com>
-Date: Wed, 22 Oct 2025 14:34:02 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=KA8xEAyx6y77z8VjzGcdEiGx9scJIiR54DJNfg8a8AQ=;
+ b=Yf4fgStK9Q8K520PcsJo/CHj08Yq7CcwPrpRIofJ65fDxdju97Vds82g79AbD691urdLBG
+ 41E6q3BTiF4C1r/9Af2ODoLVsGtJqtQ1QObjMrQmg/8FEHAZQ2DEaSnfI9pDk66l5MhYxG
+ qYcRUWlzGtg8xXmm1mj52EOz998iK9A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-KMRJ_7PGPAChnfK2pRcIQw-1; Wed,
+ 22 Oct 2025 08:30:11 -0400
+X-MC-Unique: KMRJ_7PGPAChnfK2pRcIQw-1
+X-Mimecast-MFC-AGG-ID: KMRJ_7PGPAChnfK2pRcIQw_1761136209
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 314D018007EB; Wed, 22 Oct 2025 12:30:09 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.12])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CE03180057E; Wed, 22 Oct 2025 12:30:07 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 03/16] hw/arm/ast27x0: Add SRAM link and alias mapping for SSP
+ coprocessor
+Date: Wed, 22 Oct 2025 14:29:40 +0200
+Message-ID: <20251022122953.877335-4-clg@redhat.com>
+In-Reply-To: <20251022122953.877335-1-clg@redhat.com>
+References: <20251022122953.877335-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/interop/vfio-user: update protocol specification
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20251010102453.711072-1-john.levon@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251010102453.711072-1-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -155,27 +85,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John,
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-On 10/10/25 12:24, John Levon wrote:
-> Refresh the protocol specification to the latest version implemented by
-> libvfio-user. All changes are backward compatible.
-> 
-> Note that QEMU client itself does not yet implement these extensions,
-> but as this is now the canonical specification, it needs to be kept up
-> to date.
-> 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   docs/interop/vfio-user.rst | 554 +++++++++++++++++++++++++++++++++----
->   1 file changed, 506 insertions(+), 48 deletions(-)
-> 
+AST2700 has a 128KB SRAM, physically mapped at 0x10000000–0x1001FFFF for
+the PSP (CA35) processor. The SSP coprocessor shares this same SRAM but
+accesses it through a different address window at 0x70000000–0x7001FFFF.
 
+To model this shared-memory behavior in QEMU, this commit introduces a
+linked SRAM property and alias mapping between the PSP and SSP subsystems.
 
-I missed this change in the last PR. Will do in the next.
+Changes include:
+- Add a "MemoryRegion *sram" link and "MemoryRegion sram_alias" to
+  AspeedCoprocessorState.
+- Register the new "sram" property in aspeed_coprocessor_common.c.
+- In aspeed_ast27x0-fc.c, connect the SSP coprocessor’s "sram" link to
+  the PSP’s SRAM region.
+- In aspeed_ast27x0-ssp.c, create an alias mapping for SRAM at
+  0x70000000 – 0x7001FFFF in the SSP’s memory map.
 
-Sorry about that.
+This ensures that the SSP can correctly access the shared SRAM contents
+through its own address space while maintaining a consistent physical
+backing region. It also guarantees that the SRAM is realized before the
+SSP device, ensuring successful alias setup.
 
-C.
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20251015062210.3128710-4-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/arm/aspeed_coprocessor.h | 3 ++-
+ hw/arm/aspeed_ast27x0-fc.c          | 4 ++++
+ hw/arm/aspeed_ast27x0-ssp.c         | 7 +++++++
+ hw/arm/aspeed_coprocessor_common.c  | 2 ++
+ 4 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
+index 0c7168a89c15..d9a5f517d7c7 100644
+--- a/include/hw/arm/aspeed_coprocessor.h
++++ b/include/hw/arm/aspeed_coprocessor.h
+@@ -17,7 +17,8 @@ struct AspeedCoprocessorState {
+ 
+     MemoryRegion *memory;
+     MemoryRegion sdram;
+-    MemoryRegion sram;
++    MemoryRegion *sram;
++    MemoryRegion sram_alias;
+     Clock *sysclk;
+ 
+     AspeedSCUState scu;
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index a61ecff3909b..25e668a648fa 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -118,6 +118,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+     AspeedCoprocessorState *soc;
+     AspeedCoprocessorClass *sc;
+     Ast2700FCState *s = AST2700A1FC(machine);
++    AspeedSoCState *psp = ASPEED_SOC(&s->ca35);
++
+     s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
+     clock_set_hz(s->ssp_sysclk, 200000000ULL);
+ 
+@@ -134,6 +136,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
+     sc = ASPEED_COPROCESSOR_GET_CLASS(soc);
+     aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART4, sc->uarts_base,
+                             sc->uarts_num, serial_hd(1));
++    object_property_set_link(OBJECT(&s->ssp), "sram",
++                             OBJECT(&psp->sram), &error_abort);
+     if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {
+         return false;
+     }
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index 9f3a1933a066..66c4ef6d1b74 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -20,6 +20,7 @@
+ 
+ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+     [ASPEED_DEV_SDRAM]     =  0x00000000,
++    [ASPEED_DEV_SRAM]      =  0x70000000,
+     [ASPEED_DEV_INTC]      =  0x72100000,
+     [ASPEED_DEV_SCU]       =  0x72C02000,
+     [ASPEED_DEV_SCUIO]     =  0x74C02000,
+@@ -195,6 +196,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+                                 sc->memmap[ASPEED_DEV_SDRAM],
+                                 &s->sdram);
+ 
++    /* SRAM */
++    memory_region_init_alias(&s->sram_alias, OBJECT(s), "sram.alias",
++                             s->sram, 0, memory_region_size(s->sram));
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM],
++                                &s->sram_alias);
++
+     /* SCU */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+         return;
+diff --git a/hw/arm/aspeed_coprocessor_common.c b/hw/arm/aspeed_coprocessor_common.c
+index 8a94b44f07f2..8322ad5eb544 100644
+--- a/hw/arm/aspeed_coprocessor_common.c
++++ b/hw/arm/aspeed_coprocessor_common.c
+@@ -25,6 +25,8 @@ static void aspeed_coprocessor_realize(DeviceState *dev, Error **errp)
+ static const Property aspeed_coprocessor_properties[] = {
+     DEFINE_PROP_LINK("memory", AspeedCoprocessorState, memory,
+                      TYPE_MEMORY_REGION, MemoryRegion *),
++    DEFINE_PROP_LINK("sram", AspeedCoprocessorState, sram, TYPE_MEMORY_REGION,
++                     MemoryRegion *),
+ };
+ 
+ static void aspeed_coprocessor_class_init(ObjectClass *oc, const void *data)
+-- 
+2.51.0
 
 
