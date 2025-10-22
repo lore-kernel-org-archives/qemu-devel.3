@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69340CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2303ACCD1BC
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBeUA-00032W-3W; Wed, 22 Oct 2025 15:27:02 -0400
+	id 1vBeTu-0002vP-Fy; Wed, 22 Oct 2025 15:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTr-0002uH-M5
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTl-0002tY-3o
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTp-0001al-Ca
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:42 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTh-0001Yd-Tv
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761161199;
+ s=mimecast20190719; t=1761161193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JW8aeNeh6Nu+nmUpwT9UAvg9KPt5UcYpUXSC4KDXYdA=;
- b=Yp0/A4dCKMKagzMBElLEkvV/0ttjONmLomM4GBx0deWqeni/KpW0WxBtjH1T6A16KT8ufz
- NdZhmCpCsCo/NJDbt26mfgGjaaQhxl68Ya0iUWdy2AAES3guZCHwEPXnOhhqF9cChHRxAI
- 0kNAa1ms8jazsx6JLJ5SacomukGpdBQ=
+ bh=3UsHdXQwCwD7WP5y/WUYROrf5LFRHXxP7WcAGO6x+FI=;
+ b=Or/ArdDmavQOj/RYY+sh+rjzoe1N2ljX014EBXXjgBgA9dwsPQEVD7aojLrBSldXm4TFJj
+ N5KQa/5N7Nf1scp/UN/Rpmq7b+6QLnO+GYBTETzOpqXdmqmck4OXqyyPRvAguyGdljldvE
+ vyDG8K0qyGNon6NKBXwM4FHFMIWqtG0=
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
  [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-YYW8GBPZPOKRjDXDatLV7w-1; Wed, 22 Oct 2025 15:26:33 -0400
-X-MC-Unique: YYW8GBPZPOKRjDXDatLV7w-1
-X-Mimecast-MFC-AGG-ID: YYW8GBPZPOKRjDXDatLV7w_1761161193
+ us-mta-90-amTWN4HsP5WYxQLqE10pOw-1; Wed, 22 Oct 2025 15:26:31 -0400
+X-MC-Unique: amTWN4HsP5WYxQLqE10pOw-1
+X-Mimecast-MFC-AGG-ID: amTWN4HsP5WYxQLqE10pOw_1761161191
 Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4e884663b25so50268361cf.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:26:33 -0700 (PDT)
+ d75a77b69052e-4e8b8db4a35so40414081cf.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:26:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761161193; x=1761765993;
+ d=1e100.net; s=20230601; t=1761161191; x=1761765991;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JW8aeNeh6Nu+nmUpwT9UAvg9KPt5UcYpUXSC4KDXYdA=;
- b=Sv2SYNPaQ+N+SIT1wuWWPrtkpDkW6pHLrxxf3j+TBmtwBs9Oc+HiZWGLppEDP0pONA
- P1IvG9nZbbCWbrYKgBUTBksGnmeovo7wAia1RAm59FWNTEUp3oUNrAJvGxddrfM45aFa
- CZZCQGlNCoWjaC2E5hdFv4H90mXTU6QbyW/dVw02pDc3x7EwV3FfvPXup5e1ZpHlim5u
- wLxcwPTgXDbln4W1kQp6Wh15BQ3a9dNObWMm1yN5NNDsWGyFuKN+vQ0CtC/d8V1VQxE0
- woGpWCHMJwzWvNIvC45ciuGwP4ZL0tYS0roPjUjePE/FTg05lr4ap2gKNMk6cIFsp48b
- 5uGw==
-X-Gm-Message-State: AOJu0YzUYAcgBwsMwv8lPOsD8l1Q/6SLz+lr0BcDjtF/7J52wKVbw+uW
- UpeZ1+/MROJh9mX9nYMTDpM7n0g2v3LICWokuc3WrmcNRNbcQlOwvdAo0aW2V7SFro9uz3bjJR3
- VX8lYm4NoJTbl7zPKKP/z9jAqiZSA9F/T0vLHEGhHck06ln406VdqjBJnY1CBJxa8KQoXsTklzK
- 3ct6UtsgsXFXkyIpjkeBrG5oHgtXAuPLY1n1Bg6A==
-X-Gm-Gg: ASbGncsKOTXTyUlNiC58oERoYMLSt7dPENWtkczPqmoLayuU+bXzMjPJ4w2X2J/2LY7
- D49lvqKDKqBIrGeVvy3Wc3NoxS15QTbTwh79S+0SMwpwbb3lD/j+6aELkQG+sO4eFgqgYQZYleQ
- u3lEbAH+NhT4iRhj9/DLdASSoRGDvSpkBDIfuWQixJUA9PDodCkxK68mVhsQrw1P9gT6Efp0TtZ
- 7oGlAtv5gRI2r8feK5ogGLjJU9NIs6Fm8pOjrBKWCQBAKFixaGU6Cn+2iXhfUbvseXDt7yZmFA2
- QRmqpWf1DXt6MpCTV/MRhplS3K8M7rScIxU3HRET5IWUP3U8n1K2xYJy/3POww15
-X-Received: by 2002:a05:622a:1451:b0:4b3:4457:feca with SMTP id
- d75a77b69052e-4e89d1ff721mr252775541cf.6.1761161192561; 
- Wed, 22 Oct 2025 12:26:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9t7boqwotXXvEgahMzh123AgygpagLLvET1D2CLM1h99JEh40wGE+UKWXyI4kvz626sCciA==
-X-Received: by 2002:a05:622a:1451:b0:4b3:4457:feca with SMTP id
- d75a77b69052e-4e89d1ff721mr252775071cf.6.1761161191927; 
- Wed, 22 Oct 2025 12:26:31 -0700 (PDT)
+ bh=3UsHdXQwCwD7WP5y/WUYROrf5LFRHXxP7WcAGO6x+FI=;
+ b=NeszA4chKrE+eCuePA+QNu/xGrUYA9gg1dwk6p2x5NH6iLQXbUUz4028B3tcBhx98J
+ RO7kOQWe5Wk74YItQMaig40Ln/7wszGIOmTCNQ8CV7ZrKflHYQd59XU5cXeTskax2jR9
+ fmlAR1giDrtRrN5QZa6M7mCIsQyF1qAytujBS2U9Ct92FQl8rZdpUXMt25VOCdf+RGpO
+ em7HDT6LtQo2R8PkltLOdXelfo/j+aMf4454gJF0bxolhN4jTQCXm53yYT6a8Jpampf6
+ LSzcGrORtXULCd8Ma/aNcUFJZbW4G9+dUupkEUkTTJUNCD6lg251mT38YOGmHcA1T2xB
+ f2Gg==
+X-Gm-Message-State: AOJu0YzZ+yK8HTTaV+4FyLcTFbPFU3VZHg3Impe8lVMZJLmGXYIpBGSW
+ uAd+12dEqSPsfa9QNQm4lY7EbEdug1D6uvZYCmNxbABFg9RmyJ+fToGi3+ZFeIuKbPbR6YTtERm
+ cNWtO63fYTIfcqmbW+h5RR+S/ASmwqB6DIXJZ9yid3ae/Cz5HDJegP4oNldNazK/F6GY8WlIcwq
+ bGRmZ1JM144FSMMT1/I3JK6NuGSGBjsuYxADbVlg==
+X-Gm-Gg: ASbGncvEie1enMBI+FVQpieRepWnvd8/7Nxcwd8+NxtsWkDfJtZIwCkhACGvIHIzJe0
+ zJF5OsaOeota+HLJW9stYkmc/8t5ZdYpFy787DpaUi3VXmbP0QdPCumQYIntCUEi+MrmrBPvq4P
+ oZJ7sO5rcS+pMhRLj3yjlHLIXcYoqEAui7SHC9TZFyX7+ZEgVp3HTJTbohaQpnO6uSi1Mfo0pHk
+ 2wx81D39uyLcj1iFBaQSFRmTUz46HiM96fOt6m9cv/kRFdl2EW9tEhnbRfVzh1felk/VgZHv4f5
+ c7iXlV8Z+3PxxOgORc5x6fzPSQDIRwUuYydyTVLnAknj1ArvEOA/zVUF346ehAoC
+X-Received: by 2002:a05:622a:1ccd:b0:4e8:a2aa:77c9 with SMTP id
+ d75a77b69052e-4e8a2aa88aamr220367061cf.1.1761161190844; 
+ Wed, 22 Oct 2025 12:26:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEOV+yjiKv1OCk6ubza4PxjCziIxPWCkWWJLrLvCUjFUeH/dgGNuskUR34ENQD5xGL1oIlo8A==
+X-Received: by 2002:a05:622a:1ccd:b0:4e8:a2aa:77c9 with SMTP id
+ d75a77b69052e-4e8a2aa88aamr220366601cf.1.1761161190355; 
+ Wed, 22 Oct 2025 12:26:30 -0700 (PDT)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e8aaf34307sm99748561cf.1.2025.10.22.12.26.30
+ d75a77b69052e-4e8aaf34307sm99748561cf.1.2025.10.22.12.26.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 12:26:31 -0700 (PDT)
+ Wed, 22 Oct 2025 12:26:29 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li Zhijian <lizhijian@fujitsu.com>,
@@ -80,16 +80,16 @@ Cc: Li Zhijian <lizhijian@fujitsu.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 10/13] migration/postcopy: Remove workaround on wait preempt
- channel
-Date: Wed, 22 Oct 2025 15:26:09 -0400
-Message-ID: <20251022192612.2737648-11-peterx@redhat.com>
+Subject: [PATCH 09/13] migration/rdma: Remove coroutine path in
+ qemu_rdma_wait_comp_channel
+Date: Wed, 22 Oct 2025 15:26:08 -0400
+Message-ID: <20251022192612.2737648-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251022192612.2737648-1-peterx@redhat.com>
 References: <20251022192612.2737648-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,50 +114,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 7afbdada7effbc2b97281bfbce0c6df351a3cf88.
+Now after thread-ified dest VM load during precopy, we will always in a
+thread context rather than within a coroutine.  We can remove this path
+now.
 
-Now after switching to a thread in loadvm process, the main thread should
-be able to accept() even if loading the package could cause a page fault in
-userfaultfd path.
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/savevm.c | 21 ---------------------
- 1 file changed, 21 deletions(-)
+ migration/rdma.c | 90 ++++++++++++++++++++++--------------------------
+ 1 file changed, 41 insertions(+), 49 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 991f46593c..16fae635c0 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2452,27 +2452,6 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis,
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 3389f6448b..67119634d7 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -29,7 +29,6 @@
+ #include "qemu/rcu.h"
+ #include "qemu/sockets.h"
+ #include "qemu/bitmap.h"
+-#include "qemu/coroutine.h"
+ #include "system/memory.h"
+ #include <sys/socket.h>
+ #include <netdb.h>
+@@ -1345,61 +1344,54 @@ static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
+ {
+     struct rdma_cm_event *cm_event;
  
-     QEMUFile *packf = qemu_file_new_input(QIO_CHANNEL(bioc));
+-    if (qemu_in_coroutine()) {
+-        yield_until_fd_readable(comp_channel->fd);
+-    } else {
+-        /* This is the source side, we're in a separate thread
+-         * or destination prior to migration_fd_process_incoming()
+-         * after postcopy, the destination also in a separate thread.
+-         * we can't yield; so we have to poll the fd.
+-         * But we need to be able to handle 'cancel' or an error
+-         * without hanging forever.
+-         */
+-        while (!rdma->errored && !rdma->received_error) {
+-            GPollFD pfds[2];
+-            pfds[0].fd = comp_channel->fd;
+-            pfds[0].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
+-            pfds[0].revents = 0;
+-
+-            pfds[1].fd = rdma->channel->fd;
+-            pfds[1].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
+-            pfds[1].revents = 0;
+-
+-            /* 0.1s timeout, should be fine for a 'cancel' */
+-            switch (qemu_poll_ns(pfds, 2, 100 * 1000 * 1000)) {
+-            case 2:
+-            case 1: /* fd active */
+-                if (pfds[0].revents) {
+-                    return 0;
+-                }
++    /*
++     * This is the source or dest side, either during precopy or
++     * postcopy.  We're always in a separate thread when reaching here.
++     * Poll the fd.  We need to be able to handle 'cancel' or an error
++     * without hanging forever.
++     */
++    while (!rdma->errored && !rdma->received_error) {
++        GPollFD pfds[2];
++        pfds[0].fd = comp_channel->fd;
++        pfds[0].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
++        pfds[0].revents = 0;
++
++        pfds[1].fd = rdma->channel->fd;
++        pfds[1].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
++        pfds[1].revents = 0;
++
++        /* 0.1s timeout, should be fine for a 'cancel' */
++        switch (qemu_poll_ns(pfds, 2, 100 * 1000 * 1000)) {
++        case 2:
++        case 1: /* fd active */
++            if (pfds[0].revents) {
++                return 0;
++            }
  
--    /*
--     * Before loading the guest states, ensure that the preempt channel has
--     * been ready to use, as some of the states (e.g. via virtio_load) might
--     * trigger page faults that will be handled through the preempt channel.
--     * So yield to the main thread in the case that the channel create event
--     * hasn't been dispatched.
--     *
--     * TODO: if we can move migration loadvm out of main thread, then we
--     * won't block main thread from polling the accept() fds.  We can drop
--     * this as a whole when that is done.
--     */
--    do {
--        if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
--            mis->postcopy_qemufile_dst) {
--            break;
--        }
--
--        aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
--        qemu_coroutine_yield();
--    } while (1);
--
-     ret = qemu_loadvm_state_main(packf, mis, bql_held, errp);
-     trace_loadvm_handle_cmd_packaged_main(ret);
-     qemu_fclose(packf);
+-                if (pfds[1].revents) {
+-                    if (rdma_get_cm_event(rdma->channel, &cm_event) < 0) {
+-                        return -1;
+-                    }
++            if (pfds[1].revents) {
++                if (rdma_get_cm_event(rdma->channel, &cm_event) < 0) {
++                    return -1;
++                }
+ 
+-                    if (cm_event->event == RDMA_CM_EVENT_DISCONNECTED ||
+-                        cm_event->event == RDMA_CM_EVENT_DEVICE_REMOVAL) {
+-                        rdma_ack_cm_event(cm_event);
+-                        return -1;
+-                    }
++                if (cm_event->event == RDMA_CM_EVENT_DISCONNECTED ||
++                    cm_event->event == RDMA_CM_EVENT_DEVICE_REMOVAL) {
+                     rdma_ack_cm_event(cm_event);
++                    return -1;
+                 }
+-                break;
++                rdma_ack_cm_event(cm_event);
++            }
++            break;
+ 
+-            case 0: /* Timeout, go around again */
+-                break;
++        case 0: /* Timeout, go around again */
++            break;
+ 
+-            default: /* Error of some type -
+-                      * I don't trust errno from qemu_poll_ns
+-                     */
+-                return -1;
+-            }
++        default: /* Error of some type - don't trust errno from qemu_poll_ns */
++            return -1;
++        }
+ 
+-            if (migrate_get_current()->state == MIGRATION_STATUS_CANCELLING) {
+-                /* Bail out and let the cancellation happen */
+-                return -1;
+-            }
++        if (migrate_get_current()->state == MIGRATION_STATUS_CANCELLING) {
++            /* Bail out and let the cancellation happen */
++            return -1;
+         }
+     }
+ 
 -- 
 2.50.1
 
