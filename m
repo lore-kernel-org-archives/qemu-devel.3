@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F383CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A596CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBeTs-0002u6-Qf; Wed, 22 Oct 2025 15:26:44 -0400
+	id 1vBeTv-0002vU-9Q; Wed, 22 Oct 2025 15:26:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTf-0002st-RJ
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTd-0002sf-IL
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTX-0001QS-KO
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeTZ-0001UZ-MS
  for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:26:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761161179;
+ s=mimecast20190719; t=1761161184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=GfplFGCpA2V4xkGhpWVLNLKk0Wdb6bYJg/QW2c6gRa4=;
- b=AzUP67Fr14LexYr41carccvuEMgFQh0drb9DQkqUMaLT/Fp5z0IdjYEFVZ8xl9+0vYkJkk
- 5dK9HZSBprX/yf+Nc9zX7xkNIn18gTAhlLF4FS5lkjAWoe7683QypNbK2WOoBJlTBB2yvJ
- WKnFRkUqgUrT31FkFISuvIwltuMvHIM=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kpjAE4slBEhS+3yJmkKxJqSXI1XYW1Z8hdORf1mQ/rc=;
+ b=bDMGOwCUeG4l1Kk8QfbkmWscE1P7w72siewj0QxY8ywoNAhRSI4Wsc9hYMUEImRk3Dh+PO
+ hOpmPvwlNT0mCjNdMMnQEqUnvrjTbjj6byTJaQREsyJaYawobLpohgl8hBJiZReew1QElW
+ 9aIFIEu1XcXOYknZf1eIff9tfpShz1k=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-9kR7z4CsP1aVIT8lHPfrzQ-1; Wed, 22 Oct 2025 15:26:16 -0400
-X-MC-Unique: 9kR7z4CsP1aVIT8lHPfrzQ-1
-X-Mimecast-MFC-AGG-ID: 9kR7z4CsP1aVIT8lHPfrzQ_1761161176
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4e8bb76ee59so41824231cf.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:26:16 -0700 (PDT)
+ us-mta-347-EcmBHQtTNCKh7FxOi0o6fQ-1; Wed, 22 Oct 2025 15:26:23 -0400
+X-MC-Unique: EcmBHQtTNCKh7FxOi0o6fQ-1
+X-Mimecast-MFC-AGG-ID: EcmBHQtTNCKh7FxOi0o6fQ_1761161183
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4e8984d8833so65872801cf.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:26:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761161176; x=1761765976;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GfplFGCpA2V4xkGhpWVLNLKk0Wdb6bYJg/QW2c6gRa4=;
- b=aQIZbk/E1DszpxI2zCWDneqRXARQOLmpq67uv4D8PLwXoDFB3Bn94KPnu/q9FUWGe1
- CPRMaUIkADMSj0j5dZh8xT2rhGfcRB/F/gjrDUvWyCR1U19fDWFHORW8uvX5ggGHNp1z
- wCwGGleWUN0wLU2b9WGqDHu8f4zJocb08qY0ayc0HrRimnBr2YOuM9ORFl6vPjvVg2dl
- fui6OMu598rw5h1l0Ob03JB/AGjY/7mVmoU2k+ACgQmSYQSe0l6RJROBDkku1jCeo2WK
- 5cVQ3bmrfuyLMf5kVxGnjfaogOMs2w0cwOE0jMjJUFXxd4+0RCxHehbUoXDXmiI2pNeP
- ldRw==
-X-Gm-Message-State: AOJu0YyZC6Z1Ar/vTM4bvonHPgqx6lKjHDtZAtzRejph/9gLzsv5JwwP
- aHwDQ+IMTgWfs75fGOdxwmi8uqt38PLaV8O4BQRwd0tj2Z+ztGXDjqCCsPKJjdi9u7oPV+4ywSB
- 05rfFbdekPlRkCRpU2TfeG1PcIb0BbrhXNdULtPSBp/bUW/4pCh/wXSPZKS9/89Wk8v1JpaxEaO
- dT2qgF46MRrZ8gSkLvjK5I9hnhDvoKJh/U+IWTuQ==
-X-Gm-Gg: ASbGncu5AZUdsVUxDxNIA7WjCS4+xsX9YSlNKulleOuGMF7vk2+iuqCJ++QVDUxlji6
- feVtMGxquQyNiMKf1TJ0XirDNkwuBXgUpAfVO4wQivXI7yXa/0TYZh9RAknH/TnQokTID4DOfNU
- 9lQNqIWNRX6Mf6hiw39JoAajmGKomEbEgI0u00tPT88iZWO6yhKXr+QgMFQAlLBjuga8r+xOuyS
- Gjhgn+oQKb3SxgmoVyXReQ3xyvKb0s4+jL4qk7Zlch8Zx4gl2F2GBPyIGOFVWdn4azRIWyRtJ0s
- DOhM6zGJcnE7PxHMVmSFd/wcVQDXfFQEHa5Nu87Kz+kZqK6pKEWSLW5O4n+SuMEI
-X-Received: by 2002:a05:622a:1a0b:b0:4b9:6bbf:7073 with SMTP id
- d75a77b69052e-4e89d35ad07mr279079531cf.53.1761161175687; 
- Wed, 22 Oct 2025 12:26:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0rInUYI8Kj1Nj3EtNYdpLpumRRK/PtuiLNehcemjRLQXwb6jfdbJaQrsYIuVfL6BmMovHRg==
-X-Received: by 2002:a05:622a:1a0b:b0:4b9:6bbf:7073 with SMTP id
- d75a77b69052e-4e89d35ad07mr279079031cf.53.1761161175123; 
- Wed, 22 Oct 2025 12:26:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761161182; x=1761765982;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kpjAE4slBEhS+3yJmkKxJqSXI1XYW1Z8hdORf1mQ/rc=;
+ b=kJesnu8IsyKl9RAb1QyyoNp749QPFnipFaI8Tg8o13ZjI2I+1wcUfMbDuX5LmT8D+v
+ qnEyL5BaEvPNS8TXH3oyNxU6kcC5rNstPddXtvr+TivnRqIrkD7dmF5PESUrgMW+/l8u
+ sRZXRj+JfiwhwrnS1u/cZhFU8JKER4JlUzq2YzN6ObVMxuIM4y7jUNCkWMt9SeIMordI
+ QpgQbB2iLkUVWvZ8HfWyglFX1E+n7jo5zRqoG8hfbnQ0m1h3GRgp7viCUlTHXHvPP/KX
+ iiHMFyvihtNENqZQ0kORTpX1Vawy2o5xvQXDw/4YB43+OZu8mzCDW2De7fusgb6IAHYx
+ WSsg==
+X-Gm-Message-State: AOJu0YyWfQ2ETF6TTXOtlT95pUvF0/LwV7rbDKWXljwL5sPvnHcpPSqI
+ hMC2TaI1Rq2tjx+JrDhJ06LvA1VH0YxrItStbTVdHFzsNQy/uc9z3PRk2aex7YlcI4R0IhiSXbc
+ /d9zvhh/CXJSvFRdqWczKVJR4a1RbJa/oEFGGFdvImWVm34v4VrZ1c5ytqm+Vm0m08AFM/qvrcr
+ 9yBSUr3cRCklRmTeCokV+zquWxtqUjStBtER/mEw==
+X-Gm-Gg: ASbGncv3Dsag47+GLdpy6z33WKSGOjgCjL4IDj6WKX68XIE/0cksMS75loK9GuajkYr
+ bA+sUJt+BsDMdr6HXYrVSZBJ/V6UkXnOpVToRwV7BC2fv1hbz4LoBi3gGswPx913bgpxtbXwu/M
+ pVaBEieIsPwIbnrbfiB4MNCzUcKVucw+18CtRUMW2Pl2yaCwtY6ayF/o4dconY7yXk9QMG0D2ur
+ iZGvSVQilJftrWZjeQ8XI8N2rj9gE5s8jB1+dB6ke6SmkzHELG5HSBPlwN4weNqJfxs7/+xgeWJ
+ Run0IYcHrXS+3dTyQyy0Qf5JXIeVSpYexqR/CKEKMxl5aKteJeNefwggKazr2sVS
+X-Received: by 2002:a05:622a:40e:b0:4e8:9a7d:90ec with SMTP id
+ d75a77b69052e-4e89d33641dmr302151711cf.42.1761161182307; 
+ Wed, 22 Oct 2025 12:26:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOl+qm2DDhLeCPWyZmUZYzH2UBjRR/AyJkHtutmjxA6whe24rUS2klBRrSxzQJGTwAYdnsDw==
+X-Received: by 2002:a05:622a:40e:b0:4e8:9a7d:90ec with SMTP id
+ d75a77b69052e-4e89d33641dmr302151281cf.42.1761161181793; 
+ Wed, 22 Oct 2025 12:26:21 -0700 (PDT)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4e8aaf34307sm99748561cf.1.2025.10.22.12.26.13
+ d75a77b69052e-4e8aaf34307sm99748561cf.1.2025.10.22.12.26.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 12:26:14 -0700 (PDT)
+ Wed, 22 Oct 2025 12:26:21 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li Zhijian <lizhijian@fujitsu.com>,
@@ -79,14 +80,16 @@ Cc: Li Zhijian <lizhijian@fujitsu.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 00/13] migration: Threadify loadvm process
-Date: Wed, 22 Oct 2025 15:25:59 -0400
-Message-ID: <20251022192612.2737648-1-peterx@redhat.com>
+Subject: [PATCH 04/13] migration/rdma: Allow qemu_rdma_wait_comp_channel work
+ with thread
+Date: Wed, 22 Oct 2025 15:26:03 -0400
+Message-ID: <20251022192612.2737648-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251022192612.2737648-1-peterx@redhat.com>
+References: <20251022192612.2737648-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,135 +114,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v1, however not 10.2 material.  The earliest I see fit would still
-be 11.0+ even if everything goes extremely smooth.
+It's almost there, except that currently it relies on a global flag showing
+that it's in incoming migration.
 
-Removal of RFC is only about that I'm more confident this should be able to
-land without breaking something too easily, as I smoked it slightly more
-cross-archs this time.  AFAIU the best (and possibly only..) way to prove
-it solid is to merge it.. likely in the early phase of a dev cycle.
+Change it to detect coroutine instead.
 
-The plan is we'll try to get to more device setups too soon, before it
-could land.
+Then we achieved two things in one shot:
 
-Background
-==========
+  - Drop migration_started_on_destination, which is not needed anymore, and
+  - It starts to work in a thread when loadvm using RDMA
 
-Nowadays, live migration heavily depends on threads. For example, most of
-the major features that will be used nowadays in live migration (multifd,
-postcopy, mapped-ram, vfio, etc.) all work with threads internally.
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/rdma.c | 15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
-But still, from time to time, we'll see some coroutines floating around the
-migration context.  The major one is precopy's loadvm, which is internally
-a coroutine.  It is still a critical path that any live migration depends on.
-
-A mixture of using both coroutines and threads is prone to issues.  Some
-examples can refer to commit e65cec5e5d ("migration/ram: Yield periodically
-to the main loop") or commit 7afbdada7e ("migration/postcopy: ensure
-preempt channel is ready before loading states").
-
-It was a coroutine since this work (thanks to Fabiano, the archeologist,
-digging the link):
-
-  https://lists.gnu.org/archive/html/qemu-devel/2012-08/msg01136.html
-
-Overview
-========
-
-This series tries to move migration further into the thread-based model, by
-allowing the loadvm process to happen in a thread rather than in the main
-thread with a coroutine.
-
-Luckily, since the qio channel code is always ready for both cases, IO
-paths should all be fine.
-
-Note that loadvm for postcopy already happens in a ram load thread which is
-separate.  However, RAM is just the simple case here, even it has its own
-challenges (on atomically update of the pgtables), its complexity lies in
-the kernel.
-
-For precopy, loadvm has quite a few operations that will need BQL.  The
-question is we can't take BQL for the whole process of loadvm, because
-that'll block the main thread from executions (e.g. QMP hangs).  Here, the
-finer granule we can push BQL the better.  This series so far chose
-somewhere in the middle, by taking BQL on majorly these two places:
-
-  - CPU synchronizations
-  - Device START/FULL sections
-
-After this series applied, most of the rest loadvm path will run without
-BQL anymore.  There is a more detailed discussion / todo in the commit
-message of patch "migration: Thread-ify precopy vmstate load process"
-explaning how to further split the BQL critical sections.
-
-After the series applied, the only leftover pieces in migration/ that would
-use a coroutine is snapshot save/load/delete jobs.
-
-Tests
-=====
-
-Default CI passes.
-
-RDMA unit tests pass as usual. I also tried out cancellation / failure
-tests over RDMA channels, making sure nothing is stuck.
-
-I also roughly measured how long it takes to run the whole 80+ migration
-qtest suite, and see no measurable difference before / after this series.
-
-I didn't test COLO, I wanted to but the doc example didn't work.
-
-Risks
-=====
-
-This series has the risk of breaking things.  I would be surprised if it
-didn't..
-
-The current way of taking BQL during FULL section load may cause issues, it
-means when the IOs are unstable we could be waiting for IO (in the new
-migration incoming thread) with BQL held.  This is low possibility, though,
-only happens when the network halts during flushing the device states.
-However still possible.  One solution is to further breakdown the BQL
-critical sections to smaller sections, as mentioned in TODO.
-
-Anything more than welcomed: suggestions, questions, objections, tests..
-
-TODO
-====
-
-- Finer grained BQL breakdown
-
-Peter Xu (13):
-  io: Add qio_channel_wait_cond() helper
-  migration: Properly wait on G_IO_IN when peeking messages
-  migration/rdma: Fix wrong context in qio_channel_rdma_shutdown()
-  migration/rdma: Allow qemu_rdma_wait_comp_channel work with thread
-  migration/rdma: Change io_create_watch() to return immediately
-  migration: Introduce WITH_BQL_HELD() / WITH_BQL_RELEASED()
-  migration: Pass in bql_held information from qemu_loadvm_state()
-  migration: Thread-ify precopy vmstate load process
-  migration/rdma: Remove coroutine path in qemu_rdma_wait_comp_channel
-  migration/postcopy: Remove workaround on wait preempt channel
-  migration/ram: Remove workaround on ram yield during load
-  migration: Allow blocking mode for incoming live migration
-  migration/vfio: Drop BQL dependency for loadvm SWITCHOVER_START
-
- include/io/channel.h        |  15 +++
- include/migration/colo.h    |   6 +-
- migration/migration.h       | 109 +++++++++++++++++--
- migration/savevm.h          |   4 +-
- hw/vfio/migration-multifd.c |   3 -
- io/channel.c                |  21 ++--
- migration/channel.c         |   7 +-
- migration/colo-stubs.c      |   2 +-
- migration/colo.c            |  26 ++---
- migration/migration.c       |  81 ++++++++------
- migration/qemu-file.c       |   6 +-
- migration/ram.c             |  13 +--
- migration/rdma.c            | 204 ++++++++----------------------------
- migration/savevm.c          |  98 +++++++++--------
- migration/trace-events      |   4 +-
- 15 files changed, 291 insertions(+), 308 deletions(-)
-
+diff --git a/migration/rdma.c b/migration/rdma.c
+index e6837184c8..13dd391c14 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -357,13 +357,6 @@ typedef struct RDMAContext {
+     /* Index of the next RAMBlock received during block registration */
+     unsigned int    next_src_index;
+ 
+-    /*
+-     * Migration on *destination* started.
+-     * Then use coroutine yield function.
+-     * Source runs in a thread, so we don't care.
+-     */
+-    int migration_started_on_destination;
+-
+     int total_registrations;
+     int total_writes;
+ 
+@@ -1352,12 +1345,7 @@ static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
+ {
+     struct rdma_cm_event *cm_event;
+ 
+-    /*
+-     * Coroutine doesn't start until migration_fd_process_incoming()
+-     * so don't yield unless we know we're running inside of a coroutine.
+-     */
+-    if (rdma->migration_started_on_destination &&
+-        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE) {
++    if (qemu_in_coroutine()) {
+         yield_until_fd_readable(comp_channel->fd);
+     } else {
+         /* This is the source side, we're in a separate thread
+@@ -3884,7 +3872,6 @@ static void rdma_accept_incoming_migration(void *opaque)
+         return;
+     }
+ 
+-    rdma->migration_started_on_destination = 1;
+     migration_fd_process_incoming(f);
+ }
+ 
 -- 
 2.50.1
 
