@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93247CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2907FCCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBXoD-00012A-Jk; Wed, 22 Oct 2025 08:19:17 -0400
+	id 1vBXo8-000112-5V; Wed, 22 Oct 2025 08:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXoC-00011e-0F
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo5-00010P-RL
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo9-000737-Uy
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:15 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBXo4-00072P-0U
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:19:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761135553;
+ s=mimecast20190719; t=1761135546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nYk2A4wVmkBhIJRz+4s4bB8w/6H5fxKaUobwydL0CgU=;
- b=DHbVhc6R/vVZctxeliqsw+hcHdGxldO2D4gyyj1/WnjvL0DlYlc+VFM0f6MwyIL8pSxltT
- 0X9s1OWyKhanYmLpu45RoRUx/wNTo/eAisWs28598NuKIHmcFKwVOESqhcUak5/yeAXy0I
- tFKYQzti0p4thF7cPX68iFrmqObUc90=
+ bh=A5Ad/N+nePZpXSyZ1Bg+sV63303rHbg2A64+yZ90JzY=;
+ b=adkJtzeZXAjVaC/Gj0tKOCcjXnfzY3VcbmLWgQcl2c+3+WsCM/fEhCj6h6fwGPXjZICyia
+ 5H9WHkGxT8xyiyjgasML3yTkSd95a+Sw5KBy/qyfAGnxKhtTeJnqi6W8YaN6k5hC7KQ/rl
+ 7gW5viBzH0t5axPaVGbdLuvhjCJY6P8=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-xsQ_4BYwN_ypD3DGopRlUQ-1; Wed,
- 22 Oct 2025 08:19:09 -0400
-X-MC-Unique: xsQ_4BYwN_ypD3DGopRlUQ-1
-X-Mimecast-MFC-AGG-ID: xsQ_4BYwN_ypD3DGopRlUQ_1761135549
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-OnecN58qMZOwA-7dlW0rjQ-1; Wed,
+ 22 Oct 2025 08:19:04 -0400
+X-MC-Unique: OnecN58qMZOwA-7dlW0rjQ-1
+X-Mimecast-MFC-AGG-ID: OnecN58qMZOwA-7dlW0rjQ_1761135543
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 041F41800637; Wed, 22 Oct 2025 12:19:09 +0000 (UTC)
+ id CBCD8180899E; Wed, 22 Oct 2025 12:19:03 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.12])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 417C11800451; Wed, 22 Oct 2025 12:19:06 +0000 (UTC)
+ id 89AE1180044F; Wed, 22 Oct 2025 12:19:01 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 07/12] vfio/iommufd: Support unmap all in one ioctl()
-Date: Wed, 22 Oct 2025 14:18:41 +0200
-Message-ID: <20251022121846.874152-8-clg@redhat.com>
+Subject: [PULL 05/12] accel/kvm: Fix an erroneous check on coalesced_mmio_ring
+Date: Wed, 22 Oct 2025 14:18:39 +0200
+Message-ID: <20251022121846.874152-6-clg@redhat.com>
 In-Reply-To: <20251022121846.874152-1-clg@redhat.com>
 References: <20251022121846.874152-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,45 +88,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-IOMMUFD kernel uAPI supports unmapping whole address space in one call with
-[iova, size] set to [0, UINT64_MAX], this can simplify iommufd_cdev_unmap()
-a bit. See iommufd_ioas_unmap() in kernel for details.
+According to KVM uAPI, coalesced mmio page is KVM_COALESCED_MMIO_PAGE_OFFSET
+offset from kvm_run pages. For x86 it's 2 pages offset, for arm it's 1 page
+offset currently. We shouldn't presume it's hardcoded 1 page or else
+coalesced_mmio_ring will not be cleared in do_kvm_destroy_vcpu() in x86.
 
+Fixes: 7ed0919119b0 ("migration: close kvm after cpr")
+Cc: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20251009040134.334251-3-zhenzhong.duan@intel.com
+Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
+Link: https://lore.kernel.org/qemu-devel/20250928085432.40107-6-zhenzhong.duan@intel.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/iommufd.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ accel/kvm/kvm-all.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 24a99efa87f4df268d0df7198f26bba37976874b..fc9cd9d22ff2d6f126d3c0964d7033eee33ed9f2 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -62,21 +62,8 @@ static int iommufd_cdev_unmap(const VFIOContainer *bcontainer,
- {
-     const VFIOIOMMUFDContainer *container = VFIO_IOMMU_IOMMUFD(bcontainer);
- 
--    /* unmap in halves */
-     if (unmap_all) {
--        Int128 llsize = int128_rshift(int128_2_64(), 1);
--        int ret;
--
--        ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
--                                        0, int128_get64(llsize));
--
--        if (ret == 0) {
--            ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
--                                            int128_get64(llsize),
--                                            int128_get64(llsize));
--        }
--
--        return ret;
-+        size = UINT64_MAX;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 56031925c4e9e6d46fb0e026e7b8dede2dabc7d2..f9254ae6546671e4569c190a098447becbdac0e0 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -525,7 +525,8 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
      }
  
-     /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+     /* If I am the CPU that created coalesced_mmio_ring, then discard it */
+-    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
++    if (s->coalesced_mmio_ring ==
++           (void *)cpu->kvm_run + s->coalesced_mmio * PAGE_SIZE) {
+         s->coalesced_mmio_ring = NULL;
+     }
+ 
 -- 
 2.51.0
 
