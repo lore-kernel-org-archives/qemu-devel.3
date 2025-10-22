@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561BACCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2C4CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBe46-00019w-1q; Wed, 22 Oct 2025 15:00:06 -0400
+	id 1vBe4j-0001bC-HW; Wed, 22 Oct 2025 15:00:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBe44-00018s-IN
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:04 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBe4h-0001a8-82
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:43 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBe42-0005oC-6V
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:04 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-780fe73e337so92256027b3.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:00:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBe4f-000658-1l
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:00:42 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-475c696ab72so6557335e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761159600; x=1761764400; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1761159639; x=1761764439; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3fNlJAIklGKmaXoZxWGY7d66z0UmEXF7YUPvyRdrvMY=;
- b=UZqh77H2ds8eVbTAx8+eJG1DUQ4CiCcK9YC7MiQb6pH6o2f34Y3vXDYPP+10cQfnXq
- LasQhiVjRSEQS+Yo4Rf1g/45rl13mvqZslUzcI130PFsxvXcuNWTypZUN0tyqle+ZfM7
- YsLTUCWf4egzBsnJaF5o7CXdm5snzKGREEVPib6M+fVMAFRLU3o2Exc+k1SXSBJkJeMJ
- hPuGNzXO7IA3/tVR0oLFy+rgSkN8blKEHmy0uFNSq3CAmchYsiwsFr8AVQFK6MVTnjUk
- HY47gCkZxwrQXt8BVHPM9BJ6bYpMpiLwTBbtjtfvhyVIx49Be2ZTSvinTMRdozyBnp4h
- wEFQ==
+ bh=2IfWHImcaqyKSRvjEy3I4vyXN8NDG7NL01bd1QTvyuI=;
+ b=iORlB/jcl6ti7/slU9+ykx5xj0/+TKdQQtKDmSmHqUScV/3ZnI/phEKFWcHyrk8dge
+ y0nmLdaDbMYneX2E+a8oObmzpooCPMW3D/0NSNMmjta9oVzUEfuqimOwZf5FLr/cl1Yd
+ fIP1JebAOfakhyUvsKJH0OQu4lTkGSuk/oEHgMve7dpKEi9aa/Q7rpKiEjQzkCoMipz+
+ 8XKsJOLGTcxbHU+5IcVLnfsBxzcrSFHwvOI2RfoMmVB4+VocNhh1VGkKPg+08fYUGSsq
+ aN1wvPaa6E7JCAHp/YAbda2q9LYGJqa+BAc1ZWJGdjwpJ+ULzpqoAcgW+/iX/u9NRVLu
+ jzpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761159600; x=1761764400;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1761159639; x=1761764439;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3fNlJAIklGKmaXoZxWGY7d66z0UmEXF7YUPvyRdrvMY=;
- b=sweV5DM56kiiuIx0BM2Hs1wNpndnBt3LRk4Ve1lyDajH3ZpsSkTk3auAJLggUY6Vgc
- 7vcqmKkiYLHIbMRo260oBSAzSns00R2/pQldrw3iamWFjDE26zigX0rOJpIJUF8lFbai
- ENhYbwj6dCUR6RbwNP2TsVVTXFWN1lV8dkADJc8XpUVdZR6MAGRuaoYDORBTNzX+67yp
- 4dTbUd2rJ7naiv77Yt+WhV5AdlgGXOy2Rg9bb8eHZXExmJq2jEXI63jTNyN+LTlqv3ha
- CbPnjPksHWY7+XKnAdwBY44G4qrfZqBxJ9ju6nUVIGc40/Vqi870y9XhjUjN9Ob2+Os5
- 6rCw==
+ bh=2IfWHImcaqyKSRvjEy3I4vyXN8NDG7NL01bd1QTvyuI=;
+ b=satHjiTpM75IKh30Ktkzu5bGLJmBWgwZI4s78dIB3fvAs2pYV/qSBDQFLx8wKJwi2z
+ eSiABr1/Z+H5Z9Kkrv/mrNf4ZjgJVwUZ77RkK2KXd+dqgREs3DmvrmmOUZgXZT9xo53i
+ fS+ZYwZl0Jx87S3gS+VYsJrsSIGdDRiR18YGwZGjPLFPJOUsuAV3RNOity463FeWdhT2
+ uWYQEAtghlPlNTE/QJOAe9GbXX4X3IkyEwByUo+9fEvHu8NEz/ETmSEFovlIxCjrQvMk
+ SgovpVubYQOv3M/djJwdDplzL/eVJ0U2MBVrGp9DgA3LeeEma/hZmRtfHIq+KYaGvJeW
+ 6gZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVA5cigP7reFhmRv39IqiJ1qjuWPtjYbT8QNdI72INvHBjW8IxhrypT3CVFvbSK8yHnkeREYgv9OZn4@nongnu.org
-X-Gm-Message-State: AOJu0YzVKVd2WgA6d3BDYZ2vufEBKWv3N/f8EDsoOl6xTBRgzdjIypIn
- uzUP4vTa08TnFBiUo0RLyq0RaFbmSdRZzEH5HgzO7mrZQZ9gUPfBAswf4Oo/dkSGTo4=
-X-Gm-Gg: ASbGncuD1BaKW9zaI7PrIWzO9vs3g07/fJcn5/5A15iw3WPbPrOddIBVsu4TgndSiwn
- WvJC1TFGEXvNbTV2K+xdSF9Y/zlKqFaqrrVUnadJ4uPps+RQmTM/nVbTqv4rgrUIqIs82m1rnSR
- XwDHq7wJjVIu765yVuwLU4yWPW5JMJadCw+uoCxXxrkfWW0oyly6HOIB9DKDD1EKSeIkk+uPVbv
- npGfaBH5jspiJYqO9bBN9KrZtE4MFDlGWG5ZUGYfpG9k/0ofxERWD3ynBGfYi1rQEgajlH5N/82
- ey6kAuLJZy73rHdWc7edHCHvk5IomP149URrkKvWEeXinjzYkQY95zObdyxobPZIgTXp9jQ06Ml
- nU/sCc4x5pkGVAnLc7i7Am2S7wfE+4934B+DsEWxS0pXlCGtNx/Jagx9q6pw4dhyFVUvJKl4sRJ
- f9SD3XDELKHuIFCvEmmDtManOZuoazovf+oDGA/K/qUkHb/BMhx+xcK8beF/PBQ7bkoxY/taM=
-X-Google-Smtp-Source: AGHT+IHBMoBwRn3qxrUOFuLH/BUwXNz5fl8W8J2u1GN69iUmSITjdF+MW5QmFcF7KROEGpe9Ac6pPg==
-X-Received: by 2002:a05:690c:3690:b0:785:bfd8:c4b5 with SMTP id
- 00721157ae682-785bfd8d398mr32042557b3.42.1761159599731; 
- Wed, 22 Oct 2025 11:59:59 -0700 (PDT)
-Received: from ?IPV6:2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3?
- ([2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-785cd5df1a3sm129517b3.17.2025.10.22.11.59.58
+ AJvYcCWgypYIG2gobtjeRtAIe9jp/L0pg3YRt57rbXKDzsJOx/gqtQfLSE/d+OYC7JvgkH2tR681f+ADTeN6@nongnu.org
+X-Gm-Message-State: AOJu0YwMJkv0vQdfbmbeIQ7cO9feXWuXF9ez7YY57arqeDECVBnBlhXB
+ SL3dgHSSe6vHJN0IUxigQ6tT2RIuZ/+Qf+QWIvDoXGQDGdOo2MQ0DQhegLkHd6UxsSE=
+X-Gm-Gg: ASbGncuHQgzkoF9ziMc29x7n254VF788HhFYVSEr5cgTAwJf/ml9/dP0YZUQPVoPxe8
+ pKOhaRbAgRA1ddpyHGca8YkVGKcA09aJea+S3EfHzjgsWW16EzAvUCkUQWD9FWmITNsRM1mQhMo
+ DJ494q+1gWQX004r8zvJUrUwEPLDVL0zhG8hDueesKm0Gn4QSnQeFrzPOwBzW4E7iFkTCT8Jtkk
+ MvmDswpuAA535jVBZDmHWAkZ6r2pepHtbxM4kzPAlZx91UiwtTKgMIU8U8wD1O7YYSFz54/euYA
+ +R3BqATeav1Ew+wHnd4e+IvtBjYzhZAxgXVEOXb6uwEEgXcBCnv0KOaFEZivM6eTlzxIA1tQvFY
+ hZYmBA22TFyLi6AeNSBt1kBdmKCUP/zi2QR2ysmKzyI7eEd3T6UbUtOVMiLo6V065UM4Ion0SrT
+ yYXcxDh1WY2E0ARfyMvT3lv+Q+P/suakkE0RdpPGTMH68=
+X-Google-Smtp-Source: AGHT+IFZu+BOH2IdWbpF3UTHfMahdXQwUmkMifbliwRjHLrW2rXpl0TcCPpBUwvFFrSrT+VtnH/k0g==
+X-Received: by 2002:a05:600c:450a:b0:471:21:554a with SMTP id
+ 5b1f17b1804b1-4711787c0c0mr131881085e9.13.1761159639031; 
+ Wed, 22 Oct 2025 12:00:39 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475c428dafesm55172395e9.6.2025.10.22.12.00.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 11:59:59 -0700 (PDT)
-Message-ID: <c572407c-0c9f-4ce7-b8ed-e7f8929d957d@linaro.org>
-Date: Wed, 22 Oct 2025 13:59:55 -0500
+ Wed, 22 Oct 2025 12:00:38 -0700 (PDT)
+Message-ID: <6c4d97fc-56fc-417c-9f2b-6a89c9c86591@linaro.org>
+Date: Wed, 22 Oct 2025 21:00:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] hw/hppa: PCI devices depend on availability of PCI
- bus
-To: deller@kernel.org, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-References: <20251017200653.23337-1-deller@kernel.org>
- <20251017200653.23337-9-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] target/hppa: Set FPCR exception flag bits for non-trapped
+ exceptions
 Content-Language: en-US
-In-Reply-To: <20251017200653.23337-9-deller@kernel.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Gabriel Brookman <brookmangabriel@gmail.com>
+References: <20251017085350.895681-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251017085350.895681-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,51 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/25 15:06, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
+Cc'ing Gabriel
+
+On 17/10/25 10:53, Peter Maydell wrote:
+> In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
+> we added the code for setting up the registers correctly on trapping
+> FP exceptions, we accidentally broke the handling of the flag bits
+> for non-trapping exceptions.
 > 
-> Only create the PCI serial ports (DIVA) and PCI network cards when there is
-> actually a PCI bus. The shortly added 715 machine will not have a PCI bus, so
-> avoid creating further PCI devices.
+> In update_fr0_op() we incorrectly zero out the flag bits and the C
+> bit, so any fp operation would clear previously set flag bits. We
+> also stopped setting the flag bits when the fp operation raises
+> an exception and the trap is not enabled.
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
+> Adjust the code so that we set the Flag bits for every exception that
+> happened and where the trap is not enabled.  (This is the correct
+> behaviour for the case where an instruction triggers two exceptions,
+> one of which traps and one of which does not; that can only happen
+> for inexact + underflow or inexact + overflow.)
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/hppa/machine.c | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
+>   target/hppa/fpu_helper.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> index bec5a86f24..b6cdbc74ba 100644
-> --- a/hw/hppa/machine.c
-> +++ b/hw/hppa/machine.c
-> @@ -387,11 +387,13 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
->                           enable_lasi_lan());
+> diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+> index 45353202fae..2d272730f60 100644
+> --- a/target/hppa/fpu_helper.c
+> +++ b/target/hppa/fpu_helper.c
+> @@ -94,7 +94,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+>   {
+>       uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+>       uint32_t hard_exp = 0;
+> -    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
+> +    uint32_t shadow = env->fr0_shadow;
+> +    uint32_t to_flag = 0;
+>       uint32_t fr1 = 0;
+>   
+>       if (likely(soft_exp == 0)) {
+> @@ -122,6 +123,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+>               fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
+>           }
 >       }
+> +    /* Set the Flag bits for every exception that was not enabled */
+> +    to_flag = hard_exp & ~shadow;
+> +    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
+> +
+>       env->fr0_shadow = shadow;
+>       env->fr[0] = (uint64_t)shadow << 32 | fr1;
 >   
-> -    pci_init_nic_devices(pci_bus, mc->default_nic);
-> +    if (pci_bus) {
-> +        pci_init_nic_devices(pci_bus, mc->default_nic);
-> +    }
->   
->       /* BMC board: HP Diva GSP */
-> -    dev = qdev_new("diva-gsp");
-> -    if (!object_property_get_bool(OBJECT(dev), "disable", NULL)) {
-> +    dev = pci_bus ? qdev_new("diva-gsp") : NULL;
-> +    if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
 
-Sequential testing of NULL pointers isn't ideal.
-
-Better as
-
-     if (pci_bus) {
-	pci_init_nic_devices(pci_bus, mc->default_nic);
-
-	/* BMC board: HP Diva GSP */
-	dev = qdev_new("diva-gsp");
-	if (!object_property_get_bool(OBJECT(dev), "disable", NULL)) {
-	    PCIDevice *pci_dev = pci_new_multifunction(...);
-	}
-     }
-
-
-r~
 
