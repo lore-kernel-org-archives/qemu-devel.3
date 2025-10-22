@@ -4,87 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF3ACCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BBCFCCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 12:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBYC1-0003tG-Io; Wed, 22 Oct 2025 08:43:53 -0400
+	id 1vBYI5-0006NU-RE; Wed, 22 Oct 2025 08:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vBYBz-0003rn-Rj
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:43:51 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vBYBx-00018j-RO
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:43:51 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-78125ed4052so8258350b3a.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 05:43:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761137027; x=1761741827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=G9wpds0Q5G9A4aTo8qFgm5iQqNbXf4bZi76lWbGL9sA=;
- b=dpL0uCbcTMvfmeX1SgXHe1Fmto003M2JEh5IhWIDh5Oo7h1KY+h91y1ZYixanVk0pc
- E9VDvDyNVibUWX6AumxTWBI4mem3Sq7+Tg30Zcz5txTgX0z8XT1PoN9ktrLbFHXZVji0
- WgrhOosLx5z6ftd82TcJKrbRgHCNJxKLAqV6dhd5yfnidf8R59PlAcoqA3pWp3vX8Amn
- Nte7IbZyM5esgryALbalOOD8rWxQqLLbtmZ24vEfqv2K3plXZWsqpZgmZa/bR4KE24R/
- 983VOxsf3VrZ6/+QKXAWq5tDlGJDItobdEV9i4bdgsQX30aKtQR2npCHNn97djNAZTbT
- 6umg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vBYI4-0006Ml-Gv
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:50:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vBYI0-0001sT-DF
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 08:50:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761137401;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=F4mYW0nCa5PC6HW3YQbYA/O6tPUZkrp2QAyENl0f5B14T/T4CRc7pHgOzQgHOfaaAhpeiB
+ gomm+ZS+uDdOX2ww+1ttp9je3tdUG/wEV3bITWXl+s3zcqQM1A23gIP6ne9kLZXiCLNdqX
+ Nq4xqbA3WI/Zxq9AZoPna00eRf1kspo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-83-qsYdNfC0MnShDHWhJimXfg-1; Wed, 22 Oct 2025 08:50:00 -0400
+X-MC-Unique: qsYdNfC0MnShDHWhJimXfg-1
+X-Mimecast-MFC-AGG-ID: qsYdNfC0MnShDHWhJimXfg_1761137399
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-472ce95ed1dso26514185e9.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 05:50:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761137027; x=1761741827;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G9wpds0Q5G9A4aTo8qFgm5iQqNbXf4bZi76lWbGL9sA=;
- b=fJnujw1aL65LwHxnjqH0hU79YO4J73jpFSx2RklGw/vo2HFWc8nDAM/RlllSSwRvWY
- PGvCFCLC94EJIG3Y1fL+pAH9dt57kcvlJol4tz7v9CQ6Kh80usrdkz1iPqy077P7THUP
- wi6ZThAPrRsgwUWKgWOpTjKcqZhR0tYpS6hRX/XQ4rpE/6JpNxYL0dqmRYNtDgtdx+G0
- yIQwVovjIOn+p7GOdPt5zetZBEW09JDb05Cbefdmk1BppSTJq+Xw7IUcv0sxtB+/rhik
- doeFaNEbqunNisy5vArubTdhxFmj1Lrr4g6wW+4X+8SchygRKCDUUrcjTNK2aq5lzrXk
- /rcw==
-X-Gm-Message-State: AOJu0YzxVbA3P5QnFlmVUBxlF6krQX9TcSOVKWeMWxNLlBWPRuP5N9j4
- zrjwq4ZX8u+opjleq/g6I0AYrwRnbTGuPzAGXO5cIgXr9FVqBkztTxH2/DLGcVw/k8rK0u/DOTN
- TqFenKmQ=
-X-Gm-Gg: ASbGnctVC42XccUW7KsGYGuFmyomKzWZ9XdL8SlZ37vvXPjp5q2NG3dW0s2mPUnpd/y
- lBo82uxUAKg0zF1ACSptbAaWjoRZQ4daex0KGaUXC+AnbqTpJ6HyTOzUPnkC32B6gU9uXekhcLi
- G1Y7fFQbahmeYsmjtT/oxPJmWaIfZH9dlUriOTp5fUSj8k2EYLQnNkGS/D/LXBpN/PjDINecWI4
- jeiF+xq14R0BR4x8IWHjH9Qs/oSRayb0/NWIHWzuCxEQr0OdM0pwTL1kuS3dOqYMs69o8a8z9+g
- EEH81m2NK1bCkbRHOtBcKsrn7A4/5tSFgQN0eYeAisjKWHIWqZw0lrHTT4ORvf9P4kjZ0fVbsFj
- wf/nxGOoQyZE5Aj8um7YqC6m1xLTtFoewxAs476z/plDt7v5UN9TTtl5ngPx4eNDeEXpgvAKCNU
- P+sXUEEAuwCky++IHbjS2isthfqlDqHtfxm7NZ
-X-Google-Smtp-Source: AGHT+IGV8371cjx+ZRdyqDdid7iGv+FJy/JqDrInw16+kH4VlxZiPiFAcEc51h5V9CAn5zCKNmsMng==
-X-Received: by 2002:a05:6a00:ac2:b0:7a2:183a:924f with SMTP id
- d2e1a72fcca58-7a220d2720amr25307752b3a.31.1761137027433; 
- Wed, 22 Oct 2025 05:43:47 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com ([189.38.141.22])
+ d=1e100.net; s=20230601; t=1761137399; x=1761742199;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=aCxSD4oaKV++vPmbVa9Z5BkBfLAYZL9DPaigLTybLh9PLWsN+lkzo/6D9F6wtRVOCI
+ 1IwxPsmCjFaB81VwAQ5xqnP/TqN9g/8boPQqSYYe7I7YoramoJIB7gAb8ljN8Rj9dTk4
+ XV/UMNrvBtTSxtCTrcyO9GEZfLT11qkRw4DjTzb7WXuICO2kg+vq2QqOTr4IiILvkVSW
+ iE8gAh+GTktrufpRcGE7gpu4C6aYwVnhzBsTvp73lxDVQFW3QoKht6DC8cwLJ+wzirmB
+ snXJbbTJVVxathGwADzlpInQ6jDpSeDuNTTPBzbg59lMCUNs1IO1Czj6/fWOjrVSYIsC
+ TtTQ==
+X-Gm-Message-State: AOJu0Yz7rWFU0erv30hnd++ykNan1ryvOWBPV4AKqnvV28h+9KLMO9PH
+ 4S8BsiaAw4xbQonLfOA2oSyMsZ+1svmSx46i3iljxGuldEn03DwoiY4Qu8gVrJRpBD/i/HNsyIY
+ pVoe1IkI9S2hziW/WYFZcM4Y68l3rFBHugBBFOaO8k6MfaYKD0LckFGS4
+X-Gm-Gg: ASbGncv4aCROBROIa3c6gmM3vbaDLvZtNIpTpiDFuWVXLmqe9YLAT4qwdG+4U6g0WFW
+ DN+tJ7K9ZhJoRaHXx73DKElpihqhvgKomEnlcGuVsfTW4S4gNIJ+m6DDN2k+DhTXUkSldPt9wJd
+ hrWT2oPpxSn1Jd+d/eRtwKsgQTP1/5TFMA1vVgDNTda6SCNQwNdQPyhXhDPHmcinfbShPlY/EvL
+ g9Y/JXdoP+HQS/gzkN6Iv9wwjc5T7Ogi1wxEi/o5mHlF/d4wKuWrFomJl6d06/HngmxfvesYZqk
+ c8BlNOBjFSO/rd4DjnSrqe3oscv33ph1J3lOq8eBN/7DVfdLXqZpkqIFpvWRQIogD5d7F3D3u2t
+ ATtrZmwWSrdBLV/f5FyKMAKy1Q+AyCE1a30GcxGOJvY06mXJHR9FF7I6Qaytk2tb/gAjAxVgp8Z
+ O47A==
+X-Received: by 2002:a05:600c:3e07:b0:468:7a5a:1494 with SMTP id
+ 5b1f17b1804b1-4711787350dmr122416585e9.1.1761137399186; 
+ Wed, 22 Oct 2025 05:49:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/Hm2BY761ErfCQAW9TWE1D63G3DyFVH54t8V55V0H1jT6mBT86okovR2Of93UGrtI6FGtKQ==
+X-Received: by 2002:a05:600c:3e07:b0:468:7a5a:1494 with SMTP id
+ 5b1f17b1804b1-4711787350dmr122416435e9.1.1761137398787; 
+ Wed, 22 Oct 2025 05:49:58 -0700 (PDT)
+Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a22ff349bcsm14462590b3a.17.2025.10.22.05.43.44
+ 5b1f17b1804b1-475c428a534sm50029055e9.6.2025.10.22.05.49.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 05:43:46 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH] target/riscv: fix riscv_cpu_sirq_pending() mask
-Date: Wed, 22 Oct 2025 09:43:40 -0300
-Message-ID: <20251022124340.493358-1-dbarboza@ventanamicro.com>
+ Wed, 22 Oct 2025 05:49:57 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Gonglei <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Alberto Garcia <berto@igalia.com>, Thomas Huth <huth@tuxfamily.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Magnus Damm <magnus.damm@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Collin L . Walling" <walling@linux.ibm.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Corey Minyard <minyard@acm.org>,
+ Paul Burton <paulburton@kernel.org>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ Antony Pavlov <antonynpavlov@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ Vijai Kumar K <vijai@behindbytes.com>, Samuel Tardieu <sam@rfc1149.net>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ "reviewer : vhost-user-scmi" <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Filippov <jcmvbkbc@gmail.com>, Lukas Straub <lukasstraub2@web.de>,
+ "open list : Sharp SL-5500 Co . . ." <qemu-arm@nongnu.org>,
+ "open list : S390 SCLP-backed . . ." <qemu-s390x@nongnu.org>,
+ "open list : sPAPR pseries" <qemu-ppc@nongnu.org>,
+ "open list : X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
+ "open list : RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ "open list : virtiofs" <virtio-fs@lists.linux.dev>,
+ "open list : Rust-related patc . . ." <qemu-rust@nongnu.org>
+Subject: Re: [PATCH v2] char: rename CharBackend->CharFrontend
+Date: Wed, 22 Oct 2025 14:49:51 +0200
+Message-ID: <20251022124952.3691010-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251022074612.1258413-1-marcandre.lureau@redhat.com>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,38 +164,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
-pending interrupts without apparent reason. There's no special treatment
-for these ints as far as the spec goes, and this filtering is causing
-read_stopi() to miss those VS interrupts [1].
+Queued, thanks.
 
-We shouldn't return delegated VS interrupts in S-mode though, so change
-the current mask with "~env->hideleg". Note that this is the same
-handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2820
-
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/cpu_helper.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 3479a62cc7..360db133e2 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
- 
- int riscv_cpu_sirq_pending(CPURISCVState *env)
- {
--    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg &
--                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
-+    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & ~env->hideleg;
-     uint64_t irqs_f = env->mvip & env->mvien & ~env->mideleg & env->sie;
- 
-     return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
--- 
-2.51.0
+Paolo
 
 
