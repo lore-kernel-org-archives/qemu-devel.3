@@ -4,98 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E72ACCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 13:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E00CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 13:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBYnw-0005ZM-Ms; Wed, 22 Oct 2025 09:23:04 -0400
+	id 1vBYqQ-00069Y-QI; Wed, 22 Oct 2025 09:25:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vBYnq-0005Yj-UZ
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 09:23:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1vBYqP-00068r-5k; Wed, 22 Oct 2025 09:25:37 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vBYnl-0005bw-Qt
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 09:22:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761139371;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NNQNqxq5bVrFUHowZoIoQEwT/bvzcdn+gMhvpD8sfgQ=;
- b=U0Q+Wp4F8xxIKDR26gfmXz3zrd3qo96DiBjk1UdQA4D6HPtnoEpj0QtoEnA+JitY6HP0tl
- ShIbDK1nGYT8NQ/YYZn6GKwKdduviTZOnQerXG9n/Om83KtU27MLPJ0OjcII2EPaOn8OFJ
- JDtRqXtEXR0BrHxZW+4lWe454tlZNBA=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-7rrb-Q6vPIyTL6DbqlGIkA-1; Wed, 22 Oct 2025 09:22:49 -0400
-X-MC-Unique: 7rrb-Q6vPIyTL6DbqlGIkA-1
-X-Mimecast-MFC-AGG-ID: 7rrb-Q6vPIyTL6DbqlGIkA_1761139368
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-88f7eff9d5fso1188696385a.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 06:22:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761139368; x=1761744168;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NNQNqxq5bVrFUHowZoIoQEwT/bvzcdn+gMhvpD8sfgQ=;
- b=PJzDSnOWbkrockKHSwKBUvg/tW61PLyuCslOGp+O53XvkrWKDdlFJQd4fUOLReITc2
- tW0SuMEijWZVXEGXFolM6DyJNbnfn3PmNynPVHh0LuE0/rsIZKvCa4h0Q1m0xlMf+yTK
- 8dxOA/dq34HVAIfWDMb7H45gK37+tweqa9PzahknqV9pA4CMWbaWbCgIQM8fnIdM5ZHa
- rRRV0c3GLy+RU0RKwYncWBUUKKvwwU7H0twBN+ydq7MZVDqXoJ2wAWIo9ukYzoGR9fMp
- Ygrc4UFDCafG0j56lbCdMalU69UH61ogi8789125HpuzHulvK+p6kqQkJ1A4h8+eShyH
- k6TA==
-X-Gm-Message-State: AOJu0Yz2+gqZYCi9lWGSd1vdjUOpkQt5G4g/Ftn/Kg3HxSKz5AFNhZpc
- vyWBWTM4q3unopkwJPjdR4dGPa8wEXhJmHssVofwJ1xdhtApwAiuAl2hk1GslddoDYRR3u4kB1b
- dIEYGJBcsrAyypVG8rXGMlrrF1cCx544l0wX/wR0tkx2lY3iWOhhexV4L
-X-Gm-Gg: ASbGncsMaTaLbInPbKD6VL+7tr0zOhGHdOe4ilh8YxRumZyBmHx6DpGqQVmfCiGNVBS
- jgm6WUQouzfMxtfyLp8WU73fd6PwFSo33Gya/SDV8YRRVVELz45Y6QYayDMP6PL8rFR8pPDZfsL
- SGj/THugbjeB+o6LuQnVJv38ijflv3/73a1iCa5XqL6bp/TFnZV+XY5xiHQvfzJUOfcn2FdwXR3
- E3JXMcL351ZvBuP8yKjSb3SSKjhZj/SvNlVQ2Zig6qC60YHHhIkXRFr48NQJLpZyrv7v0sf1jr5
- 7faS+pc9Ny7pTFTBfj1H3M4ggif9T1MwDiEebR6rf39Gl6tyBODyJPa4jDRuWlLlm5wQb+Wtn4N
- Fo6w=
-X-Received: by 2002:a05:620a:29d3:b0:88f:c0e1:ec2 with SMTP id
- af79cd13be357-890707f9b52mr2677931085a.60.1761139368456; 
- Wed, 22 Oct 2025 06:22:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUfPQwMW7ugMaV3OJfIP6t4ROWbJuzmZq/sb85k1vlpfegJlZShRsXcBDNp90dPQLVklPR7Q==
-X-Received: by 2002:a05:620a:29d3:b0:88f:c0e1:ec2 with SMTP id
- af79cd13be357-890707f9b52mr2677872485a.60.1761139361211; 
- Wed, 22 Oct 2025 06:22:41 -0700 (PDT)
-Received: from leonardi-redhat ([151.29.47.252])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-891cd098328sm976862585a.17.2025.10.22.06.22.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 06:22:40 -0700 (PDT)
-Date: Wed, 22 Oct 2025 15:22:37 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: Re: [PATCH v4 4/5] igvm: add support for initial register state load
- in native mode
-Message-ID: <ijrybqltievczxvugi4hhnftqqeg42o6vshhnirrz2ugeotplf@cq62mc5seswc>
-References: <20251022084439.242476-1-kraxel@redhat.com>
- <20251022084439.242476-5-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
+ id 1vBYqK-0006Aw-44; Wed, 22 Oct 2025 09:25:35 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59M7lJ7a014602;
+ Wed, 22 Oct 2025 13:25:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=bU3bHT79nzoDR1oK6typvFXx+fF0
+ 3XmwwaxjFM84Et4=; b=dhx86EO2Y4lCbfBSEMvgrKAFsvFdt192cBdn36mSyDDf
+ Q/cv+ELjzxcBSLfqGJ3bIQw+dejcp68oXFguboEN96drsVxFc+EFSfsi7cZ5PJua
+ JF3ojE1FTFbu7PiKrhiT1M36+GutVnfX2CEi487pvKWQ0ewcn12IBg4zZS+8GMXk
+ ct28e9W94QolBFXNBrYrSWfayVi/rxnPBdvyvJydPJT4OmHS8o8sTKpiIetvzgIs
+ b/wkWqIv+6/O3tKsS1cEVYP/Vm7spPDACePhwNVwhWVhy6bNIv6APs78YLRP+Xbt
+ 9gQ07s6P01x/TdSqdHEnalT/umICkjhLAbkwMB6g4Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s4x65-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Oct 2025 13:25:25 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59MClZDl004862;
+ Wed, 22 Oct 2025 13:25:25 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s4x5x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Oct 2025 13:25:25 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59MAMM8V017066;
+ Wed, 22 Oct 2025 13:25:24 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vnky0n3t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Oct 2025 13:25:24 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59MDPJEm57213248
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Oct 2025 13:25:19 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AE42220043;
+ Wed, 22 Oct 2025 13:25:19 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B666A2004B;
+ Wed, 22 Oct 2025 13:25:16 +0000 (GMT)
+Received: from vishalc-ibm.ibm.com (unknown [9.39.25.31])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 22 Oct 2025 13:25:16 +0000 (GMT)
+From: Vishal Chourasia <vishalc@linux.ibm.com>
+To: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
+ balaton@eik.bme.hu, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ berrange@redhat.com
+Cc: Vishal Chourasia <vishalc@linux.ibm.com>
+Subject: [Patch v6 0/6] hw/core/loader: capture Error from load_image_targphys
+Date: Wed, 22 Oct 2025 18:54:59 +0530
+Message-ID: <20251022132507.1597232-2-vishalc@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251022084439.242476-5-kraxel@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pQOXk4oSCZcL2q9GB-9z_oVSlh8dEWK7
+X-Proofpoint-GUID: -1WIFo2sKx6RRfXhmXhw8cMBWh3dOzkU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7fCCgByFBUXq
+ FfjCM7qo+hkhp+w36Rh2e23w3TCq6znBsLsILLbU4zHDmuH+7nlwa7CVaodz5sP9rUiva9NnJ6V
+ x7u+geqkhTOU/7T8N46sackPkgbXcJ99RN/zWQp8bSt0NZyWu+55dJCwykTquDqGgc4RYYxDY3s
+ Zjd87A3Jr9xmALjyeE/rI8l8BvQ2U1M+F01KRZTUWhj/byxeIQXVk/YyH1d1dK+rxJ9Gvf9gNAS
+ Gvswe3I7qhsGVQTDXS+0Fv7K5DqobkbJHxUqnzd/H8AZSpzKSkhNgDPUOJ8OpItNtz1ZYof5dPD
+ H+aqpC/2sVYsLXsrVZzyDrzcgJHLOTwl5LTfheSsUMSPbqatGqRlGd048wcLfJv35A6akMJ+ekE
+ HaLBDYf21bMDYjukvKNUEq9RNm0cOg==
+X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68f8db46 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=tC3Qo0kugqxd9oclSfAA:9 a=QEXdDO2ut3YA:10
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_05,2025-10-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,227 +125,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 10:44:38AM +0200, Gerd Hoffmann wrote:
->Add IgvmNativeVpContextX64 struct holding the register state (see igvm
->spec), and the qigvm_x86_load_context() function to load the register
->state.
->
->Wire up using two new functions: qigvm_x86_set_vp_context() is called
->from igvm file handling code and stores the boot processor context.
->qigvm_x86_bsp_reset() is called from i386 target cpu reset code and
->loads the context into the cpu registers.
->
->Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->---
-> include/system/igvm.h |   2 +
-> target/i386/cpu.h     |   3 +
-> backends/igvm.c       |  30 +++++-----
-> stubs/igvm.c          |   5 ++
-> target/i386/cpu.c     |   6 ++
-> target/i386/igvm.c    | 134 ++++++++++++++++++++++++++++++++++++++++++
-> 6 files changed, 165 insertions(+), 15 deletions(-)
->
->diff --git a/include/system/igvm.h b/include/system/igvm.h
->index 3f72a40b8897..48ce20604259 100644
->--- a/include/system/igvm.h
->+++ b/include/system/igvm.h
->@@ -23,5 +23,7 @@ int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
-> int qigvm_x86_get_mem_map_entry(int index,
->                                 ConfidentialGuestMemoryMapEntry *entry,
->                                 Error **errp);
->+int qigvm_x86_set_vp_context(void *data, int index,
->+                             Error **errp);
->
-> #endif
->diff --git a/target/i386/cpu.h b/target/i386/cpu.h
->index ce948861a765..78d4b427c67a 100644
->--- a/target/i386/cpu.h
->+++ b/target/i386/cpu.h
->@@ -2867,6 +2867,9 @@ void x86_cpu_dump_local_apic_state(CPUState *cs, int flags);
->
-> #endif
->
->+/* igvm.c */
->+void qigvm_x86_bsp_reset(CPUX86State *env);
->+
-> /* cpu.c */
-> bool cpu_is_bsp(X86CPU *cpu);
->
->diff --git a/backends/igvm.c b/backends/igvm.c
->index 2ab7a9d96565..905bd8d98994 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -432,18 +432,6 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
->         return 0;
->     }
->
->-    /*
->-     * A confidential guest support object must be provided for setting
->-     * a VP context.
->-     */
->-    if (!ctx->cgs) {
->-        error_setg(
->-            errp,
->-            "A VP context is present in the IGVM file but is not supported "
->-            "by the current system.");
->-        return -1;
->-    }
->-
->     data_handle = igvm_get_header_data(ctx->file, IGVM_HEADER_SECTION_DIRECTIVE,
->                                        ctx->current_header_index);
->     if (data_handle < 0) {
->@@ -453,9 +441,21 @@ static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
->     }
->
->     data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
->-    result = ctx->cgsc->set_guest_state(
->-        vp_context->gpa, data, igvm_get_buffer_size(ctx->file, data_handle),
->-        CGS_PAGE_TYPE_VMSA, vp_context->vp_index, errp);
->+
->+    if (ctx->cgs) {
->+        result = ctx->cgsc->set_guest_state(
->+            vp_context->gpa, data, igvm_get_buffer_size(ctx->file, data_handle),
->+            CGS_PAGE_TYPE_VMSA, vp_context->vp_index, errp);
->+    } else if (target_arch() == SYS_EMU_TARGET_X86_64) {
->+        result = qigvm_x86_set_vp_context(data, vp_context->vp_index, errp);
->+    } else {
->+        error_setg(
->+            errp,
->+            "A VP context is present in the IGVM file but is not supported "
->+            "by the current system.");
->+        result = -1;
->+    }
->+
->     igvm_free_buffer(ctx->file, data_handle);
->     if (result < 0) {
->         return result;
->diff --git a/stubs/igvm.c b/stubs/igvm.c
->index c32058eb2a6e..17cd1e903e35 100644
->--- a/stubs/igvm.c
->+++ b/stubs/igvm.c
->@@ -19,3 +19,8 @@ int qigvm_x86_get_mem_map_entry(int index,
-> {
->     return -1;
-> }
->+
->+int qigvm_x86_set_vp_context(void *data, int index, Error **errp)
->+{
->+    return -1;
->+}
->diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->index 455caff6b230..e00936e4b542 100644
->--- a/target/i386/cpu.c
->+++ b/target/i386/cpu.c
->@@ -8770,6 +8770,12 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
->
->     cs->halted = !cpu_is_bsp(cpu);
->
->+#if defined(CONFIG_IGVM)
->+    if (cpu_is_bsp(cpu)) {
->+        qigvm_x86_bsp_reset(env);
->+    }
->+#endif
->+
->     if (kvm_enabled()) {
->         kvm_arch_reset_vcpu(cpu);
->     }
->diff --git a/target/i386/igvm.c b/target/i386/igvm.c
->index 2ed6cd052c79..457c253b030c 100644
->--- a/target/i386/igvm.c
->+++ b/target/i386/igvm.c
->@@ -11,9 +11,115 @@
->
-> #include "qemu/osdep.h"
->
->+#include "cpu.h"
-> #include "hw/i386/e820_memory_layout.h"
-> #include "system/igvm.h"
->
->+struct IgvmNativeVpContextX64 {
->+    uint64_t rax;
->+    uint64_t rcx;
->+    uint64_t rdx;
->+    uint64_t rbx;
->+    uint64_t rsp;
->+    uint64_t rbp;
->+    uint64_t rsi;
->+    uint64_t rdi;
->+    uint64_t r8;
->+    uint64_t r9;
->+    uint64_t r10;
->+    uint64_t r11;
->+    uint64_t r12;
->+    uint64_t r13;
->+    uint64_t r14;
->+    uint64_t r15;
->+    uint64_t rip;
->+    uint64_t rflags;
->+    uint64_t idtr_base;
->+    uint16_t idtr_limit;
->+    uint16_t reserved[2];
->+    uint16_t gdtr_limit;
->+    uint64_t gdtr_base;
->+
->+    uint16_t code_selector;
->+    uint16_t code_attributes;
->+    uint32_t code_base;
->+    uint32_t code_limit;
->+
->+    uint16_t data_selector;
->+    uint16_t data_attributes;
->+    uint32_t data_base;
->+    uint32_t data_limit;
->+
->+    uint64_t gs_base;
->+    uint64_t cr0;
->+    uint64_t cr3;
->+    uint64_t cr4;
->+    uint64_t efer;
->+};
->+
->+#define FLAGS_TO_SEGCACHE(flags)                \
->+    (((unsigned int)flags) << 8)
->+
->+static void qigvm_x86_load_context(struct IgvmNativeVpContextX64 *context,
->+                                   CPUX86State *env)
->+{
->+    cpu_load_efer(env, context->efer);
->+    cpu_x86_update_cr4(env, context->cr4);
->+    cpu_x86_update_cr0(env, context->cr0);
->+    cpu_x86_update_cr3(env, context->cr3);
->+
->+    cpu_x86_load_seg_cache(
->+        env, R_CS, context->code_selector,
->+        context->code_base, context->code_limit,
->+        FLAGS_TO_SEGCACHE(context->code_attributes));
->+    cpu_x86_load_seg_cache(
->+        env, R_DS, context->data_selector,
->+        context->data_base, context->data_limit,
->+        FLAGS_TO_SEGCACHE(context->data_attributes));
->+    cpu_x86_load_seg_cache(
->+        env, R_ES, context->data_selector,
->+        context->data_base, context->data_limit,
->+        FLAGS_TO_SEGCACHE(context->data_attributes));
->+    cpu_x86_load_seg_cache(
->+        env, R_FS, context->data_selector,
->+        context->data_base, context->data_limit,
->+        FLAGS_TO_SEGCACHE(context->data_attributes));
->+    cpu_x86_load_seg_cache(
->+        env, R_GS, context->data_selector,
->+        context->data_base, context->data_limit,
->+        FLAGS_TO_SEGCACHE(context->data_attributes));
->+    cpu_x86_load_seg_cache(
->+        env, R_SS, context->data_selector,
->+        context->data_base, context->data_limit,
->+        FLAGS_TO_SEGCACHE(context->data_attributes));
+Currently, when QEMU fails to load images (kernel, BIOS, initrd) via
+load_image_targphys(), the error messages are not descriptive enough
+for users to understand why the loading failed. This series adds the
+ability to add Error information through the loader functions to
+provide more detailed error reporting.
 
-IIUC `R_TR` and `R_LDTR` are used by HVF in QEMU. Is there a reason why 
-you didn't add them here?
+v6:
+- Pass error_fatal instead of errp where caller exits right after
+  load_image_targphys() fails
+- Include filename in error messages.
 
-Rest LGTM!
+v5:
+- Moved the patch which replaces open() with qemu_open() earlier in the
+  series
+- Incorporated minor changes in the error messages requested by Balaton
+- Moved check for size zero in load_image_targphys_as() into it's
+  separate patch 
 
-Thanks,
-Luigi
+v4:
+- Reject empty files (`size == 0`) with an appropriate error. [1/5]
+- Populate error when `rom_add_file_fixed_as()` fails. [1/5]
+- Add missing check in hw/ppc/virtex_ml507.c [5/5]
+- Fixed checkpatch warnings [5/5]
+- Check errp for failures from load_image_targphys/load_image_targphys_as [3,5/5]
+- Remove unused variables [5/5]
+
+v3:
+- Use qemu_open() instead of open() in get_image_size() (danpb)
+- Remove redundant error_setg_file_open() call (danpb)
+- Use error_prepend()/error_reportf_err() to preserve underlying
+  error details (danpb)
+
+[v5]: https://lore.kernel.org/all/20251021105442.1474602-2-vishalc@linux.ibm.com
+[v4]: https://lore.kernel.org/all/20251017181250.1421446-2-vishalc@linux.ibm.com
+[v3]: https://lore.kernel.org/all/20251016173502.1261674-1-vishalc@linux.ibm.com
+[v2]: https://lore.kernel.org/all/20251015134716.1099351-2-vishalc@linux.ibm.com
+[v1]: https://lore.kernel.org/all/20251007091214.403430-2-vishalc@linux.ibm.com
+
+Vishal Chourasia (6):
+  hw/core/loader: Use qemu_open() instead of open() in get_image_size()
+  hw/core/loader: capture Error from load_image_targphys
+  hw/core/loader: add check for zero size in load_image_targphys_as
+  hw/core: Pass errp to load_image_targphys_as()
+  hw/ppc/spapr: Rename resize_hpt_err to errp
+  hw/ppc: Pass errp to load_image_targphys() and report errors
+
+ hw/alpha/dp264.c         |  4 ++--
+ hw/arm/armv7m.c          |  2 +-
+ hw/arm/boot.c            |  5 +++--
+ hw/arm/digic_boards.c    |  2 +-
+ hw/arm/highbank.c        |  3 ++-
+ hw/arm/raspi.c           |  2 +-
+ hw/arm/vexpress.c        |  2 +-
+ hw/core/generic-loader.c |  8 +++++---
+ hw/core/guest-loader.c   |  7 ++++---
+ hw/core/loader.c         | 37 +++++++++++++++++++++++++++++--------
+ hw/hppa/machine.c        |  5 +++--
+ hw/i386/multiboot.c      |  2 +-
+ hw/i386/x86-common.c     |  4 ++--
+ hw/ipmi/ipmi_bmc_sim.c   |  2 +-
+ hw/loongarch/boot.c      |  5 ++---
+ hw/m68k/an5206.c         |  2 +-
+ hw/m68k/mcf5208.c        |  4 ++--
+ hw/m68k/next-cube.c      |  2 +-
+ hw/m68k/q800.c           |  7 ++++---
+ hw/m68k/virt.c           |  4 ++--
+ hw/microblaze/boot.c     |  5 +++--
+ hw/mips/boston.c         |  2 +-
+ hw/mips/fuloong2e.c      |  9 +++++----
+ hw/mips/jazz.c           |  2 +-
+ hw/mips/loongson3_virt.c | 10 ++++++----
+ hw/mips/malta.c          |  9 +++++----
+ hw/nubus/nubus-device.c  |  2 +-
+ hw/openrisc/boot.c       |  5 +++--
+ hw/pci/pci.c             |  2 +-
+ hw/ppc/amigaone.c        | 13 ++-----------
+ hw/ppc/e500.c            | 20 ++++----------------
+ hw/ppc/mac_newworld.c    | 19 ++++++-------------
+ hw/ppc/mac_oldworld.c    | 19 ++++++-------------
+ hw/ppc/pegasos2.c        | 10 +++-------
+ hw/ppc/pnv.c             | 27 ++++++---------------------
+ hw/ppc/ppc440_bamboo.c   |  9 ++-------
+ hw/ppc/prep.c            | 19 ++++++-------------
+ hw/ppc/sam460ex.c        |  8 ++------
+ hw/ppc/spapr.c           | 33 ++++++++++++---------------------
+ hw/ppc/virtex_ml507.c    | 11 +++--------
+ hw/riscv/boot.c          |  7 ++++---
+ hw/rx/rx-gdbsim.c        |  2 +-
+ hw/s390x/ipl.c           |  8 +++++---
+ hw/sh4/r2d.c             |  8 +++++---
+ hw/smbios/smbios.c       |  2 +-
+ hw/sparc/leon3.c         |  4 ++--
+ hw/sparc/sun4m.c         |  8 +++++---
+ hw/sparc64/sun4u.c       |  7 ++++---
+ hw/xtensa/xtfpga.c       |  3 ++-
+ include/hw/loader.h      |  8 +++++---
+ system/device_tree.c     |  2 +-
+ 51 files changed, 181 insertions(+), 221 deletions(-)
+
+-- 
+2.51.0
 
 
