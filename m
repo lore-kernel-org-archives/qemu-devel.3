@@ -4,113 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9481CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F20CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 19:30:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBeWQ-0000Iz-Ic; Wed, 22 Oct 2025 15:29:22 -0400
+	id 1vBeXG-00016G-8j; Wed, 22 Oct 2025 15:30:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1vBeVn-000834-31; Wed, 22 Oct 2025 15:28:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeWv-0000tv-Pa
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:29:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1vBeVl-0001gc-6U; Wed, 22 Oct 2025 15:28:42 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MEnsvD027350;
- Wed, 22 Oct 2025 19:28:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Gq/WHDlUh8spgPYBp
- EywHSfRNf6ahpKsKuWx0r0w/P0=; b=dnVebv4i7SKr6jPanpTmsf7Xqdjlbqoi0
- gHMo47X4Ad+61IjUMnphGwRGFtNffq2ppWoMujJjGgSI60z87tS3KrOFZ8RqLC2e
- jonRPTGwA7/vxMppT5jMWMVaRHyRGIiI64PVe/PsfMjirWDWpwURwEcmP2jszgNC
- F/PvOvd6r0hvvG6ye8FnGqv2ETfGSg/856b8LHW8i3bjCvLowqwGC5Yi9OfQW5xR
- VlyQgK88kptHjhd/zlzFT8p5VnXk6TaMSZzfpkuqnx7saAmzlT3B+rZeF/t1X/Jy
- 43kkSegYjmZDwVQX8wAijc/aNYciP8A+bgQZ1rbaZ7NeptYNUDqoA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s6p02-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 19:28:35 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59MJSZPH012286;
- Wed, 22 Oct 2025 19:28:35 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s6nyw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 19:28:35 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59MHwNBb002381;
- Wed, 22 Oct 2025 19:28:34 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejhydg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 22 Oct 2025 19:28:34 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59MJSUee36635074
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 22 Oct 2025 19:28:30 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A930520043;
- Wed, 22 Oct 2025 19:28:30 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EDDB720040;
- Wed, 22 Oct 2025 19:28:27 +0000 (GMT)
-Received: from vishalc-ibm.ibm.com (unknown [9.39.25.30])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 22 Oct 2025 19:28:27 +0000 (GMT)
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-To: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
- balaton@eik.bme.hu, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- berrange@redhat.com
-Cc: Vishal Chourasia <vishalc@linux.ibm.com>
-Subject: [Patch v7 3/5] hw/core/loader: add check for zero size in
- load_image_targphys_as
-Date: Thu, 23 Oct 2025 00:57:18 +0530
-Message-ID: <20251022192717.1644251-7-vishalc@linux.ibm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251022192717.1644251-1-vishalc@linux.ibm.com>
-References: <20251022192717.1644251-1-vishalc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBeWt-0001ls-LR
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 15:29:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761161390;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XzNoWAkEF4d+oBSToQXHskCOH19a/YjosvNb3uaKjto=;
+ b=HFLxs9xlmc1JdpQgrWw9/pxJ2IkfC9LBl1TQ2L9DKRDmD34HL45CDj7diHsd4SrlpxUkb+
+ biY8tpxLkj8Z//hKN01tSEd2VrPK1x2xZs3TaEskuJEkEEeRB1hzt8ijuAjq4lr+EYYG1G
+ rM+U9MpSS5p0dXeK9dAhdcJmb5IdEQ4=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-ToYgUHtXM6Weo5dqEUF_Mg-1; Wed, 22 Oct 2025 15:29:42 -0400
+X-MC-Unique: ToYgUHtXM6Weo5dqEUF_Mg-1
+X-Mimecast-MFC-AGG-ID: ToYgUHtXM6Weo5dqEUF_Mg_1761161382
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-88ec911196aso2612662585a.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 12:29:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761161382; x=1761766182;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XzNoWAkEF4d+oBSToQXHskCOH19a/YjosvNb3uaKjto=;
+ b=ZjF2WmvB/Cdkau0FEmj8l2DtghrqpbAnxbohIPAtMcLlzWHK0l0SxuuanjuXqbCVsy
+ SsQWPm10EXkDxDIvx9yz2VajfvMVu8XcseNXKOmKExE1huVOl9f/8gjLVeocQlpHwvZM
+ znEdNZd+a+uEVxcH+05JcCOTdlZAgbTib0B+tRYg3IAL1G0s2ZYecEqwSDWvxqIl/UVp
+ QJQE63oyBQ3HUiiS7FrKXUNXh7pGTvzaneFcCZCYzcnrpXLMT2vaaJ/KFEhWq0xX/SXW
+ rQhzK7q/1OsdZlBDex0IdzHPBDSpvXXY+C4BPDK4lQPhi7kGiA9+xgy+tgYdgIjAcOAC
+ vGUQ==
+X-Gm-Message-State: AOJu0Yy5vZz4uPJBs7Q72T6dqxxBIIg8qFj+ZiBIAcTbdS4CGU1ro+vy
+ t7eiKoaJva0MY+mWdqGVyW//xXrPBR/8iudfHrST0yR1RRKmvPOTwVMNYCQll7ZmrxcoxnrAzBO
+ vKsZAmO5+gKJabRf6lk6o5ux8dsHZOVWaTit5dOf2CjJL93diBkgkM72au9SH0xZTrXdMi6fG6d
+ LcG3qwtfEPdrC9BTMg2zPDfGAHyqHlBLlJyK6vtQ==
+X-Gm-Gg: ASbGnctB1N2CqfHoUNq9K7Yl1uk04LON2lBslXKE5lO7lCmNP+4qY9wqhnNS4a/ORDN
+ Ww6BAMYbasDrNAKp3+EVrPeSX1KmJFKWiowgHyqhF+LiSUSk7dtxC4jtFSbU7+KnT8QBdgzU+/D
+ Z3SGAMhzgpL2tkPOeZzOH7FULBSas+6h2KisjqOFItOfxUruj8LXrpzbzKh4UxCd9V7QbiMASU/
+ 3m8UtDRTB9fEJ1fkaST0A1PiE3JGrDoiLNXn8hcbZ6gK1x167F4ifk2pOmni8l98Rz124Lzqucp
+ jqisS9jmV7kdcEFXu7srAFMWSnG7OE+vXhX2KH5Ul7Evk7D2PUXZq59XFEma14ED7mo=
+X-Received: by 2002:a05:620a:2589:b0:84e:3e97:fb0c with SMTP id
+ af79cd13be357-8906e4ba3dbmr2865558485a.17.1761161381724; 
+ Wed, 22 Oct 2025 12:29:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECaHoYYTyr5L447JqHLAh/DGPWWJoSq68qE+LGu6AkA/UxB5Gmt5nK2EJGaZuXmFVfHGzJNQ==
+X-Received: by 2002:a05:620a:2589:b0:84e:3e97:fb0c with SMTP id
+ af79cd13be357-8906e4ba3dbmr2865552485a.17.1761161381123; 
+ Wed, 22 Oct 2025 12:29:41 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-89c0dbccb8fsm2438785a.11.2025.10.22.12.29.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 22 Oct 2025 12:29:40 -0700 (PDT)
+Date: Wed, 22 Oct 2025 15:29:36 -0400
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Li Zhijian <lizhijian@fujitsu.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Zhang Chen <zhangckid@gmail.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 00/13] migration: Threadify loadvm process
+Message-ID: <aPkwoPBNIMLlHLBr@x1.local>
+References: <20251022192612.2737648-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: q4GSKFsuhYfi50gdpAXZRH1M8VqDEVuh
-X-Proofpoint-GUID: j1buwe5WdYYeLhVh5UHNPXlVg6gagJXu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX2vS3obQdsmzS
- rHBfS7CXFtgcJFoYQ1+h7NhOsQlH09vi3Lp8f+8sOcpsFwQyaeF0fuPm3k99UONMa7XQ4NuVoU0
- Q8w4niX+oh6Qa7XrY0XLFl92HIjnbPboOuJOJHv/l4m1VAKyqVVt4DvoW8LvCP8skKm+apNYq2q
- sJRwc4nYqJPt1vjnyQ1PaRAdYbJYVbf+t7zoAR6MLXtzPElCRWimvHs3nq4SgCP9XqHK4RHiDMg
- +nq8AqSmJERkTSTcFrWVuBMjfjT87cuJC2aS1lYlT2jHe+wLlTHBvWUEdoN6BwmCCcstUhVvNld
- JLLLQ3wq7xomlEBg6LyewEAnTtvGYfvM6VyF7wCqn1HSbb0nv8FHvhk5kp1iPJU0ZFrVuS0rm/S
- lZvxsaP+7B4hJqRc4SljjzJqLGQo3w==
-X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68f93063 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=EMG23Z06JWfOmfJaRK0A:9 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251022192612.2737648-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,32 +111,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently load_image_targphys_as() returns -1 on file open failure or
-when max size is exceeded. Add an explicit check for zero-sized files
-to catch this error early, since some callers check for size <= 0.
+On Wed, Oct 22, 2025 at 03:25:59PM -0400, Peter Xu wrote:
+> This is v1, however not 10.2 material.  The earliest I see fit would still
+> be 11.0+ even if everything goes extremely smooth.
+> 
+> Removal of RFC is only about that I'm more confident this should be able to
+> land without breaking something too easily, as I smoked it slightly more
+> cross-archs this time.  AFAIU the best (and possibly only..) way to prove
+> it solid is to merge it.. likely in the early phase of a dev cycle.
+> 
+> The plan is we'll try to get to more device setups too soon, before it
+> could land.
 
-Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
----
- hw/core/loader.c | 5 +++++
- 1 file changed, 5 insertions(+)
+I forgot to attach a changelog, sorry, here it is:
 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 48dd4e7b33..6717324527 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -141,6 +141,11 @@ ssize_t load_image_targphys_as(const char *filename,
-         return -1;
-     }
- 
-+    if (size == 0) {
-+        error_setg(errp, "empty file: %s", filename);
-+        return -1;
-+    }
-+
-     if (size > max_sz) {
-         error_setg(errp, "%s exceeds maximum image size (%" PRIu64 " MiB)",
-                    filename, max_sz / MiB);
+rfc->v1:
+- Collected tags
+- Try to split the major patch 5 to smaller one [Dave]
+  - One with WITH_BQL_*() macros, rewritten to allow internal "return" or
+    nesting [Vladimir]
+  - One patch "migration: Pass in bql_held information from
+    qemu_loadvm_state()", the patch itself contain no functional change.
+    However it should contain all changes relevant to BQL, hence maybe it
+    would help review.
+  - One patch contains the rest that need to be in one patch.
+- Refine commit message for patch "migration/rdma: Change io_create_watch()
+  to return immediately" [Fabiano]
+- Pre-requisite patch to rework migration_channel_read_peek(), removing the
+  sleep functions [Fabiano]
+  - Added patch "io: Add qio_channel_wait_cond() helper"
+  - Added patch "migration: Properly wait on G_IO_IN when peeking messages"
+- Squashed patch "migration/rdma: Remove rdma_cm_poll_handler" into patch
+  "migration: Thread-ify precopy vmstate load process", otherwise the patch
+  when split can be racy.
+- Changed the vfio patch to be at the end, instead of adding dead code
+  directly remove the bql lock/unlock, making sure that API is invoked
+  without BQL instead.
+- Added one patch "migration: Allow blocking mode for incoming live
+  migration", so that after the threadify work switching incoming main
+  channel to be in blocking mode.  Reason in commit message.
+
+It may not be complete, so there can be small touch ups here and there that
+are not mentioned.
+
 -- 
-2.51.0
+Peter Xu
 
 
