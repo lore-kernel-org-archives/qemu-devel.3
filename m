@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19186CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BA7CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSmW-00086i-30; Wed, 22 Oct 2025 02:57:12 -0400
+	id 1vBSo0-0003mm-Mb; Wed, 22 Oct 2025 02:58:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSmT-00086S-Vp
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vBSnt-0003Rl-J1
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSmS-00081n-Cx
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:09 -0400
+ id 1vBSnr-0008Gl-Dx
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116227;
+ s=mimecast20190719; t=1761116314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vG50Cp8jXs+Vv6N4renrVb1ftJ7mwjUTNPnbXKcw4pg=;
- b=C3Mln2BN4PNh03Enj2FNkKAmtoNtcZLG3gCAsy1Yto/sfFaltfy+QvOTmn0DjnpIazzvuk
- PeLNoHdH5Q+TW6AOn5i184T1Qd581e+eEn/NmOa63RJygHPFN+mQ9Y+Rfdh5GESAUH3MxD
- xzKSLbnsjKAlpzm7WIUpUrNIg2HUQz8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=DXHP6OdQkB89vcCyTKcDf3Nxv8JeBOGNotvi4AlxWwE=;
+ b=CbFcEH9ZHfG8n7/9ltMR35PIfJKtoA8JXBlGyE4QrGjRkRkKtwCwwoJGhBQh4BOQQ1G+L7
+ RhZTQEycxJ8CTDRP8VCbCBPI0BYSKi3J6ALjFa3usFxyv27WJ5Z0RnTvjYqr2FkhmB+cPE
+ ZF7DOIHtF2MMOqAKFqcNanTFS38uOc8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-kc6obWqjOoOAQGmuKWAwuA-1; Wed,
- 22 Oct 2025 02:57:03 -0400
-X-MC-Unique: kc6obWqjOoOAQGmuKWAwuA-1
-X-Mimecast-MFC-AGG-ID: kc6obWqjOoOAQGmuKWAwuA_1761116222
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-EBOVEEruMG-RPoiLb1P8jQ-1; Wed,
+ 22 Oct 2025 02:58:31 -0400
+X-MC-Unique: EBOVEEruMG-RPoiLb1P8jQ-1
+X-Mimecast-MFC-AGG-ID: EBOVEEruMG-RPoiLb1P8jQ_1761116310
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83EB819560AD; Wed, 22 Oct 2025 06:57:02 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FD18195608F; Wed, 22 Oct 2025 06:58:30 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 14C68180035A; Wed, 22 Oct 2025 06:57:00 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 38059300022B; Wed, 22 Oct 2025 06:58:28 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,16 +54,16 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 03/42] hw/audio: remove global pcspk
-Date: Wed, 22 Oct 2025 10:55:58 +0400
-Message-ID: <20251022065640.1172785-4-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 19/42] audio/paaudio: remove needless return value
+Date: Wed, 22 Oct 2025 10:56:14 +0400
+Message-ID: <20251022065640.1172785-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,43 +91,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-It is no longer used since commit 6033b9ecd4 ("pc: remove -soundhw pcspk")
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/audio/pcspk.c | 4 ----
- 1 file changed, 4 deletions(-)
+ audio/paaudio.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index a419161b5b..1b0cc08119 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -60,7 +60,6 @@ struct PCSpkState {
- };
+diff --git a/audio/paaudio.c b/audio/paaudio.c
+index f3193b08c3..93030f3fc8 100644
+--- a/audio/paaudio.c
++++ b/audio/paaudio.c
+@@ -747,14 +747,13 @@ static void qpa_volume_in(HWVoiceIn *hw, Volume *vol)
+     pa_threaded_mainloop_unlock(c->mainloop);
+ }
  
- static const char *s_spk = "pcspk";
--static PCSpkState *pcspk_state;
- 
- static inline void generate_samples(PCSpkState *s)
+-static int qpa_validate_per_direction_opts(Audiodev *dev,
+-                                           AudiodevPaPerDirectionOptions *pdo)
++static void qpa_validate_per_direction_opts(Audiodev *dev,
++                                            AudiodevPaPerDirectionOptions *pdo)
  {
-@@ -192,8 +191,6 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
-     if (s->card.state && AUD_register_card(s_spk, &s->card, errp)) {
-         pcspk_audio_init(s);
+     if (!pdo->has_latency) {
+         pdo->has_latency = true;
+         pdo->latency = 46440;
      }
--
--    pcspk_state = s;
+-    return 1;
  }
  
- static bool migrate_needed(void *opaque)
-@@ -229,7 +226,6 @@ static void pcspk_class_initfn(ObjectClass *klass, const void *data)
-     set_bit(DEVICE_CATEGORY_SOUND, dc->categories);
-     dc->vmsd = &vmstate_spk;
-     device_class_set_props(dc, pcspk_properties);
--    /* Reason: realize sets global pcspk_state */
-     /* Reason: pit object link */
-     dc->user_creatable = false;
- }
+ /* common */
+@@ -844,12 +843,8 @@ static void *qpa_audio_init(Audiodev *dev, Error **errp)
+         }
+     }
+ 
+-    if (!qpa_validate_per_direction_opts(dev, popts->in)) {
+-        return NULL;
+-    }
+-    if (!qpa_validate_per_direction_opts(dev, popts->out)) {
+-        return NULL;
+-    }
++    qpa_validate_per_direction_opts(dev, popts->in);
++    qpa_validate_per_direction_opts(dev, popts->out);
+ 
+     g = g_new0(paaudio, 1);
+     server = popts->server;
 -- 
 2.51.0
 
