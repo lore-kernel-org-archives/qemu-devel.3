@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A8DCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D49BBCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 06:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSng-0002lH-2A; Wed, 22 Oct 2025 02:58:24 -0400
+	id 1vBSmR-000868-IT; Wed, 22 Oct 2025 02:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSnc-0002cR-Kf
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vBSmP-00085v-5q
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSna-0008El-Pq
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:58:20 -0400
+ id 1vBSmM-00081N-Ne
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116297;
+ s=mimecast20190719; t=1761116221;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7AhsANNLrtfRCdhH/sgNTMRB0jOkot8Dm/EOkC2K6qo=;
- b=hsyekAKbcyPE/nIKbdlQFNuri5Or/afL6p7lY61vbjKTsfPeC2dBvTSnIsYvhGPkuJAsKI
- eILRRkNu/fxKJRfPytnys/pNREDuOGms6xQ6qPHQ9uZLjb8GvdDWXioXLBgJ6SyKtG85rD
- OxFl9HlQj3Tkn+JQ9bJmnxQqBcAGG8A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=EiPRTNZ9EVvre6ogNCtE3OgvgK62QDuQH9vHZpna9SA=;
+ b=CS7p1VNTyRDYK6zRd1siOQBSWas/mLSuvjTqlGceS6zh699ok/ZEipJ3NrUa/pNM8FjuFN
+ N6a2e8qbn/V3WLhIqMKV4AQAcnXzsd908nSVEmGx7NlzpuVjHBSuuwZhrGXXcwf2/szt59
+ I4cRcBppJs8iuG0/Cz1ZJMmypO4DYVY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-cibZdwH1MC2pPHTRU3oRGw-1; Wed,
- 22 Oct 2025 02:58:15 -0400
-X-MC-Unique: cibZdwH1MC2pPHTRU3oRGw-1
-X-Mimecast-MFC-AGG-ID: cibZdwH1MC2pPHTRU3oRGw_1761116294
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-jhoU2xzlPNGlOYfJJ7Qy8Q-1; Wed,
+ 22 Oct 2025 02:56:57 -0400
+X-MC-Unique: jhoU2xzlPNGlOYfJJ7Qy8Q-1
+X-Mimecast-MFC-AGG-ID: jhoU2xzlPNGlOYfJJ7Qy8Q_1761116216
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43D651800C36; Wed, 22 Oct 2025 06:58:14 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB3631956088; Wed, 22 Oct 2025 06:56:56 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F021119541B2; Wed, 22 Oct 2025 06:58:12 +0000 (UTC)
+ id 5DC031956056; Wed, 22 Oct 2025 06:56:54 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,16 +54,16 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 16/42] audio: start making AudioState a QOM Object
-Date: Wed, 22 Oct 2025 10:56:11 +0400
-Message-ID: <20251022065640.1172785-17-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 02/42] hw/audio: rename model list function
+Date: Wed, 22 Oct 2025 10:55:57 +0400
+Message-ID: <20251022065640.1172785-3-marcandre.lureau@redhat.com>
 In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,147 +91,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-QOM brings some conveniences for introspection, type checking, reference
-counting, interfaces etc. This is only the first step to introduce QOM
-in audio/ (I have more in the pipeline)
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- audio/audio.h     |  7 +++++++
- audio/audio_int.h |  2 ++
- audio/audio.c     | 43 ++++++++++++++++++++++++++++++++-----------
- 3 files changed, 41 insertions(+), 11 deletions(-)
+ include/hw/audio/soundhw.h | 2 +-
+ hw/audio/soundhw.c         | 4 ++--
+ system/vl.c                | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/audio/audio.h b/audio/audio.h
-index eb5b5d662d..e41c5bc55a 100644
---- a/audio/audio.h
-+++ b/audio/audio.h
-@@ -80,6 +80,10 @@ typedef struct SWVoiceOut SWVoiceOut;
- typedef struct CaptureVoiceOut CaptureVoiceOut;
- typedef struct SWVoiceIn SWVoiceIn;
+diff --git a/include/hw/audio/soundhw.h b/include/hw/audio/soundhw.h
+index 474c5ff94e..83b3011083 100644
+--- a/include/hw/audio/soundhw.h
++++ b/include/hw/audio/soundhw.h
+@@ -7,7 +7,7 @@ void deprecated_register_soundhw(const char *name, const char *descr,
+                                  int isa, const char *typename);
  
-+struct AudioStateClass {
-+    ObjectClass parent_class;
-+};
-+
- typedef struct AudioState AudioState;
- typedef struct QEMUSoundCard {
-     char *name;
-@@ -182,4 +186,7 @@ const char *audio_get_id(QEMUSoundCard *card);
- #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
-     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
+ void soundhw_init(void);
+-void show_valid_soundhw(void);
++void audio_print_available_models(void);
+ void select_soundhw(const char *name, const char *audiodev);
  
-+#define TYPE_AUDIO_STATE "audio-state"
-+OBJECT_DECLARE_TYPE(AudioState, AudioStateClass, AUDIO_STATE)
-+
- #endif /* QEMU_AUDIO_H */
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index f78ca05f92..b2b4d2d10e 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -217,6 +217,8 @@ struct SWVoiceCap {
- };
- 
- typedef struct AudioState {
-+    Object parent;
-+
-     struct audio_driver *drv;
-     Audiodev *dev;
-     void *drv_opaque;
-diff --git a/audio/audio.c b/audio/audio.c
-index 6197fa1788..754952ce58 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1617,8 +1617,19 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
-     audio_reset_timer (s);
+ #endif
+diff --git a/hw/audio/soundhw.c b/hw/audio/soundhw.c
+index b06552e7a8..aca077f5ae 100644
+--- a/hw/audio/soundhw.c
++++ b/hw/audio/soundhw.c
+@@ -65,7 +65,7 @@ void deprecated_register_soundhw(const char *name, const char *descr,
+     soundhw_count++;
  }
  
--static void free_audio_state(AudioState *s)
-+static void audio_state_init(Object *obj)
+-void show_valid_soundhw(void)
++void audio_print_available_models(void)
  {
-+    AudioState *s = AUDIO_STATE(obj);
-+
-+    QLIST_INIT (&s->hw_head_out);
-+    QLIST_INIT (&s->hw_head_in);
-+    QLIST_INIT (&s->cap_head);
-+    s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
-+}
-+
-+static void audio_state_finalize(Object *obj)
-+{
-+    AudioState *s = AUDIO_STATE(obj);
-     HWVoiceOut *hwo, *hwon;
-     HWVoiceIn *hwi, *hwin;
+     struct soundhw *c;
  
-@@ -1663,8 +1674,6 @@ static void free_audio_state(AudioState *s)
-         timer_free(s->ts);
-         s->ts = NULL;
-     }
--
--    g_free(s);
- }
+@@ -102,7 +102,7 @@ void select_soundhw(const char *name, const char *audiodev)
  
- void audio_cleanup(void)
-@@ -1673,7 +1682,7 @@ void audio_cleanup(void)
-     while (!QTAILQ_EMPTY(&audio_states)) {
-         AudioState *s = QTAILQ_FIRST(&audio_states);
-         QTAILQ_REMOVE(&audio_states, s, list);
--        free_audio_state(s);
-+        object_unref(s);
+     if (!c->name) {
+         error_report("Unknown audio device model `%s'", name);
+-        show_valid_soundhw();
++        audio_print_available_models();
+         exit(1);
      }
  }
- 
-@@ -1732,18 +1741,13 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
-     AudioState *s;
-     struct audio_driver *driver;
- 
--    s = g_new0(AudioState, 1);
-+    s = AUDIO_STATE(object_new(TYPE_AUDIO_STATE));
- 
--    QLIST_INIT (&s->hw_head_out);
--    QLIST_INIT (&s->hw_head_in);
--    QLIST_INIT (&s->cap_head);
-     if (!atexit_registered) {
-         atexit(audio_cleanup);
-         atexit_registered = true;
-     }
- 
--    s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
--
-     if (dev) {
-         /* -audiodev option */
-         s->dev = dev;
-@@ -1796,7 +1800,7 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
-     return s;
- 
- out:
--    free_audio_state(s);
-+    object_unref(s);
-     return NULL;
- }
- 
-@@ -2320,3 +2324,20 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
-     }
-     return ret;
- }
-+
-+static const TypeInfo audio_state_info = {
-+    .name = TYPE_AUDIO_STATE,
-+    .parent = TYPE_OBJECT,
-+    .instance_size = sizeof(AudioState),
-+    .instance_init = audio_state_init,
-+    .instance_finalize = audio_state_finalize,
-+    .abstract = false, // todo, subclass and make it abstract
-+    .class_size = sizeof(AudioStateClass),
-+};
-+
-+static void register_types(void)
-+{
-+    type_register_static(&audio_state_info);
-+}
-+
-+type_init(register_types);
+diff --git a/system/vl.c b/system/vl.c
+index 646239e4a6..d20a9cbe08 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3077,7 +3077,7 @@ void qemu_init(int argc, char **argv)
+                     model = g_strdup(qdict_get_str(dict, "model"));
+                     qdict_del(dict, "model");
+                     if (is_help_option(model)) {
+-                        show_valid_soundhw();
++                        audio_print_available_models();
+                         exit(0);
+                     }
+                 }
 -- 
 2.51.0
 
