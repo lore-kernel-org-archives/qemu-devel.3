@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E27CCD1BB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 18:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB526CCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 18:50:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBdq7-0003k5-QW; Wed, 22 Oct 2025 14:45:39 -0400
+	id 1vBduO-0004qs-9P; Wed, 22 Oct 2025 14:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vBdq6-0003jg-16
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:45:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vBdq3-0003x9-Et
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:45:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761158732;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=R7sVJwq8AIMTVOWBAqQAhT67VxN7wBY1rp05biea7sI=;
- b=iKLgr5oGcLLk6Zd6hjFAP0awesJjKTqSyE0tnnxYCFuaW4cNPDOlDYFs2+hBiypVqdv95a
- CI6p35rxkw3+DoYaz0oJaprBuN0hZ6QCuUcevrkNEUuSqE6zDmTGRG5mFcrxFwGpXAKToQ
- 7+bpdZ4rfQGsjZ32ZxzAP/+ZgWinLC0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-B5EM9PqJOLi4L67YGusecw-1; Wed,
- 22 Oct 2025 14:45:28 -0400
-X-MC-Unique: B5EM9PqJOLi4L67YGusecw-1
-X-Mimecast-MFC-AGG-ID: B5EM9PqJOLi4L67YGusecw_1761158727
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA632180AE0D; Wed, 22 Oct 2025 18:45:25 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.231])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A07AB300019F; Wed, 22 Oct 2025 18:45:24 +0000 (UTC)
-Date: Tue, 21 Oct 2025 16:42:40 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Aarushi Mehta <mehta.aaru20@gmail.com>,
- Fam Zheng <fam@euphon.net>, Stefano Garzarella <sgarzare@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
- qemu-block@nongnu.org, hibriansong@gmail.com,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 06/12] aio: free AioContext when aio_context_new() fails
-Message-ID: <20251021204240.GC4837@fedora>
-References: <20250910175703.374499-1-stefanha@redhat.com>
- <20250910175703.374499-7-stefanha@redhat.com>
- <aOfdaCyxInxfoLhN@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBduM-0004pa-Vw
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:50:03 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBduK-0004Sg-Od
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 14:50:02 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-7c3e996f8faso290378a34.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 11:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761158998; x=1761763798; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qqN4/upzK52KatKo8oHnixekDO2T4nKpFGS9uYP3RUw=;
+ b=zj4FdgU+tS/QYU8mIm9GcuqqlOAL6FVH+H0qr8txlfGeMnW6XY3RipahHvMKdOhoPn
+ E6f1zmwWkkQQwQFL7t7hEFnBTxhBFfrxDEviUEMARvgGVSSPDqfVALPhyJ2ayk9G4Lj3
+ iuF99j07BFzlBEYGUA5p6jqSKNlwiOPsBRHRuSUpgJ0X17iq9G7T0k9AqFTTUDfTb4Hi
+ vXwj+Gq5L7zRyxzUSeNJ12vkg8O8D3vtaP2fL0bwE6Y6M+4gtlacYwKiBXSYYPk8w9Yn
+ bmMWMy2JI38QKx6cmj5i6hHNl1PDpujBgDBZNabh4bFzenlrYnEsIwe4RFbVOdrxbH/0
+ SJCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761158998; x=1761763798;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qqN4/upzK52KatKo8oHnixekDO2T4nKpFGS9uYP3RUw=;
+ b=o8qAOROIvwW9j8B4hkAMGtxMHSN1TS63pbz+WryAWyvI6ri+EzmlQn9Cb1ONWBbm9W
+ N0kIv/DosTnVZTSkhs++RDlH4xJZvLHkhRtjqQxJuGE7kbjMKcIQQfPODPe2IpXQpeBm
+ MDni6fqQs+IKZrjM2/DYQcC6gK/WZaKfHI0JC+LBK7l8ZAyc7mi04CNAuvAX81qZDeAO
+ X7hA1NrVTPAidjwZdMfjuGLsFZnOOMQQdqxBy88KdSlplai9eGPEkL7gtqfdKB4A3ZcQ
+ LWer3EpyVVP4i/IFxAZZhxM8qczTyxoVAAMQ07gm+GSW2gPRQ9JsZlV7x9mNjWj9gU0O
+ TqQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1D74JjBojwOVqNYjtNnDekU/Sbel8vk+4afEhM2K6cRTGq6TkV4Byo/4D1/unpiFlNGzXDVqgBc9p@nongnu.org
+X-Gm-Message-State: AOJu0YzSlBfClmLrGwrpGrDznbRa6GJ2OtLoA6uubIj/8e+4G/xtbvEo
+ irfYIs13jBKetzrHMGbTjO4BKPP0N4Lwtn6h8l7KLw/UQErGrXzNjVFHLPmMd8xAsys=
+X-Gm-Gg: ASbGncv0u1B7HhmEGBEqI8nMCgo30zjvKGD1aXyXBnd9XsOQQBjfZjbJHQWmznfKv1I
+ 6wUg0yoR8P6+39qBNa685QniWKlXdMKlvXpkZH7vJC0asgaRljOfyd3CaMduzIBDbrVi/9GkK8X
+ 2ue/3fJhzhYhpW9YmxFtNW6eOTjZdNXxXfjJVGLFdalx8gzRl3/YB+IcNg5qxGoigZkxXzfditO
+ yNnfc5A7QC1qklzoJGEbEz+6psPTi3Pa7KMhDx+lCEwSt5dZ3mfvn9tka349XdT/RYazNgEg80z
+ w8hxHcJFn4iLVXnGJXP9Etml6aVrgKRbm2YsYWok+gkR3Nm5D0D8X3XtJyfSMnVXe+2KIKSto+e
+ B07LkVj9FtG9sRlDa0v0n52hMJlMhgYgkaQu9JeM2QJYAFvPn0guF58GnEk9XI2ffOgoVOeupsx
+ 0GaPPWpRyW/XxI2GIJ73hSfvIrP1gTe75wx0zFJQF4vX3XDJq5IrIIQNb/OpYDAAH4haGE6hc=
+X-Google-Smtp-Source: AGHT+IEv6Wvb1md+0ttC8J6QarTIq0WCxBPsMT/nZYXniuGP3yO3/W2xF9ZgJVuvHrm9uVRpdcjQZg==
+X-Received: by 2002:a05:6830:6684:b0:7c2:9b8b:53d9 with SMTP id
+ 46e09a7af769-7c3e53c4d3fmr1259173a34.14.1761158998555; 
+ Wed, 22 Oct 2025 11:49:58 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3?
+ ([2607:fb90:5ec2:421a:7b72:4f29:1f36:27f3])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7c288932b2dsm4855441a34.30.2025.10.22.11.49.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 11:49:57 -0700 (PDT)
+Message-ID: <f652907c-d6a4-476c-a1be-703ec13a451d@linaro.org>
+Date: Wed, 22 Oct 2025 13:49:53 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="n1ZuV0kBmG8838pc"
-Content-Disposition: inline
-In-Reply-To: <aOfdaCyxInxfoLhN@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/10] hw/scsi: Add config option for new ncr710 driver
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+References: <20251017200653.23337-1-deller@kernel.org>
+ <20251017200653.23337-5-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251017200653.23337-5-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,104 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/17/25 15:06, deller@kernel.org wrote:
+> From: Soumyajyotii Ssarkar<soumyajyotisarkar23@gmail.com>
+> 
+> Add config option and wire up in meson makefile.
+> 
+> Signed-off-by: Soumyajyotii Ssarkar<soumyajyotisarkar23@gmail.com>
+> Signed-off-by: Helge Deller<deller@gmx.de>
+> ---
+>   hw/scsi/Kconfig     | 5 +++++
+>   hw/scsi/meson.build | 1 +
+>   2 files changed, 6 insertions(+)
 
---n1ZuV0kBmG8838pc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Thu, Oct 09, 2025 at 06:06:00PM +0200, Kevin Wolf wrote:
-> Am 10.09.2025 um 19:56 hat Stefan Hajnoczi geschrieben:
-> > g_source_destroy() only removes the GSource from the GMainContext it's
-> > attached to, if any. It does not free it.
-> >=20
-> > Use g_source_unref() instead so that the AioContext (which embeds a
-> > GSource) is freed. There is no need to call g_source_destroy() in
-> > aio_context_new() because the GSource isn't attached to a GMainContext
-> > yet.
-> >=20
-> > aio_ctx_finalize() expects everything to be set up already, so introduce
-> > the new ctx->initialized boolean and do nothing when called with
-> > !initialized. This also requires moving aio_context_setup() down after
-> > event_notifier_init() since aio_ctx_finalize() won't release any
-> > resources that aio_context_setup() acquired.
-> >=20
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Reviewed-by: Eric Blake <eblake@redhat.com>
-> > ---
-> > v2:
-> > - Fix spacing in aio_ctx_finalize() argument list [Eric]
-> > ---
-> >  include/block/aio.h |  3 +++
-> >  util/async.c        | 14 +++++++++++---
-> >  2 files changed, 14 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/include/block/aio.h b/include/block/aio.h
-> > index 1657740a0e..2760f308f5 100644
-> > --- a/include/block/aio.h
-> > +++ b/include/block/aio.h
-> > @@ -291,6 +291,9 @@ struct AioContext {
-> >      gpointer epollfd_tag;
-> > =20
-> >      const FDMonOps *fdmon_ops;
-> > +
-> > +    /* Was aio_context_new() successful? */
-> > +    bool initialized;
-> >  };
-> > =20
-> >  /**
-> > diff --git a/util/async.c b/util/async.c
-> > index a39410d675..34aaab4e9e 100644
-> > --- a/util/async.c
-> > +++ b/util/async.c
-> > @@ -363,12 +363,16 @@ aio_ctx_dispatch(GSource     *source,
-> >  }
-> > =20
-> >  static void
-> > -aio_ctx_finalize(GSource     *source)
-> > +aio_ctx_finalize(GSource *source)
-> >  {
-> >      AioContext *ctx =3D (AioContext *) source;
-> >      QEMUBH *bh;
-> >      unsigned flags;
-> > =20
-> > +    if (!ctx->initialized) {
-> > +        return;
-> > +    }
->=20
-> You had to move aio_context_setup() down in aio_context_new() to make
-> sure that this doesn't leak things.
->=20
-> How will we make sure that nobody adds another error path after
-> allocating something after g_source_new()? g_source_new() doesn't seem
-> to guarantee that AioContext starts zeroed, which is annoying if we
-> wanted to just make aio_ctx_finalize() safe to be called from before the
-> first error path.
-
-Calling aio_ctx_finalize() in all cases was my first thought when
-writing this patch, but not all of the cleanup code works even when
-resources are NULL. That's why I took the ->initialized field approach.
-
-I will add comments explaining how to handle resource cleanup and the
-ordering with aio_context_setup().
-
-Stefan
-
---n1ZuV0kBmG8838pc
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmj38EAACgkQnKSrs4Gr
-c8h6fAf/WxZb7S/YmirQSQmLl+So5w6LjM6R7ZWp2fIr3zmkuIqmfP9Kj9wP3wwi
-4ZidFgRUcUclvTC0XooUmlWMlsuqk+eNkjTZr+VKYWfVzPjj+JAfWpZQw95iKaJD
-OOb/2Y0da7hqIJMOwBW+9oDnJPDgR3ybWMi2f6fbmaseUob70eEsvyIXTVw+VcQx
-V0hvME3eUVcqqGTdf3wz5VOS6tN/EI4mBDneV15/mha8XUvQOkyTZIjl/N7fGwC5
-plshgxazu4NcfN5xceReYZ1/JJ8DdRATA/mLouTjIIN5lUSDT4MgfFrTwHvB+BrO
-AH8syV5rPwLJ+jnX1O7JXTWpq7D6Lg==
-=TrRi
------END PGP SIGNATURE-----
-
---n1ZuV0kBmG8838pc--
-
+r~
 
