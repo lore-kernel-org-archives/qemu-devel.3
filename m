@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF9FCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E7FCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBZPf-0007Ql-U0; Wed, 22 Oct 2025 10:02:04 -0400
+	id 1vBZPd-0007OX-GR; Wed, 22 Oct 2025 10:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBZPe-0007Oy-LE
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:02:02 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBZPR-0007ML-QN
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:01:57 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBZPb-0001fg-FN
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:02:02 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4711810948aso48991945e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 07:01:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBZPP-0001f3-UW
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:01:49 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-426f1574a14so4609767f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 07:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761141717; x=1761746517; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761141705; x=1761746505; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UaZKulvsvyPazuPCESEO+VqOsAtzjlNqcxauSGwGk78=;
- b=j0gMyBK9xpqrBn6Y+BiW4PpuLWB0zwQuMqw0vjJV9aWmY70gH7u8gvry7lP6Azaub7
- 5AgCacYd32DcXggTtwFLnVsPMHaIbZDmHlhhx26hL58G7aiqSSkopqjzDLcs+EANsb28
- YvbbggcFbCTzmKvmu4EEvllcNiwF8zDZFJW7uwtMjlNQRGgYGY9feMfKYtioarN5BTTX
- Z3tlwvbRHoOJaQQw1CfTLbePtHFcgHG8UAEvLIGz9eC4Wmqi4jUVJZLjeWzu8Rphjk2A
- ljO8ZgryGUIwcTDUz04RaVQ2lqrIfKvs+3khvXhCqrs8287sLxAatyw0IoW6qqSXYxn/
- A0Hg==
+ bh=qLHVl30GjqbT2sNGUrp6u7XODjWGOXYBV9cF9vJVcc4=;
+ b=NMHF4BuiBuBPkZfoumVDAzK00gRsf+IyZ3CJdxeIDXFpgVFz+CtyUl2tdaXTCYlmmZ
+ TsoLL2L2auW75Q5h4PcRjKysu2Ah/MJOyFf0HpACc+iInx/aPkKevb+TOIoxkIAwMDF8
+ qLi7PmGkcY/PY5ODJRvMLYWf/MIrvyJOS7hbZ1DlFmbEkzggmR9mwL8mjZnQwSNaw/0U
+ dy0kSjiLxcNyyFR3a5Plg5ysaErzgm8sL6cGbNaCeDCJVcxzQOrsgoVJLV2+KL2L1PEw
+ WdYV+2hH8q5J/pZMQ8txB7boAdHmLUdDNvMNtrq0FwHs7O7FKy2ZPyjf0aLbEhbct31l
+ +h+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761141717; x=1761746517;
+ d=1e100.net; s=20230601; t=1761141705; x=1761746505;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UaZKulvsvyPazuPCESEO+VqOsAtzjlNqcxauSGwGk78=;
- b=et3mPE5l9T9pk4r8SVFe7rbG/G4QqAdrL7Sx/BveGGY3QxoURYKpT7x8MBHbgTkUid
- +x7Vtk9ei07QJlPMwdHZ0GtqsETU4AuIFmdHtBpl86NCT1zvglQi33V5EJBQmvsbco0c
- 8yXoRqH3ATG897ZDHiPn9UCEzFw6p/aiBXeDVL7MC2TjW2lWhe+VYTp53B/bQ7DVQIcp
- 8RdrOGD1c/ugZkEfDz9yAEvdKKYVJ/MsoyF9tjpxmkYB8IHXbjYqYa2qPk84pmzHUahd
- iwQCSLxGig8hz9uNB++rWwa2lqq3kBF65mBTf9TmApUyI3MNG1d5d/wJ3exTZxoeT6OP
- vvgg==
-X-Gm-Message-State: AOJu0Yw8CHdxzAq1GJuXh0mfaGusLfiYCyRCnvmTewjI8JtG6iWf5BhB
- Wx6hp1jxVMfR8QzaUWomZOxGoY03zZiJlANOrbSoD+mCUWQR4C5JlwqN/N02T4cu/x7YCf8/zLG
- e/+wFinE=
-X-Gm-Gg: ASbGncuQIfQK4Da+duweuJJeH302AyKaTa4AH53IkUMTOmFd5zpoik5s0ML+v3Wuv51
- kqjqravznv29ulGfqwsnEaIcXfLnZ/RM9bX5hrutLXQn5KKkUkWG2lHdXrasznhF0UNGQvieK3/
- 9MbubJQbu4aOJLulqkkrShW3FPPuJqpWyuTxGFlr8p5ho7lwbvS0SObfFORMyDKuOcxC5cxjUFa
- z2d2Sh1GLKd3d1f1OxIM0l9nD/BXSobYlJPCYfZzuJtFoir2uxZizejmzup0zeQ7SJ5SwgtYjMe
- 4C9hvMAerlYXbIoCRC/T1xwQhPB0CbP2Nr/zaDKMAquryfl5xiv4c4oKB7cZoW+HtXbSvw8Yb2v
- FaG2ZtiPKrjhSuAsWVOVv67eNABMT0Te7JpyBAN3Prr0guYV0cqx2y+JSyADQztxUi/Bpi26gRq
- e5KHD7XImb0ebZw5FC2Ug+d+lw6NLuvUJ2SO1D6NSoDke3sEOcj8ArXaLLwks/
-X-Google-Smtp-Source: AGHT+IFjoAyFjm2+kFm7KY2q3aB2HGmRZNUqm25Wo0zJ7cEcAB/9ey5BsxA253c/AteFX/omR4r+QQ==
-X-Received: by 2002:a05:600d:630a:b0:471:1b25:fa00 with SMTP id
- 5b1f17b1804b1-4711b25fd7cmr99064095e9.36.1761141717052; 
- Wed, 22 Oct 2025 07:01:57 -0700 (PDT)
+ bh=qLHVl30GjqbT2sNGUrp6u7XODjWGOXYBV9cF9vJVcc4=;
+ b=VtRxX1TIq9Rav2wDK+pDyadJu+mIJ2ndczYhXuF7O3NeznlZuCkm6C0jmY7VpvCuEJ
+ p+3ox3frSNPG844oun+mo41ii7bJb/LT9a7fTUP6g7I29XGgNKpHiSTUoSooXPgKW/Wj
+ KcPs78DGWQHQoNBx2vaHvzQ238/VD+pSkzWhZrULdJZvLIHJjoghrI7Bj7e/TK8n3rcn
+ lRn9e3cn1okUAyd4WtQ6Zv+ApkToD40iSICYGiQ9xk7hXLHW/wi+aLBwDlMjKoRGUQJe
+ aF2iaiBjDLxigf7AgDIjViJ60OoFQPB87cGtqaDTkyR9YVjwuvlTNIOK4tPNaR6uREQ8
+ hXwQ==
+X-Gm-Message-State: AOJu0YwY1uD6KJ2HxghlCnZcXLv6cXn/BR8VrKCSI31qZ1qH77Cy0nAr
+ jiCcXe0UbnB3E8msoAaTh7ttlyBeq0TIziWhVaG7P29EiLOLsMz+7Q1kj5QnCLJmNW0wVM0RTye
+ tfMyILVU=
+X-Gm-Gg: ASbGncvL5bgIrTYYVCWQm2nq94OwMjGjofmyA4RzHu9MMArPkUqy1URZFnRPD0f4Y2X
+ 9YSRfy1bN939oJwSzRcDNQNoT58a1+X/UAZtQ4/KQ6Azjb7yn6fLO3uOsB5OxQWLA1MEflDF7V4
+ CKqoY0MaiVd/OWrwMWu8VxH7aLJwX+tOdpNtHtZNCt/XWCG79wdRaj/EMMUY6GODeSUG/nbNBIU
+ tM/aN+/Pbdhj3ekxO/tilz7nXC43s3JgyiGbECxbZRa+DxWM2axvxPFYPqhVl+CIRbLVVuGDUmt
+ kxmKg9EhQlcOLlXBCllCJzvVpRgAFJgRfrdy44EPXrCHozrNoLw04HfbeWc6hAFGafJ4ag/9c1o
+ IpZM+CggS4gUDZ1Q9lfUPdB1KFEuFWd6ALGEv+Bt+3EP5KblnTPZyJQHibaDctUkU5k8iUhyzNi
+ fSao0ps1oEMqWIjogfzev3f5E2dbcgzkBdzNkjEYQT7ERIIMFHkN/ALmTnDaPEK3c7vES4Y7Y=
+X-Google-Smtp-Source: AGHT+IGHHb6FmERd2aST6drwPR4rAF24ZKe8dRavWtQqwCKBMgkph9S4iRBPtxPC9PIdkKTi8zgAlA==
+X-Received: by 2002:a05:6000:420f:b0:428:51b2:18b4 with SMTP id
+ ffacd0b85a97d-42851b22910mr3947461f8f.29.1761141705142; 
+ Wed, 22 Oct 2025 07:01:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-427f00ce586sm25929940f8f.49.2025.10.22.07.01.56
+ ffacd0b85a97d-427f00ce3e2sm25403441f8f.47.2025.10.22.07.01.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 22 Oct 2025 07:01:56 -0700 (PDT)
+ Wed, 22 Oct 2025 07:01:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
@@ -72,17 +72,18 @@ Cc: Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
  Anton Johansson <anjo@rev.ng>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/3] hw/xen: Build only once
-Date: Wed, 22 Oct 2025 16:01:13 +0200
-Message-ID: <20251022140114.72372-4-philmd@linaro.org>
+Subject: [PATCH 2/3] hw/xen: Replace target_ulong by agnostic
+ target_long_bits()
+Date: Wed, 22 Oct 2025 16:01:12 +0200
+Message-ID: <20251022140114.72372-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251022140114.72372-1-philmd@linaro.org>
 References: <20251022140114.72372-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,58 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now than hw/xen/ files don't use any target-specific code,
-we can build all file units once, removing the need for the
-xen_specific_ss[] source set.
+Both are equivalent:
+
+  target_long_bits()
+
+  sizeof(target_u?long) * BITS_PER_BYTE
+
+Prefer the former which is target-agnostic.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/xen/meson.build | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ hw/xen/xen-hvm-common.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/xen/meson.build b/hw/xen/meson.build
-index a1850e76988..dcd2b7e1df3 100644
---- a/hw/xen/meson.build
-+++ b/hw/xen/meson.build
-@@ -7,21 +7,16 @@ system_ss.add(when: ['CONFIG_XEN_BUS'], if_true: files(
-   'xen_pvdev.c',
- ))
+diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+index 258014370e1..b40ae0b3af0 100644
+--- a/hw/xen/xen-hvm-common.c
++++ b/hw/xen/xen-hvm-common.c
+@@ -2,8 +2,8 @@
+ #include "qemu/units.h"
+ #include "qemu/bitops.h"
+ #include "qemu/error-report.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+-#include "exec/target_long.h"
+ #include "exec/target_page.h"
+ #include "trace.h"
  
--system_ss.add(when: ['CONFIG_XEN', xen], if_true: files(
--  'xen-operations.c',
--),
--if_false: files(
--  'xen_stubs.c',
--))
--
--xen_specific_ss = ss.source_set()
--xen_specific_ss.add(files(
--  'xen-mapcache.c',
-+xen_common_ss = ss.source_set()
-+xen_common_ss.add(files(
-   'xen-hvm-common.c',
-+  'xen-mapcache.c',
-+  'xen-operations.c',
-   'xen-pvh-common.c',
- ))
-+
- if have_xen_pci_passthrough
--  xen_specific_ss.add(files(
-+  xen_common_ss.add(files(
-     'xen-host-pci-device.c',
-     'xen_pt.c',
-     'xen_pt_config_init.c',
-@@ -30,7 +25,8 @@ if have_xen_pci_passthrough
-     'xen_pt_msi.c',
-   ))
- else
--  xen_specific_ss.add(files('xen_pt_stub.c'))
-+  xen_common_ss.add(files('xen_pt_stub.c'))
- endif
+@@ -455,7 +455,7 @@ static void handle_ioreq(XenIOState *state, ioreq_t *req)
+                        req->addr, req->data, req->count, req->size);
  
--specific_ss.add_all(when: ['CONFIG_XEN', xen], if_true: xen_specific_ss)
-+system_ss.add_all(when: ['CONFIG_XEN', xen], if_true: xen_common_ss)
-+system_ss.add(when: ['CONFIG_XEN', xen], if_false: files('xen_stubs.c'))
+     if (!req->data_is_ptr && (req->dir == IOREQ_WRITE) &&
+-            (req->size < sizeof (target_ulong))) {
++            (req_size_bits < target_long_bits())) {
+         req->data &= MAKE_64BIT_MASK(0, req_size_bits);
+     }
+ 
 -- 
 2.51.0
 
