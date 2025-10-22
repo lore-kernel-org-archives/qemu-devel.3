@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970CFCCD195
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414BCCCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 11:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBWZw-0001Mo-5P; Wed, 22 Oct 2025 07:00:28 -0400
+	id 1vBWaN-0001Y6-3X; Wed, 22 Oct 2025 07:00:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vBWZl-0001K4-3M
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:00:19 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vBWZf-0005OU-Mj
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:00:14 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-4e8a25d96ecso15130301cf.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 04:00:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761130809; x=1761735609; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=McTDMmm6QPenYAkMV4SaAW97+I5j3duQ0g7xC+IiEwI=;
- b=iQ+ZNAvdeShLaDq1mBvhAuZTscsyqZ6ZNJ409D4F9YIamxWplF2j/cnzv+G6pKbYTK
- jJh7ggmAsFCU67eOJ7NDT52Nf3E3Flw2EpPGzLnyRPYiGwZ0BiiJkdDCjUSRn9+EZ44T
- 8STQyoe0j0BYYtZddGZLTwaEZ0EuXJH20y44JGhC55/mMMgPWamNt/YNrzIULTrA6j4W
- 95ZBbVh+r73foGW0qwPWTwp6QCYG5vDRSF5NUNoVyA4c6hp4AQYA8JP5Y8ZJpf91XauV
- cH9+LwT6QoPzZNNz2KDg8YMbCgfiB8wacbxhUXA9yGFdGZWnl5+2eA3myl6Jhd0FLOYj
- TpSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761130809; x=1761735609;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=McTDMmm6QPenYAkMV4SaAW97+I5j3duQ0g7xC+IiEwI=;
- b=w8kAHF1ZxrArC9/tPrbszoxxeI/42axOOxcK77nAcknX5UJkl+bLdQiQJkCb0qZHH/
- Mf9OYh+wf+r0rehjcMN+xzi2PipBP9spSGK581OVsl+1nAswirpSPgUA862y0SANV7Hz
- JKNvCG226enMuiVnT5cYCAIe+FYFN20caJKy3g9F8IniGa0V5Sb0ePQ0u27u2yFE+/+K
- vELeEd6O0RWnL/4ZIH+KxNgwzguqAoxtdEb3jmIHPl1TQXFbCY6NrhM+A/rxs6wFvXB9
- bj59yz50eTQKQPFRrsncUo53CqczUkLSLcAuNpOy3/pj7Rime4OokYGjc4M9vljO6SDV
- AlXg==
-X-Gm-Message-State: AOJu0Yz18lhctcHH1DyDr6EkWnXR/JBtTNAyJ2rsBHSaj0SvkgJ/yyKp
- xSOEckJ/rQienY/ERUvmVy7OK4NpphkvW0lrY7gP14oW9MRImMY6ortINeC/sxuqornJunX3N06
- SifcL9YdcOYdTy1n08Vt0nDUJRb1S24Q=
-X-Gm-Gg: ASbGncseAiZyz6t0LibnA5Qer14Otp/kLl7j/GAyjcxz7/fJJCyGMtyuNGBIIvSqyYL
- KDL3mtvUX+JZEjJFKcNbozXjh9AjKluEthuZnydtKGvVQP9Ct4FwtnRD1ReL/q+cSx1IpFgbIKm
- sEyL6izE0AAuptJEuPTeRTOCCX9OOgU1knjqGy41IxjlNt6IW9H4D7JLUJ5w0yuLQr/Lj+s2uL0
- EGMoiMHxaE/zBXn5FNAeqjio5WYjuXTgMPv65vHFetV3bMRl1q7bGSMQENK/IxErjPpofVTpSnH
- ksC2yiFh3ujK8PH6
-X-Google-Smtp-Source: AGHT+IF4IlP1X9kDdTlBiAkd/WKzj5+sD3cEI9qiDVDRw4AdO0y3C6GZuZDVgb42xhVBjuV1RM4D0OMrijVdJGrO614=
-X-Received: by 2002:a05:622a:650:b0:4e8:aa22:def3 with SMTP id
- d75a77b69052e-4e8aa22e558mr209278511cf.19.1761130809120; Wed, 22 Oct 2025
- 04:00:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBWaI-0001WV-DL
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:00:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBWaA-0005dM-OH
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 07:00:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761130841;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cWO+HWjLIQTLIzxJ/Yn1KzFJP9Nkv8LoxMvKWhvh7Bk=;
+ b=Dv+FWpi0oW6cy/eF8GD+VXQqDBJ23Q8/vyfvT8Qnfja0yUXVNcNlIiY4QhnlaSIb+4XA2D
+ jCR9wC1ne4BPW0g5NklC/Z7Bq6haOpJwcTd3dIwte//xlPsk7/mSTKZRxULmMn8Fs9GaIJ
+ +aEf0TpEauk4zJas8MCsmhvZfLTZiGE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-1wJRCyd_M0KXLEGyh8_bpQ-1; Wed,
+ 22 Oct 2025 07:00:37 -0400
+X-MC-Unique: 1wJRCyd_M0KXLEGyh8_bpQ-1
+X-Mimecast-MFC-AGG-ID: 1wJRCyd_M0KXLEGyh8_bpQ_1761130836
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBD741801359; Wed, 22 Oct 2025 11:00:35 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65FF11955F22; Wed, 22 Oct 2025 11:00:34 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 3FECC1800784; Wed, 22 Oct 2025 13:00:28 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Fabiano Rosas <farosas@suse.de>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 3/3] hw/uefi/ovmf-log: add maxsize parameter
+Date: Wed, 22 Oct 2025 13:00:27 +0200
+Message-ID: <20251022110027.441780-4-kraxel@redhat.com>
+In-Reply-To: <20251022110027.441780-1-kraxel@redhat.com>
+References: <20251022110027.441780-1-kraxel@redhat.com>
 MIME-Version: 1.0
-References: <20251022101420.36059-1-armbru@redhat.com>
- <20251022101420.36059-2-armbru@redhat.com>
-In-Reply-To: <20251022101420.36059-2-armbru@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 22 Oct 2025 14:59:57 +0400
-X-Gm-Features: AS18NWC226YaEfJj8jIJ_JUYlWqUBznfYtVZ4gvBYwl-wRC2vdO0Kl6SLnj1-Ng
-Message-ID: <CAJ+F1CKdasvQ14r+e2OEKFk+=4Yu2Mgg8EqSe_ZNQJDVoyiEKA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] qdev: Change PropertyInfo method print() to return
- malloc'ed string
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,97 +91,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Allow limiting the amount of log output sent.  Allow up to 1 MiB.
+In case the guest log buffer is larger than 1 MiB limit the output
+instead of throwing an error.
 
-On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Simpler (more so after the next commit), and no risk of truncation
-> because the caller's buffer is too small.  Performance doesn't matter;
-> the method is only used for "info qdev".
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  include/hw/qdev-properties.h     | 2 +-
->  hw/core/qdev-properties-system.c | 7 +++----
->  hw/core/qdev-properties.c        | 9 ++++-----
->  3 files changed, 8 insertions(+), 10 deletions(-)
->
-> diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-> index 0197aa4995..60b8133009 100644
-> --- a/include/hw/qdev-properties.h
-> +++ b/include/hw/qdev-properties.h
-> @@ -34,7 +34,7 @@ struct PropertyInfo {
->      const char *description;
->      const QEnumLookup *enum_table;
->      bool realized_set_allowed; /* allow setting property on realized dev=
-ice */
-> -    int (*print)(Object *obj, const Property *prop, char *dest, size_t l=
-en);
-> +    char *(*print)(Object *obj, const Property *prop);
->      void (*set_default_value)(ObjectProperty *op, const Property *prop);
->      ObjectProperty *(*create)(ObjectClass *oc, const char *name,
->                                const Property *prop);
-> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-s=
-ystem.c
-> index 1f810b7ddf..4e1afaac82 100644
-> --- a/hw/core/qdev-properties-system.c
-> +++ b/hw/core/qdev-properties-system.c
-> @@ -865,15 +865,14 @@ out:
->      visit_end_alternate(v, (void **) &alt);
->  }
->
-> -static int print_pci_devfn(Object *obj, const Property *prop, char *dest=
-,
-> -                           size_t len)
-> +static char *print_pci_devfn(Object *obj, const Property *prop)
->  {
->      int32_t *ptr =3D object_field_prop_ptr(obj, prop);
->
->      if (*ptr =3D=3D -1) {
-> -        return snprintf(dest, len, "<unset>");
-> +        return g_strdup("<unset>");
->      } else {
-> -        return snprintf(dest, len, "%02x.%x", *ptr >> 3, *ptr & 7);
-> +        return g_strdup_printf("%02x.%x", *ptr >> 3, *ptr & 7);
->      }
->  }
->
-> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> index b7e8a89ba5..422a486969 100644
-> --- a/hw/core/qdev-properties.c
-> +++ b/hw/core/qdev-properties.c
-> @@ -1117,12 +1117,11 @@ static void qdev_get_legacy_property(Object *obj,=
- Visitor *v,
->                                       Error **errp)
->  {
->      const Property *prop =3D opaque;
-> +    char *s;
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20251017115006.2696991-4-kraxel@redhat.com>
+---
+ hw/uefi/ovmf-log.c   | 42 ++++++++++++++++++++++++++++++++++--------
+ hmp-commands-info.hx |  4 ++--
+ qapi/machine.json    |  5 +++++
+ 3 files changed, 41 insertions(+), 10 deletions(-)
 
-Why not g_autofree ?
+diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
+index fe8acbd19236..98ebb0209491 100644
+--- a/hw/uefi/ovmf-log.c
++++ b/hw/uefi/ovmf-log.c
+@@ -18,6 +18,7 @@
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+ #include "qapi/qapi-commands-machine.h"
++#include "qobject/qdict.h"
+ 
+ 
+ /* ----------------------------------------------------------------------- */
+@@ -164,7 +165,8 @@ static void handle_ovmf_log_range(GString *out,
+     }
+ }
+ 
+-FirmwareLog *qmp_query_firmware_log(Error **errp)
++FirmwareLog *qmp_query_firmware_log(bool have_max_size, uint64_t max_size,
++                                    Error **errp)
+ {
+     MEM_DEBUG_LOG_HDR header;
+     dma_addr_t offset, base;
+@@ -184,18 +186,40 @@ FirmwareLog *qmp_query_firmware_log(Error **errp)
+         return NULL;
+     }
+ 
+-    if (header.DebugLogSize > MiB) {
+-        /* default size is 128k (32 pages), allow up to 1M */
+-        error_setg(errp, "firmware log: log buffer is too big");
+-        return NULL;
+-    }
+-
+     if (header.DebugLogHeadOffset > header.DebugLogSize ||
+         header.DebugLogTailOffset > header.DebugLogSize) {
+         error_setg(errp, "firmware log buffer header is invalid");
+         return NULL;
+     }
+ 
++    if (have_max_size) {
++        if (max_size > MiB) {
++            error_setg(errp, "parameter 'max-size' exceeds 1MiB");
++            return NULL;
++        }
++    } else {
++        max_size = MiB;
++    }
++
++    /* adjust header.DebugLogHeadOffset so we return at most maxsize bytes */
++    if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
++        /* wrap around */
++        if (header.DebugLogTailOffset > max_size) {
++            header.DebugLogHeadOffset = header.DebugLogTailOffset - max_size;
++        } else {
++            uint64_t max_chunk = max_size - header.DebugLogTailOffset;
++            if (header.DebugLogSize > max_chunk &&
++                header.DebugLogHeadOffset < header.DebugLogSize - max_chunk) {
++                header.DebugLogHeadOffset = header.DebugLogSize - max_chunk;
++            }
++        }
++    } else {
++        if (header.DebugLogTailOffset > max_size &&
++            header.DebugLogHeadOffset < header.DebugLogTailOffset - max_size) {
++            header.DebugLogHeadOffset = header.DebugLogTailOffset - max_size;
++        }
++    }
++
+     base = offset + header.HeaderSize;
+     if (header.DebugLogHeadOffset > header.DebugLogTailOffset) {
+         /* wrap around */
+@@ -239,8 +263,10 @@ void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
+     Error *err = NULL;
+     FirmwareLog *log;
+     gsize log_len;
++    int64_t maxsize;
+ 
+-    log = qmp_query_firmware_log(&err);
++    maxsize = qdict_get_try_int(qdict, "max-size", -1);
++    log = qmp_query_firmware_log(maxsize != -1, (uint64_t)maxsize, &err);
+     if (err)  {
+         hmp_handle_error(mon, err);
+         return;
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 33cf740bbc1b..2a7f5810d706 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -998,8 +998,8 @@ ERST
+ 
+     {
+         .name       = "firmware-log",
+-        .args_type  = "",
+-        .params     = "",
++        .args_type  = "max-size:o?",
++        .params     = "[max-size]",
+         .help       = "show the firmware (ovmf) debug log",
+         .cmd        = hmp_info_firmware_log,
+     },
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 96133e5c71cf..c6dc6fe69b5c 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1858,9 +1858,14 @@
+ #
+ # Find firmware memory log buffer in guest memory, return content.
+ #
++# @max-size: limit the amount of log data returned.  Up to 1 MiB of
++#            log data is allowed.  In case the amount of log data is
++#            larger than @max-size the tail of the log is returned.
++#
+ # Since: 10.2
+ ##
+ { 'command': 'query-firmware-log',
++  'data': { '*max-size': 'size' },
+   'returns': 'FirmwareLog' }
+ 
+ ##
+-- 
+2.51.0
 
->
-> -    char buffer[1024];
-> -    char *ptr =3D buffer;
-> -
-> -    prop->info->print(obj, prop, buffer, sizeof(buffer));
-> -    visit_type_str(v, name, &ptr, errp);
-> +    s =3D prop->info->print(obj, prop);
-> +    visit_type_str(v, name, &s, errp);
-> +    g_free(s);
-
-otherwise,
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
->  }
->
->  /**
-> --
-> 2.49.0
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
