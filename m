@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41621CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 02:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B898CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 03:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBOna-0003RI-5L; Tue, 21 Oct 2025 22:42:02 -0400
+	id 1vBPZ2-0002M0-UA; Tue, 21 Oct 2025 23:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vBOnX-0003Qh-Jc
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 22:41:59 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vBOnV-0002K4-P8
- for qemu-devel@nongnu.org; Tue, 21 Oct 2025 22:41:59 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-781001e3846so5812943b3a.2
- for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 19:41:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1761100916; x=1761705716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q4f9YnaYgyvKsd8XILEdR5MrfELcvzlciUpM11jpKgI=;
- b=hWsTDQc5khL6zrH1DXVIx1dHHJFwMdt/VUj/7PdE/lWWJQ4uSBPXR3wf4Zf8V+upJ7
- 86aIT05B58Q/7WA3dTC9g93hYxuUUJ3wao2GlSkAJmu+yqjcWU3PiUkg+68eGkpt/Rf/
- kESCSGrbBNKDxmh5ZNinKdxnWXoueeUgvpH66a395+HPKSEUb+b7/iHw0v2kLSI9PQ55
- sacZi+pduoVzCPrz9xJqvL8BX/Z70mKrDwNRKb1k5cDWG/41EV5I7D94/Ep3ANXBijxC
- Kz/EDU8CcefRucfLnHbX82YC4dfdVU9mX4PHIPI6pKfXJD22JV28ansj7oFAOPPWzhuf
- Ly4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761100916; x=1761705716;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q4f9YnaYgyvKsd8XILEdR5MrfELcvzlciUpM11jpKgI=;
- b=sao+PgKUKJIwI2TTT0xyoT0Qyu1n7UWWWcJ5K36h9+rZVCp/JXqPab4uCWxo94MoRd
- F/bjaRvfMvBFWbCDcgk1IuE5jOBE74Gbk2qks+d0oJCjPOtWWKec7pV4ga6pnLGBWSC0
- Qmp4Ch2UZnTq6qDkedObO4m81sd7bA0IB26W5xBwRaISWRpvBL0kqzSfyOhCt3BrB/lJ
- QnDqALheQw1uWe9+pl10RE7YVUHJ9hVBeiODVcxETYNv5PHJUA8ezZXAHAcei+9ZZ8ZT
- 1STiJVnYp06HrGMuRMphme7k3PSo84jJwfpxwYvRJQ0kzdBXPFmZ5EOlEtKu0zHA/Q9X
- FOlg==
-X-Gm-Message-State: AOJu0YwY7nsJflNWbND4GUVT8RHC4aXRWosdRLySaXa1aCrxgAeg/IHl
- kMfWXVTlCEA9100efTav6NwLJ3tkbF80HFgqJGu4QyjuIhtweLcZNo2BS8B5kXyBVMLaKPWiAGB
- Rz2EWPAQci/Tk/4UwSscOyMdhts5VQ21/Sebnz1Io/FsCg/t0iuoFbjB3N4EQ4CRov+EPVFBfVs
- zmga8dDfRsKXV29qy4ALYM9Av9lSrTa6z28SoN/LYu
-X-Gm-Gg: ASbGnct7N1bpxBiSgUjAkdxt8WFXFhRuLHZ2cvScdRWFCF4yKHiH7zH2RU+ISZ7P2ak
- DgpasGqamrwXzlw+a5lK46l3GtdC8XKtZqWII+WQyTgz42CvWVBuFJlIpp0V81YCQcrLxLOPXo+
- aqJRd4B3nMqXyzozkualkBrZK4q5JiCTBN3QFXOLQiArxjyTRdp5eC557v+Pm4HpU/25VggMo6u
- Ke2wWQt3Ti2myARsKs67DEtR93m7O1l6Ar9JBodSjPGnvNv4rI7rHlFGqKSoWhoiT3qM+LYz2NW
- tZN7BLAo6/6/Z4waEXxZhaTVH6hm5XJCKRAxEWoSNIomf9uXWd3pleNAwkGFgnCbwgCgP07VJKf
- tvNLf/Pj2HS6sebw6E77bIQn3BMNUuBJ+xEgHh/s1nSZMKfCLcfKSbaXV1bcPVlm+M+3bk+S/uo
- bLrwXddYqOyveXkgnZL9uWKFODnU1K/XH1GX4O7pTowCKMLgmdpQ==
-X-Google-Smtp-Source: AGHT+IH6u+daJq6CxLSlNxXGuZMH4W81DsaK3v1Hd0ZnxFgtoqwftc7Mxaph4dVu4Df70D/tGdLDNQ==
-X-Received: by 2002:a05:6a20:a122:b0:2b7:949d:63da with SMTP id
- adf61e73a8af0-334a8564eccmr24644909637.18.1761100915802; 
- Tue, 21 Oct 2025 19:41:55 -0700 (PDT)
-Received: from jchang-1875.internal.sifive.com ([136.226.240.196])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a22ff1591dsm13204731b3a.7.2025.10.21.19.41.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 21 Oct 2025 19:41:55 -0700 (PDT)
-From: Jay Chang <jay.chang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
- Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v3 2/2] target/riscv: Make PMP CSRs conform to WARL constraints
-Date: Wed, 22 Oct 2025 10:41:41 +0800
-Message-ID: <20251022024141.42178-3-jay.chang@sifive.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251022024141.42178-1-jay.chang@sifive.com>
-References: <20251022024141.42178-1-jay.chang@sifive.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vBPYz-0002Lr-92
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 23:31:01 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vBPYv-0008J7-LY
+ for qemu-devel@nongnu.org; Tue, 21 Oct 2025 23:31:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1761103841; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=lcz3zRt33FMF3SPyxj7P6CwztOIMRbgNzOoaPbraeB56HBKDu3gQR4AAJ8ANrlkiJlZZf2gYBTZ9YUklk85cNDnUmqYPoMZ8lQLvhoYXQ3zp6bvnJw1Z4KyhARw5B+XbRYIIJirf8F2qxlX7hqLFefiN0G2opxSCIl9Q1CBgVB8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1761103841;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=XHeF+j8dx0VLPM2ywfz6XVaQshQvCJFq87SWg+mg4ks=; 
+ b=M5jbf9HYMxuzu2uNS5PkA7TEXqotPeGv5JRxLjz2QPYCm4hYB6T4uVNJBDeMRABMgfXcHqVMNZxbOFZOOLhGWiDTmyO9y/frxgJ9u7V/geywY8b/93AegsAp5TjigV6Q+mA2All9MPuyGp+LQrAqLM3AwvX3ejn52vMIfRxvTj8=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761103841; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=XHeF+j8dx0VLPM2ywfz6XVaQshQvCJFq87SWg+mg4ks=;
+ b=D9XrDzeJismn7gC8OMxSIZsCsYRB2P1PjYpexIeGXXlQiAotmhPbHdsyi/m+uauW
+ ziul3axGKnvs8SAvvndzMNhGki2tEWLAaD4TyUrzZqCoZIWl7ex1AU8YlyG0zyXCSUm
+ WA+RdcFC7G+WsQ3KqSdWLBJH4phyX2KtA77ZYL9s=
+Received: by mx.zohomail.com with SMTPS id 1761103838792595.3478881674172;
+ Tue, 21 Oct 2025 20:30:38 -0700 (PDT)
+Message-ID: <38973a24-787a-4ec0-866b-7f4a7a7824d1@collabora.com>
+Date: Wed, 22 Oct 2025 06:30:33 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rcu: Unify force quiescent state
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
+ <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
+ <626016e1-c7d8-4377-bf9f-ab0f0eef1457@rsg.ci.i.u-tokyo.ac.jp>
+ <f89d4a21-635a-4779-95c1-7db0abe66863@rsg.ci.i.u-tokyo.ac.jp>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <f89d4a21-635a-4779-95c1-7db0abe66863@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=jay.chang@sifive.com; helo=mail-pf1-x436.google.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,122 +89,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch ensure pmpcfg and pmpaddr comply with WARL constraints.
+On 10/17/25 03:40, Akihiko Odaki wrote:
+> On 2025/10/17 8:43, Akihiko Odaki wrote:
+>> On 2025/10/17 4:33, Dmitry Osipenko wrote:
+>>> On 10/16/25 09:34, Akihiko Odaki wrote:
+>>>> -        /* Wait for one thread to report a quiescent state and try
+>>>> again.
+>>>> +        /*
+>>>> +         * Sleep for a while and try again.
+>>>>            * Release rcu_registry_lock, so rcu_(un)register_thread()
+>>>> doesn't
+>>>>            * wait too much time.
+>>>>            *
+>>>> @@ -133,7 +150,20 @@ static void wait_for_readers(void)
+>>>>            * rcu_registry_lock is released.
+>>>>            */
+>>>>           qemu_mutex_unlock(&rcu_registry_lock);
+>>>> -        qemu_event_wait(&rcu_gp_event);
+>>>> +
+>>>> +        if (forced) {
+>>>> +            qemu_event_wait(&rcu_gp_event);
+>>>> +
+>>>> +            /*
+>>>> +             * We want to be notified of changes made to
+>>>> rcu_gp_ongoing
+>>>> +             * while we walk the list.
+>>>> +             */
+>>>> +            qemu_event_reset(&rcu_gp_event);
+>>>> +        } else {
+>>>> +            g_usleep(10000);
+>>>> +            sleeps++;
+>>>
+>>> Thanks a lot for this RCU improvement. It indeed removes the hard stalls
+>>> with unmapping of virtio-gpu blobs.
+>>>
+>>> Am I understanding correctly that potentially we will be hitting this
+>>> g_usleep(10000) and stall virtio-gpu for the first ~10ms? I.e. the
+>>> MemoryRegion patches from Alex [1] are still needed to avoid stalls
+>>> entirely.
+>>>
+>>> [1]
+>>> https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-
+>>> alex.bennee@linaro.org/
+>>
+>> That is right, but "avoiding stalls entirely" also causes use-after-free.
+>>
+>> The problem with virtio-gpu on TCG is that TCG keeps using the old
+>> memory map until force_rcu is triggered. So, without force_rcu, the
+>> following pseudo-code on a guest will result in use-after-free:
+>>
+>> address = blob_map(resource_id);
+>> blob_unmap(resource_id);
+>>
+>> for (i = 0; i < some_big_number; i++)
+>>    *(uint8_t *)address = 0;
+>>
+>> *(uint8_t *)address will dereference the blob until force_rcu is
+>> triggered, so finalizing MemoryRegion before force_rcu results in use-
+>> after-free.
+>>
+>> The best option to eliminate the delay entirely I have in mind is to
+>> call drain_call_rcu(), but I'm not for such a change (for now).
+>> drain_call_rcu() eliminates the delay if the FlatView protected by RCU
+>> is the only referrer of the MemoryRegion, but that is not guaranteed.
+>>
+>> Performance should not be a concern anyway in this situation. The
+>> guest should not waste CPU time by polling in the first place if you
+>> really care performance; since it's a para-virtualized device and not
+>> a real hardware, CPU time may be shared between the guest and the
+>> device, and thus polling on the guest has an inherent risk of slowing
+>> down the device. For performance-sensitive workloads, the guest should:
+>>
+>> - avoid polling and
+>> - accumulate commands instead of waiting for each
+>>
+>> The delay will be less problematic if the guest does so, and I think
+>> at least Linux does avoid polling.
+>>
+>> That said, stalling the guest forever in this situation is "wrong" (!=
+>> "bad performance"). I wrote this patch to guarantee forward progress,
+>> which is mandatory for semantic correctness.
+>>
+>> Perhaps drain_call_rcu() may make sense also in other, performance-
+>> sensitive scenarios, but it should be added after benchmark or we will
+>> have a immature optimization.
+> 
+> I first thought just adding drain_call_rcu() would work but apparently
+> it is not that simple. Adding drain_call_rcu() has a few problems:
+> 
+> - It drops the BQL, which should be avoided. Problems caused by
+> run_on_cpu(), which drops the BQL, was discussed on the list for a few
+> times and drain_call_rcu() may also suffer from them.
+> 
+> - It is less effective if the RCU thread enters g_usleep() before
+> drain_call_rcu() is called.
+> 
+> - It slows down readers due to the nature of drain_call_rcu().
+> 
+> So, if you know some workload that may suffer from the delay, it may be
+> a good idea to try them with the patches from Alex first, and then think
+> of a clean solution if it improves performance.
 
-When the PMP granularity is greater than 4 bytes, NA4 mode is not valid
-per the spec and will be silently ignored.
+What's not clear to me is whether this use-after-free problem affects
+only TCG or KVM too.
 
-According to the spec, changing pmpcfg.A only affects the "read" value
-of pmpaddr. When G > 2 and pmpcfg.A is NAPOT, bits pmpaddr[G-2:0] read
-as all ones. When G > 1 and pmpcfg.A is OFF or TOR, bits pmpaddr[G-1:0]
-read as all zeros. This allows software to read back the correct
-granularity value.
+Can we unmap blob immediately using Alex' method when using KVM? Would
+be great if we could optimize unmapping for KVM. TCG performance is a
+much lesser concern.
 
-In addition, when updating the PMP address rule in TOR mode,
-the start and end addresses of the PMP region should be aligned
-to the PMP granularity. (The current SPEC only state in TOR mode
-that bits pmpaddr[G-1:0] do not affect the TOR address-matching logic.)
-
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
----
- target/riscv/pmp.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
-
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 72f1372a49..3ef62d26ad 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -108,6 +108,17 @@ static int pmp_is_invalid_smepmp_cfg(CPURISCVState *env, uint8_t val)
-         g_assert_not_reached();
-     }
- }
-+/*
-+ * Calculate PMP granularity value 'g'
-+ *
-+ * The granularity value 'g' is defined as log2(granularity) - 2, where
-+ * granularity is the minimum alignment requirement for PMP regions in bytes.
-+ */
-+static inline int pmp_get_granularity_g(CPURISCVState *env)
-+{
-+    return __builtin_ctz(riscv_cpu_cfg(env)->pmp_granularity >> 2);
-+}
-+
- 
- /*
-  * Count the number of active rules.
-@@ -153,6 +164,15 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "ignoring pmpcfg write - invalid\n");
-         } else {
-+            uint8_t a_field = pmp_get_a_field(val);
-+            /*
-+             * When granularity g >= 1 (i.e., granularity > 4 bytes),
-+             * the NA4 (Naturally Aligned 4-byte) mode is not selectable
-+             */
-+            if ((riscv_cpu_cfg(env)->pmp_granularity >
-+                MIN_RISCV_PMP_GRANULARITY) && (a_field == PMP_AMATCH_NA4)) {
-+                    return false;
-+            }
-             env->pmp_state.pmp[pmp_index].cfg_reg = val;
-             pmp_update_rule_addr(env, pmp_index);
-             return true;
-@@ -199,6 +219,7 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
-     target_ulong prev_addr = 0u;
-     hwaddr sa = 0u;
-     hwaddr ea = 0u;
-+    int g = pmp_get_granularity_g(env);
- 
-     if (pmp_index >= 1u) {
-         prev_addr = env->pmp_state.pmp[pmp_index - 1].addr_reg;
-@@ -211,6 +232,11 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
-         break;
- 
-     case PMP_AMATCH_TOR:
-+        /* Bits pmpaddr[G-1:0] do not affect the TOR address-matching logic. */
-+        if (g >= 1) {
-+            prev_addr &= ~((1ULL << g) - 1ULL);
-+            this_addr &= ~((1ULL << g) - 1ULL);
-+        }
-         if (prev_addr >= this_addr) {
-             sa = ea = 0u;
-             break;
-@@ -577,6 +603,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
- 
- /*
-  * Handle a read from a pmpaddr CSR
-+ * Change A field of pmpcfg affects the read value of pmpaddr
-  */
- target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
- {
-@@ -585,6 +612,25 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
- 
-     if (addr_index < pmp_regions) {
-         val = env->pmp_state.pmp[addr_index].addr_reg;
-+        int g = pmp_get_granularity_g(env);
-+        switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg_reg)) {
-+        case PMP_AMATCH_OFF:
-+            /* fallthrough */
-+        case PMP_AMATCH_TOR:
-+            /* Bit [g-1:0] read all zero */
-+            if (g >= 1 && g < TARGET_LONG_BITS) {
-+                val &= ~((1ULL << g) - 1ULL);
-+            }
-+            break;
-+        case PMP_AMATCH_NAPOT:
-+            /* Bit [g-2:0] read all one */
-+            if (g >= 2 && g < TARGET_LONG_BITS) {
-+                val |= ((1ULL << (g - 1)) - 1ULL);
-+            }
-+            break;
-+        default:
-+            break;
-+        }
-         trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
-     } else {
-         qemu_log_mask(LOG_GUEST_ERROR,
 -- 
-2.48.1
-
+Best regards,
+Dmitry
 
