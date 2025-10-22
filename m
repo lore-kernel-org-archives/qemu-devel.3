@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B384CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36ADBCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSp7-0000YT-He; Wed, 22 Oct 2025 02:59:54 -0400
+	id 1vBSn5-0001BK-PX; Wed, 22 Oct 2025 02:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSp6-0000UJ-71
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:59:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vBSoz-0008Mv-9i
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:59:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761116382;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=diOv9EHv5g2wvAeeVNhVdb4+wKRzzCXow7Ys5XqMn1A=;
- b=dg0nzf9amzM4fg2TzN6glmQxRDEH3KKtQrpwGCNvwdv2MtqYje1G3M0+TMAlrSKNLVZBVa
- PMSOubtrL+/J4QiGhK3bs7UuUZ3gqTpTHtJLftvTEON+54oLSMsarOSBjvTq3CliPiCvjW
- SuV9j2vXriLEpeZKSPxojjaue2dsBPU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-140-fc_pHtpBO2qGecs2U5-AsQ-1; Wed,
- 22 Oct 2025 02:59:39 -0400
-X-MC-Unique: fc_pHtpBO2qGecs2U5-AsQ-1
-X-Mimecast-MFC-AGG-ID: fc_pHtpBO2qGecs2U5-AsQ_1761116378
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48DD6180A228; Wed, 22 Oct 2025 06:59:32 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3C4F2180057D; Wed, 22 Oct 2025 06:59:29 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:Xilinx ZynqMP and...)
-Subject: [PATCH v2 30/42] audio: introduce AUD_set_volume_{in,out}_lr()
-Date: Wed, 22 Oct 2025 10:56:25 +0400
-Message-ID: <20251022065640.1172785-31-marcandre.lureau@redhat.com>
-In-Reply-To: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
-References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBSn3-00015t-T4
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:45 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBSn1-00086B-8B
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 02:57:45 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4711b95226dso52841145e9.0
+ for <qemu-devel@nongnu.org>; Tue, 21 Oct 2025 23:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761116261; x=1761721061; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QnPloFsjFit3k8b3uukb85Gevv0GhUmTfYnV5ODHyak=;
+ b=QjjodzOVW2R8Rv0HgYj018XhH57IFrOVRpaR1BrUzKf6bDy84QieGbGMZxbp2XaVoK
+ A4jbJMMD3cjI38T4LknvTOKRz33oNxzLOgeNaN3V3TcaFpKFUzQD6Twp7jvroanLb8bW
+ mc59Rvac9AQCPeOx5b2YBTbkyH9Rn7YmbvepEjBAfNje6gDjHJpxXP41aUUEzo1CDnFK
+ L8SHAYRj1uH/yXF44z31RTzJrZZBeqcHSD2tubK1Rjr5Ov5v4LA7zj1rytUJMM0Hzgir
+ 3I9LP6VJT1uCzJGztyOkADtf/mUY1c4zptq7vlL7Bomep8oSLizrDzsEMg0gtPql84N5
+ /SmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761116261; x=1761721061;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QnPloFsjFit3k8b3uukb85Gevv0GhUmTfYnV5ODHyak=;
+ b=kJoeQ7VkIyWtspzX2VP7MN03UE04CXG8xISKqdduFwe9U+nW4wd4thRAj5dv1NktAT
+ /WK0R4p08Ewn09+D1qzeVz9Cn1rot0cxQYse4MVduqnnH9xGc5UZ3fJLoiqNg7Zr7m1E
+ UFjsgw+evu8DgjO9VAIK2ZluCsq5pqFSSCT3ii+btdIdox35VUkdu3Tn5Fjc2KVkAqT+
+ imqCDXTB/Lk+PUm5OPl/Z3IokzfZ0dz12xLwR5UndOyem4pKtVqbW6mUcS/ImjFvIRgE
+ 0wrzswgB4Of3L1fg6XuvW38iAjeZGq2WjrTZV1tBe13Gj3X0FRt/mNN6uKe6Bf2UZjxT
+ eACw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXjfYAh24uZAsADZck8bSi72zhsJxiNPSmYk7R5+HZRie5zWO/kKM0QJc0DvDB4u9Bczb1J8OD4TqC4@nongnu.org
+X-Gm-Message-State: AOJu0Yzzen518u5ffNJ7M3tyKqRA1FXUORLzncTkge1QFtkdNiyQQuA2
+ EqTc8of3m5VDIr5avxw+TW35KDh73HQxFi4f/LBVtKSa33MEGlzf8FYlqyiZQXveeX4=
+X-Gm-Gg: ASbGncv4106vTdF6OaJAlWweHsdZt2amf8QtSFT+NLAI8l+R8nlydWLbGlHHkvc/BKC
+ SR+lfXGDlmfVeW22AOxt/URFLf9Cx8zA5y5GZaf8UfQwsGasHpjKhy77Whm4UnWYNevYUXxO4ak
+ 3GaS3QwV+sxc7VJyV/NaU6FT1amWEApgVqwWIZh4W84/1zE+XP3C/d4mCbFk14S81NBcpGxNqmN
+ ZN1ADp+Xv3+hd3ffeqS8o7i0QJBamccC2j5k2joWVRRqalDXTGZvIAOtChptM8FHwC5QKZ0rBWC
+ CvL+awDG5EWZFFuKAth6qXPhGs6da7oj4zCgIdHZSovT4IOAGNs+bvkds/txc0QivLVgfcH7Zwb
+ 6x9EUpj+CQRV5ybKVF1Oy2THEsWdvA4NHq6M32EOiNVPZ5dM6l09Wb79mSMYH4vNWStf3MCLWnL
+ KA/6b1U1LnsOghWh58leuKpg0Gr8OSNonzym/CQXsFYo4=
+X-Google-Smtp-Source: AGHT+IE5+4ddQWHPr5frwJdpVMVACxr2T4XPoxFldVuShxMrAH5vZ7F/O3blDy8LTBRv3QNP5YxzEA==
+X-Received: by 2002:a05:600c:3b8d:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-471179176b9mr164828215e9.28.1761116261038; 
+ Tue, 21 Oct 2025 23:57:41 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475c427c3f7sm30356415e9.1.2025.10.21.23.57.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Oct 2025 23:57:40 -0700 (PDT)
+Message-ID: <b59aaee4-89c6-4033-946f-bc2702993294@linaro.org>
+Date: Wed, 22 Oct 2025 08:57:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] igvm: add MAINTAINERS entry
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20251015112342.1672955-1-kraxel@redhat.com>
+ <20251015112342.1672955-6-kraxel@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251015112342.1672955-6-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,262 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 15/10/25 13:23, Gerd Hoffmann wrote:
+> Add Roy (being the original author) as maintainer.  Add myself as
+> reviewer.  Status to be decided.
+> 
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   MAINTAINERS | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 84cfd85e1fa1..3ebcbcdfdb04 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3893,6 +3893,15 @@ F: roms/edk2-*
+>   F: tests/data/uefi-boot-images/
+>   F: tests/uefi-test-tools/
+>   
+> +IGVM Firmware
+> +M: Roy Hopkins <roy.hopkins@randomman.co.uk>
+> +R: Gerd Hoffmann <kraxel@redhat.com>
+> +S: TBD
 
-Keep the AUD_ prefix for consistency. Introduce a macro to call the
-more flexible Volume function.
+If not Supported, then Maintained?
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/audio.h         |  8 ++++----
- audio/audio.c         | 16 ++--------------
- hw/audio/ac97.c       |  4 ++--
- hw/audio/asc.c        |  2 +-
- hw/audio/hda-codec.c  |  4 ++--
- hw/audio/lm4549.c     |  2 +-
- hw/audio/via-ac97.c   |  2 +-
- hw/audio/virtio-snd.c |  4 ++--
- hw/audio/wm8750.c     | 12 ++++++------
- hw/display/xlnx_dp.c  |  2 +-
- hw/usb/dev-audio.c    |  4 ++--
- 11 files changed, 24 insertions(+), 36 deletions(-)
+> +F: backends/igvm*.c
+> +F: include/system/igvm*.h
+> +F: stubs/igvm.c
+> +F: target/i386/igvm.c
 
-diff --git a/audio/audio.h b/audio/audio.h
-index 0af911fd9a..2175223ef6 100644
---- a/audio/audio.h
-+++ b/audio/audio.h
-@@ -119,8 +119,8 @@ int  AUD_is_active_out (SWVoiceOut *sw);
- void     AUD_init_time_stamp_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
- uint64_t AUD_get_elapsed_usec_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
- 
--void AUD_set_volume_out (SWVoiceOut *sw, int mute, uint8_t lvol, uint8_t rvol);
--void AUD_set_volume_in (SWVoiceIn *sw, int mute, uint8_t lvol, uint8_t rvol);
-+#define AUD_set_volume_out_lr(sw, mut, lvol, rvol) AUD_set_volume_out(sw, &(Volume) { .mute = mut, .channels = 2, .vol = { lvol, rvol } })
-+#define AUD_set_volume_in_lr(sw, mut, lvol, rvol) AUD_set_volume_in(sw, &(Volume) { .mute = mut, .channels = 2, .vol = { lvol, rvol } })
- 
- #define AUDIO_MAX_CHANNELS 16
- typedef struct Volume {
-@@ -129,8 +129,8 @@ typedef struct Volume {
-     uint8_t vol[AUDIO_MAX_CHANNELS];
- } Volume;
- 
--void audio_set_volume_out(SWVoiceOut *sw, Volume *vol);
--void audio_set_volume_in(SWVoiceIn *sw, Volume *vol);
-+void AUD_set_volume_out(SWVoiceOut *sw, Volume *vol);
-+void AUD_set_volume_in(SWVoiceIn *sw, Volume *vol);
- 
- SWVoiceIn *AUD_open_in (
-     QEMUSoundCard *card,
-diff --git a/audio/audio.c b/audio/audio.c
-index 284ea13289..9e6d79b4e3 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1949,13 +1949,7 @@ void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque)
-     }
- }
- 
--void AUD_set_volume_out (SWVoiceOut *sw, int mute, uint8_t lvol, uint8_t rvol)
--{
--    Volume vol = { .mute = mute, .channels = 2, .vol = { lvol, rvol } };
--    audio_set_volume_out(sw, &vol);
--}
--
--void audio_set_volume_out(SWVoiceOut *sw, Volume *vol)
-+void AUD_set_volume_out(SWVoiceOut *sw, Volume *vol)
- {
-     if (sw) {
-         HWVoiceOut *hw = sw->hw;
-@@ -1971,13 +1965,7 @@ void audio_set_volume_out(SWVoiceOut *sw, Volume *vol)
-     }
- }
- 
--void AUD_set_volume_in (SWVoiceIn *sw, int mute, uint8_t lvol, uint8_t rvol)
--{
--    Volume vol = { .mute = mute, .channels = 2, .vol = { lvol, rvol } };
--    audio_set_volume_in(sw, &vol);
--}
--
--void audio_set_volume_in(SWVoiceIn *sw, Volume *vol)
-+void AUD_set_volume_in(SWVoiceIn *sw, Volume *vol)
- {
-     if (sw) {
-         HWVoiceIn *hw = sw->hw;
-diff --git a/hw/audio/ac97.c b/hw/audio/ac97.c
-index 3d3c667e86..9157588dbc 100644
---- a/hw/audio/ac97.c
-+++ b/hw/audio/ac97.c
-@@ -414,7 +414,7 @@ static void update_combined_volume_out(AC97LinkState *s)
-     lvol = (lvol * plvol) / 255;
-     rvol = (rvol * prvol) / 255;
- 
--    AUD_set_volume_out(s->voice_po, mute, lvol, rvol);
-+    AUD_set_volume_out_lr(s->voice_po, mute, lvol, rvol);
- }
- 
- static void update_volume_in(AC97LinkState *s)
-@@ -425,7 +425,7 @@ static void update_volume_in(AC97LinkState *s)
-     get_volume(mixer_load(s, AC97_Record_Gain_Mute), 0x0f, 0,
-                &mute, &lvol, &rvol);
- 
--    AUD_set_volume_in(s->voice_pi, mute, lvol, rvol);
-+    AUD_set_volume_in_lr(s->voice_pi, mute, lvol, rvol);
- }
- 
- static void set_volume(AC97LinkState *s, int index, uint32_t val)
-diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-index 41472dc2e3..991316e984 100644
---- a/hw/audio/asc.c
-+++ b/hw/audio/asc.c
-@@ -489,7 +489,7 @@ static void asc_write(void *opaque, hwaddr addr, uint64_t value,
-         {
-             int vol = (value & 0xe0);
- 
--            AUD_set_volume_out(s->voice, 0, vol, vol);
-+            AUD_set_volume_out_lr(s->voice, 0, vol, vol);
-             break;
-         }
-     }
-diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
-index 66edad280f..cc87557954 100644
---- a/hw/audio/hda-codec.c
-+++ b/hw/audio/hda-codec.c
-@@ -466,9 +466,9 @@ static void hda_audio_set_amp(HDAAudioStream *st)
-         return;
-     }
-     if (st->output) {
--        AUD_set_volume_out(st->voice.out, muted, left, right);
-+        AUD_set_volume_out_lr(st->voice.out, muted, left, right);
-     } else {
--        AUD_set_volume_in(st->voice.in, muted, left, right);
-+        AUD_set_volume_in_lr(st->voice.in, muted, left, right);
-     }
- }
- 
-diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
-index a4a77c8dc6..dccbf56068 100644
---- a/hw/audio/lm4549.c
-+++ b/hw/audio/lm4549.c
-@@ -308,7 +308,7 @@ void lm4549_init(lm4549_state *s, lm4549_callback data_req_cb, void* opaque,
-         &as
-     );
- 
--    AUD_set_volume_out(s->voice, 0, 255, 255);
-+    AUD_set_volume_out_lr(s->voice, 0, 255, 255);
- 
-     s->voice_is_active = 0;
- 
-diff --git a/hw/audio/via-ac97.c b/hw/audio/via-ac97.c
-index d5231e1cf2..62341e5600 100644
---- a/hw/audio/via-ac97.c
-+++ b/hw/audio/via-ac97.c
-@@ -53,7 +53,7 @@ static void codec_volume_set_out(ViaAC97State *s)
-     rvol /= 255;
-     mute = CODEC_REG(s, AC97_Master_Volume_Mute) >> MUTE_SHIFT;
-     mute |= CODEC_REG(s, AC97_PCM_Out_Volume_Mute) >> MUTE_SHIFT;
--    AUD_set_volume_out(s->vo, mute, lvol, rvol);
-+    AUD_set_volume_out_lr(s->vo, mute, lvol, rvol);
- }
- 
- static void codec_reset(ViaAC97State *s)
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index eca3319e59..88777977a9 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -463,7 +463,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-                                          stream,
-                                          virtio_snd_pcm_out_cb,
-                                          &as);
--        AUD_set_volume_out(stream->voice.out, 0, 255, 255);
-+        AUD_set_volume_out_lr(stream->voice.out, 0, 255, 255);
-     } else {
-         stream->voice.in = AUD_open_in(&s->card,
-                                         stream->voice.in,
-@@ -471,7 +471,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-                                         stream,
-                                         virtio_snd_pcm_in_cb,
-                                         &as);
--        AUD_set_volume_in(stream->voice.in, 0, 255, 255);
-+        AUD_set_volume_in_lr(stream->voice.in, 0, 255, 255);
-     }
- 
-     return cpu_to_le32(VIRTIO_SND_S_OK);
-diff --git a/hw/audio/wm8750.c b/hw/audio/wm8750.c
-index 2846b55fe2..7a36c4bd3f 100644
---- a/hw/audio/wm8750.c
-+++ b/hw/audio/wm8750.c
-@@ -145,30 +145,30 @@ static void wm8750_vol_update(WM8750State *s)
- {
-     /* FIXME: multiply all volumes by s->invol[2], s->invol[3] */
- 
--    AUD_set_volume_in(s->adc_voice[0], s->mute,
-+    AUD_set_volume_in_lr(s->adc_voice[0], s->mute,
-                     s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
-                     s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
--    AUD_set_volume_in(s->adc_voice[1], s->mute,
-+    AUD_set_volume_in_lr(s->adc_voice[1], s->mute,
-                     s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
-                     s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
--    AUD_set_volume_in(s->adc_voice[2], s->mute,
-+    AUD_set_volume_in_lr(s->adc_voice[2], s->mute,
-                     s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
-                     s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
- 
-     /* FIXME: multiply all volumes by s->outvol[0], s->outvol[1] */
- 
-     /* Speaker: LOUT2VOL ROUT2VOL */
--    AUD_set_volume_out(s->dac_voice[0], s->mute,
-+    AUD_set_volume_out_lr(s->dac_voice[0], s->mute,
-                     s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[4]),
-                     s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[5]));
- 
-     /* Headphone: LOUT1VOL ROUT1VOL */
--    AUD_set_volume_out(s->dac_voice[1], s->mute,
-+    AUD_set_volume_out_lr(s->dac_voice[1], s->mute,
-                     s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[2]),
-                     s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[3]));
- 
-     /* MONOOUT: MONOVOL MONOVOL */
--    AUD_set_volume_out(s->dac_voice[2], s->mute,
-+    AUD_set_volume_out_lr(s->dac_voice[2], s->mute,
-                     s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[6]),
-                     s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[6]));
- }
-diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-index ef73e1815f..882ae3c4b4 100644
---- a/hw/display/xlnx_dp.c
-+++ b/hw/display/xlnx_dp.c
-@@ -1334,7 +1334,7 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
-                                            s,
-                                            xlnx_dp_audio_callback,
-                                            &as);
--    AUD_set_volume_out(s->amixer_output_stream, 0, 255, 255);
-+    AUD_set_volume_out_lr(s->amixer_output_stream, 0, 255, 255);
-     xlnx_dp_audio_activate(s);
-     s->vblank = ptimer_init(vblank_hit, s, DP_VBLANK_PTIMER_POLICY);
-     ptimer_transaction_begin(s->vblank);
-diff --git a/hw/usb/dev-audio.c b/hw/usb/dev-audio.c
-index 26af709f31..f59e5a53f0 100644
---- a/hw/usb/dev-audio.c
-+++ b/hw/usb/dev-audio.c
-@@ -805,7 +805,7 @@ static int usb_audio_set_control(USBAudioState *s, uint8_t attrib,
-             }
-             fprintf(stderr, "\n");
-         }
--        audio_set_volume_out(s->out.voice, &s->out.vol);
-+        AUD_set_volume_out(s->out.voice, &s->out.vol);
-     }
- 
-     return ret;
-@@ -981,7 +981,7 @@ static void usb_audio_reinit(USBDevice *dev, unsigned channels)
- 
-     s->out.voice = AUD_open_out(&s->card, s->out.voice, TYPE_USB_AUDIO,
-                                 s, output_callback, &s->out.as);
--    audio_set_volume_out(s->out.voice, &s->out.vol);
-+    AUD_set_volume_out(s->out.voice, &s->out.vol);
-     AUD_set_active_out(s->out.voice, 0);
- }
- 
--- 
-2.51.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
