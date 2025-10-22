@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07B8CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10935CCD1BB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 14:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBZsN-0007AL-Vr; Wed, 22 Oct 2025 10:31:44 -0400
+	id 1vBZsn-0007JE-80; Wed, 22 Oct 2025 10:32:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBZs7-00073d-6U
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:31:32 -0400
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
+ id 1vBZsf-0007Db-M6
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:32:04 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBZs4-000510-Mr
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:31:26 -0400
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-3c917ea655bso4564647fac.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 07:31:24 -0700 (PDT)
+ id 1vBZsc-00052U-NI
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 10:32:01 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7c0e8367d4eso2374323a34.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 07:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761143483; x=1761748283; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761143516; x=1761748316; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iTMMM1abis8wKKlNpR9iDknabGHb/qjIKHrlZwMyg8Y=;
- b=pfOiNucl/IE+WwiN4GstK/gb5e733JYt/d9A4vdXG0PeqspBkoOHzC1xAev47Fc+p+
- Wx1anyNXVq3vo0ULGr8SDi1C8RiozAo8KwJj2oQBTptKLRgJ5C5OZtexOpJ6VOGndAtk
- 01VPrSYIesj4kb6Sqe0mp7kai6wGmQJfQz7bPrXl/Gl5ET61dy7t7H83W/3Jo1H8WZQt
- Ug4AQW5ffeuuzQp51B0AYB4y+v9u516tWgQlwRfqD9PoZzAHMygLFK8h+jUywlLyqdJN
- 207QL8ma72qfTGs1Vx0xVQvTtfy15x8hr8A5TFMTlZ9S6VxlJBvNmQjzIGG0m4AsXHYO
- mU0w==
+ bh=u5F569Kj5IT9zkOFE5x+E5Dmrt3rMNP1fLrTfr3rdRg=;
+ b=XV0aXpbQrXQy4R3tTw1FNSxFKLJOXPLGvMHWuofllEqXC7vQqZoGtAlZ8G9cYKTHVr
+ +Pum3kJxza/q1Kr1JHEHAnF3+nWtoFFPY7yEvZX0s5iNZ4q1oXjferR/JrBOrWia9B/p
+ Cxoyi3fPMCtc7D2wp2DpDG3QQsfBb0AWI11SBGiw6g99SkrSamqoowSwZSo9HJo1CF8y
+ dQ+DEXnG/0A/nKdLSuxlLcva6p01we1gK+CArJ7jTcOBquKigngWwbVNyRg1l5LjgLKp
+ VqaFrAA698crAZxYqznMnZt7/uJ+DmrwMTPOxf8rMV0lMbJrwzI3DWMs62Fwh4bMLSKc
+ 26OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761143483; x=1761748283;
+ d=1e100.net; s=20230601; t=1761143516; x=1761748316;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iTMMM1abis8wKKlNpR9iDknabGHb/qjIKHrlZwMyg8Y=;
- b=wD4pgzAhm4ZCprv0lrWCOgJWW2Fs2wWaitndIcFylVAR/Tq4mPxU6+1i6zIjhOMY50
- QX+hPNzTB09KIrBzXkyC1WIpZARVRoO2DBhe4Qj/PJFPmbSgUQotQAbey/PnOHGtzNA6
- RTX3frUBnHVG1QRy6JauDUbKmeMnqmU8A4fXioVqsDXOcV9eLbOOOOqTsE48Gui6xVJA
- txbzoet4LPzkuo+CLmXwpfI1FBMdiz/VDQOZmk1I/fioheVJptGfMFE/FTsDMLpVdZit
- Cvh/sPgkJaenjbv/dFBPLZ/WveY8pmUM/VGjjBSSy2n9R38MD/njrKWgBc4Mp0BkVuSf
- hAyg==
-X-Gm-Message-State: AOJu0Yz77ZAzcAL8Y13JF+X9lZbqRMkfwYqpScCCtGmEV5XF9sRnS9mU
- fCxVlnoGrCuTrLondgW1kA2xad6ETtYNN0Quq7JeGMMqQ/z0WJyxOUDnzcuu7yNf/sPVWNvxwSA
- IPHRm
-X-Gm-Gg: ASbGnctpP4pI7a04RwCIb4JWT+CK36pm9idsKugjAkR9cm/ozZSLXCTQ187l3Ujygv/
- bI5Zya94diaHoGKXO0zvbDOfEtC0o+i7EHurpQhvNWuOnIFQTAZB7G5GO+5TJBE6Pp+hINoEhMh
- J5yv/QTLiJ+IaXSkojKoUTc2JH+c2FgYXUxfNPI4nOFBigNUuWCJIs9Bvcu3Lsi9ApaLVh+AWB6
- 1sGfuL2F0AbRvd8cZ21OcHak3Moi42+Vztc7rej76mZe1uN3Y2t+MyTIjGXs03hkHBGQe5L2kMD
- YqaNu0a8QM+e2SY5LRcW4uvZDsODjQFu7LENQkELE3JsN3ijtZLWk/LiVzMGlaIoUHolrgO6WHj
- oE6XjDdGAmr41e5J6B71xzQecjToK5blkuNCHbhngCtjn7dAyoJUQ2dV/rI9JdAD3vxOctqRtPm
- sXTOcLV6jr9q1B7s8Tv6J+x1gss2rjKTyPYtcDXQ==
-X-Google-Smtp-Source: AGHT+IFvtLZEMZqUbkIgDSEQnbU9JJkQ538k6tog23KWoxS+/V5zzXY5h+B3WEbpZQXAm0Jqmu7nGw==
-X-Received: by 2002:a05:6870:7a0d:b0:31d:736d:ebdd with SMTP id
- 586e51a60fabf-3c98cf42e93mr8537369fac.13.1761143482757; 
- Wed, 22 Oct 2025 07:31:22 -0700 (PDT)
+ bh=u5F569Kj5IT9zkOFE5x+E5Dmrt3rMNP1fLrTfr3rdRg=;
+ b=uglyTqOEiWzgw2+QF3JNvBASdjQKG5W4/cWKWXzlktpm0PTdPgXRl3FdwgKX4vaCjl
+ d/9KWQwJIkZ7CN+hd81TdKqGvn+hc7Rs7PaqkRp0TDKZxvz0V+QO49TrW5dopzQo9REW
+ 1c7s6D7CDrUbVmsRVZWKWm3qMsB3GanDv9l0jfcSXlu60z10GY+GjXfejTiLJ4pIny4p
+ ISk0KDQsCjy7IbqG1ZSM4+hmK1yeh+rqJyc9+JJrqW4WR0SS8QG4mWdzFj/axF2ben4+
+ KtBY6C+uQPDVzyv2qE2q4RH/QSggLizjoEnFdiB0207T9YFOWO6ORzwHRVnsr5ht/8U0
+ 5ESQ==
+X-Gm-Message-State: AOJu0YxUd3DEB/2+dEqQwm085pcNdfoWoNf4+0P7yleDQkAonXX7ve+B
+ DbjbAuZIxTbM4S/T5MX+O3Zv8KyjpZGFwVUaLtxIMRfHOP8wkbyX0yf4bEr3Gb27tG8b5RPdelI
+ MWuk8
+X-Gm-Gg: ASbGnctq9J2MzSxyq8K49TP6mvKV4HPP7T11QvPxkuwJGLwUVcfSlLkfzY1C0ferpAH
+ A902ZwnxID2jr6NcefB3qBjb5Q/1GX0Lf6m/MX101nu7M84+dYvDBG7KXttpL4ILB4/t9+P/Jpj
+ GlRtVqChfn9/I9EYVEhvY6A+iW48DwOh6HOpDu50meYgEMv9Pc2PBpXiDmSrNnJT8i43xjPcRYM
+ arzs+gBOcws9wzmCX2/PO60HUELjIsWrZqpNA/2MIZBPJi1xFyjoXEnZhn1BhbNz8cO2XUvfTsy
+ 0+kfjjY3BRimLl9NSRNKHJUTYu8yDibt11Tv0BUPAo3p4sRXNP58/3fsOFlxYeZ3FldJWBKbEch
+ rSVkU+5dGCalMhNEJ5bRfCNBbe8fcF12DZ7yTtinEadfSaOtc9ZalvC5boJaAcHtXhYPWRRDgSP
+ BK+fl3OCOPqCL4YV5eMZsUCJzkMkxW+hBv2e4Vqg==
+X-Google-Smtp-Source: AGHT+IEd/R8i/2aprODsJQlcn5r56XFWddLlTXHSBdr8EUjVBy5GX/cqazcO21c4fRNCQFJxoOksuQ==
+X-Received: by 2002:a05:6830:4901:b0:759:19:a328 with SMTP id
+ 46e09a7af769-7c27ca51324mr10704482a34.16.1761143515855; 
+ Wed, 22 Oct 2025 07:31:55 -0700 (PDT)
 Received: from [10.128.41.227] ([50.194.179.134])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3c9aef54fb8sm3971499fac.5.2025.10.22.07.31.20
+ 46e09a7af769-7c2887b926fsm4693666a34.14.2025.10.22.07.31.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 07:31:20 -0700 (PDT)
-Message-ID: <4b01b603-0fe4-4911-9b0e-b345259e2834@linaro.org>
-Date: Wed, 22 Oct 2025 09:31:18 -0500
+ Wed, 22 Oct 2025 07:31:53 -0700 (PDT)
+Message-ID: <da1a0b39-0747-4b96-914a-0cfee8e87e76@linaro.org>
+Date: Wed, 22 Oct 2025 09:31:51 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] aspeed queue
+Subject: Re: [PULL 00/12] vfio queue
 To: qemu-devel@nongnu.org
-References: <20251022122953.877335-1-clg@redhat.com>
+References: <20251022121846.874152-1-clg@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251022122953.877335-1-clg@redhat.com>
+In-Reply-To: <20251022121846.874152-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,27 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/25 07:29, Cédric Le Goater wrote:
+On 10/22/25 07:18, Cédric Le Goater wrote:
 > The following changes since commit 3c0b42c68f98fb276fa248012642be8cbf2cab70:
 > 
 >    Merge tag 'pull-request-2025-10-21' ofhttps://gitlab.com/thuth/qemu into staging (2025-10-21 08:59:35 -0500)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/legoater/qemu/ tags/pull-aspeed-20251022
+>    https://github.com/legoater/qemu/ tags/pull-vfio-20251022
 > 
-> for you to fetch changes up to d7bd42a740d0e8887540d7b450d0bdb2d6ba31ea:
+> for you to fetch changes up to ecbe424a63c9f860a901d6a4a75724b046abd796:
 > 
->    hw/arm/aspeed: Remove ast2700fc self-aliasing (2025-10-22 08:14:09 +0200)
+>    vfio: only check region info cache for initial regions (2025-10-22 08:12:52 +0200)
 > 
 > ----------------------------------------------------------------
-> aspeed queue:
+> vfio queue:
 > 
-> * Improve AST2700 co-processor models
-> * Add vbootrom support to the ast2700fc multi-soc machine
-> * Bump SDK version to v09.08 for the ast2700fc machine
-> * Add 32 bits property for Aspeed GPIOs
-> * Change ast2600-evb machine flash model to w25q512jv
+> * Fix CPR transfer
+> * Add support for VFIO_DMA_UNMAP_FLAG_ALL
+> * Fix vfio-user documentation
+> * Update Alex Williamson's email address
+> * Fix for vfio-region cache for the vGPU use case
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
