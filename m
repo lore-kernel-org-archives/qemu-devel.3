@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4219BCCD1BE
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2518CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 07:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBSxF-0002LK-2q; Wed, 22 Oct 2025 03:08:17 -0400
+	id 1vBT0l-0004YB-CE; Wed, 22 Oct 2025 03:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBSx9-0002DD-IC
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:08:11 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBT0j-0004Y2-UW
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:11:54 -0400
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBSx7-0001AQ-Q9
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:08:11 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBT0i-0001jk-73
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 03:11:53 -0400
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4712c6d9495so12007185e9.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 00:08:09 -0700 (PDT)
+ 5b1f17b1804b1-46fcf9f63b6so35961445e9.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 00:11:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761116888; x=1761721688; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761117110; x=1761721910; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wOSDp5qQnkQ65tSJhq1PFeeSmoZ2QbjUjpF4sKIY7Ds=;
- b=J036t94HOnVvTEwTVxEO+/6jKDDqrp46Thvewm3PDi0VqopAX1a7o18TKshaswYhL7
- uYqDPKmbrUcRUtvQgnfxvPn8ca21HPqySLxnP3p2ZbHlmjfLvz7QroEmu7gZ6FDvU9n7
- 55pxNss/S9jk4afEVq8B57eDpP5QlJH9yrqbfmlJRiEhuF9uFWTmbpopiVUlwvoJorCD
- bkFt/BWVG6h8WWAeKizF/lx2gN4XeBMkDUhJGv4Q7ETTFU5R6IPsdObuHdGZ6nBvfKjq
- dnKm3yGc91nq4GtfsyNdrqxEWv4aQOp+VkrA/pPsfpy7Et62K8bO45lcCz9Ilm16Bi5K
- 8BOw==
+ bh=uYIFUMbo/1cQ0WnVA94vGLc1yKwKjgs79jUCOMF/Pas=;
+ b=vCwyC4UKy60XJFiMumPEVJkr1g6c+n8u3TNiINQG75SpPUReGF7nsokSL7yESrlbih
+ o5dJLy7zVbYvl97kHSrv58DbPYg6gjNXiR5IUzHHXywdc6Tui7VsEb3/is8YQQGESM6A
+ pXOXtxX7SV+K9yTQiNGQb8NZTUTZlZMeBVVlpJ41QrdRFN8hWGpoIpItCCpnHsw4RbCp
+ OtiTxTQujYfND+6+3Qp2arRkBK6rhsj7iLX3xg3D6X/Q+T4apyMQOyczAaw1KLYFcw0o
+ W0zuxUK+AE0vMi5ypfVy4bipZ+kBgi7lGikRYMJvgkf8VTxg6YcVe2jWkAxP3RB8vYa2
+ Zj+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761116888; x=1761721688;
+ d=1e100.net; s=20230601; t=1761117110; x=1761721910;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wOSDp5qQnkQ65tSJhq1PFeeSmoZ2QbjUjpF4sKIY7Ds=;
- b=RjeEivqdyG9MgJAFoykAd6YoUZCmGnWGiFUUcmN/EZ3iI64sgjuUHYsrbVIp8Sm5Co
- mXT48WdySstygxk8rVb5SRiWPDXE/8vaEs/ysA8S5j3UlFM9bXorxww2Y9JjIbPdO/oE
- ZDL3AhjlqOpkdqF2vW8HVM5Nc2UemE+Lt55Tghnw2fzkANnieIZdUmxAokNDCdtEDGgQ
- VOks2/H9NGv1Hpbnchq4rQqcsBtMniGN+K3lOhlM6pX+e/0aUSvZ4CMIZ9ke9PHMWFX5
- HpKom8olwAf/lI6+QzcC9vU05tSsMeP2LtKhfv6xKTlqw+Jass2aBmDyVAF/wtWzUktZ
- 1Siw==
+ bh=uYIFUMbo/1cQ0WnVA94vGLc1yKwKjgs79jUCOMF/Pas=;
+ b=LzWe4iI6ZJQIFX9WVWFh3QRQHms594jXAzjNs0a6i9aSv89l77JavekA0JiZT5BmSm
+ 89/vRfXDjPYwl0Ei1uJNEUUrqMxYBsICNKH6dikXoF/rjcjgMdH2j7ReL63Jc8cVPUgV
+ gNNJKP8OqgMk6vejTg8K56u8Q3uf2MyjWrJC2Nc+Y8bv3LA0VxEETfcow7kpDrEI4dcy
+ 5LQy6Ma8v3ZAjxcpkYGVapa0cxSh2rhC9y7UhSu9vyZ/1dT+YDmDvsL8+L/WCdSHN2Xg
+ x9kj7VvTkkL7T38+6hrSw+OZIigCvXu0HLXR6cvcSomDDvA6J/NgRbQB/bXPvg+FTENL
+ O1rA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaheudI4jcmQ+MmLb6h9TT+axktFRUs7qk3P/HiBcwh0Eu1B9cVw743auQqGiXRKN+O0dJiBYJKy4C@nongnu.org
-X-Gm-Message-State: AOJu0YyL362GQ2UMHGgclMHr8v9j+A4IFwIY++ubdMg6OtHD4vw8e454
- Sic8tSAwdf/UJLAXTVy2slkMP4tbtofYb4gnqXojWSnxtJFKQEJ5uAtKmsbLcutSK4Q=
-X-Gm-Gg: ASbGncvt1MFii+JXZFf7Oyisy9a2VrmXHMLWcq9zmVQHwZYHKzTkMUAsL5I/SqTKBiC
- Xt6VE5CT6OplN98qJ2ZHJPojunUry8cZzid3lZsXU1jvyFINvF4+smoK5LS2TNIxn1jmLfdIaTT
- sywQh+fWdHGKkIyDowgVNg+xh7yq6EucuCjXkK0Cj0dXCjD2C5tEm4a6wU/2qhXu5SQI9ALZUQF
- 98g5En7c6+tOhaEMOWkjT82umEn4zM+pwWZY1KTBcqC8PF62KeT60qUK50UDnu8mEnhZQRrdvs4
- 2FolCoQrdz2TIGArMiAqvQn2guhi1/SnJfNdaJiGELen4IFDMMLVNpMpdTnGW9lAQkW4ImDsD5p
- bNMvmRPm2gQxs9SzF84/tm3o3oaD9N9YKAp04b7jSe3GM0no3alEhyPZCQJSkjTTq7SaAu4Slbq
- Ufp6VoIQY8J/3FTi1JzVociq1ESBLfhl9QjXBgUs9ZyrQ=
-X-Google-Smtp-Source: AGHT+IEWXYxjTKYhPNfWoqPikHLHBDoVpGkerT9WoOwOtpWi1p7xnR1m959nnzgFUm3jDSqZEsGrHg==
-X-Received: by 2002:a05:600c:8b62:b0:45d:d97c:235e with SMTP id
- 5b1f17b1804b1-47117876bcdmr140234075e9.12.1761116887893; 
- Wed, 22 Oct 2025 00:08:07 -0700 (PDT)
+ AJvYcCUXqyjrWnsKaq7ST7a/s6s3z2GxX3nG5oNyaWfNXfpHA96c0yvC2lwTi++uquXCA9Sdw66ovHGZlQ5U@nongnu.org
+X-Gm-Message-State: AOJu0YyVUMMSPQoFUkeTk6Rode7q/Mm77wR3qRYK7T+dZQylqlLy2Sf1
+ v9Q/D6dPptCBCOOZs2XsyrzOMNNBI0WHerUOQZL5OdzWRX5BYYWvQL22MK027kYG/co=
+X-Gm-Gg: ASbGnctlziSe9vxa9LArjjyu/6CBHrdZrCvFCcEG2L+la3Web3DqvpZvkg7j1zFTi7K
+ Y2ibFre6Gb0Ym1F7tjWWAgVBFVmUoLM2ac2fyEvLw9DF+Xd1BrQe1XIiM+ups9lFSJs+yuHmV8G
+ bVbdtvsXjJo3/FEOUWgKu3/yM/Ca8/9YkvQbfPG1I5pimt8m8P8XiAnTZ2l5yqHcyj011Ew6dTs
+ TsUoQpijmpal2MCzGGlFs8gp8QHp3GeoKHKkdVseCfZ1i0oMVS+XxgBFPpX5OYrXAe/NfvuSrkm
+ OCWfAws97yw47DRkEQKkzM5snITuYcfeXZsDB/278hlD5aQ9sfcVmLzESHzReChaNUVaoY7d5nK
+ W7SBkSoqNxrEjq1000pqM13BzhE9lS4+ss88bgKSS1PJ2EkXKaZznPRkuvq8QBNjzfdG2Jo8I3h
+ aUCgzzmfnyectnNb/riJUbBWdeD22F8vs/ekvrsKD7DBNOdIyHZ49Orw==
+X-Google-Smtp-Source: AGHT+IEzVgQS6nDuuz81wgOXmgCKgpt65YoI2hQTf1U55r0Ziu+wbea79QmhLw1DkCbAR0A4r2fkog==
+X-Received: by 2002:a05:600c:3e0f:b0:471:803:6a26 with SMTP id
+ 5b1f17b1804b1-4711791d945mr153385265e9.37.1761117110167; 
+ Wed, 22 Oct 2025 00:11:50 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c4342946sm28490065e9.10.2025.10.22.00.08.07
+ 5b1f17b1804b1-475c42d9524sm28407145e9.18.2025.10.22.00.11.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 00:08:07 -0700 (PDT)
-Message-ID: <d5f3459a-35b8-41ae-b9d3-4b38678576fa@linaro.org>
-Date: Wed, 22 Oct 2025 09:08:06 +0200
+ Wed, 22 Oct 2025 00:11:49 -0700 (PDT)
+Message-ID: <b14061db-3050-4a44-a351-46ae2ed0c30c@linaro.org>
+Date: Wed, 22 Oct 2025 09:11:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 33/42] audio: move internal APIs to audio_int.h
+Subject: Re: [PATCH v2 29/42] audio: remove AUDIO_HOST_ENDIANNESS
 Content-Language: en-US
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Gerd Hoffmann <kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <laurent@vivier.eu>
 References: <20251022065640.1172785-1-marcandre.lureau@redhat.com>
- <20251022065640.1172785-34-marcandre.lureau@redhat.com>
+ <20251022065640.1172785-30-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251022065640.1172785-34-marcandre.lureau@redhat.com>
+In-Reply-To: <20251022065640.1172785-30-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
@@ -110,54 +110,65 @@ On 22/10/25 08:56, marcandre.lureau@redhat.com wrote:
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   audio/audio.h          | 21 ---------------------
->   audio/audio_int.h      | 22 ++++++++++++++++++++++
->   audio/audio-hmp-cmds.c |  2 +-
->   audio/wavcapture.c     |  2 +-
->   4 files changed, 24 insertions(+), 23 deletions(-)
+>   audio/audio.h      | 6 ------
+>   audio/audio.c      | 6 +++---
+>   audio/spiceaudio.c | 4 ++--
+>   hw/audio/adlib.c   | 2 +-
+>   hw/audio/asc.c     | 2 +-
+>   hw/audio/cs4231a.c | 2 +-
+>   hw/audio/gus.c     | 2 +-
+>   7 files changed, 9 insertions(+), 15 deletions(-)
+> 
+> diff --git a/audio/audio.h b/audio/audio.h
+> index 3be0c4f24f..0af911fd9a 100644
+> --- a/audio/audio.h
+> +++ b/audio/audio.h
+> @@ -31,12 +31,6 @@
+>   
+>   typedef void (*audio_callback_fn) (void *opaque, int avail);
+>   
+> -#if HOST_BIG_ENDIAN
+> -#define AUDIO_HOST_ENDIANNESS 1
+> -#else
+> -#define AUDIO_HOST_ENDIANNESS 0
+> -#endif
+> -
+>   typedef struct audsettings {
+>       int freq;
+>       int nchannels;
+> diff --git a/audio/audio.c b/audio/audio.c
+> index 0f3093ad59..284ea13289 100644
+> --- a/audio/audio.c
+> +++ b/audio/audio.c
+> @@ -274,7 +274,7 @@ static int audio_pcm_info_eq (struct audio_pcm_info *info, struct audsettings *a
+>           && info->is_signed == is_signed
+>           && info->is_float == is_float
+>           && info->bits == bits
+> -        && info->swap_endianness == (as->endianness != AUDIO_HOST_ENDIANNESS);
+> +        && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
+>   }
+>   
+>   void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
+> @@ -320,7 +320,7 @@ void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
+>       info->nchannels = as->nchannels;
+>       info->bytes_per_frame = as->nchannels * mul;
+>       info->bytes_per_second = info->freq * info->bytes_per_frame;
+> -    info->swap_endianness = (as->endianness != AUDIO_HOST_ENDIANNESS);
+> +    info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
+>   }
+>   
+>   void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
+> @@ -2179,7 +2179,7 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
+>           .freq = pdo->frequency,
+>           .nchannels = pdo->channels,
+>           .fmt = pdo->format,
+> -        .endianness = AUDIO_HOST_ENDIANNESS,
+> +        .endianness = HOST_BIG_ENDIAN,
+>       };
+>   }
 
+Nice. Even better would be to use QAPI EndianMode.
 
-> diff --git a/audio/audio_int.h b/audio/audio_int.h
-> index 4a4d69f2bf..cc7a6fe087 100644
-> --- a/audio/audio_int.h
-> +++ b/audio/audio_int.h
-> @@ -29,12 +29,16 @@
->   #define FLOAT_MIXENG
->   /* #define RECIPROCAL */
->   #endif
-> +#include "audio.h"
->   #include "mixeng.h"
->   
->   #ifdef CONFIG_GIO
->   #include <gio/gio.h>
->   #endif
->   
-> +void AUD_vlog (const char *cap, const char *fmt, va_list ap) G_GNUC_PRINTF(2, 0);
-> +void AUD_log (const char *cap, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
-> +
->   struct audio_pcm_ops;
->   
->   struct audio_callback {
-> @@ -187,6 +191,24 @@ struct audio_pcm_ops {
->       void   (*volume_in)(HWVoiceIn *hw, Volume *vol);
->   };
->   
-> +audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo);
-> +int audioformat_bytes_per_sample(AudioFormat fmt);
-> +int audio_buffer_frames(AudiodevPerDirectionOptions *pdo,
-> +                        audsettings *as, int def_usecs);
-> +int audio_buffer_samples(AudiodevPerDirectionOptions *pdo,
-> +                         audsettings *as, int def_usecs);
-> +int audio_buffer_bytes(AudiodevPerDirectionOptions *pdo,
-> +                       audsettings *as, int def_usecs);
-> +
-> +static inline void *advance (void *p, int incr)
-> +{
-> +    uint8_t *d = p;
-> +    return (d + incr);
-> +}
-
-Modulo checkpatch.pl errors,
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
