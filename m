@@ -4,76 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B9B6CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE9CCCD195
+	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 08:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBUGv-0006o6-DG; Wed, 22 Oct 2025 04:32:41 -0400
+	id 1vBUJo-0007bA-4C; Wed, 22 Oct 2025 04:35:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vBUGu-0006ny-G4
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:32:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vBUGr-0005KU-04
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:32:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761121952;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=NPc5sPRQt+VyFRPvA/dGHGyCqhvYyKSF25Z+40XDgVI=;
- b=aTNoIjdj6Odreu+dbPZBeDKTxWEU657JCCZZVxOtr/0tXpAo0iP1wHVPyWVHBQS6ZL4JS0
- ZRydmzs2tP4caHMA3knz7m8EtsEetHEw98ZAR+wqgc2hZo3SRhW4NHeOA+MobvNyxHTmUS
- kbX96RD2BOfI2wuPTdVl8dx6YkOl6w8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-a6hdSdoqOUyvS-Xlz8HAvQ-1; Wed,
- 22 Oct 2025 04:32:30 -0400
-X-MC-Unique: a6hdSdoqOUyvS-Xlz8HAvQ-1
-X-Mimecast-MFC-AGG-ID: a6hdSdoqOUyvS-Xlz8HAvQ_1761121949
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1vBUJk-0007ab-1K
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:35:37 -0400
+Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <joro@8bytes.org>) id 1vBUJg-0005kE-El
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 04:35:35 -0400
+Received: from 8bytes.org (p549214ac.dip0.t-ipconnect.de [84.146.20.172])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BC45195422B; Wed, 22 Oct 2025 08:32:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB05819560B2; Wed, 22 Oct 2025 08:32:26 +0000 (UTC)
-Date: Wed, 22 Oct 2025 09:32:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Dhruv Choudhary <dhruv.choudhary@nutanix.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] Improve error propagation via return path
-Message-ID: <aPiWl39eLOfBJQ1n@redhat.com>
-References: <20251021075254.600961-1-dhruv.choudhary@nutanix.com>
- <aPeaBNIzrq0Ni4IM@x1.local>
- <41985b55-f99d-47ff-964c-79adc05f3ea1@yandex-team.ru>
- <aPelsAunpYhiQJ0h@x1.local> <87tszst2so.fsf@suse.de>
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.8bytes.org (Postfix) with ESMTPSA id 54D1557B8B;
+ Wed, 22 Oct 2025 10:35:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+ s=default; t=1761122129;
+ bh=Wfyi+unLoX9/MhZx+rkE3veRMcEWHccBptfOxuebbIY=;
+ h=Date:From:To:Cc:Subject:From;
+ b=U0CMSWUznptktlHupVVNR8sQzGlUAPU43CT0ykcFHlEIv1pvrNX2oXDCvB27ypQOf
+ PzGcwmUEkkXHjPAk68i6uYvpKyPyLpWTR9UqyArD9IALCqM9teBBYHkyoBsIuOf82l
+ 9LHbkl+OPPMkT9dAigxUhmAjxsGrQ7jNTf5ASvjjvl2MluoP9jVmrxKT8xNvu/5O7a
+ xuWkEKxDSeioV/S74ZWegYRX5rTC3xVyAELoyJM10Z7G/qUhjNQVspQul5/aPefH/6
+ sRoHtSeklkh99kO3FZozU2p9Vg4BxIsbS+wIBExNzPVXZNFz9jiEs+h2sBkaAASgmI
+ 8Yf+g3CQ6d0CA==
+Date: Wed, 22 Oct 2025 10:35:28 +0200
+From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+To: coconut-svsm@lists.linux.dev, linux-coco@lists.linux.dev, 
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Sean Christopherson <seanjc@google.com>, Thomas.Lendacky@amd.com,
+ huibo.wang@amd.com, pankaj.gupta@amd.com
+Subject: KVM Planes with SVSM on Linux v6.17
+Message-ID: <wmymrx6xyc55p6dpa7yhfbxgcslqgucdjmyr7ep3mfesx4ssgq@qz5kskcrnnsg>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87tszst2so.fsf@suse.de>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
+ envelope-from=joro@8bytes.org; helo=mail.8bytes.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,100 +66,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 21, 2025 at 05:31:19PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Tue, Oct 21, 2025 at 05:54:09PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> >> On 21.10.25 17:34, Peter Xu wrote:
-> >> > On Tue, Oct 21, 2025 at 07:52:53AM +0000, Dhruv Choudhary wrote:
-> >> > > Use the return-path thread to send error details from the
-> >> > > destination to the source on a migration failure. Management
-> >> > > applications can then query the source QEMU for errors, as
-> >> > > the single source of truth, making failures easy to trace.
-> >> > > 
-> >> > > Signed-off-by: Dhruv Choudhary <dhruv.choudhary@nutanix.com>
-> >> > 
-> >> > +Vladimir, Dan
-> >> > 
-> >> > IIUC we may still need to know whether the src QEMU supports this message
-> >> > or not.
-> >> > 
-> >> > OTOH, we have introduced exit-on-error since 9.1:
-> >> > 
-> >> > # @exit-on-error: Exit on incoming migration failure.  Default true.
-> >> > #     When set to false, the failure triggers a :qapi:event:`MIGRATION`
-> >> > #     event, and error details could be retrieved with `query-migrate`.
-> >> > #     (since 9.1)
-> >> > 
-> >> > This patch is going the other way.  That feature suggests the mgmt query
-> >> > the error from dest directly.
-> >> > 
-> >> > We should stick with one plan rather than doing both.
-> >> > 
-> >> 
-> >> Why?
-> >> 
-> >> exit-on-error=false is good anyway: when QMP connection is established, the
-> >> management of target QEMU process is the same: we do call qmp commands to
-> >> add devices, etc. We get QMP events. Actually, exiting is unexpected, better
-> >> to fit into QMP protocol, continuing to send events and wait for qmp quit
-> >> to exit.
-> >> 
-> >> Passing error back to the source simply improves error message on source,
-> >> which otherwise is often confusing.
-> >> 
-> >> Using both, we of course see same error in two places.. But we do have two
-> >> QEMU processes, which both handled by on-host managing services. We should
-> >> correctly report error on both parts anyway.
-> >> 
-> >> Improving error messages on source is just and improvement, which makes
-> >> current behavior better (with or without exit-on-error=false).
-> >> 
-> >> Removing exit-on-error=false semantics (with or without passing errors back)
-> >> would be a step backward, to violating of QMP protocol by unexpected exits.
-> >
-> > I didn't mean to propose removing exit-on-error, what I meant is when with
-> > it this patch doesn't look like helpful.
-> >
-> > Has libvirt been integrated with exit-on-error?  If so, IMHO we don't need
-> > this patch anymore.  To me it's not an improvement when with exit-on-error,
-> > because duplicating the error from dest to src makes it harder to know
-> > where the error happened.
-> 
-> Yeah, this does introduce some complexity of the "whose error is this?"
-> kind. I can imagine future users of migrate_has_error() having to handle
-> the error differently whether it came from this machine or the remote
-> one. Maybe with current code there's no issue, but we need to think from
-> a design perspective. Another point is whether the source machine is
-> always prepared to see an error that has nothing to do with its own
-> operation as it usually gets to know about a destination error only when
-> TCP connections start to fail.
-> 
-> That said, from a usability perspective, I'm in favor of having the
-> source machine be able to inform the user about the destination
-> machine's error. It goes in the direction of relying less on the
-> management layer, which we already agree might be a good idea.
+Hi all,
 
-Should we neccessarily assume that target machine's error is the "best"
-error message ?  Failures can result in errors being raised on both the
-source and dest, and it is not clearcut which side will have the root
-cause error, and which will just have a side effect error. If we pass
-the target error back to the source, we need to ensure that we don't
-replace a better error that the source already has.
+This morning I pushed out my current Linux and QEMU branches which support
+running COCONUT-SVSM on AMD SEV-SNP based on kernel v6.17 and the original KVM
+Planes patch-set from Paolo.
 
-Allowing use of 'query-migrate' to fetch errors on both the source and
-dest means mgmt apps have both errors available, but that does then
-mean the mgmt app needs to decide which error is "best".
+The branches are here:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+	Linux: https://github.com/coconut-svsm/linux/tree/svsm-planes-v6.17
 
+	QEMU: https://github.com/coconut-svsm/qemu/tree/svsm-planes-v6.17
+
+I know I promised that to be at this point by end of September, but things
+didn't quite work out that way. Apologies for that.
+
+The intent here is to show the current state of the work and let everyone try
+it and provide feedback, although some fundamental changes still need to
+happen (more on that below).
+
+I also decided against sending out patch-sets, as it does not make much sense
+to foster review of code that is known to fundamentally change still. If people
+see value in seeing the patches on mailing lists, please let me know.
+
+How to run it
+-------------
+
+The code can be built as usual, QEMU needs to have IGVM and KVM support
+included in order to run COCONUT-SVSM.
+
+The most important change is at the QEMU command line. With the branch above,
+the skeleton is:
+
+qemu-system-x86_64 \
+   -enable-kvm \
+   -cpu EPYC-v4 \
+   -machine q35,confidential-guest-support=sev0,memory-backend=ram1,igvm-cfg=igvm0,kernel-irqchip=split,device-plane=2 \
+   -object memory-backend-memfd,id=ram1,size=32G,share=true \
+   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1 \
+   -object igvm-cfg,id=igvm0,file=coconut-qemu.igvm \
+
+Please note the changes to the machine specification:
+
+	- `kernel-irqchip=split` The code I pushed out only works with IRQ chip
+	  in split mode.
+
+	- `device-plane=2` A new property defines the plane which controls
+	  devices. This is important so that QEMU can send IRQs to the correct
+	  plane. As COCONUT-SVSM currently always runs the guest on plane 2,
+	  the value of the property must also be 2.
+
+Known Issues
+------------
+
+During development of the KVM changes it became pretty to me that having one
+`struct kvm_vcpu` object per plane causes several problems. The problems all
+boil down to the fact that this approach introduces false unsharing of state
+which needs to be per-VCPU instead of per-Plane. I worked around these problems
+where needed to get things running, it can be seen in several patches in the
+Linux branch.
+
+But my changes do by far not cover all state which needs to be shared but is
+now factually unshared between planes. The result is that people will likely
+run into issues with the code above once leaving the beaten track I tested.
+
+The changes on the `struct kvm` object are correct, there is still one for all
+planes with a separate per-plane structure that holds the per-plane state.
+
+Next Steps
+----------
+
+To turn this into a stable and upstreamable feature the first next step is to
+update the base patches to use only one `struct kvm_vcpu` object for all planes
+and factor out per-plane state into a separate struct. Then the SEV-SNP
+specific changes will be rebased on-top.
+
+Happy testing!
+
+Regards,
+
+	Joerg
 
