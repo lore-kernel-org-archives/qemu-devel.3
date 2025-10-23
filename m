@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB69CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511C9CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC54W-0004Dr-Lg; Thu, 23 Oct 2025 19:50:20 -0400
+	id 1vC54j-0004gP-VN; Thu, 23 Oct 2025 19:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54U-0004AD-0S
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:18 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1vC54i-0004bC-6e
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:32 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54Q-0007NJ-Ob
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:17 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-b608df6d2a0so1231143a12.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:13 -0700 (PDT)
+ id 1vC54g-0007R6-4g
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:31 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-28e7cd6dbc0so18592165ad.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761263412; x=1761868212; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761263428; x=1761868228; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qtmy91JEQYqJR/91H8B/Uh3Fg5s9NSfMz+Wbznv9/ps=;
- b=I7L7sBUSD+DEdYhPxAAGFk9Ry2IgJ1WOK5fwGdZByZytTYW3fzxnGB6tAduAh12K4E
- Te0bwPHRv2yOoT/QVu2C9qrr/G/cC9iWRQkD6m6ZDEcxvFnWTrZOE9mor7LH5AcglqWz
- yn+wXaSmYKd6GhaolNBNrKHTf2hNYc6HQKkFjAIXfON/FhTkqJ32CRnU3Er0d+etC9yb
- 4gQguhRTjdf/yFmBCMXAFnsNoKFagHWA+2xasjdcJG6Dndg0U1XWwW2xQs9wqx1RvBwO
- Z7+PL9YrARW7NpAN7JmRnIOM4Cm5E9aURCnq9j4B4t1YAqKRJBuiTwv7dxfte8Y3tdIF
- uzqw==
+ bh=DSdBIzUFAJ8jmSWRkWF95NhSo1Eq4JPgHiE1RjnAzx0=;
+ b=TqgZvelAsjBAKh+kZOzdNCQ76MHoASnw1Z3LKzLNJOG9fYqPrUz9Lk85HfQZ28mMIS
+ cbHbJiOcgZXjty+sWYoVR5XvOI5vh6K84+V9t/e0gopzHoa5tBMTYtoj6bcD0He5yawh
+ SLr3jzKpgDfkhNp9fRqz/uT/aBD0afe6oSWbwu/NQ7DwKyizLfgGhNWcq6OaHdr6CjMe
+ 5tKSrh/zd1Axxf/zcJRqkbiZxohYXC3vPyRAeWaHpiwXPylIoi8Dm3FsFWP72iJW8FJY
+ aEuU4RJ6wF2NY+Z64bzaBcL003dFEnRJUwQOeAPnIVg7K9oMIZhuRKApKBXB1mW/kkQk
+ G1Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761263412; x=1761868212;
+ d=1e100.net; s=20230601; t=1761263428; x=1761868228;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qtmy91JEQYqJR/91H8B/Uh3Fg5s9NSfMz+Wbznv9/ps=;
- b=v9zqxoILJocLKzEVl+Zpv3fn9Qzjxsm96SgbWX3dpwp2DFzxRd6T3EFVHGRHSG7m+v
- kgVuzovgCJL67cVLu4jyECySS32forya16GwDbhkhXDVP4OfCNSy/sKYgz3UUxTDkJ75
- 3RYvUSEP0R0fUIcrRSuDh5RCX0jAA+L7os3744W8jnd6onTFVfMNBorRK7Q4M1ntHOIT
- ZhEAAeetMRnRbbEF0VezwV0juFBzzzV9rGhDxXdov+ex10S4dR2/rZng64iLTeqSkSNa
- 0kbbTXb2OpDK47gw34iTUWvQ73Hn3Vs6n4kb6TlW1bY7rMvbiDlEPCmCjCcrVlqDiykb
- BW4g==
-X-Gm-Message-State: AOJu0Yys2Vb8tRPshUxKmeStrJVepmi042clvSMFSDJ4zvo16GROyKoQ
- x0X1gDZNMOed0aG0cH/eT3PFq7jw1bxMowN/mF0tjs9UQgzBtLI5ZAvGJrQdrA==
-X-Gm-Gg: ASbGncuavorJ9pWddu9i76v/mAOtrsAvc3+4FfsIb850GdVwJuuf5ONhlKcGnizYchN
- XSe9tXhs8UvelvNg20wUse3g3saIH1bCxEs0tpBq/pYHEhAvdJrpQ2MiDkW1weRccFBstszy44g
- rxlD6TbTnNcfZ19tM8Id4+cQ7ckvcg9llJRcmWIUmse3guJQVk8MHQ1SDly/BcLwQXlkY8bxKiS
- kV9zYVU9SaihRxW4zOXsJv97ovABNd97f34UQgVApArcsRg5Y7UbDvGsXguG7jTghNL2cGQyw6X
- xe5VUxKWx+AzFtAjXNdmJMhKGq3l5TYWPk3wjRTrBsf1+E5hHPcjvDNcxSfZ17V0HF/eD3DRIpG
- G66NdRuIlUV2tdon0gHB4l7Y1QPBgfA5RgKodUoCL8v8+xMs52BbaMW/5dJNitWBJ19eFmhP3hd
- 4q3oS4hh4WUZMZLZO1eK3J26QTAj02v2hlzboYsX+10Y3d7upt7IX0mjasUoBhBdBqVWKiX/WmX
- hzyBUtJZQEwThTr6E4=
-X-Google-Smtp-Source: AGHT+IHBJZZEjopUCDh+nzRGQMyRPayBPFdkas5hw2KXNFGcHfcktBOegSWiwLCDS5DaUDAKd6ZKXg==
-X-Received: by 2002:a17:903:2449:b0:262:cd8c:bfa8 with SMTP id
- d9443c01a7336-2948ba3bb53mr2072115ad.34.1761263412015; 
- Thu, 23 Oct 2025 16:50:12 -0700 (PDT)
+ bh=DSdBIzUFAJ8jmSWRkWF95NhSo1Eq4JPgHiE1RjnAzx0=;
+ b=enT0GzvO4/sVrkIidaNw3edBQsfsDjsEkvpDyjXs1CertjsDafrx0d+4mzb7XtBK+o
+ 2Wda4H6ARMWGfNh3jcTvqSUolm5hNi25Mi/Z+NVfxhgIIcVRpJ1JEI3F8MoG+ala7076
+ hdICjtn4BnAkKda/IhGfDku9cYouQevKslX356k18sE47X45o/cjx8f1UDDXGcrD+Nbk
+ QV8Z6wZeVzL/3/tx3mT4KTTfhZWIcqRfRMGNeNeo46okHPadC1s2X+pnONE4YkZRit3S
+ PGzI4G5JYgm3lErHjiz23tTNBsG+LxnuvUHzTwf6IewQ50BWym0EELC4qjYha3UV0XNO
+ tZeg==
+X-Gm-Message-State: AOJu0YxqQvSZpFO58BGHoDxwFTKuzOamYStAPbdqZe08Ly5qw4QO/Dze
+ rISFtGH9YIZy8A9afNCkovj8oKfGn4++afzS9chp+GFqsCSoSrJ5SY06gfXKKA==
+X-Gm-Gg: ASbGncukGFHQekJjBntvVgydp3sYOJORFMQ7GQByLOOk6ZBzRojeVkRxQZMj+OHukvt
+ LjqdfZisJX6ghge5woEDADbpdeyD0P0sAlDwaWxG4pYvXtSzcgqeGO4j3thgUK+xlDN8s5wcm2l
+ EQ8oKqK4Y8SvLuw8j6Gv/QxEH/ulzMsW9lpS/98y4R2Cvta8a6VOKKqYfHQ5RkW58zAWbmMeQ02
+ y6oCcpcJOYdLgHWaUZy0RtLNpQVhyxvUG3EWHL+VtsgMJPNv3G1eHZEh8kdfmE/+3YWuFzKnfW6
+ kRk58/J0fcXXFwXz8nEqUvvFTtR5rxbqJon3ZjN94NZVe5drlRnix7XQceDGkdaVuHc40Ftz/9Z
+ jAOcFqKqb3a1IAUzty5i6e9JEi7EdaSFb5fBQsezXmfu9+q4puMJDUYThYlZqYorTUPRounpDOJ
+ lDBajxdz7V9dCn9z60h7yfvOxJM1k0PsCBCNdYXmUjtg4jZLEODA0Eoq/mAqrB6jOXgeNh4kgMo
+ IvqfmV9
+X-Google-Smtp-Source: AGHT+IGDfCxSQTgX1Ucivyhvv2syL2OJX+KyuSEZw48bnpdRHh9jzBQx6gaY6IdU2LJ1FG5sXJX1fw==
+X-Received: by 2002:a17:903:238b:b0:26b:3aab:f6b8 with SMTP id
+ d9443c01a7336-2948ba7c997mr2412085ad.58.1761263428306; 
+ Thu, 23 Oct 2025 16:50:28 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.09
+ d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 16:50:11 -0700 (PDT)
+ Thu, 23 Oct 2025 16:50:27 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Guenter Roeck <linux@roeck-us.net>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 10/25] target/riscv: Conceal MO_TE|MO_ALIGN within gen_lr()
- / gen_sc()
-Date: Fri, 24 Oct 2025 09:49:12 +1000
-Message-ID: <20251023234927.1864284-11-alistair.francis@wdc.com>
+Subject: [PULL v2 15/25] hw/riscv: microchip_pfsoc: Connect Ethernet PHY
+ channels
+Date: Fri, 24 Oct 2025 09:49:17 +1000
+Message-ID: <20251023234927.1864284-16-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023234927.1864284-1-alistair.francis@wdc.com>
 References: <20251023234927.1864284-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,77 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-All callers of gen_lr() / gen_sc() set the MO_TE and MO_ALIGN flags.
-Set them once in the callees.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251010155045.78220-11-philmd@linaro.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251004200049.871646-3-linux@roeck-us.net>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_rva.c.inc | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ hw/riscv/microchip_pfsoc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
-index e0fbfafdde..8737e8d60d 100644
---- a/target/riscv/insn_trans/trans_rva.c.inc
-+++ b/target/riscv/insn_trans/trans_rva.c.inc
-@@ -34,6 +34,9 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
- {
-     TCGv src1;
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 2e74783fce..9fbfba8ece 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -414,6 +414,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
  
-+    mop |= MO_ALIGN;
-+    mop |= MO_TE;
+     object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, errp);
+     object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
++    object_property_set_bool(OBJECT(&s->gem0), "phy-connected", false, errp);
 +
-     decode_save_opc(ctx, 0);
-     src1 = get_address(ctx, a->rs1, 0);
-     if (a->rl) {
-@@ -61,6 +64,9 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
-     TCGLabel *l1 = gen_new_label();
-     TCGLabel *l2 = gen_new_label();
+     sysbus_realize(SYS_BUS_DEVICE(&s->gem0), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem0), 0,
+                     memmap[MICROCHIP_PFSOC_GEM0].base);
+@@ -422,6 +424,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
  
-+    mop |= MO_ALIGN;
-+    mop |= MO_TE;
-+
-     decode_save_opc(ctx, 0);
-     src1 = get_address(ctx, a->rs1, 0);
-     tcg_gen_brcond_tl(TCG_COND_NE, load_res, src1, l1);
-@@ -99,13 +105,13 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
- static bool trans_lr_w(DisasContext *ctx, arg_lr_w *a)
- {
-     REQUIRE_A_OR_ZALRSC(ctx);
--    return gen_lr(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
-+    return gen_lr(ctx, a, MO_SL);
- }
- 
- static bool trans_sc_w(DisasContext *ctx, arg_sc_w *a)
- {
-     REQUIRE_A_OR_ZALRSC(ctx);
--    return gen_sc(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
-+    return gen_sc(ctx, a, MO_SL);
- }
- 
- static bool trans_amoswap_w(DisasContext *ctx, arg_amoswap_w *a)
-@@ -166,14 +172,14 @@ static bool trans_lr_d(DisasContext *ctx, arg_lr_d *a)
- {
-     REQUIRE_64BIT(ctx);
-     REQUIRE_A_OR_ZALRSC(ctx);
--    return gen_lr(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
-+    return gen_lr(ctx, a, MO_UQ);
- }
- 
- static bool trans_sc_d(DisasContext *ctx, arg_sc_d *a)
- {
-     REQUIRE_64BIT(ctx);
-     REQUIRE_A_OR_ZALRSC(ctx);
--    return gen_sc(ctx, a, (MO_ALIGN | MO_TE | MO_UQ));
-+    return gen_sc(ctx, a, MO_UQ);
- }
- 
- static bool trans_amoswap_d(DisasContext *ctx, arg_amoswap_d *a)
+     object_property_set_int(OBJECT(&s->gem1), "revision", GEM_REVISION, errp);
+     object_property_set_int(OBJECT(&s->gem1), "phy-addr", 9, errp);
++    object_property_set_link(OBJECT(&s->gem1), "phy-consumer",
++                             OBJECT(&s->gem0), errp);
+     sysbus_realize(SYS_BUS_DEVICE(&s->gem1), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem1), 0,
+                     memmap[MICROCHIP_PFSOC_GEM1].base);
 -- 
 2.51.0
 
