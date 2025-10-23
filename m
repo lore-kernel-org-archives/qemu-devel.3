@@ -4,108 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468BFCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF1ECCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBn8i-000206-HM; Thu, 23 Oct 2025 00:41:28 -0400
+	id 1vBnBU-0002eD-2p; Thu, 23 Oct 2025 00:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBn8h-0001zu-Db; Thu, 23 Oct 2025 00:41:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <ganeshgr@linux.ibm.com>)
+ id 1vBnBS-0002dv-M3; Thu, 23 Oct 2025 00:44:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBn8f-00028V-3j; Thu, 23 Oct 2025 00:41:27 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N0Cwcn024633;
- Thu, 23 Oct 2025 04:41:19 GMT
+ (Exim 4.90_1) (envelope-from <ganeshgr@linux.ibm.com>)
+ id 1vBnBQ-0002Dy-QD; Thu, 23 Oct 2025 00:44:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MI0VuR031838;
+ Thu, 23 Oct 2025 04:44:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=XxH7fz
- mE4P6hVwXVE5RqwkB0iPebh0mHLUi2ZdQzt2o=; b=BSGPtEvRTsR9aObiqkgzoA
- GDRImamy7QmSGo5ZcPk9bapqmfjSgA526digcV2coY1tOzNtTFZ3x64uv0Bh05Cx
- nmtLVfSy5wFLKpH4xVc431n9U95m/qItBG1FDMbBUPiJMZYzZqpW9H2Hs43wcbeR
- 59d9x2FpDdwCG8XCPU2R5Yh8sZ6dVsEteN+Y4Ity06lB8PNjGkgZrDEDWAdH57qP
- VLnkJ4LhEwBd5Q6ZKe3weIrR1WQhQpV4PLmHYwU7XiE9Ywh/a4PInR7M3Me0LYJ9
- bkC14hps78cgQ0fvogqyUY1MI+yXuBw0Fo4SefboftCVSsPh4QBX6WYI8WfUt9ow
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31ceykn-1
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=Rr/wDTA59TEXj9Qbc8z9aD4UIoCh
+ KlJmRLMy8rh50DY=; b=YcJIJjG+5gUAOAvSpUSzLJysbpplvZZG/3ccAuAj8m+A
+ wOKHD1s9UTMXtFb3SRndyox1DAJqhquW5tivZLmaWlWnjteIamCP/z8Y7goKFhaT
+ qGSodIB9KVQvfHloUJ/8iRLJFu5UYJyf01+HgUhGnWzq+Dayrd3VaL/btvzu4PQu
+ 3JyrL1JOm8qAkOy2f356xkLPKHmaYrsezFA7A0z1c6xY5sQe5ZTfOCfsDRWVSHL5
+ ry6ZLkbOQOtl4CY4bcfkBdXJW21lYuk+z0fbEVGny8psWqonLZ+E7q0HMMRzkBfh
+ DIp/m/Ay8XyBf0cHt8Aqq8+2GeZvGeNoMUIQ67e3QQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33fgbqj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 04:41:19 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59N4VqPI014555;
- Thu, 23 Oct 2025 04:41:18 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31ceykj-1
+ Thu, 23 Oct 2025 04:44:13 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N2v1rJ011030;
+ Thu, 23 Oct 2025 04:44:12 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx1bpcs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 04:41:18 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N0NbLa014676;
- Thu, 23 Oct 2025 04:41:17 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sc6g3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 04:41:17 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59N4fG5m51184006
+ Thu, 23 Oct 2025 04:44:12 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59N4i8Na20906540
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 04:41:17 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A347458052;
- Thu, 23 Oct 2025 04:41:16 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E37775805D;
- Thu, 23 Oct 2025 04:41:14 +0000 (GMT)
-Received: from [9.124.221.73] (unknown [9.124.221.73])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 04:41:14 +0000 (GMT)
-Message-ID: <3071c558-61e0-49fb-8442-9f6e9b363c93@linux.ibm.com>
-Date: Thu, 23 Oct 2025 10:11:13 +0530
+ Thu, 23 Oct 2025 04:44:08 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A8A9020043;
+ Thu, 23 Oct 2025 04:44:08 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D4DA20040;
+ Thu, 23 Oct 2025 04:44:05 +0000 (GMT)
+Received: from [9.87.141.36] (unknown [9.87.141.36])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 04:44:05 +0000 (GMT)
+Message-ID: <e8688ff0-5665-4ba6-9c9a-7cfc4adcdcdf@linux.ibm.com>
+Date: Thu, 23 Oct 2025 10:14:04 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/amigaone: Free allocated struct
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20251022211649.9A09E5972E5@zero.eik.bme.hu>
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20251022211649.9A09E5972E5@zero.eik.bme.hu>
+From: Ganesh G R <ganeshgr@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: clg@redhat.com, Glenn Miles <milesg@linux.ibm.com>, harshpb@linux.ibm.com, 
+ gautam@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, kowal@linux.ibm.com,
+ Frederic Barrat <fbarrat@linux.ibm.com>
+Subject: [DISCUSSION] Reworking remote controller access
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: aAcOo04Tu693yGxTzmK7QGxMCdxSFkv-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9gDlELOPbVnx
- 3st6Vf1OqCP8hMoKnbcJpHcmRj07/AXzU41ncxsZbPKYxQfUuD5f7OjNIPRBYXEtuc+2almXWYY
- 2OvubCBT+wqY4ml/0T4hit9beCxXs+/ZEdLTfbqoRhZg+VdNz0rhCgdINPM1l8pwTQP90xmeWwc
- EAyjghxKIW4AG84hMUtKfJ34f99qWzYPVX3Pc+bpj1nRisxkFEuuq5XJ543iwNbtm9CFRVtTPSR
- UOEev7mCcwNmhDHGK05E3b1C4FLhbssJk8VRKcOkMQT9qkrc3xkMpQBtxX6Nuu3BGLNvhs40Z7Z
- OG9bv6WCWcCtn7m6b5RWrk+hNbzwVJ/WTrZTb7SoWNke0GhmlKIkEbHYnXyxmlPXezn6egHBaKM
- D/aiyNb8H3gnsD3uB6349vM668IuPg==
-X-Proofpoint-GUID: 7X2LA4QUpRqcOJo8LUNGm9dU3b5eKn9u
-X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f9b1ef cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=O0fAPOUEty8ZO6K3NPAA:9
- a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=oH34dK2VZjykjzsv8OSz:22
- a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68f9b29d cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=DOs_RDtfQgoeyEurnsoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Tepot0Ej3Xp8JZsDvwUb6wpk43Z37TN4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXxwzDiQGj1r6R
+ 6ZukC+D6n+h4QKnWWTcLZLcdyGMlhGvVaeXjX7/+9SO9UEJ3V2ap3vLViGGkfgV8x82TNJwLIUI
+ wogxMnKA2vA6JcM45v0yJgMyyXwti+kR1AwhsZcrc/059dYcAcmU4KcZDJR/fs5wtwf6mUoyweP
+ xJtiZcHV1VMp57yb++CW+QtBYxpHrroQtz2gMWGvvlWb965rLBly6mdFEsGW2mXziwHRhfyBUds
+ T8AVmyemGQPp5u4nsKVFusAxBZGF7X4cy0IaWp/9YKrE/H6D3V+uBB2gLMuhx63QlNcDuq59aIc
+ 0gr/uiZjk7fHykeB/G7Sho8Xe/4+o/KTnFl0fzagZZNBzLy/o5fbGj1BlVpnAIh5uEp0R5cqCLp
+ 8hoibqygCYR4qK6VvANr1kn144Xs3w==
+X-Proofpoint-ORIG-GUID: Tepot0Ej3Xp8JZsDvwUb6wpk43Z37TN4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=ganeshgr@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -129,33 +119,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi all,
 
+A few days ago during the review of the P11 patches, Cedric suggested 
+removing the use of qdev_get_machine() 
+[https://lore.kernel.org/qemu-devel/3456f764-616b-412c-839c-aaef4bf1e47c@redhat.com/] 
+and instead using MMIO to obtain the address of remote virtualization 
+structures. However, it wasn't feasible to implement this change 
+alongside the P11 updates, so we opted for a temporary workaround to 
+eliminate the use of qdev_get_machine().
+[https://lore.kernel.org/qemu-devel/900db31c-54d5-410d-934e-347ca0b22ec2@redhat.com/]
 
-On 10/23/25 02:37, BALATON Zoltan wrote:
-> In create_bd_info function a bd_info struct is allocated but never
-> freed. Mark it g_autofree to avoid leaking it.
-> 
-> Fixes: 34f053d86b (ppc/amigaone: Add kernel and initrd support)
-> Resolves: Coverity CID 1641398
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/ppc/amigaone.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index 12279f42bc..47fb016b4a 100644
-> --- a/hw/ppc/amigaone.c
-> +++ b/hw/ppc/amigaone.c
-> @@ -221,7 +221,7 @@ struct bd_info {
->   
->   static void create_bd_info(hwaddr addr, ram_addr_t ram_size)
->   {
-> -    struct bd_info *bd = g_new0(struct bd_info, 1);
-> +    g_autofree struct bd_info *bd = g_new0(struct bd_info, 1);
->   
+Now, we are planning to revisit and improve the way we access remote 
+controllers. We have considered a couple of approaches:
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+1. Implement MMIO operations for all BARs
+Redirect all remote access through the BARs instead of iterating over 
+all XIVE instances to retrieve the virtualization structure addresses.
 
->       bd->bi_memsize =    cpu_to_be32(ram_size);
->       bd->bi_flashstart = cpu_to_be32(PROM_ADDR);
+2. Use a dedicated MMIO offset to return the address of the 
+virtualization structure:
+This is a simpler solution, similar to what Cedric implemented for P9, 
+the idea is to define a special MMIO offset that when accessed returns 
+the address directly. This avoids the need for qdev_get_machine() and 
+keeps the design simple.
+
+Any suggestions or feedback on these approaches.
+
+Thanks
+Ganesh
 
