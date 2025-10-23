@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F69CCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 06:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3653CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 06:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBp8p-0000D7-H8; Thu, 23 Oct 2025 02:49:43 -0400
+	id 1vBpDL-00016c-Nu; Thu, 23 Oct 2025 02:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBp8m-0000CU-0Y
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:49:40 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBpDG-00015d-2r
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:54:18 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBp8i-00032z-Hf
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:49:38 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3ece0e4c5faso401099f8f.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 23:49:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBpDE-0003V2-6B
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:54:17 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-475c696ab72so3052095e9.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 23:54:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761202174; x=1761806974; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761202455; x=1761807255; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3Rl8enOBl7vutIaQbukrZ57LYa+Xe74Ni5pvEr1Gvio=;
- b=yQgp4FUEM/z/JXW7KJT8srBnQKc1BGXIBR/8/nBuelF09sE6RzbmVSE/Ikjif/QW/q
- h9fqy576U4cr8m5fWZdrYDc7ygXN/hnq+/CnHyoPtUvXGl7BnqJhU9yLRWWpleqkKsUh
- gUMrKks1QmGBcdUJku/2cgF+zwg6o4jb5kKFkQXJlwgpvRQUPRWrexc1HRENoBuxV2yx
- 1mWZrI0wob5caQVpU/kImxODDeMBa3hJToh0P5GWMYSe6otGKmr8QxGbn8P4+qTZyod+
- K/Szc1ZL/WvPxL1/e4Fsry9luIPwwfEXVS7SnUVJ0WIMi2O6pSwLAeWIHqcZCn4EKqip
- q11g==
+ bh=sfBuDLoa3UoDVAu89X9Yh8HCpLmQt5sMVEpH70mm3fY=;
+ b=B4TcaD+nKeYqK1B5kS3WDZ9o/9RQpXdLjQTDLdkrVMUF3gA9AemnDnCjXsot79CB28
+ rv2Eu/TXCAALnV26oUIQ15U3KuG5E5Xm0BunraKQnCcgQ7bn2LGO+HTcLnKBdKvc/PsT
+ 7RN61yqDhXnmtimlyxInQ5Vm2vffG6YvPQJLYWA1RnNbxMk7+iXT2Z+Yxjbbc/LNJNwA
+ dzmBfymtZPxwBUZLlqS1hZknq601yAnfJ9DoE6MmTLGqVHil4suDhDtITYErkLUGT/31
+ nRjdGlOqQFwUmCJSI938KBpg+8+CJtOZfYFFAni/WAVFjvIgM+NygF6irFnmpwEnkf8Y
+ +lZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761202174; x=1761806974;
+ d=1e100.net; s=20230601; t=1761202455; x=1761807255;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3Rl8enOBl7vutIaQbukrZ57LYa+Xe74Ni5pvEr1Gvio=;
- b=ofqAFIkWMhz8kpa7YyfX5tnhNyReXesL5hpxSLgbLsFJaXLnw6Qa/GwuI7Q2QW0TjF
- vtzJ3BlQW80R73wJhl5HXavqQyZoz2aE3K/kjIeWfi4JtU4dpcXDKuRl3ZwmojQD9L5S
- bldRnFO6ykfohP8LEkoVB8uKBPOgzZSjdp4HVjFuhFVXb72cgHDkrFRn0Av/4vKARpX9
- AtqniH2b9oA9QisuRDLgTFNvgGP3lkPMrX5MaNsUOjqzFQ7VYmgKTwodycLQhkcUhgvO
- 6gK9c3phbRrwLf+qv6oiAADIenx+J6nRfTSgIzp9o4FRhl4YbWAQiKcJXUevy8grkg3B
- 0d1g==
+ bh=sfBuDLoa3UoDVAu89X9Yh8HCpLmQt5sMVEpH70mm3fY=;
+ b=WHxgaMH8zpc0LsYamJjeSkg1HOoa9C1ovOl0OY012i1g+bZMS2QOzmCOEvoNGVhCJB
+ K/EVS5JCRzUxgMzh+Yt6ramCWJ1+qCRhKm/oAF7cyefka/eTKLRcYvT0Sxe+7zXs0b6q
+ WYLLEHZ813EWeETke3tBIOLi1HQusmXpDjPUmj5lYJxEQqNq3VtX//uLfuqQgR3kaeWo
+ n0I4XOZXGXMBT+5lqMHy1VboJaSfL14Zmq1i9TWUQBm9xS6m29pVZ/GF7/fsAnegrSS0
+ l/0EjGcjqNpPrhgGWlYSTlTRHlsbEdHCyDAOtvslvuqaR6JG1JRL4RyS/goSfgMpteN+
+ gItQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJ6iWHcB25OMWZDTnxKhXdFQAUvIrsV4R7z16V/3NXQpqFGB/0kKgaYgG501624ELPLCGBS8AQ6QPZ@nongnu.org
-X-Gm-Message-State: AOJu0YzABC8i1hgnz9nfZaB4GHQAftmZUO13KIt9TJbcoEqDXyPa+Itc
- lk2KqB57yFFiq0hB8WbHmrGW4T+Itj+y7Avl8yHZXwEqu4U8PoRRHBfJrHX3GpkZBss=
-X-Gm-Gg: ASbGncteSl5R773CSbXIVlH5xmAj7yXYK+T84bqHJm/fPhtOWZN2eurZOs56HsY7ccU
- yN831NSCGaBqvEPyACcIn8wXTNSHqX8cp1rzXDieH3sCTOHXdSCYf3v/QH8xW4d0lmSj7Ot6d6z
- zHq5C5TzMTiuNtTag/a5f3jACPLykveVRd0dcKZgZK0LwzL/Oi3euHb13TnVg1m/ruxEMCsKW+B
- YGuDxhn3rRgoQhIO8fHum30YhHWWiLiTYV4XvVB//gVFzzuGi55E4ddj2E4tdvlwgM7bG5hjV+y
- FbPijoa3K2I8zPYvAcGUXA2X+2euUEw/hZl1EgvZY1BbZYV30k8m9VxrZsYEiP6KHZ8bACg+/Dt
- ghuyhHbm1L8kRARGk725sUoon5Yf6Uq/3tEifdZnq4wVHVyz9PNYJaCzg/UBEvdK3oo1Zn4UOKg
- evFxeZjqpL9nl4f/320tzJuEm4Io1TEn6hUJNUyi2xyoxzjlgGcryGyw==
-X-Google-Smtp-Source: AGHT+IFKnMNZQGeUcOQLByULjQUuRX3ryi6wonLp9KD9fB/ZVWauoQLCQtBNhOjfO37sMrqNtNLuEQ==
-X-Received: by 2002:a05:6000:4021:b0:426:d836:f323 with SMTP id
- ffacd0b85a97d-42704d7e928mr16650166f8f.13.1761202174565; 
- Wed, 22 Oct 2025 23:49:34 -0700 (PDT)
+ AJvYcCVzJHHRrAZplpY6Vd2+L0wrsBXjXDjDJcfJwBWwsP5v7A4hjUZ7rqcSEwaJfeqakuIzCgxzRK3xHWsC@nongnu.org
+X-Gm-Message-State: AOJu0YziiR013p0fKNavG+wW/jqhQKmUZxnNAnhjLdoAEOx0eFkHa1oe
+ HRIpShdEFTh5CmnAAdPZlEf0fa9E7yR2aRNe7wZcDd1p2G0RoM+j7qK1umXY+C72L/o=
+X-Gm-Gg: ASbGnctGCCzmRfFrJnwYYuMRF5fqZZJcfzoPezJwTql4SvTi4mWoGYfcfTxAVETPAjo
+ b30CGe+T11dTcJu7SBsygFu9ikJeY/jVFC2tNmMYn58v7/iS2/cHq1hsNOf1M2DdZBHx5ZQS6XJ
+ CIaTeurVCgRmWfvAkOO5FMr4Rb+eOIARUizeaD74j0f7a9vbqfVJD6wWufehlw6Ea1SramuVFlH
+ BzMhgqwc1PhGIzNDijARPeJ0iYDGXQRR20VUnI+sSlqVVX0u7swDj1O/DWy+p9dqZB5NcPbyx12
+ Ov+gyJEwDb4SFGuM6i8sO7wu99QqjVOelsbTiTPmz8sebowjgVDcaywgEPJIEBuZ2T31FQl9B0X
+ sZFDm6tEd6zYIugQAIbGnnI0chNPhbaEQhVVM0ARJvUmJHTrMpWNRQdamqCRvMwJd3zd+XQggJ1
+ GEbAbswewc3yXDKN4V+Sh7BE4wxIxTxGlnK6auSPMepUQ=
+X-Google-Smtp-Source: AGHT+IEUwjGMWdVbQnuD8tj2U8XA4pD7A7vBICE7GkbT9rmfERN6h8gyazVlofFffr/1Lmv3XC9fSw==
+X-Received: by 2002:a05:600c:3b8d:b0:46e:35a0:3587 with SMTP id
+ 5b1f17b1804b1-471179174cfmr172955895e9.27.1761202454017; 
+ Wed, 22 Oct 2025 23:54:14 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429898adf78sm2431986f8f.32.2025.10.22.23.49.33
+ 5b1f17b1804b1-474949dd479sm56943485e9.0.2025.10.22.23.54.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 23:49:34 -0700 (PDT)
-Message-ID: <c8278577-32dc-4121-92f3-36ccca36e9de@linaro.org>
-Date: Thu, 23 Oct 2025 08:49:33 +0200
+ Wed, 22 Oct 2025 23:54:13 -0700 (PDT)
+Message-ID: <63bb6500-56f7-4d4c-86ec-7aef613de6b6@linaro.org>
+Date: Thu, 23 Oct 2025 08:54:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/12] hw/ppc/pegasos2: Add VOF support for pegasos1
+Subject: Re: [PATCH v4 11/12] hw/ppc/pegasos2: Add Pegasos I emulation
 Content-Language: en-US
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster
  <armbru@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <cover.1761176219.git.balaton@eik.bme.hu>
- <d2d7f173dbd436b47382f384d5a93eb7e713424e.1761176219.git.balaton@eik.bme.hu>
+ <8f5bd07553b41d83a54f9df0bb93b76b22dea5c5.1761176219.git.balaton@eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d2d7f173dbd436b47382f384d5a93eb7e713424e.1761176219.git.balaton@eik.bme.hu>
+In-Reply-To: <8f5bd07553b41d83a54f9df0bb93b76b22dea5c5.1761176219.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,20 +106,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/10/25 02:06, BALATON Zoltan wrote:
-> When running without firmware ROM using Virtual Open Firmware we need
-> to do some hardware initialisation and provide the device tree as the
-> machine firmware would normally do.
+> The Pegasos II is a redesign of the original Pegasos (later marked I)
+> that replaces the north bridge and has updated firmware but otherwise
+> these are very similar. The Pegasos uses the same north bridge that
+> AmigaOne used which we already emulate so we can also easily emulate
+> Pegasos I.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   MAINTAINERS              |   1 +
->   hw/ppc/pegasos2.c        | 140 +++++++++++++++++++++++++++++++++------
->   pc-bios/dtb/meson.build  |   1 +
->   pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
->   pc-bios/dtb/pegasos1.dts | 125 ++++++++++++++++++++++++++++++++++
->   5 files changed, 246 insertions(+), 21 deletions(-)
->   create mode 100644 pc-bios/dtb/pegasos1.dtb
->   create mode 100644 pc-bios/dtb/pegasos1.dts
+>   hw/ppc/pegasos2.c | 156 ++++++++++++++++++++++++++++++++++------------
+>   1 file changed, 117 insertions(+), 39 deletions(-)
+
+
+> @@ -89,6 +96,8 @@ static void pegasos2_cpu_reset(void *opaque)
+>       if (pm->vof) {
+>           cpu->env.gpr[1] = 2 * VOF_STACK_SIZE - 0x20;
+>           cpu->env.nip = 0x100;
+> +    } else if (pm->type == PEGASOS1) {
+> +        cpu->env.nip = 0xfffc0100;
+
+Preferably add a comment explaining/describing this value (think
+at your future you in 3 years ;) ).
+
+
+> +    case PEGASOS1:
+> +    {
+> +        MemoryRegion *pci_mem, *mr;
+> +
+> +        /* Articia S */
+> +        pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL));
+> +        pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
+> +        mr = g_new(MemoryRegion, 1);
+> +        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", pci_mem,
+> +                                 0, 0x1000000);
+> +        memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+> +        mr = g_new(MemoryRegion, 1);
+> +        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-high", pci_mem,
+> +                                 0x80000000, 0x7d000000);
+> +        memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
+
+Since I don't want to delay this series any further, as a future
+cleanup consider passing the host MR (get_system_memory) as a link
+property, and map PCI hi/lo regions in the host bridge realize.
+
+> +        pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
+> +        break;
+> +    }
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
