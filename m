@@ -4,50 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7ACCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 00:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1BCCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 00:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBiqn-0007m1-3X; Wed, 22 Oct 2025 20:06:41 -0400
+	id 1vBiyx-0006Qr-NJ; Wed, 22 Oct 2025 20:15:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBiqY-0007g6-Pw; Wed, 22 Oct 2025 20:06:27 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vBiyv-0006PH-4C
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 20:15:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBiqU-0004a7-AG; Wed, 22 Oct 2025 20:06:25 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 77B905972E5;
- Thu, 23 Oct 2025 02:06:20 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id zwf_xx3SMn8E; Thu, 23 Oct 2025 02:06:18 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7452C5972F0; Thu, 23 Oct 2025 02:06:18 +0200 (CEST)
-Message-ID: <8f5bd07553b41d83a54f9df0bb93b76b22dea5c5.1761176219.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1761176219.git.balaton@eik.bme.hu>
-References: <cover.1761176219.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 11/12] hw/ppc/pegasos2: Add Pegasos I emulation
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vBiyq-0005mZ-EY
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 20:15:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761178497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m3NtoCy+IY+kJrBbhuH/M89S6JD33b+2IU+8Bx1ITh8=;
+ b=atYIne/irRkF1xMkCiqNi6Ty3ot9+hrWT6pudNROH0tMc+u4qfo2aeJg1RvwQhoRgpVW+H
+ tTyfyvrvetdNxEnwmScumKKgceDGhlSuGoNJx0TwjQU8MF43tNyXCQOdVLdpJmO/NXukY1
+ Vnn196xv6a7WE7GnCHoIwIIqj9tyq2w=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-364-E_C5gkf5NMarwe4ptDlOpQ-1; Wed, 22 Oct 2025 20:14:55 -0400
+X-MC-Unique: E_C5gkf5NMarwe4ptDlOpQ-1
+X-Mimecast-MFC-AGG-ID: E_C5gkf5NMarwe4ptDlOpQ_1761178495
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-32eb18b5659so157235a91.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 17:14:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761178494; x=1761783294;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=m3NtoCy+IY+kJrBbhuH/M89S6JD33b+2IU+8Bx1ITh8=;
+ b=IBYoUR2G370owKB/SLEpbVm3HRjISrzwRQKh9yNxHg5eu7PTjb3VYZx1Ejkkqy0jeW
+ 4I2T8/vo9Pah+FmvtPsrrkhM0BejtURWQgloyaEiB84kYuPbw5CcoTqsn/rC9JRO/7zT
+ sF9W7IC4nzrxmM8C/vpakTR3OV9+d4dncwTFrmxw8VtJVvylmyTeHraYJdWIWuKp0esW
+ 0PIGj9FHGRcdkY/1OGrlQusFZIkZviF6HZ+CI7jOgraoeoBDhjJ335aotKCUP2/QbyBD
+ G90fwntkBa5RuMJF4Y3Ymjv7GEc4nKyJISh48gzMn1l8vpY9bzEt2GyECloXddjMeduG
+ kQmA==
+X-Gm-Message-State: AOJu0YxJM+bBCC6T6617blUD/GEhwXjgxaNW5cJ8uhF/R5ZV3JkK2vzK
+ cqzE99+pfjxtHdECU7binPBSl5WwUB6TWU8wU4J7bTiHS/JuQp66VSbBosCHiq1vHTDJY8wCjtC
+ bwW9LW/PQ8bVPasrUsfcMw26oQZJsWLUbV2pBJNxexlsNxldXUbvQcvIf
+X-Gm-Gg: ASbGnctsiuueiHXXYHPi29f19acjBMLUq6WYC5dQz749kQJjXY1aZZuf0RZ5nGZxPwR
+ VXw9ovTgpwGlhst7MLMeIkLmQZingK6306wOZPeLZyngml6AyXF3urtB7TVjJaFMPKIetfFW442
+ JK2v8w7aLn1Ml1mri8sQ7ydyaAE3jPmlLcND5aCAL5RMbeJgGC9VvK9vC3s8XnDHXQ84C6egzNy
+ n69REbRr+CMCwwLBlOUMCSlOi/rg94cCMsJ+OaX8PfF0yLqWNlqQ7SIlvyaf0DpqYa41sUd8HLk
+ j6EmtJXZgo8HXfEuVPSsikVS4754dG996//8iCjOWrxgcABwU4tS12HNqlCOpwGRbLAQtzGjyHu
+ s70HdWl+RhKN5puNKyiCJ+7nktPytX/xe4hj8xu0=
+X-Received: by 2002:a17:90b:3f85:b0:33b:b078:d6d3 with SMTP id
+ 98e67ed59e1d1-33bcf8e5ebfmr29974782a91.23.1761178494333; 
+ Wed, 22 Oct 2025 17:14:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRzeDd1rsOIvBAovxwmQEyJKIREGt/1en0c0ER+PaVJopOmSFGt23cdtNBI3xV9uYs4vMDeQ==
+X-Received: by 2002:a17:90b:3f85:b0:33b:b078:d6d3 with SMTP id
+ 98e67ed59e1d1-33bcf8e5ebfmr29974733a91.23.1761178493845; 
+ Wed, 22 Oct 2025 17:14:53 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-33fb014451bsm417862a91.8.2025.10.22.17.14.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 17:14:53 -0700 (PDT)
+Message-ID: <beab3dd4-0c19-441c-a9f5-ecae9e791753@redhat.com>
+Date: Thu, 23 Oct 2025 10:14:37 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC V6 05/24] arm/virt,kvm: Pre-create KVM vCPUs for
+ 'disabled' QOM vCPUs at machine init
+To: Salil Mehta <salil.mehta@opnsrc.net>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, imammedo@redhat.com,
+ armbru@redhat.com, andrew.jones@linux.dev, david@redhat.com,
+ philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
+ oliver.upton@linux.dev, pbonzini@redhat.com, rafael@kernel.org,
+ borntraeger@linux.ibm.com, alex.bennee@linaro.org,
+ gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com, Keqian Zhu <zhuqian1@huawei.com>
+References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
+ <20251001010127.3092631-6-salil.mehta@opnsrc.net>
+ <a03ed205-b61a-4bba-9f25-83663b7d8a86@redhat.com>
+ <CAJ7pxeYurHLqj8GnLrfznmofMpsaw91GeZ3KMyucL0B_gn9gPg@mail.gmail.com>
+ <CAJ7pxeaUfUeXwtTVheCTxej-aCTCx0n8-XyAKaFneVUjcWL_7w@mail.gmail.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <CAJ7pxeaUfUeXwtTVheCTxej-aCTCx0n8-XyAKaFneVUjcWL_7w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Thu, 23 Oct 2025 02:06:18 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,330 +128,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Pegasos II is a redesign of the original Pegasos (later marked I)
-that replaces the north bridge and has updated firmware but otherwise
-these are very similar. The Pegasos uses the same north bridge that
-AmigaOne used which we already emulate so we can also easily emulate
-Pegasos I.
+Hi Salil,
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/ppc/pegasos2.c | 156 ++++++++++++++++++++++++++++++++++------------
- 1 file changed, 117 insertions(+), 39 deletions(-)
+On 10/23/25 4:50 AM, Salil Mehta wrote:
+> On Wed, Oct 22, 2025 at 6:18 PM Salil Mehta <salil.mehta@opnsrc.net> wrote:
+>> On Wed, Oct 22, 2025 at 10:37 AM Gavin Shan <gshan@redhat.com> wrote:
+>>>
+>>> Hi Salil,
+>>>
+>>> On 10/1/25 11:01 AM, salil.mehta@opnsrc.net wrote:
+>>>> From: Salil Mehta <salil.mehta@huawei.com>
+>>>>
+>>>> ARM CPU architecture does not allow CPUs to be plugged after system has
+>>>> initialized. This is a constraint. Hence, the Kernel must know all the CPUs
+>>>> being booted during its initialization. This applies to the Guest Kernel as
+>>>> well and therefore, the number of KVM vCPU descriptors in the host must be
+>>>> fixed at VM initialization time.
+>>>>
+>>>> Also, the GIC must know all the CPUs it is connected to during its
+>>>> initialization, and this cannot change afterward. This must also be ensured
+>>>> during the initialization of the VGIC in KVM. This is necessary because:
+>>>>
+>>>> 1. The association between GICR and MPIDR must be fixed at VM initialization
+>>>>      time. This is represented by the register
+>>>>      `GICR_TYPER(mp_affinity, proc_num)`.
+>>>> 2. Memory regions associated with GICR, etc., cannot be changed (added,
+>>>>      deleted, or modified) after the VM has been initialized. This is not an
+>>>>      ARM architectural constraint but rather invites a difficult and messy
+>>>>      change in VGIC data structures.
+>>>>
+>>>> To enable a hot-add–like model while preserving these constraints, the virt
+>>>> machine may enumerate more CPUs than are enabled at boot using
+>>>> `-smp disabledcpus=N`. Such CPUs are present but start offline (i.e.,
+>>>> administratively disabled at init). The topology remains fixed at VM
+>>>> creation time; only the online/offline status may change later.
+>>>>
+>>>> Administratively disabled vCPUs are not realized in QOM until first enabled,
+>>>> avoiding creation of unnecessary vCPU threads at boot. On large systems, this
+>>>> reduces startup time proportionally to the number of disabled vCPUs. Once a
+>>>> QOM vCPU is realized and its thread created, subsequent enable/disable actions
+>>>> do not unrealize it. This behaviour was adopted following review feedback and
+>>>> differs from earlier RFC versions.
+>>>>
+>>>> Co-developed-by: Keqian Zhu <zhuqian1@huawei.com>
+>>>> Signed-off-by: Keqian Zhu <zhuqian1@huawei.com>
+>>>> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+>>>> ---
+>>>>    accel/kvm/kvm-all.c    |  2 +-
+>>>>    hw/arm/virt.c          | 77 ++++++++++++++++++++++++++++++++++++++----
+>>>>    hw/core/qdev.c         | 17 ++++++++++
+>>>>    include/hw/qdev-core.h | 19 +++++++++++
+>>>>    include/system/kvm.h   |  8 +++++
+>>>>    target/arm/cpu.c       |  2 ++
+>>>>    target/arm/kvm.c       | 40 +++++++++++++++++++++-
+>>>>    target/arm/kvm_arm.h   | 11 ++++++
+>>>>    8 files changed, 168 insertions(+), 8 deletions(-)
+>>>>
+> 
+> [...]
+> 
+>>>> +void kvm_arm_create_host_vcpu(ARMCPU *cpu)
+>>>> +{
+>>>> +    CPUState *cs = CPU(cpu);
+>>>> +    unsigned long vcpu_id = cs->cpu_index;
+>>>> +    int ret;
+>>>> +
+>>>> +    ret = kvm_create_vcpu(cs);
+>>>> +    if (ret < 0) {
+>>>> +        error_report("Failed to create host vcpu %ld", vcpu_id);
+>>>> +        abort();
+>>>> +    }
+>>>> +
+>>>> +    /*
+>>>> +     * Initialize the vCPU in the host. This will reset the sys regs
+>>>> +     * for this vCPU and related registers like MPIDR_EL1 etc. also
+>>>> +     * get programmed during this call to host. These are referenced
+>>>> +     * later while setting device attributes of the GICR during GICv3
+>>>> +     * reset.
+>>>> +     */
+>>>> +    ret = kvm_arch_init_vcpu(cs);
+>>>> +    if (ret < 0) {
+>>>> +        error_report("Failed to initialize host vcpu %ld", vcpu_id);
+>>>> +        abort();
+>>>> +    }
+>>>> +
+>>>> +    /*
+>>>> +     * park the created vCPU. shall be used during kvm_get_vcpu() when
+>>>> +     * threads are created during realization of ARM vCPUs.
+>>>> +     */
+>>>> +    kvm_park_vcpu(cs);
+>>>> +}
+>>>> +
+>>>
+>>> I don't think we're able to simply call kvm_arch_init_vcpu() in the lazily realized
+>>> path. Otherwise, it can trigger a crash dump on my Nvidia's grace-hopper machine where
+>>> SVE is supported by default.
+>>
+>> Thanks for reporting this. That is not true. As long as we initialize
+>> KVM correctly and
+>> finalize the features like SVE we should be fine. In fact, this is
+>> precisely what we are
+>> doing right now.
+>>
+>> To understand the crash, I need a bit more info.
+>>
+>> 1#  is happening because KVM_ARM_VCPU_INIT is failing. If yes, the can you check
+>>        within the KVM if it is happening because
+>>       a.  features specified by QEMU are not matching the defaults within the KVM
+>>             (HInt: check kvm_vcpu_init_check_features())?
+>>       b. or complaining about init feate change kvm_vcpu_init_changed()?
+>> 2#  or it is happening during the setting of vector length or
+>> finalizing features?
+>>
+>> int kvm_arch_init_vcpu(CPUState *cs)
+>> {
+>>     [...]
+>>           /* Do KVM_ARM_VCPU_INIT ioctl */
+>>          ret = kvm_arm_vcpu_init(cpu);   ---->[1]
+>>          if (ret) {
+>>             return ret;
+>>         }
+>>            if (cpu_isar_feature(aa64_sve, cpu)) {
+>>          ret = kvm_arm_sve_set_vls(cpu); ---->[2]
+>>          if (ret) {
+>>              return ret;
+>>          }
+>>          ret = kvm_arm_vcpu_finalize(cpu, KVM_ARM_VCPU_SVE);--->[3]
+>>          if (ret) {
+>>              return ret;
+>>          }
+>>      }
+>> [...]
+>> }
+>>
+>> I think it's happening because vector length is going uninitialized.
+>> This initialization
+>> happens in context to  arm_cpu_finalize_features() which I forgot to call before
+>> calling KVM finalize.
+>>
+>>>
+>>> kvm_arch_init_vcpu() is supposed to be called in the realization path in current
+>>> implementation (without this series) because the parameters (features) to KVM_ARM_VCPU_INIT
+>>> is populated at vCPU realization time.
+>>
+>> Not necessarily. It is just meant to initialize the KVM. If we take care of the
+>> KVM requirements in the similar way the realize path does we should be
+>> fine. Can you try to add the patch below in your code and test if it works?
+>>
+>>   diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>> index c4b68a0b17..1091593478 100644
+>> --- a/target/arm/kvm.c
+>> +++ b/target/arm/kvm.c
+>> @@ -1068,6 +1068,9 @@ void kvm_arm_create_host_vcpu(ARMCPU *cpu)
+>>           abort();
+>>       }
+>>
+>> +     /* finalize the features like SVE, SME etc */
+>> +     arm_cpu_finalize_features(cpu, &error_abort);
+>> +
+>>       /*
+>>        * Initialize the vCPU in the host. This will reset the sys regs
+>>        * for this vCPU and related registers like MPIDR_EL1 etc. also
+>>
+>>
+>>
+>>
+>>>
+>>> $ home/gavin/sandbox/qemu.main/build/qemu-system-aarch64           \
+>>>     --enable-kvm -machine virt,gic-version=3 -cpu host               \
+>>>     -smp cpus=4,disabledcpus=2 -m 1024M                              \
+>>>     -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image    \
+>>>     -initrd /home/gavin/sandbox/images/rootfs.cpio.xz -nographic
+>>> qemu-system-aarch64: Failed to initialize host vcpu 4
+>>> Aborted (core dumped)
+>>>
+>>> Backtrace
+>>> =========
+>>> (gdb) bt
+>>> #0  0x0000ffff9106bc80 in __pthread_kill_implementation () at /lib64/libc.so.6
+>>> #1  0x0000ffff9101aa40 [PAC] in raise () at /lib64/libc.so.6
+>>> #2  0x0000ffff91005988 [PAC] in abort () at /lib64/libc.so.6
+>>> #3  0x0000aaaab1cc26b8 [PAC] in kvm_arm_create_host_vcpu (cpu=0xaaaab9ab1bc0)
+>>>       at ../target/arm/kvm.c:1081
+>>> #4  0x0000aaaab1cd0c94 in virt_setup_lazy_vcpu_realization (cpuobj=0xaaaab9ab1bc0, vms=0xaaaab98870a0)
+>>>       at ../hw/arm/virt.c:2483
+>>> #5  0x0000aaaab1cd180c in machvirt_init (machine=0xaaaab98870a0) at ../hw/arm/virt.c:2777
+>>> #6  0x0000aaaab160f220 in machine_run_board_init
+>>>       (machine=0xaaaab98870a0, mem_path=0x0, errp=0xfffffa86bdc8) at ../hw/core/machine.c:1722
+>>> #7  0x0000aaaab1a25ef4 in qemu_init_board () at ../system/vl.c:2723
+>>> #8  0x0000aaaab1a2635c in qmp_x_exit_preconfig (errp=0xaaaab38a50f0 <error_fatal>)
+>>>       at ../system/vl.c:2821
+>>> #9  0x0000aaaab1a28b08 in qemu_init (argc=15, argv=0xfffffa86c1f8) at ../system/vl.c:3882
+>>> #10 0x0000aaaab221d9e4 in main (argc=15, argv=0xfffffa86c1f8) at ../system/main.c:71
+>>
+>>
+>> Thank you for this. Please let me know if the above fix works and also
+>> the return values in
+>> case you encounter errors.
+> 
+> I've pushed the fix to below branch for your convenience:
+> 
+> Branch: https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v6.2
+> Fix: https://github.com/salil-mehta/qemu/commit/1f1fbc0998ffb1fe26140df3c336bf2be2aa8669
+> 
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 7eaefcf9a0..a11f3c99ed 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -1,5 +1,5 @@
- /*
-- * QEMU PowerPC CHRP (Genesi/bPlan Pegasos II) hardware System Emulator
-+ * QEMU PowerPC CHRP (Genesi/bPlan Pegasos I/II) hardware System Emulator
-  *
-  * Copyright (c) 2018-2021 BALATON Zoltan
-  *
-@@ -15,6 +15,7 @@
- #include "hw/pci/pci_host.h"
- #include "hw/irq.h"
- #include "hw/or-irq.h"
-+#include "hw/pci-host/articia.h"
- #include "hw/pci-host/mv64361.h"
- #include "hw/isa/vt82c686.h"
- #include "hw/ide/pci.h"
-@@ -55,12 +56,18 @@
- #define H_PRIVILEGE  -3  /* Caller not privileged */
- #define H_PARAMETER  -4  /* Parameter invalid, out-of-range or conflicting */
- 
-+typedef enum {
-+    PEGASOS1 = 1,
-+    PEGASOS2 = 2,
-+} PegasosMachineType;
+I guess rfc-v6.2 branch isn't ready for test because it runs into another crash
+dump with rfc-v6.2 branch, like below.
+
+host$ /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64                     \
+       -accel kvm -machine virt,gic-version=host,nvdimm=on                         \
+       -cpu host,sve=on                                                            \
+       -smp maxcpus=4,cpus=2,disabledcpus=2,sockets=2,clusters=2,cores=1,threads=1 \
+       -m 4096M,slots=16,maxmem=128G                                               \
+       -object memory-backend-ram,id=mem0,size=2048M                               \
+       -object memory-backend-ram,id=mem1,size=2048M                               \
+       -numa node,nodeid=0,memdev=mem0,cpus=0-1                                    \
+       -numa node,nodeid=1,memdev=mem1,cpus=2-3                                    \
+       -L /home/gavin/sandbox/qemu.main/build/pc-bios                              \
+       -monitor none -serial mon:stdio -nographic -gdb tcp::6666                   \
+       -qmp tcp:localhost:5555,server,wait=off                                     \
+       -bios /home/gavin/sandbox/qemu.main/build/pc-bios/edk2-aarch64-code.fd      \
+       -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image               \
+       -initrd /home/gavin/sandbox/images/rootfs.cpio.xz                           \
+       -append memhp_default_state=online_movable
+         :
+         :
+guest$ cd /sys/devices/system/cpu/
+guest$ cat present enabled online
+0-3
+0-1
+0-1
+(qemu) device_set host-arm-cpu,socket-id=1,cluster-id=0,core-id=0,thread-id=0,admin-state=enable
+qemu-system-aarch64: kvm_init_vcpu: kvm_arch_init_vcpu failed (2): Operation not permitted
+
+I picked the fix (the last patch in rfc-v6.2 branch) to rfc-v6 branch, same crash dump
+can be seen.
+
+root@nvidia-grace-hopper-01:/home/gavin/sandbox/qemu.main# git log --oneline HEAD | head -n 1
+82dbd9a8f6 tcg: Defer TB flush for 'lazy realized' vCPUs on first region alloc
+root@nvidia-grace-hopper-01:/home/gavin/sandbox/qemu.main# git diff
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 254303727b..c4f89e7db6 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2470,6 +2470,9 @@ virt_setup_lazy_vcpu_realization(Object *cpuobj, VirtMachineState *vms)
+      /* set operational state of disabled CPUs as OFF */
+      ARM_CPU(cpuobj)->power_state = PSCI_OFF;
+  
++    /* finalize the features like SVE, SME etc */
++    arm_cpu_finalize_features(ARM_CPU(cpuobj), &error_fatal);
 +
- #define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
- OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
- 
- struct PegasosMachineState {
-     MachineState parent_obj;
- 
-+    PegasosMachineType type;
-     PowerPCCPU *cpu;
-     DeviceState *nb; /* north bridge */
-     DeviceState *sb; /* south bridge */
-@@ -79,7 +86,7 @@ struct PegasosMachineState {
- 
- static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size);
- 
--static void pegasos2_cpu_reset(void *opaque)
-+static void pegasos_cpu_reset(void *opaque)
- {
-     PowerPCCPU *cpu = opaque;
-     PegasosMachineState *pm = PEGASOS_MACHINE(current_machine);
-@@ -89,6 +96,8 @@ static void pegasos2_cpu_reset(void *opaque)
-     if (pm->vof) {
-         cpu->env.gpr[1] = 2 * VOF_STACK_SIZE - 0x20;
-         cpu->env.nip = 0x100;
-+    } else if (pm->type == PEGASOS1) {
-+        cpu->env.nip = 0xfffc0100;
-     }
-     cpu_ppc_tb_reset(&cpu->env);
- }
-@@ -139,13 +148,15 @@ static void pegasos_init(MachineState *machine)
-     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
-     CPUPPCState *env;
-     MemoryRegion *rom = g_new(MemoryRegion, 1);
--    PCIBus *pci_bus;
-+    PCIBus *pci_bus = NULL;
-     Object *via;
-     PCIDevice *dev;
-     I2CBus *i2c_bus;
-     const char *fwname = machine->firmware ?: PROM_FILENAME;
-     char *filename;
-+    hwaddr prom_addr;
-     ssize_t sz;
-+    int devfn;
-     uint8_t *spd_data;
- 
-     /* init CPU */
-@@ -158,7 +169,7 @@ static void pegasos_init(MachineState *machine)
- 
-     /* Set time-base frequency */
-     cpu_ppc_tb_init(env, pm->bus_freq_hz / 4);
--    qemu_register_reset(pegasos2_cpu_reset, pm->cpu);
-+    qemu_register_reset(pegasos_cpu_reset, pm->cpu);
- 
-     /* RAM */
-     if (machine->ram_size > 2 * GiB) {
-@@ -176,12 +187,16 @@ static void pegasos_init(MachineState *machine)
-     if (!machine->firmware && !pm->vof) {
-         pm->vof = g_malloc0(sizeof(*pm->vof));
-     }
--    memory_region_init_rom(rom, NULL, "pegasos2.rom", PROM_SIZE, &error_fatal);
--    memory_region_add_subregion(get_system_memory(), PROM_ADDR, rom);
-+    prom_addr = PROM_ADDR;
-+    if (pm->type == PEGASOS1) {
-+        prom_addr += PROM_SIZE;
-+    }
-+    memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
-+    memory_region_add_subregion(get_system_memory(), prom_addr, rom);
-     sz = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-     if (sz <= 0) {
--        sz = load_image_targphys(filename, pm->vof ? 0 : PROM_ADDR, PROM_SIZE);
-+        sz = load_image_targphys(filename, pm->vof ? 0 : prom_addr, PROM_SIZE);
-     }
-     if (sz <= 0 || sz > PROM_SIZE) {
-         error_report("Could not load firmware '%s'", filename);
-@@ -192,13 +207,37 @@ static void pegasos_init(MachineState *machine)
-         pm->vof->fw_size = sz;
-     }
- 
--    /* Marvell Discovery II system controller */
--    pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
--                          qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
--    pci_bus = mv64361_get_pci_bus(pm->nb, 1);
-+    /* north bridge */
-+    switch (pm->type) {
-+    case PEGASOS1:
-+    {
-+        MemoryRegion *pci_mem, *mr;
-+
-+        /* Articia S */
-+        pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL));
-+        pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
-+        mr = g_new(MemoryRegion, 1);
-+        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", pci_mem,
-+                                 0, 0x1000000);
-+        memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
-+        mr = g_new(MemoryRegion, 1);
-+        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-high", pci_mem,
-+                                 0x80000000, 0x7d000000);
-+        memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
-+        pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
-+        break;
-+    }
-+    case PEGASOS2:
-+        /* Marvell Discovery II system controller */
-+        pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
-+                        qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
-+        pci_bus = mv64361_get_pci_bus(pm->nb, 1);
-+        break;
-+    }
- 
-     /* VIA VT8231 South Bridge (multifunction PCI device) */
--    pm->sb = DEVICE(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
-+    devfn = PCI_DEVFN(pm->type == PEGASOS1 ? 7 : 12, 0);
-+    pm->sb = DEVICE(pci_new_multifunction(devfn, TYPE_VT8231_ISA));
-     via = OBJECT(pm->sb);
- 
-     /* Set properties on individual devices before realizing the south bridge */
-@@ -223,7 +262,21 @@ static void pegasos_init(MachineState *machine)
-     /* other PC hardware */
-     pci_vga_init(pci_bus);
- 
--    pegasos2_setup_pci_irq(pm);
-+    /* pci interrupt routing */
-+    switch (pm->type) {
-+    case PEGASOS1:
-+        qdev_connect_gpio_out_named(pm->sb, "intr", 0,
-+                                    qdev_get_gpio_in(DEVICE(pm->cpu),
-+                                                     PPC6xx_INPUT_INT));
-+        for (int i = 0; i < PCI_NUM_PINS; i++) {
-+            qdev_connect_gpio_out(pm->nb, i,
-+                                  qdev_get_gpio_in_named(pm->sb, "pirq", i));
-+        }
-+        break;
-+    case PEGASOS2:
-+        pegasos2_setup_pci_irq(pm);
-+        break;
-+    }
- 
-     if (machine->kernel_filename) {
-         sz = load_elf(machine->kernel_filename, NULL, NULL, NULL,
-@@ -376,7 +429,7 @@ static void pegasos2_chipset_reset(PegasosMachineState *pm)
-                               PCI_INTERRUPT_LINE, 2, 0x309);
- }
- 
--static void pegasos2_machine_reset(MachineState *machine, ResetType type)
-+static void pegasos_machine_reset(MachineState *machine, ResetType type)
- {
-     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
-     void *fdt;
-@@ -387,6 +440,9 @@ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
-     qemu_devices_reset(type);
-     if (!pm->vof) {
-         return; /* Firmware should set up machine so nothing to do */
-+    } else if (pm->type == PEGASOS1) {
-+        error_report("VOF is not supported by this machine");
-+        exit(1);
-     }
- 
-     /* Otherwise, set up devices that board firmware would normally do */
-@@ -558,12 +614,12 @@ static target_ulong pegasos2_rtas(PowerPCCPU *cpu, PegasosMachineState *pm,
-     }
- }
- 
--static bool pegasos2_cpu_in_nested(PowerPCCPU *cpu)
-+static bool pegasos_cpu_in_nested(PowerPCCPU *cpu)
- {
-     return false;
- }
- 
--static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
-+static void pegasos_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
- {
-     PegasosMachineState *pm = PEGASOS_MACHINE(vhyp);
-     CPUPPCState *env = &cpu->env;
-@@ -574,7 +630,7 @@ static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
-     if (FIELD_EX64(env->msr, MSR, PR)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Hypercall made with MSR[PR]=1\n");
-         env->gpr[3] = H_PRIVILEGE;
--    } else if (env->gpr[3] == KVMPPC_H_RTAS) {
-+    } else if (env->gpr[3] == KVMPPC_H_RTAS && pm->type == PEGASOS2) {
-         env->gpr[3] = pegasos2_rtas(cpu, pm, env->gpr[4]);
-     } else if (env->gpr[3] == KVMPPC_H_VOF_CLIENT) {
-         int ret = vof_client_call(MACHINE(pm), pm->vof, MACHINE(pm)->fdt,
-@@ -596,56 +652,78 @@ static target_ulong vhyp_encode_hpt_for_kvm_pr(PPCVirtualHypervisor *vhyp)
-     return POWERPC_CPU(current_cpu)->env.spr[SPR_SDR1];
- }
- 
--static bool pegasos2_setprop(MachineState *ms, const char *path,
--                             const char *propname, void *val, int vallen)
-+static bool pegasos_setprop(MachineState *ms, const char *path,
-+                            const char *propname, void *val, int vallen)
- {
-     return true;
- }
- 
--static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
-+static void pegasos_machine_init(MachineClass *mc)
- {
--    MachineClass *mc = MACHINE_CLASS(oc);
--    PPCVirtualHypervisorClass *vhc = PPC_VIRTUAL_HYPERVISOR_CLASS(oc);
--    VofMachineIfClass *vmc = VOF_MACHINE_CLASS(oc);
-+    PPCVirtualHypervisorClass *vhc = PPC_VIRTUAL_HYPERVISOR_CLASS(mc);
-+    VofMachineIfClass *vmc = VOF_MACHINE_CLASS(mc);
- 
--    mc->desc = "Genesi/bPlan Pegasos II";
-     mc->init = pegasos_init;
--    mc->reset = pegasos2_machine_reset;
-+    mc->reset = pegasos_machine_reset;
-     mc->block_default_type = IF_IDE;
-     mc->default_boot_order = "cd";
-     mc->default_display = "std";
--    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("7457_v1.2");
--    mc->default_ram_id = "pegasos2.ram";
-+    mc->default_ram_id = "ram";
-     mc->default_ram_size = 512 * MiB;
-     machine_add_audiodev_property(mc);
- 
--    vhc->cpu_in_nested = pegasos2_cpu_in_nested;
--    vhc->hypercall = pegasos2_hypercall;
-+    vhc->cpu_in_nested = pegasos_cpu_in_nested;
-+    vhc->hypercall = pegasos_hypercall;
-     vhc->cpu_exec_enter = vhyp_nop;
-     vhc->cpu_exec_exit = vhyp_nop;
-     vhc->encode_hpt_for_kvm_pr = vhyp_encode_hpt_for_kvm_pr;
- 
--    vmc->setprop = pegasos2_setprop;
-+    vmc->setprop = pegasos_setprop;
-+}
-+
-+static void pegasos1_init(Object *obj)
-+{
-+    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
-+
-+    pm->type = PEGASOS1;
-+    pm->bus_freq_hz = 33000000;
-+}
-+
-+static void pegasos1_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Genesi/bPlan Pegasos I";
-+    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("750cxe_v3.1b");
- }
- 
- static void pegasos2_init(Object *obj)
- {
-     PegasosMachineState *pm = PEGASOS_MACHINE(obj);
- 
-+    pm->type = PEGASOS2;
-     pm->bus_freq_hz = 133333333;
- }
- 
-+static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Genesi/bPlan Pegasos II";
-+    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("7457_v1.2");
-+}
-+
-+DEFINE_MACHINE_EXTENDED("pegasos", MACHINE, PegasosMachineState,
-+                        pegasos_machine_init, true, (const InterfaceInfo[]) {
-+                        { TYPE_PPC_VIRTUAL_HYPERVISOR },
-+                        { TYPE_VOF_MACHINE_IF }, { } })
-+
- static const TypeInfo pegasos_machine_types[] = {
-     {
--        .name          = TYPE_PEGASOS_MACHINE,
--        .parent        = TYPE_MACHINE,
--        .instance_size = sizeof(PegasosMachineState),
--        .abstract      = true,
--        .interfaces = (const InterfaceInfo[]) {
--              { TYPE_PPC_VIRTUAL_HYPERVISOR },
--              { TYPE_VOF_MACHINE_IF },
--              { }
--        },
-+        .name          = MACHINE_TYPE_NAME("pegasos1"),
-+        .parent        = TYPE_PEGASOS_MACHINE,
-+        .class_init    = pegasos1_machine_class_init,
-+        .instance_init = pegasos1_init,
-     },
-     {
-         .name          = MACHINE_TYPE_NAME("pegasos2"),
--- 
-2.41.3
+
+Thanks,
+Gavin
 
 
