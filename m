@@ -4,90 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE3EECCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59494CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBvpi-0007T5-TO; Thu, 23 Oct 2025 09:58:26 -0400
+	id 1vBvw1-0000va-9w; Thu, 23 Oct 2025 10:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vBvpg-0007SE-Co
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:58:25 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBvvy-0000v1-LX
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:04:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vBvpe-0005Mr-Hp
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:58:24 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBvvu-00065l-Nz
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:04:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761227901;
+ s=mimecast20190719; t=1761228288;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gx62NDlEv3VoFzkfIgYd/pr8wULtIcfjNxlC6XKphy0=;
- b=i1ku3C9li4o1IeUEv48CmtHUV3CcUvoaK7iDroDM8LmszMM5BcqUkqFytx1QCALuQrMkQ5
- RZIE8ny658+Q8xfk1YZhL90jCMK8M3NJCJQ6g/UxWBW4YdgHRaYEumBUn79db/X/mEIK+G
- 7BZ9wKTiWn/Vx8BdIA11juBdyVLcw7M=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-JZg1aEzVPDmaFM2UZZqNRw-1; Thu, 23 Oct 2025 09:58:18 -0400
-X-MC-Unique: JZg1aEzVPDmaFM2UZZqNRw-1
-X-Mimecast-MFC-AGG-ID: JZg1aEzVPDmaFM2UZZqNRw_1761227898
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-63e13b766dbso981669d50.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 06:58:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761227898; x=1761832698;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Gx62NDlEv3VoFzkfIgYd/pr8wULtIcfjNxlC6XKphy0=;
- b=Iv+8PmoSBt25cdHqNOVdPXRZ2meQjJdI09LU9avFcNX/e/lX2wD1AzYflyZBujM6a+
- 7cprOsq36+9zNG3PgGaw0wceeHsjo4QVnPRV3hwLjYipVqewFftGZIZJkvE2hD3Dc6SY
- L5P3cavAIjY7FJCPABpUGc8wHN+1KPyZjh7Sar6q6JLUAwBlXbv2JzMV/CnuE0JvhFI7
- /tPd8RTeKZphGKXnDtYoLFZ0Lw2E0J2XK+PyQfKfiD2gKjZjHLIQvmsxGvzM9agnSV2P
- DsclEGolejINfqqAnHVfEkyhTxGe4+gOR0lEDNT72o5fGuWhFdmuNJA9nkUQPQBGFJRm
- OgGA==
-X-Gm-Message-State: AOJu0YxFMPGe+ZPcFETQf8SbKWszIlElbjZlw/SuoeAr0cA72Ge3kSpq
- eShPslGjL/fFAdbVMlLreVCthFX7xdkZUtIBJ+7TFFf3SDp6iOG19tKX+rIxQx+RJ/547LPw3ay
- NChFVKouIK4Fht6fMUICagAITEUmAJfDIecDh5j5erBP5+4ra4XmsbdwnP0D7v5k5Bl4cLCty2L
- ymOO7oVkEu0FC3CoH7uQIp/H3f/wPGlWM=
-X-Gm-Gg: ASbGnctYzFx07/oVlx0J/dczerXSPCBVnhNKw5GoDbKhP43/o+K0F0JCKZ+olmlDHDL
- g9QC5qzk5rZMNYYTDcbdedwz0zM/uriarGGu/tn6KwSqUTEzUJziy4EKyCE2vSyiA+nUrgGcf5i
- pfzUn+RSnk8vQhAGEF8A2FV3Jpk6Trw76BHFeg/j+HcI2tDjCCkJIGrGI1o2TWiuB2jlHaiNQeE
- jEfHau55A/KNjs=
-X-Received: by 2002:a05:690e:1907:b0:63e:2f0e:6727 with SMTP id
- 956f58d0204a3-63e2f0e6a9fmr12362762d50.42.1761227898094; 
- Thu, 23 Oct 2025 06:58:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbeW0AO6QwwllMaIwNhqcxYjwW48azFmH7jckfELZGkQhzdodmH8pSx4cSWPCC5GxxZEdk/IAOu6DtU9M4aPE=
-X-Received: by 2002:a05:690e:1907:b0:63e:2f0e:6727 with SMTP id
- 956f58d0204a3-63e2f0e6a9fmr12362748d50.42.1761227897756; Thu, 23 Oct 2025
- 06:58:17 -0700 (PDT)
+ bh=P77pi1wKutGKL4BNucJ0kfBnD5+r5bOHi46pn6dbPvw=;
+ b=VwOuxwvK7VJRbw6X7jPbN0pJLCd8i5B6SJGhtBFGOa3urQbueCj3SRKEb/OxGFYcJ1SjUV
+ kyQsKOP5nbqguoNvKdylQx3LI7GI4ZJGNn213G0R8ZUiSciHZ184EmKsTjckdlQ6wsZA1p
+ 1YjPmUtaSyt1/6cEPQ8Pl4cNYNWpxis=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-IfeQZtJpP2uw4yEX_otCUA-1; Thu,
+ 23 Oct 2025 10:04:44 -0400
+X-MC-Unique: IfeQZtJpP2uw4yEX_otCUA-1
+X-Mimecast-MFC-AGG-ID: IfeQZtJpP2uw4yEX_otCUA_1761228283
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A6B0180A997; Thu, 23 Oct 2025 14:04:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 219CD1800597; Thu, 23 Oct 2025 14:04:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3D51D21E6A27; Thu, 23 Oct 2025 16:04:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Fabiano
+ Rosas <farosas@suse.de>,  Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH] migration/qmp: Update "resume" flag doc in "migrate"
+ command
+In-Reply-To: <aPozyk9Do9iu32G4@x1.local> (Peter Xu's message of "Thu, 23 Oct
+ 2025 09:55:22 -0400")
+References: <20251022190425.2730441-1-peterx@redhat.com>
+ <87cy6eb25c.fsf@pond.sub.org> <aPozyk9Do9iu32G4@x1.local>
+Date: Thu, 23 Oct 2025 16:04:40 +0200
+Message-ID: <87sef94suf.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20251022213109.395149-1-jsnow@redhat.com>
- <f7817d99-f2cb-453a-8d3d-e28b592fa93d@redhat.com>
-In-Reply-To: <f7817d99-f2cb-453a-8d3d-e28b592fa93d@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 23 Oct 2025 09:58:06 -0400
-X-Gm-Features: AS18NWB_to9UaPcSUa_4MvqxnhTAL_nxRjkyly44qs-Ee9IavK_8s99NAOneYR0
-Message-ID: <CAFn=p-atgVAiqa9OY+CS1GRijVdF=MQyEKfq-iwTrgvNPwsPWw@mail.gmail.com>
-Subject: Re: [PATCH] scripts/device-crash-test: fix spurious EOFError messages
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,49 +87,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 23, 2025 at 3:01=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> On 22/10/2025 23.31, John Snow wrote:
-> > When the QMP library was updated to match the standalone repository in
-> > 094ded52, I neglected to update the logging filter(s) in
-> > device-crash-test, which allowed the spurious messages to leak through.
-> >
-> > Update the log filter to re-suppress these messages.
-> >
-> > Fixes: 094ded52
-> > Reported-by: Thomas Huth <thuth@redhat.com>
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   scripts/device-crash-test | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/scripts/device-crash-test b/scripts/device-crash-test
-> > index 1ecb9663ae8..c1576e8b966 100755
-> > --- a/scripts/device-crash-test
-> > +++ b/scripts/device-crash-test
-> > @@ -527,7 +527,7 @@ def main():
-> >           # Async QMP, when in use, is chatty about connection failures=
-.
-> >           # This script knowingly generates a ton of connection errors.
-> >           # Silence this logger.
-> > -        logging.getLogger('qemu.qmp.qmp_client').setLevel(logging.CRIT=
-ICAL)
-> > +        logging.getLogger('qemu.qmp.protocol').setLevel(logging.CRITIC=
-AL)
-> >
-> >       fatal_failures =3D []
-> >       wl_stats =3D {}
->
-> Thanks, that silences the messages, indeed!
->
-> Tested-by: Thomas Huth <thuth@redhat.com>
+Peter Xu <peterx@redhat.com> writes:
 
-The library is designed to be very vocal about connection failures so
-that tests don't silently fail even when there's no output expected,
-but for a test where we're intentionally trying to see if QEMU crashes
-over and over, it's not really so helpful :)
+> On Thu, Oct 23, 2025 at 07:47:11AM +0200, Markus Armbruster wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > It wasn't obvious how the resume flag should be used when staring at the
+>> > QAPI doc.  Enrich it to be crystal clear.
+>> >
+>> > Reported-by: Markus Armbruster <armbru@redhat.com>
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  qapi/migration.json | 5 ++++-
+>> >  1 file changed, 4 insertions(+), 1 deletion(-)
+>> >
+>> > diff --git a/qapi/migration.json b/qapi/migration.json
+>> > index be0f3fcc12..48856078db 100644
+>> > --- a/qapi/migration.json
+>> > +++ b/qapi/migration.json
+>> > @@ -1732,7 +1732,10 @@
+>> >  # @detach: this argument exists only for compatibility reasons and is
+>> >  #     ignored by QEMU
+>> >  #
+>> > -# @resume: resume one paused migration, default "off".  (since 3.0)
+>> > +# @resume: when set, resume one paused postcopy migration, using the new
+>> 
+>> Scratch "one" unless there can be more than one.
+>
+> Sure.
+>
+>> 
+>> > +#     URI/channels specified to replace the old/broken channels.  The user
+>> > +#     should make sure the migration is in "postcopy-paused" state before
+>> > +#     the resume request.  Default "off".  (since 3.0)
+>> >  #
+>> >  # Features:
+>> >  #
+>> 
+>> What happens when migration is not in state "postcopy-paused"?
+>
+> The QMP command "migrate" with resume=true set will be rejected,
+> corresponds to:
+>
+> migrate_prepare():
+>         if (s->state != MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>             error_setg(errp, "Cannot resume if there is no "
+>                        "paused migration");
+>             return false;
+>         }
 
-thanks for the report!
+Makes sense, thanks!
+
+I'd suggest something like 'Resume fails unless migration is in
+"postcopy-paused" state.  (default: false, since 3.0)'
+
+>> Remind me, how can migration get into and out of this state?
+>
+> It can happen if any interruption happened during a postcopy migration.  So
+> it needs to be postcopy-active state first, then something wrong happened
+> e.g. the network is down.  Then the channel will break on both sides of
+> QEMU, and both QEMUs will jump into postcopy-paused.
+>
+> To get out of the state, one needs to explicitly recover the migration, the
+> core steps are:
+>
+>   - (optional) Run migrate_recover on dest QEMU to re-establish the ports,
+>     if the old listening ports are not available anymore.
+>
+>   - Run migrate on src QEMU with resume=true flag here to resume the
+>     postcopy migration.
+>
+> If the recover succeeded, it'll switch from postcopy-paused finally back to
+> postcopy-active.
+>
+> Thanks,
+
+Got it, thanks!
 
 
