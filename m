@@ -4,88 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 964C6CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 16:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F68CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 17:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vByLX-0007vy-Al; Thu, 23 Oct 2025 12:39:27 -0400
+	id 1vByfZ-0004qR-Ma; Thu, 23 Oct 2025 13:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vByLU-0007vX-TZ
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 12:39:24 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vByLS-0003QN-FD
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 12:39:24 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b3e7cc84b82so234046166b.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 09:39:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761237560; x=1761842360; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=96IXKXR9VI35HFeQR3K/sf6rTcrhTZCDVdFjLZ8rVxQ=;
- b=KfrLpmbbgMpY0KecsKa9PmUMZmXQtjy/jd819KJiS4oBojMslb2bSK5F3O0ZPSyOyb
- ZgacT74JwpM/OQXnOS9y9VvfAikSLoGBY/R7W+fCbZ5HoVeY+SPjaCRmDw4J9kojvbkh
- v+gKT8ztrd7YNk026mTurehPOpXeoBlwEYibTXiQStjDopZgKHTytgaPS/Yl2avjGOBB
- C5oquFB9AA9HvZuVv5HGPeQY1L+i+SWFlabkBY3uZvofPGTJB1YRQXV5sHBIugBq0AAU
- PYNL0h17LndYQHR7v8PAH+MQsUMdkfy3u5ReYmjUYcAMEyu9qhdmJ5HaXMPXgTSesQr3
- pX4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761237560; x=1761842360;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=96IXKXR9VI35HFeQR3K/sf6rTcrhTZCDVdFjLZ8rVxQ=;
- b=iZnhHck/REzs66xS0YqLVgbMedxGxloa22SR38uQ/smvuA49EwcVzQGJUWxNtyU6G0
- a0/l6N+sUnQAjMLbO+q4gSnAsRab1QuudqCBSBwQ4KCJwPl/FTRcvYlDxQ5+DhZaBtjp
- g6JSVbpeGyrEvFlHivW6QTiMMoR3Mw8Ax4n8qgiiH81Zrqg3C4lYB8kbdLm0kywwiJqa
- 7Jv33/4U9gS5n8jJvy1bzDh+YHh/lgQ/TAU1cK2V0JKcWn8MOJQJHa2kcPLdSxJm7i7v
- Jq1XzpYJMXPji3+qJhwNEd2OYtZMxCTef62xciNJ6qFBpYEMZJLNPN4laYoiEbFUwgc0
- XdwQ==
-X-Gm-Message-State: AOJu0YzKa274i/0bFsJqr+NZmLYX7d37gaumb7fa234HkSiaoXaRsYeV
- i/EvInfDR64RBg5F5gCg4SBawvNwTOmZCuLrjlf90g0Bug7806Tw/AJqIaRkZduLH7w=
-X-Gm-Gg: ASbGnctDE0YYNhiIbZsUJDVuRUGTEbnF6TyHRVKFVfKcqxfMRzZhvAPDSkwt2NNlQMK
- kdBXc+P0Q/2gGpTKV5XRSuVC60Zy8F9hAoAokJKffejFZ7jHZNN2udIWuJ+6Xh0LiIhsO7sPlgR
- NcuOe9ceJgSTKPDb8rKCaoqXa90xpOCGR9IPdbusLM5UMAYsS0wxcuB9wwaFeAR81IOge3+jfUK
- erD0QhGGOmT7GLnoRDTCMALE9PgN5TFmjgFzCBNirsU28d0lj8aIxAdP2fowr1FrO7QAwkl8ab2
- 1TvIbAVt2WuXpbIBTpaFOYJcl1FSbdHg2o6VCEpb88DCQXtx1Pl/1CLqifb/7C13M0xKa0KlO0j
- 5nRs8KNM1MrvZJRtea7PM60n0gEUbFk/5YUvQOJyHMbll8tn5JcPLv4nB/SJ/QZiv085E3CKOXr
- Fe
-X-Google-Smtp-Source: AGHT+IHg0h5zeXeWcnnPrReRuvsvWD/jjOdSXUiwT9nYF59iFgWwwh39RIItutbEcILkRxQN+adiJg==
-X-Received: by 2002:a17:907:3e9f:b0:b54:858e:736f with SMTP id
- a640c23a62f3a-b6474b365b5mr2925645366b.36.1761237560296; 
- Thu, 23 Oct 2025 09:39:20 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d5130d14dsm264596766b.27.2025.10.23.09.39.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 09:39:19 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E50D25F7F5;
- Thu, 23 Oct 2025 17:39:18 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1vByfW-0004lk-0B
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 13:00:06 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1vByfS-0005iC-VZ
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 13:00:05 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0A46F8086B;
+ Thu, 23 Oct 2025 20:00:01 +0300 (MSK)
+Received: from davydov-max-lin.yandex.net (unknown
+ [2a02:6bf:8011:f00:ef9:2188:6644:f7b6])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 8xbwbU0ImGk0-Jw1D5jFi; Thu, 23 Oct 2025 20:00:00 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761238800;
+ bh=2jgKdiMkswKfHdeVn84I4j71Yy3RosUUcW+e/xTiSbM=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=B8rEgs22F3d80qr6IzsN6kFdJ2xrvE2/6GqPh7W8yukM5Fs5zBWAyIZ5F94vhJdvO
+ yODavFL/+3UVlMcCxU1QNsL3NCwBAi12JhPlcm2X7G9ecidoNFq9/hWZQRzhjRF3sd
+ tLEW/M76sLfOzHrNGePLBvWw4BQgo8uc4RiAlil8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Maksim Davydov <davydov-max@yandex-team.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [RFC PATCH] configs: drop SBSA_REF from minimal specification
-Date: Thu, 23 Oct 2025 17:39:15 +0100
-Message-ID: <20251023163915.3199361-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+Cc: crosa@redhat.com, jsnow@redhat.com, davydov-max@yandex-team.ru,
+ philmd@linaro.org, vsementsov@yandex-team.ru
+Subject: [PATCH 2/2] scripts/compare-mt: stop using global variables
+Date: Thu, 23 Oct 2025 19:58:46 +0300
+Message-Id: <20251023165846.326295-3-davydov-max@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251023165846.326295-1-davydov-max@yandex-team.ru>
+References: <20251023165846.326295-1-davydov-max@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,43 +75,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The whole point of SBSA_REF is for testing firmware which by
-definition requires TCG. This means the configuration of:
+All variables inside the main if-structure are global that can be
+confusing or be the reason of an issue. So, all code inside this structure
+was moved to the separate function to detect all usages of these global
+variables. All these usages were deleted.
 
-  --disable-tcg --with-devices-aarch64=minimal
-
-makes no sense (and indeed is broken for the
-ubuntu-24.04-aarch64-notcg) test. Drop it from minimal and remove the
-allow_failure from the test case.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
 ---
- configs/devices/aarch64-softmmu/minimal.mak          | 1 -
- .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml | 2 --
- 2 files changed, 3 deletions(-)
+ scripts/compare-machine-types.py | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/configs/devices/aarch64-softmmu/minimal.mak b/configs/devices/aarch64-softmmu/minimal.mak
-index 0ebc1dca561..3c8582e12cc 100644
---- a/configs/devices/aarch64-softmmu/minimal.mak
-+++ b/configs/devices/aarch64-softmmu/minimal.mak
-@@ -6,4 +6,3 @@
- #
+diff --git a/scripts/compare-machine-types.py b/scripts/compare-machine-types.py
+index dba9e03548..e6fcea22e1 100755
+--- a/scripts/compare-machine-types.py
++++ b/scripts/compare-machine-types.py
+@@ -264,7 +264,6 @@ def __init__(self, vm: QEMUMachine,
+                  req_mt: List[str], all_mt: bool) -> None:
+         self._vm = vm
+         self._binary = vm.binary
+-        self._qemu_args = args.qemu_args.split(' ')
  
- CONFIG_ARM_VIRT=y
--CONFIG_SBSA_REF=y
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-index 46db9ae0138..ee13587d99e 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-@@ -107,7 +107,5 @@ ubuntu-24.04-aarch64-notcg:
-   rules:
-     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
-       when: manual
--      allow_failure: true
-     - if: "$AARCH64_RUNNER_AVAILABLE"
-       when: manual
--      allow_failure: true
+         self._qemu_drivers = VMPropertyGetter(vm)
+         self.req_mt = get_req_mt(self._qemu_drivers, vm, req_mt, all_mt)
+@@ -482,17 +481,17 @@ def fill_prop_table(configs: List[Configuration],
+ 
+ def print_table(table: pd.DataFrame, table_format: str) -> None:
+     if table_format == 'json':
+-        print(comp_table.to_json())
++        print(table.to_json())
+     elif table_format == 'csv':
+-        print(comp_table.to_csv())
++        print(table.to_csv())
+     else:
+-        print(comp_table.to_markdown(index=False, stralign='center',
+-                                     colalign=('center',), headers='keys',
+-                                     tablefmt='fancy_grid',
+-                                     disable_numparse=True))
++        print(table.to_markdown(index=False, stralign='center',
++                                colalign=('center',), headers='keys',
++                                tablefmt='fancy_grid',
++                                disable_numparse=True))
+ 
+ 
+-if __name__ == '__main__':
++def main() -> None:
+     args = parse_args()
+     with ExitStack() as stack:
+         vms = [stack.enter_context(QEMUMachine(binary=binary, qmp_timer=15,
+@@ -506,3 +505,7 @@ def print_table(table: pd.DataFrame, table_format: str) -> None:
+         comp_table = fill_prop_table(configurations, args.raw)
+         if not comp_table.empty:
+             print_table(comp_table, args.format)
++
++
++if __name__ == '__main__':
++    main()
 -- 
-2.47.3
+2.34.1
 
 
