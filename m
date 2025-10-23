@@ -4,102 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E02DCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1095CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuLd-0007lP-B8; Thu, 23 Oct 2025 08:23:18 -0400
+	id 1vBuV8-0006aM-CN; Thu, 23 Oct 2025 08:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuGT-0001Pz-KM
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:18:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vBpdx-0000IK-Up; Thu, 23 Oct 2025 03:21:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuGL-0006TY-DG
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:56 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N51PIB017349;
- Thu, 23 Oct 2025 12:17:35 GMT
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vBpdq-0007Q0-Mn; Thu, 23 Oct 2025 03:21:52 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N6am3F013852;
+ Thu, 23 Oct 2025 07:21:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=VCLy0I
- To4Ij8PRTVh5hCcLrXPft42Qv41/BjkN+xhH8=; b=bS9RqNdM034J2eXFrqF+dK
- cJvIUEe6MCnM4HHMC4lg8MjsF9Ysmrc3Zy9g32fzQE0vWUAYO9rRM4gQvKTaJNmn
- PKWv3bRL2lPb/gIhq/2akiyCaI/Dw2Vm3AVdls2xG9KP4ztLvFqI1unVa1wS23HN
- A1/94Zv/eI2/NItOL//8vMzZiOhg1KocZN2NjtYuiaYZLr0zr5TJTs5gtBncIMVx
- v77e7R1m+BcHHQtXWRqC6ItMN33v7U37BzZmFmklUTjVjNngxYDmTZ/pFQJgl5mh
- rYbEknk9UFxZqrtLoO4jTCPSfSRAlP6C1vTSqE85Gm940jASiEyZXhKV3MXRJIzA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PDpfbB
+ e+7yDen1s0A8/RYdtUgxWTx+RUvRJOJhV4p/U=; b=G9AXWoAIzv+V6InNomkobO
+ aSsi4PM4ayTf0ggVltMGYQT2PRtrbQnhTrupEHRL6gFqLJCmCJlqWyhpZG8uIAu9
+ dySXBHmrzwsHkZUbMgtRhjah5ZS/4f2l1e3fL5Ow7Q7Gu7uUtFrVWodbkW4Hl1H+
+ 7PzKmCAHcoTGiYMO4Bbbb2DLQRM0/r8gpC2wc5mtvN7RuFXxNYjsPkAEoijT3m7T
+ BsZMw7oWOSK/fNBBOjAsK5yDisfoFAr6yhnYLjv57YScCvLna4cVlZo7XM9CnBBU
+ dw0TOBXV1QQRjAJoq5+7MCu+SXHAF2o+1SwPYTlSa30xwP223jGrIhCWAvGjDhWw
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31sa1da-1
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vydw1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 12:17:35 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NABQaX032142;
- Thu, 23 Oct 2025 12:17:33 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7n5k02-1
+ Thu, 23 Oct 2025 07:21:41 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59N7LeJS023837;
+ Thu, 23 Oct 2025 07:21:40 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30vydvy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 12:17:33 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NCHVFc49152404
+ Thu, 23 Oct 2025 07:21:40 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N6jDKF024686;
+ Thu, 23 Oct 2025 07:21:40 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqk4f6t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 07:21:40 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59N7LaK013697508
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 12:17:32 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E05A120043;
- Thu, 23 Oct 2025 12:17:31 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 09D4320040;
- Thu, 23 Oct 2025 12:17:31 +0000 (GMT)
-Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
- [9.124.221.73]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 12:17:30 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 24/32] hw/ppc/pegasos2: Add VOF support for pegasos1
-Date: Thu, 23 Oct 2025 17:46:43 +0530
-Message-ID: <20251023121653.3686015-25-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251023121653.3686015-1-harshpb@linux.ibm.com>
-References: <20251023121653.3686015-1-harshpb@linux.ibm.com>
+ Thu, 23 Oct 2025 07:21:36 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3A58A2004B;
+ Thu, 23 Oct 2025 07:21:36 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B8D1320043;
+ Thu, 23 Oct 2025 07:21:33 +0000 (GMT)
+Received: from [9.39.26.208] (unknown [9.39.26.208])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 07:21:33 +0000 (GMT)
+Message-ID: <3e3378f1-7fc0-47da-800a-9f8987bf072b@linux.ibm.com>
+Date: Thu, 23 Oct 2025 12:51:32 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] Implement Firmware Assisted Dump for PSeries
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20251021134823.1861675-1-adityag@linux.ibm.com>
+Content-Language: en-US
+From: shivang upadhyay <shivangu@linux.ibm.com>
+In-Reply-To: <20251021134823.1861675-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ehhsl7EvSMPIbmJL570WVxzGUCxPoKEp
-X-Proofpoint-GUID: ehhsl7EvSMPIbmJL570WVxzGUCxPoKEp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX1wFjgxAuXNI0
- KR7G+6B3cTRa9cc78E+TEhwCTNfvbnWTSswJRtrCNJXGO5vrs1yB16Gac4ejjkBRc5PWvDA48ZP
- eyFkp+Foe/506pzvW/NLSuqEbhUCq4AkZ1tjVWeycHwBSfgJprJX+ncOO7o06leW86rtorktHtn
- cpnivz755NT44WnKhxMmNdcGGZwvVo/2F3jaH2O/1g8Nnu6q8/EWYf9rTZPbBUpjQHn6m3YF0Qu
- zlKlM2NJHKZ/HKsqWnzWzhfDxGHgcqoCdXVj6wT/w5K0Y6Arbus/bloJHbpoiyfmyZd0JIcdjbi
- mm50T5oxEGmVySTG5Yf8tRfoh+G/AD0TuIRic6/DWyBSOJj+jqirKikVXFXveYDf7Z7TD1jCn8Y
- EJc8Qk93iKWpryBocE6l2GEng2j/ww==
-X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fa1cdf cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
- a=oel9PUnJIl26fRhH_UYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-GUID: AMVOwYKyyOgKYPIOkBHsroU7RKMj-5CQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXx0PNNDBNDUKj
+ pBjuLlLQUw/6EeSiGVVeO8tjw/Ull2ZtcXnWxhmtpCyUITHYJKHfWLtxIHRJhL8beLcME3RuZmz
+ fHPh7zN+llcQavxNzmCOaw/kSyQ0w/tUksiYtFD3bf9XKiOPFJtR5Gv8KPuvAf1iNw8Ksv5xELO
+ t3NeVQfn3L3/bt2vEkdXCTVQO2Y+LYrmSER86qukcpmqLgzgq/ZIKQvgiZ83B7KlNnZ+q4VVm5j
+ PaRwk30NxloFT9/fnEYE0gk2DfvssB4Mp6jFJfDZrdtow9YOoiCyvqTUVsehQziKo+sqARi69G4
+ VSMn3go+/i5UyP9IdzPtH2jbfQneh0tKYs5Q56+tErsStY+pAAjK7D8NXhP9tC91X9VYOG0TRmK
+ 3KGyUbcPDVqJWd7H9EfEw+e29v5YIw==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68f9d785 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=p0WdMEafAAAA:8 a=wEDoamZ1AAAA:20 a=NEAV23lmAAAA:8 a=93Ubh6UdAAAA:8
+ a=vTr9H3xdAAAA:8 a=VnNF1IyMAAAA:8 a=mw8Mp3qblR76PRYpqnsA:9 a=QEXdDO2ut3YA:10
+ a=q-6THwuxr82FYj4XiUVi:22 a=yULaImgL6KKpOYXvFmjq:22 a=poXaRoVlC6wW9_mwW8W4:22
+ a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
+X-Proofpoint-ORIG-GUID: a7ogN3HTP7LsGitHAHNAjzXL1D4TJRYp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1011 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -109,6 +121,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 23 Oct 2025 08:24:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,417 +136,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
 
-When running without firmware ROM using Virtual Open Firmware we need
-to do some hardware initialisation and provide the device tree as the
-machine firmware would normally do.
+On 10/21/25 7:18 PM, Aditya Gupta wrote:
+> Overview
+> =========
+>
+> Implemented Firmware Assisted Dump (fadump) on PSeries machine in QEMU.
+>
+> Fadump is an alternative dump mechanism to kdump, in which we the firmware
+> does a memory preserving boot, and the second/crashkernel is booted fresh
+> like a normal system reset, instead of the crashed kernel loading the
+> second/crashkernel in case of kdump.
+>
+> This requires implementing the "ibm,configure-kernel-dump" RTAS call in
+> QEMU.
+>
+> While booting with fadump=on, Linux will register fadump memory regions.
+>
+> Some memory regions like Real Mode Memory regions, and custom memory
+> regions declared by OS basically require copying the requested memory
+> range to a destination
+>
+> While other memory regions are populated by the firmware/platform (QEMU in
+> this case), such as CPU State Data and HPTE.
+> We pass the sizes for these data segment to the kernel as it needs to know
+> how much memory to reserve (ibm,configure-kernel-dump-sizes).
+>
+> Then after a crash, once Linux does a OS terminate call, we trigger fadump
+> if fadump was registered.
+>
+> Implementing the fadump boot as:
+>      * pause all vcpus (will save registers later)
+>      * preserve memory regions specified by fadump
+>      * do a memory preserving reboot (using GUEST_RESET as it doesn't clear
+>        the memory)
+>
+> And then we pass a metadata (firmware memory structure) as
+> "ibm,kernel-dump" in the device tree, containing all details of the
+> preserved memory regions to the kernel.
+>
+> Refer the Patch #7: "hw/ppc: Enable fadump for PSeries" for logs of a
+> succesfful fadump crash
+>
+> Note: HPTE region has not been implemented. It's not planned as of now.
+>
+> Testing
+> =======
+>
+> Has been tested with following QEMU options:
+>
+> * make check-functional-ppc64
+> * smt1/smt4
+> * with/without e1000e device
+> * gitlab ci: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2111480523
+>
+> Following vmcore has been generated with v5 of this series, booted with
+> -smp 4: https://ibm.box.com/s/dv92hdi67hh0588xn8cbvkjmlcy04d7h
+>
+> Git Tree for Testing
+> ====================
+>
+> https://github.com/adi-g15-ibm/qemu/tree/fadump-pseries-v5
+>
+> Note: You will need a way to get the /proc/vmcore out of the VM for testing
+> with crash-utility
+>
+> I use the following command line which sets up networking:
+>      "-net user,hostfwd=tcp::10022-:22 -net nic"
+>
+> And a rootfs with ssh support, then copy the /proc/vmcore with networking
+> (can do compression using gzip before ssh, but compression might take lot
+> of time if done inside the VM)
+>
+> Changelog
+> =========
+> v5:
+>    + rebased to upstream, implemented reviews by sourabh and harsh
+>    + [patch #1]: patch #1 and #2 of v4 merged into one
+>    + [patch #3]: copy memory region in chunks of 32MB instead of all at once
+>    + [patch #4]: fix endianness of vcpu id in CPUSTRT/CPUEND entries
+>    + [patch #5]: replaced type __be32 with uint32_t
+>    + [patch #7]: increased timeout for few messages to 20 seconds
+>    + [patch #8]: update maintainers file for fadump
+>
+> v4
+>    + [patch #8/8]: fixed kvm testcase, add license
+>
+> v3:
+>    + [patch #3,7]: fix compile errors (#define declared in a later patch
+>                    but used in this patch, unused var)
+>    + [patch #4/8]: use 'g_autofree' for cpu buffer, and replace g_malloc with
+>                    g_try_malloc
+>    + [patch #5/8]: use 'g_new' instead of 'malloc', add null check for cpu
+>                    region
+>    - nothing in other patches has been changed compared to v2
+>
+> v2:
+>    + rearrange code so that no unused functions get introduced in any patch
+>    + add functional test for pseries as suggested by nick
+>    + fix multiple issues pointed by harsh and nick
+>    + fix bug in cpu register saving where it was being stored in
+>      little-endian
+>    - removed 'is_next_boot_fadump' and used fadump header's status flag to
+>      store it
+>    + fixed multiple style issues (naming, unneeded diffs etc)
+>
+> Aditya Gupta (8):
+>    hw/ppc: Implement fadump register command
+>    hw/ppc: Trigger Fadump boot if fadump is registered
+>    hw/ppc: Preserve memory regions registered for fadump
+>    hw/ppc: Implement saving CPU state in Fadump
+>    hw/ppc: Pass dump-sizes property for fadump in device tree
+>    hw/ppc: Enable fadump for PSeries
+>    tests/functional: Add test for fadump in PSeries
+>    MAINTAINERS: Add entry for FADump (pSeries)
+>
+>   MAINTAINERS                               |   8 +
+>   hw/ppc/meson.build                        |   1 +
+>   hw/ppc/spapr.c                            |  69 ++
+>   hw/ppc/spapr_fadump.c                     | 730 ++++++++++++++++++++++
+>   hw/ppc/spapr_rtas.c                       |  76 +++
+>   include/hw/ppc/spapr.h                    |  11 +-
+>   include/hw/ppc/spapr_fadump.h             | 124 ++++
+>   tests/functional/ppc64/meson.build        |   2 +
+>   tests/functional/ppc64/test_fadump.py     | 182 ++++++
+>   tests/functional/qemu_test/linuxkernel.py |  59 ++
+>   10 files changed, 1261 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/ppc/spapr_fadump.c
+>   create mode 100644 include/hw/ppc/spapr_fadump.h
+>   create mode 100755 tests/functional/ppc64/test_fadump.py
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/d2d7f173dbd436b47382f384d5a93eb7e713424e.1761176219.git.balaton@eik.bme.hu
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- MAINTAINERS              |   1 +
- hw/ppc/pegasos2.c        | 140 +++++++++++++++++++++++++++++++++------
- pc-bios/dtb/meson.build  |   1 +
- pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
- pc-bios/dtb/pegasos1.dts | 125 ++++++++++++++++++++++++++++++++++
- 5 files changed, 246 insertions(+), 21 deletions(-)
- create mode 100644 pc-bios/dtb/pegasos1.dtb
- create mode 100644 pc-bios/dtb/pegasos1.dts
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 36eef27b41..684d7a5b37 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1652,6 +1652,7 @@ F: hw/ppc/pegasos2.c
- F: hw/pci-host/mv64361.c
- F: hw/pci-host/mv643xx.h
- F: include/hw/pci-host/mv64361.h
-+F: pc-bios/dtb/pegasos[12].dt[sb]
- 
- amigaone
- M: BALATON Zoltan <balaton@eik.bme.hu>
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index a11f3c99ed..93696ed381 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -84,6 +84,7 @@ struct PegasosMachineState {
-     uint64_t initrd_size;
- };
- 
-+static void *pegasos1_build_fdt(PegasosMachineState *pm, int *fdt_size);
- static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size);
- 
- static void pegasos_cpu_reset(void *opaque)
-@@ -314,6 +315,82 @@ static void pegasos_init(MachineState *machine)
-     }
- }
- 
-+static void pegasos_superio_write(uint8_t addr, uint8_t val)
-+{
-+    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
-+    cpu_physical_memory_write(0xfe0003f1, &val, 1);
-+}
-+
-+static void pegasos1_pci_config_write(PegasosMachineState *pm, int bus,
-+                                      uint32_t addr, uint32_t len, uint32_t val)
-+{
-+    addr |= BIT(31);
-+    cpu_physical_memory_write(0xfec00cf8, &addr, 4);
-+    cpu_physical_memory_write(0xfee00cfc, &val, len);
-+}
-+
-+static void pegasos1_chipset_reset(PegasosMachineState *pm)
-+{
-+    uint8_t elcr = 0x2e;
-+    cpu_physical_memory_write(0xfe0004d1, &elcr, sizeof(elcr));
-+
-+    pegasos1_pci_config_write(pm, 0, PCI_COMMAND, 2, PCI_COMMAND_IO |
-+                              PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 0) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x9);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 0) << 8) |
-+                              0x50, 1, 0x6);
-+    pegasos_superio_write(0xf4, 0xbe);
-+    pegasos_superio_write(0xf6, 0xef);
-+    pegasos_superio_write(0xf7, 0xfc);
-+    pegasos_superio_write(0xf2, 0x14);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 0) << 8) |
-+                              0x51, 1, 0x3d);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 0) << 8) |
-+                              0x55, 1, 0x90);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 0) << 8) |
-+                              0x56, 1, 0x99);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 0) << 8) |
-+                              0x57, 1, 0x90);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 1) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x10e);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 1) << 8) |
-+                              PCI_CLASS_PROG, 1, 0xf);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 1) << 8) |
-+                              0x40, 1, 0xb);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 1) << 8) |
-+                              0x50, 4, 0x17171717);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 1) << 8) |
-+                              PCI_COMMAND, 2, 0x87);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 2) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x409);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 2) << 8) |
-+                              PCI_COMMAND, 2, 0x7);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 3) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x409);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 3) << 8) |
-+                              PCI_COMMAND, 2, 0x7);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 4) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x9);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 4) << 8) |
-+                              0x48, 4, 0x2001);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 4) << 8) |
-+                              0x41, 1, 0);
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 4) << 8) |
-+                              0x90, 4, 0x1000);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 5) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x309);
-+
-+    pegasos1_pci_config_write(pm, 0, (PCI_DEVFN(7, 6) << 8) |
-+                              PCI_INTERRUPT_LINE, 2, 0x309);
-+}
-+
- static uint32_t pegasos2_mv_reg_read(PegasosMachineState *pm,
-                                      uint32_t addr, uint32_t len)
- {
-@@ -357,12 +434,6 @@ static void pegasos2_pci_config_write(PegasosMachineState *pm, int bus,
-     pegasos2_mv_reg_write(pm, pcicfg + 4, len, val);
- }
- 
--static void pegasos2_superio_write(uint8_t addr, uint8_t val)
--{
--    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
--    cpu_physical_memory_write(0xfe0003f1, &val, 1);
--}
--
- static void pegasos2_chipset_reset(PegasosMachineState *pm)
- {
-     pegasos2_mv_reg_write(pm, 0, 4, 0x28020ff);
-@@ -379,10 +450,10 @@ static void pegasos2_chipset_reset(PegasosMachineState *pm)
-                               PCI_INTERRUPT_LINE, 2, 0x9);
-     pegasos2_pci_config_write(pm, 1, (PCI_DEVFN(12, 0) << 8) |
-                               0x50, 1, 0x6);
--    pegasos2_superio_write(0xf4, 0xbe);
--    pegasos2_superio_write(0xf6, 0xef);
--    pegasos2_superio_write(0xf7, 0xfc);
--    pegasos2_superio_write(0xf2, 0x14);
-+    pegasos_superio_write(0xf4, 0xbe);
-+    pegasos_superio_write(0xf6, 0xef);
-+    pegasos_superio_write(0xf7, 0xfc);
-+    pegasos_superio_write(0xf2, 0x14);
-     pegasos2_pci_config_write(pm, 1, (PCI_DEVFN(12, 0) << 8) |
-                               0x50, 1, 0x2);
-     pegasos2_pci_config_write(pm, 1, (PCI_DEVFN(12, 0) << 8) |
-@@ -432,7 +503,7 @@ static void pegasos2_chipset_reset(PegasosMachineState *pm)
- static void pegasos_machine_reset(MachineState *machine, ResetType type)
- {
-     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
--    void *fdt;
-+    void *fdt = NULL;
-     uint32_t c[2];
-     uint64_t d[2];
-     int sz;
-@@ -440,13 +511,22 @@ static void pegasos_machine_reset(MachineState *machine, ResetType type)
-     qemu_devices_reset(type);
-     if (!pm->vof) {
-         return; /* Firmware should set up machine so nothing to do */
--    } else if (pm->type == PEGASOS1) {
--        error_report("VOF is not supported by this machine");
--        exit(1);
-     }
- 
-     /* Otherwise, set up devices that board firmware would normally do */
--    pegasos2_chipset_reset(pm);
-+    switch (pm->type) {
-+    case PEGASOS1:
-+        pegasos1_chipset_reset(pm);
-+        fdt = pegasos1_build_fdt(pm, &sz);
-+        break;
-+    case PEGASOS2:
-+        pegasos2_chipset_reset(pm);
-+        fdt = pegasos2_build_fdt(pm, &sz);
-+        break;
-+    }
-+    if (!fdt) {
-+        exit(1);
-+    }
- 
-     /* Device tree and VOF set up */
-     vof_init(pm->vof, machine->ram_size, &error_fatal);
-@@ -465,11 +545,6 @@ static void pegasos_machine_reset(MachineState *machine, ResetType type)
-         exit(1);
-     }
- 
--    fdt = pegasos2_build_fdt(pm, &sz);
--    if (!fdt) {
--        exit(1);
--    }
--
-     /* Set memory size */
-     c[0] = 0;
-     c[1] = cpu_to_be32(machine->ram_size);
-@@ -761,6 +836,8 @@ static struct {
-     const char *name;
-     void (*dtf)(PCIBus *bus, PCIDevice *d, FDTInfo *fi);
- } device_map[] = {
-+    { "pci10cc,660", "host", NULL },
-+    { "pci10cc,661", "host", NULL },
-     { "pci11ab,6460", "host", NULL },
-     { "pci1106,571", "ide", dt_ide },
-     { "pci1106,3044", "firewire", NULL },
-@@ -846,7 +923,7 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
-         qemu_fdt_setprop_cell(fi->fdt, node->str, "interrupts",
-                               pci_get_byte(&d->config[PCI_INTERRUPT_PIN]));
-     }
--    /* Pegasos2 firmware has subsystem-id amd subsystem-vendor-id swapped */
-+    /* Pegasos firmware has subsystem-id and subsystem-vendor-id swapped */
-     qemu_fdt_setprop_cell(fi->fdt, node->str, "subsystem-vendor-id",
-                           pci_get_word(&d->config[PCI_SUBSYSTEM_ID]));
-     qemu_fdt_setprop_cell(fi->fdt, node->str, "subsystem-id",
-@@ -934,6 +1011,27 @@ static void *load_dtb(const char *filename, int *fdt_size)
-     return fdt;
- }
- 
-+static void *pegasos1_build_fdt(PegasosMachineState *pm, int *fdt_size)
-+{
-+    FDTInfo fi;
-+    PCIBus *pci_bus;
-+    void *fdt = load_dtb("pegasos1.dtb", fdt_size);
-+
-+    if (!fdt) {
-+        return NULL;
-+    }
-+    qemu_fdt_setprop_string(fdt, "/", "name", "bplan,Pegasos");
-+
-+    add_cpu_info(fdt, pm->cpu, pm->bus_freq_hz);
-+
-+    fi.fdt = fdt;
-+    fi.path = "/pci@80000000";
-+    pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
-+    pci_for_each_device_reverse(pci_bus, 0, add_pci_device, &fi);
-+
-+    return fdt;
-+}
-+
- static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size)
- {
-     FDTInfo fi;
-diff --git a/pc-bios/dtb/meson.build b/pc-bios/dtb/meson.build
-index f14648f3a4..81bdd7580e 100644
---- a/pc-bios/dtb/meson.build
-+++ b/pc-bios/dtb/meson.build
-@@ -1,6 +1,7 @@
- dtbs = [
-   'bamboo.dtb',
-   'canyonlands.dtb',
-+  'pegasos1.dtb',
-   'pegasos2.dtb',
-   'petalogix-ml605.dtb',
-   'petalogix-s3adsp1800.dtb',
-diff --git a/pc-bios/dtb/pegasos1.dtb b/pc-bios/dtb/pegasos1.dtb
-new file mode 100644
-index 0000000000000000000000000000000000000000..3b863b25288a59bcede9459ff42afad713dde741
-GIT binary patch
-literal 857
-zcmZ8fO>Yx15OvxjK&T3w=^-c=RCQ5Ogp}S|g(^KkM8yI1P<g$Rbd_D(wKuI&2~qwB
-z2PCfWU-%<P`~ZlU=k<oRBR$W&=lQVL`*U;oONjLkLWqG7Yv0*FXFOp%X25>1Ue)2P
-zwH4Vq`;8bw1HZ>;t21Y#4($Qs>6oU{8xI*8@T`9T8sbOnw^Lh4-5HhX(Mm_{-ksVl
-z)<#k543FN8J7aT6ZanN9FMLHMid)8#w$22?9P@Cm<{Ue{7yY!q`;sNG#%QTC<4J?o
-zyrj~&#eOd+b^U#g+qE9l=58l32d?gA=i#Evk%Mn^%78T-ar4cvKZ`unPh?(rIUyvm
-zp(f1s<Z@XAE#z61?+<#l1@(XbHt#{YIS+BeaUS$&_<8Hk*Y`L0=jCr^^*-L<<eHaH
-z3^vr@g}yXD0>mX2*md1FhM>Vd@`{15zY&OI5A?*GZ_uJ49eCK4S?0+5L{U+Ak<mr2
-z=(Ji`5~azg5RMg}8!d)!UmuPR-|SqF&Wu~p)JT`DSVmsC+*T-XG!<Q+Us3GcRd_p9
-s7&S{Kj?U+#)j|w*U+pEiuE@E$trDqb+FTZtO-VSZr{qOC_eluFKX>nfX#fBK
-
-literal 0
-HcmV?d00001
-
-diff --git a/pc-bios/dtb/pegasos1.dts b/pc-bios/dtb/pegasos1.dts
-new file mode 100644
-index 0000000000..e5ef9db866
---- /dev/null
-+++ b/pc-bios/dtb/pegasos1.dts
-@@ -0,0 +1,125 @@
-+/*
-+ * QEMU Pegasos1 Device Tree Source
-+ *
-+ * Copyright 2025 BALATON Zoltan
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This is partial source, more info will be filled in by board code.
-+ */
-+
-+/dts-v1/;
-+
-+/ {
-+	#address-cells = <1>;
-+	device_type = "chrp";
-+	model = "Pegasos";
-+	revision = "1A";
-+	CODEGEN,vendor = "bplan GmbH";
-+	CODEGEN,board = "Pegasos";
-+	CODEGEN,description = "Pegasos CHRP PowerPC System";
-+
-+	openprom {
-+		model = "Pegasos,0.1b123";
-+	};
-+
-+	chosen {
-+	};
-+
-+	memory@0 {
-+		device_type = "memory";
-+		reg = <0 0>;
-+	};
-+
-+	cpus {
-+		#size-cells	= <0>;
-+		#address-cells	= <1>;
-+		#cpus		= <1>;
-+	};
-+
-+	failsafe {
-+		device_type = "serial";
-+	};
-+
-+	pci@80000000 {
-+		device_type = "pci";
-+		#address-cells = <3>;
-+		#size-cells = <2>;
-+		clock-frequency = <33333333>;
-+		8259-interrupt-acknowledge = <0xfef00000>;
-+		reg = <0x80000000 0x7f000000>;
-+		ranges = <0x01000000 0 0x00000000 0xfe000000 0 0x00800000
-+			  0x02000000 0 0x80000000 0x80000000 0 0x7d000000
-+			  0x02000000 0 0xfd000000 0xfd000000 0 0x01000000>;
-+		bus-range = <0 0>;
-+
-+		isa@7 {
-+			vendor-id	= <0x1106>;
-+			device-id	= <0x8231>;
-+			revision-id	= <0x10>;
-+			class-code	= <0x60100>;
-+			/* Pegasos firmware has subsystem-id and */
-+			/* subsystem-vendor-id swapped */
-+			subsystem-id	= <0x1af4>;
-+			subsystem-vendor-id = <0x1100>;
-+			reg = <0x3800 0 0 0 0>;
-+			device_type	= "isa";
-+			#address-cells	= <2>;
-+			#size-cells	= <1>;
-+			eisa-slots	= <0>;
-+			clock-frequency	= <8333333>;
-+			slot-names	= <0>;
-+
-+			serial@i2f8 {
-+				device_type	= "serial";
-+				reg		= <1 0x2f8 8>;
-+				interrupts	= <3 0>;
-+				clock-frequency	= <0>;
-+			};
-+
-+			8042@i60 {
-+				device_type	= "";
-+				reg		= <1 0x60 5>;
-+				clock-frequency	= <0>;
-+				interrupt-controller = "";
-+				#address-cells	= <1>;
-+				#size-cells	= <0>;
-+				#interrupt-cells = <2>;
-+
-+			};
-+
-+			keyboard@i60 {
-+				device_type	= "keyboard";
-+				reg		= <1 0x60 5>;
-+				interrupts	= <1 0>;
-+			};
-+
-+			rtc@i70 {
-+				device_type	= "rtc";
-+				reg		= <1 0x70 2>;
-+				interrupts	= <8 0>;
-+				clock-frequency	= <0>;
-+				compatible	= "ds1385-rtc";
-+			};
-+
-+			timer@i40 {
-+				device_type	= "timer";
-+				reg		= <1 0x40 8>;
-+				clock-frequency	= <0>;
-+			};
-+
-+			fdc@i3f0 {
-+				device_type	= "fdc";
-+				reg		= <1 0x3f0 8>;
-+				interrupts	= <6 0>;
-+				clock-frequency	= <0>;
-+			};
-+
-+			lpt@i3bc {
-+				device_type	= "lpt";
-+				reg		= <1 0x3bc 8>;
-+				interrupts	= <7 0>;
-+				clock-frequency	= <0>;
-+			};
-+		};
-+	};
-+};
--- 
-2.43.5
-
+I've tested this patch series on the fedora-42 cloud images [1], and 
+buildroot `qemu_ppc64_pseries_defconfig` image.
+Tested-by:Shivang Upadhyay <shivangu@linux.ibm.com>
+following are the logs for fedora test.
+kernel command line
+# grubby --info=ALL
+....
+args="no_timer_checkconsole=tty1console=ttyS0,115200n8systemd.firstboot=offrootflags=subvol=rootfadump=on"
+....
+triggeringthepanic
+# echo c > /proc/sysrq-trigger
+[390.457957]sysrq:Triggeracrash
+[390.462183]Kernelpanic-notsyncing:sysrqtriggeredcrash
+[390.463285]CPU:0UID:0PID:1081Comm:bashNottainted6.14.0-63.fc42.ppc64le#1
+[390.464074]Hardwarename:IBMpSeries(emulatedbyqemu)POWER10(architected)0x8012000xf000006of:SLOF,git-ee03aepSeries
+[390.465359]CallTrace:
+[390.465675][c000000007023890][c000000001787a64]dump_stack_lvl+0x88/0xc4(unreliable)
+[390.467916][c0000000070238c0][c000000000250a44]panic+0x19c/0x4a8
+[390.468555][c000000007023960][c000000000f70684]sysrq_handle_crash+0x24/0x30
+[390.469218][c0000000070239c0][c000000000f71388]__handle_sysrq+0xe8/0x3c0
+[390.469898][c000000007023a90][c000000000f722d0]write_sysrq_trigger+0x1d0/0x268
+[390.470563][c000000007023af0][c0000000008bf620]proc_reg_write+0xf0/0x160
+[390.471184][c000000007023b20][c0000000007b63b8]vfs_write+0x128/0x590
+[390.471791][c000000007023be0][c0000000007b6a10]ksys_write+0x80/0x150
+[390.472388][c000000007023c30][c000000000032980]system_call_exception+0x160/0x310
+[390.473075][c000000007023e50][c00000000000d05c]system_call_vectored_common+0x15c/0x2ec
+[390.473826]---interrupt:3000at0x7fffa36a8494
+[390.474653]NIP:00007fffa36a8494LR:00007fffa36a8494CTR:0000000000000000
+[390.475341]REGS:c000000007023e80TRAP:3000Nottainted(6.14.0-63.fc42.ppc64le)
+[390.476056]MSR:800000000280f033<SF,VEC,VSX,EE,PR,FP,ME,IR,DR,RI,LE>CR:48222408XER:00000000
+[390.477150]IRQMASK:0
+[390.477150]GPR00:000000000000000400007fffefd0a24000000000001000000000000000000001
+[390.477150]GPR04:000000013fd206c0000000000000000200000000000000000000000000000000
+[390.477150]GPR08:0000000000000000000000000000000000000000000000000000000000000000
+[390.477150]GPR12:000000000000000000007fffa3a0ac20000000012300005c000000013fd59b40
+[390.477150]GPR16:0000000123009528000000013fd3e3f000000000000000010000000122f06460
+[390.477150]GPR20:00000000000000000000000122faea1000000001230096d80000000123008bb8
+[390.477150]GPR24:00000000000000000000000123008ba80000000122fb156000007fffa3841878
+[390.477150]GPR28:000000000000000200007fffa3841790000000013fd206c00000000000000002
+[390.483172]NIP[00007fffa36a8494]0x7fffa36a8494
+[390.483616]LR[00007fffa36a8494]0x7fffa36a8494
+[390.484072]---interrupt:3000
+qemu-system-ppc64:warning:TCGdoesn'tsupportrequestedfeature,cap-cfpc=workaround
+qemu-system-ppc64:warning:TCGdoesn'tsupportrequestedfeature,cap-ibs=workaround
+qemu-system-ppc64:warning:TCGdoesn'tsupportrequestedfeature,cap-ccf-assist=on
+SLOF**********************************************************************
+QEMUStarting
+BuildDate=Nov6202415:31:54
+FWVersion=git-ee03aec2c106a699
+Press"s"toenterOpenFirmware.
+Populating/vdevicemethods
+Populating/vdevice/vty@71000000
+Populating/vdevice/nvram@71000001
+Populating/vdevice/l-lan@71000002
+Populating/vdevice/v-scsi@71000003
+SCSI:Lookingfordevices
+8000000000000000DISK:"QEMUQEMUHARDDISK2.5+"
+8200000000000000CD-ROM:"QEMUQEMUCD-ROM2.5+"
+Populating/pci@800000020000000
+000000(D):12341111qemuvga
+000800(D):10330194serialbus[usb-xhci]
+InstallingQEMUfb
+ScanningUSB
+XHCI:Initializing
+USBKeyboard
+USBmouse
+Usingdefaultconsole:/vdevice/vty@71000000
+WelcometoOpenFirmware
+Copyright(c)2004,2017IBMCorporationAllrightsreserved.
+Thisprogramandtheaccompanyingmaterialsaremadeavailable
+underthetermsoftheBSDLicenseavailableat
+http://www.opensource.org/licenses/bsd-license.php
+Tryingtoload:from:/vdevice/v-scsi@71000003/disk@8000000000000000...Successfullyloaded
+WelcometoGRUB!
+error:../../grub-core/term/serial.c:278:serialport`auto'isn'tfound.
+error:../../grub-core/commands/terminal.c:138:terminal`serial'isn'tfound.
+error:../../grub-core/commands/terminal.c:138:terminal`serial'isn'tfound.
+Booting`FedoraLinux(6.14.0-63.fc42.ppc64le)42(CloudEdition)'
+OFstdoutdeviceis:/vdevice/vty@71000000
+PreparingtobootLinuxversion6.14.0-63.fc42.ppc64le(mockbuild@6dfdb20f66f3497abc344a07ba6fd9d1)(gcc(GCC)15.0.120250228(RedHat15.0.1-0),GNUldversion2.44-3.fc42)#1 
+SMP Mon Mar 24 19:38:12 UTC 2025
+Detectedmachinetype:0000000000000101
+commandline:BOOT_IMAGE=(ieee1275/disk,gpt2)/vmlinuz-6.14.0-63.fc42.ppc64leno_timer_checkconsole=tty1console=ttyS0,115200n8systemd.firstboot=offroot=UUID=1226ffcb-9b43-42cd-9265-c87dfc50b214rootflags=subvol=rootfadump=on
+Maxnumberofcorespassedtofirmware:2048(NR_CPUS=2048)
+Callingibm,client-architecture-support...done
+memorylayoutatinit:
+memory_limit:0000000000000000(16MBaligned)
+alloc_bottom:000000000ac50000
+alloc_top:0000000030000000
+alloc_top_hi:0000000280000000
+rmo_top:0000000030000000
+ram_top:0000000280000000
+founddisplay:/pci@800000020000000/vga@0,opening...done
+instantiatingrtasat0x000000002fff0000...done
+prom_hold_cpus:skipped
+copyingOFdevicetree...
+Buildingdtstrings...
+Buildingdtstructure...
+Devicetreestrings0x000000000ac60000->0x000000000ac60c96
+Devicetreestruct0x000000000ac70000->0x000000000ac80000
+QuiescingOpenFirmware...
+BootingLinuxvia__start()@0x0000000002300000...
+[0.000000]rtasfadump:Firmware-assisteddumpisactive.
+[0.000000]random:crnginitdone
+[0.000000]fadump:Updatedcmdline:BOOT_IMAGE=(ieee1275/disk,gpt2)/vmlinuz-6.14.0-63.fc42.ppc64leno_timer_checkconsole=tty1console=ttyS0,115200n8systemd.firstboot=offroot=UUID=1226ffcb-9b43-42cd-9265-c87dfc50b214rootflags=subvol=rootfadump=on
+[0.000000]fadump:Firmware-assisteddumpisactive.
+[0.000000]fadump:Reserving9728MBofmemoryat0x00000020000000forpreservingcrashdata
+[0.000000]radix-mmu:Pagesizesfromdevice-tree:
+[0.000000]radix-mmu:Pagesizeshift=12AP=0x0
+[0.000000]radix-mmu:Pagesizeshift=16AP=0x5
+[0.000000]radix-mmu:Pagesizeshift=21AP=0x1
+[0.000000]radix-mmu:Pagesizeshift=30AP=0x2
+....
+openingthegeneratedinvmcoreincrash(vmlinuxdebugsourcetakenfrom[2]).
+# crash ./vmcore ./vmlinux
+crash9.0.0++
+....
+Forhelp,type"help".
+Type"aproposword"tosearchforcommandsrelatedto"word"...
+KERNEL:/home/crash-images/vmlinux
+DUMPFILE:./vmcore[PARTIALDUMP]
+CPUS:1
+DATE:WedDec3119:00:00EST1969
+UPTIME:00:04:33
+LOADAVERAGE:1.14,1.50,0.73
+TASKS:111
+NODENAME:localhost
+RELEASE:6.14.0-63.fc42.ppc64le
+VERSION:#1 SMP Mon Mar 24 19:38:12 UTC 2025
+MACHINE:ppc64le(1000Mhz)
+MEMORY:10GB
+PANIC:"Kernelpanic-notsyncing:sysrqtriggeredcrash"
+PID:1084
+COMMAND:"bash"
+TASK:c000000007057580[THREAD_INFO:c000000007057580]
+CPU:0
+STATE:TASK_RUNNING(PANIC)
+crash>
+....
+[1]https://fedoraproject.org/cloud/download/
+[2]https://archive.fedoraproject.org/pub/fedora-secondary/releases/42/Server/ppc64le/debug/tree/Packages/k/kernel-debuginfo-6.14.0-63.fc42.ppc64le.rpm
 
