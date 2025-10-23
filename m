@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C6BCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12060CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtkT-0001Js-Iw; Thu, 23 Oct 2025 07:44:55 -0400
+	id 1vBtl8-0002ha-Do; Thu, 23 Oct 2025 07:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkQ-0001Iw-Hn
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:50 -0400
+ id 1vBtkw-0002IH-G2
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:22 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkO-0001b5-5f
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:50 -0400
+ id 1vBtkt-0001pZ-3Q
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:22 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N81Ye0016386;
- Thu, 23 Oct 2025 11:44:46 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N10DfK018793
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dcACo3
- S87IyV+ig7TtWdbS+8ojMBsIUe/dLyrFg9j/U=; b=jm1QwXA8/qz82+vwsTy8GH
- v0XxY1DoLNFKgFMF7UWNgzjLeRLi1+5TDqAQWF8TeI6+x76SE+ufDxyWPF3As436
- 2cQwQQtgZe18esMuDpRiCMfwsSj3j4mqGndvvejm4O5sPGXxu/fNQGW1fTDaFxVx
- mQgduNX6yR+VSIUXZst8tcjcOv9nvq73QUnlIrEShcPnZTUV6jZalR2oQRkpgXu8
- BCOhm4QCOe+mME/WSb6kE72IJZlaMoIKmqFqWqkccIbpM6197WqpsrACUjvuDYEH
- uhFgYTGteG+qV7PE6KoSrwG4ulZB0lU+AX1Wf2K5jSoZ4+yFk5OYEvV81xiJNn3w
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3271wc2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:44:45 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NA8V2w032092;
- Thu, 23 Oct 2025 11:44:44 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7n5eq0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:44:44 +0000
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=e5ZRH5Zmk9CV95UyF
+ QSWujU4DCdRUIn5aby8B+0zOBg=; b=V6E2xdMaIb7wWRABXstSyVBD6rNVktKXk
+ xaNH8vDDQoVsVz9qlgaQon2jOeXimCCq3ChGVeU9DlFEePcf5ULEIS9Aoyk8Mcuq
+ 4SeZtKeAnBzebUo0CjGxyRJbvqNhkfu8Uc7CTjOwVM7r+55rwehPX3XpRLMnic6A
+ RlL9gBncE19EfSmObTJlhkSUcVqBBxcJnr9jH6uIu35YjouiwHYqEu435CHGzUt2
+ TfTdKvAWre80fKd3bxnH3yCHdnYtOdePEgeLP3C2TV0G5tqeHVV6/rM9OpI0a0C8
+ JkR7S8hFbpcqcKnT2DtZs3W0PX9a1yRKek14LD/rLArFxlt985epA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3271wdb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:07 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAo5wg002324
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:06 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejn9wp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:06 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBiesd49676730
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBj3gZ29360450
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:44:40 GMT
+ Thu, 23 Oct 2025 11:45:03 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8145E2004B;
- Thu, 23 Oct 2025 11:44:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1015B20049;
+ Thu, 23 Oct 2025 11:45:03 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9FDC920040;
- Thu, 23 Oct 2025 11:44:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0606020040;
+ Thu, 23 Oct 2025 11:45:02 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:44:39 +0000 (GMT)
+ Thu, 23 Oct 2025 11:45:01 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PULL 09/32] hw/ppc/spapr: Remove SpaprMachineClass::phb_placement
- callback
-Date: Thu, 23 Oct 2025 17:13:56 +0530
-Message-ID: <20251023114422.3675018-10-harshpb@linux.ibm.com>
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: [PULL 27/32] hw/ppc: Preserve memory regions registered for fadump
+Date: Thu, 23 Oct 2025 17:14:14 +0530
+Message-ID: <20251023114422.3675018-28-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68fa152d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
- a=l7mRzedawI2mqaqXN0wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7unxM4dIR/Iv
- DcH2ZlQbF+fm221Aa2A3PEgYV3iWdUR/T4Nd5lN59FY5EoGdAkfgBXjLjy7i854IVTg23/klDT5
- ml49Tg9pUHkeZ6My02PLkj8P/cxATT8s2FSNPEE8JPjqbzZGHCIsPcUSCd6H8eNyu5LEzsaalTj
- QVSE2yzt0z0aMgHRzphUdPLwpdxQV63129NlSRlehZkJ6GMLx80XkHq/fivv0Aed3di8f8kuMT7
- njM8e+999ObPuL9NwZ5XV8Rskkn+bWz0KHGUO/Eg7iSECLKDc82xN2XQHZVfX8C/h6iD28Qd9Xp
- 6S9rikEijgrOsEFoL6T/V5SzTMfzTNeS9zmNvpd3esgtU6ojxHooHKHGHaUT6J3jK2WWnQraIK0
- y0OksnheU24paG519QbYueCdzQaSog==
-X-Proofpoint-GUID: z_E0x7NynJngwnBeXmqC8tk0kR1jEJng
-X-Proofpoint-ORIG-GUID: z_E0x7NynJngwnBeXmqC8tk0kR1jEJng
+X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68fa1543 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=8rT69PE5f5DtODXktdUA:9
+ a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9K6uldJhdULe
+ mdFXrtgHl3IWAmb+SMU/8V1yZdSn56LNDoDwpBpXwiv8wsxtCS9TFt1g2qoObcnn2pC26OUCfXL
+ I3J9Kno2rMnUDkdp1UvPkcPEbd3OaiCOTZCPikN1T6VwZw2kLf6iX9cJjLnt0uOr4xcQ7MXWail
+ xlrhj4SkRGQCJpYsb+VOYnru/6nXXY5s65VRaZ2OaXHClMMIG2Zhcjr/UmrIG11TDIoSm6Dzt6I
+ CqF+8Dk2egpaA7RVuMbD78UzmaQK31Th/tveFGlQ628kpjj644C6W2vgdyQUxTnXQw7tYUNbWkx
+ fDIShGyRh/1YGke2UDEBpYTx8Nq3Wz8Ad5fuZXc8jehEzkGuYBCo3eSnDqXc8WkQSQsHdiHVpdH
+ vod/qLSAB2y2MVuxJJulaq47Z3DyaQ==
+X-Proofpoint-GUID: 81mPDdt8gNj-_mcHQ3Q03kSxykgqy_Nx
+X-Proofpoint-ORIG-GUID: 81mPDdt8gNj-_mcHQ3Q03kSxykgqy_Nx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
@@ -124,189 +120,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-The SpaprMachineClass::phb_placement callback was only used by
-the pseries-4.0 machine, which got removed. Remove it as now
-unused, directly calling spapr_phb_placement().
-Move spapr_phb_placement() definition to avoid forward declaration.
+While the first kernel boots, it registers memory regions for fadump
+such as:
+    * CPU state data  (has to be populated by the platform)
+    * HPTE state data (has to be populated by the platform)
+    * Real Mode Regions (platform should copy it to requested
+      destination addresses)
+    * OS defined regions (such as parameter save area)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20251021084346.73671-10-philmd@linaro.org
+Platform is also expected to modify the 'bytes_dumped' to the length of
+data preserved/copied by platform (ideally same as the source length
+passed by kernel).
+
+The kernel passes source address and length for the memory regions, and
+a destination address to where the memory is to be copied.
+
+Implement the preserving/copying of the Real Mode Regions and the
+Parameter Save Area in QEMU Pseries
+
+The regions are copied in chunks instead of copying all at once.
+
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-4-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- include/hw/ppc/spapr.h |   5 --
- hw/ppc/spapr.c         | 114 ++++++++++++++++++++---------------------
- 2 files changed, 55 insertions(+), 64 deletions(-)
+ include/hw/ppc/spapr_fadump.h |  18 ++++
+ hw/ppc/spapr_fadump.c         | 183 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 196 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 58d31b096c..bd783e92e1 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -147,11 +147,6 @@ struct SpaprMachineClass {
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
-     bool pre_6_2_numa_affinity;
--
--    bool (*phb_placement)(SpaprMachineState *spapr, uint32_t index,
--                          uint64_t *buid, hwaddr *pio,
--                          hwaddr *mmio32, hwaddr *mmio64,
--                          unsigned n_dma, uint32_t *liobns, Error **errp);
-     SpaprResizeHpt resize_hpt_default;
-     SpaprCapabilities default_caps;
-     SpaprIrq *irq;
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index ea7d2a03aa..371593d0b5 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4068,12 +4068,62 @@ int spapr_phb_dt_populate(SpaprDrc *drc, SpaprMachineState *spapr,
-     return 0;
+diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
+index 1cb90c9d63..71be2ad92c 100644
+--- a/include/hw/ppc/spapr_fadump.h
++++ b/include/hw/ppc/spapr_fadump.h
+@@ -16,11 +16,29 @@
+ 
+ #define FADUMP_VERSION                 1
+ 
++/* Firmware provided dump sections */
++#define FADUMP_CPU_STATE_DATA   0x0001
++#define FADUMP_HPTE_REGION      0x0002
++#define FADUMP_REAL_MODE_REGION 0x0011
++
++/* OS defined sections */
++#define FADUMP_PARAM_AREA       0x0100
++
++/* Dump request flag */
++#define FADUMP_REQUEST_FLAG     0x00000001
++
+ /* Dump status flags */
+ #define FADUMP_STATUS_DUMP_PERFORMED            0x8000
+ #define FADUMP_STATUS_DUMP_TRIGGERED            0x4000
+ #define FADUMP_STATUS_DUMP_ERROR                0x2000
+ 
++/* Region dump error flags */
++#define FADUMP_ERROR_INVALID_DATA_TYPE          0x8000
++#define FADUMP_ERROR_INVALID_SOURCE_ADDR        0x4000
++#define FADUMP_ERROR_LENGTH_EXCEEDS_SOURCE      0x2000
++#define FADUMP_ERROR_INVALID_DEST_ADDR          0x1000
++#define FAUDMP_ERROR_DEST_TOO_SMALL             0x0800
++
+ /*
+  * The Firmware Assisted Dump Memory structure supports a maximum of 10 sections
+  * in the dump memory structure. Presently, three sections are used for
+diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+index 53e5c12c76..5068a9d83d 100644
+--- a/hw/ppc/spapr_fadump.c
++++ b/hw/ppc/spapr_fadump.c
+@@ -7,7 +7,9 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "hw/ppc/spapr.h"
++#include "qemu/units.h"
+ #include "system/cpus.h"
++#include <math.h>
+ 
+ /*
+  * Handle the "FADUMP_CMD_REGISTER" command in 'ibm,configure-kernel-dump'
+@@ -123,14 +125,185 @@ uint32_t do_fadump_register(SpaprMachineState *spapr, target_ulong args)
+     return RTAS_OUT_SUCCESS;
  }
  
-+static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
-+                                uint64_t *buid, hwaddr *pio,
-+                                hwaddr *mmio32, hwaddr *mmio64,
-+                                unsigned n_dma, uint32_t *liobns, Error **errp)
++/*
++ * Copy the source region of given fadump section, to the destination
++ * address mentioned in the region
++ *
++ * Also set the region's error flag, if the copy fails due to non-existent
++ * address (MEMTX_DECODE_ERROR) or permission issues (MEMTX_ACCESS_ERROR)
++ *
++ * Returns true if successful copy
++ *
++ * Returns false in case of any other error, being treated as hardware
++ * error for fadump purposes
++ */
++static bool do_preserve_region(FadumpSection *region)
 +{
++    AddressSpace *default_as = &address_space_memory;
++    MemTxResult io_result;
++    MemTxAttrs attrs;
++    uint64_t src_addr, src_len, dest_addr;
++    uint64_t num_chunks;
++    g_autofree void *copy_buffer = NULL;
++
++    src_addr  = be64_to_cpu(region->source_address);
++    src_len   = be64_to_cpu(region->source_len);
++    dest_addr = be64_to_cpu(region->destination_address);
++
++    /* Mark the memory transaction as privileged memory access */
++    attrs.user = 0;
++    attrs.memory = 1;
++
 +    /*
-+     * New-style PHB window placement.
-+     *
-+     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
-+     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
-+     * windows.
-+     *
-+     * Some guest kernels can't work with MMIO windows above 1<<46
-+     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
-+     *
-+     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
-+     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
-+     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
-+     * 1TiB 64-bit MMIO windows for each PHB.
++     * Optimisation: Skip copy if source and destination are same
++     * (eg. param area)
 +     */
-+    const uint64_t base_buid = 0x800000020000000ULL;
-+    int i;
-+
-+    /* Sanity check natural alignments */
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % SPAPR_PCI_MEM32_WIN_SIZE) != 0);
-+    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % SPAPR_PCI_IO_WIN_SIZE) != 0);
-+    /* Sanity check bounds */
-+    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
-+                      SPAPR_PCI_MEM32_WIN_SIZE);
-+    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
-+                      SPAPR_PCI_MEM64_WIN_SIZE);
-+
-+    if (index >= SPAPR_MAX_PHBS) {
-+        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
-+                   SPAPR_MAX_PHBS - 1);
-+        return false;
++    if (src_addr == dest_addr) {
++        region->bytes_dumped = cpu_to_be64(src_len);
++        return true;
 +    }
 +
-+    *buid = base_buid + index;
-+    for (i = 0; i < n_dma; ++i) {
-+        liobns[i] = SPAPR_PCI_LIOBN(index, i);
++#define FADUMP_CHUNK_SIZE  ((size_t)(32 * MiB))
++    copy_buffer = g_try_malloc(FADUMP_CHUNK_SIZE);
++    if (copy_buffer == NULL) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: Failed allocating memory (size: %zu) for copying"
++            " reserved memory regions\n", FADUMP_CHUNK_SIZE);
 +    }
 +
-+    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
-+    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
-+    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
++    num_chunks = ceil((src_len * 1.0f) / FADUMP_CHUNK_SIZE);
++    for (uint64_t chunk_id = 0; chunk_id < num_chunks; ++chunk_id) {
++        /* Take minimum of bytes left to copy, and chunk size */
++        uint64_t copy_len = MIN(
++                        src_len - (chunk_id * FADUMP_CHUNK_SIZE),
++                        FADUMP_CHUNK_SIZE
++                    );
++
++        /* Copy the source region to destination */
++        io_result = address_space_read(default_as, src_addr, attrs,
++                copy_buffer, copy_len);
++        if ((io_result & MEMTX_DECODE_ERROR) ||
++            (io_result & MEMTX_ACCESS_ERROR)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Failed to decode/access address in section: %d\n",
++                region->source_data_type);
++
++            /*
++             * Invalid source address is not an hardware error, instead
++             * wrong parameter from the kernel.
++             * Return true to let caller know to continue reading other
++             * sections
++             */
++            region->error_flags = FADUMP_ERROR_INVALID_SOURCE_ADDR;
++            region->bytes_dumped = 0;
++            return true;
++        } else if (io_result != MEMTX_OK) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Failed to read source region in section: %d\n",
++                region->source_data_type);
++
++            return false;
++        }
++
++        io_result = address_space_write(default_as, dest_addr, attrs,
++                copy_buffer, copy_len);
++        if ((io_result & MEMTX_DECODE_ERROR) ||
++            (io_result & MEMTX_ACCESS_ERROR)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Failed to decode/access address in section: %d\n",
++                region->source_data_type);
++
++            /*
++             * Invalid destination address is not an hardware error,
++             * instead wrong parameter from the kernel.
++             * Return true to let caller know to continue reading other
++             * sections
++             */
++            region->error_flags = FADUMP_ERROR_INVALID_DEST_ADDR;
++            region->bytes_dumped = 0;
++            return true;
++        } else if (io_result != MEMTX_OK) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Failed to write destination in section: %d\n",
++                region->source_data_type);
++
++            return false;
++        }
++
++        src_addr += FADUMP_CHUNK_SIZE;
++        dest_addr += FADUMP_CHUNK_SIZE;
++    }
++#undef FADUMP_CHUNK_SIZE
++
++    /*
++     * Considering address_space_write would have copied the
++     * complete region
++     */
++    region->bytes_dumped = cpu_to_be64(src_len);
 +    return true;
 +}
 +
- static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                Error **errp)
+ /* Preserve the memory locations registered for fadump */
+-static bool fadump_preserve_mem(void)
++static bool fadump_preserve_mem(SpaprMachineState *spapr)
  {
-     SpaprMachineState *spapr = SPAPR_MACHINE(OBJECT(hotplug_dev));
-     SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(dev);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     const unsigned windows_supported = spapr_phb_windows_supported(sphb);
-     SpaprDrc *drc;
- 
-@@ -4092,12 +4142,10 @@ static bool spapr_phb_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-      * This will check that sphb->index doesn't exceed the maximum number of
-      * PHBs for the current machine type.
++    FadumpMemStruct *fdm = &spapr->registered_fdm;
++    uint16_t dump_num_sections, data_type;
++
++    assert(spapr->fadump_registered);
++
+     /*
+-     * TODO: Implement preserving memory regions requested during fadump
+-     * registration
++     * Handle all sections
++     *
++     * CPU State Data and HPTE regions are handled in their own cases
++     *
++     * RMR regions and any custom OS reserved regions such as parameter
++     * save area, are handled by simply copying the source region to
++     * destination address
       */
--    return
--        smc->phb_placement(spapr, sphb->index,
--                           &sphb->buid, &sphb->io_win_addr,
--                           &sphb->mem_win_addr, &sphb->mem64_win_addr,
--                           windows_supported, sphb->dma_liobn,
--                           errp);
-+    return spapr_phb_placement(spapr, sphb->index,
-+                               &sphb->buid, &sphb->io_win_addr,
-+                               &sphb->mem_win_addr, &sphb->mem64_win_addr,
-+                               windows_supported, sphb->dma_liobn, errp);
+-    return false;
++    dump_num_sections = be16_to_cpu(fdm->header.dump_num_sections);
++    for (int i = 0; i < dump_num_sections; ++i) {
++        data_type = be16_to_cpu(fdm->rgn[i].source_data_type);
++
++        /* Reset error_flags & bytes_dumped for now */
++        fdm->rgn[i].error_flags = 0;
++        fdm->rgn[i].bytes_dumped = 0;
++
++        /* If kernel did not request for the memory region, then skip it */
++        if (be32_to_cpu(fdm->rgn[i].request_flag) != FADUMP_REQUEST_FLAG) {
++            qemu_log_mask(LOG_UNIMP,
++                "FADump: Skipping copying region as not requested\n");
++            continue;
++        }
++
++        switch (data_type) {
++        case FADUMP_CPU_STATE_DATA:
++            /* TODO: Add CPU state data */
++            break;
++        case FADUMP_HPTE_REGION:
++            /* TODO: Add hpte state data */
++            break;
++        case FADUMP_REAL_MODE_REGION:
++        case FADUMP_PARAM_AREA:
++            /* Copy the memory region from region's source to its destination */
++            if (!do_preserve_region(&fdm->rgn[i])) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                    "FADump: Failed to preserve dump section: %d\n",
++                    be16_to_cpu(fdm->rgn[i].source_data_type));
++                fdm->header.dump_status_flag |=
++                    cpu_to_be16(FADUMP_STATUS_DUMP_ERROR);
++            }
++
++            break;
++        default:
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Skipping unknown source data type: %d\n", data_type);
++
++            fdm->rgn[i].error_flags =
++                cpu_to_be16(FADUMP_ERROR_INVALID_DATA_TYPE);
++        }
++    }
++
++    return true;
  }
  
- static void spapr_phb_plug(HotplugHandler *hotplug_dev, DeviceState *dev)
-@@ -4345,57 +4393,6 @@ static const CPUArchIdList *spapr_possible_cpu_arch_ids(MachineState *machine)
-     return machine->possible_cpus;
- }
+ /*
+@@ -151,7 +324,7 @@ void trigger_fadump_boot(SpaprMachineState *spapr, target_ulong spapr_retcode)
+     pause_all_vcpus();
  
--static bool spapr_phb_placement(SpaprMachineState *spapr, uint32_t index,
--                                uint64_t *buid, hwaddr *pio,
--                                hwaddr *mmio32, hwaddr *mmio64,
--                                unsigned n_dma, uint32_t *liobns, Error **errp)
--{
--    /*
--     * New-style PHB window placement.
--     *
--     * Goals: Gives large (1TiB), naturally aligned 64-bit MMIO window
--     * for each PHB, in addition to 2GiB 32-bit MMIO and 64kiB PIO
--     * windows.
--     *
--     * Some guest kernels can't work with MMIO windows above 1<<46
--     * (64TiB), so we place up to 31 PHBs in the area 32TiB..64TiB
--     *
--     * 32TiB..(33TiB+1984kiB) contains the 64kiB PIO windows for each
--     * PHB stacked together.  (32TiB+2GiB)..(32TiB+64GiB) contains the
--     * 2GiB 32-bit MMIO windows for each PHB.  Then 33..64TiB has the
--     * 1TiB 64-bit MMIO windows for each PHB.
--     */
--    const uint64_t base_buid = 0x800000020000000ULL;
--    int i;
--
--    /* Sanity check natural alignments */
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_BASE % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_LIMIT % SPAPR_PCI_MEM64_WIN_SIZE) != 0);
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM64_WIN_SIZE % SPAPR_PCI_MEM32_WIN_SIZE) != 0);
--    QEMU_BUILD_BUG_ON((SPAPR_PCI_MEM32_WIN_SIZE % SPAPR_PCI_IO_WIN_SIZE) != 0);
--    /* Sanity check bounds */
--    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_IO_WIN_SIZE) >
--                      SPAPR_PCI_MEM32_WIN_SIZE);
--    QEMU_BUILD_BUG_ON((SPAPR_MAX_PHBS * SPAPR_PCI_MEM32_WIN_SIZE) >
--                      SPAPR_PCI_MEM64_WIN_SIZE);
--
--    if (index >= SPAPR_MAX_PHBS) {
--        error_setg(errp, "\"index\" for PAPR PHB is too large (max %llu)",
--                   SPAPR_MAX_PHBS - 1);
--        return false;
--    }
--
--    *buid = base_buid + index;
--    for (i = 0; i < n_dma; ++i) {
--        liobns[i] = SPAPR_PCI_LIOBN(index, i);
--    }
--
--    *pio = SPAPR_PCI_BASE + index * SPAPR_PCI_IO_WIN_SIZE;
--    *mmio32 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM32_WIN_SIZE;
--    *mmio64 = SPAPR_PCI_BASE + (index + 1) * SPAPR_PCI_MEM64_WIN_SIZE;
--    return true;
--}
--
- static ICSState *spapr_ics_get(XICSFabric *dev, int irq)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(dev);
-@@ -4606,7 +4603,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
-     smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
-     fwc->get_dev_path = spapr_get_fw_dev_path;
-     nc->nmi_monitor_handler = spapr_nmi;
--    smc->phb_placement = spapr_phb_placement;
-     vhc->cpu_in_nested = spapr_cpu_in_nested;
-     vhc->deliver_hv_excp = spapr_exit_nested;
-     vhc->hypercall = emulate_spapr_hypercall;
+     /* Preserve the memory locations registered for fadump */
+-    if (!fadump_preserve_mem()) {
++    if (!fadump_preserve_mem(spapr)) {
+         /* Failed to preserve the registered memory regions */
+         rtas_st(spapr_retcode, 0, RTAS_OUT_HW_ERROR);
+ 
 -- 
 2.43.5
 
