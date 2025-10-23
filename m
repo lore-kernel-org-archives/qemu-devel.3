@@ -4,119 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD5CCCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 06:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A77CCCCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 07:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBpEs-0002UJ-4s; Thu, 23 Oct 2025 02:55:58 -0400
+	id 1vBpKF-0003by-Cv; Thu, 23 Oct 2025 03:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBpEq-0002Tf-DF
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:55:56 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBpEm-0003rI-FH
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:55:56 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-471b80b994bso5483465e9.3
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 23:55:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761202551; x=1761807351; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yBjsiZOdEn77FHXbaFH/pyzY5kAYbLCRT+sJz0dq6fA=;
- b=MAl0EdifKB7nEfBtFd4hmJ4NHsVqUegp720GrbjTUGvyCUMMC/sSoebrAhUxBuuceq
- mYSlkBJzXrDb1XG5t/73Wmp9T/kPygmYbZ5iJdbInvW/3oMhSswTFconW+4fCKW5vYgs
- rzTJbSG1jpwblLkjxNVwe5JK2ps/hxv6DcJEGK35B3Tloj/x7UplzX+Us0Hez13jNQOX
- PzWzYg0diG8WxGCUVbI92bEU6WrzEB57DU+FXHNUsWKEpkQRki4ZS2rclW9C4FOPea+b
- +062MqgYokmahzDF8VawksuMzdC2l7siO06+TVOV9rbNxECJcPKKqcNXJIceYKJxCApo
- A/CA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBpK8-0003aG-2t
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 03:01:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vBpK4-0004Pl-Ms
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 03:01:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761202875;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WnGeHzwPDjiiBlJxqdCFdDkc6/33T6vq8MwVC6hmm7k=;
+ b=Hbk1p+uPLON44xyQ3XegEL03WVPkMwXj0s5gmPg5kVFhk8nVB5PLw4dpnTFlMii8MHk1yn
+ QFx04XNY0mOarmBOwfSrQUdx9dHwv4WcTm4UwGbH+0PcClo6SV6uHtKV9jtSzblpRiatW1
+ IYqiVRgP7YDkt3kCSu2HpiPo9tYRcWA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-119-sCivY9aKNUmkWZbtDs50Hw-1; Thu, 23 Oct 2025 03:01:13 -0400
+X-MC-Unique: sCivY9aKNUmkWZbtDs50Hw-1
+X-Mimecast-MFC-AGG-ID: sCivY9aKNUmkWZbtDs50Hw_1761202872
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46fa88b5760so1481305e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 00:01:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761202551; x=1761807351;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yBjsiZOdEn77FHXbaFH/pyzY5kAYbLCRT+sJz0dq6fA=;
- b=gPAKS+vHqcx/18qR/vXq5lorI8n2BWFtdiYBovjVL8vgYWvFEtOhKRP1eplNpmY/7p
- zKVVO3zsUpIg0oQCj2tKNP5tSY17n50TGGfpEE39Pf91XUX3UhRb1+IiYnG/XUNphAW7
- CB9yzt2L8aBOHyvERvvxXH+3okCAovLxhQGxkIvY3iw0cTnD0JYZauJEpUsqMyPfAAMz
- MSit/GQPqnGdA6dpwU3x8N3DoLMFOVTbls4GEqXV8BUvd33YjH0Oaemj5gZUMJYwbyme
- St7bdzHNAxRpi79Tj7YOSH6r2Qm/KAmh1kifBCilI9q8F2V/615sng18DbfEdim/kNQ7
- WSZA==
+ d=1e100.net; s=20230601; t=1761202872; x=1761807672;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WnGeHzwPDjiiBlJxqdCFdDkc6/33T6vq8MwVC6hmm7k=;
+ b=GawwiwLPI3xmbxWtUqBjoWP16Q2CWDPLwdhp05mDl47Huun8yVLpQPr8S4Y9N+u1RV
+ 065Ek9DH0qcRuGfnS00deQhCjKnl7/6FCdPU/voKpLFMvZZ/bCYgQCk074o9HnO7/M51
+ ByzFudPpgGpf0Xqy8b0JFDga7IV0S+W4xovI+Psm18vecmwXAVcs+1md6Dvi5Tb6hdf5
+ gVxrgno3sQDq+6d21AnCWEUtyu2Jy4WlxzV8b1ykzGz8b8hTReC3/m3o+Y3FWp/bTJqX
+ u2gC2BSii0h89/BxTzBA9aHKxaOSnFkSAHHl43fca1ZlanujcaHzsbHGKo+z+rXZssiE
+ JeQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMG6S47ecuAwVCx/XbgZzHz+jmcinthJd5gRsFSiQwchoHDjHUgbgEPJZ4un4eZMWCDF/Cf5xjOX7z@nongnu.org
-X-Gm-Message-State: AOJu0YxnWJd8oHZiFuEqFRBAI04RlNE5V2n8cX6eQx+lGdTdUuqWjkQO
- RNS5kSVtgKR4071fn3/D9K7f/tURLqvLzV2C77AHE6l6a46DFPgwgtLKoyr3/lJapDA=
-X-Gm-Gg: ASbGnct9bGRINr/SrMZZNrMT0U6fOvUdZ0D1uQUyhyq2czfSGgmg6753FqDKou/LQyk
- M/2m9fjLarQpj0jZ/iSYUScg4Ll6BxfUO1A0PajZD0w1yqN8dJ29Q60loFIP3p+SqV77prVH+Ah
- 7/vZZICGs5cuF8Z+Atgzn8PwWTkFrelqVDI0zM8pFjBlmzPcBpGgKqHcNEnJWaFA5wYB9YOSrAR
- 0uvVZwVGqmCJTn+X8EytdNQPubv9F+zFAsClS/xeq+HpUDSQl3faahfYLw9WyniBxtxj/UITnqf
- Yg+DD+lhu4SRKgMiC7zvBmsbL55b0Hwgjw1G9o7IhxRLavMZDC9LW30YuN7IG9S8vFuNZbSknVh
- 9rAKENV2Yj+7e9GZOJ61yDED0an+M/Bs9HgGjI6IoFjd3M8/INNxFx2oS+eV1D/n6WFHglhWO2d
- nSwEBXtfNNbPkWdN++Fsx/3ddw+qU47J7OWeYXgLYXFt4vt+U9whjVBg==
-X-Google-Smtp-Source: AGHT+IFc7GZgQ+HjgYh3w9CjXImj+3Na+YnYobgCi3dJmLowW01x3YzXkb4t8JrWd9L/fU1Q9uMKFQ==
-X-Received: by 2002:a05:600c:4ec9:b0:46e:2562:e7b8 with SMTP id
- 5b1f17b1804b1-471179123admr170521105e9.21.1761202550629; 
- Wed, 22 Oct 2025 23:55:50 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429897ff3f5sm2354381f8f.22.2025.10.22.23.55.48
+ AJvYcCWHWeNAgh1MkHuuw8vTcZEo/XZtaGHsEYkxoIiEI+Z/0BGe2MVMqdDhuIdvcV1e7tS/VfF1muC3EgKA@nongnu.org
+X-Gm-Message-State: AOJu0YwtZF7lJZFRTPIH/N4Ygsnzmnpx0QIXzbI8eBF3qQzhjtHFd57e
+ FEx4YygrGgNGFM67t/P8wh3zVpFVT4JmVKWyAzK0+9YH2XtmXa9tPIO94DaazV9XWgUufaoySVl
+ gnfNOdHoOTCVQQ8l6NoToGNfXo7anR7KFishXkLfK39LiU6YjTkGzxO2V
+X-Gm-Gg: ASbGncvFc1gDNHyNj0f4pKpCdDYWSAYOwRxpBOM4xItFFAv4+HGFO9aOODkdmbEuSGy
+ lLsTwXW2b9weNryjhCazxhSdagzzQVFZtY5+XgMQBro8oT65iKIaSBAa6S8Ev6wHMSrLaxm4P+X
+ BnYkEtfbrgfZ0hj244AkI5qcoY2GSRtovZP+47dQ90jlvbAME+b9p8qpZwt2Cp8zqz+sNTeyeGA
+ 8TdTpq3q2gI8oMElwp8ecRy4M3u9UXTpqKwRhdAElsJKmGedfi+NL4mGhF1eIZutpEgHkQRCysX
+ T7r9yfFVNTfPLPFh1Eq6+G4gweMi1s1u1zlcbBF6Q1fsuSZ9kU2GxwZITmbDSV6XJqtgBjRGC2V
+ RSc4hm03XMXWZBTuw+NvwUAJGoMOZqnpkHlvY7HM=
+X-Received: by 2002:a05:600c:3e0f:b0:471:803:6a26 with SMTP id
+ 5b1f17b1804b1-4711791d945mr181052585e9.37.1761202871929; 
+ Thu, 23 Oct 2025 00:01:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiHSZSJ7Pt86hIQebL0az33XXamUCxKVfo6++kmwhHJhkm8zrJS8/KJQWSRhn0WFemwkvg2g==
+X-Received: by 2002:a05:600c:3e0f:b0:471:803:6a26 with SMTP id
+ 5b1f17b1804b1-4711791d945mr181052245e9.37.1761202871542; 
+ Thu, 23 Oct 2025 00:01:11 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-113-081.pools.arcor-ip.net.
+ [47.64.113.81]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475cae9f571sm20959645e9.7.2025.10.23.00.01.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 23:55:50 -0700 (PDT)
-Message-ID: <c013adf2-9620-4766-8f5b-1000ed1a494a@linaro.org>
-Date: Thu, 23 Oct 2025 08:55:47 +0200
+ Thu, 23 Oct 2025 00:01:11 -0700 (PDT)
+Message-ID: <f7817d99-f2cb-453a-8d3d-e28b592fa93d@redhat.com>
+Date: Thu, 23 Oct 2025 09:01:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] remove redundant typedef when use
- OBJECT_DECLARE_SIMPLE_TYPE
+Subject: Re: [PATCH] scripts/device-crash-test: fix spurious EOFError messages
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+References: <20251022213109.395149-1-jsnow@redhat.com>
 Content-Language: en-US
-To: Nguyen Dinh Phi <phind.uet@gmail.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>, Alberto Garcia <berto@igalia.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>, Jason Wang <jasowang@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Amit Shah <amit@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Pavel Pisa <pisa@cmp.felk.cvut.cz>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>
-Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20251023063429.1400398-1-phind.uet@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251023063429.1400398-1-phind.uet@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20251022213109.395149-1-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,37 +152,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 08:34, Nguyen Dinh Phi wrote:
-> When OBJECT_DECLARE_SIMPLE_TYPE is used, it automatically provides
-> the typedef, so we don’t have to define it ourselves.
+On 22/10/2025 23.31, John Snow wrote:
+> When the QMP library was updated to match the standalone repository in
+> 094ded52, I neglected to update the logging filter(s) in
+> device-crash-test, which allowed the spurious messages to leak through.
 > 
-> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+> Update the log filter to re-suppress these messages.
+> 
+> Fixes: 094ded52
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   backends/cryptodev-lkcf.c               | 1 -
->   hw/char/ipoctal232.c                    | 9 ++++-----
->   hw/char/xen_console.c                   | 1 -
->   hw/dma/pl330.c                          | 6 ++----
->   hw/net/fsl_etsec/etsec.h                | 1 -
->   hw/net/xen_nic.c                        | 2 --
->   hw/pci-host/bonito.c                    | 7 +++----
->   hw/ppc/pef.c                            | 1 -
->   hw/usb/dev-mtp.c                        | 7 +++----
->   hw/usb/dev-uas.c                        | 7 +++----
->   include/hw/char/serial.h                | 1 -
->   include/hw/input/lasips2.h              | 6 ++----
->   include/hw/misc/auxbus.h                | 7 +++----
->   include/hw/misc/bcm2835_mphi.h          | 7 ++-----
->   include/hw/misc/npcm7xx_pwm.h           | 7 ++-----
->   include/hw/pci-host/pnv_phb3.h          | 6 ++----
->   include/hw/pci-host/pnv_phb4.h          | 8 ++++----
->   include/hw/ppc/mac_dbdma.h              | 7 +++----
->   include/hw/riscv/iommu.h                | 3 ---
->   include/hw/scsi/scsi.h                  | 7 +++----
->   include/hw/vfio/vfio-container-legacy.h | 5 ++---
->   include/hw/virtio/virtio-serial.h       | 5 ++---
->   include/net/can_emu.h                   | 7 +++----
->   23 files changed, 43 insertions(+), 75 deletions(-)
+>   scripts/device-crash-test | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+> index 1ecb9663ae8..c1576e8b966 100755
+> --- a/scripts/device-crash-test
+> +++ b/scripts/device-crash-test
+> @@ -527,7 +527,7 @@ def main():
+>           # Async QMP, when in use, is chatty about connection failures.
+>           # This script knowingly generates a ton of connection errors.
+>           # Silence this logger.
+> -        logging.getLogger('qemu.qmp.qmp_client').setLevel(logging.CRITICAL)
+> +        logging.getLogger('qemu.qmp.protocol').setLevel(logging.CRITICAL)
+>   
+>       fatal_failures = []
+>       wl_stats = {}
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks, that silences the messages, indeed!
+
+Tested-by: Thomas Huth <thuth@redhat.com>
 
 
