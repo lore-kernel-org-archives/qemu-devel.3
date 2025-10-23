@@ -4,79 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741D5CCD1BC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B89CCD1BF
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtr8-00011o-G3; Thu, 23 Oct 2025 07:51:49 -0400
+	id 1vBtkO-0001Hr-Ed; Thu, 23 Oct 2025 07:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBtqz-0000sR-6Z
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:51:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBtkK-0001GU-7l
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:44 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBtqx-0002RU-3n
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:51:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761220293;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=o5J0XleYy35J72GSLb8VrlEjmKmwrzI5uCA4kevpMWE=;
- b=dp/riD5LDdLz7yyHM++9SSSuJWWihO0ShscTQX9JMF/b5OGFDeKzwPQ8wv/cG+hiLStL1S
- MXMDoXvNzVx0Lzfcnd0mRSvDkol8fteIw5iateSdseSXGTfZ1NCNGDFLy1E1256cayQt7R
- nF5nzBuU2TelNoZfTdi4Y0a40qK0iA4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-VvcMHZOqNiKpgA0i6iCdjA-1; Thu,
- 23 Oct 2025 07:51:29 -0400
-X-MC-Unique: VvcMHZOqNiKpgA0i6iCdjA-1
-X-Mimecast-MFC-AGG-ID: VvcMHZOqNiKpgA0i6iCdjA_1761220288
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 052061800657; Thu, 23 Oct 2025 11:51:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B079A180057C; Thu, 23 Oct 2025 11:51:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F136021E6A27; Thu, 23 Oct 2025 13:51:24 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Stefan Hajnoczi
- <stefanha@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter
- Maydell <peter.maydell@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 06/32] system: check security for machine types
-In-Reply-To: <20250926140144.1998694-7-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 26 Sep 2025 15:01:17
- +0100")
-References: <20250926140144.1998694-1-berrange@redhat.com>
- <20250926140144.1998694-7-berrange@redhat.com>
-Date: Thu, 23 Oct 2025 13:51:24 +0200
-Message-ID: <87frb97s5f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBtkI-0001aA-GI
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:44 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9pGRG016406;
+ Thu, 23 Oct 2025 11:44:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=gumBZn
+ sDL9HL0lcEHsF9XA4suBSXbHfK2Xn0Lw9jxU8=; b=Qo0r4Xron3ATegUF/iDRY5
+ CVEVT6Gw88MpB7GE27Dj4QmVIHE9MHvQXEKrCbWzgaSjgvoPkdShPiIVYdewQHCg
+ Z6Mi1UVFVQlN49XDcoZpDo323OyAafuIU9AE1af9Zwt6tZyf2zpM/7vkzh8UAoxN
+ qhkya1pTrfS7pxBmw6WCmkrdhJrHd1GEyRFO/mFAIa5Ql1RjdCJIG7tgC0BOYEwC
+ bIapKqG1L7m+dZXHt8o7QyQyyIi9eC5aZKzNCg++3gWsfaQXjE6dsbQ9RO8eJDFz
+ 8eFUZXJ9g2LPzNe3Qf/e0MtGDLDxvhQMCPN+6f/N+Zi85KFCcoDR70Dy2akybZvQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hrcnf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:44:40 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9cOgq017066;
+ Thu, 23 Oct 2025 11:44:39 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vnky5krv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:44:39 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBiZfV29557076
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Oct 2025 11:44:35 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F47C20049;
+ Thu, 23 Oct 2025 11:44:35 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9DAEA20040;
+ Thu, 23 Oct 2025 11:44:34 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
+ [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 11:44:34 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PULL 05/32] hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
+Date: Thu, 23 Oct 2025 17:13:52 +0530
+Message-ID: <20251023114422.3675018-6-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
+References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXx/At+VwklSHC
+ LOmWzPJhqDLEyvIPuCbQo27FiE3TosoSsIyuAV8IZJrLcKF6iwkGgrX40cP7dw6RBm//YQ9a41P
+ THoM7JE88/LjQkPl8qS7wbuOQYjb3EFN7cMwGTQBvjF5F9cajFw5SbkI4FdDVEfflbsgmMXEKnl
+ 0utWsEnLKE3Pp2d4GTNvkRU1BvQbR/Eptsr4cfeakmxbFMGjWOKjauxt0QxRb5f5mvEomo6jQIs
+ dufCgiWUJjrkIwWae999x93lQTdiXY4qqHV3HWxpn06omENtAbDQiRXh9zhQRMrBz97QnCbnobO
+ MF3CYVHPE9ewsw4dK4ehFmRlTeiPMQaizq1RIceA91ATv8qGsKSbyC50cShxzxOFCGwPSS/4UkI
+ PgSyETq0VlIsHorTC8GhqlvSrL33iw==
+X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68fa1528 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=FGj2XIL8PdlB0YAdb_sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-GUID: 0LpW3Eqi3yo943DM8HeY3uuNkWkMLCD0
+X-Proofpoint-ORIG-GUID: 0LpW3Eqi3yo943DM8HeY3uuNkWkMLCD0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,67 +123,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> This wires up the machine creation code to apply the compat policy
-> security check.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  system/vl.c | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
->
-> diff --git a/system/vl.c b/system/vl.c
-> index 38c6caf524..716bf6d490 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2182,10 +2182,19 @@ static void qemu_create_machine_containers(Object=
- *machine)
->      }
->  }
->=20=20
-> -static void qemu_create_machine(QDict *qdict)
-> +static int qemu_create_machine(QDict *qdict)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20251021084346.73671-6-philmd@linaro.org
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr_events.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-Suggest bool.
-
->  {
->      MachineClass *machine_class =3D select_machine(qdict, &error_fatal);
->      object_set_machine_compat_props(machine_class->compat_props);
-> +    Error *local_err;
-> +
-> +    if (!compat_policy_check_security(&compat_policy,
-> +                                      object_class_get_name(OBJECT_CLASS=
-(machine_class)),
-> +                                      object_class_is_secure(OBJECT_CLAS=
-S(machine_class)),
-> +                                      &local_err)) {
-> +        error_report_err(local_err);
-> +        return -1;
-> +    }
->=20=20
->      current_machine =3D MACHINE(object_new_with_class(OBJECT_CLASS(machi=
-ne_class)));
->      object_property_add_child(object_get_root(), "machine",
-> @@ -2222,6 +2231,8 @@ static void qemu_create_machine(QDict *qdict)
->                                            false, &error_abort);
->          qobject_unref(default_opts);
->      }
-> +
-> +    return 0;
->  }
->=20=20
->  static int global_init_func(void *opaque, QemuOpts *opts, Error **errp)
-> @@ -3763,7 +3774,9 @@ void qemu_init(int argc, char **argv)
->      /* Transfer QemuOpts options into machine options */
->      parse_memory_options();
->=20=20
-> -    qemu_create_machine(machine_opts_dict);
-> +    if (qemu_create_machine(machine_opts_dict) < 0) {
-> +        exit(1);
-> +    }
->=20=20
->      /*
->       * Load incoming CPR state before any devices are created, because it
+diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
+index 548a190ce8..892ddc7f8f 100644
+--- a/hw/ppc/spapr_events.c
++++ b/hw/ppc/spapr_events.c
+@@ -1041,16 +1041,14 @@ void spapr_clear_pending_hotplug_events(SpaprMachineState *spapr)
+ 
+ void spapr_events_init(SpaprMachineState *spapr)
+ {
+-    int epow_irq = SPAPR_IRQ_EPOW;
+-
+-    spapr_irq_claim(spapr, epow_irq, false, &error_fatal);
++    spapr_irq_claim(spapr, SPAPR_IRQ_EPOW, false, &error_fatal);
+ 
+     QTAILQ_INIT(&spapr->pending_events);
+ 
+     spapr->event_sources = spapr_event_sources_new();
+ 
+     spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_EPOW,
+-                                 epow_irq);
++                                 SPAPR_IRQ_EPOW);
+ 
+     /* NOTE: if machine supports modern/dedicated hotplug event source,
+      * we add it to the device-tree unconditionally. This means we may
+@@ -1061,12 +1059,10 @@ void spapr_events_init(SpaprMachineState *spapr)
+      * checking that it's enabled.
+      */
+     if (spapr->use_hotplug_event_source) {
+-        int hp_irq = SPAPR_IRQ_HOTPLUG;
+-
+-        spapr_irq_claim(spapr, hp_irq, false, &error_fatal);
++        spapr_irq_claim(spapr, SPAPR_IRQ_HOTPLUG, false, &error_fatal);
+ 
+         spapr_event_sources_register(spapr->event_sources, EVENT_CLASS_HOT_PLUG,
+-                                     hp_irq);
++                                     SPAPR_IRQ_HOTPLUG);
+     }
+ 
+     spapr->epow_notifier.notify = spapr_powerdown_req;
+-- 
+2.43.5
 
 
