@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D5C5CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E34ECCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBmjP-0000j6-N9; Thu, 23 Oct 2025 00:15:19 -0400
+	id 1vBmjj-0000ni-HC; Thu, 23 Oct 2025 00:15:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmjM-0000e8-0H
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:16 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1vBmji-0000nU-Tl
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:38 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmjK-0007Jf-3Y
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:15 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-781ea2cee3fso376062b3a.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:15:13 -0700 (PDT)
+ id 1vBmjg-0007MO-PR
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:38 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-79ef9d1805fso378590b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761192912; x=1761797712; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761192935; x=1761797735; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FVk43MZU3eODXH5tqOa2IO00Re4cjN++W5+uBbDHnOk=;
- b=MTdsakn5gDvM8H6EzXGh6N2XYuj5iL1PQp3UnRM+t0O5IjiL7ZLz0ZECVihA840gMP
- ++edDcp+SD8S8psSxcVNrtMrCJLrYHBJBwgAOE3yrfVRc3uJMAIh1piNv6sy3zqaNl1s
- qcBXuy9IEw4UaWyX13ywyweG+dayLUUFemNE6fRthCrpE92ykuBWJZo4oQAGQje7yHwI
- UUQgOj1WHaROaj3i35Oek+b0mSgUUaHEGoqpEgdnjMvpn0UqZdYT4nkUIkJJ7k/7AH1c
- b0mtQuiOjZ/IqU4EJB7Rl/qI59cR4zZxtpzEuMb/eGDIoizEWdoADAjI6G5OKiiMCqcu
- E4Gw==
+ bh=DaV098G5oL4FGgdKQrx8xC9vbZLN/Fck1L4/UQZrfQY=;
+ b=AGp0wK1C0bUfotdxSMhUomvKUXr+suL+8TZj57nPommKiNza4G4wFErX/IMDHM0449
+ WnUGi5HbYIGrYCXNyNSXbx1J3nl8++MV4hK3+gj41DTBfXU37j80izlMIkPQzufvWK94
+ s2eJikWSNvIsitDBmgGY/Rm6PPeMhQiwm5iuzaIhf5QHccsTyAH3CTie4sbuaUekJ8HL
+ Z+VC24GzORTFH512kg1x4RmsbJVVYwF8SriWvz8n6wnTdINrU64se7hMLGOqGC4kdeqr
+ 9xaWQDL7mjTh+9CT0AsB+2BLIazpNGT9bTdz6KPweb1wNFZzwqp/goxEuqpD0gDirkhJ
+ pq4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761192912; x=1761797712;
+ d=1e100.net; s=20230601; t=1761192935; x=1761797735;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FVk43MZU3eODXH5tqOa2IO00Re4cjN++W5+uBbDHnOk=;
- b=jpRzeYlvDAXnTMbAFqsoQ5GU0AYSJweH5pt3xmQOQN+t4kwtcru/ejwnas/x9AQyMZ
- a/eL7ftjphYTYAuRAwysvvmLTGB0H3Z1+KtQfVezauAoP1cZxgNYxVbksZq/2D8KgEa7
- MuXFth0I4vooV7VchQF/VJIp7LpM2SoMP/06DDfooZxLTLbtpY/O3K3zQUe62I5EUU/k
- IERG6ibQ/cAzljvVKi3vTSCAUPZJ8GOJtvAUmSL9mdoDfMIl7yXQJKzK0FR5kejOAcZQ
- PT9Ic3KzcF0bq6e97HXhz/Xc+TjzQQVldlAGb7aENBCyygi6hqMIKTdjCC8OG5XrvrE8
- GGoA==
-X-Gm-Message-State: AOJu0Yz9+QTGQ2V5z3rlxACDR2qSa273bgFx/Vb7GwzAymz7e9s8wKjX
- Xqm4Klx/Nuq+WLNGhsFobWl/McbJetWW0w/CV1swykt3lkx+qSu3uLsvwg7owg==
-X-Gm-Gg: ASbGnctQ6bpdYw9w0bF0f7MZQJ0HxPSJ9pQFm7JZCBcExFW6xjy7fuaUj1DY/qlIKo/
- Btsd/+7pHiEjtgJdi5AcZVm7j+Oaix9wuyqaz1LbwEhywH8gEGqDNtOfZ/OYJzXRW1FbXi+hW3p
- ISugLNOFwisPy/+8E3wUB8UmhrGAmf3L5Kh840tXa/YEhb6Z1X3UqccXoB8Ui9yd/8aIVuMh1j0
- wrYStlIW/bUKpjl7xxV7Jn7XdL3tA8IVKSdZ7nL7T2zoaD3RkoihVBncD1ddrSw66HaIzWYbpyd
- QvJB0Xl35Kb2K2LA1ZteDvIBH1uI4DWBMox9X2lD1ZWekq3d9MLoVxb/OJMzxH6vDTv5G07hvCX
- cQVQzj8tuH9eENMvkD2RhgzY6uyG+ZL05H3a2oKWfqblZs6OictvNE/xtNs5AfTDNrU5WHAGyqx
- SslnXzK2SYeMw1+ssjXlp05Y9H7anfE/VpW0MCHeAwAznVzDWMYxdM65yJLH4DiMzBfF8SH1eE/
- vjY1Y0xww==
-X-Google-Smtp-Source: AGHT+IHoR1FNv21hNSxMAio8UNGaDxftyenzMUFtaJfHmXmKSELU8p5JytmGSbbw3DSEiAtP5naukQ==
-X-Received: by 2002:a05:6a00:809:b0:7a2:7a4e:116c with SMTP id
- d2e1a72fcca58-7a27a4e132amr82731b3a.30.1761192912247; 
- Wed, 22 Oct 2025 21:15:12 -0700 (PDT)
+ bh=DaV098G5oL4FGgdKQrx8xC9vbZLN/Fck1L4/UQZrfQY=;
+ b=pVoYFUDuJZuD6XPNQ3vdwZZWLbiwuB7gbbSXryuNQa8gjk4NDZsfFimqdfpayultVt
+ Pulb0Lw4VE4YLQoyzVgRr3VDUxL5K1wp/nD1ma/xgHgffcXHq+GepY8w7R26F+xpuURM
+ c4TeqvXtjJrudeKd5QVp2lGD13d2Zagre2aLZz13oZAkxVSHSu2bsKLDWFmTQZufEHWr
+ ejRDwG+wMvznvWUspNEnDCJ1P6y2tK5p6fPw3h0ORJ5+g/Wi5i5dsxLdqFQmacr3Anf7
+ VT0OzQr3UXWBLFPQ79CXHj2ukEQeIK6ggQPBxLGusEt08r7ObXwNC4eTUU2xZR+eOhql
+ r5Ww==
+X-Gm-Message-State: AOJu0Yw8/T4H0hmaDje0eU+f9DgUmQ3kGz0T+r1CDOVey/jzpOqv0jgc
+ Og6EBFZu4kDyxoUrQ+4ST3JORzzCoGRYTAwGc50pFdmd63LOpWji3ep0Ex//Gg==
+X-Gm-Gg: ASbGncuHnkd1DWprzEiQyd0VrqS1BxKrc1wL0wRkzcmYnoyI/1QW4vfShiPvlfpj0CK
+ +IuWu/xP81n2W0xFkU3MK165CtcuMLYsdzZtCSkRFjCVqbGfxHFwMyZlQe6mB1d6NBOYVLIiY6K
+ Byh5POb72P3c+4fWMswLSVvz5sb+EmYY8v5SH/+MYwL2lpeH0UJ3v7tWvb8OOd78o0Mw658QVJo
+ UHGxN6GCHv1v46OhA3+AwFejXWhKQux0/6jZ8fMS7srUWmvXCJHPndLoxc00tuCpQD8DPbkf2Fy
+ Ai/JVoEC7FVxooA/ZLiHf8zcOf/HzsUsbpvXiKKVidgRUJzwOfGMzKFSERk0qftZK0dckNFKuWN
+ nGUB/4IiQN7wPuOjqlvxR3TZpLxLHFwzQW+99bED78Wo3b852sYxZBi9p9GsauOMQC5YWNXKXal
+ 9zM0N+TN2am9ZhMpnfcQq1CFrEZZkcmqmCKfZYsjlec1xdyid95BHA4qS26bZtr4tTepKNab9Ud
+ emL9u7RHs6sWa5WtpEQ
+X-Google-Smtp-Source: AGHT+IFUc7zBAuGrOhaEzFmBf6PKJhYtMK5Ma4zNgtwhr1JB1Kmgp1XsmcBjYC4c9hmJSbB6QtWf1A==
+X-Received: by 2002:a05:6a00:1742:b0:77d:6a00:1cd1 with SMTP id
+ d2e1a72fcca58-7a274ba91e4mr1683937b3a.12.1761192934853; 
+ Wed, 22 Oct 2025 21:15:34 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.15.09
+ d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.15.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 21:15:11 -0700 (PDT)
+ Wed, 22 Oct 2025 21:15:34 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Guenter Roeck <linux@roeck-us.net>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 07/37] target/riscv: Conceal MO_TE within gen_fload_idx() /
- gen_fstore_idx()
-Date: Thu, 23 Oct 2025 14:14:05 +1000
-Message-ID: <20251023041435.1775208-8-alistair.francis@wdc.com>
+Subject: [PULL 14/37] hw/net/cadence_gem: Support two Ethernet interfaces
+ connected to single MDIO bus
+Date: Thu, 23 Oct 2025 14:14:12 +1000
+Message-ID: <20251023041435.1775208-15-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023041435.1775208-1-alistair.francis@wdc.com>
 References: <20251023041435.1775208-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,112 +107,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-All callers of gen_fload_idx() / gen_fstore_idx() set the MO_TE flag.
-Set it once in the callees.
+The Microchip PolarFire SoC Icicle Kit supports two Ethernet interfaces.
+The PHY on each may be connected to separate MDIO busses, or both may be
+connected on the same MDIO bus using different PHY addresses.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251010155045.78220-8-philmd@linaro.org>
+To be able to support two PHY instances on a single MDIO bus, two properties
+are needed: First, there needs to be a flag indicating if the MDIO bus on
+a given Ethernet interface is connected. If not, attempts to read from this
+bus must always return 0xffff. Implement this property as phy-connected.
+Second, if the MDIO bus on an interface is active, it needs a link to the
+consumer interface to be able to provide PHY access for it. Implement this
+property as phy-consumer.
+
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251004200049.871646-2-linux@roeck-us.net>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_xthead.c.inc | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ include/hw/net/cadence_gem.h |  3 +++
+ hw/net/cadence_gem.c         | 24 ++++++++++++++++++------
+ 2 files changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/insn_trans/trans_xthead.c.inc
-index 70c563664a..859cbc26cb 100644
---- a/target/riscv/insn_trans/trans_xthead.c.inc
-+++ b/target/riscv/insn_trans/trans_xthead.c.inc
-@@ -349,6 +349,7 @@ static bool gen_fload_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
-     TCGv_i64 rd = cpu_fpr[a->rd];
-     TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
+diff --git a/include/hw/net/cadence_gem.h b/include/hw/net/cadence_gem.h
+index 91ebb5c8ae..21e7319f53 100644
+--- a/include/hw/net/cadence_gem.h
++++ b/include/hw/net/cadence_gem.h
+@@ -81,6 +81,9 @@ struct CadenceGEMState {
  
-+    memop |= MO_TE;
-     tcg_gen_qemu_ld_i64(rd, addr, ctx->mem_idx, memop);
-     if ((memop & MO_SIZE) == MO_32) {
-         gen_nanbox_s(rd, rd);
-@@ -369,6 +370,7 @@ static bool gen_fstore_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
-     TCGv_i64 rd = cpu_fpr[a->rd];
-     TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
+     uint8_t phy_loop; /* Are we in phy loopback? */
  
-+    memop |= MO_TE;
-     tcg_gen_qemu_st_i64(rd, addr, ctx->mem_idx, memop);
++    bool phy_connected; /* true if connected */
++    struct CadenceGEMState *phy_consumer;
++
+     /* The current DMA descriptor pointers */
+     uint32_t rx_desc_addr[MAX_PRIORITY_QUEUES];
+     uint32_t tx_desc_addr[MAX_PRIORITY_QUEUES];
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+index 44446666de..520324adfd 100644
+--- a/hw/net/cadence_gem.c
++++ b/hw/net/cadence_gem.c
+@@ -1541,12 +1541,20 @@ static void gem_handle_phy_access(CadenceGEMState *s)
+ {
+     uint32_t val = s->regs[R_PHYMNTNC];
+     uint32_t phy_addr, reg_num;
++    CadenceGEMState *ps = s;
++    uint32_t op;
  
-     return true;
-@@ -379,7 +381,7 @@ static bool trans_th_flrd(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVD);
--    return gen_fload_idx(ctx, a, MO_TE | MO_UQ, false);
-+    return gen_fload_idx(ctx, a, MO_UQ, false);
- }
+     phy_addr = FIELD_EX32(val, PHYMNTNC, PHY_ADDR);
++    op = FIELD_EX32(val, PHYMNTNC, OP);
  
- static bool trans_th_flrw(DisasContext *ctx, arg_th_memidx *a)
-@@ -387,7 +389,7 @@ static bool trans_th_flrw(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVF);
--    return gen_fload_idx(ctx, a, MO_TE | MO_UL, false);
-+    return gen_fload_idx(ctx, a, MO_UL, false);
- }
+-    if (phy_addr != s->phy_addr) {
+-        /* no phy at this address */
+-        if (FIELD_EX32(val, PHYMNTNC, OP) == MDIO_OP_READ) {
++    /* Switch phy to consumer interface if there is an address match */
++    if (s->phy_consumer && phy_addr == s->phy_consumer->phy_addr) {
++        ps = s->phy_consumer;
++    }
++
++    if (!s->phy_connected || phy_addr != ps->phy_addr) {
++        /* phy not connected or no phy at this address */
++        if (op == MDIO_OP_READ) {
+             s->regs[R_PHYMNTNC] = FIELD_DP32(val, PHYMNTNC, DATA, 0xffff);
+         }
+         return;
+@@ -1554,14 +1562,14 @@ static void gem_handle_phy_access(CadenceGEMState *s)
  
- static bool trans_th_flurd(DisasContext *ctx, arg_th_memidx *a)
-@@ -395,7 +397,7 @@ static bool trans_th_flurd(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVD);
--    return gen_fload_idx(ctx, a, MO_TE | MO_UQ, true);
-+    return gen_fload_idx(ctx, a, MO_UQ, true);
- }
+     reg_num = FIELD_EX32(val, PHYMNTNC, REG_ADDR);
  
- static bool trans_th_flurw(DisasContext *ctx, arg_th_memidx *a)
-@@ -403,7 +405,7 @@ static bool trans_th_flurw(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVF);
--    return gen_fload_idx(ctx, a, MO_TE | MO_UL, true);
-+    return gen_fload_idx(ctx, a, MO_UL, true);
- }
+-    switch (FIELD_EX32(val, PHYMNTNC, OP)) {
++    switch (op) {
+     case MDIO_OP_READ:
+         s->regs[R_PHYMNTNC] = FIELD_DP32(val, PHYMNTNC, DATA,
+-                                         gem_phy_read(s, reg_num));
++                                         gem_phy_read(ps, reg_num));
+         break;
  
- static bool trans_th_fsrd(DisasContext *ctx, arg_th_memidx *a)
-@@ -411,7 +413,7 @@ static bool trans_th_fsrd(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVD);
--    return gen_fstore_idx(ctx, a, MO_TE | MO_UQ, false);
-+    return gen_fstore_idx(ctx, a, MO_UQ, false);
- }
+     case MDIO_OP_WRITE:
+-        gem_phy_write(s, reg_num, val);
++        gem_phy_write(ps, reg_num, val);
+         break;
  
- static bool trans_th_fsrw(DisasContext *ctx, arg_th_memidx *a)
-@@ -419,7 +421,7 @@ static bool trans_th_fsrw(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVF);
--    return gen_fstore_idx(ctx, a, MO_TE | MO_UL, false);
-+    return gen_fstore_idx(ctx, a, MO_UL, false);
- }
- 
- static bool trans_th_fsurd(DisasContext *ctx, arg_th_memidx *a)
-@@ -427,7 +429,7 @@ static bool trans_th_fsurd(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVD);
--    return gen_fstore_idx(ctx, a, MO_TE | MO_UQ, true);
-+    return gen_fstore_idx(ctx, a, MO_UQ, true);
- }
- 
- static bool trans_th_fsurw(DisasContext *ctx, arg_th_memidx *a)
-@@ -435,7 +437,7 @@ static bool trans_th_fsurw(DisasContext *ctx, arg_th_memidx *a)
-     REQUIRE_XTHEADFMEMIDX(ctx);
-     REQUIRE_FPU;
-     REQUIRE_EXT(ctx, RVF);
--    return gen_fstore_idx(ctx, a, MO_TE | MO_UL, true);
-+    return gen_fstore_idx(ctx, a, MO_UL, true);
- }
- 
- /* XTheadFmv */
+     default:
+@@ -1813,6 +1821,10 @@ static const Property gem_properties[] = {
+                       num_type2_screeners, 4),
+     DEFINE_PROP_UINT16("jumbo-max-len", CadenceGEMState,
+                        jumbo_max_len, 10240),
++    DEFINE_PROP_BOOL("phy-connected", CadenceGEMState, phy_connected, true),
++    DEFINE_PROP_LINK("phy-consumer", CadenceGEMState, phy_consumer,
++                     TYPE_CADENCE_GEM, CadenceGEMState *),
++
+     DEFINE_PROP_LINK("dma", CadenceGEMState, dma_mr,
+                      TYPE_MEMORY_REGION, MemoryRegion *),
+ };
 -- 
 2.51.0
 
