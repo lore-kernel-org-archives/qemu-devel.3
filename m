@@ -4,91 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCE3CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 18:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B24CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 18:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBzql-0007yc-Af; Thu, 23 Oct 2025 14:15:47 -0400
+	id 1vBzsI-0000Fc-NI; Thu, 23 Oct 2025 14:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBzqj-0007yM-4x
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:15:45 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBzqh-000648-8D
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:15:44 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7c3e26d534fso783969a34.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:15:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761243341; x=1761848141; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=x2kl15loVr2HBhCYVWwgrTR9MffJF/yQB0EHf9rOLQg=;
- b=KYa06g6EViXFMFVySjfaSYRjgEqvVgMmUzzRo7ZhED/tqoyIsKFZmnhVqkNrzxnX4J
- y4PgTxH53syqU47rD8hK9QuoiDi38TbWKJUfB33mXSzErm+w4qhqh01TO047XyUgVT3o
- 1TagXoyXl3AbQwrTK5g77t2oFvCgkZBHBC7fEfD8clOSzJNZ7T1YVicp9+0LXttB4eNx
- pENhTZN2ckjr4j74XTk9hetBIHlm9ZXdFRJ5+bzJWupJW0heqZiaWByN1Gq2oWAobu4U
- lwS+FsFXw93jyDoJmDUkNTJKuqIfX8ZBIEGFTISasfYjXcdEAI8JN0dhQ1wD1oV1/YJB
- JvrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761243341; x=1761848141;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x2kl15loVr2HBhCYVWwgrTR9MffJF/yQB0EHf9rOLQg=;
- b=YqufTizSWMNfVnTg/a2apuEty8LMo8SSq3IdMFGi42YhP+fnKve3crkYQKzbyVJXi6
- 5LjPPEXYNR+1d722cNV51MA53wn5o/tWIq17gHXWA+cXltys+pCouP1zEtgyIg/wb7bj
- P0hOSFiwGb4IPkW/RVSdqfj79gmrDq0rBfQfTaPkehf5deskQgE9vvUYqWQzSWd7yhiZ
- jHVDo8MKqjjPdckUXI2VtxhIfVyeKe293VnkV1sezSF8Wi0Ukde7lmnliT9OHbA+xAPY
- jtYxjamLb41S1QWjlitGDGYdjj5eEYDXdt3BidAmZfnXC0tq0S5cfej9eDuMH/b5qQMg
- EGRg==
-X-Gm-Message-State: AOJu0YydduH34oN2LhyXz9Eu1RFoMkblxzZgppJAI66zaESFuiokUt9u
- 5ua4mbEf7a1afYg8qTHg43HugdwKHwK1wjcKGwUi1ytGSBrf2OIjo/ScOVL6nuJrkMs0+X3cD9R
- /AiST
-X-Gm-Gg: ASbGncudC/9skvG53yF+vRWo+o/XxRqxsKy2WXOGkpmkxSRrtuTiI18F9KUwDx/8DcA
- fwhLQ6ssH/bNCoxaUhbTb0A78h8oZMjIp9NmZZhPuoXNtszC7rXbyVWVxIQC+VaBevyeOrp5IDU
- rJF296h4ILmWZR66FfM+h0B6fR+eV+LckeI/bVex8u2KubLZgPD0AfamQbnOJV+NYvSv2v8xHoK
- YREAXczLMC3iSX/i4j3rfoaBBl8PMLqWoKAq1SXTW9u5C7aFvZO8/M+fjXPQJkn5aRvo4OfD7g0
- 5Fr+xsIyrIGemNZCsyGFRvjIFoaAY51+ZODaJydvv5TZDzawIIiKwC4oZxVmmDMkRljXzgGdEni
- /SF79y8+zWziEKTHA4wWEOG3qkMk0GBEiijtLd35OJD8tnQRqvh0Xg4Vj0S/V1cXlCJSMrNX0cE
- NAeivT3i/XwkrXJUvNm2Sor8w09kdDMXWNesSm7M17vAVgJD8hMU806BwRWsWy
-X-Google-Smtp-Source: AGHT+IFtmMfsoQMPkQB/jB1XziAVbDn1e7zpwG9BCBGXU9+lpK1Dslo4NJhCkRP8zT+KyCt7X2Webw==
-X-Received: by 2002:a05:6830:4407:b0:7c2:78a2:7703 with SMTP id
- 46e09a7af769-7c27ccaa341mr11717540a34.26.1761243341189; 
- Thu, 23 Oct 2025 11:15:41 -0700 (PDT)
-Received: from ?IPV6:2607:fb90:8ae0:85c9:1b89:4cd2:87fd:d3df?
- ([2607:fb90:8ae0:85c9:1b89:4cd2:87fd:d3df])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7c51b059913sm812979a34.32.2025.10.23.11.15.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 11:15:40 -0700 (PDT)
-Message-ID: <325c46b7-54fd-4793-95f1-2dc6cc44869c@linaro.org>
-Date: Thu, 23 Oct 2025 13:15:37 -0500
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vBzsH-0000F2-9u; Thu, 23 Oct 2025 14:17:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vBzsE-00067h-4L; Thu, 23 Oct 2025 14:17:21 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59NEa9FC007314;
+ Thu, 23 Oct 2025 18:17:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3mNAjo
+ 87fFC0wbdSkILtgImV7tnvDwxs17dZ82mQq0M=; b=jLO7cMFZhVOKLDYNBQJzmr
+ Z7YoATN6x6KeiXVFA1uls+Fn6bAtQi9tNENM1vrCCdta4sQyfWtLpOq+qGmXAsql
+ TdqAWpdhDK4voX6yevrFTFCW8YVBSYzZGLMA18eLRgUUQGbK7YF3Hn/fFmEeDrfF
+ SAjVn7q1cYjm0HPKj7POFBvolasKCB1sG/oI8mRvig1I02gKevmgHH3aWC9nU3pE
+ 1b/0a+3NB9bmiBD/TzMg7APVHdNby9n0YHU03TbAM7gku0xxpm+qDoB78I67XwJK
+ DyiPr/z/CkUXYxk+aRzye8IxtRrO8Lr9rlmdF6nZyM2hVQyjRp9Psj7/KS5jnWUg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33fkt68-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 18:17:15 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NGQkge014779;
+ Thu, 23 Oct 2025 18:16:56 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sfdwk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 18:16:56 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NIGssk61276502
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Oct 2025 18:16:55 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 926E558062;
+ Thu, 23 Oct 2025 18:16:54 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0A6D95805D;
+ Thu, 23 Oct 2025 18:16:54 +0000 (GMT)
+Received: from [9.61.246.20] (unknown [9.61.246.20])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 18:16:53 +0000 (GMT)
+Message-ID: <71399c58-fc33-4d33-9410-db3cbb8f9432@linux.ibm.com>
+Date: Thu, 23 Oct 2025 11:16:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/37] riscv-to-apply queue
-To: qemu-devel@nongnu.org, Alistair Francis <alistair23@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20251023041435.1775208-1-alistair.francis@wdc.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 5/7] pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+ <20251020162023.3649165-6-jrossi@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20251023041435.1775208-1-alistair.francis@wdc.com>
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20251020162023.3649165-6-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68fa712b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8 a=Vc6ARtGatunV12CEZOQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: l_DDY8NXwFTyoHIw4pJeAdmbYwkMgVQZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXy+f+4uLPq1lo
+ 5YR00bQ5CViZKVyeqWWONNmOKXcaC6aCpzoFC3XvDYBnqKYMqG5swjeWpzN+qkpyEYbOvympfjh
+ Fw+6iwQFXtJ3Gjjj+fyzBRWeqoIPK81zctB5Hbt3xu52aj2twJPrxkYSexj7n1eSl600+2r5oh8
+ ZbPz3KeA9eTkl2M/LaByIwqIU7X+sCa50wxuOP5PcexhVxpb30z4kmBKR+aH0THfi4aDc89MoxK
+ oGeuGkQkkHtjTh4C7ItoOVlCzMk7rF4FmA1MAyFl0CAkQWqusOwvkc5XiE9IkU1Uq7wdRBN9tEJ
+ eTpEvU3qZjnqQAzf+BWJAoJCwl4+duDNXki/vPh6xzAKftVkJA7QKkQjzuRST9AOLXqDjw9UfrB
+ zrZ2nhoIuIeL2w5U+wbxVIio/P7xiQ==
+X-Proofpoint-ORIG-GUID: l_DDY8NXwFTyoHIw4pJeAdmbYwkMgVQZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-23_02,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,42 +121,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/22/25 23:13, alistair23@gmail.com wrote:
-> From: Alistair Francis<alistair.francis@wdc.com>
-> 
-> The following changes since commit c0e80879c876cbe4cbde43a92403329bcedf2ba0:
-> 
->    Merge tag 'pull-vfio-20251022' ofhttps://github.com/legoater/qemu into staging (2025-10-22 08:01:21 -0500)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20251023
-> 
-> for you to fetch changes up to 741566c3e07fd34ed28d4464d1d7fda67db12925:
-> 
->    target/riscv: Make PMP CSRs conform to WARL constraints (2025-10-23 14:11:45 +1000)
-> 
-> ----------------------------------------------------------------
-> Second RISC-V PR for 10.2
-> 
-> * Correct mmu-type property of sifive_u harts in device tree
-> * Centralize MO_TE uses in a pair of helpers
-> * Fix Ethernet interface support for microchip-icicle-kit
-> * Fix mask for smsiaddrcfgh
-> * Add support for MIPS P8700 CPU
-> * Fix env->priv setting in reset_regs_csr()
-> * Coverity-related fixes
-> * Fix riscv_cpu_sirq_pending() mask
-> * Fix a uninitialized variable warning
-> * Make PMP granularity configurable
 
-Something in here is causing failures on s390x:
+On 10/20/2025 9:20 AM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi<jrossi@linux.ibm.com>
+>
+> Enable virt-queue PCI configuration and add routines for virtio-blk-pci devices.
+>
+> Signed-off-by: Jared Rossi<jrossi@linux.ibm.com>
+> ---
 
-https://gitlab.com/qemu-project/qemu/-/jobs/11827080939#L5859
+Just a general observation in this patch, the BAR we are reading and 
+writing to is BAR 4 for the virtio device. I think QEMU defines all the 
+structure in BAR 4 
+(https://github.com/qemu/qemu/blob/88f72048d2f5835a1b9eaba690c7861393aef283/hw/virtio/virtio-pci.c#L2169). 
+But after looking through the virtio spec, I couldn't tell if BAR 4 is 
+hardcoded in the spec and should be used by default. So maybe we should 
+try to read the BAR number from what the device provides to be more spec 
+compliant? If we think that its okay to just use BAR 4 for now, then we 
+should at least have a #define for it (also for magic number 15 which is 
+a zpci address space number for PCI config space).
 
-It seems obvious to suspect the endianness changes from the big-endian host, but I also 
-don't immediately see anything wrong.
+Thanks
+
+Farhan
 
 
-r~
 
