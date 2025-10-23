@@ -4,80 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11027CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84668CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:37:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuNV-0001kg-2m; Thu, 23 Oct 2025 08:25:17 -0400
+	id 1vBuTH-00038v-HZ; Thu, 23 Oct 2025 08:31:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.aliokhin@syntacore.com>)
- id 1vBuKs-0006KK-7x; Thu, 23 Oct 2025 08:22:36 -0400
-Received: from m.syntacore.com ([178.249.69.228])
+ (Exim 4.90_1) (envelope-from <zhangjiaji1@huawei.com>)
+ id 1vBuJN-00044U-U7; Thu, 23 Oct 2025 08:20:59 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.aliokhin@syntacore.com>)
- id 1vBuKp-00078B-P1; Thu, 23 Oct 2025 08:22:29 -0400
-Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
- by m.syntacore.com (Postfix) with ESMTP id DE7461A0005;
- Thu, 23 Oct 2025 12:22:15 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com DE7461A0005
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
- t=1761222135; bh=yTrFtcH5W+HLnEhgtmthehlr4V835CwHQv+3ZwafY58=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=V6nbW9rjkBVBKXEOROhoEDtn2TQdPXquS2B3UnSiITlPo2vHnWTwp75vjVd5Gief3
- 2ZdYAGlH6ypTYjNBtNpi8t938Hz7EFHWjHU0oj+4AAaCKSWDTlrHIkH7DsRdFSzttp
- D5G8CUrr6qMx5bysVRNzfvdFNVve9o3+yi2DSZ9MsbTHmUnI9HQ8DPhgXo+gP82MK0
- pv8O0OPL4la9/kbMqDl0S0At7H2RSHAZtmdda2vuGga3YNKqGnKnik5osxD4DsMb46
- oW6dVKew6xEyX/Qa/TvR/xv4lLaizVUmoHl/1oPWmA8cB0e5uiZayYW9lb4YgIb565
- ji/Ta2bMO+bsw==
-Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
- [10.76.202.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by m.syntacore.com (Postfix) with ESMTPS;
- Thu, 23 Oct 2025 12:22:14 +0000 (UTC)
-Received: from mail.syntacore.com (172.27.12.37) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 23 Oct 2025 15:21:45 +0300
-From: Andrey Alekhin <a.aliokhin@syntacore.com>
+ (Exim 4.90_1) (envelope-from <zhangjiaji1@huawei.com>)
+ id 1vBuJJ-0006tc-RA; Thu, 23 Oct 2025 08:20:57 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4cslX617sXz11WtH;
+ Thu, 23 Oct 2025 20:21:58 +0800 (CST)
+Received: from kwepemj100010.china.huawei.com (unknown [7.202.194.4])
+ by mail.maildlp.com (Postfix) with ESMTPS id E12851401E9;
+ Thu, 23 Oct 2025 20:20:41 +0800 (CST)
+Received: from huawei.com (10.246.99.10) by kwepemj100010.china.huawei.com
+ (7.202.194.4) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 23 Oct
+ 2025 20:20:39 +0800
 To: <qemu-devel@nongnu.org>
-CC: Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, Liu
- Zhiwei <zhiwei_liu@linux.alibaba.com>, Alistair Francis
- <alistair.francis@wdc.com>, <qemu-riscv@nongnu.org>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, Andrey Alekhin <a.aliokhin@syntacore.com>
-Subject: [PATCH] target/riscv/insn_trans: Fix sc.w & sc.d incorrect behavior
- on misaligned access
-Date: Thu, 23 Oct 2025 15:20:21 +0300
-Message-ID: <20251023122021.16138-1-a.aliokhin@syntacore.com>
-X-Mailer: git-send-email 2.43.0
+CC: <qemu-block@nongnu.org>, <kwolf@redhat.com>, <hreitz@redhat.com>,
+ <zhuyangyang14@h-partners.com>, <eric.fangyi@huawei.com>,
+ <suxiaodong1@huawei.com>, <wangjian161@huawei.com>, <wangyan122@huawei.com>,
+ <liuxiangdong5@huawei.com>, <zhangjiaji1@huawei.com>,
+ <wangqinxiao@huawei.com>, <luolongmin@huawei.com>
+Subject: [RFC 1/2] block/qcow2-cache: Introduce qcow2_write_l2_entry()
+Date: Thu, 23 Oct 2025 20:24:56 +0800
+Message-ID: <20251023122457.2610426-2-zhangjiaji1@huawei.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20251023122457.2610426-1-zhangjiaji1@huawei.com>
+References: <20251023122457.2610426-1-zhangjiaji1@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [172.27.12.37]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-X-KSMG-AntiPhishing: not scanned, disabled by settings
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
- bases: 2025/10/23 07:51:00 #27791923
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=a.aliokhin@syntacore.com; helo=m.syntacore.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Originating-IP: [10.246.99.10]
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemj100010.china.huawei.com (7.202.194.4)
+Received-SPF: pass client-ip=45.249.212.32;
+ envelope-from=zhangjiaji1@huawei.com; helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 23 Oct 2025 08:24:30 -0400
+X-Mailman-Approved-At: Thu, 23 Oct 2025 08:24:37 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,75 +67,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  zhangjiaji <zhangjiaji1@huawei.com>
+From:  zhangjiaji via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cs.w and sc.d instructions should throw
-a "Load/Save/AMO address misaligned" exception when this
-happens, but they don't. Fix solves this issue.
+From: Zhu Yangyang <zhuyangyang14@huawei.com>
 
-Note: When using misaligned address sc.w and sc.d commands
-always skip store phase because either there was
-no corresponding lr.w or lr.d command or there was
-a corresponding command with an unaligned address
-or there was mismatched command with a completely different
-address.
-In either case, the reservation set did not match the
-address and command goes to final step to invalidate
-reservation set. According specification all sc commands
-always must first invalidate reservation set (if any)
-and then complete execution normally or by throwing
-an exception
+This function will be used in the next optimization patch to flush
+only the actually changed portion of the qcow2 L2 Table cache,
+instead of flushing the entire L2 Table cache.
 
-Signed-off-by: Andrey Alekhin <a.aliokhin@syntacore.com>
+Signed-off-by: Zhu Yangyang <zhuyangyang14@h-partners.com>
 ---
- target/riscv/insn_trans/trans_rva.c.inc | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ block/qcow2-cache.c | 33 ++++++++++++++++++++++++++++++---
+ block/qcow2.h       |  2 ++
+ 2 files changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
-index 9cf3ae8019..93b89866ae 100644
---- a/target/riscv/insn_trans/trans_rva.c.inc
-+++ b/target/riscv/insn_trans/trans_rva.c.inc
-@@ -57,9 +57,10 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
- 
- static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
- {
--    TCGv dest, src1, src2;
-+    TCGv dest, src1, src2, mc;
-     TCGLabel *l1 = gen_new_label();
-     TCGLabel *l2 = gen_new_label();
-+    TCGLabel *l3 = gen_new_label();
- 
-     decode_save_opc(ctx, 0);
-     src1 = get_address(ctx, a->rs1, 0);
-@@ -93,6 +94,26 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
-      */
-     tcg_gen_movi_tl(load_res, -1);
- 
-+    mc = tcg_constant_tl((1 << (mop & MO_SIZE)) - 1);
-+    /*
-+     *   When using misaligned address sc.w and sc.d commands
-+     *   always skip store phase because either there was
-+     *   no corresponding lr.w or lr.d command or there was
-+     *   a corresponding command with an unaligned address
-+     *   or there was mismatched command with a completely different
-+     *   address.
-+     *   In either case, the reservation set did not match the
-+     *   address and command goes to final step to invalidate
-+     *   reservation set. According specification all sc commands
-+     *   always must first invalidate reservation set (if any)
-+     *   and then complete execution normally or by throwing
-+     *   an exception
-+     */
-+    tcg_gen_brcond_tl(TCG_COND_TSTEQ, src1, mc, l3);
-+    gen_helper_raise_exception(tcg_env,
-+        tcg_constant_i32(RISCV_EXCP_STORE_AMO_ADDR_MIS));
-+
-+    gen_set_label(l3);
-     return true;
+diff --git a/block/qcow2-cache.c b/block/qcow2-cache.c
+index 23d9588b08..b5378d003d 100644
+--- a/block/qcow2-cache.c
++++ b/block/qcow2-cache.c
+@@ -180,7 +180,8 @@ qcow2_cache_flush_dependency(BlockDriverState *bs, Qcow2Cache *c)
  }
  
+ static int GRAPH_RDLOCK
+-qcow2_cache_entry_flush(BlockDriverState *bs, Qcow2Cache *c, int i)
++qcow2_cache_entry_flush_part(BlockDriverState *bs, Qcow2Cache *c, int i,
++                             int l2_index, int nb_clusters)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     int ret = 0;
+@@ -226,8 +227,21 @@ qcow2_cache_entry_flush(BlockDriverState *bs, Qcow2Cache *c, int i)
+         BLKDBG_EVENT(bs->file, BLKDBG_L2_UPDATE);
+     }
+ 
+-    ret = bdrv_pwrite(bs->file, c->entries[i].offset, c->table_size,
+-                      qcow2_cache_get_table_addr(c, i), 0);
++    if (l2_index < 0) {
++        ret = bdrv_pwrite(bs->file, c->entries[i].offset, c->table_size,
++                          qcow2_cache_get_table_addr(c, i), 0);
++    } else {
++        /* Only flush the actual dirty portions. */
++        int64_t l2_offset = l2_index * l2_entry_size(s);
++        int64_t l2_bytes = nb_clusters * l2_entry_size(s);
++
++        int64_t aligned_offset = QEMU_ALIGN_DOWN(l2_offset, BDRV_SECTOR_SIZE);
++        int64_t aligned_end = QEMU_ALIGN_UP(l2_offset + l2_bytes, BDRV_SECTOR_SIZE);
++        ret = bdrv_pwrite(bs->file, c->entries[i].offset + aligned_offset,
++                          aligned_end - aligned_offset,
++                          qcow2_cache_get_table_addr(c, i) + aligned_offset, 0);
++    }
++
+     if (ret < 0) {
+         return ret;
+     }
+@@ -237,6 +251,19 @@ qcow2_cache_entry_flush(BlockDriverState *bs, Qcow2Cache *c, int i)
+     return 0;
+ }
+ 
++static int GRAPH_RDLOCK
++qcow2_cache_entry_flush(BlockDriverState *bs, Qcow2Cache *c, int i)
++{
++    return qcow2_cache_entry_flush_part(bs, c, i, -1, 0);
++}
++
++int qcow2_write_l2_entry(BlockDriverState *bs, Qcow2Cache *c, void *l2_tabel,
++                         int l2_index, int nb_clusters)
++{
++    int l2 = qcow2_cache_get_table_idx(c, l2_tabel);
++    return qcow2_cache_entry_flush_part(bs, c, l2, l2_index, nb_clusters);
++}
++
+ int qcow2_cache_write(BlockDriverState *bs, Qcow2Cache *c)
+ {
+     BDRVQcow2State *s = bs->opaque;
+diff --git a/block/qcow2.h b/block/qcow2.h
+index a9e3481c6e..b0ba2e1996 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -1001,6 +1001,8 @@ qcow2_cache_create(BlockDriverState *bs, int num_tables, unsigned table_size);
+ int qcow2_cache_destroy(Qcow2Cache *c);
+ 
+ void qcow2_cache_entry_mark_dirty(Qcow2Cache *c, void *table);
++int qcow2_write_l2_entry(BlockDriverState *bs, Qcow2Cache *c, void *l2_tabel,
++                         int l2_index, int nb_clusters)
+ int GRAPH_RDLOCK qcow2_cache_flush(BlockDriverState *bs, Qcow2Cache *c);
+ int GRAPH_RDLOCK qcow2_cache_write(BlockDriverState *bs, Qcow2Cache *c);
+ int GRAPH_RDLOCK qcow2_cache_set_dependency(BlockDriverState *bs, Qcow2Cache *c,
 -- 
-2.43.0
+2.33.0
 
 
