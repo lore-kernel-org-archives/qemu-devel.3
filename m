@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE15CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 08:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EACCCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 08:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBqVc-0000hR-9D; Thu, 23 Oct 2025 04:17:21 -0400
+	id 1vBqX3-0001Xj-2U; Thu, 23 Oct 2025 04:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBqVJ-0000cq-QI
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 04:17:06 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBqWw-0001XJ-Jf
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 04:18:42 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBqVD-0006ac-GG
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 04:16:57 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4711b95226dso5288725e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 01:16:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBqWu-0006eq-C8
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 04:18:42 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47103b6058fso3739725e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 01:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761207413; x=1761812213; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761207518; x=1761812318; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jYFpb3kXxgsMmagIn1nhcIKCG/vI488Zt38/aF91mTA=;
- b=AWLjcXkYIkEzHV/4QEbCk9M37QZU+dSLIoaTmGUj7Lxz4Vzrj+4jRRBFCTTn6ovLLy
- AHUG8HTrrkhrrhzQpuyLCNnTBAhO914UGjnvbrekoYkGAbSD4/E0TGycS/YFKnG3tszi
- nEFESux0szVGTrpBHL1LnGcDFun+vg+Og2H2oG/v39IyhO9OTG7/xsVMn9Q5R0fuXmfU
- /q9E2OHk+GAXQPecz4ok1mKhW1r8Qh66ykoSxt1r2YznBH3IDF0+cbRO3qfU6mK/PQPH
- URAe4i688QWWz76CNJgj21XJyEM5TN3BoZv4fCR2s7jFmVIg/S9riQZNPX1G/Ojr4Ljs
- kW8g==
+ bh=S1oPBOUBDEuWomT4CBHWbMW0sKyB5dY+WT9cAhuIlqE=;
+ b=sOPyWTx8u8kYZonj9aoVgT5tsMAdGTFJMk+TnpKS4LBRwaUZLBYNkesELRJqC6dHYN
+ nZtEN8S3c/07ajDiWIbUUUKk9p0cMLrvx4jVp7nsShw4v4vO7nTgXdcygaOvHc7Kifn3
+ QIqV/08Fc4ZabYGKUTm5x98xAT7AcfMBnkC6VTLEsNsE91lmHCOekEjUlIB314adKdWo
+ vbTSyEEvsqPo13j4ZiP574A49v5CIEk5wkT9aA5al2xTKxU4GMFfHvHb5jM6FBOGuFLb
+ StX0twRyxMZscwRuh4fYGUllftySquxgsEbvWg9mL8ZXUZlBpV+/m7iAzhUP0tPcknSQ
+ xEdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761207413; x=1761812213;
+ d=1e100.net; s=20230601; t=1761207518; x=1761812318;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jYFpb3kXxgsMmagIn1nhcIKCG/vI488Zt38/aF91mTA=;
- b=AUZqEajey1wrZhycJ3GJBY+GYk2XmBvrUVkPe/bZEF686HE3pg4HeIvhrXuqy1C1m7
- yrvHkU4ixvc4ZoVwPDnLy2VPNTc1TLf385lXGZ2KojCS56N+TsTkvB29Vg+4T1ZeMFci
- OIgmPQGsQh+KJh6qcfT0hS51voAEoFLqv/GFVesTD3zQORylm1+erj/PpQSuPJZOQrCn
- 8TbxXhVXRyRh/TNePlCqHn0/Dit7yW5PenvP+uzAGolXmf8Q+XZKzliubwJUfNeEpr8e
- yyns2Suaomv/W2M4uypgkyVU3lEF066BDNNC9y3IYEBMIBv2TpZIcmrhxKOgb11fkN33
- KCGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXgjiB+OUnn0DSjWLOsY2RXX/OP9kZ2ZKo7GK75ysQegPOtt+GPVO41Hzt0xo9RjnrD7+By+lbydx+@nongnu.org
-X-Gm-Message-State: AOJu0Yy0GW1cIT4Yztb6J9UFU1onY9WqSX4NOoatXFIT0FxtcX6r90yI
- oua+9alGsYi4bpcIuuKC2dSLCO3A8yZw4Yuzdax2z0lkIBAp2KI6kGn0wQRNOgJ2k94=
-X-Gm-Gg: ASbGncsyGW2kIGbdU4YYHJGagzEhX+LNDzqyj18mM5QUwJFIxksGA52SfL3a+WIMuHs
- eDnaqLwxqmQ7s4ix4rWBHN31EkK8JuQpZtcWL1aPwS9TGFulRAi5d4FZ0ghmSwVGA1A19E8pAnV
- rzK3vEbnzTP5CP7BlsI/b+8iX2b6ZFs/gzCKvYJDPyGRuKsB9nhzKbtE8e4gXexxlGZPX97Ud6m
- Qu3FWa6THdoFuUWo9DGEQp/Hpa7vhs7oMHM1WTbDMFPHhLpq9qugNXc70IYSA4kFewcRZqRUi/m
- EGqbztWgKd+Vn6HqHQ4950DUiYZttwLQ4Bzgfc0BypZtFvA/rtWvTt3dj9PG4pVIRTzxoOfjS3o
- KsPnXpVrhcv3HJ1TpS0sXQi3S8TUAiW1k1+bCHkbNQU9AoZjmPL40qhxYPHoIWclFW3k7Js74GN
- q6qk3NrgCUc9es9QHhRuHPG2LZw5pGXSjf5tMF0Zfzyig=
-X-Google-Smtp-Source: AGHT+IGU/ef0PqDqRYCsHbaBkgVYy3iDEnrCD9SKPMOTNW8xz3F3gByVWSaDDZDkBoodXhZCJAbTSg==
-X-Received: by 2002:a05:600c:3f08:b0:470:ffd1:782d with SMTP id
- 5b1f17b1804b1-47117876a19mr195200245e9.6.1761207413355; 
- Thu, 23 Oct 2025 01:16:53 -0700 (PDT)
+ bh=S1oPBOUBDEuWomT4CBHWbMW0sKyB5dY+WT9cAhuIlqE=;
+ b=m3nlf9xPOvPQyabgmfzwwxYfxoKpy6KZAlI8GzZEwAlMOb1/XVtMAH8kT9+msb1xGa
+ H9cvQ1jvdtvRHVbdxoU5NVBoYTf0mRIAfcecBSm9Nr4nftx1q4LvVekevAN39aijLp7p
+ 5j+51n3MLF1OszLUs5cNq4MSDZmuUNSIQymhTCO2Jf8uHIyYRBQgUeso6DU6kQMddUaa
+ jLYVF+wcF8dxJQ+SA8XXewgTBrL2sFe2fAFlu9lz4qhWB9cBoa74s3fEaFSu/ZLWp4vw
+ SoUem7yFOmIwTvgU9uTzd2pKdZP0HmonCmNFkC3Vdc+p0ssmrft/TvKK8gI1kq2JeNju
+ K/0w==
+X-Gm-Message-State: AOJu0YzEm2fyxAFp7DQdZE/c7RMH1Kf4aBJsgamjzHNOorfORb//AI6M
+ dZM2mdEvzE13VipqTSImfCjb9zR3QL1h6h6gbNW1dXE6Fj4I3nlJLbxqr5f+fqKilWSLkZIyUrG
+ lEuFme2M=
+X-Gm-Gg: ASbGncsvKwfxvQHrAzCMli7bE4SAHWmCgyMTMBnJOCdeU8KQu4zc25uVcH3MgNgNDx9
+ /YOwzqEiDcbQCSx8LsvdXOIJg63hzzavi/KzCM8lO48lyLRynf3rwjiCuHorBULaJO+d2irULAo
+ spbcksKMKUQLsTNhX0l3gRxG/9IAUpIjmomRrnk3slj5P0nt5hev38scp5dICnx2mmMwQa6J+v5
+ +Rpb/LsO0EVUF6pF6qHUdV35sTmlgM7hdZazZsIYjtoSI3GcHQoEb8YqEPxq0Op/PbHilJkerDT
+ W4NisdvhZEHFG9vmWpfjTTZn4gcafCi0I2440I0fKoA65r6caKjT6ZTCHgPn9OeCziElBchnN2y
+ +ui43VgKvs65Uo0C91ZbJhIbAruKRJnP808bBfUicYxADV6NwLe5ehc+jo0VciXsQ8PTPokbyf3
+ gkp18XlcsoxZZgbnMi70e4/UmvYIBe1PO8v5OLFlsyCM0=
+X-Google-Smtp-Source: AGHT+IEsY/5HbGG2Yn22zbAbjOd8n5R94APVaz/0tYEPMKuHBdmQIE1Eaju7F+glZVWnWxVkKVpaJA==
+X-Received: by 2002:a05:600c:4f11:b0:46e:37d5:dbed with SMTP id
+ 5b1f17b1804b1-475c3fd5befmr50891985e9.12.1761207517871; 
+ Thu, 23 Oct 2025 01:18:37 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47494ac30b4sm53905885e9.2.2025.10.23.01.16.51
+ ffacd0b85a97d-4298bd78c69sm823809f8f.4.2025.10.23.01.18.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 01:16:52 -0700 (PDT)
-Message-ID: <7a50b3b9-3bf6-4e4e-97b6-b927ad48902b@linaro.org>
-Date: Thu, 23 Oct 2025 10:16:51 +0200
+ Thu, 23 Oct 2025 01:18:37 -0700 (PDT)
+Message-ID: <a3ce5f41-359f-47d5-9edc-7a2eb47d4e15@linaro.org>
+Date: Thu, 23 Oct 2025 10:18:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] iotests: Run iotests with sanitizers
+Subject: Re: [PATCH] hw/uefi/ovmf-log: Fix memory leak in hmp_info_firmware_log
 Content-Language: en-US
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-References: <20251023-iotests-v1-0-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
- <20251023-iotests-v1-2-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
+To: zhaoguohan_salmon@163.com, kraxel@redhat.com
+Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ GuoHan Zhao <zhaoguohan@kylinos.cn>
+References: <20251023063106.9834-1-zhaoguohan_salmon@163.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251023-iotests-v1-2-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251023063106.9834-1-zhaoguohan_salmon@163.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,35 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 10:10, Akihiko Odaki wrote:
-> Commit 2cc4d1c5eab1 ("tests/check-block: Skip iotests when sanitizers
-> are enabled") changed iotests to skip when sanitizers are enabled.
-> The rationale is that AddressSanitizer emits warnings and reports leaks,
-> which results in test breakage. Later, sanitizers that are enabled for
-> production environments (safe-stack and cfi-icall) were exempted.
+On 23/10/25 08:31, zhaoguohan_salmon@163.com wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > 
-> However, this approach has a few problems.
+> The FirmwareLog object returned by qmp_query_firmware_log() was
+> not being freed, causing a memory leak.
 > 
-> - It requires rebuild to disable sanitizers if the existing build has
->    them enabled.
-> - It disables other useful non-production sanitizers.
-> - The exemption of safe-stack and cfi-icall is not correctly
->    implemented, so qemu-iotests are incorrectly enabled whenever either
->    safe-stack or cfi-icall is enabled *and*, even if there is another
->    sanitizer like AddressSanitizer.
+> Use g_autoptr to ensure the object is automatically freed when
+> it goes out of scope.
 > 
-> To solve these problems, direct AddressSanitizer warnings to separate
-> files to avoid changing the test results, and selectively disable
-> leak detection at runtime instead of requiring to disable all
-> sanitizers at buildtime.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Fixes: c8aa8120313f ("hw/uefi: add 'info firmware-log' hmp monitor command.")
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > ---
->   tests/qemu-iotests/meson.build   |  8 --------
->   tests/qemu-iotests/testrunner.py | 12 ++++++++++++
->   2 files changed, 12 insertions(+), 8 deletions(-)
-
-Nice.
+>   hw/uefi/ovmf-log.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
