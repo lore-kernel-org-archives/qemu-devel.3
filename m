@@ -4,110 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A55CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 09:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C0CCCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 09:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBrYc-0007kJ-GQ; Thu, 23 Oct 2025 05:24:31 -0400
+	id 1vBryN-0006PA-FA; Thu, 23 Oct 2025 05:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vBrYZ-0007k1-2x
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:24:27 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vBrYV-0006iW-8X
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:24:26 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b3c2db014easo137544166b.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 02:24:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761211460; x=1761816260; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wc/vWIbe7zNmH17tpBpu1vmNiEABiUvd2vn+iEYOxDg=;
- b=XDPIPsydj0vNGjkq3CpeGqe2QULeaVtK5b+KGye/iYxpIpnyXmzLBmkyH4bc7KUN5r
- qVVJWfN49xI9lH4hoR9rJDvjEAIrAPISMX8dzqj+FgBR1e4OSLEw9S1y1mAfmj0DM74S
- lUGpYBIGM9DMYyt8arg2yte5TsbT0wrKKX5DCg3+1dOG929CM1kGJS58rYn6rFydSpkU
- c8eTfshvjXXq+2YXS3WG6CoFb/kHi61dXM8RjvR7WAiQy7vMxXW01eVfBJmNklg9F/52
- PbAsYYiUJATlyTpnG/9aKkg48KfJLqCvww7rv2T5yQWxGh9/meMXtwvYjd0axnajiUvt
- reiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761211460; x=1761816260;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wc/vWIbe7zNmH17tpBpu1vmNiEABiUvd2vn+iEYOxDg=;
- b=nuXpfKEp9t9pAHLxYs3sUskxQklwIUtvYeoPccTrOGR9p4XCORNH8j6ilmEOKxVFDJ
- 27L2K/E+mjy4glAd/LuYizhFt0m4mf8SgxNWVJyY20ucOWgpnnj6riyYHbe+JnUw8zIK
- MK4Du91oz5sEWKJ1759shWNj1Rdeho1oOrGoHBLcmU4XAujmUZpQ9rClIh+oqYs7d7cQ
- H7FTnpV3g44uz3Jfz4jFf5+KCmEIWhs4BCVGWQt5gT1/Tm7fMKAtsJl9cBimYRwoCx8c
- k4FaULQXbY4vmYq06y+h4MRV1hOHwYUkpCrjUjFQ5LfWbeM/RWGr8ZcL471i1EjFz7hv
- yUkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFcXJRxQ/gxBUy8Ggq38sqcfoK0vw/+W+rXNhktqD+mxHgXbnqsZ1dXzHJ59cD105/JZZ/cIRbe61t@nongnu.org
-X-Gm-Message-State: AOJu0YyFLR6v4rTsjILwSu+UBH3G6auE/CbjwBspNSjyIOssCvpVrorU
- l86MFjSaHxpqEMgXuO1d4xIRL/xUou9+M+uv3Sh+IOHquLEdH4OhMOSw
-X-Gm-Gg: ASbGncu6eiwU1ZcdWnW9W3hYfSI2ofgVZz6Z58n+EQN8Kww+e7+IkH6lWi27Du9Ggmo
- uv7AaETFUShbuWDbiG/5FBwKPJHDfFCJvwelDe+VCu8rSM/sNQV/PmoDETTqZpK4GZ+WikXIeaS
- pwW0UXNCRJS8GLhT3Tx07RhiLZrFTHF8l2BvQD1fFQD0D1ydC6dr4ZyIwgp40+U+i5MJfVGX+WA
- yAZ+0eRryU7dzOxO/mk5CQAcpPpo/nRJRd/J2DHsrXg3pIs11G0dSRI3vby9PacUhIWURjjNmhN
- SumLxRW4iUUh12+Q8VHaCmkriop2Fw6MaE5ruASy3paA/8A5QD3F4Nm5MgeQOJ4B5oOh9Y+kqY7
- pVSEj/kNlimb8fdJBo6pkC2Zb0p60qpI3Yy8vaPiyElbpOzudAP/8KjiMAwU0jspNE3go0k4i0m
- 75tz6MgPtTiZc2S3veT0DW4mIBjQ3QSrKlwOgu7g6EzIY=
-X-Google-Smtp-Source: AGHT+IHU5Gei9CD4nq02yBKhEDZA0JJxDkKkZgFYiynYffZtcnsonISoZsbX4e2VEGaNNDX6TpUBgA==
-X-Received: by 2002:a17:907:1b1b:b0:b39:57ab:ec18 with SMTP id
- a640c23a62f3a-b6d51c2f64amr167997066b.45.1761211460182; 
- Thu, 23 Oct 2025 02:24:20 -0700 (PDT)
-Received: from ehlo.thunderbird.net (ip-109-41-112-116.web.vodafone.de.
- [109.41.112.116]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d511d012bsm182635966b.7.2025.10.23.02.24.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 02:24:19 -0700 (PDT)
-Date: Thu, 23 Oct 2025 09:23:58 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-CC: Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Roman Bolshakov <rbolshakov@ddn.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v7_24/24=5D_whpx=3A_apic=3A_use_non-deprec?=
- =?US-ASCII?Q?ated_APIs_to_control_interrupt_controller_state?=
-In-Reply-To: <60cd413d-d901-4da7-acb6-c9d47a198c9c@linaro.org>
-References: <20251016165520.62532-1-mohamed@unpredictable.fr>
- <20251016165520.62532-25-mohamed@unpredictable.fr>
- <2cbd9feb-2c20-46e0-af40-0bd64060dfba@linaro.org>
- <6982BC4E-1F59-47AD-B6E6-9FFF4212C627@gmail.com>
- <60cd413d-d901-4da7-acb6-c9d47a198c9c@linaro.org>
-Message-ID: <0C41CA0E-C523-4C00-AD07-71F6A7890C0E@gmail.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vBryF-0006Ot-6F
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:51:01 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vBryA-0002FI-Iu
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:50:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1761213038; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=C4/VtxmcwEjvwAnJBM5/34jYOjEWQG2E+T6Xoo4mERVyqKxSmQGWeoEUJCNL0clHtp3XlTqKwWoym3pGkkFu1O0gyaLi+sQ6GiSp713iB+VTRoAJfYbaBsZBC1iNRIklkynGFrbrm6B8ZXGb/Dgny688s2ZCnwAUiQvT10oLLYc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1761213038;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=Vg4EtX5WoHf3YJDldh5ghvu84kIQR5UAMHitCOwCLao=; 
+ b=h+cHXRX9ARZ7vAPpJHHqi9VaedqElDVFzHHs+MHVY4HlWYKQLKtpFd6hJ2+po6NJUFNryi6yLCPx/a0KDBTQDCELKGNyHqssP3d/zTBuizu1JBgBTnY4SDEUgtsaBHEEw4hJCrdVG8J1QqtoxsIKw1e71X/0fuUeA3IzHXLSaVQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761213038; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=Vg4EtX5WoHf3YJDldh5ghvu84kIQR5UAMHitCOwCLao=;
+ b=B0hKg/j9ipnw3BFT0GF0AdlRg5n1YEPxr6nxUc10eznLqDaTEkMIW0H8V29XLuuZ
+ RzkuGg3AF645YlnQ4Sm+TawJWS8zm5wFIw+HYrA+POHnEhUxXIXjEsSFsJxTjm/cO35
+ cAI/OlaCPTnNjQp+rAN8lhByPJ+YwSnW+mzh9il8=
+Received: by mx.zohomail.com with SMTPS id 1761213035344780.0733809165802;
+ Thu, 23 Oct 2025 02:50:35 -0700 (PDT)
+Message-ID: <07ecefc3-f5a1-490b-84fe-8454d3883296@collabora.com>
+Date: Thu, 23 Oct 2025 12:50:27 +0300
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rcu: Unify force quiescent state
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp>
+ <cc38a1ac-6f05-4c27-90a5-6ed71d9b566c@collabora.com>
+ <626016e1-c7d8-4377-bf9f-ab0f0eef1457@rsg.ci.i.u-tokyo.ac.jp>
+ <f89d4a21-635a-4779-95c1-7db0abe66863@rsg.ci.i.u-tokyo.ac.jp>
+ <38973a24-787a-4ec0-866b-7f4a7a7824d1@collabora.com>
+ <ef54339e-c78c-43a0-94af-9908478095d6@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <ef54339e-c78c-43a0-94af-9908478095d6@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,43 +91,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/23/25 08:50, Akihiko Odaki wrote:
+> On 2025/10/22 12:30, Dmitry Osipenko wrote:
+>> On 10/17/25 03:40, Akihiko Odaki wrote:
+>>> On 2025/10/17 8:43, Akihiko Odaki wrote:
+>>>> On 2025/10/17 4:33, Dmitry Osipenko wrote:
+>>>>> On 10/16/25 09:34, Akihiko Odaki wrote:
+>>>>>> -        /* Wait for one thread to report a quiescent state and try
+>>>>>> again.
+>>>>>> +        /*
+>>>>>> +         * Sleep for a while and try again.
+>>>>>>             * Release rcu_registry_lock, so rcu_(un)register_thread()
+>>>>>> doesn't
+>>>>>>             * wait too much time.
+>>>>>>             *
+>>>>>> @@ -133,7 +150,20 @@ static void wait_for_readers(void)
+>>>>>>             * rcu_registry_lock is released.
+>>>>>>             */
+>>>>>>            qemu_mutex_unlock(&rcu_registry_lock);
+>>>>>> -        qemu_event_wait(&rcu_gp_event);
+>>>>>> +
+>>>>>> +        if (forced) {
+>>>>>> +            qemu_event_wait(&rcu_gp_event);
+>>>>>> +
+>>>>>> +            /*
+>>>>>> +             * We want to be notified of changes made to
+>>>>>> rcu_gp_ongoing
+>>>>>> +             * while we walk the list.
+>>>>>> +             */
+>>>>>> +            qemu_event_reset(&rcu_gp_event);
+>>>>>> +        } else {
+>>>>>> +            g_usleep(10000);
+>>>>>> +            sleeps++;
+>>>>>
+>>>>> Thanks a lot for this RCU improvement. It indeed removes the hard
+>>>>> stalls
+>>>>> with unmapping of virtio-gpu blobs.
+>>>>>
+>>>>> Am I understanding correctly that potentially we will be hitting this
+>>>>> g_usleep(10000) and stall virtio-gpu for the first ~10ms? I.e. the
+>>>>> MemoryRegion patches from Alex [1] are still needed to avoid stalls
+>>>>> entirely.
+>>>>>
+>>>>> [1]
+>>>>> https://lore.kernel.org/qemu-devel/20251014111234.3190346-6-
+>>>>> alex.bennee@linaro.org/
+>>>>
+>>>> That is right, but "avoiding stalls entirely" also causes use-after-
+>>>> free.
+>>>>
+>>>> The problem with virtio-gpu on TCG is that TCG keeps using the old
+>>>> memory map until force_rcu is triggered. So, without force_rcu, the
+>>>> following pseudo-code on a guest will result in use-after-free:
+>>>>
+>>>> address = blob_map(resource_id);
+>>>> blob_unmap(resource_id);
+>>>>
+>>>> for (i = 0; i < some_big_number; i++)
+>>>>     *(uint8_t *)address = 0;
+>>>>
+>>>> *(uint8_t *)address will dereference the blob until force_rcu is
+>>>> triggered, so finalizing MemoryRegion before force_rcu results in use-
+>>>> after-free.
+>>>>
+>>>> The best option to eliminate the delay entirely I have in mind is to
+>>>> call drain_call_rcu(), but I'm not for such a change (for now).
+>>>> drain_call_rcu() eliminates the delay if the FlatView protected by RCU
+>>>> is the only referrer of the MemoryRegion, but that is not guaranteed.
+>>>>
+>>>> Performance should not be a concern anyway in this situation. The
+>>>> guest should not waste CPU time by polling in the first place if you
+>>>> really care performance; since it's a para-virtualized device and not
+>>>> a real hardware, CPU time may be shared between the guest and the
+>>>> device, and thus polling on the guest has an inherent risk of slowing
+>>>> down the device. For performance-sensitive workloads, the guest should:
+>>>>
+>>>> - avoid polling and
+>>>> - accumulate commands instead of waiting for each
+>>>>
+>>>> The delay will be less problematic if the guest does so, and I think
+>>>> at least Linux does avoid polling.
+>>>>
+>>>> That said, stalling the guest forever in this situation is "wrong" (!=
+>>>> "bad performance"). I wrote this patch to guarantee forward progress,
+>>>> which is mandatory for semantic correctness.
+>>>>
+>>>> Perhaps drain_call_rcu() may make sense also in other, performance-
+>>>> sensitive scenarios, but it should be added after benchmark or we will
+>>>> have a immature optimization.
+>>>
+>>> I first thought just adding drain_call_rcu() would work but apparently
+>>> it is not that simple. Adding drain_call_rcu() has a few problems:
+>>>
+>>> - It drops the BQL, which should be avoided. Problems caused by
+>>> run_on_cpu(), which drops the BQL, was discussed on the list for a few
+>>> times and drain_call_rcu() may also suffer from them.
+>>>
+>>> - It is less effective if the RCU thread enters g_usleep() before
+>>> drain_call_rcu() is called.
+>>>
+>>> - It slows down readers due to the nature of drain_call_rcu().
+>>>
+>>> So, if you know some workload that may suffer from the delay, it may be
+>>> a good idea to try them with the patches from Alex first, and then think
+>>> of a clean solution if it improves performance.
+>>
+>> What's not clear to me is whether this use-after-free problem affects
+>> only TCG or KVM too.
+>>
+>> Can we unmap blob immediately using Alex' method when using KVM? Would
+>> be great if we could optimize unmapping for KVM. TCG performance is a
+>> much lesser concern.
+> 
+> Unfortunately no, the use-after-free can occur whatever acceleration is
+> used. It was discussed thoroughly in the past. In short, the patch
+> breaks reference counting (which also breaks RCU as it is indirectly
+> tracked with reference counting) so use-after-free can be triggered with
+> a DMA operation.
+> 
+> The best summary I can find is the following:
+> https://lore.kernel.org/qemu-devel/6c4b9d6a-d86e-44cf-be48-
+> f919b81eac15@rsg.ci.i.u-tokyo.ac.jp/
+> 
+> The breakage of reference counting can be checked with the code in the
+> following email:
+> https://lore.kernel.org/qemu-devel/e9285843-0487-4754-
+> a348-34f1a852b24c@daynix.com/
+> 
+> I suggested adding an RCU API to request the force quiescent
+> state for virtio-gpu as a solution that works both on TCG and KVM in
+> another thread, but I think it is also the easiest solution for KVM that
+> avoids a regression. The thread can be found at:
+> https://lore.kernel.org/qemu-devel/
+> f5d55625-10e0-496f-9b3e-2010fe0c741f@rsg.ci.i.u-tokyo.ac.jp/
+> 
+> I think it is straightforward enough, but I'm worried that it may not be
+> implemented before the feature freeze. I am now just a hobbyist that has
+> little time to spend for QEMU, and RCU and the memory region management
+> are too important to make a change in haste.
+Thanks. The RCU polling improvement already is a very good start and
+makes native context usable with QEMU.
 
+You're likely the best person to work on the RCU API addition. I may
+look into it too.
 
-Am 23=2E Oktober 2025 06:33:18 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
-philmd@linaro=2Eorg>:
->On 20/10/25 12:27, Bernhard Beschow wrote:
->>=20
->>=20
->> Am 16=2E Oktober 2025 17:15:42 UTC schrieb Pierrick Bouvier <pierrick=
-=2Ebouvier@linaro=2Eorg>:
->>> On 10/16/25 9:55 AM, Mohamed Mediouni wrote:
->>>> WHvGetVirtualProcessorInterruptControllerState2 and
->>>> WHvSetVirtualProcessorInterruptControllerState2 are
->>>> deprecated since Windows 10 version 2004=2E
->>>>=20
->>>> Use the non-deprecated WHvGetVirtualProcessorState and
->>>> WHvSetVirtualProcessorState when available=2E
->>>>=20
->>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
->>>> ---
->>>>    include/system/whpx-internal=2Eh |  9 +++++++
->>>>    target/i386/whpx/whpx-apic=2Ec   | 46 +++++++++++++++++++++++++---=
-------
->>>>    2 files changed, 43 insertions(+), 12 deletions(-)
->>>=20
->>> Reviewed-by: Pierrick Bouvier <pierrick=2Ebouvier@linaro=2Eorg>
->>=20
->> Couldn't we merge this patch already until the rest of the series is fi=
-gured out?
->
->OK if you provide your Tested-by tag (:
-
-Oh, I did for an older version of the series w/o this patch: <https://lore=
-=2Ekernel=2Eorg/qemu-devel/5758AEBA-9E33-4DCA-9B08-0AF91FD03B0E@gmail=2Ecom=
-/>
-
-I'll retest=2E
-
+-- 
 Best regards,
-Bernhard
+Dmitry
 
