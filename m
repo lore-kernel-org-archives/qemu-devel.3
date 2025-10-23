@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9051CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 799F7CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtkt-00027b-A8; Thu, 23 Oct 2025 07:45:19 -0400
+	id 1vBtku-0002Ao-F0; Thu, 23 Oct 2025 07:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtko-0001l9-3k
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:14 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1vBtkp-0001lx-5v
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkl-0001pv-96
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:13 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N990kJ002342
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:10 GMT
+ id 1vBtkm-0001dJ-8y
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:14 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N48UEW015154;
+ Thu, 23 Oct 2025 11:44:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ygRf9NyfBUDoDxvgY
- FqY0DYBipiX5f6R1l75fevs5k0=; b=O/pAL1+tEN0cI63zR4P3HiNR5FGO9jmwM
- Ac6JHvSjwWjfmX36TBFHJScDqU0GcHopbEl/XsfhJTWIpjon/xOyggFGnYI5R1hT
- S+H776F+t01fWeuAfm8IZUYbIwGoaNJckivn9rD0xabyHhmkgzHTrgvQMsa4J2k/
- UY32fCJ/s1bpngOqBiWhKzkBUOc/oOiAerpyvYKDBHMRHlCupy9ksH4FkLSr3vHS
- 0UtU9oYlA9839qbSUFIIZnnRrFRbST92bwys+1Y9y13XFmsECeH5O1gylg2QoeTS
- XF8EdLnFHj6rDXuNmpgMyexHjMoTgw0pF8bVH7BeUsF1B0Q+7aCVg==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=xy+FpD
+ SQIuSIz8SH+Jrmw+29iCnIy43AKGGljobRpnk=; b=D7J3xZKDfz72+93mEcymJr
+ +yOOWBCnuzmLZhlmMtKMBHSBLytO1Di2QEq23MJ5dKW80im8fkN9nmu8higukx22
+ WI5StfOdofcnfF75owws8pwEp2ofl4q5/k/SrVbUbhoY3sH8LT4ERPmEAtO7xn2u
+ +mF7l+QSkzqDkfRYkHC2Bu9RaGh8JmGjW6u8thPB0gJJ+RS8DoXGwy9a3AKocmIg
+ qirtWNSh+O9IH3e6dykjEK3ZJ3BIPB/XbInOk8AFF30dLExxkobe8egA9xrCHZdj
+ lOuNs14R7hxl7zq0Fe3UAapPQUZHfM/NyPN8HuPG06gE9AzG9J4aSHx2rKonxPPA
+ ==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31cgj3a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:10 +0000 (GMT)
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s9wau-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:44:57 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N8VA7A014663
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:09 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sdppu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:09 +0000
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9C5DE014685;
+ Thu, 23 Oct 2025 11:44:57 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sdpnw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:44:56 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBj5mj52166934
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBituX49873324
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:45:05 GMT
+ Thu, 23 Oct 2025 11:44:55 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C32E620049;
- Thu, 23 Oct 2025 11:45:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 45ACC20049;
+ Thu, 23 Oct 2025 11:44:55 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B979F20040;
- Thu, 23 Oct 2025 11:45:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 56DB020040;
+ Thu, 23 Oct 2025 11:44:54 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:45:04 +0000 (GMT)
+ Thu, 23 Oct 2025 11:44:54 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PULL 29/32] hw/ppc: Pass dump-sizes property for fadump in device
- tree
-Date: Thu, 23 Oct 2025 17:14:16 +0530
-Message-ID: <20251023114422.3675018-30-harshpb@linux.ibm.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 21/32] hw/ppc/pegasos2: Introduce abstract superclass
+Date: Thu, 23 Oct 2025 17:14:08 +0530
+Message-ID: <20251023114422.3675018-22-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: SKwi05ohmzNjDMO-4TVe5bXdmMgfjpi5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX4pTylZOufuM3
- muwH1bkSU43kZnGlYWLWG/Xnk61a6yNpKbd+E923EgH7pMY7ZfZ8Wk0alP2M8ZIdj9uMj6hD1hb
- pbPfZeSNxulOGsFRt56XrIFUxMnyJHQ0u+t9FSBx2N3gTLJb20RlizydyB+dxUYG8ipN/98v5Q1
- 7+wNLI0zCDv6SkcU4eihq2KoQ2YzLU4z9z7x61VrggGQ7RxCmAaggivBRmhkBBrA7I5X3zFOMUq
- vSvN1gZ+WP27yFnCwqkNGFHSwch47fBa2O5Pv+1bS4uvq0r+BQzrgjKn3Bro9igakpgvq6jg6gK
- 4eXT36O+M/A4AbB079sxvo6PxICz8sXLm0vVGVpWjSLnfyoUlCzSEIli6cOLdcnlZ62tGigfp4H
- ij5NCOtq8Cj7IDsI8ZoMuWtol7aBNA==
-X-Proofpoint-GUID: SKwi05ohmzNjDMO-4TVe5bXdmMgfjpi5
-X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68fa1546 cx=c_pps
+X-Proofpoint-ORIG-GUID: PM2hKii3YUWOpvLQV7gRF6FuJY0f-E8d
+X-Proofpoint-GUID: PM2hKii3YUWOpvLQV7gRF6FuJY0f-E8d
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9WfqXy9sL9XI
+ vA776eqs7pzRWkVnk4RUgSuZxwruxbB2qcWxmZ/iXKPMFpwJ06nbqhOTtTNGncf04zcC2e9DK5Y
+ Pi67oNVTLOucSlphiG5rOe+oiZSPlAH2pbIFN7bOayV8/cubJ1UpkjKTwaGU2mZ4B5qW8ZlguFP
+ WM003Rw8bmpG5Fzt0lUKtHKc8jEcxhsDmcR0vb4x49KEK24igSo0+Z7a1fdjGWRDjf1nGf3fU51
+ w8OYjkzZyfkS8Tt5lznELqU+2Ke42i5l93LhQo8BTR6O8mYKBE9J1+HIU5BTGgi12xi/gMn4T70
+ tBw3RzvjKQf+M7t50sW93OtIVhdaWdEjCyAjeifZmGzVtsf0eZaj7q+PPJ3nk/vuQxaMo1G1OKX
+ otaAXPO1MuYvLBp5OuRnYFpWIpFSEg==
+X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fa1539 cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=fff_gh8wo2OfEAVniKgA:9
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=PatsMKc-9FYN22uO058A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -121,127 +123,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Platform (ie. QEMU) is expected to pass few device tree properties for
-details for fadump:
+Rename machine state struct to PegasosMachineState as it will be used
+for pegasos1 too.
 
-  * "ibm,configure-kernel-dump-sizes": Space required to store dump data
-    for firmware provided dump sections (ie. CPU & HPTE regions)
-  * "ibm,configure-kernel-dump-version": Versions of fadump supported
-
-Pass the above device tree nodes so that kernel can reserve sufficient
-space for preserving the CPU state data
-
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-6-adityag@linux.ibm.com
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/a09590a5da4572c9d392542f5c3793e6eb08ab9e.1761176219.git.balaton@eik.bme.hu
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/ppc/spapr.c        | 57 +++++++++++++++++++++++++++++++++++++++++++
- hw/ppc/spapr_fadump.c |  6 ++---
- 2 files changed, 60 insertions(+), 3 deletions(-)
+ hw/ppc/pegasos2.c | 66 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 34 insertions(+), 32 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 117da76a3d..d6cfb9acbc 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -900,6 +900,61 @@ static int spapr_dt_rng(void *fdt)
-     return ret ? -1 : 0;
- }
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index ed3070204b..f5b56c0e94 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -57,10 +57,10 @@
  
-+static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
-+{
-+    MachineState *ms = MACHINE(spapr);
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+
-+    uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
-+    uint64_t fadump_cpu_state_size = 0;
-+    uint16_t fadump_versions[2] = {
-+        FADUMP_VERSION /* min supported version */,
-+        FADUMP_VERSION /* max supported version */
-+    };
-+    uint32_t fadump_rgn_sizes[2][3] = {
-+        {
-+            cpu_to_be32(FADUMP_CPU_STATE_DATA),
-+            0, 0 /* Calculated later */
-+        },
-+        {
-+            cpu_to_be32(FADUMP_HPTE_REGION),
-+            0, 0 /* HPTE region not implemented */
-+        }
-+    };
-+
-+    /*
-+     * CPU State Data contains multiple fields such as header, num_cpus and
-+     * register entries
-+     *
-+     * Calculate the maximum CPU State Data size, according to maximum
-+     * possible CPUs the QEMU VM can have
-+     *
-+     * This calculation must match the 'cpu_state_len' calculation done in
-+     * 'populate_cpu_state_data' in spapr_fadump.c
-+     */
-+    fadump_cpu_state_size += sizeof(struct FadumpRegSaveAreaHeader);
-+    fadump_cpu_state_size += 0xc;                      /* padding as in PAPR */
-+    fadump_cpu_state_size += sizeof(uint32_t);         /* num_cpus */
-+    fadump_cpu_state_size += max_possible_cpus   *     /* reg entries */
-+                             FADUMP_PER_CPU_REG_ENTRIES *
-+                             sizeof(struct FadumpRegEntry);
-+
-+    /* Set maximum size for CPU state data region */
-+    assert(fadump_rgn_sizes[0][0] == cpu_to_be32(FADUMP_CPU_STATE_DATA));
-+
-+    /* Upper 32 bits of size, usually 0 */
-+    fadump_rgn_sizes[0][1] = cpu_to_be32(fadump_cpu_state_size >> 32);
-+
-+    /* Lower 32 bits of size */
-+    fadump_rgn_sizes[0][2] = cpu_to_be32(fadump_cpu_state_size & 0xffffffff);
-+
-+    /* Add device tree properties required from platform for fadump */
-+    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-version",
-+                    fadump_versions, sizeof(fadump_versions))));
-+    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
-+                    fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
-+}
-+
- static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+ #define BUS_FREQ_HZ 133333333
+ 
+-#define TYPE_PEGASOS2_MACHINE  MACHINE_TYPE_NAME("pegasos2")
+-OBJECT_DECLARE_TYPE(Pegasos2MachineState, MachineClass, PEGASOS2_MACHINE)
++#define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
++OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
+ 
+-struct Pegasos2MachineState {
++struct PegasosMachineState {
+     MachineState parent_obj;
+ 
+     PowerPCCPU *cpu;
+@@ -78,12 +78,12 @@ struct Pegasos2MachineState {
+     uint64_t initrd_size;
+ };
+ 
+-static void *pegasos2_build_fdt(Pegasos2MachineState *pm, int *fdt_size);
++static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size);
+ 
+ static void pegasos2_cpu_reset(void *opaque)
  {
-     MachineState *ms = MACHINE(spapr);
-@@ -1015,6 +1070,8 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
-     _FDT(fdt_setprop(fdt, rtas, "ibm,lrdr-capacity",
-                      lrdr_capacity, sizeof(lrdr_capacity)));
+     PowerPCCPU *cpu = opaque;
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(current_machine);
++    PegasosMachineState *pm = PEGASOS_MACHINE(current_machine);
  
-+    spapr_dt_rtas_fadump(spapr, fdt, rtas);
-+
-     spapr_dt_rtas_tokens(fdt, rtas);
+     cpu_reset(CPU(cpu));
+     cpu->env.spr[SPR_HID1] = 7ULL << 28;
+@@ -96,7 +96,7 @@ static void pegasos2_cpu_reset(void *opaque)
+ 
+ static void pegasos2_pci_irq(void *opaque, int n, int level)
+ {
+-    Pegasos2MachineState *pm = opaque;
++    PegasosMachineState *pm = opaque;
+ 
+     /* PCI interrupt lines are connected to both MV64361 and VT8231 */
+     qemu_set_irq(pm->mv_pirq[n], level);
+@@ -104,7 +104,7 @@ static void pegasos2_pci_irq(void *opaque, int n, int level)
  }
  
-diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-index fdd4929148..fa3aeac94c 100644
---- a/hw/ppc/spapr_fadump.c
-+++ b/hw/ppc/spapr_fadump.c
-@@ -492,7 +492,7 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
-     *cpu_state_len = 0;
-     *cpu_state_len += sizeof(reg_save_hdr);     /* reg save header */
-     *cpu_state_len += 0xc;                      /* padding as in PAPR */
--    *cpu_state_len += sizeof(__be32);           /* num_cpus */
-+    *cpu_state_len += sizeof(num_cpus);         /* num_cpus */
-     *cpu_state_len += reg_entries_size;         /* reg entries */
+ /* Set up PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
+-static void pegasos2_setup_pci_irq(Pegasos2MachineState *pm)
++static void pegasos2_setup_pci_irq(PegasosMachineState *pm)
+ {
+     for (int h = 0; h < 2; h++) {
+         DeviceState *pd;
+@@ -137,7 +137,7 @@ static void pegasos2_setup_pci_irq(Pegasos2MachineState *pm)
  
-     cpu_state_buffer = g_malloc(*cpu_state_len);
-@@ -503,8 +503,8 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
+ static void pegasos2_init(MachineState *machine)
+ {
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
++    PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     CPUPPCState *env;
+     MemoryRegion *rom = g_new(MemoryRegion, 1);
+     PCIBus *pci_bus;
+@@ -262,7 +262,7 @@ static void pegasos2_init(MachineState *machine)
+     }
+ }
  
-     /* Write num_cpus */
-     num_cpus = cpu_to_be32(num_cpus);
--    memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(__be32));
--    offset += sizeof(__be32);
-+    memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(num_cpus));
-+    offset += sizeof(num_cpus);
+-static uint32_t pegasos2_mv_reg_read(Pegasos2MachineState *pm,
++static uint32_t pegasos2_mv_reg_read(PegasosMachineState *pm,
+                                      uint32_t addr, uint32_t len)
+ {
+     MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 0);
+@@ -272,7 +272,7 @@ static uint32_t pegasos2_mv_reg_read(Pegasos2MachineState *pm,
+     return val;
+ }
  
-     /* Write the register entries */
-     memcpy(cpu_state_buffer + offset, reg_entries, reg_entries_size);
+-static void pegasos2_mv_reg_write(Pegasos2MachineState *pm, uint32_t addr,
++static void pegasos2_mv_reg_write(PegasosMachineState *pm, uint32_t addr,
+                                   uint32_t len, uint32_t val)
+ {
+     MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 0);
+@@ -283,7 +283,7 @@ static void pegasos2_mv_reg_write(Pegasos2MachineState *pm, uint32_t addr,
+ #define PCI0_CFG_ADDR 0xcf8
+ #define PCI1_CFG_ADDR 0xc78
+ 
+-static uint32_t pegasos2_pci_config_read(Pegasos2MachineState *pm, int bus,
++static uint32_t pegasos2_pci_config_read(PegasosMachineState *pm, int bus,
+                                          uint32_t addr, uint32_t len)
+ {
+     hwaddr pcicfg = bus ? PCI1_CFG_ADDR : PCI0_CFG_ADDR;
+@@ -296,7 +296,7 @@ static uint32_t pegasos2_pci_config_read(Pegasos2MachineState *pm, int bus,
+     return val;
+ }
+ 
+-static void pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
++static void pegasos2_pci_config_write(PegasosMachineState *pm, int bus,
+                                       uint32_t addr, uint32_t len, uint32_t val)
+ {
+     hwaddr pcicfg = bus ? PCI1_CFG_ADDR : PCI0_CFG_ADDR;
+@@ -311,7 +311,7 @@ static void pegasos2_superio_write(uint8_t addr, uint8_t val)
+     cpu_physical_memory_write(0xfe0003f1, &val, 1);
+ }
+ 
+-static void pegasos2_chipset_reset(Pegasos2MachineState *pm)
++static void pegasos2_chipset_reset(PegasosMachineState *pm)
+ {
+     pegasos2_mv_reg_write(pm, 0, 4, 0x28020ff);
+     pegasos2_mv_reg_write(pm, 0x278, 4, 0xa31fc);
+@@ -379,7 +379,7 @@ static void pegasos2_chipset_reset(Pegasos2MachineState *pm)
+ 
+ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
+ {
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
++    PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     void *fdt;
+     uint32_t c[2];
+     uint64_t d[2];
+@@ -463,7 +463,7 @@ enum pegasos2_rtas_tokens {
+     RTAS_SYSTEM_REBOOT = 20,
+ };
+ 
+-static target_ulong pegasos2_rtas(PowerPCCPU *cpu, Pegasos2MachineState *pm,
++static target_ulong pegasos2_rtas(PowerPCCPU *cpu, PegasosMachineState *pm,
+                                   target_ulong args_real)
+ {
+     AddressSpace *as = CPU(cpu)->as;
+@@ -566,7 +566,7 @@ static bool pegasos2_cpu_in_nested(PowerPCCPU *cpu)
+ 
+ static void pegasos2_hypercall(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
+ {
+-    Pegasos2MachineState *pm = PEGASOS2_MACHINE(vhyp);
++    PegasosMachineState *pm = PEGASOS_MACHINE(vhyp);
+     CPUPPCState *env = &cpu->env;
+ 
+     /* The TCG path should also be holding the BQL at this point */
+@@ -629,24 +629,26 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
+     vmc->setprop = pegasos2_setprop;
+ }
+ 
+-static const TypeInfo pegasos2_machine_info = {
+-    .name          = TYPE_PEGASOS2_MACHINE,
+-    .parent        = TYPE_MACHINE,
+-    .class_init    = pegasos2_machine_class_init,
+-    .instance_size = sizeof(Pegasos2MachineState),
+-    .interfaces = (const InterfaceInfo[]) {
+-        { TYPE_PPC_VIRTUAL_HYPERVISOR },
+-        { TYPE_VOF_MACHINE_IF },
+-        { }
++static const TypeInfo pegasos_machine_types[] = {
++    {
++        .name          = TYPE_PEGASOS_MACHINE,
++        .parent        = TYPE_MACHINE,
++        .instance_size = sizeof(PegasosMachineState),
++        .abstract      = true,
++        .interfaces = (const InterfaceInfo[]) {
++              { TYPE_PPC_VIRTUAL_HYPERVISOR },
++              { TYPE_VOF_MACHINE_IF },
++              { }
++        },
++    },
++    {
++        .name          = MACHINE_TYPE_NAME("pegasos2"),
++        .parent        = TYPE_PEGASOS_MACHINE,
++        .class_init    = pegasos2_machine_class_init,
+     },
+ };
+ 
+-static void pegasos2_machine_register_types(void)
+-{
+-    type_register_static(&pegasos2_machine_info);
+-}
+-
+-type_init(pegasos2_machine_register_types)
++DEFINE_TYPES(pegasos_machine_types)
+ 
+ /* FDT creation for passing to firmware */
+ 
+@@ -847,7 +849,7 @@ static void *load_dtb(const char *filename, int *fdt_size)
+     return fdt;
+ }
+ 
+-static void *pegasos2_build_fdt(Pegasos2MachineState *pm, int *fdt_size)
++static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size)
+ {
+     FDTInfo fi;
+     PCIBus *pci_bus;
 -- 
 2.43.5
 
