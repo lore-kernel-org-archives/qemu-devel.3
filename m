@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DCCCCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94321CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBmj4-0000ZO-Tz; Thu, 23 Oct 2025 00:14:58 -0400
+	id 1vBmjn-0000oz-TL; Thu, 23 Oct 2025 00:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmj2-0000Yd-7D
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:14:56 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vBmjl-0000oK-Sd
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:41 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmj0-00075r-Fw
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:14:55 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7a26ea3bf76so492833b3a.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:14:54 -0700 (PDT)
+ id 1vBmjk-0007Me-3q
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:41 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-781206cce18so356709b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:15:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761192892; x=1761797692; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761192938; x=1761797738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FZLyqH7Fvcg+HojmfroD3Z/4L2yTHzsWHg7CTJ36+8Y=;
- b=l6r8D6/ylcaTpHjfKC8W6At8h5LJqMbRiBNqKBoPJdW+262l2JHTgeHaMwsCEVnssc
- uVyM4lwopAzq9//tPXeyzit45VNuBDHrqsXusyyYTBhU/YCyF3Ck4q3M2E8MGE/GRFPm
- MSk90PucKmdfqOJGUnZd6Fv7yPsAg964abQBqqDsKX6d7FeKZKCPZtHzLPzOhuC73mCB
- xnADQ4FsztSNEpEuzUnIazkQXgU3aYGlvjHAOiZolYWVV7b0RL7TaAY3IySsfRsryuWI
- Ctkfkwl5pQmcLjIzah31warKAF+uq9f9xFT+XTq2KU2p1Ml5To1kx7gyO0R0iiHWurPS
- MeOg==
+ bh=DSdBIzUFAJ8jmSWRkWF95NhSo1Eq4JPgHiE1RjnAzx0=;
+ b=AoiDYwylIzhwWqt2fYpGSsYKMKYwEDhhe4a9T/2q5PDPmpveLtItMMX3dFglqqgp6F
+ RQMsGLRMzt8qfHO8WRvuSnXBHP2Cv2GX/zOuobGb1QNxga7YyEzri59mgRRHkU3f1+0Y
+ w7BvfTlR/E5TnF8rYSxODMyAABPCut+Rb6yvZ2DeZmxpuQrpHf0szwiNoGdQhL7BSCRn
+ KvTfMFKIROdDO2mI8w3Ewpo2m9lOm2Ne6aGZxN/ayWSeanEG0CvwfmJtwcUXfc2b2aOD
+ 0xM6FwWlj88vR0pQSgrn4ODVewaNEy0Vm0el383dK8XcdRo2g5ANWq+Nlj+sFqT3K1EU
+ iM2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761192892; x=1761797692;
+ d=1e100.net; s=20230601; t=1761192938; x=1761797738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FZLyqH7Fvcg+HojmfroD3Z/4L2yTHzsWHg7CTJ36+8Y=;
- b=fcyj8RQZtNHH9DSojIgMMo5oe6+e9+bEz7JjnV+h3aX0CepcPvTUxueH9BjZdnCF2t
- cDtC015EnOVxEVulitMj+bHfIW+qeaxCy3Fbe/JSMi7K7HnQUa3id+DWeX2NM92QwdkH
- OMbk4pLBCyEIVxUYAVLtpUMzJFObYE7hGjbN7RjoanEvEkNj0OWs8jy3fio1o2wo1XrH
- oUvqT1EeI75vuDioJ9e27ZO+83wpo7M84U1jPdpMIQpn3SnSmFMUXpSOMEVur4eFZZx9
- PGW9GAMFZTJe/JqfNbY/IASCWR3ZJ4XqbXUmBK0Tn3RIbXxZtLm7108j01qmO8NMT96N
- hDRg==
-X-Gm-Message-State: AOJu0YyFZqBJogD20w87N44BV2cHX8A/h+uMP/8nYASgWDgOtjH3gEbR
- Rfa0twekZmjGZoeyOkKpNID4TKc54mz6Cp6JEe08GKZsJpCETk64YZUMUHcCwA==
-X-Gm-Gg: ASbGncvDbtesD2ritS+kvR1n1jC0J56UTm8jQ0dA+XARq4w5HLjWTh2Ppl+y2m1iMMN
- 9kvdNobe3jk8d65ncmdZF2o0zN59+ErGu0KCkVNuO6czN9eHMqSxGt3pYisaZ9pwwc/0QZMq4A2
- yQY/anoxgbrxDg7D6aRveSSr8S9ARvP8LdpzYZuYzzWNDVk7N9UEoUc927ev70pnzfpfHtMW/+J
- 99v5rJYtsga2+bP8LrWldROxjtB4M/od6xQ77SnR4N8td6+8315eIvz2rC14QH15cSaPGaRj2zv
- b4cvKK46Kmp5JVtv9rfxMQwSm9OTuhxs00+qHhyu0+jzBASIKc9fndf0UtA7HQO6qxnJAeq5H1r
- zUV+Z9TmbLNKxMPy/q5e2MTNnl+2rKrLu4uBtLCGXHBJ/6WaPWtAQtBM2Pg5Fi3+XNAjT5ucOhi
- 7bfh8heRou4PZrKYf8sjCrkSG0kpDonJXDK30TldtjIJUPRV/HKFIAEoGncfV1nAYheGBPCYYPl
- JRr2Whvug==
-X-Google-Smtp-Source: AGHT+IEbHtFN2qNjOKXvewQPRvUxG1jhIPITg6L0VoOnDExU6Y6Yhp3O0rZY1+/6vTdIMink5uofBQ==
-X-Received: by 2002:a05:6a00:1707:b0:7a2:7792:a47e with SMTP id
- d2e1a72fcca58-7a27792cff9mr697388b3a.8.1761192892476; 
- Wed, 22 Oct 2025 21:14:52 -0700 (PDT)
+ bh=DSdBIzUFAJ8jmSWRkWF95NhSo1Eq4JPgHiE1RjnAzx0=;
+ b=AYTMA7kZrbSM63kDCLAKrIS1k5V1ONR4n1rH55J2G5DrOkHaoYNKmnPe1+rXLtMPJb
+ QnIdPzT7fmV+hViebk6YcxbhLsTdDPBMRBDmjnpn3vvxAFf6CRIenGqPbTS6w4xZFRaQ
+ 1z0uEfgbiXTrwH/XEGC6/5oknaJkytVbettGjGqUlsbJk9/qtBZnx37bkfZp2yiMd9aJ
+ LKWlS7sE/uVg2Tj2gxNf8PQWtwjYlZaa3QkyX7BSbJRNGRyU7czcStETO+10vGf4FWiS
+ au7stzrw7WCUuhe/OdRJsXSWNjYaP+nkEnxyveLRRmKIUV9BzxubSYxv/jQ/zaiaNWqQ
+ fgCg==
+X-Gm-Message-State: AOJu0YxYEdQf1Fmm5xjDlpsIQcx3EzsvQmdL0S4xACsMiuqXrTPeN+tr
+ zDIi5Dk199yZ7Sya1/+ETKPsa/ZnlS0SrSjepq0JOCYrX5hUNaCZOp7mbXxJPw==
+X-Gm-Gg: ASbGnctA5vP4GQ2kzY9UOReUCrkI+yFW7Q1DuVaXQzhv0Om16NnBjXQTJTE+USGWncf
+ GqgBz4EkfqaUZ7mmq9yJb6f5RguiAuQ+B6bTwbDZW4ZSnelJP/dJOwY9HmQHBi9PE7NiKM8QesE
+ 0o6UW16nnVBrSzZTsX7WEhRYVwC/Nr+bnIafopmg/2c+9hZRitLOdddrOVv588ouEDT90IaIEHp
+ A+ZFfX8VbwIYGJLKWMrSlb/IB4UVa4q2SiPsiHQmfIS/xaJ6kxVPNelHGM3MKCsqFA4YFMMZoGG
+ Cjcm/zVSf2zrQdiFqZquPhl0N2pXzsPis7G4wOIhDm2Bj3zy/MXP9c1jN3pnDoc+DDA7YTIhONA
+ EQvHFdSmJwO9ZM4mIBoBpbhK/BFBnpFkBFpdGJHoD16Qcp+8vAiQfngvUZ8Y9FO1Cim31962AcF
+ x2AeOtd8jFNJw3udVqvKoZf+cuV3MqXKcUr8/RIxzHadK+yt5qfiO2BoxcEJ1nfwFwRuHdmR08N
+ KeGT5tJZw==
+X-Google-Smtp-Source: AGHT+IGM5xJy71F6hwK63RTqc+2lEU7LFa4kHgYVTKKTnACwI0FNSFfR4E/GrSmVRt/Fn9LI09pypA==
+X-Received: by 2002:a05:6a00:b01b:b0:77f:43e6:ce65 with SMTP id
+ d2e1a72fcca58-7a26b1b4467mr2933160b3a.0.1761192937933; 
+ Wed, 22 Oct 2025 21:15:37 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.14.49
+ d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.15.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 21:14:51 -0700 (PDT)
+ Wed, 22 Oct 2025 21:15:37 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Zejun Zhao <jelly.zhao.42@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
-Subject: [PULL 01/37] hw/riscv: Correct mmu-type property of sifive_u harts in
- device tree
-Date: Thu, 23 Oct 2025 14:13:59 +1000
-Message-ID: <20251023041435.1775208-2-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Guenter Roeck <linux@roeck-us.net>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 15/37] hw/riscv: microchip_pfsoc: Connect Ethernet PHY channels
+Date: Thu, 23 Oct 2025 14:14:13 +1000
+Message-ID: <20251023041435.1775208-16-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023041435.1775208-1-alistair.francis@wdc.com>
 References: <20251023041435.1775208-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -92,7 +90,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,33 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zejun Zhao <jelly.zhao.42@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-Correct mmu-type property of sifive_u harts from Sv48 to Sv39 in 64-bit
-mode since it's the only supported SATP mode.
-
-Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251004200049.871646-3-linux@roeck-us.net>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
 ---
- hw/riscv/sifive_u.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/riscv/microchip_pfsoc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index d69f942cfb..3e1ed209ca 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -176,7 +176,7 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-             if (is_32_bit) {
-                 qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv32");
-             } else {
--                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv48");
-+                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv39");
-             }
-             riscv_isa_write_fdt(&s->soc.u_cpus.harts[cpu - 1], fdt, nodename);
-         } else {
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 2e74783fce..9fbfba8ece 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -414,6 +414,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+ 
+     object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, errp);
+     object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
++    object_property_set_bool(OBJECT(&s->gem0), "phy-connected", false, errp);
++
+     sysbus_realize(SYS_BUS_DEVICE(&s->gem0), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem0), 0,
+                     memmap[MICROCHIP_PFSOC_GEM0].base);
+@@ -422,6 +424,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+ 
+     object_property_set_int(OBJECT(&s->gem1), "revision", GEM_REVISION, errp);
+     object_property_set_int(OBJECT(&s->gem1), "phy-addr", 9, errp);
++    object_property_set_link(OBJECT(&s->gem1), "phy-consumer",
++                             OBJECT(&s->gem0), errp);
+     sysbus_realize(SYS_BUS_DEVICE(&s->gem1), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem1), 0,
+                     memmap[MICROCHIP_PFSOC_GEM1].base);
 -- 
 2.51.0
 
