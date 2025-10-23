@@ -4,113 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 137B6CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39A5CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBwL1-0001f3-Rs; Thu, 23 Oct 2025 10:30:51 -0400
+	id 1vBwLF-0001vM-94; Thu, 23 Oct 2025 10:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBwKx-0001bh-Td
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:30:43 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwLC-0001qT-Hw
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:30:58 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBwKt-0001jy-NB
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:30:43 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E4E3F211CD;
- Thu, 23 Oct 2025 14:30:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1761229831; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aIz+CW7Nn58UMLa/RU+PbumU16pmyLLAvYHbQ+gNibw=;
- b=JGbGu71GabzXPxGacf6/T0RodDIvgtBVa97Qel5Xr2hJqIcE9nGPqcWFhTltOhB83tDm7C
- DORMcpU56Fw9FnoqeQ9HgsZOwrR1LvbEomzqltH/kcg0f9wnj5gyH1F/tNhhpTbVUXKTrv
- LBp9PvWWa2smTTHze8SInvwQ10N88cU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1761229831;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aIz+CW7Nn58UMLa/RU+PbumU16pmyLLAvYHbQ+gNibw=;
- b=mzGCFxrkMaoPwXdjYNg9aZPK+kqEhlgceuYiJnHWr7CXk3bZJ8HueVot6J54GyLgiDbmcc
- ZlMle5MTieqFlPCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gl1CC76m;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9fVkzEfm
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1761229826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aIz+CW7Nn58UMLa/RU+PbumU16pmyLLAvYHbQ+gNibw=;
- b=gl1CC76m00vlQpMBoH6PH3rV7b89HxHZV/10ORaBjyX5nxlDtA2WdsoFZe3QKuWkq8lWMb
- Fc7f+d/b5bHO6tyX7TKGNwcixXckw7MEM2NqirCOeLbF1cBZ8rbak4tyrdebdlM5fTGYkX
- 8nZ42H3bGqSntHPi5Tei6TEH+IayfFQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1761229826;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aIz+CW7Nn58UMLa/RU+PbumU16pmyLLAvYHbQ+gNibw=;
- b=9fVkzEfmyG8YZX/ooRQNKrpzKNPW98sinERdoi1XhC5TSIIOjgUPc8r6um/kCV3Sz0V6B+
- QQqQkkoCmyvHOBDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6C7B0136CF;
- Thu, 23 Oct 2025 14:30:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xypyDAI8+mjPZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 23 Oct 2025 14:30:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: peterx@redhat.com, qemu-devel@nongnu.org
-Subject: re: [PATCH v2 06/24] migration: Run a post update routine after
- setting parameters
-In-Reply-To: <20251013061024.31814-1-guobin@linux.alibaba.com>
-References: <20250630195913.28033-7-farosas@suse.de>
- <20251013061024.31814-1-guobin@linux.alibaba.com>
-Date: Thu, 23 Oct 2025 11:30:23 -0300
-Message-ID: <87y0p1snb4.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwL9-0001o7-Mz
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:30:58 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-4298bada5bdso577226f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:30:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761229853; x=1761834653; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T0MAWX3PF+zlZmdiNXq5RCA26mpljCPV09k/qwEJKNk=;
+ b=bl6deGFKeu9YvkdRPVRZcnsM2BM77hiVvjBkz+8Rc5YM+LaaIgWO0kppd+yP70Azfz
+ NnzMrzpOv3elZ9GPspJWVYMTlxHrODrrWz2x+zOl6Gt/5B40E6s2t+AqwCCL3V7046TH
+ bmQr9b+MBRmvalhyya3Tof7VgdazWMKzEJoRfukLhgV+xWLBzhX2nQSN7iv4JLJgLfWS
+ qn32gvOrYo6EAydQAhQhCTDE7FxJdmFbyKA28l4TtHmJ4eXbAmXmw6H8wyfre4YkoARt
+ V9qS2xVgzKgKUDWZ0UtHgHTzxZ2KDH8dLD/38gNVvzgpspz6V8aNKdhSqkzYkchlD/H5
+ do0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761229853; x=1761834653;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T0MAWX3PF+zlZmdiNXq5RCA26mpljCPV09k/qwEJKNk=;
+ b=SkV+ltdhxSaVCMQcFC9PN6laXia2sIG7p8nkjcg8HkZ5kfJpE8dB5q84QPjDpMIHcR
+ 1tmvNysWsBspLsMJftXo4Awpqk+22h3NYhANMCSwpdfexQV0vlfJXM7F8RUmIrnccmnC
+ R9Goi3uY2iLrmSKyoUMpCyLvCV++C8u+tuwJXGpJGVgfWL1HllNN3baBjcGH4WvUetEa
+ C4SR/9QxdP/pmrWRkI3muP4VW6WUGxQRsbL0ZQpJNuIwzHMYFO6uVOhTxvAVHEy3VxjY
+ zzAwZ0lp2k6JWgLCE4p0N7Nh/2LR2wdKT/UqL9MuBQmOzS97K0pPudJwOSRlixI3Jxpz
+ qxGw==
+X-Gm-Message-State: AOJu0Yxrgvn9Mc3AFjlsFxJmZ7Anftvlim0du2bWJgfhe8KIUUx6DbgP
+ eu5tcEW5xJe8NjQwqajOd5fV7ByxwJ1kPKwT2XeiHelVu2rN8lU/3LThHajNccfCTFyIEc4TdqK
+ Aj9+qRBs=
+X-Gm-Gg: ASbGncuUXsR8YZRAw/5MT45dSFZGUzFi0/FlQj8ygJb9m+G6sQddm0QpB6OYe1kDULx
+ NrVrN3olGYFk9Yse1EN6NldCIVz8xKQ8vHyodX6BNfcexvltQokd3r+wvkNXntZswoqwHlrW7/3
+ iOrfpO2kVghyCEKWceCraK7KxTMS7M3fl+oa9K5idzFHxuer5FxEG6yzq8xJgVsDg1IqUKPOuX0
+ 59qwYBAsy+WEJV05jNJR9fsqsR52UhPAa/qaWrJlq0klAbCAxqoxLQmDj5LY5rjgFBgshWko6zX
+ EiPV7I1FfebojW38qNmzbBZUJ3A7Jcs7UUK0CFEoM2+ulxlQTn3bnGd2Rh/UhUKbbgBLcFm2+Ss
+ bOo5zFKsmROXV9MOM/VQ9isPPDOz9/cgRlFv1uzWGpKMy9GWgvXW0CbP/yVpelrsXohY7QLJaiE
+ RfOo748ZzlWljBu3mqjlHuDIeS5D2dqyOzL7JbGjDcTe5mlHrPR6YAJgR45Q2K
+X-Google-Smtp-Source: AGHT+IFCOAMqiZnDqEZh67V77IycAuiZ5c73+EWw0KcxV1hMftPod+iLrhtZSp1Ej7xvfFANsgZOnA==
+X-Received: by 2002:a05:6000:41c7:b0:427:652:8e6b with SMTP id
+ ffacd0b85a97d-42706528e8cmr17357051f8f.31.1761229853257; 
+ Thu, 23 Oct 2025 07:30:53 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429897f57d9sm4337292f8f.20.2025.10.23.07.30.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 23 Oct 2025 07:30:52 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Peter Collingbourne <pcc@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>
+Subject: [PATCH v2 20/58] target/arm/hvf: Keep calling hv_vcpu_run() in loop
+Date: Thu, 23 Oct 2025 16:30:41 +0200
+Message-ID: <20251023143051.11195-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251023114638.5667-1-philmd@linaro.org>
+References: <20251023114638.5667-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: E4E3F211CD
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,76 +109,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bin Guo <guobin@linux.alibaba.com> writes:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
+---
+ target/arm/hvf/hvf.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-> Fabiano Rosas wrote on Mon, 30 Jun 2025 16:58:55 -0300:
->
->> Some migration parameters are updated immediately once they are set
->> via migrate-set-parameters. Move that work outside of
->> migrate_params_apply() and leave that function with the single
->> responsibility of setting s->parameters and not doing any
->> side-effects.
->> 
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> 
->> diff --git a/migration/options.c b/migration/options.c
->> index 295367ce92..1f8a977865 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -1083,6 +1083,31 @@ void migrate_params_init(MigrationParameters *params)
->>      params->has_direct_io = true;
->>  }
->>  
->> +static void migrate_post_update_params(MigrationParameters *new, Error **errp)
->> +{
->> +    MigrationState *s = migrate_get_current();
->> +
->> +    if (new->has_max_bandwidth) {
->> +        if (s->to_dst_file && !migration_in_postcopy()) {
->> +            migration_rate_set(new->max_bandwidth);
->> +        }
->> +    }
->> +
->> +    if (new->has_x_checkpoint_delay) {
->> +        colo_checkpoint_delay_set();
->> +    }
->> +
->> +    if (new->has_xbzrle_cache_size) {
->> +        xbzrle_cache_resize(new->xbzrle_cache_size, errp);
->> +    }
->> +
->> +    if (new->has_max_postcopy_bandwidth) {
->> +        if (s->to_dst_file && migration_in_postcopy()) {
->> +            migration_rate_set(new->max_postcopy_bandwidth);
->> +        }
->> +    }
->> +}
->> +
->>
->> diff --git a/migration/ram.c b/migration/ram.c
->> index 2140785a05..7432f82bdd 100644
->> --- a/migration/ram.c
->> +++ b/migration/ram.c
->> @@ -174,7 +174,7 @@ static void XBZRLE_cache_unlock(void)
->>  /**
->>   * xbzrle_cache_resize: resize the xbzrle cache
->>   *
->> - * This function is called from migrate_params_apply in main
->> + * This function is called from migrate_post_update_config in main
->>   * thread, possibly while a migration is in progress.  A running
->>   * migration may be using the cache and might finish during this call,
->>   * hence changes to the cache are protected by XBZRLE.lock().
->> -- 
->
-> The function is migrate_post_update_params, 
-> but the comment says migrate_post_update_config.
->
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 27c600148f9..79861dcacf9 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2013,30 +2013,32 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+     int ret;
+     hv_return_t r;
+ 
+-    if (!(cpu->singlestep_enabled & SSTEP_NOIRQ) &&
+-        hvf_inject_interrupts(cpu)) {
+-        return EXCP_INTERRUPT;
+-    }
+-
+     if (cpu->halted) {
+         return EXCP_HLT;
+     }
+ 
+     flush_cpu_state(cpu);
+ 
+-    bql_unlock();
+-    r = hv_vcpu_run(cpu->accel->fd);
+-    bql_lock();
+-    switch (r) {
+-    case HV_SUCCESS:
+-        ret = hvf_handle_vmexit(cpu, cpu->accel->exit);
+-        break;
+-    case HV_ILLEGAL_GUEST_STATE:
+-        trace_hvf_illegal_guest_state();
+-        /* fall through */
+-    default:
+-        g_assert_not_reached();
+-    }
++    do {
++        if (!(cpu->singlestep_enabled & SSTEP_NOIRQ) &&
++            hvf_inject_interrupts(cpu)) {
++            return EXCP_INTERRUPT;
++        }
++
++        bql_unlock();
++        r = hv_vcpu_run(cpu->accel->fd);
++        bql_lock();
++        switch (r) {
++        case HV_SUCCESS:
++            ret = hvf_handle_vmexit(cpu, cpu->accel->exit);
++            break;
++        case HV_ILLEGAL_GUEST_STATE:
++            trace_hvf_illegal_guest_state();
++            /* fall through */
++        default:
++            g_assert_not_reached();
++        }
++    } while (ret == 0);
+ 
+     return ret;
+ }
+-- 
+2.51.0
 
-Nice catch, this series is a pain to rebase, a lot of cross-references
-between patches. I'll fix.
-
-> --
-> Regards,
-> Bin Guo
 
