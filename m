@@ -4,102 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AAF3CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D995ACCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtnx-0000oX-Jl; Thu, 23 Oct 2025 07:48:30 -0400
+	id 1vBtky-0002Pb-Kx; Thu, 23 Oct 2025 07:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtnd-0000H1-BM; Thu, 23 Oct 2025 07:48:11 -0400
+ id 1vBtkq-0001ru-C3
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:16 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtnZ-00025J-Cs; Thu, 23 Oct 2025 07:48:08 -0400
+ id 1vBtkn-0001ql-3t
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:15 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9g5ak003946;
- Thu, 23 Oct 2025 11:48:02 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N4v8qm025774
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4Zqa0v
- 85Z6eJjhNLnjuHesU9geC6XkCwBv0f3ip+vbo=; b=kb6yKlcHaLSYjoYPVSK0Hs
- udTX5TGAhPZ6Lhx1s0CpHVwohtMqiLXtzlFz/i4wU4bQtQY9qNYTosgo3EA1R7lk
- iI+sbn4fWgFPW2ew4O+RtceRAuftodX4RdYAS9d8MWQcqkFi6gjjuP5O1Dr64O80
- k+il1o7LXStbHgQAL5+lKT5rUP8/PPBDOGWVz7GZVwfrQ0WesmBfuheO9Kp1wPSG
- 874h31/wJt4y0i1WYmt/yyWWLgwow7SNEho8PBaaDiSjwkMFDg7y98+m4Vw7ZZs/
- xXfldWBybtWohMGX6HB3dvTlG3dYtxnHBYlWfQIVExnkAN1YBSQrti0x7gPYe0eQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hrd00-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:48:02 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59NBm24s023003;
- Thu, 23 Oct 2025 11:48:02 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hrcyw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:48:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NBAD2u002488;
- Thu, 23 Oct 2025 11:48:01 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejna9m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:48:01 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBm05J29688456
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=re1vd8/1Y7prOt3uK
+ PfK5x3KjnvSzaWw1Duzi0t8l50=; b=pbKVbH5i8VmcZHnC7ujKj6PFPhuevNEvc
+ eSKTLZ3qM3/v8YUjJcFp+8FTWhC2Mdrz2guE1XFG10LHIeFl1ZGq4nT78mTD/kka
+ Su6ExVzIyBGkyblmts8gvRdDTVWWRnN9Aysz2s6Vyz5ZYI0MEGcApcNDAUS5AVCn
+ PT5AdjUXoDs+eOy45FTPcP3qMLlTgSbw+DqJOGWtan7cGazozS/P+SgreD3I+tx5
+ 3JKRDnvu/SQSUjg60hQIJUpVA26gGyUo/VO3P42JVZUY5e7J7UlO+lni7KfDxz7g
+ SVM4fO6uV2mlQwTMHiFao019BBr5jZlfbzWMrLT2vFRmTaqbm5i6A==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hrcq6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:11 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAgTRg024953
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:11 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqk5dtu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:11 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBj7JN21299748
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:48:00 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45BD058061;
- Thu, 23 Oct 2025 11:48:00 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C193C58057;
- Thu, 23 Oct 2025 11:47:57 +0000 (GMT)
-Received: from [9.124.221.73] (unknown [9.124.221.73])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:47:57 +0000 (GMT)
-Message-ID: <00e825dc-4e44-4001-9924-77435ce2ff59@linux.ibm.com>
-Date: Thu, 23 Oct 2025 17:17:56 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] hw/ppc/spapr: Remove deprecated pseries-3.0 ->
- pseries-4.2 machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20251021084346.73671-1-philmd@linaro.org>
-Content-Language: en-US
+ Thu, 23 Oct 2025 11:45:07 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2E3512004B;
+ Thu, 23 Oct 2025 11:45:07 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2124020040;
+ Thu, 23 Oct 2025 11:45:06 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
+ [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 11:45:05 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20251021084346.73671-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: [PULL 30/32] hw/ppc: Enable fadump for PSeries
+Date: Thu, 23 Oct 2025 17:14:17 +0530
+Message-ID: <20251023114422.3675018-31-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
+References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXxS+oYxdzxhd3
- 74xs60lmW35DmTjkRRb+bdu4i80cIPh6Kb7d08yOEm9x7phWNnCP2Em/QWIwl/Ar5WVBfJc+Kj5
- L6pUtUIdV9/uh1AWYlmHU9gQVN6AbYY2dZs0HgvvVdjyesthpuKrojdIX7w8TEmxrmfnsy6lCil
- WJtr3OJYXv/sjdOmYeMW6vklzT/H+Q077eQ3JN5W2RZm+2TSjmsGv7Pof2NHE9Ka0H6/qt2XYRE
- 9ZOD6C4MY3daT0KHYt84BjDCwRq7xxzybmdEta3koS8wAFhwmzZ8MWI9JQ/OGsXQ/M2mCPPqKii
- TiGbr0Pn4XJE1anmtUXaexC1XICWahQ1eZZGV+JxceTf6fsrTPoy64QnRNTw6AuMlMNXD2woJ0s
- uO2Gy9W7q0wxCCohvnZVnKERcsvz6w==
-X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68fa15f2 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=AHPAAfRtqs9UFnfsTcQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=oH34dK2VZjykjzsv8OSz:22 a=cPQSjfK2_nFv0Q5t_7PE:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
- a=jd6J4Gguk5HxikPWLKER:22
-X-Proofpoint-GUID: 2zBzW8fBvBgXORAKnPFHflbdrcrc3Y8a
-X-Proofpoint-ORIG-GUID: ElCUNWUEIT-CDHk6-EjbkGoUucIWTq-6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXwQXTUQ3adSN9
+ tLvz/t8C6NQxPsSXtXDDVaJWQwRSVptYGT2MSp7p1TDuGiBM9PIVGeBr1XP0wiZXYiHTUvzdm+b
+ EGVCGQbYVTN4Mn0EoLNJeBSxbpnK5zm7eMS6n3vtCRw8T+AAUKEA6ocLYSVraMLefKyNMM6K8mw
+ tzGXbQ4+Iy1TEOrIeM8WUq7lWEV4Dr5DxtMQZFxdrZJzuTRc3rkodhpb0QCXp1/L6K4uV5xtI87
+ DiqvlDESiFBy4FGpGDG8OANimP9SarOxxSki/XPOOcuJrPdvi0Z5ylQAzKCq+/vXCc7brIRON1E
+ 7dFkMXpD//sDsHaF6cB677MyGFXmY1fcoyhh9gmVvHsxnzZzBprgPcnn59uesLGt5rFtLjRQujK
+ bqHD1dQ4Tb9ERK2zD/hDTJh+Xk4/3A==
+X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68fa1548 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=B08fgxTpJCymiiQPXHEA:9
+ a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-GUID: dytGWCsjOBcSx9L4y_U4OHyRabhKFsT4
+X-Proofpoint-ORIG-GUID: dytGWCsjOBcSx9L4y_U4OHyRabhKFsT4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
@@ -133,33 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Aditya Gupta <adityag@linux.ibm.com>
 
+With all support in place for preserving memory regions, enable fadump by
+exporting the "ibm,kernel-dump" property in the device tree, representing
+the fadump dump information, in case of a crash.
 
-On 10/21/25 14:13, Philippe Mathieu-Daudé wrote:
-> v2: Rebased on https://lore.kernel.org/qemu-devel/20251009184057.19973-1-harshpb@linux.ibm.com/
-> 
-> Remove the deprecated pseries-3.0 up to pseries-4.2 machines,
-> which are older than 6 years. Remove resulting dead code.
-> 
-> Harsh Prateek Bora (5):
->    ppc/spapr: remove deprecated machine pseries-3.0
->    ppc/spapr: remove deprecated machine pseries-3.1
->    ppc/spapr: remove deprecated machine pseries-4.0
->    ppc/spapr: remove deprecated machine pseries-4.1
->    ppc/spapr: remove deprecated machine pseries-4.2
-> 
-> Philippe Mathieu-Daudé (6):
->    hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
->    hw/ppc/spapr: Inline spapr_dtb_needed()
->    hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
->    target/ppc/kvm: Remove kvmppc_get_host_serial() as unused
->    target/ppc/kvm: Remove kvmppc_get_host_model() as unused
->    hw/ppc/spapr: Remove SpaprMachineClass::phb_placement callback
+Currently "ibm,configure-kernel-dump" RTAS call is already registered,
+which tells the kernel that the platform (QEMU) supports fadump.
 
-Queued and posted PR.
-Additional cleanup suggestions on patch 2 can be taken up as a 
-follow-up. Thanks.
+Now, in case of a crash, if fadump was registered, we also pass
+"ibm,kernel-dump" in device tree, which tells the kernel that the fadump
+dump is active.
 
-regards,
-Harsh
+Pass "fadump=on" to enable Linux to use firmware assisted dump.
+
+Logs of a linux boot with firmware assisted dump:
+
+    $ ./build/qemu-system-ppc64 -M pseries,x-vof=on --cpu power10 --smp 4 -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=on crashkernel=1G" -nographic
+
+    [    0.000000] fadump: Reserved 1024MB of memory at 0x00000040000000 (System RAM: 4096MB)
+    [    0.000000] fadump: Initialized 0x40000000 bytes cma area at 1024MB from 0x400102a8 bytes of memory reserved for firmware-assisted dump
+    ...
+    [    1.084686] rtas fadump: Registration is successful!
+    ...
+    # cat /sys/kernel/debug/powerpc/fadump_region
+    CPU :[0x00000040000000-0x000000400013df] 0x13e0 bytes, Dumped: 0x0
+    HPTE:[0x000000400013e0-0x000000400013df] 0x0 bytes, Dumped: 0x0
+    DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000000, Dumped: 0x0 bytes
+
+    [0x0000000921a000-0x0000000921a7ff]: cmdline append: ''
+    # echo c > /proc/sysrq-trigger
+
+The fadump boot after crash:
+
+    [    0.000000] rtas fadump: Firmware-assisted dump is active.
+    [    0.000000] fadump: Updated cmdline: debug fadump=on crashkernel=1G
+    [    0.000000] fadump: Firmware-assisted dump is active.
+    [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000000 for preserving crash data
+    ....
+    # file /proc/vmcore
+    /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
+
+Analysing the vmcore with crash-utility:
+
+          KERNEL: vmlinux-6.14-rc2
+        DUMPFILE: vmcore-fc92fb373aa0
+            CPUS: 4
+            DATE: Wed Mar 12 23:39:23 CDT 2025
+          UPTIME: 00:00:22
+    LOAD AVERAGE: 0.13, 0.03, 0.01
+           TASKS: 95
+        NODENAME: buildroot
+         RELEASE: 6.12.0-rc4+
+         VERSION: #1 SMP Fri Jan  3 00:15:17 IST 2025
+         MACHINE: ppc64le  (1000 Mhz)
+          MEMORY: 4 GB
+           PANIC: "Kernel panic - not syncing: sysrq triggered crash"
+             PID: 269
+         COMMAND: "sh"
+            TASK: c00000000a050b00  [THREAD_INFO: c00000000a050b00]
+             CPU: 0
+           STATE: TASK_RUNNING (PANIC)
+
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-7-adityag@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d6cfb9acbc..6764730beb 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -904,6 +904,8 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
+ {
+     MachineState *ms = MACHINE(spapr);
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
++    FadumpMemStruct *fdm = &spapr->registered_fdm;
++    uint16_t dump_status_flag;
+ 
+     uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
+     uint64_t fadump_cpu_state_size = 0;
+@@ -953,6 +955,16 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
+                     fadump_versions, sizeof(fadump_versions))));
+     _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
+                     fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
++
++    dump_status_flag = be16_to_cpu(fdm->header.dump_status_flag);
++    if (dump_status_flag & FADUMP_STATUS_DUMP_TRIGGERED) {
++        uint64_t fdm_size =
++            sizeof(struct FadumpSectionHeader) +
++            (be16_to_cpu(fdm->header.dump_num_sections) *
++            sizeof(struct FadumpSection));
++
++        _FDT((fdt_setprop(fdt, rtas, "ibm,kernel-dump", fdm, fdm_size)));
++    }
+ }
+ 
+ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+-- 
+2.43.5
+
 
