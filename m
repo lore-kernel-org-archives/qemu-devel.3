@@ -4,57 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B5ACCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63397CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBthe-0000CE-0i; Thu, 23 Oct 2025 07:41:58 -0400
+	id 1vBtiK-0000h2-CQ; Thu, 23 Oct 2025 07:42:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBthb-0000C2-JT; Thu, 23 Oct 2025 07:41:55 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBthY-0001Tx-E4; Thu, 23 Oct 2025 07:41:55 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B26175972E1;
- Thu, 23 Oct 2025 13:41:49 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id nVgUZyWee2Er; Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AB4395972DE; Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A9AC359703F;
- Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
-Date: Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v4 08/12] hw/ppc/pegasos2: Move hardware specific parts
- out of machine reset
-In-Reply-To: <0b12701a-827f-4f17-969b-5da124cd2e36@linux.ibm.com>
-Message-ID: <3b16afc9-4a41-fde9-f16e-645dde8b7bb3@eik.bme.hu>
-References: <cover.1761176219.git.balaton@eik.bme.hu>
- <f6633a68a72aad4fefb8d2373b52561f8ca8d41d.1761176219.git.balaton@eik.bme.hu>
- <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
- <0b12701a-827f-4f17-969b-5da124cd2e36@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBtiI-0000gj-7X
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:42:38 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vBtiG-0001WR-1m
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:42:37 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-3c8fb195c23so504923fac.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 04:42:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761219754; x=1761824554; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hzYvB1A0osd0xUYB/vF1LOzfOo+y3oks8gFbyc5/KHU=;
+ b=IGL6VRaLcqfbKUJ6NMbOHOkRdcMzAz1nACcyCW+rEo36DW1Fj5j7Va8kgGJhD7emDK
+ k/gWk7a0261o2J2anYFO7cb8ffSaFZxlsjHOxi34dCg2GR+Vhsvf99M8qdsnUFk1jmOw
+ dRsCwRyBMpjfQKslaPlThc4cwALiFiSybbMI3RSO7qAhB5Zgb0DJqnnP/DCjq1gNJtWT
+ n+1zLwPn80hNCDshHmsukaPjiwblynJUVm+/2c4hmOnTNuEUyWwdCGVVSnphgOJ5Lj7q
+ NoAC9CQqBswfWrv9NGs1tB69YBGV/qjHPRItt8XuQErF3gdSvvl8Pgog3RA+1+S8JF9B
+ NsaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761219754; x=1761824554;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hzYvB1A0osd0xUYB/vF1LOzfOo+y3oks8gFbyc5/KHU=;
+ b=obFmH1jIQCwB7xQBttsUbCEmSb1HhKnT9beL6Bd7ps3eavP8dTRauNBhTNC5TmiL9M
+ 2rDnscRISbzy501r3xS9KpCkJtfV0TJ6VG6tHJXJY+c885LuI613ehfP2aM9GdEOSqCG
+ tAJN50y0vaN71z5bhkbD4xbHd4JTF+BO18z4HqCP5yXjacsY7avpPkyktmPfn7A9229k
+ el1gZkwjwHqk8A4Ng5f8NaGOxLBFkoJ4l9getkdnub8zQ+S6bIC9rwZ4FkBVGH2Kq6yy
+ L6O+B8tHTFL1jw/Sgf1BJQPUZ/WsRpg9UO8bNADjbXlzZuW67yzw5QEPGh7xU6IBpE9W
+ 972Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV47s2nSVZNzgrwU/BcrmrSru7hfBHy5kOF6H5d56CD5yTn57zpOva4QW1nSd2UGeJIwY1e1tTbIFju@nongnu.org
+X-Gm-Message-State: AOJu0YwLrC/LriC5tXXxgxBOkv7Y9xc23eYQXgTdmCckreBcVR6crBAd
+ kCxKl378SbetmCgzZmLK0QhozqF1ZatdpbT9a+6QjRc0SOICKz4ZOElX1/uORkaC4Ss=
+X-Gm-Gg: ASbGnctReDl20SoGAmLPCuuT0OnHdqkkhVzVR/4AGzLrN/xeZb1GW1uNu3jk2Lb6wcO
+ MI6UAJYsB6dh5SrCc6DdkE4dQFvCn8SF8ucEqO/bSwvhxC5qgT36lBe2NHA6/iC7mIV7EzercD9
+ 58g1O5ob9OD/36/uZvHLnzElEc/aMd4dIyElaIjopzWeZUze4ONKsfQORw/XxMHp3qtw3lfHcVX
+ miHgn4Lw1WvyhsIQ8QKOJ4BSV2pGv9b7Aq7Ntmz/qAjg5bEDdblxRqxyZXGpAKoi83y6zNVNdHp
+ PFTNpuwgNFHEjSfGzHS+4dAdO0CXgRrd+RS+nc7+3/9t1WWC646Z55DSiWlMNpcvlnRZP6EIEOp
+ Y2SW/Yx6ZYU/jXFpniPsx0LFukoqHyqxdwytuaHLOJKNBZhBOEizu/f1Ui1pJqTU0/YYnFseO0c
+ Vo7vgaFcaqt1xNHCOoRA2Dq8XFoNh3B3p+P8kBxGDPmKkw6IClxN+qof2j/y3ly+aigqlvYP4=
+X-Google-Smtp-Source: AGHT+IEDVnPYvwWPoDYHf8yPZW0aeMG+PohSX8wFSQQoFIs9VwnWldzngcIlbbca9J04hf6aYQMFmw==
+X-Received: by 2002:a05:6871:1c8:b0:3c9:415b:a28a with SMTP id
+ 586e51a60fabf-3c98cf733cbmr9737756fac.11.1761219753734; 
+ Thu, 23 Oct 2025 04:42:33 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:5ec0:c638:dc7f:7860:6bb4:85f1?
+ ([2607:fb90:5ec0:c638:dc7f:7860:6bb4:85f1])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-3cdc4c081f6sm639567fac.10.2025.10.23.04.42.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Oct 2025 04:42:33 -0700 (PDT)
+Message-ID: <94bccb3b-9d41-4ff1-acc8-fecfd70cfc34@linaro.org>
+Date: Thu, 23 Oct 2025 06:42:31 -0500
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1110318835-1761219707=:4926"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Add assert to arm_to_core_mmu_idx()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20251023101339.1983809-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251023101339.1983809-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,67 +105,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 10/23/25 05:13, Peter Maydell wrote:
+> Before commit f76cee647c ("target/arm: Introduce mmu indexes for
+> GCS") it was impossible for arm_to_core_mmu_idx() to return an
+> invalid core MMU index, because NB_MMU_MODES was 16 and
+> ARM_MMU_IDX_COREIDX_MASK was 0xf.
+> 
+> That commit raises ARM_MMU_IDX_COREIDX_MASK to 0x1f and NB_MMU_MODES
+> to 22, so it's now possible for a bogus Arm mmu index to result in an
+> out of range core mmu index (which can then get used as an array
+> index in the CPUTLB struct arrays). Coverity complains that this
+> might result in an out-of-bounds access.
+> 
+> The out-of-bounds access can't happen because we construct all the
+> ARMMMUIdx values we will use for TLBs to have valid core MMU indexes
+> in the COREIDX field.  But we can add an assert() so that if we ever
+> do end up operating on a corrupted or wrong ARMMMUIdx value we get an
+> assert rather than silently indexing off the end of an array. This
+> should also make Coverity happier.
+> 
+> Coverity: CID 1641404
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/internals.h | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index f539bbe58e1..026548ec34f 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -968,7 +968,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
+>   
+>   static inline int arm_to_core_mmu_idx(ARMMMUIdx mmu_idx)
+>   {
+> -    return mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
+> +    int coreidx = mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
+> +    assert(coreidx < NB_MMU_MODES);
+> +    return coreidx;
+>   }
+>   
+>   static inline ARMMMUIdx core_to_arm_mmu_idx(CPUARMState *env, int mmu_idx)
 
---3866299591-1110318835-1761219707=:4926
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Thu, 23 Oct 2025, Harsh Prateek Bora wrote:
-> On 10/23/25 12:16, Philippe Mathieu-Daudé wrote:
->> On 23/10/25 02:06, BALATON Zoltan wrote:
->>> Move the pegasos2 specific chipset reset out from machine reset to a
->>> separate function and move generic parts that are not pegasos2
->>> specific from build_fdt to machine reset so now build_fdt only
->>> contains pegasos2 specific parts and can be renamed accordingly.
->>> 
->>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>> ---
->>>   hw/ppc/pegasos2.c | 79 ++++++++++++++++++++++++-----------------------
->>>   1 file changed, 41 insertions(+), 38 deletions(-)
->> 
->> 
->>> -#define PCI1_IO_BASE  0xfe000000
->> 
->> Can't we keep such definition?
->> 
->>> @@ -308,23 +307,12 @@ static void 
->>> pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
->>>   static void pegasos2_superio_write(uint8_t addr, uint8_t val)
->>>   {
->>> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f0, &addr, 1);
->>> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
->>> +    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
->>> +    cpu_physical_memory_write(0xfe0003f1, &val, 1);
->> 
->> Otherwise it is harder to notice we are accessing the MMIO mapped ISA 
->> space.
->> 
->>>   }
->> Consider renaming as pegasos_superio_write() since this method becomes
->> common to PegasOS I and II.
->
-> Thanks Philippe for reviewing the series.
->
-> Hi BALATON,
-> Would you mind addressing the above (and other?) review comments or I can 
-> queue it in the interest of time if you can send a follow-up patch later?
-
-I'll send another version of this series after rebasing the prep series. 
-We still have time until the freeze begins so I think we can wait a few 
-more days.
-
-Thank you,
-BALATON Zoltan
-
-> Thanks
-> Harsh
->
->> 
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> 
->
->
---3866299591-1110318835-1761219707=:4926--
+r~
 
