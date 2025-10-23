@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE40CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5347CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBwQw-0002bn-C3; Thu, 23 Oct 2025 10:36:54 -0400
+	id 1vBwTH-0004bm-KP; Thu, 23 Oct 2025 10:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwQf-0002Vi-Ls
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:36:38 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwTF-0004ZP-4V
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:39:17 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwQd-0002fp-VL
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:36:37 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e6ba26c50so7622405e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:36:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwTD-0002pk-H7
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:39:16 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3ecdf2b1751so663709f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761230194; x=1761834994; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1761230353; x=1761835153; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=c+ThxEWVQxXshxqXktgAOdE159T4weVKPrTjmJTbNVU=;
- b=cG8/e9Cq4uLAHw4A0HbOymcNWdvY20VHdFgqAEomIM/Hhg4nRdqlf7OolwFxyjgQB3
- XS/b9BZm+B2foGr7VyOSfnbQYkdbPp+e/zvbhtTg170E2GinrwVf3U8oTtjgWCu7/xq0
- ajCUg/YVYfFNXh2sUl/y3psfg1oAS9uIG/g9wVoGdmPNwI4focai2QwTyaYYexIKzWJb
- P0kh05tgnXXNiE8jJifJ4ou6Sfhl5zAM9BnphnC25BNa00DhLv6za9FWGG4NxWDw4QBj
- Em37KJL4FpkN0r7viICRi300oT17WkibSdMgC/PiUHh2v1jy/gFYmLkylbdB+bJYPg18
- 35ZQ==
+ bh=dVKThUFXuZtqkYzX5p6Uhhgaqobr/Pe8uEyKy/8egPc=;
+ b=Q/4hBTzEnbCivcSaXuGAO8CGbw25P//jD2Hx8gD533K9vAE5WcNN8/0HWT3A1udEiP
+ 90Uy7p1hVWgzc5XDeFdqcIrbNO71OoNDsCdeB/UkH9f3GJG6sBwKcO2x/N84n6TO0V7p
+ zb+O4rVCf08aN6wwyO6nzlTsl7G1x3NjoCHUx2fbN0Td5JPu7a05c0fxYDA3Ifs96L2y
+ etznRu/T9524A2ZtrJty6Vl8Oj+2aDAq/BKTcIjj8skonQuk74FUJG1LO6PAVPt1huw6
+ gvXR2VGNSSa749eUrnrIkMx+IMdKIFPc1F4EqYT4JdOjShivhUiqR4Y2+IcDZVSjCISz
+ gZlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761230194; x=1761834994;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1761230353; x=1761835153;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c+ThxEWVQxXshxqXktgAOdE159T4weVKPrTjmJTbNVU=;
- b=a5HAh1PI86mAOnEjW7ptR9EvlV2fMfpoPwCu7b4APQMvlhVzOU9ycQNMJ/N6X1yfut
- YWUIpM8P55TJUewAN8zI880mPZNsZJExTmQYyzjdkZcSOxGN1w5UBvgrrd8HWksCUwpB
- 8+pGq+2s5tDT3x3sKA6U8t6UiBI4dkqUa2KrRhlOXRKegs3XgstE5ihkzAzzygU1fBJ5
- uoS0bfR5oAcn4Z6Bpk8d3q1bB6TllIya3hECteze2X3FhaBhP1eJqKFAjOwT9QUnL2lE
- oev+dxMrku+5FqjRZqXf5Olmvjs+RvKT+KfB54l51X70Jd8QKAFTrdTfjYpRCsCHO9sy
- KZbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnALpZdekoWroAF4QNGrPs5F7xljJYHpVdz/ndPBIaF3cUrKQKGNIS8EARlHURh2bzxghBnfA2TkvQ@nongnu.org
-X-Gm-Message-State: AOJu0YwgUCnn7zM93x7VUdo80JwfW6WQdaONI00/qXeOLY14PVf3550v
- GCa8hewpSuG4b9KE+kiK30EZFEQFZ3eis9VbrreH6uU+qt2H3h+S82S/IlvfmoCN+/I=
-X-Gm-Gg: ASbGncuoMcXiB5SvS/yua6cJ2sq9qoEHrAp3tpXD4XW3wuy5cTI+mTzAKu6qRbeMwwV
- WIeVYb3RYc4LjbvRd1brJfY8X8eteciTFSUIcj3BpgJfTzpP4Nt08XcUiNIY33MEn/G7ma+rZ2h
- y/K9fCYMEPyd03YPRfhS7a0r2YElMMngrVeBRA7kPXZWH9kDzd5T4nHmf/l+kOEnZpKLKDxe7us
- bBiBK6HE3T0CEAGv2xl/xa2gRtPEs1dtfMPD5K8/1KTFPG5JtAb9bXmF/9Sbgdc8b9srZEQXPlk
- a0Cj1zVx1VR65iw4KsBufShu5qFAeEZxWoe68P+AaoSKIOVAQfWSiZHZvUvQxbSUEjpgczaDJ8W
- f/OKLTKQY6qruPaxR+QjDzutm6utvMkhtbDKTAnWBJrzr7W13ZJr+IkelMZSVoG/A+bL8owoBdr
- 6+94+cZssIKX+R3VwPuUpxRQ1YispyeGd1uS8IArj9Ifc=
-X-Google-Smtp-Source: AGHT+IGnVq+Eh7IMDGf93RkkUKHcAzokWuI1lz6BXAvirp33kuvtAn/gcYi5lYmfkNQWKJQoax2yaw==
-X-Received: by 2002:a05:600c:3492:b0:46e:3193:fecb with SMTP id
- 5b1f17b1804b1-471179193c3mr168961225e9.27.1761230194450; 
- Thu, 23 Oct 2025 07:36:34 -0700 (PDT)
+ bh=dVKThUFXuZtqkYzX5p6Uhhgaqobr/Pe8uEyKy/8egPc=;
+ b=p6F2FFyjN8Vr+b9gej4T4qQEVRuzCHboySIrdM4nKTfWhfP9FNwUS6Wks8iZkdwIlu
+ x2z5DryECwiQ4tbKUcVbexOobkn6LG1hDiZAIuOH1ISHEcqoNfm6GrVgvFEXKRa7dsEI
+ 8/u3hiG08sagM6slXdmU9ica9xMMsuxJ7MlnDIVr1eyZoB95aNUNTRHeZ5hULLUndlha
+ bLu6DD639IRuZ1tIJWoLgApDdwGB9jRbYO5TrdZ86f9D2MEXuNV9lGhefqLDgpx96cAl
+ keI0HtLUi/yRRrxL8QJAJtHTWYI4tRQNOx1IVxBwIPbGV42Xs9ROHMrV9IaI9rzT4r5y
+ MsyQ==
+X-Gm-Message-State: AOJu0Yyr2UzSzH7tnrMngxtIrmY1TsR7V0C0JgyJQNDQ3nXX4s9taOqP
+ gTQ1tJs8u4EL1nRvIwrKbHTxoKzzk68wRwpDGMMUQmORn1oOcbY7IhQ9oiX7+J7u5WM+IvVv/Pp
+ aD+beg3A=
+X-Gm-Gg: ASbGncuqD8hOdVFmWMCmoLD+ITi9T8d4Udug0gS5YW/lAxhL6sSrJ1tNHrItm0owiJu
+ b3+O/w70ifrXOAQH9n9XEzg5GJBUqOvM/gXV1LeMlYDh6rkbYCWjo8xSP4UE0becLgOG7jeUjxP
+ G0i8rSU54OKqr8SmanvQtbhJSu0ZA2hn5SbwXbBd47c7P7GSLXR3dZbA6JwNJ/JQOC/ybbwFd1J
+ Mv2HW0qBd/ep2p5XR1io9/iKyGhOjVfky1OLCWeqv25Q6DPxyXro4HzAwMLOb/Qo8ZGG1A7ixyN
+ r5+qYqhcDyDqQRLnP05efjC9BZtP6VNCT/JWT2Cmre/OW1SWHAUYWsrt+c8ZX/gf5gMMGyaW9Va
+ +gqCK7ZVpQ0DIUCp7xG4wT5Zt63k5PquQMEI+sdooSikzzLJf0VzrNyy8C4uw9fxmKNRWE9kmS5
+ 3gXHVgWQ6bsATZt2dr7kHwzTuxkp8Fiqx+Lik+nm+pq4Y=
+X-Google-Smtp-Source: AGHT+IHdNKBpI5e4QjWPUqViCm/ReKkO1hg+TqmM7B1lZGZa36Idk9zMTArdYKaGZhtCFXzr5S8EYw==
+X-Received: by 2002:a5d:5c89:0:b0:3ec:d7c4:25b6 with SMTP id
+ ffacd0b85a97d-42704d78abfmr18711642f8f.27.1761230353273; 
+ Thu, 23 Oct 2025 07:39:13 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47494b365adsm62172975e9.6.2025.10.23.07.36.32
+ ffacd0b85a97d-429898ecabdsm4549978f8f.47.2025.10.23.07.39.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 07:36:33 -0700 (PDT)
-Message-ID: <e6df234c-6229-45e6-9aea-e03d9eb6d023@linaro.org>
-Date: Thu, 23 Oct 2025 16:36:32 +0200
+ Thu, 23 Oct 2025 07:39:12 -0700 (PDT)
+Message-ID: <8a9db920-c140-4faa-9824-882760b46053@linaro.org>
+Date: Thu, 23 Oct 2025 16:39:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] docs/about/deprecated.rst: document isapc deprecation
- for modern x86 CPU models
+Subject: Re: [PATCH v2 36/58] target/i386/hvf: Use address_space_translate in
+ ept_emulation_fault
 Content-Language: en-US
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, imammedo@redhat.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org
-References: <20251023142926.964718-1-mark.caveayland@nutanix.com>
- <20251023142926.964718-3-mark.caveayland@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Cameron Esfahani <dirty@apple.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Peter Collingbourne <pcc@google.com>, Mads Ynddal <mads@ynddal.dk>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20251023114638.5667-1-philmd@linaro.org>
+ <20251023115311.6944-7-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251023142926.964718-3-mark.caveayland@nutanix.com>
+In-Reply-To: <20251023115311.6944-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,16 +109,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 16:28, Mark Cave-Ayland wrote:
-> Add a new paragraph in the "Backwards compatibility" section documenting that
-> using modern x86 CPU models with the isapc machine is deprecated, and will be
-> rejected in a future release.
+On 23/10/25 13:52, Philippe Mathieu-Daudé wrote:
+> From: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> The hvf_slot structure is a poor replacement for properly
+> looking up a memory region in the address space.
+> Use memory_region_get_dirty_log_mask instead of HVF_SLOT_LOG.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   docs/about/deprecated.rst | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
+>   target/i386/hvf/hvf.c | 34 +++++++++++++++++-----------------
+>   1 file changed, 17 insertions(+), 17 deletions(-)
 
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
