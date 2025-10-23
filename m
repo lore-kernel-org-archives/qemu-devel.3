@@ -4,92 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E067CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 01:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9EACCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 01:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBkXK-000892-6c; Wed, 22 Oct 2025 21:54:42 -0400
+	id 1vBkbI-0000QN-Cr; Wed, 22 Oct 2025 21:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBkXI-00088t-It
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 21:54:40 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBkXG-0000NW-BO
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 21:54:40 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b6d402422c2so73171566b.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 18:54:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761184476; x=1761789276; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zTU1GdVDQEoxIEWW2DcDN15sBXCJE59RoqYxUU1Z8pY=;
- b=gntCzMyHUEzokhIEvi2nROW/PBEp8lb7fuq8O1HO8ffgjQVGEESx2ietsRh7wfnBVD
- wG4dA6/4YKqe43rs/HR8+BRje3TXsIqqudgxeZ/tR7zEcq3tG6BhNKUf7iz0oTvgrQG8
- Mh+XQatWkv69cwdlCyIbSaQsAc/secc1X7j4Sy5qPzNBIvHhK7QSSt4LR1Yogim4X/o1
- kBZ4I5S3bDb8lhH4iV8sMYmBCR1kZAUwvxYTPH/ofrHanIwUhhzcqSZereOYnPTxyhcR
- EM1f8QpmjH49SQkufWgr0ls5DFVp4EHKoNah/cBWLrW2JXJ4Dg7iUTRtZqXzVWQvr1FP
- IqHA==
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vBkbF-0000Pn-HK
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 21:58:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vBkbC-0000hV-KC
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 21:58:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761184721;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rLIRAtTk5wrvbZRpK/LftAlTIbj9T9Qc4n5r36kVcmc=;
+ b=VLKRloT5Tn3WiFD86gQ/mXFV+Wrf3Ia8wWZuDcUx/KrlxI/NuR5QZiEEg0OXzRy4Bu+7jG
+ aVhr3xf+XBoYuWB1MuKAFUiev7DrNJ27ghHdCF1iv7si8M6bwV3VAcsvM/k0Pcdl9sJDIp
+ RSVA/x71am9Iawwj0pW87KQcgoXXFsw=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-110-hr6yXsynMliw6cKNNqV9IQ-1; Wed, 22 Oct 2025 21:58:39 -0400
+X-MC-Unique: hr6yXsynMliw6cKNNqV9IQ-1
+X-Mimecast-MFC-AGG-ID: hr6yXsynMliw6cKNNqV9IQ_1761184718
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-b6cf3112d08so508185a12.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 18:58:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761184476; x=1761789276;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zTU1GdVDQEoxIEWW2DcDN15sBXCJE59RoqYxUU1Z8pY=;
- b=hkIsDsQq9KbauTIzIfW6g+RAq3eD2O81tTqZx0nylqAmZV17qURwGWPLD6p8vkvFnT
- REygSFdsakTzp+RExkXmz3y7RlqI3BnvEKQBDQchf/D4p4Jm1mq319PM9bpyYrxTJP3u
- r/+xnBfC1WeeBDr2RLEpAw8we9jLD7emthcIdzzByph+DjvuHRS4qpK2g6VCaX+fi5d4
- VkcbZtWknJZT2nwzcBzis9RNHv7AplLInhWdoAqy7x2Bbiq6HNgybGalukPLG3SMTwku
- PQFSnWtuH2aOGRTC9iHWRbTIU8i7n68xCCcg9jfqwn/xKNiLCZfw5SiACO0KXxGvEvbf
- AjHA==
-X-Gm-Message-State: AOJu0Yz09XWXLXbyCxQkMUSP3Sb0q+5Iom+LLFf8cdegtcXEZd8n4YM0
- zA7gPQgVlEBiLCpZRNebQ4Jlq/Q9yG9RwmWtQZ3Zb9x/aAFIyZEqOWYSmauA9G2CzxIjv5cyo4c
- oRkpKosstuXdMf0dLcxyyX/YWPjXYRQQ=
-X-Gm-Gg: ASbGnculUk56MjK5xWC+yiQeSiEucpMFU7+fadzR16fQx3kqdAciqQTlxypBW2O3RGN
- GWDFgzuLQ+UKzyPPnHQU1LiSPFIrMtqAEhBtOywE0jkT+cYyOaEX8VGpZzoF4mMFa17dkwhqUqW
- YHEEKHgUUjGv4pN9yFMZcTIcDHSS1nCSpfQ7SrP914vhANn09eNJsjmzTk0PnuzgOD+s5P83NSb
- jWkKBfb2qXQULzjlNjaT1i1wqvR80vHFz7Ubq3RUK6todoy11jTr3o0OEGODwfGSneNaGWQXckU
- aadYossqjRQDu6vz4isrDarjUA==
-X-Google-Smtp-Source: AGHT+IHGvdR6ZGFy0GlDJfV5Wk9clwu29V+2IdVqfhA6NuOBEdl1a70o9nLFKg4rqroCuN8P9tkCuFtZgDON4QKdFxw=
-X-Received: by 2002:a17:906:7308:b0:b04:5e64:d7cd with SMTP id
- a640c23a62f3a-b647423d570mr2972540166b.46.1761184475552; Wed, 22 Oct 2025
- 18:54:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761184717; x=1761789517;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rLIRAtTk5wrvbZRpK/LftAlTIbj9T9Qc4n5r36kVcmc=;
+ b=K8LEogYwI8GSD85McXxVVhq0UTmiOC1qiNdtoLpe0mcuBaCGzi+qE1C8iakpaXkeie
+ doT2/VbRrACltmyE0vlIxkhEcdsNQ8wGGgr1imHufJDb2Mt8WxV+XWf55wihWqygePgw
+ 9N/Zw1xc8QwWDuV7q9Pfnz2FrHJ/5dFMZS44PGr8i+zCJoC/fuDY2qml4aI01Jbg/wUz
+ VGPhJxSb6kE4xT8eZFrFB94VqxDMaWDk7KLM+0n5mSF5codSnDIEznEGrMgcPVFIb+QS
+ Eh3f063gcZbwBqraFwR7Sbh2CfD99PFJIZqHY4LCKNIX2i+nnLceFZZDWdY/bXc6cqof
+ mOgQ==
+X-Gm-Message-State: AOJu0YyaYQNOrrKL9dnmXAznwRomIw/MPbDQ0qNEwOOlS5gooz06R4Bc
+ dNlCRDzktIG1bwh8CftvFeoEg5YvLLPnNB50W14LVR41wd/1HRDvR7/LfnFC2YtYQ4GwFdwhpNz
+ lz0vtjHdMK5bWeXznl16c3+NLSRuY4r0H7K1ptxri9lfMFw5aIPtvdH5H0w9GMBhH
+X-Gm-Gg: ASbGncvotxMrh8sx8ruR0oszP3iMZPGV64ykThMeqKP4OecrymbOYocOFCjxg1lWtZV
+ /vUK6lh+jVAQfHHiCC+qwjT0N3NVXLZ2kt0KHXoBmB6bjJuwmy8dKe2SlCR3oSsVNtlpK3au8Iy
+ 6qGUiGQStIdkC69+TWXV7O9uNVfHQWZ6F2PeVwXkd1AKkyHR6JHyrxp4QdbvcuhxMbNvnzg8yy2
+ HTQTyBORn76N04ZVQim6dYPPdN/KEPX48FfI98nT4FGmNEwYjdAq/cfPJkocUdCH7Sgiomrzpwd
+ 0xjMvwDMRpW5I3fiZktCz5kj5+D57hrolSL9U/VoyuywTu9RQGNw4SQFrVYbbTagDjpetQiEvwP
+ hzL4/s0SZMmUGK30+zIjUZ9yT1ZlmO8qzhQySfk0=
+X-Received: by 2002:a05:6a20:3d81:b0:32b:83af:9b5 with SMTP id
+ adf61e73a8af0-334a861740cmr32187863637.33.1761184716851; 
+ Wed, 22 Oct 2025 18:58:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkfr/rEg0MK3RyApv9Sehg292xcxqyonjPqUBvzKrxOBv+Z9dc1jOVcqUt1qfoMxrfrFDz0w==
+X-Received: by 2002:a05:6a20:3d81:b0:32b:83af:9b5 with SMTP id
+ adf61e73a8af0-334a861740cmr32187791637.33.1761184716378; 
+ Wed, 22 Oct 2025 18:58:36 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7a274a64c5esm683255b3a.10.2025.10.22.18.58.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 22 Oct 2025 18:58:35 -0700 (PDT)
+Message-ID: <fa5d5a65-616f-405a-a5e5-f8b70ff32193@redhat.com>
+Date: Thu, 23 Oct 2025 11:58:19 +1000
 MIME-Version: 1.0
-References: <20251001073306.28573-1-anjo@rev.ng>
- <20251001073306.28573-5-anjo@rev.ng>
- <CAKmqyKMSViOs=knzH0bi7k776FvqUX2=XtnKmGrHaeG79=qYEw@mail.gmail.com>
- <vca6pziwhxzd3pliu3jggzy4e2slsmrea5luazwmz4vav23qwn@3fzj75kzprya>
- <CAKmqyKMyBMY88+6i5BdrXJtU8S9H_DcUG8O7yu5s9cE2Mv_s5g@mail.gmail.com>
- <7fngsrmp3rdo3hzra4rso5kwi4zejvdyl6xzc7swmmqji7wr44@vyallk4lkhe6>
- <CAKmqyKPHVAKqOPQgD5J95TcnG=Gro5JBWTURmaqGr=ksVy5Q9g@mail.gmail.com>
- <dj72zr4f7ais3vdgvthvpdfpbnjblbbqdfjg7yhqzthpo67x4p@5wdd4ii7yhda>
-In-Reply-To: <dj72zr4f7ais3vdgvthvpdfpbnjblbbqdfjg7yhqzthpo67x4p@5wdd4ii7yhda>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 23 Oct 2025 11:54:09 +1000
-X-Gm-Features: AS18NWAs-NYaQg-jEmUNbffYMaGVH_sVNP0cbTdYm2HIpGLOyqHqFkfHBzjKIlo
-Message-ID: <CAKmqyKN5WcqDjmPQ0ewbSMvj=Z8OwgNKjKtg9uNgPJRNNe2zTA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/33] target/riscv: Bugfix
- riscv_pmu_ctr_get_fixed_counters_val()
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org, 
- richard.henderson@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC V6 05/24] arm/virt,kvm: Pre-create KVM vCPUs for
+ 'disabled' QOM vCPUs at machine init
+To: Salil Mehta <salil.mehta@opnsrc.net>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, imammedo@redhat.com,
+ armbru@redhat.com, andrew.jones@linux.dev, david@redhat.com,
+ philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
+ oliver.upton@linux.dev, pbonzini@redhat.com, rafael@kernel.org,
+ borntraeger@linux.ibm.com, alex.bennee@linaro.org,
+ gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com, Keqian Zhu <zhuqian1@huawei.com>
+References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
+ <20251001010127.3092631-6-salil.mehta@opnsrc.net>
+ <a03ed205-b61a-4bba-9f25-83663b7d8a86@redhat.com>
+ <CAJ7pxeYurHLqj8GnLrfznmofMpsaw91GeZ3KMyucL0B_gn9gPg@mail.gmail.com>
+ <CAJ7pxeaUfUeXwtTVheCTxej-aCTCx0n8-XyAKaFneVUjcWL_7w@mail.gmail.com>
+ <beab3dd4-0c19-441c-a9f5-ecae9e791753@redhat.com>
+ <CAJ7pxeYEpJGhtL1-3qFEJYTzL-s19fF-it6p5dkq=fg384wBpg@mail.gmail.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <CAJ7pxeYEpJGhtL1-3qFEJYTzL-s19fF-it6p5dkq=fg384wBpg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,116 +130,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 18, 2025 at 12:22=E2=80=AFAM Anton Johansson <anjo@rev.ng> wrot=
-e:
->
-> On 16/10/25, Alistair Francis wrote:
-> > On Wed, Oct 15, 2025 at 7:55=E2=80=AFPM Anton Johansson <anjo@rev.ng> w=
-rote:
-> > >
-> > > On 15/10/25, Alistair Francis wrote:
-> > > > On Tue, Oct 7, 2025 at 9:06=E2=80=AFPM Anton Johansson <anjo@rev.ng=
-> wrote:
-> > > > >
-> > > > > On 03/10/25, Alistair Francis wrote:
-> > > > > > On Wed, Oct 1, 2025 at 5:43=E2=80=AFPM Anton Johansson via
-> > > > > > <qemu-devel@nongnu.org> wrote:
-> > > > > > >
-> > > > > > > From my understanding the upper_half argument only indicates =
-whether the
-> > > > > > > upper or lower 32 bits should be returned, and upper_half wil=
-l only ever
-> > > > > > > be set when MXLEN =3D=3D 32.  However, the function also uses=
- upper_half to
-> > > > > > > determine whether the inhibit flags are located in mcyclecfgh=
- or
-> > > > > > > mcyclecfg, but this misses the case where MXLEN =3D=3D 32, up=
-per_half =3D=3D false
-> > > > > > > for TARGET_RISCV32 where we would also need to read the upper=
- half field.
-> > > > > >
-> > > > > > If MXLEN =3D=3D 32, upper_half =3D=3D false then we want to rea=
-d mcyclecfg,
-> > > > > > which the code today seems to be doing correctly.
-> > > > >
-> > > > > Hi again, I might be missing something then, when would this func=
-tion need
-> > > > > to access mcyclecfg for MXLEN =3D=3D 32?  AFAIU mcyclecfg and mcy=
-clecfgh are
-> > > > > modeled separately for MXLEN =3D=3D 32, even when sizeof(target_u=
-long) =3D=3D 8.
-> > > > > Since this function only checks inhibit flags wouldn't we always =
-want to
-> > > > > access mcyclecfgh for MXLEN =3D=3D 32?
-> > > >
-> > > > When MXLEN =3D=3D 32 mcyclecfg is the bottom 32-bits of the mcyclec=
-fg CSR
-> > > > and mcyclecfgh is the top 32-bits of the CSR. The idea is that
-> > > > target_ulong will be 32-bits (sizeof(target_ulong) =3D=3D 4). It do=
-esn't
-> > > > really matter if target_ulong is 64-bits though, as the registers
-> > > > should just be treated as 32-bit registers anyway.
-> > >
-> > > Appreciate the explanation, this makes sense to me.  But the function
-> > > only uses cfg_val to check inhibit flags in the top 32 bits, so acces=
-sing the
-> > > lower 32 bits when upper_half =3D=3D false and MXLEN =3D=3D 32 would =
-be incorrect
-> > > then?
-> >
-> > Well a guest can still access the lower 32-bits and although there is
-> > nothing there now there might be in the future.
-> >
-> > >
-> > > Your comment below is what's tripping me up, since the behaviour of
-> > > accesing the lower 32 bits for MXLEN =3D=3D 32 is not retained when
-> > > mcyclecfgh and mcyclecfg are merged to a single 64 bit field
-> >
-> > I don't follow what you mean here
->
-> On upstream when riscv_pmu_ctr_get_fixed_counters_val() is called with
-> MXLEN =3D=3D 32 and upper_half =3D=3D false, we read the inhibit flags fr=
-om the
-> lower 32 bits (mcyclecfg) and check against bit 62 (MINH) etc. thus
-> always returning false
+Hi Salil,
 
-That's correct.
+On 10/23/25 10:35 AM, Salil Mehta wrote:
+> On Thu, Oct 23, 2025 at 12:14 AM Gavin Shan <gshan@redhat.com> wrote:
+>> On 10/23/25 4:50 AM, Salil Mehta wrote:
+>>> On Wed, Oct 22, 2025 at 6:18 PM Salil Mehta <salil.mehta@opnsrc.net> wrote:
+>>>> On Wed, Oct 22, 2025 at 10:37 AM Gavin Shan <gshan@redhat.com> wrote:
+>>>>> On 10/1/25 11:01 AM, salil.mehta@opnsrc.net wrote:
+>>>>>> From: Salil Mehta <salil.mehta@huawei.com>
 
-If MXLEN =3D=3D 32 and the guest accesses mcyclecfg (lower 32-bits) then
-we expect riscv_pmu_ctr_get_fixed_counters_val() to return 0.
+[...]
 
-I agree it's clunky, we should combine the two halves into a single
-64-bit value for both 32-bit and 64-bit. But the current approach of
-separate registers although confusing, doesn't look wrong.
+>>>>>> +void kvm_arm_create_host_vcpu(ARMCPU *cpu)
+>>>>>> +{
+>>>>>> +    CPUState *cs = CPU(cpu);
+>>>>>> +    unsigned long vcpu_id = cs->cpu_index;
+>>>>>> +    int ret;
+>>>>>> +
+>>>>>> +    ret = kvm_create_vcpu(cs);
+>>>>>> +    if (ret < 0) {
+>>>>>> +        error_report("Failed to create host vcpu %ld", vcpu_id);
+>>>>>> +        abort();
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * Initialize the vCPU in the host. This will reset the sys regs
+>>>>>> +     * for this vCPU and related registers like MPIDR_EL1 etc. also
+>>>>>> +     * get programmed during this call to host. These are referenced
+>>>>>> +     * later while setting device attributes of the GICR during GICv3
+>>>>>> +     * reset.
+>>>>>> +     */
+>>>>>> +    ret = kvm_arch_init_vcpu(cs);
+>>>>>> +    if (ret < 0) {
+>>>>>> +        error_report("Failed to initialize host vcpu %ld", vcpu_id);
+>>>>>> +        abort();
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * park the created vCPU. shall be used during kvm_get_vcpu() when
+>>>>>> +     * threads are created during realization of ARM vCPUs.
+>>>>>> +     */
+>>>>>> +    kvm_park_vcpu(cs);
+>>>>>> +}
+>>>>>> +
+>>>>>
+>>>>> I don't think we're able to simply call kvm_arch_init_vcpu() in the lazily realized
+>>>>> path. Otherwise, it can trigger a crash dump on my Nvidia's grace-hopper machine where
+>>>>> SVE is supported by default.
+>>>>
+>>>> Thanks for reporting this. That is not true. As long as we initialize
+>>>> KVM correctly and
+>>>> finalize the features like SVE we should be fine. In fact, this is
+>>>> precisely what we are
+>>>> doing right now.
+>>>>
+>>>> To understand the crash, I need a bit more info.
+>>>>
+>>>> 1#  is happening because KVM_ARM_VCPU_INIT is failing. If yes, the can you check
+>>>>         within the KVM if it is happening because
+>>>>        a.  features specified by QEMU are not matching the defaults within the KVM
+>>>>              (HInt: check kvm_vcpu_init_check_features())?
+>>>>        b. or complaining about init feate change kvm_vcpu_init_changed()?
+>>>> 2#  or it is happening during the setting of vector length or
+>>>> finalizing features?
+>>>>
+>>>> int kvm_arch_init_vcpu(CPUState *cs)
+>>>> {
+>>>>      [...]
+>>>>            /* Do KVM_ARM_VCPU_INIT ioctl */
+>>>>           ret = kvm_arm_vcpu_init(cpu);   ---->[1]
+>>>>           if (ret) {
+>>>>              return ret;
+>>>>          }
+>>>>             if (cpu_isar_feature(aa64_sve, cpu)) {
+>>>>           ret = kvm_arm_sve_set_vls(cpu); ---->[2]
+>>>>           if (ret) {
+>>>>               return ret;
+>>>>           }
+>>>>           ret = kvm_arm_vcpu_finalize(cpu, KVM_ARM_VCPU_SVE);--->[3]
+>>>>           if (ret) {
+>>>>               return ret;
+>>>>           }
+>>>>       }
+>>>> [...]
+>>>> }
+>>>>
+>>>> I think it's happening because vector length is going uninitialized.
+>>>> This initialization
+>>>> happens in context to  arm_cpu_finalize_features() which I forgot to call before
+>>>> calling KVM finalize.
+>>>>
+>>>>>
+>>>>> kvm_arch_init_vcpu() is supposed to be called in the realization path in current
+>>>>> implementation (without this series) because the parameters (features) to KVM_ARM_VCPU_INIT
+>>>>> is populated at vCPU realization time.
+>>>>
+>>>> Not necessarily. It is just meant to initialize the KVM. If we take care of the
+>>>> KVM requirements in the similar way the realize path does we should be
+>>>> fine. Can you try to add the patch below in your code and test if it works?
+>>>>
+>>>>    diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>>>> index c4b68a0b17..1091593478 100644
+>>>> --- a/target/arm/kvm.c
+>>>> +++ b/target/arm/kvm.c
+>>>> @@ -1068,6 +1068,9 @@ void kvm_arm_create_host_vcpu(ARMCPU *cpu)
+>>>>            abort();
+>>>>        }
+>>>>
+>>>> +     /* finalize the features like SVE, SME etc */
+>>>> +     arm_cpu_finalize_features(cpu, &error_abort);
+>>>> +
+>>>>        /*
+>>>>         * Initialize the vCPU in the host. This will reset the sys regs
+>>>>         * for this vCPU and related registers like MPIDR_EL1 etc. also
+>>>>
+>>>>
+>>>>
+>>>>
+>>>>>
+>>>>> $ home/gavin/sandbox/qemu.main/build/qemu-system-aarch64           \
+>>>>>      --enable-kvm -machine virt,gic-version=3 -cpu host               \
+>>>>>      -smp cpus=4,disabledcpus=2 -m 1024M                              \
+>>>>>      -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image    \
+>>>>>      -initrd /home/gavin/sandbox/images/rootfs.cpio.xz -nographic
+>>>>> qemu-system-aarch64: Failed to initialize host vcpu 4
+>>>>> Aborted (core dumped)
+>>>>>
+>>>>> Backtrace
+>>>>> =========
+>>>>> (gdb) bt
+>>>>> #0  0x0000ffff9106bc80 in __pthread_kill_implementation () at /lib64/libc.so.6
+>>>>> #1  0x0000ffff9101aa40 [PAC] in raise () at /lib64/libc.so.6
+>>>>> #2  0x0000ffff91005988 [PAC] in abort () at /lib64/libc.so.6
+>>>>> #3  0x0000aaaab1cc26b8 [PAC] in kvm_arm_create_host_vcpu (cpu=0xaaaab9ab1bc0)
+>>>>>        at ../target/arm/kvm.c:1081
+>>>>> #4  0x0000aaaab1cd0c94 in virt_setup_lazy_vcpu_realization (cpuobj=0xaaaab9ab1bc0, vms=0xaaaab98870a0)
+>>>>>        at ../hw/arm/virt.c:2483
+>>>>> #5  0x0000aaaab1cd180c in machvirt_init (machine=0xaaaab98870a0) at ../hw/arm/virt.c:2777
+>>>>> #6  0x0000aaaab160f220 in machine_run_board_init
+>>>>>        (machine=0xaaaab98870a0, mem_path=0x0, errp=0xfffffa86bdc8) at ../hw/core/machine.c:1722
+>>>>> #7  0x0000aaaab1a25ef4 in qemu_init_board () at ../system/vl.c:2723
+>>>>> #8  0x0000aaaab1a2635c in qmp_x_exit_preconfig (errp=0xaaaab38a50f0 <error_fatal>)
+>>>>>        at ../system/vl.c:2821
+>>>>> #9  0x0000aaaab1a28b08 in qemu_init (argc=15, argv=0xfffffa86c1f8) at ../system/vl.c:3882
+>>>>> #10 0x0000aaaab221d9e4 in main (argc=15, argv=0xfffffa86c1f8) at ../system/main.c:71
+>>>>
+>>>>
+>>>> Thank you for this. Please let me know if the above fix works and also
+>>>> the return values in
+>>>> case you encounter errors.
+>>>
+>>> I've pushed the fix to below branch for your convenience:
+>>>
+>>> Branch: https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v6.2
+>>> Fix: https://github.com/salil-mehta/qemu/commit/1f1fbc0998ffb1fe26140df3c336bf2be2aa8669
+>>>
+>>
+>> I guess rfc-v6.2 branch isn't ready for test because it runs into another crash
+>> dump with rfc-v6.2 branch, like below.
+> 
+> 
+> rfc-6.2 is not crashing on Kunpeng920 where I tested. But this
+> chip does not have some ARM extensions like SVE etc so
+> Unfortunately, I can't test SVE/SME/PAuth etc support.
+> 
+> Can you disable SVE and then try if it comes up just to corner
+> the case?
+> 
 
->
->   if (counter_idx =3D=3D 0) {
->       cfg_val =3D upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
->                              env->mcyclecfg;
->   }
->   [...]
->   if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
->       curr_val +=3D counter_arr[PRV_M];
->   }
->
-> if this behaviour is intended, we do not retain it with this patch as
-> we always access the higher cfg bits to check for MINH.  Similarly when
-> merging mcyclecfgh and mcyclecfg
+Right, this crash dump shouldn't be encountered if SVE isn't supported. I already
+had the workaround "-cpu host,sve=off" to keep my tests moving forwards...
 
-Once merged it's fine to always check the higher bits
+>>
+>> host$ /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64                     \
+>>         -accel kvm -machine virt,gic-version=host,nvdimm=on                         \
+>>         -cpu host,sve=on                                                            \
+>>         -smp maxcpus=4,cpus=2,disabledcpus=2,sockets=2,clusters=2,cores=1,threads=1 \
+>>         -m 4096M,slots=16,maxmem=128G                                               \
+>>         -object memory-backend-ram,id=mem0,size=2048M                               \
+>>         -object memory-backend-ram,id=mem1,size=2048M                               \
+>>         -numa node,nodeid=0,memdev=mem0,cpus=0-1                                    \
+>>         -numa node,nodeid=1,memdev=mem1,cpus=2-3                                    \
+>>         -L /home/gavin/sandbox/qemu.main/build/pc-bios                              \
+>>         -monitor none -serial mon:stdio -nographic -gdb tcp::6666                   \
+>>         -qmp tcp:localhost:5555,server,wait=off                                     \
+>>         -bios /home/gavin/sandbox/qemu.main/build/pc-bios/edk2-aarch64-code.fd      \
+>>         -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image               \
+>>         -initrd /home/gavin/sandbox/images/rootfs.cpio.xz                           \
+>>         -append memhp_default_state=online_movable
+>>           :
+>>           :
+>> guest$ cd /sys/devices/system/cpu/
+>> guest$ cat present enabled online
+>> 0-3
+>> 0-1
+>> 0-1
+>> (qemu) device_set host-arm-cpu,socket-id=1,cluster-id=0,core-id=0,thread-id=0,admin-state=enable
+>> qemu-system-aarch64: kvm_init_vcpu: kvm_arch_init_vcpu failed (2): Operation not permitted
+> 
+> 
+> Ah, I see. I think I understand the issue. It's complaining
+> about calling the  finalize twice. Is it possible to check as
+> I do not have a way to test it?
+> 
+> 
+> int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature)
+> {
+> switch (feature) {
+> case KVM_ARM_VCPU_SVE:
+> [...]
+> if (kvm_arm_vcpu_sve_finalized(vcpu))
+> return -EPERM;-----> this where it must be popping?
+> [...]
+> }
+> 
 
-Alistair
+Right, I think that's the case: QEMU tries to finalize SVE capability for twice,
+which is the real problem. I'm explaining what I found as below, which would be
+helpful to the forthcoming revisions.
 
->
->   if (counter_idx =3D=3D 0) {
->       cfg_val =3D env->mcyclecfg;
->   }
->   [...]
->   if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
->       curr_val +=3D counter_arr[PRV_M];
->   }
->
-> we only check for MINH in the higher bits.
->
-> //Anton
+machvirt_init
+   virt_setup_lazy_vcpu_realization
+     arm_cpu_finalize_features
+     kvm_arm_create_host_vcpu
+       kvm_create_vcpu                       // New fd is created
+       kvm_arch_init_vcpu
+         kvm_arm_vcpu_init
+         kvm_arm_sve_set_vls
+         kvm_arm_vcpu_finalize               // (A) SVE capability is finalized
+
+device_set_admin_power_state
+   device_pre_poweron
+     virt_machine_device_pre_poweron
+       virt_cpu_pre_poweron
+         qdev_realize
+           arm_cpu_realizefn
+             cpu_exec_realizefn
+             arm_cpu_finalize_features       // Called for the second time
+             qemu_init_vcpu
+               kvm_start_vcpu_thread
+                 kvm_vcpu_thread_fn
+                   kvm_init_vcpu
+                     kvm_create_vcpu         // Called for the second time
+                     kvm_arch_init_vcpu      // Called for the second time
+                       kvm_arm_vcpu_init
+                       kvm_arm_sve_set_vls   // (B) Failed here
+                       kvm_arm_vcpu_finalize
+
+(B) where we try to finalize SVE capability again. It has been finalized at (A)
+     Fianlizing SVE capability for twice is disallowed by KVM on the host side.
+
+
+>>
+>> I picked the fix (the last patch in rfc-v6.2 branch) to rfc-v6 branch, same crash dump
+>> can be seen.
+> 
+> Are you getting previously reported abort or above new problem?
+> 
+
+Previously, the VM can't be started. After your fix is applied, the VM is able to start.
+It's a new problem that qemu crash dump is seens on attempt to hot add a vCPU.
+
+Thanks,
+Gavin
+
 
