@@ -4,126 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5EFCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A26A6CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtMg-0003BO-RT; Thu, 23 Oct 2025 07:20:18 -0400
+	id 1vBtTq-0004tE-My; Thu, 23 Oct 2025 07:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtMe-0003Ah-Cf; Thu, 23 Oct 2025 07:20:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtMb-0006jY-Oz; Thu, 23 Oct 2025 07:20:15 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N5bBu3003883;
- Thu, 23 Oct 2025 11:20:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dzdO9j
- 1oPeZ62AXCHpkiR8it91ib87CrP8/WtzHlO1o=; b=KCPwfYX1aDf3MhKcl1inyM
- hGgZxSArSq8uxgwH+IowyskdJzigHwZHQUQMETZFECBCz+M6ooKwE5Tjf0/q4Pc/
- ibh8XNIuN9bDVc67K8L1CEpd8jBDq7w2qnlbhCuJtuM/MC5CL1P/AwxhzsPFWJgj
- Y7qkZNhgepEdSElg2JXRCY00C36nKVC3ZVTWmwzAbKUhokHSRJLgYl9WUGuNbpFn
- I69MyIhOWU2Ww5hxEg42Si7CyZgC44mzc8d7yYVJrsVSJ2nASuTbXlAp1A5e6Dyi
- CjEmQtKsjrgsV+eCAvLzTHhBkbMbJCjjwlg9j08t4Tq4mGYNXxms27GjbZ8h2IFQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3271tts-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:20:11 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59NBHNWm015012;
- Thu, 23 Oct 2025 11:20:10 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3271ttk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:20:10 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N7ma8f011033;
- Thu, 23 Oct 2025 11:20:09 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx1d3w1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:20:09 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBK89830081656
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:20:08 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C050658057;
- Thu, 23 Oct 2025 11:20:08 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B1EF58058;
- Thu, 23 Oct 2025 11:20:05 +0000 (GMT)
-Received: from [9.124.221.73] (unknown [9.124.221.73])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:20:04 +0000 (GMT)
-Message-ID: <7e3aa7fe-13b2-432a-bb0b-9dae4aed00fa@linux.ibm.com>
-Date: Thu, 23 Oct 2025 16:50:02 +0530
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1vBtTk-0004sg-Vc
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:27:37 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1vBtTi-0007j6-Pd
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:27:36 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-3c978f55367so424472fac.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 04:27:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=opnsrc.net; s=google; t=1761218853; x=1761823653; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sY0R1iCadEwKjmswbPNallgydnb2h51wAU0Tm1ZwDMA=;
+ b=CHrO/ct3/QukmZoH9MF24Jzc/eP/AoNO57nRjf0lS848btvrW3t9wlwAv+ZrcJ0dIW
+ DePEq+FDKBJEL9Wt0JqdqXTL4dnKq6FTes6n+TCsKfI+ExHgKtUOczHlAoNlkmleZVXc
+ JizVfYSutKikOROSnh5/Sj951l37U8Ptm5KHfB30Ayoc1caYOiNFMrtN8DhOm+LAy0sO
+ 4XB7MvuKejgscOQ4YtWb+ZBik0e9diewbKbK+gGWVZNolTjfICOMjMXlEcDGvWKPHNi3
+ v6RZb2tVYAYI1XPKipcGoFNRYPINZQAoEksskxdBEfsrLjJNA93nBb7PfgygoaqWStQr
+ JNqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761218853; x=1761823653;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sY0R1iCadEwKjmswbPNallgydnb2h51wAU0Tm1ZwDMA=;
+ b=SEPqjhAYHCSH/Ee806VCNc72nsQ5xOF8XLNsRVw+q5Jb5J4CQLeo79071gmNarhsgr
+ x5M63Aw4yTva8g47cYFEijQeoG1FlLht6O6sqhHI8HKQ0ob6WyqdU9g4hxIevn8c3wST
+ ObGMUkNLxkJUSO2/F12SMC8N6oahNusuhFNfgek3U28inr79PSGz9BxumeHjWIe2AzCm
+ PVRBHdaoU9L8XrE763VG8GbLlDQD42I+sFtJFFDxXYcCux6LFZW99tMWzxjlMOWCqUb8
+ jTBnbYLvMXP++HkJmvSVeieYsEc1pFFQCbmkTYZ9cmFQH+z/OWeB0XB/8tZ6BK0z1h4k
+ KjUw==
+X-Gm-Message-State: AOJu0Yy9WQTNe+e7IM2QYXicqyOTfmvN7ljq+tw1PSb16Z/eugCGQjcf
+ CIU4wlxApzRvDVAL9ZkuyYU+6tzXn3aTWHe4uS8Q9h3UIcq1zfnoDXdRiHztKNf8n42t6iquEgG
+ 9UgfDFpNsjN+AeYIEHi47xw6Ad3HawuU9YHKGvx3BMAAbv7Ad2J90elO8RZ01
+X-Gm-Gg: ASbGncsGZlfROpUd7cr3fKADZVoAfwIa+AwyZOzxdkeFffW7mRb9zWb3OWmBIoL70YN
+ +q53VF0NmmZSDN6c7BysjhTnxOvU9mF344CAABz72ouIz/NE/FvWMTy0Jwpap9CugEuo4LIfbyD
+ gDuWZ0Ir0nV5dlGXgJSO9hTsolxDitpNs7Xoei7jjP2QCSaaysLHZYr7NL77IBfnG6MhwdNJ3XQ
+ iBL3z1impa/7zhzZBtE90rvqHrWAHUKIr6wd8bmQPycyTwCCVVC/58jKYa5m6u03ybBZoKWJSzs
+ DsOTuhhU/Fo4fD/PstoyHud+fTY5bMkyu4POWTPqM+riNL+D/Kgx
+X-Google-Smtp-Source: AGHT+IHYQSsjgzlxQeE5KrjCG5/Mk5Izu1cI3D06NYqUjyUougJrRjYzhox7YfKYRRHA3my3zwVSx72+KHv7exxqtLs=
+X-Received: by 2002:a05:6870:6123:b0:35c:3928:478b with SMTP id
+ 586e51a60fabf-3c98d12ee06mr10855939fac.38.1761218852702; Thu, 23 Oct 2025
+ 04:27:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/8] hw/ppc: Implement saving CPU state in Fadump
-To: Sourabh Jain <sourabhjain@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20251021134823.1861675-1-adityag@linux.ibm.com>
- <20251021134823.1861675-5-adityag@linux.ibm.com>
- <4f0ddce6-c738-4d5b-8dc6-d997dd89289f@linux.ibm.com>
- <3p2pi6gph3ta3pfsnsk6nl63lwvtrb2hsof2ak42ooapqim564@zt7s3pltaxfv>
- <4802ecac-e8af-4e47-ab21-ebc70bea8d95@linux.ibm.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <4802ecac-e8af-4e47-ab21-ebc70bea8d95@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68fa0f6b cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=PQnYJY510iHoEEqZoIQA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=oH34dK2VZjykjzsv8OSz:22
- a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXx1Y9HTgJwQj+
- /9sue+MEJ/NZPYzxMKznoQUhrnLM+BvGKTBQYxkSpoLf1yqKn+mYOAAgtH77yvQa8W0CJLRuBqQ
- pu38TAyLnKFTYWq9MsueIBfYunR0K1mcFShvMoynPyOLB0zTS88g7recNqPaaScGMFr7O6jlqq1
- D021jEgyoJJmViZX39SFGg5O2GZsMSxZwRjQUeur+xK3etKRpTBHeptCO4d4tZphUun6fnRu53K
- p+EPlMG429mm7rq7XTOWdJEaEPLsyl6R58Oh/MrqB04j7Jw7HOBifMY69zWDD6dK1Mh8Xgksi7w
- ijzrCuYEbqbpyKDtQZZUkl/E6kh/fQ1nR4MXP/qtVx0LiflNpFGbeowuBjX8658lBNlqpG4OePG
- WOmPsXy0y6hjdSHsadM7Xckk/oz4sQ==
-X-Proofpoint-GUID: PO-SYUq57zu_sEw68pjUMnehx0WgYm_h
-X-Proofpoint-ORIG-GUID: u0R4xxSDZm4oyp_ic24WAjQioI_PjrAY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
+ <20251001010127.3092631-6-salil.mehta@opnsrc.net>
+ <a03ed205-b61a-4bba-9f25-83663b7d8a86@redhat.com>
+ <CAJ7pxeYurHLqj8GnLrfznmofMpsaw91GeZ3KMyucL0B_gn9gPg@mail.gmail.com>
+ <CAJ7pxeaUfUeXwtTVheCTxej-aCTCx0n8-XyAKaFneVUjcWL_7w@mail.gmail.com>
+ <beab3dd4-0c19-441c-a9f5-ecae9e791753@redhat.com>
+ <CAJ7pxeYEpJGhtL1-3qFEJYTzL-s19fF-it6p5dkq=fg384wBpg@mail.gmail.com>
+ <CAJ7pxeZG1w++2DNVD5L5N3sEPRLYPFSFECLqFgh3BYgKpfJtog@mail.gmail.com>
+ <5a13811b-628f-4e47-86b9-fad1ab7df244@redhat.com>
+In-Reply-To: <5a13811b-628f-4e47-86b9-fad1ab7df244@redhat.com>
+From: Salil Mehta <salil.mehta@opnsrc.net>
+Date: Thu, 23 Oct 2025 11:27:20 +0000
+X-Gm-Features: AS18NWCB8gZU37rJ9KuOnLp9Gq_euh4HIBeGVBGoLKK3ahqwn2jWFpxq4tN6xK0
+Message-ID: <CAJ7pxebfrSLG66t+7CQEGLL-ia4kqTAHRShxK76GcR0h=Dfk9w@mail.gmail.com>
+Subject: Re: [PATCH RFC V6 05/24] arm/virt,kvm: Pre-create KVM vCPUs for
+ 'disabled' QOM vCPUs at machine init
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com, 
+ salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org, 
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org, peter.maydell@linaro.org, 
+ richard.henderson@linaro.org, imammedo@redhat.com, armbru@redhat.com, 
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org, 
+ eric.auger@redhat.com, will@kernel.org, ardb@kernel.org, 
+ oliver.upton@linux.dev, pbonzini@redhat.com, rafael@kernel.org, 
+ borntraeger@linux.ibm.com, alex.bennee@linaro.org, gustavo.romero@linaro.org, 
+ npiggin@gmail.com, harshpb@linux.ibm.com, linux@armlinux.org.uk, 
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com, 
+ vishnu@os.amperecomputing.com, gankulkarni@os.amperecomputing.com, 
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, zhukeqian1@huawei.com, 
+ wangxiongfeng2@huawei.com, wangyanan55@huawei.com, wangzhou1@hisilicon.com, 
+ linuxarm@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn, 
+ lixianglai@loongson.cn, shahuang@redhat.com, zhao1.liu@intel.com, 
+ Keqian Zhu <zhuqian1@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,64 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+[!] Sending this again, to keep conversation *legally* correct,
+as this did not appear in the mailing-list when sent from my
+official ID.
+
+Sorry for any inconvenience caused due to this.
+
+On Thu, Oct 23, 2025 at 4:14=E2=80=AFAM Gavin Shan <gshan@redhat.com> wrote=
+:
+>
+> Hi Salil,
+>
+> On 10/23/25 11:29 AM, Salil Mehta wrote:
+>
+> [...]
+>
+> >>
+> >> Ah, I see. I think I understand the issue. It's complaining
+> >> about calling the  finalize twice. Is it possible to check as
+> >> I do not have a way to test it?
+> >>
+> >>
+> >> int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature)
+> >> {
+> >> switch (feature) {
+> >> case KVM_ARM_VCPU_SVE:
+> >> [...]
+> >> if (kvm_arm_vcpu_sve_finalized(vcpu))
+> >> return -EPERM;-----> this where it must be popping?
+> >> [...]
+> >> }
+> >
+> > I've pushed the fix to avoid calling the finalizing SVE
+> > feature (KVM_ARM_VCPU_FINALIZE) twice on the
+> > same RFC-V6.2 branch.
+> >
+> > May I kindly request you to validate the fix again and
+> > check SVE works on NVIDIA grace-hopper?
+> >
+>
+> With the latest rfc-v6.2 branch, I don't hit the issue. The vCPU can be h=
+ot added
+> and removed on grace-hopper host.
+
+Excellent, SVE/SME and other ARM extensions have not been tested earlier.
+It would be of immense help if all of these can be validated as I do not ha=
+ve
+capable hardware to test them.
+
+Many thanks for your proactive efforts in reporting, reviewing the fixes an=
+d
+validating them as well. I appreciate it!
+
+For anyone who wants to try, fix is here:
+ https://github.com/salil-mehta/qemu/commits/virt-cpuhp-armv8/rfc-v6.2
+https://github.com/salil-mehta/qemu/commit/cd58e65a79c224a59407553c1a6288ed=
+667b19ed
 
 
-On 10/23/25 16:46, Sourabh Jain wrote:
-> 
-> 
-> On 23/10/25 16:41, Aditya Gupta wrote:
->> On 25/10/23 02:35PM, Sourabh Jain wrote:
->>>
->>>> <...snip...>
->>>> +    /*
->>>> +     * CPUSTRT and CPUEND register entries follow this format:
->>>> +     *
->>>> +     * 8 Bytes Reg ID (BE) | 4 Bytes (0x0) | 4 Bytes Logical CPU ID 
->>>> (BE)
->>>> +     */
->>>> +    curr_reg_entry->reg_id =
->>>> +        cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
->>>> +    curr_reg_entry->reg_value = cpu_to_be64(
->>>> +            ppc_cpu->vcpu_id & FADUMP_CPU_ID_MASK);
->>> Seems like converting full 64 bit CPU ID to 64 bit BE value will not 
->>> bring
->>> reg
->>> entry in below format. Isn't it?
->>>
->>> 8 Bytes Identifier (BE) | 4 Bytes Reserved (0x0) | 4 Bytes Logical 
->>> CPU ID
->>> (BE)
->>>
->>>> <...snip...>
->>>> +    /* End the registers for this CPU with "CPUEND" reg entry */
->>>> +    curr_reg_entry->reg_id =
->>>> +        cpu_to_be64(fadump_str_to_u64("CPUEND"));
->>>> +    curr_reg_entry->reg_value = cpu_to_be64(
->>>> +            ppc_cpu->vcpu_id & FADUMP_CPU_ID_MASK);
->>> Same here.
->> It will be in the same format, since even with storing 8 bytes at once,
->> we do a 8 byte swap on the CPU ID, thus bringing the cpu id in the
->> higher 4 bytes only (considering CPU ID fits in 4 bytes as ensured by
->> the FADUMP_CPU_ID_MASK).
->>
->> So, it still follows the above format, just that it does not explicitly
->> use 4 byte blocks.
->>
->> This is also consistent with how the Linux kernel reads this field:
->>
->>     /* Lower 4 bytes of reg_value contains logical cpu id */
->>     cpu = (be64_to_cpu(reg_entry->reg_value) &
->>            RTAS_FADUMP_CPU_ID_MASK);
-> 
-> Yeah looks good to me now. Thanks.
-> 
-> Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-
-Thanks Sourabh and Shivang for your diligent reviews and validation efforts.
-
-Queued.
-
-regards,
-Harsh
-> 
+Many thanks!
+Salil.
 
