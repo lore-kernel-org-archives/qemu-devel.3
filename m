@@ -4,108 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40851CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC88CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuLI-0006XJ-BF; Thu, 23 Oct 2025 08:23:00 -0400
+	id 1vBuXZ-00022i-RR; Thu, 23 Oct 2025 08:35:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuGW-0001Qc-4U
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:18:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuGQ-0006Uu-Or
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:59 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59NBbOel032075
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ygRf9NyfBUDoDxvgY
- FqY0DYBipiX5f6R1l75fevs5k0=; b=Obfopp8YRci66vnbpFwmH2v3/hq1LLV/y
- btK6103yoNFJ+xzyM5LOxQ4EV3md/zK4GBT8MvfMN54Tn4y/js+JjiC3UI5KTKO6
- SivXa2v+eY7bia0ot2Fl19Be7/2xERtieimgcvwKKidiLDvgg+c98ROdI/BEg282
- M/cqS7OuzsTdthoIOBR7Yv9/rKslrOOA5dd8BpoFJkep4hRgEH2pUdMOKmzps1qN
- L09MKX+tMMLu77Znl8mPOjNTrA7kBoGD5qh+SZMOw1i/mgnCHuiZ1xcqlcwueAey
- frWKTLWSR2uopuAjbIB6NRpGJCL9GSyxbOGLzVOSccdxuAU0sIBBQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30w0jck-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:43 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NA9l5s032249
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:42 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7n5k0m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:42 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NCHcFB54657346
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 12:17:39 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C7AD320043;
- Thu, 23 Oct 2025 12:17:38 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD89720040;
- Thu, 23 Oct 2025 12:17:37 +0000 (GMT)
-Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
- [9.124.221.73]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 12:17:37 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBuUc-0005fS-JV
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:32:37 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBuUZ-0008SL-Ar
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:32:33 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47103b6058fso5980285e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 05:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761222748; x=1761827548; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2a4PoXZUReoA7VfVNmy1fiLzr59C5J9k1wUFYONVrhA=;
+ b=kPJiKj2cbJKGdhb/RU9bLUahmVkd9PRuC9zqRcIEOoAUS5ElVG+XIY3+RVzLgBC5kv
+ DUB8JaKRZew3sk2PVJsiage8DfBcEDd+lE9PMUzxMI7RwZlKasw8CiWm5dt+9JtshL8R
+ yVb7jQItet0oWcQ+x2ERm9vunnrFxGa1F674HkCpoVEEy/V1apwAkatKECVUZdiij4sG
+ 3nIFt9s+Xp5W9aS/qFSxEz1TCDMUPgK/3WL3qu3uf+SAZmpYrGoWUXRGFQs1zvFZzdec
+ SiXt1qvbApTsSuqHFXSAOApnLtM8ZyH1NdSfWUX3Gef7Mk0CW0SOvq3sEKHC/Eg1I0Vn
+ LJdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761222748; x=1761827548;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2a4PoXZUReoA7VfVNmy1fiLzr59C5J9k1wUFYONVrhA=;
+ b=VetM4yz3WeG3mKbeHu/PJ5ijYcYdM+zR50pmUWQC/vU2P+L+XhK5HjQDcZAsKgqjnd
+ U6bTNQFcEGb9DxEHZzcG9JpuOWAfN9Wr8/vG+QryODPN3qPQ79OzmlLUDup5C6Y1bygT
+ WYulUeBLsrd+DoZGbwyV9XUiJ7HcBonDv9SSLOL94qm+1Fshh+cs5yKu6lb+YIHH+ruP
+ e8tbSUkUYioXXheO+Rx6H0DttNIn6Hgo4XKJeyEzj7g7kLnW4J4JsrOMN/TOWo9SirxW
+ zj+6GYzH5uXjqxEYnvMVquOvrjdjHJoeTeqwg6uSYGQBp4gDxUYVciJw5j4lGr4MYtEf
+ RDlg==
+X-Gm-Message-State: AOJu0Yy/1Mk6B7dpwjbFpOHJRSTDCWa5AmYBHQfnycG07uoxy+xxn2z1
+ xAkI9+Gfc7PmUIfpSuPys6Gvyg4JCvS0geZXaXlbWinxMPk35GPMmXFVDS0XDzwCHShboN1Qa5/
+ o/kzUn68=
+X-Gm-Gg: ASbGncuvKa+ro9GZZZzsftjKPhXXAme7Jghmf2PJiR9mniY93QdwafRQhAf9PH/D3lu
+ V5wbEzb3JwSpjfocMArQynowP8XUbJbhzmVj3K4TZHO0cmBnUfIvpbgubaI+zr28PbquVpFBajw
+ P043XfsoCnAhYAEfIe3OF7BwF+6UPhCDb5Emf34k0bMTUfTPTFJaNW+t4eWrbBqrLyal3I22GQm
+ vgdh8OIoBGkvIfHc3vv71cUUBZiNHb084dEWezfk+OQFl/QS0RDdPHvLpgvMmqBE+bxZ6Q3NnBt
+ iDl6HwFh/crNmsxKCF0VfMrelCpKjSvCJwwbbvYVDiRfNTXbxXsoplCHeh7LL8asXGswg3I3bV0
+ cAJC+sg3/6+Mz+8w1asawD3CpOGCcBTULzoSvxQrhr4v9PUu6Auh3FcZW50nApd8/7cfkPr5b5j
+ WYGudqKWWYfdRfhbn6jGANuNLMuSfPlTFodNpeZui/0DUOERBw6hqBUGJwBx5r
+X-Google-Smtp-Source: AGHT+IHXSw/fevYz6MyC72SPBobc67WK2XNzTHBsMH/1mqhupLtvi+rVRmQeKXVOKH10Ct5cjU3tmQ==
+X-Received: by 2002:a05:600c:8b66:b0:46f:a995:55f8 with SMTP id
+ 5b1f17b1804b1-475c6f5df70mr37661025e9.13.1761222747787; 
+ Thu, 23 Oct 2025 05:32:27 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47496d4b923sm56754855e9.14.2025.10.23.05.32.26
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 23 Oct 2025 05:32:27 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PULL 29/32] hw/ppc: Pass dump-sizes property for fadump in device
- tree
-Date: Thu, 23 Oct 2025 17:46:48 +0530
-Message-ID: <20251023121653.3686015-30-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251023121653.3686015-1-harshpb@linux.ibm.com>
-References: <20251023121653.3686015-1-harshpb@linux.ibm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>, Alexander Graf <agraf@csgraf.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Cameron Esfahani <dirty@apple.com>
+Subject: [PATCH v2 58/58] target/arm: Only allow disabling NEON when using TCG
+Date: Thu, 23 Oct 2025 14:31:42 +0200
+Message-ID: <20251023123142.8062-9-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251023114638.5667-1-philmd@linaro.org>
+References: <20251023114638.5667-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Y6oO7_VXtpSDt61PA1HZmNAZsJW22bia
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX8csqJjGFmdBs
- zND3bBPgXzHdk39eqngq07E0Mp9U3Nk+6g/OEcsmTbqX/pZRjqgXIVxsSMHP8MwlYxQl/WrpasU
- iC2ig6apY3NdJV4lCYNWG4iXp3KSqBABkJe85C6M0ZJqV4tYetzlMrpe/h1+SHTrhDQa/mvcByq
- 8p2oDiTyMK8MP/D+ZC7ak68xLvXubO7mSxfRKk+94TVLpKzWccXchNzEj6shBmhO8JdiYTRSalg
- O7vZ6eW/u23V2q2yS3csCxuf9c7jHG+As2SoB55rkrsgzruUhNJZeknPwHocUiI4r7U+9f/oNQY
- YJb/6d2kbfHmzsF06njyV2lTsUOxoj/xEwZiur57rAMlc5ibxWU0kClWQYit9mURE3U7khW6+Dl
- +pZ0PiwqtxtMtIr+4lXxrdqTx3AsGg==
-X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68fa1ce7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=fff_gh8wo2OfEAVniKgA:9
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-ORIG-GUID: Y6oO7_VXtpSDt61PA1HZmNAZsJW22bia
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,128 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+Only allow disabling NEON when using TCG.
 
-Platform (ie. QEMU) is expected to pass few device tree properties for
-details for fadump:
+This avoids confusing user experience:
 
-  * "ibm,configure-kernel-dump-sizes": Space required to store dump data
-    for firmware provided dump sections (ie. CPU & HPTE regions)
-  * "ibm,configure-kernel-dump-version": Versions of fadump supported
+  $ qemu-system-aarch64 -M virt -accel hvf \
+                        -cpu host,neon=off,vfp=off,vfp-d32=off
+  qemu-system-aarch64: AArch64 CPUs must have both VFP and Neon or neither
 
-Pass the above device tree nodes so that kernel can reserve sufficient
-space for preserving the CPU state data
+  $ qemu-system-aarch64 -M virt -accel hvf \
+                        -cpu host,neon=off,vfp=off,vfp-d32=off
+  qemu-system-aarch64: ARM CPUs must have both VFP-D32 and Neon or neither
 
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-6-adityag@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+  $ qemu-system-aarch64 -M virt -accel hvf \
+                        -cpu host,neon=off,vfp=off,vfp-d32=off
+  qemu-system-aarch64: can't apply global host-arm-cpu.vfp-d32=off: Property 'host-arm-cpu.vfp-d32' not found
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/spapr.c        | 57 +++++++++++++++++++++++++++++++++++++++++++
- hw/ppc/spapr_fadump.c |  6 ++---
- 2 files changed, 60 insertions(+), 3 deletions(-)
+ target/arm/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 117da76a3d..d6cfb9acbc 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -900,6 +900,61 @@ static int spapr_dt_rng(void *fdt)
-     return ret ? -1 : 0;
- }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index bfd3b57e8a8..9343c6093b9 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1457,7 +1457,7 @@ static void arm_cpu_post_init(Object *obj)
  
-+static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
-+{
-+    MachineState *ms = MACHINE(spapr);
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+
-+    uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
-+    uint64_t fadump_cpu_state_size = 0;
-+    uint16_t fadump_versions[2] = {
-+        FADUMP_VERSION /* min supported version */,
-+        FADUMP_VERSION /* max supported version */
-+    };
-+    uint32_t fadump_rgn_sizes[2][3] = {
-+        {
-+            cpu_to_be32(FADUMP_CPU_STATE_DATA),
-+            0, 0 /* Calculated later */
-+        },
-+        {
-+            cpu_to_be32(FADUMP_HPTE_REGION),
-+            0, 0 /* HPTE region not implemented */
-+        }
-+    };
-+
-+    /*
-+     * CPU State Data contains multiple fields such as header, num_cpus and
-+     * register entries
-+     *
-+     * Calculate the maximum CPU State Data size, according to maximum
-+     * possible CPUs the QEMU VM can have
-+     *
-+     * This calculation must match the 'cpu_state_len' calculation done in
-+     * 'populate_cpu_state_data' in spapr_fadump.c
-+     */
-+    fadump_cpu_state_size += sizeof(struct FadumpRegSaveAreaHeader);
-+    fadump_cpu_state_size += 0xc;                      /* padding as in PAPR */
-+    fadump_cpu_state_size += sizeof(uint32_t);         /* num_cpus */
-+    fadump_cpu_state_size += max_possible_cpus   *     /* reg entries */
-+                             FADUMP_PER_CPU_REG_ENTRIES *
-+                             sizeof(struct FadumpRegEntry);
-+
-+    /* Set maximum size for CPU state data region */
-+    assert(fadump_rgn_sizes[0][0] == cpu_to_be32(FADUMP_CPU_STATE_DATA));
-+
-+    /* Upper 32 bits of size, usually 0 */
-+    fadump_rgn_sizes[0][1] = cpu_to_be32(fadump_cpu_state_size >> 32);
-+
-+    /* Lower 32 bits of size */
-+    fadump_rgn_sizes[0][2] = cpu_to_be32(fadump_cpu_state_size & 0xffffffff);
-+
-+    /* Add device tree properties required from platform for fadump */
-+    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-version",
-+                    fadump_versions, sizeof(fadump_versions))));
-+    _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
-+                    fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
-+}
-+
- static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
- {
-     MachineState *ms = MACHINE(spapr);
-@@ -1015,6 +1070,8 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
-     _FDT(fdt_setprop(fdt, rtas, "ibm,lrdr-capacity",
-                      lrdr_capacity, sizeof(lrdr_capacity)));
- 
-+    spapr_dt_rtas_fadump(spapr, fdt, rtas);
-+
-     spapr_dt_rtas_tokens(fdt, rtas);
- }
- 
-diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-index fdd4929148..fa3aeac94c 100644
---- a/hw/ppc/spapr_fadump.c
-+++ b/hw/ppc/spapr_fadump.c
-@@ -492,7 +492,7 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
-     *cpu_state_len = 0;
-     *cpu_state_len += sizeof(reg_save_hdr);     /* reg save header */
-     *cpu_state_len += 0xc;                      /* padding as in PAPR */
--    *cpu_state_len += sizeof(__be32);           /* num_cpus */
-+    *cpu_state_len += sizeof(num_cpus);         /* num_cpus */
-     *cpu_state_len += reg_entries_size;         /* reg entries */
- 
-     cpu_state_buffer = g_malloc(*cpu_state_len);
-@@ -503,8 +503,8 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
- 
-     /* Write num_cpus */
-     num_cpus = cpu_to_be32(num_cpus);
--    memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(__be32));
--    offset += sizeof(__be32);
-+    memcpy(cpu_state_buffer + offset, &num_cpus, sizeof(num_cpus));
-+    offset += sizeof(num_cpus);
- 
-     /* Write the register entries */
-     memcpy(cpu_state_buffer + offset, reg_entries, reg_entries_size);
+     if (arm_feature(&cpu->env, ARM_FEATURE_NEON)) {
+         cpu->has_neon = true;
+-        if (!kvm_enabled()) {
++        if (tcg_enabled() || qtest_enabled()) {
+             qdev_property_add_static(DEVICE(obj), &arm_cpu_has_neon_property);
+         }
+     }
 -- 
-2.43.5
+2.51.0
 
 
