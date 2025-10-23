@@ -4,97 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC87CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45899CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBv22-0001dy-0d; Thu, 23 Oct 2025 09:07:06 -0400
+	id 1vBv9x-0001GH-04; Thu, 23 Oct 2025 09:15:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBv1u-0001Xq-AL
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:06:58 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBv1s-0006KW-4P
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:06:58 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-475ca9237c2so4520935e9.3
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 06:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761224814; x=1761829614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VvTtMqMAFWvn5LLkR/vIY7avxcTn9pA4YCh2pIIZxqY=;
- b=bTHH3u9w4Pht+fB6DzdM3ntHPn5OCsJQU795TYP+XVr3cOPooZpUvvp8zY9TsXCpH8
- Pug1BxStbNmYz7V4HSpHNqUTeiCHOsfBvdAQ7i41X2SYuonDWZcgy5skpHU8NLxaZwzj
- FdKti6zvU8lJWozlUHQUyTXFtoQxmgG0gG9TslkHmPidXUoc+E7t0o8k35dMp1EAW4X1
- sBvsm5RD8X6cuIpmjc+/7VNaNp8plXF31veGS3HkAGRLTYjACf+o6M24hOBGEOcxtE2n
- 4qXIIj6wxd9QMAyMvbhLMQT6clO9yvioi1d+ph+4FYesuOacw9Mje000d3xTkrb0r2Wp
- v3wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761224814; x=1761829614;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VvTtMqMAFWvn5LLkR/vIY7avxcTn9pA4YCh2pIIZxqY=;
- b=iEgthfwzEOCFiVA/e0BCatgJTVgNlYIm602yJW64ESoO83OIP9xkRhaA5ZJ3tfMLGK
- ZGD60OA3Aac2SN+F20YE9FdHgRQz9k7oAulSVAXYkfXUIUY6mVrdNcwfvRDXvGVpp7uT
- uW2jGJ1Ph2xR7CnZU2gMkY3O2atkKqJwaFpXqPLOWQ19mdwXgN/OaXHphn9skigFmBh3
- KpXxXo6YL/OWqziI58MACdqmgyWfOvfNlqVs2tdmo5gzSmEd6kOePrH39QdXSE6sBvZl
- Wp44ePSvXwQqwp6V2GnA0YjzeFI3PUmS38DfHsb51C+bhtCPEQcEmkEV5A9z8XdhCXyf
- uELg==
-X-Gm-Message-State: AOJu0YzWPoXWsj7x5NztCgeQqu6WAhRYsuHnFvDbfj3CUiBZYWys9YWG
- C3lMII8FEjzDklcpCPhJ6IQa49DQprMKCWpxJlcTr4lHT4tJeH8gmEDdxiYMX6dPfsgRdnP1t11
- i5N2/nV4=
-X-Gm-Gg: ASbGncvKmBS1ClLyx7UmC33c29pYBStsGPpAs638MD1xyOwP2eUJlSD4OZx8nvJiNor
- ORrx+4LMrSzOsGxpfDn2LagKtFCHNbKqZUdwVWbvUGNyJdadPIyGCyyfO+moJWJUOh/D3VDlmEh
- 6LXGcuLSv+mrbj5uh0StvmEHF6K/V5GcMnKaHPh7WapahdoMiZJb6ZvxNwBrKNPsSZqKNOeBYW3
- k/jiy1llK0RaHLjVgjbHZ27VrvUetXAosNjLfs01cnGtw3spyNqwYu4lzcoXm0TtbxJiG8n6MpW
- QNmxWn5xjVS5foUQZ8I6ZS6GtOHT7OkiRGEleZ5ksaZuq+wKlAUDzNfLBueEpbvEva0ndiyelFW
- TjwqeyKKbs2MEJ2bGyffCcYFPYk3bAIAu8hrWR5slz6CozXECYzs/r6CAvUcIlQuj0soSg4xkWb
- 3sQFGxJIY70boe0pYP0viLSnfjIBkkO/zMsMMazTPBFsH7BnosmA==
-X-Google-Smtp-Source: AGHT+IESrMJglDcfDuyTU5fVqNkF2Joo3L8KXHN5lQ0+HPu1mF9z8qte+JgkSyruDKu3pENu8N7C4Q==
-X-Received: by 2002:a05:600c:8284:b0:45d:d505:a1c3 with SMTP id
- 5b1f17b1804b1-47117920935mr192868025e9.37.1761224813604; 
- Thu, 23 Oct 2025 06:06:53 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475cae9253bsm35607955e9.1.2025.10.23.06.06.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Oct 2025 06:06:53 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Stefan Hajnoczi <stefanha@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Peter Collingbourne <pcc@google.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, qemu-arm@nongnu.org,
- Mads Ynddal <mads@ynddal.dk>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH v2 47/58] accel/hvf: Introduce
- hvf_arch_cpu_synchronize_[pre/post]exec() hooks
-Date: Thu, 23 Oct 2025 15:06:23 +0200
-Message-ID: <20251023130625.9157-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251023114638.5667-1-philmd@linaro.org>
-References: <20251023114638.5667-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBv9q-0001DE-6d; Thu, 23 Oct 2025 09:15:10 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBv9l-0007uz-2E; Thu, 23 Oct 2025 09:15:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5F4815972ED;
+ Thu, 23 Oct 2025 15:15:00 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id yihhUPoAiEOB; Thu, 23 Oct 2025 15:14:58 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 53E3C5972E8; Thu, 23 Oct 2025 15:14:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 523E25972DE;
+ Thu, 23 Oct 2025 15:14:58 +0200 (CEST)
+Date: Thu, 23 Oct 2025 15:14:58 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v4 11/12] hw/ppc/pegasos2: Add Pegasos I emulation
+In-Reply-To: <63bb6500-56f7-4d4c-86ec-7aef613de6b6@linaro.org>
+Message-ID: <b81e1b45-304e-e6a6-98aa-6eeee8f4ff25@eik.bme.hu>
+References: <cover.1761176219.git.balaton@eik.bme.hu>
+ <8f5bd07553b41d83a54f9df0bb93b76b22dea5c5.1761176219.git.balaton@eik.bme.hu>
+ <63bb6500-56f7-4d4c-86ec-7aef613de6b6@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-399995252-1761225298=:38722"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,86 +68,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/system/hvf_int.h  | 4 ++++
- accel/hvf/hvf-accel-ops.c | 3 +++
- target/arm/hvf/hvf.c      | 8 ++++++++
- target/i386/hvf/hvf.c     | 8 ++++++++
- 4 files changed, 23 insertions(+)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index c8e407a1463..eab443aa91f 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -71,6 +71,10 @@ int hvf_arch_put_registers(CPUState *);
- int hvf_arch_get_registers(CPUState *);
- /* Must be called by the owning thread */
- void hvf_arch_update_guest_debug(CPUState *cpu);
-+/* Must be called by the owning thread */
-+void hvf_arch_cpu_synchronize_pre_exec(CPUState *cpu);
-+/* Must be called by the owning thread */
-+void hvf_arch_cpu_synchronize_post_exec(CPUState *cpu);
- 
- void hvf_protect_clean_range(hwaddr addr, size_t size);
- void hvf_unprotect_dirty_range(hwaddr addr, size_t size);
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index e9dd2d24745..744a5288298 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -181,10 +181,13 @@ static void *hvf_cpu_thread_fn(void *arg)
-     do {
-         qemu_process_cpu_events(cpu);
-         if (cpu_can_run(cpu)) {
-+
-+            hvf_arch_cpu_synchronize_pre_exec(cpu);
-             r = hvf_arch_vcpu_exec(cpu);
-             if (r == EXCP_DEBUG) {
-                 cpu_handle_guest_debug(cpu);
-             }
-+            hvf_arch_cpu_synchronize_post_exec(cpu);
-         }
-     } while (!cpu->unplug || cpu_can_run(cpu));
- 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index b0918de5f92..c83bffe46ad 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2009,6 +2009,14 @@ static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
-     return ret;
- }
- 
-+void hvf_arch_cpu_synchronize_pre_exec(CPUState *cpu)
-+{
-+}
-+
-+void hvf_arch_cpu_synchronize_post_exec(CPUState *cpu)
-+{
-+}
-+
- int hvf_arch_vcpu_exec(CPUState *cpu)
- {
-     int ret;
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 4597d191f9d..de5e8b45d19 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -722,6 +722,14 @@ void hvf_simulate_wrmsr(CPUState *cs)
-     printf("write msr %llx\n", RCX(cs));*/
- }
- 
-+void hvf_arch_cpu_synchronize_pre_exec(CPUState *cpu)
-+{
-+}
-+
-+void hvf_arch_cpu_synchronize_post_exec(CPUState *cpu)
-+{
-+}
-+
- static int hvf_handle_vmexit(CPUState *cpu)
- {
-     X86CPU *x86_cpu = env_archcpu(cpu_env(cpu));
--- 
-2.51.0
+--3866299591-399995252-1761225298=:38722
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
+On Thu, 23 Oct 2025, Philippe Mathieu-Daudé wrote:
+> On 23/10/25 02:06, BALATON Zoltan wrote:
+>> The Pegasos II is a redesign of the original Pegasos (later marked I)
+>> that replaces the north bridge and has updated firmware but otherwise
+>> these are very similar. The Pegasos uses the same north bridge that
+>> AmigaOne used which we already emulate so we can also easily emulate
+>> Pegasos I.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/ppc/pegasos2.c | 156 ++++++++++++++++++++++++++++++++++------------
+>>   1 file changed, 117 insertions(+), 39 deletions(-)
+>
+>
+>> @@ -89,6 +96,8 @@ static void pegasos2_cpu_reset(void *opaque)
+>>       if (pm->vof) {
+>>           cpu->env.gpr[1] = 2 * VOF_STACK_SIZE - 0x20;
+>>           cpu->env.nip = 0x100;
+>> +    } else if (pm->type == PEGASOS1) {
+>> +        cpu->env.nip = 0xfffc0100;
+>
+> Preferably add a comment explaining/describing this value (think
+> at your future you in 3 years ;) ).
+
+I think I can figure that out even 3 years from now :-). PPC reset vector 
+is 0x100 so it should point to somewhere in ROM at offset 0x100. I'm not 
+quite sure how real machine gets to this address (there are pins that set 
+initial vectors address that we don't model or maybe ROM is remapped at 
+startup) but it seems to be the right start address so not much I can 
+explain about that.
+
+>> +    case PEGASOS1:
+>> +    {
+>> +        MemoryRegion *pci_mem, *mr;
+>> +
+>> +        /* Articia S */
+>> +        pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, 
+>> NULL));
+>> +        pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
+>> +        mr = g_new(MemoryRegion, 1);
+>> +        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", 
+>> pci_mem,
+>> +                                 0, 0x1000000);
+>> +        memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+>> +        mr = g_new(MemoryRegion, 1);
+>> +        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-high", 
+>> pci_mem,
+>> +                                 0x80000000, 0x7d000000);
+>> +        memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
+>
+> Since I don't want to delay this series any further, as a future
+> cleanup consider passing the host MR (get_system_memory) as a link
+> property, and map PCI hi/lo regions in the host bridge realize.
+
+I'll consider this as future clean up. These should really be controlled 
+by registers in the north bridge but I don't have docs on Articia S so I 
+don't know how this should work but these are probably the default values 
+that we could move to the articia model but have to check if that works 
+for amigaone too. I'd skip the link property though to keep it simple. 
+This is a simple machine and other host bridges also access system memory 
+currently. Until get_system_memory goes away I don't see a reason to make 
+it more complicated.
+
+Regards,
+BALATON Zoltan
+
+>> +        pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
+>> +        break;
+>> +    }
+>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>
+>
+--3866299591-399995252-1761225298=:38722--
 
