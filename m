@@ -4,112 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93F5CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B5ACCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtfB-00077P-Jp; Thu, 23 Oct 2025 07:39:25 -0400
+	id 1vBthe-0000CE-0i; Thu, 23 Oct 2025 07:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtf9-00077A-3C; Thu, 23 Oct 2025 07:39:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBthb-0000C2-JT; Thu, 23 Oct 2025 07:41:55 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtf6-0000wx-2P; Thu, 23 Oct 2025 07:39:22 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N2LVvW024779;
- Thu, 23 Oct 2025 11:39:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Tq6Tl1
- mbu+J9F6Ay1Mhb05hd2w8W9D8diyz3nyQm/10=; b=Hqdv6GP5aqsd4TkMzovkym
- cU50BzUtoAvHL+iVogMzwamxmJJXAi1q0EfTszwhMto5q0yltvFq9drksLCXeuck
- Ry9qGMOLMaIfVfJvfMA6bkRRTxfqUaF2mjsgENaTtlrWeUlX7+9fGKWBCB69hS+q
- K2L5WHxotqERQAz21T2/ubw5Aqa/g119AsXIgsrSjdnQEwQ8F3mTUkfHIyYrUq/n
- jIASU4MDUz+Kf1SEmO4SSJT3p4N72OhcETKrFOODHd02Wm1EIK1ISjN45j0R9WFb
- 5rnRVkybwqWgpb00Aum4MlyGqo3Ze5VxUJ4Ea/7P2ozB3JYSVmvSVm8jJVdwwkZw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hrc7s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:39:16 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59NBdFk9005595;
- Thu, 23 Oct 2025 11:39:15 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hrc7m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:39:15 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9FJu2014848;
- Thu, 23 Oct 2025 11:39:14 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sdp4w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:39:14 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBdErE22938248
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:39:14 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5156958059;
- Thu, 23 Oct 2025 11:39:14 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9F31A58057;
- Thu, 23 Oct 2025 11:39:12 +0000 (GMT)
-Received: from [9.124.221.73] (unknown [9.124.221.73])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:39:12 +0000 (GMT)
-Message-ID: <764df5c7-55d3-48ec-a28b-0c837e13c595@linux.ibm.com>
-Date: Thu, 23 Oct 2025 17:09:11 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/12] Pegasos2 clean up and pegasos1 emulation
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBthY-0001Tx-E4; Thu, 23 Oct 2025 07:41:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B26175972E1;
+ Thu, 23 Oct 2025 13:41:49 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id nVgUZyWee2Er; Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id AB4395972DE; Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A9AC359703F;
+ Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
+Date: Thu, 23 Oct 2025 13:41:47 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v4 08/12] hw/ppc/pegasos2: Move hardware specific parts
+ out of machine reset
+In-Reply-To: <0b12701a-827f-4f17-969b-5da124cd2e36@linux.ibm.com>
+Message-ID: <3b16afc9-4a41-fde9-f16e-645dde8b7bb3@eik.bme.hu>
 References: <cover.1761176219.git.balaton@eik.bme.hu>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <cover.1761176219.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX7xRt52b85ILU
- MZCoCyjyI/1ACSllB3UnGOtXtAbvaNXOlu6Mf4BJriQg3fEXEi1HWvzBuItEijTzlQr8JoAUohH
- Hd5gqHnz4bmxszhe8mW5+TH6iwYsM+lIY982//IWG4YeN1zV6+5TwWRLtRz6XDkFC0HKuOqsCg0
- ZJAdohVTzgO7N/Jc6iNRijPc6JYk+/h1ZYRdXQzBTwQJll3DQ5ca0KmK16bnCC/kwMB2wJbVbTC
- 4Wy2j+WuVYeCZRgSVGIn6onM3mNDCR6RRDIEm+GsqE/KQDO1E8KJUsa6m7ZKM7KPWRTbZ5W9/+S
- aoRtpaxrfAVIaBE2fGqfqW82wzFjwvTy+JoQjR77Pleb263IXeTpnJH7wr7owwdgwm0gGTNAtAk
- 3QpcR455JOCLX/taZmobZIRMGWAIRQ==
-X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68fa13e4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=AtbYnQlxtsojCQpLmmEA:9 a=QEXdDO2ut3YA:10
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: ubUdIbvXRRfMehBa-l_Ir7RMqDdOibNb
-X-Proofpoint-ORIG-GUID: vTb7DxvuQf0ItIgb812_g9Wsee_xsh0W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ <f6633a68a72aad4fefb8d2373b52561f8ca8d41d.1761176219.git.balaton@eik.bme.hu>
+ <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
+ <0b12701a-827f-4f17-969b-5da124cd2e36@linux.ibm.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="3866299591-1110318835-1761219707=:4926"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -127,26 +70,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-1110318835-1761219707=:4926
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On 10/23/25 05:36, BALATON Zoltan wrote:
-> This series changes how the fdt for VOF is generated in pegasos2 by
-> moving the static parts to a dtb and only generate the changing parts
-> such as memory size and PCI devices programmatically. This simplifies
-> the code and allows simply adding emulation of Pegasos I which has a
-> different north bridge and slightly different memory map but otherwise
-> very similar and can be emulated by reusing parts from the amigaone
-> machine. The machine was tested with a Pegasos I ROM image and MorphOS.
-> 
-> The first VOF patch (submitted separetely before, the reviewed v3 is
-> included here) fixes handling the name property in VOF that cannot be
-> represented in a dts as that always takes the path as the name and
-> cannot accept an explicit name property but we need the name property
-> to appear when guest queries properties which previously was worked
-> around by adding it to every node.
-> 
-> Regards,
-> BALATON Zoltan
+On Thu, 23 Oct 2025, Harsh Prateek Bora wrote:
+> On 10/23/25 12:16, Philippe Mathieu-Daudé wrote:
+>> On 23/10/25 02:06, BALATON Zoltan wrote:
+>>> Move the pegasos2 specific chipset reset out from machine reset to a
+>>> separate function and move generic parts that are not pegasos2
+>>> specific from build_fdt to machine reset so now build_fdt only
+>>> contains pegasos2 specific parts and can be renamed accordingly.
+>>> 
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> ---
+>>>   hw/ppc/pegasos2.c | 79 ++++++++++++++++++++++++-----------------------
+>>>   1 file changed, 41 insertions(+), 38 deletions(-)
+>> 
+>> 
+>>> -#define PCI1_IO_BASE  0xfe000000
+>> 
+>> Can't we keep such definition?
+>> 
+>>> @@ -308,23 +307,12 @@ static void 
+>>> pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
+>>>   static void pegasos2_superio_write(uint8_t addr, uint8_t val)
+>>>   {
+>>> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f0, &addr, 1);
+>>> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
+>>> +    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
+>>> +    cpu_physical_memory_write(0xfe0003f1, &val, 1);
+>> 
+>> Otherwise it is harder to notice we are accessing the MMIO mapped ISA 
+>> space.
+>> 
+>>>   }
+>> Consider renaming as pegasos_superio_write() since this method becomes
+>> common to PegasOS I and II.
+>
+> Thanks Philippe for reviewing the series.
+>
+> Hi BALATON,
+> Would you mind addressing the above (and other?) review comments or I can 
+> queue it in the interest of time if you can send a follow-up patch later?
 
-Queued.
+I'll send another version of this series after rebasing the prep series. 
+We still have time until the freeze begins so I think we can wait a few 
+more days.
+
+Thank you,
+BALATON Zoltan
+
+> Thanks
+> Harsh
+>
+>> 
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> 
+>
+>
+--3866299591-1110318835-1761219707=:4926--
 
