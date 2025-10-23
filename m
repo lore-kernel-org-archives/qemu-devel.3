@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E16C5CCF9E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4427CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuLW-0007Iw-JP; Thu, 23 Oct 2025 08:23:11 -0400
+	id 1vBuM6-0000OC-5V; Thu, 23 Oct 2025 08:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBuGT-0001Px-Fz
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:18:05 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBuKl-0006HR-7s
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:22:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBuGN-0006VM-Hd
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:55 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBuKi-00078D-Vy
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:22:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761221869;
+ s=mimecast20190719; t=1761222137;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hg2hC5L98UVtQ++c8KdSziVy7OBtW1l3z8LTPULgwGo=;
- b=iUB9NJ78hi0YitwGdNUwTriEouCLwECjvO3Fp9h9C4koaBp8UOC7ehfHWDysqaMP1Q5fsG
- cyEE+IKbUm7rZgFEVbET7kp5PCwrXJvYILSCMp/bj1rHeMAIpSWWWtCJ/ORmMbMKcbpSTC
- appxxtEhKFR0FKNLiAO+G68j8G8q7Pg=
+ bh=mk5vgdbh4MDG5vNhptvyHwPADCxvqiRpCMsJ0wLXFUo=;
+ b=DsW6/xIO5GadOCYEP7ZOFqCrdCV4okqL8SkGvoKy9qjg7EHkut/hgH+7YyQk1eMaYwaFzG
+ VrgWKCwOoVQE9LbCfWTGkcYr3lXydyYVua2dnvzMjAOTGuXb061rIRCEPE1A/l9AvH4Z+k
+ Pje1Kg33i2peCRfG6WQmqJ2lu/UOguA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-VoUxbbfOMNGctsJ8hbaXNQ-1; Thu,
- 23 Oct 2025 08:17:46 -0400
-X-MC-Unique: VoUxbbfOMNGctsJ8hbaXNQ-1
-X-Mimecast-MFC-AGG-ID: VoUxbbfOMNGctsJ8hbaXNQ_1761221865
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-IFu7DfVUO0iIhDcm6-SX-Q-1; Thu,
+ 23 Oct 2025 08:22:16 -0400
+X-MC-Unique: IFu7DfVUO0iIhDcm6-SX-Q-1
+X-Mimecast-MFC-AGG-ID: IFu7DfVUO0iIhDcm6-SX-Q_1761222135
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D2311800744; Thu, 23 Oct 2025 12:17:45 +0000 (UTC)
+ id 1C77F1800345; Thu, 23 Oct 2025 12:22:15 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8ECA180044F; Thu, 23 Oct 2025 12:17:44 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C542719560B5; Thu, 23 Oct 2025 12:22:14 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0D7BF21E6A27; Thu, 23 Oct 2025 14:17:42 +0200 (CEST)
+ id 29D6721E6A27; Thu, 23 Oct 2025 14:22:12 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Stefan Hajnoczi
@@ -54,19 +54,20 @@ Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Stefan Hajnoczi
  <philmd@linaro.org>,  Peter
  Maydell <peter.maydell@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 10/32] hw/core: report security status in query-machines
-In-Reply-To: <20250926140144.1998694-11-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 26 Sep 2025 15:01:21
+Subject: Re: [PATCH v2 12/32] docs: expand security docs with info about
+ security status
+In-Reply-To: <20250926140144.1998694-13-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 26 Sep 2025 15:01:23
  +0100")
 References: <20250926140144.1998694-1-berrange@redhat.com>
- <20250926140144.1998694-11-berrange@redhat.com>
-Date: Thu, 23 Oct 2025 14:17:42 +0200
-Message-ID: <87zf9h6cd5.fsf@pond.sub.org>
+ <20250926140144.1998694-13-berrange@redhat.com>
+Date: Thu, 23 Oct 2025 14:22:12 +0200
+Message-ID: <87tszp6c5n.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -94,54 +95,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
+> The description of virtualization vs non-virtualization use
+> cases is a crude approximation of the security characteristics
+> of QEMU devices.
+>
+> Document how QEMU can be probed to obtain information on the
+> security status of type classes, and how policies can be set
+> to inform or control their usage.
+>
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  hw/core/machine-qmp-cmds.c | 1 +
->  qapi/machine.json          | 8 +++++++-
->  2 files changed, 8 insertions(+), 1 deletion(-)
+>  docs/system/security.rst | 43 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
 >
-> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-> index 6aca1a626e..4d9906f64a 100644
-> --- a/hw/core/machine-qmp-cmds.c
-> +++ b/hw/core/machine-qmp-cmds.c
-> @@ -100,6 +100,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_p=
-rops, bool compat_props,
->          if (mc->default_ram_id) {
->              info->default_ram_id =3D g_strdup(mc->default_ram_id);
->          }
-> +        info->secure =3D object_class_is_secure(OBJECT_CLASS(mc));
+> diff --git a/docs/system/security.rst b/docs/system/security.rst
+> index f2092c8768..cda4bae6db 100644
+> --- a/docs/system/security.rst
+> +++ b/docs/system/security.rst
+> @@ -49,6 +49,49 @@ Bugs affecting the non-virtualization use case are not=
+ considered security
+>  bugs at this time.  Users with non-virtualization use cases must not rel=
+y on
+>  QEMU to provide guest isolation or any security guarantees.
 >=20=20
->          if (compat_props && mc->compat_props) {
->              int i;
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 038eab281c..bb2b308ccd 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -194,6 +194,11 @@
->  #     present when `query-machines` argument @compat-props is true.
->  #     (since 9.1)
->  #
-> +# @secure: If true, the machine is declared to provide a security
-> +#     boundary from the guest; if false the machine is either
-> +#     not providing a security boundary, or its status is undefined.
-> +#     (since 10.2)
-> +#
->  # Features:
->  #
->  # @unstable: Member @compat-props is experimental.
-> @@ -207,7 +212,8 @@
->              'deprecated': 'bool', '*default-cpu-type': 'str',
->              '*default-ram-id': 'str', 'acpi': 'bool',
->              '*compat-props': { 'type': ['CompatProperty'],
-> -                               'features': ['unstable'] } } }
-> +                               'features': ['unstable'] },
-> +            'secure': 'bool' } }
->=20=20
->  ##
->  # @query-machines:
+> +Security status reporting
+> +'''''''''''''''''''''''''
+> +
+> +QEMU is progressively working to annotate object types to explicitly sta=
+te
 
-Isn't this redundant with qom-list-types?
+Suggest "The QEMU project is working"
 
-{"execute": "qom-list-types", "arguments": {"implements": "machine"}}
+> +whether they are considered to provide a security boundary or not.
+> +
+> +It is possible to control or identify the usage of types that do not off=
+er
+> +an explicit security boundary using the ``insecure-types`` parameter to =
+the
+> +``-compat`` argument, which accepts three values:
+> +
+> + * accept: usage of any type will be permitted. This is the current
+> +   and historical default behaviour
+> + * warn: usage of types not explicitly declared secure will result
+> +   in a warning message, but still be permitted.
+> + * reject: usage of types not explicitly declared secure will result
+> +   in an error message, and will not be permitted.
+> +
+> +The compatibility policy will be honoured both at initial startup of
+> +QEMU and during any runtime alterations made with monitor commands.
+
+This is about QOM.  It doesn't cover security boundaries outside QOM,
+e.g. in block backends.  I think we better make this limitation quite
+clear here.
+
+> +
+> +The status of any type class can be queried at runtime using the
+> +``qom-list-types`` command, whose returned information will flag any
+> +types declared as secure. The ``query-machines`` command will also
+> +reflect this same information for machine types.
+> +
+> +Machine type, accelerator and device security status can be queried
+> +using ``-machine help``, ``-accel help`` and ``-device help`` command
+> +line options respectively.
+> +
+> +The setting of the ``.secure`` field at the time a type class is
+> +declared in the code will determine whether bugs are eligible to
+> +be considered as security bugs:
+> +
+> + * Explicitly declared ``.secure =3D true``: security bug process
+> +   applies, eligible for CVE assignment
+> + * Explicitly declared ``.secure =3D false``: security bug process
+> +   does not apply, ineligible for CVE assignment
+> + * No declaration of ``.secure`` property: follow the security
+> +   bug process initially. The virtualization vs non-virtualization
+> +   use case classification will be evaluated during bug triage
+> +   to determine whether to continue the security bug process,
+> +   or switch to the regular bug process.
+
+Should this evaluation result in a declaration of .secure?
+
+> +
+>  Architecture
+>  ------------
 
 
