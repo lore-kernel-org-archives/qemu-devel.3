@@ -4,145 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19003CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB70CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuFe-0000SE-Nn; Thu, 23 Oct 2025 08:17:07 -0400
+	id 1vBuGL-0001Ja-Vz; Thu, 23 Oct 2025 08:17:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBuFW-0000P1-Ux
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:16:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBuFr-0000uV-Mr
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vBuFS-0006KJ-HP
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:16:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761221810;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7CKjr6lHHQeVkUIKL6eFHT8tiqRQjmRxQoSfUQ5Y+i0=;
- b=R+radqME6AQo1wXUDzDpdFkGtLaUrBBxrjUzV8h7osGO0gVO/4flBvePCg3l8WGL4VkakP
- aNDW7WpUJ3kF2jZVOO+yCMQ5g8eN5ZC//5LGJBiO20kvjtpaRswi18xT1lZjSOX+d6NZy3
- 0e15X4TyE7+48vMEWMQBqW+kzk7HgyA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-hfUv_x5VOrOkuZVmnI5IOA-1; Thu, 23 Oct 2025 08:16:48 -0400
-X-MC-Unique: hfUv_x5VOrOkuZVmnI5IOA-1
-X-Mimecast-MFC-AGG-ID: hfUv_x5VOrOkuZVmnI5IOA_1761221808
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47113dfdd20so2375555e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 05:16:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761221808; x=1761826608;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7CKjr6lHHQeVkUIKL6eFHT8tiqRQjmRxQoSfUQ5Y+i0=;
- b=flBFwzHndzwdcdX1zcOPk/VVKZqtw9MgKTAxsTKWPIqwGanCmtnvcFTMuL27yuETTG
- AMM2M9BRhd7bJnPEoEUNGlWLULpY3Dv/fDAIopue4q/q9FRKQijfLarr4O9pc3DiTCf6
- 6NQf1J1nrJVdd3KFfKXOBJ4X32lkqrff8pBhNWUSWyxlXoAh98ohUHTutWRutHPOTZf3
- NRDVK1PlsW69r7Z+Y0NKPdL7Dv7O3RLvya8jVdAXd6Gf+/1IlDu3SHpbgamam5HeSMHs
- XZErNdHZpTyXDKnc0BrQCV+SGVt8moFvrOzOITNIUM1Eh3ryscjY4vvVtsyKWkE61IJ2
- cM/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0+8fg/3peK6iBuggfADOD4DLlHHodaj3PSEuwUchLDM5otzknF24W0ObgKgRoLnImtVqCL1bAplab@nongnu.org
-X-Gm-Message-State: AOJu0YwaX2cDxYa4GMN9ij/QlF+RgB8gG+0JlwwchLNd0R5+a68shzLZ
- MoF5lAqeIdajjqp3tYi24N1D0WWqIqO+/1tdnU4ZnEpNK3J7VbJS2BPeDzclPdMWPIUNy/zlYII
- abz/rVIRATA3yK4miCGB+4zSFuXnIuuIPMJqsCtZVyN/C2SrpeQhaSF9n
-X-Gm-Gg: ASbGnct0Q0bWyeKRyjgBSRDoY2RItESE14eiVe120KF3FgHNebmJ6NpjVWmMdSLO1Mj
- u6FS7XAC5aIFt1Le7h7X+D5hogz+0XWrp7VxQxvqpn3MRChGXiaslWk+4ZBy7dVxyGzKeQO3rbU
- cFcmGUbaJOeacZUhfSwsZ2uboRvsvqQWukPpAYCHBqTWZpc5ElSCBCvzpc2ipsFtRwbx7WXYxRP
- dhrxhX3DgsVRdtxvjtY6kIBmIoFsLDUP66xvND+OYJo06PtgzHz4roWUl+63sG33aDo7UKbe+qA
- Aa0mj93T/Za+r39BhcmCvkaz68ec3LRHy78YaOoOa1OGnA5Zhd/Hu7pzLdMJRJZroxVk4zXAdNq
- aiA0Mrmgp+tReZ6r8E4C2POdT0515qwyMynNRTg==
-X-Received: by 2002:a05:600c:34d0:b0:471:1717:409 with SMTP id
- 5b1f17b1804b1-471179071b4mr157789865e9.23.1761221807682; 
- Thu, 23 Oct 2025 05:16:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyEWsWjjrHcfejqoQ07bqJkXs2BU7oJEHNUEOZHnO3JfxeVAne0wZPwnuie9uL3v/UGpxSmw==
-X-Received: by 2002:a05:600c:34d0:b0:471:1717:409 with SMTP id
- 5b1f17b1804b1-471179071b4mr157789675e9.23.1761221807285; 
- Thu, 23 Oct 2025 05:16:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496bf7137sm59798975e9.3.2025.10.23.05.16.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 05:16:46 -0700 (PDT)
-Message-ID: <980d3ddd-950a-4ed5-81d2-2410f4df0e73@redhat.com>
-Date: Thu, 23 Oct 2025 14:16:45 +0200
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBuFp-0006OJ-52
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:19 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N2124b027635
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=AH6f+QHYzACZOrv2G/umBWx+vX+e
+ IP3SYe/93iZddz4=; b=Gz+jNKQvwAYQlgoThbxWONDoYckQ2zmyu2Ac1zEduoqn
+ F9jXGSZmGOhiedWlnSZ9aBzaOo2PdJocL3O+9QbOzWFtswbHowuWtDE76t9z2e7S
+ Xj+4uMjzK5hXPncTh5Tem0fKidwV3ZayA5KZiithd24hVNnXDN2Mks1h6QNXYmAT
+ xOD7pmTsM/jvvCDBA27t1EezmfnsrKMK75a+5ft+EJjsAfEFNV8YiePNzwiW5fFk
+ Wp+CRj2Ogi0qBawdoTgZX69Blv/ZacBa71dHQL90qQYKGjBA5dVeAyjk4CKyDuzO
+ hX04HofSFhSwdNCsYU413zeZC0t6+cEx796KUCDa8g==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33fj243-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:15 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9J2EA014676
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:02 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sdtrx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:02 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NCH06E56099316
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:00 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7333020043
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:00 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E297220040
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:16:59 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
+ [9.124.221.73]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:16:59 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL RESEND 00/32] ppc-for-10.2 queue
+Date: Thu, 23 Oct 2025 17:46:19 +0530
+Message-ID: <20251023121653.3686015-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/12] vfio queue
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20251022121846.874152-1-clg@redhat.com>
- <09fddc7e-685e-4853-a352-87737cf30b26@redhat.com>
- <ec95ad71-0e9e-472b-bea6-9d719d130505@tls.msk.ru>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <ec95ad71-0e9e-472b-bea6-9d719d130505@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68fa1ccb cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8
+ a=cNqUCJnAJEEDHSxotCYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=oH34dK2VZjykjzsv8OSz:22 a=poXaRoVlC6wW9_mwW8W4:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
+ a=QOGEsqRv6VhmHaoFNykA:22
+X-Proofpoint-GUID: fCNeSCVGPqsPIgLkcCuHu_nPjISKYrgC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX0WkNFqGJsO1d
+ 2H2k0hrRNtTsVr26Pxj93zJX7fnbcoE1wGCjc5xecMBedsUKjy6jqBPDQbLMWPyA7g9jxebKUbp
+ azb3g3SfVyfxkY9+cnv5bALaWUaD941MGCMIBsHDTq5bXqf5M3eqbzahq/UuIfWSyIJ77pUpEMB
+ AuAONojD7ZDmXiDEfRru4owh0yvGvwS3AWXNtNmwte3hWy135mDbo/ZWVnUyWowY05OboTGmeNZ
+ Bg1X92mu72+GYYx2qtNOMRQw5D/98fvTDR0aL+dxYyxaEuOofJOSHus7u1dxr4WL234mryirvda
+ jl9scWnwlpPmtqE/KlhRICXsQT815YoVnoG0mZNMwZZvB9/y2CzuHHTwyQxMr9Tmf2XvrxF+SVe
+ QRDOiAp4E6DdqzOIqazt1VQqch5iZw==
+X-Proofpoint-ORIG-GUID: fCNeSCVGPqsPIgLkcCuHu_nPjISKYrgC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,80 +118,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/23/25 11:53, Michael Tokarev wrote:
-> On 10/22/25 15:55, Cédric Le Goater wrote:
->> Michael,
->>
->> On 10/22/25 14:18, Cédric Le Goater wrote:
->>> The following changes since commit 3c0b42c68f98fb276fa248012642be8cbf2cab70:
->>>
->>>    Merge tag 'pull-request-2025-10-21' of https://gitlab.com/thuth/ qemu into staging (2025-10-21 08:59:35 -0500)
->>>
->>> are available in the Git repository at:
->>>
->>>    https://github.com/legoater/qemu/ tags/pull-vfio-20251022
->>>
->>> for you to fetch changes up to ecbe424a63c9f860a901d6a4a75724b046abd796:
->>>
->>>    vfio: only check region info cache for initial regions (2025-10-22 08:12:52 +0200)
->>>
->>> ----------------------------------------------------------------
->>> vfio queue:
->>>
->>> * Fix CPR transfer
->>> * Add support for VFIO_DMA_UNMAP_FLAG_ALL
->>> * Fix vfio-user documentation
->>> * Update Alex Williamson's email address
->>> * Fix for vfio-region cache for the vGPU use case
->>>
->>> ----------------------------------------------------------------
->>> Alex Williamson (1):
->>>        MAINTAINERS: Update Alex Williamson's email address
->>>
->>> John Levon (3):
->>>        docs/system/devices/vfio-user: fix formatting
->>>        vfio: rename field to "num_initial_regions"
->>>        vfio: only check region info cache for initial regions
->>>
->>> Zhenzhong Duan (8):
->>>        vfio/container: Remap only populated parts in a section
->>>        vfio/cpr-legacy: drop an erroneous assert
->>>        vfio/iommufd: Set cpr.ioas_id on source side for CPR transfer
->>>        vfio/iommufd: Restore vbasedev's reference to hwpt after CPR transfer
->>>        accel/kvm: Fix an erroneous check on coalesced_mmio_ring
->>>        vfio/container: Support unmap all in one ioctl()
->>>        vfio/iommufd: Support unmap all in one ioctl()
->>>        vfio/listener: Add an assertion for unmap_all
-> ..
-> 
->> Patch 11-12 are candidates for the stable-10.1 and patch "vfio: rename
->> field to "num_initial_regions" needs to be extended.
->>
->> See https://github.com/legoater/qemu/commits/staging-10.1-vfio/
-> 
-> Thank you very much Cédric for this work!
-> I picked the 2 patches prepared by you, to staging-10.1 branch.
-> It's a nice thing - vfio/platform &Co has been removed in current
-> master branch, but it is still exist in 10.1 and earlier.
-> 
-> BTW, this pull request contains a number of fixes by Zhenzhong Duan
-> which seems to be fixes too, - shouldn't these be picked up to
-> the stable series as well?
-The CPR related fixes are worth considering :
+The following changes since commit c0e80879c876cbe4cbde43a92403329bcedf2ba0:
 
-   vfio/iommufd: Restore vbasedev's reference to hwpt after CPR transfer
-   vfio/iommufd: Set cpr.ioas_id on source side for CPR transfer
-   vfio/cpr-legacy: drop an erroneous assert
-   vfio/container: Remap only populated parts in a section
+  Merge tag 'pull-vfio-20251022' of https://github.com/legoater/qemu into staging (2025-10-22 08:01:21 -0500)
 
-CPR is cutting-edge techno, so these fixes shouldn't have much impact
-on our users at this time. Feel free to drop if the backport is too
-complex. I haven't tried.
+are available in the Git repository at:
 
-Thanks,
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-10.2-d2-20251023-1
 
-C.
+for you to fetch changes up to 3db841bf1194b2720a08df2ee0a6ca517091ad0e:
 
+  MAINTAINERS: Add entry for FADump (pSeries) (2025-10-23 17:37:42 +0530)
 
+----------------------------------------------------------------
+ppc queue for 10.2
 
+* FADUMP Support for pSeries
+* Pegasos II cleanup and Pegasos I emulation
+* Deprecation of pseries 3.0 up till 4.2
+* Coverity fix for amigaone (CID: 1641398)
+
+----------------------------------------------------------------
+Aditya Gupta (8):
+      hw/ppc: Implement fadump register command
+      hw/ppc: Trigger Fadump boot if fadump is registered
+      hw/ppc: Preserve memory regions registered for fadump
+      hw/ppc: Implement saving CPU state in Fadump
+      hw/ppc: Pass dump-sizes property for fadump in device tree
+      hw/ppc: Enable fadump for PSeries
+      tests/functional: Add test for fadump in PSeries
+      MAINTAINERS: Add entry for FADump (pSeries)
+
+BALATON Zoltan (13):
+      ppc/amigaone: Free allocated struct
+      ppc/vof: Make nextprop behave more like Open Firmware
+      hw/ppc/pegasos2: Remove explicit name properties from device tree
+      hw/ppc/pegasos2: Change device tree generation
+      hw/ppc/pegasos2: Remove fdt pointer from machine state
+      hw/ppc/pegasos2: Rename mv field in machine state
+      hw/ppc/pegasos2: Add south bridge pointer in the machine state
+      hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
+      hw/ppc/pegasos2: Move hardware specific parts out of machine reset
+      hw/ppc/pegasos2: Introduce abstract superclass
+      hw/ppc/pegasos2: Add bus frequency to machine state
+      hw/ppc/pegasos2: Add Pegasos I emulation
+      hw/ppc/pegasos2: Add VOF support for pegasos1
+
+Harsh Prateek Bora (5):
+      ppc/spapr: remove deprecated machine pseries-3.0
+      ppc/spapr: remove deprecated machine pseries-3.1
+      ppc/spapr: remove deprecated machine pseries-4.0
+      ppc/spapr: remove deprecated machine pseries-4.1
+      ppc/spapr: remove deprecated machine pseries-4.2
+
+Philippe Mathieu-Daudé (6):
+      hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
+      hw/ppc/spapr: Inline spapr_dtb_needed()
+      hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
+      target/ppc/kvm: Remove kvmppc_get_host_serial() as unused
+      target/ppc/kvm: Remove kvmppc_get_host_model() as unused
+      hw/ppc/spapr: Remove SpaprMachineClass::phb_placement callback
+
+ MAINTAINERS                               |   9 +
+ include/hw/ppc/spapr.h                    |  27 +-
+ include/hw/ppc/spapr_fadump.h             | 124 +++++
+ include/hw/ppc/spapr_irq.h                |   1 -
+ target/ppc/kvm_ppc.h                      |  12 -
+ hw/ppc/amigaone.c                         |   2 +-
+ hw/ppc/pegasos2.c                         | 769 +++++++++++++++---------------
+ hw/ppc/spapr.c                            | 368 +++++---------
+ hw/ppc/spapr_caps.c                       |  12 +-
+ hw/ppc/spapr_events.c                     |  20 +-
+ hw/ppc/spapr_fadump.c                     | 730 ++++++++++++++++++++++++++++
+ hw/ppc/spapr_hcall.c                      |   5 -
+ hw/ppc/spapr_irq.c                        |  36 +-
+ hw/ppc/spapr_pci.c                        |  32 +-
+ hw/ppc/spapr_rtas.c                       |  76 +++
+ hw/ppc/spapr_vio.c                        |   9 -
+ hw/ppc/vof.c                              |  50 +-
+ target/ppc/kvm.c                          |  11 -
+ hw/ppc/meson.build                        |   1 +
+ pc-bios/dtb/meson.build                   |   2 +
+ pc-bios/dtb/pegasos1.dtb                  | Bin 0 -> 857 bytes
+ pc-bios/dtb/pegasos1.dts                  | 125 +++++
+ pc-bios/dtb/pegasos2.dtb                  | Bin 0 -> 1701 bytes
+ pc-bios/dtb/pegasos2.dts                  | 167 +++++++
+ tests/functional/ppc64/meson.build        |   2 +
+ tests/functional/ppc64/test_fadump.py     | 182 +++++++
+ tests/functional/qemu_test/linuxkernel.py |  59 +++
+ 27 files changed, 2042 insertions(+), 789 deletions(-)
+ create mode 100644 include/hw/ppc/spapr_fadump.h
+ create mode 100644 hw/ppc/spapr_fadump.c
+ create mode 100644 pc-bios/dtb/pegasos1.dtb
+ create mode 100644 pc-bios/dtb/pegasos1.dts
+ create mode 100644 pc-bios/dtb/pegasos2.dtb
+ create mode 100644 pc-bios/dtb/pegasos2.dts
+ create mode 100755 tests/functional/ppc64/test_fadump.py
 
