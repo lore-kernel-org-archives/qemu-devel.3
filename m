@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2A1CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 22 Oct 2025 23:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36009CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 00:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBijo-0005Ey-O9; Wed, 22 Oct 2025 19:59:28 -0400
+	id 1vBioz-0006rG-2r; Wed, 22 Oct 2025 20:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBijn-0005BA-6h
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:59:27 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1vBiox-0006qL-Mi
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 20:04:47 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBijj-0003dv-Jo
- for qemu-devel@nongnu.org; Wed, 22 Oct 2025 19:59:26 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-63e35e48a25so212410d50.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 16:59:23 -0700 (PDT)
+ id 1vBiou-00049W-8j
+ for qemu-devel@nongnu.org; Wed, 22 Oct 2025 20:04:47 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-63d97bcb898so372101d50.0
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 17:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761177561; x=1761782361; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761177882; x=1761782682; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FLWZ+0qHFrVJn8iYqQ+SA8YPdrOvX0d5ClWfqeLAdUo=;
- b=K2uaMm04QdErIHQkcLqV64L2YnQz/DELM3wzJ0USLBJ8jh0EX4rng/48OWj97xVix7
- fQ1lshgeCdirNvPjihQiUqSFYgtmQTonnYBhFJa181CaoJN/HtXh2rA3v4zi+7kdQqh9
- /oocpRvGYytV6rlVjgYIrqzEPolDY3jnOMAMMXYoUv/unbB3MvLvoKu/hnzd0iPOM8DC
- g2CyN32kcYQaTQuWg4IEd0XyQkKVQd5waWy7OfDyQZ9zsbIaNOmOX7l7YMX0yQ9ry41o
- nBFqcYySwvPQinBmyV5+JXZZO29DV6W7FgD6w5DSBdWZc/KwNC7etgk26kIlB/08sK1I
- 9tog==
+ bh=v3lR9sMSFDpLohM1NRfUYThbm1KIdahbEV8+1dDKJEk=;
+ b=DS8ezjreyMPve+UCBURNGx5woF9hCqhmvqzmJbFAaA9adVgCUv66jDWo+wHNIqEcaA
+ cBu98vqvwAVsD1E35eXslRphK7ZQf36V5PpTbVIoTMkl4fuxLNCK4LRKq7+ApKytwmE3
+ V8oiIeUNbVfurwgykZYrdFTPrgrCzVoM03ZljOrycUgLKqblbPOO/7aP/lIHFYYBxEvc
+ tCT3FirXPCDtnpyMjc7sKJ/sVDAmBB2IgCN2li/ABXsTyaj509cODXnObwbeH08iYwyF
+ ssoCTuR9+DZh0atI5+OEfgEDsMtpOOZesVv+BkdWlbgHHgMr5bmPcD116Z5aE6RDLrNX
+ 9vdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761177561; x=1761782361;
+ d=1e100.net; s=20230601; t=1761177882; x=1761782682;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FLWZ+0qHFrVJn8iYqQ+SA8YPdrOvX0d5ClWfqeLAdUo=;
- b=NcGNjWyfuwjRCq6ZJYqUpUFuwN8AMHLp6v3ZUIPuG594siWNloKRFEgO8CulGJc3Ip
- GwPZZp6k8hoHYPwySep0vedjJB5BddAYghm0oEFw0xjtu+fYUNmfkQMDxFTEQWijvjMd
- lMkeJlaxsMJZfSYfv6NF6AqT/FZFrvsTf8KyAENu0bXyWj7kpXCFRqATRc+uA5eMFOOL
- sJgsnOsMJjljw6uCyXMNYkCEoziZf2KnEQCr0kkZ0yjGc41ALAAtmqTpWvTek1QNwd+8
- 9tdgA2auvSNT/GyiOXLAOLl7UW/9AkIukr2Jn/ir93Em3Nr2ia+SThvR8LI3OunyvLcU
- yPvQ==
-X-Gm-Message-State: AOJu0YyR7MZ81aD7/gLWyPk96QcqhmVthH8DUjCJj2LygjrwZIzgIcU7
- Il5nVPOsYgPh2zBFEI7e8wPDdu0K9u+gIkGlY+uK1udjwnS0PW6MgsJ3tWdlacMJLtSKUjMQuMY
- HkfyBauklsyLAajEuIsJEZrQi0+3Jf2U=
-X-Gm-Gg: ASbGncuegRyCaB/NQFsITuW2YIlx2O8AZvmuJbPXF8NvNNO6YMLKg9aRFCkerN1t18S
- N7c3xKnFeQ59gtDK1qj7kGDvUfQNIxH+goejHMWp4anaxGuJBHZdzKz+26iGNcVdc+CCAB+XP17
- 6t2h4Sz/Td5GE+esYEdxaO4tIQ3ClorGsquDEf+hNW99aa3D8RXRW/yDDKMUndse8tjTLmIPxJ4
- BPzma6TSqqPL8crfKl4wwMNGnChgN/enfBhTVsJYxN0152X8sRJCDjp0c96alr2NmEp29Ze2vPF
- 4FG5dV06Uyq08M7Z2hXfI7lbVvub5yp1eGC4
-X-Google-Smtp-Source: AGHT+IGdLMq+Ap7ju7sJ6s9eL17YCINNsFADhFbWqkDLYjjFfE8TxZx8Kdq4CvGKT2zFb9Ms5+T/12IeML+dZ6YhlWg=
-X-Received: by 2002:a05:690e:2514:20b0:63e:8e4:4774 with SMTP id
- 956f58d0204a3-63e16187fccmr15576486d50.15.1761177561160; Wed, 22 Oct 2025
- 16:59:21 -0700 (PDT)
+ bh=v3lR9sMSFDpLohM1NRfUYThbm1KIdahbEV8+1dDKJEk=;
+ b=VMqYZuQ462rzdGjAH1dyUdHEsLHIDMoIo3+XI6zQDexFe1gF7z49Bg6CbpSRQ878W7
+ wgmIC2rlMYaIV5AjAd9dnYUGI4nmrNNz/bAGV/UkOpC31ST1F3FquBlJXO25H62/QHaN
+ RDLq/XLAP2Cc9qA2pq4RDP5y9EcUm3qtDEI6/C3tJeg7UiZC9C1pajENHvyN/jxQwTFB
+ 1lYTIYFhkojl2ZfIAAde6m/Q/+ZPtjpq9rzC5LLxsWlvv+y4s3oItD0jgWsveCDoQuVy
+ ctoumeRDYCtSv4Uee64YVSryRKUaV94xEoAYhpZL7XPVAF3WsTvCTTyOPDOR/2YFtPK3
+ wJpA==
+X-Gm-Message-State: AOJu0YwsWQ7RwqDBpEwL6PAVaGY2ZyyxhzaB3tKUuCVYTO9VY2+6U3YJ
+ CDhHg8Wxkggrme2r192zZ9EuaKXf3szIzakJSImIIpQO9r4XRRrtIso4jKUnf1yY6FV1sQAV2+c
+ DeMZHY8rCEDorHmDyZrKOvVyxU82HhfA=
+X-Gm-Gg: ASbGncu7KwIYShzzzbJ4N+hNcr0T/HmkmP45HNpsmpT6ZiXufe7TSyvfzyNKLDFw9Pj
+ ZCCVGh9M793tVj7Q3+rWEaKIHLFftewyMFTWf8eYuRCaR1KWbDQEJ2l5M+xPZpqUVaJuzCPmyO6
+ c58sfPRc8bNXKBElckXYA+8Yy5oN+uLzYu8+tKZRpfasEI9orzcfnJ9NL6KVmdf3BLG7IKAV/5O
+ FYlBeuuutZpuXYPHL9oCIQJDwx65/RiJWDCfIIT9rGG8Q6RHRAl/hwbESmGL2jnsXsEtRzZ3Gds
+ oIvCxGRCY5xtZHXO59dnOXwb/g==
+X-Google-Smtp-Source: AGHT+IErUTS/nV1QChoPDp98BeuQyV1QzXOJfS3L0p0tmKpbiurI/cSVCMAuyxGCrSGdC+jpmiIkz2h1E/xD0g/Zyg8=
+X-Received: by 2002:a05:690e:84a:b0:63d:24f9:5327 with SMTP id
+ 956f58d0204a3-63f2f692596mr2274449d50.28.1761177882200; Wed, 22 Oct 2025
+ 17:04:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251022124340.493358-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20251022124340.493358-1-dbarboza@ventanamicro.com>
+References: <20251021-vlen-v2-1-1fb581d4c6bf@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251021-vlen-v2-1-1fb581d4c6bf@rsg.ci.i.u-tokyo.ac.jp>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 23 Oct 2025 09:58:53 +1000
-X-Gm-Features: AS18NWCRCHvvguLVR0biTYx2m7Tfk0lUfAX2A7d1Et40qxzmfVIos9IjfTlCd2I
-Message-ID: <CAKmqyKOqKh2_8C+nfrKOMSmVegAhXArfYp1AveJYTi=emXYidQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: fix riscv_cpu_sirq_pending() mask
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+Date: Thu, 23 Oct 2025 10:04:14 +1000
+X-Gm-Features: AS18NWAQ2H5GQeyhb8oTJx_B0fsPqhEI49OdxgEXzjECtRSk_X2bWBAJHmZoAYo
+Message-ID: <CAKmqyKPO2Dj8Fw_xOxpFJYLGZNc2MwpAW7BmDmNJp1BHc-FshQ@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv: Fix a uninitialized variable warning
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=alistair23@gmail.com; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=alistair23@gmail.com; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,22 +99,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 10:45=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Tue, Oct 21, 2025 at 3:09=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
-> pending interrupts without apparent reason. There's no special treatment
-> for these ints as far as the spec goes, and this filtering is causing
-> read_stopi() to miss those VS interrupts [1].
+> riscv_cpu_validate_v() left its variable, min_vlen, uninitialized if
+> no vector extension is available, causing a compiler warning.
 >
-> We shouldn't return delegated VS interrupts in S-mode though, so change
-> the current mask with "~env->hideleg". Note that this is the same
-> handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
+> Re-define riscv_cpu_validate_v() as no-op when no vector extension is
+> available to prevent the scenario that will read the unintialized
+> variable by construction. It also simplifies its caller as a bonus.
 >
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2820
->
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 Thanks!
 
@@ -121,27 +118,54 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  target/riscv/cpu_helper.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+> Changes in v2:
+> - De-duplicated zve32f checks as suggested by Daniel Henrique Barboza.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20251019-vlen-v1-1-f7352=
+a402f06@rsg.ci.i.u-tokyo.ac.jp
+> ---
+>  target/riscv/tcg/tcg-cpu.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 3479a62cc7..360db133e2 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 1150bd14697c..d3968251fad5 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -426,6 +426,8 @@ static void riscv_cpu_validate_v(CPURISCVState *env, =
+RISCVCPUConfig *cfg,
+>          min_vlen =3D 64;
+>      } else if (cfg->ext_zve32x) {
+>          min_vlen =3D 32;
+> +    } else {
+> +        return;
+>      }
 >
->  int riscv_cpu_sirq_pending(CPURISCVState *env)
->  {
-> -    uint64_t irqs =3D riscv_cpu_all_pending(env) & env->mideleg &
-> -                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
-> +    uint64_t irqs =3D riscv_cpu_all_pending(env) & env->mideleg & ~env->=
-hideleg;
->      uint64_t irqs_f =3D env->mvip & env->mvien & ~env->mideleg & env->si=
-e;
+>      if (vlen > RV_VLEN_MAX || vlen < min_vlen) {
+> @@ -676,12 +678,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cp=
+u, Error **errp)
+>          return;
+>      }
 >
->      return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
+> -    if (cpu->cfg.ext_zve32x) {
+> -        riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+> -        if (local_err !=3D NULL) {
+> -            error_propagate(errp, local_err);
+> -            return;
+> -        }
+> +    riscv_cpu_validate_v(env, &cpu->cfg, &local_err);
+> +    if (local_err !=3D NULL) {
+> +        error_propagate(errp, local_err);
+> +        return;
+>      }
+>
+>      /* The Zve64d extension depends on the Zve64f extension */
+>
+> ---
+> base-commit: c85ba2d7a4056595166689890285105579db446a
+> change-id: 20251019-vlen-30a57c03bd93
+>
+> Best regards,
 > --
-> 2.51.0
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 >
 >
 
