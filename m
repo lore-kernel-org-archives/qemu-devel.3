@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8BFCCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 09:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50DEDCCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 09:56:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBs2u-0007b5-1P; Thu, 23 Oct 2025 05:55:48 -0400
+	id 1vBs2t-0007ao-H5; Thu, 23 Oct 2025 05:55:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vBs2q-0007a6-VC
+ id 1vBs2q-0007a7-PN
  for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:55:44 -0400
 Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vBs2n-0002ae-OK
+ id 1vBs2n-0002aO-Cz
  for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:55:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1761213342; x=1792749342;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lCfgcNtqBjjYhsMzChuyOJ9bb2S/Jnq3H/kqqntBhvc=;
- b=KzM2NO1807m8C3s9MfYiZglYfJ0vfoJGktgCwpexbonP5eut+7LUZw8S
- C79sj19nmQ+MQLEhsSI/8Hf0bsoqSHuAQFVxIjxiuZPXrzhKA7ux6kvt7
- 1ccWU7wunbNbZRLvXUSefmF3Y4JYNrblVXp1NjjA6/7MTki5wqgwxnNtt
- upgUoS+5fYJY79CYNPh8ffPOsymGmjuQVrsdRbEcOTg+JCt647x7HY1Y2
- tlQSo97n9+P8727qWXyOt2CmrQLe2Gbea3w2S6vH7/fIyIEpDdoXEmu4P
- HUJYBWjAysI3MnwogRtXVgI5jRr474aEdjpoSpIP0DSB7cXpo32Rr7+G/ g==;
-X-CSE-ConnectionGUID: NFxvpe4oTxS7S2Hshv02hw==
-X-CSE-MsgGUID: nFMeyHJCTSyJdxVBxXesbg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74816152"
-X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; d="scan'208";a="74816152"
+ bh=Ilhu01+hhVRRt4YbOjEcY+/EsGcv7tZF3vd2A5ikFKk=;
+ b=frsAKRacoSmKJRWxwxlmXKzGyYs8wpEzs4+KZymicoPwOeZtX2KVe/Rz
+ NFOcrEVRdTrGRipFZIpLkBvYnH9t6uaMEOxLljeUFLrWk8RQ+NdHeGb9X
+ hHge52YnLgtuwBwh7Ktxel3bfzTEMngQvPfHkg4oS1ddvB/Kj0KgJ5LYX
+ MTIiunAzW39xEqhoyF1sJhUFK1rT+fmuqfL160KTq1ICT71uAcPLSw67P
+ pKQBML7l4Ytgm/MBAQsZuw8BjixTbA5kLNL70oOtQiyHHmbllAePsgCup
+ MS7HNxOY/e5OcCZ04SzYp28YR/o5pySM+Y5+wHrsjkvm8R6pTXiaESIkX Q==;
+X-CSE-ConnectionGUID: mKAe4LTkSNqb7OuQh6QBAA==
+X-CSE-MsgGUID: CHz/0R2dRSWxRmGPzj4whw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74816144"
+X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; d="scan'208";a="74816144"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 02:55:40 -0700
-X-CSE-ConnectionGUID: PL7ZqBclSkuvGbEaNb3oNA==
-X-CSE-MsgGUID: NIqN/sbOSlu0koTEL+ky2g==
+ 23 Oct 2025 02:55:38 -0700
+X-CSE-ConnectionGUID: KcgZbXVxRraOLTtdhXkBjQ==
+X-CSE-MsgGUID: vBIosCMaSkGZlcdIup1NoQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; d="scan'208";a="183289359"
+X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; d="scan'208";a="183289329"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 02:55:38 -0700
+ 23 Oct 2025 02:55:35 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
  Alexey Kardashevskiy <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -53,10 +53,10 @@ To: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
 Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  Gao Chao <chao.gao@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
  Farrah Chen <farrah.chen@intel.com>
-Subject: [PATCH v2 2/2] ram-block-attributes: Unify the retrieval of the block
- size
-Date: Thu, 23 Oct 2025 17:55:25 +0800
-Message-ID: <20251023095526.48365-3-chenyi.qiang@intel.com>
+Subject: [PATCH v2 1/2] ram-block-attributes: Avoid the overkill of shared
+ memory with hugetlbfs backend
+Date: Thu, 23 Oct 2025 17:55:24 +0800
+Message-ID: <20251023095526.48365-2-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023095526.48365-1-chenyi.qiang@intel.com>
 References: <20251023095526.48365-1-chenyi.qiang@intel.com>
@@ -87,32 +87,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's an existing helper function designed to obtain the block size.
-Modify ram_block_attribute_create() to use this function for
-consistency.
+Currently, CoCo VMs can perform conversion at the base page granularity,
+which is the granularity that has to be tracked. In relevant setups, the
+target page size is assumed to be equal to the host page size, thus
+fixing the block size to the host page size.
 
+However, since private memory and shared memory have different backend
+at present, users can specify shared memory with a hugetlbfs backend
+while private memory with guest_memfd backend only supports 4K page
+size. In this scenario, ram_block->page_size is different from the host
+page size which will trigger an assertion when retrieving the block
+size.
+
+To address this, return the host page size directly to relax the
+restriction. This changes fixes a regression of using hugetlbfs backend
+for shared memory within CoCo VMs, with or without VFIO devices' presence.
+
+Acked-by: David Hildenbrand <david@redhat.com>
 Tested-by: Farrah Chen <farrah.chen@intel.com>
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
 Changes in v2:
-  - Newly added.
+  - Modify the commit message
+  - Remove the argument in ram_block_attributes_get_block_size()
 ---
- system/ram-block-attributes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ system/ram-block-attributes.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
-index a7579de5b46..cf8f5f41966 100644
+index 68e8a027032..a7579de5b46 100644
 --- a/system/ram-block-attributes.c
 +++ b/system/ram-block-attributes.c
-@@ -390,7 +390,7 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr,
+@@ -22,16 +22,14 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RamBlockAttributes,
+                                           { })
  
- RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
+ static size_t
+-ram_block_attributes_get_block_size(const RamBlockAttributes *attr)
++ram_block_attributes_get_block_size(void)
  {
--    const int block_size  = qemu_real_host_page_size();
-+    const int block_size  = ram_block_attributes_get_block_size();
-     RamBlockAttributes *attr;
-     MemoryRegion *mr = ram_block->mr;
+     /*
+      * Because page conversion could be manipulated in the size of at least 4K
+      * or 4K aligned, Use the host page size as the granularity to track the
+      * memory attribute.
+      */
+-    g_assert(attr && attr->ram_block);
+-    g_assert(attr->ram_block->page_size == qemu_real_host_page_size());
+-    return attr->ram_block->page_size;
++    return qemu_real_host_page_size();
+ }
  
+ 
+@@ -40,7 +38,7 @@ ram_block_attributes_rdm_is_populated(const RamDiscardManager *rdm,
+                                       const MemoryRegionSection *section)
+ {
+     const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     const uint64_t first_bit = section->offset_within_region / block_size;
+     const uint64_t last_bit =
+         first_bit + int128_get64(section->size) / block_size - 1;
+@@ -81,7 +79,7 @@ ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+ {
+     unsigned long first_bit, last_bit;
+     uint64_t offset, size;
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     int ret = 0;
+ 
+     first_bit = section->offset_within_region / block_size;
+@@ -122,7 +120,7 @@ ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
+ {
+     unsigned long first_bit, last_bit;
+     uint64_t offset, size;
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     int ret = 0;
+ 
+     first_bit = section->offset_within_region / block_size;
+@@ -163,7 +161,7 @@ ram_block_attributes_rdm_get_min_granularity(const RamDiscardManager *rdm,
+     const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+ 
+     g_assert(mr == attr->ram_block->mr);
+-    return ram_block_attributes_get_block_size(attr);
++    return ram_block_attributes_get_block_size();
+ }
+ 
+ static void
+@@ -265,7 +263,7 @@ ram_block_attributes_is_valid_range(RamBlockAttributes *attr, uint64_t offset,
+     g_assert(mr);
+ 
+     uint64_t region_size = memory_region_size(mr);
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+ 
+     if (!QEMU_IS_ALIGNED(offset, block_size) ||
+         !QEMU_IS_ALIGNED(size, block_size)) {
+@@ -322,7 +320,7 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr,
+                                       uint64_t offset, uint64_t size,
+                                       bool to_discard)
+ {
+-    const size_t block_size = ram_block_attributes_get_block_size(attr);
++    const size_t block_size = ram_block_attributes_get_block_size();
+     const unsigned long first_bit = offset / block_size;
+     const unsigned long nbits = size / block_size;
+     const unsigned long last_bit = first_bit + nbits - 1;
 -- 
 2.43.5
 
