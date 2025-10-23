@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32B2CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E88CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBwBR-0005e2-Ar; Thu, 23 Oct 2025 10:20:53 -0400
+	id 1vBwHy-0008TA-1k; Thu, 23 Oct 2025 10:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwBD-0005TP-6I
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:20:39 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwBB-0008OZ-4u
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:20:38 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47100eae3e5so8972235e9.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:20:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761229232; x=1761834032; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B/3T3u3vrJFyOo7CzzG4W5+4fXOzcP+Ioy5uP4fNaUM=;
- b=lIrAWLocl02uVJD+Ahppkxc78QdE4oh/nA7YJlcQYyd32dhXU6Snmn1Olj/zwzM5iv
- 99PTBo0Sg+kUOkglZkvzh4aYm1Bs+j9RHifxrX7A+jiZ1u0BA5KNtPJdCiPuc+3wTJH0
- XXkh0pe4VvUNa+poZ+A8DVHVloyvEr90gCjNe58eVbSNcM94fxPX1v8sso5qKT5V5I0b
- XdXWfdm6ALa8Mt49ATD6lJP2wybL80xWrjCJTIPa9SpHWskXRqGd0H9nSS6vXmHU12gA
- VA2NHLlygDDz+v5r3IrO/4Vm3UeTrp9aH2FbAJ2DyRVbyfwBoVSxc1KcFmAyMpMcP7MA
- R3SA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBwHw-0008SW-IW
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:27:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBwHr-0001Ad-Ej
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:27:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761229649;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ejov+DXYA6q0ZVkJsV1kdKg4rKTnu258ot1aAH0csw=;
+ b=WRrCw6SXrjf5CUbFg5VnBrUO1nXSzoYymjc++IIlwg4C0dySob/SEGVKY0kA/k2HjtFc7+
+ GBnpSpVWfVLJQah6WCtvuMnVXerXkGZ0GWpm6pZyAEDJ1z3w7GqZ/Qh4Z62VnX5eKqmsfs
+ cR7tVBmftb8/lSZMGiEOiarAQarQ4is=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-252-mPUPPnYIP0WD2VbuHem4zQ-1; Thu, 23 Oct 2025 10:27:27 -0400
+X-MC-Unique: mPUPPnYIP0WD2VbuHem4zQ-1
+X-Mimecast-MFC-AGG-ID: mPUPPnYIP0WD2VbuHem4zQ_1761229647
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4e8b8db4a35so25469411cf.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:27:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761229232; x=1761834032;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B/3T3u3vrJFyOo7CzzG4W5+4fXOzcP+Ioy5uP4fNaUM=;
- b=hafdeWWnToJoEr1Fg4QH0MY+muO4XQLn7y7V4nQDpNu1JZHIrzvoG2JX444D5sgAJS
- LZ0G/fp/uH/NASkHE2KBwVPIWNbbhaIAzWRsEKJTA66D6hcquq4xw+Y4c1j8vyQ8cxd+
- ZvmQwP/U1QgUC3Q7J1AziJdthZFtWLPtxqyXrZ6rK6CZiC6fTQW1WUWgpKa9z/1J8Ci3
- 8x86fVcl4b4fBShNATQ6kR/yQi/RscAV1+Sy0Xp41QW31S0bGzbnUe+JcjdgzYDIck3W
- TuBTEn8Dn0/oIK163bnFv6rHnzdGjCpWYRDFweTWnG+3U9GsVoB2yJZ/Iwb3j6tWKWxk
- 56fA==
-X-Gm-Message-State: AOJu0YwYnqdljQQYPAhGh6H2iDRNNC4kokTrQr1SC9hJK+vbeLfGMdWU
- lbwCLYK8dbPKecuekLfrTyIrceoupL3FzHFCayTYj7hpNxddFZcJfeZ8ZiJCmNTPB6OW3U4hDdT
- j0YdACpU=
-X-Gm-Gg: ASbGncsnY0pVfHYa/X5u8tlheQ6wkrKkUnaswoyx6TQ5L08f4CXYuaxgDf69LS9hFje
- C6WUvXMZ19ZkcRdMha4ssv4lJQbK22mYqOdC9++NyJF/CJ2XD0fMjGwF7CqLFZ7P4fLyx/k9zIm
- X6o3cfc89E6eErP6L/s9KWN1AbVfPtTXAsg6BS5/SntolMP7fqmdXublw/JDwHAF549eX3q4zRy
- Cz/ez0N/Z9MKrpqJLWQpoqaLpKpQO9t1IlR6ojQ4oXHEpC1SDhe8nYfGhKKaiJYuygBfpi2WKjj
- SYTyFFeYgWBTD6zAFPVf8WSJBn9Q4dYq3Dq9kgo+oHEUWATr+tmi6tDT78Cb3LYElOB7iKAGsHC
- sBXA9xIwlxWKEsTzcStJ7QHc11z7iBx5YjJVGJuBSeozvBmnegDV5UddApsVNBtLRz13UNJbiYI
- OiMlJC0OKLvnZ8af/xfbopwqyZ/BVnwl8GZXtvf/xeR9OSEaU8lnCB/Q==
-X-Google-Smtp-Source: AGHT+IFVKfifpv4X1bolBhGXGl4Frw8eHmfkAEwn3uq8N11SwOdZmxBCMJoHOG35nH9ULUM9MjCe0A==
-X-Received: by 2002:a05:600c:354a:b0:46e:59bd:f7d3 with SMTP id
- 5b1f17b1804b1-47117903f24mr164119455e9.20.1761229232624; 
- Thu, 23 Oct 2025 07:20:32 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47494b22536sm60875295e9.5.2025.10.23.07.20.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 07:20:31 -0700 (PDT)
-Message-ID: <07851b4a-2b28-4daf-95a1-a747baa1bf14@linaro.org>
-Date: Thu, 23 Oct 2025 16:20:30 +0200
+ d=1e100.net; s=20230601; t=1761229647; x=1761834447;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5ejov+DXYA6q0ZVkJsV1kdKg4rKTnu258ot1aAH0csw=;
+ b=YwIcgrlTsCNwO+heoaKFRdQe9n9KP9g3f6+3bk3nCPvkLdMf75bYFtBG2jYsunDYaf
+ mrFJ8MRUjYsvooaNzNb9/tKqANx8LI9xS2rTSzSspepaQ4oAWAJ61jZYVaoZ1a7Msa+p
+ czkEkqc4rDgZIHHGH2cKv5EdsPBDFlZPCjkyfATD8tKEWpAdvgs7oPp3uduOBXGZUnm2
+ 8GUSCnRsUUI0wmkdw1Dk8PsORYM2wRhLZzosEwQ0xN2A5aXuJ6Bk4io6G4nn3VVY1KKm
+ DSY48UyaJ+yOPMStycdZaRUP59LXKtNlc5n93jzlXXV4DtitIEQl7kP8dwycgZ8QQ33d
+ q7Zw==
+X-Gm-Message-State: AOJu0Ywr6Cc9ijU21UdedTB8iNzNPau4vDzfjEfihomHqaocaUAjf5Lk
+ yb8sgt6i9Nrwpuq7/BCVj1ZsxcixyRReXMZu5JpPcRsrnBg+w4v/vqub5jhl6+PMqJx2FF7vW3Z
+ BnMT37nyEPj2bCtz7ibM+t20lj+V2R061Y7/g8qe5OUR27H1/HycGR0ny
+X-Gm-Gg: ASbGncsFjPptnWAIWxeXkGkGpRVQxML4Xspvkd79zHaKl9EWIGWhtIFqRDFLMPtRLQX
+ iBT7f0Jh1P5dbLu9+fQO824hgMsEJiSjaLgQxjfOvIO35ePRa/H0xb9WuAKFRSZB0yAB6sZTFt1
+ yn+AP3u0YKK+7HKcfIVjWvRGQIXJckuQ61MnGQfMNeQWTIbPcfYo2lw50+puXMcmBkB0hcrh12a
+ 7ejTBFzgiA2r9V7CxXtT7FaNsiRXM9TRCrCOo3SyNfSovpbGknG8df8YYCNYcou1eLS7hDv12FK
+ iRrtKmjavYMBOJiwAjg0RiaRoCkwbnx9h6XR5MP7T1lEVyRGzJrjbOq7EERGGY63LH8=
+X-Received: by 2002:a05:622a:494:b0:4e5:8180:d4fa with SMTP id
+ d75a77b69052e-4eb8153df25mr32716371cf.39.1761229646993; 
+ Thu, 23 Oct 2025 07:27:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBENeZS+CWHvrlMAxXqOpAO07BPl8MCVRWYFroZ3Ir/aKPCV23xJux82ztI8lqZ5CKrE2Dnw==
+X-Received: by 2002:a05:622a:494:b0:4e5:8180:d4fa with SMTP id
+ d75a77b69052e-4eb8153df25mr32715821cf.39.1761229646432; 
+ Thu, 23 Oct 2025 07:27:26 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4eb80697747sm15212931cf.16.2025.10.23.07.27.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Oct 2025 07:27:25 -0700 (PDT)
+Date: Thu, 23 Oct 2025 10:27:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH] migration/qmp: Update "resume" flag doc in "migrate"
+ command
+Message-ID: <aPo7Sw29g_gdOD0k@x1.local>
+References: <20251022190425.2730441-1-peterx@redhat.com>
+ <87cy6eb25c.fsf@pond.sub.org> <aPozyk9Do9iu32G4@x1.local>
+ <87sef94suf.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 40/58] accel/hvf: Drop hvf_slot and
- hvf_find_overlap_slot
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Cameron Esfahani <dirty@apple.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Peter Collingbourne <pcc@google.com>, Mads Ynddal <mads@ynddal.dk>,
- Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20251023114638.5667-1-philmd@linaro.org>
- <20251023115311.6944-11-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251023115311.6944-11-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87sef94suf.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,19 +107,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 13:52, Philippe Mathieu-Daudé wrote:
-> From: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Oct 23, 2025 at 04:04:40PM +0200, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> These are now unused.
+> > On Thu, Oct 23, 2025 at 07:47:11AM +0200, Markus Armbruster wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > It wasn't obvious how the resume flag should be used when staring at the
+> >> > QAPI doc.  Enrich it to be crystal clear.
+> >> >
+> >> > Reported-by: Markus Armbruster <armbru@redhat.com>
+> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> >> > ---
+> >> >  qapi/migration.json | 5 ++++-
+> >> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >> >
+> >> > diff --git a/qapi/migration.json b/qapi/migration.json
+> >> > index be0f3fcc12..48856078db 100644
+> >> > --- a/qapi/migration.json
+> >> > +++ b/qapi/migration.json
+> >> > @@ -1732,7 +1732,10 @@
+> >> >  # @detach: this argument exists only for compatibility reasons and is
+> >> >  #     ignored by QEMU
+> >> >  #
+> >> > -# @resume: resume one paused migration, default "off".  (since 3.0)
+> >> > +# @resume: when set, resume one paused postcopy migration, using the new
+> >> 
+> >> Scratch "one" unless there can be more than one.
+> >
+> > Sure.
+> >
+> >> 
+> >> > +#     URI/channels specified to replace the old/broken channels.  The user
+> >> > +#     should make sure the migration is in "postcopy-paused" state before
+> >> > +#     the resume request.  Default "off".  (since 3.0)
+> >> >  #
+> >> >  # Features:
+> >> >  #
+> >> 
+> >> What happens when migration is not in state "postcopy-paused"?
+> >
+> > The QMP command "migrate" with resume=true set will be rejected,
+> > corresponds to:
+> >
+> > migrate_prepare():
+> >         if (s->state != MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> >             error_setg(errp, "Cannot resume if there is no "
+> >                        "paused migration");
+> >             return false;
+> >         }
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/system/hvf_int.h  | 13 -------------
->   accel/hvf/hvf-accel-ops.c | 14 --------------
->   2 files changed, 27 deletions(-)
+> Makes sense, thanks!
+> 
+> I'd suggest something like 'Resume fails unless migration is in
+> "postcopy-paused" state.  (default: false, since 3.0)'
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Since it's still a "migrate" QMP command, should I use "the command will
+fail"? I also re-arranged the words slightly.. would below look a better
+next version as a whole?
+
+# @resume: when set, use the new uri/channels specified to resume paused
+#     postcopy migration.  This flag should only be used if the previous
+#     postcopy migration was interrupted.  The command will fail unless
+#     migration is in "postcopy-paused" state.  (default: false, since 3.0)
+
+Thanks,
+
+-- 
+Peter Xu
 
 
