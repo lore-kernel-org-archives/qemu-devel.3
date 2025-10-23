@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E56ACCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 15:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581C2CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 15:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBxMt-0007Q2-HS; Thu, 23 Oct 2025 11:36:48 -0400
+	id 1vBxRn-0001C9-SZ; Thu, 23 Oct 2025 11:41:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBxMi-0007OO-Gx
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 11:36:40 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1vBxRm-0001Bq-GG
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 11:41:50 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBxMg-00039A-Rj
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 11:36:36 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-784a5f53e60so11770267b3.2
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 08:36:33 -0700 (PDT)
+ id 1vBxRk-0003xZ-La
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 11:41:50 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-785d3a5f641so6181427b3.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 08:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761233792; x=1761838592; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761234107; x=1761838907; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=R7Bu0evPT10yGWWc46+/Sxv8lt3PFMq2HvV0YKepJ3o=;
- b=JxzMdtxsN+UnwXuFW+9/nLbE3GSI+l8jx+31nuKlb8qBUoHa55HuCMOW8I4Mz1Q2JY
- 77ylyx/YzCwhY+j+gn1/rupgU5GWFvfijfVY6yb9YgOoLFp8DfSyEEgFTfODuCNpN0cd
- texcGmXtjMzh4K8ZytxaaTqq5/GuRRHobSna/hQyClnASVqsxRuIGyBN365Pu/kQeaQ/
- 9TLL5nYz+sQKt3K2sq7KdFpf45VoptDTrhxXHavGYKi3Ze93If/c/QYSKdsFtiCwPudX
- XTQEZgjQ3WX7cqwtPjm54vYf7oWl0K8x3xbFEA0Sy04KSzKPH96MYn/Z9fflScCNPcmY
- WUJA==
+ bh=aNJ/mzjc8q3KYfYFMCVDCe4wOgwKkvdCR5IVhz5kulo=;
+ b=wpMMTw/ct5vEubr0WzSUwtpMUKUdqiMP51JFN5eO5yVrT8ytJlpcSbMs0ueq5CNfBY
+ uRC9EJ1+va+j6rSHTGz4Deza+eFOvVywkK2fpw+T4y2FbxG5qzXm7/zI3D/Gz7W0TSg+
+ sqnNE6HSrqHt9sUkvKnMSdPoRXf+kz++jxT7QOWso9Qzf+biEcQJ9k2KGZZuFtJwUjSf
+ U7Sm/0EZzmpdMfGXdN3EF5jvTEYpBLJIlCAf2uK5MO3dDEFckFeN63Kj1aI76E61BcG2
+ VSnlmETrHPvPvjTPErG5uGnrxDZ4FppCx2EdHl90YCvd8T5xu23WiedLHfWye1pk7q6n
+ 63XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761233792; x=1761838592;
+ d=1e100.net; s=20230601; t=1761234107; x=1761838907;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=R7Bu0evPT10yGWWc46+/Sxv8lt3PFMq2HvV0YKepJ3o=;
- b=meX7zyu6P1tzw8t+b8YjRpeM3osZZ1WJbithBhwzT8DjFHI9qW4TeMiN+N0HhYBXQc
- ll4V188D+cGVSDqCZS8JXf4CfzC27y+Bw6sP5XRkPOBng2iEkWD+tR7471Ce+ytLfcyP
- QITs6XQGQH9kHzjkQbd3xLQB6ikrG/NbszP4l5GACGQNt1AnCqkcEfDh+cQiEjF4/z7Y
- xaIBRiu7v5R8hgjBq9335hUZ7Y1aZPffs743gP06SGvfLbhlmmxM3nL6BPgaqNmsehXs
- zksUn98dj1WcW0TiN4Nlvm5MGpLltfMLMuewx1P3zqJcS5uKE4FKGqmOv5gO1x0LfRZv
- Mx/Q==
-X-Gm-Message-State: AOJu0YzpCWUp96IJw1hAp0ynLvBB4Bk4AJGOCkjWdfVGBZwio+ikDzh6
- Bedcsjj4T4qepXvVjUCsal1/QR81l3uK6iSv6J5PFnQPzb1KFAdjRByr85X2kJ3dXT129ayXlxZ
- V9CDwelppgVbIqfJfCuiQvGoEd44Mu3u9XfRphjoqcA==
-X-Gm-Gg: ASbGnctI/qUbkzCtQX391jWAExQIvfIyr6aBzVADkq2VAFIXRMusmBPO+ovIwXBQv3E
- yVbXEI1dJBHQge/wNxBmkeCC1rub0jXMy7lTgIZuuQQ3mTfe7AW4bWRyh9dmHxsoZZouCj3M9aB
- vmpkCHVEDhYJhSx5v7iIykFWE9i0dHP2puzsndArKHx8KSViQ76qTa0Ct8bJLIuOR2WHzySXlGa
- iHhNCIYtr51nk4qdhjmnveZvIBxm8GfP2vZ9NFVC/OlEXQaW7e3AZQQYZS9KtzL27hYZOF8
-X-Google-Smtp-Source: AGHT+IG1znZmh00ANSnKnoDmuuju/L1QBXZOYYFNIxsERl38+x0oWodGpZUqwW4HlkqiKRp1fKL9tmQEB4+JCOtGLV8=
-X-Received: by 2002:a05:690c:3605:b0:783:71ee:8977 with SMTP id
- 00721157ae682-78371ee8b09mr229716667b3.11.1761233792347; Thu, 23 Oct 2025
- 08:36:32 -0700 (PDT)
+ bh=aNJ/mzjc8q3KYfYFMCVDCe4wOgwKkvdCR5IVhz5kulo=;
+ b=j1Sg+T9AdIBCcsBjHf58GOeQlcz9VKxQMtHow7jfF4BOoP6rgV79aF48sy/W/7O8MR
+ kxvlyiAPK4wLV93rDIL1RANkeFXRf3BN0pnxYhFTUSogkeYfcbiNBJAd7M+dOsHVdHwG
+ uOk2sbBWPsIEC2OCrMXucyEl0wvvwcOoQZEwpzKSfnCq0YccCrJuYsnGfTC8o/qyYoJy
+ Pl1MyDANrjSYh0WzZN/+DHMP6FmPRvZ1X0Mzwv7L2KHhNPWjK+edOcV8m8V7N01f0cUG
+ C0MQ2tGEMsZcfjiDoWcgAowMLpeBM2IcpQt6ucrjpSRgl53vTefbEgZmoZuuiXizn39g
+ Z4vA==
+X-Gm-Message-State: AOJu0Yz5bdKe1hNXODYh9RUSKLsnvHTCze/yVoAfXmKis/EgixJfPAgG
+ +gzrKZdAMPVCYzVtBNNTnL8Z+E2kkWSn4bIpeiR6Zzjhr1LAbKaX0g+7nit+43hw0QYJ8zNnTxH
+ lc5Mqhe/CbVRumr52nxkLD0X7Ij9dQzUr3L/epOElvA==
+X-Gm-Gg: ASbGncvFUHJHCVZz+1FIUvLBax4S2xyCRdZe1biGDjHHOuEkjuXoOafg3yvtX0kixUv
+ vmGiEocnc31bTGc6oNlOm35WCLqP8rL9dgX7KbgNFp6kwTny+ASTkBJCMxJENxy7Y3LhA5M2anc
+ e5BqZkmoj3TBHcS5cF56gkwDfcNqnVQpjDgXwIK29v+bk1J9jKFGpuYbVehJ0QCTwwfq+S6+7VQ
+ afWOKpMIxUWaleYELwcSuRxhhxgjAXwLw0EJcFZ4JQuoorPiXeLJVpxitRfdQ==
+X-Google-Smtp-Source: AGHT+IEXN92PMEzx8kpmVjcc1OOIyapLk81HclIYghHn6UE3s6sMCtY+TyMuBZBYxY+0Bhj20wctsKLy8DEc/l2gdVo=
+X-Received: by 2002:a05:690c:a91:b0:785:d173:7d0f with SMTP id
+ 00721157ae682-785d17383afmr18495617b3.52.1761234107008; Thu, 23 Oct 2025
+ 08:41:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251022110524.483588-1-dbarboza@ventanamicro.com>
- <CAFEAcA-gF4himAj7k03cES2-USbE-xs7f5LZEPQaCqHhDieiEA@mail.gmail.com>
- <06684337-601b-47d3-925f-b5a693aef244@ventanamicro.com>
-In-Reply-To: <06684337-601b-47d3-925f-b5a693aef244@ventanamicro.com>
+References: <20251003153948.1304776-1-peterx@redhat.com>
+ <20251003153948.1304776-41-peterx@redhat.com>
+In-Reply-To: <20251003153948.1304776-41-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 23 Oct 2025 16:36:20 +0100
-X-Gm-Features: AS18NWD43brInKiX4K_0k2Z68WeBtLuCdwqQbOafpyOHu9aPWRRAeJleyIZYHU8
-Message-ID: <CAFEAcA-5wCL7b2Vc_4NXHNUqOn6SsY8+RD0-mZo7rh_jw74BFA@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv/riscv-qmp-cmds.c: coverity-related fixes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- qemu-stable@nongnu.org
+Date: Thu, 23 Oct 2025 16:41:35 +0100
+X-Gm-Features: AS18NWA5Ww0np3mNgpztpoHvre6w2BG3eGaVJEEdtWdY30X4G9c13B8ySs9KQhg
+Message-ID: <CAFEAcA9ecytcq3cUsYZiskv_hSDR4iO+iccbVYyRZgHaHMvUuw@mail.gmail.com>
+Subject: Re: [PULL 40/45] migration: cpr-exec-command parameter
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,36 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 22 Oct 2025 at 13:39, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
-> On 10/22/25 8:59 AM, Peter Maydell wrote:
-> > g_autofree frees with g_free(), which isn't the right thing for
-> > freeing an array of pointers. To do autofree here we need
-> >
-> >   g_auto(GStrv) reg_name = g_strsplit(...);
-> >
-> > (GStrv is the glib type for gchar**; the headers give it an
-> > auto-free mechanism that calls g_strfreev().)
+On Fri, 3 Oct 2025 at 16:40, Peter Xu <peterx@redhat.com> wrote:
 >
-> I saw some instances of "g_autofree char **" and figured that it was ok to use
-> g_autofree in this case too (just git grepping, didn't dive deeper to figure
-> out context and so on).
+> From: Steve Sistare <steven.sistare@oracle.com>
+>
+> Create the cpr-exec-command migration parameter, defined as a list of
+> strings.  It will be used for cpr-exec migration mode in a subsequent
+> patch, and contains forward references to cpr-exec mode in the qapi
+> doc.
+>
+> No functional change, except that cpr-exec-command is shown by the
+> 'info migrate' command.
 
-There might be some lurking bugs here -- it's an easy
-mistake to make. I did a quick audit on the results of
- git grep 'g_autofree.*\*\*'
+Hi; I was doing a 'git grep' for accidental misuses
+of g_autofree on a char** (which will free only the
+top level array, not the strings it points to), and
+the usage in this commit confused me for a bit:
 
-It looks like migration/migration-hmp-cmds.c:hmp_migrate_set_parameter()
-does the wrong thing when it calls g_shell_parse_argv(),
-because that function documents that the vector should
-be freed with g_strfreev().
+> +    case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
+> +        g_autofree char **strv = NULL;
 
-All the others are OK, because the elements of the
-array are either manually dereffed or else remain
-the ownership of something else and shouldn't be freed.
+g_shell_parse_argv() documents that we should free the
+vector with g_strfreev(), but g_autofree will only
+g_free() it. So this looks like a bug, but...
 
-The migration one is a recent addition so I'll follow
-up to the patch where it got added to the codebase.
+> +        g_autoptr(GError) gerr = NULL;
+> +        strList **tail = &p->cpr_exec_command;
+> +
+> +        if (!g_shell_parse_argv(valuestr, NULL, &strv, &gerr)) {
+> +            error_setg(&err, "%s", gerr->message);
+> +            break;
+> +        }
+> +        for (int i = 0; strv[i]; i++) {
+> +            QAPI_LIST_APPEND(tail, strv[i]);
+
+...we copy out the pointers to the individual
+strings here, and QAPI_LIST_APPEND() doesn't do a
+string copy, so it's correct that we don't g_strfreev()
+the char**.
+
+Do you think it's worth a brief comment saying why
+g_autofree is correct here, or is it obvious enough
+without ?
+
+> +        }
+> +        p->has_cpr_exec_command = true;
+> +        break;
+> +    }
 
 thanks
 -- PMM
