@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F757CCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0319BCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBmjU-0000kZ-UC; Thu, 23 Oct 2025 00:15:24 -0400
+	id 1vBmj1-0000YF-6C; Thu, 23 Oct 2025 00:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmjS-0000ju-LK
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:22 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1vBmiz-0000Xe-II
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:14:53 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmjQ-0007Kf-P8
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:22 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-781010ff051so263833b3a.0
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:15:20 -0700 (PDT)
+ id 1vBmix-00075L-1U
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:14:53 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-781251eec51so284148b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761192919; x=1761797719; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=d5FE2heCAcRJvSP8v6hzQsEmDuz5OULa6o5imBMV2Lo=;
- b=Yeq0pfoGHw3L/VXGHhCQzaU+jMf+N+/WTrbReXdFnk9nAyafliL3VVvO8pQncnh2eU
- iKvc7GhyHcPTFmbGKt5gnp0HyAA+3jUwKJtr62FKAAZD3PT7J0pIVxw4nwrDBS7OG2/d
- MjARrty+pq2IRqVel+KVGN8ZPzm5/Qnm7xmh+RCeHMW2UJcf1P2ewy29N3IXlSjsFbjZ
- rhmc4HACidKhoGFNvf0SQIOnpJLW4VHhl/f5wo6d25PgRJiSW76eTL1jb7sefVfhnP5j
- E/a3VlcU92a+1t4yuVCua/SlztSToFFiFQMehZuqIz/QixBPIDRRYPCIXOguUOEoL/+H
- FY0A==
+ d=gmail.com; s=20230601; t=1761192889; x=1761797689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TC9ST5w810HGa9uPAOp2JqChSsuFmKsvxklpY77kCKg=;
+ b=c30dxLy8UxJGjGsvnUj3Zhea8kIpZLoV+avQy0V+GqeBAa4CWIJQA0r/lXQ1SNlrpG
+ BgiqTKVfVvFcKmq1nnsass3/nWJ1UBvRrMb8dn/kskYdZ8GLdrqVVfxR1sxJG6QI4JVq
+ SZabCQrdu1soYyLTrkd20c7vnfeiBN3BY090BVV/aU1W2DcWjplTnXd12QYlBFUdsO9Y
+ 4Du83IsRFetA43g3vXvPc24KLatNTO41F4errXRdCpRPGTWZUOnpfigv3K1n/+Q8rkrF
+ gMqu6nhcmAJ/HaGpgMBBchDAFpnb3I1jW1MlLPj1CTB+yRGNubtrT9F8DkmpOoWAsJY6
+ ZUjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761192919; x=1761797719;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=d5FE2heCAcRJvSP8v6hzQsEmDuz5OULa6o5imBMV2Lo=;
- b=gdRXbgODfuI6Bzqh3dBDidvAJv4x/RkEN0+qD9Yvs1u8xhsYM+7zXqgUEAVH2TO6rm
- E+BQOnF/Le6WFYHjsCK/Six07tbu9XmX91GzCQI1HZ+cTiMQum0kSCyXVYk0aGYWwf+O
- qXC/RmAGmH1clzYyw9a1GHwmFU3MiaV4amQrsGwcU3XBBBvgfSz34LcA4Fobd2S6/vht
- k+J9z+qAeMIY1KbUjv9Oj5VDifYCjwxq68joYWwwXDOTNoPgv83afiFjL9RpfoFUCI3l
- XWIVgLaDtsk6GRCjIKu3fUgNdBaMV+80JWEZjoYq06IKbM4dRSBz7uwcBw17u+28Wf9T
- M2sw==
-X-Gm-Message-State: AOJu0YxKi/6mqwsyn3WpB7tJ8Yd7Vmqz2qRN1bDuqIkTtkB2BRhRESML
- VouxZHJFP1Vm7wLJdlxwjQZ7ih+a7XIeG1Gb91TH9KsERcbc12wwWHcQpkwIPQ==
-X-Gm-Gg: ASbGncs4J2jO7asP7s0CD6uw7Bc8IEmiP8ybJtPv1GrtkVbimcExlHjqPsn2qGJWIM/
- m7epvMx1NcP/kfSQEAaUoHGC3OlkokyqjPhQsNpVPkbLlowXwUuI2Z77po2izI+4hmjAW67tWqe
- 1RLBQI+/ilANQWLsbamj9WwFVAaAaKBT6Vl+3VAsP5YeJIZsXYmP5uGpD0110MUj/2xfkHAdwdk
- JSKe4iFxdlAVDp7KQvfezBzvjSL+pjlcr6UkZ8iHulFLg3mk2V3OJPt4ItF9CdHd3QSRqslPLri
- e8M0uQjWmOxQIy7bzZH26NgFOKZ8MMKuVKWtHBfpO4Mf2x4WJjcg+EQe20ZXDVHpYt1eqZuhNez
- z8jYxfVqk4q/Dcov7MA25b9IROf6nY7oev71pZKxApf9zoAzbCTkWZZhrPOQ1XohjW12mtVx0eT
- z29zZBqaoMkCgbVC9kgGQawO+oW+BgoSkLnRSZvDTHY2hBoW3k3X34vZW9s+vkz0dFHdPr22fe9
- zHK2mq6cw==
-X-Google-Smtp-Source: AGHT+IEDnNPV6+YnVl52C8DvzFj9p+k+rK8uqvGT+ZHf3z3Yp/jvWjT8t6bhfXBDmbx6ZwkDnqVNFA==
-X-Received: by 2002:a05:6a00:22d4:b0:774:1f59:89de with SMTP id
- d2e1a72fcca58-7a274ba902amr1333631b3a.11.1761192918850; 
- Wed, 22 Oct 2025 21:15:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761192889; x=1761797689;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TC9ST5w810HGa9uPAOp2JqChSsuFmKsvxklpY77kCKg=;
+ b=d75vUQ7+l1bFGtjocbfXqjQRkrSgsKqLApYAGDBC9wFeO7i3dcMN1qZZYjkUXkvwEF
+ Rhydb+UEWfTt7FKEeBAvmb9m+PeG/28oABXkzmknxrKUGH5NVK0ifPzrnoHyh1Rs1kSW
+ XiW5WWQwl5LWItOZJTBNNuXlMEQ0+fFYqZ7E739VvVLpLSpkFhEjpiig+9S0IfB9Sgya
+ N6Y/CmmsKowJZigq7W4Elc+88DTmcotBlNF2k5S2UgzA+Uy6gJiYS45w1RhJtzTAdyMV
+ 593tZIzAjkS/QWcPYdGgbPvruEPEyVzf0e7G8XPHHQftvnsvmuaXcmqjuPnsApb55bBe
+ BaPw==
+X-Gm-Message-State: AOJu0YzT/6aoXzxV2R3ISnjhZYMIHBbUk3sV/Q2yuzFtVM/1Z9FGp8U4
+ UTovaq8YlitNYnTcZ9JVBcRvwTyH6RUz21K2ti0og8bdZ75EdEyX4EsL2kid8w==
+X-Gm-Gg: ASbGncsxcM32xvGrd6ngWB9LF1HhWjDoWQnhvSiYnZEiv1p4LbtYCLOcKxr3wgNatHO
+ TE1zojr4IAOQiPrA+JzWEiWWiPGSCaH9ezVuXQu5dGLTlkA/ZlETbECc25wLwWlXi6JeBiBJ0xU
+ v08GdkRe9XXvACgY9chI9C5TWgMv4fubahPmNqb3KXwH1+wzwAd5Wyf/Fq6zikLTewo5AIg9UIk
+ CFwonVKKRx55wIvg/mfZsgiwcoPF1v4eqWIYEm9j3JT1ytvQwDODfvR/FqPTv0FyfpbVpuCpD0/
+ zCYd/J7GThxaTP+GZBlzDLXT2vKlPGKpsc04pSm4RpJRoMQ7rz86XpVC0h51MuTsskCB/amm0Df
+ +oTTib4qqYWQAR1TP9AOacwDDn7pR35YLsM+dtdnwTG6FqFX3ktuPCj1B00JiZ3U/3DkbeCLHtq
+ LPBS97uVYHK6T8DZeTfXm7TciXRAZ/gM8Dsowxg99Y82pG92RS2XfkJSgkViWJIzc7yBIwb2kPY
+ TXE6lXSk4y/hA4IbXKE
+X-Google-Smtp-Source: AGHT+IEHQvrdHHDa25IsuItueoB7OrluMwhYjltcDXAhTwcpWfnnau11TgczuBX9sRHJH38IAVePIQ==
+X-Received: by 2002:a05:6a00:2e85:b0:781:187f:48d1 with SMTP id
+ d2e1a72fcca58-7a274b85d39mr1376721b3a.1.1761192888951; 
+ Wed, 22 Oct 2025 21:14:48 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.15.15
+ d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.14.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 21:15:18 -0700 (PDT)
+ Wed, 22 Oct 2025 21:14:48 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 09/37] target/riscv: Conceal MO_TE within gen_cmpxchg*()
-Date: Thu, 23 Oct 2025 14:14:07 +1000
-Message-ID: <20251023041435.1775208-10-alistair.francis@wdc.com>
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 00/37] riscv-to-apply queue
+Date: Thu, 23 Oct 2025 14:13:58 +1000
+Message-ID: <20251023041435.1775208-1-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251023041435.1775208-1-alistair.francis@wdc.com>
-References: <20251023041435.1775208-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,80 +104,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-All callers of gen_cmpxchg() / gen_cmpxchg64() set the MO_TE flag.
-Set it once in the callees.
+The following changes since commit c0e80879c876cbe4cbde43a92403329bcedf2ba0:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251010155045.78220-10-philmd@linaro.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/translate.c                    | 1 +
- target/riscv/insn_trans/trans_rvzabha.c.inc | 2 +-
- target/riscv/insn_trans/trans_rvzacas.c.inc | 7 ++++---
- 3 files changed, 6 insertions(+), 4 deletions(-)
+  Merge tag 'pull-vfio-20251022' of https://github.com/legoater/qemu into staging (2025-10-22 08:01:21 -0500)
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 94af9853cf..2e6f39aa02 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1156,6 +1156,7 @@ static bool gen_cmpxchg(DisasContext *ctx, arg_atomic *a, MemOp mop)
-     TCGv src1 = get_address(ctx, a->rs1, 0);
-     TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);
- 
-+    mop |= MO_TE;
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
- 
-diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
-index c1f99b65f0..302c63f2a3 100644
---- a/target/riscv/insn_trans/trans_rvzabha.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
-@@ -141,5 +141,5 @@ static bool trans_amocas_h(DisasContext *ctx, arg_amocas_h *a)
- {
-     REQUIRE_ZACAS(ctx);
-     REQUIRE_ZABHA(ctx);
--    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_SW);
-+    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_SW);
- }
-diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/insn_trans/trans_rvzacas.c.inc
-index 5e7c7c92b7..d850b14264 100644
---- a/target/riscv/insn_trans/trans_rvzacas.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
-@@ -25,7 +25,7 @@
- static bool trans_amocas_w(DisasContext *ctx, arg_amocas_w *a)
- {
-     REQUIRE_ZACAS(ctx);
--    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_SL);
-+    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_SL);
- }
- 
- static TCGv_i64 get_gpr_pair(DisasContext *ctx, int reg_num)
-@@ -76,6 +76,7 @@ static bool gen_cmpxchg64(DisasContext *ctx, arg_atomic *a, MemOp mop)
-     TCGv src1 = get_address(ctx, a->rs1, 0);
-     TCGv_i64 src2 = get_gpr_pair(ctx, a->rs2);
- 
-+    mop |= MO_TE;
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_atomic_cmpxchg_i64(dest, src1, dest, src2, ctx->mem_idx, mop);
- 
-@@ -88,10 +89,10 @@ static bool trans_amocas_d(DisasContext *ctx, arg_amocas_d *a)
-     REQUIRE_ZACAS(ctx);
-     switch (get_ol(ctx)) {
-     case MXL_RV32:
--        return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
-+        return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_UQ);
-     case MXL_RV64:
-     case MXL_RV128:
--        return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
-+        return gen_cmpxchg(ctx, a, MO_ALIGN | MO_UQ);
-     default:
-         g_assert_not_reached();
-     }
--- 
-2.51.0
+are available in the Git repository at:
 
+  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20251023
+
+for you to fetch changes up to 741566c3e07fd34ed28d4464d1d7fda67db12925:
+
+  target/riscv: Make PMP CSRs conform to WARL constraints (2025-10-23 14:11:45 +1000)
+
+----------------------------------------------------------------
+Second RISC-V PR for 10.2
+
+* Correct mmu-type property of sifive_u harts in device tree
+* Centralize MO_TE uses in a pair of helpers
+* Fix Ethernet interface support for microchip-icicle-kit
+* Fix mask for smsiaddrcfgh
+* Add support for MIPS P8700 CPU
+* Fix env->priv setting in reset_regs_csr()
+* Coverity-related fixes
+* Fix riscv_cpu_sirq_pending() mask
+* Fix a uninitialized variable warning
+* Make PMP granularity configurable
+
+----------------------------------------------------------------
+Akihiko Odaki (1):
+      target/riscv: Fix a uninitialized variable warning
+
+Daniel Henrique Barboza (3):
+      target/riscv/kvm: fix env->priv setting in reset_regs_csr()
+      target/riscv/riscv-qmp-cmds.c: coverity-related fixes
+      target/riscv: fix riscv_cpu_sirq_pending() mask
+
+Djordje Todorovic (13):
+      hw/intc: Allow gaps in hartids for aclint and aplic
+      target/riscv: Add cpu_set_exception_base
+      target/riscv: Add MIPS P8700 CPU
+      target/riscv: Add MIPS P8700 CSRs
+      target/riscv: Add mips.ccmov instruction
+      target/riscv: Add mips.pref instruction
+      target/riscv: Add Xmipslsp instructions
+      hw/misc: Add RISC-V CMGCR device implementation
+      hw/misc: Add RISC-V CPC device implementation
+      hw/riscv: Add support for RISCV CPS
+      hw/riscv: Add support for MIPS Boston-aia board mode
+      riscv/boston-aia: Add an e1000e NIC in slot 0 func 1
+      test/functional: Add test for boston-aia board
+
+Guenter Roeck (4):
+      hw/net/cadence_gem: Support two Ethernet interfaces connected to single MDIO bus
+      hw/riscv: microchip_pfsoc: Connect Ethernet PHY channels
+      hw/net/cadence_gem: Add pcs-enabled property
+      microchip icicle: Enable PCS on Cadence Ethernet
+
+Jay Chang (2):
+      target/riscv: Make PMP granularity configurable
+      target/riscv: Make PMP CSRs conform to WARL constraints
+
+Jialong Yang (1):
+      aplic: fix mask for smsiaddrcfgh
+
+Philippe Mathieu-Daudé (12):
+      target/riscv: Explode MO_TExx -> MO_TE | MO_xx
+      target/riscv: Conceal MO_TE within gen_amo()
+      target/riscv: Conceal MO_TE within gen_inc()
+      target/riscv: Conceal MO_TE within gen_load() / gen_store()
+      target/riscv: Conceal MO_TE within gen_load_idx() / gen_store_idx()
+      target/riscv: Conceal MO_TE within gen_fload_idx() / gen_fstore_idx()
+      target/riscv: Conceal MO_TE within gen_storepair_tl()
+      target/riscv: Conceal MO_TE within gen_cmpxchg*()
+      target/riscv: Conceal MO_TE|MO_ALIGN within gen_lr() / gen_sc()
+      target/riscv: Factor MemOp variable out when MO_TE is set
+      target/riscv: Introduce mo_endian() helper
+      target/riscv: Introduce mo_endian_env() helper
+
+Zejun Zhao (1):
+      hw/riscv: Correct mmu-type property of sifive_u harts in device tree
+
+ docs/system/riscv/mips.rst                    |  20 ++
+ docs/system/target-riscv.rst                  |   1 +
+ configs/devices/riscv64-softmmu/default.mak   |   1 +
+ include/hw/misc/riscv_cmgcr.h                 |  50 +++
+ include/hw/misc/riscv_cpc.h                   |  64 ++++
+ include/hw/net/cadence_gem.h                  |   4 +
+ include/hw/riscv/cps.h                        |  66 ++++
+ target/riscv/cpu-qom.h                        |   1 +
+ target/riscv/cpu.h                            |   8 +
+ target/riscv/cpu_cfg.h                        |   5 +
+ target/riscv/cpu_vendorid.h                   |   1 +
+ target/riscv/cpu_cfg_fields.h.inc             |   4 +
+ target/riscv/xmips.decode                     |  35 ++
+ hw/intc/riscv_aclint.c                        |  18 +-
+ hw/intc/riscv_aplic.c                         |  42 ++-
+ hw/misc/riscv_cmgcr.c                         | 248 ++++++++++++++
+ hw/misc/riscv_cpc.c                           | 265 ++++++++++++++
+ hw/net/cadence_gem.c                          |  31 +-
+ hw/riscv/boston-aia.c                         | 476 ++++++++++++++++++++++++++
+ hw/riscv/cps.c                                | 196 +++++++++++
+ hw/riscv/microchip_pfsoc.c                    |   6 +
+ hw/riscv/sifive_u.c                           |   2 +-
+ target/riscv/cpu.c                            |  83 +++++
+ target/riscv/cpu_helper.c                     |   3 +-
+ target/riscv/kvm/kvm-cpu.c                    |   1 +
+ target/riscv/mips_csr.c                       | 217 ++++++++++++
+ target/riscv/op_helper.c                      |  30 +-
+ target/riscv/pmp.c                            |  46 +++
+ target/riscv/riscv-qmp-cmds.c                 |  22 +-
+ target/riscv/tcg/tcg-cpu.c                    |  12 +-
+ target/riscv/translate.c                      |  19 +-
+ target/riscv/insn_trans/trans_rva.c.inc       |  50 +--
+ target/riscv/insn_trans/trans_rvd.c.inc       |   6 +-
+ target/riscv/insn_trans/trans_rvf.c.inc       |   6 +-
+ target/riscv/insn_trans/trans_rvi.c.inc       |  24 +-
+ target/riscv/insn_trans/trans_rvzabha.c.inc   |  20 +-
+ target/riscv/insn_trans/trans_rvzacas.c.inc   |  12 +-
+ target/riscv/insn_trans/trans_rvzce.c.inc     |  12 +-
+ target/riscv/insn_trans/trans_rvzfh.c.inc     |   8 +-
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc |  10 +-
+ target/riscv/insn_trans/trans_xmips.c.inc     | 136 ++++++++
+ target/riscv/insn_trans/trans_xthead.c.inc    |  98 +++---
+ hw/misc/Kconfig                               |  17 +
+ hw/misc/meson.build                           |   3 +
+ hw/riscv/Kconfig                              |   6 +
+ hw/riscv/meson.build                          |   3 +
+ target/riscv/meson.build                      |   2 +
+ tests/functional/riscv64/meson.build          |   2 +
+ tests/functional/riscv64/test_boston.py       | 123 +++++++
+ 49 files changed, 2356 insertions(+), 159 deletions(-)
+ create mode 100644 docs/system/riscv/mips.rst
+ create mode 100644 include/hw/misc/riscv_cmgcr.h
+ create mode 100644 include/hw/misc/riscv_cpc.h
+ create mode 100644 include/hw/riscv/cps.h
+ create mode 100644 target/riscv/xmips.decode
+ create mode 100644 hw/misc/riscv_cmgcr.c
+ create mode 100644 hw/misc/riscv_cpc.c
+ create mode 100644 hw/riscv/boston-aia.c
+ create mode 100644 hw/riscv/cps.c
+ create mode 100644 target/riscv/mips_csr.c
+ create mode 100644 target/riscv/insn_trans/trans_xmips.c.inc
+ create mode 100755 tests/functional/riscv64/test_boston.py
 
