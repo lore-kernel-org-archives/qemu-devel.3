@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DF2CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD8FCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC54K-0003vO-Oa; Thu, 23 Oct 2025 19:50:08 -0400
+	id 1vC55c-0006EH-OG; Thu, 23 Oct 2025 19:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54E-0003uF-NO
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:03 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vC553-0005Db-RC
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:58 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54C-000784-Du
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:02 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2897522a1dfso14202275ad.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:00 -0700 (PDT)
+ id 1vC551-0007Vc-98
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:53 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-29488933a91so5168885ad.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761263399; x=1761868199; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761263448; x=1761868248; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dT1VY6c3XA4W7tm/UffiQu1Cbfu56OKc9VjdmzDBxLA=;
- b=gb4Heeka+AWGX26AgYHlEXzmKLfEsboOuGlM9LXx5lOsnXol6lvFh2P43BWqYUvP0a
- T4Ufuj/vAxeEo/Dzucufk33kCea8aIJh3+mYQ7oBuSvqKNDZCQDftRUGhbbrVXHa6YDc
- D7BvkClCzFtHAM0OGl3N0hYOTNHqdb8q1Se4lRJ775KiLEqhZXTNiUV97LTYUuLKtgVy
- wJECF9gHsQzSp4PVFwTpbodZ1jNF6zgS/jlG/KppDtKyD9pm4+oB44g/oQJIXn65YGkD
- N1+Gr4NcS7+d1QESX6yJqu08XCN6zoZuqNA3RIQYkbQ18RruYkRgs1FLeor23ZBKG7V/
- zn3w==
+ bh=BEQEOMtu60rG98D2pD2eQ/ov/DkPTh4vzA3I2V26s10=;
+ b=SbPOkoyph26fbvKgPigOPe6hsWVlY+00yqFRALEW01DF9SwijxeFNW/DP9d613zDWg
+ xszZalR+9jq43MQ0QJVsrUR0giL69FpyaiTH2ZT7jjDpLje7ZATNKy9t/6uEqSUQLIaP
+ 2b1hZ48Q8pvHZs6Lu2+a8A1/kzkaBlg/lm59SMteZ/wFRwnqsfPcgVXU829He/Q3JkRf
+ 9/JR4v9HKid+yPxw/eNw5BbnePuWrjgKJ6dmUpzHDCzMac3dSa2UOiALPkEKq88WXm6p
+ 6tg7UrSmQXx2gc8qpHT+t4c7UuElnXzFCYKzMb95WDiEgOnkCaIKesLSOcqlg9iDCdU2
+ QfYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761263399; x=1761868199;
+ d=1e100.net; s=20230601; t=1761263448; x=1761868248;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dT1VY6c3XA4W7tm/UffiQu1Cbfu56OKc9VjdmzDBxLA=;
- b=xHhP6oyyJ2LsmjlVmUx84UXaKP0kyWXY7oAT7pjy5nJe09PGZ2ZLHjSSwnVbAmg1KE
- NIrGuQQp2JopUhWRMFOimvMoChcGhPd9g/kOK/wQXCxHm1FBtei0faca1NnapAkAqREk
- cE0EjeuvgTejjs261ohq3pZS6g98eAdtWgvbXLujnzPb+kaA5oRZbqvh0lv0Dzbx9ACR
- KXkY7pKog3XTnJtIctWHUKpobVJvpHski013JCSUEXt0mfVYupqc0QtY4npzxGy2TLwW
- 6CztIpraYiI7Bt6bwRne6eIJ/oM0bIkyzSMOxoae3irVf9RUjjk6y+vUp9tz5iyq5Icj
- 7HFg==
-X-Gm-Message-State: AOJu0YyErctV99Z6CzC4KPQGs1FHDHPSScs0OsgGwhvv4mN3xEh+oY+r
- YzBbZc8SOZt88D8H1gjhqMFNQahZClQL+KXSSqsqUG1b9CMmlsh1ISmIFzsO5Q==
-X-Gm-Gg: ASbGncvseBMcN60+2GB8+wRr3ed8i0qCAXlSR+hqJaH4U0akk4lfhaIv72VwwtZyDQ7
- XnWX+lJspc+cbUBEkxT8KVQb1oSekE0pW4w1ZgOCZ/T+FaCGK6C7MuNqG0tvVxDK8oP+PZC3glK
- tL07DZNXntvDCRp3n9sFSpJgvAaRci+7lDQCuuCqCrCztF4/cYt/ODCnXkkMTKSPyd7cfpjoEZ6
- Y2GPg7oD9hr6MyjbNRLDNqvkUrRtq7g2AFlhwIOJB5bqnYXg6LpZh+NE9iC+j0QMYhEbcuWQgUq
- uHzz1bO4rr9uxroN5dBx0F9QNHFSfy2+1VM2w7In6uJ+q5sWIvCN6awk+X3ZuzcrN+csUgWhCP3
- eJicHs39Sm0+8k0nVQQwa6DURZe1+EiDV8h/qVouu1ETGhIwXmlNJROZJRHjPgnABhRkzKeDVAa
- wck7adJPeNAAdtTT/fRLy8F7ZBbT152K7TzMkimfkg7tP5Qudvs+Xi4fQSMkdQdmnBEOPXNfCcB
- IAQQG54FFVyk+f/AwU=
-X-Google-Smtp-Source: AGHT+IG6B3yIRE4HJ07yBUcw3gsDmLmnMbWTiRBkGUNz5hRj4HLNs5/JHHB/Ay5Lpgn/97oYMFJVaA==
-X-Received: by 2002:a17:902:cecb:b0:27e:ec72:f6d with SMTP id
- d9443c01a7336-2946de3d929mr51880115ad.11.1761263398609; 
- Thu, 23 Oct 2025 16:49:58 -0700 (PDT)
+ bh=BEQEOMtu60rG98D2pD2eQ/ov/DkPTh4vzA3I2V26s10=;
+ b=pVViFA2vhpf9TY/oiDEr7zp1Hm8GqKvzKle3BEgF+JOyHEHJFNtn7WH/fGbXL6A1DF
+ K5xJ0u5WbLBl9SbwJX1F43nHFugChfhEm6OUuoq5u3po9jRcac2UfAcHQAwAk3dKRchH
+ 9LbLfLC7ZYCadnrVwx+SpcO2OTnPYzcevKGYBvqbQWRopya5p6qz1KP5zdvzsK+qjZMw
+ xVE/AFl/QPGxMwc1c/0P80jtyaPvG7wsyu7/rZs5RDme25YwaI8Ea7ILCxNULvS7dvYO
+ USh2ui9sGcQ0xkWCzP0UVk0JTZNreDaJN+SVmf72LuZB1B5utlJAdk2Lroxee6MiM/Bb
+ ccUQ==
+X-Gm-Message-State: AOJu0YywOVaIXWCUa2WGnxpWxiyJEXvqt8QU4u6pCB2c0sYSeu8xEG8r
+ 65hygBoAn7hHsq+k9OWfP7697DKt5yqi0LXDqSzJb+v1R5+npFYbK1FGBubmLA==
+X-Gm-Gg: ASbGnct3oQ4RsyqLtYLVbrO83MgCiwwdFIC4Yr7zgPNFRTgnC8I6+Wp1Q0Tu1MLcrCb
+ v+WkWIaORp2f/xD/XlSX/AcZKVci7Oo9PNhz8Lux+SCwq3QppQjra0P26j+Yw8DCeWlCoWGHOgU
+ wLpWr1fPsCliupOyqxdNOPByjt4RQ/Q7g4DKeHqYAywgsIt/K1D8WibU0qRFx3pxustRrPWNnuM
+ lNKBlHAz9QKtp7W7u2LSJ6vPIpy5qtCsffr4MMIvp+0rAT4kJtd1YfkAF2i7BJK2swW49sYkGT8
+ DN7zYdiDp9QqSR4eWXYSVArXDrEd1RyLGuI8sixOfsM/Lme2Pc6wrvf4XX8yDH+NlSovYowT31p
+ xShgFUnDWJ2oeh1xHdAwa5cSLLrc4VwqcuUJzJ2IdYsB/v9C86Tk5B+UimT2p+YbD5YKzqUox17
+ OsC1is1R28FR6ihOeUA7atRs6prKMn2Ecg09sGPJyDsqbYXe9Hab9WYVVACGAW53P8iNlGv/gOq
+ w7jgfGm6orWDSp4dK8=
+X-Google-Smtp-Source: AGHT+IFK/HyRphrwnhnVHoXZglr/25Q+W9XHcd3CDJcq8Ujln/CFynyAFkrgbHaZWk3u4L79qj1ZCQ==
+X-Received: by 2002:a17:903:240d:b0:290:ac36:2ecd with SMTP id
+ d9443c01a7336-290c9ca66famr332463385ad.14.1761263448472; 
+ Thu, 23 Oct 2025 16:50:48 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.49.55
+ d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 16:49:57 -0700 (PDT)
+ Thu, 23 Oct 2025 16:50:47 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 06/25] target/riscv: Conceal MO_TE within gen_load_idx() /
- gen_store_idx()
-Date: Fri, 24 Oct 2025 09:49:08 +1000
-Message-ID: <20251023234927.1864284-7-alistair.francis@wdc.com>
+Subject: [PULL v2 21/25] target/riscv/riscv-qmp-cmds.c: coverity-related fixes
+Date: Fri, 24 Oct 2025 09:49:23 +1000
+Message-ID: <20251023234927.1864284-22-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023234927.1864284-1-alistair.francis@wdc.com>
 References: <20251023234927.1864284-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,162 +107,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-All callers of gen_load_idx() / gen_store_idx() set the MO_TE flag.
-Set it once in the callees.
+Coverity CID 1641401 reports that, in reg_is_ulong_integer(), we're
+dereferencing a NULL pointer in "reg1" when using it in strcasecmp()
+call. A similar case is reported with CID 1641393.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+In theory that will never happen - it's guaranteed that both "reg1" and
+"reg2" is non-NULL because we're retrieving them in compile-time from
+static arrays. Coverity doesn't know that though.
+
+To make Coverity happier and add a bit more clarity in the code,
+g_assert() each token to make it clear that those 2 values aren't
+supposed to be NULL ever. Do that in both reg_is_ulong_integer() and
+reg_is_u64_fpu().
+
+We're also taking the opportunity to implement suggestions made by Peter
+in [1] in both functions:
+
+- use g_strsplit() instead of strtok();
+- use g_ascii_strcasecmp() instead of strcasecmp().
+
+[1] https://lore.kernel.org/qemu-devel/CAFEAcA_y4bwd9GANbXnpTy2mv80Vg_jp+A-VkQS5V6f0+BFRAA@mail.gmail.com/
+
+Coverity: CID 1641393, 1641401
+Fixes: e06d209aa6 ("target/riscv: implement MonitorDef HMP API")
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251010155045.78220-7-philmd@linaro.org>
+Message-ID: <20251022125643.588947-1-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_xthead.c.inc | 34 ++++++++++++----------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ target/riscv/riscv-qmp-cmds.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/insn_trans/trans_xthead.c.inc
-index 7e69906e5b..70c563664a 100644
---- a/target/riscv/insn_trans/trans_xthead.c.inc
-+++ b/target/riscv/insn_trans/trans_xthead.c.inc
-@@ -745,6 +745,7 @@ static bool gen_load_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
-     TCGv rd = dest_gpr(ctx, a->rd);
-     TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index c499f9b9a7..d5e9bec0f8 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -273,12 +273,13 @@ static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
+     }
  
-+    memop |= MO_TE;
-     tcg_gen_qemu_ld_tl(rd, addr, ctx->mem_idx, memop);
-     gen_set_gpr(ctx, a->rd, rd);
+     for (int i = 0; i < 32; i++) {
+-        g_autofree char *reg_name = g_strdup(reg_names[i]);
+-        char *reg1 = strtok(reg_name, "/");
+-        char *reg2 = strtok(NULL, "/");
++        g_auto(GStrv) reg_name = g_strsplit(reg_names[i], "/", 2);
  
-@@ -762,6 +763,7 @@ static bool gen_store_idx(DisasContext *ctx, arg_th_memidx *a, MemOp memop,
-     TCGv data = get_gpr(ctx, a->rd, EXT_NONE);
-     TCGv addr = get_th_address_indexed(ctx, a->rs1, a->rs2, a->imm2, zext_offs);
+-        if (strcasecmp(reg1, name) == 0 ||
+-            (reg2 && strcasecmp(reg2, name) == 0)) {
++        g_assert(reg_name[0]);
++        g_assert(reg_name[1]);
++
++        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
++            g_ascii_strcasecmp(reg_name[1], name) == 0) {
+             *val = vals[i];
+             return true;
+         }
+@@ -294,12 +295,13 @@ static bool reg_is_u64_fpu(CPURISCVState *env, const char *name, uint64_t *val)
+     }
  
-+    memop |= MO_TE;
-     tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
+     for (int i = 0; i < 32; i++) {
+-        g_autofree char *reg_name = g_strdup(riscv_fpr_regnames[i]);
+-        char *reg1 = strtok(reg_name, "/");
+-        char *reg2 = strtok(NULL, "/");
++        g_auto(GStrv) reg_name = g_strsplit(riscv_fpr_regnames[i], "/", 2);
++
++        g_assert(reg_name[0]);
++        g_assert(reg_name[1]);
  
-     return true;
-@@ -771,32 +773,32 @@ static bool trans_th_lrd(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
-     REQUIRE_64BIT(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_SQ, false);
-+    return gen_load_idx(ctx, a, MO_SQ, false);
- }
- 
- static bool trans_th_lrw(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_SL, false);
-+    return gen_load_idx(ctx, a, MO_SL, false);
- }
- 
- static bool trans_th_lrwu(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
-     REQUIRE_64BIT(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_UL, false);
-+    return gen_load_idx(ctx, a, MO_UL, false);
- }
- 
- static bool trans_th_lrh(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_SW, false);
-+    return gen_load_idx(ctx, a, MO_SW, false);
- }
- 
- static bool trans_th_lrhu(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_UW, false);
-+    return gen_load_idx(ctx, a, MO_UW, false);
- }
- 
- static bool trans_th_lrb(DisasContext *ctx, arg_th_memidx *a)
-@@ -815,19 +817,19 @@ static bool trans_th_srd(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
-     REQUIRE_64BIT(ctx);
--    return gen_store_idx(ctx, a, MO_TE | MO_SQ, false);
-+    return gen_store_idx(ctx, a, MO_SQ, false);
- }
- 
- static bool trans_th_srw(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_store_idx(ctx, a, MO_TE | MO_SL, false);
-+    return gen_store_idx(ctx, a, MO_SL, false);
- }
- 
- static bool trans_th_srh(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_store_idx(ctx, a, MO_TE | MO_SW, false);
-+    return gen_store_idx(ctx, a, MO_SW, false);
- }
- 
- static bool trans_th_srb(DisasContext *ctx, arg_th_memidx *a)
-@@ -839,32 +841,32 @@ static bool trans_th_lurd(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
-     REQUIRE_64BIT(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_SQ, true);
-+    return gen_load_idx(ctx, a, MO_SQ, true);
- }
- 
- static bool trans_th_lurw(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_SL, true);
-+    return gen_load_idx(ctx, a, MO_SL, true);
- }
- 
- static bool trans_th_lurwu(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
-     REQUIRE_64BIT(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_UL, true);
-+    return gen_load_idx(ctx, a, MO_UL, true);
- }
- 
- static bool trans_th_lurh(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_SW, true);
-+    return gen_load_idx(ctx, a, MO_SW, true);
- }
- 
- static bool trans_th_lurhu(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_load_idx(ctx, a, MO_TE | MO_UW, true);
-+    return gen_load_idx(ctx, a, MO_UW, true);
- }
- 
- static bool trans_th_lurb(DisasContext *ctx, arg_th_memidx *a)
-@@ -883,19 +885,19 @@ static bool trans_th_surd(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
-     REQUIRE_64BIT(ctx);
--    return gen_store_idx(ctx, a, MO_TE | MO_SQ, true);
-+    return gen_store_idx(ctx, a, MO_SQ, true);
- }
- 
- static bool trans_th_surw(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_store_idx(ctx, a, MO_TE | MO_SL, true);
-+    return gen_store_idx(ctx, a, MO_SL, true);
- }
- 
- static bool trans_th_surh(DisasContext *ctx, arg_th_memidx *a)
- {
-     REQUIRE_XTHEADMEMIDX(ctx);
--    return gen_store_idx(ctx, a, MO_TE | MO_SW, true);
-+    return gen_store_idx(ctx, a, MO_SW, true);
- }
- 
- static bool trans_th_surb(DisasContext *ctx, arg_th_memidx *a)
+-        if (strcasecmp(reg1, name) == 0 ||
+-            (reg2 && strcasecmp(reg2, name) == 0)) {
++        if (g_ascii_strcasecmp(reg_name[0], name) == 0 ||
++            g_ascii_strcasecmp(reg_name[1], name) == 0) {
+             *val = env->fpr[i];
+             return true;
+         }
 -- 
 2.51.0
 
