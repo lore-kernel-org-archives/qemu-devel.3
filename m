@@ -4,70 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ABA0CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5583CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuJl-00059T-4E; Thu, 23 Oct 2025 08:21:21 -0400
+	id 1vBuLf-0007yx-5n; Thu, 23 Oct 2025 08:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuG5-0001Fo-4r
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:42 -0400
+ id 1vBuFz-00018c-L9
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:32 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuG0-0006Ql-V8
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:32 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N8E5dM027671;
- Thu, 23 Oct 2025 12:17:18 GMT
+ id 1vBuFw-0006P4-30
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:27 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59NA8tmJ014597;
+ Thu, 23 Oct 2025 12:17:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0sCM4u
- 3iEphtHlN1dpt9qYhAiTLimDJuilK5EN4Zb0g=; b=hMbO3YwuLjhu7BsQ+k8hZ2
- hgSLJMW6AeEqY3V2ApObI0OfFNNqiJiZ3+eiJZEvg7pm/puoBVpr2T6CDumv7jST
- RlyeLRhaVcYPeRimROdSXueN7sdy0rZLRIx9cZcAX4BMLZ8Ld7z75Cjoh+MHBxn7
- FlFpmO5WO1VpYZuGMjImj9gxfHBW3/P1beCp/BpKQYGWUiQzA4rVOHdywh6m3/Ex
- nB9f+lD2WMzcNvY/lg51hb7J+MNLGhkwVpvVlAJ96MiYcVI9NEOHPR6MNYyayT2H
- 0UJmMOLDoY4XJUNkGw6hcsj/xd8F45/uBUvx2zvrenUO0C1vdQu+dfjWCx1v5VSQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jiEKWW
+ yOzFcKs9G5MbbG6wff0diB/5Hd2AkM87nJ2BM=; b=J+yZuQ1Wi56YiE74IwnJR9
+ sFu4dXFw6cIPLdUEiZI+70Tkaz0TzJRMAGTnYR1NPD/u2L/RneuzvUILCYY04nbM
+ KPvo0kWb5aB+Fyy0pjdX1MY6nRUqWwBT31q0xW7njv9xK/2liInkEHShX3Ptdgb6
+ zwA7LWqVLH4kE2OEdtLN8FxXtvwrYD/o5L7QIzM4/C4tAJIR+E+4aObO3e1TK95r
+ pWkKVpr9qqYMcgkR4lxrkK5HDHzMY+2H5GK68JZv4bHsGudHIH/hjeKm3xhI0R6Z
+ Bd2ZAmo+AMqQOu3vbkFXs93flRYTSI+NqW/vcblvDr/pCd2h1OAGLd0238fJt+sQ
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33fj25n-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31sa1a5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 12:17:18 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAVjT5002926;
- Thu, 23 Oct 2025 12:17:17 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejne3u-1
+ Thu, 23 Oct 2025 12:17:20 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAgTZn024953;
+ Thu, 23 Oct 2025 12:17:09 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqk5huy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 12:17:17 +0000
+ Thu, 23 Oct 2025 12:17:09 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NCHGfX8323448
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NCH7vB56623512
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 12:17:16 GMT
+ Thu, 23 Oct 2025 12:17:07 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1CB122004B;
- Thu, 23 Oct 2025 12:17:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 13FB620043;
+ Thu, 23 Oct 2025 12:17:07 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 11E4620040;
- Thu, 23 Oct 2025 12:17:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4F73020040;
+ Thu, 23 Oct 2025 12:17:06 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 12:17:14 +0000 (GMT)
+ Thu, 23 Oct 2025 12:17:06 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 11/32] ppc/spapr: remove deprecated machine pseries-4.2
-Date: Thu, 23 Oct 2025 17:46:30 +0530
-Message-ID: <20251023121653.3686015-12-harshpb@linux.ibm.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 04/32] hw/ppc/spapr: Inline spapr_dtb_needed()
+Date: Thu, 23 Oct 2025 17:46:23 +0530
+Message-ID: <20251023121653.3686015-5-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023121653.3686015-1-harshpb@linux.ibm.com>
 References: <20251023121653.3686015-1-harshpb@linux.ibm.com>
@@ -75,28 +73,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68fa1cce cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-ORIG-GUID: OXh7yQTMHBOo4i4L0KPy5UELvoTFIDkA
+X-Proofpoint-GUID: OXh7yQTMHBOo4i4L0KPy5UELvoTFIDkA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXyfq8qgNeGwsx
+ Nv+C2sGF+f2qV8VkN9Cakb75NMSoNq8IfRk2q+VY34xdDlfncndDP8l73IkidTg6xN3USJW5w7y
+ 7Hk03OB2k8QuACsz+aKK65SLO7430ldQPsFUah2nRXGLNkb/rc3fR6/ZOGCGNeGdVIZWdjJ2nvX
+ Qrt0eEPqetGwqPuuJmNcpZximKw3PJRH2JcKp4//s/FPhyntCd3NBZM8lmaXUp49QjtmcMSzJBB
+ PfCqbg5oAesDNvYvKyCu98YbxnZ1LrCPd1YJ6dZDrB1LwjnbWXkTa0iG0AS4ttzR+V6CsDY/e/a
+ KdmdpSSqns/2mNenF3z9M01NZEVPlK0Y4fNueDiKsRmmy+PyJ6nziNcfGVghbmo4lN01Wdeblqq
+ 75qiFT8n4HHumSgNwhZwg2WXWT2MQw==
+X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fa1cd0 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=aow-egSQAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=MSIEXOgWn6CInn48Bo0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=gFNbaldVC-z-bsjSTzMo:22
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: R9BLaSV8kj9gdNIXAOLypXznP8pYfwaN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX4BI40EPmQ9Sp
- AaSJwzHpmaOb8Z0qECOXEvhbZXlCy7LZVlURAB6aJ4XzCS9ac+vmCbeFy2dcpOewh0XRnEhZJha
- uOFBD4kJ+vj5/R92T8s3CHb4Jfw/yH8Sgsg+a/jcq8aouOypbeM2SPvQ4dgtIJkmywpwGI8rtz3
- QibT+9MlO8BBdJmSWurXTKlp8cfncE+gWNBfCRkrc84CYIHeLYKIrr9KJTzg/PMgvlwP7asKXkC
- UHfnX15lKHpAvkouRSh1wwtMBboCNua/+3Cn0HnR3tcz8gzXbbe6PPNBp3gXjJ2YBKIq34qgw1T
- ufH9a9khzkitWRbS9NZhPzCDLWW9nAulMlJSGbt2XyWOBy7MAEdxqGLW3FCP04xgNgSP6qtReGz
- Qa66VM8kSSyRyIQ/NhT7KVwxEbAoDQ==
-X-Proofpoint-ORIG-GUID: R9BLaSV8kj9gdNIXAOLypXznP8pYfwaN
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=aeNWSmdylBY4NdqMzywA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
@@ -124,83 +122,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pseries-4.2 machine specific logic as had been deprecated and
-due for removal now as per policy.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251021084346.73671-12-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20251021084346.73671-5-philmd@linaro.org
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- include/hw/ppc/spapr.h |  1 -
- hw/ppc/spapr.c         | 27 ---------------------------
- 2 files changed, 28 deletions(-)
+ hw/ppc/spapr.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 60d9a8a037..b9d884745f 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -141,7 +141,6 @@ struct SpaprCapabilities {
- struct SpaprMachineClass {
-     MachineClass parent_class;
- 
--    hwaddr rma_limit;          /* clamp the RMA to this size */
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
-     bool pre_6_2_numa_affinity;
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 0e6218dc9c..117da76a3d 100644
+index efeea03741..ab46e3bd60 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -2729,7 +2729,6 @@ static PCIHostState *spapr_create_default_phb(void)
- static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
- {
-     MachineState *machine = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     hwaddr rma_size = machine->ram_size;
-     hwaddr node0_size = spapr_node0_size(machine);
+@@ -2053,11 +2053,6 @@ static const VMStateDescription vmstate_spapr_irq_map = {
+     },
+ };
  
-@@ -2742,15 +2741,6 @@ static hwaddr spapr_rma_size(SpaprMachineState *spapr, Error **errp)
-      */
-     rma_size = MIN(rma_size, 1 * TiB);
- 
--    /*
--     * Clamp the RMA size based on machine type.  This is for
--     * migration compatibility with older qemu versions, which limited
--     * the RMA size for complicated and mostly bad reasons.
--     */
--    if (smc->rma_limit) {
--        rma_size = MIN(rma_size, smc->rma_limit);
--    }
--
-     if (rma_size < MIN_RMA_SLOF) {
-         error_setg(errp,
-                    "pSeries SLOF firmware requires >= %" HWADDR_PRIx
-@@ -4913,23 +4903,6 @@ static void spapr_machine_5_0_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE(5, 0);
- 
--/*
-- * pseries-4.2
-- */
--static void spapr_machine_4_2_class_options(MachineClass *mc)
+-static bool spapr_dtb_needed(void *opaque)
 -{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--
--    spapr_machine_5_0_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_4_2, hw_compat_4_2_len);
--    smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] = SPAPR_CAP_OFF;
--    smc->default_caps.caps[SPAPR_CAP_FWNMI] = SPAPR_CAP_OFF;
--    smc->rma_limit = 16 * GiB;
--    mc->nvdimm_supported = false;
+-    return true; /* backward migration compat */
 -}
 -
--DEFINE_SPAPR_MACHINE(4, 2);
--
- static void spapr_machine_register_types(void)
+ static int spapr_dtb_pre_load(void *opaque)
  {
-     type_register_static(&spapr_machine_info);
+     SpaprMachineState *spapr = (SpaprMachineState *)opaque;
+@@ -2073,7 +2068,6 @@ static const VMStateDescription vmstate_spapr_dtb = {
+     .name = "spapr_dtb",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = spapr_dtb_needed,
+     .pre_load = spapr_dtb_pre_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(fdt_initial_size, SpaprMachineState),
 -- 
 2.43.5
 
