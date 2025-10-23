@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511C9CCF9E0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45723CCD193
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC54j-0004gP-VN; Thu, 23 Oct 2025 19:50:33 -0400
+	id 1vC54T-000490-5D; Thu, 23 Oct 2025 19:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54i-0004bC-6e
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:32 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1vC54R-000436-1J
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:15 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54g-0007R6-4g
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:31 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-28e7cd6dbc0so18592165ad.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:29 -0700 (PDT)
+ id 1vC54N-0007MR-Cx
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:13 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-290ab379d48so13783995ad.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761263428; x=1761868228; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761263409; x=1761868209; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DSdBIzUFAJ8jmSWRkWF95NhSo1Eq4JPgHiE1RjnAzx0=;
- b=TqgZvelAsjBAKh+kZOzdNCQ76MHoASnw1Z3LKzLNJOG9fYqPrUz9Lk85HfQZ28mMIS
- cbHbJiOcgZXjty+sWYoVR5XvOI5vh6K84+V9t/e0gopzHoa5tBMTYtoj6bcD0He5yawh
- SLr3jzKpgDfkhNp9fRqz/uT/aBD0afe6oSWbwu/NQ7DwKyizLfgGhNWcq6OaHdr6CjMe
- 5tKSrh/zd1Axxf/zcJRqkbiZxohYXC3vPyRAeWaHpiwXPylIoi8Dm3FsFWP72iJW8FJY
- aEuU4RJ6wF2NY+Z64bzaBcL003dFEnRJUwQOeAPnIVg7K9oMIZhuRKApKBXB1mW/kkQk
- G1Ig==
+ bh=d5FE2heCAcRJvSP8v6hzQsEmDuz5OULa6o5imBMV2Lo=;
+ b=NwjIc18gZxdBIBG1dL75s0aVQ6ByPVeVFAb+9iubfXbHo+CVsB9DQ+bqFGInfT35gp
+ Qxuhknm7K8zZNOceuiOY+6Jd4dNiSoElf2M+1c4erFpfNmmG65HP9Vbobd1nr1Inf4dP
+ nWQHZi80o1x6Mpnb+GZvlKVnAs3gfrAUjwSb370OkAEpwVMweQOAiL1Xjha6Ux9KWYAF
+ j4vCoMEBKvup8dM4DPAcBNSv9gU2EUGVGj8Mv7OC1Pog1J1OJCUdCjSJeKmxrFa0bI8j
+ KXjkRQPFtjMuY9VGcCzEw97D1hbup6tjcs+8r9FAJZqxebKsZNToK3xBFFp7D10kmvrp
+ H8eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761263428; x=1761868228;
+ d=1e100.net; s=20230601; t=1761263409; x=1761868209;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DSdBIzUFAJ8jmSWRkWF95NhSo1Eq4JPgHiE1RjnAzx0=;
- b=enT0GzvO4/sVrkIidaNw3edBQsfsDjsEkvpDyjXs1CertjsDafrx0d+4mzb7XtBK+o
- 2Wda4H6ARMWGfNh3jcTvqSUolm5hNi25Mi/Z+NVfxhgIIcVRpJ1JEI3F8MoG+ala7076
- hdICjtn4BnAkKda/IhGfDku9cYouQevKslX356k18sE47X45o/cjx8f1UDDXGcrD+Nbk
- QV8Z6wZeVzL/3/tx3mT4KTTfhZWIcqRfRMGNeNeo46okHPadC1s2X+pnONE4YkZRit3S
- PGzI4G5JYgm3lErHjiz23tTNBsG+LxnuvUHzTwf6IewQ50BWym0EELC4qjYha3UV0XNO
- tZeg==
-X-Gm-Message-State: AOJu0YxqQvSZpFO58BGHoDxwFTKuzOamYStAPbdqZe08Ly5qw4QO/Dze
- rISFtGH9YIZy8A9afNCkovj8oKfGn4++afzS9chp+GFqsCSoSrJ5SY06gfXKKA==
-X-Gm-Gg: ASbGncukGFHQekJjBntvVgydp3sYOJORFMQ7GQByLOOk6ZBzRojeVkRxQZMj+OHukvt
- LjqdfZisJX6ghge5woEDADbpdeyD0P0sAlDwaWxG4pYvXtSzcgqeGO4j3thgUK+xlDN8s5wcm2l
- EQ8oKqK4Y8SvLuw8j6Gv/QxEH/ulzMsW9lpS/98y4R2Cvta8a6VOKKqYfHQ5RkW58zAWbmMeQ02
- y6oCcpcJOYdLgHWaUZy0RtLNpQVhyxvUG3EWHL+VtsgMJPNv3G1eHZEh8kdfmE/+3YWuFzKnfW6
- kRk58/J0fcXXFwXz8nEqUvvFTtR5rxbqJon3ZjN94NZVe5drlRnix7XQceDGkdaVuHc40Ftz/9Z
- jAOcFqKqb3a1IAUzty5i6e9JEi7EdaSFb5fBQsezXmfu9+q4puMJDUYThYlZqYorTUPRounpDOJ
- lDBajxdz7V9dCn9z60h7yfvOxJM1k0PsCBCNdYXmUjtg4jZLEODA0Eoq/mAqrB6jOXgeNh4kgMo
- IvqfmV9
-X-Google-Smtp-Source: AGHT+IGDfCxSQTgX1Ucivyhvv2syL2OJX+KyuSEZw48bnpdRHh9jzBQx6gaY6IdU2LJ1FG5sXJX1fw==
-X-Received: by 2002:a17:903:238b:b0:26b:3aab:f6b8 with SMTP id
- d9443c01a7336-2948ba7c997mr2412085ad.58.1761263428306; 
- Thu, 23 Oct 2025 16:50:28 -0700 (PDT)
+ bh=d5FE2heCAcRJvSP8v6hzQsEmDuz5OULa6o5imBMV2Lo=;
+ b=HD5vcE6gulEWzX4o1QI79831EyfUuTq44hnkqfdu8miwMGWliMsSNyshIMyWP1XtpZ
+ KdQ/4SpER0UR9AYjvFfbXZbfWGVFCkS40VcZhOW9vcF3B5CxC1tjQJci9fzD0m7fISB/
+ xQFqwaCHbl19IRLALZf8JoHsaO1u3/3nCLdF2wWoyb7hMteNMVjvGFW4u8P85OUpg3bQ
+ 4Wg2nbAavylfSIkyGeJF57txIDcnnDwl9RfcHKFWIHnKh+aBAUKLwECY/7InZC+iHssM
+ FyP2Z18aC1woV687JGpVYmELl/FNtuqxITI6hCyy6N2q+pWpkUGwQMOCslF3G8o7ad6Y
+ gsaw==
+X-Gm-Message-State: AOJu0YxO3zEuFaY3wdUTXjn+WNPiiSF4nP7POxi1QoBVxbuTq8CZPQxe
+ dEkXHB9HcwfUqFL1/ZrdbQIw/qBR6ieUBtTWTiMskd6OAR+DccDt8yljIB1klQ==
+X-Gm-Gg: ASbGncvbNi9XscMKpjaPLBLsj+PzPhosKiFev6xI12lhwaUkh3QkzrAHQDd90rgIr3K
+ 43ZQ4wFMx0T49woA68bMtrEq12Un8Jx2EJsZMBde1DP5a9fJRh0k8cSUaSOrh7j90MPusjqqeux
+ 9Tqt9PInCVMam8KW85c7KM8A7LrZE+yFqcHR4qnNuj3/EKH+cmQ4XpUSXmhjhr5HwpgmIiRishY
+ TlFwZoVuV3qvfq++lMZKYJByEXYsBGYwTo2JRX6KFunnAGl5mAwMpYgqh4otSVt1+LeTwW7oMPY
+ Lc3Rqj1rs+b7WnsHur8zeKV2xNr22A/CE0uhvvCxtbPqSTrnL2/5IviZWlrNVA7opIqYOxnq/3m
+ eck4nOVqzyE9bEtCSPyMxf4MnFIPbQVz7D6uJQc38ZyS8hTgRx9mjMptVmsJ0+Sr6hpY0xwe12N
+ cq3+O24I9E/InPgsPp1zOikm0coF6LS/5Ut8G7UfblNE0CwPYMA4ge59PC0oBqUhHxFeNbr3LKA
+ pEbEaEFs1jW9zKH1+k=
+X-Google-Smtp-Source: AGHT+IE1H4Xrgu14c29Ihaikih9omAnDA8Qmptu/dG4xHFzg+5dvShJZnh2hTfz+aNECJidEG9ECUw==
+X-Received: by 2002:a17:903:2b06:b0:272:f9c3:31fb with SMTP id
+ d9443c01a7336-290cba4dbb5mr335398585ad.58.1761263408737; 
+ Thu, 23 Oct 2025 16:50:08 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.25
+ d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 16:50:27 -0700 (PDT)
+ Thu, 23 Oct 2025 16:50:08 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Guenter Roeck <linux@roeck-us.net>,
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 15/25] hw/riscv: microchip_pfsoc: Connect Ethernet PHY
- channels
-Date: Fri, 24 Oct 2025 09:49:17 +1000
-Message-ID: <20251023234927.1864284-16-alistair.francis@wdc.com>
+Subject: [PULL v2 09/25] target/riscv: Conceal MO_TE within gen_cmpxchg*()
+Date: Fri, 24 Oct 2025 09:49:11 +1000
+Message-ID: <20251023234927.1864284-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023234927.1864284-1-alistair.francis@wdc.com>
 References: <20251023234927.1864284-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,38 +109,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251004200049.871646-3-linux@roeck-us.net>
+All callers of gen_cmpxchg() / gen_cmpxchg64() set the MO_TE flag.
+Set it once in the callees.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251010155045.78220-10-philmd@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/microchip_pfsoc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/translate.c                    | 1 +
+ target/riscv/insn_trans/trans_rvzabha.c.inc | 2 +-
+ target/riscv/insn_trans/trans_rvzacas.c.inc | 7 ++++---
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 2e74783fce..9fbfba8ece 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -414,6 +414,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 94af9853cf..2e6f39aa02 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1156,6 +1156,7 @@ static bool gen_cmpxchg(DisasContext *ctx, arg_atomic *a, MemOp mop)
+     TCGv src1 = get_address(ctx, a->rs1, 0);
+     TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);
  
-     object_property_set_int(OBJECT(&s->gem0), "revision", GEM_REVISION, errp);
-     object_property_set_int(OBJECT(&s->gem0), "phy-addr", 8, errp);
-+    object_property_set_bool(OBJECT(&s->gem0), "phy-connected", false, errp);
-+
-     sysbus_realize(SYS_BUS_DEVICE(&s->gem0), errp);
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem0), 0,
-                     memmap[MICROCHIP_PFSOC_GEM0].base);
-@@ -422,6 +424,8 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
++    mop |= MO_TE;
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     tcg_gen_atomic_cmpxchg_tl(dest, src1, dest, src2, ctx->mem_idx, mop);
  
-     object_property_set_int(OBJECT(&s->gem1), "revision", GEM_REVISION, errp);
-     object_property_set_int(OBJECT(&s->gem1), "phy-addr", 9, errp);
-+    object_property_set_link(OBJECT(&s->gem1), "phy-consumer",
-+                             OBJECT(&s->gem0), errp);
-     sysbus_realize(SYS_BUS_DEVICE(&s->gem1), errp);
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->gem1), 0,
-                     memmap[MICROCHIP_PFSOC_GEM1].base);
+diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
+index c1f99b65f0..302c63f2a3 100644
+--- a/target/riscv/insn_trans/trans_rvzabha.c.inc
++++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
+@@ -141,5 +141,5 @@ static bool trans_amocas_h(DisasContext *ctx, arg_amocas_h *a)
+ {
+     REQUIRE_ZACAS(ctx);
+     REQUIRE_ZABHA(ctx);
+-    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_SW);
++    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_SW);
+ }
+diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/insn_trans/trans_rvzacas.c.inc
+index 5e7c7c92b7..d850b14264 100644
+--- a/target/riscv/insn_trans/trans_rvzacas.c.inc
++++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
+@@ -25,7 +25,7 @@
+ static bool trans_amocas_w(DisasContext *ctx, arg_amocas_w *a)
+ {
+     REQUIRE_ZACAS(ctx);
+-    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_SL);
++    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_SL);
+ }
+ 
+ static TCGv_i64 get_gpr_pair(DisasContext *ctx, int reg_num)
+@@ -76,6 +76,7 @@ static bool gen_cmpxchg64(DisasContext *ctx, arg_atomic *a, MemOp mop)
+     TCGv src1 = get_address(ctx, a->rs1, 0);
+     TCGv_i64 src2 = get_gpr_pair(ctx, a->rs2);
+ 
++    mop |= MO_TE;
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     tcg_gen_atomic_cmpxchg_i64(dest, src1, dest, src2, ctx->mem_idx, mop);
+ 
+@@ -88,10 +89,10 @@ static bool trans_amocas_d(DisasContext *ctx, arg_amocas_d *a)
+     REQUIRE_ZACAS(ctx);
+     switch (get_ol(ctx)) {
+     case MXL_RV32:
+-        return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
++        return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_UQ);
+     case MXL_RV64:
+     case MXL_RV128:
+-        return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
++        return gen_cmpxchg(ctx, a, MO_ALIGN | MO_UQ);
+     default:
+         g_assert_not_reached();
+     }
 -- 
 2.51.0
 
