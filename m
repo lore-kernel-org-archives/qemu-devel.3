@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7AB9CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDBCCCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBvMv-0007yA-QJ; Thu, 23 Oct 2025 09:28:41 -0400
+	id 1vBvXx-0003Kc-1q; Thu, 23 Oct 2025 09:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBvMt-0007xE-1u
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:28:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vBvMp-0001Gp-0x
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:28:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761226111;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OF2nA1METujzPjHJV1HljOWiHhBhgZvjTGkE2DUFBmA=;
- b=g7o9CxhAsi+pCsefCUwAIXnFj9CgGRLKN86ZltAnAg0fmgiMaS6rCn/UJpom/1BrOR3Jjj
- pKK7z3ET6FKPd0LkzY36OOIvNthHIehwEFBAQuhNa69qy7BRdwAXvNj2l2GfdwU+8x+2om
- A3F/q4YSLwAIIRdr+Ow0sNikN8d1/04=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-hcROlVZUM1ueR6zyIm6Z5w-1; Thu,
- 23 Oct 2025 09:28:29 -0400
-X-MC-Unique: hcROlVZUM1ueR6zyIm6Z5w-1
-X-Mimecast-MFC-AGG-ID: hcROlVZUM1ueR6zyIm6Z5w_1761226108
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C9AF18002C9; Thu, 23 Oct 2025 13:28:28 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.138])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D3CF19540E9; Thu, 23 Oct 2025 13:28:27 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 85BEA1800850; Thu, 23 Oct 2025 15:28:25 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vBvXm-0003IX-DY
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:39:55 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vBvXj-0002US-RR
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:39:54 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b6d345d7ff7so84464666b.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 06:39:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761226789; x=1761831589; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uu7f2cPMreAu/FEx0SmABAsEb+pXYwyUwIKtWIb8WKU=;
+ b=oOKlpbd3KjL6ulbxWQC9VLn8+yi8uA8Yt8m84Kv2/WLsO9uAvYujgfja/JcjamoorU
+ rpPMGBIGi3iO/ueU73G04RSZbRFF19ZD34X3U3EJklq6Pv1WkNwhTiR52Si9DwzUqMzn
+ 6t5qK+iZWEkLmRX2xC5uO1+lWb5P1h9vRSzaQZXn6Uam7iCrRY25lLIRqn95EmNFoz2D
+ ITscc2uh4LfW4KJ8aGTUpvVuFf7jhc+jxZ+AEeYBJECZmibpn7owpTvZf576dECdMufl
+ SSmLPWxxLiFeerFeKC0ojHqKAdomqrxhkbUzTSfAceXkUgbVKcl+2gGZclf3CFL2iGDe
+ 9ulA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761226789; x=1761831589;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Uu7f2cPMreAu/FEx0SmABAsEb+pXYwyUwIKtWIb8WKU=;
+ b=sfZLgp+VJ7pPi9vqAfgWI++YNqp4LEEEd5+BH78H6TFSPs1hu290sAd59F8qIUK1Nm
+ 5u5Jp673NNEUFO9xrw+1FGxEY7ANJqX20moTb0XMW+QFD4uKFbwQax4EmU1AK9qXHRNF
+ 45RP/E0RpVNWYx9z7SVrdUSVP/C6aebxCqLwp6780LUM56eJICOgu+2jsgBDU9dXZABI
+ PnhojtGjnQ9qSlR5fG/Z/H8dr7GewHt+rnmIHl3zpQ+zeXkXwByA/k9Oq3Bc1lxj9AVi
+ DM2TIblKckOZRF636Xh7tZipblb4Jlvs6RWbNTyKLy+hZs5frzTVBasEMsu9ZysntQ/f
+ XjUQ==
+X-Gm-Message-State: AOJu0YxvSH3L0SFiaqiviuNPwK3NGP2HcijaO4prHx/eWX+DkPQMGtMj
+ R6Y1zrfj8ef/VcKLrQbIa8+RhZx+ydoDIebPd5ZHc0q+wM+AUQl9ONlcuwb2g7oMc90=
+X-Gm-Gg: ASbGncvTfMyURtAoe5VpH29lMSNyJKwBHp1miele/fLKqmjhE5j4PpN1TufqYvefotV
+ TybIcm5XqnRnMapLiI3TQ0DV4LaixNbZfYN+8NRbRPeVLD00GCrDMYQ9wVrY76ROk5zQM57FOx+
+ sXUr0NNEExpX0vhQuGK+sN/OGa28ZhI23goKXA8zaiPMXz5TvFcgBAIk8EKnkAGr75Hsk0TU/OX
+ Qs/ZQzG7DiMTOAoCy7FBBol3Pvtyo6qPMte1ruB6c7NM8MlcZHC47JkE8ddmYZ05EORgVatwdRP
+ 8Dj7KtaigSCK8JDx8NjVbAFnXoMXf2kDtQIKA033LbTASpynsgdpLzX7rbvl3A5BsthbeJAtcwC
+ +jiLC/hjMeAQ2ivwcwBvU+HRpqnc3kH+O4E+45fntfBtHOQ5m3CcCMjuw0715d8mAhUmb8mYaQB
+ QO
+X-Google-Smtp-Source: AGHT+IGKMRQXIzhPyDKn5b0RBHZeQ9iiLum0PmzyXO5v5tUQ/RuolL79sa74YPUUGA7SWgGBb8kNvg==
+X-Received: by 2002:a17:907:96aa:b0:b38:49a6:5839 with SMTP id
+ a640c23a62f3a-b6d2c7216f9mr994931766b.11.1761226789341; 
+ Thu, 23 Oct 2025 06:39:49 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d5f019b0dsm49844866b.53.2025.10.23.06.39.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Oct 2025 06:39:48 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E3DE05F7F5;
+ Thu, 23 Oct 2025 14:39:47 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/1] hw/uefi/ovmf-log: Fix memory leak in hmp_info_firmware_log
-Date: Thu, 23 Oct 2025 15:28:25 +0200
-Message-ID: <20251023132825.338615-2-kraxel@redhat.com>
-In-Reply-To: <20251023132825.338615-1-kraxel@redhat.com>
-References: <20251023132825.338615-1-kraxel@redhat.com>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [RFC PATCH] plugins/core: add missing QEMU_DISABLE_CFI annotations
+Date: Thu, 23 Oct 2025 14:39:43 +0100
+Message-ID: <20251023133943.3025569-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,37 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Most of the memory callbacks come directly from the generated code
+however we have do have a a direct from C callback for the slow-path
+and memory helpers.
 
-The FirmwareLog object returned by qmp_query_firmware_log() was
-not being freed, causing a memory leak.
+There is also a reset callback that calls out to plugins.
 
-Use g_autoptr to ensure the object is automatically freed when
-it goes out of scope.
+Like the other plugin points we need to disable CFI as we are making
+function calls to dynamically linked libraries.
 
-Fixes: c8aa8120313f ("hw/uefi: add 'info firmware-log' hmp monitor command.")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251023063106.9834-1-zhaoguohan_salmon@163.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3175
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/uefi/ovmf-log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plugins/core.c   | 1 +
+ plugins/loader.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-index 98ebb0209491..850ef21f8859 100644
---- a/hw/uefi/ovmf-log.c
-+++ b/hw/uefi/ovmf-log.c
-@@ -261,7 +261,7 @@ void hmp_info_firmware_log(Monitor *mon, const QDict *qdict)
-     g_autofree gchar *log_esc = NULL;
-     g_autofree guchar *log_out = NULL;
-     Error *err = NULL;
--    FirmwareLog *log;
-+    g_autoptr(FirmwareLog) log = NULL;
-     gsize log_len;
-     int64_t maxsize;
+diff --git a/plugins/core.c b/plugins/core.c
+index 35a252d2729..8f8bc7219c2 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -668,6 +668,7 @@ void exec_inline_op(enum plugin_dyn_cb_type type,
+     }
+ }
  
++QEMU_DISABLE_CFI
+ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                              uint64_t value_low,
+                              uint64_t value_high,
+diff --git a/plugins/loader.c b/plugins/loader.c
+index ba10ebac993..0dbe7bea263 100644
+--- a/plugins/loader.c
++++ b/plugins/loader.c
+@@ -318,6 +318,7 @@ struct qemu_plugin_reset_data {
+     bool reset;
+ };
+ 
++QEMU_DISABLE_CFI
+ static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
+ {
+     struct qemu_plugin_ctx *ctx = data->ctx;
 -- 
-2.51.0
+2.47.3
 
 
