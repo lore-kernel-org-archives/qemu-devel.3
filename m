@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BD3CCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 10:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E277FCCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 10:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBsNc-0003EU-GD; Thu, 23 Oct 2025 06:17:12 -0400
+	id 1vBsNw-0003Ib-Rn; Thu, 23 Oct 2025 06:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vBsNN-0003Di-Ru
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:16:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vBsNp-0003Fj-85
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:17:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vBsNJ-0004qT-Sa
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:16:57 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vBsNm-0004rt-EZ
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:17:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761214611;
+ s=mimecast20190719; t=1761214640;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NACNEBvSgZpW2mk4FNsjRF6+gFRoCkATDeRGg4HRw14=;
- b=T0rBrGyzSrthF0rSXGMj2riB3AEgNoGnT67EUxg4755Q6a12iGX6lp1FHuZ0mxdViIIff3
- BBu0hZQIrB/LF5Jdg1/zYJYIbG2EKBfOS5XDKyj0ug6GukXsypvmpbvP6rvkHn72fy+3fY
- uMGt+UCXHf5rAsGqh3K/8GTQeiQ0rIQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=55665LDHlH2/K6s71Rp7vVH/8waNkeXUSCb3nmQ26Kw=;
+ b=IjK4l3z3Ws4TbjqEgVOT5uXbZqainw249HNiLjttMHPMKj7KapDbUx6WjUYWoCVDvNdn4B
+ yuUoeMcApk7XG+Nx0IVd0GHT3LaJTeJrtPAaOq+67NXFHeSmthVaQIgaBwSvp8YVlmCoLF
+ 8y7se8/xCkoFVPD4P5UaNcVzIL7B28U=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-ymcgfrHAO1CZ2OZCx0ayTA-1; Thu, 23 Oct 2025 06:16:49 -0400
-X-MC-Unique: ymcgfrHAO1CZ2OZCx0ayTA-1
-X-Mimecast-MFC-AGG-ID: ymcgfrHAO1CZ2OZCx0ayTA_1761214608
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-426d4f59cbcso1055306f8f.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 03:16:49 -0700 (PDT)
+ us-mta-368-Eel_--nFOCijCsGRd2LFaQ-1; Thu, 23 Oct 2025 06:17:18 -0400
+X-MC-Unique: Eel_--nFOCijCsGRd2LFaQ-1
+X-Mimecast-MFC-AGG-ID: Eel_--nFOCijCsGRd2LFaQ_1761214637
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-471125c8bc1so5569745e9.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 03:17:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761214608; x=1761819408;
+ d=1e100.net; s=20230601; t=1761214637; x=1761819437;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NACNEBvSgZpW2mk4FNsjRF6+gFRoCkATDeRGg4HRw14=;
- b=MkKAsMlRxq5sBWQwuOumOsxubUDQV5a8ReIUwFrA4uBBOi26YinfyBmc4fsHHIrpj0
- 8C1kx/DDXCbLTrYudK2fRAVYLL9aN3cH/1c6HiFkNfR0HaK2URB9+YyAVJtUp9ILmQK6
- Tmn2mN3dm1yyMQJ6xwDCwDOC+eh/fWF+OQJWlKhE2CpcuwbLhuPoCpaK+zqARdnqkxBJ
- 6ore9nYv4/NEACEb+S4bhj5Ja/kQjgSKp/saoFXgejzk4CQTpRHsWFAojZXOIUNZw0/d
- LoFJCRAbUwlQ9SXACVFKFPZuak2k+/0BYjWOi3xJzVbEPs5DxMFKfRSkwZ1acDyDoQhi
- 1PyQ==
-X-Gm-Message-State: AOJu0YwnX1VjN2+lD4PoI1jwoDYakC1cHLqyFeewCpeG70cVesmjKudE
- 4RG5A8MYbzKYU8A26mW5Ve67OfI6xe4i1FAVTUF1Hq03fZ4IJMyInt1UjDK72S5FNq+p2ki4pDM
- YPcZKKH0OlENx/fWPxTWJnj43R0ybqauIt6fYb8c1ZexNN+C2J7hhtHU8
-X-Gm-Gg: ASbGnctagFw54+tVJc4LAsX8Otgav+X16SQFuxuXdOlCrotRBNhnzoLS2MNa0v07t7X
- CWME7rH41vLewTRPNLNlrJQVMeYbF9lcI8uD7Fjs0xiAHBbBh0Wt9wY/7FdqN5kNab3+ugLjdNE
- 3xJmrSWO7HYkQ9P88rGDxGAvTlrhMERuxDU6q7Z6tK/SNevG2XhU/6ikNzJYGXdfWFrc6JyJM90
- fCcIXkd+G8Q0+xEbqUEz/XAo1Jx2nqYoiHQUqI0aJvaVOJIjGXEPMSVKiG2pgJsFIUXJDkE5Fiw
- djxvYmtiKWOkYiXAF2ZzYLRUwqdHgG0Fl4+PO6E15K2ExpSXKmTGC+59bazaCcLvrvhZSesGIko
- SypHUCy/7iKVqv0Yyqv3+OKDghJNAZpNB5p7p0TTBDfYcodj/uWYLBjVB77Aq4MBYgF3FtX+Jfk
- Rzi9m7KQtfY05Hf5vYdHOev1LKDv8=
-X-Received: by 2002:a05:6000:2081:b0:426:fff3:5d04 with SMTP id
- ffacd0b85a97d-428532779edmr4590162f8f.25.1761214608380; 
- Thu, 23 Oct 2025 03:16:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGk0+2QYmpMwZ0q9K7ByCPyiPeT1pBT4xdJ42NSUsdKxH7q8yNE+wnUTI4QWyUJCDjyR/D2Tg==
-X-Received: by 2002:a05:6000:2081:b0:426:fff3:5d04 with SMTP id
- ffacd0b85a97d-428532779edmr4590127f8f.25.1761214607973; 
- Thu, 23 Oct 2025 03:16:47 -0700 (PDT)
+ bh=55665LDHlH2/K6s71Rp7vVH/8waNkeXUSCb3nmQ26Kw=;
+ b=Ebvkz5UGTD0s6QpYHY3H2sz6vD870liEle+Fw8HUEM0eAQSCSNHxX9SOMUuDldgor+
+ nDSOMMLT6t655N4D0xCZHO5Nvy8MYMOQJ22h9CQT5GiuonPUbU0v822iIyLZsqtfhKIN
+ 9KI0YB1jcCKLcoFxVldzv8JpCegZgTTcban5vuE8ZrQXE0rlFVXjvq+HUnGNhR44ybGb
+ 1/LV1gQhhYfF3utX+nYVBwcS9+MP8gp07iVL6WL0W2eKglEjzx5EdOtUiV2Y7hkphv/Y
+ nofiFW6npPfqhmR5QOd19grBtkR3W12BupBFy0A2cZ3uM50X5BVgcORUWWQwjWVoFFJv
+ 5TQQ==
+X-Gm-Message-State: AOJu0Yz5TCLPI2mFm8y/dPRi/62x061zOW5m1HCwxp4cjiyWKGsoUcgw
+ QPd+p2oHx/Mj2EfWrpJL+yGyq2oe2965jqqLDb0iajoZcRPezLci6t9P1Ccrw4m7AzUa/M1dlHb
+ 8Y05WROiE9i8QW36y6NhTRN76h3lgZijWKwBquU4UvuHLyy+O4UpPM6FW
+X-Gm-Gg: ASbGnctS+O0fQ0AOX3/9wqXg4uE3Y000x3PBE8mw4MwPwluOoiYiaK0DfTQm+u9QjBb
+ qN2NN1NGSMvpbV9GWgR8bECmAulEucGvMfnMr1YpRy2NnVJfA9DzMEG19zHm5KmFQdm5tDsZH8A
+ 0foQJnxTAVCvoVmHhQH1VTL/ddj1wJ8b5Zy1AmxPqrhjpUgzZymxONVgunZ5cg5ae4mHK0S9Pbe
+ 7JF+TJ/7hLw6bUfwUFfnHN9eMxNaX0OUgAAOTJyEx686c9SUamBPUlzsY5eLfcLWfgbHjt91fBk
+ S5EwU05ODI6cGAi/I6tFQR2IGctukljtKKxXFTioHdRHcwFwUHrlzs2tXfAqkkuuAMFSu/Gc+kV
+ 1mAnlOtfjZJURguiLkjcUjF2W4UG27uzhnhClJXS+l0qiWlIqd/gutPbuB8Gm9TpK4DN5143Hkp
+ dUXN08xh81hKPWskyLocUcGj/hA38=
+X-Received: by 2002:a05:600c:4e86:b0:46d:996b:828c with SMTP id
+ 5b1f17b1804b1-47117879b8dmr155812545e9.10.1761214637261; 
+ Thu, 23 Oct 2025 03:17:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHa3bd34XZZZ7K2byhB5kt1AsQzhL1TcPM49/bHaiEhydcHGuIPKn2q+PCPLNQeKFYAshtjsA==
+X-Received: by 2002:a05:600c:4e86:b0:46d:996b:828c with SMTP id
+ 5b1f17b1804b1-47117879b8dmr155812395e9.10.1761214636869; 
+ Thu, 23 Oct 2025 03:17:16 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f4e:3200:c99d:a38b:3f3a:d4b3?
  (p200300d82f4e3200c99da38b3f3ad4b3.dip0.t-ipconnect.de.
  [2003:d8:2f4e:3200:c99d:a38b:3f3a:d4b3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429898add96sm3100816f8f.30.2025.10.23.03.16.46
+ ffacd0b85a97d-429898cc930sm3758856f8f.33.2025.10.23.03.17.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 03:16:47 -0700 (PDT)
-Message-ID: <3035c1a0-78b7-44a4-a9d8-4e84b9732262@redhat.com>
-Date: Thu, 23 Oct 2025 12:16:46 +0200
+ Thu, 23 Oct 2025 03:17:16 -0700 (PDT)
+Message-ID: <ab265378-6e08-480c-92b5-640f84bc6706@redhat.com>
+Date: Thu, 23 Oct 2025 12:17:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] ram-block-attributes: Avoid the overkill of shared
- memory with hugetlbfs backend
+Subject: Re: [PATCH v2 2/2] ram-block-attributes: Unify the retrieval of the
+ block size
 To: Chenyi Qiang <chenyi.qiang@intel.com>, Peter Xu <peterx@redhat.com>,
  Alexey Kardashevskiy <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Gao Chao <chao.gao@intel.com>,
  Li Xiaoyao <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>
 References: <20251023095526.48365-1-chenyi.qiang@intel.com>
- <20251023095526.48365-2-chenyi.qiang@intel.com>
+ <20251023095526.48365-3-chenyi.qiang@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -133,10 +133,10 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20251023095526.48365-2-chenyi.qiang@intel.com>
+In-Reply-To: <20251023095526.48365-3-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -162,34 +162,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23.10.25 11:55, Chenyi Qiang wrote:
-
-Subject should probably rather be:
-
-"ram-block-attributes: fix interaction with hugetlb memory backends"
-
-Maybe that can be fixed up when applying.
-
-> Currently, CoCo VMs can perform conversion at the base page granularity,
-> which is the granularity that has to be tracked. In relevant setups, the
-> target page size is assumed to be equal to the host page size, thus
-> fixing the block size to the host page size.
+> There's an existing helper function designed to obtain the block size.
+> Modify ram_block_attribute_create() to use this function for
+> consistency.
 > 
-> However, since private memory and shared memory have different backend
-> at present, users can specify shared memory with a hugetlbfs backend
-> while private memory with guest_memfd backend only supports 4K page
-> size. In this scenario, ram_block->page_size is different from the host
-> page size which will trigger an assertion when retrieving the block
-> size.
-> 
-> To address this, return the host page size directly to relax the
-> restriction. This changes fixes a regression of using hugetlbfs backend
-> for shared memory within CoCo VMs, with or without VFIO devices' presence.
-> 
-> Acked-by: David Hildenbrand <david@redhat.com>
 > Tested-by: Farrah Chen <farrah.chen@intel.com>
 > Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 > ---
+> Changes in v2:
+>    - Newly added.
+> ---
+>   system/ram-block-attributes.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+> index a7579de5b46..cf8f5f41966 100644
+> --- a/system/ram-block-attributes.c
+> +++ b/system/ram-block-attributes.c
+> @@ -390,7 +390,7 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr,
+>   
+>   RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
+>   {
+> -    const int block_size  = qemu_real_host_page_size();
+> +    const int block_size  = ram_block_attributes_get_block_size();
 
+Double space before the "  " can be removed while you touch this.
 
 -- 
 Cheers
