@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85610CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DDBCCF9E7
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuI6-0002vm-On; Thu, 23 Oct 2025 08:19:49 -0400
+	id 1vBuLj-0008DD-Ry; Thu, 23 Oct 2025 08:23:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuG8-0001Hh-Rt
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:42 -0400
+ id 1vBuGW-0001Qd-A9
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:18:12 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBuG4-0006Rh-BS
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:17:34 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59MLvesH009163;
- Thu, 23 Oct 2025 12:17:28 GMT
+ id 1vBuGT-0006V2-5l
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:18:00 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9bRog030017
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4r3gci
- mnVaxRH11Ad0jfuJA9DZCx9TNezn3pCJerEKE=; b=rj8uAeZkBJTZ0iBa6UvF2N
- o7KtI4qwybadvaZ64ws6zOd71s5QjoOHovxYSsCBLP/PokzoN8ygi1tW6zB4wqhY
- EANlxPDcQ7rnRHmOTFsoYXhde3McP5UhuP3cirbS07Gs5JTe4f9xJnV9MuCXvrPk
- j+eaU366reArPK5VbIfMh43pUZJMj3W2+uNEJUo674Z4Tcqr187nO4IBGhjuabBW
- rrZKcM3Rn5geVgFCep9nZyt9zmDPcKWepWdjqlz6MDH1idrhIaCCXz/Bv/LdtSmS
- uE2i/r74jS6NuF0tomzTXQmbC89wZuGHAP59Ti682cd8YhLVHg0uY7Ol4gBAwb9g
- ==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=re1vd8/1Y7prOt3uK
+ PfK5x3KjnvSzaWw1Duzi0t8l50=; b=I1nimCCsBSXldcEkOM0hPAS90YmF6WyTr
+ fgrsxgsM5govj3+qsIGHHoHjypPwsjdRY6suc+phKEOKHOjdrDF+WEPcuZ0TqIA9
+ dEi9gwdICyMSMb5aLazRuKZTrH0LzrmuE2V4m9aousEHSpwdAizq54lVfQrYv9Xe
+ HnZsrvJfQ9ZBgNreLYPSs9DBLv/6t/uErIlgqXXOtl6I2yUuGAEGUeXD9VyYXWOP
+ Pt45cayTkoks5hPt/DU+CoNJcAEbj+/uK4uW4u+T/L4mRBMb+mLBKurHb3Qsw3nX
+ uB6ZVOx6wfmvn2zOW74Rla1DY3F8QdBi/iFMcjkRgJSxW2pl+QT2A==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33fj26f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 12:17:27 +0000 (GMT)
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31sa1em-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:45 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAU0TS032096;
- Thu, 23 Oct 2025 12:17:26 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7n5jyb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 12:17:26 +0000
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAY0dG032099
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:44 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7n5k0w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 12:17:44 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NCHOiT49152386
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NCHeKh30343616
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 12:17:24 GMT
+ Thu, 23 Oct 2025 12:17:40 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F2842004B;
- Thu, 23 Oct 2025 12:17:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3BC9420043;
+ Thu, 23 Oct 2025 12:17:40 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9DC5E20040;
- Thu, 23 Oct 2025 12:17:23 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 25E6D20040;
+ Thu, 23 Oct 2025 12:17:39 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 12:17:23 +0000 (GMT)
+ Thu, 23 Oct 2025 12:17:38 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 18/32] hw/ppc/pegasos2: Add south bridge pointer in the machine
- state
-Date: Thu, 23 Oct 2025 17:46:37 +0530
-Message-ID: <20251023121653.3686015-19-harshpb@linux.ibm.com>
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: [PULL 30/32] hw/ppc: Enable fadump for PSeries
+Date: Thu, 23 Oct 2025 17:46:49 +0530
+Message-ID: <20251023121653.3686015-31-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023121653.3686015-1-harshpb@linux.ibm.com>
 References: <20251023121653.3686015-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68fa1cd7 cx=c_pps
+X-Proofpoint-ORIG-GUID: eKaAUmVy-_SDuRpryIgU8unoMa-DfvuW
+X-Proofpoint-GUID: eKaAUmVy-_SDuRpryIgU8unoMa-DfvuW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXzti4sIW4tpOy
+ qmuTk/APAKk3OiTSKe6nYzda8Qol4DInUdMxZRN6iPdcw6eUeKBy4fedUJn0ObF49sz8pFQVAWq
+ c6g8hI9BIdq2V9C1Y8AK+vaR40K77WVgEzWZk7VR43PowhY1wC4CyY5vHa/wVp3AFURzEzFYKJq
+ OwlPWGw69+zdTrOjKTFuSayYKN7RoV4c5IZjIH9xXVmRZOpqA3OndN0XOpU/xjNYAReYND+B1Hj
+ dWIHmaiz181uqD43rKGHj03/VPb2lHUyFKrRBzU0AYA21O6q+iRdJxJn8wb+sBjRRmm8Cj8oWHh
+ 9uc3wHLH/3iZ6a6xNctw0UVgjQ4qjeqH0pTP/bvCKzRZ3i627uu48wR1npSKwW4uankX/dKl6MK
+ 2Wkm8u2/aBNPLFyOokFxkPd2wZ1F6Q==
+X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fa1ce9 cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
- a=TGpnWNUbWJQoO7jwSJQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: ecKNsMFR4_jwfL2LnaBcYJv4QMTYfAcR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXwlwmN/tQdoSw
- EHOJRNqre6/LyA0nwcv6CVU6YHE/VabCa+Ook64bMz+omRDYz4dwhuS5ZB8srC2Di3c32VeZUu0
- fR3TS3VLe/cKPgk/i3XB9OkY1leIfXFWk8+q2lIJ6TE83yI2z5y2VXadD0UoQCommDIysMe26wB
- U/oMM2gAXqWxIZMX/ENVH05cFCm/mxTsqCWiNyzEHbFVYQ3IS8zIkTO2LGumB0MmlJ3RVsQaBIS
- HbJvIqHl16ixspCgOoKvCnKR4JEbuS9AwfPRRLPuWyYMMtOdaVwODzjzDV7p9vLyjuMb2nppvew
- wYE5EegyHd/iD52MiUVwfKYRt5x586XIxk7ugvBEiLolOOE/l5P55cdsf61PpRkj2/iKFZyWVJN
- Hw9i7Neh8g6nIC5CnJgkX11UOf8U2A==
-X-Proofpoint-ORIG-GUID: ecKNsMFR4_jwfL2LnaBcYJv4QMTYfAcR
+ a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=B08fgxTpJCymiiQPXHEA:9
+ a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
@@ -124,41 +120,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-Add field for the south bridge in machine state to have both north and
-south bridges in it.
+With all support in place for preserving memory regions, enable fadump by
+exporting the "ibm,kernel-dump" property in the device tree, representing
+the fadump dump information, in case of a crash.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/654d3223b418d5bb2ba08a2b014375c2abf341aa.1761176219.git.balaton@eik.bme.hu
+Currently "ibm,configure-kernel-dump" RTAS call is already registered,
+which tells the kernel that the platform (QEMU) supports fadump.
+
+Now, in case of a crash, if fadump was registered, we also pass
+"ibm,kernel-dump" in device tree, which tells the kernel that the fadump
+dump is active.
+
+Pass "fadump=on" to enable Linux to use firmware assisted dump.
+
+Logs of a linux boot with firmware assisted dump:
+
+    $ ./build/qemu-system-ppc64 -M pseries,x-vof=on --cpu power10 --smp 4 -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=on crashkernel=1G" -nographic
+
+    [    0.000000] fadump: Reserved 1024MB of memory at 0x00000040000000 (System RAM: 4096MB)
+    [    0.000000] fadump: Initialized 0x40000000 bytes cma area at 1024MB from 0x400102a8 bytes of memory reserved for firmware-assisted dump
+    ...
+    [    1.084686] rtas fadump: Registration is successful!
+    ...
+    # cat /sys/kernel/debug/powerpc/fadump_region
+    CPU :[0x00000040000000-0x000000400013df] 0x13e0 bytes, Dumped: 0x0
+    HPTE:[0x000000400013e0-0x000000400013df] 0x0 bytes, Dumped: 0x0
+    DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000000, Dumped: 0x0 bytes
+
+    [0x0000000921a000-0x0000000921a7ff]: cmdline append: ''
+    # echo c > /proc/sysrq-trigger
+
+The fadump boot after crash:
+
+    [    0.000000] rtas fadump: Firmware-assisted dump is active.
+    [    0.000000] fadump: Updated cmdline: debug fadump=on crashkernel=1G
+    [    0.000000] fadump: Firmware-assisted dump is active.
+    [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000000 for preserving crash data
+    ....
+    # file /proc/vmcore
+    /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
+
+Analysing the vmcore with crash-utility:
+
+          KERNEL: vmlinux-6.14-rc2
+        DUMPFILE: vmcore-fc92fb373aa0
+            CPUS: 4
+            DATE: Wed Mar 12 23:39:23 CDT 2025
+          UPTIME: 00:00:22
+    LOAD AVERAGE: 0.13, 0.03, 0.01
+           TASKS: 95
+        NODENAME: buildroot
+         RELEASE: 6.12.0-rc4+
+         VERSION: #1 SMP Fri Jan  3 00:15:17 IST 2025
+         MACHINE: ppc64le  (1000 Mhz)
+          MEMORY: 4 GB
+           PANIC: "Kernel panic - not syncing: sysrq triggered crash"
+             PID: 269
+         COMMAND: "sh"
+            TASK: c00000000a050b00  [THREAD_INFO: c00000000a050b00]
+             CPU: 0
+           STATE: TASK_RUNNING (PANIC)
+
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-7-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/ppc/pegasos2.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/ppc/spapr.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 9b89c7ecc2..4b63f0e175 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -69,6 +69,7 @@ struct Pegasos2MachineState {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d6cfb9acbc..6764730beb 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -904,6 +904,8 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
+ {
+     MachineState *ms = MACHINE(spapr);
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
++    FadumpMemStruct *fdm = &spapr->registered_fdm;
++    uint16_t dump_status_flag;
  
-     PowerPCCPU *cpu;
-     DeviceState *nb; /* north bridge */
-+    DeviceState *sb; /* south bridge */
-     IRQState pci_irqs[PCI_NUM_PINS];
-     OrIRQState orirq[PCI_NUM_PINS];
-     qemu_irq mv_pirq[PCI_NUM_PINS];
-@@ -174,7 +175,8 @@ static void pegasos2_init(MachineState *machine)
-     pci_bus = mv64361_get_pci_bus(pm->nb, 1);
+     uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
+     uint64_t fadump_cpu_state_size = 0;
+@@ -953,6 +955,16 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
+                     fadump_versions, sizeof(fadump_versions))));
+     _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
+                     fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
++
++    dump_status_flag = be16_to_cpu(fdm->header.dump_status_flag);
++    if (dump_status_flag & FADUMP_STATUS_DUMP_TRIGGERED) {
++        uint64_t fdm_size =
++            sizeof(struct FadumpSectionHeader) +
++            (be16_to_cpu(fdm->header.dump_num_sections) *
++            sizeof(struct FadumpSection));
++
++        _FDT((fdt_setprop(fdt, rtas, "ibm,kernel-dump", fdm, fdm_size)));
++    }
+ }
  
-     /* VIA VT8231 South Bridge (multifunction PCI device) */
--    via = OBJECT(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
-+    pm->sb = DEVICE(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
-+    via = OBJECT(pm->sb);
- 
-     /* Set properties on individual devices before realizing the south bridge */
-     if (machine->audiodev) {
+ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
 -- 
 2.43.5
 
