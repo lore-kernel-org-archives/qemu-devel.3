@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1110ECCD1BE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0441CCD1BC
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuXR-0001qA-T9; Thu, 23 Oct 2025 08:35:30 -0400
+	id 1vBuXL-0001Oe-7J; Thu, 23 Oct 2025 08:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBuU7-0005Ri-DA
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:32:14 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBuU1-0005Hk-9T
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:32:00 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBuU3-0008P2-OD
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:32:02 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46e6ba26c50so6241115e9.2
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 05:31:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBuTz-0008OU-2i
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:31:57 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3ece1102998so525985f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 05:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761222715; x=1761827515; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761222710; x=1761827510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xopSbsh+IkB5STrBQ4YQZEElngQLIdle4gTE7izg1DA=;
- b=BmbGeO2gu+UBZ5BTM2htp/wFotQ2ogN7kzNY8us92/jTqlG3sjxlwgtibhUw7J1ud1
- XZamgrTyZGENrZn8mVzClD1nWFONdZ6VbuzxC6vf86KVWnzqzeuNWsTWQkr5D+eCRuS8
- 3eGc4pWE4Ldn86Ez4WuzrytSEqmQRloIL9+bk1CfMnyQvgqsTG0wnFvq66u7BGlZS8GS
- BjDdbkcvyXn4VrMBO/P4QESvfsXCJkoS5Odrbj1GtsF09+8kZ8La7xKxtX4zah5hUMgb
- xQHM5cp5pKOeDj3WanXD9QyygelMoNM3FQseu4CQgG3BT3azZ8t0jE+U3mE9UeAGdbpN
- 5m5w==
+ bh=YDmYw54TK5jSiAes/7YC6P5tTS/ucyoXkoDxXUlAez4=;
+ b=LjDZbiHpXzLv/ChTLfGlxK5q1aRkPphrtnrA//qkZ7hgWjzP2l8aIKxFkc4DTQ/AWM
+ /D4nEpkXg6tAM6+Ty7X1hHZZu373Pm+sTgPvDgoEX7OBLpKnoBR1TPw2t5ru+kMJqt6R
+ n/EgpXxgGZDkkWYhRObObYCAkeD04qjLKNtOdlozRK2SK4Abgd19NdbEA2i4QDB9731n
+ /Ghrabu2OGnQp15FyvLqgQhkM2tZN8VR4UoZW0lFHdH2LrGTFhEVk5lafbO6hGFYrux+
+ f+MisFnDijSb0GXytbQUDpTGcvtev3poqrXUxb/gCit6C7t5EMA1WBhVkAORiY/GaISd
+ 4pyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761222715; x=1761827515;
+ d=1e100.net; s=20230601; t=1761222710; x=1761827510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xopSbsh+IkB5STrBQ4YQZEElngQLIdle4gTE7izg1DA=;
- b=paRWkIyWraqWjxCm3NgQtC1pppZblve6CYMHXnaDOVMgK2v4Q3wLYWbjC25dGuZHge
- VAZXFzMe6BV+j1NjIgqdHRZYNWRIxCssbEkT/wSJL9ARJG89FMS7SJpYU8UBQBHqckFe
- Zzcip+EHyt4EV1C590/XAKIjq/vUfcWPhzQoVrQNqGlSSgqQoIXzcdcT4VyrLfpQ/NZ0
- iZJTKXHIm/xyctkjHSP/XbHi1WaJJzhZvLjXInIqtX5FPxN+tBflqDV7bdaKW7ihH3mf
- hQD3NTKXEtXrjVIYWzfD5QM/1oeIdQUGhly2Q7Karl4mDt+We2VuqTLLr2EDsQc4Mbf0
- AzAQ==
-X-Gm-Message-State: AOJu0Yzs3hre17UZNjbpxMT6G8C5Anjv0Au7coJRj6bFA++F+KxrSLjB
- Cte12FqlQykUkmMyskaRCod85v/PiPOPK06JBaxTXXF/rM4uA/UIyLJ9qVUNpAIoyFGV3hmdYQ5
- W1wOIAp0=
-X-Gm-Gg: ASbGnct3n0kLbXiPI1A4Yuhy9EFtvCSmY1r9ye3TKHzuPayuLbbb1q9/R2k2mA/EDt6
- p7PHKHRldddgpjcb2EbimNwxTOB5O9P80+ih3HlU2TWQneYi25xUGADz59YBKITdidcZgyqL1MB
- +aMZfcBJlekUMPSpchcKejN5tqQstteqQ1qg+phX+YGXJxzr9aq7vDvuX4Zqn5pK2Y8y2Adw9Yh
- eXKu2Trw88GSa3mzbz5oV6HUzKpQYUaDfdMXLj92u4k7VfcPnzSmO1pN4y9HB7AuvCY+zWb/QBC
- z929ewzTtyWE6dP6ekqmmSvgrp/OZu6pwm/j8p3o1JkG8jw1YNRpuNZVjfEeyS9lPZMhHRUuwZO
- C9u7UEGkVD9Asb/9X0wByilreHv+e2oxFRaCtQYKMzLn/wJEmo08bYRGIrUwH3tjz4dtzYnI1ef
- vm2aRtN35hToQNilwqT4ZqctqMjxPdmRfIIZ0kca6lAxG2v4B+aY15E/Zwu3xr
-X-Google-Smtp-Source: AGHT+IGEU2IBoSQZLt4Ab58guPQIpf8DWmjNyHuvhqmIqNJDdMprKnJOlr8YAHvFe4ycMS1p8kAe8A==
-X-Received: by 2002:a05:600c:3b8d:b0:471:60c:1501 with SMTP id
- 5b1f17b1804b1-47117918c0cmr204928115e9.28.1761222715556; 
- Thu, 23 Oct 2025 05:31:55 -0700 (PDT)
+ bh=YDmYw54TK5jSiAes/7YC6P5tTS/ucyoXkoDxXUlAez4=;
+ b=KeiOcRdhuXcd0nDosBnKRzo45QROrPmvpHJ/rZ8o3UwiWgr++SAA39iNLsfWH9Nz5I
+ uTafyU7zetSRaRbdvK+w2+6DHk8vVFJFYU+9PyzIM2V7+n8GqJdet2oU/fgeiekUmbAx
+ DtLGCjdgnMfr18wUO4QtZs2vk8pGemdfMhnvo1hZ50YCfnDlbRplNWd0IG0LqsZ1xDag
+ AG8mfk/hG8esB8+a1LcRoj/THnv0GRxrTjZwidKKK+OaCuxdtpeKsbRI9kmM9SZeqV11
+ jhLYZfca4ip1cpYEljU7x2UmKZQILhCUtLLXbRxpbzUvkVqT/Y2c33DZEfcotFE0hW/C
+ 5zrQ==
+X-Gm-Message-State: AOJu0YzgQkP8iLMzmK2dzkFltg7fP2p1df6Rhv4eDXr66+IS8BmXhpKo
+ hRn+6MnBY4bop2lEKr9JugQqq/fjaSPrcVXJ4suu3OfrXMK4Gc0j1hyQ7wOW215HDP7OslwfOid
+ 5mrwPHvo=
+X-Gm-Gg: ASbGncugSapoC/23FX4FTpFqkXpwI2dwZmQkPmxgMDAShEODxt3J1DuQB8YXx3qFifh
+ +KMNqTbtdYyTMmhgWCsdtg136t+40r/S4iBGctEOlhLdtf2YfqycqPVSbPEVVx8W99oKC8qLNtO
+ 0Pt707DEmg2WWtoo6T8u/5s45qf9FE4bHu+iQMRjJsUd+wzSJfBC1pSBPv47HG3hRGrBLzOcveV
+ LFL1TFsCvo7K9w+k0fYao/59pIkI/t17azQB4/QTeZIjLnBsDuBL7NXSCsI+0UCHcjO9VyY0y6I
+ /0SoV3UNFDSh5X5Lkk+LmPhutLYeDbihmLUveiALF5qzQfpKcQM0xwnVYOzgzUBEI3CQ2BfjSku
+ Iwoh06myy8FOiNJNCbbUz6c4+NpyBnj++/6KIq4uqdaEJ90j4IX4/5FHXo85KnE2Cm/ikvSpPBN
+ s+ha4SzDyLtxdINyW3IPNX6w39yCMpwwqi8N7Q5agIW/Ic8PLsgw==
+X-Google-Smtp-Source: AGHT+IGGIR/0SPECtQT4Jff1V+N/nTa9ysFMFejsJuRkzH7znWUcHtDVIOGN32PvjaO4+QCmua0g5A==
+X-Received: by 2002:a05:6000:2510:b0:3ee:15c6:9a6b with SMTP id
+ ffacd0b85a97d-4298a0c60e7mr1426429f8f.48.1761222710233; 
+ Thu, 23 Oct 2025 05:31:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496d269dbsm56778895e9.11.2025.10.23.05.31.54
+ ffacd0b85a97d-429898add96sm3716004f8f.30.2025.10.23.05.31.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Oct 2025 05:31:54 -0700 (PDT)
+ Thu, 23 Oct 2025 05:31:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -75,25 +75,24 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mads Ynddal <mads@ynddal.dk>, Phil Dennis-Jordan <phil@philjordan.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  Roman Bolshakov <rbolshakov@ddn.com>, Cameron Esfahani <dirty@apple.com>
-Subject: [PATCH v2 52/58] accel: Introduce AccelOpsClass::cpu_target_realize()
- hook
-Date: Thu, 23 Oct 2025 14:31:36 +0200
-Message-ID: <20251023123142.8062-3-philmd@linaro.org>
+Subject: [PATCH v2 51/58] accel/hvf: Model PhysTimer register
+Date: Thu, 23 Oct 2025 14:31:35 +0200
+Message-ID: <20251023123142.8062-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023114638.5667-1-philmd@linaro.org>
 References: <20251023114638.5667-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,43 +108,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow accelerators to set vCPU properties before its realization.
+Emulate PhysTimer dispatching to TCG, like we do with GIC registers.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/accel-cpu-ops.h | 1 +
- accel/accel-common.c          | 5 +++++
- 2 files changed, 6 insertions(+)
+TODO: audit it is safe
+---
+ target/arm/hvf/hvf.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
-index 0674764914f..9c07a903ea0 100644
---- a/include/accel/accel-cpu-ops.h
-+++ b/include/accel/accel-cpu-ops.h
-@@ -34,6 +34,7 @@ struct AccelOpsClass {
-     /* initialization function called when accel is chosen */
-     void (*ops_init)(AccelClass *ac);
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index dbf6b83532d..cc3f22ac542 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -190,6 +190,7 @@ void hvf_arm_init_debug(void)
+ #define SYSREG_LORC_EL1       SYSREG(3, 0, 10, 4, 3)
+ #define SYSREG_CNTPCT_EL0     SYSREG(3, 3, 14, 0, 1)
+ #define SYSREG_CNTP_CTL_EL0   SYSREG(3, 3, 14, 2, 1)
++#define SYSREG_CNTP_CVAL_EL0  SYSREG(3, 3, 14, 2, 2)
+ #define SYSREG_PMCR_EL0       SYSREG(3, 3, 9, 12, 0)
+ #define SYSREG_PMUSERENR_EL0  SYSREG(3, 3, 9, 14, 0)
+ #define SYSREG_PMCNTENSET_EL0 SYSREG(3, 3, 9, 12, 1)
+@@ -202,6 +203,8 @@ void hvf_arm_init_debug(void)
+ #define SYSREG_PMCEID1_EL0    SYSREG(3, 3, 9, 12, 7)
+ #define SYSREG_PMCCNTR_EL0    SYSREG(3, 3, 9, 13, 0)
  
-+    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
-     bool (*cpus_are_resettable)(void);
-     void (*cpu_reset_hold)(CPUState *cpu);
- 
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 850c5ab4b8e..eecb2a292af 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -106,6 +106,11 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
-     if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
-         return false;
++#define SYSREG_CNTP_TVAL_EL0  SYSREG(3, 3, 14, 2, 0)
++#define SYSREG_CNTP_CVAL_EL0  SYSREG(3, 3, 14, 2, 2)
+ #define SYSREG_CNTV_CTL_EL0   SYSREG(3, 3, 14, 3, 1)
+ #define SYSREG_CNTV_CVAL_EL0  SYSREG(3, 3, 14, 3, 2)
+ #define SYSREG_PMCCFILTR_EL0  SYSREG(3, 3, 14, 15, 7)
+@@ -1231,16 +1234,20 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
      }
-+    if (acc->ops
-+        && acc->ops->cpu_target_realize
-+        && !acc->ops->cpu_target_realize(cpu, errp)) {
-+        return false;
-+    }
  
-     return true;
- }
+     switch (reg) {
+-    case SYSREG_CNTPCT_EL0:
+-        *val = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) /
+-              gt_cntfrq_period_ns(arm_cpu);
+-        return 0;
+     case SYSREG_OSLSR_EL1:
+         *val = env->cp15.oslsr_el1;
+         return 0;
+     case SYSREG_OSDLR_EL1:
+         /* Dummy register */
+         return 0;
++    case SYSREG_CNTP_CTL_EL0:
++    case SYSREG_CNTP_TVAL_EL0:
++    case SYSREG_CNTPCT_EL0:
++        /* Call the TCG sysreg handler. This is only safe for VTimer regs. */
++        if (hvf_sysreg_read_cp(cpu, "VTimer", reg, val)) {
++            return 0;
++        }
++        break;
+     case SYSREG_ICC_AP0R0_EL1:
+     case SYSREG_ICC_AP0R1_EL1:
+     case SYSREG_ICC_AP0R2_EL1:
+@@ -1553,19 +1560,20 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+     case SYSREG_OSLAR_EL1:
+         env->cp15.oslsr_el1 = val & 1;
+         return 0;
+-    case SYSREG_CNTP_CTL_EL0:
+-        /*
+-         * Guests should not rely on the physical counter, but macOS emits
+-         * disable writes to it. Let it do so, but ignore the requests.
+-         */
+-        qemu_log_mask(LOG_UNIMP, "Unsupported write to CNTP_CTL_EL0\n");
+-        return 0;
+     case SYSREG_OSDLR_EL1:
+         /* Dummy register */
+         return 0;
+     case SYSREG_LORC_EL1:
+         /* Dummy register */
+         return 0;
++    case SYSREG_CNTP_CTL_EL0:
++    case SYSREG_CNTP_CVAL_EL0:
++    case SYSREG_CNTP_TVAL_EL0:
++        /* Call the TCG sysreg handler. This is only safe for VTimer regs. */
++        if (hvf_sysreg_write_cp(cpu, "VTimer", reg, val)) {
++            return 0;
++        }
++        break;
+     case SYSREG_ICC_AP0R0_EL1:
+     case SYSREG_ICC_AP0R1_EL1:
+     case SYSREG_ICC_AP0R2_EL1:
 -- 
 2.51.0
 
