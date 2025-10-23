@@ -4,93 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A93FCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468BFCCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBn42-0003wZ-C6; Thu, 23 Oct 2025 00:36:38 -0400
+	id 1vBn8i-000206-HM; Thu, 23 Oct 2025 00:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBn3l-0003n6-MX
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:36:21 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBn3j-0001Xc-Li
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:36:21 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-290aaff555eso3322925ad.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:36:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761194177; x=1761798977; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=350XNCdecgPAX+wmyPNQHhgr60+8VzYIB+50MP3LTE4=;
- b=idqylpp8bVBmulLMNesCTOQ1t1fB8kD7Gkw/Exu3dBFeFkhO9IVyN/uG0ZVt+b7OJe
- P1AQT1B98J67zTEe2UVJmgfbBXmiJXKmLYTuzfR3CyCGls4/FsYKgCQsHns+vPNxs7tY
- 9BpY7+EmHe+32pFQmyAQi7AEbVkRo0tOddUM7YJhyelIF5Vq/4hpWWnx2VbqnEMMtIU4
- 7CwdYdCCno/EGVSz9WzF2gU+59aQzrgS2RI/7v9GGE686DyX7VTVBOOq9I9iGocypy5p
- +ACFvARcmRtgyak2QxIx8tii4tWwdoGweSeJtqoDT+bCeefnP7/D9t4gLNmQZS6Jsg5y
- EAKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761194177; x=1761798977;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=350XNCdecgPAX+wmyPNQHhgr60+8VzYIB+50MP3LTE4=;
- b=arJIHezOlbmvZ8kQ6NW2LQvN3S0FiOOyEuhAZ4f3SbvNLPb/p+dxyXqS3KAK9/XD7P
- WPCqbKCSk/+VoVsdEHOQssS/QWvWncvWSCqpf/9ElVakrB1Lb25koAbqZq4lezTtzmfM
- qA2/2ah/P5YTXOTR/Xyl2kHUgdN9kLqYevduTdjcT7SoiRDotm+G2g3E7e+OHqkhjNG9
- ecNPQuaa/H2ivw/mG70zXYnn4vnluE6HAi+S5pzW4XbyWa644PZO9urvH0wSVflbO0Jc
- hlIhnL4Kdq5a+UtJPYeX8R6DWaypevrbPc5kZB9DAydem3WAGqV7knxvtwmKHhhM87p3
- gWPg==
-X-Gm-Message-State: AOJu0YwRorctirlQIxXv8sR28lSG5qdW+WJp/De5R0WL4zWtsaj8tklF
- TAqYb19xp+ftfcQ2MTZ6ychoiQfsdKJazf4wnMDA9/bkdDHyh9B9dp013N8cZw==
-X-Gm-Gg: ASbGncsFdNV4RKFoz3yRwA25Gl3/W1opeEOm4y/QZppqZtMXIqRKuyGC9pqsnPERAmM
- ogVKiV+DNCZyJnMkgc99W3+0RkgqhVry8ALj17ZM7Lvc4O7kRX02LrsoqI6h8tEsC5BnFOkUITt
- MHI0qOtoGp5Qak3us3Zsw+xm+vXj133luz8nTnAhKvWeGsr5uZjgskOP4Rujh/s577iDhYmkEp2
- KR3sUgY5MtraygNA1bDyWEMBUjUo5ziwy827prWF3LD6DhIpzNDyx3eF8+5AlrIYhrKmKB/j2Wn
- MzIroOqFRblXBbeVYtGWtgRAxk+rVFZBNj0gyv1nqWkuoXbfasgfmGhRtFs/DAadYIiji4yyNyw
- pYFRV8AiejilkG9SntfjKvAuXO5qlmxBKCZM+r4yeDQj+0H42OgQTLcPtB1EEKpr8EU1qJvahfI
- FkCkgcOGBuwSaFRT8I/5AnfIqSamBGMm5P+SGFDI7w9VvFrSMXX/cyVC+1fpuavXh5vHWbJ+9U1
- +4ErLRACDNXfOd0Mh4=
-X-Google-Smtp-Source: AGHT+IGCUjtB6fNwPWP6Xv2zSBg7q0v+eYNCCg029fn4zA/ZswedJcI7sYcMwtxmeWRkjWlt/c4/mA==
-X-Received: by 2002:a17:903:230a:b0:27e:f018:d2fb with SMTP id
- d9443c01a7336-290c9cf37d3mr268423705ad.6.1761194176954; 
- Wed, 22 Oct 2025 21:36:16 -0700 (PDT)
-Received: from toolbx.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2946dfc113csm8643015ad.68.2025.10.22.21.36.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 21:36:16 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-stable@nongnu.org
-Subject: [PULL 34/37] target/riscv: fix riscv_cpu_sirq_pending() mask
-Date: Thu, 23 Oct 2025 14:35:17 +1000
-Message-ID: <20251023043520.1777130-13-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251023043520.1777130-1-alistair.francis@wdc.com>
-References: <20251023043520.1777130-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBn8h-0001zu-Db; Thu, 23 Oct 2025 00:41:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBn8f-00028V-3j; Thu, 23 Oct 2025 00:41:27 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N0Cwcn024633;
+ Thu, 23 Oct 2025 04:41:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=XxH7fz
+ mE4P6hVwXVE5RqwkB0iPebh0mHLUi2ZdQzt2o=; b=BSGPtEvRTsR9aObiqkgzoA
+ GDRImamy7QmSGo5ZcPk9bapqmfjSgA526digcV2coY1tOzNtTFZ3x64uv0Bh05Cx
+ nmtLVfSy5wFLKpH4xVc431n9U95m/qItBG1FDMbBUPiJMZYzZqpW9H2Hs43wcbeR
+ 59d9x2FpDdwCG8XCPU2R5Yh8sZ6dVsEteN+Y4Ity06lB8PNjGkgZrDEDWAdH57qP
+ VLnkJ4LhEwBd5Q6ZKe3weIrR1WQhQpV4PLmHYwU7XiE9Ywh/a4PInR7M3Me0LYJ9
+ bkC14hps78cgQ0fvogqyUY1MI+yXuBw0Fo4SefboftCVSsPh4QBX6WYI8WfUt9ow
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31ceykn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 04:41:19 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59N4VqPI014555;
+ Thu, 23 Oct 2025 04:41:18 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31ceykj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 04:41:18 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N0NbLa014676;
+ Thu, 23 Oct 2025 04:41:17 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sc6g3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 04:41:17 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59N4fG5m51184006
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Oct 2025 04:41:17 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A347458052;
+ Thu, 23 Oct 2025 04:41:16 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E37775805D;
+ Thu, 23 Oct 2025 04:41:14 +0000 (GMT)
+Received: from [9.124.221.73] (unknown [9.124.221.73])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 04:41:14 +0000 (GMT)
+Message-ID: <3071c558-61e0-49fb-8442-9f6e9b363c93@linux.ibm.com>
+Date: Thu, 23 Oct 2025 10:11:13 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/amigaone: Free allocated struct
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20251022211649.9A09E5972E5@zero.eik.bme.hu>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20251022211649.9A09E5972E5@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: aAcOo04Tu693yGxTzmK7QGxMCdxSFkv-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9gDlELOPbVnx
+ 3st6Vf1OqCP8hMoKnbcJpHcmRj07/AXzU41ncxsZbPKYxQfUuD5f7OjNIPRBYXEtuc+2almXWYY
+ 2OvubCBT+wqY4ml/0T4hit9beCxXs+/ZEdLTfbqoRhZg+VdNz0rhCgdINPM1l8pwTQP90xmeWwc
+ EAyjghxKIW4AG84hMUtKfJ34f99qWzYPVX3Pc+bpj1nRisxkFEuuq5XJ543iwNbtm9CFRVtTPSR
+ UOEev7mCcwNmhDHGK05E3b1C4FLhbssJk8VRKcOkMQT9qkrc3xkMpQBtxX6Nuu3BGLNvhs40Z7Z
+ OG9bv6WCWcCtn7m6b5RWrk+hNbzwVJ/WTrZTb7SoWNke0GhmlKIkEbHYnXyxmlPXezn6egHBaKM
+ D/aiyNb8H3gnsD3uB6349vM668IuPg==
+X-Proofpoint-GUID: 7X2LA4QUpRqcOJo8LUNGm9dU3b5eKn9u
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68f9b1ef cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=O0fAPOUEty8ZO6K3NPAA:9
+ a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=oH34dK2VZjykjzsv8OSz:22
+ a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,44 +129,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
-pending interrupts without apparent reason. There's no special treatment
-for these ints as far as the spec goes, and this filtering is causing
-read_stopi() to miss those VS interrupts [1].
 
-We shouldn't return delegated VS interrupts in S-mode though, so change
-the current mask with "~env->hideleg". Note that this is the same
-handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
+On 10/23/25 02:37, BALATON Zoltan wrote:
+> In create_bd_info function a bd_info struct is allocated but never
+> freed. Mark it g_autofree to avoid leaking it.
+> 
+> Fixes: 34f053d86b (ppc/amigaone: Add kernel and initrd support)
+> Resolves: Coverity CID 1641398
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/ppc/amigaone.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+> index 12279f42bc..47fb016b4a 100644
+> --- a/hw/ppc/amigaone.c
+> +++ b/hw/ppc/amigaone.c
+> @@ -221,7 +221,7 @@ struct bd_info {
+>   
+>   static void create_bd_info(hwaddr addr, ram_addr_t ram_size)
+>   {
+> -    struct bd_info *bd = g_new0(struct bd_info, 1);
+> +    g_autofree struct bd_info *bd = g_new0(struct bd_info, 1);
+>   
 
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2820
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251022124340.493358-1-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
----
- target/riscv/cpu_helper.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 3479a62cc7..360db133e2 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
- 
- int riscv_cpu_sirq_pending(CPURISCVState *env)
- {
--    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg &
--                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
-+    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & ~env->hideleg;
-     uint64_t irqs_f = env->mvip & env->mvien & ~env->mideleg & env->sie;
- 
-     return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
--- 
-2.51.0
-
+>       bd->bi_memsize =    cpu_to_be32(ram_size);
+>       bd->bi_flashstart = cpu_to_be32(PROM_ADDR);
 
