@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFEFCCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3898DCCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtkl-0001dW-2k; Thu, 23 Oct 2025 07:45:11 -0400
+	id 1vBtko-0001lB-7H; Thu, 23 Oct 2025 07:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkZ-0001PC-OS
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:01 -0400
+ id 1vBtkm-0001hT-8c
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:12 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkV-0001c0-Ct
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:58 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N3aMWO026207;
- Thu, 23 Oct 2025 11:44:45 GMT
+ id 1vBtkj-0001cn-Oa
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:11 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N7h6Wg002474;
+ Thu, 23 Oct 2025 11:44:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wih0cG
- 6UAMGul2imA4gk0mNhbLpBRw+cuAyP66e7sFA=; b=nWkNCTs75gvSSYgefLUS6H
- 3ArqbbItDqnz8NF6OsRn1Pt0v+fnf7Mq69Xl7xNOw7SZMErUkCGRUhChgF4pddlK
- 2x5stfzHChaiCeYVC61ngD0hGpOm7u4ZWEDMUEc0nE2Y4CvFp57R2thLSNBSeFrW
- 8nZPwbK5EcY5/ziT9fxXN5g8lWQRBXqNjUbPA0HJ9w/CBinmtr2DxalGaoM8KVzj
- ETMl0y5wfEhx/UpKMAi0xXBfV2t0R/s9baZ4pPdzjRMpymgsiNA/nR2nNGxLNAmX
- /aNO072U00Pspeokv8lUEqY+ZINbVsRt/OxUArJjcb3e9Ba4AkEmtNtflR77z5Pg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=9iBxiB
+ LeBwvy9mCaX1xtUVuE7Oh9PcyzMKCkJrJ5pgE=; b=JADJ6kV3PZYJ9mYaX8M2e6
+ DWKIDNY4ok7mAKaVt9WOsni9DxywG1rebVyMs5CbVNRG/QiftpPzf1HakQDgXuXf
+ zJcQ66ExPOxxHNYJ17i5fIxPtvJRqiNApC/FNFlMaZnZM7Y+yAJRPOPEgYPfm4J8
+ WMmZyFqgMM/0iEk5FSOh/IH77A3UIfATHSO+LM9usseQUiEiktOPWfZ/tIpvq4S4
+ t/ejyiYOY4Dqs5lIRLFJUsu4v03An6tO2lp66j9HPTzr+649pN36vymJ7GSVF87e
+ ujIqiKBo7OyoNmu4Yqm1cIqr1L5hPPk5DTzK/IuixblcRDBsVJakJLBz3YamE6zQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v33fhx5f-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3271wch-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:44:45 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NA8XLE024303;
- Thu, 23 Oct 2025 11:44:43 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqk5ds9-1
+ Thu, 23 Oct 2025 11:44:55 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NB1VkE011075;
+ Thu, 23 Oct 2025 11:44:54 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx1d6ew-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:44:43 +0000
+ Thu, 23 Oct 2025 11:44:54 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBifHA46727562
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBiq1u54133090
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:44:42 GMT
+ Thu, 23 Oct 2025 11:44:53 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DCC7020040;
- Thu, 23 Oct 2025 11:44:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C7C9520049;
+ Thu, 23 Oct 2025 11:44:52 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D29C020049;
- Thu, 23 Oct 2025 11:44:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E6E8E20040;
+ Thu, 23 Oct 2025 11:44:51 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:44:40 +0000 (GMT)
+ Thu, 23 Oct 2025 11:44:51 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/32] ppc/spapr: remove deprecated machine pseries-4.1
-Date: Thu, 23 Oct 2025 17:13:57 +0530
-Message-ID: <20251023114422.3675018-11-harshpb@linux.ibm.com>
+Subject: [PULL 19/32] hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
+Date: Thu, 23 Oct 2025 17:14:06 +0530
+Message-ID: <20251023114422.3675018-20-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
@@ -75,28 +74,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FMYWBuos c=1 sm=1 tr=0 ts=68fa152d cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68fa1537 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=aow-egSQAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=DRTwgpVIqhQ9bHD4Ks0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=gFNbaldVC-z-bsjSTzMo:22
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
-X-Proofpoint-GUID: jZK9Rvhs_qjY0Z5AnA_xe8EaQlrkRDJS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX+SSInFEZjA5g
- 3xmW90rSkFv0NjjNBcxT1LYHzPJb0shZnwEVFc0suDYY6ThMg19nfU/iqz7v4IpaQjQo4RtQqwb
- x2lxly83ccueK2xnHr7QMRrDB92izPgZdCG6sSCU/FYe1Im/hxRPEn6rIOkCTMO9Fqp3DnFVtIg
- wrUt46FUucziclWloQVPBtSK4B9OcjiBp1hx/nO6sGYyrqq/muKlatL31pnaUug5B2XDMyGTTHH
- GAQpoE3O1VKC6pXgER4x7tfKt8lh23IFb0hC4YFddJtRHpaRBtwiahFW0rHS5GoGMcHUFwOx+9r
- Jk9N4gScTIc36/hdLm0eWb4JgMfdwuJmlf6Yd5R6vbTMV1bWHYySVjC86dTFSN/FjVHvP9zDChY
- 9ShotR4rVfDh+mS+7ZcGXLBnGb1YGg==
-X-Proofpoint-ORIG-GUID: jZK9Rvhs_qjY0Z5AnA_xe8EaQlrkRDJS
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=Px54sdigDSgh_EqQyywA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX3y5IAoMDpRxd
+ KOnunwJPC2u805aMyb/QTzFsO01CfqF0LIo0panc8WDRUk922FepYY7O+qiP4xCFbn9cXN91J++
+ pAzNRejb38g4lV/a2xBH57Xhti/ccLM1XxDGLaX81fUbv0OuBZnro0NBHGiN7gmQbKMLZdg5/4M
+ 4rrEh1ddG2pWCBsifppt7CLlPQ/CUyKtuuQoq/t33RbVxKF39AvIUJLdgRikLRriN6iYNucCPW5
+ LSt+ityDVtArJn4OC1+8ZYTowo8zYKjCl8parFzPk+8z4qaPJe6yx4f9mf3ooiD79rsyoznjVAn
+ kqMrSmLbrL6osWq3L7L7UJ/33t5zYAE7wYvoWzC3sLfGYI+DaX/miuE0ntr0DSzzXukWyhB6lma
+ Xyb19Hkko6Zzgvo/VE5ePjAT5TRh8A==
+X-Proofpoint-GUID: m6WPlVmswBiPIJDGYmGGFERud3uOD02G
+X-Proofpoint-ORIG-GUID: m6WPlVmswBiPIJDGYmGGFERud3uOD02G
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 malwarescore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
@@ -124,115 +123,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the pseries-4.1 machine specific logic as had been deprecated and
-due for removal now as per policy.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251021084346.73671-11-philmd@linaro.org
+Collect steps of setting up PCI IRQ routing in one function.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/f5ff16a6933ab6e1f9e194d16ef85364ac3cf6df.1761176219.git.balaton@eik.bme.hu
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- include/hw/ppc/spapr.h |  2 --
- hw/ppc/spapr.c         | 37 +------------------------------------
- 2 files changed, 1 insertion(+), 38 deletions(-)
+ hw/ppc/pegasos2.c | 66 +++++++++++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index bd783e92e1..60d9a8a037 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -141,8 +141,6 @@ struct SpaprCapabilities {
- struct SpaprMachineClass {
-     MachineClass parent_class;
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index 4b63f0e175..2f9bd3eac5 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -107,6 +107,38 @@ static void pegasos2_pci_irq(void *opaque, int n, int level)
+     qemu_set_irq(pm->via_pirq[n], level);
+ }
  
--    bool linux_pci_probe;
--    bool smp_threads_vsmt; /* set VSMT to smp_threads by default */
-     hwaddr rma_limit;          /* clamp the RMA to this size */
-     bool pre_5_1_assoc_refpoints;
-     bool pre_5_2_numa_associativity;
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 371593d0b5..0e6218dc9c 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1072,7 +1072,6 @@ static void spapr_dt_ov5_platform_support(SpaprMachineState *spapr, void *fdt,
- static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
++/* Set up PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
++static void pegasos2_setup_pci_irq(Pegasos2MachineState *pm)
++{
++    for (int h = 0; h < 2; h++) {
++        DeviceState *pd;
++        g_autofree const char *pn = g_strdup_printf("pcihost%d", h);
++
++        pd = DEVICE(object_resolve_path_component(OBJECT(pm->nb), pn));
++        assert(pd);
++        for (int i = 0; i < PCI_NUM_PINS; i++) {
++            OrIRQState *ori = &pm->orirq[i];
++
++            if (h == 0) {
++                g_autofree const char *n = g_strdup_printf("pci-orirq[%d]", i);
++
++                object_initialize_child_with_props(OBJECT(pm), n,
++                                                   ori, sizeof(*ori),
++                                                   TYPE_OR_IRQ, &error_fatal,
++                                                   "num-lines", "2", NULL);
++                qdev_realize(DEVICE(ori), NULL, &error_fatal);
++                qemu_init_irq(&pm->pci_irqs[i], pegasos2_pci_irq, pm, i);
++                qdev_connect_gpio_out(DEVICE(ori), 0, &pm->pci_irqs[i]);
++                pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->nb, "gpp", 12 + i);
++                pm->via_pirq[i] = qdev_get_gpio_in_named(pm->sb, "pirq", i);
++            }
++            qdev_connect_gpio_out(pd, i, qdev_get_gpio_in(DEVICE(ori), h));
++        }
++    }
++    qdev_connect_gpio_out_named(pm->sb, "intr", 0,
++                                qdev_get_gpio_in_named(pm->nb, "gpp", 31));
++}
++
+ static void pegasos2_init(MachineState *machine)
  {
-     MachineState *machine = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(machine);
-     int chosen;
+     Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
+@@ -118,7 +150,6 @@ static void pegasos2_init(MachineState *machine)
+     I2CBus *i2c_bus;
+     const char *fwname = machine->firmware ?: PROM_FILENAME;
+     char *filename;
+-    int i;
+     ssize_t sz;
+     uint8_t *spd_data;
  
-     _FDT(chosen = fdt_add_subnode(fdt, 0, "chosen"));
-@@ -1143,9 +1142,7 @@ static void spapr_dt_chosen(SpaprMachineState *spapr, void *fdt, bool reset)
-          * We can deal with BAR reallocation just fine, advertise it
-          * to the guest
-          */
--        if (smc->linux_pci_probe) {
--            _FDT(fdt_setprop_cell(fdt, chosen, "linux,pci-probe-only", 0));
+@@ -169,9 +200,6 @@ static void pegasos2_init(MachineState *machine)
+     /* Marvell Discovery II system controller */
+     pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
+                           qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
+-    for (i = 0; i < PCI_NUM_PINS; i++) {
+-        pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->nb, "gpp", 12 + i);
+-    }
+     pci_bus = mv64361_get_pci_bus(pm->nb, 1);
+ 
+     /* VIA VT8231 South Bridge (multifunction PCI device) */
+@@ -185,14 +213,9 @@ static void pegasos2_init(MachineState *machine)
+     }
+ 
+     pci_realize_and_unref(PCI_DEVICE(via), pci_bus, &error_abort);
+-    for (i = 0; i < PCI_NUM_PINS; i++) {
+-        pm->via_pirq[i] = qdev_get_gpio_in_named(DEVICE(via), "pirq", i);
+-    }
+     object_property_add_alias(OBJECT(machine), "rtc-time",
+                               object_resolve_path_component(via, "rtc"),
+                               "date");
+-    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
+-                                qdev_get_gpio_in_named(pm->nb, "gpp", 31));
+ 
+     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
+     pci_ide_create_devs(dev);
+@@ -205,30 +228,7 @@ static void pegasos2_init(MachineState *machine)
+     /* other PC hardware */
+     pci_vga_init(pci_bus);
+ 
+-    /* PCI interrupt routing: lines from pci.0 and pci.1 are ORed */
+-    for (int h = 0; h < 2; h++) {
+-        DeviceState *pd;
+-        g_autofree const char *pn = g_strdup_printf("pcihost%d", h);
+-
+-        pd = DEVICE(object_resolve_path_component(OBJECT(pm->nb), pn));
+-        assert(pd);
+-        for (i = 0; i < PCI_NUM_PINS; i++) {
+-            OrIRQState *ori = &pm->orirq[i];
+-
+-            if (h == 0) {
+-                g_autofree const char *n = g_strdup_printf("pci-orirq[%d]", i);
+-
+-                object_initialize_child_with_props(OBJECT(pm), n,
+-                                                   ori, sizeof(*ori),
+-                                                   TYPE_OR_IRQ, &error_fatal,
+-                                                   "num-lines", "2", NULL);
+-                qdev_realize(DEVICE(ori), NULL, &error_fatal);
+-                qemu_init_irq(&pm->pci_irqs[i], pegasos2_pci_irq, pm, i);
+-                qdev_connect_gpio_out(DEVICE(ori), 0, &pm->pci_irqs[i]);
+-            }
+-            qdev_connect_gpio_out(pd, i, qdev_get_gpio_in(DEVICE(ori), h));
 -        }
-+        _FDT(fdt_setprop_cell(fdt, chosen, "linux,pci-probe-only", 0));
+-    }
++    pegasos2_setup_pci_irq(pm);
  
-         spapr_dt_ov5_platform_support(spapr, fdt, chosen);
-     }
-@@ -2589,7 +2586,6 @@ static CPUArchId *spapr_find_cpu_slot(MachineState *ms, uint32_t id, int *idx)
- static void spapr_set_vsmt_mode(SpaprMachineState *spapr, Error **errp)
- {
-     MachineState *ms = MACHINE(spapr);
--    SpaprMachineClass *smc = SPAPR_MACHINE_GET_CLASS(spapr);
-     Error *local_err = NULL;
-     bool vsmt_user = !!spapr->vsmt;
-     int kvm_smt = kvmppc_smt_threads();
-@@ -2625,15 +2621,6 @@ static void spapr_set_vsmt_mode(SpaprMachineState *spapr, Error **errp)
-             return;
-         }
-         /* In this case, spapr->vsmt has been set by the command line */
--    } else if (!smc->smp_threads_vsmt) {
--        /*
--         * Default VSMT value is tricky, because we need it to be as
--         * consistent as possible (for migration), but this requires
--         * changing it for at least some existing cases.  We pick 8 as
--         * the value that we'd get with KVM on POWER8, the
--         * overwhelmingly common case in production systems.
--         */
--        spapr->vsmt = MAX(8, smp_threads);
-     } else {
-         spapr->vsmt = smp_threads;
-     }
-@@ -4649,8 +4636,6 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
-     smc->default_caps.caps[SPAPR_CAP_AIL_MODE_3] = SPAPR_CAP_ON;
-     spapr_caps_add_properties(smc);
-     smc->irq = &spapr_irq_dual;
--    smc->linux_pci_probe = true;
--    smc->smp_threads_vsmt = true;
-     xfc->match_nvt = spapr_match_nvt;
-     vmc->client_architecture_support = spapr_vof_client_architecture_support;
-     vmc->quiesce = spapr_vof_quiesce;
-@@ -4945,26 +4930,6 @@ static void spapr_machine_4_2_class_options(MachineClass *mc)
- 
- DEFINE_SPAPR_MACHINE(4, 2);
- 
--/*
-- * pseries-4.1
-- */
--static void spapr_machine_4_1_class_options(MachineClass *mc)
--{
--    SpaprMachineClass *smc = SPAPR_MACHINE_CLASS(mc);
--    static GlobalProperty compat[] = {
--        /* Only allow 4kiB and 64kiB IOMMU pagesizes */
--        { TYPE_SPAPR_PCI_HOST_BRIDGE, "pgsz", "0x11000" },
--    };
--
--    spapr_machine_4_2_class_options(mc);
--    smc->linux_pci_probe = false;
--    smc->smp_threads_vsmt = false;
--    compat_props_add(mc->compat_props, hw_compat_4_1, hw_compat_4_1_len);
--    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--}
--
--DEFINE_SPAPR_MACHINE(4, 1);
--
- static void spapr_machine_register_types(void)
- {
-     type_register_static(&spapr_machine_info);
+     if (machine->kernel_filename) {
+         sz = load_elf(machine->kernel_filename, NULL, NULL, NULL,
 -- 
 2.43.5
 
