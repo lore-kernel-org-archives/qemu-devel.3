@@ -4,84 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF30CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55165CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBun1-00038l-19; Thu, 23 Oct 2025 08:51:35 -0400
+	id 1vBuu7-0005u8-Ie; Thu, 23 Oct 2025 08:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBumy-00037t-Bq
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:51:32 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBumv-0003AR-J1
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:51:31 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-781421f5be6so8543537b3.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 05:51:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761223886; x=1761828686; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+5PqL5ZxUUsmEc2PAC+LfM+bZGlSeMgP+auKmNkesXo=;
- b=DUFCWp45E1AVgN99FvsRUWUD4uJCySqZV/rPQqetBUhHDUCXmpgwisuKgAabUJ7KCZ
- GWnRXJAEzHuerGbuzvo53mq6wARLtIeGNL95VCP+XE5wdEhoahsa7gJ2YUg0vltp2Zw9
- HDu06TTHlSZqHwZ3SXQ7fDs/Yoi86YTeFGU7sLjJb6Tkye6wEY94p1sr0VYBNPEJ4AJc
- vIXmRM5Qt7h/v5YBttmIMMMitej/sKMnxB0zlR5oVNcKWBnh/Mip/UZ7Pjw7f2sA56E5
- dJBdNa25TQHTx34xPxqOhR1sBpwUi656ihO8zlHgDlazcD0V2krSBk0lwhDBrVukhpoe
- bdUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761223886; x=1761828686;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+5PqL5ZxUUsmEc2PAC+LfM+bZGlSeMgP+auKmNkesXo=;
- b=sFVU3FNNm6KRyuTyX6L3jCIx0nlfx5eZG5hhFYjj7/6G4QiKU6iA2pwFUw2/p5zF5e
- zz5rpUqsp5OAIybWd1i9wU9jjw/uwxxzxe/uHmDLQtzUjrbFAO/W4Y4GdvPNiqXsjQmg
- UCS77fRBx6NO7naE4acUTeHTx2TDzKkADhDM6qZG8oilg3UWoOLdP1qjiiDIPQTmf0T8
- wrsE4wb1aBX8asb7cBbbgoSNcQ7Ilfz4GsvO0d3DHX0+oQusDofbgkRy5Y5qRUJUK+VT
- TCAi6l9fcnNW9xcIgAaRialfFyDND9VtMB7bcsIm/gbJctC8DqivT7OkFSxtPmhCi0S4
- 2w2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXk4dGPII6IrvJDGyXoJZ6iRcOkpUE9PU5fOVfYz+6hKy0Gllgb9umXeikFWfQhURSSZ/OGnTf4RM8u@nongnu.org
-X-Gm-Message-State: AOJu0Yx8mHBPIwaX+BuYEmu2mZeLN76ndoTL+xe+UdesNsHl77Q9oE8m
- HlVoJzGyOmryf9ycKaKH7mwKp2ff1C1zu2DIIglZrcdcb4YO3NhbAu7cNsLVAy1oCpgkDP+NwpD
- 9BjE0C/ri/CDBM0kvRBhaT3Yuvd+TmDUk2LbPktM+0Q==
-X-Gm-Gg: ASbGncvBirxDZNnyl0Kz/sZg2lt7rNF8+w3PaOkhc8ywR80tIXyf2w5N75gkJmJmz6I
- kIPGzs/+rJlf/FnZ8ilThsrtTbUucy3mQ1istKwhTb32+vVGzb6u50Py/u8sva6j41gGyBySqMO
- 35GRAwvGlgz7+ctajhAeg1bYbDO6z64mRPySQTS4f4qTZtEsV3aL8TlLO2G70d1ecsDRuBfWW7S
- PvjxtV7LWPTj2lSF7SNXMEZfRPFqRcnXZTf6dWlECHgQ7to+nNo8s8aUx7QHc9JybzWqOr2
-X-Google-Smtp-Source: AGHT+IHSLRsQ4vEaol9uukXm+lusfl02KWmZxCyEr67FYX85YmpQnPDN29Kvvc9oOQLd1Ho4rDVCg1f/AV53gbkNEHk=
-X-Received: by 2002:a05:690e:1511:b0:633:a883:3d1b with SMTP id
- 956f58d0204a3-63e160e98a9mr18500658d50.6.1761223886060; Thu, 23 Oct 2025
- 05:51:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBuu4-0005tc-TG; Thu, 23 Oct 2025 08:58:53 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vButx-00048F-Ue; Thu, 23 Oct 2025 08:58:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B62BF5972EA;
+ Thu, 23 Oct 2025 14:58:39 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id GQrIU0lILz0X; Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B323C5972DE; Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B10D05972E8;
+ Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
+Date: Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v4 08/12] hw/ppc/pegasos2: Move hardware specific parts
+ out of machine reset
+In-Reply-To: <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
+Message-ID: <81856e15-36e0-be76-d51c-55915a8d1233@eik.bme.hu>
+References: <cover.1761176219.git.balaton@eik.bme.hu>
+ <f6633a68a72aad4fefb8d2373b52561f8ca8d41d.1761176219.git.balaton@eik.bme.hu>
+ <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
 MIME-Version: 1.0
-References: <20251017153027.969016-1-peter.maydell@linaro.org>
- <20251017153027.969016-4-peter.maydell@linaro.org>
-In-Reply-To: <20251017153027.969016-4-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 23 Oct 2025 13:51:13 +0100
-X-Gm-Features: AS18NWC33KCwJiaDFRUpINc-4aLCNb-T3Np3MyG1ihe1OjHu4K0U9pisn9bjtjk
-Message-ID: <CAFEAcA8BobzAHpgQ3p=UVN3p0Hm1_P_xr8AN=sJ0GQtFP98FEA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] tests/tcg/aarch64: Add test case for SME2 gdbstub
- registers
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-392806474-1761224317=:38722"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,30 +69,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Oct 2025 at 16:30, Peter Maydell <peter.maydell@linaro.org> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-392806474-1761224317=:38722
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Thu, 23 Oct 2025, Philippe Mathieu-Daudé wrote:
+> On 23/10/25 02:06, BALATON Zoltan wrote:
+>> Move the pegasos2 specific chipset reset out from machine reset to a
+>> separate function and move generic parts that are not pegasos2
+>> specific from build_fdt to machine reset so now build_fdt only
+>> contains pegasos2 specific parts and can be renamed accordingly.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/ppc/pegasos2.c | 79 ++++++++++++++++++++++++-----------------------
+>>   1 file changed, 41 insertions(+), 38 deletions(-)
 >
-> Test the SME2 register exposure over gdbstub, in the same way
-> we already do for SME.
 >
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> -#define PCI1_IO_BASE  0xfe000000
+>
+> Can't we keep such definition?
+>
+>> @@ -308,23 +307,12 @@ static void 
+>> pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
+>>     static void pegasos2_superio_write(uint8_t addr, uint8_t val)
+>>   {
+>> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f0, &addr, 1);
+>> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
+>> +    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
+>> +    cpu_physical_memory_write(0xfe0003f1, &val, 1);
+>
+> Otherwise it is harder to notice we are accessing the MMIO mapped ISA space.
 
-> +def run_test():
-> +    """Test reads and writes of the SME2 registers"""
-> +    frame = gdb.selected_frame()
-> +    rname = "zt0"
-> +    zt0 = frame.read_register(rname)
-> +    report(True, "Reading %s" % rname)
-> +
-> +    # Writing to the ZT0 register, byte by byte.
-> +    for i in range(0, 64):
-> +        cmd = "set $zt0[%d] = 0x01" % (i)
-> +            gdb.execute(cmd)
-> +            report(True, "%s" % cmd)
+It might be misleading as it's PCI1 on pegasos2 but PCI0 on pegasos1 so 
+the define does not clarify much either way even if I rename it to 
+PCI_IO_BASE. Generally I think for numbers that are only used once having 
+a define just obfuscates it as I then have to look up what the number is 
+elsewhere instead of seeing right away. I guess I'll leave it as it is now 
+that this version was pulled.
 
-These two lines are wrongly indented, and Python will error
-out with "unexpected indent". I fixed this up in my local
-tree but clearly forgot to commit the change to git before
-sending. I'll fix this up in applying them to target-arm.next.
+>>   }
+> Consider renaming as pegasos_superio_write() since this method becomes
+> common to PegasOS I and II.
 
--- PMM
+This could have removed one hunk from patch 12 and adding it here making 
+that patch shorter but this one longer so not much difference. Now that 
+these are reviewed I think it does not matter any more.
+
+Regards,
+BALATON Zoltan
+
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>
+>
+--3866299591-392806474-1761224317=:38722--
 
