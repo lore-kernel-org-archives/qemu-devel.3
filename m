@@ -4,65 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F89CCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 18:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C218CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 18:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC0Jj-0002UC-Po; Thu, 23 Oct 2025 14:45:43 -0400
+	id 1vC0Lj-0003Qh-Nr; Thu, 23 Oct 2025 14:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vC0Jd-0002RX-Hn
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:45:37 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vC0Li-0003Py-7W
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:47:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vC0Ja-0001bS-96
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:45:37 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1EDEEC00CE;
- Thu, 23 Oct 2025 21:45:29 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:538::1:38] (unknown
- [2a02:6bf:8080:538::1:38])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id RjdROb0L3Sw0-ksrVIj9l; Thu, 23 Oct 2025 21:45:28 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761245128;
- bh=icc+T/iVJCOcCbIjJfl9EocFEOZD0VoVa7ei332PSts=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Z8HejJesHnE/I9dhr1q1kVMLl5OyygTXZu8kXxk8d23A0ZRubAPFMSTwdKFsch7L1
- oQTa4SFV1PxLTUCnR7GCX8dN6o8HkDSvlpcr+yct14FrX8LEDses6dJNduf3Ck4y2u
- xe8uUBrITtTJY98XrrE1AK8HCFbujLdDeCw75nes=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <f5baf6f3-5b9f-4e12-839b-32d1a269ab5b@yandex-team.ru>
-Date: Thu, 23 Oct 2025 21:45:27 +0300
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vC0Lg-0001q8-UU
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:47:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761245264;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=26rkqkMyMyT3FJEkuwcl8NsYfREVdvrGfbjXgjsUy+4=;
+ b=HfiqgZiuohnRSaDGiIGBb/QCLKNAVhmyuz1ODg3iax3aZzxQr4i2K5zsFY4tDXuNWVHGRE
+ LRI8niOO+N1GSRpnAbvVaOb2xJToxlHbBJ22CpmMwFgLZL6Tn1HyMjeVlWkvI7mYm3JJfi
+ Wxpb3yoPPAmK57HNv3fFmLQhZCNdJzU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-9UR4Y8HeMkmsUmBHXoQfJw-1; Thu,
+ 23 Oct 2025 14:47:40 -0400
+X-MC-Unique: 9UR4Y8HeMkmsUmBHXoQfJw-1
+X-Mimecast-MFC-AGG-ID: 9UR4Y8HeMkmsUmBHXoQfJw_1761245260
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFAE91956052; Thu, 23 Oct 2025 18:47:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.90])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17F4719540EB; Thu, 23 Oct 2025 18:47:37 +0000 (UTC)
+Date: Thu, 23 Oct 2025 20:47:35 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
+Subject: Re: [PATCH 3/5] vvfat: add a define for SECTOR_SIZE
+Message-ID: <aPp4R9jcHqxDzfNc@redhat.com>
+References: <20250903075721.77623-1-chigot@adacore.com>
+ <20250903075721.77623-4-chigot@adacore.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] scripts/compare-mt: stop using global variables
-To: Maksim Davydov <davydov-max@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: crosa@redhat.com, jsnow@redhat.com, philmd@linaro.org
-References: <20251023165846.326295-1-davydov-max@yandex-team.ru>
- <20251023165846.326295-3-davydov-max@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251023165846.326295-3-davydov-max@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250903075721.77623-4-chigot@adacore.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,72 +84,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.10.25 19:58, Maksim Davydov wrote:
-> All variables inside the main if-structure are global that can be
-> confusing or be the reason of an issue. So, all code inside this structure
-> was moved to the separate function to detect all usages of these global
-> variables. All these usages were deleted.
+Am 03.09.2025 um 09:57 hat Clément Chigot geschrieben:
+> This makes those 0x200 far clearer.
 > 
-
-May be mention, that Configuration._qemu_args was unused.
-
-> Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-
-
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
 > ---
->   scripts/compare-machine-types.py | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
-> 
-> diff --git a/scripts/compare-machine-types.py b/scripts/compare-machine-types.py
-> index dba9e03548..e6fcea22e1 100755
-> --- a/scripts/compare-machine-types.py
-> +++ b/scripts/compare-machine-types.py
-> @@ -264,7 +264,6 @@ def __init__(self, vm: QEMUMachine,
->                    req_mt: List[str], all_mt: bool) -> None:
->           self._vm = vm
->           self._binary = vm.binary
-> -        self._qemu_args = args.qemu_args.split(' ')
->   
->           self._qemu_drivers = VMPropertyGetter(vm)
->           self.req_mt = get_req_mt(self._qemu_drivers, vm, req_mt, all_mt)
-> @@ -482,17 +481,17 @@ def fill_prop_table(configs: List[Configuration],
->   
->   def print_table(table: pd.DataFrame, table_format: str) -> None:
->       if table_format == 'json':
-> -        print(comp_table.to_json())
-> +        print(table.to_json())
->       elif table_format == 'csv':
-> -        print(comp_table.to_csv())
-> +        print(table.to_csv())
->       else:
-> -        print(comp_table.to_markdown(index=False, stralign='center',
-> -                                     colalign=('center',), headers='keys',
-> -                                     tablefmt='fancy_grid',
-> -                                     disable_numparse=True))
-> +        print(table.to_markdown(index=False, stralign='center',
-> +                                colalign=('center',), headers='keys',
-> +                                tablefmt='fancy_grid',
-> +                                disable_numparse=True))
->   
->   
-> -if __name__ == '__main__':
-> +def main() -> None:
->       args = parse_args()
->       with ExitStack() as stack:
->           vms = [stack.enter_context(QEMUMachine(binary=binary, qmp_timer=15,
-> @@ -506,3 +505,7 @@ def print_table(table: pd.DataFrame, table_format: str) -> None:
->           comp_table = fill_prop_table(configurations, args.raw)
->           if not comp_table.empty:
->               print_table(comp_table, args.format)
-> +
-> +
-> +if __name__ == '__main__':
-> +    main()
+>  block/vvfat.c | 60 ++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 33 insertions(+), 27 deletions(-)
 
+> @@ -1513,7 +1515,7 @@ vvfat_read(BlockDriverState *bs, int64_t sector_num, uint8_t *buf, int nb_sector
+>                               " allocated\n", sector_num,
+>                               n >> BDRV_SECTOR_BITS));
+>                  if (bdrv_co_pread(s->qcow, sector_num * BDRV_SECTOR_SIZE, n,
+> -                                  buf + i * 0x200, 0) < 0) {
+> +                                  buf + i * SECTOR_SIZE, 0) < 0) {
 
--- 
-Best regards,
-Vladimir
+We get a nasty mix of BDRV_SECTOR_SIZE (the QEMU block layer's sector
+size) and the new SECTOR_SIZE (the FAT file system's sector size) here.
+I think both of these actually refer to FAT.
+
+Should we also change those instances of BDRV_SECTOR_SIZE that really
+should be SECTOR_SIZE?
+
+Kevin
+
 
