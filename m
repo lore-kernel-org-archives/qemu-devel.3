@@ -4,105 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDFDCCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A03CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:18:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtJw-00014T-OX; Thu, 23 Oct 2025 07:17:38 -0400
+	id 1vBtKp-0002LA-2c; Thu, 23 Oct 2025 07:18:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1vBtJt-0000xc-CE
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:17:25 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1vBtJr-00063F-3H
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:17:25 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-3c97c98c791so432704fac.2
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 04:17:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1761218239; x=1761823039; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OJWYBEk/V4d9wpSFG/g1KRLHkm47ZYXjvJVAJan0qOA=;
- b=HnKbFrBVu/N8tTmG3HidTnopSYYJpKI6S9eWC7K/QJwd725sXq3/VX8q250XSi9+aE
- JMD15reu2ueCHxdMS9XmrQtwFQG6/fzdfdEIiZ6Xmh3fVNAhhgn0ANdRQKckYzadJ4Tl
- RXbNfgPAaRqZ/BOo8QsH/5sBRmj/4iJMjmD5e9zZL9+ZEExbubwZEUKA0i68Au3rEbjb
- OXrEwkEx4CpPP81AtsDCxKg/Yehqrp5hAtMC+WXdrl/QjmGj3QKg2JS8Uihra4o8VEuA
- 3VJy0XqDY6YLO9NzHJLK6jh6VsfV52XM9oJDP2FmCMwLpwJc/y/2pnk0W4ch5x95lfm3
- Ip+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761218239; x=1761823039;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OJWYBEk/V4d9wpSFG/g1KRLHkm47ZYXjvJVAJan0qOA=;
- b=FZqgHmwUSy6wqGUDKcpgs+c62S6/iWK5TUzU/0vTmAy5xNU9WsmpqGuKygfHKbbKZg
- yCM4ro9X7IaU6ahwBQ06pWV6Nh/zHicWSSHMyhRqpjoBSUYpfG5tmNokLjUyBUV69ByE
- KRf1MWBgizl1KqNeTx8s9qvwacQP4/oeRbu5MAP2PDUx3RcxuoLCQfSOHeZvb2P0hy+l
- 2mo1FjmcITQD/9QFHdCtSdb4quqmyV7UPUyjpFHW/3J9E2aETlV1o2CLqXiU9noU38po
- DN5JTVEzyqEIqo/dOobapwqfHezYUvO+uwHyLBl+S4iOd6VcfILqZhwyYx5XAXnsZyLy
- sIXg==
-X-Gm-Message-State: AOJu0YwsitLmKb2dw5x7fay50JjawxPGH4oqF4i6a8VNsmJ4Gwu0+Alu
- sigUxkfMHTZpeCm5fmSbOAYWQA47EpTOAsR3kUuQgO4tuUl8Ds3a2IfiNUPjL2kD86hH+gyi32X
- /+npKetzGfxEDvElP4wQg3ofy4FUP9y6Z0F0qiYsVSg==
-X-Gm-Gg: ASbGncsqcUillAq6/2GZZwAJDGHtdEzknvG3aVJ4zw5hAE+g9IbZuOtVjeMitlwc2jt
- XWWfpATFJGBArCtoVFGRnkmLOw+dhTiBAIQE63z0pHyMReCFEUM2x+7fylqg+7EHXWKlODZ+MDS
- XAZWN1p2rvFSMY8a0XiEx5E7HE2b7kMsFK1FNjYiMQS/orGPKhovIYCAnc9r+ijEPPPP5+Q98VO
- s/4ywb8zwGbwXgoZOi4RmZRH9oD0+hH+424DqXaBKKCYp7QXC1CFD4t8mEPb/ge4/xUOIvSfVjq
- 101t71uTmpH58T3vSwPYmIgPwQJUWjhKXYsQLNt0Bg==
-X-Google-Smtp-Source: AGHT+IGICgurpd3aMLuZ1wxCw3RNpOzkGRQbLMtX0qb9usCEuRGzqnsd0LmxJeXXYle+k1jmQANreIsqiuovY2tthfI=
-X-Received: by 2002:a05:6871:1ca:b0:3cd:aa60:c2ce with SMTP id
- 586e51a60fabf-3cdc5aa5472mr875723fac.45.1761218238908; Thu, 23 Oct 2025
- 04:17:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vBtKm-0002BJ-Da; Thu, 23 Oct 2025 07:18:20 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vBtKj-0006L5-0u; Thu, 23 Oct 2025 07:18:20 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N68EwM021232;
+ Thu, 23 Oct 2025 11:18:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=qnOzLG+A4yWbKubDhnECJQgCWHsdIR
+ ipdQtCP6oc2jU=; b=YKOr627AuTAC1MitAycEI8bAlXJq+fvHiZreCqLzyCDJKR
+ KlXR0jIh9m4c/2qVyvSGHJWcPVh5D6I2PghGGS4wjdWSA7abKQUtThAEBQe6hL3V
+ DfvSFnSdwLnE8ZDd8G9olmERHzkDM1gml/asXqOIwL8cE8w8K/7uSxQmiqVzPVtH
+ BOji8DaCX6fV00GI5Sxjb+YDDCYfscPlgD78RNYdzcHmhCSkrX69IKARthw+OmSR
+ Uch15I4g1tQ+06sEKjflT4nCmDc6f3eG3Aow2+YRKF7HcmimtmHTSQIpIuzq36JX
+ Oc9GZPcS/WutkUVHgl1wf6yO88a/oP80tam8k0LA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31cgf83-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:18:14 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59NBG8ba009263;
+ Thu, 23 Oct 2025 11:18:14 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31cgf7y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:18:14 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAU0ES032096;
+ Thu, 23 Oct 2025 11:18:13 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vp7n5c2b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 11:18:13 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBI9Ip21627444
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Oct 2025 11:18:09 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D2C620043;
+ Thu, 23 Oct 2025 11:18:09 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B31AB20040;
+ Thu, 23 Oct 2025 11:17:59 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.222.253])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 23 Oct 2025 11:17:59 +0000 (GMT)
+Date: Thu, 23 Oct 2025 16:47:54 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v5 6/8] hw/ppc: Enable fadump for PSeries
+Message-ID: <jemz4qnj7ljjfxf4ia76luq5k7dftudrakjdp2ewdc7j5673aj@ubexpabxs4a7>
+References: <20251021134823.1861675-1-adityag@linux.ibm.com>
+ <20251021134823.1861675-7-adityag@linux.ibm.com>
+ <2217b04e-680f-4071-80cd-cde41ff552ae@linux.ibm.com>
 MIME-Version: 1.0
-References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
- <20251001010127.3092631-6-salil.mehta@opnsrc.net>
- <a03ed205-b61a-4bba-9f25-83663b7d8a86@redhat.com>
- <CAJ7pxeYurHLqj8GnLrfznmofMpsaw91GeZ3KMyucL0B_gn9gPg@mail.gmail.com>
- <CAJ7pxeaUfUeXwtTVheCTxej-aCTCx0n8-XyAKaFneVUjcWL_7w@mail.gmail.com>
- <beab3dd4-0c19-441c-a9f5-ecae9e791753@redhat.com>
- <CAJ7pxeYEpJGhtL1-3qFEJYTzL-s19fF-it6p5dkq=fg384wBpg@mail.gmail.com>
- <fa5d5a65-616f-405a-a5e5-f8b70ff32193@redhat.com>
-In-Reply-To: <fa5d5a65-616f-405a-a5e5-f8b70ff32193@redhat.com>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Thu, 23 Oct 2025 11:17:06 +0000
-X-Gm-Features: AS18NWAMDKvdk11IzAj_EjqCCe8eeIgV6YFd8IufHo1HI04c-yM3AhG5gQvOK_Q
-Message-ID: <CAJ7pxeanrOU4cuf-JLgR-v7kMLqkrFUUvb95bBpx9mPy1BcsdA@mail.gmail.com>
-Subject: Re: [PATCH RFC V6 05/24] arm/virt,kvm: Pre-create KVM vCPUs for
- 'disabled' QOM vCPUs at machine init
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com, 
- salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org, 
- jonathan.cameron@huawei.com, lpieralisi@kernel.org, peter.maydell@linaro.org, 
- richard.henderson@linaro.org, imammedo@redhat.com, armbru@redhat.com, 
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org, 
- eric.auger@redhat.com, will@kernel.org, ardb@kernel.org, 
- oliver.upton@linux.dev, pbonzini@redhat.com, rafael@kernel.org, 
- borntraeger@linux.ibm.com, alex.bennee@linaro.org, gustavo.romero@linaro.org, 
- npiggin@gmail.com, harshpb@linux.ibm.com, linux@armlinux.org.uk, 
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com, 
- vishnu@os.amperecomputing.com, gankulkarni@os.amperecomputing.com, 
- karl.heubaum@oracle.com, miguel.luis@oracle.com, zhukeqian1@huawei.com, 
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com, wangzhou1@hisilicon.com, 
- linuxarm@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn, 
- lixianglai@loongson.cn, shahuang@redhat.com, zhao1.liu@intel.com, 
- Keqian Zhu <zhuqian1@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2217b04e-680f-4071-80cd-cde41ff552ae@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: S-YQM-ZURIEqKDpC3P-jA8XB_dDatvhW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX2U5HKsg7uYUG
+ rCNo0+BYB9EF/WquXY05/WonKPj/3DDrfybQzPpbhsl/HkT0DgbaRYps9fd8VHmyFdDyyX9obDC
+ J6jRLXXWFiR5lm8KwWvfuOOIp1qNWT1L9Dn6X72MwnYB1D+QwI5sGxpdttoEJ8LC+uL1afdZ8bd
+ 0OWcCaYDxLAWial8xKlJjcgKIGrXyOH9OyROpA43Ff1AV90ECTov044zFxfMAL0eBfFmvTd9cGx
+ IY8Skqv3bCZt53yeNtIlmx2O+3CJ/XA04E1umpDZb2HMzSwhGWa3tK3Q7BUyeKZL+R7AX62YqAw
+ 4cZ5woXB6bnQ/lW1ExJc9y0XjrOFdaZvzVSwHyV3ujn1PET5Pbs0/82HQcb1xI4zQt1oLocvcdF
+ DrgNT0p+ZsrSdRpvgglR3TsGGpC7ug==
+X-Proofpoint-GUID: RRHq5kPG5qW8KFt2w37gi1Lv9A64taKi
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68fa0ef6 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=gwc0g8rqIRSIA0_rrhAA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,113 +133,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gavin
+On 25/10/23 02:38PM, Sourabh Jain wrote:
+> 
+> 
+> On 21/10/25 19:18, Aditya Gupta wrote:
+> > With all support in place for preserving memory regions, enable fadump by
+> > exporting the "ibm,kernel-dump" property in the device tree, representing
+> > the fadump dump information, in case of a crash.
+> > 
+> > Currently "ibm,configure-kernel-dump" RTAS call is already registered,
+> > which tells the kernel that the platform (QEMU) supports fadump.
+> > 
+> > Now, in case of a crash, if fadump was registered, we also pass
+> > "ibm,kernel-dump" in device tree, which tells the kernel that the fadump
+> > dump is active.
+> > 
+> > Pass "fadump=on" to enable Linux to use firmware assisted dump.
+> > 
+> > Logs of a linux boot with firmware assisted dump:
+> > 
+> >      $ ./build/qemu-system-ppc64 -M pseries,x-vof=on --cpu power10 --smp 4 -m 4G -kernel some-vmlinux -initrd some-initrd -append "debug fadump=on crashkernel=1G" -nographic
+> > 
+> >      [    0.000000] fadump: Reserved 1024MB of memory at 0x00000040000000 (System RAM: 4096MB)
+> >      [    0.000000] fadump: Initialized 0x40000000 bytes cma area at 1024MB from 0x400102a8 bytes of memory reserved for firmware-assisted dump
+> >      ...
+> >      [    1.084686] rtas fadump: Registration is successful!
+> >      ...
+> >      # cat /sys/kernel/debug/powerpc/fadump_region
+> >      CPU :[0x00000040000000-0x000000400013df] 0x13e0 bytes, Dumped: 0x0
+> >      HPTE:[0x000000400013e0-0x000000400013df] 0x0 bytes, Dumped: 0x0
+> >      DUMP: Src: 0x00000000000000, Dest: 0x00000040010000, Size: 0x40000000, Dumped: 0x0 bytes
+> > 
+> >      [0x0000000921a000-0x0000000921a7ff]: cmdline append: ''
+> >      # echo c > /proc/sysrq-trigger
+> > 
+> > The fadump boot after crash:
+> > 
+> >      [    0.000000] rtas fadump: Firmware-assisted dump is active.
+> >      [    0.000000] fadump: Updated cmdline: debug fadump=on crashkernel=1G
+> >      [    0.000000] fadump: Firmware-assisted dump is active.
+> >      [    0.000000] fadump: Reserving 3072MB of memory at 0x00000040000000 for preserving crash data
+> >      ....
+> >      # file /proc/vmcore
+> >      /proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
+> > 
+> > Analysing the vmcore with crash-utility:
+> > 
+> >            KERNEL: vmlinux-6.14-rc2
+> >          DUMPFILE: vmcore-fc92fb373aa0
+> >              CPUS: 4
+> >              DATE: Wed Mar 12 23:39:23 CDT 2025
+> >            UPTIME: 00:00:22
+> >      LOAD AVERAGE: 0.13, 0.03, 0.01
+> >             TASKS: 95
+> >          NODENAME: buildroot
+> >           RELEASE: 6.12.0-rc4+
+> >           VERSION: #1 SMP Fri Jan  3 00:15:17 IST 2025
+> >           MACHINE: ppc64le  (1000 Mhz)
+> >            MEMORY: 4 GB
+> >             PANIC: "Kernel panic - not syncing: sysrq triggered crash"
+> >               PID: 269
+> >           COMMAND: "sh"
+> >              TASK: c00000000a050b00  [THREAD_INFO: c00000000a050b00]
+> >               CPU: 0
+> >             STATE: TASK_RUNNING (PANIC)
+> > 
+> > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> > ---
+> >   hw/ppc/spapr.c | 12 ++++++++++++
+> >   1 file changed, 12 insertions(+)
+> > 
+> > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> > index d40d5a9dcde5..77da8c1b02f5 100644
+> > --- a/hw/ppc/spapr.c
+> > +++ b/hw/ppc/spapr.c
+> > @@ -904,6 +904,8 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
+> >   {
+> >       MachineState *ms = MACHINE(spapr);
+> >       MachineClass *mc = MACHINE_GET_CLASS(ms);
+> > +    FadumpMemStruct *fdm = &spapr->registered_fdm;
+> > +    uint16_t dump_status_flag;
+> >       uint32_t max_possible_cpus = mc->possible_cpu_arch_ids(ms)->len;
+> >       uint64_t fadump_cpu_state_size = 0;
+> > @@ -953,6 +955,16 @@ static void spapr_dt_rtas_fadump(SpaprMachineState *spapr, void *fdt, int rtas)
+> >                       fadump_versions, sizeof(fadump_versions))));
+> >       _FDT((fdt_setprop(fdt, rtas, "ibm,configure-kernel-dump-sizes",
+> >                       fadump_rgn_sizes, sizeof(fadump_rgn_sizes))));
+> > +
+> > +    dump_status_flag = be16_to_cpu(fdm->header.dump_status_flag);
+> > +    if (dump_status_flag & FADUMP_STATUS_DUMP_TRIGGERED) {
+> > +        uint64_t fdm_size =
+> > +            sizeof(struct FadumpSectionHeader) +
+> > +            (be16_to_cpu(fdm->header.dump_num_sections) *
+> > +            sizeof(struct FadumpSection));
+> > +
+> > +        _FDT((fdt_setprop(fdt, rtas, "ibm,kernel-dump", fdm, fdm_size)));
+> > +    }
+> >   }
+> >   static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+> 
+> LGTM
+> Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-On Thu, Oct 23, 2025 at 1:58=E2=80=AFAM Gavin Shan <gshan@redhat.com> wrote=
-:
->
-> Hi Salil,
->
-> On 10/23/25 10:35 AM, Salil Mehta wrote:
-> > On Thu, Oct 23, 2025 at 12:14=E2=80=AFAM Gavin Shan <gshan@redhat.com> =
-wrote:
-> >> On 10/23/25 4:50 AM, Salil Mehta wrote:
-> >>> On Wed, Oct 22, 2025 at 6:18=E2=80=AFPM Salil Mehta <salil.mehta@opns=
-rc.net> wrote:
-> >>>> On Wed, Oct 22, 2025 at 10:37=E2=80=AFAM Gavin Shan <gshan@redhat.co=
-m> wrote:
-> >>>>> On 10/1/25 11:01 AM, salil.mehta@opnsrc.net wrote:
-> >>>>>> From: Salil Mehta <salil.mehta@huawei.com>
+Thanks for all your reviews Sourabh !
 
-[...]
-
-> >> guest$ cd /sys/devices/system/cpu/
-> >> guest$ cat present enabled online
-> >> 0-3
-> >> 0-1
-> >> 0-1
-> >> (qemu) device_set host-arm-cpu,socket-id=3D1,cluster-id=3D0,core-id=3D=
-0,thread-id=3D0,admin-state=3Denable
-> >> qemu-system-aarch64: kvm_init_vcpu: kvm_arch_init_vcpu failed (2): Ope=
-ration not permitted
-> >
-> >
-> > Ah, I see. I think I understand the issue. It's complaining
-> > about calling the  finalize twice. Is it possible to check as
-> > I do not have a way to test it?
-> >
-> >
-> > int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature)
-> > {
-> > switch (feature) {
-> > case KVM_ARM_VCPU_SVE:
-> > [...]
-> > if (kvm_arm_vcpu_sve_finalized(vcpu))
-> > return -EPERM;-----> this where it must be popping?
-> > [...]
-> > }
-> >
->
-> Right, I think that's the case: QEMU tries to finalize SVE capability for=
- twice,
-> which is the real problem. I'm explaining what I found as below, which wo=
-uld be
-> helpful to the forthcoming revisions.
->
-> machvirt_init
->    virt_setup_lazy_vcpu_realization
->      arm_cpu_finalize_features
->      kvm_arm_create_host_vcpu
->        kvm_create_vcpu                       // New fd is created
->        kvm_arch_init_vcpu
->          kvm_arm_vcpu_init
->          kvm_arm_sve_set_vls
->          kvm_arm_vcpu_finalize               // (A) SVE capability is fin=
-alized
->
-> device_set_admin_power_state
->    device_pre_poweron
->      virt_machine_device_pre_poweron
->        virt_cpu_pre_poweron
->          qdev_realize
->            arm_cpu_realizefn
->              cpu_exec_realizefn
->              arm_cpu_finalize_features       // Called for the second tim=
-e
->              qemu_init_vcpu
->                kvm_start_vcpu_thread
->                  kvm_vcpu_thread_fn
->                    kvm_init_vcpu
->                      kvm_create_vcpu         // Called for the second tim=
-e
->                      kvm_arch_init_vcpu      // Called for the second tim=
-e
->                        kvm_arm_vcpu_init
->                        kvm_arm_sve_set_vls   // (B) Failed here
->                        kvm_arm_vcpu_finalize
->
-> (B) where we try to finalize SVE capability again. It has been finalized =
-at (A)
->      Fianlizing SVE capability for twice is disallowed by KVM on the host=
- side.
->
->
-> >>
-> >> I picked the fix (the last patch in rfc-v6.2 branch) to rfc-v6 branch,=
- same crash dump
-> >> can be seen.
-> >
-> > Are you getting previously reported abort or above new problem?
-> >
->
-> Previously, the VM can't be started. After your fix is applied, the VM is=
- able to start.
-> It's a new problem that qemu crash dump is seens on attempt to hot add a =
-vCPU.
-
-
-Thanks for confirming this as well.
-
-Cheers
-Salil.
 
