@@ -4,94 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64E1CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35BFCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 12:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuAJ-0001Gr-2h; Thu, 23 Oct 2025 08:11:35 -0400
+	id 1vBu91-0000AS-A8; Thu, 23 Oct 2025 08:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vBu8o-0008MR-K4
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:10:09 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vBu8l-0005FD-IF
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:10:01 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-61feb87fe26so1265386a12.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 05:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761221397; x=1761826197; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g+0U4t7TJx0pQHp17q8cgNldMYGi3quYhnb/lv6Cse4=;
- b=pVVcc+lSaVTqdNcFNmgKEz5KHQv/7EZdo1RYGqXomiKNWUIR/hE/j4PTZGJtdxyKk6
- hXDtixIuoiT5IO+bIXPWvN8PZlXC49N0XwUE/mZRdHBVU1mTgYV+jme/lhirAESrwT2X
- LAC0AkrpEk7m3Iuuj58lLYIC/T4QNwWN47WbU8k7gM6UXWTx0fY1ewdE0EP0d6DI+cbM
- J9X51FGEWvsAj3Mb0MicTUFYfB8ICYeKwWl2fOP0aKWCAGGBH9Jq2p9HJyI72b8570BX
- 3JVh4oADNxi/msHGNcwJ9EIwRdSkQHUpuIWOHK9wNDP/JoVO3ypVT50YbOeyYsIu5XAg
- LzFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761221397; x=1761826197;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g+0U4t7TJx0pQHp17q8cgNldMYGi3quYhnb/lv6Cse4=;
- b=JYfDiv1K4gcmmw1+xCEIkXczAs/g9aZgEDZffZpF9UBTcNyLW2lJOG0VBYvwH8xLST
- S0f//WleheqIkOnXaW7oL8Pz7nParzIVm3Ojp4C+tKijxCz/ksXlQT1kz2qXWjb6bjGW
- heKz6UrfOGodI2gWTt96z0n00UnEiP6vf4OF5dR8bTNymhhT6oWrE4PMcw2iGGuQKaUE
- q7uTY+BcOn+NNU+kEOUluJwwt2vdkuW4yG4MFKGe8PQOcsPSo6RkL3diZGyh64BDPQ05
- d5NLrQlLwOYRgMZtXT9v36ojOBE3mFnUgdbCbhm/hytnMQ64PUmQhM68qBavRiw97DzM
- 2Gig==
-X-Gm-Message-State: AOJu0Yw8h3F4z9Ir7cqWkrlFVo3xh9y3HInZxIRSwygvishoewOd+bR+
- Pg2amWhMxa/hGpRvN7loQGEByjoh4yRxCXVzzaMnTqET9xq7Nghy2Dw4OwWDfnAGR58=
-X-Gm-Gg: ASbGncsCoSqTSCROVDE1xpvjzUFhslJd4JpuFn61mFLaKxnN1mNJF2S7moYd3jakyhL
- uRAeOTCUj76ABRFnwMVQkPG2gHfcBcs/+SlNfiGVdsTorsKIjCemK3JcNwTD40VeoNTYBDHAc/W
- U2lYRRtnj90FiDslMYyosVzpO1Q0OQ5BBb7VP+Dqbf0iuAOzbSEIkTLys4xtgyx1kbkyVsSFjED
- aKoSGz+0fhOPq772deWcztSEt7lL2DHZbUYsRcsRATH+HIN0o6aRYu8qqtwgxvnEKgwJKYZesJA
- yVPmn0x3dxzqoAO/sgx0A2SV6VE2IwWz1nqUus6UxYfIJE3V+s1yXQbiTQvSpXTnwIMZoY//gbz
- nCMpfsRLnFeG+ZegxqWb9cUa52J5fZ/cys44HiNc+RVIQdCjJer1Cyjzxf4OKf4g2zsCUjm1Hyr
- kH
-X-Google-Smtp-Source: AGHT+IGYxYTBza0UK+fad1RIGV4aG5m25NcQ0rxVC3BvIg5L0VkjF4a8JVKWyklfghiIlXAWgrrBuw==
-X-Received: by 2002:a05:6402:35c7:b0:63b:ea47:bcbb with SMTP id
- 4fb4d7f45d1cf-63c1f64c996mr23288766a12.8.1761221396978; 
- Thu, 23 Oct 2025 05:09:56 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e3f324628sm1531832a12.34.2025.10.23.05.09.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 05:09:54 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 062D960E36;
- Thu, 23 Oct 2025 13:09:54 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vBu8G-0007qs-S8
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:09:29 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vBu8D-000527-Ii
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 08:09:28 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Dx+tF8GvpodL0ZAA--.56144S3;
+ Thu, 23 Oct 2025 20:07:24 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJDx_8NuGvporJkDAQ--.47140S16;
+ Thu, 23 Oct 2025 20:07:23 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-s390x@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/7] scripts/ci/setup: regenerate yaml
-Date: Thu, 23 Oct 2025 13:09:48 +0100
-Message-ID: <20251023120953.2905297-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251023120953.2905297-1-alex.bennee@linaro.org>
-References: <20251023120953.2905297-1-alex.bennee@linaro.org>
+Cc: Song Gao <gaosong@loongson.cn>
+Subject: [PULL 14/14] target/loongarch: Add bit A/D checking in TLB entry with
+ PTW supported
+Date: Thu, 23 Oct 2025 20:07:10 +0800
+Message-Id: <20251023120710.3086556-15-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20251023120710.3086556-1-maobibo@loongson.cn>
+References: <20251023120710.3086556-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJDx_8NuGvporJkDAQ--.47140S16
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,60 +65,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-0d4fb8f746d (configure: set the bindgen cross target) updated the base
-libvirt-ci project which has resulted in changes.
+With read/write access, add bit A/D checking if hardware PTW is
+supported. If no matched, hardware page table walk is called. And
+then bit A/D is updated in PTE entry and TLB entry is updated also.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
- scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml | 4 ++--
- scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml   | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-index ce632d97108..70063db198e 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-@@ -26,7 +26,7 @@ packages:
-   - git
-   - hostname
-   - libaio-dev
--  - libasan6
-+  - libasan8
-   - libasound2-dev
-   - libattr1-dev
-   - libbpf-dev
-@@ -37,7 +37,7 @@ packages:
-   - libcap-ng-dev
-   - libcapstone-dev
-   - libcbor-dev
--  - libclang-dev
-+  - libclang-rt-dev
-   - libcmocka-dev
-   - libcurl4-gnutls-dev
-   - libdaxctl-dev
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-index f45f75c9602..4f1a49be34a 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-@@ -26,7 +26,7 @@ packages:
-   - git
-   - hostname
-   - libaio-dev
--  - libasan6
-+  - libasan8
-   - libasound2-dev
-   - libattr1-dev
-   - libbpf-dev
-@@ -37,7 +37,7 @@ packages:
-   - libcap-ng-dev
-   - libcapstone-dev
-   - libcbor-dev
--  - libclang-dev
-+  - libclang-rt-dev
-   - libcmocka-dev
-   - libcurl4-gnutls-dev
-   - libdaxctl-dev
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 1f3aaaa41d..01e0a27f0b 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -627,6 +627,31 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     context.addr = address;
+     context.tlb_index = -1;
+     ret = get_physical_address(env, &context, access_type, mmu_idx, 0);
++    if (ret == TLBRET_MATCH && context.mmu_index != MMU_DA_IDX
++        && cpu_has_ptw(env)) {
++        bool need_update = true;
++
++        if (access_type == MMU_DATA_STORE && pte_dirty(context.pte)) {
++            need_update = false;
++        } else if (access_type != MMU_DATA_STORE && pte_access(context.pte)) {
++            need_update = false;
++
++            /*
++             * FIXME: should context.prot be set without PAGE_WRITE with
++             * pte_write(context.pte) && !pte_dirty(context.pte)??
++             *
++             * Otherwise there will be no loongarch_cpu_tlb_fill() function call
++             * for MMU_DATA_STORE access_type in future since QEMU TLB with
++             * prot PAGE_WRITE is added already
++             */
++        }
++
++        if (need_update) {
++            /* Need update bit A/D in PTE entry, take PTW again */
++            ret = TLBRET_NOMATCH;
++        }
++    }
++
+     if (ret != TLBRET_MATCH && cpu_has_ptw(env)) {
+         /* Take HW PTW if TLB missed or bit P is zero */
+         if (ret == TLBRET_NOMATCH || ret == TLBRET_INVALID) {
 -- 
-2.47.3
+2.43.5
 
 
