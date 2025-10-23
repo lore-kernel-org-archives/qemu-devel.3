@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC82CCF9E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B994CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBwLb-00033H-2n; Thu, 23 Oct 2025 10:31:23 -0400
+	id 1vBwLQ-0002VM-5G; Thu, 23 Oct 2025 10:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwLV-0002pR-O7
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:31:17 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwLN-0002MV-Fe
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:31:09 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwLT-0001sz-Hm
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:31:17 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-4298a028de6so568450f8f.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:31:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwLK-0001qa-Tn
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:31:08 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47103b6058fso7004825e9.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761229873; x=1761834673; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761229863; x=1761834663; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y/pnrcoc7cYS7GwGVqSI0sbh32hz5/hHl5ailiW8kns=;
- b=EsDjM/dYUM45rokp2gdyIcESbPlvuJPcqXQ62wMX1k/BMvH2Ek8BuQluFpAEddeJXM
- qKQpXFqf/ijupwVMmzQUYRMfTtYRaxhriVkimHeJZqTY45PzVdYJVB4Win01RiOnteBm
- Dvs9YcKn/bqDjwNXJqD+7o6+Og53huTNKLsVMxA+sEfDc+KMzJeUKV/1Mo7Nhe89L/jN
- Xt+seVhPT6bBCGd4VOF3i2RHgd4v6PPX3jXGrSilczzGNjmxvdKzvrHMmfLGnhDLJJ+I
- nres1bNI+ciWXUhHLLGt0vVOuoJWGjyDiOXVypCdxfuCxMKix7qKbW3F95WVtSQE5wcT
- Xwbw==
+ bh=T/5WvYcYJ8yp0ccFt2pcnpeZY9JJpwnARpW25qBUYws=;
+ b=RWXF7h3YTI7xEfZYCMyLx7/YS+gdwv+VjIC2WiRCtBgKEfc2UEercQwxCvwiXBIH8K
+ 8gujDFK/M9LINUld/Dk61sTd6nY2jhpHmN39KeXCc1yp0ZdK0p1SR48FlzIKeXLXn1Hw
+ fmlpAR+xsmBrc+fCCby//8wnxJaypGolbOroHAs/sThykHk9VbcTPrFthWiEqDXxb7vi
+ VeIuxJhvawKZADYJB7FP7swfUexO7VafzFPRL4ZxTFQo062RTnRtQyIN6fhffOh+zMPw
+ C1PHGYLbUKTIj5rPCLbnCwRCJ+l8aloXlQr1MjHxahFH5jGolQW2C1DPxe8GQ9/x8wGo
+ Bf1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761229873; x=1761834673;
+ d=1e100.net; s=20230601; t=1761229863; x=1761834663;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y/pnrcoc7cYS7GwGVqSI0sbh32hz5/hHl5ailiW8kns=;
- b=MbINdYiicHpvW/Rd4g1/SUiS5qXEfv27e3VYI/ukN9CU5Siimg0AC8XLYkiasWOvf6
- BSJmv/SVXT7VtzMreIKTSqlBE3ifrAgbHQ17wW03t7LaUTSGRYjmoMnLaD5c+G73GGY0
- ixul8P9tEQCxGnsuz8l9ZJaxmAA56oGJiADKwoyEqJvZATV8o92zL8CmtC2rbiaE4g11
- 00FLQ/V+WqDGyMyGduwSIJG1mofSJ8Y7B2G966bvrCC5fKbezABqHBkawXnBVE0IESDY
- 01qxtoYAVXhl2kvOYkYxMAu0auvE99/3kkXQck0ltq6WQTEUEv/AAPOPRiPHyCjPwJzJ
- IiiA==
-X-Gm-Message-State: AOJu0Yxszfiu08cZhr98T9PdQ0pVEaJw5x26Jn/FLPDbIxH5YTakGYEm
- dDAy4rq5wRtjCYTgdcr4Zr43/TFjCKgE5tnpT6m79+R9ptqVHCK5zTm1YLQL1KL3Mid7zkkz60r
- XSU4xahY=
-X-Gm-Gg: ASbGncsOjA9W1o/GpDnlswqCfbY4UMRd2cGcv1lV6UHjVuiA5XfoD78VxLvvMd/ulNB
- IFPY1GCgfa7QYqI9uKSGuvWnkVivsOP0/KuQp7Qo/BQ9fvtTGGzGPRWSCrwpK7iZwC/lBFIJW00
- k4ZQS0kF2lxC2OGCnb91j4UEjL+YLkMNjJ1W3qlpFTruJ67CEw2m0ij1aMzEPl+AJLWuORkDzEZ
- h2eUNUgmCeCNPcElqDsYRR23PCvrCc4bOTC01Vuc7YNH1Hzrh4BD+9BdCgJMltg4YZq1EXgL9cQ
- 6JS1njzTRMcj9VCaOb1UFC3+V5i3MN42AlGwf1GeBKLUZbbuKe14sdcFOYg81cCE7BuhLZATZIx
- 7cR+gnT07sCbQZar0Umk7t5Q1dMRl5y7nGUm5Pt4vG7DYrE+XlDiVeNmKNhtqWv6ylBj4bCVJUu
- tJArs3hF/5UGDSZvOVIqTm5z7eWIjA2FmA632MNOMSnXw7s9BKpA==
-X-Google-Smtp-Source: AGHT+IHkR8W1MvRpp609Gf74Z1yewPmxQUUgOJcQ3VVKK1u2vq1dtS5BzGk9WOf6s75DONZ03Q6q1A==
-X-Received: by 2002:a05:6000:2c0f:b0:3ec:db87:ff53 with SMTP id
- ffacd0b85a97d-42853255d50mr6053232f8f.12.1761229873078; 
- Thu, 23 Oct 2025 07:31:13 -0700 (PDT)
+ bh=T/5WvYcYJ8yp0ccFt2pcnpeZY9JJpwnARpW25qBUYws=;
+ b=cZBSTMRLCcTtUclt4kMvEx6s1/5DWUetiSvnwCuplbcBssktuJkzkA3wYWaME26cYW
+ iZ8g2YkKi5WsPnBS3bFEn7DkLXUVUgBuVIsDNwtDfMIntI9ot+6l+m+5koCSX+jQgcx0
+ dR0YG4PRoBGOohz4Eaq07EDkDv4VPsrGJosWoADrqiXq/roEFhAT7jqifmowknIyQ5tj
+ U3hKpayPywOxXzSU0oQL7yGhPz5Usw59dDD/GTVRHGryoldny6pmACtl34N8FYneL7+Q
+ PRaWB8joAGigDNMMy1N+s/oBcDROgSw05CVaKnJGt+zjb8kqejksEIimx/A+uXWojiTe
+ Bdbg==
+X-Gm-Message-State: AOJu0Yx7lai78PSHhRn8DPc2UCRTCBGZUy2aalSw4pFWFj5/xN7vuIvN
+ /q2plWzrQE6t4lOpOQfVvWXMYvuWrZZNYQWBXGcSOgRAtq/aKxP1JNBq8LD2GLMjtn164/Mbqtw
+ GiA5vIPE=
+X-Gm-Gg: ASbGncvxHMvlaGK79/3HspQ10PVeKK0czmJSJyWey8tDoJxDpH+sCvd5477MPbxbfnM
+ m0WGMZ93Iv0SsOyb8sLokQsxgdb6NMq7w0tWGnG/8iQTWeRxs5PHz6WMMGU9Gggyvw370NqoTB7
+ ffIEX0s4RjOKloocJEF3aHHhKaMpOcL2jhkd7bsMuEP0mn5Wc62wG1rS3bYO1G3I8TUs3xAzybv
+ H6DycecZtTsohjX0Pol/e9P4H8n/fr4sogoRl/eirycyqSQ7H8D7ES35NvJmErfhAiVhT2Vld0R
+ P5RakU1ynlbnCaBrEGr0Ge1/+riKY3QqX0PrGm8ePBLIXCby0KWn2rQFi+moTenaCU77Po7loGl
+ lgRX/Npyjq/x6XmpeDiMyx2NPOCkOqxY5rOLYTYmxycs6R/ZeDEzgMqwOxe9eg3/5ReVtRF7dDF
+ UTI6CinEqUl+RYSwW+rS4S2Zvb4kVh7l7QmpdHW/zycqD8mn5PsXkg8ui4nqYr
+X-Google-Smtp-Source: AGHT+IEqpoi13AH0kldXC38uycff9piRT4TNbZHtmzsemW55pwWAXcaSN0OAkWJHRuwpkfCzmkGtoA==
+X-Received: by 2002:a05:600c:a4a:b0:471:665:e688 with SMTP id
+ 5b1f17b1804b1-475c40013b7mr53414085e9.17.1761229863263; 
+ Thu, 23 Oct 2025 07:31:03 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429898cc930sm5145512f8f.33.2025.10.23.07.31.12
+ 5b1f17b1804b1-475c4342373sm119172675e9.12.2025.10.23.07.31.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Oct 2025 07:31:12 -0700 (PDT)
+ Thu, 23 Oct 2025 07:31:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
@@ -76,18 +76,18 @@ Cc: Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Cameron Esfahani <dirty@apple.com>
-Subject: [PATCH v2 24/58] accel/hvf: Restrict ARM specific fields of
- AccelCPUState
-Date: Thu, 23 Oct 2025 16:30:45 +0200
-Message-ID: <20251023143051.11195-5-philmd@linaro.org>
+Subject: [PATCH v2 22/58] accel/hvf: Guard hv_vcpu_run() between
+ cpu_exec_start/end() calls
+Date: Thu, 23 Oct 2025 16:30:43 +0200
+Message-ID: <20251023143051.11195-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023114638.5667-1-philmd@linaro.org>
 References: <20251023114638.5667-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,33 +110,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not expose ARM specific fields to X86 implementation,
-allowing to use the proper 'hv_vcpu_exit_t' type.
+Similarly to 1d78a3c3ab8 for KVM, wrap hv_vcpu_run() with
+cpu_exec_start/end(), so that the accelerator can perform
+pending operations while all vCPUs are quiescent. See also
+explanation in commit c265e976f46 ("cpus-common: lock-free
+fast path for cpu_exec_start/end").
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/system/hvf_int.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/arm/hvf/hvf.c  | 2 ++
+ target/i386/hvf/hvf.c | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 195d64dcf18..3d2be4092ef 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -59,10 +59,12 @@ extern HVFState *hvf_state;
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 79861dcacf9..c882f4c89cf 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2026,7 +2026,9 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+         }
  
- struct AccelCPUState {
-     hvf_vcpuid fd;
--    void *exit;
-+#ifdef __aarch64__
-+    hv_vcpu_exit_t *exit;
-     bool vtimer_masked;
-     sigset_t unblock_ipi_mask;
-     bool guest_debug_enabled;
-+#endif
- };
+         bql_unlock();
++        cpu_exec_start(cpu);
+         r = hv_vcpu_run(cpu->accel->fd);
++        cpu_exec_end(cpu);
+         bql_lock();
+         switch (r) {
+         case HV_SUCCESS:
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 2929a92defe..ab59381b500 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -992,9 +992,13 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+             return EXCP_HLT;
+         }
  
- void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
++        cpu_exec_start(cpu);
++
+         hv_return_t r = hv_vcpu_run_until(cpu->accel->fd, HV_DEADLINE_FOREVER);
+         assert_hvf_ok(r);
+ 
++        cpu_exec_end(cpu);
++
+         /* handle VMEXIT */
+         ret = hvf_handle_vmexit(cpu);
+     } while (ret == 0);
 -- 
 2.51.0
 
