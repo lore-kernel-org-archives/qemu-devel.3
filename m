@@ -4,120 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DBCCCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 08:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AC6CCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 08:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBqwv-0006wQ-C4; Thu, 23 Oct 2025 04:45:34 -0400
+	id 1vBqzN-0007d9-8e; Thu, 23 Oct 2025 04:48:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBqwh-0006vZ-W6; Thu, 23 Oct 2025 04:45:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBqwf-00023O-JU; Thu, 23 Oct 2025 04:45:19 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N3lUkm027999;
- Thu, 23 Oct 2025 08:45:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vvtvKS
- DDg12TR54quXLVVns2KlYZLB7SZKs0n0Bbi0s=; b=qV7cAHTS3CL75b52HryEb1
- kJqK0MrvoX46W8fgGiPowUE3PNlkUgel4d2G8fmODZpQWPUvBGCGVNUUMe47AwJt
- W59UyahUyGV04fT1XWGX1qsOsW0lR/3R7NiB5MFQFCIHZIhDNzzrZRqLF7uKDOlv
- HaCyweoNCXFiaFUCrTDM7OuYH90tS+v4VgBkXJ7vPdx/1MX6a9yExYMiac1jGesI
- nDm3gMWEwls8VLQG7154ANDcVeKd0MbG6bftY8pfG/PYVjIopRorxfYJzBpy9fBs
- 6Wrfnm9GuLIYLNpc7YCuf76eTR626b/7YipvbFOxI1xsBGm39vMU/MA9CZWJs+Hg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v327177f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 08:45:11 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59N8hTcv027689;
- Thu, 23 Oct 2025 08:45:11 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v327177b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 08:45:10 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N65Qv1024690;
- Thu, 23 Oct 2025 08:45:09 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqk4s5u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 08:45:09 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59N8j94e25297460
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 08:45:09 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 266B058059;
- Thu, 23 Oct 2025 08:45:09 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 22D4258063;
- Thu, 23 Oct 2025 08:45:07 +0000 (GMT)
-Received: from [9.124.221.73] (unknown [9.124.221.73])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 08:45:06 +0000 (GMT)
-Message-ID: <0b12701a-827f-4f17-969b-5da124cd2e36@linux.ibm.com>
-Date: Thu, 23 Oct 2025 14:15:05 +0530
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vBqzI-0007cO-Qm
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 04:48:01 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vBqzD-0002ka-Ju
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 04:47:59 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ee15b5435bso333205f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 01:47:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761209273; x=1761814073; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Rz8/K0tEMyMdFk9Zgt2mrSe6G0rqUn802kF8LFl6g/o=;
+ b=USCFQHox6j3EMxFHJ2AvEOzfRZWjcAHXRxxLZkdaLLYwpbY3OYYmZaIsdLi8Aw5LGo
+ sRdCkRU7Ac9AbwVMpRcHtZ6uW9njRa4AIl32yF4dMeiR6XY0b/Wse53RuV8Yp7eNSsVX
+ gcSDibp4o4L2CdctYzfeIV4J3GLAI22so7ShmDlwXcUEHW7WiOM4n8+dShB6DUPy1Myd
+ q781mPqXuxXMs2ZVlW9A/G2CeU43hol8Ulhcpc9bbosorOZ/WQGu7i7l1IKYbhNjDPcS
+ 4/j3zfWRA7SbSD+ori/6GZciJzyYwqwX8ZLGCA71g2fGAR8m42EBk/sn7MQvllyK8KL9
+ Vp4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761209273; x=1761814073;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rz8/K0tEMyMdFk9Zgt2mrSe6G0rqUn802kF8LFl6g/o=;
+ b=QO4yKT1EwHwwQQ6QIm4XEftW29cvuvusmcz81v6DQX9hdacTwYHalYbsygRuEFVG2l
+ 7clRDqkrXNcLEKK2ZnvPM20pCqXKdy/Z3TmreJ1B1rWFr1Pb6Da/YjcCyzEPs7X88P6w
+ Ypzmx2lfo3H6OTsyy+ZPA5Z1ScZX4xN2N1tGKTlt59xRdBNPzhRWhwzrinQMmx/YrH0h
+ PEFxf2JqEbF+J+He4Y4vGm7KHWxqffZXZWs4NfvZtiKo8RNTaf39g+0jBsuAZiMK2bvI
+ RFKofhLwiRQC6zmt+bQQAHUus5J9lZHeIncsWr8ZjAf5MK38GiiOYTGqOHBSx6OyzW8d
+ go4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlgKo5rxYB3HymTw3VO78CVIMbVqmNGWr1PGaYs6ZzOgLm6vGZdzGsoSuLLJiX3JbZvkzKoxsKjf7W@nongnu.org
+X-Gm-Message-State: AOJu0Yx+fwXh1TLo7NUhInWiQxU0B1IFem1u4TqmyOtnBV61FwqlRfnf
+ jRwrpw05RdZYY4CtOJ5Fg6mAETu2juBXQgQkhzAvNLOSinF/+aI/hkU123IcmiLNVC8=
+X-Gm-Gg: ASbGncsqaw7cX7ScioQ4BbOxIXEkBVrnqKgRLSMLuxChxPyYYUT7HrKWhg9ZYuNKlqK
+ 4x+XV/dGFMeiITAG5+SYnqktlrufgrch1FMsGov/ytVLY8E3K0o9F48qkanTgl/w6SvBNx1Z74q
+ rmpRmeQDxuQGsmMy20n8QDcAvVOg6vqfW5+X7uqHxy6BIoZtYr/fbuyR53AavdBA01+Mdr2x6pN
+ iBuPVI6sVvogPUvvovdlw/MCnbFwg//qdhydDW9VzYq87dskq5GYMTrxkiqaB2FJs6Xll1Zw7Go
+ EklSqKyFfUIXwY1Rt3GK5HzggWkmHKKHj5cTvQMfPm7w00syR3yMHx1b2OLWAnUMpBN3XLXJFfL
+ OggA6ToLE6WPxp5HFUODxS0t/Bedhha5WmnPoY0aCNIhN4/e8rnyia469rK3qAmNbw118repmZv
+ DcG2reudsRXPvn5r9nONbstA1MED1t5GcK8SjYmlLY60z4DGiLO9JP+tit/OSJEm5oug==
+X-Google-Smtp-Source: AGHT+IFDm4qYEEpbTlOdExTrEq2HLGdn+RSQQuCW6SQSu4OKkkIkvK0iQV/mXC3K8TkmaNLnEhoL1w==
+X-Received: by 2002:a5d:5f93:0:b0:427:4b0:b3f9 with SMTP id
+ ffacd0b85a97d-4298a04071bmr981873f8f.3.1761209273145; 
+ Thu, 23 Oct 2025 01:47:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6?
+ ([2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429898adf78sm3002027f8f.32.2025.10.23.01.47.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Oct 2025 01:47:52 -0700 (PDT)
+Message-ID: <67daa7b7-7411-4207-bae3-0bccf33f77f5@linaro.org>
+Date: Thu, 23 Oct 2025 10:47:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/12] hw/ppc/pegasos2: Move hardware specific parts
- out of machine reset
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1761176219.git.balaton@eik.bme.hu>
- <f6633a68a72aad4fefb8d2373b52561f8ca8d41d.1761176219.git.balaton@eik.bme.hu>
- <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
+Subject: Re: [PATCH v7 24/24] whpx: apic: use non-deprecated APIs to control
+ interrupt controller state
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>
+References: <20251016165520.62532-1-mohamed@unpredictable.fr>
+ <20251016165520.62532-25-mohamed@unpredictable.fr>
+ <2cbd9feb-2c20-46e0-af40-0bd64060dfba@linaro.org>
+ <6982BC4E-1F59-47AD-B6E6-9FFF4212C627@gmail.com>
+ <60cd413d-d901-4da7-acb6-c9d47a198c9c@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <60cd413d-d901-4da7-acb6-c9d47a198c9c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68f9eb17 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=YMFv762I7AkAACKW-JIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
- a=cPQSjfK2_nFv0Q5t_7PE:22 a=oH34dK2VZjykjzsv8OSz:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
- a=jd6J4Gguk5HxikPWLKER:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXzIIyXmFxSC8d
- AfjDUbi3G0ajS8baAX9y8Ssu/WIQAgG4gQu8kYJ7L9jf+5PVP/bdWCk9WvkgIOXo05ki4HOZbhl
- kbEWzzhtJm22O1w3OdyV973atW7QHEYDf1u69AQb0nJiezrEzAB17cG7HM6h+2ATMcOR+zKGGkO
- xWPdgV/syuOb8xfPGoShvObHaCiSSCP8C3cNATqEJ01mhUMzveVxwDJoIrqIBabLV5SwhEI1JMe
- jJv/YOC6RLNxAZeJJ12vwrbiGYsJHCfeNiGzK9PLVakOAmsW9sWX4dC8owhMYYH3diALDM5iRTX
- kWW0ndHWB0TmlsQlklBEeYX81jOqS/ByRVgYEdYvMWHThYhbuMInNlxAb2bBauDBBkbtwr15atA
- v80FAjwEI92JlLF1RbSmL1NdO+d3qg==
-X-Proofpoint-GUID: yy2GzmSr5kvlJaXpru2dqWPwHyZZYYSy
-X-Proofpoint-ORIG-GUID: MS8mv9RuZzLimWVS0SjM3dTdTIAxykIe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,52 +127,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/23/25 12:16, Philippe Mathieu-Daudé wrote:
-> On 23/10/25 02:06, BALATON Zoltan wrote:
->> Move the pegasos2 specific chipset reset out from machine reset to a
->> separate function and move generic parts that are not pegasos2
->> specific from build_fdt to machine reset so now build_fdt only
->> contains pegasos2 specific parts and can be renamed accordingly.
+On 2025-10-23 08:33, Philippe Mathieu-Daudé wrote:
+> On 20/10/25 12:27, Bernhard Beschow wrote:
 >>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/ppc/pegasos2.c | 79 ++++++++++++++++++++++++-----------------------
->>   1 file changed, 41 insertions(+), 38 deletions(-)
+>>
+>> Am 16. Oktober 2025 17:15:42 UTC schrieb Pierrick Bouvier <pierrick.bouvier@linaro.org>:
+>>> On 10/16/25 9:55 AM, Mohamed Mediouni wrote:
+>>>> WHvGetVirtualProcessorInterruptControllerState2 and
+>>>> WHvSetVirtualProcessorInterruptControllerState2 are
+>>>> deprecated since Windows 10 version 2004.
+>>>>
+>>>> Use the non-deprecated WHvGetVirtualProcessorState and
+>>>> WHvSetVirtualProcessorState when available.
+>>>>
+>>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>>> ---
+>>>>     include/system/whpx-internal.h |  9 +++++++
+>>>>     target/i386/whpx/whpx-apic.c   | 46 +++++++++++++++++++++++++---------
+>>>>     2 files changed, 43 insertions(+), 12 deletions(-)
+>>>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Couldn't we merge this patch already until the rest of the series is figured out?
 > 
+> OK if you provide your Tested-by tag (:
 > 
->> -#define PCI1_IO_BASE  0xfe000000
-> 
-> Can't we keep such definition?
-> 
->> @@ -308,23 +307,12 @@ static void 
->> pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
->>   static void pegasos2_superio_write(uint8_t addr, uint8_t val)
->>   {
->> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f0, &addr, 1);
->> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
->> +    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
->> +    cpu_physical_memory_write(0xfe0003f1, &val, 1);
-> 
-> Otherwise it is harder to notice we are accessing the MMIO mapped ISA 
-> space.
-> 
->>   }
-> Consider renaming as pegasos_superio_write() since this method becomes
-> common to PegasOS I and II.
 
-Thanks Philippe for reviewing the series.
-
-Hi BALATON,
-Would you mind addressing the above (and other?) review comments or I 
-can queue it in the interest of time if you can send a follow-up patch 
-later?
-
-Thanks
-Harsh
-
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+I did in the past, but I'm not sure it was reapplied by Mohamed.
+In all cases,
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
