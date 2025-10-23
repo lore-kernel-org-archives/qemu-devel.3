@@ -4,99 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75399CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E7FCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBvew-0006eK-0k; Thu, 23 Oct 2025 09:47:18 -0400
+	id 1vBvfM-0006nn-2C; Thu, 23 Oct 2025 09:47:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBveu-0006e5-Vs
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:47:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBvfH-0006lM-U4
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:47:41 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vBver-00047q-O6
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:47:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761227231;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=11BZObUEMo9xjmVKVDgGRPtSV3Z2bXiczkY4zrJQvQw=;
- b=c/hfWgW0ng61QG6szVwwyBC8f0IKv9eLUwHmVMN+gLZOEzq9ysm8mGWD9uLA7WFT6PR9jQ
- xO9Msb17ZDrgAFB1XjjGEgeg3sZGa6SEVRXoyhPDaOcxbvIqpKz2PBHyWrcwCXqIUFsyA6
- /H2RUg/fHaui/NmGKBCgnDBF6RwlREs=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-svO2fzjlNo-RZn8N4ilYUA-1; Thu, 23 Oct 2025 09:47:10 -0400
-X-MC-Unique: svO2fzjlNo-RZn8N4ilYUA-1
-X-Mimecast-MFC-AGG-ID: svO2fzjlNo-RZn8N4ilYUA_1761227230
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4e8b2052f07so20506311cf.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 06:47:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761227230; x=1761832030;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=11BZObUEMo9xjmVKVDgGRPtSV3Z2bXiczkY4zrJQvQw=;
- b=nUfd+FgUkwQQg+bQeioVodFLLN1gHIscOFjvPmgFEFYppGQNiwjrhBDgVa2LCvv2/7
- tiEt4WAcBeiHofGmECkQkvCxGYdYGlP+I1CI43PlmBydctBz39aljHTmgZaQgRFKqi1y
- CLd6PWeHyZSLIoiG3w5JD+sXVsCNv2NEhgKFE9kxFzQ4JIIxRJ9St+KPNoQegQkoUJw2
- a8tWvy6Bqy7Wzp38cvvD+9GWmDRvXAEObdEVkpIc04wqY70wr9HlauR/sEXJYgLLf/Ud
- WtALpSK8yFON7BhXb6KZSzFEwIuJ50joEDqjfVLbikurnobBNXwbq6dLKACjWz1W3Wil
- CjKw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVc678jCv1ugFKYTQBblOyeJryKXihNr5kcJ/BHXqfAwkpOaKcDyYS7sS/UAuMqCLhSKdeqeGXhFiE@nongnu.org
-X-Gm-Message-State: AOJu0YzgokLnohqTpep3eoFa/jZae09CJWrHd7rVifYt1g8LKWyzF5IL
- 9i1vZoiHIeaCH8fw2nwhSIYzn0Hc9oHf2l3LO81Pctbd+MXwOgNCwxqK8HDc6LfhHi9uo4YhNUP
- +pA12LMMzImcmYrMLcpyljKhpeeIDUTs9PIa/ulKyFgg/b5S7PTsV6F8f
-X-Gm-Gg: ASbGncvhmfMSkX+zvJ9MDniXbsPDAninMQ21twiD1x+vfo4GJcoynWZfxrwdV+J6knw
- SamIOpHtjdr+OVE1wKoIGF1+jzAAPB3orF7vHn3z64ifiqGUR/k6DSrEntLUu5ft8r/YAQYk38y
- NM5TsxHFfxxoUFueW9e/6ISYaltl367qLf0Jz5FmxKJ6LEj5m8O8Vtp7G9iKcsu7pwPYmUagCev
- nAWdVDrBdzwk4sODRx2jFVJt3hRz4evzSc9FduUxzcrEWNdZV3tPytAIvg7GvBcBrDpqeMH5b9n
- uwLQIuO66OoSAjPfyCl9I67JTby4VEL5QdiQd/Fno3IbVrWxXV0HZumaf0ktjBtHJ14=
-X-Received: by 2002:a05:622a:a28a:b0:4b6:cbd:8c91 with SMTP id
- d75a77b69052e-4eb732d4f46mr80003741cf.5.1761227229532; 
- Thu, 23 Oct 2025 06:47:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH58A2n3T7td4XkD3DM5bwNwq61heDDy+ylhz6auBt3gJNmsx2tPdZFhb5YdPsUCwEBiAY3CQ==
-X-Received: by 2002:a05:622a:a28a:b0:4b6:cbd:8c91 with SMTP id
- d75a77b69052e-4eb732d4f46mr80003351cf.5.1761227228971; 
- Thu, 23 Oct 2025 06:47:08 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4eb8080ca61sm14267651cf.21.2025.10.23.06.47.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 06:47:07 -0700 (PDT)
-Date: Thu, 23 Oct 2025 09:47:05 -0400
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy <aik@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Gao Chao <chao.gao@intel.com>,
- Li Xiaoyao <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>
-Subject: Re: [PATCH v2 1/2] ram-block-attributes: Avoid the overkill of
- shared memory with hugetlbfs backend
-Message-ID: <aPox2bGvDplUdPFe@x1.local>
-References: <20251023095526.48365-1-chenyi.qiang@intel.com>
- <20251023095526.48365-2-chenyi.qiang@intel.com>
- <3035c1a0-78b7-44a4-a9d8-4e84b9732262@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vBvfE-00049d-2a
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:47:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 05C3D5972E8;
+ Thu, 23 Oct 2025 15:47:34 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id SBlafnu6aheC; Thu, 23 Oct 2025 15:47:30 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E28045972E1; Thu, 23 Oct 2025 15:47:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E10C75972DE;
+ Thu, 23 Oct 2025 15:47:30 +0200 (CEST)
+Date: Thu, 23 Oct 2025 15:47:30 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org
+cc: kraxel@redhat.com, marcandre.lureau@redhat.com, 
+ Chad Jablonski <chad@jablonski.xyz>
+Subject: Re: [PATCH v4 1/1] ati-vga: Fix framebuffer mapping by using
+ hardware-correct aperture sizes
+In-Reply-To: <20251017155117.1953708-2-chad@jablonski.xyz>
+Message-ID: <d49a9ae5-1042-7e8b-2c09-4a8a39e08eb3@eik.bme.hu>
+References: <20251017155117.1953708-1-chad@jablonski.xyz>
+ <20251017155117.1953708-2-chad@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3035c1a0-78b7-44a4-a9d8-4e84b9732262@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,51 +67,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 23, 2025 at 12:16:46PM +0200, David Hildenbrand wrote:
-> On 23.10.25 11:55, Chenyi Qiang wrote:
-> 
-> Subject should probably rather be:
-> 
-> "ram-block-attributes: fix interaction with hugetlb memory backends"
-> 
-> Maybe that can be fixed up when applying.
+On Fri, 17 Oct 2025, Chad Jablonski wrote:
+> Rage 128 cards always request 64MB for their linear (framebuffer)
+> aperture and R100 cards always request 128MB. This is regardless
+> of the amount of physical VRAM on the board. The following are results
+> from real hardware tests:
+>
+> Card                              VRAM    PCI BAR0   CONFIG_MEMSIZE  CONFIG_APER_SIZE  AGP_APER_OFFSET
+> -----------------------           ----    --------   --------------  ----------------  ---------------
+> Rage 128 Pro Ultra TF             32MB     64MB       0x02000000      0x02000000        0x02000000
+> Rage 128 RF/SG AGP                16MB     64MB       0x01000000      0x02000000        0x02000000
+> Radeon R100 QD [Radeon 7200]      64MB    128MB       0x04000000      0x04000000        N/A
+> Radeon RV100 QY [Radeon 7000/VE]  32MB    128MB       0x02000000      0x04000000        N/A
+>
+> Previously the linear aperture (BAR0) would match the VRAM size.
+> This discrepancy caused issues with the X.org and XFree86 r128 drivers.
+> These drivers apply a mask of 0xfc000000 (2^26 = 64MB) to the linear
+> aperture address. If that address is not on a 64MB boundary the
+> framebuffer points to an incorrect memory location.
+>
+> Testing shows that the Radeon R100 also has a BAR0 larger than VRAM
+> (128MB in this case) and the X.org radeon driver also masks to 64MB.
+>
+> For Rage 128, CONFIG_APER_SIZE also differs from the previous value and
+> the behavior stated in the documentation. The Rage 128 register guide
+> states that it should contain the size of the VRAM + AGP memory. The cards
+> tested above show that this isn't the case. These tests also included
+> enabling/disabling AGP with 8MB of memory. It didn't change the
+> contents of CONFIG_APER_SIZE.
+>
+> For both Rage 128 and R100 the CONFIG_APER_SIZE is half of the PCI BAR0 size.
 
-I also agree the old subject is slightly confusing..
+Ping?
 
-I queued the two patches with all the small fixups.
-
-Thanks,
-
-> 
-> > Currently, CoCo VMs can perform conversion at the base page granularity,
-> > which is the granularity that has to be tracked. In relevant setups, the
-> > target page size is assumed to be equal to the host page size, thus
-> > fixing the block size to the host page size.
-> > 
-> > However, since private memory and shared memory have different backend
-> > at present, users can specify shared memory with a hugetlbfs backend
-> > while private memory with guest_memfd backend only supports 4K page
-> > size. In this scenario, ram_block->page_size is different from the host
-> > page size which will trigger an assertion when retrieving the block
-> > size.
-> > 
-> > To address this, return the host page size directly to relax the
-> > restriction. This changes fixes a regression of using hugetlbfs backend
-> > for shared memory within CoCo VMs, with or without VFIO devices' presence.
-> > 
-> > Acked-by: David Hildenbrand <david@redhat.com>
-> > Tested-by: Farrah Chen <farrah.chen@intel.com>
-> > Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> > ---
-> 
-> 
-> -- 
-> Cheers
-> 
-> David / dhildenb
-> 
-
--- 
-Peter Xu
-
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+> hw/display/ati.c     | 16 ++++++++++++++--
+> hw/display/ati_int.h |  5 +++++
+> 2 files changed, 19 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index f7c0006a87..0b4298d078 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -361,7 +361,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+>                                       PCI_BASE_ADDRESS_0, size) & 0xfffffff0;
+>         break;
+>     case CONFIG_APER_SIZE:
+> -        val = s->vga.vram_size / 2;
+> +        val = memory_region_size(&s->linear_aper) / 2;
+>         break;
+>     case CONFIG_REG_1_BASE:
+>         val = pci_default_read_config(&s->dev,
+> @@ -952,6 +952,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+> {
+>     ATIVGAState *s = ATI_VGA(dev);
+>     VGACommonState *vga = &s->vga;
+> +    uint64_t aper_size;
+>
+> #ifndef CONFIG_PIXMAN
+>     if (s->use_pixman != 0) {
+> @@ -1011,7 +1012,18 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+>     /* io space is alias to beginning of mmregs */
+>     memory_region_init_alias(&s->io, OBJECT(s), "ati.io", &s->mm, 0, 0x100);
+>
+> -    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &vga->vram);
+> +    /*
+> +     * The framebuffer is at the beginning of the linear aperture. For
+> +     * Rage128 the upper half of the aperture is reserved for an AGP
+> +     * window (which we do not emulate.)
+> +     */
+> +    aper_size = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
+> +                ATI_RAGE128_LINEAR_APER_SIZE : ATI_R100_LINEAR_APER_SIZE;
+> +    memory_region_init(&s->linear_aper, OBJECT(dev), "ati-linear-aperture0",
+> +                       aper_size);
+> +    memory_region_add_subregion(&s->linear_aper, 0, &vga->vram);
+> +
+> +    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &s->linear_aper);
+>     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
+>     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mm);
+>
+> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+> index f5a47b82b0..708cc1dd3a 100644
+> --- a/hw/display/ati_int.h
+> +++ b/hw/display/ati_int.h
+> @@ -10,6 +10,7 @@
+> #define ATI_INT_H
+>
+> #include "qemu/timer.h"
+> +#include "qemu/units.h"
+> #include "hw/pci/pci_device.h"
+> #include "hw/i2c/bitbang_i2c.h"
+> #include "vga_int.h"
+> @@ -29,6 +30,9 @@
+> /* Radeon RV100 (VE) */
+> #define PCI_DEVICE_ID_ATI_RADEON_QY 0x5159
+>
+> +#define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
+> +#define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
+> +
+> #define TYPE_ATI_VGA "ati-vga"
+> OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
+>
+> @@ -97,6 +101,7 @@ struct ATIVGAState {
+>     QEMUCursor *cursor;
+>     QEMUTimer vblank_timer;
+>     bitbang_i2c_interface bbi2c;
+> +    MemoryRegion linear_aper;
+>     MemoryRegion io;
+>     MemoryRegion mm;
+>     ATIVGARegs regs;
+>
 
