@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2B7CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCF0CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtkk-0001cX-Oj; Thu, 23 Oct 2025 07:45:10 -0400
+	id 1vBtkS-0001JU-JP; Thu, 23 Oct 2025 07:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkT-0001Jr-Hv
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vBtkL-0001Gy-Vq
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtkR-0001bP-2f
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:53 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N71hbn027075;
- Thu, 23 Oct 2025 11:44:47 GMT
+ id 1vBtkJ-0001aN-Tg
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:45 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAuh7f007202;
+ Thu, 23 Oct 2025 11:44:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=H+48uAYpotk2iY/Lw
- YGGOzuF9C4Vf0vGq+/I+DRjh38=; b=DXRUUnHH0npoVf8csRYvyp3R2CXeR63Gp
- 3RTAhZJxaEWEJKJhwtIeshrI0DIXZZhMtGXDnmA50bP9SMwCnGs3Dn32pI826MbQ
- B94lNG9fe1AFqOqv0+nIWhLhqrCiyUgSIA0o2zfuw6VsMsDmlCJjp8X+1Y+ZM5PC
- eHjQP7bkN+RfcDVdmfeEy8n2C8a2d1muxIXQ3RKpEjwo64omELbY1ORWE2eVA0gS
- 5wJDCRJna8jvwM/Lm6NzVoTAKldmlDFpWljNfCPDesDF2G2QiY3ez9HC2/RPcgRC
- 0AHA3PaVx91K2s4G6IeOuqrl3sZwRM/rCK2VtTe0qgAQTj/RWgzAw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s9wa5-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GxcLpK
+ pr/QtQZF/cMnjmsCw52HTcPqMgbEWgV3CIK5k=; b=Ws4AC6qXSLcA0rWCparsxs
+ YIjSWmtevHQdoBe8WJTWy7lIGpe4FDZt8MrEfEcQ6gAFdhjeiE5LTowA+ErS6Z4M
+ D6xAkq+JTvKU3pgJqoVC2r5nTgG/g2HYXzA4aVXyq75lbgbChurf60J9AsLnyVXr
+ 0EHLPqU+etsThc88YILC8wkiviXEw8UEMRuQEv7aNY47OY/ndGoVj9ufJ+/5WvDj
+ vl/dqQPsxm1Omk1cLPO6+BZueafkcyibZcXPmT+S2xZSW5eV1y6jgjVfI6cPPsUM
+ YK/Tv0OvCCn2q4tzBd07rPs9g98yXOmDRAXMgOnMEkB0k/Gmt59ZpsDqJhUGu2/g
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30w0ef8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:44:46 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N8Inmq014658;
- Thu, 23 Oct 2025 11:44:46 GMT
+ Thu, 23 Oct 2025 11:44:42 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NBAWCq002367;
+ Thu, 23 Oct 2025 11:44:41 GMT
 Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sdpn9-1
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejn9vm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 Oct 2025 11:44:45 +0000
+ Thu, 23 Oct 2025 11:44:41 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
  by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBiiMp51839446
+ 59NBibx246727488
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:44:44 GMT
+ Thu, 23 Oct 2025 11:44:38 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5825820049;
- Thu, 23 Oct 2025 11:44:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E35E220049;
+ Thu, 23 Oct 2025 11:44:37 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 959D520040;
- Thu, 23 Oct 2025 11:44:43 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0FC7920040;
+ Thu, 23 Oct 2025 11:44:37 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:44:43 +0000 (GMT)
+ Thu, 23 Oct 2025 11:44:36 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 12/32] ppc/amigaone: Free allocated struct
-Date: Thu, 23 Oct 2025 17:13:59 +0530
-Message-ID: <20251023114422.3675018-13-harshpb@linux.ibm.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PULL 07/32] target/ppc/kvm: Remove kvmppc_get_host_model() as unused
+Date: Thu, 23 Oct 2025 17:13:54 +0530
+Message-ID: <20251023114422.3675018-8-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 8oIS3WVz-f063-DFaV6g-QU1_m808P1E
-X-Proofpoint-GUID: 8oIS3WVz-f063-DFaV6g-QU1_m808P1E
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfXxDLz/BkzAMxI
- VvjUMLqT5z48r7dpUBoL6/6SSeCj44iPwHhC6OImBYgJTekIZgom7xIQM/GA0KjFPOBgnBeLGOg
- lgZoUHxVHVSfluBSG+s6RcTWSRirHw86ABLYPWmSlBvd/yxNYINCF7tl7esGDNOkWijvo04MdQA
- YI5PH16RGGns600Ob6PUB4WhR/QG94x4z7gwi/M3hZCPV20NKZjeGNJBC4Aln9LIgu5kP0955He
- yD5qaO6l98AIjmclwbQk1dI5EgleeX1ONXJtrXjdTkeHwBW/A30F+4XtQXHuRZizrZtdk3ZnU4H
- 28Efko4B6/IFPEAoxK4W4AzWr6nGy7rwUevG5kR6uRbp959NTXuvXAll50jvBvunnUCdrhyB7s7
- 3VcesrWdzbQwuNQfKJ1UD7NfTWYt4g==
-X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fa152e cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=F02M0vMrOoqODbYQAHQA:9
- a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-GUID: zK_LNzWCD7NxC4-OzKvRP-vaGJ5blasy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX5DvWsW/UVsAl
+ 11RJ5yQD16prtpOJpHOqNVflCP7vnQdDVO6Lk1yHaiY7BaOLvSwTCKFPduWsQoTm2beSMt6n0vZ
+ sFCm4WW0I6Isrt1V9OKAzr1ENRGnX6xqC+JnyqwRjGCMyy4vL2LqMttjpt564GToF2RYo1EgNxU
+ ER5PpiH24wq8C/wYJCkRaB3Bp8uf4q19+z3jaJ27JH37rv9Jase4dWHZfI7va/STvIgoFZBnYa+
+ VkH6YFlBvu/8sVS7bbH2NM8Yn1LjyIJ1gPw/aSb+mRMfFCaBUP8IhGwdaQQ8JyOilM/Ns3knmft
+ eoNIua7BBJyhBfFGRNItwEPkcWa3ymjxe/osMnAcNxnVqNzHkfETwLHtUKaC6kPMS0ylMmXKtUJ
+ Vw1/Jh3fgIUE/a8ZrIGdGG9a0KEeAQ==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68fa152a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
+ a=aeNWSmdylBY4NdqMzywA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
+ a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-ORIG-GUID: zK_LNzWCD7NxC4-OzKvRP-vaGJ5blasy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -118,34 +123,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-In create_bd_info function a bd_info struct is allocated but never
-freed. Mark it g_autofree to avoid leaking it.
-
-Fixes: 34f053d86b (ppc/amigaone: Add kernel and initrd support)
-Resolves: Coverity CID 1641398
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20251022211649.9A09E5972E5@zero.eik.bme.hu
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20251021084346.73671-8-philmd@linaro.org
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/ppc/amigaone.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/ppc/kvm_ppc.h | 6 ------
+ target/ppc/kvm.c     | 5 -----
+ 2 files changed, 11 deletions(-)
 
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 12279f42bc..47fb016b4a 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -221,7 +221,7 @@ struct bd_info {
+diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+index f24cc4de3c..742881231e 100644
+--- a/target/ppc/kvm_ppc.h
++++ b/target/ppc/kvm_ppc.h
+@@ -21,7 +21,6 @@
  
- static void create_bd_info(hwaddr addr, ram_addr_t ram_size)
+ uint32_t kvmppc_get_tbfreq(void);
+ uint64_t kvmppc_get_clockfreq(void);
+-bool kvmppc_get_host_model(char **buf);
+ int kvmppc_get_hasidle(CPUPPCState *env);
+ int kvmppc_get_hypercall(CPUPPCState *env, uint8_t *buf, int buf_len);
+ int kvmppc_set_interrupt(PowerPCCPU *cpu, int irq, int level);
+@@ -128,11 +127,6 @@ static inline uint32_t kvmppc_get_tbfreq(void)
+     return 0;
+ }
+ 
+-static inline bool kvmppc_get_host_model(char **buf)
+-{
+-    return false;
+-}
+-
+ static inline uint64_t kvmppc_get_clockfreq(void)
  {
--    struct bd_info *bd = g_new0(struct bd_info, 1);
-+    g_autofree struct bd_info *bd = g_new0(struct bd_info, 1);
+     return 0;
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index cb61e99f9d..43124bf1c7 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -1864,11 +1864,6 @@ uint32_t kvmppc_get_tbfreq(void)
+     return cached_tbfreq;
+ }
  
-     bd->bi_memsize =    cpu_to_be32(ram_size);
-     bd->bi_flashstart = cpu_to_be32(PROM_ADDR);
+-bool kvmppc_get_host_model(char **value)
+-{
+-    return g_file_get_contents("/proc/device-tree/model", value, NULL, NULL);
+-}
+-
+ /* Try to find a device tree node for a CPU with clock-frequency property */
+ static int kvmppc_find_cpu_dt(char *buf, int buf_len)
+ {
 -- 
 2.43.5
 
