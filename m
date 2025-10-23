@@ -4,87 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976A7CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 10:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BD3CCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 10:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBsKM-0002Jm-8f; Thu, 23 Oct 2025 06:13:50 -0400
+	id 1vBsNc-0003EU-GD; Thu, 23 Oct 2025 06:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBsKJ-0002Is-Hf
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:13:47 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vBsKF-0004TR-JZ
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:13:47 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3f0ae439b56so312997f8f.3
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 03:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761214421; x=1761819221; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TJIxDlMye1hJhg/nMi1UknWnM2H2w8fSrILkmnP7nFA=;
- b=TZKn6Rmp66N7Je4OmKQKpXaps0j2VaKgAAcbq2FtGNXJYgcxLHRB5QxbMW8aN579TC
- 8BaJM3KDSoNV4QMrj92aCRRtlcKE2sLTw4PVSNdIoBDQmlDS873Lh4OwNn7ydzBXutZy
- qaFg3+Pt8K+XlE+oYORAICaYHko//DJVuhbc3Pkk1Q7zXv2PIuDUWWorxfBb8AS8QjLF
- 4SKyewdsCwNRRLpC51CXSCwD06R2vySbN3z28kflxF/74dxacbktgE8n7eHtdj8yvvOd
- CWk8E3ebfJzM3yQu6wbNDSKw70Xofd5IMUM6U3sUfVAH7LFeI0YxAok/ylAYL0mel7Hg
- n6wg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vBsNN-0003Di-Ru
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:16:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1vBsNJ-0004qT-Sa
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 06:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761214611;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NACNEBvSgZpW2mk4FNsjRF6+gFRoCkATDeRGg4HRw14=;
+ b=T0rBrGyzSrthF0rSXGMj2riB3AEgNoGnT67EUxg4755Q6a12iGX6lp1FHuZ0mxdViIIff3
+ BBu0hZQIrB/LF5Jdg1/zYJYIbG2EKBfOS5XDKyj0ug6GukXsypvmpbvP6rvkHn72fy+3fY
+ uMGt+UCXHf5rAsGqh3K/8GTQeiQ0rIQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-ymcgfrHAO1CZ2OZCx0ayTA-1; Thu, 23 Oct 2025 06:16:49 -0400
+X-MC-Unique: ymcgfrHAO1CZ2OZCx0ayTA-1
+X-Mimecast-MFC-AGG-ID: ymcgfrHAO1CZ2OZCx0ayTA_1761214608
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-426d4f59cbcso1055306f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 03:16:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761214421; x=1761819221;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1761214608; x=1761819408;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TJIxDlMye1hJhg/nMi1UknWnM2H2w8fSrILkmnP7nFA=;
- b=YqnnDOe/a3g81LoB9O5AYqKRMmrcDmWCbrI8oziYoeNvL9ktf5HA1XVBzAkoe8BH9x
- aJwO14O1iFqte+FMvG5tn4GPiZNqkRa+ECIFOdBV5hWqbS0BY3kNSQ3y/tcpcyPOLRyV
- tFtLcj1IHFHPVVFyUOWoI5XTMDwyczx8iUHdvrw9okbtWqMkJtsmOboCSulQpSibfOop
- sAxdLgjnVHMMdZAMxaWMFzu/MoYvRP6oKgTr2AZ5cT0eZBlQIzbTulae+42YfLIxwY28
- JoGXfTkzU7HkvPLGbFKU+rXHXkjQN9T9C12w2JbGw27HmlQ7wt1idWb1fdi4GQ61fyc9
- BZbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQJuGCo8r8iGGMRcXxW2zz8uYrqt23xMhyP5BwrQ1Q+EUPGrWAr4avnYqz4lpNJ/RK0FVcG4b53Pbm@nongnu.org
-X-Gm-Message-State: AOJu0YztXp8SRjcIeKk8SK8vAFrVoIMcWBLrDu7DaUBQ6UY0KGPz+AYL
- aM5huIr5DJ6G+xyEOHdzG6eFV3f+k/5x7KDg4n+9CGd0BF48eJhv5Ii6+EI+fBiC1fo=
-X-Gm-Gg: ASbGncsPa3W4BPtC7LU9D8oOfuQSfdHBRDG0oetNVJjHjxYhbCX5DB/IxZefQZ/63fb
- JaHXcFRMKTNOKTlkpdGWSrVIlrLfs1IxW3j8ZiX0z49Fm5nVZXAiZJyIpHgzrNDSEDXpFRG/Wzd
- nrl1iPNAQRVfkbsd9QIZtBVcwBSXRwStgcXiy0KGGeW6h/YkuzxAcQ2vv/bxZXyzQpdV7zFF4mw
- VNtTIPJ39OE5irxeJI9/3FJkN4g1NXck1a4A1PW7+PjgQnlh+ezpjXESMUlm/VzaaFYajJY1EWC
- akHwfh0GNAkHoijWpctJMbQ+4Gg16huFhHAHObBrEEQ7tLgCp8DbFiXhdmZoJrhtawczfwjDHy5
- I5y7OdXAmylk8t9jj062nhw9AZtje5GeELtP+6noyB/juV+3n+dUQIELvOUnjf6C+rFzvK8ikNm
- Wy4bTaCw==
-X-Google-Smtp-Source: AGHT+IHPaTFApidrptjzqYdH4DqNeY7rOv0DcQmfz6Tu8oSU/UhT2EKYKDj4f3BtVKiQnbcT1LuemQ==
-X-Received: by 2002:a05:6000:310b:b0:3eb:8395:e2e0 with SMTP id
- ffacd0b85a97d-42704dab124mr15469424f8f.51.1761214421152; 
- Thu, 23 Oct 2025 03:13:41 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ bh=NACNEBvSgZpW2mk4FNsjRF6+gFRoCkATDeRGg4HRw14=;
+ b=MkKAsMlRxq5sBWQwuOumOsxubUDQV5a8ReIUwFrA4uBBOi26YinfyBmc4fsHHIrpj0
+ 8C1kx/DDXCbLTrYudK2fRAVYLL9aN3cH/1c6HiFkNfR0HaK2URB9+YyAVJtUp9ILmQK6
+ Tmn2mN3dm1yyMQJ6xwDCwDOC+eh/fWF+OQJWlKhE2CpcuwbLhuPoCpaK+zqARdnqkxBJ
+ 6ore9nYv4/NEACEb+S4bhj5Ja/kQjgSKp/saoFXgejzk4CQTpRHsWFAojZXOIUNZw0/d
+ LoFJCRAbUwlQ9SXACVFKFPZuak2k+/0BYjWOi3xJzVbEPs5DxMFKfRSkwZ1acDyDoQhi
+ 1PyQ==
+X-Gm-Message-State: AOJu0YwnX1VjN2+lD4PoI1jwoDYakC1cHLqyFeewCpeG70cVesmjKudE
+ 4RG5A8MYbzKYU8A26mW5Ve67OfI6xe4i1FAVTUF1Hq03fZ4IJMyInt1UjDK72S5FNq+p2ki4pDM
+ YPcZKKH0OlENx/fWPxTWJnj43R0ybqauIt6fYb8c1ZexNN+C2J7hhtHU8
+X-Gm-Gg: ASbGnctagFw54+tVJc4LAsX8Otgav+X16SQFuxuXdOlCrotRBNhnzoLS2MNa0v07t7X
+ CWME7rH41vLewTRPNLNlrJQVMeYbF9lcI8uD7Fjs0xiAHBbBh0Wt9wY/7FdqN5kNab3+ugLjdNE
+ 3xJmrSWO7HYkQ9P88rGDxGAvTlrhMERuxDU6q7Z6tK/SNevG2XhU/6ikNzJYGXdfWFrc6JyJM90
+ fCcIXkd+G8Q0+xEbqUEz/XAo1Jx2nqYoiHQUqI0aJvaVOJIjGXEPMSVKiG2pgJsFIUXJDkE5Fiw
+ djxvYmtiKWOkYiXAF2ZzYLRUwqdHgG0Fl4+PO6E15K2ExpSXKmTGC+59bazaCcLvrvhZSesGIko
+ SypHUCy/7iKVqv0Yyqv3+OKDghJNAZpNB5p7p0TTBDfYcodj/uWYLBjVB77Aq4MBYgF3FtX+Jfk
+ Rzi9m7KQtfY05Hf5vYdHOev1LKDv8=
+X-Received: by 2002:a05:6000:2081:b0:426:fff3:5d04 with SMTP id
+ ffacd0b85a97d-428532779edmr4590162f8f.25.1761214608380; 
+ Thu, 23 Oct 2025 03:16:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGk0+2QYmpMwZ0q9K7ByCPyiPeT1pBT4xdJ42NSUsdKxH7q8yNE+wnUTI4QWyUJCDjyR/D2Tg==
+X-Received: by 2002:a05:6000:2081:b0:426:fff3:5d04 with SMTP id
+ ffacd0b85a97d-428532779edmr4590127f8f.25.1761214607973; 
+ Thu, 23 Oct 2025 03:16:47 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f4e:3200:c99d:a38b:3f3a:d4b3?
+ (p200300d82f4e3200c99da38b3f3ad4b3.dip0.t-ipconnect.de.
+ [2003:d8:2f4e:3200:c99d:a38b:3f3a:d4b3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429897f57b7sm3126352f8f.16.2025.10.23.03.13.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 03:13:40 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] target/arm: Add assert to arm_to_core_mmu_idx()
-Date: Thu, 23 Oct 2025 11:13:39 +0100
-Message-ID: <20251023101339.1983809-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ ffacd0b85a97d-429898add96sm3100816f8f.30.2025.10.23.03.16.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Oct 2025 03:16:47 -0700 (PDT)
+Message-ID: <3035c1a0-78b7-44a4-a9d8-4e84b9732262@redhat.com>
+Date: Thu, 23 Oct 2025 12:16:46 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] ram-block-attributes: Avoid the overkill of shared
+ memory with hugetlbfs backend
+To: Chenyi Qiang <chenyi.qiang@intel.com>, Peter Xu <peterx@redhat.com>,
+ Alexey Kardashevskiy <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Gao Chao <chao.gao@intel.com>,
+ Li Xiaoyao <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>
+References: <20251023095526.48365-1-chenyi.qiang@intel.com>
+ <20251023095526.48365-2-chenyi.qiang@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20251023095526.48365-2-chenyi.qiang@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,46 +161,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before commit f76cee647c ("target/arm: Introduce mmu indexes for
-GCS") it was impossible for arm_to_core_mmu_idx() to return an
-invalid core MMU index, because NB_MMU_MODES was 16 and
-ARM_MMU_IDX_COREIDX_MASK was 0xf.
+On 23.10.25 11:55, Chenyi Qiang wrote:
 
-That commit raises ARM_MMU_IDX_COREIDX_MASK to 0x1f and NB_MMU_MODES
-to 22, so it's now possible for a bogus Arm mmu index to result in an
-out of range core mmu index (which can then get used as an array
-index in the CPUTLB struct arrays). Coverity complains that this
-might result in an out-of-bounds access.
+Subject should probably rather be:
 
-The out-of-bounds access can't happen because we construct all the
-ARMMMUIdx values we will use for TLBs to have valid core MMU indexes
-in the COREIDX field.  But we can add an assert() so that if we ever
-do end up operating on a corrupted or wrong ARMMMUIdx value we get an
-assert rather than silently indexing off the end of an array. This
-should also make Coverity happier.
+"ram-block-attributes: fix interaction with hugetlb memory backends"
 
-Coverity: CID 1641404
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/internals.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Maybe that can be fixed up when applying.
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f539bbe58e1..026548ec34f 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -968,7 +968,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
- 
- static inline int arm_to_core_mmu_idx(ARMMMUIdx mmu_idx)
- {
--    return mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
-+    int coreidx = mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
-+    assert(coreidx < NB_MMU_MODES);
-+    return coreidx;
- }
- 
- static inline ARMMMUIdx core_to_arm_mmu_idx(CPUARMState *env, int mmu_idx)
+> Currently, CoCo VMs can perform conversion at the base page granularity,
+> which is the granularity that has to be tracked. In relevant setups, the
+> target page size is assumed to be equal to the host page size, thus
+> fixing the block size to the host page size.
+> 
+> However, since private memory and shared memory have different backend
+> at present, users can specify shared memory with a hugetlbfs backend
+> while private memory with guest_memfd backend only supports 4K page
+> size. In this scenario, ram_block->page_size is different from the host
+> page size which will trigger an assertion when retrieving the block
+> size.
+> 
+> To address this, return the host page size directly to relax the
+> restriction. This changes fixes a regression of using hugetlbfs backend
+> for shared memory within CoCo VMs, with or without VFIO devices' presence.
+> 
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Tested-by: Farrah Chen <farrah.chen@intel.com>
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
+
+
 -- 
-2.43.0
+Cheers
+
+David / dhildenb
 
 
