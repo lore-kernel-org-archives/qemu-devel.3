@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63397CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDF3CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtiK-0000h2-CQ; Thu, 23 Oct 2025 07:42:40 -0400
+	id 1vBtkD-0001FU-0u; Thu, 23 Oct 2025 07:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBtiI-0000gj-7X
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:42:38 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vBtiG-0001WR-1m
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:42:37 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-3c8fb195c23so504923fac.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 04:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761219754; x=1761824554; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hzYvB1A0osd0xUYB/vF1LOzfOo+y3oks8gFbyc5/KHU=;
- b=IGL6VRaLcqfbKUJ6NMbOHOkRdcMzAz1nACcyCW+rEo36DW1Fj5j7Va8kgGJhD7emDK
- k/gWk7a0261o2J2anYFO7cb8ffSaFZxlsjHOxi34dCg2GR+Vhsvf99M8qdsnUFk1jmOw
- dRsCwRyBMpjfQKslaPlThc4cwALiFiSybbMI3RSO7qAhB5Zgb0DJqnnP/DCjq1gNJtWT
- n+1zLwPn80hNCDshHmsukaPjiwblynJUVm+/2c4hmOnTNuEUyWwdCGVVSnphgOJ5Lj7q
- NoAC9CQqBswfWrv9NGs1tB69YBGV/qjHPRItt8XuQErF3gdSvvl8Pgog3RA+1+S8JF9B
- NsaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761219754; x=1761824554;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hzYvB1A0osd0xUYB/vF1LOzfOo+y3oks8gFbyc5/KHU=;
- b=obFmH1jIQCwB7xQBttsUbCEmSb1HhKnT9beL6Bd7ps3eavP8dTRauNBhTNC5TmiL9M
- 2rDnscRISbzy501r3xS9KpCkJtfV0TJ6VG6tHJXJY+c885LuI613ehfP2aM9GdEOSqCG
- tAJN50y0vaN71z5bhkbD4xbHd4JTF+BO18z4HqCP5yXjacsY7avpPkyktmPfn7A9229k
- el1gZkwjwHqk8A4Ng5f8NaGOxLBFkoJ4l9getkdnub8zQ+S6bIC9rwZ4FkBVGH2Kq6yy
- L6O+B8tHTFL1jw/Sgf1BJQPUZ/WsRpg9UO8bNADjbXlzZuW67yzw5QEPGh7xU6IBpE9W
- 972Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV47s2nSVZNzgrwU/BcrmrSru7hfBHy5kOF6H5d56CD5yTn57zpOva4QW1nSd2UGeJIwY1e1tTbIFju@nongnu.org
-X-Gm-Message-State: AOJu0YwLrC/LriC5tXXxgxBOkv7Y9xc23eYQXgTdmCckreBcVR6crBAd
- kCxKl378SbetmCgzZmLK0QhozqF1ZatdpbT9a+6QjRc0SOICKz4ZOElX1/uORkaC4Ss=
-X-Gm-Gg: ASbGnctReDl20SoGAmLPCuuT0OnHdqkkhVzVR/4AGzLrN/xeZb1GW1uNu3jk2Lb6wcO
- MI6UAJYsB6dh5SrCc6DdkE4dQFvCn8SF8ucEqO/bSwvhxC5qgT36lBe2NHA6/iC7mIV7EzercD9
- 58g1O5ob9OD/36/uZvHLnzElEc/aMd4dIyElaIjopzWeZUze4ONKsfQORw/XxMHp3qtw3lfHcVX
- miHgn4Lw1WvyhsIQ8QKOJ4BSV2pGv9b7Aq7Ntmz/qAjg5bEDdblxRqxyZXGpAKoi83y6zNVNdHp
- PFTNpuwgNFHEjSfGzHS+4dAdO0CXgRrd+RS+nc7+3/9t1WWC646Z55DSiWlMNpcvlnRZP6EIEOp
- Y2SW/Yx6ZYU/jXFpniPsx0LFukoqHyqxdwytuaHLOJKNBZhBOEizu/f1Ui1pJqTU0/YYnFseO0c
- Vo7vgaFcaqt1xNHCOoRA2Dq8XFoNh3B3p+P8kBxGDPmKkw6IClxN+qof2j/y3ly+aigqlvYP4=
-X-Google-Smtp-Source: AGHT+IEDVnPYvwWPoDYHf8yPZW0aeMG+PohSX8wFSQQoFIs9VwnWldzngcIlbbca9J04hf6aYQMFmw==
-X-Received: by 2002:a05:6871:1c8:b0:3c9:415b:a28a with SMTP id
- 586e51a60fabf-3c98cf733cbmr9737756fac.11.1761219753734; 
- Thu, 23 Oct 2025 04:42:33 -0700 (PDT)
-Received: from ?IPV6:2607:fb90:5ec0:c638:dc7f:7860:6bb4:85f1?
- ([2607:fb90:5ec0:c638:dc7f:7860:6bb4:85f1])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3cdc4c081f6sm639567fac.10.2025.10.23.04.42.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 04:42:33 -0700 (PDT)
-Message-ID: <94bccb3b-9d41-4ff1-acc8-fecfd70cfc34@linaro.org>
-Date: Thu, 23 Oct 2025 06:42:31 -0500
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBtk9-0001Ec-Uf
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vBtk7-0001ZD-PP
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:44:33 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N7SBpn011630
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=lF9ayyK4Y+CGn5OGK6ljEp8yPxYv
+ WKH1w2ZyxYCV4zA=; b=pmmgOUDdjhGvayVy5GqilkQxqmS7w/F8RD2ljqmrKxxk
+ tFvOLZlgRn8G0P3fCjAp0WbC0iRkEM1X12VmuGS/YTbtE/hZ37DPongXOAkY5ATj
+ OW+uNB5UJEd2lTZMNc+lWnn1IVpGBAZJxcpKfFaJd99vuBcPe4gud9T2rjk48ECu
+ kWR3qUYkKtJ2WooqxEr7G4md88OHhqkHfw4wtDbWsEVQLVwmotgoT/ANmFDQ7QdY
+ XI3KONxM+ZOHsAFtqUYCb19iqIAE7oDXz7jYLMSM9wHfhRDTAYNdZQxxzElMma7U
+ 8+CnnYz7EaTMrtBnzT0MiQw8m8UXEKhTn7yTN5RJNA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31cgj1c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:30 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAhERA002320
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:29 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqejn9v8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:29 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBiR7636897080
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:28 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DA23F20049
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:27 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 542D120040
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:27 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
+ [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:44:27 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/32] ppc-for-10.2 queue
+Date: Thu, 23 Oct 2025 17:13:47 +0530
+Message-ID: <20251023114422.3675018-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Add assert to arm_to_core_mmu_idx()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20251023101339.1983809-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251023101339.1983809-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: QuAvMs7AQk5z2lJ0TbZZqTBGOZvIR4bE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9a2/N8w/o52x
+ JF9ksGdk8FfoKGdmGxlPrwKTIQTDzuDTr24fk9pTo600yEy75UP0r7ZSQq0D9CaeusAsyB21wKe
+ uD6qoPhMpOfmzy1ORPDUhDZHUq9c8PI27sNRh63uzJeQE0k11diLN/6iaw+tAosODrLMv1aldfV
+ 6pVuuL6yqe1L1bD3scVsw/VoOF30ZmQWW32IrAlTk0K5KzgKoy5o/CEcLSH0CpIVERzzVz8c1UC
+ j9ve+wH7lHoYpqMgunuyeh02fpitrwx1/u4uh4gFeZZOSity/RIhniZVRI0eKN0QsuUSIADCClK
+ sOoilzmC2KkGigPrRbahDiYXGEyfQEnWyDCzhKt/DAhS1Sc7Yu4w7ZJabkn5lUj8KIpXg8JbgHa
+ m2B79V1SnqXDA/zfXl4oI33mghYvVA==
+X-Proofpoint-GUID: QuAvMs7AQk5z2lJ0TbZZqTBGOZvIR4bE
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68fa151e cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8
+ a=1LGeStAcr6Diqoz3mFYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=oH34dK2VZjykjzsv8OSz:22 a=poXaRoVlC6wW9_mwW8W4:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22
+ a=QOGEsqRv6VhmHaoFNykA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,48 +118,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/23/25 05:13, Peter Maydell wrote:
-> Before commit f76cee647c ("target/arm: Introduce mmu indexes for
-> GCS") it was impossible for arm_to_core_mmu_idx() to return an
-> invalid core MMU index, because NB_MMU_MODES was 16 and
-> ARM_MMU_IDX_COREIDX_MASK was 0xf.
-> 
-> That commit raises ARM_MMU_IDX_COREIDX_MASK to 0x1f and NB_MMU_MODES
-> to 22, so it's now possible for a bogus Arm mmu index to result in an
-> out of range core mmu index (which can then get used as an array
-> index in the CPUTLB struct arrays). Coverity complains that this
-> might result in an out-of-bounds access.
-> 
-> The out-of-bounds access can't happen because we construct all the
-> ARMMMUIdx values we will use for TLBs to have valid core MMU indexes
-> in the COREIDX field.  But we can add an assert() so that if we ever
-> do end up operating on a corrupted or wrong ARMMMUIdx value we get an
-> assert rather than silently indexing off the end of an array. This
-> should also make Coverity happier.
-> 
-> Coverity: CID 1641404
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/internals.h | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index f539bbe58e1..026548ec34f 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -968,7 +968,9 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
->   
->   static inline int arm_to_core_mmu_idx(ARMMMUIdx mmu_idx)
->   {
-> -    return mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
-> +    int coreidx = mmu_idx & ARM_MMU_IDX_COREIDX_MASK;
-> +    assert(coreidx < NB_MMU_MODES);
-> +    return coreidx;
->   }
->   
->   static inline ARMMMUIdx core_to_arm_mmu_idx(CPUARMState *env, int mmu_idx)
+The following changes since commit c0e80879c876cbe4cbde43a92403329bcedf2ba0:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+  Merge tag 'pull-vfio-20251022' of https://github.com/legoater/qemu into staging (2025-10-22 08:01:21 -0500)
 
-r~
+are available in the Git repository at:
+
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-10.2-d2-20251023
+
+for you to fetch changes up to 5191104c18f44c8d04180ed4959ec97323d906f5:
+
+  MAINTAINERS: Add entry for FADump (pSeries) (2025-10-23 16:37:04 -0400)
+
+----------------------------------------------------------------
+ppc queue for 10.2
+
+* FADUMP Support for pSeries
+* Pegasos II cleanup and Pegasos I emulation
+* Deprecation of pseries 3.0 up till 4.2
+* Coverity fix for amigaone (CID: 1641398)
+
+----------------------------------------------------------------
+Aditya Gupta (8):
+      hw/ppc: Implement fadump register command
+      hw/ppc: Trigger Fadump boot if fadump is registered
+      hw/ppc: Preserve memory regions registered for fadump
+      hw/ppc: Implement saving CPU state in Fadump
+      hw/ppc: Pass dump-sizes property for fadump in device tree
+      hw/ppc: Enable fadump for PSeries
+      tests/functional: Add test for fadump in PSeries
+      MAINTAINERS: Add entry for FADump (pSeries)
+
+BALATON Zoltan (13):
+      ppc/amigaone: Free allocated struct
+      ppc/vof: Make nextprop behave more like Open Firmware
+      hw/ppc/pegasos2: Remove explicit name properties from device tree
+      hw/ppc/pegasos2: Change device tree generation
+      hw/ppc/pegasos2: Remove fdt pointer from machine state
+      hw/ppc/pegasos2: Rename mv field in machine state
+      hw/ppc/pegasos2: Add south bridge pointer in the machine state
+      hw/ppc/pegasos2: Move PCI IRQ routing setup to a function
+      hw/ppc/pegasos2: Move hardware specific parts out of machine reset
+      hw/ppc/pegasos2: Introduce abstract superclass
+      hw/ppc/pegasos2: Add bus frequency to machine state
+      hw/ppc/pegasos2: Add Pegasos I emulation
+      hw/ppc/pegasos2: Add VOF support for pegasos1
+
+Harsh Prateek Bora (5):
+      ppc/spapr: remove deprecated machine pseries-3.0
+      ppc/spapr: remove deprecated machine pseries-3.1
+      ppc/spapr: remove deprecated machine pseries-4.0
+      ppc/spapr: remove deprecated machine pseries-4.1
+      ppc/spapr: remove deprecated machine pseries-4.2
+
+Philippe Mathieu-Daudé (6):
+      hw/ppc/spapr: Remove SpaprMachineClass::nr_xirqs field
+      hw/ppc/spapr: Inline spapr_dtb_needed()
+      hw/ppc/spapr: Inline few SPAPR_IRQ_* uses
+      target/ppc/kvm: Remove kvmppc_get_host_serial() as unused
+      target/ppc/kvm: Remove kvmppc_get_host_model() as unused
+      hw/ppc/spapr: Remove SpaprMachineClass::phb_placement callback
+
+ MAINTAINERS                               |   9 +
+ include/hw/ppc/spapr.h                    |  27 +-
+ include/hw/ppc/spapr_fadump.h             | 124 +++++
+ include/hw/ppc/spapr_irq.h                |   1 -
+ target/ppc/kvm_ppc.h                      |  12 -
+ hw/ppc/amigaone.c                         |   2 +-
+ hw/ppc/pegasos2.c                         | 769 +++++++++++++++---------------
+ hw/ppc/spapr.c                            | 368 +++++---------
+ hw/ppc/spapr_caps.c                       |  12 +-
+ hw/ppc/spapr_events.c                     |  20 +-
+ hw/ppc/spapr_fadump.c                     | 730 ++++++++++++++++++++++++++++
+ hw/ppc/spapr_hcall.c                      |   5 -
+ hw/ppc/spapr_irq.c                        |  36 +-
+ hw/ppc/spapr_pci.c                        |  32 +-
+ hw/ppc/spapr_rtas.c                       |  76 +++
+ hw/ppc/spapr_vio.c                        |   9 -
+ hw/ppc/vof.c                              |  50 +-
+ target/ppc/kvm.c                          |  11 -
+ hw/ppc/meson.build                        |   1 +
+ pc-bios/dtb/meson.build                   |   2 +
+ pc-bios/dtb/pegasos1.dtb                  | Bin 0 -> 857 bytes
+ pc-bios/dtb/pegasos1.dts                  | 125 +++++
+ pc-bios/dtb/pegasos2.dtb                  | Bin 0 -> 1701 bytes
+ pc-bios/dtb/pegasos2.dts                  | 167 +++++++
+ tests/functional/ppc64/meson.build        |   2 +
+ tests/functional/ppc64/test_fadump.py     | 182 +++++++
+ tests/functional/qemu_test/linuxkernel.py |  59 +++
+ 27 files changed, 2042 insertions(+), 789 deletions(-)
+ create mode 100644 include/hw/ppc/spapr_fadump.h
+ create mode 100644 hw/ppc/spapr_fadump.c
+ create mode 100644 pc-bios/dtb/pegasos1.dtb
+ create mode 100644 pc-bios/dtb/pegasos1.dts
+ create mode 100644 pc-bios/dtb/pegasos2.dtb
+ create mode 100644 pc-bios/dtb/pegasos2.dts
+ create mode 100755 tests/functional/ppc64/test_fadump.py
 
