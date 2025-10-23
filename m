@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50DEDCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 09:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605F0CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 09:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBs2t-0007ao-H5; Thu, 23 Oct 2025 05:55:47 -0400
+	id 1vBs5T-0000Wu-6j; Thu, 23 Oct 2025 05:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vBs2q-0007a7-PN
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:55:44 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vBs2n-0002aO-Cz
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:55:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761213342; x=1792749342;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Ilhu01+hhVRRt4YbOjEcY+/EsGcv7tZF3vd2A5ikFKk=;
- b=frsAKRacoSmKJRWxwxlmXKzGyYs8wpEzs4+KZymicoPwOeZtX2KVe/Rz
- NFOcrEVRdTrGRipFZIpLkBvYnH9t6uaMEOxLljeUFLrWk8RQ+NdHeGb9X
- hHge52YnLgtuwBwh7Ktxel3bfzTEMngQvPfHkg4oS1ddvB/Kj0KgJ5LYX
- MTIiunAzW39xEqhoyF1sJhUFK1rT+fmuqfL160KTq1ICT71uAcPLSw67P
- pKQBML7l4Ytgm/MBAQsZuw8BjixTbA5kLNL70oOtQiyHHmbllAePsgCup
- MS7HNxOY/e5OcCZ04SzYp28YR/o5pySM+Y5+wHrsjkvm8R6pTXiaESIkX Q==;
-X-CSE-ConnectionGUID: mKAe4LTkSNqb7OuQh6QBAA==
-X-CSE-MsgGUID: CHz/0R2dRSWxRmGPzj4whw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74816144"
-X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; d="scan'208";a="74816144"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 02:55:38 -0700
-X-CSE-ConnectionGUID: KcgZbXVxRraOLTtdhXkBjQ==
-X-CSE-MsgGUID: vBIosCMaSkGZlcdIup1NoQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,249,1754982000"; d="scan'208";a="183289329"
-Received: from emr-bkc.sh.intel.com ([10.112.230.82])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 02:55:35 -0700
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-To: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Alexey Kardashevskiy <aik@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
- Gao Chao <chao.gao@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
- Farrah Chen <farrah.chen@intel.com>
-Subject: [PATCH v2 1/2] ram-block-attributes: Avoid the overkill of shared
- memory with hugetlbfs backend
-Date: Thu, 23 Oct 2025 17:55:24 +0800
-Message-ID: <20251023095526.48365-2-chenyi.qiang@intel.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251023095526.48365-1-chenyi.qiang@intel.com>
-References: <20251023095526.48365-1-chenyi.qiang@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBs5R-0000Wl-JG
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:58:25 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBs5P-0002pn-Gr
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 05:58:25 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-780fe76f457so6672497b3.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 02:58:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761213501; x=1761818301; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2uCZYUUy2pPaW+WI53ENBf6uxgXbiMMJyi4oRoJmj/I=;
+ b=gkPPcvEYacvbTMpseyGKOrMCBqcJBAon/DNBDGMtRGui9DJ4UQPkf8xgKrLdoFD/bL
+ y7ZwKn+k3HDXsD/2A4ImqVx/6x0LUQrtbl9XWOt3e4mlbQZbP4XvfTdtjLBEjBuyVIBY
+ wqPcofMACpNzBmNI8uz8rEO5v66rom/TR7psfy+WkCn7YSN0m1jAksgDCZnqUnuKJBtR
+ BNP4iiU2VXXtGzgdQIXxuxdmS07F7Y9xrbsR+DXeB3A1iLgzrgq7B64xLuXp6scGymgB
+ kfvSJgI6VHIguyR6tl4PDFkdDZ+n76fHuvwZMAXp/d91Nip+TXfghsGK0xrwoDOfg4al
+ b8rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761213501; x=1761818301;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2uCZYUUy2pPaW+WI53ENBf6uxgXbiMMJyi4oRoJmj/I=;
+ b=MmQJI8FsI7k3ijQS+0MY1uYJhR4QFdbJqo5C7Qkqeu2GWRRL7HBbZoyH/h1YgvTjih
+ zaapWh4gSBvQbntjzeftuH7qRIeaKNALtvG7+PEwdnlBOiQimOlVnYyTQZmDfrzaDckr
+ 3Gz1KgPmX6JmYtrxSmsIr3cdVKpSTtIAQFvxZawGvZY0f6axPub/81Whv6O7nm73Byg0
+ ubaWUkTRz8ckuC5iB+XEH8sXdyDwzyVAle1Hn9wWBPEeOYZCwQwMnTa+9MLrXf22awLT
+ ehlB7wEOJsY8PY2f5yLtrVh4/51JliHGRoYvYdKZE6V6yUjFR7eGBoDZJTeSxeFHGE5b
+ q7Fw==
+X-Gm-Message-State: AOJu0YxYAWFf/dV328EDaTL8AZ2FEWZ7atDKFdB7xBlQgZa8NKgLBCP+
+ s9eAniXqDzXdamiuKavR2zwlAoZrh4DDgVWEZ0H0CmKgM4eSd/rc2zDASQL461dqcQBXHx43x5M
+ ChPbr+XHA2trjsse6+61faiq+ghz+vTCxEOeN7YICmw==
+X-Gm-Gg: ASbGncu8CqLEXdUTpMsGiq4YeV0lT5fmRzKcLuIp2vn4cP7x4EI4lkHmDj5nuzOj8o5
+ JcaWnPFOqNLwb7gjzwDtCXTJB7UOOJoRodibjrj/yyTs/XJ7si4mHr0pCsLdtgzLXzA3Zdl9uPy
+ Q1PiPmPBXENOT+ydsiDekNMiD6XvIO6JyTNinWqgkg/J2yjPkSqVFyw5qL/VC5Hg36mSX31NVQP
+ DwT7FTFM2kpNt5DSmJClTo0NhItP5BXZhCt831Vkz6NRhArjAxrFxivyTH4zkPGWTdgEE9f
+X-Google-Smtp-Source: AGHT+IHGdFE1vaRM/LwHh2b/SkXWVv6uOP2079WMrEPY2/Lnv5iEm6RyBmmKEVDJFWzAcvfe8dvixv9vzcXjTU+e1AI=
+X-Received: by 2002:a05:690c:6901:b0:783:7143:d826 with SMTP id
+ 00721157ae682-7837143e02emr373269267b3.29.1761213501337; Thu, 23 Oct 2025
+ 02:58:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20251005194734.4084726-1-samuel.thibault@ens-lyon.org>
+ <20251005194734.4084726-2-samuel.thibault@ens-lyon.org>
+In-Reply-To: <20251005194734.4084726-2-samuel.thibault@ens-lyon.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 23 Oct 2025 10:58:10 +0100
+X-Gm-Features: AS18NWDu7BoC5j1Y6x1Y5u34B8z3AnBEez0HpBArB-jBjNO64An1_ejkOv4DKAY
+Message-ID: <CAFEAcA_P2=kv_WZZP7k_5TRvTmzo1NMUq8r+sMFCRBApORXkKA@mail.gmail.com>
+Subject: Re: [PULL 1/1] Add a feature for mapping a host unix socket to a
+ guest tcp socket
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: qemu-devel@nongnu.org, Viktor Kurilko <murlockkinght@gmail.com>,
+ stefanha@redhat.com, jan.kiszka@siemens.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,111 +95,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, CoCo VMs can perform conversion at the base page granularity,
-which is the granularity that has to be tracked. In relevant setups, the
-target page size is assumed to be equal to the host page size, thus
-fixing the block size to the host page size.
+On Sun, 5 Oct 2025 at 20:48, Samuel Thibault
+<samuel.thibault@ens-lyon.org> wrote:
+>
+> From: Viktor Kurilko <murlockkinght@gmail.com>
+>
+> This patch adds the ability to map a host unix socket to a guest tcp socket when
+> using the slirp backend. This feature was added in libslirp version 4.7.0.
+>
+> A new syntax for unix socket: -hostfwd=unix:hostpath-[guestaddr]:guestport
+>
+> Signed-off-by: Viktor Kurilko <murlockkinght@gmail.com>
+> Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+> Message-ID: <20250808143904.363907-1-murlockkinght@gmail.com>
+> ---
 
-However, since private memory and shared memory have different backend
-at present, users can specify shared memory with a hugetlbfs backend
-while private memory with guest_memfd backend only supports 4K page
-size. In this scenario, ram_block->page_size is different from the host
-page size which will trigger an assertion when retrieving the block
-size.
+Coverity worries here about a possible time-of-check-time-of-use
+bug (CID 1641394). This is a heuristic that tends to fire even
+when there's no interesting attack possible, but I don't
+know what this code is doing so I raise it here:
 
-To address this, return the host page size directly to relax the
-restriction. This changes fixes a regression of using hugetlbfs backend
-for shared memory within CoCo VMs, with or without VFIO devices' presence.
+> +#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+> +    if (is_unix) {
+> +        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
+> +            fail_reason = "Missing - separator";
+> +            goto fail_syntax;
+> +        }
+> +        if (buf[0] == '\0') {
+> +            fail_reason = "Missing unix socket path";
+> +            goto fail_syntax;
+> +        }
+> +        if (buf[0] != '/') {
+> +            fail_reason = "unix socket path must be absolute";
+> +            goto fail_syntax;
+> +        }
+> +
+> +        size_t path_len = strlen(buf);
+> +        if (path_len > sizeof(host_addr.un.sun_path) - 1) {
+> +            fail_reason = "Unix socket path is too long";
+> +            goto fail_syntax;
+> +        }
+> +
+> +        struct stat st;
+> +        if (stat(buf, &st) == 0) {
 
-Acked-by: David Hildenbrand <david@redhat.com>
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
----
-Changes in v2:
-  - Modify the commit message
-  - Remove the argument in ram_block_attributes_get_block_size()
----
- system/ram-block-attributes.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+Coverity notes that we do a check on the filename here
+with stat()...
 
-diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
-index 68e8a027032..a7579de5b46 100644
---- a/system/ram-block-attributes.c
-+++ b/system/ram-block-attributes.c
-@@ -22,16 +22,14 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RamBlockAttributes,
-                                           { })
- 
- static size_t
--ram_block_attributes_get_block_size(const RamBlockAttributes *attr)
-+ram_block_attributes_get_block_size(void)
- {
-     /*
-      * Because page conversion could be manipulated in the size of at least 4K
-      * or 4K aligned, Use the host page size as the granularity to track the
-      * memory attribute.
-      */
--    g_assert(attr && attr->ram_block);
--    g_assert(attr->ram_block->page_size == qemu_real_host_page_size());
--    return attr->ram_block->page_size;
-+    return qemu_real_host_page_size();
- }
- 
- 
-@@ -40,7 +38,7 @@ ram_block_attributes_rdm_is_populated(const RamDiscardManager *rdm,
-                                       const MemoryRegionSection *section)
- {
-     const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
--    const size_t block_size = ram_block_attributes_get_block_size(attr);
-+    const size_t block_size = ram_block_attributes_get_block_size();
-     const uint64_t first_bit = section->offset_within_region / block_size;
-     const uint64_t last_bit =
-         first_bit + int128_get64(section->size) / block_size - 1;
-@@ -81,7 +79,7 @@ ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
- {
-     unsigned long first_bit, last_bit;
-     uint64_t offset, size;
--    const size_t block_size = ram_block_attributes_get_block_size(attr);
-+    const size_t block_size = ram_block_attributes_get_block_size();
-     int ret = 0;
- 
-     first_bit = section->offset_within_region / block_size;
-@@ -122,7 +120,7 @@ ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
- {
-     unsigned long first_bit, last_bit;
-     uint64_t offset, size;
--    const size_t block_size = ram_block_attributes_get_block_size(attr);
-+    const size_t block_size = ram_block_attributes_get_block_size();
-     int ret = 0;
- 
-     first_bit = section->offset_within_region / block_size;
-@@ -163,7 +161,7 @@ ram_block_attributes_rdm_get_min_granularity(const RamDiscardManager *rdm,
-     const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
- 
-     g_assert(mr == attr->ram_block->mr);
--    return ram_block_attributes_get_block_size(attr);
-+    return ram_block_attributes_get_block_size();
- }
- 
- static void
-@@ -265,7 +263,7 @@ ram_block_attributes_is_valid_range(RamBlockAttributes *attr, uint64_t offset,
-     g_assert(mr);
- 
-     uint64_t region_size = memory_region_size(mr);
--    const size_t block_size = ram_block_attributes_get_block_size(attr);
-+    const size_t block_size = ram_block_attributes_get_block_size();
- 
-     if (!QEMU_IS_ALIGNED(offset, block_size) ||
-         !QEMU_IS_ALIGNED(size, block_size)) {
-@@ -322,7 +320,7 @@ int ram_block_attributes_state_change(RamBlockAttributes *attr,
-                                       uint64_t offset, uint64_t size,
-                                       bool to_discard)
- {
--    const size_t block_size = ram_block_attributes_get_block_size(attr);
-+    const size_t block_size = ram_block_attributes_get_block_size();
-     const unsigned long first_bit = offset / block_size;
-     const unsigned long nbits = size / block_size;
-     const unsigned long last_bit = first_bit + nbits - 1;
--- 
-2.43.5
+> +            if (!S_ISSOCK(st.st_mode)) {
+> +                fail_reason = "file exists and it's not unix socket";
+> +                goto fail_syntax;
+> +            }
+> +
+> +            if (unlink(buf) < 0) {
 
+...and then later we do an unlink() if it's a unix socket.
+But Coverity points out that an attacker could change what
+the filename points to between the stat and the unlink,
+causing us to unlink some non-socket file.
+
+Do we care ?
+
+> +                error_setg_errno(errp, errno, "Failed to unlink '%s'", buf);
+> +                goto fail_syntax;
+> +            }
+> +        }
+> +        host_addr.un.sun_family = AF_UNIX;
+> +        memcpy(host_addr.un.sun_path, buf, path_len);
+> +        host_addr_size = sizeof(host_addr.un);
+> +    } else
+
+thanks
+-- PMM
 
