@@ -4,82 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0BECCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 05:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9E2CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 05:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBntB-0005q7-66; Thu, 23 Oct 2025 01:29:29 -0400
+	id 1vBoAV-0000X8-BX; Thu, 23 Oct 2025 01:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vBnt5-0005nc-1T
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 01:29:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBoAT-0000X0-Pf
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 01:47:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vBnt1-0008NI-7o
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 01:29:22 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vBoAR-0003Ol-Es
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 01:47:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761197358;
+ s=mimecast20190719; t=1761198436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fbmUiP24vmItDggaUgWvlUJsW1ZjEpUJ2OUsevgIUgY=;
- b=jQL07RY0wc7w8QqfPstJrp/b7HvQ3XnR6RlR64YF4S4KqPqujIix2iH3i4N3GPSI/eKzy0
- qOosepckfsY9mYfd4kn9NOn/L+lF7fy5zyRmcJNDIXat8b76219iVMFjoHAsG9yoH6j1F9
- kPPK8K/GYL+9GimfHX6RGMbCY3kHS0M=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-CUO-4Sb0PaicUBY1A8PjPQ-1; Thu, 23 Oct 2025 01:29:15 -0400
-X-MC-Unique: CUO-4Sb0PaicUBY1A8PjPQ-1
-X-Mimecast-MFC-AGG-ID: CUO-4Sb0PaicUBY1A8PjPQ_1761197355
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-785c67bec06so4577907b3.2
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 22:29:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761197355; x=1761802155;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fbmUiP24vmItDggaUgWvlUJsW1ZjEpUJ2OUsevgIUgY=;
- b=eUSFB3b3UW79HaZdmlmqsoWmkUh0O65YOURXZHzcRI9ZLlJBvaJBuBJL/oz94XFY1O
- iY7E/FUe0aoqZnZQ3tcsCs7FSDxDOFTwCrF4TFaNAihwKS6O1Bj1R7iRuiPvbQ8ReIGT
- FSrd+ONugRDIxyjI88sT6ni50abtBTZIEwH/FEEs6QpX7FVFQwNgUono1Oo8s0B3xMgK
- 8ydWo5pkJkQlM5tM0GvsJPPfYngSlKnumFZgozGBPzFgY0pYjPUGd7HAueVmOK/kxhJZ
- XO/1tA0Mh7fVZo7UN5fou2YQh2JbGmKJisv2z4kIO1UgbnqoU/85nLeErmfOZXQcH+bc
- yxjA==
-X-Gm-Message-State: AOJu0YzPlGz+w9U8M+Tc7BCgw1/t/5V5FfvWq/OZnAZI7AdAxf8sihrR
- C+GL1NhNnKa3Lp7O8HO27yWrzgUUrMJUVCYTburBDRSuXptp7+uWX+hK4n7cA+a6kATBYz6hQrm
- 5uQnFeR6cMGc+6SNVoCZg/z568U5OfG5GTQbOfxzY3u+clUen/EDO8jdTD6z0/JKGN3TGAvSbC1
- sz+iDduKszX/TjxlOCd0K7GAvUcbDRRYA=
-X-Gm-Gg: ASbGncuH4xlGf/xlCSK0FtwSpvzJEWiRMaPgMaA3wiSbkcaZHSVOUTNQ4yvnePvCvzf
- I7E5dOxjPpSYmenfM/RBQdcBR9bXLRfLcnDshe/eZY6qtuw+9zobKUS1wzQCAb6NsgncNuBLHdP
- mH6qY0MS6QtCqXgjAwfEdP2l9lJo5UcR5fCuva4P0mNkrW/4nhVAjF7B/YSqazPSP5tgZ4dUcvK
- 7m4bQpXI+mfoeIXmCChZMCWOF6gVJORzFZ6/SVQerw=
-X-Received: by 2002:a05:690e:1247:b0:63e:3ad2:ef0b with SMTP id
- 956f58d0204a3-63e3ad2f3aamr9669334d50.27.1761197355323; 
- Wed, 22 Oct 2025 22:29:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMNtQhgXOHw5JccfVN2dTPh+mFBbwneys20DcXXi2z4NE4jqtgqMlotZlFS9J9j5xCiN4EMdLYbomPje+4wqk=
-X-Received: by 2002:a05:690e:1247:b0:63e:3ad2:ef0b with SMTP id
- 956f58d0204a3-63e3ad2f3aamr9669316d50.27.1761197354934; Wed, 22 Oct 2025
- 22:29:14 -0700 (PDT)
+ bh=yGGqJ0a9xI1phmDPNhzSdwqznxzjRp6AItckTqiqurc=;
+ b=O7Kjes7WGd6sDDMBy12Lfg18woc+Wv01AZ9RAeuUJa8zF1QJ5sczZmYPSyZnBPn3ye6g4k
+ jv4QupTWhNhOD6BgJ8QnUG79utfALOdKj/doNpTAjjIu5L07kEcKyCdbtq0Qgz6A6A1Wll
+ IeqD4ymsxrHQPMzojIK1KvhBo4bdmCU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-l0exl2F4NCeb5-kmH2qF2Q-1; Thu,
+ 23 Oct 2025 01:47:15 -0400
+X-MC-Unique: l0exl2F4NCeb5-kmH2qF2Q-1
+X-Mimecast-MFC-AGG-ID: l0exl2F4NCeb5-kmH2qF2Q_1761198435
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFE8C195608A; Thu, 23 Oct 2025 05:47:14 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.19])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 631AE180035A; Thu, 23 Oct 2025 05:47:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C81E721E6A27; Thu, 23 Oct 2025 07:47:11 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  Fabiano Rosas <farosas@suse.de>,  Juraj Marcin
+ <jmarcin@redhat.com>
+Subject: Re: [PATCH] migration/qmp: Update "resume" flag doc in "migrate"
+ command
+In-Reply-To: <20251022190425.2730441-1-peterx@redhat.com> (Peter Xu's message
+ of "Wed, 22 Oct 2025 15:04:25 -0400")
+References: <20251022190425.2730441-1-peterx@redhat.com>
+Date: Thu, 23 Oct 2025 07:47:11 +0200
+Message-ID: <87cy6eb25c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20251022162405.318672-1-gmaglione@redhat.com>
-In-Reply-To: <20251022162405.318672-1-gmaglione@redhat.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 23 Oct 2025 07:28:38 +0200
-X-Gm-Features: AS18NWDvrcSA01l2mdO93F5TWwEHZFoRvdCVKRPZbJ2BP5JjZx0Q-6Nc655t5A4
-Message-ID: <CAJaqyWf-VmK8w4d7Qn6ZHZRjVze0CatU01hNw5Db53RzE2G0-g@mail.gmail.com>
-Subject: Re: [PATCH v2] vhost-user: make vhost_set_vring_file() synchronous
-To: German Maglione <gmaglione@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,118 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 22, 2025 at 6:24=E2=80=AFPM German Maglione <gmaglione@redhat.c=
-om> wrote:
->
-> QEMU sends all of VHOST_USER_SET_VRING_KICK, _CALL, and _ERR without
-> setting the NEED_REPLY flag, i.e. by the time the respective
-> vhost_user_set_vring_*() function returns, it is completely up to chance
-> whether the back-end has already processed the request and switched over
-> to the new FD for interrupts.
->
-> At least for vhost_user_set_vring_call(), that is a problem: It is
-> called through vhost_virtqueue_mask(), which is generally used in the
-> VirtioDeviceClass.guest_notifier_mask() implementation, which is in turn
-> called by virtio_pci_one_vector_unmask().  The fact that we do not wait
-> for the back-end to install the FD leads to a race there:
->
-> Masking interrupts is implemented by redirecting interrupts to an
-> internal event FD that is not connected to the guest.  Unmasking then
-> re-installs the guest-connected IRQ FD, then checks if there are pending
-> interrupts left on the masked event FD, and if so, issues an interrupt
-> to the guest.
->
-> Because guest_notifier_mask() (through vhost_user_set_vring_call())
-> doesn't wait for the back-end to switch over to the actual IRQ FD, it's
-> possible we check for pending interrupts while the back-end is still
-> using the masked event FD, and then we will lose interrupts that occur
-> before the back-end finally does switch over.
->
-> Fix this by setting NEED_REPLY on those VHOST_USER_SET_VRING_* messages,
-> so when we get that reply, we know that the back-end is now using the
-> new FD.
->
-> We have a few reports of a virtiofs mount hanging:
-> - https://gitlab.com/virtio-fs/virtiofsd/-/issues/101
-> - https://gitlab.com/virtio-fs/virtiofsd/-/issues/133
-> - https://gitlab.com/virtio-fs/virtiofsd/-/issues/213
->
-> This is quite difficult bug to reproduce, even for the reporters.
-> It only happens on production, every few weeks, and/or on 1 in 300 VMs.
-> So, we are not 100% sure this fixes that issue. However, we think this
-> is still a bug, and at least we have one report that claims this fixed
-> the issue:
->
-> https://gitlab.com/virtio-fs/virtiofsd/-/issues/133#note_2743209419
->
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-Thanks!
-
-> Signed-off-by: German Maglione <gmaglione@redhat.com>
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> It wasn't obvious how the resume flag should be used when staring at the
+> QAPI doc.  Enrich it to be crystal clear.
+>
+> Reported-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  hw/virtio/vhost-user.c | 24 +++++++++++++++++++++++-
->  1 file changed, 23 insertions(+), 1 deletion(-)
+>  qapi/migration.json | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 36c9c2e04d..1605485396 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1327,8 +1327,11 @@ static int vhost_set_vring_file(struct vhost_dev *=
-dev,
->                                  VhostUserRequest request,
->                                  struct vhost_vring_file *file)
->  {
-> +    int ret;
->      int fds[VHOST_USER_MAX_RAM_SLOTS];
->      size_t fd_num =3D 0;
-> +    bool reply_supported =3D virtio_has_feature(dev->protocol_features,
-> +                                              VHOST_USER_PROTOCOL_F_REPL=
-Y_ACK);
->      VhostUserMsg msg =3D {
->          .hdr.request =3D request,
->          .hdr.flags =3D VHOST_USER_VERSION,
-> @@ -1336,13 +1339,32 @@ static int vhost_set_vring_file(struct vhost_dev =
-*dev,
->          .hdr.size =3D sizeof(msg.payload.u64),
->      };
->
-> +    if (reply_supported) {
-> +        msg.hdr.flags |=3D VHOST_USER_NEED_REPLY_MASK;
-> +    }
-> +
->      if (file->fd > 0) {
->          fds[fd_num++] =3D file->fd;
->      } else {
->          msg.payload.u64 |=3D VHOST_USER_VRING_NOFD_MASK;
->      }
->
-> -    return vhost_user_write(dev, &msg, fds, fd_num);
-> +    ret =3D vhost_user_write(dev, &msg, fds, fd_num);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    if (reply_supported) {
-> +        /*
-> +         * wait for the back-end's confirmation that the new FD is activ=
-e,
-> +         * otherwise guest_notifier_mask() could check for pending inter=
-rupts
-> +         * while the back-end is still using the masked event FD, losing
-> +         * interrupts that occur before the back-end installs the FD
-> +         */
-> +        return process_message_reply(dev, &msg);
-> +    }
-> +
-> +    return 0;
->  }
->
->  static int vhost_user_set_vring_kick(struct vhost_dev *dev,
-> --
-> 2.49.0
->
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index be0f3fcc12..48856078db 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -1732,7 +1732,10 @@
+>  # @detach: this argument exists only for compatibility reasons and is
+>  #     ignored by QEMU
+>  #
+> -# @resume: resume one paused migration, default "off".  (since 3.0)
+> +# @resume: when set, resume one paused postcopy migration, using the new
+
+Scratch "one" unless there can be more than one.
+
+> +#     URI/channels specified to replace the old/broken channels.  The user
+> +#     should make sure the migration is in "postcopy-paused" state before
+> +#     the resume request.  Default "off".  (since 3.0)
+>  #
+>  # Features:
+>  #
+
+What happens when migration is not in state "postcopy-paused"?
+
+Remind me, how can migration get into and out of this state?
 
 
