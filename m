@@ -4,90 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73EA5CCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 17:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F268ECCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 17:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBzVM-0007cb-0a; Thu, 23 Oct 2025 13:53:40 -0400
+	id 1vBzXx-0000QA-8b; Thu, 23 Oct 2025 13:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vBzVJ-0007c2-PV
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 13:53:37 -0400
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vBzVE-0003Et-TT
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 13:53:35 -0400
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-430cd27de3eso5303545ab.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 10:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761242010; x=1761846810; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gLxuKcSubCR6viDDbMsAbQt9pP1J4RDabAVm7vVMkeg=;
- b=JsvNhQX11pnNU4aJb9eb9WE4jdfb6Mc3kyTh1Ol6KA5sI3DR+dP3fW16jdLQrV3nXO
- kGSm9gX+SknopwzECYmtwI8ESgMUOGh3qE8rKF/SEqDfHQ6SWYa6tE8jITFw0xxGO1zm
- Jj7cA3vW9feJ9EzruB6fVBRr3JUaddqYfW7lH0yOygxQrNrQWmyZAtpNpRs/wUymUXxV
- j06XvFYlt74vWxZgb98ieyqUaamM/4uHJ1U87ktUzlx9O2GBytgKhMwE2TRhZkDSG0x/
- jZZMyYYsmgO5MPBFQX3oyElcl5pp+FEoAAh3mC9EYX+YAmUiSMMQhNlsMeO7wiwuOUHY
- rQQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761242010; x=1761846810;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gLxuKcSubCR6viDDbMsAbQt9pP1J4RDabAVm7vVMkeg=;
- b=ZIrvnoZudihOx2lpGdZijfXJlGZjfmC+Rd2DrXHQhidW4ebCQkwLhj0ubYwUefP37s
- Hd7jRjpAesPMWKggrUzd15lIQO9HdQL0e77AyCtB6RGpJXZePI6R2+V7uDUQU6X2TYdC
- BL/07VPRxjtaJI2eKKFMPXH9pDnqpT9gkKs9xbHQjLa9w61FONtvdVAZlnr/EUYT7z0I
- 5oL2vTMfi2XU09kR1CMWBOi4mf9KjNlfCgl1w1oXsMONh9fJ3QyaNxUrZKPlZZo0G8Uc
- p1fR8GGPjYUrI6usECLwXbXZFZvxihFrr9mmp3A2t8khW+dVcTqJFjwjB8Yq+Sk5bU9o
- 92/A==
-X-Gm-Message-State: AOJu0YzgHYtLxGKBTTLmksc5IEGTAMaXegU8YIt92xFQUIA5LX+rRhqy
- 0FFRPCG7LOmI/shVwJhxUGQsA+fq5mcmkaEEanWK3DQkXLsOKYn/DWXFdF9CNjofLdtLXqrAHZv
- BI2lXoumUpqQ+00SmicIoU6vjvg44erE=
-X-Gm-Gg: ASbGncuyyBL/rbx7fW5Q0XuFLlxWqWMmqFWThpPlhZS0BfXxxHZwId3CErXsyKn0ToU
- MlFSGx2AGQi7IF2nBwDJFiJl/CQ3xwtON+9PZjgI+XDUy+uI+QeAExO5SRlcWoBY0HYMew2UgDF
- VZijpsSeCdWG8cylN0mDsYICpdCrLjDJA3X/GkNQjj3haCZwdg3NsuYNssBVfzbIs65qR5AtUXw
- 66ahJe60IS397kiU63Q9sCKX0TqmLZH6Yr488UofO2ztghYiXNzJsEAtXZw
-X-Google-Smtp-Source: AGHT+IGoD7YdMSCZo94Q/k2r/atpPo9Czh3sPNRkSu0OMjXaGTB/2QVX2hQULCwIBzlprMhogMDsCG5tVUIo3YF+Inc=
-X-Received: by 2002:a05:6e02:216e:b0:430:ab21:8c4d with SMTP id
- e9e14a558f8ab-430c5232bd3mr346212725ab.11.1761242009968; Thu, 23 Oct 2025
- 10:53:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vBzXt-0000N5-HS; Thu, 23 Oct 2025 13:56:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vBzXp-0003bk-Pd; Thu, 23 Oct 2025 13:56:16 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59NAJO1R026789;
+ Thu, 23 Oct 2025 17:56:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=5COfb/
+ MEiDxlgd0dT/x8GocJeOIBifB2uMRPbuRSAkA=; b=D+m8ntC/tl13Jx4NY/4E6S
+ 89ZkKjSqqHV8i+YyT1IRE8JUZbTaS4UeuxUG2ISxPTowmfKnJhMFeOx3Q3tjF7TL
+ 5/IwA5vUp7m7PEO6DMwOZZD9eZELM26TSI5wzIETcoTxHMWiEf72vu4cDhpieMYc
+ /nW2gbL/AGJZx6Us0O8cPgYdvcqkwH3OrfYMWG5GfokFAEANI7NdPPIQNgKml2ki
+ rF7UUMu2l3W8s4R1WfSnbCFxZ1zvDrY8qGMfGDUNqquueBplLNVjiGgOg4LK84vs
+ GbI76+1w1yq+PisPBvSe30ll1HnWtTKJBsfJkBx4gxwi8LIWxZDMVLYYhjDjYgrg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v30w25wn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 17:56:11 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NHZlG3024953;
+ Thu, 23 Oct 2025 17:56:11 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vpqk71a1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 23 Oct 2025 17:56:11 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NHu9GY22151690
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 23 Oct 2025 17:56:09 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6CD3758058;
+ Thu, 23 Oct 2025 17:56:09 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CB90758059;
+ Thu, 23 Oct 2025 17:56:08 +0000 (GMT)
+Received: from [9.61.246.20] (unknown [9.61.246.20])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 23 Oct 2025 17:56:08 +0000 (GMT)
+Message-ID: <1839cf44-81f1-4eb6-8243-e2cf6853c92a@linux.ibm.com>
+Date: Thu, 23 Oct 2025 10:56:07 -0700
 MIME-Version: 1.0
-References: <20251020054413.2614932-1-dtalexundeer@yandex-team.ru>
- <CAFubqFsiEGHP1Py78VapGvPBi1rpGWZcRbb8Li-QvWhbRGYDiA@mail.gmail.com>
- <453ec8f4-fbda-4411-a02c-5d30429d7083@yandex-team.ru>
- <CAFubqFsFPoa5xuP1Pd=hhY1bo5vhLL4chhEpfVn3VxhR_SnZEQ@mail.gmail.com>
- <8c79d385-d7a9-4752-b610-9d7b8b3c7f5d@yandex-team.ru>
-In-Reply-To: <8c79d385-d7a9-4752-b610-9d7b8b3c7f5d@yandex-team.ru>
-From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Thu, 23 Oct 2025 13:53:19 -0400
-X-Gm-Features: AS18NWCNN46csafOKPwsJsjcXiOxv392LwYi2xrYiM4Srz-PkZklz85Pvce5mOU
-Message-ID: <CAFubqFtTWDeDUUxq1jO=AFuwd2vmiTYa3ZbVZLXmxNUp01xVtw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] vhost-user-blk: support inflight migration
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Raphael Norwitz <raphael@enfabrica.net>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-il1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] pc-bios/s390-ccw: Introduce PCI device IPL format
+From: Farhan Ali <alifm@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20251020162023.3649165-1-jrossi@linux.ibm.com>
+ <20251020162023.3649165-5-jrossi@linux.ibm.com>
+ <49301ff9-894c-4341-bd9e-7b2213aa184b@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <49301ff9-894c-4341-bd9e-7b2213aa184b@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: CAsF-ay5sCcEV5-ESSk0kViXGVrKG9f1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX33fkjsleiZ9s
+ Q0vJV5TMy+PeEOITGFvluqDbCekhD0xzsKueZrOF63IKiwjpmJx1yk6zjZAYyZH1wAyRwO/yyyP
+ J74vBsUKXybdxguLImx9m0pnewihQwkSjBShyly+w5VEhM+IessGcCi70sE+btodMrOcIG99hFH
+ 38Q03ZlFWarZrk1xzfKGm60wqbmW57M69mvESCDnsPbXLHTt7DQ9P5MKdJhniJ4nRiKudu2AE9o
+ Jwvs7IezYZ/Bd8G3hIpittRXb6LZdwhz6LMOB1+7+Z6+oBnc3/0kISEhxR3q5S56oAGTigAfH3w
+ MgW2vZYM+CfT+GU/M4TJzvY96163ACSjpYAXpMQOFq0lQwZfrv349uo2Y5wRqodBopMIzk2JiGx
+ oTv3Xz8w4N2ZiVYBraJ/Af/Xh0j5/g==
+X-Authority-Analysis: v=2.4 cv=MIJtWcZl c=1 sm=1 tr=0 ts=68fa6c3b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=eZw9B4C5VJsgSpDazncA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: CAsF-ay5sCcEV5-ESSk0kViXGVrKG9f1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-23_02,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,124 +122,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 23, 2025 at 2:44=E2=80=AFAM Alexandr Moshkov
-<dtalexundeer@yandex-team.ru> wrote:
->
->
-> On 10/23/25 02:33, Raphael Norwitz wrote:
->
-> On Wed, Oct 22, 2025 at 3:59=E2=80=AFAM Alexandr Moshkov
-> <dtalexundeer@yandex-team.ru> wrote:
->
-> Hi!
->
-> On 10/21/25 23:54, Raphael Norwitz wrote:
->
-> The logic looks ok from the vhost-user-blk side but some comments inline.
->
-> On Mon, Oct 20, 2025 at 1:47=E2=80=AFAM Alexandr Moshkov
-> <dtalexundeer@yandex-team.ru> wrote:
->
-> Hi!
->
-> During inter-host migration, waiting for disk requests to be drained
-> in the vhost-user backend can incur significant downtime.
->
-> This can be avoided if QEMU migrates the inflight region in vhost-user-bl=
-k.
-> Thus, during the qemu migration, the vhost-user backend can cancel all in=
-flight requests and
-> then, after migration, they will be executed on another host.
->
-> At first, I tried to implement migration for all vhost-user devices that =
-support inflight at once,
-> but this would require a lot of changes both in vhost-user-blk (to transf=
-er it to the base class) and
-> in the vhost-user-base base class (inflight implementation and remodeling=
- + a large refactor).
->
-> Even if it's a more significant change I'd rather generalize as much
-> logic as possible and expose it as a vhost-user protocol feature. IMO
-> too much vhost-user device-agnositic code is being pushed into
-> vhost-user-blk.
->
-> As far as I understand (correct me if I'm wrong), but this feature must b=
-e implemented in device itself (along with inflight field location) or in s=
-ome base class for vhost-user devices. For now vhost-user-blk doesn't have =
-one yet. The closest base class that i could find is vhost-user-base, but f=
-or using it, it has to implement all device-agnostic code from vhost-user-b=
-lk, and don't break all existing vhost-user-base derived devices. For examp=
-le, to support inflight migration in base class, there first need to implem=
-ent inflight field in it, along with the reconnect feature. Then, with a bi=
-g refactor, somehow inherit vhost-user-blk from it, along with other device=
-s such as vhost-user-fs.
->
-> So, IMO it looks like a whole separate track that will need to be tackled=
-.
->
-> I get that inflight is inside of struct VhostUserBlk, not in struct
-> vhost_user. Even if not all device types support inflight I think that
-> could probably be changed? If we do keep things as you have it here
-> patch 1 should probably bring the vhost_dev_load_inflight() and
-> vhost_dev_save_inflight() into vhost_user.c rather than vhost.c since
-> only vhost_user devices seem to use inflight.
->
-> Firstly, I tried to implement inflight in the vhost_user structure, but t=
-his structure is initialized on every vhost_user_blk_connect() and then des=
-troyed on every vhost_user_blk_disconnect(). But, the inflight region must =
-survive device disconnect.
->
-> During active migration, the vhost_user struct will be destroyed before t=
-he inflight saving.
->
 
-In struct vhost we should probably add some data which persists
-between reconnects. I take your point that we cannot generalize
-inflight migration without doing that first.
+On 10/23/2025 10:31 AM, Farhan Ali wrote:
+>> + * Find the position of the capability config within PCI configuration
+>> + * space for a given cfg type.  Return the position if found, 
+>> otherwise 0.
+>> + */
+>> +uint8_t find_cap_pos(uint32_t fhandle, uint64_t cfg_type) {
+>> +    uint64_t req, next, cfg;
+>> +    uint8_t status;
+>> +    int rc;
+>> +
+>> +    req = ZPCI_CREATE_REQ(fhandle, 0xf, 1);
+>> +    rc = pcilg(&next, req, PCI_CAPABILITY_LIST, &status);
+>> +    rc = pcilg(&cfg, req, next + 3, &status);
+>
+> Why are we reading next + 3 into cfg? If I understand this correctly 
+> next will be the address of the first capability in the linked list, 
+> and so we should just read the first byte from next to get the 
+> capability id? I think we should have helper function like 
+> qpci_find_capability to find the capabilities?
+>
+>
+>> +
+>> +    while (!rc && (cfg != cfg_type) && next) {
+>> +        rc = pcilg(&next, req, next + 1, &status);
+>> +        rc = pcilg(&cfg, req, next + 3, &status);
+>
+> Same question here?
+>
+>
+>> +    }
+>> +
+>> +    return rc ? 0 : next;
+>> +}
+>> +
+>
+> [..snip..]
+>
+Ah I see in patch 5 we are using this function to get virtio config 
+type, which is a vendor specific capability and according to spec the 
+virtio config type is defined in the 4th byte. Maybe we could just move 
+the function to virtio-pci.c? I would expect a function defined here 
+will try to find a specific PCI capability by searching through the PCI 
+capability list.
 
-> And you are right about the location of the functions in patch 1. I will =
-move them to the vhost-user.c file, which will be more appropriate. Thanks!
->
-> As Markus noted this also conflicts significantly with Vladimir's
-> series so I'd suggest waiting until those are in, or possibly
-> attempting to generalize on top of his changes.
->
-> Yea, but i think, i just need to perform inflight migration only when som=
-e non-local migration flag is set.
->
-> I'm not sure about that. While it may be completely safe in your case
-> to avoid GET_VRING_BASE/quiescing the backend, it could introduce
-> corruption cases on other vhost-user-blk storage backends which work
-> differently. I think this would require an "opt-in" migration
-> parameter over and above checking that it's not a local migration.
->
-> In patch 2 I introduce migration capability for that. Or you think that w=
-e need something like per-device parameter?
->
+Thanks
 
-My point here was that you will definitely need a parameter you have.
-I'll leave it to others to say if we actually need a per-device
-parameter.
+Farhan
 
-> Ideally there would be some way to have the vhost-user backends expose
-> support per device with a protocol feature and, if the source and
-> destination both advertise support, we perform the inflight migration
-> skipping GET_VRING_BASE. I don't know enough about the migration code
-> to know how that would be done or if it is practical.
->
-> Also (and I think this also applies to Vladimir's series), it should
-> be possible to add multiple vhost-user-blk devices to the same Qemu
-> instance but have the devices backed by very different backend
-> implementations. What happens if some of those backend implementations
-> support things like lightweight local migration and/or inflight
-> migration but others don't? Ideally you would want the API to be able
-> to select target vhost-user-blk devices for accelerated migration
-> rather than assuming they will all want to use the same features. I
-> don't know if anyone is doing that or if we care about such cases but
-> I just want to throw the concern out there.
->
-> Hmm, that looks like we need some per-device parameter in order to set th=
-is feature on for them.
->
-> I guess we need a opinion from migration maintainer about such cases
+
+
 
