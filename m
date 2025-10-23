@@ -4,92 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4C0CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78043CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBwZz-0008TR-CR; Thu, 23 Oct 2025 10:46:15 -0400
+	id 1vBwbD-0000nA-PT; Thu, 23 Oct 2025 10:47:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwZx-0008T0-LN
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:46:13 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBwaq-0000gO-8a
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:47:11 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBwZs-0004Hn-4h
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:46:13 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47106fc51faso13094895e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:46:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761230766; x=1761835566; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Qp3pcsU2dEu0k14ENpLaGUQV2wB7bT2BOba+91AwC9c=;
- b=u0rZLBmbU3CU/ZxdgQsFL3mp0kKCF6M2QxO1TjiAJYu6PP/soz4g23fpO5kjwODVfq
- 5+LpTlwK+QIJE4ILUjrles9MTdpZ8t7IEpgIZ9AbJUaJbgJgm94BmFyx0RgN2PMEqUuJ
- RYTnC+cntnwRRRSczUOH8G26edRQQfrdAuU+OsFvaDf1a16pN6WvXI9U+Mz8I0UO6AVp
- f+Q6cTOfJcPqeqyS03svZ2wuka7HluCOA6lqXRxtURJaztn3Zy2gsyCQEgTRFs0svB5F
- 4s7NaszvoG4S34ZSrQgUe9f0TV3Bet0T7zXZR2gYJES2PeC8uLmZfxUcDMIzbtInmmaA
- kXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761230766; x=1761835566;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qp3pcsU2dEu0k14ENpLaGUQV2wB7bT2BOba+91AwC9c=;
- b=gKRtGCSj38a4xPajLmXLg60xNm59vFrvvFr6V6s/9K5oxEHPQHvgpTPHCrnpO4tR7L
- bo9e7mSyg9dxFX2U7PyDL6X0FcYAxksc2JvNgI3K88TT46D839sp1V0BEtFfdPwBJgzY
- FBhFAuAKDk4HBTMl4eNGsNJyb/pc5GFLBN4Z9hU83prKpR4zDHjfX4UfqXfG6SqCwqwq
- b+PCE/cAYrvZT4CYzE91cTfwfZUDIfclX0fn3nt7cxYheAaz09KDFTFH9aWAQNJy1uj+
- kwdBUQQwgR9cKDAell7+6dMv4c7xnuAElepKNNmbiE09LCj/YKhjWxkF8S32vub0764+
- w2wQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUc/tc+4+qH35AlpXPMvlq0mB/jLSxg/NQcRESLRVx+5OfQmNKuiIZEkAklofvKiYUoFMd10WvV3Cf2@nongnu.org
-X-Gm-Message-State: AOJu0Yx+Kr0FNM1az4aGVBJ+FNfKQJdw4WhtKzuu4/A4OYwM1qv5TPnQ
- N8IPeh3A+FQkmufj/bWbePM3nWycmZS6aFSy3XEpZOwZXQcCynenULANHi1eLU/aBvU=
-X-Gm-Gg: ASbGncsG03Y4OJsT/nNtR+df/rKBSnUubzx9p/iCFIVQoVmUQB6QXpW0wyMEZkn+3/q
- SRa+fx3T31GFOrdG0DfZGmF/9dgL2jnYCBtbtYhCZZh1WYgh5xWIMclnsh0/cHjQpy+ZckKywJK
- nKEVc66r+rHx8XiKg64mSN4tXnTQZnlZM1D7bM6xLk8ulE+yjUGez/akYmTm3kaDwoLyop6rt9v
- F6ImCrDDZGxjIKlzq3slvYDMjSU0FmTIxN2Re3JTNqWtr3WEqCMdYcOOiiI8EjFUfPBA3fNSYSd
- CGVjQRIjGQNptYPw0pAyq1ULq1Uf1/IfP6yjS8wOcQt2BbgXWLt3ZmDw+RKeFArTB9i0TXAx0lH
- OQbi8t5O/Z4lPPLO5o2dhRpBCIsthJbfonr2hRNB9CBnxrrtJ0BRM7xqYp7tN3km+iOcXUIc2G5
- dH4yKeRKZkfjUtRA4YzHVIJwzlXkChysjwm3R1KFpA38k=
-X-Google-Smtp-Source: AGHT+IE486+GHoPqxGwVa66A7ZfMKoN5pHCSigRczAqY9dZXX4byWlO7S7mT/jRdyUyjNFyYCvkC2w==
-X-Received: by 2002:a05:600c:450c:b0:46e:38cc:d3e2 with SMTP id
- 5b1f17b1804b1-47117906a23mr191876125e9.22.1761230765892; 
- Thu, 23 Oct 2025 07:46:05 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-474949f0312sm62697415e9.0.2025.10.23.07.46.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 07:46:05 -0700 (PDT)
-Message-ID: <b619588b-6b6f-43e5-893c-93e04b963ed3@linaro.org>
-Date: Thu, 23 Oct 2025 16:46:04 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vBwam-0004SL-PM
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:47:08 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E35DB2124B;
+ Thu, 23 Oct 2025 14:46:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761230819; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ctakP51aVcSmCO2h8NJgdYldazosEhBNepSnQoZfwe4=;
+ b=N5Tbbh34iU4MkCSSEF6Q1ozjc+uDqRPV83cfTlNzpJ7/JmUDbZ3oYBGV0/o+nJnLDtOwP4
+ iodxhm6epDT8vmqX60vAnXdrttXdo7dXbPOR2F4AjjGecrBTRgZotd3VF1mHPtFbDBzDaC
+ oXARpSpQDbmurLNz6MYk0HOReCu6R14=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761230819;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ctakP51aVcSmCO2h8NJgdYldazosEhBNepSnQoZfwe4=;
+ b=W1VLimOFh0pCmBkpx5jGRMYG3rA7t33EjoyPab5AMqpaJJe+eOtIrpxqS7LKvrZLE8lVsU
+ nj1Nod45xClZJUAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761230814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ctakP51aVcSmCO2h8NJgdYldazosEhBNepSnQoZfwe4=;
+ b=eexhBRPKbLMQGz1NutckSLobfLp35Bacnqy3xXxwiOhKd9ZY2rtEq7KR1mPGFvSWceAQIs
+ To12Qk5y36UgPmMUXNV+5u0ABIjkE6MrE+xBmlDhTxtPkhZWcmxsYLMPxa9jvYfW26Yy8+
+ mSkLeuExlf57qu8F7LU5Ezq0mKb0I08=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761230814;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ctakP51aVcSmCO2h8NJgdYldazosEhBNepSnQoZfwe4=;
+ b=vfR+t+7GBI7GhEW+bWrX/p1fdTv6C5Us206sIFF3sKVFloBM+3dLX5jSE02ZCTBh4jI0FB
+ 7nNtEhSSowqDYaBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 605A913285;
+ Thu, 23 Oct 2025 14:46:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id H/jDCN4/+mg1dgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 23 Oct 2025 14:46:54 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: peterx@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 14/24] migration: Use visitors in
+ migrate_params_test_apply
+In-Reply-To: <20251015021603.21933-1-guobin@linux.alibaba.com>
+References: <20250630195913.28033-15-farosas@suse.de>
+ <20251015021603.21933-1-guobin@linux.alibaba.com>
+Date: Thu, 23 Oct 2025 11:46:51 -0300
+Message-ID: <87v7k5smjo.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] migration/vmstate: remove
- VMSTATE_BUFFER_POINTER_UNSAFE macro
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20251023135316.31128-1-mjt@tls.msk.ru>
- <20251023135316.31128-3-mjt@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251023135316.31128-3-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,alibaba.com:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +116,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 15:53, Michael Tokarev wrote:
-> The only user of this macro was VirtIONet.vlans, which has been
-> converted to regular VMSTATE_BUFFER.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->   include/migration/vmstate.h | 9 ---------
->   1 file changed, 9 deletions(-)
+Bin Guo <guobin@linux.alibaba.com> writes:
 
-Yay!
+> Fabiano Rosas wrote on Mon, 30 Jun 2025 16:59:03 -0300:
+>
+>> Convert the code in migrate_params_test_apply() from an open-coded
+>> copy of every migration parameter to a copy using visitors. The
+>> current code has conditionals for each parameter's has_* field, which
+>> is exactly what the visitors do.
+>> 
+>> This hides the details of QAPI from the migration code and avoids the
+>> need to update migrate_params_test_apply() every time a new migration
+>> parameter is added. Both were very confusing and while the visitor
+>> code can become a bit involved, there is no need for new contributors
+>> to ever touch it.
+>> 
+>> Change the name of the function to a more direct reference of what it
+>> does: merging the user params with the temporary copy.
+>> 
+>> Move the QAPI_CLONE_MEMBERS into the caller, so QAPI_CLONE can be used
+>> and there's no need to allocate memory in the migration
+>> code. Similarly, turn 'tmp' into a pointer so the proper qapi_free_
+>> routine can be used.
+>> 
+>> An extra call to migrate_mark_all_params_present() is now needed
+>> because the visitors update the has_ field for non-present fields, but
+>> we actually want them all set so migrate_params_apply() can copy all
+>> of them.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/options.c | 157 +++++++++++++++-----------------------------
+>>  1 file changed, 54 insertions(+), 103 deletions(-)
+>> 
+>> diff --git a/migration/options.c b/migration/options.c
+>> index 6619b5f21a..695bec5b8f 100644
+>> --- a/migration/options.c
+>> +++ b/migration/options.c
+>> 
+>> -static void migrate_params_test_apply(MigrationParameters *params,
+>> -                                      MigrationParameters *dest)
+>> +static bool migrate_params_merge(MigrationParameters *dst,
+>> +
+>> +    ...
+>> +    /* read in from src */
+>> +    v = qobject_output_visitor_new(&ret_out);
+>> +    ok = visit_type_MigrationParameters(v, NULL, &src, errp);
+>> +    if (!ok) {
+>> +        goto out;
+>>      }
+>> +    visit_complete(v, &ret_out);
+>> +    visit_free(v);
+>>  
+>> -    if (params->has_max_bandwidth) {
+>> -        dest->max_bandwidth = params->max_bandwidth;
+>> +    /*
+>> +     * Write to dst but leave existing fields intact (except for has_*
+>> +     * which will be updated according to their presence in src).
+>> +     */
+>> +    v = qobject_input_visitor_new(ret_out);
+>> +    ok = visit_start_struct(v, NULL, NULL, 0, errp);
+>> +    if (!ok) {
+>> +        goto out;
+>>      }
+>> -
+>> -    if (params->has_avail_switchover_bandwidth) {
+>> -        dest->avail_switchover_bandwidth = params->avail_switchover_bandwidth;
+>> +    ok = visit_type_MigrationParameters_members(v, dst, errp);
+>> +    if (!ok) {
+>> +        goto out;
+>>      }
+>> -
+>> -    if (params->has_downtime_limit) {
+>> -        dest->downtime_limit = params->downtime_limit;
+>> +    ok = visit_check_struct(v, errp);
+>> +    visit_end_struct(v, NULL);
+>> +    if (!ok) {
+>> +        goto out;
+>>      }
+>>  
+>> -    if (params->has_x_checkpoint_delay) {
+>> -        dest->x_checkpoint_delay = params->x_checkpoint_delay;
+>> -    }
+>> +out:
+>> +    visit_free(v);
+>> +    qobject_unref(ret_out);
+>> +    return ok;
+>> }
+>
+> If visit_start_struct is executed successfully, then visit_end_struct
+> should be executed. IMHO:
+>
+>     v = qobject_input_visitor_new(ret_out);
+>     ok = visit_start_struct(v, NULL, NULL, 0, errp);
+>     if (!ok) {
+>         goto out;
+>     }
+>
+>     ok = visit_type_MigrationParameters_members(v, dst, errp);
+>     if (!ok) {
+>         goto out_end;
+>     }
+>
+>     ok = visit_check_struct(v, errp);
+>
+> out_end:
+>     visit_end_struct(v, NULL);
+>
+> out:
+>     visit_free(v);
+>     qobject_unref(ret_out);
+>
+>     return ok;
+> }
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+New code after Peter's suggestions is:
+
++/*
++ * Merge @src over @dst by copying deep clones of the present members
++ * from @src to @dst. Non-present on @src are left untouched on @dst.
++ */
++#define QAPI_MERGE(type, dst_, src_)                                    \
++    ({                                                                  \
++        QObject *out_ = NULL;                                           \
++        Visitor *v_;                                                    \
++        /* read in from src */                                          \
++        v_ = qobject_output_visitor_new(&out_);                         \
++        visit_type_ ## type (v_, NULL, &src_, &error_abort);            \
++        visit_complete(v_, &out_);                                      \
++        visit_free(v_);                                                 \
++        /*                                                              \
++         * Write to dst but leave existing fields intact (except for    \
++         * has_* which will be updated according to their presence in   \
++         * src).                                                        \
++         */                                                             \
++        v_ = qobject_input_visitor_new(out_);                           \
++        visit_start_struct(v_, NULL, NULL, 0, &error_abort);            \
++        visit_type_ ## type ## _members(v_, dst_, &error_abort);        \
++        visit_check_struct(v_, &error_abort);                           \
++        visit_end_struct(v_, NULL);                                     \
++        visit_free(v_);                                                 \
++        qobject_unref(out_);                                            \
++    })
 
 
