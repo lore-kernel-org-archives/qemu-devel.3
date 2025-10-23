@@ -4,104 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BFBCCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 21:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1259FCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC3DM-0004A6-IL; Thu, 23 Oct 2025 17:51:20 -0400
+	id 1vC4zi-0003EP-1b; Thu, 23 Oct 2025 19:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vC3DJ-00046Q-Ih
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 17:51:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vC3DF-0008PG-Th
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 17:51:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761256271;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=AjgNK2/SYOANrW93y5oB01orMYsUa6D9VQFEV1Nxnw4=;
- b=f8J/HPpDhV+uqr4jIp6eaMgc/WiP9Jstt/DEMggZdqDGWJL/jj1DfKeu9jrH0Nc83we/xO
- ssM8AU80/puAorvLwo1Sx79SiybPuPoCDyjxGMWLYmyhSqyRDM5yfQYXFC8NHIxcj+F7B3
- 6tg1eogvvDzwgpCg793mdS356CYNsSw=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-RCAHpB-eNaOC6hwK3SoeYA-1; Thu, 23 Oct 2025 17:51:09 -0400
-X-MC-Unique: RCAHpB-eNaOC6hwK3SoeYA-1
-X-Mimecast-MFC-AGG-ID: RCAHpB-eNaOC6hwK3SoeYA_1761256267
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-33baf262850so1355582a91.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 14:51:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vC4zg-0003EA-Rj
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:45:20 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vC4ze-0005rK-SI
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:45:20 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-6399328ff1fso2582727a12.0
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761263116; x=1761867916; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wl/DpvATYGTNA9S2ruD6WLDx/H/Q0BUswbcZ7HGIcN4=;
+ b=InNDN6rS2PRvh4sYmYNaSfJBx2cjcWIF7bI8ZFWrkE5pkEBayCVayx2rca9Z+JOv98
+ txY3iykXCfibcK6AbfQu8D843iIXFe0waZuswEh2zRy+ZEmwYZ50cxXTXzvtSZ1DSZrA
+ Uepqt1h/q97ieAdXdKei9jToBqoVCRBzAx5S6LtH9eSo70aR3q/uTVY635vgdQtWIDHS
+ t2fUuiJYV8LGEYV+E7JbxD3W/wacsNbSv4pW9Q52ko/k2HOtHjKPPqIgkHxW4FThaee+
+ Wd4Jbk9216c1tDnWOB4t+CjWSEeN2HskWA1Ra0aAVQDb4YH53QGe13N2O99P5BFfv/BE
+ wL+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761256267; x=1761861067;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1761263116; x=1761867916;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AjgNK2/SYOANrW93y5oB01orMYsUa6D9VQFEV1Nxnw4=;
- b=iaeFS+AcL1CeiwGO0wcT9VfH/2yGZAOB54cIO6FKWqbQTxhmN68A+0oVPcSMHyeEE0
- WyDyNs0zAwU9hIC7I9vPdH9xgfHpoA0teLXlR1PIO0U8piCSWGrQeldfnt/G0IpnEoWk
- mYMUDdUX6hhxcDF3itm8AEp70rjpRzYQAqy9wzkPXu78rfI56k5hFiTn5QMuAlq5oMDi
- oFJwxyw6qXy75MrYllyv0rHTW46V0haln6lr4e+K8aZZVyw6TtWg9rHMHoC88dxDYqvF
- E/snDEWxXoYYxoHWKRdt1BnICbX5KnrbQxaFxF/j2ioee7NI0oL6rXGRxQIQDtnP3zZ6
- x2xg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyB3Qd0so/+EbzWENgSoR9wFAONCDxuLokkFCKkoHxO68yYgiPxmk+agOaL/MlEopZ5mN2K9RaEd1o@nongnu.org
-X-Gm-Message-State: AOJu0YxHq6UEUZNjvV+grbMHChKBfSEcXCmVZFPomHIwrzkJXsy5ODQI
- INHWuwW1R3mjTSX0y9QILt6BoSVpjVpIU007V+gHVBh29UgUmsbE6Ve9Pvpv3lvgUromArEvpOd
- DFcvDYD7LPvUkYvNEks3E1oQeVT6Obz49fZS8K7G9+Dh8YEuZClrcTOe0
-X-Gm-Gg: ASbGncu23o7wn3hKRi9IsMBaHWo3DGLk+ijojXF4J87sgtco4+G2eFlUfPy4gWQy2ze
- NF3Z0wtDPdWtAxSOEvkuOZkcSVi7u2iDtld+zKuPJ0PZ0gAC9CNoXor24572cXq+AcSM4kPsjfo
- NvljDQOK40AN4lJSmVLQA7OVwZDLoFkh4xOBDyipfea6UVjBfFRKlEnghKDpNtu1kFnM2xn0iBz
- PnJjFL37hZ0FopwP70u/axuH7Mi+7mezzTnyPsHHkMgwVIEhqKhh6irMl8FfyZ1PIgePaAEZCQV
- J5UpfpN0wZCKSyaLuztkgfAW8BBYrcYFt+qP/R2Q8dOrJV902CQJ56CFrIz4mrAkXtedPAb7baO
- Uzet9YgWGwaI=
-X-Received: by 2002:a17:90b:2604:b0:330:797a:f504 with SMTP id
- 98e67ed59e1d1-33bcf85fb3cmr27926867a91.3.1761256267099; 
- Thu, 23 Oct 2025 14:51:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHYOhfvNQllhKAXfdJozsJlaMiIcSS41fVn/1p7yKb/xgJTDpMleUZESCscSrXayoG8XOnKQ==
-X-Received: by 2002:a17:90b:2604:b0:330:797a:f504 with SMTP id
- 98e67ed59e1d1-33bcf85fb3cmr27926854a91.3.1761256266737; 
- Thu, 23 Oct 2025 14:51:06 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.104.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33e224c9bd0sm6773487a91.21.2025.10.23.14.51.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 14:51:06 -0700 (PDT)
-Date: Fri, 24 Oct 2025 03:20:58 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PULL 02/45] migration: push Error **errp into
- vmstate_load_state()
-Message-ID: <aPqjQspKFCZoqAm8@armenon-kvm.bengluru.csb>
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-3-peterx@redhat.com>
- <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
- <aPex9SsQOup69DRI@x1.local>
+ bh=wl/DpvATYGTNA9S2ruD6WLDx/H/Q0BUswbcZ7HGIcN4=;
+ b=k23zuhw7gdupqySKP8jlaZUum+/TTygeAoBf5cJnOK3DOBI+8H2ohPaN4kckBfBMRv
+ uF+z7SIGIzLlJqQlTshEBZtAvH6VTKqphOIIdmiga7BED0p4NKu9kXQJ8tqR4mRYt+HY
+ LYkiJCdadWtNdv7DQJrJe+bZZkFIINVlpPxmKugfSUSahPfRavoLGVO9fU/hIYLFeb0A
+ bv90VRnVyg8PVEpEftXMDqD9zSYOIigoFBBKBGRRk3+bTDasbDxOaZ4KZBBE1jS+RfTx
+ lDsHifa8z13anjrtIbMFuEYLj4aAxFeTkyeFKlGOEqyOJo56POvAGASuSdzFq3B0y/A1
+ WFCg==
+X-Gm-Message-State: AOJu0YwkLrE4ihabyhPV/ACiOrrUmB0/UAJLmExrkvw/xnT//eS0Nrhb
+ rYZm0BeB+lQf2Ow40WaCuWtYkTiqVX2GK3qUo5qFDZit8l3wZlfJlm0NOCAUAJRUpY5nKhspYgG
+ XXV+ZHpSDpt8MlY+1+uOk8sugo/gzbOw=
+X-Gm-Gg: ASbGnctIPOjfX1/QItWSpUDwxSG24go5VsPB3OGR0l8+eCYJ487v/+5OfBanhPTO0rN
+ m4KoK88DVnPr0nwtfZGxcMyQE0vLAxww4f0KSfDQiSyNv7WFyvI7J8DuYuyo7KSmhBwkGEPPCHC
+ Mi2fbwN343TouXxJ/Ih1N5sPR6YxRHbKe4Zs439qyTOK+pYRf8qhUtL69YXzLWP1cLqdTHzsXZd
+ l/wM/hY/C0uuYnsAzv3n26zLDgyDdArtLqZDi1wYBYaQ1cvUZwJRdWvlBdBL4T0ovBgAqtK4OYj
+ Pt20oXKzKdGZ9ryRXykkGQrxeg==
+X-Google-Smtp-Source: AGHT+IHgv2eSTbEzPeEgHTSPnwBGw2+xHrqHp/o+PN1/4fcYOQFlbJAjrxUir6eT5wudeWdf/ka0KV4BP2nDh2ByYXk=
+X-Received: by 2002:a05:6402:274c:b0:633:7b1e:9aa3 with SMTP id
+ 4fb4d7f45d1cf-63e60099747mr358248a12.34.1761263116215; Thu, 23 Oct 2025
+ 16:45:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aPex9SsQOup69DRI@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251023041435.1775208-1-alistair.francis@wdc.com>
+ <325c46b7-54fd-4793-95f1-2dc6cc44869c@linaro.org>
+In-Reply-To: <325c46b7-54fd-4793-95f1-2dc6cc44869c@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 24 Oct 2025 09:44:49 +1000
+X-Gm-Features: AS18NWDX02T7udmyR5oJLpUoESsVvj3uMJVGZrRVgtZrrL_37d9xRGhf-y-4Eio
+Message-ID: <CAKmqyKNyFioTOHtBcvZW5gCH8c19ikCrLqhwJC3x7_040r=VJA@mail.gmail.com>
+Subject: Re: [PULL 00/37] riscv-to-apply queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,91 +95,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Fri, Oct 24, 2025 at 4:15=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 10/22/25 23:13, alistair23@gmail.com wrote:
+> > From: Alistair Francis<alistair.francis@wdc.com>
+> >
+> > The following changes since commit c0e80879c876cbe4cbde43a92403329bcedf=
+2ba0:
+> >
+> >    Merge tag 'pull-vfio-20251022' ofhttps://github.com/legoater/qemu in=
+to staging (2025-10-22 08:01:21 -0500)
+> >
+> > are available in the Git repository at:
+> >
+> >    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-2025=
+1023
+> >
+> > for you to fetch changes up to 741566c3e07fd34ed28d4464d1d7fda67db12925=
+:
+> >
+> >    target/riscv: Make PMP CSRs conform to WARL constraints (2025-10-23 =
+14:11:45 +1000)
+> >
+> > ----------------------------------------------------------------
+> > Second RISC-V PR for 10.2
+> >
+> > * Correct mmu-type property of sifive_u harts in device tree
+> > * Centralize MO_TE uses in a pair of helpers
+> > * Fix Ethernet interface support for microchip-icicle-kit
+> > * Fix mask for smsiaddrcfgh
+> > * Add support for MIPS P8700 CPU
+> > * Fix env->priv setting in reset_regs_csr()
+> > * Coverity-related fixes
+> > * Fix riscv_cpu_sirq_pending() mask
+> > * Fix a uninitialized variable warning
+> > * Make PMP granularity configurable
+>
+> Something in here is causing failures on s390x:
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/11827080939#L5859
+>
+> It seems obvious to suspect the endianness changes from the big-endian ho=
+st, but I also
+> don't immediately see anything wrong.
 
-On Tue, Oct 21, 2025 at 12:16:53PM -0400, Peter Xu wrote:
-> On Tue, Oct 21, 2025 at 04:43:52PM +0100, Peter Maydell wrote:
-> > On Fri, 3 Oct 2025 at 16:39, Peter Xu <peterx@redhat.com> wrote:
-> > >
-> > > From: Arun Menon <armenon@redhat.com>
-> > >
-> > > This is an incremental step in converting vmstate loading
-> > > code to report error via Error objects instead of directly
-> > > printing it to console/monitor.
-> > > It is ensured that vmstate_load_state() must report an error
-> > > in errp, in case of failure.
-> > >
-> > > The errors are temporarily reported using error_report_err().
-> > > This is removed in the subsequent patches in this series,
-> > > when we are actually able to propagate the error to the calling
-> > > function using errp. Whereas, if we want the function to exit on
-> > > error, then error_fatal is passed.
-> > 
-> > > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > > index de35902213..e61585aa61 100644
-> > > --- a/hw/display/virtio-gpu.c
-> > > +++ b/hw/display/virtio-gpu.c
-> > > @@ -1347,7 +1347,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-> > >      }
-> > >
-> > >      /* load & apply scanout state */
-> > > -    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
-> > > +    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &error_fatal);
-> > 
-> > This is in a migration VMState .get function -- shouldn't we
-> > be passing failure up to the caller, rather than exiting
-> > with error_fatal here ?
-> > 
-> > The commit message says some of this is fixed in subsequent
-> > patches, but as of today this is still the code in git.
-> > The other callsites which pass error_fatal to vmstate_load_state()
-> > also look wrong:
-> > 
-> > hw/s390x/virtio-ccw.c:    return vmstate_load_state(f,
-> > &vmstate_virtio_ccw_dev, dev, 1, &error_fatal);
-> > hw/virtio/virtio-mmio.c:    return vmstate_load_state(f,
-> > &vmstate_virtio_mmio, proxy, 1, &error_fatal);
-> > hw/virtio/virtio-pci.c:    return vmstate_load_state(f,
-> > &vmstate_virtio_pci, proxy, 1, &error_fatal);
-> > 
-> > as they are written to return an error value that they'll
-> > never see because of the use of error_fatal here.
-> 
-> Indeed a fair question to ask.
-> 
-> > 
-> > Do you have plans for further cleanup/extension of the
-> > use of Error here that would let these functions pass
-> > the Error back up the chain ?
-> 
-> It would be non-trivial though as we'll need to change VMStateInfo.get()
-> API and that'll be another lot of churns.
-> 
-> Arun, should we pass NULL for above three occurances, so that we will still
-> not brute force quit when error happens?  Do you want to send a patch?
+It seem like only the new Boston machine is failing, so I think that's
+the issue.
 
-Sorry, I missed the email.
-I am wondering if we should pass an Error *err, and in case of failure,
-warn_report_err(err) and return a negative integer.
+Alistair
 
-There is no return value check after vmstate_load_state() or vmstate_save_state()
-calls. Previosuly, if something failed during vmstate_load_state(), the
-function used to report error using error_report(). To be consistent we might have
-to keep reporting. This is not possible if we pass NULL.
-
-Please guide.
-Thank you.
-
-> 
-> -- 
-> Peter Xu
-> 
-
-Regards,
-Arun Menon
-
+>
+>
+> r~
 
