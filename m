@@ -4,62 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F6C6CCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 18:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA36CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 18:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBzw2-0002CD-2H; Thu, 23 Oct 2025 14:21:14 -0400
+	id 1vC09h-0006y2-Ar; Thu, 23 Oct 2025 14:35:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vBzvt-0002AZ-SN
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:21:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vC09d-0006wl-DA
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:35:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vBzvr-0006Us-I1
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:21:05 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vC09b-0000D5-Rt
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:35:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761243661;
+ s=mimecast20190719; t=1761244514;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tpvw1ocDqVJ6iJOZ/XM4STlfLgrjUCg2rMhKsgkLDp0=;
- b=VVCn8oYyW2Yea1aR0vqwOe7cz+28BzQKEpmdDfC9ChGY0S40iszn51j6EJJybbmLpbpC/Y
- Nb9cd7niGSaCv1qMCNPwYezBX6FNzAIOgIq7Hy3CPY6cWLJYAzoKohfDp9hfol0u/JbVt8
- JEZm0zO2zvPA+LeSaGre6qNLgvSrVHU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-BraGkLnwNTi21S2NyBwY8Q-1; Thu,
- 23 Oct 2025 14:20:59 -0400
-X-MC-Unique: BraGkLnwNTi21S2NyBwY8Q-1
-X-Mimecast-MFC-AGG-ID: BraGkLnwNTi21S2NyBwY8Q_1761243657
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 03368195609D; Thu, 23 Oct 2025 18:20:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.90])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3EC633000B50; Thu, 23 Oct 2025 18:20:54 +0000 (UTC)
-Date: Thu, 23 Oct 2025 20:20:51 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, qemu-block@nongnu.org
-Subject: Re: [PATCH 1/5] vvfat: introduce no-mbr option
-Message-ID: <aPpyAzn7abZZ5WNv@redhat.com>
-References: <20250903075721.77623-1-chigot@adacore.com>
- <20250903075721.77623-2-chigot@adacore.com>
+ bh=aSu+3e0ILA36mEf/IBDmzVp7nDFD60/OLAnveOqbwYI=;
+ b=FKSOfQMNgoQRQGAE8NV13cumA5HSJoaNetuD5KMpo4tr9j6FvtpbN0PIRyYmIuiEqUuZvp
+ 3rYRc6HtDhtBBFxB7erM/nTqH4OfJqc5I7PutCkCm28YAUj6fy/tRXgofKQYaoao/vm9fb
+ BRUCojrAeqwgRDTdbdyviYvrCtPSzD0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-aLX8_5rSPLyR72HSqVjyhw-1; Thu, 23 Oct 2025 14:35:12 -0400
+X-MC-Unique: aLX8_5rSPLyR72HSqVjyhw-1
+X-Mimecast-MFC-AGG-ID: aLX8_5rSPLyR72HSqVjyhw_1761244512
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8217df6d44cso348587285a.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:35:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761244512; x=1761849312;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aSu+3e0ILA36mEf/IBDmzVp7nDFD60/OLAnveOqbwYI=;
+ b=O6P1w5o4l9lfCTXNTIyk1qHOuWADQXYeMSknI8MPR5JRRt1GX6ixP99q7UFbc+/Wsz
+ ho14zDXIwtocOVLWlHkkvvj4kW79rC4Mm1UPH58U70BX2L0jYqP7NlnWBv8Md4zHv4U+
+ dBF1o5HwL8f38WuUJgkH5fp6LU03viqABe+N1qyzt2dyq1f2DkB2O2wQzeX76LYKlT4C
+ 6q6tF6MemBhg6/BaxhGDIxea5WjSFQST8qAsrkWrpX8myIIngljO54YDJj9r34Egb09G
+ diY8Mara4Dqk5OHEmbPj+BVXw3ANfFzaEttOD2Sci62COjAR5aXgFgZaA1PuP0gJ7R1x
+ hLeg==
+X-Gm-Message-State: AOJu0YyUYfHMsZOdBPPjb/zmCHTETcrYvzSrai+tQDjIZ8ouf6TEZ8mv
+ M7NIRByW+WCYUOjecGe39C/Izi94QeHUT8vcj93Kh7/0hX0ARWD4V074so/UlIqWrBIg5N8AM4z
+ 2n9adfqkzH3YS4zgWvbKxFMuwCRJNb1VV8aBcPJjNbVf5luXRFbCWnCkR
+X-Gm-Gg: ASbGncvklPKKm6tDcAu8+00/0Qt7DkKxVOIBB5o16ogLSUJMCabaKcGZGEa2+A1kdyK
+ IQ09owQCN1m6snZ6U2RbtcCCSbGZVBh5y1yZ/3gqftyggxke1lQBYnDHlyMJ5c2DgGm4iF89fdr
+ qpzv/TzZiSK9+aOxOdZYhwy4EBWuUqlYN7Z6hiL01DOjvey+9uWNdSuPY2pBbxH4aF8iMmOisga
+ bf9GW58X98HFdG5owaIyMNQAL2jmQ5agtN4XtvZK9YDEi969kpCTwJY3dnEZ7Urz3pUV7fPCPhx
+ mrgulx7lbT0B+GySC/0HpsLAJiYd1ENAeT4a5hc8t79d157UJKs7vHsoUoODejaEYZg=
+X-Received: by 2002:a05:620a:1a04:b0:892:a71a:c02 with SMTP id
+ af79cd13be357-892a71a1e17mr2101495085a.23.1761244512230; 
+ Thu, 23 Oct 2025 11:35:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGsutgZ2hDzmT7jfPnSPmo24QLI9mAkYMVj7gfsbPD5Dtv6byqn/D+yFJ2Q6GmH34STaPGRQ==
+X-Received: by 2002:a05:620a:1a04:b0:892:a71a:c02 with SMTP id
+ af79cd13be357-892a71a1e17mr2101490985a.23.1761244511730; 
+ Thu, 23 Oct 2025 11:35:11 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-89c0dbcc879sm210635285a.2.2025.10.23.11.35.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Oct 2025 11:35:11 -0700 (PDT)
+Date: Thu, 23 Oct 2025 14:35:09 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH] migration/qmp: Update "resume" flag doc in "migrate"
+ command
+Message-ID: <aPp1XRanwjPzQs-5@x1.local>
+References: <20251022190425.2730441-1-peterx@redhat.com>
+ <87cy6eb25c.fsf@pond.sub.org> <aPozyk9Do9iu32G4@x1.local>
+ <87sef94suf.fsf@pond.sub.org> <aPo7Sw29g_gdOD0k@x1.local>
+ <875xc54jrt.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250903075721.77623-2-chigot@adacore.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <875xc54jrt.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,92 +108,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 03.09.2025 um 09:57 hat Clément Chigot geschrieben:
-> This option when set prevents a master boot record (MBR) to be
-> initialized. This is mandatory as some operating system don't recognized
-> mounted disks if a MBR is present.
+On Thu, Oct 23, 2025 at 07:20:38PM +0200, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-
-Can we actually give an example of such an OS in the commit message?
-
-> ---
->  block/vvfat.c | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
+> > On Thu, Oct 23, 2025 at 04:04:40PM +0200, Markus Armbruster wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > On Thu, Oct 23, 2025 at 07:47:11AM +0200, Markus Armbruster wrote:
+> >> >> Peter Xu <peterx@redhat.com> writes:
+> >> >> 
+> >> >> > It wasn't obvious how the resume flag should be used when staring at the
+> >> >> > QAPI doc.  Enrich it to be crystal clear.
+> >> >> >
+> >> >> > Reported-by: Markus Armbruster <armbru@redhat.com>
+> >> >> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> >> >> > ---
+> >> >> >  qapi/migration.json | 5 ++++-
+> >> >> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >> >> >
+> >> >> > diff --git a/qapi/migration.json b/qapi/migration.json
+> >> >> > index be0f3fcc12..48856078db 100644
+> >> >> > --- a/qapi/migration.json
+> >> >> > +++ b/qapi/migration.json
+> >> >> > @@ -1732,7 +1732,10 @@
+> >> >> >  # @detach: this argument exists only for compatibility reasons and is
+> >> >> >  #     ignored by QEMU
+> >> >> >  #
+> >> >> > -# @resume: resume one paused migration, default "off".  (since 3.0)
+> >> >> > +# @resume: when set, resume one paused postcopy migration, using the new
+> >> >> 
+> >> >> Scratch "one" unless there can be more than one.
+> >> >
+> >> > Sure.
+> >> >
+> >> >> 
+> >> >> > +#     URI/channels specified to replace the old/broken channels.  The user
+> >> >> > +#     should make sure the migration is in "postcopy-paused" state before
+> >> >> > +#     the resume request.  Default "off".  (since 3.0)
+> >> >> >  #
+> >> >> >  # Features:
+> >> >> >  #
+> >> >> 
+> >> >> What happens when migration is not in state "postcopy-paused"?
+> >> >
+> >> > The QMP command "migrate" with resume=true set will be rejected,
+> >> > corresponds to:
+> >> >
+> >> > migrate_prepare():
+> >> >         if (s->state != MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> >> >             error_setg(errp, "Cannot resume if there is no "
+> >> >                        "paused migration");
+> >> >             return false;
+> >> >         }
+> >> 
+> >> Makes sense, thanks!
+> >> 
+> >> I'd suggest something like 'Resume fails unless migration is in
+> >> "postcopy-paused" state.  (default: false, since 3.0)'
+> >
+> > Since it's still a "migrate" QMP command, should I use "the command will
+> > fail"? I also re-arranged the words slightly.. would below look a better
+> > next version as a whole?
+> >
+> > # @resume: when set, use the new uri/channels specified to resume paused
+> > #     postcopy migration.  This flag should only be used if the previous
+> > #     postcopy migration was interrupted.  The command will fail unless
+> > #     migration is in "postcopy-paused" state.  (default: false, since 3.0)
+> >
+> > Thanks,
 > 
-> diff --git a/block/vvfat.c b/block/vvfat.c
-> index 814796d918..0220dd828b 100644
-> --- a/block/vvfat.c
-> +++ b/block/vvfat.c
-> @@ -1082,6 +1082,11 @@ static QemuOptsList runtime_opts = {
->              .type = QEMU_OPT_BOOL,
->              .help = "Make the image writable",
->          },
-> +        {
-> +            .name = "no-mbr",
-> +            .type = QEMU_OPT_BOOL,
-> +            .help = "Do not add a Master Boot Record on this disk",
-> +        },
+> I like it.
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
-Let's keep option names positive to avoid double negations like
-'no-mbr=false'. We can have an 'mbr' option that defaults to true. Or in
-fact, maybe calling it 'partitioned' would be easier to understand.
+Rather than a new resend to bother everyone, I'll just queue it with the
+amended version and the tag.. thanks Markus!
 
-You need to update BlockdevOptionsVVFAT in qapi/block-core.json, too, to
-make the new option work with -blockdev. You should update the
-description for @floppy there, too, because it says that hard disks are
-always partitioned.
-
-It should also be added to vvfat_strong_runtime_opts because the value
-of this option changes the data that the guest sees.
-
->          { /* end of list */ }
->      },
->  };
-> @@ -1092,6 +1097,7 @@ static void vvfat_parse_filename(const char *filename, QDict *options,
->      int fat_type = 0;
->      bool floppy = false;
->      bool rw = false;
-> +    bool no_mbr = false;
->      int i;
->  
->      if (!strstart(filename, "fat:", NULL)) {
-> @@ -1116,6 +1122,10 @@ static void vvfat_parse_filename(const char *filename, QDict *options,
->          rw = true;
->      }
->  
-> +    if (strstr(filename, ":no-mbr:")) {
-
-In the string, the negative form can stay (because the positive one
-doesn't exist here).
-
-> +        no_mbr = true;
-> +    }
-> +
->      /* Get the directory name without options */
->      i = strrchr(filename, ':') - filename;
->      assert(i >= 3);
-> @@ -1131,6 +1141,7 @@ static void vvfat_parse_filename(const char *filename, QDict *options,
->      qdict_put_int(options, "fat-type", fat_type);
->      qdict_put_bool(options, "floppy", floppy);
->      qdict_put_bool(options, "rw", rw);
-> +    qdict_put_bool(options, "no-mbr", no_mbr);
->  }
->  
->  static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
-> @@ -1196,7 +1207,10 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
->          if (!s->fat_type) {
->              s->fat_type = 16;
->          }
-> -        s->offset_to_bootsector = 0x3f;
-> +        /* Reserver space for MBR */
-> +        if (!qemu_opt_get_bool(opts, "no-mbr", false)) {
-> +            s->offset_to_bootsector = 0x3f;
-> +        }
->          cyls = s->fat_type == 12 ? 64 : 1024;
->          heads = 16;
->          secs = 63;
-
-Kevin
+-- 
+Peter Xu
 
 
