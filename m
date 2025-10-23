@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C565CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53F7CCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 14:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBw57-0005vi-1a; Thu, 23 Oct 2025 10:14:21 -0400
+	id 1vBw9A-0003Jh-L4; Thu, 23 Oct 2025 10:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBw52-0005tg-PX
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:14:16 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBw98-0003I9-2m
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:18:30 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBw4z-0007PP-Lh
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:14:16 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46e6a6a5e42so5098955e9.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:14:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vBw95-0007st-0h
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 10:18:29 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-78488cdc20aso10967267b3.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 07:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761228851; x=1761833651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1761229105; x=1761833905; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D/iyIMlpli6FTCe5zjpzm5x3w0vLSEGAxerjR++HIGs=;
- b=Gm9qmD45sM5Wv2izY9MurTyOJygnzcg3KnUwrqxXUYVnRBWIg9ATxa8tE0tUCwVSx1
- Tb4No9ZHYotqX6fRdsFzbwJ3uvQaNIiE8MCrEY5S5n/M69g1aKAynYyBcJId6ywDfAGO
- kk9cY66GBIxHZ8EKzXtgpEBgJCWtG202mAtNjqIVylrgEzrEn1RtBG++MIn8sabVLyPO
- KSonYKNUQO0+rlYVdAoxEoQDz9p/LU3PuoW4SZ9zylmvXQ+88dmJYq3Q9N/FiEn3H4rk
- hq9vSLgotMAVvy5s7jN4o/N0SKX+kRquUGObUuz1ve9Y2b1U9YSV8+pEIJb06VaBL+wr
- oPdQ==
+ bh=ILb6a6dquYwm4ywy49WY48dEBgbB4ZDhcXdzJecZtIA=;
+ b=lUyk59dLmLLD+kkCwXS4sYApgDohef5xSUFf+tUhOLXIZUXHs/WprT9z3Z48YI8vWD
+ cTuz53Tpjfymv09JBIl+L/8BIYHorEcYzNCl6H/LvBFHpyoKYfZXazucAOAtua6fz4Kd
+ QWSzbPfGTnEZ2gaPy0egF2er+cQeW2GKI04s6xX6P9N95xhkJQpnZvo7/HMGjkX85G8/
+ IX0y7i/YWXr6ZJxiO5sQYA8Qo3aHZS3sSdMOLP5AMFvCcMLXNIBcl7SMmionLzJCvVZI
+ cUHpWCFb2RgIHU2rEvzf+q0VUFhOybNmy8Hz+ZlQDcEiWxV46OnwqGMJfPn6E9QKVdgZ
+ wd5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761228851; x=1761833651;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1761229105; x=1761833905;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D/iyIMlpli6FTCe5zjpzm5x3w0vLSEGAxerjR++HIGs=;
- b=CzyBbzwYZHerHxB4ck5OTi6v74XlUo/ut2hNZVIMOe8JthR5Nbqva3QyDS7mh2oYl1
- 1MDhoO/EQM5ceim3E7NUvW7ymJCVkkYm/ki2N0Iu+XaaIM/RY+3zeonOSojP+POhxz+n
- kCkGMdfRP24F3P5ALnzU81xF7cyMwy3dSrwZLaWwUL4Ip5WKNcxgteovC8BN/fu6sDiY
- s/MhxvQamZ+BQcmOb+YckBZrB6z1If9OQdga9Ax3dxbvrCEoqmyarfaUMu5ehw9Lbu/5
- gynOj+PM3gPThtklwh+1OJuVuMVS6RqIpPdXykjkXy+Y5Wt2oWI5d9vyE7/77JIpIZ1m
- NHUw==
-X-Gm-Message-State: AOJu0YxQtT7ddMxWKxnOXEoJfz6KGRdj52yi4bUSSfHuxFypmLsD5buS
- HijeS0EVP98bv3iKgYC2Q6RBZACgqlzriBn7mzFEJhBm4O2OFf7e3NIA+OMM7xw+WPSmItQhUYR
- BpnGrMII=
-X-Gm-Gg: ASbGnct0bfWYrqrrCWygVK2JSUSzv3nJsUCCy/xFsU9KqKwwGN7/XSVHa0YTj0s4aC7
- fOo1Px1H6rARL7OfqQdv4YO+gXx8VFLlZN4+BwJG590zU3STxzykwEy98QynnCvokfSa1RvDaS6
- 5ZZZ0uDwFbd0CiJNZi4zZ1dvGOz1qMOSF7CuCewRlvBbPqqR/LaTija75d3KBosSG6/qzySYT/t
- Y0DjLrtDu6TiqI0UU7jPnnjsYPPyLeAZ+1o3hYH9DhH/ZZ23aZFf75U6c0VZD5SJylqSZ2xO5R4
- QeGDcYoEcz1mAihhb/tn4mlhPtlg+NnX69wpTYgAHomq/h0crQDpJHoIo1qxQXJ0b+mTOgJAZjz
- WrIBuWsYOtpegVsfskFFW6EVQo8Kzh6fsqV02WUhQrKD5SQN3+C1+1ylBi0sHdBNkZQ1SlEC+DF
- v2JtZb80+wXi1wUs/KkPBTnkxhwxDB2Wc5DPB4+vHoBm9BsDqjxMaZKHQKL6XO
-X-Google-Smtp-Source: AGHT+IHXpB3MzhtN00eUBw9o2qYBPxiuTR1FU2KSZ3PJiuEJZapYSBV6tWavzCkIKpkyCUDoeZ2B5g==
-X-Received: by 2002:a05:600c:a4a:b0:471:145b:dd0d with SMTP id
- 5b1f17b1804b1-4711790c334mr147062075e9.24.1761228851448; 
- Thu, 23 Oct 2025 07:14:11 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47496bf7137sm62054175e9.3.2025.10.23.07.14.10
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 23 Oct 2025 07:14:10 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Collingbourne <pcc@google.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH v2 16/58] target/arm/hvf: switch hvf_arm_get_host_cpu_features
- to not create a vCPU
-Date: Thu, 23 Oct 2025 16:13:35 +0200
-Message-ID: <20251023141339.10143-7-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251023114638.5667-1-philmd@linaro.org>
-References: <20251023114638.5667-1-philmd@linaro.org>
+ bh=ILb6a6dquYwm4ywy49WY48dEBgbB4ZDhcXdzJecZtIA=;
+ b=QPgRLvOTrgFLpuLE+A3Rq50Iv6GeEQqejSolQA7I2AtqwBZ4tHJ+OHoKYTyUKlHVuh
+ MVJgLxLUQts1YNkFvf954A7TkYdPzGiKWPvoHiDEzP8g1dBTVO8TpBBCcRIzSibYtu3F
+ HEuhC1XZibRC/zj7ru8E+HDGBFcipx1QfYkY3MNwp99C0H0gg/EL75F3OOHUcgJ09ntM
+ MhSaiiVFhRJtyJqeb0+IfGgIT/UmN4Jybdo+1xOTC/bce1FHjRalzyQgWxtQc9PdTrJf
+ 0A4DvSg2NLgIFbcQa2+bXsLreCbY4D1g2qgYALZpuL60lSi/RJDFSxQnr9e0d1ay/73O
+ lCxA==
+X-Gm-Message-State: AOJu0YzuV9r2l2EDPfY7DTnJ27SHbJlwVkAloxCEDHjrMPmkLQqEg00C
+ KIUXzoFooS98eSugLYkIYURtBatnYGGmLiEHtcwEw3W0W4/iAW2/6mY6bx+TxO9bSqKL88THC2T
+ WdMw9jHsnqTvBcihptCOMxQeCH0gm/J5Sg5e1ncTncQ==
+X-Gm-Gg: ASbGncsAJSMrlRoYhPIRNEvh/hhvk8Nadt180u9BFC0C05IfcrN7nw2udilksKwdtFa
+ 1txPFP1krm2UvK6BTAcJkmW4EP69smu0Fl0oWwIswyf1zZrI6NcqRUZRryfVoSUTSkQqaLa0R97
+ u4N1YppKrMs6/rWw1wo3ZpLUY9qCO90z5cq2wei9c6NEin2kUvsUWgn9PpQmCcDsx4EZKZIt2zB
+ +a13QWjiJc2D93zNKmqAa62z43u8OQl1ANw6lJlhesiDkiwQK7hLLArxna0k4Dua/ng8dFO
+X-Google-Smtp-Source: AGHT+IFrBvYTznie5yOrXKRJeJERtPINvFVVYR1GSwPbvkwVab/Z6QUfz1SSGw+7D1+rAUd61nVybMIep1rnnZATmPQ=
+X-Received: by 2002:a05:690e:151a:b0:63f:1e8c:f264 with SMTP id
+ 956f58d0204a3-63f1e8cfb4emr8097616d50.69.1761229105416; Thu, 23 Oct 2025
+ 07:18:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+References: <20251021145313.4584-1-philmd@linaro.org>
+In-Reply-To: <20251021145313.4584-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 23 Oct 2025 15:18:13 +0100
+X-Gm-Features: AS18NWAMpIG0-9i3EwRbCO1532y9Q9DCV5ubWS2KFVwAsxDgyTq6cgGiLfv5NYM
+Message-ID: <CAFEAcA88AB9q=R4aN+CJj_xOiBNmS=aWEV72cwKTRfX_FEjTPA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,92 +95,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+On Tue, 21 Oct 2025 at 15:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> uint8_t is good enough to hold a property "between 0 and 0xff".
+>
+> Define pullups/pulldowns properties using DEFINE_PROP_UINT8()
+> macro, remove unnecessary range checks in pl061_realize().
+> Update the two caller sites.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+> v2: qdev_prop_set_uint32 -> qdev_prop_set_uint8 in callers (Peter)
 
-Creating a vCPU locks out APIs such as hv_gic_create().
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-As a result, switch to using the hv_vcpu_config_get_feature_reg interface.
-
-Besides, all the following methods must be run on a vCPU thread:
-
-  - hv_vcpu_create()
-  - hv_vcpu_get_sys_reg()
-  - hv_vcpu_destroy()
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
-Message-ID: <20250808070137.48716-3-mohamed@unpredictable.fr>
-[PMD: Release config calling os_release()]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/hvf/hvf.c | 35 ++++++++++++++---------------------
- 1 file changed, 14 insertions(+), 21 deletions(-)
-
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index dea1cb37d1f..fcb6950692b 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -744,25 +744,24 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
- {
-     ARMISARegisters host_isar = {};
-     static const struct isar_regs {
--        int reg;
-+        hv_feature_reg_t reg;
-         ARMIDRegisterIdx index;
-     } regs[] = {
--        { HV_SYS_REG_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_IDX },
--        { HV_SYS_REG_ID_AA64PFR1_EL1, ID_AA64PFR1_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64PFR1_EL1, ID_AA64PFR1_EL1_IDX },
-         /* Add ID_AA64PFR2_EL1 here when HVF supports it */
--        { HV_SYS_REG_ID_AA64DFR0_EL1, ID_AA64DFR0_EL1_IDX },
--        { HV_SYS_REG_ID_AA64DFR1_EL1, ID_AA64DFR1_EL1_IDX },
--        { HV_SYS_REG_ID_AA64ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
--        { HV_SYS_REG_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64DFR0_EL1, ID_AA64DFR0_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64DFR1_EL1, ID_AA64DFR1_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
-         /* Add ID_AA64ISAR2_EL1 here when HVF supports it */
--        { HV_SYS_REG_ID_AA64MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
--        { HV_SYS_REG_ID_AA64MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
--        { HV_SYS_REG_ID_AA64MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
-         /* Add ID_AA64MMFR3_EL1 here when HVF supports it */
-     };
--    hv_vcpu_t fd;
-     hv_return_t r = HV_SUCCESS;
--    hv_vcpu_exit_t *exit;
-+    hv_vcpu_config_t config = hv_vcpu_config_create();
-     uint64_t t;
-     int i;
- 
-@@ -773,17 +772,11 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-                      (1ULL << ARM_FEATURE_PMU) |
-                      (1ULL << ARM_FEATURE_GENERIC_TIMER);
- 
--    /* We set up a small vcpu to extract host registers */
--
--    if (hv_vcpu_create(&fd, &exit, NULL) != HV_SUCCESS) {
--        return false;
--    }
--
-     for (i = 0; i < ARRAY_SIZE(regs); i++) {
--        r |= hv_vcpu_get_sys_reg(fd, regs[i].reg,
--                                 &host_isar.idregs[regs[i].index]);
-+        r |= hv_vcpu_config_get_feature_reg(config, regs[i].reg,
-+                                            &host_isar.idregs[regs[i].index]);
-     }
--    r |= hv_vcpu_destroy(fd);
-+    os_release(config);
- 
-     /*
-      * Hardcode MIDR because Apple deliberately doesn't expose a divergent
--- 
-2.51.0
-
+thanks
+-- PMM
 
