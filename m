@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07F7ECCD193
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 08:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EA8CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 08:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBqPw-00074V-RK; Thu, 23 Oct 2025 04:11:28 -0400
+	id 1vBqPx-00075B-E4; Thu, 23 Oct 2025 04:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vBqPu-00072F-A0; Thu, 23 Oct 2025 04:11:26 -0400
+ id 1vBqPt-0006zU-3z; Thu, 23 Oct 2025 04:11:25 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vBqPp-0005jX-5F; Thu, 23 Oct 2025 04:11:26 -0400
+ id 1vBqPp-0005jb-56; Thu, 23 Oct 2025 04:11:24 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59N8B470071845
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59N8B471071845
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Thu, 23 Oct 2025 17:11:14 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YI6AcWaknwGQjA/0MF5wdHYKtn9Hg1bdj98qn4IDn0A=; 
+DKIM-Signature: a=rsa-sha256; bh=HCFiz1S1b6I1iKxAHjbd3TDsQoWjLO5k05+NL3oD3BQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1761207074; v=1;
- b=OwlA73iGe/K3hEFtZ46pXIi+LjKZXIUI/mFWRGa368y0qUem3dfypprMgBndgxv+
- R4hRFbGvVqG0NweEXB7vbcYeIpB6NbHt9711jEJqrdrr6oa+Y+dFDYe3dlJ9m2mx
- i2J970XsZnJbw4Grs+o04urEKAdNI1yqQp8L5kDSU5E/xYdIlXXvXY3R0YyByvC1
- WJAh086/uh2eKl9QjUZtJBVfGx3853RxTAFN8zZ5XmErBLFLBFBBZFs2PHsBEihe
- PChZoOvoRp2d0SSCOFaCD76XV+DhWq6rDYjMhpiet57RGrlqWvAFmSufWGgtSju2
- LmZ0fCUpOkaFYUewcmEtoQ==
+ b=iJyPWuEpPcs+vTa9ZXATweR48P+6Kn7E0jLNkClk9RM+0wx6NjXi43EMmpSCNpPe
+ aW43P3uzLAgy6RjJ/sOFL5AIYu9gpSLzOD+0tZRGB6qWXmT/O6C7Xrug0qBYPCgq
+ LrfWu09NK7xS+OEYrG+BqP0q+qbF8TB6SNxbxqhA5pJc5PpdhAkbln/HV9E/E113
+ p60hViYA8aKOk/Z9jqtjhdy34Thmwwmjkcj5JkTSWF257v16bbRqj1w6ZH8jrzbC
+ +4YekIDO5O/BhvkQmRh4E1zHOlT/s0cP7kbp14+HBvGynpqDnirRe2G+ym+h97Nf
+ 0WegOpHi1Vo4oOq2qzCiQA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 23 Oct 2025 17:10:58 +0900
-Subject: [PATCH 1/2] qemu-img: Fix amend option parse error handling
+Date: Thu, 23 Oct 2025 17:10:59 +0900
+Subject: [PATCH 2/2] iotests: Run iotests with sanitizers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251023-iotests-v1-1-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20251023-iotests-v1-2-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
 References: <20251023-iotests-v1-0-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20251023-iotests-v1-0-fab143ca4c2f@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -71,34 +71,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_opts_del(opts) dereferences opts->list, which is the old amend_opts
-pointer that can be dangling after executing
-qemu_opts_append(amend_opts, bs->drv->create_opts) and cause
-use-after-free.
+Commit 2cc4d1c5eab1 ("tests/check-block: Skip iotests when sanitizers
+are enabled") changed iotests to skip when sanitizers are enabled.
+The rationale is that AddressSanitizer emits warnings and reports leaks,
+which results in test breakage. Later, sanitizers that are enabled for
+production environments (safe-stack and cfi-icall) were exempted.
 
-Fix the potential use-after-free by moving the qemu_opts_del() call
-before the qemu_opts_append() call.
+However, this approach has a few problems.
+
+- It requires rebuild to disable sanitizers if the existing build has
+  them enabled.
+- It disables other useful non-production sanitizers.
+- The exemption of safe-stack and cfi-icall is not correctly
+  implemented, so qemu-iotests are incorrectly enabled whenever either
+  safe-stack or cfi-icall is enabled *and*, even if there is another
+  sanitizer like AddressSanitizer.
+
+To solve these problems, direct AddressSanitizer warnings to separate
+files to avoid changing the test results, and selectively disable
+leak detection at runtime instead of requiring to disable all
+sanitizers at buildtime.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- qemu-img.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qemu-iotests/meson.build   |  8 --------
+ tests/qemu-iotests/testrunner.py | 12 ++++++++++++
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/qemu-img.c b/qemu-img.c
-index 7a162fdc08d3..63961e2b76f0 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -4571,9 +4571,9 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
-     amend_opts = qemu_opts_append(amend_opts, bs->drv->amend_opts);
-     opts = qemu_opts_create(amend_opts, NULL, 0, &error_abort);
-     if (!qemu_opts_do_parse(opts, options, NULL, &err)) {
-+        qemu_opts_del(opts);
-         /* Try to parse options using the create options */
-         amend_opts = qemu_opts_append(amend_opts, bs->drv->create_opts);
--        qemu_opts_del(opts);
-         opts = qemu_opts_create(amend_opts, NULL, 0, &error_abort);
-         if (qemu_opts_do_parse(opts, options, NULL, NULL)) {
-             error_append_hint(&err,
+diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+index fad340ad5957..56b04468274a 100644
+--- a/tests/qemu-iotests/meson.build
++++ b/tests/qemu-iotests/meson.build
+@@ -2,14 +2,6 @@ if not have_tools or host_os == 'windows'
+   subdir_done()
+ endif
+ 
+-foreach cflag: qemu_ldflags
+-  if cflag.startswith('-fsanitize') and \
+-     not cflag.contains('safe-stack') and not cflag.contains('cfi-icall')
+-    message('Sanitizers are enabled ==> Disabled the qemu-iotests.')
+-    subdir_done()
+-  endif
+-endforeach
+-
+ bash = find_program('bash', required: false, version: '>= 4.0')
+ if not bash.found()
+   message('bash >= v4.0 not available ==> Disabled the qemu-iotests.')
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index 14cc8492f9fb..e2a365899414 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -263,10 +263,21 @@ def do_run_test(self, test: str) -> TestResult:
+             Path(env[d]).mkdir(parents=True, exist_ok=True)
+ 
+         test_dir = env['TEST_DIR']
++        f_asan = Path(test_dir, f_test.name + '.out.asan')
+         f_bad = Path(test_dir, f_test.name + '.out.bad')
+         f_notrun = Path(test_dir, f_test.name + '.notrun')
+         f_casenotrun = Path(test_dir, f_test.name + '.casenotrun')
+ 
++        env['ASAN_OPTIONS'] = f'detect_leaks=0:log_path={f_asan}'
++
++        def unlink_asan():
++            with os.scandir(test_dir) as it:
++                for entry in it:
++                    if entry.name.startswith(f_asan.name):
++                        os.unlink(entry)
++
++        unlink_asan()
++
+         for p in (f_notrun, f_casenotrun):
+             silent_unlink(p)
+ 
+@@ -312,6 +323,7 @@ def do_run_test(self, test: str) -> TestResult:
+                               description=f'output mismatch (see {f_bad})',
+                               diff=diff, casenotrun=casenotrun)
+         else:
++            unlink_asan()
+             f_bad.unlink()
+             return TestResult(status='pass', elapsed=elapsed,
+                               casenotrun=casenotrun)
 
 -- 
 2.51.0
