@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55165CCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00EFCCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBuu7-0005u8-Ie; Thu, 23 Oct 2025 08:58:57 -0400
+	id 1vBux5-0007KS-Bp; Thu, 23 Oct 2025 09:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vBuu4-0005tc-TG; Thu, 23 Oct 2025 08:58:53 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1vBuwY-0007A8-UJ; Thu, 23 Oct 2025 09:01:39 -0400
+Received: from mail.xenproject.org ([104.130.215.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vButx-00048F-Ue; Thu, 23 Oct 2025 08:58:49 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B62BF5972EA;
- Thu, 23 Oct 2025 14:58:39 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id GQrIU0lILz0X; Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B323C5972DE; Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B10D05972E8;
- Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
-Date: Thu, 23 Oct 2025 14:58:37 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v4 08/12] hw/ppc/pegasos2: Move hardware specific parts
- out of machine reset
-In-Reply-To: <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
-Message-ID: <81856e15-36e0-be76-d51c-55915a8d1233@eik.bme.hu>
-References: <cover.1761176219.git.balaton@eik.bme.hu>
- <f6633a68a72aad4fefb8d2373b52561f8ca8d41d.1761176219.git.balaton@eik.bme.hu>
- <ee9b01ab-fd91-453e-b1d3-1a91d9447a2a@linaro.org>
+ (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
+ id 1vBuwV-0004yK-OE; Thu, 23 Oct 2025 09:01:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date;
+ bh=mcZQh+kreTywuj0nxQatcCOfo+AYejtqCbV1FXs6+0A=; b=PhbHKESiP4JtKxgv3ZYfUS0MQ6
+ MCB2P8pXipw6t2pTEovt7Lr5ebDNGE1ggscH5gg/cm6u8BEwdMkn1h8ksCSuk8hjOqShoqU68RS3h
+ /UJWQvNrF/Nzj/be0F6kbIj9CEfBJc/xay9QGcWd8CP8MMcRzqYED25hE1UgoHgNiPxY=;
+Received: from xenbits.xenproject.org ([104.239.192.120])
+ by mail.xenproject.org with esmtp (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1vBuwD-00FsTM-2Y;
+ Thu, 23 Oct 2025 13:01:05 +0000
+Received: from [2a01:cb15:80df:da00:94d0:641e:16e6:ca4b] (helo=l14)
+ by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <anthony@xenproject.org>) id 1vBuwD-00BXxQ-1N;
+ Thu, 23 Oct 2025 13:01:05 +0000
+Date: Thu, 23 Oct 2025 15:01:03 +0200
+From: Anthony PERARD <anthony@xenproject.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
+ Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] hw/xen: Avoid non-inclusive language in params.h
+Message-ID: <aPonD3KTbOMxyIlD@l14>
+References: <20251013111152.25807-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-392806474-1761224317=:38722"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251013111152.25807-1-thuth@redhat.com>
+Received-SPF: pass client-ip=104.130.215.37;
+ envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,61 +71,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Oct 13, 2025 at 01:11:52PM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> Copy the latest version of Xen's params.h to the QEMU repository:
+> 
+> https://xenbits.xen.org/gitweb/?p=xen.git;a=commitdiff;h=0291089f6ea81690f37035a124d54c51fa7ba097#patch8
+> 
+> With this patch, we get rid of a non-inclusive word in the comment
+> there.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
---3866299591-392806474-1761224317=:38722
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Acked-by: Anthony PERARD <anthony.perard@vates.tech>
 
-On Thu, 23 Oct 2025, Philippe Mathieu-Daudé wrote:
-> On 23/10/25 02:06, BALATON Zoltan wrote:
->> Move the pegasos2 specific chipset reset out from machine reset to a
->> separate function and move generic parts that are not pegasos2
->> specific from build_fdt to machine reset so now build_fdt only
->> contains pegasos2 specific parts and can be renamed accordingly.
->> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/ppc/pegasos2.c | 79 ++++++++++++++++++++++++-----------------------
->>   1 file changed, 41 insertions(+), 38 deletions(-)
->
->
->> -#define PCI1_IO_BASE  0xfe000000
->
-> Can't we keep such definition?
->
->> @@ -308,23 +307,12 @@ static void 
->> pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
->>     static void pegasos2_superio_write(uint8_t addr, uint8_t val)
->>   {
->> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f0, &addr, 1);
->> -    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
->> +    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
->> +    cpu_physical_memory_write(0xfe0003f1, &val, 1);
->
-> Otherwise it is harder to notice we are accessing the MMIO mapped ISA space.
+Thanks,
 
-It might be misleading as it's PCI1 on pegasos2 but PCI0 on pegasos1 so 
-the define does not clarify much either way even if I rename it to 
-PCI_IO_BASE. Generally I think for numbers that are only used once having 
-a define just obfuscates it as I then have to look up what the number is 
-elsewhere instead of seeing right away. I guess I'll leave it as it is now 
-that this version was pulled.
-
->>   }
-> Consider renaming as pegasos_superio_write() since this method becomes
-> common to PegasOS I and II.
-
-This could have removed one hunk from patch 12 and adding it here making 
-that patch shorter but this one longer so not much difference. Now that 
-these are reviewed I think it does not matter any more.
-
-Regards,
-BALATON Zoltan
-
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->
->
---3866299591-392806474-1761224317=:38722--
+-- 
+Anthony PERARD
 
