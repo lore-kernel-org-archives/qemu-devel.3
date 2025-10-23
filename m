@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE362CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF04CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 11:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBtlD-0002v7-3q; Thu, 23 Oct 2025 07:45:39 -0400
+	id 1vBtkr-0001yW-Hm; Thu, 23 Oct 2025 07:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtl1-0002XA-D2
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vBtkj-0001bv-MY
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:10 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vBtky-0001rK-Kn
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:27 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N37158027350
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:13 GMT
+ id 1vBtkh-0001pF-0p
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 07:45:09 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9o7KV009802
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=boZzhnriNTM7Whjeo
- biFLf3wFyDVDG3ktmyfi+fB4Zs=; b=AX+bUAT4TJU0tcaDhfquWT2qSLdpI7D6a
- QIbgXZu3nI16cYvSJC276qQGnDtNu1EKeqNTzTmEVkf3z3BBHVioBmtmRLY9kDSI
- G+OV0pOIFpd3QgvpXMJ2iz7RQHEGhUuqDjMU6OycsVC3meUUwbOwqJpY1cQzRvDc
- aATNGRvS7GLgC7tRwVLjM87ceSz68FPYi3jbptcge1NyN9JryyDYLoLqmTaoAx7z
- 5vJfBzLMtxEH1afDLsD8bk+W+Q9Eipv0jOSlmo1v9EoKzhDTcVBGjj2c8HTdXVdy
- 1aEc0WdW9opAsQCjv55CVNdsGNoze92aLBFqJPFp3kUx6OwDqI9WA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31s9wbu-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=SHOv8a
+ CPVVBUZ4TJUuYP+d/H3Z0VMw1ie/M0KiCcZSg=; b=dsUb0kGUQFFbxcqEdr9T80
+ FuoLm3Qi6Ubuf8aqw9Pl6FFTDqWEmW8mJQR9rDLQ73e6JNWC/lq98j1B1NxbgmIh
+ QemvbhUJY/bWtHr1n9tTUnqSotL3R0Yh7zHBsIveP9H9EZ1GUrr9b0N514LUEyrJ
+ d4ilKXw0dZD1hUtgFKINvxYAmmwJsoAOkVd710Yf+MYfivbFZ5aQoIpscY22SXAT
+ aWbrcO+tY5NXBz4+O/Ki0zFa+OHcPfYAgCSfTR9JRoOiKZ3nvxbSLhTrFjme2uar
+ TdkmmXsP12UztpH36Mto8agixVyYG48fWC7mAK6Ye2fE+jSJvlE/4DSJS0Gv/YFg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31cgj32-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:12 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N8Inmu014658
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:12 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sdpq0-1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:05 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59N9cOgs017066
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:05 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49vnky5kt3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:12 +0000
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:45:05 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59NBj8Lo49676746
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59NBj0hk20447982
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 Oct 2025 11:45:08 GMT
+ Thu, 23 Oct 2025 11:45:00 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62F4D20049;
- Thu, 23 Oct 2025 11:45:08 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4E12820049;
+ Thu, 23 Oct 2025 11:45:00 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 80BF920040;
- Thu, 23 Oct 2025 11:45:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4449020040;
+ Thu, 23 Oct 2025 11:44:59 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
  [9.124.221.73]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 23 Oct 2025 11:45:07 +0000 (GMT)
+ Thu, 23 Oct 2025 11:44:59 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PULL 31/32] tests/functional: Add test for fadump in PSeries
-Date: Thu, 23 Oct 2025 17:14:18 +0530
-Message-ID: <20251023114422.3675018-32-harshpb@linux.ibm.com>
+Subject: [PULL 25/32] hw/ppc: Implement fadump register command
+Date: Thu, 23 Oct 2025 17:14:12 +0530
+Message-ID: <20251023114422.3675018-26-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 References: <20251023114422.3675018-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 7ydDpxNjYLn7g1z2iq4wmrwfP2i7GJ2B
-X-Proofpoint-GUID: 7ydDpxNjYLn7g1z2iq4wmrwfP2i7GJ2B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX9tYmXz+n7Lrm
- s5l3vq5dJQaPZMmc59OAUFxBewpW6pcrKdVUpfknhPvvmIfPdglmkxuwwL9dixO0s5S3eWesWjG
- /CGa+T/8ZpmkZmrMkZJt6VPfKBomkJGiocFr+ENy7rUzG1329iQOyp/puvMlFWRW9UFU0l5nuc8
- v/2mM0GLl5I5H0IHEI0km9YyNNhA2KJIgBSLx/kFdxpBAb2OwdIXydzYm7NpNAc+MLBufVRm7as
- +Wssx7/BAb4g5jNLih/NekybGdpUZqoTLw8FRGk0gErixKrb8/G88PHx7MmQIKI6nzQ22GUfmMy
- bemALR0fmuGqiE2z5uMCRJ+IgAVHIVkOk5dr83eG3vj2ZdJOzITGB5mAs1obXanMpX6p86gbQjz
- CJmowsxxvXvauhOC7Kjss/tGweFSNg==
-X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fa1549 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=NEAV23lmAAAA:8 a=vTr9H3xdAAAA:8
- a=Gr56plS7bk8yA4v_bscA:9 a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
+X-Proofpoint-ORIG-GUID: KlwvTHJWBsr0J48q2ksXo9We4Q1uySrO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX+M/cge9urr9U
+ QHJWXqlxXawhPHcLJqW7/nzgJmsTTIXolh6Uzua43NZKIyRnRAmLTQLhSTfzfuBJOX+ZV4lRHtA
+ TCs8uqOMhmLcJf7t8AZ/YvUQthIDiz5iNfKEqGBFTwnaD6urmtCPIvoOJOmp0hRy8ULe6iaVAvN
+ fAxufyHdmscPozdhalrC+nXFc4gqNJq4VcgolQ4WgJL5JMPS4tmFlDD/IAWJ8BOrjqeIcuD4J+F
+ Jasql2T/RexWVBJxgLJImMrryPzX1Wqf8GEPCAIWj2yi353NoJ3BPJrt0ZNtzxvRbXqya/RxZqG
+ FhXODSYHj8Vr/0e+mxVIXZbbjQ951Sa0fvHMmYv80XX9jrXGGsJP2zn9Bk6j/JEvQfIGnmi822k
+ ttUHwvoLD4CrO53z0N9wG5eeWxoiNQ==
+X-Proofpoint-GUID: KlwvTHJWBsr0J48q2ksXo9We4Q1uySrO
+X-Authority-Analysis: v=2.4 cv=SKNPlevH c=1 sm=1 tr=0 ts=68fa1541 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=l8_VZ6W0Klpo2I8UYZoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=oH34dK2VZjykjzsv8OSz:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-22_08,2025-10-22_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -122,327 +125,394 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aditya Gupta <adityag@linux.ibm.com>
 
-Add testcases for testing fadump with PSeries and PSeries+KVM
-combinations
+Add skeleton to handle "ibm,configure-kernel-dump" rtas call in QEMU,
+including register, unregister and invalidate commands.
 
-It tests if fadump is successfully detected and registered in the first
-kernel boot. Then crashes the kernel, and verifies whether we have a
-/proc/vmcore in the 2nd boot
+The register just verifies the structure of the fadump memory structure
+passed by kernel, and set fadump_registered in spapr state to true.
 
-Also introduce 'wait_for_regex_console_pattern' to check for cases where
-there is a single success message, but can have multiple failure
-messages.
+Verify basic details mandated by the PAPR, such as number of
+inputs/output, and add handling for the three fadump commands:
+regiser/unregister/invalidate.
 
-This is particularly useful for cases such as fadump, where the
-success message is
-    "Reserved 1024MB ... successfully"
-But at the same point, it can fail with multiple errors such as
-    "Not supported" or "Allocation failed"
+The checks are based on the table in following requirement in PAPR v2.13:
+    "R1–7.3.30–1. For the Configure Platform Assisted Kernel Dump option ..."
 
-'wait_for_regex_console_pattern' also has a timeout, for cases when we
-know the success/failure should appear in a short amount of time,
-instead of waiting for the much longer test timeout, such as kernels
-with support of fadump will print the success/failure in earlyboot of
-the kernel, while kernel without support of fadump won't print anything
-for long time, and without a timeout the testcase keeps waiting till
-longer test timeout
+Relevant section for the register command in PAPR is:
+    Section 7.3.30: "ibm,configure-kernel-dump RTAS call" (PAPR v2.13)
+
+Note: Any modifications made by the kernel to the fadump memory
+structure after the 'ibm,configure-kernel-dump' RTAS call returns will
+not be reflected in QEMU, as QEMU retains the fadump memory structure
+that was provided during fadump registration.
+
+The kernel must unregister and re-register fadump to apply any changes
+to the fadump memory structure.
 
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-8-adityag@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20251021134823.1861675-2-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- tests/functional/ppc64/meson.build        |   2 +
- tests/functional/ppc64/test_fadump.py     | 182 ++++++++++++++++++++++
- tests/functional/qemu_test/linuxkernel.py |  59 +++++++
- 3 files changed, 243 insertions(+)
- create mode 100755 tests/functional/ppc64/test_fadump.py
+ include/hw/ppc/spapr.h        |  11 ++-
+ include/hw/ppc/spapr_fadump.h |  69 +++++++++++++++++++
+ hw/ppc/spapr_fadump.c         | 123 ++++++++++++++++++++++++++++++++++
+ hw/ppc/spapr_rtas.c           |  71 ++++++++++++++++++++
+ hw/ppc/meson.build            |   1 +
+ 5 files changed, 274 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/ppc/spapr_fadump.h
+ create mode 100644 hw/ppc/spapr_fadump.c
 
-diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
-index 1fa0a70f7e..f0f8ab8f61 100644
---- a/tests/functional/ppc64/meson.build
-+++ b/tests/functional/ppc64/meson.build
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index b9d884745f..28cf2723d8 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -13,6 +13,7 @@
+ #include "hw/ppc/xics.h"        /* For ICSState */
+ #include "hw/ppc/spapr_tpm_proxy.h"
+ #include "hw/ppc/spapr_nested.h" /* For SpaprMachineStateNested */
++#include "hw/ppc/spapr_fadump.h" /* For FadumpMemStruct */
  
- test_ppc64_timeouts = {
-+  'fadump' : 480,
-   'hv' : 1000,
-   'mac99' : 120,
-   'powernv' : 480,
-@@ -16,6 +17,7 @@ tests_ppc64_system_quick = [
+ struct SpaprVioBus;
+ struct SpaprPhbState;
+@@ -267,6 +268,11 @@ struct SpaprMachineState {
+     Error *fwnmi_migration_blocker;
  
- tests_ppc64_system_thorough = [
-   'e500',
-+  'fadump',
-   'hv',
-   'mac99',
-   'powernv',
-diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
-new file mode 100755
-index 0000000000..2d6b8017e8
+     SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
++
++    /* Fadump State */
++    bool fadump_registered;
++    bool fadump_dump_active;
++    FadumpMemStruct registered_fdm;
+ };
+ 
+ #define H_SUCCESS         0
+@@ -692,6 +698,8 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+ #define RTAS_OUT_PARAM_ERROR                    -3
+ #define RTAS_OUT_NOT_SUPPORTED                  -3
+ #define RTAS_OUT_NO_SUCH_INDICATOR              -3
++#define RTAS_OUT_DUMP_ALREADY_REGISTERED        -9
++#define RTAS_OUT_DUMP_ACTIVE                    -10
+ #define RTAS_OUT_NOT_AUTHORIZED                 -9002
+ #define RTAS_OUT_SYSPARM_PARAM_ERROR            -9999
+ 
+@@ -754,8 +762,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+ #define RTAS_IBM_SUSPEND_ME                     (RTAS_TOKEN_BASE + 0x2A)
+ #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
+ #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
++#define RTAS_CONFIGURE_KERNEL_DUMP              (RTAS_TOKEN_BASE + 0x2D)
+ 
+-#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2D)
++#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
+ 
+ /* RTAS ibm,get-system-parameter token values */
+ #define RTAS_SYSPARM_SPLPAR_CHARACTERISTICS      20
+diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
+new file mode 100644
+index 0000000000..f64f339204
 --- /dev/null
-+++ b/tests/functional/ppc64/test_fadump.py
-@@ -0,0 +1,182 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/include/hw/ppc/spapr_fadump.h
+@@ -0,0 +1,69 @@
++/*
++ * Firmware Assisted Dump in PSeries
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef PPC_SPAPR_FADUMP_H
++#define PPC_SPAPR_FADUMP_H
 +
-+from unittest import skip
-+from qemu_test import Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import LinuxKernelTest
-+from qemu_test import exec_command, exec_command_and_wait_for_pattern
++#include "qemu/osdep.h"
++#include "cpu.h"
 +
-+class QEMUFadump(LinuxKernelTest):
-+    """
-+    Functional test to verify Fadump is working in following scenarios:
++/* Fadump commands */
++#define FADUMP_CMD_REGISTER            1
++#define FADUMP_CMD_UNREGISTER          2
++#define FADUMP_CMD_INVALIDATE          3
 +
-+    1. test_fadump_pseries:       PSeries
-+    2. test_fadump_pseries_kvm:   PSeries + KVM
-+    """
++#define FADUMP_VERSION                 1
 +
-+    timeout = 90
-+    KERNEL_COMMON_COMMAND_LINE = 'console=hvc0 fadump=on '
-+    msg_panic = 'Kernel panic - not syncing'
-+    msg_not_supported = 'Firmware-Assisted Dump is not supported on this hardware'
-+    msg_registered_success = ''
-+    msg_registered_failed = ''
-+    msg_dump_active = ''
++/*
++ * The Firmware Assisted Dump Memory structure supports a maximum of 10 sections
++ * in the dump memory structure. Presently, three sections are used for
++ * CPU state data, HPTE & Parameters area, while the remaining seven sections
++ * can be used for boot memory regions.
++ */
++#define FADUMP_MAX_SECTIONS            10
 +
-+    ASSET_EPAPR_KERNEL = Asset(
-+        ('https://github.com/open-power/op-build/releases/download/v2.7/'
-+         'zImage.epapr'),
-+        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
++typedef struct FadumpSection FadumpSection;
++typedef struct FadumpSectionHeader FadumpSectionHeader;
++typedef struct FadumpMemStruct FadumpMemStruct;
 +
-+    ASSET_VMLINUZ_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-+         'releases/39/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
-+        ('81e5541d243b50c8f9568906c6918dda22239744d637bb9a7b22d23c3d661226'
-+         '8d5302beb2ca5c06f93bdbc9736c414ef5120756c8bf496ff488ad07d116d67f')
-+        )
++struct SpaprMachineState;
 +
-+    ASSET_FEDORA_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-+        'releases/39/Everything/ppc64le/os/ppc/ppc64/initrd.img'),
-+        'e7f24b44cb2aaa67d30e551db6ac8d29cc57c934b158dabca6b7f885f2cfdd9b')
++/* Kernel Dump section info */
++/* All fields are in big-endian */
++struct FadumpSection {
++    uint32_t    request_flag;
++    uint16_t    source_data_type;
++    uint16_t    error_flags;
++    uint64_t    source_address;
++    uint64_t    source_len;
++    uint64_t    bytes_dumped;
++    uint64_t    destination_address;
++};
 +
-+    def do_test_fadump(self, is_kvm=False, is_powernv=False):
-+        """
-+        Helper Function for Fadump tests below
++/* ibm,configure-kernel-dump header. */
++struct FadumpSectionHeader {
++    uint32_t    dump_format_version;
++    uint16_t    dump_num_sections;
++    uint16_t    dump_status_flag;
++    uint32_t    offset_first_dump_section;
 +
-+        It boots the VM with fadump enabled, checks if fadump is correctly
-+        registered.
-+        Then crashes the system causing a QEMU_SYSTEM_RESET, after which
-+        dump should be available in the kernel.
-+        Finally it checks the filesize of the exported /proc/vmcore in 2nd
-+        kernel to verify it's same as the VM's memory size
-+        """
-+        if is_kvm:
-+            self.require_accelerator("kvm")
-+            self.vm.add_args("-accel", "kvm")
-+        else:
-+            self.require_accelerator("tcg")
++    /* Fields for disk dump option. */
++    uint32_t    dd_block_size;
++    uint64_t    dd_block_offset;
++    uint64_t    dd_num_blocks;
++    uint32_t    dd_offset_disk_path;
 +
-+        if is_powernv:
-+            self.set_machine("powernv10")
-+        else:
-+            # SLOF takes upto >20s in startup time, use VOF
-+            self.set_machine("pseries")
-+            self.vm.add_args("-machine", "x-vof=on")
-+            self.vm.add_args("-m", "6G")
++    /* Maximum time allowed to prevent an automatic dump-reboot. */
++    uint32_t    max_time_auto;
++};
 +
-+        self.vm.set_console()
++/* Note: All the data in these structures is in big-endian */
++struct FadumpMemStruct {
++    FadumpSectionHeader header;
++    FadumpSection       rgn[FADUMP_MAX_SECTIONS];
++};
 +
-+        kernel_path = None
++uint32_t do_fadump_register(struct SpaprMachineState *, target_ulong);
++#endif /* PPC_SPAPR_FADUMP_H */
+diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+new file mode 100644
+index 0000000000..2c9f024c2d
+--- /dev/null
++++ b/hw/ppc/spapr_fadump.c
+@@ -0,0 +1,123 @@
++/*
++ * Firmware Assisted Dump in PSeries
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+        if is_powernv:
-+            kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
-+        else:
-+            kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/ppc/spapr.h"
 +
-+        initrd_path = self.ASSET_FEDORA_INITRD.fetch()
++/*
++ * Handle the "FADUMP_CMD_REGISTER" command in 'ibm,configure-kernel-dump'
++ *
++ * Note: Any changes made by the kernel to the fadump memory struct won't
++ * reflect in QEMU after the 'ibm,configure-kernel-dump' RTAS call has returned,
++ * as we store the passed fadump memory structure passed during fadump
++ * registration.
++ * Kernel has to invalidate & re-register fadump, if it intends to make any
++ * changes to the fadump memory structure
++ *
++ * Returns:
++ *  * RTAS_OUT_SUCCESS: On successful registration
++ *  * RTAS_OUT_PARAM_ERROR: If parameters are not correct, eg. too many
++ *                          sections, invalid memory addresses that we are
++ *                          unable to read, etc
++ *  * RTAS_OUT_DUMP_ALREADY_REGISTERED: Dump already registered
++ *  * RTAS_OUT_HW_ERROR: Misc issue such as memory access failures
++ */
++uint32_t do_fadump_register(SpaprMachineState *spapr, target_ulong args)
++{
++    FadumpSectionHeader header;
++    FadumpSection regions[FADUMP_MAX_SECTIONS] = {0};
++    target_ulong fdm_addr = rtas_ld(args, 1);
++    target_ulong fdm_size = rtas_ld(args, 2);
++    AddressSpace *default_as = &address_space_memory;
++    MemTxResult io_result;
++    MemTxAttrs attrs;
++    uint64_t next_section_addr;
++    uint16_t dump_num_sections;
 +
-+        self.vm.add_args('-kernel', kernel_path)
-+        self.vm.add_args('-initrd', initrd_path)
-+        self.vm.add_args('-append', "fadump=on"\
-+                         " -nodefaults -serial mon:stdio crashkernel=2G"\
-+                         " rdinit=/bin/sh ")
++    /* Mark the memory transaction as privileged memory access */
++    attrs.user = 0;
++    attrs.memory = 1;
 +
-+        self.vm.launch()
++    if (spapr->fadump_registered) {
++        /* FADump already registered */
++        return RTAS_OUT_DUMP_ALREADY_REGISTERED;
++    }
 +
-+        # If kernel detects fadump support, and "fadump=on" is in command
-+        # line which we add above, it will print something like:
-+        #
-+        #     fadump: Reserved 1024MB of memory at 0x00000040000000 ...
-+        #
-+        # Else, if the kernel doesn't detect fadump support, it prints:
-+        #
-+        #     fadump: Firmware-Assisted Dump is not supported on this hardware
-+        #
-+        # Timeout after 20s if kernel doesn't print any fadump logs, this
-+        # can happen due to fadump being disabled in the kernel
-+        self.wait_for_regex_console_pattern(
-+            success_pattern="fadump: Reserved ",
-+            failure_pattern=r"fadump: (Firmware-Assisted Dump is not"\
-+            " supported on this hardware|Failed to find memory chunk for"\
-+            " reservation!)",
-+            timeout=20
-+        )
++    if (spapr->fadump_dump_active) {
++        return RTAS_OUT_DUMP_ACTIVE;
++    }
 +
-+        # Ensure fadump is registered successfully, if registration
-+        # succeeds, we get a log from rtas fadump:
-+        #
-+        #     rtas fadump: Registration is successful!
-+        self.wait_for_console_pattern(
-+            "rtas fadump: Registration is successful!"
-+        )
++    if (fdm_size < sizeof(FadumpSectionHeader)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: Header size is invalid: " TARGET_FMT_lu "\n", fdm_size);
++        return RTAS_OUT_PARAM_ERROR;
++    }
 +
-+        # Wait for the shell
-+        self.wait_for_console_pattern("#")
++    /* Ensure fdm_addr points to a valid RMR-memory/RMA-memory buffer */
++    if ((fdm_addr <= 0) || ((fdm_addr + fdm_size) > spapr->rma_size)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: Invalid fdm address: " TARGET_FMT_lu "\n", fdm_addr);
++        return RTAS_OUT_PARAM_ERROR;
++    }
 +
-+        # Mount /proc since not available in the initrd used
-+        exec_command(self, command="mount -t proc proc /proc")
++    /* Try to read the passed fadump header */
++    io_result = address_space_read(default_as, fdm_addr, attrs,
++            &header, sizeof(header));
++    if (io_result != MEMTX_OK) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: Unable to read fdm: " TARGET_FMT_lu "\n", fdm_addr);
 +
-+        # Crash the kernel
-+        exec_command(self, command="echo c > /proc/sysrq-trigger")
++        return RTAS_OUT_HW_ERROR;
++    }
 +
-+        # Check for the kernel panic message, setting timeout to 20s as it
-+        # should occur almost immediately after previous echo c
-+        self.wait_for_regex_console_pattern(
-+            success_pattern="Kernel panic - not syncing: sysrq" \
-+                " triggered crash",
-+            timeout=20
-+        )
++    /* Verify that we understand the fadump header version */
++    if (header.dump_format_version != cpu_to_be32(FADUMP_VERSION)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: Unknown fadump header version: 0x%x\n",
++            header.dump_format_version);
++        return RTAS_OUT_PARAM_ERROR;
++    }
 +
-+        # Check if fadump is active
-+        # If the kernel shows that fadump is active, that implies it's a
-+        # crashkernel boot
-+        # Else if the kernel shows "fadump: Reserved ..." then it's
-+        # treating this as the first kernel boot, this is likely the case
-+        # that qemu didn't pass the 'ibm,kernel-dump' device tree node
-+        wait_for_console_pattern(
-+            test=self,
-+            success_message="rtas fadump: Firmware-assisted dump is active",
-+            failure_message="fadump: Reserved "
-+        )
++    /* Reset dump status flags */
++    header.dump_status_flag = 0;
 +
-+        # In a successful fadump boot, we get these logs:
-+        #
-+        # [    0.000000] fadump: Firmware-assisted dump is active.
-+        # [    0.000000] fadump: Reserving <>MB of memory at <> for preserving crash data
-+        #
-+        # Check if these logs are present in the fadump boot
-+        self.wait_for_console_pattern("preserving crash data")
++    dump_num_sections = be16_to_cpu(header.dump_num_sections);
 +
-+        # Wait for prompt
-+        self.wait_for_console_pattern("sh-5.2#")
++    if (dump_num_sections > FADUMP_MAX_SECTIONS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: Too many sections: %d sections\n", dump_num_sections);
++        return RTAS_OUT_PARAM_ERROR;
++    }
 +
-+        # Mount /proc since not available in the initrd used
-+        exec_command_and_wait_for_pattern(self,
-+            command="mount -t proc proc /proc",
-+            success_message="#"
-+        )
++    next_section_addr =
++        fdm_addr +
++        be32_to_cpu(header.offset_first_dump_section);
 +
-+        # Check if vmcore exists
-+        exec_command_and_wait_for_pattern(self,
-+            command="stat /proc/vmcore",
-+            success_message="File: /proc/vmcore",
-+            failure_message="No such file or directory"
-+        )
++    for (int i = 0; i < dump_num_sections; ++i) {
++        /* Read the fadump section from memory */
++        io_result = address_space_read(default_as, next_section_addr, attrs,
++                &regions[i], sizeof(regions[i]));
++        if (io_result != MEMTX_OK) {
++            qemu_log_mask(LOG_UNIMP,
++                "FADump: Unable to read fadump %dth section\n", i);
++            return RTAS_OUT_PARAM_ERROR;
++        }
 +
-+    def test_fadump_pseries(self):
-+        return self.do_test_fadump(is_kvm=False, is_powernv=False)
++        next_section_addr += sizeof(regions[i]);
++    }
 +
-+    @skip("PowerNV Fadump not supported yet")
-+    def test_fadump_powernv(self):
-+        return
++    spapr->fadump_registered = true;
++    spapr->fadump_dump_active = false;
 +
-+    def test_fadump_pseries_kvm(self):
-+        """
-+        Test Fadump in PSeries with KVM accel
-+        """
-+        self.do_test_fadump(is_kvm=True, is_powernv=False)
++    /* Store the registered fadump memory struct */
++    spapr->registered_fdm.header = header;
++    for (int i = 0; i < dump_num_sections; ++i) {
++        spapr->registered_fdm.rgn[i] = regions[i];
++    }
 +
-+if __name__ == '__main__':
-+    QEMUFadump.main()
-diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
-index 2aca0ee3cd..c4767527da 100644
---- a/tests/functional/qemu_test/linuxkernel.py
-+++ b/tests/functional/qemu_test/linuxkernel.py
-@@ -5,6 +5,9 @@
++    return RTAS_OUT_SUCCESS;
++}
+diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+index 143bc8c379..6042fc72e5 100644
+--- a/hw/ppc/spapr_rtas.c
++++ b/hw/ppc/spapr_rtas.c
+@@ -344,6 +344,73 @@ static void rtas_ibm_set_system_parameter(PowerPCCPU *cpu,
+     rtas_st(rets, 0, ret);
+ }
  
- import hashlib
- import urllib.request
-+import logging
-+import re
-+import time
++/* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
++static void rtas_configure_kernel_dump(PowerPCCPU *cpu,
++                                   SpaprMachineState *spapr,
++                                   uint32_t token, uint32_t nargs,
++                                   target_ulong args,
++                                   uint32_t nret, target_ulong rets)
++{
++    target_ulong cmd = rtas_ld(args, 0);
++    uint32_t ret_val;
++
++    /* Number of outputs has to be 1 */
++    if (nret != 1) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: ibm,configure-kernel-dump called with nret != 1.\n");
++        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        return;
++    }
++
++    /* Number of inputs has to be 3 */
++    if (nargs != 3) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "FADump: ibm,configure-kernel-dump called with nargs != 3.\n");
++        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        return;
++    }
++
++    switch (cmd) {
++    case FADUMP_CMD_REGISTER:
++        ret_val = do_fadump_register(spapr, args);
++        if (ret_val != RTAS_OUT_SUCCESS) {
++            rtas_st(rets, 0, ret_val);
++            return;
++        }
++        break;
++    case FADUMP_CMD_UNREGISTER:
++        if (spapr->fadump_dump_active) {
++            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
++            return;
++        }
++
++        spapr->fadump_registered = false;
++        spapr->fadump_dump_active = false;
++        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
++        break;
++    case FADUMP_CMD_INVALIDATE:
++        if (!spapr->fadump_dump_active) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Nothing to invalidate, no dump active\n");
++
++            rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        }
++
++        spapr->fadump_registered = false;
++        spapr->fadump_dump_active = false;
++        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                "FADump: Unknown command: " TARGET_FMT_lu "\n", cmd);
++
++        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
++        return;
++    }
++
++    rtas_st(rets, 0, RTAS_OUT_SUCCESS);
++}
++
+ static void rtas_ibm_os_term(PowerPCCPU *cpu,
+                             SpaprMachineState *spapr,
+                             uint32_t token, uint32_t nargs,
+@@ -659,6 +726,10 @@ static void core_rtas_register_types(void)
+     spapr_rtas_register(RTAS_IBM_NMI_INTERLOCK, "ibm,nmi-interlock",
+                         rtas_ibm_nmi_interlock);
  
- from .cmd import wait_for_console_pattern, exec_command_and_wait_for_pattern
- from .testcase import QemuSystemTest
-@@ -19,6 +22,62 @@ def wait_for_console_pattern(self, success_message, vm=None):
-                                  failure_message='Kernel panic - not syncing',
-                                  vm=vm)
++    /* Register fadump rtas call */
++    spapr_rtas_register(RTAS_CONFIGURE_KERNEL_DUMP, "ibm,configure-kernel-dump",
++                        rtas_configure_kernel_dump);
++
+     qtest_set_command_cb(spapr_qtest_callback);
+ }
  
-+    def wait_for_regex_console_pattern(self, success_pattern,
-+                                       failure_pattern=None,
-+                                       timeout=None):
-+        """
-+        Similar to 'wait_for_console_pattern', but supports regex patterns,
-+        hence multiple failure/success patterns can be detected at a time.
-+
-+        Args:
-+            success_pattern (str | re.Pattern): A regex pattern that indicates
-+                a successful event. If found, the method exits normally.
-+            failure_pattern (str | re.Pattern, optional): A regex pattern that
-+                indicates a failure event. If found, the test fails
-+            timeout (int, optional): The maximum time (in seconds) to wait for
-+                a match.
-+                If exceeded, the test fails.
-+        """
-+
-+        console = self.vm.console_file
-+        console_logger = logging.getLogger('console')
-+
-+        self.log.debug(
-+            f"Console interaction: success_msg='{success_pattern}' " +
-+            f"failure_msg='{failure_pattern}' timeout='{timeout}s'")
-+
-+        # Only consume console output if waiting for something
-+        if success_pattern is None and failure_pattern is None:
-+            return
-+
-+        start_time = time.time()
-+
-+        while time.time() - start_time < timeout:
-+            try:
-+                msg = console.readline().decode().strip()
-+            except UnicodeDecodeError:
-+                msg = None
-+            if not msg:
-+                continue
-+            console_logger.debug(msg)
-+            if success_pattern is None or re.search(success_pattern, msg):
-+                break
-+            if failure_pattern:
-+                # Find the matching error to print in log
-+                match = re.search(failure_pattern, msg)
-+                if not match:
-+                    continue
-+
-+                console.close()
-+                fail = 'Failure message found in console: "%s".' \
-+                        ' Expected: "%s"' % \
-+                        (match.group(), success_pattern)
-+                self.fail(fail)
-+
-+        if time.time() - start_time >= timeout:
-+            fail = f"Timeout ({timeout}s) while trying to search pattern"
-+            self.fail(fail)
-+
-     def launch_kernel(self, kernel, initrd=None, dtb=None, console_index=0,
-                       wait_for=None):
-         self.vm.set_console(console_index=console_index)
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index 170b90ae7d..6b7c1f4f49 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -26,6 +26,7 @@ ppc_ss.add(when: 'CONFIG_PSERIES', if_true: files(
+   'spapr_nvdimm.c',
+   'spapr_rtas_ddw.c',
+   'spapr_numa.c',
++  'spapr_fadump.c',
+   'pef.c',
+ ))
+ ppc_ss.add(when: ['CONFIG_PSERIES', 'CONFIG_TCG'], if_true: files(
 -- 
 2.43.5
 
