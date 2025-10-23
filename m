@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2348BCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 19:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19997CCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 19:00:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC0XB-0006aY-Kl; Thu, 23 Oct 2025 14:59:37 -0400
+	id 1vC0XB-0006ad-LD; Thu, 23 Oct 2025 14:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vC0X7-0006Ya-NJ
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:59:33 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vC0X9-0006ZW-Oc
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:59:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vC0X5-0003E1-9q
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:59:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vC0X7-0003EN-Gx
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 14:59:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761245970;
+ s=mimecast20190719; t=1761245972;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3YB+xOGWDMtE1OJfHdAxqd5sOxAtxUDFVH7AXA1Dk0w=;
- b=XAbm0SPEe82jc3R5zhMZ08f4m50qJs3EdCnDR3uL5z7+j3mE+8ZkbLuEHM1gvteVj1G+ZC
- r7IbB9ekbtZrkXvp6O+hAvUk56YwMqmon7hFf8cMypcGm/2XTnbwzNBHkoMZawiL+9jBey
- b/S7Yu2uV2NtV9RzIswJHi9OXP177zI=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K+mpVlWrgRBpecPbzFIQUbJyLDt7bDmktG7fUEU0KxA=;
+ b=eweVEquhuypUKmETjLiXV1fxvEafmtLf9iuJkZuhYrKAZFrXq180mLV/r2KYT7iT3IAJbi
+ 2jipm8aP3O7eqCSqSSubjE06gRlct6QHN66MQpO4hAiRL9jGwDbY7HyuFOPNhkzv7XHGlr
+ Bkemgpno+3SVJf64vwCYqOXduSKAIoI=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-xqi5XLMZMOeBPxshN1nXRg-1; Thu, 23 Oct 2025 14:59:28 -0400
-X-MC-Unique: xqi5XLMZMOeBPxshN1nXRg-1
-X-Mimecast-MFC-AGG-ID: xqi5XLMZMOeBPxshN1nXRg_1761245968
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-890f1090e81so341667085a.0
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:59:28 -0700 (PDT)
+ us-mta-447-DPLhGyLsPNmHAjBVEas3KQ-1; Thu, 23 Oct 2025 14:59:31 -0400
+X-MC-Unique: DPLhGyLsPNmHAjBVEas3KQ-1
+X-Mimecast-MFC-AGG-ID: DPLhGyLsPNmHAjBVEas3KQ_1761245971
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4e88947a773so55467631cf.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 11:59:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761245968; x=1761850768;
+ d=1e100.net; s=20230601; t=1761245970; x=1761850770;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3YB+xOGWDMtE1OJfHdAxqd5sOxAtxUDFVH7AXA1Dk0w=;
- b=gZ7AA2t21JD9Vl4NiRjDALGD6yI4rqJwkLOo1aDyDmQNZ1Stdhsw4MiX7TY28/7JB+
- IwmFHZUQp02coOcpWISqN/xcAYk3/JJMxKcsGqSkxd6tjy/nAmUwNadC63pk7cVRYZ5s
- XWM7T6zOOqbpJh8z+dpNf8uuvc1uAUMh8XRATbilQ1mAGTw6vGYxR5Cj+NhcSjYmhj0Z
- o3U9gavuXwb+pT0yZcWijTYSHrArXnwh3y91iwcv2Ptz309qyOOLV6HJ/+0R5pWK49b5
- jvurlawFq4LfGmmDQwZ3T2mXWJMqBBtmxjkdfqLTAaUQyC09yA/For+ef52XYUWLWjdp
- +VrA==
-X-Gm-Message-State: AOJu0YzaAoJZkaCek6tX1TPVEDIPcg5fQ2YTU06Xbvu2yjhSrJYY9h5K
- tFld1bCSBusfLPMWGBqjLSD9W/qJ6/n2BklxF14f7UQRBiwQ1tAAXE5Ixb4wBKtJlOqvse2rFTx
- BE1bZtmQh5x/c+969/OAOxHfgt7Y+Gcyi53LPRFzWd1vwEk5J9++4nn4HRU476fxGbrg9uVwlW6
- RGxb9fBSS+blSzhipYx5FougkDRJt/5gRq/GstFA==
-X-Gm-Gg: ASbGncs7s+9kZWtpjdmc+KmtTe9LKcBKs2Wc6hROuugoD3qOs1zB2vweaT3ydW7qa1Y
- cVRJx/1h7T9vzXtavUVp19ppcIpsBsi4DwgktUwkqbA08YPXC4ng8kRyb2cfC9huv6YryVkqNJJ
- gxNisVlF2iM1YHqdFsGYRL9O6/qlVNrBdujXwOEi48wz7Rov8ZYHr1NUBFHkGWi7nROyORXu6X0
- QrwfAF3zZRzB9s+MUL/pzlFKGXbaxmaejDC2IEaH5sFvhALF1u8AwoA2kujzrCpMJC2P2v+lQEU
- JxWM29KwQlVGvRMeFr8IshvbDEQ5BVy6SbPjjFxbBzoSw83uNuEBtIFSpR7GLiPf
-X-Received: by 2002:a05:620a:2586:b0:844:c04c:6a9f with SMTP id
- af79cd13be357-89070603bf9mr2770581685a.72.1761245967588; 
- Thu, 23 Oct 2025 11:59:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6w20327bFVAP6AIV1bCFZSr9pU4iSoe5jW81ZihAUC2O5/zPeIQUWvu/dTLlswfo3XpO7+w==
-X-Received: by 2002:a05:620a:2586:b0:844:c04c:6a9f with SMTP id
- af79cd13be357-89070603bf9mr2770577885a.72.1761245966971; 
- Thu, 23 Oct 2025 11:59:26 -0700 (PDT)
+ bh=K+mpVlWrgRBpecPbzFIQUbJyLDt7bDmktG7fUEU0KxA=;
+ b=mtBT3XgPPCz6MvWt0M8T73/2F4zW2utxc8J8pl1fVQIYRO9y3qlyQUwixzxyFuAZ09
+ ZCqs+3HoKK6ewpiJhWhTVRv9feIOJw3H+DmInOzUMcugK7aNZPFzOEOl+UY0pwDrIOcp
+ q713AXlqUjywQFUcSrXHUi036gAKo2pjWRPPW8RViPs4wqC0zjSJvjGRBQxTl/O7xLAM
+ ChnUEko2+JQfgy3cxFsNXizEn/3wu6m77d5Bmbh82Yz7Tcn0NomxfzPojFL1eFPYxohJ
+ Eg2bJqiKkfNw+nn7Wf9RxfgvTNvXNBPqwet4/LmXqrl1trZ9Le9YYqOT12qb8EKZgxCp
+ tZaw==
+X-Gm-Message-State: AOJu0YxwVobw/va+mt5jDOOHXFF1lwzt+6MT5Mzhm+C81bHxAkFAyrwA
+ QUqQkIJ+JpLqEUo/QNbq9CDDQJ+W+pbCsIMCv30nBr5qY6Nf3xlun0LPSTR7RXM22yX3qmCC9mc
+ leRJa3FRVvlZsvQkjjvyD9qPrAsvOToraOC519J3zyagOoDi02YyMfdml8fnY0T9pAgi1xO1Agz
+ CY9dyd2AlEnXSwFBkChWXrA+j/DiVZYIgk0/NFgw==
+X-Gm-Gg: ASbGncsZO4K01n1D7M0gUu/oVQRNAwgcAMYpqqG2n/L05Uc8LT+T9cGxhJGYNtIr8eQ
+ CTcj36dir6qaIDNkyBbG0h1oHVAFgIc0p/46I4dDrDJbzzcWc3kLhIkToydMj0i0wQUt+voZXAF
+ EXwg+ik+4NSosP9d5E30gQQG1du7gPHZ4MxWNRlW8NgQsqOmdvHItWDAO7NKCEpsoiEftVJo2Qc
+ 32G083V5c8FmvRksUOomUN9hBeUyg+Q3dpx9ncfJdPd8SVs4VCaD//hxQoDAaaTKWdvwTvNd9E4
+ Nh1t4+hQfKMa66+ZpjFMJpWejmlvGOk1l6rHoKY65CyroUmzhBhZ4dM8J42x8Yhx
+X-Received: by 2002:a05:622a:650:b0:4e8:aa22:def3 with SMTP id
+ d75a77b69052e-4e8aa22e558mr281838921cf.19.1761245970122; 
+ Thu, 23 Oct 2025 11:59:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmmnB/tCoG176yVHb77uscDJtQGtynoLcszG/HybtMkf0gbPzCuCZnyL3Y0+CbppV1GJj1Yw==
+X-Received: by 2002:a05:622a:650:b0:4e8:aa22:def3 with SMTP id
+ d75a77b69052e-4e8aa22e558mr281838381cf.19.1761245969190; 
+ Thu, 23 Oct 2025 11:59:29 -0700 (PDT)
 Received: from x1.com ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-89c0ec61770sm213940585a.26.2025.10.23.11.59.25
+ af79cd13be357-89c0ec61770sm213940585a.26.2025.10.23.11.59.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 11:59:26 -0700 (PDT)
+ Thu, 23 Oct 2025 11:59:27 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Chenyi Qiang <chenyi.qiang@intel.com>,
  David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Li Xiaoyao <xiaoyao.li@intel.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH 7/8] hostmem: Rename guest_memfd to guest_memfd_private
-Date: Thu, 23 Oct 2025 14:59:12 -0400
-Message-ID: <20251023185913.2923322-8-peterx@redhat.com>
+Subject: [PATCH 8/8] hostmem: Support in-place guest memfd to back a VM
+Date: Thu, 23 Oct 2025 14:59:13 -0400
+Message-ID: <20251023185913.2923322-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251023185913.2923322-1-peterx@redhat.com>
 References: <20251023185913.2923322-1-peterx@redhat.com>
@@ -108,85 +108,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the HostMemoryBackend.guest_memfd field to reflect what it really
-means, on whether it needs guest_memfd to back its private portion of
-mapping.  This will help on clearance when we introduce in-place
-guest_memfd for hostmem.
+Host backends supports guest-memfd now by detecting whether it's a
+confidential VM.  There's no way to choose it yet from the memory level to
+use it in-place.  If we use guest-memfd, it so far always implies we need
+two layers of memory backends, while the guest-memfd only provides the
+private set of pages.
+
+This patch introduces a way so that QEMU can consume guest memfd as the
+only source of memory to back the object (aka, in place), rather than
+having another backend supporting the pages converted to shared.
+
+To use the in-place guest-memfd, one can add a memfd object with:
+
+  -object memory-backend-memfd,guest-memfd=on,share=on
+
+Note that share=on is required with in-place guest_memfd.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/system/hostmem.h | 2 +-
- backends/hostmem-file.c  | 2 +-
- backends/hostmem-memfd.c | 2 +-
- backends/hostmem-ram.c   | 2 +-
- backends/hostmem.c       | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ qapi/qom.json            |  6 +++-
+ backends/hostmem-memfd.c | 66 +++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 67 insertions(+), 5 deletions(-)
 
-diff --git a/include/system/hostmem.h b/include/system/hostmem.h
-index 88fa791ac7..dcbf81aeae 100644
---- a/include/system/hostmem.h
-+++ b/include/system/hostmem.h
-@@ -76,7 +76,7 @@ struct HostMemoryBackend {
-     uint64_t size;
-     bool merge, dump, use_canonical_path;
-     bool prealloc, is_mapped, share, reserve;
--    bool guest_memfd, aligned;
-+    bool guest_memfd_private, aligned;
-     uint32_t prealloc_threads;
-     ThreadContext *prealloc_context;
-     DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index 1f20cd8fd6..0e4cfd6dc6 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -86,7 +86,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
-+    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-     ram_flags |= RAM_NAMED_FILE;
-     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 830cb2ffe7..6b090fe9a0 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -764,13 +764,17 @@
+ # @seal: if true, create a sealed-file, which will block further
+ #     resizing of the memory (default: true)
+ #
++# @guest-memfd: if true, use guest-memfd to back the memory region.
++#     (default: false, since: 10.2)
++#
+ # Since: 2.12
+ ##
+ { 'struct': 'MemoryBackendMemfdProperties',
+   'base': 'MemoryBackendProperties',
+   'data': { '*hugetlb': 'bool',
+             '*hugetlbsize': 'size',
+-            '*seal': 'bool' },
++            '*seal': 'bool',
++            '*guest-memfd': 'bool' },
+   'if': 'CONFIG_LINUX' }
+ 
+ ##
 diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 3f3e485709..ea93f034e4 100644
+index ea93f034e4..1fa16c1e1d 100644
 --- a/backends/hostmem-memfd.c
 +++ b/backends/hostmem-memfd.c
-@@ -60,7 +60,7 @@ have_fd:
-     backend->aligned = true;
-     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
-+    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
+@@ -18,6 +18,8 @@
+ #include "qapi/error.h"
+ #include "qom/object.h"
+ #include "migration/cpr.h"
++#include "system/kvm.h"
++#include <linux/kvm.h>
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+@@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
+     bool hugetlb;
+     uint64_t hugetlbsize;
+     bool seal;
++    /*
++     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
++     * which represents a internally private guest-memfd that only backs
++     * private pages.  Instead, this flag marks the memory backend will
++     * 100% use the guest-memfd pages in-place.
++     */
++    bool guest_memfd;
+ };
+ 
+ static bool
+@@ -47,10 +56,40 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+         goto have_fd;
+     }
+ 
+-    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+-                           m->hugetlb, m->hugetlbsize, m->seal ?
+-                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+-                           errp);
++    if (m->guest_memfd) {
++        /* User choose to use in-place guest-memfd to back the VM.. */
++        if (!backend->share) {
++            error_setg(errp, "In-place guest-memfd must be used with share=on");
++            return false;
++        }
++
++        /*
++         * This is the request to have a guest-memfd to back private pages.
++         * In-place guest-memfd doesn't work like that.  Disable it for now
++         * to make it simple, so that each memory backend can only have
++         * guest-memfd either as private, or fully shared.
++         */
++        if (backend->guest_memfd_private) {
++            error_setg(errp, "In-place guest-memfd cannot be used with another "
++                       "private guest-memfd");
++            return false;
++        }
++
++        /* TODO: add huge page support */
++        fd = kvm_create_guest_memfd(backend->size,
++                                    GUEST_MEMFD_FLAG_MMAP |
++                                    GUEST_MEMFD_FLAG_INIT_SHARED,
++                                    errp);
++        if (fd < 0) {
++            return false;
++        }
++    } else {
++        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
++                               m->hugetlb, m->hugetlbsize, m->seal ?
++                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
++                               errp);
++    }
++
+     if (fd == -1) {
+         return false;
+     }
+@@ -65,6 +104,18 @@ have_fd:
                                            backend->size, ram_flags, fd, 0, errp);
  }
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index 96ad29112d..6a507fad77 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -30,7 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
-+    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-                                                   name, backend->size,
-                                                   ram_flags, errp);
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 35734d6f4d..70450733db 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -288,7 +288,7 @@ static void host_memory_backend_init(Object *obj)
-     /* TODO: convert access to globals to compat properties */
-     backend->merge = machine_mem_merge(machine);
-     backend->dump = machine_dump_guest_core(machine);
--    backend->guest_memfd = machine_require_guest_memfd(machine);
-+    backend->guest_memfd_private = machine_require_guest_memfd(machine);
-     backend->reserve = true;
-     backend->prealloc_threads = machine->smp.cpus;
- }
+ 
++static bool
++memfd_backend_get_guest_memfd(Object *o, Error **errp)
++{
++    return MEMORY_BACKEND_MEMFD(o)->guest_memfd;
++}
++
++static void
++memfd_backend_set_guest_memfd(Object *o, bool value, Error **errp)
++{
++    MEMORY_BACKEND_MEMFD(o)->guest_memfd = value;
++}
++
+ static bool
+ memfd_backend_get_hugetlb(Object *o, Error **errp)
+ {
+@@ -152,6 +203,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
+         object_class_property_set_description(oc, "hugetlbsize",
+                                               "Huge pages size (ex: 2M, 1G)");
+     }
++
++    object_class_property_add_bool(oc, "guest-memfd",
++                                   memfd_backend_get_guest_memfd,
++                                   memfd_backend_set_guest_memfd);
++    object_class_property_set_description(oc, "guest-memfd",
++                                          "Use guest memfd");
++
+     object_class_property_add_bool(oc, "seal",
+                                    memfd_backend_get_seal,
+                                    memfd_backend_set_seal);
 -- 
 2.50.1
 
