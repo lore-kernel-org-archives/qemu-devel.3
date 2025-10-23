@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9389ECCF9E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1766CCD1BC
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 04:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBmjI-0000cd-WE; Thu, 23 Oct 2025 00:15:14 -0400
+	id 1vBmj8-0000aE-TS; Thu, 23 Oct 2025 00:15:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmjG-0000cI-MF
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:10 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1vBmj7-0000Zh-GQ
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:01 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vBmjD-0007IS-R6
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:09 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-77f5d497692so463185b3a.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:15:07 -0700 (PDT)
+ id 1vBmj4-00076I-1b
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 00:15:01 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-780fc3b181aso245468b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 21:14:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761192906; x=1761797706; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761192896; x=1761797696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=teMt2way951YBxY9HJbUv32x5kU3XvCldsY+jVeFn8s=;
- b=fsrymvowvhhloDlNjlyTpbAHk7FRnBgxqtVimld9fVuHUbxjulg9nPJ4TYdMRDMbIp
- 3Fqj+8PrOE2wmJeTJbm2GUdPEyspz8VydZukrZuQDpMyzN7B/5JmIOqiMajpNbyP/7Af
- 0LCyQM71WPEy628rWjPj2u2V9MPWPKqgAhGXg2wBcKtFxMsKxfIAisd3BY/MOhEyz0Vw
- UdeLbJIYXb9XHaR2xsPOyKX7FcvxNad+pAhO4zpnTUPN7IDHR9WNLkGIj6x3EOYf6yDL
- GNPoHUeZG6jcDlc7y2eH5d961VwdpDvt0oAqj/BLN1ZKOcBsEHgfNdcf5hhq33XM2iYv
- 6sVg==
+ bh=q3b3KiRFcodjeYXZ9z9ez1yB1uPskn9qGHHcHxHyxcw=;
+ b=XWNbhRyyKhT7QAZkHRuujmCYWdlfW1B0/Q0bbRornySbH8sihLCdtPb15Qp9IjW5Wt
+ ELvQ1WWM1LB6+4w95v4SH+j/zqJ8PTh8Ejqz/fOkTTbTopdRawgPBldMXjJXmnJ1a4xG
+ lVMvuGZ/Kn+ygDOfUaqy6Mm1+4zEKAwAO+ugj8uOJ2jSL5bEVvmuV/p+ihwaTJ+STW3q
+ DCWDW+qaeBmEhnKawa/UtiqtY40PiddPN5YRZFFL+nkOdDSmNLIVmO20OcEP1Um9Ddq3
+ VgrlclXrJqIiowQs17oWOr4J0WyPzl0ZMZIwOmLD0SnEwoL4T4zVd8a3O9e9JlDq2hWi
+ uRvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761192906; x=1761797706;
+ d=1e100.net; s=20230601; t=1761192896; x=1761797696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=teMt2way951YBxY9HJbUv32x5kU3XvCldsY+jVeFn8s=;
- b=d1c15GtWsem9hzEE+5W+PWUORUDsx1SnTlxMDzVDZQ8W5FCvK4Fh2uxwi6udzaFvM3
- 9AH69efNTu4Kb8NAMm7peXtEDNS+SOKKo5g78lX2YIQQqDcxBaucke7zO7dHYIvIPX7S
- +fdl9qru1Dqn0OmJQOy2ubejNwaDYA4ui96fP3OdczZpHLn8x2TTCzYxddjONu8ZabJD
- ZYlmaWZ7KWA+943toW0+bsFZJBzCksGO9RWBIz9xKfcI9IeRMwAyHqprRq8i2hsjf0n+
- tS213TWGMyxYaSorK5fao8vA1jf6G9t1r1gp9HFFXYPqpbo3lewhVMX/7l5OyEDJobsj
- kgZw==
-X-Gm-Message-State: AOJu0YwcrYSTlwB45UZCqMKYN5BZlN125ghwN2nhfhGwDELznhPXZ+lB
- 4t1LlN7K4NGC4Qa6QlVCmJOXeD832y6qy08PQA7QmgWVzO41HrafViuZ27t3xw==
-X-Gm-Gg: ASbGncta6+05jC0UGPtz/OCpaiegoy7bYPsdavbLllkilS8nucTOH9CM7M0s2dDUwZS
- UM1o2XXfd6wVVkKoMoD8EqtYxgu2rJt9ZQt4Oww4DRWJqMrCJ6ULIJkCqaKsF7zCuBBpy7KGD9q
- SyrNEXsqrMmSW/anA782wOXGFGlwU6RyXXD942UQNNIBwZ0yIgL7Dixb4tjJAqMHiNJNwzt8718
- 8lomPP6/bh+mGcxBCnd58uCdNmJwDf4VdahtKzYZbiwi27ihRYXJFkV5ilnOonAXXSaubHvfF+7
- fC8ahfiLTtskUypXMTjgcp0Nil9hD20e4vdIb4V2KYBB3rvUOrxlU3FiK/JVY9ecxqp1dpidFnH
- PPBRUARcs5IZ4atPg/ht0ypgH7RnfSRBBNqXeGOxK7MGp7UFYguPWkDw7LYWZ4bAXHrBToLqAXm
- Qjdyr1VDcw/OaYmTL1dmfCiFSKRTIndjP4LVHA+w+OaM0thi3Jesztnne+LsO6CocxfDjf7mSwY
- jnYxSjA3a8r9AOy3RN7
-X-Google-Smtp-Source: AGHT+IHSGwojHXW1kWuVMB8L+8Jjjc4BotrzoUisrnYtXrEwSMRHwG59I2D4+sdlw13PNM2ONUAjjA==
-X-Received: by 2002:a05:6a20:2590:b0:334:a775:a59b with SMTP id
- adf61e73a8af0-334a8650ca9mr34519341637.58.1761192905721; 
- Wed, 22 Oct 2025 21:15:05 -0700 (PDT)
+ bh=q3b3KiRFcodjeYXZ9z9ez1yB1uPskn9qGHHcHxHyxcw=;
+ b=MeK/ZP7jsLGAO5SypTC+ytQILlhWtUKD2lh+aoMUeJ1mGwk/2vn64ofkGKbi28HW+o
+ Vi2QQKHE8F5jsnaqxCTmiCu2AHnDlXioa1inD2cZ/ed8yOlb0+B4JsD2W6PG4IA7346o
+ W+fWqzvq8LySQNAuGkuqnlUJf+spEAYg/KFB0Ydav2yjElyCLO2BH7iKL8I+tyrOjQpT
+ bFg46pIRNvnx6RnLeWQAv3qVQEjQkvc2luBjNH+aas9hIfNtkj4lOKTnP5uAv440Iixb
+ bZlnNMyP9rc8mgsrgmL4ErZoeyKwZNVi5LstY2jOVx8mzpiuFZRmnSjku5KX8ETGn1GL
+ bXbQ==
+X-Gm-Message-State: AOJu0YzB7SFyX2Nsz9AUP69okyuwAH+A4qD3XtxtFQim7Hjdw2QQdg8E
+ 4JKwkXfIo31SRcoI3Uj+D6MSGc+9sao4F8u4jeWyILBvuY2KGvRcjFLnAidFgw==
+X-Gm-Gg: ASbGncttWm1c1B3ptyJts24MqFIwUK54jbDlRW74bdVDLKx7rL3jhvsYz+wQtqBCdwb
+ AfizM8CO+uMaGeFO4hTOdwAYi2NfbXg8/3upiqSR3m/tg1gQZDzKg2Xp1QVI+muT9pcq+FIF0mV
+ NNAqGUkwMKPvx6+MtMufAbPfKzs9x8Q6+UKzy0+58rljofyrUjqqC3zWC38Qv+nrCspEtwPw6+z
+ qtGoSfLU4s1M9MPzGz2KIMPa0OPvKDJldm0bPq354fKGMk8PJBlpQd0GtKRLPVBsnJE8Zae7xZv
+ +AaN39fH0QGJEXNfivIX0h94E6Cw5ifZ6gEWZoYkUiUZnFBGpmbqYE3ANVEQXpHFaaHSv08ydum
+ A+Adp9CoJDYZcJd2X8nmi7w8hvxSIcz0EtB1e++A8tn6+Bo3c7KASelj8FF6yBj9FkBwaPFey46
+ UH+f6l36bSYCtPBt+jyWdl+wKxzgQKFsHwWCtIDNT1wxUUIfxSCaMim3xby8TDoVKbLoHIGRKsh
+ rGe6pjfhHgwrWjD1kGoG/xwqeWoUUI=
+X-Google-Smtp-Source: AGHT+IG2LshWid24tSer61In00kE4AkWkeBp7tc3wRGeg9HwywtAU7v6Lc/o3wXfp/lvqAy0PCr1Ew==
+X-Received: by 2002:a05:6a20:a104:b0:334:a180:b7a7 with SMTP id
+ adf61e73a8af0-33c61fc0376mr1624637637.42.1761192895904; 
+ Wed, 22 Oct 2025 21:14:55 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.15.02
+ d2e1a72fcca58-7a274abe5f0sm961640b3a.34.2025.10.22.21.14.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 22 Oct 2025 21:15:05 -0700 (PDT)
+ Wed, 22 Oct 2025 21:14:55 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
@@ -75,18 +75,17 @@ Cc: alistair23@gmail.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 05/37] target/riscv: Conceal MO_TE within gen_load() /
- gen_store()
-Date: Thu, 23 Oct 2025 14:14:03 +1000
-Message-ID: <20251023041435.1775208-6-alistair.francis@wdc.com>
+Subject: [PULL 02/37] target/riscv: Explode MO_TExx -> MO_TE | MO_xx
+Date: Thu, 23 Oct 2025 14:14:00 +1000
+Message-ID: <20251023041435.1775208-3-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023041435.1775208-1-alistair.francis@wdc.com>
 References: <20251023041435.1775208-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -112,137 +111,537 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-All callers of gen_load() / gen_store() set the MO_TE flag.
-Set it once in the callees.
+Extract the implicit MO_TE definition in order to replace
+it in the next commit.
+
+Mechanical change using:
+
+  $ for n in UW UL UQ UO SW SL SQ; do \
+      sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
+           $(git grep -l MO_TE$n target/hexagon); \
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251010155045.78220-6-philmd@linaro.org>
+Message-ID: <20251010155045.78220-3-philmd@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_rvi.c.inc   | 24 ++++++++++++-----------
- target/riscv/insn_trans/trans_rvzce.c.inc |  6 +++---
- 2 files changed, 16 insertions(+), 14 deletions(-)
+ target/riscv/op_helper.c                      | 16 ++--
+ target/riscv/insn_trans/trans_rva.c.inc       | 44 ++++-----
+ target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
+ target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
+ target/riscv/insn_trans/trans_rvi.c.inc       | 22 ++---
+ target/riscv/insn_trans/trans_rvzabha.c.inc   | 20 ++---
+ target/riscv/insn_trans/trans_rvzacas.c.inc   |  8 +-
+ target/riscv/insn_trans/trans_rvzce.c.inc     | 10 +--
+ target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
+ target/riscv/insn_trans/trans_xthead.c.inc    | 90 +++++++++----------
+ 11 files changed, 113 insertions(+), 113 deletions(-)
 
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 8382aa94cb..c486f771d3 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -633,7 +633,7 @@ target_ulong helper_hyp_hlv_hu(CPURISCVState *env, target_ulong addr)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, false, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUW, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UW, mmu_idx);
+ 
+     return cpu_ldw_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+ }
+@@ -642,7 +642,7 @@ target_ulong helper_hyp_hlv_wu(CPURISCVState *env, target_ulong addr)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, false, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUL, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL, mmu_idx);
+ 
+     return cpu_ldl_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+ }
+@@ -651,7 +651,7 @@ target_ulong helper_hyp_hlv_d(CPURISCVState *env, target_ulong addr)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, false, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUQ, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UQ, mmu_idx);
+ 
+     return cpu_ldq_mmu(env, adjust_addr_virt(env, addr), oi, ra);
+ }
+@@ -669,7 +669,7 @@ void helper_hyp_hsv_h(CPURISCVState *env, target_ulong addr, target_ulong val)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, false, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUW, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UW, mmu_idx);
+ 
+     cpu_stw_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
+ }
+@@ -678,7 +678,7 @@ void helper_hyp_hsv_w(CPURISCVState *env, target_ulong addr, target_ulong val)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, false, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUL, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL, mmu_idx);
+ 
+     cpu_stl_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
+ }
+@@ -687,7 +687,7 @@ void helper_hyp_hsv_d(CPURISCVState *env, target_ulong addr, target_ulong val)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, false, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUQ, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UQ, mmu_idx);
+ 
+     cpu_stq_mmu(env, adjust_addr_virt(env, addr), val, oi, ra);
+ }
+@@ -703,7 +703,7 @@ target_ulong helper_hyp_hlvx_hu(CPURISCVState *env, target_ulong addr)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, true, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUW, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UW, mmu_idx);
+ 
+     return cpu_ldw_code_mmu(env, addr, oi, GETPC());
+ }
+@@ -712,7 +712,7 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, target_ulong addr)
+ {
+     uintptr_t ra = GETPC();
+     int mmu_idx = check_access_hlsv(env, true, ra);
+-    MemOpIdx oi = make_memop_idx(MO_TEUL, mmu_idx);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL, mmu_idx);
+ 
+     return cpu_ldl_code_mmu(env, addr, oi, ra);
+ }
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index 9cf3ae8019..10e4c55efd 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -99,142 +99,142 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+ static bool trans_lr_w(DisasContext *ctx, arg_lr_w *a)
+ {
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_lr(ctx, a, (MO_ALIGN | MO_TESL));
++    return gen_lr(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
+ }
+ 
+ static bool trans_sc_w(DisasContext *ctx, arg_sc_w *a)
+ {
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_sc(ctx, a, (MO_ALIGN | MO_TESL));
++    return gen_sc(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
+ }
+ 
+ static bool trans_amoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amoadd_w(DisasContext *ctx, arg_amoadd_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amoxor_w(DisasContext *ctx, arg_amoxor_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amoand_w(DisasContext *ctx, arg_amoand_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amoor_w(DisasContext *ctx, arg_amoor_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amomin_w(DisasContext *ctx, arg_amomin_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amomax_w(DisasContext *ctx, arg_amomax_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amominu_w(DisasContext *ctx, arg_amominu_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_amomaxu_w(DisasContext *ctx, arg_amomaxu_w *a)
+ {
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TESL);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TE | MO_SL);
+ }
+ 
+ static bool trans_lr_d(DisasContext *ctx, arg_lr_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_lr(ctx, a, MO_ALIGN | MO_TEUQ);
++    return gen_lr(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_sc_d(DisasContext *ctx, arg_sc_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_sc(ctx, a, (MO_ALIGN | MO_TEUQ));
++    return gen_sc(ctx, a, (MO_ALIGN | MO_TE | MO_UQ));
+ }
+ 
+ static bool trans_amoswap_d(DisasContext *ctx, arg_amoswap_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amoadd_d(DisasContext *ctx, arg_amoadd_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amoxor_d(DisasContext *ctx, arg_amoxor_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amoand_d(DisasContext *ctx, arg_amoand_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amoor_d(DisasContext *ctx, arg_amoor_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amomin_d(DisasContext *ctx, arg_amomin_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amomax_d(DisasContext *ctx, arg_amomax_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amominu_d(DisasContext *ctx, arg_amominu_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TE | MO_UQ);
+ }
+ 
+ static bool trans_amomaxu_d(DisasContext *ctx, arg_amomaxu_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZAAMO(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TEUQ);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TE | MO_UQ);
+ }
+diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/insn_trans/trans_rvd.c.inc
+index 30883ea37c..3385820678 100644
+--- a/target/riscv/insn_trans/trans_rvd.c.inc
++++ b/target/riscv/insn_trans/trans_rvd.c.inc
+@@ -42,7 +42,7 @@
+ static bool trans_fld(DisasContext *ctx, arg_fld *a)
+ {
+     TCGv addr;
+-    MemOp memop = MO_TEUQ;
++    MemOp memop = MO_TE | MO_UQ;
+ 
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+@@ -72,7 +72,7 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
+ static bool trans_fsd(DisasContext *ctx, arg_fsd *a)
+ {
+     TCGv addr;
+-    MemOp memop = MO_TEUQ;
++    MemOp memop = MO_TE | MO_UQ;
+ 
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
+index ed73afe089..150e2b9a7d 100644
+--- a/target/riscv/insn_trans/trans_rvf.c.inc
++++ b/target/riscv/insn_trans/trans_rvf.c.inc
+@@ -43,7 +43,7 @@ static bool trans_flw(DisasContext *ctx, arg_flw *a)
+ {
+     TCGv_i64 dest;
+     TCGv addr;
+-    MemOp memop = MO_TEUL;
++    MemOp memop = MO_TE | MO_UL;
+ 
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+@@ -65,7 +65,7 @@ static bool trans_flw(DisasContext *ctx, arg_flw *a)
+ static bool trans_fsw(DisasContext *ctx, arg_fsw *a)
+ {
+     TCGv addr;
+-    MemOp memop = MO_TEUL;
++    MemOp memop = MO_TE | MO_UL;
+ 
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
 diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 34012caf1e..9a03058f46 100644
+index b9c7160468..34012caf1e 100644
 --- a/target/riscv/insn_trans/trans_rvi.c.inc
 +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -402,6 +402,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
- {
-     bool out;
- 
-+    memop |= MO_TE;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |= MO_ATOM_WITHIN16;
-     }
-@@ -426,24 +427,24 @@ static bool trans_lb(DisasContext *ctx, arg_lb *a)
+@@ -426,24 +426,24 @@ static bool trans_lb(DisasContext *ctx, arg_lb *a)
  
  static bool trans_lh(DisasContext *ctx, arg_lh *a)
  {
--    return gen_load(ctx, a, MO_TE | MO_SW);
-+    return gen_load(ctx, a, MO_SW);
+-    return gen_load(ctx, a, MO_TESW);
++    return gen_load(ctx, a, MO_TE | MO_SW);
  }
  
  static bool trans_lw(DisasContext *ctx, arg_lw *a)
  {
--    return gen_load(ctx, a, MO_TE | MO_SL);
-+    return gen_load(ctx, a, MO_SL);
+-    return gen_load(ctx, a, MO_TESL);
++    return gen_load(ctx, a, MO_TE | MO_SL);
  }
  
  static bool trans_ld(DisasContext *ctx, arg_ld *a)
  {
      REQUIRE_64_OR_128BIT(ctx);
--    return gen_load(ctx, a, MO_TE | MO_SQ);
-+    return gen_load(ctx, a, MO_SQ);
+-    return gen_load(ctx, a, MO_TESQ);
++    return gen_load(ctx, a, MO_TE | MO_SQ);
  }
  
  static bool trans_lq(DisasContext *ctx, arg_lq *a)
  {
      REQUIRE_128BIT(ctx);
--    return gen_load(ctx, a, MO_TE | MO_UO);
-+    return gen_load(ctx, a, MO_UO);
+-    return gen_load(ctx, a, MO_TEUO);
++    return gen_load(ctx, a, MO_TE | MO_UO);
  }
  
  static bool trans_lbu(DisasContext *ctx, arg_lbu *a)
-@@ -453,19 +454,19 @@ static bool trans_lbu(DisasContext *ctx, arg_lbu *a)
+@@ -453,19 +453,19 @@ static bool trans_lbu(DisasContext *ctx, arg_lbu *a)
  
  static bool trans_lhu(DisasContext *ctx, arg_lhu *a)
  {
--    return gen_load(ctx, a, MO_TE | MO_UW);
-+    return gen_load(ctx, a, MO_UW);
+-    return gen_load(ctx, a, MO_TEUW);
++    return gen_load(ctx, a, MO_TE | MO_UW);
  }
  
  static bool trans_lwu(DisasContext *ctx, arg_lwu *a)
  {
      REQUIRE_64_OR_128BIT(ctx);
--    return gen_load(ctx, a, MO_TE | MO_UL);
-+    return gen_load(ctx, a, MO_UL);
+-    return gen_load(ctx, a, MO_TEUL);
++    return gen_load(ctx, a, MO_TE | MO_UL);
  }
  
  static bool trans_ldu(DisasContext *ctx, arg_ldu *a)
  {
      REQUIRE_128BIT(ctx);
--    return gen_load(ctx, a, MO_TE | MO_UQ);
-+    return gen_load(ctx, a, MO_UQ);
+-    return gen_load(ctx, a, MO_TEUQ);
++    return gen_load(ctx, a, MO_TE | MO_UQ);
  }
  
  static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
-@@ -503,6 +504,7 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
- 
- static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
- {
-+    memop |= MO_TE;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |= MO_ATOM_WITHIN16;
-     }
-@@ -521,24 +523,24 @@ static bool trans_sb(DisasContext *ctx, arg_sb *a)
+@@ -521,24 +521,24 @@ static bool trans_sb(DisasContext *ctx, arg_sb *a)
  
  static bool trans_sh(DisasContext *ctx, arg_sh *a)
  {
--    return gen_store(ctx, a, MO_TE | MO_SW);
-+    return gen_store(ctx, a, MO_SW);
+-    return gen_store(ctx, a, MO_TESW);
++    return gen_store(ctx, a, MO_TE | MO_SW);
  }
  
  static bool trans_sw(DisasContext *ctx, arg_sw *a)
  {
--    return gen_store(ctx, a, MO_TE | MO_SL);
-+    return gen_store(ctx, a, MO_SL);
+-    return gen_store(ctx, a, MO_TESL);
++    return gen_store(ctx, a, MO_TE | MO_SL);
  }
  
  static bool trans_sd(DisasContext *ctx, arg_sd *a)
  {
      REQUIRE_64_OR_128BIT(ctx);
--    return gen_store(ctx, a, MO_TE | MO_UQ);
-+    return gen_store(ctx, a, MO_UQ);
+-    return gen_store(ctx, a, MO_TEUQ);
++    return gen_store(ctx, a, MO_TE | MO_UQ);
  }
  
  static bool trans_sq(DisasContext *ctx, arg_sq *a)
  {
      REQUIRE_128BIT(ctx);
--    return gen_store(ctx, a, MO_TE | MO_UO);
-+    return gen_store(ctx, a, MO_UO);
+-    return gen_store(ctx, a, MO_TEUO);
++    return gen_store(ctx, a, MO_TE | MO_UO);
  }
  
  static bool trans_addd(DisasContext *ctx, arg_addd *a)
+diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
+index ce8edcba62..25db42d24c 100644
+--- a/target/riscv/insn_trans/trans_rvzabha.c.inc
++++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
+@@ -79,55 +79,55 @@ static bool trans_amomaxu_b(DisasContext *ctx, arg_amomaxu_b *a)
+ static bool trans_amoswap_h(DisasContext *ctx, arg_amoswap_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amoadd_h(DisasContext *ctx, arg_amoadd_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amoxor_h(DisasContext *ctx, arg_amoxor_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amoand_h(DisasContext *ctx, arg_amoand_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amoor_h(DisasContext *ctx, arg_amoor_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amomin_h(DisasContext *ctx, arg_amomin_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amomax_h(DisasContext *ctx, arg_amomax_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amominu_h(DisasContext *ctx, arg_amominu_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amomaxu_h(DisasContext *ctx, arg_amomaxu_h *a)
+ {
+     REQUIRE_ZABHA(ctx);
+-    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TESW);
++    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TE | MO_SW);
+ }
+ 
+ static bool trans_amocas_b(DisasContext *ctx, arg_amocas_b *a)
+@@ -141,5 +141,5 @@ static bool trans_amocas_h(DisasContext *ctx, arg_amocas_h *a)
+ {
+     REQUIRE_ZACAS(ctx);
+     REQUIRE_ZABHA(ctx);
+-    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TESW);
++    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_SW);
+ }
+diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/insn_trans/trans_rvzacas.c.inc
+index 15e688a033..5e7c7c92b7 100644
+--- a/target/riscv/insn_trans/trans_rvzacas.c.inc
++++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
+@@ -25,7 +25,7 @@
+ static bool trans_amocas_w(DisasContext *ctx, arg_amocas_w *a)
+ {
+     REQUIRE_ZACAS(ctx);
+-    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TESL);
++    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_SL);
+ }
+ 
+ static TCGv_i64 get_gpr_pair(DisasContext *ctx, int reg_num)
+@@ -88,10 +88,10 @@ static bool trans_amocas_d(DisasContext *ctx, arg_amocas_d *a)
+     REQUIRE_ZACAS(ctx);
+     switch (get_ol(ctx)) {
+     case MXL_RV32:
+-        return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_TEUQ);
++        return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
+     case MXL_RV64:
+     case MXL_RV128:
+-        return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TEUQ);
++        return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
+     default:
+         g_assert_not_reached();
+     }
+@@ -123,7 +123,7 @@ static bool trans_amocas_q(DisasContext *ctx, arg_amocas_q *a)
+     tcg_gen_concat_i64_i128(dest, destl, desth);
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     tcg_gen_atomic_cmpxchg_i128(dest, src1, dest, src2, ctx->mem_idx,
+-                                (MO_ALIGN | MO_TEUO));
++                                (MO_ALIGN | MO_TE | MO_UO));
+ 
+     tcg_gen_extr_i128_i64(destl, desth, dest);
+ 
 diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/insn_trans/trans_rvzce.c.inc
-index d130179432..c8dc102c8e 100644
+index dd15af0f54..d130179432 100644
 --- a/target/riscv/insn_trans/trans_rvzce.c.inc
 +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
 @@ -88,13 +88,13 @@ static bool trans_c_lbu(DisasContext *ctx, arg_c_lbu *a)
  static bool trans_c_lhu(DisasContext *ctx, arg_c_lhu *a)
  {
      REQUIRE_ZCB(ctx);
--    return gen_load(ctx, a, MO_TE | MO_UW);
-+    return gen_load(ctx, a, MO_UW);
+-    return gen_load(ctx, a, MO_TEUW);
++    return gen_load(ctx, a, MO_TE | MO_UW);
  }
  
  static bool trans_c_lh(DisasContext *ctx, arg_c_lh *a)
  {
      REQUIRE_ZCB(ctx);
--    return gen_load(ctx, a, MO_TE | MO_SW);
-+    return gen_load(ctx, a, MO_SW);
+-    return gen_load(ctx, a, MO_TESW);
++    return gen_load(ctx, a, MO_TE | MO_SW);
  }
  
  static bool trans_c_sb(DisasContext *ctx, arg_c_sb *a)
@@ -250,11 +649,430 @@ index d130179432..c8dc102c8e 100644
  static bool trans_c_sh(DisasContext *ctx, arg_c_sh *a)
  {
      REQUIRE_ZCB(ctx);
--    return gen_store(ctx, a, MO_TE | MO_UW);
-+    return gen_store(ctx, a, MO_UW);
+-    return gen_store(ctx, a, MO_TEUW);
++    return gen_store(ctx, a, MO_TE | MO_UW);
  }
  
  #define X_S0    8
+@@ -175,7 +175,7 @@ static bool gen_pop(DisasContext *ctx, arg_cmpp *a, bool ret, bool ret_val)
+         return false;
+     }
+ 
+-    MemOp memop = get_ol(ctx) == MXL_RV32 ? MO_TEUL : MO_TEUQ;
++    MemOp memop = get_ol(ctx) == MXL_RV32 ? MO_TE | MO_UL : MO_TE | MO_UQ;
+     int reg_size = memop_size(memop);
+     target_ulong stack_adj = ROUND_UP(ctpop32(reg_bitmap) * reg_size, 16) +
+                              a->spimm;
+@@ -228,7 +228,7 @@ static bool trans_cm_push(DisasContext *ctx, arg_cm_push *a)
+         return false;
+     }
+ 
+-    MemOp memop = get_ol(ctx) == MXL_RV32 ? MO_TEUL : MO_TEUQ;
++    MemOp memop = get_ol(ctx) == MXL_RV32 ? MO_TE | MO_UL : MO_TE | MO_UQ;
+     int reg_size = memop_size(memop);
+     target_ulong stack_adj = ROUND_UP(ctpop32(reg_bitmap) * reg_size, 16) +
+                              a->spimm;
+diff --git a/target/riscv/insn_trans/trans_rvzfh.c.inc b/target/riscv/insn_trans/trans_rvzfh.c.inc
+index bece48e600..eec478afcb 100644
+--- a/target/riscv/insn_trans/trans_rvzfh.c.inc
++++ b/target/riscv/insn_trans/trans_rvzfh.c.inc
+@@ -57,7 +57,7 @@ static bool trans_flh(DisasContext *ctx, arg_flh *a)
+     }
+ 
+     dest = cpu_fpr[a->rd];
+-    tcg_gen_qemu_ld_i64(dest, t0, ctx->mem_idx, MO_TEUW);
++    tcg_gen_qemu_ld_i64(dest, t0, ctx->mem_idx, MO_TE | MO_UW);
+     gen_nanbox_h(dest, dest);
+ 
+     mark_fs_dirty(ctx);
+@@ -79,7 +79,7 @@ static bool trans_fsh(DisasContext *ctx, arg_fsh *a)
+         t0 = temp;
+     }
+ 
+-    tcg_gen_qemu_st_i64(cpu_fpr[a->rs2], t0, ctx->mem_idx, MO_TEUW);
++    tcg_gen_qemu_st_i64(cpu_fpr[a->rs2], t0, ctx->mem_idx, MO_TE | MO_UW);
+ 
+     return true;
+ }
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index f4a1c12ca0..c555596617 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -105,7 +105,7 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+     src1 = get_address(ctx, a->rs1, 0);
+ 
+     tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx),
+-                           (MO_ALIGN | MO_TESL));
++                           (MO_ALIGN | MO_TE | MO_SL));
+     gen_set_gpr(ctx, a->rd, dest);
+     return true;
+ }
+@@ -134,7 +134,7 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
+     src1 = get_address(ctx, a->rs1, 0);
+ 
+     tcg_gen_atomic_xchg_tl(dest, src1, src2, SS_MMU_INDEX(ctx),
+-                           (MO_ALIGN | MO_TESQ));
++                           (MO_ALIGN | MO_TE | MO_SQ));
+     gen_set_gpr(ctx, a->rd, dest);
+     return true;
+ }
+diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/insn_trans/trans_xthead.c.inc
+index 22488412d4..754cb80e22 100644
+--- a/target/riscv/insn_trans/trans_xthead.c.inc
++++ b/target/riscv/insn_trans/trans_xthead.c.inc
+@@ -379,7 +379,7 @@ static bool trans_th_flrd(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+-    return gen_fload_idx(ctx, a, MO_TEUQ, false);
++    return gen_fload_idx(ctx, a, MO_TE | MO_UQ, false);
+ }
+ 
+ static bool trans_th_flrw(DisasContext *ctx, arg_th_memidx *a)
+@@ -387,7 +387,7 @@ static bool trans_th_flrw(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+-    return gen_fload_idx(ctx, a, MO_TEUL, false);
++    return gen_fload_idx(ctx, a, MO_TE | MO_UL, false);
+ }
+ 
+ static bool trans_th_flurd(DisasContext *ctx, arg_th_memidx *a)
+@@ -395,7 +395,7 @@ static bool trans_th_flurd(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+-    return gen_fload_idx(ctx, a, MO_TEUQ, true);
++    return gen_fload_idx(ctx, a, MO_TE | MO_UQ, true);
+ }
+ 
+ static bool trans_th_flurw(DisasContext *ctx, arg_th_memidx *a)
+@@ -403,7 +403,7 @@ static bool trans_th_flurw(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+-    return gen_fload_idx(ctx, a, MO_TEUL, true);
++    return gen_fload_idx(ctx, a, MO_TE | MO_UL, true);
+ }
+ 
+ static bool trans_th_fsrd(DisasContext *ctx, arg_th_memidx *a)
+@@ -411,7 +411,7 @@ static bool trans_th_fsrd(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+-    return gen_fstore_idx(ctx, a, MO_TEUQ, false);
++    return gen_fstore_idx(ctx, a, MO_TE | MO_UQ, false);
+ }
+ 
+ static bool trans_th_fsrw(DisasContext *ctx, arg_th_memidx *a)
+@@ -419,7 +419,7 @@ static bool trans_th_fsrw(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+-    return gen_fstore_idx(ctx, a, MO_TEUL, false);
++    return gen_fstore_idx(ctx, a, MO_TE | MO_UL, false);
+ }
+ 
+ static bool trans_th_fsurd(DisasContext *ctx, arg_th_memidx *a)
+@@ -427,7 +427,7 @@ static bool trans_th_fsurd(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+-    return gen_fstore_idx(ctx, a, MO_TEUQ, true);
++    return gen_fstore_idx(ctx, a, MO_TE | MO_UQ, true);
+ }
+ 
+ static bool trans_th_fsurw(DisasContext *ctx, arg_th_memidx *a)
+@@ -435,7 +435,7 @@ static bool trans_th_fsurw(DisasContext *ctx, arg_th_memidx *a)
+     REQUIRE_XTHEADFMEMIDX(ctx);
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+-    return gen_fstore_idx(ctx, a, MO_TEUL, true);
++    return gen_fstore_idx(ctx, a, MO_TE | MO_UL, true);
+ }
+ 
+ /* XTheadFmv */
+@@ -598,64 +598,64 @@ static bool trans_th_ldia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_inc(ctx, a, MO_TESQ, false);
++    return gen_load_inc(ctx, a, MO_TE | MO_SQ, false);
+ }
+ 
+ static bool trans_th_ldib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_inc(ctx, a, MO_TESQ, true);
++    return gen_load_inc(ctx, a, MO_TE | MO_SQ, true);
+ }
+ 
+ static bool trans_th_lwia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_inc(ctx, a, MO_TESL, false);
++    return gen_load_inc(ctx, a, MO_TE | MO_SL, false);
+ }
+ 
+ static bool trans_th_lwib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_inc(ctx, a, MO_TESL, true);
++    return gen_load_inc(ctx, a, MO_TE | MO_SL, true);
+ }
+ 
+ static bool trans_th_lwuia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_inc(ctx, a, MO_TEUL, false);
++    return gen_load_inc(ctx, a, MO_TE | MO_UL, false);
+ }
+ 
+ static bool trans_th_lwuib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_inc(ctx, a, MO_TEUL, true);
++    return gen_load_inc(ctx, a, MO_TE | MO_UL, true);
+ }
+ 
+ static bool trans_th_lhia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_inc(ctx, a, MO_TESW, false);
++    return gen_load_inc(ctx, a, MO_TE | MO_SW, false);
+ }
+ 
+ static bool trans_th_lhib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_inc(ctx, a, MO_TESW, true);
++    return gen_load_inc(ctx, a, MO_TE | MO_SW, true);
+ }
+ 
+ static bool trans_th_lhuia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_inc(ctx, a, MO_TEUW, false);
++    return gen_load_inc(ctx, a, MO_TE | MO_UW, false);
+ }
+ 
+ static bool trans_th_lhuib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_inc(ctx, a, MO_TEUW, true);
++    return gen_load_inc(ctx, a, MO_TE | MO_UW, true);
+ }
+ 
+ static bool trans_th_lbia(DisasContext *ctx, arg_th_meminc *a)
+@@ -686,38 +686,38 @@ static bool trans_th_sdia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_store_inc(ctx, a, MO_TESQ, false);
++    return gen_store_inc(ctx, a, MO_TE | MO_SQ, false);
+ }
+ 
+ static bool trans_th_sdib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_store_inc(ctx, a, MO_TESQ, true);
++    return gen_store_inc(ctx, a, MO_TE | MO_SQ, true);
+ }
+ 
+ static bool trans_th_swia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_inc(ctx, a, MO_TESL, false);
++    return gen_store_inc(ctx, a, MO_TE | MO_SL, false);
+ }
+ 
+ static bool trans_th_swib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_inc(ctx, a, MO_TESL, true);
++    return gen_store_inc(ctx, a, MO_TE | MO_SL, true);
+ }
+ 
+ static bool trans_th_shia(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_inc(ctx, a, MO_TESW, false);
++    return gen_store_inc(ctx, a, MO_TE | MO_SW, false);
+ }
+ 
+ static bool trans_th_shib(DisasContext *ctx, arg_th_meminc *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_inc(ctx, a, MO_TESW, true);
++    return gen_store_inc(ctx, a, MO_TE | MO_SW, true);
+ }
+ 
+ static bool trans_th_sbia(DisasContext *ctx, arg_th_meminc *a)
+@@ -769,32 +769,32 @@ static bool trans_th_lrd(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_idx(ctx, a, MO_TESQ, false);
++    return gen_load_idx(ctx, a, MO_TE | MO_SQ, false);
+ }
+ 
+ static bool trans_th_lrw(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_idx(ctx, a, MO_TESL, false);
++    return gen_load_idx(ctx, a, MO_TE | MO_SL, false);
+ }
+ 
+ static bool trans_th_lrwu(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_idx(ctx, a, MO_TEUL, false);
++    return gen_load_idx(ctx, a, MO_TE | MO_UL, false);
+ }
+ 
+ static bool trans_th_lrh(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_idx(ctx, a, MO_TESW, false);
++    return gen_load_idx(ctx, a, MO_TE | MO_SW, false);
+ }
+ 
+ static bool trans_th_lrhu(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_idx(ctx, a, MO_TEUW, false);
++    return gen_load_idx(ctx, a, MO_TE | MO_UW, false);
+ }
+ 
+ static bool trans_th_lrb(DisasContext *ctx, arg_th_memidx *a)
+@@ -813,19 +813,19 @@ static bool trans_th_srd(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_store_idx(ctx, a, MO_TESQ, false);
++    return gen_store_idx(ctx, a, MO_TE | MO_SQ, false);
+ }
+ 
+ static bool trans_th_srw(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_idx(ctx, a, MO_TESL, false);
++    return gen_store_idx(ctx, a, MO_TE | MO_SL, false);
+ }
+ 
+ static bool trans_th_srh(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_idx(ctx, a, MO_TESW, false);
++    return gen_store_idx(ctx, a, MO_TE | MO_SW, false);
+ }
+ 
+ static bool trans_th_srb(DisasContext *ctx, arg_th_memidx *a)
+@@ -837,32 +837,32 @@ static bool trans_th_lurd(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_idx(ctx, a, MO_TESQ, true);
++    return gen_load_idx(ctx, a, MO_TE | MO_SQ, true);
+ }
+ 
+ static bool trans_th_lurw(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_idx(ctx, a, MO_TESL, true);
++    return gen_load_idx(ctx, a, MO_TE | MO_SL, true);
+ }
+ 
+ static bool trans_th_lurwu(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_load_idx(ctx, a, MO_TEUL, true);
++    return gen_load_idx(ctx, a, MO_TE | MO_UL, true);
+ }
+ 
+ static bool trans_th_lurh(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_idx(ctx, a, MO_TESW, true);
++    return gen_load_idx(ctx, a, MO_TE | MO_SW, true);
+ }
+ 
+ static bool trans_th_lurhu(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_load_idx(ctx, a, MO_TEUW, true);
++    return gen_load_idx(ctx, a, MO_TE | MO_UW, true);
+ }
+ 
+ static bool trans_th_lurb(DisasContext *ctx, arg_th_memidx *a)
+@@ -881,19 +881,19 @@ static bool trans_th_surd(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_store_idx(ctx, a, MO_TESQ, true);
++    return gen_store_idx(ctx, a, MO_TE | MO_SQ, true);
+ }
+ 
+ static bool trans_th_surw(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_idx(ctx, a, MO_TESL, true);
++    return gen_store_idx(ctx, a, MO_TE | MO_SL, true);
+ }
+ 
+ static bool trans_th_surh(DisasContext *ctx, arg_th_memidx *a)
+ {
+     REQUIRE_XTHEADMEMIDX(ctx);
+-    return gen_store_idx(ctx, a, MO_TESW, true);
++    return gen_store_idx(ctx, a, MO_TE | MO_SW, true);
+ }
+ 
+ static bool trans_th_surb(DisasContext *ctx, arg_th_memidx *a)
+@@ -931,19 +931,19 @@ static bool trans_th_ldd(DisasContext *ctx, arg_th_pair *a)
+ {
+     REQUIRE_XTHEADMEMPAIR(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_loadpair_tl(ctx, a, MO_TESQ, 4);
++    return gen_loadpair_tl(ctx, a, MO_TE | MO_SQ, 4);
+ }
+ 
+ static bool trans_th_lwd(DisasContext *ctx, arg_th_pair *a)
+ {
+     REQUIRE_XTHEADMEMPAIR(ctx);
+-    return gen_loadpair_tl(ctx, a, MO_TESL, 3);
++    return gen_loadpair_tl(ctx, a, MO_TE | MO_SL, 3);
+ }
+ 
+ static bool trans_th_lwud(DisasContext *ctx, arg_th_pair *a)
+ {
+     REQUIRE_XTHEADMEMPAIR(ctx);
+-    return gen_loadpair_tl(ctx, a, MO_TEUL, 3);
++    return gen_loadpair_tl(ctx, a, MO_TE | MO_UL, 3);
+ }
+ 
+ static bool gen_storepair_tl(DisasContext *ctx, arg_th_pair *a, MemOp memop,
+@@ -967,13 +967,13 @@ static bool trans_th_sdd(DisasContext *ctx, arg_th_pair *a)
+ {
+     REQUIRE_XTHEADMEMPAIR(ctx);
+     REQUIRE_64BIT(ctx);
+-    return gen_storepair_tl(ctx, a, MO_TESQ, 4);
++    return gen_storepair_tl(ctx, a, MO_TE | MO_SQ, 4);
+ }
+ 
+ static bool trans_th_swd(DisasContext *ctx, arg_th_pair *a)
+ {
+     REQUIRE_XTHEADMEMPAIR(ctx);
+-    return gen_storepair_tl(ctx, a, MO_TESL, 3);
++    return gen_storepair_tl(ctx, a, MO_TE | MO_SL, 3);
+ }
+ 
+ /* XTheadSync */
 -- 
 2.51.0
 
