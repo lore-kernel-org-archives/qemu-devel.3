@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA8CCCD193
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB69CCD1BF
 	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 23:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC54g-0004YD-QK; Thu, 23 Oct 2025 19:50:31 -0400
+	id 1vC54W-0004Dr-Lg; Thu, 23 Oct 2025 19:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54f-0004Uh-27
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:29 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1vC54U-0004AD-0S
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:18 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vC54d-0007Qc-9J
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:28 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-b608df6d2a0so1231266a12.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:26 -0700 (PDT)
+ id 1vC54Q-0007NJ-Ob
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 19:50:17 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b608df6d2a0so1231143a12.1
+ for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 16:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761263425; x=1761868225; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1761263412; x=1761868212; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DaV098G5oL4FGgdKQrx8xC9vbZLN/Fck1L4/UQZrfQY=;
- b=HVgPNf0PmBN9iuXvrE5UcTm9YYB05VDruutqkgdzcBqcYwOLsMGt8L+VO00ZoN6CRl
- n3OS4Tom6iHyfwFwXko5NjHBW+Bi3uyrwCScpzcxahp+rRDEzlwO7MGrfVJWWAhPQADE
- LM5Kri5S1rTTdeTA5J490BfCtPb7qnUXeEHxBS0W0XoU0fB9+71qcSS8s0d5HNrE28xM
- FEH5uoTxppW5H8wZ90mH2ieAL3nHCwKkFaD8DZu9mgI4iScOCsPBVZ+elyXvy0Btazou
- yuv/OVnWE/vb4hsPS5c9KolyBqg5e5mWANAHhQElBIbzRIZ0Dqx09/BAEvFDMDbrR+Rj
- hTbg==
+ bh=Qtmy91JEQYqJR/91H8B/Uh3Fg5s9NSfMz+Wbznv9/ps=;
+ b=I7L7sBUSD+DEdYhPxAAGFk9Ry2IgJ1WOK5fwGdZByZytTYW3fzxnGB6tAduAh12K4E
+ Te0bwPHRv2yOoT/QVu2C9qrr/G/cC9iWRQkD6m6ZDEcxvFnWTrZOE9mor7LH5AcglqWz
+ yn+wXaSmYKd6GhaolNBNrKHTf2hNYc6HQKkFjAIXfON/FhTkqJ32CRnU3Er0d+etC9yb
+ 4gQguhRTjdf/yFmBCMXAFnsNoKFagHWA+2xasjdcJG6Dndg0U1XWwW2xQs9wqx1RvBwO
+ Z7+PL9YrARW7NpAN7JmRnIOM4Cm5E9aURCnq9j4B4t1YAqKRJBuiTwv7dxfte8Y3tdIF
+ uzqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761263425; x=1761868225;
+ d=1e100.net; s=20230601; t=1761263412; x=1761868212;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DaV098G5oL4FGgdKQrx8xC9vbZLN/Fck1L4/UQZrfQY=;
- b=r5kSVXZyWx5Cd+jyQGp0vQ87a78Ft3SDIqJavllrfE5/QgsM/ShiXza1l/EwjeSWUX
- sG20jJRtWJ3ZyVlX228bm6IS81nrFkulTunsQQyhwW31K67WfR+kPzQnyVtl7utyi7Fj
- x65GAjdR53ZO4tj0QibXLJSJhw4e8aoFE5CKESJfhpSORrYYAf5UIpefmRnc0YyPkvu1
- UsIHa1UaxcwRGNk52cW9GuSpyztXiPAAP5l7yToriysrCFPqDa6FqErbANivVhXz4+6V
- fTrIKri/H+o2gHXXgbMGqCS/YaP4wkZw1rgOV3W8txj2WJjoznJtCI4JKT9bHHlxKx7P
- hxkw==
-X-Gm-Message-State: AOJu0YyeSgDY+UYFZkboRqdM9JPU63IlDkc2RkOz5i7eG5cthGp+axpn
- VRRGhjEIq401/VyhDDzHa6owccDS5bnpePO8RRzx703irbZx8Np1TRfKMn2XGg==
-X-Gm-Gg: ASbGncuGEZz10+GSbu9MLBJItHj9QMrCZxVG50uH7vB3X2KF5Q1DUqdG4hWE305uL7q
- TF4zW+e/rTM3u5EtL5s1vKNJ3C+ugaeSa01obw6AsN2/KvI/pE+8wdmQEa1UBvSHfqdsppIqa95
- 4L5YIhaMBY/F2ucf/H4oXYqbharFPJ6pnshQxV7+lDcG9IJOxa+XFxmcW9xcxiGSSCTObCEucSh
- iI2R48OBmiiH3X4gjWhnr5YUux/BgVUmzWcP8O4X/tDsoBLIhG36z8ygUBZ3IruJbX+dnLRILUj
- f0vu68V5s+qAVOoRmVzvUmewtaURCpUuYGwkvs15UZpfSz5sZ8L6Bep4adWGLZnl+LiWYhVa3gI
- YL0cYis/bxu9l8gVHR/wTpEK0i2IC43cpHrmSxnFtij2yvR5/RD+DdJQ2um6zQoVEPvXUktyAyN
- 1plyEZfURoaqvSbosMyLA8uh5SEaVVI1xzD1IWhcYSINbePp+uZjfRxFc6clst79/DgG9V1brQ0
- YLxpI+D
-X-Google-Smtp-Source: AGHT+IFGUsRaMl50hhZX1kMN4WIkLzDPqiGEW4Kao3SjduNLr1Y+ckEIYHpw8QwKjdvkHuVRMzxrLQ==
-X-Received: by 2002:a17:902:ccc3:b0:28e:9a74:7b58 with SMTP id
- d9443c01a7336-2948ba3ba9dmr2788605ad.31.1761263425190; 
- Thu, 23 Oct 2025 16:50:25 -0700 (PDT)
+ bh=Qtmy91JEQYqJR/91H8B/Uh3Fg5s9NSfMz+Wbznv9/ps=;
+ b=v9zqxoILJocLKzEVl+Zpv3fn9Qzjxsm96SgbWX3dpwp2DFzxRd6T3EFVHGRHSG7m+v
+ kgVuzovgCJL67cVLu4jyECySS32forya16GwDbhkhXDVP4OfCNSy/sKYgz3UUxTDkJ75
+ 3RYvUSEP0R0fUIcrRSuDh5RCX0jAA+L7os3744W8jnd6onTFVfMNBorRK7Q4M1ntHOIT
+ ZhEAAeetMRnRbbEF0VezwV0juFBzzzV9rGhDxXdov+ex10S4dR2/rZng64iLTeqSkSNa
+ 0kbbTXb2OpDK47gw34iTUWvQ73Hn3Vs6n4kb6TlW1bY7rMvbiDlEPCmCjCcrVlqDiykb
+ BW4g==
+X-Gm-Message-State: AOJu0Yys2Vb8tRPshUxKmeStrJVepmi042clvSMFSDJ4zvo16GROyKoQ
+ x0X1gDZNMOed0aG0cH/eT3PFq7jw1bxMowN/mF0tjs9UQgzBtLI5ZAvGJrQdrA==
+X-Gm-Gg: ASbGncuavorJ9pWddu9i76v/mAOtrsAvc3+4FfsIb850GdVwJuuf5ONhlKcGnizYchN
+ XSe9tXhs8UvelvNg20wUse3g3saIH1bCxEs0tpBq/pYHEhAvdJrpQ2MiDkW1weRccFBstszy44g
+ rxlD6TbTnNcfZ19tM8Id4+cQ7ckvcg9llJRcmWIUmse3guJQVk8MHQ1SDly/BcLwQXlkY8bxKiS
+ kV9zYVU9SaihRxW4zOXsJv97ovABNd97f34UQgVApArcsRg5Y7UbDvGsXguG7jTghNL2cGQyw6X
+ xe5VUxKWx+AzFtAjXNdmJMhKGq3l5TYWPk3wjRTrBsf1+E5hHPcjvDNcxSfZ17V0HF/eD3DRIpG
+ G66NdRuIlUV2tdon0gHB4l7Y1QPBgfA5RgKodUoCL8v8+xMs52BbaMW/5dJNitWBJ19eFmhP3hd
+ 4q3oS4hh4WUZMZLZO1eK3J26QTAj02v2hlzboYsX+10Y3d7upt7IX0mjasUoBhBdBqVWKiX/WmX
+ hzyBUtJZQEwThTr6E4=
+X-Google-Smtp-Source: AGHT+IHBJZZEjopUCDh+nzRGQMyRPayBPFdkas5hw2KXNFGcHfcktBOegSWiwLCDS5DaUDAKd6ZKXg==
+X-Received: by 2002:a17:903:2449:b0:262:cd8c:bfa8 with SMTP id
+ d9443c01a7336-2948ba3bb53mr2072115ad.34.1761263412015; 
+ Thu, 23 Oct 2025 16:50:12 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.22
+ d9443c01a7336-2946de02cb7sm36088525ad.40.2025.10.23.16.50.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Oct 2025 16:50:24 -0700 (PDT)
+ Thu, 23 Oct 2025 16:50:11 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Guenter Roeck <linux@roeck-us.net>,
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 14/25] hw/net/cadence_gem: Support two Ethernet interfaces
- connected to single MDIO bus
-Date: Fri, 24 Oct 2025 09:49:16 +1000
-Message-ID: <20251023234927.1864284-15-alistair.francis@wdc.com>
+Subject: [PULL v2 10/25] target/riscv: Conceal MO_TE|MO_ALIGN within gen_lr()
+ / gen_sc()
+Date: Fri, 24 Oct 2025 09:49:12 +1000
+Message-ID: <20251023234927.1864284-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251023234927.1864284-1-alistair.francis@wdc.com>
 References: <20251023234927.1864284-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,100 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The Microchip PolarFire SoC Icicle Kit supports two Ethernet interfaces.
-The PHY on each may be connected to separate MDIO busses, or both may be
-connected on the same MDIO bus using different PHY addresses.
+All callers of gen_lr() / gen_sc() set the MO_TE and MO_ALIGN flags.
+Set them once in the callees.
 
-To be able to support two PHY instances on a single MDIO bus, two properties
-are needed: First, there needs to be a flag indicating if the MDIO bus on
-a given Ethernet interface is connected. If not, attempts to read from this
-bus must always return 0xffff. Implement this property as phy-connected.
-Second, if the MDIO bus on an interface is active, it needs a link to the
-consumer interface to be able to provide PHY access for it. Implement this
-property as phy-consumer.
-
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251004200049.871646-2-linux@roeck-us.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251010155045.78220-11-philmd@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/net/cadence_gem.h |  3 +++
- hw/net/cadence_gem.c         | 24 ++++++++++++++++++------
- 2 files changed, 21 insertions(+), 6 deletions(-)
+ target/riscv/insn_trans/trans_rva.c.inc | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/net/cadence_gem.h b/include/hw/net/cadence_gem.h
-index 91ebb5c8ae..21e7319f53 100644
---- a/include/hw/net/cadence_gem.h
-+++ b/include/hw/net/cadence_gem.h
-@@ -81,6 +81,9 @@ struct CadenceGEMState {
- 
-     uint8_t phy_loop; /* Are we in phy loopback? */
- 
-+    bool phy_connected; /* true if connected */
-+    struct CadenceGEMState *phy_consumer;
-+
-     /* The current DMA descriptor pointers */
-     uint32_t rx_desc_addr[MAX_PRIORITY_QUEUES];
-     uint32_t tx_desc_addr[MAX_PRIORITY_QUEUES];
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index 44446666de..520324adfd 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -1541,12 +1541,20 @@ static void gem_handle_phy_access(CadenceGEMState *s)
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index e0fbfafdde..8737e8d60d 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -34,6 +34,9 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
  {
-     uint32_t val = s->regs[R_PHYMNTNC];
-     uint32_t phy_addr, reg_num;
-+    CadenceGEMState *ps = s;
-+    uint32_t op;
+     TCGv src1;
  
-     phy_addr = FIELD_EX32(val, PHYMNTNC, PHY_ADDR);
-+    op = FIELD_EX32(val, PHYMNTNC, OP);
- 
--    if (phy_addr != s->phy_addr) {
--        /* no phy at this address */
--        if (FIELD_EX32(val, PHYMNTNC, OP) == MDIO_OP_READ) {
-+    /* Switch phy to consumer interface if there is an address match */
-+    if (s->phy_consumer && phy_addr == s->phy_consumer->phy_addr) {
-+        ps = s->phy_consumer;
-+    }
++    mop |= MO_ALIGN;
++    mop |= MO_TE;
 +
-+    if (!s->phy_connected || phy_addr != ps->phy_addr) {
-+        /* phy not connected or no phy at this address */
-+        if (op == MDIO_OP_READ) {
-             s->regs[R_PHYMNTNC] = FIELD_DP32(val, PHYMNTNC, DATA, 0xffff);
-         }
-         return;
-@@ -1554,14 +1562,14 @@ static void gem_handle_phy_access(CadenceGEMState *s)
+     decode_save_opc(ctx, 0);
+     src1 = get_address(ctx, a->rs1, 0);
+     if (a->rl) {
+@@ -61,6 +64,9 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+     TCGLabel *l1 = gen_new_label();
+     TCGLabel *l2 = gen_new_label();
  
-     reg_num = FIELD_EX32(val, PHYMNTNC, REG_ADDR);
- 
--    switch (FIELD_EX32(val, PHYMNTNC, OP)) {
-+    switch (op) {
-     case MDIO_OP_READ:
-         s->regs[R_PHYMNTNC] = FIELD_DP32(val, PHYMNTNC, DATA,
--                                         gem_phy_read(s, reg_num));
-+                                         gem_phy_read(ps, reg_num));
-         break;
- 
-     case MDIO_OP_WRITE:
--        gem_phy_write(s, reg_num, val);
-+        gem_phy_write(ps, reg_num, val);
-         break;
- 
-     default:
-@@ -1813,6 +1821,10 @@ static const Property gem_properties[] = {
-                       num_type2_screeners, 4),
-     DEFINE_PROP_UINT16("jumbo-max-len", CadenceGEMState,
-                        jumbo_max_len, 10240),
-+    DEFINE_PROP_BOOL("phy-connected", CadenceGEMState, phy_connected, true),
-+    DEFINE_PROP_LINK("phy-consumer", CadenceGEMState, phy_consumer,
-+                     TYPE_CADENCE_GEM, CadenceGEMState *),
++    mop |= MO_ALIGN;
++    mop |= MO_TE;
 +
-     DEFINE_PROP_LINK("dma", CadenceGEMState, dma_mr,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
- };
+     decode_save_opc(ctx, 0);
+     src1 = get_address(ctx, a->rs1, 0);
+     tcg_gen_brcond_tl(TCG_COND_NE, load_res, src1, l1);
+@@ -99,13 +105,13 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+ static bool trans_lr_w(DisasContext *ctx, arg_lr_w *a)
+ {
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_lr(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
++    return gen_lr(ctx, a, MO_SL);
+ }
+ 
+ static bool trans_sc_w(DisasContext *ctx, arg_sc_w *a)
+ {
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_sc(ctx, a, (MO_ALIGN | MO_TE | MO_SL));
++    return gen_sc(ctx, a, MO_SL);
+ }
+ 
+ static bool trans_amoswap_w(DisasContext *ctx, arg_amoswap_w *a)
+@@ -166,14 +172,14 @@ static bool trans_lr_d(DisasContext *ctx, arg_lr_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_lr(ctx, a, MO_ALIGN | MO_TE | MO_UQ);
++    return gen_lr(ctx, a, MO_UQ);
+ }
+ 
+ static bool trans_sc_d(DisasContext *ctx, arg_sc_d *a)
+ {
+     REQUIRE_64BIT(ctx);
+     REQUIRE_A_OR_ZALRSC(ctx);
+-    return gen_sc(ctx, a, (MO_ALIGN | MO_TE | MO_UQ));
++    return gen_sc(ctx, a, MO_UQ);
+ }
+ 
+ static bool trans_amoswap_d(DisasContext *ctx, arg_amoswap_d *a)
 -- 
 2.51.0
 
