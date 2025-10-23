@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAABCCCD1BC
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 06:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F69CCD193
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 06:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBp76-00087s-KC; Thu, 23 Oct 2025 02:47:56 -0400
+	id 1vBp8p-0000D7-H8; Thu, 23 Oct 2025 02:49:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBp74-00087G-7R
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:47:54 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBp8m-0000CU-0Y
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:49:40 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBp72-0002eu-Ey
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:47:53 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47117f92e32so3384855e9.1
- for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 23:47:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vBp8i-00032z-Hf
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 02:49:38 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ece0e4c5faso401099f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 22 Oct 2025 23:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761202069; x=1761806869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761202174; x=1761806974; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=62Q2uk5f0k47hMfVnvACmPYV4/Cahi2vI5y31H1o+T0=;
- b=lqRG+lnSPwkvLJbj4mmB5mHIMcIuqgiwV3pxwbmNw2JIg5/9i14WnKbmHMkmstUl6H
- h7X1bLVBMiJdEvIWs8B9OduICcfAjRoT1AE+xQoYVZzQE3GlNNQATh1T2zaTlWeTcxlv
- 1uB27g4Ujp0xBT1IQAv1qpgIfjNEqkf4PI/H1BJYDVNw1GIDC+AVmwTf8M5v513lVxbP
- dgKDoKHl7TTDf0Frtff+Isrzw4+Z4XLXNCu3pYj6CdF5RJq8zosO9CJ6AxpyZS9j2rha
- wITASjlsCd5/RtsR0QD+IG9A/DBtjG6C02Hdb81gK20Z133Vt9eLlq21bJ+3YKMbz1T8
- GlOQ==
+ bh=3Rl8enOBl7vutIaQbukrZ57LYa+Xe74Ni5pvEr1Gvio=;
+ b=yQgp4FUEM/z/JXW7KJT8srBnQKc1BGXIBR/8/nBuelF09sE6RzbmVSE/Ikjif/QW/q
+ h9fqy576U4cr8m5fWZdrYDc7ygXN/hnq+/CnHyoPtUvXGl7BnqJhU9yLRWWpleqkKsUh
+ gUMrKks1QmGBcdUJku/2cgF+zwg6o4jb5kKFkQXJlwgpvRQUPRWrexc1HRENoBuxV2yx
+ 1mWZrI0wob5caQVpU/kImxODDeMBa3hJToh0P5GWMYSe6otGKmr8QxGbn8P4+qTZyod+
+ K/Szc1ZL/WvPxL1/e4Fsry9luIPwwfEXVS7SnUVJ0WIMi2O6pSwLAeWIHqcZCn4EKqip
+ q11g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761202069; x=1761806869;
+ d=1e100.net; s=20230601; t=1761202174; x=1761806974;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=62Q2uk5f0k47hMfVnvACmPYV4/Cahi2vI5y31H1o+T0=;
- b=d+RwTJPZo0BVcAXR4oEbSDEL0qM4z16rwDR7WccAiInTRJR69FwmwEnZdjNb+I6KGP
- bKweXKICcF6MhXXG9+IfIMb4alebS/+TX3Tf1tjhjdNkNaKN2wzZcWrDpwpnqyXkPta/
- q+F/h67ITw3myF0qMrcbrQ11Jt0FZPQBS84RkgPfRUcZmpyfps5Nag6YagWnU6rZlBj8
- On9iIcsPGb5WZxSmwAZaO2Z442EVKx08J+fzM/hMzc/1u3451AUtQM5SKNLm0aRSZJ1W
- 2prsm4MIqvaz2zdUU+CDFAbyS9XFYsg1Y/WbSpD9D1XVKOJD88NkttwZK63PW0B26mvT
- lg5w==
+ bh=3Rl8enOBl7vutIaQbukrZ57LYa+Xe74Ni5pvEr1Gvio=;
+ b=ofqAFIkWMhz8kpa7YyfX5tnhNyReXesL5hpxSLgbLsFJaXLnw6Qa/GwuI7Q2QW0TjF
+ vtzJ3BlQW80R73wJhl5HXavqQyZoz2aE3K/kjIeWfi4JtU4dpcXDKuRl3ZwmojQD9L5S
+ bldRnFO6ykfohP8LEkoVB8uKBPOgzZSjdp4HVjFuhFVXb72cgHDkrFRn0Av/4vKARpX9
+ AtqniH2b9oA9QisuRDLgTFNvgGP3lkPMrX5MaNsUOjqzFQ7VYmgKTwodycLQhkcUhgvO
+ 6gK9c3phbRrwLf+qv6oiAADIenx+J6nRfTSgIzp9o4FRhl4YbWAQiKcJXUevy8grkg3B
+ 0d1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVx2QuQmuXR1HNznXQu52t9CWCzxQtAwfS0jjkTJE+GuAI13pfBZzlG8oBRASDVV1mApOJWNpSlDGzA@nongnu.org
-X-Gm-Message-State: AOJu0YxqBosxc6KQTaqHwByYpN8LO+/h0/YFspCb8PafKoe9PJ71d+hM
- 8gDxEuzO9/njllZN+IFo4wqHQew5R3DukLPpS9BNE+7NiaMkc74tFWxwSVy6DcPrugBSaufK/XG
- 7GgB9KI4=
-X-Gm-Gg: ASbGncv/6cnUIOtqTScgIc0cWNcMlOrpkh46MF3JROtn/Ghke1uZJ9DcpArh6OCMevx
- vdJ4nvje/nZzq34wvwz5KbzjJj1P9QQ7SokEr3h8/C7db4fjrXPFxnRCaOMA63xUjf1iPeKhxyW
- PtuAzYB/zb2mYwOMGhsvD6ihBokWXdFw+6X1GVfodPMSWUn2xG6fjhvTn2kMOmsoGLUX55/zlJd
- 086X1TiN47S2t3cFrSr5syoPmeI54gaz7eaDjBtZKaJ+CLJyczXOTXGntHEbcee4536jRiUVtKt
- WooRL5i8YN7eqZaD5bk///wR0JKRbY+GUkq2uOoW9zd0L/QSok4NxIMaSeorWu38Xtdjxx1d4E2
- 0mDrKiXElpjIf0YePSvBLdxP/RMmBEgJsVflQLOvd6yd3zTvhKz/08TQS4jPzWqyl/YPIYHlb34
- bsozSZljyuKwnAw/lsA5K4yWj3gVnf4WsQqrFMcVSyK7eruOEPArB8sQ==
-X-Google-Smtp-Source: AGHT+IF5d8j1spEU/bW0QJb1k1CWhFdUWVEQCRLnGensKXfrH7NCAped6ekIM5x0djZ/7vyL/m8Law==
-X-Received: by 2002:a05:600c:3494:b0:471:76f:80ed with SMTP id
- 5b1f17b1804b1-47117934827mr167490655e9.41.1761202069263; 
- Wed, 22 Oct 2025 23:47:49 -0700 (PDT)
+ AJvYcCVJ6iWHcB25OMWZDTnxKhXdFQAUvIrsV4R7z16V/3NXQpqFGB/0kKgaYgG501624ELPLCGBS8AQ6QPZ@nongnu.org
+X-Gm-Message-State: AOJu0YzABC8i1hgnz9nfZaB4GHQAftmZUO13KIt9TJbcoEqDXyPa+Itc
+ lk2KqB57yFFiq0hB8WbHmrGW4T+Itj+y7Avl8yHZXwEqu4U8PoRRHBfJrHX3GpkZBss=
+X-Gm-Gg: ASbGncteSl5R773CSbXIVlH5xmAj7yXYK+T84bqHJm/fPhtOWZN2eurZOs56HsY7ccU
+ yN831NSCGaBqvEPyACcIn8wXTNSHqX8cp1rzXDieH3sCTOHXdSCYf3v/QH8xW4d0lmSj7Ot6d6z
+ zHq5C5TzMTiuNtTag/a5f3jACPLykveVRd0dcKZgZK0LwzL/Oi3euHb13TnVg1m/ruxEMCsKW+B
+ YGuDxhn3rRgoQhIO8fHum30YhHWWiLiTYV4XvVB//gVFzzuGi55E4ddj2E4tdvlwgM7bG5hjV+y
+ FbPijoa3K2I8zPYvAcGUXA2X+2euUEw/hZl1EgvZY1BbZYV30k8m9VxrZsYEiP6KHZ8bACg+/Dt
+ ghuyhHbm1L8kRARGk725sUoon5Yf6Uq/3tEifdZnq4wVHVyz9PNYJaCzg/UBEvdK3oo1Zn4UOKg
+ evFxeZjqpL9nl4f/320tzJuEm4Io1TEn6hUJNUyi2xyoxzjlgGcryGyw==
+X-Google-Smtp-Source: AGHT+IFKnMNZQGeUcOQLByULjQUuRX3ryi6wonLp9KD9fB/ZVWauoQLCQtBNhOjfO37sMrqNtNLuEQ==
+X-Received: by 2002:a05:6000:4021:b0:426:d836:f323 with SMTP id
+ ffacd0b85a97d-42704d7e928mr16650166f8f.13.1761202174565; 
+ Wed, 22 Oct 2025 23:49:34 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c4342946sm78825685e9.10.2025.10.22.23.47.48
+ ffacd0b85a97d-429898adf78sm2431986f8f.32.2025.10.22.23.49.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Oct 2025 23:47:48 -0700 (PDT)
-Message-ID: <5429d889-a47e-43f9-be48-403164d2882a@linaro.org>
-Date: Thu, 23 Oct 2025 08:47:47 +0200
+ Wed, 22 Oct 2025 23:49:34 -0700 (PDT)
+Message-ID: <c8278577-32dc-4121-92f3-36ccca36e9de@linaro.org>
+Date: Thu, 23 Oct 2025 08:49:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/12] hw/ppc/pegasos2: Move PCI IRQ routing setup to a
- function
+Subject: Re: [PATCH v4 12/12] hw/ppc/pegasos2: Add VOF support for pegasos1
 Content-Language: en-US
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster
  <armbru@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <cover.1761176219.git.balaton@eik.bme.hu>
- <f5ff16a6933ab6e1f9e194d16ef85364ac3cf6df.1761176219.git.balaton@eik.bme.hu>
+ <d2d7f173dbd436b47382f384d5a93eb7e713424e.1761176219.git.balaton@eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f5ff16a6933ab6e1f9e194d16ef85364ac3cf6df.1761176219.git.balaton@eik.bme.hu>
+In-Reply-To: <d2d7f173dbd436b47382f384d5a93eb7e713424e.1761176219.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,12 +106,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/10/25 02:06, BALATON Zoltan wrote:
-> Collect steps of setting up PCI IRQ routing in one function.
+> When running without firmware ROM using Virtual Open Firmware we need
+> to do some hardware initialisation and provide the device tree as the
+> machine firmware would normally do.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/ppc/pegasos2.c | 66 +++++++++++++++++++++++------------------------
->   1 file changed, 33 insertions(+), 33 deletions(-)
+>   MAINTAINERS              |   1 +
+>   hw/ppc/pegasos2.c        | 140 +++++++++++++++++++++++++++++++++------
+>   pc-bios/dtb/meson.build  |   1 +
+>   pc-bios/dtb/pegasos1.dtb | Bin 0 -> 857 bytes
+>   pc-bios/dtb/pegasos1.dts | 125 ++++++++++++++++++++++++++++++++++
+>   5 files changed, 246 insertions(+), 21 deletions(-)
+>   create mode 100644 pc-bios/dtb/pegasos1.dtb
+>   create mode 100644 pc-bios/dtb/pegasos1.dts
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
