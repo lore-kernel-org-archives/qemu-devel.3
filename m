@@ -4,57 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00EFCCCD1BE
-	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF7BCCD1BE
+	for <qemu-devel@archiver.kernel.org>; Thu, 23 Oct 2025 13:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vBux5-0007KS-Bp; Thu, 23 Oct 2025 09:01:59 -0400
+	id 1vBuxr-0007ju-TS; Thu, 23 Oct 2025 09:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
- id 1vBuwY-0007A8-UJ; Thu, 23 Oct 2025 09:01:39 -0400
-Received: from mail.xenproject.org ([104.130.215.37])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vBuxo-0007ca-AX
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:02:45 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony@xenproject.org>)
- id 1vBuwV-0004yK-OE; Thu, 23 Oct 2025 09:01:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=xenproject.org; s=20200302mail; h=In-Reply-To:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date;
- bh=mcZQh+kreTywuj0nxQatcCOfo+AYejtqCbV1FXs6+0A=; b=PhbHKESiP4JtKxgv3ZYfUS0MQ6
- MCB2P8pXipw6t2pTEovt7Lr5ebDNGE1ggscH5gg/cm6u8BEwdMkn1h8ksCSuk8hjOqShoqU68RS3h
- /UJWQvNrF/Nzj/be0F6kbIj9CEfBJc/xay9QGcWd8CP8MMcRzqYED25hE1UgoHgNiPxY=;
-Received: from xenbits.xenproject.org ([104.239.192.120])
- by mail.xenproject.org with esmtp (Exim 4.96)
- (envelope-from <anthony@xenproject.org>) id 1vBuwD-00FsTM-2Y;
- Thu, 23 Oct 2025 13:01:05 +0000
-Received: from [2a01:cb15:80df:da00:94d0:641e:16e6:ca4b] (helo=l14)
- by xenbits.xenproject.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <anthony@xenproject.org>) id 1vBuwD-00BXxQ-1N;
- Thu, 23 Oct 2025 13:01:05 +0000
-Date: Thu, 23 Oct 2025 15:01:03 +0200
-From: Anthony PERARD <anthony@xenproject.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hw/xen: Avoid non-inclusive language in params.h
-Message-ID: <aPonD3KTbOMxyIlD@l14>
-References: <20251013111152.25807-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vBuxj-0005Ix-QU
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 09:02:44 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1881CC0165;
+ Thu, 23 Oct 2025 16:02:34 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:538::1:38] (unknown
+ [2a02:6bf:8080:538::1:38])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id W2YXuX0LvqM0-LODQcwpM; Thu, 23 Oct 2025 16:02:33 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761224553;
+ bh=W+8AVratf3RlD1DMq8Mb6kCENMtPuX6Dz4QkW8K/udo=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=ncMRJJ1d7jqvPld2M4xbnl89K/jtyZ5iAA/ljFAI0KCRTLOyMRsVsqRFG/8OYuxBM
+ 9DqKoq3Ey9FQNHQXfq2GDmtiQ9s2fDP0D1x4JNKlscaaVMi/R8beGbtl6w1AZJXY8O
+ wyLFUQSnyowHj5lGqw8oI6r2Aqwh6FiiQNrpXsCw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <356a7e00-5137-4011-b28b-ec3644d34e16@yandex-team.ru>
+Date: Thu, 23 Oct 2025 16:02:32 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251013111152.25807-1-thuth@redhat.com>
-Received-SPF: pass client-ip=104.130.215.37;
- envelope-from=anthony@xenproject.org; helo=mail.xenproject.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] io: Add qio_channel_wait_cond() helper
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Li Zhijian <lizhijian@fujitsu.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Zhang Chen <zhangckid@gmail.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
+References: <20251022192612.2737648-1-peterx@redhat.com>
+ <20251022192612.2737648-2-peterx@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251022192612.2737648-2-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,22 +84,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 13, 2025 at 01:11:52PM +0200, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 22.10.25 22:26, Peter Xu wrote:
+> Add the helper to wait for QIO channel's IO availability in any
+> context (coroutine, or non-coroutine).  Use it tree-wide for three
+> occurences.
 > 
-> Copy the latest version of Xen's params.h to the QEMU repository:
-> 
-> https://xenbits.xen.org/gitweb/?p=xen.git;a=commitdiff;h=0291089f6ea81690f37035a124d54c51fa7ba097#patch8
-> 
-> With this patch, we get rid of a non-inclusive word in the comment
-> there.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Cc: Daniel P. Berrangé<berrange@redhat.com>
+> Signed-off-by: Peter Xu<peterx@redhat.com>
 
-Acked-by: Anthony PERARD <anthony.perard@vates.tech>
 
-Thanks,
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
 -- 
-Anthony PERARD
+Best regards,
+Vladimir
 
