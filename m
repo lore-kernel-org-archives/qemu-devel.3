@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAB5CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 16:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F321ACCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 16:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCKhR-0001yY-J9; Fri, 24 Oct 2025 12:31:33 -0400
+	id 1vCKhy-00021z-8z; Fri, 24 Oct 2025 12:32:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vCKhO-0001xv-F6
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:31:30 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vCKhM-0002Gl-IP
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:31:30 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-7829fc3b7deso18315267b3.3
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 09:31:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761323487; x=1761928287; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XCHxeZcUKToA4Lb05QdesZghIE5s3k+8NronWtFxWyA=;
- b=BiDmcXIoMn3U6wGD9hhvA7/68YLxEFw8gyW8+wI9HdMQ8w23l5w8rpUgqUnL4yERhr
- eOFQO0cMh+Eo7KRe2KwQl93NvRG2gQvHpwp02Yn0Sg113nZtscgUl1gNhiO7lWPiN5/k
- lHtRLUl4ztHyQWWCByFGWyq4Wjzesxq/HVro7/9BcrOGS3eig4lkk+k29AS5XlHJF7oF
- qJFw300B0Fzh/eiMekktjx71gGnqVPcw1bqPFJvEOzp8EOhBCrogVQRya+V6E27tjoM6
- l/6ygKz6ZqRZe5LqP894aOVsYjZkoOok/OEoHlZqYyKs1qzS8gABJAbzoSIJEABjRsvh
- NiGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761323487; x=1761928287;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XCHxeZcUKToA4Lb05QdesZghIE5s3k+8NronWtFxWyA=;
- b=HS2Tglkbj9A5o7x+OlVyJtswMmyDiPxSmEbG6MjC3w0wnHsktFaofgDU+m70DosGop
- 5rsveVGjxmLycDWQbUiI3jPRs926o7YI4bD5bFVWsaCNGb0w/pvI75YpjfSS7SCa/fCl
- P5wzkhSKRHFRYVO9hvWX2H9Qj+aROCY1H/AhaYSt8mMpmkbVDDBuszE73WTwm9eJnO4G
- 3oXFp1q2INOvIrE11dUG1mNjf3jJpkAN/fM5RV2Gqjod9X8nRkJqTIEJsHR+sUm1Aa01
- w6taR+ShAQbPKUjTPVPc2+I3Yrcb49OkIdFv+ajXdFrmL1vqOBp9Ko4cf1iBAuuduO/I
- 88sg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQlTE6xB3bYstN5fs6J3QKv4Urv3oLmIp3cuj6qcQNBdurwPdJl8AKATbhB+MzrlAhe/gvBifSXlIW@nongnu.org
-X-Gm-Message-State: AOJu0YzFe+zs9BWlhAK0hVFdvKKTMG6uLx8QHaRjyvk8S14kHJSROYes
- w3caPXVa4aY2kui96YRogEWbrx8iLok476hqyNkA/6o2erCM3FZH93P4oZAOx1TRR7/dHwhBHVy
- mYNjO5IybTzNYMvoUxIgWzC30WB+42GR/Kq4FseQfVw==
-X-Gm-Gg: ASbGnctY/7mXk6BaxdshfhsTcWEwe8UlDuK2W/O67fv2C1Jxn0BZq7lvmwA6VNEoxgE
- oYadbiAzmRVqd3DwKfKs6iG17D3g1np2daxQ0vddav7JNEHQrWdtTszlTqVi45yE5kyB18JlI6c
- WnYbRL2r4ORT/PmK6GJjkUUfJluvaoJhG5+fmrFxASEYyOudkMpUaDs158B0ep9iZECYWN9DXHZ
- BNjVmIuiMTrnaO9vcKw2PhuteYHKiYPGZYS742vFenXl5gn71q6vvNXySQftg==
-X-Google-Smtp-Source: AGHT+IGxdYZk3y7WnRXSJWIEo4CNchDzY0y0iklOGHaDOQX+1VhNeO2/miP1bV4WhGQBZHLb8Nz9bax55Hjsi5dr0GY=
-X-Received: by 2002:a05:690e:4085:b0:63c:e19c:d7c6 with SMTP id
- 956f58d0204a3-63e160d88a6mr24074830d50.10.1761323486540; Fri, 24 Oct 2025
- 09:31:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vCKhv-00021O-4J
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:32:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vCKhr-0002JF-Et
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:32:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761323518;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fRDfpQC8E0oCBtb7MzCfUYS5XgPIdeEk1gIm1GeFACM=;
+ b=NMAhgIHJ41XGN8nt9yF5TmbrTNP7XGbtJEQEHm1vx4OWYQWAy9pr3rdrzNPuiaP2wMiDDT
+ y1qb77f68yx7WlIgklpRZxXdYGhs95gGg5S51oLromAxmQeEsJCEKAU8NKe2ZCFjA0qTUW
+ 9xZfAOA8jIdN2KuCu5FO8FSUTSwYtCk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-Fpo0g9rJNhS9ccL37bmwfw-1; Fri,
+ 24 Oct 2025 12:31:54 -0400
+X-MC-Unique: Fpo0g9rJNhS9ccL37bmwfw-1
+X-Mimecast-MFC-AGG-ID: Fpo0g9rJNhS9ccL37bmwfw_1761323514
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA6491800C36; Fri, 24 Oct 2025 16:31:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF88F19560B8; Fri, 24 Oct 2025 16:31:51 +0000 (UTC)
+Date: Fri, 24 Oct 2025 17:31:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH] migration: Don't free the reason after calling
+ migrate_add_blocker
+Message-ID: <aPup9BzTf-uk8cUf@redhat.com>
+References: <20251024092821.82220-1-guobin@linux.alibaba.com>
+ <87o6pw1rfn.fsf@pond.sub.org> <aPtim8ZACUWyje2o@redhat.com>
+ <874irozabw.fsf@pond.sub.org> <87v7k4xuhk.fsf@pond.sub.org>
+ <aPumkKBx4PoGSwNv@x1.local>
 MIME-Version: 1.0
-References: <20250519040555.3797167-1-alistair.francis@wdc.com>
- <20250519040555.3797167-48-alistair.francis@wdc.com>
- <CAFEAcA_6zma2=nsBWB7ebb35Jt1cNAChiMG0xnkT3WPEY8csiw@mail.gmail.com>
- <f9c1c814-c083-4c9b-831c-4cd5ce162002@ventanamicro.com>
-In-Reply-To: <f9c1c814-c083-4c9b-831c-4cd5ce162002@ventanamicro.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Oct 2025 17:31:14 +0100
-X-Gm-Features: AS18NWCSh2DPYM1A1o1Qxyo_9hvigqmohyDuZCQqLQR3P42rAS8k29o_BqoZBD4
-Message-ID: <CAFEAcA_6fLs=xmCzhxYuJqqRky2uPLFFW-9f=4ABMx+bTekVXQ@mail.gmail.com>
-Subject: Re: [PULL 47/56] target/riscv/kvm: add scounteren CSR
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: alistair23@gmail.com, qemu-devel@nongnu.org, 
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aPumkKBx4PoGSwNv@x1.local>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,65 +89,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Oct 2025 at 17:17, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
->
->
-> On 10/24/25 10:43 AM, Peter Maydell wrote:
-> > On Mon, 19 May 2025 at 05:25, <alistair23@gmail.com> wrote:
-> >>
-> >> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> >>
-> >> Add support for the scounteren KVM CSR. Note that env->scounteren is a
-> >> 32 bit and all KVM CSRs are target_ulong, so scounteren will be capped
-> >> to 32 bits read/writes.
-> >>
-> >> Reported-by: Andrew Jones <ajones@ventanamicro.com>
-> >> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> >> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-> >> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> >> Message-ID: <20250429124421.223883-10-dbarboza@ventanamicro.com>
-> >> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> >> ---
-> >>   target/riscv/kvm/kvm-cpu.c | 2 ++
-> >>   1 file changed, 2 insertions(+)
-> >>
-> >> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> >> index ca171d5457..82f9728636 100644
-> >> --- a/target/riscv/kvm/kvm-cpu.c
-> >> +++ b/target/riscv/kvm/kvm-cpu.c
-> >> @@ -251,6 +251,7 @@ static KVMCPUConfig kvm_csr_cfgs[] = {
-> >>       KVM_CSR_CFG("stval",      stval,      RISCV_CSR_REG(stval)),
-> >>       KVM_CSR_CFG("sip",        mip,        RISCV_CSR_REG(sip)),
-> >>       KVM_CSR_CFG("satp",       satp,       RISCV_CSR_REG(satp)),
-> >> +    KVM_CSR_CFG("scounteren", scounteren, RISCV_CSR_REG(scounteren)),
-> >>       KVM_CSR_CFG("senvcfg",    senvcfg,    RISCV_CSR_REG(senvcfg)),
-> >>   };
-> >>
-> >> @@ -701,6 +702,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-> >>       env->stval = 0;
-> >>       env->mip = 0;
-> >>       env->satp = 0;
-> >> +    env->scounteren = 0;
-> >>       env->senvcfg = 0;
-> >>   }
-> >
-> > Hi -- this came up in a conversation on IRC. Does this new
-> > CPU state field need migration support adding in machine.c ?
->
->
-> Hmm, I believe it already has, doesn't it?
->
-> target/riscv/machine.c:
+On Fri, Oct 24, 2025 at 12:17:20PM -0400, Peter Xu wrote:
+> On Fri, Oct 24, 2025 at 04:08:39PM +0200, Markus Armbruster wrote:
+> > Markus Armbruster <armbru@redhat.com> writes:
+> > 
+> > > Daniel P. Berrangé <berrange@redhat.com> writes:
+> > 
+> > [...]
+> > 
+> > >> But wow, the migrate_add_blocker API design is unpleasant with its
+> > >> pair of "Error **" parameters - it is practically designed to
+> > >> maximise confusion & surprise.
+> > >
+> > > It's quite a sight, isn't it?
+> > >
+> > > I'll give it a quick Friday afternoon try.
+> > 
+> > Alright, my confusion has been maximised.  Giving up on this.
+> 
+> Besides the use of two Error** that might be confusing, what is more
+> confusing (if not wrong..): migrate_add_blocker() will take ownership of
+> the 1st Error**, no matter whether the helper succeeded or not. However, it
+> only resets the first Error** if failed.
+> 
+> I think it means if migrate_add_blocker() succeeded, the caller will have a
+> non-NULL pointer, even if it has lost the ownership of that pointer.
+> 
+> I'm guessing it never caused issue only because we don't usually
+> error_free() the migration blocker anywhere.. but I think maybe we should
+> at least do an error_copy() in add_blockers()..
 
->         VMSTATE_UINT32(env.scounteren, RISCVCPU),  <-------
+IMHO we should not even be using an Error object for the the blocker.
+AFAICT, internally all we care about is the formatted string. The main
+reason for using an Error object appears to be to have a convenient
+pointer to use as an identifier to later pass to del_blocker.
 
-So it does. I'm not sure how I missed that in my grep.
-Sorry for the noise.
+I'd be inclined to just have passed in a fixed string, and return an
+integer identifier for the blocker. eg
 
--- PMM
+    int64 migrate_add_blocker(const char *reason, Error **errp);
+
+    void migrate_del_blocker(int64 blockerid);
+
+The migrate_add_blocker method would strdup(reason) to keep its own
+copy.
+
+The usage would thus be clear & simple:
+
+    int64 blockerid = migrate_add_blocker("cannot migrate vfio", errp);
+    if (!blockerid) {
+         return;
+    }
+
+    ... some time later...
+
+    migrate_del_blocker(blockerid);
+
+
+In some cases we needed dynamically formatted strings, which could have
+been achieved thus:
+
+    g_autofree char *msg = g_strdup_printf("cannot migrate vfio %d", blah);
+    int64 blockerid = migrate_add_blocker(msg, errp);
+    ...the rest as above...
+
+yes, this costs an extra strdup(), but that is an acceptable & negligible
+overhead in the context in which we're doing this.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
