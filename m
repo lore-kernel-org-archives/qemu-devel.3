@@ -4,90 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD3FCCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 10:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B0DCCD1A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 11:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCFI4-0001i9-WC; Fri, 24 Oct 2025 06:45:01 -0400
+	id 1vCFm6-0007Xf-A7; Fri, 24 Oct 2025 07:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vCFI3-0001i0-Bn
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:44:59 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vCFHz-0006ab-Pe
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:44:58 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-63c3d913b3bso3341162a12.2
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 03:44:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761302688; x=1761907488; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VbykXfu5ReLykfFpsQ8/0goS2fZ05aatviuLWRiZqkw=;
- b=HIoHqFNe4o3XJ6rk78SDIE74rre3leWcu83I34se356kNCvVKZAAEEVFdZnAP5NyZ4
- 4n/A1GfsQrHRSBDxD46oKsYkLUeGfk5tglI5YC9NUmDh6H1Wntl2/KCMKkqa4HNJ4nko
- ew6Cd8TFE7cmnnr1bu9iGDyIeGQVRlZw++UsNDbZ7niTiXqeXVnQvPIIDMUO/m2f6SxF
- LdlOW5KuTIgBaHNGT5YX/63+5I8vQ/jGouu1Yivxe0iqAZhzupK9vST30Fgmt877xcSz
- f0ehhFI7I0Zq+g3kEul7LiT+S1FCMEBGLqcQdzn5SUSw5FYSzSgT5YVs7ZaIyoLXMgkQ
- 4F5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761302688; x=1761907488;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VbykXfu5ReLykfFpsQ8/0goS2fZ05aatviuLWRiZqkw=;
- b=jeU2HvFWjN58yUmM84MwHQ5eJgToBng5TvOsyKf51H77kYvKyr4T05Ze6soxJviXEB
- d7XWuOT+aM0Uhqb6OCmNN5qh5b61kR1RlKuBLGz/+j+Edx6VJrDh7jo0gFGODoOx/7BF
- Xi9IT9/rKBpvajVFBpIfwlvNUqeFuUoVXH2G0iF/F69Y62kKz8R1wlJUFd5IKfgPlOk2
- PqACNeRDiszbC9+m/BxsRaNbWiIMZ6QUwHdGcYO1EOijd6quOJdYdBaiXaAeigEjk5ey
- qDVaQrM0ERetSOd8Tp+kevrPiNZkcDPZOmTq65JGJCC4YSSwobKG0Snumhcm4e9RfsuX
- NcTg==
-X-Gm-Message-State: AOJu0YyznDGtPUVs7yFbzhb22N5SZ4uC/4AKRx0+3Jyfcs8cI50vGzks
- nCiB2bDb9/qGB0Y+g7AAC99dsfx0sAjjk4jiyMznUrPTGhYL7fGXip71eUJYYb2ThhVwGNbMnL8
- 96Fc7PUE=
-X-Gm-Gg: ASbGnct8SYbXo+zQIEr8bKPsBDHApU4VQeK2m7NFDnN4OxMRN2HyJuc1xRkfduwnYqE
- bXODXcJE4Dfd5KY+gK3Ka/TU3ZuAMFNlpeDRiZG/+2QzWCX3VOOigcaqNDjzooAIcWjEATpj91t
- xdaLV5nWSXNJfNalJYMalHaTXoxgLJA3NjKN3VxkosScapzRHEcj7acVX1jN0Jn7duk/Cq18tRm
- FAqM2gnBqlBnH60tJJZtNxUj/v0yGTXLJSJHmj5rWuGEssyprkJD+iOSAK+JoQVzlTiwMjbkHJ4
- gJlao9l7cp/U0zPZSYalTQdlIn+fe9sb3pYtUKO1t66/c1+bdZOxEsI0pUVfxY/HljZx4AbliW+
- 0rmhdOXcgglZlLoQyFJChLBVxFb97a9ydA7JrR5h+cD+bnGaDMzT+fDoikLrkQQmTkmpniMy4iD
- 43/HLIXQaghGAz5NMxmBpDY1tpRy8LF+sJ4xtzs6vnE7STgLGEhkQ6Z4jgUgb6MvP0
-X-Google-Smtp-Source: AGHT+IExyk3fY9IfUx0oxxK/3ROGjS/stXwSRQwla4xo//YiCkyPHfoIZMw5eeywcHzvCd7kF+ry6Q==
-X-Received: by 2002:a05:6402:2554:b0:63e:2d46:cc5d with SMTP id
- 4fb4d7f45d1cf-63e3dff1673mr5431174a12.7.1761302687785; 
- Fri, 24 Oct 2025 03:44:47 -0700 (PDT)
-Received: from [10.120.116.227] (ip-037-024-071-028.um08.pools.vodafone-ip.de.
- [37.24.71.28]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e3eddc3c2sm4005010a12.17.2025.10.24.03.44.47
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 03:44:47 -0700 (PDT)
-Message-ID: <5365da00-402a-4ebb-a011-4671cf260e01@linaro.org>
-Date: Fri, 24 Oct 2025 12:44:43 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vCFlx-0007Wd-97
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 07:15:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vCFls-0002EM-GS
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 07:15:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761304546;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O3ZKRHnJqmFYanSwlrlrOpC8RL1X+H/82RQv2u2herE=;
+ b=JvSaRd1JQQXqUfBco57JflGbqCPZX0vvdSUc7UNk1zIgSmSdSISo7sbVDQz36fqZwrXP0p
+ m20xZuc9vK521beABkd0H5tcl60zWW2I8fib0yBKRd313NmFNBxLRMC439ynz0DQRxv8qH
+ aVt9/I68BkiWnqlgb1dV7qBcXXdjLqA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-Hz2N3ZyENdaS6JGgdlBFHA-1; Fri,
+ 24 Oct 2025 07:15:44 -0400
+X-MC-Unique: Hz2N3ZyENdaS6JGgdlBFHA-1
+X-Mimecast-MFC-AGG-ID: Hz2N3ZyENdaS6JGgdlBFHA_1761304543
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7811E1800669; Fri, 24 Oct 2025 11:15:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EED3230002D7; Fri, 24 Oct 2025 11:15:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1679D21E6A27; Fri, 24 Oct 2025 13:15:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de
+Subject: Re: [PATCH] migration: Don't free the reason after calling
+ migrate_add_blocker
+In-Reply-To: <20251024092821.82220-1-guobin@linux.alibaba.com> (Bin Guo's
+ message of "Fri, 24 Oct 2025 17:28:21 +0800")
+References: <20251024092821.82220-1-guobin@linux.alibaba.com>
+Date: Fri, 24 Oct 2025 13:15:40 +0200
+Message-ID: <87o6pw1rfn.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/25] riscv-to-apply queue
-To: qemu-devel@nongnu.org
-References: <20251023234927.1864284-1-alistair.francis@wdc.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251023234927.1864284-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52a.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +85,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/25 01:49, alistair23@gmail.com wrote:
-> From: Alistair Francis<alistair.francis@wdc.com>
-> 
-> The following changes since commit 88b1716a407459c8189473e4667653cb8e4c3df7:
-> 
->    Merge tag 'pull-target-arm-20251023' ofhttps://gitlab.com/pm215/qemu into staging (2025-10-23 13:17:27 -0500)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20251024
-> 
-> for you to fetch changes up to eccf20c02a5ad913a910444dc6bbe5de0952d254:
-> 
->    target/riscv: Make PMP CSRs conform to WARL constraints (2025-10-24 09:24:08 +1000)
-> 
-> ----------------------------------------------------------------
-> Second RISC-V PR for 10.2
-> 
-> * Correct mmu-type property of sifive_u harts in device tree
-> * Centralize MO_TE uses in a pair of helpers
-> * Fix Ethernet interface support for microchip-icicle-kit
-> * Fix mask for smsiaddrcfgh
-> * Fix env->priv setting in reset_regs_csr()
-> * Coverity-related fixes
-> * Fix riscv_cpu_sirq_pending() mask
-> * Fix a uninitialized variable warning
-> * Make PMP granularity configurable
+Bin Guo <guobin@linux.alibaba.com> writes:
 
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> ---
+>  hw/intc/arm_gicv3_kvm.c | 1 -
+>  target/i386/sev.c       | 1 -
+>  2 files changed, 2 deletions(-)
+>
+> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+> index 66b0dddfd4..6f311e37ef 100644
+> --- a/hw/intc/arm_gicv3_kvm.c
+> +++ b/hw/intc/arm_gicv3_kvm.c
+> @@ -841,7 +841,6 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+>          error_setg(&kvm_nv_migration_blocker,
+>                     "Live migration disabled because KVM nested virt is enabled");
+>          if (migrate_add_blocker(&kvm_nv_migration_blocker, errp)) {
+> -            error_free(kvm_nv_migration_blocker);
+>              return;
+>          }
+>  
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index 1057b8ab2c..fd2dada013 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -1661,7 +1661,6 @@ sev_snp_launch_finish(SevCommonState *sev_common)
+>      ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
+>      if (local_err) {
+>          error_report_err(local_err);
+> -        error_free(sev_mig_blocker);
+>          exit(1);
+>      }
+>  }
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Does this fix use-after-free bugs?
 
-r~
 
