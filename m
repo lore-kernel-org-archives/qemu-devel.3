@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748FCCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFBD0CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCDQJ-000580-NA; Fri, 24 Oct 2025 04:45:23 -0400
+	id 1vCDQ9-0004hL-Fc; Fri, 24 Oct 2025 04:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vCDQH-00057S-Mf
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:45:21 -0400
+ id 1vCDQ5-0004TC-CM
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:45:09 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vCDQA-0006Uo-Ot
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:45:21 -0400
+ id 1vCDQ3-0006Tq-41
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:45:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761295515; x=1792831515;
+ t=1761295507; x=1792831507;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1Uf95f0OPqx561A9lu3za/8GenVH9dQv814u2kwXs+o=;
- b=Z9v1PgrCFPv5Pf8DR/aByJ9sJJkiCZ7SwS20y8qtSOjwC+jC1YOzdiXu
- WILR4QpmsMzd/baKrHsEW+pQr+Y1nCf4ZG6lFnPwqEyA2KvLVasBHyeuA
- PoaZwosZbHs/cVJ8cD5icCHQUZFyBjkw6MQGxNJdS8B1jD74thrERo/UH
- Bqbgns3YESywITKc3LdnGERO8w7gyF+eTjNYmvYFO3o3qnT0wnurt9gAT
- EYZ/yurIJDN4uqN467m/RHqnbM2nzDMc/ZEAcJzXBk3d8aa7TVNTJJ338
- zVdPZVMSWoPlftBNCki5zvqoAoQfBnu3eUD/oFz8pk0ZGQhVTmdIKAtau Q==;
-X-CSE-ConnectionGUID: Bq+8SWNyTJauwoOyH7sjlA==
-X-CSE-MsgGUID: M2Oxo9GsREC3gFY2bDgQlQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62504867"
-X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="62504867"
+ bh=4K2B6RJKuThNGzDsczXDYfh2O2nvRDMOSoVHxlALa2k=;
+ b=PnUrVS1nSUWwmY4cEZbyxa2MVRJYoA7AtP6X/HgBJaB5L7qbb97oZfrJ
+ bnJaWy3Q2VVYuiFf09ASVuR2Rh+UBYp0B1q7KelWX5Qym8ExFKE3EuXHT
+ z6eWvieNZSTnbCBT3mV4WfxgBvWS8a7pbz06u9TknFDz1wlnoieSjvaGs
+ tklIwtXwvWMnVeYIlBAjXr2sETcnNhFJKdOZWLoLsXjgAySqmuoG31u/P
+ +U2nkBmuCfNyWwlPokTCmIIWqjniE12BMF+O+jeP3MlVIKKYj91+4Pjcf
+ F0XL8VVyaOK0mS+UOqstImTvEwOWgdS/hfBhW389Tu+H9rhgh9JzBR/TT A==;
+X-CSE-ConnectionGUID: u9otza/yS/WR1PwZDvhnvA==
+X-CSE-MsgGUID: PcRdux/TTEGtjTtLcNB5oQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62504855"
+X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="62504855"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 01:45:14 -0700
-X-CSE-ConnectionGUID: HI/upXgFRNC4wwN0j02rXg==
-X-CSE-MsgGUID: EAkSC/H/Rsa/co7hZzphtw==
+ 24 Oct 2025 01:45:05 -0700
+X-CSE-ConnectionGUID: 1kz8ZlhDRum05fQ8J0Edkw==
+X-CSE-MsgGUID: chaJRzLpQpaTar5fnS647A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="183985938"
+X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="183985887"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 01:45:10 -0700
+ 24 Oct 2025 01:45:02 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,10 +54,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v7 10/23] intel_iommu: Check for compatibility with IOMMUFD
- backed device when x-flts=on
-Date: Fri, 24 Oct 2025 04:43:34 -0400
-Message-ID: <20251024084349.102322-11-zhenzhong.duan@intel.com>
+Subject: [PATCH v7 08/23] vfio/iommufd: Force creating nesting parent HWPT
+Date: Fri, 24 Oct 2025 04:43:32 -0400
+Message-ID: <20251024084349.102322-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251024084349.102322-1-zhenzhong.duan@intel.com>
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
@@ -88,67 +87,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vIOMMU is configured x-flts=on in scalable mode, first stage page table
-is passed to host to construct nested page table for passthrough devices.
+Call pci_device_get_viommu_flags() to get if vIOMMU supports
+VIOMMU_FLAG_WANT_NESTING_PARENT.
 
-We need to check compatibility of some critical IOMMU capabilities between
-vIOMMU and host IOMMU to ensure guest first stage page table could be used by
-host.
+If yes, create a nesting parent HWPT and add it to the container's hwpt_list,
+letting this parent HWPT cover the entire second stage mappings (GPA=>HPA).
 
-For instance, vIOMMU supports first stage 1GB large page mapping, but host does
-not, then this IOMMUFD backed device should fail.
+This allows a VFIO passthrough device to directly attach to this default HWPT
+and then to use the system address space and its listener.
 
-Even of the checks pass, for now we willingly reject the association because
-all the bits are not there yet, it will be relaxed in the end of this series.
+Introduce a vfio_device_get_viommu_flags_want_nesting() helper to facilitate
+this implementation.
 
-Note vIOMMU has exposed IOMMU_HWPT_ALLOC_NEST_PARENT flag to force VFIO core to
-create nesting parent HWPT, if host doesn't support nested translation, the
-creation will fail. So no need to check nested capability here.
+It is safe to do so because a vIOMMU will be able to fail in set_iommu_device()
+call, if something else related to the VFIO device or vIOMMU isn't compatible.
 
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/i386/intel_iommu.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ include/hw/vfio/vfio-device.h |  2 ++
+ hw/vfio/device.c              | 12 ++++++++++++
+ hw/vfio/iommufd.c             |  9 +++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index ce4c54165e..7d908cdb58 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4636,8 +4636,31 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-         return true;
-     }
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index a0b8fc2eb6..48d00c7bc4 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -267,6 +267,8 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
  
-+#ifdef CONFIG_IOMMUFD
-+    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
-+    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
+ void vfio_device_unprepare(VFIODevice *vbasedev);
+ 
++bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev);
 +
-+    /* Remaining checks are all first stage translation specific */
-+    if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
-+        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
-+        return false;
-+    }
-+
-+    if (caps->type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
-+        error_setg(errp, "Incompatible host platform IOMMU type %d",
-+                   caps->type);
-+        return false;
-+    }
-+
-+    if (s->fs1gp && !(vtd->cap_reg & VTD_CAP_FS1GP)) {
-+        error_setg(errp,
-+                   "First stage 1GB large page is unsupported by host IOMMU");
-+        return false;
-+    }
-+#endif
-+
-     error_setg(errp,
--               "host device is uncompatible with first stage translation");
-+               "host IOMMU is incompatible with guest first stage translation");
-     return false;
+ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+                                 struct vfio_region_info **info);
+ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 5ed3103e72..be94947623 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -23,6 +23,7 @@
+ 
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/pci.h"
++#include "hw/iommu.h"
+ #include "hw/hw.h"
+ #include "trace.h"
+ #include "qapi/error.h"
+@@ -521,6 +522,17 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
+     vbasedev->bcontainer = NULL;
  }
  
++bool vfio_device_get_viommu_flags_want_nesting(VFIODevice *vbasedev)
++{
++    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
++
++    if (vdev) {
++        return !!(pci_device_get_viommu_flags(&vdev->parent_obj) &
++                  VIOMMU_FLAG_WANT_NESTING_PARENT);
++    }
++    return false;
++}
++
+ /*
+  * Traditional ioctl() based io
+  */
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 8de765c769..f9d0926274 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -404,6 +404,15 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+         flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+     }
+ 
++    /*
++     * If vIOMMU requests VFIO's cooperation to create nesting parent HWPT,
++     * force to create it so that it could be reused by vIOMMU to create
++     * nested HWPT.
++     */
++    if (vfio_device_get_viommu_flags_want_nesting(vbasedev)) {
++        flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
++    }
++
+     if (cpr_is_incoming()) {
+         hwpt_id = vbasedev->cpr.hwpt_id;
+         goto skip_alloc;
 -- 
 2.47.1
 
