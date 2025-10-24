@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA89CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E728BCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCMsc-0005z7-D3; Fri, 24 Oct 2025 14:51:14 -0400
+	id 1vCMyq-0007oH-3H; Fri, 24 Oct 2025 14:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCMsZ-0005x1-Ky; Fri, 24 Oct 2025 14:51:11 -0400
+ id 1vCMyo-0007nX-6E; Fri, 24 Oct 2025 14:57:38 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCMsX-0003mU-Le; Fri, 24 Oct 2025 14:51:11 -0400
+ id 1vCMym-0004I4-4Z; Fri, 24 Oct 2025 14:57:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=sisQzolJPTdubEX7W/qvFv42/OZgStnF2J5ERyw41fI=; b=NNf+WXlDK6661vehtmOYi3cuEb
- zUsZOFiOx6byukXHqGC+N/uI3u5JZOODnKYsWG3eHhJZ2iorWwq3TM0kkxeSg4wvwDqK+479WPO2+
- LBk4LLFEaRZ8knBtEUjFRxRk3Fd3PbNfTHhznrIOsbDcTKqCp3CghGp4xarEd9YLMW2HO6DHkHBa5
- BwPHKUDA+Zwt3s+jDbxa2K5zJHF/2mff3s/a5bpd5qnWy86Wvd5IzfwnxKgNNPrKsYkie99jldvTp
- Ba0Mg+QJV2y0x0vVcjTfej0v1z/I+rKhGnNspyGK7hBHDAgrbGYcDksUrDsCqIEVSrENrvmTpeTdL
- 7JW7Pv2Qt4uUoQ1WBqMQoHZkbL3j6yUmWdCXDrAu50/y8HkiwLrDezwv7ArujbWpUbDg4epgS6KsH
- oxOG7mwH1+K4WD+hHKzsmHKndJrY9pdL1lsIbTrkpaRyPyULkIAUn91NjLyN80/jbWaUVMQfftTBs
- hUS0vsAWkbfptrKvTUhFw8HL5pYF/TrlOAdFSIbu4m8caRy78FfsD+535xezkyNbsPI9pIyZzOySz
- nSryzId8l8Y2PDg+FGBmxPllFuiZuWT8P5LedkbYIyktP1bvh7HZiteQtICUnofjuVTkiHS3aODXI
- qnTFA3at+wV6DU8BJrV7ao04lL3iBh02Sy9Wb6bNc=;
+ bh=kUQ0a2UgrEW9utnp0TiZ/N5zzuvIlenUVyxFeGmy0vE=; b=zumd8j68wi+R7b01ohT9Eyamp9
+ ocEZIJ2VcypVHQlbhMYK59KdZjRBmA2GE25Y4vQiZzNIdMEfsqcQAwi7dxQf3rpWrX1uoe+ezjaAT
+ b046/yTvwTJmczS3+lISu/CW0iHalzHqynmKrlKTUw+93m6+k3lT0wTlXbKSQvz4MaMu5yDjgrE0z
+ DoWpUd2ZuD+sj5L5tkoeMJst7e3mEi4FpuP3eKn3SwiIlBGym2KoeMfc+sVvnDWlVwkFRRAzkT2RR
+ IUajFsRXAjzzOpNfIUDZP1unplbg5Hlba/1LO4NUNLkHlmkclzLbNHFdTy2ESRhgmAwQCRkVCdkQ4
+ NJHk/tIXNK9EkU4iLgGqWovgdeZSiB7ArbH7pKaf/4gmqLBbOyi6dqU6EXXzR157pG1jeokKRT6t2
+ wOx3VNR5H9cqhI8YJohG2Vv+vEw+aCK+6OWuCf1q+1DxIfDB/bWVfZ3adiYvoXUEchaFVmNsB0JNI
+ J4jvJDpx7ruhEtg5qAPJxtjOAtkcezDjD5idw5GzWc1K7Y10eKpWgtL7TmV+knI/dvlvzZmdIcXKD
+ M16Km6rC6yWvZh1aKUNkONS245Lr5W5pDPBWmzpWVEO2boWXu5mYPnRO5mczNmWHxJpqhaor9jZae
+ QgSjp1wNqOa8cLMZ2tvc9wJ1B9mrA8UBYiNuyGXtA=;
 Received: from [2a02:8012:2f01:0:521c:3ef:78b8:2419]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCMqH-000B5i-8O; Fri, 24 Oct 2025 19:48:53 +0100
-Message-ID: <bbbf39fc-f6cc-4988-8f59-e49fa2e153a9@ilande.co.uk>
-Date: Fri, 24 Oct 2025 19:51:00 +0100
+ id 1vCMwV-000B7e-6R; Fri, 24 Oct 2025 19:55:19 +0100
+Message-ID: <e08788dc-b216-401e-9d89-3ba0a01c5d7b@ilande.co.uk>
+Date: Fri, 24 Oct 2025 19:57:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
@@ -48,7 +48,7 @@ Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <cover.1761232472.git.balaton@eik.bme.hu>
- <3c4cb144c24a2a729669549c4c0e6e47d230e68e.1761232472.git.balaton@eik.bme.hu>
+ <f7b0329b72ca8740cc55f380fdf5cb4db2803620.1761232472.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -75,12 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <3c4cb144c24a2a729669549c4c0e6e47d230e68e.1761232472.git.balaton@eik.bme.hu>
+In-Reply-To: <f7b0329b72ca8740cc55f380fdf5cb4db2803620.1761232472.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:521c:3ef:78b8:2419
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v5 02/13] hw/pci-host/raven: Simplify PCI facing part
+Subject: Re: [PATCH v5 06/13] hw/pci-host/raven: Simplify PCI interrupt routing
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -108,78 +108,124 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/10/2025 16:26, BALATON Zoltan wrote:
 
-> The raven PCI device does not need a state struct as it has no data to
-> store there any more, so we can remove that to simplify code.
+> No need to use an or-irq to map interrupt lines to a single IRQ as the
+> PCI code can handle this internally so simplify by dropping the or-irq
+> similar to how ppc440_pcix.c does it.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/pci-host/raven.c | 19 -------------------
->   1 file changed, 19 deletions(-)
+>   hw/pci-host/raven.c | 39 +++++++++++++++------------------------
+>   hw/ppc/prep.c       |  5 ++++-
+>   2 files changed, 19 insertions(+), 25 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index c0492d1456..fa76e5170c 100644
+> index 22ad244eb6..2057a1869f 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -31,7 +31,6 @@
+> @@ -30,11 +30,8 @@
+>   #include "hw/pci/pci_device.h"
 >   #include "hw/pci/pci_bus.h"
 >   #include "hw/pci/pci_host.h"
->   #include "hw/qdev-properties.h"
-> -#include "migration/vmstate.h"
+> -#include "hw/qdev-properties.h"
 >   #include "hw/intc/i8259.h"
 >   #include "hw/irq.h"
->   #include "hw/or-irq.h"
-> @@ -40,12 +39,6 @@
+> -#include "hw/or-irq.h"
+> -#include "qom/object.h"
+>   
 >   #define TYPE_RAVEN_PCI_DEVICE "raven"
 >   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+> @@ -44,8 +41,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PREPPCIState, RAVEN_PCI_HOST_BRIDGE)
+>   struct PREPPCIState {
+>       PCIHostState parent_obj;
 >   
-> -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
-> -
-> -struct RavenPCIState {
-> -    PCIDevice dev;
-> -};
-> -
->   typedef struct PRePPCIState PREPPCIState;
->   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
->                            TYPE_RAVEN_PCI_HOST_BRIDGE)
-> @@ -312,16 +305,6 @@ static void raven_realize(PCIDevice *d, Error **errp)
->       d->config[PCI_CAPABILITY_LIST] = 0x00;
+> -    OrIRQState *or_irq;
+> -    qemu_irq pci_irqs[PCI_NUM_PINS];
+> +    qemu_irq irq;
+>       AddressSpace pci_io_as;
+>       MemoryRegion pci_io;
+>       MemoryRegion pci_io_non_contiguous;
+> @@ -175,16 +171,25 @@ static const MemoryRegionOps raven_io_ops = {
+>       .valid.unaligned = true,
+>   };
+>   
+> +/*
+> + * All four IRQ[ABCD] pins from all slots are tied to a single board
+> + * IRQ, so our mapping function here maps everything to IRQ 0.
+> + * The code in pci_change_irq_level() tracks the number of times
+> + * the mapped IRQ is asserted and deasserted, so if multiple devices
+> + * assert an IRQ at the same time the behaviour is correct.
+> + *
+> + * This may need further refactoring for boards that use multiple IRQ lines.
+> + */
+>   static int raven_map_irq(PCIDevice *pci_dev, int irq_num)
+>   {
+> -    return (irq_num + (pci_dev->devfn >> 3)) & 1;
+> +    return 0;
 >   }
 >   
-> -static const VMStateDescription vmstate_raven = {
-> -    .name = "raven",
-> -    .version_id = 0,
-> -    .minimum_version_id = 0,
-> -    .fields = (const VMStateField[]) {
-> -        VMSTATE_PCI_DEVICE(dev, RavenPCIState),
-> -        VMSTATE_END_OF_LIST()
-> -    },
-> -};
-> -
->   static void raven_class_init(ObjectClass *klass, const void *data)
+>   static void raven_set_irq(void *opaque, int irq_num, int level)
 >   {
->       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-> @@ -333,7 +316,6 @@ static void raven_class_init(ObjectClass *klass, const void *data)
->       k->revision = 0x00;
->       k->class_id = PCI_CLASS_BRIDGE_HOST;
->       dc->desc = "PReP Host Bridge - Motorola Raven";
-> -    dc->vmsd = &vmstate_raven;
->       /*
->        * Reason: PCI-facing part of the host bridge, not usable without
->        * the host-facing part, which can't be device_add'ed, yet.
-> @@ -344,7 +326,6 @@ static void raven_class_init(ObjectClass *klass, const void *data)
->   static const TypeInfo raven_info = {
->       .name = TYPE_RAVEN_PCI_DEVICE,
->       .parent = TYPE_PCI_DEVICE,
-> -    .instance_size = sizeof(RavenPCIState),
->       .class_init = raven_class_init,
->       .interfaces = (const InterfaceInfo[]) {
->           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+> -    PREPPCIState *s = opaque;
+> +    qemu_irq *irq = opaque;
+>   
+> -    qemu_set_irq(s->pci_irqs[irq_num], level);
+> +    qemu_set_irq(*irq, level);
+>   }
+>   
+>   static AddressSpace *raven_pcihost_set_iommu(PCIBus *bus, void *opaque,
+> @@ -212,26 +217,12 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
+>       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
+>       MemoryRegion *address_space_mem = get_system_memory();
+> -    int i;
+> -
+> -    /*
+> -     * According to PReP specification section 6.1.6 "System Interrupt
+> -     * Assignments", all PCI interrupts are routed via IRQ 15
+> -     */
+> -    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
+> -    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
+> -                            &error_fatal);
+> -    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
+> -    sysbus_init_irq(dev, &s->or_irq->out_irq);
+> -
+> -    for (i = 0; i < PCI_NUM_PINS; i++) {
+> -        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
+> -    }
+>   
+>       qdev_init_gpio_in(d, raven_change_gpio, 1);
+>   
+> +    sysbus_init_irq(dev, &s->irq);
+>       h->bus = pci_register_root_bus(d, NULL, raven_set_irq, raven_map_irq,
+> -                                   s, &s->pci_memory, &s->pci_io, 0, 4,
+> +                                   &s->irq, &s->pci_memory, &s->pci_io, 0, 1,
+>                                      TYPE_PCI_BUS);
+>   
+>       memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_le_ops, s,
+> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+> index c730cb3429..816455d289 100644
+> --- a/hw/ppc/prep.c
+> +++ b/hw/ppc/prep.c
+> @@ -304,7 +304,10 @@ static void ibm_40p_init(MachineState *machine)
+>       qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
+>       qdev_connect_gpio_out(i82378_dev, 0,
+>                             qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
+> -
+> +    /*
+> +     * According to PReP specification section 6.1.6 "System Interrupt
+> +     * Assignments", all PCI interrupts are routed via IRQ 15
+> +     */
+>       sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
+>       isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+>   
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+ From a PCI bus perspective this is not correct: a PCI bus always has 4 IRQ lines, 
+and so removing them from the model is the wrong thing to do. In fact in more general 
+terms, any device that creates a PCI bus that doesn't have 4 IRQs is not doing the 
+right thing (this is likely an artifact of conversion from older APIs).
 
 
 ATB,
 
 Mark.
-
 
