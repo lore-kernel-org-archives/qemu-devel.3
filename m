@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B83FCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B83ECCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCNfL-0007yS-SZ; Fri, 24 Oct 2025 15:41:35 -0400
+	id 1vCNgw-0000er-C1; Fri, 24 Oct 2025 15:43:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNfJ-0007tV-9G
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:41:34 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNgn-0000dg-Jp
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:43:06 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNfH-00034V-1Q
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:41:33 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-475dc6029b6so301255e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:41:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNgk-00038x-8r
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:43:05 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4711f156326so22509005e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761334888; x=1761939688; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761334980; x=1761939780; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KpH1TjiIWYMoy+2aYVMfZHyQSqeUvDzN9D1JMZexHpc=;
- b=IPXmp0HdRJvYINqiR++Z3ZOpRlU+90GxkmTAs/RHEuJ+FyNZeeJg3WltINBPrdfZ2K
- gIKDzZDV2Bibd39TWHikf4FkOw6TvoqK41RbHth5AcG3GdY4wF49UyEavVBZa+h7Qjrg
- 1FqhA52oHaL9uVBJIO+DiVCw2SrhfXgbN5uLUOPRg7w1f+KYLto++a77bkyhAOzY2emb
- eOzTqds/TAXbxn0NWg098/0TtHhCLGkcz3be8ugfx9r0U5Hnez7B9rH44rvK8PNWE5e2
- 7re6abLK2MiW8FA1yvnRBM4W/hs6LSTU4Es3v1KDeiCs9kzK6vqqd5Mraof6gOuzVqEu
- W+ug==
+ bh=769iWgY60OlZK01l+9XhxEq7r89R7EBa1iwDi8rTPRg=;
+ b=Chld+oy/m6QQ3IJTFlAYwJqBj468NnB+ZUbzV8qWtc3o44GfLLCGLdpBNIbnyh8s0E
+ cFCnK/H1b4R/zUOODW8/U0ZNhZH3Dph3G3sdwnewatpFKF7ndeFHdGdHZw/bxH1Lj63G
+ qp5FqbQ8BirKtdu7GWY5UqYjE1QdDvjK2/dODTqhZML0rEFtlb7+S3OmUaqd1vsKbgcu
+ rVp8mV1EVSEsNrujT9L8TqzR4BXCEgM+1Yeq6b+Y1ijoI8hoe7/aA1SaIPOHL8KWfItr
+ SuatA/5lM/0trDA+DUfC6xQXsxh9oRW78EOhYwlGZBaJMzsF4aQHQA6FPuIMdkbUMtD1
+ tw5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761334888; x=1761939688;
+ d=1e100.net; s=20230601; t=1761334980; x=1761939780;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KpH1TjiIWYMoy+2aYVMfZHyQSqeUvDzN9D1JMZexHpc=;
- b=LPQSL525gUdlyuKVylnfXvN2SILnCr/xVBQr72gMwsfXVuFQHNd1WMd4emyjojnflv
- /JpFL7laCVuxQPQYfra7nOZikdy9XDeh9qMJjIM1MNy8ANzKBNxJ/LTLCiRJQujjQ1MC
- jEd3+JAI4QLu2FaeNMd3ja0FY1rjnVhbIfWdm53WK37FLXA+AEc/Pk6vI49YoApRGrJx
- aY2kMe97l5qXtWbUdBG1/5yTu/qZxlpL8Ij8OO8vUYyUwjQ+xWKHUd6keHGrINukZBoF
- DOh9hgr6sZSMYuOoatQ2sJhUGJJfv6ARlb4JC5RCgqNQ5TJPwTw2Pp6hessvBT3npokZ
- Mvvw==
-X-Gm-Message-State: AOJu0Yy7eDqWzlYLyqe4uZLy+lSVZQ5TpcqxJE8CadpwD8VDgSBuDPbu
- yWshYW8MAgVJSOun3z5ls9YnYdp6jgLOERKLPSkmeodsLVxmZGo24EXu9WgXvdjSfBFAVqA8QN5
- VG7WChRM=
-X-Gm-Gg: ASbGncv/go/94AgmkEScoiXqPIKYkrVoroNOfGWC00K849xy244KTubkecaEdtz+jdM
- HqUZBbeCIOSwISUWsH5HcMALhvb8fiLaLd942nWeHM0eY7R2Uj2Phb+8aVcVE+tgAH0KQUM68ZW
- 1U0dbmAmaK0GOCFOJSbD6LfOuB3j1sA77pGfaCcBHkQliwETApLYfeOEw287ZjyLP+8QWPDDVGw
- V0ajbzRfBjIBbUMNqPDkmV8oNnEZZarMU++sWa2pZttf2T+V6uR/bLbaxcjPNVyZyAsTRZEYjLm
- wAfYzS8Jn8/HwnJERwxX6c2Zbp9vQ64+HhHFJLAjku/5/UfX7VcptOA++j9UzvJch0P6IyAWQ//
- WwZ0HpwUzygsEzOKuDWEakEG9fxBttO9d74mBVozOGXMtpWkMVTZgiamkDYn80bl4XFyo+bAgWT
- TKuWNRNa8yhA+s0SvTwuNHxpYU+N8YphlS915Tib3xN/aasGwNoWZ5AINgE7GR
-X-Google-Smtp-Source: AGHT+IH6/dZ1UCh6BkdG06z1NSspqbsgE2j1KQM2XnC+xyXgfkt/gcwR5yK/U9aRTqcDlnLNjY6/Jw==
-X-Received: by 2002:a05:600c:3b82:b0:475:daa7:ec60 with SMTP id
- 5b1f17b1804b1-475daa7ee4amr10581395e9.21.1761334888253; 
- Fri, 24 Oct 2025 12:41:28 -0700 (PDT)
+ bh=769iWgY60OlZK01l+9XhxEq7r89R7EBa1iwDi8rTPRg=;
+ b=JlbG5ZIuR6rODDwSeZp+XdMBCifyE1n6lpOA3oip8RCRraID8wze20PfV0js2YO9fP
+ /j0ot8ywmBCihwMNmS+zIfxJvZiQ6NFbbMXN95z2TezUJur8sfYQBRmRYadMKXcrYSdj
+ 5se92Njk4DiXI4mmOp924kqk2OpcwC2qlLTtf6gEFPKjBT5NBMAZqzfD/QLywUWtgZOl
+ k319yNbtNMwOIKWm5/2pNKpVOp8v5Po4yr4ZXjrO9HuH3C9jN0p3k40/ZSRnb60dIeJq
+ Zmq8SDlDLEY4JTSvLtUisLQ4SF+j8Z4NWt+Z+MUNdPGaovAM8La0gHmipsB045u+Q4gO
+ HIxw==
+X-Gm-Message-State: AOJu0YzmlvvYwX2HcoGXTAcnxIXWH+YtVqWJUz8tFl/U505MyWVJxz9k
+ PeK9pY+EzDoZmxEBbJBP1LvaZ8ubZwgI5vZ9ecK3LOHfnEwa0IZWZSEZXH5dtAO9Th5GyfLMqrN
+ 6/uVOiM0=
+X-Gm-Gg: ASbGncvgjgL9O/7T8nTmkc8uJzcHB+/mTbAyHH5qmel7TSGW+f4lIOpUJjF4r4+ksuq
+ fOu/G8ou538QJb4PUhqcK9TQWNRLNhGKEOS6i9CONtrns5g4UoTUklgERRI8rtOp42fku7/J1fX
+ mPpa1hlXf5API7iYcbW/SWSXhLOh53ei89kR/IYC+C5bN/hZIKcwzuGHRtmZkVbi0FWmF4yv7Il
+ qhz8+LilYFYy2Zhx/abemaOZ24mEN0fCxxvHQFs6qip9BHAKnbMGWpPc/QV1OYBqL9fxP4zeEFI
+ HEzmGhjnWihWBAus8W+Ky9pQPYp0dmDw2PWSgDdspp2hdHhM/NBLuUag7HTpPcovp7BfNRHXgNs
+ LQS2JswMNh/7Rh/HRdfTrVHyt6jSRydDasrqp+r/u6FMSLTDSUYu+cAeJyKrumhwW8z5oXOsK4W
+ f25DhczV9vwDfCX6fZWZazCtSZikfPgG8AEzrFLYvdAW7SLp0l+w==
+X-Google-Smtp-Source: AGHT+IFWb29gcfQca/ER+BJPqO7aaqpfQSFwUlsK9eveXaILCnQc1djGh0p3zJ6qYEW4EAd1XFXiAg==
+X-Received: by 2002:a05:600c:470d:b0:471:a98:998d with SMTP id
+ 5b1f17b1804b1-471178a4ac3mr203706195e9.12.1761334980264; 
+ Fri, 24 Oct 2025 12:43:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475cae9f571sm107387325e9.7.2025.10.24.12.41.27
+ 5b1f17b1804b1-475caf2eb9csm105240475e9.14.2025.10.24.12.42.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Oct 2025 12:41:27 -0700 (PDT)
+ Fri, 24 Oct 2025 12:42:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 24/27] hw/mips: Include missing 'system/memory.h' header
-Date: Fri, 24 Oct 2025 21:04:11 +0200
-Message-ID: <20251024190416.8803-25-philmd@linaro.org>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PATCH 25/27] hw/sparc: Include missing 'system/memory.h' header
+Date: Fri, 24 Oct 2025 21:04:12 +0200
+Message-ID: <20251024190416.8803-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251024190416.8803-1-philmd@linaro.org>
 References: <20251024190416.8803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,45 +105,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 "system/memory.h" header is indirectly pulled by "hw/sysbus.h".
 Include it explicitly to avoid when refactoring the latter:
 
-  In file included from ../../hw/misc/mips_itu.c:26:
-  include/hw/misc/mips_itu.h:65:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     65 |     MemoryRegion storage_io;
+  In file included from ../../hw/sparc/sun4m_iommu.c:28:
+  include/hw/sparc/sun4m_iommu.h:36:18: error: field has incomplete type 'AddressSpace' (aka 'struct AddressSpace')
+     36 |     AddressSpace iommu_as;
         |                  ^
-  In file included from ../../hw/misc/mips_cmgcr.c:17:
-  include/hw/misc/mips_cmgcr.h:80:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     80 |     MemoryRegion iomem;
+  In file included from ../../hw/sparc64/sun4u_iommu.c:29:
+  include/hw/sparc/sun4u_iommu.h:38:18: error: field has incomplete type 'AddressSpace' (aka 'struct AddressSpace')
+     38 |     AddressSpace iommu_as;
         |                  ^
+  include/qemu/typedefs.h:27:16: note: forward declaration of 'struct AddressSpace'
+     27 | typedef struct AddressSpace AddressSpace;
+        |                ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/misc/mips_cmgcr.h | 1 +
- include/hw/misc/mips_itu.h   | 1 +
- 2 files changed, 2 insertions(+)
+ include/hw/sparc/sparc32_dma.h | 1 +
+ include/hw/sparc/sun4m_iommu.h | 1 +
+ include/hw/sparc/sun4u_iommu.h | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/include/hw/misc/mips_cmgcr.h b/include/hw/misc/mips_cmgcr.h
-index db4bf5f4499..e15731f18ce 100644
---- a/include/hw/misc/mips_cmgcr.h
-+++ b/include/hw/misc/mips_cmgcr.h
-@@ -12,6 +12,7 @@
+diff --git a/include/hw/sparc/sparc32_dma.h b/include/hw/sparc/sparc32_dma.h
+index cde8ec02cb6..46ed0a20d88 100644
+--- a/include/hw/sparc/sparc32_dma.h
++++ b/include/hw/sparc/sparc32_dma.h
+@@ -5,6 +5,7 @@
+ #include "hw/scsi/esp.h"
+ #include "hw/net/lance.h"
+ #include "qom/object.h"
++#include "system/memory.h"
+ 
+ #define DMA_REGS 4
+ 
+diff --git a/include/hw/sparc/sun4m_iommu.h b/include/hw/sparc/sun4m_iommu.h
+index 4e2ab34cdef..dd09a72c525 100644
+--- a/include/hw/sparc/sun4m_iommu.h
++++ b/include/hw/sparc/sun4m_iommu.h
+@@ -27,6 +27,7 @@
  
  #include "hw/sysbus.h"
  #include "qom/object.h"
 +#include "system/memory.h"
  
- #define TYPE_MIPS_GCR "mips-gcr"
- OBJECT_DECLARE_SIMPLE_TYPE(MIPSGCRState, MIPS_GCR)
-diff --git a/include/hw/misc/mips_itu.h b/include/hw/misc/mips_itu.h
-index 27c9a1090d5..1a684d90a15 100644
---- a/include/hw/misc/mips_itu.h
-+++ b/include/hw/misc/mips_itu.h
-@@ -22,6 +22,7 @@
+ #define IOMMU_NREGS         (4 * 4096 / 4)
+ 
+diff --git a/include/hw/sparc/sun4u_iommu.h b/include/hw/sparc/sun4u_iommu.h
+index f94566a72c9..fad71264408 100644
+--- a/include/hw/sparc/sun4u_iommu.h
++++ b/include/hw/sparc/sun4u_iommu.h
+@@ -29,6 +29,7 @@
  
  #include "hw/sysbus.h"
  #include "qom/object.h"
 +#include "system/memory.h"
  
- #define TYPE_MIPS_ITU "mips-itu"
- OBJECT_DECLARE_SIMPLE_TYPE(MIPSITUState, MIPS_ITU)
+ #define IOMMU_NREGS             3
+ 
 -- 
 2.51.0
 
