@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3D4CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8152BCCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCN5M-0000u0-J6; Fri, 24 Oct 2025 15:04:24 -0400
+	id 1vCN5P-0000vH-UD; Fri, 24 Oct 2025 15:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN5L-0000tT-Gh
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:04:23 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN5I-000504-QL
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:04:23 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-475dbc3c9efso591695e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761332658; x=1761937458; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DI4urzwiBkpvf6sSaNyHt9E181h3FLTAu5FO96TNJJo=;
- b=GwMmGgEak/WOwFj9r5E7CxWN8Mc2vMMqVTgBhV1xqatu3SfqmJEhqVCMEXmhb+xGRD
- eVAF3ALaW1WCHSc5bTXfKhua3hl1aCmKtUpaOGmUAJxelkerh/9Jz0rAddlD8tzJ8FnZ
- GNTz3300Zx/EFTiAGnmuMO2Gk07wwcuLV20afE6uZnjfAa4yawrKIOusUMhZG0ZA7C+M
- 7YpSTBpYHS/rXBRr2OiQgKjIbIjxjsJHro0gm3XBRCcMA6NmqQUf+F2pLjXlG7aUBBgP
- /pf+zeIanUPmd9vpTLeB/efCISt6XOrbI9GyhW2l/XaRJFmI0EUk5871qWBknA6C951Q
- brHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761332658; x=1761937458;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DI4urzwiBkpvf6sSaNyHt9E181h3FLTAu5FO96TNJJo=;
- b=QizhrBl91IkbSZswr9ioiLjoHFAnT7Q2axpWAqL9J6Uyc32PaFTAA985/cwbvgF9r6
- hwwjJS0K7aZIrlYk3++49q6EZKWrFdcDDxCFDQKW6SlKvtzoraKVM6um3F9wdmRWulY8
- UH0h0+KX568nBb3bQlfn07vhyd7+yklPgmI9uETUzSM/J+Ap5tP9quADAS78xGAfbwd2
- qudhLCAtnSWQoxqUBnzOhsOP4cjIXwywCbZAdkx+ot9POqjCOVDuVCdv17HFgOivgGbf
- VvXunrKv432L4qTLgcdKSyfer+GtKn5QfqsHNBgTWRc6AqftYV25GYxpUVvU/9/ks5Bo
- CNew==
-X-Gm-Message-State: AOJu0YwYazuCzm5EhbDtNqkjKU4FP+giUAS7Hlpzb+poLWqrohWw78/6
- VNSCUIOu9iNRJVE0hqwDjywHrVILKbNmfpcLU/8BVa6IcqHUl7SEK+PqPhWbHDXjtiVnud7rm1v
- x4ZJf4QM=
-X-Gm-Gg: ASbGncuvlF1XmPP0ZbTtUz+ep0rULAe9XyIuSmgUx7NOWCPR7GXb3JRIZhPnWtyrpOH
- wSSeOfYmwWGiBGsO5IDxigjrA4l7CCM6zM2MRW9e54JIcm9RenoyBvSAwTyvwudJPDajR8u2etj
- Pp4XcdBlfVkxpO7E8nQJ8wk8gBGzZUlMNRj42Z4ihdjt9SYWpkq4k06NdayIrHzXM++hRcUPFRv
- IB/RCRYxph2qVQvdsSla7qII8klEmOkxwuwb8gf9LwJaGF+QgxQ6nEDIu2SB5rGlOkLqeziVzRK
- geaoTlpRcDSHs2vqYsYR7eqqpSaAVkPY1mVhGpAUeZqCuNNtGQDfDgwAEq8HZIWJcOzIirSnT1F
- toplj/3pvol2zk/75xHRGmi/qmMFW7V/n0NodksP9Lpsi7O4iknEVhDk0QKdHk0bf0pgni9qnEG
- tkbm40S+uH5HK3t7Leto9GmFsm13nRt13XkqKzkQ8MnxRLNzNlEg==
-X-Google-Smtp-Source: AGHT+IHRTgCZhtm+u8RTYICAZZr5sSX1RA/Uh2bvpsX7iZwxYT/r4c1t3Oq+vhjlWWoItp1FMGaGDg==
-X-Received: by 2002:a05:600c:474b:b0:46e:4e6d:79f4 with SMTP id
- 5b1f17b1804b1-47117877525mr210287255e9.15.1761332658488; 
- Fri, 24 Oct 2025 12:04:18 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475caf15416sm105328485e9.10.2025.10.24.12.04.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Oct 2025 12:04:17 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 00/27] hw/sysbus: Spring cleanups (part 1)
-Date: Fri, 24 Oct 2025 21:03:47 +0200
-Message-ID: <20251024190416.8803-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vCN5O-0000v3-AD
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:04:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vCN5M-00051M-L8
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:04:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761332663;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XA/4q4Ov24n9vAgzW1LfcQ1pMbwFjxB/xETz3OMfPM4=;
+ b=THI35GQXEQkEGYV0SEGU7bZlAH1SfcZ9kdJ1AQjGNxPs0J6k9klHUvfwANJi3SGvxyyZeA
+ p1qCUU4KV7bMfkms7UJnjf4Gnf2feYS4Za4WXSvk9cndsR8kQZ8PmKEK8SNq6ph8fdhUwp
+ JHclUqaTmmSMbH1R+7PqCK32xycDoRo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-jeXZNimPMrWXdRnMXfu0jw-1; Fri,
+ 24 Oct 2025 15:04:20 -0400
+X-MC-Unique: jeXZNimPMrWXdRnMXfu0jw-1
+X-Mimecast-MFC-AGG-ID: jeXZNimPMrWXdRnMXfu0jw_1761332659
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26A22196F76E; Fri, 24 Oct 2025 19:04:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.155])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3537530002DE; Fri, 24 Oct 2025 19:04:17 +0000 (UTC)
+Date: Fri, 24 Oct 2025 14:04:14 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, armbru@redhat.com, qemu-devel@nongnu.org, 
+ hreitz@redhat.com
+Subject: Re: [PATCH v2 4/4] qemu-img info: Add cache mode option
+Message-ID: <zg2f7rmtapyvgztyyuj2twsntezx3ayhmloawqesf25g56pkxf@qperuc67znnm>
+References: <20251024123041.51254-1-kwolf@redhat.com>
+ <20251024123041.51254-5-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251024123041.51254-5-kwolf@redhat.com>
+User-Agent: NeoMutt/20250905
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,116 +84,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Constify SysBusDevice argument
-- Add sysbus_has_pio() and sysbus_pio_get_address()
-- Use proper SysBus accessors
-- Include missing 'exec/cpu-common.h' and 'system/memory.h' headers
+On Fri, Oct 24, 2025 at 02:30:40PM +0200, Kevin Wolf wrote:
+> When querying block limits, different cache modes (in particular
+> O_DIRECT or not) can result in different limits. Add an option to
+> 'qemu-img info' that allows the user to specify a cache mode, so that
+> they can get the block limits for the cache mode they intend to use with
+> their VM.
+> 
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  docs/tools/qemu-img.rst |  2 +-
+>  qemu-img.c              | 25 +++++++++++++++++++++----
+>  qemu-img-cmds.hx        |  4 ++--
+>  3 files changed, 24 insertions(+), 7 deletions(-)
+>
 
-Philippe Mathieu-Daudé (27):
-  hw/qdev: Have qdev_get_gpio_out_connector() take const DeviceState arg
-  hw/sysbus: Have various helpers take a const SysBusDevice argument
-  hw/sysbus: Use memory_region_name()
-  hw/i386/microvm: Use proper SysBus accessors
-  hw/timer/hpet: Use proper SysBus accessors
-  hw/acpi/cxl: Use proper SysBus accessors
-  hw/sysbus: Add sysbus_has_pio() and sysbus_pio_get_address()
-  hw/pci-bridge/pci_expander_bridge: Use proper SysBus accessors
-  hw/platform-bus: Include missing 'system/memory.h' header
-  hw/block/pflash: Include missing 'system/memory.h' header
-  hw/misc/unimp: Include missing 'system/memory.h' header
-  hw/misc/empty_slot: Include missing 'system/memory.h' header
-  hw/uefi: Include missing 'system/memory.h' header
-  hw/usb/imx: Include missing 'system/memory.h' header
-  hw/pci/pcihost: Include missing 'system/memory.h' header
-  hw/scsi/esp: Include missing 'system/memory.h' header
-  hw/avr: Include missing 'system/memory.h' header
-  hw/input/lassi: Include missing 'system/memory.h' header
-  hw/tricore: Include missing 'system/memory.h' header
-  hw/int/loongarch: Include missing 'system/memory.h' header
-  hw/rtc/m48t59: Include missing 'system/memory.h' header
-  hw/rtc/sun: Include 'exec/cpu-common.h' and 'system/memory.h' headers
-  hw/xilinx: Include 'exec/cpu-common.h' and 'system/memory.h' headers
-  hw/mips: Include missing 'system/memory.h' header
-  hw/sparc: Include missing 'system/memory.h' header
-  hw/riscv: Include missing 'system/memory.h' header
-  hw/rx: Include missing 'system/memory.h' header
-
- hw/rtc/m48t59-internal.h                  |  2 ++
- include/hw/char/avr_usart.h               |  1 +
- include/hw/char/cadence_uart.h            |  1 +
- include/hw/char/ibex_uart.h               |  1 +
- include/hw/char/renesas_sci.h             |  1 +
- include/hw/char/shakti_uart.h             |  1 +
- include/hw/char/sifive_uart.h             |  1 +
- include/hw/gpio/sifive_gpio.h             |  1 +
- include/hw/input/lasips2.h                |  1 +
- include/hw/intc/loongarch_dintc.h         |  2 +-
- include/hw/intc/loongarch_extioi_common.h |  1 +
- include/hw/intc/loongarch_pch_msi.h       |  1 +
- include/hw/intc/loongarch_pic_common.h    |  1 +
- include/hw/intc/loongson_ipi_common.h     |  2 ++
- include/hw/intc/riscv_aclint.h            |  1 +
- include/hw/intc/riscv_aplic.h             |  1 +
- include/hw/intc/riscv_imsic.h             |  1 +
- include/hw/intc/rx_icu.h                  |  1 +
- include/hw/intc/sifive_plic.h             |  1 +
- include/hw/misc/avr_power.h               |  1 +
- include/hw/misc/lasi.h                    |  1 +
- include/hw/misc/mchp_pfsoc_dmc.h          |  1 +
- include/hw/misc/mchp_pfsoc_ioscb.h        |  1 +
- include/hw/misc/mchp_pfsoc_sysreg.h       |  1 +
- include/hw/misc/mips_cmgcr.h              |  1 +
- include/hw/misc/mips_itu.h                |  1 +
- include/hw/misc/sifive_e_aon.h            |  1 +
- include/hw/misc/sifive_e_prci.h           |  1 +
- include/hw/misc/sifive_test.h             |  1 +
- include/hw/misc/sifive_u_otp.h            |  1 +
- include/hw/misc/sifive_u_prci.h           |  1 +
- include/hw/misc/unimp.h                   |  1 +
- include/hw/net/cadence_gem.h              |  1 +
- include/hw/pci/pci_host.h                 |  1 +
- include/hw/platform-bus.h                 |  1 +
- include/hw/qdev-core.h                    |  3 ++-
- include/hw/riscv/opentitan.h              |  1 +
- include/hw/riscv/shakti_c.h               |  1 +
- include/hw/riscv/sifive_e.h               |  1 +
- include/hw/riscv/xiangshan_kmh.h          |  1 +
- include/hw/rtc/goldfish_rtc.h             |  1 +
- include/hw/scsi/esp.h                     |  1 +
- include/hw/sparc/sparc32_dma.h            |  1 +
- include/hw/sparc/sun4m_iommu.h            |  1 +
- include/hw/sparc/sun4u_iommu.h            |  1 +
- include/hw/ssi/ibex_spi_host.h            |  1 +
- include/hw/ssi/sifive_spi.h               |  1 +
- include/hw/sysbus.h                       | 12 +++++++-----
- include/hw/timer/avr_timer16.h            |  1 +
- include/hw/timer/cadence_ttc.h            |  1 +
- include/hw/timer/ibex_timer.h             |  1 +
- include/hw/timer/renesas_cmt.h            |  1 +
- include/hw/timer/renesas_tmr.h            |  1 +
- include/hw/timer/sifive_pwm.h             |  1 +
- include/hw/tricore/tc27x_soc.h            |  1 +
- include/hw/tricore/tricore_testdevice.h   |  1 +
- include/hw/uefi/var-service.h             |  1 +
- include/hw/usb/imx-usb-phy.h              |  1 +
- hw/acpi/cxl.c                             |  2 +-
- hw/block/pflash_cfi01.c                   |  1 +
- hw/block/pflash_cfi02.c                   |  1 +
- hw/char/xilinx_uartlite.c                 |  2 ++
- hw/core/gpio.c                            |  3 ++-
- hw/core/sysbus.c                          | 23 +++++++++++++++++------
- hw/i386/microvm-dt.c                      |  6 ++++--
- hw/intc/xilinx_intc.c                     |  2 ++
- hw/misc/empty_slot.c                      |  1 +
- hw/net/xilinx_axienet.c                   |  2 ++
- hw/pci-bridge/pci_expander_bridge.c       | 12 ++++++------
- hw/rtc/sun4v-rtc.c                        |  2 ++
- hw/ssi/xilinx_spi.c                       |  2 ++
- hw/timer/hpet.c                           |  3 ++-
- hw/timer/xilinx_timer.c                   |  2 ++
- 73 files changed, 114 insertions(+), 24 deletions(-)
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
 -- 
-2.51.0
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
