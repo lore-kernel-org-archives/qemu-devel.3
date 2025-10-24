@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFCECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77162CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCHi3-0005SK-7k; Fri, 24 Oct 2025 09:19:59 -0400
+	id 1vCHie-0005x7-81; Fri, 24 Oct 2025 09:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHhz-0005Qn-Lo
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:19:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vCHiE-0005Zc-5F
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHht-0004jy-H6
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:19:55 -0400
+ id 1vCHiA-0004o9-9J
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761311986;
+ s=mimecast20190719; t=1761312005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6K6yXOxzdduDep/cEeTdz/PabHfAAO8ZDJVfFXVKLhM=;
- b=GfrwAutsSGkWvQFJmHWK7e5U5NuWvECZ/iTRZsZiJ7h/8sCREloQVnEGgAlyQQmxAGOPX3
- pifbQtjWw0nPYHlxgbcsRUFzHJ6gPSrjRhhSPo7Q2PLlcWVioCiACjPeKv7BXKLLZdOz2I
- FoBaHBKsHJkpyGUrWbSUWyKLFK7B+Fs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4U13DS84vu8fdAZLnmbcdTQZOB+68oeOMig+2Pdendk=;
+ b=MqmdTHIeUpTiS7VzONsLwYDUk/HqWy6EP/HZeNDuziTgSMvg8VTRLRxaZJ1d8FlrYc4Pj8
+ nQxQZe8DHu/2gf7NbSWwdws1g0tSCjg4L/kpma/InLanA0rdIoq4ov/JqO83ED4WE/GCZv
+ sZ7/Ya+N8dZA1XmL8vFPf4jxzaBM1AE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-O6YSTuXwMJ66L6PLCeiwpg-1; Fri,
- 24 Oct 2025 09:19:43 -0400
-X-MC-Unique: O6YSTuXwMJ66L6PLCeiwpg-1
-X-Mimecast-MFC-AGG-ID: O6YSTuXwMJ66L6PLCeiwpg_1761311982
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-HIz2jB6SNqKA6FzLr3vGUA-1; Fri,
+ 24 Oct 2025 09:20:02 -0400
+X-MC-Unique: HIz2jB6SNqKA6FzLr3vGUA-1
+X-Mimecast-MFC-AGG-ID: HIz2jB6SNqKA6FzLr3vGUA_1761312001
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 957A919541BF; Fri, 24 Oct 2025 13:19:42 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2155D196F742; Fri, 24 Oct 2025 13:20:01 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.2])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E77B819540EB; Fri, 24 Oct 2025 13:19:40 +0000 (UTC)
+ id 43F7F1953994; Fri, 24 Oct 2025 13:19:58 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: [PULL 01/13] crypto: propagate Error object on premature termination
-Date: Fri, 24 Oct 2025 14:19:25 +0100
-Message-ID: <20251024131937.56673-2-berrange@redhat.com>
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/13] crypto: validate an error is reported in test expected
+ fails
+Date: Fri, 24 Oct 2025 14:19:33 +0100
+Message-ID: <20251024131937.56673-10-berrange@redhat.com>
 In-Reply-To: <20251024131937.56673-1-berrange@redhat.com>
 References: <20251024131937.56673-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,89 +88,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The way that premature termination was handled in TLS connections was
-changed to handle an ordering problem during graceful shutdown in the
-migration code.
+There was a bug where TLS x509 credentials validation failed
+to fill out the Error object. Validate this in the failure
+scenarios.
 
-Unfortunately one of the codepaths returned -1 to indicate an error
-condition, but failed to set the 'errp' parameter.
-
-This broke error handling in the qio_channel_tls_handshake function,
-as the QTask callback would no longer see that an error was raised.
-As a result, the client will go on to try to use the already closed
-TLS connection, resulting in misleading errors.
-
-This was evidenced in the I/O test 233 which showed changes such as
-
--qemu-nbd: Certificate does not match the hostname localhost
-+qemu-nbd: Failed to read initial magic: Unable to read from socket: Connection reset by peer
-
-Fixes: 7e0c22d585581b8083ffdeb332ea497218665daf
-Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/tlssession.c |  8 +++++---
- io/channel-tls.c    | 13 +++++++------
- 2 files changed, 12 insertions(+), 9 deletions(-)
+ tests/unit/test-crypto-tlscredsx509.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index ac38c2121d..8c0bf457ad 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -569,8 +569,6 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
-     if (ret < 0) {
-         if (ret == GNUTLS_E_AGAIN) {
-             return QCRYPTO_TLS_SESSION_ERR_BLOCK;
--        } else if (ret == GNUTLS_E_PREMATURE_TERMINATION) {
--            return QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION;
-         } else {
-             if (session->rerr) {
-                 error_propagate(errp, session->rerr);
-@@ -580,7 +578,11 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
-                            "Cannot read from TLS channel: %s",
-                            gnutls_strerror(ret));
-             }
--            return -1;
-+            if (ret == GNUTLS_E_PREMATURE_TERMINATION) {
-+                return QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION;
-+            } else {
-+                return -1;
-+            }
-         }
-     }
+diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
+index a7ea5f422d..85f51aee1b 100644
+--- a/tests/unit/test-crypto-tlscredsx509.c
++++ b/tests/unit/test-crypto-tlscredsx509.c
+@@ -73,6 +73,7 @@ static void test_tls_creds(const void *opaque)
+     struct QCryptoTLSCredsTestData *data =
+         (struct QCryptoTLSCredsTestData *)opaque;
+     QCryptoTLSCreds *creds;
++    Error *err = NULL;
  
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 1fbed4be0c..70fad38d18 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -368,6 +368,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-                                      int flags,
-                                      Error **errp)
- {
-+    ERRP_GUARD();
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
-     size_t i;
-     ssize_t got = 0;
-@@ -384,13 +385,13 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-             } else {
-                 return QIO_CHANNEL_ERR_BLOCK;
-             }
--        } else if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION) {
--            if (qio_channel_tls_allow_premature_termination(tioc, flags)) {
--                ret = 0;
--            } else {
--                return -1;
--            }
-         } else if (ret < 0) {
-+            if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION &&
-+                qio_channel_tls_allow_premature_termination(tioc, flags)) {
-+                error_free(*errp);
-+                *errp = NULL;
-+                return got;
-+            }
-             return -1;
-         }
-         got += ret;
+ #define CERT_DIR "tests/test-crypto-tlscredsx509-certs/"
+     g_mkdir_with_parents(CERT_DIR, 0700);
+@@ -111,10 +112,12 @@ static void test_tls_creds(const void *opaque)
+          QCRYPTO_TLS_CREDS_ENDPOINT_SERVER :
+          QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT),
+         CERT_DIR,
+-        data->expectFail ? NULL : &error_abort);
++        data->expectFail ? &err : &error_abort);
+ 
+     if (data->expectFail) {
+         g_assert(creds == NULL);
++        g_assert(err != NULL);
++        error_free(err);
+     } else {
+         g_assert(creds != NULL);
+     }
 -- 
 2.50.1
 
