@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7B6CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4245ECCD1A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCDR0-0006GW-Pz; Fri, 24 Oct 2025 04:46:06 -0400
+	id 1vCDPx-00046W-4Y; Fri, 24 Oct 2025 04:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vCDQp-00068n-Hx
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:45:56 -0400
+ id 1vCDPv-00043X-Bs
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:44:59 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vCDQn-0006Vx-Go
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:45:55 -0400
+ id 1vCDPt-0006I7-OH
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:44:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761295554; x=1792831554;
+ t=1761295498; x=1792831498;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=G9NYNT/BTF1+pHfUhU7z1uUhIj/5SiXz+/P9BecLONY=;
- b=VbH51TJHJ1QNnBLeWDwe9nSS74Ki8o0+2f2BXAuCvbhJZmq4a2o6p+LN
- oWu9qXbowDORjflvvPXqmw5I2ufs61imHqgRQYDg0QfvRiBJxeefsFk1j
- ZF3e4W0E0DRRVUh4Ew2lci0BA02JlKh8nQadn7e5Ytg5hq1AJqOxurHlY
- jICID2XTa1WoUwXy1wXnEqBwiWDMc79MP3x71236SJsicymcWlhWTmbEE
- iHHnHZTSVVmVrdu9iUbnvuOOBcFbs+LbOT9LT51ax8vROm9jAKrsRAZkg
- 72GzmQAwcts50JEyH6dY2rsygdJzuDGSaf84mpBHGa9wjxQAL2IB2lmm4 Q==;
-X-CSE-ConnectionGUID: 54rd9rX2TzGMo1skoE31Qw==
-X-CSE-MsgGUID: 3tcaSLqpSm2MNOzaaYngcg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62504897"
-X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="62504897"
+ bh=qHLED1XIY6Q5SS9koomJEvK4/Adx3nXbXGD/y+pGbBI=;
+ b=dxS1borUo76Ht3w7MDB7h7fjvZ1WlAQsiYQa1zfLUyIPUC7XgKEG19ie
+ tSxys2fBORAXTK9fg+HvX5VWGq+OO3abA/a4NL9U5ehpseSRVZwCtU7tp
+ jzjRjRH/U7eDlB1bbiIeOW2VUY9Mu5bye1mGt6nkl4QKeE1As5mRFyEuj
+ QMUfAZXD9jL8K+cdxo5L7FFX7R2sCO84qvHWUntvdqAu0exN/7f7S7jYU
+ B3wMTmZw7bqnVgJCD1Cvk1d/rhjJSya54r/+tQra6oBRvMf1WyhYP5XMc
+ rivP2WmE38z6ZdupZ/BZE4Mmwg9EtruhwErUVFcqKLXYfFzfTY1asycWd Q==;
+X-CSE-ConnectionGUID: 7iwNxma7SmO9Onjg7+R12A==
+X-CSE-MsgGUID: bQqK7t3cSvG9mTXFAdAkag==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62504837"
+X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="62504837"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 01:45:43 -0700
-X-CSE-ConnectionGUID: vJ5EwJMrQF6cdvJSE4pwXg==
-X-CSE-MsgGUID: 1WoXB/qmRBeQ8INXgAhZ3g==
+ 24 Oct 2025 01:44:57 -0700
+X-CSE-ConnectionGUID: Hcl9TUaRRAWcgAdIXNuoHA==
+X-CSE-MsgGUID: vGy0RVF4RUGy8T00EFus+A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="183986024"
+X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="183985839"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 01:45:39 -0700
+ 24 Oct 2025 01:44:53 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,10 +54,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v7 17/23] iommufd: Introduce a helper function to extract
- vendor capabilities
-Date: Fri, 24 Oct 2025 04:43:41 -0400
-Message-ID: <20251024084349.102322-18-zhenzhong.duan@intel.com>
+Subject: [PATCH v7 06/23] intel_iommu: Implement get_viommu_flags() callback
+Date: Fri, 24 Oct 2025 04:43:30 -0400
+Message-ID: <20251024084349.102322-7-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251024084349.102322-1-zhenzhong.duan@intel.com>
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
@@ -88,99 +87,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In VFIO core, we call iommufd_backend_get_device_info() to return vendor
-specific hardware information data, but it's not good to extract this raw
-data in VFIO core.
+Implement get_viommu_flags() callback and expose a request for nesting
+parent HWPT for now.
 
-Introduce host_iommu_extract_quirks() to help extracting the raw data and
-return a bitmap in iommufd.c because it's the place defining
-iommufd_backend_get_device_info().
+VFIO uses it to create nesting parent HWPT which is further used to create
+nested HWPT in vIOMMU. All these will be implemented in following patches.
 
-The other choice is to put vendor data extracting code in vendor vIOMMU
-emulation file, but that will make those files mixed with vIOMMU
-emulation and host IOMMU extracting code, also need a new callback in
-PCIIOMMUOps. So we choose a simpler way as above.
-
-Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- include/hw/iommu.h                 |  5 +++++
- include/system/host_iommu_device.h | 15 +++++++++++++++
- backends/iommufd.c                 | 13 +++++++++++++
- 3 files changed, 33 insertions(+)
+ hw/i386/intel_iommu.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-index 9b8bb94fc2..6d61410703 100644
---- a/include/hw/iommu.h
-+++ b/include/hw/iommu.h
-@@ -22,4 +22,9 @@ enum viommu_flags {
-     VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
- };
- 
-+/* Host IOMMU quirks. Extracted from host IOMMU capabilities */
-+enum host_iommu_quirks {
-+    HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
-+};
-+
- #endif /* HW_IOMMU_H */
-diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index ab849a4a82..9ae7f4cc6d 100644
---- a/include/system/host_iommu_device.h
-+++ b/include/system/host_iommu_device.h
-@@ -39,6 +39,21 @@ typedef struct HostIOMMUDeviceCaps {
-     uint64_t hw_caps;
-     VendorCaps vendor_caps;
- } HostIOMMUDeviceCaps;
-+
-+/**
-+ * host_iommu_extract_quirk: Extract host IOMMU quirks
-+ *
-+ * This function converts @type specific hardware information data
-+ * into a standard bitmap format.
-+ *
-+ * @type: IOMMU Hardware Info Types
-+ *
-+ * @VendorCaps: IOMMU @type specific hardware information data
-+ *
-+ * Returns: bitmap with each representing a host IOMMU quirk defined in
-+ * enum host_iommu_quirks
-+ */
-+uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps);
- #endif
- 
- #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 086bd67aea..61b991ec53 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -19,6 +19,7 @@
- #include "migration/cpr.h"
- #include "monitor/monitor.h"
- #include "trace.h"
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index d6a4e21972..db5be065bf 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -24,6 +24,7 @@
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "hw/sysbus.h"
 +#include "hw/iommu.h"
- #include "hw/vfio/vfio-device.h"
- #include <sys/ioctl.h>
- #include <linux/iommufd.h>
-@@ -411,6 +412,18 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
-     return true;
+ #include "intel_iommu_internal.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_bus.h"
+@@ -4704,6 +4705,16 @@ static void vtd_address_space_unmap_in_migration(VTDAddressSpace *as,
+     }
  }
  
-+uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps)
++static uint64_t vtd_get_viommu_flags(void *opaque)
 +{
-+    uint64_t quirks = 0;
++    IntelIOMMUState *s = opaque;
++    uint64_t flags;
 +
-+    if (type == IOMMU_HW_INFO_TYPE_INTEL_VTD &&
-+        caps->vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
-+        quirks |= HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO;
-+    }
++    flags = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
 +
-+    return quirks;
++    return flags;
 +}
 +
- bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
-                                       uint32_t data_type, uint32_t entry_len,
-                                       uint32_t *entry_num, void *data,
+ /* Unmap the whole range in the notifier's scope. */
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+ {
+@@ -5362,6 +5373,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
+     .pri_register_notifier = vtd_pri_register_notifier,
+     .pri_unregister_notifier = vtd_pri_unregister_notifier,
+     .pri_request_page = vtd_pri_request_page,
++    .get_viommu_flags = vtd_get_viommu_flags,
+ };
+ 
+ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 2.47.1
 
