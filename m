@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB67CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 10:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADFACCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 10:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCF17-00039V-SG; Fri, 24 Oct 2025 06:27:30 -0400
+	id 1vCF1u-0003Rr-Qu; Fri, 24 Oct 2025 06:28:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCF0z-000391-Q8
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:27:22 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCF1s-0003Qm-IJ
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:28:16 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCF0x-0003la-L0
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:27:21 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47106fc51faso23655315e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 03:27:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCF1r-0003sg-0L
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:28:16 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3ece0e4c5faso1662097f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 03:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761301637; x=1761906437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761301693; x=1761906493; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/ofH/qDioWS9i85RSfGKQqa+DzVFsKGlL6h5yNY5wH4=;
- b=eU22lcQMrstsUHYETagEArSgZ8FmYUvpaV5CXZitIARfGAQ1/6fAoaVGOcZcAB1Sj7
- YudZ0E18cJukKhOOYnsjuALiFaQgp00S0DSblD0OY25Duef72bsHXroTeuMEslwcdbp4
- zb6ap2zxkbb4b7EhjJ9mryQqfetiZe35Ix90ELxG/aooRPYhkQM5C1PH+CDCZrBAnkFw
- pQx9YQ16cybZZMX9ieLhwORmJiRrGuAFBW0ikxTEc8iNQUYGXPhCbsB28ffBhNjMqExJ
- hgzwZFSbCWkiIXJ69SRYV51Jsml1lUtjydJrrSCTb88negm7TIly9uvMxSXWWYPTB4mT
- abbA==
+ bh=j9uj9jMqSOpToxNeFYPndZYQj39Bp9DR8WsYK0KAv34=;
+ b=NhwkKRn1gRieLN1yKPVwOS2SeHse1PRexa4URFOI0AJx9vjjhD3Yd5te15mNOluKGa
+ wKLPfRvi3ilklwmedmQSBRmh7oAzg6zv9cWoGpe4E6faBlA2PFFDwx3c/01fWI1aqswA
+ /IBO6As9Ztyj8BblP+hajYbFz++I6nfGT+5+nvApzDGDj26EAl64K5O/rsc1CD9slspk
+ aIJl8/IpWfgUKsCERUTltghqU7ILfGxqJ5Mp0wWjqT0r+9HZn5opleSKX7UY72H3cH28
+ CV+wRInSwB1qhofdViEUIk//OGnvlS19FLPqJjh70IyMmwSHoJrUCQempZqZN7t0U53s
+ l2cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761301637; x=1761906437;
+ d=1e100.net; s=20230601; t=1761301693; x=1761906493;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/ofH/qDioWS9i85RSfGKQqa+DzVFsKGlL6h5yNY5wH4=;
- b=wedaV7UyXs6yh4mpECqLNXvHwhrbR6RjQulyzkipVhl2Uu3XqL9RHsDARPkYwvSvdV
- uHyr5ztNfdiiOKKWkE8G7E9tUZ9mmPIS4JCDfK/xiFWNzCa37dh10DcDfj7ZohXl7GSK
- VRmiiRwpxyIabEjk3KtBDqrKli2PX9IgwurzB4zs1QqZaLEYiEkXb6NtuQJfENylmu8y
- Z2W21G3PGs9bB0Fjm+rx8eJ9Ozz6X/EGJFiM1CPJk1qwu2puvMf1CqDMDZXgBEF3J+VK
- 1msK1T/AVlENieDUMOh0zJ0yH3EDfAWel57JMqdePqhCrUqU5kInzhZGrykVm+kPtdoM
- DXDg==
+ bh=j9uj9jMqSOpToxNeFYPndZYQj39Bp9DR8WsYK0KAv34=;
+ b=gqmaxEhWdJIH/JDRk+cpjL/yuQqYdYuesh2uuTpolqwYCpX/sovi2DG6fi2UNbp6jH
+ Al+OgJ2UAnV5Zav5EsKUuiPHyzggXsW3qJCIHQPVQKqmlWEVyvyIh0IBHAyZF0f31mF7
+ HH/g1I0NnVfLUEPoa/8N3QnrAwPo32W43sxCmXddZAYZTvd1Lw1UopnD/F0uSafF3/be
+ jZ7DxxIy8meganlHLKAYsmchidGeHeD96aox/p/c+Qm+C6bYbMEG1Taz/kc0E+NaggEZ
+ xrEJ5X1BKbqg5C1CATmIndp0/inEd0aYehl9wKSLQ48oME9ZCCdZpUBG4UJUuftsBYHC
+ EhRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN8xYLrQB30+GHb27RSCLUsObK8eRV+K6rxqnTCbql+xt9tNNv1No1efftcNjkqe1u3wKIFSh7jdDF@nongnu.org
-X-Gm-Message-State: AOJu0YzvF9+wlAYL/acywxjhzhtNkYqmRV8vd9jIsK8uPxx7g3vQdR9r
- KIxyzeB9hIXIK/Pr8pkRuS4wpPP3R5Omd8Rva0c/fgA7evq1IE1eMug44N/K3NnMcwo=
-X-Gm-Gg: ASbGnctPyfsgj848WFJyhIPa8iWTsGDGCfdJDIEDTqVVVYiS/ikvgahL3LOBSS+HjzT
- 6Jy+NTIUCUb8lyIp+7EHoLpEIefLwo5axnG3g2E1px2/L4SVL55S1N3pbo0Vomzxi5HepGT5Wp7
- Y0iUBt8jJZbn11+97LP6fFtQ9HJKboZNIwvVeKpZ4yU84NSvRcPMaOJsKbg4M908KGAEpon5g/p
- a/8QGUxfe2HDi2VaRsmtd5UlvRbdKuZeFk+1oD1OPHIbtlmRCTCeCt/0bWvZfdQbSbF4hsDEPUO
- YsSY8f4lhFAg+Dl1eLrdh5W1lkuJlOROpSnOHmRmn9hZJ+rXxppXEJBPR6g9sS512IGUNyDSWut
- tY8uKIsqKvsiXkifZyaMR39YlxV634RYn0LJWzecaJQbHlxyPv6kHIbjQsXGxt8e3XFAf+cgDzU
- 8ZfLRV3Pc/VCyTYylWzCIiR4KdEX+ummbbzBo7H/iDtrQzR12w5jZLrQ==
-X-Google-Smtp-Source: AGHT+IG5Kzu4L59Mfz5Lusfrk1UlhytOQcBmk416tnpsTk9+ZpncQiNVfVwcJ7YGQjMmYFvtywBgcg==
-X-Received: by 2002:a05:600c:3149:b0:46e:4b8b:75f2 with SMTP id
- 5b1f17b1804b1-471178a7ea5mr190556735e9.16.1761301637330; 
- Fri, 24 Oct 2025 03:27:17 -0700 (PDT)
+ AJvYcCXi96ju45fRX3DZeIVVvszji+gXDcnJonGJNZ6j6GUsqpXYIHPEnVex7FKguuGOEn/fKL71bBc6z9M2@nongnu.org
+X-Gm-Message-State: AOJu0YzT59fwxIe/ciUnytF1Vr+SQs+uRBt92HpM5YaA5yeTVafKVN/d
+ BYhRptTM7Eo4J9OlbhvSaeNZb117kKWtv2pfObXFGtb5t45N8lwDkX+nL3EUUN6ORZGs4D9lAIn
+ 8cg437Jw=
+X-Gm-Gg: ASbGncvI3XaQvTrcw1B2HfJuGQ4gERe7hIoshJYf5PJDEtWm1w/f9MUuvvxUYAKiwKd
+ tJ9+t/3wcEgw+nm86oMtj8Op5PmYqzdCYEf3C4wTYEKo7SpHHBaVvWN1QN9AoJqC35jE/K4nXTJ
+ g9ksX7F6nvmJ8q5SZ2tSa2Tvc419y3tSI4N684bTZN8RFovgyJY/3rGjsDe2WgDUFnIfrzChCO7
+ GW45Ixu26Y63cQhpbtt94P3OS7z5uh+ogCA3gjsT9SWIj90CQGDUo3DrlP+oPjzcrfE6tPZ1acc
+ ZqC+4STZvR2kI4NDwdxKeUV17iu/W6yz1dPHf0FjDM8PxUV1qh5YonNg4W2mweayrayIk6+M8Kj
+ HYDSyMkd4Gc6tHHpMY9EG2Mn1d9HYyHSa+CN+jrCA8/enze6sOi3NQCQdUWWExe3xfrk6j42roW
+ jXBd13aP0bPjc5GvCnAW+DbWBUPNME4CPD6vd7Dw/kpSfQQwiSXICt0w==
+X-Google-Smtp-Source: AGHT+IF67fxQrWpoAe5qzjn39W+1jcMFR1iH5Kot0Zd+DhKWIHWsmZhQjpjYtrQUdC7Q3tMrQys2fQ==
+X-Received: by 2002:a05:6000:18ab:b0:429:8d0a:8108 with SMTP id
+ ffacd0b85a97d-4298d0a8213mr3365814f8f.24.1761301693233; 
+ Fri, 24 Oct 2025 03:28:13 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c41cc92csm139922175e9.0.2025.10.24.03.27.16
+ ffacd0b85a97d-429897e7630sm8703748f8f.10.2025.10.24.03.28.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 03:27:16 -0700 (PDT)
-Message-ID: <8b878349-fa1a-45e9-9f19-ea7a55e8ac41@linaro.org>
-Date: Fri, 24 Oct 2025 12:27:15 +0200
+ Fri, 24 Oct 2025 03:28:12 -0700 (PDT)
+Message-ID: <07d6854a-4c70-4234-a345-a7546e1374b3@linaro.org>
+Date: Fri, 24 Oct 2025 12:28:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Patch v9 6/6] ppc: Pass error_fatal to load_image_targphys()
+Subject: Re: [Patch v9 1/6] core/loader: Use qemu_open() instead of open() in
+ get_image_size()
 Content-Language: en-US
 To: Vishal Chourasia <vishalc@linux.ibm.com>, adityag@linux.ibm.com,
  harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
  peter.maydell@linaro.org, alistair23@gmail.com, balaton@eik.bme.hu,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
- hpoussin@reactos.org
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com
 References: <20251024092616.1893092-2-vishalc@linux.ibm.com>
- <20251024092616.1893092-9-vishalc@linux.ibm.com>
+ <20251024092616.1893092-4-vishalc@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251024092616.1893092-9-vishalc@linux.ibm.com>
+In-Reply-To: <20251024092616.1893092-4-vishalc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,33 +108,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/10/25 11:26, Vishal Chourasia wrote:
-> Pass error_fatal to load_image_targphys() calls in ppc machine initialization
-> to capture detailed error information when loading firmware, kernel,
-> and initrd images.
+> Replace open() with qemu_open() which provides better error handling
+> via the Error object, automatically sets O_CLOEXEC, and supports FD
+> passing with /dev/fdset.
 > 
-> Passing error_fatal automatically reports detailed error messages and
-> exits immediately on failure. Eliminating redundant exit(1) calls, as
-> error_fatal handles termination
+> Currently pass errp argument as NULL.
 > 
-> The behavior remains functionally identical, but error messages now
-> come directly from the loader function with more context about the
-> failure cause.
-> 
-> Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 > ---
->   hw/ppc/amigaone.c      | 13 ++-----------
->   hw/ppc/e500.c          | 19 +++----------------
->   hw/ppc/mac_newworld.c  | 16 +++-------------
->   hw/ppc/mac_oldworld.c  | 16 +++-------------
->   hw/ppc/pegasos2.c      |  9 ++-------
->   hw/ppc/pnv.c           | 28 +++++-----------------------
->   hw/ppc/ppc440_bamboo.c |  8 +-------
->   hw/ppc/prep.c          | 17 ++++-------------
->   hw/ppc/sam460ex.c      |  7 +------
->   hw/ppc/spapr.c         | 13 ++-----------
->   hw/ppc/virtex_ml507.c  | 10 ++--------
->   11 files changed, 28 insertions(+), 128 deletions(-)
+>   hw/core/loader.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
