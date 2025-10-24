@@ -4,94 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0F2CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A52CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCCaH-0004d5-JM; Fri, 24 Oct 2025 03:51:37 -0400
+	id 1vCDHG-0001k4-S2; Fri, 24 Oct 2025 04:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCCaF-0004bB-Nb
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:51:35 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCCaD-0006rD-HV
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:51:35 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3ee130237a8so1113553f8f.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 00:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761292291; x=1761897091; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4glzaFawliIjjaWDi2C0Xa1voW/SWLLSoWe8mQUe1ck=;
- b=jrid1vSQEvTP0ZPpvxdBg0W5UjNfopnPSqDH7OWziVoUGVvWtryOuiXhAA5syvp44d
- /1UGFNj0RQA4bLQS3e6zgAkQ57GY5OAjRIZVgDSNDwf6DYU6NoYMT1QQFFYxAb+mC3RN
- wmZ15ENRp72Q07Van5hJMN37uVm+PDyIRnst2cEbAWqBzxOVasBnSDc6h8/ViPypRFoE
- jLMAmEbU037Y5jRKOZXdyBbnNJzmoaWdSTf0XYQD6PaH13i/TGp4ahxd+XLIp1IyxO5a
- 2iteXWxgDIOgnDW9ZYcp/spEyGdvaDLvMC+mm67rIcHOyHzDxVjN1fK8601TUHiPP168
- HWew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761292291; x=1761897091;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4glzaFawliIjjaWDi2C0Xa1voW/SWLLSoWe8mQUe1ck=;
- b=IRQEf5aByML/LiStAxuP8/s/b/ge0q/TXhWJZZ9olFil+SU7wPy1OKw5LJkpVQsR3b
- 4yyGMf0J1HNB1ALOMQUD0IihJXhJQGwu7qX7T1e+S9juLRG46HaQxNMw3ZpxOKOMRsD0
- AW9nE6NEaQP7h9x1Tk7DWCXrzDWlyisly2gNeL6zWdkfJkAQ8IAVNqVIb5FfJhECq5J6
- TWjVaVloqT1V7V0L1Mp2ObhMbVB3bkXrietOxnXKz2qyX5JCVKPcB9vvuVWSNhFV/G/I
- yL/YLaKkY7GPROc57vachsWIot+buw9BrhZxT9oP/QH3HzCALrmLS7evqDjPt8nvGH/B
- aIIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTWEZ06qbcGDj1Iz3yHFMgR3DoIPqbrnD67wUnoow9KXyDea/hHfR+A+In7nkmXXiwR5bx/znk4+Gz@nongnu.org
-X-Gm-Message-State: AOJu0YyXDHeEkexi4PEClEDYamcVP+U3F6wTd/TbnQhTdi2lOP2r3x9Q
- IBE6mmqWj+cmSZWO5QWIF9VX450TYCQUrqhzkvWSFr+VrE+UdVCtEqM0It04Kv35AsI=
-X-Gm-Gg: ASbGncu6GPKJbG/yIyXq1g7hZHXaiVBn8F9D57kDyJ1yXaUd8ZweTe6u3DNulBZ5lIB
- jkqHK2whohzGOIYp/fOzKJOct7DGlu+uTg/SJRtoXhF6eytw58TJrxBklO1O9rY9i7yCQPXmRsM
- j90duR8tZePmIZ5KRF3UMCAt0+wuu9uWiWd1Ccg68IHT5VpLfi5R6DrlARoPNkK8vGc7joRtNmn
- liPS7v3rULQdzPA8aj5bMgm2fq6RN0/xypKs+hIup4l/m1axL4aS3NQG2maZJOK60+Ik7Q4ykNd
- LVRo0s7PePSFTRNv5RXFjeViMOM1+e275XaIXN93sbiln5ZKVDa4BMXNbpjcDRYYaOeUWfM4SDe
- sl4mK+h7WUK4ZmDfuirvYhJbvWiphrJT1J/oPlQTLuMsY/75OIIbVrK3VtYNGPSHm3Orj/D1YB2
- btsYJ8yCHNRzI4duQiDSAYp2u3aTYAuOG970qArjeF3pwr9ulYQvnYSg==
-X-Google-Smtp-Source: AGHT+IFrSXGqc72GBHPeTxxpi8VBFWjaaCGuZU2DGshUveK9WKKOUkzM27+cibwVbEhyJQCxffc+qg==
-X-Received: by 2002:a05:6000:4301:b0:3df:c5e3:55f8 with SMTP id
- ffacd0b85a97d-429907523c1mr1016311f8f.54.1761292291495; 
- Fri, 24 Oct 2025 00:51:31 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429898eb549sm7946672f8f.41.2025.10.24.00.51.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 00:51:30 -0700 (PDT)
-Message-ID: <0d3e6fb4-ddb5-4b85-82b8-e1222079adc4@linaro.org>
-Date: Fri, 24 Oct 2025 09:51:29 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vCDHF-0001jl-Ee
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:36:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vCDHC-0005U6-Gq
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:36:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761294956;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=U/YMcayaIu6umHLLLvVXP/pil8Sdt7o9tSyto535lkw=;
+ b=dnzlEG9H4QCDUhJFHmPOByreH0nhKhbCSsM22gW1nrZW52FbI5jwDHNr1PogIxQ4S9aitw
+ 9wYwn6cAy956xXtxSdGuJcW6sbj1SJ80dAPeDbWj6sduSXXqaA7IauALNyV7rd5tMCWEj6
+ R677Ebn0cmP5q21cpUEz/1+uUwCm/ps=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-UEur_-YxOZO67qVR8GxNoQ-1; Fri,
+ 24 Oct 2025 04:35:52 -0400
+X-MC-Unique: UEur_-YxOZO67qVR8GxNoQ-1
+X-Mimecast-MFC-AGG-ID: UEur_-YxOZO67qVR8GxNoQ_1761294951
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ECFA19541BD; Fri, 24 Oct 2025 08:35:51 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AB1730002DB; Fri, 24 Oct 2025 08:35:50 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9BDF921E6A27; Fri, 24 Oct 2025 10:35:47 +0200 (CEST)
+Resent-To: chigot@adacore.com, qemu-block@nongnu.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Fri, 24 Oct 2025 10:35:47 +0200
+Resent-Message-ID: <87ecqs3dek.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>,
+ qemu-devel@nongnu.org, hreitz@redhat.com,  qemu-block@nongnu.org
+Subject: Re: [PATCH 5/5] vvfat: add support for "size" options
+In-Reply-To: <aPqCJRNCjxcZ6jq5@redhat.com> (Kevin Wolf's message of "Thu, 23
+ Oct 2025 21:29:41 +0200")
+References: <20250903075721.77623-1-chigot@adacore.com>
+ <20250903075721.77623-6-chigot@adacore.com>
+ <aPqCJRNCjxcZ6jq5@redhat.com>
+Date: Fri, 24 Oct 2025 10:30:17 +0200
+Message-ID: <87ms5g3dnq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 06/10] tests/functional: add memlock tests
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20250611125846.125918-1-thuth@redhat.com>
- <20250611125846.125918-7-thuth@redhat.com>
- <986e788c-6a94-4c27-9a6e-a761e3f763c0@linaro.org>
-In-Reply-To: <986e788c-6a94-4c27-9a6e-a761e3f763c0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,148 +93,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/10/25 09:45, Philippe Mathieu-Daudé wrote:
-> Hi Alexandr,
-> 
-> On 11/6/25 14:58, Thomas Huth wrote:
->> From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->>
->> Add new tests to check the correctness of the `-overcommit memlock`
->> option (possible values: off, on, on-fault) by using
->> `/proc/{qemu_pid}/status` file to check in VmSize, VmRSS and VmLck
->> values:
->>
->> * if `memlock=off`, then VmLck = 0;
->> * if `memlock=on`, then VmLck > 0 and almost all memory is resident;
->> * if `memlock=on-fault`, then VmLck > 0 and only few memory is resident.
->>
->> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->> Message-ID: <20250605065908.299979-3-dtalexundeer@yandex-team.ru>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Kevin Wolf <kwolf@redhat.com> writes:
+
+> Am 03.09.2025 um 09:57 hat Cl=C3=A9ment Chigot geschrieben:
+>> This allows more flexibility to vvfat backend. The value for "Number of
+>> Heads" and "Sectors per track" are based on SD specifications Part 2.
+
+This is too terse to remind me of how vvfat picks cylinders, heads, and
+sectors before this patch, so I need to go dig through the source code.
+I figure it depends on configuration parameters @floppy and @fat-type
+like this:
+
+    floppy  fat-type    cyls heads secs   cyls*heads*secs*512
+    false      12         64    16   63         31.5 MiB
+    false      16       1024    16   63        504   MiB
+    false      32       1024    16   63        504   MiB
+    true       12         80     2   18       1440   KiB
+    true       16         80     2   36       2880   KiB
+    true       32         80     2   36       2880   KiB
+
+How exactly does the new parameter @size change this?
+
+>> Some limitations remains, the size parameter is recognized only when
+>> "format=3Dvvfat" is passed. In particular, "format=3Draw,size=3Dxxx" is
+>> keeping the previously hardcoded value: 504MB for FAT16 and 32 MB for
+>> FAT12. FAT32 has not been adjusted and thus still default to 504MB.
+
+31.5MiB unless I'm mistaken.
+
+I'm not sure what you're trying to convey in this paragraph.  As far as
+I can tell, you're adding a @size parameter to vvfat, so of course it
+doesn't affect raw.
+
+>> Moreover, for flopyy, size=3D1M is creating a disk 1.44 MB, and size=3D2=
+M a
+
+floppy
+
+>> disk of 2.88 MB. This avoids having to worry about float operations.
+
+More on this part below.
+
+>> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
 >> ---
->>   tests/functional/meson.build     |  1 +
->>   tests/functional/test_memlock.py | 79 ++++++++++++++++++++++++++++++++
->>   2 files changed, 80 insertions(+)
->>   create mode 100755 tests/functional/test_memlock.py
->>
->> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->> index 557d59ddf4d..c3fca446cff 100644
->> --- a/tests/functional/meson.build
->> +++ b/tests/functional/meson.build
->> @@ -312,6 +312,7 @@ tests_x86_64_system_quick = [
->>     'virtio_version',
->>     'x86_cpu_model_versions',
->>     'vnc',
->> +  'memlock',
->>   ]
->>   tests_x86_64_system_thorough = [
->> diff --git a/tests/functional/test_memlock.py b/tests/functional/ 
->> test_memlock.py
->> new file mode 100755
->> index 00000000000..2b515ff979f
->> --- /dev/null
->> +++ b/tests/functional/test_memlock.py
->> @@ -0,0 +1,79 @@
->> +#!/usr/bin/env python3
->> +#
->> +# Functional test that check overcommit memlock options
->> +#
->> +# Copyright (c) Yandex Technologies LLC, 2025
->> +#
->> +# Author:
->> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->> +#
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +
->> +import re
->> +
->> +from typing import Dict
->> +
->> +from qemu_test import QemuSystemTest
->> +from qemu_test import skipLockedMemoryTest
->> +
->> +
->> +STATUS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
->> +
->> +
->> +@skipLockedMemoryTest(2_097_152)  # 2GB
->> +class MemlockTest(QemuSystemTest):
->> +    """
->> +    Runs a guest with memlock options.
->> +    Then verify, that this options is working correctly
->> +    by checking the status file of the QEMU process.
->> +    """
->> +
->> +    def common_vm_setup_with_memlock(self, memlock):
->> +        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
-> 
-> This test fails on Darwin:
-> 
-> qemu-system-x86_64: mlockall: Function not implemented
-> qemu-system-x86_64: locking memory failed
-> 
-> Please consider using the @skipIfOperatingSystem("Darwin") decorator,
-> ...
-> 
->> +        self.vm.launch()
->> +
->> +    def test_memlock_off(self):
->> +        self.common_vm_setup_with_memlock('off')
->> +
->> +        status = self.get_process_status_values(self.vm.get_pid())
->> +
->> +        self.assertTrue(status['VmLck'] == 0)
->> +
->> +    def test_memlock_on(self):
->> +        self.common_vm_setup_with_memlock('on')
->> +
->> +        status = self.get_process_status_values(self.vm.get_pid())
->> +
->> +        # VmLck > 0 kB and almost all memory is resident
->> +        self.assertTrue(status['VmLck'] > 0)
->> +        self.assertTrue(status['VmRSS'] >= status['VmSize'] * 0.70)
->> +
->> +    def test_memlock_onfault(self):
->> +        self.common_vm_setup_with_memlock('on-fault')
->> +
->> +        status = self.get_process_status_values(self.vm.get_pid())
->> +
->> +        # VmLck > 0 kB and only few memory is resident
->> +        self.assertTrue(status['VmLck'] > 0)
->> +        self.assertTrue(status['VmRSS'] <= status['VmSize'] * 0.30)
->> +
->> +    def get_process_status_values(self, pid: int) -> Dict[str, int]:
->> +        result = {}
->> +        raw_status = self._get_raw_process_status(pid)
->> +
->> +        for line in raw_status.split('\n'):
->> +            if m := STATUS_VALUE_PATTERN.match(line):
->> +                result[m.group(1)] = int(m.group(2))
->> +
->> +        return result
->> +
->> +    def _get_raw_process_status(self, pid: int) -> str:
->> +        try:
->> +            with open(f'/proc/{pid}/status', 'r') as f:
-> 
-> ... or even better implement skipUntilOperatingSystem() and use
+>>  block/vvfat.c | 165 ++++++++++++++++++++++++++++++++++++++++++--------
+>>  1 file changed, 141 insertions(+), 24 deletions(-)
+>>=20
+>> diff --git a/block/vvfat.c b/block/vvfat.c
+>> index 6526c585a2..4537c39d5c 100644
+>> --- a/block/vvfat.c
+>> +++ b/block/vvfat.c
+>> @@ -1091,6 +1091,11 @@ static QemuOptsList runtime_opts =3D {
+>>              .type =3D QEMU_OPT_BOOL,
+>>              .help =3D "Do not add a Master Boot Record on this disk",
+>>          },
+>> +        {
+>> +            .name =3D BLOCK_OPT_SIZE,
+>> +            .type =3D QEMU_OPT_SIZE,
+>> +            .help =3D "Virtual disk size"
+>> +        },
+>>          { /* end of list */ }
+>>      },
+>>  };
+>
+> Like in patch 1, you need additional changes, in particular to add the
+> option to the QAPI schema in qapi/block-core.json.
+>
+>> @@ -1148,10 +1153,141 @@ static void vvfat_parse_filename(const char *fi=
+lename, QDict *options,
+>>      qdict_put_bool(options, "no-mbr", no_mbr);
+>>  }
+>>=20=20
+>> +static void vvfat_get_size_parameters(uint64_t size, BDRVVVFATState *s,
+>> +                                      bool floppy, Error **errp)
+>> +{
+>> +    if (floppy) {
+>> +        /*
+>> +         * Floppy emulation only supports 1.44 MB or 2.88 MB (default).
+>> +         * In order to avoid floating operations ambiguity, 1 MB is
+>> +         * recognized for 1.44 MB and 2 MB for 2.88 MB.
+>> +         */
+>> +        if (!size) {
+>> +            size =3D 2 * 1024 * 1024;
+>> +        } else {
+>> +            if (size =3D=3D 1024 * 1024 && s->fat_type =3D=3D 16) {
+>> +                error_setg(errp,
+>> +                           "floppy FAT16 unsupported size; only support=
+ 2M "
+>> +                           "(for an effective size of 2.88 MB)");
+>> +            } else if (size !=3D 2 * 1024 * 1024 && size !=3D 1024 * 10=
+24) {
+>> +                error_setg(errp,
+>> +                           "floppy unsupported size; should be 1MB (for=
+ "
+>> +                           "an effective size of 1.44 MB) or 2.88M (for=
+ "
+>> +                           "2.88MB)");
+>> +            }
+>> +        }
+>
+> This is horrible. To be fair, it's pretty hard to do something not
+> horrible when the usual units to describe floppy sizes are already
+> horrible. :-)
 
-Sorry, I meant:
+Yes :)
 
-   skipUntilOperatingSystem -> skipUnlessOperatingSystem
+> But I'd still like us to do better here.
+>
+> To me it looks a bit like what we really want is an enum for floppy
+> sizes (though is there any real reason why we have only those two?), but
+> an arbitrary size for hard disks.
+>
+> Without the enum, obviously, users could specify 1440k and that would do
+> the right thing. Maybe special casing whatever 1.44M and 2.88M result
+> in and translating them into 1440k and 2880k could be more justifiable
+> than special casing 1M and 2M, but it would still be ugly.
+>
+> Markus, do you have any advice how this should be represented in QAPI?
 
-> it instead, since this test is clearly Linux-focused.
-> 
->> +                return f.read()
->> +        except FileNotFoundError:
->> +            self.skipTest("Can't open status file of the process")
->> +
->> +
->> +if __name__ == '__main__':
->> +    MemlockTest.main()
-> Regards,
-> 
-> Phil.
-> 
+Maybe, but first I'd like to understand what @size does.
 
 
