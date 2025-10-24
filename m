@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD156CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 16:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CB8CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 16:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCKjd-0003Iu-9y; Fri, 24 Oct 2025 12:33:49 -0400
+	id 1vCKpP-0005Ic-Os; Fri, 24 Oct 2025 12:39:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKjb-0003GY-BX
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:33:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKpO-0005IF-2e
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:39:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKjZ-0002Vu-KX
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:33:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKpL-0003b8-8i
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:39:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761323624;
+ s=mimecast20190719; t=1761323981;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=eNbB8AEJ5nc9dluS8eIA/NhTfA01eE5PHcMV01Gcj0M=;
- b=RSN+E6w/OaTYeiM27j5lJoCLiSHTqFkQNrkPfRnO+maPWKcdYaqsCbp49LgmWCtZfng0L5
- Cwj5mVeRo8/eBDNEUnpg2WFjcljqOG/NyJStEGAjk8lEHIkf34kpC2HrO7Tha6P7J/Ypnx
- wpVXxm/U2GNhh+t/2gLfxEfQioR1XBk=
+ bh=TAM+kEwGnc13nxGSKhY/nW5JwV9NrtpZi41A2zGVfVY=;
+ b=UhKblTbBZp4yDfv2BgyHoUsdqzsAQqyi12C3RSwHmQDXQuzGyRuA38QxAiNR3j7QvmVNiR
+ ijUADxR0u9nQELwIYiuwyT4zqjYiSU3u7vybU8xWS1mbUyvexQ+1sxcuxCJb1XrUNLnj47
+ V4sHn2luEetgsE5c3RiaSgrLjm7Whfw=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-9Bvw-rS_OvSCPc5BwDsczw-1; Fri, 24 Oct 2025 12:33:42 -0400
-X-MC-Unique: 9Bvw-rS_OvSCPc5BwDsczw-1
-X-Mimecast-MFC-AGG-ID: 9Bvw-rS_OvSCPc5BwDsczw_1761323621
+ us-mta-211-uOJ3Tz9jN1Sso3WesdIi_A-1; Fri, 24 Oct 2025 12:39:39 -0400
+X-MC-Unique: uOJ3Tz9jN1Sso3WesdIi_A-1
+X-Mimecast-MFC-AGG-ID: uOJ3Tz9jN1Sso3WesdIi_A_1761323979
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47113dcc15dso12964855e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 09:33:42 -0700 (PDT)
+ 5b1f17b1804b1-4721b4f3afbso9053805e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 09:39:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761323621; x=1761928421;
+ d=1e100.net; s=20230601; t=1761323979; x=1761928779;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eNbB8AEJ5nc9dluS8eIA/NhTfA01eE5PHcMV01Gcj0M=;
- b=kqi+WBqGdoEZMY5D6ZKWs3MSgW1HjZlX+ly8PQpfMC59QMQI9zV6Ak+CyWxUrHK2y0
- qeQrNs/AcF/GoMNL4SJrh+vLam67qc3i8KnKtSh22w8/D9qXCaA8EbWeHykJCL1oUq0j
- hXGexUMgjI07wJv5RLK9MuaP3E9uTEgStL/F0U6PO/UvrmqJoUQYiBaM5BWjzDVNjGd/
- +fPIDYU8kczcsRExG3p2xlrWJCf+RuTZqGH05galvGiUlbmDNP6ECPL9IHh6zAXKuSKq
- aEMIBOYSJBjy2Lx8YXRgfCJFkC190KFN4dBWQltWRD+icO5lSMo2b7JDOg6MJa3NiGIN
- HiEg==
+ bh=TAM+kEwGnc13nxGSKhY/nW5JwV9NrtpZi41A2zGVfVY=;
+ b=svNo7HyB9MFUQYT8fyuP9sC7VAuer01GCTlOo1iPWfjadS4XdRzbS1MbyQvoApEdAI
+ 4jqrgP99XAiO85Ue5SoxIhaF0Q55Gd6ls1hTptJFQYxIIj/kFG7FBY83yKGsvEIawDyY
+ ms6wSk3ZYq5CVSG4h94SmW6gq7ztL9kGgnoq7Rv2mFuw6ZfYPrha1z2NQRQ7yWT2PugK
+ 5aGwePKpBVEXmrndi9crehboCdzWnpt2oCpo1xmJtosRHzS7wO27sYn9oSKAUwV8ALof
+ O7szOlbX+nxWpfr9Gamc0cTg0/lJs7M4tgZLLXgLnvD56QGber+PQuVBDxX5DfcI0a9t
+ /dCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDtCDgBl2XStS2mAYtgH0ZFEWUwokqmH98dW2BCrI6yKwIJB6SPj8baOl8kCj75kVR6EQMJdDF6VJM@nongnu.org
-X-Gm-Message-State: AOJu0Yx0B5lGF7mgxO0RicfijA0+4W09++58WTtdsRW4PUYZG8BQxr44
- 4nw7R3kP2anKNFJMk6V4MUI76E6bxT6LRqtyXBKEi95DBfhPNsMqrNP+kApXON/i8NH7f8ec8bR
- 82+7grbGzdi/Ldj1vQJzBrJ+40GjHd6nqB16ru13JXGUQvP7s+xQ/TDnt
-X-Gm-Gg: ASbGncsewkB3SFeUNYReagWQSokfBqLkXT8vCCw9RIzQf3IxboMWaDlB+BsQx1p9cra
- 72zTrGAziTO2WzeLseNRPxJ3s9y2cor0TVBTeqr0Hloj0WOr7ijj2L8++vi0/ehSI7eCORsj6H/
- pji/JxY2giPT2kwJ3tPVzmBcQFrLr2//c0ZZpjJebxR95Yh/AGMbD+536Vc7RDrNK92179lwZOX
- FKY7SMknpn/gt+IlUJif4ifgcrtC14TeFHBllff4jgA4oo/0896b0U+csAtynTEv3a9vwYXQ9zL
- dvj1WIlInv35/QwMLLQf5KwHOxCPBTaK0Zmk6Az5ggnmQmfE1R7on9wxvpcBZ3JH1a4zD2D7
-X-Received: by 2002:a05:600c:1e1f:b0:471:d2f:799a with SMTP id
- 5b1f17b1804b1-47117877791mr191573405e9.16.1761323621233; 
- Fri, 24 Oct 2025 09:33:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNKKewo0ZjwpxxXZUgtbtZyRQnARwXvp2V/Sx/KV4isuQYP0uK+B3juwSnFgfcDW7Y1x/L4A==
-X-Received: by 2002:a05:600c:1e1f:b0:471:d2f:799a with SMTP id
- 5b1f17b1804b1-47117877791mr191573195e9.16.1761323620837; 
- Fri, 24 Oct 2025 09:33:40 -0700 (PDT)
+ AJvYcCWDkI6qm5V+jmm7xJqI206Z64Pyf6pn7bRIRkG8+dkMwEplVGLnYcgflQZqrmtJUDrmhzV3impl3Pjg@nongnu.org
+X-Gm-Message-State: AOJu0YyZixvOd2rIijGASf5uLkKmfEpg4JBppNq3edcoQ+b9tFtE4GLC
+ rxYU7wOS75fA3azFissbpovA+7wiZC2MoyecKqrs7T8YhW/ROJPTpHww+YT3rxRUekwqs5tD8si
+ 8iNBx/s+dqo7eRmVh/aUuxYSRn51GJDS2ca5xdMcFuOeCWgYrUTVlCTOd
+X-Gm-Gg: ASbGncsHbgBKrX7woN6SazHTIBs0GgFn3h533G5oiOWgvyqP6qRZIjpw+bQDCgODtHY
+ t3pbIDMLvhl36+Plo4nH29l9Q57Kl7ssXVJH/Lr/Qz7cnkC75Xti5+wGEAJz+TGb9rm3BlGUZpJ
+ 9d+ays2nvkeNGv/iozECj/CnTTXj1WtFpc5ya4Y04ZW6LGlhf/YA5YBx5llJKw1QZDV/IWssWG8
+ 2WzLkbBunxCMLOF1EbYniDmmwJd2lF+dpfrEkqkcR97GvGvYSXN1LBrZ3+5L9DAnNaCN7vMPLUi
+ afILGEFj/jU6T+rHO9IEOAXHyFsL+D5gHwVafjH5XV3K2GE/hsFciYbUxAeL9Yxtu5JDY1Uc
+X-Received: by 2002:a05:600c:1546:b0:46d:ba6d:65bb with SMTP id
+ 5b1f17b1804b1-475d2ecb307mr27887725e9.31.1761323978653; 
+ Fri, 24 Oct 2025 09:39:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkaJJJL/1FQ7xHlxOTPcdWMwpUdC3rpzdFO9RIBIrjnEaTymsAprfk0HXLJuekjPuBbbRE3w==
+X-Received: by 2002:a05:600c:1546:b0:46d:ba6d:65bb with SMTP id
+ 5b1f17b1804b1-475d2ecb307mr27887375e9.31.1761323978174; 
+ Fri, 24 Oct 2025 09:39:38 -0700 (PDT)
 Received: from [10.54.0.145] ([147.135.244.229])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429898adf78sm10715396f8f.32.2025.10.24.09.33.13
+ 5b1f17b1804b1-475c4342368sm164507145e9.9.2025.10.24.09.39.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 09:33:40 -0700 (PDT)
-Message-ID: <39faab3a-f65c-471e-a049-d60cc42725e0@redhat.com>
-Date: Fri, 24 Oct 2025 18:32:42 +0200
+ Fri, 24 Oct 2025 09:39:36 -0700 (PDT)
+Message-ID: <deafd3cd-481d-429d-a658-670886010f71@redhat.com>
+Date: Fri, 24 Oct 2025 18:39:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 20/23] vfio: Bypass readonly region for dirty tracking
+Subject: Re: [PATCH v7 12/23] intel_iommu: Add some macros and inline functions
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
@@ -84,7 +84,7 @@ Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-21-zhenzhong.duan@intel.com>
+ <20251024084349.102322-13-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -130,10 +130,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251024084349.102322-21-zhenzhong.duan@intel.com>
+In-Reply-To: <20251024084349.102322-13-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,65 +159,139 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/24/25 10:43, Zhenzhong Duan wrote:
-> When doing ditry tracking or calculating dirty tracking range, readonly
-> regions can be bypassed, because corresponding DMA mappings are readonly
-> and never become dirty.
+> Add some macros and inline functions that will be used by following
+> patch.
 > 
-> This can optimize dirty tracking a bit for passthrough device.
+> This patch also make a cleanup to change macro VTD_SM_PASID_ENTRY_DID
+> and VTD_SM_PASID_ENTRY_FSPM to use extract64() just like what smmu does,
+> because they are either used in following patches or used indirectly by
+> new introduced inline functions. But we doesn't aim to change the huge
+> amount of bit mask style macro definitions in this patch, that should be
+> in a separate patch.
 > 
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 > ---
->   hw/vfio/listener.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
+>   hw/i386/intel_iommu_internal.h |  8 +++++--
+>   hw/i386/intel_iommu.c          | 38 +++++++++++++++++++++++++++-------
+>   2 files changed, 37 insertions(+), 9 deletions(-)
 > 
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index 0862b2b834..cbd86c79af 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -828,7 +828,8 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
->           container_of(listener, VFIODirtyRangesListener, listener);
->       hwaddr iova, end;
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index 09edba81e2..df80af839d 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -642,10 +642,14 @@ typedef struct VTDPASIDCacheInfo {
+>   #define VTD_SM_PASID_ENTRY_PT          (4ULL << 6)
 >   
-> -    if (!vfio_listener_valid_section(section, false, "tracking_update") ||
-> +    /* Bypass readonly section as it never become dirty */
-> +    if (!vfio_listener_valid_section(section, true, "tracking_update") ||
->           !vfio_get_section_iova_range(dirty->bcontainer, section,
->                                        &iova, &end, NULL)) {
->           return;
-> @@ -1087,6 +1088,12 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->       if (!mr) {
->           goto out_unlock;
+>   #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
+> -#define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
+> +#define VTD_SM_PASID_ENTRY_DID(x)      extract64((x)->val[1], 0, 16)
+>   
+> -#define VTD_SM_PASID_ENTRY_FSPM          3ULL
+>   #define VTD_SM_PASID_ENTRY_FSPTPTR       (~0xfffULL)
+> +#define VTD_SM_PASID_ENTRY_SRE_BIT(x)    extract64((x)->val[2], 0, 1)
+> +/* 00: 4-level paging, 01: 5-level paging, 10-11: Reserved */
+> +#define VTD_SM_PASID_ENTRY_FSPM(x)       extract64((x)->val[2], 2, 2)
+> +#define VTD_SM_PASID_ENTRY_WPE_BIT(x)    extract64((x)->val[2], 4, 1)
+> +#define VTD_SM_PASID_ENTRY_EAFE_BIT(x)   extract64((x)->val[2], 7, 1)
+>   
+>   /* First Stage Paging Structure */
+>   /* Masks for First Stage Paging Entry */
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 56abbb991d..871e6aad19 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -52,8 +52,7 @@
+>   
+>   /* pe operations */
+>   #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
+> -#define VTD_PE_GET_FS_LEVEL(pe) \
+> -    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FSPM))
+> +#define VTD_PE_GET_FS_LEVEL(pe) (VTD_SM_PASID_ENTRY_FSPM(pe) + 4)
+>   #define VTD_PE_GET_SS_LEVEL(pe) \
+>       (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
+>   
+> @@ -837,6 +836,31 @@ static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntry *pe)
 >       }
+>   }
+>   
+> +static inline dma_addr_t vtd_pe_get_fspt_base(VTDPASIDEntry *pe)
+> +{
+> +    return pe->val[2] & VTD_SM_PASID_ENTRY_FSPTPTR;
+> +}
 > +
-> +    if (!(iotlb->perm & IOMMU_WO) || mr->readonly) {
+> +/*
+> + * First stage IOVA address width: 48 bits for 4-level paging(FSPM=00)
+> + *                                 57 bits for 5-level paging(FSPM=01)
+> + */
+> +static inline uint32_t vtd_pe_get_fs_aw(VTDPASIDEntry *pe)
+> +{
+> +    return 48 + VTD_SM_PASID_ENTRY_FSPM(pe) * 9;
 
 
-In case you resend, please add a trace event.
+Can't we use VTD_HOST_AW_48BIT here ?
 
-Anyhow,
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> +        rcu_read_unlock();
-> +        return;
-> +    }
+> +}
 > +
->       translated_addr = memory_region_get_ram_addr(mr) + xlat;
+> +static inline bool vtd_pe_pgtt_is_pt(VTDPASIDEntry *pe)
+> +{
+> +    return (VTD_PE_GET_TYPE(pe) == VTD_SM_PASID_ENTRY_PT);
+> +}
+> +
+> +/* check if pgtt is first stage translation */
+> +static inline bool vtd_pe_pgtt_is_fst(VTDPASIDEntry *pe)
+> +{
+> +    return (VTD_PE_GET_TYPE(pe) == VTD_SM_PASID_ENTRY_FST);
+> +}
+> +
+>   static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
+>   {
+>       return pdire->val & 1;
+> @@ -1625,7 +1649,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
 >   
->       ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-> @@ -1222,7 +1229,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
->       int ret;
->       Error *local_err = NULL;
->   
-> -    if (vfio_listener_skipped_section(section, false)) {
-> +    if (vfio_listener_skipped_section(section, true)) {
->           return;
+>       if (s->root_scalable) {
+>           vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
+> -        return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
+> +        return VTD_SM_PASID_ENTRY_DID(&pe);
 >       }
 >   
+>       return VTD_CONTEXT_ENTRY_DID(ce->hi);
+> @@ -1707,7 +1731,7 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
+>                */
+>               return false;
+>           }
+> -        return (VTD_PE_GET_TYPE(&pe) == VTD_SM_PASID_ENTRY_PT);
+> +        return vtd_pe_pgtt_is_pt(&pe);
+>       }
+>   
+>       return (vtd_ce_get_type(ce) == VTD_CONTEXT_TT_PASS_THROUGH);
+> @@ -3146,9 +3170,9 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+>           /* Fall through */
+>       case VTD_INV_DESC_PASIDC_G_DSI:
+>           if (pc_entry->valid) {
+> -            did = VTD_SM_PASID_ENTRY_DID(pc_entry->pasid_entry.val[1]);
+> +            did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
+>           } else {
+> -            did = VTD_SM_PASID_ENTRY_DID(pe.val[1]);
+> +            did = VTD_SM_PASID_ENTRY_DID(&pe);
+>           }
+>           if (pc_info->did != did) {
+>               return;
+> @@ -5267,7 +5291,7 @@ static int vtd_pri_perform_implicit_invalidation(VTDAddressSpace *vtd_as,
+>           return -EINVAL;
+>       }
+>       pgtt = VTD_PE_GET_TYPE(&pe);
+> -    domain_id = VTD_SM_PASID_ENTRY_DID(pe.val[1]);
+> +    domain_id = VTD_SM_PASID_ENTRY_DID(&pe);
+>       ret = 0;
+>       switch (pgtt) {
+>       case VTD_SM_PASID_ENTRY_FST:
 
 
