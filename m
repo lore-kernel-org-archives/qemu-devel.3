@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C83CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 09:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03571CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 10:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCELc-00048g-Uq; Fri, 24 Oct 2025 05:44:36 -0400
+	id 1vCEhR-0007QP-O9; Fri, 24 Oct 2025 06:07:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vCELb-000482-Ll; Fri, 24 Oct 2025 05:44:35 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vCELZ-00068b-Th; Fri, 24 Oct 2025 05:44:35 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59O8ZpZk019199;
- Fri, 24 Oct 2025 09:44:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=Ox0IwXrq3QIqPPP9oQR0eeKwwQp9+C
- Ayjz/lAbNiMCE=; b=kTtCIjcJasTNSh1cI+3pE180DVdjbZ/RL1QjlwTUj9GwS+
- b2FSeGOvMtp1vM7TZB5BEjJMuD/ptz+ZS8tmKIFOkmUmE+D+Qi83G1IA6H8Q/O5z
- k/AVCJ7bspWt3rgQLppjnpOcJ7c4bQwrL4dUIDV7hk92e88qO6RTHAX0t6KdgnpX
- y8KaGQ2dOne7hb0SYSZWpzFFRuO9WtaN2iQ8SM4bbCt9M1FkU8XIlq4ZC8y/Kxtb
- dGH3G9fZBY4vds5HLImST5OkXQSR3L5FVn915EwiJCwWiykKDyR3FCCgdt00g+m+
- dZi4+P+2d1fN8Zeuyb2njCBz4MDx4dIZtg8W93dg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hw0vv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Oct 2025 09:44:16 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59O9btCd000589;
- Fri, 24 Oct 2025 09:44:16 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v32hw0vt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Oct 2025 09:44:16 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59O61uBj011049;
- Fri, 24 Oct 2025 09:44:15 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vqx1j6ds-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Oct 2025 09:44:15 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59O9iB0a52429056
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Oct 2025 09:44:11 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4D75C20043;
- Fri, 24 Oct 2025 09:44:11 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 74A6220040;
- Fri, 24 Oct 2025 09:44:05 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.221.189])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 24 Oct 2025 09:44:05 +0000 (GMT)
-Date: Fri, 24 Oct 2025 15:14:03 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Vishal Chourasia <vishalc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCEhN-0007Q3-Tu
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:07:05 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCEhL-00018U-UU
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 06:07:05 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-427015003eeso1742313f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 03:07:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761300421; x=1761905221; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+d5w4Ms3ArSrHS6Jir+aMx3sEITvzS9GTWVVIsJYVgU=;
+ b=HHhrotjxYeHa9Wy8Aa+OTVPBYKFiGm2xKjrl4X12kJwoSrK9yzywqEQuKY2Cl0/hKe
+ yXUh7fsn/+pQ6vqSMkpECuXJPpkSzfX41MaWiUdSQgt7HknKSKVjcYo/HErAE+4NW/l7
+ AoAd8ITZyG2r8u0K3avhQq5HFxfJtKeiei5GDukvWai9RUrmfynT8gMI7CCp06VlekdG
+ GjaVu33uspVSFDjCQlDdXmEQf9+tf1A+/v6ZYIFlsMf7lK/MgahGrs/jU5CQ/MzkKTP0
+ invMTJN+JJms2WGoSb2xBN/Z+mlrP5x62zbdhodsvkSouQ8yhjbIOWD8ia6K8f9xmxyJ
+ RkoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761300421; x=1761905221;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+d5w4Ms3ArSrHS6Jir+aMx3sEITvzS9GTWVVIsJYVgU=;
+ b=BA/41zoSJ1M2bi4saMcIrqTRbF4/eZOFjjhsxiJMoFF+W5/Iakyl+8fqATmvrqJe6t
+ cjYA+243rnEPcLCv9G4GxdqQBav32Jv4r2RPs2Z7s0DfCfmmXOSKio0KHMOJs/fYd45O
+ w2N07jalczaa/ynqig+SYM3YcC5PbrvOyJPD9NoF6YMFNlsvVGLgW66j51Izpe02x4TV
+ Q+lxjla4q5pIcG6Jm8SUBRXGu6Uh9Q2Q5doJkoDzaGXamYVn8cXN+mlToIq75px1ptAL
+ t1dWsFGY1kGu09+0d0MWUG4VucblNKz84cWX4Ihjos7iDKfnrwslEN1+/4GJOpAeM88i
+ XG7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBN77qLTwCroITDpbbyt8Xg8g7UYZJsY9qf2vqcG+ezPjXZMEkYmA57jsF8nqT+fNLY2TvFgOOk7tj@nongnu.org
+X-Gm-Message-State: AOJu0YwLtCkRKSw9vwfmCfF3cKvsgySKbpDETCfj4WWnCTEo/5PPhT5e
+ 9ubzEHVSrLM4NlUJAzCIiut6RUBUSbzbi22Tpbw+sbTe1282TxpOiFOMA7vtJbXQ2k0=
+X-Gm-Gg: ASbGnctRX2MxVBVFuFrJ/YWOx1mRqS2ZfQn7F/kZI8t6dIDoRB9IJFR1EXA3lu+a1Ql
+ AUAmj1/UD24Goo2dW8EEJxMkPPOO+0/P/bvnQ//4FK1ouYckQ+0yCsBAAZKnsbOn+w/iC/aQEDa
+ wX5gJkWbHNC3FyeT2bL/6UdnISAQBCVwK3C42cWSqPvUnWPGvnpN7Hg0krCXMr8VymkaafYWyID
+ e/gYJaosUKwX7/lmWucWUNPaaWaPffao2bWBD/a5AX0bX9ZiVRjpR90AHgUxvNON8lOASdwVuP9
+ 9robsNJMugnxIp4TAaLxGTEjatJ/QZUP4wrViRKE8mvYDNn53YO8dp3NTaOrEKBzjUOGCNgriV2
+ 8MrrO8/bgzFTeJPEU9zoqAf0FT+cEhv9pUD4nb/sJ/7yXYfxLkf01y5hWlC3zEOaNOkX55T+zHF
+ 9GLNNjkHrut3NdzweGwW6xfPF/iRbCvfYQRDBs0+IiZguN/yR5Q5HXsg==
+X-Google-Smtp-Source: AGHT+IGQg5z7ZD+AxY1MbjqzzDXM//GUfZhO6dh1Wg06V2gDGRrlTBGzurtiENNEz4DCFKUntlzwiQ==
+X-Received: by 2002:a05:6000:4008:b0:428:3bf5:b3bd with SMTP id
+ ffacd0b85a97d-4283bf5b663mr16872652f8f.35.1761300421475; 
+ Fri, 24 Oct 2025 03:07:01 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429898ebf82sm8598714f8f.42.2025.10.24.03.06.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Oct 2025 03:07:00 -0700 (PDT)
+Message-ID: <5f54bcb6-ab0d-4777-be1c-ed50903f2333@linaro.org>
+Date: Fri, 24 Oct 2025 12:06:58 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v9 2/6] core/loader: capture Error from load_image_targphys
+Content-Language: en-US
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Vishal Chourasia <vishalc@linux.ibm.com>
 Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
  peter.maydell@linaro.org, alistair23@gmail.com, balaton@eik.bme.hu,
  qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
@@ -77,47 +82,22 @@ Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
  maobibo@loongson.cn, laurent@vivier.eu, edgar.iglesias@gmail.com,
  hpoussin@reactos.org, david@redhat.com, chigot@adacore.com,
  konrad.frederic@yahoo.fr, atar4qemu@gmail.com, jcmvbkbc@gmail.com
-Subject: Re: [Patch v9 2/6] core/loader: capture Error from load_image_targphys
-Message-ID: <pg226vepbq7c5ckwguxpysgirdj4sydgfl54c6wshed5ifqbvb@lu5rv4gaxokb>
 References: <20251024092616.1893092-2-vishalc@linux.ibm.com>
  <20251024092616.1893092-5-vishalc@linux.ibm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251024092616.1893092-5-vishalc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX0/ktVH8i5CTa
- AGB8LGqBn7BeNaYf0t1pbJk1G3vzFA2LvRcpkGX5pt2fbMheKy/wxG2nEIeK292m9Bxnn56yn07
- oC0mILhypaPZ1iMa6nNAlcMFd9HImpDjdf3zRFzyReZ5GFTtHNeSjwJKrVzRlFIWTkjRBqqwl7N
- wOfxL3F3+X9fEFfMoT1rarjp4o+uRS0T9u9rkKl7voqfelIA9ZQOUVuRLwFqlKpqFSi4bGvu7Xd
- KM7j3tczxtqHdoBktFwUrm18jg9weKCaCj0w+0t2Bsty6sMuMAQOJQIH2aIx/Tp6WwIzGHl3nuI
- BXEVNqemVrXHmwt8sPBCqRNGjJ6HSkITlJLe2JTvLHtjEMlSMlALgusy+EVtyFSrznvhNFRKTxc
- 9/UHivkwQYLu574at/ooo5R4pcv6gw==
-X-Authority-Analysis: v=2.4 cv=OrVCCi/t c=1 sm=1 tr=0 ts=68fb4a70 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=LniPDNFaPioPFOIVJ8gA:9 a=CjuIK1q_8ugA:10
- a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: rmcenrPoeGx9IRebROe0IZ3UpnHQ-bEf
-X-Proofpoint-ORIG-GUID: P8t21JINeBaiFbl4cRFaMATHE_dRYJ0E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-23_03,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ <pg226vepbq7c5ckwguxpysgirdj4sydgfl54c6wshed5ifqbvb@lu5rv4gaxokb>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <pg226vepbq7c5ckwguxpysgirdj4sydgfl54c6wshed5ifqbvb@lu5rv4gaxokb>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,22 +113,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/10/24 02:56PM, Vishal Chourasia wrote:
-> Add Error **errp parameter to load_image_targphys(),
-> load_image_targphys_as(), and get_image_size() to enable better
-> error reporting when image loading fails.
+On 24/10/25 11:44, Aditya Gupta wrote:
+> On 25/10/24 02:56PM, Vishal Chourasia wrote:
+>> Add Error **errp parameter to load_image_targphys(),
+>> load_image_targphys_as(), and get_image_size() to enable better
+>> error reporting when image loading fails.
+>>
+>> Pass NULL for errp in all existing call sites to maintain current
+>> behavior. No functional change intended in this patch.
+>>
+>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 > 
-> Pass NULL for errp in all existing call sites to maintain current
-> behavior. No functional change intended in this patch.
+> All tests pass for me, and changes look good.
+
+Does that imply:
+
+   Tested-by: Aditya Gupta <adityag@linux.ibm.com>
+
+?
+
 > 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-
-All tests pass for me, and changes look good.
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-Thanks,
-- Aditya G
+> Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+> 
+> Thanks,
+> - Aditya G
+> 
+> 
 
 
