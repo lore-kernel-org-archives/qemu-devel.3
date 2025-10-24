@@ -4,145 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF65ACCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 17:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB00CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCLkc-0008FT-PB; Fri, 24 Oct 2025 13:38:54 -0400
+	id 1vCMCO-0004Pb-Bi; Fri, 24 Oct 2025 14:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLkZ-0008F5-SO
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:38:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vCMCL-0004Oz-VG
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 14:07:33 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLkW-0002T3-5m
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:38:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761327520;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=99DqisHHiWuDqbo1PH+vuQKG9hkb9XpjpghmHElLyZg=;
- b=eC5NL5pDkKrIeOAM7NpNRKLD4UTyBdeCb+Vl9PCJt/nYA4Li74ZnMlCjMG0WE0PbAVX6MW
- LnKZ8x4Qa+CxzPTE+RTgQIiVs777VuYiCS06LPPuTjg80ZbR0sHqDAt4JGPCJG3/2chE2p
- A4qXxh9t+D2eDGKplMCA7St9LLXNjYM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-288-N5TmYn4NM3O0sWAKf1IDsw-1; Fri, 24 Oct 2025 13:38:39 -0400
-X-MC-Unique: N5TmYn4NM3O0sWAKf1IDsw-1
-X-Mimecast-MFC-AGG-ID: N5TmYn4NM3O0sWAKf1IDsw_1761327518
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b48635cf06fso401217566b.1
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 10:38:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vCMCJ-00062r-7y
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 14:07:33 -0400
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 40F873FCEF
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 18:07:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1761329248;
+ bh=jGBTpgxaWd9BNfOkrmxqe8GIY4UBuLK9jHD5a24y3QQ=;
+ h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc;
+ b=oJTbeUSHTf2lPaxEqqZzYN58vQPIJKi2OSZZktKePaTWpZ/rOnqoEQVLeaDT80/1b
+ la0pq5IxOx1Z8hxFzfu5Z1stCoqe6OnVFtMNCk0oL3/508fye5rajlG6Q7LnM4ZxTM
+ 3qg0bBrTdIfMRDLHjsaZFDhvl73fg14q71zFIYsObcPykTi67a4KevmgBNLZ61yLZA
+ kNGqG8ozuGYOS+4nL1NsVJR75PUXDqONqqnYDNX/IGCNnqknb8P9aWu6IG/+Rx8Zj1
+ 7tm3sJA+Wtxdo1BAHVSctzKIVSZdQKXNcRfqKvdlJvA2RpPCVqNOJkmnQ+pqMku6Kf
+ AXcymPFlS0V1ahh4cmvRxUS9jD06xmylbzxI9e7wW6XRFwhkewWKlWWHeXJOgXMl6u
+ VVtxXcp9Il9zoQ9b8cWNBfKByC8fEbld2lIv4xOE1vvLFVEg9Whmc0ihuBHrINnEhD
+ VFQRnzoV7Q/hIBP7kovav7ZYwyZfC6xYQkwbiuXSca9yDslvuY1D5vB5R517HK8gfH
+ VJCXMCA/1Wq5pWIUMILuHKWh5p21FkUsCTM1kiKAuROgUA6r4r+jq13Tr3n/tTOSFN
+ /7PssJ0mm6wir/g4Csoli/0xrzhmll9dZmbDW08oRJNtlvM+Ut/qZcidXpd1KaZMiJ
+ zsqZkznQE7jtBJPPmPScMhXc=
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-940f5d522efso632642239f.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 11:07:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761327518; x=1761932318;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1761329246; x=1761934046;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=99DqisHHiWuDqbo1PH+vuQKG9hkb9XpjpghmHElLyZg=;
- b=tIQxlFdD7R3zy300mf6TNdcIs7DiTm5zbO818fPO6QQ1JJ441scpn/Q7gV6Egq6paK
- l9ZVwHtvlcczcnedR6xt4zTUnqeLW+rmAn+PNouMKRtMSzf/5tsJEnWyylKsFdBOjSgE
- ojdnjj8SN1CIwTu5E1DOmY7rZ1nXb1zYerLt4rqmUYkw1Wgf/8l62bMEOjoXhUzh0EUM
- Q1iSS+22ysTOn2EhneNI+dYdZ1bGnWxgAqeXeKlCyEeNt1HUC8gUTHx9YZO4xGJ/NlPn
- c8PrnooR/9HPa+eiFfb4PtSIVXNe+n3hzv1h9OQ8KTsK0NrwmgocYFaUzKoW+n+eA/bT
- HrtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWyU08FExiGYNwwL5Hn4SFHGFdY/Ba11z88+xqmmQEunISjiOwspCSYgEnsFpW6gKIUwFJ1dqA+NlG@nongnu.org
-X-Gm-Message-State: AOJu0YxJvcprFxERdgIjMDZCzRArgI/QNMpY9aDHKlCj4JgnQq5afRUW
- icrsPWIHJc4Au9d3kMbdpJH5DZNqeZCQLHLdanwPwkDLUx5Ukj/pYl4Weo9lYKCis88+2Ohte8x
- 1CL9nBokX4CyuLNHZPsEuI7QpqWPDSlutd4Y0p5pOFqkDydRiNVGdEbtX4L9jHrfO
-X-Gm-Gg: ASbGncta6auy+lFEz2O5TxSe6nHTBpVT8JpnV9MMlslVmI2IPiQIlUorqItc0i5FngT
- vgu+PFNqz0gEwfIJogd6jEphLoscfxnRs/dsX/8QyvZ4P+1HLPzP8BJWrIk+47YAH9C9Sw5dWir
- SzrfyT56L1kkQjTjZD3U7y6vPKbkauoPAvUKo2TV5GCSP/Kip0ujE6y5JW3NN+fLNX2tOOa4v1E
- EHMwcxHlEDxLktzcc6NNJHoujSMrylWBdZCfnLH3i7V8RRYTjvB5dzxXemGMB5duhbS5ZOEKM9V
- we29PnTYKXtvOiDpw9UzOz/GJ9At14nqbBv9S/C0bky/ZNoWg3a2MOF7pYIx1H4PA0IPnHMe
-X-Received: by 2002:a17:907:1b15:b0:b6d:505e:3da1 with SMTP id
- a640c23a62f3a-b6d505e7df8mr736220066b.7.1761327517637; 
- Fri, 24 Oct 2025 10:38:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGU6bNjzjHr6b01pIttDrKqBI56hD9ZfjNCZXavh1gb7fv9Lb1uQkSY8GeZvzhZ5KHuSGpEEg==
-X-Received: by 2002:a17:907:1b15:b0:b6d:505e:3da1 with SMTP id
- a640c23a62f3a-b6d505e7df8mr736213566b.7.1761327516403; 
- Fri, 24 Oct 2025 10:38:36 -0700 (PDT)
-Received: from [10.54.0.145] ([147.135.244.229])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d517827a1sm564146166b.40.2025.10.24.10.38.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 10:38:35 -0700 (PDT)
-Message-ID: <ad429497-65cb-4eeb-80a4-250c93b0df14@redhat.com>
-Date: Fri, 24 Oct 2025 19:38:26 +0200
+ bh=jGBTpgxaWd9BNfOkrmxqe8GIY4UBuLK9jHD5a24y3QQ=;
+ b=QTU+MHfC4Of90psNjKmdZr7ygtYjsbqQnntWhbcGCg16Swh+HCoFGbhe7WYqkeqasQ
+ Pwos5NC/P9QZNGVMCPwMVy22xDhvxFxgaBV8LnGE5nbv+ffToXAx11jheY9/gcMZHmie
+ wD53zgveIuBYd2BczSHKw00SadaDLg+az6mak4j50GiwqOh34w5HXrSjKF0k6TX9QoyP
+ LsI9uACeBuR3UT0KVSSO4Nk23f3gcSvg/UfRjRHYF/i4fvdPQfK1Q/WmlJFN2er1+aVW
+ t1rXvn/Ym12NiljWDzxJjbwfStsVn/g0gNsSVjxFDl4ZU6Vk58sOc8hMl2Ppzm9mYrVs
+ i6Cw==
+X-Gm-Message-State: AOJu0YwbHC5R2Un1VjBTRj582BcCloYtBMO4RqufO0hEQW9v4rXJ9zJ2
+ NSoFaV3Xtf02ZErB8O2vHgjU7BO8W972WvRdTTi1VD8Jx7xOjD6j8sDjwdmdES/Bg2h+UjiMZ5J
+ ZowKa8sAXYPIyend9CwGsOKLUYIl/z0PX/Y3a6kKExpbtwpM8Ws35+E7S55Uln0+KwKtsTquE
+X-Gm-Gg: ASbGncupCeMw/mnQxO4QeMKxN87sgwVYzmb5SXEH5SI9KXRX6SOAdrrID6lEkN4LSdJ
+ xI4RQnmML+N0jobbJcZpgoqdSqy/gGAsC2arP2Weu/HQLt35AbqO9GIx6BIF+PbNGRELZ1tpruC
+ AONewZreLOo9B25U2qs44EfmtiFWqIgcqFFMjZD0yt+SqqeCNsuXshCVMARtJYMAlLCb34HPcK7
+ QNvdCPrPJwpsy5E0z0T083HmBOdOKJhwITQiudR/L91Uy1WDWsZyXEUqFfWrP2ic67625RyKWrQ
+ vu+q3srJl+d80EOugThdNFMuPAiS2JXWLIpoi7TfDAWSfnExUkW4W7Z8mstlzbzhSBzy+aiuLEJ
+ payToRh/7ZK1EsYxa
+X-Received: by 2002:a05:6e02:1aa7:b0:430:b32d:c1a1 with SMTP id
+ e9e14a558f8ab-431dc139f4dmr96153335ab.7.1761329246564; 
+ Fri, 24 Oct 2025 11:07:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9XHGSzzqoHlrGsaXpgvHIw3pePTxBO6UEw/pjeGXe4M9VE4BDvNjpcck7LyjfQtSgFZfvPw==
+X-Received: by 2002:a05:6e02:1aa7:b0:430:b32d:c1a1 with SMTP id
+ e9e14a558f8ab-431dc139f4dmr96152655ab.7.1761329245977; 
+ Fri, 24 Oct 2025 11:07:25 -0700 (PDT)
+Received: from resolute.lxd ([147.219.77.79]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-5abb8ba7f6dsm2386451173.55.2025.10.24.11.07.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Oct 2025 11:07:25 -0700 (PDT)
+From: Wesley Hershberger <wesley.hershberger@canonical.com>
+Date: Fri, 24 Oct 2025 13:07:06 -0500
+Subject: [PATCH] block: Add missing null checks during query-named-block-nodes
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 19/23] Workaround for ERRATA_772415_SPR17
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-20-zhenzhong.duan@intel.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251024084349.102322-20-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Message-Id: <20251024-second-fix-3149-v1-1-d997fa3d5ce2@canonical.com>
+X-B4-Tracking: v=1; b=H4sIAEnA+2gC/x2MywqAIBAAfyX23IJuSo9fiQ6la+3FQiEC6d+Tj
+ sMwUyBzEs4wNQUS35LljBV024A71rgziq8MpMhqRQYzuzN6DPJgp82IgQxtfgi2DxZqdSWu7j/
+ Oy/t+xNC4NmEAAAA=
+X-Change-ID: 20251024-second-fix-3149-f242bd8f57f5
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ qemu-block@nongnu.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Wesley Hershberger <wesley.hershberger@canonical.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4665;
+ i=wesley.hershberger@canonical.com; h=from:subject:message-id;
+ bh=L8GGCcoymsfzdRMwP6L5gPp2wpLnPyuT/p0GSeLrPCg=;
+ b=owEB7QES/pANAwAKAfkogKziOh25AcsmYgBo+8BcknF6LoO/i7aFw/eui5P0qykexRPjgPAMP
+ 8KOz28mvlqJAbMEAAEKAB0WIQQsIHxFLwpehxEbQ8r5KICs4joduQUCaPvAXAAKCRD5KICs4jod
+ uURFDADF9nZKsyiUOngibojdFPE/SU9uY/QTMPLLcVoQTr91hU9i5ZWuJWVVMkI3IVhiLffpZoH
+ BSV8xl3OY7pg1j557e+5Oi0gpFjrFnlpC3i7tHlMnw+qvW6/PlUjas5XBTOJ5WL/0gkOd73Pl0H
+ KFezobuLSKS7htHhXKHMDaZgI7YD+QE3gUi1RKhVEoga3NlmY0L5CpSt7P9pK7azWYQ1wfNxS9p
+ 5AgbWUtSQIoMjCXbRMtDNrye+1jcUHxh+d1bcBbFQCu2cI4aYKeUnA0lCfYI/Xi1s3rIv20Wezg
+ 7/FaIKRsWtm0bhBz5bDrkrIgrJClBWkdhM/aCGsJudl5wFp2mjkFUtn4Q74ZzatpQSGG247RdzD
+ 4MMPXU3mhTJSezTK7FSTZJsjMt60DbHw8DpvA9jY/lIMCyQGh/mj16s5Pw/Pxax7synj54TTQCc
+ 8UaVGqDfK9+FN1IH2geqEQw7nmm7r8vYwWACHLojMGLzWYkI6KYtUCwJsjBndRTCCSgdE=
+X-Developer-Key: i=wesley.hershberger@canonical.com; a=openpgp;
+ fpr=2C207C452F0A5E87111B43CAF92880ACE23A1DB9
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=wesley.hershberger@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,86 +134,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/25 10:43, Zhenzhong Duan wrote:
-> On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
-> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
-> range mapped on second stage page table could still be written.
-> 
-> Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
-> Update, Errata Details, SPR17.
-> https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
-> 
-> Also copied the SPR17 details from above link:
-> "Problem: When remapping hardware is configured by system software in
-> scalable mode as Nested (PGTT=011b) and with PWSNP field Set in the
-> PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
-> Access bit if enabled) in first-stage page-table entries even when
-> second-stage mappings indicate that corresponding first-stage page-table
-> is Read-Only.
-> 
-> Implication: Due to this erratum, pages mapped as Read-only in second-stage
-> page-tables may be modified by remapping hardware Access/Dirty bit updates.
-> 
-> Workaround: None identified. System software enabling nested translations
-> for a VM should ensure that there are no read-only pages in the
-> corresponding second-stage mappings."
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   hw/vfio/iommufd.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index f9d0926274..f9da0e79cc 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -15,6 +15,7 @@
->   #include <linux/vfio.h>
->   #include <linux/iommufd.h>
->   
-> +#include "hw/iommu.h"
+Some operations insert an implicit node above the top node in the block
+graph (e.g. block-stream or blockdev-backup). The implicit node is
+removed when the operation finishes. If QMP query-named-block-nodes is
+called while the operation is removing the implicit node, it may observe
+a node with no children, causing a segfault.
 
-Changes look ok apart from this include.
+This is hypothesized to only affect the block-stream operation as other
+operations use the workaround bdc4c4c5e372756a5ba3fb3a61e585b02f0dd7f4
+or do not detach their children during cleanup (see
+3108a15cf09865456d499b08fe14e3dbec4ccbb3).
 
+This backtrace was observed in #3149 on a relatively recent build. The
+bs passed to bdrv_refresh_filename is the cor_filter_bs from the
+block-stream operation; bs->implicit was "true".
 
-Thanks,
+0  bdrv_refresh_filename (bs=0x5efed72f8350)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:8082
+1  0x00005efea73cf9dc in bdrv_block_device_info
+    (blk=0x0, bs=0x5efed72f8350, flat=true, errp=0x7ffeb829ebd8)
+    at block/qapi.c:62
+2  0x00005efea7391ed3 in bdrv_named_nodes_list
+    (flat=<optimized out>, errp=0x7ffeb829ebd8)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:6275
+3  0x00005efea7471993 in qmp_query_named_block_nodes
+    (has_flat=<optimized out>, flat=<optimized out>, errp=0x7ffeb829ebd8)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/blockdev.c:2834
+4  qmp_marshal_query_named_block_nodes
+    (args=<optimized out>, ret=0x7f2b753beec0, errp=0x7f2b753beec8)
+    at qapi/qapi-commands-block-core.c:553
+5  0x00005efea74f03a5 in do_qmp_dispatch_bh (opaque=0x7f2b753beed0)
+    at qapi/qmp-dispatch.c:128
+6  0x00005efea75108e6 in aio_bh_poll (ctx=0x5efed6f3f430)
+    at util/async.c:219
+...
 
-C.
+The get_allocated_file_size change resolves a second segfault after the
+first was resolved. Here, bdrv_filter_bs returns NULL as the
+bs (cor_filter_bs) has no children:
 
+0  bdrv_co_get_allocated_file_size (bs=<optimized out>)
+    at /usr/src/qemu-1:10.1.0+ds-5ubuntu2+test8/b/qemu/block.c:6018
+1  0x0000631d078522be in bdrv_co_get_allocated_file_size_entry
+    (opaque=0x7ffd375c5dd0) at block/block-gen.c:288
+2  0x0000631d07929ec2 in coroutine_trampoline
+    (i0=<optimized out>, i1=<optimized out>)
+    at util/coroutine-ucontext.c:175
+...
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3149
+Buglink: https://bugs.launchpad.net/bugs/2126951
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Wesley Hershberger <wesley.hershberger@canonical.com>
+---
+As discussed in the previous thread:
+https://lists.gnu.org/archive/html/qemu-devel/2025-10/msg05458.html
 
->   #include "hw/vfio/vfio-device.h"
->   #include "qemu/error-report.h"
->   #include "trace.h"
-> @@ -351,6 +352,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->       VFIOContainer *bcontainer = VFIO_IOMMU(container);
->       uint32_t type, flags = 0;
->       uint64_t hw_caps;
-> +    VendorCaps caps;
->       VFIOIOASHwpt *hwpt;
->       uint32_t hwpt_id;
->       int ret;
-> @@ -396,7 +398,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->        * instead.
->        */
->       if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
-> -                                         &type, NULL, 0, &hw_caps, errp)) {
-> +                                         &type, &caps, sizeof(caps), &hw_caps,
-> +                                         errp)) {
->           return false;
->       }
->   
-> @@ -411,6 +414,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->        */
->       if (vfio_device_get_viommu_flags_want_nesting(vbasedev)) {
->           flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
-> +
-> +        if (host_iommu_extract_quirks(type, &caps) &
-> +            HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO) {
-> +            bcontainer->bypass_ro = true;
-> +        }
->       }
->   
->       if (cpr_is_incoming()) {
+This resolves the issue with my reproducer.
+
+make check-block passes locally.
+
+Please let me know if any adjustments to the patch are needed.
+
+Thanks for the quick & helpful reviews!
+---
+ block.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/block.c b/block.c
+index 8848e9a7ed665a1bfbde2aba29e2c414f5bbe39b..8629324703d5d5fcf0bc3908d5b2dd4b26e4031d 100644
+--- a/block.c
++++ b/block.c
+@@ -6024,8 +6024,18 @@ int64_t coroutine_fn bdrv_co_get_allocated_file_size(BlockDriverState *bs)
+          */
+         return -ENOTSUP;
+     } else if (drv->is_filter) {
++        BlockDriverState *filtered = bdrv_filter_bs(bs);
++
++        /*
++         * A filter may have been removed from the graph (child detached) but
++         * not yet unrefed.
++         */
++        if (!filtered) {
++            return -ENOMEDIUM;
++        }
++
+         /* Filter drivers default to the size of their filtered child */
+-        return bdrv_co_get_allocated_file_size(bdrv_filter_bs(bs));
++        return bdrv_co_get_allocated_file_size(filtered);
+     } else {
+         /* Other drivers default to summing their children's sizes */
+         return bdrv_sum_allocated_file_size(bs);
+@@ -8067,6 +8077,15 @@ void bdrv_refresh_filename(BlockDriverState *bs)
+     }
+ 
+     if (bs->implicit) {
++        /*
++         * An node may have been removed from the graph (child detached) but
++         * not yet unrefed. filename and full_open_options can be left
++         * unchanged since this state is temporary.
++         */
++        if (QLIST_EMPTY(&bs->children)) {
++            return;
++        }
++
+         /* For implicit nodes, just copy everything from the single child */
+         child = QLIST_FIRST(&bs->children);
+         assert(QLIST_NEXT(child, next) == NULL);
+
+---
+base-commit: e8779f3d1509cd07620c6166a9a280376e01ff2f
+change-id: 20251024-second-fix-3149-f242bd8f57f5
+
+Best regards,
+-- 
+Wesley Hershberger <wesley.hershberger@canonical.com>
 
 
