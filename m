@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539AFCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B83FCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCNep-0007Ia-RX; Fri, 24 Oct 2025 15:41:04 -0400
+	id 1vCNfL-0007yS-SZ; Fri, 24 Oct 2025 15:41:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCNeb-0007DC-9D; Fri, 24 Oct 2025 15:40:52 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCNeZ-0002z9-2k; Fri, 24 Oct 2025 15:40:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=3jabX5j3zKWCVEHgBcqKHqACw6r0ZQMjg6DzvhR2sKc=; b=LtzzqAnOeqmpDQnQM43pQ3uY6O
- rncjy9U0dAKYDnLWcgP/qaLuJba6WyZu8unt4vo8RCOXdzShk9lRHa3EgzB5tsh3U/+82hWK5xV0s
- FoIRQavQhJk3vgzK0JdkC3b+yNH/0GRx+jeZFzzxjnN9phEmc3EJ3yZSMG4MM3eMym77j0iRXdk2a
- jH6ycQEykxvaTsdzmDX4W0jxmACohil9BIcKd5zZCGLOwAVpC5WDhRNKtuq9Sa+Lj7+nIieielckl
- dx7NcAkUBhLOHkFvxOEP7d6oaAFeCWU2bUidHuMZ5mz5jx6/6cx1yb5utbg4XOJ3LJrxiGI6VzN6A
- gw9vM9pp76mcMvkPtGaWoxuSt8XFWycFkMfjJNjWl7YECweq5EwyjRk4U0dJVtWNC8rleF20jBhuQ
- a8IV3ku8rqSqMlqeWXfCp8GZbqJTtw+pxIXcJCQXtHnCmdIwaSNnSXgvd1Z4jVFLBspVMTktTCOnP
- JXEWpSoGakEX5OJhHYekcOnobHvo11/zt/hiX6O9qIz6BhuLFJqB1nsff4WJe7afT8Ekj17iaEpgo
- DtLjXiYhxSVcDdsyGPZqh4Fa506KWWN8XJrDh1HdEOpQE654q7dJIXhAgNHZVKozEPlpiDmLEFqGw
- R4gqzGxLpLfUk2X1RMQSMTTo8AGaiFhFo5pn7l2Mk=;
-Received: from [2a02:8012:2f01:0:521c:3ef:78b8:2419]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCNcI-000BOr-Ev; Fri, 24 Oct 2025 20:38:26 +0100
-Message-ID: <1201fe45-f822-4e1e-8cd7-84b23eaa2bd0@ilande.co.uk>
-Date: Fri, 24 Oct 2025 20:40:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNfJ-0007tV-9G
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:41:34 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNfH-00034V-1Q
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:41:33 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-475dc6029b6so301255e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:41:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761334888; x=1761939688; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KpH1TjiIWYMoy+2aYVMfZHyQSqeUvDzN9D1JMZexHpc=;
+ b=IPXmp0HdRJvYINqiR++Z3ZOpRlU+90GxkmTAs/RHEuJ+FyNZeeJg3WltINBPrdfZ2K
+ gIKDzZDV2Bibd39TWHikf4FkOw6TvoqK41RbHth5AcG3GdY4wF49UyEavVBZa+h7Qjrg
+ 1FqhA52oHaL9uVBJIO+DiVCw2SrhfXgbN5uLUOPRg7w1f+KYLto++a77bkyhAOzY2emb
+ eOzTqds/TAXbxn0NWg098/0TtHhCLGkcz3be8ugfx9r0U5Hnez7B9rH44rvK8PNWE5e2
+ 7re6abLK2MiW8FA1yvnRBM4W/hs6LSTU4Es3v1KDeiCs9kzK6vqqd5Mraof6gOuzVqEu
+ W+ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761334888; x=1761939688;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KpH1TjiIWYMoy+2aYVMfZHyQSqeUvDzN9D1JMZexHpc=;
+ b=LPQSL525gUdlyuKVylnfXvN2SILnCr/xVBQr72gMwsfXVuFQHNd1WMd4emyjojnflv
+ /JpFL7laCVuxQPQYfra7nOZikdy9XDeh9qMJjIM1MNy8ANzKBNxJ/LTLCiRJQujjQ1MC
+ jEd3+JAI4QLu2FaeNMd3ja0FY1rjnVhbIfWdm53WK37FLXA+AEc/Pk6vI49YoApRGrJx
+ aY2kMe97l5qXtWbUdBG1/5yTu/qZxlpL8Ij8OO8vUYyUwjQ+xWKHUd6keHGrINukZBoF
+ DOh9hgr6sZSMYuOoatQ2sJhUGJJfv6ARlb4JC5RCgqNQ5TJPwTw2Pp6hessvBT3npokZ
+ Mvvw==
+X-Gm-Message-State: AOJu0Yy7eDqWzlYLyqe4uZLy+lSVZQ5TpcqxJE8CadpwD8VDgSBuDPbu
+ yWshYW8MAgVJSOun3z5ls9YnYdp6jgLOERKLPSkmeodsLVxmZGo24EXu9WgXvdjSfBFAVqA8QN5
+ VG7WChRM=
+X-Gm-Gg: ASbGncv/go/94AgmkEScoiXqPIKYkrVoroNOfGWC00K849xy244KTubkecaEdtz+jdM
+ HqUZBbeCIOSwISUWsH5HcMALhvb8fiLaLd942nWeHM0eY7R2Uj2Phb+8aVcVE+tgAH0KQUM68ZW
+ 1U0dbmAmaK0GOCFOJSbD6LfOuB3j1sA77pGfaCcBHkQliwETApLYfeOEw287ZjyLP+8QWPDDVGw
+ V0ajbzRfBjIBbUMNqPDkmV8oNnEZZarMU++sWa2pZttf2T+V6uR/bLbaxcjPNVyZyAsTRZEYjLm
+ wAfYzS8Jn8/HwnJERwxX6c2Zbp9vQ64+HhHFJLAjku/5/UfX7VcptOA++j9UzvJch0P6IyAWQ//
+ WwZ0HpwUzygsEzOKuDWEakEG9fxBttO9d74mBVozOGXMtpWkMVTZgiamkDYn80bl4XFyo+bAgWT
+ TKuWNRNa8yhA+s0SvTwuNHxpYU+N8YphlS915Tib3xN/aasGwNoWZ5AINgE7GR
+X-Google-Smtp-Source: AGHT+IH6/dZ1UCh6BkdG06z1NSspqbsgE2j1KQM2XnC+xyXgfkt/gcwR5yK/U9aRTqcDlnLNjY6/Jw==
+X-Received: by 2002:a05:600c:3b82:b0:475:daa7:ec60 with SMTP id
+ 5b1f17b1804b1-475daa7ee4amr10581395e9.21.1761334888253; 
+ Fri, 24 Oct 2025 12:41:28 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475cae9f571sm107387325e9.7.2025.10.24.12.41.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 24 Oct 2025 12:41:27 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 24/27] hw/mips: Include missing 'system/memory.h' header
+Date: Fri, 24 Oct 2025 21:04:11 +0200
+Message-ID: <20251024190416.8803-25-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251024190416.8803-1-philmd@linaro.org>
 References: <20251024190416.8803-1-philmd@linaro.org>
- <20251024190416.8803-4-philmd@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20251024190416.8803-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:521c:3ef:78b8:2419
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 03/27] hw/sysbus: Use memory_region_name()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,37 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/10/2025 20:03, Philippe Mathieu-Daudé wrote:
+"system/memory.h" header is indirectly pulled by "hw/sysbus.h".
+Include it explicitly to avoid when refactoring the latter:
 
-> MemoryRegion::name is kind of internal. Use the proper
-> memory_region_name() accessor, which might return a different
-> name.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/core/sysbus.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-> index ae447c1196a..d33be6b2b52 100644
-> --- a/hw/core/sysbus.c
-> +++ b/hw/core/sysbus.c
-> @@ -154,7 +154,7 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
->   int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
->   {
->       for (int i = 0; i < dev->num_mmio; i++) {
-> -        if (!strcmp(dev->mmio[i].memory->name, name)) {
-> +        if (!strcmp(memory_region_name(dev->mmio[i].memory), name)) {
->               sysbus_mmio_map(dev, i, addr);
->               return i;
->           }
+  In file included from ../../hw/misc/mips_itu.c:26:
+  include/hw/misc/mips_itu.h:65:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
+     65 |     MemoryRegion storage_io;
+        |                  ^
+  In file included from ../../hw/misc/mips_cmgcr.c:17:
+  include/hw/misc/mips_cmgcr.h:80:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
+     80 |     MemoryRegion iomem;
+        |                  ^
 
-Interesting. I'm mildly curious as to if you discovered anything that broke with this 
-change (even though I agree it is correct)?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/misc/mips_cmgcr.h | 1 +
+ include/hw/misc/mips_itu.h   | 1 +
+ 2 files changed, 2 insertions(+)
 
-
-ATB,
-
-Mark.
+diff --git a/include/hw/misc/mips_cmgcr.h b/include/hw/misc/mips_cmgcr.h
+index db4bf5f4499..e15731f18ce 100644
+--- a/include/hw/misc/mips_cmgcr.h
++++ b/include/hw/misc/mips_cmgcr.h
+@@ -12,6 +12,7 @@
+ 
+ #include "hw/sysbus.h"
+ #include "qom/object.h"
++#include "system/memory.h"
+ 
+ #define TYPE_MIPS_GCR "mips-gcr"
+ OBJECT_DECLARE_SIMPLE_TYPE(MIPSGCRState, MIPS_GCR)
+diff --git a/include/hw/misc/mips_itu.h b/include/hw/misc/mips_itu.h
+index 27c9a1090d5..1a684d90a15 100644
+--- a/include/hw/misc/mips_itu.h
++++ b/include/hw/misc/mips_itu.h
+@@ -22,6 +22,7 @@
+ 
+ #include "hw/sysbus.h"
+ #include "qom/object.h"
++#include "system/memory.h"
+ 
+ #define TYPE_MIPS_ITU "mips-itu"
+ OBJECT_DECLARE_SIMPLE_TYPE(MIPSITUState, MIPS_ITU)
+-- 
+2.51.0
 
 
