@@ -4,75 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC15CCD1AB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58658CCD1A5
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 03:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC8qg-00027s-PH; Thu, 23 Oct 2025 23:52:18 -0400
+	id 1vC8qP-00025F-FC; Thu, 23 Oct 2025 23:52:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vC8qe-000279-1I
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 23:52:16 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vC8qN-00024a-34; Thu, 23 Oct 2025 23:51:59 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vC8qb-0000nu-T6
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 23:52:15 -0400
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vC8q8-0000mR-KI; Thu, 23 Oct 2025 23:51:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761277935; x=1792813935;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=AJ7UoWkceY2OSRMiA7porTtv2ydezDLqkoMDBq1MBFs=;
- b=ndICa3Wr1fcUulDYGycdo3+w/0fTMw7VWdng3GUPKt+KQP7IEKNJCasY
- 6+72tTDac3bIKfFHG7lcxq0p84VXezZp9vuz6+mQXlHhuwJpxeA0MZZGs
- fm4/KaKrglwMrjs8VltLMbcjXvFmqpsr9QwMMH6V1aKDwoyhq+6aSkUuf
- KFpoHbnxL4azSeJ4S4FPznBOes67SdLKEnvd2uxhYU+TK0WgEoNXr3SUt
- mznLTxfryHIrFmeTwLQVsu8fu1gsgAfMaULQxsMqCRo6x0+3LIG6Fd1Ew
- +SM3YNtksxqi7LdMdgfDNEJrKZOaWwXYDy5PUY9n4Y3ksoLM55ikyiI4L A==;
-X-CSE-ConnectionGUID: 9PflvZYzR2WlDRBHfiRdjA==
-X-CSE-MsgGUID: 5hhnMynjT5OeNCwgbJ9QnQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="67102355"
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="67102355"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 20:52:08 -0700
-X-CSE-ConnectionGUID: eofsMfssQD2MqL7cpHotRA==
-X-CSE-MsgGUID: sQD6NKesRUeJeqMnYzvSrA==
+ t=1761277905; x=1792813905;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=P9d7AvBWexqqmIBuTu4J+YIDKpgdaZUG36V6xx42Upo=;
+ b=c888EEjKT/LKKpqesaSdWMj9jeUE74MpmY/WiwceP0opM25NBl4Fo1z7
+ KVGtXQNdZ/9wyRBEDHdOOz9XAyRBkF559NwuTYFMIye4AnC6b9eJuAKhQ
+ lRE2Orly3Bk4dARgBZVv3TemVBbx8TNkQMz6leRiLt+276X8ZloR827bR
+ wGrBPMScbzFedfBZs0VDfP4T8cm4+MaBq5KshByB0HQSKh9khHeRr6hAC
+ V82oi803RuS0NLPDoyqhFIEk2jW9HxQjrNNQYY13z5Rd1fvnTBQNm7/zc
+ 4yzQtF5uDkx5kJHlFq2dycA48gVaOgn4TW1oXZJjB6/OgSkUQQX8uMdCl g==;
+X-CSE-ConnectionGUID: Oj2HehJkRBO3PMLHFO0h0A==
+X-CSE-MsgGUID: mQ1LqAOQQVqgE3OGyV6TNg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="80892393"
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="80892393"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2025 20:51:39 -0700
+X-CSE-ConnectionGUID: PFl4ODBQTbCbTcn/isx1hQ==
+X-CSE-MsgGUID: Yu/nMQgkQEKnbWmup76g/g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184399414"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 20:52:04 -0700
-Message-ID: <30f9d0b9-0a27-4b78-9633-8912bc18998b@intel.com>
-Date: Fri, 24 Oct 2025 11:52:01 +0800
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="183554351"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 23 Oct 2025 20:51:38 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2] rust/qemu-macros: Convert bit value to u8 within
+ #[property]
+Date: Fri, 24 Oct 2025 12:13:44 +0800
+Message-Id: <20251024041344.1389488-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] kvm: Detect guest-memfd flags supported
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Chenyi Qiang <chenyi.qiang@intel.com>, David Hildenbrand <david@redhat.com>,
- Alexey Kardashevskiy <aik@amd.com>, Juraj Marcin <jmarcin@redhat.com>
-References: <20251023185913.2923322-1-peterx@redhat.com>
- <20251023185913.2923322-4-peterx@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20251023185913.2923322-4-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=xiaoyao.li@intel.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.998, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,67 +79,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/2025 2:59 AM, Peter Xu wrote:
-> Detect supported guest-memfd flags by the current kernel, and reject
-> creations of guest-memfd using invalid flags.  When the cap isn't
-> available, then no flag is supported.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   accel/kvm/kvm-all.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 1425dfd8b3..48a8f6424f 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -108,6 +108,7 @@ static int kvm_sstep_flags;
->   static bool kvm_immediate_exit;
->   static uint64_t kvm_supported_memory_attributes;
->   static bool kvm_guest_memfd_supported;
-> +static uint64_t kvm_guest_memfd_flags_supported;
->   static hwaddr kvm_max_slot_size = ~0;
->   
->   static const KVMCapabilityInfo kvm_required_capabilites[] = {
-> @@ -2781,6 +2782,11 @@ static int kvm_init(AccelState *as, MachineState *ms)
->       kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
->       kvm_guest_memfd_supported = kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
->           kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
-> +    ret = kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
-> +    if (ret > 0)
-> +        kvm_guest_memfd_flags_supported = (uint64_t)ret;
-> +    else
-> +        kvm_guest_memfd_flags_supported = 0;
+For bit property, make the type conversion within the #[property] macro
+so that users do not need to handle the conversion.
 
-Nit:
-1. QEMU's coding style always requires curly braces.
-2. is the (uint64_t) necessary?
-3. can we name it "kvm_supported_guest_memfd_flags" to make it 
-consistent with "kvm_supported_memory_attributes"?
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+Changes Since v2:
+ - Check #field_ty::BITS instead of u8::MAX.
+ - Update test cases.
+---
+ rust/hw/timer/hpet/src/device.rs |  2 +-
+ rust/qemu-macros/src/lib.rs      | 23 ++++++++++++++++++-----
+ rust/qemu-macros/src/tests.rs    | 15 ++++++++++++---
+ 3 files changed, 31 insertions(+), 9 deletions(-)
 
-so how about
-
-kvm_supported_guest_memfd_flags = kvm_vm_check_extension(s, 
-KVM_CAP_GUEST_MEMFD_FLAGS);
-     if (kvm_supported_guest_memfd_flags < 0) {
-         kvm_supported_guest_memfd_flags = 0;
-     }
-
->       kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
->   
->       if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-> @@ -4486,6 +4492,12 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
->           return -1;
->       }
->   
-> +    if (flags & ~kvm_guest_memfd_flags_supported) {
-> +        error_setg(errp, "KVM does not support guest-memfd flag: 0x%"PRIx64,
-> +                   flags & ~kvm_guest_memfd_flags_supported);
-> +        return -1;
-> +    }
-> +
->       fd = kvm_vm_ioctl(kvm_state, KVM_CREATE_GUEST_MEMFD, &guest_memfd);
->       if (fd < 0) {
->           error_setg_errno(errp, errno, "Error creating KVM guest_memfd");
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 86638c076666..23f2eefd1cd9 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -539,7 +539,7 @@ pub struct HPETState {
+     // Internal state
+     /// Capabilities that QEMU HPET supports.
+     /// bit 0: MSI (or FSB) support.
+-    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT as u8, default = false)]
++    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT, default = false)]
+     flags: u32,
+ 
+     /// Offset of main counter relative to qemu clock.
+diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+index 50239f228be2..ee417bb4b4ef 100644
+--- a/rust/qemu-macros/src/lib.rs
++++ b/rust/qemu-macros/src/lib.rs
+@@ -262,12 +262,25 @@ macro_rules! str_to_c_str {
+             },
+         )?;
+         let field_ty = field.ty.clone();
+-        let qdev_prop = if bitnr.is_none() {
+-            quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO }
++        let (qdev_prop, bitval) = if let Some(bitval) = bitnr {
++            (
++                quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO },
++                quote! {
++                    {
++                        const {
++                            assert!(#bitval >= 0 && #bitval < #field_ty::BITS as _,
++                                    "bit number exceeds type bits range");
++                        }
++                        #bitval as u8
++                    }
++                },
++            )
+         } else {
+-            quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO }
++            (
++                quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO },
++                quote! { 0 },
++            )
+         };
+-        let bitnr = bitnr.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
+         let set_default = defval.is_some();
+         let defval = defval.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
+         properties_expanded.push(quote! {
+@@ -275,7 +288,7 @@ macro_rules! str_to_c_str {
+                 name: ::std::ffi::CStr::as_ptr(#prop_name),
+                 info: #qdev_prop,
+                 offset: ::core::mem::offset_of!(#name, #field_name) as isize,
+-                bitnr: #bitnr,
++                bitnr: #bitval,
+                 set_default: #set_default,
+                 defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
+                 ..::common::Zeroable::ZERO
+diff --git a/rust/qemu-macros/src/tests.rs b/rust/qemu-macros/src/tests.rs
+index 65691412ff57..b65cf656fa36 100644
+--- a/rust/qemu-macros/src/tests.rs
++++ b/rust/qemu-macros/src/tests.rs
+@@ -179,7 +179,10 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                         name: ::std::ffi::CStr::as_ptr(c"flags"),
+                         info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
+-                        bitnr: 3,
++                        bitnr : {
++                            const { assert!(3 >= 0 && 3 < u32::BITS as _ , "bit number exceeds type bits range"); }
++                            3 as u8
++                        },
+                         set_default: false,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: 0 as u64 },
+                         ..::common::Zeroable::ZERO
+@@ -207,7 +210,10 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                         name: ::std::ffi::CStr::as_ptr(c"flags"),
+                         info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
+-                        bitnr: 3,
++                        bitnr : {
++                            const { assert!(3 >= 0 && 3 < u32::BITS as _ , "bit number exceeds type bits range"); }
++                            3 as u8
++                        },
+                         set_default: true,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: true as u64 },
+                         ..::common::Zeroable::ZERO
+@@ -235,7 +241,10 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                         name: ::std::ffi::CStr::as_ptr(c"msi"),
+                         info: <u64 as ::hwcore::QDevProp>::BIT_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
+-                        bitnr: 3,
++                        bitnr : {
++                            const { assert!(3 >= 0 && 3 < u64::BITS as _ , "bit number exceeds type bits range"); }
++                            3 as u8
++                        },
+                         set_default: true,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: false as u64 },
+                         ..::common::Zeroable::ZERO
+-- 
+2.34.1
 
 
