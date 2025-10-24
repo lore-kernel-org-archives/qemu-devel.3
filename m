@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D8BCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD916CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCBOm-0003cp-43; Fri, 24 Oct 2025 02:35:40 -0400
+	id 1vCBOa-0003aZ-Oz; Fri, 24 Oct 2025 02:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCBOk-0003cf-O2
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:38 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1vCBOV-0003Yo-O8
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:24 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCBOi-0003zC-La
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:38 -0400
+ id 1vCBOT-0003kG-Jq
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761287737; x=1792823737;
+ t=1761287722; x=1792823722;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=J041AyqDu393CENrSjsYGiKHkAgugONGgNt6ugUkk3A=;
- b=gyMs5PyhEm9P47phLXvsvc4/ki8wB7REvAgIoHcLw14lO8aPeqVbZxiN
- F07AZdP2pKqUwBPj77e3Bd+T2YOzo02c164ME/rh1QfGhFrpMO+9h442U
- /1N583APyVVk/lFOTCMk9u/K0qO88XSW2oWM1R79uWV6Qq2VjSw2TpjFU
- CU8TEDnngAavyGJ0IM+9vFM/6+g4s0EOmBHbJZ355MgWPILhvbAak9d3O
- 1Qk3CnE87S5iTnx+AMC39iZsr3dUJise+qtVc4rDVDR8sQTNtqwbJhOn7
- 6FX5eDsKXNjmsexRhaHcLMDv8X7PP1JzyYU2BSGmQ8/gnibByYvzoOslS Q==;
-X-CSE-ConnectionGUID: sil7nKIySc2DqktRg6adwg==
-X-CSE-MsgGUID: DaQAvaGMR6qJQJ4ht/IzYQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63170916"
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="63170916"
+ bh=qU5Tj18SBAmRCCj3RrNgLtsm8wwe6XuagVR52Qb/xRo=;
+ b=kfckt/+BW7fsh/NpgZzvtHzvY3W/LN1l/hiyg1IxGMx9vDEq5rWWALwx
+ 60WZCLG5VD9AUlLEY9sFcugZy3OSRM505ysHlGRtiMrBuVb6GSFUOIPLp
+ guIK3EXGZlfMYIjcEPQT7GrtdAp6AaPUJ2oAe8A1q30J7D4P4XbMYz6zY
+ RRyM8UipYCHpz4I2E4hImc8/UlD2En/uzznoF47KJUhS942PSqKcsFQFs
+ UQ3wNXom2GR2UJzGbY4ey+bLdj4jVhapv2eqsAAhh8wBZd/IIUvcjQy1a
+ fnvS66SKnRROE0VuXUO7b4C3z3liWTWPhKYPVdbaBiOJfNWF3nF3MlXCb w==;
+X-CSE-ConnectionGUID: ZhUV/myJRM2xjz2sVI2ABQ==
+X-CSE-MsgGUID: 1VOqb7g3Rw2Gi7qpoKpfow==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74137893"
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="74137893"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 23:35:32 -0700
-X-CSE-ConnectionGUID: Ha6JoebcTaezDh11zjjpDA==
-X-CSE-MsgGUID: aNZv1DHrSRy9ZHsUbcgWgg==
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2025 23:35:21 -0700
+X-CSE-ConnectionGUID: XxIr8PBlTo+gR5ef38s0JQ==
+X-CSE-MsgGUID: kTyIiDalRs+xYRGXLFAcxw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184276097"
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184276083"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 23 Oct 2025 23:35:24 -0700
+ by fmviesa006.fm.intel.com with ESMTP; 23 Oct 2025 23:35:17 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -53,15 +53,15 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Zide Chen <zide.chen@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, Yang Weijiang <weijiang.yang@intel.com>
-Subject: [PATCH v3 13/20] i386/kvm: Add save/load support for CET MSRs
-Date: Fri, 24 Oct 2025 14:56:25 +0800
-Message-Id: <20251024065632.1448606-14-zhao1.liu@intel.com>
+Subject: [PATCH v3 11/20] i386/cpu: Enable xsave support for CET states
+Date: Fri, 24 Oct 2025 14:56:23 +0800
+Message-Id: <20251024065632.1448606-12-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251024065632.1448606-1-zhao1.liu@intel.com>
 References: <20251024065632.1448606-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -88,11 +88,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yang Weijiang <weijiang.yang@intel.com>
 
-CET (architectural) MSRs include:
-MSR_IA32_U_CET - user mode CET control bits.
-MSR_IA32_S_CET - supervisor mode CET control bits.
-MSR_IA32_PL{0,1,2,3}_SSP - linear addresses of SSPs for user/kernel modes.
-MSR_IA32_SSP_TBL_ADDR - linear address of interrupt SSP table
+Add CET_U/S bits in xstate area and report support in xstate
+feature mask.
+MSR_XSS[bit 11] corresponds to CET user mode states.
+MSR_XSS[bit 12] corresponds to CET supervisor mode states.
+
+CET Shadow Stack(SHSTK) and Indirect Branch Tracking(IBT) features
+are enumerated via CPUID.(EAX=07H,ECX=0H):ECX[7] and EDX[20]
+respectively, two features share the same state bits in XSS, so
+if either of the features is enabled, set CET_U and CET_S bits
+together.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
 Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
@@ -102,139 +107,121 @@ Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes Since v2:
- - Rename MSR_IA32_SSP_TBL_ADDR to MSR_IA32_INT_SSP_TAB.
- - Rename X86CPUState.ssp_table_addr to X86CPUState.int_ssp_table.
- - Drop X86CPUStete.guest_ssp since it is not used in current commit.
- - Do not check CET-S & CET-U xtates when get/set MSTs since CET
-   is XSAVE-managed feature but is not XSAVE-enabled.
+ - Rename XSavesCETU/XSavesCETS to XSaveCETU/XSaveCETS.
+ - Refine the comments.
+ - Drop ".offset = 0" and its comment.
+ - Re-describe xstate dependencies via features array.
+ - Drop "cet-u" & "cet-s" enumeration from FEAT_XSAVE_XSS_LO's
+   feat_name array sicne currently xsave doesn't use named features.
 ---
- target/i386/cpu.h     | 16 +++++++++++
- target/i386/kvm/kvm.c | 64 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 80 insertions(+)
+ target/i386/cpu.c | 14 ++++++++++++++
+ target/i386/cpu.h | 26 +++++++++++++++++++++++++-
+ 2 files changed, 39 insertions(+), 1 deletion(-)
 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index b01729ad36d2..0bb65e8c5321 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2078,6 +2078,20 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
+             { FEAT_7_0_ECX,         CPUID_7_0_ECX_PKU },
+         },
+     },
++    [XSTATE_CET_U_BIT] = {
++        .size = sizeof(XSaveCETU),
++        .features = {
++            { FEAT_7_0_ECX,         CPUID_7_0_ECX_CET_SHSTK },
++            { FEAT_7_0_EDX,         CPUID_7_0_EDX_CET_IBT },
++        },
++    },
++    [XSTATE_CET_S_BIT] = {
++        .size = sizeof(XSaveCETS),
++        .features = {
++            { FEAT_7_0_ECX,         CPUID_7_0_ECX_CET_SHSTK },
++            { FEAT_7_0_EDX,         CPUID_7_0_EDX_CET_IBT },
++        },
++    },
+     [XSTATE_ARCH_LBR_BIT] = {
+         .size = sizeof(XSaveArchLBR),
+         .features = {
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 86fbfd5e4023..4edb977575e2 100644
+index 6537affcf067..7584cddb5917 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -580,6 +580,14 @@ typedef enum X86Seg {
- #define MSR_APIC_START                  0x00000800
- #define MSR_APIC_END                    0x000008ff
+@@ -589,6 +589,8 @@ typedef enum X86Seg {
+ #define XSTATE_Hi16_ZMM_BIT             7
+ #define XSTATE_PT_BIT                   8
+ #define XSTATE_PKRU_BIT                 9
++#define XSTATE_CET_U_BIT                11
++#define XSTATE_CET_S_BIT                12
+ #define XSTATE_ARCH_LBR_BIT             15
+ #define XSTATE_XTILE_CFG_BIT            17
+ #define XSTATE_XTILE_DATA_BIT           18
+@@ -603,6 +605,8 @@ typedef enum X86Seg {
+ #define XSTATE_Hi16_ZMM_MASK            (1ULL << XSTATE_Hi16_ZMM_BIT)
+ #define XSTATE_PT_MASK                  (1ULL << XSTATE_PT_BIT)
+ #define XSTATE_PKRU_MASK                (1ULL << XSTATE_PKRU_BIT)
++#define XSTATE_CET_U_MASK               (1ULL << XSTATE_CET_U_BIT)
++#define XSTATE_CET_S_MASK               (1ULL << XSTATE_CET_S_BIT)
+ #define XSTATE_ARCH_LBR_MASK            (1ULL << XSTATE_ARCH_LBR_BIT)
+ #define XSTATE_XTILE_CFG_MASK           (1ULL << XSTATE_XTILE_CFG_BIT)
+ #define XSTATE_XTILE_DATA_MASK          (1ULL << XSTATE_XTILE_DATA_BIT)
+@@ -625,7 +629,8 @@ typedef enum X86Seg {
+                                  XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK)
  
-+#define MSR_IA32_U_CET                  0x000006a0       /* user mode cet */
-+#define MSR_IA32_S_CET                  0x000006a2       /* kernel mode cet */
-+#define MSR_IA32_PL0_SSP                0x000006a4       /* ring-0 shadow stack pointer */
-+#define MSR_IA32_PL1_SSP                0x000006a5       /* ring-1 shadow stack pointer */
-+#define MSR_IA32_PL2_SSP                0x000006a6       /* ring-2 shadow stack pointer */
-+#define MSR_IA32_PL3_SSP                0x000006a7       /* ring-3 shadow stack pointer */
-+#define MSR_IA32_INT_SSP_TAB            0x000006a8       /* exception shadow stack table */
-+
- #define XSTATE_FP_BIT                   0
- #define XSTATE_SSE_BIT                  1
- #define XSTATE_YMM_BIT                  2
-@@ -2090,6 +2098,14 @@ typedef struct CPUArchState {
-     uint64_t msr_rapl_power_unit;
-     uint64_t msr_pkg_energy_status;
+ /* CPUID feature bits available in XSS */
+-#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
++#define CPUID_XSTATE_XSS_MASK   (XSTATE_ARCH_LBR_MASK | XSTATE_CET_U_MASK | \
++                                 XSTATE_CET_S_MASK)
  
+ #define CPUID_XSTATE_MASK       (CPUID_XSTATE_XCR0_MASK | CPUID_XSTATE_XSS_MASK)
+ 
+@@ -904,6 +909,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_ECX_WAITPKG           (1U << 5)
+ /* Additional AVX-512 Vector Byte Manipulation Instruction */
+ #define CPUID_7_0_ECX_AVX512_VBMI2      (1U << 6)
++/* Control-flow enforcement technology: shadow stack */
++#define CPUID_7_0_ECX_CET_SHSTK         (1U << 7)
+ /* Galois Field New Instructions */
+ #define CPUID_7_0_ECX_GFNI              (1U << 8)
+ /* Vector AES Instructions */
+@@ -951,6 +958,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_EDX_TSX_LDTRK         (1U << 16)
+ /* Architectural LBRs */
+ #define CPUID_7_0_EDX_ARCH_LBR          (1U << 19)
++/* Control-flow enforcement technology: indirect branch tracking */
++#define CPUID_7_0_EDX_CET_IBT           (1U << 20)
+ /* AMX_BF16 instruction */
+ #define CPUID_7_0_EDX_AMX_BF16          (1U << 22)
+ /* AVX512_FP16 instruction */
+@@ -1737,6 +1746,19 @@ typedef struct XSavePKRU {
+     uint32_t padding;
+ } XSavePKRU;
+ 
++/* Ext. save area 11: CET_U state */
++typedef struct XSaveCETU {
 +    uint64_t u_cet;
-+    uint64_t s_cet;
++    uint64_t pl3_ssp;
++} XSaveCETU;
++
++/* Ext. save area 12: CET_S state */
++typedef struct XSaveCETS {
 +    uint64_t pl0_ssp;
 +    uint64_t pl1_ssp;
 +    uint64_t pl2_ssp;
-+    uint64_t pl3_ssp;
-+    uint64_t int_ssp_table;
++} XSaveCETS;
 +
-     /* Fields up to this point are cleared by a CPU reset */
-     struct {} end_reset_fields;
- 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index f7a6ef650af7..92c2fd6d6aee 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -4255,6 +4255,28 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-         }
-     }
- 
-+    if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK ||
-+        env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT) {
-+        kvm_msr_entry_add(cpu, MSR_IA32_U_CET, env->u_cet);
-+        kvm_msr_entry_add(cpu, MSR_IA32_S_CET, env->s_cet);
-+
-+        if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, env->pl1_ssp);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, env->pl2_ssp);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL3_SSP, env->pl3_ssp);
-+
-+            /*
-+             * This MSR is not present on processors that do not support
-+             * Intel 64 architecture.
-+             */
-+            if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
-+                kvm_msr_entry_add(cpu, MSR_IA32_INT_SSP_TAB,
-+                                  env->int_ssp_table);
-+            }
-+        }
-+    }
-+
-     return kvm_buf_set_msrs(cpu);
- }
- 
-@@ -4646,6 +4668,27 @@ static int kvm_get_msrs(X86CPU *cpu)
-         }
-     }
- 
-+    if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK ||
-+        env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT) {
-+        kvm_msr_entry_add(cpu, MSR_IA32_U_CET, 0);
-+        kvm_msr_entry_add(cpu, MSR_IA32_S_CET, 0);
-+
-+        if (env->features[FEAT_7_0_EDX] & CPUID_7_0_ECX_CET_SHSTK) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL3_SSP, 0);
-+
-+            /*
-+             * This MSR is not present on processors that do not support
-+             * Intel 64 architecture.
-+             */
-+            if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
-+                kvm_msr_entry_add(cpu, MSR_IA32_INT_SSP_TAB, 0);
-+            }
-+        }
-+    }
-+
-     ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
-     if (ret < 0) {
-         return ret;
-@@ -4993,6 +5036,27 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_ARCH_LBR_INFO_0 ... MSR_ARCH_LBR_INFO_0 + 31:
-             env->lbr_records[index - MSR_ARCH_LBR_INFO_0].info = msrs[i].data;
-             break;
-+        case MSR_IA32_U_CET:
-+            env->u_cet = msrs[i].data;
-+            break;
-+        case MSR_IA32_S_CET:
-+            env->s_cet = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL0_SSP:
-+            env->pl0_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL1_SSP:
-+            env->pl1_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL2_SSP:
-+            env->pl2_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_PL3_SSP:
-+            env->pl3_ssp = msrs[i].data;
-+            break;
-+        case MSR_IA32_INT_SSP_TAB:
-+            env->int_ssp_table = msrs[i].data;
-+            break;
-         case MSR_K7_HWCR:
-             env->msr_hwcr = msrs[i].data;
-             break;
+ /* Ext. save area 15: Arch LBR state */
+ typedef struct XSaveArchLBR {
+     uint64_t lbr_ctl;
+@@ -1764,6 +1786,8 @@ QEMU_BUILD_BUG_ON(sizeof(XSaveOpmask) != 0x40);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveZMM_Hi256) != 0x200);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveHi16_ZMM) != 0x400);
+ QEMU_BUILD_BUG_ON(sizeof(XSavePKRU) != 0x8);
++QEMU_BUILD_BUG_ON(sizeof(XSaveCETU) != 0x10);
++QEMU_BUILD_BUG_ON(sizeof(XSaveCETS) != 0x18);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveXTILECFG) != 0x40);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveXTILEDATA) != 0x2000);
 -- 
 2.34.1
 
