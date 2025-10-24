@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C33CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 15:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD50CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 15:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCK1d-0006UT-W0; Fri, 24 Oct 2025 11:48:22 -0400
+	id 1vCK5o-0007PH-4B; Fri, 24 Oct 2025 11:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vCK1c-0006UH-HW
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:48:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vCK5l-0007Ot-70
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:52:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vCK1Z-00042v-ET
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:48:20 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vCK5j-0004l4-BD
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:52:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761320895;
+ s=mimecast20190719; t=1761321154;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LF781Yxe/gZhmHOdp6xowU5YohbDfxxiI3wbmRaev3I=;
- b=XhtoK15/4I8qbMnWXhfqEyqBU0lzmYNfssn09+QMaT+WdmZ4OW+tlvSB1JXsAPgO+c9cPm
- /sHnnisdr/XVdJvdYiJOGe9czvS2Fq1xvtPFeiIBl3hVIKQteaRqnggBgDcQ5mA7akn8B7
- cwlewWpliKJcBvmUgloRDxWPpBQ5T20=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=j6n53AlBvvrnmvaH3YLABuQFzSbHe1/KCxxyv8CfaaM=;
+ b=OmPsySAb3pfLAV5NAAhDB1kNRdI0hg+Qt2aIsv4xLcJO4syPBjRIC9m87mmX/qBE4Xc4o6
+ wpSUIi5iBMi7Cee1qi9GnY+4W4Eq4XGsbfx43mMTBtqBjk20xGBEdORCsW11AQGw1BGQAq
+ Vc1cz6gD4yN3AJx7JJFVwLrLWwbZJ5Q=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-QA1YHA3UPheTZHUUvkoBuA-1; Fri, 24 Oct 2025 11:48:14 -0400
-X-MC-Unique: QA1YHA3UPheTZHUUvkoBuA-1
-X-Mimecast-MFC-AGG-ID: QA1YHA3UPheTZHUUvkoBuA_1761320894
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4e892acc0b3so63136301cf.2
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 08:48:14 -0700 (PDT)
+ us-mta-281-AAsq6LQnNNykkf0hAdHOgA-1; Fri, 24 Oct 2025 11:52:32 -0400
+X-MC-Unique: AAsq6LQnNNykkf0hAdHOgA-1
+X-Mimecast-MFC-AGG-ID: AAsq6LQnNNykkf0hAdHOgA_1761321152
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-87c1115d604so55653296d6.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 08:52:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761320894; x=1761925694;
+ d=1e100.net; s=20230601; t=1761321152; x=1761925952;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LF781Yxe/gZhmHOdp6xowU5YohbDfxxiI3wbmRaev3I=;
- b=BtvV0Sk2PmgqTGMOloUk0NwCGJqWhP6K9+MNWbHAolH4USCNtw6qqW9UwrgLnVBO4v
- 4bK0UxvjL8eNdJ4lWq/UauDhg7123PNOk58G4RvzpomMhVNsMz3EehjBaqvwo1HBiABh
- sj7Zv0TJMbHR3Bl+tfd6f/uGz8HyVJnPZ1zvU6aaJnE8msZaxTywC2Rl3Py/jptI/pFi
- bRIszztsaU5z6ULsG0t8bcutHqan6pfzeTitqq345JEWYgm25Ne0hAIS6KlrR9fGg6Ol
- tDyvmxgdKUt4i66i3tNx/lExfT41DlRkjH5JIlZlXn7XRVsri11HMAlmKWAe+vNWJHuh
- kMLA==
+ bh=j6n53AlBvvrnmvaH3YLABuQFzSbHe1/KCxxyv8CfaaM=;
+ b=bL5QzRneYhLtwGGKh0LdAthH2/ix6Jjum5GYsFCBFXzjn5U3IqxP9/XJkJjr36zLXl
+ IKNho0BDL3vUZ9sS54C8Ota3W76kcaEpWtzODpKmu4kzz/8meRb06B2MJI3g8dgYY94j
+ jY4QnmgarkBEBQPi4fln07zM1s8rnQZv4CdY157MielIicLsKNfZnHYuv3BaG7gCH+ci
+ nWgPDQaJgSgvBdGRmbYtNyZlqthqYA0CxuXJ60Fs4dVRUPOa4kCgt0dxr8mqtGAxhuWe
+ mWiPpMxL/brCbfdXD7+/Tru2im0oXDsP+oBVmpJOR6GPaAZ18mMFkejC4ez3ag/jJYWm
+ qgpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTLwftmQxWc6vhb2dzfGjpMcnmriG5aLVUst2Ng5E/wQ04xzPKYZsst/xCPks22ZdACm3oRu8qI8Gj@nongnu.org
-X-Gm-Message-State: AOJu0YxnnUbchne3VxpHQvlGmUmnGrW44B1intP8I4BvqpnGRO/GEQzV
- 6hzzQacvh2tXynxq4DzjSs5UpWvcBBCfIkRJNT8ZQ7hnJfnkiAHbRCgSPSZzxVgkCPqVXLEuzpR
- GKjdIPLR+rshiqgl2/B7Em13DHJtyzt9YcXFfK/9DdRWdqkPF2P8E4Tkn
-X-Gm-Gg: ASbGncuTdfWgqJ2mSh0czBa/3tClGjzH0nSYegwLNRkDxI5TCe5VZYk3fQoyCTCT3Ok
- RzzIla3Du8iTnrnekOztqw80V1X6Gf1vDS9vxCF09nzLo/Ta48hahHw3vhCP+lgzHzBx6Rv4Ml1
- 3szOsqptMaIa/BsBpJd0UlYrPstzw/TJj1t4AUH+QdBFrqJUbNIc9E7Q69f2a9snPQ7YsllJTf7
- 2XLPnGbRp5Y2f0hHEHiKJ7En4FMk5JfK5cFss5osXIm4bxdIUgdj41Nfoye0OYV46MRrEXPnr1B
- 0/aJZzA9r9wxxgHaLTyrPRSv7nfWafqfcgd45k0C4eDYqoueVJsFggvk5ltcQNN4JJI=
-X-Received: by 2002:ac8:57c2:0:b0:4b5:f6c5:cfc with SMTP id
- d75a77b69052e-4e89d274b1dmr349293071cf.19.1761320893797; 
- Fri, 24 Oct 2025 08:48:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2i9ToaEP5sHyYUnXGVpo/+t3KD11l2O2gW7I5hvH1EaOYGP4v0rmRXoIDMjFcIgu38aualw==
-X-Received: by 2002:ac8:57c2:0:b0:4b5:f6c5:cfc with SMTP id
- d75a77b69052e-4e89d274b1dmr349292731cf.19.1761320893298; 
- Fri, 24 Oct 2025 08:48:13 -0700 (PDT)
+ AJvYcCUjYDM4UK88UmB8i3JHk3WNGu2AVUYinaIRJtqdTEVF60bCA/9uj9AMjAkqPifu8Z2s9+wTWovGIdVm@nongnu.org
+X-Gm-Message-State: AOJu0YzxFX1dTJxRUcFvEYy2D720wSdtEwIUOk2FdqTNsjxK87bHQzyy
+ coEOkvD4kNTZqhGU+wIMy8BUlG1AhapplZpjqNkMAEtRwefiQMBRIsQ17dbLWBIZXeToR3OiZOt
+ gU7vc+lG8zcQRxxhmr1Igyl/SfHLe4YyIuM8UF7aQb9zIhRsLb4hURVbq
+X-Gm-Gg: ASbGncuhY0l4QY4Pui9amv/+1JFvwNAyZcBNbpAE44U9h5AUSq8tmm2LyHGqRs4p0KK
+ 17z5DKf0bWulriA1HE748m/6+fQa6za+28kUYCQ6EdxljS8flU0nSSOOZ6Mp16wa1CYBvM9UPwx
+ IleedwoOnq/tJbz99LjvVXrV2DYXG1foO5R0tD04912CzLOQpK8q0H8wQ0raCZmeQfuhu2azSIp
+ jNbaE2xc2GSaF+vzOyTqmpfqaySJiFnWB5CGS8KkqAf7V3ztKorOFbuCPpvusELtktdrZieL03v
+ gRiEyCH779cKzkEhvPx5aBuRWOmg49PiD00uJkAL38jHXzAma1PuTrOzhUi0KyJ+18o=
+X-Received: by 2002:a05:6214:3f91:b0:87d:f2ea:6758 with SMTP id
+ 6a1803df08f44-87df2ea69bemr156171526d6.44.1761321151674; 
+ Fri, 24 Oct 2025 08:52:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrtqHNuj50s+/BTpKOQlICGaTes3uoIDLiw5WiovLi6BkaMH9iRmgfZvoVg71vZJI3aOU4cg==
+X-Received: by 2002:a05:6214:3f91:b0:87d:f2ea:6758 with SMTP id
+ 6a1803df08f44-87df2ea69bemr156171106d6.44.1761321151062; 
+ Fri, 24 Oct 2025 08:52:31 -0700 (PDT)
 Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4eb80804d81sm36948991cf.19.2025.10.24.08.48.12
+ 6a1803df08f44-87f8fb6bddcsm39224066d6.11.2025.10.24.08.52.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Oct 2025 08:48:12 -0700 (PDT)
-Date: Fri, 24 Oct 2025 11:48:11 -0400
+ Fri, 24 Oct 2025 08:52:30 -0700 (PDT)
+Date: Fri, 24 Oct 2025 11:52:28 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Arun Menon <armenon@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PULL 02/45] migration: push Error **errp into
- vmstate_load_state()
-Message-ID: <aPufu9WHdaL60bFv@x1.local>
-References: <20251003153948.1304776-1-peterx@redhat.com>
- <20251003153948.1304776-3-peterx@redhat.com>
- <CAFEAcA_230hx7mFzo=jT07heROTvjO=q7B4B73+gO_KneC6EuA@mail.gmail.com>
- <aPex9SsQOup69DRI@x1.local>
- <aPqjQspKFCZoqAm8@armenon-kvm.bengluru.csb>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH] hostmem/shm: Allow shm memory backend serve as shared
+ memory for coco-VMs
+Message-ID: <aPugvDibWCyorBoW@x1.local>
+References: <20250721065220.895606-1-xiaoyao.li@intel.com>
+ <f38c961d-9c5a-4e45-a42e-fbafb7e5e88b@intel.com>
+ <b1263375-8fac-4452-9c4f-983ef8870a44@intel.com>
+ <f59ba5d2-e205-46c7-90c0-8e02ab91f5ae@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aPqjQspKFCZoqAm8@armenon-kvm.bengluru.csb>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <f59ba5d2-e205-46c7-90c0-8e02ab91f5ae@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,86 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 24, 2025 at 03:20:58AM +0530, Arun Menon wrote:
-> Hi Peter,
+On Fri, Oct 24, 2025 at 08:51:35AM +0800, Xiaoyao Li wrote:
+> On 9/12/2025 1:45 PM, Xiaoyao Li wrote:
+> > On 8/14/2025 5:45 PM, Xiaoyao Li wrote:
+> > > On 7/21/2025 2:52 PM, Xiaoyao Li wrote:
+> > > > shm can surely serve as the shared memory for coco-VMs. But currently it
+> > > > doesn't check the backend->guest_memfd to pass down the RAM_GUEST_MEMFD
+> > > > flag. It leads to failure when creating coco-VMs (e.g., TDX guest) which
+> > > > require private mmeory.
+> > > > 
+> > > > Set and pass down RAM_GUEST_MEMFD when backend->guest_memfd is true, to
+> > > > allow shm memory backend serve as shared memory for coco-VMs.
+> > > 
+> > > ping...
+> > > 
+> > > Paolo, will you merge it for QEMU 10.1? I think it's worth it.
+> > 
+> > ping again.
 > 
-> On Tue, Oct 21, 2025 at 12:16:53PM -0400, Peter Xu wrote:
-> > On Tue, Oct 21, 2025 at 04:43:52PM +0100, Peter Maydell wrote:
-> > > On Fri, 3 Oct 2025 at 16:39, Peter Xu <peterx@redhat.com> wrote:
-> > > >
-> > > > From: Arun Menon <armenon@redhat.com>
-> > > >
-> > > > This is an incremental step in converting vmstate loading
-> > > > code to report error via Error objects instead of directly
-> > > > printing it to console/monitor.
-> > > > It is ensured that vmstate_load_state() must report an error
-> > > > in errp, in case of failure.
-> > > >
-> > > > The errors are temporarily reported using error_report_err().
-> > > > This is removed in the subsequent patches in this series,
-> > > > when we are actually able to propagate the error to the calling
-> > > > function using errp. Whereas, if we want the function to exit on
-> > > > error, then error_fatal is passed.
-> > > 
-> > > > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > > > index de35902213..e61585aa61 100644
-> > > > --- a/hw/display/virtio-gpu.c
-> > > > +++ b/hw/display/virtio-gpu.c
-> > > > @@ -1347,7 +1347,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-> > > >      }
-> > > >
-> > > >      /* load & apply scanout state */
-> > > > -    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1);
-> > > > +    vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &error_fatal);
-> > > 
-> > > This is in a migration VMState .get function -- shouldn't we
-> > > be passing failure up to the caller, rather than exiting
-> > > with error_fatal here ?
-> > > 
-> > > The commit message says some of this is fixed in subsequent
-> > > patches, but as of today this is still the code in git.
-> > > The other callsites which pass error_fatal to vmstate_load_state()
-> > > also look wrong:
-> > > 
-> > > hw/s390x/virtio-ccw.c:    return vmstate_load_state(f,
-> > > &vmstate_virtio_ccw_dev, dev, 1, &error_fatal);
-> > > hw/virtio/virtio-mmio.c:    return vmstate_load_state(f,
-> > > &vmstate_virtio_mmio, proxy, 1, &error_fatal);
-> > > hw/virtio/virtio-pci.c:    return vmstate_load_state(f,
-> > > &vmstate_virtio_pci, proxy, 1, &error_fatal);
-> > > 
-> > > as they are written to return an error value that they'll
-> > > never see because of the use of error_fatal here.
-> > 
-> > Indeed a fair question to ask.
-> > 
-> > > 
-> > > Do you have plans for further cleanup/extension of the
-> > > use of Error here that would let these functions pass
-> > > the Error back up the chain ?
-> > 
-> > It would be non-trivial though as we'll need to change VMStateInfo.get()
-> > API and that'll be another lot of churns.
-> > 
-> > Arun, should we pass NULL for above three occurances, so that we will still
-> > not brute force quit when error happens?  Do you want to send a patch?
+> ping++,
 > 
-> Sorry, I missed the email.
-> I am wondering if we should pass an Error *err, and in case of failure,
-> warn_report_err(err) and return a negative integer.
+> + Peter,
 > 
-> There is no return value check after vmstate_load_state() or vmstate_save_state()
-> calls. Previosuly, if something failed during vmstate_load_state(), the
-> function used to report error using error_report(). To be consistent we might have
-> to keep reporting. This is not possible if we pass NULL.
+> Maybe you can queue it in case it gets missed from Paolo again?
 
-Yes, dumping the errors should be better.
-
-The other thing is even if virtio_gpu_load() ignored vmstate_load_state()'s
-retval, I think it should..  If you agree you can also fix that together.
-In general, likely we should never use error_abort in vmstate_load_state().
-
-Thanks,
+Yep, queued now and I copied stable, let me know otherwise.  Thanks.
 
 -- 
 Peter Xu
