@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEAFCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CB5CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCBiW-00079m-OF; Fri, 24 Oct 2025 02:56:04 -0400
+	id 1vCBkG-0008KK-6x; Fri, 24 Oct 2025 02:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCBiV-00079Y-Qy
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:56:03 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vCBkE-0008Hi-Ii
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:57:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCBiT-0006eI-KA
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:56:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761288962; x=1792824962;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=W7ZaPgXUZ/IWG5Zgflot8zEURcD4R2zU18fM23RjKuc=;
- b=Nnwr58RZ1GhEkTWLFn4Nb22xIzZzvXP4R44Q8xd3eZfj6BEPrdDs/zO6
- jdwO+/+EJkW/z2ifq1t+rfVfXHxyq5sMPXly96Z1DZQyFSg0X/mpmhJyO
- knqqlLpzaCKpmi4uTMpwHsDX88vEO88mlh9FGYXOC2SKWwlDaOY9ZC6En
- wt7VXbpmaBvZeRmWVu3vxT7OGA8ePujzWRg75+vlQ8qH7iupMWW0w+Xqf
- wm5QJd6I1hv85apZcDcW/edgsnxDPazHa21QY+a5EWWZdGqRX/IrDkQsD
- VLM1yqU+lVCp8f/GLhyO6Yc9z98+xdla3F7PvcKRWUIPHmViI2B058295 Q==;
-X-CSE-ConnectionGUID: 6sL63VHfQ0uAM46fcT457w==
-X-CSE-MsgGUID: NngfjNCjT0iqFNepWDBULg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63369848"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="63369848"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 23:55:59 -0700
-X-CSE-ConnectionGUID: cBVe/XFERcORWfdSNGMJfw==
-X-CSE-MsgGUID: 9+flY793TgqhbOopPdL9tA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="188747323"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 23 Oct 2025 23:55:58 -0700
-Date: Fri, 24 Oct 2025 15:18:07 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH] i386/cpu: Add an option in X86CPUDefinition to control CPUID
- 0x1f
-Message-ID: <aPsoLx2+2bpW6mWf@intel.com>
-References: <20250923021133.190725-1-ewanhai-oc@zhaoxin.com>
- <20250923021133.190725-4-ewanhai-oc@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vCBk4-0006lI-3P
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:57:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761289059;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Knj5o0XKslR8KZibGSIwkm7pF6XSwQomEo4fnIU5PI8=;
+ b=fVunw9/HArt65UPaUjO8H7lejxxffeAhmOX7qFpIhVEFX3NzcCa0B2Je1MbI6GZdWVkeSi
+ gPKZVWwi7wtz+te5fzAdXsRVYzxuGkF5dk+BJw/qPtltgdA8XKQP0tlQuKtp3q8qt0HhS6
+ +r1K2ifdG+XOYEDAnSsSO5jSlNDgous=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-m25K25NfP6GZe2m-AqMZ6Q-1; Fri,
+ 24 Oct 2025 02:57:35 -0400
+X-MC-Unique: m25K25NfP6GZe2m-AqMZ6Q-1
+X-Mimecast-MFC-AGG-ID: m25K25NfP6GZe2m-AqMZ6Q_1761289054
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96D1A195609F; Fri, 24 Oct 2025 06:57:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.49])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 193F21800452; Fri, 24 Oct 2025 06:57:30 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v2 1/2] target/ppc/cpu_init: Simplify the setup of the TLBxCFG
+ SPR registers
+Date: Fri, 24 Oct 2025 08:57:25 +0200
+Message-ID: <20251024065726.738005-2-thuth@redhat.com>
+In-Reply-To: <20251024065726.738005-1-thuth@redhat.com>
+References: <20251024065726.738005-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250923021133.190725-4-ewanhai-oc@zhaoxin.com>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,53 +85,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Many Intel and Zhaoxin CPUs enable CPUID 0x1f by default to encode CPU
-topology information.
+From: Thomas Huth <thuth@redhat.com>
 
-Add the "cpuid_0x1f" option to X86CPUDefinition to allow named CPU
-models to configure CPUID 0x1f from the start, thereby forcing 0x1f
-to be present for guest.
+The next commit is going to remove init_proc_e200(), which is one of
+the two calling sites of register_BookE206_sprs(). This causes recent
+versions of GCC to inline the register_BookE206_sprs() function into
+the other only remaining calling site, init_proc_e500(), which in
+turn causes some false-positives compiler warnings:
 
-With this option, there's no need to explicitly add v1 model to an
-unversioned CPU model for explicitly enabling the x-force-cpuid-0x1f
-property.
+ In file included from ../../devel/qemu/target/ppc/cpu_init.c:46:
+ In function ‘register_BookE206_sprs’,
+     inlined from ‘init_proc_e500’ at ../../devel/qemu/target/ppc/cpu_init.c:2910:5:
+ ../../devel/qemu/target/ppc/cpu_init.c:897:29: error:
+  array subscript 3 is outside array bounds of ‘uint32_t[2]’ {aka ‘unsigned int[2]’}
+  [-Werror=array-bounds=]
+   897 |                      tlbncfg[3]);
+       |                      ~~~~~~~^~~
+ ../../devel/qemu/target/ppc/spr_common.h:61:39: note: in definition of macro ‘spr_register_kvm_hv’
+    61 |                   KVM_ARG(one_reg_id) initial_value)
+       |                                       ^~~~~~~~~~~~~
+ ../../devel/qemu/target/ppc/spr_common.h:77:5: note: in expansion of macro ‘spr_register_kvm’
+    77 |     spr_register_kvm(env, num, name, uea_read, uea_write,                    \
+       |     ^~~~~~~~~~~~~~~~
+ ../../devel/qemu/target/ppc/cpu_init.c:894:9: note: in expansion of macro ‘spr_register’
+   894 |         spr_register(env, SPR_BOOKE_TLB3CFG, "TLB3CFG",
+       |         ^~~~~~~~~~~~
+ ../../devel/qemu/target/ppc/cpu_init.c: In function ‘init_proc_e500’:
+ ../../devel/qemu/target/ppc/cpu_init.c:2809:14: note: at offset 12 into object ‘tlbncfg’ of size 8
+  2809 |     uint32_t tlbncfg[2];
+       |              ^~~~~~~
+ cc1: all warnings being treated as errors
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+init_proc_e500() only defines "uint32_t tlbncfg[2];", but it is OK since
+it also sets "env->nb_ways = 2", so the code that GCC warns about in
+register_BookE206_sprs() is never reached. Unfortunately, GCC is not smart
+enough to see this, so it emits these warnings.
+
+To fix it, let's simplify the code in register_BookE206_sprs() a little
+bit to set up the SPRs in a loop, so we don't reference the tlbncfg[3]
+entry directly anymore.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/i386/cpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/ppc/cpu_init.c | 38 ++++++++++++--------------------------
+ 1 file changed, 12 insertions(+), 26 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 175054fdb322..56c1030a8627 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2307,6 +2307,12 @@ typedef struct X86CPUDefinition {
-     int model;
-     int stepping;
-     uint8_t avx10_version;
-+    /*
-+     * Whether to present CPUID 0x1f by default.
-+     * If true, encode CPU topology in 0x1f leaf even if there's no
-+     * extended topology levels.
-+     */
-+    bool cpuid_0x1f;
-     FeatureWordArray features;
-     const char *model_id;
-     const CPUCaches *const cache_info;
-@@ -8092,6 +8098,10 @@ static void x86_cpu_load_model(X86CPU *cpu, const X86CPUModel *model)
-                                  &error_abort);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 3aa3aefc136..12c645699e8 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -850,6 +850,13 @@ static void register_BookE206_sprs(CPUPPCState *env, uint32_t mas_mask,
+         SPR_BOOKE_MAS0, SPR_BOOKE_MAS1, SPR_BOOKE_MAS2, SPR_BOOKE_MAS3,
+         SPR_BOOKE_MAS4, SPR_BOOKE_MAS5, SPR_BOOKE_MAS6, SPR_BOOKE_MAS7,
+     };
++    const char *tlbcfg_names[4] = {
++        "TLB0CFG", "TLB1CFG", "TLB2CFG", "TLB3CFG",
++    };
++    const int tlbcfg_sprn[4] = {
++        SPR_BOOKE_TLB0CFG, SPR_BOOKE_TLB1CFG,
++        SPR_BOOKE_TLB2CFG, SPR_BOOKE_TLB3CFG,
++    };
+     int i;
+ 
+     /* TLB assist registers */
+@@ -889,34 +896,13 @@ static void register_BookE206_sprs(CPUPPCState *env, uint32_t mas_mask,
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, SPR_NOACCESS,
+                  mmucfg);
+-    switch (env->nb_ways) {
+-    case 4:
+-        spr_register(env, SPR_BOOKE_TLB3CFG, "TLB3CFG",
+-                     SPR_NOACCESS, SPR_NOACCESS,
+-                     &spr_read_generic, SPR_NOACCESS,
+-                     tlbncfg[3]);
+-        /* Fallthru */
+-    case 3:
+-        spr_register(env, SPR_BOOKE_TLB2CFG, "TLB2CFG",
+-                     SPR_NOACCESS, SPR_NOACCESS,
+-                     &spr_read_generic, SPR_NOACCESS,
+-                     tlbncfg[2]);
+-        /* Fallthru */
+-    case 2:
+-        spr_register(env, SPR_BOOKE_TLB1CFG, "TLB1CFG",
+-                     SPR_NOACCESS, SPR_NOACCESS,
+-                     &spr_read_generic, SPR_NOACCESS,
+-                     tlbncfg[1]);
+-        /* Fallthru */
+-    case 1:
+-        spr_register(env, SPR_BOOKE_TLB0CFG, "TLB0CFG",
++
++    assert(env->nb_ways <= ARRAY_SIZE(tlbcfg_names));
++    for (i = 0; i < env->nb_ways; i++) {
++        spr_register(env, tlbcfg_sprn[i], tlbcfg_names[i],
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, SPR_NOACCESS,
+-                     tlbncfg[0]);
+-        /* Fallthru */
+-    case 0:
+-    default:
+-        break;
++                     tlbncfg[i]);
      }
-
-+    if (def->cpuid_0x1f) {
-+        object_property_set_bool(OBJECT(cpu), "x-force-cpuid-0x1f", def->cpuid_0x1f,
-+                                 &error_abort);
-+    }
-     x86_cpu_apply_version_props(cpu, model);
-
-     /*
---
-2.34.1
-
+ #endif
+ }
+-- 
+2.51.0
 
 
