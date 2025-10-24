@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E56A1CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 17:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE798CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 17:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCLgZ-000744-TL; Fri, 24 Oct 2025 13:34:43 -0400
+	id 1vCLjQ-0007l5-2O; Fri, 24 Oct 2025 13:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLgY-00073j-DC
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:34:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLjO-0007ko-FG
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:37:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLgW-0001s8-LN
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:34:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLjM-0002PM-4M
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:37:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761327279;
+ s=mimecast20190719; t=1761327455;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6SqXxDGnpl7Qb/QY+llfXHFctRjCgmrBll7M+ZxiidU=;
- b=FRq4FcsYPPEXqxQdJeXbQBdbhETBI1T4GCdII24848ztA0QoHzllDYDGD/wkINyI7yeC1T
- nLBK3/SCwEpHOvE2xQ7P37xaLWDa9HgtQPsu/z/tIbgKSn/Fmib2LyzsXvQk309qI+utHO
- kr5uxaKw9HAvNs4uRanKpUg1YVKHvZQ=
+ bh=99DqisHHiWuDqbo1PH+vuQKG9hkb9XpjpghmHElLyZg=;
+ b=MoiZXBV3fzRL0vd0QHbG+mnx0fGzCz710nIVQp4viJG4MFuqQKHCyrx6i5WkJ6dHFS3A/S
+ ASADLIz1zJWMEt0sBZ5tf/FhXgsI9Zy2/r0z2oNiais5bR4QW/PO6R5RU5HWTppxpwp0Tx
+ T9EKqf363Z3FAD5Ap6Gwz4Dw/4ybBe4=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-177-6Umw9YWCMmWIyHlOd55MjA-1; Fri, 24 Oct 2025 13:34:38 -0400
-X-MC-Unique: 6Umw9YWCMmWIyHlOd55MjA-1
-X-Mimecast-MFC-AGG-ID: 6Umw9YWCMmWIyHlOd55MjA_1761327277
+ us-mta-537-p1jyOmMJP2O6IxP10ldgVg-1; Fri, 24 Oct 2025 13:37:33 -0400
+X-MC-Unique: p1jyOmMJP2O6IxP10ldgVg-1
+X-Mimecast-MFC-AGG-ID: p1jyOmMJP2O6IxP10ldgVg_1761327452
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47113dcc15dso13332975e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 10:34:38 -0700 (PDT)
+ 5b1f17b1804b1-47106720618so15820545e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 10:37:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761327277; x=1761932077;
+ d=1e100.net; s=20230601; t=1761327452; x=1761932252;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6SqXxDGnpl7Qb/QY+llfXHFctRjCgmrBll7M+ZxiidU=;
- b=YZO2XAXrBvCphkqJpjsLKwLBNgp3VesMZYqLojLKT9MBzRm1XUsmCAZfwoYHWlle1K
- 6wqbnuMfkcWtJwTUnZ7+r/fIn+lGJuQ4Q7qShyHoIVooUVIdp8j9X7+t4LqKjt0VSnvU
- fmlZo2750q2stzVr9u0+uHu6siaDI6DeYI5yQqmm1vXHX33TBwMDSRF+6fcEi5VkqFuM
- ADAeKGWWBtX331E8tSs1epva/XNP1smqpQ61U7KVRc28Yo0maVC6hRRg7r1NJK7calwp
- G+Rr7wTBJ416dmGtB+EitxIiaFkYXEr2RzbrFcQdhn7Th5WKVDqh7N5fWgs5ZM0s3u6X
- vYMg==
+ bh=99DqisHHiWuDqbo1PH+vuQKG9hkb9XpjpghmHElLyZg=;
+ b=O6zxjWw4b1eSQQJ6VJs2U7aaKPuVxwtSZjlLINkGPuF5pUgYQV3Cc4NCtvo1Ax4vo+
+ uEckPxJr1vlM6KawcDITcgK86x/622zsnbm0XECJKOQ+l+yptdYBH5fEVsDE2Y+6jqQs
+ JJNRLx91fM62mS+oXbbfPHIUiDk+12u641a+d9P7iR5EJ2GiG0CWM/KtEgpD7z6FgJJZ
+ NALmh/ghwDCTk55t/f6zJZx/okmFDlZ650cI0jMG0SfhE573qWwNR2SQ62VcRBgOOPfI
+ RK7auxTjV6OPZ1KLlIqotghA+9vfccXETX00ZnKE7yMD8c+AcyTCs38EwTRdDizpe2wW
+ l0lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmaSf6Dw7shrPOw8VXF4w4D17oamnynqHFgUVaIX4CxvaFt1xrl4NV2i5DKmUp6Vs3HTSs+6enyNp/@nongnu.org
-X-Gm-Message-State: AOJu0YyQ50kRjYizwjlWFJBrwf8I+OHM8prwaxAQwPhjrWXV3Tdji8Yq
- GPEtR5zaKA4yMoSOm/eaoeOacSxNoeXYYtXX3Kx9nk7mNz9pGUYxkSycp0mMnRM9NbWK/nGhXib
- qooRq/EW7ubhNx6F/m16U2QVer2d8aPsK91suGSyivwxwBnNk8zER5wRt
-X-Gm-Gg: ASbGncuQKIAbiJNisVlal/+9tmaA+Dn59ka/YDKhrbxZj8oX2s04tyv3i8Zj5ZLFG7O
- 1KdRYcJmMXDSFKYNcliM3PpZrk9jIkzRNlhtyRg57Z1mo92fR3AQ1fxDlmzrQs1qWan2TXE300P
- toxiloIN0j30uJzVvfenfY+UhKsvzctAYsVT8DkxV/ffXcno8LIU6E6vxt3zgV4rQlpR+ddIXaI
- OBfEzm0Qj9fpJal1oCkYB0k0U3Dgvvx4qMQEY2ernyxwAo14WqOXPMeZaMw1TeR/+V2BudjlB61
- z+qOA2JZVYULpatxeCPTW0OJpD4+60r/NkwGEyglQfp9XL0T+1+rBuIgYZFThHDUKlxXgOS1
-X-Received: by 2002:a05:600c:1d9b:b0:46e:38f7:625f with SMTP id
- 5b1f17b1804b1-471178771b6mr186496455e9.10.1761327276935; 
- Fri, 24 Oct 2025 10:34:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHwBjxzW0gOcPgzjEbNl5YHVbpPj3+Suuh8ikzc1IbqjlcsWs+XqRXWtw41MhmeraZswfERJw==
-X-Received: by 2002:a05:600c:1d9b:b0:46e:38f7:625f with SMTP id
- 5b1f17b1804b1-471178771b6mr186496305e9.10.1761327276582; 
- Fri, 24 Oct 2025 10:34:36 -0700 (PDT)
+ AJvYcCUW/wGvTQT5gTJWOFmUi47rIE5eqj2ywTLvOxqgC9nOUVhq3xh+8vHSwi7+9UZ1bAWawXivJPu0WAPw@nongnu.org
+X-Gm-Message-State: AOJu0YxctaP7SMOJyPoIAwU9Fsb/nN6hEL80YsCcqlADliLDYlbsR6CC
+ EW7b4j3Cvidsx/rB9oiUDQ4yB91DjiwZC72zyZQaO55ARc4Kwwij4s7iHPVswm1cAT8azHDGlKD
+ klOn6Dhr35HzTekLgfJUp6cY7zpnMkL8nanQFTmZLAZ4oQxptYy2p8cxX
+X-Gm-Gg: ASbGncuoWC0DTZTxCdtkrp9bOUW0UK7uZ0jBZa/eQ91a2FAUi7i9YNb3MP92G5J3QxY
+ TZKWWU2NyqWAVrY/wiGaIlCmBDXrfc1BBz/V36RuaaqWth7//cARTfV51GESx0G1F0eSPENuDUo
+ qEjO5PvMfooGMlKMrKfmcLouUD8sE+rC9vVDYEyZQGrwft+vSPZ7AC4k98ra4Htt0aTaNHoolcE
+ cHOE0iMs5JuUnH/E9PFNok7k2URmnmiM64EcwryavvQjmkTuzpnS/dBHbkwyLgKfOKH2fRl97C1
+ OmjP+PkpwxrA+Pp6lreZOqoTGnM7lgwIKHc3fWaCA8lxclXiDYxOb229N+4YDDdxajnQrlqE
+X-Received: by 2002:a05:600c:45d4:b0:471:56:6f79 with SMTP id
+ 5b1f17b1804b1-475d30d90admr28971995e9.41.1761327452203; 
+ Fri, 24 Oct 2025 10:37:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IETV6v0K4rF/WEXFsftyF1P3i4kO0IjoYRlppo6wEY6jOJC2wIdaDvhX/umx4PIpfUVbYRSaw==
+X-Received: by 2002:a05:600c:45d4:b0:471:56:6f79 with SMTP id
+ 5b1f17b1804b1-475d30d90admr28971825e9.41.1761327451691; 
+ Fri, 24 Oct 2025 10:37:31 -0700 (PDT)
 Received: from [10.54.0.145] ([147.135.244.229])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475caf2ef9fsm101633935e9.13.2025.10.24.10.34.31
+ 5b1f17b1804b1-475caf15416sm102380545e9.10.2025.10.24.10.36.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 10:34:35 -0700 (PDT)
-Message-ID: <ea677402-3548-4923-9e5a-49c8fc7ef9e7@redhat.com>
-Date: Fri, 24 Oct 2025 19:34:28 +0200
+ Fri, 24 Oct 2025 10:36:29 -0700 (PDT)
+Message-ID: <3e4f5b3d-1ba2-4a1b-92e6-3b9ef9067ffe@redhat.com>
+Date: Fri, 24 Oct 2025 19:36:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 17/23] iommufd: Introduce a helper function to extract
- vendor capabilities
+Subject: Re: [PATCH v7 19/23] Workaround for ERRATA_772415_SPR17
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
@@ -85,7 +84,7 @@ Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-18-zhenzhong.duan@intel.com>
+ <20251024084349.102322-20-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -131,7 +130,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251024084349.102322-18-zhenzhong.duan@intel.com>
+In-Reply-To: <20251024084349.102322-20-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -160,108 +159,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/24/25 10:43, Zhenzhong Duan wrote:
-> In VFIO core, we call iommufd_backend_get_device_info() to return vendor
-> specific hardware information data, but it's not good to extract this raw
-> data in VFIO core.
+> On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
+> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
+> range mapped on second stage page table could still be written.
 > 
-> Introduce host_iommu_extract_quirks() to help extracting the raw data and
-> return a bitmap in iommufd.c because it's the place defining
-> iommufd_backend_get_device_info().
+> Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
+> Update, Errata Details, SPR17.
+> https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/eagle-stream/sapphire-rapids-specification-update/
 > 
-> The other choice is to put vendor data extracting code in vendor vIOMMU
-> emulation file, but that will make those files mixed with vIOMMU
-> emulation and host IOMMU extracting code, also need a new callback in
-> PCIIOMMUOps. So we choose a simpler way as above.
+> Also copied the SPR17 details from above link:
+> "Problem: When remapping hardware is configured by system software in
+> scalable mode as Nested (PGTT=011b) and with PWSNP field Set in the
+> PASID-table-entry, it may Set Accessed bit and Dirty bit (and Extended
+> Access bit if enabled) in first-stage page-table entries even when
+> second-stage mappings indicate that corresponding first-stage page-table
+> is Read-Only.
 > 
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Implication: Due to this erratum, pages mapped as Read-only in second-stage
+> page-tables may be modified by remapping hardware Access/Dirty bit updates.
+> 
+> Workaround: None identified. System software enabling nested translations
+> for a VM should ensure that there are no read-only pages in the
+> corresponding second-stage mappings."
+> 
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 > ---
->   include/hw/iommu.h                 |  5 +++++
->   include/system/host_iommu_device.h | 15 +++++++++++++++
->   backends/iommufd.c                 | 13 +++++++++++++
->   3 files changed, 33 insertions(+)
+>   hw/vfio/iommufd.c | 10 +++++++++-
+>   1 file changed, 9 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-> index 9b8bb94fc2..6d61410703 100644
-> --- a/include/hw/iommu.h
-> +++ b/include/hw/iommu.h
-> @@ -22,4 +22,9 @@ enum viommu_flags {
->       VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
->   };
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index f9d0926274..f9da0e79cc 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -15,6 +15,7 @@
+>   #include <linux/vfio.h>
+>   #include <linux/iommufd.h>
 >   
-> +/* Host IOMMU quirks. Extracted from host IOMMU capabilities */
-> +enum host_iommu_quirks {
-> +    HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
+> +#include "hw/iommu.h"
 
-
-This host IOMMU quirk definition in a vIOMMU header file is not very
-consistent.
+Changes look ok apart from this include.
 
 
 Thanks,
 
 C.
 
-   > +};
-> +
->   #endif /* HW_IOMMU_H */
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index ab849a4a82..9ae7f4cc6d 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -39,6 +39,21 @@ typedef struct HostIOMMUDeviceCaps {
->       uint64_t hw_caps;
->       VendorCaps vendor_caps;
->   } HostIOMMUDeviceCaps;
-> +
-> +/**
-> + * host_iommu_extract_quirk: Extract host IOMMU quirks
-> + *
-> + * This function converts @type specific hardware information data
-> + * into a standard bitmap format.
-> + *
-> + * @type: IOMMU Hardware Info Types
-> + *
-> + * @VendorCaps: IOMMU @type specific hardware information data
-> + *
-> + * Returns: bitmap with each representing a host IOMMU quirk defined in
-> + * enum host_iommu_quirks
-> + */
-> +uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps);
->   #endif
->   
->   #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 086bd67aea..61b991ec53 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -19,6 +19,7 @@
->   #include "migration/cpr.h"
->   #include "monitor/monitor.h"
->   #include "trace.h"
-> +#include "hw/iommu.h"
+
+
 >   #include "hw/vfio/vfio-device.h"
->   #include <sys/ioctl.h>
->   #include <linux/iommufd.h>
-> @@ -411,6 +412,18 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
->       return true;
->   }
+>   #include "qemu/error-report.h"
+>   #include "trace.h"
+> @@ -351,6 +352,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>       VFIOContainer *bcontainer = VFIO_IOMMU(container);
+>       uint32_t type, flags = 0;
+>       uint64_t hw_caps;
+> +    VendorCaps caps;
+>       VFIOIOASHwpt *hwpt;
+>       uint32_t hwpt_id;
+>       int ret;
+> @@ -396,7 +398,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>        * instead.
+>        */
+>       if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
+> -                                         &type, NULL, 0, &hw_caps, errp)) {
+> +                                         &type, &caps, sizeof(caps), &hw_caps,
+> +                                         errp)) {
+>           return false;
+>       }
 >   
-> +uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps)
-> +{
-> +    uint64_t quirks = 0;
+> @@ -411,6 +414,11 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>        */
+>       if (vfio_device_get_viommu_flags_want_nesting(vbasedev)) {
+>           flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
 > +
-> +    if (type == IOMMU_HW_INFO_TYPE_INTEL_VTD &&
-> +        caps->vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
-> +        quirks |= HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO;
-> +    }
-> +
-> +    return quirks;
-> +}
-> +
->   bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
->                                         uint32_t data_type, uint32_t entry_len,
->                                         uint32_t *entry_num, void *data,
+> +        if (host_iommu_extract_quirks(type, &caps) &
+> +            HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO) {
+> +            bcontainer->bypass_ro = true;
+> +        }
+>       }
+>   
+>       if (cpr_is_incoming()) {
 
 
