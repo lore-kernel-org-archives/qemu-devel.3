@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 610FFCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99FBCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCHur-00066i-Vj; Fri, 24 Oct 2025 09:33:29 -0400
+	id 1vCI01-0007Ul-0e; Fri, 24 Oct 2025 09:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHuS-00061n-7k
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:32:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vCHzz-0007Tw-38
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:38:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHuM-0006i3-Ne
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:32:47 -0400
+ id 1vCHzv-00087d-Nj
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:38:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761312753;
+ s=mimecast20190719; t=1761313105;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b1GaxKa27SjrtH/KtsIcygs1hqS/G+k0Q9fMRiZ1/CI=;
- b=LFKJN3+ixDkQKIrX6ULMrwHZzjph941qRk1mWkW6qcZPsiNVcmwr6o1TyOc2Uo08BeJwNl
- Hf3801TZxpNFn+BOd58IiuIkrK/fXNxj1FsYZxzTancotFk4Z4hfHsD6DZEDlAQziraHhP
- SSVswVYYcOrNMEDNgPkC9j1EwqlrN3A=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=7z2hCgKzlURpD7Qwpoh4JYNqLO1hqpH85h6cTdAOI8g=;
+ b=HwCK9K5nNlO18WejdKT3EdAlUJYrudM9TLXttZIxio0nJTLxQdtRXRhBdOKN6p7x1bQuO6
+ oz3257UiWmY+94AJ7ugpFVs2avNOykt9NMykKdCuFys8RIzQaltb9rUrLpIcTCefFg4MVP
+ RFc7C/qcxlfJII9jrMWZwCmhvddXIL0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-uXX25-okNhioN_Zlbme7-w-1; Fri,
- 24 Oct 2025 09:32:31 -0400
-X-MC-Unique: uXX25-okNhioN_Zlbme7-w-1
-X-Mimecast-MFC-AGG-ID: uXX25-okNhioN_Zlbme7-w_1761312750
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-PCDj6jcqNuuvndpjyKMKFg-1; Fri,
+ 24 Oct 2025 09:38:23 -0400
+X-MC-Unique: PCDj6jcqNuuvndpjyKMKFg-1
+X-Mimecast-MFC-AGG-ID: PCDj6jcqNuuvndpjyKMKFg_1761313102
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C711219540E0; Fri, 24 Oct 2025 13:32:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87255180060D; Fri, 24 Oct 2025 13:38:22 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.2])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C781B180057C; Fri, 24 Oct 2025 13:32:27 +0000 (UTC)
-Date: Fri, 24 Oct 2025 14:32:24 +0100
+ id A2B60180057D; Fri, 24 Oct 2025 13:38:19 +0000 (UTC)
+Date: Fri, 24 Oct 2025 14:38:16 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
@@ -56,19 +56,20 @@ Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 10/32] hw/core: report security status in query-machines
-Message-ID: <aPt_6NX7n8Uqb76J@redhat.com>
+Subject: Re: [PATCH v2 11/32] qom: report & filter on security status in
+ qom-list-types
+Message-ID: <aPuBSEqfjYNLOclQ@redhat.com>
 References: <20250926140144.1998694-1-berrange@redhat.com>
- <20250926140144.1998694-11-berrange@redhat.com>
- <87zf9h6cd5.fsf@pond.sub.org>
+ <20250926140144.1998694-12-berrange@redhat.com>
+ <87a51h9964.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zf9h6cd5.fsf@pond.sub.org>
+In-Reply-To: <87a51h9964.fsf@pond.sub.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,64 +95,119 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 23, 2025 at 02:17:42PM +0200, Markus Armbruster wrote:
+On Thu, Oct 23, 2025 at 12:58:27PM +0200, Markus Armbruster wrote:
 > Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  hw/core/machine-qmp-cmds.c | 1 +
-> >  qapi/machine.json          | 8 +++++++-
-> >  2 files changed, 8 insertions(+), 1 deletion(-)
+> > This adds:
 > >
-> > diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-> > index 6aca1a626e..4d9906f64a 100644
-> > --- a/hw/core/machine-qmp-cmds.c
-> > +++ b/hw/core/machine-qmp-cmds.c
-> > @@ -100,6 +100,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-> >          if (mc->default_ram_id) {
-> >              info->default_ram_id = g_strdup(mc->default_ram_id);
-> >          }
-> > +        info->secure = object_class_is_secure(OBJECT_CLASS(mc));
-> >  
-> >          if (compat_props && mc->compat_props) {
-> >              int i;
-> > diff --git a/qapi/machine.json b/qapi/machine.json
-> > index 038eab281c..bb2b308ccd 100644
-> > --- a/qapi/machine.json
-> > +++ b/qapi/machine.json
-> > @@ -194,6 +194,11 @@
-> >  #     present when `query-machines` argument @compat-props is true.
-> >  #     (since 9.1)
+> >  * a new boolean 'secure' field to the type info returned by
+> >    qom-list-types, which will be set if the type provides a
+> >    security boundary
+> >
+> >  * a new boolean 'secure' parameter to the arguments of
+> >    qom-list-types, which can be used to filter types based
+> >    on their security status
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> I was about to ask for this feature in reply to PATCH 2 when I found
+> this patch.  Consider moving it right after PATCH 2, or
+> forward-referencing it in PATCH 2's commit message.
+> 
+> > ---
+> >  qapi/qom.json      | 10 ++++++++--
+> >  qom/qom-qmp-cmds.c | 30 ++++++++++++++++++++++++------
+> >  2 files changed, 32 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index 830cb2ffe7..3e5e7e6f6f 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -210,12 +210,15 @@
+> >  # @abstract: the type is abstract and can't be directly instantiated.
+> >  #     Omitted if false.  (since 2.10)
 > >  #
-> > +# @secure: If true, the machine is declared to provide a security
-> > +#     boundary from the guest; if false the machine is either
-> > +#     not providing a security boundary, or its status is undefined.
-> > +#     (since 10.2)
+> > +# @secure: the type provides a security boundary.
+> > +#     Omitted if false.  (since 10.2)
+> 
+> Please wrap like this:
+> 
+>    # @secure: the type provides a security boundary.  Omitted if false.
+>    #     (since 10.2)
+> 
 > > +#
-> >  # Features:
+> >  # @parent: Name of parent type, if any (since 2.10)
 > >  #
-> >  # @unstable: Member @compat-props is experimental.
-> > @@ -207,7 +212,8 @@
-> >              'deprecated': 'bool', '*default-cpu-type': 'str',
-> >              '*default-ram-id': 'str', 'acpi': 'bool',
-> >              '*compat-props': { 'type': ['CompatProperty'],
-> > -                               'features': ['unstable'] } } }
-> > +                               'features': ['unstable'] },
-> > +            'secure': 'bool' } }
+> >  # Since: 1.1
+> >  ##
+> >  { 'struct': 'ObjectTypeInfo',
+> > -  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str' } }
+> > +  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str', '*secure': 'bool' } }
+> 
+> Long line.  I think it's time to put each member on its own line.
+> 
 > >  
 > >  ##
-> >  # @query-machines:
+> >  # @qom-list-types:
+> > @@ -227,12 +230,15 @@
+> >  #
+> >  # @abstract: if true, include abstract types in the results
+> >  #
+> > +# @secure: if set, filter to only include types with matching security status
+> > +#     (since 10.2)
 > 
-> Isn't this redundant with qom-list-types?
+> Hmm.
 > 
-> {"execute": "qom-list-types", "arguments": {"implements": "machine"}}
+>                 absent          false           true
+>     @abstract   only concrete   only concrete   all
+>     @secure     all             only insecure   only secure     (I think)
+> 
+> The difference is grating.  Any ideas?
 
-Well if the mgmt app is already using 'query-machines' for other reasons,
-and doesn't currently use 'qom-list-types', then it is useful to have
-the info reported in the former too.  Also I viewed the 'secure' flag
-as being conceptually twinned with the 'deprecated' flag which is also
-here in 'query-machines'.
+I considered the current handling of @abstract to be flawed,
+because there are three possible data sets you might want,
+and the behaviour of @abstract only lets you query two of
+the three - requires a second call to qom-list-types to
+get the union of abstract and non-abstract.
 
+Ideally we would fix @abstract but we can't do that without
+back-compatibility fallout.
+
+To avoid changing the default behaviour of qom-list-types
+we need @secure==absent to return 'all', so that pretty
+much forces us down this route of different behaviours
+for @abstract vs @secure, unless we deprecate @abstract
+and invent something completely new.
+
+
+> >  ObjectTypeInfoList *qmp_qom_list_types(const char *implements,
+> >                                         bool has_abstract,
+> >                                         bool abstract,
+> > +                                       bool has_secure,
+> > +                                       bool secure,
+> >                                         Error **errp)
+> >  {
+> > -    ObjectTypeInfoList *ret = NULL;
+> > +    ObjectTypeInfoData data = {
+> > +        .list = NULL,
+> > +        .has_secure = has_secure,
+> > +        .secure = secure,
+> > +    };
+> >  
+> >      module_load_qom_all();
+> > -    object_class_foreach(qom_list_types_tramp, implements, abstract, &ret);
+> > +    object_class_foreach(qom_list_types_tramp, implements, abstract, &data);
+> >  
+> > -    return ret;
+> > +    return data.list;
+> >  }
+> >  
+> >  ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+> 
+> This fuses a change of how the list value is built with the addition of
+> a new list element member.  I'd prefer them separate.
+
+Sure, will change.
 
 With regards,
 Daniel
