@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3961CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DAB1CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCI47-0001Jz-DM; Fri, 24 Oct 2025 09:42:47 -0400
+	id 1vCI5S-0001qR-Cu; Fri, 24 Oct 2025 09:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCI46-0001Jo-3t
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:42:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCI43-0000NL-LL
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:42:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761313362;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z16FVq0PIBns+/DtbQAikezhiuOuuPBLT8ax2g/pWMY=;
- b=iA6+sWBi5I1XAlmPX1cqE9DZeG/onjKk3c8R7UwqNpQLteN8RFGF4QN0FN37tDbZxniMC+
- 9iZIfV0Xk7TIS42hJ8I23iLpBHFF8y+8TWqraGKTFaZyo/F5e0DXirRcTQBHntcSFS1PSy
- DXYbqUtDF6kLmFiMEi4zFDLgdxRh8S0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-sEf7mXKTOemJGtlsdB9VoA-1; Fri,
- 24 Oct 2025 09:42:38 -0400
-X-MC-Unique: sEf7mXKTOemJGtlsdB9VoA-1
-X-Mimecast-MFC-AGG-ID: sEf7mXKTOemJGtlsdB9VoA_1761313356
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99A291955DD7; Fri, 24 Oct 2025 13:42:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6650A195398C; Fri, 24 Oct 2025 13:42:29 +0000 (UTC)
-Date: Fri, 24 Oct 2025 14:42:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 12/32] docs: expand security docs with info about
- security status
-Message-ID: <aPuCQnBkVH0tZd6x@redhat.com>
-References: <20250926140144.1998694-1-berrange@redhat.com>
- <20250926140144.1998694-13-berrange@redhat.com>
- <87tszp6c5n.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vCI5J-0001pv-DJ
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:44:01 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vCI5B-0000TY-Sl
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:44:01 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-78487b0960bso22927167b3.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 06:43:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761313426; x=1761918226; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=95i4oZgLg/VvWq9kaSxHTnN7P5gIDyXEX4/LTYsaoTo=;
+ b=canrMWLggYHLxaPjqaaml1QgdoxqzV6/ud+sbqY9vcZyHrxjbwB54qyC8u2Z1N2WxC
+ UvvEb9xDL4nj81vh8BQMHhHfJe3MU903vHFDQV8bazElqzGTo0PQUoeUzOJUOKnRQfcy
+ FFreY7sqOEf7IHN82iFrthJFoK4oJnkD3BrZA1AY1APZA8721STVxXiQiwLlyD4Ocfat
+ qw1nefO/hgmqq4MWncwSky/a4XPBFj5D2mtCm84++PKngkb+CiTFBbJPXbsVSImrnH3A
+ cFUKTcQTDImEqD6fb6+Jz7W/S3fFEI6NsSJlnhMUiWh4P9opiwakYhErh1Q/oijdNd6Z
+ toig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761313426; x=1761918226;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=95i4oZgLg/VvWq9kaSxHTnN7P5gIDyXEX4/LTYsaoTo=;
+ b=kVXMmEQQl3SKWQVgoDvdPSlxo3ainrrzf8dPER54QijwIJae/QKJNyzGq38vfnDk3j
+ 1RZu0Osilv2q0bG6oiyuCchW6CY7l48Ub+5kMM48hKpcn+ePwNk04PJrrIxpr1f6Xn9y
+ 9i8tdHb2blXibBzrotA3VrMIiK9TYWkCQbZlep/h9QqURXopGd38fW/PtC62/GOhvZDT
+ R2AzqgGB7Je2/Vjj0X5CaYciOzRmWSiE+j7y9MI5jl7UQdnQbPJyN9C1GQQOl8glGHET
+ GJx2xC0ZGy8hlBJG244AJNBtPyLB3GLaHVSDJ70BnR8nS/HcfeTPfRlJIr3WuVWZ8mvk
+ zIow==
+X-Gm-Message-State: AOJu0Yxm8PMXfkiT+RqgLDuEom6NBCtrrk7tl8B1A/pGIRsZCPyH/VIW
+ 9bR4e8sXNLlLVKgCFqQXqrKkYRsRYsjRhf/70vrloMyLTHWsnFmwi3/ona3E7dLB6uNOjvaynVt
+ S4blyIcAe12+ta2omW33vLAANWoBnnR1t2wmdvtxXxw==
+X-Gm-Gg: ASbGncuPR6afWXoyAU6133LI3M4SzowsktIpgqBhr1GxBLNA/BW64ZMat2d+lT+OdqH
+ /8DguFyLIedcJR1KCccE/jMmue7cfuOoTjOpye1Gl3U/wzb1ElVVWk+RBKS9urt0v3Q/KQF/fcQ
+ 8pTdO2XHBxB1RBqIHdC/l2yINmVVs9gP3Y9LJ2WMSwLprYa0mFwPg2hfzBRglvMBQvgVJaDJL1F
+ nDbgk4E4trdyK158oP9pbaUCc+SJv9M1ywd75MBnkXZ8HdQQgVDDV3OL9aJ1Q==
+X-Google-Smtp-Source: AGHT+IF4imKZDiln1CIJoaFP96KWNoe6nwx5ZGtf/BDCMCppXHvrGFzh3iAZnBPaaYXXQxgM/UVFTn+IPErZ0o6CT/I=
+X-Received: by 2002:a05:690c:6185:b0:785:bfd8:c4b1 with SMTP id
+ 00721157ae682-785cd9f9694mr54932517b3.2.1761313425711; Fri, 24 Oct 2025
+ 06:43:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tszp6c5n.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250519040555.3797167-1-alistair.francis@wdc.com>
+ <20250519040555.3797167-48-alistair.francis@wdc.com>
+In-Reply-To: <20250519040555.3797167-48-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 24 Oct 2025 14:43:33 +0100
+X-Gm-Features: AS18NWCcljQhAZTolQhlN9OmytpTIn0TSdhfyammXmZrXXNx2ZyBx-SjWML4Ngo
+Message-ID: <CAFEAcA_6zma2=nsBWB7ebb35Jt1cNAChiMG0xnkT3WPEY8csiw@mail.gmail.com>
+Subject: Re: [PULL 47/56] target/riscv/kvm: add scounteren CSR
+To: alistair23@gmail.com
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,94 +93,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 23, 2025 at 02:22:12PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > The description of virtualization vs non-virtualization use
-> > cases is a crude approximation of the security characteristics
-> > of QEMU devices.
-> >
-> > Document how QEMU can be probed to obtain information on the
-> > security status of type classes, and how policies can be set
-> > to inform or control their usage.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  docs/system/security.rst | 43 ++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 43 insertions(+)
-> >
-> > diff --git a/docs/system/security.rst b/docs/system/security.rst
-> > index f2092c8768..cda4bae6db 100644
-> > --- a/docs/system/security.rst
-> > +++ b/docs/system/security.rst
-> > @@ -49,6 +49,49 @@ Bugs affecting the non-virtualization use case are not considered security
-> >  bugs at this time.  Users with non-virtualization use cases must not rely on
-> >  QEMU to provide guest isolation or any security guarantees.
-> >  
-> > +Security status reporting
-> > +'''''''''''''''''''''''''
-> > +
-> > +QEMU is progressively working to annotate object types to explicitly state
-> 
-> Suggest "The QEMU project is working"
-> 
-> > +whether they are considered to provide a security boundary or not.
-> > +
-> > +It is possible to control or identify the usage of types that do not offer
-> > +an explicit security boundary using the ``insecure-types`` parameter to the
-> > +``-compat`` argument, which accepts three values:
-> > +
-> > + * accept: usage of any type will be permitted. This is the current
-> > +   and historical default behaviour
-> > + * warn: usage of types not explicitly declared secure will result
-> > +   in a warning message, but still be permitted.
-> > + * reject: usage of types not explicitly declared secure will result
-> > +   in an error message, and will not be permitted.
-> > +
-> > +The compatibility policy will be honoured both at initial startup of
-> > +QEMU and during any runtime alterations made with monitor commands.
-> 
-> This is about QOM.  It doesn't cover security boundaries outside QOM,
-> e.g. in block backends.  I think we better make this limitation quite
-> clear here.
+On Mon, 19 May 2025 at 05:25, <alistair23@gmail.com> wrote:
+>
+> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>
+> Add support for the scounteren KVM CSR. Note that env->scounteren is a
+> 32 bit and all KVM CSRs are target_ulong, so scounteren will be capped
+> to 32 bits read/writes.
+>
+> Reported-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Message-ID: <20250429124421.223883-10-dbarboza@ventanamicro.com>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index ca171d5457..82f9728636 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -251,6 +251,7 @@ static KVMCPUConfig kvm_csr_cfgs[] = {
+>      KVM_CSR_CFG("stval",      stval,      RISCV_CSR_REG(stval)),
+>      KVM_CSR_CFG("sip",        mip,        RISCV_CSR_REG(sip)),
+>      KVM_CSR_CFG("satp",       satp,       RISCV_CSR_REG(satp)),
+> +    KVM_CSR_CFG("scounteren", scounteren, RISCV_CSR_REG(scounteren)),
+>      KVM_CSR_CFG("senvcfg",    senvcfg,    RISCV_CSR_REG(senvcfg)),
+>  };
+>
+> @@ -701,6 +702,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
+>      env->stval = 0;
+>      env->mip = 0;
+>      env->satp = 0;
+> +    env->scounteren = 0;
+>      env->senvcfg = 0;
+>  }
 
-I was anticipating perhaps future work to bring this to non-QOM
-stuff too like the block backends, but I guess we can mention
-QOM now, and change it later if needed.
+Hi -- this came up in a conversation on IRC. Does this new
+CPU state field need migration support adding in machine.c ?
 
-
-> > +Machine type, accelerator and device security status can be queried
-> > +using ``-machine help``, ``-accel help`` and ``-device help`` command
-> > +line options respectively.
-> > +
-> > +The setting of the ``.secure`` field at the time a type class is
-> > +declared in the code will determine whether bugs are eligible to
-> > +be considered as security bugs:
-> > +
-> > + * Explicitly declared ``.secure = true``: security bug process
-> > +   applies, eligible for CVE assignment
-> > + * Explicitly declared ``.secure = false``: security bug process
-> > +   does not apply, ineligible for CVE assignment
-> > + * No declaration of ``.secure`` property: follow the security
-> > +   bug process initially. The virtualization vs non-virtualization
-> > +   use case classification will be evaluated during bug triage
-> > +   to determine whether to continue the security bug process,
-> > +   or switch to the regular bug process.
-> 
-> Should this evaluation result in a declaration of .secure?
-
-Yeah, that would be good workflow.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
