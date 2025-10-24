@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC53CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1F4CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCHi5-0005TG-Ey; Fri, 24 Oct 2025 09:20:01 -0400
+	id 1vCHic-0005qm-WD; Fri, 24 Oct 2025 09:20:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHi3-0005SG-00
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:19:59 -0400
+ id 1vCHiA-0005XU-Fn
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHi1-0004lE-34
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:19:58 -0400
+ id 1vCHi7-0004nh-Ta
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761311996;
+ s=mimecast20190719; t=1761312003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8JQXhF8o3AXpEzb21LKwdmGdvdb2hFy8yKFZ6fAIr70=;
- b=hz55VCPDQiwAQdIld6FOkF4mxjbHXCtwbdt8KtOSF3zvOgyYqvdkBfCjlMykxKxiuvknZY
- lq8OdAe7sz9ztceCuUeOcELNkzxjQbdY/MACjyUaRNiS/xUzOHo6zIXfd0iksnRvf1W3O3
- KyW1bghHrR1HOdPu4PYOZZ4c9iApMdM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=JZB7OCoqm6b79w7L+YOt3iE+VCy+nmZflnF5z8stP38=;
+ b=e5j9CmSUeJp8qhAnRJ6JZF3aUD4AB0Mo4BWkOY0O66ETjova+uWnQHAxRomks4W9R9+AzE
+ wdPnpNrvEmnWKX3Yqd3tyD5Lua8B3AuqlgjWVa71GtnxQ16Qgl9SMNb7GEPO6dUR/BJ+Tl
+ jVoEBSWxAtjdnGz2xAZfOQhLxhpLido=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-qFvFkbOnPkijXKYNGJSncw-1; Fri,
- 24 Oct 2025 09:19:52 -0400
-X-MC-Unique: qFvFkbOnPkijXKYNGJSncw-1
-X-Mimecast-MFC-AGG-ID: qFvFkbOnPkijXKYNGJSncw_1761311991
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-F174ytIsMJ6nIL0EN4T76g-1; Fri,
+ 24 Oct 2025 09:19:59 -0400
+X-MC-Unique: F174ytIsMJ6nIL0EN4T76g-1
+X-Mimecast-MFC-AGG-ID: F174ytIsMJ6nIL0EN4T76g_1761311998
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA5981800669; Fri, 24 Oct 2025 13:19:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A760419560B5; Fri, 24 Oct 2025 13:19:58 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.2])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A45A19540EB; Fri, 24 Oct 2025 13:19:49 +0000 (UTC)
+ id E136019540EB; Fri, 24 Oct 2025 13:19:56 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Blake <eblake@redhat.com>
-Subject: [PULL 05/13] io: move websock resource release to close method
-Date: Fri, 24 Oct 2025 14:19:29 +0100
-Message-ID: <20251024131937.56673-6-berrange@redhat.com>
+Subject: [PULL 08/13] crypto: remove extraneous pointer usage in gnutls certs
+Date: Fri, 24 Oct 2025 14:19:32 +0100
+Message-ID: <20251024131937.56673-9-berrange@redhat.com>
 In-Reply-To: <20251024131937.56673-1-berrange@redhat.com>
 References: <20251024131937.56673-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -86,61 +87,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QIOChannelWebsock object releases all its resources in the
-finalize callback. This is later than desired, as callers expect
-to be able to call qio_channel_close() to fully close a channel
-and release resources related to I/O.
+The 'gnutls_x509_crt_t' type is already a pointer, not a struct,
+so the extra level of pointer indirection is not needed.
 
-The logic in the finalize method is at most a failsafe to handle
-cases where a consumer forgets to call qio_channel_close.
-
-This adds equivalent logic to the close method to release the
-resources, using g_clear_handle_id/g_clear_pointer to be robust
-against repeated invocations. The finalize method is tweaked
-so that the GSource is removed before releasing the underlying
-channel.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- io/channel-websock.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ crypto/tlscredsx509.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 0a8c5c4712..a50a160e18 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -922,13 +922,13 @@ static void qio_channel_websock_finalize(Object *obj)
-     buffer_free(&ioc->encinput);
-     buffer_free(&ioc->encoutput);
-     buffer_free(&ioc->rawinput);
--    object_unref(OBJECT(ioc->master));
-     if (ioc->io_tag) {
-         g_source_remove(ioc->io_tag);
-     }
-     if (ioc->io_err) {
-         error_free(ioc->io_err);
-     }
-+    object_unref(OBJECT(ioc->master));
- }
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index 3df2a33b0b..4169ad9a75 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -325,25 +325,25 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+                                         bool isCA,
+                                         Error **errp)
+ {
+-    gnutls_x509_crt_t *cert_to_check = &cert;
++    gnutls_x509_crt_t cert_to_check = cert;
+     bool checking_issuer = true;
+     int retval = 0;
  
+     while (checking_issuer) {
+         checking_issuer = false;
  
-@@ -1218,6 +1218,15 @@ static int qio_channel_websock_close(QIOChannel *ioc,
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(ioc);
- 
-     trace_qio_channel_websock_close(ioc);
-+    buffer_free(&wioc->encinput);
-+    buffer_free(&wioc->encoutput);
-+    buffer_free(&wioc->rawinput);
-+    if (wioc->io_tag) {
-+        g_clear_handle_id(&wioc->io_tag, g_source_remove);
-+    }
-+    if (wioc->io_err) {
-+        g_clear_pointer(&wioc->io_err, error_free);
-+    }
-     return qio_channel_close(wioc->master, errp);
- }
- 
+-        if (gnutls_x509_crt_check_issuer(*cert_to_check,
+-                                         *cert_to_check)) {
++        if (gnutls_x509_crt_check_issuer(cert_to_check,
++                                         cert_to_check)) {
+             /*
+              * The cert is self-signed indicating we have
+              * reached the root of trust.
+              */
+             return qcrypto_tls_creds_check_cert(
+-                creds, *cert_to_check, cacertFile,
++                creds, cert_to_check, cacertFile,
+                 isServer, isCA, errp);
+         }
+         for (int i = 0; i < ncacerts; i++) {
+-            if (gnutls_x509_crt_check_issuer(*cert_to_check,
++            if (gnutls_x509_crt_check_issuer(cert_to_check,
+                                              cacerts[i])) {
+                 retval = qcrypto_tls_creds_check_cert(
+                     creds, cacerts[i], cacertFile,
+@@ -351,7 +351,7 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+                 if (retval < 0) {
+                     return retval;
+                 }
+-                cert_to_check = &cacerts[i];
++                cert_to_check = cacerts[i];
+                 checking_issuer = true;
+                 break;
+             }
 -- 
 2.50.1
 
