@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB91CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6CECCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:08:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCN6r-00028n-Tc; Fri, 24 Oct 2025 15:05:57 -0400
+	id 1vCN8d-0003MO-58; Fri, 24 Oct 2025 15:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN6p-00027Q-9J
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:05:55 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN8a-0003Gv-P6
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:07:44 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN6m-0005Ka-V5
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:05:54 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3ed20bdfdffso2487520f8f.2
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:05:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN8L-0005Wo-2A
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:07:32 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-475dae5d473so1875205e9.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761332751; x=1761937551; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761332844; x=1761937644; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FimQXnCYHKm6ncvC3S5Pc9wwaP1Ko27xUZV6rL9UQNE=;
- b=xVksornqzr5W0Q7/tyitYhH8vL5Y19YzqdSTRZI6Hnlxo/WsSh7HjwYXrDFyVuw01b
- l4IIsvmUS0ip1BWAkrExdWcaXxoIJ1zZtcqZpml3UioguFEJw+FTc42NzlpkWqPoHQBd
- 9perQJpBF403n6xHmATZuG3aja15Nzk4TyjOOTk7p7twjzAlkARfbhGrUAPK5QZghLaB
- HiToLgHljQ3Twx5AsJKzJopJ8PEl4n9g4d5lscMZLQtn2RN2k1UKILCSACN2xG7x3Lc/
- UJVyIdSvaRJl0V8t93nv63egXYbJJt8RgZP/yoFD7SjrhhRwaZHl1L/vy5xC0fEN22ue
- dmLA==
+ bh=xe5v3lt1asWPn9kptHJk/kzV1sk/igz/mIMd9PS7E3M=;
+ b=PkS+equjvbNLag/r/tIkF0Y5PkVhDqRx7rXFx9KHSOJeap5Yo+xoNh1hAi4WL7HTkG
+ 1Y/hgfpvIVl1pw4ytkVbjG4CMtHfgMmdV/RiPiiEt0SiPP5GadAYNaqkjf4Z36kKudqh
+ uckBe3dm9DCjTVHb+7h8A4rpWdtblXxU0vMgy6DjV7W8MLFHKZlj8l/d3KRAsTO6q/BH
+ zeUehWFaR3lBg8iN19DlG4dGh5EKBVjkRKaBfxsLpYZ64VqyBMwbGRltqx6yQtXOotoF
+ n8rDvrK6FXBiw/T5j3xhGR/s0OmtiF1T2YtcCoBYDpK7JGmY2BdWPfca+QXTPls2byhy
+ 2+lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761332751; x=1761937551;
+ d=1e100.net; s=20230601; t=1761332844; x=1761937644;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FimQXnCYHKm6ncvC3S5Pc9wwaP1Ko27xUZV6rL9UQNE=;
- b=TeeavBo23KTrHSHOeCqdrQLO2Y+QytA04XszApw+o2m8CxLZmC2ZN6/OMRATq3gysc
- w3bZz7d0YibZ5oaL8UeRfhET+sFZc9JihFqO8ndc1pG8Fcpju5zPF7S/W0c1Pmb5BY/3
- YakQMIF5T1VSKxlSOmTHTR4nz15qFD1M0MbRk7UPFS8TQ5L09isPP8hkJY7r2BvdrQap
- CTvcpBkY31zjxUW0UZGShkRCGZ56Hb8Q8XdGo1CIoQKN1ocOhE5JjPS4n5bp2Y62Ywk3
- Xrg745wUPYuaVHI4rMWByk8qJ26mUAIueJqrAvu48YEnWKEV+lFo3Rn66VGSSp7mMwna
- Mz2g==
-X-Gm-Message-State: AOJu0YxMeMTSC2jCryodBioSU+PO54volkNE7NgfdoV6ytxR41/KgGEe
- i0bnoLEto0m1ULoDPuNGChLLE+rqCjleGQwQaPsyBHgakjjXZ53n4gUwNmb6Ua0YeYpVnhXpuj/
- Mr+mqLKQ=
-X-Gm-Gg: ASbGnctUyHXIgpEiFHBVSrLIx7lM2FfZRMiZFE1X6F4/4v1uD6mppxCpZJnNb6njNBB
- NIJdGeeuovFQ7L4Lbhs8lIwLOuB6lYsLIEXQcjKt8sPbBG0fKYpNjLgmUB8RZOH/Jm1/T34S5Ok
- bsqn+VkkC0XbU8TQ1udMlyWIW71qEWoQNmiqNrbwmAg5+ylUALlCDIelROUxjLa/qH9EUGH9sZT
- DtxYm2KasKxkYxVDDmitlVHOJHZ4exrzma+2cWfL8dPUsTkfii1Pjncfthi3l8eZ3S49t3SWyQI
- 3QsjcgswQ5Xl91Q/LbLtRhyde1+Zo8P7Yp1+CuA0HGjgcCEulqmgBrGAObNsY+bKWku0ZJN6jJi
- jTbwugPCvwhTtR6x+TeEhfXufVNUK1rzHOqHo1ZERcFmdrlVO8116TRa5vdKN3V5gOG+3F9ZrjI
- yQ3krcHattZM39AGYx5RmGJNXPqF2KN1l9pQIdOIP3i6fCCMz4OJSe5/zL8jf5
-X-Google-Smtp-Source: AGHT+IFKoLkMs5+SowOaBcE+d8/5jPxLp08ETkRhmQ7aRqBnMfobElkOPpHUE3vyYwWq5FBgfpakRQ==
-X-Received: by 2002:a05:6000:2dc6:b0:425:86f0:6817 with SMTP id
- ffacd0b85a97d-4299075b4a0mr2530630f8f.57.1761332750813; 
- Fri, 24 Oct 2025 12:05:50 -0700 (PDT)
+ bh=xe5v3lt1asWPn9kptHJk/kzV1sk/igz/mIMd9PS7E3M=;
+ b=GN6d78DirHkQrxYhy7Ub5/ZqI4z0xrgbvcPJb2HL3mdRFQp6fOL5ypXbD2V0WYDGkN
+ ZyC0oWHZxtG7czUCDr7Gdz+WcIdb/RT26yz9wEMQbELBhy1Mlh727luJmr/vL6MjnBaD
+ FqGoHeTHhdxjh6jWC1O1rOk9DxsEqGsE1buVTVHn+3YRmz9pMEyMLNsVIfTWCkRbTPBq
+ mRa6OntVSyqNh5bNAs/zuqC8epU+HKZNlQhUs+rCd0hTg+Nq9RtYb+K3AB6uH+aHAKqJ
+ SMisWNp+wqqaqVoJQLI0L89XZ1zexld13vmdPycJMJIK+daWsW18aSAkPcZoaF+KLJkS
+ 0ubA==
+X-Gm-Message-State: AOJu0YxWenRj5CnTOd30kMh3sk3D2l0WmP0QAwZiCszVVv+klI77G72D
+ InI268A4l6B/f0K8o+MoY+y+yHbnb5JDrLnXukpHtPCsChlLaHPx9ABehunewyMLCu0ODtQHoNl
+ BUWdZymg=
+X-Gm-Gg: ASbGncudW3btHmP/HCxh43isQJm+aBrj2yaFfTsbvlYyTCvuSwn1PQxh92/LlUHgsKT
+ AV31oZY1gg5f3BIJwPSiGhACqf21RWZmsJNaP5R3mr5t880jqqt/6lwVhwzKgG/IMm+vTz3q7yo
+ QCH42nEMoD0weY4o9V57wqGKdcno82BCYhXSe9uiLUOqkzrGleCPmg8hhVQLxCmV1+2E2xs9tY9
+ XjrCo7c7tTTX3cIdUYoL3GhBFBGylWoTwWPPmvfBIno/8wnPHyCt1N1e8qud2S/34trtmX2KKoX
+ TNGM2LoDXfzBWchUIZ9EnJQMck2qln9ZRyQU/sy58QGHs0C5DZlnuLZsxaWYqNCgqz5xJ8zk4/V
+ xqjk7Bp9j80/VzB0gfVNBt2L6x8Ar3PjFYMxWlU9o86DrhoSsuluRimoU24zJK6MGIIbKXFCwhD
+ 9FmJMvpuu5b/YCo84XKD8yuaN14FKW1DcNTAsnskNhUeSk1WuJBMjw6sKvHHQU
+X-Google-Smtp-Source: AGHT+IHHL42jq+kWv7bwkbCqhqJl6wI5+ZAIN94rhWy0oYxeiCcmfQP/ob7ihjyIdvV26ky8WlaCOg==
+X-Received: by 2002:a05:600c:3488:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-4711786c586mr210976455e9.1.1761332843600; 
+ Fri, 24 Oct 2025 12:07:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429897f57cesm11088658f8f.17.2025.10.24.12.05.49
+ 5b1f17b1804b1-475c428f709sm165005335e9.8.2025.10.24.12.07.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Oct 2025 12:05:50 -0700 (PDT)
+ Fri, 24 Oct 2025 12:07:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
@@ -71,18 +71,18 @@ Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 01/27] hw/qdev: Have qdev_get_gpio_out_connector() take const
- DeviceState arg
-Date: Fri, 24 Oct 2025 21:03:48 +0200
-Message-ID: <20251024190416.8803-2-philmd@linaro.org>
+Subject: [PATCH 02/27] hw/sysbus: Have various helpers take a const
+ SysBusDevice argument
+Date: Fri, 24 Oct 2025 21:03:49 +0200
+Message-ID: <20251024190416.8803-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251024190416.8803-1-philmd@linaro.org>
 References: <20251024190416.8803-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,43 +105,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This getter doesn't update any DeviceState internal fields,
-make it const.
+These getters don't update any SysBusDevice internal fields,
+make the argument const.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/qdev-core.h | 3 ++-
- hw/core/gpio.c         | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ include/hw/sysbus.h | 10 +++++-----
+ hw/core/sysbus.c    | 10 +++++-----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index a7bfb10dc70..2caa0cbd26f 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -725,7 +725,8 @@ void qdev_connect_gpio_out_named(DeviceState *dev, const char *name, int n,
-  *
-  * Return: qemu_irq associated with GPIO or NULL if un-wired.
-  */
--qemu_irq qdev_get_gpio_out_connector(DeviceState *dev, const char *name, int n);
-+qemu_irq qdev_get_gpio_out_connector(const DeviceState *dev,
-+                                     const char *name, int n);
+diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
+index 18fde8a7b48..69eb62e29c8 100644
+--- a/include/hw/sysbus.h
++++ b/include/hw/sysbus.h
+@@ -70,17 +70,17 @@ struct SysBusDevice {
+ typedef void FindSysbusDeviceFunc(SysBusDevice *sbdev, void *opaque);
  
- /**
-  * qdev_intercept_gpio_out: Intercept an existing GPIO connection
-diff --git a/hw/core/gpio.c b/hw/core/gpio.c
-index 6e32a8eec61..c7c2936fc55 100644
---- a/hw/core/gpio.c
-+++ b/hw/core/gpio.c
-@@ -129,7 +129,8 @@ void qdev_connect_gpio_out_named(DeviceState *dev, const char *name, int n,
-     g_free(propname);
+ void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory);
+-MemoryRegion *sysbus_mmio_get_region(SysBusDevice *dev, int n);
++MemoryRegion *sysbus_mmio_get_region(const SysBusDevice *dev, int n);
+ void sysbus_init_irq(SysBusDevice *dev, qemu_irq *p);
+ void sysbus_pass_irq(SysBusDevice *dev, SysBusDevice *target);
+ void sysbus_init_ioports(SysBusDevice *dev, uint32_t ioport, uint32_t size);
+ 
+ 
+-bool sysbus_has_irq(SysBusDevice *dev, int n);
+-bool sysbus_has_mmio(SysBusDevice *dev, unsigned int n);
++bool sysbus_has_irq(const SysBusDevice *dev, int n);
++bool sysbus_has_mmio(const SysBusDevice *dev, unsigned int n);
+ void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq);
+-bool sysbus_is_irq_connected(SysBusDevice *dev, int n);
+-qemu_irq sysbus_get_connected_irq(SysBusDevice *dev, int n);
++bool sysbus_is_irq_connected(const SysBusDevice *dev, int n);
++qemu_irq sysbus_get_connected_irq(const SysBusDevice *dev, int n);
+ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr);
+ int sysbus_mmio_map_name(SysBusDevice *dev, const char*name, hwaddr addr);
+ void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index ec69e877a2c..ae447c1196a 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -80,7 +80,7 @@ static void system_bus_class_init(ObjectClass *klass, const void *data)
  }
  
--qemu_irq qdev_get_gpio_out_connector(DeviceState *dev, const char *name, int n)
-+qemu_irq qdev_get_gpio_out_connector(const DeviceState *dev,
-+                                     const char *name, int n)
+ /* Check whether an IRQ source exists */
+-bool sysbus_has_irq(SysBusDevice *dev, int n)
++bool sysbus_has_irq(const SysBusDevice *dev, int n)
  {
-     g_autofree char *propname = g_strdup_printf("%s[%d]",
-                                      name ? name : "unnamed-gpio-out", n);
+     char *prop = g_strdup_printf("%s[%d]", SYSBUS_DEVICE_GPIO_IRQ, n);
+     ObjectProperty *r;
+@@ -91,12 +91,12 @@ bool sysbus_has_irq(SysBusDevice *dev, int n)
+     return (r != NULL);
+ }
+ 
+-bool sysbus_is_irq_connected(SysBusDevice *dev, int n)
++bool sysbus_is_irq_connected(const SysBusDevice *dev, int n)
+ {
+     return !!sysbus_get_connected_irq(dev, n);
+ }
+ 
+-qemu_irq sysbus_get_connected_irq(SysBusDevice *dev, int n)
++qemu_irq sysbus_get_connected_irq(const SysBusDevice *dev, int n)
+ {
+     DeviceState *d = DEVICE(dev);
+     return qdev_get_gpio_out_connector(d, SYSBUS_DEVICE_GPIO_IRQ, n);
+@@ -114,7 +114,7 @@ void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq)
+ }
+ 
+ /* Check whether an MMIO region exists */
+-bool sysbus_has_mmio(SysBusDevice *dev, unsigned int n)
++bool sysbus_has_mmio(const SysBusDevice *dev, unsigned int n)
+ {
+     return (n < dev->num_mmio);
+ }
+@@ -190,7 +190,7 @@ void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory)
+     dev->mmio[n].memory = memory;
+ }
+ 
+-MemoryRegion *sysbus_mmio_get_region(SysBusDevice *dev, int n)
++MemoryRegion *sysbus_mmio_get_region(const SysBusDevice *dev, int n)
+ {
+     assert(n >= 0 && n < QDEV_MAX_MMIO);
+     return dev->mmio[n].memory;
 -- 
 2.51.0
 
