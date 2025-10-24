@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8924ACCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD61CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCMPY-0008Go-F0; Fri, 24 Oct 2025 14:21:12 -0400
+	id 1vCMPT-0008Fu-P6; Fri, 24 Oct 2025 14:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vCMPW-0008Ga-BK
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 14:21:10 -0400
+ id 1vCMPS-0008Fi-Au
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 14:21:06 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vCMPU-0008FU-La
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 14:21:10 -0400
+ id 1vCMPN-0008EP-Ai
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 14:21:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761330069; x=1792866069;
+ t=1761330061; x=1792866061;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=len0glU2yj1H+jJxLFoYUNqMIXEmHQqgK+yIOKm5WK4=;
- b=QZiwuToAPXhlZ+rJr9JsDsuSgiDIwtcvsDR6bQehJiNFxvmeFyKZ4FUy
- AgmEGVuFIONUfrJD5oPR9Kdn1kvkbBG83bHrpS8cPVzuPaNY9d3p7ygv2
- MSZ24Wz+Jjf+VrwrSE88E9YS/RVCtd46J7BRHBzI964rJwRTKdO99GdOM
- N7x4ym9PGKRLdM8ii5o170y5UxZl4Ihjvhi2RnIFYk7RKyvPaV914vz6k
- qqAxD3pzGFi6L23voHlz8kYz4LscyEctEZEkvK7nzSwH7bLgXThOOwRzW
- rfMbC6VMb4wnXE88/EhVsVkywI3MUBI1qH0HdYcY5DERXeE2Xt97XD9rT Q==;
-X-CSE-ConnectionGUID: gGaKdqOvSJ+x9VlqHj6LAQ==
-X-CSE-MsgGUID: ylCje5b2RxGCeVEiAb9zCg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74119595"
-X-IronPort-AV: E=Sophos;i="6.19,253,1754982000"; d="scan'208";a="74119595"
+ bh=dsTKYI2tavi9iR5GYwHm3XNJQdogM73BnjgCufX5w34=;
+ b=AQOq+R4s8HfmjLIM/rA0Ci/SyKgjZ+V9ZvyVUWvBuL2okFES9rpOAnGV
+ 4qFXVH+BzB5Z6f5dtmbQi4J2jP6Aulta9ipHK5dPCKXJGLoEgHjz5rNAz
+ sAkHiw3+EiMYd9eSepYxi9pY82hRsHQqgrKZPKCvs4ePz3OTUZ8HAVDx1
+ dF3xtmk5XAkbUkR+awcHMy/ryKzlEhKM/qILmuz7H2sYSCmXt+SU8jq4Q
+ bPmcgYKCeUl7/juDxDaazD/J4hbHwHwg8pqo0QN+jvsMp/P5TZqvlIaiL
+ PTOLsYszYQlXlqT8/Yo25QBTAqG7ZARmENf4vi01U8GL/E3WiOAg8+3V3 g==;
+X-CSE-ConnectionGUID: jzvTDofJSV6xt4PEA+nGFA==
+X-CSE-MsgGUID: 786HbB2SSQyt8PbkRdJDjg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74119586"
+X-IronPort-AV: E=Sophos;i="6.19,253,1754982000"; d="scan'208";a="74119586"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 11:21:07 -0700
-X-CSE-ConnectionGUID: 2WCoOoWFRcy/c3j3blz6VQ==
-X-CSE-MsgGUID: fk28vnV3Q3yKX/jhnR3r/A==
+ 24 Oct 2025 11:20:56 -0700
+X-CSE-ConnectionGUID: Sfbz+b2xRfOOmIF5BmsdkQ==
+X-CSE-MsgGUID: /Hv5XVoGRCOJkJC5vJnBAw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,253,1754982000"; d="scan'208";a="188882533"
+X-IronPort-AV: E=Sophos;i="6.19,253,1754982000"; d="scan'208";a="188882449"
 Received: from soc-cp83kr3.clients.intel.com (HELO [10.241.241.181])
  ([10.241.241.181])
  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 11:21:07 -0700
-Message-ID: <03763c00-3f14-4cab-9a75-78771cbbb79a@intel.com>
-Date: Fri, 24 Oct 2025 11:21:06 -0700
+ 24 Oct 2025 11:20:55 -0700
+Message-ID: <1bcebd76-877e-41eb-a21e-5a49c648fd37@intel.com>
+Date: Fri, 24 Oct 2025 11:20:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/20] i386/cpu: Drop pmu check in CPUID 0x1C encoding
+Subject: Re: [PATCH v3 04/20] i386/cpu: Reorganize arch lbr structure
+ definitions
 To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao
@@ -60,10 +61,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao
  Dapeng Mi <dapeng1.mi@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>
 References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-9-zhao1.liu@intel.com>
+ <20251024065632.1448606-5-zhao1.liu@intel.com>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20251024065632.1448606-9-zhao1.liu@intel.com>
+In-Reply-To: <20251024065632.1448606-5-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=192.198.163.11; envelope-from=zide.chen@intel.com;
@@ -94,8 +95,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 10/23/2025 11:56 PM, Zhao Liu wrote:
-> Since CPUID_7_0_EDX_ARCH_LBR will be masked off if pmu is disabled,
-> there's no need to check CPUID_7_0_EDX_ARCH_LBR feature with pmu.
+> - Move ARCH_LBR_NR_ENTRIES macro and LBREntry definition before XSAVE
+>   areas definitions.
+> - Reorder XSavesArchLBR (area 15) between XSavePKRU (area 9) and
+>   XSaveXTILECFG (area 17), and reorder the related QEMU_BUILD_BUG_ON
+>   check to keep the same ordering.
+> 
+> This makes xsave structures to be organized together and makes them
+> clearer.
 > 
 > Tested-by: Farrah Chen <farrah.chen@intel.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
@@ -103,33 +110,80 @@ On 10/23/2025 11:56 PM, Zhao Liu wrote:
 Reviewed-by: Zide Chen <zide.chen@intel.com>
 
 > ---
->  target/i386/cpu.c | 13 +++++++++----
->  1 file changed, 9 insertions(+), 4 deletions(-)
+>  target/i386/cpu.h | 38 +++++++++++++++++++-------------------
+>  1 file changed, 19 insertions(+), 19 deletions(-)
 > 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 5b7a81fcdb1b..5cd335bb5574 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -8275,11 +8275,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->          }
->          break;
->      }
-> -    case 0x1C:
-> -        if (cpu->enable_pmu && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-> -            x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
-> -            *edx = 0;
-> +    case 0x1C: /* Last Branch Records Information Leaf */
-> +        *eax = 0;
-> +        *ebx = 0;
-> +        *ecx = 0;
-> +        *edx = 0;
-> +        if (!(env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-> +            break;
->          }
-> +        x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
-> +        *edx = 0; /* EDX is reserved. */
->          break;
->      case 0x1D: {
->          /* AMX TILE, for now hardcoded for Sapphire Rapids*/
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 886a941e481c..ac527971d8cd 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -1652,6 +1652,14 @@ typedef struct {
+>  
+>  #define NB_OPMASK_REGS 8
+>  
+> +typedef struct {
+> +    uint64_t from;
+> +    uint64_t to;
+> +    uint64_t info;
+> +} LBREntry;
+> +
+> +#define ARCH_LBR_NR_ENTRIES 32
+> +
+>  /* CPU can't have 0xFFFFFFFF APIC ID, use that value to distinguish
+>   * that APIC ID hasn't been set yet
+>   */
+> @@ -1729,24 +1737,6 @@ typedef struct XSavePKRU {
+>      uint32_t padding;
+>  } XSavePKRU;
+>  
+> -/* Ext. save area 17: AMX XTILECFG state */
+> -typedef struct XSaveXTILECFG {
+> -    uint8_t xtilecfg[64];
+> -} XSaveXTILECFG;
+> -
+> -/* Ext. save area 18: AMX XTILEDATA state */
+> -typedef struct XSaveXTILEDATA {
+> -    uint8_t xtiledata[8][1024];
+> -} XSaveXTILEDATA;
+> -
+> -typedef struct {
+> -       uint64_t from;
+> -       uint64_t to;
+> -       uint64_t info;
+> -} LBREntry;
+> -
+> -#define ARCH_LBR_NR_ENTRIES            32
+> -
+>  /* Ext. save area 15: Arch LBR state */
+>  typedef struct XSaveArchLBR {
+>      uint64_t lbr_ctl;
+> @@ -1757,6 +1747,16 @@ typedef struct XSaveArchLBR {
+>      LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
+>  } XSaveArchLBR;
+>  
+> +/* Ext. save area 17: AMX XTILECFG state */
+> +typedef struct XSaveXTILECFG {
+> +    uint8_t xtilecfg[64];
+> +} XSaveXTILECFG;
+> +
+> +/* Ext. save area 18: AMX XTILEDATA state */
+> +typedef struct XSaveXTILEDATA {
+> +    uint8_t xtiledata[8][1024];
+> +} XSaveXTILEDATA;
+> +
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveAVX) != 0x100);
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveBNDREG) != 0x40);
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveBNDCSR) != 0x40);
+> @@ -1764,9 +1764,9 @@ QEMU_BUILD_BUG_ON(sizeof(XSaveOpmask) != 0x40);
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveZMM_Hi256) != 0x200);
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveHi16_ZMM) != 0x400);
+>  QEMU_BUILD_BUG_ON(sizeof(XSavePKRU) != 0x8);
+> +QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveXTILECFG) != 0x40);
+>  QEMU_BUILD_BUG_ON(sizeof(XSaveXTILEDATA) != 0x2000);
+> -QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
+>  
+>  typedef struct ExtSaveArea {
+>      uint32_t feature, bits;
 
 
