@@ -4,83 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DAB1CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D09D9CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 14:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCI5S-0001qR-Cu; Fri, 24 Oct 2025 09:44:10 -0400
+	id 1vCIQX-0004jv-2p; Fri, 24 Oct 2025 10:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vCI5J-0001pv-DJ
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:44:01 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vCI5B-0000TY-Sl
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:44:01 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-78487b0960bso22927167b3.2
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 06:43:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761313426; x=1761918226; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=95i4oZgLg/VvWq9kaSxHTnN7P5gIDyXEX4/LTYsaoTo=;
- b=canrMWLggYHLxaPjqaaml1QgdoxqzV6/ud+sbqY9vcZyHrxjbwB54qyC8u2Z1N2WxC
- UvvEb9xDL4nj81vh8BQMHhHfJe3MU903vHFDQV8bazElqzGTo0PQUoeUzOJUOKnRQfcy
- FFreY7sqOEf7IHN82iFrthJFoK4oJnkD3BrZA1AY1APZA8721STVxXiQiwLlyD4Ocfat
- qw1nefO/hgmqq4MWncwSky/a4XPBFj5D2mtCm84++PKngkb+CiTFBbJPXbsVSImrnH3A
- cFUKTcQTDImEqD6fb6+Jz7W/S3fFEI6NsSJlnhMUiWh4P9opiwakYhErh1Q/oijdNd6Z
- toig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761313426; x=1761918226;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=95i4oZgLg/VvWq9kaSxHTnN7P5gIDyXEX4/LTYsaoTo=;
- b=kVXMmEQQl3SKWQVgoDvdPSlxo3ainrrzf8dPER54QijwIJae/QKJNyzGq38vfnDk3j
- 1RZu0Osilv2q0bG6oiyuCchW6CY7l48Ub+5kMM48hKpcn+ePwNk04PJrrIxpr1f6Xn9y
- 9i8tdHb2blXibBzrotA3VrMIiK9TYWkCQbZlep/h9QqURXopGd38fW/PtC62/GOhvZDT
- R2AzqgGB7Je2/Vjj0X5CaYciOzRmWSiE+j7y9MI5jl7UQdnQbPJyN9C1GQQOl8glGHET
- GJx2xC0ZGy8hlBJG244AJNBtPyLB3GLaHVSDJ70BnR8nS/HcfeTPfRlJIr3WuVWZ8mvk
- zIow==
-X-Gm-Message-State: AOJu0Yxm8PMXfkiT+RqgLDuEom6NBCtrrk7tl8B1A/pGIRsZCPyH/VIW
- 9bR4e8sXNLlLVKgCFqQXqrKkYRsRYsjRhf/70vrloMyLTHWsnFmwi3/ona3E7dLB6uNOjvaynVt
- S4blyIcAe12+ta2omW33vLAANWoBnnR1t2wmdvtxXxw==
-X-Gm-Gg: ASbGncuPR6afWXoyAU6133LI3M4SzowsktIpgqBhr1GxBLNA/BW64ZMat2d+lT+OdqH
- /8DguFyLIedcJR1KCccE/jMmue7cfuOoTjOpye1Gl3U/wzb1ElVVWk+RBKS9urt0v3Q/KQF/fcQ
- 8pTdO2XHBxB1RBqIHdC/l2yINmVVs9gP3Y9LJ2WMSwLprYa0mFwPg2hfzBRglvMBQvgVJaDJL1F
- nDbgk4E4trdyK158oP9pbaUCc+SJv9M1ywd75MBnkXZ8HdQQgVDDV3OL9aJ1Q==
-X-Google-Smtp-Source: AGHT+IF4imKZDiln1CIJoaFP96KWNoe6nwx5ZGtf/BDCMCppXHvrGFzh3iAZnBPaaYXXQxgM/UVFTn+IPErZ0o6CT/I=
-X-Received: by 2002:a05:690c:6185:b0:785:bfd8:c4b1 with SMTP id
- 00721157ae682-785cd9f9694mr54932517b3.2.1761313425711; Fri, 24 Oct 2025
- 06:43:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vCIQV-0004jV-0Z
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 10:05:55 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vCIQT-0003a8-1y
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 10:05:54 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 9D5C143616;
+ Fri, 24 Oct 2025 14:05:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078E3C4CEF1;
+ Fri, 24 Oct 2025 14:05:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1761314743;
+ bh=kEPbTDZac7CjluEtE5j18ISVJGK6g6nGBRg4GbTVTXw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=gLLrpYfYY+N8x2bnVbq/kQ4p3chpY7BnLHMvtGumF3h8HRl8eVqyWRcU+EmcHioQe
+ crgRy0hCv9eZTpp1z8PuHIJPDPmWtI0VslXA12NzWqAICWUx5AquXcNiybjNAfUdOS
+ KKuaz5t5WXPbMfXAKs9EEHWQy07XKse3D4gq0GloinbaWYlSTapWV7mxS5UKgucidW
+ AxsSGlztFyXCzEHLbpmHJb/aAOFnXOgcYPrw56D/1FmmtShIFnioWdn0ZwGvq50Ztd
+ IYcdN5uNDFyZvKnUWUj29x/RPAZQ9i2NZOaQkKQvidq79mm+H6v9sPrNGl7Qm8mS4p
+ 9gjFHC3i2fQ/Q==
+Date: Fri, 24 Oct 2025 19:29:01 +0530
+From: Naveen N Rao <naveen@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm@vger.kernel.org, 
+ Tom Lendacky <thomas.lendacky@amd.com>, Nikunj A Dadhania <nikunj@amd.com>, 
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>, 
+ Roy Hopkins <roy.hopkins@randomman.co.uk>
+Subject: Re: [PATCH v2 0/9] target/i386: SEV: Add support for enabling VMSA
+ SEV features
+Message-ID: <tu7zyirbskj7gfr3mrwt6wlezslthrzbzvvmuszubvfvclcdhc@oxsy3cjmicoz>
+References: <cover.1758794556.git.naveen@kernel.org>
 MIME-Version: 1.0
-References: <20250519040555.3797167-1-alistair.francis@wdc.com>
- <20250519040555.3797167-48-alistair.francis@wdc.com>
-In-Reply-To: <20250519040555.3797167-48-alistair.francis@wdc.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Oct 2025 14:43:33 +0100
-X-Gm-Features: AS18NWCcljQhAZTolQhlN9OmytpTIn0TSdhfyammXmZrXXNx2ZyBx-SjWML4Ngo
-Message-ID: <CAFEAcA_6zma2=nsBWB7ebb35Jt1cNAChiMG0xnkT3WPEY8csiw@mail.gmail.com>
-Subject: Re: [PULL 47/56] target/riscv/kvm: add scounteren CSR
-To: alistair23@gmail.com
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1758794556.git.naveen@kernel.org>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,47 +75,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 May 2025 at 05:25, <alistair23@gmail.com> wrote:
->
-> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->
-> Add support for the scounteren KVM CSR. Note that env->scounteren is a
-> 32 bit and all KVM CSRs are target_ulong, so scounteren will be capped
-> to 32 bits read/writes.
->
-> Reported-by: Andrew Jones <ajones@ventanamicro.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Message-ID: <20250429124421.223883-10-dbarboza@ventanamicro.com>
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index ca171d5457..82f9728636 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -251,6 +251,7 @@ static KVMCPUConfig kvm_csr_cfgs[] = {
->      KVM_CSR_CFG("stval",      stval,      RISCV_CSR_REG(stval)),
->      KVM_CSR_CFG("sip",        mip,        RISCV_CSR_REG(sip)),
->      KVM_CSR_CFG("satp",       satp,       RISCV_CSR_REG(satp)),
-> +    KVM_CSR_CFG("scounteren", scounteren, RISCV_CSR_REG(scounteren)),
->      KVM_CSR_CFG("senvcfg",    senvcfg,    RISCV_CSR_REG(senvcfg)),
->  };
->
-> @@ -701,6 +702,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
->      env->stval = 0;
->      env->mip = 0;
->      env->satp = 0;
-> +    env->scounteren = 0;
->      env->senvcfg = 0;
->  }
+On Thu, Sep 25, 2025 at 03:47:29PM +0530, Naveen N Rao (AMD) wrote:
+> This series adds support for enabling VMSA SEV features for SEV-ES and
+> SEV-SNP guests. Since that is already supported for IGVM files, some of
+> that code is moved to generic path and reused.
+> 
+> Debug-swap is already supported in KVM today, while patches for enabling
+> Secure TSC have been accepted for the upcoming kernel release.
 
-Hi -- this came up in a conversation on IRC. Does this new
-CPU state field need migration support adding in machine.c ?
+Any other comments on this series?
 
-thanks
--- PMM
+So far, the only minor change I have on top of this series is the change 
+suggested by Markus:
+
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 5b830a9ba000..a2b9ccdfe43e 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1010,7 +1010,8 @@
+ #     designated guest firmware page for measured boot with -kernel
+ #     (default: false) (since 6.2)
+ #
+-# @debug-swap: enable virtualization of debug registers
++# @debug-swap: enable virtualization of debug registers. This is only
++#     supported on SEV-ES/SEV-SNP guests
+ #     (default: false) (since 10.2)
+ #
+ # Since: 9.1
+
+Otherwise, this series still applies cleanly to current master.
+
+> 
+> Roy,
+> I haven't been able to test IGVM, so would be great if that is tested to 
+> confirm there are no unintended changes there.
+
+I took a stab at this with the buildigvm tool from Roy. I am able to 
+boot a Linux guest with an IGVM file generated from that using qemu 
+built with this series applied. In addition, with the below change to 
+buildigvm, I am able to see Secure TSC being enabled in the guest:
+
+diff --git a/src/vmsa.rs b/src/vmsa.rs
+index 3d67a953055e..ac150264c244 100644
+--- a/src/vmsa.rs
++++ b/src/vmsa.rs
+@@ -70,6 +70,7 @@ fn construct_vmsa(reset_addr: u32, platform: Platform) -> Result<Box<SevVmsa>, B
+
+     if let Platform::SevSnp = platform {
+         vmsa.sev_features.set_snp(true);
++        vmsa.sev_features.set_secure_tsc(true);
+     }
+
+     Ok(vmsa_box)
+
+I couldn't get it to work with > 1 vCPUs though (I'm possibly missing 
+OVMF changes or such).
+
+
+- Naveen
+
 
