@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA64CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 15:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5A0CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 15:41:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCJuF-0008Dt-C3; Fri, 24 Oct 2025 11:40:43 -0400
+	id 1vCJuc-0008KF-G1; Fri, 24 Oct 2025 11:41:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCJu8-0008Cr-To
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:40:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vCJuX-0008J6-DI
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:41:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCJu5-0003Mq-UW
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:40:36 -0400
+ id 1vCJuV-0003PV-NF
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 11:41:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761320432;
+ s=mimecast20190719; t=1761320458;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6K6yXOxzdduDep/cEeTdz/PabHfAAO8ZDJVfFXVKLhM=;
- b=XdH5z4dhWzJ/4xErw6xB/utR1mk9YcGpmKCHdcLfH+e5HXgqCRF+07WT8ufIwpJAXHYttp
- Da79jE1OEotAsb9tgDkLNTxIc94GXg+YAF9T55oaOZaJoV4++iTf4RK5uNPzIVeYDkMgVk
- mC5cngiz/TFgqrUm2gBVp82ew3W3JiA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/OXOtC2OQD8lPutBqcaoCBpArL8Uq5/+PRqSib4ESnE=;
+ b=ZsH91JgjnSCzXjn4dpB9fxFUoOwU5YLtYvXR7Q4iwb9PKYXKPVzOH0FwxZHKLM+xsOn3vO
+ 7TVohuAJRNi6zHoX/CZURic1B3Hw2XQkbulRGlzpgtDJJmMSVIepNV4B+GXhcUbb96Uuxn
+ ApsOwfF0cXvYX4BmZuXIBmPNVMcMFXw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-Nvhoxs8yNtKMxeD2GNcGew-1; Fri,
- 24 Oct 2025 11:40:31 -0400
-X-MC-Unique: Nvhoxs8yNtKMxeD2GNcGew-1
-X-Mimecast-MFC-AGG-ID: Nvhoxs8yNtKMxeD2GNcGew_1761320430
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-548-iL0Ih1KjN223oqvvT1hmLQ-1; Fri,
+ 24 Oct 2025 11:40:55 -0400
+X-MC-Unique: iL0Ih1KjN223oqvvT1hmLQ-1
+X-Mimecast-MFC-AGG-ID: iL0Ih1KjN223oqvvT1hmLQ_1761320453
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E6B3195398A; Fri, 24 Oct 2025 15:40:30 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0E3019560BB; Fri, 24 Oct 2025 15:40:53 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.2])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6A51D195398C; Fri, 24 Oct 2025 15:40:28 +0000 (UTC)
+ id DA45419540EB; Fri, 24 Oct 2025 15:40:51 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 01/13] crypto: propagate Error object on premature termination
-Date: Fri, 24 Oct 2025 16:40:12 +0100
-Message-ID: <20251024154024.227978-2-berrange@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: [PULL 10/13] crypto: fix error reporting in cert chain checks
+Date: Fri, 24 Oct 2025 16:40:21 +0100
+Message-ID: <20251024154024.227978-11-berrange@redhat.com>
 In-Reply-To: <20251024154024.227978-1-berrange@redhat.com>
 References: <20251024154024.227978-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,89 +86,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The way that premature termination was handled in TLS connections was
-changed to handle an ordering problem during graceful shutdown in the
-migration code.
+The loop that checks the CA certificate chain can fail to report
+an error message if one of the certs in the chain has an issuer
+that is not present in the chain. In this case, the outer loop
+'while (checking_issuer)' will terminate after failing to find
+the issuer, and no error message will be reported.
 
-Unfortunately one of the codepaths returned -1 to indicate an error
-condition, but failed to set the 'errp' parameter.
-
-This broke error handling in the qio_channel_tls_handshake function,
-as the QTask callback would no longer see that an error was raised.
-As a result, the client will go on to try to use the already closed
-TLS connection, resulting in misleading errors.
-
-This was evidenced in the I/O test 233 which showed changes such as
-
--qemu-nbd: Certificate does not match the hostname localhost
-+qemu-nbd: Failed to read initial magic: Unable to read from socket: Connection reset by peer
-
-Fixes: 7e0c22d585581b8083ffdeb332ea497218665daf
-Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- crypto/tlssession.c |  8 +++++---
- io/channel-tls.c    | 13 +++++++------
- 2 files changed, 12 insertions(+), 9 deletions(-)
+ crypto/tlscredsx509.c                 | 33 ++++++++++++++++++---------
+ tests/unit/test-crypto-tlscredsx509.c | 12 ++++++++++
+ 2 files changed, 34 insertions(+), 11 deletions(-)
 
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index ac38c2121d..8c0bf457ad 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -569,8 +569,6 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
-     if (ret < 0) {
-         if (ret == GNUTLS_E_AGAIN) {
-             return QCRYPTO_TLS_SESSION_ERR_BLOCK;
--        } else if (ret == GNUTLS_E_PREMATURE_TERMINATION) {
--            return QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION;
-         } else {
-             if (session->rerr) {
-                 error_propagate(errp, session->rerr);
-@@ -580,7 +578,11 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
-                            "Cannot read from TLS channel: %s",
-                            gnutls_strerror(ret));
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index 4169ad9a75..2eccd71b3c 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -326,11 +326,11 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+                                         Error **errp)
+ {
+     gnutls_x509_crt_t cert_to_check = cert;
+-    bool checking_issuer = true;
+     int retval = 0;
++    gnutls_datum_t dn = {};
+ 
+-    while (checking_issuer) {
+-        checking_issuer = false;
++    for (;;) {
++        gnutls_x509_crt_t cert_issuer = NULL;
+ 
+         if (gnutls_x509_crt_check_issuer(cert_to_check,
+                                          cert_to_check)) {
+@@ -345,19 +345,30 @@ qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
+         for (int i = 0; i < ncacerts; i++) {
+             if (gnutls_x509_crt_check_issuer(cert_to_check,
+                                              cacerts[i])) {
+-                retval = qcrypto_tls_creds_check_cert(
+-                    creds, cacerts[i], cacertFile,
+-                    isServer, isCA, errp);
+-                if (retval < 0) {
+-                    return retval;
+-                }
+-                cert_to_check = cacerts[i];
+-                checking_issuer = true;
++                cert_issuer = cacerts[i];
+                 break;
              }
--            return -1;
-+            if (ret == GNUTLS_E_PREMATURE_TERMINATION) {
-+                return QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION;
-+            } else {
-+                return -1;
-+            }
          }
++        if (!cert_issuer) {
++            break;
++        }
++
++        if (qcrypto_tls_creds_check_cert(creds, cert_issuer, cacertFile,
++                                         isServer, isCA, errp) < 0) {
++            return -1;
++        }
++
++        cert_to_check = cert_issuer;
      }
  
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 1fbed4be0c..70fad38d18 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -368,6 +368,7 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-                                      int flags,
-                                      Error **errp)
- {
-+    ERRP_GUARD();
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
-     size_t i;
-     ssize_t got = 0;
-@@ -384,13 +385,13 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
-             } else {
-                 return QIO_CHANNEL_ERR_BLOCK;
-             }
--        } else if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION) {
--            if (qio_channel_tls_allow_premature_termination(tioc, flags)) {
--                ret = 0;
--            } else {
--                return -1;
--            }
-         } else if (ret < 0) {
-+            if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION &&
-+                qio_channel_tls_allow_premature_termination(tioc, flags)) {
-+                error_free(*errp);
-+                *errp = NULL;
-+                return got;
-+            }
-             return -1;
-         }
-         got += ret;
++    retval = gnutls_x509_crt_get_dn2(cert_to_check, &dn);
++    if (retval < 0) {
++        error_setg(errp, "Unable to fetch cert DN: %s",
++                   gnutls_strerror(retval));
++        return -1;
++    }
++    error_setg(errp, "Cert '%s' has no issuer in CA chain", dn.data);
++    g_free(dn.data);
+     return -1;
+ }
+ 
+diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
+index 85f51aee1b..7c5df32bcc 100644
+--- a/tests/unit/test-crypto-tlscredsx509.c
++++ b/tests/unit/test-crypto-tlscredsx509.c
+@@ -643,6 +643,15 @@ int main(int argc, char **argv)
+                               certchain_with_invalid,
+                               G_N_ELEMENTS(certchain_with_invalid));
+ 
++    gnutls_x509_crt_t certchain_incomplete[] = {
++        cacertrootreq.crt,
++        cacertlevel2areq.crt,
++    };
++
++    test_tls_write_cert_chain(WORKDIR "cacertchain-incomplete-ctx.pem",
++                              certchain_incomplete,
++                              G_N_ELEMENTS(certchain_incomplete));
++
+     TLS_TEST_REG(chain1, true,
+                  WORKDIR "cacertchain-ctx.pem",
+                  servercertlevel3areq.filename, false);
+@@ -652,6 +661,9 @@ int main(int argc, char **argv)
+     TLS_TEST_REG(certchainwithexpiredcert, false,
+                  WORKDIR "cacertchain-with-invalid-ctx.pem",
+                  clientcertlevel2breq.filename, false);
++    TLS_TEST_REG(chainincomplete, true,
++                 WORKDIR "cacertchain-incomplete-ctx.pem",
++                 servercertlevel3areq.filename, true);
+ 
+     /* Some missing certs - first two are fatal, the last
+      * is ok
 -- 
 2.50.1
 
