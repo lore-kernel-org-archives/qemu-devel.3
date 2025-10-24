@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C03ACCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FBBECCD1A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCC1u-0005yF-Lu; Fri, 24 Oct 2025 03:16:06 -0400
+	id 1vCC5B-0006qg-O8; Fri, 24 Oct 2025 03:19:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vCC1t-0005xz-EP
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:16:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vCC58-0006qO-4m
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:19:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vCC1p-00014L-LY
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:16:05 -0400
+ id 1vCC56-0001IW-2Q
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:19:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761290158;
+ s=mimecast20190719; t=1761290363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=LwY0CZyjTPV3LGOEdfpo91frV8S+3G4HeBfgmsZkQCATdQZFE5a+AE+c5uz/zjAIOs4oVm
- TLtxtsYQcVJnT6UmnIIfAFUo0U2D4T7w89ugvhdFK0040zGWebdBkDTYd/fHzMGlZCgsBB
- pRGU7oEXg6v02HT1w4fmKefv6GwBsZs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=h1qxonL+L9MKDWYeJ+RXK2VRKKtWw9z7Gm3e6WthLSM=;
+ b=AkuJVoDeQj3iW54tFPK2BIEuwiLSEt43vxLyz6dqnPNeNyM75gpT0mnET/Tg/4dmPWnjJJ
+ hLXUpXgP13xqWDG4Qh32T4sSptSRPIqNKVItMyuNL+5UsW9vaGdYgTDZGc4Ae3I6i6Hq08
+ 2MKcfUFkYNoGUeNjVqZZUu0J9MlVX2k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-yrnUKSoQMcedQKK2yjfT1g-1; Fri, 24 Oct 2025 03:15:54 -0400
-X-MC-Unique: yrnUKSoQMcedQKK2yjfT1g-1
-X-Mimecast-MFC-AGG-ID: yrnUKSoQMcedQKK2yjfT1g_1761290153
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3f384f10762so832050f8f.3
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 00:15:54 -0700 (PDT)
+ us-mta-578--g9t-5uUPuqW13RwJ3JOQQ-1; Fri, 24 Oct 2025 03:19:21 -0400
+X-MC-Unique: -g9t-5uUPuqW13RwJ3JOQQ-1
+X-Mimecast-MFC-AGG-ID: -g9t-5uUPuqW13RwJ3JOQQ_1761290360
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-46e4cb3e4deso9314935e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 00:19:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761290153; x=1761894953;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=w4P6/4DaRmVRLXsXBuWiDFCHAQq/R2YRYPNgCOP+hXI1IYihA+pLpZ/1S0o1iN9txO
- YgXSo4Hko9LNfr9hCzG8gpHR8KRyoyL2HGbWOQthpzEGX5yzaJ9ZB2ZxSwancGIk6iWU
- OgU89q6qhrSLlKhgqJQzsLBHCfLiF1A+ImALimu7kUqwmLLSzF42mKOEyb3ihhm/TbfO
- aXPtc7KxjprWfo9EPG6y+cHMOB437STOL6nbgJ0sVWUbTnU2BfeJmOByuAQhNTQjkb0e
- 1xKKL6HlIAsK3Chs1v87CgSI9p2NE3nrlhz3P2ujj++STFFueIkTNY1McF8G7D6hR5qf
- RIMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoGWdPnK+iMARvF0/S+UXaWT9S6uPHpSVI40kx/g9QKlWDrFwV+l8izOaeP/2sPqMC4nWwz5IEtPXF@nongnu.org
-X-Gm-Message-State: AOJu0YwMBEc3GFaTEwqhrBWYJUnC65Rc5b8zjF/gD2w7gzVXDEQhF5Sv
- oj3E0b0HDIn8M+lv3vUFUfJLKwxF5JwCVUEVlmhAPHzhiR0+9NhEErmF0SpnifTD6glFtnkjYc3
- OsC2hVQjR9zWt5Z77MlPC8SzrXLXDrMWV5Zido1jJyILZRMUjDk7n7Lni
-X-Gm-Gg: ASbGncsLmtLcb6xt2/jSWs1VXrdFYzmX5sFu25kG7iNDi4aCTUJNUHnDFZfP8+8dkGP
- MBS6NQFKHoYGds+WxlqKmO293otPMBB1DS4UtVZyVOCISJQidxBLymKJYRtkchv0sZqKThWD9V+
- WeIq44q4tDdgGVEMFJ32koOzmxBtrOyVJcLGFskapXS99rxD19Fy4ppaV4cRJL6q62r5c+GdiiL
- dEZylan5c+WXXZ2LaDBall/90Qg3M8k2zlo/dvWTVrBdRnA7VgEtAsjVJhbZ6Ab4I5UVTTtcZQJ
- b0asPYNBE5i9uWTlUUc4n0W0Glmlo99WFZlWAb8742JYFOeupNR2zH6bLJJCeyBc4RU5ly/E8Ab
- aLUAOBtG9Uo4nD6g0IXATDHSmbKzklt6PK2r7Wueh38U+4z7hMrglZUVw+EeYw2Gy+GE1skDS+Y
- syeg==
-X-Received: by 2002:a05:6000:401e:b0:427:809:f00b with SMTP id
- ffacd0b85a97d-429907473d1mr843305f8f.50.1761290152935; 
- Fri, 24 Oct 2025 00:15:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuz0p215bbSsNFJJ4kgNNrVotmo/dGasCM560NQmuJ8l6WCv9Xxl/RzPR3LioqYRrNB51edA==
-X-Received: by 2002:a05:6000:401e:b0:427:809:f00b with SMTP id
- ffacd0b85a97d-429907473d1mr843281f8f.50.1761290152546; 
- Fri, 24 Oct 2025 00:15:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761290360; x=1761895160;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h1qxonL+L9MKDWYeJ+RXK2VRKKtWw9z7Gm3e6WthLSM=;
+ b=oyq8NlLlMdc/48JR77JNxIjUsaJaMSUnVHtswL6rjJW+0pGudZ+iUJRJRGU8sXXB5K
+ LkUt8tZSuAfiGJUnUU90lrGqlQgAkMfHb9C4ObpeQTVNyKXCRbs9vc7bHWiwcoMfiWvC
+ WGSoIg5J7hU0x5n/Sl3PMMrJO9YlQhyyswmlDJ224A9VGNe7JEofRoi0/FicKQrOpS/8
+ PnaQSOnuLlph/S+Ph7a6ddUVjEr7lImZm7LLeILPqQxvQvqv8RjMILAPqJnoOBWMa1/U
+ x5ToN4xdpyhzkyVoDLYB5YyBpDbCmgC/Fqvv7wvO5kb76YJIiFm1Fo/O61XlWh5Bvsmr
+ 7Spw==
+X-Gm-Message-State: AOJu0YwTuoKUuOQHPPb1e0iqa8/vKptb+LGrPohy5ueIOYneS48cLdNF
+ 545/MNFkgJD165i8bs6oxk3F3KulSR64j4IjARQFHa3nGoEeZtFrRoJwtXuVS+fwCdUCvHtZ578
+ v1i8HtFn1J+J5flRdGoZEj9q2fNAh7ID1qGZ4OWpvPMunXLx61MsIA5per/pwYjuaSQrtPyrpam
+ 8bGpq1zTPsmwQr/IirAqSdsHyDa+SlGd0/eIZ2hZZ0
+X-Gm-Gg: ASbGncuFqaOB7qxH1SJv7giVTmdFp/oIKOlBKojfzTZRhcuo9lRn+u2BcocpV5BPWKq
+ XwhFibXK/jT4J3aE/o0L/4ttgSdC+gzYGIR62WP+lDyABTvBe5GBS3qHM0gvOhgOG4U8QDVoT/A
+ rMic4eP+mvCWii+3DXg6ssVYI03ygOD3KZwoHSeSd0KPS0BFmlgVtQ43ZnDzddrpKGJ1yFMS/Be
+ /Obd8zPJQqi97+3+Vh5oRIxx9kl9Q7RyvWTzKTXUdl4jQdw1inTZsxzGs3Wd3Znly5JM9MHQpbv
+ C2GVhsGbIxJlnNmIpkLlvwt2gwaqDgxhxpj95hYkeBTqFYz4N07IJ4ySZAmgeN/R4hDcA3+gm2Q
+ DOy03T4NgWrGwBPXPA7XKstRzctpmVFKYkNSb5tFEDY/sb65cJHjO/HdXtjq6YxK2lEY1VFmNLZ
+ HnVg==
+X-Received: by 2002:a05:600c:358c:b0:45c:b6d3:a11d with SMTP id
+ 5b1f17b1804b1-475d2412c06mr13698655e9.1.1761290359768; 
+ Fri, 24 Oct 2025 00:19:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHU6SgB8mgRHZPY4uScTWgtxiZOZ1ymnXU2sKxfnnAByvjqYWH5rxe/6X6mTJ/aNZNx7+wnRA==
+X-Received: by 2002:a05:600c:358c:b0:45c:b6d3:a11d with SMTP id
+ 5b1f17b1804b1-475d2412c06mr13698325e9.1.1761290359298; 
+ Fri, 24 Oct 2025 00:19:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.61.22.175])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429898ccd70sm9547069f8f.35.2025.10.24.00.15.51
+ 5b1f17b1804b1-475cae9f8eesm76613085e9.6.2025.10.24.00.19.18
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Oct 2025 00:15:51 -0700 (PDT)
+ Fri, 24 Oct 2025 00:19:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: imammedo@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/2] isapc: warn rather than reject modern x86 CPU models
-Date: Fri, 24 Oct 2025 09:15:50 +0200
-Message-ID: <20251024071550.226521-1-pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] target/i386: clear CPU_INTERRUPT_SIPI for all accelerators
+Date: Fri, 24 Oct 2025 09:19:18 +0200
+Message-ID: <20251024071918.228749-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251023142926.964718-1-mark.caveayland@nutanix.com>
-References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,8 +106,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Similar to what commit df32e5c5 did for TCG; fixes boot with multiple
+processors on WHPX and probably more accelerators
 
-Paolo
+Fixes: df32e5c568c ("i386/cpu: Prevent delivering SIPI during SMM in TCG mode", 2025-10-14)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3178
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/hvf/x86hvf.c    | 1 +
+ target/i386/kvm/kvm.c       | 1 +
+ target/i386/nvmm/nvmm-all.c | 1 +
+ target/i386/whpx/whpx-all.c | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+index a502437c303..3838c9f5a6f 100644
+--- a/target/i386/hvf/x86hvf.c
++++ b/target/i386/hvf/x86hvf.c
+@@ -446,6 +446,7 @@ int hvf_process_events(CPUState *cs)
+         cs->halted = 0;
+     }
+     if (cpu_test_interrupt(cs, CPU_INTERRUPT_SIPI)) {
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
+         cpu_synchronize_state(cs);
+         do_cpu_sipi(cpu);
+     }
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 3095625b525..23a0329d7a5 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -5659,6 +5659,7 @@ int kvm_arch_process_async_events(CPUState *cs)
+         cs->halted = 0;
+     }
+     if (cpu_test_interrupt(cs, CPU_INTERRUPT_SIPI)) {
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
+         kvm_cpu_synchronize_state(cs);
+         do_cpu_sipi(cpu);
+     }
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index 2e442baf4b7..60c9b975562 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -709,6 +709,7 @@ nvmm_vcpu_loop(CPUState *cpu)
+         cpu->halted = false;
+     }
+     if (cpu_test_interrupt(cpu, CPU_INTERRUPT_SIPI)) {
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
+         nvmm_cpu_synchronize_state(cpu);
+         do_cpu_sipi(x86_cpu);
+     }
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 256761834c9..1cb33001cc4 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1621,6 +1621,7 @@ static void whpx_vcpu_process_async_events(CPUState *cpu)
+     }
+ 
+     if (cpu_test_interrupt(cpu, CPU_INTERRUPT_SIPI)) {
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_SIPI);
+         whpx_cpu_synchronize_state(cpu);
+         do_cpu_sipi(x86_cpu);
+     }
+-- 
+2.51.0
 
 
