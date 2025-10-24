@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201F2CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA89CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 18:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCMrd-0005db-Hz; Fri, 24 Oct 2025 14:50:13 -0400
+	id 1vCMsc-0005z7-D3; Fri, 24 Oct 2025 14:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCMrb-0005dH-Em; Fri, 24 Oct 2025 14:50:11 -0400
+ id 1vCMsZ-0005x1-Ky; Fri, 24 Oct 2025 14:51:11 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCMrZ-0003hh-AI; Fri, 24 Oct 2025 14:50:11 -0400
+ id 1vCMsX-0003mU-Le; Fri, 24 Oct 2025 14:51:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=T6f/Wb0rJA+ZjSfZQBNbJyUWta3KDccIAnOnrcPexZM=; b=PDl85yebiS1IinpdHx1Z05Ip2A
- Efi/pJhOzApHjJmw4TfNYqu1KrxxENxA0epHqatV6cctmpvoBtx0cT3GQ1T+bFcs6V+8TbtjyDKim
- ycooz0OFm2Z75w5/dBQwFTiTR/lFv/bnC3Bj3wCT/4bjivzlaS2lK6ZW4+a2PFU0q0QnKiK9sKjSb
- KGQzItY4g00Jsc3XvBG20TTo5rgYJuxgBTyD951c5bf0rBfwfl7uAvKEwnB7vs4gC0Xw4zUyQ4WyN
- OcDp+sD6Oomt7YRQPer3dDj/H0pXketzeSAnXoHuPNFT+dV9LwE+vWHMABJZVHdFqJxKhW1YbJe/U
- l6ej+/BPo/vrXXlIk5tIings/8VT0bLkEGPHafKPMWFP2DSm85Ev1gR7/seU3N0Hjv9Gy28QldkuU
- lm8rP5a7byr6RDiiNGq2oz5fvJMzrOawbos4GD16+5WfbzVFiT+Q07JtpYB2h9EO+XHREuBdAh4g3
- 0NDg6QUbQon9jQcMn+f1erx2LGWiWra+ACOht37DMUA62v1URNi56kQ1HVu5bDFjiNCCh3qcCM+BY
- weQdQV2FKJwPmEOSV4CvMBkSEHquhhn8G0S8yh80fELNYMnCzbrd4aQ/yK9AKU+MrLPRYIHn4DiSg
- rNpDJLDou40wMJTYRAit1FHYSG01CsHOgVxq8BlNg=;
+ bh=sisQzolJPTdubEX7W/qvFv42/OZgStnF2J5ERyw41fI=; b=NNf+WXlDK6661vehtmOYi3cuEb
+ zUsZOFiOx6byukXHqGC+N/uI3u5JZOODnKYsWG3eHhJZ2iorWwq3TM0kkxeSg4wvwDqK+479WPO2+
+ LBk4LLFEaRZ8knBtEUjFRxRk3Fd3PbNfTHhznrIOsbDcTKqCp3CghGp4xarEd9YLMW2HO6DHkHBa5
+ BwPHKUDA+Zwt3s+jDbxa2K5zJHF/2mff3s/a5bpd5qnWy86Wvd5IzfwnxKgNNPrKsYkie99jldvTp
+ Ba0Mg+QJV2y0x0vVcjTfej0v1z/I+rKhGnNspyGK7hBHDAgrbGYcDksUrDsCqIEVSrENrvmTpeTdL
+ 7JW7Pv2Qt4uUoQ1WBqMQoHZkbL3j6yUmWdCXDrAu50/y8HkiwLrDezwv7ArujbWpUbDg4epgS6KsH
+ oxOG7mwH1+K4WD+hHKzsmHKndJrY9pdL1lsIbTrkpaRyPyULkIAUn91NjLyN80/jbWaUVMQfftTBs
+ hUS0vsAWkbfptrKvTUhFw8HL5pYF/TrlOAdFSIbu4m8caRy78FfsD+535xezkyNbsPI9pIyZzOySz
+ nSryzId8l8Y2PDg+FGBmxPllFuiZuWT8P5LedkbYIyktP1bvh7HZiteQtICUnofjuVTkiHS3aODXI
+ qnTFA3at+wV6DU8BJrV7ao04lL3iBh02Sy9Wb6bNc=;
 Received: from [2a02:8012:2f01:0:521c:3ef:78b8:2419]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vCMpF-000B57-Rp; Fri, 24 Oct 2025 19:47:49 +0100
-Message-ID: <663659f9-62a9-4943-bc75-c61990e6dc11@ilande.co.uk>
-Date: Fri, 24 Oct 2025 19:49:45 +0100
+ id 1vCMqH-000B5i-8O; Fri, 24 Oct 2025 19:48:53 +0100
+Message-ID: <bbbf39fc-f6cc-4988-8f59-e49fa2e153a9@ilande.co.uk>
+Date: Fri, 24 Oct 2025 19:51:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
@@ -48,7 +48,7 @@ Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Markus Armbruster <armbru@redhat.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <cover.1761232472.git.balaton@eik.bme.hu>
- <5a60e395d72e5eb4d01093434fbb645d72ac567a.1761232472.git.balaton@eik.bme.hu>
+ <3c4cb144c24a2a729669549c4c0e6e47d230e68e.1761232472.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -75,13 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <5a60e395d72e5eb4d01093434fbb645d72ac567a.1761232472.git.balaton@eik.bme.hu>
+In-Reply-To: <3c4cb144c24a2a729669549c4c0e6e47d230e68e.1761232472.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:521c:3ef:78b8:2419
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v5 01/13] hw/pci-host/raven: Simplify creating PCI facing
- part
+Subject: Re: [PATCH v5 02/13] hw/pci-host/raven: Simplify PCI facing part
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,58 +108,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/10/2025 16:26, BALATON Zoltan wrote:
 
-> There is no need to init and realize the PCI facing part of the host
-> bridge separately as it does not expose any properties that need to be
-> available before realize. It can be simpilfied using pci_create_simple.
+> The raven PCI device does not need a state struct as it has no data to
+> store there any more, so we can remove that to simplify code.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/pci-host/raven.c | 11 +----------
->   1 file changed, 1 insertion(+), 10 deletions(-)
+>   hw/pci-host/raven.c | 19 -------------------
+>   1 file changed, 19 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index eacffc86d8..c0492d1456 100644
+> index c0492d1456..fa76e5170c 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -65,7 +65,6 @@ struct PRePPCIState {
->       MemoryRegion bm_ram_alias;
->       MemoryRegion bm_pci_memory_alias;
->       AddressSpace bm_as;
-> -    RavenPCIState pci_dev;
+> @@ -31,7 +31,6 @@
+>   #include "hw/pci/pci_bus.h"
+>   #include "hw/pci/pci_host.h"
+>   #include "hw/qdev-properties.h"
+> -#include "migration/vmstate.h"
+>   #include "hw/intc/i8259.h"
+>   #include "hw/irq.h"
+>   #include "hw/or-irq.h"
+> @@ -40,12 +39,6 @@
+>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
 >   
->       int contiguous_map;
->   };
-> @@ -260,8 +259,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
->                             "pci-intack", 1);
->       memory_region_add_subregion(address_space_mem, 0xbffffff0, &s->pci_intack);
->   
-> -    /* TODO Remove once realize propagates to child devices. */
-> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
-> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), TYPE_RAVEN_PCI_DEVICE);
->   }
->   
->   static void raven_pcihost_initfn(Object *obj)
-> @@ -269,7 +267,6 @@ static void raven_pcihost_initfn(Object *obj)
->       PCIHostState *h = PCI_HOST_BRIDGE(obj);
->       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
->       MemoryRegion *address_space_mem = get_system_memory();
-> -    DeviceState *pci_dev;
->   
->       memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
->       memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
-> @@ -306,12 +303,6 @@ static void raven_pcihost_initfn(Object *obj)
->       pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
->   
->       h->bus = &s->pci_bus;
+> -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
 > -
-> -    object_initialize(&s->pci_dev, sizeof(s->pci_dev), TYPE_RAVEN_PCI_DEVICE);
-> -    pci_dev = DEVICE(&s->pci_dev);
-> -    object_property_set_int(OBJECT(&s->pci_dev), "addr", PCI_DEVFN(0, 0),
-> -                            NULL);
-> -    qdev_prop_set_bit(pci_dev, "multifunction", false);
+> -struct RavenPCIState {
+> -    PCIDevice dev;
+> -};
+> -
+>   typedef struct PRePPCIState PREPPCIState;
+>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+> @@ -312,16 +305,6 @@ static void raven_realize(PCIDevice *d, Error **errp)
+>       d->config[PCI_CAPABILITY_LIST] = 0x00;
 >   }
 >   
->   static void raven_realize(PCIDevice *d, Error **errp)
+> -static const VMStateDescription vmstate_raven = {
+> -    .name = "raven",
+> -    .version_id = 0,
+> -    .minimum_version_id = 0,
+> -    .fields = (const VMStateField[]) {
+> -        VMSTATE_PCI_DEVICE(dev, RavenPCIState),
+> -        VMSTATE_END_OF_LIST()
+> -    },
+> -};
+> -
+>   static void raven_class_init(ObjectClass *klass, const void *data)
+>   {
+>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+> @@ -333,7 +316,6 @@ static void raven_class_init(ObjectClass *klass, const void *data)
+>       k->revision = 0x00;
+>       k->class_id = PCI_CLASS_BRIDGE_HOST;
+>       dc->desc = "PReP Host Bridge - Motorola Raven";
+> -    dc->vmsd = &vmstate_raven;
+>       /*
+>        * Reason: PCI-facing part of the host bridge, not usable without
+>        * the host-facing part, which can't be device_add'ed, yet.
+> @@ -344,7 +326,6 @@ static void raven_class_init(ObjectClass *klass, const void *data)
+>   static const TypeInfo raven_info = {
+>       .name = TYPE_RAVEN_PCI_DEVICE,
+>       .parent = TYPE_PCI_DEVICE,
+> -    .instance_size = sizeof(RavenPCIState),
+>       .class_init = raven_class_init,
+>       .interfaces = (const InterfaceInfo[]) {
+>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
