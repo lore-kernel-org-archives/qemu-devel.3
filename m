@@ -4,71 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D9D8CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 11:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A30ACCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 11:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCFpf-0008Ea-9l; Fri, 24 Oct 2025 07:19:43 -0400
+	id 1vCFv1-0000hK-9Z; Fri, 24 Oct 2025 07:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vCFpd-0008E0-69
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 07:19:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vCFux-0000h0-0t; Fri, 24 Oct 2025 07:25:11 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vCFpb-0002PP-JQ
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 07:19:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761304778;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PWGREZMJAe0FtvAba+hFh7LvomgEQeN2ryqRcCQs6jY=;
- b=PIkZHjkUMPGV+VZQXfOLT7qR177VfXAiMlhK+ssI3qvOIn4Zq/mRA03tXpkG6hIbqWQIjN
- Qr5tRR1rPlDZ5yQTbMg6SSsw5HuI/1NXZM/bbJlXVzXU/nueOjAsHbe0fL+CCL7yD3IL+f
- 9U88zh286kenmrnA4z46ZDTCI+07F/A=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-dRVa-QrLPX2d4sDoJDLqCQ-1; Fri,
- 24 Oct 2025 07:19:33 -0400
-X-MC-Unique: dRVa-QrLPX2d4sDoJDLqCQ-1
-X-Mimecast-MFC-AGG-ID: dRVa-QrLPX2d4sDoJDLqCQ_1761304772
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91639195410F; Fri, 24 Oct 2025 11:19:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.249])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4187930002D7; Fri, 24 Oct 2025 11:19:29 +0000 (UTC)
-Date: Fri, 24 Oct 2025 13:19:27 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Jeff Cody <codyprime@gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Mark VHDX block driver as "Odd Fixes"
-Message-ID: <aPtgv3P-pOH2z_zN@redhat.com>
-References: <20251002125446.2500179-1-peter.maydell@linaro.org>
- <CAFEAcA_gQXgUJukHJt9RhOHK34SwtnoPf2PYgnMjrLWfFqhw0w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vCFuu-0003Fh-6d; Fri, 24 Oct 2025 07:25:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B0C71597456;
+ Fri, 24 Oct 2025 13:25:02 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id pHPCwg5B4zsa; Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A751359744F; Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A54DB59736A;
+ Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
+Date: Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Vishal Chourasia <vishalc@linux.ibm.com>
+cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com, 
+ npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com
+Subject: Re: [Patch v9 3/6] core/loader: improve error handling in image
+ loading functions
+In-Reply-To: <20251024092616.1893092-6-vishalc@linux.ibm.com>
+Message-ID: <aecf60d5-8bb2-48bb-28b5-20b58729fb56@eik.bme.hu>
+References: <20251024092616.1893092-2-vishalc@linux.ibm.com>
+ <20251024092616.1893092-6-vishalc@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_gQXgUJukHJt9RhOHK34SwtnoPf2PYgnMjrLWfFqhw0w@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,13 +66,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 23.10.2025 um 15:20 hat Peter Maydell geschrieben:
-> Ping -- would a block layer maintainer like to pick this up?
+On Fri, 24 Oct 2025, Vishal Chourasia wrote:
+> Add error checking for lseek() failure and provide better error
+> messages when image loading fails, including filenames and addresses.
+>
+> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+> ---
+> hw/core/loader.c | 16 +++++++++++++++-
+> 1 file changed, 15 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 7aca4989ef..48dd4e7b33 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -79,6 +79,10 @@ int64_t get_image_size(const char *filename, Error **errp)
+>     if (fd < 0)
+>         return -1;
+>     size = lseek(fd, 0, SEEK_END);
+> +    if (size < 0) {
+> +        error_setg_errno(errp, errno, "lseek failure: %s", filename);
+> +        return -1;
+> +    }
+>     close(fd);
+>     return size;
+> }
+> @@ -129,14 +133,24 @@ ssize_t load_image_targphys_as(const char *filename,
+>                                hwaddr addr, uint64_t max_sz, AddressSpace *as,
+>                                Error **errp)
+> {
+> +    ERRP_GUARD();
+>     ssize_t size;
+>
+>     size = get_image_size(filename, errp);
+> -    if (size < 0 || size > max_sz) {
+> +    if (*errp) {
+> +        return -1;
+> +    }
+> +
+> +    if (size > max_sz) {
+> +        error_setg(errp, "%s exceeds maximum image size (%" PRIu64 " MiB)",
+> +                   filename, max_sz / MiB);
 
-Sure. (CC would have helped me to see it sooner.)
+MiB is arbitrary here. This function is used to load all kinds of images 
+such as ROMs which may be 64k-2MB or even executables in generic loader 
+that can be a few kilobytes. This might result in errors saying max size 
+is 0 MiB if the allowed size is less than a MiB (e.g. amigaone PROM_SIZE = 
+512 KiB) and integer division discards fractions. Do we have a function to 
+pretty print sizes or maybe this should be left as bytes or at most 
+kilobytes?
 
-Thanks, applied to the block branch.
+Regards,
+BALATON Zoltan
 
-Kevin
-
+>         return -1;
+>     }
+> +
+>     if (size > 0) {
+>         if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
+> +            error_setg(errp, "could not load '%s' at %" HWADDR_PRIx,
+> +                       filename, addr);
+>             return -1;
+>         }
+>     }
+>
 
