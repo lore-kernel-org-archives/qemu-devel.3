@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F03CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539AFCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCNe7-0006rq-7m; Fri, 24 Oct 2025 15:40:19 -0400
+	id 1vCNep-0007Ia-RX; Fri, 24 Oct 2025 15:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNdp-0006kI-M7
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:40:04 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCNdm-0002jS-DJ
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:40:01 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4711b95226dso27423755e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:39:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761334796; x=1761939596; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4FzH6bP8ELPeYTP6y896Uws7RnQ1srjQZb3yYWsL6TA=;
- b=vs3sD/SmtdeD9Xnty1aPNbmRcYbQWzC8qB/DKqTLow5PCacmGE9jv1x1lwZSjH9Lo5
- S8kGRZlIKNJholuAZhfPyu+J5FOINlrDqrrZlA4+DbFGsWEZTPd0L3TA8HIUeSsmc2HR
- MbWCjUbXYW8KjUg+X25L+cTvIWMbHrh9mXtwyVsnqYbYR7JHUoEVeqX27IWXwbuvRWDP
- HF3+y9uVi/ztnzIg0l9ZHO10i78vPL8qnVFXay0PnSgKFQEge6GY6GFwNuixRdP+Qcfc
- vZCfyeA69UjZw1QuyeLPbltphnCmnwqdpE++2BuPBvIMD2mLKzIi50NZCusoTb6/Fv5I
- moJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761334796; x=1761939596;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4FzH6bP8ELPeYTP6y896Uws7RnQ1srjQZb3yYWsL6TA=;
- b=fcf1d1uGLUiNG9579vIS4RMF2yvKruVUbk79mOhNto61yY2cTnB5NXPEqX5Rw+Suwz
- wjGXp1/tVv9JCUUuWsNtIp/EZFQO/HIH3LeRBot+SvmgPIcnPXHaE4sSLPSPYOdGW5Mp
- 9nCXa/JXjqiJV8g/juZPO5hne2YC7G5IJI59MNlCPsWK2eabqVnFg7GFiKMO9/TrPRT2
- BISEuhQhg52VrQ0zkY1t9ngtwkL/8vmRuOmWCmo+Y74bSU1DEJLaq3bfzTIbdBKgwXlj
- vthNs9rtHb8aO66UPeU3M8CHPYhNZK+GN2PLioZrvwamTTYfPmuivQuaweo+mXeIdX59
- WMkQ==
-X-Gm-Message-State: AOJu0YwCsnwN52/7y1j5ZnCHHT1c9xTMuEHSzzNidVcN3+brwB0SNrxc
- pquYgWfYo1TZhMekR6JEiD+/sYLwc2yBBffcBrIg/w2894dUenPUrW+jCns4FSLOmQNGANg9TtM
- tb8SCCII=
-X-Gm-Gg: ASbGncue61UX9cAAErtJ9m9eMo+qNQrwRV2YeRiKsagBqil65tUT0yH2U4Et7lWQQyz
- BRd6CswTVDZuwAwDQP4iXYp+1EsBwxFvrjqlzm4IGflpQZ4WNfIVtwSpCDLaciAIvGCndmXXsKK
- tnA5v4RRme9CvIdCJ9TV6JE+hP3pBUQ0V7PC36RQKF9a8SHpnrWSDOKLDF6vOP9hP8bup9de7K4
- BecfGq198Z9bvQAo+b9o1kNWcKFF43TsHyAt6vsZzpHvJ6d2q4TJa+d9x/zGgEKnyK8UonVz65r
- Y4/io+ZVszeu33Bz6FxQQrSow9zUnHHKJPy9iv9VNYb7qngKIPV6qopM+BXnkA6by+lE8f145Yh
- OmDHDdfMZBMaxubLA6+3fsZ2waq5CFoQvVBzEPCgCpMo/ajRMJlmcJyu8CtUOYg+9kdKwO2k5PK
- qxq+Lj73ArpPLsc22WuFwIJXrDBQeVtlmNiLlkFVU9LPKAG71FXy8afxVPgKXk
-X-Google-Smtp-Source: AGHT+IFkKcF2kN3btUwRTFmlvWK1OjhqWr1tuBBt4m2MdygZA5bFcoeTQb0Zn2LUOkdPsNXkJc+D+w==
-X-Received: by 2002:a05:6000:2406:b0:427:a27:3a6c with SMTP id
- ffacd0b85a97d-4270a273c43mr19858859f8f.63.1761334796188; 
- Fri, 24 Oct 2025 12:39:56 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952de971sm20312f8f.39.2025.10.24.12.39.54
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Oct 2025 12:39:54 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 23/27] hw/xilinx: Include 'exec/cpu-common.h' and
- 'system/memory.h' headers
-Date: Fri, 24 Oct 2025 21:04:10 +0200
-Message-ID: <20251024190416.8803-24-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251024190416.8803-1-philmd@linaro.org>
-References: <20251024190416.8803-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vCNeb-0007DC-9D; Fri, 24 Oct 2025 15:40:52 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vCNeZ-0002z9-2k; Fri, 24 Oct 2025 15:40:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=3jabX5j3zKWCVEHgBcqKHqACw6r0ZQMjg6DzvhR2sKc=; b=LtzzqAnOeqmpDQnQM43pQ3uY6O
+ rncjy9U0dAKYDnLWcgP/qaLuJba6WyZu8unt4vo8RCOXdzShk9lRHa3EgzB5tsh3U/+82hWK5xV0s
+ FoIRQavQhJk3vgzK0JdkC3b+yNH/0GRx+jeZFzzxjnN9phEmc3EJ3yZSMG4MM3eMym77j0iRXdk2a
+ jH6ycQEykxvaTsdzmDX4W0jxmACohil9BIcKd5zZCGLOwAVpC5WDhRNKtuq9Sa+Lj7+nIieielckl
+ dx7NcAkUBhLOHkFvxOEP7d6oaAFeCWU2bUidHuMZ5mz5jx6/6cx1yb5utbg4XOJ3LJrxiGI6VzN6A
+ gw9vM9pp76mcMvkPtGaWoxuSt8XFWycFkMfjJNjWl7YECweq5EwyjRk4U0dJVtWNC8rleF20jBhuQ
+ a8IV3ku8rqSqMlqeWXfCp8GZbqJTtw+pxIXcJCQXtHnCmdIwaSNnSXgvd1Z4jVFLBspVMTktTCOnP
+ JXEWpSoGakEX5OJhHYekcOnobHvo11/zt/hiX6O9qIz6BhuLFJqB1nsff4WJe7afT8Ekj17iaEpgo
+ DtLjXiYhxSVcDdsyGPZqh4Fa506KWWN8XJrDh1HdEOpQE654q7dJIXhAgNHZVKozEPlpiDmLEFqGw
+ R4gqzGxLpLfUk2X1RMQSMTTo8AGaiFhFo5pn7l2Mk=;
+Received: from [2a02:8012:2f01:0:521c:3ef:78b8:2419]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vCNcI-000BOr-Ev; Fri, 24 Oct 2025 20:38:26 +0100
+Message-ID: <1201fe45-f822-4e1e-8cd7-84b23eaa2bd0@ilande.co.uk>
+Date: Fri, 24 Oct 2025 20:40:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20251024190416.8803-1-philmd@linaro.org>
+ <20251024190416.8803-4-philmd@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20251024190416.8803-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:521c:3ef:78b8:2419
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 03/27] hw/sysbus: Use memory_region_name()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,147 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"exec/cpu-common.h" and "system/memory.h" headers are indirectly
-pulled by "hw/sysbus.h". Include them explicitly to avoid when
-refactoring the latter:
+On 24/10/2025 20:03, Philippe Mathieu-Daudé wrote:
 
-  hw/ssi/xilinx_spi.c:88:5: error: unknown type name 'EndianMode'
-     88 |     EndianMode model_endianness;
-        |     ^
-  hw/ssi/xilinx_spi.c:89:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     89 |     MemoryRegion mmio;
-        |                  ^
-  hw/timer/xilinx_timer.c:77:5: error: unknown type name 'EndianMode'
-     77 |     EndianMode model_endianness;
-        |     ^
-  hw/timer/xilinx_timer.c:78:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     78 |     MemoryRegion mmio;
-        |                  ^
-  hw/char/xilinx_uartlite.c:61:5: error: unknown type name 'EndianMode'
-     61 |     EndianMode model_endianness;
-        |     ^
-  hw/char/xilinx_uartlite.c:62:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     62 |     MemoryRegion mmio;
-        |                  ^
-  hw/intc/xilinx_intc.c:57:5: error: unknown type name 'EndianMode'
-     57 |     EndianMode model_endianness;
-        |     ^
-  hw/intc/xilinx_intc.c:58:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-     58 |     MemoryRegion mmio;
-        |                  ^
-  hw/net/xilinx_axienet.c:320:18: error: field has incomplete type 'MemoryRegion' (aka 'struct MemoryRegion')
-    320 |     MemoryRegion iomem;
-        |                  ^
-  hw/net/xilinx_axienet.c:645:19: error: use of undeclared identifier 'DEVICE_LITTLE_ENDIAN'
-    645 |     .endianness = DEVICE_LITTLE_ENDIAN,
-        |                   ^
+> MemoryRegion::name is kind of internal. Use the proper
+> memory_region_name() accessor, which might return a different
+> name.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/core/sysbus.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+> index ae447c1196a..d33be6b2b52 100644
+> --- a/hw/core/sysbus.c
+> +++ b/hw/core/sysbus.c
+> @@ -154,7 +154,7 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
+>   int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
+>   {
+>       for (int i = 0; i < dev->num_mmio; i++) {
+> -        if (!strcmp(dev->mmio[i].memory->name, name)) {
+> +        if (!strcmp(memory_region_name(dev->mmio[i].memory), name)) {
+>               sysbus_mmio_map(dev, i, addr);
+>               return i;
+>           }
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/char/xilinx_uartlite.c | 2 ++
- hw/intc/xilinx_intc.c     | 2 ++
- hw/net/xilinx_axienet.c   | 2 ++
- hw/ssi/xilinx_spi.c       | 2 ++
- hw/timer/xilinx_timer.c   | 2 ++
- 5 files changed, 10 insertions(+)
+Interesting. I'm mildly curious as to if you discovered anything that broke with this 
+change (even though I agree it is correct)?
 
-diff --git a/hw/char/xilinx_uartlite.c b/hw/char/xilinx_uartlite.c
-index 8008171eea9..94f5bc22a1c 100644
---- a/hw/char/xilinx_uartlite.c
-+++ b/hw/char/xilinx_uartlite.c
-@@ -25,6 +25,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-common.h"
- #include "hw/char/xilinx_uartlite.h"
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
-@@ -33,6 +34,7 @@
- #include "qemu/module.h"
- #include "chardev/char-fe.h"
- #include "qom/object.h"
-+#include "system/memory.h"
- 
- #define DUART(x)
- 
-diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
-index 5257ad54b17..5aa85ada5f8 100644
---- a/hw/intc/xilinx_intc.c
-+++ b/hw/intc/xilinx_intc.c
-@@ -27,12 +27,14 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-common.h"
- #include "hw/sysbus.h"
- #include "qemu/module.h"
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
- #include "qom/object.h"
-+#include "system/memory.h"
- 
- #define D(x)
- 
-diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-index 1f5c7480476..f4f2571c228 100644
---- a/hw/net/xilinx_axienet.c
-+++ b/hw/net/xilinx_axienet.c
-@@ -31,10 +31,12 @@
- #include "net/net.h"
- #include "net/checksum.h"
- 
-+#include "exec/cpu-common.h"
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
- #include "hw/stream.h"
- #include "qom/object.h"
-+#include "system/memory.h"
- 
- #define DPHY(x)
- 
-diff --git a/hw/ssi/xilinx_spi.c b/hw/ssi/xilinx_spi.c
-index 4144c8a6270..6039a654c3d 100644
---- a/hw/ssi/xilinx_spi.c
-+++ b/hw/ssi/xilinx_spi.c
-@@ -26,6 +26,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-common.h"
- #include "hw/sysbus.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
-@@ -36,6 +37,7 @@
- #include "hw/qdev-properties-system.h"
- #include "hw/ssi/ssi.h"
- #include "qom/object.h"
-+#include "system/memory.h"
- 
- #ifdef XILINX_SPI_ERR_DEBUG
- #define DB_PRINT(...) do { \
-diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-index ff4a224d08f..51658ee2bd9 100644
---- a/hw/timer/xilinx_timer.c
-+++ b/hw/timer/xilinx_timer.c
-@@ -27,6 +27,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-common.h"
- #include "hw/sysbus.h"
- #include "hw/irq.h"
- #include "hw/ptimer.h"
-@@ -35,6 +36,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qom/object.h"
-+#include "system/memory.h"
- 
- #define D(x)
- 
--- 
-2.51.0
+
+ATB,
+
+Mark.
 
 
