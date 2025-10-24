@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F08CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 17:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C67CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 17:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCLAX-0001Hh-0C; Fri, 24 Oct 2025 13:01:37 -0400
+	id 1vCLRR-0003WW-8N; Fri, 24 Oct 2025 13:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLAU-0001HI-Mo
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:01:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLRQ-0003W6-B8
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:19:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLAQ-000685-QZ
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:01:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCLRO-0008EI-3h
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 13:19:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761325288;
+ s=mimecast20190719; t=1761326340;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DshxyYX4shI5ZySFLf3diEEMmNU2wG9DB1pkYigNfUM=;
- b=Dg4kuUz2/tTVXUNLFCDsCkhdbLN4rFClGrqfYZDBa9vuUF956nLoHNhC/Rrvi4qQWv6Y7a
- +wL3PB7tRP2LedK8tgIes64W0/aQQ0MiXbMR/edEQSdeCXS7Ppk4hDenOXA7NxJweimQyW
- NdcxdXhmpj8EoWtIRNb0q0dj8k7EdIY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F0kMmeKl4YZ06uBU9gD3D9MgpcSdq9tB67fzkejJ8js=;
+ b=RUjkbLaIPBMUS1x4W/Y4cgMkn9q3w1L3kgJ4Km9BCJKjb6enp3aa2ePWVLfOhDEcIkg5Bx
+ nKCmi4wZt+362v0wnV/2Nps7F5mSiJZsfTNqYVBFYMeDktunnCf+UuHTB3pgxd10FvW/ij
+ XXg41zyW7xM7C6BpgE257BkyK1d7qO8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-157-hqr5ow5XNwOfJcsmLUGLkg-1; Fri, 24 Oct 2025 13:01:27 -0400
-X-MC-Unique: hqr5ow5XNwOfJcsmLUGLkg-1
-X-Mimecast-MFC-AGG-ID: hqr5ow5XNwOfJcsmLUGLkg_1761325286
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-471005f28d2so11971585e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 10:01:26 -0700 (PDT)
+ us-mta-223-fKgyziGwPOG66igLwxi4CQ-1; Fri, 24 Oct 2025 13:18:58 -0400
+X-MC-Unique: fKgyziGwPOG66igLwxi4CQ-1
+X-Mimecast-MFC-AGG-ID: fKgyziGwPOG66igLwxi4CQ_1761326337
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3f7b5c27d41so1672203f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 10:18:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761325286; x=1761930086;
+ d=1e100.net; s=20230601; t=1761326337; x=1761931137;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DshxyYX4shI5ZySFLf3diEEMmNU2wG9DB1pkYigNfUM=;
- b=bZh9+3EkO3Ke8Cg1zevomHQ6d3dsJQp54ldjXTy47NlpE9PnotSUvpFtv93FiTlLL7
- c5BDP+PP1CaNOTfaiOpITFhjSaTk5MgfeMbofq8+6ohLQwMFFwF66zns+E3WkemEkdVj
- U3HW3D3MQNPkrnSBqSPM/RxCU7uJ3C2liM0M9W3IbYLvJimp1CTR8UlAlYaB0xfKD1AC
- iSMHEMgAF0rfY+mY6qe/e8fI5X0JKRKGEZvv9yxx8Bt4IQ3eOYgd4GabzpxsYfU5h25+
- lF0XjwFOD5ObPCSBZJSbbSOtoud8JmMgqLwX6ERFUG0m+GzYQ33xSkFmKtnHvN5t07/O
- RqVg==
+ bh=F0kMmeKl4YZ06uBU9gD3D9MgpcSdq9tB67fzkejJ8js=;
+ b=bvVhlwdOLHAQd7ZaSn3dMf1mHRn3vrJywP7hMgPYbhhmNLHOWNWvzWlSVNVivGlv/K
+ tdkFgjYn/1HPgVKInyzry7Bb9Ft9aUG1e/1SOWCY6RSrGbIDE16LMig8jq3JdoMSBPBN
+ +oi9d6xRe/VK+r/Szyj3SO0WqbHj8cBuBJERqdZ5CZm3seHucFtAG1KdFkug/gbScsGA
+ sJKaSi85iK5AzcFoiPzuT2s5pC7wwwLRPUucUGYrzn7Nylf70qqJl8dgngXiS1aOUWM0
+ u8UT/kGmJyBwg5axmZ5DSthpbIDQkcTsDw474t/alreFlmSlLY+XFWR+Phbx1Wdh2RrT
+ lamg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0AsG9UueLBzwvmloZDVvvd4/fVJlrm1IWJeMmWHxEvgjXpWPaMrL2jN6T91tq7gKPuYJF7GOdszzh@nongnu.org
-X-Gm-Message-State: AOJu0YwoxPOs+Zgz87GvUEd+aDo4RCyMVGpYidiGWhphsKN8dfAJOEe8
- V5wEbOfpzXJ3QwyR82DGs/nDsar5n3LsaXZPYN+OGYtbQUmOoxkYLI3PA8ZxgnBKUU9Z92Zmy69
- 19bo8egDbIDL4LDG4ORbN791MLOBFkKuc5D7yFgs7b/PCPTce6eLtE9ri
-X-Gm-Gg: ASbGncsJHtu545RlG8PoyLO0N6Fl5hwv75u0NGKxP1prBoZelBQgp2Rfu1AwVWhPrf4
- lgjClkHi5zdbmCGC3HrhvQA5bSmM4ArimYWVRARVwzFPxPyvR91dq3n9q8VOHOgKrEIboaARbPd
- yzk2t1qFpjEEGAhl9ryZoz7DiVxrxr77A091T8GxuMoPahnuOTukaFKnGSf0oTCb7AxYvT63+q+
- 74VU4xb+7cDwE1OvNBg1ISgDPApzilZGxDznePzKzlsYnQP+Ke9ug7beeWVe5SGgo8TxGiUTBBG
- nPC84aaSJa4GjZ+aBXOtfB66qDzS9qPRL3grBQxcHBDdfEdK1HQKGCbmF32klW7TBS9h4mXt
-X-Received: by 2002:a05:600c:c091:b0:46f:b42e:edcf with SMTP id
- 5b1f17b1804b1-47117925d66mr158249185e9.40.1761325285788; 
- Fri, 24 Oct 2025 10:01:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHA3sr6EYrzyuDVFd3+DRzEWO0IkWZjsjwmPrpdS4zK4X3Ar565t8EWHA5PHXPkwkwmvMuFw==
-X-Received: by 2002:a05:600c:c091:b0:46f:b42e:edcf with SMTP id
- 5b1f17b1804b1-47117925d66mr158248875e9.40.1761325285306; 
- Fri, 24 Oct 2025 10:01:25 -0700 (PDT)
+ AJvYcCX6liALwXCncKubV0Hr4GEP4qyUIbsFRYp+ppBdl7Z+r2wKcbJzliDo0mzOrDMD4FPRHA5msM4ez3d5@nongnu.org
+X-Gm-Message-State: AOJu0Yx4pddbQ4bWjlYMXILko2V/BE7Qh+rxYeCV+73gbLbwCFheihxa
+ 1oL2j4zVJLcFP1KvrrW36dYaYV0GL1qVXrHPFp9cZYYDSOioJe7LhYvpFdKECTUgNl5JrmZAd82
+ +ZG2O5e0LMmlNvg1tfXYcvYk79JuXfNXHoVKHpiaUB+4iCfO0t6NvxpqU
+X-Gm-Gg: ASbGncsNY8ZlSgL3QS+ormrhZOF9O8gKkWS6km6qA0UlQFhN4z7+NZ5SflcMU1rUmhD
+ q73vOBq/8FvpG6BS9XvAhReH0SQT/RrpkGKH3+NVtzTqITR2p90XaMfLp6Glf9tY7mTuwbJdOg5
+ ad4N31cpZE5GJVlGBeHN8ZuN/hNjP2cbA1e1+l/is8D+YeG+kEeWSiv0+PREybb83ghTq638Hap
+ tN4t/N9BqY8fpXZ+KIEVB4tIQE4vZi9snCaNej8iYi64CvKoJALzZxZpnWNnDC2uF1/+jjMVaB6
+ V8yuFsymaJW6SvYoONsp99YqpdQSnu34ZvN7cOFk5RtS0bHl/ZHYDAjxGKo5iriPEBIAbcjV
+X-Received: by 2002:a05:6000:2689:b0:425:7e33:b4a9 with SMTP id
+ ffacd0b85a97d-4298f489f65mr3656628f8f.0.1761326337306; 
+ Fri, 24 Oct 2025 10:18:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9spf4DBAd7sK53BIkqMVf6nOc8FCsfHar6n07eCDHG3GvGXyYBLeBmuQK5Y7j+/SQ54M3KA==
+X-Received: by 2002:a05:6000:2689:b0:425:7e33:b4a9 with SMTP id
+ ffacd0b85a97d-4298f489f65mr3656599f8f.0.1761326336901; 
+ Fri, 24 Oct 2025 10:18:56 -0700 (PDT)
 Received: from [10.54.0.145] ([147.135.244.229])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c43900e1sm189920625e9.17.2025.10.24.10.01.18
+ ffacd0b85a97d-429898ccc60sm10354188f8f.34.2025.10.24.10.18.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 10:01:24 -0700 (PDT)
-Message-ID: <90e0d491-e59e-4093-812e-57627baea452@redhat.com>
-Date: Fri, 24 Oct 2025 19:01:17 +0200
+ Fri, 24 Oct 2025 10:18:56 -0700 (PDT)
+Message-ID: <8dccb89a-f41b-4ae0-9f9d-f39f609766ee@redhat.com>
+Date: Fri, 24 Oct 2025 19:18:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 13/23] intel_iommu: Bind/unbind guest page table to host
+Subject: Re: [PATCH v7 05/23] hw/pci: Introduce pci_device_get_viommu_flags()
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>
+ chao.p.peng@intel.com
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-14-zhenzhong.duan@intel.com>
+ <20251024084349.102322-6-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -130,9 +130,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251024084349.102322-14-zhenzhong.duan@intel.com>
+In-Reply-To: <20251024084349.102322-6-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -159,61 +159,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/24/25 10:43, Zhenzhong Duan wrote:
-> This captures the guest PASID table entry modifications and propagates
-> the changes to host to attach a hwpt with type determined per guest IOMMU
-> PGTT configuration.
+> Introduce a new PCIIOMMUOps optional callback, get_viommu_flags() which
+> allows to retrieve flags exposed by a vIOMMU. The first planned vIOMMU
+> device flag is VIOMMU_FLAG_WANT_NESTING_PARENT that advertises the
+> support of HW nested stage translation scheme and wants other sub-system
+> like VFIO's cooperation to create nesting parent HWPT.
 > 
-> When PGTT=PT, attach PASID_0 to a second stage HWPT(GPA->HPA).
-> When PGTT=FST, attach PASID_0 to nested HWPT with nesting parent HWPT
-> coming from VFIO.
+> pci_device_get_viommu_flags() is a wrapper that can be called on a PCI
+> device potentially protected by a vIOMMU.
 > 
-> Co-Authored-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> get_viommu_flags() is designed to return 64bit bitmap of purely vIOMMU
+> flags which are only determined by user's configuration, no host
+> capabilities involved. Reasons are:
+> 
+> 1. host may has heterogeneous IOMMUs, each with different capabilities
+> 2. this is migration friendly, return value is consistent between source
+>     and target.
+> 
+> Note that this op will be invoked at the attach_device() stage, at which
+> point host IOMMU capabilities are not yet forwarded to the vIOMMU through
+> the set_iommu_device() callback that will be after the attach_device().
+> 
+> See below sequence:
+> 
+>    vfio_device_attach():
+>        iommufd_cdev_attach():
+>            pci_device_get_viommu_flags() for HW nesting cap
+>            create a nesting parent HWPT
+>            attach device to the HWPT
+>            vfio_device_hiod_create_and_realize() creating hiod
+>    ...
+>    pci_device_set_iommu_device(hiod)
+> 
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 > ---
->   include/hw/i386/intel_iommu.h |   1 +
->   hw/i386/intel_iommu.c         | 150 +++++++++++++++++++++++++++++++++-
->   hw/i386/trace-events          |   3 +
->   3 files changed, 151 insertions(+), 3 deletions(-)
-> 
-> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-> index 3758ac239c..b5f8a9fc29 100644
-> --- a/include/hw/i386/intel_iommu.h
-> +++ b/include/hw/i386/intel_iommu.h
-> @@ -104,6 +104,7 @@ struct VTDAddressSpace {
->       PCIBus *bus;
->       uint8_t devfn;
->       uint32_t pasid;
-> +    uint32_t fs_hwpt;
->       AddressSpace as;
->       IOMMUMemoryRegion iommu;
->       MemoryRegion root;          /* The root container of the device */
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 871e6aad19..3789a36147 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -20,6 +20,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->   #include "qemu/error-report.h"
->   #include "qemu/main-loop.h"
->   #include "qapi/error.h"
-> @@ -42,6 +43,9 @@
->   #include "migration/vmstate.h"
->   #include "trace.h"
->   #include "system/iommufd.h"
-> +#ifdef CONFIG_IOMMUFD
-> +#include <linux/iommufd.h>
-> +#endif
+>   MAINTAINERS          |  1 +
+>   include/hw/iommu.h   | 25 +++++++++++++++++++++++++
 
 
-Exposing IOMMUFD in the Intel vIOMMU is unexpected. Initially, we
-introduced HostIOMMUDeviceClass to avoid exposing the IOMMU backends.
-Are we OK to bypass this abstract layer now ?
+Hmm, why not under include/hw/pci/ ? Was this discussed ?
 
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
@@ -221,214 +212,115 @@ C.
 
 
 
-  >   /* context entry operations */
->   #define PASID_0    0
-> @@ -87,6 +91,7 @@ struct vtd_iotlb_key {
+>   include/hw/pci/pci.h | 22 ++++++++++++++++++++++
+>   hw/pci/pci.c         | 11 +++++++++++
+>   4 files changed, 59 insertions(+)
+>   create mode 100644 include/hw/iommu.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 36eef27b41..d94fbcbdfb 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2338,6 +2338,7 @@ F: include/system/iommufd.h
+>   F: backends/host_iommu_device.c
+>   F: include/system/host_iommu_device.h
+>   F: include/qemu/chardev_open.h
+> +F: include/hw/iommu.h
+>   F: util/chardev_open.c
+>   F: docs/devel/vfio-iommufd.rst
 >   
->   static void vtd_address_space_refresh_all(IntelIOMMUState *s);
->   static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
-> +static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, Error **errp);
+> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
+> new file mode 100644
+> index 0000000000..9b8bb94fc2
+> --- /dev/null
+> +++ b/include/hw/iommu.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * General vIOMMU flags
+> + *
+> + * Copyright (C) 2025 Intel Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_IOMMU_H
+> +#define HW_IOMMU_H
+> +
+> +#include "qemu/bitops.h"
+> +
+> +/*
+> + * Theoretical vIOMMU flags. Only determined by the vIOMMU device properties and
+> + * independent on the actual host IOMMU capabilities they may depend on. Each
+> + * flag can be an expectation or request to other sub-system or just a pure
+> + * vIOMMU capability. vIOMMU can choose which flags to expose.
+> + */
+> +enum viommu_flags {
+> +    /* vIOMMU needs nesting parent HWPT to create nested HWPT */
+> +    VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
+> +};
+> +
+> +#endif /* HW_IOMMU_H */
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index bde9dca8e2..cf99b5bb68 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -462,6 +462,18 @@ typedef struct PCIIOMMUOps {
+>        * @devfn: device and function number of the PCI device.
+>        */
+>       void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
+> +    /**
+> +     * @get_viommu_flags: get vIOMMU flags
+> +     *
+> +     * Optional callback, if not implemented, then vIOMMU doesn't support
+> +     * exposing flags to other sub-system, e.g., VFIO.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * Returns: bitmap with each representing a vIOMMU flag defined in
+> +     * enum viommu_flags.
+> +     */
+> +    uint64_t (*get_viommu_flags)(void *opaque);
+>       /**
+>        * @get_iotlb_info: get properties required to initialize a device IOTLB.
+>        *
+> @@ -644,6 +656,16 @@ bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+>                                    Error **errp);
+>   void pci_device_unset_iommu_device(PCIDevice *dev);
 >   
->   static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
->   {
-> @@ -98,7 +103,11 @@ static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
->       g_hash_table_iter_init(&as_it, s->vtd_address_spaces);
->       while (g_hash_table_iter_next(&as_it, NULL, (void **)&vtd_as)) {
->           VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-> -        pc_entry->valid = false;
-> +        if (pc_entry->valid) {
-> +            pc_entry->valid = false;
-> +            /* It's fatal to get failure during reset */
-> +            vtd_bind_guest_pasid(vtd_as, &error_fatal);
-> +        }
+> +/**
+> + * pci_device_get_viommu_flags: get vIOMMU flags.
+> + *
+> + * Returns: bitmap with each representing a vIOMMU flag defined in
+> + * enum viommu_flags. Or 0 if vIOMMU doesn't report any.
+> + *
+> + * @dev: PCI device pointer.
+> + */
+> +uint64_t pci_device_get_viommu_flags(PCIDevice *dev);
+> +
+>   /**
+>    * pci_iommu_get_iotlb_info: get properties required to initialize a
+>    * device IOTLB.
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index d0e81651aa..c9932c87e3 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -3010,6 +3010,17 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
 >       }
 >   }
 >   
-> @@ -2380,6 +2389,128 @@ static void vtd_context_global_invalidate(IntelIOMMUState *s)
->       vtd_iommu_replay_all(s);
->   }
->   
-> +#ifdef CONFIG_IOMMUFD
-> +static int vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +                              VTDPASIDEntry *pe, uint32_t *fs_hwpt,
-> +                              Error **errp)
+> +uint64_t pci_device_get_viommu_flags(PCIDevice *dev)
 > +{
-> +    struct iommu_hwpt_vtd_s1 vtd = {};
+> +    PCIBus *iommu_bus;
 > +
-> +    vtd.flags = (VTD_SM_PASID_ENTRY_SRE_BIT(pe) ? IOMMU_VTD_S1_SRE : 0) |
-> +                (VTD_SM_PASID_ENTRY_WPE_BIT(pe) ? IOMMU_VTD_S1_WPE : 0) |
-> +                (VTD_SM_PASID_ENTRY_EAFE_BIT(pe) ? IOMMU_VTD_S1_EAFE : 0);
-> +    vtd.addr_width = vtd_pe_get_fs_aw(pe);
-> +    vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
-> +
-> +    return !iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                       idev->hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
-> +                                       sizeof(vtd), &vtd, fs_hwpt, errp);
-> +}
-> +
-> +static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +                                    VTDAddressSpace *vtd_as)
-> +{
-> +    if (!vtd_as->fs_hwpt) {
-> +        return;
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->get_viommu_flags) {
+> +        return iommu_bus->iommu_ops->get_viommu_flags(iommu_bus->iommu_opaque);
 > +    }
-> +    iommufd_backend_free_id(idev->iommufd, vtd_as->fs_hwpt);
-> +    vtd_as->fs_hwpt = 0;
-> +}
-> +
-> +static int vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-> +                                     VTDAddressSpace *vtd_as, Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +    VTDPASIDEntry *pe = &vtd_as->pasid_cache_entry.pasid_entry;
-> +    uint32_t hwpt_id;
-> +    bool ret;
-> +
-> +    /*
-> +     * We can get here only if flts=on, the supported PGTT is FST and PT.
-> +     * Catch invalid PGTT when processing invalidation request to avoid
-> +     * attaching to wrong hwpt.
-> +     */
-> +    if (!vtd_pe_pgtt_is_fst(pe) && !vtd_pe_pgtt_is_pt(pe)) {
-> +        error_setg(errp, "Invalid PGTT type");
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (vtd_pe_pgtt_is_pt(pe)) {
-> +        hwpt_id = idev->hwpt_id;
-> +    } else if (vtd_create_fs_hwpt(idev, pe, &hwpt_id, errp)) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    ret = host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp);
-> +    trace_vtd_device_attach_hwpt(idev->devid, vtd_as->pasid, hwpt_id, !ret);
-> +    if (ret) {
-> +        /* Destroy old fs_hwpt if it's a replacement */
-> +        vtd_destroy_old_fs_hwpt(idev, vtd_as);
-> +        if (vtd_pe_pgtt_is_fst(pe)) {
-> +            vtd_as->fs_hwpt = hwpt_id;
-> +        }
-> +    } else if (vtd_pe_pgtt_is_fst(pe)) {
-> +        iommufd_backend_free_id(idev->iommufd, hwpt_id);
-> +    }
-> +
-> +    return !ret;
-> +}
-> +
-> +static int vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-> +                                     VTDAddressSpace *vtd_as, Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +    IntelIOMMUState *s = vtd_as->iommu_state;
-> +    uint32_t pasid = vtd_as->pasid;
-> +    bool ret;
-> +
-> +    if (s->dmar_enabled && s->root_scalable) {
-> +        ret = host_iommu_device_iommufd_detach_hwpt(idev, errp);
-> +        trace_vtd_device_detach_hwpt(idev->devid, pasid, !ret);
-> +    } else {
-> +        /*
-> +         * If DMAR remapping is disabled or guest switches to legacy mode,
-> +         * we fallback to the default HWPT which contains shadow page table.
-> +         * So guest DMA could still work.
-> +         */
-> +        ret = host_iommu_device_iommufd_attach_hwpt(idev, idev->hwpt_id, errp);
-> +        trace_vtd_device_reattach_def_hwpt(idev->devid, pasid, idev->hwpt_id,
-> +                                           !ret);
-> +    }
-> +
-> +    if (ret) {
-> +        vtd_destroy_old_fs_hwpt(idev, vtd_as);
-> +    }
-> +
-> +    return !ret;
-> +}
-> +
-> +static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, Error **errp)
-> +{
-> +    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-> +    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
-> +    int ret;
-> +
-> +    /* Ignore emulated device or legacy VFIO backed device */
-> +    if (!vtd_hiod) {
-> +        return 0;
-> +    }
-> +
-> +    if (pc_entry->valid) {
-> +        ret = vtd_device_attach_iommufd(vtd_hiod, vtd_as, errp);
-> +    } else {
-> +        ret = vtd_device_detach_iommufd(vtd_hiod, vtd_as, errp);
-> +    }
-> +
-> +    return ret;
-> +}
-> +#else
-> +static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, Error **errp)
-> +{
 > +    return 0;
 > +}
-> +#endif
 > +
->   /* Do a context-cache device-selective invalidation.
->    * @func_mask: FM field after shifting
->    */
-> @@ -3134,6 +3265,8 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->       VTDPASIDEntry pe;
->       IOMMUNotifier *n;
->       uint16_t did;
-> +    const char *err_prefix;
-> +    Error *local_err = NULL;
->   
->       if (vtd_dev_get_pe_from_pasid(vtd_as, &pe)) {
->           if (!pc_entry->valid) {
-> @@ -3154,7 +3287,9 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->               vtd_address_space_unmap(vtd_as, n);
->           }
->           vtd_switch_address_space(vtd_as);
-> -        return;
-> +
-> +        err_prefix = "Detaching from HWPT failed: ";
-> +        goto do_bind_unbind;
->       }
->   
->       /*
-> @@ -3182,12 +3317,21 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->       if (!pc_entry->valid) {
->           pc_entry->pasid_entry = pe;
->           pc_entry->valid = true;
-> -    } else if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
-> +        err_prefix = "Attaching to HWPT failed: ";
-> +    } else if (vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
-> +        err_prefix = "Replacing HWPT attachment failed: ";
-> +    } else {
->           return;
->       }
->   
->       vtd_switch_address_space(vtd_as);
->       vtd_address_space_sync(vtd_as);
-> +
-> +do_bind_unbind:
-> +    /* TODO: Fault event injection into guest, report error to QEMU for now */
-> +    if (vtd_bind_guest_pasid(vtd_as, &local_err)) {
-> +        error_reportf_err(local_err, "%s", err_prefix);
-> +    }
->   }
->   
->   static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-> index b704f4f90c..5a3ee1cf64 100644
-> --- a/hw/i386/trace-events
-> +++ b/hw/i386/trace-events
-> @@ -73,6 +73,9 @@ vtd_warn_invalid_qi_tail(uint16_t tail) "tail 0x%"PRIx16
->   vtd_warn_ir_vector(uint16_t sid, int index, int vec, int target) "sid 0x%"PRIx16" index %d vec %d (should be: %d)"
->   vtd_warn_ir_trigger(uint16_t sid, int index, int trig, int target) "sid 0x%"PRIx16" index %d trigger %d (should be: %d)"
->   vtd_reset_exit(void) ""
-> +vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
-> +vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
-> +vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
->   
->   # amd_iommu.c
->   amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
+>   int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
+>                            bool exec_req, hwaddr addr, bool lpig,
+>                            uint16_t prgi, bool is_read, bool is_write)
 
 
