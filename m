@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6454BCCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55EA4CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCBOO-0003Uj-7G; Fri, 24 Oct 2025 02:35:16 -0400
+	id 1vCBOX-0003Ym-Bt; Fri, 24 Oct 2025 02:35:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCBOL-0003UP-7j
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:13 -0400
+ id 1vCBOR-0003Xu-4q
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:19 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCBOI-0003kG-Hf
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:12 -0400
+ id 1vCBOP-0003kG-BG
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:35:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761287711; x=1792823711;
+ t=1761287717; x=1792823717;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=hgZVF5yOjTiT/cqOb4vICgZJdehG/NoYvKjkMr72MLQ=;
- b=jsUUyBHirlmdg3nDAoh0gxnHEN8/Ovv1369plhXApV4ArfSFGWH9zYSu
- oxip7a9YdA/LEoxQtxlmJUpHKZVJjMxCM5m5h8OCMG06MTSP3AZkjrVlH
- BWmK4P3tqbdGqCySiiH0GnTaPxzI88sHa48xZTROYyh32obLlbXPk5obZ
- VP/UbUF53MTcR43S2QHyP7YCAFH9X+f30y8elAZzd8hlLB0TzqAMoePT5
- UUnPQFcX56vXQMYj6PzV8egfEPK+RvQ+MeyfBtGUbG19bOJP24MQdte5h
- 7CpyqolU+8cutvhL33LWgs2qdpgjZIzQFrKzemTcGI1TYJ8SV8h6tHoDB w==;
-X-CSE-ConnectionGUID: moztmNvrRhCJDXz+4M2gIw==
-X-CSE-MsgGUID: kFiUGrFDTz6UXg717BknHQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74137883"
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="74137883"
+ bh=q1llAB51wlYD8DExeRchjbchwIbqPcgnJ8aGmhooIHs=;
+ b=By965o7DuvBgMG7lNCDnN96JwA8X67cTSlUpv4cY7C/8UD1ga60SZ9fp
+ NmAMUnZF5BYnQWt7PPPvwEl9Srlm9YV3OZCSFg1NRTvmwpEhnXC3GBNt5
+ 7QMQc889PC2u/ZEBBuFwkixk3BY+5eIHajLUheQbQWGUme6St0abk0OMi
+ dqMTTv/l+q+3BnQwRn9AGHqnuPP6c6PkVZZGRSmP1nPrAVjA84GrXC99S
+ 0P5ekR2dBcKQEk3rTuuWG0bZxTIFzhlBt2TEpBigAUn2AJpm6WICXeKIZ
+ N0aLE1QgGIe/dbgm78ce9EC+Mdgevap9DOVL2KSmHFnBwQz30S1pU/ANx Q==;
+X-CSE-ConnectionGUID: AEUk+y4fT52k7fLQJR8Y6g==
+X-CSE-MsgGUID: kFxMChShQimR3bbxMo5ZTw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74137891"
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="74137891"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 23:35:10 -0700
-X-CSE-ConnectionGUID: k+loaOomT4esGWD24LR1Hg==
-X-CSE-MsgGUID: JXZ5mRxMRDa0NViqr9Tl8w==
+ 23 Oct 2025 23:35:17 -0700
+X-CSE-ConnectionGUID: zdda8MoeRuaoDINh3c/nxA==
+X-CSE-MsgGUID: mKBG2dchQsOb/9ZT/rM9Xg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184276030"
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184276073"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 23 Oct 2025 23:35:06 -0700
+ by fmviesa006.fm.intel.com with ESMTP; 23 Oct 2025 23:35:14 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -53,9 +53,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Zide Chen <zide.chen@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Farrah Chen <farrah.chen@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 08/20] i386/cpu: Drop pmu check in CPUID 0x1C encoding
-Date: Fri, 24 Oct 2025 14:56:20 +0800
-Message-Id: <20251024065632.1448606-9-zhao1.liu@intel.com>
+Subject: [PATCH v3 10/20] i386/cpu: Add missing migratable xsave features
+Date: Fri, 24 Oct 2025 14:56:22 +0800
+Message-Id: <20251024065632.1448606-11-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251024065632.1448606-1-zhao1.liu@intel.com>
 References: <20251024065632.1448606-1-zhao1.liu@intel.com>
@@ -86,40 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since CPUID_7_0_EDX_ARCH_LBR will be masked off if pmu is disabled,
-there's no need to check CPUID_7_0_EDX_ARCH_LBR feature with pmu.
+Xtile-cfg & xtile-data are both user xstates. Their xstates are cached
+in X86CPUState, and there's a related vmsd "vmstate_amx_xtile", so that
+it's safe to mark them as migratable.
+
+Arch lbr xstate is a supervisor xstate, and it is save & load by saving
+& loading related arch lbr MSRs, which are cached in X86CPUState, and
+there's a related vmsd "vmstate_arch_lbr". So it's also safe to mark it
+as migratable (even though KVM hasn't supported it - its migration
+support is completed in QEMU).
+
+PT is still unmigratable since KVM disabled it and there's no vmsd and
+no other emulation/simulation support.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5b7a81fcdb1b..5cd335bb5574 100644
+index 1917376dbea9..b01729ad36d2 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -8275,11 +8275,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         break;
-     }
--    case 0x1C:
--        if (cpu->enable_pmu && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
--            x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
--            *edx = 0;
-+    case 0x1C: /* Last Branch Records Information Leaf */
-+        *eax = 0;
-+        *ebx = 0;
-+        *ecx = 0;
-+        *edx = 0;
-+        if (!(env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-+            break;
-         }
-+        x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
-+        *edx = 0; /* EDX is reserved. */
-         break;
-     case 0x1D: {
-         /* AMX TILE, for now hardcoded for Sapphire Rapids*/
+@@ -1522,7 +1522,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
+-            XSTATE_PKRU_MASK,
++            XSTATE_PKRU_MASK | XSTATE_ARCH_LBR_MASK | XSTATE_XTILE_CFG_MASK |
++            XSTATE_XTILE_DATA_MASK,
+     },
+     [FEAT_XSAVE_XCR0_HI] = {
+         .type = CPUID_FEATURE_WORD,
 -- 
 2.34.1
 
