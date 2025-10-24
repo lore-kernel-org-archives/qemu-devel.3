@@ -4,53 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A30ACCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 11:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 746F5CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 11:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCFv1-0000hK-9Z; Fri, 24 Oct 2025 07:25:15 -0400
+	id 1vCFxQ-0001U7-1Q; Fri, 24 Oct 2025 07:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vCFux-0000h0-0t; Fri, 24 Oct 2025 07:25:11 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vCFxK-0001Tf-3n
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 07:27:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vCFuu-0003Fh-6d; Fri, 24 Oct 2025 07:25:10 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B0C71597456;
- Fri, 24 Oct 2025 13:25:02 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id pHPCwg5B4zsa; Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A751359744F; Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A54DB59736A;
- Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
-Date: Fri, 24 Oct 2025 13:25:00 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Vishal Chourasia <vishalc@linux.ibm.com>
-cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com, 
- npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com
-Subject: Re: [Patch v9 3/6] core/loader: improve error handling in image
- loading functions
-In-Reply-To: <20251024092616.1893092-6-vishalc@linux.ibm.com>
-Message-ID: <aecf60d5-8bb2-48bb-28b5-20b58729fb56@eik.bme.hu>
-References: <20251024092616.1893092-2-vishalc@linux.ibm.com>
- <20251024092616.1893092-6-vishalc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vCFxG-0003ZF-Lm
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 07:27:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761305252;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=XseWFTip55d81N5cRWV84qEQeXCezeJaBKMQXKmPQtE=;
+ b=BysD2fSqQNXCN0izT1wtJ15y268sCH2CWheHq9+qKzkLO98EYC6h3OE2pxLvqcBtALGmoP
+ 0Ka7gRHfzCw+nVNxLRou/T5xfc6KCjKNstIDWB7QeS4xH8uOpKqH4XEOHBK84ePbOrSKw9
+ t1RLtdQxKB5u3ZUGFuONzSJ+Q0JObNA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-cuqsoXAsMm-UMxu6vS7cbg-1; Fri,
+ 24 Oct 2025 07:27:31 -0400
+X-MC-Unique: cuqsoXAsMm-UMxu6vS7cbg-1
+X-Mimecast-MFC-AGG-ID: cuqsoXAsMm-UMxu6vS7cbg_1761305250
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4ED38196F748; Fri, 24 Oct 2025 11:27:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5982730002D7; Fri, 24 Oct 2025 11:27:26 +0000 (UTC)
+Date: Fri, 24 Oct 2025 12:27:23 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org,
+ peterx@redhat.com, farosas@suse.de
+Subject: Re: [PATCH] migration: Don't free the reason after calling
+ migrate_add_blocker
+Message-ID: <aPtim8ZACUWyje2o@redhat.com>
+References: <20251024092821.82220-1-guobin@linux.alibaba.com>
+ <87o6pw1rfn.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87o6pw1rfn.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,70 +84,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Oct 2025, Vishal Chourasia wrote:
-> Add error checking for lseek() failure and provide better error
-> messages when image loading fails, including filenames and addresses.
->
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-> ---
-> hw/core/loader.c | 16 +++++++++++++++-
-> 1 file changed, 15 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index 7aca4989ef..48dd4e7b33 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -79,6 +79,10 @@ int64_t get_image_size(const char *filename, Error **errp)
->     if (fd < 0)
->         return -1;
->     size = lseek(fd, 0, SEEK_END);
-> +    if (size < 0) {
-> +        error_setg_errno(errp, errno, "lseek failure: %s", filename);
-> +        return -1;
-> +    }
->     close(fd);
->     return size;
-> }
-> @@ -129,14 +133,24 @@ ssize_t load_image_targphys_as(const char *filename,
->                                hwaddr addr, uint64_t max_sz, AddressSpace *as,
->                                Error **errp)
-> {
-> +    ERRP_GUARD();
->     ssize_t size;
->
->     size = get_image_size(filename, errp);
-> -    if (size < 0 || size > max_sz) {
-> +    if (*errp) {
-> +        return -1;
-> +    }
-> +
-> +    if (size > max_sz) {
-> +        error_setg(errp, "%s exceeds maximum image size (%" PRIu64 " MiB)",
-> +                   filename, max_sz / MiB);
+On Fri, Oct 24, 2025 at 01:15:40PM +0200, Markus Armbruster wrote:
+> Bin Guo <guobin@linux.alibaba.com> writes:
+> 
+> > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> > ---
+> >  hw/intc/arm_gicv3_kvm.c | 1 -
+> >  target/i386/sev.c       | 1 -
+> >  2 files changed, 2 deletions(-)
+> >
+> > diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+> > index 66b0dddfd4..6f311e37ef 100644
+> > --- a/hw/intc/arm_gicv3_kvm.c
+> > +++ b/hw/intc/arm_gicv3_kvm.c
+> > @@ -841,7 +841,6 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+> >          error_setg(&kvm_nv_migration_blocker,
+> >                     "Live migration disabled because KVM nested virt is enabled");
+> >          if (migrate_add_blocker(&kvm_nv_migration_blocker, errp)) {
+> > -            error_free(kvm_nv_migration_blocker);
+> >              return;
+> >          }
+> >  
+> > diff --git a/target/i386/sev.c b/target/i386/sev.c
+> > index 1057b8ab2c..fd2dada013 100644
+> > --- a/target/i386/sev.c
+> > +++ b/target/i386/sev.c
+> > @@ -1661,7 +1661,6 @@ sev_snp_launch_finish(SevCommonState *sev_common)
+> >      ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
+> >      if (local_err) {
+> >          error_report_err(local_err);
+> > -        error_free(sev_mig_blocker);
+> >          exit(1);
+> >      }
+> >  }
+> 
+> Does this fix use-after-free bugs?
 
-MiB is arbitrary here. This function is used to load all kinds of images 
-such as ROMs which may be 64k-2MB or even executables in generic loader 
-that can be a few kilobytes. This might result in errors saying max size 
-is 0 MiB if the allowed size is less than a MiB (e.g. amigaone PROM_SIZE = 
-512 KiB) and integer division discards fractions. Do we have a function to 
-pretty print sizes or maybe this should be left as bytes or at most 
-kilobytes?
+I don't think so, because when migrate_add_blocker() returns error,
+the Error for the blocker will have been propagated into the errp
+parameter, and then set to NULL. So these two error_free calls
+should be a no-op.
 
-Regards,
-BALATON Zoltan
+But wow, the migrate_add_blocker API design is unpleasant with its
+pair of "Error **" parameters - it is practically designed to
+maximise confusion & surprise.
 
->         return -1;
->     }
-> +
->     if (size > 0) {
->         if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
-> +            error_setg(errp, "could not load '%s' at %" HWADDR_PRIx,
-> +                       filename, addr);
->             return -1;
->         }
->     }
->
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
