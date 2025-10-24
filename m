@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25D5CCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 719E2CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 08:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCDRq-0007Rt-Sx; Fri, 24 Oct 2025 04:46:59 -0400
+	id 1vCDRp-0007E4-2d; Fri, 24 Oct 2025 04:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vCDRK-0006k9-3e
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:46:31 -0400
+ id 1vCDR6-0006PF-1T
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:46:12 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vCDRG-0006Vx-Fh
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:46:25 -0400
+ id 1vCDR1-0006Vx-3n
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 04:46:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761295582; x=1792831582;
+ t=1761295567; x=1792831567;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=LP1D7XetZb6ZhMXtSAU5yfiQPqQ/UQw5oX+K5RQFgU0=;
- b=nHX6wy8pCaR1K3Pj1d+wpxD0atB1dtu3yQY2nzyPvxubSJk14fA4Jy/2
- GvPn/Lj7galgzlSsHbbkhsj7xBFD9I0pyf6XQqhC0dbmMczoijfJ2Rif9
- xsnGFveAraGp+d85tP+kqELA1sMn4aHm44Nx5/uL2KmlAQ0tJ02QwBeT9
- JUeJ9pMYcD3QJN6x0DTQPV3zCWrKN0rlmVg6FugrpfSXgJBx+PjfOQJO2
- g0DyX7uLiKemxqsQ0irwnTaNdUQj924saJRMJbQT5pzGKNBwoUt31Tw11
- aaAFRmmTZb5sizu2G8NgYNeH9mCNoV2tqpQXNLbz0nRC3MAUqikch933w A==;
-X-CSE-ConnectionGUID: TdSgl7yZQo+iM7UFKkDUiA==
-X-CSE-MsgGUID: unAr2bzrTM+hl7oiytAtwA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62504927"
-X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="62504927"
+ bh=sQ4rQABjPT4FizzJIvKbATx14Hbt5+8x/jbVvdDB6Rk=;
+ b=Fpesn2QSJEzPxZZX6VXA2hgu9IjFxn5wkYtLyK4bZJmhUf0lCa5jsldb
+ S9MLKdzpcR77Q0hmZT2Qzna1toswmZlfRqTC+PhAIOG25qVI3N4mUKo/f
+ 3ibfLAFy1M9SyH0eqzI4DomZEyNN1ekTY5+WMbuYu8G4o1A2sE2qQHBDJ
+ SNz9pxZf3Ny8z1qMek/tAtOqUoTqoDjt4nrXlPxtQtLWzUzUoxiqLMxkM
+ HIp1JCnk5Z6WlK9gt8DLRc0hOPggia9YxcEsrBjmdyR3Utj1+IUCLecm5
+ xWVr/2xBJYzNEG8uQFHw5whaDi18AiPjxTEcJXyUNRo5ndh0SkV7iXFTa w==;
+X-CSE-ConnectionGUID: 9NN3qBWpQe6H7VpiosvFeQ==
+X-CSE-MsgGUID: YqvzpCOKQeiTiOB3TFDs3w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="62504903"
+X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="62504903"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 01:46:08 -0700
-X-CSE-ConnectionGUID: pN/Ux4sCQkOCn6iu8FWVmQ==
-X-CSE-MsgGUID: AanNRT4BQNSgSrO+k0UBsw==
+ 24 Oct 2025 01:45:55 -0700
+X-CSE-ConnectionGUID: 4QGJJ0xORQS3ewrLu3G/xQ==
+X-CSE-MsgGUID: 3MlgoxSSRaO4FUIAzD8Nrw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="183986151"
+X-IronPort-AV: E=Sophos;i="6.19,252,1754982000"; d="scan'208";a="183986069"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2025 01:46:04 -0700
+ 24 Oct 2025 01:45:51 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,9 +54,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v7 23/23] docs/devel: Add IOMMUFD nesting documentation
-Date: Fri, 24 Oct 2025 04:43:47 -0400
-Message-ID: <20251024084349.102322-24-zhenzhong.duan@intel.com>
+Subject: [PATCH v7 20/23] vfio: Bypass readonly region for dirty tracking
+Date: Fri, 24 Oct 2025 04:43:44 -0400
+Message-ID: <20251024084349.102322-21-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20251024084349.102322-1-zhenzhong.duan@intel.com>
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
@@ -87,48 +87,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation about using IOMMUFD backed VFIO device with intel_iommu with
-x-flts=on.
+When doing ditry tracking or calculating dirty tracking range, readonly
+regions can be bypassed, because corresponding DMA mappings are readonly
+and never become dirty.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
+This can optimize dirty tracking a bit for passthrough device.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- docs/devel/vfio-iommufd.rst | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ hw/vfio/listener.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
-index 3d1c11f175..f1e4d940e6 100644
---- a/docs/devel/vfio-iommufd.rst
-+++ b/docs/devel/vfio-iommufd.rst
-@@ -164,3 +164,28 @@ RAM discarding for mdev.
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 0862b2b834..cbd86c79af 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -828,7 +828,8 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+         container_of(listener, VFIODirtyRangesListener, listener);
+     hwaddr iova, end;
  
- ``vfio-ap`` and ``vfio-ccw`` devices don't have same issue as their backend
- devices are always mdev and RAM discarding is force enabled.
+-    if (!vfio_listener_valid_section(section, false, "tracking_update") ||
++    /* Bypass readonly section as it never become dirty */
++    if (!vfio_listener_valid_section(section, true, "tracking_update") ||
+         !vfio_get_section_iova_range(dirty->bcontainer, section,
+                                      &iova, &end, NULL)) {
+         return;
+@@ -1087,6 +1088,12 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     if (!mr) {
+         goto out_unlock;
+     }
 +
-+Usage with intel_iommu with x-flts=on
-+-------------------------------------
++    if (!(iotlb->perm & IOMMU_WO) || mr->readonly) {
++        rcu_read_unlock();
++        return;
++    }
 +
-+Only IOMMUFD backed VFIO device is supported when intel_iommu is configured
-+with x-flts=on, for legacy container backed VFIO device, below error shows:
-+
-+.. code-block:: none
-+
-+    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when x-flts=on
-+
-+VFIO device under PCI bridge is unsupported, use PCIE bridge if necessary,
-+or else below error shows:
-+
-+.. code-block:: none
-+
-+    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device under PCI bridge is unsupported when x-flts=on
-+
-+If host IOMMU has ERRATA_772415_SPR17, kexec or reboot from "intel_iommu=on,sm_on"
-+to "intel_iommu=on,sm_off" in guest is also unsupported. Configure scalable mode
-+off as below if it's not needed by guest.
-+
-+.. code-block:: bash
-+
-+    -device intel-iommu,x-scalable-mode=off
+     translated_addr = memory_region_get_ram_addr(mr) + xlat;
+ 
+     ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+@@ -1222,7 +1229,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+     int ret;
+     Error *local_err = NULL;
+ 
+-    if (vfio_listener_skipped_section(section, false)) {
++    if (vfio_listener_skipped_section(section, true)) {
+         return;
+     }
+ 
 -- 
 2.47.1
 
