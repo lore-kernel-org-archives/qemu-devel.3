@@ -4,59 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28AB4CCD193
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 00:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D17CCD193
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 00:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC5qC-0003E5-LL; Thu, 23 Oct 2025 20:39:36 -0400
+	id 1vC620-00064M-Pb; Thu, 23 Oct 2025 20:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vC4nz-0001iC-4h; Thu, 23 Oct 2025 19:33:15 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vC61x-000643-Qe
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 20:51:45 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1vC4nt-000218-K6; Thu, 23 Oct 2025 19:33:13 -0400
-DKIM-Signature: a=rsa-sha256; bh=AcXEnY0YmRHED/7Z4bIgl6aD2DbyZU0eJ0H0wjefJZ8=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1761262385; v=1;
- b=IxMU7sEHwRbCQTn+nNeT4dIOdwbm1eBsPe4vponz8hrZELCzC1Fgay9zdgh+Q+IY8AbHwwlr
- jtibdKPPTJ2vf3QYN4j4snhwnHrAK7AomqslTCzCwa99FXj7aSPeqffcyJ7P43pcKxwuQx/pF8N
- D5A9QoeWqn21uYfwmgSQvdPgw5D82Zj8jLTrGVyETkCU1IcaZcd1+l0aDaR+rtdejtFQ6BdlubF
- zjWVoH/W4GrKykCHEggF+t+xg/m9kDk62g5HuQ6EeFYXX0KN6WEluPuE6nL7kPN+vsLVvrroD/z
- 6ppPxNVz3aTQEfdCvwt4SkcPOPBBjkqEPdjSJCvoW0w3g==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 3CDAF23DD6;
- Thu, 23 Oct 2025 23:33:05 +0000 (UTC)
-From: ~abombo <abombo@git.sr.ht>
-Date: Wed, 22 Oct 2025 10:55:01 -0500
-Subject: [PATCH qemu 1/1] block: Don't regress when prep_writev2 isn't present
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vC61u-0005N3-Rp
+ for qemu-devel@nongnu.org; Thu, 23 Oct 2025 20:51:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761267103; x=1792803103;
+ h=message-id:date:mime-version:subject:from:to:cc:
+ references:in-reply-to:content-transfer-encoding;
+ bh=Nq2T+mtt4/jXbD9ztfl08Y+N1NJLtlENRQWzbWSeTYc=;
+ b=X7zdaFOk+fCFH43hy1VRv/1N1mX9PKqZ9qsxizbaubZFgg3zvfoptQBl
+ eAWBzz/Fj13PhNhitzEk8suxfjy50ZxYvbHGjVIMmzjk9qKFAozGhKts3
+ TFJDa5Mq/c9m+bY44rLFzBpLco2iRGVfpqlkpAaXppT+pqlleX3r3aOT8
+ dF7BhEk6Gp0fQUe6+IV25BrovMS6jMz7GkWOcYN0bxNS695bSjuzp2S6F
+ jC9vH53Q8zkMk9NnEgMqyhrQWaF0ucPDsJhab5MVkpY2gDJMXT9UzBlbM
+ fCsYjK26oVaQLPbmmTXc7RnnEUMNtRnOn7UkK8aoYXjoJ+p87EKeesvnf g==;
+X-CSE-ConnectionGUID: mgzCOZDbTdWVTMJTdb5RBQ==
+X-CSE-MsgGUID: M0TuIUvjRLKEIPLEz8oW4Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63485399"
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="63485399"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2025 17:51:40 -0700
+X-CSE-ConnectionGUID: 0+hRl0ZUSY2qIP2Go93dzA==
+X-CSE-MsgGUID: dNQBlBj6TUudzPCLJyNSZQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184371060"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2025 17:51:38 -0700
+Message-ID: <f59ba5d2-e205-46c7-90c0-8e02ab91f5ae@intel.com>
+Date: Fri, 24 Oct 2025 08:51:35 +0800
 MIME-Version: 1.0
-Message-ID: <176126238504.17752.8775213803155377166-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <176126238504.17752.8775213803155377166-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Cc: Aarushi Mehta <mehta.aaru20@gmail.com>, Julia Suvorova <jusual@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Fabiano =?utf-8?q?Fid=C3=AAncio?= <fabiano@fidencio.org>,
- abombo@microsoft.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: 17
-X-Spam_score: 1.7
-X-Spam_bar: +
-X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
- DKIM_INVALID=0.1, DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hostmem/shm: Allow shm memory backend serve as shared
+ memory for coco-VMs
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: David Hildenbrand <david@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
+References: <20250721065220.895606-1-xiaoyao.li@intel.com>
+ <f38c961d-9c5a-4e45-a42e-fbafb7e5e88b@intel.com>
+ <b1263375-8fac-4452-9c4f-983ef8870a44@intel.com>
+Content-Language: en-US
+In-Reply-To: <b1263375-8fac-4452-9c4f-983ef8870a44@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.998, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 23 Oct 2025 20:39:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,52 +88,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~abombo <abombox@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aur=C3=A9lien Bombo <abombo@microsoft.com>
+On 9/12/2025 1:45 PM, Xiaoyao Li wrote:
+> On 8/14/2025 5:45 PM, Xiaoyao Li wrote:
+>> On 7/21/2025 2:52 PM, Xiaoyao Li wrote:
+>>> shm can surely serve as the shared memory for coco-VMs. But currently it
+>>> doesn't check the backend->guest_memfd to pass down the RAM_GUEST_MEMFD
+>>> flag. It leads to failure when creating coco-VMs (e.g., TDX guest) which
+>>> require private mmeory.
+>>>
+>>> Set and pass down RAM_GUEST_MEMFD when backend->guest_memfd is true, to
+>>> allow shm memory backend serve as shared memory for coco-VMs.
+>>
+>> ping...
+>>
+>> Paolo, will you merge it for QEMU 10.1? I think it's worth it.
+> 
+> ping again.
 
-984a32f17e8d introduced support for prep_writev2 as released in liburing 2.2
-and libaio 0.3.111. However, it also broke users of older versions of these
-libraries (without prep_writev2) who relied on flags being no-op, so we remove
-the check on flags.
+ping++,
 
-Fixes: 984a32f17e8d
++ Peter,
 
-Signed-off-by: Aur=C3=A9lien Bombo <abombo@microsoft.com>
----
- block/io_uring.c  | 1 -
- block/linux-aio.c | 1 -
- 2 files changed, 2 deletions(-)
+Maybe you can queue it in case it gets missed from Paolo again?
 
-diff --git a/block/io_uring.c b/block/io_uring.c
-index dd4f304910..b44edcd7a4 100644
---- a/block/io_uring.c
-+++ b/block/io_uring.c
-@@ -349,7 +349,6 @@ static int luring_do_submit(int fd, LuringAIOCB *luringcb=
-, LuringState *s,
-                               luringcb->qiov->niov, offset, luring_flags);
-     }
- #else
--        assert(flags =3D=3D 0);
-         io_uring_prep_writev(sqes, fd, luringcb->qiov->iov,
-                              luringcb->qiov->niov, offset);
- #endif
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index c200e7ad20..1aa65cf09b 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -383,7 +383,6 @@ static int laio_do_submit(int fd, struct qemu_laiocb *lai=
-ocb, off_t offset,
-         io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flag=
-s);
-     }
- #else
--        assert(flags =3D=3D 0);
-         io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
- #endif
-         break;
---=20
-2.49.1
+>>> cc: Stefano Garzarella <sgarzare@redhat.com>
+>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>> ---
+>>>   backends/hostmem-shm.c | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+>>> index f66211a2ec92..806e2670e039 100644
+>>> --- a/backends/hostmem-shm.c
+>>> +++ b/backends/hostmem-shm.c
+>>> @@ -54,6 +54,7 @@ have_fd:
+>>>       /* Let's do the same as memory-backend-ram,share=on would do. */
+>>>       ram_flags = RAM_SHARED;
+>>>       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+>>> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+>>>       return memory_region_init_ram_from_fd(&backend->mr, 
+>>> OBJECT(backend),
+>>>                                                 backend_name, 
+>>> backend- >size,
+>>
+>>
+> 
+> 
+
 
