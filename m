@@ -4,114 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1624ACCD1AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79947CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCBnm-0002IC-1T; Fri, 24 Oct 2025 03:01:30 -0400
+	id 1vCBqz-0002sl-8E; Fri, 24 Oct 2025 03:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vCBni-0002Hs-G8; Fri, 24 Oct 2025 03:01:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vCBne-0007Ie-AA; Fri, 24 Oct 2025 03:01:26 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59O2Cp83001436;
- Fri, 24 Oct 2025 07:01:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=aGL96QkdmxV/93o3u77NLA1xCKDU8F
- GsOUJ6EMPnSyA=; b=djs9Tn8aQIzr8mlr8A4BanWhd6cB/JPzpBpI7fRkfTfZV7
- vCJU6mYaLfZrJDGCbgYEpJ52GCooaCwR7HtcI6C0ik9oSk2bVLXnN5KogQ05OZBs
- eM9NImBmxM6OYfrwrgdn0RMGsHdZhk6pyW92s6+LxaqjOASwLgyRxOP9M8tbuOEK
- tkGlckOmqw6enpt402MjwADBH6DJFga7EB7UOW+H88RLWfn/zs/c/2BR4hf42pt9
- UwCxq2sod2+4u94grNdjjLRUs4mUxWa/MjUjLMZrM506RzE3Qo7TJ/oOudfMFIRW
- xwfso34I9JZf1i+2RG/tivfO5rTkPhQhIPgc5D8A==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31se1hd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Oct 2025 07:01:09 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59O70lZt004782;
- Fri, 24 Oct 2025 07:01:09 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v31se1ha-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Oct 2025 07:01:09 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59O4JBxR014848;
- Fri, 24 Oct 2025 07:01:08 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7sj3p5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Oct 2025 07:01:08 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59O714Ix38076802
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Oct 2025 07:01:04 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B404020040;
- Fri, 24 Oct 2025 07:01:04 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8869120043;
- Fri, 24 Oct 2025 07:01:01 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.24.113]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 24 Oct 2025 07:01:01 +0000 (GMT)
-Date: Fri, 24 Oct 2025 12:30:59 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Vishal Chourasia <vishalc@linux.ibm.com>
-Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
- peter.maydell@linaro.org, alistair23@gmail.com, balaton@eik.bme.hu,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
- hpoussin@reactos.org
-Subject: Re: [Patch v8 5/5] ppc: Pass error_fatal to load_image_targphys()
-Message-ID: <b77zlk6bmog2l42zsqerhceeuenfwjvhhqmrwzycilzqet4lcr@uhrhof54phgj>
-References: <20251024052707.1852358-1-vishalc@linux.ibm.com>
- <20251024052707.1852358-6-vishalc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCBqx-0002sG-IO
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:04:47 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCBqv-0007X0-EO
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:04:47 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4270a3464bcso1251209f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 00:04:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761289483; x=1761894283; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Cz/YscZ8sVZFu4ytxHS+AYKtg+NBUWy+A3KdiVTcnIo=;
+ b=Rf1khyibyKzy8rGdDZubkCrh76ldJeBA1oZ1gkpRWhUhHMrBzLC6SbbqvJ1NmQ/Tfx
+ tvhZ7bpBzQNMoCucCPnEwjpDZY/Mi3Yz4Cp101UdEJbJklhKAO2uknkIDYAtTQOSgC9V
+ HGZZM6CpImcsgRZRch4V3sSxLtB0V7NOB2c+fdcHEe5OxOqkuP4h4Fgu1//XCeZEQO2D
+ mdoi6hmmCGu3Kj44W+UDf5klLqe34q4iVkxjpA9nMbDWsJdcGrZgDElS0+vYIacRX9Wl
+ +bbT/r/oF7Xj3fo+45qp5gra43+hf6VKkrPBDUasTq6GQzY8LAqPxIdO9Uzo+eSMKXgw
+ EKnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761289483; x=1761894283;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cz/YscZ8sVZFu4ytxHS+AYKtg+NBUWy+A3KdiVTcnIo=;
+ b=ClLKP1Wtvu6BpWTNPVL1MELCnKq0VIlGi1RK8X314Sl2IMN1ZIKiD1S6YFHSJuiGE5
+ 3zdtXxYsgLP6S5sU+byAXMWDE2tTinjh9SltOfH95xIr5+vMnuJ0mqIu91wWpKOPh963
+ W7OquiR8umstu6TUXrTm24yjY950qbserEQKpo6UrFB9VGiHvyvhNFLQc5xGLR9EEmz7
+ oIqy5LmMbN+Mn/W52i5bevvuqoi+bSLneQYlmogWA3sxy9pGLPZvSCX/tYmr3kE13qOn
+ bAauOW3AJUw0cE2YLh3WJpGOcfNn7+3h4hZTjTq59dW8Oxj7EES0QtHl6Ao+LNQyoNy2
+ ckZg==
+X-Gm-Message-State: AOJu0Yyg+nZ2K0eNhA0rhlybOeuTm3ohMWqSWVXxsP1Oqb9wj79R5Y6Q
+ KW4y/YELiDuJ3NMvQ0y6/bOFUSt6LGTlYZ76Hsgot20TsuYtGboCL5noElX82Ad5Qt4=
+X-Gm-Gg: ASbGnctqc10plZ8Gd8Vsb17QCLszL/2i1oPJHdJZcTI+BPOlxAuVKjSwTXxN6sK2qsq
+ l1etSLZcv7c1+4i7hWJ2o975cPsbpqX2fHE+2mAns+PYoNVhuiKlZU+/UngVFU6iWfIT7syPJv+
+ Tzfg/xGfL+koTCA0uT3Ip/v1u36Zrl2zK5Wfgbs+ycdobOuR8LXQRHo93yKktZzJCzhFcCUVCcj
+ 8dyCcIr54qj636u0ST8Ner+RiUTQuuDT5Atjv3oNOcRgL+3RqRiPwzyrhxfwFC9FZg/iHfBAjW3
+ 7WTDx9BQOz69U5Lt16TEex27Pt1USZZSCgIZMNC6lkWyLjJ4SpuKFZSQmoN3Fd+VVqe16RnZrJT
+ OZmrBz/4UpTNYnPa1AjYzHV39ZF2kZiy9XIzooXqMU9c5cK+9FE1vDPiz+KDchMJX9XzqEJizxI
+ eSnnJnOvVnuRyC2xfg67ejn9E3XllY2dm66U9yMhC0rhgp6T2ptC4ucuNNiAfXPMg9
+X-Google-Smtp-Source: AGHT+IHfl5tFmUnk2F2ZLT2s30YXzku6qdrTo3Y/xDUhU7+GfilRTAw+BEltjEJGBWoB+u8/pQ9esg==
+X-Received: by 2002:a05:6000:2c13:b0:428:3bf5:b3bf with SMTP id
+ ffacd0b85a97d-4283bf5b5a9mr13887252f8f.43.1761289483341; 
+ Fri, 24 Oct 2025 00:04:43 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429898ccc60sm7886911f8f.34.2025.10.24.00.04.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Oct 2025 00:04:42 -0700 (PDT)
+Message-ID: <961a8b24-0f7c-4ddd-a6e2-1f558ddfa304@linaro.org>
+Date: Fri, 24 Oct 2025 09:04:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251024052707.1852358-6-vishalc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: b-lT96tYvPpSq3BqA6JEWKL33W0RQMKh
-X-Proofpoint-GUID: KiKSeLIIpvgryvLoVDRjTHaYzTv3WAiz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX5fVsarr088/a
- WXd5zJv9DpsEPnmefpl3KtIDsXQqgeZFsX7YCK2PdLvmX9yav+mScK1GS1MMmmomzW+JnEnSMF4
- lbTvAZHy18u8wkohCi/UeNC2qeaNc9x52VoLqGyGbrMveS6f4NecXJjWomLWxoP5yF9tUsaIaSr
- qdga1GxBPFvBvGbDoAhIIl3S3w9rjS8oLUOs2VUYElh7FIbon6akxG+wiJjc3cTNWGcrGHcPf+n
- qeyUFnMO8D+emRlIRPRmlLcWzTlrbmaP2PO1nk4p+Cq5iMgSrDm9Ht+GImkBHor9UtWamNK/ME8
- 5kfD82TRuMevfI5v2Lm89Cv+oUv+MCrAoz8Z5sRdryPyQYjYgPqvSXuQCQ2IR2+7TpdYIp5/K61
- oUVsQbXSmsXPDNJx43t80vb/A/08qA==
-X-Authority-Analysis: v=2.4 cv=IJYPywvG c=1 sm=1 tr=0 ts=68fb2435 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=_EigNRFGLW7WWO1u94oA:9 a=CjuIK1q_8ugA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-23_03,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
- bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] target/ppc: Remove the unusable e200 CPUs
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20251024065726.738005-1-thuth@redhat.com>
+ <20251024065726.738005-3-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251024065726.738005-3-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,56 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/10/24 10:57AM, Vishal Chourasia wrote:
-> Pass error_fatal to load_image_targphys() calls in ppc machine initialization
-> to capture detailed error information when loading firmware, kernel,
-> and initrd images.
+On 24/10/25 08:57, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Passing error_fatal automatically reports detailed error messages and
-> exits immediately on failure. Eliminating redundant exit(1) calls, as
-> error_fatal handles termination
+> There is currently no machine in QEMU (except the "none" machine)
+> that can be run with with one of the e200 ppc CPUs - all machines
+> either complain about an invalid CPU type or crash QEMU immediately.
 > 
-> The behavior remains functionally identical, but error messages now
-> come directly from the loader function with more context about the
-> failure cause.
+> Looking at the history of this CPU type, it seems like it has never
+> been used in QEMU and only implemented as a placeholder (see e.g. the
+> comment about unimplemented instructions in the POWERPC_FAMILY(e200)
+> section of cpu_init.c). Being completely unused and unusable since
+> such a long time, let's just remove it now (without deprecation phase,
+> since there were no users of this dead code anyway).
 > 
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+> Note: The init_excp_e200() is used by the e500 CPUs, too, so we
+> rename this function to init_excp_e500() instead of removing it.
+> 
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   target/ppc/cpu-models.h |   4 --
+>   target/ppc/cpu-models.c |   5 --
+>   target/ppc/cpu_init.c   | 147 +---------------------------------------
+>   3 files changed, 2 insertions(+), 154 deletions(-)
 
-Thanks, the errors are much clearer now:
-
-	$ ./build/qemu-system-ppc64 -M powernv -kernel ./vmlinux                                                     
-	qemu-system-ppc64: <...>/vmlinux exceeds maximum image size (128 MiB)
-	
-	$ ./build/qemu-system-ppc64 -M powernv -kernel ./vmlinux
-	qemu-system-ppc64: Could not open '<...>/vmlinux': Permission denied
-	
-	$ ./build/qemu-system-ppc64 -M powernv -kernel ./vmlinux
-	qemu-system-ppc64: Could not open '<...>/vmlinux': No such file or directory
-
-Have few observations below, but the patch looks good to me.
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
->
-> > <...snip...>
-> diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-> index 004efc6b97..951de4bae4 100644
-> --- a/hw/ppc/mac_newworld.c
-> +++ b/hw/ppc/mac_newworld.c
-> @@ -189,7 +189,7 @@ static void ppc_core99_init(MachineState *machine)
->          if (bios_size <= 0) {
->              /* or load binary ROM image */
->              bios_size = load_image_targphys(filename, PROM_BASE, PROM_SIZE,
-> -                                            NULL);
-> +                                            &error_fatal);
-
-Nit: This and few similar diffs below change the behaviour.
-Previously qemu wouldn't have exited here, but now it will.
-
-This looks okay to me, as considering the code, it must successfully
-load these images.
-
-Thanks,
-- Aditya G
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
