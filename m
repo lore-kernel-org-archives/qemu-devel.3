@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B0ECCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F02CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCHi4-0005Sr-2P; Fri, 24 Oct 2025 09:20:00 -0400
+	id 1vCHif-00060x-Qh; Fri, 24 Oct 2025 09:20:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHi1-0005RJ-4S
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:19:58 -0400
+ id 1vCHiK-0005bn-2q
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHhw-0004kb-Ed
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:19:56 -0400
+ id 1vCHiI-0004pa-9i
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761311991;
+ s=mimecast20190719; t=1761312013;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+4+pgRmhA7AwhaFbarb6ijKQeWXtkQsaRprqh0MkzyA=;
- b=WxjGdZX1z9Zrxx2WolBVqiFPtivTmBtvRaFfx6EJfU+h5yh0wE6GBbF/zOH74Cr4KGFSZ1
- e7NViVb1QP8y6KiZxa2p7tEAdEEL/E5xNYXHa4dtmi4I7LyDGSO/ckyQZEHY27hq74CdjS
- TSLbbi9IbpjI1Qt4T3bVEU6HvKOniGU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=4Aun0N/wVasItP7YaAzv4+UXwONU7Qt1vFFTlbtlkBk=;
+ b=CJqy6GVFsf8XUObyxcJNRrYPkiwqQOh3n7DG2Qx/8bcQXZrBTnQaTykLEYg8oI23k+gAox
+ YqY3vjWgRCmNxDRq3s0V5ZPSKnrH+ElDQLSDk5AqUKa8g/o19CJdNfHQzqxSY/BPP1nt6H
+ gEAHy6cRQm/HIgacGzgWaxVtti/XyDw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-HYG5GSj2NLSzzXAYDAzPMA-1; Fri,
- 24 Oct 2025 09:19:48 -0400
-X-MC-Unique: HYG5GSj2NLSzzXAYDAzPMA-1
-X-Mimecast-MFC-AGG-ID: HYG5GSj2NLSzzXAYDAzPMA_1761311987
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-MBUUOKeJPE-8SoSlRZ6pDw-1; Fri,
+ 24 Oct 2025 09:20:11 -0400
+X-MC-Unique: MBUUOKeJPE-8SoSlRZ6pDw-1
+X-Mimecast-MFC-AGG-ID: MBUUOKeJPE-8SoSlRZ6pDw_1761312011
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3397F196F766; Fri, 24 Oct 2025 13:19:47 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECD1D1800C36; Fri, 24 Oct 2025 13:20:10 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.2])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5753519540EB; Fri, 24 Oct 2025 13:19:44 +0000 (UTC)
+ id 6611D19540EB; Fri, 24 Oct 2025 13:20:09 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 03/13] tests: use macros for registering char tests for sockets
-Date: Fri, 24 Oct 2025 14:19:27 +0100
-Message-ID: <20251024131937.56673-4-berrange@redhat.com>
+ Eric Blake <eblake@redhat.com>
+Subject: [PULL 13/13] crypto: switch to newer gnutls API for distinguished name
+Date: Fri, 24 Oct 2025 14:19:37 +0100
+Message-ID: <20251024131937.56673-14-berrange@redhat.com>
 In-Reply-To: <20251024131937.56673-1-berrange@redhat.com>
 References: <20251024131937.56673-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -86,46 +86,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test-char.c has a couple of helper macros for registering tests that
-need to be repeated for both IP and UNIX sockets. One test case was not
-using the macro though.
+The new API automatically allocates the right amount of memory
+to hold the distinguished name, avoiding the need to loop and
+realloc.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/unit/test-char.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ crypto/tlssession.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-index f30a39f61f..e156b17329 100644
---- a/tests/unit/test-char.c
-+++ b/tests/unit/test-char.c
-@@ -1934,7 +1934,9 @@ int main(int argc, char **argv)
-     g_test_add_data_func("/char/socket/server/mainloop-fdpass/" # name, \
-                          &server3 ##name, char_socket_server_test);     \
-     g_test_add_data_func("/char/socket/server/wait-conn-fdpass/" # name, \
--                         &server4 ##name, char_socket_server_test)
-+                         &server4 ##name, char_socket_server_test);     \
-+    g_test_add_data_func("/char/socket/server/two-clients/" # name,     \
-+                         addr, char_socket_server_two_clients_test)
+diff --git a/crypto/tlssession.c b/crypto/tlssession.c
+index 8c0bf457ad..92fe4f0380 100644
+--- a/crypto/tlssession.c
++++ b/crypto/tlssession.c
+@@ -409,20 +409,14 @@ qcrypto_tls_session_check_certificate(QCryptoTLSSession *session,
+         }
  
- #define SOCKET_CLIENT_TEST(name, addr)                                  \
-     static CharSocketClientTestConfig client1 ## name =                 \
-@@ -1974,14 +1976,10 @@ int main(int argc, char **argv)
-     if (has_ipv4) {
-         SOCKET_SERVER_TEST(tcp, &tcpaddr);
-         SOCKET_CLIENT_TEST(tcp, &tcpaddr);
--        g_test_add_data_func("/char/socket/server/two-clients/tcp", &tcpaddr,
--                             char_socket_server_two_clients_test);
-     }
- #ifndef WIN32
-     SOCKET_SERVER_TEST(unix, &unixaddr);
-     SOCKET_CLIENT_TEST(unix, &unixaddr);
--    g_test_add_data_func("/char/socket/server/two-clients/unix", &unixaddr,
--                         char_socket_server_two_clients_test);
- #endif
+         if (i == 0) {
+-            size_t dnameSize = 1024;
+-            session->peername = g_malloc(dnameSize);
+-        requery:
+-            ret = gnutls_x509_crt_get_dn(cert, session->peername, &dnameSize);
++            gnutls_datum_t dname = {};
++            ret = gnutls_x509_crt_get_dn2(cert, &dname);
+             if (ret < 0) {
+-                if (ret == GNUTLS_E_SHORT_MEMORY_BUFFER) {
+-                    session->peername = g_realloc(session->peername,
+-                                                  dnameSize);
+-                    goto requery;
+-                }
+                 error_setg(errp, "Cannot get client distinguished name: %s",
+                            gnutls_strerror(ret));
+                 goto error;
+             }
++            session->peername = (char *)g_steal_pointer(&dname.data);
+             if (session->authzid) {
+                 bool allow;
  
-     g_test_add_func("/char/udp", char_udp_test);
 -- 
 2.50.1
 
