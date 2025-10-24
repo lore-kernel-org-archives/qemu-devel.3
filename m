@@ -4,73 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F2BCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC2ACCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 13:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCHiZ-0005h9-6e; Fri, 24 Oct 2025 09:20:31 -0400
+	id 1vCHkg-0002yR-BY; Fri, 24 Oct 2025 09:22:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHi8-0005Uc-Dh
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vCHi6-0004mX-Bz
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:20:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761312001;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CCObt3x+cEciUOh6vncOKwvla1QzbKPqBuEb/0PEtVo=;
- b=MdhfKTuq9K0bkakpZw/mzconBJ916NPKm41mQ94ZkS3OzMpdXxCXOK4oLj63X/KBQLNs5q
- 9uIyAUmV6QOrG353punHXGleN/eeOpbrkiZ5iZlSSAaDTST7CyQn0WUcUZoTYr6dsHBaxz
- IbLkw4USva/FwjNH97iJAqfl9NDu51Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-Iprb4okpOE6sRGCiK3cGPw-1; Fri,
- 24 Oct 2025 09:19:57 -0400
-X-MC-Unique: Iprb4okpOE6sRGCiK3cGPw-1
-X-Mimecast-MFC-AGG-ID: Iprb4okpOE6sRGCiK3cGPw_1761311996
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A2A4180A221; Fri, 24 Oct 2025 13:19:56 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C4B419540EB; Fri, 24 Oct 2025 13:19:54 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, Henry Kleynhans <hkleynhans@fb.com>
-Subject: [PULL 07/13] crypto: only verify CA certs in chain of trust
-Date: Fri, 24 Oct 2025 14:19:31 +0100
-Message-ID: <20251024131937.56673-8-berrange@redhat.com>
-In-Reply-To: <20251024131937.56673-1-berrange@redhat.com>
-References: <20251024131937.56673-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCHkY-0002sd-Bu
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:22:34 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCHkV-0005JA-Jt
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 09:22:34 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4710683a644so17287745e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 06:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761312149; x=1761916949; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RMOMosQl9MIfBuDe4FsTvoDMMN3T75GWwRSeAMfRXNM=;
+ b=FJm7KmBHSTUT3HQMx72TfjTXcsM9SfAHni3V/NxVmqwEbflkxCw7XjBYgxeS4VIiN7
+ ZR/CfJ1Qacm8imOBpNlD04rxk/srStztXhT4w2GF6IGcdpZtOhOl/5yUjR/EgqquxPQw
+ Da99sjUeMRifMREpVJH6jzdel7k7clRoKllaqbHWS6fiJ2JZaHmI4QLsyzUqyxWHivVg
+ Kz3VPs8PILVJsOkYm5XqTxSfdWVQvwWgXIxCYglTlmcHvCT+NxVCHNY69HRH+CAlySHK
+ vQkcKt6WHWW5H//9leEd9efL3tGVbHnNpzkGmYDZyeOtFdr8Mk0GmQUL4+mSa1wRi2k3
+ oMwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761312149; x=1761916949;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RMOMosQl9MIfBuDe4FsTvoDMMN3T75GWwRSeAMfRXNM=;
+ b=ZAnan3EC9QDmPi4UdvnNn8D12C+9gfvBqDGrDRTnycIVtzA4lJA5efwTYl7+/CmJnk
+ 9iBGOlpRiCqogAcg6iexbQQgEN/A86Sn/UAkNjg0qbM7msDvgGFYrjeWNk0R+gRIdn+h
+ 0Ot//7dk1HHLu6eNBJWuFGN0e652QUDb4CpLXTFjRmV8Hi+K5vDPZAfEsJ6SLY/J+q8c
+ 8xmOEghgEYHbnZlBx/y1UprvFnc92eYBX69YYPiiMSqK6gLHbvy+gzT52TwjdBTvkOoX
+ jirWf+fhQw1n+RgT0+GdR3IxZ52NezDir++L6AXfFqFpCWCkWZ043t1LVYDxC+ydwtbE
+ +AAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXOH5m1Nrv/cEd2sn7fczbQRZ4eVX5HcWkN/WeyIK5sPmkclyHcb1oVAPFjlERHcI6ucTkwp1uTaoxR@nongnu.org
+X-Gm-Message-State: AOJu0YwvkB00C3ALkGy3snISUOlfFcKe3PPyk6t4asWp2mJFx8BydOpz
+ oNKII8dyP9krKpgZwlOsTSTmJW/4iy5Mol/H4uNkXzZoV3+8EEqaQQGT/96NwSAIwMo=
+X-Gm-Gg: ASbGncsGbb0Lv1eRqNWbJHU5VN7f1XhiM7lABv4a8nSY5+ZBG2FTVtII8UCu+W6BJ2Q
+ SD8hl6tPXtECjcdn9MBoHSxZLvMoYrN+f6aAJDZ0N76hVvYqDHxYxyqLxusIMPajThuDs42SqNv
+ qNaf+0WIruL5e80as6knH0KTRdK3bbKJHxICTPV2MNSvBxYbK6xDNxdDzHOaiBmTKHwZrpHAeo/
+ 7efRIlV01DE1Yi4FtffT40HkxQp7aX7vUU2zpSkte3MBSDEK88sq397G+o/ECsiDCWBuifZP+1R
+ kLNpua4P7++ID1PEbR6R5pmlvB14LHEs3nbgV0zMD43KMUr91kEGFnbCHCW1UXn3u8NbkSvRyQh
+ ZF9JCZbRJMizgO68ISKiMk4AKnZyG8IL8hhwGtdWSETs5YBUUSOkncmT8h6d1RmcQ/eIPVGHZrv
+ JeOGVvAIltbLzrasGf8RVr/MhtHdLNo1BrciA1RIulLinwStmKTuzX4Q==
+X-Google-Smtp-Source: AGHT+IGWWisBwhPD9v42K/lZv+z8Afbxf3S7mpLhSCR15mbe8Rz3kKEWfmcDmTJLw2r0UOKnjha81A==
+X-Received: by 2002:a05:600c:3f10:b0:475:d278:1ab8 with SMTP id
+ 5b1f17b1804b1-475d2781b2fmr22486665e9.2.1761312148884; 
+ Fri, 24 Oct 2025 06:22:28 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475d8172443sm16204495e9.11.2025.10.24.06.22.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Oct 2025 06:22:28 -0700 (PDT)
+Message-ID: <c76ee7b7-5eb2-4124-b70f-c437b787c241@linaro.org>
+Date: Fri, 24 Oct 2025 15:22:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v9 3/6] core/loader: improve error handling in image
+ loading functions
+Content-Language: en-US
+To: Vishal Chourasia <vishalc@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ npiggin@gmail.com, peter.maydell@linaro.org, alistair23@gmail.com,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com
+References: <20251024092616.1893092-2-vishalc@linux.ibm.com>
+ <20251024092616.1893092-6-vishalc@linux.ibm.com>
+ <aecf60d5-8bb2-48bb-28b5-20b58729fb56@eik.bme.hu>
+ <5c2da466-1e2f-45be-a3be-d1dbcfaba8fa@linux.ibm.com>
+ <75aa6f52-4bf3-4e07-a8ea-29bda1cb42a7@linaro.org>
+ <5bfb5c2d-5215-4ca7-9a8b-48f3520add20@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5bfb5c2d-5215-4ca7-9a8b-48f3520add20@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,173 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Henry Kleynhans <hkleynhans@fb.com>
+On 24/10/25 14:58, Vishal Chourasia wrote:
+> Hi Philippe,
+> 
+> On 24/10/25 18:17, Philippe Mathieu-Daudé wrote:
+>> On 24/10/25 14:11, Vishal Chourasia wrote:
+>>> Hi Balaton, Philippe
+>>>
+>>> On 24/10/25 16:55, BALATON Zoltan wrote:
+>>>> On Fri, 24 Oct 2025, Vishal Chourasia wrote:
+>>>>> Add error checking for lseek() failure and provide better error
+>>>>> messages when image loading fails, including filenames and addresses.
+>>>>>
+>>>>> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+>>>>> ---
+>>>>> hw/core/loader.c | 16 +++++++++++++++-
+>>>>> 1 file changed, 15 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/hw/core/loader.c b/hw/core/loader.c
+>>>>> index 7aca4989ef..48dd4e7b33 100644
+>>>>> --- a/hw/core/loader.c
+>>>>> +++ b/hw/core/loader.c
+>>>>> @@ -79,6 +79,10 @@ int64_t get_image_size(const char *filename, 
+>>>>> Error **errp)
+>>>>>     if (fd < 0)
+>>>>>         return -1;
+>>>>>     size = lseek(fd, 0, SEEK_END);
+>>>>> +    if (size < 0) {
+>>>>> +        error_setg_errno(errp, errno, "lseek failure: %s", filename);
+>>>>> +        return -1;
+>>>>> +    }
+>>>>>     close(fd);
+>>>>>     return size;
+>>>>> }
+>>>>> @@ -129,14 +133,24 @@ ssize_t load_image_targphys_as(const char 
+>>>>> *filename,
+>>>>>                                hwaddr addr, uint64_t max_sz, 
+>>>>> AddressSpace *as,
+>>>>>                                Error **errp)
+>>>>> {
+>>>>> +    ERRP_GUARD();
+>>>>>     ssize_t size;
+>>>>>
+>>>>>     size = get_image_size(filename, errp);
+>>>>> -    if (size < 0 || size > max_sz) {
+>>>>> +    if (*errp) {
+>>>>> +        return -1;
+>>>>> +    }
+>>>>> +
+>>>>> +    if (size > max_sz) {
+>>>>> +        error_setg(errp, "%s exceeds maximum image size (%" PRIu64 
+>>>>> " MiB)",
+>>>>> +                   filename, max_sz / MiB);
+>>>>
+>>>> MiB is arbitrary here. This function is used to load all kinds of 
+>>>> images such as ROMs which may be 64k-2MB or even executables in 
+>>>> generic loader that can be a few kilobytes. This might result in 
+>>>> errors saying max size is 0 MiB if the allowed size is less than a 
+>>>> MiB (e.g. amigaone PROM_SIZE = 512 KiB) and integer division 
+>>>> discards fractions. Do we have a function to pretty print sizes or 
+>>>> maybe this should be left as bytes or at most kilobytes?
+>>>>
+>>> Yes, for images sizes less than a megabyte.
+>>> Perhaps we can leave it at Kilobytes
+>>>
+>>> I will send out another version.
+>>
+>> If so, then please use qemu_strtosz().
+> 
+> There is another function size_to_str() suggested by Peter I was 
+> planning to use it, as it was doing the expected job.
+> 
+> It seems qemu_strtosz() converts size strings to bytes.
 
-The CA file provided to qemu may contain CA certificates which do not
-form part of the chain of trust for the specific certificate we are
-sanity checking.
-
-This patch changes the sanity checking from validating every CA
-certificate to only checking the CA certificates which are part of the
-chain of trust (issuer chain).  Other certificates are ignored.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Henry Kleynhans <hkleynhans@fb.com>
-[DB: changed 'int' to 'bool' in 'checking_issuer' variable]
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/tlscredsx509.c                 | 57 ++++++++++++++++++++++++---
- tests/unit/test-crypto-tlscredsx509.c | 25 +++++++++++-
- 2 files changed, 75 insertions(+), 7 deletions(-)
-
-diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-index cd1f504471..3df2a33b0b 100644
---- a/crypto/tlscredsx509.c
-+++ b/crypto/tlscredsx509.c
-@@ -315,6 +315,51 @@ qcrypto_tls_creds_check_cert(QCryptoTLSCredsX509 *creds,
-     return 0;
- }
- 
-+static int
-+qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
-+                                        gnutls_x509_crt_t cert,
-+                                        gnutls_x509_crt_t *cacerts,
-+                                        unsigned int ncacerts,
-+                                        const char *cacertFile,
-+                                        bool isServer,
-+                                        bool isCA,
-+                                        Error **errp)
-+{
-+    gnutls_x509_crt_t *cert_to_check = &cert;
-+    bool checking_issuer = true;
-+    int retval = 0;
-+
-+    while (checking_issuer) {
-+        checking_issuer = false;
-+
-+        if (gnutls_x509_crt_check_issuer(*cert_to_check,
-+                                         *cert_to_check)) {
-+            /*
-+             * The cert is self-signed indicating we have
-+             * reached the root of trust.
-+             */
-+            return qcrypto_tls_creds_check_cert(
-+                creds, *cert_to_check, cacertFile,
-+                isServer, isCA, errp);
-+        }
-+        for (int i = 0; i < ncacerts; i++) {
-+            if (gnutls_x509_crt_check_issuer(*cert_to_check,
-+                                             cacerts[i])) {
-+                retval = qcrypto_tls_creds_check_cert(
-+                    creds, cacerts[i], cacertFile,
-+                    isServer, isCA, errp);
-+                if (retval < 0) {
-+                    return retval;
-+                }
-+                cert_to_check = &cacerts[i];
-+                checking_issuer = true;
-+                break;
-+            }
-+        }
-+    }
-+
-+    return -1;
-+}
- 
- static int
- qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t cert,
-@@ -499,12 +544,12 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
-         goto cleanup;
-     }
- 
--    for (i = 0; i < ncacerts; i++) {
--        if (qcrypto_tls_creds_check_cert(creds,
--                                         cacerts[i], cacertFile,
--                                         isServer, true, errp) < 0) {
--            goto cleanup;
--        }
-+    if (cert &&
-+        qcrypto_tls_creds_check_authority_chain(creds, cert,
-+                                                cacerts, ncacerts,
-+                                                cacertFile, isServer,
-+                                                true, errp) < 0) {
-+        goto cleanup;
-     }
- 
-     if (cert && ncacerts &&
-diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
-index 3c25d75ca1..a7ea5f422d 100644
---- a/tests/unit/test-crypto-tlscredsx509.c
-+++ b/tests/unit/test-crypto-tlscredsx509.c
-@@ -589,6 +589,12 @@ int main(int argc, char **argv)
-                  true, true, GNUTLS_KEY_KEY_CERT_SIGN,
-                  false, false, NULL, NULL,
-                  0, 0);
-+    TLS_CERT_REQ(cacertlevel1creq_invalid, cacertrootreq,
-+                 "UK", "qemu level 1c invalid", NULL, NULL, NULL, NULL,
-+                 true, true, true,
-+                 true, true, GNUTLS_KEY_KEY_CERT_SIGN,
-+                 false, false, NULL, NULL,
-+                 360, 400);
-     TLS_CERT_REQ(cacertlevel2areq, cacertlevel1areq,
-                  "UK", "qemu level 2a", NULL, NULL, NULL, NULL,
-                  true, true, true,
-@@ -617,16 +623,32 @@ int main(int argc, char **argv)
-         cacertlevel2areq.crt,
-     };
- 
-+
-     test_tls_write_cert_chain(WORKDIR "cacertchain-ctx.pem",
-                               certchain,
-                               G_N_ELEMENTS(certchain));
- 
-+    gnutls_x509_crt_t certchain_with_invalid[] = {
-+        cacertrootreq.crt,
-+        cacertlevel1areq.crt,
-+        cacertlevel1breq.crt,
-+        cacertlevel1creq_invalid.crt,
-+        cacertlevel2areq.crt,
-+    };
-+
-+    test_tls_write_cert_chain(WORKDIR "cacertchain-with-invalid-ctx.pem",
-+                              certchain_with_invalid,
-+                              G_N_ELEMENTS(certchain_with_invalid));
-+
-     TLS_TEST_REG(chain1, true,
-                  WORKDIR "cacertchain-ctx.pem",
-                  servercertlevel3areq.filename, false);
-     TLS_TEST_REG(chain2, false,
-                  WORKDIR "cacertchain-ctx.pem",
-                  clientcertlevel2breq.filename, false);
-+    TLS_TEST_REG(certchainwithexpiredcert, false,
-+                 WORKDIR "cacertchain-with-invalid-ctx.pem",
-+                 clientcertlevel2breq.filename, false);
- 
-     /* Some missing certs - first two are fatal, the last
-      * is ok
-@@ -640,7 +662,6 @@ int main(int argc, char **argv)
-     TLS_TEST_REG(missingclient, false,
-                  cacert1req.filename,
-                  "clientcertdoesnotexist.pem", false);
--
-     ret = g_test_run();
- 
-     test_tls_discard_cert(&cacertreq);
-@@ -694,10 +715,12 @@ int main(int argc, char **argv)
-     test_tls_discard_cert(&cacertrootreq);
-     test_tls_discard_cert(&cacertlevel1areq);
-     test_tls_discard_cert(&cacertlevel1breq);
-+    test_tls_discard_cert(&cacertlevel1creq_invalid);
-     test_tls_discard_cert(&cacertlevel2areq);
-     test_tls_discard_cert(&servercertlevel3areq);
-     test_tls_discard_cert(&clientcertlevel2breq);
-     unlink(WORKDIR "cacertchain-ctx.pem");
-+    unlink(WORKDIR "cacertchain-with-invalid-ctx.pem");
- 
-     test_tls_cleanup(KEYFILE);
-     rmdir(WORKDIR);
--- 
-2.50.1
+Yes, they are the opposite ;)
 
 
