@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98CCCCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEEC1CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 07:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCBsn-0003zA-N0; Fri, 24 Oct 2025 03:06:41 -0400
+	id 1vCBvz-0004oR-FA; Fri, 24 Oct 2025 03:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vCBsl-0003yl-Pm
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:06:39 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCBvx-0004nX-Bp
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:09:57 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vCBsi-0007oB-JK
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:06:39 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-63bf76fc9faso3186715a12.2
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 00:06:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCBvu-0008OD-VW
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 03:09:56 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-475c696ab72so13338145e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 00:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761289594; x=1761894394; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JUJEaRPsh6/qimqJR3dkhAKVZxll1SWc/WpT3QfbVlk=;
- b=ZXBkuvRt+EHQMEEN+IRVuv+Tpk5eltqBKBP++dcG7jBteLN+8t0MF1kTho08FVrRB5
- 5T38JrZxSv4p6I0UsmBW3cjorQR9df0y/uuh01xB2nOsXf7qeraxiW8x1J7MpdI7DRDC
- BNMej/viLFdKCdjJY+kJXz1VMUKl6rKa/7OwOT/6Yi1lIt3PMmrP128dMHRAZYIuxOb6
- plG+BBXuU8LNOFlya9P1XDFR02ukT4S7vjiCVoW8cYDhomPy32sHto9qSCFcnPg/I3g7
- QICBIcalAab9WMSlKfdxolybhFwGlp/ZWNWWxLap0AKPPowa2ENF/jzyYGX/0WBCs+cF
- TI8Q==
+ d=linaro.org; s=google; t=1761289793; x=1761894593; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BbZ9k+vv2489pj0gnO0wSZy4lQoR+D1JoJ0eY8FvxVg=;
+ b=nPbYZli2br0DjklLkoEcbQa94amShKG8tmlprfV0vghjgc3nnTMLC/stEICGznnh2U
+ XknoIMsa0aoGuNOOeyQ1GPPGbnkAgkdT2I3So8hdMXdK0+VMQzNLyQ8Auqd7duq3a3XV
+ PRWElynWbibXvUTwEXXtw1qzdTlr8YKDrg3KAZkTWpESN1MAHpDVuWfs2UU6S3+WdbmS
+ slhPMV+LSjGKOxr9OPquw33C5yQhwZenFCRjga+m2yuBhuHi52TIfaTXhpirNuODjvp+
+ ULfh0Ba5a7w+W4Ngo3xFSMe8H2VfS1/mbAU3JZwzhTyRtNRIWbKNcPhL7/HNZWVe8T8L
+ md8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761289594; x=1761894394;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JUJEaRPsh6/qimqJR3dkhAKVZxll1SWc/WpT3QfbVlk=;
- b=w7sp0gpwZ34CLRO6vbMxj9+/3PDCw/7urVQRCqH6RLe+mABROhAFVR157TVrny71Hv
- zoh6MCjdZf1qF50VJlOj8CXIk3W76gfW3OuacblWWGFHQ30sQz3kwmtFnkZfkUgzkbUl
- Cn0Mfpye5q/kSYMSrDVDZMUqOHsqPvCi+l4Iy1j7crnxkOhOdVjC3d4CP0SiMUjcklKF
- dHhw9Zd786QWFiz+VkmnT1KKTtWblWDHg5v6jFYwj0z0GTZu4qEZJseuyir2tB8RKcuK
- Y+exYpKlYo3ybMA2vQhEveXcfhsvELU+XwGrkLdrJx9c2d+/X4d54PJIaJS1pR2TtBCl
- flAQ==
-X-Gm-Message-State: AOJu0Yyh4xt2KJMVPt2nL2hGn/yCLrp8r8bfNf/sjD5Lut7+VezUcgaZ
- SdwYNs28eJjQAVNg2Vyh0m68zUFZ4kpZ2kFd+Y1BnmEWji2G3rIcveJAYnZqppEHA08=
-X-Gm-Gg: ASbGncs8w/IIMpNnN6gj2GuGQkpC8mOVRDGhb8wDP7bHEMT55Y0vLw+7byLSUXcKGY8
- nlrjnzWQix0OOiwFkCJiw/ScSI7CWvxw9lxhlZJ2RQ5uGaNOLCiZE1BCu76/QEUQMJPkvkyRITU
- 6mJjzZWJalbJolJRtaR3iO9RAdssNagyydAPm4Rs1THRT7uFK8JgqoATcJhbOJpFLPvMgm4cLsd
- MEhZQTJId6vVSTBuPrQXeFEDeewdAl7iVgkAsrbrKg9RZZBHsim5bxafYwb1AiIqhyOCXzX2gdF
- YkqX+cvfIVk08bQMCqhnB6liI2hac1ulILlYExJELXwpHa5cHKrhm3tHgJZnFbUKR9JtQGCIySN
- iHh5bK8/cBLmfv+b2s2BgPSYm9KVe3wYyRlSdr+mHl3ZzXGF/FCTm3L9O+GlULwO7KAUnhg4wS1
- UwwXs82TBiLrm3PkcUV3FVe8w6ez3e5gbJv3IY0csZeiujp0H3wS4h64IOVkqQ
-X-Google-Smtp-Source: AGHT+IExyXPOMj6BIgZSb8wr9qFGU6WhtqmFly/uHleC8TxgrdaTVTTVNs+8QD1wKZHAkpkjkUfd5w==
-X-Received: by 2002:a05:6402:5189:b0:63c:3efe:d970 with SMTP id
- 4fb4d7f45d1cf-63c3efeee6emr22089507a12.31.1761289594164; 
- Fri, 24 Oct 2025 00:06:34 -0700 (PDT)
-Received: from meli-email.org (athedsl-4440453.home.otenet.gr.
- [79.129.177.117]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e3ebb328esm3446636a12.5.2025.10.24.00.06.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Oct 2025 00:06:33 -0700 (PDT)
-Date: Fri, 24 Oct 2025 09:59:37 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2] rust/qemu-macros: Convert bit value to u8 within
- #[property]
-User-Agent: meli/0.8.12
-References: <20251024041344.1389488-1-zhao1.liu@intel.com>
-In-Reply-To: <20251024041344.1389488-1-zhao1.liu@intel.com>
-Message-ID: <t4mjqw.dx8x6zfu0m3i@linaro.org>
+ d=1e100.net; s=20230601; t=1761289793; x=1761894593;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BbZ9k+vv2489pj0gnO0wSZy4lQoR+D1JoJ0eY8FvxVg=;
+ b=iT+X9tDOe3C9YMkIk1fH7xPKL9mVLSqM+L8ZXVDGEUeyGiCabGMHbsoQjZ9qRkmijt
+ /gCcZiTW9GRVZEOCrxCmcQiR8veo4s6FOoIVh8X826K59l9DLpvPCX+wMs61tVVTbhzJ
+ OtiILuh0arZZJT6UoLsjAqrcPjp+vkWu8NemvLdERDUZu/Mf1Fm3IixVtktTmTC5tNpG
+ dhBlybTraBIPUwzxu52c3WPrrWMYfTgR0/E9NqYemxr/pIHVyR55JlzDwRlY33lVrHWy
+ ehOLImHZ+Wh9V8EFlnmD2obAdSCbZrHGE+yrrNWtpUXXmOIExj23S6zMRneqm6Yv2qsV
+ aFrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmLQhl+vrWG6O+W2FIRkwDoW5NHs8fM7BBCR45V+xYO6wNVymVVebmA2uEwsJTBRzFWJ404h9gYcso@nongnu.org
+X-Gm-Message-State: AOJu0YwakvBCXD/slDtZ/U1llJt5ZKkPCY0bhT7VKKP1A5QZ6PKESHPR
+ /iLXpdnfTmRpsIoSWHNxx3aUtkVkTqFknVKHKJT0E69L0Om31s1V56Yb0bvU5HDz2kk=
+X-Gm-Gg: ASbGncvkMbx/MOdAH/6h/RpcnLm9N+rDzm2wfoybNExhLnvBxr8RKwllFAU5uxv+zot
+ 57fWa3vPA2LmGCB9N2w5pRQ13QJvz5zEo7Jx9YbjjaPxBHTA/Y13fHN0wfWGeWdNljZqNoexE2n
+ IeXEGhBBIOwWevP06NR+VA+q1f2s1BXpLjQBJgsKZYYXkh1lLjsNtrpXcZYKDIre7EWWxHbjvEp
+ ilKCkuJ7vQDXFhwFrdMp5tJwtu5yzYEOJUW8W+FSZLTH0deLDKz0W86ZCtd5hATKQmDaExVMIjS
+ CADk2Z5/rL9aOeGnM5YaIoWDRzR6yQGTv9doRjjhqOeOHTzqrBoUE1i9zdPp1nbl8Rq5mTkVgPQ
+ CSXGDbzpC7VLdNqVUHo2rE2ZzfgYoDUgoXkKjyy/VSZaLaASMj4Zu45+yPoiN6nSRCwMHDtod29
+ 7MqjVD88XSon31IO8l0pskGnTvBr1oqcHjc7s1NrFTXx2OpfuRvlcihcXPTxDuTCma
+X-Google-Smtp-Source: AGHT+IEBlxP3uYiHCHbHVWLkDClRzjddyK59Wj9WgQd26HRQgKAW1HG0Zxl/RWMr4nkLrNqS0P2PbA==
+X-Received: by 2002:a05:600c:a02:b0:46d:5189:3583 with SMTP id
+ 5b1f17b1804b1-475d2c2ffaemr8548455e9.0.1761289792849; 
+ Fri, 24 Oct 2025 00:09:52 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429898eac60sm7615738f8f.39.2025.10.24.00.09.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Oct 2025 00:09:52 -0700 (PDT)
+Message-ID: <8bbfa678-1568-4290-8b24-ed34a7559dbc@linaro.org>
+Date: Fri, 24 Oct 2025 09:09:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x535.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v8 2/5] core/loader: capture Error from load_image_targphys
+Content-Language: en-US
+To: Vishal Chourasia <vishalc@linux.ibm.com>, adityag@linux.ibm.com,
+ harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
+ peter.maydell@linaro.org, alistair23@gmail.com, balaton@eik.bme.hu,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
+ richard.henderson@linaro.org, alistair@alistair23.me,
+ alex.bennee@linaro.org, deller@gmx.de, pbonzini@redhat.com,
+ eduardo@habkost.net, minyard@acm.org, gaosong@loongson.cn,
+ maobibo@loongson.cn, laurent@vivier.eu, edgar.iglesias@gmail.com,
+ hpoussin@reactos.org, david@redhat.com, chigot@adacore.com,
+ konrad.frederic@yahoo.fr, atar4qemu@gmail.com, jcmvbkbc@gmail.com
+References: <20251024052707.1852358-1-vishalc@linux.ibm.com>
+ <20251024052707.1852358-3-vishalc@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251024052707.1852358-3-vishalc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,132 +111,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Oct 2025 07:13, Zhao Liu <zhao1.liu@intel.com> wrote:
->For bit property, make the type conversion within the #[property] macro
->so that users do not need to handle the conversion.
->
->Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
->Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
->---
->Changes Since v2:
-> - Check #field_ty::BITS instead of u8::MAX.
-> - Update test cases.
->---
-
-
-LGTM, some questions...
-
-> rust/hw/timer/hpet/src/device.rs |  2 +-
-> rust/qemu-macros/src/lib.rs      | 23 ++++++++++++++++++-----
-> rust/qemu-macros/src/tests.rs    | 15 ++++++++++++---
-> 3 files changed, 31 insertions(+), 9 deletions(-)
->
->diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
->index 86638c076666..23f2eefd1cd9 100644
->--- a/rust/hw/timer/hpet/src/device.rs
->+++ b/rust/hw/timer/hpet/src/device.rs
->@@ -539,7 +539,7 @@ pub struct HPETState {
->     // Internal state
->     /// Capabilities that QEMU HPET supports.
->     /// bit 0: MSI (or FSB) support.
->-    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT as u8, default = false)]
->+    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT, default = false)]
->     flags: u32,
+On 24/10/25 07:27, Vishal Chourasia wrote:
+> Add Error **errp parameter to load_image_targphys(),
+> load_image_targphys_as(), and get_image_size() to enable better
+> error reporting when image loading fails.
 > 
->     /// Offset of main counter relative to qemu clock.
->diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
->index 50239f228be2..ee417bb4b4ef 100644
->--- a/rust/qemu-macros/src/lib.rs
->+++ b/rust/qemu-macros/src/lib.rs
->@@ -262,12 +262,25 @@ macro_rules! str_to_c_str {
->             },
->         )?;
->         let field_ty = field.ty.clone();
->-        let qdev_prop = if bitnr.is_none() {
->-            quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO }
->+        let (qdev_prop, bitval) = if let Some(bitval) = bitnr {
->+            (
->+                quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO },
->+                quote! {
->+                    {
->+                        const {
->+                            assert!(#bitval >= 0 && #bitval < #field_ty::BITS as _,
->+                                    "bit number exceeds type bits 
->range");
+> Pass NULL for errp in all existing call sites to maintain current
+> behavior. No functional change intended in this patch.
 
-Const panic messages cannot use formatting parameters yet, but.
-Can we interpolate the type (e.g u32) in the compile-time panic message? 
-Not important but would make the error message friendlier.
+If you want "No functional change", then ...
+
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+> ---
+>   hw/alpha/dp264.c         |  4 ++--
+>   hw/arm/armv7m.c          |  2 +-
+>   hw/arm/boot.c            |  5 +++--
+>   hw/arm/digic_boards.c    |  2 +-
+>   hw/arm/highbank.c        |  3 ++-
+>   hw/arm/raspi.c           |  2 +-
+>   hw/arm/vexpress.c        |  2 +-
+>   hw/core/generic-loader.c |  3 ++-
+>   hw/core/guest-loader.c   |  2 +-
+>   hw/core/loader.c         | 32 ++++++++++++++++++++++++--------
+>   hw/hppa/machine.c        |  5 +++--
+>   hw/i386/multiboot.c      |  2 +-
+>   hw/i386/x86-common.c     |  4 ++--
+>   hw/ipmi/ipmi_bmc_sim.c   |  2 +-
+>   hw/loongarch/boot.c      |  5 ++---
+>   hw/m68k/an5206.c         |  2 +-
+>   hw/m68k/mcf5208.c        |  4 ++--
+>   hw/m68k/next-cube.c      |  2 +-
+>   hw/m68k/q800.c           |  7 ++++---
+>   hw/m68k/virt.c           |  4 ++--
+>   hw/microblaze/boot.c     |  5 +++--
+>   hw/mips/boston.c         |  2 +-
+>   hw/mips/fuloong2e.c      |  9 +++++----
+>   hw/mips/jazz.c           |  2 +-
+>   hw/mips/loongson3_virt.c | 10 ++++++----
+>   hw/mips/malta.c          |  9 +++++----
+>   hw/nubus/nubus-device.c  |  2 +-
+>   hw/openrisc/boot.c       |  5 +++--
+>   hw/pci/pci.c             |  2 +-
+>   hw/ppc/amigaone.c        |  4 ++--
+>   hw/ppc/e500.c            |  5 +++--
+>   hw/ppc/mac_newworld.c    |  9 ++++++---
+>   hw/ppc/mac_oldworld.c    |  9 ++++++---
+>   hw/ppc/pegasos2.c        |  5 +++--
+>   hw/ppc/pnv.c             |  9 ++++++---
+>   hw/ppc/ppc440_bamboo.c   |  3 ++-
+>   hw/ppc/prep.c            |  8 +++++---
+>   hw/ppc/sam460ex.c        |  3 ++-
+>   hw/ppc/spapr.c           |  8 ++++----
+>   hw/ppc/virtex_ml507.c    |  5 +++--
+>   hw/riscv/boot.c          |  7 ++++---
+>   hw/rx/rx-gdbsim.c        |  2 +-
+>   hw/s390x/ipl.c           |  8 +++++---
+>   hw/sh4/r2d.c             |  8 +++++---
+>   hw/smbios/smbios.c       |  2 +-
+>   hw/sparc/leon3.c         |  4 ++--
+>   hw/sparc/sun4m.c         |  8 +++++---
+>   hw/sparc64/sun4u.c       |  7 ++++---
+>   hw/xtensa/xtfpga.c       |  3 ++-
+>   include/hw/loader.h      |  8 +++++---
+>   system/device_tree.c     |  2 +-
+>   51 files changed, 160 insertions(+), 107 deletions(-)
 
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index c9782d67e8..48dd4e7b33 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -48,6 +48,7 @@
+>   #include "qapi/error.h"
+>   #include "qapi/qapi-commands-machine.h"
+>   #include "qapi/type-helpers.h"
+> +#include "qemu/units.h"
+>   #include "trace.h"
+>   #include "hw/hw.h"
+>   #include "disas/disas.h"
+> @@ -70,14 +71,18 @@
+>   static int roms_loaded;
+>   
+>   /* return the size or -1 if error */
+> -int64_t get_image_size(const char *filename)
+> +int64_t get_image_size(const char *filename, Error **errp)
+>   {
+>       int fd;
+>       int64_t size;
+> -    fd = qemu_open(filename, O_RDONLY | O_BINARY, NULL);
+> +    fd = qemu_open(filename, O_RDONLY | O_BINARY, errp);
+>       if (fd < 0)
+>           return -1;
+>       size = lseek(fd, 0, SEEK_END);
+> +    if (size < 0) {
+> +        error_setg_errno(errp, errno, "lseek failure: %s", filename);
+> +        return -1;
+> +    }
+>       close(fd);
+>       return size;
+>   }
+> @@ -118,23 +123,34 @@ ssize_t read_targphys(const char *name,
+>   }
+>   
+>   ssize_t load_image_targphys(const char *filename,
+> -                            hwaddr addr, uint64_t max_sz)
+> +                            hwaddr addr, uint64_t max_sz, Error **errp)
+>   {
+> -    return load_image_targphys_as(filename, addr, max_sz, NULL);
+> +    return load_image_targphys_as(filename, addr, max_sz, NULL, errp);
+>   }
+>   
+>   /* return the size or -1 if error */
+>   ssize_t load_image_targphys_as(const char *filename,
+> -                               hwaddr addr, uint64_t max_sz, AddressSpace *as)
+> +                               hwaddr addr, uint64_t max_sz, AddressSpace *as,
+> +                               Error **errp)
+>   {
+> +    ERRP_GUARD();
+>       ssize_t size;
+>   
+> -    size = get_image_size(filename);
+> -    if (size < 0 || size > max_sz) {
+> +    size = get_image_size(filename, errp);
+> +    if (*errp) {
+> +        return -1;
+> +    }
+> +
+> +    if (size > max_sz) {
+> +        error_setg(errp, "%s exceeds maximum image size (%" PRIu64 " MiB)",
+> +                   filename, max_sz / MiB);
+>           return -1;
+>       }
+> +
+>       if (size > 0) {
+>           if (rom_add_file_fixed_as(filename, addr, -1, as) < 0) {
+> +            error_setg(errp, "could not load '%s' at %" HWADDR_PRIx,
+> +                       filename, addr);
+>               return -1;
+>           }
+>       }
+... these changes must be in a distinct patch. The first patch
+being the one adapting the API by propagating the NULL **errp parameter.
 
->+                        }
->+                        #bitval as u8
->+                    }
->+                },
->+            )
->         } else {
->-            quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO }
->+            (
->+                quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO },
->+                quote! { 0 },
->+            )
->         };
->-        let bitnr = bitnr.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
->         let set_default = defval.is_some();
->         let defval = defval.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
->         properties_expanded.push(quote! {
->@@ -275,7 +288,7 @@ macro_rules! str_to_c_str {
->                 name: ::std::ffi::CStr::as_ptr(#prop_name),
->                 info: #qdev_prop,
->                 offset: ::core::mem::offset_of!(#name, #field_name) as isize,
->-                bitnr: #bitnr,
->+                bitnr: #bitval,
->                 set_default: #set_default,
->                 defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
->                 ..::common::Zeroable::ZERO
->diff --git a/rust/qemu-macros/src/tests.rs b/rust/qemu-macros/src/tests.rs
->index 65691412ff57..b65cf656fa36 100644
->--- a/rust/qemu-macros/src/tests.rs
->+++ b/rust/qemu-macros/src/tests.rs
->@@ -179,7 +179,10 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
->                         name: ::std::ffi::CStr::as_ptr(c"flags"),
->                         info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
->                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
->-                        bitnr: 3,
->+                        bitnr : {
->+                            const { assert!(3 >= 0 && 3 < u32::BITS as _ , "bit number exceeds type bits range"); }
->+                            3 as u8
->+                        },
->                         set_default: false,
->                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: 0 as u64 },
->                         ..::common::Zeroable::ZERO
->@@ -207,7 +210,10 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
->                         name: ::std::ffi::CStr::as_ptr(c"flags"),
->                         info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
->                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
->-                        bitnr: 3,
->+                        bitnr : {
->+                            const { assert!(3 >= 0 && 3 < u32::BITS as _ , "bit number exceeds type bits range"); }
->+                            3 as u8
->+                        },
->                         set_default: true,
->                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: true as u64 },
->                         ..::common::Zeroable::ZERO
->@@ -235,7 +241,10 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
->                         name: ::std::ffi::CStr::as_ptr(c"msi"),
->                         info: <u64 as ::hwcore::QDevProp>::BIT_INFO,
->                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
->-                        bitnr: 3,
->+                        bitnr : {
->+                            const { assert!(3 >= 0 && 3 < u64::BITS as _ , "bit number exceeds type bits range"); }
->+                            3 as u8
->+                        },
->                         set_default: true,
->                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: false as u64 },
->                         ..::common::Zeroable::ZERO
->-- 
->2.34.1
->
+If there are no other comments on this series, I can split while
+queueing your series; but if you don't mind doing it I'd rather let
+you repost a v9 ;)
+
+Regards,
+
+Phil.
 
