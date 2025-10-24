@@ -4,114 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBDCACCD1A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEAFCCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 06:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCBiE-00077v-O8; Fri, 24 Oct 2025 02:55:46 -0400
+	id 1vCBiW-00079m-OF; Fri, 24 Oct 2025 02:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vCBi8-00077T-Th
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:55:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vCBiV-00079Y-Qy
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:56:03 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vCBi5-0006cQ-GH
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:55:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761288934;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qk/1K0avWi1fwiLFQ6xtzNkb1QuApfY9mW8p4gvIfN4=;
- b=CT4IXtGS8dFIUKMFcbIp1HwGJQcVkSj2o4vA7p+tRdYAJsfB87LxjmsjMU3Fia6wzHFo4B
- E8VINmbvGoXr8oybRyMuoFJ0J3uPQQNFj1dSi0ZE3n2BfCLElr9HN1kkUy7b8LYU8Cbgpp
- 22hq+lrltF3d49RaLMmEQW4VtpASo8k=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-XkSScXFUPf2vt2EfjxCfVA-1; Fri, 24 Oct 2025 02:55:32 -0400
-X-MC-Unique: XkSScXFUPf2vt2EfjxCfVA-1
-X-Mimecast-MFC-AGG-ID: XkSScXFUPf2vt2EfjxCfVA_1761288931
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-33bb3b235ebso3861891a91.1
- for <qemu-devel@nongnu.org>; Thu, 23 Oct 2025 23:55:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761288931; x=1761893731;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qk/1K0avWi1fwiLFQ6xtzNkb1QuApfY9mW8p4gvIfN4=;
- b=Q/x/UcOt6lkWLORdNOOeBo8DyF99a0Joz06wm/9BY3Uza4uwsGVq+11n7GmTdSz/nE
- LwIFaVpEdgl722Cwt7sRkPChffer3NQs6aqSIHttyOJXixNNihnThrw3r0oVovLlCYYQ
- uva/m4RzGiZNCyRaGGO2m+TLMiNasVCBT026X0mWh3UZl9PcLqOhKE9nhDEBuY7p2asE
- 6owg88vLfeTYrvHH5IE+3VxrEgtLOCSuLw2RuSHDW8RJ06e7n4IZe5dMD3CbomMuuas3
- N1EejpU65DXOtmNPcExqHj9LNwD+tRKxdqnuE5iG0nrBqY+IwKVu2gutnkzDHcNhpcxr
- eOSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5Kf755bfRgUTdZx/1Q+XcA+Qke2UqAe/y6Jm2r7P1Au/970+iIV+O1+bjqYwpxMiyzBRbEczWyDcZ@nongnu.org
-X-Gm-Message-State: AOJu0Ywvg8E4FsDE6DlrcV1zLVQx+dS1paPADlxiNtth/IKrdqv4hbPG
- d7MSSAMNmbL2BcfYqqiynoIXsnTT/eUFs+ywVV5v2iQ8PcmQ7bVMpuhwaaBfB0GTj/+PO1lfeYI
- dVpbOK50lAeh0sxpXQTRgcUBpfbzMIxrURYrtUif5yOtSqsaEUs8Q33Jf
-X-Gm-Gg: ASbGncsWo8W2LBDbQ6DPGEZsW6hhcs9SO9+vwoPrQ64Z0hnFqvTjE5bXBdG1e2FlQHB
- zCV3kUwZry3U1iqCoLSizNrac8tNTnw4iPBZRagbrAQYibZXxEVrC5iKm/ZiWp2hRj1BvVl8eCg
- Ax85ADI0ZX38C7oYXhL0tHYJh26x4sP5o2M3qVR2hobaENv6XZ4bJj+YxBl3pmsI4u9P195dmam
- 19XvLJ4d3ZrgS1RyX/HkzO1FD93Ep2fNzexOQW+AZpZPYzRB/eEPFGvboZ0o07hS+u/1cv2C/uQ
- wUblU0/MPTxYPwIF5nh36MCbqlnPsoRy6n8ZGeEZbIUb7QHHjFNO2rB/dFy995NZVeO7+RuzcCH
- ELqmX00u+gG6EP7J/SAvKDZOHkCo6fVRaSEUI4Ew=
-X-Received: by 2002:a17:902:cec6:b0:27e:f201:ec94 with SMTP id
- d9443c01a7336-2948b98294amr18185395ad.18.1761288931189; 
- Thu, 23 Oct 2025 23:55:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgef95mK+Ki2hx1NleNTDyL0rmdqa3EraCCc9f9J5a/5oLh2Z4mfb5VfE8OmNXFAdv4TGihQ==
-X-Received: by 2002:a17:902:cec6:b0:27e:f201:ec94 with SMTP id
- d9443c01a7336-2948b98294amr18184875ad.18.1761288930747; 
- Thu, 23 Oct 2025 23:55:30 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
- [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2946ddee569sm44681375ad.31.2025.10.23.23.55.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Oct 2025 23:55:30 -0700 (PDT)
-Message-ID: <f6c6abf0-e57c-4f67-9289-371196d062a5@redhat.com>
-Date: Fri, 24 Oct 2025 16:55:14 +1000
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vCBiT-0006eI-KA
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 02:56:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761288962; x=1792824962;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=W7ZaPgXUZ/IWG5Zgflot8zEURcD4R2zU18fM23RjKuc=;
+ b=Nnwr58RZ1GhEkTWLFn4Nb22xIzZzvXP4R44Q8xd3eZfj6BEPrdDs/zO6
+ jdwO+/+EJkW/z2ifq1t+rfVfXHxyq5sMPXly96Z1DZQyFSg0X/mpmhJyO
+ knqqlLpzaCKpmi4uTMpwHsDX88vEO88mlh9FGYXOC2SKWwlDaOY9ZC6En
+ wt7VXbpmaBvZeRmWVu3vxT7OGA8ePujzWRg75+vlQ8qH7iupMWW0w+Xqf
+ wm5QJd6I1hv85apZcDcW/edgsnxDPazHa21QY+a5EWWZdGqRX/IrDkQsD
+ VLM1yqU+lVCp8f/GLhyO6Yc9z98+xdla3F7PvcKRWUIPHmViI2B058295 Q==;
+X-CSE-ConnectionGUID: 6sL63VHfQ0uAM46fcT457w==
+X-CSE-MsgGUID: NngfjNCjT0iqFNepWDBULg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63369848"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="63369848"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2025 23:55:59 -0700
+X-CSE-ConnectionGUID: cBVe/XFERcORWfdSNGMJfw==
+X-CSE-MsgGUID: 9+flY793TgqhbOopPdL9tA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="188747323"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 23 Oct 2025 23:55:58 -0700
+Date: Fri, 24 Oct 2025 15:18:07 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH] i386/cpu: Add an option in X86CPUDefinition to control CPUID
+ 0x1f
+Message-ID: <aPsoLx2+2bpW6mWf@intel.com>
+References: <20250923021133.190725-1-ewanhai-oc@zhaoxin.com>
+ <20250923021133.190725-4-ewanhai-oc@zhaoxin.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC V6 00/24] Support of Virtual CPU Hotplug-like Feature
- for ARMv8+ Arch
-From: Gavin Shan <gshan@redhat.com>
-To: salil.mehta@opnsrc.net, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- mst@redhat.com
-Cc: salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
- jonathan.cameron@huawei.com, lpieralisi@kernel.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org, imammedo@redhat.com,
- armbru@redhat.com, andrew.jones@linux.dev, david@redhat.com,
- philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
- oliver.upton@linux.dev, pbonzini@redhat.com, rafael@kernel.org,
- borntraeger@linux.ibm.com, alex.bennee@linaro.org,
- gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- linux@armlinux.org.uk, darren@os.amperecomputing.com,
- ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
- gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
- jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
- shahuang@redhat.com, zhao1.liu@intel.com
-References: <20251001010127.3092631-1-salil.mehta@opnsrc.net>
- <b1c0a0a8-3b94-47ee-ab8b-e42099f3f1a8@redhat.com>
-Content-Language: en-US
-In-Reply-To: <b1c0a0a8-3b94-47ee-ab8b-e42099f3f1a8@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250923021133.190725-4-ewanhai-oc@zhaoxin.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,99 +84,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Salil,
+Many Intel and Zhaoxin CPUs enable CPUID 0x1f by default to encode CPU
+topology information.
 
-On 10/22/25 8:07 PM, Gavin Shan wrote:
-> On 10/1/25 11:01 AM, salil.mehta@opnsrc.net wrote:
->>
->> ===================
->> (VII) Commands Used
->> ===================
->>
->> A. Qemu launch commands to init the machine (with 6 possible vCPUs):
->>
->> $ qemu-system-aarch64 --enable-kvm -machine virt,gic-version=3 \
->> -cpu host -smp cpus=4,disabled=2 \
->> -m 300M \
->> -kernel Image \
->> -initrd rootfs.cpio.gz \
->> -append "console=ttyAMA0 root=/dev/ram rdinit=/init maxcpus=2 acpi=force" \
->> -nographic \
->> -bios QEMU_EFI.fd \
->>
-> 
-> The parameter 'disabled=2' isn't correct here and it needs to be 'disabledcpus=2'.
-> Otherwise, the VM won't be started due to the unrecognized parameter.
-> 
-> $ /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64       \
->    --enable-kvm -machine virt,gic-version=3 -cpu host,sve=off    \
->    -smp cpus=4,disabled=2 -m 1024M                               \
->    -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image \
->    -initrd /home/gavin/sandbox/images/rootfs.cpio.xz -nographic
-> qemu-system-aarch64: Parameter 'smp.disabled' is unexpected
-> 
+Add the "cpuid_0x1f" option to X86CPUDefinition to allow named CPU
+models to configure CPUID 0x1f from the start, thereby forcing 0x1f
+to be present for guest.
 
-Apart from the issues that were reported previously, there are more issues.
-some of them may be invalid. I'm sharing the extra issues below.
+With this option, there's no need to explicitly add v1 model to an
+unversioned CPU model for explicitly enabling the x-force-cpuid-0x1f
+property.
 
-The VM is always started using the following command lines.
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-host$ /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64               \
--accel kvm -machine virt,gic-version=host,nvdimm=on                         \
--cpu host,sve=off                                                           \
--smp maxcpus=4,cpus=2,disabledcpus=2,sockets=2,clusters=2,cores=1,threads=1 \
--m 4096M,slots=16,maxmem=128G -object memory-backend-ram,id=mem0,size=2048M \
--object memory-backend-ram,id=mem1,size=2048M                               \
--numa node,nodeid=0,memdev=mem0,cpus=0-1                                    \
--numa node,nodeid=1,memdev=mem1,cpus=2-3                                    \
--L /home/gavin/sandbox/qemu.main/build/pc-bios                              \
--monitor none -serial mon:stdio                                             \
--nographic -gdb tcp::6666 -qmp tcp:localhost:5555,server,wait=off           \
--bios /home/gavin/sandbox/qemu.main/build/pc-bios/edk2-aarch64-code.fd      \
--kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image               \
--initrd /home/gavin/sandbox/images/rootfs.cpio.xz                           \
--append memhp_default_state=online_movable
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 175054fdb322..56c1030a8627 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2307,6 +2307,12 @@ typedef struct X86CPUDefinition {
+     int model;
+     int stepping;
+     uint8_t avx10_version;
++    /*
++     * Whether to present CPUID 0x1f by default.
++     * If true, encode CPU topology in 0x1f leaf even if there's no
++     * extended topology levels.
++     */
++    bool cpuid_0x1f;
+     FeatureWordArray features;
+     const char *model_id;
+     const CPUCaches *const cache_info;
+@@ -8092,6 +8098,10 @@ static void x86_cpu_load_model(X86CPU *cpu, const X86CPUModel *model)
+                                  &error_abort);
+     }
 
-[Issue-1]: Inconsistent output from 'qom-list /machine/unattached'. The disabled
-CPU device doesn't show up at the beginning, but it appears after it's hot added.
-However, the CPU device is still seen after it's hot removed.
++    if (def->cpuid_0x1f) {
++        object_property_set_bool(OBJECT(cpu), "x-force-cpuid-0x1f", def->cpuid_0x1f,
++                                 &error_abort);
++    }
+     x86_cpu_apply_version_props(cpu, model);
 
-(qemu) qom-list /machine/unattached
-device[0] (child<host-arm-cpu>)
-device[1] (child<host-arm-cpu>)
-   :
-(qemu) device_set host-arm-cpu,socket-id=1,admin-state=enable
-(qemu) qom-list /machine/unattached
-device[0] (child<host-arm-cpu>)
-device[1] (child<host-arm-cpu>)
-device[42] (child<host-arm-cpu>)
-   :
-(qemu) device_set host-arm-cpu,socket-id=1,admin-state=disable
-(qemu) qom-list /machine/unattached
-device[0] (child<host-arm-cpu>)
-device[1] (child<host-arm-cpu>)
-device[42] (child<host-arm-cpu>)
+     /*
+--
+2.34.1
 
-[Issue-2]: The hot added CPU disappears after a system reset
-
-guest$ cat /sys/devices/system/cpu/online
-0-1
-(qemu) device_set host-arm-cpu,socket-id=1,admin-state=enable
-guest$ echo 1 > /sys/devices/system/cpu/cpu2/online
-guest$ cat /sys/devices/system/cpu/online
-0-2
-
-(qemu) system_reset
-guest$ cat /sys/devices/system/cpu/online
-0-1
-
-[Issue-3] PCDIMM is unable to be hot added.
-
-(qemu) object_add memory-backend-ram,id=hp-mem0,size=512M
-(qemu) device_add pc-dimm,id=hp-dimm0,memdev=hp-mem0,node=0
-Error: Parameter 'driver' expects a pluggable device type or which supports changing power-state administratively
-
-Thanks,
-Gavin
 
 
