@@ -4,74 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBD2CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 02:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E44CCD1AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 03:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vC7Za-0001rw-Oh; Thu, 23 Oct 2025 22:30:34 -0400
+	id 1vC8Lz-00073W-RL; Thu, 23 Oct 2025 23:20:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vC7ZY-0001ro-LT
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 22:30:33 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vC8Lx-00072z-9Y; Thu, 23 Oct 2025 23:20:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vC7ZV-0000a7-9l
- for qemu-devel@nongnu.org; Thu, 23 Oct 2025 22:30:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761273029; x=1792809029;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=PX+eVf5i4pYVjX5/OhEJPZeGHVaKXl1t7iu4j85VAaw=;
- b=MGyU1PHem5O59WIeZAgitW5aiamcwf7hhjmM3graLaKRQ8j3Q22KnaH1
- /iDMg4QNYAsL1YIRF8oi1LVXocCl/6jR8Py8qSUyTB7CDxh2txehhh4JE
- PpvL0JnTih7pIQ9+dvqeYR9HPj8YPu295cwL29ABSLfi0zjICCvbfC2a5
- ID1DD/bPraCa2JvnvhAGv1HlII2SENdcDg8l5uIeoHSRoNR/iATsG7k4Z
- xWSz2xTqqYea0BLLQeIwiniWDuVUqjBZ2PVUd7QM4QQsDJPa9mmouLy5a
- YvVOSsJuWFwRyz61GqnVlLpWUwd8W/+xqALpU3OcOKmvunyWA7GhIFLl1 g==;
-X-CSE-ConnectionGUID: FVtloujFQ5aqnf2pCuFn5w==
-X-CSE-MsgGUID: 9yswrV+8QRaHVE8aIKdDSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74892986"
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="74892986"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 19:30:25 -0700
-X-CSE-ConnectionGUID: MDsBStKpQK6NIicOOyHanA==
-X-CSE-MsgGUID: 5DeMk5hbQOC+NPgPg490Tg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,251,1754982000"; d="scan'208";a="184386427"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2025 19:30:22 -0700
-Message-ID: <9614d727-97bf-4a50-be13-6754952bec96@intel.com>
-Date: Fri, 24 Oct 2025 10:30:19 +0800
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vC8Lv-0005Sz-Ed; Thu, 23 Oct 2025 23:20:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59NHGcMU009507;
+ Fri, 24 Oct 2025 03:20:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=E3Uylb
+ dQZzgk3xu7QuXsgwtg6zerAAQoxu2KBY9T3dY=; b=F69ySHZW2axQno6ePTZnyb
+ 7fL2PZNC4JhvRx5QtlOz3ibY2LbYmQcbJegHe/G4+iHv3ZsHNcIO4423OPJF83Dx
+ eaPl9CQ0DebtSH7wNaZmaIfLBDq49w5niYv1v3SAXmPNfGVFC+yIXsEAojhaILjM
+ nHP1VOoESJ+rB1IQErnXqPFXHCy9dO4WtvmTecE9FNcVq59CeLBX/z51TTuHs1MC
+ In+Rn8RCkxD5NWJC0+m1eyMCOLOtrF7IbOQ+qDZGPLvSuiKOp787crn2JU7lG8vA
+ Z/jbPwZsNGQ7IndwsjzDURMKczUHGR6BvQLf/Hpo1futJEBEKqmNgi7greJIFADw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3275cxh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Oct 2025 03:20:05 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59O3I5Xd005686;
+ Fri, 24 Oct 2025 03:20:04 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49v3275cxd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Oct 2025 03:20:04 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59NNPRTr014650;
+ Fri, 24 Oct 2025 03:20:03 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49vn7shcg8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Oct 2025 03:20:03 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59O3Jxxd62915068
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Oct 2025 03:19:59 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9A06820043;
+ Fri, 24 Oct 2025 03:19:59 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C57320040;
+ Fri, 24 Oct 2025 03:19:54 +0000 (GMT)
+Received: from [9.39.26.73] (unknown [9.39.26.73])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Oct 2025 03:19:53 +0000 (GMT)
+Message-ID: <8affcf68-8782-4cb8-8923-1f625d599091@linux.ibm.com>
+Date: Fri, 24 Oct 2025 08:49:52 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] kvm: Allow kvm_guest_memfd_supported for non-private
- use case
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Chenyi Qiang <chenyi.qiang@intel.com>, David Hildenbrand <david@redhat.com>,
- Alexey Kardashevskiy <aik@amd.com>, Juraj Marcin <jmarcin@redhat.com>
-References: <20251023185913.2923322-1-peterx@redhat.com>
- <20251023185913.2923322-3-peterx@redhat.com>
+Subject: Re: [Patch v7 2/5] hw/core/loader: capture Error from
+ load_image_targphys
+To: Vishal Chourasia <vishalc@linux.ibm.com>
+References: <20251022192717.1644251-1-vishalc@linux.ibm.com>
+ <20251022192717.1644251-5-vishalc@linux.ibm.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20251023185913.2923322-3-peterx@redhat.com>
+Cc: harshpb@linux.ibm.com, milesg@linux.ibm.com, npiggin@gmail.com,
+ peter.maydell@linaro.org, alistair23@gmail.com, balaton@eik.bme.hu,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, berrange@redhat.com,
+ richard.henderson@linaro.org, alistair@alistair23.me,
+ alex.bennee@linaro.org, deller@gmx.de, pbonzini@redhat.com,
+ eduardo@habkost.net, minyard@acm.org, gaosong@loongson.cn,
+ maobibo@loongson.cn, laurent@vivier.eu, edgar.iglesias@gmail.com,
+ hpoussin@reactos.org, david@redhat.com, chigot@adacore.com,
+ konrad.frederic@yahoo.fr, atar4qemu@gmail.com, jcmvbkbc@gmail.com
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <20251022192717.1644251-5-vishalc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=EJELElZC c=1 sm=1 tr=0 ts=68faf065 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=6Tfyqbp0RZxg3S9JSXoA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDE4MDAyMiBTYWx0ZWRfX6TG9WX4Jjlhb
+ KFTxzuNpjsTvGO0Wjs6UklLQD6LhyFWDDNLls+E6IvWwOnP0IfjAIWfFUYx6ILra6D6CztsxOcz
+ xpJrJEeF5eo9fN2gHjA+gqDBsaAZCH9mrnEsXls4+gTPRKFQLHuDu2Uax+oUrjKpv2bzGnaCfKZ
+ ACYVRJt5LtbVuVfZsFaxeaE0d6yRLAWEnhnzjG5netJYEiSDW3tTnp7EpFf4RjzFvsdJGY/X+AI
+ wIrtzzRbQTNCrJcAiEyd7rIU57v36F/Q9OSkeHp93Wd09CrKpSyf3WVtHblO7X3no0PclKGHiio
+ VHzwenDTSEsIAvTWfdRfdn7dnCNvCmZOPCBJhJA4z9v98agK5vi/JDmfYi7yjQ+7GL/rVrC13Zt
+ ITLl20YG6W6k8AD3AKpHoIGvkqSLVQ==
+X-Proofpoint-GUID: xD-nj0K6x6CvlVy6OLt4aDUYfIzOEMsz
+X-Proofpoint-ORIG-GUID: 1KSM_Uzud7wlwmZT-QyUV_HDQGnNf2zQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-23_03,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510180022
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.998, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,136 +136,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/2025 2:59 AM, Peter Xu wrote:
-> Guest-memfd is not 100% attached to private, it's a VM-specific memory
-> provider.  Allow it to be created even without private attributes, for
-> example, when the VM can use the guest-memfd memory completely shared.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   accel/kvm/kvm-all.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index f9254ae654..1425dfd8b3 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2779,10 +2779,8 @@ static int kvm_init(AccelState *as, MachineState *ms)
->       }
->   
->       kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
-> -    kvm_guest_memfd_supported =
-> -        kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-> -        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
-> -        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> +    kvm_guest_memfd_supported = kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-> +        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
->       kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
->   
->       if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
+On 23/10/25 00:57, Vishal Chourasia wrote:
+
+> Add Error **errp parameter to load_image_targphys(),
+> load_image_targphys_as(), and get_image_size() to enable better
+> error reporting when image loading fails.
+>
+> Pass NULL for errp in all existing call sites to maintain current
+> behavior. No functional change intended in this patch.
+>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+
+The series might need a rebase again This patch fails to apply on 
+current upstream.
 
 
-The check on KVM_MEMORY_ATTRIBUTE_PRIVATE is dropped silently. But using 
-guest memfd to serve as private memory does requires the support of 
-KVM_MEMORY_ATTRIBUTE_PRIVATE.
+Thanks,
 
-My version of the patch was
+- Aditya G
 
 
-Author: Xiaoyao Li <xiaoyao.li@intel.com>
-Date:   Sat Jul 19 00:56:57 2025 +0800
-
-     kvm: Decouple memory attribute check from kvm_guest_memfd_supported
-
-     With the mmap support of guest memfd, KVM allows usersapce to create
-     guest memfd serving as normal non-private memory for X86 DEFEAULT VM.
-     However, KVM doesn't support private memory attriute for X86 DEFAULT
-     VM.
-
-     Make kvm_guest_memfd_supported not rely on KVM_MEMORY_ATTRIBUTE_PRIVATE
-     and check KVM_MEMORY_ATTRIBUTE_PRIVATE separately when the machine
-     requires guest_memfd to serve as private memory.
-
-     This allows QMEU to create guest memfd with mmap to serve as the memory
-     backend for X86 DEFAULT VM.
-
-     Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index f9254ae65466..96c194ce54cd 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1501,6 +1501,11 @@ int kvm_set_memory_attributes_shared(hwaddr 
-start, uint64_t size)
-      return kvm_set_memory_attributes(start, size, 0);
-  }
-
-+bool kvm_private_memory_attribute_supported(void)
-+{
-+    return !!(kvm_supported_memory_attributes & 
-KVM_MEMORY_ATTRIBUTE_PRIVATE);
-+}
-+
-  /* Called with KVMMemoryListener.slots_lock held */
-  static void kvm_set_phys_mem(KVMMemoryListener *kml,
-                               MemoryRegionSection *section, bool add)
-@@ -2781,8 +2786,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
-      kvm_supported_memory_attributes = kvm_vm_check_extension(s, 
-KVM_CAP_MEMORY_ATTRIBUTES);
-      kvm_guest_memfd_supported =
-          kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
--        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
--        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-+        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
-      kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, 
-KVM_CAP_PRE_FAULT_MEMORY);
-
-      if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-index 68cd33ba9735..73f04eb589ef 100644
---- a/accel/stubs/kvm-stub.c
-+++ b/accel/stubs/kvm-stub.c
-@@ -125,3 +125,8 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t 
-flags, Error **errp)
-  {
-      return -ENOSYS;
-  }
-+
-+bool kvm_private_memory_attribute_supported(void)
-+{
-+    return false;
-+}
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 8f9eecf044c2..b5811c90f1cc 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -561,6 +561,7 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t 
-flags, Error **errp);
-
-  int kvm_set_memory_attributes_private(hwaddr start, uint64_t size);
-  int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
-+bool kvm_private_memory_attribute_supported(void);
-
-  int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
-
-diff --git a/system/physmem.c b/system/physmem.c
-index a340ca3e6166..7704572a5745 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2211,6 +2211,14 @@ static void ram_block_add(RAMBlock *new_block, 
-Error **errp)
-                         object_get_typename(OBJECT(current_machine->cgs)));
-              goto out_free;
-          }
-+
-+        if (!kvm_private_memory_attribute_supported()) {
-+            error_setg(errp, "cannot set up private guest memory for %s: "
-+                       " KVM does not support private memory attribute",
-+                       object_get_typename(OBJECT(current_machine->cgs)));
-+            goto out_free;
-+        }
-+
-          assert(new_block->guest_memfd < 0);
-
-          ret = ram_block_coordinated_discard_require(true);
 
