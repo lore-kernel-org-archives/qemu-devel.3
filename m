@@ -4,62 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D09D9CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 14:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1822CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 14:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCIQX-0004jv-2p; Fri, 24 Oct 2025 10:05:57 -0400
+	id 1vCITU-0005TP-Vc; Fri, 24 Oct 2025 10:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vCIQV-0004jV-0Z
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 10:05:55 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vCITP-0005Ss-E3
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 10:08:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1vCIQT-0003a8-1y
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 10:05:54 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 9D5C143616;
- Fri, 24 Oct 2025 14:05:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078E3C4CEF1;
- Fri, 24 Oct 2025 14:05:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1761314743;
- bh=kEPbTDZac7CjluEtE5j18ISVJGK6g6nGBRg4GbTVTXw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=gLLrpYfYY+N8x2bnVbq/kQ4p3chpY7BnLHMvtGumF3h8HRl8eVqyWRcU+EmcHioQe
- crgRy0hCv9eZTpp1z8PuHIJPDPmWtI0VslXA12NzWqAICWUx5AquXcNiybjNAfUdOS
- KKuaz5t5WXPbMfXAKs9EEHWQy07XKse3D4gq0GloinbaWYlSTapWV7mxS5UKgucidW
- AxsSGlztFyXCzEHLbpmHJb/aAOFnXOgcYPrw56D/1FmmtShIFnioWdn0ZwGvq50Ztd
- IYcdN5uNDFyZvKnUWUj29x/RPAZQ9i2NZOaQkKQvidq79mm+H6v9sPrNGl7Qm8mS4p
- 9gjFHC3i2fQ/Q==
-Date: Fri, 24 Oct 2025 19:29:01 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, kvm@vger.kernel.org, 
- Tom Lendacky <thomas.lendacky@amd.com>, Nikunj A Dadhania <nikunj@amd.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Zhao Liu <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: Re: [PATCH v2 0/9] target/i386: SEV: Add support for enabling VMSA
- SEV features
-Message-ID: <tu7zyirbskj7gfr3mrwt6wlezslthrzbzvvmuszubvfvclcdhc@oxsy3cjmicoz>
-References: <cover.1758794556.git.naveen@kernel.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vCITN-0003qp-Aj
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 10:08:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761314931;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=y4U/sWqrpc3a4btbxAWo6H/G1bY+HTYlS6Kp3FO696c=;
+ b=VU3gXoxkdmr7iOkTQAmf8WpVPNwtdT8YJSTH1j2ejR6ZbJrQqnq5mYs6P3ON9EcFWYCKUW
+ byjei30uaOR+1D+XoJhUzn5mDNY/wCJStfLwaMyKdfwHp59uDGp8Fp7+NoqtY/u/ioDYs1
+ WwKtQmHIqjWau91hEYfLQqQ8XlObfII=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-swZePv2BMhiatMm8Nm35WA-1; Fri,
+ 24 Oct 2025 10:08:47 -0400
+X-MC-Unique: swZePv2BMhiatMm8Nm35WA-1
+X-Mimecast-MFC-AGG-ID: swZePv2BMhiatMm8Nm35WA_1761314926
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9AF79197753E; Fri, 24 Oct 2025 14:08:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEE2518005B0; Fri, 24 Oct 2025 14:08:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2F69921E6A27; Fri, 24 Oct 2025 16:08:39 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Bin Guo <guobin@linux.alibaba.com>,  qemu-devel@nongnu.org,
+ peterx@redhat.com,  farosas@suse.de
+Subject: Re: [PATCH] migration: Don't free the reason after calling
+ migrate_add_blocker
+In-Reply-To: <874irozabw.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Fri, 24 Oct 2025 15:41:07 +0200")
+References: <20251024092821.82220-1-guobin@linux.alibaba.com>
+ <87o6pw1rfn.fsf@pond.sub.org> <aPtim8ZACUWyje2o@redhat.com>
+ <874irozabw.fsf@pond.sub.org>
+Date: Fri, 24 Oct 2025 16:08:39 +0200
+Message-ID: <87v7k4xuhk.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1758794556.git.naveen@kernel.org>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,63 +90,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 25, 2025 at 03:47:29PM +0530, Naveen N Rao (AMD) wrote:
-> This series adds support for enabling VMSA SEV features for SEV-ES and
-> SEV-SNP guests. Since that is already supported for IGVM files, some of
-> that code is moved to generic path and reused.
-> 
-> Debug-swap is already supported in KVM today, while patches for enabling
-> Secure TSC have been accepted for the upcoming kernel release.
+Markus Armbruster <armbru@redhat.com> writes:
 
-Any other comments on this series?
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-So far, the only minor change I have on top of this series is the change 
-suggested by Markus:
+[...]
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 5b830a9ba000..a2b9ccdfe43e 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1010,7 +1010,8 @@
- #     designated guest firmware page for measured boot with -kernel
- #     (default: false) (since 6.2)
- #
--# @debug-swap: enable virtualization of debug registers
-+# @debug-swap: enable virtualization of debug registers. This is only
-+#     supported on SEV-ES/SEV-SNP guests
- #     (default: false) (since 10.2)
- #
- # Since: 9.1
+>> But wow, the migrate_add_blocker API design is unpleasant with its
+>> pair of "Error **" parameters - it is practically designed to
+>> maximise confusion & surprise.
+>
+> It's quite a sight, isn't it?
+>
+> I'll give it a quick Friday afternoon try.
 
-Otherwise, this series still applies cleanly to current master.
-
-> 
-> Roy,
-> I haven't been able to test IGVM, so would be great if that is tested to 
-> confirm there are no unintended changes there.
-
-I took a stab at this with the buildigvm tool from Roy. I am able to 
-boot a Linux guest with an IGVM file generated from that using qemu 
-built with this series applied. In addition, with the below change to 
-buildigvm, I am able to see Secure TSC being enabled in the guest:
-
-diff --git a/src/vmsa.rs b/src/vmsa.rs
-index 3d67a953055e..ac150264c244 100644
---- a/src/vmsa.rs
-+++ b/src/vmsa.rs
-@@ -70,6 +70,7 @@ fn construct_vmsa(reset_addr: u32, platform: Platform) -> Result<Box<SevVmsa>, B
-
-     if let Platform::SevSnp = platform {
-         vmsa.sev_features.set_snp(true);
-+        vmsa.sev_features.set_secure_tsc(true);
-     }
-
-     Ok(vmsa_box)
-
-I couldn't get it to work with > 1 vCPUs though (I'm possibly missing 
-OVMF changes or such).
-
-
-- Naveen
+Alright, my confusion has been maximised.  Giving up on this.
 
 
