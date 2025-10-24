@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CB8CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 16:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E303CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 16:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCKpP-0005Ic-Os; Fri, 24 Oct 2025 12:39:47 -0400
+	id 1vCKuE-0006L7-UE; Fri, 24 Oct 2025 12:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKpO-0005IF-2e
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:39:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKuA-0006KO-MT
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:44:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKpL-0003b8-8i
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:39:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vCKu8-0004CE-Km
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 12:44:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761323981;
+ s=mimecast20190719; t=1761324279;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TAM+kEwGnc13nxGSKhY/nW5JwV9NrtpZi41A2zGVfVY=;
- b=UhKblTbBZp4yDfv2BgyHoUsdqzsAQqyi12C3RSwHmQDXQuzGyRuA38QxAiNR3j7QvmVNiR
- ijUADxR0u9nQELwIYiuwyT4zqjYiSU3u7vybU8xWS1mbUyvexQ+1sxcuxCJb1XrUNLnj47
- V4sHn2luEetgsE5c3RiaSgrLjm7Whfw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qQbywWN35EL6EHEDA2f+DdynI7ul4AhmRqmNo0ONzkY=;
+ b=IU8Bv8JvNceeaAHIlVgaOrIPmowXMhKVE7W5jzQfVfr+IXopwygCXvgU6B5gNpJiTMPs5/
+ +jbsFqB5aCvb9uLmP5P44QEP4O6KvJJiYu7oCzH1dGq0pdIrAj9U7YwogznXeOEIukeiLc
+ pAaBMVn5vdpqOoI4Np2I31rfabD14lY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-uOJ3Tz9jN1Sso3WesdIi_A-1; Fri, 24 Oct 2025 12:39:39 -0400
-X-MC-Unique: uOJ3Tz9jN1Sso3WesdIi_A-1
-X-Mimecast-MFC-AGG-ID: uOJ3Tz9jN1Sso3WesdIi_A_1761323979
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4721b4f3afbso9053805e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 09:39:39 -0700 (PDT)
+ us-mta-649-9hk-eSpKPAiJ1cAE4dIaIw-1; Fri, 24 Oct 2025 12:44:35 -0400
+X-MC-Unique: 9hk-eSpKPAiJ1cAE4dIaIw-1
+X-Mimecast-MFC-AGG-ID: 9hk-eSpKPAiJ1cAE4dIaIw_1761324274
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3ecdb10a612so1317587f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 09:44:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761323979; x=1761928779;
+ d=1e100.net; s=20230601; t=1761324274; x=1761929074;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TAM+kEwGnc13nxGSKhY/nW5JwV9NrtpZi41A2zGVfVY=;
- b=svNo7HyB9MFUQYT8fyuP9sC7VAuer01GCTlOo1iPWfjadS4XdRzbS1MbyQvoApEdAI
- 4jqrgP99XAiO85Ue5SoxIhaF0Q55Gd6ls1hTptJFQYxIIj/kFG7FBY83yKGsvEIawDyY
- ms6wSk3ZYq5CVSG4h94SmW6gq7ztL9kGgnoq7Rv2mFuw6ZfYPrha1z2NQRQ7yWT2PugK
- 5aGwePKpBVEXmrndi9crehboCdzWnpt2oCpo1xmJtosRHzS7wO27sYn9oSKAUwV8ALof
- O7szOlbX+nxWpfr9Gamc0cTg0/lJs7M4tgZLLXgLnvD56QGber+PQuVBDxX5DfcI0a9t
- /dCQ==
+ bh=qQbywWN35EL6EHEDA2f+DdynI7ul4AhmRqmNo0ONzkY=;
+ b=NGOrBqmKCIptPd/34DFKQh+rdM+g3s3n2oK+pXTg6aFPusGlTvNzLLAF1xNekNjn4Q
+ bNSRPSQ/ucpn1atSRg3yNd/f0BvksUJnqv3ZuVL1B2wGJgLAHVheeStkUGsLT2Bq91nV
+ ZciK06hX9bzrzRL1dedQ8UtQT1d/J/+OIJL3ClXmL8x7Zaig6XSqEDWwSxyu22+PifZT
+ dbQg5cFhF7IZC4x0WChnHYuxzAp7KagvRzY1afUAKbIeiRjHTtsjGeQEbx2kOGJqMYpZ
+ ZgD7baOP6ibREE7zE/ZPJIdexMtTwA6cx4i0VRQ3Crs3PZ+P6kUGeYEDzX/6PkyyKRp4
+ ZWgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDkI6qm5V+jmm7xJqI206Z64Pyf6pn7bRIRkG8+dkMwEplVGLnYcgflQZqrmtJUDrmhzV3impl3Pjg@nongnu.org
-X-Gm-Message-State: AOJu0YyZixvOd2rIijGASf5uLkKmfEpg4JBppNq3edcoQ+b9tFtE4GLC
- rxYU7wOS75fA3azFissbpovA+7wiZC2MoyecKqrs7T8YhW/ROJPTpHww+YT3rxRUekwqs5tD8si
- 8iNBx/s+dqo7eRmVh/aUuxYSRn51GJDS2ca5xdMcFuOeCWgYrUTVlCTOd
-X-Gm-Gg: ASbGncsHbgBKrX7woN6SazHTIBs0GgFn3h533G5oiOWgvyqP6qRZIjpw+bQDCgODtHY
- t3pbIDMLvhl36+Plo4nH29l9Q57Kl7ssXVJH/Lr/Qz7cnkC75Xti5+wGEAJz+TGb9rm3BlGUZpJ
- 9d+ays2nvkeNGv/iozECj/CnTTXj1WtFpc5ya4Y04ZW6LGlhf/YA5YBx5llJKw1QZDV/IWssWG8
- 2WzLkbBunxCMLOF1EbYniDmmwJd2lF+dpfrEkqkcR97GvGvYSXN1LBrZ3+5L9DAnNaCN7vMPLUi
- afILGEFj/jU6T+rHO9IEOAXHyFsL+D5gHwVafjH5XV3K2GE/hsFciYbUxAeL9Yxtu5JDY1Uc
-X-Received: by 2002:a05:600c:1546:b0:46d:ba6d:65bb with SMTP id
- 5b1f17b1804b1-475d2ecb307mr27887725e9.31.1761323978653; 
- Fri, 24 Oct 2025 09:39:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkaJJJL/1FQ7xHlxOTPcdWMwpUdC3rpzdFO9RIBIrjnEaTymsAprfk0HXLJuekjPuBbbRE3w==
-X-Received: by 2002:a05:600c:1546:b0:46d:ba6d:65bb with SMTP id
- 5b1f17b1804b1-475d2ecb307mr27887375e9.31.1761323978174; 
- Fri, 24 Oct 2025 09:39:38 -0700 (PDT)
+ AJvYcCXpnRBySEsIrokpefJgQfO1QYLP0ylrhHEUAXWSMgdK4EpFezsjQIhkDuCAZlKFZg6RSnTVgCFJQpiT@nongnu.org
+X-Gm-Message-State: AOJu0YzKkFr+VFcupExytrZ55bAmj0xy+heTpaPmer7mfMQt9LCenlAV
+ aZ3JG649w9IZzPkzAJQ/rUTN8j6TaiCFHGQZXgs1vJ0E9ZIg3dGjWUPcLhkJixGboBMp2ll2Ulf
+ iuyw+5QgOejSe7QYmgY9SCuoRUTth591sOmgTA2rFFY9YcDli2Zj8pHuD
+X-Gm-Gg: ASbGncuchF1gk3SA2qAOjO0p7DY9bWhdC3E6rc35XqVEd0UxptzCqxoPq4EiXl08gYh
+ jSLtFnMXJDZxA+VMMM4nK/S5MTeGN2WMhDL9MaztsCXauRUupD/kHNebNP9a0TR6DFoPfi9+gQZ
+ Vg63eky9gXh8llqxOwyVvah61bI49OzFK+bkaMu9A7mDG4Tpp0dSTAvYROmBM0Ivukf2heQTDu0
+ QQ2XNt9MsQRUjBQb9daA0wLD++XUDYGHZg5/PUzv6UcRGGKA//In/pGv4xRXGI69hmoGxMeBDkY
+ NtX2NnPbtwHol3zBhNPxn9aIbsBRC00+w0KAg8bre0N5l0/l4zMwFxm/O4Ud5O2vMC4iCDeZ
+X-Received: by 2002:a05:6000:4212:b0:427:546:4378 with SMTP id
+ ffacd0b85a97d-429907170c3mr2741203f8f.20.1761324274449; 
+ Fri, 24 Oct 2025 09:44:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNYP+oAd2dwxMQKtwjqiCViN6cc6YlzS9BXuowxZcskfVoSGeCYnqISmbLJg8dwUWLKgAMyA==
+X-Received: by 2002:a05:6000:4212:b0:427:546:4378 with SMTP id
+ ffacd0b85a97d-429907170c3mr2741188f8f.20.1761324273951; 
+ Fri, 24 Oct 2025 09:44:33 -0700 (PDT)
 Received: from [10.54.0.145] ([147.135.244.229])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475c4342368sm164507145e9.9.2025.10.24.09.39.34
+ ffacd0b85a97d-42992e47f6asm1895635f8f.33.2025.10.24.09.44.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Oct 2025 09:39:36 -0700 (PDT)
-Message-ID: <deafd3cd-481d-429d-a658-670886010f71@redhat.com>
-Date: Fri, 24 Oct 2025 18:39:33 +0200
+ Fri, 24 Oct 2025 09:44:32 -0700 (PDT)
+Message-ID: <647cfdb2-6dee-4831-920e-a6440829c201@redhat.com>
+Date: Fri, 24 Oct 2025 18:44:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 12/23] intel_iommu: Add some macros and inline functions
+Subject: Re: [PATCH v7 17/23] iommufd: Introduce a helper function to extract
+ vendor capabilities
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
@@ -84,7 +85,7 @@ Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com
 References: <20251024084349.102322-1-zhenzhong.duan@intel.com>
- <20251024084349.102322-13-zhenzhong.duan@intel.com>
+ <20251024084349.102322-18-zhenzhong.duan@intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -130,7 +131,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251024084349.102322-13-zhenzhong.duan@intel.com>
+In-Reply-To: <20251024084349.102322-18-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -159,78 +160,67 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/24/25 10:43, Zhenzhong Duan wrote:
-> Add some macros and inline functions that will be used by following
-> patch.
+> In VFIO core, we call iommufd_backend_get_device_info() to return vendor
+> specific hardware information data, but it's not good to extract this raw
+> data in VFIO core.
 > 
-> This patch also make a cleanup to change macro VTD_SM_PASID_ENTRY_DID
-> and VTD_SM_PASID_ENTRY_FSPM to use extract64() just like what smmu does,
-> because they are either used in following patches or used indirectly by
-> new introduced inline functions. But we doesn't aim to change the huge
-> amount of bit mask style macro definitions in this patch, that should be
-> in a separate patch.
+> Introduce host_iommu_extract_quirks() to help extracting the raw data and
+> return a bitmap in iommufd.c because it's the place defining
+> iommufd_backend_get_device_info().
 > 
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> The other choice is to put vendor data extracting code in vendor vIOMMU
+> emulation file, but that will make those files mixed with vIOMMU
+> emulation and host IOMMU extracting code, also need a new callback in
+> PCIIOMMUOps. So we choose a simpler way as above.
+> 
+> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 > ---
->   hw/i386/intel_iommu_internal.h |  8 +++++--
->   hw/i386/intel_iommu.c          | 38 +++++++++++++++++++++++++++-------
->   2 files changed, 37 insertions(+), 9 deletions(-)
+>   include/hw/iommu.h                 |  5 +++++
+>   include/system/host_iommu_device.h | 15 +++++++++++++++
+>   backends/iommufd.c                 | 13 +++++++++++++
+>   3 files changed, 33 insertions(+)
 > 
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index 09edba81e2..df80af839d 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -642,10 +642,14 @@ typedef struct VTDPASIDCacheInfo {
->   #define VTD_SM_PASID_ENTRY_PT          (4ULL << 6)
+> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
+> index 9b8bb94fc2..6d61410703 100644
+> --- a/include/hw/iommu.h
+> +++ b/include/hw/iommu.h
+> @@ -22,4 +22,9 @@ enum viommu_flags {
+>       VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
+>   };
 >   
->   #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
-> -#define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
-> +#define VTD_SM_PASID_ENTRY_DID(x)      extract64((x)->val[1], 0, 16)
->   
-> -#define VTD_SM_PASID_ENTRY_FSPM          3ULL
->   #define VTD_SM_PASID_ENTRY_FSPTPTR       (~0xfffULL)
-> +#define VTD_SM_PASID_ENTRY_SRE_BIT(x)    extract64((x)->val[2], 0, 1)
-> +/* 00: 4-level paging, 01: 5-level paging, 10-11: Reserved */
-> +#define VTD_SM_PASID_ENTRY_FSPM(x)       extract64((x)->val[2], 2, 2)
-> +#define VTD_SM_PASID_ENTRY_WPE_BIT(x)    extract64((x)->val[2], 4, 1)
-> +#define VTD_SM_PASID_ENTRY_EAFE_BIT(x)   extract64((x)->val[2], 7, 1)
->   
->   /* First Stage Paging Structure */
->   /* Masks for First Stage Paging Entry */
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 56abbb991d..871e6aad19 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -52,8 +52,7 @@
->   
->   /* pe operations */
->   #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
-> -#define VTD_PE_GET_FS_LEVEL(pe) \
-> -    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FSPM))
-> +#define VTD_PE_GET_FS_LEVEL(pe) (VTD_SM_PASID_ENTRY_FSPM(pe) + 4)
->   #define VTD_PE_GET_SS_LEVEL(pe) \
->       (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
->   
-> @@ -837,6 +836,31 @@ static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntry *pe)
->       }
->   }
->   
-> +static inline dma_addr_t vtd_pe_get_fspt_base(VTDPASIDEntry *pe)
-> +{
-> +    return pe->val[2] & VTD_SM_PASID_ENTRY_FSPTPTR;
-> +}
+> +/* Host IOMMU quirks. Extracted from host IOMMU capabilities */
+> +enum host_iommu_quirks {
+> +    HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
+> +};
 > +
-> +/*
-> + * First stage IOVA address width: 48 bits for 4-level paging(FSPM=00)
-> + *                                 57 bits for 5-level paging(FSPM=01)
+>   #endif /* HW_IOMMU_H */
+> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+> index ab849a4a82..9ae7f4cc6d 100644
+> --- a/include/system/host_iommu_device.h
+> +++ b/include/system/host_iommu_device.h
+> @@ -39,6 +39,21 @@ typedef struct HostIOMMUDeviceCaps {
+>       uint64_t hw_caps;
+>       VendorCaps vendor_caps;
+>   } HostIOMMUDeviceCaps;
+> +
+> +/**
+> + * host_iommu_extract_quirk: Extract host IOMMU quirks
+> + *
+> + * This function converts @type specific hardware information data
+> + * into a standard bitmap format.
+> + *
+> + * @type: IOMMU Hardware Info Types
+> + *
+> + * @VendorCaps: IOMMU @type specific hardware information data
+> + *
+> + * Returns: bitmap with each representing a host IOMMU quirk defined in
+> + * enum host_iommu_quirks
 > + */
-> +static inline uint32_t vtd_pe_get_fs_aw(VTDPASIDEntry *pe)
-> +{
-> +    return 48 + VTD_SM_PASID_ENTRY_FSPM(pe) * 9;
+> +uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps);
 
-
-Can't we use VTD_HOST_AW_48BIT here ?
+..._get_quirks() sounds nicer. This is minor.
 
 
 Thanks,
@@ -238,60 +228,41 @@ Thanks,
 C.
 
 
-> +}
-> +
-> +static inline bool vtd_pe_pgtt_is_pt(VTDPASIDEntry *pe)
+
+
+>   #endif
+>   
+>   #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 086bd67aea..61b991ec53 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -19,6 +19,7 @@
+>   #include "migration/cpr.h"
+>   #include "monitor/monitor.h"
+>   #include "trace.h"
+> +#include "hw/iommu.h"
+>   #include "hw/vfio/vfio-device.h"
+>   #include <sys/ioctl.h>
+>   #include <linux/iommufd.h>
+> @@ -411,6 +412,18 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>       return true;
+>   }
+>   
+> +uint64_t host_iommu_extract_quirks(uint32_t type, VendorCaps *caps)
 > +{
-> +    return (VTD_PE_GET_TYPE(pe) == VTD_SM_PASID_ENTRY_PT);
+> +    uint64_t quirks = 0;
+> +
+> +    if (type == IOMMU_HW_INFO_TYPE_INTEL_VTD &&
+> +        caps->vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
+> +        quirks |= HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO;
+> +    }
+> +
+> +    return quirks;
 > +}
 > +
-> +/* check if pgtt is first stage translation */
-> +static inline bool vtd_pe_pgtt_is_fst(VTDPASIDEntry *pe)
-> +{
-> +    return (VTD_PE_GET_TYPE(pe) == VTD_SM_PASID_ENTRY_FST);
-> +}
-> +
->   static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
->   {
->       return pdire->val & 1;
-> @@ -1625,7 +1649,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
->   
->       if (s->root_scalable) {
->           vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
-> -        return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
-> +        return VTD_SM_PASID_ENTRY_DID(&pe);
->       }
->   
->       return VTD_CONTEXT_ENTRY_DID(ce->hi);
-> @@ -1707,7 +1731,7 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
->                */
->               return false;
->           }
-> -        return (VTD_PE_GET_TYPE(&pe) == VTD_SM_PASID_ENTRY_PT);
-> +        return vtd_pe_pgtt_is_pt(&pe);
->       }
->   
->       return (vtd_ce_get_type(ce) == VTD_CONTEXT_TT_PASS_THROUGH);
-> @@ -3146,9 +3170,9 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
->           /* Fall through */
->       case VTD_INV_DESC_PASIDC_G_DSI:
->           if (pc_entry->valid) {
-> -            did = VTD_SM_PASID_ENTRY_DID(pc_entry->pasid_entry.val[1]);
-> +            did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
->           } else {
-> -            did = VTD_SM_PASID_ENTRY_DID(pe.val[1]);
-> +            did = VTD_SM_PASID_ENTRY_DID(&pe);
->           }
->           if (pc_info->did != did) {
->               return;
-> @@ -5267,7 +5291,7 @@ static int vtd_pri_perform_implicit_invalidation(VTDAddressSpace *vtd_as,
->           return -EINVAL;
->       }
->       pgtt = VTD_PE_GET_TYPE(&pe);
-> -    domain_id = VTD_SM_PASID_ENTRY_DID(pe.val[1]);
-> +    domain_id = VTD_SM_PASID_ENTRY_DID(&pe);
->       ret = 0;
->       switch (pgtt) {
->       case VTD_SM_PASID_ENTRY_FST:
+>   bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+>                                         uint32_t data_type, uint32_t entry_len,
+>                                         uint32_t *entry_num, void *data,
 
 
