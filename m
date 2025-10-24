@@ -4,71 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8152BCCF9E3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB91CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Oct 2025 19:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCN5P-0000vH-UD; Fri, 24 Oct 2025 15:04:27 -0400
+	id 1vCN6r-00028n-Tc; Fri, 24 Oct 2025 15:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vCN5O-0000v3-AD
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:04:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1vCN5M-00051M-L8
- for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:04:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761332663;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XA/4q4Ov24n9vAgzW1LfcQ1pMbwFjxB/xETz3OMfPM4=;
- b=THI35GQXEQkEGYV0SEGU7bZlAH1SfcZ9kdJ1AQjGNxPs0J6k9klHUvfwANJi3SGvxyyZeA
- p1qCUU4KV7bMfkms7UJnjf4Gnf2feYS4Za4WXSvk9cndsR8kQZ8PmKEK8SNq6ph8fdhUwp
- JHclUqaTmmSMbH1R+7PqCK32xycDoRo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-jeXZNimPMrWXdRnMXfu0jw-1; Fri,
- 24 Oct 2025 15:04:20 -0400
-X-MC-Unique: jeXZNimPMrWXdRnMXfu0jw-1
-X-Mimecast-MFC-AGG-ID: jeXZNimPMrWXdRnMXfu0jw_1761332659
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26A22196F76E; Fri, 24 Oct 2025 19:04:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.155])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3537530002DE; Fri, 24 Oct 2025 19:04:17 +0000 (UTC)
-Date: Fri, 24 Oct 2025 14:04:14 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, armbru@redhat.com, qemu-devel@nongnu.org, 
- hreitz@redhat.com
-Subject: Re: [PATCH v2 4/4] qemu-img info: Add cache mode option
-Message-ID: <zg2f7rmtapyvgztyyuj2twsntezx3ayhmloawqesf25g56pkxf@qperuc67znnm>
-References: <20251024123041.51254-1-kwolf@redhat.com>
- <20251024123041.51254-5-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN6p-00027Q-9J
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:05:55 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vCN6m-0005Ka-V5
+ for qemu-devel@nongnu.org; Fri, 24 Oct 2025 15:05:54 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3ed20bdfdffso2487520f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Oct 2025 12:05:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761332751; x=1761937551; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FimQXnCYHKm6ncvC3S5Pc9wwaP1Ko27xUZV6rL9UQNE=;
+ b=xVksornqzr5W0Q7/tyitYhH8vL5Y19YzqdSTRZI6Hnlxo/WsSh7HjwYXrDFyVuw01b
+ l4IIsvmUS0ip1BWAkrExdWcaXxoIJ1zZtcqZpml3UioguFEJw+FTc42NzlpkWqPoHQBd
+ 9perQJpBF403n6xHmATZuG3aja15Nzk4TyjOOTk7p7twjzAlkARfbhGrUAPK5QZghLaB
+ HiToLgHljQ3Twx5AsJKzJopJ8PEl4n9g4d5lscMZLQtn2RN2k1UKILCSACN2xG7x3Lc/
+ UJVyIdSvaRJl0V8t93nv63egXYbJJt8RgZP/yoFD7SjrhhRwaZHl1L/vy5xC0fEN22ue
+ dmLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761332751; x=1761937551;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FimQXnCYHKm6ncvC3S5Pc9wwaP1Ko27xUZV6rL9UQNE=;
+ b=TeeavBo23KTrHSHOeCqdrQLO2Y+QytA04XszApw+o2m8CxLZmC2ZN6/OMRATq3gysc
+ w3bZz7d0YibZ5oaL8UeRfhET+sFZc9JihFqO8ndc1pG8Fcpju5zPF7S/W0c1Pmb5BY/3
+ YakQMIF5T1VSKxlSOmTHTR4nz15qFD1M0MbRk7UPFS8TQ5L09isPP8hkJY7r2BvdrQap
+ CTvcpBkY31zjxUW0UZGShkRCGZ56Hb8Q8XdGo1CIoQKN1ocOhE5JjPS4n5bp2Y62Ywk3
+ Xrg745wUPYuaVHI4rMWByk8qJ26mUAIueJqrAvu48YEnWKEV+lFo3Rn66VGSSp7mMwna
+ Mz2g==
+X-Gm-Message-State: AOJu0YxMeMTSC2jCryodBioSU+PO54volkNE7NgfdoV6ytxR41/KgGEe
+ i0bnoLEto0m1ULoDPuNGChLLE+rqCjleGQwQaPsyBHgakjjXZ53n4gUwNmb6Ua0YeYpVnhXpuj/
+ Mr+mqLKQ=
+X-Gm-Gg: ASbGnctUyHXIgpEiFHBVSrLIx7lM2FfZRMiZFE1X6F4/4v1uD6mppxCpZJnNb6njNBB
+ NIJdGeeuovFQ7L4Lbhs8lIwLOuB6lYsLIEXQcjKt8sPbBG0fKYpNjLgmUB8RZOH/Jm1/T34S5Ok
+ bsqn+VkkC0XbU8TQ1udMlyWIW71qEWoQNmiqNrbwmAg5+ylUALlCDIelROUxjLa/qH9EUGH9sZT
+ DtxYm2KasKxkYxVDDmitlVHOJHZ4exrzma+2cWfL8dPUsTkfii1Pjncfthi3l8eZ3S49t3SWyQI
+ 3QsjcgswQ5Xl91Q/LbLtRhyde1+Zo8P7Yp1+CuA0HGjgcCEulqmgBrGAObNsY+bKWku0ZJN6jJi
+ jTbwugPCvwhTtR6x+TeEhfXufVNUK1rzHOqHo1ZERcFmdrlVO8116TRa5vdKN3V5gOG+3F9ZrjI
+ yQ3krcHattZM39AGYx5RmGJNXPqF2KN1l9pQIdOIP3i6fCCMz4OJSe5/zL8jf5
+X-Google-Smtp-Source: AGHT+IFKoLkMs5+SowOaBcE+d8/5jPxLp08ETkRhmQ7aRqBnMfobElkOPpHUE3vyYwWq5FBgfpakRQ==
+X-Received: by 2002:a05:6000:2dc6:b0:425:86f0:6817 with SMTP id
+ ffacd0b85a97d-4299075b4a0mr2530630f8f.57.1761332750813; 
+ Fri, 24 Oct 2025 12:05:50 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429897f57cesm11088658f8f.17.2025.10.24.12.05.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 24 Oct 2025 12:05:50 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH 01/27] hw/qdev: Have qdev_get_gpio_out_connector() take const
+ DeviceState arg
+Date: Fri, 24 Oct 2025 21:03:48 +0200
+Message-ID: <20251024190416.8803-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251024190416.8803-1-philmd@linaro.org>
+References: <20251024190416.8803-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251024123041.51254-5-kwolf@redhat.com>
-User-Agent: NeoMutt/20250905
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,26 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 24, 2025 at 02:30:40PM +0200, Kevin Wolf wrote:
-> When querying block limits, different cache modes (in particular
-> O_DIRECT or not) can result in different limits. Add an option to
-> 'qemu-img info' that allows the user to specify a cache mode, so that
-> they can get the block limits for the cache mode they intend to use with
-> their VM.
-> 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  docs/tools/qemu-img.rst |  2 +-
->  qemu-img.c              | 25 +++++++++++++++++++++----
->  qemu-img-cmds.hx        |  4 ++--
->  3 files changed, 24 insertions(+), 7 deletions(-)
->
+This getter doesn't update any DeviceState internal fields,
+make it const.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/qdev-core.h | 3 ++-
+ hw/core/gpio.c         | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index a7bfb10dc70..2caa0cbd26f 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -725,7 +725,8 @@ void qdev_connect_gpio_out_named(DeviceState *dev, const char *name, int n,
+  *
+  * Return: qemu_irq associated with GPIO or NULL if un-wired.
+  */
+-qemu_irq qdev_get_gpio_out_connector(DeviceState *dev, const char *name, int n);
++qemu_irq qdev_get_gpio_out_connector(const DeviceState *dev,
++                                     const char *name, int n);
+ 
+ /**
+  * qdev_intercept_gpio_out: Intercept an existing GPIO connection
+diff --git a/hw/core/gpio.c b/hw/core/gpio.c
+index 6e32a8eec61..c7c2936fc55 100644
+--- a/hw/core/gpio.c
++++ b/hw/core/gpio.c
+@@ -129,7 +129,8 @@ void qdev_connect_gpio_out_named(DeviceState *dev, const char *name, int n,
+     g_free(propname);
+ }
+ 
+-qemu_irq qdev_get_gpio_out_connector(DeviceState *dev, const char *name, int n)
++qemu_irq qdev_get_gpio_out_connector(const DeviceState *dev,
++                                     const char *name, int n)
+ {
+     g_autofree char *propname = g_strdup_printf("%s[%d]",
+                                      name ? name : "unnamed-gpio-out", n);
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.51.0
 
 
