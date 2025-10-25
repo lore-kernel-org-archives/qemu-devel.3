@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920BBCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 18:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61318CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 18:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCiyC-0006uy-6m; Sat, 25 Oct 2025 14:26:28 -0400
+	id 1vCj1V-0008VZ-Hb; Sat, 25 Oct 2025 14:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vCixq-0006iX-2x
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 14:26:08 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1vCj1T-0008VJ-Ex
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 14:29:51 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vCixl-0002rS-Hd
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 14:26:05 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b6d402422c2so752405266b.2
- for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 11:26:01 -0700 (PDT)
+ id 1vCj1R-000332-IJ
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 14:29:51 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b4aed12cea3so276805366b.1
+ for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 11:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761416759; x=1762021559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761416987; x=1762021787; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ts2j38OK+dgbdYAETPYQuhRQ1Szff25gZPmkQ/Bglz0=;
- b=T5ck2x2NYjF9DrYM9f2ctWsBMIwwnFn0ivgX/FxvhD8+4JWh91MMGkMwpWyQgHGiD3
- dS9qa7eEjib/yzCJBFlKdsGpLWO3GiBEpZTU07DKVuGBwowgZZYs9gxz/IvtFBJdA2JK
- EIZhJuglIYeKhIZNxF/e9EX8OC5Hy1A+daUOLiD3MDgfzSW1/SPloDEjnDjd88WD/1sX
- GQoQbvOHhX5aF+lEKkstyCsqTpyDmKI2TqjY0Cu2lboCuJ/qFMBUK/FzWIHtzz3pgiRL
- M7rdHFqVB7gOAL3yGRAdO+7mvFeATsEVFCcb950CuJL1jFbS0PMffHt5NCFFqkY3KtPk
- Pg0Q==
+ bh=8OBbSNq3SKGchaEDkpfJegXyjMzuNGP4MZN82Vq68r8=;
+ b=hmwRPsk6tKCLclWLmES96j21vk74kafMkuXLhOwNwQx9grwqcevtJljwJsSF3TBxS+
+ fZ8YsYMuR+hVHtn7bX8FB73M+ibXEKAfMa+ErYyhs3vrL72tDYg2fS+e1kQiKrOFwvG/
+ 1z5cSlxEtj2al4XpZCEb2kBFjbOz8CqHYILhsa+xKZKmahkEs2lrLeQCiUAhKUM1itmZ
+ +9dsmniwp0MVlxUHhFqgQaN02EAunOS8eC5nqn8W6UKT0QmcruAG/dE5MaIJ8R+uu+m/
+ 3S5ELBUWqfo3HGGcTQSieKopNQcLCPXVPzoGaayEEzqsaf2PlNYWYPRz/HJyqg0kqmCl
+ P+xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761416759; x=1762021559;
+ d=1e100.net; s=20230601; t=1761416987; x=1762021787;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ts2j38OK+dgbdYAETPYQuhRQ1Szff25gZPmkQ/Bglz0=;
- b=rDeUW+BuQvA23kabLBjBq0Pyk9CVd4XDhzrf9AeLRgqt8SMgQMjOQYnfO1Q5dwcYkd
- hxdmA9vulnbcH4kv08pzr2JYrv6KCzzE8qowj3Om6mvXcf8O1/FZ2fmpyZ4Gk2E3oq7d
- 1QgqTu4HDInavqWsU0N1KOzqnyeFKKtTk/yet0YBL350yuwoezr8cQqfUDIY+xJQQf0Q
- z+Zo8chAOhE3bUj+VyllBaeu0SX2usfP+zmm835vWtXMk3AqbtrhNk+EbVb+Hsq3yS99
- W5kxk4BZfWJ0p6fyY7LZv1jpVm0+2m/hF4qiGQnW0bqr0Ld4uagtaVPhIHwN5IfGOZpb
- sprQ==
+ bh=8OBbSNq3SKGchaEDkpfJegXyjMzuNGP4MZN82Vq68r8=;
+ b=Xcgo3TVs1hKJefm0ktyVkdydRhSLlMXKOFxeyJEL0FAkW8xWJvi83ZiAR0e48Bx0KX
+ jFRFe9cv5nz2hHGQwUabcEJvrK16bKX+AbLM6doN5SBr5H1meP4Ngb2L+ZSbyp7sD7uW
+ zjwS8eloUOQnL2xGDo03sZWY2Dy1rFt/aLri9hDl/jir3WmF0yaN3Vnlo2iw3Sg5Gme4
+ TfHzWMsbypNkuwHfIrLivHwYdimX05D3DarFHb2wU5FAb/1utAzYCjKkQP6yYyCV1qia
+ kxjLSmw3XBHIlYyHbUJXhcwVleM4dSIjCxkDsUgro+Y4PmZRf5SAoI/Vyx++VWNu/nr4
+ pvtA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWL/4TirGGnGLh+48CkaaOacmzUS0kU8dVintYlQjFsmD8Z0OorKeRGoM7j2aDOe3U/S7KxlrQHJ9If@nongnu.org
-X-Gm-Message-State: AOJu0YzOIVd3SlevilNFevOyHwXousLJPibm8POzNSERyQcl19zmUA22
- c2+u6x+f5KArhBtzPSQMIV2XaduVUyGrzUS6DtRGtd/Pvk7oqOL2hwjf9jQA/sWQx50=
-X-Gm-Gg: ASbGncuA2/Fv9mo5iyneczaSRjHH4C6bTIDWt57vuEgfMHCY/P4S78goAogHleE66DF
- WAu9026gazjWrO7/zrnWCc0e0THBLvYpiwM6Kk6GZzc7jrZE76s/ocAXQFNYV/i0Prci+/Y5tqt
- XZ6cH24vo9/61zXLkIcYnki1qfMO+sEF6uOd24Cv9sRybIyf/l8bziN5HMp/L3HZuHTtsfxoBwB
- czJAIhjxUzaoJ8I6n2Un/nL7wNn1skFiOAJUhZP/seWLiAfKbpcI3U4uQs0TBWCP0sd5nn8NHQ1
- RUn+y2gcX4FBcrS3nbBeQERq9ycMFc+1czxUH7E6HeMmL7KnoVoJguYEvX2xLDQZN8Db4ixu+B7
- tky20gsmlJPd/BPPRGyl6MWfbpim4Z4Fj9XqB0pGdjb9YQ0QvsPeUEz0doOA/LY5vmhfB+OXc8t
- Xm4NoJLULptyVqwNmHFSB1Sl4tqlF0Ypqya61a5oE4LZ9qNwohj1hhLWUN3w3CFBKaVTfkiK8dF
- Q==
-X-Google-Smtp-Source: AGHT+IHFCQ/RE/oBiJdkb+LqgUFHjTlcPdW/BIXgap6eriaKxMdch9+NdxGfjJuiR98z397ilvk/mA==
-X-Received: by 2002:a17:907:2685:b0:b3f:f207:b755 with SMTP id
- a640c23a62f3a-b6471d45a76mr3256861166b.6.1761416759499; 
- Sat, 25 Oct 2025 11:25:59 -0700 (PDT)
+ AJvYcCUkv5q68DfUEcvSCedTDR/t3EbKCXmhITsnncYz0xogFKesVRs7Wz3G4/5PD7E6/XvGuYFlGyLkvwUI@nongnu.org
+X-Gm-Message-State: AOJu0YxNYMZKakNvwA2tQZx+of5p98d7kcNeP1a/6ZBI5wS4BoKwabgl
+ 9jZ9uVBBs1hY/fR4YcltcOVc+3FNdY8hOf4cW8IChvbvImFhNCih1jyXJfwotp/CIRA=
+X-Gm-Gg: ASbGncsTu1xxSDrWLbxxo4ZSlVxP1e+NPZG8w0KLextLtxsBgvCon4BaczzZJ8OzyVO
+ eOlJVgheyM3bNgiahaypWqT9d+fKjbxx+uSlN0v9neBq5zRTNeW1cMaONknsJP5f6p4g95CU5ut
+ pTdLSN9rA2MpiMb2K4ha7ZoTBhtj+v5D2ZMr6m8ZzUonxibiL3FZtOGQJpC2vQF5aiOGBxaYEnm
+ a6I+XVg1qdUvoHoCZgurphT3Jd3fz50SimMOeXt6N/ou4k6GwabbdGpUPemXFev9ZXXg10snOGE
+ GFKdeBNNSxumtd/tW5riaFSgsqAsf94ObPrCFC2NwhRtwzsAl2scFiSvHixNdfxBO3rQR8ujwuX
+ NMxPpynt87bSVvRKheu3vrjAFCNNUae0FS7JXy/XVWUw8LSNRgWdvSYReh4sWXF7ufUMxehYxTh
+ oLFVY6mab0YM0UiPgKBgcZ3xU6dM7rdLYTS7wBc+/s7HAN4xlIjNLai6kxBQgk5y8=
+X-Google-Smtp-Source: AGHT+IFpR8cF2Z5aljTNvU2LjgNbXZCT5+wmhIW5WNKM07PQnBU0lWQV3aXn2OXrvk+hcf1WknRLEg==
+X-Received: by 2002:a17:907:3f12:b0:b6d:5718:d42d with SMTP id
+ a640c23a62f3a-b6d5718d6c6mr987400366b.50.1761416986692; 
+ Sat, 25 Oct 2025 11:29:46 -0700 (PDT)
 Received: from [10.240.88.227] (ip-037-024-071-028.um08.pools.vodafone-ip.de.
  [37.24.71.28]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d8541fb5bsm261624466b.56.2025.10.25.11.25.58
+ a640c23a62f3a-b6d85308cb0sm265477366b.9.2025.10.25.11.29.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Oct 2025 11:25:59 -0700 (PDT)
-Message-ID: <59eb5630-a91b-46d4-bf0e-f8b763119c00@linaro.org>
-Date: Sat, 25 Oct 2025 20:25:56 +0200
+ Sat, 25 Oct 2025 11:29:46 -0700 (PDT)
+Message-ID: <c8a521bb-8130-4dde-914c-7d96b056994d@linaro.org>
+Date: Sat, 25 Oct 2025 20:29:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 42/58] target/arm/hvf: Implement dirty page tracking
+Subject: Re: [PATCH v2 44/58] accel/hvf: Have WFI returns if !cpu_has_work
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -84,14 +83,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Roman Bolshakov <rbolshakov@ddn.com>
 References: <20251023114638.5667-1-philmd@linaro.org>
- <20251023130625.9157-1-philmd@linaro.org>
+ <20251023130625.9157-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251023130625.9157-1-philmd@linaro.org>
+In-Reply-To: <20251023130625.9157-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,25 +114,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/23/25 15:06, Philippe Mathieu-Daudé wrote:
-> +        /* Handle dirty page logging for ram. */
-> +        if (iswrite) {
-> +            hwaddr xlat;
-> +            MemoryRegion *mr = address_space_translate(as, ipa, &xlat,
-> +                                                       NULL, true,
-> +                                                       MEMTXATTRS_UNSPECIFIED);
-> +            if (memory_region_is_ram(mr)) {
-> +                uint64_t ipa_page = ipa & TARGET_PAGE_MASK;
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/arm/hvf/hvf.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index cf4746c344a..8c2eac6738f 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -1749,6 +1749,13 @@ static void hvf_wfi(CPUState *cpu)
+>       uint64_t nanos;
+>       uint32_t cntfrq;
+>   
+> +    if (cpu_has_work(cpu)) {
+> +        /* Don't bother to go into our "low power state" if
+> +         * we would just wake up immediately.
+> +         */
+> +        return;
+> +    }
 > +
-> +                /* TODO: Inject exception to the guest. */
-> +                assert(!mr->readonly);
-> +
-> +                if (memory_region_get_dirty_log_mask(mr)) {
-> +                    memory_region_set_dirty(mr, ipa_page + xlat,
-> +                                            TARGET_PAGE_SIZE);
-> +                    hvf_unprotect_dirty_range(ipa_page, TARGET_PAGE_SIZE);
-> +                }
+>       if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD | CPU_INTERRUPT_FIQ)) {
+>           /* Interrupt pending, no need to wait */
+>           return;
 
-We need to use the host page size/mask, not TARGET_PAGE_SIZE/MASK here.
+cpu_has_work is a superset of the interrupt test.
+The interrupt test should be removed.
 
 r~
 
