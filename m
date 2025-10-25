@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE7ECCF9E3
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 14:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DCF8CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 14:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCfEo-00041p-FD; Sat, 25 Oct 2025 10:27:23 -0400
+	id 1vCfEq-00042n-KB; Sat, 25 Oct 2025 10:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
- id 1vCdZG-0001br-TA
+ id 1vCdZG-0001bq-P6
  for qemu-devel@nongnu.org; Sat, 25 Oct 2025 08:40:22 -0400
-Received: from sg-1-35.ptr.blmpb.com ([118.26.132.35])
+Received: from sg-1-12.ptr.blmpb.com ([118.26.132.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
- id 1vCdZ8-0003jD-Iq
+ id 1vCdZ7-0003jK-Sr
  for qemu-devel@nongnu.org; Sat, 25 Oct 2025 08:40:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1761395936;
+ s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1761395939;
  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
  reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=00eb6wcpigcap9zvWNW3IU66esW+FAYMAuecjq3ixY4=;
- b=V8SctDpeAkjyuxhK2Q/clZGglO3SthzBOZmBCervqzrGwbJRCf/XhVWnhiVFu/H+80gw0F
- B7vyXNrm6O/hwXVaaERmr0czd9G+Let9xFaapaM/UJDhxwm5BbR4IOMuD0vlftl5WzH0al
- HZO5vEGHSjPDb7eAT92gui/+rsM8BQUCsjXuYzQsKvWpUX+3Zt1tH5T7yrgB73AcsuomhP
- qBYn5UtOK0vU5HCyIpoRFiG16ckt399AoKdG1SPHDe+8ThuT2xDbBMOyWVFunWHHZegHtW
- 8M5VlXDWh5bABRMdH2BLzdKrFhAYEC4haHJWow3fpgLNESByXKpfrdMgSv1SWg==
+ bh=gR+aViI6I08ckniD2DB2RSpyPEY8T+Gw+c1ftkb472c=;
+ b=TBcSrg+MmTf9qFNI5AfAtrdpw1f1esUZmiTzhhq6UaM9K8ANdgi4/HJwkPZGymYs+rrclT
+ Nsn8kXZTN+qSJCyI9+dUhtakt/K/YVJO32IldgaDwpbi5MrE3u37MvjUrlu/UHiMpyZ3i+
+ 9Ctin24heL1XW5HaG8GdnWpCncgDRfGModqnsOsQirPg4Mo5dr3m0AcnBnva1aeXd9+qHx
+ IivqH/M21O8dwBuZ5waEpzJGoxS+yoKrOUmSMoZoOqoVybGG9KvUAER7OmdVZpcS63ngPg
+ yBOkA4OLCJiTWdiDplqbeImdyoh/UJFUknopzG+C9dvgac4sC+M4iDQQLcLAng==
+Message-Id: <20251025123853.63139-4-chenmiao@openatom.club>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 To: <pbonzini@redhat.com>, <manos.pitsidianakis@linaro.org>, 
  <richard.henderson@linaro.org>, <philmd@linaro.org>
-From: "chenmiao" <chenmiao@openatom.club>
-Message-Id: <20251025123853.63139-1-chenmiao@openatom.club>
-X-Original-From: chenmiao <chenmiao@openatom.club>
+X-Lms-Return-Path: <lba+268fcc4e1+f535d1+nongnu.org+chenmiao@openatom.club>
 X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset=UTF-8
+X-Original-From: chenmiao <chenmiao@openatom.club>
 Cc: <qemu-rust@nongnu.org>, <qemu-devel@nongnu.org>, 
- <hust-os-kernel-patches@googlegroups.com>, 
- "Chao Liu" <chao.liu@openatom.club>, "Chen Miao" <chenmiao@openatom.club>
-Received: from nyaos.localdomain ([114.249.194.57]) by smtp.feishu.cn with
- ESMTPS; Sat, 25 Oct 2025 20:38:53 +0800
-Date: Sat, 25 Oct 2025 12:38:48 +0000
+ <hust-os-kernel-patches@googlegroups.com>
+From: "chenmiao" <chenmiao@openatom.club>
+Subject: [RFC 3/5] hw: gpio: Move the pcf8574 struct to header
+Date: Sat, 25 Oct 2025 12:38:51 +0000
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: [RFC 0/5] rust: hw: Add the I2C and the first GPIO device
-X-Lms-Return-Path: <lba+268fcc4de+f73d47+nongnu.org+chenmiao@openatom.club>
-Received-SPF: pass client-ip=118.26.132.35;
- envelope-from=chenmiao@openatom.club; helo=sg-1-35.ptr.blmpb.com
+Received: from nyaos.localdomain ([114.249.194.57]) by smtp.feishu.cn with
+ ESMTPS; Sat, 25 Oct 2025 20:38:57 +0800
+Received-SPF: pass client-ip=118.26.132.12;
+ envelope-from=chenmiao@openatom.club; helo=sg-1-12.ptr.blmpb.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -72,75 +71,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have implemented I2C and the first GPIO device in Rust for QEMU.
-Additionally, in the respective patches, we have shared our insights and
-experiences regarding the use of Rust for device modeling within QEMU.
+To better implement the Rust PCF8574 bindings, move its struct definition to
+the header file.
 
-1. The first patch implements the BusState for the I2CBus infrastructure.
-2. The second patch implements the I2CBus and I2CSlave infrastructure, along
-   with a discussion of the challenges encountered during the implementation.
-3. The third patch moves the struct definition of the PCF8574 to the
-   corresponding header file.
-4. The fourth patch provides a set of necessary helper functions for the PCF8574
-   GPIO device.
-5. The fifth patch implements the PCF8574 GPIO device, along with a discussion
-   of the issues and considerations addressed during the implementation.
+Signed-off-by: chenmiao <chenmiao@openatom.club>
+---
+ hw/gpio/pcf8574.c         | 32 --------------------------------
+ include/hw/gpio/pcf8574.h | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 32 deletions(-)
 
-Regarding this series of patches, we have found that Rust for QEMU is indeed
-still not mature enough and requires continuous iteration. Additionally, the
-lack of basic documentation also needs to be addressed. In this regard, I hope
-our team(HUST OpenAtom Open Source Club) can contribute to the documentation
-efforts for Rust for QEMU.
-
-Link: https://groups.google.com/g/hust-os-kernel-patches/c/z7vHWg3xvDc
-
-Signed-off-by: Chao Liu <chao.liu@openatom.club>
-Signed-off-by: Chen Miao <chenmiao@openatom.club>
-
-chenmiao (5):
-  rust: hw: core: Add the BusState of rust version
-  rust: hw: core: Add rust bindings/funcs for i2c bus
-  hw: gpio: Move the pcf8574 struct to header
-  rust: hw: core: Provide some interfaces for the GPIO device
-  rust: hw: gpio: Add the the first gpio device pcf8574
-
- hw/gpio/Kconfig                      |   5 +
- hw/gpio/meson.build                  |   2 +-
- hw/gpio/pcf8574.c                    |  32 ---
- include/hw/gpio/pcf8574.h            |  36 +++
- rust/Cargo.lock                      |  21 +-
- rust/Cargo.toml                      |   1 +
- rust/hw/Kconfig                      |   1 +
- rust/hw/core/meson.build             |   2 +
- rust/hw/core/src/bus.rs              |  51 +++++
- rust/hw/core/src/i2cbus.rs           | 313 +++++++++++++++++++++++++++
- rust/hw/core/src/irq.rs              |   6 +-
- rust/hw/core/src/lib.rs              |   6 +
- rust/hw/core/src/qdev.rs             |  12 +-
- rust/hw/core/wrapper.h               |   1 +
- rust/hw/gpio/Kconfig                 |   2 +
- rust/hw/gpio/meson.build             |   1 +
- rust/hw/gpio/pcf8574/Cargo.toml      |  31 +++
- rust/hw/gpio/pcf8574/build.rs        |   1 +
- rust/hw/gpio/pcf8574/meson.build     |  50 +++++
- rust/hw/gpio/pcf8574/src/bindings.rs |  29 +++
- rust/hw/gpio/pcf8574/src/device.rs   | 174 +++++++++++++++
- rust/hw/gpio/pcf8574/src/lib.rs      |   4 +
- rust/hw/gpio/pcf8574/wrapper.h       |  51 +++++
- rust/hw/meson.build                  |   1 +
- 24 files changed, 795 insertions(+), 38 deletions(-)
- create mode 100644 rust/hw/core/src/bus.rs
- create mode 100644 rust/hw/core/src/i2cbus.rs
- create mode 100644 rust/hw/gpio/Kconfig
- create mode 100644 rust/hw/gpio/meson.build
- create mode 100644 rust/hw/gpio/pcf8574/Cargo.toml
- create mode 120000 rust/hw/gpio/pcf8574/build.rs
- create mode 100644 rust/hw/gpio/pcf8574/meson.build
- create mode 100644 rust/hw/gpio/pcf8574/src/bindings.rs
- create mode 100644 rust/hw/gpio/pcf8574/src/device.rs
- create mode 100644 rust/hw/gpio/pcf8574/src/lib.rs
- create mode 100644 rust/hw/gpio/pcf8574/wrapper.h
-
+diff --git a/hw/gpio/pcf8574.c b/hw/gpio/pcf8574.c
+index 274b44b..670fc00 100644
+--- a/hw/gpio/pcf8574.c
++++ b/hw/gpio/pcf8574.c
+@@ -15,38 +15,6 @@
+ #include "qemu/module.h"
+ #include "qom/object.h"
+ 
+-/*
+- * PCF8574 and compatible chips incorporate quasi-bidirectional
+- * IO. Electrically it means that device sustain pull-up to line
+- * unless IO port is configured as output _and_ driven low.
+- *
+- * IO access is implemented as simple I2C single-byte read
+- * or write operation. So, to configure line to input user write 1
+- * to corresponding bit. To configure line to output and drive it low
+- * user write 0 to corresponding bit.
+- *
+- * In essence, user can think of quasi-bidirectional IO as
+- * open-drain line, except presence of builtin rising edge acceleration
+- * embedded in PCF8574 IC
+- *
+- * PCF8574 has interrupt request line, which is being pulled down when
+- * port line state differs from last read. Port read operation clears
+- * state and INT line returns to high state via pullup.
+- */
+-
+-OBJECT_DECLARE_SIMPLE_TYPE(PCF8574State, PCF8574)
+-
+-#define PORTS_COUNT (8)
+-
+-struct PCF8574State {
+-    I2CSlave parent_obj;
+-    uint8_t  lastrq;     /* Last requested state. If changed - assert irq */
+-    uint8_t  input;      /* external electrical line state */
+-    uint8_t  output;     /* Pull-up (1) or drive low (0) on bit */
+-    qemu_irq handler[PORTS_COUNT];
+-    qemu_irq intrq;      /* External irq request */
+-};
+-
+ static void pcf8574_reset(DeviceState *dev)
+ {
+     PCF8574State *s = PCF8574(dev);
+diff --git a/include/hw/gpio/pcf8574.h b/include/hw/gpio/pcf8574.h
+index 3291d7d..fe1ce89 100644
+--- a/include/hw/gpio/pcf8574.h
++++ b/include/hw/gpio/pcf8574.h
+@@ -10,6 +10,42 @@
+ #ifndef _HW_GPIO_PCF8574
+ #define _HW_GPIO_PCF8574
+ 
++#include "qemu/osdep.h"
++#include "hw/i2c/i2c.h"
++#include "qom/object.h"
++
+ #define TYPE_PCF8574 "pcf8574"
+ 
++/*
++ * PCF8574 and compatible chips incorporate quasi-bidirectional
++ * IO. Electrically it means that device sustain pull-up to line
++ * unless IO port is configured as output _and_ driven low.
++ *
++ * IO access is implemented as simple I2C single-byte read
++ * or write operation. So, to configure line to input user write 1
++ * to corresponding bit. To configure line to output and drive it low
++ * user write 0 to corresponding bit.
++ *
++ * In essence, user can think of quasi-bidirectional IO as
++ * open-drain line, except presence of builtin rising edge acceleration
++ * embedded in PCF8574 IC
++ *
++ * PCF8574 has interrupt request line, which is being pulled down when
++ * port line state differs from last read. Port read operation clears
++ * state and INT line returns to high state via pullup.
++ */
++
++OBJECT_DECLARE_SIMPLE_TYPE(PCF8574State, PCF8574)
++
++#define PORTS_COUNT (8)
++
++struct PCF8574State {
++    I2CSlave parent_obj;
++    uint8_t  lastrq;     /* Last requested state. If changed - assert irq */
++    uint8_t  input;      /* external electrical line state */
++    uint8_t  output;     /* Pull-up (1) or drive low (0) on bit */
++    qemu_irq handler[PORTS_COUNT];
++    qemu_irq intrq;      /* External irq request */
++};
++
+ #endif /* _HW_GPIO_PCF8574 */
 -- 
 2.43.0
 
