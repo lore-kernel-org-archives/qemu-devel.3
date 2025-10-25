@@ -2,50 +2,52 @@ Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5768CCD195
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Oct 2025 20:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D788BCCF9EC
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 16:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v9qjS-00063w-T6; Fri, 17 Oct 2025 16:07:23 -0400
+	id 1vCgzJ-0004pu-DP; Sat, 25 Oct 2025 12:19:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1v9qjP-00063d-7z
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 16:07:19 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vCgzG-0004pN-PM
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 12:19:26 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1v9qjG-0005NR-Nf
- for qemu-devel@nongnu.org; Fri, 17 Oct 2025 16:07:18 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vCgz9-00049v-6v
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 12:19:26 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id A2E134050D;
- Fri, 17 Oct 2025 20:06:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61322C4CEE7;
- Fri, 17 Oct 2025 20:06:57 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id CE1DC605E2;
+ Sat, 25 Oct 2025 16:19:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94F6C113D0;
+ Sat, 25 Oct 2025 16:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1760731619;
+ s=k20201202; t=1761409148;
  bh=UTfxhwXz0sTKChJDyW3N/uDtKWbEJWe54PKakEJPxsI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=myGeaETyXDs2RjfEsjbGmJJj0RoHJndU7iGVKL9T9kkp92uY2LpOmyWsI7nl68kf+
- 8j90CXmJ4N1YPzQetsIBgunDKXioFjUrT45iqCdSv/udALz3Gv5lpm9q/or6uJP5pm
- Mh9hYGocc4Pgq00Revb2voX7EIVbEv/XbPW73VuIEzQfVBO8SH+5UFBk/edMDRoiBq
- nFwgkjQ8nR6UFsYiO4SCeg68KZILrvGXKjvaJI44PV+S4LeqBw3tLFwqs3SBvwz2EX
- AgVx3HLPMJowhnmRpTd5Kgml+bkMw9oqjluu1rHQC2wEI4q3I5oSTSJmtAmKA49f+I
- P/nZZ5PBJPVyA==
+ b=W9ePmt/J3/Jr2pUeTqRAvRdW9wwQGaeUVPwxTgkKmYbdvU/K620l2wcHK2IxCfuis
+ x29r9jw9w4q1ygl+lEuSCn30BMHtKBV/pDYUIIr1sdRgA6MlMT29/jZonWX/0ayF4U
+ 03cpZSu7onY43AcoQBcPgVH5FgadEJMp9EcBuYSXK+mcoudDZk3oYS8XeloARJaO1S
+ iQpggwnn2VFPJGUgLFo1TSmGqYwDHrQ8oCo37KbtQ0TYXF19aQmOXnAXF9aWzqPwIW
+ szgYa3ce4pUTirjjZhOAQwXy9hvfvIgAO77pM1o+ub1Gn2Q8Y1eL1z2T2KO2Ng6U4Y
+ Dznmy1cCgJqzg==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Helge Deller <deller@gmx.de>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 01/10] target/hppa: Update SeaBIOS-hppa to version 19
-Date: Fri, 17 Oct 2025 22:06:44 +0200
-Message-ID: <20251017200653.23337-2-deller@kernel.org>
+Cc: Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 01/11] target/hppa: Update SeaBIOS-hppa to version 19
+Date: Sat, 25 Oct 2025 18:18:51 +0200
+Message-ID: <20251025161901.32710-2-deller@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251017200653.23337-1-deller@kernel.org>
-References: <20251017200653.23337-1-deller@kernel.org>
+In-Reply-To: <20251025161901.32710-1-deller@kernel.org>
+References: <20251025161901.32710-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
