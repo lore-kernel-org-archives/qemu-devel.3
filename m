@@ -4,100 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94852CCF9E3
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 16:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE3CCCD1BF
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 16:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vChRH-0000BX-GJ; Sat, 25 Oct 2025 12:48:23 -0400
+	id 1vChR9-0000AC-0Z; Sat, 25 Oct 2025 12:48:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vChRF-0000Aw-9L
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 12:48:21 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vChRC-0008Dg-UO
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 12:48:21 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-4270a3464caso1456858f8f.1
- for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 09:48:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761410897; x=1762015697; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8b9xRaJlWL+nt1fXH4LsscZYHwjDggsC/SQS05yNr9E=;
- b=WAblNiKSRaWPn9pGIJr5pJLwYLdNV1zwevI/P+mV0e0ftoQd0ukvnqXoYVnM7ZjckR
- s+0XM3ceaoKjjx4un34mm11gGasoz9ye8vc/MsiTbGCKdVyzrImEVkpdYwq5I9/rdKyx
- yXyXEjYt1BwkjdlQtLIs365s3ud6uhMQ1W2Y14YJ5J3LNYbrr9tZB38xxOwvecAteJN1
- SojuYZX7EFSixeFxH1IFmBZn7Ibb+I9jwxB18xgw0M51tmE5CuaaxZCYzZXctYeSSmPv
- rWo4p7yRwuGOq0LUx8IeNvnpSyBM11iVjbWhe/cAmGLxu2kWdyMidNx23Nb7YTe2QZdZ
- GsZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761410897; x=1762015697;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8b9xRaJlWL+nt1fXH4LsscZYHwjDggsC/SQS05yNr9E=;
- b=Wu88zjaUxwaxw3U9HRM95m/xaurZyd+3iZi78bCmX2jlf2RjX0bNQ3t41lhsQMtRDo
- Shpy1L2iJIbfF421xN98j6uVZ8H77ButlBunuY42ZdBKnLjOXWkBvIubtdVjRV6/rqJY
- 5p14J14txs2r4/UyBh0HE6WUNwLXB6XNPMs0bG7ccjuTVX+zQwiyWjnjFwzzL8zYZV3c
- RzLRkb0KCWOsDpEUe1FvdZ1rcpNCJjpxIHTTo2qYgbPhzm0BfHi1AhoalIf+DkEwPPSI
- lqv6Fttn0Yom3NTF6lEqc5zCjvCygfEWSjddrKKxL2aWLTeaFlzLn/VkpHEZdpHOR0oW
- PIwg==
-X-Gm-Message-State: AOJu0Yys/WFIQ4+mjMeFfCCNiX4Eg5/Po6vLwn+QVKldPV3yhw3p92JP
- 0ifZCGuRy/aITfc9Rgck7S+nhlV9KYD2eqecABHiiXlKIXcPu8aGcWEcITD05hmtw9E=
-X-Gm-Gg: ASbGncu1IoOzt+ocGBp8eDpTFK8jjTFTtyZB/beIP/hlp1BlsrHhP8BNcKyDhzXSQzO
- 6gFu2f+iUnxEEaFxxpIQdUZx2vCXnkHGWkv/KqOAWanACXsqDP0hOziIDYdoekXLwt3L3u4E8fq
- ZebirDPMnTjsLnOYXg9sfCQmwuOyBZA67GSEAD15ms69RQ+Fweq8KAdZ5Xfl43Gc68Ug76aArlY
- 2btgzmPEz+UAoUa19mMcv4yJPIQrSvolq/J86r5XoVfNDudSwQ1ZaSooR4Q27uwIgSszg4C9oPr
- a6bYMa9KTOXfwGzICsVl2lu0rYwvMSDkngcc2N1HlxCH6xubAUZpEg4LpKN44VpwFCZUJkz+zAN
- 80fQk/zzA/EyHh0VsgjT2WLdCbaVMf04EdtST8cahoz7YuTEatI2ZXjBWTfIvOmO6sNfVPZwFPQ
- e9+n/y0k4JVaBnFnNgIcPaMFKDtNXsvJ5sL51Z0TZSpQk=
-X-Google-Smtp-Source: AGHT+IGZ/hKZsKg7fTySQTIzCPM2+0XG00VcSx5LKzVRwpTeIpv9gKt/sgKUAfuh+4TLI0DsmVqT4Q==
-X-Received: by 2002:a05:6000:2890:b0:428:3fcb:197f with SMTP id
- ffacd0b85a97d-4298a0ed388mr8717808f8f.63.1761410896852; 
- Sat, 25 Oct 2025 09:48:16 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952b7badsm4414143f8f.7.2025.10.25.09.48.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Oct 2025 09:48:16 -0700 (PDT)
-Message-ID: <4dc7b5ba-176b-4e2a-876c-a911793dab13@linaro.org>
-Date: Sat, 25 Oct 2025 18:48:15 +0200
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vChR7-0000A4-UK
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 12:48:13 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vChR6-0008AU-0Q
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 12:48:13 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id F288F60350;
+ Sat, 25 Oct 2025 16:48:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64718C4CEF5;
+ Sat, 25 Oct 2025 16:48:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1761410889;
+ bh=qo4rZthWrQcK+3AK1ydySpYdsN44RTNav98iyPNzJ6w=;
+ h=Date:From:To:Subject:References:In-Reply-To:From;
+ b=gyVy4gqW7LwKrJVB7sWJDZqusEqhD+qFq4w2Wx/lK/RWsX+BsLQsFvlTgxsXopOxW
+ iOiG9vfU6yvdbKFaH375mdlGwaZM6YAWSGR85Fu+0cEMfltTWklm21Nc3GsmbsqlGe
+ iVwh1WBpu8357RST9anrGHK4m0DCq8s+8pxpueI6S8zaHXCEmkhstpZ0MpEfxKksnd
+ KlBmUSub0Zo7RIXUr4c93a2jVuV0RaWx7NwklMkpmke3m7ophxPtOyo6GGP3E8cqy9
+ 5MAKwiewBwYbABuW9rEgqEx2lNC7f2jdmAQhsPw3Yy/S5h9cLGlDjhAzFA1hSk7a6w
+ PNlOGZFzSAT4g==
+Date: Sat, 25 Oct 2025 18:48:05 +0200
+From: Helge Deller <deller@kernel.org>
+To: Philippe =?iso-8859-15?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Subject: Re: [PATCH v3 11/11] hw/hppa: Add 715 machine type including NCR710
+ SCSI
+Message-ID: <aPz_RTXD7iHdIFn-@p100>
+References: <20251025161901.32710-1-deller@kernel.org>
+ <20251025161901.32710-12-deller@kernel.org>
+ <a54e8e84-9b69-4144-a02f-1825b9918352@linaro.org>
+ <52210596-bd63-42bf-b562-0fab03eef683@gmx.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/13] hw/pci-host/raven: Do not map regions in init
- method
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <cover.1761232472.git.balaton@eik.bme.hu>
- <586026b62dd514cc2c4bc0a67346d9e79d13dee6.1761232473.git.balaton@eik.bme.hu>
- <809dd471-4acd-4f14-80eb-3454a365b69a@ilande.co.uk>
- <370952a5-c0a0-98db-3c05-328bf773af60@eik.bme.hu>
- <58055dac-2263-4a29-7bb6-424bb38e4ef3@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <58055dac-2263-4a29-7bb6-424bb38e4ef3@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-15
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+In-Reply-To: <52210596-bd63-42bf-b562-0fab03eef683@gmx.de>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,156 +73,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/10/25 16:49, BALATON Zoltan wrote:
-> Hello,
-> 
-> Added a few more people to cc hoping to get some opinion to clear this 
-> up. This is brought up by my patch trying to simplify hw/pci-host/ 
-> raven.c part of this series:
-> https://patchew.org/QEMU/cover.1761232472.git.balaton@eik.bme.hu/
-> (First submitted in May here:
-> https://patchew.org/QEMU/cover.1746374076.git.balaton@eik.bme.hu/
-> but that went relatively unnoticed and missed the previous release.)
-> Find discussion below the patch.
-> 
-> On Sat, 25 Oct 2025, BALATON Zoltan wrote:
->> On Fri, 24 Oct 2025, Mark Cave-Ayland wrote:
->>> On 23/10/2025 16:26, BALATON Zoltan wrote:
->>>> Export memory regions as sysbus mmio regions and let the board code
->>>> map them similar to how it is done in grackle. While at it rename
->>>> raven_pcihost_realizefn to raven_pcihost_realize.
->>>>
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>   hw/pci-host/raven.c | 38 +++++++++++++-------------------------
->>>>   hw/ppc/prep.c       | 10 ++++++++--
->>>>   2 files changed, 21 insertions(+), 27 deletions(-)
+Add a new emulation for a 715/64 machine.
+This machines has no PCI bus, and has the majority of the devices (SCSI,
+network, serial ports, ...) provided by a LASI multi-function I/O chip.
 
+v2: based on feedback from Richard
+- Fix indenting and use assert() to check ncr710 device availability
 
->>>> @@ -180,7 +178,18 @@ static void raven_pcihost_realizefn(DeviceState 
->>>> *d, Error **errp)
->>>>         qdev_init_gpio_in(d, raven_change_gpio, 1);
->>>>   +    memory_region_init(&s->pci_io, o, "pci-io", 0x3f800000);
->>>> +    memory_region_init_io(&s->pci_discontiguous_io, o,
->>>> +                          &raven_io_ops, &s->pci_io,
->>>> +                          "pci-discontiguous-io", 8 * MiB);
->>>> +    memory_region_set_enabled(&s->pci_discontiguous_io, false);
->>>> +    memory_region_init(&s->pci_memory, o, "pci-memory", 0x3f000000);
->>>> +
->>>> +    sysbus_init_mmio(dev, &s->pci_io);
->>>> +    sysbus_init_mmio(dev, &s->pci_discontiguous_io);
->>>> +    sysbus_init_mmio(dev, &s->pci_memory);
->>>>       sysbus_init_irq(dev, &s->irq);
->>>> +
->>>>       h->bus = pci_register_root_bus(d, NULL, raven_set_irq, 
->>>> raven_map_irq,
->>>>                                      &s->irq, &s->pci_memory, &s- 
->>>> >pci_io, 0, 1,
->>>>                                      TYPE_PCI_BUS);
->>>> @@ -219,32 +228,12 @@ static void 
->>>> raven_pcihost_realizefn(DeviceState *d, Error **errp)
->>>>       pci_setup_iommu(h->bus, &raven_iommu_ops, s);
->>>>   }
->>>>   -static void raven_pcihost_initfn(Object *obj)
->>>> -{
->>>> -    PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
->>>> -    MemoryRegion *address_space_mem = get_system_memory();
->>>> -
->>>> -    memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
->>>> -    memory_region_init_io(&s->pci_discontiguous_io, obj,
->>>> -                          &raven_io_ops, &s->pci_io,
->>>> -                          "pci-discontiguous-io", 8 * MiB);
->>>> -    memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
->>>> -
->>>> -    /* CPU address space */
->>>> -    memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
->>>> -                                &s->pci_io);
->>>> -    memory_region_add_subregion_overlap(address_space_mem, 
->>>> PCI_IO_BASE_ADDR,
->>>> -                                        &s->pci_discontiguous_io, 1);
->>>> -    memory_region_set_enabled(&s->pci_discontiguous_io, false);
->>>> -    memory_region_add_subregion(address_space_mem, 0xc0000000, &s- 
->>>> >pci_memory);
->>>> -}
->>>> -
+v3: based on feedback from Philippe Mathieu-Daud� <philmd@linaro.org>
+- create SCSI device at caller site, not inside machine_HP_common_init_tail()
 
+Signed-off-by: Helge Deller <deller@gmx.de>
 
->>>> @@ -293,6 +296,9 @@ static void ibm_40p_init(MachineState *machine)
->>>>       pcihost = SYS_BUS_DEVICE(dev);
->>>>       object_property_add_child(qdev_get_machine(), "raven", 
->>>> OBJECT(dev));
->>>>       sysbus_realize_and_unref(pcihost, &error_fatal);
->>>> +    sysbus_mmio_map(pcihost, 0, PCI_IO_BASE_ADDR);
->>>> +    sysbus_mmio_map_overlap(pcihost, 1, PCI_IO_BASE_ADDR, 1);
->>>> +    sysbus_mmio_map(pcihost, 2, PCI_MEM_BASE_ADDR);
->>>>       pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
->>>>       if (!pci_bus) {
->>>>           error_report("could not create PCI host controller");
->>>
->>> In general the expectation is that memory regions should be 
->>> initialised in the _init() function, unless they depend upon a 
->>> property in which case they should be initialised in the _realize() 
->>> function. Why do you feel this needs to be different?
->>
->> Is any of it needed before realize? If not why have an init method at 
->> all? As shown here this works perfectly without one and is more 
->> comprehensible that way for people reading it without deep knowledge 
->> about Qdev. In general I think simple devices only need a realize 
->> method and the init method is rarely needed, e.g. if there are some 
->> child objects that need to be init for passing properties that can be 
->> set before realize or similar unusual cases but for most classes init 
->> is not needed at all. I only want to keep what's necessary and remove 
->> everything that's not needed. I think that makes the device model 
->> easier to understand.
-> 
-> I've checked documentation here:
-> https://www.qemu.org/docs/master/devel/qdev-api.html
-> but it's not really clear on what's the preferred way of using init and 
-> realize. It's not even very clear on when to use which to me. So becuase 
-> that did not help I did a quick survey on what other pci-host models do. 
-> Of the 32 .c files in hw/pci-host 16 have an init method:
-> 
-> aspeed_pcie.c, astro.c, designware.c, gpex.c, grackle.c, i440fx.c, 
-> pnv_phb3.c, pnv_phb3_msi.c, pnv_phb3_pbcq.c, pnv_phb4.c, q35.c, raven.c, 
-> sabre.c, uninorth.c, versatile.c, xilinx-pcie.c
-> 
-> Of these astro.c has an empty init function that should be removed; 
-> grackle.c, sabre.c and uninorth.c are maintained by you so I'll ignore 
-> them here; we're discussing raven.c now and i440fx.c has two 
-> memory_region_init_io calls in init that could be in realize where all 
-> others are and otherwise all other models do this in realize and only 
-> init child objects and add properties in init methods when that's needed 
-> because they need to be available before realize. The other 16 device 
-> models don't have an init method at all and do all in the realize like I 
-> proposed in this patch for raven. Since only device models that you 
-> maintain do it differently I think what you say is not following the 
-> preferred way so you should not block this patch.
-> 
-> I'd be interested if there is a consensus on this or can we cone to one 
-> that we can document to avoid this repeating every time.
-
-I've been told to stop arguing about QDev on the mailing list, and
-instead spend my time and energy in documenting QDev, so we'll discuss
-the documentation patches :)
-
-Also we'll try to provide a QDev meaningful state machine, which will
-help to enforce doing in the correct places.
-
-
-Meanwhile...
-
-.instance_init is actually QOM layer, it is called once, and can
-not fail. What is allocated here has to be de-allocated in 
-.instance_finalize.
-
-.realize is QDev where we check the device properties, reporting error.
-What is allocated/configured there has to be de-allocated in .unrealize.
-
-The big difference is for hot-pluggable devices, where unplug calls
-unrealize(), keeping the device initialized. Re-plug calls .realize()
-again, and we should be able to do that multiple times.
-
-With that in mind, IMO it is better to allocate all we can once in
-.instance_init().
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 81ed050b5e..92e9fcf437 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -30,6 +30,8 @@
+ #include "hw/pci-host/astro.h"
+ #include "hw/pci-host/dino.h"
+ #include "hw/misc/lasi.h"
++#include "hw/scsi/ncr53c710.h"
++#include "hw/scsi/lasi_ncr710.h"
+ #include "hppa_hardware.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+@@ -346,7 +348,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+ }
+ 
+ /*
+- * Last creation step: Add SCSI discs, NICs, graphics & load firmware
++ * Last creation step: Add NICs, graphics & load firmware
+  */
+ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                                         TranslateFn *translate)
+@@ -361,12 +363,6 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     MemoryRegion *rom_region;
+     SysBusDevice *s;
+ 
+-    /* SCSI disk setup. */
+-    if (drive_get_max_bus(IF_SCSI) >= 0) {
+-        dev = DEVICE(pci_create_simple(pci_bus, -1, "lsi53c895a"));
+-        lsi53c8xx_handle_legacy_cmdline(dev);
+-    }
+-
+     /* Graphics setup. */
+     if (machine->enable_graphics && vga_interface_type != VGA_NONE) {
+         dev = qdev_new("artist");
+@@ -537,6 +533,71 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+     cpu[0]->env.kernel_entry = kernel_entry;
+ }
+ 
++/*
++ * Create HP 715/64 workstation
++ */
++static void machine_HP_715_init(MachineState *machine)
++{
++    DeviceState *dev;
++    MemoryRegion *addr_space = get_system_memory();
++    TranslateFn *translate;
++    ISABus *isa_bus;
++
++    /* Create CPUs and RAM.  */
++    translate = machine_HP_common_init_cpus(machine);
++
++    if (hppa_is_pa20(&cpu[0]->env)) {
++        error_report("The HP 715/64 workstation requires a 32-bit "
++                     "CPU. Use '-machine 715' instead.");
++        exit(1);
++    }
++
++    /* Create ISA bus, needed for PS/2 kbd/mouse port emulation */
++    isa_bus = hppa_isa_bus(translate(NULL, IDE_HPA));
++    assert(isa_bus);
++
++    /* Init Lasi chip */
++    lasi_dev = DEVICE(lasi_init());
++    memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA_715),
++                                sysbus_mmio_get_region(
++                                    SYS_BUS_DEVICE(lasi_dev), 0));
++
++    /* Serial ports: Lasi use a 7.272727 MHz clock. */
++    serial_mm_init(addr_space, translate(NULL, LASI_HPA_715 + LASI_UART + 0x800), 0,
++        qdev_get_gpio_in(lasi_dev, LASI_IRQ_UART_HPA), 7272727 / 16,
++        serial_hd(0), DEVICE_BIG_ENDIAN);
++
++    /* Parallel port */
++    parallel_mm_init(addr_space, translate(NULL, LASI_HPA_715 + LASI_LPT + 0x800), 0,
++                     qdev_get_gpio_in(lasi_dev, LASI_IRQ_LPT_HPA),
++                     parallel_hds[0]);
++
++    /* PS/2 Keyboard/Mouse */
++    dev = qdev_new(TYPE_LASIPS2);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
++                       qdev_get_gpio_in(lasi_dev, LASI_IRQ_PS2KBD_HPA));
++    memory_region_add_subregion(addr_space,
++                                translate(NULL, LASI_HPA_715 + LASI_PS2),
++                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
++                                                       0));
++    memory_region_add_subregion(addr_space,
++                                translate(NULL, LASI_HPA_715 + LASI_PS2 + 0x100),
++                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
++                                                       1));
++    /* SCSI disk setup. */
++    if (drive_get_max_bus(IF_SCSI) >= 0) {
++        dev = lasi_ncr710_init(addr_space,
++                               translate(NULL, LASI_HPA_715 + 0x6000),
++                               qdev_get_gpio_in(lasi_dev, LASI_IRQ_SCSI_HPA));
++        assert(dev);
++        lasi_ncr710_handle_legacy_cmdline(dev);
++    }
++
++    /* Add NICs, graphics & load firmware */
++    machine_HP_common_init_tail(machine, NULL, translate);
++}
++
+ /*
+  * Create HP B160L workstation
+  */
+@@ -603,7 +664,13 @@ static void machine_HP_B160L_init(MachineState *machine)
+                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
+                                                        1));
+ 
+-    /* Add SCSI discs, NICs, graphics & load firmware */
++    /* SCSI disk setup. */
++    if (drive_get_max_bus(IF_SCSI) >= 0) {
++        dev = DEVICE(pci_create_simple(pci_bus, -1, "lsi53c895a"));
++        lsi53c8xx_handle_legacy_cmdline(dev);
++    }
++
++    /* Add NICs, graphics & load firmware */
+     machine_HP_common_init_tail(machine, pci_bus, translate);
+ }
+ 
+@@ -646,7 +713,13 @@ static void machine_HP_C3700_init(MachineState *machine)
+     pci_bus = PCI_BUS(qdev_get_child_bus(DEVICE(astro->elroy[0]), "pci"));
+     assert(pci_bus);
+ 
+-    /* Add SCSI discs, NICs, graphics & load firmware */
++    /* SCSI disk setup. */
++    if (drive_get_max_bus(IF_SCSI) >= 0) {
++        dev = DEVICE(pci_create_simple(pci_bus, -1, "lsi53c895a"));
++        lsi53c8xx_handle_legacy_cmdline(dev);
++    }
++
++    /* Add NICs, graphics & load firmware */
+     machine_HP_common_init_tail(machine, pci_bus, translate);
+ }
+ 
+@@ -743,6 +816,25 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_size = 1024 * MiB;
+ }
+ 
++static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
++{
++    static const char * const valid_cpu_types[] = {
++        TYPE_HPPA_CPU,
++        NULL
++    };
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "HP 715/64 workstation";
++    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->valid_cpu_types = valid_cpu_types;
++    mc->init = machine_HP_715_init;
++    /* can only support up to max. 8 CPUs due inventory major numbers */
++    mc->max_cpus = MIN_CONST(HPPA_MAX_CPUS, 8);
++    mc->default_ram_size = 256 * MiB;
++    mc->default_nic = NULL;
++}
++
++
+ static const TypeInfo hppa_machine_types[] = {
+     {
+         .name           = TYPE_HPPA_COMMON_MACHINE,
+@@ -762,6 +854,10 @@ static const TypeInfo hppa_machine_types[] = {
+         .name = MACHINE_TYPE_NAME("C3700"),
+         .parent = TYPE_HPPA_COMMON_MACHINE,
+         .class_init = HP_C3700_machine_init_class_init,
++    }, {
++        .name = MACHINE_TYPE_NAME("715"),
++        .parent = TYPE_HPPA_COMMON_MACHINE,
++        .class_init = HP_715_machine_init_class_init,
+     },
+ };
+ 
 
