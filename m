@@ -4,61 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BA3CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 08:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DC5CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 09:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCZfo-0005Sx-3B; Sat, 25 Oct 2025 04:30:53 -0400
+	id 1vCaXB-0004Cu-5z; Sat, 25 Oct 2025 05:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCZfZ-0005PE-Bk; Sat, 25 Oct 2025 04:30:38 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ id 1vCaX7-0004Cg-Ee; Sat, 25 Oct 2025 05:25:57 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vCZfR-0005NK-B8; Sat, 25 Oct 2025 04:30:32 -0400
+ id 1vCaX4-0003f5-9Y; Sat, 25 Oct 2025 05:25:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761381029; x=1792917029;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=ES1nI8th0/0ldH3aqAwXeLgU68F0dfZwicYy4qewdBI=;
- b=Cv3YE25Dgs6MIdCl5n3KejESaHKUvms2nGS1IMKANTrmcL3d8ScksImj
- NEh0fp4SwBH3oj8rfzMVP1N61RPmIMQL0f4WXkX2WR20W01NB7pElnPXA
- mXrFRR573DmyeFk1JKc5NHW2D1o2xQsffyh0OR0qxCeDaYXa/8JUUIUeA
- xZvJu3d7+eL7BIliFSOcSf2dfYeCTyatWRPlr+Rj7guCp6NZ037qqf4QL
- IDXT+0CSLQF/C24Jj4FbaDZzkgVvr1TMiiom+av+fHQJVcQZjLxEXLz8v
- u7dbcE+js7+n7E79N2Vpl9+np0E7RCLCxRkwn/wDUgQqGyZFoXj6GHnyu g==;
-X-CSE-ConnectionGUID: tD7ZBRxgQrq9xnU6zA0dlg==
-X-CSE-MsgGUID: SIsFF1wuTWatW5GKZkT8gQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63641143"
-X-IronPort-AV: E=Sophos;i="6.19,254,1754982000"; d="scan'208";a="63641143"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Oct 2025 01:30:18 -0700
-X-CSE-ConnectionGUID: TWw3h7OQT+yRd9lnV13LzA==
-X-CSE-MsgGUID: GjFwbR+fQzWcKLeJQ8d0nA==
+ t=1761384355; x=1792920355;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=g/sW1J5uxn/GgSoKHlodEjilw0neQLqD5vVBzHxK79A=;
+ b=AkDzscwmCsY/48F58NhJvXxSuLnCjeygif9cP7MmgowQgZLwAvS7xEi1
+ S3phtDnG2jXY1oDC/x7GAe8y4H/G7tzPkbpeALn8TNazbEPQSzKr1MXKG
+ LiIxaw/Sr8/FOrLqy+KmLj3Z8BjBNoOC6gcCOaIgFTc6y3aClI/4e5Zej
+ CPxHYHStm18Kk5wRfTgcgCTVLIw/t7yCrR5qkBX099WpATBBTyYRVTK5p
+ CoYTQqH+gMIaIgU1tkykGhB/OUla4ab3ZmlsO0L99VwiJH/O2WiWojmfu
+ 9B1tHF3a4mQ/6hdjyRN0i/QzvpWASpJS5qmNqbAincuZbboPWYdL9chEY g==;
+X-CSE-ConnectionGUID: s0m1j+PlSD+tix6lR97Qxg==
+X-CSE-MsgGUID: HS9FOIEWT+OLl0rNCrL6bg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="74666295"
+X-IronPort-AV: E=Sophos;i="6.19,254,1754982000"; d="scan'208";a="74666295"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Oct 2025 02:25:50 -0700
+X-CSE-ConnectionGUID: dbUQGUyISPeb4RPPxwXlTw==
+X-CSE-MsgGUID: TKg4aS6qRMeRwQlQVyDsaw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,254,1754982000"; d="scan'208";a="208258318"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 25 Oct 2025 01:30:17 -0700
-Date: Sat, 25 Oct 2025 16:52:26 +0800
+X-IronPort-AV: E=Sophos;i="6.19,254,1754982000"; d="scan'208";a="184527200"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 25 Oct 2025 02:25:48 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-Subject: Re: [PATCH v2] rust/qemu-macros: Convert bit value to u8 within
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v3] rust/qemu-macros: Convert bit value to u8 within
  #[property]
-Message-ID: <aPyPyvvb+G6Df6Qw@intel.com>
-References: <20251024041344.1389488-1-zhao1.liu@intel.com>
- <t4mjqw.dx8x6zfu0m3i@linaro.org>
+Date: Sat, 25 Oct 2025 17:47:53 +0800
+Message-Id: <20251025094753.1899634-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <t4mjqw.dx8x6zfu0m3i@linaro.org>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -66,8 +62,8 @@ X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,26 +79,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> >+                quote! {
-> >+                    {
-> >+                        const {
-> >+                            assert!(#bitval >= 0 && #bitval < #field_ty::BITS as _,
-> >+                                    "bit number exceeds type bits 
-> >range");
-> 
-> Const panic messages cannot use formatting parameters yet, but.
-> Can we interpolate the type (e.g u32) in the compile-time panic message? 
+For bit property, make the type conversion within the #[property] macro
+so that users do not need to handle the conversion.
 
-Good idea! `concat!` with `stringify!(#field_ty)` should work.
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+Changes Since v2:
+ - Present type info in assertion message.
 
-> Not important but would make the error message friendlier.
+Changes Since v1:
+ - Check #field_ty::BITS instead of u8::MAX.
+ - Update test cases.
+---
+ rust/hw/timer/hpet/src/device.rs |  2 +-
+ rust/qemu-macros/src/lib.rs      | 23 ++++++++++++++++++-----
+ rust/qemu-macros/src/tests.rs    | 24 +++++++++++++++++++++---
+ 3 files changed, 40 insertions(+), 9 deletions(-)
 
-Yeah, let me refresh a v3.
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 86638c076666..23f2eefd1cd9 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -539,7 +539,7 @@ pub struct HPETState {
+     // Internal state
+     /// Capabilities that QEMU HPET supports.
+     /// bit 0: MSI (or FSB) support.
+-    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT as u8, default = false)]
++    #[property(rename = "msi", bit = HPET_FLAG_MSI_SUPPORT_SHIFT, default = false)]
+     flags: u32,
+ 
+     /// Offset of main counter relative to qemu clock.
+diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+index 50239f228be2..4bf18d3e2c58 100644
+--- a/rust/qemu-macros/src/lib.rs
++++ b/rust/qemu-macros/src/lib.rs
+@@ -262,12 +262,25 @@ macro_rules! str_to_c_str {
+             },
+         )?;
+         let field_ty = field.ty.clone();
+-        let qdev_prop = if bitnr.is_none() {
+-            quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO }
++        let (qdev_prop, bitval) = if let Some(bitval) = bitnr {
++            (
++                quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO },
++                quote! {
++                    {
++                        const {
++                            assert!(#bitval >= 0 && #bitval < #field_ty::BITS as _,
++                                concat!("bit number exceeds ", stringify!(#field_ty), " bits range"));
++                        }
++                        #bitval as u8
++                    }
++                },
++            )
+         } else {
+-            quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO }
++            (
++                quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO },
++                quote! { 0 },
++            )
+         };
+-        let bitnr = bitnr.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
+         let set_default = defval.is_some();
+         let defval = defval.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
+         properties_expanded.push(quote! {
+@@ -275,7 +288,7 @@ macro_rules! str_to_c_str {
+                 name: ::std::ffi::CStr::as_ptr(#prop_name),
+                 info: #qdev_prop,
+                 offset: ::core::mem::offset_of!(#name, #field_name) as isize,
+-                bitnr: #bitnr,
++                bitnr: #bitval,
+                 set_default: #set_default,
+                 defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
+                 ..::common::Zeroable::ZERO
+diff --git a/rust/qemu-macros/src/tests.rs b/rust/qemu-macros/src/tests.rs
+index 65691412ff57..9b19845064b2 100644
+--- a/rust/qemu-macros/src/tests.rs
++++ b/rust/qemu-macros/src/tests.rs
+@@ -179,7 +179,13 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                         name: ::std::ffi::CStr::as_ptr(c"flags"),
+                         info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
+-                        bitnr: 3,
++                        bitnr : {
++                            const {
++                                assert!(3 >= 0 && 3 < u32::BITS as _ ,
++                                    concat!("bit number exceeds ", stringify!(u32), " bits range"));
++                            }
++                            3 as u8
++                        },
+                         set_default: false,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: 0 as u64 },
+                         ..::common::Zeroable::ZERO
+@@ -207,7 +213,13 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                         name: ::std::ffi::CStr::as_ptr(c"flags"),
+                         info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
+-                        bitnr: 3,
++                        bitnr : {
++                            const {
++                                assert!(3 >= 0 && 3 < u32::BITS as _ ,
++                                    concat!("bit number exceeds ", stringify!(u32), " bits range"));
++                            }
++                            3 as u8
++                        },
+                         set_default: true,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: true as u64 },
+                         ..::common::Zeroable::ZERO
+@@ -235,7 +247,13 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                         name: ::std::ffi::CStr::as_ptr(c"msi"),
+                         info: <u64 as ::hwcore::QDevProp>::BIT_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, flags) as isize,
+-                        bitnr: 3,
++                        bitnr : {
++                            const {
++                                assert!(3 >= 0 && 3 < u64::BITS as _ ,
++                                    concat!("bit number exceeds ", stringify!(u64), " bits range"));
++                            }
++                            3 as u8
++                        },
+                         set_default: true,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: false as u64 },
+                         ..::common::Zeroable::ZERO
+-- 
+2.34.1
 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
-Thanks!
-
-Regards,
-Zhao
 
