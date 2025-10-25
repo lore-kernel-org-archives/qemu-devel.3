@@ -4,65 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70767CCF9E9
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 19:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E58CCF9E9
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 20:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCkHo-0006SJ-3n; Sat, 25 Oct 2025 15:50:50 -0400
+	id 1vCkUQ-0000yn-7z; Sat, 25 Oct 2025 16:03:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vCkHc-0006RZ-Td
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 15:50:39 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vCkUO-0000yV-5m; Sat, 25 Oct 2025 16:03:48 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vCkHX-0006jx-UC
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 15:50:36 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3C822C00DB;
- Sat, 25 Oct 2025 22:50:21 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:538::1:38] (unknown
- [2a02:6bf:8080:538::1:38])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id JognN51L4Gk0-Q3YDIEVX; Sat, 25 Oct 2025 22:50:20 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761421820;
- bh=xGHa/gx+GWtepGVVatRmh8iiB6nmthhXtqEtzLEoL/w=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QDQW2WQALPGQgwc5BDXA0ZRO0vsJHnN8r4J7vRylBfJzoUmZAM0GKmtDsEPJjNmSk
- LVPYYri+Rq2cBa3aYIlr7SFKpMMYdRm6ZbguWx/FO1oeWKDM6eqCGgbOdkhpW8t2yc
- 6VTzUKB5PkuBVX76nX0NKjqT4l0rljhstNkI8S0s=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <5006c0f4-3dc7-434d-b0ba-be4db5dbded7@yandex-team.ru>
-Date: Sat, 25 Oct 2025 22:50:19 +0300
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vCkUK-0000FQ-7C; Sat, 25 Oct 2025 16:03:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 18E355972FE;
+ Sat, 25 Oct 2025 22:03:39 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id Vl2wa1EqAuGr; Sat, 25 Oct 2025 22:03:37 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F2B755972FB; Sat, 25 Oct 2025 22:03:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F0E545972F3;
+ Sat, 25 Oct 2025 22:03:36 +0200 (CEST)
+Date: Sat, 25 Oct 2025 22:03:36 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH] hw/pci-host/articia: Add variable for common type cast
+In-Reply-To: <a7280729-ff67-46df-bcd3-1de5f6df84c1@linaro.org>
+Message-ID: <12695325-a81c-8dc0-dc02-b63cb819ecbe@eik.bme.hu>
+References: <20251025125512.19967597305@zero.eik.bme.hu>
+ <a7280729-ff67-46df-bcd3-1de5f6df84c1@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] migration: vmsd errp handlers: return bool
-To: peterx@redhat.com
-Cc: stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- armbru@redhat.com, berrange@redhat.com
-References: <20251020160344.2401137-1-vsementsov@yandex-team.ru>
- <20251020160344.2401137-3-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251020160344.2401137-3-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-1054418449-1761422386=:44805"
+Content-ID: <8e1bc861-3113-3fc9-6718-c075f660b563@eik.bme.hu>
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,170 +67,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.10.25 19:03, Vladimir Sementsov-Ogievskiy wrote:
-> Recently we moved to returning errp. Why to keep int return value?
-> Generally it doesn't help: you can't use in a logic of handling
-> an error, as you are never sure, that in future the logic in
-> the stack will not change: it may start to return another error
-> code in the same case, or return same error code in another case.
-> 
-> Actually, we can only rely on concrete errno code when get it
-> _directly_ from documented library function or syscall. This way we
-> handle for example EINTR. But later in a stack, we can only add
-> this errno to the textual error by strerror().
-> 
-> Let this new, recently added API be simpler and clearer, let it
-> return simple boolean value, so we shouldn't think:
-> 
->    - should we handle different error codes differently
->      (if yes - how exactly, if no - why do we need this information?)
-> 
->    - should we add it to errp, or it was already added earlier in
->      the stack
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   backends/tpm/tpm_emulator.c   | 10 ++++------
->   docs/devel/migration/main.rst |  6 +++---
->   include/migration/vmstate.h   |  6 +++---
->   migration/vmstate.c           | 24 +++++++++++-------------
->   4 files changed, 21 insertions(+), 25 deletions(-)
-> 
-> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-> index dacfca5ab7..3937ac5572 100644
-> --- a/backends/tpm/tpm_emulator.c
-> +++ b/backends/tpm/tpm_emulator.c
-> @@ -947,24 +947,22 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
->   
->   /*
->    * Load the TPM state blobs into the TPM.
-> - *
-> - * Returns negative errno codes in case of error.
->    */
-> -static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
-> +static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
->   {
->       TPMBackend *tb = opaque;
->       int ret;
->   
->       ret = tpm_emulator_set_state_blobs(tb, errp);
->       if (ret < 0) {
-> -        return ret;
-> +        return false;
->       }
->   
->       if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-O_o, we've missed an elephant (errp is not set here).
+--3866299591-1054418449-1761422386=:44805
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <af060f02-394b-fbe8-181a-f95d7a064a08@eik.bme.hu>
 
-> -        return -EIO;
-> +        return false;
->       }
->   
-> -    return 0;
-> +    return true;
->   }
->   
->   static const VMStateDescription vmstate_tpm_emulator = {
-> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-> index 1afe7b9689..234d280249 100644
-> --- a/docs/devel/migration/main.rst
-> +++ b/docs/devel/migration/main.rst
-> @@ -446,15 +446,15 @@ The functions to do that are inside a vmstate definition, and are called:
->   
->   Following are the errp variants of these functions.
->   
-> -- ``int (*pre_load_errp)(void *opaque, Error **errp);``
-> +- ``bool (*pre_load_errp)(void *opaque, Error **errp);``
->   
->     This function is called before we load the state of one device.
->   
-> -- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
-> +- ``bool (*post_load_errp)(void *opaque, int version_id, Error **errp);``
->   
->     This function is called after we load the state of one device.
->   
-> -- ``int (*pre_save_errp)(void *opaque, Error **errp);``
-> +- ``bool (*pre_save_errp)(void *opaque, Error **errp);``
->   
->     This function is called before we save the state of one device.
->   
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 63ccaee07a..dbe330dd5f 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -218,11 +218,11 @@ struct VMStateDescription {
->       int minimum_version_id;
->       MigrationPriority priority;
->       int (*pre_load)(void *opaque);
-> -    int (*pre_load_errp)(void *opaque, Error **errp);
-> +    bool (*pre_load_errp)(void *opaque, Error **errp);
->       int (*post_load)(void *opaque, int version_id);
-> -    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
-> +    bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
->       int (*pre_save)(void *opaque);
-> -    int (*pre_save_errp)(void *opaque, Error **errp);
-> +    bool (*pre_save_errp)(void *opaque, Error **errp);
->       int (*post_save)(void *opaque);
->       bool (*needed)(void *opaque);
->       bool (*dev_unplug_pending)(void *opaque);
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index fd066f910e..921e09c38e 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -154,13 +154,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->           return -EINVAL;
->       }
->       if (vmsd->pre_load_errp) {
-> -        ret = vmsd->pre_load_errp(opaque, errp);
-> -        if (ret < 0) {
-> +        if (!vmsd->pre_load_errp(opaque, errp)) {
->               error_prepend(errp, "pre load hook failed for: '%s', "
-> -                          "version_id: %d, minimum version_id: %d, "
-> -                          "ret: %d: ", vmsd->name, vmsd->version_id,
-> -                          vmsd->minimum_version_id, ret);
-> -            return ret;
-> +                          "version_id: %d, minimum version_id: %d: "
-> +                          vmsd->name, vmsd->version_id,
-> +                          vmsd->minimum_version_id);
-> +            return -EINVAL;
->           }
->       } else if (vmsd->pre_load) {
->           ret = vmsd->pre_load(opaque);
-> @@ -256,11 +255,11 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->           return ret;
->       }
->       if (vmsd->post_load_errp) {
-> -        ret = vmsd->post_load_errp(opaque, version_id, errp);
-> -        if (ret < 0) {
-> +        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
->               error_prepend(errp, "post load hook failed for: %s, version_id: "
-> -                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
-> -                          vmsd->version_id, vmsd->minimum_version_id, ret);
-> +                          "%d, minimum_version: %d: ", vmsd->name,
-> +                          vmsd->version_id, vmsd->minimum_version_id);
-> +            ret = -EINVAL;
->           }
->       } else if (vmsd->post_load) {
->           ret = vmsd->post_load(opaque, version_id);
-> @@ -438,12 +437,11 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->       trace_vmstate_save_state_top(vmsd->name);
->   
->       if (vmsd->pre_save_errp) {
-> -        ret = vmsd->pre_save_errp(opaque, errp);
->           trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
-> -        if (ret < 0) {
-> +        if (!vmsd->pre_save_errp(opaque, errp)) {
->               error_prepend(errp, "pre-save for %s failed, ret: %d: ",
->                             vmsd->name, ret);
-> -            return ret;
-> +            return -EINVAL;
->           }
->       } else if (vmsd->pre_save) {
->           ret = vmsd->pre_save(opaque);
+On Sat, 25 Oct 2025, Philippe Mathieu-Daudé wrote:
+> On 25/10/25 14:55, BALATON Zoltan wrote:
+>> We need the device casted to OBJECT often enough in realize to store
+>> it in a local variable that also makes function calls more readable.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>> Based-on: <cover.1761346145.git.balaton@eik.bme.hu>
+>> 
+>> hw/pci-host/articia.c | 14 +++++++-------
+>>   1 file changed, 7 insertions(+), 7 deletions(-)
+>> 
+>> diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
+>> index 761e89bc8f..56fe3b6953 100644
+>> --- a/hw/pci-host/articia.c
+>> +++ b/hw/pci-host/articia.c
+>> @@ -174,24 +174,24 @@ static void articia_realize(DeviceState *dev, Error 
+>> **errp)
+>>   {
+>>       ArticiaState *s = ARTICIA(dev);
+>>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
+>> +    Object *o = OBJECT(dev);
+>
+> Preferably "obj".
 
+Since you said preferably I take that as personal preference and leave it 
+as it is :-) I prefer shorter names for these to match s and h and to have 
+a chance to fit in the 80 char limit with long_snake_case_function_names.
 
--- 
-Best regards,
-Vladimir
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+I hope I can still keep your R-b.
+Thanks,
+BALATON Zoltan
+--3866299591-1054418449-1761422386=:44805--
 
