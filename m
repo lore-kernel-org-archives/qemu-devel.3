@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6CDCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 17:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD66CCF9E3
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Oct 2025 17:30:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCi4e-0003l2-Ll; Sat, 25 Oct 2025 13:29:05 -0400
+	id 1vCi5p-0004Mg-GS; Sat, 25 Oct 2025 13:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vCi4c-0003kJ-E2
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 13:29:02 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1vCi5n-0004MG-9d
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 13:30:15 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vCi4Z-0004Ur-Mg
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 13:29:01 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b6d6c11f39aso353115466b.2
- for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 10:28:57 -0700 (PDT)
+ id 1vCi5M-0004le-Ea
+ for qemu-devel@nongnu.org; Sat, 25 Oct 2025 13:30:14 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b3c2db014easo697667366b.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 10:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761413336; x=1762018136; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761413386; x=1762018186; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=i8uNBJOD2BFm4Sw4IakR1TgSuUcxXiAz4M+GTDdgdUM=;
- b=m66/eypEqJCVo9vxtqeE8BAKG3FMKc8lX/eP1out28fQdjA6jUSfjU9Y9w8mT2P06b
- 8gqfHmZZ3TIQlnGapKOEDPeisr0Mvan1iP3OfWxoYIDcJTDxKNfivXyjnU9rB4CHJ4df
- uQV3Q7Wb1OwTHI7j+qOOeBtcjzewp4GjtPd4jWFunnPz+pWfKWilWK4RX7bOhe61POUN
- iX+PN5qWIs9YA4jiRZb2t9hz9o+mf7vlXpL3wj5CevM9KC/BK34zcg9QYIOxgtExjy2F
- lSAckJ/5LinZoN97i/PhLJ+HzMCoT7XF+1NFl0fhiBG32Q1NPHDw+6+76PKkfQvVNvFZ
- 8ZyQ==
+ bh=w0f03hOEp1gmYfEfGUxQnlArhFaVOTnFO28f0M4TDSY=;
+ b=zxjYMkQaFSFl6h3s0+pLFJVPQZX17nojkQ/owonrT+xkpdXqciRm2iNT/eHYK+x4fR
+ 9HbyonegjVHYag0kNdI/1ntZ8MC9W7WXCrbTqPj8LuNzgsj7FAooKjyFtywebFNcSLPW
+ 4IfC144o+Am782ML9IGgDKLExjQwrwspw7HFnsxf9VOPE4t6PcSMA7KBCeFBCJdDh2nv
+ Hk/qtdHpYxRMB7NLvuDcELl3koeblCTF6ee3kZgmnyVSl5TvmOLuzoVjLvFmbmvRB/Mw
+ dOZs0og3KIEFUxJwCqpq4GOGqGRvVG5LUHnllj07DEuw78Q0genzVfKUl2deGwB/JhVM
+ Vr/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761413336; x=1762018136;
+ d=1e100.net; s=20230601; t=1761413386; x=1762018186;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i8uNBJOD2BFm4Sw4IakR1TgSuUcxXiAz4M+GTDdgdUM=;
- b=Tp8Ct85hOQgb+Z/XrF+cZV/c0CfJfYu1e1qfgD5dGR1KS4JnoJEARfYs/6NCuMpWpe
- ykbmI7P9DXT4i0A0SKlz0GKvr3fZcvS1AIb6fHxhazbq0409URklEcu1NChhrjGTudvR
- urLPzaXiiU78/nwJ1COPqVl4q8K+qryfDCumP1wdlhEf0ig7TGTAJKnbYqmCioGnyKCb
- UNcNBvFWnD782Z45WkKQmjd6vQhktyBZE5NaQRiRkEndH21jq+p1eCmKgG/0LKa/n6OA
- lRzivcaRvF4ZyqFxv6as76vslwLaaXlSmmpmfvcCXme7ZgpJ1hApgPnJ7aBGViS9Wg0K
- dDAQ==
+ bh=w0f03hOEp1gmYfEfGUxQnlArhFaVOTnFO28f0M4TDSY=;
+ b=n40vyO9RwIyPAb/r9VDTNGCeeN/PPLFFr70C+zSN54QmJ11U23869xIhb0M9swcNK8
+ OdqJvQZ+K2lswQmupajBg8QO9co7hNw4tA305T32VL3b5hXkUrdIOW+7BnsP+AIoAV23
+ l/BudSR7AoOgDqmyN6SvqOHIvWy3g1N9TLaM6Jk6g1wT+2CFL1duu3BlugiE2UQmG9OK
+ 2goxs1/Hxs3ZN1giqJOhqhEHqDJhWoXZ3tXpm44zH9ICPstOcuj0JzzgEvRM347A4KSW
+ Y0liozcTL5vdkEKfqfR3EOp80PMLFsvK2zsKzbKCIFEPaHHv2aAVAk4QgbTQWpwgEtYO
+ LXbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKCuiH/74000b61XxKXkgUZyNYC/D8GkQLFkyZusoOvMRtZE2Rynrhk48C8mdZZJNBVAa8G7Y7nJ+U@nongnu.org
-X-Gm-Message-State: AOJu0YzHfQwtJ7PM5fwr3O2sXK+OPy0uh713CP8CHjMMYbbRCDy6wVnx
- HG6eb8uNgL/X0u8FdTfeZeJ2TB1M1p+1AOnyihfPqnO6oDsyu359DDXHEFn+6g+LPDw=
-X-Gm-Gg: ASbGnctoXrHYR+DghU/r07YyIZjkI3s3QwnHwC5GOZuRU4LEZGdz6TLCTJudZxaqUV1
- GW+rxEBpIrNdJN/6vc1kpWZngTBOlgBaMiCzxaiFWcEDJ6kvYiw3gusognV/TE7fayfIpcQDCGf
- r2P4OXWpsVaX5+kKnbmh2MeYWftefDneNyD/ziigfZPazIRbRre+nLS4bMvnadeDMPA03CSS/bQ
- g1YYKqF7eoR6sDRLpfpBcl/mzmReetbRHO1osqBLYNOhccvHOBPVyVTlnxJ71iPc80brL46zVF7
- uXjCNhLzfW13Q5uzdMLnFbx9Ov0tSxV/TOMmaokJrz4P0C9tY8FwRCr1ZeHJfsONIbjDk4FG/ER
- otTfF3O+nr/eR1xj8JkmQbrCzTBitKzDLqRPPArfSMuZaYBUQTakhpuK4qFYflbUVjXI20d9sGI
- V+U+0ZB5MppnRCqLvYYjuYDbTtt+t5kLFYvrUd++WarIP53xIh847Uk90gAUoG0DQl2NDyo011V
- Q==
-X-Google-Smtp-Source: AGHT+IGy9ZxytPWIMuBckxQJ8oSqCLWMqYUmlGMfB58x2kQNcPs+huJBsZr39MSgOuxjm2jG+9EZIQ==
-X-Received: by 2002:a17:906:d54f:b0:b43:b7ec:b8a1 with SMTP id
- a640c23a62f3a-b6d51b0df0fmr1091063766b.24.1761413336477; 
- Sat, 25 Oct 2025 10:28:56 -0700 (PDT)
+ AJvYcCVVBB0vNSZBrWnJDm0p/1MJSguShX/UeaT0Q0lTW5XLgvsua3QoTZjSAbKyEOStz3OclqoHWkQTUlNU@nongnu.org
+X-Gm-Message-State: AOJu0YzlNf5UURbiqPotPKzDNw6wFGDmi+RzmAqRhbn7sNEtMddI7qDU
+ ZJljTIkzts1Pk1OtH+SSYxbNquoAXRZFXt1ef4UCr6aXufTKbwkeHKIRmKjRZ2rUsKo=
+X-Gm-Gg: ASbGncuYgO/8gRNqEsOrqlqQRVcGOXUI9TmjrUCNL3/hTkVDUGm3cvVow0Q3B4711oT
+ gPgBTXPqwspiYlEO81jr0aUiz5mTPmtssn9Qm3z6SpAi3WaKlALbXhcfweeWSDuRCuDk1RUAF5W
+ FfYpRN4YXZIEi9uKeGL4g0ZW0kAUEahcGDM52cP43/vcOXcS1TqTBr8LutTlk6BZbhjiaEBBw5B
+ NwFVsunhRZ+i+HStIr2cpkm13ECLRAxZj63AdKwmbw++Jj2mzxmbRtx1ROqoBeO/8AcQsFZlFjC
+ 8RlUFAv4t8lPmbv+wp8Khh8wdbMNrnzGhxAChfk9adEQgyxbC5+kuOvEUdyM3MuQoDJn9Mnp9r1
+ hx8RLPxxmG63otmlEeRFyQCWSGVYKrjEnDCBt4vfvpP6wcEn5Sy1axIQHdmhM4lNA1meRt8uiCt
+ Jqh1OKyFz/vVE3slrrep54Q3CzMly2xwJeNM5ep/xVWDM7U3F78RZTNUUneBijjFAm8WAv7CFc0
+ g==
+X-Google-Smtp-Source: AGHT+IGVO4le4lqEQDRHiNvaF7BB4i+X13/MevNdrWz8yx/9iYYuas9U3eRd1MOUK8E6+hI4gP91xw==
+X-Received: by 2002:a17:906:6a28:b0:b2b:3481:93c8 with SMTP id
+ a640c23a62f3a-b6d51b0ac76mr1208201466b.19.1761413386299; 
+ Sat, 25 Oct 2025 10:29:46 -0700 (PDT)
 Received: from [10.240.88.227] (ip-037-024-071-028.um08.pools.vodafone-ip.de.
  [37.24.71.28]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d854395absm253098066b.62.2025.10.25.10.28.52
+ a640c23a62f3a-b6d8548ed8fsm255502166b.73.2025.10.25.10.29.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Oct 2025 10:28:56 -0700 (PDT)
-Message-ID: <a6daac4e-ef32-4ce6-a5f7-ff8f362f0d34@linaro.org>
-Date: Sat, 25 Oct 2025 19:28:49 +0200
+ Sat, 25 Oct 2025 10:29:45 -0700 (PDT)
+Message-ID: <bb33e2ea-ecc3-4802-a312-57a664d1d283@linaro.org>
+Date: Sat, 25 Oct 2025 19:29:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 30/58] target/arm: Re-use arm_is_psci_call() in HVF
+Subject: Re: [PATCH v2 31/58] target/arm: Share ARM_PSCI_CALL trace event
+ between TCG and HVF
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -82,21 +83,21 @@ Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
  Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20251023114638.5667-1-philmd@linaro.org>
- <20251023115311.6944-1-philmd@linaro.org>
+ <20251023115311.6944-2-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251023115311.6944-1-philmd@linaro.org>
+In-Reply-To: <20251023115311.6944-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,12 +114,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/23/25 13:52, Philippe Mathieu-Daudé wrote:
-> Re-use arm_is_psci_call() instead of open-coding it.
+> It is useful to compare PSCI calls of the same guest running
+> under TCG or HVF.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   target/arm/hvf/hvf.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   target/arm/hvf/hvf.c    | 3 ++-
+>   target/arm/tcg/psci.c   | 3 +++
+>   target/arm/trace-events | 3 +++
+>   3 files changed, 8 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
