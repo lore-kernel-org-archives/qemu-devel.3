@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11AFCCD193
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 07:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBCFCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 08:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCvUw-00065s-C2; Sun, 26 Oct 2025 03:49:06 -0400
+	id 1vCviL-0008TD-0S; Sun, 26 Oct 2025 04:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1vCvUu-00065I-Q5
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 03:49:04 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1vCvUs-0003c3-Ri
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 03:49:04 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-29301049db3so5803605ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 Oct 2025 00:49:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761464941; x=1762069741; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=G/oYF7H1MNrp4EDiT8ChUrBUiR5J7jFia5NcsuMMXDQ=;
- b=Fw6iVZSg1ZxMUbwtYFxcAWBh7jeLm0HBXQOKAUki7KXIAGU94tiuxnoFCUha0o4J5a
- wn4PBmQvHhr/yGYAdOuYlH+qgtFsHI7cjQFe6xD+6sxSSWVTXDBDnOgTcCEtj8aBJveQ
- Z0yPqQx6hQSyfqU2o83G34+HKVT+mUCB0Q73T0JpkHx4eWWiOjOfXzgCaZsb6I9Lyth1
- xnC62lzfP3h1orprQQw111qlrDeA9I5BrX/bxihTpodmKWzAk4dwK6O+CQMCILC+D6eV
- o6fA8nTBa4I8yBl4YagHD8U/FFUFmgCgv1Bxz3ytCbaQ/bNArNhg/YpA93ky5j4HBpnj
- R90w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761464941; x=1762069741;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G/oYF7H1MNrp4EDiT8ChUrBUiR5J7jFia5NcsuMMXDQ=;
- b=Tt9ywV3JvvZ2OczsnonSQROwdchIcHGlGKvAIGxUCOn4ToRzF/0FSSemnFa7RTurC1
- WpaeYKSJidvFmQv0Fyl86guGxaWjr/b1cUMHv2nxac7W5VY+Yhmy7TqZ9Ly9yL3YlP2U
- 4I8tjN/Mteiq+hN3zaee7m4gTkoN+TeDg41iJbOOYRhFZH6yg8sqLnZf1EonD48NRVYm
- +w9N/JSFt5Uitro8OvRFRj4YQL1jwrifhDRDIjF/0yeS3MCtl9dmVmFSnjjZeBVfqFQw
- pRT91AM/80gcvS75G+hk09MqNVL6Kqs1Bi9mHYWZkgcfDPST4j958eTq6xH3x0+RSy2V
- /fuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8zo3i5WEUD5gFMvDulGRSRPppCTCICU+5ztrCiCcaxugyT3vzGdLDjwMliQx/1yiWmec1GyXGQCS6@nongnu.org
-X-Gm-Message-State: AOJu0Yw98zhTCgt3pGwFzCT4eh++IQsrH0oDXRwXSEC2Rhmd1LquHOJe
- +Ek7zSexq31SYepXNk9HOveAcThd8FZTYpxr6uQZOUvyw56OQQTqww9m
-X-Gm-Gg: ASbGncviQsaV1ajGHKHYlkFw8uNXwUC/soveaMuR5DrdZaF11rMioXpIpzEEkrlK1ju
- a9S+EqbaRIQsbtK/X7ituZjt/j/KgHU/W/DQhye+OcFcn0dqAuqSz3U/BYefEaJN1u948c9qRPF
- Jvh0zbRLc1E2tO1PdR7SaVLftZXQeuJebt3B2kQHavukO0zZ5b7KxQJ7MegNCspmlVIabIPbZlS
- 4D8ySdYPx91uOEXMdtSvYtv0kbqs+9jh8r8maOFTbF3/iVKM4Qb/L52OL7iC570ZraCJ+LsbAxK
- P9kEwtdKOm+FXfCv/SIESIvKMFZSHv6lMruwBslTR8+NtwrJc37XNHaSVtAVhJeRCxrGwNMVPWC
- EH83tnsTlMbUTN9xBLANGCWzMBfoSa1kbNOe+u8sc7JpyQSSPn8aeBlb6kzSftt7mJq/4/XS7W8
- bQG/3ePPoc
-X-Google-Smtp-Source: AGHT+IF23XD1vacgvcpD2HE01KSIzFvqT6rQ70eVYUUQn4QsHTrecd40K4MCG54mMb61iFzNDXx/vQ==
-X-Received: by 2002:a17:903:94e:b0:26a:3c75:5241 with SMTP id
- d9443c01a7336-292d3fcce91mr130490955ad.9.1761464941084; 
- Sun, 26 Oct 2025 00:49:01 -0700 (PDT)
-Received: from fedora ([2409:40f2:1162:986e:b8ab:55e2:7dea:929a])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-29498e46664sm42987625ad.109.2025.10.26.00.48.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Oct 2025 00:49:00 -0700 (PDT)
-From: Yoges Vyas <yvyas1991@gmail.com>
-To: qemu-ppc@nongnu.org,
-	rathc@linux.ibm.com,
-	philmd@linaro.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, qemu-devel@nongnu.org,
- Yoges Vyas <yvyas1991@gmail.com>
-Subject: [PATCH] ppc/spapr: Cleanup MSI IRQ number handling
-Date: Sun, 26 Oct 2025 13:18:52 +0530
-Message-ID: <20251026074852.53691-1-yvyas1991@gmail.com>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vCviJ-0008T1-M6; Sun, 26 Oct 2025 04:02:55 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vCviH-0005iN-Mj; Sun, 26 Oct 2025 04:02:55 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 64240162060;
+ Sun, 26 Oct 2025 11:02:46 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7848B2F855B;
+ Sun, 26 Oct 2025 11:02:48 +0300 (MSK)
+Message-ID: <6f06c770-d66a-4520-8646-30b30c990235@tls.msk.ru>
+Date: Sun, 26 Oct 2025 11:02:48 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/3] io: fix crash in VNC websock server when client
+ quits early
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Grant Millar | Cylo <rid@cylo.io>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20251003150245.3510069-1-berrange@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251003150245.3510069-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=yvyas1991@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,77 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that spapr_irq_nr_msis() returns a constant value,
-lets replace it with a macro.
-Ref: https://lore.kernel.org/qemu-devel/bf149815-9782-4964-953d-73658b1043c9@linux.ibm.com/
+On 10/3/25 18:02, Daniel P. Berrangé wrote:
+> See patch 3 for the description of the problem and reproducer
+> 
+> Changes in v2:
+> 
+>   - Improve finalizer robustness of TLS source
+>   - Keep cleanup in finalizer of websock, just augment
+>     it in the close method
+>   - Fix resetting of hs_ioc_tag value when callback
+>     is complete
+>   - Add CVE assignemnt in 3rd patch
+> 
+> Daniel P. Berrangé (3):
+>    io: release active GSource in TLS channel finalizer
+>    io: move websock resource release to close method
+>    io: fix use after free in websocket handshake code
+> 
+>   include/io/channel-websock.h |  3 ++-
+>   io/channel-tls.c             | 10 ++++++++++
+>   io/channel-websock.c         | 33 ++++++++++++++++++++++++++-------
+>   3 files changed, 38 insertions(+), 8 deletions(-)
 
-Suggested-by: Chinmay Rath <rathc@linux.ibm.com>
-Signed-off-by: Yogesh Vyas <yvyas1991@gmail.com>
----
- hw/ppc/spapr_irq.c         | 7 +------
- hw/ppc/spapr_pci.c         | 2 +-
- include/hw/ppc/spapr_irq.h | 2 +-
- 3 files changed, 3 insertions(+), 8 deletions(-)
+Hi Daniel!
 
-diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
-index 2ce323457b..fc45a5d5d6 100644
---- a/hw/ppc/spapr_irq.c
-+++ b/hw/ppc/spapr_irq.c
-@@ -33,7 +33,7 @@ static const TypeInfo spapr_intc_info = {
- 
- static void spapr_irq_msi_init(SpaprMachineState *spapr)
- {
--    spapr->irq_map_nr = spapr_irq_nr_msis(spapr);
-+    spapr->irq_map_nr = SPAPR_IRQ_NR_MSIS;
-     spapr->irq_map = bitmap_new(spapr->irq_map_nr);
- }
- 
-@@ -277,11 +277,6 @@ void spapr_irq_dt(SpaprMachineState *spapr, uint32_t nr_servers,
-     sicc->dt(spapr->active_intc, nr_servers, fdt, phandle);
- }
- 
--uint32_t spapr_irq_nr_msis(SpaprMachineState *spapr)
--{
--    return SPAPR_NR_XIRQS + SPAPR_XIRQ_BASE - SPAPR_IRQ_MSI;
--}
--
- void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
- {
-     if (kvm_enabled() && kvm_kernel_irqchip_split()) {
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index bdec8f0728..d596a9e38e 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -2279,7 +2279,7 @@ int spapr_dt_phb(SpaprMachineState *spapr, SpaprPhbState *phb,
-     _FDT(fdt_setprop(fdt, bus_off, "reg", &bus_reg, sizeof(bus_reg)));
-     _FDT(fdt_setprop_cell(fdt, bus_off, "ibm,pci-config-space-type", 0x1));
-     _FDT(fdt_setprop_cell(fdt, bus_off, "ibm,pe-total-#msi",
--                          spapr_irq_nr_msis(spapr)));
-+                          SPAPR_IRQ_NR_MSIS));
- 
-     /* Dynamic DMA window */
-     if (phb->ddw_enabled) {
-diff --git a/include/hw/ppc/spapr_irq.h b/include/hw/ppc/spapr_irq.h
-index 5ddd1107c3..265d43e06b 100644
---- a/include/hw/ppc/spapr_irq.h
-+++ b/include/hw/ppc/spapr_irq.h
-@@ -40,6 +40,7 @@
- #define SPAPR_IRQ_MSI        (SPAPR_XIRQ_BASE + 0x0300)
- 
- #define SPAPR_NR_XIRQS       0x1000
-+#define SPAPR_IRQ_NR_MSIS    (SPAPR_XIRQ_BASE + SPAPR_NR_XIRQS - SPAPR_IRQ_MSI)
- 
- struct SpaprMachineState;
- 
-@@ -89,7 +90,6 @@ void spapr_irq_print_info(struct SpaprMachineState *spapr, GString *buf);
- void spapr_irq_dt(struct SpaprMachineState *spapr, uint32_t nr_servers,
-                   void *fdt, uint32_t phandle);
- 
--uint32_t spapr_irq_nr_msis(struct SpaprMachineState *spapr);
- int spapr_irq_msi_alloc(struct SpaprMachineState *spapr, uint32_t num, bool align,
-                         Error **errp);
- void spapr_irq_msi_free(struct SpaprMachineState *spapr, int irq, uint32_t num);
--- 
-2.51.0
+Is this patchset not supposed to go to the stable qemu series?
+I think it should?
 
+Thanks,
+
+/mjt
 
