@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65CD8CCD193
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB424CCF9E5
 	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 11:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCyUT-000098-Pn; Sun, 26 Oct 2025 07:00:49 -0400
+	id 1vCyUi-0000DM-Et; Sun, 26 Oct 2025 07:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1vCyUN-00008S-Hg
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 07:00:45 -0400
-Received: from mail-m82109.xmail.ntesmail.com ([156.224.82.109])
+ id 1vCyUX-0000C2-8Q
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 07:00:57 -0400
+Received: from mail-m83244.xmail.ntesmail.com ([156.224.83.244])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1vCyUK-0001DM-3u
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 07:00:43 -0400
+ id 1vCyUT-0001De-Ip
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 07:00:52 -0400
 Received: from DESKTOP-FHFCVTH.localdomain (unknown [117.67.70.197])
- by smtp.qiye.163.com (Hmail) with ESMTP id 2734efe8d;
- Sun, 26 Oct 2025 18:53:29 +0800 (GMT+08:00)
+ by smtp.qiye.163.com (Hmail) with ESMTP id 2734efe93;
+ Sun, 26 Oct 2025 18:53:33 +0800 (GMT+08:00)
 From: fanyihao@rt-thread.org
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Yihao Fan <fanyihao@rt-thread.org>
-Subject: [PATCH v3 1/3] hw/arm: Add support for the STM32F407 SoC|
-Date: Sun, 26 Oct 2025 18:53:18 +0800
-Message-ID: <20251026105320.5591-2-fanyihao@rt-thread.org>
+Subject: [PATCH v3 3/3] hw/arm/stm32f407: Add PWR device to stm32f407 SoC
+Date: Sun, 26 Oct 2025 18:53:20 +0800
+Message-ID: <20251026105320.5591-4-fanyihao@rt-thread.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251026105320.5591-1-fanyihao@rt-thread.org>
 References: <20251026105320.5591-1-fanyihao@rt-thread.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9a2026dd6d03a4kunmcecdce756fb9d0
+X-HM-Tid: 0a9a2026ec0603a4kunmcecdce756fba16
 X-HM-MType: 1
 X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCHxgYVkNIQ09NSklCT09PS1YVFAkWGhdVEwETFh
+ tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZT00ZVhgeGE1LHUxMQxpOHlYVFAkWGhdVEwETFh
  oSFyQUDg9ZV1kYEgtZQVlKSkxVTUxVTEtVSkJMWVdZFhoPEhUdFFlBWUtVS1VLVUtZBg++
 DKIM-Signature: a=rsa-sha256;
- b=GOxTajplREGhFfSNDdN3lp8E1EKwpuIoYqbhkv+IUMRxXNKEQkizghIOixDVDhyJAhIAbHAvmSdSxpYnyR6ABBHsgKS3nzXqmdrFaw06PjZ1HDRA1QrtAgPDo8F54zE+WYJvZuAXZ8HsC6U0s6hojX7WkgrHXh9E3kzZVRuXX7s6ou9g4yvAoyFD3O2B1x9kylGB01ffJaEw+G5SGtQ/Lzv6qopW9svsiIirqLp/D2acTcoIJBGunVWGwOsDwiPCpQ9M81yHyzjNv5bJN4sJu/6vxGTIXUjKws1So2bYLdBkS6D5zb2Fv9uC76ruIscJesKNTf/JzNuX8kiBa6WWNg==;
+ b=LeSv9dIE7r+kD8x2p89LehFf14dQXQWBwvEmfakyPeh38c6ZH+XKgvWp7uMYK28i9LbmZt2S3cn0JiXbmdvA3ZXgA6d4mm7NnPvmX9InGdkA2BmqwaiKDHSY/03wle9AfeIguSbZ/vVmRfsH5m0/5cg2J5oTFSd5PSuidZplT6D67RwUyySzL5KVLvB2j9U7gcY/MGZAzC7Gfg7qIeLhjERs0l6C0vBy/FYaf0jo1pjYH+zbq+MOX9ML6QqdqfYpQmwemsUiMvZmw9KCsKmRl4kFmOSZolT5QRt2sQDumqmxWo7nJBbkz5QovcYp748CUjkNWDmAUr6eYUl3k3PGYQ==;
  s=default; c=relaxed/relaxed; d=rt-thread.org; v=1; 
- bh=sGVPZ8gA5r2Nwvf5BhQZjT1d9gQGdKW8aQGO0W3CrmM=;
+ bh=OPeNH0YZQT3ge2lXtgrOwVZ7h5TGBUtzJOp/6Nywh3M=;
  h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=156.224.82.109;
- envelope-from=fanyihao@rt-thread.org; helo=mail-m82109.xmail.ntesmail.com
+Received-SPF: pass client-ip=156.224.83.244;
+ envelope-from=fanyihao@rt-thread.org; helo=mail-m83244.xmail.ntesmail.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,75 +72,105 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yihao Fan <fanyihao@rt-thread.org>
 
-This patch introduces a new QEMU machine type for the STM32F407 SoC featuring a Cortex-M4 core.
-This will be used by the RT-Spark to create a machine.
-Furthermore, I have updated the reusable USART, timer,
-and RCC drivers to align with the existing driver implementations.
+Add the Power supply configuration device to the stm32f407 SoC.
 
 Signed-off-by: Yihao Fan <fanyihao@rt-thread.org>
 ---
- MAINTAINERS                    |   7 ++
- hw/arm/Kconfig                 |   6 +
- hw/arm/meson.build             |   1 +
- hw/arm/stm32f407_soc.c         | 208 +++++++++++++++++++++++++++++++++
- include/hw/arm/stm32f407_soc.h |  74 ++++++++++++
- 5 files changed, 296 insertions(+)
- create mode 100644 hw/arm/stm32f407_soc.c
- create mode 100644 include/hw/arm/stm32f407_soc.h
+ docs/system/arm/stm32.rst       |   1 +
+ hw/arm/Kconfig                  |   1 +
+ hw/arm/stm32f407_soc.c          |   9 +++
+ hw/misc/Kconfig                 |   3 +
+ hw/misc/meson.build             |   1 +
+ hw/misc/stm32f4xx_pwr.c         | 111 ++++++++++++++++++++++++++++++++
+ include/hw/arm/stm32f407_soc.h  |   3 +
+ include/hw/misc/stm32f4xx_pwr.h |  40 ++++++++++++
+ 8 files changed, 169 insertions(+)
+ create mode 100644 hw/misc/stm32f4xx_pwr.c
+ create mode 100644 include/hw/misc/stm32f4xx_pwr.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 36eef27b419..ceef177740b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1163,6 +1163,13 @@ F: hw/misc/stm32f4xx_exti.c
- F: hw/misc/stm32_rcc.c
- F: include/hw/misc/stm32_rcc.h
+diff --git a/docs/system/arm/stm32.rst b/docs/system/arm/stm32.rst
+index 3f085eb35ee..c83276f6c12 100644
+--- a/docs/system/arm/stm32.rst
++++ b/docs/system/arm/stm32.rst
+@@ -38,6 +38,7 @@ Supported devices
+  * System configuration (SYSCFG)
+  * Timer controller (TIMER)
+  * Reset and Clock Controller (RCC) (STM32F4 only, reset and enable only)
++ * Power supply configuration (PWR) (STM32F4 only)
  
-+STM32F407
-+M: yanl1229 <yanl1229@rt-thread.org>
-+M: Yihao Fan <fanyihao@rt-thread.org>
-+L: qemu-arm@nongnu.org
-+S: Maintained
-+F: hw/arm/stm32f407_soc.c
-+
- Netduino 2
- M: Alistair Francis <alistair@alistair23.me>
- M: Peter Maydell <peter.maydell@linaro.org>
+ Missing devices
+ ---------------
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index b44b85f4361..bbf675c158c 100644
+index ddb2da45ae9..2c07220eb0b 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -406,6 +406,12 @@ config STM32F405_SOC
+@@ -417,6 +417,7 @@ config STM32F407_SOC
+     select ARM_V7M
      select STM32F4XX_SYSCFG
      select STM32F4XX_EXTI
++    select STM32F4XX_PWR
  
-+config STM32F407_SOC
-+    bool
-+    select ARM_V7M
-+    select STM32F4XX_SYSCFG
-+    select STM32F4XX_EXTI
-+
  config B_L475E_IOT01A
      bool
-     default y
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index b88b5b06d7e..1de2642620a 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -33,6 +33,7 @@ arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2
- arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
- arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
- arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32F407_SOC', if_true: files('stm32f407_soc.c'))
- arm_common_ss.add(when: 'CONFIG_B_L475E_IOT01A', if_true: files('b-l475e-iot01a.c'))
- arm_common_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_soc.c'))
- arm_common_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp.c', 'xlnx-zcu102.c'))
 diff --git a/hw/arm/stm32f407_soc.c b/hw/arm/stm32f407_soc.c
-new file mode 100644
-index 00000000000..8e20ddcd5b1
---- /dev/null
+index 8e20ddcd5b1..1512d922e5e 100644
+--- a/hw/arm/stm32f407_soc.c
 +++ b/hw/arm/stm32f407_soc.c
-@@ -0,0 +1,208 @@
+@@ -51,6 +51,7 @@ static void stm32f407_soc_initfn(Object *obj)
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32F4XX_SYSCFG);
+     object_initialize_child(obj, "exti", &s->exti, TYPE_STM32F4XX_EXTI);
+     object_initialize_child(obj, "rcc", &s->rcc, TYPE_STM32_RCC);
++    object_initialize_child(obj, "pwr", &s->pwr, TYPE_STM32F4XX_PWR);
+ 
+     for (i = 0; i < STM_NUM_USARTS; i++) {
+         object_initialize_child(obj, "usart[*]", &s->usart[i],
+@@ -183,6 +184,14 @@ static void stm32f407_soc_realize(DeviceState *dev_soc, Error **errp)
+         sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, timer_irq[i]));
+     }
+ 
++    /* PWR controller */
++    dev = DEVICE(&s->pwr);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pwr), errp)) {
++        return;
++    }
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_mmio_map(busdev, 0, PWR_BASE_ADDR);
++
+ }
+ 
+ static void stm32f407_soc_class_init(ObjectClass *klass, void *data)
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 4e35657468b..ff4dc58b4d3 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -108,6 +108,9 @@ config STM32F4XX_SYSCFG
+ config STM32F4XX_EXTI
+     bool
+ 
++config STM32F4XX_PWR
++    bool
++
+ config STM32L4X5_EXTI
+     bool
+ 
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index b1d8d8e5d2a..0e0f5c3a275 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -112,6 +112,7 @@ system_ss.add(when: 'CONFIG_STM32_RCC', if_true: files('stm32_rcc.c'))
+ system_ss.add(when: 'CONFIG_STM32F2XX_SYSCFG', if_true: files('stm32f2xx_syscfg.c'))
+ system_ss.add(when: 'CONFIG_STM32F4XX_SYSCFG', if_true: files('stm32f4xx_syscfg.c'))
+ system_ss.add(when: 'CONFIG_STM32F4XX_EXTI', if_true: files('stm32f4xx_exti.c'))
++system_ss.add(when: 'CONFIG_STM32F4XX_PWR', if_true: files('stm32f4xx_pwr.c'))
+ system_ss.add(when: 'CONFIG_STM32L4X5_EXTI', if_true: files('stm32l4x5_exti.c'))
+ system_ss.add(when: 'CONFIG_STM32L4X5_SYSCFG', if_true: files('stm32l4x5_syscfg.c'))
+ system_ss.add(when: 'CONFIG_STM32L4X5_RCC', if_true: files('stm32l4x5_rcc.c'))
+diff --git a/hw/misc/stm32f4xx_pwr.c b/hw/misc/stm32f4xx_pwr.c
+new file mode 100644
+index 00000000000..83ce0e6a0a9
+--- /dev/null
++++ b/hw/misc/stm32f4xx_pwr.c
+@@ -0,0 +1,111 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
 +/*
@@ -151,209 +182,140 @@ index 00000000000..8e20ddcd5b1
 +
 +#include "qemu/osdep.h"
 +#include "qapi/error.h"
-+#include "system/address-spaces.h"
-+#include "system/system.h"
-+#include "hw/arm/stm32f407_soc.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/misc/unimp.h"
-+#include "hw/sd/sd.h"
-+#include "hw/boards.h"
-+#include "qom/object.h"
++#include "qemu/log.h"
++#include "hw/misc/stm32f4xx_pwr.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "qemu/module.h"
++#include "migration/vmstate.h"
++#include "qemu/module.h"
 +
-+static const uint32_t syscfg_addr = 0x40013800;
-+static const uint32_t exti_addr = 0x40013C00;
-+static const uint32_t usart_addr[STM_NUM_USARTS] = {
-+    STM32F407_USART1, STM32F407_USART2, STM32F407_USART3,
-+    STM32F407_USART6
-+};
-+/* At the moment only Timer 2 to 5 are modelled */
-+static const uint32_t timer_addr[STM_NUM_TIMERS] = {
-+    STM32F407_TIM2, STM32F407_TIM3, STM32F407_TIM4,
-+    STM32F407_TIM5
-+};
-+static const int syscfg_irq = 71;
-+static const int exti_irq[] = {
-+    6, 7, 8, 9, 10, 23, 23, 23, 23, 23, 40,
-+    40, 40, 40, 40, 40
-+};
-+static const int usart_irq[STM_NUM_USARTS] = {
-+    37, 38, 39, 71
-+};
-+static const int timer_irq[STM_NUM_TIMERS] = {
-+    28, 29, 30, 50
-+};
++#ifndef STM32F4XX_PWR_DEBUG
++#define STM32F4XX_PWR_DEBUG 0
++#endif
 +
-+static void stm32f407_soc_initfn(Object *obj)
++#define DB_PRINT_L(lvl, fmt, args...) do { \
++    if (STM32F4XX_PWR_DEBUG >= lvl) { \
++        qemu_log("%s: " fmt, __func__, ## args); \
++    } \
++} while (0);
++
++#define DB_PRINT(fmt, args...) DB_PRINT_L(1, fmt, ## args)
++
++static uint64_t stm32f4xx_pwr_read(void *opaque, hwaddr offset, unsigned size)
 +{
-+    int i;
++    STM32F4XXPwrState *s = opaque;
 +
-+    STM32F407State *s = STM32F407_SOC(obj);
-+
-+    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
-+    object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32F4XX_SYSCFG);
-+    object_initialize_child(obj, "exti", &s->exti, TYPE_STM32F4XX_EXTI);
-+    object_initialize_child(obj, "rcc", &s->rcc, TYPE_STM32_RCC);
-+
-+    for (i = 0; i < STM_NUM_USARTS; i++) {
-+        object_initialize_child(obj, "usart[*]", &s->usart[i],
-+                                TYPE_STM32F2XX_USART);
++    switch (offset) {
++    case PWR_CR:
++        return s->pwr_cr;
++    case PWR_CSR:
++        return s->pwr_csr;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "STM32F4XX PWR: Bad read offset 0x%lx\n", offset);
++        return 0;
 +    }
-+
-+    for (i = 0; i < STM_NUM_TIMERS; i++) {
-+        object_initialize_child(obj, "timer[*]", &s->timer[i],
-+                                TYPE_STM32F2XX_TIMER);
-+    }
-+
-+    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-+    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
 +}
 +
-+static void stm32f407_soc_realize(DeviceState *dev_soc, Error **errp)
++static void stm32f4xx_pwr_write(void *opaque, hwaddr offset, uint64_t value, unsigned size)
 +{
-+    STM32F407State *s = STM32F407_SOC(dev_soc);
-+    DeviceState *dev, *armv7m;
-+    SysBusDevice *busdev;
-+    DriveInfo *dinfo;
-+    int i, j;
++    STM32F4XXPwrState *s = opaque;
 +
-+    MemoryRegion *system_memory = get_system_memory();
-+
-+    /*
-+     * We use s->refclk internally and only define it with qdev_init_clock_in()
-+     * so it is correctly parented and not leaked on an init/deinit; it is not
-+     * intended as an externally exposed clock.
-+     */
-+    if (clock_has_source(s->refclk)) {
-+        error_setg(errp, "refclk clock must not be wired up by the board code");
-+        return;
++    switch (offset) {
++    case PWR_CR:
++        s->pwr_cr = value;
++        if (value & PWR_CR_ODEN)
++            s->pwr_csr |= PWR_CSR_ODRDY;
++        if (value & PWR_CR_ODSWEN)
++            s->pwr_csr |= PWR_CSR_ODSWRDY;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "STM32F4XX PWR: Bad write offset 0x%lx\n", offset);
++        break;
 +    }
-+
-+    if (!clock_has_source(s->sysclk)) {
-+        error_setg(errp, "sysclk clock must be wired up by the board code");
-+        return;
-+    }
-+
-+    /*
-+     * TODO: ideally we should model the SoC RCC and its ability to
-+     * change the sysclk frequency and define different sysclk sources.
-+     */
-+
-+    /* The refclk always runs at frequency HCLK / 8 */
-+    clock_set_mul_div(s->refclk, 8, 1);
-+    clock_set_source(s->refclk, s->sysclk);
-+
-+    memory_region_init_rom(&s->flash, OBJECT(dev_soc), "STM32F407.flash",
-+                           FLASH_SIZE, &error_fatal);
-+    memory_region_init_alias(&s->flash_alias, OBJECT(dev_soc),
-+                             "STM32F407.flash.alias", &s->flash, 0, FLASH_SIZE);
-+
-+    memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
-+    memory_region_add_subregion(system_memory, 0, &s->flash_alias);
-+
-+    memory_region_init_ram(&s->sram, NULL, "STM32F407.sram", SRAM_SIZE,
-+                           &error_fatal);
-+    memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
-+
-+    memory_region_init_ram(&s->ccm, NULL, "STM32F407.ccm", CCM_SIZE,
-+                           &error_fatal);
-+    memory_region_add_subregion(system_memory, CCM_BASE_ADDRESS, &s->ccm);
-+
-+    armv7m = DEVICE(&s->armv7m);
-+    qdev_prop_set_uint32(armv7m, "num-irq", 98);
-+    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
-+    qdev_prop_set_bit(armv7m, "enable-bitband", true);
-+    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-+    qdev_connect_clock_in(armv7m, "refclk", s->refclk);
-+    object_property_set_link(OBJECT(&s->armv7m), "memory",
-+                             OBJECT(system_memory), &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
-+        return;
-+    }
-+
-+    /* Reset and clock controller */
-+    dev = DEVICE(&s->rcc);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rcc), errp)) {
-+        return;
-+    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_mmio_map(busdev, 0, RCC_BASE_ADDR);
-+
-+    /* System configuration controller */
-+    dev = DEVICE(&s->syscfg);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->syscfg), errp)) {
-+        return;
-+    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_mmio_map(busdev, 0, syscfg_addr);
-+    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, syscfg_irq));
-+
-+    /* EXTI device */
-+    dev = DEVICE(&s->exti);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->exti), errp)) {
-+        return;
-+    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_mmio_map(busdev, 0, exti_addr);
-+    for (i = 0; i < 16; i++) {
-+        sysbus_connect_irq(busdev, i, qdev_get_gpio_in(armv7m, exti_irq[i]));
-+    }
-+    for (i = 0; i < 16; i++) {
-+        qdev_connect_gpio_out(DEVICE(&s->syscfg), i, qdev_get_gpio_in(dev, i));
-+    }
-+
-+    /* Attach UART (uses USART registers) and USART controllers */
-+    for (i = 0; i < STM_NUM_USARTS; i++) {
-+        dev = DEVICE(&(s->usart[i]));
-+        qdev_prop_set_chr(dev, "chardev", serial_hd(i));
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usart[i]), errp)) {
-+            return;
-+        }
-+        busdev = SYS_BUS_DEVICE(dev);
-+        sysbus_mmio_map(busdev, 0, usart_addr[i]);
-+        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, usart_irq[i]));
-+    }
-+
-+    /* Timer 2 to 5 contoller */
-+    for (i = 0; i < STM_NUM_TIMERS; i++) {
-+        dev = DEVICE(&(s->timer[i]));
-+        qdev_prop_set_uint64(dev, "clock-frequency", 1000000000);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->timer[i]), errp)) {
-+            return;
-+        }
-+        busdev = SYS_BUS_DEVICE(dev);
-+        sysbus_mmio_map(busdev, 0, timer_addr[i]);
-+        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, timer_irq[i]));
-+    }
-+
 +}
 +
-+static void stm32f407_soc_class_init(ObjectClass *klass, void *data)
++static const MemoryRegionOps stm32f4xx_pwr_ops = {
++    .read = stm32f4xx_pwr_read,
++    .write = stm32f4xx_pwr_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void stm32f4xx_pwr_init(Object *obj)
++{
++    STM32F4XXPwrState *s = STM32F4XX_PWR(obj);
++
++    memory_region_init_io(&s->mmio, obj, &stm32f4xx_pwr_ops, s, TYPE_STM32F4XX_PWR, 0x400);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++}
++
++static void stm32f4xx_pwr_reset(DeviceState *dev)
++{
++    STM32F4XXPwrState *s = STM32F4XX_PWR(dev);
++
++    s->pwr_cr  = 0x0000;
++    s->pwr_csr = 0x0000;
++}
++
++static void stm32f4xx_pwr_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->realize = stm32f407_soc_realize;
++    device_class_set_legacy_reset(dc, stm32f4xx_pwr_reset);
 +}
 +
-+static const TypeInfo stm32f407_soc_info = {
-+    .name          = TYPE_STM32F407_SOC,
++static const TypeInfo stm32f4xx_pwr_info = {
++    .name          = TYPE_STM32F4XX_PWR,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(STM32F407State),
-+    .instance_init = stm32f407_soc_initfn,
-+    .class_init    = stm32f407_soc_class_init,
++    .instance_size = sizeof(STM32F4XXPwrState),
++    .instance_init = stm32f4xx_pwr_init,
++    .class_init    = stm32f4xx_pwr_class_init,
 +};
 +
-+static void stm32f407_soc_types(void)
++static void stm32f4xx_pwr_register_types(void)
 +{
-+    type_register_static(&stm32f407_soc_info);
++    type_register_static(&stm32f4xx_pwr_info);
 +}
 +
-+type_init(stm32f407_soc_types)
++type_init(stm32f4xx_pwr_register_types)
 diff --git a/include/hw/arm/stm32f407_soc.h b/include/hw/arm/stm32f407_soc.h
-new file mode 100644
-index 00000000000..3497e91aa1c
---- /dev/null
+index 3497e91aa1c..f7e39ffaceb 100644
+--- a/include/hw/arm/stm32f407_soc.h
 +++ b/include/hw/arm/stm32f407_soc.h
-@@ -0,0 +1,74 @@
+@@ -17,6 +17,7 @@
+ #include "hw/char/stm32f2xx_usart.h"
+ #include "hw/timer/stm32f2xx_timer.h"
+ #include "hw/misc/stm32_rcc.h"
++#include "hw/misc/stm32f4xx_pwr.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_STM32F407_SOC "stm32f407-soc"
+@@ -39,6 +40,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(STM32F407State, STM32F407_SOC)
+ #define SYSCFG_BASE_ADDRESS 0x40013800
+ #define SYSCFG_IRQ  71
+ #define EXIT_BASE_ADDRESS 0x40013C00
++#define PWR_BASE_ADDR       0x40007000
+ 
+ #define FLASH_BASE_ADDRESS  0x8000000
+ #define FLASH_SIZE          0x100000
+@@ -57,6 +59,7 @@ typedef struct STM32F407State {
+     STM32RccState rcc;
+     STM32F4xxSyscfgState syscfg;
+     STM32F4xxExtiState exti;
++    STM32F4XXPwrState pwr;
+     STM32F2XXUsartState usart[STM_NUM_USARTS];
+     STM32F2XXTimerState timer[STM_NUM_TIMERS];
+ 
+diff --git a/include/hw/misc/stm32f4xx_pwr.h b/include/hw/misc/stm32f4xx_pwr.h
+new file mode 100644
+index 00000000000..889fbc26ab0
+--- /dev/null
++++ b/include/hw/misc/stm32f4xx_pwr.h
+@@ -0,0 +1,40 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
 +/*
@@ -363,69 +325,35 @@ index 00000000000..3497e91aa1c
 + * https://www.st.com/en/microcontrollers-microprocessors/stm32f407-417/documentation.html
 + */
 +
-+#ifndef STM32F407_SOC_H
-+#define STM32F407_SOC_H
++#ifndef STM32F4XX_PWR_H
++#define STM32F4XX_PWR_H
 +
-+#include "hw/or-irq.h"
-+#include "hw/arm/armv7m.h"
-+#include "hw/misc/stm32f4xx_syscfg.h"
-+#include "hw/misc/stm32f4xx_exti.h"
-+#include "hw/char/stm32f2xx_usart.h"
-+#include "hw/timer/stm32f2xx_timer.h"
-+#include "hw/misc/stm32_rcc.h"
++#include "hw/sysbus.h"
 +#include "qom/object.h"
 +
-+#define TYPE_STM32F407_SOC "stm32f407-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(STM32F407State, STM32F407_SOC)
++#define PWR_CR      0x00
++#define PWR_CSR     0x04
 +
-+#define STM_NUM_USARTS      4
-+#define STM32F407_USART1    0x40011000
-+#define STM32F407_USART2    0x40004400
-+#define STM32F407_USART3    0x40004800
-+#define STM32F407_USART6    0x40011400
++#define PWR_CR_DBP      (1 << 8)
++#define PWR_CR_ODEN     (1 << 16)
++#define PWR_CR_ODSWEN   (1 << 17)
 +
-+#define STM_NUM_TIMERS      4
-+#define STM32F407_TIM1      0x40010000
-+#define STM32F407_TIM2      0x40000000
-+#define STM32F407_TIM3      0x40000400
-+#define STM32F407_TIM4      0x40000800
-+#define STM32F407_TIM5      0x40000c00
++#define PWR_CSR_ODRDY   (1 << 16)
++#define PWR_CSR_ODSWRDY (1 << 17)
 +
-+#define RCC_BASE_ADDR       0x40023800
-+#define SYSCFG_BASE_ADDRESS 0x40013800
-+#define SYSCFG_IRQ  71
-+#define EXIT_BASE_ADDRESS 0x40013C00
++#define TYPE_STM32F4XX_PWR "stm32f4xx-pwr"
++OBJECT_DECLARE_SIMPLE_TYPE(STM32F4XXPwrState, STM32F4XX_PWR)
 +
-+#define FLASH_BASE_ADDRESS  0x8000000
-+#define FLASH_SIZE          0x100000
-+#define SRAM_BASE_ADDRESS   0x20000000
-+#define SRAM_SIZE           (192 * 1024)
-+#define CCM_BASE_ADDRESS    0x10000000
-+#define CCM_SIZE            (64 * 1024)
-+
-+typedef struct STM32F407State {
-+    /*< private >*/
++struct STM32F4XXPwrState {
++    /* <private> */
 +    SysBusDevice parent_obj;
-+    /*< public >*/
 +
-+    ARMv7MState armv7m;
++    /* <public> */
++    MemoryRegion mmio;
 +
-+    STM32RccState rcc;
-+    STM32F4xxSyscfgState syscfg;
-+    STM32F4xxExtiState exti;
-+    STM32F2XXUsartState usart[STM_NUM_USARTS];
-+    STM32F2XXTimerState timer[STM_NUM_TIMERS];
-+
-+    MemoryRegion ccm;
-+    MemoryRegion sram;
-+    MemoryRegion flash;
-+    MemoryRegion flash_alias;
-+
-+    Clock *sysclk;
-+    Clock *refclk;
-+
-+
-+} STM32F407State;
++    uint32_t pwr_cr;
++    uint32_t pwr_csr;
++};
 +
 +#endif
 -- 
