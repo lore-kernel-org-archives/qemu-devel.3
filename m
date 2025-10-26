@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA7BCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 00:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 967D8CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 05:51:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCokr-0000to-5n; Sat, 25 Oct 2025 20:37:05 -0400
+	id 1vCtdh-0007pg-Aq; Sun, 26 Oct 2025 01:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vCokp-0000tX-Jm
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 20:37:03 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1vCtdc-0007p7-TV
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 01:49:56 -0400
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vCokn-0000qZ-LW
- for qemu-devel@nongnu.org; Sat, 25 Oct 2025 20:37:03 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-27d3540a43fso35048885ad.3
- for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 17:37:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1vCtda-0006nM-TK
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 01:49:56 -0400
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-430db938c09so1874035ab.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Oct 2025 22:49:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761439017; x=1762043817; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y/zbNch+hHTr4ko2O/nzCx6Er5hyTQ8TC5nOt8MbHa0=;
- b=kqMgwSGB8TVI39w0N+SlKaxrwXYGT48bcVOytmoPKqQwzMuxwBafL9YfKY/zsyAYGA
- beki/eRzOTp8rRbiQSoOhcoeIpvTbuWVQjRFts8N6swtpEBPQZ3U39Ob5lVmjxrgE5Bb
- 1mITB+VNDw+RThKnr7MCU1lDIQmwmHrEtoKLsjpf0df35rbjKEbPbQT7iCDbEedkUTru
- GAL9PTv2/hafJuKmDMRx2vBGMNoTCCW+1WQKxAB6Lj+nQ1gKqKSUDq23oWPUfEya4PS7
- G4sCK8rSmIgslbdSVWzUOX9Z5pUVUuw9awlZ/8aDmBY+vgjcvPGVXlIaSlvj2oShEfHF
- DyIA==
+ d=gmail.com; s=20230601; t=1761457793; x=1762062593; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qeFPa1/Zflh4e7Htf5toZtXK8LIFeSL3rmsgxzDgbDU=;
+ b=l2VKflYaaUDMC3KTaNoyqyKIQL3zSdfJ3ApgW35LBv3L4ZlZYngIuFQAKhbo7hVk4v
+ BxumvOxNiRfsZqY1Ax4M/pBvyJPIBxQOFxcl5K3eFESHMdjeWDliEx0hk2yXpPDiOdAm
+ Xf8eKvxWI/AjyfU8BiM+tt5nyUSwMazm4PC3Ln54ylxcUhkiIuEBWHcM1waRD846XjkR
+ dCafXebWVDky2KJjwo61SVNTyqxNr2nqX7p0anoBQbmIEFh28biV1RcFh09YH88GpWyA
+ 0kW5QQhoRTRE24N6xFdn7nlWcODI4MoUg+YXsP7OLLwN4+aja9GdaNq6DFZsdeFa4PMw
+ /71w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761439017; x=1762043817;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y/zbNch+hHTr4ko2O/nzCx6Er5hyTQ8TC5nOt8MbHa0=;
- b=j83n6OXONnaN1Bx+8oZGgL9kaR/PaZ7BzcchtU3OYTrIpNW6DVevQla/IkbTdLvX0F
- HNUEFluEumRH6lJe1JQVh8sx2HkwtvEbX8XEeY3aeS/GRiGsmljUOf2EMMjdB8pwDt6h
- oKZaEPotH/otUUyJ9et1xiobjGVY9szTOs5+a719XeJCdHDR0zc53v+npfCAo+EOpDFT
- ByYp9PUEhgVkYzgn5MzQGZnp5pxMnwOVuIEtkfcTa07yNKw2MsW/BErQ7Yo9C0ODexix
- fH812TnmbmDDhQkrEkvfhMWKDTaVgRTQdw88ZMbOjgDrpu7yfX9+xNh5J1r4zJjnQeTJ
- EnxQ==
-X-Gm-Message-State: AOJu0Yyin1nhDbq62snMOQOGUpNSEReZqqCSKrexgO3ErUsahoRom9uA
- VQqKZvBqBPDreQyVqiJ9vcYrSvYl8dWP2Dd5V7taaaIdnC/27bbk66uulaIlEM2S9tE=
-X-Gm-Gg: ASbGnctPEWebDnSHFabAf21IMuFVSCmZnwoQBzdTgRZf95z/3Nc51Zl8CHYou4q4PLR
- q7d5MbVCOvDAcWitEQlLFYHyNNO04dyeFv0ZwIna9nGojXwEYBO8KFje/Z7v0RKSQNyQ260dQqP
- JXxqLgSJIarZyCod6e5FBZAzxQdjIZgLJ4jid+zvbvY8QNldIMjie02d6hADcDyemmGahtvKLOp
- pMYzLlPm7JGw9+3e6zbBJAO7kQO4q5flIegW7nyEDv7QyEGyyqo5xlqVBqvtw9AFbLL4lvBALzA
- xKBrEcaWtDnCDQ95nR2zseTF2Rtk9isGMaFjF0XbhEmttiHfNf2hQrB7zKkuh7cP7dtZwCsHle0
- YitKiMJYz+B7/hZgnBPbJXGdpRh0aJp2HLHGGy2FvFL9Ert/d+/gqoYCYqJJy+6+MJsLan82sth
- 3ErODGFtgSeUuG
-X-Google-Smtp-Source: AGHT+IGilCZdpWMe1PnDZBrkhmuVtYevTJmLppOP6O3jXiOOT+CnpFmuqReTkh3PZEHMFlqR2oSCMw==
-X-Received: by 2002:a17:902:c942:b0:26a:8171:daf7 with SMTP id
- d9443c01a7336-290c9cbc096mr57387485ad.16.1761439017491; 
- Sat, 25 Oct 2025 17:36:57 -0700 (PDT)
-Received: from [192.168.68.110] ([189.38.141.22])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29498cf3bbcsm34821945ad.15.2025.10.25.17.36.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Oct 2025 17:36:57 -0700 (PDT)
-Message-ID: <c01b9130-e706-4f56-b67a-653130f7ee01@ventanamicro.com>
-Date: Sat, 25 Oct 2025 21:36:51 -0300
+ d=1e100.net; s=20230601; t=1761457793; x=1762062593;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qeFPa1/Zflh4e7Htf5toZtXK8LIFeSL3rmsgxzDgbDU=;
+ b=JJOonRJ4F/SRUiyAK39kGROjff1NMsAOeZ4gPmOi8NIemiVkOPAXbnuI0V48FoZ1uU
+ akmBQokP0SU/2RwxESLgmSVmnh+2i7FdLAHGug2C0JXy+kbkKpQnQAiXiKGXkjlFGXWz
+ HogfvfJgFGunmdidY0ZVdN4kO04pq3+M0u4P072SBvpU13xqoNKp55zyAkmgBDsYZyRZ
+ 5f5909JraqyXf4avIPhSa7s2nljDJ3V8pMz4LPx4Ijs7NRE8g2fncGfIvlR4STq3tWcn
+ YpADs6y5lDvHl9Qbs4EjBp+V0+JRVGz97POJt//fzZm9KDwGNEii4f7Ph2cqqyHFGx7H
+ 0X9g==
+X-Gm-Message-State: AOJu0YzeV0+GQJlK+XzN1HHp6eZYZLi8MHOpil5QJp186oNsEYVLSECA
+ 0DyajG2ct1kSb9ckqI8LvnbCgaSH3XMjLM6MzuYwo7VP6vMrSWWE26um/ARnQmFw4HJRi9N3TPH
+ kXUjbVEUy0qX+J0zZoldspBVoML1GedQ=
+X-Gm-Gg: ASbGnctbnBtvEY1Qa4DEoTvPYa2kWI+Shbw/SPer+nuKaTnmyx/1xDajRCD9RdHPlC6
+ tX9/XHk0h7CwXHFUAtxxSKTC8r2/9zmDR1UcLbHqm9pRYiPOKwspXADJlc87UrrpEbnAtBL0sJk
+ LXHlGTaV+Zr2HCv+TYQWWaLNrpFzmc+fCKRG0utBdA/66d1fRXPtlOoAiEQF0//IOXcv41puPis
+ mmrr7G8XA7H9HJ5HNSSd2LTGvZNBzJvtYusePKBZC8omB7AMp1jiBQfubPJXQNDFhNQlFFWoqe/
+ S+priEsIav+OUDwa1Za69y8Q1pYkZA==
+X-Google-Smtp-Source: AGHT+IGvlwbVGDWgQ7898L+OV3wnvGvNBbKHpnPfPFrLFuvX6gjaRicdN4LZsYGxj/SOyI86qrw12akFQOcGrGEo6OI=
+X-Received: by 2002:a05:6e02:214f:b0:431:da8d:b40 with SMTP id
+ e9e14a558f8ab-431da8d0e94mr64203445ab.4.1761457792581; Sat, 25 Oct 2025
+ 22:49:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 47/56] target/riscv/kvm: add scounteren CSR
-To: Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell
- <peter.maydell@linaro.org>, alistair23@gmail.com
-Cc: qemu-devel@nongnu.org, Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250519040555.3797167-1-alistair.francis@wdc.com>
- <20250519040555.3797167-48-alistair.francis@wdc.com>
- <CAFEAcA_6zma2=nsBWB7ebb35Jt1cNAChiMG0xnkT3WPEY8csiw@mail.gmail.com>
- <f9c1c814-c083-4c9b-831c-4cd5ce162002@ventanamicro.com>
- <7fe9bec3-43f5-4d28-9efa-5d499335baf8@tls.msk.ru>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <7fe9bec3-43f5-4d28-9efa-5d499335baf8@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
+ <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
+In-Reply-To: <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
+From: Yogesh Vyas <yvyas1991@gmail.com>
+Date: Sun, 26 Oct 2025 11:19:41 +0530
+X-Gm-Features: AWmQ_bnJC5hZ7Xx632IXaVcrVs0i8gYl-JPQEoX4pUIIs6kAjlY511UDHXdms1U
+Message-ID: <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="00000000000003830b0642095a57"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=yvyas1991@gmail.com; helo=mail-il1-x131.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,95 +98,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--00000000000003830b0642095a57
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Oct 19, 2025 at 5:37=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
+ wrote:
+
+> On Sun, 19 Oct 2025, Yogesh Vyas wrote:
+> > When I run QEMU with the ROM option, the machine boots successfully wit=
+h
+> > the below command:
+> >
+> > qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \
+> >                  -cdrom debian-8.11.0-powerpc-netinst.iso \
+> >                  -device VGA,romfile=3D"" -serial stdio
+> >
+> > However, when I try to boot the machine without the ROM using VOF, the
+> > machine does not come up and no logs appear on stdout:
+> >
+> > qemu-system-ppc64 -machine pegasos2 -serial stdio \
+> >                  -kernel vmlinuz-chrp.initrd -append "---" \
+> >                  -cdrom debian-8.11.0-powerpc-netinst.iso
+> >
+> > Please let me know if I am missing any parameters or setup required for
+> > booting via VOF on Pegasos2.
+> >
+> > Documentation referred: qemu/docs/system/ppc/amigang.rst
+>
+> Maybe you did not use the right vmlinuz-chrp.initrd. Pegasos2 is a 32 bit
+> machine so you need /install/powerpc/vmlinuz-chrp.initrd for it (see in
+> the /install/pegasos script that is used with firmware). Even if you call
+> it from qemu-system-ppc64 which includes both 32 bit and 64 bit machines
+> but does not make 32 bit machines 64 bit so you still need the 32 bit OS.
+>
+>
+Hi Balaton,
+I am using 32bit images only and looks like VOF boot works with the distro
+provided Qemu (both ppc and pp64), however doesn't work with upstream Qemu
+for VOF.
+
+yogi@fedora:~/work/images$ file vmlinuz-chrp.initrd
+vmlinuz-chrp.initrd: ELF 32-bit MSB executable, PowerPC or cisco 4500,
+version 1 (SYSV), statically linked, not stripped
+
+yogi@fedora:~/work/images$ file debian-8.11.0-powerpc-netinst.iso
+debian-8.11.0-powerpc-netinst.iso: ISO 9660 CD-ROM filesystem data (DOS/MBR
+boot sector) 'Debian 8.11.0 ppc 1'
+
+Qemu distro version:
+yogi@fedora:~/work/images$ qemu-system-ppc --version
+QEMU emulator version 9.2.4 (qemu-9.2.4-2.fc42)
+Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
+yogi@fedora:~/work/images$ qemu-system-ppc64 --version
+QEMU emulator version 9.2.4 (qemu-9.2.4-2.fc42)
+Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
+
+When using upstream Qemu (both ppc and pp64) with VOF it just gets stuck
+with no console output. Am I missing something?
+
+I also tried applying the patches from
+https://lore.kernel.org/qemu-devel/cover.1761346145.git.balaton@eik.bme.hu/=
+T/#t
+but still the same issue.
+
+Regards,
+Yogesh
 
 
-On 10/25/25 1:45 PM, Michael Tokarev wrote:
-> On 10/24/25 19:17, Daniel Henrique Barboza wrote:
->>
->>
->> On 10/24/25 10:43 AM, Peter Maydell wrote:
->>> On Mon, 19 May 2025 at 05:25, <alistair23@gmail.com> wrote:
->>>>
->>>> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>>
->>>> Add support for the scounteren KVM CSR. Note that env->scounteren is a
->>>> 32 bit and all KVM CSRs are target_ulong, so scounteren will be capped
->>>> to 32 bits read/writes.
->>>>
->>>> Reported-by: Andrew Jones <ajones@ventanamicro.com>
->>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
->>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->>>> Message-ID: <20250429124421.223883-10-dbarboza@ventanamicro.com>
->>>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
->>>> ---
->>>>   target/riscv/kvm/kvm-cpu.c | 2 ++
->>>>   1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
->>>> index ca171d5457..82f9728636 100644
->>>> --- a/target/riscv/kvm/kvm-cpu.c
->>>> +++ b/target/riscv/kvm/kvm-cpu.c
->>>> @@ -251,6 +251,7 @@ static KVMCPUConfig kvm_csr_cfgs[] = {
->>>>       KVM_CSR_CFG("stval",      stval,      RISCV_CSR_REG(stval)),
->>>>       KVM_CSR_CFG("sip",        mip,        RISCV_CSR_REG(sip)),
->>>>       KVM_CSR_CFG("satp",       satp,       RISCV_CSR_REG(satp)),
->>>> +    KVM_CSR_CFG("scounteren", scounteren, RISCV_CSR_REG(scounteren)),
->>>>       KVM_CSR_CFG("senvcfg",    senvcfg,    RISCV_CSR_REG(senvcfg)),
->>>>   };
->>>>
->>>> @@ -701,6 +702,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
->>>>       env->stval = 0;
->>>>       env->mip = 0;
->>>>       env->satp = 0;
->>>> +    env->scounteren = 0;
->>>>       env->senvcfg = 0;
->>>>   }
->>>
->>> Hi -- this came up in a conversation on IRC. Does this new
->>> CPU state field need migration support adding in machine.c ?
->>
->>
->> Hmm, I believe it already has, doesn't it?
->>
->> target/riscv/machine.c:
->>
->>
->> const VMStateDescription vmstate_riscv_cpu = {
->>      .name = "cpu",
->>      .version_id = 10,
->>      .minimum_version_id = 10,
->>      .post_load = riscv_cpu_post_load,
->>      .fields = (const VMStateField[]) {
->>          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
->> (...)
->>         VMSTATE_UINT32(env.scounteren, RISCVCPU),  <-------
->>
->>
->> Or are you referring to something else like post_load callbacks and so on? Thanks,
-> 
-> In this case, can or should this change be picked up for
-> qemu-stable (in this case, 10.0.x)?
-> 
-> Not that it's hugely important, but some subsequent patches
-> in this area would apply cleanly if I'll pick this one and
-> also senvcfg one (86b8c3821496).
 
-Go ahead, but to pick those you'll need to also pick these:
+> Regards,
+> BALATON Zoltan
+>
 
-[PULL 44/56] target/riscv/kvm: do not read unavailable CSRs
+--00000000000003830b0642095a57
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-[PULL 46/56] target/riscv/kvm: read/write KVM regs via env size
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Oct 19,=
+ 2025 at 5:37=E2=80=AFPM BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.b=
+me.hu">balaton@eik.bme.hu</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">On Sun, 19 Oct 2025, Yogesh Vyas wrote:<br>
+&gt; When I run QEMU with the ROM option, the machine boots successfully wi=
+th<br>
+&gt; the below command:<br>
+&gt;<br>
+&gt; qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -cdrom d=
+ebian-8.11.0-powerpc-netinst.iso \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -device =
+VGA,romfile=3D&quot;&quot; -serial stdio<br>
+&gt;<br>
+&gt; However, when I try to boot the machine without the ROM using VOF, the=
+<br>
+&gt; machine does not come up and no logs appear on stdout:<br>
+&gt;<br>
+&gt; qemu-system-ppc64 -machine pegasos2 -serial stdio \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -kernel =
+vmlinuz-chrp.initrd -append &quot;---&quot; \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -cdrom d=
+ebian-8.11.0-powerpc-netinst.iso<br>
+&gt;<br>
+&gt; Please let me know if I am missing any parameters or setup required fo=
+r<br>
+&gt; booting via VOF on Pegasos2.<br>
+&gt;<br>
+&gt; Documentation referred: qemu/docs/system/ppc/amigang.rst<br>
+<br>
+Maybe you did not use the right vmlinuz-chrp.initrd. Pegasos2 is a 32 bit <=
+br>
+machine so you need /install/powerpc/vmlinuz-chrp.initrd for it (see in <br=
+>
+the /install/pegasos script that is used with firmware). Even if you call <=
+br>
+it from qemu-system-ppc64 which includes both 32 bit and 64 bit machines <b=
+r>
+but does not make 32 bit machines 64 bit so you still need the 32 bit OS.<b=
+r>
+<br></blockquote><div><br></div><div>Hi Balaton,</div><div>I am using 32bit=
+=C2=A0images only and looks like VOF boot works with the distro provided Qe=
+mu (both ppc and pp64), however doesn&#39;t work with upstream Qemu for VOF=
+.</div><div><br></div><div>yogi@fedora:~/work/images$ file vmlinuz-chrp.ini=
+trd<br>vmlinuz-chrp.initrd: ELF 32-bit MSB executable, PowerPC or cisco 450=
+0, version 1 (SYSV), statically linked, not stripped</div><div><br></div><d=
+iv>yogi@fedora:~/work/images$ file debian-8.11.0-powerpc-netinst.iso <br>de=
+bian-8.11.0-powerpc-netinst.iso: ISO 9660 CD-ROM filesystem data (DOS/MBR b=
+oot sector) &#39;Debian 8.11.0 ppc 1&#39;</div><div><br></div><div>Qemu dis=
+tro version:=C2=A0</div><div>yogi@fedora:~/work/images$ qemu-system-ppc --v=
+ersion<br>QEMU emulator version 9.2.4 (qemu-9.2.4-2.fc42)<br>Copyright (c) =
+2003-2024 Fabrice Bellard and the QEMU Project developers<br>yogi@fedora:~/=
+work/images$ qemu-system-ppc64 --version<br>QEMU emulator version 9.2.4 (qe=
+mu-9.2.4-2.fc42)<br>Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Pr=
+oject developers</div><div><br></div><div>When using upstream Qemu (both pp=
+c and pp64) with VOF it just gets stuck with no console=C2=A0output. Am I m=
+issing something?</div><div><br></div><div>I also tried applying the patche=
+s from=C2=A0<a href=3D"https://lore.kernel.org/qemu-devel/cover.1761346145.=
+git.balaton@eik.bme.hu/T/#t">https://lore.kernel.org/qemu-devel/cover.17613=
+46145.git.balaton@eik.bme.hu/T/#t</a> but still the same issue.</div><div><=
+br></div><div>Regards,</div><div>Yogesh</div><div><br></div><div>=C2=A0</di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">
+Regards,<br>
+BALATON Zoltan<br>
+</blockquote></div></div>
 
-Otherwise you might introduce bugs. Thanks,
-
-
-Daniel
-
-
-> 
-> Thanks,
-> 
-> /mjt
-
+--00000000000003830b0642095a57--
 
