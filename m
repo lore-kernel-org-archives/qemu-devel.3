@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E1BCCD193
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 11:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC09CCD193
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 11:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vCydQ-0002mK-Jz; Sun, 26 Oct 2025 07:10:04 -0400
+	id 1vCyeM-0003Fq-60; Sun, 26 Oct 2025 07:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vCydO-0002ly-KN; Sun, 26 Oct 2025 07:10:02 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
+ id 1vCyeG-0003Dk-3S
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 07:10:57 -0400
+Received: from mail-m1087.netease.com ([154.81.10.87])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vCydM-0002Vu-EC; Sun, 26 Oct 2025 07:10:02 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8FAE15972FE;
- Sun, 26 Oct 2025 12:09:57 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id bAYSc6P4nRAk; Sun, 26 Oct 2025 12:09:55 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6B9275972FB; Sun, 26 Oct 2025 12:09:55 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 65F505972F3;
- Sun, 26 Oct 2025 12:09:55 +0100 (CET)
-Date: Sun, 26 Oct 2025 12:09:55 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Yogesh Vyas <yvyas1991@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
-In-Reply-To: <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
-Message-ID: <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
-References: <cover.1760798392.git.balaton@eik.bme.hu>
- <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
- <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
- <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
+ id 1vCyeA-0002OB-1R
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 07:10:54 -0400
+Received: from DESKTOP-FHFCVTH.localdomain (unknown [117.67.70.197])
+ by smtp.qiye.163.com (Hmail) with ESMTP id 2734efe8c;
+ Sun, 26 Oct 2025 18:53:27 +0800 (GMT+08:00)
+From: fanyihao@rt-thread.org
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Yihao Fan <fanyihao@rt-thread.org>
+Subject: [PATCH v3 0/3] hw/arm Add STM32F4 support and PWR device model
+Date: Sun, 26 Oct 2025 18:53:17 +0800
+Message-ID: <20251026105320.5591-1-fanyihao@rt-thread.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-5853053-1761476995=:17833"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9a2026d53503a4kunmcecdce756fb9ac
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+ tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDSE5IVkpKH0lITxhCGhlDHlYVFAkWGhdVEwETFh
+ oSFyQUDg9ZV1kYEgtZQVlKSkxVTUxVTEtVSkJMWVdZFhoPEhUdFFlBWUtVS1VLVUtZBg++
+DKIM-Signature: a=rsa-sha256;
+ b=EHyxWZoZpVsbhOWRoNvBLwIkgf79fkvMTb3jU2rUXO9Npv4OZ+jQ8Bs/qRd41zH69xGpuZhMpbRrGoRyDUi79xQIwrwcA0XpVXpz96OdBENRztd+bzg/M2JdtYBWcIiddK9i9yxzxBAruJbFGwiicJ5/apCRZSB92kSKgd1nzQdx3yKpgEmd8O2m3kQPsdbUbjYvAnuuDvX63ie/5XN8DGXlA7aTki7uz8V+LVaHGjkGdqxASETG1PRHdy8QRZHxGVn++XTc9cjSdRAQR/ZKL+aArUdC26/6b071YGaF0uR1ydJISLxOZP5OfvK9INIOWt68T4VR7e88euwUK979Bw==;
+ s=default; c=relaxed/relaxed; d=rt-thread.org; v=1; 
+ bh=gSQgDGzHd0DPl21PTZbTJ+WaDy1s6qkipCbYatTL2Lw=;
+ h=date:mime-version:subject:message-id:from;
+Received-SPF: pass client-ip=154.81.10.87; envelope-from=fanyihao@rt-thread.org;
+ helo=mail-m1087.netease.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -68,73 +67,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Yihao Fan <fanyihao@rt-thread.org>
 
---3866299591-5853053-1761476995=:17833
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+This patch series introduces basic support for the STM32F407 SoC and
+a new STM32F4spark machine in QEMU, along with a PWR device model.
 
-On Sun, 26 Oct 2025, Yogesh Vyas wrote:
-> On Sun, Oct 19, 2025 at 5:37 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
->> On Sun, 19 Oct 2025, Yogesh Vyas wrote:
->>> When I run QEMU with the ROM option, the machine boots successfully with
->>> the below command:
->>>
->>> qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \
->>>                  -cdrom debian-8.11.0-powerpc-netinst.iso \
->>>                  -device VGA,romfile="" -serial stdio
->>>
->>> However, when I try to boot the machine without the ROM using VOF, the
->>> machine does not come up and no logs appear on stdout:
->>>
->>> qemu-system-ppc64 -machine pegasos2 -serial stdio \
->>>                  -kernel vmlinuz-chrp.initrd -append "---" \
->>>                  -cdrom debian-8.11.0-powerpc-netinst.iso
->>>
->>> Please let me know if I am missing any parameters or setup required for
->>> booting via VOF on Pegasos2.
->>>
->>> Documentation referred: qemu/docs/system/ppc/amigang.rst
->>
->> Maybe you did not use the right vmlinuz-chrp.initrd. Pegasos2 is a 32 bit
->> machine so you need /install/powerpc/vmlinuz-chrp.initrd for it (see in
->> the /install/pegasos script that is used with firmware). Even if you call
->> it from qemu-system-ppc64 which includes both 32 bit and 64 bit machines
->> but does not make 32 bit machines 64 bit so you still need the 32 bit OS.
->>
->>
-> Hi Balaton,
-> I am using 32bit images only and looks like VOF boot works with the distro
-> provided Qemu (both ppc and pp64), however doesn't work with upstream Qemu
-> for VOF.
+In addition, I have modified the header file referenced by the RCC
+driver to STM32RCC in accordance with the suggestions.
 
-That's odd, it works for me with QEMU master so I can't reproduce this.
+This series includes:
+- A new SoC model (STM32F407) with initial integration.
+- A board model called STM32F4spark to instantiate and test the SoC.
+- A PWR device implementation for STM32F4xx family.
 
-> yogi@fedora:~/work/images$ file vmlinuz-chrp.initrd
-> vmlinuz-chrp.initrd: ELF 32-bit MSB executable, PowerPC or cisco 4500,
-> version 1 (SYSV), statically linked, not stripped
+Signed-off-by: Yihao Fan <fanyihao@rt-thread.org>
+---
 
-The file command says 32-bit for both /install/powerpc/vmlinuz-chrp.initrd 
-and /install/powerpc64/vmlinuz-chrp.initrd but only the first one should 
-work. Can you double check you have the right vmlinuz-chrp.initrd file? 
-But if you say the same file works with 9.2.4 I have no idea why. I see 
-these files on the CD
+Yihao Fan (3):
+  hw/arm: Add support for the STM32F407 SoC
+  hw/arm: Add support for the STM32F407-RT-SPARk board
+  hw/arm/stm32f407: Add PWR device to stm32f407 SoC
 
-   9301172 Jun 19  2018 /install/powerpc/vmlinuz-chrp.initrd
-  10534888 Jun 19  2018 /install/powerpc64/vmlinuz-chrp.initrd
+ MAINTAINERS                            |  14 ++
+ docs/system/arm/STM32F407-RT-SPARK.rst |  41 +++++
+ docs/system/arm/stm32.rst              |   2 +
+ docs/system/target-arm.rst             |   1 +
+ hw/arm/Kconfig                         |  13 ++
+ hw/arm/meson.build                     |   2 +
+ hw/arm/stm32f407_soc.c                 | 217 +++++++++++++++++++++++++
+ hw/arm/stm32f4spark.c                  |  56 +++++++
+ hw/misc/Kconfig                        |   3 +
+ hw/misc/meson.build                    |   1 +
+ hw/misc/stm32f4xx_pwr.c                | 111 +++++++++++++
+ include/hw/arm/stm32f407_soc.h         |  77 +++++++++
+ include/hw/misc/stm32f4xx_pwr.h        |  40 +++++
+ 13 files changed, 578 insertions(+)
+ create mode 100644 docs/system/arm/STM32F407-RT-SPARK.rst
+ create mode 100644 hw/arm/stm32f407_soc.c
+ create mode 100644 hw/arm/stm32f4spark.c
+ create mode 100644 hw/misc/stm32f4xx_pwr.c
+ create mode 100644 include/hw/arm/stm32f407_soc.h
+ create mode 100644 include/hw/misc/stm32f4xx_pwr.h
 
-File command says:
+-- 
+2.43.0
 
-vmlinuz-chrp.initrd:   ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, not stripped
-vmlinuz-chrp.initrd64: ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, not stripped
-
-but only the first from the powerpc directory is supposed to work and it 
-does boot for me with QEMU master. You can also check following the other 
-way described in qemu/docs/system/ppc/amigang.rst using -bios pegasos2.rom 
-which loads the correct image from the CD. Does that work?
-
-Regards,
-BALATON Zoltan
---3866299591-5853053-1761476995=:17833--
 
