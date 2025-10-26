@@ -4,114 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA99CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 13:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B55CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Oct 2025 13:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vD0ZT-0005K0-W9; Sun, 26 Oct 2025 09:14:08 -0400
+	id 1vD0eL-0006H7-DH; Sun, 26 Oct 2025 09:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vD0ZO-0005Is-9a
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 09:14:02 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1vD0eI-0006GO-WF
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 09:19:07 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vD0ZM-0002vl-AV
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 09:14:02 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-63c12ff0c5eso7426788a12.0
- for <qemu-devel@nongnu.org>; Sun, 26 Oct 2025 06:13:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1vD0eC-0003Ue-A8
+ for qemu-devel@nongnu.org; Sun, 26 Oct 2025 09:19:05 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b63e5da0fdeso325840a12.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Oct 2025 06:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761484434; x=1762089234; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZCg2KuHIyhADBEtyAO750pPN7BaUMKj9tSTj6ArSi/0=;
- b=gIXXrCLSakK24k3WtqLyj2nfXhImH6g6kPRuvrzHEaoon+zHIYVE/gsc1SKUrtDAMf
- 26W8ka72kmqw0OG7gXHr4DOiBccQFQyC5Rf1D89db6nzaSWrKMx3I0jyoS6a9tWE8cAQ
- gswmD7PFGIcVyU8NpoK4eiRV4KWsEog6pTYQDCls0tOV3tp14tjzrjP47hNlV87Ivcqh
- ChRvl0WTTIPkr/M+TVuard/IxmJnCcO40caZmcPIwL+5wR2CU8wZqlY2rIG0IRBH+quz
- kuSPZ1m3U3E4mETai6yjB+R4IhJcugBsKUU5FIrfsVroWU33o0IpoWJywGpt3hM89j74
- MCSA==
+ d=gmail.com; s=20230601; t=1761484738; x=1762089538; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DC0pMwkmIg0Vk/iZYerMDWH0JGX6W6XKzJLcDNgUpSg=;
+ b=mdyu3novTeLPWZ7f49kcerN7bMsZ/bs3cPDZY3xwpXmNY68Fd+SXYx71X9JyQv0ajy
+ oSdSt0+86tUVAmXzkv8yVdh3MDuyFJaq1ZalLQKbXCDEc45zAc6o06pCIIoJJPPBD+aL
+ iTuS/udz98ldzCNcWjbvXvSt6Flv5YfIr0pjRzBd3NgL49ay9nTdosA/bchspvuWstRB
+ jLo1lv2Jy3PNH1q+VwlRkcW5pmUYLQAU795hPxhS4qGNlMhy4gU26AaM6FW3ugzNopvl
+ wZFxJotbjZSqM+wke7ccz1J/WHT03kA3yBL++JrOECYg2jyfAX82rjuVLpNdQMN8dY8B
+ KQoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761484434; x=1762089234;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZCg2KuHIyhADBEtyAO750pPN7BaUMKj9tSTj6ArSi/0=;
- b=CEFY2ySb+dTYiP9ZUzKLKad+puUQPLCxx9yxfNHgrCX4HR5sJdmGyN9xH32jzsmKnq
- VZnFC/l2Bkf6KfMoHnJ9C9swf/U4XtQFaB1qgef1cGHZZZQrdQgBl/JOmME2tbnaCstl
- sfva3CEnshhYUVFTMQ+K1EhJqPr1Y67a880CoQA3V1ZyDRjku5+ZzjOG/pawyaoM1q2M
- g9VPVbfiWYesIqDuM1oSMyZYXFMx7rxXF1adDib7AEA4+Fgzi5t9ondrbM03emZP911f
- Sa9gbdqHk8xS3f3+MocN5D8dSFiErC8QsV2n556odTVhxkK6r+V+pTo0R5eE0Lv7tPhp
- RXIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5VvKYNfhpqdVCv6x/WTyKW8jMNtZdNTFc3nX0sMFPzGHc0KOMCrfpxoaXGw0qpY0TvSwVF9OIpFkE@nongnu.org
-X-Gm-Message-State: AOJu0YyTg16X54RagYKUQvURs20WV+LK0EnHntAaSvyGctVlwyx+DpwR
- zo6AWY6vdZwLtYlnm2qma2IE9yvLcIbM4gN//6QoLbEx8y63Y2ugLfE1uVW3G7QpwPk=
-X-Gm-Gg: ASbGncu2BqKozH4YTOQEBJ7g/AbRkVlVRXh+LXM0c5XBzRPqKjJORAR0MBuYVsPrMak
- bGkNeOu6UYz4gnCUYAzG1kjXQt79nxn1RoOMHfFCpNA2o0Ngsos1P67b6UD3hMIMywnUhDe9ZTZ
- GEASZR55G9UXLkpJhRzUKDYJabEoAF6Wded6D+yE6fD0ahVnQOhMw/xQH8ZWy48GK4+3kukxEbr
- //dUHjEdXAeLC0B39IrEOBRQWUDps0IXwUaQQmVgWiXHVPdo+GEGNXy05/1BeXMb3dLxfYjORC/
- sbaXa8ZSlNIj8msajNMZoED1SVNVTbipqO/tSJ7KHtf8fspiwfMyJbvxIB68LPV2QTnx2gL5kj0
- qORgevAf+jPmCikG+SRf1ddDnb1iAiKGfN98G/VCFUH++Nye3Ti6T+B0sO4rt+yq8tU369BeUOn
- 32
-X-Google-Smtp-Source: AGHT+IHohdTXeNdAezaApM4ylBLpkYwIKKIfC5yuv+XlUvglfAYp1sZTNgZk5KJjx3yajv8CBURMkA==
-X-Received: by 2002:aa7:c511:0:b0:63c:1031:7c60 with SMTP id
- 4fb4d7f45d1cf-63e5eb5c731mr5960661a12.19.1761484434295; 
- Sun, 26 Oct 2025 06:13:54 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d85308c8dsm462226766b.0.2025.10.26.06.13.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Oct 2025 06:13:53 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4B0E15F7FA;
- Sun, 26 Oct 2025 13:13:52 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alberto Faria <afaria@redhat.com>, Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson
- <anjo@rev.ng>, Markus Armbruster <armbru@redhat.com>, Brian Cain
- <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>, Chao Peng
- <chao.p.peng@linux.intel.com>, cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le
- Goater
- <clg@kaod.org>, cw@f00f.org, demiobenour@gmail.com, dhedde@kalrayinc.com,
- Eric Blake <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
- Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
- <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
- <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
- <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, wei.w.wang@intel.com, z.huo@139.com, LIU Zhiwei
- <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call 28/10/2025 agenda items?
-User-Agent: mu4e 1.12.14-dev2; emacs 30.1
-Date: Sun, 26 Oct 2025 13:13:52 +0000
-Message-ID: <87bjltkdpr.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1761484738; x=1762089538;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DC0pMwkmIg0Vk/iZYerMDWH0JGX6W6XKzJLcDNgUpSg=;
+ b=RCvm3QkElk1Tj3j/pwr6hatwjWbpDjDcNbFyG/k2c31j2CloRTvXYC5NtZKnfR82eH
+ KhyL3uDxF11qFFmwm2JsjM67nopYNLmKRLQMZo50xh0LgBmOUwfdUZZlATwT9IJ1nSnz
+ 0SeKdXYwz7qIs8MCvnEDSmdbJVBQVS+VnF5fdz6Qll7ejFb/n1iRkdJT1mAV/9F8y5St
+ I/DGLOSoHqJUM8tE/p0JwRF9NLis9sdWRphq6eoMlbRWmkTo1VWzcS9PHIG+ezNGK6vo
+ iNBbxHvciZTYfCFuTRqwhFpCRAprbhzQOTc7y/DOY7H9Lv3l1EIQ6eETjkP8U9gIkAnQ
+ 5pDA==
+X-Gm-Message-State: AOJu0Yyp9jRgdj2nfzHB+StWtzEwTqQlD6bCDLtopWHz4hMp6SQ75TYW
+ Xgb2TNY0C9hRB9R80Q/X6dOVKgiryOecDEQAKj1D1b3IY04MQh02xOJc
+X-Gm-Gg: ASbGncsc3BpeCLXkA3noFoWcU96AaNa+EB5+q+AZfqwblYVtcJjbH2g7InADd+MLmf+
+ mILAt9JkuQZumEKqLhX4eYVDJ0Smu+QqEFYlykZgUdGyYVyt4ZIQtzMa4TV1RaaenIOk5vblcU8
+ 7jPrH4dLv53n/btcxwJPNq5DXSnIE5zB30PdxYEXuWv9NflCMks6C0AEyvQ55rTOEGSYcvWmlSa
+ FzgscaJMRUDP1ZoYiyn2AnYW0j5WayRN4u9l9gA3IoXxicCjH2juhnKFUelGF2YGGtYDWWx2DIR
+ yv28FsOs8v08FvNgoppX68h1Bhrscyj8E/I+nKOwdms1+9EhUfDeekTJ/CmEKiy8iBLFnAum/dm
+ m4rrHFw4zF4y6P9A5K7qjrTFFNMtrCyuA7pQEOJapu1MtHC6iBxJDhMOzJ4dYrHWgzEdxh1Y3Nt
+ Frnn/xgEMSAph57K42mOTCztW1sohuXtmw+VMXjXuQ6bM4SIeYZDQDfe9gZeO4j2OE2QYS8Fp7
+X-Google-Smtp-Source: AGHT+IG/j70cc6xDtSPQoON/IP+qZ67TCQVavMUt3EB8BsHvqrJg9+7cdL4kdmPGdVOOv1pf1+3LDw==
+X-Received: by 2002:a05:6a00:244d:b0:7a2:864b:9c8e with SMTP id
+ d2e1a72fcca58-7a2864b9cf8mr5707052b3a.3.1761484738366; 
+ Sun, 26 Oct 2025 06:18:58 -0700 (PDT)
+Received: from ?IPV6:2409:40f2:116b:b390:f34d:aca1:36fe:8380?
+ ([2409:40f2:116b:b390:f34d:aca1:36fe:8380])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7a414012a1dsm4947971b3a.10.2025.10.26.06.18.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 26 Oct 2025 06:18:57 -0700 (PDT)
+Message-ID: <26f74e6c-a89f-4be0-aa6c-78ad88e2cba3@gmail.com>
+Date: Sun, 26 Oct 2025 18:48:53 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
+ <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
+ <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
+ <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
+Content-Language: en-US
+From: Yogesh Vyas <yvyas1991@gmail.com>
+In-Reply-To: <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=yvyas1991@gmail.com; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,17 +111,96 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-Hi,
+On 10/26/25 4:39 PM, BALATON Zoltan wrote:
+> On Sun, 26 Oct 2025, Yogesh Vyas wrote:
+>> On Sun, Oct 19, 2025 at 5:37 PM BALATON Zoltan <balaton@eik.bme.hu> 
+>> wrote:
+>>> On Sun, 19 Oct 2025, Yogesh Vyas wrote:
+>>>> When I run QEMU with the ROM option, the machine boots successfully 
+>>>> with
+>>>> the below command:
+>>>>
+>>>> qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \
+>>>>                  -cdrom debian-8.11.0-powerpc-netinst.iso \
+>>>>                  -device VGA,romfile="" -serial stdio
+>>>>
+>>>> However, when I try to boot the machine without the ROM using VOF, the
+>>>> machine does not come up and no logs appear on stdout:
+>>>>
+>>>> qemu-system-ppc64 -machine pegasos2 -serial stdio \
+>>>>                  -kernel vmlinuz-chrp.initrd -append "---" \
+>>>>                  -cdrom debian-8.11.0-powerpc-netinst.iso
+>>>>
+>>>> Please let me know if I am missing any parameters or setup required 
+>>>> for
+>>>> booting via VOF on Pegasos2.
+>>>>
+>>>> Documentation referred: qemu/docs/system/ppc/amigang.rst
+>>>
+>>> Maybe you did not use the right vmlinuz-chrp.initrd. Pegasos2 is a 
+>>> 32 bit
+>>> machine so you need /install/powerpc/vmlinuz-chrp.initrd for it (see in
+>>> the /install/pegasos script that is used with firmware). Even if you 
+>>> call
+>>> it from qemu-system-ppc64 which includes both 32 bit and 64 bit 
+>>> machines
+>>> but does not make 32 bit machines 64 bit so you still need the 32 
+>>> bit OS.
+>>>
+>>>
+>> Hi Balaton,
+>> I am using 32bit images only and looks like VOF boot works with the 
+>> distro
+>> provided Qemu (both ppc and pp64), however doesn't work with upstream 
+>> Qemu
+>> for VOF.
+>
+> That's odd, it works for me with QEMU master so I can't reproduce this.
+>
+>> yogi@fedora:~/work/images$ file vmlinuz-chrp.initrd
+>> vmlinuz-chrp.initrd: ELF 32-bit MSB executable, PowerPC or cisco 4500,
+>> version 1 (SYSV), statically linked, not stripped
+>
+> The file command says 32-bit for both 
+> /install/powerpc/vmlinuz-chrp.initrd and 
+> /install/powerpc64/vmlinuz-chrp.initrd but only the first one should 
+> work. Can you double check you have the right vmlinuz-chrp.initrd 
+> file? But if you say the same file works with 9.2.4 I have no idea 
+> why. I see these files on the CD
+>
+>   9301172 Jun 19  2018 /install/powerpc/vmlinuz-chrp.initrd
+>  10534888 Jun 19  2018 /install/powerpc64/vmlinuz-chrp.initrd
 
-The KVM/QEMU community call is at:
 
-https://meet.jit.si/kvmcallmeeting
-@
-28/10/2025 13:00 UTC
+I am also using the same file:
 
-Are there any agenda items for the sync-up?
+yogi@fedora:~/work/images$ ls -lrt vmlinuz-chrp.initrd
+-r--r--r--. 1 yogi yogi 9301172 Oct 18 23:50 vmlinuz-chrp.initrd
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>
+> File command says:
+>
+> vmlinuz-chrp.initrd:   ELF 32-bit MSB executable, PowerPC or cisco 
+> 4500, version 1 (SYSV), statically linked, not stripped
+> vmlinuz-chrp.initrd64: ELF 32-bit MSB executable, PowerPC or cisco 
+> 4500, version 1 (SYSV), statically linked, not stripped
+>
+> but only the first from the powerpc directory is supposed to work and 
+> it does boot for me with QEMU master. You can also check following the 
+> other way described in qemu/docs/system/ppc/amigang.rst using -bios 
+> pegasos2.rom which loads the correct image from the CD. Does that work?
+
+Yes, I had mentioned it in my first mail that ROM option works as 
+expected. It is only an issue when using VOF with upstream Qemu.
+
+Could you please share your Qemu command line if it's different from the 
+one mentioned in the documentation.
+
+Regards,
+
+Yogesh Vyas
+
+>
+> Regards,
+> BALATON Zoltan
 
