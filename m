@@ -4,238 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78456CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4428CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDOym-0000xK-SR; Mon, 27 Oct 2025 11:17:53 -0400
+	id 1vDOvl-0004uu-P6; Mon, 27 Oct 2025 11:14:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jag.raman@oracle.com>)
- id 1vDOyj-0000rN-1L; Mon, 27 Oct 2025 11:17:49 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vDOvR-0004Hp-RV
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:14:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jag.raman@oracle.com>)
- id 1vDOyd-0004iM-NI; Mon, 27 Oct 2025 11:17:48 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59RDYDrh012294;
- Mon, 27 Oct 2025 15:16:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=/8Mx/2yX0Z2uxv3xfI/Mq3E22u3j2FbExaG7RQchyjg=; b=
- TflSspzi0MAVsVY7caZQAMB8S5fmSsEZ8bDpLuDuHjLRSIm/j1HN66TFyb7NS8yc
- wZmP4MU4CvwR6grRBnlMQA8Ngvtwn9Y0PZmGn/5alrUd8VdKAlR8WrGuIo1EvBmV
- UIVVV8lBlF/fa3EIO5J2fYkPoPNOjzzA86xzYivAONOnWYieSDWqoUfunQoY/6dF
- 0UlVXc+8HSBTQGHMy4jEncpcGIYynmqGWp6MbfR/hvWtR4en9POoeCvS59ohK9wX
- 4md4NNViax9AjaE6Fd9kLoFY5XX170bUbxzoIBvzIU/q+TH5TDLQsSfSVshpLUXG
- qS/p7fc/4fNrGhJSowAJSQ==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4a232us6ju-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Oct 2025 15:16:02 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 59REmtZD034834; Mon, 27 Oct 2025 15:16:01 GMT
-Received: from ph0pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11011036.outbound.protection.outlook.com [40.107.208.36])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4a19peam8w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Oct 2025 15:16:00 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TOfc+hvaFjZW/am4CHeeAihBA4GeGExPdV97pI5YN0Fa/hp2j6f2ge2A2bYUD8YJF3RLsoa+qC4t0E2rOHd+y5b+jUTVKD6ssLaBJF/OaImJlH9oNsWFoQowGszIcf9sOg27J0nGXA7+SJJDMQR8E162J7zqznbcTj0ClDtBnA6tcjgvtRppyCYPbnWFBpA4GZhEJ652UVEP5UqK/mqGjRHun2JpJBKBuHPtat6/+hyEPfSJ/h8Qq5Gys33jIjsIISMNx/CpnEyunwaJmeWhlMYfWk+xBglNZ8x0uXMnvL4XFu8sDu9LbmF0o73aqetPsjvcd5Bok4VJGUaLxgKewA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/8Mx/2yX0Z2uxv3xfI/Mq3E22u3j2FbExaG7RQchyjg=;
- b=vFPLc+qhYBFwxIRkygu5JAuRpoKcxtV25ehagxaDNKfXV9ltrnJW9PFDgfk2PNxulOVS4JOmqBy3lbuGbJGobYg8jq8Q3KwrQssfm6Q/TMlR5xpge2i3UER6Ye3myQcetsopdZyAZc7YJQfh88FNHa+iZiCXpyUIaZJJLf040MdJBDjjP3Sp1iEHDsjU99Q8RAMn82TpnFohE4jn/dq+4MfpS8SxwMuAmducekIuOpQe9dxi8Z4EG7Se56IqLc7N1lTIjKdg1nlOZXufywvG22Ot+LqSVyv37igFVLXE++9K1M4SsKIR2AczhsKcOsLxOoJh0epTEl9n5m6WBJjIgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/8Mx/2yX0Z2uxv3xfI/Mq3E22u3j2FbExaG7RQchyjg=;
- b=jzXoAfQH4XmjBbnPnDtVn7G37j8rWNDsMwMsQ0Tz/ULnxgQ9qQPgqoqDAtJL/KHrQFS0ERwMOnt/5ixmYSPmH3MzEq05MdByTL+T88HE0KF6fE3nnZXLmPlGP7+JhpZrM/cTLgiJ9Q1V8A9cJ474ft7lD0HqAzUuKvTnqkpIf5s=
-Received: from DS7PR10MB5008.namprd10.prod.outlook.com (2603:10b6:5:3b1::19)
- by IA3PR10MB8114.namprd10.prod.outlook.com (2603:10b6:208:513::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Mon, 27 Oct
- 2025 15:15:57 +0000
-Received: from DS7PR10MB5008.namprd10.prod.outlook.com
- ([fe80::3190:3396:d0a1:a69]) by DS7PR10MB5008.namprd10.prod.outlook.com
- ([fe80::3190:3396:d0a1:a69%6]) with mapi id 15.20.9253.013; Mon, 27 Oct 2025
- 15:15:57 +0000
-From: Jag Raman <jag.raman@oracle.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Troy
- Lee <leetroy@gmail.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Glenn Miles <milesg@linux.ibm.com>, Elena Ufimtseva
- <elena.ufimtseva@oracle.com>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?=
- <clg@kaod.org>, Paul Burton <paulburton@kernel.org>, Joel Stanley
- <joel@jms.id.au>, =?utf-8?B?SGVydsOpIFBvdXNzaW5lYXU=?=
- <hpoussin@reactos.org>, Aurelien Jarno <aurelien@aurel32.net>,
- BALATON Zoltan <balaton@eik.bme.hu>, Aditya Gupta <adityag@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Bernhard
- Beschow <shentey@gmail.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Steven Lee
- <steven_lee@aspeedtech.com>, Nicholas Piggin <npiggin@gmail.com>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Andrey Smirnov
- <andrew.smirnov@gmail.com>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH] hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent
- class_init()
-Thread-Topic: [PATCH] hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent
- class_init()
-Thread-Index: AQHcRzQfNZk8RZaccEyva0ud0/otmbTWGroA
-Date: Mon, 27 Oct 2025 15:15:57 +0000
-Message-ID: <F7CDF3CF-9E6C-462F-9BC6-0AAB5C02EC70@oracle.com>
-References: <20251027112306.57634-1-philmd@linaro.org>
-In-Reply-To: <20251027112306.57634-1-philmd@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3826.700.81)
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS7PR10MB5008:EE_|IA3PR10MB8114:EE_
-x-ms-office365-filtering-correlation-id: d867b817-7347-4903-9498-08de156bbaad
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?dTN1dmdyNjBpYlQyMmNHWm1iTTJ4bkdhVVZ1RHN0K05PY3JwdE4wZTdXNG5B?=
- =?utf-8?B?clBtcEtZaGYya0NhSTU5NXNLaGlydDI3QXlkU2JpWHhlZ2JEVitNM3RnMTNl?=
- =?utf-8?B?QWV2MzdlZzdzVTBTTTlhWjcybDdPSVZvRGVxQlRuVDV2Y2NiMThubVVMOHMy?=
- =?utf-8?B?dmVVUHpla2pScFlEdjl5Q0ZRZC9vMGIwWEVIcGZoazZwZmRrdGVEdnQxUFVs?=
- =?utf-8?B?bjRnN3NOMWpBT2hwZHlESmt5TUtDd1cwZFBZNGtIdTlGQ0VoTEd4STJyd2Rn?=
- =?utf-8?B?ZGJ4cU8vYStEOWdSVnI2WituTHJTSmNJNCt5N2l1am5YNlpQN0RLaVM3bzBX?=
- =?utf-8?B?Qyt6bjRrTitENzBvdStCRDZjOFlxTHVFcDYxNXVXc1g5dWJkQ0VEdUw4Z3g4?=
- =?utf-8?B?aUJoa0Y1Vm80QTFLMW5GVUpsc1I4QTQ4YW5KeTd1cHdYNktjTXVwL1QwZGQ1?=
- =?utf-8?B?ekxsZTR4WXhyMHYraGtPQ2FzL2NEQUp0NGVFMUFqNncraU1yeGJLVlA1ek9Q?=
- =?utf-8?B?MW1BbXZHcWlVZlBrUENXWlZOb2JuL0JibFlGR0VNNTkwQVFGYkZlT1YzaTd3?=
- =?utf-8?B?T2ZsTE44N2VOemNBYlVESC9nVHVQbVpRK1h6WHIvTHdvbndnYzBpVWR2UWJL?=
- =?utf-8?B?VzZXV3lFKzdvZ1VkSjQxKzBBZ0NoNExCbnBySk9rUGtWNVl1LzZNSHhicTUr?=
- =?utf-8?B?d1A1WkErdysrdWtKYlc5UWRxT0F2MVBSR0tEMWxpYjFtQWZIZjRHN3VUZGor?=
- =?utf-8?B?ODU5czBEZ1FhVXQxNmIwZkR2V1hqS3g3RHJLWEg3a0FZb1c4Q284Q0VwMlFn?=
- =?utf-8?B?allnckpZRUloZXUrYmdDcTI5azZodE1YV3JQT3ZNb3FiNm1sZlFhQ3l6Ry9J?=
- =?utf-8?B?S1R2T3p0VlR1RDE2d0JTb0N1dEYyQmljVFA0czVKWnRVSmpUZjhaVHZETWx6?=
- =?utf-8?B?VUExdzNkVzZXenVVNXZhU0V0NzI1VkJlWm9XYUFLL2lNUnFSSUY2ZFNTT2Vr?=
- =?utf-8?B?QTNUWThqcVVFekk5czczanVFQ1FSOUc3ZXpmS0xEVWtLd0hRQ2RaZ2ZGZzJh?=
- =?utf-8?B?cjltTEtHRTNQSjI2Wnh4NkdqaEVvYzdMWm1uTnJFeGlodkk4UmhYWEFDcEg5?=
- =?utf-8?B?SU1yUzR6WlEyZUFMUXVsT0J3QnhTN0tCVWVGSDVCMkZSemRqelgzNkJzeUlR?=
- =?utf-8?B?eDVUKzZUZzRHTVpVdlVlQjlGaU5pMDhUbHJyQzNwYzZPbmVuT0NhaGhadWJ2?=
- =?utf-8?B?SFBwWW5pNktmeEJwN2s1MmZoZ2lEaXVtL1lQSm9OUlpPdTNWNXhuVXVJeXFK?=
- =?utf-8?B?cHNxMEFUcjZrQkVhNzFhdjBLT2pkWXBjanRRTHZwTDJYSHIweEtUZ3NDdUZr?=
- =?utf-8?B?SnRqOG5lN3RSWmNwdkVNQXJGQnFKRVNJUUY4K2R1a1E2RTJ5Y3p0WWx1WWtr?=
- =?utf-8?B?bVlrWmNkZVJWWk1jMkpqc3NPRUdMTkNmTDl0ak5lcHpDcysyU3hhbmIwVDUr?=
- =?utf-8?B?cVI0akdkbUpJVjlFVUVhK3BzSkdRQW9SUE16YnVFSDFJWitHOUY2cE5uREpy?=
- =?utf-8?B?Q0s3bUU1TzhrNnRxY2ErVkNlcUF6WkxkT1NzMHIvd3ZWbjZFWVczSDllckF2?=
- =?utf-8?B?RHlBdGF3MC8zLzNxTWRTN0hMZG1KN2d2ZFRtc3NpMjk3SlZQZjVLZnBqVTJK?=
- =?utf-8?B?eXo0RjU0QnY1QzZ3Q1VYWTlLSlZydnR0TElxYXVaSk8rczNCN3RFcU9ydDU4?=
- =?utf-8?B?Yjc0K0FUeEtUK3ZTbHRKSnNSa2xURWZIWDA2YlNKb21Xd1FUTVBySkd2bzQ3?=
- =?utf-8?B?Q0ZBb0FhS3ZXU1MrcnoxVUtidlhFMlI5QzlNTTdONVRqNjVyZE1IUUJSQVNV?=
- =?utf-8?B?NEN3RnFXbGpnd0VvVCtJcHk0YzBFQUQxSzJCR1JCOEI2bE4zMjlNbUtNaVg4?=
- =?utf-8?B?ZkRMZ1V0NUlyaXEvU2JkQUx3ZXJtTjlEYVR6bmxVVGFQdUFxenVmSUd0aWJx?=
- =?utf-8?B?ZldzOXNMeDUzNFdmbXQwRno4SWkrYUJvcFRLc2tZZnlzaU9PK2lvaWtqd1Vo?=
- =?utf-8?Q?J9PQC7?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR10MB5008.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UDIxcmhLcGg1emR4T2N2Z1V0emFmRXhSQ3ZRRS82Rm1HUjFGR1ZjNm9pL1hJ?=
- =?utf-8?B?NXB4TmZ6QnRTTytWVkN2SGRPUUhLU0F4cUFvaUt6TDdEOGFzZEYrMmJ0UlhK?=
- =?utf-8?B?SUJnUkxPZlphT3d4SzdEUlR6bUlER3BiSjd6VFRwU0RHUGZtU1lGTnlIeWg0?=
- =?utf-8?B?Y04zekFWdnRxNFN4NDZjenp2VWJuQUppS1hqVGgvbXBpVUZTc2tGakN0ZFR5?=
- =?utf-8?B?Q3U2SFBzaXliN25sY0YrcFZBaHZPbktIVGsxUGw2aG1tSjR2WG9uRUJiN3BL?=
- =?utf-8?B?bTJvaUxwcmZ6WEdDQXJ0VGI3d0ZpUGZ3S2VRbUNlMGJ6UzZRYjh2UjRhU1Yw?=
- =?utf-8?B?SkxXUXZKU2QybUdYUDVIbWlRWnlTK3dNSnJqQ2wzVlBBZ3dxUzJRR3UzV3FN?=
- =?utf-8?B?UjBlNHIvK2VGcVh3bHRWSWxZekVXcWN5cFhmRFIycFlMaGNYZzlLNW96Y015?=
- =?utf-8?B?NzVYbzdzeXJDbzhkTUlFcUJheDVVYzgzb3dPRzh0OTJVcjU2NXBwWWs4bXpV?=
- =?utf-8?B?aWlSb2hCb0FZNjlZK3R2KzI2VVBzRDJTakxtNDNRaUxjY0xUV1lRZ29iM1cr?=
- =?utf-8?B?NUxtVERzdGpzNDFNbGI5aHBsUXZKWmQrck1tMWVUQUZQcjZwaFU0TzhwTUlG?=
- =?utf-8?B?VEFCZnoxS3BIQmdnclZYSFdlbk1DSy9xVVVvY2hEMlJ0WGJHYm5zSndGR0wz?=
- =?utf-8?B?RXp1M0kvc3lmQXVpOUZWVlFtamxtcWIrU09vUmFialFOQ0VkMXI1c0NRaTFa?=
- =?utf-8?B?MlAzeVdQNGdxNnVEYVNEZjFOVm9jT3N4enVXSTluNExpVzZzaEhUenJsMkor?=
- =?utf-8?B?YXRRQ092RkhJdkozaHRvTzU1WFQ3NVMyRmc4RHZsYlJCVHpHZEtkcWtSZkov?=
- =?utf-8?B?clhpZlZkNjcxRXVwZCtqLzg2OW8zc0NyVFZUYzhYWlo1d2lZaW9qUHRNS0Qx?=
- =?utf-8?B?cFpZODducEJhMUFLZmtndjdyNkNMY1A5ZkQwdUtHOUFENFRmTUJXYlp6ZnNl?=
- =?utf-8?B?OXllN0F3b0JhYTFRc1U0TmRrQ2FiSEg3NndTeXVyY3VPZC9hUTNxK1NNL3dG?=
- =?utf-8?B?WjhjMXZad3QyRzljMjJGUnRIM21BcXRmaWREOEtQSlg5N1ZCZWtlS2VrZVI0?=
- =?utf-8?B?NFlwdzFKa1BneUFvM09PNkxiL1FKTzBRL0VrbUpzUFpyLys5Q3hqUFNmbEkr?=
- =?utf-8?B?bUFXSlVNZGwrTU9Xa2Q5Y0xOUDl3elVTdWRFV2svZlpwQTJsUkNaT05hTUl1?=
- =?utf-8?B?c3ZsVVNvSlpGdFc4UzZzcGVqVjVZd1VaclpzaGFvWFNQUHNrck10Uk9IVFZa?=
- =?utf-8?B?MXBJaE95dUtOaWUzRUFnYXczcTBwN2g1Y3EvWWQzclgzK0pMQTEvbHhYSzBi?=
- =?utf-8?B?OUZpK1dTTkFNY25wZFU5TXRRQlE1d1ZiSERQdzVMU2xFVmZncFNoRE0vSHE4?=
- =?utf-8?B?Z2J2WXZyQjlKRW5nVWVFVWsvSFRhWU00aDNRaHp5V0ZTWjJuTXRLcDZRRzBQ?=
- =?utf-8?B?NFlIdkEvNm9tRVl2Sk9DZk55QjJkdUlSTEVNOXdwUUhYVnZpVHdPK0VBSjls?=
- =?utf-8?B?a0d1V0VXN08yM0lrdnVFbEpSdlJKbEVhcEFpVWhBMi9INjdzSE4zNFVZU3B5?=
- =?utf-8?B?V1ZwS3d5ZSthcW8vTGI1Tkd3V3ZqRlRvSkRBTlQ1dXlLRzFmWVFyaXdodkpC?=
- =?utf-8?B?ZEFJME55d2d0YkE4VStCVlZxMTE2MVZ4SkIvQ1cxKytESEFjalh6RnZYZmg0?=
- =?utf-8?B?dlAvaXdvU2tSK3VOM0ROSDhQS2dkNVc5UHZBSE8yZGJKdHpiNlFUbklFUitz?=
- =?utf-8?B?bW1yUytJd1UyVnEzNGF5UUlhOXMxaThmTkRIb0xXSjFwZXRHd0xpMnNuM0pV?=
- =?utf-8?B?cVRnZW5OQmJDWFN5YnY0a1hVVXlURXRyRE5NQmRxcjZBd2tjYWpMZlZVYjgv?=
- =?utf-8?B?N2hlSDRMOFBLTW5ybFYyb3lUU3lNMWhKbStHaHpIUFZqVFZ3VTlySG1YOXFU?=
- =?utf-8?B?V24wZHVCYURDcUlzOHYrdi9sOVQzY1hwSk5ySWxDV1pHRDJNY0pUYUg5MXdV?=
- =?utf-8?B?bmt0N2hWYkFmOXpVTU1BSVNhL1FwZkxBWVVzbkpUOVFoUEgwREs0UDdvQUd2?=
- =?utf-8?B?V0x6bHpUL3ZnMkd3b0poYWlUZGxTaStvdEtHRUVVTStrV2V1ZFEyOGV3UW5S?=
- =?utf-8?B?TlE9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <7AEAF2A50000D5459A76E4882E09E7CB@namprd10.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vDOv4-0003zg-QS
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:14:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761578037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RDFhMwRL21R0Bwv/3/FBbWpj5LfRnnxzjgImN711wJ0=;
+ b=G/+1P0unjaUBfegFlUjMUrSgQ/pxEq6pfSFE6Jcg5LrIOnEMKrZy5rXTBhZqtbN2okjLxK
+ 0/bWB9o2fm/krYnFeI+F7kesl44VxkCrIEagYcJA5KG9WCz1TVyONW3dt3TI2Z3WR/AmOD
+ k+vVRF/hpoyYlOMv3zug9rgbeDw1xtk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-uOOulOvHOh2PkyEew_wwXQ-1; Mon,
+ 27 Oct 2025 11:13:53 -0400
+X-MC-Unique: uOOulOvHOh2PkyEew_wwXQ-1
+X-Mimecast-MFC-AGG-ID: uOOulOvHOh2PkyEew_wwXQ_1761578030
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B7201955F07; Mon, 27 Oct 2025 15:13:50 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.5])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C98B919560AD; Mon, 27 Oct 2025 15:13:47 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Alexandre Ratchov <alex@caoua.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jan Kiszka <jan.kiszka@web.de>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v3 27/35] audio: remove QEMUSoundCard
+Date: Mon, 27 Oct 2025 19:10:34 +0400
+Message-ID: <20251027151045.2863176-28-marcandre.lureau@redhat.com>
+In-Reply-To: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
+References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ni0IMUDscLFct9tInYXFwjigqw+3IZhewG0Cfg1N13MLGVCDngZ1vr4d5HAlqXMOGjkkNCyDNnUqoAYVtdTO/GyRY2epL1k6gZDy9pMgpEukjeoYox4zUCt5/WpVrMscJMjp8cP6d7PLbkoqCiAMdfmtLPHQs+NXSCHsWmTrk/4ufWi7dTZRLAQ+zAISQnfA+pni6J9CeLczX6m9AC3EU5CTaL5SRipdvwbX+UFDIz2InG30hbDUqW3b5g38Scj1HFePdFVlvaxo9mctLh8TC+QRr2yUJ3Nzjcd45xq7Su2e+uBMKgfjiTzsnFFgvEJh1ozFPhzNfzS39ygZbu5fSzcUadZ8hNHTtIJ/m9Vx0NCdZidYwYIa21uV4ZBk0RvOMq70FFSWIG0MMB2ZF0dRbDSbqGZwJdjxv7f3J3UgAlDF8DNL/krfaJ5hADtACS/Emhan7frpasbcsBBMVkaenMuPU+pIhjLtTG2vrAIjyUIs8HIGj+7vgy+1zpCzB6WjhPF7LumJFY0xL6NlPsDGGr3bKGsbkqNCgGouvHRxcaOQ9pslEUbZG3bmYWHr4SmNqKFJ8oyeEPikV+HkR1CHMCOTZxC5/4aQHhIqQ7E1y+U=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5008.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d867b817-7347-4903-9498-08de156bbaad
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Oct 2025 15:15:57.0191 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: x2bQ4vEXlgIVmdEMhK9RE97EqaIfjI5O3zpU2SfwNihbBnYrtAEAc88f1xz6fXLewD2eKrByrAQdzya5yCOrYg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR10MB8114
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-27_06,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxscore=0 bulkscore=0
- malwarescore=0 mlxlogscore=999 suspectscore=0 phishscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510020000
- definitions=main-2510270141
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDA1MiBTYWx0ZWRfX7LvmlJXceQLp
- A0rFVaBPV6nqqtCjKgNJSqvtvQmV4YTonLWqnyLWTA+fP8qgaAkIsBE2kom9nwrD+A5EVww6XUj
- ySWA8ZJhOM5bRnwOnd7LgbVvdsOuDka9lyUSM50wePBJU1wWB7zY0vu1FBZACPCvT4r73zLVmuv
- 5PDDo9AZo8fcJbv2qtjeMBye8OJCJfCsXR4A7Z3Sh8IT6FgeX5DoqfzIYKFhS4zob9ZJpRt0hqQ
- P2jrrUkkUdqqow2ha55eHu+MhMQ4ri8E+h070E0us2yD57H+k7XPBDvlhaMokzt2MoNBcUnIvvF
- 175pqiJXSh0mCOwQoymG7bwx2E3hI2R5zvKDBAZW4XlNrrniAU+/Ihp1drjwVzDRr8uq7q45W0N
- XQolnl/xwA64Cej+9tknctUzP64DuwaepK5r5GMnRwjImgwdcXo=
-X-Proofpoint-GUID: OX92UsXqqRaENMUljFwpkNulwrksolxI
-X-Proofpoint-ORIG-GUID: OX92UsXqqRaENMUljFwpkNulwrksolxI
-X-Authority-Analysis: v=2.4 cv=abVsXBot c=1 sm=1 tr=0 ts=68ff8cb2 b=1 cx=c_pps
- a=qoll8+KPOyaMroiJ2sR5sw==:117
- a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=GoEa3M9JfhUA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=MQrfSksWscPBuBvOILcA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 cc=ntf awl=host:12092
-Received-SPF: pass client-ip=205.220.165.32; envelope-from=jag.raman@oracle.com;
- helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -251,200 +106,1247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gT2N0IDI3LCAyMDI1LCBhdCA3OjIz4oCvQU0sIFBoaWxpcHBlIE1hdGhpZXUtRGF1
-ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4gd3JvdGU6DQo+IA0KPiBObyBuZWVkIHRvIHNldCBERVZJ
-Q0VfQ0FURUdPUllfQlJJREdFIGZvciBlYWNoIGRldmljZQ0KPiBpbXBsZW1lbnRpbmcgVFlQRV9Q
-Q0lfSE9TVF9CUklER0U6IHNldCBpdCBvbmNlIGluIHRoZQ0KPiBwYXJlbnQuDQo+IA0KPiBTaWdu
-ZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQo+
-IC0tLQ0KPiBody9wY2ktaG9zdC9hcnRpY2lhLmMgICAgIHwgMSAtDQo+IGh3L3BjaS1ob3N0L2Fz
-cGVlZF9wY2llLmMgfCAxIC0NCj4gaHcvcGNpLWhvc3QvZGVzaWdud2FyZS5jICB8IDMgLS0tDQo+
-IGh3L3BjaS1ob3N0L2dwZXguYyAgICAgICAgfCAyIC0tDQo+IGh3L3BjaS1ob3N0L2dyYWNrbGUu
-YyAgICAgfCAxIC0NCj4gaHcvcGNpLWhvc3QvZ3Q2NDEyMC5jICAgICB8IDEgLQ0KPiBody9wY2kt
-aG9zdC9tdjY0MzYxLmMgICAgIHwgMSAtDQo+IGh3L3BjaS1ob3N0L3Budl9waGIuYyAgICAgfCAx
-IC0NCj4gaHcvcGNpLWhvc3QvcHBjZTUwMC5jICAgICB8IDEgLQ0KPiBody9wY2ktaG9zdC9xMzUu
-YyAgICAgICAgIHwgMSAtDQo+IGh3L3BjaS1ob3N0L3JhdmVuLmMgICAgICAgfCAxIC0NCj4gaHcv
-cGNpLWhvc3QvcmVtb3RlLmMgICAgICB8IDEgLQ0KPiBody9wY2ktaG9zdC9zYWJyZS5jICAgICAg
-IHwgMSAtDQo+IGh3L3BjaS1ob3N0L3VuaW5vcnRoLmMgICAgfCA0IC0tLS0NCj4gaHcvcGNpLWhv
-c3QveGlsaW54LXBjaWUuYyB8IDIgLS0NCj4gaHcvcGNpL3BjaV9ob3N0LmMgICAgICAgICB8IDEg
-Kw0KPiAxNiBmaWxlcyBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMjIgZGVsZXRpb25zKC0pDQo+
-IA0KPiBkaWZmIC0tZ2l0IGEvaHcvcGNpLWhvc3QvYXJ0aWNpYS5jIGIvaHcvcGNpLWhvc3QvYXJ0
-aWNpYS5jDQo+IGluZGV4IGNjNjVhYWMyYTg3Li40N2YyMjM4NzlmMCAxMDA2NDQNCj4gLS0tIGEv
-aHcvcGNpLWhvc3QvYXJ0aWNpYS5jDQo+ICsrKyBiL2h3L3BjaS1ob3N0L2FydGljaWEuYw0KPiBA
-QCAtMjAwLDcgKzIwMCw2IEBAIHN0YXRpYyB2b2lkIGFydGljaWFfY2xhc3NfaW5pdChPYmplY3RD
-bGFzcyAqa2xhc3MsIGNvbnN0IHZvaWQgKmRhdGEpDQo+ICAgICBEZXZpY2VDbGFzcyAqZGMgPSBE
-RVZJQ0VfQ0xBU1Moa2xhc3MpOw0KPiANCj4gICAgIGRjLT5yZWFsaXplID0gYXJ0aWNpYV9yZWFs
-aXplOw0KPiAtICAgIHNldF9iaXQoREVWSUNFX0NBVEVHT1JZX0JSSURHRSwgZGMtPmNhdGVnb3Jp
-ZXMpOw0KPiB9DQo+IA0KPiAvKiBUWVBFX0FSVElDSUFfUENJX0hPU1QgKi8NCj4gZGlmZiAtLWdp
-dCBhL2h3L3BjaS1ob3N0L2FzcGVlZF9wY2llLmMgYi9ody9wY2ktaG9zdC9hc3BlZWRfcGNpZS5j
-DQo+IGluZGV4IGY3NTkzNDQ0ZmM0Li4yNDk5ZDNmZTY4MCAxMDA2NDQNCj4gLS0tIGEvaHcvcGNp
-LWhvc3QvYXNwZWVkX3BjaWUuYw0KPiArKysgYi9ody9wY2ktaG9zdC9hc3BlZWRfcGNpZS5jDQo+
-IEBAIC0zMTIsNyArMzEyLDYgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3BjaWVfcmNfY2xhc3NfaW5p
-dChPYmplY3RDbGFzcyAqa2xhc3MsIGNvbnN0IHZvaWQgKmRhdGEpDQo+ICAgICBkYy0+ZGVzYyA9
-ICJBU1BFRUQgUENJZSBSQyI7DQo+ICAgICBkYy0+cmVhbGl6ZSA9IGFzcGVlZF9wY2llX3JjX3Jl
-YWxpemU7DQo+ICAgICBkYy0+ZndfbmFtZSA9ICJwY2kiOw0KPiAtICAgIHNldF9iaXQoREVWSUNF
-X0NBVEVHT1JZX0JSSURHRSwgZGMtPmNhdGVnb3JpZXMpOw0KPiANCj4gICAgIGhjLT5yb290X2J1
-c19wYXRoID0gYXNwZWVkX3BjaWVfcmNfcm9vdF9idXNfcGF0aDsNCj4gICAgIGRldmljZV9jbGFz
-c19zZXRfcHJvcHMoZGMsIGFzcGVlZF9wY2llX3JjX3Byb3BzKTsNCj4gZGlmZiAtLWdpdCBhL2h3
-L3BjaS1ob3N0L2Rlc2lnbndhcmUuYyBiL2h3L3BjaS1ob3N0L2Rlc2lnbndhcmUuYw0KPiBpbmRl
-eCBmNmU0OWNlOWI4ZC4uYjBiNTFhZDk1MTcgMTAwNjQ0DQo+IC0tLSBhL2h3L3BjaS1ob3N0L2Rl
-c2lnbndhcmUuYw0KPiArKysgYi9ody9wY2ktaG9zdC9kZXNpZ253YXJlLmMNCj4gQEAgLTU5Myw4
-ICs1OTMsNiBAQCBzdGF0aWMgdm9pZCBkZXNpZ253YXJlX3BjaWVfcm9vdF9jbGFzc19pbml0KE9i
-amVjdENsYXNzICprbGFzcywNCj4gICAgIFBDSURldmljZUNsYXNzICprID0gUENJX0RFVklDRV9D
-TEFTUyhrbGFzcyk7DQo+ICAgICBEZXZpY2VDbGFzcyAqZGMgPSBERVZJQ0VfQ0xBU1Moa2xhc3Mp
-Ow0KPiANCj4gLSAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29y
-aWVzKTsNCj4gLQ0KPiAgICAgay0+dmVuZG9yX2lkID0gUENJX1ZFTkRPUl9JRF9TWU5PUFNZUzsN
-Cj4gICAgIGstPmRldmljZV9pZCA9IDB4QUJDRDsNCj4gICAgIGstPnJldmlzaW9uID0gMDsNCj4g
-QEAgLTczNiw3ICs3MzQsNiBAQCBzdGF0aWMgdm9pZCBkZXNpZ253YXJlX3BjaWVfaG9zdF9jbGFz
-c19pbml0KE9iamVjdENsYXNzICprbGFzcywNCj4gDQo+ICAgICBoYy0+cm9vdF9idXNfcGF0aCA9
-IGRlc2lnbndhcmVfcGNpZV9ob3N0X3Jvb3RfYnVzX3BhdGg7DQo+ICAgICBkYy0+cmVhbGl6ZSA9
-IGRlc2lnbndhcmVfcGNpZV9ob3N0X3JlYWxpemU7DQo+IC0gICAgc2V0X2JpdChERVZJQ0VfQ0FU
-RUdPUllfQlJJREdFLCBkYy0+Y2F0ZWdvcmllcyk7DQo+ICAgICBkYy0+ZndfbmFtZSA9ICJwY2ki
-Ow0KPiAgICAgZGMtPnZtc2QgPSAmdm1zdGF0ZV9kZXNpZ253YXJlX3BjaWVfaG9zdDsNCj4gfQ0K
-PiBkaWZmIC0tZ2l0IGEvaHcvcGNpLWhvc3QvZ3BleC5jIGIvaHcvcGNpLWhvc3QvZ3BleC5jDQo+
-IGluZGV4IGI4MDZhMjI4NmY3Li41ZjgwOTAyOGJlMiAxMDA2NDQNCj4gLS0tIGEvaHcvcGNpLWhv
-c3QvZ3BleC5jDQo+ICsrKyBiL2h3L3BjaS1ob3N0L2dwZXguYw0KPiBAQCAtMjAwLDcgKzIwMCw2
-IEBAIHN0YXRpYyB2b2lkIGdwZXhfaG9zdF9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywg
-Y29uc3Qgdm9pZCAqZGF0YSkNCj4gICAgIGhjLT5yb290X2J1c19wYXRoID0gZ3BleF9ob3N0X3Jv
-b3RfYnVzX3BhdGg7DQo+ICAgICBkYy0+cmVhbGl6ZSA9IGdwZXhfaG9zdF9yZWFsaXplOw0KPiAg
-ICAgZGMtPnVucmVhbGl6ZSA9IGdwZXhfaG9zdF91bnJlYWxpemU7DQo+IC0gICAgc2V0X2JpdChE
-RVZJQ0VfQ0FURUdPUllfQlJJREdFLCBkYy0+Y2F0ZWdvcmllcyk7DQo+ICAgICBkYy0+ZndfbmFt
-ZSA9ICJwY2kiOw0KPiAgICAgZGV2aWNlX2NsYXNzX3NldF9wcm9wcyhkYywgZ3BleF9ob3N0X3By
-b3BlcnRpZXMpOw0KPiB9DQo+IEBAIC0yNDIsNyArMjQxLDYgQEAgc3RhdGljIHZvaWQgZ3BleF9y
-b290X2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmtsYXNzLCBjb25zdCB2b2lkICpkYXRhKQ0KPiAg
-ICAgUENJRGV2aWNlQ2xhc3MgKmsgPSBQQ0lfREVWSUNFX0NMQVNTKGtsYXNzKTsNCj4gICAgIERl
-dmljZUNsYXNzICpkYyA9IERFVklDRV9DTEFTUyhrbGFzcyk7DQo+IA0KPiAtICAgIHNldF9iaXQo
-REVWSUNFX0NBVEVHT1JZX0JSSURHRSwgZGMtPmNhdGVnb3JpZXMpOw0KPiAgICAgZGMtPmRlc2Mg
-PSAiUUVNVSBnZW5lcmljIFBDSWUgaG9zdCBicmlkZ2UiOw0KPiAgICAgZGMtPnZtc2QgPSAmdm1z
-dGF0ZV9ncGV4X3Jvb3Q7DQo+ICAgICBrLT52ZW5kb3JfaWQgPSBQQ0lfVkVORE9SX0lEX1JFREhB
-VDsNCj4gZGlmZiAtLWdpdCBhL2h3L3BjaS1ob3N0L2dyYWNrbGUuYyBiL2h3L3BjaS1ob3N0L2dy
-YWNrbGUuYw0KPiBpbmRleCBmOWRhNWE5MDhjMS4uZmE4NzJjMTdlM2IgMTAwNjQ0DQo+IC0tLSBh
-L2h3L3BjaS1ob3N0L2dyYWNrbGUuYw0KPiArKysgYi9ody9wY2ktaG9zdC9ncmFja2xlLmMNCj4g
-QEAgLTE0MCw3ICsxNDAsNiBAQCBzdGF0aWMgdm9pZCBncmFja2xlX2NsYXNzX2luaXQoT2JqZWN0
-Q2xhc3MgKmtsYXNzLCBjb25zdCB2b2lkICpkYXRhKQ0KPiANCj4gICAgIGRjLT5yZWFsaXplID0g
-Z3JhY2tsZV9yZWFsaXplOw0KPiAgICAgZGV2aWNlX2NsYXNzX3NldF9wcm9wcyhkYywgZ3JhY2ts
-ZV9wcm9wZXJ0aWVzKTsNCj4gLSAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRj
-LT5jYXRlZ29yaWVzKTsNCj4gICAgIGRjLT5md19uYW1lID0gInBjaSI7DQo+ICAgICBzYmMtPmV4
-cGxpY2l0X29md191bml0X2FkZHJlc3MgPSBncmFja2xlX29md191bml0X2FkZHJlc3M7DQo+IH0N
-Cj4gZGlmZiAtLWdpdCBhL2h3L3BjaS1ob3N0L2d0NjQxMjAuYyBiL2h3L3BjaS1ob3N0L2d0NjQx
-MjAuYw0KPiBpbmRleCBiMWQ5NmY2MmZlOS4uYmZmYTExNjU1ODAgMTAwNjQ0DQo+IC0tLSBhL2h3
-L3BjaS1ob3N0L2d0NjQxMjAuYw0KPiArKysgYi9ody9wY2ktaG9zdC9ndDY0MTIwLmMNCj4gQEAg
-LTEyOTgsNyArMTI5OCw2IEBAIHN0YXRpYyB2b2lkIGd0NjQxMjBfY2xhc3NfaW5pdChPYmplY3RD
-bGFzcyAqa2xhc3MsIGNvbnN0IHZvaWQgKmRhdGEpDQo+IHsNCj4gICAgIERldmljZUNsYXNzICpk
-YyA9IERFVklDRV9DTEFTUyhrbGFzcyk7DQo+IA0KPiAtICAgIHNldF9iaXQoREVWSUNFX0NBVEVH
-T1JZX0JSSURHRSwgZGMtPmNhdGVnb3JpZXMpOw0KPiAgICAgZGV2aWNlX2NsYXNzX3NldF9wcm9w
-cyhkYywgZ3Q2NDEyMF9wcm9wZXJ0aWVzKTsNCj4gICAgIGRjLT5yZWFsaXplID0gZ3Q2NDEyMF9y
-ZWFsaXplOw0KPiAgICAgZGV2aWNlX2NsYXNzX3NldF9sZWdhY3lfcmVzZXQoZGMsIGd0NjQxMjBf
-cmVzZXQpOw0KPiBkaWZmIC0tZ2l0IGEvaHcvcGNpLWhvc3QvbXY2NDM2MS5jIGIvaHcvcGNpLWhv
-c3QvbXY2NDM2MS5jDQo+IGluZGV4IGUwNWI2NzcwMTAyLi5lNWU2NjE0YjEzOSAxMDA2NDQNCj4g
-LS0tIGEvaHcvcGNpLWhvc3QvbXY2NDM2MS5jDQo+ICsrKyBiL2h3L3BjaS1ob3N0L212NjQzNjEu
-Yw0KPiBAQCAtMTA4LDcgKzEwOCw2IEBAIHN0YXRpYyB2b2lkIG12NjQzNjFfcGNpaG9zdF9jbGFz
-c19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9pZCAqZGF0YSkNCj4gDQo+ICAgICBk
-Yy0+cmVhbGl6ZSA9IG12NjQzNjFfcGNpaG9zdF9yZWFsaXplOw0KPiAgICAgZGV2aWNlX2NsYXNz
-X3NldF9wcm9wcyhkYywgbXY2NDM2MV9wY2lob3N0X3Byb3BzKTsNCj4gLSAgICBzZXRfYml0KERF
-VklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29yaWVzKTsNCj4gfQ0KPiANCj4gc3RhdGlj
-IGNvbnN0IFR5cGVJbmZvIG12NjQzNjFfcGNpaG9zdF9pbmZvID0gew0KPiBkaWZmIC0tZ2l0IGEv
-aHcvcGNpLWhvc3QvcG52X3BoYi5jIGIvaHcvcGNpLWhvc3QvcG52X3BoYi5jDQo+IGluZGV4IDRi
-MGNlZDc5YjA4Li5lMDdjZjhhMGQwZiAxMDA2NDQNCj4gLS0tIGEvaHcvcGNpLWhvc3QvcG52X3Bo
-Yi5jDQo+ICsrKyBiL2h3L3BjaS1ob3N0L3Budl9waGIuYw0KPiBAQCAtMjAyLDcgKzIwMiw2IEBA
-IHN0YXRpYyB2b2lkIHBudl9waGJfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIGNvbnN0
-IHZvaWQgKmRhdGEpDQo+ICAgICBoYy0+cm9vdF9idXNfcGF0aCA9IHBudl9waGJfcm9vdF9idXNf
-cGF0aDsNCj4gICAgIGRjLT5yZWFsaXplID0gcG52X3BoYl9yZWFsaXplOw0KPiAgICAgZGV2aWNl
-X2NsYXNzX3NldF9wcm9wcyhkYywgcG52X3BoYl9wcm9wZXJ0aWVzKTsNCj4gLSAgICBzZXRfYml0
-KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29yaWVzKTsNCj4gICAgIGRjLT51c2Vy
-X2NyZWF0YWJsZSA9IHRydWU7DQo+IH0NCj4gDQo+IGRpZmYgLS1naXQgYS9ody9wY2ktaG9zdC9w
-cGNlNTAwLmMgYi9ody9wY2ktaG9zdC9wcGNlNTAwLmMNCj4gaW5kZXggOTc1ZDE5MWNjYjguLmVk
-YWRjMzUzODRjIDEwMDY0NA0KPiAtLS0gYS9ody9wY2ktaG9zdC9wcGNlNTAwLmMNCj4gKysrIGIv
-aHcvcGNpLWhvc3QvcHBjZTUwMC5jDQo+IEBAIC01MTYsNyArNTE2LDYgQEAgc3RhdGljIHZvaWQg
-ZTUwMF9wY2lob3N0X2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmtsYXNzLCBjb25zdCB2b2lkICpk
-YXRhKQ0KPiAgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NMQVNTKGtsYXNzKTsNCj4gDQo+
-ICAgICBkYy0+cmVhbGl6ZSA9IGU1MDBfcGNpaG9zdF9yZWFsaXplOw0KPiAtICAgIHNldF9iaXQo
-REVWSUNFX0NBVEVHT1JZX0JSSURHRSwgZGMtPmNhdGVnb3JpZXMpOw0KPiAgICAgZGV2aWNlX2Ns
-YXNzX3NldF9wcm9wcyhkYywgcGNpaG9zdF9wcm9wZXJ0aWVzKTsNCj4gICAgIGRjLT52bXNkID0g
-JnZtc3RhdGVfcHBjZTUwMF9wY2k7DQo+IH0NCj4gZGlmZiAtLWdpdCBhL2h3L3BjaS1ob3N0L3Ez
-NS5jIGIvaHcvcGNpLWhvc3QvcTM1LmMNCj4gaW5kZXggMTk1MWFlNDQwY2MuLmMxMzQ2NzlmYTBj
-IDEwMDY0NA0KPiAtLS0gYS9ody9wY2ktaG9zdC9xMzUuYw0KPiArKysgYi9ody9wY2ktaG9zdC9x
-MzUuYw0KPiBAQCAtMTk0LDcgKzE5NCw2IEBAIHN0YXRpYyB2b2lkIHEzNV9ob3N0X2NsYXNzX2lu
-aXQoT2JqZWN0Q2xhc3MgKmtsYXNzLCBjb25zdCB2b2lkICpkYXRhKQ0KPiAgICAgZGV2aWNlX2Ns
-YXNzX3NldF9wcm9wcyhkYywgcTM1X2hvc3RfcHJvcHMpOw0KPiAgICAgLyogUmVhc29uOiBuZWVk
-cyB0byBiZSB3aXJlZCB1cCBieSBwY19xMzVfaW5pdCAqLw0KPiAgICAgZGMtPnVzZXJfY3JlYXRh
-YmxlID0gZmFsc2U7DQo+IC0gICAgc2V0X2JpdChERVZJQ0VfQ0FURUdPUllfQlJJREdFLCBkYy0+
-Y2F0ZWdvcmllcyk7DQo+ICAgICBkYy0+ZndfbmFtZSA9ICJwY2kiOw0KPiB9DQo+IA0KPiBkaWZm
-IC0tZ2l0IGEvaHcvcGNpLWhvc3QvcmF2ZW4uYyBiL2h3L3BjaS1ob3N0L3JhdmVuLmMNCj4gaW5k
-ZXggZWFjZmZjODZkODQuLjY2MWE0MjIzZDY5IDEwMDY0NA0KPiAtLS0gYS9ody9wY2ktaG9zdC9y
-YXZlbi5jDQo+ICsrKyBiL2h3L3BjaS1ob3N0L3JhdmVuLmMNCj4gQEAgLTM2NSw3ICszNjUsNiBA
-QCBzdGF0aWMgdm9pZCByYXZlbl9wY2lob3N0X2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmtsYXNz
-LCBjb25zdCB2b2lkICpkYXRhKQ0KPiB7DQo+ICAgICBEZXZpY2VDbGFzcyAqZGMgPSBERVZJQ0Vf
-Q0xBU1Moa2xhc3MpOw0KPiANCj4gLSAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0Us
-IGRjLT5jYXRlZ29yaWVzKTsNCj4gICAgIGRjLT5yZWFsaXplID0gcmF2ZW5fcGNpaG9zdF9yZWFs
-aXplZm47DQo+ICAgICBkYy0+ZndfbmFtZSA9ICJwY2kiOw0KPiB9DQo+IGRpZmYgLS1naXQgYS9o
-dy9wY2ktaG9zdC9yZW1vdGUuYyBiL2h3L3BjaS1ob3N0L3JlbW90ZS5jDQo+IGluZGV4IGU2ZDJh
-ZjQ1MDJhLi45NTliZWI1YzMwMSAxMDA2NDQNCj4gLS0tIGEvaHcvcGNpLWhvc3QvcmVtb3RlLmMN
-Cj4gKysrIGIvaHcvcGNpLWhvc3QvcmVtb3RlLmMNCj4gQEAgLTU1LDcgKzU1LDYgQEAgc3RhdGlj
-IHZvaWQgcmVtb3RlX3BjaWhvc3RfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIGNvbnN0
-IHZvaWQgKmRhdGEpDQo+ICAgICBkYy0+cmVhbGl6ZSA9IHJlbW90ZV9wY2lob3N0X3JlYWxpemU7
-DQo+IA0KPiAgICAgZGMtPnVzZXJfY3JlYXRhYmxlID0gZmFsc2U7DQo+IC0gICAgc2V0X2JpdChE
-RVZJQ0VfQ0FURUdPUllfQlJJREdFLCBkYy0+Y2F0ZWdvcmllcyk7DQoNClRoYW5rcyBmb3IgdGhl
-IHBhdGNoLCBQaGlsaXBwZSEgVGhlIGNoYW5nZSB0byByZW1vdGUuYyBsb29rcyBnb29kLg0KLS0N
-CkphZw0KDQo+ICAgICBkYy0+ZndfbmFtZSA9ICJwY2kiOw0KPiB9DQo+IA0KPiBkaWZmIC0tZ2l0
-IGEvaHcvcGNpLWhvc3Qvc2FicmUuYyBiL2h3L3BjaS1ob3N0L3NhYnJlLmMNCj4gaW5kZXggNTM4
-NjI0YzUwNzkuLmY5NWU1ZGI1ODNhIDEwMDY0NA0KPiAtLS0gYS9ody9wY2ktaG9zdC9zYWJyZS5j
-DQo+ICsrKyBiL2h3L3BjaS1ob3N0L3NhYnJlLmMNCj4gQEAgLTUwNSw3ICs1MDUsNiBAQCBzdGF0
-aWMgdm9pZCBzYWJyZV9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9pZCAq
-ZGF0YSkNCj4gICAgIGRjLT5yZWFsaXplID0gc2FicmVfcmVhbGl6ZTsNCj4gICAgIGRldmljZV9j
-bGFzc19zZXRfbGVnYWN5X3Jlc2V0KGRjLCBzYWJyZV9yZXNldCk7DQo+ICAgICBkZXZpY2VfY2xh
-c3Nfc2V0X3Byb3BzKGRjLCBzYWJyZV9wcm9wZXJ0aWVzKTsNCj4gLSAgICBzZXRfYml0KERFVklD
-RV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29yaWVzKTsNCj4gICAgIGRjLT5md19uYW1lID0g
-InBjaSI7DQo+ICAgICBzYmMtPmV4cGxpY2l0X29md191bml0X2FkZHJlc3MgPSBzYWJyZV9vZndf
-dW5pdF9hZGRyZXNzOw0KPiB9DQo+IGRpZmYgLS1naXQgYS9ody9wY2ktaG9zdC91bmlub3J0aC5j
-IGIvaHcvcGNpLWhvc3QvdW5pbm9ydGguYw0KPiBpbmRleCAxOTQwMzdkNmU3NS4uZDMzN2EyZmQ2
-MmMgMTAwNjQ0DQo+IC0tLSBhL2h3L3BjaS1ob3N0L3VuaW5vcnRoLmMNCj4gKysrIGIvaHcvcGNp
-LWhvc3QvdW5pbm9ydGguYw0KPiBAQCAtNDM1LDcgKzQzNSw2IEBAIHN0YXRpYyB2b2lkIHBjaV91
-bmluX21haW5fY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIGNvbnN0IHZvaWQgKmRhdGEp
-DQo+IA0KPiAgICAgZGMtPnJlYWxpemUgPSBwY2lfdW5pbl9tYWluX3JlYWxpemU7DQo+ICAgICBk
-ZXZpY2VfY2xhc3Nfc2V0X3Byb3BzKGRjLCBwY2lfdW5pbl9tYWluX3BjaV9ob3N0X3Byb3BzKTsN
-Cj4gLSAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29yaWVzKTsN
-Cj4gICAgIGRjLT5md19uYW1lID0gInBjaSI7DQo+ICAgICBzYmMtPmV4cGxpY2l0X29md191bml0
-X2FkZHJlc3MgPSBwY2lfdW5pbl9tYWluX29md191bml0X2FkZHJlc3M7DQo+IH0NCj4gQEAgLTQ1
-Myw3ICs0NTIsNiBAQCBzdGF0aWMgdm9pZCBwY2lfdTNfYWdwX2NsYXNzX2luaXQoT2JqZWN0Q2xh
-c3MgKmtsYXNzLCBjb25zdCB2b2lkICpkYXRhKQ0KPiAgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVW
-SUNFX0NMQVNTKGtsYXNzKTsNCj4gDQo+ICAgICBkYy0+cmVhbGl6ZSA9IHBjaV91M19hZ3BfcmVh
-bGl6ZTsNCj4gLSAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29y
-aWVzKTsNCj4gfQ0KPiANCj4gc3RhdGljIGNvbnN0IFR5cGVJbmZvIHBjaV91M19hZ3BfaW5mbyA9
-IHsNCj4gQEAgLTQ2OSw3ICs0NjcsNiBAQCBzdGF0aWMgdm9pZCBwY2lfdW5pbl9hZ3BfY2xhc3Nf
-aW5pdChPYmplY3RDbGFzcyAqa2xhc3MsIGNvbnN0IHZvaWQgKmRhdGEpDQo+ICAgICBEZXZpY2VD
-bGFzcyAqZGMgPSBERVZJQ0VfQ0xBU1Moa2xhc3MpOw0KPiANCj4gICAgIGRjLT5yZWFsaXplID0g
-cGNpX3VuaW5fYWdwX3JlYWxpemU7DQo+IC0gICAgc2V0X2JpdChERVZJQ0VfQ0FURUdPUllfQlJJ
-REdFLCBkYy0+Y2F0ZWdvcmllcyk7DQo+IH0NCj4gDQo+IHN0YXRpYyBjb25zdCBUeXBlSW5mbyBw
-Y2lfdW5pbl9hZ3BfaW5mbyA9IHsNCj4gQEAgLTQ4NSw3ICs0ODIsNiBAQCBzdGF0aWMgdm9pZCBw
-Y2lfdW5pbl9pbnRlcm5hbF9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9p
-ZCAqZGF0YSkNCj4gICAgIERldmljZUNsYXNzICpkYyA9IERFVklDRV9DTEFTUyhrbGFzcyk7DQo+
-IA0KPiAgICAgZGMtPnJlYWxpemUgPSBwY2lfdW5pbl9pbnRlcm5hbF9yZWFsaXplOw0KPiAtICAg
-IHNldF9iaXQoREVWSUNFX0NBVEVHT1JZX0JSSURHRSwgZGMtPmNhdGVnb3JpZXMpOw0KPiB9DQo+
-IA0KPiBzdGF0aWMgY29uc3QgVHlwZUluZm8gcGNpX3VuaW5faW50ZXJuYWxfaW5mbyA9IHsNCj4g
-ZGlmZiAtLWdpdCBhL2h3L3BjaS1ob3N0L3hpbGlueC1wY2llLmMgYi9ody9wY2ktaG9zdC94aWxp
-bngtcGNpZS5jDQo+IGluZGV4IGM3MTQ5MmRlOWU3Li4xNTQwNTMzMjIzYyAxMDA2NDQNCj4gLS0t
-IGEvaHcvcGNpLWhvc3QveGlsaW54LXBjaWUuYw0KPiArKysgYi9ody9wY2ktaG9zdC94aWxpbngt
-cGNpZS5jDQo+IEBAIC0xNzIsNyArMTcyLDYgQEAgc3RhdGljIHZvaWQgeGlsaW54X3BjaWVfaG9z
-dF9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9pZCAqZGF0YSkNCj4gDQo+
-ICAgICBoYy0+cm9vdF9idXNfcGF0aCA9IHhpbGlueF9wY2llX2hvc3Rfcm9vdF9idXNfcGF0aDsN
-Cj4gICAgIGRjLT5yZWFsaXplID0geGlsaW54X3BjaWVfaG9zdF9yZWFsaXplOw0KPiAtICAgIHNl
-dF9iaXQoREVWSUNFX0NBVEVHT1JZX0JSSURHRSwgZGMtPmNhdGVnb3JpZXMpOw0KPiAgICAgZGMt
-PmZ3X25hbWUgPSAicGNpIjsNCj4gICAgIGRldmljZV9jbGFzc19zZXRfcHJvcHMoZGMsIHhpbGlu
-eF9wY2llX2hvc3RfcHJvcHMpOw0KPiB9DQo+IEBAIC0yOTEsNyArMjkwLDYgQEAgc3RhdGljIHZv
-aWQgeGlsaW54X3BjaWVfcm9vdF9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qg
-dm9pZCAqZGF0YSkNCj4gICAgIFBDSURldmljZUNsYXNzICprID0gUENJX0RFVklDRV9DTEFTUyhr
-bGFzcyk7DQo+ICAgICBEZXZpY2VDbGFzcyAqZGMgPSBERVZJQ0VfQ0xBU1Moa2xhc3MpOw0KPiAN
-Cj4gLSAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29yaWVzKTsN
-Cj4gICAgIGRjLT5kZXNjID0gIlhpbGlueCBBWEktUENJZSBIb3N0IEJyaWRnZSI7DQo+ICAgICBr
-LT52ZW5kb3JfaWQgPSBQQ0lfVkVORE9SX0lEX1hJTElOWDsNCj4gICAgIGstPmRldmljZV9pZCA9
-IDB4NzAyMTsNCj4gZGlmZiAtLWdpdCBhL2h3L3BjaS9wY2lfaG9zdC5jIGIvaHcvcGNpL3BjaV9o
-b3N0LmMNCj4gaW5kZXggNzE3OWQ5OTE3OGIuLmI1YzYyNGUxMmU4IDEwMDY0NA0KPiAtLS0gYS9o
-dy9wY2kvcGNpX2hvc3QuYw0KPiArKysgYi9ody9wY2kvcGNpX2hvc3QuYw0KPiBAQCAtMjQ1LDYg
-KzI0NSw3IEBAIHN0YXRpYyB2b2lkIHBjaV9ob3N0X2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmts
-YXNzLCBjb25zdCB2b2lkICpkYXRhKQ0KPiAgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NM
-QVNTKGtsYXNzKTsNCj4gICAgIGRldmljZV9jbGFzc19zZXRfcHJvcHMoZGMsIHBjaV9ob3N0X3By
-b3BlcnRpZXNfY29tbW9uKTsNCj4gICAgIGRjLT52bXNkID0gJnZtc3RhdGVfcGNpaG9zdDsNCj4g
-KyAgICBzZXRfYml0KERFVklDRV9DQVRFR09SWV9CUklER0UsIGRjLT5jYXRlZ29yaWVzKTsNCj4g
-fQ0KPiANCj4gc3RhdGljIGNvbnN0IFR5cGVJbmZvIHBjaV9ob3N0X3R5cGVfaW5mbyA9IHsNCj4g
-LS0gDQo+IDIuNTEuMA0KPiANCg0K
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+There is no clear need for this extra intermediary structure between
+the audio backend and its user.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ audio/audio.h                       | 18 ++++++------------
+ audio/audio_int.h                   |  3 ---
+ audio/audio_template.h              | 22 ++++++++++------------
+ hw/audio/lm4549.h                   |  2 +-
+ include/hw/audio/asc.h              |  2 +-
+ include/hw/audio/virtio-snd.h       |  2 +-
+ include/hw/display/xlnx_dp.h        |  2 +-
+ include/hw/isa/vt82c686.h           |  2 +-
+ include/hw/qdev-properties-system.h |  2 +-
+ audio/audio.c                       | 29 ++++++++++-------------------
+ hw/audio/ac97.c                     | 25 ++++++++++++-------------
+ hw/audio/adlib.c                    |  9 ++++-----
+ hw/audio/asc.c                      |  9 +++------
+ hw/audio/cs4231a.c                  |  8 ++++----
+ hw/audio/es1370.c                   | 23 +++++++++++------------
+ hw/audio/gus.c                      |  9 ++++-----
+ hw/audio/hda-codec.c                | 15 +++++++--------
+ hw/audio/lm4549.c                   |  8 ++++----
+ hw/audio/pcspk.c                    |  9 +++++----
+ hw/audio/pl041.c                    |  2 +-
+ hw/audio/sb16.c                     | 16 ++++++++--------
+ hw/audio/via-ac97.c                 |  9 ++++-----
+ hw/audio/virtio-snd.c               | 13 ++++++-------
+ hw/audio/wm8750.c                   | 23 +++++++++++------------
+ hw/core/qdev-properties-system.c    | 11 +++++------
+ hw/display/xlnx_dp.c                |  6 +++---
+ hw/usb/dev-audio.c                  | 11 +++++------
+ 27 files changed, 129 insertions(+), 161 deletions(-)
+
+diff --git a/audio/audio.h b/audio/audio.h
+index 1d56f111ea..fdbc33ae0c 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -69,18 +69,12 @@ struct AudioBackendClass {
+ };
+ 
+ typedef struct AudioBackend AudioBackend;
+-typedef struct QEMUSoundCard {
+-    char *name;
+-    AudioBackend *be;
+-    QLIST_ENTRY (QEMUSoundCard) entries;
+-} QEMUSoundCard;
+ 
+ typedef struct QEMUAudioTimeStamp {
+     uint64_t old_ts;
+ } QEMUAudioTimeStamp;
+ 
+-bool AUD_register_card (const char *name, QEMUSoundCard *card, Error **errp);
+-void AUD_remove_card (QEMUSoundCard *card);
++bool AUD_backend_check (AudioBackend **be, Error **errp);
+ CaptureVoiceOut *AUD_add_capture(
+     AudioBackend *s,
+     struct audsettings *as,
+@@ -90,7 +84,7 @@ CaptureVoiceOut *AUD_add_capture(
+ void AUD_del_capture (CaptureVoiceOut *cap, void *cb_opaque);
+ 
+ SWVoiceOut *AUD_open_out (
+-    QEMUSoundCard *card,
++    AudioBackend *be,
+     SWVoiceOut *sw,
+     const char *name,
+     void *callback_opaque,
+@@ -98,7 +92,7 @@ SWVoiceOut *AUD_open_out (
+     struct audsettings *settings
+     );
+ 
+-void AUD_close_out (QEMUSoundCard *card, SWVoiceOut *sw);
++void AUD_close_out (AudioBackend *be, SWVoiceOut *sw);
+ size_t AUD_write (SWVoiceOut *sw, void *pcm_buf, size_t size);
+ int  AUD_get_buffer_size_out (SWVoiceOut *sw);
+ void AUD_set_active_out (SWVoiceOut *sw, int on);
+@@ -132,7 +126,7 @@ AUD_set_volume_in_lr(SWVoiceIn *sw, bool mut, uint8_t lvol, uint8_t rvol) {
+ }
+ 
+ SWVoiceIn *AUD_open_in (
+-    QEMUSoundCard *card,
++    AudioBackend *be,
+     SWVoiceIn *sw,
+     const char *name,
+     void *callback_opaque,
+@@ -140,7 +134,7 @@ SWVoiceIn *AUD_open_in (
+     struct audsettings *settings
+     );
+ 
+-void AUD_close_in (QEMUSoundCard *card, SWVoiceIn *sw);
++void AUD_close_in (AudioBackend *be, SWVoiceIn *sw);
+ size_t AUD_read (SWVoiceIn *sw, void *pcm_buf, size_t size);
+ void AUD_set_active_in (SWVoiceIn *sw, int on);
+ int  AUD_is_active_in (SWVoiceIn *sw);
+@@ -166,7 +160,7 @@ void audio_help(void);
+ 
+ AudioBackend *audio_be_by_name(const char *name, Error **errp);
+ AudioBackend *audio_get_default_audio_be(Error **errp);
+-const char *audio_get_id(QEMUSoundCard *card);
++const char *audio_be_get_id(AudioBackend *be);
+ 
+ #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
+     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 338af38fd1..c4453b3a29 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -111,7 +111,6 @@ typedef struct HWVoiceIn {
+ } HWVoiceIn;
+ 
+ struct SWVoiceOut {
+-    QEMUSoundCard *card;
+     AudioBackend *s;
+     struct audio_pcm_info info;
+     t_sample *conv;
+@@ -128,7 +127,6 @@ struct SWVoiceOut {
+ };
+ 
+ struct SWVoiceIn {
+-    QEMUSoundCard *card;
+     AudioBackend *s;
+     int active;
+     struct audio_pcm_info info;
+@@ -248,7 +246,6 @@ typedef struct AudioBackend {
+     void *drv_opaque;
+ 
+     QEMUTimer *ts;
+-    QLIST_HEAD (card_listhead, QEMUSoundCard) card_head;
+     QLIST_HEAD (hw_in_listhead, HWVoiceIn) hw_head_in;
+     QLIST_HEAD (hw_out_listhead, HWVoiceOut) hw_head_out;
+     QLIST_HEAD (cap_listhead, CaptureVoiceOut) cap_head;
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index b3c10a0709..d621008f38 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -473,11 +473,11 @@ static void glue (audio_close_, TYPE) (SW *sw)
+     g_free (sw);
+ }
+ 
+-void glue (AUD_close_, TYPE) (QEMUSoundCard *card, SW *sw)
++void glue(AUD_close_, TYPE)(AudioBackend *be, SW *sw)
+ {
+     if (sw) {
+-        if (audio_bug(__func__, !card)) {
+-            dolog ("card=%p\n", card);
++        if (audio_bug(__func__, !be)) {
++            dolog("backend=%p\n", be);
+             return;
+         }
+ 
+@@ -486,7 +486,7 @@ void glue (AUD_close_, TYPE) (QEMUSoundCard *card, SW *sw)
+ }
+ 
+ SW *glue (AUD_open_, TYPE) (
+-    QEMUSoundCard *card,
++    AudioBackend *be,
+     SW *sw,
+     const char *name,
+     void *callback_opaque ,
+@@ -494,16 +494,15 @@ SW *glue (AUD_open_, TYPE) (
+     struct audsettings *as
+     )
+ {
+-    AudioBackend *s;
++    AudioBackend *s = be;
+     AudiodevPerDirectionOptions *pdo;
+ 
+-    if (audio_bug(__func__, !card || !name || !callback_fn || !as)) {
+-        dolog ("card=%p name=%p callback_fn=%p as=%p\n",
+-               card, name, callback_fn, as);
++    if (audio_bug(__func__, !be || !name || !callback_fn || !as)) {
++        dolog("backend=%p name=%p callback_fn=%p as=%p\n",
++              be, name, callback_fn, as);
+         goto fail;
+     }
+ 
+-    s = card->be;
+     pdo = glue(audio_get_pdo_, TYPE)(s->dev);
+ 
+     ldebug ("open %s, freq %d, nchannels %d, fmt %d\n",
+@@ -524,7 +523,7 @@ SW *glue (AUD_open_, TYPE) (
+     }
+ 
+     if (!pdo->fixed_settings && sw) {
+-        glue (AUD_close_, TYPE) (card, sw);
++        glue(AUD_close_, TYPE)(be, sw);
+         sw = NULL;
+     }
+ 
+@@ -548,7 +547,6 @@ SW *glue (AUD_open_, TYPE) (
+         }
+     }
+ 
+-    sw->card = card;
+     sw->vol = nominal_volume;
+     sw->callback.fn = callback_fn;
+     sw->callback.opaque = callback_opaque;
+@@ -562,7 +560,7 @@ SW *glue (AUD_open_, TYPE) (
+     return sw;
+ 
+  fail:
+-    glue (AUD_close_, TYPE) (card, sw);
++    glue(AUD_close_, TYPE)(be, sw);
+     return NULL;
+ }
+ 
+diff --git a/hw/audio/lm4549.h b/hw/audio/lm4549.h
+index 61c3ab12dd..1d858e2a04 100644
+--- a/hw/audio/lm4549.h
++++ b/hw/audio/lm4549.h
+@@ -21,7 +21,7 @@ typedef void (*lm4549_callback)(void *opaque);
+ 
+ 
+ typedef struct {
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     SWVoiceOut *voice;
+     uint32_t voice_is_active;
+ 
+diff --git a/include/hw/audio/asc.h b/include/hw/audio/asc.h
+index 04fac270b6..a60c2f597c 100644
+--- a/include/hw/audio/asc.h
++++ b/include/hw/audio/asc.h
+@@ -61,7 +61,7 @@ struct ASCState {
+     MemoryRegion mem_regs;
+     MemoryRegion mem_extregs;
+ 
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     SWVoiceOut *voice;
+     uint8_t *mixbuf;
+     int samples;
+diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
+index 8dafedb276..0ad80bc9be 100644
+--- a/include/hw/audio/virtio-snd.h
++++ b/include/hw/audio/virtio-snd.h
+@@ -216,7 +216,7 @@ struct VirtIOSound {
+     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
+     uint64_t features;
+     VirtIOSoundPCM *pcm;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     VMChangeStateEntry *vmstate;
+     virtio_snd_config snd_conf;
+     QemuMutex cmdq_mutex;
+diff --git a/include/hw/display/xlnx_dp.h b/include/hw/display/xlnx_dp.h
+index e86a87f235..802a1427c9 100644
+--- a/include/hw/display/xlnx_dp.h
++++ b/include/hw/display/xlnx_dp.h
+@@ -84,7 +84,7 @@ struct XlnxDPState {
+     struct PixmanPlane v_plane;
+     struct PixmanPlane bout_plane;
+ 
+-    QEMUSoundCard aud_card;
++    AudioBackend *audio_be;
+     SWVoiceOut *amixer_output_stream;
+     int16_t audio_buffer_0[AUD_CHBUF_MAX_DEPTH];
+     int16_t audio_buffer_1[AUD_CHBUF_MAX_DEPTH];
+diff --git a/include/hw/isa/vt82c686.h b/include/hw/isa/vt82c686.h
+index da1722daf2..48c412ce81 100644
+--- a/include/hw/isa/vt82c686.h
++++ b/include/hw/isa/vt82c686.h
+@@ -24,7 +24,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaAC97State, VIA_AC97);
+ 
+ struct ViaAC97State {
+     PCIDevice dev;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     MemoryRegion sgd;
+     MemoryRegion fm;
+     MemoryRegion midi;
+diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
+index 9601a11a09..1bd7a7634b 100644
+--- a/include/hw/qdev-properties-system.h
++++ b/include/hw/qdev-properties-system.h
+@@ -87,7 +87,7 @@ extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
+                 .set_default = true)
+ 
+ #define DEFINE_PROP_AUDIODEV(_n, _s, _f) \
+-    DEFINE_PROP(_n, _s, _f, qdev_prop_audiodev, QEMUSoundCard)
++    DEFINE_PROP(_n, _s, _f, qdev_prop_audiodev, AudioBackend *)
+ 
+ #define DEFINE_PROP_UUID_NODEFAULT(_name, _state, _field) \
+     DEFINE_PROP(_name, _state, _field, qdev_prop_uuid, QemuUUID)
+diff --git a/audio/audio.c b/audio/audio.c
+index 8044d55c5c..46282f86d6 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -1620,7 +1620,6 @@ static void audio_be_init(Object *obj)
+     QLIST_INIT(&s->hw_head_out);
+     QLIST_INIT(&s->hw_head_in);
+     QLIST_INIT(&s->cap_head);
+-    QLIST_INIT(&s->card_head);
+     s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
+ 
+     s->vmse = qemu_add_vm_change_state_handler(audio_vm_change_state_handler, s);
+@@ -1812,28 +1811,20 @@ AudioBackend *audio_get_default_audio_be(Error **errp)
+     return default_audio_be;
+ }
+ 
+-bool AUD_register_card (const char *name, QEMUSoundCard *card, Error **errp)
++bool AUD_backend_check (AudioBackend **be, Error **errp)
+ {
+-    if (!card->be) {
+-        card->be = audio_get_default_audio_be(errp);
+-        if (!card->be) {
++    assert(be != NULL);
++
++    if (!*be) {
++        *be = audio_get_default_audio_be(errp);
++        if (!*be) {
+             return false;
+         }
+     }
+ 
+-    card->name = g_strdup (name);
+-    memset (&card->entries, 0, sizeof (card->entries));
+-    QLIST_INSERT_HEAD(&card->be->card_head, card, entries);
+-
+     return true;
+ }
+ 
+-void AUD_remove_card (QEMUSoundCard *card)
+-{
+-    QLIST_REMOVE (card, entries);
+-    g_free (card->name);
+-}
+-
+ static struct audio_pcm_ops capture_pcm_ops;
+ 
+ CaptureVoiceOut *AUD_add_capture(
+@@ -2232,11 +2223,11 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
+     }
+ }
+ 
+-const char *audio_get_id(QEMUSoundCard *card)
++const char *audio_be_get_id(AudioBackend *be)
+ {
+-    if (card->be) {
+-        assert(card->be->dev);
+-        return card->be->dev->id;
++    if (be) {
++        assert(be->dev);
++        return be->dev->id;
+     } else {
+         return "";
+     }
+diff --git a/hw/audio/ac97.c b/hw/audio/ac97.c
+index c3e5f9c8bb..a91bf52b95 100644
+--- a/hw/audio/ac97.c
++++ b/hw/audio/ac97.c
+@@ -120,7 +120,7 @@ typedef struct AC97BusMasterRegs {
+ 
+ struct AC97LinkState {
+     PCIDevice dev;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     uint32_t glob_cnt;
+     uint32_t glob_sta;
+     uint32_t cas;
+@@ -320,7 +320,7 @@ static void open_voice(AC97LinkState *s, int index, int freq)
+         switch (index) {
+         case PI_INDEX:
+             s->voice_pi = AUD_open_in(
+-                &s->card,
++                s->audio_be,
+                 s->voice_pi,
+                 "ac97.pi",
+                 s,
+@@ -331,7 +331,7 @@ static void open_voice(AC97LinkState *s, int index, int freq)
+ 
+         case PO_INDEX:
+             s->voice_po = AUD_open_out(
+-                &s->card,
++                s->audio_be,
+                 s->voice_po,
+                 "ac97.po",
+                 s,
+@@ -342,7 +342,7 @@ static void open_voice(AC97LinkState *s, int index, int freq)
+ 
+         case MC_INDEX:
+             s->voice_mc = AUD_open_in(
+-                &s->card,
++                s->audio_be,
+                 s->voice_mc,
+                 "ac97.mc",
+                 s,
+@@ -355,17 +355,17 @@ static void open_voice(AC97LinkState *s, int index, int freq)
+         s->invalid_freq[index] = freq;
+         switch (index) {
+         case PI_INDEX:
+-            AUD_close_in(&s->card, s->voice_pi);
++            AUD_close_in(s->audio_be, s->voice_pi);
+             s->voice_pi = NULL;
+             break;
+ 
+         case PO_INDEX:
+-            AUD_close_out(&s->card, s->voice_po);
++            AUD_close_out(s->audio_be, s->voice_po);
+             s->voice_po = NULL;
+             break;
+ 
+         case MC_INDEX:
+-            AUD_close_in(&s->card, s->voice_mc);
++            AUD_close_in(s->audio_be, s->voice_mc);
+             s->voice_mc = NULL;
+             break;
+         }
+@@ -1275,7 +1275,7 @@ static void ac97_realize(PCIDevice *dev, Error **errp)
+     AC97LinkState *s = AC97(dev);
+     uint8_t *c = s->dev.config;
+ 
+-    if (!AUD_register_card ("ac97", &s->card, errp)) {
++    if (!AUD_backend_check (&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -1320,14 +1320,13 @@ static void ac97_exit(PCIDevice *dev)
+ {
+     AC97LinkState *s = AC97(dev);
+ 
+-    AUD_close_in(&s->card, s->voice_pi);
+-    AUD_close_out(&s->card, s->voice_po);
+-    AUD_close_in(&s->card, s->voice_mc);
+-    AUD_remove_card(&s->card);
++    AUD_close_in(s->audio_be, s->voice_pi);
++    AUD_close_out(s->audio_be, s->voice_po);
++    AUD_close_in(s->audio_be, s->voice_mc);
+ }
+ 
+ static const Property ac97_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(AC97LinkState, card),
++    DEFINE_AUDIO_PROPERTIES(AC97LinkState, audio_be),
+ };
+ 
+ static void ac97_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index 45c0a458f2..4e6c80b8e0 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -57,7 +57,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AdlibState, ADLIB)
+ struct AdlibState {
+     ISADevice parent_obj;
+ 
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     uint32_t freq;
+     uint32_t port;
+     int ticking[2];
+@@ -240,7 +240,6 @@ static void Adlib_fini (AdlibState *s)
+ 
+     s->active = 0;
+     s->enabled = 0;
+-    AUD_remove_card (&s->card);
+ }
+ 
+ static MemoryRegionPortio adlib_portio_list[] = {
+@@ -255,7 +254,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
+     AdlibState *s = ADLIB(dev);
+     struct audsettings as;
+ 
+-    if (!AUD_register_card ("adlib", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -275,7 +274,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
+     as.endianness = HOST_BIG_ENDIAN;
+ 
+     s->voice = AUD_open_out (
+-        &s->card,
++        s->audio_be,
+         s->voice,
+         "adlib",
+         s,
+@@ -298,7 +297,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
+ }
+ 
+ static const Property adlib_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(AdlibState, card),
++    DEFINE_AUDIO_PROPERTIES(AdlibState, audio_be),
+     DEFINE_PROP_UINT32 ("iobase",  AdlibState, port, 0x220),
+     DEFINE_PROP_UINT32 ("freq",    AdlibState, freq,  44100),
+ };
+diff --git a/hw/audio/asc.c b/hw/audio/asc.c
+index 991316e984..5c3f6c8f86 100644
+--- a/hw/audio/asc.c
++++ b/hw/audio/asc.c
+@@ -634,8 +634,6 @@ static void asc_unrealize(DeviceState *dev)
+ 
+     g_free(s->mixbuf);
+     g_free(s->silentbuf);
+-
+-    AUD_remove_card(&s->card);
+ }
+ 
+ static void asc_realize(DeviceState *dev, Error **errp)
+@@ -643,7 +641,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
+     ASCState *s = ASC(dev);
+     struct audsettings as;
+ 
+-    if (!AUD_register_card("Apple Sound Chip", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -652,10 +650,9 @@ static void asc_realize(DeviceState *dev, Error **errp)
+     as.fmt = AUDIO_FORMAT_U8;
+     as.endianness = HOST_BIG_ENDIAN;
+ 
+-    s->voice = AUD_open_out(&s->card, s->voice, "asc.out", s, asc_out_cb,
++    s->voice = AUD_open_out(s->audio_be, s->voice, "asc.out", s, asc_out_cb,
+                             &as);
+     if (!s->voice) {
+-        AUD_remove_card(&s->card);
+         error_setg(errp, "Initializing audio stream failed");
+         return;
+     }
+@@ -702,7 +699,7 @@ static void asc_init(Object *obj)
+ }
+ 
+ static const Property asc_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(ASCState, card),
++    DEFINE_AUDIO_PROPERTIES(ASCState, audio_be),
+     DEFINE_PROP_UINT8("asctype", ASCState, type, ASC_TYPE_ASC),
+ };
+ 
+diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
+index 0a5d614f8b..ec9643b817 100644
+--- a/hw/audio/cs4231a.c
++++ b/hw/audio/cs4231a.c
+@@ -69,7 +69,7 @@ DECLARE_INSTANCE_CHECKER(CSState, CS4231A,
+ 
+ struct CSState {
+     ISADevice dev;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     MemoryRegion ioports;
+     qemu_irq pic;
+     uint32_t regs[CS_REGS];
+@@ -328,7 +328,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
+     }
+ 
+     s->voice = AUD_open_out (
+-        &s->card,
++        s->audio_be,
+         s->voice,
+         "cs4231a",
+         s,
+@@ -678,7 +678,7 @@ static void cs4231a_realizefn (DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    if (!AUD_register_card ("cs4231a", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -694,7 +694,7 @@ static void cs4231a_realizefn (DeviceState *dev, Error **errp)
+ }
+ 
+ static const Property cs4231a_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(CSState, card),
++    DEFINE_AUDIO_PROPERTIES(CSState, audio_be),
+     DEFINE_PROP_UINT32 ("iobase",  CSState, port, 0x534),
+     DEFINE_PROP_UINT32 ("irq",     CSState, irq,  9),
+     DEFINE_PROP_UINT32 ("dma",     CSState, dma,  3),
+diff --git a/hw/audio/es1370.c b/hw/audio/es1370.c
+index 721c02be0a..0628f03310 100644
+--- a/hw/audio/es1370.c
++++ b/hw/audio/es1370.c
+@@ -258,7 +258,7 @@ struct chan {
+ 
+ struct ES1370State {
+     PCIDevice dev;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     MemoryRegion io;
+     struct chan chan[NB_CHANNELS];
+     SWVoiceOut *dac_voice[2];
+@@ -330,10 +330,10 @@ static void es1370_reset (ES1370State *s)
+         d->scount = 0;
+         d->leftover = 0;
+         if (i == ADC_CHANNEL) {
+-            AUD_close_in (&s->card, s->adc_voice);
++            AUD_close_in(s->audio_be, s->adc_voice);
+             s->adc_voice = NULL;
+         } else {
+-            AUD_close_out (&s->card, s->dac_voice[i]);
++            AUD_close_out(s->audio_be, s->dac_voice[i]);
+             s->dac_voice[i] = NULL;
+         }
+     }
+@@ -412,7 +412,7 @@ static void es1370_update_voices (ES1370State *s, uint32_t ctl, uint32_t sctl)
+                 if (i == ADC_CHANNEL) {
+                     s->adc_voice =
+                         AUD_open_in (
+-                            &s->card,
++                            s->audio_be,
+                             s->adc_voice,
+                             "es1370.adc",
+                             s,
+@@ -422,7 +422,7 @@ static void es1370_update_voices (ES1370State *s, uint32_t ctl, uint32_t sctl)
+                 } else {
+                     s->dac_voice[i] =
+                         AUD_open_out (
+-                            &s->card,
++                            s->audio_be,
+                             s->dac_voice[i],
+                             i ? "es1370.dac2" : "es1370.dac1",
+                             s,
+@@ -784,12 +784,12 @@ static int es1370_post_load (void *opaque, int version_id)
+     for (i = 0; i < NB_CHANNELS; ++i) {
+         if (i == ADC_CHANNEL) {
+             if (s->adc_voice) {
+-                AUD_close_in (&s->card, s->adc_voice);
++                AUD_close_in(s->audio_be, s->adc_voice);
+                 s->adc_voice = NULL;
+             }
+         } else {
+             if (s->dac_voice[i]) {
+-                AUD_close_out (&s->card, s->dac_voice[i]);
++                AUD_close_out(s->audio_be, s->dac_voice[i]);
+                 s->dac_voice[i] = NULL;
+             }
+         }
+@@ -833,7 +833,7 @@ static void es1370_realize(PCIDevice *dev, Error **errp)
+     ES1370State *s = ES1370(dev);
+     uint8_t *c = s->dev.config;
+ 
+-    if (!AUD_register_card ("es1370", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -861,15 +861,14 @@ static void es1370_exit(PCIDevice *dev)
+     int i;
+ 
+     for (i = 0; i < 2; ++i) {
+-        AUD_close_out(&s->card, s->dac_voice[i]);
++        AUD_close_out(s->audio_be, s->dac_voice[i]);
+     }
+ 
+-    AUD_close_in(&s->card, s->adc_voice);
+-    AUD_remove_card(&s->card);
++    AUD_close_in(s->audio_be, s->adc_voice);
+ }
+ 
+ static const Property es1370_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(ES1370State, card),
++    DEFINE_AUDIO_PROPERTIES(ES1370State, audio_be),
+ };
+ 
+ static void es1370_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/audio/gus.c b/hw/audio/gus.c
+index d13a95eb5a..d253329021 100644
+--- a/hw/audio/gus.c
++++ b/hw/audio/gus.c
+@@ -49,7 +49,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(GUSState, GUS)
+ struct GUSState {
+     ISADevice dev;
+     GUSEmuState emu;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     uint32_t freq;
+     uint32_t port;
+     int pos, left, shift, irqs;
+@@ -242,7 +242,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+     IsaDmaClass *k;
+     struct audsettings as;
+ 
+-    if (!AUD_register_card ("gus", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -258,7 +258,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+     as.endianness = HOST_BIG_ENDIAN;
+ 
+     s->voice = AUD_open_out (
+-        &s->card,
++        s->audio_be,
+         NULL,
+         "gus",
+         s,
+@@ -267,7 +267,6 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+         );
+ 
+     if (!s->voice) {
+-        AUD_remove_card (&s->card);
+         error_setg(errp, "No voice");
+         return;
+     }
+@@ -292,7 +291,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+ }
+ 
+ static const Property gus_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(GUSState, card),
++    DEFINE_AUDIO_PROPERTIES(GUSState, audio_be),
+     DEFINE_PROP_UINT32 ("freq",    GUSState, freq,        44100),
+     DEFINE_PROP_UINT32 ("iobase",  GUSState, port,        0x240),
+     DEFINE_PROP_UINT32 ("irq",     GUSState, emu.gusirq,  7),
+diff --git a/hw/audio/hda-codec.c b/hw/audio/hda-codec.c
+index cc87557954..f7ae2aa1fd 100644
+--- a/hw/audio/hda-codec.c
++++ b/hw/audio/hda-codec.c
+@@ -178,7 +178,7 @@ struct HDAAudioState {
+     HDACodecDevice hda;
+     const char *name;
+ 
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     const desc_codec *desc;
+     HDAAudioStream st[4];
+     bool running_compat[16];
+@@ -491,7 +491,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+         } else {
+             cb = hda_audio_compat_output_cb;
+         }
+-        st->voice.out = AUD_open_out(&st->state->card, st->voice.out,
++        st->voice.out = AUD_open_out(st->state->audio_be, st->voice.out,
+                                      st->node->name, st, cb, &st->as);
+     } else {
+         if (use_timer) {
+@@ -500,7 +500,7 @@ static void hda_audio_setup(HDAAudioStream *st)
+         } else {
+             cb = hda_audio_compat_input_cb;
+         }
+-        st->voice.in = AUD_open_in(&st->state->card, st->voice.in,
++        st->voice.in = AUD_open_in(st->state->audio_be, st->voice.in,
+                                    st->node->name, st, cb, &st->as);
+     }
+ }
+@@ -696,7 +696,7 @@ static void hda_audio_init(HDACodecDevice *hda,
+     const desc_param *param;
+     uint32_t i, type;
+ 
+-    if (!AUD_register_card("hda", &a->card, errp)) {
++    if (!AUD_backend_check(&a->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -754,12 +754,11 @@ static void hda_audio_exit(HDACodecDevice *hda)
+         }
+         timer_free(st->buft);
+         if (st->output) {
+-            AUD_close_out(&a->card, st->voice.out);
++            AUD_close_out(a->audio_be, st->voice.out);
+         } else {
+-            AUD_close_in(&a->card, st->voice.in);
++            AUD_close_in(a->audio_be, st->voice.in);
+         }
+     }
+-    AUD_remove_card(&a->card);
+ }
+ 
+ static int hda_audio_post_load(void *opaque, int version)
+@@ -858,7 +857,7 @@ static const VMStateDescription vmstate_hda_audio = {
+ };
+ 
+ static const Property hda_audio_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(HDAAudioState, card),
++    DEFINE_AUDIO_PROPERTIES(HDAAudioState, audio_be),
+     DEFINE_PROP_UINT32("debug", HDAAudioState, debug,   0),
+     DEFINE_PROP_BOOL("mixer", HDAAudioState, mixer,  true),
+     DEFINE_PROP_BOOL("use-timer", HDAAudioState, use_timer,  true),
+diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
+index dccbf56068..c51ec0e66f 100644
+--- a/hw/audio/lm4549.c
++++ b/hw/audio/lm4549.c
+@@ -190,7 +190,7 @@ void lm4549_write(lm4549_state *s,
+         as.endianness = 0;
+ 
+         s->voice = AUD_open_out(
+-            &s->card,
++            s->audio_be,
+             s->voice,
+             "lm4549.out",
+             s,
+@@ -260,7 +260,7 @@ static int lm4549_post_load(void *opaque, int version_id)
+     as.endianness = 0;
+ 
+     s->voice = AUD_open_out(
+-        &s->card,
++        s->audio_be,
+         s->voice,
+         "lm4549.out",
+         s,
+@@ -282,7 +282,7 @@ void lm4549_init(lm4549_state *s, lm4549_callback data_req_cb, void* opaque,
+     struct audsettings as;
+ 
+     /* Register an audio card */
+-    if (!AUD_register_card("lm4549", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -300,7 +300,7 @@ void lm4549_init(lm4549_state *s, lm4549_callback data_req_cb, void* opaque,
+     as.endianness = 0;
+ 
+     s->voice = AUD_open_out(
+-        &s->card,
++        s->audio_be,
+         s->voice,
+         "lm4549.out",
+         s,
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index e0b0949918..a41f5b11f0 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -49,7 +49,7 @@ struct PCSpkState {
+     MemoryRegion ioport;
+     uint32_t iobase;
+     uint8_t sample_buf[PCSPK_BUF_LEN];
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     SWVoiceOut *voice;
+     PITCommonState *pit;
+     unsigned int pit_count;
+@@ -123,7 +123,7 @@ static int pcspk_audio_init(PCSpkState *s)
+         return 0;
+     }
+ 
+-    s->voice = AUD_open_out(&s->card, s->voice, s_spk, s, pcspk_callback, &as);
++    s->voice = AUD_open_out(s->audio_be, s->voice, s_spk, s, pcspk_callback, &as);
+     if (!s->voice) {
+         error_report("pcspk: Could not open voice");
+         return -1;
+@@ -196,8 +196,9 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+ 
+     isa_register_ioport(isadev, &s->ioport, s->iobase);
+ 
+-    if (s->card.be && AUD_register_card(s_spk, &s->card, errp)) {
++    if (s->audio_be && AUD_backend_check(&s->audio_be, errp)) {
+         pcspk_audio_init(s);
++        return;
+     }
+ }
+ 
+@@ -221,7 +222,7 @@ static const VMStateDescription vmstate_spk = {
+ };
+ 
+ static const Property pcspk_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(PCSpkState, card),
++    DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
+     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+     DEFINE_PROP_BOOL("migrate", PCSpkState, migrate,  true),
+     DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonState *),
+diff --git a/hw/audio/pl041.c b/hw/audio/pl041.c
+index 5d9d6c1178..fd3d09611f 100644
+--- a/hw/audio/pl041.c
++++ b/hw/audio/pl041.c
+@@ -626,7 +626,7 @@ static const VMStateDescription vmstate_pl041 = {
+ };
+ 
+ static const Property pl041_device_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(PL041State, codec.card),
++    DEFINE_AUDIO_PROPERTIES(PL041State, codec.audio_be),
+     /* Non-compact FIFO depth property */
+     DEFINE_PROP_UINT32("nc_fifo_depth", PL041State, fifo_depth,
+                        DEFAULT_FIFO_DEPTH),
+diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
+index e86aafd488..8109d124d1 100644
+--- a/hw/audio/sb16.c
++++ b/hw/audio/sb16.c
+@@ -54,7 +54,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(SB16State, SB16)
+ struct SB16State {
+     ISADevice parent_obj;
+ 
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     qemu_irq pic;
+     uint32_t irq;
+     uint32_t dma;
+@@ -216,7 +216,7 @@ static void continue_dma8 (SB16State *s)
+         as.endianness = 0;
+ 
+         s->voice = AUD_open_out (
+-            &s->card,
++            s->audio_be,
+             s->voice,
+             "sb16",
+             s,
+@@ -379,7 +379,7 @@ static void dma_cmd (SB16State *s, uint8_t cmd, uint8_t d0, int dma_len)
+         as.endianness = 0;
+ 
+         s->voice = AUD_open_out (
+-            &s->card,
++            s->audio_be,
+             s->voice,
+             "sb16",
+             s,
+@@ -880,7 +880,7 @@ static void legacy_reset (SB16State *s)
+     as.endianness = 0;
+ 
+     s->voice = AUD_open_out (
+-        &s->card,
++        s->audio_be,
+         s->voice,
+         "sb16",
+         s,
+@@ -1287,7 +1287,7 @@ static int sb16_post_load (void *opaque, int version_id)
+     SB16State *s = opaque;
+ 
+     if (s->voice) {
+-        AUD_close_out (&s->card, s->voice);
++        AUD_close_out(s->audio_be, s->voice);
+         s->voice = NULL;
+     }
+ 
+@@ -1303,7 +1303,7 @@ static int sb16_post_load (void *opaque, int version_id)
+             as.endianness = 0;
+ 
+             s->voice = AUD_open_out (
+-                &s->card,
++                s->audio_be,
+                 s->voice,
+                 "sb16",
+                 s,
+@@ -1401,7 +1401,7 @@ static void sb16_realizefn (DeviceState *dev, Error **errp)
+     SB16State *s = SB16 (dev);
+     IsaDmaClass *k;
+ 
+-    if (!AUD_register_card ("sb16", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -1440,7 +1440,7 @@ static void sb16_realizefn (DeviceState *dev, Error **errp)
+ }
+ 
+ static const Property sb16_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(SB16State, card),
++    DEFINE_AUDIO_PROPERTIES(SB16State, audio_be),
+     DEFINE_PROP_UINT32 ("version", SB16State, ver,  0x0405), /* 4.5 */
+     DEFINE_PROP_UINT32 ("iobase",  SB16State, port, 0x220),
+     DEFINE_PROP_UINT32 ("irq",     SB16State, irq,  5),
+diff --git a/hw/audio/via-ac97.c b/hw/audio/via-ac97.c
+index 62341e5600..019d296853 100644
+--- a/hw/audio/via-ac97.c
++++ b/hw/audio/via-ac97.c
+@@ -239,7 +239,7 @@ static void open_voice_out(ViaAC97State *s)
+         .fmt = s->aur.type & BIT(5) ? AUDIO_FORMAT_S16 : AUDIO_FORMAT_S8,
+         .endianness = 0,
+     };
+-    s->vo = AUD_open_out(&s->card, s->vo, "via-ac97.out", s, out_cb, &as);
++    s->vo = AUD_open_out(s->audio_be, s->vo, "via-ac97.out", s, out_cb, &as);
+ }
+ 
+ static uint64_t sgd_read(void *opaque, hwaddr addr, unsigned size)
+@@ -426,7 +426,7 @@ static void via_ac97_realize(PCIDevice *pci_dev, Error **errp)
+     ViaAC97State *s = VIA_AC97(pci_dev);
+     Object *o = OBJECT(s);
+ 
+-    if (!AUD_register_card ("via-ac97", &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -455,12 +455,11 @@ static void via_ac97_exit(PCIDevice *dev)
+ {
+     ViaAC97State *s = VIA_AC97(dev);
+ 
+-    AUD_close_out(&s->card, s->vo);
+-    AUD_remove_card(&s->card);
++    AUD_close_out(s->audio_be, s->vo);
+ }
+ 
+ static const Property via_ac97_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(ViaAC97State, card),
++    DEFINE_AUDIO_PROPERTIES(ViaAC97State, audio_be),
+ };
+ 
+ static void via_ac97_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 88777977a9..9101560f38 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -78,7 +78,7 @@ static const VMStateDescription vmstate_virtio_snd = {
+ };
+ 
+ static const Property virtio_snd_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(VirtIOSound, card),
++    DEFINE_AUDIO_PROPERTIES(VirtIOSound, audio_be),
+     DEFINE_PROP_UINT32("jacks", VirtIOSound, snd_conf.jacks,
+                        VIRTIO_SOUND_JACK_DEFAULT),
+     DEFINE_PROP_UINT32("streams", VirtIOSound, snd_conf.streams,
+@@ -391,10 +391,10 @@ static void virtio_snd_pcm_close(VirtIOSoundPCMStream *stream)
+     if (stream) {
+         virtio_snd_pcm_flush(stream);
+         if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+-            AUD_close_out(&stream->pcm->snd->card, stream->voice.out);
++            AUD_close_out(stream->pcm->snd->audio_be, stream->voice.out);
+             stream->voice.out = NULL;
+         } else if (stream->info.direction == VIRTIO_SND_D_INPUT) {
+-            AUD_close_in(&stream->pcm->snd->card, stream->voice.in);
++            AUD_close_in(stream->pcm->snd->audio_be, stream->voice.in);
+             stream->voice.in = NULL;
+         }
+     }
+@@ -457,7 +457,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+     stream->as = as;
+ 
+     if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
+-        stream->voice.out = AUD_open_out(&s->card,
++        stream->voice.out = AUD_open_out(s->audio_be,
+                                          stream->voice.out,
+                                          "virtio-sound.out",
+                                          stream,
+@@ -465,7 +465,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+                                          &as);
+         AUD_set_volume_out_lr(stream->voice.out, 0, 255, 255);
+     } else {
+-        stream->voice.in = AUD_open_in(&s->card,
++        stream->voice.in = AUD_open_in(s->audio_be,
+                                         stream->voice.in,
+                                         "virtio-sound.in",
+                                         stream,
+@@ -1053,7 +1053,7 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    if (!AUD_register_card("virtio-sound", &vsnd->card, errp)) {
++    if (!AUD_backend_check(&vsnd->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -1330,7 +1330,6 @@ static void virtio_snd_unrealize(DeviceState *dev)
+         g_free(vsnd->pcm);
+         vsnd->pcm = NULL;
+     }
+-    AUD_remove_card(&vsnd->card);
+     qemu_mutex_destroy(&vsnd->cmdq_mutex);
+     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
+     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_EVENT]);
+diff --git a/hw/audio/wm8750.c b/hw/audio/wm8750.c
+index 7a36c4bd3f..d399c335c3 100644
+--- a/hw/audio/wm8750.c
++++ b/hw/audio/wm8750.c
+@@ -34,7 +34,7 @@ struct WM8750State {
+ 
+     uint8_t i2c_data[2];
+     int i2c_len;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+     SWVoiceIn *adc_voice[IN_PORT_N];
+     SWVoiceOut *dac_voice[OUT_PORT_N];
+     int enable;
+@@ -188,12 +188,12 @@ static void wm8750_set_format(WM8750State *s)
+ 
+     for (i = 0; i < IN_PORT_N; i ++)
+         if (s->adc_voice[i]) {
+-            AUD_close_in(&s->card, s->adc_voice[i]);
++            AUD_close_in(s->audio_be, s->adc_voice[i]);
+             s->adc_voice[i] = NULL;
+         }
+     for (i = 0; i < OUT_PORT_N; i ++)
+         if (s->dac_voice[i]) {
+-            AUD_close_out(&s->card, s->dac_voice[i]);
++            AUD_close_out(s->audio_be, s->dac_voice[i]);
+             s->dac_voice[i] = NULL;
+         }
+ 
+@@ -206,11 +206,11 @@ static void wm8750_set_format(WM8750State *s)
+     in_fmt.freq = s->adc_hz;
+     in_fmt.fmt = AUDIO_FORMAT_S16;
+ 
+-    s->adc_voice[0] = AUD_open_in(&s->card, s->adc_voice[0],
++    s->adc_voice[0] = AUD_open_in(s->audio_be, s->adc_voice[0],
+                     CODEC ".input1", s, wm8750_audio_in_cb, &in_fmt);
+-    s->adc_voice[1] = AUD_open_in(&s->card, s->adc_voice[1],
++    s->adc_voice[1] = AUD_open_in(s->audio_be, s->adc_voice[1],
+                     CODEC ".input2", s, wm8750_audio_in_cb, &in_fmt);
+-    s->adc_voice[2] = AUD_open_in(&s->card, s->adc_voice[2],
++    s->adc_voice[2] = AUD_open_in(s->audio_be, s->adc_voice[2],
+                     CODEC ".input3", s, wm8750_audio_in_cb, &in_fmt);
+ 
+     /* Setup output */
+@@ -219,12 +219,12 @@ static void wm8750_set_format(WM8750State *s)
+     out_fmt.freq = s->dac_hz;
+     out_fmt.fmt = AUDIO_FORMAT_S16;
+ 
+-    s->dac_voice[0] = AUD_open_out(&s->card, s->dac_voice[0],
++    s->dac_voice[0] = AUD_open_out(s->audio_be, s->dac_voice[0],
+                     CODEC ".speaker", s, wm8750_audio_out_cb, &out_fmt);
+-    s->dac_voice[1] = AUD_open_out(&s->card, s->dac_voice[1],
++    s->dac_voice[1] = AUD_open_out(s->audio_be, s->dac_voice[1],
+                     CODEC ".headphone", s, wm8750_audio_out_cb, &out_fmt);
+     /* MONOMIX is also in stereo for simplicity */
+-    s->dac_voice[2] = AUD_open_out(&s->card, s->dac_voice[2],
++    s->dac_voice[2] = AUD_open_out(s->audio_be, s->dac_voice[2],
+                     CODEC ".monomix", s, wm8750_audio_out_cb, &out_fmt);
+     /* no sense emulating OUT3 which is a mix of other outputs */
+ 
+@@ -624,7 +624,7 @@ static void wm8750_realize(DeviceState *dev, Error **errp)
+ {
+     WM8750State *s = WM8750(dev);
+ 
+-    if (!AUD_register_card(CODEC, &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -637,7 +637,6 @@ static void wm8750_fini(I2CSlave *i2c)
+     WM8750State *s = WM8750(i2c);
+ 
+     wm8750_reset(I2C_SLAVE(s));
+-    AUD_remove_card(&s->card);
+     g_free(s);
+ }
+ #endif
+@@ -707,7 +706,7 @@ void wm8750_set_bclk_in(void *opaque, int new_hz)
+ }
+ 
+ static const Property wm8750_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(WM8750State, card),
++    DEFINE_AUDIO_PROPERTIES(WM8750State, audio_be),
+ };
+ 
+ static void wm8750_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index c83a52fc62..578cbdc015 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -487,18 +487,17 @@ static void get_audiodev(Object *obj, Visitor *v, const char* name,
+                          void *opaque, Error **errp)
+ {
+     const Property *prop = opaque;
+-    QEMUSoundCard *card = object_field_prop_ptr(obj, prop);
+-    char *p = g_strdup(audio_get_id(card));
++    AudioBackend **be = object_field_prop_ptr(obj, prop);
++    g_autofree char *id = g_strdup(audio_be_get_id(*be));
+ 
+-    visit_type_str(v, name, &p, errp);
+-    g_free(p);
++    visit_type_str(v, name, (char **)&id, errp);
+ }
+ 
+ static void set_audiodev(Object *obj, Visitor *v, const char* name,
+                          void *opaque, Error **errp)
+ {
+     const Property *prop = opaque;
+-    QEMUSoundCard *card = object_field_prop_ptr(obj, prop);
++    AudioBackend **be = object_field_prop_ptr(obj, prop);
+     AudioBackend *state;
+     g_autofree char *str = NULL;
+ 
+@@ -508,7 +507,7 @@ static void set_audiodev(Object *obj, Visitor *v, const char* name,
+ 
+     state = audio_be_by_name(str, errp);
+     if (state) {
+-        card->be = state;
++        *be = state;
+     }
+ }
+ 
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 882ae3c4b4..96cbb1b3a7 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -1306,7 +1306,7 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
+     DisplaySurface *surface;
+     struct audsettings as;
+ 
+-    if (!AUD_register_card("xlnx_dp.audio", &s->aud_card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -1328,7 +1328,7 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
+     as.fmt = AUDIO_FORMAT_S16;
+     as.endianness = 0;
+ 
+-    s->amixer_output_stream = AUD_open_out(&s->aud_card,
++    s->amixer_output_stream = AUD_open_out(s->audio_be,
+                                            s->amixer_output_stream,
+                                            "xlnx_dp.audio.out",
+                                            s,
+@@ -1392,7 +1392,7 @@ static void xlnx_dp_reset(DeviceState *dev)
+ }
+ 
+ static const Property xlnx_dp_device_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(XlnxDPState, aud_card),
++    DEFINE_AUDIO_PROPERTIES(XlnxDPState, audio_be),
+ };
+ 
+ static void xlnx_dp_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/usb/dev-audio.c b/hw/usb/dev-audio.c
+index f59e5a53f0..c8e032ab64 100644
+--- a/hw/usb/dev-audio.c
++++ b/hw/usb/dev-audio.c
+@@ -635,7 +635,7 @@ static uint8_t *streambuf_get(struct streambuf *buf, size_t *len)
+ struct USBAudioState {
+     /* qemu interfaces */
+     USBDevice dev;
+-    QEMUSoundCard card;
++    AudioBackend *audio_be;
+ 
+     /* state */
+     struct {
+@@ -931,8 +931,7 @@ static void usb_audio_unrealize(USBDevice *dev)
+     }
+ 
+     usb_audio_set_output_altset(s, ALTSET_OFF);
+-    AUD_close_out(&s->card, s->out.voice);
+-    AUD_remove_card(&s->card);
++    AUD_close_out(s->audio_be, s->out.voice);
+ 
+     streambuf_fini(&s->out.buf);
+ }
+@@ -942,7 +941,7 @@ static void usb_audio_realize(USBDevice *dev, Error **errp)
+     USBAudioState *s = USB_AUDIO(dev);
+     int i;
+ 
+-    if (!AUD_register_card(TYPE_USB_AUDIO, &s->card, errp)) {
++    if (!AUD_backend_check(&s->audio_be, errp)) {
+         return;
+     }
+ 
+@@ -979,7 +978,7 @@ static void usb_audio_reinit(USBDevice *dev, unsigned channels)
+     s->out.as.endianness = 0;
+     streambuf_init(&s->out.buf, s->buffer, s->out.channels);
+ 
+-    s->out.voice = AUD_open_out(&s->card, s->out.voice, TYPE_USB_AUDIO,
++    s->out.voice = AUD_open_out(s->audio_be, s->out.voice, TYPE_USB_AUDIO,
+                                 s, output_callback, &s->out.as);
+     AUD_set_volume_out(s->out.voice, &s->out.vol);
+     AUD_set_active_out(s->out.voice, 0);
+@@ -991,7 +990,7 @@ static const VMStateDescription vmstate_usb_audio = {
+ };
+ 
+ static const Property usb_audio_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(USBAudioState, card),
++    DEFINE_AUDIO_PROPERTIES(USBAudioState, audio_be),
+     DEFINE_PROP_UINT32("debug", USBAudioState, debug, 0),
+     DEFINE_PROP_UINT32("buffer", USBAudioState, buffer_user, 0),
+     DEFINE_PROP_BOOL("multi", USBAudioState, multi, false),
+-- 
+2.51.0
+
 
