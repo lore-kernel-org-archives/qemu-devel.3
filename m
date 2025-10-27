@@ -4,94 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F185BCCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBDEDCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLx9-0005nq-4d; Mon, 27 Oct 2025 08:04:00 -0400
+	id 1vDLy6-0006CR-3N; Mon, 27 Oct 2025 08:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLv8-0004X3-L1
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:01:58 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLv3-0000Pf-Nm
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:01:54 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-427060bc0f5so2510969f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 05:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761566506; x=1762171306; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PLGcLctG7Za4dYWV4ICZwURdQTbZRIsw0zDlM3v5vho=;
- b=A1ZlwAIEa5BMe4OC8bUqtL0jrxVxEGl4t3Se5PaH0l3tcgwj77S3QeRReRVCnj7j08
- IinDPFf8XHPDe23OtbQwe1Nv3oT0RHT3zQTGCu0tv934RaIV7IJ66tCl+qwMSrFt5XIv
- 64+0hTur3yzjdRSfVZOocP6EgRmgsaamtn2K8PQzZmQhGwY46YlRdA+6xu8GWBbwO7gf
- c+7LCSubcoAkk7KKib44xQuG6kRq4hoRhKNmEkhicRQAe6s4enZQipHET3CCWtdyVHmx
- W/F6h6ZQ4vcGyd3boA4ETLv3K63bUk27R6h+kuGIs6tjCSDV33YMM7GS2lcLnZgjOueP
- FtgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761566506; x=1762171306;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PLGcLctG7Za4dYWV4ICZwURdQTbZRIsw0zDlM3v5vho=;
- b=jKrrmc387T0GhDTWDmK2TMyfhVyoR0D3EQCGnM+V0FjRg89sncRZw6D3TtwUQa9+Tc
- mPFrIlL/T+y9SgYU0vmIoE6oVLfs22rhM0YGg4nurwcmh8qL2PANV+Ek+wX8Btqg4r/c
- NK8dY6BEj8FbFnjHhKH5AHbyTAi6HZ8D1vty9+5bYIDWgIX86HAuL6uOzNkOXPI/RhRa
- Qm/xTZSCcow51f/VrdaubK3f3xDm+CE5W75xDEyHAkcr/5BZnPftejGXhSfDDHDFL9Gh
- vZ0xB1dIQ+gmXl8WFqOfkTT0EhMgaZi83qfwlDMXtnVk6HGwqjOw/NqoDZ66GsVLZyAJ
- 4z+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWiC9kVhz1kaHfmxer2FgTt1ptb2lLQAiNNKmJlltDK/Gu/cIEhZhRjTH7zBnJD9o8paNGPv92I+nU9@nongnu.org
-X-Gm-Message-State: AOJu0YxSfrB1uGQ5FRbIUbp1+RYI7h2ejsCR/kdYUWEMXqMk7rz3/FdI
- sqg41Wl+NWBN9I0Li8zJJqr1qPSbwEmIyqAR3aqwX4mWRW0CHLC8Re2opR0IlJvbit2KyamniRh
- rgOs+KkA=
-X-Gm-Gg: ASbGncsBV5sMqe7JKAjoQj5Hxp2viVzY9odK7k4s+DDnO4qU7u91TW+EUj3Ltl8AO7X
- ktQXv1MoyOY5+YtPZdM7ehSyRKDetUAtP6Wh5aZVYUjPlsE2TNcU6yLtQaTCH+pN/K2Wzal8Ync
- J7SlZ9CN+/ojaKtorXL/zBKOhjZVIqosJAODZnz2Zexk9V5bHzdd6Y+vIy2EKgeKMDs6tulC/12
- TyIyRSZEXtqrI64JtYpfvj6xazpMcTmbQteo5DahV0HAENJUR9nPAHSnIp+0rS43Ir4nA/8K+Bz
- Yx6+QaYFcppaLHlHLj+CKGEsy/9WHCBCeL8L3wUOAQAw52V9wI5P9hEL816uxngg44Ux2ZAfbQQ
- i2U241Yqpte7ZKcPshVqupu39r+u/mpKThqPEdyk4gErkD1CJHex4LPi5t7/bGi2WG1er4qbCN6
- KPX2dBRQdsal64XZxEt+mZAdDu2IdrwqlalR1i1U4zDkH2HgaG4jIHPIhtXkzchDao
-X-Google-Smtp-Source: AGHT+IFA5lQdG3wEcpUVDcxHr0YznpdNBH1fOJhn4oLYLiZia3GVWBWl7OHntj9GSjgdsqgHj61wLA==
-X-Received: by 2002:a05:6000:2282:b0:3e5:394d:10bb with SMTP id
- ffacd0b85a97d-4299072c109mr8362370f8f.41.1761566505883; 
- Mon, 27 Oct 2025 05:01:45 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952d5985sm13766651f8f.25.2025.10.27.05.01.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 05:01:45 -0700 (PDT)
-Message-ID: <85355b5e-6c8d-440d-8a82-5bae8228f078@linaro.org>
-Date: Mon, 27 Oct 2025 13:01:44 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vDLwT-0005CM-KR
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:03:17 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vDLwN-0000WE-Pn
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:03:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761566592; x=1793102592;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=6LCxF2jA+tRNbEsvz636k3v92U5z6MVr9ifOurEWXoI=;
+ b=hs00f2LrQUmn8VO8Lxx+R23JoPm9p/iFUO2C8iceHnZ2OtrJT28Km3+a
+ dDgnzHQMsDoayEbns06e1CJjm5igDlCnhR+WssE9GiP3lGWtXUCkVccWh
+ U14koo2FFgzk925haYALM96vJ2W4okpaDF+7wRG8zAYCBaUgpQBP/ty+O
+ fQDu8va3aecteazm94xj7LP3DzkQwmuthQgPEtfyluCRewqDCFlRU5yVH
+ lrij07GAdPN6P3IALuszMmgLIlu/YDt4WAfoeTuHerIL2miAe2T7hGRmx
+ mG4AyoAWktgCd6igU1WJkzeLJM8LjSUxRLNW33qUkC/ae7mMduGU6fgaX Q==;
+X-CSE-ConnectionGUID: Bqn8nqleRES/BqpUBvvwnQ==
+X-CSE-MsgGUID: zjEJ1MGOSq2yZphE61vGIg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63735562"
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="63735562"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Oct 2025 05:03:05 -0700
+X-CSE-ConnectionGUID: N+Q9za3bSYybuKHJA7IsZQ==
+X-CSE-MsgGUID: 0kPqkZuySniQb1bI7Vwfaw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="184648115"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Oct 2025 05:03:01 -0700
+Message-ID: <308bcfcd-6c43-4530-8ba7-8a2d8a7b0c8f@intel.com>
+Date: Mon, 27 Oct 2025 20:02:58 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/riscv64/test_sifive_u: Remove unused
- import statement
+Subject: Re: [PATCH v3 10/20] i386/cpu: Add missing migratable xsave features
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
+ John Allen <john.allen@amd.com>, Babu Moger <babu.moger@amd.com>,
+ Mathias Krause <minipli@grsecurity.net>, Dapeng Mi <dapeng1.mi@intel.com>,
+ Zide Chen <zide.chen@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Farrah Chen <farrah.chen@intel.com>
+References: <20251024065632.1448606-1-zhao1.liu@intel.com>
+ <20251024065632.1448606-11-zhao1.liu@intel.com>
+ <0dc79cc8-f932-4025-aff3-b1d5b56cb654@intel.com> <aP9HPKwHPcOlBTwm@intel.com>
+ <aP9VF7FkfGeY6B+Q@intel.com>
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20251027112803.54564-1-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027112803.54564-1-thuth@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aP9VF7FkfGeY6B+Q@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.574, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,17 +93,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 12:28, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 10/27/2025 7:18 PM, Zhao Liu wrote:
+> On Mon, Oct 27, 2025 at 06:19:40PM +0800, Zhao Liu wrote:
+>> Date: Mon, 27 Oct 2025 18:19:40 +0800
+>> From: Zhao Liu <zhao1.liu@intel.com>
+>> Subject: Re: [PATCH v3 10/20] i386/cpu: Add missing migratable xsave
+>>   features
+>>
+>>> Though the feature expansion in x86_cpu_expand_features() under
+>>>
+>>> 	if (xcc->max_features) {
+>>> 		...
+>>> 	}
+>>>
+>>> only enables migratable features when cpu->migratable is true,
+>>> x86_cpu_enable_xsave_components() overwrite the value later.
+>>
+>> I have not changed the related logic, and this was intentional...too,
+>> which is planed to be cleaned up after CET.
 > 
-> skipIfMissingCommands is not used here, remove the import to silence
-> a pylint warning for this file.
+> There's only 1 use case of migratable_flags, so I would try to drop
+> it directly.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/riscv64/test_sifive_u.py | 1 -
->   1 file changed, 1 deletion(-)
+> The xsave-managed/enabled feature is not suitable as the configurable
+> feature. Therefore, it is best to keep it non-configurable as it is
+> currently.
+> 
+> At least with this fix, the support for the new xsave feature —
+> including APX next — will not be broken, 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+can you elaborate what will be broken without the patch?
+
+As I see, we can drop the .migratable_flags directly.
+
+migrable_flags is only used in x86_cpu_get_migratable_flags(), which is 
+only called by x86_cpu_get_supported_feature_word() when passed @cpu is 
+not null and cpu->migratable is true. So it only affects the case of
+
+   x86_cpu_expand_features()
+     -> x86_cpu_get_supported_feature_word()
+
+And only FEAT_XSAVE_XCR0_LO defines .migratable_flags
+
+As I commented earlier, though the .migrable_flags determines the return 
+value of x86_cpu_get_supported_feature_word() for 
+features[FEAT_XSAVE_XCR0_LO] in x86_cpu_expand_features(), eventually 
+the x86_cpu_enable_xsave_components() overwrites 
+features[FEAT_XSAVE_XCR0_LO]. So even we set the migratable_flags to 0 
+for FEAT_XSAVE_XCR0_LO, it doesn't have any issue.
+
+So I think we can remove migratable_flags totally.
+
+> and the migratable flag
+> refactoring will become a separate RFC.
+> 
+> Regards,
+> Zhao
+> 
 
 
