@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA36CCF9EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12B2CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLA0-0007AE-Kn; Mon, 27 Oct 2025 07:13:12 -0400
+	id 1vDL9Z-0006Mh-UM; Mon, 27 Oct 2025 07:12:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL9g-0006d3-Mg
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:53 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1vDL9Q-0005s1-Fk
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:36 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL9D-0007dk-EQ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:52 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-63d6ee383bdso9783529a12.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:12:19 -0700 (PDT)
+ id 1vDL9A-0007cZ-0X
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:36 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b6d855ca585so471685266b.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563537; x=1762168337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761563535; x=1762168335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W/iOxgVLV7ayfoY5ug7v4UBSScUkrPrd3MmiVSvSTZ8=;
- b=wXcgQe5yVb/onyd75PQDNyyLH4zEYZlSDUVqTI7oNKbCeNdOuy47I/F4eh667zeYu2
- 5PYUe0VEkSexE5toCZKjflzuWUl3JUUb4ivvBsNqLK9geNF1vwlQRhy3atN7NvcNSPtT
- WBdT3fDtoX6tG3unummcAepqtgroSclW4T8tCYn0rygKBVVASpzSCoYj9irbrDvWylBN
- aJgl4yg73VPIUKmquvv/t8CeFjUa/j3D+ZJsq4RwzvXPGRXvVTcfF/VB/hczZ7aZAh8W
- T+q/e7KhcYEC4N/q/9V/Qk04r61ABtCU4Qn+mG839MxzI7leS9LAuW0+EA5Ssycei0zg
- cjJg==
+ bh=4PhvPHHz2nKzNx0dR+rkbmZq1ESoRDt6FUBPfkcoyms=;
+ b=wFIIH1LW/SN5gWuu1FNeYKW0lOBFUVQhuL+8AFprkZHWzsPCicgd4XOJWmBWwq9VcT
+ F4l8oaXV3gwoD/4nHhy+3GYL8XUbsgNjLY/kdYWDFUDboUjRiMiOo6stAhQgVuUCCfB4
+ 3nh2GGN/m7UxtG8bp5zt5np9UM3N6eCTs1CnDbS8x4nAgYfw3RNepcfSI7gvnAoOaNeS
+ 9ASBa0yfNQguM6adc52tbMAsok+T8qmx+zm0O5lsBddDqaXY9Le0YRg8fK1rH5hgxV3s
+ Oq5qgDmmeXyL1xZG7eKD9mAFKXORHyErHK4k0GHw34b/lMhVa2jRck+Xn/TmOielkQTp
+ 4MgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563537; x=1762168337;
+ d=1e100.net; s=20230601; t=1761563535; x=1762168335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=W/iOxgVLV7ayfoY5ug7v4UBSScUkrPrd3MmiVSvSTZ8=;
- b=lMksADHTJZRFJM3EPnMnzWlOUUMZkcTgYH3xrYvyJ/5V+7LCNdkY4njS6MoNLLvMxF
- gHborwauUXu9bl8dj1DujCRenRqBa5WAuj5FPBAFWTYVTPBpJ2s9DhpFrc1wTLytpvSh
- CzNOR02HhHU2ElKnXTPJewvLyK+N6Ar6J/UhLhw3DTERU/Qr6tzyxjiEHqQ/+Ymas/Nj
- rrXa3Kyg1G12b+/5Kmt9LTJCz51icladJjVcpPcHHEAFJopL5krs5eUQDZfnkN09+TNU
- Sa51Oscge9KUYZRRZNa4w35d3qPlRL+2FGhWEabhk7MePetdlKWIEfOZZeDLozA6iZ/w
- irAw==
-X-Gm-Message-State: AOJu0YxBOj2epC912+CL+Oyz80BNFCyAUKHt4Qa6vvVGxfOthNttS33F
- FreGpzgQdLc7C2o+H5snCmck9apHgKk5Qbi6ECDLjgNkKLvAlUlQiW1C5vDZoEb6dSI=
-X-Gm-Gg: ASbGnctYeBETx7F/pB8dyBKMCdYGAfjZtORudKvoxJhw2CKsylmie86oLrJvKOAm9Sk
- Q6wL5NbPrSQgl6LDWJFCqZhlkAgVm9OKTocz/B9Szo/oqY2uoisI6uOeeqk5ahmwqYKLw8RWodS
- hceesLAy5eHmWHLtgeziFsxVE91Wy0sKYF2PDNozD1PZ29wiViIS+gO4OO6UWurvsyJ2RlJHAIa
- ZZscVITALwcTdTv/WlFA+LphLW0a5PCsVXOzKpBgYDGAEH6ZRnO+weiRIc313bJswpUA7L2sFnv
- PYzHv2obp1uMGjfIMY8tIaP4hTHI3tt8z33Ad2mVnVcpc6jiz0QYArif6RnkLx9T1ow4lAtA+yq
- Y2s4Z/S9CJkwBbswCa9IsyiKEgXy8MNN2yCM8C0YhGwWgOfs7GQ3JdrJkxyxmaqIWimrjxVlQpJ
- 3RtDj/yYKv86k=
-X-Google-Smtp-Source: AGHT+IGhsq9zSRESJBDIy2OiiKM1bVTFG6U4x3jHc5iycQNI9bx7qUJrdez6Sl0r++blgXVMg0SA3A==
-X-Received: by 2002:a05:6402:268a:b0:62a:a4f0:7e4f with SMTP id
- 4fb4d7f45d1cf-63c1f6c21e0mr33780942a12.29.1761563537074; 
- Mon, 27 Oct 2025 04:12:17 -0700 (PDT)
+ bh=4PhvPHHz2nKzNx0dR+rkbmZq1ESoRDt6FUBPfkcoyms=;
+ b=Cb04qQpTFY0c9ufPzTIC0iXdEeLzzP/+ABWYA/fOBbgvMTZD/7Knb2g0XsRCcJsQRG
+ 6w1wz1dZldomUNOBpGIqn1GsoO4p45ED/8E2qYs2DZESUDaS/zn83QNYiPJOje62S0xn
+ 67qzgcQnb4W30xNaSmBpHu4a9WDYPmJXDuvMeJlMDQtb7Eyp2FlZgcCOuFkRGdBOq52X
+ j5lzqYxVUPziXcBgX0l0EIBYdVB/13SKe8q5jlRav3vFVCgBhUjZdbYgLxKhhGUvIq5E
+ 8b1D/P2O/kEupL+OBykbm6RlA04GxGIFQM4eHqGJXqbr6+hSQA6fglH8xth5ifPF6WNQ
+ 8oaw==
+X-Gm-Message-State: AOJu0YwaOUgCUkhXxwGRY96/gwl3PVeWhKyn1t6JvsFatNVYzlVm4yjk
+ rSd942vqxeL7DIlX7uV711tA4r/peFmLO4IRBWHSqppv0lj9rhUoqnjFwdLrsOJO3QU=
+X-Gm-Gg: ASbGncsSaq9uOnFUCNcJfD3Iu7Hh7VSXSVq7c8/nTX83H9nZjN05upYShAfqkJ/rc5v
+ 0+yizNIy8XY7PWHYVhXCYOX/cP+lzYZodHtSfXJyqbRL8GD/xJ/Hq2NUfa/HBQCroh5ZoaRRzWv
+ chbRuSVJMtVOkXlpNFAs9AeGYGAOroekXDYjOUL8Juu9YuhqPxbDAfzzAWmB61tlSR1kCSbkXPW
+ WhZNIzRv+BifVPayP1iSIfZd2TyxDDYRpeL8dWDJzmoZgNS9w1pD17j+DgzJR5X+vysac0YpcKL
+ wY30aAXir/uRkRzwP0VnjCrUxjzudJICu0OFcWKWN6hHjtIyeOUVOBQGL9fBLwScqF+zl1NCCOT
+ Fqyb5m+FF8EIpI0wkZyqzzLr+yKRF0rPUBBT1uKaQxr2LjUIuDyp0SQj7mBIxJiuiZFWtYfeeqd
+ 9x
+X-Google-Smtp-Source: AGHT+IFvvCvIty1DfR5lRQdjx9oxrgbu4HcCbWQum7FpsPzWGCkS4/ZxOKXh/Bm3P5OVv9Aw1Mskyg==
+X-Received: by 2002:a17:907:3e0c:b0:b6d:7e04:7a24 with SMTP id
+ a640c23a62f3a-b6d7e047d4cmr934588966b.36.1761563535106; 
+ Mon, 27 Oct 2025 04:12:15 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e7ef82b6esm6076455a12.11.2025.10.27.04.12.11
+ a640c23a62f3a-b6d8548ed8fsm737084866b.73.2025.10.27.04.12.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 27 Oct 2025 04:12:12 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D4DBB60D8F;
- Mon, 27 Oct 2025 11:03:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 460455F929;
+ Mon, 27 Oct 2025 11:03:47 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -94,25 +94,25 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
-Subject: [PATCH 19/35] target/mips: call plugin trap callbacks
-Date: Mon, 27 Oct 2025 11:03:26 +0000
-Message-ID: <20251027110344.2289945-20-alex.bennee@linaro.org>
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH 33/35] configs: drop SBSA_REF from minimal specification
+Date: Mon, 27 Oct 2025 11:03:40 +0000
+Message-ID: <20251027110344.2289945-34-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,69 +128,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Julian Ganz <neither@nut.email>
+The whole point of SBSA_REF is for testing firmware which by
+definition requires TCG. This means the configuration of:
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+  --disable-tcg --with-devices-aarch64=minimal
 
-This change places hooks for MIPS targets. We consider the exceptions
-NMI and EXT_INTERRUPT to be asynchronous interrupts rather than
-exceptions.
+makes no sense (and indeed is broken for the
+ubuntu-24.04-aarch64-notcg) test. Drop it from minimal and remove the
+allow_failure from the test case.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Julian Ganz <neither@nut.email>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/mips/tcg/system/tlb_helper.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ configs/devices/aarch64-softmmu/minimal.mak          | 1 -
+ .gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml | 2 --
+ 2 files changed, 3 deletions(-)
 
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 1e8901556d6..566924b079e 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -18,6 +18,7 @@
-  */
- #include "qemu/osdep.h"
- #include "qemu/bitops.h"
-+#include "qemu/plugin.h"
+diff --git a/configs/devices/aarch64-softmmu/minimal.mak b/configs/devices/aarch64-softmmu/minimal.mak
+index 0ebc1dca561..3c8582e12cc 100644
+--- a/configs/devices/aarch64-softmmu/minimal.mak
++++ b/configs/devices/aarch64-softmmu/minimal.mak
+@@ -6,4 +6,3 @@
+ #
  
- #include "cpu.h"
- #include "internal.h"
-@@ -1034,6 +1035,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-     bool update_badinstr = 0;
-     target_ulong offset;
-     int cause = -1;
-+    uint64_t last_pc = env->active_tc.PC;
- 
-     if (qemu_loglevel_mask(CPU_LOG_INT)
-         && cs->exception_index != EXCP_EXT_INTERRUPT) {
-@@ -1052,6 +1054,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         cs->exception_index = EXCP_NONE;
-         mips_semihosting(env);
-         env->active_tc.PC += env->error_code;
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     case EXCP_DSS:
-         env->CP0_Debug |= 1 << CP0DB_DSS;
-@@ -1336,6 +1339,14 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                  env->CP0_Status, env->CP0_Cause, env->CP0_BadVAddr,
-                  env->CP0_DEPC);
-     }
-+    switch (cs->exception_index) {
-+    case EXCP_NMI:
-+    case EXCP_EXT_INTERRUPT:
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-+    }
-     cs->exception_index = EXCP_NONE;
- }
- 
+ CONFIG_ARM_VIRT=y
+-CONFIG_SBSA_REF=y
+diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+index 46db9ae0138..ee13587d99e 100644
+--- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
++++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
+@@ -107,7 +107,5 @@ ubuntu-24.04-aarch64-notcg:
+   rules:
+     - if: '$CI_PROJECT_NAMESPACE == "qemu-project" && $CI_COMMIT_BRANCH =~ /^staging/'
+       when: manual
+-      allow_failure: true
+     - if: "$AARCH64_RUNNER_AVAILABLE"
+       when: manual
+-      allow_failure: true
 -- 
 2.47.3
 
