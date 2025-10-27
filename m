@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FDEBCCF9EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C92DCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDL9T-0005zw-MV; Mon, 27 Oct 2025 07:12:39 -0400
+	id 1vDL2E-0001NS-GV; Mon, 27 Oct 2025 07:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL9F-0005WL-Iq
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:26 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1vDL22-00015w-5X
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:04:58 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL95-0007ag-6p
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:25 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-63c21467e5bso499162a12.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:12:12 -0700 (PDT)
+ id 1vDL1S-0005fL-AK
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:04:57 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b3b3a6f4dd4so850559266b.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563531; x=1762168331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761563035; x=1762167835; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sVtx82IqB8qzVQiPKkt82SS7lmyo0Iaesq+DA5MG3VA=;
- b=dBtxloko77tJdQBnLGiOGwxo95WR7gd0CJ8AjQmz65aZL1o67cgsV1R2crtBmKREEv
- qU36vmGvxWgYGIzhLdxHt/3f8SpzTzRTEhPz+3Mm+fwTIuc7gdY72fcjiDaxiRgVQw+Y
- Q291/7oDbpcS8hI2Jf9Oa8m57Kx1ydf7u79BI+cCZJz3z1AJZTuWpIDXev08z2EkTeq9
- 4ZoI3NDr+HbPNGj55QmTYG5hRlMw3K284oPIWM3dIKxbmet5pu4PrASwjOjM5JI7DqsG
- L/UcxaX6rxw5TlE+MVD4qEvwsC6CITNSiN+1g2UM0bJnF/8ygOgDsed0F9lVOU8txLqz
- 6W6Q==
+ bh=D1dBqMEfBlqSUG7PelnGPIkGv75RoYZ1ZvCkqq8IgNo=;
+ b=glzuNhfefPlRvwbG2yFjU6hUpmd014VOSa0ArrXDbYRCCLRxUw6kavgfMR1+etQk3k
+ ex7Ke3cOLDPDkuNEUXxh+8MR0RZnDvuM2CdlalJESHMZHNSh6o8o6gJwLlfXlgZxLKqD
+ tW1yoViMfnmDLmR37V4XkRQw+da0SrT3gIGBgmZ2EIOPILq3cTJgepGuW7m9hDDsq4B7
+ ls42jitiFxm2Op/7BfpwxskX1NuxQ0wrQlwa79iDKy79oiLscwT6EyvLekojvdh6TDl1
+ DYoPD7Y5B5yOcUlO/d0ukJ752dj39JnJYCjCDdyyrgooJ3ZqdMlZmlyWa9RjEpjbVMvv
+ Bc3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563531; x=1762168331;
+ d=1e100.net; s=20230601; t=1761563035; x=1762167835;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sVtx82IqB8qzVQiPKkt82SS7lmyo0Iaesq+DA5MG3VA=;
- b=X8ctgdGmTgxb/Fy15NOYJ2RqkHNXP5+IufSAPXJt0X9ZW5lOF0kxOD3kvabcP2Ewju
- g4gK831m4cPcJ8F56Hkqf/ZHQanLwuEjis8K7TVG1B75WguMNt/4OEL90K5xva0GW/Bw
- w7HIfLNd4ltrk7gOPaRWfRmoWle0u9pCYN8vUii1cWS1M9ssquJeHBle3EuP77vjeuDt
- 9kg++cFTGLQ51Khy35E5mh8TC7qLwE5qy/blFoYWf6a1ASwxc7mKCpWDKIbGyQ/LcP04
- fNZ1ughzq2dZTXoN8ZDJAPjZaHKhyz0VXJ8Br1abT5o4BeL3WZdvHS7iRmg4/ezoJ0ma
- XmjQ==
-X-Gm-Message-State: AOJu0Yxzd5RHGlIFrdRF0pS3rV+7K6feqnDQNpO3puMYmcr4lhkxrBXq
- LywTpVoku62oM1VWEMHgbDzTMtaLT+z4FitAV6dz5OcZZUq3/j64ydJ6Uy5dYXLEG0g=
-X-Gm-Gg: ASbGncuX2oxCzefs1lFO97rFk6Dy1Oc9jDB0lrfqY0yRw1yUexk3VZwrljW6XMbeDpD
- 6iZg55zf7E1bytb3d4AsFafgq+V+PSkyf9RozcawkE1l5SyBDh8ZR1pDs7QKV9pp6DrptKhT7ha
- 6tqSSgRLnSn3ZvSX20vy0BWmqKSrUIqWnfq3lXbQETWVkpEUcdgd39H8actKjiABS4fLqPx3HFw
- yuaUMc54gYW3SH0WPhy7hAKZMSHqIZTiVip4Q3W2UoE+P7HdylPuujsFvW1DBxSdlSLDarKOMoN
- GajuiGxu9YkQFIYJ9swniwvZoRYp8W8NQSkO1j+gpHHMpSsS4OiqISZe7fGzf9gGBmq0QuQPaoS
- bLq5KHrlsrcWgTUGpysF2NZHjkoOis5uR653XeDEIch5EgsvQ7uk9VEL8ruXsppbFGPqOQAAwA5
- qxecsWcVnnQgM=
-X-Google-Smtp-Source: AGHT+IEGqI7c2U07bxg2uAm6b33YE7flAC6uooFc7mct1Dclg/qMpPcTcoi/nCsPRkV1rI2TUSCRzg==
-X-Received: by 2002:a05:6402:909:b0:639:f7b5:9c2d with SMTP id
- 4fb4d7f45d1cf-63c1f641924mr34968200a12.9.1761563530678; 
- Mon, 27 Oct 2025 04:12:10 -0700 (PDT)
+ bh=D1dBqMEfBlqSUG7PelnGPIkGv75RoYZ1ZvCkqq8IgNo=;
+ b=wlW8gT+Gus2q6HZ36BNm9D82dO/4zaLOk4WqjkBBVc3KEk2ln79K4xnotwizw+qjCz
+ VXetNIulHUHKMTU8DNPWE1owavR4b0LM60DoDdZorHGP6VoS7Ytm0SdVFkfpLlHjY9KW
+ 8nQzLZNLto/KTjTxoZEERJz0f3bPTHZb/ALx8nrRrDImuVD5ZxMWMj5sRJjZrGJJTN85
+ y/Y3WF1W/UN39Cgvzdr6MCLKaP9AbSt4TSDGad14ny1n28Vz2NQ/41mNVAV30/yd8rgf
+ 2e+jlT+0p93TUj5dTyqDey92P8Ij1+AtgpuhoSchNxO23altLfBihAOA0klawxamA9C1
+ 4eKA==
+X-Gm-Message-State: AOJu0Yw0mWP5XOC3ZbkF49kbGMJxjvczbi9zIFtNT+Xb6rncxgot7oOL
+ 14a33xBVrEM4TO0uAvYF5kVm5CzOdxDB6toq3/JcPuVABDa0B3z8nlAxU9VLa3qcpcw=
+X-Gm-Gg: ASbGncsjdqcxgRNoPWu8NTQRSnWcPUw0UYIzIbhQWR+LKx+xvbjhKko46zCHRo++/lv
+ z9tBst7i+COOiZYe8Z1LO4B0W5y0SOAw3meaFET/0Y0js8LJajs31lUywXNxTlL/VCeTb+xHuNr
+ arBquq/yM2687zUEtUbDUbMCObHBx7oEOd/VBL6Vo1a+UWhN3uHSqgN3qWevA7luff4lCbToxXq
+ 77/+reHgX4AlZtUA+hHZtdZe2L22Y767zVQ7jVWIzFkhUum5OLYOR7Bxpkd1B5+9RVgZTXq/08v
+ qmvzxxlRDFLqHsd3j9MufsO74LPY/47EiOm8cU5xSlN4zQmHLKdRy19Q0i61v5jb3jP8MPqgJoo
+ 5y98glcS90S104A5JskTZchod21JWh5AAqD4bj/PlRJOKEsrhZSmYnzYq27oj+Bv9Xso40v+4io
+ cVkFQlap6iphk=
+X-Google-Smtp-Source: AGHT+IF5kYTpImflkBbD2clRHQr+gdOVKdNdq8AWjSa+ytlNl34JftCGYvwU6boz7oiv8UPvMHvJ7g==
+X-Received: by 2002:a17:907:3e0d:b0:b6d:5ef8:4bf1 with SMTP id
+ a640c23a62f3a-b6d6fe42fe9mr1097430066b.19.1761563034748; 
+ Mon, 27 Oct 2025 04:03:54 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e7efb818esm5802190a12.24.2025.10.27.04.12.08
+ 4fb4d7f45d1cf-63e7efd116asm6178995a12.33.2025.10.27.04.03.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 04:12:08 -0700 (PDT)
+ Mon, 27 Oct 2025 04:03:53 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5851660E7B;
- Mon, 27 Oct 2025 11:03:46 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3F828609D9;
+ Mon, 27 Oct 2025 11:03:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -95,17 +95,17 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
  Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
-Subject: [PATCH 24/35] target/s390x: call plugin trap callbacks
-Date: Mon, 27 Oct 2025 11:03:31 +0000
-Message-ID: <20251027110344.2289945-25-alex.bennee@linaro.org>
+Subject: [PATCH 12/35] target/arm: call plugin trap callbacks
+Date: Mon, 27 Oct 2025 11:03:19 +0000
+Message-ID: <20251027110344.2289945-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -135,66 +135,138 @@ events as well as the corresponding hook functions. Due to differences
 between architectures, the latter need to be called from target specific
 code.
 
-This change places hooks for IBM System/390 targets. We treat "program
-interrupts" and service calls as exceptions. We treat external and io
-"exceptions" as well as resets as interrupts.
+This change places hooks for ARM (and Aarch64) targets. We decided to
+treat the (V)IRQ, (VI/VF)NMI, (V)FIQ and VSERR exceptions as interrupts
+since they are, presumably, async in nature.
 
-Acked-by: David Hildenbrand <david@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/s390x/tcg/excp_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/arm/internals.h    |  1 +
+ target/arm/helper.c       | 24 ++++++++++++++++++++++++
+ target/arm/tcg/m_helper.c |  5 +++++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 0ae4e266065..c6641280bc6 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -35,6 +35,7 @@
- #include "hw/s390x/s390_flic.h"
- #include "hw/boards.h"
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index f86f421a3db..6fbf7e1ca49 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -375,6 +375,7 @@ static inline int r14_bank_number(int mode)
+ 
+ void arm_cpu_register(const ARMCPUInfo *info);
+ 
++void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from);
+ void register_cp_regs_for_features(ARMCPU *cpu);
+ void init_cpreg_list(ARMCPU *cpu);
+ 
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 2ef9c178147..ef6435c3efb 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -34,6 +34,7 @@
+ #endif
+ #include "cpregs.h"
+ #include "target/arm/gtimer.h"
++#include "qemu/plugin.h"
+ 
+ #define HELPER_H "tcg/helper.h"
+ #include "exec/helper-proto.h.inc"
+@@ -8783,6 +8784,24 @@ static void take_aarch32_exception(CPUARMState *env, int new_mode,
+     }
+ }
+ 
++void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from)
++{
++    switch (cs->exception_index) {
++    case EXCP_IRQ:
++    case EXCP_VIRQ:
++    case EXCP_NMI:
++    case EXCP_VINMI:
++    case EXCP_FIQ:
++    case EXCP_VFIQ:
++    case EXCP_VFNMI:
++    case EXCP_VSERR:
++        qemu_plugin_vcpu_interrupt_cb(cs, from);
++        break;
++    default:
++        qemu_plugin_vcpu_exception_cb(cs, from);
++    }
++}
++
+ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
+ {
+     /*
+@@ -9473,6 +9492,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+     unsigned int new_el = env->exception.target_el;
++    uint64_t last_pc = cs->cc->get_pc(cs);
+ 
+     assert(!arm_feature(env, ARM_FEATURE_M));
+ 
+@@ -9489,6 +9509,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
+         arm_handle_psci_call(cpu);
+         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
+     }
+ 
+@@ -9500,6 +9521,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
+ #ifdef CONFIG_TCG
+     if (cs->exception_index == EXCP_SEMIHOST) {
+         tcg_handle_semihosting(cs);
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
+     }
+ #endif
+@@ -9525,6 +9547,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
+     if (!kvm_enabled()) {
+         cpu_set_interrupt(cs, CPU_INTERRUPT_EXITTB);
+     }
++
++    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
+ }
+ #endif /* !CONFIG_USER_ONLY */
+ 
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index d856e3bc8e2..3fb24c77900 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -23,6 +23,7 @@
+ #if !defined(CONFIG_USER_ONLY)
+ #include "hw/intc/armv7m_nvic.h"
  #endif
 +#include "qemu/plugin.h"
  
- G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
-                                            uint32_t code, uintptr_t ra)
-@@ -502,6 +503,7 @@ void s390_cpu_do_interrupt(CPUState *cs)
-     S390CPU *cpu = S390_CPU(cs);
-     CPUS390XState *env = &cpu->env;
-     bool stopped = false;
-+    uint64_t last_pc = cpu->env.psw.addr;
+ static void v7m_msr_xpsr(CPUARMState *env, uint32_t mask,
+                          uint32_t reg, uint32_t val)
+@@ -2194,6 +2195,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
+     CPUARMState *env = &cpu->env;
+     uint32_t lr;
+     bool ignore_stackfaults;
++    uint64_t last_pc = env->regs[15];
  
-     qemu_log_mask(CPU_LOG_INT, "%s: %d at psw=%" PRIx64 ":%" PRIx64 "\n",
-                   __func__, cs->exception_index, env->psw.mask, env->psw.addr);
-@@ -531,21 +533,27 @@ try_deliver:
-     switch (cs->exception_index) {
-     case EXCP_PGM:
-         do_program_interrupt(env);
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-         break;
-     case EXCP_SVC:
-         do_svc_interrupt(env);
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-         break;
-     case EXCP_EXT:
-         do_ext_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_IO:
-         do_io_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_MCHK:
-         do_mchk_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_RESTART:
-         do_restart_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-         break;
-     case EXCP_STOP:
-         do_stop_interrupt(env);
+     arm_log_exception(cs);
+ 
+@@ -2361,6 +2363,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
+         g_assert_not_reached();
+ #endif
+         env->regs[15] += env->thumb ? 2 : 4;
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
+     case EXCP_BKPT:
+         armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_DEBUG, false);
+@@ -2427,6 +2430,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
+ 
+     ignore_stackfaults = v7m_push_stack(cpu);
+     v7m_exception_taken(cpu, lr, false, ignore_stackfaults);
++
++    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
+ }
+ 
+ uint32_t HELPER(v7m_mrs)(CPUARMState *env, uint32_t reg)
 -- 
 2.47.3
 
