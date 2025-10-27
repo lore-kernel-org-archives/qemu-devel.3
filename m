@@ -4,111 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72716CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 14:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2303BCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 14:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDOfM-0004s5-D2; Mon, 27 Oct 2025 10:57:48 -0400
+	id 1vDOfz-0005aj-FX; Mon, 27 Oct 2025 10:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDOfK-0004oC-30
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 10:57:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vDOft-0005V2-G2
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 10:58:22 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDOfG-0001zN-LM
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 10:57:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761577056;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0zGaeFNSF8Mx0lpSFWIUY06kERol+iaDPy5ooIN4uAI=;
- b=dU7mUun3MC+AQNl01kgENi0NkyNSmZDLab9ybec7s+fzbXYca+GX9A9KSafmnhS4+zVDcG
- 7qKE44ZlJsYZDfQmHYApmsnPSpHVBbyJrokvSMXEkTAYLK/0C/BCMcfFeIbkVOjtfrZ1Gb
- lLFFB/AuglFRI/frgAtXA0jxtJP0yGk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-iJEVAK7TMpGcLGEtMahqTg-1; Mon, 27 Oct 2025 10:57:30 -0400
-X-MC-Unique: iJEVAK7TMpGcLGEtMahqTg-1
-X-Mimecast-MFC-AGG-ID: iJEVAK7TMpGcLGEtMahqTg_1761577049
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47111dc7c5dso28264945e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 07:57:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761577049; x=1762181849;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0zGaeFNSF8Mx0lpSFWIUY06kERol+iaDPy5ooIN4uAI=;
- b=UXU8fFhxNN3IQDBnE/ic203VMizOUjXZ4aiJTqaJwdIS1cbkmdF5OlbDjOWHFH6aGt
- 0j/dwzfyAMW6omdwYfHcBHRYuDONKAqNFgRP8VzndPYOhRAnkHabbXRlFmA1pHHW8gPZ
- kd4xQe0Iz/mVhkhCplBEpOchdFfdPKvWwy8/ge+yYTJEt2wgSVxBoEtaUq9EefOGaAje
- N0AGD0TPq6gR5Id3QM16WoXnFs4KKYAHu6PBZ+LCHgG+ucQ8zFCmiTVVvjbUIXKtDPX4
- zPd08WdSiGT5MlT7IX/W5GriswO2Lbec++K3uTMU5HI+RPBW0nCfPrxYNQsgm6eY/Soq
- as8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSbQTUyfbnCf3bg0bYNwFt68aHMhwt6Go7t+vOjRbd5ODLHKgoLgnW8XGfxzaV4IL4ATa8F8TkSjrt@nongnu.org
-X-Gm-Message-State: AOJu0Yxz7wQGi72icLB2NKgnNeNd9xSROa2ycehsBoiMhnoqYkRTYmwx
- W0RzNKjoPSQCmdDzVCbamM3mrC1+9DAGcQ0xpvYa5Ehe1A3fp2TCkzknoqvBXyBmBnFTkOp0ttL
- psXMAZviPsnpl2P+0xE0MDfX2L50voULs9s9yTfcuvqTW+zgIgyeD9YeW
-X-Gm-Gg: ASbGncttU28ia4qh1rYbb1fO5Pj97+jLWemINoNgV8GtaKOtMpxltZdnnZYd1BcYgFT
- AUG3WILOiuh+5PwLioZUqqo/giMko/6JbqqogjNWGKbfDIcv7qzgW79xpUq6/+eTBzktA7ri8hg
- HJTKRyMVNL4wnJD/XzMJ6oPM1gM//XACDxGFSoGieJ+E58qtacf9iuM7e9rwDQ75B/WEjpjoul0
- mucuDsWWMpquSOP79VBsRm2An6JZM/1Qe0XociKCsjZwvGjnCw5VDnhrXohm8VvjhVgA8qkZOec
- JODnBJOTphYNmofs0OhKMhhPBAK9GBGRhJCdVbmR4XsZ7P18N8IV4HkPrS03Ya4EYhFc53r44nj
- zsFAZydmuYlBCSN/WAAcaEbBz5Zafi0+XDvMFuM6gGcUhLQ==
-X-Received: by 2002:a05:600c:2254:b0:477:f2c:291c with SMTP id
- 5b1f17b1804b1-4770f2c2a07mr26706655e9.14.1761577049445; 
- Mon, 27 Oct 2025 07:57:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMxVMvKqeURDWv0Y4UThrbAQkFVRGj2HE5ulcLA66V3GIh9gB9ezsMhV6cRBo4spgq49cjAQ==
-X-Received: by 2002:a05:600c:2254:b0:477:f2c:291c with SMTP id
- 5b1f17b1804b1-4770f2c2a07mr26706485e9.14.1761577049000; 
- Mon, 27 Oct 2025 07:57:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952b7a7csm14804853f8f.8.2025.10.27.07.57.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 07:57:28 -0700 (PDT)
-Message-ID: <dce9bc94-f1ae-44ec-8067-ee4dbe3688f2@redhat.com>
-Date: Mon, 27 Oct 2025 15:57:27 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vDOfm-00026S-E7
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 10:58:21 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 75FF7C00E2;
+ Mon, 27 Oct 2025 17:58:07 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c5c::1:11] (unknown
+ [2a02:6bf:8080:c5c::1:11])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 6wdd6Y1LomI0-fZXMFXvq; Mon, 27 Oct 2025 17:58:06 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1761577086;
+ bh=LABveeVuoNQv0XKdQWupoRWMz7Tu9n3cRS2GLoxA7kQ=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Zz1jrZFCHDfXojxikVHh0gekwWW3PkeXkN+oM2g9ycN7j2xJ8+vGtnUHzNVxLaVLG
+ Ie2XhmXMV+U2PkCGc6DYPa0cKM15vFctcCpTl3QZHxQJOUdk6gt/xgSvQIrtqfmIkk
+ gO+9Bm/84LPEmbCV/qur2MBzVQIGtPcTJY6KkU7Y=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9f5ba3d7-3103-4d2a-b50f-f8883a18c812@yandex-team.ru>
+Date: Mon, 27 Oct 2025 17:58:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 23/27] hw/arm/smmuv3-accel: Add property to specify OAS
- bits
+Subject: Re: [PATCH v3 4/4] migration: vmsd errp handlers: return bool
+To: Markus Armbruster <armbru@redhat.com>
+Cc: peterx@redhat.com, stefanb@linux.vnet.ibm.com, farosas@suse.de,
+ qemu-devel@nongnu.org, berrange@redhat.com
+References: <20251025202649.1122420-1-vsementsov@yandex-team.ru>
+ <20251025202649.1122420-5-vsementsov@yandex-team.ru>
+ <87o6psocib.fsf@pond.sub.org>
 Content-Language: en-US
-To: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
- jgg@nvidia.com, nicolinc@nvidia.com, ddutile@redhat.com,
- berrange@redhat.com, nathanc@nvidia.com, mochs@nvidia.com,
- smostafa@google.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-24-skolothumtho@nvidia.com>
- <20251001144653.0000456b@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251001144653.0000456b@huawei.com>
-Content-Type: text/plain; charset=UTF-8
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87o6psocib.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,58 +77,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 10/1/25 3:46 PM, Jonathan Cameron wrote:
-> On Mon, 29 Sep 2025 14:36:39 +0100
-> Shameer Kolothum <skolothumtho@nvidia.com> wrote:
->
->> QEMU SMMUv3 currently sets the output address size (OAS) to 44 bits. With
->> accelerator mode enabled, a guest device may use SVA where CPU page tables
->> are shared with SMMUv3, requiring OAS at least equal to the CPU OAS. Add
->> a user option to set this.
+On 27.10.25 13:38, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> Switch the new API to simple bool-returning interface, as return value
+>> is not used otherwise than check is function failed or not. No logic
+>> depend on concrete errno values.
 >>
->> Note: Linux kernel docs currently state the OAS field in the IDR register
->> is not meaningful for users. But looks like we need this information.
-> So is there a kernel documentation fix pending? :)
->
-> Mind you I think we should ensure this is true anyway in QEMU as some other
-> OS might do weird things if it's not.
->
-> Maybe we should just raise the default QEMU uses (with compat stuff for older
-> qemu) and not worry about an exposed control for this?
-
-I tend to agree with Jonathan. We may assess the effort to increase OAS
-value in general.
-
-Eric
->> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >> ---
->>  hw/arm/smmuv3-accel.c    | 15 +++++++++++++++
->>  hw/arm/smmuv3-internal.h |  3 ++-
->>  hw/arm/smmuv3.c          | 15 ++++++++++++++-
->>  include/hw/arm/smmuv3.h  |  1 +
->>  4 files changed, 32 insertions(+), 2 deletions(-)
+>>   backends/tpm/tpm_emulator.c   | 10 ++++------
+>>   docs/devel/migration/main.rst |  6 +++---
+>>   include/migration/vmstate.h   |  6 +++---
+>>   migration/vmstate.c           | 14 ++++++--------
+>>   4 files changed, 16 insertions(+), 20 deletions(-)
 >>
->> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->> index eee54316bf..ba37d690ad 100644
->> --- a/hw/arm/smmuv3-accel.c
->> +++ b/hw/arm/smmuv3-accel.c
->> @@ -86,6 +86,17 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->>          return false;
->>      }
->>  
->> +    /*
->> +     * ToDo: OAS is not something Linux kernel doc says meaningful for user.
->> +     * But looks like OAS needs to be compatibe for accelerator support. Please
-> spell check this too..
->
->> +     * check.
->> +     */
->
+>> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+>> index aa69eb606f..6cc9aa199c 100644
+>> --- a/backends/tpm/tpm_emulator.c
+>> +++ b/backends/tpm/tpm_emulator.c
+>> @@ -947,25 +947,23 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
+>>   
+>>   /*
+>>    * Load the TPM state blobs into the TPM.
+>> - *
+>> - * Returns negative errno codes in case of error.
+>>    */
+>> -static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+>> +static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+>>   {
+>>       TPMBackend *tb = opaque;
+>>       int ret;
+>>   
+>>       ret = tpm_emulator_set_state_blobs(tb, errp);
+> 
+> Note for later: this returns 0 or -EIO.
+> 
+>>       if (ret < 0) {
+>> -        return ret;
+>> +        return false;
+>>       }
+>>   
+>>       if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
+>>           error_setg(errp, "Failed to resume tpm");
+>> -        return -EIO;
+>> +        return false;
+>>       }
+>>   
+>> -    return 0;
+>> +    return true;
+>>   }
+>>   
+>>   static const VMStateDescription vmstate_tpm_emulator = {
+>> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+>> index 1afe7b9689..234d280249 100644
+>> --- a/docs/devel/migration/main.rst
+>> +++ b/docs/devel/migration/main.rst
+>> @@ -446,15 +446,15 @@ The functions to do that are inside a vmstate definition, and are called:
+>>   
+>>   Following are the errp variants of these functions.
+>>   
+>> -- ``int (*pre_load_errp)(void *opaque, Error **errp);``
+>> +- ``bool (*pre_load_errp)(void *opaque, Error **errp);``
+>>   
+>>     This function is called before we load the state of one device.
+>>   
+>> -- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
+>> +- ``bool (*post_load_errp)(void *opaque, int version_id, Error **errp);``
+>>   
+>>     This function is called after we load the state of one device.
+>>   
+>> -- ``int (*pre_save_errp)(void *opaque, Error **errp);``
+>> +- ``bool (*pre_save_errp)(void *opaque, Error **errp);``
+>>   
+>>     This function is called before we save the state of one device.
+>>   
+>> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+>> index 63ccaee07a..dbe330dd5f 100644
+>> --- a/include/migration/vmstate.h
+>> +++ b/include/migration/vmstate.h
+>> @@ -218,11 +218,11 @@ struct VMStateDescription {
+>>       int minimum_version_id;
+>>       MigrationPriority priority;
+>>       int (*pre_load)(void *opaque);
+>> -    int (*pre_load_errp)(void *opaque, Error **errp);
+>> +    bool (*pre_load_errp)(void *opaque, Error **errp);
+>>       int (*post_load)(void *opaque, int version_id);
+>> -    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>> +    bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>>       int (*pre_save)(void *opaque);
+>> -    int (*pre_save_errp)(void *opaque, Error **errp);
+>> +    bool (*pre_save_errp)(void *opaque, Error **errp);
+>>       int (*post_save)(void *opaque);
+>>       bool (*needed)(void *opaque);
+>>       bool (*dev_unplug_pending)(void *opaque);
+>> diff --git a/migration/vmstate.c b/migration/vmstate.c
+>> index 677e56c84a..adaaf91b3f 100644
+>> --- a/migration/vmstate.c
+>> +++ b/migration/vmstate.c
+>> @@ -154,13 +154,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>>           return -EINVAL;
+>>       }
+>>       if (vmsd->pre_load_errp) {
+>> -        ret = vmsd->pre_load_errp(opaque, errp);
+>> -        if (ret < 0) {
+>> +        if (!vmsd->pre_load_errp(opaque, errp)) {
+>>               error_prepend(errp, "pre load hook failed for: '%s', "
+>>                             "version_id: %d, minimum version_id: %d: ",
+>>                             vmsd->name, vmsd->version_id,
+>>                             vmsd->minimum_version_id);
+>> -            return ret;
+>> +            return -EINVAL;
+>>           }
+>>       } else if (vmsd->pre_load) {
+>>           ret = vmsd->pre_load(opaque);
+>> @@ -256,11 +255,11 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>>           return ret;
+>>       }
+>>       if (vmsd->post_load_errp) {
+>> -        ret = vmsd->post_load_errp(opaque, version_id, errp);
+>> -        if (ret < 0) {
+>> +        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
+>>               error_prepend(errp, "post load hook failed for: %s, version_id: "
+>>                             "%d, minimum_version: %d: ", vmsd->name,
+>>                             vmsd->version_id, vmsd->minimum_version_id);
+>> +            ret = -EINVAL;
+> 
+> With ->post_load_errp is tpm_emulator_post_load(), the value returned on
+> error changes from -EIO to -EINVAL.
+> 
+> Do callers of vmstate_load_state() care?
 
+Fast check.. let see somewhere, OK: get_qlist() in vmstate-types.c.. That's a .get
+in VMStateInfo structure.
+
+Oh, and we do print this ret the same way:
+
+
+int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp)
+
+  ...
+
+                     ret = inner_field->info->get(f, curr_elem, size,
+                                                  inner_field);
+                     if (ret < 0) {
+                         error_setg(errp,
+                                    "Failed to load element of type %s for %s: "
+                                    "%d", inner_field->info->name,
+                                    inner_field->name, ret);
+                     }
+
+
+Not saying about a lot  of vmstate_load_state() other calls in the code, and callers do
+passthrough the error to their callers, and so on. It's a huge work to analyze all of
+them.
+
+
+Hmm now I see that tpm_emulator_post_load() returns only -EIO code on all error paths.
+
+Would it be correct just use -EIO here in my patch instead of -EINVAL? It will save
+current behavior as is.
+
+
+
+-- 
+Best regards,
+Vladimir
 
