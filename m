@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4841FCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10909CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmd-0004ww-EY; Mon, 27 Oct 2025 14:17:31 -0400
+	id 1vDRmN-0004nc-Ou; Mon, 27 Oct 2025 14:17:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmR-0004qb-3t
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:20 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm6-0004ho-Ns
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:01 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm9-0003yJ-W5
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:17 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRly-000409-6U
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:16:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=5ZezYXaPprRXNYqfXmXZR4eVQGJYSqNhw3mLtbyh/mE=; b=TfE7yEooQOfQq80
- 7Hg4c4CZ0tfeeC9ZG97LPRDwHXeoVOTc1sFU87hyfYLPf6MCbt6jyWgPsDDxddph4S487a9l7bTfY
- 8Alqyvn6BEUt2SgMl0ANygN+j8pAeuyfCyyV6xi1gOagjY3x6HFjtYTy+aQvkaUKKLzifHby5Iz5i
- dU=;
+ List-Help; bh=okOiofNy7st7WsZ2e3AUHi2e/nfBmPBAYNfiTpuL2hk=; b=YR1pdmwDq+QIt8H
+ QQvxE2haJfqx5j1h2PksBzI8mcB0OWB2e9ciKwXOdFjur992ZB3GAQs9mLkcUwN2mxqy+085/RbjM
+ TWtlj5uU00+dYgQ1SM1jlG7gYCXihpbJ3kGjMp3+r84V7dw7BmGzwQ3EYrBQ58uG1KCH57smgHTyo
+ YU=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 07/33] target/riscv: Combine minstretcfg and minstretcfgh
-Date: Mon, 27 Oct 2025 19:18:04 +0100
-Message-ID: <20251027181831.27016-8-anjo@rev.ng>
+Subject: [PATCH v4 21/33] target/riscv: Fix size of gei fields
+Date: Mon, 27 Oct 2025 19:18:18 +0100
+Message-ID: <20251027181831.27016-22-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,94 +64,90 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the privileged specification,
-minstretcfg is a 64-bit register and minstretcfgh refers to the top
-32 bits of this register when XLEN == 32.  No real advantage is
-gained by keeping them separate, and combining them allows for slight
-simplification.
+geilen takes the values 31 or 63, fix it to 8 bits. hgeie and hgeip are
+at most 64 bits in size, fix to 64.  Update relevant function arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h |  3 +--
- target/riscv/csr.c | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ target/riscv/cpu.h        | 10 +++++-----
+ target/riscv/cpu_helper.c |  4 ++--
+ target/riscv/machine.c    |  4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index e15439dab7..2d41105ca5 100644
+index 4c42971809..5f051796f4 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -421,8 +421,7 @@ struct CPUArchState {
+@@ -279,7 +279,7 @@ struct CPUArchState {
+ #ifndef CONFIG_USER_ONLY
+     /* This contains QEMU specific information about the virt state. */
+     bool virt_enabled;
+-    target_ulong geilen;
++    uint8_t geilen;
+     uint64_t resetvec;
  
-     /* PMU cycle & instret privilege mode filtering */
-     uint64_t mcyclecfg;
--    target_ulong minstretcfg;
--    target_ulong minstretcfgh;
-+    uint64_t minstretcfg;
+     uint64_t mhartid;
+@@ -356,8 +356,8 @@ struct CPUArchState {
+     uint64_t htval;
+     uint64_t htinst;
+     uint64_t hgatp;
+-    target_ulong hgeie;
+-    target_ulong hgeip;
++    uint64_t hgeie;
++    uint64_t hgeip;
+     uint64_t htimedelta;
+     uint64_t hvien;
  
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ddd80ab68d..b28839d121 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1117,7 +1117,8 @@ static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
- static RISCVException read_minstretcfg(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
+@@ -609,8 +609,8 @@ int riscv_cpu_mirq_pending(CPURISCVState *env);
+ int riscv_cpu_sirq_pending(CPURISCVState *env);
+ int riscv_cpu_vsirq_pending(CPURISCVState *env);
+ bool riscv_cpu_fp_enabled(CPURISCVState *env);
+-target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
+-void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
++uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
++void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
+ bool riscv_cpu_vector_enabled(CPURISCVState *env);
+ void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 38b57bc622..e0a324b401 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -661,7 +661,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+     }
+ }
+ 
+-target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
++uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
  {
--    *val = env->minstretcfg;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
-+    *val = extract64(env->minstretcfg, 0, rv32 ? 32 : 64);
-     return RISCV_EXCP_NONE;
+     if (!riscv_has_ext(env, RVH)) {
+         return 0;
+@@ -670,7 +670,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
+     return env->geilen;
  }
  
-@@ -1144,7 +1145,7 @@ static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
- static RISCVException read_minstretcfgh(CPURISCVState *env, int csrno,
-                                         target_ulong *val)
+-void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
++void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
  {
--    *val = env->minstretcfgh;
-+    *val = extract64(env->minstretcfg, 32, 32);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1161,7 +1162,8 @@ static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MINSTRETCFGH_BIT_VSINH : 0;
- 
--    env->minstretcfgh = val & inh_avail_mask;
-+    env->minstretcfg = deposit64(env->minstretcfg, 32, 32,
-+                                 val & inh_avail_mask);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1251,8 +1253,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-     if (counter_idx == 0) {
-         cfg_val = env->mcyclecfg;
-     } else if (counter_idx == 2) {
--        cfg_val = rv32 ? ((uint64_t)env->minstretcfgh << 32) :
--                  env->minstretcfg;
-+        cfg_val = env->minstretcfg;
-     } else {
-         cfg_val = env->mhpmevent_val[counter_idx];
-         cfg_val &= MHPMEVENT_FILTER_MASK;
-@@ -1574,12 +1575,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
-         }
-         break;
-     case 2:          /* INSTRETCFGH */
-+        cfgh = extract64(env->minstretcfg, 32, 32);
-         if (wr_mask) {
-             wr_mask &= ~MINSTRETCFGH_BIT_MINH;
--            env->minstretcfgh = (new_val & wr_mask) |
--                                (env->minstretcfgh & ~wr_mask);
-+            cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-+            env->minstretcfg = deposit64(env->minstretcfg, 32, 32, cfgh);
-         } else {
--            *val = env->minstretcfgh;
-+            *val = cfgh;
-         }
-         break;
-     default:
+     if (!riscv_has_ext(env, RVH)) {
+         return;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index ce5e44325d..8a8f5be8d6 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -91,8 +91,8 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.htval, RISCVCPU),
+         VMSTATE_UINT64(env.htinst, RISCVCPU),
+         VMSTATE_UINT64(env.hgatp, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgeie, RISCVCPU),
+-        VMSTATE_UINTTL(env.hgeip, RISCVCPU),
++        VMSTATE_UINT64(env.hgeie, RISCVCPU),
++        VMSTATE_UINT64(env.hgeip, RISCVCPU),
+         VMSTATE_UINT64(env.hvien, RISCVCPU),
+         VMSTATE_UINT64(env.hvip, RISCVCPU),
+         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
 -- 
 2.51.0
 
