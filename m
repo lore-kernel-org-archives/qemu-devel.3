@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF72CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 06:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C73CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 06:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDGJ6-0000yk-A9; Mon, 27 Oct 2025 02:02:16 -0400
+	id 1vDGKS-0001ZM-DR; Mon, 27 Oct 2025 02:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vDGJ2-0000qA-RQ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 02:02:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vDGKQ-0001ZB-1C
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 02:03:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vDGIx-0003XK-6b
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 02:02:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vDGKO-0003bU-G7
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 02:03:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761544921;
+ s=mimecast20190719; t=1761545014;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FVIpKJ0ZQdga10anyGfvciZy4tdq+yEL28P8kQ3jiZA=;
- b=AsI5RbUOtIBkLBQnZJbVO5LRCo7XsMaun4cnfCzJ5G66DzNWtXCmrQIIL/t/9S+AJpSS/r
- v71Q3YTS2sslqhE+VRkUAd6drNFXfnbe2wv3+yu0urrofnCTrkch3b//8b5Avj6ROXCkZB
- 0+B9/DWS4qTej7QEf7PcsChyri2UPcA=
+ bh=I2fKZPFJfIsaw6O7W8sAi+D/a3pQf/fMFHRbEOokbTQ=;
+ b=YEMclKlbo7XAuQNHVLL7t6phGZ3rMjjXzFTMWSJsqwTxd5AESbZkSvuLqGLcv+BZkIy6LZ
+ /mBTQoKOHNd0nnWtW7kS0qD9DBrYTFIB+7Eva2/r5wrPKJUgwoQkDM1amGJC967Go4nDhF
+ e9k5AwUyB+l7jgN8tbzcEiYrf+GsPL8=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-45-hkj-_AWsN_-5OqAi9BjJEQ-1; Mon, 27 Oct 2025 02:01:56 -0400
-X-MC-Unique: hkj-_AWsN_-5OqAi9BjJEQ-1
-X-Mimecast-MFC-AGG-ID: hkj-_AWsN_-5OqAi9BjJEQ_1761544914
+ us-mta-590-5QZf3gWbN7qQCl5AN_1o-g-1; Mon, 27 Oct 2025 02:03:33 -0400
+X-MC-Unique: 5QZf3gWbN7qQCl5AN_1o-g-1
+X-Mimecast-MFC-AGG-ID: 5QZf3gWbN7qQCl5AN_1o-g_1761545012
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-476b8c02445so14206975e9.1
- for <qemu-devel@nongnu.org>; Sun, 26 Oct 2025 23:01:55 -0700 (PDT)
+ 5b1f17b1804b1-47106a388cfso23696655e9.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Oct 2025 23:03:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761544913; x=1762149713;
+ d=1e100.net; s=20230601; t=1761545012; x=1762149812;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FVIpKJ0ZQdga10anyGfvciZy4tdq+yEL28P8kQ3jiZA=;
- b=f5GhIaNW21i/XXjVKfooR227TrZIDG0rsLIrrIBaConbdLimuoKph8oenhDUCupTIF
- BXisHc5qMYb2lxWMGzM0Z8+pGjDWD3FFRWbQMnuYyZop+t/5/mX848GaTj7K6U4Z5ubm
- N7b07CWHkiKrGmuL6+cNQGplqPCwE6yNQcbECpSlnyjKVkx6BpXtPXITkFxwKawCLm4e
- z7XlcB/2iRoVbZrkmJUzQS+LQrAvPdInUk6JoYsnJtQ1u5CJ7cg4HjV4uZITVTRF/GEx
- dSMAD04DnSGErxv9kToBW7Yfmc6BVvCOEdVgaH8jg7/8qpk26EkO1iZP7/ps9VB1J3Jy
- 6zcQ==
+ bh=I2fKZPFJfIsaw6O7W8sAi+D/a3pQf/fMFHRbEOokbTQ=;
+ b=XbrUNPAifrAlDwpE6Ie/Nr1zKYXrhnFyuDgUcgDksOWWKRaowOO9iL6BDo4gq6UWDG
+ 8O9LhDeyU2iWw8u85wD0NVjx/rKzIdGO/XwkjcvqzZfShdSMmIqEuHac8yfAIklU5M2O
+ jSoUQ1dyoWUuDw3v+HmLxlK+Tgt1xIUoObn1MCMCdFrhISU8RolQ3KkSCqNAWwj6ShaA
+ 2cwQk8DhuPYrlyKBJEysJJfnF7hjoVxbIVOkez2ECw1a2JfNtLsMvgv+3FnXNRDJCOUy
+ r7LDzO1MF3GSW68IdvHCqqp1EDDp80PYA2WuKJMjutJlCmqapu8klSMZIcHiuV+JmDGb
+ L3lg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsPRi4B3qqxVbvVnLs4MWo0Wg7mKwjWYrW6zjVa7PTNjaXwhtzweFQTWiYeMnKqWdTe6BO1k00bNsu@nongnu.org
-X-Gm-Message-State: AOJu0Yxo8kIyOLmrjOoqZt9cS5222BFnOsCm2cUJdiwBepc2UqatVCMe
- YWKaDYLhpHwTTn73WC8TEL7Yl2LofmkvmfrnnH0SU+E/NYzG/qZtcGpERSdwn9Xxqa6/FXlIUKw
- pcAAA1Z1pVrywGA9PeqEwxo338xWkiMW0VZaJWmQVz9uP7ICOUvR1ANQu
-X-Gm-Gg: ASbGncvhaJ637zUDweHXEZEk1KhO84m5QHW3PIILINR7DnCEI8pTayzuj8VkPRXYReO
- /zmXwYR+5EHjrb9YGFL/SIHXJsxOiwEPBpn6ddyxYi4Odn00dLMpQovbtuZ5QH4bsGeygmlfgQu
- q+M4AMUPJSZBJPteY+4utb84L31FGXXmG/dNIGgXwL30ELmQ3aFrq+PnmU+xgoZnVdkWDw83Iz3
- twRe3LW4oq6fouZHvBvAV6FqxUEiuFCx9cD1s95lcYjnpMg7PNL7bNY8R9MBVbSa4kJZtxYu8m3
- SP2cMAmh4LGc9q6ifhr/QxEUxn2Ba85WIjDCL5/eFLOVN0AJnAZLz3+NO/y0jY/mtlHYiZtl7jC
- EC1BYCskAgr8p5zXzuPhzjjnsbVFhZEpIQNUZnuM=
-X-Received: by 2002:a05:600c:6094:b0:477:1326:7b4b with SMTP id
- 5b1f17b1804b1-47713267bbbmr6807865e9.19.1761544913107; 
- Sun, 26 Oct 2025 23:01:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJb33BJEzIzefMiAc87nuL7O+OEzdAtkOP+o0l5zR4g7I5eJ2J+nDHJ+KtW/tQUk2OVXIXLQ==
-X-Received: by 2002:a05:600c:6094:b0:477:1326:7b4b with SMTP id
- 5b1f17b1804b1-47713267bbbmr6807625e9.19.1761544912678; 
- Sun, 26 Oct 2025 23:01:52 -0700 (PDT)
+ AJvYcCUOhOwIGCJXDs7DisqiKRdULcNLt8owYsIWkMpkijgCdMzXSyLR32SBTiXccAAiWZy3DLs40S+rbyIQ@nongnu.org
+X-Gm-Message-State: AOJu0YwSuik4PEeHMV+vw0C+w8YnvL3BizWs8B3CnTHQi6GTcU60oqhv
+ umzFe8UB/b+m87h0kKa5EBrwrjy77hvsvdpUuV3sX4h4sbfxbCQ2+c7QrCTd6PysfU7zFvpE1p3
+ qWTBM1cE13e7sMEso7JdGfq8ZApAMW/j/d2oOe6PARGY2MEPgr2rm8KsVVaH56/yV
+X-Gm-Gg: ASbGncvNcxN4hYVEUQc6vpskN4U+EFouaJfUn9ItoutfGn3Fdb7PZ18cxUZbe0kvbjY
+ UaMkE17sec1X/iNrr6omIuhOFA0MYaSFqWwV3tlNIawIbhIYGferA1G2GwMNBYu/Bn+ndj+KvEj
+ qfl4Uan/r7lI0sobFdtpYLbfVJN2zQzzIrDcHGKHua635irxRQGwEmtmX4ycOmWyFNDaQ24oJ6V
+ 251ydHGr2m+n8m08nmCUhMWvi87+ettGcUifw68YFPanflpS2X4xHONu7e7gUjOQcaoHOgqzlD+
+ ++B+nkb+rGgfQyTHx0z9xNdxaYoJnxLAWWmh530GekoFPVIZf2hfhBN07fd+HeFXMaiWmy/nvV5
+ eVV2ahuBjjFKmf4skNesvI4drDs+cYCqvnxys5FU=
+X-Received: by 2002:a05:600c:3b8d:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-471179176b9mr316388995e9.28.1761545011844; 
+ Sun, 26 Oct 2025 23:03:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzOkuYH35l/DYjV6P7co6kgmO6pZBHRZfVdB6jX2wTwTXeF/nnkBVQCsI2Wk8VsLtvexSmwQ==
+X-Received: by 2002:a05:600c:3b8d:b0:45d:f81d:eae7 with SMTP id
+ 5b1f17b1804b1-471179176b9mr316388775e9.28.1761545011432; 
+ Sun, 26 Oct 2025 23:03:31 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-081.pools.arcor-ip.net.
  [47.64.113.81]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd494d5csm117453685e9.9.2025.10.26.23.01.50
+ 5b1f17b1804b1-475dd4cc596sm117517385e9.15.2025.10.26.23.03.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Oct 2025 23:01:51 -0700 (PDT)
-Message-ID: <8e332026-49b6-4389-bbc5-5713d8f3cc1d@redhat.com>
-Date: Mon, 27 Oct 2025 07:01:49 +0100
+ Sun, 26 Oct 2025 23:03:30 -0700 (PDT)
+Message-ID: <8fe414c9-6978-4775-859f-738e7f1f56cb@redhat.com>
+Date: Mon, 27 Oct 2025 07:03:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tests/functional/.../testcase.py: better socketdir
- cleanup
+Subject: Re: [PATCH 2/2] MAINTAINERS: fix functional tests section
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: philmd@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org
 References: <20251025165809.930670-1-vsementsov@yandex-team.ru>
- <20251025165809.930670-2-vsementsov@yandex-team.ru>
+ <20251025165809.930670-3-vsementsov@yandex-team.ru>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,10 +126,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251025165809.930670-2-vsementsov@yandex-team.ru>
+In-Reply-To: <20251025165809.930670-3-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -156,36 +155,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/10/2025 18.58, Vladimir Sementsov-Ogievskiy wrote:
-> TemporaryDirectory prefer explicit call to .cleanup() (or
-> use context manager). Otherwise it may produce a warning like:
-> 
->     /usr/lib/python3.10/tempfile.py:1008: \
->       ResourceWarning: Implicitly cleaning up \
->       <TemporaryDirectory '/tmp/qemu_func_test_sock_4esmf5ba'>
-> 
-> Currently, the only test using socket_dir() is
-> tests/functional/x86_64/test_vfio_user_client.py, and it does
-> print this warning, at least with python 3.10.12. With this commit,
-> the warning disappears.
+> Without "S: Maintained", ./scripts/get_maintainer.pl shows "unknown"
+> role instead of "maintainer" for "M: " entry, it's confusing. I really
+> hope that functional tests are maintained:)
 > 
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   tests/functional/qemu_test/testcase.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 2c0abde395..a122acb560 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -233,7 +233,7 @@ def tearDown(self):
->           if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
->               shutil.rmtree(self.workdir)
->           if self.socketdir is not None:
-> -            shutil.rmtree(self.socketdir.name)
-> +            self.socketdir.cleanup()
->               self.socketdir = None
->           self.machinelog.removeHandler(self._log_fh)
->           self.log.removeHandler(self._log_fh)
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f33f95ceea..27e5e93d2a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4408,6 +4408,7 @@ Functional testing framework
+>   M: Thomas Huth <thuth@redhat.com>
+>   R: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   R: Daniel P. Berrange <berrange@redhat.com>
+> +S: Maintained
+>   F: docs/devel/testing/functional.rst
+>   F: scripts/clean_functional_cache.py
+>   F: tests/functional/qemu_test/
+
+Ooops, thanks for catching it!
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
