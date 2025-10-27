@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA989CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B049CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDSk3-0004rQ-Hp; Mon, 27 Oct 2025 15:18:56 -0400
+	id 1vDT0a-00005w-8G; Mon, 27 Oct 2025 15:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSju-0004qX-7n
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:18:47 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDT0X-00005P-6a
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:35:57 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSjl-0005FF-CF
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:18:44 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so38432395e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:18:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDT0N-0007ts-T3
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:35:56 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47112edf9f7so31820885e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761592710; x=1762197510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761593741; x=1762198541; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9HKp2yg/DZV39UfA2Dur6nn6mJkBI4zDfwSONB9qI6c=;
- b=vfFhI0nv8nCNMkQkTihlZd2vg+rW15ZjQj3l25Jbe8r9uzXjvTfjYnKaS61kwI6o58
- ItcA2GPKRfLVZaIZm6IHN4o5n8mT8RbCuca76VjpjnT3NwpLgNI0ArkvuaQz3eDa52Rf
- lLswkRkqYgpY92f3v0tFLdG7YXYwLiPeniC5jfaReSXj70cXFDl5PNWBQJEJ/huRmgmJ
- ZeDxQNpPsu7WMTaNKKS9Pk+ShgYQmlLyd4YDN/05TU3mPUv3R9TAUbLZdgirsv/RXuXC
- e+W6w9LnasOeqfF3pdE9wufsxYoVLwg72cUw94qr0Mfl47ttJnA/LNrWL2qD4pSv5TL1
- gT8w==
+ bh=rq9McUYcA2663ggQwnVLUVi1Gll9sS+Csapci13wf94=;
+ b=qs2tro4jHquGyOEdwlrE2114sbuu1a0/D2lqOSmR7pP8HmJix8NBeN6RgEZdDL62qc
+ gw5I0TNPaU+ckw9xtATZAz9WdLtk4i+0FuRChb87cUO2yPnNPpDCEh2EP6epXhFKK6kL
+ w125bA6/ase0jqyEdvED5yofITgXMLSpGqHYJcnQQt6HjsipcEZuQh13Q1HyG+IgOrMk
+ V1omoNrRBX5p2MZUQZ4dNuqjWwHK8Ilf9ocF0B3IyQSZpVwSNTQW/068uGxp+95ukEE6
+ JsWni+Ghkcl4f+t1SU2xih2bvVuIMm3BIYkTzgGfyaTszx575IBL9u4ZpJPwASSSVFFs
+ j0rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761592710; x=1762197510;
+ d=1e100.net; s=20230601; t=1761593741; x=1762198541;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9HKp2yg/DZV39UfA2Dur6nn6mJkBI4zDfwSONB9qI6c=;
- b=IoRmRF+kBTyqqIiE+qi1o/GijhiDAnnbt6rsiDjoHJGM5OISHPoAL6CQNe0YwcqFGz
- KYLeNqJE7GLb6Xa/dOmvpfVHUbJdFL98cJEuCp0dzPg+cBhveXNqrR6/t+VTT6PodVCP
- pMYrCEtiTLzIt+k24vHrErTH5xeATI93iYRujcKT4+mAkuFR8eUMvfevh6R2HkSHnF1I
- uitVKuPBbHIfwAZkJSD5StVs2FWpEg8JLpQc1JEYJtq+xjfRNCuRk8MvUTlAHjZIz6Ik
- ySJHhGNFf4qIos8ybmZAOkkbtMHcCpOpqY5cx492JNMowWkGNpIcd3M+0KUxC5rMsNiy
- P2+Q==
-X-Gm-Message-State: AOJu0Yz2fXXIBLzOrLMMJYV+UIDA9q+J4bl/QW+yKqCQZTL1qkMHM7rh
- ifgPYvLEO8gTUEe4UyKRoe9RSete/P7UMXLtKCp2LogumwGnLTHc8GRIxRBGYnpkkhbaOgCYHq8
- HrDmZfps=
-X-Gm-Gg: ASbGncsoTIYN+Ln/XBbphhKk73RYkc9w8VPyDwzFG9uyV5vtEjCMa0dk/szenwpT4TF
- wWGsBP1nGaiS8SgMMMdvhb5/0qmAPaerUdTLo847UUEM5ChlD3H9YmUJG6GA+cYnsECU52DsnVJ
- cIhOZeLDPBAMEI6H9Upf/nG6CKzWW95a3k4WQ6fIHbVKRWYYBMlnlscTNJT6ldp0Qs6UbqFt4CV
- wcLpuMRrzG2hs41RrHmGEaq6IIj5960kRPRBk9Gvte4W1luwxbvQRPj7VjEMqeKtFuFfogTUB8r
- ZBIVDC2f+VHsKaO3DwPFzR2QYTnr31MswGkKR5upMzWsvMkufNXSu6+IKSU0BI+sNPHXBXKW5Pj
- NMHw/oGKJnyc8u0m3KH2J16y+L3WjaILyGjCtuGV2RFn+oxnW47+NXahIhXiWwZb+xmuCrrO7Tx
- sHaecEUOm+ZnASu+JEhAn/PNMgO0oLHE0wNFEX/pv0hHdFUKXN+gAe6g==
-X-Google-Smtp-Source: AGHT+IEEoJ2H7nrcaNH4jtBvC/x4UMaDq23WYjl/UcaQZMIQltT+04vpL3rTPs5fzshCvG4gOO8bWA==
-X-Received: by 2002:a05:600c:34c4:b0:46e:4246:c90d with SMTP id
- 5b1f17b1804b1-47717dfa47bmr6980475e9.11.1761592710496; 
- Mon, 27 Oct 2025 12:18:30 -0700 (PDT)
+ bh=rq9McUYcA2663ggQwnVLUVi1Gll9sS+Csapci13wf94=;
+ b=qdxk2ZuFZ3soneAFh7pUrAWXzPBanUgC7Pep1TznGQ9ioHHGXlcfvetEDQxBgLHGVW
+ r5ixk3NCLZr9GK5XQnWjeulWA7AaS0TqUjg1UbZnQCBgMHWThH6eiyDNtv722N70eBUx
+ c6oPfca47Q+RrXNd1g88yBOFu5TogMkSdfSH/nN9pmxgzLTRkUynFUC99LU9UmDLWt3a
+ LIcL61NZWrJ5yMWATfQyiLI8c9PFb1CQudYsL4t/4tXQ8KPQV4JPoqdqbl/n3w42kRLW
+ vEUron84Cpltp1VS6JfFnFKDug2ydfGGTJQUBQMRsxqlJjPkcmgxkzTWEotoI9zTaphW
+ qqsw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1oLEFQcflsh+bfnUIzt2gePEBXe1oa7UEhKLAEQy6aAIsDEjgzx3dRRAbNZf1DcX3nubAuAw98LwS@nongnu.org
+X-Gm-Message-State: AOJu0YzYRbh/6Jj0iTt5ltNXqqSnbjhGytoIjR6hQvqIikF9mbKMxnwd
+ JDPiyyHAYbtS9umgibRxgjgWIsFvUNu9JHh0skRjKAG4/65Lv1nVlyUdbk8BFnsWbWA=
+X-Gm-Gg: ASbGncsTYsw5L5YOnq06DF5LZtOcZY6SKJC7hsbuHxkrJ7DNYi+0k33PT4hr5sv95A+
+ VkHzNxR5wycLkJ/VdR+1yMslQk7z+tHwcRvrMJBoKfpFd3ZYqj+1d5Ve17bjOT/Azb2SNpj+k62
+ LQJUrdmPTgTmL4ChtCnDE6dHiqA4HivENLxJDvQPVcTm5mz5pTTmmc0Fr1nArzz/JjUk1CRrwUM
+ 1V7R7qFlkA8cvzN5rEg3/ApNFV8Ud4riAwQPkF2VGtqofUfyflIuzbnz2AQslufhOUsmVjOwThq
+ eudgKZkKnZM3nqz6GJmNBneJ2/6rOKahMu6sRYmmxGUXbo5aT2CXhDzNH9htnpbCNwk/jl2X62E
+ RyStXrn3fTUPVfwK2kKgNSjQFbOcoVaQGCrzbQGgAeq5pHLqM84FYF/Pg1muCg6dAXT5ScxbLyx
+ 0oQvC2niKADIgRQxLuNQBYX83eAlDlOD5OswI+U7C/t0A=
+X-Google-Smtp-Source: AGHT+IEOj6fd5vTsHHDM4GVjydxYRU5o5RW4YwvJW9eL9ZNFkLLG22JwDoCcbsBFmJeW2y4g5CxG2w==
+X-Received: by 2002:a05:600c:45c5:b0:471:1337:7220 with SMTP id
+ 5b1f17b1804b1-47717df6931mr8384255e9.3.1761593741266; 
+ Mon, 27 Oct 2025 12:35:41 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952d9e80sm15814669f8f.28.2025.10.27.12.18.28
+ 5b1f17b1804b1-475dd47853csm154236525e9.13.2025.10.27.12.35.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 12:18:29 -0700 (PDT)
-Message-ID: <89384089-94f5-4dea-8746-29e479290210@linaro.org>
-Date: Mon, 27 Oct 2025 20:18:28 +0100
+ Mon, 27 Oct 2025 12:35:40 -0700 (PDT)
+Message-ID: <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
+Date: Mon, 27 Oct 2025 20:35:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/aspeed: Remove ast2700fc self-aliasing
+Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, qemu-arm@nongnu.org, Troy Lee <leetroy@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20251021110427.93991-1-philmd@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <cover.1761346145.git.balaton@eik.bme.hu>
+ <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251021110427.93991-1-philmd@linaro.org>
+In-Reply-To: <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/10/25 13:04, Philippe Mathieu-Daudé wrote:
-> Remove pointless alias to the very same machine:
+On 25/10/25 01:31, BALATON Zoltan wrote:
+> These memory windows are a result of the address decoding in the
+> Articia S north bridge so better model it there and not in board code.
 > 
->    $ qemu-system-aarch64 -M help | fgrep ast2700fc
->    ast2700fc            ast2700 full core support (alias of ast2700fc)
->    ast2700fc            ast2700 full core support
-> 
-> Fixes: a74faf35efc ("hw/arm: Introduce ASPEED AST2700 A1 full core machine")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 1 -
->   1 file changed, 1 deletion(-)
+>   hw/pci-host/articia.c | 15 ++++++++++++++-
+>   hw/ppc/amigaone.c     | 28 +++++-----------------------
+>   hw/ppc/pegasos2.c     | 13 -------------
+>   3 files changed, 19 insertions(+), 37 deletions(-)
 
-Merged as commit d7bd42a740d0e8887540d7b450d0bdb2d6ba31ea, thanks!
+
+> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, Error **errp)
+>   {
+>       ArticiaState *s = ARTICIA(dev);
+>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
+> +    MemoryRegion *mr;
+>       PCIDevice *pdev;
+>   
+>       bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
+> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState *dev, Error **errp)
+>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
+>                             TYPE_ARTICIA, 0x1000000);
+>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
+> +    mr = g_new(MemoryRegion, 1);
+
+Won't Coverity or other analysis tools complain about the leak?
+(this is why we usually keep a reference in the device state, here
+ArticiaState). Otherwise:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", &s->mem,
+> +                             0, PCI_LOW_SIZE);
+> +    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
+> +    mr = g_new(MemoryRegion, 1);
+> +    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", &s->mem,
+> +                             PCI_HIGH_ADDR, PCI_HIGH_SIZE);
+> +    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
 
