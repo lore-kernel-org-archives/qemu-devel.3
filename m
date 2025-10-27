@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70145CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0369ECCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmb-0004w3-9i; Mon, 27 Oct 2025 14:17:29 -0400
+	id 1vDRmW-0004sL-TE; Mon, 27 Oct 2025 14:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmZ-0004vC-Lg
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:27 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmI-0004kp-TB
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:13 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm8-0003z5-BJ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:26 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm8-0003zj-92
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+ In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=OLFNERCRTHBzWJFDjAl53bj22G8oN3ivJxQ4R76Lj3A=; b=QiuSEDnqtKYunCa
- 0LT2rbgMos7+3n/6A9M979d2K7QuBXgSM7o8YQI9SnmPPcBCr4L4PbTbPgTx7DW1WdkTdb/j+xiq1
- 0xijPKlA5cX+5CUg0GAVZi/X1tmVP0DRBBnLRTmBe8eAd4L85UA0M3rczQTOpO6O9sopwrfQCl2pV
- W0=;
+ List-Help; bh=5J5Jw5g3NjL1ulfGNyC1OJCz5ICRwP0OTllUem2SidE=; b=sI/7v5Gbw69hPOB
+ Bm3ogZeKJKnksxzbgUXvyDAM2+w3yUU77EX1no7Nw7+NLvBig2SS0AztxczahDuDHb1bY9FuGh/Nr
+ YDZYHfKfZH3xwQRstWTHj6wqOHGQE2pcAPmrMXyk1oyPI097U1545YsP0E9A7MOWp5Qp/MG5yjJyZ
+ FI=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 14/33] target/riscv: Fix size of guest_phys_fault_addr
-Date: Mon, 27 Oct 2025 19:18:11 +0100
-Message-ID: <20251027181831.27016-15-anjo@rev.ng>
+Subject: [PATCH v4 18/33] target/riscv: Fix size of excp_uw2
+Date: Mon, 27 Oct 2025 19:18:15 +0100
+Message-ID: <20251027181831.27016-19-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -64,64 +65,28 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Widen to 64 bits, and use hwaddr as argument to get_physical_address().
+Fix to 64 bits to match size of instruction start words.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/cpu.h        | 2 +-
- target/riscv/cpu_helper.c | 3 +--
- target/riscv/machine.c    | 2 +-
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 77dd0ad6e4..28fbcc1030 100644
+index 1e4128128b..f901608d0e 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -237,7 +237,7 @@ struct CPUArchState {
-     uint64_t badaddr;
-     uint64_t bins;
- 
--    target_ulong guest_phys_fault_addr;
-+    uint64_t guest_phys_fault_addr;
- 
-     target_ulong priv_ver;
-     target_ulong vext_ver;
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index e105dec426..210e7bae6d 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1185,7 +1185,7 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
-  */
- static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-                                 int *ret_prot, vaddr addr,
--                                target_ulong *fault_pte_addr,
-+                                hwaddr *fault_pte_addr,
-                                 int access_type, int mmu_idx,
-                                 bool first_stage, bool two_stage,
-                                 bool is_debug, bool is_probe)
-@@ -1786,7 +1786,6 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         ret = get_physical_address(env, &pa, &prot, address,
-                                    &env->guest_phys_fault_addr, access_type,
-                                    mmu_idx, true, true, false, probe);
--
-         /*
-          * A G-stage exception may be triggered during two state lookup.
-          * And the env->guest_phys_fault_addr has already been set in
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index b047321073..27034180c4 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -438,7 +438,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64(env.load_val, RISCVCPU),
-         VMSTATE_UINT8(env.frm, RISCVCPU),
-         VMSTATE_UINT64(env.badaddr, RISCVCPU),
--        VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-+        VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
-         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-         VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-         VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+@@ -258,7 +258,7 @@ struct CPUArchState {
+     /* shadow stack register for zicfiss extension */
+     uint64_t ssp;
+     /* env place holder for extra word 2 during unwind */
+-    target_ulong excp_uw2;
++    uint64_t excp_uw2;
+     /* sw check code for sw check exception */
+     target_ulong sw_check_code;
+ #ifdef CONFIG_USER_ONLY
 -- 
 2.51.0
 
