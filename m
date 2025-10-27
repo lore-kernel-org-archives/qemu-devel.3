@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394B3CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05BDACCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDKd9-0005gd-Hp; Mon, 27 Oct 2025 06:39:15 -0400
+	id 1vDKd7-0005gN-JI; Mon, 27 Oct 2025 06:39:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vDKd4-0005fp-FE
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:11 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
+ id 1vDKd1-0005ez-1N
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:08 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vDKcy-0000o5-Cq
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:08 -0400
-X-ASG-Debug-ID: 1761561538-1eb14e3d8860d30001-jgbH7p
+ id 1vDKcw-0000o1-KX
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:06 -0400
+X-ASG-Debug-ID: 1761561536-086e230b3125a90001-jgbH7p
 Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
- mx2.zhaoxin.com with ESMTP id Gwnh3qWnuryHsSNz (version=TLSv1.2
+ mx1.zhaoxin.com with ESMTP id mon7WHUHnKhe4p9s (version=TLSv1.2
  cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Mon, 27 Oct 2025 18:38:58 +0800 (CST)
+ Mon, 27 Oct 2025 18:38:57 +0800 (CST)
 X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
 X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
 Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX2.zhaoxin.com
  (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
- 2025 18:38:57 +0800
+ 2025 18:38:56 +0800
 Received: from ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85]) by
  ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85%7]) with mapi id
- 15.01.2507.059; Mon, 27 Oct 2025 18:38:57 +0800
+ 15.01.2507.059; Mon, 27 Oct 2025 18:38:56 +0800
 X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
 Received: from ewan-server.lan (10.28.24.130) by zxbjmbx1.zhaoxin.com
  (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
@@ -42,12 +42,12 @@ Received: from ewan-server.lan (10.28.24.130) by zxbjmbx1.zhaoxin.com
 From: Ewan Hai <ewanhai-oc@zhaoxin.com>
 To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
 CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>
-Subject: [PATCH v2 4/4] target/i386: Introduce Zhaoxin Shijidadao-Server CPU
+Subject: [PATCH v2 3/4] target/i386: Introduce Zhaoxin Shijidadao-Client CPU
  model
-Date: Mon, 27 Oct 2025 06:21:39 -0400
-X-ASG-Orig-Subj: [PATCH v2 4/4] target/i386: Introduce Zhaoxin
- Shijidadao-Server CPU model
-Message-ID: <20251027102139.270662-5-ewanhai-oc@zhaoxin.com>
+Date: Mon, 27 Oct 2025 06:21:38 -0400
+X-ASG-Orig-Subj: [PATCH v2 3/4] target/i386: Introduce Zhaoxin
+ Shijidadao-Client CPU model
+Message-ID: <20251027102139.270662-4-ewanhai-oc@zhaoxin.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
 References: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
@@ -57,33 +57,35 @@ Content-Type: text/plain
 X-Originating-IP: [10.28.24.130]
 X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
  zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 10/27/2025 6:38:56 PM
+X-Moderation-Data: 10/27/2025 6:38:55 PM
 X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
-X-Barracuda-Start-Time: 1761561538
+X-Barracuda-Start-Time: 1761561536
 X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Barracuda-URL: https://mx2.zhaoxin.com:4443/cgi-mod/mark.cgi
 X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 7981
+X-Barracuda-Scan-Msg-Size: 8602
 X-Barracuda-BRTS-Status: 1
 X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.01
+X-Barracuda-Spam-Score: -1.53
 X-Barracuda-Spam-Status: No,
- SCORE=-2.01 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=UPPERCASE_75_100
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.149253
+ SCORE=-1.53 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=UPPERCASE_50_75,
+ UPPERCASE_50_75_2
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.149254
  Rule breakdown below
  pts rule name              description
  ---- ---------------------- --------------------------------------------------
- 0.01 UPPERCASE_75_100       message body is 75-100% uppercase
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+ 0.00 UPPERCASE_50_75        message body is 50-75% uppercase
+ 0.49 UPPERCASE_50_75_2      message body is 50-75% uppercase
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,34 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shijidadao-Server hardware enables IA32_CORE_CAPABILITIES and relies on
-the SPLIT_LOCK_DETECT feature. When the kernel has not yet virtualized
-this MSR, KVM filters the capability and QEMU emits a warning.
+Zhaoxin "Shijidadao-Client" hardware has two revisions:
 
-This patch retains the core-capability bit in the CPU model so it will
-take effect once KVM support becomes available.
+* v1 supports SMAP but lacks XSAVEC, XGETBV1, XSAVES, and VMX-XSAVES
+* v2 provides XSAVEC/XGETBV1/XSAVES/VMX-XSAVES but does not support SMAP
+
+This patch leverages QEMU's inherent versioning mechanism, where CPU
+models default to '.version =3D 1'. The v1 definition matches the first
+hardware revision, while a new 'version =3D 2' captures the differences
+of the second revision. In this way, both hardware versions are
+covered by a single CPU model, with the version property naturally
+distinguishing their feature sets.
 
 Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
 ---
- target/i386/cpu.c | 130 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 130 insertions(+)
+ target/i386/cpu.c | 141 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 141 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index a2e1b4924a..00f49c32f9 100644
+index ffd1c727d5..a2e1b4924a 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6910,6 +6910,136 @@ static const X86CPUDefinition builtin_x86_defs[] =
+@@ -6769,6 +6769,147 @@ static const X86CPUDefinition builtin_x86_defs[] =
 =3D {
-             { /* end of list */ }
-         }
+         .model_id =3D "AMD EPYC-Turin Processor",
+         .cache_info =3D &epyc_turin_cache_info,
      },
 +    {
-+        .name =3D "Shijidadao-Server",
++        .name =3D "Shijidadao-Client",
 +        .level =3D 0x1f,
 +        .vendor =3D CPUID_VENDOR_ZHAOXIN1,
 +        .family =3D 7,
-+        .model =3D 0x7b,
-+        .stepping =3D 0,
++        .model =3D 0x6b,
++        .stepping =3D 1,
 +        .cpuid_0x1f =3D true,
 +        /* missing: CPUID_HT, CPUID_TM, CPUID_PBE */
 +        .features[FEAT_1_EDX] =3D
@@ -159,10 +166,7 @@ SE,
 +        .features[FEAT_7_0_ECX] =3D
 +            CPUID_7_0_ECX_RDPID | CPUID_7_0_ECX_PKU | CPUID_7_0_ECX_UMIP,
 +        .features[FEAT_7_0_EDX] =3D
-+            CPUID_7_0_EDX_ARCH_CAPABILITIES | CPUID_7_0_EDX_SPEC_CTRL |
-+            CPUID_7_0_EDX_CORE_CAPABILITY,
-+        .features[FEAT_CORE_CAPABILITY] =3D
-+            MSR_CORE_CAP_SPLIT_LOCK_DETECT,
++            CPUID_7_0_EDX_ARCH_CAPABILITIES | CPUID_7_0_EDX_SPEC_CTRL,
 +        .features[FEAT_8000_0001_EDX] =3D
 +            CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_PDPE1GB |
 +            CPUID_EXT2_NX | CPUID_EXT2_SYSCALL,
@@ -182,9 +186,7 @@ ns
 +            CPUID_C000_0001_EDX_XCRYPT_EN | CPUID_C000_0001_EDX_XCRYPT |
 +            CPUID_C000_0001_EDX_XSTORE_EN | CPUID_C000_0001_EDX_XSTORE,
 +        .features[FEAT_XSAVE] =3D
-+            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC | CPUID_XSAVE_XGETBV=
-1 |
-+            CPUID_XSAVE_XSAVES,
++            CPUID_XSAVE_XSAVEOPT,
 +        .features[FEAT_ARCH_CAPABILITIES] =3D
 +            MSR_ARCH_CAP_RDCL_NO | MSR_ARCH_CAP_SKIP_L1DFL_VMENTRY |
 +            MSR_ARCH_CAP_MDS_NO | MSR_ARCH_CAP_PSCHANGE_MC_NO |
@@ -224,7 +226,6 @@ S |
 +            VMX_SECONDARY_EXEC_ENABLE_INVPCID |
 +            VMX_SECONDARY_EXEC_ENABLE_VMFUNC |
 +            VMX_SECONDARY_EXEC_SHADOW_VMCS |
-+            VMX_SECONDARY_EXEC_XSAVES      |
 +            VMX_SECONDARY_EXEC_ENABLE_PML,
 +        .features[FEAT_VMX_PINBASED_CTLS] =3D
 +            VMX_PIN_BASED_EXT_INTR_MASK | VMX_PIN_BASED_NMI_EXITING |
@@ -266,8 +267,24 @@ DDR |
 +            MSR_VMX_BASIC_INS_OUTS | MSR_VMX_BASIC_TRUE_CTLS,
 +        .features[FEAT_VMX_VMFUNC] =3D MSR_VMX_VMFUNC_EPT_SWITCHING,
 +        .xlevel =3D 0x80000008,
-+        .model_id =3D "Zhaoxin Shijidadao Processor",
++        .model_id =3D "Zhaoxin Shijidadao-Client Processor",
 +        .cache_info =3D &shijidadao_cache_info,
++        .versions =3D (X86CPUVersionDefinition[]) {
++            { .version =3D 1 },
++            {
++                .version =3D 2,
++                .note =3D "with more XSAVE features",
++                .props =3D (PropValue[]) {
++                    { "xsavec", "on" },
++                    { "xgetbv1", "on" },
++                    { "xsaves", "on"},
++                    { "vmx-xsaves", "on"},
++                    { "smap", "off" },
++                    { /* end of list */ }
++                },
++            },
++            { /* end of list */ }
++        }
 +    },
  };
 =20
