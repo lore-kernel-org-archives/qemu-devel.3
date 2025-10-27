@@ -4,114 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DB7CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA65CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLHD-00024M-Gv; Mon, 27 Oct 2025 07:20:39 -0400
+	id 1vDLHr-0003JV-ML; Mon, 27 Oct 2025 07:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLH0-0001x7-8d
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:20:34 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLGu-0001Jk-Md
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:20:24 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4710683a644so37617845e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:20:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761564017; x=1762168817; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nO3lNScKiiWvqqEh/loTsdCNf697WClZjXeg3xz97Jo=;
- b=hKt9cxaF7FKuIdA0E1qDwd4IFdnoiqBrwHY3Q+UnB6AxT8o3/jfNuR846t5BHI1Mls
- rvaDfRvCFaMlMCdqWa+zp164jQDUUI6q5YoGCsTn3i+YM0UBcISBJcanPKrz/SzgrTx2
- CLkk4I5fdhPueL01xXVNE+pi3SCtA+orF9P7r6JKJqU9mKdLcmu534HmfltcP/VFKxBA
- Yf/fDdd7daK56PeOH3OsEevTkMR8fh6Z7CJugJb3yHXVwKKjy2yUI5FaUmQAIhXOnrOt
- 6BSeklQrcknP1673VtBcReCH0eLvrOql/4xtLqCrruEB59MsWztFwaVpf8tsZFz/cQgI
- vtcQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vDLHo-0003Hh-Nc
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:21:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vDLHi-0001U8-V2
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:21:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761564067;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RUHh9fyYbo1gqOH2AfjhX3xtiiAOs0PKIRCN2UNeQrw=;
+ b=KAZ8Mmuqmsj/4CjsAGCK0NFmRWWabOTA0cysEJOVClXwt+eANawE/V4qNZTQZn8TP9a1BS
+ c4DvUYFg1XhXGZIzXfASpzq1R5xRs8xYNri0rS7KoD+S7SD7GzdnQdknhy9XBXouROD8M7
+ 9vUus4epwHyDXYVcq9Q/tNshYkBYxIY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-343-_eYwuLBuNdOiXBJFHPZA6w-1; Mon, 27 Oct 2025 07:21:06 -0400
+X-MC-Unique: _eYwuLBuNdOiXBJFHPZA6w-1
+X-Mimecast-MFC-AGG-ID: _eYwuLBuNdOiXBJFHPZA6w_1761564065
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42700099ff5so4234540f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:21:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761564017; x=1762168817;
+ d=1e100.net; s=20230601; t=1761564065; x=1762168865;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nO3lNScKiiWvqqEh/loTsdCNf697WClZjXeg3xz97Jo=;
- b=u+u8WENQyQkrOTWH308tjL/0U1twnGawbmTSMFM5+RbNGnWo5xpGdKSSdAADNpAABY
- dY/spxc+UEVw8rfXL3rTk1L/AQeYFDyTYMDvo/8/Qy2wKntddb1YdcuLQQyp62rCyKHa
- 1iQ2wcokbHPG7KN+x03euXmgZHlputpwdnEF58ZQEpGjj9uqVEkkPw2l7vUk4dYoTort
- tbkmljONPpuOZuUYfN5NDe36s4kmXde2SdcqxKeCkhk8ZdXuk01o0uiwcO4ceu+ww9Dp
- vN90/1uzIPnNJqTEmnmAf6Rd744eT/1pVxYj/6ImkpbAHYZ2fL8sSNIUo/dnIOjekr6V
- PTVg==
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RUHh9fyYbo1gqOH2AfjhX3xtiiAOs0PKIRCN2UNeQrw=;
+ b=vxpB/pqj+j6baTf0T9B3WvNnAVf2ZOsKR/ew3bQKLrAgMTXTTyHgd0VVQ6QNCqmrT4
+ mmTF3Bl9ncIi1JqGpmi8Wj9aNWXzTxt63Qd7Ss7C3XgSylo5Jub5pu/gpIZ0Fzf0G5wf
+ Lwgen6Qr2WYo5k9Uztjx/e+yCso9RAwG7pGS7D4clBxbh+qpk1hdelaP1ix0R6DNQuyI
+ Rg3eSF+9s/jVgkmyVzb/HhXlU0EjaJwFE1TAfRwXGLmi2l+abve7BXU5xoR7WT+YlxlS
+ x8Pv7j8Oh1GwEicti7bJL76ScXPrlLZ1E6RiYZOzjwo4rIfabx9kNewjI/RSHbCA3DZE
+ J6aQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXq0DG2aIbiCZ3Wq+0L/OXsUyK0NKsiKXZu8JUWqXEyRmgNFQUc3Md86/kDDdoavL+y8ocf7Rcj3aH@nongnu.org
-X-Gm-Message-State: AOJu0YyRFH+Iz8mMtzw5EdubrjsnImmk2dMunVg8E8LQVwPsykUFW6gP
- ghmWQVVv9OdeSxQfNFOkglg49601gr+ZLvWUr9zKShSeG20eIwrkO6s/JBo1I8CCxxw=
-X-Gm-Gg: ASbGncuiIC2zarWRqPw/UXPuCpGnhuiKJ8CrbRRZ/KlyOiE7onv9lBQsOgcafeizEL7
- syD1vKs8APxrgommpO1Zl2aEcVedIsKeQfqkBZru2Vn9aTue6J4jjCWiMGZaXBsqLiy9nadZoKl
- pTx3Oj74tMUYN4tuqNsVsn4AjBqjoKODulHCCURMW1/5oQhyYEbOtRnDNXGtoBhADpPyUplWm2W
- DIZU6XGd9zCpDbCDGz5/UF/NkCm4Nuf0YMWPOuhkuGTWIMzHXBcfMhnTroH4DIY0+FU5XtXDzJf
- PFgH/EKRiCa/8aPg+J19/PouEHfqvdNXPL6V9l3hxqTErubS8jGVBl4CEL98IHtdQSFXruCkj+Z
- w7WiU7Dn9AUksXKeNd6kGuE+gyP7j0zZP6kK9a26mBQUKCLqDUrAmMbLxYp/pnK5ull06cVsTwK
- 0c2lYT1td4/HBl6qNRhe2PqYCr4KeYzA+QIkSnujaSBs4b76B212il9jtreVM=
-X-Google-Smtp-Source: AGHT+IHEUnV1AykrggKoia9CZDo9Z7W6W1PE4O2InlfS6IlS1+bf7cSFHkw2t1kCvzUiRP7UaublFA==
-X-Received: by 2002:a05:600d:42e2:b0:45d:e775:d8b8 with SMTP id
- 5b1f17b1804b1-475d24088a3mr67734275e9.1.1761564016749; 
- Mon, 27 Oct 2025 04:20:16 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dcbacdc6sm65522715e9.0.2025.10.27.04.20.13
+ AJvYcCXuCMJBGRalUfeX11B9S2hYKV3kiF2ZRvnWJ7pAG77bU9+UvEZCxzITATB4rUBkJAchLbfU3CCDO4HI@nongnu.org
+X-Gm-Message-State: AOJu0YyXqN1dR/xkUfLXoyuCw8Of5I+NQgiyjYFQ/lj7IYsjpeSbEgyh
+ aeKIOMDO6n1qABwHDNpE+PdWj+q7GOgh8s4XJ7XD124scOmY64uAqtdWfG4enwJjxy9ZGcZMTrT
+ eC2+LsHpuaTPk5VTwZi/FMwi0h/0JrPWrFJ+6EVFSS+hHHbrB9p4kNXEf
+X-Gm-Gg: ASbGncunpZLmGMmfwoDUDVRKmrMkvfNf665veqQpJN30IDmoFrJW2B12Q9cvsNm1eVC
+ R3ANnRB5jDXDFmkrcmMayuiClotS4XNNBTgTtkz6o0b0R6vHPGm0DJnodCvmyDLTlpE4Jms8e0x
+ EqFHJySHjV4hs1JKBHicBFTicgnfAZJsxIJ4OUVoE8wx6Z6JMwVpsSWYVVw5bwCACdYBqtgBEch
+ 84y+lwCQq7YK1WFoTEDK6dOM4fukzKqh0OLbtnpw3hFZ4u+guR79UEQ96KZpUv70PoGbV4AWZiS
+ Q/OZmSR8E9jzVs2G/xsJNMBjBSFgb+kg4KALicGwFam8PeYPd3mqwsySZ+FKLkJh+y0o6kmwTGy
+ 8oDpbTO87BIjdX2tCUXdECMWKzNyNk7D7O62Mo0kwZg4P+g==
+X-Received: by 2002:a05:6000:2287:b0:428:1475:6a0f with SMTP id
+ ffacd0b85a97d-42814756c75mr23271058f8f.54.1761564064994; 
+ Mon, 27 Oct 2025 04:21:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVtMp4xI6bh+medUm2VqKSKslacg0C/StsVr5/Fjf1nymJzlpv2SHr9HYet1fGRF7/r3O9PA==
+X-Received: by 2002:a05:6000:2287:b0:428:1475:6a0f with SMTP id
+ ffacd0b85a97d-42814756c75mr23271021f8f.54.1761564064533; 
+ Mon, 27 Oct 2025 04:21:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952b7b43sm13992593f8f.6.2025.10.27.04.21.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 04:20:16 -0700 (PDT)
-Message-ID: <2e6c67ff-e8d3-40b0-a648-f0ad755fa433@linaro.org>
-Date: Mon, 27 Oct 2025 12:20:13 +0100
+ Mon, 27 Oct 2025 04:21:04 -0700 (PDT)
+Message-ID: <ec1caa15-2d90-4289-8535-160e759199c4@redhat.com>
+Date: Mon, 27 Oct 2025 12:21:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/35] ci: clean-up remaining bits of armhf builds.
+Subject: Re: [PATCH v4 17/27] hw/arm/virt: Set PCI preserve_config for accel
+ SMMUv3
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Chinmay Rath <rathc@linux.ibm.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Helge Deller <deller@gmx.de>, Stafford Horne <shorne@gmail.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
- Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20251027110344.2289945-1-alex.bennee@linaro.org>
- <20251027110344.2289945-2-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027110344.2289945-2-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ shameerkolothum@gmail.com
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-18-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250929133643.38961-18-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,19 +120,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 12:03, Alex Bennée wrote:
-> We no longer need to support 32 bit builds and we missed this while
-> cleaning up.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   docs/devel/testing/ci-jobs.rst.inc            | 7 -------
->   scripts/ci/setup/ubuntu/build-environment.yml | 6 ------
->   2 files changed, 13 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+On 9/29/25 3:36 PM, Shameer Kolothum wrote:
+> In a subsequent patch, SMMUv3 accel mode will make use of IORT RMR nodes
+> to enable nested translation of MSI doorbell addresses. IORT RMR requires
+> _DSM #5 to be set for the PCI host bridge so that the Guest kernel preserves
+> the PCI boot configuration.
+
+Does not really explain what the patch does:
+introduce a new pci_preserve_config field in virt machine state which
+allows the generation of DSM #5. This field is only set if accel SMMU is
+instantiated
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/virt-acpi-build.c | 8 ++++++++
+>  hw/arm/virt.c            | 4 ++++
+>  include/hw/arm/virt.h    | 1 +
+>  3 files changed, 13 insertions(+)
+>
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 96830f7c4e..fd03b7f6a9 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -163,6 +163,14 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+>          .pci_native_hotplug = !acpi_pcihp,
+>      };
+>  
+> +    /*
+> +     * Accel SMMU requires RMRs for MSI 1-1 mapping, which
+> +     * require _DSM for preserving PCI Boot Configurations
+_DSM function 5 (Ignore PCI Boot Configuration)
+> +     */
+> +    if (vms->pci_preserve_config) {
+> +        cfg.preserve_config = true;
+> +    }
+> +
+>      if (vms->highmem_mmio) {
+>          cfg.mmio64 = memmap[VIRT_HIGH_PCIE_MMIO];
+>      }
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index b533b0556e..6467d7cfc8 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -3087,6 +3087,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>              }
+>  
+>              create_smmuv3_dev_dtb(vms, dev, bus);
+> +            if (object_property_get_bool(OBJECT(dev), "accel", &error_abort) &&
+> +                                         !vms->pci_preserve_config) {
+> +                vms->pci_preserve_config = true;
+why don't you put that in above "if
+(object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {"
+block. Besides do you need to test !vms->pci_preserve_config? Eric
+> +            }
+>          }
+>      }
+>  
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index ea2cff05b0..00287941a9 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -180,6 +180,7 @@ struct VirtMachineState {
+>      bool ns_el2_virt_timer_irq;
+>      CXLState cxl_devices_state;
+>      bool legacy_smmuv3_present;
+> +    bool pci_preserve_config;
+>  };
+>  
+>  #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM : VIRT_PCIE_ECAM)
 
 
