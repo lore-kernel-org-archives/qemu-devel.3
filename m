@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85CC7CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D00CCF9F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:39:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDKdB-0005he-Tr; Mon, 27 Oct 2025 06:39:17 -0400
+	id 1vDKdB-0005hd-Ty; Mon, 27 Oct 2025 06:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vDKd0-0005ey-Jd
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:08 -0400
+ id 1vDKd2-0005fA-CD
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:09 -0400
 Received: from mx2.zhaoxin.com ([61.152.208.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vDKcw-0000o0-I2
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:06 -0400
-X-ASG-Debug-ID: 1761561536-1eb14e3d8960e50001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx2.zhaoxin.com with ESMTP id SbsFemwYB0zoAEcB (version=TLSv1.2
+ id 1vDKcs-0000nA-Tn
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:07 -0400
+X-ASG-Debug-ID: 1761561530-1eb14e3d8a60d80001-jgbH7p
+Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
+ mx2.zhaoxin.com with ESMTP id UJIAZjO3kI0O3A1M (version=TLSv1.2
  cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Mon, 27 Oct 2025 18:38:56 +0800 (CST)
+ Mon, 27 Oct 2025 18:38:50 +0800 (CST)
 X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX1.zhaoxin.com
+ (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
- 2025 18:38:56 +0800
+ 2025 18:38:50 +0800
 Received: from ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85]) by
  ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85%7]) with mapi id
- 15.01.2507.059; Mon, 27 Oct 2025 18:38:56 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+ 15.01.2507.059; Mon, 27 Oct 2025 18:38:50 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
 Received: from ewan-server.lan (10.28.24.130) by zxbjmbx1.zhaoxin.com
  (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
- 2025 18:21:40 +0800
+ 2025 18:21:39 +0800
 From: Ewan Hai <ewanhai-oc@zhaoxin.com>
 To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
-CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>
-Subject: [PATCH v2 2/4] target/i386: Add cache model for Zhaoxin Shijidadao
- vCPUs
-Date: Mon, 27 Oct 2025 06:21:37 -0400
-X-ASG-Orig-Subj: [PATCH v2 2/4] target/i386: Add cache model for Zhaoxin
- Shijidadao vCPUs
-Message-ID: <20251027102139.270662-3-ewanhai-oc@zhaoxin.com>
+CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
+ Xudong Hao <xudong.hao@intel.com>
+Subject: [PATCH v2 1/4] target/i386: Add an option in X86CPUDefinition to
+ control CPUID 0x1f
+Date: Mon, 27 Oct 2025 06:21:36 -0400
+X-ASG-Orig-Subj: [PATCH v2 1/4] target/i386: Add an option in X86CPUDefinition
+ to control CPUID 0x1f
+Message-ID: <20251027102139.270662-2-ewanhai-oc@zhaoxin.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
 References: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
@@ -57,23 +58,24 @@ Content-Type: text/plain
 X-Originating-IP: [10.28.24.130]
 X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
  zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 10/27/2025 6:38:55 PM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1761561536
+X-Moderation-Data: 10/27/2025 6:38:49 PM
+X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
+X-Barracuda-Start-Time: 1761561530
 X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
 X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
 X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 3328
+X-Barracuda-Scan-Msg-Size: 1659
 X-Barracuda-BRTS-Status: 1
 X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Score: -1.82
 X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+ SCORE=-1.82 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=PR0N_SUBJECT
 X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.149253
  Rule breakdown below
  pts rule name              description
  ---- ---------------------- --------------------------------------------------
+ 0.20 PR0N_SUBJECT Subject has letters around special characters (pr0n)
 Received-SPF: pass client-ip=61.152.208.219;
  envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
 X-Spam_score_int: -18
@@ -97,129 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhaoxin "Shijidadao" vCPUs require built-in cache enumeration in QEMU
-to properly report CPUID leaf 0x4 and 0x80000005/0x80000006 when
-'host-cache-info' is disabled.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-This patch defines the L1/L2/L3 cache parameters for the Shijidadao
-architecture, preparing for use in both client and server models.
+Many Intel and Zhaoxin CPUs enable CPUID 0x1f by default to encode CPU
+topology information.
 
-Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Add the "cpuid_0x1f" option to X86CPUDefinition to allow named CPU
+models to configure CPUID 0x1f from the start, thereby forcing 0x1f
+to be present for guest.
+
+With this option, there's no need to explicitly add v1 model to an
+unversioned CPU model for explicitly enabling the x-force-cpuid-0x1f
+property.
+
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 99 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ target/i386/cpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c5853216dc..ffd1c727d5 100644
+index 0a66e1fec9..c5853216dc 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -3284,6 +3284,105 @@ static const CPUCaches yongfeng_cache_info =3D {
-     },
- };
+@@ -2212,6 +2212,12 @@ typedef struct X86CPUDefinition {
+     int model;
+     int stepping;
+     uint8_t avx10_version;
++    /*
++     * Whether to present CPUID 0x1f by default.
++     * If true, encode CPU topology in 0x1f leaf even if there's no
++     * extended topology levels.
++     */
++    bool cpuid_0x1f;
+     FeatureWordArray features;
+     const char *model_id;
+     const CPUCaches *const cache_info;
+@@ -7759,6 +7765,10 @@ static void x86_cpu_load_model(X86CPU *cpu, const X8=
+6CPUModel *model)
+     object_property_set_uint(OBJECT(cpu), "avx10-version", def->avx10_vers=
+ion,
+                              &error_abort);
 =20
-+static const CPUCaches shijidadao_cache_info =3D {
-+    .l1d_cache =3D &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x0.EAX */
-+        .type =3D DATA_CACHE,
-+        .level =3D 1,
-+        .self_init =3D true,
-+
-+        /* CPUID 0x4.0x0.EBX */
-+        .line_size =3D 64,
-+        .partitions =3D 1,
-+        .associativity =3D 8,
-+
-+        /* CPUID 0x4.0x0.ECX */
-+        .sets =3D 64,
-+
-+        /* CPUID 0x4.0x0.EDX */
-+        .no_invd_sharing =3D false,
-+        .inclusive =3D false,
-+        .complex_indexing =3D false,
-+
-+        /* CPUID 0x80000005.ECX */
-+        .lines_per_tag =3D 1,
-+        .size =3D 32 * KiB,
-+
-+        .share_level =3D CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l1i_cache =3D &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x1.EAX */
-+        .type =3D INSTRUCTION_CACHE,
-+        .level =3D 1,
-+        .self_init =3D true,
-+
-+        /* CPUID 0x4.0x1.EBX */
-+        .line_size =3D 64,
-+        .partitions =3D 1,
-+        .associativity =3D 16,
-+
-+        /* CPUID 0x4.0x1.ECX */
-+        .sets =3D 64,
-+
-+        /* CPUID 0x4.0x1.EDX */
-+        .no_invd_sharing =3D false,
-+        .inclusive =3D false,
-+        .complex_indexing =3D false,
-+
-+        /* CPUID 0x80000005.EDX */
-+        .lines_per_tag =3D 1,
-+        .size =3D 64 * KiB,
-+
-+        .share_level =3D CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l2_cache =3D &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x2.EAX */
-+        .type =3D UNIFIED_CACHE,
-+        .level =3D 2,
-+        .self_init =3D true,
-+
-+        /* CPUID 0x4.0x2.EBX */
-+        .line_size =3D 64,
-+        .partitions =3D 1,
-+        .associativity =3D 8,
-+
-+        /* CPUID 0x4.0x2.ECX */
-+        .sets =3D 1024,
-+
-+        /* CPUID 0x4.0x2.EDX */
-+        .no_invd_sharing =3D false,
-+        .inclusive =3D true,
-+        .complex_indexing =3D false,
-+
-+        /* CPUID 0x80000006.ECX */
-+        .size =3D 512 * KiB,
-+
-+        .share_level =3D CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l3_cache =3D &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x3.EAX */
-+        .type =3D UNIFIED_CACHE,
-+        .level =3D 3,
-+        .self_init =3D true,
-+
-+        /* CPUID 0x4.0x3.EBX */
-+        .line_size =3D 64,
-+        .partitions =3D 1,
-+        .associativity =3D 16,
-+
-+        /* CPUID 0x4.0x3.ECX */
-+        .sets =3D 32768,
-+
-+        /* CPUID 0x4.0x3.EDX */
-+        .no_invd_sharing =3D false,
-+        .inclusive =3D true,
-+        .complex_indexing =3D false,
-+
-+        .size =3D 32 * MiB,
-+        .share_level =3D CPU_TOPOLOGY_LEVEL_DIE,
-+    },
-+};
-+
- /* The following VMX features are not supported by KVM and are left out in=
- the
-  * CPU definitions:
-  *
++    if (def->cpuid_0x1f) {
++        object_property_set_bool(OBJECT(cpu), "x-force-cpuid-0x1f",
++                                 def->cpuid_0x1f, &error_abort);
++    }
+     x86_cpu_apply_version_props(cpu, model);
+=20
+     /*
 --=20
 2.34.1
 
