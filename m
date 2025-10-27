@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB19CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C65CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDL2A-0001GR-6y; Mon, 27 Oct 2025 07:05:06 -0400
+	id 1vDL28-0001Fg-Ot; Mon, 27 Oct 2025 07:05:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL26-0001CJ-19
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:02 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1vDL1Z-0000h8-9s
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:04:30 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL1V-0005iG-BO
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:01 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b50645ecfbbso944162866b.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:04:05 -0700 (PDT)
+ id 1vDL1M-0005bd-Pk
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:04:28 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b6d53684cfdso1009210766b.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563042; x=1762167842; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761563029; x=1762167829; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=67CkZCuN3cp9w2dJxnK8m/N1W6WVM4gtmx6Huv90J+s=;
- b=gmvpzK1uGmljiKgapt1i9oSAA7nescFn9+c9lKqBpYUBAzUOok8MGdGRa1CjKbCOqw
- ahwUUqU5Qr8l+6gN6xo2wp1z72q0q2px3E3iG53LBuqXg+fZZkfwXN4J0IXOW8nBzaWS
- sYp+jIiTuA4OpxtWqZnFxrYU8ee3rH1BeTZI+Rfyw8Twy1AypFAE+zB5y5WcSQxEIP3/
- eQnaoIg0rAX/3IoozilZiEE6DgyT6WIfk8mafwP2t5DeJLARcW9Z9Jfs9VatjP2ztZCw
- ihE081alPpzSGQIi0ewvYUHULhHvBc7yuZ46jkmjWdrW61vYLf8E7wAGnJ+RDruDpebk
- KJWw==
+ bh=j70gJxXdGck8MJa36gCkeQcF/t7I7PGzdE6PkZ71zsE=;
+ b=D4vcdQYl789pFjgIDXaLfjweHugOVaM40Pd89aFoaDIB5cNgPf6/+hPY6NL1J7A/5x
+ YxBQn31WOXZ3km06ytrmlF/SIDqq7geLUpAefHGVVOLLInh0yc0zytBPTnqcw4RKOKbb
+ zcoIUJ5Otj5MAp4ZhnUffwo0zlInzOMIX+SaGsbbPGEsGfF8c0citK60/TijGkXzQEd1
+ M1xeqx/ioN3EJr+SAcA4P/P7U3H31i75i/QKXco8XsQ2Lh8QbJ1vyeywO/kyWsY7Vdtt
+ 3JWGITBbsaY+xm9L6+/YJxT0gr09v8yWhy8sECUQm5d2ceObZa6LKSLOamQGJ4wdqJ/4
+ gwPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563042; x=1762167842;
+ d=1e100.net; s=20230601; t=1761563029; x=1762167829;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=67CkZCuN3cp9w2dJxnK8m/N1W6WVM4gtmx6Huv90J+s=;
- b=JMKsgb0M+zBhQ2QY91Y2+tmE5DP+MGGvAd24MwTwHXBP5ko8OSOYPfJzEHt5C6vT5C
- k3K0/5lM2enlQYvQKgIRocls6NKkVYCj5y9XCpweZGqmqWEumwEiwm93+69/dvEKOMYe
- pJTOrWM6L77BrGyb/DQWVrvtDIOfsWtDcnnIbdaxc6A+RzCoXXJ00iiUcgC6S45O2vdt
- 6Y0bfdSkhJ5DXSAGgt+urM6s588adaSXXvP/ZVWX0edVHU0PND37puHZeOtmtGwJY0w3
- jMWetQhVwV5uxjqYvfTjFjWJIFdR+Sh4BZ8MD0EhaBrHoHxJr5jHyQLIK/p87OpJtVkV
- goKA==
-X-Gm-Message-State: AOJu0Ywg8WVIYcLRKABO0Rw5GIFD/A8HoroXMRsMhM2rel7lwc8qw6Rw
- sRnG06fimmoqiRRW9txU4Ve9vw0tCAFinsd6PXvMJE5oKbtnLxEt0VOH1bYetfW5mCc=
-X-Gm-Gg: ASbGncslo8wfOF641BdyEosWuyOUmT50OXr5y59dY1bFjMnShDpUEdeTupnXrCK9P1c
- Qvcz9oZuMd43kXzuGZJCZgx/38W/ro21Sh/q2e8cYArQuw4KUV1sCh9EJ345HLS7f7OI7S9/Gax
- rPGFWckyb1Gzlalnucoa680l3V1mCssw2JyX4gMFufnW0YAle9XyEBsaJXowF7iWl+TC9/0Lsd7
- WYiC1HN9x8kDw/kNVMm5mAayvgsNmFIOWFp+IyLQHcnvbHUebABgk373dZh0Ty1a5nhv6j3rDMh
- WqCZWTTiFt9cmYst3sfd4WoY6Hu3u4mFB+HHKMK22AdDbmfqC93qiLT9F0s3bluC6SXI/whsZ+O
- Y2j0Zb6z8DEw7Mu9ItAMN7GC0YsgGXVzUYWiRX+OkY8A/kbenG8ZRN6L5rKeCjb3WNfs4gPky8U
- 3GQajA8UVDUpXlBEmAXPtHDA==
-X-Google-Smtp-Source: AGHT+IFAymNmJTdejyHUdyfAt8q8b+EN6fltsBo84Abf5ft1cxc9OuxCZfv2BkJqjWbVt1OZ6HI0Ww==
-X-Received: by 2002:a17:906:fe4c:b0:b55:c30d:c9fc with SMTP id
- a640c23a62f3a-b6472b628a4mr4160361366b.11.1761563042192; 
- Mon, 27 Oct 2025 04:04:02 -0700 (PDT)
+ bh=j70gJxXdGck8MJa36gCkeQcF/t7I7PGzdE6PkZ71zsE=;
+ b=TVIWAKFWQUrgeE+06D81WmXg83Z2lhddMdXttt9FpHx7qA1LHQJtuhWJlrf+WLcylp
+ FjTrZQt7tS6PHhHZRC/YqqnTN/ItMzdvSwk8x6GkkDhJ20vCRzC3PX62bWJUM5Erm8oR
+ /q6EbcARUBZHXhXFZVG/Zry8iBD49bhi+wFUhloJPs6gH0Nc6+Ty1xHoSAPq7EkqyznF
+ 6CG0AbGisYGB/ro8Q1oxUQrwzJrdMZD3EYe8oQJfl4msit1c5oXC/TSujwniC8/J2HyN
+ i2HtgDU9xLIkmUzq3noYOednHBRuwcvLQNacXzngM4b4hbtAOneZZisC/EOvmN63BKJA
+ F5Tw==
+X-Gm-Message-State: AOJu0YzYtnd9EdLsjVRcZqBxoM0ynN/25xbQ0iWTVhmkyXeu79ZgkISO
+ 4RwSbVOi8ytHg0fMDXzaECu1JNRGbhL8aVDfGpTy/IDAxiOxYm9IpMBecxg196QasnA=
+X-Gm-Gg: ASbGnctkk2BKb7NOWgpaIvU20gadEjAQJdVESlC16D/16RT7WlsSzd2leAkIvCfaOs3
+ pHBXhuZxFui+1Ku/mqV1qap1sfKp3u19inZpEvf31riEHexV3+RBVgungeIHmNHM84U1BYTM3LN
+ rdX7kV4WkrcODjsZ3sCYK4s69SztgHxGrEw3G7ugcs1+qwV2C9vRgbc+HK2BP39pRj5GotD6eUl
+ AH/DCE+5E1a/YRBSVO//GA/yBe5s+VEr1Mggv8M5G7HJkPIoDchTbwT5RQAaOSxAxCd0k+0pBtC
+ teziOpe8/Nbiqfp+G4JM8NmR9hR9gpMyba9dCD7zCZy9f/MvYzyeBKna25h6ozJtDGtLInm2tAs
+ qwrr1rlK2wV4aAsDSyWWjqG3s6VnEo+EUD6706ubA4mtTVlW/lA4jXifVIKYjL3mGNDtUIRcQr6
+ vevoF2Wk68joyyWEq6jFgRxQ==
+X-Google-Smtp-Source: AGHT+IHMVv5tt5JLpSnfEJyZKqOa3wbzf1/A2Kwv6tqT7NQOmJaYgs5Vgi9m2Q2oWdSmj1jix/T2Ug==
+X-Received: by 2002:a17:907:c11:b0:b32:8943:7884 with SMTP id
+ a640c23a62f3a-b647500ee9amr3839114366b.45.1761563029024; 
+ Mon, 27 Oct 2025 04:03:49 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d85369697sm757975966b.26.2025.10.27.04.03.53
+ a640c23a62f3a-b6d853edc87sm734402566b.46.2025.10.27.04.03.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 04:03:54 -0700 (PDT)
+ Mon, 27 Oct 2025 04:03:45 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BD79360F82;
- Mon, 27 Oct 2025 11:03:46 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 7C0705F9E0;
+ Mon, 27 Oct 2025 11:03:44 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -94,18 +94,18 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
-Subject: [PATCH 28/35] target/xtensa: call plugin trap callbacks
-Date: Mon, 27 Oct 2025 11:03:35 +0000
-Message-ID: <20251027110344.2289945-29-alex.bennee@linaro.org>
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH 04/35] scripts/ci: allow both Ubuntu or Debian to run upgrade
+Date: Mon, 27 Oct 2025 11:03:11 +0000
+Message-ID: <20251027110344.2289945-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,91 +128,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Julian Ganz <neither@nut.email>
+There is no practical difference between the systems when it comes to
+updating the installed system.
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
-
-This change places hooks for xtensa targets.
-
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Julian Ganz <neither@nut.email>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/xtensa/exc_helper.c  | 6 ++++++
- target/xtensa/xtensa-semi.c | 3 +++
- 2 files changed, 9 insertions(+)
+ scripts/ci/setup/build-environment.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/xtensa/exc_helper.c b/target/xtensa/exc_helper.c
-index b611c9bf97c..fdc522698dc 100644
---- a/target/xtensa/exc_helper.c
-+++ b/target/xtensa/exc_helper.c
-@@ -32,6 +32,7 @@
- #include "exec/helper-proto.h"
- #include "qemu/host-utils.h"
- #include "qemu/atomic.h"
-+#include "qemu/plugin.h"
+diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
+index 66bde188755..253d0b759bc 100644
+--- a/scripts/ci/setup/build-environment.yml
++++ b/scripts/ci/setup/build-environment.yml
+@@ -24,7 +24,7 @@
+         update_cache: yes
+         upgrade: yes
+       when:
+-        - ansible_facts['distribution'] == 'Ubuntu'
++        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
  
- void HELPER(exception)(CPUXtensaState *env, uint32_t excp)
- {
-@@ -207,6 +208,8 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
-     CPUXtensaState *env = cpu_env(cs);
- 
-     if (cs->exception_index == EXC_IRQ) {
-+        uint64_t last_pc = env->pc;
-+
-         qemu_log_mask(CPU_LOG_INT,
-                       "%s(EXC_IRQ) level = %d, cintlevel = %d, "
-                       "pc = %08x, a0 = %08x, ps = %08x, "
-@@ -218,6 +221,7 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
-                       env->sregs[INTSET], env->sregs[INTENABLE],
-                       env->sregs[CCOUNT]);
-         handle_interrupt(env);
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-     }
- 
-     switch (cs->exception_index) {
-@@ -238,9 +242,11 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
-                       env->sregs[CCOUNT]);
-         if (env->config->exception_vector[cs->exception_index]) {
-             uint32_t vector;
-+            uint64_t last_pc = env->pc;
- 
-             vector = env->config->exception_vector[cs->exception_index];
-             env->pc = relocated_vector(env, vector);
-+            qemu_plugin_vcpu_exception_cb(cs, last_pc);
-         } else {
-             qemu_log_mask(CPU_LOG_INT,
-                           "%s(pc = %08x) bad exception_index: %d\n",
-diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
-index 431c263dc57..9d9c6254a30 100644
---- a/target/xtensa/xtensa-semi.c
-+++ b/target/xtensa/xtensa-semi.c
-@@ -35,6 +35,7 @@
- #include "system/memory.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-+#include "qemu/plugin.h"
- 
- enum {
-     TARGET_SYS_exit = 1,
-@@ -197,6 +198,7 @@ void HELPER(simcall)(CPUXtensaState *env)
-     CPUState *cs = env_cpu(env);
-     AddressSpace *as = cs->as;
-     uint32_t *regs = env->regs;
-+    uint64_t last_pc = env->pc;
- 
-     switch (regs[2]) {
-     case TARGET_SYS_exit:
-@@ -433,4 +435,5 @@ void HELPER(simcall)(CPUXtensaState *env)
-         regs[3] = TARGET_ENOSYS;
-         break;
-     }
-+    qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
- }
+     # the package lists are updated by "make lcitool-refresh"
+     - name: Define package list file path
 -- 
 2.47.3
 
