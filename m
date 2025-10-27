@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28ADECCF9E0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21452CCF9E5
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmM-0004kK-3M; Mon, 27 Oct 2025 14:17:14 -0400
+	id 1vDRmz-00057g-Tm; Mon, 27 Oct 2025 14:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm6-0004hm-ML
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:01 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRma-0004vh-Mr
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:28 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRlu-0003xr-99
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:16:57 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm8-00040V-8p
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date
- :Subject:Cc:To:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=vZ91EHYp/glpFLmZCVXk1L/z4ydrLark3C60pBiL2NM=; b=N1nTaP+2hzJKdC4
- DBM3Eu8plDoYu+0ueruj9Nv8jfk+jnzeg5d2SlJqwCkjgYfbnSJdgtoawADikzXmpvwNq2Nd5OoAn
- LJJPo0SVIM0i5kuN2i9tW6dX4UvK0a82I03lxdIUKMYXSLMIPDdALu12FXkv8W8CDpCFFyifo5vns
- CU=;
+ List-Help; bh=DdBLmkynQWPUm7c/HYslPmi4M74pSgGv1LWSDvYSNXQ=; b=sZLN39WfxOUWKaW
+ bFymzT72+U50mx/Mh8n9aUnJexkyLmkGosBlyVGOv1jIXrdAS5MyNvE0UkCq/SOQbpKxKB0YAZO3s
+ JnSt11DJN4Z59hB6FDCWCwyCZPbdkbVL8D7aShfD2aH1kPmTvheKOtfJNF1gbsjUYiWEFqb6S/MBW
+ 8s=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 00/33] single-binary: Make riscv cpu.h target independent
-Date: Mon, 27 Oct 2025 19:17:57 +0100
-Message-ID: <20251027181831.27016-1-anjo@rev.ng>
+Subject: [PATCH v4 23/33] target/riscv: Fix arguments to board IMSIC emulation
+ callbacks
+Date: Mon, 27 Oct 2025 19:18:20 +0100
+Message-ID: <20251027181831.27016-24-anjo@rev.ng>
+In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
+References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -63,130 +65,292 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+In hw/ the relevant RISCVIMSICState fields
+eidelivery, eithreshold, eistate are uint32_t.
 
-this is a first patchset moving towards single-binary support for riscv.
-Additional patchsets for hw/ and target/ are based on this one so it's
-best to make sure the approach taken is ok.  Most patches in this set
-concern fields in CPUArchState which are either widened (usually to
-uint64_t) or fixed to a smaller size which handles all use cases.
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/riscv/cpu.h        | 42 ++++++++++++++++++++-------------------
+ hw/intc/riscv_imsic.c     | 34 +++++++++++++++----------------
+ target/riscv/cpu_helper.c | 12 ++++-------
+ target/riscv/csr.c        | 24 ++++++++++++----------
+ 4 files changed, 57 insertions(+), 55 deletions(-)
 
-General purpose registers and fields mapped to TCG are dealt with by
-widening the type and applying an offset to tcg_global_mem_new() to
-correctly handle 32-bit targets on big endian hosts.
-
-Quick question to correct my understanding. AFAICT riscv64-softmmu is a
-superset of riscv32-softmmu which handles 32-, 64, and 128-bit ISAs, so
-concerning single-binary do we for the time being only need to support
-riscv64-softmmu?
-
-Let me know what you think of the direction taken here and if you would
-prefer something else.
-
-Patches 4, 5, and 10 still in need of review.
-
-Changes in v2:
-  - Use BIT() to define misa extension bits in "Use 32 bits for misa
-    extensions";
-
-  - Squash "Fix size of mcause" into "Fix size of trivial CPUArchState
-    fields";
-
-  - Bump VMSTATE version_id and minimum_version_id for "cpu/pmp/entry",
-    "cpu/pmp", "cpu/hyper", "cpu/vector", "cpu/rv128", "cpu/debug",
-    "cpu/envcfg", "cpu/pmu", "cpu/jvt", "cpu/ssp", and "cpu".  Migration
-    from older versions is broken.
-
-Changes in v3:
-  - Fix formatting issues during printing;
-
-  - Move assert before extract64() in pmu_read_ctr();
-
-  - Added patch 5/34 fixing a bug in rmw_cd_ctr_cfg() where bit 30 is
-    zeroed instead of bit 62 (MHPMEVENTH_* vs MHPMEVENT_*);
-
-  - Added privilege_mode_t typedef for storing PRV_* fields;
-  
-  - Added reviewed-bys.
-
-Changes in v4:
-  - Used target-specific includes (target/riscv/*) for csr.h and
-    debug.h (Philippe);
-
-  - Migrated mcontext (Philippe), migration entry is added to existing
-    patch modifiying mcontext (patch 28 "Fix size of trigger data");
-
-  - Dropped first patch ("Use 32 bits for misa extensions") which is
-    already merged (Philippe);
-
-  - Added reviewed-bys and acked-bys.
-
-Anton Johansson (33):
-  target/riscv: Fix size of trivial CPUArchState fields
-  target/riscv: Fix size of mhartid
-  target/riscv: Bugfix riscv_pmu_ctr_get_fixed_counters_val()
-  target/riscv: Bugfix make bit 62 read-only 0 for sireg* cfg CSR read
-  target/riscv: Combine mhpmevent and mhpmeventh
-  target/riscv: Combine mcyclecfg and mcyclecfgh
-  target/riscv: Combine minstretcfg and minstretcfgh
-  target/riscv: Combine mhpmcounter and mhpmcounterh
-  target/riscv: Fix size of gpr and gprh
-  target/riscv: Fix size of vector CSRs
-  target/riscv: Fix size of pc, load_[val|res]
-  target/riscv: Fix size of frm and fflags
-  target/riscv: Fix size of badaddr and bins
-  target/riscv: Fix size of guest_phys_fault_addr
-  target/riscv: Fix size of priv_ver and vext_ver
-  target/riscv: Fix size of retxh
-  target/riscv: Fix size of ssp
-  target/riscv: Fix size of excp_uw2
-  target/riscv: Fix size of sw_check_code
-  target/riscv: Fix size of priv
-  target/riscv: Fix size of gei fields
-  target/riscv: Fix size of [m|s|vs]iselect fields
-  target/riscv: Fix arguments to board IMSIC emulation callbacks
-  target/riscv: Fix size of irq_overflow_left
-  target/riscv: Indent PMUFixedCtrState correctly
-  target/riscv: Replace target_ulong in riscv_cpu_get_trap_name()
-  target/riscv: Replace target_ulong in riscv_ctr_add_entry()
-  target/riscv: Fix size of trigger data
-  target/riscv: Fix size of mseccfg
-  target/riscv: Move debug.h include away from cpu.h
-  target/riscv: Move CSR declarations to separate csr.h header
-  target/riscv: Introduce externally facing CSR access functions
-  target/riscv: Make pmp.h target_ulong agnostic
-
- target/riscv/cpu.h                            | 345 +++++++-----------
- target/riscv/csr.h                            |  93 +++++
- target/riscv/debug.h                          |   2 -
- target/riscv/pmp.h                            |  20 +-
- hw/intc/riscv_imsic.c                         |  34 +-
- hw/riscv/riscv_hart.c                         |   7 +-
- linux-user/riscv/signal.c                     |   5 +-
- target/riscv/cpu.c                            |  10 +-
- target/riscv/cpu_helper.c                     |  45 ++-
- target/riscv/csr.c                            | 290 ++++++++-------
- target/riscv/debug.c                          |   1 +
- target/riscv/fpu_helper.c                     |   6 +-
- target/riscv/gdbstub.c                        |   1 +
- target/riscv/kvm/kvm-cpu.c                    |   1 +
- target/riscv/machine.c                        | 180 +++++----
- target/riscv/op_helper.c                      |   1 +
- target/riscv/pmp.c                            |  14 +-
- target/riscv/pmu.c                            | 150 ++------
- target/riscv/riscv-qmp-cmds.c                 |   3 +-
- target/riscv/tcg/tcg-cpu.c                    |   3 +-
- target/riscv/th_csr.c                         |   1 +
- target/riscv/translate.c                      |  53 ++-
- target/riscv/vector_helper.c                  |  22 +-
- .../riscv/insn_trans/trans_privileged.c.inc   |   2 +-
- target/riscv/insn_trans/trans_rvi.c.inc       |  16 +-
- target/riscv/insn_trans/trans_rvm.c.inc       |  16 +-
- target/riscv/insn_trans/trans_rvv.c.inc       |  24 +-
- target/riscv/insn_trans/trans_rvzicfiss.c.inc |  22 +-
- 28 files changed, 687 insertions(+), 680 deletions(-)
- create mode 100644 target/riscv/csr.h
-
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index b35851cf4f..d6ad0e1896 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -200,6 +200,24 @@ FIELD(VTYPE, VMA, 7, 1)
+ FIELD(VTYPE, VEDIV, 8, 2)
+ FIELD(VTYPE, RESERVED, 10, sizeof(uint64_t) * 8 - 11)
+ 
++#ifndef CONFIG_USER_ONLY
++/* machine specific AIA ireg read-modify-write callback */
++#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen)                 \
++    ((uint32_t)((((__xlen) & 0xff) << 24) |                                    \
++                (((__vgein) & 0x3f) << 20) |                                   \
++                (((__virt) & 0x1) << 18) |                                     \
++                (((__priv) & 0x3) << 16) |                                     \
++                  (__isel & 0xffff)))
++#define AIA_IREG_ISEL(__ireg) ((__ireg) & 0xffff)
++#define AIA_IREG_PRIV(__ireg) (((__ireg) >> 16) & 0x3)
++#define AIA_IREG_VIRT(__ireg) (((__ireg) >> 18) & 0x1)
++#define AIA_IREG_VGEIN(__ireg) (((__ireg) >> 20) & 0x3f)
++#define AIA_IREG_XLEN(__ireg) (((__ireg) >> 24) & 0xff)
++
++typedef int (*aia_ireg_rmw_fn)(void *arg, uint32_t reg, uint64_t *val,
++                               uint64_t new_val, uint64_t write_mask);
++#endif
++
+ typedef struct PMUCTRState {
+     /* Current value of a counter */
+     uint64_t mhpmcounter_val;
+@@ -465,20 +483,8 @@ struct CPUArchState {
+     void *rdtime_fn_arg;
+ 
+     /* machine specific AIA ireg read-modify-write callback */
+-#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
+-    ((((__xlen) & 0xff) << 24) | \
+-     (((__vgein) & 0x3f) << 20) | \
+-     (((__virt) & 0x1) << 18) | \
+-     (((__priv) & 0x3) << 16) | \
+-     (__isel & 0xffff))
+-#define AIA_IREG_ISEL(__ireg)                  ((__ireg) & 0xffff)
+-#define AIA_IREG_PRIV(__ireg)                  (((__ireg) >> 16) & 0x3)
+-#define AIA_IREG_VIRT(__ireg)                  (((__ireg) >> 18) & 0x1)
+-#define AIA_IREG_VGEIN(__ireg)                 (((__ireg) >> 20) & 0x3f)
+-#define AIA_IREG_XLEN(__ireg)                  (((__ireg) >> 24) & 0xff)
+-    int (*aia_ireg_rmw_fn[4])(void *arg, target_ulong reg,
+-        target_ulong *val, target_ulong new_val, target_ulong write_mask);
+-    void *aia_ireg_rmw_fn_arg[4];
++    aia_ireg_rmw_fn aia_ireg_rmw_cb[4];
++    void *aia_ireg_rmw_cb_arg[4];
+ 
+     /* True if in debugger mode.  */
+     bool debugger;
+@@ -646,12 +652,8 @@ void riscv_cpu_interrupt(CPURISCVState *env);
+ #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
+ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+                              void *arg);
+-void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+-                                   int (*rmw_fn)(void *arg,
+-                                                 target_ulong reg,
+-                                                 target_ulong *val,
+-                                                 target_ulong new_val,
+-                                                 target_ulong write_mask),
++void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, uint32_t priv,
++                                   aia_ireg_rmw_fn rmw_fn,
+                                    void *rmw_fn_arg);
+ 
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index 6174e1a05d..9274a1e842 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -88,11 +88,11 @@ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
+ }
+ 
+ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                      target_ulong *val,
+-                                      target_ulong new_val,
+-                                      target_ulong wr_mask)
++                                      uint64_t *val,
++                                      uint64_t new_val,
++                                      uint64_t wr_mask)
+ {
+-    target_ulong old_val = imsic->eidelivery[page];
++    uint32_t old_val = imsic->eidelivery[page];
+ 
+     if (val) {
+         *val = old_val;
+@@ -106,11 +106,11 @@ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+ }
+ 
+ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                      target_ulong *val,
+-                                      target_ulong new_val,
+-                                      target_ulong wr_mask)
++                                      uint64_t *val,
++                                      uint64_t new_val,
++                                      uint64_t wr_mask)
+ {
+-    target_ulong old_val = imsic->eithreshold[page];
++    uint32_t old_val = imsic->eithreshold[page];
+ 
+     if (val) {
+         *val = old_val;
+@@ -124,8 +124,8 @@ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+ }
+ 
+ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                 target_ulong *val, target_ulong new_val,
+-                                 target_ulong wr_mask)
++                                 uint64_t *val, uint64_t new_val,
++                                 uint64_t wr_mask)
+ {
+     uint32_t base, topei = riscv_imsic_topei(imsic, page);
+ 
+@@ -149,11 +149,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+ 
+ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+                                uint32_t xlen, uint32_t page,
+-                               uint32_t num, bool pend, target_ulong *val,
+-                               target_ulong new_val, target_ulong wr_mask)
++                               uint32_t num, bool pend, uint64_t *val,
++                               uint64_t new_val, uint64_t wr_mask)
+ {
+     uint32_t i, base, prev;
+-    target_ulong mask;
++    uint64_t mask;
+     uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
+ 
+     if (xlen != 32) {
+@@ -178,7 +178,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+             continue;
+         }
+ 
+-        mask = (target_ulong)1 << i;
++        mask = 1ull << i;
+         if (wr_mask & mask) {
+             if (new_val & mask) {
+                 prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
+@@ -197,8 +197,8 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+     return 0;
+ }
+ 
+-static int riscv_imsic_rmw(void *arg, target_ulong reg, target_ulong *val,
+-                           target_ulong new_val, target_ulong wr_mask)
++static int riscv_imsic_rmw(void *arg, uint32_t reg, uint64_t *val,
++                           uint64_t new_val, uint64_t wr_mask)
+ {
+     RISCVIMSICState *imsic = arg;
+     uint32_t isel, priv, virt, vgein, xlen, page;
+@@ -383,7 +383,7 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+         }
+ 
+         if (!kvm_irqchip_in_kernel()) {
+-            riscv_cpu_set_aia_ireg_rmw_fn(env, (imsic->mmode) ? PRV_M : PRV_S,
++            riscv_cpu_set_aia_ireg_rmw_cb(env, (imsic->mmode) ? PRV_M : PRV_S,
+                                           riscv_imsic_rmw, imsic);
+         }
+     }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e0a324b401..b102f15ac6 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -765,17 +765,13 @@ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+     env->rdtime_fn_arg = arg;
+ }
+ 
+-void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+-                                   int (*rmw_fn)(void *arg,
+-                                                 target_ulong reg,
+-                                                 target_ulong *val,
+-                                                 target_ulong new_val,
+-                                                 target_ulong write_mask),
++void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, uint32_t priv,
++                                   aia_ireg_rmw_fn rmw_fn,
+                                    void *rmw_fn_arg)
+ {
+     if (priv <= PRV_M) {
+-        env->aia_ireg_rmw_fn[priv] = rmw_fn;
+-        env->aia_ireg_rmw_fn_arg[priv] = rmw_fn_arg;
++        env->aia_ireg_rmw_cb[priv] = rmw_fn;
++        env->aia_ireg_rmw_cb_arg[priv] = rmw_fn_arg;
+     }
+ }
+ 
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index ebdb955869..491186d9c7 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2637,6 +2637,7 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+     int ret = -EINVAL;
+     uint8_t *iprio;
+     target_ulong priv, vgein;
++    uint64_t wide_val;
+ 
+     /* VS-mode CSR number passed in has already been translated */
+     switch (csrno) {
+@@ -2681,16 +2682,17 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+         }
+     } else if (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST) {
+         /* IMSIC registers only available when machine implements it. */
+-        if (env->aia_ireg_rmw_fn[priv]) {
++        if (env->aia_ireg_rmw_cb[priv]) {
+             /* Selected guest interrupt file should not be zero */
+             if (virt && (!vgein || env->geilen < vgein)) {
+                 goto done;
+             }
+             /* Call machine specific IMSIC register emulation */
+-            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
++            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+                                     AIA_MAKE_IREG(isel, priv, virt, vgein,
+                                                   riscv_cpu_mxl_bits(env)),
+-                                    val, new_val, wr_mask);
++                                    &wide_val, new_val, wr_mask);
++            *val = wide_val;
+         }
+     } else {
+         isel_reserved = true;
+@@ -2922,6 +2924,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     bool virt;
+     int ret = -EINVAL;
+     target_ulong priv, vgein;
++    uint64_t wide_val;
+ 
+     /* Translate CSR number for VS-mode */
+     csrno = aia_xlate_vs_csrno(env, csrno);
+@@ -2947,7 +2950,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     };
+ 
+     /* IMSIC CSRs only available when machine implements IMSIC. */
+-    if (!env->aia_ireg_rmw_fn[priv]) {
++    if (!env->aia_ireg_rmw_cb[priv]) {
+         goto done;
+     }
+ 
+@@ -2960,10 +2963,11 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     }
+ 
+     /* Call machine specific IMSIC register emulation for TOPEI */
+-    ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
++    ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+                     AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
+                                   riscv_cpu_mxl_bits(env)),
+-                    val, new_val, wr_mask);
++                    &wide_val, new_val, wr_mask);
++    *val = wide_val;
+ 
+ done:
+     if (ret) {
+@@ -4428,7 +4432,7 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+                                   target_ulong *val)
+ {
+     int irq, ret;
+-    target_ulong topei;
++    uint64_t topei = 0;
+     uint64_t vseip, vsgein;
+     uint32_t iid, iprio, hviid, hviprio, gein;
+     uint32_t s, scount = 0, siid[VSTOPI_NUM_SRCS], siprio[VSTOPI_NUM_SRCS];
+@@ -4443,13 +4447,13 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+         if (gein <= env->geilen && vseip) {
+             siid[scount] = IRQ_S_EXT;
+             siprio[scount] = IPRIO_MMAXIPRIO + 1;
+-            if (env->aia_ireg_rmw_fn[PRV_S]) {
++            if (env->aia_ireg_rmw_cb[PRV_S]) {
+                 /*
+                  * Call machine specific IMSIC register emulation for
+                  * reading TOPEI.
+                  */
+-                ret = env->aia_ireg_rmw_fn[PRV_S](
+-                        env->aia_ireg_rmw_fn_arg[PRV_S],
++                ret = env->aia_ireg_rmw_cb[PRV_S](
++                        env->aia_ireg_rmw_cb_arg[PRV_S],
+                         AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, PRV_S, true, gein,
+                                       riscv_cpu_mxl_bits(env)),
+                         &topei, 0, 0);
 -- 
 2.51.0
 
