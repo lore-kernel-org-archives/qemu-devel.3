@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F0CCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB60DCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmU-0004rK-AF; Mon, 27 Oct 2025 14:17:23 -0400
+	id 1vDRmc-0004w8-IQ; Mon, 27 Oct 2025 14:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmG-0004kC-3t
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:08 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmQ-0004qW-8T
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:20 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRly-000401-7B
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:07 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmA-0003yr-02
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
- In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=/JWX58fLEOumjtEggtpYYPCTc75FSdSeBBwvHfyqbbY=; b=OflbZiQ+a1arwoU
- NX/z/SWo+27j3oSbf8/QZgxDm5INr3HwT61tniE/2CVAsJyiEksutyny1P4mRihheWMeLSiC6VHwF
- hUWskkWx7xq7hASV3VfqPJq7P74KiHsKZYwO8CyMLCKatCNkOFJo8q1jrXbRirTiKkfTWSFFSC33Y
- MM=;
+ List-Help; bh=xzmt7cLSz4yJS8IzF79BoJ0z6M/UFl7qXf5BHQA55gk=; b=u9m3FixuZRfVUxP
+ TcIJgh2kyVUX9BRjiI4ud0MS3qKBknUCbOuYrstooAfMrwCqHtm6RCJsqQu2M042frIzmwL401wPz
+ dAyRDhWJi68+oNRxJ8Acexi5WAtVEqnor0naEi94XEpfaAAPexCpsg4pSE/liLsgdRJ/5JiePfxP2
+ 0w=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 19/33] target/riscv: Fix size of sw_check_code
-Date: Mon, 27 Oct 2025 19:18:16 +0100
-Message-ID: <20251027181831.27016-20-anjo@rev.ng>
+Subject: [PATCH v4 11/33] target/riscv: Fix size of pc, load_[val|res]
+Date: Mon, 27 Oct 2025 19:18:08 +0100
+Message-ID: <20251027181831.27016-12-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -47,7 +46,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,89 +64,116 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field only holds values of 2 and 3, fix its size to 8 bits and
-update stores from TCG.
+Fix to 64 bits in size and as these are mapped to TCG globals, be
+careful with host endianness when allocating globals.  Casts are
+added to logging expressions to retain the correct size for
+TARGET_RISCV32.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                            | 2 +-
- target/riscv/translate.c                      | 4 ++--
- target/riscv/insn_trans/trans_rvi.c.inc       | 8 ++++----
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 4 ++--
- 4 files changed, 9 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h        |  6 +++---
+ target/riscv/cpu.c        |  2 +-
+ target/riscv/cpu_helper.c |  6 +++---
+ target/riscv/machine.c    |  6 +++---
+ target/riscv/translate.c  | 12 +++++++-----
+ 5 files changed, 17 insertions(+), 15 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index f901608d0e..191a3fb3d9 100644
+index bd200ccad4..f00ae69e8a 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -260,7 +260,7 @@ struct CPUArchState {
-     /* env place holder for extra word 2 during unwind */
-     uint64_t excp_uw2;
-     /* sw check code for sw check exception */
--    target_ulong sw_check_code;
-+    uint8_t sw_check_code;
- #ifdef CONFIG_USER_ONLY
-     uint32_t elf_flags;
+@@ -225,9 +225,9 @@ struct CPUArchState {
+     uint8_t vxsat;
+     bool vill;
+ 
+-    target_ulong pc;
+-    target_ulong load_res;
+-    target_ulong load_val;
++    uint64_t pc;
++    uint64_t load_res;
++    uint64_t load_val;
+ 
+     /* Floating-Point state */
+     uint64_t fpr[32]; /* assume both F and D extensions */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index dc97d35458..353b927dd5 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -528,7 +528,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
+     }
  #endif
+-    qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
++    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
+ #ifndef CONFIG_USER_ONLY
+     {
+         static const int dump_csrs[] = {
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 1f791e4de3..e105dec426 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2278,9 +2278,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ 
+     qemu_log_mask(CPU_LOG_INT,
+                   "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
+-                  "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
+-                  __func__, env->mhartid, async, cause, env->pc, tval,
+-                  riscv_cpu_get_trap_name(cause, async));
++                  "epc:0x%"PRIx64", tval:0x"TARGET_FMT_lx", desc=%s\n",
++                  __func__, env->mhartid, async, cause, env->pc,
++                  tval, riscv_cpu_get_trap_name(cause, async));
+ 
+     mode = env->priv <= PRV_S && cause < 64 &&
+         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 440b09fc32..66ed3f6504 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -433,9 +433,9 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
+         VMSTATE_UINT8_ARRAY(env.miprio, RISCVCPU, 64),
+         VMSTATE_UINT8_ARRAY(env.siprio, RISCVCPU, 64),
+-        VMSTATE_UINTTL(env.pc, RISCVCPU),
+-        VMSTATE_UINTTL(env.load_res, RISCVCPU),
+-        VMSTATE_UINTTL(env.load_val, RISCVCPU),
++        VMSTATE_UINT64(env.pc, RISCVCPU),
++        VMSTATE_UINT64(env.load_res, RISCVCPU),
++        VMSTATE_UINT64(env.load_val, RISCVCPU),
+         VMSTATE_UINTTL(env.frm, RISCVCPU),
+         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
+         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
 diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 5a6913057c..f4f0b96d0a 100644
+index 15eee7f6ee..e82805e178 100644
 --- a/target/riscv/translate.c
 +++ b/target/riscv/translate.c
-@@ -1377,8 +1377,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     if (ctx->fcfi_lp_expected) {
-         /* Emit after insn_start, i.e. before the op following insn_start. */
-         tcg_ctx->emit_before_op = QTAILQ_NEXT(ctx->base.insn_start, link);
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         tcg_ctx->emit_before_op = NULL;
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 104a8ebe20..37d2f4d957 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -53,8 +53,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         /*
-          * misaligned, according to spec we should raise sw check exception
-          */
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         return true;
-@@ -66,8 +66,8 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-         TCGv tmp = tcg_temp_new();
-         tcg_gen_extract_tl(tmp, get_gpr(ctx, xT2, EXT_NONE), 12, 20);
-         tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->label, skip);
--        tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
--                      tcg_env, offsetof(CPURISCVState, sw_check_code));
-+        tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-+                        tcg_env, offsetof(CPURISCVState, sw_check_code));
-         gen_helper_raise_exception(tcg_env,
-                       tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-         gen_set_label(skip);
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 40e5a1b7df..cb9c5419fa 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -40,8 +40,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                        mxl_memop(ctx) | MO_ALIGN);
-     TCGv rs1 = get_gpr(ctx, a->rs1, EXT_NONE);
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
--    tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
--                  tcg_env, offsetof(CPURISCVState, sw_check_code));
-+    tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-+                    tcg_env, offsetof(CPURISCVState, sw_check_code));
-     gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+@@ -1459,6 +1459,10 @@ void riscv_translate_init(void)
+     /* 32 bits in size, no offset needed */
+     size_t vl_offset = offsetof(CPURISCVState, vl);
+     size_t vstart_offset = offsetof(CPURISCVState, vstart);
++    /* 64 bits in size mapped to TCGv, needs offset */
++    size_t pc_offset     = offsetof(CPURISCVState, pc) + field_offset;
++    size_t res_offset    = offsetof(CPURISCVState, load_res) + field_offset;
++    size_t val_offset    = offsetof(CPURISCVState, load_val) + field_offset;
+ 
+     for (i = 1; i < 32; i++) {
+         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
+@@ -1474,11 +1478,9 @@ void riscv_translate_init(void)
+             offsetof(CPURISCVState, fpr[i]), riscv_fpr_regnames[i]);
+     }
+ 
+-    cpu_pc = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), "pc");
++    cpu_pc = tcg_global_mem_new(tcg_env, pc_offset, "pc");
+     cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
+     cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
+-    load_res = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_res),
+-                             "load_res");
+-    load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
+-                             "load_val");
++    load_res = tcg_global_mem_new(tcg_env, res_offset, "load_res");
++    load_val = tcg_global_mem_new(tcg_env, val_offset, "load_val");
+ }
 -- 
 2.51.0
 
