@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE75CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:46:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4274CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLf7-0006UR-Fq; Mon, 27 Oct 2025 07:45:22 -0400
+	id 1vDLhl-0007pq-Vj; Mon, 27 Oct 2025 07:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vDLf4-0006Sq-RH
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:45:19 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1vDLhi-0007nc-9t
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:48:04 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vDLf0-0006KZ-5m
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:45:18 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-63c3d913b3bso7722106a12.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:45:12 -0700 (PDT)
+ id 1vDLhc-0007OD-7F
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:48:01 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-63c3c7d3d53so6909415a12.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761565509; x=1762170309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761565672; x=1762170472; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PFSH39XRIMlwqwI+bqs2giHc9er1rtvjubUyS0EOFQQ=;
- b=vZ1olwCJerCb54uZQgSgDit5QIxCD8Fd4XrZnN+ykl8wbiARbC6vrYAa3qE4K1jlI6
- sR6jq74Llj2ldJND0F7WZ/hj2cBSFrtCAsHLQ5Aif5sNumqRbVS4tGfFSrdlPSMrJiEq
- WQGeH4rpDUj5lvSdghUBysqZlaaKWC2YsRZteNidrtEernpChQFLbkSxfrqNkROMcsFa
- VyeTo8Cf8sxP7h+F/jRj+L5qHEiSUtm3CfIPcvDGGFnSDMFB3rEU89cBFQtCq+nG+QUt
- +BrSP11p7zIT6qJp5iIAd2vTx/B6R+Zhui/ufYmr3CZiavDXkkXOnJ5ArJpBi2p2vQYc
- VG/g==
+ bh=fFI81I62K4Q3kbrq7ZnN7xnBndnVGylk+wBKfPvi4qw=;
+ b=jN3ss7F30FgIYmmw5uHme6EEBrrLtH2DM/FXIa6LA5wxv5K5Vv3yYvxlX6J53HC59M
+ OM4pAc7xBJMpzgDi9EwntCA59U0cWaKZF3EQSeWHYHG9RZ6YIUDq9FyaN6hXdARVbpEf
+ uPQZuFsX5wqbZHD7xGNXHVdOWY3qQyF5x4s8lfMhJQraL5Qhzv+5MR8fGYzvZ5FCMDuB
+ 9bkySe5W+fqCqCqCFzrq++XMUS8f6Zo/JsxmdXzoD3CSx5XuoFiz3ndWR8MZik//DST2
+ iSPD46WKTI8ogPB5q1zObHuiFyoLh2oekRDDqWg3XIrm3UZc0JZGFhwDUbxVqAL575RC
+ NAGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761565510; x=1762170310;
+ d=1e100.net; s=20230601; t=1761565672; x=1762170472;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PFSH39XRIMlwqwI+bqs2giHc9er1rtvjubUyS0EOFQQ=;
- b=QZpb3pwQK5Y/B0PVzA20C1l4XuPlkSvvLqCye5uFKDYSBX4qdTqK3aVF+1aEclFO4/
- WyLkXpJhNcKiWXkQNAkkBiyfP5Fdmlx8a2ZtmVW2V2xD1oKrUQETOPqPNtORzB6EBbe4
- WPU7QhA4nfzi5L4i+y40qoJI7fXy1AFznkIjavMuvRaEz0oC+YQhvBusa24HLVxxDME5
- A9kKAb7cRZNfPmfeULaGjsUsv7IiNSMte+PkmozJXENIm734M9nRnd1oDC1gvLBihq9A
- VvfD8BTJZTV02Xwj18aomM9p/EFIDnLibI1CshHv/AdsbZ9JTltXNwd3EAy/I9gsAHCC
- F/7w==
+ bh=fFI81I62K4Q3kbrq7ZnN7xnBndnVGylk+wBKfPvi4qw=;
+ b=Pb+NZFgkW+7DHZJSIHJApRCqc3zKQUvj4BySlMdq6iSVpZsijEM4FOJaTei1xeGSTJ
+ xOy8e6CTqvyImH5ScS++moiK727KsUbTcLKVammSA5JNwm65J46NtX2rmpQ71h4GRxAF
+ vLQc3ndeI1t/AwHhgxi5JmVKjvtycxxsS3nqGUmiKgf1eNPzfvjvCShWRuWg69PrRwcp
+ WBxSWbMkRI99b+0ANDfIkrJ8j0ZUx58eGPOC/Id6hOpV39f8CIXyRkmGAvy6JNMSwH+8
+ SH4mqfouA+5mCTXTmk0GVSL3vjvSz746CGn23wi74sxiWUovZojlZRKxSm+TDNWI2GJi
+ 7Z+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXayH0IttfpA4qnSHKqfTSTtcTVxwyNzH6WTr9LNaPmLt8qK2Omx/ew4pcJNbfaeWC9/HGEd4cqHBd7@nongnu.org
-X-Gm-Message-State: AOJu0YxtJs5NIN/HdAUkvRT+9oRO0RNyG/zGEWmKYXCk22XxIeaQVVHF
- ChB0UwrVZOiCe1wUTpTZnwYcHuqZnkWEQiu07cAtovSLlBrhX6evCxKxnYNCHbxt95ENbEnVZ98
- xl93toYG3saaPylSLAUHnofWkVugKP1en1EvEMqId+g==
-X-Gm-Gg: ASbGncuVc42QbH4H+AksNGdIxiiUvS7JDmu+mr10D031q+XL00jw2+NZoZmBWQ0QwJm
- uFazkDbR9aMvQwSZRaDv1lVLc7kMHd42tgn67E7AIh3ME2twMWH+zEEpi1z+4phEBmj5hnVt6yn
- l/wnkaGRFciJL9hA9XRW5PLHCd6EduDJKRBQ7n/6uYpENgG0A8P44crl2kzSWAmOH2IHbagKuqL
- hj+81UjoRhLWSkSjlSjeP2gnUBfEaQL1GQnKjBuQUXZcnkWaxqSwA5E25iw6dNeVpiOoIMU
-X-Google-Smtp-Source: AGHT+IEWw3nvJbS54MlftPnMOotBRaZt+4RO2auERxOZhnB9LpqFf1ztTe8OdlTCI2b5JQUyzlOnjDQzc/m59LRNw5I=
-X-Received: by 2002:a05:6402:34c8:b0:63b:ee26:5449 with SMTP id
- 4fb4d7f45d1cf-63e3e597dfemr12423873a12.32.1761565509458; Mon, 27 Oct 2025
- 04:45:09 -0700 (PDT)
+ AJvYcCUOuxpnfDE0yn1M22813yDLFCd/gv/9YdgfY/Cbcp/Nkcy6wOoNZlED2f6KSzRAUFZJ3vcbOtXlUcZj@nongnu.org
+X-Gm-Message-State: AOJu0YzsuBjmxtgNp0XpIaPcEP9tIdZ2QYGf2S8cZGsyF0dv4xVeKQe9
+ j7tLD9wbUfjzTqKv7A+JcZf7XBubL1kmonWyEt9M3QZIybU57ub2wA3YIv+ixffFYHHJSMWqViu
+ 9Uzbca92UHRmfA45BY+mewU6X1khyZUbAlwGoFXWlgwZWpy9K2RpbHpg=
+X-Gm-Gg: ASbGncuR2UMeu9CnEbDowHoU6oHRYBXGGCJNQBbGUEivXfCHAyOpv3vFI039gOGEC7S
+ xaJn9a7s9Umq43FFUUxg1Y463KL8ajDu/EpuYL35Zv0BLe1oT/sKnrgkGvn64DBvsXuDQSYrAdo
+ dVsQhZKiojQeeD/NCUAUNLMZOU5AEAmURQjrA6HrsnuwUlt7UNyoleWLgCeVugga3vTizbjQ6q0
+ iRyEdr3GRFGTuZUZFQoL+cUa1mKQLtGiqUh9iYvXYiasQiE+jE2sy7cerjzeQ==
+X-Google-Smtp-Source: AGHT+IGC2EA8knIU2yPngnJugfDYwJPIsmqZesn1wnLqAx2rjzVkjNQkZwI7QIX9x3duOqYVp3og8O2sHCMzr0KEoLQ=
+X-Received: by 2002:a05:6402:1941:b0:639:ea57:44f2 with SMTP id
+ 4fb4d7f45d1cf-63e6007f18amr9025027a12.24.1761565672130; Mon, 27 Oct 2025
+ 04:47:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <20251027075123.2237914-1-quic_haixcui@quicinc.com>
- <20251027075123.2237914-3-quic_haixcui@quicinc.com>
-In-Reply-To: <20251027075123.2237914-3-quic_haixcui@quicinc.com>
+ <20251027075123.2237914-4-quic_haixcui@quicinc.com>
+In-Reply-To: <20251027075123.2237914-4-quic_haixcui@quicinc.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 27 Oct 2025 13:44:42 +0200
-X-Gm-Features: AWmQ_bkoH6c8qrpquPHT31h3ZNP47BqJsP5TyVHLiEnDGz_SFQE2ek-pt_0hREE
-Message-ID: <CAAjaMXamfeLc+ca3Cg+ZpqEM+jw6zg1w=sX63NX7FCSHgQj+NQ@mail.gmail.com>
-Subject: Re: [PATCH v1 2/3] standard-headers: Update virtio_spi.h from Linux
- v6.18-rc3
+Date: Mon, 27 Oct 2025 13:47:26 +0200
+X-Gm-Features: AWmQ_bmwSuBbtbdGrYu6Pqy6TzZ0tB1LfCDcDxwg0nVn1EYIMzI8dRXd5HqDRBc
+Message-ID: <CAAjaMXY9roe5z_tZmrW46LqPgB+ERhaE+47rg6c0YwJQnQ1w1Q@mail.gmail.com>
+Subject: Re: [PATCH v1 3/3] virtio-spi: Add vhost-user-spi device support
 To: Haixu Cui <quic_haixcui@quicinc.com>
 Cc: alex.bennee@linaro.org, viresh.kumar@linaro.org, quic_tsoni@quicinc.com, 
  qemu-devel@nongnu.org, mst@redhat.com, zhiqiang.tu@oss.qualcomm.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,231 +101,329 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Oct 27, 2025 at 9:52=E2=80=AFAM Haixu Cui <quic_haixcui@quicinc.com=
 > wrote:
 >
-> Synced virtio_spi.h from upstream Linux kernelusing
-> scripts/update-linux-headers.sh.
+> This patch introduces support for vhost-user-spi and vhost-user-spi-pci
+> devices in QEMU, enabling virtio-based SPI communication via the vhost-us=
+er
+> protocol.
 >
-> Source:
-> - Linux commit dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa (v6.18-rc3)
-> - Author: Linus Torvalds <torvalds@linux-foundation.org>
-> - Date:   Sun Oct 26 15:59:49 2025 -0700
+> The implementation follows the virtio-spi specification and leverages
+> the upstream virtio-spi driver in Linux. Relevant references:
 >
-> This update ensures QEMU's standard headers are consistent with the lates=
-t
-> virtio SPI definitions from Linux v6.18-rc3.
+> - Virtio SPI specification:
+>   https://github.com/oasis-tcs/virtio-spec/tree/master/device-types/spi
+> - Linux virtio-spi driver:
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
+/drivers/spi/spi-virtio.c?h=3Dv6.18-rc3
+> - vhost-user-spi daemon:
+>   https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-spi
+>
+> Example usage with rust-vmm vhost-user-spi daemon:
+>
+> Start the vhost-user-spi daemon:
+>     vhost-device-spi --socket-path=3Dvspi.sock --socket-count=3D1 \
+>         --device "/dev/spidev0.0"
+>
+> Launch QEMU with:
+>     qemu-system-aarch64 -m 1G \
+>         -chardev socket,path=3D/home/root/vspi.sock0,id=3Dvspi \
+>         -device vhost-user-spi-device,chardev=3Dvspi,id=3Dspi \
+>         -object memory-backend-file,id=3Dmem,size=3D1G,mem-path=3D/dev/sh=
+m,share=3Don \
+>         -numa node,memdev=3Dmem
 >
 > Signed-off-by: Haixu Cui <quic_haixcui@quicinc.com>
+
+LGTM
+
+You should also update docs/system/devices/vhost-user.rst with an entry.
+
 > ---
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
->  include/standard-headers/linux/virtio_spi.h | 181 ++++++++++++++++++++
->  1 file changed, 181 insertions(+)
->  create mode 100644 include/standard-headers/linux/virtio_spi.h
+>  MAINTAINERS                        |  6 +++
+>  hw/virtio/Kconfig                  |  5 +++
+>  hw/virtio/meson.build              |  3 ++
+>  hw/virtio/vhost-user-spi-pci.c     | 69 ++++++++++++++++++++++++++++++
+>  hw/virtio/vhost-user-spi.c         | 65 ++++++++++++++++++++++++++++
+>  hw/virtio/virtio.c                 |  4 +-
+>  include/hw/virtio/vhost-user-spi.h | 25 +++++++++++
+>  7 files changed, 176 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/virtio/vhost-user-spi-pci.c
+>  create mode 100644 hw/virtio/vhost-user-spi.c
+>  create mode 100644 include/hw/virtio/vhost-user-spi.h
 >
-> diff --git a/include/standard-headers/linux/virtio_spi.h b/include/standa=
-rd-headers/linux/virtio_spi.h
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f33f95ceea..9ce2e16140 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2520,6 +2520,12 @@ F: hw/virtio/vhost-user-scmi*
+>  F: include/hw/virtio/vhost-user-scmi.h
+>  F: tests/qtest/libqos/virtio-scmi.*
+>
+> +vhost-user-spi
+> +M: Haixu Cui <quic_haixcui@quicinc.com>
+> +S: Maintained
+> +F: include/hw/virtio/vhost-user-spi.h
+> +F: hw/virtio/vhost-user-spi*
+> +
+>  virtio-crypto
+>  M: Gonglei <arei.gonglei@huawei.com>
+>  S: Supported
+> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+> index 10f5c53ac0..8895682c61 100644
+> --- a/hw/virtio/Kconfig
+> +++ b/hw/virtio/Kconfig
+> @@ -127,6 +127,11 @@ config VHOST_USER_SCMI
+>      default y
+>      depends on VIRTIO && VHOST_USER && ARM
+>
+> +config VHOST_USER_SPI
+> +    bool
+> +    default y
+> +    depends on VIRTIO && VHOST_USER
+> +
+>  config VHOST_USER_TEST
+>      bool
+>      default y
+> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> index affd66887d..6675b63ce6 100644
+> --- a/hw/virtio/meson.build
+> +++ b/hw/virtio/meson.build
+> @@ -28,6 +28,7 @@ if have_vhost
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('=
+vhost-user-rng.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('=
+vhost-user-snd.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files=
+('vhost-user-input.c'))
+> +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files('=
+vhost-user-spi.c'))
+>
+>      # PCI Stubs
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+TEST'],
+> @@ -42,6 +43,8 @@ if have_vhost
+>                           if_true: files('vhost-user-snd-pci.c'))
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+INPUT'],
+>                           if_true: files('vhost-user-input-pci.c'))
+> +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+SPI'],
+> +                         if_true: files('vhost-user-spi-pci.c'))
+>    endif
+>    if have_vhost_vdpa
+>      system_virtio_ss.add(files('vhost-vdpa.c'))
+> diff --git a/hw/virtio/vhost-user-spi-pci.c b/hw/virtio/vhost-user-spi-pc=
+i.c
 > new file mode 100644
-> index 0000000000..54e570fb4a
+> index 0000000000..095aba5760
 > --- /dev/null
-> +++ b/include/standard-headers/linux/virtio_spi.h
-> @@ -0,0 +1,181 @@
-> +/* SPDX-License-Identifier: BSD-3-Clause */
+> +++ b/hw/virtio/vhost-user-spi-pci.c
+> @@ -0,0 +1,69 @@
 > +/*
-> + * Copyright (C) 2023 OpenSynergy GmbH
-> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All rights reserv=
+> + * Vhost-user spi virtio device PCI glue
+> + *
+> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserv=
 ed.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
-> +#ifndef _LINUX_VIRTIO_VIRTIO_SPI_H
-> +#define _LINUX_VIRTIO_VIRTIO_SPI_H
 > +
-> +#include "standard-headers/linux/types.h"
-> +#include "standard-headers/linux/virtio_config.h"
+> +#include "qemu/osdep.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/virtio/vhost-user-spi.h"
+> +#include "hw/virtio/virtio-pci.h"
+> +
+> +struct VHostUserSPIPCI {
+> +    VirtIOPCIProxy parent_obj;
+> +    VHostUserSPI vdev;
+> +};
+> +
+> +typedef struct VHostUserSPIPCI VHostUserSPIPCI;
+> +
+> +#define TYPE_VHOST_USER_SPI_PCI "vhost-user-spi-pci-base"
+> +
+> +DECLARE_INSTANCE_CHECKER(VHostUserSPIPCI, VHOST_USER_SPI_PCI,
+> +                         TYPE_VHOST_USER_SPI_PCI)
+> +
+> +static void vhost_user_spi_pci_realize(VirtIOPCIProxy *vpci_dev, Error *=
+*errp)
+> +{
+> +    VHostUserSPIPCI *dev =3D VHOST_USER_SPI_PCI(vpci_dev);
+> +    DeviceState *vdev =3D DEVICE(&dev->vdev);
+> +
+> +    vpci_dev->nvectors =3D 1;
+> +    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+> +}
+> +
+> +static void vhost_user_spi_pci_class_init(ObjectClass *klass, const void=
+ *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +    VirtioPCIClass *k =3D VIRTIO_PCI_CLASS(klass);
+> +    PCIDeviceClass *pcidev_k =3D PCI_DEVICE_CLASS(klass);
+> +    k->realize =3D vhost_user_spi_pci_realize;
+> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> +    pcidev_k->vendor_id =3D PCI_VENDOR_ID_REDHAT_QUMRANET;
+> +    pcidev_k->device_id =3D 0; /* Set by virtio-pci based on virtio id *=
+/
+> +    pcidev_k->revision =3D 0x00;
+> +    pcidev_k->class_id =3D PCI_CLASS_COMMUNICATION_OTHER;
+> +}
+> +
+> +static void vhost_user_spi_pci_instance_init(Object *obj)
+> +{
+> +    VHostUserSPIPCI *dev =3D VHOST_USER_SPI_PCI(obj);
+> +
+> +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
+> +                                TYPE_VHOST_USER_SPI);
+> +}
+> +
+> +static const VirtioPCIDeviceTypeInfo vhost_user_spi_pci_info =3D {
+> +    .base_name =3D TYPE_VHOST_USER_SPI_PCI,
+> +    .non_transitional_name =3D "vhost-user-spi-pci",
+> +    .instance_size =3D sizeof(VHostUserSPIPCI),
+> +    .instance_init =3D vhost_user_spi_pci_instance_init,
+> +    .class_init =3D vhost_user_spi_pci_class_init,
+> +};
+> +
+> +static void vhost_user_spi_pci_register(void)
+> +{
+> +    virtio_pci_types_register(&vhost_user_spi_pci_info);
+> +}
+> +
+> +type_init(vhost_user_spi_pci_register);
+> diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
+> new file mode 100644
+> index 0000000000..0d44dec46a
+> --- /dev/null
+> +++ b/hw/virtio/vhost-user-spi.c
+> @@ -0,0 +1,65 @@
+> +/*
+> + * Vhost-user spi virtio device
+> + *
+> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserv=
+ed.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/virtio/virtio-bus.h"
+> +#include "hw/virtio/vhost-user-spi.h"
+> +#include "qemu/error-report.h"
 > +#include "standard-headers/linux/virtio_ids.h"
-> +#include "standard-headers/linux/virtio_types.h"
+> +#include "standard-headers/linux/virtio_spi.h"
 > +
-> +/* Sample data on trailing clock edge */
-> +#define VIRTIO_SPI_CPHA                        _BITUL(0)
-> +/* Clock is high when IDLE */
-> +#define VIRTIO_SPI_CPOL                        _BITUL(1)
-> +/* Chip Select is active high */
-> +#define VIRTIO_SPI_CS_HIGH                     _BITUL(2)
-> +/* Transmit LSB first */
-> +#define VIRTIO_SPI_MODE_LSB_FIRST              _BITUL(3)
-> +/* Loopback mode */
-> +#define VIRTIO_SPI_MODE_LOOP                   _BITUL(4)
-> +
-> +/**
-> + * struct virtio_spi_config - All config fields are read-only for the
-> + * Virtio SPI driver
-> + * @cs_max_number: maximum number of chipselect the host SPI controller
-> + *   supports.
-> + * @cs_change_supported: indicates if the host SPI controller supports t=
-o toggle
-> + *   chipselect after each transfer in one message:
-> + *   0: unsupported, chipselect will be kept in active state throughout =
-the
-> + *      message transaction;
-> + *   1: supported.
-> + *   Note: Message here contains a sequence of SPI transfers.
-> + * @tx_nbits_supported: indicates the supported number of bit for writin=
-g:
-> + *   bit 0: DUAL (2-bit transfer), 1 for supported
-> + *   bit 1: QUAD (4-bit transfer), 1 for supported
-> + *   bit 2: OCTAL (8-bit transfer), 1 for supported
-> + *   other bits are reserved as 0, 1-bit transfer is always supported.
-> + * @rx_nbits_supported: indicates the supported number of bit for readin=
-g:
-> + *   bit 0: DUAL (2-bit transfer), 1 for supported
-> + *   bit 1: QUAD (4-bit transfer), 1 for supported
-> + *   bit 2: OCTAL (8-bit transfer), 1 for supported
-> + *   other bits are reserved as 0, 1-bit transfer is always supported.
-> + * @bits_per_word_mask: mask indicating which values of bits_per_word ar=
-e
-> + *   supported. If not set, no limitation for bits_per_word.
-> + * @mode_func_supported: indicates the following features are supported =
-or not:
-> + *   bit 0-1: CPHA feature
-> + *     0b00: invalid, should support as least one CPHA setting
-> + *     0b01: supports CPHA=3D0 only
-> + *     0b10: supports CPHA=3D1 only
-> + *     0b11: supports CPHA=3D0 and CPHA=3D1.
-> + *   bit 2-3: CPOL feature
-> + *     0b00: invalid, should support as least one CPOL setting
-> + *     0b01: supports CPOL=3D0 only
-> + *     0b10: supports CPOL=3D1 only
-> + *     0b11: supports CPOL=3D0 and CPOL=3D1.
-> + *   bit 4: chipselect active high feature, 0 for unsupported and 1 for
-> + *     supported, chipselect active low is supported by default.
-> + *   bit 5: LSB first feature, 0 for unsupported and 1 for supported,
-> + *     MSB first is supported by default.
-> + *   bit 6: loopback mode feature, 0 for unsupported and 1 for supported=
-,
-> + *     normal mode is supported by default.
-> + * @max_freq_hz: the maximum clock rate supported in Hz unit, 0 means no
-> + *   limitation for transfer speed.
-> + * @max_word_delay_ns: the maximum word delay supported, in nanoseconds.
-> + *   A value of 0 indicates that word delay is unsupported.
-> + *   Each transfer may consist of a sequence of words.
-> + * @max_cs_setup_ns: the maximum delay supported after chipselect is ass=
-erted,
-> + *   in ns unit, 0 means delay is not supported to introduce after chips=
-elect is
-> + *   asserted.
-> + * @max_cs_hold_ns: the maximum delay supported before chipselect is dea=
-sserted,
-> + *   in ns unit, 0 means delay is not supported to introduce before chip=
-select
-> + *   is deasserted.
-> + * @max_cs_incative_ns: maximum delay supported after chipselect is deas=
-serted,
-> + *   in ns unit, 0 means delay is not supported to introduce after chips=
-elect is
-> + *   deasserted.
-> + */
-> +struct virtio_spi_config {
-> +       uint8_t cs_max_number;
-> +       uint8_t cs_change_supported;
-> +#define VIRTIO_SPI_RX_TX_SUPPORT_DUAL          _BITUL(0)
-> +#define VIRTIO_SPI_RX_TX_SUPPORT_QUAD          _BITUL(1)
-> +#define VIRTIO_SPI_RX_TX_SUPPORT_OCTAL         _BITUL(2)
-> +       uint8_t tx_nbits_supported;
-> +       uint8_t rx_nbits_supported;
-> +       uint32_t bits_per_word_mask;
-> +#define VIRTIO_SPI_MF_SUPPORT_CPHA_0           _BITUL(0)
-> +#define VIRTIO_SPI_MF_SUPPORT_CPHA_1           _BITUL(1)
-> +#define VIRTIO_SPI_MF_SUPPORT_CPOL_0           _BITUL(2)
-> +#define VIRTIO_SPI_MF_SUPPORT_CPOL_1           _BITUL(3)
-> +#define VIRTIO_SPI_MF_SUPPORT_CS_HIGH          _BITUL(4)
-> +#define VIRTIO_SPI_MF_SUPPORT_LSB_FIRST                _BITUL(5)
-> +#define VIRTIO_SPI_MF_SUPPORT_LOOPBACK         _BITUL(6)
-> +       uint32_t mode_func_supported;
-> +       uint32_t max_freq_hz;
-> +       uint32_t max_word_delay_ns;
-> +       uint32_t max_cs_setup_ns;
-> +       uint32_t max_cs_hold_ns;
-> +       uint32_t max_cs_inactive_ns;
+> +static const Property vspi_properties[] =3D {
+> +    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
 > +};
 > +
-> +/**
-> + * struct spi_transfer_head - virtio SPI transfer descriptor
-> + * @chip_select_id: chipselect index the SPI transfer used.
-> + * @bits_per_word: the number of bits in each SPI transfer word.
-> + * @cs_change: whether to deselect device after finishing this transfer
-> + *     before starting the next transfer, 0 means cs keep asserted and
-> + *     1 means cs deasserted then asserted again.
-> + * @tx_nbits: bus width for write transfer.
-> + *     0,1: bus width is 1, also known as SINGLE
-> + *     2  : bus width is 2, also known as DUAL
-> + *     4  : bus width is 4, also known as QUAD
-> + *     8  : bus width is 8, also known as OCTAL
-> + *     other values are invalid.
-> + * @rx_nbits: bus width for read transfer.
-> + *     0,1: bus width is 1, also known as SINGLE
-> + *     2  : bus width is 2, also known as DUAL
-> + *     4  : bus width is 4, also known as QUAD
-> + *     8  : bus width is 8, also known as OCTAL
-> + *     other values are invalid.
-> + * @reserved: for future use.
-> + * @mode: SPI transfer mode.
-> + *     bit 0: CPHA, determines the timing (i.e. phase) of the data
-> + *         bits relative to the clock pulses.For CPHA=3D0, the
-> + *         "out" side changes the data on the trailing edge of the
-> + *         preceding clock cycle, while the "in" side captures the data
-> + *         on (or shortly after) the leading edge of the clock cycle.
-> + *         For CPHA=3D1, the "out" side changes the data on the leading
-> + *         edge of the current clock cycle, while the "in" side
-> + *         captures the data on (or shortly after) the trailing edge of
-> + *         the clock cycle.
-> + *     bit 1: CPOL, determines the polarity of the clock. CPOL=3D0 is a
-> + *         clock which idles at 0, and each cycle consists of a pulse
-> + *         of 1. CPOL=3D1 is a clock which idles at 1, and each cycle
-> + *         consists of a pulse of 0.
-> + *     bit 2: CS_HIGH, if 1, chip select active high, else active low.
-> + *     bit 3: LSB_FIRST, determines per-word bits-on-wire, if 0, MSB
-> + *         first, else LSB first.
-> + *     bit 4: LOOP, loopback mode.
-> + * @freq: the transfer speed in Hz.
-> + * @word_delay_ns: delay to be inserted between consecutive words of a
-> + *     transfer, in ns unit.
-> + * @cs_setup_ns: delay to be introduced after CS is asserted, in ns
-> + *     unit.
-> + * @cs_delay_hold_ns: delay to be introduced before CS is deasserted
-> + *     for each transfer, in ns unit.
-> + * @cs_change_delay_inactive_ns: delay to be introduced after CS is
-> + *     deasserted and before next asserted, in ns unit.
-> + */
-> +struct spi_transfer_head {
-> +       uint8_t chip_select_id;
-> +       uint8_t bits_per_word;
-> +       uint8_t cs_change;
-> +       uint8_t tx_nbits;
-> +       uint8_t rx_nbits;
-> +       uint8_t reserved[3];
-> +       uint32_t mode;
-> +       uint32_t freq;
-> +       uint32_t word_delay_ns;
-> +       uint32_t cs_setup_ns;
-> +       uint32_t cs_delay_hold_ns;
-> +       uint32_t cs_change_delay_inactive_ns;
+> +static void vspi_realize(DeviceState *dev, Error **errp)
+> +{
+> +    VHostUserBase *vub =3D VHOST_USER_BASE(dev);
+> +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_GET_CLASS(dev);
+> +
+> +    /* Fixed for SPI */
+> +    vub->virtio_id =3D VIRTIO_ID_SPI;
+> +    vub->num_vqs =3D 1;
+> +    vub->vq_size =3D 4;
+> +    vub->config_size =3D sizeof(struct virtio_spi_config);
+> +
+> +    vubc->parent_realize(dev, errp);
+> +}
+> +
+> +static const VMStateDescription vu_spi_vmstate =3D {
+> +    .name =3D "vhost-user-spi",
+> +    .unmigratable =3D 1,
 > +};
 > +
-> +/**
-> + * struct spi_transfer_result - virtio SPI transfer result
-> + * @result: Transfer result code.
-> + *          VIRTIO_SPI_TRANS_OK: Transfer successful.
-> + *          VIRTIO_SPI_PARAM_ERR: Parameter error.
-> + *          VIRTIO_SPI_TRANS_ERR: Transfer error.
-> + */
-> +struct spi_transfer_result {
-> +#define VIRTIO_SPI_TRANS_OK    0
-> +#define VIRTIO_SPI_PARAM_ERR   1
-> +#define VIRTIO_SPI_TRANS_ERR   2
-> +       uint8_t result;
+> +static void vu_spi_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +    VHostUserBaseClass *vubc =3D VHOST_USER_BASE_CLASS(klass);
+> +
+> +    dc->vmsd =3D &vu_spi_vmstate;
+> +    device_class_set_props(dc, vspi_properties);
+> +    device_class_set_parent_realize(dc, vspi_realize,
+> +                                    &vubc->parent_realize);
+> +    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> +}
+> +
+> +static const TypeInfo vu_spi_info =3D {
+> +    .name =3D TYPE_VHOST_USER_SPI,
+> +    .parent =3D TYPE_VHOST_USER_BASE,
+> +    .instance_size =3D sizeof(VHostUserSPI),
+> +    .class_init =3D vu_spi_class_init,
 > +};
 > +
-> +#endif /* #ifndef _LINUX_VIRTIO_VIRTIO_SPI_H */
+> +static void vu_spi_register_types(void)
+> +{
+> +    type_register_static(&vu_spi_info);
+> +}
+> +
+> +type_init(vu_spi_register_types)
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 153ee0a0cf..242b95e702 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -48,6 +48,7 @@
+>  #include "standard-headers/linux/virtio_iommu.h"
+>  #include "standard-headers/linux/virtio_mem.h"
+>  #include "standard-headers/linux/virtio_vsock.h"
+> +#include "standard-headers/linux/virtio_spi.h"
+>
+>  /*
+>   * Maximum size of virtio device config space
+> @@ -196,7 +197,8 @@ const char *virtio_device_names[] =3D {
+>      [VIRTIO_ID_PARAM_SERV] =3D "virtio-param-serv",
+>      [VIRTIO_ID_AUDIO_POLICY] =3D "virtio-audio-pol",
+>      [VIRTIO_ID_BT] =3D "virtio-bluetooth",
+> -    [VIRTIO_ID_GPIO] =3D "virtio-gpio"
+> +    [VIRTIO_ID_GPIO] =3D "virtio-gpio",
+> +    [VIRTIO_ID_SPI] =3D "virtio-spi"
+>  };
+>
+>  static const char *virtio_id_to_name(uint16_t device_id)
+> diff --git a/include/hw/virtio/vhost-user-spi.h b/include/hw/virtio/vhost=
+-user-spi.h
+> new file mode 100644
+> index 0000000000..a1a65820cd
+> --- /dev/null
+> +++ b/include/hw/virtio/vhost-user-spi.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * Vhost-user spi virtio device
+> + *
+> + * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserv=
+ed.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QEMU_VHOST_USER_SPI_H
+> +#define QEMU_VHOST_USER_SPI_H
+> +
+> +#include "hw/virtio/virtio.h"
+> +#include "hw/virtio/vhost.h"
+> +#include "hw/virtio/vhost-user.h"
+> +#include "hw/virtio/vhost-user-base.h"
+> +
+> +#define TYPE_VHOST_USER_SPI "vhost-user-spi-device"
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(VHostUserSPI, VHOST_USER_SPI)
+> +
+> +struct VHostUserSPI {
+> +    VHostUserBase parent_obj;
+> +};
+> +
+> +#endif /* QEMU_VHOST_USER_SPI_H */
 > --
 > 2.34.1
 >
 >
+
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
