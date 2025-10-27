@@ -4,64 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C02CCD1A5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 05:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDA9CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 06:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDGEL-0007yb-5r; Mon, 27 Oct 2025 01:57:21 -0400
+	id 1vDGII-0000dB-7X; Mon, 27 Oct 2025 02:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDGEI-0007yP-JT
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 01:57:18 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vDGIA-0000cZ-H0; Mon, 27 Oct 2025 02:01:18 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vDGEF-0002kx-7l
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 01:57:18 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59R5v1hS041967
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 27 Oct 2025 14:57:05 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=F7CpjYT/HngMjwg7+wZEmco+AYWuE4/x+3O2up+YASI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1761544625; v=1;
- b=DyBCkPFoEEOc/R3Vt0Rw4AHM8V0MpJ7MMWs71saEvfz7a3ymLbqzUBMgLCenxp2s
- gaPRqS0xNSZgIF+VfVoq1URhw4zELQyDEwh6iW6urE3CH6eIjlGVHxpR3xCmHAYz
- Hd3jNxxkri0k0pUlcYSNrlXyasKj+AtchX5RZfbIIn5vaKI4Isv4tEd5Cc/w2JFR
- kMIEj1+G7HJOTsZLu7c6zIe8R5gqFDWVF/6KV1RYLG4aCJ7CPFgnNSqPR7VqN7Le
- 7VirUKx3tUsMx9S05ZuApgb8Ldn7c12wDeLPfSZhEM1Uip4s5peXRwCZ3HRjDtma
- IjEBhNlnicnuWvbKWpuNUw==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 27 Oct 2025 14:56:53 +0900
-Subject: [PATCH] memory: Make FlatView root references weak
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vDGI8-0003UJ-Ek; Mon, 27 Oct 2025 02:01:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1761544876; x=1793080876;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=5GcIoUEbVLn4r+3U/67dMJ9YrkF59pGKydiph58TFY8=;
+ b=DfTieBzVvornEUmXTDmpxfjirvWiOmxF/lJQ6iPl6ccTvG6M44DHe08t
+ piOErBONLcDWOR9OwVb+b0RB/DI1gsFCo4ngDRgE5MNdrD+dgq/z+vxGB
+ nkbCVzaRF7AZcndUL6qLUoR20oHvBwxTAtuqGgmsORre9DUtMa+gWHv4M
+ l4IuRDIIfRgMgyH6+OUgIAaA3OY4sM0nfH3GPzyPGwIRBDkct9wMt0clU
+ 2oTdP5SVAPb17HgSFywdbuvrEPIZLYS8UWAaAxIwRhFRFU46N+QzfNpZT
+ 6oeNU2qjs5qgLETFMZyuDW9h/2CQ4jCSq+lWqBAwB34+MHyukAli0UfjX w==;
+X-CSE-ConnectionGUID: IADjHUOKQ2OciG76INq6BQ==
+X-CSE-MsgGUID: 7zQhILgGRr+uphxlUdxmkQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="66233881"
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="66233881"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Oct 2025 23:01:13 -0700
+X-CSE-ConnectionGUID: 6VkfQLnMTGir/KE97NJcTQ==
+X-CSE-MsgGUID: c8GKq0NzSsK5HQMCJryC3g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="184570122"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 26 Oct 2025 23:01:11 -0700
+Date: Mon, 27 Oct 2025 14:23:20 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: chenmiao <chenmiao@openatom.club>
+Cc: pbonzini@redhat.com, manos.pitsidianakis@linaro.org,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ qemu-rust@nongnu.org, qemu-devel@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com
+Subject: Re: [RFC 1/5] rust: hw: core: Add the BusState of rust version
+Message-ID: <aP8P2H0qk0yJMPe3@intel.com>
+References: <20251025123853.63139-2-chenmiao@openatom.club>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-root-v1-1-ddf92b9058be@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAKQJ/2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1NDAyMT3aL8/BLdFBNjQxNTg7TkpKQ0JaDSgqLUtMwKsDHRsbW1AL/RBsl
- WAAAA
-X-Change-ID: 20251024-root-d431450fcbbf
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251025123853.63139-2-chenmiao@openatom.club>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,81 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-docs/devel/memory.rst says "memory_region_ref and memory_region_unref
-are never called on aliases", but these functions are called for
-FlatView roots, which can be aliases.
+On Sat, Oct 25, 2025 at 12:38:49PM +0000, chenmiao wrote:
+> Date: Sat, 25 Oct 2025 12:38:49 +0000
+> From: chenmiao <chenmiao@openatom.club>
+> Subject: [RFC 1/5] rust: hw: core: Add the BusState of rust version
+> X-Mailer: git-send-email 2.43.0
+> 
+> A Rust version implementation has been designed for BusState,
+> which will be used for the subsequent I2CBus implementation.
+> 
+> Signed-off-by: chenmiao <chenmiao@openatom.club>
+> ---
+>  rust/hw/core/meson.build |  1 +
+>  rust/hw/core/src/bus.rs  | 51 ++++++++++++++++++++++++++++++++++++++++
+>  rust/hw/core/src/lib.rs  |  3 +++
+>  3 files changed, 55 insertions(+)
+>  create mode 100644 rust/hw/core/src/bus.rs
 
-This causes object overwrite hazard in pci-bridge. Specifically,
-pci_bridge_region_init() expects that there are no references to
-w->alias_io after object_unparent() is called, allowing it to reuse the
-associated storage. However, if a parent bus still holds a reference to
-the existing object as a FlatView's root, the storage is still in use,
-leading to an overwrite. This hazard can be confirmed by adding the
-following code to pci_bridge_region_init():
+After a quick glance, I think this BusState is implemented quite well.
 
-PCIDevice *parent_dev = parent->parent_dev;
-assert(!object_dynamic_cast(OBJECT(parent_dev), TYPE_PCI_BRIDGE) ||
-       PCI_BRIDGE(parent_dev)->as_io.current_map->root != &w->alias_io);
+Only a few minor nits inline:
 
-This assertion fails when running:
-meson test -C build qtest-x86_64/bios-tables-test \
-    '--test-args=-p /x86_64/acpi/piix4/pci-hotplug/no_root_hotplug'
+...
 
-Make the references of FlatView roots "weak" (i.e., remove the
-reference to a root automatically removed when it is finalized) to
-avoid calling memory_region_ref and memory_region_unref and fix the
-hazard with pci-bridge.
+> +pub trait BusStateImpl: DeviceImpl + IsA<BusState> {}
+> +
+> +impl BusClass {
+> +    pub fn class_init<T: BusStateImpl>(self: &mut BusClass) {
+> +        self.parent_class.class_init::<T>();
+> +    }
+> +}
+> +
+> +pub trait BusStateMethods: ObjectDeref
 
-Alternative solutions (like removing the "never called on aliases"
-statement or detailing the exception) were rejected because the alias
-invariant is still relied upon in several parts of the codebase, and
-updating existing code to align with a new condition is non-trivial.
+This can be named BusMethods - just like DeviceMethods did.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- system/memory.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+> +where
+> +    Self::Target: IsA<BusState>,
+> +{
+> +    fn bus_realize(&self) {
 
-diff --git a/system/memory.c b/system/memory.c
-index 8b84661ae36c..08fe5e791224 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -266,7 +266,6 @@ static FlatView *flatview_new(MemoryRegion *mr_root)
-     view = g_new0(FlatView, 1);
-     view->ref = 1;
-     view->root = mr_root;
--    memory_region_ref(mr_root);
-     trace_flatview_new(view, mr_root);
- 
-     return view;
-@@ -301,7 +300,6 @@ static void flatview_destroy(FlatView *view)
-         memory_region_unref(view->ranges[i].mr);
-     }
-     g_free(view->ranges);
--    memory_region_unref(view->root);
-     g_free(view);
- }
- 
-@@ -1796,6 +1794,12 @@ void memory_region_init_iommu(void *_iommu_mr,
- static void memory_region_finalize(Object *obj)
- {
-     MemoryRegion *mr = MEMORY_REGION(obj);
-+    gpointer key;
-+    gpointer value;
-+
-+    if (g_hash_table_steal_extended(flat_views, mr, &key, &value)) {
-+        ((FlatView *)value)->root = NULL;
-+    }
- 
-     /*
-      * Each memory region (that can be freed) must have an owner, and it
+"bus_" prefix is not needed:
 
----
-base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
-change-id: 20251024-root-d431450fcbbf
+dummy_bus.realize() is clear and enough.
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> +        assert!(bql::is_locked());
+
+It's better to add safety comment from beginning (// SAFETY: xxx).
+
+> +        unsafe {
+> +            bindings::qbus_realize(
+> +                self.upcast().as_mut_ptr(),
+> +                addr_of_mut!(util::bindings::error_fatal),
+> +            );
+> +        }
+> +    }
+> +}
+
+Regards,
+Zhao
+
 
 
