@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B23CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA989CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDSjC-0004XL-SG; Mon, 27 Oct 2025 15:18:02 -0400
+	id 1vDSk3-0004rQ-Hp; Mon, 27 Oct 2025 15:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSjA-0004TS-1N
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:18:00 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSju-0004qX-7n
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:18:47 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSj2-0005D7-6b
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:17:59 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-475e01db75aso17202405e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:17:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSjl-0005FF-CF
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:18:44 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47118259fd8so38432395e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761592658; x=1762197458; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761592710; x=1762197510; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OX4zfCLoPvhE7+rhyNGlBqoW+O/OVNQrXavKW0oZ7hg=;
- b=LG+FP2NL6SVh9t4PBhyJK7iOlQerBl+AYUT16ORXOufp34iHReoIoQ0sCH6toaR38V
- 4oLCkH7UzZNytbvrip8+QyFcVsLlwSCBsvdVBqzL7k3Va10kkWASxTEoxk29vFPuwx1d
- IwKKbQXdLE/yLFZ1WX677iFnacrtrINce4W+tujBgWU/gDTnmrOJuNIykijTROxut2Jj
- XcDlEFOph26Tc6U30puZXeehe9YYa4AI7DMWDNR5slzecewofBy8xl1hrIPN9pylg4A0
- VxceaVtc7MbqIY9pgOWEpMzsLox8N9oBaiFPaTA7jrxxd4N2hvdTv8d18+LW3rwi9nED
- ZnAA==
+ bh=9HKp2yg/DZV39UfA2Dur6nn6mJkBI4zDfwSONB9qI6c=;
+ b=vfFhI0nv8nCNMkQkTihlZd2vg+rW15ZjQj3l25Jbe8r9uzXjvTfjYnKaS61kwI6o58
+ ItcA2GPKRfLVZaIZm6IHN4o5n8mT8RbCuca76VjpjnT3NwpLgNI0ArkvuaQz3eDa52Rf
+ lLswkRkqYgpY92f3v0tFLdG7YXYwLiPeniC5jfaReSXj70cXFDl5PNWBQJEJ/huRmgmJ
+ ZeDxQNpPsu7WMTaNKKS9Pk+ShgYQmlLyd4YDN/05TU3mPUv3R9TAUbLZdgirsv/RXuXC
+ e+W6w9LnasOeqfF3pdE9wufsxYoVLwg72cUw94qr0Mfl47ttJnA/LNrWL2qD4pSv5TL1
+ gT8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761592658; x=1762197458;
+ d=1e100.net; s=20230601; t=1761592710; x=1762197510;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OX4zfCLoPvhE7+rhyNGlBqoW+O/OVNQrXavKW0oZ7hg=;
- b=CeVWA955dUu4+0h3XCrDV411igv+K2Oorsw3pJY6NOtT2hr0ilJe2q/lI6R+clmZMj
- CDSOQsLee+82y2K3wOECwrcuOIlX+ydSo/uVCSu05aO1wZ+6lqFi0JHvMO3J2L+Jo0rb
- HTOtjZF727hl4X5rdATFhDnCX0uOvcBekiMxfHK+HPDDD5bGqNOL5nPvMwOHD0eCN7e+
- tfer3GHNDRIwPE3I1Akse11aETrNXlPBvdoD7YFHKLvPOaFTOBI/UjPeK6lyEMc+01iW
- 9MzJmeIE7EuJwV3nEXLvXCcQ2I76y6r6QZNBdJSLxaklhIa3EQGUSodvFgRS9euJW1ab
- wdDQ==
-X-Gm-Message-State: AOJu0Ywe3rXVi5YoUq6hQHiT6IzQAT/vsKOSqtpp/JIdLMRTsfV5hmf7
- RLgXAC65ygV0RTP5zo5BiM8WUnIwabOpx0ZrNuoMleXV69R2Gr7tI3IYzK3czLbmmeK4I3KQ0Bw
- Oq3XXVHs=
-X-Gm-Gg: ASbGncuBXVwd+P15ruPckd/6dCSth8hMezBQHx/6AjPTdLW8mdyKAlsM8A9BHwhRzxa
- A1Q6a7tdZB5uTyUypRpOoCoH1yUQ213EjeyatS2ZUBB4s44UltOCU3GSTKZG+7+58YkDPnPhgnb
- 5l5t3xAL7g7VtLbWsDcmXTjchoBgg8FeQGf16YRC4kQbGwgGebSClXyXx64spcFjJt3/5Y3L3ys
- jVPXX+qkycT+y3eYahn7euFMJRL4aIdTt8M3rLMzJMCsUpwZsJIbuLsMHAROLuJeORnsXhNS4bd
- ialAawv/uYwjrqf4Zt8p6TentIWdE58SVf2JGPbGOrFOwtYI0GGEHWEyvlFh9I2Q0sFGTxFTKoP
- 1t2KAQmQrEP88lPX5lfSqJh2zPgX4/C9p58vFUKtAPbfAOD8+faCbef4p6uuJIyOV5l/x5TOhUr
- M08YiPbVDX+o+JUBR6usuOSzyPtR+GdzwgqXDH5AeOQvAIInpY1Wyr8Q==
-X-Google-Smtp-Source: AGHT+IE6bsd48TMgBcJRd8xWdvttKaErtSwdPfBofrIhRIW/1pPh7lT8y/cKFUSZgcIose3NawzhVQ==
-X-Received: by 2002:a05:600c:3511:b0:476:84e9:b561 with SMTP id
- 5b1f17b1804b1-47717e587d1mr8807005e9.32.1761592657798; 
- Mon, 27 Oct 2025 12:17:37 -0700 (PDT)
+ bh=9HKp2yg/DZV39UfA2Dur6nn6mJkBI4zDfwSONB9qI6c=;
+ b=IoRmRF+kBTyqqIiE+qi1o/GijhiDAnnbt6rsiDjoHJGM5OISHPoAL6CQNe0YwcqFGz
+ KYLeNqJE7GLb6Xa/dOmvpfVHUbJdFL98cJEuCp0dzPg+cBhveXNqrR6/t+VTT6PodVCP
+ pMYrCEtiTLzIt+k24vHrErTH5xeATI93iYRujcKT4+mAkuFR8eUMvfevh6R2HkSHnF1I
+ uitVKuPBbHIfwAZkJSD5StVs2FWpEg8JLpQc1JEYJtq+xjfRNCuRk8MvUTlAHjZIz6Ik
+ ySJHhGNFf4qIos8ybmZAOkkbtMHcCpOpqY5cx492JNMowWkGNpIcd3M+0KUxC5rMsNiy
+ P2+Q==
+X-Gm-Message-State: AOJu0Yz2fXXIBLzOrLMMJYV+UIDA9q+J4bl/QW+yKqCQZTL1qkMHM7rh
+ ifgPYvLEO8gTUEe4UyKRoe9RSete/P7UMXLtKCp2LogumwGnLTHc8GRIxRBGYnpkkhbaOgCYHq8
+ HrDmZfps=
+X-Gm-Gg: ASbGncsoTIYN+Ln/XBbphhKk73RYkc9w8VPyDwzFG9uyV5vtEjCMa0dk/szenwpT4TF
+ wWGsBP1nGaiS8SgMMMdvhb5/0qmAPaerUdTLo847UUEM5ChlD3H9YmUJG6GA+cYnsECU52DsnVJ
+ cIhOZeLDPBAMEI6H9Upf/nG6CKzWW95a3k4WQ6fIHbVKRWYYBMlnlscTNJT6ldp0Qs6UbqFt4CV
+ wcLpuMRrzG2hs41RrHmGEaq6IIj5960kRPRBk9Gvte4W1luwxbvQRPj7VjEMqeKtFuFfogTUB8r
+ ZBIVDC2f+VHsKaO3DwPFzR2QYTnr31MswGkKR5upMzWsvMkufNXSu6+IKSU0BI+sNPHXBXKW5Pj
+ NMHw/oGKJnyc8u0m3KH2J16y+L3WjaILyGjCtuGV2RFn+oxnW47+NXahIhXiWwZb+xmuCrrO7Tx
+ sHaecEUOm+ZnASu+JEhAn/PNMgO0oLHE0wNFEX/pv0hHdFUKXN+gAe6g==
+X-Google-Smtp-Source: AGHT+IEEoJ2H7nrcaNH4jtBvC/x4UMaDq23WYjl/UcaQZMIQltT+04vpL3rTPs5fzshCvG4gOO8bWA==
+X-Received: by 2002:a05:600c:34c4:b0:46e:4246:c90d with SMTP id
+ 5b1f17b1804b1-47717dfa47bmr6980475e9.11.1761592710496; 
+ Mon, 27 Oct 2025 12:18:30 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd4a5cc4sm148220435e9.11.2025.10.27.12.17.36
+ ffacd0b85a97d-429952d9e80sm15814669f8f.28.2025.10.27.12.18.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 12:17:36 -0700 (PDT)
-Message-ID: <64b66fb0-f297-494a-8e79-b38c02c070b1@linaro.org>
-Date: Mon, 27 Oct 2025 20:17:35 +0100
+ Mon, 27 Oct 2025 12:18:29 -0700 (PDT)
+Message-ID: <89384089-94f5-4dea-8746-29e479290210@linaro.org>
+Date: Mon, 27 Oct 2025 20:18:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] hw/xen: Build only once
+Subject: Re: [PATCH] hw/arm/aspeed: Remove ast2700fc self-aliasing
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Paul Durrant <paul@xen.org>,
- Stefano Stabellini <sstabellini@kernel.org>, Anton Johansson <anjo@rev.ng>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-References: <20251022140114.72372-1-philmd@linaro.org>
+Cc: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, qemu-arm@nongnu.org, Troy Lee <leetroy@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>
+References: <20251021110427.93991-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251022140114.72372-1-philmd@linaro.org>
+In-Reply-To: <20251021110427.93991-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,14 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/10/25 16:01, Philippe Mathieu-Daudé wrote:
-> Replace target-specific code to allow building
-> hw/xen/ files once.
+On 21/10/25 13:04, Philippe Mathieu-Daudé wrote:
+> Remove pointless alias to the very same machine:
 > 
-> Philippe Mathieu-Daudé (3):
->    hw/xen: Use BITS_PER_BYTE & MAKE_64BIT_MASK() in req_size_bits()
->    hw/xen: Replace target_ulong by agnostic target_long_bits()
->    hw/xen: Build only once
+>    $ qemu-system-aarch64 -M help | fgrep ast2700fc
+>    ast2700fc            ast2700 full core support (alias of ast2700fc)
+>    ast2700fc            ast2700 full core support
+> 
+> Fixes: a74faf35efc ("hw/arm: Introduce ASPEED AST2700 A1 full core machine")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/arm/aspeed_ast27x0-fc.c | 1 -
+>   1 file changed, 1 deletion(-)
 
-ping?
+Merged as commit d7bd42a740d0e8887540d7b450d0bdb2d6ba31ea, thanks!
 
