@@ -4,80 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC25CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177B7CCF9EC
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDKQM-0002dR-OD; Mon, 27 Oct 2025 06:26:02 -0400
+	id 1vDKcO-0005XJ-KN; Mon, 27 Oct 2025 06:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vDKQJ-0002cr-Oo
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:26:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vDKQG-0006jz-Sj
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:25:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761560754;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=60r4CtRHLc0zNgXQS9j9tZ8dFh+anHNmoO+UEQQrbD0=;
- b=WGo6RiF7K8bpD5xWTi+Blek/ee8AI8fW3QHTyK7/WF2+wiEMJ+JfsJbS4UmEoXWZMxKgXb
- rlR3zEOocL158MLce2gFko9umD4NXASCv8BBj0qBQTgXiNlzoZ+h3ud4MveSohVWqz57fh
- pweWYwpkajtHsHz8joimMucU9ZZY1B0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-KSdcQgCLOwyxNaSfSyzp1A-1; Mon,
- 27 Oct 2025 06:25:52 -0400
-X-MC-Unique: KSdcQgCLOwyxNaSfSyzp1A-1
-X-Mimecast-MFC-AGG-ID: KSdcQgCLOwyxNaSfSyzp1A_1761560751
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8737E19540E1; Mon, 27 Oct 2025 10:25:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.35])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 178E11955F1B; Mon, 27 Oct 2025 10:25:48 +0000 (UTC)
-Date: Mon, 27 Oct 2025 10:25:45 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration: Don't free the reason after calling
- migrate_add_blocker
-Message-ID: <aP9IqYzAea1DUjqp@redhat.com>
-References: <20251024092821.82220-1-guobin@linux.alibaba.com>
- <87o6pw1rfn.fsf@pond.sub.org> <aPtim8ZACUWyje2o@redhat.com>
- <874irozabw.fsf@pond.sub.org> <87v7k4xuhk.fsf@pond.sub.org>
- <aPumkKBx4PoGSwNv@x1.local> <aPup9BzTf-uk8cUf@redhat.com>
- <87a51gdv4m.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDKcG-0005Us-4F
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:38:24 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDKcB-0000js-7b
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:38:19 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-475dae5d473so22126865e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 03:38:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761561490; x=1762166290; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jWmlF7+vyrZERgeszuiIIOKjLCZenDx0ckDEkY9Y/kw=;
+ b=Gy6krtuuOrnNkT3JDjDl/PknjENGMy9tGmqPs5AuOzV8ZzRQ9qfRgcI7jqhQs2Bs2Y
+ sLQGJiI9yslDFiGM1sAradP3cGeOOpIn6BsVCowhiyc9aCChjeRORx2p2/FmBWwPcvfL
+ OVyIviMoDj+k2xtf7cBo3PgJZ8NkVb/jlviclke5PUtWy3p6VENyl9mp5Z/UrCmn+AC6
+ jMznrMhtypiGeb7Mmmkc4z1+f2WucYj3TSQco5940jRtwTyJ5cMpM3yP/WLgplxGVTSv
+ iLCs361gwd+X+FPnNXWyM0IzNaJVYfqDjixo9I67scVgqPgB7l38crwEXK9HErqTKhgA
+ 2P9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761561490; x=1762166290;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jWmlF7+vyrZERgeszuiIIOKjLCZenDx0ckDEkY9Y/kw=;
+ b=EXllCaD5iYOQrxvM2pvY9+dJ9Q430CwjFShVJEPlVb8Yzggjg5lsx2T+TQ1RRspUQv
+ tedtOZINgHkd+vvk6BhMSoXDnE6KAqrlT6rBbGf8PMOakpuJHl21uLOHZ1w45bC0WIbc
+ PMpteBYGXbyZyo0jXi9VJwUuEG8URTLniIGrId08OPJDbNs+hbIi5QR/HTQa2mtrGdwC
+ uXX6FVVbT+Lu3RDwf8+zTbpFghz+axYArtYWpTISMXpHrlV+ZD0uWEVUOkmTOS9V0VvP
+ d+qKRW5px9PJxN4CscS6FZ3NjDaNyiKijm5QYn22vz+6DyIeQl4N8v6JmGmDYzP9bxUk
+ UEXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVO0qrCHxjzwTGKvWycq68UIIw8KJJeIUKaP26fCAwtfJqiZkfxrnoCt1j3W6dKpTm3fUVoXIy/kCdT@nongnu.org
+X-Gm-Message-State: AOJu0YwhJ7ypNJlQOrlsHHIyAww78fvGet+2fQgi/VYzutjrvDC/4rrr
+ +AdCxO+j+A76Ihahfo93NwTtvNgTsWreC4GuSAFsVBvEeiskBlMtKtVnCMufa8Y0+v5WFtQfH8h
+ l1k7hPDU=
+X-Gm-Gg: ASbGncsHEC9c3eFRgsrwa4WBz8ctfA+qDaNz6AM/kkUr/2jWh3ECPajbiEPW82ZAsqh
+ QMh28jhjzSinwOXsAZ0DFoPqWp0E+x+6aFTXqgEocTKTZ52wqwmno8PiaXQEUqK4JJIGZJE6Xw1
+ SlyxkJ99lu0Sw2tzQjSBdkAl8Uke9s2DBDFKG/rdTmc2Zhd4b1s6dAnOhWNoRYXWSiV7A7NlvNP
+ mfQmpv6/FGlqOOBsJAOA/LY1bjTgsgq+bvQhyJGagu/9efmw1YnXeU7GHXqJgpnmnYUsB1flrhq
+ EaATVCU48iNbzT51Q3W4VGuGh5wJ4Z9jP4VWkXAyjhvtXkIhXnD77UoBNctUHyMtW6jrY6DqRRV
+ 31LAIARX1Chg96JYBtzrMXZRAUqOcHgRZp/kFVs+mrQmAESPInmCuvaotjEFWfN7xCKzD4KLAAd
+ WnIGYaj/Bz3K/VOSnjBzSEOMTNERTgHMXIkqVcn7AMVCiMVVaR
+X-Google-Smtp-Source: AGHT+IEHuzf3RTrfkbmkP6KwZTSn5MqM5Hl3yyEoisOPc+Lo1T6zA6UZNZHPhYM/goVSxgz1FWoHKA==
+X-Received: by 2002:a05:600c:354a:b0:46e:59bd:f7d3 with SMTP id
+ 5b1f17b1804b1-47117903f24mr244627195e9.20.1761561490419; 
+ Mon, 27 Oct 2025 03:38:10 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd035dc2sm131756505e9.5.2025.10.27.03.38.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Oct 2025 03:38:09 -0700 (PDT)
+Message-ID: <d4c918c9-820b-4a9a-bb9a-72bdc0df617a@linaro.org>
+Date: Mon, 27 Oct 2025 11:38:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] intel_iommu: Remove an unused state field
+Content-Language: en-US
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>
+References: <20251027075232.95262-1-clement.mathieu--drif@eviden.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251027075232.95262-1-clement.mathieu--drif@eviden.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a51gdv4m.fsf@suse.de>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,125 +104,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 24, 2025 at 03:15:05PM -0300, Fabiano Rosas wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 27/10/25 08:52, CLEMENT MATHIEU--DRIF wrote:
+> dma_translation has been moved to x86-iommu and is no longer referenced.
 > 
-> > On Fri, Oct 24, 2025 at 12:17:20PM -0400, Peter Xu wrote:
-> >> On Fri, Oct 24, 2025 at 04:08:39PM +0200, Markus Armbruster wrote:
-> >> > Markus Armbruster <armbru@redhat.com> writes:
-> >> > 
-> >> > > Daniel P. Berrangé <berrange@redhat.com> writes:
-> >> > 
-> >> > [...]
-> >> > 
-> >> > >> But wow, the migrate_add_blocker API design is unpleasant with its
-> >> > >> pair of "Error **" parameters - it is practically designed to
-> >> > >> maximise confusion & surprise.
-> >> > >
-> >> > > It's quite a sight, isn't it?
-> >> > >
-> >> > > I'll give it a quick Friday afternoon try.
-> >> > 
-> >> > Alright, my confusion has been maximised.  Giving up on this.
-> >> 
-> >> Besides the use of two Error** that might be confusing, what is more
-> >> confusing (if not wrong..): migrate_add_blocker() will take ownership of
-> >> the 1st Error**, no matter whether the helper succeeded or not. However, it
-> >> only resets the first Error** if failed.
-> >> 
-> >> I think it means if migrate_add_blocker() succeeded, the caller will have a
-> >> non-NULL pointer, even if it has lost the ownership of that pointer.
-> >> 
-> >> I'm guessing it never caused issue only because we don't usually
-> >> error_free() the migration blocker anywhere.. but I think maybe we should
-> >> at least do an error_copy() in add_blockers()..
-> >
-> > IMHO we should not even be using an Error object for the the blocker.
-> > AFAICT, internally all we care about is the formatted string. The main
-> > reason for using an Error object appears to be to have a convenient
-> > pointer to use as an identifier to later pass to del_blocker.
-> >
-> > I'd be inclined to just have passed in a fixed string, and return an
-> > integer identifier for the blocker. eg
-> >
-> >     int64 migrate_add_blocker(const char *reason, Error **errp);
-> >
-> >     void migrate_del_blocker(int64 blockerid);
-> >
-> > The migrate_add_blocker method would strdup(reason) to keep its own
-> > copy.
-> >
-> > The usage would thus be clear & simple:
-> >
-> >     int64 blockerid = migrate_add_blocker("cannot migrate vfio", errp);
-> >     if (!blockerid) {
-> >          return;
-> >     }
-> >
-> >     ... some time later...
-> >
-> >     migrate_del_blocker(blockerid);
-> >
-> >
-> > In some cases we needed dynamically formatted strings, which could have
-> > been achieved thus:
-> >
-> >     g_autofree char *msg = g_strdup_printf("cannot migrate vfio %d", blah);
-> >     int64 blockerid = migrate_add_blocker(msg, errp);
-> >     ...the rest as above...
-> >
-> > yes, this costs an extra strdup(), but that is an acceptable & negligible
-> > overhead in the context in which we're doing this.
-> >
-> 
-> Hmm, I must disagree. This is more complex than what we have
-> today. Calling error_setg(err, "msg") is pretty standard, already gives
-> us formatting and keeps all (potentially) user-facing messages uniform.
+> Fixes: b6b49c2cd6c2 (intel-iommu: Move dma_translation to x86-iommu)
+> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> ---
+>   include/hw/i386/intel_iommu.h | 1 -
+>   1 file changed, 1 deletion(-)
 
-IMHO this usage in migration is not really about error reporting
-though, and the lifecycle ownership of the Error objects in this
-migration usage is very diferent from the typical lifecycle
-ownership of Error objects used in reporting errors, which I think
-leads to a surprising / unusual API.
-
-> Asking for people to deal with strings and storing an int64 in their
-> code is not improving the situation. Besides, the Error is already used
-> by the block layer when blocking operations, for instance. If anything
-> we should be integrating the two usages instead of inventing yet another
-> for the migration code. See:
-
-Yes, having a common API for these two similar use cases would be
-a useful thing. I'm just not convinced we should be (mis|re)using
-the Error object for either of these two situations.
-
-> 
-> replication.c:
->   error_setg(&s->blocker,
->              "Block device is in use by internal backup job");
->   ...
->   bdrv_op_block_all(top_bs, s->blocker);
-> 
-> block.c:
->   void bdrv_op_block(BlockDriverState *bs, BlockOpType op, Error *reason)
->   {
->       BdrvOpBlocker *blocker;
->       assert((int) op >= 0 && op < BLOCK_OP_TYPE_MAX);
-> 
->       blocker = g_new0(BdrvOpBlocker, 1);
->       blocker->reason = reason;
->       QLIST_INSERT_HEAD(&bs->op_blockers[op], blocker, list);
-> }
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
