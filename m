@@ -4,101 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFCDBCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BE9CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDQ7a-0002p1-Il; Mon, 27 Oct 2025 12:31:02 -0400
+	id 1vDQCG-0004J9-FE; Mon, 27 Oct 2025 12:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDQ7V-0002oA-HH
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:30:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vDQCC-0004Io-56; Mon, 27 Oct 2025 12:35:48 -0400
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1vDQ7O-0006Xv-Sj
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:30:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761582639;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=lkrnlnzE6PCXaK0DoFa9OQ3jM9C1/Pjy4gO9NDcDN4Q=;
- b=RKTaG02Rr4yhMLBrETMI2LWHfr01A/Ni5RL8ZzWuSXqhZ5ZCCHXFhgBZ2MxTeLekHNB2WL
- FtHg3nvIMbKfmRR4MKJL9azjBXq7gjW4shEZXgra9AhFFWA76O3fOlZbuRp/ycYty4w5qd
- g7GepwhVLVO/nnhMQkcrEY/MnmS8d2A=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-K50qaD7JM12fEn3rl5kgSA-1; Mon, 27 Oct 2025 12:30:33 -0400
-X-MC-Unique: K50qaD7JM12fEn3rl5kgSA-1
-X-Mimecast-MFC-AGG-ID: K50qaD7JM12fEn3rl5kgSA_1761582632
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b6ceeea4addso3786979a12.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:30:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761582632; x=1762187432;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lkrnlnzE6PCXaK0DoFa9OQ3jM9C1/Pjy4gO9NDcDN4Q=;
- b=foCyWszhCt0sgqhq4gxKVplkX5C3iV2mjQnqbruaSPFEOCiEa57MY12oHMn0F0Bjb4
- J8HIMVV8hyHmzaM4uZEvIYiMzO3DIAk81StUIingeHRufsKriB6zebg5WPP0yrUdTVuq
- 54jaYF4IWTvBrssyBGEadE6S1ne+xVCeMHujTdt/D2ogEzVorl/mbHFLWsGItmslvjvf
- H7XzJX8w0SyBohL5ID8CrXq/k7zjdIM69uii9TyHC3Sux4lS9fmpwby70Nvo99ECvtrU
- X/wz/1arIYYpBlQgS99wJ6SZgv0VM7BsTF11ARnWy74XrC2837aYsLCaySS7LztQlJRl
- 4UyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIfhi0AKydr0eHaa5u5cbn0nKMnaK2KOAuFNdfoMzK1uoSPdzubkmdd8Z0yLwK8pBg6Oc2iczzIAl1@nongnu.org
-X-Gm-Message-State: AOJu0YxfMKVLElaOx6QmcVA9YtDAONRBi/aHPVbtmEKEUh0KHEqAKP8g
- wDgh66m0voKNuDCn6Je+frHg7gqk2wndMik9rtrY6qwEylhleeTIgaCOHG4XC2I3LC1iSMPoPEz
- l5BW6dFvYieFi3jf0jibb2qj+f2uPDlsCxZClY9ZXqVgzYKkuMC86aA08
-X-Gm-Gg: ASbGncsIpse4k+0UQJMX/SmVfmHZk5L60dnx6UXqHOUUBhHZi+OCPhXlbdLRVJkLHc8
- yApguH030rx3gCoR8G3PjXsYwPsHBqpty+Lz3GNzbZ6VWMNsRGkekDkp9qtRLJE6kgScj1WQ2I8
- CHLLbJwS1+NlwHsXjfH7YACcN+QOT76mObWO45QsyYEd+H1IqHwg4I9ssZ8qz2mFU70WYSr6O4i
- AtIEvEsAQf2mIHmFQPOllLNDCpqjPHBA8Q85dZRVMfrNAiAQYqTI1MXlEFALSRe91eEE8eLYAEg
- gwboO2QtRzR6ZH0OwQm5cRIUiLN2zRYL20oNHr+aIkqLQLrur0DwOjZK1KrwLY3NXEiXBGmG90m
- Y+f5qAC3iHow=
-X-Received: by 2002:a17:903:32cc:b0:290:c317:a34e with SMTP id
- d9443c01a7336-294cb3dba25mr4957335ad.25.1761582632001; 
- Mon, 27 Oct 2025 09:30:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCfLWV+iKL70FzHZlbCu3QAzVtYlNClVfbCrkPe8M2QqihG+rESNCMGHAVEY3JO5Pdz+iatw==
-X-Received: by 2002:a17:903:32cc:b0:290:c317:a34e with SMTP id
- d9443c01a7336-294cb3dba25mr4956795ad.25.1761582631211; 
- Mon, 27 Oct 2025 09:30:31 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.108.56])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29498d271ccsm86277345ad.57.2025.10.27.09.30.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 09:30:30 -0700 (PDT)
-Date: Mon, 27 Oct 2025 22:00:23 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Markus Armbruster <armbru@redhat.com>, peterx@redhat.com,
- stefanb@linux.vnet.ibm.com, farosas@suse.de, qemu-devel@nongnu.org,
- berrange@redhat.com
-Subject: Re: [PATCH v3 4/4] migration: vmsd errp handlers: return bool
-Message-ID: <aP-eHzbAtvNp3N3d@armenon-kvm.bengluru.csb>
-References: <20251025202649.1122420-1-vsementsov@yandex-team.ru>
- <20251025202649.1122420-5-vsementsov@yandex-team.ru>
- <87o6psocib.fsf@pond.sub.org>
- <9f5ba3d7-3103-4d2a-b50f-f8883a18c812@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vDQC4-000712-Bj; Mon, 27 Oct 2025 12:35:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NyiPvg9M+fpcDUG0HNN3z+E2m0qs38uoNNb5rWc1Y32sYzPeZY+zJZ5DlDHtFU9erGfu+LTFJUPdGpBdY+kglyKZ7JDGf15ldIfmi0GcJJQOcMYl69cqxTtkT/Cj5XqAf6EbpVjliL4VOUGFHyduKZf8HAxXg4pA3miN+FfR0sEVaCEUG1g1q2wxMKNLp2ZuSM1myAF2O7iSWtZLZy2hwrbUNnq8Xhsyl/XIjAa5hKZKDQC8yGYT7rbp0WynyesSNtbPIz7ErZNISXv6azF6O2aUUSy31wR/zQjdpJWElUsWaORpDRJxEdynsvvJS72Kw6cOm2CFOBzZAYP9RZ7Iew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GSLulAlhd2G5aABWQE/rp5H/8PV+/g4V+Xypdi+/M+0=;
+ b=ERKfBcMM/Y7XiFVhhIxZq/CWbWrO8h0dECOeohQjlnXj8yXUP6YzdnCOvnpj0GxIt6y1hvlFr4LJt+imWSdhQmNQ98CoJsLZPL3YrsowQrEntpADu7D56nby697ew3dhi8qufs7U2xE2beAh6WGvmz1KGDrifz5TWWWPS3CEcdaf7nlIUn35xOedqfjv0Au34RDdX9V8j7bzt5QD/efCpSmGRiGRRpIeMtk6LY1GbshtOh4w9M2olV3U0yHY4lHjp70eYax86NDUeHm8fnKI/XMsp/8Neh4T8FfH5FTSD0GWJukJr20F3lbyF/Xe7wx+c0xdETysvfWg56rshL3rvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GSLulAlhd2G5aABWQE/rp5H/8PV+/g4V+Xypdi+/M+0=;
+ b=B7YHXRNRWPxVxBcCqj3gPuP+5cKpt6kO3wozkFg1ql9uZonSbGH0iEdwhxbz8myX3LtslAEj19QUvDiYE/4NHN+khctQ9Ybhje/KGLkGiX3vtEReAx5/pzAFBOSWBWg274YIQBBK2elR2XIpHuVr/mB4Ray0z56X1AYerwl0MuH3bF3RqEscnRNFae1dqDPmsM1NbNWslM9ikd8PAA2btwJDZBbXi77DhVYI4JIoY7jPa9ntBWHv64pBSzhjCyzgqSpkSDFeq3NFwOmHl53P+p/FJ/qnrC0605Jh4ctVZe8LLaI9vIWteBqUS9AvoQ6LqiT1AFxELu2ndjfZa4dLTA==
+Received: from MN0P220CA0025.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::33)
+ by DS0PR12MB8503.namprd12.prod.outlook.com (2603:10b6:8:15a::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Mon, 27 Oct
+ 2025 16:35:19 +0000
+Received: from BL6PEPF00020E63.namprd04.prod.outlook.com
+ (2603:10b6:208:52e:cafe::13) by MN0P220CA0025.outlook.office365.com
+ (2603:10b6:208:52e::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.19 via Frontend Transport; Mon,
+ 27 Oct 2025 16:35:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL6PEPF00020E63.mail.protection.outlook.com (10.167.249.24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9275.10 via Frontend Transport; Mon, 27 Oct 2025 16:35:18 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 27 Oct
+ 2025 09:35:03 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 27 Oct
+ 2025 09:35:02 -0700
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 27 Oct 2025 09:35:01 -0700
+Date: Mon, 27 Oct 2025 09:34:59 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>,
+ <shameerkolothum@gmail.com>
+Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
+ reset
+Message-ID: <aP+fMyVXzA7/0mC2@Asurada-Nvidia>
+References: <20250929133643.38961-1-skolothumtho@nvidia.com>
+ <20250929133643.38961-20-skolothumtho@nvidia.com>
+ <aPF9l5GwctGN0tqT@Asurada-Nvidia>
+ <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <9f5ba3d7-3103-4d2a-b50f-f8883a18c812@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00020E63:EE_|DS0PR12MB8503:EE_
+X-MS-Office365-Filtering-Correlation-Id: f40850b4-55b9-4af3-7850-08de1576d109
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|376014|7416014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3Iq3v87QVI9Zzju3nxOVz+Yd00K0hHHi+0/FRUqnHxwiUu4Scky4Pc3xKloV?=
+ =?us-ascii?Q?9sONEhSeCN5G9V73hN2Y/KVUJH6D3vZIjZToN4810O03X+8Kuqd//39uE3t5?=
+ =?us-ascii?Q?tR/xSlyMfNQLJCobrxprKdqA+u8aZ/T/u+7bHd2RzuZlL1U9hYSiYjlitJyH?=
+ =?us-ascii?Q?zaY6A1OAh2wPnPAvg4Bmy6fyuupGRCgQlSlvrwDjT53SSVHCxA8tXGHzNlNT?=
+ =?us-ascii?Q?4PEddriho+367ypAiZdezOUMNZ7Mk7E0r47Ae4AmV6vP+P19e3lYMnTLHgHx?=
+ =?us-ascii?Q?ULlnNV6mEzKeQWv9Z5/rHd59MxyvgEXKd3Fui077Exgeu+s+efiKt+3skXog?=
+ =?us-ascii?Q?A+Ap3DTYTyEMFUHuGQGllMrqyyGaHZXMXz9yLjglEBfiDLmM5AiZyxffA2QW?=
+ =?us-ascii?Q?dqG16GwNi0zIgFbqiEmGw1zeuhevjECcFqsVd8y2LtvAAerDl0SHT9m9JH6z?=
+ =?us-ascii?Q?BUZJlsnQmdQtq1vTHhfHNFDOVe/kyVehwvJMBUZZfFNbQ5tMshfhFkMsHf1Y?=
+ =?us-ascii?Q?o/nxGn0YZcjXG7zwYlOTd2l6kf6SdsVuKIn0zE2gZtxafWgTykvwgr6+ys7h?=
+ =?us-ascii?Q?xxy0vwJpRYwZ1Z0M3A/q5mxhM9mmcfwPo9aBHsB1nwgHyjkQPM2BPSu9SpmB?=
+ =?us-ascii?Q?3duiVhf4JTVQH85R7ahcn2ZD2NsBet3IhHArmaTMLfvDuNOlAFQ0O5Tfv+Dm?=
+ =?us-ascii?Q?02Z849ugmRG5ZhtqNUlMaDr1PgZopuE0XP4L004reUUL9sepLSb79OZ4C+xf?=
+ =?us-ascii?Q?a/3lCiEpAq7n5AEhw0g394nFVVMA/uwCi+2+098dk9YmgPXHODKf4LbEfBDV?=
+ =?us-ascii?Q?yB+QeywHHovM28dEG+jKINK5OqDk3ObvPwFL0uYoneALfC9DLWqOh8mNwIbs?=
+ =?us-ascii?Q?ALqnzJ7gXIeHt+DBDkzh0epJ04eIeeFq0ZWHfRqO6ifTUeP53vYsMbJLanal?=
+ =?us-ascii?Q?6pAI/eYFc/HHYHGTa8OS0jh6QOtSdGZyIcJX/gDgNi/2eUiwhIcwDGhRGynz?=
+ =?us-ascii?Q?JNbO/ag8N+JvC0DfPbEI77qSASU8r1uxY/9dt0LErDint4a3smw46dVmfgdu?=
+ =?us-ascii?Q?mKhuUqqw5SX0UwtBz/GAqUpEL6Ycd8UfJZyr6gn6w8AFDIRXcUkHU8woH3Bo?=
+ =?us-ascii?Q?XHlX3NI/dGluJTi+RQCbSL1ZjgQ+35pza6tR9DI6byPGXJrWXqv+6aeMN5Z7?=
+ =?us-ascii?Q?FYISIB9KFSlKijLUAGW9MTxf4XYYKDIiTevev1eF14Fw7rbeKSAp83auidKV?=
+ =?us-ascii?Q?aCB/e/wrnbXcfzWN1ZkYOOUdd9/LrXLfjMguUIFfLR+ANEihnH4cK7Q1Q1iG?=
+ =?us-ascii?Q?W1ANutnfhhH71yvOXBizSYEX/KMmS/GxaZa0LqzJ6i90mdIzcEyanPRPW+++?=
+ =?us-ascii?Q?6uqsPqrbHIErqQuF3AAFEJtXlME9ObqNTJBLu8PrwVuOEM6XTTxJkH8UIGnK?=
+ =?us-ascii?Q?no5LfczDQyyF9HpcaUFAPta3hSBsc08u8ozBJpjrkXaweAzdr67RQEXzWlqf?=
+ =?us-ascii?Q?yVANgP8XpBfdTW/ypgfc3HHhPE0Jx5yz9i1lmJngm2pa7bN/HK/rGgYO2/XG?=
+ =?us-ascii?Q?mFb6Lx3Li9QlFN3U/eM=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(376014)(7416014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2025 16:35:18.8817 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f40850b4-55b9-4af3-7850-08de1576d109
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E63.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8503
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+ envelope-from=nicolinc@nvidia.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,182 +160,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vladimir,
+On Mon, Oct 27, 2025 at 03:26:15PM +0100, Eric Auger wrote:
+> On 10/17/25 1:19 AM, Nicolin Chen wrote:
+> > On Mon, Sep 29, 2025 at 02:36:35PM +0100, Shameer Kolothum wrote:
+> >> When the guest reboots with devices in nested mode (S1 + S2), any QEMU/UEFI
+> >> access to those devices can fail because S1 translation is not valid during
+> >> the reboot. For example, a passthrough NVMe device may hold GRUB boot info
+> >> that UEFI tries to read during the reboot.
+> >>
+> >> Set S1 to bypass mode during reset to avoid such failures.
+> > GBPA is set to bypass on reset so I think it's fine. Yet, maybe the
+> > code should check that.
+ 
+> shouldn't we check its actual value before setting bypass?
 
-On Mon, Oct 27, 2025 at 05:58:05PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 27.10.25 13:38, Markus Armbruster wrote:
-> > Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> > 
-> > > Switch the new API to simple bool-returning interface, as return value
-> > > is not used otherwise than check is function failed or not. No logic
-> > > depend on concrete errno values.
-> > > 
-> > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > ---
-> > >   backends/tpm/tpm_emulator.c   | 10 ++++------
-> > >   docs/devel/migration/main.rst |  6 +++---
-> > >   include/migration/vmstate.h   |  6 +++---
-> > >   migration/vmstate.c           | 14 ++++++--------
-> > >   4 files changed, 16 insertions(+), 20 deletions(-)
-> > > 
-> > > diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-> > > index aa69eb606f..6cc9aa199c 100644
-> > > --- a/backends/tpm/tpm_emulator.c
-> > > +++ b/backends/tpm/tpm_emulator.c
-> > > @@ -947,25 +947,23 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
-> > >   /*
-> > >    * Load the TPM state blobs into the TPM.
-> > > - *
-> > > - * Returns negative errno codes in case of error.
-> > >    */
-> > > -static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
-> > > +static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
-> > >   {
-> > >       TPMBackend *tb = opaque;
-> > >       int ret;
-> > >       ret = tpm_emulator_set_state_blobs(tb, errp);
-> > 
-> > Note for later: this returns 0 or -EIO.
-> > 
-> > >       if (ret < 0) {
-> > > -        return ret;
-> > > +        return false;
-> > >       }
-> > >       if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
-> > >           error_setg(errp, "Failed to resume tpm");
-> > > -        return -EIO;
-> > > +        return false;
-> > >       }
-> > > -    return 0;
-> > > +    return true;
-> > >   }
-> > >   static const VMStateDescription vmstate_tpm_emulator = {
-> > > diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-> > > index 1afe7b9689..234d280249 100644
-> > > --- a/docs/devel/migration/main.rst
-> > > +++ b/docs/devel/migration/main.rst
-> > > @@ -446,15 +446,15 @@ The functions to do that are inside a vmstate definition, and are called:
-> > >   Following are the errp variants of these functions.
-> > > -- ``int (*pre_load_errp)(void *opaque, Error **errp);``
-> > > +- ``bool (*pre_load_errp)(void *opaque, Error **errp);``
-> > >     This function is called before we load the state of one device.
-> > > -- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
-> > > +- ``bool (*post_load_errp)(void *opaque, int version_id, Error **errp);``
-> > >     This function is called after we load the state of one device.
-> > > -- ``int (*pre_save_errp)(void *opaque, Error **errp);``
-> > > +- ``bool (*pre_save_errp)(void *opaque, Error **errp);``
-> > >     This function is called before we save the state of one device.
-> > > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> > > index 63ccaee07a..dbe330dd5f 100644
-> > > --- a/include/migration/vmstate.h
-> > > +++ b/include/migration/vmstate.h
-> > > @@ -218,11 +218,11 @@ struct VMStateDescription {
-> > >       int minimum_version_id;
-> > >       MigrationPriority priority;
-> > >       int (*pre_load)(void *opaque);
-> > > -    int (*pre_load_errp)(void *opaque, Error **errp);
-> > > +    bool (*pre_load_errp)(void *opaque, Error **errp);
-> > >       int (*post_load)(void *opaque, int version_id);
-> > > -    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
-> > > +    bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
-> > >       int (*pre_save)(void *opaque);
-> > > -    int (*pre_save_errp)(void *opaque, Error **errp);
-> > > +    bool (*pre_save_errp)(void *opaque, Error **errp);
-> > >       int (*post_save)(void *opaque);
-> > >       bool (*needed)(void *opaque);
-> > >       bool (*dev_unplug_pending)(void *opaque);
-> > > diff --git a/migration/vmstate.c b/migration/vmstate.c
-> > > index 677e56c84a..adaaf91b3f 100644
-> > > --- a/migration/vmstate.c
-> > > +++ b/migration/vmstate.c
-> > > @@ -154,13 +154,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-> > >           return -EINVAL;
-> > >       }
-> > >       if (vmsd->pre_load_errp) {
-> > > -        ret = vmsd->pre_load_errp(opaque, errp);
-> > > -        if (ret < 0) {
-> > > +        if (!vmsd->pre_load_errp(opaque, errp)) {
-> > >               error_prepend(errp, "pre load hook failed for: '%s', "
-> > >                             "version_id: %d, minimum version_id: %d: ",
-> > >                             vmsd->name, vmsd->version_id,
-> > >                             vmsd->minimum_version_id);
-> > > -            return ret;
-> > > +            return -EINVAL;
-> > >           }
-> > >       } else if (vmsd->pre_load) {
-> > >           ret = vmsd->pre_load(opaque);
-> > > @@ -256,11 +255,11 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-> > >           return ret;
-> > >       }
-> > >       if (vmsd->post_load_errp) {
-> > > -        ret = vmsd->post_load_errp(opaque, version_id, errp);
-> > > -        if (ret < 0) {
-> > > +        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
-> > >               error_prepend(errp, "post load hook failed for: %s, version_id: "
-> > >                             "%d, minimum_version: %d: ", vmsd->name,
-> > >                             vmsd->version_id, vmsd->minimum_version_id);
-> > > +            ret = -EINVAL;
-> > 
-> > With ->post_load_errp is tpm_emulator_post_load(), the value returned on
-> > error changes from -EIO to -EINVAL.
-> > 
-> > Do callers of vmstate_load_state() care?
-> 
-> Fast check.. let see somewhere, OK: get_qlist() in vmstate-types.c.. That's a .get
-> in VMStateInfo structure.
-> 
-> Oh, and we do print this ret the same way:
-> 
-> 
-> int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->                        void *opaque, int version_id, Error **errp)
-> 
->  ...
-> 
->                     ret = inner_field->info->get(f, curr_elem, size,
->                                                  inner_field);
->                     if (ret < 0) {
->                         error_setg(errp,
->                                    "Failed to load element of type %s for %s: "
->                                    "%d", inner_field->info->name,
->                                    inner_field->name, ret);
->                     }
-> 
-> 
-> Not saying about a lot  of vmstate_load_state() other calls in the code, and callers do
-> passthrough the error to their callers, and so on. It's a huge work to analyze all of
-> them.
-> 
-> 
-> Hmm now I see that tpm_emulator_post_load() returns only -EIO code on all error paths.
-> 
-> Would it be correct just use -EIO here in my patch instead of -EINVAL? It will save
-> current behavior as is.
+Yes, you are right. GBPA can be changed by the guest. So:
 
-I admit I too was not sure whether to use int or bool return type.
-A bit of the discussion is here: https://lore.kernel.org/qemu-devel/87v7mbsjb0.fsf@pond.sub.org/
-I found few places where a genuine error code was returned from the function
-For example:
-vmbus_post_load() calls vmbus_init() that returns -ENOMEM on failure.
+"maybe" -> "should"
 
-The intention was to eventually phase out the old implementation and replace them
-with the new ones (errp)
-We wanted the new errp variants to be structurally as close to the old
-ones as possible so that we can perform a bulk change later.
+> By the way the spec says is ABORT is set to 0x0:
+> "Do not abort incoming transactions. Transactions bypass the SMMU with
+> attributes given by other fields in this register."
+> 
+> Wondering about those attributes and they can apply on the host?
 
-> 
-> 
-> 
-> -- 
-> Best regards,
-> Vladimir
-> 
+Not at this moment. vSTE only carries:
+ * @ste: The first two double words of the user space Stream Table Entry for
+ *       the translation. Must be little-endian.
+ *       Allowed fields: (Refer to "5.2 Stream Table Entry" in SMMUv3 HW Spec)
+ *       - word-0: V, Cfg, S1Fmt, S1ContextPtr, S1CDMax
+ *       - word-1: EATS, S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
 
-Regards,
-Arun Menon
+So, kernel needs to expand the word-1 to support those GBPA fields.
+I will send a kernel patch this week.
 
+Thanks
+Nicolin
 
