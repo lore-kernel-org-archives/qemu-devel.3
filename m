@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DE8CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1647CCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDMTK-0005cY-V6; Mon, 27 Oct 2025 08:37:15 -0400
+	id 1vDMVQ-0000QH-RC; Mon, 27 Oct 2025 08:39:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDMTH-0005X4-Vi
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:37:12 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDMVO-0000ID-Pf
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:39:23 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDMTC-0006HN-IU
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:37:11 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4283be7df63so2190179f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 05:37:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDMVK-0006ck-BG
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:39:22 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47106fc51faso58902515e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 05:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761568618; x=1762173418; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jRIl7x0MizgYPc3G/UF39YlinV+2/KH7EhfIDyLaI94=;
- b=TPt3jIuPWhrmjsGQaqQND6pFRKzBwNkyIZr1OQ2TF78hbm2dsJfARCyhPXgbWkPUKg
- CWJhF8jhQkMxZjV8uJBMq8EKfYH68U0rtyW8OiLCgRQjvOba1tcnRCl47Y9rkZzod2K8
- 4KqH2nDe2ofttf8PJvzOJenw4e0PXS43Jb57aF125hPZfN/T50TTK7JD7unLDIuPMppd
- sudwi3tUpCTqu/N1qnXxcg850AFDrAVvOCYYXRghFCZb8KarKe91bIp0nMpylT2RZaTl
- KazRdD6hABfGxqpSHFQAMUYa/lNlxOAOYugHKFwkq3LYBtndeb3uphR6TIghYfmnQ9Xy
- MCKw==
+ d=linaro.org; s=google; t=1761568751; x=1762173551; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7Ql+hTPlUsTJ8wpJN0eJ1PP4FlTu6yxQu8J9nvXsbnI=;
+ b=OfJoO3NHZU7zVdNKngmwpRXgmZlyFl+N4ueBIZc6x5wv1ATGzUBFd7svgKqZlQxU58
+ liP0BLDR6wUKq+RjCCkDEGXsf9xLdNPeUF0cK+rEA/Zt58Kk9Rit7IQkwngpfURgxMe7
+ g9Fv0G9WcGRaXrs2b+HeW4TPrT/8bHe1pFIJhH7TKbWiaoRKap5yOLr5JWJKbzjhRhpz
+ uxHNaaLYqThcHbkfJEPJkx5K1IR2kV/03VeCAi6jk1WqWjGF3pSmePIIQ5ubN06S6/XP
+ B9oB8t5ekDAJ9yL5nhNAiQbeOhs9krp9d1uQ4+9O+ptm/NliED/gCNfu4ShcGvriVNTv
+ 697g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761568618; x=1762173418;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jRIl7x0MizgYPc3G/UF39YlinV+2/KH7EhfIDyLaI94=;
- b=YbYz9zecHE0ge+Tk75/I4NNIY8G2ZPQGEjA13a/tAgYYp4qFnSNRJLHkLylDMfXQ5W
- Miw4AkodSUpgca/4O8rzkdfbXxhxRIOxHZmqO54mmrKN8RLBgSxZy/0DHLT0hBFFqMn7
- Yt5fVocabhGO3UQOmtxwc811X9TEuCuDR/CXyEDxhjclADBXg5LzKeTe5iOISzQpndAg
- PijqDUwgf7nA8Bzpn7aZrVeZWRITLrKxDlcpmow8me9aH7JTHJ2CSm+bCLqbTtZxEFIT
- NjgwmeCFYQJA0D0EnlO/W3OMnqGCsI+/JELzoGbgxhx8Se6XckqG5xzw0jWHzpZ+/b6c
- RPIg==
-X-Gm-Message-State: AOJu0YwHMWahP9plyYQsSX0brYlcwONgqLTv2Q9IDd41MX/HXN77e9Mf
- CzZuLNVbennSF+KAB/YR0WpeaLugyMQd8cpMxUPoDCCNj8wu438/xpv9yjFY783sHa+s6cBnXxl
- QYZkbJ5w=
-X-Gm-Gg: ASbGncucj1/7kV/sBDvowFMHDhwiAcXCrU5XpYVi8DKHbQMmcrVnXXGFHiZN+j1Pop9
- P78+9qNffNmAW7kdQi0dr5efvKMGLN8LMtCwuKpE0ONkV4YG0UT4p7ABOqjpObALRLmjFdni4Lz
- SWoybmLvFuWmLjT1Mto+BYcitU7nMLdptLRNCttcjVzjCd0MwqrFKlYqiNABpnYNVTahbCZJC32
- fCeACfLfO8Xy+D9rKXLWYa7v8R9elcnnprCOmqNOCaD06eLIYL21E3wI219kjxfV7byP5LVhU/6
- GXELleyXDE2SAASYn/M01MbdPo4Befm36c+CQEeWv/jQYAdmWmjwUr/NShy2AaEiXV06rHaoJlP
- aAmGRQlfcFuydS2hDFfb0ey/qx2T9JPCgIKcq2vKVICjpuiPmZjQGzyto+yAt6ClyvgSHJiwkd9
- KDFX3gqD964aOyAJs2WAh1jQW07mX1LDWDLTd9sChpJt68VAtRIw==
-X-Google-Smtp-Source: AGHT+IH2Prbndh0uvJjKiUoU3UPX0rGxgzHyo/VdREMmAAmrTo4WaM2iyFDJwTPOS30C5zYMyDFNbw==
-X-Received: by 2002:a05:6000:4610:b0:429:66bf:1475 with SMTP id
- ffacd0b85a97d-42966bf1732mr10802747f8f.3.1761568618346; 
- Mon, 27 Oct 2025 05:36:58 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1761568751; x=1762173551;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Ql+hTPlUsTJ8wpJN0eJ1PP4FlTu6yxQu8J9nvXsbnI=;
+ b=FK8Qghmdn/RnclrqQnP4cDTi3qtkehT6/RgA8hIcMIpNNoB4fcNrau90IAC5BGbcME
+ n+pFCqoUh5Ierx6UjR2EwyUjq3rNu9cWEgUbuS3GeQqIf/tbZOliS1o3BtATwmOLJj/o
+ CrVQ0ZvSSSXYlXhifaboFDpr9Bmm77ZD9XYNq21zNCrjBLjZPZ/JjWOojeWe6RyXCR+x
+ 9nHdHXDX7flu0ZHQTUqvJhKgryjA0dv57Ox2R6fPmTU0AxxruCozPDD7DDIctbfZdaRP
+ KV33m1APVsUySHF9REGkLwQ5ODERF5Y6eFAkZu6p0sh5dj28ja+5Joa8g07IviUYLMhi
+ FExw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGx0dRC0JU28N12MZwh0vkLP1hAiMW0tXa7+LMS6f9yM48RM9Waq2WrTexbTDpQkgMFoFp0h9323u5@nongnu.org
+X-Gm-Message-State: AOJu0Yy/sVsH9y2giRGPKbKOt85V0mzCHR7Oik6oX9j8JG+l3yKzl9Jk
+ xvuvuJyvp0KodvUAkr3+AtbspF5vE68lQRrLMFShCedryggyhb7RTO1AxjcdcysSJ0/FZ1q1Uet
+ 8EY6gXzg=
+X-Gm-Gg: ASbGncscVNGsYqCyEze0+CdymK1ll3OBOBAcLVFQJdJVatrjLZ+KaKLWqA/dq21Gs5s
+ k1Wmtr1scJe3VjdKpkgnTUJrRyE9gE7gWZbtnaHvysLRM18TC+48Rc9yjXvbNgsrw/gwlrSW2p4
+ GS25vbrJ282opImtuyfJv5qz6mWUPbf/HuV1lCilKFmjne3RVlEFUmSAM77kT0eKTo53OsKNSjX
+ 7ci+Tergac2XuT1JaOPsRAp9bnI8q+Itexf1iO9d3eWN1+AgwrO1JrirCf3JUbDGe6xC8G3cVt6
+ /oEFfZwewQu8a+3Yw7EqburTZG8vzrAPFCwGrCdPCb31AVdJsVkkC1jhLcxmdsTQ5Tw4tq8UQEt
+ udcSUhU0fsP4bUWR1LzWg570oehmv6nPmRXtkAbJU1faNCsN2+N0zMWzTIyeNKom8IQT67iYC85
+ ePzVYv5OVtDWVcoc0IBIRm7Debp7bO4O6edgHMv01gyr6+/DuTHSrpyQ==
+X-Google-Smtp-Source: AGHT+IGfFu6QX3ft/2rvrwT+kLulJLqO3IbLvzkBTBOfxQgVFY1wbfCY932mekqDBXLdL/bvR7RKDQ==
+X-Received: by 2002:a05:600c:4688:b0:46f:b42e:ed87 with SMTP id
+ 5b1f17b1804b1-47117925eb5mr259473075e9.40.1761568751364; 
+ Mon, 27 Oct 2025 05:39:11 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df62dsm15181023f8f.45.2025.10.27.05.36.56
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Oct 2025 05:36:57 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- David Hildenbrand <david@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Peter Xu <peterx@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PATCH 1/6] system/memory: Expose unassigned_mem_ops symbol
-Date: Mon, 27 Oct 2025 13:36:38 +0100
-Message-ID: <20251027123644.63487-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251027123644.63487-1-philmd@linaro.org>
-References: <20251027123644.63487-1-philmd@linaro.org>
+ 5b1f17b1804b1-475dd4924a4sm136957735e9.7.2025.10.27.05.39.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Oct 2025 05:39:10 -0700 (PDT)
+Message-ID: <2d408ff2-5f5c-4de9-a33b-904a25496b8b@linaro.org>
+Date: Mon, 27 Oct 2025 13:39:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] hw/riscv: Use generic hwaddr for firmware
+ addressses
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com,
+ richard.henderson@linaro.org, palmer@dabbelt.com
+References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
+ <20251027-feature-single-binary-hw-v1-v2-1-44478d589ae9@rev.ng>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251027-feature-single-binary-hw-v1-v2-1-44478d589ae9@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,43 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To log unassigned I/O region accesses, we provide unassigned_io_ops,
-exposed in "system/ioport.h". Similarly, expose unassigned_mem_ops
-in "system/memory.h" to be able to log accesses to unassigned MMIO.
+Typo addres[s]ses ;)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/system/memory.h  | 2 ++
- system/memory-internal.h | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+On 27/10/25 13:35, Anton Johansson wrote:
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   include/hw/riscv/boot.h    | 20 ++++++++++----------
+>   hw/riscv/boot.c            | 22 +++++++++++-----------
+>   hw/riscv/microchip_pfsoc.c |  2 +-
+>   hw/riscv/sifive_u.c        |  2 +-
+>   hw/riscv/spike.c           |  4 ++--
+>   hw/riscv/virt.c            |  2 +-
+>   6 files changed, 26 insertions(+), 26 deletions(-)
+> 
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index 7d59b2e6c6..d835594baa 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -43,21 +43,21 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
+>   char *riscv_plic_hart_config_string(int hart_count);
+>   
+>   void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
+> -target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+> -                                          target_ulong firmware_end_addr);
+> -target_ulong riscv_find_and_load_firmware(MachineState *machine,
+> -                                          const char *default_machine_firmware,
+> -                                          hwaddr *firmware_load_addr,
+> -                                          symbol_fn_t sym_cb);
+> +hwaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+> +                                    hwaddr firmware_end_addr);
+> +hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> +                                    const char *default_machine_firmware,
+> +                                    hwaddr *firmware_load_addr,
+> +                                    symbol_fn_t sym_cb);
+>   const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
+>   char *riscv_find_firmware(const char *firmware_filename,
+>                             const char *default_machine_firmware);
+> -target_ulong riscv_load_firmware(const char *firmware_filename,
+> -                                 hwaddr *firmware_load_addr,
+> -                                 symbol_fn_t sym_cb);
+> +hwaddr riscv_load_firmware(const char *firmware_filename,
+> +                           hwaddr *firmware_load_addr,
+> +                           symbol_fn_t sym_cb);
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 3bd5ffa5e0d..f42c6ba31c8 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2714,6 +2714,8 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
-                                          MemOp op,
-                                          MemTxAttrs attrs);
- 
-+extern const MemoryRegionOps unassigned_mem_ops;
-+
- /**
-  * address_space_init: initializes an address space
-  *
-diff --git a/system/memory-internal.h b/system/memory-internal.h
-index 46f758fa7e4..5588ae35081 100644
---- a/system/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -28,8 +28,6 @@ static inline AddressSpaceDispatch *address_space_to_dispatch(AddressSpace *as)
- FlatView *address_space_get_flatview(AddressSpace *as);
- void flatview_unref(FlatView *view);
- 
--extern const MemoryRegionOps unassigned_mem_ops;
--
- void flatview_add_to_dispatch(FlatView *fv, MemoryRegionSection *section);
- AddressSpaceDispatch *address_space_dispatch_new(FlatView *fv);
- void address_space_dispatch_compact(AddressSpaceDispatch *d);
--- 
-2.51.0
+OK up to here,
 
+>   void riscv_load_kernel(MachineState *machine,
+>                          RISCVBootInfo *info,
+> -                       target_ulong kernel_start_addr,
+> +                       hwaddr kernel_start_addr,
+
+but can we have this single change in a distinct patch please,
+so we can better describe it than "firmware address" and it
+doesn't block the rest?
+
+>                          bool load_initrd,
+>                          symbol_fn_t sym_cb);
 
