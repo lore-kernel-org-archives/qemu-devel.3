@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7894CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111BECCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmN-0004nL-HQ; Mon, 27 Oct 2025 14:17:15 -0400
+	id 1vDRmW-0004s6-Iy; Mon, 27 Oct 2025 14:17:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm8-0004i7-Nj
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:01 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmO-0004ow-FY
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:16 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRly-0003zg-1W
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:00 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm9-00040F-UW
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=JTclVRBMtgGwr1WRYJzVLDg5Lk0+x88TQC1Cio9tuf4=; b=LS6/Mdzc7x7R5gq
- Q/mDocp/vUCR8ja/rK3iUL6RRceHg0ChTMHXTFesUNH7JRxQLHJ3xFfMHk0B/2mWTSayPRVO3ie12
- RoNTvrzSBpSx52t3yOhQZ4QQd9EelZBo8doy1EDzMV8UAvgnERUFOuNWRVGI/sO8DA1gYxJ7x6wB7
- F0=;
+ List-Help; bh=EYLeKSXhNMgqHtQFg09UqeqA2dvQjNTn7rGYRTbYnho=; b=BSgwiAa57W10T1P
+ 7piELO3+Z3BuGYzIkik1oLVnDEeLCtEm2t3eqiVaCLc/TQRJUkhec93RbRRcqv+uFbIcPBRsigo0T
+ d8v51e3wdMdU7w6DuEtAf3uaM8Vt1P6SjgCz5hyN8LkaW+EwSRF619lCQ6PLSrxCsOO+FnM8iVN8k
+ yQ=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 17/33] target/riscv: Fix size of ssp
-Date: Mon, 27 Oct 2025 19:18:14 +0100
-Message-ID: <20251027181831.27016-18-anjo@rev.ng>
+Subject: [PATCH v4 22/33] target/riscv: Fix size of [m|s|vs]iselect fields
+Date: Mon, 27 Oct 2025 19:18:19 +0100
+Message-ID: <20251027181831.27016-23-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -46,7 +46,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,107 +64,199 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As ssp holds a pointer, fix to 64 bits in size and make sure stores from
-TCG use the correct size to avoid problems on big endian hosts.
-
-Note, the cpu/ssp VMSTATE version is bumped, breaking migration from
-older versions.
+[m|s|vs]iselect are defined in version 20250508 of the privileged
+specification to be XLEN in size, however QEMU only ever uses at most
+16 bits of these fields, so fix them to 16.  Update relevant function
+arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                            |  2 +-
- target/riscv/machine.c                        |  6 +++---
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h     |  6 +++---
+ target/riscv/csr.c     | 32 ++++++++++++++++----------------
+ target/riscv/machine.c |  6 +++---
+ 3 files changed, 22 insertions(+), 22 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7c54a08eb4..1e4128128b 100644
+index 5f051796f4..b35851cf4f 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -256,7 +256,7 @@ struct CPUArchState {
-     /* elp state for zicfilp extension */
-     bool      elp;
-     /* shadow stack register for zicfiss extension */
--    target_ulong ssp;
-+    uint64_t ssp;
-     /* env place holder for extra word 2 during unwind */
-     target_ulong excp_uw2;
-     /* sw check code for sw check exception */
+@@ -343,8 +343,8 @@ struct CPUArchState {
+     uint8_t siprio[64];
+ 
+     /* AIA CSRs */
+-    target_ulong miselect;
+-    target_ulong siselect;
++    uint16_t miselect;
++    uint16_t siselect;
+     uint64_t mvien;
+     uint64_t mvip;
+ 
+@@ -390,7 +390,7 @@ struct CPUArchState {
+     uint64_t vsatp;
+ 
+     /* AIA VS-mode CSRs */
+-    target_ulong vsiselect;
++    uint16_t vsiselect;
+ 
+     uint64_t mtval2;
+     uint64_t mtinst;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 5ba1fe4168..ebdb955869 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2405,7 +2405,7 @@ static RISCVException rmw_xiselect(CPURISCVState *env, int csrno,
+                                    target_ulong *val, target_ulong new_val,
+                                    target_ulong wr_mask)
+ {
+-    target_ulong *iselect;
++    uint16_t *iselect;
+     int ret;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+@@ -2448,18 +2448,18 @@ static RISCVException rmw_xiselect(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
+-static bool xiselect_aia_range(target_ulong isel)
++static bool xiselect_aia_range(uint16_t isel)
+ {
+     return (ISELECT_IPRIO0 <= isel && isel <= ISELECT_IPRIO15) ||
+            (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST);
+ }
+ 
+-static bool xiselect_cd_range(target_ulong isel)
++static bool xiselect_cd_range(uint16_t isel)
+ {
+     return (ISELECT_CD_FIRST <= isel && isel <= ISELECT_CD_LAST);
+ }
+ 
+-static bool xiselect_ctr_range(int csrno, target_ulong isel)
++static bool xiselect_ctr_range(int csrno, uint16_t isel)
+ {
+     /* MIREG-MIREG6 for the range 0x200-0x2ff are not used by CTR. */
+     return CTR_ENTRIES_FIRST <= isel && isel <= CTR_ENTRIES_LAST &&
+@@ -2467,7 +2467,7 @@ static bool xiselect_ctr_range(int csrno, target_ulong isel)
+ }
+ 
+ static int rmw_iprio(target_ulong xlen,
+-                     target_ulong iselect, uint8_t *iprio,
++                     uint16_t iselect, uint8_t *iprio,
+                      target_ulong *val, target_ulong new_val,
+                      target_ulong wr_mask, int ext_irq_no)
+ {
+@@ -2511,7 +2511,7 @@ static int rmw_iprio(target_ulong xlen,
+     return 0;
+ }
+ 
+-static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,
++static int rmw_ctrsource(CPURISCVState *env, uint16_t isel, target_ulong *val,
+                           target_ulong new_val, target_ulong wr_mask)
+ {
+     /*
+@@ -2550,7 +2550,7 @@ static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,
+     return 0;
+ }
+ 
+-static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,
++static int rmw_ctrtarget(CPURISCVState *env, uint16_t isel, target_ulong *val,
+                           target_ulong new_val, target_ulong wr_mask)
+ {
+     /*
+@@ -2589,7 +2589,7 @@ static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,
+     return 0;
+ }
+ 
+-static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
++static int rmw_ctrdata(CPURISCVState *env, uint16_t isel, target_ulong *val,
+                         target_ulong new_val, target_ulong wr_mask)
+ {
+     /*
+@@ -2630,7 +2630,7 @@ static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
+ }
+ 
+ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+-                         target_ulong isel, target_ulong *val,
++                         uint16_t isel, target_ulong *val,
+                          target_ulong new_val, target_ulong wr_mask)
+ {
+     bool virt = false, isel_reserved = false;
+@@ -2710,12 +2710,12 @@ done:
+ }
+ 
+ static int rmw_xireg_cd(CPURISCVState *env, int csrno,
+-                        target_ulong isel, target_ulong *val,
++                        uint16_t isel, target_ulong *val,
+                         target_ulong new_val, target_ulong wr_mask)
+ {
+     int ret = -EINVAL;
+-    int ctr_index = isel - ISELECT_CD_FIRST;
+-    int isel_hpm_start = ISELECT_CD_FIRST + 3;
++    uint16_t ctr_index = isel - ISELECT_CD_FIRST;
++    uint16_t isel_hpm_start = ISELECT_CD_FIRST + 3;
+ 
+     if (!riscv_cpu_cfg(env)->ext_smcdeleg || !riscv_cpu_cfg(env)->ext_ssccfg) {
+         ret = RISCV_EXCP_ILLEGAL_INST;
+@@ -2782,7 +2782,7 @@ done:
+ }
+ 
+ static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
+-                        target_ulong isel, target_ulong *val,
++                        uint16_t isel, target_ulong *val,
+                         target_ulong new_val, target_ulong wr_mask)
+ {
+     if (!riscv_cpu_cfg(env)->ext_smctr && !riscv_cpu_cfg(env)->ext_ssctr) {
+@@ -2810,7 +2810,7 @@ static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
+  * extension using csrind should be implemented here.
+  */
+ static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
+-                              target_ulong isel, target_ulong *val,
++                              uint16_t isel, target_ulong *val,
+                               target_ulong new_val, target_ulong wr_mask)
+ {
+     bool virt = csrno == CSR_VSIREG ? true : false;
+@@ -2840,7 +2840,7 @@ static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
+                       target_ulong new_val, target_ulong wr_mask)
+ {
+     int ret = -EINVAL;
+-    target_ulong isel;
++    uint16_t isel;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+     if (ret != RISCV_EXCP_NONE) {
+@@ -2871,7 +2871,7 @@ static RISCVException rmw_xireg(CPURISCVState *env, int csrno,
+                                 target_ulong wr_mask)
+ {
+     int ret = -EINVAL;
+-    target_ulong isel;
++    uint16_t isel;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+     if (ret != RISCV_EXCP_NONE) {
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 1cf744c5f0..c55794c554 100644
+index 8a8f5be8d6..376075b2bd 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -390,11 +390,11 @@ static bool ssp_needed(void *opaque)
+@@ -108,7 +108,7 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.vscause, RISCVCPU),
+         VMSTATE_UINT64(env.vstval, RISCVCPU),
+         VMSTATE_UINT64(env.vsatp, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
++        VMSTATE_UINT16(env.vsiselect, RISCVCPU),
+         VMSTATE_UINT64(env.vsie, RISCVCPU),
  
- static const VMStateDescription vmstate_ssp = {
-     .name = "cpu/ssp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = ssp_needed,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(env.ssp, RISCVCPU),
-+        VMSTATE_UINT64(env.ssp, RISCVCPU),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 0b6ad57965..40e5a1b7df 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-@@ -45,7 +47,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
-     tcg_gen_addi_tl(addr, addr, tmp);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -59,12 +62,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     TCGv addr = tcg_temp_new();
-     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
-     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     tcg_gen_addi_tl(addr, addr, tmp);
-     tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -76,7 +82,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
--    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(dest, wide_addr);
-     gen_set_gpr(ctx, a->rd, dest);
- 
-     return true;
+         VMSTATE_UINT64(env.mtval2, RISCVCPU),
+@@ -467,8 +467,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.mepc, RISCVCPU),
+         VMSTATE_UINT64(env.mcause, RISCVCPU),
+         VMSTATE_UINT64(env.mtval, RISCVCPU),
+-        VMSTATE_UINTTL(env.miselect, RISCVCPU),
+-        VMSTATE_UINTTL(env.siselect, RISCVCPU),
++        VMSTATE_UINT16(env.miselect, RISCVCPU),
++        VMSTATE_UINT16(env.siselect, RISCVCPU),
+         VMSTATE_UINT32(env.scounteren, RISCVCPU),
+         VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+         VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
 -- 
 2.51.0
 
