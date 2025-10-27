@@ -4,91 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FF7CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 20:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB8DCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 20:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDTWC-0000Ov-S4; Mon, 27 Oct 2025 16:08:40 -0400
+	id 1vDTfz-0003zZ-Ig; Mon, 27 Oct 2025 16:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
- id 1vDTW8-0000OV-8l
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 16:08:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vDTfs-0003yF-P8; Mon, 27 Oct 2025 16:18:40 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
- id 1vDTW2-0003RY-Is
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 16:08:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761595700;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KfbE8twWN5mleo6BLszqh3rtiajyRr2Q66zgpuK2Fac=;
- b=LBTpNFPlyf5LNb68udcy36ySzXOFdthl5MY32nikIyFnNb1l/jh9H6gAcmX8ycTRU9TShA
- UaVIj/HUVChjwYg1zQI2DYAdCDUz+UrbC5aYX9nc+ib1GcCwTZBqISyrUSrVUenOevKFuD
- QvgHO4ysM7WMsi9sn32YQG4SNKsiOck=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-KEUXXApYPS648Qjm75wagQ-1; Mon, 27 Oct 2025 16:08:17 -0400
-X-MC-Unique: KEUXXApYPS648Qjm75wagQ-1
-X-Mimecast-MFC-AGG-ID: KEUXXApYPS648Qjm75wagQ_1761595697
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-5a0d093ceacso1823811137.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 13:08:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761595697; x=1762200497;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KfbE8twWN5mleo6BLszqh3rtiajyRr2Q66zgpuK2Fac=;
- b=oZJy0RMo8OvoCMikfeB4cwJiMnt9oMjc0hEagOktdclsIZiFs3gIelSDLbs1Ah3e2+
- eT2iQcacr3dufsd387a8kWQXZmsHClnhiKXOoKKZVrsKvmRUWEzN+BFTlwNCG0tPSMX8
- gMomo67MdgVmpjvT1zjJ3jqfg5L+rDeVPZY4Eg0tletIBPj+SIoh4SAE8bPc8TQs+Vfa
- XSkJ0R4TtJL7q8fWzXuDgXMMgDBvUPFac062KsHjitc4V+rs9CpZG9aQqxMmkIFDdyJK
- mDhJ9qfTV2kpAT4xuBF3Rcl24wPRMk3+k73tO4FSptkPU1/DWKPn0CsnxlXlkibqWlTt
- JN0A==
-X-Gm-Message-State: AOJu0Yz5pQALzikAA7aJCEhqi2H3mosYLj8Jb3lUncrX/gzhbZKtHqph
- ufLBGK7/GhRNBLuPNewXAjzKY/OMyj9mWYsTajnUplmMNx4ni761dGCXvddqkJowommQazxI49V
- TSvXWs+oCHTJmM+X6hxVeMAZOa/yJJs2PgjcSXaxeOVgJrIN+Xq9l5+uR38lVEzawFsSbgpE6Tj
- kS6rNhkZWghLbL1jjAZ3rpllYbC8q/3P8=
-X-Gm-Gg: ASbGncveA4+XmYasZfQ9JoLGFzEnPvlKGwOCfqRsiccbwfKnAw6W6HyBolYjIgQlHc2
- 3iZ++Ob6K1gmX3Hjrdh0oyVh5ZeJf0BOizyGym3915ESCajjEgZ51vfxkF5MeIm37aPWc312lJP
- EKdKk5zw7hcmA8D4Hiei/HEVC/eXXwEzyJ/A4ddudzuWfOJTBj+5iSN1ja
-X-Received: by 2002:a05:6102:34d5:b0:5db:3cc4:5b60 with SMTP id
- ada2fe7eead31-5db7ca8bbf9mr404389137.15.1761595697074; 
- Mon, 27 Oct 2025 13:08:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEO9q+hsGBjSRbvO9bvh59XWbAAgvELxzObbb7gAH4Snnp1jesAPh7/mkjeCQfw8HIo9/DKJf3R4OkGBIKOrTM=
-X-Received: by 2002:a05:6102:34d5:b0:5db:3cc4:5b60 with SMTP id
- ada2fe7eead31-5db7ca8bbf9mr404382137.15.1761595696353; Mon, 27 Oct 2025
- 13:08:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vDTfk-0004as-NK; Mon, 27 Oct 2025 16:18:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F36F75972E6;
+ Mon, 27 Oct 2025 21:18:23 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id CC39OZBD8NS3; Mon, 27 Oct 2025 21:18:21 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E20925972E2; Mon, 27 Oct 2025 21:18:21 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DFD4659703F;
+ Mon, 27 Oct 2025 21:18:21 +0100 (CET)
+Date: Mon, 27 Oct 2025 21:18:21 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Yogesh Vyas <yvyas1991@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Markus Armbruster <armbru@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v3 00/13] Pegasos2 clean up and pegasos1 emulation
+In-Reply-To: <38673ed9-4690-472b-9e0f-c8a736247097@gmail.com>
+Message-ID: <fd804cb4-d987-5e3d-24e8-0a4fb88e092e@eik.bme.hu>
+References: <cover.1760798392.git.balaton@eik.bme.hu>
+ <CAJOT6qN-n7LpVnLO-5CpOUF8z-j1Ogi=6cJBvvKZc-Eh5tHVzA@mail.gmail.com>
+ <a410ac54-d1dc-aa67-d1d7-690b2495e9df@eik.bme.hu>
+ <CAJOT6qN4QYRdNR-oQV8JSv_074umiHB==_dyemX01+FsNiqPOQ@mail.gmail.com>
+ <c7daf4e7-50d3-263c-4fa2-35947e2d3267@eik.bme.hu>
+ <26f74e6c-a89f-4be0-aa6c-78ad88e2cba3@gmail.com>
+ <993819c9-cf87-ec91-31ac-f8988c8d3d67@eik.bme.hu>
+ <38673ed9-4690-472b-9e0f-c8a736247097@gmail.com>
 MIME-Version: 1.0
-References: <20251003220039.1336663-1-csomani@redhat.com>
- <aPpue5a-uCkdlc9z@redhat.com>
-In-Reply-To: <aPpue5a-uCkdlc9z@redhat.com>
-From: Chandan Somani <csomani@redhat.com>
-Date: Mon, 27 Oct 2025 13:08:04 -0700
-X-Gm-Features: AWmQ_bn6KD38Aka6S70Igx8HFpvxOxbrAAfIFRHS4Za8a1VK2SixQZ6rFzYuFQw
-Message-ID: <CAHEFcASuJ1paM+4-=DpCtJxXiF2ifZuTYSx7HnR+Y32jQCJH=A@mail.gmail.com>
-Subject: Re: [PATCH v2] block: enable stats-intervals for storage devices
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- John Snow <jsnow@redhat.com>, 
- "open list:Block layer core" <qemu-block@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000b827cd0642297579"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=csomani@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary="3866299591-1418406676-1761596301=:603"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,68 +72,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b827cd0642297579
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, Oct 23, 2025 at 11:05=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
-e:
+--3866299591-1418406676-1761596301=:603
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-> Am 03.10.2025 um 23:59 hat Chandan Somani geschrieben:
-> > This patch allows stats-intervals to be used for storage
-> > devices with the -device option. It accepts a list of interval
-> > lengths in JSON format.
-> >
-> > It configures and collects the stats in the BlockBackend layer
-> > through the storage device that consumes the BlockBackend.
-> >
-> > Signed-off-by: Chandan Somani <csomani@redhat.com>
+On Mon, 27 Oct 2025, Yogesh Vyas wrote:
+> On 10/26/25 10:15 PM, BALATON Zoltan wrote:
+>> On Sun, 26 Oct 2025, Yogesh Vyas wrote:
+>>> On 10/26/25 4:39 PM, BALATON Zoltan wrote:
+>>>> On Sun, 26 Oct 2025, Yogesh Vyas wrote:
+>>>>> On Sun, Oct 19, 2025 at 5:37 PM BALATON Zoltan <balaton@eik.bme.hu> 
+>>>>> wrote:
+>>>>>> On Sun, 19 Oct 2025, Yogesh Vyas wrote:
+>>>>>>> When I run QEMU with the ROM option, the machine boots successfully 
+>>>>>>> with
+>>>>>>> the below command:
+>>>>>>> 
+>>>>>>> qemu-system-ppc64 -machine pegasos2 -bios pegasos2.rom \
+>>>>>>>                  -cdrom debian-8.11.0-powerpc-netinst.iso \
+>>>>>>>                  -device VGA,romfile="" -serial stdio
+>>>>>>> 
+>>>>>>> However, when I try to boot the machine without the ROM using VOF, the
+>>>>>>> machine does not come up and no logs appear on stdout:
+>>>>>>> 
+>>>>>>> qemu-system-ppc64 -machine pegasos2 -serial stdio \
+>>>>>>>                  -kernel vmlinuz-chrp.initrd -append "---" \
+>>>>>>>                  -cdrom debian-8.11.0-powerpc-netinst.iso
+>>>>>>> 
+>>>>>>> Please let me know if I am missing any parameters or setup required 
+>>>>>>> for
+>>>>>>> booting via VOF on Pegasos2.
+>>>>>>> 
+>>>>>>> Documentation referred: qemu/docs/system/ppc/amigang.rst
+>>>>>> 
+>>>>>> Maybe you did not use the right vmlinuz-chrp.initrd. Pegasos2 is a 32 
+>>>>>> bit
+>>>>>> machine so you need /install/powerpc/vmlinuz-chrp.initrd for it (see in
+>>>>>> the /install/pegasos script that is used with firmware). Even if you 
+>>>>>> call
+>>>>>> it from qemu-system-ppc64 which includes both 32 bit and 64 bit 
+>>>>>> machines
+>>>>>> but does not make 32 bit machines 64 bit so you still need the 32 bit 
+>>>>>> OS.
+>>>>>> 
+>>>>>> 
+>>>>> Hi Balaton,
+>>>>> I am using 32bit images only and looks like VOF boot works with the 
+>>>>> distro
+>>>>> provided Qemu (both ppc and pp64), however doesn't work with upstream 
+>>>>> Qemu
+>>>>> for VOF.
+>>>> 
+>>>> That's odd, it works for me with QEMU master so I can't reproduce this.
+>>>> 
+>>>>> yogi@fedora:~/work/images$ file vmlinuz-chrp.initrd
+>>>>> vmlinuz-chrp.initrd: ELF 32-bit MSB executable, PowerPC or cisco 4500,
+>>>>> version 1 (SYSV), statically linked, not stripped
+>>>> 
+>>>> The file command says 32-bit for both 
+>>>> /install/powerpc/vmlinuz-chrp.initrd and 
+>>>> /install/powerpc64/vmlinuz-chrp.initrd but only the first one should 
+>>>> work. Can you double check you have the right vmlinuz-chrp.initrd file? 
+>>>> But if you say the same file works with 9.2.4 I have no idea why. I see 
+>>>> these files on the CD
+>>>> 
+>>>>   9301172 Jun 19  2018 /install/powerpc/vmlinuz-chrp.initrd
+>>>>  10534888 Jun 19  2018 /install/powerpc64/vmlinuz-chrp.initrd
+>>> 
+>>> 
+>>> I am also using the same file:
+>>> 
+>>> yogi@fedora:~/work/images$ ls -lrt vmlinuz-chrp.initrd
+>>> -r--r--r--. 1 yogi yogi 9301172 Oct 18 23:50 vmlinuz-chrp.initrd
+>>> 
+>>>> 
+>>>> File command says:
+>>>> 
+>>>> vmlinuz-chrp.initrd:   ELF 32-bit MSB executable, PowerPC or cisco 4500, 
+>>>> version 1 (SYSV), statically linked, not stripped
+>>>> vmlinuz-chrp.initrd64: ELF 32-bit MSB executable, PowerPC or cisco 4500, 
+>>>> version 1 (SYSV), statically linked, not stripped
+>>>> 
+>>>> but only the first from the powerpc directory is supposed to work and it 
+>>>> does boot for me with QEMU master. You can also check following the other 
+>>>> way described in qemu/docs/system/ppc/amigang.rst using -bios 
+>>>> pegasos2.rom which loads the correct image from the CD. Does that work?
+>>> 
+>>> Yes, I had mentioned it in my first mail that ROM option works as 
+>>> expected. It is only an issue when using VOF with upstream Qemu.
+>> 
+>> Or if you suspect it's a VOF issue you can try -trace enable="vof*"
+>> 
+> Hi Balaton,
 >
-> Thanks, applied to the block branch.
+> As suggested, I tried both options in upstream:
+> yogi@fedora:~/work/git/fork/qemu/build$ ./qemu-system-ppc -machine pegasos2 
+> -serial stdio -kernel ~/work/images/vmlinuz-chrp.initrd -append "---" -cdrom 
+> ~/work/images/debian-8.11.0-powerpc-netinst.iso -d guest_errors -trace 
+> enable="vof*"
 >
-> Maybe you can add a patch on top that extends tests/qemu-iotests/136 to
-> also test the -device based settings (probably in a new child class)
-> instead of only -drive?
->
-Yes, will work on this
+> I could see the below trace and the error message:
+>  vof_getproplen ph=0x13 "subsystem-vendor-id" => len=4
+> vof_getprop ph=0x13 "subsystem-vendor-id" => len=4 [00001100]
+> vof_getproplen ph=0x13 "reg" => len=20
+> vof_getprop ph=0x13 "reg" => len=20 [00000000 00000000 00000000 00000000 
+> 00000000]
+> vof_write ih=0x2 [22] "Device tree strings 0x"
+> vof_write ih=0x2 [8] "01b0d000"
+> vof_write ih=0x2 [6] " -> 0x"
+> vof_write ih=0x2 [8] "01b0d405"
+> vof_write ih=0x2 [2] "
+> "
+> vof_write ih=0x2 [22] "Device tree struct  0x"
+> vof_write ih=0x2 [8] "01b0e000"
+> vof_write ih=0x2 [6] " -> 0x"
+> vof_write ih=0x2 [8] "01b0f000"
+> vof_write ih=0x2 [2] "
+> "
+> vof_getprop ph=0x3 "stdin" => len=4 [00000001]
+> vof_write ih=0x2 [18] "Calling quiesce..."
+> vof_write ih=0x2 [2] "
+> "
+> vof_claimed 0x0..0xd80 size=0xd80
+> vof_claimed 0x8000..0x10000 size=0x8000
+> vof_claimed 0x400000..0xcd8dfc size=0x8d8dfc
+> vof_claimed 0xd00000..0x15a1ec0 size=0x8a1ec0
+> vof_claimed 0x15a2000..0x1b0b90d size=0x56990d
+> vof_claimed 0x1b0c000..0x1c0c000 size=0x100000
+> vof_claimed 0x1ffff000..0x1ffff014 size=0x14
+> vof_write ih=0x2 [24] "returning from prom_init"
+> vof_write ih=0x2 [2] "
+> "
+> Trying to read invalid spr 1012 (0x3f4) at c0013f48
 
->
-> Kevin
->
->
+Then VOF works too and the Linux kernel loader starts but it stops 
+somewhere when the actual kernel starts. I get:
 
---000000000000b827cd0642297579
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+vof_write ih=0x1 [18] "Calling quiesce..."
+vof_write ih=0x1 [2] "
+"
+vof_claimed 0x0..0xd80 size=0xd80
+vof_claimed 0x8000..0x10000 size=0x8000
+vof_claimed 0x400000..0xcd8dfc size=0x8d8dfc
+vof_claimed 0xd00000..0x15a1ec0 size=0x8a1ec0
+vof_claimed 0x15a2000..0x1b0b90d size=0x56990d
+vof_claimed 0x1b0c000..0x1c0c000 size=0x100000
+vof_claimed 0x1ffff000..0x1ffff014 size=0x14
+vof_write ih=0x1 [24] "returning from prom_init"
+vof_write ih=0x1 [2] "
+"
+Trying to read invalid spr 1012 (0x3f4) at 00000000c0013f48
+[    0.000000] Using CHRP machine description
+[    0.000000] Total memory = 512MB; using 1024kB for hash table (at cff00000)
+[    0.000000] Initializing cgroup subsys cpuset
+[    0.000000] Initializing cgroup subsys cpu
+[    0.000000] Initializing cgroup subsys cpuacct
+[    0.000000] Linux version 3.16.0-6-powerpc (debian-kernel@lists.debian.org) (gcc version 4.8.4 (Debian 4.8.4-1) ) #1 Debian 3.16.56-1+deb8u1 (2018-05-08)
+[    0.000000] Found initrd at 0xc15a2000:0xc1b0b90d
+[    0.000000] chrp type = 6 [Genesi Pegasos]
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 23,=
- 2025 at 11:05=E2=80=AFAM Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com=
-">kwolf@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">Am 03.10.2025 um 23:59 hat Chandan Somani geschrieben:<br=
->
-&gt; This patch allows stats-intervals to be used for storage<br>
-&gt; devices with the -device option. It accepts a list of interval<br>
-&gt; lengths in JSON format.<br>
-&gt; <br>
-&gt; It configures and collects the stats in the BlockBackend layer<br>
-&gt; through the storage device that consumes the BlockBackend.<br>
-&gt; <br>
-&gt; Signed-off-by: Chandan Somani &lt;<a href=3D"mailto:csomani@redhat.com=
-" target=3D"_blank">csomani@redhat.com</a>&gt;<br>
-<br>
-Thanks, applied to the block branch.<br>
-<br>
-Maybe you can add a patch on top that extends tests/qemu-iotests/136 to<br>
-also test the -device based settings (probably in a new child class)<br>
-instead of only -drive?<br></blockquote><div>Yes, will work on this</div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Kevin<br>
-<br></blockquote><div>=C2=A0</div></div></div>
+Are you using this same vmlinuz-chrp.initrd?
 
---000000000000b827cd0642297579--
+$ md5sum vmlinuz-chrp.initrd
+a440d76c1d2ccfa86bdff6dba017cf39  vmlinuz-chrp.initrd
 
+If so then probably there's something with your QEMU installation.
+
+Regards,
+BALATON Zoltan
+--3866299591-1418406676-1761596301=:603--
 
