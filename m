@@ -4,111 +4,215 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0186CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 610FFCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLBc-0000WM-Jk; Mon, 27 Oct 2025 07:14:55 -0400
+	id 1vDLCT-0002cZ-9y; Mon, 27 Oct 2025 07:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDLB3-0000Hl-3q
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:14:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1vDLCL-0002Xc-40; Mon, 27 Oct 2025 07:15:40 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDLAv-00084y-Ib
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:14:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761563646;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UB7t7wD3NVFDY4b1WC3tRHbChuKKwIXTFYvp4gnmd+U=;
- b=IMUiqrZzo/aMLBoly8jAMCg6DgJ7iDfpIR1ZkfsI1+FIjJxIUGXYw3f7uf0r4sVrqDhKUl
- morz0MtqxES8FPLArrnYNKiEAuPje3sFxdpezoiTByFRUefU9GTBYzaGWCjoZLBq/jK1Yw
- U6Lr0Jm5U7QwUbsHzNVKAsC0cT2MhUM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-132-rJNEdOtuN6S5Hjaa3LXmSA-1; Mon, 27 Oct 2025 07:14:04 -0400
-X-MC-Unique: rJNEdOtuN6S5Hjaa3LXmSA-1
-X-Mimecast-MFC-AGG-ID: rJNEdOtuN6S5Hjaa3LXmSA_1761563643
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-475e032d81bso15521615e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:14:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563643; x=1762168443;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UB7t7wD3NVFDY4b1WC3tRHbChuKKwIXTFYvp4gnmd+U=;
- b=bNZZrxUjRAlsk01jaY12ygaFbCgnBZORuzq/XRFmERqa7wnG+0tRuyiIV8JnTjOGwd
- +6BaEJM42oq2A9UNTJrEKZwJfdGLOXbQbSH7VaHSkEjTmqC/q6ONbPHLm9OtLulEcYCo
- aCIlVzpSZOBM6JYXi+Vkb72sbEo8tD1aU4MmnKFdzSjPyH9xnSQvkmycxbMuE7ORThrU
- evU+E+RegstRgd+F1C1g6v9IjLtTkhLIYh+kr2FmkuuNoV6do54I4U+SHpIQjmX0Rts5
- MUCKAjBa/5PH140mOX+uLnC4JoFpsWHaGPcA2sTcXs0DA7ivgrtLuyK21EkE8+8pDvO0
- m+Ew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSoDDIVF87+C0GyB4juA6g9X5+ZnoiWDmPnvkw+TrRsu5GUPFey1KCxgZQfl4Somoenzn+capzsEhS@nongnu.org
-X-Gm-Message-State: AOJu0YyltZ2r6WVSntP9CbCSExQEV6fzKAmF3akWgTA1XS1dZCwDItAG
- v8k4FXNjHe5FsGKZPU+0WLwvEm0VD4hEDThTDePNhjlGnh3gELSxgQ3f/bDq6gYCnIKj9AiIn0J
- WiE8Ur/Q4zPl0ykEkxishXGrYu2AWEBxQHrhV0n3Gfc/bHy1/pEoOOVPq
-X-Gm-Gg: ASbGncvQDx37gKY0Y8qRTanIwlADDnYCe0oaFg8mieHUIV1YAZKBBXSTsrFlYO0kQYS
- CDceRMZAlbpdWJsTF519Ie3M0KhM01X/NEtYkdPSp7vTr6qb57wIAtsPxBR+MrPo3SvCiR55dIs
- MsHrmQqCpPvqUQ9iE8keKfGUSsmjiljiybzbOWI4bZuDrJ/sED8V8muqswiSiPsVCH2UGurNSzC
- 7XkL161E3YLBYeXDNaRm3PxJMvgI8lhxBpa50BOOMQeT0MY4h3VoTwLsQcMS4XiHH8IiKHZnrpW
- 7nnxDtluaMeCGDJ7n3T0dKObRHDDezf7r9VKLHply4CH4T2LHDmk8nLUXKDcVnS8QS2X773fVZq
- wXils1fzDET6Yi+6YPVQ+s27IhtHxHk40NQZv46OF2Zigpg==
-X-Received: by 2002:a05:600c:3e12:b0:45b:7d77:b592 with SMTP id
- 5b1f17b1804b1-471178a74demr269664285e9.12.1761563642886; 
- Mon, 27 Oct 2025 04:14:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXiRPNvBdDoUXgfgjhOiWXW7XhCGEauvpSnaZf/rD8J2Y67pmzryMQSElmLxkkNQ2xquIkFQ==
-X-Received: by 2002:a05:600c:3e12:b0:45b:7d77:b592 with SMTP id
- 5b1f17b1804b1-471178a74demr269663915e9.12.1761563642335; 
- Mon, 27 Oct 2025 04:14:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475ddab6adcsm62452205e9.9.2025.10.27.04.14.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 04:14:01 -0700 (PDT)
-Message-ID: <6576d1b9-dd44-4efe-946f-4dedc6df84d8@redhat.com>
-Date: Mon, 27 Oct 2025 12:14:00 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1vDLCB-0008Vc-Aq; Mon, 27 Oct 2025 07:15:35 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T9NW+5XDCc4LRYvVjvJ7GSJquKQZXfE7dALR8A97LlVNXAfLWNE32KmiBM15IGeF1VSs7T0t2Ddya1ZCgTags9O7YsB/+vZuhrEOjJ3VLASgbCtDYdpHvA9ee2d+gfiglwpu5cTr6X8eWh/DT1yqe/TbqohkQnOT4oug8wGDhEBkP8UHRW5r7oEFwohPJy1z4hrwNDV8RdJP9fDpT9kCYCPa5vj/KUnmv7GH6haIlmcgBe/AVb+bGCjdZMdvmUL0z9i8HgPqQ/DjfMTBKNu8RoMJRKY1wHo6cQFTMIUKVDYVIJoMfEdU2FXVi16OkvZzYbioeL5vXLzj/M62OeDv7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9hz++b5B4vfg3+2/TYiKBGI9CI26RI5NiATWcBxSZKU=;
+ b=YgR/JbrckNqqZppdHL31YA8sBrnUD8iL4Pr8ZKenYbbLjFDTcnVwrr5BWx0l+doyjmEVYcz5ZJeAJk223s2K2XwyVCvJ6uHtQvJ7w0/3YpDV9uVOSFrwvzD0aHIcnB+vgIr+VPfsSpYDhr/9TrJmC+Vxpg5Ws0FbUqQisvwxdhI8/yz6+YHjcNxAZ2o3br+IdKIz5doARelsYBwc0wWxEMwVHuwH0X3WZyH3GFpSaYj+2cPBttzJ/MVjDR3otzUdC75d4GH7tmHIzrF2sTf6bUTX4FQFVRxYnLDH7VuH4+QIG7+7k3l/jhBPg+55SqF7mnHFSV0as6/7ZjnMN9jjYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9hz++b5B4vfg3+2/TYiKBGI9CI26RI5NiATWcBxSZKU=;
+ b=yyItY2+Blle9vO2Cw4D8noHG/PiLOTnEfDzGxgYbl2ycjjXVz9Y1oGj6GvaUi2QOGd0rq1DnH4WMzxFqM7e9Gm6P/+AL8o+YiJNspbl2aPLEHvaoMxoPQMhXMNW5flQw+jGDir5FpF7UczxqpHepEjHs6EmvticrSzb79/WZqLaDeK6Mdq39XN0l6UKP/MCzsklgJFdvaS4e98/I5pTV38FAhN2ysdrR04dmdOgh/lCB+h5oqfAjfk29fmglInhhEb5/vFr9y082R3lpDpB4kPHrblPQxaxlv4jG3hgy3yQt594iruXpxEkj5BATLnA1//LLQBgm0C+n5W4NKNfzvg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:588::19)
+ by GV1PR10MB9187.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:1d0::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Mon, 27 Oct
+ 2025 11:15:13 +0000
+Received: from AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::8fe1:7e71:cf4a:7408]) by AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::8fe1:7e71:cf4a:7408%6]) with mapi id 15.20.9253.017; Mon, 27 Oct 2025
+ 11:15:13 +0000
+Message-ID: <dccad571-544c-49bd-b450-62da7bf77a1f@siemens.com>
+Date: Mon, 27 Oct 2025 12:15:11 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 16/27] hw/pci-host/gpex: Allow to generate preserve
- boot config DSM #5
+Subject: Re: [PATCH v5 0/6] sd: Add RPMB emulation to eMMC model
+From: Jan Kiszka <jan.kiszka@siemens.com>
+To: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>,
+ Alexander Bulekov <alxndr@bu.edu>, Alistair Francis
+ <alistair@alistair23.me>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Joel Stanley <joel@jms.id.au>, Warner Losh <imp@bsdimp.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
 Content-Language: en-US
-To: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peter.maydell@linaro.org,
- jgg@nvidia.com, nicolinc@nvidia.com, ddutile@redhat.com,
- berrange@redhat.com, nathanc@nvidia.com, mochs@nvidia.com,
- smostafa@google.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-17-skolothumtho@nvidia.com>
- <20251001140523.00006635@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251001140523.00006635@huawei.com>
+Autocrypt: addr=jan.kiszka@siemens.com; keydata=
+ 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
+In-Reply-To: <cover.1760702638.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR3P281CA0014.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:1d::7) To AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:588::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS4PR10MB6181:EE_|GV1PR10MB9187:EE_
+X-MS-Office365-Filtering-Correlation-Id: 58f0a7e5-e588-471d-315b-08de154a191f
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?S2Y1LzVKR28wZ3dIMEZ3djBWMnJLR3E1aWtFc1haNTg2bDJYQ2FhbGlibzZk?=
+ =?utf-8?B?M3NwZ3pLcEZyWEZCZGM5VVNtM08rK0Y1by9Wamx2cERiMjhtenR2YkNVYkNQ?=
+ =?utf-8?B?bkdPbW51SXFQTGpvL2FMODBFb3pna2U4QTNwTUsxczUzeTVoWGlCcENIYjYr?=
+ =?utf-8?B?VHd4d1ZEVUJUZnZMMit1dEd5RzdyTG1rbUpTSU43Z0tEYTZKT1dIWWtpWElZ?=
+ =?utf-8?B?KzBIZE5ZWXNRdUw5OW9HUUZ1dUlRdzg0Y0hyRHdncDNVUXdWYk5hYXBOa1ZX?=
+ =?utf-8?B?R0lubEw0YnNpcEgvZDdPOTJsclc3SE50RlExNTFlV2ZPTG1Ub0t6UlBjdEdT?=
+ =?utf-8?B?Mnorb04rMGF3UTIwVGRZYmpzdlBEMDgxcXZMT0pnNVhQS3N3ckd0QXg1S2o5?=
+ =?utf-8?B?d05Rd2thdFppMy9oVTg0Tk5RbFZ6MWlTRDBSdHZweHlPSXJ5dkJNSFpSZWEv?=
+ =?utf-8?B?VnY4bENUd0orR3FmTDBvT1BCcDdyR3JJbUpuNXEyYXRHNTFxUmZ1OXVJWisz?=
+ =?utf-8?B?R1hHR01vUGdWS2RmWHlIYkREQkRIWnJzd3doamFGckZ4V1pieDNqTkJHUEJO?=
+ =?utf-8?B?WVlYdjBLWUtZUlJLZi9tNm5YeTZjd2c2UmMyMStaZ04xTHFZQnc5MDkxTERr?=
+ =?utf-8?B?TGE3M0dyczJLNVp2Q1hVWlpCZmI3QisyNzMrdU1lV1ptVjhRNmhCVjI0L0sy?=
+ =?utf-8?B?VWFqcVRZcTdUMzZGVy9nWi9tVFBVckgxNVdWM0V3NFcveTAyb2IrUW9QSmRW?=
+ =?utf-8?B?NndacjlYb1p2Vzc2ZHN4eG5wSmlBU3JIbDlWRnVZZjRycXlZTTFYeGpMZHNj?=
+ =?utf-8?B?SWx5YWVuMkkxVHltbFJEcDRZNmNRS2NNS2xQY1pXUVFoa0NaWnZHdnJoVW5j?=
+ =?utf-8?B?SnVoUVBhZGo1Qmkya0lzSjlHR3U4dlA4RTRXMk9UcG1adzU1RnViQkZkejVm?=
+ =?utf-8?B?RWE1MERFMFg3d1VCUTBoc1hnMXgzSHBmeUxuZTdva0dOenV1Z1B6d2dDQ3Y3?=
+ =?utf-8?B?NkljemprRnVQTnJROTU2ZXlBLzBYUGRWTUxJaE1OL0lKeWZibTMzOElMYXNs?=
+ =?utf-8?B?MnVXL0dZdnlFZjVNaTRuVlpLSUM4RE9zeVEwdFVuMXRLSHlpY1FkcUNhOXJQ?=
+ =?utf-8?B?eFBNdWx3WEpPLzhQZ3BhOGNJeWx3b0lqVFVueWhkRTR3Z1VuT0lscUFBeVRB?=
+ =?utf-8?B?SEJOc2JtRjJBMnJrYitFOENuemFRRXdmMlh1bWlZb3RqOTFpcTEwTXZ4Y1VZ?=
+ =?utf-8?B?cGU4S1BVbmhYUVYxV24rcDV2RUlWK29sT21hK0RIYitpWVdXMlR1SDNOc3FL?=
+ =?utf-8?B?QWtTcnhMYjFPK0lxVlN3TE91bjVSR05YS0Y3MFdoeXUwdWZvMWRITHFKUWVD?=
+ =?utf-8?B?ME0ybTV3NHlTZXZtQmMwaVUzK0RYNktlRFZQNnMyQmw5dGJWR3VaenE2SWdh?=
+ =?utf-8?B?MnpIZHc2ankrTDcrVFU1Q25qQ24rZHNKWWVsMTh0Rm9zRUcyTmRCbElBU2xo?=
+ =?utf-8?B?aUdmbzJoV3NiUVQrUklscTRzMG5TTjZZSmRpSWE5MnFPMHhVOENZaUxxdkJu?=
+ =?utf-8?B?MlVlell2d1c2U3JsV00yNTFGbVZNbVVnYXVrZWlUd3p3WXV6ZE5kcFhyNkhW?=
+ =?utf-8?B?NWNBekpTdVgza2pqQmVyRHlMekF6Unlad1F4RDQySVhYM0dyZitHQkV5ZUZU?=
+ =?utf-8?B?aDgxS3lickIwMEdibzdxSEZ0VkN1YnFnZlMxTFI3dkprTXA3Y2pRbW9PRDNR?=
+ =?utf-8?B?RjBTd0ZVN2QrOUtxUURIV2lpK0dsUkt6bUNMY0kyb3BESVJVR1pITGtQWmhi?=
+ =?utf-8?B?eGpmNE50c1B6aUtOcWtSWXJFamgyMmFhVzhjZXhGQkM3Yll6RkVLK0d3b2Q2?=
+ =?utf-8?B?RThyN3ZpNnFtUVR4ZDJBcGRwUDRaaUk0QzdtNytmaFJSNVpCTGNiM1RNRkVP?=
+ =?utf-8?B?SGJHYjloTmg0cUdBVitySXF3UGNIaFJFWW1QSngwaW5TSHYzVjdLcHNxaTl5?=
+ =?utf-8?B?d056VFByVExBPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NEliVStuQ3lsY2pCZGZuU3lONC9ETjBsZkFCWjhSU2dJQ1VObkdTSUkycERJ?=
+ =?utf-8?B?K1UzS1FSYlFXbjQrTWV5QkowckpjZldtdVg0OEFxUW9WckRtN0EzZmNMdmZX?=
+ =?utf-8?B?U092Smc0MmlFOHRydkhTbWU5K3ZJY01aS3NUazF6N3krbDNEY1ZuaEJSbVJp?=
+ =?utf-8?B?bUxHYWQvQThWK1ZoWTNHa0VXRVpuYmZzVmJFa28zVnBmOVkrS0FJRnRqRzBE?=
+ =?utf-8?B?WW9tclo1Vng1bEhEazhud2NIRXlzOHNMZ2s4amtNNm1FNUk4N2JuN3J1d09y?=
+ =?utf-8?B?Z0YzRG80YXBFVjQ5TXd3L0ZPNEJud1djUi9mY0R2SlhGa0JrbmNPcGRGdFJG?=
+ =?utf-8?B?NWtiSXhMZWZIWkcrR3FBSFBPcWY0Vkt3allPcFRkRzNSZFRVOEQzeU5uU2VH?=
+ =?utf-8?B?S0V6L2EvOGtUZzFxenU5bUM5NlIwdTRSYjZnbGwyeWtwTVJiNkNOQldKekZK?=
+ =?utf-8?B?SnN0NHpPWitmeElicVZEZ0x4R0plQU1uVGpYOEl4WXJLZ3lIbjAwRHcrc0Jy?=
+ =?utf-8?B?dlN2T1dBVWU5ay81SG9FYXpSYkFGNFRFZUQ4RlhNZWJlNEl0cExEd2xERmJq?=
+ =?utf-8?B?eEZTYXhycExtYUVVOTU1eEx1elVBS2ZWYkVNYmVNbmYwN1k5RHVKSkpMZzFT?=
+ =?utf-8?B?ZmFKUlluVWhNV2VKYzhFbEhUUnhNV1ZmRjNSdWlJaWpDU3ZrUFBZMS9scnhp?=
+ =?utf-8?B?YUJURVI5UU1mODhOL3dPRVZzeGNEUmkyYkxrSE9tSjkrNFhCNm14NElDZUE0?=
+ =?utf-8?B?SnpiSjJSenFIMGJadW50TGlOdWJhVndxT2w1dVRDTEpaQ2VsVk5oQ2phZ29I?=
+ =?utf-8?B?Qmx3aENXSVpESkthdkEvaEs1RThWMldSKytUbnc2U1BPTkFaa05hMk51NjN0?=
+ =?utf-8?B?UTVMN3FYZTM2czZDVVRISno0Z0ZhQXFxSmxvbGdYbU9YbFd6UXdpa2p1TXlO?=
+ =?utf-8?B?cXlDNENPS3R5UFM0eVpsK0JHYUx3dVJjZmU4THk2SUxkUk8rL0FETEwxUUhN?=
+ =?utf-8?B?Qk1weDY4LzdQL0Q1UEhpdlNudWNrKzBkQ011WW5qbElUSlpnbWpNeG05R3Fr?=
+ =?utf-8?B?SzM2VnF6a2tXZFF1MHdLVUdkRml2Tm1tUmtrcTRMWDNjOWJSRlFGazl4RGoy?=
+ =?utf-8?B?c3NTcWViRGt2OUlvQmw0WWZXQUtQUzVhQmtDbVlLYnY3bXFra3I1OWF5TGVR?=
+ =?utf-8?B?eXpSallaOTB2TWsxTnIzTzhROVBwVER5blFhcjZNRTdVZGY4VzdITTZZNFY1?=
+ =?utf-8?B?R0RyMmlaUzFKNGNaZFl4SnplK2grS0hoVWNtQkNaZEhocURSTHcrNnQwSWFi?=
+ =?utf-8?B?MEFrU2sxZXZ6WVhEdGJBNUphN0RRSXhxb1RvU0xqWlZianF0RWQrcGE2SmpH?=
+ =?utf-8?B?bDVpMUNrVjVDMm1hT2xZZDFsVVFaK2FpTTE2bU0xRnZqbW8zUkxpMFZkaHp2?=
+ =?utf-8?B?WU5lM1l3dng2cXczM2ZKUStNaWkrclpEbWRrRnBzaGdRa25nSFJBMml0TjlL?=
+ =?utf-8?B?NXlkc1NWS2pwVTVwR0pYUkw1WDdrRFR0b2srbzBOMWI0L09JM3hEdmlhOWV2?=
+ =?utf-8?B?M0t6cEtJWGFLUkx3TThEc2NhTEY3dGpLdkxBUTh6WGNUbWI1UEdZbVI3ek9p?=
+ =?utf-8?B?R2xkZWhLbndEem9mcG9sTkxCb1JnV0pCMlp4T2llWWwybkYySlVpdERrcEEw?=
+ =?utf-8?B?Y1JndEcwQ212Z3hlOEltR0NmVHVTSFVZRkRIazgyaWgzVGxGNVpnNEp1dU1i?=
+ =?utf-8?B?WTNuaTQ2SHl0RVV5dW9RYUNnejMvbDlQRVpCcUxvanhzRXo2eHg1ZHRyblc3?=
+ =?utf-8?B?ZklzUzFLSjZsYno4N2dzcDVCazAwZXpGL0huOFJENVV2RnczV1BNbUhyM0FQ?=
+ =?utf-8?B?Q1RZRGlnV3VrR2hQTEdiWG9QVFFZY2Z0VWJNU0I5VzdGYXplbG9TQkdVWkVr?=
+ =?utf-8?B?MWxWYlhxZHM2T0ZlVFRzM3lLWXRrZE4xcnZLMDBYalRsL1AwZXF4Q1dLQUFE?=
+ =?utf-8?B?N2h6R1pyUmFwd0g5cy9tblVPcFFCZnZiN3ZQNjh0ZUt6dFgrc1RYSjNYdUFj?=
+ =?utf-8?B?WFVzNVBvSnFISkYwckg0bUlSWEJGSUR4bXMzcERvb2JrM1l3Q3o2b3dnQmRn?=
+ =?utf-8?Q?cvHpmu9fHcrBI9k8TQQhPD7nI?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58f0a7e5-e588-471d-315b-08de154a191f
+X-MS-Exchange-CrossTenant-AuthSource: AS4PR10MB6181.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2025 11:15:13.0055 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7X9arbXD14OekOmh6IDFXbBwzkydVmF+gmhYwUmqucfO3tvUR5K3pWf4rVbDR/R3Tf86TVUlqrHuASUppv0RaA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR10MB9187
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=jan.kiszka@siemens.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,118 +225,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 17.10.25 14:03, Jan Kiszka wrote:
+> Changes in v5 [1]:
+>  - fix regression of patch 1 with unplugged SD cards
+>  - address review comments on documentation
+> 
+> Changes in v4:
+>  - add truncation warning to mkemmc.sh
+>  - fix typos in doc and mkemmc.sh
+> 
+> Changes in v3:
+>  - rebased, dropping merged patches
+>  - rework image alignment rules to match hardware
+>  - improve/fix mkemmc script
+>  - add emmc documentation
+> 
+> Changes in v2:
+>  - handle write counter expiry
+>  - assert() availability of QCRYPTO_HASH_ALGO_SHA256
+>  - add missing SPDX-License-Identifier
+> 
+> This closes an old gap in system integration testing for the very
+> complex ARM firmware stacks by adding fairly advanced Replay Protected
+> Memory Block (RPMB) emulation to the eMMC device model. Key programming
+> and message authentication are working, so is the write counter. Known
+> users are happy with the result. What is missing, but not only for RPMB-
+> related registers, is state persistence across QEMU restarts. This is OK
+> at this stage for most test scenarios, though, and could still be added
+> later on.
+> 
+> What can already be done with it is demonstrated in the WIP branch of
+> isar-cip-core at [2]: TF-A + OP-TEE + StandaloneMM TA + fTPM TA, used by
+> U-Boot and Linux for UEFI variable storage and TPM scenarios. If you
+> want to try: build qemu-arm64 target for trixie with 6.12-cip *head*
+> kernel, enable secure boot and disk encryption, then run
+> 
+> $ QEMU_PATH=/path/to/qemu-build/ ./start-qemu.sh
+> 
+> Deploy snakeoil keys into PK, KEK and db after first boot to enable
+> secure booting:
+> 
+> root@demo:~# cert-to-efi-sig-list PkKek-1-snakeoil.pem PK.esl
+> root@demo:~# sign-efi-sig-list -k PkKek-1-snakeoil.key -c PkKek-1-snakeoil.pem PK PK.esl PK.auth
+> root@demo:~# efi-updatevar -f PK.auth db
+> root@demo:~# efi-updatevar -f PK.auth KEK
+> root@demo:~# efi-updatevar -f PK.auth PK
+> 
+> Note that emulation is a bit slow in general, and specifically the
+> partition encryption on first boot is taking 20 min. - we should
+> probably reduce its size or understand if there is still something to
+> optimize.
+> 
+> Jan
+> 
+> [1] https://github.com/siemens/qemu/commits/queues/emmc/
+> [2] https://gitlab.com/cip-project/cip-core/isar-cip-core/-/commits/wip/qemu-rpmb
+> 
+> CC: Alexander Bulekov <alxndr@bu.edu>
+> CC: Alistair Francis <alistair@alistair23.me>
+> CC: Cédric Le Goater <clg@kaod.org>
+> CC: Joel Stanley <joel@jms.id.au>
+> CC: Warner Losh <imp@bsdimp.com>
+> 
+> Jan Kiszka (6):
+>   hw/sd/sdcard: Fix size check for backing block image
+>   hw/sd/sdcard: Allow user-instantiated eMMC
+>   hw/sd/sdcard: Add basic support for RPMB partition
+>   hw/sd/sdcard: Handle RPMB MAC field
+>   scripts: Add helper script to generate eMMC block device images
+>   docs: Add eMMC device model description
+> 
+>  docs/system/device-emulation.rst |   1 +
+>  docs/system/devices/emmc.rst     |  53 +++++
+>  hw/sd/sd.c                       | 352 ++++++++++++++++++++++++++++---
+>  hw/sd/sdmmc-internal.h           |  21 ++
+>  hw/sd/trace-events               |   2 +
+>  scripts/mkemmc.sh                | 218 +++++++++++++++++++
+>  6 files changed, 618 insertions(+), 29 deletions(-)
+>  create mode 100644 docs/system/devices/emmc.rst
+>  create mode 100755 scripts/mkemmc.sh
+> 
 
+Gentle ping: Would be great to get it into the next QEMU release. Please
+let me know if something is still missing for that.
 
-On 10/1/25 3:05 PM, Jonathan Cameron wrote:
-> On Mon, 29 Sep 2025 14:36:32 +0100
-> Shameer Kolothum <skolothumtho@nvidia.com> wrote:
->
->> From: Eric Auger <eric.auger@redhat.com>
->>
->> Add a 'preserve_config' field in struct GPEXConfig and if set, generate the
->> DSM #5 for preserving PCI boot configurations. For SMMUV3 accel=on support,
->> we are making use of IORT RMRs in a subsequent patch and that requires the
->> DSM #5.
->>
->> At the moment the DSM generation is not yet enabled.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> [Shameer: Removed possible duplicate _DSM creations]
->> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
->> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Throw an AML blob in the patch description as easier to check that against
-> the spec.  Add a specific spec reference as well.
->
->> ---
->> Previously, QEMU reverted an attempt to enable DSM #5 because it caused a
->> regression,
->> https://lore.kernel.org/all/20210724185234.GA2265457@roeck-us.net/.
->>
->> However, in this series, we enable it selectively, only when SMMUv3 is in
->> accelerator mode. The devices involved in the earlier regression are not
->> expected in accelerated SMMUv3 use cases.
->> ---
->>  hw/pci-host/gpex-acpi.c    | 29 +++++++++++++++++++++++------
->>  include/hw/pci-host/gpex.h |  1 +
->>  2 files changed, 24 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
->> index 4587baeb78..e3825ed0b1 100644
->> --- a/hw/pci-host/gpex-acpi.c
->> +++ b/hw/pci-host/gpex-acpi.c
->> @@ -51,10 +51,11 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
->>      }
->>  }
->>  
->> -static Aml *build_pci_host_bridge_dsm_method(void)
->> +static Aml *build_pci_host_bridge_dsm_method(bool preserve_config)
->>  {
->>      Aml *method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
->>      Aml *UUID, *ifctx, *ifctx1, *buf;
->> +    uint8_t byte_list[1] = {0};
-> The inline declaration is a bit odd, but I'm not seeing a specific reason to
-> change that here.  Perhaps call out the change as some 'other cleanup' in the
-> patch description if you want to make it anyway.
-I think this is a good cleanup anyway.
->
->>  
->>      /* PCI Firmware Specification 3.0
->>       * 4.6.1. _DSM for PCI Express Slot Information
->> @@ -64,10 +65,23 @@ static Aml *build_pci_host_bridge_dsm_method(void)
->>      UUID = aml_touuid("E5C937D0-3553-4D7A-9117-EA4D19C3434D");
->>      ifctx = aml_if(aml_equal(aml_arg(0), UUID));
->>      ifctx1 = aml_if(aml_equal(aml_arg(2), aml_int(0)));
->> -    uint8_t byte_list[1] = {0};
->> +    if (preserve_config) {
->> +        /* support for function 0 and function 5 */
->> +        byte_list[0] = 0x21;
-> Change the comment to reflect the fix in previous patch as otherwise
-> it sounds like bit(0) means function 0 is supported.
->
->        /* support functions other than 0, specifically function 5 */
+Thanks,
+Jan
 
-yeah I was confused too after all this time. Maybe quote the ACPI spec
-at least in the commit msg:
-
-"
-If Function Index is zero, the return is a buffer containing one bit for
-each function index, starting with zero. Bit 0 indicates whether there
-is support for any functions other than function 0 for the specified
-UUID and Revision ID. If set to zero, no functions are supported (other
-than function zero) for the specified UUID and Revision ID. If set to
-one, at least one additional function is supported. For all other bits
-in the buffer, a bit is set to zero to indicate if that function index
-is not supported for the specific UUID and Revision ID. (For example,
-bit 1 set to 0 indicates that function index 1 is not supported for the
-specific UUID and Revision ID.)
-"
-
-Eric
-
-
->
->> +    }
->>      buf = aml_buffer(1, byte_list);
->>      aml_append(ifctx1, aml_return(buf));
->>      aml_append(ifctx, ifctx1);
->> +    if (preserve_config) {
->> +        Aml *ifctx2 = aml_if(aml_equal(aml_arg(2), aml_int(5)));
->> +        /*
->> +         * 0 - The operating system must not ignore the PCI configuration that
->> +         *     firmware has done at boot time.
->> +         */
->> +        aml_append(ifctx2, aml_return(aml_int(0)));
->> +        aml_append(ifctx, ifctx2);
->> +    }
->> +
->>      aml_append(method, ifctx);
->>  
->>      byte_list[0] = 0;
->> @@ -77,12 +91,13 @@ static Aml *build_pci_host_bridge_dsm_method(void)
->>  }
-
+-- 
+Siemens AG, Foundational Technologies
+Linux Expert Center
 
