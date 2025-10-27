@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D77CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 21:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C285CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 21:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDUab-0002Zf-Ax; Mon, 27 Oct 2025 17:17:17 -0400
+	id 1vDUaV-0002Yu-Qb; Mon, 27 Oct 2025 17:17:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vDUZx-0002Up-Ul
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 17:16:48 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vDUZs-0002Ud-1d
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 17:16:42 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vDUZr-00050Y-FQ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 17:16:37 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vDUZn-00050X-TP
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 17:16:30 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id A264D48C42;
+ by sea.source.kernel.org (Postfix) with ESMTP id CC48F48C43;
+ Mon, 27 Oct 2025 21:16:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F082BC4CEF1;
  Mon, 27 Oct 2025 21:16:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BF2C4CEF1;
- Mon, 27 Oct 2025 21:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1761599781;
- bh=xFlzV8vrus0MSYUZSP7M+xz2pgWJO+cv9CnznTXzwKI=;
+ s=k20201202; t=1761599783;
+ bh=8wDaX0jKB4u1eOBf4NCKMedHFU8zVDmGIoXbem7rhpE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=hc3lyDXU0IIrCXgErqQv79ze7SRRmmwlX+71EX23gc913Mp39OsamYatZNhzi80cG
- OZ/wUc//XDsITtsW+tAiHl9ijTujnO3wLX8Q2E7wxg/TslL5UfgfzViTWJtDBEQYdw
- ua9LOwR2SH4pFy2cTlF84/LcyvUBwk4WtgQp6P/ukWlYP5sRps4WOHF+xtCIAhJ7mW
- ezd8Vil2w8aJesxAbPjWEmuPEl/x1kuGhNivDme8wvfnYOpqP/FBLB/S96t24+fRbc
- 5qv5Iz0j7HtrX+WpWBNITnJNXs40avYiAbpb6GOGSeo03xb/JTacq7DMRDtpwE/H1Y
- 54gPK2cChWfBw==
+ b=trhOsd1iPCMUE0KJPzEX6E/Lb+Ex2euRZ1PdqlpSrVliJD0pzGr/+ivKUTQzMxtg6
+ 2vJ5hVGA466IwDwh9ZqPAiaQA/hpi6eg3mGyrsucBzVzI8StraQLxca8X0YMrnbVLr
+ mfExofkO+NAWgo+e5UsWvH3ncGflSx7GWtEBAhD9f5NTJFykdGXMtyhrZ6vwBC7jFK
+ lxYu3+Mcd4PGecdRfGmOgxIOGlc4xny7igi0xKrOUfWGMv+jGtbSywRujMmQWiHZA5
+ Tl+WK/yGXfDjkzfR+MvU4i2njwQgMfH4OAGQKS9JNDSOZL6Yn+RXMtVtZdD4MCBNQ3
+ zrHW68RChmGXg==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>
@@ -40,13 +40,14 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Fam Zheng <fam@euphon.net>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, deller@gmx.de
-Subject: [PULL 06/11] hw/hppa: Fix firmware end address for LASI chip
-Date: Mon, 27 Oct 2025 22:15:58 +0100
-Message-ID: <20251027211603.7141-7-deller@kernel.org>
+Subject: [PULL 07/11] hw/hppa: Fix interrupt of LASI parallel port
+Date: Mon, 27 Oct 2025 22:15:59 +0100
+Message-ID: <20251027211603.7141-8-deller@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251027211603.7141-1-deller@kernel.org>
 References: <20251027211603.7141-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
  envelope-from=deller@kernel.org; helo=sea.source.kernel.org
@@ -73,37 +74,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The base address of a LASI chip on a 715 machine starts at HPA
-0xf0100000.  Make sure that the firmware does not extend beyond that
-address, otherwise it's not possible to access the LASI ports.
+Fix wrong assignment where the LASI parallel port was using the IRQ line of the
+LASI LAN card.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hppa/hppa_hardware.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/hppa/machine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
-index 21c777cba6..d422af0429 100644
---- a/hw/hppa/hppa_hardware.h
-+++ b/hw/hppa/hppa_hardware.h
-@@ -5,7 +5,7 @@
- #define HW_HPPA_HPPA_HARDWARE_H
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index cddca69b93..bec5a86f24 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -584,7 +584,7 @@ static void machine_HP_B160L_init(MachineState *machine)
  
- #define FIRMWARE_START  0xf0000000
--#define FIRMWARE_END    0xf0800000
-+#define FIRMWARE_END    0xf0100000
- #define FIRMWARE_HIGH   0xfffffff0  /* upper 32-bits of 64-bit firmware address */
+     /* Parallel port */
+     parallel_mm_init(addr_space, translate(NULL, LASI_LPT_HPA + 0x800), 0,
+-                     qdev_get_gpio_in(lasi_dev, LASI_IRQ_LAN_HPA),
++                     qdev_get_gpio_in(lasi_dev, LASI_IRQ_LPT_HPA),
+                      parallel_hds[0]);
  
- #define RAM_MAP_HIGH  0x0100000000  /* memory above 3.75 GB is mapped here */
-@@ -19,6 +19,7 @@
- #define DINO_UART_HPA   0xfff83000
- #define  DINO_UART_BASE 0xfff83800
- #define DINO_SCSI_HPA   0xfff8c000
-+#define LASI_HPA_715    0xf0100000
- #define LASI_HPA        0xffd00000
- #define LASI_UART_HPA   0xffd05000
- #define LASI_SCSI_HPA   0xffd06000
+     /* PS/2 Keyboard/Mouse */
 -- 
 2.51.0
 
