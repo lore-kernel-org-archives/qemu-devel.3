@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BD5CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F185BCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLuz-0004SF-BF; Mon, 27 Oct 2025 08:01:45 -0400
+	id 1vDLx9-0005nq-4d; Mon, 27 Oct 2025 08:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLuc-0004Ix-Iq
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:01:25 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLv8-0004X3-L1
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:01:58 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLuY-0000K4-3C
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:01:22 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47109187c32so24035715e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 05:01:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDLv3-0000Pf-Nm
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:01:54 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-427060bc0f5so2510969f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 05:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761566471; x=1762171271; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1761566506; x=1762171306; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BXmG4rPJzsExvgDltHVu7249ESkbN7O+AY3Sm1krET8=;
- b=qlShkdCyC9FfjEA76EXbNNZxH1VXCYVpNeijYIRnGcDMMJ8f7DYc0ckMFpjLshLct9
- ZMbOnIE3tu5Y/nEwy3x0gMl5nGsIaJ3JG3eL2AL6Z7DoNQSi0Rg0ENMkuwV+SPpWNy9P
- P7s5fzfvyWKXhS00x5lNMjJOEB6I31/Q6BOA3aPZbDOoreXaglIqHByDkGqAyJFHAJIh
- DodCqKjEfD9qXv74PtoYGhe56Q4f2PpnB2oR5ReJlnqEKgV7qoOrLto38YIMyZd2YjZC
- ACUcD5YpyqyVd+lwweihi7k6RvnVMXMPxStuPCox5YlkDWXvhbCYvHWDOhmXvvB4m+Zf
- CwMw==
+ bh=PLGcLctG7Za4dYWV4ICZwURdQTbZRIsw0zDlM3v5vho=;
+ b=A1ZlwAIEa5BMe4OC8bUqtL0jrxVxEGl4t3Se5PaH0l3tcgwj77S3QeRReRVCnj7j08
+ IinDPFf8XHPDe23OtbQwe1Nv3oT0RHT3zQTGCu0tv934RaIV7IJ66tCl+qwMSrFt5XIv
+ 64+0hTur3yzjdRSfVZOocP6EgRmgsaamtn2K8PQzZmQhGwY46YlRdA+6xu8GWBbwO7gf
+ c+7LCSubcoAkk7KKib44xQuG6kRq4hoRhKNmEkhicRQAe6s4enZQipHET3CCWtdyVHmx
+ W/F6h6ZQ4vcGyd3boA4ETLv3K63bUk27R6h+kuGIs6tjCSDV33YMM7GS2lcLnZgjOueP
+ FtgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761566471; x=1762171271;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1761566506; x=1762171306;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BXmG4rPJzsExvgDltHVu7249ESkbN7O+AY3Sm1krET8=;
- b=GK7P+LvFBeqH/nkAFkietkRXoW0zCJYLLVUbZRhiS9DDpdYKrHszb0rilT5cRsAsS8
- mYl3bWhMzD97txFzF+tlDIuHC6k13fReOTekcgwEzpvWqsyxS0N0l+N0sgcrIWO5Xa/X
- erZzyTE9Xtea0K78LIlEK6XEsyjRzehy+gdmNVQwcdlBaInU95HEAFOxTBeAtKXqg5iX
- cKaag0J9FaSjBX4hNu+HkTFNDd2+XliDiAPRPo9O9P5CvU8ZDEy9z8MpYW6tTS5JvPnN
- YDe+4rBD8WW1EMfM+JfFzuyGVDx10YjTMwnUcCr7A1ycRDPU2Z/cfcddtONgN4iCB5B1
- IiLg==
+ bh=PLGcLctG7Za4dYWV4ICZwURdQTbZRIsw0zDlM3v5vho=;
+ b=jKrrmc387T0GhDTWDmK2TMyfhVyoR0D3EQCGnM+V0FjRg89sncRZw6D3TtwUQa9+Tc
+ mPFrIlL/T+y9SgYU0vmIoE6oVLfs22rhM0YGg4nurwcmh8qL2PANV+Ek+wX8Btqg4r/c
+ NK8dY6BEj8FbFnjHhKH5AHbyTAi6HZ8D1vty9+5bYIDWgIX86HAuL6uOzNkOXPI/RhRa
+ Qm/xTZSCcow51f/VrdaubK3f3xDm+CE5W75xDEyHAkcr/5BZnPftejGXhSfDDHDFL9Gh
+ vZ0xB1dIQ+gmXl8WFqOfkTT0EhMgaZi83qfwlDMXtnVk6HGwqjOw/NqoDZ66GsVLZyAJ
+ 4z+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPJf1y60Tk89DRUQNEePf3awu0pdvbTHiyX+ZTBnuNQfziQTsS19XNKbsFjHQJErHNEfFcwOJw5GR5@nongnu.org
-X-Gm-Message-State: AOJu0YwWKy1bob3ZdCj0WZi/8akPpfXAiTkxjS1miDnn5zjcQFrmDp+u
- fcaw4hlE7xxk4n7i0BclCOG44o3LqRnNStrCbBY17rUnUV5xg15gS+gvroVOjE80Vtg=
-X-Gm-Gg: ASbGnctAl6uF110ZG9qz0GK1z6BJ5ZQD+CYjOo5/TqqPAaSeX56x2gvRADQVVVDZj8I
- S7/W1AliNUQ2q+20JpfDcTRfyClg5aE9G3SegShI5nAnfz+lYo6cEXKCHMy4LJXnhZFiP1CAqny
- hn+ZQ1TWxYHtIwWIm0MwlNtqQD+Ra2mKeRxstJJa/FYDaGKNGaA+txW2hcI50E8X+QzliREBWJK
- BmXlqwqjQoPY8yPOCEPKWWnUMUGhN5LmcASd5IcxGpxMRlrbBdcoViawP3wP1TY6QC41yHo9S9F
- T/JN/m0itBuHFCxXg0fKycRFJKmwtpr1vM8yUHrDwYSWwaCG4vg+4PjsZh7LDmlQevX5w5yWR2r
- jNVU1YZWw8d/FDLFoTM8RjeTjCEJA/3LbrDW9liI3R8RDcCPZQ6394OM7ucMSyiSL00QQRNNZsZ
- 75nvHl8eKKRIh3Qhbvpltp6e8uVCJ67BYC5FiB1su6Yeo=
-X-Google-Smtp-Source: AGHT+IF8m3ukDmgT1ef+UwiXVMOA4QUDsO0KtxTwBMHpDKZiWoXEX8dZTimr/8CJH12qvIPO7cs/vA==
-X-Received: by 2002:a05:600c:1d9b:b0:46f:b32e:528f with SMTP id
- 5b1f17b1804b1-4711787639amr274798645e9.5.1761566470629; 
- Mon, 27 Oct 2025 05:01:10 -0700 (PDT)
+ AJvYcCWiC9kVhz1kaHfmxer2FgTt1ptb2lLQAiNNKmJlltDK/Gu/cIEhZhRjTH7zBnJD9o8paNGPv92I+nU9@nongnu.org
+X-Gm-Message-State: AOJu0YxSfrB1uGQ5FRbIUbp1+RYI7h2ejsCR/kdYUWEMXqMk7rz3/FdI
+ sqg41Wl+NWBN9I0Li8zJJqr1qPSbwEmIyqAR3aqwX4mWRW0CHLC8Re2opR0IlJvbit2KyamniRh
+ rgOs+KkA=
+X-Gm-Gg: ASbGncsBV5sMqe7JKAjoQj5Hxp2viVzY9odK7k4s+DDnO4qU7u91TW+EUj3Ltl8AO7X
+ ktQXv1MoyOY5+YtPZdM7ehSyRKDetUAtP6Wh5aZVYUjPlsE2TNcU6yLtQaTCH+pN/K2Wzal8Ync
+ J7SlZ9CN+/ojaKtorXL/zBKOhjZVIqosJAODZnz2Zexk9V5bHzdd6Y+vIy2EKgeKMDs6tulC/12
+ TyIyRSZEXtqrI64JtYpfvj6xazpMcTmbQteo5DahV0HAENJUR9nPAHSnIp+0rS43Ir4nA/8K+Bz
+ Yx6+QaYFcppaLHlHLj+CKGEsy/9WHCBCeL8L3wUOAQAw52V9wI5P9hEL816uxngg44Ux2ZAfbQQ
+ i2U241Yqpte7ZKcPshVqupu39r+u/mpKThqPEdyk4gErkD1CJHex4LPi5t7/bGi2WG1er4qbCN6
+ KPX2dBRQdsal64XZxEt+mZAdDu2IdrwqlalR1i1U4zDkH2HgaG4jIHPIhtXkzchDao
+X-Google-Smtp-Source: AGHT+IFA5lQdG3wEcpUVDcxHr0YznpdNBH1fOJhn4oLYLiZia3GVWBWl7OHntj9GSjgdsqgHj61wLA==
+X-Received: by 2002:a05:6000:2282:b0:3e5:394d:10bb with SMTP id
+ ffacd0b85a97d-4299072c109mr8362370f8f.41.1761566505883; 
+ Mon, 27 Oct 2025 05:01:45 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd01dfc7sm65349145e9.2.2025.10.27.05.01.09
+ ffacd0b85a97d-429952d5985sm13766651f8f.25.2025.10.27.05.01.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 05:01:10 -0700 (PDT)
-Message-ID: <c3aec42a-467c-4320-802b-a80e19cc78e6@linaro.org>
-Date: Mon, 27 Oct 2025 13:01:09 +0100
+ Mon, 27 Oct 2025 05:01:45 -0700 (PDT)
+Message-ID: <85355b5e-6c8d-440d-8a82-5bae8228f078@linaro.org>
+Date: Mon, 27 Oct 2025 13:01:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/migration: Fix bad indentation
+Subject: Re: [PATCH] tests/functional/riscv64/test_sifive_u: Remove unused
+ import statement
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20251027112347.54190-1-thuth@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20251027112803.54564-1-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027112347.54190-1-thuth@redhat.com>
+In-Reply-To: <20251027112803.54564-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 12:23, Thomas Huth wrote:
+On 27/10/25 12:28, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> pylint complains about bad indentation in two lines. Use 12 spaces
-> instead of 11 spaces to get it right.
+> skipIfMissingCommands is not used here, remove the import to silence
+> a pylint warning for this file.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   tests/functional/migration.py | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   tests/functional/riscv64/test_sifive_u.py | 1 -
+>   1 file changed, 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
