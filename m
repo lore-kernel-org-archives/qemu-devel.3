@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C2CCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F32CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDT2C-0000YO-F1; Mon, 27 Oct 2025 15:37:40 -0400
+	id 1vDT5L-000273-VD; Mon, 27 Oct 2025 15:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDT28-0000Xn-Cj
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:37:38 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDT56-00025T-R0
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:40:44 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDT21-0008A1-Ae
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:37:35 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-426fd62bfeaso2472306f8f.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:37:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDT4y-0000Dp-BH
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:40:39 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-475dd54d7cdso8727185e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761593842; x=1762198642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761594025; x=1762198825; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RUA6XkTACLfZVlrcW1bD/5d1YZcWJdLhmh+Xga5jA4g=;
- b=PoILuwRDhC0kJmaZ86XqZCXXTa5LP3ZyR35oVxxHKLJCJQh9NE9T/yDTWWDKG2IiWi
- iVHZxhSsWr7+/WNNksw5GLQ6mzw0BxxRgMA34UxwnOMrfIoylV4+Qlmu+347tWYRVmFq
- T/9LnDFS1LZH9YYAVII9K7EijVjg3eeFyZoyajo82zsKi5MkDXyeVouAl1FlDXxL/Mmu
- jB0am1gntQVX5nLUWZ9J7InTdYMeBADsgQa4oOyrVsiMG/PicOcskJpl4ri7sGohrWhd
- Qt3OhBdua9AMdCKXFNEqyQ4BeiZZ9tLnpF54QguB/Hokj5n1I4wG44vfPRqfBV+O8KE/
- Qmfw==
+ bh=5brc5qyLbooxSabCjlWZku5y1ceMf1JYxwGzirNblyg=;
+ b=WieTEGPGK+A91sSSN+DHuRx2qFb1QvhXtdzYeUeA8Ke2TKXo5iw4XGzM/BBhujrj7T
+ aVXUdvVkU4YGiacIumCl4P2qyRIOpyPvtnffySlKPTxC5Mypm8wYW0iNnSLORPHsv955
+ XwRtUH0Wuj8evd52fQ5n/OI8jofvJukBDV+odqMnmVuuegIsgoTLM+X4Ak9giA2btAJF
+ vtJ18EYfTmmVgT/sU0SpQPA+lTqGOxu43y6qodcsPtVxdK0Oz8NSB4eEwEGCX1BlEy1I
+ wjPKokmxmeaQ0MW0H5VgLr3s/CJyzmvemsEqH33Jkan6ZpeVCErAULy/dO6Bl6+0ONAD
+ Dqcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761593842; x=1762198642;
+ d=1e100.net; s=20230601; t=1761594025; x=1762198825;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RUA6XkTACLfZVlrcW1bD/5d1YZcWJdLhmh+Xga5jA4g=;
- b=bdd6WPRsiwk/FX76SJlE+rh0BvSKIeZ9QPsrrO84cpL1nhJOB3yEuafNCdDTs1+iu7
- EwnWIIDOZfyLNBEKJRTMeUOEnkBvfqhSuJIhs9HRH6e1FTd1ZTs8XEi5jYrLM9SXkmK4
- ZWSFsKrC6VHbXsHp/tDUf51zPDYCBtOkgRpphYipqANLHgtuC8Qinq70dlHjjZZueJnZ
- InBGgYMdx7R3XpBqlbjwLi8n8bt1bUmBBriA7ebh+kUP33Kcxp/g4BRZ+Rvor0BKC6pQ
- mIRpRB2/IFM/rYmEfXJwyVlLPqdNKimcj7SyJBbKLeqp0qkq+BabuCDLm/FNK1LJqtPM
- FtSg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpwU6jrwjIu8Zr9Xso9ZeJGQmQ2AMwmypJjQayAWRli65LAWbzG2TUTHaxaj0fW9WFzk+SutXTkSze@nongnu.org
-X-Gm-Message-State: AOJu0YzimCJ1ynx5zSOrGbnKQQzz3xcSAsWcuDNLfoTMwWFPbMDbtOMh
- GW5LwBUAsSe99qCD+CTYHNSz+QsqHfs0D8U3VhDzkTDien3UFAOq9QZlFRH7bu9k0kQ=
-X-Gm-Gg: ASbGncvD6tzO1Ju2UDVJDRGA7qHrZSphjbrRsG1dlBs6xUJZ/Tr9sgXOBQm3thzj+m7
- 93aGt5vO0iq8wY26srRiY3bgcV3WJYX6r2hA9jJTP7Aw9FfDqKry97fMOYe/O/b6Psl+76g0E++
- wfSyV0UITT5Bvj2FOT4rR17TSPwa3E6N5Ngsdw2IhD9upqOVCbGrIB4G34ZHDDrmsBb9znD3v5u
- UVaPkvLwMqae8dl0xNlli21kXoA9eGaBb6buwTblv262+yc6lPS+oWJgSxd6S07bCkc3ZNJDcG7
- M9BBz0UGZDGDgjDETTwzMzJ1nNZrMwC3qv7O0aDd3DI6Xz4YNHn/BB87ozSXVlf166WZqAOPZWD
- LFbXj1/7KwVtmIjNRt5RjaRiRgLtGIObV+cSHyu51t7pNWUPoTnt8GF3OD82yPzwT4vBF5L8lrN
- 8kv7MOsiKhBx2d3r7jd72dHPKzHvVzIiucnQ3DZ7HTXQahEqYMhFNvBQ==
-X-Google-Smtp-Source: AGHT+IEhZOAYTPgYdoik0Jki6nz6otrCdEX7F9xi1o5NSpsiMM2FacQUDB6bJdTbQnw6z6EbQ0n1lg==
-X-Received: by 2002:a05:6000:2502:b0:427:630:4106 with SMTP id
- ffacd0b85a97d-429a7e76b56mr777204f8f.34.1761593842241; 
- Mon, 27 Oct 2025 12:37:22 -0700 (PDT)
+ bh=5brc5qyLbooxSabCjlWZku5y1ceMf1JYxwGzirNblyg=;
+ b=mHaYO6E748DNUrkO8tNebMrZMomZvJeG78G2jaKXLehURZNz+vEf8zAAr87+LWDk5m
+ SnCTGwsTkK/kpl00x/JKCN60mGBVhHn2liWwC05rZZ1Jt6EcTVi7nJGpIDx92yl4SHDa
+ l31Wm2Bm/GuL4Me40tkuGLCgO6OfORZ23eXw7GPVK7NlJrtq7D3iedcMcfSyXYc1vFr3
+ AfRU2eOe5ct0BbM9KsEdI5mhTfT54NejGehlH5Lu7iI+5JknurU0hqQ+PWVf0mK4bb3g
+ JOtLWsy2hN/nhXYcFhj37tOTdnfdDSD92DAR21Bt1m4C9ZY3XTzwRBpYmNkQjIkt/JLw
+ Tb+w==
+X-Gm-Message-State: AOJu0YxjjYUixn+ezG+Op2IZPdZVNX/YRwq9lOSxw2GgPDTPbMk2whuU
+ WCbfqLYvfOlgFYUSu6VzAJVNlIK1PcMUom2S0eu8Sst9NxymGnPnj2idFD8X+3dmfqZQgEPX/8e
+ lzIvOhlc=
+X-Gm-Gg: ASbGncsfMvG/u0LUhX1Ez1L96qu7iV+lJQxlpn4xhAzBW6Sb6Ipc3Qon1eSizpEg95d
+ HAwmktxcXnHTdZ2cGsnPBjDqGgHyYSUZ1wHp/8gERiIHWn9spzqo3HpW70Q2ox0hnsDJ1FoumvN
+ RKy50pJCFySEut6Ao71ognzAl/TOjEZtt6thCc54B1pjtMZKCoYliintmIIdZE76ckVXZzLp8Ks
+ HIOQZcQDmVMksfymxRKsO1Y8HqrDB9iq2d4G/ephaKfzbojOeAKQThxtB1cBUSmEh34gCIrgPrc
+ KzYgQg+UGchcGmHOYqb3LCCI9Kx2UxoTdJjPuOTv8/hStQBSqqhfNNeh3H9MZ736B3KshF/DZZT
+ nUKVNSuiCdtK0IGohaA3wj3Stoj+trD+TxguidZi0oaEAYkOqEKde6h1H5c/6qH0DJ7/oDBbZBg
+ 59WvXe/41GCzLthlx72+KUFYJWp+QXn7v39b6JZEkBKTo=
+X-Google-Smtp-Source: AGHT+IEcN/DKny5fmLBPSD6ormwN6HPLeG4cZiM9KGf3kCN1b/B39lDV0CG8A9Fjn7kkoY7J2kuQmA==
+X-Received: by 2002:a05:600c:524a:b0:471:ff3:a877 with SMTP id
+ 5b1f17b1804b1-47717e414afmr6557625e9.20.1761594024656; 
+ Mon, 27 Oct 2025 12:40:24 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df5c9sm15840318f8f.41.2025.10.27.12.37.21
+ ffacd0b85a97d-429952da12dsm16121824f8f.29.2025.10.27.12.40.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 12:37:21 -0700 (PDT)
-Message-ID: <1e5e5d37-d89b-417a-8b71-b1c7db8ca70d@linaro.org>
-Date: Mon, 27 Oct 2025 20:37:20 +0100
+ Mon, 27 Oct 2025 12:40:24 -0700 (PDT)
+Message-ID: <6106f968-4a4c-4fc1-a7e5-ab3955adf259@linaro.org>
+Date: Mon, 27 Oct 2025 20:40:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/ppc/pegasos: Update documentation for pegasos1
+Subject: Re: [PATCH v2 0/4] hw/arm/virt: Remove virt-4.1 and virt-4.2 machines
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <f86b90f6839a0cf9426c0d89e95e6ca33704728c.1761346145.git.balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org
+Cc: Andrew Jones <ajones@ventanamicro.com>,
+ Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>
+References: <20251020094022.68768-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f86b90f6839a0cf9426c0d89e95e6ca33704728c.1761346145.git.balaton@eik.bme.hu>
+In-Reply-To: <20251020094022.68768-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,12 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/10/25 01:31, BALATON Zoltan wrote:
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   docs/system/ppc/amigang.rst | 29 +++++++++++++++++------------
->   1 file changed, 17 insertions(+), 12 deletions(-)
+On 20/10/25 11:40, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - Do not remove virt-6.0 -> virt-7.2 (danpb)
+> 
+> Remove the deprecated virt-4.1 and virt-4.2 machines,
+> which are older than 6 years. Remove resulting dead code.
+> 
+> Philippe Mathieu-Daudé (4):
+>    hw/arm/virt: Remove deprecated virt-4.1 machine
+>    hw/arm/virt: Remove VirtMachineClass::no_ged field
+>    hw/arm/virt: Remove deprecated virt-4.2 machine
+>    hw/arm/virt: Remove VirtMachineClass::kvm_no_adjvtime field
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Ping?
 
