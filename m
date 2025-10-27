@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD28CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6D5CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDQWb-0003uS-F9; Mon, 27 Oct 2025 12:56:53 -0400
+	id 1vDQWp-0004Jn-EO; Mon, 27 Oct 2025 12:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQWH-0003df-LI
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:56:36 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQWm-0004J9-E0
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:57:04 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQW6-0001ON-Pl
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:56:33 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-475dab5a5acso15593825e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:56:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQWi-0001Qr-Lr
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:57:03 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3f99ac9acc4so4449903f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761584180; x=1762188980; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761584212; x=1762189012; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vRbyNgBG2QYbRLBjJ+dLxGFpEggesGRlG37R+YEXlUY=;
- b=KS1LNAc8q8CYO8apch6tuk0VHvUuPez1V8SqFRUp7Ja5uJHIqNfIx+22vwSWPPY5pF
- SEQo8r/ccC2TJ8OvXoLFBF5+m0O5ffw8zHGwy6iEDRMLKEpRMvKMNUOGJfVpyM1VZYTc
- IoMAKN5mqeZfN+IUd29OrUyMZV95rUOZugrtgYWr42SQWovQqwaLoGAxYAXvL1W5Jz/D
- qrwtpoXN2y+3woejy3N4zDoCYFYj++tiC62BBRSCWAjj1MXwyPPKpduaucyLYbzAdXXg
- O0KpoR0Fp7ivF9ldgIupyAxYeLVSItwqmi2cpFAB8mW0NXknTMjy4wV/jNuOEhEv0Ux5
- aL3g==
+ bh=0cgsohnlqfIwKcj+UfAMSb5jLmeYbJmNA4yX9S32MCE=;
+ b=RvnhzdJTzQ5sa0jAaGSOIvWJVyLcXY1CL+JZBqHHp28Xmy+v4njXzcSNLa/yKYqUZl
+ yo+MhDgNWweu8ECsA58LH5i2QfNV343wNOrv6xiZLtP7iqwlPxyV2k034vYgDrnYJ979
+ r2h9wwUN1MLmDJ9aHXnhKQeWdEK1iSrb8M+zeklGMCYEHSiu4EQl+wve2lpr2vcsN0ql
+ d24vKYDhc6GyAjdpYhUJSpO8/Nvcp5usSL48OAHIlv/grNN7+EZgu/6HOzphM606j7kg
+ a4/nOqpgQmTquaGCHoqwCc4219rZBgjFpayWZBzMakqGrFY5T3v8/4FdM01gzzimzbTL
+ /q7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761584180; x=1762188980;
+ d=1e100.net; s=20230601; t=1761584212; x=1762189012;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vRbyNgBG2QYbRLBjJ+dLxGFpEggesGRlG37R+YEXlUY=;
- b=np8/Tesq38pzM0klFsaYdsgrIZE/fmZndnL/BSGa+fnVJ7H8Pw6y1LI7LA9FBEtD6Y
- 8V61nbvTyy6/GVOesklKaSV/TVOfm7tdpvjJXr9Y4LOBRbuxsZtNPTYRV7FdY79JInYG
- Z22pPVEpJg3og4QNkQAkjDi9WB55GkgTHXThV3EPd/FW7N10TMZ3t6SJhmZjdTM4ZfS/
- P1qjy1SL+RGN6d4v18VodgfHjHFEpiMJRUu4ZI53qEC3wa8iSemqg1QzPgqspZpraTRM
- kIHRHyktKzSNLt2rguRi6LGB+5awKfYtVDOTcAtsJElbugSYZPWcJT/i6v6yl4IQloEk
- 82cQ==
-X-Gm-Message-State: AOJu0Yw3oP0GXhc54jWR4e+mVgxRwLfliitI+kGcfcer+3oQftLck/XC
- qCkhLJtwmxXezMpzNh4Fobo8+nAocj0cn2p/pu8r7gMJyR/F8Vt7ebxV1ZU3bYgi+FV59lgVxds
- Dz0fZiP8=
-X-Gm-Gg: ASbGncu107RcTQ4aU8ClDRRXHSrBQnaGVNMOzrBwbD0/Qr/AVZdE70bOV4Aibjqdl3y
- wfFmEE6yOfdQZja0C2au+ySMVsBVQqkF7PZMZGUfcC2DsJohiLjt95PZuVC5pPX7ePra6S+xdUk
- prRIQ/odKeKEE0WGwFAwF2vMQaALUSrZoGU++K0G4q7ycZju3WDafudo5rhlBoAUzUb5zaV2mh2
- Kb/SmDtbG0G0jAy7TYGF73biTlgGxZ/7hAXiSWg0JZx3/LFVQCfP76go1leFyAzgq/i48o+WOLI
- tCvQWJ+zERgvCpaDOVBDVq3dYovBl0X6eAtgbs1mDH5zQNkPXT/gwZjaf+GJ/O2SgyzdSr2oBus
- yKieQX2BdcOQj6qT3obSbmr+ONdCckreqMVhzjV2Zp7JutQeEyzj6NRHCuUr4k7erQ1kTvAaoWg
- Y1ekYE4QPTJmaoooIrqRbOqAcNABwRXzrqtY7QxCmJVEEYuGsvxQ==
-X-Google-Smtp-Source: AGHT+IHB6Jayx13wSSGJnxfl7G3sjpsz07BEBFYyiomF06bFmu07tIKBf/4iI63Ifm7s+Y+LnHZUng==
-X-Received: by 2002:a05:600c:6215:b0:46e:33b2:c8da with SMTP id
- 5b1f17b1804b1-47717e416admr3367265e9.32.1761584179936; 
- Mon, 27 Oct 2025 09:56:19 -0700 (PDT)
+ bh=0cgsohnlqfIwKcj+UfAMSb5jLmeYbJmNA4yX9S32MCE=;
+ b=NiMBmRKYaUXw91jfRNbszV4Y835Mmf2vA3wp8gQ7rCBwBpSHiiJrYroTkStuOwvFvN
+ 0mXgpWv450lAPiFB3A1BH3IMu2uPi3pL+WJbXb61pe5LWEfevjmg0nRN1TfrPOMHCn0F
+ FTHw4OjpTMq8zr/JtMWczJOu9vzr63GgUnCne3gdilPPKO9rNG01JSgCSkHv2Kb+K818
+ /A3Bot3mytk3E8uYkf4pZ2jIWmLma4Wz/nGr/mYxYAFSFSEYHE0Ao2aX2gC/QxO7oPGa
+ K/RAWcmiXW+elKLJ8U+KVUv3cPUg+rMvyEe76RqJGW5RmYuywpKVpQLST25jmJp+fo0B
+ YpOA==
+X-Gm-Message-State: AOJu0YxEUDJ731+niveWJMmvkzUMjnKPV9yVacvHrar6u4F3M3cWa7dh
+ /TV/90qXNCfZfDsJlQ8+/hx94lQbU11O+8cXMjfWcbKUPL8tWvJRI9sAOHgkwdprQiua2k7+hrN
+ 0vqhU59g=
+X-Gm-Gg: ASbGncvEA7xvBy8LsLwGoaIWtBg94svrynfm57lDqhIeqCiOi3nwKGQUW1jDoTmVcRO
+ XD4ZPf4OwdG8I1CPPw6Fy7Wed41+uSGuVjkNB8wME/SAG9Q3wgZlex/QlOey4JO+Mui+fkJQOWL
+ ki90zvUL5fOgRhhxVxn7411wpaDFp5/Yiv+z1CuGATbSqZLApOlDWcPUXS9IRVdKf6Gp0kI3+0K
+ FvW21QgcqtomLwgFvlQzQT8QwMdbXWkvI8XTlgNoa1PRdh2XaQSF546y9sNT4PkcviCbbIbzeSx
+ Id8dHAWqAxZd1le3bIM2eCP2D0nWbleEvRFQP1Cm6QSQtEknGreJq54/63IjnJQBtRg6F2WIXE1
+ 6LmHciDFeX+qIsm7EDdvYeeoHaqf8qPY/wSmJl4cRV2X0dS6x63pB2eGnf18Wh9xP7JoaakKSkp
+ umz+P0aRkZeQaEpUibrHsgqXITgwaujdI9YhfA/ULiRAX0/sRoDw==
+X-Google-Smtp-Source: AGHT+IEjovgpOz7XN12E1ogjYuZ5/HhI/Cxq7vKPig9ZFea41DRNg/SoJufOiYB1YV7fQj1ka/pnew==
+X-Received: by 2002:a05:6000:2405:b0:429:8e79:a181 with SMTP id
+ ffacd0b85a97d-429a7e9ca2bmr301011f8f.56.1761584211671; 
+ Mon, 27 Oct 2025 09:56:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd02cd5dsm145426295e9.4.2025.10.27.09.56.18
+ ffacd0b85a97d-429952cbc16sm14793791f8f.15.2025.10.27.09.56.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Oct 2025 09:56:18 -0700 (PDT)
+ Mon, 27 Oct 2025 09:56:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -72,24 +72,25 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 6/7] hw/pci-host/sabre: Re-use generic pci_host_data_le_ops
- MemoryRegionOps
-Date: Mon, 27 Oct 2025 17:53:02 +0100
-Message-ID: <20251027165304.98296-7-philmd@linaro.org>
+Subject: [PATCH v2 7/7] hw/pci-host/typhoon: Re-use generic
+ pci_host_data_le_ops MemoryRegionOps
+Date: Mon, 27 Oct 2025 17:53:03 +0100
+Message-ID: <20251027165304.98296-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251027165304.98296-1-philmd@linaro.org>
 References: <20251027165304.98296-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,84 +111,74 @@ pci_host_data_le_ops MemoryRegionOps.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/pci-host/sabre.c      | 34 +++-------------------------------
- hw/pci-host/trace-events |  2 --
- 2 files changed, 3 insertions(+), 33 deletions(-)
+ hw/alpha/alpha_sys.h |  1 -
+ hw/alpha/pci.c       | 26 --------------------------
+ hw/alpha/typhoon.c   |  4 ++--
+ 3 files changed, 2 insertions(+), 29 deletions(-)
 
-diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
-index 669191b6c7e..eb3dbe3361f 100644
---- a/hw/pci-host/sabre.c
-+++ b/hw/pci-host/sabre.c
-@@ -246,28 +246,6 @@ static const MemoryRegionOps sabre_host_config_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
+diff --git a/hw/alpha/alpha_sys.h b/hw/alpha/alpha_sys.h
+index a303c584383..c193f0a9b56 100644
+--- a/hw/alpha/alpha_sys.h
++++ b/hw/alpha/alpha_sys.h
+@@ -14,7 +14,6 @@ PCIBus *typhoon_init(MemoryRegion *, qemu_irq *, qemu_irq *, AlphaCPU *[4],
+ 
+ /* alpha_pci.c.  */
+ extern const MemoryRegionOps alpha_pci_ignore_ops;
+-extern const MemoryRegionOps alpha_pci_conf1_ops;
+ extern const MemoryRegionOps alpha_pci_iack_ops;
+ 
+ #endif
+diff --git a/hw/alpha/pci.c b/hw/alpha/pci.c
+index 7c18297177b..d44cee570bf 100644
+--- a/hw/alpha/pci.c
++++ b/hw/alpha/pci.c
+@@ -38,32 +38,6 @@ const MemoryRegionOps alpha_pci_ignore_ops = {
+     },
  };
  
--static void sabre_pci_config_write(void *opaque, hwaddr addr,
--                                   uint64_t val, unsigned size)
--{
--    SabreState *s = opaque;
--    PCIHostState *phb = PCI_HOST_BRIDGE(s);
 -
--    trace_sabre_pci_config_write(addr, val);
--    pci_data_write(phb->bus, addr, val, size);
+-/* PCI config space reads/writes, to byte-word addressable memory.  */
+-static uint64_t bw_conf1_read(void *opaque, hwaddr addr,
+-                              unsigned size)
+-{
+-    PCIBus *b = opaque;
+-    return pci_data_read(b, addr, size);
 -}
 -
--static uint64_t sabre_pci_config_read(void *opaque, hwaddr addr,
--                                      unsigned size)
+-static void bw_conf1_write(void *opaque, hwaddr addr,
+-                           uint64_t val, unsigned size)
 -{
--    uint32_t ret;
--    SabreState *s = opaque;
--    PCIHostState *phb = PCI_HOST_BRIDGE(s);
--
--    ret = pci_data_read(phb->bus, addr, size);
--    trace_sabre_pci_config_read(addr, ret);
--    return ret;
+-    PCIBus *b = opaque;
+-    pci_data_write(b, addr, val, size);
 -}
 -
- /* The sabre host has an IRQ line for each IRQ line of each slot.  */
- static int pci_sabre_map_irq(PCIDevice *pci_dev, int irq_num)
- {
-@@ -361,12 +339,6 @@ static void sabre_host_reset(DeviceState *d)
-     pci_bridge_update_mappings(PCI_BRIDGE(pci_dev));
- }
- 
--static const MemoryRegionOps pci_config_ops = {
--    .read = sabre_pci_config_read,
--    .write = sabre_pci_config_write,
+-const MemoryRegionOps alpha_pci_conf1_ops = {
+-    .read = bw_conf1_read,
+-    .write = bw_conf1_write,
 -    .endianness = DEVICE_LITTLE_ENDIAN,
+-    .impl = {
+-        .min_access_size = 1,
+-        .max_access_size = 4,
+-    },
 -};
 -
- static void sabre_host_realize(DeviceState *dev, Error **errp)
- {
-     SabreState *s = SABRE(dev);
-@@ -430,12 +402,12 @@ static void sabre_host_instance_init(Object *obj)
+ /* PCI/EISA Interrupt Acknowledge Cycle.  */
  
-     /* sabre_config */
-     memory_region_init_io(&s->sabre_config, obj, &sabre_host_config_ops, s,
--                          "sabre-config", 0x10000);
-+                          "pci-conf-idx", 0x10000);
-     /* at region 0 */
-     sysbus_init_mmio(sbd, &s->sabre_config);
+ static uint64_t iack_read(void *opaque, hwaddr addr, unsigned size)
+diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
+index 4c56f981d71..f5a9d6e6ed4 100644
+--- a/hw/alpha/typhoon.c
++++ b/hw/alpha/typhoon.c
+@@ -911,8 +911,8 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+                                 &s->pchip.reg_iack);
  
--    memory_region_init_io(&s->pci_config, obj, &pci_config_ops, s,
--                          "sabre-pci-config", 0x1000000);
-+    memory_region_init_io(&s->pci_config, obj, &pci_host_data_le_ops, s,
-+                          "pci-data-idx", 0x1000000);
-     /* at region 1 */
-     sysbus_init_mmio(sbd, &s->pci_config);
- 
-diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
-index 792ab25729b..20c3cae47a2 100644
---- a/hw/pci-host/trace-events
-+++ b/hw/pci-host/trace-events
-@@ -35,8 +35,6 @@ sabre_set_request(int irq_num) "request irq %d"
- sabre_clear_request(int irq_num) "clear request irq %d"
- sabre_config_write(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
- sabre_config_read(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
--sabre_pci_config_write(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
--sabre_pci_config_read(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
- sabre_pci_set_irq(int irq_num, int level) "set irq_in %d level %d"
- sabre_pci_set_obio_irq(int irq_num, int level) "set irq %d level %d"
+     /* Pchip0 PCI configuration, 0x801.FE00.0000, 16MB.  */
+-    memory_region_init_io(&s->pchip.reg_conf, OBJECT(s), &alpha_pci_conf1_ops,
+-                          b, "pci0-conf", 16 * MiB);
++    memory_region_init_io(&s->pchip.reg_conf, OBJECT(s), &pci_host_data_le_ops,
++                          phb, "pci0-data-idx", 16 * MiB);
+     memory_region_add_subregion(addr_space, 0x801fe000000ULL,
+                                 &s->pchip.reg_conf);
  
 -- 
 2.51.0
