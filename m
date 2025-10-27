@@ -4,114 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08D4CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD996CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLQ4-0006gN-OH; Mon, 27 Oct 2025 07:29:48 -0400
+	id 1vDLSu-0000Ef-Ug; Mon, 27 Oct 2025 07:32:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDLPt-0006bs-Rr
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:29:40 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDLPn-0002tC-P5
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:29:36 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-63bea08a326so6471338a12.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761564561; x=1762169361; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6W1h9SPPhGdZNQbElgjYoxu13x/9GVYMR5jHwBwvdxM=;
- b=hlr3SzVrpYLOl1U8VgFHNNgemzOPaHBDq32tcQdhGKTmb8ElwiRGrE7U5A4qmKS8yn
- cCXjDUrV+IAdV/mSac1UM0b+Sn4lsIhCYaz1GCsTc1I8kcSy3oYHjDg0y5fGM+GMRp4c
- UiJjrI3fV/pSkkLF1/1+48eeAjA7jLHO3jG5OJ3pLqj20BvYzYIVeVYmenPA+Fm7bJSo
- Sn68nqpQ05mhiVc6N25v31t+EjtI0153gRWuqaOjGFdFnqLPTs/CWvojKtZS7nuiQcIf
- Oq8IpDu59HI67h4XXllDAOPfi778hRN25jTTJPyK/2F6enDGo4iU5VstvyhLKc5Rc159
- H1yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761564561; x=1762169361;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6W1h9SPPhGdZNQbElgjYoxu13x/9GVYMR5jHwBwvdxM=;
- b=lQ81cCtC60rVrjkC1p8/TS2apZj6nwspjiLPlV92rxTz9ooyMW8WzfxFQH7JAGcQxL
- 3zHLOyG5xjQjEd2pD4kIFRjQsbxCTa1Cd7pKwCpxWzTGvgbE1qPClDRriItZ9mMpXI9A
- 92YMxqp3keB1Uza936vpsp1GFjrwt3Rc/liu0XPRfMNPckKFFcCbtYX+yyieOAkS0n/V
- HtONnvRqV4UtDDejHPqU5YJMiJE2VWHlmNuOepnXg2Bpc5wwB8fN/Fnos8SkiLcSkQEM
- 6xBDi9yd+NUNSqkzcSifYg2rvpRtoltHeutLtzrahEihyTBhyg6i5pOosLrXYGjCCdYq
- tQOA==
-X-Gm-Message-State: AOJu0YwUeGY6ABC3KuGdEBsEdmtZUDb6l8bBB9QLXOmo5pb7FoB/ZyzT
- 2PvrVjwURnFFBM6paJYiwGZhuw1YXm4YMJvLT5PiSPVoG5jj2pj2ARwdCY/DmP+Qc4c=
-X-Gm-Gg: ASbGncsUnGSVW+BbdHeW8xdqyk5poLPV8sTikxSKzI7gRW6Ea6I5A2aP+E3LmEHCl2h
- g1VqV12wCu/AWikYXfdLvgHatQsnNO5gVMEyTVo4+w2E7L88varAqmlDFV108kzzey9IM9lJvzN
- bh4K8DLn7xqdRgzcsaOLexe37miAz0+sApixdQJaKV/YOmDkdOveEaX0HajU8X+2xPd3cmYeGQD
- JBdSxCpI6llmmnvEYO422o4EbbB6po1VYh1w25XGOeUze6EuX8fwI6s0ebihtwxUf9x0UjNapRc
- knlVZwxiJMqSWUJYVp07+rVSxxLbmUE+K72+op0BsdlO2rRNXuweN+nBIuc5LhGrLbWzpzjFJK+
- a3K4tydmkyiLd7Sym3VuJVEzojf040rJQGrpmLjQGY5v00LuErlIszcPkskqY6PptLod3qOHLCj
- 1l4OFwcEuCOWU=
-X-Google-Smtp-Source: AGHT+IHc4AQ+JBp1nIR+qFc6zaSMMCKxCXNHdvmH5AUywdFfQvEaemqlQ53JZqExwuln1jX+kqK5fA==
-X-Received: by 2002:a05:6402:4504:b0:634:ab34:ed40 with SMTP id
- 4fb4d7f45d1cf-63c1f580cf2mr34932038a12.0.1761564559866; 
- Mon, 27 Oct 2025 04:29:19 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63e7ef829dasm6061281a12.13.2025.10.27.04.29.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 04:29:19 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 406825F8CD;
- Mon, 27 Oct 2025 11:29:18 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,  Alexandre Iooss
- <erdnaxe@crans.org>,  Chinmay Rath <rathc@linux.ibm.com>,
- qemu-arm@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  Nicholas
- Piggin <npiggin@gmail.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,  David
- Hildenbrand <david@redhat.com>,  qemu-ppc@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  qemu-s390x@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Bastian Koppelmann
- <kbastian@mail.uni-paderborn.de>,  Helge Deller <deller@gmx.de>,  Stafford
- Horne <shorne@gmail.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Palmer Dabbelt <palmer@dabbelt.com>,  Alistair
- Francis <alistair.francis@wdc.com>,  Laurent Vivier <laurent@vivier.eu>,
- Weiwei Li <liwei1518@gmail.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>,  Yoshinori Sato
- <yoshinori.sato@nifty.com>,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>,  Thomas Huth
- <thuth@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,
- Michael Rolnik <mrolnik@gmail.com>,  Song Gao <gaosong@loongson.cn>,
- qemu-riscv@nongnu.org,  Aleksandar Rikalo <arikalo@gmail.com>
-Subject: Re: [PATCH 00/35] maintainer updates for 10.2 softfeeeze (ci,
- plugins, semihosting) pre-PR
-In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Mon, 27 Oct 2025 11:03:07 +0000")
-References: <20251027110344.2289945-1-alex.bennee@linaro.org>
-User-Agent: mu4e 1.12.14-dev2; emacs 30.1
-Date: Mon, 27 Oct 2025 11:29:18 +0000
-Message-ID: <87v7k0y44x.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1vDLSV-00005C-A0
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:32:30 -0400
+Received: from mail-southcentralusazon11011026.outbound.protection.outlook.com
+ ([40.93.194.26] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1vDLSJ-0003O0-Km
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:32:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LDrrE7qBeKC9vUagBnIcxeyYEpVti+qO8YWuh8zGBYBqkIhNKJjLfaaQktqy/jC+DeZJG81G6c09kBRoXTngTDcjAIUtKrLc7eZryemyZ1fIcZn6O3QXSQguN/ZX49g3FRmDRjgZM/Oh5TU+S0v8gO2ar9ibhV30U2CZp97twkRHduN8hs8/PchQzBe01T1cicHLFVcLCFXLa7Gn1voPc3C1NpxcBBFZ5ielM+ZptGdxcUOFL4lRO4S8fuOdn9yjY63dZ/qNuMX98PDdqEZrf39EJK8Bb49OkJPIQSYx81R4gHBTZH7Ia84Ryx0EMo0zmANLfchBt35Ba4c8W/1PRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Xqer8IpkXt8OyODCYLOTbt6URKIxmbdVK5XbXpDvqk0=;
+ b=xEUkjPf/xPRrtGig0TpPpC7UpT2UUQaDKejGF3T3UH7BCmoB0DS7PHqPZcEq1OgsmSVrw+gD2nAoK2Ah/dm40ZpBqOdybM6jHznTDlBzvHqnk/fztjzD4DfRv+vK8S6gN0SHTIYMkoW8nLd/mqryjxcfKfWT6wKXKwlh5ao5c2I2nguMDdoaQ9HDu+HVal+2q24WbmE48tpby4YCrrH5eIZ9FNlHFc5YpjIb2iVpzXv0bAY37UGus24FwshfCd7TFpBd9qyTMhT32znrb3GKTKRhu9z9AXeVxkuG/eD+4t7xVInGqgVfEmf9DCLLYgsVH+qffLXglNLDmlYEgIk29Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Xqer8IpkXt8OyODCYLOTbt6URKIxmbdVK5XbXpDvqk0=;
+ b=l7lS1cBpomWbAcR6MtLWBWkfvRIyBWqVzHQu3B14Pgj19uRrdXs6gv8DBhFSv1LHw7hY5cxaYRi0nvbFcEYSOWhymiIGNfGGYG6E8ZQJKeiovkkfEhnoH1XdKkAyrv3q2bmOHPeR8nYEki1UmWr6/bMR/Y7DA/QH5SK2U/wWuq4unjdOkOKZ5xyElAhhZXlzT8aPRyO9hCp/QBXpXisVbvZEw0WET8V8i2ZC448GkVDRXhu0cSS5CRtXhfxmCr2YhQ9Cow3xob7U+slDpwI25WFO7CNOMRskPkCvmjBMEAprdNUF0YXVRVXWHcwq3M5qVqud0kT04dmJzjLZF3GY3Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by SJ2PR12MB9087.namprd12.prod.outlook.com (2603:10b6:a03:562::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Mon, 27 Oct
+ 2025 11:26:53 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91%7]) with mapi id 15.20.9253.018; Mon, 27 Oct 2025
+ 11:26:53 +0000
+Message-ID: <df474b7c-b210-43ba-9c0f-97526aaf5f93@nvidia.com>
+Date: Mon, 27 Oct 2025 13:26:47 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/8] vfio/migration: Add migration blocker if VM memory
+ is too large to cause unmap_bitmap failure
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, yi.l.liu@intel.com, clement.mathieu--drif@eviden.com,
+ eric.auger@redhat.com, joao.m.martins@oracle.com, xudong.hao@intel.com,
+ giovanni.cabiddu@intel.com, rohith.s.r@intel.com, mark.gross@intel.com,
+ arjan.van.de.ven@intel.com
+References: <20251024020922.13053-1-zhenzhong.duan@intel.com>
+ <20251024020922.13053-8-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20251024020922.13053-8-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TL0P290CA0015.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:5::7)
+ To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|SJ2PR12MB9087:EE_
+X-MS-Office365-Filtering-Correlation-Id: ae750df8-d3fe-4420-4e20-08de154bba8c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?d3JGdjFNeU9lRzM2YXNKS1hzSDVVMXlnZzBybXdad2YwSlg3amhZSVA1NzJG?=
+ =?utf-8?B?aU43UW5PWTFjU04zL21yZmhyZDFRZkhZNjMyTTlWTjFWWXN5dkxWbjFDWkpJ?=
+ =?utf-8?B?cEpKaURxUWwzK3RxcDNQeVpISXpYbElKRnp5VlltMzZZQ29BM05RS3VqNnJ6?=
+ =?utf-8?B?S3BjcXQrdUZSMy8rMWllNzFtNTdHRktBVGxrNEtWTE5DREVYY0dmZmxYVzBG?=
+ =?utf-8?B?WlZVSDh4VG9oeDdnNHdnaHB0MlFkUGRUR2dkMzlkNGRFOHUxSlNpNCs4OS9h?=
+ =?utf-8?B?MmFKanFWbENhaVpsaEZ4OGtlYnBNTHBnOHRpZUt5ZU5mRFNuL01QSlg2cFVw?=
+ =?utf-8?B?V0tTRnk0TUdmWW1vODBpZVZWb3A0YnRQS29SY21BV1lsdDRZRnVldFQyVCt6?=
+ =?utf-8?B?YS82R2FPU1ZmM3VQUXBFRHBrRkVVeCt2UVp3dTZSS3l4WFNLc3pWbXEzMDNC?=
+ =?utf-8?B?dm9zWnliYUJuQmt0bmxxRzgwMXcvbnlLdzVxSGQ2Y1BhRGFOMkkvdnYzNmZV?=
+ =?utf-8?B?K1NQVy91WXJkWGRjS1RlYlVXZDVyb2Q5elBqZFhBR3JEV1VIZ1JqQXJzeDFE?=
+ =?utf-8?B?YUNhVDZsMThqZ2xGaXNmd29BUHR2QzFsOTZPNTUzenVqeVhLbUpTOCtUU2hl?=
+ =?utf-8?B?d29PeGloZlRRRHhSOHdjcGR4WU5KVVBNclNaUlBZbEhHYnZERlU0dXMxcHFE?=
+ =?utf-8?B?MGV3NXFvcUMrVFN0b3RQRUpOM2NxbGw1QThsemFucUZjVDhYUEw5YmRZempS?=
+ =?utf-8?B?ZGo4OHpoanpoTmlBSVFtWmVUdEJ0RDlEam1XWDZ2UWQ0TWIrNTJodGJtM2cx?=
+ =?utf-8?B?Ykxtc1REVXVscnJaSzdncDdpTG9uOXlTQnEwQ1BpRmtJSUhINTdlNFNpOFZB?=
+ =?utf-8?B?THI3RUxpQ3ozM1ZkOGNhTDRiSU0xRXhvTVRpdEJoMW9qUXk4ODk0Uk5XRS9w?=
+ =?utf-8?B?anAyV05INGJPYTdrelZ3c3VORWJWdk9EWGE3N3FmL0NPRWdUcUREM1RzeWF6?=
+ =?utf-8?B?ZW5jd285eWJybjRxYktIU29NTXk2OUF2ZWRXUE9BZFM2cVpSMXMyaW5wQTB0?=
+ =?utf-8?B?UHFKRlM0OTdvK2Z3M09iUVBDMGpOVkVMcWVSTFlIK2k3TmZGdnQvNzI5WWMv?=
+ =?utf-8?B?UTVSRGt3VUpORnZRYjBlN3lrUHBDUEd3NHlXbzJvNzlHaitnSnFWWFZlQ3Zh?=
+ =?utf-8?B?TTF0M2l2L3VXenlYZHBjdWhTY2pJVGVhYWZUUzdicHQyc2Nicy92bU1HNDRs?=
+ =?utf-8?B?U1RKWVZHR2JpNzBZYU8xM3NRanhrUU5oQytaaUZOaFVPSDFWNWJlTERzUXNP?=
+ =?utf-8?B?eDRIVFcrTjhZcnlUQnJOWVJiVTY0L3RkeTlBbkZhL1c3WnFUV0cyMzZ6MmtZ?=
+ =?utf-8?B?VWwySjZMd3UwY2J5UUE1UEZpV09udS9kbmJTRkFrOWlPOTJNRFpReWdQY3lL?=
+ =?utf-8?B?OEpvMFlSdWlGYnVsQ1BWbFdRVllFZXppV09lampybE5CT2FRbjBmMGp4Myt5?=
+ =?utf-8?B?NnJTd2gyWWZtcWY1OFdkK1lMdGE3anB6TDlkL243L2hGMkp6MjdCUXhIcmwx?=
+ =?utf-8?B?M1FMS0JEc1hZb1V2b05oYis1QVN1STc2UXR2SFIzMzRqV3ROcnE3ajBmM1JV?=
+ =?utf-8?B?WHBiazl5V1hjR0tlNmxHTTh1TEFzc2g2UHIvSi9VN3Y4OVNHREJrVnB4VC9E?=
+ =?utf-8?B?VjRnS1dETmUzZlhrSytXVG9tY1NSN0preXhndWlzTjFDWXUwdFA4K2VHV2FY?=
+ =?utf-8?B?WHRDWkVTUUhXdTRDV1ZvSFlpUWp2YUlpMk54WXAvU2ZPSWMwWmNxMDNiZUUw?=
+ =?utf-8?B?WThHb0pIcnB3YUd5ZmxZNUVhUDFEbExNWG5WeWNXN2lCY0M2MUdzUStKRmpH?=
+ =?utf-8?B?c1ZTemt2bkp1bml0TWJKR3Zzbjh0emNBNUdKVnk3MzgvMWVnc2tVMWdNR1lR?=
+ =?utf-8?Q?RnYSxc1LlO7JvVDFxNHDWJApgBPkCq68?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Ti82dlRuQUw4R3NzUHE0OW5xdElZcEFGRzNNNjhHZklrLzFsQTl3M3lqRUU0?=
+ =?utf-8?B?TzJFOUJIbEVRN0UwV0wrVThBckMvODQzQzIzL3dZMEJZdzN6TGZEMktkZ29W?=
+ =?utf-8?B?RjNhSmFDbkNoSEtDOGN3QUVTNVFvazZpMHdPblltYitZYjdjRngwYkRnSU9W?=
+ =?utf-8?B?TVBsV1pQOEJYTHlXcTZJblJjMGJraEFTMXpEdVM2clllZURTVWNZVVZ6Yldq?=
+ =?utf-8?B?RGU4dCtuTFhMZFpUNVd0SnpBb0ZmYUgzU3ZIVVdna1lmYmxGNnRMeHorOTZt?=
+ =?utf-8?B?eXFjYkp5T0k0VUMxYjRjWDJFeitVODJHb3JNNnZXSkh5elpYdEJMVU9LbDRG?=
+ =?utf-8?B?S0JFL2NwZ3B2MThOeFRRUFI0T0loM3NUdE9YeFp6VXNtNStjUWs4bzlNVnZ4?=
+ =?utf-8?B?UStJY01taUR5OHVJVHhvUXVmeC9mMFptVGo3cGllcmRvd0dSVmcvVXI2VmpQ?=
+ =?utf-8?B?SXdIT2M5MEN6RUhpOXd6d0twUWZMYmE4MExhN1dTZ0U4SnlIUE43bHJRU0pj?=
+ =?utf-8?B?TE9NTldma1dDUnBWcDRTazlrS0x2TGNpMUROdHd1SUxkUkVBMzdMUHJRSmpK?=
+ =?utf-8?B?UDJSMTkzS2E2eTBVTzZ6Z2ZaYkwvaWNtNnBVWXR1b3h5YkVOWE9mZmFBc2FJ?=
+ =?utf-8?B?THFlNldIZ09WN0J5a2FqTnNRWHduS0FzYXdTSTVPNyt4bEk2VnBOdDhUUEZ2?=
+ =?utf-8?B?WjNkVlVEcWpDei8vTHg2aC9ldnYxRFB1bGhRUkhERWUvVmg1bW1CSEdYQlNq?=
+ =?utf-8?B?QmcvNnVYbCs3YXFxNFpOL2hCS29pZmdxMDVyVi9qL0xmUGNLaEkwYkROaWVQ?=
+ =?utf-8?B?NG9lRlVLS0FrUDFWYlp6NFNIMFFFV2NCeFVYOGFVUEpKbXpjV3lhME5EUlVZ?=
+ =?utf-8?B?YkpKcnk3UlpaVk9ieCs3U3NRV3ZVVWpIZStrZkhORmtnb0NpRFZ5NEhGYWR0?=
+ =?utf-8?B?MlNrQ0lJUGRJZE9VRHdRODBZcHBrQ0JEVjM1dmw0aWNsZ3dBNXVLNGd2ekZr?=
+ =?utf-8?B?aFo5ZjJ2dmNwWlJuck1PUHBZdi9KWEx4akt5UDdQMDJLVzFXY2llTkR0bUc1?=
+ =?utf-8?B?enFvWlRWRnFrRTkxUVNac2VWdDBKWk5TUXpiWGFXWmU0a28zVWIyelh0Vlhk?=
+ =?utf-8?B?c0JxaXBLazRrSTRpdXlJN3NobjFzWjFYZUdBbUdzakI5YWdwL2ptUEQ3Qm9K?=
+ =?utf-8?B?NHNvT3NtVzFYUG5wWXlBR2VuenNiL0pPQXBjN1hzZmNzMUVIejZGYllRaDR6?=
+ =?utf-8?B?NVpaaWU4SUJIdCs5RUs5REFlL3FzdUF4bkphYUJhaXI4OU9qTm5VMzlDR2ZM?=
+ =?utf-8?B?VzRSMnRtSU1jY2p1WHBaSkZxVWluSWtWMld4UlN0RStDZWZTNjNSTXh0bkJm?=
+ =?utf-8?B?SVpSNHVVTGVFUHZwT2pYNEh0c0l2aDhqY1RMUUF6cE15MU9xbkhLaXh1VGM3?=
+ =?utf-8?B?RC9PV1RSaVBYOTVPNVpxeDUrUGY1NkRDN2N2MXQ3aXpEYXUyeVBhZ1hEVXBo?=
+ =?utf-8?B?ZDNrQ3JxRzB2QWdnRTE2R0g4K0tOTEhFOXR5TWM3czk5RUo4OGMwbWhvU3FJ?=
+ =?utf-8?B?SUtKaDg4dCtnbzUwT3FOek9CaWtqa0JTbXRqRkIxSVkvNWFzSHBYOWtCUDVW?=
+ =?utf-8?B?WVdZRnRISjlXaDlEbFBaeFpObXBTbTJqa3dyR1J0U1M4YTRTOHJoVXk1WGZF?=
+ =?utf-8?B?ZE4yRG8vL1oxSmM0Ri9UVVBja1VuWFF2ZFN3blVocGpQQncyLzUrYUx3dXFR?=
+ =?utf-8?B?NjFFaDVYTnIrN3FTNnJKMyticEpGdVFIMDVRT2p6MVRpaXJKTUhzTXJqSTd0?=
+ =?utf-8?B?MmsvekNZbUJlZU1PYTkrZXp3eEI5TzBrYWJVaFE4M1J6Sk1MWUF3M1lpNmt5?=
+ =?utf-8?B?QTJnVWQ0VjBabXdieGhNZC82RDNhQlhxZ1hlelNzcHg0M05GUXBPcHlwUWpD?=
+ =?utf-8?B?MlJhdTNSeDlqekJKdXdGTFVQRExZOU92VkFpMTFiUzJPZm0rU2Jza0lVNEJM?=
+ =?utf-8?B?SFRnc0pzUTRZZTFWWFlEeWdxL05oTDlvMGVKN2gxWTNiR0xBOTgyQjZMMzEy?=
+ =?utf-8?B?UjdDMnROdDYyZHpocGVmdGU4U3Z5MzFMcGgrTUc2YmFFUGkzeWlYVGxDQmxk?=
+ =?utf-8?Q?fuoRWWFpNB6eJQH9bmOAD07nf?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae750df8-d3fe-4420-4e20-08de154bba8c
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2025 11:26:53.2576 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8zucCKffMK1i7ifNkaDdmEiRbnOwGyBU4lCuPD/oNmoCOvQDhNItyN7bw7XhBpWPC8leM0ntn6VRBxhsGKTWpg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9087
+Received-SPF: permerror client-ip=40.93.194.26;
+ envelope-from=avihaih@nvidia.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,137 +186,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Hi,
 
-> Hi,
+On 24/10/2025 5:09, Zhenzhong Duan wrote:
+> External email: Use caution opening links or attachments
 >
-> This should be my final pull-request before softfreeze on the 4th of
-> November. As I'll be travelling I intend to send it out by the end of
-> the week.
+>
+> With default config, kernel VFIO IOMMU type1 driver limits dirty bitmap to
+> 256MB for unmap_bitmap ioctl so the maximum guest memory region is no more
+> than 8TB size for the ioctl to succeed.
+>
+> Be conservative here to limit total guest memory to max value supported
+> by unmap_bitmap ioctl or else add a migration blocker. IOMMUFD backend
+> doesn't have such limit, one can use IOMMUFD backed device if there is a
+> need to migration such large VM.
+>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   hw/vfio/iommufd.c   |  5 +++++
+>   hw/vfio/migration.c | 33 +++++++++++++++++++++++++++++++++
+>   2 files changed, 38 insertions(+)
+>
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index ba5c6b6586..8de765c769 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -633,6 +633,11 @@ skip_ioas_alloc:
+>       QLIST_INIT(&container->hwpt_list);
+>
+>       bcontainer = VFIO_IOMMU(container);
+> +
+> +    /* There is no limitation on dirty bitmap size in IOMMUFD */
+> +    bcontainer->max_dirty_bitmap_size = UINT64_MAX;
+> +    bcontainer->dirty_pgsizes = qemu_real_host_page_size();
+> +
+>       vfio_address_space_insert(space, bcontainer);
+>
+>       if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index 4c06e3db93..44bab024b7 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -16,6 +16,7 @@
+>   #include <sys/ioctl.h>
+>
+>   #include "system/runstate.h"
+> +#include "hw/boards.h"
+>   #include "hw/vfio/vfio-device.h"
+>   #include "hw/vfio/vfio-migration.h"
+>   #include "migration/misc.h"
+> @@ -1152,6 +1153,31 @@ static bool vfio_viommu_preset(VFIODevice *vbasedev)
+>       return vbasedev->bcontainer->space->as != &address_space_memory;
+>   }
+>
+> +static bool vfio_dirty_tracking_exceed_limit(VFIODevice *vbasedev)
+> +{
+> +    VFIOContainer *bcontainer = vbasedev->bcontainer;
+> +    uint64_t max_size, page_size;
+> +
 
-This is of course the 10.2 softfreeze. I must be nostalgic ;-)
+IIUC, this check is not relevant when using VFIO device dirty tracking, 
+so maybe bail early if VFIO device dirty tracking is used?
+E.g.:
 
->
-> The CI changes are mostly cleanups for the ansible scripts. I've
-> dropped the final testing/next patch which enables the ppc64le custom
-> runner as I don't think I'll have time to debug that before the
-> freeze.
->
-> The plugin updates are already well reviewed and should make more
-> richer plugins giving semantic info on the type of discontinuities you
-> can see.
->
-> There are a few other minor fixes including come missing CFI tags for
-> some plugin callbacks and fixing the minimal -no-tcg build.
->
-> The following still need review:
->
->   scripts/ci: modify gitlab runner deb setup
->   tests/lcitool: generate a yaml file for the ppc64le runner
->   scripts/ci: allow both Ubuntu or Debian to run upgrade
->   scripts/ci: move build-environment.yaml up a level
->   scripts/ci/setup: regenerate yaml
->   ci: clean-up remaining bits of armhf builds.
->
-> Alex.
->
-> Alex Benn=C3=A9e (8):
->   ci: clean-up remaining bits of armhf builds.
->   scripts/ci/setup: regenerate yaml
->   scripts/ci: move build-environment.yaml up a level
->   scripts/ci: allow both Ubuntu or Debian to run upgrade
->   tests/lcitool: generate a yaml file for the ppc64le runner
->   scripts/ci: modify gitlab runner deb setup
->   plugins/core: add missing QEMU_DISABLE_CFI annotations
->   configs: drop SBSA_REF from minimal specification
->
-> Julian Ganz (25):
->   plugins: add types for callbacks related to certain discontinuities
->   plugins: add API for registering discontinuity callbacks
->   plugins: add hooks for new discontinuity related callbacks
->   contrib/plugins: add plugin showcasing new dicontinuity related API
->   target/alpha: call plugin trap callbacks
->   target/arm: call plugin trap callbacks
->   target/avr: call plugin trap callbacks
->   target/hppa: call plugin trap callbacks
->   target/i386: call plugin trap callbacks
->   target/loongarch: call plugin trap callbacks
->   target/m68k: call plugin trap callbacks
->   target/microblaze: call plugin trap callbacks
->   target/mips: call plugin trap callbacks
->   target/openrisc: call plugin trap callbacks
->   target/ppc: call plugin trap callbacks
->   target/riscv: call plugin trap callbacks
->   target/rx: call plugin trap callbacks
->   target/s390x: call plugin trap callbacks
->   target/sh4: call plugin trap callbacks
->   target/sparc: call plugin trap callbacks
->   target/tricore: call plugin trap callbacks
->   target/xtensa: call plugin trap callbacks
->   tests: add plugin asserting correctness of discon event's to_pc
->   tests: add test for double-traps on rv64
->   tests: add test with interrupted memory accesses on rv64
->
-> Sean Anderson (2):
->   gdbstub: Fix %s formatting
->   semihosting: Fix GDB File-I/O FLEN
->
->  docs/about/emulation.rst                      |   8 +
->  docs/devel/testing/ci-jobs.rst.inc            |   7 -
->  configs/devices/aarch64-softmmu/minimal.mak   |   1 -
->  include/qemu/plugin-event.h                   |   3 +
->  include/qemu/plugin.h                         |  13 ++
->  include/qemu/qemu-plugin.h                    |  60 +++++
->  target/arm/internals.h                        |   1 +
->  contrib/plugins/traps.c                       |  83 +++++++
->  gdbstub/syscalls.c                            |   2 +-
->  plugins/core.c                                |  58 +++++
->  plugins/loader.c                              |   1 +
->  semihosting/arm-compat-semi.c                 |   5 +-
->  target/alpha/helper.c                         |  13 ++
->  target/arm/helper.c                           |  24 ++
->  target/arm/tcg/m_helper.c                     |   5 +
->  target/avr/helper.c                           |   3 +
->  target/hppa/int_helper.c                      |  17 ++
->  target/i386/tcg/excp_helper.c                 |   3 +
->  target/i386/tcg/seg_helper.c                  |   4 +
->  target/loongarch/tcg/tcg_cpu.c                |   4 +
->  target/m68k/op_helper.c                       |  22 ++
->  target/microblaze/helper.c                    |  10 +
->  target/mips/tcg/system/tlb_helper.c           |  11 +
->  target/openrisc/interrupt.c                   |  15 ++
->  target/ppc/excp_helper.c                      |  41 ++++
->  target/riscv/cpu_helper.c                     |   9 +
->  target/rx/helper.c                            |  12 +
->  target/s390x/tcg/excp_helper.c                |   8 +
->  target/sh4/helper.c                           |   4 +
->  target/sparc/int32_helper.c                   |   7 +
->  target/sparc/int64_helper.c                   |  10 +
->  target/tricore/op_helper.c                    |   5 +
->  target/xtensa/exc_helper.c                    |   6 +
->  target/xtensa/xtensa-semi.c                   |   3 +
->  tests/tcg/plugins/discons.c                   | 221 ++++++++++++++++++
->  .../custom-runners/ubuntu-24.04-aarch64.yml   |   2 -
->  contrib/plugins/meson.build                   |   2 +-
->  .../setup/{ubuntu =3D> }/build-environment.yml  |  32 +--
->  .../ci/setup/debian/debian-13-ppc64le.yaml    | 134 +++++++++++
->  scripts/ci/setup/gitlab-runner.yml            |   6 +-
->  .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |   4 +-
->  .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |   4 +-
->  tests/lcitool/refresh                         |   1 +
->  tests/tcg/plugins/meson.build                 |   2 +-
->  tests/tcg/riscv64/Makefile.softmmu-target     |  12 +
->  tests/tcg/riscv64/doubletrap.S                |  73 ++++++
->  tests/tcg/riscv64/interruptedmemory.S         |  97 ++++++++
->  47 files changed, 1031 insertions(+), 37 deletions(-)
->  create mode 100644 contrib/plugins/traps.c
->  create mode 100644 tests/tcg/plugins/discons.c
->  rename scripts/ci/setup/{ubuntu =3D> }/build-environment.yml (63%)
->  create mode 100644 scripts/ci/setup/debian/debian-13-ppc64le.yaml
->  create mode 100644 tests/tcg/riscv64/doubletrap.S
->  create mode 100644 tests/tcg/riscv64/interruptedmemory.S
+if (vbasedev->dirty_pages_supported 
+&& vbasedev->device_dirty_page_tracking != ON_OFF_AUTO_OFF) {
+     return false;
+}
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+And replace this with vfio_device_dirty_pages_disabled() in patch #8?
+
+Thanks.
+
+> +    if (!bcontainer->dirty_pages_supported) {
+> +        return true;
+> +    }
+> +    /*
+> +     * VFIO IOMMU type1 driver has limitation of bitmap size on unmap_bitmap
+> +     * ioctl(), calculate the limit and compare with guest memory size to
+> +     * catch dirty tracking failure early.
+> +     *
+> +     * This limit is 8TB with default kernel and QEMU config, we are a bit
+> +     * conservative here as VM memory layout may be nonconsecutive or VM
+> +     * can run with vIOMMU enabled so the limitation could be relaxed. One
+> +     * can also switch to use IOMMUFD backend if there is a need to migrate
+> +     * large VM.
+> +     */
+> +    page_size = 1 << ctz64(bcontainer->dirty_pgsizes);
+> +    max_size = bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * page_size;
+> +
+> +    return current_machine->ram_size > max_size;
+> +}
+> +
+>   /*
+>    * Return true when either migration initialized or blocker registered.
+>    * Currently only return false when adding blocker fails which will
+> @@ -1208,6 +1234,13 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
+>           goto add_blocker;
+>       }
+>
+> +    if (vfio_dirty_tracking_exceed_limit(vbasedev)) {
+> +        error_setg(&err, "%s: Migration is currently not supported with "
+> +                   "large memory VM due to dirty tracking limitation in "
+> +                   "VFIO type1 driver", vbasedev->name);
+> +        goto add_blocker;
+> +    }
+> +
+>       trace_vfio_migration_realize(vbasedev->name);
+>       return true;
+>
+> --
+> 2.47.1
+>
 
