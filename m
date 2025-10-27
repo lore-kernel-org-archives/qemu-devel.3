@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7EDCCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6993CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:15:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDSfW-00016r-8V; Mon, 27 Oct 2025 15:14:14 -0400
+	id 1vDSfw-0001Dx-1j; Mon, 27 Oct 2025 15:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSfU-00015Y-3B
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:14:12 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSfn-0001Az-NT
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:14:32 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSfK-0004ov-Fk
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:14:11 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47103b6058fso37142915e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:14:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDSfg-0004q0-NP
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 15:14:31 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47106fc51faso64194215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 12:14:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761592440; x=1762197240; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761592458; x=1762197258; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QZD91lk/H5cElIViFNtuzvYiD76APtVBDjWNMxi3u7I=;
- b=TXduyaogkX6gPb6s/0lslOCOjLPMu5IunR1gkwaHv/9LcE7FY0U7q+IVzpzPhVne32
- MOM4KFI0jYONTtM+CDMIWkKkxV/G5KDJGztfPlwIPAjz0LhjSFmYDqYnV1H4yAElY6ma
- f74QfsGCdLqjpFVPn3CuH6V1RGVHmK6zgY1c1bbaIyVr+D8rfGhFqZSmQKrFOw0Io2Lw
- ig9/MK/tPsORYe8kha0eybrLv6bfO2LF4Pvt/E68Lzyp+evn7iUElMPCHjOqOBd9mPOR
- oaoZty5CfLKaSbAuk8XsEVMp8G1UU3f+NbxNdnJzFnoEVtlOwtpPgF73lcGsDuRuZth6
- mPcQ==
+ bh=Ze1HeQwneioMnf4Ze6ioGnVXWQX8YBJ4TneOP9JJPbo=;
+ b=ZeE/Og0aEwEltLv+6zSgBmXWZ1y7XmsPkR1UIju95TxcY7iWen5nl2TBEOAxNuS8zS
+ dOVBfUQET4Tvso5h5Ch+GwZEYELBT9rE4nR4w6kQwLNjsxY+hCW3Na3PxbFJ6haY71XY
+ CPaJUphEE1lJl+eC+mn1+JA9gZn05lBJwd7mCBn8Md41a8TCXRyUpIvV40hFHq+kEOcN
+ i+TbetxC0FauCPJaM2IAnDJVkfCfRpOilvsudu0Y0WxzTm8NmMYq5KPWxQx7SsRq3kV+
+ Adr7YA5c1GbFYgWpYLKqCecLCChMMgAbw8+y1GJq9YhwjPa+iZwJlo3CoKGyQQSRP8zl
+ z4gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761592440; x=1762197240;
+ d=1e100.net; s=20230601; t=1761592458; x=1762197258;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QZD91lk/H5cElIViFNtuzvYiD76APtVBDjWNMxi3u7I=;
- b=rb1iJwOxRq8O4e0flSv7DTXKyZOQ7ak+YQuupw0+H9/ImV3FsB8C1o0Avc75JHFx8x
- AYpJTU04bLSGo3KRY4rQR8WNwd8g/58JsiFKcWur+Xrd7rRIAk003igvpWj5OuhZk3JM
- wWOS0bV2cN8PEk/CHwySoxeiNNBtr5Uxhh4CGip/Sxit4gMg+2gAiccWwqbMgE/stVXT
- xIw4R+nuDqRviI5ZvnruZC7TX5QscDGBidt06ey0JwSAdiFtqTalr6672cAgEwGOFbqZ
- DO7FvCI4OeLHTXpcduCyK3VPre/2s/mBQ6rre8VRHqbjXjsz99SiUYHOIW2oSVmz14g6
- Ep9w==
+ bh=Ze1HeQwneioMnf4Ze6ioGnVXWQX8YBJ4TneOP9JJPbo=;
+ b=OkC5CEtlh/rSTn9MX4wZO1YX8KlKDY5CzpkuF61evaVwDKmwq8Ox5JvR3KKUQr9Wuv
+ EOftOHePJNEuigITCTrfiV4zC7vPFPMPToCvtuSG4getEfRQP9Bla1OYlUXQuXjn2dnk
+ rV6p7snRJkC9X0HtmTYZGB27otxlReVme3f8hTpPq3351uduSyvQdQEsZnWknPaAC8D4
+ ae9eSE2vqCHxQwcy0wRzkgB4QjLJRTI5T6GejBIgLGzpQTl7b1H5hL5/gfxFRyJ+1nSm
+ Cs7haMqrRTEjDbhwFwhKiKJkepcSmVjp803hCocvjvs4y3wSfWoU3LVi92DoUvSEkGl8
+ I7DQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUr+Bof6X4iKR6AB3i5oSTkW70+JW5OILlcpK7t2qZsowEYzjhhelJV0z01Qfsd3mkgy5MamCGCa02g@nongnu.org
-X-Gm-Message-State: AOJu0YzGc6IMXwwDKZ2czjEyFnhpWBja852raON0e7/idC7UDnky9YrJ
- sw0/CrdTsuRgA1IO/YDkElD3xD87CdtDlnqOprPx4LY00j8VCOlS30t5D7F/MER3Np8=
-X-Gm-Gg: ASbGncuGN4eL7VF9S+lVMCeWTOno8/DYAMLMxkLaiDaVprC209iyA118sztBPSzlwzv
- 3Q5FlDfdBmVtOrzNJLGhlohB8TV/vOdUK/n04abm+pR8RuqBuYqNbx90DlCHRLSTqP2nAUFUjuo
- Ayhrbaz0itBeMXksC0cVoUQ0WfGMukhDUFZ5cFi6hgAMyAWMr9X8gwRNhVyjecoCtOXn1HpAuKn
- FLuP/g9Ad1zLl2X4wKRvcBAzPHDgO4ACOQdlbiKkv9na5aj6RIySiZZ6biEebOxeJlkaMP6c5Z4
- vjzvKcXvce/a3fTBXm2QHRtedPdVQ3HwFYsIDb9xBUM47V/K991RIvbEi2GYlF3vucEbfJ19C73
- u2JRHo2ThGlXEzBayOLi9o9MLHnTYq/fTcmeVec9UVEQZVmR88yaPnTAjgTcYTgKUGfdvzX7tfT
- wnB5s2VFevjxY3MAXv1tt+BnuMHRb6bh7L6iqK+Jb80FN2bw49fNUl6Q==
-X-Google-Smtp-Source: AGHT+IF8xLoboInyv51TbHc//7OxQ2/ZdVNu84tifKDxawEZDB2JRjAYlkB7iv0B+RW1DxkJ+9Crqw==
-X-Received: by 2002:a05:600c:3f10:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-4771815a225mr6230765e9.11.1761592440123; 
- Mon, 27 Oct 2025 12:14:00 -0700 (PDT)
+ AJvYcCUpHE0n+2lnRAG5kRSgSo2eNYdyCTXyynMEaLmoc3nvs5KvwjDggZBMdu3YDdK5xT0tkDEMtjMW40vo@nongnu.org
+X-Gm-Message-State: AOJu0YzPc/MsmwjPbP4Su0kNR/eX8S/vVo42iNSdE5T/uAFUkSWC35tz
+ ijUtmocIsy9V8Y2dgygujVP+2NBlDjPn4y4CA/YD8lvmsmT/AVoRrwahRHsCx/9WH1Y=
+X-Gm-Gg: ASbGncsutWZFYjTNBBjojDrq00ynOndvPUbdVcBxTDQMXK3tTcRAZv7DzNqA+v5uw9Z
+ A8XlvSAUWIvcDclgnp8vfkjBoeu+9JtU4cNt/xRADGIzapIN7B1ny5bjypH06bSbWGp04Kn4sNR
+ zNL08c6bhgYpZKTny0eSLaPVNVX/nryz7SzqVVDT3C1qCM9bO11ed8CdHQnJpz5kUM5Pq8V1onY
+ Q5lQk84ghHlykgNEqkqZ+suoe9LOuJyJID5trAQ/VfR/6TNXGERM4DVGCcEtEMkXuvwxj4ULNq+
+ LD0z10YgaRjznxQoIPB7C1I/VYRBL3IwsPZi6gV6trKGrd1fyvKkH6dw3f6CzjOXuuu//gd3s8m
+ fX1GniJdx/uuXX6l/t6got1Kkn+gVN+KZOsYbtP8Lwja8yIKViWh16GxKPl8UcovNKGGBSRZvSV
+ UXHBR0JIIsYRAh/dKJ9G12hKMAX4QpKiNwiSKT5jRTRSQ=
+X-Google-Smtp-Source: AGHT+IHc9ZeJ2F/prmKPtuWawnnz6kgY8imn0zgOgZLy8B4nqZPyG3oEa3Ll5Hz4sh2bjGhJ54EJbg==
+X-Received: by 2002:a05:600d:8386:b0:46d:cfc9:1d0f with SMTP id
+ 5b1f17b1804b1-477182e1357mr3464165e9.19.1761592457826; 
+ Mon, 27 Oct 2025 12:14:17 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952d9e80sm15796282f8f.28.2025.10.27.12.13.59
+ ffacd0b85a97d-429952ca569sm15454761f8f.12.2025.10.27.12.14.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 12:13:59 -0700 (PDT)
-Message-ID: <91c9cbc9-ffd0-452c-bf93-9ff4b702e225@linaro.org>
-Date: Mon, 27 Oct 2025 20:13:58 +0100
+ Mon, 27 Oct 2025 12:14:17 -0700 (PDT)
+Message-ID: <d66bb755-0f35-4eec-8919-c37a48330282@linaro.org>
+Date: Mon, 27 Oct 2025 20:14:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ds1225y: Fix nvram MemoryRegion owner
+Subject: Re: [PATCH] intel_iommu: Remove an unused state field
 Content-Language: en-US
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Aleksandar Rikalo <arikalo@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20251027-ds1225y-v1-1-406888eb495f@rsg.ci.i.u-tokyo.ac.jp>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>
+References: <20251027075232.95262-1-clement.mathieu--drif@eviden.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027-ds1225y-v1-1-406888eb495f@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251027075232.95262-1-clement.mathieu--drif@eviden.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +106,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/10/25 02:05, Akihiko Odaki wrote:
-> s points to the MemoryRegion itself. dev points to DS1225Y, the real
-> owner.
+On 27/10/25 08:52, CLEMENT MATHIEU--DRIF wrote:
+> dma_translation has been moved to x86-iommu and is no longer referenced.
 > 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Fixes: b6b49c2cd6c2 (intel-iommu: Move dma_translation to x86-iommu)
+> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
 > ---
->   hw/nvram/ds1225y.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/hw/i386/intel_iommu.h | 1 -
+>   1 file changed, 1 deletion(-)
 
 Queued, thanks!
 
