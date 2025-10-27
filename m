@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48240CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6911ACCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:09:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDL2F-0001PX-B7; Mon, 27 Oct 2025 07:05:11 -0400
+	id 1vDL2B-0001HV-2B; Mon, 27 Oct 2025 07:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL2D-0001L6-I7
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:09 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1vDL1y-0000zh-32
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:04:54 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL1Z-0005ci-0z
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:08 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b6d345d7ff7so848511066b.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:03:52 -0700 (PDT)
+ id 1vDL1S-0005g9-5H
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:04:53 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-63bdfd73e6eso10284696a12.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563030; x=1762167830; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761563036; x=1762167836; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dPRpRXWNkgzTelJ9LaP0XDvrgpGKDnKCNCyXswtjrG8=;
- b=w5dLCARn5qgqtBNCDCY41zmbiYRysQivS7/97/aDe/4US434ThlSgwfMG2x2Ex+gg4
- pd4Fmj5rvKt0bxhzfl2AR41IMMbc41OGjR0Bqab7pk1CG2zRcBMS8X9STFNRk9XFzM/z
- jutJwpxpipYbqmLvFhgAXHgUXXuJA7PKSXlTVRzFxEH4XEtx4/SnppriHCMU014Vxhc4
- BcaF4u+o3XQDfu9VdPR12TOnYoDEhdHZkMlUtg/HAOY1G2jkG5Xs9kvlsg0utfgvEai7
- zjCOTJSKNOeAVz0N+2vEPkpeQxqlnSGYp0VVYEu0G2K/F6zocIpDZ0RGa+bPHsKdNTa8
- pqMQ==
+ bh=6tc/ncHQ43H5RAM4g98aEerDqB5nJ7XC9XRTlxHTgjE=;
+ b=RC6W0lZoe2DPpgJuvPbnkpvI2CHFJov4P0RbMXSvPm5HiBQeFPMU0tGjvk1zxiVRET
+ jhJMbdR6idwvZX3aHQREyEDAHhx085ycv1byqAWs4uwawbAMwPjmT/otbcOOTBZccD7M
+ EV4FqvKtJ/oOV5gbVkR/QKr722By5jaOjkaTmB3iF4320yERYvkYadfvKwJjIdR3qL5f
+ NQo1t+HspSB+QYfao4l82rlR01T8yr4hz12E5phYJbNQUQvu/qnx7GWKtKhujEt4hoSu
+ lOULW40XFfd5detS3bPn73JF88QKM4rFezPilpqVPGhhJ91Ljcc/hRxMpkMuMQ0mmeOo
+ Trkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563030; x=1762167830;
+ d=1e100.net; s=20230601; t=1761563036; x=1762167836;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dPRpRXWNkgzTelJ9LaP0XDvrgpGKDnKCNCyXswtjrG8=;
- b=BH93+OirhxbcTLnPjPbVJ9HTWNtBKJ0l6Uv7JFxK28S/N7CdKlcdEn9Ey+5iuHsW/+
- eFTFpUVA56KDSI37Xbqe7t0zTQy8mM+ZYp7m2FQ4RwyZTGpe4tRZqG03/bahSMaJJp02
- /KrPQc5al/WN64FRaWbfpSan8FE8X0hxV9pKoOj/dIMxjVJJ2ak9wOyPFf5UNVLwVXj3
- ly3NJ6I2BRExJf9PXDguoUAUFW+9HzLP10VK567lmcR5nls6OdvNqKwffbbT2Ldpivc/
- Uv5T3XvTFiWB97TI/D2c/Jt5YdJotdoVPe4TjS3/8x/W4letAAxaZ2zCNhDw/KeERpug
- F3qg==
-X-Gm-Message-State: AOJu0Yw2bNvKglSg+rDOqHFGYQRzT03JUJocvAc+1Znt457BcSIFPBik
- Eb4q1AunFRecQiTMNFaJwFz6KQ6ZnwnFN7PKVtpnD8MyQXjJMvk4NDTzAPCMWK+FT/s=
-X-Gm-Gg: ASbGnctm6eCQ6i+8SadWd5bC78Cc9GqQBf/G+Ms+hcGbTxfd6qNauAM9CQO1eeOWpqB
- eSYDP5T31odAMDqAP4Yca8SpXpia6sbFYPXknR2NHxhlAMr6jxFpg7vGiiIEvmzROo1TBW+0snn
- 172TkGk3vg56iuAzZMXft2mD+to9pS0WeQlw+hKiz43Z4zX1ZkaywFsQqCYje9vCxKxS40p6QhH
- KoB9AOGFBvsULXaENQDFsEiNid/KTUja03ymKcCqohNKOdaDRXb/tV/W208PowC2HuzFhXT5Z/y
- M9Xp73uOUCErAEy9mxs2nwU44ANXFLbiG66WxgAX9J5Q0yAD2zr6z4iE3KV88laTFGLFnd/pjIJ
- ATBQMrLT+gzLknANwFGFRUgKpzUbvkVmhGbxNr3qE14hLj3UQgc0NmgN9RBDNdMY8STI3GbRY3s
- gJG+fwsAI5uAM=
-X-Google-Smtp-Source: AGHT+IEKOw2sZTHAivgqlTb6K/HYXBQhpYwxsm2va8DyFrA5s6EN+1suG8QBDsLHPxzTUtSD784+vA==
-X-Received: by 2002:a17:906:7955:b0:b6d:5fbf:8c63 with SMTP id
- a640c23a62f3a-b6d6bb4a57emr1240007166b.15.1761563030330; 
- Mon, 27 Oct 2025 04:03:50 -0700 (PDT)
+ bh=6tc/ncHQ43H5RAM4g98aEerDqB5nJ7XC9XRTlxHTgjE=;
+ b=dvRh3ZYFHTHvz5MnELTf1uGbGGlSAy/8dwRW+8YDhFpzMo4aRCtoh6o8KBvOZwMSZ9
+ 6UUKNo/lmedMur5ePgm1YtansSZJaDyjU7dI9GXGoTk7+rSa0YEl/jk+4Ww4g//3cogJ
+ J8bF0U9q72H3vNuF8utC84lT7XAP1EOjwnVZTxySHYbU1OzkNT3XNoTFdfBDfCuvJeIP
+ 6BTLyp5CjumHXY7tri5dFEIdQsZINa8A097D1kTao7b5bmgYlKQIkF1M1Z/A2F7JEO8l
+ Bshk1bT5MufCQ4ASKceB9Bcy2fboiHkcdJXqDoSjGQq7csnDYfOhHtCrbQ54w0JKnCXG
+ 44Rw==
+X-Gm-Message-State: AOJu0Yy6YC57fhsem1QB3qfvCFLnylTPSLo6uOFz5+sbn1CeCHPvv9Na
+ XIq5MgW0AbxNrkyVZ5Acad+B0I2kLIw0NCP4WHSPXCeJiBAEpXxrHL6kZ7F4n8M1gio=
+X-Gm-Gg: ASbGnctEaznyfzTwx2804j9PKkQ8sEnE+1mqBqDBuMlL/1qrFvQChynNd3IULv7cYLC
+ ZcE3ebeWcdpxEttRK/tM5383RBkex70sFecA0th8RUYlM/8sHBma2XiM9ToySlR6V3CxcyD0Rt0
+ NyCETQBcaAMNhtDXooDjvQD00/+nOEk1OT3is0xBcCtAs2LK3KRx6Qi7kphHAJfj3cutCD8ziF3
+ mW9Ez/6akDzMnOjQwuc7lZOyki9rWeKj9VtOA8TXN4A7L/BVMFVL9c7rqRQ5/IPTjdVcWUCAsad
+ s8xv/7y/opOPdEwkdYiAqAQqIwVmT+67DrkkN5GKOHm7PXw0wIqsvlXqOiVHiklGGCgejxIK9Dw
+ 4Ck+o19aRGO033zhk/TmPYsoVMniCVL/ZBtyrwPLdpYTI8hWVoksGnNOkyjNkp1mN5Sgb4HcGKv
+ fsrt5oO2RfpsM=
+X-Google-Smtp-Source: AGHT+IERY0LRDtAh/P/JnbkEdSaGPZN26CjXuTfwQxfSVQ5HKYkzM6nMMAvqidpDE39wy9t9gsU+wA==
+X-Received: by 2002:aa7:cf0a:0:b0:63e:6f85:1ef3 with SMTP id
+ 4fb4d7f45d1cf-63e6f851f34mr5947239a12.12.1761563036495; 
+ Mon, 27 Oct 2025 04:03:56 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d85309069sm716387666b.10.2025.10.27.04.03.46
+ 4fb4d7f45d1cf-63e7efb950csm6163591a12.28.2025.10.27.04.03.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 04:03:49 -0700 (PDT)
+ Mon, 27 Oct 2025 04:03:53 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A833D5FAA7;
- Mon, 27 Oct 2025 11:03:44 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 7AA5F60A94;
+ Mon, 27 Oct 2025 11:03:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -94,25 +94,25 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH 06/35] scripts/ci: modify gitlab runner deb setup
-Date: Mon, 27 Oct 2025 11:03:13 +0000
-Message-ID: <20251027110344.2289945-7-alex.bennee@linaro.org>
+ Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
+Subject: [PATCH 15/35] target/i386: call plugin trap callbacks
+Date: Mon, 27 Oct 2025 11:03:22 +0000
+Message-ID: <20251027110344.2289945-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,41 +128,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both Debian and Ubuntu are setup the same way.
+From: Julian Ganz <neither@nut.email>
 
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
+
+This change places the hook for x86 targets.
+
+Signed-off-by: Julian Ganz <neither@nut.email>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/ci/setup/gitlab-runner.yml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/i386/tcg/excp_helper.c | 3 +++
+ target/i386/tcg/seg_helper.c  | 4 ++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/scripts/ci/setup/gitlab-runner.yml b/scripts/ci/setup/gitlab-runner.yml
-index 7025935487a..76aeaf4ee95 100644
---- a/scripts/ci/setup/gitlab-runner.yml
-+++ b/scripts/ci/setup/gitlab-runner.yml
-@@ -56,12 +56,12 @@
-         url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
-         mode: 0755
-       when:
--        - ansible_facts['distribution'] == 'Ubuntu'
-+        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
+diff --git a/target/i386/tcg/excp_helper.c b/target/i386/tcg/excp_helper.c
+index 6fb8036d988..32f2784e923 100644
+--- a/target/i386/tcg/excp_helper.c
++++ b/target/i386/tcg/excp_helper.c
+@@ -23,6 +23,7 @@
+ #include "system/runstate.h"
+ #include "exec/helper-proto.h"
+ #include "helper-tcg.h"
++#include "qemu/plugin.h"
  
-     - name: Run gitlab-runner repo setup script (DEB)
-       shell: "/root/script.deb.sh"
-       when:
--        - ansible_facts['distribution'] == 'Ubuntu'
-+        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
+ G_NORETURN void helper_raise_interrupt(CPUX86State *env, int intno,
+                                           int next_eip_addend)
+@@ -93,6 +94,7 @@ void raise_interrupt2(CPUX86State *env, int intno,
+                       uintptr_t retaddr)
+ {
+     CPUState *cs = env_cpu(env);
++    uint64_t last_pc = env->eip + env->segs[R_CS].base;
  
-     - name: Install gitlab-runner (DEB)
-       ansible.builtin.apt:
-@@ -69,7 +69,7 @@
-           update_cache: yes
-           state: present
-       when:
--        - ansible_facts['distribution'] == 'Ubuntu'
-+        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
+     if (!is_int) {
+         cpu_svm_check_intercept_param(env, SVM_EXIT_EXCP_BASE + intno,
+@@ -106,6 +108,7 @@ void raise_interrupt2(CPUX86State *env, int intno,
+     env->error_code = error_code;
+     env->exception_is_int = is_int;
+     env->exception_next_eip = env->eip + next_eip_addend;
++    qemu_plugin_vcpu_exception_cb(cs, last_pc);
+     cpu_loop_exit_restore(cs, retaddr);
+ }
  
-     # RPM setup
-     - name: Get gitlab-runner repo setup script (RPM)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index f49fe851cdf..667b1c38696 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -29,6 +29,7 @@
+ #include "seg_helper.h"
+ #include "access.h"
+ #include "tcg-cpu.h"
++#include "qemu/plugin.h"
+ 
+ #ifdef TARGET_X86_64
+ #define SET_ESP(val, sp_mask)                                   \
+@@ -1192,6 +1193,7 @@ void do_interrupt_all(X86CPU *cpu, int intno, int is_int,
+                       int error_code, target_ulong next_eip, int is_hw)
+ {
+     CPUX86State *env = &cpu->env;
++    uint64_t last_pc = env->eip + env->segs[R_CS].base;
+ 
+     if (qemu_loglevel_mask(CPU_LOG_INT)) {
+         if ((env->cr[0] & CR0_PE_MASK)) {
+@@ -1263,6 +1265,8 @@ void do_interrupt_all(X86CPU *cpu, int intno, int is_int,
+                  event_inj & ~SVM_EVTINJ_VALID);
+     }
+ #endif
++
++    qemu_plugin_vcpu_interrupt_cb(CPU(cpu), last_pc);
+ }
+ 
+ void do_interrupt_x86_hardirq(CPUX86State *env, int intno, int is_hw)
 -- 
 2.47.3
 
