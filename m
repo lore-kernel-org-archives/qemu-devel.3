@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471C5CCF9E0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9957BCCF9EE
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 17:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDR1b-0001g4-VT; Mon, 27 Oct 2025 13:28:56 -0400
+	id 1vDR20-0001iZ-Kj; Mon, 27 Oct 2025 13:29:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDR1a-0001fe-5K
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:28:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDR1Q-0005pP-7P
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:28:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761586119;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nLIboskL/rQ/k7TUMmbaT8PpA+hD/Sk2wIipoyR6JjE=;
- b=U/gmkKM0Hjvod2WE9y9Z3myXmXed9364rcc7kU1SpiRpkQrP4n3rXOIAAoTyinFMi1JJLr
- st8bw6BR6Crvd7IGnYOa8vdzCCAl3aMnhOFbqaZxdnyJRJrpatp86NLGUsJ/vGAD+xY+gQ
- fR3N3oDHJxn3ZuDDOQVh5qmzvLINt3Q=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-8-E8pKyTO5O7meDuGAQcFg-1; Mon, 27 Oct 2025 13:28:37 -0400
-X-MC-Unique: 8-E8pKyTO5O7meDuGAQcFg-1
-X-Mimecast-MFC-AGG-ID: 8-E8pKyTO5O7meDuGAQcFg_1761586116
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4256fae4b46so3823911f8f.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 10:28:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDR1x-0001hp-0s
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:29:18 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDR1m-0005rL-K4
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:29:16 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-783fa3aa122so60739137b3.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 10:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761586139; x=1762190939; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=INZxKXORbBCMoXc1lgrc8dzHD7uXhAg2JhqJTdk2J5o=;
+ b=SfUghv6LpoYmwkBcNVdOLPJCf8uFwj7VkAgyXOdv5QsMBocTrjL5GFqvQNte/4T3Bh
+ ExO/Ba6YGWFiJisG4mlPU+q/zGETHMdCwXDlxdzKMBtGIZZte4+hH6y8SbZeUoAHN0XU
+ tc3dzUzI1jypbh9zamCFqEe7x93xCozQ9K5LWD1ellxWGVC2ARPffOg++1gfR5oq9ejN
+ mSxv8a8TjQksgKE3+iyUeqT0uuot0SK9iDkXxqEotjG3UowannHY+4ZsjRcsn8xr4ihN
+ 9i5yL2Co5BrgEkzwdq02mQPgz3WtwqFJr7EyytxPt4Fj/7RI0GNxmQv+sAhIeemzZ9mf
+ DGLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761586116; x=1762190916;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nLIboskL/rQ/k7TUMmbaT8PpA+hD/Sk2wIipoyR6JjE=;
- b=UnWh4LvqovStFeB4DnF8F+Xaxp+C69begTSy65mWC4ooBxrpmow68aLFDqT1zUZXJx
- yJsK/zNljmeq19chQFFW/HKDEt/lt76tobmsBDQI5v1+6k8V7lsO/bSYw+Z8AWrCQ3kH
- kMyzN/0lTlduJHK7aDHsTwt9qU/73W6U6a2aVrYGj+B6rnwLUACmxXvINQiA3GpNffgV
- u6t8lR5zMwPH3PZ4quzjHGOqNPk2ShCGKBzuXrFNIKMPx8/ce86z7mSZt4m9ZfLO0LVQ
- LWq2EN5v1jleFdXifQX14bJykSW0K5Vqcj+t7aJeMAzp9ZpJwl9PHxSyAp548N+bIu7h
- ZSZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJJdOdgXiXysYOt7k8ph5i6PD8B/f58z6D0ivR1pPyiok3elPimqT3LvX8Kl+eNKLUP+BQjQkPompx@nongnu.org
-X-Gm-Message-State: AOJu0YwOA20aw2zyQT3ThfVA89jyproekiij4bHgoVKmorIKgO2bgkmG
- ke2pLFgAHRl6q+6NeT6j+HbTl4Jc0r1cC3JAQvB11wPKoYO9GmDo1yW7/AdYY53/dp0Y4AYOBxe
- CcwmBmc8/17vIjnhuHswA42bOuYvrNTqO0t9zlbz0bJysjG/r79UcTbi0
-X-Gm-Gg: ASbGnctpfvEFHA1yCIsCq1lQHUfJ+LFB3EFSX6nHvRY3dWpCM+H6c9okS9xpico2C13
- mTKr5O4TKiP7sL+tR23CSCStC9wUAElRwwbzhXx9R/upLWkHnbW2fuZtXQhOZqCz0SuVGk72Xfw
- ty3dGe51r5LRk8B0A9OY/vzLvlxQK1iBhKcW6Sf2wFLkHc+RP3H+PeKChy4SRF3FPPjYWj6QTqy
- XPVk5BEgfcz9y1MmALqQTXMT+02Ot/+UA+6efKa1/HyE0tgwe42IhnKq3DjUh1MFGpNg427wQgM
- mJOezzOoJEVpyjP1F1ZPTt6KXHh0UHDMWgsbE8OKlaIZq0XsAuMMsJG7sNjGi9+KBFBaxlrWjBQ
- 734PxMizTHjY6Xoksr7zNog3tu6jlMoLngp1OnnsqKG1eeQ==
-X-Received: by 2002:a05:6000:2381:b0:3eb:5245:7c1f with SMTP id
- ffacd0b85a97d-429a7e35cddmr401032f8f.2.1761586116438; 
- Mon, 27 Oct 2025 10:28:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEECNBbkkanBJOCmuNxECWe+RldEe86PX/D9bIC19yYKIgd0pa9jybRTI0BhR2KBrdbIOQcEQ==
-X-Received: by 2002:a05:6000:2381:b0:3eb:5245:7c1f with SMTP id
- ffacd0b85a97d-429a7e35cddmr401017f8f.2.1761586116023; 
- Mon, 27 Oct 2025 10:28:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952b7ce1sm15144251f8f.0.2025.10.27.10.28.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 10:28:35 -0700 (PDT)
-Message-ID: <c2c6a1ec-1590-4eaf-b59a-a2dc3b5ed260@redhat.com>
-Date: Mon, 27 Oct 2025 18:28:34 +0100
+ d=1e100.net; s=20230601; t=1761586139; x=1762190939;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=INZxKXORbBCMoXc1lgrc8dzHD7uXhAg2JhqJTdk2J5o=;
+ b=SXrDPmLsP5l22Pus9w3QuX8gylmyFEYwZ4x/qfsxmY+i94L4gyByxn3SZHG1icSEhI
+ jdDmKoSs0C2EB5i3/XmOy1jBxma/3WvTMbsFnDR/8kJgVUOfW3IHQzgszJAMOLOCQRnU
+ 6S7BI6ji0O1eDnCfTTKWHxtZRsVKj3CYebJ2Sc8avWfSUfnWrRd+yFY3Ko5pWYNcIOSF
+ DMkAWj2lOPbLNDsfKIASkTRU8QPMnWbg+j7s6jHAfXgYm07HtlPwO7Giq+MvOfYvSJSt
+ P18adGPA3+oEFIxBUZrCWkO6V2ef9VdmxLzhMAkZPw0e/jwyxWtX+qHJyc+Ea5kkSz8w
+ NGQw==
+X-Gm-Message-State: AOJu0Yy45Di7k9dbJTUYrXURDa5GXtOYJctdjcnxHXSv6IIuP/aQyxSy
+ n3nRZxVel1qnnup2ub1Vrq2eT7OzOa8dMfBKqapZKPoDf4sfA3IdFooz78DWDEg8o23TWQBnxBg
+ zZV6XJsnhBMUQFwiegvj6ykFNH1uq1fHfx/CAynSJvw==
+X-Gm-Gg: ASbGncts8SrXaFBS2fPWvsvS9FivgGaQTnGBwJAMTYv8DHbFOPkntl/dzDUBEt62ZYt
+ YYQL7/CVwrn1bUbL+UFJbwlKemGYe/Jejwk66sz1ZbuV6Whu8+WGgZ37qzziFuDdfBi3wqhjulU
+ YgobZzqEx5So1VXexLGXDbM4lFU88M7ZNykN2Pyp9rZTB3mPCr6oN+hJdzMCMsyEnPV0N7Lzhry
+ P6nRarr3a9AsUJzc8RYsanc42ra6ZNTV7mvrZljfaisbQ2KgJ87eqcZRu66HN9OGiNa1y2h
+X-Google-Smtp-Source: AGHT+IGW5g6yIAcZ8AnOlOitoNnidGxixqtCOTnyGFJVecQ/ja8nQV9cYTlFtFnGNK9cKJBxxc8PEU9t5cKyVByoUKQ=
+X-Received: by 2002:a05:690c:8691:10b0:785:be06:1d54 with SMTP id
+ 00721157ae682-78619161e83mr2030937b3.18.1761586138601; Mon, 27 Oct 2025
+ 10:28:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 25/27] backends/iommufd: Add a callback helper to
- retrieve PASID support
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- shameerkolothum@gmail.com
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-26-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250929133643.38961-26-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20251027165304.98296-1-philmd@linaro.org>
+ <20251027165304.98296-2-philmd@linaro.org>
+In-Reply-To: <20251027165304.98296-2-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Oct 2025 17:28:47 +0000
+X-Gm-Features: AWmQ_bk_oHxsM-oUwSt3Djx72KQBlXsw0UXYh0V7QLR7hzdQr_p2FAkH_yrkm54
+Message-ID: <CAFEAcA-=cT_2JX+-D0_nHMrr_fgpRtXA2WqvY66unNAUhwkVkQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] hw/pci/pci_host: Add 'config-reg-check-high-bit'
+ property
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Helge Deller <deller@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,89 +96,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On Mon, 27 Oct 2025 at 16:54, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> In order to have more PCI host bridges to re-use the
+> generic pci_host_data_le_ops MemoryRegionOps, add the
+> 'config-reg-check-high-bit' property (%true by default).
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-On 9/29/25 3:36 PM, Shameer Kolothum wrote:
-> Subsequent patch will make use of this to add a PASID CAP for assigned devices.
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  backends/iommufd.c                 |  9 +++++++++
->  include/system/host_iommu_device.h | 12 ++++++++++++
->  2 files changed, 21 insertions(+)
->
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 023e67bc46..0ff46a5747 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -523,6 +523,14 @@ bool host_iommu_device_iommufd_detach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
->      return idevc->detach_hwpt(idev, errp);
->  }
->  
-> +static uint8_t hiod_iommufd_get_pasid(HostIOMMUDevice *hiod, uint64_t *hw_caps)
-I would call it hiod_iommufd_get_max_pasid_log2 instead.
-> +{
-> +    HostIOMMUDeviceCaps *caps = &hiod->caps;
-> +
-> +    *hw_caps = caps->hw_caps;
-> +    return caps->max_pasid_log2;
-> +}
-> +
->  static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+> diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+> index b5c624e12e8..d6db365e327 100644
+> --- a/hw/pci/pci_host.c
+> +++ b/hw/pci/pci_host.c
+> @@ -184,8 +184,10 @@ static void pci_host_data_write(void *opaque, hwaddr=
+ addr,
 >  {
->      HostIOMMUDeviceCaps *caps = &hiod->caps;
-> @@ -543,6 +551,7 @@ static void hiod_iommufd_class_init(ObjectClass *oc, const void *data)
->      HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
->  
->      hioc->get_cap = hiod_iommufd_get_cap;
-> +    hioc->get_pasid = hiod_iommufd_get_pasid;
-same for the cb name
+>      PCIHostState *s =3D opaque;
+>
+> -    if (s->config_reg & (1u << 31))
+> -        pci_data_write(s->bus, s->config_reg | (addr & 3), val, len);
+> +    if (s->config_reg_check_high_bit && !(s->config_reg & (1U << 31))) {
+> +        return;
+> +    }
+> +    pci_data_write(s->bus, s->config_reg | (addr & 3), val, len);
+>  }
+>
+>  static uint64_t pci_host_data_read(void *opaque,
+> @@ -193,7 +195,7 @@ static uint64_t pci_host_data_read(void *opaque,
+>  {
+>      PCIHostState *s =3D opaque;
+>
+> -    if (!(s->config_reg & (1U << 31))) {
+> +    if (s->config_reg_check_high_bit && !(s->config_reg & (1U << 31))) {
+>          return 0xffffffff;
+>      }
+>      return pci_data_read(s->bus, s->config_reg | (addr & 3), len);
+> @@ -235,6 +237,8 @@ const VMStateDescription vmstate_pcihost =3D {
 >  };
->  
->  static const TypeInfo types[] = {
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index c6a2a3899a..3773c54977 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -115,6 +115,18 @@ struct HostIOMMUDeviceClass {
->       * @hiod: handle to the host IOMMU device
->       */
->      uint64_t (*get_page_size_mask)(HostIOMMUDevice *hiod);
-> +    /**
-> +     * @get_pasid: Get PASID support information along this
-> +     *             @hiod Host IOMMU device
-> +     * Optional callback. If not implemented, PASID not supported
-> +     *
-> +     * @hiod: handle to the host IOMMU device
-> +     *
-> +     * @out_hw_caps: Output the generic iommu capability info which includes
-> +     *               device PASID CAP info
+>
+>  static const Property pci_host_properties_common[] =3D {
+> +    DEFINE_PROP_BOOL("config-reg-check-high-bit", PCIHostState,
+> +                     config_reg_check_high_bit, true),
 
-I would precise this corresponds to kernel bitmap of enum iommufd_hw_capabilities
+I think it might be useful to name and document this
+property at a slightly higher level of abstraction.
 
-> +     * Returns the width of PASIDs. Zero means no PASID support
-> +     */
-> +     uint8_t (*get_pasid)(HostIOMMUDevice *hiod, uint64_t *out_hw_caps);
-ditto. But actually even get_pasid_max_pasid_log2 is not very well
-suited as it returns both iommu_hw_capabilities and max_pasid_log2.
-and this can now be easily mixed up with the other get_cap() callback.
+Specifically, this code is handling the behaviour of
+the CONFIG_ADDRESS register which is part of the PCI
+Configuration Access Method (CAM). For x86 the top bit of
+CONFIG_ADDRESS is an Enable bit, which must be set to
+cause accesses to CONFIG_DATA to actually do something.
+For PCI controllers like Dino there is no Enable bit
+defined in CONFIG_ADDRESS[*] and CONFIG_DATA accesses always
+take effect.
 
-Why can't we use hiod_iommufd_get_cap() cb instead that would return an
-uint64_t instead. we could easily add new cap value for max_pasid_log2
-and output_hw_capabilities.
+[*] http://ftp.parisc-linux.org/docs/chips/dino_ers.pdf page 49
 
-Or do I miss something?
+So perhaps we could call this "config-address-reg-has-enable-bit" ?
 
-Thanks
+A documentation comment about its purpose and noting that
+the expectation is that this is set by the subclass,
+not by end-users, might also be helpful.
 
-Eric
-
->  };
->  
->  /*
-
+thanks
+-- PMM
 
