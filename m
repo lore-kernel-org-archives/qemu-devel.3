@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B52CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 09:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1DBBCCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 09:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDJro-0006Ul-I4; Mon, 27 Oct 2025 05:50:20 -0400
+	id 1vDJtX-00075j-5U; Mon, 27 Oct 2025 05:52:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vDJrm-0006UZ-IG
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:50:18 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1vDJtR-00075O-SQ
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:52:01 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vDJrg-0001BC-0x
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:50:18 -0400
+ id 1vDJtO-0001LW-2u
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:52:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761558612; x=1793094612;
+ t=1761558718; x=1793094718;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=EPREoMUXRyDfBk/mK+9pxDtEalQDV12FTD9qW61Ut7E=;
- b=bzHZHJdoPfSM53hKtc8ABChwnCTuPwtoggdExkvHyA91ip56pIHWWqxJ
- 3MVBkfo+iDoRdRLJKJbi+NkprVruDTl2YjdwOsoo8AFZwsCsz7kLeMGlw
- I7Pz6AYqVxvQmPYa+YcIRhjVKn+ssrYXMpWflWStSDVdatC0TM9THs67q
- XLetowJD4xFGhKHOE/NBPf6/hiEFArXg1A5feo/0hrH3dRlhpPCf0wFfh
- UP/4/AMi+ETnQvnztbWMi9kS8kFaQ3L6yo2gIX0weaafQRt8lfK3AH95i
- 2vo3YzdiK9TDkuUvtMF+W9MAKk+FyvmhqMZ1pHuZBRbVr/en0JUt5bo5k g==;
-X-CSE-ConnectionGUID: ovKl2CyRQAqK63hhkYnt4g==
-X-CSE-MsgGUID: JJBnvRrYRruoAm7SPCLd1w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="86263350"
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="86263350"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2025 02:50:06 -0700
-X-CSE-ConnectionGUID: BHXATqk5RQmsIvipYv+t5Q==
-X-CSE-MsgGUID: v4fAVbsXSPKNKCNSurB9EQ==
+ bh=pOktcS9kwkPjEXa37/dQ2r0t6/Ys/P8rTUy3GS729DY=;
+ b=h0TE609Nv/de7XTYNDdqdDaD9HYI1GfIltrfl3AXF8y4xKH33viDs7Nc
+ //nGpTuL5IfvgTj9tf10RsZcfnZvh1gwVmMFD+3XkuNLBaXib+F4ttL0D
+ gNoPS0RLt/JQAaM+KQvpJeM8vyk19Zud6L/Muw9eN2NbndHmyTl6jjx16
+ 1LrTSeb//0pDpXt7JQ5I579CX+ZUjGGTW/zpa08RHU0peSi1MYqaM8Qsz
+ IX6Sftz1/DZJMu7Ub9N/4r532joDcw5xje2gYRZNxc20LTlJJ5FfvsMou
+ dYfqnbE3X3ZOUVxPiTBQu33irwcjFZpthKTkhW/HKnnPMM7Q/ggV6XGGS Q==;
+X-CSE-ConnectionGUID: lghZXlHYS7SEatyLdL515w==
+X-CSE-MsgGUID: vifE+hOdTpGMsQyefytWmA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="66248327"
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="66248327"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Oct 2025 02:51:52 -0700
+X-CSE-ConnectionGUID: hhfk4mV1TS25CUZXzNCQ3Q==
+X-CSE-MsgGUID: DmQaWATJSeqDO7CLnF366Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="185759421"
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="222213035"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 27 Oct 2025 02:50:03 -0700
-Date: Mon, 27 Oct 2025 18:12:13 +0800
+ by orviesa001.jf.intel.com with ESMTP; 27 Oct 2025 02:51:49 -0700
+Date: Mon, 27 Oct 2025 18:13:59 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,17 +56,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Mathias Krause <minipli@grsecurity.net>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
-Subject: Re: [PATCH v3 07/20] i386/cpu: Reorganize dependency check for arch
- lbr state
-Message-ID: <aP9FfUKoP2azthS8@intel.com>
+Subject: Re: [PATCH v3 09/20] i386/cpu: Fix supervisor xstate initialization
+Message-ID: <aP9F5wpOh3zOF1rr@intel.com>
 References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-8-zhao1.liu@intel.com>
- <d34f682a-c6c0-4609-96e8-2a0b76585c7d@intel.com>
+ <20251024065632.1448606-10-zhao1.liu@intel.com>
+ <5d501d23-74d3-45aa-a51e-52ef59002e1a@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d34f682a-c6c0-4609-96e8-2a0b76585c7d@intel.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <5d501d23-74d3-45aa-a51e-52ef59002e1a@intel.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -91,36 +90,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> >   * XSAVES feature bit (CPUID 0xD.0x1.EAX[bit 3]):
+On Mon, Oct 27, 2025 at 03:55:30PM +0800, Xiaoyao Li wrote:
+> Date: Mon, 27 Oct 2025 15:55:30 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v3 09/20] i386/cpu: Fix supervisor xstate initialization
+> 
+> On 10/24/2025 2:56 PM, Zhao Liu wrote:
+> > From: Chao Gao <chao.gao@intel.com>
 > > 
-> >     Arch lbr state is a supervisor state, which requires the XSAVES
-> >     feature support. Enumerate supported supervisor state based on XSAVES
-> >     feature bit in x86_cpu_enable_xsave_components().
+> > Arch lbr is a supervisor xstate, but its area is not covered in
+> > x86_cpu_init_xsave().
 > > 
-> >     Then it's safe to drop the check on XSAVES feature support during
-> >     CPUID 0XD encoding.
-
-...
-
+> > Fix it by checking supported xss bitmap.
+> > 
+> > In addition, drop the (uint64_t) type casts for supported_xcr0 since
+> > x86_cpu_get_supported_feature_word() returns uint64_t so that the cast
+> > is not needed. Then ensure line length is within 90 characters.
+> > 
+> > Tested-by: Farrah Chen <farrah.chen@intel.com>
+> > Signed-off-by: Chao Gao <chao.gao@intel.com>
+> > Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >   target/i386/cpu.c | 9 ++++++---
+> >   1 file changed, 6 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index 5cd335bb5574..1917376dbea9 100644
+> > --- a/target/i386/cpu.c
 > > +++ b/target/i386/cpu.c
-> > @@ -8174,16 +8174,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-> >               *ebx = xsave_area_size(xstate, true);
-> >               *ecx = env->features[FEAT_XSAVE_XSS_LO];
-> >               *edx = env->features[FEAT_XSAVE_XSS_HI];
-> > -            if (kvm_enabled() && cpu->enable_pmu &&
-> > -                (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR) &&
-> > -                (*eax & CPUID_XSAVE_XSAVES)) {
-> > -                *ecx |= XSTATE_ARCH_LBR_MASK;
-> > -            } else {
-> > -                *ecx &= ~XSTATE_ARCH_LBR_MASK;
-> > -            }
+> > @@ -9707,20 +9707,23 @@ static void x86_cpu_post_initfn(Object *obj)
+> >   static void x86_cpu_init_xsave(void)
+> >   {
+> >       static bool first = true;
+> > -    uint64_t supported_xcr0;
+> > +    uint64_t supported_xcr0, supported_xss;
+> >       int i;
+> >       if (first) {
+> >           first = false;
+> >           supported_xcr0 =
+> > -            ((uint64_t) x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) << 32) |
+> > +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) |
 > 
-> > -        } else if (count == 0xf && cpu->enable_pmu
-> > -                   && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-> > -            x86_cpu_get_supported_cpuid(0xD, count, eax, ebx, ecx, edx);
-> 
-> This chunk needs to be a separate patch. It's a functional change.
+> missing the "<< 32" here,
 
-Already mentioned this in commit message.
+Yes, good catch.
 
 
