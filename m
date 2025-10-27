@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74806CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F83CCCF9EF
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRn2-0005Du-LF; Mon, 27 Oct 2025 14:17:56 -0400
+	id 1vDRn1-00057c-4q; Mon, 27 Oct 2025 14:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmi-0004yx-Ta
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:38 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmX-0004tu-Na
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:26 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmD-00041l-Vp
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:36 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm9-000404-Up
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
- In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=eev5Lo5++MldWSwigyJl/p1GZnnsmAjufLhfJFBnfBE=; b=BG00EZidaBZbXLp
- nh5GCeKGIyKetRAHFAwZPxfngWYQemFOY21zN8hVHZoqHzWWRFCTCnvYNLa0mgyrgwtGNIO9iJZlQ
- uLoHyPaCuUgTe+4Lpl/IqijUcufRovgu28/rSWs5bUBvOUgFXmOcZ3aiAnDSVca6lCczgJWe6VQqU
- zk=;
+ List-Help; bh=fhHIF14aZaL5bswiWWZk8ZrOvTFnjdR1muzxmPNyYn8=; b=oVVpME9zRO9jpKL
+ dp8NNe1kbhN5CCngsjMcdF4raPP7Qwep27qt4w8jAWhg+vqQpeZLFDY6hxovQG/wVgkjvPJBF24hy
+ X0uvvfNF631GGegqP8mWw5pGec5hRc9sjAf23FZi9tewbUf5bkMv3+V5JwnJEpr4nH2RQYoiLjt4S
+ 8A=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 33/33] target/riscv: Make pmp.h target_ulong agnostic
-Date: Mon, 27 Oct 2025 19:18:30 +0100
-Message-ID: <20251027181831.27016-34-anjo@rev.ng>
+Subject: [PATCH v4 20/33] target/riscv: Fix size of priv
+Date: Mon, 27 Oct 2025 19:18:17 +0100
+Message-ID: <20251027181831.27016-21-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -47,7 +46,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,165 +64,133 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pmp.h header is exposed through cpu.h.  pmp_table_t is also used in
-CPUArchState.  CSR declarations are only used in target/ and are moved to
-csr.h.  In pmp.h, addr_reg is widened to 64 bits and the privilege mode
-parameter is fixed to 8 bits, similar to previous commits.
-
-Note, the cpu/pmp/entry and cpu/pmp VMSTATE versions are bumped, breaking
-migration from older versions.
+The priv field of CPUArchState only stores values in the range [0,3],
+fix to 8 bits in size and update relevant function arguments.  Introduce
+a new privilege_mode_t typedef for passing around the privilege mode.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.h     | 12 ++++++++++++
- target/riscv/pmp.h     | 20 +++++---------------
- target/riscv/machine.c | 10 +++++-----
- target/riscv/pmp.c     | 10 ++++++----
- 4 files changed, 28 insertions(+), 24 deletions(-)
+ target/riscv/cpu.h        | 15 +++++++++++----
+ target/riscv/cpu_helper.c | 13 ++++++++-----
+ target/riscv/machine.c    |  2 +-
+ 3 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-index 552e6c5de5..3752a0ef43 100644
---- a/target/riscv/csr.h
-+++ b/target/riscv/csr.h
-@@ -78,4 +78,16 @@ void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
- /* In th_csr.c */
- extern const RISCVCSR th_csr_list[];
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 191a3fb3d9..4c42971809 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -109,6 +109,12 @@ typedef struct riscv_cpu_profile {
  
-+/* PMP CSRs, defined in pmp.c */
-+void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-+                      target_ulong val);
-+target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+ extern RISCVCPUProfile *riscv_profiles[];
+ 
++/*
++ * Type large enough to hold all PRV_* fields, update CPUArchState::priv
++ * migration field if changing this type.
++ */
++typedef uint8_t privilege_mode_t;
 +
-+void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
-+uint64_t mseccfg_csr_read(CPURISCVState *env);
-+
-+void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-+                       target_ulong val);
-+target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
-+
- #endif /* RISCV_CSR_H */
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index e322904637..f5d6ec2bbf 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -22,8 +22,6 @@
- #ifndef RISCV_PMP_H
- #define RISCV_PMP_H
+ /* Privileged specification version */
+ #define PRIV_VER_1_10_0_STR "v1.10.0"
+ #define PRIV_VER_1_11_0_STR "v1.11.0"
+@@ -265,7 +271,7 @@ struct CPUArchState {
+     uint32_t elf_flags;
+ #endif
  
--#include "cpu.h"
--
- typedef enum {
-     PMP_READ  = 1 << 0,
-     PMP_WRITE = 1 << 1,
-@@ -50,7 +48,7 @@ typedef enum {
- } mseccfg_field_t;
+-    target_ulong priv;
++    privilege_mode_t priv;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+     uint64_t senvcfg;
+@@ -651,10 +657,11 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+ #endif /* !CONFIG_USER_ONLY */
  
- typedef struct {
--    target_ulong addr_reg;
-+    uint64_t addr_reg;
-     uint8_t  cfg_reg;
- } pmp_entry_t;
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
++void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
++                        bool virt_en);
  
-@@ -65,21 +63,13 @@ typedef struct {
-     uint32_t num_rules;
- } pmp_table_t;
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, target_ulong prev_priv, bool prev_virt);
++    enum CTRType type, privilege_mode_t prev_priv, bool prev_virt);
+ void riscv_ctr_clear(CPURISCVState *env);
  
--void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
--                      target_ulong val);
--target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
--
--void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
--uint64_t mseccfg_csr_read(CPURISCVState *env);
-+typedef struct CPUArchState CPURISCVState;
+ void riscv_translate_init(void);
+@@ -725,7 +732,7 @@ static inline int cpu_address_mode(CPURISCVState *env)
+     return mode;
+ }
  
--void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
--                       target_ulong val);
--target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        target_ulong size, pmp_priv_t privs,
-+                        int size, pmp_priv_t privs,
-                         pmp_priv_t *allowed_privs,
--                        target_ulong mode);
--target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
-+                        privilege_mode_t mode);
-+uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
- void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
- void pmp_update_rule_nums(CPURISCVState *env);
- uint32_t pmp_get_num_rules(CPURISCVState *env);
+-static inline RISCVMXL cpu_get_xl(CPURISCVState *env, target_ulong mode)
++static inline RISCVMXL cpu_get_xl(CPURISCVState *env, privilege_mode_t mode)
+ {
+     RISCVMXL xl = env->misa_mxl;
+     /*
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 210e7bae6d..38b57bc622 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -798,7 +798,7 @@ void riscv_ctr_clear(CPURISCVState *env)
+     memset(env->ctr_data, 0x0, sizeof(env->ctr_data));
+ }
+ 
+-static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
++static uint64_t riscv_ctr_priv_to_mask(privilege_mode_t priv, bool virt)
+ {
+     switch (priv) {
+     case PRV_M:
+@@ -818,7 +818,8 @@ static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
+     g_assert_not_reached();
+ }
+ 
+-static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
++static uint64_t riscv_ctr_get_control(CPURISCVState *env,
++                                      privilege_mode_t priv,
+                                       bool virt)
+ {
+     switch (priv) {
+@@ -840,7 +841,8 @@ static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
+  * and src privilege is less than target privilege. This includes the virtual
+  * state as well.
+  */
+-static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
++static bool riscv_ctr_check_xte(CPURISCVState *env,
++                                privilege_mode_t src_prv,
+                                 bool src_virt)
+ {
+     target_long tgt_prv = env->priv;
+@@ -929,7 +931,7 @@ static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
+  *    idx = (sctrstatus.WRPTR - entry - 1) & (depth - 1);
+  */
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, target_ulong src_priv, bool src_virt)
++    enum CTRType type, privilege_mode_t src_priv, bool src_virt)
+ {
+     bool tgt_virt = env->virt_enabled;
+     uint64_t src_mask = riscv_ctr_priv_to_mask(src_priv, src_virt);
+@@ -1027,7 +1029,8 @@ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+     env->sctrstatus = set_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK, head);
+ }
+ 
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
++void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
++                        bool virt_en)
+ {
+     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+ 
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 36f4c3251d..13eb292c4a 100644
+index c55794c554..ce5e44325d 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -48,10 +48,10 @@ static int pmp_post_load(void *opaque, int version_id)
- 
- static const VMStateDescription vmstate_pmp_entry = {
-     .name = "cpu/pmp/entry",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(addr_reg, pmp_entry_t),
-+        VMSTATE_UINT64(addr_reg, pmp_entry_t),
-         VMSTATE_UINT8(cfg_reg, pmp_entry_t),
-         VMSTATE_END_OF_LIST()
-     }
-@@ -59,8 +59,8 @@ static const VMStateDescription vmstate_pmp_entry = {
- 
- static const VMStateDescription vmstate_pmp = {
-     .name = "cpu/pmp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = pmp_needed,
-     .post_load = pmp_post_load,
-     .fields = (const VMStateField[]) {
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 0b23b4b8ed..c68c787cf2 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "cpu.h"
-+#include "csr.h"
- #include "trace.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
-@@ -298,7 +299,7 @@ static int pmp_is_in_range(CPURISCVState *env, int pmp_index, hwaddr addr)
-  */
- static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-                                        pmp_priv_t *allowed_privs,
--                                       target_ulong mode)
-+                                       privilege_mode_t mode)
- {
-     bool ret;
- 
-@@ -357,8 +358,9 @@ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-  * Return false if no match
-  */
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        target_ulong size, pmp_priv_t privs,
--                        pmp_priv_t *allowed_privs, target_ulong mode)
-+                        int size, pmp_priv_t privs,
-+                        pmp_priv_t *allowed_privs,
-+                        privilege_mode_t mode)
- {
-     int i = 0;
-     int pmp_size = 0;
-@@ -708,7 +710,7 @@ uint64_t mseccfg_csr_read(CPURISCVState *env)
-  * To avoid this we return a size of 1 (which means no caching) if the PMP
-  * region only covers partial of the TLB page.
-  */
--target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
-+uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
- {
-     hwaddr pmp_sa;
-     hwaddr pmp_ea;
+@@ -445,7 +445,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+         VMSTATE_UNUSED(4),
+         VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
+-        VMSTATE_UINTTL(env.priv, RISCVCPU),
++        VMSTATE_UINT8(env.priv, RISCVCPU),
+         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
+         VMSTATE_UINT64(env.resetvec, RISCVCPU),
+         VMSTATE_UINT64(env.mhartid, RISCVCPU),
 -- 
 2.51.0
 
