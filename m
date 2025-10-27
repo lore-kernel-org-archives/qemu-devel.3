@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB60DCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E675CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmc-0004w8-IQ; Mon, 27 Oct 2025 14:17:30 -0400
+	id 1vDRn6-0005G2-8k; Mon, 27 Oct 2025 14:18:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmQ-0004qW-8T
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:20 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmh-0004xZ-D6
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:38 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmA-0003yr-02
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:18 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmC-00041B-2c
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+ In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=xzmt7cLSz4yJS8IzF79BoJ0z6M/UFl7qXf5BHQA55gk=; b=u9m3FixuZRfVUxP
- TcIJgh2kyVUX9BRjiI4ud0MS3qKBknUCbOuYrstooAfMrwCqHtm6RCJsqQu2M042frIzmwL401wPz
- dAyRDhWJi68+oNRxJ8Acexi5WAtVEqnor0naEi94XEpfaAAPexCpsg4pSE/liLsgdRJ/5JiePfxP2
- 0w=;
+ List-Help; bh=u9TE57MJkx2dMHKlQT6EKBcKg03vPkkQ5mXn9pVXN3Y=; b=SQGXnnZcfvNXWT+
+ a9H82+xHOExshg+8hgyyW76WAw04KPr4eyszGzhBbxRK87Kp/SCqpslce5BezKQG7QGflTVKvLrEs
+ 3ZVXy9I6W5Ffk5Nnn8xvu/76RZqS9Jj7lDVZkkdJhNpDeXWljAI0FyrMntxfDH0wX3Vqk1YJhsRAi
+ 7g=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 11/33] target/riscv: Fix size of pc, load_[val|res]
-Date: Mon, 27 Oct 2025 19:18:08 +0100
-Message-ID: <20251027181831.27016-12-anjo@rev.ng>
+Subject: [PATCH v4 29/33] target/riscv: Fix size of mseccfg
+Date: Mon, 27 Oct 2025 19:18:26 +0100
+Message-ID: <20251027181831.27016-30-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -64,116 +65,68 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix to 64 bits in size and as these are mapped to TCG globals, be
-careful with host endianness when allocating globals.  Casts are
-added to logging expressions to retain the correct size for
-TARGET_RISCV32.
+mseccfg is defined in version 20250508 of the privileged specification
+to be 64 bits in size.  Update relevant function arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/cpu.h        |  6 +++---
- target/riscv/cpu.c        |  2 +-
- target/riscv/cpu_helper.c |  6 +++---
- target/riscv/machine.c    |  6 +++---
- target/riscv/translate.c  | 12 +++++++-----
- 5 files changed, 17 insertions(+), 15 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ target/riscv/pmp.h | 4 ++--
+ target/riscv/pmp.c | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index bd200ccad4..f00ae69e8a 100644
+index 153480846a..cc40d6c86c 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -225,9 +225,9 @@ struct CPUArchState {
-     uint8_t vxsat;
-     bool vill;
+@@ -464,7 +464,7 @@ struct CPUArchState {
  
--    target_ulong pc;
--    target_ulong load_res;
--    target_ulong load_val;
-+    uint64_t pc;
-+    uint64_t load_res;
-+    uint64_t load_val;
+     /* physical memory protection */
+     pmp_table_t pmp_state;
+-    target_ulong mseccfg;
++    uint64_t mseccfg;
  
-     /* Floating-Point state */
-     uint64_t fpr[32]; /* assume both F and D extensions */
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index dc97d35458..353b927dd5 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -528,7 +528,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-         qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
-     }
- #endif
--    qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
-+    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
- #ifndef CONFIG_USER_ONLY
-     {
-         static const int dump_csrs[] = {
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 1f791e4de3..e105dec426 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -2278,9 +2278,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     /* trigger module */
+     uint16_t mcontext;
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index 271cf24169..e322904637 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -69,8 +69,8 @@ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+                       target_ulong val);
+ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
  
-     qemu_log_mask(CPU_LOG_INT,
-                   "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
--                  "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
--                  __func__, env->mhartid, async, cause, env->pc, tval,
--                  riscv_cpu_get_trap_name(cause, async));
-+                  "epc:0x%"PRIx64", tval:0x"TARGET_FMT_lx", desc=%s\n",
-+                  __func__, env->mhartid, async, cause, env->pc,
-+                  tval, riscv_cpu_get_trap_name(cause, async));
+-void mseccfg_csr_write(CPURISCVState *env, target_ulong val);
+-target_ulong mseccfg_csr_read(CPURISCVState *env);
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
++uint64_t mseccfg_csr_read(CPURISCVState *env);
  
-     mode = env->priv <= PRV_S && cause < 64 &&
-         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 440b09fc32..66ed3f6504 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -433,9 +433,9 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
-         VMSTATE_UINT8_ARRAY(env.miprio, RISCVCPU, 64),
-         VMSTATE_UINT8_ARRAY(env.siprio, RISCVCPU, 64),
--        VMSTATE_UINTTL(env.pc, RISCVCPU),
--        VMSTATE_UINTTL(env.load_res, RISCVCPU),
--        VMSTATE_UINTTL(env.load_val, RISCVCPU),
-+        VMSTATE_UINT64(env.pc, RISCVCPU),
-+        VMSTATE_UINT64(env.load_res, RISCVCPU),
-+        VMSTATE_UINT64(env.load_val, RISCVCPU),
-         VMSTATE_UINTTL(env.frm, RISCVCPU),
-         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
-         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 15eee7f6ee..e82805e178 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1459,6 +1459,10 @@ void riscv_translate_init(void)
-     /* 32 bits in size, no offset needed */
-     size_t vl_offset = offsetof(CPURISCVState, vl);
-     size_t vstart_offset = offsetof(CPURISCVState, vstart);
-+    /* 64 bits in size mapped to TCGv, needs offset */
-+    size_t pc_offset     = offsetof(CPURISCVState, pc) + field_offset;
-+    size_t res_offset    = offsetof(CPURISCVState, load_res) + field_offset;
-+    size_t val_offset    = offsetof(CPURISCVState, load_val) + field_offset;
- 
-     for (i = 1; i < 32; i++) {
-         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
-@@ -1474,11 +1478,9 @@ void riscv_translate_init(void)
-             offsetof(CPURISCVState, fpr[i]), riscv_fpr_regnames[i]);
-     }
- 
--    cpu_pc = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), "pc");
-+    cpu_pc = tcg_global_mem_new(tcg_env, pc_offset, "pc");
-     cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
-     cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
--    load_res = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_res),
--                             "load_res");
--    load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
--                             "load_val");
-+    load_res = tcg_global_mem_new(tcg_env, res_offset, "load_res");
-+    load_val = tcg_global_mem_new(tcg_env, val_offset, "load_val");
- }
+ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+                        target_ulong val);
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 3ef62d26ad..0b23b4b8ed 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -643,7 +643,7 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+ /*
+  * Handle a write to a mseccfg CSR
+  */
+-void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val)
+ {
+     int i;
+     uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
+@@ -689,7 +689,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
+ /*
+  * Handle a read from a mseccfg CSR
+  */
+-target_ulong mseccfg_csr_read(CPURISCVState *env)
++uint64_t mseccfg_csr_read(CPURISCVState *env)
+ {
+     trace_mseccfg_csr_read(env->mhartid, env->mseccfg);
+     return env->mseccfg;
 -- 
 2.51.0
 
