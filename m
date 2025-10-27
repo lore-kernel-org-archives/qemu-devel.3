@@ -4,50 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F043CCF9EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BE6CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDMPI-0000F6-Li; Mon, 27 Oct 2025 08:33:04 -0400
+	id 1vDMS8-00043h-Ai; Mon, 27 Oct 2025 08:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDMOm-0008Jp-U3
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:32:36 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vDMS2-0003pH-TU
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:35:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDMOg-0005Qk-6Z
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:32:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=th+wdmi7NGFG7aD8VQN9evtAT3+C+6eCcEbIMbhmlvE=; b=lDN+oCLM5/2IOkY
- MuLigZjR82m/tatVK8lJfDPWkBHOxKy2Hs7HWZO9WZpRHzyC+J6ab254aTcSOaI3d7ztA29tjntaj
- Omuee11gWa7tmjtGevTvlH1ufh3LYOIcLJAdW/BibrjC1GNYoOQAiMFxKNaefOmC5PHCaIBfeJ55l
- 3U=;
-Date: Mon, 27 Oct 2025 13:35:11 +0100
-Subject: [PATCH v2 2/3] hw/riscv: Replace target_ulong uses
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vDMRr-00064K-Iw
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:35:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761568534;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PCkPzW30WVEzQkAXGjant10stjDzNI0OMdr7gXxNFRY=;
+ b=AjrPsI7d3LBb8nrGGywIyzM7JPL2YZ1//lEl3tgjPHHwqu4CbJeaTb/i3xqvyJN/7QNj3v
+ TAm6gB0NCZe4LOZnYOuDsJIM6R9wBJlWWCB/1Y6F9NLO1k8AOzpOl32Mu2e4tU2JSFFduC
+ qVoKTJCdOubC8KkosTh6eXs0R7ieO4I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-nYjI3XfHOJm-lD4D5Ng19A-1; Mon,
+ 27 Oct 2025 08:35:30 -0400
+X-MC-Unique: nYjI3XfHOJm-lD4D5Ng19A-1
+X-Mimecast-MFC-AGG-ID: nYjI3XfHOJm-lD4D5Ng19A_1761568529
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B4D321800451; Mon, 27 Oct 2025 12:35:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.35])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7227819560AD; Mon, 27 Oct 2025 12:35:25 +0000 (UTC)
+Date: Mon, 27 Oct 2025 12:35:21 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jan =?utf-8?B?TMO8YmJl?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>
+Subject: Re: [PATCH v5 2/6] hw/sd/sdcard: Allow user-instantiated eMMC
+Message-ID: <aP9nCeWC-qr248iZ@redhat.com>
+References: <cover.1760702638.git.jan.kiszka@siemens.com>
+ <90fc6201696fcf0e5fd0493365bc32b217aa9d6e.1760702638.git.jan.kiszka@siemens.com>
+ <aP9dvF1unTtLrSdQ@redhat.com>
+ <9d287284-1cb2-4126-b7d7-9c57b32ce408@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
-References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
-In-Reply-To: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, 
- alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+In-Reply-To: <9d287284-1cb2-4126-b7d7-9c57b32ce408@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,58 +92,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- hw/riscv/riscv-iommu.c | 6 ++++--
- hw/riscv/riscv_hart.c  | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+On Mon, Oct 27, 2025 at 01:23:56PM +0100, Philippe Mathieu-Daudé wrote:
+> On 27/10/25 12:55, Daniel P. Berrangé wrote:
+> > On Fri, Oct 17, 2025 at 02:03:54PM +0200, Jan Kiszka wrote:
+> > > From: Jan Kiszka <jan.kiszka@siemens.com>
+> > > 
+> > > Enable user-instantiation so that PCI-attached eMMCs can be created for
+> > > virt machines, for QA purposes for the eMMC model itself and for complex
+> > > firmware/OS integrations using the upcoming RPMB partition support.
+> > 
+> > IIUC, the 'emmc' device wants an 'sd-bus' but this commit talks about
+> > it being PCI-attached ?
+> 
+> Sigh, it should not, but it got introduced this way and we didn't
+> have time / energy / good reason to rework the code, which currently
+> just works.
+> 
+> SD / MMC cards -> plugged over external SD bus
+> 
+> embedded MMC cards -> no SD bus, directly mmio-mapped.
+> 
+> > 
+> > Can you elaborate on / illustrate the usage example for an end user ?
+> 
+> Saving time by testing virtual hardware, without having to implement a
+> real model.
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index b33c7fe325..f8656ec04b 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -26,6 +26,8 @@
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/timer.h"
-+#include "qemu/target-info.h"
-+#include "qemu/bitops.h"
- 
- #include "cpu_bits.h"
- #include "riscv-iommu.h"
-@@ -391,9 +393,9 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             const uint64_t va_mask = (1ULL << va_len) - 1;
- 
-             if (pass == S_STAGE && va_len > 32) {
--                target_ulong mask, masked_msbs;
-+                uint64_t mask, masked_msbs;
- 
--                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
-+                mask = MAKE_64BIT_MASK(0, target_long_bits() - va_len + 1);
-                 masked_msbs = (addr >> (va_len - 1)) & mask;
- 
-                 if (masked_msbs != 0 && masked_msbs != mask) {
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index c7e98a4308..65d2c92018 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -93,7 +93,7 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
-         g_assert(rc == 0);
-         csr_call(words[1], cpu, csr, &val);
- 
--        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
-+        qtest_sendf(chr, "OK 0 %"PRIx64"\n", val);
- 
-         return true;
-     }
+Ok, more specifically, what are the suggested QEMU command line
+args to make use of this with PCI ?
 
+
+With regards,
+Daniel
 -- 
-2.51.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
