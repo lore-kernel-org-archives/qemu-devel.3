@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24225CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31F6CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDOum-0003MA-Jo; Mon, 27 Oct 2025 11:13:52 -0400
+	id 1vDOu4-0002gp-75; Mon, 27 Oct 2025 11:13:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOuO-0003Ca-Fx
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vDOu1-0002XU-1q
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:12:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOuG-0003uj-ED
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:20 -0400
+ id 1vDOtv-0003pp-M2
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:12:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761577988;
+ s=mimecast20190719; t=1761577967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ICokOjjJvkBhHEvSKhn1V4b+1D2ZTn5cRxBK+gf+D2U=;
- b=JFrLk0CkZ1DwANaxKsa7GdAz3tWZwZTx/Mi7ZoUza8Keu2G6YB7PQ6gXnvPWsLst6eXKHY
- /87y0054/IdowNkk9UH8abMHxE+J1LvMZNn2xmKru3yGxISs0TTUAwRUTHEWO4XT0dNA7K
- XuyLfiaYmRoBWmd7lLuHy1jYwEP6rx8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=NyK7D/H1Qi5xmEtGl32oA++O1kygrS8pRPRLpmHg6Pw=;
+ b=jPht8+y66+mP7esigBA2nSQxVNOpi62DpYjbyUccRVwFRnm/m8JCMR4xNZU0fnAJMhMGAl
+ NTqsSHH3/SN5SnxShc2RfVbjumLs6sW5ujpFvsO776Mv5FxozEiUqZnBUgp/hEvOVrciPg
+ TXKKukDD3me/Wa3kMH3LZggEXuwmp3g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-r3y8zLxeMxC3N3fSl7p2nQ-1; Mon,
- 27 Oct 2025 11:13:06 -0400
-X-MC-Unique: r3y8zLxeMxC3N3fSl7p2nQ-1
-X-Mimecast-MFC-AGG-ID: r3y8zLxeMxC3N3fSl7p2nQ_1761577984
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-83Bee93fMxquqzuo45yFDw-1; Mon,
+ 27 Oct 2025 11:12:43 -0400
+X-MC-Unique: 83Bee93fMxquqzuo45yFDw-1
+X-Mimecast-MFC-AGG-ID: 83Bee93fMxquqzuo45yFDw_1761577959
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0276E1956096; Mon, 27 Oct 2025 15:13:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A8FB180035A; Mon, 27 Oct 2025 15:12:39 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 93DE11955F1B; Mon, 27 Oct 2025 15:13:02 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97A7E180035A; Mon, 27 Oct 2025 15:12:37 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Alexandre Ratchov <alex@caoua.org>,
@@ -71,16 +71,16 @@ Cc: Alexandre Ratchov <alex@caoua.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v3 20/35] audio: initialize card_head during object init
-Date: Mon, 27 Oct 2025 19:10:27 +0400
-Message-ID: <20251027151045.2863176-21-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 16/35] audio: move period tick initialization
+Date: Mon, 27 Oct 2025 19:10:23 +0400
+Message-ID: <20251027151045.2863176-17-marcandre.lureau@redhat.com>
 In-Reply-To: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -108,31 +108,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Part of QOM-ification.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ audio/audio.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/audio/audio.c b/audio/audio.c
-index 853930bb48..bdaee7855f 100644
+index 087e1946e7..43db7380f0 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -1623,6 +1623,7 @@ static void audio_state_init(Object *obj)
-     QLIST_INIT(&s->hw_head_out);
-     QLIST_INIT(&s->hw_head_in);
-     QLIST_INIT(&s->cap_head);
-+    QLIST_INIT(&s->card_head);
-     s->ts = timer_new_ns(QEMU_CLOCK_VIRTUAL, audio_timer, s);
+@@ -1582,6 +1582,13 @@ static bool audio_driver_init(AudioState *s, struct audio_driver *drv,
+     audio_init_nb_voices_out(s, drv, 1);
+     audio_init_nb_voices_in(s, drv, 0);
+     s->drv = drv;
++
++    if (dev->timer_period <= 0) {
++        s->period_ticks = 1;
++    } else {
++        s->period_ticks = dev->timer_period * (int64_t)SCALE_US;
++    }
++
+     return true;
+ }
  
-     s->vmse = qemu_add_vm_change_state_handler(audio_vm_change_state_handler, s);
-@@ -1792,7 +1793,6 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
-         goto out;
+@@ -1768,12 +1775,6 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
+         }
      }
-     object_unref(s);
--    QLIST_INIT (&s->card_head);
-     return s;
  
- out:
+-    if (dev->timer_period <= 0) {
+-        s->period_ticks = 1;
+-    } else {
+-        s->period_ticks = dev->timer_period * (int64_t)SCALE_US;
+-    }
+-
+     vmse = qemu_add_vm_change_state_handler (audio_vm_change_state_handler, s);
+     if (!vmse) {
+         dolog ("warning: Could not register change state handler\n"
 -- 
 2.51.0
 
