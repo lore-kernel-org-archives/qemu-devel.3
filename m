@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85FC9CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 08:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C646CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 08:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDIov-0001TX-LZ; Mon, 27 Oct 2025 04:43:17 -0400
+	id 1vDJ3k-00041n-Oc; Mon, 27 Oct 2025 04:58:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vDIos-0001T6-Hb
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 04:43:16 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vDIoo-0000tB-RC
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 04:43:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761554591; x=1793090591;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=EMbzEKeXsUzP0lsfCgvG+XKe9Fk6bXujPvl2lOBxAAQ=;
- b=Qd/zqtFL+DEGwkCEJ3RN+T/YNvVkDzYovPM8/LKx5J3GjgQx6Llm3TYu
- zUbtOvR27WVFMROUdw5SZzo3YZN8mhCELvHo4/050ftqOQQbycLBm4n7E
- HUlJLzqeGj/VhDZ8/ZEWje9wvOP6aMFwCrdscGcya8uFEUcGdWVVrIXp8
- 8ivg99jtAggN/lDbhFh1NJk+W8o07BAqQ1B+W9Bs5yJCGbaL60sUcjvWJ
- eYqBK3SivW3dVOgwQSWYVNbLjEMZguVcfGO5zgySCCx08DzNk1J9L6PvA
- ylroUWx1rE7Aczy5S5NTISJ/Ji20J0lehmMtGmFl2AYH5rHHyORg5FqZM w==;
-X-CSE-ConnectionGUID: wgZXzYXOTGGDqD5ojZoYyQ==
-X-CSE-MsgGUID: lDNOuZxKQGiidqOk/HkBWw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63780191"
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="63780191"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2025 01:43:05 -0700
-X-CSE-ConnectionGUID: vfbcSDChQSmufMSf7Uh7yw==
-X-CSE-MsgGUID: S7QixNJtSYCAjBQIFFYspg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="184604403"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2025 01:43:00 -0700
-Message-ID: <0dc79cc8-f932-4025-aff3-b1d5b56cb654@intel.com>
-Date: Mon, 27 Oct 2025 16:42:57 +0800
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vDJ3f-00041R-78
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 04:58:32 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vDJ3b-0002US-6x
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 04:58:30 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-79af647cef2so3745050b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 01:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761555500; x=1762160300; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BRPwAmzEtN5zn/cUwTdexoYMkniskluAW6/Bh6lNOlY=;
+ b=rOghzfF3kN9x2iZVhCpYV+c3ZiheP17OemRBySgMhqgvTuxM4KKB9lByRuF/YSrFHs
+ hE9lnpCFRpg9+9x83j4Rk4Jzko5yg1B8ehBXXjAnylGJ5UjOa2qSo6G4Tk/lswGzQK1p
+ 0ZNAqFv+NR1f5H0sSixYAfezJgpNNOv9EIYOUlxCA/rZfuqXDn0zl/e16rGBHmb5Cp0d
+ D7fC1/RMbEMySf47i5XvkYAspnKbnWOflDkEUzmpmGAVTsvuEL6DNETVRqETZwoXq54o
+ CHdkpWzXzScCXEhDwXkzmQLCh4p6XLNa0X8Twb+Ah1oVmgevM4tgIK8rOfLEDjA72Jjx
+ 6Jgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761555500; x=1762160300;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BRPwAmzEtN5zn/cUwTdexoYMkniskluAW6/Bh6lNOlY=;
+ b=emZwh+/Bmr4TdWLggpMhxAWCI4NnxhZQ9/x+iBBVZ7dD1XqOVOWFE6u3ZgRwVZJbkI
+ lrMnvAxETgUQuCPXV5vB8ikAVEAfkm6z6jHSurDuWund+VQuIG9oVwxUvx0zs1ypWAc5
+ dIKgo51scbaFV8zDjICUt7BW/GJqBjNHMfJiDkD6Iw5MzVFIMFq/eXvHu/qbuMVLsE3q
+ vbDv7CvBYMtjA3bcW6YIEW034FaUf+6uwZTT7IJXgt2Rk0uN86svIoE5gAL7nfGD62kg
+ PB0sa1N4k/x9aGDkOEjpgXFLOrbr49GPSeSQweQIcE1wk7XAcu82Kd/x5bspUhMOct5y
+ JEPQ==
+X-Gm-Message-State: AOJu0YxrDTy44/WCHXuZ0HHIgd40o3PICHlJ1NF0FXQnmqbDuvNpZ/V4
+ 8WiDHS/Ai0V50lwd0VMxS5b9jluEMOy7XFbUZ/FJ74O7dpTuukjrgAkR9np0EalStwfCTZjSpps
+ YDH0a
+X-Gm-Gg: ASbGncvsxyUxzg0+FXZjyez2QYjLxeVRJU6KOHlrFq401sUskTQmGoA7ZXRbRZa2Y6g
+ UkRn53LtTO1HMSddb6N1OweXKtUhLJb89l+T29EJoZj8PIRBkWX3JwjTZ3TUsHFLoAAzBCbcIXy
+ 2G+HANBsc1e/scOJ+jJYatoi4asqXg0M65hu5W2Wifg28gBVbEhioCaKyX3aBr3ap5Hk36atbEc
+ AXZeouEKd09LrWj3x06EZOJI7B2KGcGj5B3rUM6BIIBxtmtdvI2Z8XeRK0Qq/9gNljrPWWM0nZc
+ yYFh6KXYg77CGBPjnb6bVai8C9brDxbnjt6aALrVPmhcUOesNpiSTuEAFyGtAX5bNqGep0H8IUf
+ rJln3D3X5zD9NSgl17iaY/NXIHUnXie07FglYc1s06Wm1Ev0DTrU6Ro4dQ6EMYpaLWyNhjZEp6Y
+ dkRJbBIpKcol5hLVBcG45VAa2VIRCHgJ4=
+X-Google-Smtp-Source: AGHT+IFe3V7F9XnzRwcv1AQVWDfpvCFTWNUjnU328ebrD7XDTw/DBD+qNHQ7UfLRaTzrkwXT2BmJKQ==
+X-Received: by 2002:a05:6a21:6d99:b0:334:96ed:7a61 with SMTP id
+ adf61e73a8af0-334a83edc85mr45490519637.0.1761555499971; 
+ Mon, 27 Oct 2025 01:58:19 -0700 (PDT)
+Received: from pc.taild8403c.ts.net ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7a414034661sm7473559b3a.26.2025.10.27.01.58.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Oct 2025 01:58:19 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Phil=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] docs/about/emulation: update assets for uftrace plugin
+ documentation
+Date: Mon, 27 Oct 2025 01:58:08 -0700
+Message-ID: <20251027085808.2306054-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/20] i386/cpu: Add missing migratable xsave features
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao
- <chao.gao@intel.com>, John Allen <john.allen@amd.com>,
- Babu Moger <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>,
- Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
-References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-11-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20251024065632.1448606-11-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.57, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,57 +101,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/2025 2:56 PM, Zhao Liu wrote:
-> Xtile-cfg & xtile-data are both user xstates. Their xstates are cached
-> in X86CPUState, and there's a related vmsd "vmstate_amx_xtile", so that
-> it's safe to mark them as migratable.
-> 
-> Arch lbr xstate is a supervisor xstate, and it is save & load by saving
-> & loading related arch lbr MSRs, which are cached in X86CPUState, and
-> there's a related vmsd "vmstate_arch_lbr". So it's also safe to mark it
-> as migratable (even though KVM hasn't supported it - its migration
-> support is completed in QEMU).
-> 
-> PT is still unmigratable since KVM disabled it and there's no vmsd and
-> no other emulation/simulation support.
+Linaro is discontinuing its fileserver service by end of the year.
+Migrate assets to GitHub.
 
-The patch itself looks reasonable.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/about/emulation.rst | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-I'm wondering why there is no issue reported since I believe folks 
-tested the functionality of AMX live migration when AMX support was 
-upstreamed. So I explore a bit and find that the 
-migrable_flags/ungratable_flags in XCR0/XSS leaf don't take any effect 
-because of the
-x86_cpu_enable_xsave_components()
-
-Though the feature expansion in x86_cpu_expand_features() under
-
-	if (xcc->max_features) {
-		...
-	}
-
-only enables migratable features when cpu->migratable is true, 
-x86_cpu_enable_xsave_components() overwrite the value later.
-
-> Tested-by: Farrah Chen <farrah.chen@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   target/i386/cpu.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 1917376dbea9..b01729ad36d2 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -1522,7 +1522,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
->           .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
->               XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
->               XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
-> -            XSTATE_PKRU_MASK,
-> +            XSTATE_PKRU_MASK | XSTATE_ARCH_LBR_MASK | XSTATE_XTILE_CFG_MASK |
-> +            XSTATE_XTILE_DATA_MASK,
->       },
->       [FEAT_XSAVE_XCR0_HI] = {
->           .type = CPUID_FEATURE_WORD,
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 8a5e128f677..320443bfe61 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -886,24 +886,24 @@ As an example, we can trace qemu itself running git::
+     $ uftrace dump --chrome | gzip > ~/qemu_aarch64_git_help.json.gz
+ 
+ For convenience, you can download this trace `qemu_aarch64_git_help.json.gz
+-<https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz>`_.
++<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/qemu_aarch64_git_help.json.gz>`_.
+ Download it and open this trace on https://ui.perfetto.dev/. You can zoom in/out
+ using :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys.
+ Some sequences taken from this trace:
+ 
+ - Loading program and its interpreter
+ 
+-.. image:: https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/loader_exec.png?raw=true
+    :height: 200px
+ 
+ - open syscall
+ 
+-.. image:: https://fileserver.linaro.org/s/rsXPTeZZPza4PcE/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/open_syscall.png?raw=true
+    :height: 200px
+ 
+ - TB creation
+ 
+-.. image:: https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/tb_translation.png?raw=true
+    :height: 200px
+ 
+ It's usually better to use ``uftrace record`` directly. However, tracing
+@@ -916,7 +916,7 @@ Example system trace
+ 
+ A full trace example (chrome trace, from instructions below) generated from a
+ system boot can be found `here
+-<https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz>`_.
++<https://github.com/pbo-linaro/qemu-assets/raw/refs/heads/master/qemu-uftrace/aarch64_boot.json.gz>`_.
+ Download it and open this trace on https://ui.perfetto.dev/. You can see code
+ executed for all privilege levels, and zoom in/out using
+ :kbd:`W`, :kbd:`A`, :kbd:`S`, :kbd:`D` keys. You can find below some sequences
+@@ -924,27 +924,27 @@ taken from this trace:
+ 
+ - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
+ 
+-.. image:: https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/bl3_to_bl1.png?raw=true
+    :height: 200px
+ 
+ - U-boot initialization (until code relocation, after which we can't track it)
+ 
+-.. image:: https://fileserver.linaro.org/s/LKTgsXNZFi5GFNC/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/uboot.png?raw=true
+    :height: 200px
+ 
+ - Stat and open syscalls in kernel
+ 
+-.. image:: https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/stat.png?raw=true
+    :height: 200px
+ 
+ - Timer interrupt
+ 
+-.. image:: https://fileserver.linaro.org/s/TM5yobYzJtP7P3C/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/timer_interrupt.png?raw=true
+    :height: 200px
+ 
+ - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
+ 
+-.. image:: https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
++.. image:: https://github.com/pbo-linaro/qemu-assets/blob/master/qemu-uftrace/poweroff.png?raw=true
+    :height: 200px
+ 
+ Build and run system example
+-- 
+2.47.3
 
 
