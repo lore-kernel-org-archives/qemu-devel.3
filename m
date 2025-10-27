@@ -4,96 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D022CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 13:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB0F4CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 13:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDNZp-0004b2-Ig; Mon, 27 Oct 2025 09:48:01 -0400
+	id 1vDNh2-0006VB-In; Mon, 27 Oct 2025 09:55:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDNZl-0004aZ-Du
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:47:57 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vDNgx-0006Uv-9Y
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:55:24 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDNZe-0008Ot-By
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:47:57 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-63e393c49f1so5247646d50.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 06:47:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761572865; x=1762177665; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JnVoZT7sodXirfrArD3Xk4OH/feoGFzhhfQYD2cLoO8=;
- b=PnZw0FTFaQvRgu1+NXS0Yq1+ZLol8brtW2BTFVbi8O4dvTVBORc5F4A0OU5o69ATTu
- r4bLFUS8x7xXTz3f6hmJatbxhurJLHWROkDrEMVfDgVXPgSVn5OqhupCeBIJX/nQczAb
- F0x0kGjrC6FynRcSWeWmyUA3T7Yc+jgAE5WgXlijfzabeb7gdV0tBiFh5SW7vSYe+bWx
- jHDcE9eAMZPrGeM+RpgyC3v5jLSotwJkkhRHcqvAf7FFFRo2+I7Pv94RMrmwJidq1o1S
- 41ByY+XAs7sF6g0GERZshHjIkle3MNlyaQHtj2cVjfrOyRvZAXfotx1U7K44GP7SMw8b
- fZ4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761572865; x=1762177665;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JnVoZT7sodXirfrArD3Xk4OH/feoGFzhhfQYD2cLoO8=;
- b=C5yRO7QtiDvn8DwnZsEtEr8shOa7oTVW6G1DK1a77DsmdPScSTomEO85UBcmPdAeXZ
- ztQbZOj+1qKt11lr7HeDs/ZEAnZKuxWqB5CySCLXTja2obHL/XlrlKL/Ns0yruATHeqn
- 5Qa+glBXYFWNWOAG3MhDXI04TrcCdApswmZUym1m2aLA4VC/ICD8Z4sVZPwc7xYFjXsr
- jqTvDqNJc1x1u+hlgxnmjDPkMpTfLhj/6APr6o3AClEte5pSL2XNLZFEijFommXnCakR
- uZxc+nDQId/I23qMOd5dSslIsO9Y2eTDF42B523SC+jXGQX4fprmkaeVlEP8WnPpiJQv
- p4gg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1XP4f2kTN4QvPd/nQAffl4he8RxrnX09fA+zPeEwzOa5HB80XnfygYD4JprFH1KWdzPDGU/pI4/iG@nongnu.org
-X-Gm-Message-State: AOJu0YwGSdGOm6J1c28qu6fa1YwjQg/XUPEEfzC+1OxWBNSnOtEqv7KA
- cR0fDi6+/0v8uU/5jbGFd270M4gT5k2f5a2Oa0IyklZ91mX2L1H1D3g7iLUNwzLF4jDb9ffS2kF
- kQMwpPpXA1YyQLPjoN/MJlshJsPplC+JmQzOihnUXQg==
-X-Gm-Gg: ASbGncs9U6rbYXC+c0ULJzx8n1DN1yRgxLAJ6URR5EnV8SQNiIr8zedeUUPlJRlUQbP
- ulkNhGgJmt/tkyRZuJqdrlHWWmwNjZDR5oTQV9E2S5Vc935oM1cxdnW6hlZ4PDSDqx/R1xU8vch
- NwYaNiljj6dGAkeAbws65p80MPZeYJmKrtFLoCZPUken+uroPZ4cchxzCjuDJLSTcCLPE92r8nO
- Yl/LeSEg7NoQrplkjPiQElH4AurlpeM3ngizO5n+xMtwiwjGD/1sOw9SZQ6Jw==
-X-Google-Smtp-Source: AGHT+IEM61JjLbKFAoubdh0ZAA9tyM2Daf+J6xnuDO9+ExFDsD7BA7ZUSfretDEdD9lZiXLGvz5B0/7TU63AU1GJZMY=
-X-Received: by 2002:a05:690e:edb:b0:63e:26b1:2148 with SMTP id
- 956f58d0204a3-63f6ba78badmr52856d50.35.1761572864913; Mon, 27 Oct 2025
- 06:47:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vDNgl-0000ZL-3j
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:55:21 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 828C221A92;
+ Mon, 27 Oct 2025 13:55:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761573302; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/pyeJYXHGaSqkeZZ0wF0DOcwPh7gNuUyrXP+8J1n79Y=;
+ b=nN4FIgs991zejoYf/BZFalKzxm0FSKVhZHj3tUIcifB8KZ4o1iPUSlhv+EW4iOdPQoumCa
+ xPk18tsHRGzTeE0/QGYgi4sC1tE4hYEFsxLNQktEmFaBh3P8fDwzBSAzz7IK/FdeAdhovN
+ dT8OBjxEg+XAupvag1Rt8MKG+y+G2IA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761573302;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/pyeJYXHGaSqkeZZ0wF0DOcwPh7gNuUyrXP+8J1n79Y=;
+ b=5vpekhlgj7+6V0QzKBQSXStvG/vIN3IcoPuCKiF/YTS6Gxv0LpzXuLx/Dpbr+9S8VVyTMe
+ Olfw1yWGjI2jWvDA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nN4FIgs9;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5vpekhlg
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1761573302; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/pyeJYXHGaSqkeZZ0wF0DOcwPh7gNuUyrXP+8J1n79Y=;
+ b=nN4FIgs991zejoYf/BZFalKzxm0FSKVhZHj3tUIcifB8KZ4o1iPUSlhv+EW4iOdPQoumCa
+ xPk18tsHRGzTeE0/QGYgi4sC1tE4hYEFsxLNQktEmFaBh3P8fDwzBSAzz7IK/FdeAdhovN
+ dT8OBjxEg+XAupvag1Rt8MKG+y+G2IA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1761573302;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/pyeJYXHGaSqkeZZ0wF0DOcwPh7gNuUyrXP+8J1n79Y=;
+ b=5vpekhlgj7+6V0QzKBQSXStvG/vIN3IcoPuCKiF/YTS6Gxv0LpzXuLx/Dpbr+9S8VVyTMe
+ Olfw1yWGjI2jWvDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 07FFB136CF;
+ Mon, 27 Oct 2025 13:55:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 5+4gL7V5/2i+awAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 27 Oct 2025 13:55:01 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang?=
+ =?utf-8?Q?=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Bin Guo <guobin@linux.alibaba.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration: Don't free the reason after calling
+ migrate_add_blocker
+In-Reply-To: <87ecqomsnt.fsf@pond.sub.org>
+References: <20251024092821.82220-1-guobin@linux.alibaba.com>
+ <87o6pw1rfn.fsf@pond.sub.org> <aPtim8ZACUWyje2o@redhat.com>
+ <874irozabw.fsf@pond.sub.org> <87v7k4xuhk.fsf@pond.sub.org>
+ <aPumkKBx4PoGSwNv@x1.local> <aPup9BzTf-uk8cUf@redhat.com>
+ <87a51gdv4m.fsf@suse.de> <aP9IqYzAea1DUjqp@redhat.com>
+ <87ecqomsnt.fsf@pond.sub.org>
+Date: Mon, 27 Oct 2025 10:54:58 -0300
+Message-ID: <874irke9fx.fsf@suse.de>
 MIME-Version: 1.0
-References: <20251027123644.63487-1-philmd@linaro.org>
- <87pla8xzd2.fsf@draig.linaro.org>
- <CAFEAcA-hWZei6ytAik5sjFcsYqbKaM6K5mzHepmGQpggAdbQmw@mail.gmail.com>
- <0199c5ce-9bb2-42f5-b545-8aaaf47364b0@linaro.org>
-In-Reply-To: <0199c5ce-9bb2-42f5-b545-8aaaf47364b0@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Oct 2025 13:47:32 +0000
-X-Gm-Features: AWmQ_bnuZU8jn6syclu5JvYJvu1EeYKAYpyWaWtWlF0Pc1NYS-zk6PzJ2Tltw5o
-Message-ID: <CAFEAcA-MFBs_Xs3R-FCwk6=8vV2VhkEhZqBrf5e4NsrFwUqjtA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] hw: Log unassigned MMIO accesses with
- unassigned_mem_ops
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- David Hildenbrand <david@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Troy Lee <leetroy@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Peter Xu <peterx@redhat.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Rspamd-Queue-Id: 828C221A92
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,67 +138,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Oct 2025 at 13:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 27/10/25 14:26, Peter Maydell wrote:
-> > (2) PCI "I/O" BARs. PCI devices can have both MMIO
-> > and IO BARs. A PCI controller on x86 maps IO BARs
-> > into the IO space, I think. On non-x86 the IO BARs
-> > typically appear in a different window for MMIO
-> > accesses. Behaviour of PCI I/O accesses to unimplemented
-> > regions is probably defined by the PCI spec somewhere.
-> > Behaviour of PCI accesses to unimplemented MMIO
-> > window areas is I think technically left unspecified
-> > by the PCI standard, but "write ignore/read -1" is
-> > what x86 does and what most software expects, so
-> > hardware that implements something else is making
-> > its life unnecessarily difficult.
->
-> Right, this is what I'd like to unify, ...
->
-> > I suspect we entangle the PCI IO BAR concept and
-> > implementation a bit more with the x86 I/O ops
-> > implementation than we ideally ought to.
->
-> ... to disentangle that.
+Markus Armbruster <armbru@redhat.com> writes:
 
-I think my suggestion (based on about five minutes'
-thought, so possibly wrong-headed ;-)) would be:
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>
+>> On Fri, Oct 24, 2025 at 03:15:05PM -0300, Fabiano Rosas wrote:
+>>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>> > IMHO we should not even be using an Error object for the the blocker.
+>>> > AFAICT, internally all we care about is the formatted string. The main
+>>> > reason for using an Error object appears to be to have a convenient
+>>> > pointer to use as an identifier to later pass to del_blocker.
+>>> >
+>>> > I'd be inclined to just have passed in a fixed string, and return an
+>>> > integer identifier for the blocker. eg
+>>> >
+>>> >     int64 migrate_add_blocker(const char *reason, Error **errp);
+>>> >
+>>> >     void migrate_del_blocker(int64 blockerid);
+>>> >
+>>> > The migrate_add_blocker method would strdup(reason) to keep its own
+>>> > copy.
+>>> >
+>>> > The usage would thus be clear & simple:
+>>> >
+>>> >     int64 blockerid =3D migrate_add_blocker("cannot migrate vfio", er=
+rp);
+>>> >     if (!blockerid) {
+>>> >          return;
+>>> >     }
+>>> >
+>>> >     ... some time later...
+>>> >
+>>> >     migrate_del_blocker(blockerid);
+>>> >
+>>> >
+>>> > In some cases we needed dynamically formatted strings, which could ha=
+ve
+>>> > been achieved thus:
+>>> >
+>>> >     g_autofree char *msg =3D g_strdup_printf("cannot migrate vfio %d"=
+, blah);
+>>> >     int64 blockerid =3D migrate_add_blocker(msg, errp);
+>>> >     ...the rest as above...
+>>> >
+>>> > yes, this costs an extra strdup(), but that is an acceptable & neglig=
+ible
+>>> > overhead in the context in which we're doing this.
+>>> >
+>>>=20
+>>> Hmm, I must disagree. This is more complex than what we have
+>>> today. Calling error_setg(err, "msg") is pretty standard, already gives
+>>> us formatting and keeps all (potentially) user-facing messages uniform.
+>>
+>> IMHO this usage in migration is not really about error reporting
+>> though, and the lifecycle ownership of the Error objects in this
+>> migration usage is very diferent from the typical lifecycle
+>> ownership of Error objects used in reporting errors, which I think
+>> leads to a surprising / unusual API.
 
- * the individual PCI devices like bochs-display and
-   vga-pci that currently use unassigned_io_ops should
-   instead define their own local MemoryRegionOps that
-   does what that specific device requires. (I actually
-   suspect that having no I/O ops at all so that the
-   accesses to holes in that MR fall through to the
-   PCI controller's default behaviour for unassigned
-   accesses would also produce correct behaviour, but that's
-   trickier to verify and would require looking at a lot
-   of individual pci-controller models, so the easy thing is
-   a local MRO.)
- * patches 3, 4 and 5 are all defining the default behaviour
-   for "access to some MMIO window provided by a PCI
-   controller". If we want to disentangle this from the
-   x86 IO port handling, then I guess that we could either
-   have the generic PCI code provide a "reads as all-ones,
-   writes ignored" MemoryRegionOps as a convenience for
-   controller implementations; or we could have each
-   controller do it separately. I guess I prefer the former.
- * I'm not sure about patch 6, but it looks like some kind
-   of PCI-to-other-bus bridge. It should probably define its
-   own MemoryRegionOps with the behaviour it wants. (Though
-   again it's possible that letting unassigned addresses
-   fall through the the PCI controller's implementation
-   would be neater.)
+The blocker does eventually show up to the user via
+migration_is_blocked().
 
-Roughly, what's happened here is that various nominally
-independent bits of code have borrowed unassigned_io_ops
-as a convenient pre-existing "reads as all ones, writes
-ignored" MemoryRegionOps; we can disentangle by having
-them implement what they're after locally rather than
-borrowing something that doesn't logically belong to them.
+I get that there is an initial surprise to passing an Error around for
+something that is not strictly an error, but IMO this is just a small
+idiosyncrasy. For the lifecycle point, we could probably simplify what
+we're doing in migration, I don't see why the Error ** needs to be
+cleared in case the blocker cannot be installed.
 
-thanks
--- PMM
+>
+> I think a blocker interface where you pass the error to use when the
+> blocker blocks something is defensible.
+>
+> Passing an error message or even a text snippet to be interpolated into
+> the error message would also be defensible.
+>
+> We're using the former, and it has turned out to be confusing.  Less so
+> in the block layer, where we sensibly pass Error *.  More so in
+> migration, where we pass Error **.  Error ** is almost always used to
+> receive an error, so when we use it for something else, we risk
+> confusion.
+>
+
+I don't understand exactly why we need the Error **, it looks like we're
+just storing that error twice, once via the device's migration_blocker
+and another via the migration core's GSList
+*migration_blockers.
+
+The block layer doesn't have the use case of blocking the blocker like
+migration does, but it still looks like the two are doing pretty much
+the same, with the block "op" being analogous to the migration "mode".
+
+>>> Asking for people to deal with strings and storing an int64 in their
+>>> code is not improving the situation. Besides, the Error is already used
+>>> by the block layer when blocking operations, for instance. If anything
+>>> we should be integrating the two usages instead of inventing yet another
+>>> for the migration code. See:
+>>
+>> Yes, having a common API for these two similar use cases would be
+>> a useful thing. I'm just not convinced we should be (mis|re)using
+>> the Error object for either of these two situations.
+>
+> I guess we could have a generic Blocker object instead of using Error
+> for the purpose.
+>
+> In addition to an error message, an Error object has an error class
+> (rarely used remnant of the past), where in the source code the Error
+> object was created (reported to the user when handling &error_abort),
+> and an optional hint.  Is any of this useful for blockers?
+>
+
+I haven't found the need for those.
+
+>>> replication.c:
+>>>   error_setg(&s->blocker,
+>>>              "Block device is in use by internal backup job");
+>>>   ...
+>>>   bdrv_op_block_all(top_bs, s->blocker);
+>>>=20
+>>> block.c:
+>>>   void bdrv_op_block(BlockDriverState *bs, BlockOpType op, Error *reaso=
+n)
+>>>   {
+>>>       BdrvOpBlocker *blocker;
+>>>       assert((int) op >=3D 0 && op < BLOCK_OP_TYPE_MAX);
+>>>=20
+>>>       blocker =3D g_new0(BdrvOpBlocker, 1);
+>>>       blocker->reason =3D reason;
+>>>       QLIST_INSERT_HEAD(&bs->op_blockers[op], blocker, list);
+>>> }
+>>
+>>
+>> With regards,
+>> Daniel
 
