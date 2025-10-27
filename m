@@ -4,78 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35850CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1531FCCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDKJa-0006nB-Jg; Mon, 27 Oct 2025 06:19:02 -0400
+	id 1vDKKB-00070C-PU; Mon, 27 Oct 2025 06:19:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vDKJY-0006mS-VZ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:19:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vDKK5-0006tG-BR; Mon, 27 Oct 2025 06:19:33 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vDKJW-00056o-7X
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:19:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761560335;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0I7Il8PGSe1NIostIwQs+k8+quOSKAZMu2O9qzR0lkc=;
- b=FrSEbN8rLw4ZjRPfqfwN+1d/f9lrj5HhEFZtAHX3I2ULBiQAwUEQoqYTaKSd9SroZV9VVU
- 7+3jnA5i+oiz0Q5DL14OJSjUo1/ti1ajfsCGd64h/fezCiCSJcHjG9d5R5dSggPR987L2Q
- ougV8FzRt8vHoixzNtox6BNjLIFHCJQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-ozkl54mtO82lqpq9WuYqAA-1; Mon,
- 27 Oct 2025 06:18:51 -0400
-X-MC-Unique: ozkl54mtO82lqpq9WuYqAA-1
-X-Mimecast-MFC-AGG-ID: ozkl54mtO82lqpq9WuYqAA_1761560330
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E815B1954210; Mon, 27 Oct 2025 10:18:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.35])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 437443000223; Mon, 27 Oct 2025 10:18:46 +0000 (UTC)
-Date: Mon, 27 Oct 2025 10:18:42 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Grant Millar | Cylo <rid@cylo.io>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v2 0/3] io: fix crash in VNC websock server when client
- quits early
-Message-ID: <aP9HAtXK1HJlKzbO@redhat.com>
-References: <20251003150245.3510069-1-berrange@redhat.com>
- <6f06c770-d66a-4520-8646-30b30c990235@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vDKK1-000587-8A; Mon, 27 Oct 2025 06:19:32 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59RAJBfR020236
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 27 Oct 2025 19:19:19 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=6tb1ZfeeDiSbV2uBs4uiPRzZA4g/1gjlvgC72cZNFHM=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1761560359; v=1;
+ b=GhIf3feCo+JJgP9XAdzuHZaiSfBVpqGqP4zaiUKxmOcvrdHGzMJM3+AX/L5RrSfC
+ tbRnvhTXTOwqIr1z43sQQ0Mqil5AsXYGmVg9vqdoXuusLu6K44coOqUOH2bOYY+Q
+ NPNf0W6NoJEkytm+FSKOfYIAlBWwyRo2PKs/WI9yFLnb66ZRlhTv8pwVh75vEvz/
+ ztiRR3vS+jCkA4ZQl3RAnOjSpFeYX/bifxOG1NKx8DE6g44Rrl9cryIkR/Ui8afW
+ 7cHPzmA6cyBq45UONF3WJv5PwJRCmdIduECQt8mJvAzhEobEhsKFtPAMnlnTvZZI
+ dJgMCL6DdmYZSNhhgYEndg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH v3 0/3] hw/arm/virt: Remove the lower bound of HighMem IO
+ Regions
+Date: Mon, 27 Oct 2025 19:19:05 +0900
+Message-Id: <20251027-virt-v3-0-fa2a2f37e32d@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f06c770-d66a-4520-8646-30b30c990235@tls.msk.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABlH/2gC/3XN0QqCMBTG8VeRXbexnZXOrnqP6GLOqadAbdORi
+ O/etEAIuvx/HH5nJt46tJ6ck5k4G9Bj18aQh4SYRre1pVjGJsDhxDNQNKAbqJKy1JVOjRAFiae
+ 9sxW+NuZ6+7SzzzFqwz426IfOTdurINb1Rw2CCsp1kacKIAWjLs7XzCBDNtKhe0wd04bde7JqA
+ XYh5+IrQBS0AZnlRx4B/ldYluUN04vdu/wAAAA=
+X-Change-ID: 20250728-virt-833dafa6c11b
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,53 +77,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Oct 26, 2025 at 11:02:48AM +0300, Michael Tokarev wrote:
-> On 10/3/25 18:02, Daniel P. Berrangé wrote:
-> > See patch 3 for the description of the problem and reproducer
-> > 
-> > Changes in v2:
-> > 
-> >   - Improve finalizer robustness of TLS source
-> >   - Keep cleanup in finalizer of websock, just augment
-> >     it in the close method
-> >   - Fix resetting of hs_ioc_tag value when callback
-> >     is complete
-> >   - Add CVE assignemnt in 3rd patch
-> > 
-> > Daniel P. Berrangé (3):
-> >    io: release active GSource in TLS channel finalizer
-> >    io: move websock resource release to close method
-> >    io: fix use after free in websocket handshake code
-> > 
-> >   include/io/channel-websock.h |  3 ++-
-> >   io/channel-tls.c             | 10 ++++++++++
-> >   io/channel-websock.c         | 33 ++++++++++++++++++++++++++-------
-> >   3 files changed, 38 insertions(+), 8 deletions(-)
-> 
-> Hi Daniel!
-> 
-> Is this patchset not supposed to go to the stable qemu series?
-> I think it should?
+Remove the lower bound of the Highmem IO Regions' addresses for the
+latest machine version to increase the chance to fit the regions in the
+PA space.
 
-Yes, it is applicable to all active stable branches - the bug has been
-present since 2.6.0 AFAICT.
+The lower bound was especially problematic when using virt-install on
+Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
+require sufficient space in the ECAM region. However, the Highmem ECAM
+region did not fit in the limited PA space on the hardware, and the ECAM
+region size was limited to 16 MiB. If virt-install had added more than
+16 devices to the root bridge, the region overflowed, which prevented
+edk2-stable202505 from scanning PCI devices, including the boot disk,
+causing boot failures.
 
-I've just sent a pull request for master
+Ideally, a virtual machine with more than 16 devices added to the root
+bridge should just work so that users and management layers do not have
+to care whether they use constrained hardware.
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg06571.html
+The base address of the Highmem IO Regions was fixed when commit
+f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
+regions") added the first Highmem IO Region. Later, commit 957e32cffa57
+("hw/arm/virt: Dynamic memory map depending on RAM requirements")
+allowed moving the Highmem IO Regions to higher addresses to accommodate
+RAM more than 255 GiB, but the lower bound remained to keep the legacy
+memory map.
 
-these three websock related patches will probably cherry-pick without
-trouble.
+Remove the lower bound for the latest machine version to accommodate
+more devices with the root bridge. Keeping the lower bound for the old
+machine versions ensures the compatibility is still maintained.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+The hardcoded memory map in tests/qtest/libqos/generic-pcihost.c is also
+updated.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Changes in v3:
+- Fixed test failures reported by Peter Maydell.
+- Link to v2: https://lore.kernel.org/qemu-devel/20250901-virt-v2-1-ac2379402c80@rsg.ci.i.u-tokyo.ac.jp
+
+Changes in v2:
+- Rebased.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250728-virt-v1-1-0ab9682262c8@rsg.ci.i.u-tokyo.ac.jp
+
+---
+Akihiko Odaki (3):
+      test/acpi: aarch64/virt: Allow DSDT and MCFG changes
+      hw/arm/virt: Remove the lower bound of HighMem IO Regions
+      test/acpi: aarch64/virt: Update golden masters for DSDT and MCFG
+
+ include/hw/arm/virt.h                            |   1 +
+ hw/arm/virt.c                                    |  16 ++++++++++++----
+ tests/qtest/libqos/generic-pcihost.c             |   2 +-
+ tests/data/acpi/aarch64/virt/DSDT                | Bin 5337 -> 5333 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt   | Bin 5423 -> 5419 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | Bin 6246 -> 6242 bytes
+ tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | Bin 5391 -> 5387 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp          | Bin 6698 -> 6698 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb            | Bin 7812 -> 7808 bytes
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev     | Bin 10274 -> 10270 bytes
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy  | Bin 10274 -> 10270 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology       | Bin 5539 -> 5535 bytes
+ tests/data/acpi/aarch64/virt/DSDT.viot           | Bin 5354 -> 5350 bytes
+ tests/data/acpi/aarch64/virt/MCFG                | Bin 60 -> 60 bytes
+ tests/data/acpi/aarch64/virt/MCFG.memhp          | Bin 0 -> 60 bytes
+ 15 files changed, 14 insertions(+), 5 deletions(-)
+---
+base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
+change-id: 20250728-virt-833dafa6c11b
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
