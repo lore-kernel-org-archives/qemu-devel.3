@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5784CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 13:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E45CCCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 13:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDN9x-0000vG-1z; Mon, 27 Oct 2025 09:21:17 -0400
+	id 1vDNA6-00012k-PH; Mon, 27 Oct 2025 09:21:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vDN9t-0000ui-Ba
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:21:13 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1vDNA4-00012I-7U
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:21:24 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vDN9i-00054Y-Ci
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:21:12 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-78af743c232so4139573b3a.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 06:20:59 -0700 (PDT)
+ id 1vDNA1-000561-6X
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:21:23 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7a26ea3bf76so6176864b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 06:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1761571256; x=1762176056; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1761571275; x=1762176075; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=g8Q/30bUWm2O2CU+TjmYKHZVjlU36Cumj5zQfUBgl38=;
- b=fQS0Jr4vzFEo0OO9/bKhpOJBQW4jEz4XDaueUG3prMrSSirlnQJ0zbPmgzAP0OQ3lu
- Uyoe2RPfJriVO2ntnbZ5Gyt71MsayFSY7hIE4t76KN5pgki+0ntho9LIKlTMlwKS5V56
- JvQq7GAlXHaQyVo/hqL9QFBA+U88pqpcfLJenTcmbWGaxKpmaASwZ0oGLYoFdTFQApeY
- NodDZ8TZw7qZjJINrsktXU/lCkJkK3ud+UHw0/DqQUdYVKfbTQLRe+jG464/RvKLFPHs
- airUOTw2lIcKliuxB/5gPchrWPucAJYgJdNncLfuR7o4BtmMX2UQlEYPgwFaB5sTkt9C
- lFVQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DPKndzwZr/+MHPxY/xI0zdM+3Z2yGmvypNFzYdd86+Q=;
+ b=Yt7ZnKbxWyGykUaYLj5JI3b8ZC6wsTcj9UjsN242rYH+T/6G8U1TuKqxhfVC5o7GzY
+ UFL4x2/ExbeEO68UVPJVphPluD6+T/xDlDYFGDlaFzSct/90a4WARqe1FqMWRj2fSm1c
+ 4idyHLwoB3KqzdwfU8tNsizb2BPHNoahSWN48CDrPGkglQfwKEkVNAtygE6exV3IR5EP
+ oFXYvzcuSLG9O3fn58kPClgVUDJIb17SR+WnJRNu4+szjHE2FlaYHo2MAnanj1Bn5wLR
+ 4GSCZwLWw7Y66nB2DP4XjDf44Y5O5SdJMAsWo46NnpgOsJkx5LjvuvISQ5Ks7SZH7PWB
+ KOHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761571256; x=1762176056;
+ d=1e100.net; s=20230601; t=1761571275; x=1762176075;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g8Q/30bUWm2O2CU+TjmYKHZVjlU36Cumj5zQfUBgl38=;
- b=FXUKqlb3yi+6NQf8N7BIs9MEghdC0C88iVhBwLdmhzbWrGNyDp9H7sVwGa3jDLbwAO
- RRqY9i2Z6PXCLZqmpfjMvUJVXXDsy0VhsJnuKTVhcRROzkE6TxPwgicA7tepladDBT76
- JCBniq6gpxS9uHeiuU/OCq0Vzvs/zrz/qsVELqdATEVwtg+xQuoROGFnm7ggPZsP7fxF
- I0dSUggx5oguyJtdkKK5Pre0anZpLQqRT+fYd4ufTApGFtdLNT1hzIC+0ZOcJoUXEM7l
- o4ANiGyMIYoevk/hv8Xr1i5d1gkoZ/kqTt5QYpyVnlVhUp12Jifh4XvJpcTNjc5LVxte
- HTJA==
+ bh=DPKndzwZr/+MHPxY/xI0zdM+3Z2yGmvypNFzYdd86+Q=;
+ b=V4rD1y8prfOODJ05LCIhvs1OCsxv7cNqEJq29RclFubTTwebIHvbF38Rcw4Nh7Q1og
+ efO9FCU6b4pxyTT8EgENgaBzuxvCfinsGKS4mZ8NrR+7zeEV9gjTzjbE+3P0A8CXfBi9
+ ldMnsQGqUTeGNekyzArgCiGZ5an2/Kos6i4jLBMku8XhbRKBsghSxkGxWCkT77QWCo1M
+ fXR/l7Z7anjv3+5J0YQlvy9PC9O02dT23wyeddfxGf7RKHac5zuoC5G2+N6lyWGPuFbE
+ qrVHbc3IYYEWEDTwKYnMs07nqeASbj5LlnnQpOQoxUOJwE0VWJ+4c8bADw4Q5AvZfnkf
+ boVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0hCWLLWBPbBJgQqH0aYmuOYGXLAUlohDHxG8eRCDcnbH/X24yeS7gru7vq2TSTvEl9f2KRyE9jV9a@nongnu.org
-X-Gm-Message-State: AOJu0Yx+fM2CZaa2DyCB9x5DGVllSqPCI/4xSIBUi65brTV54aZEou50
- eJAeB+ES61WbKaNtKY4v9gYRdRexGKiF9OHXeMLpi4w4czI6jkrg3I8sGfDAvesrXkY=
-X-Gm-Gg: ASbGncsupmIqH9IKwZP7rz3zfvb4ohxMSGCTUr3vTh/jHaiXaRgdeyX8Q30XZ5andp4
- dfwfK5TF+dmdqBhzK/gMndvFNNfJe6YexPNCYH9Q3QbUSm2K9tekYvUj2xzpLGuV1XoPwEAEnE4
- 341njRBAyHythmWIUn2F980/L1AsFSRTRm/b3UKIFxfoWXX5QYDZwTwuZl8uZ3ZoJyXQ/JNpqLI
- G85Iaf1wTWCQAwlIYu6SGqjlFzxLYpcUtjs7Hcj6zO7Xh6O8Oehu5al9EBmPDfojWIupGVgAbTA
- RI/0TQ4GFjXk7XuhV0mhSR4zFmVBrB1pB4JaqXqllR6/teMb64McSyN7zJdWW8HFTxuJtrXvTom
- 7IWq5rsvvzzpDCeuuofZoIyyVWaXAJDxQSauWP1BWT47SkDPanK85FPu2VUUGhru/YnG7USHxv3
- yyJ3lZUuDwl3//eK2x76CZ3ds=
-X-Google-Smtp-Source: AGHT+IEFaUsLRDHzdFEW1FTVJTg6Zu8WHr5LIy4QXPlo5vm2eWFv+tazkRop8FO5HtkxIBUgO4B9aw==
-X-Received: by 2002:a05:6a00:228a:b0:7a2:7610:364f with SMTP id
- d2e1a72fcca58-7a28688190cmr13165060b3a.29.1761571255978; 
- Mon, 27 Oct 2025 06:20:55 -0700 (PDT)
+ AJvYcCWjSMHu3nZuBNvkqSEFS1ib7epHmCF6KQG0vFApKdhgxESCuN/skKFfY5+r1hv35Bd+b01xJPVNqGgg@nongnu.org
+X-Gm-Message-State: AOJu0YxVIbIfYWy8qfnSz8fuFAwknXoJRP04QVT9uN887UVcBPvvBF/m
+ gWQQ9NCvsjZdRjQraTvAV24TSD6wV+CfF+vHIXE6CdaAPZ72znnl6fWqFTm7hLFErx4=
+X-Gm-Gg: ASbGncsBZxFU3dweq/kPpGJF+SG+KI8/GhOwpObLQFxgxSUd4ooMkKc2btNyQ48+m2T
+ 0hBL2LntvMPGTMtQ35QEdr3L/iejEtI+3IqH1TwhTyj4p1fRvPHKfuhw4jJKtKgZJ0Lhe+b8xIP
+ 5X6sIB//OBua8NPNrNs6YpPIDnJIKJYLD3qXAv/sbG1AFNrlHLhqlL4DXLpvwrQ2+W7XCqR7Hfw
+ by5pbFkQYY9tnGwpMndBhBDtZA3f0LQco8iVifLwAbalq+q1nIkGCnw57Mf1v/LtLoMALJcMKZN
+ c3P0f34dO9W8oKRgJpWQzsmzlk47CVWuZVxLpNO2QiWg2mnHx0vFeSg+KQOU26uAih0EJw3UxnC
+ 8fJmw88uN+pFYV5vc9act0AYvedNoR+VieFQG45v4lZf0vbS3n0Q2xhwap2CMazUY+sc1q5Hacl
+ Zu0VW8vRFElNEb
+X-Google-Smtp-Source: AGHT+IHqfq7KKHCI7Y+BVW4DO1YIF/bELgu2+Chc+88WMWOTY5nyf2X8375maSbuFe1ryoXk0w2BHQ==
+X-Received: by 2002:a05:6a21:3286:b0:342:5901:fd9f with SMTP id
+ adf61e73a8af0-3425902013bmr7423893637.28.1761571274512; 
+ Mon, 27 Oct 2025 06:21:14 -0700 (PDT)
 Received: from [192.168.68.110] ([189.38.141.22])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7a414012c40sm8347826b3a.6.2025.10.27.06.20.53
+ 98e67ed59e1d1-33fed3eca8dsm3600851a91.0.2025.10.27.06.21.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 06:20:55 -0700 (PDT)
-Message-ID: <934bc46a-6a86-4cab-8cbf-c98a4cc92ed1@ventanamicro.com>
-Date: Mon, 27 Oct 2025 10:20:49 -0300
+ Mon, 27 Oct 2025 06:21:14 -0700 (PDT)
+Message-ID: <1a34b7b5-57c7-47b4-8796-8856d572494c@ventanamicro.com>
+Date: Mon, 27 Oct 2025 10:21:09 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/riscv64/test_sifive_u: Remove unused
- import statement
-To: Thomas Huth <thuth@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix MemoryRegion owner
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
  <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20251027112803.54564-1-thuth@redhat.com>
+ qemu-riscv@nongnu.org
+References: <20251027-iommu-v1-1-0fc52a02a273@rsg.ci.i.u-tokyo.ac.jp>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20251027112803.54564-1-thuth@redhat.com>
+In-Reply-To: <20251027-iommu-v1-1-0fc52a02a273@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,31 +109,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/27/25 8:28 AM, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 10/27/25 2:37 AM, Akihiko Odaki wrote:
+> as points to the MemoryRegion itself. s is the device that owns the
+> MemoryRegion.
 > 
-> skipIfMissingCommands is not used here, remove the import to silence
-> a pylint warning for this file.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
->   tests/functional/riscv64/test_sifive_u.py | 1 -
->   1 file changed, 1 deletion(-)
+>   hw/riscv/riscv-iommu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/tests/functional/riscv64/test_sifive_u.py b/tests/functional/riscv64/test_sifive_u.py
-> index 358ff0d1f60..847f709da12 100755
-> --- a/tests/functional/riscv64/test_sifive_u.py
-> +++ b/tests/functional/riscv64/test_sifive_u.py
-> @@ -13,7 +13,6 @@
->   import os
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index b33c7fe3259e..51c28d4f8c57 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -1362,7 +1362,7 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+>           /* IOVA address space, untranslated addresses */
+>           memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+>               TYPE_RISCV_IOMMU_MEMORY_REGION,
+> -            OBJECT(as), "riscv_iommu", UINT64_MAX);
+> +            OBJECT(s), "riscv_iommu", UINT64_MAX);
+>           address_space_init(&as->iova_as, MEMORY_REGION(&as->iova_mr), name);
 >   
->   from qemu_test import Asset, LinuxKernelTest
-> -from qemu_test import skipIfMissingCommands
->   
->   
->   class SifiveU(LinuxKernelTest):
+>           QLIST_INSERT_HEAD(&s->spaces, as, list);
+> 
+> ---
+> base-commit: 36076d24f04ea9dc3357c0fbe7bb14917375819c
+> change-id: 20251027-iommu-94d68e7a85d2
+> 
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
 
 
