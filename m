@@ -4,150 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BE9CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C41CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDQCG-0004J9-FE; Mon, 27 Oct 2025 12:35:52 -0400
+	id 1vDQJE-0005y2-HW; Mon, 27 Oct 2025 12:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vDQCC-0004Io-56; Mon, 27 Oct 2025 12:35:48 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vDQC4-000712-Bj; Mon, 27 Oct 2025 12:35:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NyiPvg9M+fpcDUG0HNN3z+E2m0qs38uoNNb5rWc1Y32sYzPeZY+zJZ5DlDHtFU9erGfu+LTFJUPdGpBdY+kglyKZ7JDGf15ldIfmi0GcJJQOcMYl69cqxTtkT/Cj5XqAf6EbpVjliL4VOUGFHyduKZf8HAxXg4pA3miN+FfR0sEVaCEUG1g1q2wxMKNLp2ZuSM1myAF2O7iSWtZLZy2hwrbUNnq8Xhsyl/XIjAa5hKZKDQC8yGYT7rbp0WynyesSNtbPIz7ErZNISXv6azF6O2aUUSy31wR/zQjdpJWElUsWaORpDRJxEdynsvvJS72Kw6cOm2CFOBzZAYP9RZ7Iew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GSLulAlhd2G5aABWQE/rp5H/8PV+/g4V+Xypdi+/M+0=;
- b=ERKfBcMM/Y7XiFVhhIxZq/CWbWrO8h0dECOeohQjlnXj8yXUP6YzdnCOvnpj0GxIt6y1hvlFr4LJt+imWSdhQmNQ98CoJsLZPL3YrsowQrEntpADu7D56nby697ew3dhi8qufs7U2xE2beAh6WGvmz1KGDrifz5TWWWPS3CEcdaf7nlIUn35xOedqfjv0Au34RDdX9V8j7bzt5QD/efCpSmGRiGRRpIeMtk6LY1GbshtOh4w9M2olV3U0yHY4lHjp70eYax86NDUeHm8fnKI/XMsp/8Neh4T8FfH5FTSD0GWJukJr20F3lbyF/Xe7wx+c0xdETysvfWg56rshL3rvA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GSLulAlhd2G5aABWQE/rp5H/8PV+/g4V+Xypdi+/M+0=;
- b=B7YHXRNRWPxVxBcCqj3gPuP+5cKpt6kO3wozkFg1ql9uZonSbGH0iEdwhxbz8myX3LtslAEj19QUvDiYE/4NHN+khctQ9Ybhje/KGLkGiX3vtEReAx5/pzAFBOSWBWg274YIQBBK2elR2XIpHuVr/mB4Ray0z56X1AYerwl0MuH3bF3RqEscnRNFae1dqDPmsM1NbNWslM9ikd8PAA2btwJDZBbXi77DhVYI4JIoY7jPa9ntBWHv64pBSzhjCyzgqSpkSDFeq3NFwOmHl53P+p/FJ/qnrC0605Jh4ctVZe8LLaI9vIWteBqUS9AvoQ6LqiT1AFxELu2ndjfZa4dLTA==
-Received: from MN0P220CA0025.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::33)
- by DS0PR12MB8503.namprd12.prod.outlook.com (2603:10b6:8:15a::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Mon, 27 Oct
- 2025 16:35:19 +0000
-Received: from BL6PEPF00020E63.namprd04.prod.outlook.com
- (2603:10b6:208:52e:cafe::13) by MN0P220CA0025.outlook.office365.com
- (2603:10b6:208:52e::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.19 via Frontend Transport; Mon,
- 27 Oct 2025 16:35:19 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL6PEPF00020E63.mail.protection.outlook.com (10.167.249.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9275.10 via Frontend Transport; Mon, 27 Oct 2025 16:35:18 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 27 Oct
- 2025 09:35:03 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 27 Oct
- 2025 09:35:02 -0700
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com (10.129.68.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 27 Oct 2025 09:35:01 -0700
-Date: Mon, 27 Oct 2025 09:34:59 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>,
- <shameerkolothum@gmail.com>
-Subject: Re: [PATCH v4 19/27] hw/arm/smmuv3-accel: Install S1 bypass hwpt on
- reset
-Message-ID: <aP+fMyVXzA7/0mC2@Asurada-Nvidia>
-References: <20250929133643.38961-1-skolothumtho@nvidia.com>
- <20250929133643.38961-20-skolothumtho@nvidia.com>
- <aPF9l5GwctGN0tqT@Asurada-Nvidia>
- <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDQJA-0005w8-VX
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:43:01 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vDQJ7-0007pj-9S
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:43:00 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-63e1a326253so5215789d50.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761583370; x=1762188170; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iIqSimi39klofHZtZnL5Vj2K3y0rXxrFl3z6jktwTZo=;
+ b=ZBqGr22IMs91mfamvtGC9ODmUlayhO2pnq7/qn8v2QOGf2jfQ5MwSYa5fgSgdyy613
+ aD6LrxXkQWrlm7dc65Ww64if/n+jRa5hKaFOv+KHSRHRq9dv32tnWdHmUXo0zI+Dnpnb
+ IZ5Xcn2czhzFRIbdCHOONvDMmSlrQCEFLUkfsKFI4wYGZ/3djE3Rgj6xZbLS54Nhm1n9
+ OryC2OJktoxrGD1eXEScWhpHKijypenldkP2VJrcKmXvxkFam1FF3jCHs59ucWc5kbDP
+ +HSWBFnLMk5o+VKeczdQUi2HLodBKYxn3rZZynV5WxjSgyEFORF6B3ZZmXl5wsVBvC6f
+ Zs0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761583370; x=1762188170;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iIqSimi39klofHZtZnL5Vj2K3y0rXxrFl3z6jktwTZo=;
+ b=IRJrZISIs5pnCw80rfhxcuwN2uSLv38zofB66rskKMyB5dXUsKmD89y0CaaAUlEA+1
+ xWZtd+OgHQi7YAjX6cEkqzBrUQGktpFgcA22WJfatI/7HWhdIMVLdmLtQw4iicTWTyPU
+ NUc7I8GwyeF4fPrqo/W9YI+6Tt0MNfIX8a1C8p1ybSnj1GrNSivXlTICsCtkNnr8jF9m
+ hnqA46e1+v25Xftv05HgAdFDth4DtFJpw6aHU3jUVZvP6Z2xfFN/yh048Kamc1SjyuvO
+ zGIJwVI5p+xdyE0OAzs8oyMT6s0qZw/kj2+bUpm8f4nI8EAIHsUeUt9lvUJgH9xK4fng
+ ghyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyHpYd/IhT/AUHlCNsXzl6UyTnpTRDNWrxHEVqXltwJlOI7Ckz//TwbrP2WReahB68hhG5duVaRJK2@nongnu.org
+X-Gm-Message-State: AOJu0YzlFEwktntou67eAE+Oya3751srQd2zO2+PemNAEwE0Wjc3Dk1I
+ yRCarUxfc+hC6xPTk84B98kFOH4CKTynDfMKZCQzVSKY7n+cuPNt5+BKj6uZ21WMbspfHqyG9GK
+ AEaCpBB4a0Lxjm70ruF9lpiFWlLms4cfM6lCt2Qi6Dg==
+X-Gm-Gg: ASbGncuoVKEWHDYKERSgrXAM2iTHPdFchVTFSXE14FNXVZqxD0qO69jVuZsqdYtzLiB
+ 355aQSFkefWsrwweda9ddDbzHXECuCcCihAW5jFXKd6JueywfBPCgYIpWzcOEH2YzqOuVt5F25q
+ gD88ClxIOdWQRm0o07l1yBO3qHiGWsOf3y75kJq/UFVJHtE2HuOr8Ca//9nqhXofjp97gehL1qE
+ WR9pwINLhD9tloKJPbHs87bbBEg0UXRa1ojk/56Z85CvRpjYIBmF+yroeDdlQ==
+X-Google-Smtp-Source: AGHT+IFnTy4GuL39gQqo5cO5/AtjK3ueLANt8SL8mKD6Wd3Al0HmUJPCwVFv88tqthud15vc4T2fVPU5v7ZGG0ZTM0s=
+X-Received: by 2002:a05:690c:a90:b0:784:a6d4:dc21 with SMTP id
+ 00721157ae682-7861838ccc5mr3677497b3.52.1761583370329; Mon, 27 Oct 2025
+ 09:42:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <76ce5b05-98fe-4682-a5ca-2f87b7535f35@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00020E63:EE_|DS0PR12MB8503:EE_
-X-MS-Office365-Filtering-Correlation-Id: f40850b4-55b9-4af3-7850-08de1576d109
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|7416014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3Iq3v87QVI9Zzju3nxOVz+Yd00K0hHHi+0/FRUqnHxwiUu4Scky4Pc3xKloV?=
- =?us-ascii?Q?9sONEhSeCN5G9V73hN2Y/KVUJH6D3vZIjZToN4810O03X+8Kuqd//39uE3t5?=
- =?us-ascii?Q?tR/xSlyMfNQLJCobrxprKdqA+u8aZ/T/u+7bHd2RzuZlL1U9hYSiYjlitJyH?=
- =?us-ascii?Q?zaY6A1OAh2wPnPAvg4Bmy6fyuupGRCgQlSlvrwDjT53SSVHCxA8tXGHzNlNT?=
- =?us-ascii?Q?4PEddriho+367ypAiZdezOUMNZ7Mk7E0r47Ae4AmV6vP+P19e3lYMnTLHgHx?=
- =?us-ascii?Q?ULlnNV6mEzKeQWv9Z5/rHd59MxyvgEXKd3Fui077Exgeu+s+efiKt+3skXog?=
- =?us-ascii?Q?A+Ap3DTYTyEMFUHuGQGllMrqyyGaHZXMXz9yLjglEBfiDLmM5AiZyxffA2QW?=
- =?us-ascii?Q?dqG16GwNi0zIgFbqiEmGw1zeuhevjECcFqsVd8y2LtvAAerDl0SHT9m9JH6z?=
- =?us-ascii?Q?BUZJlsnQmdQtq1vTHhfHNFDOVe/kyVehwvJMBUZZfFNbQ5tMshfhFkMsHf1Y?=
- =?us-ascii?Q?o/nxGn0YZcjXG7zwYlOTd2l6kf6SdsVuKIn0zE2gZtxafWgTykvwgr6+ys7h?=
- =?us-ascii?Q?xxy0vwJpRYwZ1Z0M3A/q5mxhM9mmcfwPo9aBHsB1nwgHyjkQPM2BPSu9SpmB?=
- =?us-ascii?Q?3duiVhf4JTVQH85R7ahcn2ZD2NsBet3IhHArmaTMLfvDuNOlAFQ0O5Tfv+Dm?=
- =?us-ascii?Q?02Z849ugmRG5ZhtqNUlMaDr1PgZopuE0XP4L004reUUL9sepLSb79OZ4C+xf?=
- =?us-ascii?Q?a/3lCiEpAq7n5AEhw0g394nFVVMA/uwCi+2+098dk9YmgPXHODKf4LbEfBDV?=
- =?us-ascii?Q?yB+QeywHHovM28dEG+jKINK5OqDk3ObvPwFL0uYoneALfC9DLWqOh8mNwIbs?=
- =?us-ascii?Q?ALqnzJ7gXIeHt+DBDkzh0epJ04eIeeFq0ZWHfRqO6ifTUeP53vYsMbJLanal?=
- =?us-ascii?Q?6pAI/eYFc/HHYHGTa8OS0jh6QOtSdGZyIcJX/gDgNi/2eUiwhIcwDGhRGynz?=
- =?us-ascii?Q?JNbO/ag8N+JvC0DfPbEI77qSASU8r1uxY/9dt0LErDint4a3smw46dVmfgdu?=
- =?us-ascii?Q?mKhuUqqw5SX0UwtBz/GAqUpEL6Ycd8UfJZyr6gn6w8AFDIRXcUkHU8woH3Bo?=
- =?us-ascii?Q?XHlX3NI/dGluJTi+RQCbSL1ZjgQ+35pza6tR9DI6byPGXJrWXqv+6aeMN5Z7?=
- =?us-ascii?Q?FYISIB9KFSlKijLUAGW9MTxf4XYYKDIiTevev1eF14Fw7rbeKSAp83auidKV?=
- =?us-ascii?Q?aCB/e/wrnbXcfzWN1ZkYOOUdd9/LrXLfjMguUIFfLR+ANEihnH4cK7Q1Q1iG?=
- =?us-ascii?Q?W1ANutnfhhH71yvOXBizSYEX/KMmS/GxaZa0LqzJ6i90mdIzcEyanPRPW+++?=
- =?us-ascii?Q?6uqsPqrbHIErqQuF3AAFEJtXlME9ObqNTJBLu8PrwVuOEM6XTTxJkH8UIGnK?=
- =?us-ascii?Q?no5LfczDQyyF9HpcaUFAPta3hSBsc08u8ozBJpjrkXaweAzdr67RQEXzWlqf?=
- =?us-ascii?Q?yVANgP8XpBfdTW/ypgfc3HHhPE0Jx5yz9i1lmJngm2pa7bN/HK/rGgYO2/XG?=
- =?us-ascii?Q?mFb6Lx3Li9QlFN3U/eM=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(7416014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2025 16:35:18.8817 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f40850b4-55b9-4af3-7850-08de1576d109
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E63.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8503
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=nicolinc@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+References: <20250911144923.24259-1-sebott@redhat.com>
+ <20250911144923.24259-3-sebott@redhat.com>
+In-Reply-To: <20250911144923.24259-3-sebott@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Oct 2025 16:42:39 +0000
+X-Gm-Features: AWmQ_bnGFe7efhNQOt02HzPY7w4uzHv-6KQOwTPx1B30MSJa7HImhr0NK5nCCdw
+Message-ID: <CAFEAcA-urFX=V7kuRA3cRik7PifFQER5eoXC_CZ2jKg7OZz9iA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/arm/kvm: add kvm-psci-version vcpu property
+To: Sebastian Ott <sebott@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,40 +96,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 03:26:15PM +0100, Eric Auger wrote:
-> On 10/17/25 1:19 AM, Nicolin Chen wrote:
-> > On Mon, Sep 29, 2025 at 02:36:35PM +0100, Shameer Kolothum wrote:
-> >> When the guest reboots with devices in nested mode (S1 + S2), any QEMU/UEFI
-> >> access to those devices can fail because S1 translation is not valid during
-> >> the reboot. For example, a passthrough NVMe device may hold GRUB boot info
-> >> that UEFI tries to read during the reboot.
-> >>
-> >> Set S1 to bypass mode during reset to avoid such failures.
-> > GBPA is set to bypass on reset so I think it's fine. Yet, maybe the
-> > code should check that.
- 
-> shouldn't we check its actual value before setting bypass?
+On Thu, 11 Sept 2025 at 15:49, Sebastian Ott <sebott@redhat.com> wrote:
+>
+> Provide a kvm specific vcpu property to override the default
+> (as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
+> by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+>
+> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+> ---
+>  docs/system/arm/cpu-features.rst |  5 +++
+>  target/arm/cpu.h                 |  6 +++
+>  target/arm/kvm.c                 | 70 +++++++++++++++++++++++++++++++-
+>  3 files changed, 80 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+> index 37d5dfd15b..1d32ce0fee 100644
+> --- a/docs/system/arm/cpu-features.rst
+> +++ b/docs/system/arm/cpu-features.rst
+> @@ -204,6 +204,11 @@ the list of KVM VCPU features and their descriptions.
+>    the guest scheduler behavior and/or be exposed to the guest
+>    userspace.
+>
+> +``kvm-psci-version``
+> +  Override the default (as of kernel v6.13 that would be PSCI v1.3)
+> +  PSCI version emulated by the kernel. Current valid values are:
+> +  0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+> +
+>  TCG VCPU Features
+>  =================
+>
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index c15d79a106..44292aab32 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -974,6 +974,12 @@ struct ArchCPU {
+>       */
+>      uint32_t psci_version;
+>
+> +    /*
+> +     * Intermediate value used during property parsing.
+> +     * Once finalized, the value should be read from psci_version.
+> +     */
+> +    uint32_t prop_psci_version;
+> +
+>      /* Current power state, access guarded by BQL */
+>      ARMPSCIState power_state;
+>
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 6672344855..bc6073f395 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -483,6 +483,59 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
+>      ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>  }
+>
+> +static char *kvm_get_psci_version(Object *obj, Error **errp)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
+> +    const char *val;
+> +
+> +    switch (cpu->prop_psci_version) {
+> +    case QEMU_PSCI_VERSION_0_1:
+> +        val = "0.1";
+> +        break;
+> +    case QEMU_PSCI_VERSION_0_2:
+> +        val = "0.2";
+> +        break;
+> +    case QEMU_PSCI_VERSION_1_0:
+> +        val = "1.0";
+> +        break;
+> +    case QEMU_PSCI_VERSION_1_1:
+> +        val = "1.1";
+> +        break;
+> +    case QEMU_PSCI_VERSION_1_2:
+> +        val = "1.2";
+> +        break;
+> +    case QEMU_PSCI_VERSION_1_3:
+> +        val = "1.3";
+> +        break;
+> +    default:
+> +        val = "0.2";
+> +        break;
+> +    }
+> +    return g_strdup(val);
+> +}
+> +
+> +static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
+> +
+> +    if (!strcmp(value, "0.1")) {
+> +        cpu->prop_psci_version = QEMU_PSCI_VERSION_0_1;
+> +    } else if (!strcmp(value, "0.2")) {
+> +        cpu->prop_psci_version = QEMU_PSCI_VERSION_0_2;
+> +    } else if (!strcmp(value, "1.0")) {
+> +        cpu->prop_psci_version = QEMU_PSCI_VERSION_1_0;
+> +    } else if (!strcmp(value, "1.1")) {
+> +        cpu->prop_psci_version = QEMU_PSCI_VERSION_1_1;
+> +    } else if (!strcmp(value, "1.2")) {
+> +        cpu->prop_psci_version = QEMU_PSCI_VERSION_1_2;
+> +    } else if (!strcmp(value, "1.3")) {
+> +        cpu->prop_psci_version = QEMU_PSCI_VERSION_1_3;
 
-Yes, you are right. GBPA can be changed by the guest. So:
+We already have six values here and it's not implausible
+we might end up with more in future; maybe we should make the
+mapping between string and constant data-driven rather
+than having code written out longhand in the get and set
+functions?
 
-"maybe" -> "should"
+> +    } else {
+> +        error_setg(errp, "Invalid PSCI-version value");
+> +        error_append_hint(errp, "Valid values are 0.1, 0.2, 1.0, 1.1, 1.2, 1.3\n");
+> +    }
+> +}
 
-> By the way the spec says is ABORT is set to 0x0:
-> "Do not abort incoming transactions. Transactions bypass the SMMU with
-> attributes given by other fields in this register."
-> 
-> Wondering about those attributes and they can apply on the host?
-
-Not at this moment. vSTE only carries:
- * @ste: The first two double words of the user space Stream Table Entry for
- *       the translation. Must be little-endian.
- *       Allowed fields: (Refer to "5.2 Stream Table Entry" in SMMUv3 HW Spec)
- *       - word-0: V, Cfg, S1Fmt, S1ContextPtr, S1CDMax
- *       - word-1: EATS, S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
-
-So, kernel needs to expand the word-1 to support those GBPA fields.
-I will send a kernel patch this week.
-
-Thanks
-Nicolin
+thanks
+-- PMM
 
