@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6349DCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 05:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D43A5CCD1A5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 05:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDG5Q-0005RI-Un; Mon, 27 Oct 2025 01:48:08 -0400
+	id 1vDG6z-000625-4i; Mon, 27 Oct 2025 01:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vDG5O-0005R7-OJ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 01:48:06 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1vDG6w-00061Q-J0
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 01:49:42 -0400
+Received: from mx2.zhaoxin.com ([61.152.208.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vDG5M-0001VD-Eq
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 01:48:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761544085; x=1793080085;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=24zEWJ2BhHyTK1Z3gf/A4Z3jWdwL2s4O/5Gno5jTRLU=;
- b=Uq+dakpVFUihp9eQvmeij3dmTbzHdlDQsg1oIGn/h0TivdIMU3aX5kjL
- VuFF9edY1GTgKQ0D6jMO/0m8/GPg1SyfKRvybJnndx5YO8R8KmmW7c6Q4
- eqsiGFud9j/w2e6fJyqsx3q9fuunxYs5C6yTsqDv5Uz9VEN9IX+mPqcIf
- 63k4Vz096k8oSygw5wQj3o0gkygq6g8B9b5e/kKXu+JU3qoWnWAAha91J
- Iuld6BtMcb5TpH9053nYxrazW6230ZWhJ7uUM4L4ZQ2orRajVjvTonwMR
- dIwrwzUT/+SbgK62U0FQlyRfpUg7evKCYd82sTZqjOnv0pOIAeVrAQjVu A==;
-X-CSE-ConnectionGUID: luLJ0jSGQlyfSEfmqs1VVA==
-X-CSE-MsgGUID: YJZYagGUR9u8jFwcKwC2Ig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63541804"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="63541804"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Oct 2025 22:48:01 -0700
-X-CSE-ConnectionGUID: /SnmDoMzTvOFq7mwUpzN/Q==
-X-CSE-MsgGUID: b6cy4JhCSIe4bWzQbH9gHQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="184566973"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Oct 2025 22:47:57 -0700
-Message-ID: <94d254b3-3d0f-4fe8-b6aa-da5df2b9c0e6@intel.com>
-Date: Mon, 27 Oct 2025 13:47:53 +0800
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1vDG6t-0001p0-S5
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 01:49:42 -0400
+X-ASG-Debug-ID: 1761544163-1eb14e3d885fb30001-jgbH7p
+Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
+ mx2.zhaoxin.com with ESMTP id zYJZQ2sHxRe4C4td (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Mon, 27 Oct 2025 13:49:23 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX2.zhaoxin.com
+ (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
+ 2025 13:49:23 +0800
+Received: from ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85]) by
+ ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85%7]) with mapi id
+ 15.01.2507.059; Mon, 27 Oct 2025 13:49:23 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from [192.168.31.91] (10.28.24.130) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
+ 2025 11:44:12 +0800
+Message-ID: <53c9af0b-49e2-4ec3-8846-01d44b2a9745@zhaoxin.com>
+Date: Mon, 27 Oct 2025 11:42:35 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/20] i386/cpu: Clean up indent style of
- x86_ext_save_areas[]
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao
- <chao.gao@intel.com>, John Allen <john.allen@amd.com>,
- Babu Moger <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>,
- Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
-References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-3-zhao1.liu@intel.com>
+Subject: Re: [PATCH 3/3] target/i386: Introduce Zhaoxin Shijidadao-Server CPU
+ model
+To: Zhao Liu <zhao1.liu@intel.com>
+X-ASG-Orig-Subj: Re: [PATCH 3/3] target/i386: Introduce Zhaoxin
+ Shijidadao-Server CPU model
+CC: <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>,
+ <cobechen@zhaoxin.com>
+References: <20250923021133.190725-1-ewanhai-oc@zhaoxin.com>
+ <20250923021133.190725-4-ewanhai-oc@zhaoxin.com> <aPsnqxDZR4KxgcdN@intel.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20251024065632.1448606-3-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <aPsnqxDZR4KxgcdN@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.57, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+X-Originating-IP: [10.28.24.130]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 10/27/2025 1:49:21 PM
+X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
+X-Barracuda-Start-Time: 1761544163
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 1249
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.149244
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=61.152.208.219;
+ envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,94 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/24/2025 2:56 PM, Zhao Liu wrote:
-
-<empty commit message> isn't good.
-
-> Tested-by: Farrah Chen <farrah.chen@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-
-> ---
->   target/i386/cpu.c | 58 +++++++++++++++++++++++++++--------------------
->   1 file changed, 33 insertions(+), 25 deletions(-)
+On 10/24/25 3:15 PM, Zhao Liu wrote:
 > 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 0a66e1fec939..f0e179c2d235 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -2028,38 +2028,46 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
->           .feature = FEAT_1_ECX, .bits = CPUID_EXT_XSAVE,
->           .size = sizeof(X86LegacyXSaveArea) + sizeof(X86XSaveHeader),
->       },
-> -    [XSTATE_YMM_BIT] =
-> -          { .feature = FEAT_1_ECX, .bits = CPUID_EXT_AVX,
-> -            .size = sizeof(XSaveAVX) },
-> -    [XSTATE_BNDREGS_BIT] =
-> -          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
-> -            .size = sizeof(XSaveBNDREG)  },
-> -    [XSTATE_BNDCSR_BIT] =
-> -          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
-> -            .size = sizeof(XSaveBNDCSR)  },
-> -    [XSTATE_OPMASK_BIT] =
-> -          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-> -            .size = sizeof(XSaveOpmask) },
-> -    [XSTATE_ZMM_Hi256_BIT] =
-> -          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-> -            .size = sizeof(XSaveZMM_Hi256) },
-> -    [XSTATE_Hi16_ZMM_BIT] =
-> -          { .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-> -            .size = sizeof(XSaveHi16_ZMM) },
-> -    [XSTATE_PKRU_BIT] =
-> -          { .feature = FEAT_7_0_ECX, .bits = CPUID_7_0_ECX_PKU,
-> -            .size = sizeof(XSavePKRU) },
-> +    [XSTATE_YMM_BIT] = {
-> +        .feature = FEAT_1_ECX, .bits = CPUID_EXT_AVX,
-> +        .size = sizeof(XSaveAVX),
-> +    },
-> +    [XSTATE_BNDREGS_BIT] = {
-> +        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
-> +        .size = sizeof(XSaveBNDREG),
-> +    },
-> +    [XSTATE_BNDCSR_BIT] = {
-> +        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_MPX,
-> +        .size = sizeof(XSaveBNDCSR),
-> +    },
-> +    [XSTATE_OPMASK_BIT] = {
-> +        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-> +        .size = sizeof(XSaveOpmask),
-> +    },
-> +    [XSTATE_ZMM_Hi256_BIT] = {
-> +        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-> +        .size = sizeof(XSaveZMM_Hi256),
-> +    },
-> +    [XSTATE_Hi16_ZMM_BIT] = {
-> +        .feature = FEAT_7_0_EBX, .bits = CPUID_7_0_EBX_AVX512F,
-> +        .size = sizeof(XSaveHi16_ZMM),
-> +    },
-> +    [XSTATE_PKRU_BIT] = {
-> +        .feature = FEAT_7_0_ECX, .bits = CPUID_7_0_ECX_PKU,
-> +        .size = sizeof(XSavePKRU),
-> +    },
->       [XSTATE_ARCH_LBR_BIT] = {
-> -            .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
-> -            .offset = 0 /*supervisor mode component, offset = 0 */,
-> -            .size = sizeof(XSavesArchLBR) },
-> +        .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
-> +        .offset = 0 /*supervisor mode component, offset = 0 */,
-> +        .size = sizeof(XSavesArchLBR),
-> +    },
->       [XSTATE_XTILE_CFG_BIT] = {
->           .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
->           .size = sizeof(XSaveXTILECFG),
->       },
->       [XSTATE_XTILE_DATA_BIT] = {
->           .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
-> -        .size = sizeof(XSaveXTILEDATA)
-> +        .size = sizeof(XSaveXTILEDATA),
->       },
->   };
->   
+> 
+> On Mon, Sep 22, 2025 at 10:11:33PM -0400, Ewan Hai wrote:
+>> Date: Mon, 22 Sep 2025 22:11:33 -0400
+>> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+>> Subject: [PATCH 3/3] target/i386: Introduce Zhaoxin Shijidadao-Server CPU
+>>  model
+>> X-Mailer: git-send-email 2.34.1
+>>
+>> Shijidadao-Server hardware enables IA32_CORE_CAPABILITIES and relies on
+>> the SPLIT_LOCK_DETECT feature. When the kernel has not yet virtualized
+>> this MSR, KVM filters the capability and QEMU emits a warning.
+>>
+>> This patch retains the core-capability bit in the CPU model so it will
+>> take effect once KVM support becomes available.
+>>
+>> In QEMU, vCPU models default to '.version = 1'. Since there is currently
+>> no '.features[index]' mapping for the "x-force-cpuid-0x1f" property, this
+>> patch adds that property to the v1 version of the model.
+> 
+> I'm preparing the CPU model for Diamond Rapids, and also meet this
+> issue.
+> 
+> Well, I happen to have a patch for this and I think you could give it
+> a try. :)
+
+That's good news. I'll test your patch and update mine accordingly.
+When I send out v2, should I note in the cover letter that my patches are based
+on your "0x1f option" patch?
 
 
