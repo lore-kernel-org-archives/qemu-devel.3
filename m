@@ -4,65 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5202ECCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 20:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA40CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 21:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDUFj-00060l-GH; Mon, 27 Oct 2025 16:55:43 -0400
+	id 1vDUag-0002aq-A6; Mon, 27 Oct 2025 17:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDUFf-000605-4i; Mon, 27 Oct 2025 16:55:39 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vDUZx-0002Uo-8q
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 17:16:48 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vDUFV-0001yw-GE; Mon, 27 Oct 2025 16:55:38 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 41E1AC05B8;
- Mon, 27 Oct 2025 23:55:19 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c5c::1:11] (unknown
- [2a02:6bf:8080:c5c::1:11])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ItjTFc1L2mI0-Rv3YXlot; Mon, 27 Oct 2025 23:55:18 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1761598518;
- bh=uB3Tx0IskXOo1yZQih2MPrhBcfUYjNlRl6VKYPEQWfc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=y4HmTaOVzzl5NS/Kn8WwkSkiRjPz8+hLd4qEJg+WWj5zfGmy1FeAjj3pN94wk2oTL
- XeTxJmBwOnjpHw0mtcqXwXpA4bg4GBw2baKeYJ8ybNRNxgzoEaQ4639cfzloA8TqnW
- IYcWLA55GjGMRDK/E3nQT2hroyXFx4WQqEjrMwFU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <64465d5a-7588-4a7e-a751-28259f1d6748@yandex-team.ru>
-Date: Mon, 27 Oct 2025 23:55:18 +0300
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vDUZr-00050z-Vx
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 17:16:36 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 5FF41620C4;
+ Mon, 27 Oct 2025 21:16:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510F7C4CEF1;
+ Mon, 27 Oct 2025 21:16:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1761599788;
+ bh=+GhzTgilJrazmWbh75bvGEDpXtSwiYUhbOKItG96eAM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=k/GHOdWVigYE7Ppo913wh0oh8dvi4C8emqEZpOw2qeMphzOmoHvhuq3FrHXIK/syp
+ lro2fZ6pY5I20xLzgNuqmfPU8H/koMKXyxj6didOd/kujAMlxoI6UJCHj5/HQV5/Gv
+ VvRmdekPvlmFgXj0wz8FZh+uD6Wlm+HeRDejnok/RXM3828Wkm5p+1TDBr4Li8h2gG
+ hJUfjqq7JYpgbw/gQcumRjk+WtBsFvHzcM80G2/IuCghez6hm3/lHVKCN5/7NyAIs2
+ VjqsHn31LtoFng9XCjd4OPrEvDESXcfiPuKrsbv1qJCljm75rtBUwN/FyVbdjcSHgl
+ 3tRgbtX1IQibg==
+From: deller@kernel.org
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fam Zheng <fam@euphon.net>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, deller@gmx.de
+Subject: [PULL 09/11] hw/hppa: PCI devices depend on availability of PCI bus
+Date: Mon, 27 Oct 2025 22:16:01 +0100
+Message-ID: <20251027211603.7141-10-deller@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251027211603.7141-1-deller@kernel.org>
+References: <20251027211603.7141-1-deller@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: Add missing null checks during
- query-named-block-nodes
-To: Wesley Hershberger <wesley.hershberger@canonical.com>,
- Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-References: <20251024-second-fix-3149-v1-1-d997fa3d5ce2@canonical.com>
- <aP9BhBEUSuM0ougc@redhat.com>
- <CADzzt1B4ZwRwv+ZCWyGwyZwqScHAfKkbL2UEaujd3BJNSkMbXg@mail.gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CADzzt1B4ZwRwv+ZCWyGwyZwqScHAfKkbL2UEaujd3BJNSkMbXg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,26 +72,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.10.25 19:04, Wesley Hershberger wrote:
-> (I've run make check-block with it and saw no failures).
+From: Helge Deller <deller@gmx.de>
 
-When changing internals of block-layer, it's better to run all iotests, at least for qcow2, raw and nbd. check-block runs only subset.
+Only create the PCI serial ports (DIVA) and PCI network cards when there is
+actually a PCI bus. The shortly added 715 machine will not have a PCI bus, so
+avoid creating further PCI devices.
 
-Like
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ hw/hppa/machine.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-cd build
-./tests/qemu-iotests/check -qcow2
-./tests/qemu-iotests/check -raw
-./tests/qemu-iotests/check -nbd
-
-
-At least,
-
-    ./tests/qemu-iotests/check -qcow2 257
-
-fails with your diff.
-
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index bec5a86f24..31eeba72b4 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -387,20 +387,22 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+                         enable_lasi_lan());
+     }
+ 
+-    pci_init_nic_devices(pci_bus, mc->default_nic);
+-
+-    /* BMC board: HP Diva GSP */
+-    dev = qdev_new("diva-gsp");
+-    if (!object_property_get_bool(OBJECT(dev), "disable", NULL)) {
+-        pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
+-        if (!lasi_dev) {
+-            /* bind default keyboard/serial to Diva card */
+-            qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
+-            qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
+-            qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
+-            qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
++    if (pci_bus) {
++        pci_init_nic_devices(pci_bus, mc->default_nic);
++
++        /* BMC board: HP Diva GSP PCI card */
++        dev = qdev_new("diva-gsp");
++        if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
++            pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
++            if (!lasi_dev) {
++                /* bind default keyboard/serial to Diva card */
++                qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
++                qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
++                qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
++                qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
++            }
++            pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
+         }
+-        pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
+     }
+ 
+     /* create USB OHCI controller for USB keyboard & mouse on Astro machines */
 -- 
-Best regards,
-Vladimir
+2.51.0
+
 
