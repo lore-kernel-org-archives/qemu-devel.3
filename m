@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A52CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 07:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23CA5CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 07:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDHQj-0007lT-2w; Mon, 27 Oct 2025 03:14:13 -0400
+	id 1vDHgK-0001LU-Ad; Mon, 27 Oct 2025 03:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vDHQg-0007kz-RC
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 03:14:10 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vDHQe-0005ic-DQ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 03:14:10 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-475dbc3c9efso12318485e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 00:14:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761549245; x=1762154045; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=eKT9zBBZCgaN3iJB6X4Q0ab8Z0yNK5YFsQi+vSRE6qs=;
- b=IfmEQzYSGWwKx8K5iv+VI5CKU1OOhVUgo6h2aTUxZx7lVBXQL7Exv5y8KUj8xc7rH9
- HSPThBqm/i8H5fsC7oknjqCQwaFenbTDSIQiPBkIvYovX95zUEP98z1FG5ESepEqeqkq
- zBQa9t/SEtC67z7xzJ5OT6r+EuvtqWsVVa/5ooDrlPCJ52OZbtPTbnYhNUlyuKVtSe0E
- 4foPp5f8vkoMzinCfPolFlc1M8zuCLFx3wSf+woY5pUB8LOzVeEsff/ZcSR6IdMAKg9T
- Hd91r/4doftcVsW4ATDTWxX/rMXDGMthOh+PGY8xjbuG2fYulR7CG40GAJb2cMJSDw+l
- C+Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761549245; x=1762154045;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eKT9zBBZCgaN3iJB6X4Q0ab8Z0yNK5YFsQi+vSRE6qs=;
- b=RShHW0jeJz/ZMdH812NgsBTHR5Bgc1pobMSi8OXh8Rzufc+tB36cm8hkH2eNHMwW/3
- 40vIneFA59QHisZIKhRJMv7TWugvDt584HWFiaWLvUVotTXuD1r5I5HkN6DxnI0Bqge6
- PQJ1c/EhDbKT1v2qkqt+hiWg+lPkvYhKIk6kK1F8hzNdMmElfro/dWS2z88yv3BCn15+
- nEWdHdF8P+4M837K/Zmhz1QovlxXgWDKZhGQnVPbvy1h3fvqCMUhradJ/VSQxboeOBCy
- +RFwBqnhrMdOD9IiwwGMa83pJkJlLaBH4aygtbgoFFNzObHJQm6DMnXubOkvQq5opJ9t
- lKfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUl2Xhzxilu07oBkilQHi2/ySbqLLIzveJEqS1tz7hu9eYNe3WnwMBLAYRlsf//LIHerax0IeSBONP7@nongnu.org
-X-Gm-Message-State: AOJu0Yzss1V4DYfc+910VRkKqP4uZUfpLHQNSR2zE9imPMMlPoUnnoQs
- 2vhjbEkN65pA1268cSwKCP4Dw4HpsKOhzHcihoKBsTV+fBxWmtDu+2sXNYo41Vxy7Yc=
-X-Gm-Gg: ASbGncvCOwPJSfWm8WYOA+cofAzsxAF2ESRaeoz4cpuufwGzAdTtaQxHLacxE7Y0I5T
- T8Q6bzpG3sOK+f1dyyq8hGjm4S7Av99xiJxCruSv6V9zlbahjSJbdHMIuUH1vddd+1SpAbzXw0Z
- 71UNG3AmGHRJ5MJgnPmCwKDeOpmE2Dz5RZGSsNnwv2827U/ISdS9s3w1XXo/jsotN/lNjbX43lk
- 93G1oyPyOp63qj6xaDZ/oevMqWJouBURlCA6M6cmuM1Gd1Vy4bsl/e6YbAnRApd69HO70hkgw3f
- meFXpEWYOMut0OO1tx2tyNtkwCFcZ+GdXBW28XOkBwMUhXViipn/6TLkRL0fYWxezxAI2oGxI99
- Q2IxqB+rRXO45jF32dQfHTjq83BIGSsMXIqDgLeDgAuBptW8IrZaGcS1EAL9VA4FdayH/G9GA1Q
- /e+lfx1m7bdioxO0zAWL/RiE/xx4lvEHqz8KW7xLR1TPvr2mUZ1Ag2CsY=
-X-Google-Smtp-Source: AGHT+IEIhTe+BxOVW2fMofFmq6XWGEe64UhxXgiz1F5gL0/WAWz8mYUX/3g+/RY4StC6f0aKhuIMRw==
-X-Received: by 2002:a05:600c:1da7:b0:46e:4be1:a423 with SMTP id
- 5b1f17b1804b1-4711786d630mr245959165e9.1.1761549245178; 
- Mon, 27 Oct 2025 00:14:05 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6?
- ([2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dcb9d92esm62033295e9.0.2025.10.27.00.14.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 00:14:04 -0700 (PDT)
-Message-ID: <881d4aaf-2a75-4941-869a-076334650bf7@linaro.org>
-Date: Mon, 27 Oct 2025 08:14:01 +0100
+ (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
+ id 1vDHgH-0001KF-3V
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 03:30:17 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
+ id 1vDHgE-0008NB-Tn
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 03:30:16 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 59R0VkPM1272226; Mon, 27 Oct 2025 07:30:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=Ktn5mmWF2lXCLL+niUEBl/
+ Iw0VUMAk71wku/QdBLXXs=; b=VHNFiPDZIwqcw0mM6+sJ7McntjoJJ59sc0nTbs
+ +6M9AbsRSIcZO7QKwTT/q4MR4po0QUEa5JZgvNAJGgUT0vQt9GiLMZKg+tLj3m3Y
+ 0bbeSFwwGFcE+60Qmn4hQHAf+aCnoe39QuEe9UDuUSU6cRUXI/oXKcsH69p6jRy2
+ 3bVyZ9RhGdjA9WqlOtLSzfn6Ba7tPFm4Z+95zcEadFRAfBOCqSabKSW/F5BGKso+
+ KxjhVSsrSRvFL9caIf5UqEXJztvr0gCLCSnD9Ynf2BIc7NInMmJyAleTxewE8IwO
+ XeNbVPf0Dy9xE6bHZu2G9f4jc3gnR2giocDdtyNA2PXYQOWg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a0nnb3ry8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Oct 2025 07:30:08 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
+ [10.47.209.197])
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 59R7U7G7003985
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Oct 2025 07:30:07 GMT
+Received: from haixcui1-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Mon, 27 Oct 2025 00:30:05 -0700
+From: Haixu Cui <quic_haixcui@quicinc.com>
+To: <alex.bennee@linaro.org>, <viresh.kumar@linaro.org>,
+ <quic_tsoni@quicinc.com>, <qemu-devel@nongnu.org>, <mst@redhat.com>,
+ <zhiqiang.tu@oss.qualcomm.com>
+CC: Haixu Cui <quic_haixcui@quicinc.com>
+Subject: [PATCH v1 0/3] virtio-spi: Sync Linux headers and add vhost-user-spi
+ device support
+Date: Mon, 27 Oct 2025 15:29:46 +0800
+Message-ID: <20251027072949.2187054-1-quic_haixcui@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH V2 1/2] linux-user: add a plugin API to filter syscalls
-To: Richard Henderson <richard.henderson@linaro.org>,
- Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- alex bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Zhengwei Qi <qizhwei@sjtu.edu.cn>,
- Yun Wang <yunwang94@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>,
- Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <1341969682.5812455.1761115945695.JavaMail.zimbra@sjtu.edu.cn>
- <1236223604.5812631.1761116021855.JavaMail.zimbra@sjtu.edu.cn>
- <80029288-4571-4e5a-ab99-b3c5c8daf8b6@linaro.org>
-Content-Language: en-US
-In-Reply-To: <80029288-4571-4e5a-ab99-b3c5c8daf8b6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: _6yHVLg7rhEz6w9AGB8480Dtm-0c8CRj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI3MDA2OCBTYWx0ZWRfX4BVEY22F5B4g
+ 4izJw6M1vEFbPVRubMMGZj7aHZ94EbWb8yB32RXaLEIUlDPQDPd+cyLt8SSTIJdsK+x4AfKWJz6
+ 9M8b0YwXtkSLSgWK84JqTZhqAZQa0QSDDPk6Qw9zFziSIYp0Fa7L0y4Gfs2SHOn8Q4w5Rb0mnp1
+ 2ox/maG5C1AQthSe0puHuqDZaI/QmSOqMdE7xBe+KxY7z/CcbbPOGdDQzG2JQQydgETBpdrNZ91
+ VfOPrUzZL1f4lqqoLBVfSe+0rJ3fpdp/6KKluXjV25pbjHn1cBMswZp0JrzOMM8VOuc5I9PvIh+
+ /4UYuEMLJcNOWNAMzefphIwGhtu0vhb7Asovl83Sdiscp0NjbHZvNJZVW6ENiJWrG3FtB9HtVha
+ dnLPcLhPp8xV+NB9yQCYkdFlRacEXw==
+X-Authority-Analysis: v=2.4 cv=AJoZt3K7 c=1 sm=1 tr=0 ts=68ff1f80 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=COk6AnOGAAAA:8 a=ONEyY3_IPAylEGahahoA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: _6yHVLg7rhEz6w9AGB8480Dtm-0c8CRj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-27_03,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ phishscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510020000 definitions=main-2510270068
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_haixcui@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,140 +111,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard and Alex,
+This patch series introduces vhost-user-spi device support to QEMU
+and synchronizes relevant standard headers from upstream Linux.
 
-On 2025-10-22 18:00, Richard Henderson wrote:
-> On 10/22/25 01:53, Ziyang Zhang wrote:
->> @@ -165,6 +166,10 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
->>                             uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
->>                             uint64_t a6, uint64_t a7, uint64_t a8);
->>    void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret);
->> +bool
->> +qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
->> +                         uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
->> +                         uint64_t a6, uint64_t a7, uint64_t a8, uint64_t *ret);
-> 
-> The second and third lines should indented just past the ( on the first line, i.e. with
-> CPUState.
-> 
->> +static inline bool
->> +qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
->> +                                uint64_t a2, uint64_t a3, uint64_t a4,
->> +                                uint64_t a5, uint64_t a6, uint64_t a7,
->> +                                uint64_t a8, uint64_t *ret)
-> 
-> Like this.
-> 
->> +typedef bool
->> +(*qemu_plugin_vcpu_syscall_filter_cb_t)(qemu_plugin_id_t id,
->> +                                unsigned int vcpu_index,
->> +                                int64_t num, uint64_t a1, uint64_t a2,
->> +                                uint64_t a3, uint64_t a4, uint64_t a5,
->> +                                uint64_t a6, uint64_t a7, uint64_t a8,
->> +                                uint64_t *ret);
-> 
-> Likewise.
-> 
->> +static inline bool send_through_syscall_filters(CPUState *cpu, int num,
->> +                                  abi_long arg1, abi_long arg2,
->> +                                  abi_long arg3, abi_long arg4,
->> +                                  abi_long arg5, abi_long arg6,
->> +                                  abi_long arg7, abi_long arg8, abi_long *ret)
-> 
-> Do not mark inline; let the compiler decide.
-> 
->> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
->> index d78b2029fa..b8225f838f 100644
->> --- a/linux-user/syscall.c
->> +++ b/linux-user/syscall.c
->> @@ -14084,8 +14084,11 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
->>            print_syscall(cpu_env, num, arg1, arg2, arg3, arg4, arg5, arg6);
->>        }
->>    
->> -    ret = do_syscall1(cpu_env, num, arg1, arg2, arg3, arg4,
->> -                      arg5, arg6, arg7, arg8);
->> +    if (!send_through_syscall_filters(cpu, num, arg1, arg2, arg3, arg4, arg5,
->> +        arg6, arg7, arg8, &ret)) {
-> 
-> Incorrect indent.
-> 
->> +        ret = do_syscall1(cpu_env, num, arg1, arg2, arg3, arg4,
->> +                        arg5, arg6, arg7, arg8);
-> 
-> Likewise.
-> 
->> diff --git a/plugins/core.c b/plugins/core.c
->> index ead09fd2f1..1b2f875fb1 100644
->> --- a/plugins/core.c
->> +++ b/plugins/core.c
->> @@ -538,6 +538,40 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
->>        }
->>    }
->>    
->> +/*
->> + * Disable CFI checks.
->> + * The callback function has been loaded from an external library so we do not
->> + * have type information
->> + */
->> +QEMU_DISABLE_CFI
->> +bool
->> +qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
->> +                         uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
->> +                         uint64_t a6, uint64_t a7, uint64_t a8, uint64_t *ret)
-> 
-> Likewise.
-> 
->> +{
->> +    struct qemu_plugin_cb *cb, *next;
->> +    enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER;
->> +
->> +    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
->> +        return false;
->> +    }
->> +
->> +    bool filtered = false;
->> +    QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
->> +        qemu_plugin_vcpu_syscall_filter_cb_t func = cb->f.vcpu_syscall_filter;
->> +
->> +        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
->> +        if (func(cb->ctx->id, cpu->cpu_index, num, a1, a2, a3, a4,
->> +            a5, a6, a7, a8, ret)) {
->> +            filtered = true;
->> +            qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
->> +            break;
->> +        }
->> +        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
->> +    }
->> +    return filtered;
->> +}
-> 
-> The loop is better written
-> 
->       QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
->           bool filtered;
-> 
->           qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
->           filtered = cb->f.vcpu_syscall_filter(cb->ctx->id, cpu->cpu_index,
->                                                num, a1, a2, a3, a4, a5,
->                                                a6, a7, a8, ret);
->           qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-> 
->           if (filtered) {
->               return true;
->           }
->       }
->       return false;
-> 
-> 
-> r~
+The series consists of the following changes:
+1. Synchronize virtio_ids.h from Linux kernel (v6.18-rc3) using
+   scripts/update-linux-headers.sh.
+2. Synchronize virtio_spi.h from Linux kernel (v6.18-rc3) using
+   scripts/update-linux-headers.sh.
+3. Implement vhost-user-spi and vhost-user-spi-pci devices in QEMU,
+   enabling virtio-based SPI communication via the vhost-user protocol.
 
-Thanks for the review.
-Beyond the code style, are you open to accept such a functionality as 
-part of API plugins?
+The new device implementation follows the virtio-spi specification and
+leverages the upstream Linux virtio-spi driver. This enables QEMU to emulate
+SPI devices using the vhost-user protocol, facilitating integration with external
+SPI daemons and improving virtualization support for SPI peripherals.
 
-I think it's simple and powerful enough to justify having it upstream. 
-Plus, it will solve other issues than integration with Lorelei.
+Signed-off-by: Haixu Cui <quic_haixcui@quicinc.com>
 
-Regards,
-Pierrick
+
 
