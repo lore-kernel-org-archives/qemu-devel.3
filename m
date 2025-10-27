@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9E6CCF9EF
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48240CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDL2R-0001gI-9c; Mon, 27 Oct 2025 07:05:23 -0400
+	id 1vDL2F-0001PX-B7; Mon, 27 Oct 2025 07:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL2P-0001eq-Ei
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:22 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1vDL2D-0001L6-I7
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:09 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL1a-0005dn-JI
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:20 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-63c31c20b64so7306306a12.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:03:54 -0700 (PDT)
+ id 1vDL1Z-0005ci-0z
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:05:08 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b6d345d7ff7so848511066b.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563032; x=1762167832; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761563030; x=1762167830; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FdYYc9UfPJiJOmUk4OWh6nheP5mSB2HOK4r3KtorV48=;
- b=iizFSWCne8dtm4AE8rAmqRWuFEYhpe7lTw/Fubft+FpBsD35TdVMUjHAkPmqX5LaGV
- xp/QOmMyPa2lFgTqnxaL7ck6WHWFzw3vbG8KiRcB74UobMCPLe31xWSv2Oj8O+CiS19T
- lBHluuZc4ZMw0JXGQSNr34koFzqJwtAmSIzKr8HxMu2vZXRSxLkSqWyOkEsFAC+a0nT2
- 7TgU2OLerF4y6wJ5IcI1ffD/3HsV4yvwJaHXLOQosxyPYH7mMJzWvQ23NnqV3I6RMWYJ
- x/dulghvbgw2dJgteam8D9pYTaDBdnU9+vIIEv84uM15VjVzrGIte6a5JjNlAtiWKkrF
- WPtg==
+ bh=dPRpRXWNkgzTelJ9LaP0XDvrgpGKDnKCNCyXswtjrG8=;
+ b=w5dLCARn5qgqtBNCDCY41zmbiYRysQivS7/97/aDe/4US434ThlSgwfMG2x2Ex+gg4
+ pd4Fmj5rvKt0bxhzfl2AR41IMMbc41OGjR0Bqab7pk1CG2zRcBMS8X9STFNRk9XFzM/z
+ jutJwpxpipYbqmLvFhgAXHgUXXuJA7PKSXlTVRzFxEH4XEtx4/SnppriHCMU014Vxhc4
+ BcaF4u+o3XQDfu9VdPR12TOnYoDEhdHZkMlUtg/HAOY1G2jkG5Xs9kvlsg0utfgvEai7
+ zjCOTJSKNOeAVz0N+2vEPkpeQxqlnSGYp0VVYEu0G2K/F6zocIpDZ0RGa+bPHsKdNTa8
+ pqMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563032; x=1762167832;
+ d=1e100.net; s=20230601; t=1761563030; x=1762167830;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FdYYc9UfPJiJOmUk4OWh6nheP5mSB2HOK4r3KtorV48=;
- b=YCb+WbWsMkzmaMkLkE636/qf+AUlZV12J64cpsEx5uKLP9K6penEIi+fy25Xt2yhMF
- BA8e+OdX1hux/U3raDiIsNfy120yLOdo1GIMVTguBBFuKgDtRg4E2pmKuAitivTWScMb
- uxjMjbvnWpZb/HBelGO6NhMMk0BQVwlpN0z2cNmuNixttY1W0qwGt/kvV2tpEjqh4HMH
- iidgfjDW90co0fKY1++iDADcc9wjKoIsZa+lp0Xy8TAsFWe8BLhQU0iZ9R7d0sbVpSuA
- HdaqrNbeBxl3CNsVjKRnQBvY1mw2SBMro5u8qM8CNZ1ev8Ib8IGPI2d25OyGQRfZ9VAB
- qXJA==
-X-Gm-Message-State: AOJu0YxS3O6bWFwFFQqH5APL3iATEy0YUspw6g9gNsa+CNbpaD+IoS7D
- sKY1bRomJaW42aGg47X2TXxSMXl2KztT+rvZb7lh65IEtwALA6qY19D5oblDEkKRxu8=
-X-Gm-Gg: ASbGncuKB91JRvX7MFASM+UzHxc2NygC0D2ZEnWqSX1CeczeJ1kt70/duaZofwhkaGY
- 9Kwe332BtDdrT1FxfvdXJ8yBgInUj904Tns7ng7WD/MqBkd7XtrDq106nR6iCkhha53MAPIRkoD
- sAT128DdcoWKfYA4m1G5OZZ1xpOkw7SXxz0ceG2l1ESnFlf/CEyQpXU8ThRYsLYTAp+ldE9ampl
- 3zKymYzGynfjd1ThKjMrg7uHpUMYe4iBiJQ8eyu9PYHoVPbf0W5J8H/ziaXNK5MYUslwmPYxUY2
- YG0joMD4dOUY+NBUMkNs7Ca7cQkvEo9SL+Pt2AjXufZGX3+hFAFLhh80FsyP57SgjLvwaO6Qozo
- vhS9driXti3gG/zMZJdGdMc2lQdvU9dramT+RHb4JSegu7KQAtq5lgSJ8iy8daxg7x4kVZADUKc
- fQTrtDVrJjIVE=
-X-Google-Smtp-Source: AGHT+IE146XaimMpIxyppkc5SJJoPLUyMmLDLovFokulHH30KUzEQB5Xf7fiUrkKHn734LTDcCF5qA==
-X-Received: by 2002:a05:6402:51d1:b0:63c:3efe:d996 with SMTP id
- 4fb4d7f45d1cf-63c3efeee79mr31902705a12.20.1761563032280; 
- Mon, 27 Oct 2025 04:03:52 -0700 (PDT)
+ bh=dPRpRXWNkgzTelJ9LaP0XDvrgpGKDnKCNCyXswtjrG8=;
+ b=BH93+OirhxbcTLnPjPbVJ9HTWNtBKJ0l6Uv7JFxK28S/N7CdKlcdEn9Ey+5iuHsW/+
+ eFTFpUVA56KDSI37Xbqe7t0zTQy8mM+ZYp7m2FQ4RwyZTGpe4tRZqG03/bahSMaJJp02
+ /KrPQc5al/WN64FRaWbfpSan8FE8X0hxV9pKoOj/dIMxjVJJ2ak9wOyPFf5UNVLwVXj3
+ ly3NJ6I2BRExJf9PXDguoUAUFW+9HzLP10VK567lmcR5nls6OdvNqKwffbbT2Ldpivc/
+ Uv5T3XvTFiWB97TI/D2c/Jt5YdJotdoVPe4TjS3/8x/W4letAAxaZ2zCNhDw/KeERpug
+ F3qg==
+X-Gm-Message-State: AOJu0Yw2bNvKglSg+rDOqHFGYQRzT03JUJocvAc+1Znt457BcSIFPBik
+ Eb4q1AunFRecQiTMNFaJwFz6KQ6ZnwnFN7PKVtpnD8MyQXjJMvk4NDTzAPCMWK+FT/s=
+X-Gm-Gg: ASbGnctm6eCQ6i+8SadWd5bC78Cc9GqQBf/G+Ms+hcGbTxfd6qNauAM9CQO1eeOWpqB
+ eSYDP5T31odAMDqAP4Yca8SpXpia6sbFYPXknR2NHxhlAMr6jxFpg7vGiiIEvmzROo1TBW+0snn
+ 172TkGk3vg56iuAzZMXft2mD+to9pS0WeQlw+hKiz43Z4zX1ZkaywFsQqCYje9vCxKxS40p6QhH
+ KoB9AOGFBvsULXaENQDFsEiNid/KTUja03ymKcCqohNKOdaDRXb/tV/W208PowC2HuzFhXT5Z/y
+ M9Xp73uOUCErAEy9mxs2nwU44ANXFLbiG66WxgAX9J5Q0yAD2zr6z4iE3KV88laTFGLFnd/pjIJ
+ ATBQMrLT+gzLknANwFGFRUgKpzUbvkVmhGbxNr3qE14hLj3UQgc0NmgN9RBDNdMY8STI3GbRY3s
+ gJG+fwsAI5uAM=
+X-Google-Smtp-Source: AGHT+IEKOw2sZTHAivgqlTb6K/HYXBQhpYwxsm2va8DyFrA5s6EN+1suG8QBDsLHPxzTUtSD784+vA==
+X-Received: by 2002:a17:906:7955:b0:b6d:5fbf:8c63 with SMTP id
+ a640c23a62f3a-b6d6bb4a57emr1240007166b.15.1761563030330; 
+ Mon, 27 Oct 2025 04:03:50 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-63ecf3686c5sm356035a12.36.2025.10.27.04.03.47
+ a640c23a62f3a-b6d85309069sm716387666b.10.2025.10.27.04.03.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 27 Oct 2025 04:03:49 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 13AD460915;
- Mon, 27 Oct 2025 11:03:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id A833D5FAA7;
+ Mon, 27 Oct 2025 11:03:44 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -94,26 +94,25 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
-Subject: [PATCH 10/35] contrib/plugins: add plugin showcasing new dicontinuity
- related API
-Date: Mon, 27 Oct 2025 11:03:17 +0000
-Message-ID: <20251027110344.2289945-11-alex.bennee@linaro.org>
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH 06/35] scripts/ci: modify gitlab runner deb setup
+Date: Mon, 27 Oct 2025 11:03:13 +0000
+Message-ID: <20251027110344.2289945-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NEW_PRODUCTS=1.249,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,144 +128,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Julian Ganz <neither@nut.email>
+Both Debian and Ubuntu are setup the same way.
 
-We recently introduced new plugin API for registration of discontinuity
-related callbacks. This change introduces a minimal plugin showcasing
-the new API. It simply counts the occurances of interrupts, exceptions
-and host calls per CPU and reports the counts when exitting.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Julian Ganz <neither@nut.email>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/about/emulation.rst    |  8 ++++
- contrib/plugins/traps.c     | 83 +++++++++++++++++++++++++++++++++++++
- contrib/plugins/meson.build |  2 +-
- 3 files changed, 92 insertions(+), 1 deletion(-)
- create mode 100644 contrib/plugins/traps.c
+ scripts/ci/setup/gitlab-runner.yml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 8a5e128f677..92c219119e8 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -1015,6 +1015,14 @@ interesting to generate them around a particular point of execution::
-     # generate trace around init execution (2 seconds):
-     $ uftrace dump --chrome --time-range=1753122320~1753122322 > init.json
+diff --git a/scripts/ci/setup/gitlab-runner.yml b/scripts/ci/setup/gitlab-runner.yml
+index 7025935487a..76aeaf4ee95 100644
+--- a/scripts/ci/setup/gitlab-runner.yml
++++ b/scripts/ci/setup/gitlab-runner.yml
+@@ -56,12 +56,12 @@
+         url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
+         mode: 0755
+       when:
+-        - ansible_facts['distribution'] == 'Ubuntu'
++        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
  
-+Count traps
-+...........
-+
-+``contrib/plugins/traps.c``
-+
-+This plugin counts the number of interrupts (asyncronous events), exceptions
-+(synchronous events) and host calls (e.g. semihosting) per cpu.
-+
- Other emulation features
- ------------------------
+     - name: Run gitlab-runner repo setup script (DEB)
+       shell: "/root/script.deb.sh"
+       when:
+-        - ansible_facts['distribution'] == 'Ubuntu'
++        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
  
-diff --git a/contrib/plugins/traps.c b/contrib/plugins/traps.c
-new file mode 100644
-index 00000000000..d5ddc0f3dd6
---- /dev/null
-+++ b/contrib/plugins/traps.c
-@@ -0,0 +1,83 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2025, Julian Ganz <neither@nut.email>
-+ *
-+ * Traps - count traps
-+ *
-+ * Count the number of interrupts (asyncronous events), exceptions (synchronous
-+ * events) and host calls (e.g. semihosting) per cpu and report those counts on
-+ * exit.
-+ */
-+
-+#include <stdio.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+typedef struct {
-+    uint64_t interrupts;
-+    uint64_t exceptions;
-+    uint64_t hostcalls;
-+} TrapCounters;
-+
-+static struct qemu_plugin_scoreboard *traps;
-+
-+static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
-+                        enum qemu_plugin_discon_type type, uint64_t from_pc,
-+                        uint64_t to_pc)
-+{
-+    TrapCounters *rec = qemu_plugin_scoreboard_find(traps, vcpu_index);
-+    switch (type) {
-+    case QEMU_PLUGIN_DISCON_INTERRUPT:
-+        rec->interrupts++;
-+        break;
-+    case QEMU_PLUGIN_DISCON_EXCEPTION:
-+        rec->exceptions++;
-+        break;
-+    case QEMU_PLUGIN_DISCON_HOSTCALL:
-+        rec->hostcalls++;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+        break;
-+    }
-+}
-+
-+static void plugin_exit(qemu_plugin_id_t id, void *p)
-+{
-+    g_autoptr(GString) report;
-+    report = g_string_new("VCPU, interrupts, exceptions, hostcalls\n");
-+    int max_vcpus = qemu_plugin_num_vcpus();
-+    int vcpu;
-+
-+    for (vcpu = 0; vcpu < max_vcpus; vcpu++) {
-+        TrapCounters *rec = qemu_plugin_scoreboard_find(traps, vcpu);
-+        g_string_append_printf(report,
-+                               "% 4d, % 10"PRId64", % 10"PRId64", % 10"PRId64
-+                               "\n", vcpu, rec->interrupts, rec->exceptions,
-+                               rec->hostcalls);
-+    }
-+
-+    qemu_plugin_outs(report->str);
-+    qemu_plugin_scoreboard_free(traps);
-+}
-+
-+QEMU_PLUGIN_EXPORT
-+int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
-+                        int argc, char **argv)
-+{
-+    if (!info->system_emulation) {
-+        qemu_plugin_outs("Note: interrupts are only reported in system"
-+                         " emulation mode.");
-+    }
-+
-+    traps = qemu_plugin_scoreboard_new(sizeof(TrapCounters));
-+
-+    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
-+                                        vcpu_discon);
-+
-+    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 7eb3629c95d..eb944b5159a 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -1,6 +1,6 @@
- contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
-                    'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
--                   'uftrace']
-+                   'traps', 'uftrace']
- if host_os != 'windows'
-   # lockstep uses socket.h
-   contrib_plugins += 'lockstep'
+     - name: Install gitlab-runner (DEB)
+       ansible.builtin.apt:
+@@ -69,7 +69,7 @@
+           update_cache: yes
+           state: present
+       when:
+-        - ansible_facts['distribution'] == 'Ubuntu'
++        - ansible_facts['distribution'] in ['Ubuntu', 'Debian']
+ 
+     # RPM setup
+     - name: Get gitlab-runner repo setup script (RPM)
 -- 
 2.47.3
 
