@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED48CCF9EA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F043CCF9EC
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDMPM-0000MP-TJ; Mon, 27 Oct 2025 08:33:10 -0400
+	id 1vDMPI-0000F6-Li; Mon, 27 Oct 2025 08:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDMOq-0008KX-F9
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:32:39 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDMOm-0008Jp-U3
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:32:36 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDMOm-0005Qs-1U
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:32:35 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDMOg-0005Qk-6Z
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:32:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=rbPtFhv3Q5NimVYyKy2JbS1JGzSF5xEi+Jv6vNPHBQw=; b=oQMC+/2ZGQxg5+1
- AttuQtQ4iUiEnoAXf93+6oDCVqzZPYesFX7B19oKxSwLC2T37RtQqxyciE5U+JbiP1DoBOJzosyGr
- KAuuPPvjNkcxAZXYhY5sfLkEGaoHwGuUmLSbvQYoGXVoSR1N8U1rK0Za0on+zGf9r7jMQ3TBvsAkm
- 7Q=;
-Subject: [PATCH v2 0/3] single-binary: Prepare hw/riscv for single compilation
-Date: Mon, 27 Oct 2025 13:35:09 +0100
-Message-Id: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
+ List-Help; bh=th+wdmi7NGFG7aD8VQN9evtAT3+C+6eCcEbIMbhmlvE=; b=lDN+oCLM5/2IOkY
+ MuLigZjR82m/tatVK8lJfDPWkBHOxKy2Hs7HWZO9WZpRHzyC+J6ab254aTcSOaI3d7ztA29tjntaj
+ Omuee11gWa7tmjtGevTvlH1ufh3LYOIcLJAdW/BibrjC1GNYoOQAiMFxKNaefOmC5PHCaIBfeJ55l
+ 3U=;
+Date: Mon, 27 Oct 2025 13:35:11 +0100
+Subject: [PATCH v2 2/3] hw/riscv: Replace target_ulong uses
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAP1m/2gC/42OQQ7CIBBFr9LM2jGAhTSuvIfpAuhAJzHUQK02T
- e8u9gQmf/P+4v2/QaHMVODabJBp4cJTqqBODfjRpkjIQ2VQQmkppMZAdn5lwsIpPggdJ5tXHN+
- 4SOy8vjhjjHDaQzU8MwX+HPZ7X3nkMk95PcYW+Wv/89YI7FwrDQ22VT7c6tVzitDv+/4FHCT3/
- cMAAAA=
-X-Change-ID: 20251015-feature-single-binary-hw-v1-8c53b6660b5c
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251027-feature-single-binary-hw-v1-v2-2-44478d589ae9@rev.ng>
+References: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
+In-Reply-To: <20251027-feature-single-binary-hw-v1-v2-0-44478d589ae9@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, 
  alistair.francis@wdc.com, richard.henderson@linaro.org, palmer@dabbelt.com
@@ -68,38 +65,53 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
-
-this is a small prerequisite patchset that removes target_[u]?long and
-replaces a few target specific macros with target-info variants.
-
-Next up is using the target-info style QOM filtering of boards and then
-moving translation units to common code.  My current patches for this
-are based on Philippes single-binary-hw-arm-rfc-v5 branch, is there some
-other branch I should target here?
-
-Changes in v2:
-- Use MAKE_64BIT_MASK() in patch 2 (Richard);
-- Dropped runtime TARGET_PHYS_ADDR_SPACE_BITS as it shouldn't be exposed
-  to common code and is better dealt with in other ways
-  (Richard, Philippe);
-- Added reviewed-bys.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
-Anton Johansson (3):
-      hw/riscv: Use generic hwaddr for firmware addressses
-      hw/riscv: Replace target_ulong uses
-      hw/riscv: Widen OpenSBI dynamic info struct
+ hw/riscv/riscv-iommu.c | 6 ++++--
+ hw/riscv/riscv_hart.c  | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
- include/hw/riscv/boot.h         | 20 +++++++++----------
- include/hw/riscv/boot_opensbi.h | 14 ++++++-------
- hw/riscv/boot.c                 | 44 +++++++++++++++++++++--------------------
- hw/riscv/microchip_pfsoc.c      |  2 +-
- hw/riscv/riscv-iommu.c          |  6 ++++--
- hw/riscv/riscv_hart.c           |  2 +-
- hw/riscv/sifive_u.c             |  2 +-
- hw/riscv/spike.c                |  4 ++--
- hw/riscv/virt.c                 |  2 +-
- 9 files changed, 50 insertions(+), 46 deletions(-)
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index b33c7fe325..f8656ec04b 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -26,6 +26,8 @@
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qemu/timer.h"
++#include "qemu/target-info.h"
++#include "qemu/bitops.h"
+ 
+ #include "cpu_bits.h"
+ #include "riscv-iommu.h"
+@@ -391,9 +393,9 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             const uint64_t va_mask = (1ULL << va_len) - 1;
+ 
+             if (pass == S_STAGE && va_len > 32) {
+-                target_ulong mask, masked_msbs;
++                uint64_t mask, masked_msbs;
+ 
+-                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
++                mask = MAKE_64BIT_MASK(0, target_long_bits() - va_len + 1);
+                 masked_msbs = (addr >> (va_len - 1)) & mask;
+ 
+                 if (masked_msbs != 0 && masked_msbs != mask) {
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index c7e98a4308..65d2c92018 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -93,7 +93,7 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
+         g_assert(rc == 0);
+         csr_call(words[1], cpu, csr, &val);
+ 
+-        qtest_sendf(chr, "OK 0 "TARGET_FMT_lx"\n", (target_ulong)val);
++        qtest_sendf(chr, "OK 0 %"PRIx64"\n", val);
+ 
+         return true;
+     }
+
+-- 
+2.51.0
 
 
