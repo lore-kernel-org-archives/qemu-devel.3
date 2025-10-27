@@ -4,55 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915B1CCF9E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 19:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FF7CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 20:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDTCM-0004ql-K2; Mon, 27 Oct 2025 15:48:11 -0400
+	id 1vDTWC-0000Ov-S4; Mon, 27 Oct 2025 16:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vDTCI-0004qC-SI; Mon, 27 Oct 2025 15:48:07 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
+ id 1vDTW8-0000OV-8l
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 16:08:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vDTC7-0001D8-ND; Mon, 27 Oct 2025 15:48:04 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EECA65972E4;
- Mon, 27 Oct 2025 20:47:42 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id GA2hvVyPPey5; Mon, 27 Oct 2025 20:47:40 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B11C75972E2; Mon, 27 Oct 2025 20:47:40 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AF19F59703F;
- Mon, 27 Oct 2025 20:47:40 +0100 (CET)
-Date: Mon, 27 Oct 2025 20:47:40 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
-In-Reply-To: <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
-Message-ID: <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
-References: <cover.1761346145.git.balaton@eik.bme.hu>
- <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
- <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
+ (Exim 4.90_1) (envelope-from <csomani@redhat.com>)
+ id 1vDTW2-0003RY-Is
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 16:08:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761595700;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KfbE8twWN5mleo6BLszqh3rtiajyRr2Q66zgpuK2Fac=;
+ b=LBTpNFPlyf5LNb68udcy36ySzXOFdthl5MY32nikIyFnNb1l/jh9H6gAcmX8ycTRU9TShA
+ UaVIj/HUVChjwYg1zQI2DYAdCDUz+UrbC5aYX9nc+ib1GcCwTZBqISyrUSrVUenOevKFuD
+ QvgHO4ysM7WMsi9sn32YQG4SNKsiOck=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-499-KEUXXApYPS648Qjm75wagQ-1; Mon, 27 Oct 2025 16:08:17 -0400
+X-MC-Unique: KEUXXApYPS648Qjm75wagQ-1
+X-Mimecast-MFC-AGG-ID: KEUXXApYPS648Qjm75wagQ_1761595697
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-5a0d093ceacso1823811137.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 13:08:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761595697; x=1762200497;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KfbE8twWN5mleo6BLszqh3rtiajyRr2Q66zgpuK2Fac=;
+ b=oZJy0RMo8OvoCMikfeB4cwJiMnt9oMjc0hEagOktdclsIZiFs3gIelSDLbs1Ah3e2+
+ eT2iQcacr3dufsd387a8kWQXZmsHClnhiKXOoKKZVrsKvmRUWEzN+BFTlwNCG0tPSMX8
+ gMomo67MdgVmpjvT1zjJ3jqfg5L+rDeVPZY4Eg0tletIBPj+SIoh4SAE8bPc8TQs+Vfa
+ XSkJ0R4TtJL7q8fWzXuDgXMMgDBvUPFac062KsHjitc4V+rs9CpZG9aQqxMmkIFDdyJK
+ mDhJ9qfTV2kpAT4xuBF3Rcl24wPRMk3+k73tO4FSptkPU1/DWKPn0CsnxlXlkibqWlTt
+ JN0A==
+X-Gm-Message-State: AOJu0Yz5pQALzikAA7aJCEhqi2H3mosYLj8Jb3lUncrX/gzhbZKtHqph
+ ufLBGK7/GhRNBLuPNewXAjzKY/OMyj9mWYsTajnUplmMNx4ni761dGCXvddqkJowommQazxI49V
+ TSvXWs+oCHTJmM+X6hxVeMAZOa/yJJs2PgjcSXaxeOVgJrIN+Xq9l5+uR38lVEzawFsSbgpE6Tj
+ kS6rNhkZWghLbL1jjAZ3rpllYbC8q/3P8=
+X-Gm-Gg: ASbGncveA4+XmYasZfQ9JoLGFzEnPvlKGwOCfqRsiccbwfKnAw6W6HyBolYjIgQlHc2
+ 3iZ++Ob6K1gmX3Hjrdh0oyVh5ZeJf0BOizyGym3915ESCajjEgZ51vfxkF5MeIm37aPWc312lJP
+ EKdKk5zw7hcmA8D4Hiei/HEVC/eXXwEzyJ/A4ddudzuWfOJTBj+5iSN1ja
+X-Received: by 2002:a05:6102:34d5:b0:5db:3cc4:5b60 with SMTP id
+ ada2fe7eead31-5db7ca8bbf9mr404389137.15.1761595697074; 
+ Mon, 27 Oct 2025 13:08:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEO9q+hsGBjSRbvO9bvh59XWbAAgvELxzObbb7gAH4Snnp1jesAPh7/mkjeCQfw8HIo9/DKJf3R4OkGBIKOrTM=
+X-Received: by 2002:a05:6102:34d5:b0:5db:3cc4:5b60 with SMTP id
+ ada2fe7eead31-5db7ca8bbf9mr404382137.15.1761595696353; Mon, 27 Oct 2025
+ 13:08:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1154126658-1761594460=:85857"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251003220039.1336663-1-csomani@redhat.com>
+ <aPpue5a-uCkdlc9z@redhat.com>
+In-Reply-To: <aPpue5a-uCkdlc9z@redhat.com>
+From: Chandan Somani <csomani@redhat.com>
+Date: Mon, 27 Oct 2025 13:08:04 -0700
+X-Gm-Features: AWmQ_bn6KD38Aka6S70Igx8HFpvxOxbrAAfIFRHS4Za8a1VK2SixQZ6rFzYuFQw
+Message-ID: <CAHEFcASuJ1paM+4-=DpCtJxXiF2ifZuTYSx7HnR+Y32jQCJH=A@mail.gmail.com>
+Subject: Re: [PATCH v2] block: enable stats-intervals for storage devices
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000b827cd0642297579"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=csomani@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,69 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+--000000000000b827cd0642297579
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---3866299591-1154126658-1761594460=:85857
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+On Thu, Oct 23, 2025 at 11:05=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
+e:
 
-On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
-> On 25/10/25 01:31, BALATON Zoltan wrote:
->> These memory windows are a result of the address decoding in the
->> Articia S north bridge so better model it there and not in board code.
->> 
->> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/pci-host/articia.c | 15 ++++++++++++++-
->>   hw/ppc/amigaone.c     | 28 +++++-----------------------
->>   hw/ppc/pegasos2.c     | 13 -------------
->>   3 files changed, 19 insertions(+), 37 deletions(-)
+> Am 03.10.2025 um 23:59 hat Chandan Somani geschrieben:
+> > This patch allows stats-intervals to be used for storage
+> > devices with the -device option. It accepts a list of interval
+> > lengths in JSON format.
+> >
+> > It configures and collects the stats in the BlockBackend layer
+> > through the storage device that consumes the BlockBackend.
+> >
+> > Signed-off-by: Chandan Somani <csomani@redhat.com>
+>
+> Thanks, applied to the block branch.
+>
+> Maybe you can add a patch on top that extends tests/qemu-iotests/136 to
+> also test the -device based settings (probably in a new child class)
+> instead of only -drive?
+>
+Yes, will work on this
+
+>
+> Kevin
 >
 >
->> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, Error 
->> **errp)
->>   {
->>       ArticiaState *s = ARTICIA(dev);
->>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
->> +    MemoryRegion *mr;
->>       PCIDevice *pdev;
->>         bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
->> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState *dev, Error 
->> **errp)
->>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
->>                             TYPE_ARTICIA, 0x1000000);
->>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
->> +    mr = g_new(MemoryRegion, 1);
+
+--000000000000b827cd0642297579
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 23,=
+ 2025 at 11:05=E2=80=AFAM Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com=
+">kwolf@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">Am 03.10.2025 um 23:59 hat Chandan Somani geschrieben:<br=
 >
-> Won't Coverity or other analysis tools complain about the leak?
-> (this is why we usually keep a reference in the device state, here
-> ArticiaState). Otherwise:
+&gt; This patch allows stats-intervals to be used for storage<br>
+&gt; devices with the -device option. It accepts a list of interval<br>
+&gt; lengths in JSON format.<br>
+&gt; <br>
+&gt; It configures and collects the stats in the BlockBackend layer<br>
+&gt; through the storage device that consumes the BlockBackend.<br>
+&gt; <br>
+&gt; Signed-off-by: Chandan Somani &lt;<a href=3D"mailto:csomani@redhat.com=
+" target=3D"_blank">csomani@redhat.com</a>&gt;<br>
+<br>
+Thanks, applied to the block branch.<br>
+<br>
+Maybe you can add a patch on top that extends tests/qemu-iotests/136 to<br>
+also test the -device based settings (probably in a new child class)<br>
+instead of only -drive?<br></blockquote><div>Yes, will work on this</div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+Kevin<br>
+<br></blockquote><div>=C2=A0</div></div></div>
 
-According to 
-https://www.qemu.org/docs/master/devel/memory.html#region-lifecycle
-there should be no leak and keeping a reference should not be necessary as 
-the lifetime is managed by attaching it to the owner object so no need to 
-keep a reference when it's not needed otherwise. Not littering the state 
-struct with unneded references makes it easier to comprehend so I'd only 
-keep things there that are necessary.
+--000000000000b827cd0642297579--
 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Can I keep this R-b considering the above?
-
-Regards,
-BALATON Zoltan
-
->> +    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", &s->mem,
->> +                             0, PCI_LOW_SIZE);
->> +    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
->> +    mr = g_new(MemoryRegion, 1);
->> +    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", &s->mem,
->> +                             PCI_HIGH_ADDR, PCI_HIGH_SIZE);
->> +    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
->
->
---3866299591-1154126658-1761594460=:85857--
 
