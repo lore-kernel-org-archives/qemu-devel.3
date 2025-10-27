@@ -4,82 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BE6CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D758CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDMS8-00043h-Ai; Mon, 27 Oct 2025 08:36:02 -0400
+	id 1vDMTb-0005gL-0F; Mon, 27 Oct 2025 08:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vDMS2-0003pH-TU
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:35:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vDMRr-00064K-Iw
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:35:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761568534;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PCkPzW30WVEzQkAXGjant10stjDzNI0OMdr7gXxNFRY=;
- b=AjrPsI7d3LBb8nrGGywIyzM7JPL2YZ1//lEl3tgjPHHwqu4CbJeaTb/i3xqvyJN/7QNj3v
- TAm6gB0NCZe4LOZnYOuDsJIM6R9wBJlWWCB/1Y6F9NLO1k8AOzpOl32Mu2e4tU2JSFFduC
- qVoKTJCdOubC8KkosTh6eXs0R7ieO4I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-nYjI3XfHOJm-lD4D5Ng19A-1; Mon,
- 27 Oct 2025 08:35:30 -0400
-X-MC-Unique: nYjI3XfHOJm-lD4D5Ng19A-1
-X-Mimecast-MFC-AGG-ID: nYjI3XfHOJm-lD4D5Ng19A_1761568529
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4D321800451; Mon, 27 Oct 2025 12:35:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.35])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7227819560AD; Mon, 27 Oct 2025 12:35:25 +0000 (UTC)
-Date: Mon, 27 Oct 2025 12:35:21 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jan =?utf-8?B?TMO8YmJl?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>
-Subject: Re: [PATCH v5 2/6] hw/sd/sdcard: Allow user-instantiated eMMC
-Message-ID: <aP9nCeWC-qr248iZ@redhat.com>
-References: <cover.1760702638.git.jan.kiszka@siemens.com>
- <90fc6201696fcf0e5fd0493365bc32b217aa9d6e.1760702638.git.jan.kiszka@siemens.com>
- <aP9dvF1unTtLrSdQ@redhat.com>
- <9d287284-1cb2-4126-b7d7-9c57b32ce408@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDMTU-0005e7-DT
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:37:24 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDMTL-0006J3-Ck
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 08:37:21 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4710683a644so38377925e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 05:37:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761568630; x=1762173430; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=byf3wvrJPaiUb+20B8P2dJNrSEIy4cHbROmq/ZIrtd0=;
+ b=f7gYOTKZGl20sj8R5yWHoYXo19HgdHL5aJrsticajMmyQZ9Hf0seRMBxXVvxXdUBKr
+ VWdHxC53hn0HOfkP29PYETB+1ckT3o0MAuhXW2jWNEEqGqSqjA8Urvp3GbLkXJqjEEhM
+ MYAZxov5dNs0qwOCiG9/OqmdekOvssoZrqTMB1/8PRAtnTPkQcsBAg+oQvab8EL8naTy
+ 5T4myDbXrneoQf7TfQ4mOsa69adE18EZRZzzfOO7KoVN5Kg0N2SBac75NZomvoiub7lM
+ rURJa+jgD9Lp7Cnkl427QqpdsRu5v1Kq0BcvvB3VpRzaknPf1xc6rnddXi4cWL1YWATU
+ CPzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761568630; x=1762173430;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=byf3wvrJPaiUb+20B8P2dJNrSEIy4cHbROmq/ZIrtd0=;
+ b=Psy2ggl4gVWcZcncliRQs7hzdcsUUERHYP3ZV9wD5oKypAk7lII1Spu9CB2nenrGFe
+ +F4aTWAmnNkckYQ8YvlWaStoamAATK6ZbNi+BWC4RjBZrlck4YrdZD+o5/wQSO6UZfrX
+ JXRt9fSPmcW3Drdt8ORYYpuqB/35CsxFmYXpfk55sA+7bcaaAvz8qCy9h3MbiuYWic/V
+ GwcsoGNGxOZgsH85LQKKET0AaWn6/V9RTZVHjlN+ptQtw06yC2PyY+IZJHQ5qFAfL2kd
+ 0nnnItiA6IDHj0ucY4nT4THKDuQVJnTOAEE6xbVBDdaFggiBEevqF+lPyjZqc0WKt8LG
+ liEg==
+X-Gm-Message-State: AOJu0YxQMx5acc0nAk4v1wJ/qfwpzk4VHSKi99ODuI4kqJMRZWozeSmi
+ iKQJ6A8YFyKdZ31hi0mq1SOiApCVPAiNZVlj5ig5ysth40bni3vCiUO+sKwgxlCTI4dl7bMDXYr
+ HP6Szwa8=
+X-Gm-Gg: ASbGncsB93Bq34eBFAUAzgAQbUZ7RwEr+64lQMbm1dB24U4iCmber4uefX4GaUR1UaD
+ yYuCXYLWdIK8fWKzcqfUO1Eqnb07Ei0iJL5sWqh4RmySBovIQW9OStVP36B7oaylWwtHueL0Ayn
+ S9ZaOYPXtTt8tb/oCo1R+Wz2ercB/fUIW50aSVSQ3vx15mTORf9X2UOoJxCDJKHQtEakIlmijcP
+ ve9gTktud1P9lGpAPTzunGRK6Lje/gmcri1+zRg1A3J83G82e+N6JWZmEwgMGYErjHDe3ErsTRZ
+ yOsMIke4sTG/1W1Q4JW545GR9Jtc38LPAJY2QauTRvp+fIOWys6AeeD2jYIhqCTIJ8Za5x5DNHd
+ jveueU8iqd2utq/lUmJoRyBYcvrh6QVapuaYk/jjd2ao2cy9i07riE15UFLD280LpA+elu2HFva
+ rYjTSqM2p1gD1qt3BvhNFqjmZ/OdhDQfc22EV5ormVegQVegebug==
+X-Google-Smtp-Source: AGHT+IF0HM1WPelwexRRvaRYywTdAciouBmeE9MMLLDlaRyIPNrEjKd09Zq7ElpyHHwfs+kdey0Omw==
+X-Received: by 2002:a05:600d:8317:b0:46f:a8fd:c0dc with SMTP id
+ 5b1f17b1804b1-475d2412e43mr75835965e9.3.1761568630468; 
+ Mon, 27 Oct 2025 05:37:10 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd489fa4sm130398515e9.16.2025.10.27.05.37.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 27 Oct 2025 05:37:10 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ David Hildenbrand <david@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Peter Xu <peterx@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Subject: [PATCH 2/6] hw/display/vga: Log unassigned MMIO accesses with
+ unassigned_mem_ops
+Date: Mon, 27 Oct 2025 13:36:39 +0100
+Message-ID: <20251027123644.63487-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251027123644.63487-1-philmd@linaro.org>
+References: <20251027123644.63487-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9d287284-1cb2-4126-b7d7-9c57b32ce408@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,45 +109,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 27, 2025 at 01:23:56PM +0100, Philippe Mathieu-Daudé wrote:
-> On 27/10/25 12:55, Daniel P. Berrangé wrote:
-> > On Fri, Oct 17, 2025 at 02:03:54PM +0200, Jan Kiszka wrote:
-> > > From: Jan Kiszka <jan.kiszka@siemens.com>
-> > > 
-> > > Enable user-instantiation so that PCI-attached eMMCs can be created for
-> > > virt machines, for QA purposes for the eMMC model itself and for complex
-> > > firmware/OS integrations using the upcoming RPMB partition support.
-> > 
-> > IIUC, the 'emmc' device wants an 'sd-bus' but this commit talks about
-> > it being PCI-attached ?
-> 
-> Sigh, it should not, but it got introduced this way and we didn't
-> have time / energy / good reason to rework the code, which currently
-> just works.
-> 
-> SD / MMC cards -> plugged over external SD bus
-> 
-> embedded MMC cards -> no SD bus, directly mmio-mapped.
-> 
-> > 
-> > Can you elaborate on / illustrate the usage example for an end user ?
-> 
-> Saving time by testing virtual hardware, without having to implement a
-> real model.
+Replace unassigned_io_ops -> unassigned_mem_ops to log
+accesses as MMIO ones.
 
-Ok, more specifically, what are the suggested QEMU command line
-args to make use of this with PCI ?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/display/bochs-display.c | 2 +-
+ hw/display/vga-pci.c       | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-
-With regards,
-Daniel
+diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
+index ad2821c9745..9fa52234219 100644
+--- a/hw/display/bochs-display.c
++++ b/hw/display/bochs-display.c
+@@ -286,7 +286,7 @@ static void bochs_display_realize(PCIDevice *dev, Error **errp)
+     memory_region_init_io(&s->qext, obj, &bochs_display_qext_ops, s,
+                           "qemu extended regs", PCI_VGA_QEXT_SIZE);
+ 
+-    memory_region_init_io(&s->mmio, obj, &unassigned_io_ops, NULL,
++    memory_region_init_io(&s->mmio, obj, &unassigned_mem_ops, NULL,
+                           "bochs-display-mmio", PCI_VGA_MMIO_SIZE);
+     memory_region_add_subregion(&s->mmio, PCI_VGA_BOCHS_OFFSET, &s->vbe);
+     memory_region_add_subregion(&s->mmio, PCI_VGA_QEXT_OFFSET, &s->qext);
+diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
+index b81f7fd2d0f..583f5d5dee6 100644
+--- a/hw/display/vga-pci.c
++++ b/hw/display/vga-pci.c
+@@ -254,7 +254,7 @@ static void pci_std_vga_realize(PCIDevice *dev, Error **errp)
+ 
+     /* mmio bar for vga register access */
+     if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_MMIO)) {
+-        memory_region_init_io(&d->mmio, OBJECT(dev), &unassigned_io_ops, NULL,
++        memory_region_init_io(&d->mmio, OBJECT(dev), &unassigned_mem_ops, NULL,
+                               "vga.mmio", PCI_VGA_MMIO_SIZE);
+ 
+         if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
+@@ -285,7 +285,7 @@ static void pci_secondary_vga_realize(PCIDevice *dev, Error **errp)
+     s->con = graphic_console_init(DEVICE(dev), 0, s->hw_ops, s);
+ 
+     /* mmio bar */
+-    memory_region_init_io(&d->mmio, OBJECT(dev), &unassigned_io_ops, NULL,
++    memory_region_init_io(&d->mmio, OBJECT(dev), &unassigned_mem_ops, NULL,
+                           "vga.mmio", PCI_VGA_MMIO_SIZE);
+ 
+     if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.51.0
 
 
