@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB1ACCF9EF
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC43CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:21:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDOuS-0003CU-AW; Mon, 27 Oct 2025 11:13:25 -0400
+	id 1vDOva-0004Tw-Vh; Mon, 27 Oct 2025 11:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOuL-00037W-6J
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vDOuo-0003Ri-OA
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOuE-0003tq-TN
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:16 -0400
+ id 1vDOuY-0003x3-9H
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761577984;
+ s=mimecast20190719; t=1761578004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=As73ehZGzDMA3+aR7WvD+QJm4w/pt+FCK4s6oAej+rQ=;
- b=Qe9rBIoExzbRchAvbH9/HP0plBtkMHV+jO1iJR4Grj4djYvIyaaaNd33SkIblqqvmhwM4L
- 8AMjyI90o7eIU/ffBuEBZkwPVgmHf0/FspIgoGt0q+qxGPZO70+YWb4Txa6/81hCMZUan+
- P85oQizQSLsU3eT8zRQR6Ctl7Rr0mg0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=hy4r03TiVsWUDCEtGQ377AJr9mo6eZ99I30huexBd+o=;
+ b=ec3QuFgbU5AJmUfqnnzqqrwmay2OLeh7+nl4q3wj7x357UtMU1F6jC87yWwXLNfQVTah74
+ bduEMUkoqOef2iLQSqLLMzQ1/hS58AjoruqM/kIB1cxnex+AkPr9GRiOdxMIIZ5zYDYHd9
+ YYsiBn+zVJnWqxCYSSOXv7opP8gnwu0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-CJLULtClPmWTl8308stZqA-1; Mon,
- 27 Oct 2025 11:13:00 -0400
-X-MC-Unique: CJLULtClPmWTl8308stZqA-1
-X-Mimecast-MFC-AGG-ID: CJLULtClPmWTl8308stZqA_1761577978
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-DsO2r2GTNOaUEM264E1qjQ-1; Mon,
+ 27 Oct 2025 11:13:19 -0400
+X-MC-Unique: DsO2r2GTNOaUEM264E1qjQ-1
+X-Mimecast-MFC-AGG-ID: DsO2r2GTNOaUEM264E1qjQ_1761577996
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19613180121B; Mon, 27 Oct 2025 15:12:58 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 760801956096; Mon, 27 Oct 2025 15:13:16 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9862C180035A; Mon, 27 Oct 2025 15:12:56 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 76B1330001A2; Mon, 27 Oct 2025 15:13:14 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Alexandre Ratchov <alex@caoua.org>,
@@ -71,17 +71,16 @@ Cc: Alexandre Ratchov <alex@caoua.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v3 19/35] audio: register and unregister vmstate with
- AudioState
-Date: Mon, 27 Oct 2025 19:10:26 +0400
-Message-ID: <20251027151045.2863176-20-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 22/35] audio: remove AUDIO_HOST_ENDIANNESS
+Date: Mon, 27 Oct 2025 19:10:29 +0400
+Message-ID: <20251027151045.2863176-23-marcandre.lureau@redhat.com>
 In-Reply-To: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,7 +90,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,52 +109,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Proper lifecycle management with QOM state.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- audio/audio.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ audio/audio.h      | 6 ------
+ audio/audio.c      | 6 +++---
+ audio/spiceaudio.c | 4 ++--
+ hw/audio/adlib.c   | 2 +-
+ hw/audio/asc.c     | 2 +-
+ hw/audio/cs4231a.c | 2 +-
+ hw/audio/gus.c     | 2 +-
+ 7 files changed, 9 insertions(+), 15 deletions(-)
 
+diff --git a/audio/audio.h b/audio/audio.h
+index 3be0c4f24f..0af911fd9a 100644
+--- a/audio/audio.h
++++ b/audio/audio.h
+@@ -31,12 +31,6 @@
+ 
+ typedef void (*audio_callback_fn) (void *opaque, int avail);
+ 
+-#if HOST_BIG_ENDIAN
+-#define AUDIO_HOST_ENDIANNESS 1
+-#else
+-#define AUDIO_HOST_ENDIANNESS 0
+-#endif
+-
+ typedef struct audsettings {
+     int freq;
+     int nchannels;
 diff --git a/audio/audio.c b/audio/audio.c
-index 4c3c3fd52f..853930bb48 100644
+index f334030d96..18bc9188db 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -1614,6 +1614,8 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
-     audio_reset_timer (s);
+@@ -274,7 +274,7 @@ static int audio_pcm_info_eq (struct audio_pcm_info *info, struct audsettings *a
+         && info->is_signed == is_signed
+         && info->is_float == is_float
+         && info->bits == bits
+-        && info->swap_endianness == (as->endianness != AUDIO_HOST_ENDIANNESS);
++        && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
  }
  
-+static const VMStateDescription vmstate_audio;
-+
- static void audio_state_init(Object *obj)
- {
-     AudioState *s = AUDIO_STATE(obj);
-@@ -1625,6 +1627,8 @@ static void audio_state_init(Object *obj)
- 
-     s->vmse = qemu_add_vm_change_state_handler(audio_vm_change_state_handler, s);
-     assert(s->vmse != NULL);
-+
-+    vmstate_register_any(NULL, &vmstate_audio, s);
+ void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
+@@ -320,7 +320,7 @@ void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
+     info->nchannels = as->nchannels;
+     info->bytes_per_frame = as->nchannels * mul;
+     info->bytes_per_second = info->freq * info->bytes_per_frame;
+-    info->swap_endianness = (as->endianness != AUDIO_HOST_ENDIANNESS);
++    info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
  }
  
- static void audio_state_finalize(Object *obj)
-@@ -1679,6 +1683,8 @@ static void audio_state_finalize(Object *obj)
-         qemu_del_vm_change_state_handler(s->vmse);
-         s->vmse = NULL;
-     }
-+
-+    vmstate_unregister(NULL, &vmstate_audio, s);
+ void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
+@@ -2179,7 +2179,7 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
+         .freq = pdo->frequency,
+         .nchannels = pdo->channels,
+         .fmt = pdo->format,
+-        .endianness = AUDIO_HOST_ENDIANNESS,
++        .endianness = HOST_BIG_ENDIAN,
+     };
  }
  
- static Object *get_audiodevs_root(void)
-@@ -1787,7 +1793,6 @@ static AudioState *audio_init(Audiodev *dev, Error **errp)
-     }
-     object_unref(s);
-     QLIST_INIT (&s->card_head);
--    vmstate_register_any(NULL, &vmstate_audio, s);
-     return s;
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index 7f02f7285c..7e737bff9a 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -102,7 +102,7 @@ static int line_out_init(HWVoiceOut *hw, struct audsettings *as,
+ #endif
+     settings.nchannels  = SPICE_INTERFACE_PLAYBACK_CHAN;
+     settings.fmt        = AUDIO_FORMAT_S16;
+-    settings.endianness = AUDIO_HOST_ENDIANNESS;
++    settings.endianness = HOST_BIG_ENDIAN;
  
- out:
+     audio_pcm_init_info (&hw->info, &settings);
+     hw->samples = LINE_OUT_SAMPLES;
+@@ -218,7 +218,7 @@ static int line_in_init(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ #endif
+     settings.nchannels  = SPICE_INTERFACE_RECORD_CHAN;
+     settings.fmt        = AUDIO_FORMAT_S16;
+-    settings.endianness = AUDIO_HOST_ENDIANNESS;
++    settings.endianness = HOST_BIG_ENDIAN;
+ 
+     audio_pcm_init_info (&hw->info, &settings);
+     hw->samples = LINE_IN_SAMPLES;
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index 6aae365f47..45c0a458f2 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -272,7 +272,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
+     as.freq = s->freq;
+     as.nchannels = SHIFT;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = AUDIO_HOST_ENDIANNESS;
++    as.endianness = HOST_BIG_ENDIAN;
+ 
+     s->voice = AUD_open_out (
+         &s->card,
+diff --git a/hw/audio/asc.c b/hw/audio/asc.c
+index edd42d6d91..41472dc2e3 100644
+--- a/hw/audio/asc.c
++++ b/hw/audio/asc.c
+@@ -650,7 +650,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
+     as.freq = ASC_FREQ;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_U8;
+-    as.endianness = AUDIO_HOST_ENDIANNESS;
++    as.endianness = HOST_BIG_ENDIAN;
+ 
+     s->voice = AUD_open_out(&s->card, s->voice, "asc.out", s, asc_out_cb,
+                             &as);
+diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
+index 3b80a61378..0a5d614f8b 100644
+--- a/hw/audio/cs4231a.c
++++ b/hw/audio/cs4231a.c
+@@ -305,7 +305,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
+         s->tab = ALawDecompressTable;
+     x_law:
+         as.fmt = AUDIO_FORMAT_S16;
+-        as.endianness = AUDIO_HOST_ENDIANNESS;
++        as.endianness = HOST_BIG_ENDIAN;
+         s->shift = as.nchannels == 2;
+         break;
+ 
+diff --git a/hw/audio/gus.c b/hw/audio/gus.c
+index 45ea04bf89..d13a95eb5a 100644
+--- a/hw/audio/gus.c
++++ b/hw/audio/gus.c
+@@ -255,7 +255,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+     as.freq = s->freq;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = AUDIO_HOST_ENDIANNESS;
++    as.endianness = HOST_BIG_ENDIAN;
+ 
+     s->voice = AUD_open_out (
+         &s->card,
 -- 
 2.51.0
 
