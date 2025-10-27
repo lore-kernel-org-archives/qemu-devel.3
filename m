@@ -4,93 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1CEDCCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB31CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDOxQ-0006WM-LI; Mon, 27 Oct 2025 11:16:28 -0400
+	id 1vDP7c-0006FJ-LX; Mon, 27 Oct 2025 11:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOw8-0005Qx-2E
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:15:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOvr-000476-R1
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:15:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761578088;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5uEAD8IufxGlfbgcYTAd6K5nN0aUVsvDwES5X6ku/Aw=;
- b=emun6P46NH3UsX/xzllWSlYz5BTiSZZkTj6uB6BCMeSsiRdmmqOvVx9fAf0VzqJs/1e7mN
- VjaBoKypVVDE4UOYd2ug+hHQb12TrtfB7jqavWUun8AySy4EIB0jAf4vLSN0EqAE4iSP4S
- ATmgubyf98X7E0khHefXJShxeUGy1m4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-LlJD0ToGOFSD_dkmd2rLiQ-1; Mon,
- 27 Oct 2025 11:14:43 -0400
-X-MC-Unique: LlJD0ToGOFSD_dkmd2rLiQ-1
-X-Mimecast-MFC-AGG-ID: LlJD0ToGOFSD_dkmd2rLiQ_1761578081
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4BAB180136C; Mon, 27 Oct 2025 15:14:40 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2862030001A2; Mon, 27 Oct 2025 15:14:38 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Alexandre Ratchov <alex@caoua.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jan Kiszka <jan.kiszka@web.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <huth@tuxfamily.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v3 35/35] audio: Rename @endianness argument as @big_endian
- for clarity
-Date: Mon, 27 Oct 2025 19:10:42 +0400
-Message-ID: <20251027151045.2863176-36-marcandre.lureau@redhat.com>
-In-Reply-To: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
-References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vDP7Z-0006Eo-FH; Mon, 27 Oct 2025 11:26:57 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vDP7O-0006h7-3a; Mon, 27 Oct 2025 11:26:57 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAH6CQmj_9oTF12AA--.3142S2;
+ Mon, 27 Oct 2025 23:26:30 +0800 (CST)
+Received: from [192.168.31.222] (unknown [113.246.234.35])
+ by mail (Coremail) with SMTP id AQAAfwBHqeYkj_9oYFdxAA--.51062S2;
+ Mon, 27 Oct 2025 23:26:28 +0800 (CST)
+Message-ID: <ce64f4a2-75a0-442c-a26f-7391a378e8d0@phytium.com.cn>
+Date: Mon, 27 Oct 2025 23:26:28 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 2/2] tests/qtest: add SMMUv3 smoke test using
+ smmu-testdev DMA source
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+References: <20250930165340.42788-1-tangtao1634@phytium.com.cn>
+ <20250930165340.42788-3-tangtao1634@phytium.com.cn>
+ <87jz0lnan1.fsf@draig.linaro.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <87jz0lnan1.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: AQAAfwBHqeYkj_9oYFdxAA--.51062S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAQBWj+ghAHuwAFsp
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3WFykKry3uw45KFW7JF43KFg_yoW7tw45pF
+ Z3KasrAF4UJr1UCr13Jw48uFykJrZ5AF17Gry5JryxZr4qvr1ktF42gFWFqF97Ar97WF18
+ Zr4jqFnrur15XFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,181 +79,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi Alex,
 
-@endianness is used as a boolean, rename for clarity.
+On 2025/10/23 19:02, Alex Bennée wrote:
+> tangtao1634 <tangtao1634@phytium.com.cn> writes:
+>
+>> From: Tao Tang <tangtao1634@phytium.com.cn>
+>>
+>> Introduce a bare-metal qtest that drives the new smmu-testdev to exercise
+>> the SMMUv3 emulation without guest firmware or drivers. The test programs
+>> a minimal Non-Secure context (STE/CD/PTE), triggers a DMA, and asserts
+>> translation results.
+>>
+>> Motivation
+>> ----------
+>> SMMU testing in emulation often requires a large software stack and a
+>> realistic PCIe fabric, which adds flakiness and obscures failures. This
+>> qtest keeps the surface small and deterministic by using a hermetic DMA
+>> source that feeds the SMMU directly.
+>>
+>> What the test covers
+>> --------------------
+>> * Builds a Non-Secure STE/CD/PTE for a chosen stream_id/ssid.
+>> * Primes source and destination host buffers.
+>> * Kicks a DMA via smmu-testdev and waits for completion.
+>> * Verifies translated access and payload equality.
+>>
+>> Non-goals and scope limits
+>> --------------------------
+>> * Secure bank flows are omitted because Secure SMMU support is still RFC.
+>>    A local Secure test exists and can be posted once the upstream series
+>>    lands.
+>> * PCIe discovery, MSI/INTx, ATS/PRI, and driver bring-up are out of scope
+>>    as smmu-testdev is not a realistic PCIe Endpoint nor a platform device.
+>>
+>> Rationale for a dedicated path
+>> ------------------------------
+>> Using a generic PCI or virtio device would still require driver init and a
+>> richer bus model, undermining determinism for this focused purpose. This
+>> qtest, paired with smmu-testdev, keeps failures attributable to the SMMU
+>> translation path.
+>>
+>> Finally we document the smmu-testdev device in docs/specs.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>> ------------------------------<snip>------------------------------
+>>
+>>
+>>
+>> ------------------------------<snip>------------------------------
+>> +
+>> +    /* Find device by vendor/device ID to avoid slot surprises. */
+>> +    dev = NULL;
+> might as well init when you declare.
+>
+>> +    g_assert_nonnull(dev);
+> surely g_assert(dev) would do.
+>
+>> +    const uint32_t modes[] = { 0u, 1u, 2u }; /* Stage1, Stage2, Nested stage */
+>> +    const SMMUTestDevSpace spaces[] = { STD_SPACE_NONSECURE };
+> top of block.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/alsaaudio.c | 32 ++++++--------------------------
- audio/ossaudio.c  | 14 +++-----------
- audio/paaudio.c   |  8 ++++----
- audio/pwaudio.c   | 12 ++++++------
- 4 files changed, 19 insertions(+), 47 deletions(-)
 
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index 89f6dad1a9..7d7da576dc 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -264,7 +264,7 @@ static int alsa_poll_in (HWVoiceIn *hw)
-     return alsa_poll_helper (alsa->handle, &alsa->pollhlp, POLLIN);
- }
- 
--static snd_pcm_format_t aud_to_alsafmt (AudioFormat fmt, int endianness)
-+static snd_pcm_format_t aud_to_alsafmt(AudioFormat fmt, bool big_endian)
- {
-     switch (fmt) {
-     case AUDIO_FORMAT_S8:
-@@ -274,39 +274,19 @@ static snd_pcm_format_t aud_to_alsafmt (AudioFormat fmt, int endianness)
-         return SND_PCM_FORMAT_U8;
- 
-     case AUDIO_FORMAT_S16:
--        if (endianness) {
--            return SND_PCM_FORMAT_S16_BE;
--        } else {
--            return SND_PCM_FORMAT_S16_LE;
--        }
-+        return big_endian ? SND_PCM_FORMAT_S16_BE : SND_PCM_FORMAT_S16_LE;
- 
-     case AUDIO_FORMAT_U16:
--        if (endianness) {
--            return SND_PCM_FORMAT_U16_BE;
--        } else {
--            return SND_PCM_FORMAT_U16_LE;
--        }
-+        return big_endian ? SND_PCM_FORMAT_U16_BE : SND_PCM_FORMAT_U16_LE;
- 
-     case AUDIO_FORMAT_S32:
--        if (endianness) {
--            return SND_PCM_FORMAT_S32_BE;
--        } else {
--            return SND_PCM_FORMAT_S32_LE;
--        }
-+        return big_endian ? SND_PCM_FORMAT_S32_BE : SND_PCM_FORMAT_S32_LE;
- 
-     case AUDIO_FORMAT_U32:
--        if (endianness) {
--            return SND_PCM_FORMAT_U32_BE;
--        } else {
--            return SND_PCM_FORMAT_U32_LE;
--        }
-+        return big_endian ? SND_PCM_FORMAT_U32_BE : SND_PCM_FORMAT_U32_LE;
- 
-     case AUDIO_FORMAT_F32:
--        if (endianness) {
--            return SND_PCM_FORMAT_FLOAT_BE;
--        } else {
--            return SND_PCM_FORMAT_FLOAT_LE;
--        }
-+        return big_endian ? SND_PCM_FORMAT_FLOAT_BE : SND_PCM_FORMAT_FLOAT_LE;
- 
-     default:
-         dolog ("Internal logic error: Bad audio format %d\n", fmt);
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index 86c4805675..c6cad47a01 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -131,7 +131,7 @@ static void oss_poll_in (HWVoiceIn *hw)
-     qemu_set_fd_handler(oss->fd, oss_helper_poll_in, NULL, hw->s);
- }
- 
--static int aud_to_ossfmt (AudioFormat fmt, int endianness)
-+static int aud_to_ossfmt(AudioFormat fmt, bool big_endian)
- {
-     switch (fmt) {
-     case AUDIO_FORMAT_S8:
-@@ -141,18 +141,10 @@ static int aud_to_ossfmt (AudioFormat fmt, int endianness)
-         return AFMT_U8;
- 
-     case AUDIO_FORMAT_S16:
--        if (endianness) {
--            return AFMT_S16_BE;
--        } else {
--            return AFMT_S16_LE;
--        }
-+        return big_endian ? AFMT_S16_BE : AFMT_S16_LE;
- 
-     case AUDIO_FORMAT_U16:
--        if (endianness) {
--            return AFMT_U16_BE;
--        } else {
--            return AFMT_U16_LE;
--        }
-+        return big_endian ? AFMT_U16_BE : AFMT_U16_LE;
- 
-     default:
-         dolog ("Internal logic error: Bad audio format %d\n", fmt);
-diff --git a/audio/paaudio.c b/audio/paaudio.c
-index 6b9b6d219a..0c06a39719 100644
---- a/audio/paaudio.c
-+++ b/audio/paaudio.c
-@@ -316,7 +316,7 @@ unlock_and_fail:
-     return 0;
- }
- 
--static pa_sample_format_t audfmt_to_pa (AudioFormat afmt, int endianness)
-+static pa_sample_format_t audfmt_to_pa(AudioFormat afmt, bool big_endian)
- {
-     int format;
- 
-@@ -327,14 +327,14 @@ static pa_sample_format_t audfmt_to_pa (AudioFormat afmt, int endianness)
-         break;
-     case AUDIO_FORMAT_S16:
-     case AUDIO_FORMAT_U16:
--        format = endianness ? PA_SAMPLE_S16BE : PA_SAMPLE_S16LE;
-+        format = big_endian ? PA_SAMPLE_S16BE : PA_SAMPLE_S16LE;
-         break;
-     case AUDIO_FORMAT_S32:
-     case AUDIO_FORMAT_U32:
--        format = endianness ? PA_SAMPLE_S32BE : PA_SAMPLE_S32LE;
-+        format = big_endian ? PA_SAMPLE_S32BE : PA_SAMPLE_S32LE;
-         break;
-     case AUDIO_FORMAT_F32:
--        format = endianness ? PA_SAMPLE_FLOAT32BE : PA_SAMPLE_FLOAT32LE;
-+        format = big_endian ? PA_SAMPLE_FLOAT32BE : PA_SAMPLE_FLOAT32LE;
-         break;
-     default:
-         dolog ("Internal logic error: Bad audio format %d\n", afmt);
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 0fd59d9fe6..30f717ccac 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -324,7 +324,7 @@ done_unlock:
- }
- 
- static int
--audfmt_to_pw(AudioFormat fmt, int endianness)
-+audfmt_to_pw(AudioFormat fmt, bool big_endian)
- {
-     int format;
- 
-@@ -336,19 +336,19 @@ audfmt_to_pw(AudioFormat fmt, int endianness)
-         format = SPA_AUDIO_FORMAT_U8;
-         break;
-     case AUDIO_FORMAT_S16:
--        format = endianness ? SPA_AUDIO_FORMAT_S16_BE : SPA_AUDIO_FORMAT_S16_LE;
-+        format = big_endian ? SPA_AUDIO_FORMAT_S16_BE : SPA_AUDIO_FORMAT_S16_LE;
-         break;
-     case AUDIO_FORMAT_U16:
--        format = endianness ? SPA_AUDIO_FORMAT_U16_BE : SPA_AUDIO_FORMAT_U16_LE;
-+        format = big_endian ? SPA_AUDIO_FORMAT_U16_BE : SPA_AUDIO_FORMAT_U16_LE;
-         break;
-     case AUDIO_FORMAT_S32:
--        format = endianness ? SPA_AUDIO_FORMAT_S32_BE : SPA_AUDIO_FORMAT_S32_LE;
-+        format = big_endian ? SPA_AUDIO_FORMAT_S32_BE : SPA_AUDIO_FORMAT_S32_LE;
-         break;
-     case AUDIO_FORMAT_U32:
--        format = endianness ? SPA_AUDIO_FORMAT_U32_BE : SPA_AUDIO_FORMAT_U32_LE;
-+        format = big_endian ? SPA_AUDIO_FORMAT_U32_BE : SPA_AUDIO_FORMAT_U32_LE;
-         break;
-     case AUDIO_FORMAT_F32:
--        format = endianness ? SPA_AUDIO_FORMAT_F32_BE : SPA_AUDIO_FORMAT_F32_LE;
-+        format = big_endian ? SPA_AUDIO_FORMAT_F32_BE : SPA_AUDIO_FORMAT_F32_LE;
-         break;
-     default:
-         dolog("Internal logic error: Bad audio format %d\n", fmt);
--- 
-2.51.0
+Thank you very much for your valuable feedback. Also I will refactor 
+these codes with the guide of summarized plans as described in patch #1.
+
+>
+>> +    /* Use attrs-DMA path for end-to-end */
+>> +    qpci_io_writel(dev, bar, STD_REG_DMA_MODE, 1);
+>> +    for (size_t mi = 0; mi < sizeof(modes) / sizeof(modes[0]); mi++) {
+>> +        const SMMUTestDevSpace *s1_set = NULL;
+>> +        size_t s1_count = 0;
+>> +        const SMMUTestDevSpace *s2_set = NULL;
+>> +        size_t s2_count = 0;
+>> +
+>> +        switch (modes[mi]) {
+>> +        case 0u:
+>> +        case 1u:
+>> +        case 2u:
+>> +            s1_set = spaces;
+>> +            s1_count = sizeof(spaces) / sizeof(spaces[0]);
+>> +            s2_set = spaces;
+>> +            s2_count = sizeof(spaces) / sizeof(spaces[0]);
+>> +            break;
+>> +        default:
+>> +            g_assert_not_reached();
+>> +        }
+>> +
+>> +        for (size_t si = 0; si < s1_count; si++) {
+>> +            for (size_t sj = 0; sj < s2_count; sj++) {
+>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_MODE, modes[mi]);
+>> +                qpci_io_writel(dev, bar, STD_REG_S1_SPACE, s1_set[si]);
+>> +                qpci_io_writel(dev, bar, STD_REG_S2_SPACE, s2_set[sj]);
+>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_DBELL, 0x2);
+>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_DBELL, 0x1);
+>> +
+>> +                uint32_t st = qpci_io_readl(dev, bar,
+>> +                                            STD_REG_TRANS_STATUS);
+>> +                g_test_message("build: stage=%s s1=%s s2=%s status=0x%x",
+>> +                                std_mode_to_str(modes[mi]),
+>> +                                std_space_to_str(s1_set[si]),
+>> +                                std_space_to_str(s2_set[sj]), st);
+>> +                /* Program SMMU registers in selected control bank. */
+>> +                smmu_prog_minimal(qts, s1_set[si]);
+>> +
+>> +                /* End-to-end DMA using tx_space per mode. */
+>> +                SMMUTestDevSpace tx_space =
+>> +                    (modes[mi] == 0u) ? s1_set[si] : s2_set[sj];
+>> +                uint32_t dma_attrs = ((uint32_t)tx_space << 1);
+>> +                qpci_io_writel(dev, bar, STD_REG_DMA_ATTRS,
+>> +                                dma_attrs);
+>> +                qpci_io_writel(dev, bar, STD_REG_DMA_DBELL, 1);
+>> +                /* Wait for DMA completion and assert success. */
+>> +                {
+>> +                    uint32_t dr = poll_dma_result(dev, bar, qts);
+>> +                    uint32_t exp = expected_dma_result(modes[mi],
+>> +                                                        spaces[si],
+>> +                                                        spaces[sj]);
+>> +                    g_assert_cmpuint(dr, ==, exp);
+>> +                    g_test_message("polling end. attrs=0x%x res=0x%x",
+>> +                                   dma_attrs, dr);
+>> +                }
+>> +                /* Clear CD/STE/PTE built by the device for next round. */
+>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_CLEAR, 1);
+>> +                g_test_message("clear cache end.");
+>> +            }
+>> +        }
+>> +    }
+> I suspect this function could be broken up a bit as new tests are added
+> and functionality shared?
+
+
+Sure. I've actually been thinking along the same lines. As I plan for 
+future tests, I'm considering how best to organize the test cases given 
+the numerous combinations of features we'll need to cover. For example, 
+beyond iterating through security states and translation stages, we will 
+also need to test many other parameters, such as:
+
+- Linear vs. two-level Stream Tables
+
+- Different Output Address Sizes (Although only support 44bits in 
+current SMMU implementation)
+
+My question to you and the wider group is, how far should we go in 
+covering these combinations for an initial smoke test? The current loops 
+for security state and translation stage cover the basics, but I'm 
+wondering if we should aim for more complexity at this stage, or if 
+that's a task for future patches. I'd be very interested to hear 
+everyone's opinion on the right scope.
+
+In any case, your suggestion to break the current test logic into 
+smaller, shared functions is definitely the right first step to manage 
+the structure. I will refactor the code accordingly in the next version.
+
+Thanks again for the valuable suggestion!
+
+Best regards,
+
+Tao
 
 
