@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC43CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7341CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDOva-0004Tw-Vh; Mon, 27 Oct 2025 11:14:35 -0400
+	id 1vDOsX-0001O3-Ju; Mon, 27 Oct 2025 11:11:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOuo-0003Ri-OA
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:51 -0400
+ id 1vDOsU-0001MA-I6
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:11:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vDOuY-0003x3-9H
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:13:41 -0400
+ id 1vDOsI-0003VD-9H
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:11:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761578004;
+ s=mimecast20190719; t=1761577868;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hy4r03TiVsWUDCEtGQ377AJr9mo6eZ99I30huexBd+o=;
- b=ec3QuFgbU5AJmUfqnnzqqrwmay2OLeh7+nl4q3wj7x357UtMU1F6jC87yWwXLNfQVTah74
- bduEMUkoqOef2iLQSqLLMzQ1/hS58AjoruqM/kIB1cxnex+AkPr9GRiOdxMIIZ5zYDYHd9
- YYsiBn+zVJnWqxCYSSOXv7opP8gnwu0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=j4aJ4u/eX28EZuhy4vNPnKeQoMgSUL/1mHewTfZYfnw=;
+ b=gFSVzXlXEw316UDnuXFpFZZUR+/ItJn5M9wheff6wYAjcKNE4MK8AoswBfWr+UBIhjRqqy
+ I3U7B+gSItJUz5c5WYtV5yuFR+V5Y9Fou/lxNRpalTW4WcWlmffXWsnYQ5iBP8O7wvR7gw
+ 7ryGXyLNn/AniFphE31t/Mf7V39WPG8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-DsO2r2GTNOaUEM264E1qjQ-1; Mon,
- 27 Oct 2025 11:13:19 -0400
-X-MC-Unique: DsO2r2GTNOaUEM264E1qjQ-1
-X-Mimecast-MFC-AGG-ID: DsO2r2GTNOaUEM264E1qjQ_1761577996
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-lblU7ZvlMrKkuqzvhndXpA-1; Mon,
+ 27 Oct 2025 11:11:04 -0400
+X-MC-Unique: lblU7ZvlMrKkuqzvhndXpA-1
+X-Mimecast-MFC-AGG-ID: lblU7ZvlMrKkuqzvhndXpA_1761577861
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 760801956096; Mon, 27 Oct 2025 15:13:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86C251800D83; Mon, 27 Oct 2025 15:11:00 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 76B1330001A2; Mon, 27 Oct 2025 15:13:14 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 689F119560AD; Mon, 27 Oct 2025 15:10:56 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Alexandre Ratchov <alex@caoua.org>,
@@ -71,15 +71,15 @@ Cc: Alexandre Ratchov <alex@caoua.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v3 22/35] audio: remove AUDIO_HOST_ENDIANNESS
-Date: Mon, 27 Oct 2025 19:10:29 +0400
-Message-ID: <20251027151045.2863176-23-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 01/35] qdev: add qdev_find_default_bus()
+Date: Mon, 27 Oct 2025 19:10:08 +0400
+Message-ID: <20251027151045.2863176-2-marcandre.lureau@redhat.com>
 In-Reply-To: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 References: <20251027151045.2863176-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,8 +90,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,140 +108,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- audio/audio.h      | 6 ------
- audio/audio.c      | 6 +++---
- audio/spiceaudio.c | 4 ++--
- hw/audio/adlib.c   | 2 +-
- hw/audio/asc.c     | 2 +-
- hw/audio/cs4231a.c | 2 +-
- hw/audio/gus.c     | 2 +-
- 7 files changed, 9 insertions(+), 15 deletions(-)
+This helper is used next by -audio code.
 
-diff --git a/audio/audio.h b/audio/audio.h
-index 3be0c4f24f..0af911fd9a 100644
---- a/audio/audio.h
-+++ b/audio/audio.h
-@@ -31,12 +31,6 @@
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/monitor/qdev.h |  3 +++
+ system/qdev-monitor.c  | 25 +++++++++++++++++++++----
+ 2 files changed, 24 insertions(+), 4 deletions(-)
+
+diff --git a/include/monitor/qdev.h b/include/monitor/qdev.h
+index 1d57bf6577..de33637869 100644
+--- a/include/monitor/qdev.h
++++ b/include/monitor/qdev.h
+@@ -1,6 +1,8 @@
+ #ifndef MONITOR_QDEV_H
+ #define MONITOR_QDEV_H
  
- typedef void (*audio_callback_fn) (void *opaque, int avail);
++#include "hw/qdev-core.h"
++
+ /*** monitor commands ***/
  
--#if HOST_BIG_ENDIAN
--#define AUDIO_HOST_ENDIANNESS 1
--#else
--#define AUDIO_HOST_ENDIANNESS 0
--#endif
--
- typedef struct audsettings {
-     int freq;
-     int nchannels;
-diff --git a/audio/audio.c b/audio/audio.c
-index f334030d96..18bc9188db 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -274,7 +274,7 @@ static int audio_pcm_info_eq (struct audio_pcm_info *info, struct audsettings *a
-         && info->is_signed == is_signed
-         && info->is_float == is_float
-         && info->bits == bits
--        && info->swap_endianness == (as->endianness != AUDIO_HOST_ENDIANNESS);
-+        && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
+ void hmp_info_qtree(Monitor *mon, const QDict *qdict);
+@@ -11,6 +13,7 @@ int qdev_device_help(QemuOpts *opts);
+ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp);
+ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+                                         bool from_json, Error **errp);
++BusState *qdev_find_default_bus(DeviceClass *dc, Error **errp);
+ 
+ /**
+  * qdev_set_id: parent the device and set its id if provided.
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index ec4a2394ce..f2aa400a77 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -621,6 +621,25 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
+     return prop->name;
  }
  
- void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
-@@ -320,7 +320,7 @@ void audio_pcm_init_info (struct audio_pcm_info *info, struct audsettings *as)
-     info->nchannels = as->nchannels;
-     info->bytes_per_frame = as->nchannels * mul;
-     info->bytes_per_second = info->freq * info->bytes_per_frame;
--    info->swap_endianness = (as->endianness != AUDIO_HOST_ENDIANNESS);
-+    info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
- }
- 
- void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
-@@ -2179,7 +2179,7 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
-         .freq = pdo->frequency,
-         .nchannels = pdo->channels,
-         .fmt = pdo->format,
--        .endianness = AUDIO_HOST_ENDIANNESS,
-+        .endianness = HOST_BIG_ENDIAN,
-     };
- }
- 
-diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
-index 7f02f7285c..7e737bff9a 100644
---- a/audio/spiceaudio.c
-+++ b/audio/spiceaudio.c
-@@ -102,7 +102,7 @@ static int line_out_init(HWVoiceOut *hw, struct audsettings *as,
- #endif
-     settings.nchannels  = SPICE_INTERFACE_PLAYBACK_CHAN;
-     settings.fmt        = AUDIO_FORMAT_S16;
--    settings.endianness = AUDIO_HOST_ENDIANNESS;
-+    settings.endianness = HOST_BIG_ENDIAN;
- 
-     audio_pcm_init_info (&hw->info, &settings);
-     hw->samples = LINE_OUT_SAMPLES;
-@@ -218,7 +218,7 @@ static int line_in_init(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
- #endif
-     settings.nchannels  = SPICE_INTERFACE_RECORD_CHAN;
-     settings.fmt        = AUDIO_FORMAT_S16;
--    settings.endianness = AUDIO_HOST_ENDIANNESS;
-+    settings.endianness = HOST_BIG_ENDIAN;
- 
-     audio_pcm_init_info (&hw->info, &settings);
-     hw->samples = LINE_IN_SAMPLES;
-diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
-index 6aae365f47..45c0a458f2 100644
---- a/hw/audio/adlib.c
-+++ b/hw/audio/adlib.c
-@@ -272,7 +272,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
-     as.freq = s->freq;
-     as.nchannels = SHIFT;
-     as.fmt = AUDIO_FORMAT_S16;
--    as.endianness = AUDIO_HOST_ENDIANNESS;
-+    as.endianness = HOST_BIG_ENDIAN;
- 
-     s->voice = AUD_open_out (
-         &s->card,
-diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-index edd42d6d91..41472dc2e3 100644
---- a/hw/audio/asc.c
-+++ b/hw/audio/asc.c
-@@ -650,7 +650,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
-     as.freq = ASC_FREQ;
-     as.nchannels = 2;
-     as.fmt = AUDIO_FORMAT_U8;
--    as.endianness = AUDIO_HOST_ENDIANNESS;
-+    as.endianness = HOST_BIG_ENDIAN;
- 
-     s->voice = AUD_open_out(&s->card, s->voice, "asc.out", s, asc_out_cb,
-                             &as);
-diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
-index 3b80a61378..0a5d614f8b 100644
---- a/hw/audio/cs4231a.c
-+++ b/hw/audio/cs4231a.c
-@@ -305,7 +305,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
-         s->tab = ALawDecompressTable;
-     x_law:
-         as.fmt = AUDIO_FORMAT_S16;
--        as.endianness = AUDIO_HOST_ENDIANNESS;
-+        as.endianness = HOST_BIG_ENDIAN;
-         s->shift = as.nchannels == 2;
-         break;
- 
-diff --git a/hw/audio/gus.c b/hw/audio/gus.c
-index 45ea04bf89..d13a95eb5a 100644
---- a/hw/audio/gus.c
-+++ b/hw/audio/gus.c
-@@ -255,7 +255,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
-     as.freq = s->freq;
-     as.nchannels = 2;
-     as.fmt = AUDIO_FORMAT_S16;
--    as.endianness = AUDIO_HOST_ENDIANNESS;
-+    as.endianness = HOST_BIG_ENDIAN;
- 
-     s->voice = AUD_open_out (
-         &s->card,
++BusState *qdev_find_default_bus(DeviceClass *dc, Error **errp)
++{
++    BusState *bus = NULL;
++
++    assert(dc->bus_type != NULL);
++    bus = qbus_find_recursive(sysbus_get_default(), NULL, dc->bus_type);
++    if (!bus) {
++        error_setg(errp, "No '%s' bus found for device '%s'",
++                   dc->bus_type, object_class_get_name(OBJECT_CLASS(dc)));
++        return NULL;
++    }
++    if (qbus_is_full(bus)) {
++        error_setg(errp, "A '%s' bus was found but is full", dc->bus_type);
++        return NULL;
++    }
++
++    return bus;
++}
++
+ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+                                         bool from_json, Error **errp)
+ {
+@@ -657,10 +676,8 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+             return NULL;
+         }
+     } else if (dc->bus_type != NULL) {
+-        bus = qbus_find_recursive(sysbus_get_default(), NULL, dc->bus_type);
+-        if (!bus || qbus_is_full(bus)) {
+-            error_setg(errp, "No '%s' bus found for device '%s'",
+-                       dc->bus_type, driver);
++        bus = qdev_find_default_bus(dc, errp);
++        if (!bus) {
+             return NULL;
+         }
+     }
 -- 
 2.51.0
 
