@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D00CCF9F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBB3CCF9EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 10:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDKdB-0005hd-Ty; Mon, 27 Oct 2025 06:39:17 -0400
+	id 1vDKd2-0005e9-B1; Mon, 27 Oct 2025 06:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vDKd2-0005fA-CD
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:09 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vDKcs-0005cs-3s
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:38:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1vDKcs-0000nA-Tn
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:39:07 -0400
-X-ASG-Debug-ID: 1761561530-1eb14e3d8a60d80001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx2.zhaoxin.com with ESMTP id UJIAZjO3kI0O3A1M (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Mon, 27 Oct 2025 18:38:50 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
- 2025 18:38:50 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85]) by
- ZXSHMBX1.zhaoxin.com ([fe80::936:f2f9:9efa:3c85%7]) with mapi id
- 15.01.2507.059; Mon, 27 Oct 2025 18:38:50 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ewan-server.lan (10.28.24.130) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Mon, 27 Oct
- 2025 18:21:39 +0800
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
-CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
- Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v2 1/4] target/i386: Add an option in X86CPUDefinition to
- control CPUID 0x1f
-Date: Mon, 27 Oct 2025 06:21:36 -0400
-X-ASG-Orig-Subj: [PATCH v2 1/4] target/i386: Add an option in X86CPUDefinition
- to control CPUID 0x1f
-Message-ID: <20251027102139.270662-2-ewanhai-oc@zhaoxin.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
-References: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vDKck-0000mF-AB
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 06:38:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1761561525;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Fw8k+9K2IZYTTk6QD/aPafJUyiI6LdCipQ1znq7ubKg=;
+ b=Vw25HFj2XZhU1nCs+T9JlcdyCvIcFUOfu9yXjcQmgQIOdPiiaQU+ax9s69n9ElM0Ky0jQb
+ dkZNGTPkdNSugQUfHqStNZSupzJsIVkQzhnno7VHhhij7Hbz+EGyr4e+5hB8tU2i4Xu5Dr
+ FBE2ywzBneRjTESN9ODQIu7e7+8Mfh4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-mwKsJ6UjNJmRbLA_mVIEtA-1; Mon,
+ 27 Oct 2025 06:38:41 -0400
+X-MC-Unique: mwKsJ6UjNJmRbLA_mVIEtA-1
+X-Mimecast-MFC-AGG-ID: mwKsJ6UjNJmRbLA_mVIEtA_1761561521
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F327180137A; Mon, 27 Oct 2025 10:38:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 918473000223; Mon, 27 Oct 2025 10:38:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DF72521E6A27; Mon, 27 Oct 2025 11:38:36 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: peterx@redhat.com,  stefanb@linux.vnet.ibm.com,  farosas@suse.de,
+ qemu-devel@nongnu.org,  armbru@redhat.com,  berrange@redhat.com
+Subject: Re: [PATCH v3 4/4] migration: vmsd errp handlers: return bool
+In-Reply-To: <20251025202649.1122420-5-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Sat, 25 Oct 2025 23:26:49 +0300")
+References: <20251025202649.1122420-1-vsementsov@yandex-team.ru>
+ <20251025202649.1122420-5-vsementsov@yandex-team.ru>
+Date: Mon, 27 Oct 2025 11:38:36 +0100
+Message-ID: <87o6psocib.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain
-X-Originating-IP: [10.28.24.130]
-X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 10/27/2025 6:38:49 PM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1761561530
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 1659
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -1.82
-X-Barracuda-Spam-Status: No,
- SCORE=-1.82 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=PR0N_SUBJECT
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.149253
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
- 0.20 PR0N_SUBJECT Subject has letters around special characters (pr0n)
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,56 +86,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-Many Intel and Zhaoxin CPUs enable CPUID 0x1f by default to encode CPU
-topology information.
+> Switch the new API to simple bool-returning interface, as return value
+> is not used otherwise than check is function failed or not. No logic
+> depend on concrete errno values.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  backends/tpm/tpm_emulator.c   | 10 ++++------
+>  docs/devel/migration/main.rst |  6 +++---
+>  include/migration/vmstate.h   |  6 +++---
+>  migration/vmstate.c           | 14 ++++++--------
+>  4 files changed, 16 insertions(+), 20 deletions(-)
+>
+> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+> index aa69eb606f..6cc9aa199c 100644
+> --- a/backends/tpm/tpm_emulator.c
+> +++ b/backends/tpm/tpm_emulator.c
+> @@ -947,25 +947,23 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
+>  
+>  /*
+>   * Load the TPM state blobs into the TPM.
+> - *
+> - * Returns negative errno codes in case of error.
+>   */
+> -static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+> +static bool tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+>  {
+>      TPMBackend *tb = opaque;
+>      int ret;
+>  
+>      ret = tpm_emulator_set_state_blobs(tb, errp);
 
-Add the "cpuid_0x1f" option to X86CPUDefinition to allow named CPU
-models to configure CPUID 0x1f from the start, thereby forcing 0x1f
-to be present for guest.
+Note for later: this returns 0 or -EIO.
 
-With this option, there's no need to explicitly add v1 model to an
-unversioned CPU model for explicitly enabling the x-force-cpuid-0x1f
-property.
+>      if (ret < 0) {
+> -        return ret;
+> +        return false;
+>      }
+>  
+>      if (tpm_emulator_startup_tpm_resume(tb, 0, true) < 0) {
+>          error_setg(errp, "Failed to resume tpm");
+> -        return -EIO;
+> +        return false;
+>      }
+>  
+> -    return 0;
+> +    return true;
+>  }
+>  
+>  static const VMStateDescription vmstate_tpm_emulator = {
+> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+> index 1afe7b9689..234d280249 100644
+> --- a/docs/devel/migration/main.rst
+> +++ b/docs/devel/migration/main.rst
+> @@ -446,15 +446,15 @@ The functions to do that are inside a vmstate definition, and are called:
+>  
+>  Following are the errp variants of these functions.
+>  
+> -- ``int (*pre_load_errp)(void *opaque, Error **errp);``
+> +- ``bool (*pre_load_errp)(void *opaque, Error **errp);``
+>  
+>    This function is called before we load the state of one device.
+>  
+> -- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
+> +- ``bool (*post_load_errp)(void *opaque, int version_id, Error **errp);``
+>  
+>    This function is called after we load the state of one device.
+>  
+> -- ``int (*pre_save_errp)(void *opaque, Error **errp);``
+> +- ``bool (*pre_save_errp)(void *opaque, Error **errp);``
+>  
+>    This function is called before we save the state of one device.
+>  
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 63ccaee07a..dbe330dd5f 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -218,11 +218,11 @@ struct VMStateDescription {
+>      int minimum_version_id;
+>      MigrationPriority priority;
+>      int (*pre_load)(void *opaque);
+> -    int (*pre_load_errp)(void *opaque, Error **errp);
+> +    bool (*pre_load_errp)(void *opaque, Error **errp);
+>      int (*post_load)(void *opaque, int version_id);
+> -    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+> +    bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>      int (*pre_save)(void *opaque);
+> -    int (*pre_save_errp)(void *opaque, Error **errp);
+> +    bool (*pre_save_errp)(void *opaque, Error **errp);
+>      int (*post_save)(void *opaque);
+>      bool (*needed)(void *opaque);
+>      bool (*dev_unplug_pending)(void *opaque);
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 677e56c84a..adaaf91b3f 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -154,13 +154,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>          return -EINVAL;
+>      }
+>      if (vmsd->pre_load_errp) {
+> -        ret = vmsd->pre_load_errp(opaque, errp);
+> -        if (ret < 0) {
+> +        if (!vmsd->pre_load_errp(opaque, errp)) {
+>              error_prepend(errp, "pre load hook failed for: '%s', "
+>                            "version_id: %d, minimum version_id: %d: ",
+>                            vmsd->name, vmsd->version_id,
+>                            vmsd->minimum_version_id);
+> -            return ret;
+> +            return -EINVAL;
+>          }
+>      } else if (vmsd->pre_load) {
+>          ret = vmsd->pre_load(opaque);
+> @@ -256,11 +255,11 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>          return ret;
+>      }
+>      if (vmsd->post_load_errp) {
+> -        ret = vmsd->post_load_errp(opaque, version_id, errp);
+> -        if (ret < 0) {
+> +        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
+>              error_prepend(errp, "post load hook failed for: %s, version_id: "
+>                            "%d, minimum_version: %d: ", vmsd->name,
+>                            vmsd->version_id, vmsd->minimum_version_id);
+> +            ret = -EINVAL;
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+With ->post_load_errp is tpm_emulator_post_load(), the value returned on
+error changes from -EIO to -EINVAL.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0a66e1fec9..c5853216dc 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2212,6 +2212,12 @@ typedef struct X86CPUDefinition {
-     int model;
-     int stepping;
-     uint8_t avx10_version;
-+    /*
-+     * Whether to present CPUID 0x1f by default.
-+     * If true, encode CPU topology in 0x1f leaf even if there's no
-+     * extended topology levels.
-+     */
-+    bool cpuid_0x1f;
-     FeatureWordArray features;
-     const char *model_id;
-     const CPUCaches *const cache_info;
-@@ -7759,6 +7765,10 @@ static void x86_cpu_load_model(X86CPU *cpu, const X8=
-6CPUModel *model)
-     object_property_set_uint(OBJECT(cpu), "avx10-version", def->avx10_vers=
-ion,
-                              &error_abort);
-=20
-+    if (def->cpuid_0x1f) {
-+        object_property_set_bool(OBJECT(cpu), "x-force-cpuid-0x1f",
-+                                 def->cpuid_0x1f, &error_abort);
-+    }
-     x86_cpu_apply_version_props(cpu, model);
-=20
-     /*
---=20
-2.34.1
+Do callers of vmstate_load_state() care?
+
+>          }
+>      } else if (vmsd->post_load) {
+>          ret = vmsd->post_load(opaque, version_id);
+> @@ -438,11 +437,10 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>      trace_vmstate_save_state_top(vmsd->name);
+>  
+>      if (vmsd->pre_save_errp) {
+> -        ret = vmsd->pre_save_errp(opaque, errp);
+>          trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+> -        if (ret < 0) {
+> +        if (!vmsd->pre_save_errp(opaque, errp)) {
+>              error_prepend(errp, "pre-save for %s failed: ", vmsd->name);
+> -            return ret;
+> +            return -EINVAL;
+>          }
+>      } else if (vmsd->pre_save) {
+>          ret = vmsd->pre_save(opaque);
+> -- 
+> 2.48.1
 
 
