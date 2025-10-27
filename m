@@ -4,73 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26924CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F122ECCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 15:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDPM9-0001yl-P5; Mon, 27 Oct 2025 11:42:01 -0400
+	id 1vDPWk-0007AL-F4; Mon, 27 Oct 2025 11:52:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vDPM5-0001wu-Nh
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:41:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vDPLu-0008NC-SJ
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:41:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761579703;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t180PYNalySODgaWYpV7NHiAYPKhiHRd9Vru2Y5LYN0=;
- b=duYo6PkkvGmiLjF843zZI1strkjhb8mHNNio1J82ge8zReX2eLogz9rlbl2u2ocrz8hB54
- 1Lf7aRdm/XOiD/ev5pEHOJAIKJM6hGG7Ix7Z6aI6gB5ndH1v/jfMstv7W9u0d9q9c/LgMC
- agsYAJoIPlQHQxqBsFJhWgCqjOmMPCg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-YTB0RVUrPLiUyx-3MlzZmw-1; Mon,
- 27 Oct 2025 11:41:40 -0400
-X-MC-Unique: YTB0RVUrPLiUyx-3MlzZmw-1
-X-Mimecast-MFC-AGG-ID: YTB0RVUrPLiUyx-3MlzZmw_1761579699
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56DB618001D6; Mon, 27 Oct 2025 15:41:39 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.45.224.183])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66AFF30001A2; Mon, 27 Oct 2025 15:41:36 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Peter Xu <peterx@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Jiri Denemark <jdenemar@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 2/4] migration: Move postcopy_ram_listen_thread() to
- postcopy-ram.c
-Date: Mon, 27 Oct 2025 16:41:09 +0100
-Message-ID: <20251027154115.4138677-3-jmarcin@redhat.com>
-In-Reply-To: <20251027154115.4138677-1-jmarcin@redhat.com>
-References: <20251027154115.4138677-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vDPWh-00077d-LI
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:52:55 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vDPWU-0001R0-5e
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 11:52:55 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3ece1102998so3480123f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 08:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761580357; x=1762185157; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ogXZxyzPaxjWuprtWPOLHF5wOuMHCIeyn0aJmTaSpoA=;
+ b=FB9Lc03R2CZYzz23hLOsviCEys8SNdVAfMl/t7ZXsdBWGRgXs5wLNvmOgHbMEmoQh+
+ E7Oj1TlizsfdcLPOychj7OtlnXchvhoSQJ4cqDg9WDsw8nH0o37DSzdX3eH8y5QVD2YH
+ 0sMnxNjkZLfGH2GIokGqRPUuCrfViu7UBtJ34sdiJiSj+PazOGVv0j9c2ioN2tC2RRmx
+ 8TCy26X4glmN/bZNhg5OwiaMe95V/QuTy4IiVXW2NMTS1+YyNsYdKinIAln2grIqBklt
+ dg10dD97ANX1t+jiLvb8KNbuIrLBzRZVHxApJRonGtPd5oCgynEAAuYDIFMy278XXkG7
+ RQHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761580357; x=1762185157;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ogXZxyzPaxjWuprtWPOLHF5wOuMHCIeyn0aJmTaSpoA=;
+ b=Orbs4eg6f+3ZZ8EvwnBUmcliIhxBkcqz1o9LdxxYrWmK+cAxXM82XZXgJLFYdw451N
+ MmaOc1eixOmHpCSKFJCt+oM/+g/m1qMag1f8U5cIPLO5GJXXhG+ctnFE71zYrKg2sMNQ
+ cx1OsGITSs63OpoTbNcx+LmGmp9NjfKrshs+JUeKS494h+NYhN+K/cxJChTfYRJ20po3
+ Ntyi4qGtEco9M/6v6amtpjaqOe4QnjQk3qdOjX0hgv/MVs/h3Y704vUr59JNIIrDuOM8
+ Sdp5QF4zhZs6fHiqM4ijmDyEcJzvZ7u1B75x3CwhaavDrXPgebE1FSLioxqzieLJmoSW
+ iEDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX87BJBvBvFKeSk0uzVOtC0GKvtAmg5n3bs7rOXWrYDHD5YGaxKFKCUk93hcm1rMvu+Wn8LPwHYz/ma@nongnu.org
+X-Gm-Message-State: AOJu0YwkKj07IZcGKpqkHH8fxkyH0Ka0nh034S6lrG5CJuFaPSBm66FF
+ 3zDLmfobUH/om7H80QH8lJTw3lsye8nJrmuC2BlM0ZGDrtitVOSeCpM4TNp5aaTmZ/4=
+X-Gm-Gg: ASbGncvWz39Pko5+mIO2l9mHsv8isbY/4ZyTqNGjtsGJePQHhwxaayHhujCXNZ5UmC8
+ Vhw7rdJAQP6w8xmkjjsweTJYmfQzq7Uiz7fZW6JXQq61WRsi8A8F/sMIiXHheLXyZQz7AiwMt6r
+ ABwegeo4kz5ihQ9CiKAShoEdKornh57KRUbGnrgdRE4DhxUVgRKSsB74mgNovcsTOgocUFThnuS
+ jeGpI6Smnh2KVfiKdWdOBcW2sp1cMvc+nIKRsPjPQESe9cr8h1YbbZABQTx8nLjUzL4h34l79d9
+ XszTOb2EoPuRkIRPU/rg9j8fdN8v6yRGoBswnQBrv4fGjBbzld1dNQLHtUCLY9Alu1JxJX36Jpb
+ eYJAJYtYvd0bYMyGRu5+aQA+v91OhdBds0GXExGYBzxpQMt6IE1gCLUMgHooEjLif6sa7jf1cnE
+ kcrQANFeqQkzoHZXmwFDpM4xu3sgjdux0RqUGt3soDn46yghDdnmiuo6Y=
+X-Google-Smtp-Source: AGHT+IFJ1rYxb38BcPzvJi4w2kIpfoHD2jfv8K/V341TSmca0B3jWuLres9cuJYCpfrHmw37/t8szg==
+X-Received: by 2002:a5d:5d07:0:b0:427:652:b7ff with SMTP id
+ ffacd0b85a97d-429a7e91e75mr149714f8f.60.1761580356742; 
+ Mon, 27 Oct 2025 08:52:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6?
+ ([2a01:e0a:404:4d10:9f16:e9b1:dc97:28e6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-429952d5768sm15340127f8f.24.2025.10.27.08.52.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Oct 2025 08:52:36 -0700 (PDT)
+Message-ID: <792a06cd-302c-46a5-997c-026cb67f8f2e@linaro.org>
+Date: Mon, 27 Oct 2025 16:52:31 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 2/2] tests/qtest: add SMMUv3 smoke test using
+ smmu-testdev DMA source
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+References: <20250930165340.42788-1-tangtao1634@phytium.com.cn>
+ <20250930165340.42788-3-tangtao1634@phytium.com.cn>
+ <87jz0lnan1.fsf@draig.linaro.org>
+ <ce64f4a2-75a0-442c-a26f-7391a378e8d0@phytium.com.cn>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <ce64f4a2-75a0-442c-a26f-7391a378e8d0@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,351 +115,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+Hi Tao,
 
-This patch addresses a TODO about moving postcopy_ram_listen_thread() to
-postcopy file. Furthermore, this patch adds a pair of functions,
-postcopy_incoming_setup() and postcopy_incoming_cleanup(), which sets up
-and cleans the postcopy_ram_incoming state and the listen thread.
+On 2025-10-27 16:26, Tao Tang wrote:
+> Hi Alex,
+> 
+> On 2025/10/23 19:02, Alex Bennée wrote:
+>> tangtao1634 <tangtao1634@phytium.com.cn> writes:
+>>
+>>> From: Tao Tang <tangtao1634@phytium.com.cn>
+>>>
+>>> Introduce a bare-metal qtest that drives the new smmu-testdev to exercise
+>>> the SMMUv3 emulation without guest firmware or drivers. The test programs
+>>> a minimal Non-Secure context (STE/CD/PTE), triggers a DMA, and asserts
+>>> translation results.
+>>>
+>>> Motivation
+>>> ----------
+>>> SMMU testing in emulation often requires a large software stack and a
+>>> realistic PCIe fabric, which adds flakiness and obscures failures. This
+>>> qtest keeps the surface small and deterministic by using a hermetic DMA
+>>> source that feeds the SMMU directly.
+>>>
+>>> What the test covers
+>>> --------------------
+>>> * Builds a Non-Secure STE/CD/PTE for a chosen stream_id/ssid.
+>>> * Primes source and destination host buffers.
+>>> * Kicks a DMA via smmu-testdev and waits for completion.
+>>> * Verifies translated access and payload equality.
+>>>
+>>> Non-goals and scope limits
+>>> --------------------------
+>>> * Secure bank flows are omitted because Secure SMMU support is still RFC.
+>>>     A local Secure test exists and can be posted once the upstream series
+>>>     lands.
+>>> * PCIe discovery, MSI/INTx, ATS/PRI, and driver bring-up are out of scope
+>>>     as smmu-testdev is not a realistic PCIe Endpoint nor a platform device.
+>>>
+>>> Rationale for a dedicated path
+>>> ------------------------------
+>>> Using a generic PCI or virtio device would still require driver init and a
+>>> richer bus model, undermining determinism for this focused purpose. This
+>>> qtest, paired with smmu-testdev, keeps failures attributable to the SMMU
+>>> translation path.
+>>>
+>>> Finally we document the smmu-testdev device in docs/specs.
+>>>
+>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>> ---
+>>> ------------------------------<snip>------------------------------
+>>>
+>>>
+>>>
+>>> ------------------------------<snip>------------------------------
+>>> +
+>>> +    /* Find device by vendor/device ID to avoid slot surprises. */
+>>> +    dev = NULL;
+>> might as well init when you declare.
+>>
+>>> +    g_assert_nonnull(dev);
+>> surely g_assert(dev) would do.
+>>
+>>> +    const uint32_t modes[] = { 0u, 1u, 2u }; /* Stage1, Stage2, Nested stage */
+>>> +    const SMMUTestDevSpace spaces[] = { STD_SPACE_NONSECURE };
+>> top of block.
+> 
+> 
+> Thank you very much for your valuable feedback. Also I will refactor
+> these codes with the guide of summarized plans as described in patch #1.
+> 
+>>
+>>> +    /* Use attrs-DMA path for end-to-end */
+>>> +    qpci_io_writel(dev, bar, STD_REG_DMA_MODE, 1);
+>>> +    for (size_t mi = 0; mi < sizeof(modes) / sizeof(modes[0]); mi++) {
+>>> +        const SMMUTestDevSpace *s1_set = NULL;
+>>> +        size_t s1_count = 0;
+>>> +        const SMMUTestDevSpace *s2_set = NULL;
+>>> +        size_t s2_count = 0;
+>>> +
+>>> +        switch (modes[mi]) {
+>>> +        case 0u:
+>>> +        case 1u:
+>>> +        case 2u:
+>>> +            s1_set = spaces;
+>>> +            s1_count = sizeof(spaces) / sizeof(spaces[0]);
+>>> +            s2_set = spaces;
+>>> +            s2_count = sizeof(spaces) / sizeof(spaces[0]);
+>>> +            break;
+>>> +        default:
+>>> +            g_assert_not_reached();
+>>> +        }
+>>> +
+>>> +        for (size_t si = 0; si < s1_count; si++) {
+>>> +            for (size_t sj = 0; sj < s2_count; sj++) {
+>>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_MODE, modes[mi]);
+>>> +                qpci_io_writel(dev, bar, STD_REG_S1_SPACE, s1_set[si]);
+>>> +                qpci_io_writel(dev, bar, STD_REG_S2_SPACE, s2_set[sj]);
+>>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_DBELL, 0x2);
+>>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_DBELL, 0x1);
+>>> +
+>>> +                uint32_t st = qpci_io_readl(dev, bar,
+>>> +                                            STD_REG_TRANS_STATUS);
+>>> +                g_test_message("build: stage=%s s1=%s s2=%s status=0x%x",
+>>> +                                std_mode_to_str(modes[mi]),
+>>> +                                std_space_to_str(s1_set[si]),
+>>> +                                std_space_to_str(s2_set[sj]), st);
+>>> +                /* Program SMMU registers in selected control bank. */
+>>> +                smmu_prog_minimal(qts, s1_set[si]);
+>>> +
+>>> +                /* End-to-end DMA using tx_space per mode. */
+>>> +                SMMUTestDevSpace tx_space =
+>>> +                    (modes[mi] == 0u) ? s1_set[si] : s2_set[sj];
+>>> +                uint32_t dma_attrs = ((uint32_t)tx_space << 1);
+>>> +                qpci_io_writel(dev, bar, STD_REG_DMA_ATTRS,
+>>> +                                dma_attrs);
+>>> +                qpci_io_writel(dev, bar, STD_REG_DMA_DBELL, 1);
+>>> +                /* Wait for DMA completion and assert success. */
+>>> +                {
+>>> +                    uint32_t dr = poll_dma_result(dev, bar, qts);
+>>> +                    uint32_t exp = expected_dma_result(modes[mi],
+>>> +                                                        spaces[si],
+>>> +                                                        spaces[sj]);
+>>> +                    g_assert_cmpuint(dr, ==, exp);
+>>> +                    g_test_message("polling end. attrs=0x%x res=0x%x",
+>>> +                                   dma_attrs, dr);
+>>> +                }
+>>> +                /* Clear CD/STE/PTE built by the device for next round. */
+>>> +                qpci_io_writel(dev, bar, STD_REG_TRANS_CLEAR, 1);
+>>> +                g_test_message("clear cache end.");
+>>> +            }
+>>> +        }
+>>> +    }
+>> I suspect this function could be broken up a bit as new tests are added
+>> and functionality shared?
+> 
+> 
+> Sure. I've actually been thinking along the same lines. As I plan for
+> future tests, I'm considering how best to organize the test cases given
+> the numerous combinations of features we'll need to cover. For example,
+> beyond iterating through security states and translation stages, we will
+> also need to test many other parameters, such as:
+> 
+> - Linear vs. two-level Stream Tables
+> 
+> - Different Output Address Sizes (Although only support 44bits in
+> current SMMU implementation)
+>
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- migration/migration.c    |   2 +-
- migration/postcopy-ram.c | 144 +++++++++++++++++++++++++++++++++++++++
- migration/postcopy-ram.h |   3 +
- migration/savevm.c       | 131 +----------------------------------
- 4 files changed, 150 insertions(+), 130 deletions(-)
+Reading through this, I start to wonder if we will not end up rewriting 
+a full SMMU driver by accident. The problem with SMMU development is 
+that from the outside, it seems to be "just a device translating DMA 
+accesses". In reality, the "just" means we have a stateful device, 
+configured from possibly different parts in a software stack. For 
+example, with Realms, TF-A, RMM, and kernel all contribute to this state.
 
-diff --git a/migration/migration.c b/migration/migration.c
-index e9acd0f63b..8827884a15 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -892,7 +892,7 @@ process_incoming_migration_co(void *opaque)
-              * but managed to complete within the precopy period, we can use
-              * the normal exit.
-              */
--            postcopy_ram_incoming_cleanup(mis);
-+            postcopy_incoming_cleanup(mis);
-         } else if (ret >= 0) {
-             /*
-              * Postcopy was started, cleanup should happen at the end of the
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5471efb4f0..dbbb2dfb78 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -2077,3 +2077,147 @@ bool postcopy_is_paused(MigrationStatus status)
-     return status == MIGRATION_STATUS_POSTCOPY_PAUSED ||
-         status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
- }
-+
-+/*
-+ * Triggered by a postcopy_listen command; this thread takes over reading
-+ * the input stream, leaving the main thread free to carry on loading the rest
-+ * of the device state (from RAM).
-+ */
-+static void *postcopy_listen_thread(void *opaque)
-+{
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    QEMUFile *f = mis->from_src_file;
-+    int load_res;
-+    MigrationState *migr = migrate_get_current();
-+    Error *local_err = NULL;
-+
-+    object_ref(OBJECT(migr));
-+
-+    migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-+                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
-+    qemu_event_set(&mis->thread_sync_event);
-+    trace_postcopy_ram_listen_thread_start();
-+
-+    rcu_register_thread();
-+    /*
-+     * Because we're a thread and not a coroutine we can't yield
-+     * in qemu_file, and thus we must be blocking now.
-+     */
-+    qemu_file_set_blocking(f, true, &error_fatal);
-+
-+    /* TODO: sanity check that only postcopiable data will be loaded here */
-+    load_res = qemu_loadvm_state_main(f, mis, &local_err);
-+
-+    /*
-+     * This is tricky, but, mis->from_src_file can change after it
-+     * returns, when postcopy recovery happened. In the future, we may
-+     * want a wrapper for the QEMUFile handle.
-+     */
-+    f = mis->from_src_file;
-+
-+    /* And non-blocking again so we don't block in any cleanup */
-+    qemu_file_set_blocking(f, false, &error_fatal);
-+
-+    trace_postcopy_ram_listen_thread_exit();
-+    if (load_res < 0) {
-+        qemu_file_set_error(f, load_res);
-+        dirty_bitmap_mig_cancel_incoming();
-+        if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
-+            !migrate_postcopy_ram() && migrate_dirty_bitmaps())
-+        {
-+            error_report("%s: loadvm failed during postcopy: %d. All states "
-+                         "are migrated except dirty bitmaps. Some dirty "
-+                         "bitmaps may be lost, and present migrated dirty "
-+                         "bitmaps are correctly migrated and valid.",
-+                         __func__, load_res);
-+            load_res = 0; /* prevent further exit() */
-+        } else {
-+            error_prepend(&local_err,
-+                          "loadvm failed during postcopy: %d: ", load_res);
-+            migrate_set_error(migr, local_err);
-+            error_report_err(local_err);
-+            migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-+                                           MIGRATION_STATUS_FAILED);
-+        }
-+    }
-+    if (load_res >= 0) {
-+        /*
-+         * This looks good, but it's possible that the device loading in the
-+         * main thread hasn't finished yet, and so we might not be in 'RUN'
-+         * state yet; wait for the end of the main thread.
-+         */
-+        qemu_event_wait(&mis->main_thread_load_event);
-+    }
-+    postcopy_incoming_cleanup(mis);
-+
-+    if (load_res < 0) {
-+        /*
-+         * If something went wrong then we have a bad state so exit;
-+         * depending how far we got it might be possible at this point
-+         * to leave the guest running and fire MCEs for pages that never
-+         * arrived as a desperate recovery step.
-+         */
-+        rcu_unregister_thread();
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-+                                   MIGRATION_STATUS_COMPLETED);
-+    /*
-+     * If everything has worked fine, then the main thread has waited
-+     * for us to start, and we're the last use of the mis.
-+     * (If something broke then qemu will have to exit anyway since it's
-+     * got a bad migration state).
-+     */
-+    bql_lock();
-+    migration_incoming_state_destroy();
-+    bql_unlock();
-+
-+    rcu_unregister_thread();
-+    mis->have_listen_thread = false;
-+    postcopy_state_set(POSTCOPY_INCOMING_END);
-+
-+    object_unref(OBJECT(migr));
-+
-+    return NULL;
-+}
-+
-+int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp)
-+{
-+    /*
-+     * Sensitise RAM - can now generate requests for blocks that don't exist
-+     * However, at this point the CPU shouldn't be running, and the IO
-+     * shouldn't be doing anything yet so don't actually expect requests
-+     */
-+    if (migrate_postcopy_ram()) {
-+        if (postcopy_ram_incoming_setup(mis)) {
-+            postcopy_ram_incoming_cleanup(mis);
-+            error_setg(errp, "Failed to setup incoming postcopy RAM blocks");
-+            return -1;
-+        }
-+    }
-+
-+    trace_loadvm_postcopy_handle_listen("after uffd");
-+
-+    if (postcopy_notify(POSTCOPY_NOTIFY_INBOUND_LISTEN, errp)) {
-+        return -1;
-+    }
-+
-+    mis->have_listen_thread = true;
-+    postcopy_thread_create(mis, &mis->listen_thread,
-+                           MIGRATION_THREAD_DST_LISTEN,
-+                           postcopy_listen_thread, QEMU_THREAD_DETACHED);
-+
-+    return 0;
-+}
-+
-+int postcopy_incoming_cleanup(MigrationIncomingState *mis)
-+{
-+    int rc = 0;
-+
-+    if (migrate_postcopy_ram()) {
-+        rc = postcopy_ram_incoming_cleanup(mis);
-+    }
-+
-+    return rc;
-+}
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index ca19433b24..a080dd65a7 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -199,4 +199,7 @@ bool postcopy_is_paused(MigrationStatus status);
- void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-                                    RAMBlock *rb);
- 
-+int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp);
-+int postcopy_incoming_cleanup(MigrationIncomingState *mis);
-+
- #endif
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 7b35ec4dd0..96a2699ca7 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2087,112 +2087,6 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
-     return 0;
- }
- 
--/*
-- * Triggered by a postcopy_listen command; this thread takes over reading
-- * the input stream, leaving the main thread free to carry on loading the rest
-- * of the device state (from RAM).
-- * (TODO:This could do with being in a postcopy file - but there again it's
-- * just another input loop, not that postcopy specific)
-- */
--static void *postcopy_ram_listen_thread(void *opaque)
--{
--    MigrationIncomingState *mis = migration_incoming_get_current();
--    QEMUFile *f = mis->from_src_file;
--    int load_res;
--    MigrationState *migr = migrate_get_current();
--    Error *local_err = NULL;
--
--    object_ref(OBJECT(migr));
--
--    migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
--                                   MIGRATION_STATUS_POSTCOPY_ACTIVE);
--    qemu_event_set(&mis->thread_sync_event);
--    trace_postcopy_ram_listen_thread_start();
--
--    rcu_register_thread();
--    /*
--     * Because we're a thread and not a coroutine we can't yield
--     * in qemu_file, and thus we must be blocking now.
--     */
--    qemu_file_set_blocking(f, true, &error_fatal);
--
--    /* TODO: sanity check that only postcopiable data will be loaded here */
--    load_res = qemu_loadvm_state_main(f, mis, &local_err);
--
--    /*
--     * This is tricky, but, mis->from_src_file can change after it
--     * returns, when postcopy recovery happened. In the future, we may
--     * want a wrapper for the QEMUFile handle.
--     */
--    f = mis->from_src_file;
--
--    /* And non-blocking again so we don't block in any cleanup */
--    qemu_file_set_blocking(f, false, &error_fatal);
--
--    trace_postcopy_ram_listen_thread_exit();
--    if (load_res < 0) {
--        qemu_file_set_error(f, load_res);
--        dirty_bitmap_mig_cancel_incoming();
--        if (postcopy_state_get() == POSTCOPY_INCOMING_RUNNING &&
--            !migrate_postcopy_ram() && migrate_dirty_bitmaps())
--        {
--            error_report("%s: loadvm failed during postcopy: %d. All states "
--                         "are migrated except dirty bitmaps. Some dirty "
--                         "bitmaps may be lost, and present migrated dirty "
--                         "bitmaps are correctly migrated and valid.",
--                         __func__, load_res);
--            load_res = 0; /* prevent further exit() */
--        } else {
--            error_prepend(&local_err,
--                          "loadvm failed during postcopy: %d: ", load_res);
--            migrate_set_error(migr, local_err);
--            error_report_err(local_err);
--            migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
--                                           MIGRATION_STATUS_FAILED);
--        }
--    }
--    if (load_res >= 0) {
--        /*
--         * This looks good, but it's possible that the device loading in the
--         * main thread hasn't finished yet, and so we might not be in 'RUN'
--         * state yet; wait for the end of the main thread.
--         */
--        qemu_event_wait(&mis->main_thread_load_event);
--    }
--    postcopy_ram_incoming_cleanup(mis);
--
--    if (load_res < 0) {
--        /*
--         * If something went wrong then we have a bad state so exit;
--         * depending how far we got it might be possible at this point
--         * to leave the guest running and fire MCEs for pages that never
--         * arrived as a desperate recovery step.
--         */
--        rcu_unregister_thread();
--        exit(EXIT_FAILURE);
--    }
--
--    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
--                                   MIGRATION_STATUS_COMPLETED);
--    /*
--     * If everything has worked fine, then the main thread has waited
--     * for us to start, and we're the last use of the mis.
--     * (If something broke then qemu will have to exit anyway since it's
--     * got a bad migration state).
--     */
--    bql_lock();
--    migration_incoming_state_destroy();
--    bql_unlock();
--
--    rcu_unregister_thread();
--    mis->have_listen_thread = false;
--    postcopy_state_set(POSTCOPY_INCOMING_END);
--
--    object_unref(OBJECT(migr));
--
--    return NULL;
--}
--
- /* After this message we must be able to immediately receive postcopy data */
- static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis,
-                                          Error **errp)
-@@ -2218,32 +2112,11 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis,
- 
-     trace_loadvm_postcopy_handle_listen("after discard");
- 
--    /*
--     * Sensitise RAM - can now generate requests for blocks that don't exist
--     * However, at this point the CPU shouldn't be running, and the IO
--     * shouldn't be doing anything yet so don't actually expect requests
--     */
--    if (migrate_postcopy_ram()) {
--        if (postcopy_ram_incoming_setup(mis)) {
--            postcopy_ram_incoming_cleanup(mis);
--            error_setg(errp, "Failed to setup incoming postcopy RAM blocks");
--            return -1;
--        }
--    }
-+    int rc = postcopy_incoming_setup(mis, errp);
- 
--    trace_loadvm_postcopy_handle_listen("after uffd");
--
--    if (postcopy_notify(POSTCOPY_NOTIFY_INBOUND_LISTEN, errp)) {
--        return -1;
--    }
--
--    mis->have_listen_thread = true;
--    postcopy_thread_create(mis, &mis->listen_thread,
--                           MIGRATION_THREAD_DST_LISTEN,
--                           postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
-     trace_loadvm_postcopy_handle_listen("return");
- 
--    return 0;
-+    return rc;
- }
- 
- static void loadvm_postcopy_handle_run_bh(void *opaque)
--- 
-2.51.0
+A possible analogy would be if we used a QTest device to test QEMU MMU 
+implementation, instead of simply relying on running a kernel exercising 
+this code.
+
+That said, it's still useful for some basic scenarios, but I'm not sure 
+it's the ultimate answer for complex use cases, and thus, it should not 
+try to cover it.
+As well, this brings the question of which kind of solution we would 
+need for that. It seems that one need would be to check the SMMU "state" 
+from user space, which moves the problem on having a driver able to poke 
+this state.
+
+> My question to you and the wider group is, how far should we go in
+> covering these combinations for an initial smoke test? The current loops
+> for security state and translation stage cover the basics, but I'm
+> wondering if we should aim for more complexity at this stage, or if
+> that's a task for future patches. I'd be very interested to hear
+> everyone's opinion on the right scope.
+>
+
+We have to start somewhere, so something simple and not trying to solve 
+all use cases is the right approach. It can even just be read/write 
+config/registers before trying to add any DMA scenario.
+
+> In any case, your suggestion to break the current test logic into
+> smaller, shared functions is definitely the right first step to manage
+> the structure. I will refactor the code accordingly in the next version.
+> 
+> Thanks again for the valuable suggestion!
+> 
+> Best regards,
+> 
+> Tao
+> 
 
 
