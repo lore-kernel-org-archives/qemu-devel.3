@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D59CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980BFCCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDPh8-0003QN-2x; Mon, 27 Oct 2025 12:03:42 -0400
+	id 1vDPiF-00045M-19; Mon, 27 Oct 2025 12:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDPh6-0003ON-Ar
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:03:40 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDPh2-0002mm-Ky
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:03:40 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-63e0c6f0adfso4922284d50.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:03:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761581012; x=1762185812; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RR5BznuAUZ5//5K4fKsbv/PX3i2neLhRixVpX04AB5M=;
- b=xly0LVzHw88qf36MStGnklTLaK4DHLEG9V5KkLWXSwSV6NeCpluHF6gmaz0QtNd1JW
- be6innh9YwV+dSVTvKEF/Ihr27bx3n9zwWin8z/OvEmW7xRlyPYaKFGY+izIDCXdpRXG
- g/WgQr9x2aKurZlpU0Ii1KteWM7rbuI4rQ1gcyz/uU88BiP4WqLfX+OlDyNw8l05G9NE
- H8FY72ddZU1qu3JRlxJaJ2KC2Iy60TeAd0uMOfCM/0f4PAe/u4WHzrpRUqGy4WaW0xOb
- tr5nNctP4jp0yxo7UkfUeJAmN48OavQvXNPX4o+5j5QzE7hTtP4Bvls+6WGLuOOxC7VB
- dVKA==
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vDPi1-00042b-Nz
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:04:39 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wesley.hershberger@canonical.com>)
+ id 1vDPhw-0002pJ-Ij
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:04:36 -0400
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 002654664E
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 16:04:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1761581066;
+ bh=K+uuWePygWGRawRF+mLJCdCtahM8w0ZIFtVRhWLR0oQ=;
+ h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+ To:Cc:Content-Type;
+ b=WT1s15QgqH06CkS8SHLIa8vcZYcn4gtpofmhQS6C0x6Ke5LtOr4EzDeGR83SaSOqt
+ bbjp1HxUv6HquKDrdt6MLBXbHMqxnnF2rpLpNt44VvX2P0+lhm9YP9Et9tGpyf/odO
+ ITenEkElEiWuGbdzl0pPmTAsz/FzyTzoto+LNhtmcJbwrxefujG0aRG6kYeGs+3Pqn
+ 4g8VmGN5w1te17bng7c3hih1o7gFJVAe76XTlV2US/laU1AFAr4cXia+/BWyn7DKfS
+ TuyD2mp/jXRuWqOwgOl/ffwziEXHoatT6C1tz04SLr4Ti4zuXH3fpVxhAjJjeeUQnA
+ JNWzKTW/vlFDLI0cYtj5s4UrTwZT+2jv2CXgFbDeb5q0I63nJlIxu8ib5NHd3UE++t
+ Z7GzSt8qErTY34npdL/+e9bnlAYsBXsZFwr1LXXw+c/u7XIC9iYwp+vb9UqVtOgnDo
+ 1S0q6Jzc+9rP6/Aa7SfQZZCn2nlSpzf2qe3kFEf3Mgii8MBFsdho25da7sVEeJ3/Wl
+ FJpYtBcSWH3CA/EoZ1+PA8uRuMb4R86X4Wd4fV8XQwwXI7z00EuePvcEp5y0KTwWz1
+ PB/fodnx17NbnzLtH7HJ9LR+8AtTfIzNVzOU8K/1ridd7LsyBVy+6p8PMWfMhoAFYt
+ IFinDtcpg6JxzyvoRXU9h/GI=
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-78378ec9d66so77784597b3.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:04:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761581012; x=1762185812;
+ d=1e100.net; s=20230601; t=1761581065; x=1762185865;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RR5BznuAUZ5//5K4fKsbv/PX3i2neLhRixVpX04AB5M=;
- b=vcANMUJOhN0ZnKPD20r59ROfQzaf4PuKdb6QwJGIa/t7xQDCEjBBVMundJWS1hBfJ9
- Tuuhjfu/tSV8Ff4LJ/DD+MGcX33VmCEukdzPSz40vu40zbYLUk/E1GiwRKXl5kf5/g47
- I3KVssCwWB82E8/Q9ECBhzTuwW9fxK5FfsvG47R7I/b3T6Giw9ug2QVLShkLrW9e/rSP
- Oprfsp5t0EU5RUqnAK6fOq3bMpbicj7/OylNXJ23NbV8zpUZGoICM7trcdBBmnM/AhHX
- jP2vUtkZNkI0qrDglfgcwGoPklkuJZgYmExl7x7ZDST7ELlG4yNLdiojvz45pqhae/XT
- AjRw==
-X-Gm-Message-State: AOJu0Yz4xQm8cfdqYg5zcReRk0xYlrAN9ke5iINnAV55nQpS/VxG3vD7
- Phv5cwhO6bpoY0zWeHDMUXJkGb8eJTPK5uSdjum7bxuAMUY5EkIjcEdvdMUO0I0/tF+Wee8hIYV
- fIVbvgjwaqah5l0ujPnZR2CYxn/YuRCzpzw5Uf3LFAQ==
-X-Gm-Gg: ASbGnctZ5IuBKixRWhKqdiP2cf6U/Z5/OlX5w2zIlWonoAU4QSGtKmKEwo9HQFFjCpd
- j2usdq/2RWAUi6kQKYnKXKap2cEJ2RtEjo432nTUSD95Ja4bM0hUvHU4tT3KeJdmgGDoP7f8W0q
- We4DzoSoVNGem+5kxgLZkFZovr/qWje0VBkkSj2x2wuSlEflL1BBryD+1JHEbV3hl0ZUzuhzRRw
- SCV3oSl9ZBbDLpYQZ56LcEY/tgiKed/q/bysHdGHDfb4U33ZsZde97d5mFF60Ws9LQOFro2
-X-Google-Smtp-Source: AGHT+IEUrN/EysgI2nB2F9WdFzaJ1hhJHQ7VjfW/gyaI669aRQl1+Q6hp6c/yY+VSNAPuRW0/bPat1D3KnOCnNmBZY0=
-X-Received: by 2002:a05:690e:c4f:b0:612:891a:9ecc with SMTP id
- 956f58d0204a3-63f6b9b05b7mr479893d50.9.1761581011690; Mon, 27 Oct 2025
- 09:03:31 -0700 (PDT)
+ bh=K+uuWePygWGRawRF+mLJCdCtahM8w0ZIFtVRhWLR0oQ=;
+ b=o2gileKci/EEjEo2LqdhG7jFcTO1RUq1Txj8mj4HfR2AvOcxY5nNxI+c2NsqjPNrs3
+ ovg9PmCYG2jTg7LdsE4nWZ6/fLzgWBhybhjHB9RmCOSS56cuiL7CHxJblg18qgyXg001
+ iDecOvsZnxPgfyBWaHpMY+1/Dhy2GuxNFmeyVlifHJbuokWHcBp8aSfb0Ar8SBgvaZOB
+ M0eeh4sn/i247lHYVNY8AtzCEcfhLHBqgJmRU2nTpYG3KMqcXX1yddLYAihZTCvwPcQe
+ XCNrJOudaxOdwf73185pNeGIWKTlaYEzDN+IAczVvFZ4fhBEayb0aRggzyEt8nqj7BWJ
+ 8rhQ==
+X-Gm-Message-State: AOJu0YwbbHc76iEBSV11HKvMN5RS6DTi+Vqbp5EzOFX0ESu9sspTfS0x
+ zV4bCwUMG1yzknZz2fMFROBU6yaPVHYF3sz/1cNe83O+vCpHOBDwBj0bp/Lq/758kzY17Q7Uugm
+ UX4ncx2zdAr120PuUcrZLeb5ReTS0NyWBJh2ZfAvbyx9+KLG4s0Bwxsjs8kZRHpSQ2fWZ0/JaQK
+ dEzafe0gonycU3P9REY5LFCIH3T16uuc2Hme5m7mQKP6/BobM=
+X-Gm-Gg: ASbGncv/lUXMcLLXRW249Q0o57hCa1FpcO6N/xSbxXHZBUhV6f1DqXGNCbgOIRxOa+g
+ dwAbrCjGkdPT7cJpxLhLSOMO79y+xHCHwQflZDhuE3/5O85fooICCX+fPQtt3vNL3sMg5O2e5ts
+ 8LfdM0CAqD9NSX+hIuOJguMfiqofn7Io7ZTl4wkXzhcCazDXDC8+ax2eTU6nMo23tRHf5qPJC40
+ cKUH/w1f4fpaTk=
+X-Received: by 2002:a53:b9c4:0:b0:63f:5642:74be with SMTP id
+ 956f58d0204a3-63f6b9d41abmr402105d50.4.1761581064646; 
+ Mon, 27 Oct 2025 09:04:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJWYZMx5ZqQPVn/EDNtIHxLZ/9laaVHZ+WyRvmBBGMdnQ+y/A1F4s3ma4HZyYQHsm+1jyKS4d1VGx/s5Y7UmM=
+X-Received: by 2002:a53:b9c4:0:b0:63f:5642:74be with SMTP id
+ 956f58d0204a3-63f6b9d41abmr402077d50.4.1761581064268; Mon, 27 Oct 2025
+ 09:04:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250920140124.63046-1-mohamed@unpredictable.fr>
- <20250920140124.63046-4-mohamed@unpredictable.fr>
- <CAFEAcA-398ZMeLUbHWyUw4np81mLikEn2PkQnFQMY4oY_iWRFA@mail.gmail.com>
- <29E39B1C-40D3-4BBA-8B0B-C39594BA9B29@unpredictable.fr>
-In-Reply-To: <29E39B1C-40D3-4BBA-8B0B-C39594BA9B29@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Oct 2025 16:03:19 +0000
-X-Gm-Features: AWmQ_bky_gDkaMRbeQ688zuYHzvCneYcGVItHtc3zS3XRWMV3shJhZg-0iZCeos
-Message-ID: <CAFEAcA93e6GL9agaCBZ2AabB21JrS6KS6MsbRHGPwdc_vj7xDQ@mail.gmail.com>
-Subject: Re: [PATCH v6 03/23] hw/arm: virt: add GICv2m for the case when ITS
- is not available
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Phil Dennis-Jordan <phil@philjordan.eu>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, kvm@vger.kernel.org,
- Igor Mammedov <imammedo@redhat.com>, 
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Alexander Graf <agraf@csgraf.de>, Sunil Muthuswamy <sunilmut@microsoft.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251024-second-fix-3149-v1-1-d997fa3d5ce2@canonical.com>
+ <aP9BhBEUSuM0ougc@redhat.com>
+In-Reply-To: <aP9BhBEUSuM0ougc@redhat.com>
+From: Wesley Hershberger <wesley.hershberger@canonical.com>
+Date: Mon, 27 Oct 2025 11:04:13 -0500
+X-Gm-Features: AWmQ_bmjriDjlsTF9xdqJQ3a8IMx0TAii1wLj36kCLG44SruGyGKkfjFo0Tg1UA
+Message-ID: <CADzzt1B4ZwRwv+ZCWyGwyZwqScHAfKkbL2UEaujd3BJNSkMbXg@mail.gmail.com>
+Subject: Re: [PATCH] block: Add missing null checks during
+ query-named-block-nodes
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=wesley.hershberger@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,94 +115,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2 Oct 2025 at 05:30, Mohamed Mediouni <mohamed@unpredictable.fr> wr=
-ote:
+On Mon, Oct 27, 2025 at 4:55=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote=
+:
 >
+> Am 24.10.2025 um 20:07 hat Wesley Hershberger geschrieben:
 >
+> Sorry, Wesley, that this turns out to be a bit more complicated! We'll
+> probably need some further discussion before we can know if or which
+> adjustments to the patch are needed.
+
+Hi Kevin, thanks for your thoughts.
+
+> Before I send this, I just had another thought: Why does copy-on-read
+> even drop the child in bdrv_cor_filter_drop()? Wouldn't the normal
+> mode of operation be that for a short time you have both the cor node
+> and its parent point to the same child node, and that would just work?
+> I see commit messages about conflicting node permissions (3108a15cf09 by
+> Vladimir), but I don't understand this. A filter without parents
+> shouldn't try to take any permissions.
 >
-> > On 25. Sep 2025, at 18:24, Peter Maydell <peter.maydell@linaro.org> wro=
-te:
-> >
-> > On Sat, 20 Sept 2025 at 15:02, Mohamed Mediouni
-> > <mohamed@unpredictable.fr> wrote:
-> >>
-> >> On Hypervisor.framework for macOS and WHPX for Windows, the provided e=
-nvironment is a GICv3 without ITS.
-> >>
-> >> As such, support a GICv3 w/ GICv2m for that scenario.
-> >>
-> >> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> >>
-> >> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> >> ---
-> >> hw/arm/virt-acpi-build.c | 4 +++-
-> >> hw/arm/virt.c            | 8 ++++++++
-> >> include/hw/arm/virt.h    | 2 ++
-> >> 3 files changed, 13 insertions(+), 1 deletion(-)
-> >
-> > Looking at this I find myself wondering whether we need the
-> > old-version back compat handling. The cases I think we have
-> > at the moment are:
-> >
-> > (1) TCG, virt-6.1 and earlier: no_tcg_its is set
-> >   -- you can have a gicv2 (always with a gicv2m)
-> >   -- if you specify gic-version=3D3 you get a GICv3 without ITS
-> > (2) TCG, virt-6.2 and later:
-> >   -- gic-version=3D2 still has gicv2m
-> >   -- gic-version=3D3 by default gives you an ITS; if you also
-> >      say its=3Doff you get GICv3 with no ITS
-> >   -- there is no case where we provide a GICv3 and are
-> >      unable to provide an ITS for it
-> > (3) KVM (any version):
-> >   -- gic-version=3D2 has a gicv2m
-> >   -- gic-version=3D3 gives you an ITS by default; its=3Doff
-> >      will remove it
-> >   -- there is no case where we provide a GICv3 and are
-> >      unable to provide an ITS for it
-> > (4) HVF:
-> >   -- only gic-version=3D2 works, you get a gicv2m
-> >
-> > and I think what we want is:
-> > (a) if you explicitly disable the ITS (with its=3Doff or via
-> >     no_tcg_its) you get no ITS (and no gicv2m)
-> > (b) if you explicitly enable the ITS you should get an
-> >     actual ITS or an error message
-> > (c) the default should be its=3Dauto which gives
-> >     you "ITS if we can, gicv2m if we can't".
-> >     This is repurposing the its=3D property as "message signaled
-> >     interrupt support", which is a little bit of a hack
-> >     but I think OK if we're clear about it in the docs.
-> >     (We could rename the property to "msi=3D(off,its,gicv2m,auto)"
-> >     with back-compat support for "its=3D" but I don't know if
-> >     that's worth the effort.)
-> >
-> > And then that doesn't need any back-compat handling for pre-10.2
-> > machine types or a "no_gicv3_with_gicv2m" flag, because for
-> > 10.1 and earlier there is no case that currently works and
-> > which falls into category (c) and which doesn't give you an ITS.
-> > (because we don't yet have hvf gicv3 implemented: that's a new
-> > feature that never worked in 10.1.)
-> >
-> > What do you think?
->
-> Would it be wanted to provide MSI-X support in all scenarios
-> even with its=3Doff?
+> So another option for never letting the situation arise would be that
+> cor_filter_bs just keeps its child until it's really deleted.
 
-We should prefer to provide MSI-X support. If the user
-explicitly asks for a config that doesn't give MSI-X
-support, that's their choice to make.
+It sounds like you'd be open to a patch that partially reverts 3108a15cf09?
+In my local testing I did verify that preventing the child from being detac=
+hed
+resolves the bug and am currently double-checking it with this diff:
 
-> And there=E2=80=99s the consequence of that making GICv3 + GICv2m only
-> testable with auto and not with TCG or kvm, which doesn=E2=80=99t sound i=
-deal.
+diff --git a/block.c b/block.c
+index 8848e9a7ed..72261ea1d4 100644
+--- a/block.c
++++ b/block.c
+@@ -5386,17 +5386,13 @@ bdrv_replace_node_noperm(BlockDriverState *from,
+  *
+  * With auto_skip=3Dfalse the error is returned if from has a parent which=
+ should
+  * not be updated.
+- *
+- * With @detach_subchain=3Dtrue @to must be in a backing chain of @from. I=
+n this
+- * case backing link of the cow-parent of @to is removed.
+  */
+ static int GRAPH_WRLOCK
+ bdrv_replace_node_common(BlockDriverState *from, BlockDriverState *to,
+-                         bool auto_skip, bool detach_subchain, Error **err=
+p)
++                         bool auto_skip, Error **errp)
+ {
+     Transaction *tran =3D tran_new();
+     g_autoptr(GSList) refresh_list =3D NULL;
+-    BlockDriverState *to_cow_parent =3D NULL;
+     int ret;
 
-I guess that would be an argument for the "give the property
-the right name so we can say "msi=3D(off,its,gicv2m,auto)". Then
-you could say
- -accel tcg -machine gic-version=3D3,msi=3Dgicv2m
+     GLOBAL_STATE_CODE();
+@@ -5405,17 +5401,6 @@ bdrv_replace_node_common(BlockDriverState
+*from, BlockDriverState *to,
+     assert(to->quiesce_counter);
+     assert(bdrv_get_aio_context(from) =3D=3D bdrv_get_aio_context(to));
 
-to test that setup.
+-    if (detach_subchain) {
+-        assert(bdrv_chain_contains(from, to));
+-        assert(from !=3D to);
+-        for (to_cow_parent =3D from;
+-             bdrv_filter_or_cow_bs(to_cow_parent) !=3D to;
+-             to_cow_parent =3D bdrv_filter_or_cow_bs(to_cow_parent))
+-        {
+-            ;
+-        }
+-    }
+-
+     /*
+      * Do the replacement without permission update.
+      * Replacement may influence the permissions, we should calculate new
+@@ -5427,11 +5412,6 @@ bdrv_replace_node_common(BlockDriverState
+*from, BlockDriverState *to,
+         goto out;
+     }
 
-thanks
--- PMM
+-    if (detach_subchain) {
+-        /* to_cow_parent is already drained because from is drained */
+-        bdrv_remove_child(bdrv_filter_or_cow_child(to_cow_parent), tran);
+-    }
+-
+     refresh_list =3D g_slist_prepend(refresh_list, to);
+     refresh_list =3D g_slist_prepend(refresh_list, from);
+
+@@ -5450,7 +5430,7 @@ out:
+ int bdrv_replace_node(BlockDriverState *from, BlockDriverState *to,
+                       Error **errp)
+ {
+-    return bdrv_replace_node_common(from, to, true, false, errp);
++    return bdrv_replace_node_common(from, to, true, errp);
+ }
+
+ int bdrv_drop_filter(BlockDriverState *bs, Error **errp)
+@@ -5466,7 +5446,7 @@ int bdrv_drop_filter(BlockDriverState *bs, Error **er=
+rp)
+
+     bdrv_drained_begin(child_bs);
+     bdrv_graph_wrlock();
+-    ret =3D bdrv_replace_node_common(bs, child_bs, true, true, errp);
++    ret =3D bdrv_replace_node_common(bs, child_bs, true, errp);
+     bdrv_graph_wrunlock();
+     bdrv_drained_end(child_bs);
+
+@@ -5917,17 +5897,7 @@ int bdrv_drop_intermediate(BlockDriverState
+*top, BlockDriverState *base,
+         updated_children =3D g_slist_prepend(updated_children, c);
+     }
+
+-    /*
+-     * It seems correct to pass detach_subchain=3Dtrue here, but it trigge=
+rs
+-     * one more yet not fixed bug, when due to nested aio_poll loop
+we switch to
+-     * another drained section, which modify the graph (for example, remov=
+ing
+-     * the child, which we keep in updated_children list). So, it's a TODO=
+.
+-     *
+-     * Note, bug triggered if pass detach_subchain=3Dtrue here and run
+-     * test-bdrv-drain. test_drop_intermediate_poll() test-case will crash=
+.
+-     * That's a FIXME.
+-     */
+-    bdrv_replace_node_common(top, base, false, false, &local_err);
++    bdrv_replace_node_common(top, base, false, &local_err);
+     bdrv_graph_wrunlock();
+
+     if (local_err) {
+
+> Vladimir, do you remember what the specific problem was?
+
+I'd be happy to submit this if Vladimir is happy that it won't cause
+other issues
+(I've run make check-block with it and saw no failures).
+
+Thanks so much!
+~Wesley
 
