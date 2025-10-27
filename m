@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 065D5CCF9EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 17:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CE3CCF9EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 17:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDQZs-0005zC-1a; Mon, 27 Oct 2025 13:00:16 -0400
+	id 1vDQaA-0006Ao-0G; Mon, 27 Oct 2025 13:00:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQZm-0005yu-N4
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:00:10 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQa8-00069L-Iu
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:00:32 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQZc-0001a6-FM
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:00:10 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-427007b1fe5so4204577f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:59:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQa0-0001pG-3o
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 13:00:32 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-474975af41dso34212645e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 10:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761584396; x=1762189196; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761584418; x=1762189218; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6Hhbqbl2JFn13SNwt+EdjfCvEeWKXegJVpttQ41Ra/w=;
- b=fVxBsAdBvmm+ii0trzpIFrfPOJ9Zdwe7fY6DHQrER9umohwo/wDUydbvr03uuFx9lB
- mtZWoiwQ3zMkzh8r3HZR8yBSQzQktzI2KoNik+v2rDjzUrrPPQBitSx/n152or9Q50hr
- xB42vCutrB/SEiN93OTt7drqeWgzjQMocuXx+AS16GAYy1eaiCB6+yr2/+vDz/ceMx/f
- oDXLumPA1Lbf41siwMGizWn3O4z7OILQae1/UNOaNfkRtIu+noTj2fMmrH5IvCzcBfuV
- R5fwvyrGsX4zEfLb3WM3tTtEtSawsmGguwgPAYgNWolY1/1LWjl7EKmlRhOfYuTlc0md
- fFTQ==
+ bh=Aathi89rtU4Qcn0jbqp4B+hZBRllDuF+Ck/DO4z+mQE=;
+ b=PZlyGr3UF5omq7agnuef+mV6KYy6T9YevE9pwqGxtECqbLPIlC04jGWfUyZ4sQaG3t
+ g1OTaeSgBULJd8TiqhV9WxZzSWBYjno4mL8OaDDJh8Rylv+EGhbjFPc4rjtxPEuNRMMw
+ lKIRR8saycBgiA/ZFamcccJZXUclbICZ4PjOLBuDzLNBwHdBgWb2LqIONfl+LGrPg5Ev
+ +71kIBEWIWIMBjPH2bQzoorflU1riyZ0puh8nUm/yH+e41+cpmwuhccaxOkufVjVJq+G
+ Jibv9bExJU0WLrMgRW5J3frv7mJLbVRCimQ+phS8MyGcBLn6Ve7jBbdZU8+dCND4ny5f
+ Ps1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761584396; x=1762189196;
+ d=1e100.net; s=20230601; t=1761584418; x=1762189218;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6Hhbqbl2JFn13SNwt+EdjfCvEeWKXegJVpttQ41Ra/w=;
- b=vxSiYeXo7hySU3gpfonGY2nbhhqKrrfZFRVt97m8gKix4n5Ne1l3odwIHVlbsMo6tq
- wbAUnrQqLM4LA616YEyhPmqo1V09N+KmzpK8qaG72uDlkyIi6gakXhFucMHdeJWZn2pb
- DnADeWCN6I/DT5kY/lVtPIQY6gpm/6l88nkXnHR5TeoGMiL6gj13NikQ9u7qfZqya8NF
- BlWILfqRwc5KQyYRIFI6CSIEe+5xwyzOaUyJO0UmI0qWtUokJpCUyKHDgZ+V6hlp2Hu2
- lH600emq97u1Y2qgI/8ZMxjpv9JnyK1UvImdt8iqrCMwpfEY//BF6RZr5PbJJ5p2jYAa
- 52pQ==
-X-Gm-Message-State: AOJu0Yzh3ScY7OZJlLta3U9AnVrfJHGVy/8n+G5lZczOXP1wBZPfJNBn
- R63GOirWu172Cio8AVhwfTT1dkaQrcq2pCElZytFnpTIw6cuXGxpZVNBnXcGMlgOHy8GRMWrB5E
- CI0FlnPs=
-X-Gm-Gg: ASbGncuXtOSk68jFYbuvbXmLtcHczqJuaUxHl2FrwUlrFiOraEK4AHdC0pNgF7beyhC
- pyVDKzGEaQ2Buh+594H4TPKk2b7EhFZ0AkoMFcIP0jTyE3kmhb/Ef/FvXtf0yhjDFXA1Vv+r58p
- 2ZZdJJ+KSquRzeAmy5mo4/n8b6KN1muyvjGvnyjWtw3RqBdyPm9+aq8bI/l9z+ITxqV3RFeGYzD
- EHCNYt3OLnhC5S3NCPZaXa+IKIIY1RJkhdSsSLlVu7BKHWkbGE3JRzR/pot8dtxzvLLAHEbjB7O
- u0t43U7qc5SOkS+toUpybWzysD2rqNw9Y/Zn54lESDW3pMLObaMbW7kpc89lVxkVRofyd0BkT9+
- QUXE/qNdNx8tQ59hwnQLfxrBO8w86k9g+TZnfQ5bb+1n8sEBzVhRC6kvk6uEHGp1iL+iNWuHE1J
- xKK70MtzcTAOq04BTLk1OxALxdqSIrryiDYB9B4OskokkiEYM7zN+9VA==
-X-Google-Smtp-Source: AGHT+IEJ1Cv/AmpNtQu+FliggCE3O2OmtaL3NmKkUDwGaRoplk5JCAE5tZZawOLYVxt9G/O93um9Rw==
-X-Received: by 2002:a05:6000:24c5:b0:429:8bfe:d842 with SMTP id
- ffacd0b85a97d-429a7e52c88mr343049f8f.4.1761584395933; 
- Mon, 27 Oct 2025 09:59:55 -0700 (PDT)
+ bh=Aathi89rtU4Qcn0jbqp4B+hZBRllDuF+Ck/DO4z+mQE=;
+ b=FyEdCWiIOxA8Us/cY/xEjtVNU/90xJpwMECbagWN4zu906vaoC9NKn5G5OrUgPxmu2
+ 6Pvwwtam05NxZSeVf7Smc988iZRm1JoPxOaWd5NjVxKPx+35AVLz/n1YIz2GKBKuPLCg
+ zwHKDsibQE86aKJst0KsF45Z17b2gVJnqR+Id/aZM6cPyCjafDbMA4pQny+KErdh0oBd
+ vHj7bRffS7GiKtcZ+3GEhS1bSqWN6WZKGmP23+AfHgtilRbEkvcBLw7iWnfmlKVBHDx0
+ 3VCM5t/njGf8srY/+UGa27JBvWunLLWngT5K6oPI7UW2VVNfevNVnW+Ig/6YXq53fffC
+ 5cig==
+X-Gm-Message-State: AOJu0YyFMyHExHYh1oOrxP9IV7E/43Z8iJ9Q1AtDCeu1k4a89afbgMIm
+ l2/0i8LGRbH2ptfmLvRS20O2gVm/ZwnSASg32KsjsdrawvrrVx4ULPRALVbtLkH0Zq1M/+Zrdp5
+ RCV1xs2c=
+X-Gm-Gg: ASbGncsN7gYQcQ/Ct41BpM7/WO4FU6zKYtjSrG1X0bxhKuXfmMiUcLemMsHy2tCBKqK
+ q+/AX1DEyppz5MEHvMCIyYxLni7OvB/2/QGAKJjfQGwJtUnWFgru1ZMjIq4Yg02uQ+mbBQZFgib
+ +cuSHZ+lnxoei5nDjbMQ9/Kky+7B/hAonhHehKtbUgh76QPHcZAkuOQ0i+rPM/zgJUcDPiL/LqM
+ FV706ob2/EvowweOVckn+TVbGe711ThEr/M2/JD5PvQ1kNNzfPvgn2vra8tD7KYDcRg2wZ+TD7V
+ +BR07faygxmw7e56AW1fDF9dx/nb/gCoqdYOpmXHdIJUkAQK+jf0/quiiEVY0wGsJG9SwfjOgrZ
+ mTmYpxfssXdsoYG0UkXLP+Dr543LQ45t1BE4LGEK2U2P4TT0O0AQlhluZ4ofhJFVqy+Lf6WpF16
+ mwPAVwZLAi/4aHep6N+JlPJFqLj6wyn7PjfjKzvaAz8Ue/SYNFQvLWhetXCHcZtvz9
+X-Google-Smtp-Source: AGHT+IHID/an2damXvT2lLmZrkbJFT/kf+LTqdO0F61dfoUD/wxExN0eQdaJ2LySJCo0t/qB2DXj9Q==
+X-Received: by 2002:a05:600c:8b83:b0:46e:2562:e7b8 with SMTP id
+ 5b1f17b1804b1-47717e42293mr3211465e9.21.1761584418032; 
+ Mon, 27 Oct 2025 10:00:18 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952e3201sm15349398f8f.47.2025.10.27.09.59.55
+ 5b1f17b1804b1-475dd035e05sm145547525e9.7.2025.10.27.10.00.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 09:59:55 -0700 (PDT)
-Message-ID: <6e24181a-5deb-4eb2-9882-72d28e6005a8@linaro.org>
-Date: Mon, 27 Oct 2025 17:59:54 +0100
+ Mon, 27 Oct 2025 10:00:17 -0700 (PDT)
+Message-ID: <b6881d44-f198-47ef-9c74-e3bb83f51660@linaro.org>
+Date: Mon, 27 Oct 2025 18:00:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] hw/pci-host/typhoon: Re-use generic
+Subject: Re: [PATCH v2 6/7] hw/pci-host/sabre: Re-use generic
  pci_host_data_le_ops MemoryRegionOps
 Content-Language: en-US
 To: qemu-devel@nongnu.org
@@ -78,20 +78,20 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>
 References: <20251027165304.98296-1-philmd@linaro.org>
- <20251027165304.98296-8-philmd@linaro.org>
+ <20251027165304.98296-7-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251027165304.98296-8-philmd@linaro.org>
+In-Reply-To: <20251027165304.98296-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,47 +113,40 @@ On 27/10/25 17:53, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/alpha/alpha_sys.h |  1 -
->   hw/alpha/pci.c       | 26 --------------------------
->   hw/alpha/typhoon.c   |  4 ++--
->   3 files changed, 2 insertions(+), 29 deletions(-)
+>   hw/pci-host/sabre.c      | 34 +++-------------------------------
+>   hw/pci-host/trace-events |  2 --
+>   2 files changed, 3 insertions(+), 33 deletions(-)
 > 
-> diff --git a/hw/alpha/alpha_sys.h b/hw/alpha/alpha_sys.h
-> index a303c584383..c193f0a9b56 100644
-> --- a/hw/alpha/alpha_sys.h
-> +++ b/hw/alpha/alpha_sys.h
-> @@ -14,7 +14,6 @@ PCIBus *typhoon_init(MemoryRegion *, qemu_irq *, qemu_irq *, AlphaCPU *[4],
->   
->   /* alpha_pci.c.  */
->   extern const MemoryRegionOps alpha_pci_ignore_ops;
-> -extern const MemoryRegionOps alpha_pci_conf1_ops;
->   extern const MemoryRegionOps alpha_pci_iack_ops;
->   
->   #endif
-> diff --git a/hw/alpha/pci.c b/hw/alpha/pci.c
-> index 7c18297177b..d44cee570bf 100644
-> --- a/hw/alpha/pci.c
-> +++ b/hw/alpha/pci.c
-> @@ -38,32 +38,6 @@ const MemoryRegionOps alpha_pci_ignore_ops = {
->       },
+> diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
+> index 669191b6c7e..eb3dbe3361f 100644
+> --- a/hw/pci-host/sabre.c
+> +++ b/hw/pci-host/sabre.c
+> @@ -246,28 +246,6 @@ static const MemoryRegionOps sabre_host_config_ops = {
+>       .endianness = DEVICE_BIG_ENDIAN,
 >   };
 >   
-> -
-> -/* PCI config space reads/writes, to byte-word addressable memory.  */
-> -static uint64_t bw_conf1_read(void *opaque, hwaddr addr,
-> -                              unsigned size)
+> -static void sabre_pci_config_write(void *opaque, hwaddr addr,
+> -                                   uint64_t val, unsigned size)
 > -{
-> -    PCIBus *b = opaque;
-> -    return pci_data_read(b, addr, size);
+> -    SabreState *s = opaque;
+> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+> -
+> -    trace_sabre_pci_config_write(addr, val);
+> -    pci_data_write(phb->bus, addr, val, size);
 > -}
 > -
-> -static void bw_conf1_write(void *opaque, hwaddr addr,
-> -                           uint64_t val, unsigned size)
+> -static uint64_t sabre_pci_config_read(void *opaque, hwaddr addr,
+> -                                      unsigned size)
 > -{
-> -    PCIBus *b = opaque;
-> -    pci_data_write(b, addr, val, size);
+> -    uint32_t ret;
+> -    SabreState *s = opaque;
+> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+> -
+> -    ret = pci_data_read(phb->bus, addr, size);
 
-Hmm, likely incorrect, better ignore.
+Likely incorrect, please ignore.
 
+> -    trace_sabre_pci_config_read(addr, ret);
+> -    return ret;
 > -}
 
