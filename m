@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878ECCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 09:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B52CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 09:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDJpK-0005hE-Qm; Mon, 27 Oct 2025 05:47:46 -0400
+	id 1vDJro-0006Ul-I4; Mon, 27 Oct 2025 05:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vDJpE-0005g9-Tl
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:47:42 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1vDJrm-0006UZ-IG
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:50:18 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vDJpA-0000oz-VH
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:47:39 -0400
+ id 1vDJrg-0001BC-0x
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 05:50:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1761558458; x=1793094458;
+ t=1761558612; x=1793094612;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=INtutBeGtSZcey+6l6//I7VSxH7KBfMtFX4UxJfmMhA=;
- b=Lq15KViFWJf31IUKJPFH5f5cxKmRDPREY35symZmbkE0m2ovtdDN9slA
- viU5mIw/d8TSSVoI45sdff0fb0Qi4Y7O46I6itb76NOWnMskrdWYDQEKj
- gjTz9p1+r/t3qh10puc9b8wQO9RFlLC8cy3AbO/qHxxw65qLlkHkZVhxs
- i52LcCPUvlu5LNmUjkjaebDf/fTTzAbUzNZpTb8mdzHxTlRPlCZCxy0fn
- TKv5FUm0O6P5K0qnvJ4VC4ZIOYV7bnIv/j6WVTRPnmMCzZG4ugaB1+J1c
- BBpHbrEt74ZxSwB15sR9taRrltHg9tupKqd+rcNZcQCB/U6qixu8qUvhI g==;
-X-CSE-ConnectionGUID: s0hxYB0fRaO549ti7VJudQ==
-X-CSE-MsgGUID: 9zV7i8euRGGoktRrrQ2VNA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="63671114"
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="63671114"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Oct 2025 02:47:33 -0700
-X-CSE-ConnectionGUID: m0k8MP5VRSqS1ezfWvIK5w==
-X-CSE-MsgGUID: dQXCqHEvT/GQG+pXwdsPOA==
+ bh=EPREoMUXRyDfBk/mK+9pxDtEalQDV12FTD9qW61Ut7E=;
+ b=bzHZHJdoPfSM53hKtc8ABChwnCTuPwtoggdExkvHyA91ip56pIHWWqxJ
+ 3MVBkfo+iDoRdRLJKJbi+NkprVruDTl2YjdwOsoo8AFZwsCsz7kLeMGlw
+ I7Pz6AYqVxvQmPYa+YcIRhjVKn+ssrYXMpWflWStSDVdatC0TM9THs67q
+ XLetowJD4xFGhKHOE/NBPf6/hiEFArXg1A5feo/0hrH3dRlhpPCf0wFfh
+ UP/4/AMi+ETnQvnztbWMi9kS8kFaQ3L6yo2gIX0weaafQRt8lfK3AH95i
+ 2vo3YzdiK9TDkuUvtMF+W9MAKk+FyvmhqMZ1pHuZBRbVr/en0JUt5bo5k g==;
+X-CSE-ConnectionGUID: ovKl2CyRQAqK63hhkYnt4g==
+X-CSE-MsgGUID: JJBnvRrYRruoAm7SPCLd1w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11586"; a="86263350"
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="86263350"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Oct 2025 02:50:06 -0700
+X-CSE-ConnectionGUID: BHXATqk5RQmsIvipYv+t5Q==
+X-CSE-MsgGUID: v4fAVbsXSPKNKCNSurB9EQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="184619291"
+X-IronPort-AV: E=Sophos;i="6.19,258,1754982000"; d="scan'208";a="185759421"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 27 Oct 2025 02:47:30 -0700
-Date: Mon, 27 Oct 2025 18:09:40 +0800
+ by fmviesa010.fm.intel.com with ESMTP; 27 Oct 2025 02:50:03 -0700
+Date: Mon, 27 Oct 2025 18:12:13 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,17 +56,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Mathias Krause <minipli@grsecurity.net>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, Farrah Chen <farrah.chen@intel.com>
-Subject: Re: [PATCH v3 05/20] i386/cpu: Make ExtSaveArea store an array of
- dependencies
-Message-ID: <aP9E5M5d8ZoMhFCO@intel.com>
+Subject: Re: [PATCH v3 07/20] i386/cpu: Reorganize dependency check for arch
+ lbr state
+Message-ID: <aP9FfUKoP2azthS8@intel.com>
 References: <20251024065632.1448606-1-zhao1.liu@intel.com>
- <20251024065632.1448606-6-zhao1.liu@intel.com>
- <2d9f489e-dfa5-4bd1-bc7f-62223f81c167@intel.com>
+ <20251024065632.1448606-8-zhao1.liu@intel.com>
+ <d34f682a-c6c0-4609-96e8-2a0b76585c7d@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2d9f489e-dfa5-4bd1-bc7f-62223f81c167@intel.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <d34f682a-c6c0-4609-96e8-2a0b76585c7d@intel.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -91,25 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > @@ -7137,10 +7161,13 @@ static const char *x86_cpu_feature_name(FeatureWord w, int bitnr)
-> >       if (w == FEAT_XSAVE_XCR0_LO || w == FEAT_XSAVE_XCR0_HI) {
-> >           int comp = (w == FEAT_XSAVE_XCR0_HI) ? bitnr + 32 : bitnr;
-> > -        if (comp < ARRAY_SIZE(x86_ext_save_areas) &&
-> > -            x86_ext_save_areas[comp].bits) {
-> > -            w = x86_ext_save_areas[comp].feature;
-> > -            bitnr = ctz32(x86_ext_save_areas[comp].bits);
-> > +        if (comp < ARRAY_SIZE(x86_ext_save_areas)) {
-> > +            /* Present the first feature as the default. */
-> > +            const FeatureMask *fm = &x86_ext_save_areas[comp].features[0];
-> 
-> It doesn't look right to me.
-> 
-> E.g., when users are requesting IBT, thus CET_U and CET_S, they might get
-> "shstk" not avaiable.
+> >   * XSAVES feature bit (CPUID 0xD.0x1.EAX[bit 3]):
+> > 
+> >     Arch lbr state is a supervisor state, which requires the XSAVES
+> >     feature support. Enumerate supported supervisor state based on XSAVES
+> >     feature bit in x86_cpu_enable_xsave_components().
+> > 
+> >     Then it's safe to drop the check on XSAVES feature support during
+> >     CPUID 0XD encoding.
 
-This was intentional. This patch only introduces a new dependency array
-without attempting to change the existing state. The series is already
-quite large, so I didn't include all the cleanup within it.
+...
 
+> > +++ b/target/i386/cpu.c
+> > @@ -8174,16 +8174,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+> >               *ebx = xsave_area_size(xstate, true);
+> >               *ecx = env->features[FEAT_XSAVE_XSS_LO];
+> >               *edx = env->features[FEAT_XSAVE_XSS_HI];
+> > -            if (kvm_enabled() && cpu->enable_pmu &&
+> > -                (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR) &&
+> > -                (*eax & CPUID_XSAVE_XSAVES)) {
+> > -                *ecx |= XSTATE_ARCH_LBR_MASK;
+> > -            } else {
+> > -                *ecx &= ~XSTATE_ARCH_LBR_MASK;
+> > -            }
+> 
+> > -        } else if (count == 0xf && cpu->enable_pmu
+> > -                   && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
+> > -            x86_cpu_get_supported_cpuid(0xD, count, eax, ebx, ecx, edx);
+> 
+> This chunk needs to be a separate patch. It's a functional change.
+
+Already mentioned this in commit message.
 
 
