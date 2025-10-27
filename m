@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B140CCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD28CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 16:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDQWL-0003dT-MG; Mon, 27 Oct 2025 12:56:37 -0400
+	id 1vDQWb-0003uS-F9; Mon, 27 Oct 2025 12:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQVz-0003Qd-F7
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:56:16 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQWH-0003df-LI
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:56:36 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQVd-0001MM-Oa
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:56:11 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-4298b49f103so1623189f8f.2
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:55:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDQW6-0001ON-Pl
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 12:56:33 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-475dab5a5acso15593825e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 09:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761584147; x=1762188947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761584180; x=1762188980; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rJWsP8lU8vlleE35z63JKOE98MNb43nWOSZHGlrXrmY=;
- b=rNEOEWFXx5RJOCMP73VWDqK6xAm6nAiu6pUpthVRA3bdYtljdPDDzkiYisXQQdgCoI
- ssRyeEOonry9R9DBGM5E9y4pPhr7aHBTBt9MhwtTZOAu3cJ/Ad4DS8aPc35Pd4/vKUx+
- XABMH+tG/61aL22uwSSnpkISCl/rgcFCwNJgem05KD4TWdZQ3dKSl61p5gjAm3m3TA6Q
- Wml5M0nMVPPX938iWLSu5hVgNcBiO+1vgIuLd+7Z3I8LhBxLJ1kARbu9TiiJpd0IHjB+
- AQKRnthVumD238921YaxZILnDB8G8tN++fGnmw5ZxUgl8gNcD58k46LIkdFfIwoHujp5
- hmVQ==
+ bh=vRbyNgBG2QYbRLBjJ+dLxGFpEggesGRlG37R+YEXlUY=;
+ b=KS1LNAc8q8CYO8apch6tuk0VHvUuPez1V8SqFRUp7Ja5uJHIqNfIx+22vwSWPPY5pF
+ SEQo8r/ccC2TJ8OvXoLFBF5+m0O5ffw8zHGwy6iEDRMLKEpRMvKMNUOGJfVpyM1VZYTc
+ IoMAKN5mqeZfN+IUd29OrUyMZV95rUOZugrtgYWr42SQWovQqwaLoGAxYAXvL1W5Jz/D
+ qrwtpoXN2y+3woejy3N4zDoCYFYj++tiC62BBRSCWAjj1MXwyPPKpduaucyLYbzAdXXg
+ O0KpoR0Fp7ivF9ldgIupyAxYeLVSItwqmi2cpFAB8mW0NXknTMjy4wV/jNuOEhEv0Ux5
+ aL3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761584147; x=1762188947;
+ d=1e100.net; s=20230601; t=1761584180; x=1762188980;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rJWsP8lU8vlleE35z63JKOE98MNb43nWOSZHGlrXrmY=;
- b=BpvCWYSvOBgd+CScTM9LD7ML7mGNIoeABCqsz6TQHN7+Io/gOJ2bSjQa9zjJNiavQC
- 62coLNzqY9vb1wYo5Ed4dYjk28QVXdyYKONA1MlSTSTLoa7in/4jhMgHGRKC2wP24KBN
- uiwOHdm8aSALOcvaVY15D9E28ncDdUPkJ8tbtiBrVLg8Dmx5ffPb617e9bcaX4KVymAF
- zG8OpDrfFqIJJY4+Oq8QZN3dFcT0nT5FTyEm7OW9e2gMKJM9b17R3G24M40dGVB+Ly8F
- jfPSm/0zF59iGkbSAwZlYM7bfd+TXIBGkCRWazy1hB8j+hy7aVRwgYRXuE6fEZC0HSoN
- 4A+g==
-X-Gm-Message-State: AOJu0YwuhgSj+Fxd0gowmPkoKySbxwX/ORptNf2Zsb/GiwN08oA4ij56
- e0bJ6YO3dquxYOivuCYlJqGLKFF6pFdjtjPctrpfW5Woel4ja6jNHwU7nROQrxxXlTK5qf+C//P
- aKYGigcw=
-X-Gm-Gg: ASbGncujbeym9efsryOMY70yGsfshCOs7j+08cAxNqAuhRmZu3SYEkxBFy4tBfSsco7
- N2tbpV4h9GcGxTW+Yty19m/ExT9auXARfTBhqH6D3VubQmlB6+LUNQZ8UETY7J1mBhKbF2mkQ5m
- 937Y/GcQz5MNCDZ5xB+ytvfFr4jgN+ZjNLuZbznKjwSbtNltnfnDWho/7DPUt5/jk2QH7svuqYj
- DagbFVBTDoTjM4fT82YOrZXsL1Yn7j0aDLXlGadjXVB0iXtgSEc4LrUqJsxH4EL3yMmicvxJ5PI
- EG78/bj7EhsW9tSxuGAVnMxdzOZcMdPDGj6sMNUKkxjr7AbXYbZQsT29jQsMXkZz7ffWRl6KR1R
- xcueo1SxLCJZXltaBg1hFlMN03Iu1YSBwRCnNxEfYOy84uh+go/NJCY4yniNbDOvkEmwHkbODM2
- xWPyPjG1bP9C4eVUfwhwKpWS461bElKag4FWxBmy+fOu9Qoqh132cfgaZa32lTX/zfwk1yzm4=
-X-Google-Smtp-Source: AGHT+IFtcG54nuSaLEEr+2seJ9InEAuITtTAVmn1aKWi2EhdCvQwCqtnRdnSJkLE8ehoeHUHBCZ3Vg==
-X-Received: by 2002:a5d:64c4:0:b0:3df:c5e3:55fe with SMTP id
- ffacd0b85a97d-429a7e7c755mr335757f8f.29.1761584147273; 
- Mon, 27 Oct 2025 09:55:47 -0700 (PDT)
+ bh=vRbyNgBG2QYbRLBjJ+dLxGFpEggesGRlG37R+YEXlUY=;
+ b=np8/Tesq38pzM0klFsaYdsgrIZE/fmZndnL/BSGa+fnVJ7H8Pw6y1LI7LA9FBEtD6Y
+ 8V61nbvTyy6/GVOesklKaSV/TVOfm7tdpvjJXr9Y4LOBRbuxsZtNPTYRV7FdY79JInYG
+ Z22pPVEpJg3og4QNkQAkjDi9WB55GkgTHXThV3EPd/FW7N10TMZ3t6SJhmZjdTM4ZfS/
+ P1qjy1SL+RGN6d4v18VodgfHjHFEpiMJRUu4ZI53qEC3wa8iSemqg1QzPgqspZpraTRM
+ kIHRHyktKzSNLt2rguRi6LGB+5awKfYtVDOTcAtsJElbugSYZPWcJT/i6v6yl4IQloEk
+ 82cQ==
+X-Gm-Message-State: AOJu0Yw3oP0GXhc54jWR4e+mVgxRwLfliitI+kGcfcer+3oQftLck/XC
+ qCkhLJtwmxXezMpzNh4Fobo8+nAocj0cn2p/pu8r7gMJyR/F8Vt7ebxV1ZU3bYgi+FV59lgVxds
+ Dz0fZiP8=
+X-Gm-Gg: ASbGncu107RcTQ4aU8ClDRRXHSrBQnaGVNMOzrBwbD0/Qr/AVZdE70bOV4Aibjqdl3y
+ wfFmEE6yOfdQZja0C2au+ySMVsBVQqkF7PZMZGUfcC2DsJohiLjt95PZuVC5pPX7ePra6S+xdUk
+ prRIQ/odKeKEE0WGwFAwF2vMQaALUSrZoGU++K0G4q7ycZju3WDafudo5rhlBoAUzUb5zaV2mh2
+ Kb/SmDtbG0G0jAy7TYGF73biTlgGxZ/7hAXiSWg0JZx3/LFVQCfP76go1leFyAzgq/i48o+WOLI
+ tCvQWJ+zERgvCpaDOVBDVq3dYovBl0X6eAtgbs1mDH5zQNkPXT/gwZjaf+GJ/O2SgyzdSr2oBus
+ yKieQX2BdcOQj6qT3obSbmr+ONdCckreqMVhzjV2Zp7JutQeEyzj6NRHCuUr4k7erQ1kTvAaoWg
+ Y1ekYE4QPTJmaoooIrqRbOqAcNABwRXzrqtY7QxCmJVEEYuGsvxQ==
+X-Google-Smtp-Source: AGHT+IHB6Jayx13wSSGJnxfl7G3sjpsz07BEBFYyiomF06bFmu07tIKBf/4iI63Ifm7s+Y+LnHZUng==
+X-Received: by 2002:a05:600c:6215:b0:46e:33b2:c8da with SMTP id
+ 5b1f17b1804b1-47717e416admr3367265e9.32.1761584179936; 
+ Mon, 27 Oct 2025 09:56:19 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952de971sm15162492f8f.39.2025.10.27.09.55.45
+ 5b1f17b1804b1-475dd02cd5dsm145426295e9.4.2025.10.27.09.56.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Oct 2025 09:55:46 -0700 (PDT)
+ Mon, 27 Oct 2025 09:56:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -72,25 +72,24 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 5/7] hw/pci-host/sabre: Include 'host' in host bridge
- method names
-Date: Mon, 27 Oct 2025 17:53:01 +0100
-Message-ID: <20251027165304.98296-6-philmd@linaro.org>
+Subject: [PATCH v2 6/7] hw/pci-host/sabre: Re-use generic pci_host_data_le_ops
+ MemoryRegionOps
+Date: Mon, 27 Oct 2025 17:53:02 +0100
+Message-ID: <20251027165304.98296-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251027165304.98296-1-philmd@linaro.org>
 References: <20251027165304.98296-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,143 +105,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename various methods to help distinguish between
-sabre_host* (for host bridge block) and sabre_pci*
-(for the PCI function).
+Avoid duplicating code, re-use the generic generic
+pci_host_data_le_ops MemoryRegionOps.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/pci-host/sabre.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ hw/pci-host/sabre.c      | 34 +++-------------------------------
+ hw/pci-host/trace-events |  2 --
+ 2 files changed, 3 insertions(+), 33 deletions(-)
 
 diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
-index f63d832efc0..669191b6c7e 100644
+index 669191b6c7e..eb3dbe3361f 100644
 --- a/hw/pci-host/sabre.c
 +++ b/hw/pci-host/sabre.c
-@@ -116,8 +116,8 @@ static const PCIIOMMUOps sabre_iommu_ops = {
-     .get_address_space = sabre_pci_dma_iommu,
- };
- 
--static void sabre_config_write(void *opaque, hwaddr addr,
--                               uint64_t val, unsigned size)
-+static void sabre_host_config_write(void *opaque, hwaddr addr,
-+                                    uint64_t val, unsigned size)
- {
-     SabreState *s = opaque;
- 
-@@ -194,8 +194,8 @@ static void sabre_config_write(void *opaque, hwaddr addr,
-     }
- }
- 
--static uint64_t sabre_config_read(void *opaque,
--                                  hwaddr addr, unsigned size)
-+static uint64_t sabre_host_config_read(void *opaque,
-+                                       hwaddr addr, unsigned size)
- {
-     SabreState *s = opaque;
-     uint32_t val = 0;
-@@ -240,9 +240,9 @@ static uint64_t sabre_config_read(void *opaque,
-     return val;
- }
- 
--static const MemoryRegionOps sabre_config_ops = {
--    .read = sabre_config_read,
--    .write = sabre_config_write,
-+static const MemoryRegionOps sabre_host_config_ops = {
-+    .read = sabre_host_config_read,
-+    .write = sabre_host_config_write,
+@@ -246,28 +246,6 @@ static const MemoryRegionOps sabre_host_config_ops = {
      .endianness = DEVICE_BIG_ENDIAN,
  };
  
-@@ -329,7 +329,7 @@ static void pci_sabre_set_irq(void *opaque, int irq_num, int level)
-     }
+-static void sabre_pci_config_write(void *opaque, hwaddr addr,
+-                                   uint64_t val, unsigned size)
+-{
+-    SabreState *s = opaque;
+-    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+-
+-    trace_sabre_pci_config_write(addr, val);
+-    pci_data_write(phb->bus, addr, val, size);
+-}
+-
+-static uint64_t sabre_pci_config_read(void *opaque, hwaddr addr,
+-                                      unsigned size)
+-{
+-    uint32_t ret;
+-    SabreState *s = opaque;
+-    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+-
+-    ret = pci_data_read(phb->bus, addr, size);
+-    trace_sabre_pci_config_read(addr, ret);
+-    return ret;
+-}
+-
+ /* The sabre host has an IRQ line for each IRQ line of each slot.  */
+ static int pci_sabre_map_irq(PCIDevice *pci_dev, int irq_num)
+ {
+@@ -361,12 +339,6 @@ static void sabre_host_reset(DeviceState *d)
+     pci_bridge_update_mappings(PCI_BRIDGE(pci_dev));
  }
  
--static void sabre_reset(DeviceState *d)
-+static void sabre_host_reset(DeviceState *d)
- {
-     SabreState *s = SABRE(d);
-     PCIDevice *pci_dev;
-@@ -367,7 +367,7 @@ static const MemoryRegionOps pci_config_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--static void sabre_realize(DeviceState *dev, Error **errp)
-+static void sabre_host_realize(DeviceState *dev, Error **errp)
+-static const MemoryRegionOps pci_config_ops = {
+-    .read = sabre_pci_config_read,
+-    .write = sabre_pci_config_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-};
+-
+ static void sabre_host_realize(DeviceState *dev, Error **errp)
  {
      SabreState *s = SABRE(dev);
-     PCIHostState *phb = PCI_HOST_BRIDGE(dev);
-@@ -402,7 +402,7 @@ static void sabre_realize(DeviceState *dev, Error **errp)
-     pci_realize_and_unref(pci_dev, phb->bus, &error_fatal);
- }
- 
--static void sabre_init(Object *obj)
-+static void sabre_host_instance_init(Object *obj)
- {
-     SabreState *s = SABRE(obj);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-@@ -429,7 +429,7 @@ static void sabre_init(Object *obj)
-                              0);
+@@ -430,12 +402,12 @@ static void sabre_host_instance_init(Object *obj)
  
      /* sabre_config */
--    memory_region_init_io(&s->sabre_config, obj, &sabre_config_ops, s,
-+    memory_region_init_io(&s->sabre_config, obj, &sabre_host_config_ops, s,
-                           "sabre-config", 0x10000);
+     memory_region_init_io(&s->sabre_config, obj, &sabre_host_config_ops, s,
+-                          "sabre-config", 0x10000);
++                          "pci-conf-idx", 0x10000);
      /* at region 0 */
      sysbus_init_mmio(sbd, &s->sabre_config);
-@@ -483,7 +483,7 @@ static const TypeInfo sabre_pci_info = {
-     },
- };
  
--static char *sabre_ofw_unit_address(const SysBusDevice *dev)
-+static char *sabre_host_ofw_unit_address(const SysBusDevice *dev)
- {
-     SabreState *s = SABRE(dev);
+-    memory_region_init_io(&s->pci_config, obj, &pci_config_ops, s,
+-                          "sabre-pci-config", 0x1000000);
++    memory_region_init_io(&s->pci_config, obj, &pci_host_data_le_ops, s,
++                          "pci-data-idx", 0x1000000);
+     /* at region 1 */
+     sysbus_init_mmio(sbd, &s->pci_config);
  
-@@ -492,34 +492,34 @@ static char *sabre_ofw_unit_address(const SysBusDevice *dev)
-                (uint32_t)(s->special_base & 0xffffffff));
- }
- 
--static const Property sabre_properties[] = {
-+static const Property sabre_host_properties[] = {
-     DEFINE_PROP_UINT64("special-base", SabreState, special_base, 0),
-     DEFINE_PROP_UINT64("mem-base", SabreState, mem_base, 0),
- };
- 
--static void sabre_class_init(ObjectClass *klass, const void *data)
-+static void sabre_host_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     SysBusDeviceClass *sbc = SYS_BUS_DEVICE_CLASS(klass);
- 
--    dc->realize = sabre_realize;
--    device_class_set_legacy_reset(dc, sabre_reset);
--    device_class_set_props(dc, sabre_properties);
-+    dc->realize = sabre_host_realize;
-+    device_class_set_legacy_reset(dc, sabre_host_reset);
-+    device_class_set_props(dc, sabre_host_properties);
-     dc->fw_name = "pci";
--    sbc->explicit_ofw_unit_address = sabre_ofw_unit_address;
-+    sbc->explicit_ofw_unit_address = sabre_host_ofw_unit_address;
- }
- 
--static const TypeInfo sabre_info = {
-+static const TypeInfo sabre_host_info = {
-     .name          = TYPE_SABRE,
-     .parent        = TYPE_PCI_HOST_BRIDGE,
-     .instance_size = sizeof(SabreState),
--    .instance_init = sabre_init,
--    .class_init    = sabre_class_init,
-+    .instance_init = sabre_host_instance_init,
-+    .class_init    = sabre_host_class_init,
- };
- 
- static void sabre_register_types(void)
- {
--    type_register_static(&sabre_info);
-+    type_register_static(&sabre_host_info);
-     type_register_static(&sabre_pci_info);
- }
+diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
+index 792ab25729b..20c3cae47a2 100644
+--- a/hw/pci-host/trace-events
++++ b/hw/pci-host/trace-events
+@@ -35,8 +35,6 @@ sabre_set_request(int irq_num) "request irq %d"
+ sabre_clear_request(int irq_num) "clear request irq %d"
+ sabre_config_write(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
+ sabre_config_read(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
+-sabre_pci_config_write(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
+-sabre_pci_config_read(uint64_t addr, uint64_t val) "addr 0x%"PRIx64" val 0x%"PRIx64
+ sabre_pci_set_irq(int irq_num, int level) "set irq_in %d level %d"
+ sabre_pci_set_obio_irq(int irq_num, int level) "set irq %d level %d"
  
 -- 
 2.51.0
