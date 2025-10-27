@@ -4,95 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D8DCCF9EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 13:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D09CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 13:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDNFY-00046o-Ac; Mon, 27 Oct 2025 09:27:04 -0400
+	id 1vDNIA-00056n-0Q; Mon, 27 Oct 2025 09:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDNFP-00046Q-Lx
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:26:55 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1vDNI8-00056e-4w
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:29:44 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDNFK-00067V-34
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:26:55 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-785bf425f96so64924977b3.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 06:26:47 -0700 (PDT)
+ id 1vDNI2-0006F9-Jz
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 09:29:43 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-63e35e48a25so4849914d50.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 06:29:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761571603; x=1762176403; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2JlZ40rh/4ufe0hpy/2q9P+F5rcOVJ+uTTMetF3tVtY=;
- b=xIJ92dsufm+R+SYTBRLpaEnOQ0UjZti7nN2i11GPLSFByUtRUs2ObQ3R6/MKJDg7RD
- C0i3Ylsd94FDoEE0w/i/pb0abb2z0ttpyS2Mu97lw6beXEvu5e8Wtn35hsufiqHIeDCV
- uC9R6JfdRd3k6sO6H8p0GeI93gsqVd+HXnt2mgRgywymG8FxYHj/iC09e05GO53Jvt1N
- FfUPkEIITniEH0v5BMP9e4OALpznDyWFFx8M2enIyTVexmJPIsCJ7i/OEd7HB0QUbOde
- fs/7Pc9TivgqalCBd+C4YTT/BEAj65BQV1aPnCPJEN8Ohjinz7jymercsqMYHeN7CX0J
- ow/g==
+ d=linaro.org; s=google; t=1761571774; x=1762176574; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=G3r7QarJlMlOShYQ5z1qFAKOuJaRk0BIQS4KzqEqg2Y=;
+ b=u+cqQq7+48CJQm/DK/XeyA56ELCOUUdRFp47nEia1A+FNtqDfWKaSPwaIlwOZpNU1O
+ MQ8JsFLBeC2LodxJzN12fMFo7SlinF2Gdkc07BctVjgSY3qqA8xYnXbkA0DQwHLwn0vv
+ sWLQ9mHb1cAjp7lYBQTWaUsyKQkJUbzEvE6vqiPhimALPMdCQ17u1ugVWoyhyYbh1vn3
+ G3b+totgFfwDmR5gPv2QPG+tmGmOKC2BGHcPiAQFvYiC1ieLTdqeAKiAOQjFyNAZbQPe
+ YVSV9GaMO4L0OuLq6i8kTV5U3bwvJ0quyXTuUw7xR3/wTBRFFsC1FL36L6nx7U8KOUUh
+ 5ccw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761571603; x=1762176403;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2JlZ40rh/4ufe0hpy/2q9P+F5rcOVJ+uTTMetF3tVtY=;
- b=YSOkvBAzBGhaTq6Bv9gB1TiSWjh4Ib5QVxwlS9wbWabuehJJPBRo93xP/vxLvnVofh
- dWq7Gb5zYx3nKNOC3xWvuElBGWGTR4AYCnlV4pAnSnqOXfYBhdKv88PSolkW/AXvD/DW
- WAabHSwLwaGOLZ+7G9lmrD0uO/XyY3Z2wc3je496lnz/xpSC0wu0jF7ZvHfVrMnm85Y5
- UvFvHaKRXtMYxXBIsE2HZyMLv6b3VDkxsDz14YwdwOQsx/Vo5D0gDrmPnikst5PMwDl4
- 8xaDEpoctrcYu+VnkyCZepOPHt/kVLD5RsPCpYDI6GU/syhKQR+gfGP3dpGIxs59Y/Kr
- 8vpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLiCkDvI9X50RKorzwI0FdwfUAAdlWrGJZSmlB9viR/09A0GW4lHXjGqDbJGwIxdvu32TA5W/0wYWx@nongnu.org
-X-Gm-Message-State: AOJu0YxRut/7WJNHKURltm2547OY3JHoZuy0rtxW4HSXpNt6Co/CHB3P
- EE39ZOs0kqgXDndVms1fHRocpuJmIBmjKyTrnpr3KCg9kJkLHVRCO/fy5URYhnxgXZjMBVE9th2
- wgiETMx9PECM+RDBtuHuqklWKX4UlsDGIHD+6LjxZRg==
-X-Gm-Gg: ASbGncsE5MQqrCIOLkCt5ag5TiZzrxJNZyD45jHYopkcg3ronIjIRDtt4oxmcREWRvN
- POAQqIp1AAmSjVyomapq3VpsB4+Uuno4ftrfzEUopO7zOS39GJCo0zivoSTInkR5V4VSCPzCsSP
- 0fi85K8N0edVCqIC3n+y3/kabJAeKvXflNueZDHfCyLqmPzo3t1nXcEKYw6GaSXjS+hzaOBUPlZ
- /Fui5vCWIK+lI0dvsdeJNCXm60X2+2Pj+sQgRyQ8TlakEtE2E8bSpTUU0mWl32b4B2ah40h
-X-Google-Smtp-Source: AGHT+IFk7Uj8LN/dt+aIDo255N2Isb21PA09nzUH/ysHk7N5SlWLcjUArW+QRMC8xnVqzH6u+yc5oUdvGxIRpg+AdB8=
-X-Received: by 2002:a05:690e:1281:b0:63f:471b:c949 with SMTP id
- 956f58d0204a3-63f471bca5bmr7909122d50.8.1761571603210; Mon, 27 Oct 2025
- 06:26:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761571774; x=1762176574;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=G3r7QarJlMlOShYQ5z1qFAKOuJaRk0BIQS4KzqEqg2Y=;
+ b=HXOunjUcw1bNP0O4M1F6Y6m/NbO/oaY44a1msPmEbOh203Ppi1sHG9hDBO6L5ZEmTz
+ 7+/ZtEXauZ09DdqysdMbJ4Xu+6m0KDSmUPV9WFsriEq9hBb0n1QHK3C857xZaCnWKYi4
+ YHAoJ+uotM1VZ2PL5F/xPRqttkLgPbpdhIL+k0uFBUwq7H7KQyHaz1RvFh+t9YC9B0Wc
+ kdo4ssTrqjZ//+2yLT6nYH2kT8KtBdXcowrhQkwXFc4MNWo7Rcoo0v/gz/Yo4SFtBEzA
+ Q0aKvcvKcvedPhTIEgWPZX4B+SbVIB/aKswZetDA6Vo1lfRCTtDImKvy2+5ltQaUN+lh
+ BvOw==
+X-Gm-Message-State: AOJu0Yziw54+f/gVK4y9Z4dFIM3TSRJDPu/hEBazXKo98ZA+yQ8hp2cO
+ JMHl8K/3Gnh2oDcfQcjYZOm17vp9vSf7CATNfF6f+YJZjXo/16oNpuz8LvUpSiVT/xedoT+iN2c
+ yAbZgjuzjxWU8TT91qhyvEGf5i5LNoZiTaojKslAVZA==
+X-Gm-Gg: ASbGnctpxWkAkKggkuru8bfpngrd+DYnSNa6q2SU51TlcCVqm0bGYKlnUNiN/cUXYHX
+ d70Fp8q5E/9Mfq1xgEucSfzzIe68wEW/AGF3m1B9vqeLW4RhnK7r7odVNgQW9a41vc162F9d773
+ n/6cDNwbw23Q0Nr70cPKMbvIbq2Se/iK0nMIs4QLmv+CwJcAfdR3nvmkKIkwBI+SUEymGfNSGIf
+ iuR+IgDl1Fe+1WsdQnsvp2dJHRW0gAdEzlYorp4BzUoy+QsJtbOxqVrqCW/8OfmxiUNHTY/
+X-Google-Smtp-Source: AGHT+IFcT0sM7lzoLUnzJt5MoOKljkEDYBDHNzLlvvk5gJ8gfPWfMVxjCtOgYJj2vAazYphpSkilwE0JHBDM6V+jkXk=
+X-Received: by 2002:a05:690e:1c0c:b0:63e:b41:cebc with SMTP id
+ 956f58d0204a3-63f6b96603emr79369d50.17.1761571773916; Mon, 27 Oct 2025
+ 06:29:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251027123644.63487-1-philmd@linaro.org>
- <87pla8xzd2.fsf@draig.linaro.org>
-In-Reply-To: <87pla8xzd2.fsf@draig.linaro.org>
+References: <SEZPR03MB671446308755C442896589ABFDFCA@SEZPR03MB6714.apcprd03.prod.outlook.com>
+In-Reply-To: <SEZPR03MB671446308755C442896589ABFDFCA@SEZPR03MB6714.apcprd03.prod.outlook.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Oct 2025 13:26:31 +0000
-X-Gm-Features: AWmQ_bkpx50CfK5BteaU9RbSYcG8QV48fHlVzImH5ClM6PbG9BO1ljkCejP4EK8
-Message-ID: <CAFEAcA-hWZei6ytAik5sjFcsYqbKaM6K5mzHepmGQpggAdbQmw@mail.gmail.com>
-Subject: Re: [PATCH 0/6] hw: Log unassigned MMIO accesses with
- unassigned_mem_ops
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- David Hildenbrand <david@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Troy Lee <leetroy@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Peter Xu <peterx@redhat.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>
+Date: Mon, 27 Oct 2025 13:29:22 +0000
+X-Gm-Features: AWmQ_bmLeP3nIa41xl6h_5HPaiZ75PTsfBRSUQB1YJgjq3vrW7HOYGyU5ZkOPx0
+Message-ID: <CAFEAcA-UB3Jeftf84tiPONXi5Wc=-8L7gBr5WHHaOEjL3x3TYg@mail.gmail.com>
+Subject: Re: Subject: Request for QEMU Wiki account
+To: "zhaoguohan_salmon@163.com" <zhaoguohan_salmon@163.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,50 +92,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Oct 2025 at 13:12, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Mon, 27 Oct 2025 at 12:58, zhaoguohan_salmon@163.com
+<zhaoguohan_salmon@163.com> wrote:
 >
-> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+> Hello,
 >
-> > Do not log unassigned MMIO accesses as I/O ones:
-> > expose unassigned_mem_ops then use it instead of
-> > unassigned_io_ops.
->
-> But why? Is it because ioport.c is a x86 io thing?
+> My patch has been merged and I was asked to update the ChangeLog page
+> on the QEMU wiki (https://wiki.qemu.org/ChangeLog/10.2).
 
+Generally speaking we expect the submaintainers (people who
+submit the pull requests; Philippe in this case, I think) to
+do the changelog updates, not individual patch authors.
 
-There is a behaviour difference: unassigned_mem_ops
-will fault (because of unassigned_mem_accepts()),
-but unassigned_io_ops will be "reads as -1, writes
-are ignored". This patch series doesn't mention any
-intention of introducing a behaviour difference, so
-I suspect this is not intended...
+(There's no reason you can't have a wiki account anyway if
+you want one. But you don't actually need to do anything here.)
 
-There are a couple of different but related concepts
-here that we need to keep straight:
-
-(1) x86 I/O ops, which are different CPU instructions
-that talk to a different memory-space than MMIO
-accesses. In QEMU we model these as accesses to the
-address_space_io AddressSpace. I believe no other
-target CPU has an equivalent to this.
-
-(2) PCI "I/O" BARs. PCI devices can have both MMIO
-and IO BARs. A PCI controller on x86 maps IO BARs
-into the IO space, I think. On non-x86 the IO BARs
-typically appear in a different window for MMIO
-accesses. Behaviour of PCI I/O accesses to unimplemented
-regions is probably defined by the PCI spec somewhere.
-Behaviour of PCI accesses to unimplemented MMIO
-window areas is I think technically left unspecified
-by the PCI standard, but "write ignore/read -1" is
-what x86 does and what most software expects, so
-hardware that implements something else is making
-its life unnecessarily difficult.
-
-I suspect we entangle the PCI IO BAR concept and
-implementation a bit more with the x86 I/O ops
-implementation than we ideally ought to.
-
+thanks
 -- PMM
 
