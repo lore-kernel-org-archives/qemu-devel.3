@@ -4,80 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EA3CCF9EA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA36CCF9EC
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDLBv-0000y3-9c; Mon, 27 Oct 2025 07:15:12 -0400
+	id 1vDLA0-0007AE-Kn; Mon, 27 Oct 2025 07:13:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDLBb-0000ap-Kh
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:14:54 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vDL9g-0006d3-Mg
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:53 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vDLBR-00089P-DK
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:14:49 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-63e330a1360so4878903d50.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:14:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vDL9D-0007dk-EQ
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:52 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-63d6ee383bdso9783529a12.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563668; x=1762168468; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pskZw5DLpP/xDMQMjw31wbkLr9mwhPCBWcUw9JjqcWk=;
- b=sOxCcdL9XTSd1RA6F2/mf2kEgwEaV/Kas8hM2inPNFCyLQgt2kltikoOKV530BQgDM
- o5G5VlEPWmgtgtw68V7qE3POtd4vPOoVb5CoyXQ6XpGE1ejrsc+xWp1MhLNbrCkJWfms
- R3r2ezQaIgnvgxnke1PlZD7Hco5uMZEPWw+y75ALqwl+zJX2ZBKUH/aCzqytsy1sTcN0
- +LAXg43bqhwO3UByGpeTg35CuAyG/dj6nuSm8s9B9/QeM5APZvTb5+58UG3SaqC0qssL
- UIf5zmD9g3rMioBnsrD8baHdyYjD6pv0KemA63qYsLZO1D3koxWEOcm/sIUQibFx64c5
- TeEg==
+ d=linaro.org; s=google; t=1761563537; x=1762168337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W/iOxgVLV7ayfoY5ug7v4UBSScUkrPrd3MmiVSvSTZ8=;
+ b=wXcgQe5yVb/onyd75PQDNyyLH4zEYZlSDUVqTI7oNKbCeNdOuy47I/F4eh667zeYu2
+ 5PYUe0VEkSexE5toCZKjflzuWUl3JUUb4ivvBsNqLK9geNF1vwlQRhy3atN7NvcNSPtT
+ WBdT3fDtoX6tG3unummcAepqtgroSclW4T8tCYn0rygKBVVASpzSCoYj9irbrDvWylBN
+ aJgl4yg73VPIUKmquvv/t8CeFjUa/j3D+ZJsq4RwzvXPGRXvVTcfF/VB/hczZ7aZAh8W
+ T+q/e7KhcYEC4N/q/9V/Qk04r61ABtCU4Qn+mG839MxzI7leS9LAuW0+EA5Ssycei0zg
+ cjJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563668; x=1762168468;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pskZw5DLpP/xDMQMjw31wbkLr9mwhPCBWcUw9JjqcWk=;
- b=kZvQkwlfkD/zbxEpQeQkNoob1TSKUcsWw1BrWjXSKLwqbW2YqoHB3WrmbJB2fTkMSo
- B8zhb7ooKGhowiGCNyQlfhJ4iEmxpgIX4otlDH3fubzpZchCtSxam05u56fUsF3lPT48
- BBYJnv7G/XVBTo/EtlLCkrMx7nC7RSTK3CRii7CugGbkuEmnQ1CL1UxylgTRPkLrh/5S
- gazoBqG5MUNh49vZrO/7kkD4ANqfKDjqFso/Yn+EFQiiiyigeKHo1EdPWUUaGQNXDT2G
- PDrsgpdkZIsuWM0w3frM7wdOjMhC/ouD6Sq7ckNMR2xGzvy5Nzrj8OKCR4Irt5qVy4tb
- KZ2A==
-X-Gm-Message-State: AOJu0YwhpvKCwuj50gO5fcypQOyJZgvEU5MMmY+gudYc0YXc/HYg2F1f
- atIrx8wIBIPihAs5BKNVobqVRaobTdXACT2LpRxplNxWsqOPtx6VSXbobmOIHKJ57rLZY745IKJ
- Dur+6sVSZVxtfA6mykGRl1pbneFlQugBC7fCtnQaFkA==
-X-Gm-Gg: ASbGncuL9kyzE+jp1JmUQY0wArTOO1ZkjCTUe7e8Q3IBf4G3cUkMDj1K3TR5JO2VGqr
- fTCiGxKSbjgPjrkjcter3P6hnU8LsEmEXby+3XabTWff+H64bB1DlwZ9Vbd8nFOdCSmJTBl6lJG
- OCf4sp/WtScPDj1Rg3QhUfzMJpjq+jwc/dw7OKNTZJWemia5UIGtUl8Y6aYJswfzD7crp3baSiZ
- +RrSsY6/+nFzo0yt/1GXI7GpzFW/DyLPuMiEb8vJnQTEQ68eg5QY/sfJ5kVaw==
-X-Google-Smtp-Source: AGHT+IGWME6nkNKfaH+Bbk6rsG35FBrEEilNG8kWH1HP6RTwHfHFiNDFyG05H20xRMwXzcHLFqSud9l4o941jY3upDM=
-X-Received: by 2002:a05:690e:419b:b0:63e:1c4c:302b with SMTP id
- 956f58d0204a3-63f378c4e53mr12969017d50.47.1761563667703; Mon, 27 Oct 2025
- 04:14:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1761563537; x=1762168337;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=W/iOxgVLV7ayfoY5ug7v4UBSScUkrPrd3MmiVSvSTZ8=;
+ b=lMksADHTJZRFJM3EPnMnzWlOUUMZkcTgYH3xrYvyJ/5V+7LCNdkY4njS6MoNLLvMxF
+ gHborwauUXu9bl8dj1DujCRenRqBa5WAuj5FPBAFWTYVTPBpJ2s9DhpFrc1wTLytpvSh
+ CzNOR02HhHU2ElKnXTPJewvLyK+N6Ar6J/UhLhw3DTERU/Qr6tzyxjiEHqQ/+Ymas/Nj
+ rrXa3Kyg1G12b+/5Kmt9LTJCz51icladJjVcpPcHHEAFJopL5krs5eUQDZfnkN09+TNU
+ Sa51Oscge9KUYZRRZNa4w35d3qPlRL+2FGhWEabhk7MePetdlKWIEfOZZeDLozA6iZ/w
+ irAw==
+X-Gm-Message-State: AOJu0YxBOj2epC912+CL+Oyz80BNFCyAUKHt4Qa6vvVGxfOthNttS33F
+ FreGpzgQdLc7C2o+H5snCmck9apHgKk5Qbi6ECDLjgNkKLvAlUlQiW1C5vDZoEb6dSI=
+X-Gm-Gg: ASbGnctYeBETx7F/pB8dyBKMCdYGAfjZtORudKvoxJhw2CKsylmie86oLrJvKOAm9Sk
+ Q6wL5NbPrSQgl6LDWJFCqZhlkAgVm9OKTocz/B9Szo/oqY2uoisI6uOeeqk5ahmwqYKLw8RWodS
+ hceesLAy5eHmWHLtgeziFsxVE91Wy0sKYF2PDNozD1PZ29wiViIS+gO4OO6UWurvsyJ2RlJHAIa
+ ZZscVITALwcTdTv/WlFA+LphLW0a5PCsVXOzKpBgYDGAEH6ZRnO+weiRIc313bJswpUA7L2sFnv
+ PYzHv2obp1uMGjfIMY8tIaP4hTHI3tt8z33Ad2mVnVcpc6jiz0QYArif6RnkLx9T1ow4lAtA+yq
+ Y2s4Z/S9CJkwBbswCa9IsyiKEgXy8MNN2yCM8C0YhGwWgOfs7GQ3JdrJkxyxmaqIWimrjxVlQpJ
+ 3RtDj/yYKv86k=
+X-Google-Smtp-Source: AGHT+IGhsq9zSRESJBDIy2OiiKM1bVTFG6U4x3jHc5iycQNI9bx7qUJrdez6Sl0r++blgXVMg0SA3A==
+X-Received: by 2002:a05:6402:268a:b0:62a:a4f0:7e4f with SMTP id
+ 4fb4d7f45d1cf-63c1f6c21e0mr33780942a12.29.1761563537074; 
+ Mon, 27 Oct 2025 04:12:17 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-63e7ef82b6esm6076455a12.11.2025.10.27.04.12.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Oct 2025 04:12:12 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D4DBB60D8F;
+ Mon, 27 Oct 2025 11:03:45 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stafford Horne <shorne@gmail.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
+Subject: [PATCH 19/35] target/mips: call plugin trap callbacks
+Date: Mon, 27 Oct 2025 11:03:26 +0000
+Message-ID: <20251027110344.2289945-20-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
+References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20251021145313.4584-1-philmd@linaro.org>
-In-Reply-To: <20251021145313.4584-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Oct 2025 11:14:15 +0000
-X-Gm-Features: AWmQ_bkH_jL3DWOvxchR7RvXqEKF12Utam3dMdEF2ldn_SnlYqpl2of3h2vWnqk
-Message-ID: <CAFEAcA9D+zHH_+UQDPc-GqSH-b8NC9VvoXXJwhOxT8Mtry08Mg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
- qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>
-Content-Type: multipart/alternative; boundary="000000000000a9b7210642220007"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,49 +128,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a9b7210642220007
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Julian Ganz <neither@nut.email>
 
-On Tue, 21 Oct 2025 at 15:53, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g>
-wrote:
->
-> uint8_t is good enough to hold a property "between 0 and 0xff".
->
-> Define pullups/pulldowns properties using DEFINE_PROP_UINT8()
-> macro, remove unnecessary range checks in pl061_realize().
-> Update the two caller sites.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> v2: qdev_prop_set_uint32 -> qdev_prop_set_uint8 in callers (Peter)
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
+This change places hooks for MIPS targets. We consider the exceptions
+NMI and EXT_INTERRUPT to be asynchronous interrupts rather than
+exceptions.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Julian Ganz <neither@nut.email>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/mips/tcg/system/tlb_helper.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Applied to target-arm.next, thanks.
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index 1e8901556d6..566924b079e 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -18,6 +18,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include "qemu/bitops.h"
++#include "qemu/plugin.h"
+ 
+ #include "cpu.h"
+ #include "internal.h"
+@@ -1034,6 +1035,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+     bool update_badinstr = 0;
+     target_ulong offset;
+     int cause = -1;
++    uint64_t last_pc = env->active_tc.PC;
+ 
+     if (qemu_loglevel_mask(CPU_LOG_INT)
+         && cs->exception_index != EXCP_EXT_INTERRUPT) {
+@@ -1052,6 +1054,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+         cs->exception_index = EXCP_NONE;
+         mips_semihosting(env);
+         env->active_tc.PC += env->error_code;
++        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+         return;
+     case EXCP_DSS:
+         env->CP0_Debug |= 1 << CP0DB_DSS;
+@@ -1336,6 +1339,14 @@ void mips_cpu_do_interrupt(CPUState *cs)
+                  env->CP0_Status, env->CP0_Cause, env->CP0_BadVAddr,
+                  env->CP0_DEPC);
+     }
++    switch (cs->exception_index) {
++    case EXCP_NMI:
++    case EXCP_EXT_INTERRUPT:
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
++        break;
++    default:
++        qemu_plugin_vcpu_exception_cb(cs, last_pc);
++    }
+     cs->exception_index = EXCP_NONE;
+ }
+ 
+-- 
+2.47.3
 
--- PMM
-
---000000000000a9b7210642220007
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Tue, 21 Oct 2025 at 15:53, Philippe Mathieu-Dau=
-d=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; =
-wrote:<br>&gt;<br>&gt; uint8_t is good enough to hold a property &quot;betw=
-een 0 and 0xff&quot;.<br>&gt;<br>&gt; Define pullups/pulldowns properties u=
-sing DEFINE_PROP_UINT8()<br>&gt; macro, remove unnecessary range checks in =
-pl061_realize().<br>&gt; Update the two caller sites.<br>&gt;<br>&gt; Signe=
-d-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.o=
-rg">philmd@linaro.org</a>&gt;<br>&gt; ---<br><div>&gt; v2: qdev_prop_set_ui=
-nt32 -&gt; qdev_prop_set_uint8 in callers (Peter)</div><div><br></div><div>=
-<br>
-<br>
-Applied to target-arm.next, thanks.<br>
-<br>
--- PMM<br>
-<br></div></div>
-
---000000000000a9b7210642220007--
 
