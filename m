@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA1DCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69BFCCCF9EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 11:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDL9Y-0006GF-RH; Mon, 27 Oct 2025 07:12:45 -0400
+	id 1vDL9n-0006jy-Ft; Mon, 27 Oct 2025 07:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL9L-0005ia-KB
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:31 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1vDL9i-0006gV-EX
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:54 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDL98-0007aN-J5
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:30 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b6d83bf1077so494845166b.3
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:12:13 -0700 (PDT)
+ id 1vDL9D-0007c4-6E
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:12:54 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-63bea08a326so6450069a12.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 04:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761563530; x=1762168330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761563534; x=1762168334; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ebp/epSF7muaQbMsubBHfpMjof/a62SHlqNtbg8Z0UI=;
- b=c8mudxhtE0Ys1g7ClB3SWybxMtTyTmm7O7MRpoJ7fo+U9sU3Afk0NU+xF+py3+9yK7
- qd9OitsDVcDlW0u1KvLyDErj98bBpxD/uHZNnsZ/FqpGiGO2l/ZjaBirCMhr9PmjoCGh
- gqJI43Zta0Eun3DtKDPkuJAyJ+j1ezmtOJlHH5nACpHNCsoPYGK+JanQi+Gghc0Yh5XY
- E0eyaDrhU9Xa9UBw4GHG/ROpeZ5C9t32nEvUWlx5eRQers2Ql3N3XKhpgq+jhC8HBTyh
- AO+KlGyum2/p2xzNnOHQCKlzPFpbiOqnJ/UdSEtEHLYrUfkQeAzj/BKye48+EOC3ydpI
- vvYg==
+ bh=MOIWat0zdvoLqu/dm2Cji7uUG0JRvbRh67vkFVnoxR0=;
+ b=iW9VegSAwyykgu1vq5W01FUJ+YhkX1BGgNjBs5vO+zMsZ8rdB22gmk5TSYHQKl6T/f
+ eQCsfRpQ3j7FDGy5IE9SCKTCDEHagDVfOZ5VqrGIn3YbMaruOIqv9zSZ4BzXsXZnNljt
+ WBOwU1O7agn7NLuOZkOcrknciSyHMIP9thIv8mrO9uKrgI8BWRbD47L83bJ/e/gdMlJE
+ 8U6CfdNp4PRMAKcsbpkV3HMLFkJRMJ+X3FD33Tn/QeIP1QpCWM7DQID1Ronhj6FqV/2S
+ SsVu4PR1BPNJBF//UxJic9HKvzb7XsrLw4KAm4RNX2Tn9xF81x487ICYlV8KH12IrIZh
+ 5ggQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761563530; x=1762168330;
+ d=1e100.net; s=20230601; t=1761563534; x=1762168334;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ebp/epSF7muaQbMsubBHfpMjof/a62SHlqNtbg8Z0UI=;
- b=sVziBU8eYJnu4nZbDiXzLrxrY7vxIJT1mNykPBSDREYjwUJODO09/vnojjQ+2jiHDR
- TaW7vapd/r7OsUHubxDc6DuU5k0enFrLq6rqk+mAEiPF44ZDCOUN0f9WsMCjxTd6hEZo
- nZ1VRd3jduxJPKwRO3xabNMcawLIIQ+CzNDLKBEGddTGp4NcgEArmSrHdXJ4++sysO6D
- DEZHIWlEwanAM8cFAgAOC14mbtMa5MtusgSWMS+1+ELGoqDGVbzQf4TDm3mSIlLzO++U
- i5V2Q50EFInMpZDR0Cd7OLICQvhE88/HamS5alt9EakZSSBS1fkOWGvce4zBcSoV7X9b
- w7ag==
-X-Gm-Message-State: AOJu0YzsZSLVLF6CbpzyF547ATraHKBtSpFqIg547wxIg6T2xyIXjar/
- 9M3D3TKRrrsQwMQwC2G4zz2p6k+S02+oR5ojnwfpBgLQ3N6WGT2MMbGg11pQbJ9GUKc=
-X-Gm-Gg: ASbGncvCuCyuWu2ZNzkN8bE2NzqpMZHpkfH2S5F++94PN/b3qo0nH5be1PEZkVbgBup
- YItLxzsinXbDQBz9ZkWASvAc5JWf+ur/NpG7O1PTi6q9KJR+pgdeFPiTBBFSCGouuq2J7MiHvEn
- X3YABEaPqFut7HD03GgiJT7x/2B7w008YIEDTruXmbNZ8WdTfQeKylF9tTqR4hSkT9ZezVd6Qp2
- FqBBNbuOIo2XFx8sNEzDXndrLap62hgFE9L+d4XdxKWrhx6MDPzG7UcKlWbJD7B55zfRMkKyJZM
- Okj0B7BqDBXpsOf6DYCWd9ab0t75OX5zOgEWsSMIqrkAmmslSQRqqPZAWETKBast4fQV/qg9PuD
- cb8D2KQVfuv+qPr5blYN2g2y/BFyg5+NbItxq3j2WorKHLECheuqtWzOg6EwmxiD3GABWMhdlGr
- eR
-X-Google-Smtp-Source: AGHT+IHw+fFt1vxI3afdl5Mm0RuD/0R4AOwToR0nUpX3DiGL1ZjBpMF+xhKh6S1HJdvyALHqhPmlYg==
-X-Received: by 2002:a17:906:fe4d:b0:b3c:e14c:e24 with SMTP id
- a640c23a62f3a-b647195b339mr4091529366b.13.1761563529688; 
- Mon, 27 Oct 2025 04:12:09 -0700 (PDT)
+ bh=MOIWat0zdvoLqu/dm2Cji7uUG0JRvbRh67vkFVnoxR0=;
+ b=HJUM88/TUH8USh8zmJ7CqF547dHrTOj5AWXsTGHIzGT66uYjSo2BRSyDYzRBZZa7/k
+ YXmzjfI9UBND4VGQDcsbDFySdDFF7glqfIVdzyFda8ielPxj2teuf6wWWcOuoUVllh3U
+ IKCsdpKs0b+9bDpf59yId2mMeNCZ3IyaLmMGWlnRzM2VneKGXzZ2D9WBDLscv78kg2LM
+ RNMd2A90omzjq5mrBjAhqTaYdZzo16FMK5vfoToq7O/E0ZtyTdZ4J6pyfnaSX4lqHPO4
+ lUPCiK+7c7dRFAEwrrL6vqqs3MtCmnGqAxpKSj7QaD77/BJSAKkBGrVgoSQCpH1I9RSX
+ sXFQ==
+X-Gm-Message-State: AOJu0Yw51ImSf5Q4AFV7O9bF1wEleaC1CZWzg9z4Yah99qhxzUXTNa5v
+ RkguCeJYqmAfVU9PNDgOFvQOUFVJs9E3QrdDH33PIj/XyL9X/+EghlQ7v6QmHuTP5rg=
+X-Gm-Gg: ASbGncvB7WeF8bfq3dpnDMyl8zVdgXDxF9Vd+zcvqkhaJlajZ/b+2Jgnq5nmO76KMuR
+ A6hAFIFYn2sl0gxG+sf8kHBKc8N1QsckvmvvmCyZhgrDoSu8W0isHq3hh0wJRTpIjnstyxrh4ph
+ FRCL4oR8S0O2kTTlOFgGhzQ99Bfj+ykzSdoqVYLiTnnsDUEwNzk+RQuEOKtF+BGCnKKWLjJlPEm
+ 2GxveYD+YBVr6TbJUC0+5gXXiVqWTvg9DX5QcOcIFepyiTZ/ogQQtZAcIf6ia0785Q6yfQXfYTm
+ ojA13Ok5bsLaoKcHPDFPe9bINibpaGZMuFVpAYvA3t94oP4QNMcuOeozJG4E69ky/sf0OosoTHw
+ VU3k7eZgM6cwAP1q42O6l/YnLKgkDDeeuz97ZgzCCcagXT9uo7FqecOrjxQIAGxrhEQ6ZmhHjZQ
+ scDp9hQe1/zr4=
+X-Google-Smtp-Source: AGHT+IG7xohgDbdCZpEaQql0WKu05/9DRCJ7c6eaYimOVb8vqucvzuXNIHI9wIYvrcQfxrfUbcLyJw==
+X-Received: by 2002:a05:6402:4504:b0:634:ab34:ed40 with SMTP id
+ 4fb4d7f45d1cf-63c1f580cf2mr34888236a12.0.1761563533781; 
+ Mon, 27 Oct 2025 04:12:13 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d853fc258sm721557266b.53.2025.10.27.04.12.08
+ 4fb4d7f45d1cf-63e7ef95cb9sm6162733a12.17.2025.10.27.04.12.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Oct 2025 04:12:08 -0700 (PDT)
+ Mon, 27 Oct 2025 04:12:12 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5C8A86152D;
- Mon, 27 Oct 2025 11:03:47 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id BC74960CB8;
+ Mon, 27 Oct 2025 11:03:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -94,19 +94,18 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Michael Rolnik <mrolnik@gmail.com>,
  Song Gao <gaosong@loongson.cn>, qemu-riscv@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Sean Anderson <sean.anderson@linux.dev>
-Subject: [PATCH 34/35] gdbstub: Fix %s formatting
-Date: Mon, 27 Oct 2025 11:03:41 +0000
-Message-ID: <20251027110344.2289945-35-alex.bennee@linaro.org>
+ Aleksandar Rikalo <arikalo@gmail.com>, Julian Ganz <neither@nut.email>
+Subject: [PATCH 18/35] target/microblaze: call plugin trap callbacks
+Date: Mon, 27 Oct 2025 11:03:25 +0000
+Message-ID: <20251027110344.2289945-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251027110344.2289945-1-alex.bennee@linaro.org>
 References: <20251027110344.2289945-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,34 +128,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Julian Ganz <neither@nut.email>
 
-The format string for %s has two format characters. This causes it to
-emit strings like "466f5bd8/6x" instead of "466f5bd8/6". GDB detects
-this and returns EIO, causing all open File I/O calls to fail.
+We recently introduced API for registering callbacks for trap related
+events as well as the corresponding hook functions. Due to differences
+between architectures, the latter need to be called from target specific
+code.
 
-Fixes: 0820a075af ("gdbstub: Adjust gdb_do_syscall to only use uint32_t and uint64_t")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+This change places the hook for MicroBlaze targets. This architecture
+has one special "exception" for interrupts and no host calls.
+
+Signed-off-by: Julian Ganz <neither@nut.email>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- gdbstub/syscalls.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/microblaze/helper.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
-index e855df21aba..d8bb90cc1c7 100644
---- a/gdbstub/syscalls.c
-+++ b/gdbstub/syscalls.c
-@@ -127,7 +127,7 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...)
-             case 's':
-                 i64 = va_arg(va, uint64_t);
-                 i32 = va_arg(va, uint32_t);
--                p += snprintf(p, p_end - p, "%" PRIx64 "/%x" PRIx32, i64, i32);
-+                p += snprintf(p, p_end - p, "%" PRIx64 "/%" PRIx32, i64, i32);
-                 break;
-             default:
-             bad_format:
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+index cf577a72268..a1857b72172 100644
+--- a/target/microblaze/helper.c
++++ b/target/microblaze/helper.c
+@@ -27,6 +27,7 @@
+ #include "qemu/host-utils.h"
+ #include "exec/log.h"
+ #include "exec/helper-proto.h"
++#include "qemu/plugin.h"
+ 
+ 
+ G_NORETURN
+@@ -35,6 +36,7 @@ static void mb_unaligned_access_internal(CPUState *cs, uint64_t addr,
+ {
+     CPUMBState *env = cpu_env(cs);
+     uint32_t esr, iflags;
++    uint64_t last_pc = env->pc;
+ 
+     /* Recover the pc and iflags from the corresponding insn_start.  */
+     cpu_restore_state(cs, retaddr);
+@@ -54,6 +56,7 @@ static void mb_unaligned_access_internal(CPUState *cs, uint64_t addr,
+     env->ear = addr;
+     env->esr = esr;
+     cs->exception_index = EXCP_HW_EXCP;
++    qemu_plugin_vcpu_exception_cb(cs, last_pc);
+     cpu_loop_exit(cs);
+ }
+ 
+@@ -152,6 +155,7 @@ void mb_cpu_do_interrupt(CPUState *cs)
+     CPUMBState *env = &cpu->env;
+     uint32_t t, msr = mb_cpu_read_msr(env);
+     bool set_esr;
++    uint64_t last_pc = env->pc;
+ 
+     /* IMM flag cannot propagate across a branch and into the dslot.  */
+     assert((env->iflags & (D_FLAG | IMM_FLAG)) != (D_FLAG | IMM_FLAG));
+@@ -256,6 +260,12 @@ void mb_cpu_do_interrupt(CPUState *cs)
+     env->res_addr = RES_ADDR_NONE;
+     env->iflags = 0;
+ 
++    if (cs->exception_index == EXCP_IRQ) {
++        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
++    } else {
++        qemu_plugin_vcpu_exception_cb(cs, last_pc);
++    }
++
+     if (!set_esr) {
+         qemu_log_mask(CPU_LOG_INT,
+                       "         to pc=%08x msr=%08x\n", env->pc, msr);
 -- 
 2.47.3
 
