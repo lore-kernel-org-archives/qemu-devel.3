@@ -4,67 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3D7CCF9EC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A7CCF9EA
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 12:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDMmN-0002HL-Lw; Mon, 27 Oct 2025 08:56:55 -0400
+	id 1vDMmS-0002Kk-E0; Mon, 27 Oct 2025 08:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan_salmon@163.com>)
- id 1vDCIw-0001AV-HN
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 21:45:50 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
+ (Exim 4.90_1) (envelope-from <nicolas.parlant@parhuet.fr>)
+ id 1vDLe5-0005kk-Ui
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:44:21 -0400
+Received: from lnsph.fr ([45.13.104.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan_salmon@163.com>)
- id 1vDCIt-0004bF-EA
- for qemu-devel@nongnu.org; Sun, 26 Oct 2025 21:45:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:Content-Type:
- MIME-Version; bh=74vbux3O9aOpjh2GDNxVJNluH5LBz4mgBHYS71a33wc=;
- b=hNHtpcnvxjKBCfGpeUFRGV0gZHd0t3nfDUZ650PWk6YbaRFLCctCVtXCux8W51
- 7lL20OjYQFp3R69X+JamQ96LcesmXcm5uKAy/QkRqSxgyqQ7Q5T4sudcLLIp5wgF
- B+m3Cx3p3JgsNyDObCp4ikYE2pBMdPGOl5L+5JPD/eM3w=
-Received: from SEZPR03MB6714.apcprd03.prod.outlook.com (unknown [])
- by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id _____wB3v7G2zv5oi1OfBA--.165S2;
- Mon, 27 Oct 2025 09:45:28 +0800 (CST)
-From: "zhaoguohan_salmon@163.com" <zhaoguohan_salmon@163.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Subject: Request for QEMU Wiki account
-Thread-Topic: Subject: Request for QEMU Wiki account
-Thread-Index: AQHcRuNbNAo9tAO4ikasUjTtyuTMrA==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Mon, 27 Oct 2025 01:45:22 +0000
-Message-ID: <SEZPR03MB671446308755C442896589ABFDFCA@SEZPR03MB6714.apcprd03.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator: 
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels: 
-Content-Type: multipart/alternative;
- boundary="_000_SEZPR03MB671446308755C442896589ABFDFCASEZPR03MB6714apcp_"
+ (Exim 4.90_1) (envelope-from <nicolas.parlant@parhuet.fr>)
+ id 1vDLe1-0005yT-7B
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 07:44:17 -0400
+From: Nicolas PARLANT <nicolas.parlant@parhuet.fr>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=parhuet.fr; s=dkim;
+ t=1761565441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=/ZkYEPhMYnXLtQUB2AyxC107i5sz1bUsO07DPCuqMeE=;
+ b=AGKLUnIGTx9PgJkWnUHbL1Wu5BWp2B++1L2eF+AUsenLzxI63BFOtzFSjftdu2Bw2tlSQU
+ 6/yNL8DRP1yxkyWpQZ+knJmsNTpwPB3x5cJsl5EenB3ccHa8C+8dA4I879MT2On7e2vmpU
+ WvtT4zx4/TpKh7/jSJhKS3oC/OLOL8pFRh6iLfQqUHxe3d7qagN1uPthctR5zo6xFllvXV
+ 6McDkAb9BKPlJT/Myqb5H8DeTa0eaZE0uoUSQQ58UI0ckT78/Q6RkX+NQFBNlK/U+zFHHh
+ CVi/rKXYn8++1pnhRLlzdc9yEQAlYn3j54uiDYatd6Rzv1ojYNcP+l+yD10w0A==
+Authentication-Results: lnsph.fr;
+ auth=pass smtp.auth=ppn smtp.mailfrom=nicolas.parlant@parhuet.fr
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	Nicolas PARLANT <nicolas.parlant@parhuet.fr>
+Subject: [PATCH] make gdbus-codegen optional, not required by passt
+Date: Mon, 27 Oct 2025 12:39:11 +0100
+Message-ID: <20251027113910.25379-2-nicolas.parlant@parhuet.fr>
 MIME-Version: 1.0
-X-CM-TRANSID: _____wB3v7G2zv5oi1OfBA--.165S2
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
- VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjTRQVy4UUUUU
-X-Originating-IP: [2603:1046:101:4e::5]
-X-CM-SenderInfo: 52kd0wpxrkt0xbvdzzlrq6il2tof0z/1tbiFA-vEGj5wuS8iQACsk
-Received-SPF: pass client-ip=117.135.210.3;
- envelope-from=zhaoguohan_salmon@163.com; helo=m16.mail.163.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: C7CE46000642
+X-Spamd-Result: default: False [-1.44 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.10)[]; R_MISSING_CHARSET(0.55)[];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FROM_EQ_ENVFROM(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_ZERO(0.00)[0];
+ DKIM_SIGNED(0.00)[parhuet.fr:s=dkim]; FROM_HAS_DN(0.00)[]
+X-Rspamd-Server: lnsph.fr
+Received-SPF: pass client-ip=45.13.104.99;
+ envelope-from=nicolas.parlant@parhuet.fr; helo=lnsph.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 27 Oct 2025 08:56:53 -0400
+X-Mailman-Approved-At: Mon, 27 Oct 2025 08:56:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,84 +76,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_SEZPR03MB671446308755C442896589ABFDFCASEZPR03MB6714apcp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+passt needs gio but not gdbus-codegen. Make gdbus-codegen optional,
+dbus_display which requires it will still fail as expected.
 
-Hello,
+Signed-off-by: Nicolas PARLANT <nicolas.parlant@parhuet.fr>
+---
+ meson.build | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-My patch has been merged and I was asked to update the ChangeLog page
-on the QEMU wiki (https://wiki.qemu.org/ChangeLog/10.2).
-
-Could you please help create a wiki account for me?
-Preferred username: zhaoguohan
-
-Thank you!
-Best regards,
-Guohan Zhao
-
---_000_SEZPR03MB671446308755C442896589ABFDFCASEZPR03MB6714apcp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-Hello,</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-<br>
-</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-My patch has been merged and I was asked to update the ChangeLog page</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-on the QEMU wiki (https://wiki.qemu.org/ChangeLog/10.2).</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-<br>
-</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-Could you please help create a wiki account for me?</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-Preferred username: zhaoguohan</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-<br>
-</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-Thank you!</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-Best regards,</div>
-<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
-Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
-s=3D"elementToProof">
-Guohan Zhao</div>
-</body>
-</html>
-
---_000_SEZPR03MB671446308755C442896589ABFDFCASEZPR03MB6714apcp_--
+diff --git a/meson.build b/meson.build
+index c5710a6a47..3f7c973127 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1126,8 +1126,7 @@ if not get_option('gio').auto() or have_system
+     gio = not_found
+   endif
+   if gio.found()
+-    gdbus_codegen = find_program('gdbus-codegen',
+-                                 required: get_option('gio'))
++    gdbus_codegen = find_program('gdbus-codegen', required: false)
+     gio_unix = dependency('gio-unix-2.0', required: get_option('gio'),
+                           method: 'pkg-config')
+     gio = declare_dependency(dependencies: [gio, gio_unix],
+-- 
+2.51.0
 
 
