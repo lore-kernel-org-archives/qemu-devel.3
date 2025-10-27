@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29053CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5B1CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Oct 2025 18:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDRmm-0004xH-Nc; Mon, 27 Oct 2025 14:17:40 -0400
+	id 1vDRme-0004x2-NY; Mon, 27 Oct 2025 14:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRma-0004vX-5d
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:28 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmW-0004sM-T8
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:24 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRm9-0003yG-Mm
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:27 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vDRmA-0003yz-Cf
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 14:17:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=SqASfMA/cKK4vUjYrgBCtFoI43jFmkMuq8bn83jJIrM=; b=v5MBUSRdvF2FaDV
- vx+GkL7VbedPE62GQ7PRsXupMNGro6lP0OU+l2vt6i8OFxHzs8fNQnSEW71ZflGI4oPMuFxHXACLv
- 1YTfni6NmUSu+o097asFuSoHTkqcoebmn8FGE5v9n08RUiVxMEuqveJA7WxlAezO413gl2P9dUJzW
- JI=;
+ List-Help; bh=NyQ0/zEa9ImnId0R7CumHW1rlKaHM17SHUcK1eXQFAI=; b=vDNnrCHu7PVmitJ
+ Fz8fHxrbOfthb/7X6bSxGEhr7jjn032ciY61dMhdQ01zJg7G9mHgo9TaB5s/opq5LXPbFkFI4ESpQ
+ kSgMoCzJyef+ZkkcOZXcMDvek5WZk7XMCcwdEsdGpGZ3zpgXFP3WC+x72y+l492c31v9q6weeNUR7
+ Ic=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v4 06/33] target/riscv: Combine mcyclecfg and mcyclecfgh
-Date: Mon, 27 Oct 2025 19:18:03 +0100
-Message-ID: <20251027181831.27016-7-anjo@rev.ng>
+Subject: [PATCH v4 12/33] target/riscv: Fix size of frm and fflags
+Date: Mon, 27 Oct 2025 19:18:09 +0100
+Message-ID: <20251027181831.27016-13-anjo@rev.ng>
 In-Reply-To: <20251027181831.27016-1-anjo@rev.ng>
 References: <20251027181831.27016-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,126 +64,98 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the privileged specification, mcyclecfg
-is a 64-bit register and mcyclecfgh refers to the top 32 bits of this
-register when XLEN == 32.  No real advantage is gained by keeping
-them separate, and combining them allows for slight simplification.
+According to version 20250508 of the unprivileged specification the frm
+field of fcsr is 3-bits in size, fix it to 8-bits.  Similarly fflags is
+5 bits, fix to 8.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h |  3 +--
- target/riscv/csr.c | 28 +++++++++++++++++-----------
- 2 files changed, 18 insertions(+), 13 deletions(-)
+ target/riscv/cpu.h        | 6 +++---
+ target/riscv/csr.c        | 4 ++++
+ target/riscv/fpu_helper.c | 6 +++---
+ target/riscv/machine.c    | 2 +-
+ 4 files changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 0791959fcd..e15439dab7 100644
+index f00ae69e8a..a55d4ac690 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -420,8 +420,7 @@ struct CPUArchState {
-     uint32_t mcountinhibit;
+@@ -231,7 +231,7 @@ struct CPUArchState {
  
-     /* PMU cycle & instret privilege mode filtering */
--    target_ulong mcyclecfg;
--    target_ulong mcyclecfgh;
-+    uint64_t mcyclecfg;
-     target_ulong minstretcfg;
-     target_ulong minstretcfgh;
+     /* Floating-Point state */
+     uint64_t fpr[32]; /* assume both F and D extensions */
+-    target_ulong frm;
++    uint8_t frm;
+     float_status fp_status;
  
+     target_ulong badaddr;
+@@ -665,8 +665,8 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+                                       RISCVException exception,
+                                       uintptr_t pc);
+ 
+-target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
+-void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
++uint8_t riscv_cpu_get_fflags(CPURISCVState *env);
++void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t);
+ 
+ FIELD(TB_FLAGS, MEM_IDX, 0, 3)
+ FIELD(TB_FLAGS, FS, 3, 2)
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 55110b4b66..ddd80ab68d 100644
+index 65b6469395..5ba1fe4168 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -1062,7 +1062,8 @@ static RISCVException read_hpmcounterh(CPURISCVState *env, int csrno,
- static RISCVException read_mcyclecfg(CPURISCVState *env, int csrno,
-                                      target_ulong *val)
- {
--    *val = env->mcyclecfg;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
-+    *val = extract64(env->mcyclecfg, 0, rv32 ? 32 : 64);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1072,7 +1073,7 @@ static RISCVException write_mcyclecfg(CPURISCVState *env, int csrno,
-     uint64_t inh_avail_mask;
- 
-     if (riscv_cpu_mxl(env) == MXL_RV32) {
--        env->mcyclecfg = val;
-+        env->mcyclecfg = deposit64(env->mcyclecfg, 0, 32, val);
-     } else {
-         /* Set xINH fields if priv mode supported */
-         inh_avail_mask = ~MHPMEVENT_FILTER_MASK | MCYCLECFG_BIT_MINH;
-@@ -1091,7 +1092,7 @@ static RISCVException write_mcyclecfg(CPURISCVState *env, int csrno,
- static RISCVException read_mcyclecfgh(CPURISCVState *env, int csrno,
-                                       target_ulong *val)
- {
--    *val = env->mcyclecfgh;
-+    *val = extract64(env->mcyclecfg, 32, 32);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1109,7 +1110,7 @@ static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MCYCLECFGH_BIT_VSINH : 0;
- 
--    env->mcyclecfgh = val & inh_avail_mask;
-+    env->mcyclecfg = deposit64(env->mcyclecfg, 32, 32, val & inh_avail_mask);
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -1248,8 +1249,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-     g_assert(rv32 || !upper_half);
- 
-     if (counter_idx == 0) {
--        cfg_val = rv32 ? ((uint64_t)env->mcyclecfgh << 32) :
--                  env->mcyclecfg;
-+        cfg_val = env->mcyclecfg;
-     } else if (counter_idx == 2) {
-         cfg_val = rv32 ? ((uint64_t)env->minstretcfgh << 32) :
-                   env->minstretcfg;
-@@ -1523,8 +1523,12 @@ static int rmw_cd_mhpmeventh(CPURISCVState *env, int evt_index,
- }
- 
- static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
--                            target_ulong new_val, target_ulong wr_mask)
-+                          target_ulong new_val, uint64_t wr_mask)
+@@ -896,6 +896,10 @@ static RISCVException write_frm(CPURISCVState *env, int csrno,
+ static RISCVException read_fcsr(CPURISCVState *env, int csrno,
+                                 target_ulong *val)
  {
 +    /*
-+     * wr_mask is 64-bit so upper 32 bits of mcyclecfg and minstretcfg
-+     * are retained.
++     * This is an 8-bit operation, fflags make up the lower 5 bits and
++     * frm the upper 3 bits of fcsr.
 +     */
-     switch (cfg_index) {
-     case 0:             /* CYCLECFG */
-         if (wr_mask) {
-@@ -1550,8 +1554,9 @@ static int rmw_cd_ctr_cfg(CPURISCVState *env, int cfg_index, target_ulong *val,
+     *val = (riscv_cpu_get_fflags(env) << FSR_AEXC_SHIFT)
+         | (env->frm << FSR_RD_SHIFT);
+     return RISCV_EXCP_NONE;
+diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
+index af40561b31..db64fca622 100644
+--- a/target/riscv/fpu_helper.c
++++ b/target/riscv/fpu_helper.c
+@@ -23,10 +23,10 @@
+ #include "fpu/softfloat.h"
+ #include "internals.h"
+ 
+-target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
++uint8_t riscv_cpu_get_fflags(CPURISCVState *env)
+ {
+     int soft = get_float_exception_flags(&env->fp_status);
+-    target_ulong hard = 0;
++    uint8_t hard = 0;
+ 
+     hard |= (soft & float_flag_inexact) ? FPEXC_NX : 0;
+     hard |= (soft & float_flag_underflow) ? FPEXC_UF : 0;
+@@ -37,7 +37,7 @@ target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
+     return hard;
  }
  
- static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
--                            target_ulong new_val, target_ulong wr_mask)
-+                           target_ulong new_val, target_ulong wr_mask)
+-void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong hard)
++void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t hard)
  {
-+    uint64_t cfgh;
+     int soft = 0;
  
-     if (riscv_cpu_mxl(env) != MXL_RV32) {
-         return RISCV_EXCP_ILLEGAL_INST;
-@@ -1559,12 +1564,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
- 
-     switch (cfg_index) {
-     case 0:         /* CYCLECFGH */
-+        cfgh = extract64(env->mcyclecfg, 32, 32);
-         if (wr_mask) {
-             wr_mask &= ~MCYCLECFGH_BIT_MINH;
--            env->mcyclecfgh = (new_val & wr_mask) |
--                              (env->mcyclecfgh & ~wr_mask);
-+            cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-+            env->mcyclecfg = deposit64(env->mcyclecfg, 32, 32, cfgh);
-         } else {
--            *val = env->mcyclecfgh;
-+            *val = cfgh;
-         }
-         break;
-     case 2:          /* INSTRETCFGH */
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 66ed3f6504..07995fb303 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -436,7 +436,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.pc, RISCVCPU),
+         VMSTATE_UINT64(env.load_res, RISCVCPU),
+         VMSTATE_UINT64(env.load_val, RISCVCPU),
+-        VMSTATE_UINTTL(env.frm, RISCVCPU),
++        VMSTATE_UINT8(env.frm, RISCVCPU),
+         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
+         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
+         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
 -- 
 2.51.0
 
