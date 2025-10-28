@@ -4,112 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD46CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0079CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDeFw-0006FM-22; Tue, 28 Oct 2025 03:36:36 -0400
+	id 1vDeSY-0000Ii-Ih; Tue, 28 Oct 2025 03:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1vDeFt-0006EF-U1
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:36:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1vDeFq-0005Kb-Gj
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:36:32 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59S2n1Yn002617;
- Tue, 28 Oct 2025 07:36:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=pI2vw8
- /X4T+4mGe2zMaGH5fubM9qLeWAlkicDqa/uD0=; b=oPTXcnDPlkJ9RZvptqBqRT
- jE8eVcZjkHYsl74YiTDvfi5xst3kAM1MQK8b05gAduqFvyU5J5UNg6h3TT9hUyXZ
- 3AEGia/Hi+7qZ3syMbhEJ4MlqIInwEVcjzmE91sOF4pSzq5muv3BFo0Npup01Jgb
- nTVHqqkCBBtDzYr4XH7qXSZ3LTkB5wFDt3jTskSkd4eeMBJw8aPj6XPSXH3HcfNw
- Aa6gdJxM0Sl6FEoVo0cwBFupINI2lNQN5uRWJxwSr5s8KihkcxdNzznkpXex13f0
- fM5NtPM/Y2FDWgZt3MQUbWVIJYabj+1WiSzTfcqxbMY/gLmtkmARElQPVYuJpLQw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a0p81tk92-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Oct 2025 07:36:26 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59S7UVrg023524;
- Tue, 28 Oct 2025 07:36:25 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a198xhngm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Oct 2025 07:36:25 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 59S7aLtN38338872
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Oct 2025 07:36:21 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9CE5720049;
- Tue, 28 Oct 2025 07:36:21 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C23D920040;
- Tue, 28 Oct 2025 07:36:19 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.39.28.67])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 28 Oct 2025 07:36:19 +0000 (GMT)
-Date: Tue, 28 Oct 2025 13:06:14 +0530
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: peter.maydell@linaro.org, adityag@linux.ibm.com, harshpb@linux.ibm.com,
- qemu-devel@nongnu.org, sourabhjain@linux.ibm.com, shivangu@linux.ibm.com
-Subject: Re: [PATCH 2/2] hw/ppc: Fix memory leak in get_cpu_state_data()
-Message-ID: <4kof4anqdtbanmoillntmeo6gqgnr4noizmf4ugkarc2ejl72l@cc6ncrvwrgrj>
-References: <20251028065815.84156-1-shivangu@linux.ibm.com>
- <20251028065815.84156-2-shivangu@linux.ibm.com>
- <94cebbf2-5883-4fa7-9b86-f8bf0f3332c1@linaro.org>
- <5f16773a-e7f6-445a-a69e-ddeb62e61760@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeST-0000IR-Kw
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:33 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeS3-0006wW-R2
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:49:23 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-475dc0ed8aeso27836835e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:49:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1761637743; x=1762242543; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=swfUf7YT2HN3IdIkPCfKk032w9FveEY2Y7oYC8RTyY0=;
+ b=DGCXRVD1XMUzsdPnQAIGuIpn0ADua/3BcDNS5WS+px/opOJ0YqDzUF3baqX8NCQ3QB
+ fiVrdDhEx3UYdzdoJV9Z2meK8VmMvSc+iyoPdUP2QeO8UB9bOW6gY7Nc+Mu5ci5SLPLn
+ Qc/N9GUIXoJtnCwzeKFy8X0Dxrc7ZVFSWIcKdzZN9zBh3lx3k2Q+RXhB0qqctlOSmA+O
+ 5tuRZLGmm1Og7E6MvZh6JoimP9YRNxOQJsYVo9fUBCBCSQTjSaOEoFJpxJdnR/Y7JsTX
+ hwW3rAq8Sx76WauYmUBoviecJRrw6F2t/9Id76/+CIkZ1GWTrFHaVFA4/BQRE5t1nNd0
+ /6XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761637743; x=1762242543;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=swfUf7YT2HN3IdIkPCfKk032w9FveEY2Y7oYC8RTyY0=;
+ b=KjGJp3z3SJEVCYSpzMWmClt7haAQu47DxuyHlBXouT8RZrY6bYLXhNjG56T5/mNhvw
+ 2txlV4HGyjJRmypLrot6dTQIa0+U3M7skTp9RO+P76X7VewedjkZcKzzaDW2vNHjaQRF
+ ZvH09KDCmStoWIftkeSSZn+5raHtYeWi7Xli6xIs2fAOAyjW1bYcoe6K6i9K4Y6M6lLD
+ SLXTWloKN6mI8BneBOL6JStWYV6IUyqPN9litm/9NLfA3PGnlV/323Gd6WVumiL1ooed
+ 91ReVppqRrVMRNSNZIL79x0053IlI5d0bwaEKkSdrZ/Pg6dUH4kaF/h2SOoQvC+Fd6Of
+ MKpw==
+X-Gm-Message-State: AOJu0YzqCKnGy/naYtdmRdYkFo8+XPBNTRbhr4cwTYaQSi9/h/qBDkel
+ IP6DDTMy2B6xpENTFzeqwsz/RT8fjNVNhhUE1wFAE3VLmSvh/CgerfgCPE+bnNUNdurmnvodl/I
+ ZCUDpF1A=
+X-Gm-Gg: ASbGncv9V6hp1G6zOmczlfkmLrmAIx3qSk7HEAAgNYJ8dLxDfc17mhlNIWErgyqCXNc
+ xgnVZAdk7JFuCo+SBYjXYCWI5cxGfSoc+9cp31ggK+P1/g5CpeHT976ZYFSRUOYxvPOu6G4EjxF
+ tTbaMsw+DtEHFdfS0YJhBVX4w7c1LwZjajIJM4eQA2JP62f9biRgusnjP3+bRL/KfSPScsLFfx7
+ 0WImA5TJgAYGYz8zx7vTFB9EDrmrEjFujeU2F04/aWimAzCnQeaKdR72+yKI1pv4+o6n+yplTyu
+ RxFJ6h/pVr/G3HRX94zkn3051tAWqhhG/cujLGnMR7ahuWAl1m3yuAbqbLPY0d1jM2PuXL19kW2
+ TECLs6PD3+oa3t1hmhsxWA53/K4zHKsUH/Iqv/lXDtyCwlFa1DXoqz7N4GU+4iS1YR9qAhImWaZ
+ gUZIiVho5hlXa9Cea138uuEdN0K2/zuKeQBKfBRF5uOljrsZJWjqdsmdg=
+X-Google-Smtp-Source: AGHT+IHDwu4lqhNf9oq80u4Z7KnlXzHBu2pijclYUroTmuLMG3ugxkwcF7ZTvZYY/inIJnTjGDdBcQ==
+X-Received: by 2002:a05:600c:4fd4:b0:45d:d1a3:ba6a with SMTP id
+ 5b1f17b1804b1-47717e4089amr19227235e9.33.1761637743471; 
+ Tue, 28 Oct 2025 00:49:03 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-475dd02cd6dsm186480535e9.2.2025.10.28.00.49.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 28 Oct 2025 00:49:03 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/23] Misc HW patches for 2025-10-28
+Date: Tue, 28 Oct 2025 08:48:36 +0100
+Message-ID: <20251028074901.22062-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5f16773a-e7f6-445a-a69e-ddeb62e61760@linaro.org>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=fIQ0HJae c=1 sm=1 tr=0 ts=6900727a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=8nJEP1OIZ-IA:10 a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8
- a=t_OyuiPTES2zf-S82qoA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: DF4Fq74-uXnj6tSktO09aBBPhE6IMM3i
-X-Proofpoint-GUID: DF4Fq74-uXnj6tSktO09aBBPhE6IMM3i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI1MDAyNCBTYWx0ZWRfXyufUcAe4qds7
- 8eT+Mebfa5VdusCjzTe//K5QaFEmpK3tINgyVqSL1ltth9i0RvO+YKw+SlHPyKbCB4Zk5ReoQZO
- JkX8GvdzPaAMJMZanlgT7N/V9dn+1nytrmG8LbWc6VEGGpEJkgfIpV8rCElvldkhN2hg8pUY3Ym
- xCJzKewnXksOgNh8dXUP0qgbH8Zy0MCvvcJY7vqwnNCVFsqqoHc0fKdra512SOqVRnIPDVa/GKh
- f4TS+SBwAve5IXdsNLmjKUS72lgt8blQ7PNTHHroGhBKBUh2lHDJlI/pZHY1JQ3eLOnHVQdsG2T
- 4LHZ97tTDozevORQARWLJujs5cRCFnyF5Fv/XbAtAyxhblVVdcaWfU2MugMPStJcTZ37MiyDNAx
- uiHCx4cWbAWVMrq1Az57n5ZW5HoWfQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-28_03,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 adultscore=0 suspectscore=0 spamscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510250024
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,52 +97,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 08:30:05AM +0100, Philippe Mathieu-DaudÈ wrote:
-> On 28/10/25 08:12, Philippe Mathieu-DaudÈ wrote:
-> > Hi Shivang,
-> > 
-> > On 28/10/25 07:58, Shivang Upadhyay wrote:
-> > > Fixes coverity (CID 1642024)
-> > > 
-> > > Cc: Aditya Gupta <adityag@linux.ibm.com>
-> > > Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > > Link: https://lore.kernel.org/qemu-devel/
-> > > CAFEAcA_Bm52bkPi9MH_uugXRR5fj48RtpbOnPNFQtbX=7Mz_yw@mail.gmail.com/
-> > > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > > Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> > > ---
-> > > † hw/ppc/spapr_fadump.c | 2 +-
-> > > † 1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-> > > index 883a60cdcf..49d2f862a1 100644
-> > > --- a/hw/ppc/spapr_fadump.c
-> > > +++ b/hw/ppc/spapr_fadump.c
-> > > @@ -453,7 +453,7 @@ static FadumpRegEntry
-> > > *populate_cpu_reg_entries(CPUState *cpu,
-> > > † static void *get_cpu_state_data(uint64_t *cpu_state_len)
-> > > † {
-> > > ††††† FadumpRegSaveAreaHeader reg_save_hdr;
-> > > -††† FadumpRegEntry *reg_entries;
-> > > +††† g_autofree FadumpRegEntry *reg_entries;
-> > 
-> > g_autofree pointers have to be NULL-initialized. I don't remember why,
-> > likely CPP warnings.
-> 
-> Ah, see for example commit c8f48b120b3:
-> 
->   As mentioned in docs/devel/style.rst "Automatic memory deallocation":
-> 
->   * Variables declared with g_auto* MUST always be initialized,
->     otherwise the cleanup function will use uninitialized stack memory
-> 
-> and for full context, commit 821f2967562 ("docs: document use of
-> automatic cleanup functions in glib").
-Hi Philippe,
+The following changes since commit 36076d24f04ea9dc3357c0fbe7bb14917375819c:
 
-Thanks for fix and explaination.
-I'll send out v2 soon.
+  Merge tag 'next-pr-pull-request' of https://gitlab.com/berrange/qemu into staging (2025-10-25 10:42:55 +0200)
 
-~Shivang.
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/hw-misc-20251028
+
+for you to fetch changes up to 7dbe2d7df094aa8af2d8fcdf08fccce70b1ca5bc:
+
+  hw/riscv: Widen OpenSBI dynamic info struct (2025-10-28 08:19:18 +0100)
+
+----------------------------------------------------------------
+Misc HW patches
+
+Various fixes and cleanups:
+- Set FPCR exception flag bits for HPPA non-trapped exceptions
+- Convert VirtIONet::vlans from pointer to array
+  and remove VMSTATE_BUFFER_POINTER_UNSAFE()
+- Remove redundant QOM typedef when OBJECT_DECLARE_SIMPLE_TYPE() is used
+- Have various QDev / SysBus helpers take a const device argument
+- Improve errors when loaders parse images
+- Remove IntelIOMMUState::dma_translation leftover
+- Remove most target_[u]long uses in hw/riscv/
+- Fix DS1225Y MemoryRegion owner
+- Simplification refactors on Raven PCI Host Bridge
+----------------------------------------------------------------
+
+Akihiko Odaki (1):
+  nw/nvram/ds1225y: Fix nvram MemoryRegion owner
+
+Anton Johansson (2):
+  hw/riscv: Use generic hwaddr for firmware addresses
+  hw/riscv: Widen OpenSBI dynamic info struct
+
+BALATON Zoltan (5):
+  hw/pci-host/raven: Simplify creating PCI facing part
+  hw/pci-host/raven: Simplify PCI facing part
+  hw/pci-host/raven: Simplify host bridge type declaration
+  hw/pci-host/raven: Use DEFINE_TYPES macro
+  hw/pci-host/raven: Simplify PCI bus creation
+
+Cl√©ment Mathieu--Drif (1):
+  hw/i386/intel_iommu: Remove an unused state field
+
+Michael Tokarev (2):
+  hw/net/virtio-net: make VirtIONet.vlans an array instead of a pointer
+  migration/vmstate: remove VMSTATE_BUFFER_POINTER_UNSAFE macro
+
+Nguyen Dinh Phi (1):
+  qom: remove redundant typedef when use OBJECT_DECLARE_SIMPLE_TYPE
+
+Peter Maydell (1):
+  target/hppa: Set FPCR exception flag bits for non-trapped exceptions
+
+Philippe Mathieu-Daud√© (4):
+  hw/qdev: Have qdev_get_gpio_out_connector() take const DeviceState arg
+  hw/sysbus: Have various helpers take a const SysBusDevice argument
+  hw/uefi: Include missing 'system/memory.h' header
+  hw/int/loongarch: Include missing 'system/memory.h' header
+
+Vishal Chourasia (6):
+  hw/core/loader: Use qemu_open() instead of open() in get_image_size()
+  hw/core/loader: capture Error from load_image_targphys
+  hw/core/loader: improve error handling in image loading functions
+  hw/core/loader: add check for zero size in load_image_targphys_as
+  hw/core/loader: Pass errp to load_image_targphys_as()
+  hw/ppc: Pass error_fatal to load_image_targphys()
+
+ hw/net/fsl_etsec/etsec.h                  |   1 -
+ include/hw/char/serial.h                  |   1 -
+ include/hw/i386/intel_iommu.h             |   1 -
+ include/hw/input/lasips2.h                |   6 +-
+ include/hw/intc/loongarch_dintc.h         |   2 +-
+ include/hw/intc/loongarch_extioi_common.h |   1 +
+ include/hw/intc/loongarch_pch_msi.h       |   1 +
+ include/hw/intc/loongarch_pic_common.h    |   1 +
+ include/hw/intc/loongson_ipi_common.h     |   1 +
+ include/hw/loader.h                       |   8 +-
+ include/hw/misc/auxbus.h                  |   7 +-
+ include/hw/misc/bcm2835_mphi.h            |   7 +-
+ include/hw/misc/npcm7xx_pwm.h             |   7 +-
+ include/hw/pci-host/pnv_phb3.h            |   6 +-
+ include/hw/pci-host/pnv_phb4.h            |   8 +-
+ include/hw/ppc/mac_dbdma.h                |   7 +-
+ include/hw/qdev-core.h                    |   3 +-
+ include/hw/riscv/boot.h                   |  18 ++--
+ include/hw/riscv/boot_opensbi.h           |  14 +--
+ include/hw/riscv/iommu.h                  |   3 -
+ include/hw/scsi/scsi.h                    |   7 +-
+ include/hw/sysbus.h                       |  10 +--
+ include/hw/uefi/var-service.h             |   1 +
+ include/hw/vfio/vfio-container-legacy.h   |   5 +-
+ include/hw/virtio/virtio-net.h            |   2 +-
+ include/hw/virtio/virtio-serial.h         |   5 +-
+ include/migration/vmstate.h               |   9 --
+ include/net/can_emu.h                     |   7 +-
+ backends/cryptodev-lkcf.c                 |   1 -
+ hw/alpha/dp264.c                          |   4 +-
+ hw/arm/armv7m.c                           |   2 +-
+ hw/arm/boot.c                             |   5 +-
+ hw/arm/digic_boards.c                     |   2 +-
+ hw/arm/highbank.c                         |   3 +-
+ hw/arm/raspi.c                            |   2 +-
+ hw/arm/vexpress.c                         |   2 +-
+ hw/char/ipoctal232.c                      |   9 +-
+ hw/char/xen_console.c                     |   1 -
+ hw/core/generic-loader.c                  |   5 +-
+ hw/core/gpio.c                            |   3 +-
+ hw/core/guest-loader.c                    |   4 +-
+ hw/core/loader.c                          |  42 ++++++---
+ hw/core/sysbus.c                          |  10 +--
+ hw/dma/pl330.c                            |   6 +-
+ hw/hppa/machine.c                         |   5 +-
+ hw/i386/multiboot.c                       |   2 +-
+ hw/i386/x86-common.c                      |   4 +-
+ hw/ipmi/ipmi_bmc_sim.c                    |   2 +-
+ hw/loongarch/boot.c                       |   5 +-
+ hw/m68k/an5206.c                          |   2 +-
+ hw/m68k/mcf5208.c                         |   4 +-
+ hw/m68k/next-cube.c                       |   2 +-
+ hw/m68k/q800.c                            |   7 +-
+ hw/m68k/virt.c                            |   4 +-
+ hw/microblaze/boot.c                      |   5 +-
+ hw/mips/boston.c                          |   2 +-
+ hw/mips/fuloong2e.c                       |   9 +-
+ hw/mips/jazz.c                            |   2 +-
+ hw/mips/loongson3_virt.c                  |  10 ++-
+ hw/mips/malta.c                           |   9 +-
+ hw/net/virtio-net.c                       |   9 +-
+ hw/net/xen_nic.c                          |   2 -
+ hw/nubus/nubus-device.c                   |   2 +-
+ hw/nvram/ds1225y.c                        |   2 +-
+ hw/openrisc/boot.c                        |   5 +-
+ hw/pci-host/bonito.c                      |   7 +-
+ hw/pci-host/raven.c                       | 105 +++++++---------------
+ hw/pci/pci.c                              |   2 +-
+ hw/ppc/amigaone.c                         |  13 +--
+ hw/ppc/e500.c                             |  20 +----
+ hw/ppc/mac_newworld.c                     |  19 ++--
+ hw/ppc/mac_oldworld.c                     |  19 ++--
+ hw/ppc/pef.c                              |   1 -
+ hw/ppc/pegasos2.c                         |  10 +--
+ hw/ppc/pnv.c                              |  27 ++----
+ hw/ppc/ppc440_bamboo.c                    |   9 +-
+ hw/ppc/prep.c                             |  19 ++--
+ hw/ppc/sam460ex.c                         |   8 +-
+ hw/ppc/spapr.c                            |  17 +---
+ hw/ppc/virtex_ml507.c                     |  11 +--
+ hw/riscv/boot.c                           |  49 +++++-----
+ hw/riscv/microchip_pfsoc.c                |   2 +-
+ hw/riscv/sifive_u.c                       |   2 +-
+ hw/riscv/spike.c                          |   4 +-
+ hw/riscv/virt.c                           |   2 +-
+ hw/rx/rx-gdbsim.c                         |   2 +-
+ hw/s390x/ipl.c                            |   8 +-
+ hw/sh4/r2d.c                              |   8 +-
+ hw/smbios/smbios.c                        |   2 +-
+ hw/sparc/leon3.c                          |   4 +-
+ hw/sparc/sun4m.c                          |   8 +-
+ hw/sparc64/sun4u.c                        |   7 +-
+ hw/usb/dev-mtp.c                          |   7 +-
+ hw/usb/dev-uas.c                          |   7 +-
+ hw/xtensa/xtfpga.c                        |   3 +-
+ system/device_tree.c                      |   2 +-
+ target/hppa/fpu_helper.c                  |   7 +-
+ 97 files changed, 321 insertions(+), 434 deletions(-)
+
+-- 
+2.51.0
+
 
