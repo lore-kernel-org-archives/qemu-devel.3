@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927D7CCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 17:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D436CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 17:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDnbt-0006Ws-Ki; Tue, 28 Oct 2025 13:35:54 -0400
+	id 1vDnau-0005vx-1o; Tue, 28 Oct 2025 13:34:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDnbW-0006Oo-Og
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:35:33 -0400
+ id 1vDnas-0005vJ-CU
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:34:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDnbP-0004hx-Tj
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:35:30 -0400
+ id 1vDnap-0004Pu-Bp
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:34:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761672922;
+ s=mimecast20190719; t=1761672885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eLhLVJ2XarzKVk+Slx8EqzVV2n5CC0vk3GBdbky8+bk=;
- b=YbF7G3QQzntxJwTEiMLAuFM8CuZTdHvLPX9Mr3LVqxmWRuKwLFhWIP9HvbiZ6rpnFjYxQG
- HkcG3NizHBVceX87W8bK7iv8S/Cfj1/fP/BHw4xftAxk0OFtN/nt2LOyknd+H1Qzomam3v
- nKsIzQcuSxPH/SltghMjbiLaiVZ1eOY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/7osdAW5bSf9qjwAd56pP8o2B29iR255+zUoc4/NUqo=;
+ b=cDpd9MLd7Z22bF9iH9N5YoSb+X9lbZdws24l2sp8IMyPLiJgI4IfP6yjmG0gauzv2JM80I
+ wjwOcMIaS5A5pSqCQN8uVPL+z2fTGjZMvWQToaLunqU9jvU3ghdss0Z/LxSudmgNePCJCt
+ Dzm3oz894dkxuTGvJ9EbV4S+Ao+aiCE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-bC7CMogrOjei_uKmrT1kSQ-1; Tue, 28 Oct 2025 13:35:20 -0400
-X-MC-Unique: bC7CMogrOjei_uKmrT1kSQ-1
-X-Mimecast-MFC-AGG-ID: bC7CMogrOjei_uKmrT1kSQ_1761672919
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-475c422fd70so50648885e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 10:35:20 -0700 (PDT)
+ us-mta-130-oeMyffwgMouU5wrcZdUbTw-1; Tue, 28 Oct 2025 13:34:43 -0400
+X-MC-Unique: oeMyffwgMouU5wrcZdUbTw-1
+X-Mimecast-MFC-AGG-ID: oeMyffwgMouU5wrcZdUbTw_1761672883
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-475c422fd70so50643925e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 10:34:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761672919; x=1762277719;
+ d=1e100.net; s=20230601; t=1761672882; x=1762277682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eLhLVJ2XarzKVk+Slx8EqzVV2n5CC0vk3GBdbky8+bk=;
- b=he+/+zpwFlKe+YIbKTltQCSJlzQyxRW/CuZUYgLNnHEM90Ty2SWPtueuqtPiRbSJRx
- Xb0IRepVp/oyImGllFdRf9VGB+vyQbiL2640XrQhCwMzHfWrcovQquWneA6s0ygMR9Pa
- GJDzp26cmWRvLjyE7FmrTtvh6QYfQDVrpNWz1wYFdDGd0pEFySlny+NZsnH3b4T4WOCD
- S/z+o/9+rYULFfUmu1H8H5ACdMs5SulS9tbzJ+MYHBLM2pntokwXBInoPTIeqsOdQZ5C
- 0w8BQyWie7t5/K3dpZfQzlMiwK9VjhXMrchJhNxZ/1VUMqM5ldPwLRUexP3DVrBX2ru/
- o0IQ==
-X-Gm-Message-State: AOJu0YyjmKphXWCEy8ExJyD2FHAhJIlN+WQhLr4sDLzCzzphB2U1xXOQ
- Gb30OZXHNq3ryikJ0pya7IM9RclsbP14idBECxoImxI13kDFRWgFlrlcohuHtHMz7I/XxgxEQUL
- Uc9rsO272QFG559qDD7SfapwWITb9vwhAgEllvTZJ50pwC4F9DWqtKEQxbdOs+SagCRDiWpeqXx
- WjP46hrJ0TtK6PgzkV+h82kkol312eABrI44xV/LA0
-X-Gm-Gg: ASbGnctAwKY7uujId+CVV8IZ7lYul6cBGv86gvyioQ2RZWqY7ZS4Ej1YVVSA2cKrXQM
- k/+XwcJ0VqEXYk4c/i4pmKuZa4cAQks77hiPYWaRnE21nJkCn770TFPtSAoPORuX830m0Bfan1q
- H02h7sRqg0n4XSKOCGx1FI/qITm16Y6wOF8IIEby0yOPJ+NRvWWvAwn7m0PP2lY0OY2uI+L9f5s
- /3ojF+BYTYOunfsexBGN4rjDFOEWAexIs71blMgNBSe6sLpDmnJ+W7E1msgVljgOsIOxxCV69iC
- dhIBE5Nij4GgXFZmBPK+BLyEgs/iESwq/Z0RZ4csJ0rOtkF5jxF1jjjd2mut6YwBUiejhiATEut
- lLREIhP5NGloD9bWCswty7DScDsiNhINf1wOUYOncw6kLceEp2CnAh5RW8bRfgDmBjxb7lqLugf
- vwN94=
-X-Received: by 2002:a05:6000:1786:b0:426:fb28:7962 with SMTP id
- ffacd0b85a97d-429a7e86fdfmr4110812f8f.61.1761672918516; 
- Tue, 28 Oct 2025 10:35:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYISxoFXRWT4CSQFkij0/JYLnvkQ9ZHEUxIVRSWMIjdtVxfJZ2pB4Kvct1JEbXqJvyYeHsRg==
-X-Received: by 2002:a05:6000:1786:b0:426:fb28:7962 with SMTP id
- ffacd0b85a97d-429a7e86fdfmr4110553f8f.61.1761672916739; 
- Tue, 28 Oct 2025 10:35:16 -0700 (PDT)
+ bh=/7osdAW5bSf9qjwAd56pP8o2B29iR255+zUoc4/NUqo=;
+ b=YYXj8KauXTsJuAfG29xLaTFhEK7m/eLCRAILvaBrb6f3zGkM+2KJ6OZofSkVlSunhR
+ oIyFbs2pcBM8W2XNK2zu30rVa1FsXN3WCnyRPKc2xwYfSxWJyGZnDubOQim+QxI/WjsB
+ 3at0nV81/BycHns8TY+EYr/MMzWr9nrywEJyIsITwSL73mwWz6SPq2rC3FnMF2/0n8zN
+ uzB7P9IkVr906fEGri36soEHyMI321+Td84T4yE9CWs9f42/k5KVEL6r4gLmhTG3l52X
+ uAkJl/ftBI+r2zDC4/UGdXFP3ywD9XhvLlAqNqhGjiLGHfLel/gbSTw+UftaSGljLtAY
+ g1Jw==
+X-Gm-Message-State: AOJu0YzYSO2azGqvYX9FM8922OQTO/mrQT4ERVND7VBk1GBnmXn4zJOe
+ tcxxgaHAm/5O/AZ7r/czCYcaVGgkNMv+6nbgZigde7MQhMPLa0MsrA4FS+omwAalRnzxi+ZNpMR
+ 3nJGq8EQP/L3KBxSLUCBgITsvsfQjyEBm0DjRKHSYUngp5IG0HEFEuf7gbzdhSA8Sqgs1a2+DAD
+ uabHAyDkjSDcvLqQHrNRvmN4LuT9PxUMTj2PF0rJJb
+X-Gm-Gg: ASbGncvkZlJRWEadPxzWTZd5dVfoUQLyrx07Km1dSWGUb+urgkYRfP0MCe1htUiTIBy
+ 7u+p4w5zR1bG8LOf3WmukoJ0hR04hzVxWMVYxR/qV4GGUkvNGSgE5mpb/5enIxuLZASUrHOpO2A
+ 5QCmpUecaONxTH4Jc0nBhYT9Ldi7ZHGiTQ2zmkrXcBA1mU5g7AxZFr02EAXPQI+M8sel4bepFXA
+ hnTWdN3e4Us2iQHFwOnrCu9vGcCIn7o/qtWGOkFfW4V64Ow8RMR7LyK84RqNcF0PpSSFp9YlZzI
+ hn5n3VwpbladmD+/ID5ktbUfVjVJ2JmSTMrQ0ayllIxxz82Ctwm1FgWZHP8LrbTr02dXEMMnCXB
+ uE1fZixhdT4LpTbiLJRr6LST+ztYvvMHaU9wk63Q7fCCHSZ2zIynor+4CexVCDh2VanNg5JkD4b
+ r/mFY=
+X-Received: by 2002:a05:600c:8b8b:b0:471:1717:40f with SMTP id
+ 5b1f17b1804b1-4771e1ca084mr2207565e9.22.1761672882014; 
+ Tue, 28 Oct 2025 10:34:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHD8diAi5KAatEerGVhRBxHrqUc0knotgUiMBAJlIi0rSqnnoX86wT4L4Hj12X/uA1YfK/gWg==
+X-Received: by 2002:a05:600c:8b8b:b0:471:1717:40f with SMTP id
+ 5b1f17b1804b1-4771e1ca084mr2207315e9.22.1761672881428; 
+ Tue, 28 Oct 2025 10:34:41 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.110.222])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df473sm21505827f8f.42.2025.10.28.10.35.13
+ 5b1f17b1804b1-4771e196a9asm3885085e9.7.2025.10.28.10.34.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 10:35:14 -0700 (PDT)
+ Tue, 28 Oct 2025 10:34:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 15/18] hw/i386/isapc.c: warn rather than reject modern x86 CPU
- models
-Date: Tue, 28 Oct 2025 18:34:27 +0100
-Message-ID: <20251028173430.2180057-16-pbonzini@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PULL 03/18] rcu: Unify force quiescent state
+Date: Tue, 28 Oct 2025 18:34:15 +0100
+Message-ID: <20251028173430.2180057-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251028173430.2180057-1-pbonzini@redhat.com>
 References: <20251028173430.2180057-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -113,107 +111,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Commit e1e2909f8e ("hw/i386/pc_piix.c: restrict isapc machine to 32-bit CPUs")
-restricted the isapc machine to 32-bit CPUs, but subsequent concern has been
-expressed as to the effect this could have on users.
+Borrow the concept of force quiescent state from Linux to ensure readers
+remain fast during normal operation and to avoid stalls.
 
-The outcome of the latest discussion is that we should exercise more caution
-and follow the official deprecation route, so instead of rejecting modern x86
-CPUs issue a deprecation warning but allow the user to continue.
+Background
+==========
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20251023142926.964718-2-mark.caveayland@nutanix.com
+The previous implementation had four steps to begin reclamation.
+
+1. call_rcu_thread() would wait for the first callback.
+
+2. call_rcu_thread() would periodically poll until a decent number of
+   callbacks piled up or it timed out.
+
+3. synchronize_rcu() would statr a grace period (GP).
+
+4. wait_for_readers() would wait for the GP to end. It would also
+   trigger the force_rcu notifier to break busy loops in a read-side
+   critical section if drain_call_rcu() had been called.
+
+Problem
+=======
+
+The separation of waiting logic across these steps led to suboptimal
+behavior:
+
+The GP was delayed until call_rcu_thread() stops polling.
+
+force_rcu was not consistently triggered when call_rcu_thread() detected
+a high number of pending callbacks or a timeout. This inconsistency
+sometimes led to stalls, as reported in a virtio-gpu issue where memory
+unmapping was blocked[1].
+
+wait_for_readers() imposed unnecessary overhead in non-urgent cases by
+unconditionally executing qatomic_set(&index->waiting, true) and
+qemu_event_reset(&rcu_gp_event), which are necessary only for expedited
+synchronization.
+
+Solution
+========
+
+Move the polling in call_rcu_thread() to wait_for_readers() to prevent
+the delay of the GP. Additionally, reorganize wait_for_readers() to
+distinguish between two states:
+
+Normal State: it relies exclusively on periodic polling to detect
+the end of the GP and maintains the read-side fast path.
+
+Force Quiescent State: Whenever expediting synchronization, it always
+triggers force_rcu and executes both qatomic_set(&index->waiting, true)
+and qemu_event_reset(&rcu_gp_event). This avoids stalls while confining
+the read-side overhead to this state.
+
+This unified approach, inspired by the Linux RCU, ensures consistent and
+efficient RCU grace period handling and confirms resolution of the
+virtio-gpu issue.
+
+[1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-alex.bennee@linaro.org/
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Link: https://lore.kernel.org/r/20251016-force-v1-1-919a82112498@rsg.ci.i.u-tokyo.ac.jp
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/isapc.c | 55 ++++++++++++++++++++-----------------------------
- 1 file changed, 22 insertions(+), 33 deletions(-)
+ util/rcu.c | 81 +++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 52 insertions(+), 29 deletions(-)
 
-diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
-index 44f4a446724..1ba9ae22cc3 100644
---- a/hw/i386/isapc.c
-+++ b/hw/i386/isapc.c
-@@ -41,29 +41,31 @@ static void pc_init_isa(MachineState *machine)
-     DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
-     int i;
+diff --git a/util/rcu.c b/util/rcu.c
+index b703c86f15a..acac9446ea9 100644
+--- a/util/rcu.c
++++ b/util/rcu.c
+@@ -43,10 +43,14 @@
+ #define RCU_GP_LOCKED           (1UL << 0)
+ #define RCU_GP_CTR              (1UL << 1)
  
--    /*
--     * There is a small chance that someone unintentionally passes "-cpu max"
--     * for the isapc machine, which will provide a much more modern 32-bit
--     * CPU than would be expected for an ISA-era PC. If the "max" cpu type has
--     * been specified, choose the "best" 32-bit cpu possible which we consider
--     * be the pentium3 (deliberately choosing an Intel CPU given that the
--     * default 486 CPU for the isapc machine is also an Intel CPU).
--     */
--    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
--        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
--        warn_report("-cpu max is invalid for isapc machine, using pentium3");
--    }
-+    bool valid_cpu_type = false;
-+    static const char * const valid_cpu_types[] = {
-+        X86_CPU_TYPE_NAME("486"),
-+        X86_CPU_TYPE_NAME("athlon"),
-+        X86_CPU_TYPE_NAME("kvm32"),
-+        X86_CPU_TYPE_NAME("pentium"),
-+        X86_CPU_TYPE_NAME("pentium2"),
-+        X86_CPU_TYPE_NAME("pentium3"),
-+        X86_CPU_TYPE_NAME("qemu32"),
-+    };
- 
-     /*
--     * Similarly if someone unintentionally passes "-cpu host" for the isapc
--     * machine then display a warning and also switch to the "best" 32-bit
--     * cpu possible which we consider to be the pentium3. This is because any
--     * host CPU will already be modern than this, but it also ensures any
--     * newer CPU flags/features are filtered out for older guests.
-+     * The isapc machine is supposed to represent a legacy ISA-only PC with a
-+     * 32-bit processor. For historical reasons the machine can still accept
-+     * almost any valid processor, but this is now deprecated in 10.2. Emit
-+     * a warning if anyone tries to use a deprecated CPU.
-      */
--    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("host"))) {
--        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
--        warn_report("-cpu host is invalid for isapc machine, using pentium3");
-+    for (i = 0; i < ARRAY_SIZE(valid_cpu_types); i++) {
-+        if (!strcmp(machine->cpu_type, valid_cpu_types[i])) {
-+            valid_cpu_type = true;
-+        }
-+    }
 +
-+    if (!valid_cpu_type) {
-+        warn_report("cpu type %s is deprecated for isapc machine", machine->cpu_type);
++#define RCU_CALL_MIN_SIZE        30
++
+ unsigned long rcu_gp_ctr = RCU_GP_LOCKED;
+ 
+ QemuEvent rcu_gp_event;
+ static int in_drain_call_rcu;
++static int rcu_call_count;
+ static QemuMutex rcu_registry_lock;
+ static QemuMutex rcu_sync_lock;
+ 
+@@ -76,15 +80,29 @@ static void wait_for_readers(void)
+ {
+     ThreadList qsreaders = QLIST_HEAD_INITIALIZER(qsreaders);
+     struct rcu_reader_data *index, *tmp;
++    int sleeps = 0;
++    bool forced = false;
+ 
+     for (;;) {
+-        /* We want to be notified of changes made to rcu_gp_ongoing
+-         * while we walk the list.
++        /*
++         * Force the grace period to end and wait for it if any of the
++         * following heuristical conditions are satisfied:
++         * - A decent number of callbacks piled up.
++         * - It timed out.
++         * - It is in a drain_call_rcu() call.
++         *
++         * Otherwise, periodically poll the grace period, hoping it ends
++         * promptly.
+          */
+-        qemu_event_reset(&rcu_gp_event);
++        if (!forced &&
++            (qatomic_read(&rcu_call_count) >= RCU_CALL_MIN_SIZE ||
++             sleeps >= 5 || qatomic_read(&in_drain_call_rcu))) {
++            forced = true;
+ 
+-        QLIST_FOREACH(index, &registry, node) {
+-            qatomic_set(&index->waiting, true);
++            QLIST_FOREACH(index, &registry, node) {
++                notifier_list_notify(&index->force_rcu, NULL);
++                qatomic_set(&index->waiting, true);
++            }
+         }
+ 
+         /* Here, order the stores to index->waiting before the loads of
+@@ -106,8 +124,6 @@ static void wait_for_readers(void)
+                  * get some extra futex wakeups.
+                  */
+                 qatomic_set(&index->waiting, false);
+-            } else if (qatomic_read(&in_drain_call_rcu)) {
+-                notifier_list_notify(&index->force_rcu, NULL);
+             }
+         }
+ 
+@@ -115,7 +131,8 @@ static void wait_for_readers(void)
+             break;
+         }
+ 
+-        /* Wait for one thread to report a quiescent state and try again.
++        /*
++         * Sleep for a while and try again.
+          * Release rcu_registry_lock, so rcu_(un)register_thread() doesn't
+          * wait too much time.
+          *
+@@ -133,7 +150,20 @@ static void wait_for_readers(void)
+          * rcu_registry_lock is released.
+          */
+         qemu_mutex_unlock(&rcu_registry_lock);
+-        qemu_event_wait(&rcu_gp_event);
++
++        if (forced) {
++            qemu_event_wait(&rcu_gp_event);
++
++            /*
++             * We want to be notified of changes made to rcu_gp_ongoing
++             * while we walk the list.
++             */
++            qemu_event_reset(&rcu_gp_event);
++        } else {
++            g_usleep(10000);
++            sleeps++;
++        }
++
+         qemu_mutex_lock(&rcu_registry_lock);
      }
  
-     if (machine->ram_size > 3.5 * GiB) {
-@@ -154,18 +156,6 @@ static void pc_init_isa(MachineState *machine)
- 
- static void isapc_machine_options(MachineClass *m)
- {
--    static const char * const valid_cpu_types[] = {
--        X86_CPU_TYPE_NAME("486"),
--        X86_CPU_TYPE_NAME("athlon"),
--        X86_CPU_TYPE_NAME("kvm32"),
--        X86_CPU_TYPE_NAME("pentium"),
--        X86_CPU_TYPE_NAME("pentium2"),
--        X86_CPU_TYPE_NAME("pentium3"),
--        X86_CPU_TYPE_NAME("qemu32"),
--        X86_CPU_TYPE_NAME("max"),
--        X86_CPU_TYPE_NAME("host"),
--        NULL
--    };
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
- 
-     m->desc = "ISA-only PC";
-@@ -180,7 +170,6 @@ static void isapc_machine_options(MachineClass *m)
-     pcmc->has_reserved_memory = false;
-     m->default_nic = "ne2k_isa";
-     m->default_cpu_type = X86_CPU_TYPE_NAME("486");
--    m->valid_cpu_types = valid_cpu_types;
-     m->no_floppy = !module_object_class_by_name(TYPE_ISA_FDC);
-     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+@@ -173,15 +203,11 @@ void synchronize_rcu(void)
+     }
  }
+ 
+-
+-#define RCU_CALL_MIN_SIZE        30
+-
+ /* Multi-producer, single-consumer queue based on urcu/static/wfqueue.h
+  * from liburcu.  Note that head is only used by the consumer.
+  */
+ static struct rcu_head dummy;
+ static struct rcu_head *head = &dummy, **tail = &dummy.next;
+-static int rcu_call_count;
+ static QemuEvent rcu_call_ready_event;
+ 
+ static void enqueue(struct rcu_head *node)
+@@ -259,30 +285,27 @@ static void *call_rcu_thread(void *opaque)
+     rcu_register_thread();
+ 
+     for (;;) {
+-        int tries = 0;
+-        int n = qatomic_read(&rcu_call_count);
++        int n;
+ 
+-        /* Heuristically wait for a decent number of callbacks to pile up.
++        /*
+          * Fetch rcu_call_count now, we only must process elements that were
+          * added before synchronize_rcu() starts.
+          */
+-        while (n == 0 || (n < RCU_CALL_MIN_SIZE && ++tries <= 5)) {
+-            g_usleep(10000);
+-            if (n == 0) {
+-                qemu_event_reset(&rcu_call_ready_event);
+-                n = qatomic_read(&rcu_call_count);
+-                if (n == 0) {
+-#if defined(CONFIG_MALLOC_TRIM)
+-                    malloc_trim(4 * 1024 * 1024);
+-#endif
+-                    qemu_event_wait(&rcu_call_ready_event);
+-                }
+-            }
++        for (;;) {
++            qemu_event_reset(&rcu_call_ready_event);
+             n = qatomic_read(&rcu_call_count);
++            if (n) {
++                break;
++            }
++
++#if defined(CONFIG_MALLOC_TRIM)
++            malloc_trim(4 * 1024 * 1024);
++#endif
++            qemu_event_wait(&rcu_call_ready_event);
+         }
+ 
+-        qatomic_sub(&rcu_call_count, n);
+         synchronize_rcu();
++        qatomic_sub(&rcu_call_count, n);
+         bql_lock();
+         while (n > 0) {
+             node = try_dequeue();
 -- 
 2.51.1
 
