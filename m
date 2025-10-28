@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1224CCCD1BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BEACCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:59:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDiF1-0005m6-MM; Tue, 28 Oct 2025 07:51:56 -0400
+	id 1vDiMI-00075c-Fo; Tue, 28 Oct 2025 07:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDiEz-0005lh-Nf
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:51:53 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDiMG-00075I-OE
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:59:24 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vDiEx-0007av-A2
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:51:53 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-61feb87fe26so10013669a12.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:51:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vDiMD-0008Ec-56
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:59:23 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-b6d3340dc2aso101228166b.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761652305; x=1762257105; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=if4SeftyPY4YOGFs06B2Ms4qhDTlHia+6cs4AEOESkg=;
- b=yrEJto473S7YTvAm3kIciIeuP7F3tZ/6EBwMIA2M5C31C2kw5h/coCNQ4fskwVkunh
- VYUoo9SqLR1Cw9JI6wmQ6IqgcBOftr0DCwvKIZTGJ6PToTj3vDzRUjAMZj402hUgrLD4
- 1ressutk0/0xQL6DI5GuRowQpevvh0TrTTtlr5ouykHgUygo183uKpolcmzcgGegqxNk
- 12C1Q5b48m7dsHtJKb9CMAbEQ/+vi6uWCIVSVOR03F0sUbxO4h6xUqJoeSxKBdFCRawy
- SoSVnmpUbDrrv57ju9fbeU3B+4kgMRKgIUgXbLb+lJ2eHw1tHzm9by+rXvabj1Yrf7mg
- Fh0g==
+ d=linaro.org; s=google; t=1761652755; x=1762257555; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XBn7RArNNfoWX8I+WWixaNZpEIEbgylvkPRW+fG+CdY=;
+ b=GzoIzm0xhnWw9UbPCUN1lwZPV88LxmOShW+fBLF6+Ykf4wWJlMtr2vv9BXg3Lkl0GP
+ ACHn/Y0cwmtn03Ey4sHRgKaeNWUgoWo5219NEGtz49xKc/R7jlA+9N4JBm4YOCB2MLBC
+ oZAyP8r3iExVA7FbrsKhHcn4gMR+Pq8Sk+C0Vr0WfvAn+onAP7OpuzXsjooY6V/IuIhy
+ d+O6xDCUJrE7XZO/yP5zuXHn8RL1av9unRXvw6aUxpfLKt76lVCd5W06jtgdfmsV3g21
+ XXm513023QALb3yMGm65ykFQ619iwigqyoO4Q/Dlts3WYETNBNg1vyVDBSVKtLT4yYVg
+ TzUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761652305; x=1762257105;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=if4SeftyPY4YOGFs06B2Ms4qhDTlHia+6cs4AEOESkg=;
- b=tpmqPrppyBHbyjoedfQmafj8nP+lM8WADaMU0s1xddJv8cbH8otH4Qj8n5PYVqH+5D
- KqjZG2rTrbhnSRu6A1rQI0K9nR70WzKkz9uA5z1Nr/dQnJgGxXFP09CXrLKv7A+4N0rT
- FO38GMhh9+oI3gmmWnbUVNXbDbohGO9xUopE6IgI6OsomG2um++Rqy9e42dyFbUETfpz
- VPGjVIR/g65kqmbYnUKAt9HGkMmhLk+iFWp9dMPujjdCFVA7qqJfA4f4J3yDxHJXxoQP
- 9c8lHIdQoy5Hhee/OLvfC6aDIFERpZsZxW14wJ77o1uOWbQlkeGVuSOf8HlK+Qd5v+AF
- CBeA==
-X-Gm-Message-State: AOJu0YxjKBqmCFJ7ATiEQwqCtMcSx+pg6RK2LsRAGd5xfQJaW62VLII9
- z7sMdwylA9OFfoEc7vHGdWQUQpkowgMqc34KEarKQSr2TV8V9n08vx3Uq4q61tPij9s=
-X-Gm-Gg: ASbGncuUzGWLu/9+MSPKNJtypq05aVISa7fkLRt/sv5ch0wAxvgDeJ4ay42EyIkz6Sw
- BAQdiayr5cvNHPf/RsX5BmXZx0+zQoOS6K4q/z0q0rhkWNlJCNfFRiRtYuKEU58tMxHC1GRJYMU
- g8zJVzBjMRfUuzuu508lT7U/BJJIJMihLfR+v+pjNHKt/QfYKA7YuBrxl6Nyu9e2RNi/G1mMIhL
- oaQmqyKWQNFD65XjH6thMxumZxDDZVFjlqSjgPEgD84xjawGArESdgrv4cOAj8x4/xMxjnjDndD
- d6Z2negCzHuhIxVJdOk9QBznAbXX8UDz5G4RUbSnYsY6GVD5XoB1Aa+vQPS92fuZGOemISLn1cu
- 6SUAtS34ShxOnHSk7LRGPDVrMIRp8VCRNY1MDY0Pvh32v6AH4OSh7tlMHCzIpuLvww2Q6Kw4BHi
- 4VbFlWAEp8mVA=
-X-Google-Smtp-Source: AGHT+IGGFPuw9R4e2NpovDPbpMeSOBWQ5Acn6TGo+wd8txJFtLeyqYvll/fEP+mmi/hEAYE+Wn/+PA==
-X-Received: by 2002:a17:907:847:b0:b07:c1df:875 with SMTP id
- a640c23a62f3a-b6dba58b628mr376462166b.56.1761652304813; 
- Tue, 28 Oct 2025 04:51:44 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b6d85398444sm1063914666b.35.2025.10.28.04.51.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 04:51:43 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B43D75F828;
- Tue, 28 Oct 2025 11:51:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Mads Ynddal <mads@ynddal.dk>,  Cameron Esfahani
- <dirty@apple.com>,  qemu-arm@nongnu.org,  Roman Bolshakov
- <rbolshakov@ddn.com>,  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Phil
- Dennis-Jordan <phil@philjordan.eu>,  Mohamed Mediouni
- <mohamed@unpredictable.fr>,  Peter Collingbourne <pcc@google.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1761652755; x=1762257555;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XBn7RArNNfoWX8I+WWixaNZpEIEbgylvkPRW+fG+CdY=;
+ b=Z3Z9nCjQMd3dqy8nOB4u/GlsP4jAZ7govufU/rEzxu3FqrGioX0cugPTYsCX3iPMOU
+ 8sLkgX+2UAqlGYN9dGNZyFvB30thSRTekiJgaxvc2fJS1N0C/C8THDeEKmCDP353U7VG
+ FUiFWXFPGveF0p09fqg8b2qul5+aDVtRhc8xVXr9Q5IB7aH50xMOFmWFwjj8cy7KCLNf
+ nSezpet5vY3L9S5ciKhupIXzdglo4oL902xT3E7+hZpAf4ngfuuVsYVjg+ynmaPH9D21
+ QGYoWZDndi7PJrRe1jYntwhaw0+1wfrylufY494BnvzMMxscBtjg/8flyRoLA8ynSZIb
+ /O1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoW8X9U4slUqg2HV31J6mVvpSw4Y17koY05f10klsdyc+d8ACz666xRKxmQ4JfuzSwLGkE/+WcA/cm@nongnu.org
+X-Gm-Message-State: AOJu0YzHecjDYuxuCiBwUnjSNClGa8RmYNWztvHhBl6eLiKXvre3uIXf
+ QYXAqjlxz9WupeedcBnsVfZ/WAapUSjaAn1BD9hWcWy2gBMf1TrTIxfOHW7jnHPhoRg=
+X-Gm-Gg: ASbGnctZrcLIMr72wED3GnkokX9NvoMqRfxDZACDJuSurzjH39KThTnDXfg5tf2m+Qj
+ vR6LVxwYOODos9BbjnrIayxV1WQe9u7dCeH4exAEbWmrSrguswagOzWlMpVMCMguPjl5e6cQ9Kn
+ YcTo1vBa5rLpsqLWVhB6HfkP2VMjrHaRCII6AJLoFOrrX+sZLdtxMfVb9ivSLg+6xW8rcctFKXg
+ /dezA0WKIGPF6q/hPvy6tMdUxiiyjH5pUlhtLzi77q/lGF8/DUuozz0Z5ylAQhHycJfS05rcxda
+ xIyD2WXgzLuV2hN0D3k+xy7SiZF5sE/K7u48WCFy5/W/LQ1fBhytX66qz3BPAXEqOc7b9Ffxz9b
+ nFADtakJbpnCMOfX1R1lQbbWHSYz6BLnEuLsCnAPzgXxJMtJ6nQUfNgprGIoQpUTqBnHc1NireY
+ N8SJsIhdyHL+G+6OgP
+X-Google-Smtp-Source: AGHT+IHG9l4+tG2g7chJis7I0T9AlWKuv1yT2fFspzQ+U2dDIasx8CZBJ8Sh0U55++nDevLZoXvICA==
+X-Received: by 2002:a17:907:3d44:b0:b4c:629b:aa67 with SMTP id
+ a640c23a62f3a-b6dbc094080mr293180766b.32.1761652755434; 
+ Tue, 28 Oct 2025 04:59:15 -0700 (PDT)
+Received: from [10.240.88.227] ([212.144.248.67])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b6d8992aa28sm1031517466b.41.2025.10.28.04.59.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Oct 2025 04:59:14 -0700 (PDT)
+Message-ID: <757efb2d-afc8-413f-9807-aacdd342d8bd@linaro.org>
+Date: Tue, 28 Oct 2025 12:59:12 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 42/59] accel/hvf: Skip WFI if CPU has work to do
-In-Reply-To: <20251028054238.14949-43-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 28 Oct 2025 06:42:18
- +0100")
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
 References: <20251028054238.14949-1-philmd@linaro.org>
  <20251028054238.14949-43-philmd@linaro.org>
-User-Agent: mu4e 1.12.14-dev2; emacs 30.1
-Date: Tue, 28 Oct 2025 11:51:42 +0000
-Message-ID: <878qgvxn01.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251028054238.14949-43-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,15 +112,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
-
+On 10/28/25 06:42, Philippe Mathieu-Daudé wrote:
 > Avoid sleeping vCPU thread for any pending work, not just IRQs.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/arm/hvf/hvf.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
