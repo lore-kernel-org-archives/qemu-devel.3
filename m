@@ -4,104 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B8FCCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 02:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D804CCF9E5
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 02:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDZDM-0008SA-68; Mon, 27 Oct 2025 22:13:36 -0400
+	id 1vDZP9-0002Yl-TC; Mon, 27 Oct 2025 22:25:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1vDZDK-0008Rn-Un
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:13:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1vDZDH-00025b-Ok
- for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:13:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761617597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZLYe9AOWl7pPQRY2B72dm5ypE/vO29Drc46QIp7wmwE=;
- b=AOzaVmVhUbQl46kJnYmLxseBJXWEysHq2LLJcO9Cl8mj+5qQyX+9GXvcCZASXfqWc+cXWn
- JxaF/BzEYAE0SVSlyv1Nzore44LiWicUEXWZNliB0tP/Rbw4CRi+M+dIlBW8LMzDj71XyO
- 8LmuYbUg9mXCp4WQq8e2d6HBobAhLDM=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-EVe9aJR_OnSAo6uLMVwpsw-1; Mon, 27 Oct 2025 22:13:15 -0400
-X-MC-Unique: EVe9aJR_OnSAo6uLMVwpsw-1
-X-Mimecast-MFC-AGG-ID: EVe9aJR_OnSAo6uLMVwpsw_1761617595
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8904a9e94ebso1135195285a.1
- for <qemu-devel@nongnu.org>; Mon, 27 Oct 2025 19:13:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761617595; x=1762222395;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZLYe9AOWl7pPQRY2B72dm5ypE/vO29Drc46QIp7wmwE=;
- b=N2LnHer5dcFILQDWs7LEC79yjvJyhNCTq6eMqrc8Fr8/j3LdPToMV2w6rRB89fuMiP
- a0JZOyyIqooS0YyOt92Fx0Dj9RkLQEiT9A4X73QQrwomKSPqbu+GATXi48JoiZhg4sed
- vL7PS5r7rD2L3jesUJ20hKo4VCSm9RwzXVudHsJGXSuiWiNYAWojrVogcqVbvaCc6tN7
- yMNreU1q1hp3nd3Q0i/atopoGKdFeOEidLvuNvf1FGCwcab6XrXL37z+nmtVUr4/9QjS
- gZI/bHoCcktS0oGLqigLSHVQDjvgOpV5QOshjatu4XXNVHK7f8fSBfPWKUmJEK0cC4vl
- e8Dg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCyOHFYtZ+vFWupIr2/hkm6DcHd72chQGSXe02IbsaFOkdf6SKX/M1MGljoaIbaEDJQvcQvrHBlihb@nongnu.org
-X-Gm-Message-State: AOJu0YxjiUvZdGA4nSOwzm7YgY5gk9JRY5nwLoCP/19R4/fuxduzExQv
- Q/xZQCWeBubwbVxGlWnf2sWeffMhf35BhaffEkyYHYcJs/W+Nqn+B7ACPAh+KPAcbAWPDEJSx61
- 9UTq9hT6PC3OYpHCuL2V9DJWncqvh5Nm3/LRsN7uI9MP5EhxwJv5vJvzr
-X-Gm-Gg: ASbGncsBq/1ru+L1uYekuM9kV4ObYS2WpqThz5n7ShN+eZMhW/Juz2LOuAY7RzpMmgL
- idLL6f53/4ZC91ubxDNYBnkPa6dJk2aDx0Gi0emQ7iUT8ntWXmeMjOnfcFua7j3lkli5AIyHqy8
- UjoLVTCb7u/3+RrCLIBdDyE9nOIBEZqkxoRPm6DBotWS6CdrdIxv8Awzf/7ORe5EF4XSDuaZPR0
- mOSzWK+1ekhZ25Zt+Az/NnWs5XmHZgTjztQa7YLHz/+HYh5MvBQfbQqbe4AyqoyGq2CspojZuU8
- xGtnfOzy+/j60b93fjzlQj7o2K29fpZkX+/r6EogV9VH2CsZGvUTrg1vfR2+y1zqX2oa2m831GU
- =
-X-Received: by 2002:a05:620a:450f:b0:892:7dd2:9f14 with SMTP id
- af79cd13be357-8a6f47d049cmr275747685a.25.1761617594984; 
- Mon, 27 Oct 2025 19:13:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHktz2vJHRa9etpRmyqikOSZkSMHecWN+F5LxZn+rGi5z6+eGx2o9R/xf7px/SUvkxnkbmv0w==
-X-Received: by 2002:a05:620a:450f:b0:892:7dd2:9f14 with SMTP id
- af79cd13be357-8a6f47d049cmr275745785a.25.1761617594613; 
- Mon, 27 Oct 2025 19:13:14 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-89f2421fc4csm717517185a.10.2025.10.27.19.13.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Oct 2025 19:13:14 -0700 (PDT)
-Message-ID: <5e897607-2c33-46f2-b2ab-579a2f4b6385@redhat.com>
-Date: Mon, 27 Oct 2025 22:13:11 -0400
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
+ id 1vDZP7-0002YV-59
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:25:45 -0400
+Received: from sg-1-21.ptr.blmpb.com ([118.26.132.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chenmiao@openatom.club>)
+ id 1vDZOw-0003cS-FI
+ for qemu-devel@nongnu.org; Mon, 27 Oct 2025 22:25:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1761618314;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=o54b0pDg9yXREB1dN2LH8NZeQ92OBhMKqCmOFsRu6Sw=;
+ b=t9ZckaihNE6hwr2o+wvXQ9mJ8V7AflRyfDegxGgUjALJ5ERQ0LhjFgUF7E51YIGFEFQfCn
+ Sjpj+y9E+xK9QDc5ri1JlCbk2UrWg2Oeqc/C9lznQX9aWgeg2oNhw0walch79PQkopwSgQ
+ sazM0y67YVm90zEg5ljfHmr3GpYKyr4UjWCq34xUU6ODMYig76Bxr6ssw/vXPFkfhAVObx
+ 7XtPdiDax25GwOH1aoV3D5a8g0YoQgTCWf1J5stqCIXNgOGSFlgJhdV6PW69t91d/Aack/
+ NVDK7Yvovxd9DrQx4v6iTGkKWx8d7tOZ3HzC/vGvFcwKr3AUgYYarfkDzmT8tw==
+Subject: Re: [RFC 2/5] rust: hw: core: Add rust bindings/funcs for i2c bus
+To: "Zhao Liu" <zhao1.liu@intel.com>
+Received: from [198.18.0.1] ([114.249.194.57]) by smtp.feishu.cn with ESMTPS;
+ Tue, 28 Oct 2025 10:25:11 +0800
+References: <20251025123853.63139-3-chenmiao@openatom.club>
+ <aP8cp3y6uCa7tsel@intel.com>
+Content-Transfer-Encoding: quoted-printable
+From: "Chen Miao" <chenmiao@openatom.club>
+Message-Id: <257dc812-a7c0-492a-a03a-d1e567bb6442@openatom.club>
+X-Original-From: Chen Miao <chenmiao@openatom.club>
+X-Lms-Return-Path: <lba+269002988+d3a40b+nongnu.org+chenmiao@openatom.club>
+Cc: <pbonzini@redhat.com>, <manos.pitsidianakis@linaro.org>, 
+ <richard.henderson@linaro.org>, <philmd@linaro.org>, 
+ <qemu-rust@nongnu.org>, <qemu-devel@nongnu.org>, 
+ <hust-os-kernel-patches@googlegroups.com>, 
+ "Chao Liu" <chao.liu@openatom.club>
+Date: Tue, 28 Oct 2025 10:25:10 +0800
+Mime-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs/system/arm/virt: Document user-creatable SMMUv3
-Content-Language: en-US
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, nicolinc@nvidia.com,
- nathanc@nvidia.com, mochs@nvidia.com, jonathan.cameron@huawei.com
-References: <20251024084350.252702-1-skolothumtho@nvidia.com>
- <CAFEAcA8SAQO0frmN-rK6zp_-fEGXLefAXAxHmT=LASqEL-UU5g@mail.gmail.com>
- <c21641fd-1a35-4b47-a361-bfc2daf7dbd7@redhat.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <c21641fd-1a35-4b47-a361-bfc2daf7dbd7@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <aP8cp3y6uCa7tsel@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Received-SPF: pass client-ip=118.26.132.21;
+ envelope-from=chenmiao@openatom.club; helo=sg-1-21.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,83 +75,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/27/25 10:13 AM, Eric Auger wrote:
-> 
-> 
-> On 10/27/25 12:27 PM, Peter Maydell wrote:
->> On Fri, 24 Oct 2025 at 09:46, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
->>> The virt machine now supports creating multiple SMMUv3 instances, each
->>> associated with a separate PCIe root complex.
->>>
->>> Update the documentation with an example.
->>>
->>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->> Thanks. I have some minor word-smithing tweaks, but I'll just
->> apply them to this patch in target-arm.next if you're OK with
->> that:
+On 10/27/2025 3:17 PM, Zhao Liu wrote:
+> On Sat, Oct 25, 2025 at 12:38:50PM +0000, chenmiao wrote:
+>> Date: Sat, 25 Oct 2025 12:38:50 +0000
+>> From: chenmiao <chenmiao@openatom.club>
+>> Subject: [RFC 2/5] rust: hw: core: Add rust bindings/funcs for i2c bus
+>> X-Mailer: git-send-email 2.43.0
 >>
+>> We have implemented the I2CBus and I2CSlave infrastructure in Rust by re=
+ferring
+>> to the SysBus device model.
 >>
->> --- a/docs/system/arm/virt.rst
->> +++ b/docs/system/arm/virt.rst
->> @@ -224,23 +224,24 @@ SMMU configuration
->>   """"""""""""""""""
+>> Initially, we assumed that the I2CBus was at the same hierarchical level=
+ as the
+>> PL011 device. Therefore, we followed the implementation paradigm of the =
+PL011
+>> device as a reference. However, in the end, we discovered that the I2CBu=
+s is
+>> actually at the same level as the SysBus. As a result, we adopted the bi=
+nding
+>> implementation paradigm used for SysBus devices. With this adjustment, w=
+e
+>> successfully compiled the code locally.
 >>
->>   Machine-wide SMMUv3 IOMMU
->> -  See the machine-specific ``iommu`` option above. This allows specifying
->> -  a single, machine-wide SMMUv3 instance that applies to all devices in
->> -  the PCIe topology.
->> +  Setting the machine-specific option ``iommu=smmuv3`` causes QEMU to
->> +  create a single, machine-wide SMMUv3 instance that applies to all
->> +  devices in the PCIe topology.
+>> During the implementation process, we found that the current two paradig=
+ms in
+>> Rust =E2=80=94 bindings and impl =E2=80=94 are extremely complex and lac=
+k comprehensive
+>> documentation. There is no clear explanation as to why Bus and Device mo=
+dels
+>> need to be implemented using different approaches. Furthermore, the
+>> implementation of Bus and Device following these paradigms still has man=
+y
+>> limitations. At present, at least vmstate is not easily supported.
 >>
->>     For information about selectively bypassing devices, refer to
->>     ``docs/bypass-iommu.txt``.
+>> Signed-off-by: Chao Liu <chao.liu@openatom.club>
+>> Signed-off-by: chenmiao <chenmiao@openatom.club>
+>> ---
+>>   rust/hw/core/meson.build   |   1 +
+>>   rust/hw/core/src/i2cbus.rs | 291 +++++++++++++++++++++++++++++++++++++
+>>   rust/hw/core/src/lib.rs    |   3 +
+>>   rust/hw/core/wrapper.h     |   1 +
+>>   4 files changed, 296 insertions(+)
+>>   create mode 100644 rust/hw/core/src/i2cbus.rs
 >>
->>   User-creatable SMMUv3 devices
->> -  Allows creating multiple user-defined SMMUv3 devices, each associated
->> -  with a separate PCIe root complex. This is only permitted if the
->> -  machine-wide SMMUv3 (``iommu=smmuv3``) option is not used.
->> +  You can use the ``-device arm-smmuv3`` option to create multiple
->> +  user-defined SMMUv3 devices, each associated with a separate PCIe
->> +  root complex. This is only permitted if the machine-wide SMMUv3
->> +  (``iommu=smmuv3``) option is not used. Each ``arm-smmuv3`` device
->> +  uses the ``primary-bus`` sub-option to specify which PCIe root
->> +  complex it is associated with.
->>
->>     This model is useful when you want to mirror a host configuration where
->>     each NUMA node typically has its own SMMU, allowing the VM topology to
->> -  align more closely with the host’s hardware layout. Supporting multiple
->> -  SMMUv3 instances is also a prerequisite for future accelerated SMMUv3
->> -  support.
->> +  align more closely with the host’s hardware layout.
->>
->>     Example::
->>
->>
->>
->>
->> (I deleted the sentence about SMMU acceleration because that
->> isn't upstream yet. When it lands then we can update the
->> docs if the version of it that lands can't support acceleration
->> of a single machine-wide accelerator.)
->>
->> thanks
->> -- PMM
->>
-> Looks good to me as well
-> 
-> Fell free to add my R-b
-> 
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> 
-> Thanks!
-> 
-> Eric
-> 
-+1; looks good; can add my r-b if another is desired/needed.
-- Don
-> 
-> 
-> 
+>> diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
+>> index efcda50..7c44786 100644
+>> --- a/rust/hw/core/meson.build
+>> +++ b/rust/hw/core/meson.build
+>> @@ -52,6 +52,7 @@ _hwcore_rs =3D static_library(
+>>         'src/bindings.rs',
+>>         'src/bus.rs',
+>>         'src/irq.rs',
+>> +      'src/i2cbus.rs',
+>>         'src/qdev.rs',
+>>         'src/sysbus.rs',
+>>       ],
+>> diff --git a/rust/hw/core/src/i2cbus.rs b/rust/hw/core/src/i2cbus.rs
+>> new file mode 100644
+>> index 0000000..c026955
+>> --- /dev/null
+>> +++ b/rust/hw/core/src/i2cbus.rs
+> This file implements both I2CBus and I2C device (Slave).
+>
+> To be general, I think it's better to name it as "i2c.rs".
+>
+>> @@ -0,0 +1,291 @@
+>> +// Copyright 2025 HUST OpenAtom Open Source Club.
+>> +// Author(s): Chao Liu <chao.liu@openatom.club>
+>> +// Author(s): Chen Miao <chenmiao@openatom.club>
+>> +// SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +//! Bindings to access `i2c` functionality from Rust.
+>> +
+>> +use std::ffi::CStr;
+>> +
+>> +pub use bindings::I2CSlaveClass;
+>> +use common::Opaque;
+>> +use qom::{prelude::*, Owned};
+>> +use util::Result;
+>> +
+>> +use crate::{
+>> +    bindings,
+>> +    bus::{BusClass, BusState},
+>> +    qdev::{DeviceImpl, DeviceState},
+>> +};
+>> +
+>> +/// A safe wrapper around [`bindings::I2CBus`].
+>> +#[repr(transparent)]
+>> +#[derive(Debug, common::Wrapper)]
+>> +pub struct I2CBus(Opaque<bindings::I2CBus>);
+>> +
+>> +unsafe impl Send for I2CBus {}
+>> +unsafe impl Sync for I2CBus {}
+>> +
+>> +unsafe impl ObjectType for I2CBus {
+>> +    type Class =3D BusClass;
+>> +    const TYPE_NAME: &'static CStr =3D
+>> +        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_I2C=
+_BUS) };
+>> +}
+>> +
+>> +qom_isa!(I2CBus: BusState, Object);
+>> +
+>> +// TODO: add virtual methods
+>> +pub trait I2CBusImpl: DeviceImpl + IsA<I2CBus> {}
+>> +
+>> +/// Trait for methods of [`I2CBus`] and its subclasses.
+>> +pub trait I2CBusMethods: ObjectDeref
+>> +where
+>> +    Self::Target: IsA<I2CBus>,
+>> +{
+>> +    /// Initialize an I2C bus
+>> +    fn init_bus(&self, parent: &DeviceState, name: &str) -> *mut bindin=
+gs::I2CBus {
+>> +        assert!(bql::is_locked());
+> It's better to add # SFAETY comment (others methods below also need it).
+>
+>> +        unsafe { bindings::i2c_init_bus(parent.as_mut_ptr(), name.as_pt=
+r().cast()) }
+>> +    }
+> ...
+>
+>> +    /// Sets the I2C bus master.
+>> +    ///
+>> +    /// # Safety
+>> +    ///
+>> +    /// This function is unsafe because:
+>> +    /// - `bh` must be a valid pointer to a `QEMUBH`.
+>> +    /// - The caller must ensure that `self` is in a valid state.
+>> +    /// - The caller must guarantee no data races occur during executio=
+n.
+>> +    unsafe fn set_master(&self, bh: *mut bindings::QEMUBH) {
+> I think it's better to have a Opaque<> wrapper over bindings::QEMUBH.
+> However, async has not yet been fully considered.
+>
+> IMO, It seems i2c_bus_master() is only used by i2c-echo, which is not
+> implememnted in this series. Perhaps this series could initially omit
+> QEMUBH (with a TODO comment) until QEMUBH binding is introduced.
+I think our team is also interested in the implementation of QEMUBH, and we=
+=20
+will try to implement this part as well. Regarding the omission of QEMUBH, =
+I=20
+believe we can add a comment here for now!
+>> +        assert!(bql::is_locked());
+>> +        unsafe { bindings::i2c_bus_master(self.upcast().as_mut_ptr(), b=
+h) }
+>> +    }
+>> +
+>> +    /// Release an I2C bus
+>> +    fn release(&self) {
+>> +        assert!(bql::is_locked());
+>> +        unsafe { bindings::i2c_bus_release(self.upcast().as_mut_ptr()) =
+}
+>> +    }
+>> +}
+>> +
+>> +impl<R: ObjectDeref> I2CBusMethods for R where R::Target: IsA<I2CBus> {=
+}
+>> +
+>> +/// A safe wrapper around [`bindings::I2CSlave`].
+>> +#[repr(transparent)]
+>> +#[derive(Debug, common::Wrapper)]
+>> +pub struct I2CSlave(Opaque<bindings::I2CSlave>);
+>> +
+>> +unsafe impl Send for I2CSlave {}
+>> +unsafe impl Sync for I2CSlave {}
+>> +
+>> +unsafe impl ObjectType for I2CSlave {
+>> +    type Class =3D I2CSlaveClass;
+>> +    const TYPE_NAME: &'static CStr =3D
+>> +        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_I2C=
+_SLAVE) };
+>> +}
+>> +
+>> +qom_isa!(I2CSlave: DeviceState, Object);
+>> +
+>> +// TODO: add virtual methods
+>> +pub trait I2CSlaveImpl: DeviceImpl + IsA<I2CSlave> {
+>> +    /// Master to slave. Returns non-zero for a NAK, 0 for success.
+>> +    const SEND: Option<fn(&Self, data: u8) -> Result<bool>> =3D None;
+>> +
+>> +    /// Master to slave (asynchronous). Receiving slave must call `i2c_=
+ack()`.
+>> +    const SEND_ASYNC: Option<fn(&Self, data: u8) -> Result<()>> =3D Non=
+e;
+>> +
+>> +    /// Slave to master. This cannot fail, the device should always ret=
+urn something here.
+>> +    const RECV: Option<fn(&Self) -> Result<bool>> =3D None;
+>> +
+>> +    /// Notify the slave of a bus state change. For start event,
+>> +    /// returns non-zero to NAK an operation. For other events the
+>> +    /// return code is not used and should be zero.
+>> +    const EVENT: Option<fn(&Self, event: I2CEvent) -> Result<I2CEvent>>=
+ =3D None;
+>> +
+>> +    /// Check if this device matches the address provided. Returns bool=
+ of
+>> +    /// true if it matches (or broadcast), and updates the device list,=
+ false
+>> +    /// otherwise.
+>> +    ///
+>> +    /// If broadcast is true, match should add the device and return tr=
+ue.
+>> +    type AddressMatcher;
+>> +    const MATCH_AND_ADD: Option<Self::AddressMatcher> =3D None;
+>> +}
+>> +
+>> +impl I2CSlaveClass {
+>> +    /// Fill in the virtual methods of `I2CSlaveClass` based on the
+>> +    /// definitions in the `I2CSlaveImpl` trait.
+>> +    pub fn class_init<T: I2CSlaveImpl>(self: &mut I2CSlaveClass) {
+> It seems the callbacks (SEND/SEND_ASYNC/...) are missing to set here.
+>
+> For example, add a callback wrapper first:
+>
+> unsafe extern "C" fn rust_i2c_slave_send_fn<T: I2CSlaveImpl>(
+>      slave: *mut bindings::I2CSlave,
+>      date: u8,
+> ) {
+>      let state =3D NonNull::new(slave).unwrap().cast::<T>();
+>      T::SEND.unwrap()(unsafe { state.as_ref() }, data);
+> }
+>
+> Then create C callback like:
+>
+> pub fn class_init<T: I2CSlaveImpl>(self: &mut I2CSlaveClass) {
+>      ...
+>      if <T as I2CSlaveImpl>::SEND.is_some() {
+>          self.send =3D Some(rust_i2c_slave_send_fn::<T>);
+>      }
+>      ...
+> }
+>
+> Similarly, you can refer to ResettableClass::class_init and
+> DeviceClass::class_init.
 
+Ok, I'll complete it strictly according to your instructions.
+
+>
+>> +        self.parent_class.class_init::<T>();
+>> +    }
+>> +}
+>> +
+> Regards,
+> Zhao
+
+Waiting for your next review for other patch.
+
+Thanks,
+
+Chen Miao
+
+>
 
