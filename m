@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E646CCF9F0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0D6CCD1BF
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 17:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDnbH-0006DH-5S; Tue, 28 Oct 2025 13:35:15 -0400
+	id 1vDnaz-0005y0-U7; Tue, 28 Oct 2025 13:34:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDnbF-0006Bp-Df
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:35:13 -0400
+ id 1vDnaz-0005wq-0I
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:34:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vDnb8-0004Sc-M4
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:35:13 -0400
+ id 1vDnaw-0004Qk-8q
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 13:34:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761672901;
+ s=mimecast20190719; t=1761672891;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uNUgC+CpMFn7MC6N/Zib6jbMtfkLhzBQ6ENJcnYPLcY=;
- b=UgeQ3lbihjE4uB/Q12iv9e+6L8p8PeWEgqqRshyAHxJQvviSGGDxqOK7b3Z28ZW2zqTI7g
- zovQoye6d6jM1+kswS7xHzQK4J7btf276ikBOrApzIUKkz1pF0fE/3CLOW/bKY5oQ5Aww7
- r1NZNExI+VysuTGsJ7FS75o5zWEo0w8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sw91OJuYj1JrwFfKm7ne2KgP4Ysk3Lo0/gaXKLESQRo=;
+ b=h5pVtTk9kPqENEWZ1oXTLp6VYEj0P+0m4inrWChGEsAlbJuYsOMs0+Fpm0BE1pyOMWBpIs
+ N9oF1L25VFgRPpI2XX4O0LD3o8ZPNd/1Ty01YZv/JZt/8WmvqusOkW3dylWKK4SCjjOgep
+ WcnS2W4NmaEo2spE6zj5fwDisxK7jx8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-kmWzT40lPXC-t_oV4CoUUw-1; Tue, 28 Oct 2025 13:35:00 -0400
-X-MC-Unique: kmWzT40lPXC-t_oV4CoUUw-1
-X-Mimecast-MFC-AGG-ID: kmWzT40lPXC-t_oV4CoUUw_1761672899
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4711899ab0aso44619155e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 10:35:00 -0700 (PDT)
+ us-mta-660-eG4zLAfTPoyWdmn_evKn-Q-1; Tue, 28 Oct 2025 13:34:49 -0400
+X-MC-Unique: eG4zLAfTPoyWdmn_evKn-Q-1
+X-Mimecast-MFC-AGG-ID: eG4zLAfTPoyWdmn_evKn-Q_1761672888
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4298da9effcso4126048f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 10:34:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761672898; x=1762277698;
+ d=1e100.net; s=20230601; t=1761672887; x=1762277687;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uNUgC+CpMFn7MC6N/Zib6jbMtfkLhzBQ6ENJcnYPLcY=;
- b=iNyDV4h3ijk8zo0Bhx68MdbbQXg50b+j7d9/QK2ih4/WywC84v6pWsQE5fhnA98733
- YZbNcVoscpw87iQVa9sp0IvqWz7srBuSEAYsmO3WIeAFmufv77hYaB/x7iHn0GHCXwxp
- cXcMvIxhnpJbYagfwTDpGUfduPqtg/fQA795JXShX5wVbalBUklRvgA4SLQHuzCvhOJw
- FO3cxXQejZMAu/BlUT2j3oK39oZygi0w2lc8Mz2vdjhKPbjwZ2OIWEXkChBpFq3i9f2u
- nmBhJy0ocSJa3K8d6Kb3b2sxmrNdl3T4CH2eKqMz64hJyilBoBwlTlPf9cogPTQKpH5v
- tyMA==
-X-Gm-Message-State: AOJu0YwGPNsoLh/ml0uX6slumT09pGcLn91X7U5pxUnwzk4MeOqnLKHs
- ae2nJapB80ryGJiP+y4iaevQV2o5bE6MH6SfUXtlvBWIxYLmTT7n7EQoX5z/fkVoM51FVB8V/Vj
- JH7B6CF4UkgKjyIP9wf9QGyIlMZcC8DfKGOlRrM+HR9yy2B8oendjW2XiYCUPoo+f5euZwTo6HY
- lBym/RcnYBq2JtyPimrqmM95ylbnOEQxWJHtUoZSDw
-X-Gm-Gg: ASbGncvFX8mz5tED8OSu3lpWKIYmsv8TaSnseHsKC4f2tg4OMp3bQTnvo5g47a+PI3k
- +vgdqxxEE4MNYsMH+KnqjGkRCV1WW6RBfcs9wDHCbraMGFY/G+ZmpXquR9z81ou+fB5ji1E3XT8
- bPfD+xE7VdkkOnwz7TOQhj6iNXWQ0tSs4XBmQw8y3fp7wsw5fk/bgUquZwrcnsRGgB0fb9HC+bY
- h06/33vlcZwAVQ0L1TAcCRQLSMXqcKst6P8BzXYm+r1HOrDXWz4aN/jN8LJzf8/mlvve6x+iRiC
- h7z/lTQpt5BX/3UJ9bxXEt80dI+aEUgnaEELopAR+WMfl+D66247WeJcBmJfrKPOcw6MSfz8wmZ
- CrO0v33ajflMLKDNziW0Q8dENTr4HsB3BKpt1bAmm4gNNIe2+o/gSXMlFX4wcpx+/Cqpl22n60H
- YvF/o=
-X-Received: by 2002:a05:600c:1992:b0:475:d952:342f with SMTP id
- 5b1f17b1804b1-4771e24e0fdmr2056235e9.39.1761672897803; 
- Tue, 28 Oct 2025 10:34:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3OeZeHSZv4NQ7tuLzYcaOXr9HroN3Ew7tD56JoIb97RfKqnz54BteuTIHb+bwl2DtvtGdJw==
-X-Received: by 2002:a05:600c:1992:b0:475:d952:342f with SMTP id
- 5b1f17b1804b1-4771e24e0fdmr2055935e9.39.1761672897248; 
- Tue, 28 Oct 2025 10:34:57 -0700 (PDT)
+ bh=sw91OJuYj1JrwFfKm7ne2KgP4Ysk3Lo0/gaXKLESQRo=;
+ b=mkr+wzZMUgwxVEpz8YBTlrJ3yH6qvUG3zCRWYoe3UKVbGnYEWc0z5edK8ufeP0ISqW
+ 1AIamvC7zlkiGLJjGI/+4EYbrZzm+KP1DlVC+93/CvZrzpWlfvsZcmT7s3A5oS7GRzrM
+ isRJUmHPudRZAuWaalpFQIAsrBjr3laku0raCeB6cLIL9HTv2POgnNdNjp5Lhca8kK8L
+ gM7q25V5gINdxbkqCLE/GbRHqZe3mk5MKTJE1xaa3mrqB1GsZ99P8sR8pSQfHIyQgSn1
+ fwnHxree17ItfHMP0rqj79Y4JHN006gD4y9UDk48mY8jvNPIzBeI5rGB2hW+HjgFgQFr
+ PJeQ==
+X-Gm-Message-State: AOJu0YzUfVrYAGo5IWSogjVL+tU4eb4FM8Dx+l0cfB7eZvpGhlac78+i
+ ++y2vNjQmafd3BJW9Dav7pB8CumjEPB7+np0l1D06VwYdogIsowSVHB+oagefiDKDGQfCCC2nAR
+ Z3o0hmMDa85kPGykpGm4m7ENsAYD7q+5xMg773ug5TGddXj5WKXLhWZqhwsv3rrc3XNAX+L2Ii4
+ b6XzKvXLOEh59ugYlDtcfyxSSrCPRC9I6Tdnp+lCaq
+X-Gm-Gg: ASbGncsKDve1F40CE0hVYS7Otdb8K5idZfps/76Qz6yI0nfWNXZNwP70N0OUdSo+gpu
+ us3TWnKSMHlTz5QvtPD6pQysIVFcWPtHzPVUPRmIsIV9Z0aXfH6zkopuK+oEjtybWOTEoxCulTR
+ ADyZT/+q2L5Kmzvxcnh62wg3TP1uS4+QefECSKox9edFLNyyc+l05Gdhqu0Eo8ZlS4grjvCQRjg
+ 5RE/bO8d7aZtUh6Iv4kV0utMs9YWIOeaM9sPH5ar0AmBfjFVW56aBQlUIHpzT3WsoImNvDRg6vD
+ F74hLmDLga6SQzQ/0W+bdI0P6N9y3M08Q6KOioubd2UnPAZivYGpIu7WuzRYtEnLktVrhCKdMxq
+ pa6eecpItTuQ5NLB+r9fMLb44VVrhwPToZT+AqcDXHuI2mnIx9XxV9oF3pVtYwdYedanLopCsrV
+ r5f0I=
+X-Received: by 2002:a05:600c:64c7:b0:471:672:3486 with SMTP id
+ 5b1f17b1804b1-4771e18157dmr2954195e9.15.1761672887381; 
+ Tue, 28 Oct 2025 10:34:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGDcdKtLkNrl+YX/vvzTstmhdnZaPxZ2RDYdZwg98VYaaHXSh6uvh4cYUw1EM4hqFDEc3aiag==
+X-Received: by 2002:a05:600c:64c7:b0:471:672:3486 with SMTP id
+ 5b1f17b1804b1-4771e18157dmr2953955e9.15.1761672886918; 
+ Tue, 28 Oct 2025 10:34:46 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.110.222])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4771e202093sm3535315e9.11.2025.10.28.10.34.55
+ ffacd0b85a97d-429952d5985sm21497448f8f.25.2025.10.28.10.34.44
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 10:34:55 -0700 (PDT)
+ Tue, 28 Oct 2025 10:34:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 09/18] accel/mshv: use return value of handle_pio_str_read
-Date: Tue, 28 Oct 2025 18:34:21 +0100
-Message-ID: <20251028173430.2180057-10-pbonzini@redhat.com>
+Subject: [PULL 05/18] rust: only leave leaf crates as workspace members
+Date: Tue, 28 Oct 2025 18:34:17 +0100
+Message-ID: <20251028173430.2180057-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251028173430.2180057-1-pbonzini@redhat.com>
 References: <20251028173430.2180057-1-pbonzini@redhat.com>
@@ -110,31 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity complains because we assign to ret here but
-then never read it again before we overwrite it with
-the call to set_x64_registers().
+Everything else can be obtained as a dependency.
 
-Analyzed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/mshv/mshv-cpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ rust/Cargo.toml | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 1f7b9cb37ec..1c3db02188c 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1489,6 +1489,10 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-         reg_values[0] = info->rsi;
-     } else {
-         ret = handle_pio_str_read(cpu, info, repeat, port, direction_flag);
-+        if (ret < 0) {
-+            error_report("Failed to handle pio str read");
-+            return -1;
-+        }
-         reg_names[0] = HV_X64_REGISTER_RDI;
-         reg_values[0] = info->rdi;
-     }
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+index 783e626802c..ace0baf9bd7 100644
+--- a/rust/Cargo.toml
++++ b/rust/Cargo.toml
+@@ -1,18 +1,8 @@
+ [workspace]
+ resolver = "2"
+ members = [
+-    "bits",
+-    "bql",
+-    "common",
+-    "migration",
+-    "qemu-macros",
+-    "qom",
+-    "system",
+-    "hw/core",
+     "hw/char/pl011",
+     "hw/timer/hpet",
+-    "trace",
+-    "util",
+     "tests",
+ ]
+ 
 -- 
 2.51.1
 
