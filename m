@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75202CCF9EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA175CCF9EA
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 23:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDtR3-0001xp-Td; Tue, 28 Oct 2025 19:49:05 -0400
+	id 1vDtRw-0002Lo-Lp; Tue, 28 Oct 2025 19:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vDtR1-0001w5-6Y
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:04 -0400
-Received: from p-east1-cluster5-host8-snip4-2.eps.apple.com ([57.103.89.203]
+ id 1vDtRp-0002HT-4d
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:54 -0400
+Received: from p-east1-cluster6-host8-snip4-8.eps.apple.com ([57.103.90.209]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vDtQh-0004mG-Vc
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:02 -0400
+ id 1vDtR7-0004q7-4w
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 19:49:49 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-20-percent-0 (Postfix) with ESMTPS id
- 9223518034F6; Tue, 28 Oct 2025 23:48:32 +0000 (UTC)
+ 76A851803784; Tue, 28 Oct 2025 23:49:03 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=x0AeXVBnKwJPdtruMIBq71ElqhCOTD6zQN1Y4p0awp4=;
+ s=sig1; bh=jo9W/NpYfEdIC6CdCIx10Eqt7ku8SV4hAzngP6kYZbk=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=RDP0iz9PoLCjDrRrS6r0rl7a/CW95tINu/1eCq/6Dr/KHZxR5Y+rprLt1Lux+YG/+0ldTuIdE6pCgtPitQ7uVQNs4iTsVc4FGMgS+1H2X3kgpG38OMtaTZ4Zhoc4INPB2qf9Kwa6InTatjNYd1vbGOvcpkVjCFISPH0Hse3dJStcks/qU9/vQFjFgi9l9G4es0fTPD6VLmBUSwM6B4LxmZGpD8hT5D9wXRQ6POVX2InlQhk4qX3MEFqHEaoUoY16+rFWMncXw6DOOm3y+rmXpaV/r2VlibAPFjkv0lnbBbY7SHLsHAnVwFdjjTyFbG90PpXqRnwC3DuScFGqX9JMnw==
+ b=XIncgXhBk50Vcordu5gvwevqrJ8GSMFUSS3RnksGGjVyuj3ZLiPqfnm/RajHSbIvRUw8kiN6HycyohwsklEoGVYGGRjW4k+/mjMIfoF5YmXX9sA5Got+gQNpY9HZVyKNc5ZPgr5xyo/5UUGhRavltP2PX6DD306gm5UW+8anfSCEbe2JskKeByX1oHdPi5GK/JzI1zF8s38GHEOW5sgSqoWudqKkbYJHMK+Xk/Qi0QFCQBWBIm38MOGtHUe75l9OSYnKd9cLSzmd0aK94trJf7ImFq2Aqkqv8tzPuFMHSuXqZTq3568d3Yjn9kxXUVdYe/8IEJ6A38NqW2owuC7jIw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-20-percent-0 (Postfix) with ESMTPSA id
- 3AD0118034C1; Tue, 28 Oct 2025 23:48:30 +0000 (UTC)
+ 79B7418034E9; Tue, 28 Oct 2025 23:49:01 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -42,39 +42,40 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v9 11/27] whpx: interrupt controller support
-Date: Wed, 29 Oct 2025 00:47:41 +0100
-Message-ID: <20251028234757.39609-12-mohamed@unpredictable.fr>
+Subject: [PATCH v9 26/27] whpx: apic: use non-deprecated APIs to control
+ interrupt controller state
+Date: Wed, 29 Oct 2025 00:47:56 +0100
+Message-ID: <20251028234757.39609-27-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251028234757.39609-1-mohamed@unpredictable.fr>
 References: <20251028234757.39609-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: k6ecscc6SACL6C411WX3xOFkqsftmxwt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDIwMiBTYWx0ZWRfX5GTbpG4wHgq0
- M2UfhaEFwmsYyNM9KWt4Kiq9XvGwFlVK5QFWw6RrO3KgZ2KyxVZsz8ea0uhI10Mky7Ahha+pctO
- y60sH1uNdBSvc96rbFH0hlt3r1gskg9VM3htYHxRE47Axl9nodGNbZ4Ltl+hT0NMibKcuzSBbB9
- MMQbT8EcJXt49MOjgXpKeNf50EpNQmPrEJfeLt8yjVXTSuaNKme3XYSOYsjnn7zeSobdnvSegIC
- L0sXjBVkYTT45YdO3+2h5FuHmqKC/06HqZZVFMSnHMcOLk2FTSA1Etl5ZUfzXpjAzPg82hp2E=
-X-Proofpoint-ORIG-GUID: k6ecscc6SACL6C411WX3xOFkqsftmxwt
+X-Proofpoint-ORIG-GUID: 8BQWhcjgj0pFxB1AX12Sp58gS_Qqy9dP
+X-Proofpoint-GUID: 8BQWhcjgj0pFxB1AX12Sp58gS_Qqy9dP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI4MDIwMiBTYWx0ZWRfX2MvCCfOYXxUA
+ LuAplZwli74JgUiJpmGEmSqWc7uwrfZwBCMR8Xc3DesPasiSYgI39252XlNNspuBQxU7pbym9ck
+ jDWwO3432KNK1qwVdSI8zO56rsRWqJ8gUBycYSSjzhZ3lHcBW2CPpTZUaYT4VeuaQLt+hP726l0
+ afN1mFHj8TyJNbs+VPIJd/US0w50hGbwFl4fdTwSk/aCPlsjVzcHgb3aaBft183ujsml4AMyT1K
+ BOTrJ1vSxzPvXpHxIwt2ximSj163BYPaaOMmwqTmdIt3mDQ+1bf4R1Z0SRc2jKEPIkLmR3Qmo=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-28_09,2025-10-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxscore=0
- clxscore=1030 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ adultscore=0 phishscore=0 spamscore=0 mlxscore=0
+ clxscore=1030 malwarescore=0
+ bulkscore=0 mlxlogscore=752 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.22.0-2506270000 definitions=main-2510280202
-X-JNJ: AAAAAAAB3OY9fXm3kb75kclqFygMjci0oC4Hr5dS/KfmM+KvTcvFYrSfnNae8mDTjNjpbQbUSED3eybKM6HUr4wMoGmmu2/sUh0U6fK0qzJzgh8i06bHUAnduCwjnGKKMvakTWF6UPGSzVDs/X0lwpgm2OCzYDpsV270u1OWuoL/dVTgVPqWK3XeafTvt67M5y3WwlNmes10nPZ0cgUtIipvnVqdTRV6pzaCeRfwL4EeFu8+7wYvh3eSiB+WvZmTIPfnPaZhfOne8ujS3G7ZdS+C/euXlAM0jGsHQzHnTLt2lEvUZxDatYEO+6JQb0pcQLR3RSxYJDTq0M5Lx4Yc65zTXocGTZj4OBQPu88W8IDPHHkjsEVWGJhQlnAksYJ6/yi0cnkQIjw7mzwsNbhA+pP0+Iy4+FzbMAA/RKVNZSo+tKx4lJmmNsFloRw2mMofM7/veMKiErvGbwGgzdamYpcPPZXEqw9Q4d0JzAbI4SJZxyyQHXQM8f5c4q3j0dhE1jVWEYGlgWysWM1YrAKCgJe6ucneJoHiV2eb139HbN/O1SnVt5YHnJLZjN9NRFMdh+Fy6EjDcAIOFxkdiHlEcI3u2eDTpFtygHvlkpqV9ZvJuj1k1OEzRYd5kbtKhVZZeQFDz24hcjP9E/nG6XKOYIhtClp6sFAbY91971bQbYpxHS9mkdYKcdOCHAQK5H9AQK7O8rhVy0ut0pjy2UGHELKx7Ddai47Sl3O/0vT4Qk/wDpBoPqQuQgVybh0b2NojbO6J6fz247u6w06SGwU=
-Received-SPF: pass client-ip=57.103.89.203;
+X-JNJ: AAAAAAABql2qxcO0yN7mA0ewvSlf95mNqQPItJJjeOnD/tTGo/FSyPD+ENl4hYUYVr/fF+SwbDwDpnTfE/i0hF+3w/EKsUY6oBwsd6HbtOaU84fVeZiHLmdmp0rFvL4yys6ZGzRg/5gGKDJPi8nOCJv9qDGciYF4YtTKKkp8nSnIYgnCqIAs6APJs9hcRE+Y7Q0G8d6RqVYiK3C7ADJYalKYMwBjXHDLTHMjNqIGCiYtCK94bDEFrM+rzIWSvo9lysWABbeqkbJDlmfD6NWzD/KgLx4Ylgm/VCezE4EmCW1PZ7IbRy+QdWspPe/SbVV8H3HHEVzvQBjwIuhun3bOnliogzJt4k1l6dCJfg5dtPltza7btfFXGM25ByDoOSJVfA1VHWnTHNzEN+bnZQU3G2expGUkOMpc/a0xKwsZ+0KGAsoIpFJIgdGTQuVcCPWsYU70S0f4rKUX5s0sz4mEmmf49Zkx0+2Yc4WwvCnNM79F53h9wFYqYGJML+ogiFgbCSYj+ZZ0z2frgGcJx4K5Nthe9uVXiwqLRCkMsnXXCbYIimr4x8AEFn9ymXT/kal5qX676Sq8NfEJNdf9E4SWq4EaJ9ut9Ly0h26gtEIn7iabNvtvUWfzh6lL92fGU9SDlkxCT4fP9cGAAKb/fquohAkrqH7xR3G/J1DinKDsVzAgRGJCij4mUMDZPzqB/I8G+i3k/PmhV7V5Byj2EvlUCX1h4wn7qRsACCVzaLpHrfhTkFXX6elkOEpC/liJB98esqMqlwnvyVG4eU7ZDoZGlruyUeKXfqPIcjs=
+Received-SPF: pass client-ip=57.103.90.209;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,331 +91,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+WHvGetVirtualProcessorInterruptControllerState2 and
+WHvSetVirtualProcessorInterruptControllerState2 are
+deprecated since Windows 10 version 2004.
+
+Use the non-deprecated WHvGetVirtualProcessorState and
+WHvSetVirtualProcessorState when available.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/virt.c                      |   3 +
- hw/intc/arm_gicv3_common.c         |   3 +
- hw/intc/arm_gicv3_whpx.c           | 239 +++++++++++++++++++++++++++++
- hw/intc/meson.build                |   1 +
- include/hw/intc/arm_gicv3_common.h |   3 +
- 5 files changed, 249 insertions(+)
- create mode 100644 hw/intc/arm_gicv3_whpx.c
+ include/system/whpx-internal.h |  9 +++++++
+ target/i386/whpx/whpx-apic.c   | 46 +++++++++++++++++++++++++---------
+ 2 files changed, 43 insertions(+), 12 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 61d7bab803..9121eb37eb 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -47,6 +47,7 @@
- #include "system/tcg.h"
- #include "system/kvm.h"
- #include "system/hvf.h"
-+#include "system/whpx.h"
- #include "system/qtest.h"
- #include "system/system.h"
- #include "hw/loader.h"
-@@ -2105,6 +2106,8 @@ static void finalize_gic_version(VirtMachineState *vms)
-         /* KVM w/o kernel irqchip can only deal with GICv2 */
-         gics_supported |= VIRT_GIC_VERSION_2_MASK;
-         accel_name = "KVM with kernel-irqchip=off";
-+    } else if (whpx_enabled()) {
-+        gics_supported |= VIRT_GIC_VERSION_3_MASK;
-     } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
-         gics_supported |= VIRT_GIC_VERSION_2_MASK;
-         if (module_object_class_by_name("arm-gicv3")) {
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 2d0df6da86..1fd1e329e8 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -32,6 +32,7 @@
- #include "gicv3_internal.h"
- #include "hw/arm/linux-boot-if.h"
- #include "system/kvm.h"
-+#include "system/whpx.h"
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index 81c0c1819f..90b4077b76 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -86,6 +86,15 @@ void whpx_apic_get(APICCommonState *s);
+   X(HRESULT, WHvSetVirtualProcessorInterruptControllerState2, \
+         (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, PVOID State, \
+          UINT32 StateSize)) \
++  X(HRESULT, WHvGetVirtualProcessorState, \
++        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, \
++        WHV_VIRTUAL_PROCESSOR_STATE_TYPE StateType, PVOID Buffer, \
++        UINT32 BufferSizeInBytes, UINT32 *BytesWritten)) \
++  X(HRESULT, WHvSetVirtualProcessorState, \
++        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, \
++        WHV_VIRTUAL_PROCESSOR_STATE_TYPE StateType, PVOID Buffer, \
++        UINT32 BufferSizeInBytes)) \
++
  
+ #define LIST_WINHVEMULATION_FUNCTIONS(X) \
+   X(HRESULT, WHvEmulatorCreateEmulator, (const WHV_EMULATOR_CALLBACKS* Callbacks, WHV_EMULATOR_HANDLE* Emulator)) \
+diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
+index b934fdcbe1..fa45a64b21 100644
+--- a/target/i386/whpx/whpx-apic.c
++++ b/target/i386/whpx/whpx-apic.c
+@@ -137,11 +137,21 @@ static void whpx_apic_put(CPUState *cs, run_on_cpu_data data)
+     whpx_put_apic_base(CPU(s->cpu), s->apicbase);
+     whpx_put_apic_state(s, &kapic);
  
- static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
-@@ -663,6 +664,8 @@ const char *gicv3_class_name(void)
+-    hr = whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2(
+-        whpx_global.partition,
+-        cs->cpu_index,
+-        &kapic,
+-        sizeof(kapic));
++    if (whp_dispatch.WHvSetVirtualProcessorState) {
++        hr = whp_dispatch.WHvSetVirtualProcessorState(
++            whpx_global.partition,
++            cs->cpu_index,
++            WHvVirtualProcessorStateTypeInterruptControllerState2,
++            &kapic,
++            sizeof(kapic));
++    } else {
++        hr = whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2(
++            whpx_global.partition,
++            cs->cpu_index,
++            &kapic,
++            sizeof(kapic));
++    }
++
+     if (FAILED(hr)) {
+         fprintf(stderr,
+             "WHvSetVirtualProcessorInterruptControllerState failed: %08lx\n",
+@@ -155,16 +165,28 @@ void whpx_apic_get(APICCommonState *s)
  {
-     if (kvm_irqchip_in_kernel()) {
-         return "kvm-arm-gicv3";
-+    } else if (whpx_enabled()) {
-+        return TYPE_WHPX_GICV3;
-     } else {
-         if (kvm_enabled()) {
-             error_report("Userspace GICv3 is not supported with KVM");
-diff --git a/hw/intc/arm_gicv3_whpx.c b/hw/intc/arm_gicv3_whpx.c
-new file mode 100644
-index 0000000000..88a05e5901
---- /dev/null
-+++ b/hw/intc/arm_gicv3_whpx.c
-@@ -0,0 +1,239 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * ARM Generic Interrupt Controller using HVF platform support
-+ *
-+ * Copyright (c) 2025 Mohamed Mediouni
-+ * Based on vGICv3 KVM code by Pavel Fedin
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "qemu/error-report.h"
-+#include "qemu/module.h"
-+#include "system/runstate.h"
-+#include "system/whpx.h"
-+#include "system/whpx-internal.h"
-+#include "gicv3_internal.h"
-+#include "vgic_common.h"
-+#include "qom/object.h"
-+#include "target/arm/cpregs.h"
-+
-+#include "hw/arm/bsa.h"
-+#include <winhvplatform.h>
-+#include <winhvplatformdefs.h>
-+#include <winnt.h>
-+
-+struct WHPXARMGICv3Class {
-+    ARMGICv3CommonClass parent_class;
-+    DeviceRealize parent_realize;
-+    ResettablePhases parent_phases;
-+};
-+
-+typedef struct WHPXARMGICv3Class WHPXARMGICv3Class;
-+
-+/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
-+DECLARE_OBJ_CHECKERS(GICv3State, WHPXARMGICv3Class,
-+                     WHPX_GICV3, TYPE_WHPX_GICV3);
-+
-+/* TODO: Implement GIC state save-restore */
-+static void whpx_gicv3_check(GICv3State *s)
-+{
-+}
-+
-+static void whpx_gicv3_put(GICv3State *s)
-+{
-+    whpx_gicv3_check(s);
-+}
-+
-+static void whpx_gicv3_get(GICv3State *s)
-+{
-+}
-+
-+static void whpx_gicv3_set_irq(void *opaque, int irq, int level)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+
-+    GICv3State *s = (GICv3State *)opaque;
-+    if (irq > s->num_irq) {
-+        return;
-+    }
-+    WHV_INTERRUPT_TYPE interrupt_type = WHvArm64InterruptTypeFixed;
-+    WHV_INTERRUPT_CONTROL interrupt_control = {
-+    interrupt_type = WHvArm64InterruptTypeFixed,
-+    .RequestedVector = GIC_INTERNAL + irq, .InterruptControl.Asserted = level};
-+
-+    whp_dispatch.WHvRequestInterrupt(whpx->partition, &interrupt_control,
-+         sizeof(interrupt_control));
-+}
-+
-+static void whpx_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    GICv3State *s;
-+    GICv3CPUState *c;
-+
-+    c = (GICv3CPUState *)env->gicv3state;
-+    s = c->gic;
-+
-+    c->icc_pmr_el1 = 0;
-+    /*
-+     * Architecturally the reset value of the ICC_BPR registers
-+     * is UNKNOWN. We set them all to 0 here; when the kernel
-+     * uses these values to program the ICH_VMCR_EL2 fields that
-+     * determine the guest-visible ICC_BPR register values, the
-+     * hardware's "writing a value less than the minimum sets
-+     * the field to the minimum value" behaviour will result in
-+     * them effectively resetting to the correct minimum value
-+     * for the host GIC.
-+     */
-+    c->icc_bpr[GICV3_G0] = 0;
-+    c->icc_bpr[GICV3_G1] = 0;
-+    c->icc_bpr[GICV3_G1NS] = 0;
-+
-+    c->icc_sre_el1 = 0x7;
-+    memset(c->icc_apr, 0, sizeof(c->icc_apr));
-+    memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
-+
-+    if (s->migration_blocker) {
-+        return;
-+    }
-+
-+    c->icc_ctlr_el1[GICV3_S] = c->icc_ctlr_el1[GICV3_NS];
-+}
-+
-+static void whpx_gicv3_reset_hold(Object *obj, ResetType type)
-+{
-+    GICv3State *s = ARM_GICV3_COMMON(obj);
-+    WHPXARMGICv3Class *kgc = WHPX_GICV3_GET_CLASS(s);
-+
-+    if (kgc->parent_phases.hold) {
-+        kgc->parent_phases.hold(obj, type);
-+    }
-+
-+    whpx_gicv3_put(s);
-+}
-+
-+
-+/*
-+ * CPU interface registers of GIC needs to be reset on CPU reset.
-+ * For the calling arm_gicv3_icc_reset() on CPU reset, we register
-+ * below ARMCPRegInfo. As we reset the whole cpu interface under single
-+ * register reset, we define only one register of CPU interface instead
-+ * of defining all the registers.
-+ */
-+static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
-+    { .name = "ICC_CTLR_EL1", .state = ARM_CP_STATE_BOTH,
-+      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 12, .opc2 = 4,
-+      /*
-+       * If ARM_CP_NOP is used, resetfn is not called,
-+       * So ARM_CP_NO_RAW is appropriate type.
-+       */
-+      .type = ARM_CP_NO_RAW,
-+      .access = PL1_RW,
-+      .readfn = arm_cp_read_zero,
-+      .writefn = arm_cp_write_ignore,
-+      /*
-+       * We hang the whole cpu interface reset routine off here
-+       * rather than parcelling it out into one little function
-+       * per register
-+       */
-+      .resetfn = whpx_gicv3_icc_reset,
-+    },
-+};
-+
-+static void whpx_set_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE val)
-+{
-+    struct whpx_state *whpx = &whpx_global;
+     CPUState *cpu = CPU(s->cpu);
+     struct whpx_lapic_state kapic;
 +    HRESULT hr;
-+    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(whpx->partition, cpu->cpu_index,
-+         &reg, 1, &val);
 +
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set register %08x, hr=%08lx", reg, hr);
++    if (whp_dispatch.WHvGetVirtualProcessorState) {
++        hr = whp_dispatch.WHvGetVirtualProcessorState(
++            whpx_global.partition,
++            cpu->cpu_index,
++            WHvVirtualProcessorStateTypeInterruptControllerState2,
++            &kapic,
++            sizeof(kapic),
++            NULL);
++    } else {
++        hr = whp_dispatch.WHvGetVirtualProcessorInterruptControllerState2(
++            whpx_global.partition,
++            cpu->cpu_index,
++            &kapic,
++            sizeof(kapic),
++            NULL);
 +    }
-+}
-+
-+static void whpx_gicv3_realize(DeviceState *dev, Error **errp)
-+{
-+    GICv3State *s = WHPX_GICV3(dev);
-+    WHPXARMGICv3Class *kgc = WHPX_GICV3_GET_CLASS(s);
-+    Error *local_err = NULL;
-+    int i;
-+
-+    kgc->parent_realize(dev, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-+    if (s->revision != 3) {
-+        error_setg(errp, "unsupported GIC revision %d for platform GIC",
-+                   s->revision);
-+    }
-+
-+    if (s->security_extn) {
-+        error_setg(errp, "the platform vGICv3 does not implement the "
-+                   "security extensions");
-+        return;
-+    }
-+
-+    if (s->nmi_support) {
-+        error_setg(errp, "NMI is not supported with the platform GIC");
-+        return;
-+    }
-+
-+    if (s->nb_redist_regions > 1) {
-+        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
-+                   "supported by WHPX");
-+        error_append_hint(errp, "A maximum of %d VCPUs can be used",
-+                          s->redist_region_count[0]);
-+        return;
-+    }
-+
-+    gicv3_init_irqs_and_mmio(s, whpx_gicv3_set_irq, NULL);
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        CPUState *cpu_state = qemu_get_cpu(i);
-+        ARMCPU *cpu = ARM_CPU(cpu_state);
-+        WHV_REGISTER_VALUE val = {.Reg64 = 0x080A0000 + (GICV3_REDIST_SIZE * i)};
-+        whpx_set_reg(cpu_state, WHvArm64RegisterGicrBaseGpa, val);
-+        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
-+    }
-+
-+    if (s->maint_irq) {
-+        error_setg(errp, "Nested virtualisation not currently supported by WHPX.");
-+        return;
-+    }
-+}
-+
-+static void whpx_gicv3_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
-+    WHPXARMGICv3Class *kgc = WHPX_GICV3_CLASS(klass);
-+
-+    agcc->pre_save = whpx_gicv3_get;
-+    agcc->post_load = whpx_gicv3_put;
-+
-+    device_class_set_parent_realize(dc, whpx_gicv3_realize,
-+                                    &kgc->parent_realize);
-+    resettable_class_set_parent_phases(rc, NULL, whpx_gicv3_reset_hold, NULL,
-+                                       &kgc->parent_phases);
-+}
-+
-+static const TypeInfo whpx_arm_gicv3_info = {
-+    .name = TYPE_WHPX_GICV3,
-+    .parent = TYPE_ARM_GICV3_COMMON,
-+    .instance_size = sizeof(GICv3State),
-+    .class_init = whpx_gicv3_class_init,
-+    .class_size = sizeof(WHPXARMGICv3Class),
-+};
-+
-+static void whpx_gicv3_register_types(void)
-+{
-+    type_register_static(&whpx_arm_gicv3_info);
-+}
-+
-+type_init(whpx_gicv3_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index faae20b93d..96742df090 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -41,6 +41,7 @@ specific_ss.add(when: 'CONFIG_APIC', if_true: files('apic.c', 'apic_common.c'))
- arm_common_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gicv3_cpuif_common.c'))
- arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
- specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
-+specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: files('arm_gicv3_whpx.c'))
- specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
- arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
- specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 61d51915e0..9fd8b9b858 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -313,6 +313,9 @@ typedef struct ARMGICv3CommonClass ARMGICv3CommonClass;
- DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
-                      ARM_GICV3_COMMON, TYPE_ARM_GICV3_COMMON)
  
-+/* Types for GICv3 kernel-irqchip */
-+#define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
-+
- struct ARMGICv3CommonClass {
-     /*< private >*/
-     SysBusDeviceClass parent_class;
+-    HRESULT hr = whp_dispatch.WHvGetVirtualProcessorInterruptControllerState2(
+-        whpx_global.partition,
+-        cpu->cpu_index,
+-        &kapic,
+-        sizeof(kapic),
+-        NULL);
+     if (FAILED(hr)) {
+         fprintf(stderr,
+-            "WHvSetVirtualProcessorInterruptControllerState failed: %08lx\n",
++            "WHvGetVirtualProcessorInterruptControllerState failed: %08lx\n",
+             hr);
+ 
+         abort();
 -- 
 2.50.1 (Apple Git-155)
 
