@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F575CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07498CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 11:10:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDhY0-0001e9-EA; Tue, 28 Oct 2025 07:07:28 -0400
+	id 1vDha6-0002Z5-PW; Tue, 28 Oct 2025 07:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDhXz-0001df-1o
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:07:27 -0400
+ id 1vDha1-0002WE-Vk
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:09:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vDhXu-0008QO-SA
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:07:25 -0400
+ id 1vDhZs-0000D9-V5
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 07:09:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761649640;
+ s=mimecast20190719; t=1761649761;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YiZygqK3nrPdhOoVaeAx5pny0s8zlVN8FdyMOFmhpD8=;
- b=FL8lrZESGbp5BDi8yTUkc3zmfbvrD6/NMC4rDst8kssTJccszVfsHKMKvsOhUrGknuewFG
- FOXOD2eNCqKrJKvPZkDU1XRE8dg8wTiUCABXNefFMIvzbh8LmKslcKOdZFZlp4YlWsLcy+
- 1Hal4rh38S5FjDxhOiP03TcvSbnqrp8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fapeBS9BlMiWanMAmjo5FOfv9HzZKkc/WpK7c6FKcGc=;
+ b=A21y0snpXmioW1ueLBDGHNt4lR8w8E2By2zvaTVmH5MRo77aamhY1kQOnrxtEiCF30YmWF
+ prYAn6ZEKsLzlls/CuUktx+LxR72yBkolrt76hxHNEVVCVL77e/PHn802pcDFu00T2nFJd
+ 3Ydgeb7ST+cm8qEshiIxg/zJVJpobpA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-Wf7YQsG-O9-0XmkuSSiGsg-1; Tue, 28 Oct 2025 07:07:18 -0400
-X-MC-Unique: Wf7YQsG-O9-0XmkuSSiGsg-1
-X-Mimecast-MFC-AGG-ID: Wf7YQsG-O9-0XmkuSSiGsg_1761649638
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-475dc22db7eso30701155e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:07:18 -0700 (PDT)
+ us-mta-507-qr_XLkUtNum7y5kg2cRegg-1; Tue, 28 Oct 2025 07:09:20 -0400
+X-MC-Unique: qr_XLkUtNum7y5kg2cRegg-1
+X-Mimecast-MFC-AGG-ID: qr_XLkUtNum7y5kg2cRegg_1761649758
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4710d174c31so54562025e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 04:09:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761649637; x=1762254437;
+ d=1e100.net; s=20230601; t=1761649758; x=1762254558;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YiZygqK3nrPdhOoVaeAx5pny0s8zlVN8FdyMOFmhpD8=;
- b=BYK8iAVaUZ/kJjCHTAMhBqB3Olu/UNRKPzkXwINT+HLyGx/YSeLWF27S4EIfWluX4X
- XLiytNu0f/fp+/QkWbGLhYbSg+MbG7V7DrgxRNGl8YafyP9NYV4ijW3WOgeGUPQWVdWh
- xho92UcKa3EzULvOAgIcRKXI/E+rxZL7co/OOfsSpDubsqoCMvx7ZW8GXEQCRU7cBKZJ
- 9zH4ioEocx4dhAxMHYxKhEl1qsMFjd89b1TbBr8G+3CPUBvGYi446My60NnOt0h0SZWN
- +i+PiOoyk7tYJEGoeUrWKRMGnGCtJPc4gJ9GsmNCNzCFpyW6hozfPMsPCRaV3umpJPBJ
- x6ew==
+ bh=fapeBS9BlMiWanMAmjo5FOfv9HzZKkc/WpK7c6FKcGc=;
+ b=sKsL3I2rluHm9yGNsloGS/o9XknEf3ipQ6su3MUV+2bmVHbli4cuBg13SinJQyeeKb
+ klhOkfAf9piCmC4koH58kmWjkd2Aeu9WvRyW0Bnt4LClJ5XkHGqUhvLZlgpp/Y9n4yLQ
+ D3DnxDYP2AV97XwF1MUImf1oyK5Bt3Guq/VQAufBMxzrS1Lu2Cghn7enrf19pfrn7924
+ TU+ox+anxuDDm8cnTf+Z3sITO6aDHMQ8BZ7zHI0g1G2p/Ldqyqb/uqQ+okFuJ5Ecw4aC
+ xJHbkXJv5zVbF9dYvXzd4F2YalJEMb7Ym4+JdsGIHexuduvJHRIxjufoSOg9t0YAtL7O
+ E9Sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVAKzyHhGYHyALDyduiRtpNUGe4ea24lf+pw2E85lBK0rSWKMuBgK5QwCfrToJx/dJxKyX8oxXOm3CX@nongnu.org
-X-Gm-Message-State: AOJu0Yz4XoEIIbmIxr7nnZlU4Xex8uqq6CzVc1lgIxLPEezHRGmVqxBv
- fdrO2NjlqWnKBBrAS0LMKIRZWuGSlr7OSVXsQCIPLvJCxx7qb3MjcyEkz/aTrPzFXAyiT1H2/lv
- txyMlvbahYZ5sG4nFdbznna6jjGEcXIKs5/pa4aEF5eKCC27OrakOYLtIzhWV6em8
-X-Gm-Gg: ASbGncvHRzkbmqt3LPX6wdZeHclBFeOUL+gXxoETTUDUKxurKEvjXe+8roiG2e1yso+
- V4NBRY1VVmUNwN7Y+3kqybCpDsO9d8Giru3C5eGO2XVuy8tEWVGgzcxciQ/sYxP4b6eljfW/CH/
- WP+iVawygmQxbqRc/ZTp1YW816De1NCBWyQhr/mjinbaitXmMCmo/iYNMKzRIRRpyi3FTRc5UnL
- 5RpZZof2FlMT6XrdyKdpcYpo+Pm1RlTJ3HbaYPreAbFuEqQF4g/tiBDSZY79ETORdMOx7rYZUrm
- gRmiaZbJ7ksYKqfet5xZuxOgwf+0YrGCYl008w1hGExxYpxl3QSLenSYhWvkeknyZ9d8xuLnjP1
- NCD6dIXMS33EE/+npCCFZ8pBRq8gUOpeazya3gKICJqmGEQ==
-X-Received: by 2002:a05:600c:6215:b0:471:16b1:b824 with SMTP id
- 5b1f17b1804b1-47717e3f3b5mr30828405e9.28.1761649637348; 
- Tue, 28 Oct 2025 04:07:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjKiJZ1L3buHymE+/qfFxnMX4DBs9WMUeaXcg4jB0+smPA3O5BdC+eUEhECQ10KoQ47iZc9w==
-X-Received: by 2002:a05:600c:6215:b0:471:16b1:b824 with SMTP id
- 5b1f17b1804b1-47717e3f3b5mr30827975e9.28.1761649636876; 
- Tue, 28 Oct 2025 04:07:16 -0700 (PDT)
+ AJvYcCUSHwXYTFXtXKcjmqSw6L7NwC2oXc45Qcm1ouEUCZz4wvRCZ9qSZFxpHHGPgzOIcP3+yq0COorY2WDM@nongnu.org
+X-Gm-Message-State: AOJu0Yzam9vCWFxNPOSlRh3xcs/nrbKYpcXb8PMBUKu23gOAuNGUYa7Z
+ UsKvzmfPt7SLx9SsFucOmkEJyP1DdBj0Yg1nJl9i+zFim+QoiXLEonh4heVh7xrhPrwNJ/MYZpP
+ MVtiqH4MWca70kRwrGMGff8/aeWQIpg+H3S6qfTYoKyxaTlQ8uc/qIfx4
+X-Gm-Gg: ASbGncv+MXYepB+zT+MVmEmV0sGtQnPILRGdQxCW1qdvkIv+ovV8lat9KTvKJ6xd386
+ jAMexM2pX+qAkzz5M/0KqNziUHjLu1ZQNOCJFGXFypaTIEvvA7vqRuU4aQKzIXLT2BWLBGDn4/h
+ qEnUFIV6c7MAZZx4jH3l8A5eLDuGzFeKJ/u74yVTk5SKnvZrY2/f8OU46bd5on8PSaK4i6DpJz1
+ PfgUuLjPkckAPRegAPvrKb+qjbzj/sQJA816oATmzzndq9DOUWsC8Vpy8rjALmhof3h31qQ/7P7
+ OKnGgU8OcqDt+air0E3qGDVHmTm2DPl8AEWg7ZRZUpU27MMTYphRtFSuCUBSWm3YkGIF6HBu3TY
+ D+RfQ+6V+TdN+YIK0DtXYQq6/ypHVSWEvg+NozLdc4qPHMQ==
+X-Received: by 2002:a05:600c:1e0f:b0:471:9b5:6fd3 with SMTP id
+ 5b1f17b1804b1-47717d48706mr22441265e9.0.1761649757852; 
+ Tue, 28 Oct 2025 04:09:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEY9PtLRhmhOJVgaKLuJAd1yQ3XJUdvEIF9JnQKeEWI8/jDORg2dqxJeXrB8HT4Jx/+n8WWNA==
+X-Received: by 2002:a05:600c:1e0f:b0:471:9b5:6fd3 with SMTP id
+ 5b1f17b1804b1-47717d48706mr22440925e9.0.1761649757415; 
+ Tue, 28 Oct 2025 04:09:17 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd4a6043sm189636795e9.12.2025.10.28.04.07.15
+ 5b1f17b1804b1-475dd02cbc6sm194271915e9.1.2025.10.28.04.09.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 04:07:16 -0700 (PDT)
-Message-ID: <5909c005-8a7c-4bd9-84c4-e0d6d7009947@redhat.com>
-Date: Tue, 28 Oct 2025 12:07:15 +0100
+ Tue, 28 Oct 2025 04:09:16 -0700 (PDT)
+Message-ID: <96597d95-f338-46e8-b353-567a10913e57@redhat.com>
+Date: Tue, 28 Oct 2025 12:09:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RESEND PATCH 7/7] hw/arm/virt: [DO NOT UPSTREAM] Enforce
@@ -122,7 +122,7 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+
 
 On 10/28/25 11:37 AM, Peter Maydell wrote:
 > On Thu, 16 Oct 2025 at 15:01, Eric Auger <eric.auger@redhat.com> wrote:
@@ -173,14 +173,9 @@ On 10/28/25 11:37 AM, Peter Maydell wrote:
 >> +      "0x603000000013c103, 0x603000000013c512, 0x603000000013c513" },
 > Strings which are lists of long hex numbers? Is there a
 > more readable way to do this?
-for sysregs, we could use the reg name string directly once we have
-script generated list of regs from json description. However for some
-regs it won't be possible, like pseudo FW regs.
-As those props are really supposed to be used by very informed users
-(distro staff) who need to know the kvm indices, I thought it could be
-acceptable. Maybe we can rely on defines to make it more readable.
 
-Thanks
+forgot to mention that we could use x- prefix for those properties to
+enphasize they are rather experimental and not meant to be used commonly.
 
 Eric
 >
