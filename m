@@ -4,87 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50950CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C39CCD1BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 07:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDe12-0001fD-AS; Tue, 28 Oct 2025 03:21:12 -0400
+	id 1vDe4K-0002Ls-Ew; Tue, 28 Oct 2025 03:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe0z-0001er-S0
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:21:09 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe4I-0002La-9R
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:24:34 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe0x-0003Nh-LP
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:21:09 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47103b6058fso40951925e9.1
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:21:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDe4F-0003ov-OC
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 03:24:34 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46fcf9f63b6so33108785e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 00:24:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761636064; x=1762240864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1761636269; x=1762241069; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=N7nu7PK90YXI5ougHYdnUc2XCygZqpqlYRNaiEeDPYw=;
- b=blFeToO3Q7y6QpwDHeGzrrwNXmTrgannL4duWXzA4903wpSJsZLF3NLi/rnemnz6Xy
- mpiUS9sy+1xOsz06Fpv0KNKWngFTcVPP9Zcv8Ndg8jeYj9xLKNblJrIasl4nFBP2GCbJ
- G7iFf7VZl2R666z0tEc+dxULVX4lyfzfjPxHvhpM5ohK+y3ULZJSz0eI9MAFyDlvXN3X
- Ez5bv5wn7hdPNsdjiK6RoqKSYJaUWBWy3ulxmvYF2NE6p3J8P5QsYP1JCrRr8EGNiESr
- /vyzjuTZCtikfbHwdbS8Fd4SEOuhkI5/RreH3B6tXjOQCfov9UgGQHp6r7aLODYGMb5E
- jbug==
+ bh=5Wc5EMJcGF/yIZ1a3Xyle52cvqomflG7WNTE1Zfw/QI=;
+ b=EISWoKcITGyIGkIJz0OjH0Ya9R83InLZc0eqHXuB1eVLJnkeJcQFQicjk0FyXGafsP
+ 9+QT1aa75xFiJtMCUL0fYcFC5v+0QGVQn8L1ozHYk6auIvynXCkiuo5U9RhZOnyoI1nd
+ 4lkMCEVtAQcI3BQroemIPaY9OyUysW2/3l4/8lmzgYDZi24QCsA3S1X/haywvA2p4J86
+ 0exGehJId/X6vkpoVW1yhXwB4dxgjoBf3eKRWdd29asx8xoVW0JZVmT2xYUzkBSDgxlz
+ LhmDibAlvNifd0CH3yQuMFACnVGYdAR1FHaSa9v9HhzkTqNUgelNtH2agyHA11d05kni
+ NCRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761636064; x=1762240864;
+ d=1e100.net; s=20230601; t=1761636269; x=1762241069;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N7nu7PK90YXI5ougHYdnUc2XCygZqpqlYRNaiEeDPYw=;
- b=Q2/P/29VYKWZRTiBUnY65SBL5OaL9HImqaJOuOqnqfuhRcnp7tM9eQIktNjJS3VFK7
- Xk//3AbRKgs4OPao+1CF3UtZiNgadBOxfOjm4/pUPRy/dKuWHYokw/QMhUrD80KD8gxS
- gK3/Ryg0NA+lMayka8HQR7D1xd4slvf5gZCQwFBK8gN0FlPkmB/140HHO8VKVDGYDoG8
- 4f7bIVZetPj0klSCgQPj8joBGx1vMMrO+EYQTqkH53l2mlZdDnwXFemi0CoBjg+8nufK
- Z8Fn6WW8sfzBvTAh7NNd86LRbRm08uqjiUhzxVEZdVg+L0j0tlbCT4pQO1lEu7I+4P7T
- OWew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXehb/bqrkmyxRU4t2u6JOU7gb1DlBNmquUfsqMaGfZFbiF/OVS18IPZmDAAiTdOr8Q6OrIn7+09gKS@nongnu.org
-X-Gm-Message-State: AOJu0YzaKiopRbizg/GaZJeVCRuz8Oz46DRu4ks1httcktADP6tjFNLQ
- /bs0FwuE83pKCDw7U1PlYzmvft2+4vxly0nihSWaqArGEXZH2EZGcT4K/Zs1XOoymCo=
-X-Gm-Gg: ASbGncuHzMRmxpC+K2w2bFbkgMAlKQ3l/r4FnN0Jl9g64OHJ4y3aBVm39seUtbT00Gr
- ebtS/6vAc37SdaJ4r+SIaKmGcLHollGFwqnaQRk7i+ayrsp73OSANcB60ytnTNFt2OvNV6p8VIV
- DjHShDxddabsUIbzaL77bIFYxRaHi3H+5g9qyCGysadSJB2tAkwg7wQYnrHMUwUzXh4Dm98m6jH
- YP7UpVaZEZoVvpCnK+rLwiZueSCjHhVBRuBc0SlqUFGxATw7hexFg72tspSUfo88Uz+gbP/ye/o
- zgQ6Bh6u3duKqD19qoz2Z2B91Hk6tRA1HuqC8qqB3Apnyt9eUfi1k0ppLw3sBOV0to2tQD4U4Ty
- bzRak4d3bRMKQ4VD+SntPOtadxkWMhwTZJ7igbBKzhMFUM8VLbjAgSmqqvpsjuLrpQPsarRljKo
- gl3Qwt0sof31Ol26i18SG4XSnt6oqUnuKfjY7uivwuJ3OnHRuU
-X-Google-Smtp-Source: AGHT+IFGp3z8A1qloCBRFDt0s9TNFrsZhhWyCHiiYmh6iUDB4yZEniPh0QbY4Yk/cLMVmxpgQ7mlFA==
-X-Received: by 2002:a05:600c:46d3:b0:45f:29eb:2148 with SMTP id
- 5b1f17b1804b1-4771a46941fmr9051465e9.7.1761636063871; 
- Tue, 28 Oct 2025 00:21:03 -0700 (PDT)
+ bh=5Wc5EMJcGF/yIZ1a3Xyle52cvqomflG7WNTE1Zfw/QI=;
+ b=LkjgxElYSTWkS11F8nAT+jsSP0XDhiXol14j5JGaT7RDKaSMxC+HdF+DbXTW6NRSiK
+ 5y6yCR1RQivMjcteizd1ilyZpBwywH9N6+v07BBGkzq10i0smQcl6xYNDDZbVHgJn7o2
+ NXDzYHea81sXzAgYRJhYT8p/pxktb5+rYS1tNwa8twit8Gz/KoySS3cIiMF0vcHgmubD
+ xV9bDUS1suW7QCV2wHs3aaNGiDJixJ6ZVn2HCAfnRMVbXdK2auZv46BSXBlWgCT90TgA
+ RDwnCNeHymzOH8bYaq1eMbGNcpxiLMG5480poRqVsS9VL8KVYCWgETbskcbrcsNS/0x3
+ cfpQ==
+X-Gm-Message-State: AOJu0YzsV36JUxgtQDC6KcAT4qay3e9xIweYilGnybFqgw41iZ2FmGb9
+ 8KeP433aSkyjfxU+Tle/5aRTGIaa8s7PyBVR+ixupR0KBjm9hxkqrwhq6yJ4o+uAa7qPjfRnrRr
+ DO9PtIHE=
+X-Gm-Gg: ASbGncv0qjuJFPj8NXXjsB3BSEJSHPXTlK17DTU5F2gKSoiibrXBjsvSyOh7wxDY1Q7
+ 0hqAPcUFG0QNW2YtC8JgCtpDI5qdBnS8rfUtJc+xtI2ux8qcV4AsdFjRGY+EcrkWNs5VWuSQ5Bv
+ /RO/KTpnEQMlJE1i+cQVEb3Zf/WFHLVDADlZEo03+MfAd2FlQNhegVK9iGga8/X2pDh4WRrqHhy
+ 7kShdPSzrlR2P/4hTpvydtPjiaF8VNJoWdnifU7F+uRFdrDtveoG3CLjzxFY5XZ+NvQlY3AFBlU
+ 7ulgezR/OAwrNOpTiaYcFiUytObxRDVdfiJ59dkvUwKr47PZ4TrS3P2HM/QFvxfaGe15UYxZidl
+ 9lfFiLwBfXmSmnqwTHDbpi2ImIMHwI0ABsgNvmStuwGKCU2jwJckgU+4/9znRewSqzHQ08I9yyl
+ yuz3892mrpkh2MnCBhOj2sqcT6OSqWfpsUblZbPGy6Byu2ivZw
+X-Google-Smtp-Source: AGHT+IHx5cG+9O/KFCGlN4IXvyg6Dpidl0xdTMmq9j7zCRvdamNWHN3JDp2Ap09izyNQnsEQWwsVpw==
+X-Received: by 2002:a05:600c:5246:b0:471:12c2:201f with SMTP id
+ 5b1f17b1804b1-47717e40d7cmr21207195e9.32.1761636268991; 
+ Tue, 28 Oct 2025 00:24:28 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47718427409sm14116455e9.1.2025.10.28.00.21.01
+ 5b1f17b1804b1-475dd02ce46sm214378625e9.3.2025.10.28.00.24.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Oct 2025 00:21:02 -0700 (PDT)
-Message-ID: <d86bebc2-2c97-4dd2-8132-441020d21376@linaro.org>
-Date: Tue, 28 Oct 2025 08:21:00 +0100
+ Tue, 28 Oct 2025 00:24:28 -0700 (PDT)
+Message-ID: <5602536a-d57f-466f-8913-0d6264c13eda@linaro.org>
+Date: Tue, 28 Oct 2025 08:24:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/13] hw/pci-host/raven clean ups
+Subject: Re: [PATCH] hw/pci-host: Set DEVICE_CATEGORY_BRIDGE once in parent
+ class_init()
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <cover.1761232472.git.balaton@eik.bme.hu>
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goat?=
+ =?UTF-8?Q?er?= <clg@kaod.org>, Paul Burton <paulburton@kernel.org>,
+ Joel Stanley <joel@jms.id.au>, Jagannathan Raman <jag.raman@oracle.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Aditya Gupta <adityag@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Bernhard Beschow <shentey@gmail.com>,
+ qemu-arm@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Steven Lee <steven_lee@aspeedtech.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-ppc@nongnu.org
+References: <20251027112306.57634-1-philmd@linaro.org>
+ <CAJ+F1CKRRQY9w=e8XnxxMNTLoJqWiN-TBtu7qV_+2pAaEhM5fA@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cover.1761232472.git.balaton@eik.bme.hu>
+In-Reply-To: <CAJ+F1CKRRQY9w=e8XnxxMNTLoJqWiN-TBtu7qV_+2pAaEhM5fA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,14 +117,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/10/25 17:26, BALATON Zoltan wrote:
+On 28/10/25 08:16, Marc-André Lureau wrote:
+> On Mon, Oct 27, 2025 at 3:37 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> No need to set DEVICE_CATEGORY_BRIDGE for each device
+>> implementing TYPE_PCI_HOST_BRIDGE: set it once in the
+>> parent.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> this will also categorize a bunch of devices
 
-> BALATON Zoltan (13):
->    hw/pci-host/raven: Simplify creating PCI facing part
->    hw/pci-host/raven: Simplify PCI facing part
->    hw/pci-host/raven: Simplify host bridge type declaration
->    hw/pci-host/raven: Use DEFINE_TYPES macro
->    hw/pci-host/raven: Simplify PCI bus creation
+Indeed:
 
-Queuing reviewed patches, thanks.
+$ git grep -l parent.*TYPE_PCI_HOST_BRIDGE
+hw/alpha/typhoon.c
+hw/pci-bridge/pci_expander_bridge.c
+hw/pci-host/articia.c
+hw/pci-host/astro.c
+hw/pci-host/bonito.c
+hw/pci-host/designware.c
+hw/pci-host/dino.c
+hw/pci-host/grackle.c
+hw/pci-host/gt64120.c
+hw/pci-host/i440fx.c
+hw/pci-host/mv64361.c
+hw/pci-host/ppc440_pcix.c
+hw/pci-host/ppc4xx_pci.c
+hw/pci-host/ppce500.c
+hw/pci-host/raven.c
+hw/pci-host/sabre.c
+hw/pci-host/sh_pci.c
+hw/pci-host/uninorth.c
+hw/pci-host/versatile.c
+hw/pci/pcie_host.c
+hw/ppc/spapr_pci.c
+hw/s390x/s390-pci-bus.c
+
+So the following ones are categorized:
+
+hw/alpha/typhoon.c
+hw/pci-bridge/pci_expander_bridge.c
+hw/pci-host/astro.c
+hw/pci-host/bonito.c
+hw/pci-host/dino.c
+hw/pci-host/i440fx.c
+hw/pci-host/ppc440_pcix.c
+hw/pci-host/ppc4xx_pci.c
+hw/pci-host/sh_pci.c
+hw/pci-host/versatile.c
+hw/pci/pcie_host.c
+hw/ppc/spapr_pci.c
+hw/s390x/s390-pci-bus.c
+
+I'll update the description.
+
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+Thanks!
+
+> 
+>> ---
+>>   hw/pci-host/articia.c     | 1 -
+>>   hw/pci-host/aspeed_pcie.c | 1 -
+>>   hw/pci-host/designware.c  | 3 ---
+>>   hw/pci-host/gpex.c        | 2 --
+>>   hw/pci-host/grackle.c     | 1 -
+>>   hw/pci-host/gt64120.c     | 1 -
+>>   hw/pci-host/mv64361.c     | 1 -
+>>   hw/pci-host/pnv_phb.c     | 1 -
+>>   hw/pci-host/ppce500.c     | 1 -
+>>   hw/pci-host/q35.c         | 1 -
+>>   hw/pci-host/raven.c       | 1 -
+>>   hw/pci-host/remote.c      | 1 -
+>>   hw/pci-host/sabre.c       | 1 -
+>>   hw/pci-host/uninorth.c    | 4 ----
+>>   hw/pci-host/xilinx-pcie.c | 2 --
+>>   hw/pci/pci_host.c         | 1 +
+>>   16 files changed, 1 insertion(+), 22 deletions(-)
+
 
