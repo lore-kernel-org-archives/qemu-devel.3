@@ -4,103 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8830CCF9E0
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D6ACCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 16:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDmef-0008GJ-Nv; Tue, 28 Oct 2025 12:34:41 -0400
+	id 1vDmeZ-0008CN-Qz; Tue, 28 Oct 2025 12:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeP-00087K-5R
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vDmeM-00086m-LG; Tue, 28 Oct 2025 12:34:24 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vDmeL-0003gZ-J8
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 12:34:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1761669258;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H8pa3E2fGggwnU3WGnqZTwjKApxvhV+ccDzx1XffCOw=;
- b=Lu7kuXT9MxZiSZ6f13yYKtrJCPyt04KZnMMWHCxi+PUsKzcLzMnj2k+WQzRKFS7VPMMzSg
- JAOgRoTKupGw4R3XxK46rfM8iK8eOm9QSAXZV+QuHWP95Rubjc1hAeZrUggzZAAvdTaK9f
- fviEiJg397cAJkwHq5vIoqCh5GqOzZ4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-zKa9_W6fMEGvHcyB_zqA1A-1; Tue, 28 Oct 2025 12:34:17 -0400
-X-MC-Unique: zKa9_W6fMEGvHcyB_zqA1A-1
-X-Mimecast-MFC-AGG-ID: zKa9_W6fMEGvHcyB_zqA1A_1761669256
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-475dd9906e1so19575125e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 09:34:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761669256; x=1762274056;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=H8pa3E2fGggwnU3WGnqZTwjKApxvhV+ccDzx1XffCOw=;
- b=M/TcE77xSqiSgCKWZCIMII4uNjmLqUwVR1hAHSbMiuWA/4w205qbCFsK1wtDqgIY+V
- 6CCd7Atn5LeBiFAaMp55MvcxaywaSm+Qqjfap5vr8ftzLFMM1tyn/7cVrHnZpA/4KV6C
- 3+kp5zJliqo9WrvxwdfzVXMYDZR5ngW57rfM9+DsPEz6FTykQPDehlWvjIgADU2XeSKw
- FmznmTg7+nS/zd/bOb7S+tKbERpb6hSKUTFCXl8ULYxM7tfQjyKndZRRItOUB+/leQDP
- PXwuNKajL+B/BhCXRmcAD3OCZ7IxtDYrvCY/2pee0L7/MeO8V5NVa9Y0WCo+cMqIY1z6
- Aipw==
-X-Gm-Message-State: AOJu0YwLvsDoxRoGxM3kTc9ZMiII3igfee/h6tG2cAAkNg0SRPOHfGLw
- JYP2PXEyk+9DLrgQWx1JTMJ0jQ2Lt/VP8tEgeFE5pp7ODKXM22OfdC7VVjOI/+MnA45urP8l2nu
- LtKC3+bkyLelmni6M5uQ8KRvkIFfZcZA6cBLEROujcM7BLbPkmJV/SPaK
-X-Gm-Gg: ASbGncszLUp1tJFyAA19GA5TGdzBGEZbAVRT9Ko6oyqvxIQMP6fUCApHsoXo+l2+su6
- siT3lHmEpIMpFBdklHOW99Zr3IZ4yD7zgOvk7HGcnA31H45e7F5q/OnnzSPGuAGmKkskpLGmFFt
- 4lXhsQzss1NLY5mFcpk76QpY+YF9bnY3uwR7uJkTUl0YzzypF/n9C5Mu0mtsmyohCdSH1hWriSc
- Uejq974GHzbvlhV8qNsrtJB5Ol1OEXyS6yAAH9Rus79pVkd4xvC3nnv+tAkTOXsnDXUTqX1WkyV
- MLPfaGvP7f/thUeFFJ1uCd4H2Z2rd/IOz5ztVJj2TyhyRsYX+BrsCYB/e8oJa7rMwhmLwONkVCc
- aDWtyyYn9l1nvJcbr4DGy4Ubn5PagqnjsCQd7+1mU2yH1wXIehUnG5jhSXg==
-X-Received: by 2002:a05:600c:190d:b0:475:dd9a:f791 with SMTP id
- 5b1f17b1804b1-4771e3ab004mr97805e9.28.1761669255806; 
- Tue, 28 Oct 2025 09:34:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBefty/iKIJFguef+AlhNtGh9Ly7/T4sJ8jGnXLfUY8XY3h5Ld7thGmSEX9B4+wBHB+O88ZA==
-X-Received: by 2002:a05:600c:190d:b0:475:dd9a:f791 with SMTP id
- 5b1f17b1804b1-4771e3ab004mr97265e9.28.1761669255430; 
- Tue, 28 Oct 2025 09:34:15 -0700 (PDT)
-Received: from localhost
- (p200300cfd7171feeff88afa910cb665f.dip0.t-ipconnect.de.
- [2003:cf:d717:1fee:ff88:afa9:10cb:665f])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-429952df6b9sm22061204f8f.44.2025.10.28.09.34.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Oct 2025 09:34:14 -0700 (PDT)
-From: Hanna Czenczek <hreitz@redhat.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>,
- Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Subject: [PATCH 09/16] block/io: Take reqs_lock for tracked_requests
-Date: Tue, 28 Oct 2025 17:33:35 +0100
-Message-ID: <20251028163343.116249-10-hreitz@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251028163343.116249-1-hreitz@redhat.com>
-References: <20251028163343.116249-1-hreitz@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vDmeC-0003Wt-0S; Tue, 28 Oct 2025 12:34:22 -0400
+Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 59SGXfdJ078437
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 29 Oct 2025 01:33:41 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=GycpbXY4fYRdDDh3FM9iiNwRlSs+QbvSmpcEVTygCN8=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1761669221; v=1;
+ b=aOtaeHh4wDXfgLrf/GvWYMWpkHzFRXsrFCyDhScSv2S3r6T0uTJriYQA3VeNJSb/
+ En0lB8qeFvSeqFx+25vPIjE0ykWrfzCP50z5GTwmqAZMhQpztLJXeh3uF4MSzOrI
+ oXEYiz4vpK/uFuRZdgPpGstQpWbK4Lb76leJXUI7UT9D5Y2L9mOtDZbEzVG5WHjz
+ T8l7XPbMG4FO8EraOLObRn92dWYo/+iXoaI3uNrycZBKrCjYtyynN1vy9OsoPShz
+ KQPRcL79EwnbysUSuYxw53QTPKQyJInD1LLQpG/zk/YYH7QOl02x3orSSPtlm4ek
+ bMxmVGtwNA2QuKExwWS+FQ==
+Message-ID: <802b77f2-2c23-4b5a-a739-d56b09c335de@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 29 Oct 2025 01:33:41 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] hw/pci-host/articia: Map PCI memory windows in realize
+To: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <cover.1761346145.git.balaton@eik.bme.hu>
+ <ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu>
+ <7747275c-8e0a-4983-8613-fc39fc03bb39@linaro.org>
+ <87b009e6-0d51-7409-61ad-dd65582eb13e@eik.bme.hu>
+ <d23d5106-645c-466f-86e1-30ce20cc61d3@linaro.org>
+ <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <dbdbc78f-3d4b-c0b2-87ac-85e24568a115@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,52 +79,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bdrv_co_get_self_request() does not take a lock around iterating through
-bs->tracked_requests.  With multiqueue, it may thus iterate over a list
-that is in the process of being modified, producing an assertion
-failure:
+On 2025/10/28 21:59, BALATON Zoltan wrote:
+> On Tue, 28 Oct 2025, Philippe Mathieu-Daudé wrote:
+>> On 27/10/25 20:47, BALATON Zoltan wrote:
+>>> On Mon, 27 Oct 2025, Philippe Mathieu-Daudé wrote:
+>>>> On 25/10/25 01:31, BALATON Zoltan wrote:
+>>>>> These memory windows are a result of the address decoding in the
+>>>>> Articia S north bridge so better model it there and not in board code.
+>>>>>
+>>>>> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>>> ---
+>>>>>   hw/pci-host/articia.c | 15 ++++++++++++++-
+>>>>>   hw/ppc/amigaone.c     | 28 +++++-----------------------
+>>>>>   hw/ppc/pegasos2.c     | 13 -------------
+>>>>>   3 files changed, 19 insertions(+), 37 deletions(-)
+>>>>
+>>>>
+>>>>> @@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, 
+>>>>> Error **errp)
+>>>>>   {
+>>>>>       ArticiaState *s = ARTICIA(dev);
+>>>>>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
+>>>>> +    MemoryRegion *mr;
+>>>>>       PCIDevice *pdev;
+>>>>>         bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
+>>>>> @@ -180,6 +186,14 @@ static void articia_realize(DeviceState *dev, 
+>>>>> Error **errp)
+>>>>>       memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
+>>>>>                             TYPE_ARTICIA, 0x1000000);
+>>>>>       memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
+>>>>> +    mr = g_new(MemoryRegion, 1);
+>>>>
+>>>> Won't Coverity or other analysis tools complain about the leak?
+>>>> (this is why we usually keep a reference in the device state, here
+>>>> ArticiaState). Otherwise:
+>>>
+>>> According to https://www.qemu.org/docs/master/devel/ 
+>>> memory.html#region- lifecycle
+>>> there should be no leak and keeping a reference should not be 
+>>> necessary as the lifetime is managed by attaching it to the owner 
+>>> object so no need to keep a reference when it's not needed otherwise. 
+>>> Not littering the state struct with unneded references makes it 
+>>> easier to comprehend so I'd only keep things there that are necessary.
+>>
+>> IIUC this doc is about what happens within the allocated MemoryRegion,
+>> regardless of where it is allocated.
+> 
+> That doc explicitely says:
+> 
+> "Destruction of a memory region happens automatically when the owner 
+> object dies. When there are multiple memory regions under the same owner 
+> object, the memory API will guarantee all memory regions will be 
+> properly detached and finalized one by one. The order in which memory 
+> regions will be finalized is not guaranteed."
 
-../block/file-posix.c:3702: raw_do_pwrite_zeroes: Assertion `req' failed.
+Destruction in this context does not imply freeing the storage.
 
-[0] abort() at /lib64/libc.so.6
-[1] __assert_fail_base.cold() at /lib64/libc.so.6
-[2] raw_do_pwrite_zeroes() at ../block/file-posix.c:3702
-[3] bdrv_co_do_pwrite_zeroes() at ../block/io.c:1910
-[4] bdrv_aligned_pwritev() at ../block/io.c:2109
-[5] bdrv_co_do_zero_pwritev() at ../block/io.c:2192
-[6] bdrv_co_pwritev_part() at ../block/io.c:2292
-[7] bdrv_co_pwritev() at ../block/io.c:2225
-[8] handle_alloc_space() at ../block/qcow2.c:2573
-[9] qcow2_co_pwritev_task() at ../block/qcow2.c:2625
+The documentation describes destruction in QOM. QOM performs the 
+following steps during destruction:
+1. Delete properties
+2. Call finalization callbacks
+3. Free the storage
 
-Fix this by taking reqs_lock.
+However, 3 will not happen in this case since you allocate the storage 
+by yourself and it is not managed by QOM.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
----
- block/io.c | 3 +++
- 1 file changed, 3 insertions(+)
+Please also note that the documentation also says:
+ > If however the memory region is part of a dynamically allocated data
+ > structure, you should free the memory region in the instance_finalize
+ > callback.  For an example see VFIOMSIXInfo and VFIOQuirk in
+ > hw/vfio/pci.c.
 
-diff --git a/block/io.c b/block/io.c
-index 9bd8ba8431..37df1e0253 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -721,11 +721,14 @@ BdrvTrackedRequest *coroutine_fn bdrv_co_get_self_request(BlockDriverState *bs)
-     Coroutine *self = qemu_coroutine_self();
-     IO_CODE();
- 
-+    qemu_mutex_lock(&bs->reqs_lock);
-     QLIST_FOREACH(req, &bs->tracked_requests, list) {
-         if (req->co == self) {
-+            qemu_mutex_unlock(&bs->reqs_lock);
-             return req;
-         }
-     }
-+    qemu_mutex_unlock(&bs->reqs_lock);
- 
-     return NULL;
- }
--- 
-2.51.0
+> 
+> (and these pci-host objects are created once at machine init and never 
+> die so the question seems quite theoretical). I'd like to keep object 
+> state simple and not keep around references in it that nothing uses and 
+> should be managed automatically. I'd only add fields to the state struct 
+> that other methods need.
 
+It is indeed theoretical. That said, I prefer the memory region to be 
+embedded into the device state struct as it will clarify that the 
+lifetime of the memory region is bound to the device.
+
+Regards,
+Akihiko Odaki
 
