@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE3ECCF9EA
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17AD7CCF9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Oct 2025 08:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vDej6-0000wr-Ul; Tue, 28 Oct 2025 04:06:45 -0400
+	id 1vDek6-0001Eh-RF; Tue, 28 Oct 2025 04:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeiJ-0008M2-RY
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:05:57 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vDeiD-00018H-M6
- for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:05:55 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3ee15b5435bso4158268f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Oct 2025 01:05:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1761638711; x=1762243511; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LLmkeQSs/VBwfVzEPmuGbOaGLChFkPJiX0fIN4S0l5E=;
- b=ERnlU5R6iqL5NWN7fq9piHLTjem5yA1oyLRHZ386MpyL4viJ4SadZgnq5vZ5WzfDeX
- VZfzsG79dwCBvkNhZWNJFQ9cY7jzV/PXl7YU57OKdf5uJEbZauheb2o/xi0QaTQgMA9L
- k1F11wac+GuPSZYaQbZx5ishp2vvuqRAPCsWJlhzjS7qNfkfqzw40cdjvo9K0I+AvBaU
- 4yumqENXUDSG+kMGdE+svcgvq4+GSv2xCAFM5MWw/ibbfqkg/Guer70g7QK8fCKd19Km
- K9Pf/gVrQ1jOpgZ0XM31CK16JVBe50H10LqVzmu3M1uPPgFdvPzg2Gb7raP6XXvst8/Q
- k5+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761638711; x=1762243511;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LLmkeQSs/VBwfVzEPmuGbOaGLChFkPJiX0fIN4S0l5E=;
- b=rOX5i9W3lil4LJ+7ZA9mxiz9ugvuR4kJXp5zBs9rE2vfQSKdmp+V2VVu8JqTwPFI/f
- cC5PEVBLWrhSJCT+QkSaJItQu/7ffIkHnqr92zMNtb25aKlXqNaSBRGAj3fQK8wIdGGm
- vTSX0+aTX+x6g7dZj+WBsvpQ/rIEX+gCYbvDhPuPyt/FHfaofASMsT9rb2WESphFFOTt
- +wbzAL/hWlho7kmpHgMTOo/Rqa5hWm/9jTEsTqmfvR82PnI0MotaoItTQNgUEWBAekjO
- WU25mo8RV+ptd8D9+xslVOi+cxzi7Odkg0iMrwv9y8IQZtYS2tzwZRBYhPV1wePcArjE
- 5ccQ==
-X-Gm-Message-State: AOJu0YyUoqmtVHvUPso/rUIY5RManiX52tn8IiY6RQ/OrUNL0DEg1VU8
- yL34w2hJuqlG4jklsHp7ed8zsHpm8CV+lIk6NNpuXAmPijzzakbHblXqVIYQUh3C+kYcCFlZhL1
- 5H6OZNHk=
-X-Gm-Gg: ASbGncsRW3SxJEcN2EZqvf9M9pn70pZjCzVHD9Lrx9uQJ3UeBXAz3Tjmtk2ObLeyqIa
- snOimrku7d+aA2/rdrUBbQw/CRiVMhroHhaeb5Un8M6M0dkkurnOhdoreIZEQJfc+k/t8PP8zJI
- KxYoCooca0u4DVQM3Li3BN1V428/vGiqC3Gbt5nl64UdJVfiz3XVjzsm6a6fNlbKhOpnb4+urni
- HYe1mQw3t2/JoqmRDLt8QHgu1f3/R9l7og9kpDR4Cdbyf84piE4+CaBf2fVcjR1IWCOTC1Eq9Qe
- EQ1DQ83Pgb8r0/zLjqYJ/muiOZ9hVO4fkUb20CARnCqW+njlUaaKMXvXmgX8yxMBXzxi8qrDtlw
- KbHZfmlWTFCrvB3jzvbjdesXPcZdn5QbW+xlYE80CdbyHxHXjUbHZPOUpSFoIIrQwT7xYax12/U
- moVU3FNTij2ZV+iuXtSYcrBtehS0ftldmtj7NyrZKJpvNN+FNCwDYjjy5+t4aVrZIJ3g==
-X-Google-Smtp-Source: AGHT+IEm4UO+ArAp4I0x0HhwWaEbKOmqewIUYrU1pqmrcvMN2x072Qa9ZTR2JoRQRO+Jpx4Yao1nWQ==
-X-Received: by 2002:a05:600c:5295:b0:46f:b32e:5094 with SMTP id
- 5b1f17b1804b1-47717e6ac65mr22788165e9.32.1761638711619; 
- Tue, 28 Oct 2025 01:05:11 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-475dd4cc5efsm184271135e9.16.2025.10.28.01.05.10
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 28 Oct 2025 01:05:11 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 6/7] hw/ppc/e500: Use proper SysBus accessors
-Date: Tue, 28 Oct 2025 09:02:56 +0100
-Message-ID: <20251028080258.23309-7-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vDeib-00009w-6j
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:06:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vDeiV-0001DV-AT
+ for qemu-devel@nongnu.org; Tue, 28 Oct 2025 04:06:12 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59S2lTms029705;
+ Tue, 28 Oct 2025 08:06:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=fgKnxY3+ROcW67MNh
+ +burGNbiMtT4B4rTWDwLbIabB4=; b=kCXtRc1giF/qaqkIm4qKozIHdwvMbVJbL
+ 4ZYIWKOTOBbYUUz9bCeJCa5VANlIG7NQ8c1+0TUBgpNjR17eXJbNsbH46esBNn4V
+ Y+ADgBTcq05D4Jn6k162NHGIXYt5vpQVvGvjWD663XD0JzqhdXJ0X0b4RovjkQXi
+ iaBAPFGDs2b3Qimy05//KCaWUqxB+2PEhhVUhZ9e67IypDNTTiCa9CjXoD5zHaNV
+ mAErqT7Ol0pwU/3HmDQwhKYafCuceP8WDprjGhqihI120PRQ9X65jtTDRaA6CLDW
+ K5YXWBSJqhKHg1mDOpdwIAhTtW8nlP8z2mMHQr7JtI7FeaoVBCA9w==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a0mys2n8k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Oct 2025 08:06:04 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 59S3olrg030075;
+ Tue, 28 Oct 2025 08:06:03 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a19vmhpnd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Oct 2025 08:06:03 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 59S860fO61276668
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Oct 2025 08:06:00 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E6FFF2004D;
+ Tue, 28 Oct 2025 08:05:59 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4ACBF20040;
+ Tue, 28 Oct 2025 08:05:58 +0000 (GMT)
+Received: from shivang.com (unknown [9.39.28.67])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Oct 2025 08:05:58 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: peter.maydell@linaro.org
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, qemu-devel@nongnu.org,
+ shivangu@linux.ibm.com, sourabhjain@linux.ibm.com, philmd@linaro.org
+Subject: [PATCH v2 1/2] hw/ppc: Fix missing return on allocation failure
+Date: Tue, 28 Oct 2025 13:35:50 +0530
+Message-ID: <20251028080551.92722-2-shivangu@linux.ibm.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251028080258.23309-1-philmd@linaro.org>
-References: <20251028080258.23309-1-philmd@linaro.org>
+In-Reply-To: <20251028080551.92722-1-shivangu@linux.ibm.com>
+References: <20251028080551.92722-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nCYW-GcK9ZRxJtHX0FRc3Aml7JYUXV8h
+X-Authority-Analysis: v=2.4 cv=ct2WUl4i c=1 sm=1 tr=0 ts=6900796c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=x6icFKpwvdMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
+ a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=ebZVwKzJ5QttRmoVdyAA:9
+ a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDI1MDAxMCBTYWx0ZWRfX4CLCb3ocmv2Y
+ 8dyxxRd+SAYlUtTm8D8qSll9yr/X7TeCl+Pq7K+GNJl63Ry0Xp/PzyYGDkCRjHkVagGQ5QhnDXe
+ gjcNIkGe8H66BC7BNG6ByLMRDx9DPTmOCxK7/BIaepfXY2AEN8uSkfXRUBUMwvtYT5ExudWP+Ow
+ mf14uO6akqB/zdmaEQkdqDaV5mR1TRb8X/N1t06/0SoDJAQ1GIrB5hEmTKGQGOX00Nr2VeQXYCB
+ T/f7XYq6/T3p7IA8reTl59YN8uEYZO5C6uYBUAtuc1foGP0lYJMUZ5NJvqdhehDoMESEt7WgPi+
+ hMcio/dWxquGnLv5HxTmumV1QzkVikQ9hM9lRnGFflW4bno4k7KWrSvlfsjYCAa1qwPJpPySs1s
+ +CByvRYcsor7m792mbun0wWXcqkx5g==
+X-Proofpoint-GUID: nCYW-GcK9ZRxJtHX0FRc3Aml7JYUXV8h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-28_03,2025-10-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 adultscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510250010
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,27 +119,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SysBusDevice::mmio[] is kind of internal. Use the proper
-sysbus_mmio_get_region() accessor.
+Fixes coverity (CID 1642026)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/CAFEAcA-SPmsnU1wzsWxBcFC=ZM_DDhPEg1N4iX9Q4bL1xOnwBg@mail.gmail.com/
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 ---
- hw/ppc/e500.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/spapr_fadump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 8842f7f6b88..fe1aeffe676 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -887,7 +887,7 @@ static DeviceState *ppce500_init_mpic(PPCE500MachineState *pms,
+diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+index fa3aeac94c..883a60cdcf 100644
+--- a/hw/ppc/spapr_fadump.c
++++ b/hw/ppc/spapr_fadump.c
+@@ -234,6 +234,7 @@ static bool do_preserve_region(FadumpSection *region)
+         qemu_log_mask(LOG_GUEST_ERROR,
+             "FADump: Failed allocating memory (size: %zu) for copying"
+             " reserved memory regions\n", FADUMP_CHUNK_SIZE);
++        return false;
+     }
  
-     s = SYS_BUS_DEVICE(dev);
-     memory_region_add_subregion(ccsr, MPC8544_MPIC_REGS_OFFSET,
--                                s->mmio[0].memory);
-+                                sysbus_mmio_get_region(s, 0));
- 
-     return dev;
- }
+     num_chunks = ceil((src_len * 1.0f) / FADUMP_CHUNK_SIZE);
 -- 
 2.51.0
 
